@@ -46,7 +46,7 @@ public class GuideEntryOJB extends ObjectFenixOJB implements IPersistentGuideEnt
 			
 		}
 		// else if (guideEntry is mapped to the database then write any existing changes)
-		else if ((guideEntryToWrite instanceof IGuideEntry) &&
+		else if ((guideEntryToWrite != null) &&
 				 ((GuideEntry) guideEntryBD).getInternalCode().equals(
 		          ((GuideEntry) guideEntryToWrite).getInternalCode())) {
 

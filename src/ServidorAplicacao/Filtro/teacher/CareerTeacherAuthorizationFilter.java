@@ -8,7 +8,6 @@ import Dominio.ITeacher;
 import Dominio.teacher.Career;
 import Dominio.teacher.ICareer;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Filtro.Filtro;
 import ServidorAplicacao.Filtro.framework.DomainObjectTeacherAuthorizationFilter;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentTeacher;

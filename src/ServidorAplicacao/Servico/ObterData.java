@@ -12,7 +12,6 @@ package ServidorAplicacao.Servico;
 import java.util.Calendar;
 
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import Util.Mes;
 
 
@@ -50,8 +49,7 @@ public class ObterData implements IServico {
    * @throws ExcepcaoInexistente if there is none Data with the
    * desired name, parent and sitio.
    **/
-  public DataView run()
-	throws FenixServiceException, ExcepcaoInexistente {
+  public DataView run() {
 	
 	Calendar calendar = Calendar.getInstance();
 	int dia= calendar.get(Calendar.DAY_OF_MONTH);

@@ -44,7 +44,7 @@ public class CreateMasterDegreeThesisTest extends AdministrativeOfficeBaseTest
         return "CreateMasterDegreeThesis";
     }
 
-    protected Object[] getServiceArgumentsForNotAuthenticatedUser() throws FenixServiceException
+    protected Object[] getServiceArgumentsForNotAuthenticatedUser()
     {
         InfoTeacher infoTeacherGuider = new InfoTeacher();
         infoTeacherGuider.setIdInternal(new Integer(954));

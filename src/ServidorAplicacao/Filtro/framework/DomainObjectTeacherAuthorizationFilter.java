@@ -6,7 +6,6 @@ package ServidorAplicacao.Filtro.framework;
 
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
-import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.AuthorizationByRoleFilter;
 import ServidorAplicacao.Filtro.AuthorizationUtils;
@@ -36,8 +35,7 @@ public abstract class DomainObjectTeacherAuthorizationFilter extends Authorizati
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#execute(pt.utl.ist.berserk.ServiceRequest,
      *          pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
-                    Exception
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception
     {
         IUserView id = getRemoteUser(request);
         Object[] arguments = getServiceCallArguments(request);

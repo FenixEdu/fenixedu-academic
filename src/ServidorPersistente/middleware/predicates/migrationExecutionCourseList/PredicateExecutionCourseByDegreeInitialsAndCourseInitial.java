@@ -25,7 +25,7 @@ public class PredicateExecutionCourseByDegreeInitialsAndCourseInitial
 		String degreeInitials,
 		String courseInitials,
 		int curricularYear) {
-		this.courseInitialsToFind = courseInitials;
+//		this.courseInitialsToFind = courseInitials;
 		this.degreeInitialsToFind = degreeInitials;
 		pairToFind =
 			new CourseCurricularYearPair(
@@ -33,7 +33,7 @@ public class PredicateExecutionCourseByDegreeInitialsAndCourseInitial
 				new Integer(curricularYear));
 	}
 
-	private String courseInitialsToFind;
+//	private String courseInitialsToFind;
 	private String degreeInitialsToFind;
 	private CourseCurricularYearPair pairToFind;
 

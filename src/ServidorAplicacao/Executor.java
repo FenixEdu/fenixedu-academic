@@ -52,7 +52,7 @@ public class Executor {
 	}
 
 	public void doIt(ServicoSeguro ss)
-		throws NotAuthorizeException, NotExecuteException, PersistenceException {
+		throws NotExecuteException, PersistenceException {
 		try {
 			System.out.println(
 				"LOGTIME= "

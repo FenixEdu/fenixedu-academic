@@ -7,7 +7,6 @@ package ServidorAplicacao.Filtro.Seminaries;
 
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
-import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.AuthorizationUtils;
 import ServidorAplicacao.Filtro.Filtro;
@@ -33,8 +32,7 @@ public class CandidaciesAccessFilter extends Filtro
      * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
      *          pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
-                    Exception
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception
     {
         IUserView id = getRemoteUser(request);
         if (((id != null && id.getRoles() != null && !AuthorizationUtils.containsRole(

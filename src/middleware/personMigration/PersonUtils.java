@@ -39,7 +39,7 @@ public class PersonUtils {
 	 * @return The right Country
 	 * @throws ExcepcaoPersistencia
 	 */
-	public static ICountry convertCountry(String countryCode) throws ExcepcaoPersistencia {
+	public static ICountry convertCountry(String countryCode) {
 
 		Criteria criteria = new Criteria();
 

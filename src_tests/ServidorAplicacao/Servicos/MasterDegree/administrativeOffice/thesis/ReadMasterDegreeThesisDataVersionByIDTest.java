@@ -33,14 +33,14 @@ public class ReadMasterDegreeThesisDataVersionByIDTest extends AdministrativeOff
         return "ReadMasterDegreeThesisDataVersionByID";
     }
 
-    protected Object[] getServiceArgumentsForNotAuthenticatedUser() throws FenixServiceException
+    protected Object[] getServiceArgumentsForNotAuthenticatedUser()
     {
         Object[] argsReadMasterDegreeThesisDataVersion = { null };
 
         return argsReadMasterDegreeThesisDataVersion;
     }
 
-    protected Object[] getServiceArgumentsForNotAuthorizedUser() throws FenixServiceException
+    protected Object[] getServiceArgumentsForNotAuthorizedUser()
     {
         Object[] argsReadMasterDegreeThesisDataVersion = { new Integer(1)};
 

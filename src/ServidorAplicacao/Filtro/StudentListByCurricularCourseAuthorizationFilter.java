@@ -10,7 +10,6 @@ import org.apache.commons.collections.CollectionUtils;
 
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
-import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 import DataBeans.InfoRole;
 import Dominio.CurricularCourse;
 import Dominio.ICoordinator;
@@ -63,7 +62,7 @@ public class StudentListByCurricularCourseAuthorizationFilter extends AccessCont
 	 *      pt.utl.ist.berserk.ServiceResponse)
 	 */
 	public void execute(ServiceRequest request, ServiceResponse response)
-		throws FilterException, Exception
+		throws Exception
 	{
 		IUserView id = (IUserView) request.getRequester();
 		if ((id != null && id.getRoles() != null && !containsRole(id.getRoles()))

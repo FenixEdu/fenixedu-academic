@@ -6,7 +6,6 @@ package ServidorAplicacao.Filtro.teacher;
 
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
-import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 import DataBeans.teacher.InfoServiceProviderRegime;
 import DataBeans.teacher.InfoWeeklyOcupation;
 import Dominio.ITeacher;
@@ -44,8 +43,7 @@ public class EditTeacherInformationAuthorizationFilter extends AuthorizationByRo
     /* (non-Javadoc)
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#execute(pt.utl.ist.berserk.ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
-                    Exception
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception
     {
         IUserView id = getRemoteUser(request);
         Object[] arguments = getServiceCallArguments(request);        

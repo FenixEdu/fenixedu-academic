@@ -22,7 +22,6 @@ import Dominio.Pessoa;
 import ServidorAplicacao.Executor;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.PersistenceException;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizeException;
 import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import ServidorAplicacao.Servico.person.ServicoAutorizacaoLerPessoa;
 import ServidorAplicacao.Servico.person.ServicoSeguroLerPessoa;
@@ -55,8 +54,6 @@ public final class IndexAction extends Action {
 
 			Executor.getInstance().doIt(servicoSeguroLerPessoa);
 
-		} catch (NotAuthorizeException nae) {
-			errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.authorization"));
 		} catch (NotExecuteException nee) {
 			errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.execution"));
 		} catch (PersistenceException pe) {

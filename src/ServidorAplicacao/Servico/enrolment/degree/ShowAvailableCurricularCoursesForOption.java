@@ -1,7 +1,6 @@
 package ServidorAplicacao.Servico.enrolment.degree;
 
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentContextManager;
 import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.strategys.EnrolmentStrategyFactory;
@@ -42,7 +41,7 @@ public class ShowAvailableCurricularCoursesForOption implements IServico {
 	 * @return List
 	 * @throws FenixServiceException
 	 */
-	public InfoEnrolmentContext run(InfoEnrolmentContext infoEnrolmentContext) throws FenixServiceException {
+	public InfoEnrolmentContext run(InfoEnrolmentContext infoEnrolmentContext) {
 		IEnrolmentStrategyFactory enrolmentStrategyFactory = EnrolmentStrategyFactory.getInstance();
 		IEnrolmentStrategy strategy = enrolmentStrategyFactory.getEnrolmentStrategyInstance(EnrolmentContextManager.getEnrolmentContext(infoEnrolmentContext));
 		return EnrolmentContextManager.getInfoEnrolmentContext(strategy.getOptionalCurricularCourses());

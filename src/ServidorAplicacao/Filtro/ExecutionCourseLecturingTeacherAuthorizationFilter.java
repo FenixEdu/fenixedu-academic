@@ -7,7 +7,6 @@ package ServidorAplicacao.Filtro;
 
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
-import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
 import Dominio.ExecutionCourse;
@@ -51,8 +50,7 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter extends Authoriz
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#execute(pt.utl.ist.berserk.ServiceRequest,
      *          pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
-                    Exception
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception
     {
         IUserView id = getRemoteUser(request);
         Object[] arguments = getServiceCallArguments(request);

@@ -1,10 +1,8 @@
 package ServidorAplicacao;
 
-import java.rmi.RemoteException;
 import java.util.Calendar;
 import java.util.HashMap;
 
-import javax.ejb.CreateException;
 import javax.ejb.EJBException;
 import javax.ejb.SessionBean;
 import javax.ejb.SessionContext;
@@ -136,7 +134,7 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper
 	 * 
 	 * @see javax.ejb.SessionBean#ejbActivate()
 	 */
-	public void ejbCreate() throws CreateException
+	public void ejbCreate()
 	{
 	}
 
@@ -145,7 +143,7 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper
 	 * 
 	 * @see javax.ejb.SessionBean#ejbActivate()
 	 */
-	public void ejbActivate() throws EJBException, RemoteException
+	public void ejbActivate() throws EJBException
 	{
 	}
 
@@ -154,7 +152,7 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper
 	 * 
 	 * @see javax.ejb.SessionBean#ejbPassivate()
 	 */
-	public void ejbPassivate() throws EJBException, RemoteException
+	public void ejbPassivate() throws EJBException
 	{
 	}
 
@@ -163,7 +161,7 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper
 	 * 
 	 * @see javax.ejb.SessionBean#ejbRemove()
 	 */
-	public void ejbRemove() throws EJBException, RemoteException
+	public void ejbRemove() throws EJBException
 	{
 	}
 
@@ -172,7 +170,7 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper
 	 * 
 	 * @see javax.ejb.SessionBean#setSessionContext(javax.ejb.SessionContext)
 	 */
-	public void setSessionContext(SessionContext arg0) throws EJBException, RemoteException
+	public void setSessionContext(SessionContext arg0) throws EJBException
 	{
 	}
 

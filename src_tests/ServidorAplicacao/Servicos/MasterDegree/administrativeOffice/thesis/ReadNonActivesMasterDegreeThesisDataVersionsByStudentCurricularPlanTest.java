@@ -36,7 +36,7 @@ public class ReadNonActivesMasterDegreeThesisDataVersionsByStudentCurricularPlan
         return "ReadNonActivesMasterDegreeThesisDataVersionsByStudentCurricularPlan";
     }
 
-    protected Object[] getServiceArgumentsForNotAuthenticatedUser() throws FenixServiceException
+    protected Object[] getServiceArgumentsForNotAuthenticatedUser()
     {
         Object[] argsReadMasterDegreeThesisDataVersion = { null };
 

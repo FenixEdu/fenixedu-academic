@@ -3,7 +3,6 @@ package middleware;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.StringTokenizer;
 
@@ -90,7 +89,7 @@ public class LoadStudents extends DataFileLoader {
 	}
 
 	private static void carregarAluno(String line)
-		throws ExistingPersistentException, ExcepcaoPersistencia, IllegalAccessException, InvocationTargetException {
+		throws ExistingPersistentException, ExcepcaoPersistencia {
 		StringTokenizer stringTokenizer =
 			new StringTokenizer(line, getFieldSeparator());
 

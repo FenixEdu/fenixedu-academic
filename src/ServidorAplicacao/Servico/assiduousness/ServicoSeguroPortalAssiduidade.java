@@ -2,7 +2,6 @@ package ServidorAplicacao.Servico.assiduousness;
 
 import ServidorAplicacao.ServicoAutorizacao;
 import ServidorAplicacao.ServicoSeguro;
-import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 
 /**
  *
@@ -14,6 +13,6 @@ public class ServicoSeguroPortalAssiduidade extends ServicoSeguro {
     super(servicoAutorizacaoPortalAssiduidade);
   }
   
-  public void execute() throws NotExecuteException {
+  public void execute() {
   }
 }

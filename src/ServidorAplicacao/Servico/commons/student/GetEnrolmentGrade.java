@@ -71,16 +71,12 @@ public class GetEnrolmentGrade implements IServico {
 			InfoEnrolmentEvaluation infolatestEvaluation = Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(enrolmentEvaluation);
 			if (enrolmentEvaluation.getEmployee() != null) {
 
-				try {
-					if (String.valueOf(enrolmentEvaluation.getEmployee().getIdInternal()) != null
-						|| String.valueOf(enrolmentEvaluation.getEmployee().getIdInternal()).length() > 0) {
-						IEmployee employee = readEmployee(enrolmentEvaluation.getEmployee().getIdInternal().intValue());
-						enrolmentEvaluation.setEmployee(employee);
-						infolatestEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(employee.getPerson()));
-					}
-				} catch (ExcepcaoPersistencia e1) {
-					throw new FenixServiceException(e1);
-				}
+				if (String.valueOf(enrolmentEvaluation.getEmployee().getIdInternal()) != null
+                	|| String.valueOf(enrolmentEvaluation.getEmployee().getIdInternal()).length() > 0) {
+                	IEmployee employee = readEmployee(enrolmentEvaluation.getEmployee().getIdInternal().intValue());
+                	enrolmentEvaluation.setEmployee(employee);
+                	infolatestEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(employee.getPerson()));
+                }
 			}
 			return infolatestEvaluation;
 
@@ -120,18 +116,14 @@ public class GetEnrolmentGrade implements IServico {
 			}
 
 			InfoEnrolmentEvaluation infolatestEvaluation = Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(latestEvaluation);
-			try {
-				if (latestEvaluation.getEmployee() != null) {
-					if (String.valueOf(latestEvaluation.getEmployee().getIdInternal()) != null
-						|| String.valueOf(latestEvaluation.getEmployee().getIdInternal()).length() > 0) {
-						IEmployee employee = readEmployee(latestEvaluation.getEmployee().getIdInternal().intValue());
-						latestEvaluation.setEmployee(employee);
-						infolatestEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(employee.getPerson()));
-					}
-				}
-			} catch (ExcepcaoPersistencia e1) {
-				throw new FenixServiceException(e1);
-			}
+			if (latestEvaluation.getEmployee() != null) {
+            	if (String.valueOf(latestEvaluation.getEmployee().getIdInternal()) != null
+            		|| String.valueOf(latestEvaluation.getEmployee().getIdInternal()).length() > 0) {
+            		IEmployee employee = readEmployee(latestEvaluation.getEmployee().getIdInternal().intValue());
+            		latestEvaluation.setEmployee(employee);
+            		infolatestEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(employee.getPerson()));
+            	}
+            }
 			return infolatestEvaluation;
 		} else {
 			IEnrolmentEvaluation previousEvaluation = null;
@@ -158,20 +150,15 @@ public class GetEnrolmentGrade implements IServico {
 			} catch (NumberFormatException e) {
 //				latestEvaluation.setGrade((new Integer(latestEvaluation.getGrade())).toString());
 				InfoEnrolmentEvaluation infolatestEvaluation = Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(latestEvaluation);
-				try {
-
-					if (latestEvaluation.getEmployee() != null) {
-						if (String.valueOf(latestEvaluation.getEmployee().getIdInternal()) != null
-							|| String.valueOf(latestEvaluation.getEmployee().getIdInternal()).length() > 0) {
-							IEmployee employee = readEmployee(latestEvaluation.getEmployee().getIdInternal().intValue());
-							latestEvaluation.setEmployee(employee);
-							infolatestEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(employee.getPerson()));
-						}
-					}
-					return infolatestEvaluation;
-				} catch (ExcepcaoPersistencia e1) {
-					throw new FenixServiceException(e1);
-				}
+				if (latestEvaluation.getEmployee() != null) {
+                	if (String.valueOf(latestEvaluation.getEmployee().getIdInternal()) != null
+                		|| String.valueOf(latestEvaluation.getEmployee().getIdInternal()).length() > 0) {
+                		IEmployee employee = readEmployee(latestEvaluation.getEmployee().getIdInternal().intValue());
+                		latestEvaluation.setEmployee(employee);
+                		infolatestEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(employee.getPerson()));
+                	}
+                }
+                return infolatestEvaluation;
 
 			}
 
@@ -189,27 +176,24 @@ public class GetEnrolmentGrade implements IServico {
 						}
 					}
 					return infolatestEvaluation;
-				} catch (ExcepcaoPersistencia e1) {
-					throw new FenixServiceException(e1);
 				}
+                finally
+                {
+                }
 
 			} else {
-				try {
-					latestEvaluation.setGrade((new Integer(latestEvaluation.getGrade())).toString());
-					InfoEnrolmentEvaluation infolatestEvaluation =
-						Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(latestEvaluation);
-					if (latestEvaluation.getEmployee() != null) {
-						if (String.valueOf(latestEvaluation.getEmployee().getIdInternal()) != null
-							|| String.valueOf(latestEvaluation.getEmployee().getIdInternal()).length() > 0) {
-							IEmployee employee = readEmployee(latestEvaluation.getEmployee().getIdInternal().intValue());
-							latestEvaluation.setEmployee(employee);
-							infolatestEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(employee.getPerson()));
-						}
-					}
-					return infolatestEvaluation;
-				} catch (ExcepcaoPersistencia e1) {
-					throw new FenixServiceException(e1);
-				}
+				latestEvaluation.setGrade((new Integer(latestEvaluation.getGrade())).toString());
+                InfoEnrolmentEvaluation infolatestEvaluation =
+                	Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(latestEvaluation);
+                if (latestEvaluation.getEmployee() != null) {
+                	if (String.valueOf(latestEvaluation.getEmployee().getIdInternal()) != null
+                		|| String.valueOf(latestEvaluation.getEmployee().getIdInternal()).length() > 0) {
+                		IEmployee employee = readEmployee(latestEvaluation.getEmployee().getIdInternal().intValue());
+                		latestEvaluation.setEmployee(employee);
+                		infolatestEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(employee.getPerson()));
+                	}
+                }
+                return infolatestEvaluation;
 			}
 		}
 
@@ -220,19 +204,15 @@ public class GetEnrolmentGrade implements IServico {
 		if (latestEvaluation.getEmployee() != null) {
 			if (String.valueOf(latestEvaluation.getEmployee().getIdInternal()) != null
 				|| String.valueOf(latestEvaluation.getEmployee().getIdInternal()).length() > 0) {
-				try {
-					IEmployee employee = readEmployee(latestEvaluation.getEmployee().getIdInternal().intValue());
-					latestEvaluation.setEmployee(employee);
-					infolatestEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(employee.getPerson()));
-				} catch (ExcepcaoPersistencia e) {
-					throw new FenixServiceException(e);
-				}
+				IEmployee employee = readEmployee(latestEvaluation.getEmployee().getIdInternal().intValue());
+                latestEvaluation.setEmployee(employee);
+                infolatestEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(employee.getPerson()));
 			}
 		}
 		return infolatestEvaluation;
 	}
 
-	private IEmployee readEmployee(int id) throws ExcepcaoPersistencia {
+	private IEmployee readEmployee(int id) {
 		IEmployee employee = null;
 		IPersistentEmployee persistentEmployee;
 		try {

@@ -61,7 +61,7 @@ import Util.TipoDocumentoIdentificacao;
 public class SuperConverter extends ObjectFenixOJB {
 
 	PersistenceBroker broker = null;
-	public SuperConverter() throws ExcepcaoPersistencia{
+	public SuperConverter(){
 		broker = PersistenceBrokerFactory.defaultPersistenceBroker();
 	}
 
@@ -1105,7 +1105,7 @@ public static void main(String args[]) throws Exception{
 	}
 
 	
-	public ICountry convertCountry(String countryCode) throws ExcepcaoPersistencia {
+	public ICountry convertCountry(String countryCode) {
 
 		Criteria criteria = new Criteria();
 		

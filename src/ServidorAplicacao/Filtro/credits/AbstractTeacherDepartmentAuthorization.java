@@ -8,7 +8,6 @@ import java.util.List;
 
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
-import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 import Dominio.IDepartment;
 import Dominio.IPessoa;
 import Dominio.ITeacher;
@@ -40,7 +39,7 @@ public abstract class AbstractTeacherDepartmentAuthorization extends AccessContr
 	 *          pt.utl.ist.berserk.ServiceResponse)
 	 */
     public void execute(ServiceRequest serviceRequest, ServiceResponse serviceResponse)
-            throws FilterException, Exception
+            throws Exception
     {
         IUserView requester = (IUserView) serviceRequest.getRequester();
         if ((requester == null)

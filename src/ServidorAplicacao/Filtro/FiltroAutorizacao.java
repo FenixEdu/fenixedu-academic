@@ -10,7 +10,6 @@ package ServidorAplicacao.Filtro;
 
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
-import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -28,8 +27,7 @@ public class FiltroAutorizacao extends Filtro
      * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
      *          pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
-                    Exception
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception
     {
         IUserView requester = getRemoteUser(request);
         if (requester == null || !(requester instanceof UserView))

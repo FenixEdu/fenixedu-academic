@@ -25,7 +25,7 @@ public class MWAreaSecundariaIleecOJB extends ObjectFenixOJB implements IPersist
 	}
 
 	public MWAreaSecundariaIleec readSecondaryAreaById(Integer areaId)
-		throws PersistentMiddlewareSupportException, ExcepcaoPersistencia
+		throws ExcepcaoPersistencia
 	{
 
 		Criteria criteria = new Criteria();
@@ -34,7 +34,7 @@ public class MWAreaSecundariaIleecOJB extends ObjectFenixOJB implements IPersist
 	}
 
 	public MWAreaSecundariaIleec readByName(String name)
-		throws PersistentMiddlewareSupportException, ExcepcaoPersistencia
+		throws ExcepcaoPersistencia
 	{
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("nome", name);

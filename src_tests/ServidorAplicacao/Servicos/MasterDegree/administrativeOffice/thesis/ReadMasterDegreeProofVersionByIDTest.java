@@ -36,14 +36,14 @@ public class ReadMasterDegreeProofVersionByIDTest extends AdministrativeOfficeBa
         return "ReadMasterDegreeProofVersionByID";
     }
 
-    protected Object[] getServiceArgumentsForNotAuthenticatedUser() throws FenixServiceException
+    protected Object[] getServiceArgumentsForNotAuthenticatedUser()
     {
         Object[] argsReadMasterDegreeProofVersion = { null };
 
         return argsReadMasterDegreeProofVersion;
     }
 
-    protected Object[] getServiceArgumentsForNotAuthorizedUser() throws FenixServiceException
+    protected Object[] getServiceArgumentsForNotAuthorizedUser()
     {
         Object[] argsReadMasterDegreeProofVersion = { new Integer(1)};
 

@@ -34,7 +34,6 @@ import ServidorAplicacao.Servico.assiduousness.ServicoSeguroConstruirEscolhasMar
 import ServidorAplicacao.Servico.assiduousness.ServicoSeguroConsultarJustificacoes;
 import ServidorAplicacao.Servico.assiduousness.ServicoSeguroConsultarMarcacaoPonto;
 import ServidorAplicacao.Servico.assiduousness.ServicoSeguroConsultarVerbete;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizeException;
 import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import ServidorApresentacao.formbeans.assiduousness.ConsultarFuncionarioMostrarForm;
 import Util.Comparador;
@@ -101,9 +100,6 @@ public final class ConsultarFuncionarioEscolhaAction extends Action
             try
             {
                 Executor.getInstance().doIt(servicoSeguroConstruirEscolhasMarcacoesPonto);
-            } catch (NotAuthorizeException nae)
-            {
-                errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nae.getMessage()));
             } catch (NotExecuteException nee)
             {
                 errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nee.getMessage()));
@@ -130,9 +126,6 @@ public final class ConsultarFuncionarioEscolhaAction extends Action
             try
             {
                 Executor.getInstance().doIt(servicoSeguroConsultarMarcacaoPonto);
-            } catch (NotAuthorizeException nae)
-            {
-                errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nae.getMessage()));
             } catch (NotExecuteException nee)
             {
                 errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nee.getMessage()));
@@ -225,9 +218,6 @@ public final class ConsultarFuncionarioEscolhaAction extends Action
             try
             {
                 Executor.getInstance().doIt(servicoSeguroConsultarJustificacoes);
-            } catch (NotAuthorizeException nae)
-            {
-                errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nae.getMessage()));
             } catch (NotExecuteException nee)
             {
                 errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nee.getMessage()));
@@ -253,9 +243,6 @@ public final class ConsultarFuncionarioEscolhaAction extends Action
             try
             {
                 Executor.getInstance().doIt(servicoSeguroBuscarParamJustificacoes);
-            } catch (NotAuthorizeException nae)
-            {
-                errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nae.getMessage()));
             } catch (NotExecuteException nee)
             {
                 errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nee.getMessage()));
@@ -337,9 +324,6 @@ public final class ConsultarFuncionarioEscolhaAction extends Action
             try
             {
                 Executor.getInstance().doIt(servicoSeguroConsultarVerbete);
-            } catch (NotAuthorizeException nae)
-            {
-                errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nae.getMessage()));
             } catch (NotExecuteException nee)
             {
                 errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nee.getMessage()));

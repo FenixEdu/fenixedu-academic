@@ -40,7 +40,7 @@ public class ReadNonActivesMasterDegreeProofVersionsByStudentCurricularPlanTest
         return "ReadNonActivesMasterDegreeProofVersionsByStudentCurricularPlan";
     }
 
-    protected Object[] getServiceArgumentsForNotAuthenticatedUser() throws FenixServiceException
+    protected Object[] getServiceArgumentsForNotAuthenticatedUser()
     {
         Object[] argsReadMasterDegreeProofVersion = { null };
 

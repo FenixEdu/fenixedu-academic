@@ -21,7 +21,6 @@ import ServidorAplicacao.Executor;
 import ServidorAplicacao.PersistenceException;
 import ServidorAplicacao.Servico.assiduousness.ServicoAutorizacaoLer;
 import ServidorAplicacao.Servico.assiduousness.ServicoSeguroPessoasGestaoAssiduidade;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizeException;
 import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import ServidorAplicacao.Servico.person.ServicoAutorizacaoAlterarPessoa;
 import ServidorAplicacao.Servico.person.ServicoAutorizacaoLerPessoa;
@@ -56,8 +55,6 @@ public final class ForgotPasswordAction extends Action {
 
 			Executor.getInstance().doIt(servicoSeguroLerPessoa);
 
-		} catch (NotAuthorizeException nae) {
-			errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.authorization"));
 		} catch (NotExecuteException nee) {
 			errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.execution"));
 		} catch (PersistenceException pe) {
@@ -89,8 +86,6 @@ public final class ForgotPasswordAction extends Action {
 
 			Executor.getInstance().doIt(servicoSeguroPessoasGestaoAssiduidade);
 
-		} catch (NotAuthorizeException nae) {
-			errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.authorization"));
 		} catch (NotExecuteException nee) {
 			errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.execution"));
 		} catch (PersistenceException pe) {
@@ -131,8 +126,6 @@ public final class ForgotPasswordAction extends Action {
 
 				Executor.getInstance().doIt(servicoSeguroAlterarPessoa);
 
-			} catch (NotAuthorizeException nae) {
-				errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.authorization"));
 			} catch (NotExecuteException nee) {
 				errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.server"));
 			} catch (PersistenceException pe) {

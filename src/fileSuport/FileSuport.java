@@ -234,7 +234,7 @@ public class FileSuport implements IFileSuport
         }
     }
 
-    private void beginTransaction() throws SlideException, NotSupportedException, SystemException
+    private void beginTransaction() throws NotSupportedException, SystemException
     {
         System.out.println("beforeBegin->" + token.getStatus());
         token.begin();

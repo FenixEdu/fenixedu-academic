@@ -7,7 +7,6 @@ import Dominio.Pessoa;
 import ServidorAplicacao.Executor;
 import ServidorAplicacao.PersistenceException;
 import ServidorAplicacao.Servico.assiduousness.ServicoAutorizacaoLer;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizeException;
 import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import ServidorAplicacao.Servico.person.ServicoSeguroEscreverPapelPessoa;
 import ServidorAplicacao.Servico.person.ServicoSeguroLerTodasPessoas;
@@ -28,8 +27,6 @@ public class EscreverPapelPessoa implements Serializable {
 		ServicoSeguroLerTodasPessoas servicoSeguroLerTodasPessoas = new ServicoSeguroLerTodasPessoas(servicoAutorizacaoLer);		
 		try {
 			Executor.getInstance().doIt(servicoSeguroLerTodasPessoas);
-		} catch (NotAuthorizeException nae) {
-			System.out.println(nae.getMessage());
 		} catch (NotExecuteException nee) {
 			System.out.println(nee.getMessage());
 		} catch (PersistenceException pe) {
@@ -47,8 +44,6 @@ public class EscreverPapelPessoa implements Serializable {
 				new ServicoSeguroEscreverPapelPessoa(servicoAutorizacaoLer, pessoa);
 			try {
 				Executor.getInstance().doIt(servicoSeguroEscreverPapelPessoa);
-			} catch (NotAuthorizeException nae) {
-				System.out.println(nae.getMessage());
 			} catch (NotExecuteException nee) {
 				System.out.println(nee.getMessage());
 			} catch (PersistenceException pe) {

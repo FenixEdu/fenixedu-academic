@@ -9,8 +9,6 @@ import org.apache.commons.collections.CollectionUtils;
 
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
-import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
-
 import DataBeans.InfoRole;
 import Dominio.ICoordinator;
 import Dominio.IMasterDegreeCandidate;
@@ -152,8 +150,7 @@ public class CandidateApprovalAuthorizationFilter extends Filtro
      * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
      *          pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
-                    Exception
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception
     {
         IUserView userView = getRemoteUser(request);
         if ((userView != null && userView.getRoles() != null && !containsRole(userView.getRoles()))

@@ -22,7 +22,6 @@ import ServidorAplicacao.PersistenceException;
 import ServidorAplicacao.Servico.assiduousness.ServicoAutorizacaoLer;
 import ServidorAplicacao.Servico.assiduousness.ServicoSeguroConsultarFuncionario;
 import ServidorAplicacao.Servico.assiduousness.ServicoSeguroLerFuncionario;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizeException;
 import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import ServidorApresentacao.formbeans.assiduousness.ConsultarFuncionarioMostrarForm;
 import constants.assiduousness.Constants;
@@ -48,8 +47,6 @@ public final class ConsultarFuncionarioMostrarAction extends Action {
 		try {
 			Executor.getInstance().doIt(servicoSeguroLerFuncionario);
 
-		} catch (NotAuthorizeException nae) {
-			errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nae.getMessage()));
 		} catch (NotExecuteException nee) {
 			errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nee.getMessage()));
 		} catch (PersistenceException pe) {
@@ -71,8 +68,6 @@ public final class ConsultarFuncionarioMostrarAction extends Action {
 			/* funcionario a consultar */
 			Executor.getInstance().doIt(servicoSeguroConsultarFuncionario);
 
-		} catch (NotAuthorizeException nae) {
-			errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nae.getMessage()));
 		} catch (NotExecuteException nee) {
 			errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nee.getMessage()));
 		} catch (PersistenceException pe) {

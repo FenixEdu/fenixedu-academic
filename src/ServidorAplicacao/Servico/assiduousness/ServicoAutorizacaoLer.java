@@ -1,7 +1,6 @@
 package ServidorAplicacao.Servico.assiduousness;
 
 import ServidorAplicacao.ServicoAutorizacao;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizeException;
 
 /**
  *
@@ -13,7 +12,8 @@ public class ServicoAutorizacaoLer extends ServicoAutorizacao {
   public ServicoAutorizacaoLer() {
   }
   
-  public void execute() throws NotAuthorizeException {
+  public void execute()
+  {
   }
 }
 

@@ -6,7 +6,6 @@
 package ServidorAplicacao.Filtro.Seminaries;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
-import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 import Dominio.IStudent;
 import Dominio.Seminaries.Candidacy;
 import Dominio.Seminaries.ICandidacy;
@@ -29,8 +28,7 @@ public class CandidacyOwnershipFilter extends Filtro
 	/* (non-Javadoc)
      * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
-                    Exception
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception
     {
         Integer candidacyID= (Integer) getServiceCallArguments(request)[0];
         ISuportePersistente persistenceSupport= SuportePersistenteOJB.getInstance();
