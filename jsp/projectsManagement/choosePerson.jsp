@@ -12,8 +12,9 @@
 	<span class="error"><bean:message key="message.noUserProjects" /></span>
 </logic:present>
 <logic:notPresent name="noUserProjects">
-	<table>
+	<table cellspacing="0">
 		<tr>
+			<td class="infoop"><span class="emphasis-box">Info</span></td>
 			<td class="infoop"><bean:message key="message.accessDelegation.information" /></td>
 		</tr>
 	</table>

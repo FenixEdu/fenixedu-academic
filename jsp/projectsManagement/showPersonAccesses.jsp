@@ -47,7 +47,7 @@ function getIndex(input){
 				<td><strong><bean:message key="label.username" />:</strong></td>
 				<td><bean:write name="infoPerson" property="username" /></td>
 			</tr>
-			<tr>				
+			<tr>
 				<td><strong><bean:message key="label.name" />:</strong></td>
 				<td><bean:write name="infoPerson" property="nome" /></td>
 			</tr>
@@ -55,6 +55,14 @@ function getIndex(input){
 	</logic:present>
 	<h3><bean:message key="message.personProjectAccess" /></h3>
 	<logic:notEmpty name="personAccessesList" scope="request">
+		<table cellspacing="0">
+			<tr>
+				<td class="infoop"><span class="emphasis-box">Info</span></td>
+				<td class="infoop"><bean:message key="message.projectAccess" /></td>
+			</tr>
+		</table>
+		<br />
+		<br />
 		<table>
 			<tr>
 				<td class="listClasses-header"><bean:message key="label.username" /></td>
@@ -93,6 +101,13 @@ function getIndex(input){
 	<logic:present name="projectList">
 		<h3><bean:message key="message.availableProjects" /></h3>
 		<logic:notEmpty name="projectList">
+			<table cellspacing="0">
+				<tr>
+					<td class="infoop"><span class="emphasis-box">Info</span></td>
+					<td class="infoop"><bean:message key="message.delegateAccess" /></td>
+				</tr>
+			</table>
+			<br />
 			<html:form action="/projectAccess" focus="beginDay">
 				<html:hidden property="username" value="<%=(pageContext.findAttribute("username")).toString()%>" />
 				<html:hidden property="method" value="delegateAccess" />

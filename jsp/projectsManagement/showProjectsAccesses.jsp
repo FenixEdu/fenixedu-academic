@@ -5,6 +5,14 @@
 <br />
 <logic:present name="projectsAccessesList" scope="request">
 	<logic:notEmpty name="projectsAccessesList" scope="request">
+		<table cellspacing="0">
+			<tr>
+				<td class="infoop"><span class="emphasis-box">Info</span></td>
+				<td class="infoop"><bean:message key="message.projectAccess" /></td>
+			</tr>
+		</table>
+		<br />
+		<br />
 		<table>
 			<tr>
 				<td class="listClasses-header"><bean:message key="label.username" /></td>
