@@ -59,32 +59,34 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
 
 		List associatedExecutionCourses = exam.getAssociatedExecutionCourses();
 
-		for (int i = 0; i < associatedExecutionCourses.size(); i++) {
-			IDisciplinaExecucao executionCourse =
-				(IDisciplinaExecucao) associatedExecutionCourses.get(i);
-			executionCourse.getAssociatedExams().remove(exam);
+		if (associatedExecutionCourses != null) {
+			for (int i = 0; i < associatedExecutionCourses.size(); i++) {
+				IDisciplinaExecucao executionCourse =
+					(IDisciplinaExecucao) associatedExecutionCourses.get(i);
+				executionCourse.getAssociatedExams().remove(exam);
 
-			IExamExecutionCourse examExecutionCourseToDelete =
+				IExamExecutionCourse examExecutionCourseToDelete =
+					SuportePersistenteOJB
+						.getInstance()
+						.getIPersistentExamExecutionCourse()
+						.readBy(
+						exam,
+						executionCourse);
+
 				SuportePersistenteOJB
 					.getInstance()
 					.getIPersistentExamExecutionCourse()
-					.readBy(
-					exam,
-					executionCourse);
-
-			SuportePersistenteOJB
-				.getInstance()
-				.getIPersistentExamExecutionCourse()
-				.delete(
-				examExecutionCourseToDelete);
+					.delete(
+					examExecutionCourseToDelete);
+			}
 		}
 
 		exam.setAssociatedExecutionCourses(null);
 
 		super.delete(exam);
 
-//		PersistenceBroker broker = ((HasBroker) tx).getBroker();
-//		broker.clearCache();
+		//		PersistenceBroker broker = ((HasBroker) tx).getBroker();
+		//		broker.clearCache();
 	}
 
 	public void deleteAll() throws ExcepcaoPersistencia {
