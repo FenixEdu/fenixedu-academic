@@ -12,7 +12,7 @@
 
     <!-- Validation for Execution Course Form -->
     <form name="chooseExecutionCourseForm">
-      <field property="courseInitials" depends="required">
+      <field property="exeCode" depends="required">
         <arg0 key="property.context.course"/>
       </field>
     </form>

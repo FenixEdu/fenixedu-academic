@@ -30,7 +30,7 @@
       <form-bean name="chooseExecutionCourseForm"
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
-        <form-property name="courseInitials" type="java.lang.String"/>
+        <form-property name="exeCode" type="java.lang.String"/>
 	  </form-bean>
 	  
 	  <!-- Dynamic-FormBean for Choose Context-->
@@ -146,12 +146,6 @@
       </action>
     	
     	
-    	
-    	<action path="/viewExecutionCourseShifts" 
-    		type="ServidorApresentacao.Action.publico.ViewExecutionCourseShifts">
-    		<forward name="Sucess" path="/viewExecutionCourseShifts.jsp"/>
- 		</action>
- 		
       <action parameter="method"
               path="/consultTimeTables"
               scope="request"
@@ -252,72 +246,27 @@
       </action>
 
 	<!-- Start of Gesdis-->
-	
-	<action path="/curricularCourses" 
-    		type="ServidorApresentacao.Action.publico.ViewCurricularCoursesAction">
-    		<forward name="sucess" path="/curricularCourses.jsp"/>
- 		</action>
-	
-	
-	
-		<action path="/viewTimeTable" 
-    		type="ServidorApresentacao.Action.publico.ViewExecutionCourseTimeTableAction">
-    		<forward name="Sucess" path="/viewTimeTable.jsp"/>
- 		</action>
- 		
-	<action     
-		path="/accessBibliographicReferences"		   			
-		scope="session"
-        type="ServidorApresentacao.Action.publico.AccessBibliographyAction">	           
-		<forward name="Sucess" path="/bibliographicReferences.jsp"/>
 		
-	</action>             
-
-	<!-- access to announcements -->
-	<action 
-		type="ServidorApresentacao.Action.publico.AccessAnnouncementManagementAction" 
-		path="/accessAnnouncements">
-        <forward name="Sucess" path="/announcements.jsp" />  
-                      
-	</action>
-
-	<!-- access to objectives -->
-	<action 
-		type="ServidorApresentacao.Action.publico.ViewObjectives" 
-		scope="session"
-		path="/accessObjectives">
-        <forward name="viewObjectives" path="/objectives.jsp" />       
-	</action>
-
-	<!-- access to program -->
-	<action 
-		type="ServidorApresentacao.Action.publico.ViewProgramAction" 
-		scope="session"
-		path="/accessProgram">
-        <forward name="viewProgram" path="/program.jsp" />       
-	</action>
-
-	
+ 		
+	 
 	<!-- Site viewer -->
 	<action 
+		name="chooseExecutionCourseForm"
 		path="/viewSite"
 		parameter="method"
         type="ServidorApresentacao.Action.publico.SiteViewerDispatchAction">    
-     <forward name="executionCourseViewer" path="/viewExecutionCourse.jsp"/>         
+     <forward name="executionCourseViewer" path="/viewExecutionCourse.jsp"/>   
+     <forward name="announcements" path="/announcements.jsp" />
+     <forward name="objectives" path="/objectives.jsp" />   
+     <forward name="program" path="/program.jsp" />  
+     <forward name="evaluation" path="/viewEvaluation.jsp"/>  
+     <forward name="bibliography" path="/bibliographicReferences.jsp"/>
+     <forward name="curricularCourses" path="/curricularCourses.jsp"/>  
+     <forward name="timeTable" path="/viewTimeTable.jsp"/>  
+     <forward name="shifts" path="/viewExecutionCourseShifts.jsp"/>   
+     <forward name="section" path="/viewSection.jsp"/>       
 	</action>
 	
-	
-	<!-- Section viewer -->
-	<action path="/viewSection"
-        type="ServidorApresentacao.Action.publico.ViewSectionAction">    
-     <forward name="Sucess" path="/viewSection.jsp"/>         
-	</action>
-	
-	<!-- Evaluation viewer -->
-	<action path="/viewEvaluation"
-        type="ServidorApresentacao.Action.publico.ViewEvaluationAction">    
-     <forward name="Sucess" path="/viewEvaluation.jsp"/>         
-	</action>
 	
 <!-- End of Gesdis-->
 
