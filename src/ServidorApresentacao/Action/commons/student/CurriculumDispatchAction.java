@@ -46,6 +46,11 @@ public class CurriculumDispatchAction extends DispatchAction {
         HttpSession session = request.getSession();
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
+        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+        if(degreeCurricularPlanID != null){
+            request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        }
+        
         String studentNumber = getStudent(request);
         InfoPerson infoPerson = null;
 
@@ -80,6 +85,9 @@ public class CurriculumDispatchAction extends DispatchAction {
 
         request.setAttribute("studentPerson", infoPerson);
 
+        if(degreeCurricularPlanID != null){
+            return mapping.findForward("ShowStudentCurriculumForCoordinator");
+        }
         return mapping.findForward("ShowStudentCurriculum");
     }
 
@@ -171,7 +179,7 @@ public class CurriculumDispatchAction extends DispatchAction {
         }
         // TODO Remove this exception! It returns null and it is not supposed!
         catch (Exception exp) {
-            System.out.println(exp.getMessage());
+            exp.printStackTrace();
             return null;
         }
 

@@ -51,7 +51,8 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
     public ActionForward prepareEnrollmentChooseStudent(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         getExecutionDegree(request);
-
+        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         return mapping.findForward("prepareEnrollmentChooseStudent");
     }
 
@@ -82,6 +83,9 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
         ActionErrors errors = new ActionErrors();
         DynaValidatorForm enrollmentForm = (DynaValidatorForm) form;
         Integer studentNumber = new Integer((String) enrollmentForm.get("studentNumber"));
+        
+        Integer degreeCurricularPlanID = (Integer) enrollmentForm.get("degreeCurricularPlanID");
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
         Integer executionDegreeId = getExecutionDegree(request);
         InfoStudentEnrollmentContext infoStudentEnrolmentContext = null;

@@ -5,13 +5,11 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <%@ page import="java.lang.Math" %>
-
-
 <strong><jsp:include page="../context.jsp"/></strong>
 <br />
 <br />
 
-
+<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
 <logic:present name="<%= SessionConstants.LIST_INFOEXECUTIONCOURSE %>" scope="request">
 	<bean:size id="numberInfoExecutionCourses" name="<%= SessionConstants.LIST_INFOEXECUTIONCOURSE %>"/>
 
@@ -62,7 +60,7 @@
 						<td class="listClasses">
 							<html:link page="<%= "/executionCoursesInformation.do?method=showOccupancyLevels&amp;"
 									+ "executionCourseOID="
-									+ pageContext.findAttribute("executionCourseOID") %>">
+									+ pageContext.findAttribute("executionCourseOID") + "&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 								<bean:write name="executionCourse" property="occupancy"/>
 							</html:link>
 						</td>
@@ -83,7 +81,7 @@
 						<bean:define id="equalLoad" name="executionCourse" property="equalLoad" />
 						<html:link page="<%= "/executionCoursesInformation.do?method=showLoads&amp;"
 								+ "executionCourseOID="
-								+ pageContext.findAttribute("executionCourseOID") %>">
+								+ pageContext.findAttribute("executionCourseOID") + "&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 							<logic:equal name="executionCourse" property="equalLoad" value="true">
 								<font color="#008000"><bean:message key ="label.hours.load.equal" /></font>
 							</logic:equal>
@@ -94,15 +92,15 @@
 						</html:link>
 					</td>
 					<td class="listClasses">
-						<html:link page="/courseInformation.do" paramId="executionCourseId" paramName="executionCourse" paramProperty="idInternal">
+						<html:link page="<%= "/courseInformation.do?executionCourseId=" + executionCourseOID +  "&degreeCurricularPlanID=" + degreeCurricularPlanID%>">
 							<bean:message key ="label.courseInformation.view" />
 						</html:link>
 					</td>
 					<td class="listClasses">
-						<html:link page="/viewTeachingReport.do?method=read" paramId="executionCourseId" paramName="executionCourse" paramProperty="idInternal">
+						<html:link page="<%= "/viewTeachingReport.do?method=read&executionCourseId=" + executionCourseOID +  "&degreeCurricularPlanID=" + degreeCurricularPlanID%>">
 							<logic:notEmpty name="executionCourse" property="courseReportFilled">
 								<logic:equal name="executionCourse" property="courseReportFilled" value="true">
-									<font color="#008000"><bean:message key ="link.filled" /></font>						
+									<font color="#008000"><bean:message key ="link.filled" /></font>
 								</logic:equal>
 								<logic:equal name="executionCourse" property="courseReportFilled" value="false">
 									<font color="#FF0000"><bean:message key ="link.notFilled" /></font>						
@@ -122,7 +120,7 @@
 						<%= ap_av %>
 					</td>
 					<td class="listClasses">
-						<html:link page="/studentsByCurricularCourse.do?method=prepare" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal">
+						<html:link page="<%= "/studentsByCurricularCourse.do?method=prepare&objectCode=" + executionCourseOID +  "&degreeCurricularPlanID=" + degreeCurricularPlanID%>">
 							<bean:message key ="link.students.see" />
 						</html:link>
 					</td>

@@ -42,6 +42,9 @@ public class ExecutionCourseInfoDispatchAction extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
+        
+        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
         InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
                 .getAttribute(SessionConstants.MASTER_DEGREE);
@@ -64,7 +67,7 @@ public class ExecutionCourseInfoDispatchAction extends DispatchAction {
         }
 
         request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodsLabelValueList);
-
+        
         /* Obtain a list of curricular years */
         List labelListOfCurricularYears = ContextUtils.getLabelListOfOptionalCurricularYears();
         request.setAttribute(SessionConstants.LABELLIST_CURRICULAR_YEARS, labelListOfCurricularYears);
@@ -72,6 +75,46 @@ public class ExecutionCourseInfoDispatchAction extends DispatchAction {
         return mapping.findForward("ReadyToSearch");
     }
 
+    
+    public ActionForward prepareChoiceForCoordinator(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        HttpSession session = request.getSession(false);
+        IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
+        
+        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+
+        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session
+                .getAttribute(SessionConstants.MASTER_DEGREE);
+
+        Object argsReadExecutionPeriods[] = {degreeCurricularPlanID};
+        List executionPeriods = (List) ServiceManagerServiceFactory.executeService(userView,
+                "ReadExecutionPeriodsByDegreeCurricularPlan", argsReadExecutionPeriods);
+
+        ComparatorChain chainComparator = new ComparatorChain();
+        chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
+        chainComparator.addComparator(new BeanComparator("semester"));
+        Collections.sort(executionPeriods, chainComparator);
+
+        List executionPeriodsLabelValueList = new ArrayList();
+        for (int i = 0; i < executionPeriods.size(); i++) {
+            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) executionPeriods.get(i);
+            executionPeriodsLabelValueList.add(new LabelValueBean(infoExecutionPeriod.getName() + " - "
+                    + infoExecutionPeriod.getInfoExecutionYear().getYear(), infoExecutionPeriod
+                    .getIdInternal().toString()));
+        }
+
+        request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodsLabelValueList);
+        
+        /* Obtain a list of curricular years */
+        List labelListOfCurricularYears = ContextUtils.getLabelListOfOptionalCurricularYears();
+        request.setAttribute(SessionConstants.LABELLIST_CURRICULAR_YEARS, labelListOfCurricularYears);
+
+        return mapping.findForward("ReadyToSearch");
+    }
+    
+    
+    
     public ActionForward getExecutionCourses(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -83,6 +126,9 @@ public class ExecutionCourseInfoDispatchAction extends DispatchAction {
                 .getAttribute(SessionConstants.MASTER_DEGREE);
 
         DynaActionForm searchExecutionCourse = (DynaActionForm) form;
+        
+        Integer degreeCurricularPlanID = (Integer) searchExecutionCourse.get("degreeCurricularPlanID");
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
         // Mandatory Selection
         Integer executionPeriodOID = null;
@@ -143,6 +189,9 @@ public class ExecutionCourseInfoDispatchAction extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
+        
+        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
         Object args[] = { new Integer(request.getParameter("executionCourseOID")) };
 
@@ -251,6 +300,9 @@ public class ExecutionCourseInfoDispatchAction extends DispatchAction {
             HttpServletResponse response) throws Exception {
 
         IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
+        
+        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
         Object args[] = { new Integer(request.getParameter("executionCourseOID")) };
 

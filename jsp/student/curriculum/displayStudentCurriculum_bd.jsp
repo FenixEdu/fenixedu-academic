@@ -20,6 +20,7 @@
 	<bean:size id="numCPs" name="selectedStudentCPs"/>
 
 	<html:form action="/viewCurriculum.do?method=getStudentCP">
+		<html:hidden property="degreeCurricularPlanID"/>
 		
 		<table width="100%">
 			<tr>
@@ -46,7 +47,6 @@
 				</td>
 			</tr>
 		</table>
-		
 		<logic:present property="studentNumber" name="studentCurricularPlanAndEnrollmentsSelectionForm">
 			<html:hidden name="studentCurricularPlanAndEnrollmentsSelectionForm" property="studentNumber"/>
 		</logic:present>

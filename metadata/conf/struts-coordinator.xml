@@ -19,6 +19,7 @@
             <form-property name="objectCode" type="java.lang.Integer" />
             <form-property name="method" type="java.lang.String" />
 			<form-property name="viewPhoto" type="java.lang.String" />
+			<form-property name="degreeCurricularPlanID" type="java.lang.Integer" />
         </form-bean>
 
 		<form-bean name="removeCoordinators"
@@ -82,7 +83,8 @@
         <form-property name="page" type="java.lang.Integer"/>
         <form-property name="executionPeriodOID" type="java.lang.String"/>
         <form-property name="curricularYearOID" type="java.lang.String"/>
-        <form-property name="executionCourseName" type="java.lang.String"/>        
+        <form-property name="executionCourseName" type="java.lang.String"/>
+        <form-property name="degreeCurricularPlanID" type="java.lang.Integer" initial="0"/>      
       </form-bean>
       
       <!-- Dynamic-FormBean for searchExecutionCourse -->
@@ -159,6 +161,7 @@
 		<form-property name="page" type="java.lang.Integer" initial="0"/>
 		<form-property name="isOptional" type="java.lang.String"/>
 		<form-property name="courseType" type="java.lang.String"/>
+		<form-property name="degreeCurricularPlanID" type="java.lang.Integer"/>
 	</form-bean>
 
 	<form-bean name="curriculumForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
@@ -260,6 +263,16 @@
             <form-property name="order" type="java.lang.String"/>
             
 		</form-bean>
+		
+		<!-- TEACHER INFORMATION -->	
+		<form-bean name="teacherInformationForm" 
+	  			 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+            <form-property name="yearString" type="java.lang.String"/>
+            <form-property name="executionDegreeId" type="java.lang.String"/>
+            <form-property name="degreeCurricularPlanID" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+		
 
 		<!-- VIEW STUDENT CURRICULUM FORMS -->
 		<form-bean name="studentCurricularPlanAndEnrollmentsSelectionForm"
@@ -269,6 +282,7 @@
         	<form-property name="select" type="java.lang.String" />
 			<form-property name="studentNumber" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
+			<form-property name="degreeCurricularPlanID" type="java.lang.Integer" initial="0"/>
 		</form-bean>	
 
     </form-beans>
@@ -515,6 +529,7 @@
 	  <!-- Read Teachers Information -->
         <action path="/teachersInformation" 
             scope="request"
+            name="teacherInformationForm"
             type="ServidorApresentacao.Action.coordinator.ReadTeachersInformationAction" >
             <forward name="show" path="view-teachers-information"/>
         </action>
@@ -621,7 +636,7 @@
 	  
 	<!-- ****************** LEEC Enrollment **************************** -->
 	<action path="/studentEnrollementSection"
-	type="ServidorApresentacao.Action.commons.VoidAction"
+	type="ServidorApresentacao.Action.coordinator.CoordinatorVoidAction"
 	parameter="method"
 	>
 		<forward name="Success" path="firstPageStudentEnrollementSection"/>
@@ -661,6 +676,7 @@
 		input="/viewStudentCurriculum.do?method=prepareViewStudentCurriculumChooseStudent&amp;page=0">
         	<forward name="ShowStudentCurricularPlans" path="df.page.showStudentCurricularPlans"/>
         	<forward name="ShowStudentCurriculum" path="df.page.showStudentCurriculum"/>
+        	<forward name="ShowStudentCurriculumForCoordinator" path="df.page.showStudentCurriculumForCoordinator"/>
         	<forward name="NotAuthorized" path="df.page.notAuthorized"/>	
     </action>	  
     

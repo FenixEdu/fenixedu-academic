@@ -474,7 +474,7 @@
     </filterChain>
     <filterChain>
         <name>ReadTeachersInformationAuthorization</name>
-        <expression>ExecutionDegreeCoordinatorAuthorization || GEPAuthorization </expression>
+        <expression>CoordinatorAuthorization || GEPAuthorization </expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
@@ -631,6 +631,13 @@
 	<filterChain>
         <name>EnrollmentAuthorization</name>
         <expression>EnrollmentAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+    	<filterChain>
+        <name>EnrollmentOrCoordinatorAuthorization</name>
+        <expression>EnrollmentAuthorization || CoordinatorAuthorization</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>

@@ -37,6 +37,8 @@ public class TutorManagementDispatchAction extends FenixDispatchAction {
 
         String executionDegreeId = request.getParameter("executionDegreeId");
         request.setAttribute("executionDegreeId", executionDegreeId);
+        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
         //This code is temporary, it just verify if the coordinator logged is a
         // LEEC's coordinator

@@ -5,6 +5,19 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 
 <h2><bean:message key="title.teachersInformation"/>(<dt:format pattern="dd/MM/yyyy"><dt:currentTime/></dt:format>)</h2>
+<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
+
+<html:form action="/teachersInformation.do">	
+	<h2>
+		<bean:message key="link.masterDegree.administrativeOffice.gratuity.chosenYear"/>
+		<html:select property="yearString" size="1" onchange="this.form.submit();">
+			<html:options property="value" labelProperty="label" collection="executionYearList" />
+		</html:select>
+		<html:hidden property="degreeCurricularPlanID" />
+		<html:hidden property="executionDegreeId" />		
+	</h2>
+</html:form>
+
 
 <logic:present name="infoSiteTeachersInformation">
 	<table width="90%" border="0" cellspacing="1" style="margin-top:10px">
@@ -19,21 +32,16 @@
 		<logic:iterate id="infoSiteTeacherInformation" name="infoSiteTeachersInformation">
 			<bean:size id="numberCourses" name="infoSiteTeacherInformation" property="infoLecturingExecutionCourses"/> 
 				<logic:iterate id="infoExecutionCourse" name="infoSiteTeacherInformation" property="infoLecturingExecutionCourses" length="1"> 
+				<bean:define id="teacherUsername" name="infoSiteTeacherInformation" property="infoTeacher.infoPerson.username" />
 					<tr>
 						<td class="listClasses" rowspan="<%=  pageContext.findAttribute("numberCourses") %>">&nbsp;
-							<html:link page="/readTeacherInformation.do" 
-									   paramId="username" 
-									   paramName="infoSiteTeacherInformation" 
-					    				paramProperty="infoTeacher.infoPerson.username">
+							<html:link page="<%= "/readTeacherInformation.do?username=" + teacherUsername + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 					    		<bean:write name="infoSiteTeacherInformation" 
 					    					property="infoTeacher.infoPerson.nome"/> 
 					    	</html:link> 
 					    </td>
 					    <td class="listClasses" rowspan="<%=  pageContext.findAttribute("numberCourses") %>">&nbsp; 
-					    	<html:link page="/readTeacherInformation.do" 
-					    			   paramId="username" 
-					    			   paramName="infoSiteTeacherInformation" 
-					    			   paramProperty="infoTeacher.infoPerson.username"> 
+					    	<html:link page="<%= "/readTeacherInformation.do?username=" + teacherUsername + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 					    		<bean:write name="infoSiteTeacherInformation"   
 					    					property="infoTeacher.teacherNumber"/> 
 					    	</html:link> 

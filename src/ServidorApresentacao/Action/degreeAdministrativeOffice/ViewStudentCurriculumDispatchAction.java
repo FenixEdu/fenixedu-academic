@@ -17,6 +17,8 @@ public class ViewStudentCurriculumDispatchAction extends DispatchAction {
     public ActionForward prepareView(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         getExecutionDegreeId(request);
+        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         return mapping.findForward("prepareViewStudentCurriculumChooseStudent");
     }
 

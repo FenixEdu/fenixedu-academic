@@ -92,7 +92,7 @@ public class ReadTeachersInformation implements IService {
 
             List professorships = null;
             IExecutionYear executionYear = null;
-            if (executionYearString != null) {
+            if (executionYearString != null && !executionYearString.equals("")) {
                 executionYear = persistentExecutionYear.readExecutionYearByName(executionYearString);
             } else {
                 executionYear = persistentExecutionYear.readCurrentExecutionYear();

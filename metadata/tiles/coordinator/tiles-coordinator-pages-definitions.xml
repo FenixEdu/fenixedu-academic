@@ -115,7 +115,7 @@
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/withRules/enrollmentConfirmation.jsp"/>
 	</definition>
 
-	<definition name="df.page.prepareViewStudentCurriculumChooseStudent" extends="definition.coordinator.two-column.extra-menu.student">
+	<definition name="df.page.prepareViewStudentCurriculumChooseStudent" extends="definition.coordinator.two-column">
 		<put name="body" value="/degreeAdministrativeOffice/curriculum/prepareViewStudentCurriculumChooseStudent.jsp"/>
 	</definition>
 	<definition name="df.page.showStudentCurricularPlans" extends="definition.coordinator.two-column.extra-menu.student">
@@ -125,6 +125,9 @@
 		<put name="body" value="/student/notAuthorized_bd.jsp" />
 	</definition>
 	<definition name="df.page.showStudentCurriculum" extends="definition.coordinator.two-column.extra-menu.student" >
+		<put name="body" value="/student/curriculum/displayStudentCurriculum_bd.jsp" />
+	</definition>
+	<definition name="df.page.showStudentCurriculumForCoordinator" extends="definition.coordinator.two-column" >
 		<put name="body" value="/student/curriculum/displayStudentCurriculum_bd.jsp" />
 	</definition>
 

@@ -1,5 +1,6 @@
 package ServidorPersistente.OJB;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
@@ -67,6 +68,14 @@ public class ExecutionYearOJB extends PersistentObjectOJB implements IPersistent
         }
     }
 
+    public List readExecutionYearsInPeriod(Date start, Date end) throws ExcepcaoPersistencia{
+        Criteria criteria = new Criteria();
+
+        criteria.addLessThan("beginDate", end);
+        criteria.addGreaterThan("endDate", start);
+        return queryList(ExecutionYear.class, criteria);        
+    }
+    
     public IExecutionYear readCurrentExecutionYear() throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("state", PeriodState.CURRENT);

@@ -55,6 +55,7 @@
 <br />
 <html:hidden property="method" value="getExecutionCourses"/>
 <html:hidden property="page" value="1"/>
+<html:hidden property="degreeCurricularPlanID"/>
 <html:submit styleClass="inputbutton">
 <bean:message key="label.choose"/>
 </html:submit>

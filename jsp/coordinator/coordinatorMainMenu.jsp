@@ -91,7 +91,7 @@
 		<br /><br />
 		<ul>
 			<li>
-				<html:link page="<%= "/executionCoursesInformation.do?method=prepareChoice&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
+				<html:link page="<%= "/executionCoursesInformation.do?method=prepareChoiceForCoordinator&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 				<bean:message key="link.coordinator.executionCoursesInformation"/></html:link>
 				<br/>
 				<br/>
@@ -111,12 +111,22 @@
 				<br/>
 				<br/>
 			</li>
+
 			<li>
+				<html:link page="<%= "/viewStudentCurriculum.do?method=prepareView&amp;executionDegreeId=" + executionDegreeID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
+				    <bean:message key="label.coordinator.studentInformation"/>
+				    <br/>
+					<br/>
+				</html:link>
+				
+				<%-- OLD REDIRECTION 			
 				<html:link page="<%= "/studentEnrollementSection.do?executionDegreeId=" + executionDegreeID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">							
 					<bean:message key="label.coordinator.studentInformation"/>
 				</html:link>
 				<br/>
 				<br/>
+				--%>
+				
 			</li>
 			
 		</ul>

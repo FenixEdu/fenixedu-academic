@@ -2,13 +2,18 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<h2><bean:message key="title.student.information"/></h2>
+
 <html:errors/>
+<h2><bean:message key="title.student.information"/></h2>
 <html:form action="/viewCurriculum" focus="studentNumber">
 	<html:hidden property="method" value="getStudentCP"/>
 	<html:hidden property="page" value="1"/>
+	
 	<logic:present name="executionDegreeId">
 		<html:hidden property="executionDegreeId" value="<%=pageContext.findAttribute("executionDegreeId").toString()%>"/>
+	</logic:present>
+	<logic:present name="degreeCurricularPlanID">
+		<html:hidden property="degreeCurricularPlanID" value="<%=pageContext.findAttribute("degreeCurricularPlanID").toString()%>"/>
 	</logic:present>
 	<table>
 		<tr>

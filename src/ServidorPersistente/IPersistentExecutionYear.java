@@ -1,5 +1,6 @@
 package ServidorPersistente;
 
+import java.util.Date;
 import java.util.List;
 
 import Dominio.IExecutionYear;
@@ -40,4 +41,6 @@ public interface IPersistentExecutionYear extends IPersistentObject {
     public IExecutionYear readCurrentExecutionYear() throws ExcepcaoPersistencia;
 
     public List readOpenExecutionYears() throws ExcepcaoPersistencia;
+    
+    public List readExecutionYearsInPeriod(Date start, Date end) throws ExcepcaoPersistencia;
 }

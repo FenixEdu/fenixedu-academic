@@ -53,6 +53,9 @@ public class StudentsWithAttendsByCurricularCourseListAction extends
             //ok, we don't want to view a shift's student list
         }
         
+        Integer degreeCurricularPlanID = (Integer) formBean.get("degreeCurricularPlanID");
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        
         Integer checkedCoursesIds[] = (Integer[]) formBean.get("coursesIDs");
         enrollmentType = (String[]) formBean.get("enrollmentType");
         Integer checkedShiftIds[] = (Integer[]) formBean.get("shiftIDs");
@@ -157,6 +160,9 @@ public class StudentsWithAttendsByCurricularCourseListAction extends
         
         DynaActionForm formBean = (DynaActionForm)form;
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        
+        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         
         // all the information, no filtering applied
         Object args[] = { executionCourseID, null, null, null };

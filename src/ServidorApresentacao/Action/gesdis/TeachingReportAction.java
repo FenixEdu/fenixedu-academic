@@ -170,6 +170,8 @@ public class TeachingReportAction extends DispatchAction {
         setSiteViewToRequest(request, siteView, mapping);
         List infoCoursesHistoric = readCoursesHistoric(mapping, form, request);
         setInfoCoursesHistoric(request, infoCoursesHistoric, mapping);
+        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
         return mapping.findForward("successfull-read");
     }
 

@@ -40,6 +40,8 @@ public class ViewCourseInformationAction extends FenixAction {
         ActionErrors errors = new ActionErrors();
         IUserView userView = SessionUtils.getUserView(request);
         String executionCourseId = request.getParameter("executionCourseId");
+        Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 
         SiteView siteView = null;
         Object[] args = { new Integer(executionCourseId) };

@@ -79,6 +79,7 @@ function cleanSelect(checkboxes) {
 <html:form action="/studentsByCurricularCourse.do" method="post">
 <html:hidden property="objectCode"/>
 <html:hidden property="method" value="readStudents"/>
+<html:hidden property="degreeCurricularPlanID" />
 
 
 <table width="100%">

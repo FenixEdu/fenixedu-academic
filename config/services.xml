@@ -2525,6 +2525,13 @@
         <filterChains/>
     </service>
     <service>
+        <name>ReadExecutionYearsByDegreeCurricularPlanID</name>
+        <implementationClass>ServidorAplicacao.Servico.commons.ReadExecutionYearsByDegreeCurricularPlanID</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains/>
+    </service>
+    <service>
         <name>ReadExecutionYear</name>
         <implementationClass>ServidorAplicacao.Servico.commons.ReadExecutionYear</implementationClass>
         <description/>
@@ -2565,6 +2572,13 @@
 	<service>
         <name>ReadExecutionPeriods</name>
         <implementationClass>ServidorAplicacao.Servico.commons.ReadExecutionPeriods</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains/>
+    </service>
+	<service>
+        <name>ReadExecutionPeriodsByDegreeCurricularPlan</name>
+        <implementationClass>ServidorAplicacao.Servico.commons.ReadExecutionPeriodsByDegreeCurricularPlan</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains/>
@@ -6160,7 +6174,7 @@
             ServidorAplicacao.Servico.enrollment.ShowAvailableCurricularCourses</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
-            <chain name="EnrollmentAuthorization"/>
+            <chain name="EnrollmentOrCoordinatorAuthorization"/>
         </filterChains>
     </service>
     <service>
