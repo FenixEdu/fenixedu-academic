@@ -674,7 +674,7 @@
 
 
     <target name="load-data"
-    		depends="create-tables"
+    		depends="create-tables, replace-tokens"
             description="Carrega os dados nas tabelas">
         <sql
             driver="com.mysql.jdbc.Driver"
@@ -683,7 +683,7 @@
             password="${db.pass}"
             encoding="${encoding}">
 	        <fileset dir="${sql}">
-			 <include name="middleware/PopulateTables.sql" />
+			 <include name="middleware/PopulateTables_generated.sql" />
   			</fileset>
             <classpath>
                 <fileset dir="${lib}">
@@ -691,6 +691,7 @@
                 </fileset>
             </classpath>
         </sql>
+
     </target>
 
 	
@@ -788,8 +789,7 @@
     <target name="load-new-ID-Students"
     		depends="load-data"
             description="Carrega os Alunos com novos BI's para a Tabela MW_ALUNO">
-        <sql
-            driver="com.mysql.jdbc.Driver"
+        <sql driver="com.mysql.jdbc.Driver"
             url="jdbc:mysql://localhost/${db.name}"
             userid="${db.user}"
             password="${db.pass}"
@@ -828,34 +828,29 @@
 	</target>
 
 
-
-
 	<target name="update-students"
 	        depends="compile-proj, update-students-with-new-ID, update-existing-students, create-new-students">
 	</target>
-
-
-
 
     <target name="load-2003-enrolments"
     		depends="load-data"
             description="Carrega as inscricoes de 2003 para a Tabela MW_ENROLMENT">
 		<sequential>
-	        <sql
-	            driver="com.mysql.jdbc.Driver"
-	            url="jdbc:mysql://localhost/${db.name}"
-	            userid="${db.user}"
-	            password="${db.pass}"
-	            encoding="${encoding}">
-		        <fileset dir="${sql}">
-				 <include name="middleware/Load2003Enrolments.sql" />
-	  			</fileset>
-	            <classpath>
-	                <fileset dir="${lib}">
-	                    <include name="**/*.jar"/>
-	                </fileset>
-	            </classpath>
-	        </sql>
+        <sql
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost/${db.name}"
+            userid="${db.user}"
+            password="${db.pass}"
+            encoding="${encoding}">
+	        <fileset dir="${sql}">
+			 <include name="middleware/Load2003Enrolments.sql" />
+  			</fileset>
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </sql>
         
 	        <sql
 	            driver="com.mysql.jdbc.Driver"
@@ -877,9 +872,17 @@
         </sequential>
     </target>
 	
-	
-	
-	
+	<target name="replace-tokens">
+        <delete file="${sql}/middleware/PopulateTables_generated.sql" />
+		<copy file="${sql}/middleware/PopulateTables.sql" toFile="${sql}/middleware/PopulateTables_generated.sql" />		
+		<replace dir="${sql}/middleware"	propertyFile="middleware.properties">
+	    	<include name="PopulateTables_generated.sql"/>
+		    <replacefilter token="@load.data.infile.root@" property="load.data.infile.root"/>
+    	</replace>
+	</target>
+
+
+
 	<target name="update-students-enrolments"
 	        depends="compile-proj, load-2003-enrolments">
 		<java classname="middleware.studentMigration.UpdateStudentEnrolments"
@@ -898,8 +901,5 @@
 	        </classpath>
 		</java>
 	</target>
-
-
-
 	
 </project>
