@@ -2,8 +2,9 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import ="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
+<%@ page import ="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<%@ page import="ServidorApresentacao.TagLib.sop.v3.TimeTableType" %>
 
 <br /> 
 <logic:present name="<%=SessionConstants.ALL_INFO_VIEW_CLASS_SCHEDULE %>" scope="request">
@@ -27,7 +28,7 @@
 		<h2><bean:message key="title.class.timetable" /><bean:write name="viewClassSchedule" property="infoClass.nome" /></h2>
 	   	<br/>
 	   	<bean:define id="lessons" name="viewClassSchedule" property="classLessons"/>
-		<app:gerarHorario name="lessons"/>
+		<div align="center"><app:gerarHorario name="lessons" type="<%= TimeTableType.SOP_ROOM_TIMETABLE %>"/></div>
 		<br style="page-break-before:always;" />
 	</logic:iterate>
 </logic:present>

@@ -31,28 +31,29 @@ public class ViewAllRoomsSchedulesAction extends Action {
 
 		HttpSession session = request.getSession(false);
 		if (session != null) {
-//			GestorServicos gestor = GestorServicos.manager();
-//			IUserView userView =
-//				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-//
-//			InfoExecutionPeriod infoExecutionPeriod = setExecutionContext(request);
-//
-//			Object[] args =	{ infoExecutionPeriod };
-//			List infoViewAllExamsList =
-//				(List) gestor.executar(
-//					userView,"ReadExamsSortedByExecutionDegreeAndCurricularYear",	args);
-//
-//
-//
-//			if (infoViewAllExamsList != null
-//				&& infoViewAllExamsList.isEmpty()) {
-//				request.removeAttribute(SessionConstants.ALL_INFO_EXAMS_KEY);
-//			} else {
-//				request.setAttribute(
-//					SessionConstants.ALL_INFO_EXAMS_KEY,
-//					infoViewAllExamsList);
-//			}
-//
+			GestorServicos gestor = GestorServicos.manager();
+			IUserView userView =
+				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
+			InfoExecutionPeriod infoExecutionPeriod = setExecutionContext(request);
+
+			Object[] args =	{ infoExecutionPeriod };
+			List infoViewClassScheduleList =
+				(List) gestor.executar(
+					userView,"ReadAllRoomsLessons",	args);
+
+			if (infoViewClassScheduleList != null
+				&& infoViewClassScheduleList.isEmpty()) {
+				request.removeAttribute(SessionConstants.ALL_INFO_VIEW_ROOM_SCHEDULE);
+			} else {
+				request.setAttribute(
+					SessionConstants.ALL_INFO_VIEW_ROOM_SCHEDULE,
+					infoViewClassScheduleList);
+				request.setAttribute(
+					SessionConstants.INFO_EXECUTION_PERIOD_KEY,
+					infoExecutionPeriod);
+			}
+
 			return mapping.findForward("Sucess");
 		} else
 			throw new Exception();

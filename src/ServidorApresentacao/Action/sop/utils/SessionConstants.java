@@ -205,7 +205,7 @@ public abstract class SessionConstants {
 	//    SOP Constants - For Timetables Management
 	// -------------------------------------------------------------------------------
 	public static final String ALL_INFO_VIEW_CLASS_SCHEDULE = "ALL_INFO_VIEW_CLASS_SCHEDULE";
-
+	public static final String ALL_INFO_VIEW_ROOM_SCHEDULE = "ALL_INFO_VIEW_ROOM_SCHEDULE";
 
 
 
