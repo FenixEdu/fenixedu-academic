@@ -1,9 +1,57 @@
-# MySQL-Front 3.1  (Build 14.6)
+#
+# Table structure for table OLD_INQUIRIES_COURSES_RES
+#
 
+DROP TABLE IF EXISTS `OLD_INQUIRIES_COURSES_RES`;
 
-# Host: localhost    Database: ciapl
-# ------------------------------------------------------
-# Server version 4.0.21-nt
+CREATE TABLE `OLD_INQUIRIES_COURSES_RES` (
+  `ID_INTERNAL` int(4) NOT NULL auto_increment,
+  `INQUIRY_ID` int(4) NOT NULL default '0',
+  `GEP_EXECUTION_YEAR` int(4) NOT NULL default '0',
+  `SEMESTER` int(1) NOT NULL default '0',
+  `KEY_EXECUTION_PERIOD` int(4) NOT NULL default '0',
+  `KEY_DEGREE` int(2) NOT NULL default '0',
+  `GEP_COURSE_ID` int(4) NOT NULL default '0',
+  `COURSE_CODE` varchar(50) default NULL,
+  `GEP_COURSE_NAME` varchar(100) default NULL,
+  `CURRICULAR_YEAR` int(1) NOT NULL default '0',
+  `NUMBER_ANSWERS` int(4) default NULL,
+  `NUMBER_ENROLLMENTS` double default NULL,
+  `NUMBER_APPROVED` double default NULL,
+  `NUMBER_EVALUATED` double default NULL,
+  `REPRESENTATION_QUOTA` double default NULL,
+  `FIRST_ENROLLMENT` int(4) default NULL,
+  `AVERAGE_2_2` double default NULL,
+  `DEVIATION_2_2` double default NULL,
+  `TOLERANCE_2_2` double default NULL,
+  `N_ANSWERS_2_2` int(4) default NULL,
+  `AVERAGE_2_3` double default NULL,
+  `DEVIATION_2_3` double default NULL,
+  `TOLERANCE_2_3` double default NULL,
+  `N_ANSWERS_2_3` int(4) default NULL,
+  `AVERAGE_2_4` double default NULL,
+  `DEVIATION_2_4` double default NULL,
+  `TOLERANCE_2_4` double default NULL,
+  `N_ANSWERS_2_4` int(4) default NULL,
+  `AVERAGE_2_5` double default NULL,
+  `DEVIATION_2_5` double default NULL,
+  `TOLERANCE_2_5` double default NULL,
+  `N_ANSWERS_2_5_NUMBER` int(4) default NULL,
+  `N_ANSWERS_2_5_TEXT` int(4) default NULL,
+  `AVERAGE_2_6` double default NULL,
+  `DEVIATION_2_6` double default NULL,
+  `TOLERANCE_2_6` double default NULL,
+  `N_ANSWERS_2_6` int(4) default NULL,
+  `AVERAGE_2_7` varchar(255) default NULL,
+  `N_ANSWERS_2_7` int(4) default NULL,
+  `AVERAGE_2_8` double default NULL,
+  `DEVIATION_2_8` double default NULL,
+  `TOLERANCE_2_8` double default NULL,
+  `N_ANSWERS_2_8` int(4) default NULL,
+  PRIMARY KEY  (`ID_INTERNAL`),
+  UNIQUE KEY `U1` (`KEY_EXECUTION_PERIOD`,`KEY_DEGREE`,`COURSE_CODE`)
+) TYPE=InnoDB;
+
 
 #
 # Table structure for table OLD_INQUIRIES_SUMMARY
@@ -24,7 +72,6 @@ CREATE TABLE `OLD_INQUIRIES_SUMMARY` (
   `CURRICULAR_YEAR` int(1) NOT NULL default '0',
   `REPRESENTATION_QUOTA` double default NULL,
   `COURSE_CODE` varchar(50) default NULL,
-  `KEY_CURRICULAR_COURSE` int(4) default NULL,
   `GEP_COURSE_ID` int(4) NOT NULL default '0',
   `GEP_COURSE_NAME` varchar(100) default NULL,
   `NUMBER_ENROLLMENTS` int(4) default NULL,
@@ -76,12 +123,12 @@ CREATE TABLE `OLD_INQUIRIES_TEACHERS_RES` (
   `CURRICULAR_YEAR` int(1) NOT NULL default '0',
   `GEP_COURSE_ID` int(4) NOT NULL default '0',
   `COURSE_CODE` varchar(50) default NULL,
-  `KEY_CURRICULAR_COURSE` int(4) default NULL,
   `GEP_COURSE_NAME` varchar(100) default NULL,
   `CLASS_TYPE` varchar(10) default NULL,
   `CLASS_TYPE_LONG` varchar(50) default NULL,
   `TEACHER_NUMBER` int(4) NOT NULL default '0',
   `KEY_TEACHER` int(4) default NULL,
+  `KEY_RESPONSIBLE_TEACHER` int(4) default NULL,
   `ACTIVE` varchar(50) default NULL,
   `TEACHER_NAME` varchar(255) default NULL,
   `CATEGORY` varchar(255) default NULL,
@@ -127,4 +174,5 @@ CREATE TABLE `OLD_INQUIRIES_TEACHERS_RES` (
   PRIMARY KEY  (`ID_INTERNAL`),
   UNIQUE KEY `U1` (`KEY_EXECUTION_PERIOD`,`KEY_DEGREE`,`COURSE_CODE`,`TEACHER_NUMBER`,`CLASS_TYPE`)
 ) TYPE=InnoDB;
+
 

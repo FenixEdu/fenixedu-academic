@@ -28,7 +28,7 @@ public class OldInquiriesSummaryOJB extends PersistentObjectOJB implements
     
     public List readByDegreeIdAndExecutionPeriod(Integer degreeID, Integer executionPeriodID) throws ExcepcaoPersistencia {
     	Criteria criteria = new Criteria();
-    	criteria.addEqualTo("degreeKey", degreeID);
+    	criteria.addEqualTo("keyDegree", degreeID);
     	criteria.addEqualTo("keyExecutionPeriod", executionPeriodID);
     	
     	return queryList(OldInquiriesSummary.class, criteria);
@@ -36,7 +36,7 @@ public class OldInquiriesSummaryOJB extends PersistentObjectOJB implements
 
     public List readByDegreeId(Integer degreeID) throws ExcepcaoPersistencia {
     	Criteria criteria = new Criteria();
-    	criteria.addEqualTo("degreeKey", degreeID);
+    	criteria.addEqualTo("keyDegree", degreeID);
 
     	return queryList(OldInquiriesSummary.class, criteria);
     }

@@ -56,7 +56,7 @@ public class ReadOldIquiriesSummaryByDegreeID implements IServico{
                         iois.copyFromDomain((IOldInquiriesSummary) oldInquiriesSummary);
 
                     } catch (Exception ex) {
-                    	//return iois;
+                    	ex.printStackTrace();
                     }
                     
                     //TODO: DEBUG

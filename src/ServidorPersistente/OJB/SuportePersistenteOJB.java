@@ -58,6 +58,7 @@ import ServidorPersistente.OJB.gratuity.masterDegree.SibsPaymentFileEntryOJB;
 import ServidorPersistente.OJB.gratuity.masterDegree.SibsPaymentFileOJB;
 import ServidorPersistente.OJB.guide.ReimbursementGuideEntryOJB;
 import ServidorPersistente.OJB.guide.ReimbursementGuideOJB;
+import ServidorPersistente.OJB.inquiries.OldInquiriesCoursesResOJB;
 import ServidorPersistente.OJB.inquiries.OldInquiriesSummaryOJB;
 import ServidorPersistente.OJB.inquiries.OldInquiriesTeachersResOJB;
 import ServidorPersistente.OJB.log.EnrolmentLogOJB;
@@ -129,6 +130,7 @@ import ServidorPersistente.gratuity.masterDegree.IPersistentSibsPaymentFile;
 import ServidorPersistente.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
 import ServidorPersistente.guide.IPersistentReimbursementGuide;
 import ServidorPersistente.guide.IPersistentReimbursementGuideEntry;
+import ServidorPersistente.inquiries.IPersistentOldInquiriesCoursesRes;
 import ServidorPersistente.inquiries.IPersistentOldInquiriesSummary;
 import ServidorPersistente.inquiries.IPersistentOldInquiriesTeachersRes;
 import ServidorPersistente.managementAssiduousness.IPersistentCostCenter;
@@ -1275,6 +1277,9 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	}
 	public IPersistentOldInquiriesTeachersRes getIPersistentOldInquiriesTeachersRes() {
 	    return new OldInquiriesTeachersResOJB();
+	}
+	public IPersistentOldInquiriesCoursesRes getIPersistentOldInquiriesCoursesRes() {
+	    return new OldInquiriesCoursesResOJB();
 	}
 	//
     public IPersistentPublicationTeacher getIPersistentPublicationTeacher(){

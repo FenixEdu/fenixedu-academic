@@ -97,7 +97,7 @@
 				<td class="listClasses">
 					<logic:iterate id="oldInquirieRes" name="oldInquiriesTeachersResList" type="DataBeans.inquiries.InfoOldInquiriesTeachersRes">
 						&nbsp;
-						<html:link page="/viewOldInquiriesTeachersResults.do?method=viewResults"  paramId="oldInquiryId" paramName="oldInquirieRes" paramProperty="idInternal">
+						<html:link page="/viewOldInquiriesTeachersResults.do?method=viewResults"  paramId="oldInquiryTeacherId" paramName="oldInquirieRes" paramProperty="idInternal">
 							<bean:write name="oldInquirieRes" property="classType"/>
 						</html:link>
 						&nbsp;

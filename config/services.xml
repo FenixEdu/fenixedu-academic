@@ -8034,6 +8034,17 @@
 			<chain name="TeacherAuthorization"/>
 		</filterChains>
 	</service>
+	<service>
+		<name>ReadOldInquiryCoursesResByExecutionPeriodAndDegreeIdAndCourseCode</name>
+		<implementationClass> 
+            ServidorAplicacao.Servico.course.inquiries.ReadOldInquiryCoursesResByExecutionPeriodAndDegreeIdAndCourseCode
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="TeacherAuthorization"/>
+		</filterChains>
+	</service>
 	
 	<!-- =============================================================================================== -->
 	

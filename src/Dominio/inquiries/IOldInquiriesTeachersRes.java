@@ -306,26 +306,6 @@ public interface IOldInquiriesTeachersRes extends IDomainObject {
     public void setGepCourseName(String gepCourseName);
 
     /**
-     * @return Returns the curricularCourse.
-     */
-    public ICurricularCourse getCurricularCourse();
-    
-    /**
-     * @param curricularCourse The curricularCourse to set.
-     */
-    public void setCurricularCourse(ICurricularCourse curricularCourse);
-    
-    /**
-     * @return Returns the keyCurricularCourse.
-     */
-    public Integer getKeyCurricularCourse();
-
-    /**
-     * @param keyCurricularCourse The keyCurricularCourse to set.
-     */
-    public void setKeyCurricularCourse(Integer keyCurricularCourse);
-
-    /**
      * @return Returns the gepExecutionYear.
      */
     public Integer getGepExecutionYear();

@@ -5,7 +5,6 @@
 package Dominio.inquiries;
 
 import Dominio.DomainObject;
-import Dominio.ICurricularCourse;
 import Dominio.ICurso;
 import Dominio.IExecutionPeriod;
 import Dominio.ITeacher;
@@ -32,8 +31,6 @@ public class OldInquiriesTeachersRes extends DomainObject implements IOldInquiri
 	private Integer gepCourseId;
 	private String courseCode;
 	private String gepCourseName;
-	private Integer keyCurricularCourse;
-	private ICurricularCourse curricularCourse;
 
 	private String classType;
 	private String classTypeLong;
@@ -443,30 +440,6 @@ public class OldInquiriesTeachersRes extends DomainObject implements IOldInquiri
      */
     public void setGepCourseName(String gepCourseName) {
         this.gepCourseName = gepCourseName;
-    }
-    /**
-     * @return Returns the curricularCourse.
-     */
-    public ICurricularCourse getCurricularCourse() {
-        return curricularCourse;
-    }
-    /**
-     * @param curricularCourse The curricularCourse to set.
-     */
-    public void setCurricularCourse(ICurricularCourse curricularCourse) {
-        this.curricularCourse = curricularCourse;
-    }
-    /**
-     * @return Returns the keyCurricularCourse.
-     */
-    public Integer getKeyCurricularCourse() {
-        return keyCurricularCourse;
-    }
-    /**
-     * @param keyCurricularCourse The keyCurricularCourse to set.
-     */
-    public void setKeyCurricularCourse(Integer keyCurricularCourse) {
-        this.keyCurricularCourse = keyCurricularCourse;
     }
     /**
      * @return Returns the gepExecutionYear.

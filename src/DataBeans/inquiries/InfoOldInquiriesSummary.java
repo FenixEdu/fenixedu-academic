@@ -6,7 +6,7 @@ package DataBeans.inquiries;
 
 import java.lang.reflect.InvocationTargetException;
 
-import DataBeans.InfoDegreeInfo;
+import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoObject;
 import DataBeans.util.CopyUtils;
@@ -18,7 +18,7 @@ import Dominio.inquiries.IOldInquiriesSummary;
  */
 public class InfoOldInquiriesSummary extends InfoObject implements Comparable{
 
-    private Integer keyExecutionPeriod;
+	private Integer keyExecutionPeriod;
 	private InfoExecutionPeriod executionPeriod;
 	
 	private Integer inquiryId;
@@ -26,8 +26,8 @@ public class InfoOldInquiriesSummary extends InfoObject implements Comparable{
 	private Integer gepExecutionYear;
 	private Integer semester;
 	
-	private Integer degreeKey;
-	private InfoDegreeInfo degree;
+	private Integer keyDegree;
+	private InfoDegree degree;
 	
 	private String gepDegreeName;
 	private Integer curricularYear;
@@ -35,7 +35,7 @@ public class InfoOldInquiriesSummary extends InfoObject implements Comparable{
 	private Double averageAppreciationTeachers;
 	private Double averageAppreciationCourse;
 	private Double representationQuota;
-
+	
 	private String courseCode;
 	private Integer gepCourseId;
 	private String gepCourseName;
@@ -71,6 +71,8 @@ public class InfoOldInquiriesSummary extends InfoObject implements Comparable{
 	private Double average6_1;
 	private Double average6_2;
 	private Double average6_3;
+
+    
     /**
      * @return Returns the average2_2.
      */
@@ -154,18 +156,6 @@ public class InfoOldInquiriesSummary extends InfoObject implements Comparable{
      */
     public void setAverage2_7_numerical(Double average2_7_numerical) {
         this.average2_7_numerical = average2_7_numerical;
-    }
-    /**
-     * @return Returns the courseCode.
-     */
-    public String getCourseCode() {
-        return courseCode;
-    }
-    /**
-     * @param courseCode The courseCode to set.
-     */
-    public void setCourseCode(String courseCode) {
-        this.courseCode = courseCode;
     }
     /**
      * @return Returns the average2_8.
@@ -373,28 +363,40 @@ public class InfoOldInquiriesSummary extends InfoObject implements Comparable{
         this.averageAppreciationTeachers = averageAppreciationTeachers;
     }
     /**
+     * @return Returns the courseCode.
+     */
+    public String getCourseCode() {
+        return courseCode;
+    }
+    /**
+     * @param courseCode The courseCode to set.
+     */
+    public void setCourseCode(String courseCode) {
+        this.courseCode = courseCode;
+    }
+    /**
+     * @return Returns the curricularYear.
+     */
+    public Integer getCurricularYear() {
+        return curricularYear;
+    }
+    /**
+     * @param curricularYear The curricularYear to set.
+     */
+    public void setCurricularYear(Integer curricularYear) {
+        this.curricularYear = curricularYear;
+    }
+    /**
      * @return Returns the degree.
      */
-    public InfoDegreeInfo getDegree() {
+    public InfoDegree getDegree() {
         return degree;
     }
     /**
      * @param degree The degree to set.
      */
-    public void setDegree(InfoDegreeInfo degree) {
+    public void setDegree(InfoDegree degree) {
         this.degree = degree;
-    }
-    /**
-     * @return Returns the degreeKey.
-     */
-    public Integer getDegreeKey() {
-        return degreeKey;
-    }
-    /**
-     * @param degreeKey The degreeKey to set.
-     */
-    public void setDegreeKey(Integer degreeKey) {
-        this.degreeKey = degreeKey;
     }
     /**
      * @return Returns the executionPeriod.
@@ -481,16 +483,16 @@ public class InfoOldInquiriesSummary extends InfoObject implements Comparable{
         this.inquiryId = inquiryId;
     }
     /**
-     * @return Returns the curricularYear.
+     * @return Returns the keyDegree.
      */
-    public Integer getCurricularYear() {
-        return curricularYear;
+    public Integer getKeyDegree() {
+        return keyDegree;
     }
     /**
-     * @param curricularYear The curricularYear to set.
+     * @param keyDegree The keyDegree to set.
      */
-    public void setCurricularYear(Integer keyCurricularYear) {
-        this.curricularYear = keyCurricularYear;
+    public void setKeyDegree(Integer keyDegree) {
+        this.keyDegree = keyDegree;
     }
     /**
      * @return Returns the keyExecutionPeriod.
@@ -588,8 +590,6 @@ public class InfoOldInquiriesSummary extends InfoObject implements Comparable{
     public void setSemester(Integer semester) {
         this.semester = semester;
     }
-    
-    
     public void copyFromDomain(IOldInquiriesSummary oldInquiresSummary) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         if (oldInquiresSummary != null) {
             super.copyFromDomain(oldInquiresSummary);
@@ -597,7 +597,7 @@ public class InfoOldInquiriesSummary extends InfoObject implements Comparable{
         
         CopyUtils.copyPropertiesNullConvertion(this, oldInquiresSummary);
         this.setExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(oldInquiresSummary.getExecutionPeriod()));
-        this.setDegree(InfoDegreeInfo.newInfoFromDomain(oldInquiresSummary.getDegree()));
+        this.setDegree(InfoDegree.newInfoFromDomain(oldInquiresSummary.getDegree()));
         
     }
 

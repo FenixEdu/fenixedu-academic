@@ -25,6 +25,7 @@ import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoTeacher;
+import DataBeans.inquiries.InfoOldInquiriesCoursesRes;
 import DataBeans.inquiries.InfoOldInquiriesTeachersRes;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
@@ -123,17 +124,25 @@ public class ViewOldInquiriesTeachersResultsAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         
         IUserView userView = (IUserView) request.getSession().getAttribute(SessionConstants.U_VIEW);
-        Integer oldInquiryId = getIntegerFromRequest("oldInquiryId", request);
+        Integer oldInquiryTeacherId = getIntegerFromRequest("oldInquiryTeacherId", request);
         Integer executionPeriodId = getIntegerFromRequest("executionPeriodId", request);
         Integer degreeId = getIntegerFromRequest("degreeId", request);
         Integer curricularYear = getIntegerFromRequest("curricularYear", request);
         String courseCode = getStringFromRequest("courseCode", request);
         
         request.setAttribute("infoTeacher", request.getSession().getAttribute("info_teacher"));
-
-        if(oldInquiryId != null) {
         
-	        Object args[] = { oldInquiryId };
+        if((executionPeriodId != null) && (degreeId != null) && (courseCode != null)) {
+            Object args[] = { executionPeriodId, degreeId, courseCode };
+            InfoOldInquiriesCoursesRes ioicr = (InfoOldInquiriesCoursesRes) ServiceUtils.executeService(userView,
+                    "ReadOldInquiryCoursesResByExecutionPeriodAndDegreeIdAndCourseCode", args);
+            
+            request.setAttribute("oldInquiriesCoursesRes", ioicr);
+        }
+
+        if(oldInquiryTeacherId != null) {
+        
+	        Object args[] = { oldInquiryTeacherId };
 	        InfoOldInquiriesTeachersRes ioitr = (InfoOldInquiriesTeachersRes) ServiceUtils.executeService(userView,
 	                "ReadOldInquiryTeachersResById", args);
 	        

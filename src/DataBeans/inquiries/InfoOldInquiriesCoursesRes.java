@@ -1,29 +1,34 @@
 /*
- * Created on Nov 17, 2004
- *
+ * Created on Mar 8, 2005
+ * 
  */
-package Dominio.inquiries;
+package DataBeans.inquiries;
 
-import Dominio.DomainObject;
-import Dominio.IDegreeInfo;
-import Dominio.IExecutionPeriod;
+import java.lang.reflect.InvocationTargetException;
+
+import DataBeans.InfoDegreeInfo;
+import DataBeans.InfoExecutionPeriod;
+import DataBeans.InfoObject;
+import DataBeans.util.CopyUtils;
+import Dominio.inquiries.IOldInquiriesCoursesRes;
 
 /**
  * @author João Fialho & Rita Ferreira
- *
+ * 
  */
-public class OldInquiriesCoursesRes extends DomainObject implements IOldInquiriesCoursesRes {
-	
+public class InfoOldInquiriesCoursesRes extends InfoObject implements
+        Comparable {
+
 	private Integer inquiryId;
 	
 	private Integer gepExecutionYear;
 	private Integer semester;
 	
 	private Integer keyExecutionPeriod;
-	private IExecutionPeriod executionPeriod;
+	private InfoExecutionPeriod executionPeriod;
 	
 	private Integer keyDegree;
-	private IDegreeInfo degree;
+	private InfoDegreeInfo degree;
 	
 	private Integer gepCourseId;
 	private String courseCode;
@@ -196,13 +201,13 @@ public class OldInquiriesCoursesRes extends DomainObject implements IOldInquirie
     /**
      * @return Returns the degree.
      */
-    public IDegreeInfo getDegree() {
+    public InfoDegreeInfo getDegree() {
         return degree;
     }
     /**
      * @param degree The degree to set.
      */
-    public void setDegree(IDegreeInfo degree) {
+    public void setDegree(InfoDegreeInfo degree) {
         this.degree = degree;
     }
     /**
@@ -292,13 +297,13 @@ public class OldInquiriesCoursesRes extends DomainObject implements IOldInquirie
     /**
      * @return Returns the executionPeriod.
      */
-    public IExecutionPeriod getExecutionPeriod() {
+    public InfoExecutionPeriod getExecutionPeriod() {
         return executionPeriod;
     }
     /**
      * @param executionPeriod The executionPeriod to set.
      */
-    public void setExecutionPeriod(IExecutionPeriod executionPeriod) {
+    public void setExecutionPeriod(InfoExecutionPeriod executionPeriod) {
         this.executionPeriod = executionPeriod;
     }
     /**
@@ -601,4 +606,24 @@ public class OldInquiriesCoursesRes extends DomainObject implements IOldInquirie
     public void setTolerance2_8(Double tolerance2_8) {
         this.tolerance2_8 = tolerance2_8;
     }
+	/* (non-Javadoc)
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
+    public int compareTo(Object arg0) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+    
+    public void copyFromDomain(IOldInquiriesCoursesRes oldInquiriesCoursesRes) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+        if (oldInquiriesCoursesRes != null) {
+            super.copyFromDomain(oldInquiriesCoursesRes);
+        }
+        
+        CopyUtils.copyPropertiesNullConvertion(this, oldInquiriesCoursesRes);
+        this.setExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(oldInquiriesCoursesRes.getExecutionPeriod()));
+        this.setDegree(InfoDegreeInfo.newInfoFromDomain(oldInquiriesCoursesRes.getDegree()));
+        
+    }
+
+
 }

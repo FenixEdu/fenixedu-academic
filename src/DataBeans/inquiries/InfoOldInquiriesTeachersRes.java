@@ -6,7 +6,6 @@ package DataBeans.inquiries;
 
 import java.lang.reflect.InvocationTargetException;
 
-import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoObject;
@@ -37,8 +36,6 @@ public class InfoOldInquiriesTeachersRes extends InfoObject implements
 	private Integer gepCourseId;
 	private String courseCode;
 	private String gepCourseName;
-	private Integer keyCurricularCourse;
-	private InfoCurricularCourse curricularCourse;
 
 	private String classType;
 	private String classTypeLong;
@@ -450,30 +447,6 @@ public class InfoOldInquiriesTeachersRes extends InfoObject implements
         this.gepCourseName = gepCourseName;
     }
     /**
-     * @return Returns the curricularCourse.
-     */
-    public InfoCurricularCourse getCurricularCourse() {
-        return curricularCourse;
-    }
-    /**
-     * @param curricularCourse The curricularCourse to set.
-     */
-    public void setCurricularCourse(InfoCurricularCourse curricularCourse) {
-        this.curricularCourse = curricularCourse;
-    }
-    /**
-     * @return Returns the keyCurricularCourse.
-     */
-    public Integer getKeyCurricularCourse() {
-        return keyCurricularCourse;
-    }
-    /**
-     * @param keyCurricularCourse The keyCurricularCourse to set.
-     */
-    public void setKeyCurricularCourse(Integer keyCurricularCourse) {
-        this.keyCurricularCourse = keyCurricularCourse;
-    }
-    /**
      * @return Returns the gepExecutionYear.
      */
     public Integer getGepExecutionYear() {
@@ -829,7 +802,6 @@ public class InfoOldInquiriesTeachersRes extends InfoObject implements
             this.setExecutionPeriod(InfoExecutionPeriod.newInfoFromDomain(oldInquiresTeachersRes.getExecutionPeriod()));
             this.setDegree(InfoDegree.newInfoFromDomain(oldInquiresTeachersRes.getDegree()));
             this.setTeacher(InfoTeacher.newInfoFromDomain(oldInquiresTeachersRes.getTeacher()));
-            this.setCurricularCourse(InfoCurricularCourse.newInfoFromDomain(oldInquiresTeachersRes.getCurricularCourse()));
         }
     }
     
