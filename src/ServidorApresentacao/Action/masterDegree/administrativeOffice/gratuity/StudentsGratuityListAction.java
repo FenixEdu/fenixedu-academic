@@ -108,7 +108,7 @@ public class StudentsGratuityListAction extends DispatchAction
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		
+		System.out.println("-->aqui");
 		IUserView userView = SessionUtils.getUserView(request);
 		
 		DynaActionForm studentListForm = (DynaActionForm) actionForm;

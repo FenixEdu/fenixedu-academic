@@ -6,15 +6,20 @@
 
 <h2><bean:message key="link.masterDegree.administrativeOffice.gratuity.listStudents"/></h2>
 <span class="error"><html:errors/></span>
-<html:form action="/studentsGratuityList.do" >
+
+<html:form action="/studentsGratuityList" >
 <html:hidden property="method" value="prepareChooseDegree"/>
+<logic:present name="showNextSelects">
+	<html:hidden property="executionYear"/>
+	<html:hidden property="page" value="1"/>
+</logic:present>
 <table>
 		<tr>
 			<td>
 				<bean:message key="label.masterDegree.gratuity.executionYear"/>
 			</td>
 			<td>
-				<html:select property="executionYear" onchange="document.insertGratuityDataForm.method.value='prepareInsertGratuityDataChooseDegree';document.insertGratuityDataForm.submit();">
+				<html:select property="executionYear" onchange="document.studentsGratuityListForm.method.value='prepareChooseDegree';document.studentsGratuityListForm.submit();">
 					<html:option value="" key="label.manager.executionCourseManagement.select">
 						<bean:message key="label.manager.executionCourseManagement.select"/>
 					</html:option>

@@ -638,7 +638,7 @@
             <form-property name="paymentPhases" type="java.lang.String[]"/>
        </form-bean>
        
-       <form-bean name="studentGratuityListForm" 
+       <form-bean name="studentsGratuityListForm" 
 	  			 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
             <form-property name="executionYear" type="java.lang.String"/>
@@ -2154,7 +2154,7 @@
 	<action path="/studentsGratuityList"
 		type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.StudentsGratuityListAction"
 		parameter="method"
-		name="studentGratuityListForm"
+		name="studentsGratuityListForm"
 		scope="request"
 		input="/studentsGratuityList.do?method=chooseStudentList&amp;page=0"
 	>
