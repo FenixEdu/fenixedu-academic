@@ -14,7 +14,7 @@ import java.util.List;
 
 import Util.TipoSala;
 
-public class Sala implements ISala {
+public class Sala implements ISala, IDomainObject {
 	protected String _nome;
 	protected String _edificio;
 	protected Integer _piso;

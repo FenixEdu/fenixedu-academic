@@ -52,9 +52,6 @@ public class EditExamRooms implements IServico {
 	public InfoExam run(InfoExam infoExam, final List roomsForExam)
 		throws FenixServiceException {
 
-		//RemovalAwareCollection
-		//ManageableCollection
-
 		ServiceSetUp();
 
 		List finalRoomList = new ArrayList();
@@ -68,10 +65,6 @@ public class EditExamRooms implements IServico {
 
 			// Remove all elements
 			exam.getAssociatedRooms().clear();
-//			List tempRooms = exam.getAssociatedRooms();
-//			for (int i = 0; i < tempRooms.size(); i++) {
-//				exam.getAssociatedRooms().remove(tempRooms.get(i));
-//			}
 			
 			// Add all elements
 			CollectionUtils.forAllDo(finalRoomList, new Closure() {
