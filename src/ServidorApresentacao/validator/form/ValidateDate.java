@@ -39,17 +39,26 @@ public class ValidateDate {
 		String sProperty2 = ValidatorUtil.getValueAsString(bean,field.getVarValue("month"));
 		String sProperty3 = ValidatorUtil.getValueAsString(bean,field.getVarValue("day"));
 		
+System.out.println("Estou aqui");
 
-		if ((valueString == null) || (sProperty2 == null) || (sProperty3 == null) ||
-			(valueString.length() == 0) || (sProperty2.length() == 0) || (sProperty3.length() == 0)){
-			errors.add(field.getKey(),Resources.getActionError(request, va, field));
+		if (((valueString == null) && (sProperty2 == null) && (sProperty3 == null)) ||
+			((valueString.length() == 0) && (sProperty2.length() == 0) && (sProperty3.length() == 0))){
+//			errors.add(field.getKey(),Resources.getActionError(request, va, field));
 			return true;
 		}
 
-		Integer year = new Integer(valueString);
-		Integer month = new Integer(sProperty2);
-		Integer day = new Integer(sProperty3);
-
+		Integer year = null;
+		Integer month = null;
+		Integer day = null;
+		
+		try {
+			year = new Integer(valueString);
+			month = new Integer(sProperty2);
+			day = new Integer(sProperty3);
+		} catch(NumberFormatException e){
+			errors.add(field.getKey(),Resources.getActionError(request, va, field));
+			return false;
+		}
 		
 		if (!GenericValidator.isBlankOrNull(valueString)) {
 			  if (!Data.validDate(day, month, year) || 
