@@ -71,9 +71,22 @@
     
     <!-- ========== Global Exception Definitions ============================== -->
     <global-exceptions>
-	    <exception type="ServidorAplicacao.Servico.ExcepcaoInexistente"
-	           key="ServidorAplicacao.Servico.ExcepcaoInexistente"
-	           path="/naoExistente.do"/>
+		<exception type="java.lang.Exception"
+			       key="java.lang.Exception"
+			       path="/naoExecutado.do"
+			       handler="ServidorApresentacao.config.FenixExceptionHandler"/>
+		<exception type="ServidorAplicacao.NotAuthorizedException"
+			       key="ServidorAplicacao.NotAuthorizedException"
+			       path="/naoAutorizado.do"
+			       />
+		<exception type="ServidorAplicacao.FenixServiceException"
+		  	       key="ServidorAplicacao.FenixServiceException"
+		  	       path="/naoExecutado.do"
+		  	       handler="ServidorApresentacao.config.FenixExceptionHandler" />
+		<exception type="ServidorAplicacao.Servico.ExcepcaoInexistente"
+			       key="ServidorAplicacao.Servico.ExcepcaoInexistente"
+			       path="/naoExistente.do"
+			       handler="ServidorApresentacao.config.FenixExceptionHandler" />
     </global-exceptions>
     
     <!-- ========== Global Forward Definitions =============================== -->
@@ -88,7 +101,8 @@
       <!-- page fronting actions -->
       <action path="/index" forward="/autenticacaoCand.jsp"/>
       <action path="/authentication" forward="/autenticacaoCand.jsp"/>
-      <action path="/naoExistente" forward="/naoExistente.jsp"/>
+      <action path="/naoExecutado" forward="/error.jsp"/>
+      
 
       <!-- action definition -->
       <action name="authenticationForm"

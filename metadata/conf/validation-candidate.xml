@@ -123,9 +123,11 @@
       </field>
 	
       <field property="birthDay" depends="required,integer,range">
+        <msg name="range" key="errors.invalid.date.format"/>
         <arg0 key="candidate.day"/>
-        <arg1 key="${var:min}" resource="false"/>
-        <arg2 key="${var:max}" resource="false"/>        
+        <arg1 key="candidate.birth"/>
+        <arg2 key="${var:min}" resource="false"/>
+        <arg3 key="${var:max}" resource="false"/>        
         <var>
           <var-name>min</var-name>
           <var-value>1</var-value>
@@ -137,9 +139,11 @@
       </field>
 
       <field property="birthMonth" depends="required,integer,range">
+        <msg name="range" key="errors.invalid.date.format"/>
         <arg0 key="candidate.month"/> 
-        <arg1 key="Janeiro" resource="false"/>
-        <arg2 key="Dezembro" resource="false"/>        
+        <arg1 key="candidate.birth"/>
+        <arg2 key="Janeiro" resource="false"/>
+        <arg3 key="Dezembro" resource="false"/>        
         <var>
           <var-name>min</var-name>
           <var-value>0</var-value>
@@ -151,9 +155,11 @@
       </field>
 
       <field property="birthYear" depends="required,integer,range">
+        <msg name="range" key="errors.invalid.date.format"/>
         <arg0 key="candidate.year"/>
-        <arg1 key="${var:min}" resource="false"/>
-        <arg2 key="${var:max}" resource="false"/>        
+        <arg1 key="candidate.birth"/>
+        <arg2 key="${var:min}" resource="false"/>
+        <arg3 key="${var:max}" resource="false"/>        
         <var>
           <var-name>min</var-name>
           <var-value>1900</var-value>
@@ -165,9 +171,11 @@
       </field>
 
       <field property="idIssueDateDay" depends="required,integer,range">
+        <msg name="range" key="errors.invalid.date.format"/>
         <arg0 key="candidate.day"/>
-        <arg1 key="${var:min}" resource="false"/>
-        <arg2 key="${var:max}" resource="false"/>        
+        <arg1 key="candidate.identificationDocumentIssueDate"/>
+        <arg2 key="${var:min}" resource="false"/>
+        <arg3 key="${var:max}" resource="false"/>        
         <var>
           <var-name>min</var-name>
           <var-value>1</var-value>
@@ -179,9 +187,11 @@
       </field>
 
       <field property="idIssueDateMonth" depends="required,integer,range">
+        <msg name="range" key="errors.invalid.date.format"/>
         <arg0 key="candidate.month"/>
-        <arg1 key="Janeiro" resource="false"/>
-        <arg2 key="Dezembro" resource="false"/>        
+        <arg1 key="candidate.identificationDocumentIssueDate"/>
+        <arg2 key="Janeiro" resource="false"/>
+        <arg3 key="Dezembro" resource="false"/>        
         <var>
           <var-name>min</var-name>
           <var-value>0</var-value>
@@ -193,9 +203,11 @@
       </field>
 
       <field property="idIssueDateYear" depends="required,integer,range">
+        <msg name="range" key="errors.invalid.date.format"/>
         <arg0 key="candidate.year"/>
-        <arg1 key="${var:min}" resource="false"/>
-        <arg2 key="${var:max}" resource="false"/>        
+        <arg1 key="candidate.identificationDocumentIssueDate"/>
+        <arg2 key="${var:min}" resource="false"/>
+        <arg3 key="${var:max}" resource="false"/>        
         <var>
           <var-name>min</var-name>
           <var-value>1900</var-value>
@@ -218,6 +230,16 @@
           <var-name>max</var-name>
           <var-value>20.0</var-value>
         </var>
+      </field>
+
+
+      <field property="postCode" depends="mask">
+        <msg name="mask" key="errors.invalid.zipCode"/>
+        <var>
+        	<var-name>mask</var-name>
+        	<var-value>^\d{4}(-\d{3})$</var-value>
+        </var>
+        
       </field>
 
 
