@@ -8,12 +8,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
+
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoTeacher;
 import DataBeans.teacher.credits.InfoShiftPercentage;
 import DataBeans.teacher.credits.InfoTeacherShiftPercentage;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
+import Dominio.IAula;
 import Dominio.IDisciplinaExecucao;
 import Dominio.ITeacherShiftPercentage;
 import Dominio.ITurno;
@@ -57,11 +61,6 @@ public class ReadTeacherExecutionCourseShiftsPercentage implements IServico {
 			IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
 			executionCourse.setIdInternal(infoExecutionCourse.getIdInternal());
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-//			IDisciplinaExecucaoPersistente executionCourseDAO =
-//				sp.getIDisciplinaExecucaoPersistente();
-
-//			IDisciplinaExecucao executionCourseFromBD =
-//				(IDisciplinaExecucao) executionCourseDAO.readByOId(executionCourse);
 
 			ITurno shiftExample = new Turno();
 			shiftExample.setDisciplinaExecucao(executionCourse);
@@ -102,11 +101,21 @@ public class ReadTeacherExecutionCourseShiftsPercentage implements IServico {
 					infoShiftPercentage.addInfoTeacherShiftPercentage(
 						infoTeacherShiftPercentage);
 				}
-
+				List infoLessons = (List) CollectionUtils.collect(shift.getAssociatedLessons(), new Transformer(){
+					
+						public Object transform(Object input) {
+							IAula lesson = (IAula) input;
+							return Cloner.copyILesson2InfoLesson(lesson);
+						}});
+				
+				
+				infoShiftPercentage.setInfoLessons(infoLessons);
+				
 				infoShiftPercentage.setAvailablePercentage(
 					new Double(availablePercentage));
 
 				infoShiftPercentageList.add(infoShiftPercentage);
+				
 			}
 
 		} catch (ExcepcaoPersistencia e) {
@@ -115,4 +124,5 @@ public class ReadTeacherExecutionCourseShiftsPercentage implements IServico {
 		}
 		return infoShiftPercentageList;
 	}
+	
 }
