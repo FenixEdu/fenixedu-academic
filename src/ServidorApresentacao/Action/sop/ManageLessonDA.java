@@ -192,13 +192,6 @@ public class ManageLessonDA
 				// change and the hour is contained within the original hour
 				InfoLesson infoLessonOld =
 					(InfoLesson) request.getAttribute(SessionConstants.LESSON);
-				if (contained(infoLessonOld, infoLesson)) {
-					emptyRoomsList.add(
-						0,
-						((InfoLesson) request
-							.getAttribute(SessionConstants.LESSON))
-							.getInfoSala());
-				}
 				manageLessonForm.set(
 					"nomeSala",
 					""
