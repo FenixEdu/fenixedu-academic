@@ -36,7 +36,11 @@ public class RequestWrapperFilter implements Filter
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException
 	{
+		// Do not delete. This is usefull for profileing.
+		//Profiler.getInstance();
+		//Object keyAction = Profiler.start("Action");
 		chain.doFilter(new FenixHttpServletRequestWrapper((HttpServletRequest) request), response);
+		//Profiler.stop(keyAction);
 	}
 	public class FenixHttpServletRequestWrapper extends HttpServletRequestWrapper
 	{
