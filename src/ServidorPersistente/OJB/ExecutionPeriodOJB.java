@@ -209,4 +209,14 @@ public class ExecutionPeriodOJB
 		return (IExecutionPeriod) queryObject(ExecutionPeriod.class, criteria);
 	}
 
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.IPersistentExecutionPeriod#readPublic()
+	 */
+	public List readPublic() throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addNotEqualTo("state", PeriodState.NOT_OPEN);
+		criteria.addGreaterThan("semester",new Integer(0));
+		return queryList(ExecutionPeriod.class, criteria);
+	}
+
 }

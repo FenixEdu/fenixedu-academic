@@ -16,6 +16,13 @@
         <form-property name="roomName" type="java.lang.String"/>
       </form-bean>
 	
+      <form-bean name="pagedIndexForm"
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                dynamic="true">
+        <form-property name="index" type="java.lang.Integer"/>
+        <form-property name="page" type="java.lang.Integer"/>
+      </form-bean>
+
 	  <!-- CONTEXTO -->
       <!-- Dynamic-FormBean para EscolherContexto -->
       <form-bean name="chooseSearchContextForm"
@@ -137,8 +144,8 @@
     
     <!-- ========== Global Forward Definitions =============================== -->
     <global-forwards type="org.apache.struts.action.ActionForward">
-       <forward name="index" path="/index.do" redirect="true"/>
-       <forward name="firstPage" path="/index.do"/>
+       <forward name="index" path="/index.do=prepare&amp;page=0" redirect="true"/>
+       <forward name="firstPage" path="/index.do=prepare&amp;page=0"/>
     </global-forwards>
     
     <!-- ========== Action Mapping Definitions =============================== -->
@@ -149,11 +156,24 @@
  	  <action path="/nonExistingObject" forward="/nonExistingError.jsp"/>
 	    <!-- page fronting actions -->
     	
-    	<action path="/index"
+
+	<action path="/index"
+			name="pagedIndexForm"
+			input="/index.do?method=prepare&amp;page=0"
+    		type="ServidorApresentacao.Action.publico.InitiateSessionDispatchAction"
+    		parameter="method"
+    		validate="true"
+    		scope="request"
+    		>
+  		<forward name="showForm" path="/index.jsp"/>
+  		<forward name="choose" path="/index.do?method=prepare&amp;page=0"/>
+	</action>
+	
+<!--    	<action path="/index"
       	      type="ServidorApresentacao.Action.publico.InitiateSessionAction">
       	  <forward name="Success" path="/index.jsp"/>
       </action>
-    	
+-->    	
     	
       <action parameter="method"
               path="/consultTimeTables"

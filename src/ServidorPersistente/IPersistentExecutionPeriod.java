@@ -68,4 +68,6 @@ public interface IPersistentExecutionPeriod extends IPersistentObject {
 		IExecutionYear year)
 		throws ExcepcaoPersistencia;
 
+	public List readPublic() throws ExcepcaoPersistencia;
+
 }

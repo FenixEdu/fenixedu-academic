@@ -35,18 +35,18 @@ public class StartFilter implements Filter {
 		ServletResponse response,
 		FilterChain chain)
 		throws IOException, ServletException {
-		
 
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 
 		ServletContext context = config.getServletContext();
-		
+
 		HttpSession session = httpRequest.getSession(true);
-		
-		
+
 		/*:FIXME: use other context constant (not SessionConstants.) */
-		session.setAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY, context.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY));
-				
+		if (session.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY) == null) {
+			session.setAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY,context.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY));
+		}
+
 		chain.doFilter(request, response);
 	}
 

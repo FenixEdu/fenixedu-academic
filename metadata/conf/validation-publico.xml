@@ -10,6 +10,13 @@
       </field>
     </form>
 
+	<!-- Validation for Paged Index Form -->
+    <form name="pagedIndexForm">
+      <field property="index" depends="required, integer" page="1">
+        <arg0 key="property.index"/>
+      </field>
+    </form>
+    
     <!-- Validation for Execution Course Form -->
     <form name="chooseExecutionCourseForm">
       <field property="objectCode" depends="required, integer">

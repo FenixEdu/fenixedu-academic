@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -15,10 +16,13 @@ import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoRoom;
+import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.TipoSala;
 
 /**
@@ -58,18 +62,24 @@ public class SelectRoomsFormAction extends FenixAction {
 			throw new FenixActionException(e);
 		}
 
-		InfoExecutionPeriod infoExecutionPeriod;
-		Object args[] = {
-		};
+		InfoExecutionPeriod infoExecutionPeriod = null;
 		try {
-			infoExecutionPeriod =
-				(InfoExecutionPeriod) ServiceUtils.executeService(
-					null,
-					"ReadCurrentExecutionPeriod",
-					args);
-		} catch (FenixServiceException e1) {
-			throw new FenixActionException(e1);
+			infoExecutionPeriod = setExecutionContext(request);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
+//		Object args[] = {
+//		};
+//		try {
+//			infoExecutionPeriod =
+//				(InfoExecutionPeriod) ServiceUtils.executeService(
+//					null,
+//					"ReadCurrentExecutionPeriod",
+//					args);
+//		} catch (FenixServiceException e1) {
+//			throw new FenixActionException(e1);
+//		}
 
 		request.setAttribute("objectCode", infoExecutionPeriod.getIdInternal());
 
@@ -139,6 +149,28 @@ public class SelectRoomsFormAction extends FenixAction {
 			return new TipoSala(obj);
 		else
 			return null;
+	}
+
+	private InfoExecutionPeriod setExecutionContext(HttpServletRequest request)
+		throws Exception {
+
+		HttpSession session = request.getSession(false);
+		InfoExecutionPeriod infoExecutionPeriod =
+			(InfoExecutionPeriod) session.getAttribute(
+				SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+		if (infoExecutionPeriod == null) {
+			IUserView userView = SessionUtils.getUserView(request);
+			infoExecutionPeriod =
+				(InfoExecutionPeriod) ServiceUtils.executeService(
+					userView,
+					"ReadCurrentExecutionPeriod",
+					new Object[0]);
+
+			session.setAttribute(
+				SessionConstants.INFO_EXECUTION_PERIOD_KEY,
+				infoExecutionPeriod);
+		}
+		return infoExecutionPeriod;
 	}
 
 }
