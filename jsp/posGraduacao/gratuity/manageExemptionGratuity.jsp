@@ -66,7 +66,7 @@
 				</logic:iterate>
 				<tr>
 					<td>
-						<bean:message key="label.anotherOne" />&nbsp;
+						<bean:message key="label.masterDegree.gratuity.anotherOne" />&nbsp;
 					</td>
 					<td>
 						<html:radio property="valueExemptionGratuity" value="-1"/>
@@ -98,7 +98,7 @@
 				</logic:iterate>	
 				<tr>
 					<td>
-						<bean:message key="label.anotherOne" />&nbsp;
+						<bean:message key="label.masterDegree.gratuity.anotherOne" />&nbsp;
 					</td>
 					<td>																							
 						<html:radio property="justificationExemptionGratuity" value="<%= String.valueOf(ExemptionGratuityType.OTHER.getValue()) %>"/>

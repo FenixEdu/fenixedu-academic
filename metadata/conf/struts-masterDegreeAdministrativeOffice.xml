@@ -642,9 +642,11 @@
        <form-bean name="studentsGratuityListForm" 
 	  			 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
+            <form-property name="page" type="java.lang.Integer" initial="0" />
             <form-property name="executionYear" type="java.lang.String"/>
             <form-property name="specialization" type="java.lang.String"/>
             <form-property name="degree" type="java.lang.String"/>
+            <form-property name="situation" type="java.lang.String" />
        </form-bean>
    </form-beans>
     
@@ -2160,9 +2162,11 @@
 		parameter="method"
 		name="studentsGratuityListForm"
 		scope="request"
-		input="/studentsGratuityList.do?method=chooseStudentList&amp;page=0"
+		input="/studentsGratuityList.do?method=prepareChooseDegree&amp;page=0"
 	>
-		<forward name="chooseStudentList" path="chooseStudentList"/>
+		<forward name="choose" path="/studentsGratuityList.do?method=chooseExecutionYear&amp;page=0" />
+		<forward name="chooseStudentsGratuityList" path="chooseStudentsGratuityList"/>
+		<forward name="studentsGratuityList" path="studentsGratuityList" />
 	</action>
     </action-mappings>
     

@@ -62,6 +62,14 @@ public class Specialization implements Serializable {
 		result.add(new LabelValueBean(Specialization.ESPECIALIZACAO_STRING, Specialization.ESPECIALIZACAO_STRING));
 		return result;	
     }
+    
+    public static ArrayList toArrayListWithoutDefault() {
+    	ArrayList result = new ArrayList();
+    	result.add(new LabelValueBean(Specialization.MESTRADO_STRING, Specialization.MESTRADO_STRING));
+    	result.add(new LabelValueBean(Specialization.INTEGRADO_STRING, Specialization.INTEGRADO_STRING));
+    	result.add(new LabelValueBean(Specialization.ESPECIALIZACAO_STRING, Specialization.ESPECIALIZACAO_STRING));
+    	return result;	
+    }
 
     public boolean equals(Object o) {
         if(o instanceof Specialization) {

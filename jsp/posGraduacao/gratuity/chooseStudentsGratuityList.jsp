@@ -8,10 +8,14 @@
 <span class="error"><html:errors/></span>
 
 <html:form action="/studentsGratuityList" >
-<html:hidden property="method" value="prepareChooseDegree"/>
-<logic:present name="showNextSelects">
-	<html:hidden property="executionYear"/>
+<logic:notPresent name="showNextSelects">
+	<html:hidden property="method" value="prepareChooseDegree"/>
 	<html:hidden property="page" value="1"/>
+</logic:notPresent>
+<logic:present name="showNextSelects">
+	<html:hidden property="method" value="studentsGratuityList"/>
+	<html:hidden property="executionYear"/>
+	<html:hidden property="page" value="2"/>
 </logic:present>
 <table>
 		<tr>
@@ -27,20 +31,7 @@
 				</html:select>
 			</td>
 		</tr>
-		<logic:present name="showNextSelects">
-			<tr>
-				<td>
-					<bean:message key="label.masterDegree.gratuity.specializationArea"/>
-				</td>
-				<td>
-					<html:select property="specialization">
-						<html:option value="" key="label.manager.executionCourseManagement.select">
-							<bean:message key="label.manager.executionCourseManagement.select"/>
-						</html:option>
-						<html:optionsCollection name="specializations"/>
-					</html:select>
-				</td>
-			</tr>
+		<logic:present name="showNextSelects">			
 			<tr>
 				<td>
 					<bean:message key="label.qualification.degree"/>
@@ -51,6 +42,44 @@
 							<bean:message key="label.manager.executionCourseManagement.select"/>
 						</html:option>
 						<html:optionsCollection name="<%=SessionConstants.DEGREES%>"/>
+					</html:select>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<bean:message key="label.masterDegree.gratuity.specializationArea"/>
+				</td>
+				<td>
+					<html:select property="specialization">
+						<html:option value="" key="label.manager.executionCourseManagement.select">
+							<bean:message key="label.manager.executionCourseManagement.select"/>
+						</html:option>
+						<html:option value="Todos" key="label.masterDegree.gratuity.all">
+							<bean:message key="label.masterDegree.gratuity.all"/>
+						</html:option>
+						<html:optionsCollection name="specializations"/>
+					</html:select>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<bean:message key="label.masterDegree.gratuity.situation"/>
+				</td>
+				<td>
+					<html:select property="situation">
+						<html:option value="">
+							<bean:message key="label.manager.executionCourseManagement.select"/>
+						</html:option>						
+						<html:option value="Todos">
+							<bean:message key="label.masterDegree.gratuity.all"/>
+						</html:option>
+						<logic:iterate id="gratuitySituation" name="situations">
+							<bean:define id="gratuitySituationName" name="gratuitySituation" property="name"/>
+							<bean:define id="gratuitySituationNameKEY" value="<%= "label.gratuitySituationType." + gratuitySituationName.toString() %>"/>						
+							<html:option value="<%= gratuitySituationName.toString() %>" >
+								<bean:message name="gratuitySituationNameKEY"/>
+							</html:option>
+						</logic:iterate>
 					</html:select>
 				</td>
 			</tr>
