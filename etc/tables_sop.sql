@@ -172,3 +172,16 @@ create table EXAM_ROOM (
    primary key (ID_INTERNAL),
    unique U1 (KEY_EXAM, KEY_ROOM))
    type=InnoDB;
+   
+#----------------------------
+# Table structure for exam_enrollment
+#----------------------------
+DROP TABLE IF EXISTS EXAM_ENROLLMENT;
+CREATE TABLE EXAM_ENROLLMENT (
+  ID_INTERNAL int(11) not null auto_increment,
+  KEY_EXAM int(11) not null,
+  BEGIN_DATE datetime,
+  END_DATE datetime,
+  PRIMARY KEY (ID_INTERNAL),
+  unique U1 (KEY_EXAM)
+) TYPE=InnoDB;
