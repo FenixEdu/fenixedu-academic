@@ -116,11 +116,11 @@
 		      parameter="method"
               type="ServidorApresentacao.Action.masterDegree.administrativeOffice.CreateCandidateDispatchAction"
               validate="true">
-	         <forward name="PrepareSuccess" path="/createCandidate.jsp"/>  
-	         <forward name="CreateSuccess" path="/createCandidateSuccess.jsp"/>  
      		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
 		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
                         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+	         <forward name="PrepareSuccess" path="/createCandidate.jsp"/>  
+	         <forward name="CreateSuccess" path="/createCandidateSuccess.jsp"/>  
       </action>
 
       <!-- action to visualize candidates -->
@@ -134,9 +134,6 @@
 	         <forward name="PrepareReady" path="/chooseCandidateList.jsp"/>  
 	         <forward name="ActionReady" path="/visualizeCandidate.jsp"/>  
 	         <forward name="ChooseCandidate" path="/candidateList.jsp"/>  
-     		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
-		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
       </action>
 
       <!-- action to edit candidates -->
@@ -147,12 +144,12 @@
 		      parameter="method"
               type="ServidorApresentacao.Action.masterDegree.administrativeOffice.ListCandidatesDispatchAction"
               validate="true">
-	         <forward name="PrepareReady" path="/chooseCandidateList.jsp"/>  
-	         <forward name="ActionReady" path="/editCandidates.do?method=prepareEdit"/>  
-	         <forward name="ChooseCandidate" path="/candidateList.jsp"/>  
      		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
 		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
                         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+	         <forward name="PrepareReady" path="/chooseCandidateList.jsp"/>  
+	         <forward name="ActionReady" path="/editCandidates.do?method=prepareEdit"/>  
+	         <forward name="ChooseCandidate" path="/candidateList.jsp"/>  
       </action>
       
       <!-- Action For LogOff -->
@@ -178,18 +175,12 @@
 	      validate="true"
 		 parameter="method"
       	      type="ServidorApresentacao.Action.masterDegree.administrativeOffice.CreateContributorDispatchAction">
-      	  <forward name="CreateSuccess" path="/contributor/createContributorSuccess.jsp"/>
-      	  <forward name="PrepareReady" path="/contributor/createContributor.jsp"/>
    		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
             key="ServidorApresentacao.Action.exceptions.ExistingActionException"
             handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-      	  
+      	  <forward name="CreateSuccess" path="/contributor/createContributorSuccess.jsp"/>
+      	  <forward name="PrepareReady" path="/contributor/createContributor.jsp"/>
       </action>
-
-
-
-
-
       <!-- action to create a guide -->
       <action attribute="createGuideForm"
       		  input="/guide/createGuide.jsp"
