@@ -6845,8 +6845,8 @@
 		</filterChains>
 	</service>
     <service>
-		<name>ReadAllBuildings</name>
-		<implementationClass>ServidorAplicacao.Servico.sop.exams.ReadAllBuildings</implementationClass>
+		<name>ReadBuildings</name>
+		<implementationClass>ServidorAplicacao.Servico.sop.ReadBuildings</implementationClass>
 		<description>
 		</description>
 		<isTransactional>true</isTransactional>
@@ -8420,4 +8420,22 @@
 			<chain name="ManagerAuthorization"/>
 		</filterChains>
 	</service>
+    <service>
+        <name>CreateBuilding</name>
+        <implementationClass>ServidorAplicacao.Servico.sop.CreateBuilding</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TimeTableManagerAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>DeleteBuilding</name>
+        <implementationClass>ServidorAplicacao.Servico.sop.DeleteBuilding</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TimeTableManagerAuthorization"/>
+        </filterChains>
+    </service>
 </serviceDefinitions>

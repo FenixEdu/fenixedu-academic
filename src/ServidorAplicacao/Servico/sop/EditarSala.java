@@ -9,22 +9,23 @@ package ServidorAplicacao.Servico.sop;
  * 
  * @author tfc130
  */
+import java.util.List;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoRoom;
 import DataBeans.RoomKey;
+import Dominio.IBuilding;
 import Dominio.ISala;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentBuilding;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class EditarSala implements IService {
-
-    /**
-     * The actor of this class.
-     */
-    public EditarSala() {
-    }
 
     public Object run(RoomKey salaAntiga, InfoRoom salaNova) throws ExistingServiceException {
 
@@ -34,6 +35,7 @@ public class EditarSala implements IService {
         try {
 
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            final IPersistentBuilding persistentBuilding = sp.getIPersistentBuilding();
 
             sala = sp.getISalaPersistente().readByName(salaAntiga.getNomeSala());
 
@@ -46,6 +48,8 @@ public class EditarSala implements IService {
                     }
                 }
 
+                final IBuilding building = findBuilding(persistentBuilding, salaNova.getEdificio());
+
                 sp.getISalaPersistente().simpleLockWrite(sala);
                 sala.setNome(salaNova.getNome());
                 sala.setEdificio(salaNova.getEdificio());
@@ -53,6 +57,8 @@ public class EditarSala implements IService {
                 sala.setCapacidadeNormal(salaNova.getCapacidadeNormal());
                 sala.setCapacidadeExame(salaNova.getCapacidadeExame());
                 sala.setTipo(salaNova.getTipo());
+                sala.setBuilding(building);
+
                 result = true;
             }
         } catch (ExcepcaoPersistencia ex) {
@@ -60,6 +66,17 @@ public class EditarSala implements IService {
         }
 
         return new Boolean(result);
+    }
+
+    protected IBuilding findBuilding(final IPersistentBuilding persistentBuilding, final String edificio)
+            throws ExcepcaoPersistencia {
+        final List buildings = persistentBuilding.readAll();
+        return (IBuilding) CollectionUtils.find(buildings, new Predicate() {
+            public boolean evaluate(Object arg0) {
+                final IBuilding building = (IBuilding) arg0;
+                return building.getName().equalsIgnoreCase(edificio);
+            }
+        });
     }
 
 }

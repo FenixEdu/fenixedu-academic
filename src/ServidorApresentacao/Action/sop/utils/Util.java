@@ -2,10 +2,16 @@ package ServidorApresentacao.Action.sop.utils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.util.LabelValueBean;
 
+import DataBeans.InfoBuilding;
+import ServidorAplicacao.Filtro.exception.FenixFilterException;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import Util.DiaSemana;
 import Util.Season;
 import Util.TipoSala;
@@ -24,50 +30,23 @@ public class Util {
      * of being placed here. The first element of the list is the selected
      * element when the list is shown. If this element is null, then it is not
      * added to the list.
+     * @throws FenixServiceException 
+     * @throws FenixFilterException 
      */
-    public static List readExistingBuldings(String name, String value) {
+    public static List readExistingBuldings(String name, String value) throws FenixFilterException, FenixServiceException {
         List edificios = new ArrayList();
 
         if (name != null)
             edificios.add(new LabelValueBean(name, value));
 
-        edificios.add(new LabelValueBean("Edifício Ciência", "Edifício Ciência"));
-        edificios.add(new LabelValueBean("Pavilhão Central", "Pavilhão Central"));
+        final Object args[] = {};
+        final List infoBuildings = (List) ServiceUtils.executeService(null, "ReadBuildings", args);
+        Collections.sort(infoBuildings, new BeanComparator("name"));
 
-        edificios.add(new LabelValueBean("LTI do CIIST", "LTI do CIIST"));
-
-        edificios.add(new LabelValueBean("Pavilhão Civil", "Pavilhão Civil"));
-
-        edificios.add(new LabelValueBean("Pavilhão Electricidade", "Pavilhão Electricidade"));
-
-        edificios.add(new LabelValueBean("Pavilhão Pós-Graduação", "Pavilhão Pós-Graduação"));
-
-        edificios.add(new LabelValueBean("Pavilhão Química", "Pavilhão Química"));
-
-        edificios.add(new LabelValueBean("Pavilhão Mecânica I", "Pavilhão Mecânica I"));
-
-        edificios.add(new LabelValueBean("Pavilhão Mecânica II", "Pavilhão Mecânica II"));
-
-        edificios.add(new LabelValueBean("Pavilhão Mecânica III", "Pavilhão Mecânica III"));
-
-        edificios.add(new LabelValueBean("Pavilhão Minas", "Pavilhão Minas"));
-
-        edificios
-                .add(new LabelValueBean("Pavilhão Novas Licenciaturas", "Pavilhão Novas Licenciaturas"));
-
-        edificios
-                .add(new LabelValueBean("TagusPark - Bloco A - Poente", "TagusPark - Bloco A - Poente"));
-        edificios.add(new LabelValueBean("TagusPark - Bloco A - Nascente",
-                "TagusPark - Bloco A - Nascente"));
-
-        edificios.add(new LabelValueBean("TagusPark - Bloco B - Nascente",
-                "TagusPark - Bloco B - Nascente"));
-
-        edificios
-                .add(new LabelValueBean("TagusPark - Bloco B - Poente", "TagusPark - Bloco B - Poente"));
-
-        edificios.add(new LabelValueBean("Torre Norte", "Torre Norte"));
-        edificios.add(new LabelValueBean("Torre Sul", "Torre Sul"));
+        for (final Iterator iterator = infoBuildings.iterator(); iterator.hasNext(); ) {
+            final InfoBuilding infoBuilding = (InfoBuilding) iterator.next();
+            edificios.add(new LabelValueBean(infoBuilding.getName(), infoBuilding.getName()));
+        }
 
         return edificios;
     }

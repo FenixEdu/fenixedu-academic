@@ -7,12 +7,15 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import DataBeans.InfoBuilding;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoRoom;
 import ServidorAplicacao.IUserView;
@@ -36,7 +39,12 @@ public class RoomExamSearchDA extends FenixContextDispatchAction {
             HttpServletResponse response) throws Exception {
         IUserView userView = SessionUtils.getUserView(request);
         Object args[] = {};
-        List buildingsStrings = (List) ServiceUtils.executeService(userView, "ReadAllBuildings", args);
+        List infoBuildings = (List) ServiceUtils.executeService(userView, "ReadBuildings", args);
+        List buildingsStrings = (List) CollectionUtils.collect(infoBuildings, new Transformer() {
+            public Object transform(Object arg0) {
+                final InfoBuilding infoBuilding = (InfoBuilding) arg0;
+                return infoBuilding.getName();
+            }});
         List types = Util.readTypesOfRooms("", null);
         List buildings = new ArrayList();
         Iterator iter = buildingsStrings.iterator();

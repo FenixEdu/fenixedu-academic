@@ -1,7 +1,33 @@
-<!-- Please keep user defined mappings in this file only
-     to avoid mixing user defined and system mappings. -->   
-<!-- Mapping of User defined classes starts here -->
-<!-- Definitions for Dominio.Sala -->
+<class-descriptor class="Dominio.Building" table="BUILDING">
+      <field-descriptor
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
+      <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+      />
+     <collection-descriptor
+			name="rooms"
+			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			element-class-ref="Dominio.Sala"
+			proxy="true"
+			auto-retrieve="true"
+			refresh="true">
+		<inverse-foreignkey field-ref="keyBuilding"/>
+	</collection-descriptor>
+</class-descriptor>
+
 <class-descriptor
    	  class="Dominio.Sala"
    	  table="ROOM"
@@ -50,6 +76,17 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
+      <field-descriptor
+         name="keyBuilding"
+         column="KEY_BUILDING"
+         jdbc-type="INTEGER"
+      />
+      <reference-descriptor
+         name="building"
+         class-ref="Dominio.Building"
+      >
+         <foreignkey field-ref="keyBuilding"/>
+      </reference-descriptor>
 </class-descriptor>
 
 <!-- Definitions for Dominio.Turma -->

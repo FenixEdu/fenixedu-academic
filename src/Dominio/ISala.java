@@ -43,4 +43,8 @@ public interface ISala extends Serializable, IDomainObject {
     public void setCapacidadeExame(Integer capacidadeExame);
 
     public void setRoomOccupations(List roomOccupations);
+
+    public IBuilding getBuilding();
+
+    public void setBuilding(IBuilding building);
 }

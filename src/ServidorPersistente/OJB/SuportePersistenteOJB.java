@@ -1302,4 +1302,9 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
     public IPersistentProjectAccess getIPersistentProjectAccess() {
         return new ProjectAccessOJB();
     }
+
+    public IPersistentBuilding getIPersistentBuilding() {
+        return new BuildingOJB();
+    }
+
 }

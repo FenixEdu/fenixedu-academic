@@ -470,4 +470,6 @@ public interface ISuportePersistente {
     public IPersistentSecretaryEnrolmentStudent getIPersistentSecretaryEnrolmentStudent();
     
     public IPersistentProjectAccess getIPersistentProjectAccess();
+
+    public IPersistentBuilding getIPersistentBuilding();
 }

@@ -487,6 +487,11 @@
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>      
 
+		<form-bean name="buildingForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+				<form-property name="name" type="java.lang.String" />
+		</form-bean>      
+
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -1745,6 +1750,23 @@
 			<forward name="sucess" path="/chooseDegreesForExecutionCourseMerge.do?method=prepareChooseDegreesAndExecutionPeriod"/>
 		</action>	
 
+		<action type="ServidorApresentacao.Action.sop.ManageBuildingsDA"
+				path="/manageBuildings"
+				input="/manageBuildings.do?method=prepare"
+				name="buildingForm"
+				parameter="method"
+				scope="request"
+				validate="false">
+			<exception type="ServidorAplicacao.Servico.exceptions.ExistingServiceException"
+				   key="message.building.exists"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   />
+			<exception type="ServidorAplicacao.Servico.exceptions.NotEmptyServiceException"
+				   key="message.building.not.empty"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   />
+			<forward name="viewBuildings" path="/manageBuildings.jsp"/>
+		</action>
     </action-mappings>     
 
     

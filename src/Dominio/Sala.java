@@ -15,6 +15,7 @@ import java.util.List;
 import Util.TipoSala;
 
 public class Sala extends DomainObject implements ISala {
+
     protected String _nome;
 
     protected String _edificio;
@@ -28,6 +29,10 @@ public class Sala extends DomainObject implements ISala {
     protected TipoSala _tipo;
 
     private List roomOccupations;
+
+    private Integer keyBuilding;
+
+    private IBuilding building;
 
     /** Construtor sem argumentos público requerido pela moldura de objectos OJB */
     public Sala() {
@@ -56,11 +61,12 @@ public class Sala extends DomainObject implements ISala {
     }
 
     public String getEdificio() {
-        return _edificio;
+        //return _edificio;
+        return getBuilding().getName();
     }
 
     public void setEdificio(String edificio) {
-        _edificio = edificio;
+        //_edificio = edificio;
     }
 
     public Integer getPiso() {
@@ -130,6 +136,23 @@ public class Sala extends DomainObject implements ISala {
      */
     public void setRoomOccupations(List roomOccupations) {
         this.roomOccupations = roomOccupations;
+    }
+
+    public IBuilding getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(IBuilding building) {
+        this.building = building;
+        this._edificio = building.getName();
+    }
+
+    public Integer getKeyBuilding() {
+        return keyBuilding;
+    }
+
+    public void setKeyBuilding(Integer keyBuilding) {
+        this.keyBuilding = keyBuilding;
     }
 
 }
