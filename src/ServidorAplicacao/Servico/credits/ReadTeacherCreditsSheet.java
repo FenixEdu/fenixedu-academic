@@ -9,16 +9,20 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoProfessorship;
 import DataBeans.InfoTeacher;
 import DataBeans.credits.TeacherCreditsSheetDTO;
 import DataBeans.degree.finalProject.InfoTeacherDegreeFinalProjectStudent;
 import DataBeans.teacher.credits.InfoShiftProfessorship;
+import DataBeans.teacher.professorship.DetailedProfessorship;
 import DataBeans.teacher.professorship.InfoSupportLesson;
 import DataBeans.teacher.workTime.InfoTeacherInstitutionWorkTime;
 import DataBeans.util.Cloner;
 import Dominio.ExecutionPeriod;
+import Dominio.ICurricularCourse;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IProfessorship;
 import Dominio.IShiftProfessorship;
@@ -286,7 +290,7 @@ public class ReadTeacherCreditsSheet implements IServico
             List infoTeacherDegreeFinalProjectStudentList = readTeacherDegreeFinalProjectStudentList(
                     teacher, executionPeriod, sp);
 
-			List infoProfessorshipsList = readInfoProfessorships(teacher, executionPeriod, sp);
+			List detailedProfessorshipList = readDetailedProfessorships(teacher, executionPeriod, sp);
             
             InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
             InfoExecutionPeriod infoExecutionPeriod = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(
@@ -307,7 +311,7 @@ public class ReadTeacherCreditsSheet implements IServico
             teacherCreditsSheetDTO.setInfoTeacherDegreeFinalProjectStudentList(
                     infoTeacherDegreeFinalProjectStudentList);
             
-            teacherCreditsSheetDTO.setInfoProfessorshipList(infoProfessorshipsList);
+            teacherCreditsSheetDTO.setDetailedProfessorshipList(detailedProfessorshipList);
 
         }
         catch (ExcepcaoPersistencia e)
@@ -325,22 +329,54 @@ public class ReadTeacherCreditsSheet implements IServico
      * @param sp
      * @return
      */
-    private List readInfoProfessorships(ITeacher teacher, IExecutionPeriod executionPeriod, ISuportePersistente sp) throws ExcepcaoPersistencia
+    private List readDetailedProfessorships(ITeacher teacher, IExecutionPeriod executionPeriod, ISuportePersistente sp) throws ExcepcaoPersistencia
     {
         IPersistentProfessorship professorshipDAO = sp.getIPersistentProfessorship();
         
         List professorshipList = professorshipDAO.readByTeacherAndExecutionPeriod(teacher, executionPeriod);
-		List infoProfessorshipList = (List) CollectionUtils.collect(
-				professorshipList, new Transformer()
-				{
+		List detailedProfessorshipList = (List) CollectionUtils.collect(professorshipList,
+				 new Transformer()
+				 {
 
-					public Object transform(Object input)
-					{
-						IProfessorship professorship = (IProfessorship) input;
-						InfoProfessorship infoProfessorship = Cloner.copyIProfessorship2InfoProfessorship(professorship);
-						return infoProfessorship;
-					}
-				});
-        return infoProfessorshipList;
+					 public Object transform(Object input)
+					 {
+						 IProfessorship professorship = (IProfessorship) input;
+						 InfoProfessorship infoProfessorShip = Cloner
+								 .copyIProfessorship2InfoProfessorship(professorship);
+
+						 List executionCourseCurricularCoursesList = getInfoCurricularCourses(
+								 professorship.getExecutionCourse());
+
+						 DetailedProfessorship detailedProfessorship = new DetailedProfessorship();
+
+						 detailedProfessorship.setInfoProfessorship(infoProfessorShip);
+						 detailedProfessorship.setExecutionCourseCurricularCoursesList(
+								 executionCourseCurricularCoursesList);
+
+						 return detailedProfessorship;
+					 }
+
+					 private List getInfoCurricularCourses(IExecutionCourse executionCourse)
+					 {
+
+						 List infoCurricularCourses = (List) CollectionUtils.collect(executionCourse
+								 .getAssociatedCurricularCourses(),
+								 new Transformer()
+								 {
+
+									 public Object transform(Object input)
+									 {
+										 ICurricularCourse curricularCourse = (ICurricularCourse) input;
+										 InfoCurricularCourse infoCurricularCourse = Cloner
+												 .copyCurricularCourse2InfoCurricularCourse(
+														 curricularCourse);
+										 return infoCurricularCourse;
+									 }
+								 });
+						 return infoCurricularCourses;
+					 }
+				 });
+
+		 return detailedProfessorshipList;
     }
 }
