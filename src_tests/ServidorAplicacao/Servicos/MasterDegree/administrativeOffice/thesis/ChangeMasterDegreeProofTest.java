@@ -32,7 +32,12 @@ public class ChangeMasterDegreeProofTest extends ServiceTestCase {
 	 */
 	public ChangeMasterDegreeProofTest(String testName) {
 		super(testName);
-		this.dataSetFilePath = "etc/datasets/servicos/MasterDegree/administrativeOffice/thesis/testChangeMasterDegreeProofDataSet.xml";
+		if (testName.equals("testSuccessfulChangeMasterDegreeProofWhenProofDoesNotExist")) {
+			this.dataSetFilePath =
+				"etc/datasets/servicos/MasterDegree/administrativeOffice/thesis/testChangeMasterDegreeProofWhenProofDoesNotExistDataSet.xml";
+		} else {
+			this.dataSetFilePath = "etc/datasets/servicos/MasterDegree/administrativeOffice/thesis/testChangeMasterDegreeProofDataSet.xml";
+		}
 	}
 
 	protected void setUp() {
@@ -175,6 +180,35 @@ public class ChangeMasterDegreeProofTest extends ServiceTestCase {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			fail("testUnsuccessfulChangeExistingMasterDegreeProofWithoutScholarshipFinished " + ex.getMessage());
+		}
+
+	}
+
+	public void testSuccessfulChangeMasterDegreeProofWhenProofDoesNotExist() {
+		try {
+			Object[] argsReadStudentCurricularPlan = { new Integer(142), new TipoCurso(TipoCurso.MESTRADO)};
+			InfoStudentCurricularPlan infoStudentCurricularPlan =
+				(InfoStudentCurricularPlan) serviceManager.executar(
+					userView,
+					"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
+					argsReadStudentCurricularPlan);
+
+			Object[] argsChangeMasterDegreeProof =
+				{
+					userView,
+					infoStudentCurricularPlan,
+					new GregorianCalendar(2003, Calendar.OCTOBER, 10).getTime(),
+					new GregorianCalendar(2003, Calendar.NOVEMBER, 11).getTime(),
+					MasterDegreeClassification.UNDEFINED,
+					new Integer(5)};
+
+			serviceManager.executar(userView, getNameOfServiceToBeTested(), argsChangeMasterDegreeProof);
+			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/MasterDegree/administrativeOffice/thesis/testExpectedChangeMasterDegreeProofWhenProofDoesNotExistDataSet.xml");
+			//ok
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			fail("testSuccessChangeExistingMasterDegreeProof " + ex.getMessage());
 		}
 
 	}
