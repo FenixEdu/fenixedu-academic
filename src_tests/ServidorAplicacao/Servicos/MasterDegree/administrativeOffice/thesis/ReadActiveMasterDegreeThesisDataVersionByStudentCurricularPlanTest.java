@@ -6,13 +6,9 @@ import DataBeans.InfoExternalPerson;
 import DataBeans.InfoMasterDegreeThesisDataVersion;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.InfoTeacher;
-import ServidorAplicacao.GestorServicos;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
-import ServidorAplicacao.Servicos.ServiceTestCase;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest;
 import Util.State;
 import Util.TipoCurso;
 
@@ -22,11 +18,7 @@ import Util.TipoCurso;
  *   - Shezad Anavarali (sana@mega.ist.utl.pt)
  *   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
  */
-public class ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlanTest extends ServiceTestCase {
-
-	private GestorServicos serviceManager = GestorServicos.manager();
-	private IUserView userView = null;
-	private String dataSetFilePath;
+public class ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlanTest extends AdministrativeOfficeBaseTest {
 
 	/**
 	 * @param testName
@@ -37,41 +29,27 @@ public class ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlanTest 
 			"etc/datasets/servicos/MasterDegree/administrativeOffice/thesis/testReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlanDataSet.xml";
 	}
 
-	protected void setUp() {
-		super.setUp();
-		this.userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
-	}
-
-	/**
-	 * @param strings
-	 * @return
-	 */
-	private IUserView authenticateUser(String[] args) {
-		SuportePersistenteOJB.resetInstance();
-
-		try {
-			return (IUserView) gestor.executar(null, "Autenticacao", args);
-		} catch (Exception ex) {
-			fail("Authenticating User!" + ex);
-			return null;
-		}
-	}
-
 	protected String getNameOfServiceToBeTested() {
 		return "ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan";
 	}
 
-	protected String getDataSetFilePath() {
-		return this.dataSetFilePath;
+	protected Object[] getServiceArgumentsForNotAuthenticatedUser() throws FenixServiceException {
+		Object[] argsReadMasterDegreeThesisDataVersion = { null };
+
+		return argsReadMasterDegreeThesisDataVersion;
 	}
 
-	protected String[] getAuthenticatedAndAuthorizedUser() {
-		String[] args = { "f3667", "pass", getApplication()};
-		return args;
-	}
+	protected Object[] getServiceArgumentsForNotAuthorizedUser() throws FenixServiceException {
+		Object[] argsReadStudentCurricularPlan = { new Integer(142), new TipoCurso(TipoCurso.MESTRADO)};
+		InfoStudentCurricularPlan infoStudentCurricularPlan =
+			(InfoStudentCurricularPlan) serviceManager.executar(
+				userView,
+				"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
+				argsReadStudentCurricularPlan);
 
-	protected String getApplication() {
-		return Autenticacao.INTRANET;
+		Object[] argsReadMasterDegreeThesisDataVersion = { infoStudentCurricularPlan };
+
+		return argsReadMasterDegreeThesisDataVersion;
 	}
 
 	public void testSuccessReadActiveMasterDegreeThesisDataVersion() {
@@ -90,8 +68,8 @@ public class ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlanTest 
 					getNameOfServiceToBeTested(),
 					argsReadMasterDegreeThesisDataVersion);
 
-			assertEquals(infoMasterDegreeThesisDataVersion.getIdInternal(), new Integer(10));
-			assertEquals(infoMasterDegreeThesisDataVersion.getInfoMasterDegreeThesis().getIdInternal(), new Integer(10));
+			assertEquals(infoMasterDegreeThesisDataVersion.getIdInternal(), new Integer(1));
+			assertEquals(infoMasterDegreeThesisDataVersion.getInfoMasterDegreeThesis().getIdInternal(), new Integer(1));
 			assertEquals(infoMasterDegreeThesisDataVersion.getInfoResponsibleEmployee().getIdInternal(), new Integer(1194));
 			assertEquals(infoMasterDegreeThesisDataVersion.getDissertationTitle(), "some title");
 			assertEquals(infoMasterDegreeThesisDataVersion.getCurrentState(), new State(State.ACTIVE));
@@ -124,12 +102,12 @@ public class ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlanTest 
 					userView,
 					getNameOfServiceToBeTested(),
 					argsReadMasterDegreeThesisDataVersion);
-			
+
 			fail("testReadWhenMasterDegreeThesisDoesNotExist did not throw NonExistingServiceException");
-			
+
 		} catch (NonExistingServiceException ex) {
 			//ok
-			
+
 		} catch (FenixServiceException e) {
 			e.printStackTrace();
 			fail("testReadNonExistingActiveMasterDegreeThesisDataVersion " + e.getMessage());

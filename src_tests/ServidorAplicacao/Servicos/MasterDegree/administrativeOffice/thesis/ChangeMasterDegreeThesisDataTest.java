@@ -1,18 +1,15 @@
 package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.thesis;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import DataBeans.InfoMasterDegreeThesisDataVersion;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.InfoTeacher;
-import ServidorAplicacao.GestorServicos;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
-import ServidorAplicacao.Servicos.ServiceTestCase;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest;
 import Util.TipoCurso;
 
 /**
@@ -21,11 +18,7 @@ import Util.TipoCurso;
  *   - Shezad Anavarali (sana@mega.ist.utl.pt)
  *   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
  */
-public class ChangeMasterDegreeThesisDataTest extends ServiceTestCase {
-
-	private GestorServicos serviceManager = GestorServicos.manager();
-	private IUserView userView = null;
-	private String dataSetFilePath;
+public class ChangeMasterDegreeThesisDataTest extends AdministrativeOfficeBaseTest {
 
 	/**
 	 * @param testName
@@ -35,41 +28,57 @@ public class ChangeMasterDegreeThesisDataTest extends ServiceTestCase {
 		this.dataSetFilePath = "etc/datasets/servicos/MasterDegree/administrativeOffice/thesis/testChangeMasterDegreeThesisDataSet.xml";
 	}
 
-	protected void setUp() {
-		super.setUp();
-		this.userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
-	}
-
-	/**
-	 * @param strings
-	 * @return
-	 */
-	private IUserView authenticateUser(String[] args) {
-		SuportePersistenteOJB.resetInstance();
-
-		try {
-			return (IUserView) gestor.executar(null, "Autenticacao", args);
-		} catch (Exception ex) {
-			fail("Authenticating User!" + ex);
-			return null;
-		}
-	}
-
 	protected String getNameOfServiceToBeTested() {
 		return "ChangeMasterDegreeThesisData";
 	}
 
-	protected String getDataSetFilePath() {
-		return this.dataSetFilePath;
+	protected Object[] getServiceArgumentsForNotAuthenticatedUser() {
+		InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan();
+		infoStudentCurricularPlan.setIdInternal(new Integer(8582));
+		
+		InfoTeacher infoTeacherGuider = new InfoTeacher();
+		infoTeacherGuider.setIdInternal(new Integer(956));
+		InfoTeacher infoTeacherAssistent = new InfoTeacher();
+		infoTeacherAssistent.setIdInternal(new Integer(957));
+
+		List guiders = new ArrayList();
+		List assistentGuiders = new ArrayList();
+		List externalAssistentGuiders = new ArrayList();
+
+		guiders.add(infoTeacherGuider);
+		assistentGuiders.add(infoTeacherAssistent);
+
+		Object[] argsChangeMasterDegreeThesis =
+			{ null, infoStudentCurricularPlan, "some title", guiders, assistentGuiders, externalAssistentGuiders };
+
+		return argsChangeMasterDegreeThesis;
+
 	}
 
-	protected String[] getAuthenticatedAndAuthorizedUser() {
-		String[] args = { "f3667", "pass", getApplication()};
-		return args;
-	}
+	protected Object[] getServiceArgumentsForNotAuthorizedUser() throws FenixServiceException {
+		Object[] argsReadStudentCurricularPlan = { new Integer(142), new TipoCurso(TipoCurso.MESTRADO)};
+		InfoStudentCurricularPlan infoStudentCurricularPlan =
+			(InfoStudentCurricularPlan) serviceManager.executar(
+				userViewNotAuthorized,
+				"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
+				argsReadStudentCurricularPlan);
 
-	protected String getApplication() {
-		return Autenticacao.INTRANET;
+		InfoTeacher infoTeacherGuider = new InfoTeacher();
+		infoTeacherGuider.setIdInternal(new Integer(956));
+		InfoTeacher infoTeacherAssistent = new InfoTeacher();
+		infoTeacherAssistent.setIdInternal(new Integer(957));
+
+		List guiders = new ArrayList();
+		List assistentGuiders = new ArrayList();
+		List externalAssistentGuiders = new ArrayList();
+
+		guiders.add(infoTeacherGuider);
+		assistentGuiders.add(infoTeacherAssistent);
+
+		Object[] argsChangeMasterDegreeThesis =
+			{ userViewNotAuthorized, infoStudentCurricularPlan, "some title", guiders, assistentGuiders, externalAssistentGuiders };
+
+		return argsChangeMasterDegreeThesis;
 	}
 
 	public void testSuccessfulChangeMasterDegreeThesisData() {

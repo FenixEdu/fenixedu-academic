@@ -5,13 +5,10 @@ import java.util.GregorianCalendar;
 
 import DataBeans.InfoMasterDegreeProofVersion;
 import DataBeans.InfoStudentCurricularPlan;
-import ServidorAplicacao.GestorServicos;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.Autenticacao;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.ScholarshipNotFinishedServiceException;
-import ServidorAplicacao.Servicos.ServiceTestCase;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest;
 import Util.MasterDegreeClassification;
 import Util.TipoCurso;
 
@@ -21,11 +18,7 @@ import Util.TipoCurso;
  *   - Shezad Anavarali (sana@mega.ist.utl.pt)
  *   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
  */
-public class ChangeMasterDegreeProofTest extends ServiceTestCase {
-
-	private GestorServicos serviceManager = GestorServicos.manager();
-	private IUserView userView = null;
-	private String dataSetFilePath;
+public class ChangeMasterDegreeProofTest extends AdministrativeOfficeBaseTest {
 
 	/**
 	 * @param testName
@@ -40,41 +33,42 @@ public class ChangeMasterDegreeProofTest extends ServiceTestCase {
 		}
 	}
 
-	protected void setUp() {
-		super.setUp();
-		this.userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
-	}
-
-	/**
-	 * @param strings
-	 * @return
-	 */
-	private IUserView authenticateUser(String[] args) {
-		SuportePersistenteOJB.resetInstance();
-
-		try {
-			return (IUserView) gestor.executar(null, "Autenticacao", args);
-		} catch (Exception ex) {
-			fail("Authenticating User!" + ex);
-			return null;
-		}
-	}
-
 	protected String getNameOfServiceToBeTested() {
 		return "ChangeMasterDegreeProof";
 	}
 
-	protected String getDataSetFilePath() {
-		return this.dataSetFilePath;
+	protected Object[] getServiceArgumentsForNotAuthenticatedUser() {
+		InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan();
+		infoStudentCurricularPlan.setIdInternal(new Integer(8582));
+		Object[] argsChangeMasterDegreeProof =
+			{
+				null,
+				infoStudentCurricularPlan,
+				new GregorianCalendar(2003, Calendar.OCTOBER, 10).getTime(),
+				new GregorianCalendar(2003, Calendar.NOVEMBER, 11).getTime(),
+				MasterDegreeClassification.UNDEFINED,
+				new Integer(5)};
+
+		return argsChangeMasterDegreeProof;
 	}
 
-	protected String[] getAuthenticatedAndAuthorizedUser() {
-		String[] args = { "f3667", "pass", getApplication()};
-		return args;
-	}
+	protected Object[] getServiceArgumentsForNotAuthorizedUser() throws FenixServiceException{
+		Object[] argsReadStudentCurricularPlan = { new Integer(142), new TipoCurso(TipoCurso.MESTRADO)};
+		InfoStudentCurricularPlan infoStudentCurricularPlan =
+			(InfoStudentCurricularPlan) serviceManager.executar(
+				userViewNotAuthorized,
+				"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
+				argsReadStudentCurricularPlan);
+		Object[] argsChangeMasterDegreeProof =
+			{
+				userViewNotAuthorized,
+				infoStudentCurricularPlan,
+				new GregorianCalendar(2003, Calendar.OCTOBER, 10).getTime(),
+				new GregorianCalendar(2003, Calendar.NOVEMBER, 11).getTime(),
+				MasterDegreeClassification.UNDEFINED,
+				new Integer(5)};
 
-	protected String getApplication() {
-		return Autenticacao.INTRANET;
+		return argsChangeMasterDegreeProof;
 	}
 
 	public void testSuccessChangeExistingMasterDegreeProof() {

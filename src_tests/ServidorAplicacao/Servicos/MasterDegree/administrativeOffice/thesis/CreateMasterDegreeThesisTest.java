@@ -6,12 +6,9 @@ import java.util.List;
 import DataBeans.InfoExternalPerson;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.InfoTeacher;
-import ServidorAplicacao.GestorServicos;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
-import ServidorAplicacao.Servicos.ServiceTestCase;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest;
 import Util.TipoCurso;
 
 /**
@@ -20,11 +17,7 @@ import Util.TipoCurso;
  *   - Shezad Anavarali (sana@mega.ist.utl.pt)
  *   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
  */
-public class CreateMasterDegreeThesisTest extends ServiceTestCase {
-
-	private GestorServicos serviceManager = GestorServicos.manager();
-	private IUserView userView = null;
-	private String dataSetFilePath;
+public class CreateMasterDegreeThesisTest extends AdministrativeOfficeBaseTest {
 
 	/**
 	 * @param testName
@@ -40,41 +33,58 @@ public class CreateMasterDegreeThesisTest extends ServiceTestCase {
 		}
 	}
 
-	protected void setUp() {
-		super.setUp();
-		this.userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
-	}
-
-	/**
-	 * @param strings
-	 * @return
-	 */
-	private IUserView authenticateUser(String[] args) {
-		SuportePersistenteOJB.resetInstance();
-
-		try {
-			return (IUserView) gestor.executar(null, "Autenticacao", args);
-		} catch (Exception ex) {
-			fail("Authenticating User!" + ex);
-			return null;
-		}
-	}
-
 	protected String getNameOfServiceToBeTested() {
 		return "CreateMasterDegreeThesis";
 	}
 
-	protected String getDataSetFilePath() {
-		return this.dataSetFilePath;
+	protected Object[] getServiceArgumentsForNotAuthenticatedUser() throws FenixServiceException {
+		InfoTeacher infoTeacherGuider = new InfoTeacher();
+		infoTeacherGuider.setIdInternal(new Integer(954));
+		InfoTeacher infoTeacherAssistent = new InfoTeacher();
+		infoTeacherAssistent.setIdInternal(new Integer(955));
+		InfoExternalPerson infoExternalPerson = new InfoExternalPerson();
+		infoExternalPerson.setIdInternal(new Integer(1));
+
+		List guiders = new ArrayList();
+		List assistentGuiders = new ArrayList();
+		List externalAssistentGuiders = new ArrayList();
+
+		guiders.add(infoTeacherGuider);
+		assistentGuiders.add(infoTeacherAssistent);
+		externalAssistentGuiders.add(infoExternalPerson);
+
+		Object[] argsCreateMasterDegreeThesis = { null, null, "some title", guiders, assistentGuiders, externalAssistentGuiders };
+
+		return argsCreateMasterDegreeThesis;
 	}
 
-	protected String[] getAuthenticatedAndAuthorizedUser() {
-		String[] args = { "f3667", "pass", getApplication()};
-		return args;
-	}
+	protected Object[] getServiceArgumentsForNotAuthorizedUser() throws FenixServiceException {
+		Object[] argsReadStudentCurricularPlan = { new Integer(209), new TipoCurso(TipoCurso.MESTRADO)};
+		InfoStudentCurricularPlan infoStudentCurricularPlan =
+			(InfoStudentCurricularPlan) serviceManager.executar(
+				userViewNotAuthorized,
+				"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
+				argsReadStudentCurricularPlan);
 
-	protected String getApplication() {
-		return Autenticacao.INTRANET;
+		InfoTeacher infoTeacherGuider = new InfoTeacher();
+		infoTeacherGuider.setIdInternal(new Integer(954));
+		InfoTeacher infoTeacherAssistent = new InfoTeacher();
+		infoTeacherAssistent.setIdInternal(new Integer(955));
+		InfoExternalPerson infoExternalPerson = new InfoExternalPerson();
+		infoExternalPerson.setIdInternal(new Integer(1));
+
+		List guiders = new ArrayList();
+		List assistentGuiders = new ArrayList();
+		List externalAssistentGuiders = new ArrayList();
+
+		guiders.add(infoTeacherGuider);
+		assistentGuiders.add(infoTeacherAssistent);
+		externalAssistentGuiders.add(infoExternalPerson);
+
+		Object[] argsCreateMasterDegreeThesis =
+			{ userViewNotAuthorized, infoStudentCurricularPlan, "some title", guiders, assistentGuiders, externalAssistentGuiders };
+
+		return argsCreateMasterDegreeThesis;
 	}
 
 	public void testSuccessfulCreateMasterDegreeThesis() {

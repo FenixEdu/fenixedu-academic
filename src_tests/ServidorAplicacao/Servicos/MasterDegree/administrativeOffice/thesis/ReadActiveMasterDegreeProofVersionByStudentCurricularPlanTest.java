@@ -6,14 +6,10 @@ import java.util.GregorianCalendar;
 
 import DataBeans.InfoMasterDegreeProofVersion;
 import DataBeans.InfoStudentCurricularPlan;
-import ServidorAplicacao.GestorServicos;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.ScholarshipNotFinishedServiceException;
-import ServidorAplicacao.Servicos.ServiceTestCase;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest;
 import Util.MasterDegreeClassification;
 import Util.State;
 import Util.TipoCurso;
@@ -24,11 +20,7 @@ import Util.TipoCurso;
  *   - Shezad Anavarali (sana@mega.ist.utl.pt)
  *   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
  */
-public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlanTest extends ServiceTestCase {
-
-	private GestorServicos serviceManager = GestorServicos.manager();
-	private IUserView userView = null;
-	private String dataSetFilePath;
+public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlanTest extends AdministrativeOfficeBaseTest {
 
 	/**
 	 * @param testName
@@ -39,41 +31,27 @@ public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlanTest exten
 			"etc/datasets/servicos/MasterDegree/administrativeOffice/thesis/testReadActiveMasterDegreeProofVersionByStudentCurricularPlanDataSet.xml";
 	}
 
-	protected void setUp() {
-		super.setUp();
-		this.userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
-	}
-
-	/**
-	 * @param strings
-	 * @return
-	 */
-	private IUserView authenticateUser(String[] args) {
-		SuportePersistenteOJB.resetInstance();
-
-		try {
-			return (IUserView) gestor.executar(null, "Autenticacao", args);
-		} catch (Exception ex) {
-			fail("Authenticating User!" + ex);
-			return null;
-		}
-	}
-
 	protected String getNameOfServiceToBeTested() {
 		return "ReadActiveMasterDegreeProofVersionByStudentCurricularPlan";
 	}
 
-	protected String getDataSetFilePath() {
-		return this.dataSetFilePath;
+	protected Object[] getServiceArgumentsForNotAuthenticatedUser() throws FenixServiceException {
+		Object[] argsReadMasterDegreeProofVersion = { null };
+
+		return argsReadMasterDegreeProofVersion;
 	}
 
-	protected String[] getAuthenticatedAndAuthorizedUser() {
-		String[] args = { "f3667", "pass", getApplication()};
-		return args;
-	}
+	protected Object[] getServiceArgumentsForNotAuthorizedUser() throws FenixServiceException {
+		Object[] argsReadStudentCurricularPlan = { new Integer(142), new TipoCurso(TipoCurso.MESTRADO)};
+		InfoStudentCurricularPlan infoStudentCurricularPlan =
+			(InfoStudentCurricularPlan) serviceManager.executar(
+				userViewNotAuthorized,
+				"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
+				argsReadStudentCurricularPlan);
 
-	protected String getApplication() {
-		return Autenticacao.INTRANET;
+		Object[] argsReadMasterDegreeProofVersion = { infoStudentCurricularPlan };
+
+		return argsReadMasterDegreeProofVersion;
 	}
 
 	public void testSuccessReadActiveMasterDegreeProofVersion() {
@@ -89,8 +67,8 @@ public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlanTest exten
 			InfoMasterDegreeProofVersion infoMasterDegreeProofVersion =
 				(InfoMasterDegreeProofVersion) serviceManager.executar(userView, getNameOfServiceToBeTested(), argsReadMasterDegreeProofVersion);
 
-			assertEquals(infoMasterDegreeProofVersion.getIdInternal(), new Integer(10));
-			assertEquals(infoMasterDegreeProofVersion.getInfoMasterDegreeThesis().getIdInternal(), new Integer(10));
+			assertEquals(infoMasterDegreeProofVersion.getIdInternal(), new Integer(1));
+			assertEquals(infoMasterDegreeProofVersion.getInfoMasterDegreeThesis().getIdInternal(), new Integer(1));
 			assertEquals(infoMasterDegreeProofVersion.getInfoResponsibleEmployee().getIdInternal(), new Integer(1194));
 			assertEquals(infoMasterDegreeProofVersion.getCurrentState(), new State(State.ACTIVE));
 			assertEquals(infoMasterDegreeProofVersion.getAttachedCopiesNumber(), new Integer(5));
@@ -121,7 +99,7 @@ public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlanTest exten
 			Object[] argsReadMasterDegreeProofVersion = { infoStudentCurricularPlan };
 			InfoMasterDegreeProofVersion infoMasterDegreeProofVersion =
 				(InfoMasterDegreeProofVersion) serviceManager.executar(userView, getNameOfServiceToBeTested(), argsReadMasterDegreeProofVersion);
-			
+
 			fail("testReadWithScholarShipNotFinished did not throw ScholarShipNotFinishedServiceException");
 
 		} catch (ScholarshipNotFinishedServiceException ex) {
@@ -145,13 +123,10 @@ public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlanTest exten
 
 			Object[] argsReadMasterDegreeProofVersion = { infoStudentCurricularPlan };
 			InfoMasterDegreeProofVersion infoMasterDegreeProofVersion =
-				(InfoMasterDegreeProofVersion) serviceManager.executar(
-					userView,
-					getNameOfServiceToBeTested(),
-					argsReadMasterDegreeProofVersion);
-			
+				(InfoMasterDegreeProofVersion) serviceManager.executar(userView, getNameOfServiceToBeTested(), argsReadMasterDegreeProofVersion);
+
 			fail("testReadNonExistentMasterDegreeProofVersion did not throw NonExistingServiceException");
-					
+
 		} catch (NonExistingServiceException ex) {
 			//ok
 
