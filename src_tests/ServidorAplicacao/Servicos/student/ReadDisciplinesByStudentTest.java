@@ -12,19 +12,12 @@ package ServidorAplicacao.Servicos.student;
  */
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoPerson;
-import DataBeans.InfoShiftEnrolment;
-import DataBeans.InfoStudent;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
 import Util.TipoCurso;
 
 public class ReadDisciplinesByStudentTest extends TestCaseReadServices {
 
-	private InfoPerson infoPerson = null;
-	private InfoStudent infoStudent = null;
-	private InfoShiftEnrolment infoShiftEnrolment = null;
-	
-    public ReadDisciplinesByStudentTest(java.lang.String testName) {
+	public ReadDisciplinesByStudentTest(java.lang.String testName) {
     super(testName);
   }
     

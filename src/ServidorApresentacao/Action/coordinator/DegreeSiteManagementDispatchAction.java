@@ -374,7 +374,6 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
         throws FenixActionException
     {
 
-        HttpSession session = request.getSession(false);
         ActionErrors errors = new ActionErrors();
 
         Integer executionDegreeId = getFromRequest("infoExecutionDegreeID", request);

@@ -62,11 +62,9 @@ public class UnEnrollStudentInExamTest extends ServiceNeedsAuthenticationTestCas
     public void testUnEnrollNonExistingStudentInExam()
     {
         Object[] args = { "UsernameOfNonExistingStudent", new Integer(2)};
-        Boolean result;
-
         try
         {
-            result = (Boolean)gestor.executar(userView, getNameOfServiceToBeTested(), args);
+           gestor.executar(userView, getNameOfServiceToBeTested(), args);
 
             System.out.println(
                 "testUnEnrollNonExistingStudentInExam was UNSUCCESSFULY runned by class: "
