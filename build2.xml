@@ -195,11 +195,12 @@
     <fileset dir="${env.CATALINA_HOME}/common/lib">
       <include name="*.jar"/>
     </fileset>
+<!--
     <pathelement location="${env.CATALINA_HOME}/shared/classes"/>
     <fileset dir="${env.CATALINA_HOME}/shared/lib">
       <include name="*.jar"/>
     </fileset>
-
+-->
   </path>
 
 <!-- ==================== All Target ====================================== -->
