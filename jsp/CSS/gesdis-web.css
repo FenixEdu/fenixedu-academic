@@ -94,7 +94,6 @@ a:hover {
 	border: 0;
 	}
 #principal {
-	width: 100%;
 	margin: 0;
 	padding: 2.5em 5em 2.5em 5em;
 	border: 0;
@@ -127,6 +126,7 @@ a:hover {
 	border: 0;
 	}
 #barranav {
+	width: 15%;
 	margin: 0;
 	border: 0;
 	background-color: #EBEFFA !important;
