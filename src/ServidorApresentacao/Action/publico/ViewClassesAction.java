@@ -4,6 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -14,6 +16,7 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoSiteClasses;
 import DataBeans.SiteView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixContextAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
@@ -39,6 +42,7 @@ public class ViewClassesAction extends FenixContextAction {
         } catch (Exception e) {
             e.printStackTrace();
         }
+		
         HttpSession session = request.getSession(true);
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                 .getAttribute(SessionConstants.EXECUTION_PERIOD);
@@ -53,7 +57,20 @@ public class ViewClassesAction extends FenixContextAction {
         String degreeInitials = (String) infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla();
 		String nameDegreeCurricularPlan = (String) infoExecutionDegree.getInfoDegreeCurricularPlan().getName();
         Integer curricularYear = (Integer) request.getAttribute("curYear");
-
+        
+		ActionErrors errors = new ActionErrors();
+		request.setAttribute(SessionConstants.INFO_DEGREE_CURRICULAR_PLAN, infoExecutionDegree.getInfoDegreeCurricularPlan());
+		request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
+		request.setAttribute(
+			SessionConstants.EXECUTION_PERIOD_OID,
+			infoExecutionPeriod.getIdInternal().toString());
+		
+		request.setAttribute("degreeInitials", degreeInitials);
+		request.setAttribute("nameDegreeCurricularPlan",
+				nameDegreeCurricularPlan);
+		RequestUtils.setExecutionDegreeToRequest(request,infoExecutionDegree);
+		
+		
         ISiteComponent component = new InfoSiteClasses();
         SiteView siteView = null;
         Object[] args = { component,
@@ -64,19 +81,19 @@ public class ViewClassesAction extends FenixContextAction {
         try {
             siteView = (SiteView) ServiceUtils.executeService(null,
                     "ClassSiteComponentService", args);
-        } catch (FenixServiceException e1) {
+         
+		} 
+		catch (NonExistingServiceException e1) {
+			errors.add("nonExisting", new ActionError("error.exception.noStudents"));
+			saveErrors(request, errors);
+			return mapping.findForward("Sucess");
+		
+        } 
+        catch (FenixServiceException e1) {
             throw new FenixActionException(e1);
         }
-		request.setAttribute(SessionConstants.INFO_DEGREE_CURRICULAR_PLAN, infoExecutionDegree.getInfoDegreeCurricularPlan());
-		request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
-		request.setAttribute(
-			SessionConstants.EXECUTION_PERIOD_OID,
-			infoExecutionPeriod.getIdInternal().toString());
+       
 		request.setAttribute("siteView", siteView);
-        request.setAttribute("degreeInitials", degreeInitials);
-        request.setAttribute("nameDegreeCurricularPlan",
-                nameDegreeCurricularPlan);
-        RequestUtils.setExecutionDegreeToRequest(request,infoExecutionDegree);
         return mapping.findForward("Sucess");
         
 

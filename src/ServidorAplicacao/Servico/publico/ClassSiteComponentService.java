@@ -19,6 +19,8 @@ import Dominio.ITurma;
 import Dominio.Turma;
 import ServidorAplicacao.Factory.PublicSiteComponentBuilder;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
+import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentExecutionPeriod;
@@ -69,12 +71,15 @@ public class ClassSiteComponentService implements IService {
                             executionYear);
             PublicSiteComponentBuilder componentBuilder = PublicSiteComponentBuilder
                     .getInstance();
-
             ITurma domainClass;
-            if (classId == null) {
+            if (classId == null) {			
                 domainClass = getDomainClass(className, curricularYear,
                         executionPeriod, executionDegree, sp);
+                if (domainClass == null) {
+					throw new NonExistingServiceException();
+                }
             } else {
+
                 domainClass = (ITurma) persistentSchoolClass.readByOID(
                         Turma.class, classId);
             }
@@ -101,13 +106,16 @@ public class ClassSiteComponentService implements IService {
 									   executionDegree, executionPeriod);
 
 				   } else {
-
 						   	if (className == null && curricularYear == null) {					
+							
 							  domainList = persistentClass
 									  .readByExecutionDegreeAndDegreeAndExecutionPeriod(
 											  executionDegree,executionDegree.getCurricularPlan()
-											  .getDegree(), executionPeriod);									
-							  domainClass = (ITurma) domainList.get(0);
+											  .getDegree(), executionPeriod);	
+								 
+							  if (domainList.size() != 0) {								
+							   domainClass = (ITurma) domainList.get(0);
+							  }
 				   			}else {
 							   domainClass = new Turma();
 							   domainClass.setAnoCurricular(curricularYear);
