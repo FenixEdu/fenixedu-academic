@@ -64,7 +64,6 @@ public class GetEnrolmentGrade implements IServico {
         }
 
     }
-
     private InfoEnrolmentEvaluation getInfoLatestEvaluation(
             IEnrolmentEvaluation latestEvaluation) throws ExcepcaoPersistencia {
         //CLONER
@@ -82,9 +81,11 @@ public class GetEnrolmentGrade implements IServico {
                 latestEvaluation.setEmployee(employee);
                 //CLONER
                 //infolatestEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(employee.getPerson()));
+           
                 infolatestEvaluation.setInfoEmployee(InfoPerson
                         .newInfoFromDomain(employee.getPerson()));
             }
+			infolatestEvaluation.setInfoPersonResponsibleForGrade(InfoPerson.newInfoFromDomain(latestEvaluation.getPersonResponsibleForGrade()));
         }
         return infolatestEvaluation;
     }
