@@ -42,7 +42,7 @@ public class ReadSiteItemTest extends ServiceNeedsAuthenticationTestCase {
 		Integer infoSiteCode = new Integer(4);
 		InfoSiteCommon commonComponent = new InfoSiteCommon();
 		InfoSiteItems bodyComponent = new InfoSiteItems();
-		Object obj1 = new Integer(6);
+		Object obj1 = new Integer(1);
 		Object obj2 = null;
 
 		Object[] args =
@@ -63,7 +63,7 @@ public class ReadSiteItemTest extends ServiceNeedsAuthenticationTestCase {
 	}
 
 	protected String getDataSetFilePath() {
-		return null;
+		return "etc/datasets/servicos/teacher/testReadSiteItemDataSet.xml";
 	}
 
 	protected String getNameOfServiceToBeTested() {
@@ -84,14 +84,14 @@ public class ReadSiteItemTest extends ServiceNeedsAuthenticationTestCase {
 	public void testReadSiteItems() {
 		TeacherAdministrationSiteView result = null;
 		IItem item = new Item(new Integer(1));
-		
+
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			sp.iniciarTransaccao();
 			IPersistentItem persistentItem = sp.getIPersistentItem();
 			item = (IItem) persistentItem.readByOId(item, false);
 			sp.confirmarTransaccao();
-			
+
 			result =
 				(TeacherAdministrationSiteView) gestor.executar(
 					userView,
@@ -101,20 +101,19 @@ public class ReadSiteItemTest extends ServiceNeedsAuthenticationTestCase {
 			InfoSiteItems bodyComponent = (InfoSiteItems) result.getComponent();
 			InfoItem infoItem = bodyComponent.getItem();
 			List items = bodyComponent.getItems();
-			
+
 			IItem iItem = Cloner.copyInfoItem2IItem(infoItem);
-			
+
 			assertTrue(item.equals(iItem));
-			
+
 			assertEquals(items.size(), 2);
-			
-			compareDataSet("etc/datasets/servicos/teacher/sd.xml");
+
+			compareDataSet("etc/datasets/servicos/teacher/testExpectedReadSiteItemDataSet.xml");
 
 			System.out.println(
 				"testDeleteExistingItem was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			ex.printStackTrace();
 			System.out.println(
 				"testDeleteExistingItem was UNSUCCESSFULY runned by class: "
@@ -123,4 +122,83 @@ public class ReadSiteItemTest extends ServiceNeedsAuthenticationTestCase {
 		}
 	}
 
+	public void testReadNonSiteItem() {
+		TeacherAdministrationSiteView result = null;
+
+		Integer infoExecutionCourseCode = new Integer(27);
+		Integer infoSiteCode = new Integer(4);
+		InfoSiteCommon commonComponent = new InfoSiteCommon();
+		InfoSiteItems bodyComponent = new InfoSiteItems();
+		Object obj1 = new Integer(2);
+		Object obj2 = null;
+
+		Object[] args =
+			{
+				infoExecutionCourseCode,
+				commonComponent,
+				bodyComponent,
+				infoSiteCode,
+				obj1,
+				obj2 };
+
+		try {
+
+			result =
+				(TeacherAdministrationSiteView) gestor.executar(
+					userView,
+					getNameOfServiceToBeTested(),
+					args);
+
+			System.out.println(
+				"testDeleteExistingItem was UNSUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+			fail("testDeleteExistingItem");
+		} catch (Exception ex) {
+			System.out.println(
+				"testDeleteExistingItem was SUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+		}
+	}
+
+	public void testReadNonExistingItem() {
+
+		Integer infoExecutionCourseCode = new Integer(27);
+		Integer infoSiteCode = new Integer(4);
+		InfoSiteCommon commonComponent = new InfoSiteCommon();
+		InfoSiteItems bodyComponent = new InfoSiteItems();
+		Object obj1 = new Integer(100);
+		Object obj2 = null;
+
+		Object[] args =
+			{
+				infoExecutionCourseCode,
+				commonComponent,
+				bodyComponent,
+				infoSiteCode,
+				obj1,
+				obj2 };
+
+		try {
+
+			gestor.executar(
+				userView,
+				getNameOfServiceToBeTested(),
+				args);
+
+			System.out.println(
+				"testDeleteExistingItem was UNSUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+			fail("testDeleteExistingItem");
+		} catch (NullPointerException ex) {
+			System.out.println(
+				"testDeleteExistingItem was SUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.println(
+				"testDeleteExistingItem was UNSUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+		}
+	}
 }

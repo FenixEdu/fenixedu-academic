@@ -56,7 +56,7 @@ public class ReadSiteSectionsTest extends ServiceNeedsAuthenticationTestCase {
 	}
 
 	protected String getDataSetFilePath() {
-		return null;
+		return "etc/datasets/servicos/teacher/testReadSiteSectionsDataSet.xml";
 	}
 
 	protected String getNameOfServiceToBeTested() {
@@ -86,9 +86,9 @@ public class ReadSiteSectionsTest extends ServiceNeedsAuthenticationTestCase {
 			InfoSiteCommon commonComponent =
 				(InfoSiteCommon) result.getCommonComponent();
 			List sections = commonComponent.getSections();
-			assertEquals(sections.size(), 2);
+			assertEquals(sections.size(), 5);
 			
-			compareDataSet("etc/datasets/servicos/teacher/sd.xml");
+			compareDataSet("etc/datasets/servicos/teacher/testExpectedReadSiteSectionsDataSet.xml");
 
 			System.out.println(
 				"testDeleteExistingItem was SUCCESSFULY runned by class: "

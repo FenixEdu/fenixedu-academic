@@ -12,6 +12,7 @@ import DataBeans.util.Cloner;
 import Dominio.ISection;
 import Dominio.Section;
 import ServidorAplicacao.Servico.Autenticacao;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 import ServidorPersistente.IPersistentSection;
 import ServidorPersistente.ISuportePersistente;
@@ -61,7 +62,7 @@ public class ReadSiteSectionTest extends ServiceNeedsAuthenticationTestCase {
 	}
 
 	protected String getDataSetFilePath() {
-		return null;
+		return "etc/datasets/servicos/teacher/testReadSiteSectionDataSet.xml";
 	}
 
 	protected String getNameOfServiceToBeTested() {
@@ -103,17 +104,100 @@ public class ReadSiteSectionTest extends ServiceNeedsAuthenticationTestCase {
 			ISection iSection = Cloner.copyInfoSection2ISection(infoSection);
 			
 			assertTrue(section.equals(iSection));
+			
+			compareDataSet("etc/datasets/servicos/teacher/testExpectedReadSiteSectionDataSet.xml");
 
 			System.out.println(
-				"testDeleteExistingItem was SUCCESSFULY runned by class: "
+				"testReadSiteSection was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
 			System.out.println(
-				"testDeleteExistingItem was UNSUCCESSFULY runned by class: "
+				"testReadSiteSection was UNSUCCESSFULY runned by class: "
 					+ this.getClass().getName());
-			fail("testDeleteExistingItem");
+			fail("testReadSiteSection");
+		}
+	}
+	
+	public void testReadNonSiteSection() {
+		TeacherAdministrationSiteView result = null;
+
+		Integer infoExecutionCourseCode = new Integer(27);
+		Integer infoSiteCode = new Integer(4);
+		InfoSiteCommon commonComponent = new InfoSiteCommon();
+		InfoSiteSection bodyComponent = new InfoSiteSection();
+		Object obj1 = new Integer(7);
+		Object obj2 = null;
+
+		Object[] args =
+			{
+				infoExecutionCourseCode,
+				commonComponent,
+				bodyComponent,
+				infoSiteCode,
+				obj1,
+				obj2 };
+
+		try {
+
+			result =
+				(TeacherAdministrationSiteView) gestor.executar(
+					userView,
+					getNameOfServiceToBeTested(),
+					args);
+
+			System.out.println(
+				"testReadNonSiteSection was UNSUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+			fail("testReadNonSiteSection");
+		} catch (Exception ex) {
+			System.out.println(
+				"testReadNonSiteSection was SUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+		}
+	}
+
+	public void testReadNonExistingSection() {
+
+		Integer infoExecutionCourseCode = new Integer(27);
+		Integer infoSiteCode = new Integer(4);
+		InfoSiteCommon commonComponent = new InfoSiteCommon();
+		InfoSiteSection bodyComponent = new InfoSiteSection();
+		Object obj1 = new Integer(100);
+		Object obj2 = null;
+
+		Object[] args =
+			{
+				infoExecutionCourseCode,
+				commonComponent,
+				bodyComponent,
+				infoSiteCode,
+				obj1,
+				obj2 };
+
+		try {
+
+			gestor.executar(
+				userView,
+				getNameOfServiceToBeTested(),
+				args);
+
+			System.out.println(
+				"testReadNonExistingSection was UNSUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+			fail("testReadNonExistingSection");
+		} catch (FenixServiceException ex) {
+			System.out.println(
+				"testReadNonExistingSection was SUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.println(
+				"testReadNonExistingSection was UNSUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+			fail("testReadNonExistingSection");
 		}
 	}
 
