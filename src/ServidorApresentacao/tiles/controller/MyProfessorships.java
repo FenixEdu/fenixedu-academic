@@ -90,6 +90,11 @@ public class MyProfessorships extends ControllerSupport {
                 }
                 
             }
+            
+            if(selectedExecutionPeriod == null){
+                selectedExecutionPeriod = (InfoExecutionPeriod)executionPeriods.get(0);
+            }
+
             request.setAttribute("selectedExecutionPeriodId", selectedExecutionPeriod.getIdInternal().toString());
 
             DynaActionForm dynaActionForm = (DynaActionForm) request.getAttribute("executionPeriodForm");
