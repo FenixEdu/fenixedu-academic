@@ -71,7 +71,6 @@ public class EditarTurno implements IServico {
 			throw new InvalidNewShiftCapacity();
 		}
 
-
 		try {
 			ISuportePersistente sp;
 			sp = SuportePersistenteOJB.getInstance();
@@ -81,11 +80,25 @@ public class EditarTurno implements IServico {
 					Turno.class,
 					infoShiftOld.getIdInternal());
 
+			int capacityDiference =
+				infoShiftNew.getLotacao().intValue()
+					- shift.getLotacao().intValue();
+
+			if (shift.getAvailabilityFinal().intValue() + capacityDiference < 0) {
+				throw new InvalidFinalAvailabilityException();
+			}
+
 			sp.getITurnoPersistente().lockWrite(shift);
 
 			shift.setNome(infoShiftNew.getNome());
 			shift.setTipo(infoShiftNew.getTipo());
+
 			shift.setLotacao(infoShiftNew.getLotacao());
+			shift.setAvailabilityFinal(
+				new Integer(
+					shift.getAvailabilityFinal().intValue()
+						+ capacityDiference));
+
 			IDisciplinaExecucao executionCourse =
 				(IDisciplinaExecucao) sp
 					.getIDisciplinaExecucaoPersistente()
@@ -93,15 +106,19 @@ public class EditarTurno implements IServico {
 					DisciplinaExecucao.class,
 					infoShiftNew.getInfoDisciplinaExecucao().getIdInternal());
 
-			System.out.println("infoShiftOld.getInfoDisciplinaExecucao().getNome()= " + infoShiftOld.getInfoDisciplinaExecucao().getNome());
-			System.out.println("infoShiftNew.getInfoDisciplinaExecucao().getNome()= " + infoShiftNew.getInfoDisciplinaExecucao().getNome());
+			System.out.println(
+				"infoShiftOld.getInfoDisciplinaExecucao().getNome()= "
+					+ infoShiftOld.getInfoDisciplinaExecucao().getNome());
+			System.out.println(
+				"infoShiftNew.getInfoDisciplinaExecucao().getNome()= "
+					+ infoShiftNew.getInfoDisciplinaExecucao().getNome());
 
 			shift.setDisciplinaExecucao(executionCourse);
 
 			infoShift = Cloner.copyShift2InfoShift(shift);
-			
+
 			try {
-				sp.getITurnoPersistente().lockWrite(shift);	
+				sp.getITurnoPersistente().lockWrite(shift);
 			} catch (ExcepcaoPersistencia ex) {
 				throw new ExistingShiftException(ex);
 			}
@@ -118,7 +135,7 @@ public class EditarTurno implements IServico {
 		InfoExecutionCourse newShiftExecutionCourse,
 		Integer newShiftCapacity)
 		throws FenixServiceException {
-			
+
 		// 1. Read shift lessons
 		List shiftLessons = null;
 		ITurno shift = null;
@@ -141,7 +158,8 @@ public class EditarTurno implements IServico {
 			IAula lesson = ((IAula) shiftLessons.get(i));
 			shiftDuration
 				+= (getLessonDurationInMinutes(lesson).doubleValue() / 60);
-			if (lesson.getSala().getCapacidadeNormal().intValue() > maxCapacity.intValue()) {
+			if (lesson.getSala().getCapacidadeNormal().intValue()
+				> maxCapacity.intValue()) {
 				maxCapacity = lesson.getSala().getCapacidadeNormal();
 			}
 		}
@@ -164,12 +182,12 @@ public class EditarTurno implements IServico {
 				throw new InvalidNewShiftExecutionCourse();
 			}
 		}
-		
+
 		// 4. Check if NEW shift capacity is bigger then maximum lesson room capacity
 		//if (newShiftCapacity.intValue() > maxCapacity.intValue()) {
 		//	throw new InvalidNewShiftCapacity();
 		//}
-		
+
 	}
 
 	private boolean newShiftTypeIsValid(
@@ -385,9 +403,7 @@ public class EditarTurno implements IServico {
 		 * @param message
 		 * @param cause
 		 */
-		private InvalidNewShiftCapacity(
-			String message,
-			Throwable cause) {
+		private InvalidNewShiftCapacity(String message, Throwable cause) {
 			super(message, cause);
 		}
 
@@ -427,6 +443,41 @@ public class EditarTurno implements IServico {
 			super(cause);
 		}
 
+	}
+
+	/**
+	 * To change the template for this generated type comment go to
+	 * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+	 */
+	public class InvalidFinalAvailabilityException extends FenixServiceException {
+
+		/**
+		 * 
+		 */
+		private InvalidFinalAvailabilityException() {
+			super();
+		}
+
+		/**
+		 * @param errorType
+		 */
+		private InvalidFinalAvailabilityException(int errorType) {
+			super(errorType);
+		}
+
+		/**
+		 * @param s
+		 */
+		private InvalidFinalAvailabilityException(String s) {
+			super(s);
+		}
+
+		/**
+		 * @param cause
+		 */
+		private InvalidFinalAvailabilityException(Throwable cause) {
+			super(cause);
+		}
 
 	}
 

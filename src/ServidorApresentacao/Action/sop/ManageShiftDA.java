@@ -21,6 +21,7 @@ import DataBeans.InfoShift;
 import DataBeans.ShiftKey;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.sop.EditarTurno.ExistingShiftException;
+import ServidorAplicacao.Servico.sop.EditarTurno.InvalidFinalAvailabilityException;
 import ServidorAplicacao.Servico.sop.EditarTurno.InvalidNewShiftCapacity;
 import ServidorAplicacao.Servico.sop.EditarTurno.InvalidNewShiftExecutionCourse;
 import ServidorAplicacao.Servico.sop.EditarTurno.InvalidNewShiftType;
@@ -105,6 +106,13 @@ public class ManageShiftDA
 					argsCriarTurno);
 		} catch (ExistingShiftException ex) {
 			throw new ExistingActionException("O Turno", ex);
+		} catch (InvalidFinalAvailabilityException e0) {
+			ActionErrors actionErrors = new ActionErrors();
+			actionErrors.add(
+				"errors.exception.invalid.finalAvailability",
+				new ActionError("errors.exception.invalid.finalAvailability"));
+			saveErrors(request, actionErrors);
+			return mapping.getInputForward();
 		} catch (InvalidNewShiftType e1) {
 			ActionErrors actionErrors = new ActionErrors();
 			actionErrors.add(

@@ -81,7 +81,7 @@
 	</table>
 	<br />
 	<html:submit property="operation" styleClass="inputbutton">
-		<bean:message key="lable.chooseRoom"/>
+		<bean:message key="lable.ok"/>
 	</html:submit>
 	<html:reset value="Limpar" styleClass="inputbutton">
 		<bean:message key="label.clear"/>
