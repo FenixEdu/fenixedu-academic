@@ -16,7 +16,7 @@ import ServidorApresentacao.TestCasePresentationMDAdministrativeOffice;
  *
  */
 
-public class ListConjtributorsDispatchActionPrepareMethodTest
+public class ListContributorsDispatchActionPrepareMethodTest
 	extends TestCasePresentationMDAdministrativeOffice{
 	/**
 	 * Main method 
@@ -31,14 +31,14 @@ public class ListConjtributorsDispatchActionPrepareMethodTest
 	 * @return Test to be done
 	 */
 	public static Test suite() {
-		TestSuite suite = new TestSuite(ListConjtributorsDispatchActionPrepareMethodTest.class);
+		TestSuite suite = new TestSuite(ListContributorsDispatchActionPrepareMethodTest.class);
 		return suite;
 	}
 
 	/**
 	 * @param testName
 	 */
-	public ListConjtributorsDispatchActionPrepareMethodTest(String testName) {
+	public ListContributorsDispatchActionPrepareMethodTest(String testName) {
 		super(testName);
 	}
 

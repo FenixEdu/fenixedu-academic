@@ -18,7 +18,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  *
  */
 
-public class ListConjtributorsDispatchActionEditMethodTest
+public class ListContributorsDispatchActionPrepareEditMethodTest
 	extends TestCasePresentationMDAdministrativeOffice{
 	/**
 	 * Main method 
@@ -33,14 +33,14 @@ public class ListConjtributorsDispatchActionEditMethodTest
 	 * @return Test to be done
 	 */
 	public static Test suite() {
-		TestSuite suite = new TestSuite(ListConjtributorsDispatchActionEditMethodTest.class);
+		TestSuite suite = new TestSuite(ListContributorsDispatchActionPrepareEditMethodTest.class);
 		return suite;
 	}
 
 	/**
 	 * @param testName
 	 */
-	public ListConjtributorsDispatchActionEditMethodTest(String testName) {
+	public ListContributorsDispatchActionPrepareEditMethodTest(String testName) {
 		super(testName);
 	}
 
@@ -72,10 +72,8 @@ public class ListConjtributorsDispatchActionEditMethodTest
 	 */
 	protected Map getItemsToPutInRequestForActionToBeTestedSuccessfuly() {
 		HashMap requestParameters = new HashMap();
-		requestParameters.put("method","edit");
-		requestParameters.put("contributorNumber","1");
-		requestParameters.put("contributorName","IST");
-		requestParameters.put("contributorAddress","Rovisco Pais");
+		requestParameters.put("method","prepareEdit");
+		requestParameters.put("contributorPosition","1");
 		return requestParameters;
 	}
 
@@ -125,7 +123,7 @@ public class ListConjtributorsDispatchActionEditMethodTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getSuccessfulForward()
 	 */
 	protected String getSuccessfulForward() {
-		return "EditSuccess";
+		return "EditReady";
 	}
 
 }

@@ -1,12 +1,15 @@
 
 package ServidorApresentacao.Action.masterDegree.administrativeOffice.contributor;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoContributor;
+import ServidorApresentacao.ScopeConstants;
 import ServidorApresentacao.TestCasePresentationMDAdministrativeOffice;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
@@ -18,7 +21,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  *
  */
 
-public class ListConjtributorsDispatchActionPrepareEditMethodTest
+public class ListContributorsDispatchActionChooseContributorMethodTest
 	extends TestCasePresentationMDAdministrativeOffice{
 	/**
 	 * Main method 
@@ -33,14 +36,14 @@ public class ListConjtributorsDispatchActionPrepareEditMethodTest
 	 * @return Test to be done
 	 */
 	public static Test suite() {
-		TestSuite suite = new TestSuite(ListConjtributorsDispatchActionPrepareEditMethodTest.class);
+		TestSuite suite = new TestSuite(ListContributorsDispatchActionChooseContributorMethodTest.class);
 		return suite;
 	}
 
 	/**
 	 * @param testName
 	 */
-	public ListConjtributorsDispatchActionPrepareEditMethodTest(String testName) {
+	public ListContributorsDispatchActionChooseContributorMethodTest(String testName) {
 		super(testName);
 	}
 
@@ -50,12 +53,12 @@ public class ListConjtributorsDispatchActionPrepareEditMethodTest
 	 */
 	protected Map getItemsToPutInSessionForActionToBeTestedSuccessfuly() {
 		InfoContributor infoContributor = new InfoContributor();
-		infoContributor.setContributorNumber(new Integer(123));
-		infoContributor.setContributorName("Contributor 1");
-		infoContributor.setContributorAddress("Address 1");
+		List contributorList = new ArrayList();
+		contributorList.add(infoContributor);
+		contributorList.add(infoContributor);
 		
 		HashMap requestParameters = new HashMap();
-		requestParameters.put(SessionConstants.CONTRIBUTOR, infoContributor);
+		requestParameters.put(SessionConstants.CONTRIBUTOR_LIST, contributorList);
 		return requestParameters;
 	}
 
@@ -72,7 +75,7 @@ public class ListConjtributorsDispatchActionPrepareEditMethodTest
 	 */
 	protected Map getItemsToPutInRequestForActionToBeTestedSuccessfuly() {
 		HashMap requestParameters = new HashMap();
-		requestParameters.put("method","prepareEdit");
+		requestParameters.put("method","chooseContributor");
 		requestParameters.put("contributorPosition","1");
 		return requestParameters;
 	}
@@ -88,7 +91,12 @@ public class ListConjtributorsDispatchActionPrepareEditMethodTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getExistingAttributesListToVerifyInSuccessfulExecution()
 	 */
 	protected Map getExistingAttributesListToVerifyInSuccessfulExecution() {
-		return null;
+		HashMap attributes = new HashMap();
+		List requestAttributes = new ArrayList();
+		requestAttributes.add(SessionConstants.CONTRIBUTOR_LIST);
+		requestAttributes.add(SessionConstants.CONTRIBUTOR);
+		attributes.put(new Integer(ScopeConstants.SESSION),requestAttributes);
+		return attributes;
 	}
 
 	/* (non-Javadoc)
@@ -116,14 +124,14 @@ public class ListConjtributorsDispatchActionPrepareEditMethodTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoNameAction()
 	 */
 	protected String getRequestPathInfoNameAction() {
-		return "/editContributor";
+		return "/visualizeContributors";
 	}
 
 	/* (non-Javadoc)
 	 * @see ServidorApresentacao.TestCaseActionExecution#getSuccessfulForward()
 	 */
 	protected String getSuccessfulForward() {
-		return "EditReady";
+		return "ActionReady";
 	}
 
 }

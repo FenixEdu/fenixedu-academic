@@ -1,14 +1,12 @@
 
 package ServidorApresentacao.Action.masterDegree.administrativeOffice.contributor;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import ServidorApresentacao.ScopeConstants;
+import DataBeans.InfoContributor;
 import ServidorApresentacao.TestCasePresentationMDAdministrativeOffice;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
@@ -20,7 +18,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  *
  */
 
-public class ListConjtributorsDispatchActionGetContributorsMethodTest
+public class ListContributorsDispatchActionEditMethodTest
 	extends TestCasePresentationMDAdministrativeOffice{
 	/**
 	 * Main method 
@@ -35,14 +33,14 @@ public class ListConjtributorsDispatchActionGetContributorsMethodTest
 	 * @return Test to be done
 	 */
 	public static Test suite() {
-		TestSuite suite = new TestSuite(ListConjtributorsDispatchActionGetContributorsMethodTest.class);
+		TestSuite suite = new TestSuite(ListContributorsDispatchActionEditMethodTest.class);
 		return suite;
 	}
 
 	/**
 	 * @param testName
 	 */
-	public ListConjtributorsDispatchActionGetContributorsMethodTest(String testName) {
+	public ListContributorsDispatchActionEditMethodTest(String testName) {
 		super(testName);
 	}
 
@@ -51,7 +49,14 @@ public class ListConjtributorsDispatchActionGetContributorsMethodTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInSessionForActionToBeTestedSuccessfuly()
 	 */
 	protected Map getItemsToPutInSessionForActionToBeTestedSuccessfuly() {
-		return null;
+		InfoContributor infoContributor = new InfoContributor();
+		infoContributor.setContributorNumber(new Integer(123));
+		infoContributor.setContributorName("Contributor 1");
+		infoContributor.setContributorAddress("Address 1");
+		
+		HashMap requestParameters = new HashMap();
+		requestParameters.put(SessionConstants.CONTRIBUTOR, infoContributor);
+		return requestParameters;
 	}
 
 	/* (non-Javadoc)
@@ -67,7 +72,10 @@ public class ListConjtributorsDispatchActionGetContributorsMethodTest
 	 */
 	protected Map getItemsToPutInRequestForActionToBeTestedSuccessfuly() {
 		HashMap requestParameters = new HashMap();
-		requestParameters.put("method","getContributors");
+		requestParameters.put("method","edit");
+		requestParameters.put("contributorNumber","1");
+		requestParameters.put("contributorName","IST");
+		requestParameters.put("contributorAddress","Rovisco Pais");
 		return requestParameters;
 	}
 
@@ -82,11 +90,7 @@ public class ListConjtributorsDispatchActionGetContributorsMethodTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getExistingAttributesListToVerifyInSuccessfulExecution()
 	 */
 	protected Map getExistingAttributesListToVerifyInSuccessfulExecution() {
-		HashMap attributes = new HashMap();
-		List requestAttributes = new ArrayList();
-		requestAttributes.add(SessionConstants.CONTRIBUTOR_LIST);
-		attributes.put(new Integer(ScopeConstants.SESSION),requestAttributes);
-		return attributes;
+		return null;
 	}
 
 	/* (non-Javadoc)
@@ -114,14 +118,14 @@ public class ListConjtributorsDispatchActionGetContributorsMethodTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoNameAction()
 	 */
 	protected String getRequestPathInfoNameAction() {
-		return "/visualizeContributors";
+		return "/editContributor";
 	}
 
 	/* (non-Javadoc)
 	 * @see ServidorApresentacao.TestCaseActionExecution#getSuccessfulForward()
 	 */
 	protected String getSuccessfulForward() {
-		return "ChooseContributor";
+		return "EditSuccess";
 	}
 
 }

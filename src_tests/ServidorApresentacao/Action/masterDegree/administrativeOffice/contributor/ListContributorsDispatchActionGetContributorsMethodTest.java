@@ -8,7 +8,6 @@ import java.util.Map;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoContributor;
 import ServidorApresentacao.ScopeConstants;
 import ServidorApresentacao.TestCasePresentationMDAdministrativeOffice;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -21,7 +20,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  *
  */
 
-public class ListConjtributorsDispatchActionChooseContributorMethodTest
+public class ListContributorsDispatchActionGetContributorsMethodTest
 	extends TestCasePresentationMDAdministrativeOffice{
 	/**
 	 * Main method 
@@ -36,14 +35,14 @@ public class ListConjtributorsDispatchActionChooseContributorMethodTest
 	 * @return Test to be done
 	 */
 	public static Test suite() {
-		TestSuite suite = new TestSuite(ListConjtributorsDispatchActionChooseContributorMethodTest.class);
+		TestSuite suite = new TestSuite(ListContributorsDispatchActionGetContributorsMethodTest.class);
 		return suite;
 	}
 
 	/**
 	 * @param testName
 	 */
-	public ListConjtributorsDispatchActionChooseContributorMethodTest(String testName) {
+	public ListContributorsDispatchActionGetContributorsMethodTest(String testName) {
 		super(testName);
 	}
 
@@ -52,14 +51,7 @@ public class ListConjtributorsDispatchActionChooseContributorMethodTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInSessionForActionToBeTestedSuccessfuly()
 	 */
 	protected Map getItemsToPutInSessionForActionToBeTestedSuccessfuly() {
-		InfoContributor infoContributor = new InfoContributor();
-		List contributorList = new ArrayList();
-		contributorList.add(infoContributor);
-		contributorList.add(infoContributor);
-		
-		HashMap requestParameters = new HashMap();
-		requestParameters.put(SessionConstants.CONTRIBUTOR_LIST, contributorList);
-		return requestParameters;
+		return null;
 	}
 
 	/* (non-Javadoc)
@@ -75,8 +67,7 @@ public class ListConjtributorsDispatchActionChooseContributorMethodTest
 	 */
 	protected Map getItemsToPutInRequestForActionToBeTestedSuccessfuly() {
 		HashMap requestParameters = new HashMap();
-		requestParameters.put("method","chooseContributor");
-		requestParameters.put("contributorPosition","1");
+		requestParameters.put("method","getContributors");
 		return requestParameters;
 	}
 
@@ -94,7 +85,6 @@ public class ListConjtributorsDispatchActionChooseContributorMethodTest
 		HashMap attributes = new HashMap();
 		List requestAttributes = new ArrayList();
 		requestAttributes.add(SessionConstants.CONTRIBUTOR_LIST);
-		requestAttributes.add(SessionConstants.CONTRIBUTOR);
 		attributes.put(new Integer(ScopeConstants.SESSION),requestAttributes);
 		return attributes;
 	}
@@ -131,7 +121,7 @@ public class ListConjtributorsDispatchActionChooseContributorMethodTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getSuccessfulForward()
 	 */
 	protected String getSuccessfulForward() {
-		return "ActionReady";
+		return "ChooseContributor";
 	}
 
 }
