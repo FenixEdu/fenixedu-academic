@@ -21,10 +21,13 @@ import Dominio.ITurma;
 import Dominio.ITurmaTurno;
 import Dominio.ITurno;
 import Dominio.TurmaTurno;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.sop.exceptions.ExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class AdicionarTurno implements IServico {
 
@@ -48,7 +51,7 @@ public class AdicionarTurno implements IServico {
     return "AdicionarTurno";
   }
 
-  public Boolean run(InfoClass infoClass, InfoShift infoShift) {
+  public Boolean run(InfoClass infoClass, InfoShift infoShift) throws FenixServiceException {
 
     ITurmaTurno turmaTurno = null;
     boolean result = false;
@@ -65,11 +68,15 @@ public class AdicionarTurno implements IServico {
 
 	  turmaTurno = new TurmaTurno(group, shift);
       
-      sp.getITurmaTurnoPersistente().lockWrite(turmaTurno);
+      try {
+		sp.getITurmaTurnoPersistente().lockWrite(turmaTurno);
+	} catch (ExistingPersistentException e) {
+		throw new ExistingServiceException(e);
+	}
       
       result = true;
     } catch (ExcepcaoPersistencia ex) {
-      ex.printStackTrace();
+		throw new FenixServiceException(ex.getMessage());
     }
 
     return new Boolean (result);

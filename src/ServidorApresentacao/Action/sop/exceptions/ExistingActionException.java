@@ -44,5 +44,5 @@ public class ExistingActionException extends FenixActionException {
 	public static void setKey(String key) {
 		ExistingActionException.key = key;
 	}
-
+//TODO find a way of internationalizing the message passed as argument to the exception error message of the resource bundle
 }

@@ -25,7 +25,10 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoShift;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IUserView;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.sop.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -54,18 +57,21 @@ public class ClassShiftManagerDispatchAction extends DispatchAction {
 
 			Object[] argsAdicionarTurno = { classView, infoShift };
 
-			ServiceUtils.executeService(
-				userView,
-				"AdicionarTurno",
-				argsAdicionarTurno);
+			try {
+				ServiceUtils.executeService(
+					userView,
+					"AdicionarTurno",
+					argsAdicionarTurno);
+			} catch (Exception e) {
+				throw new ExistingActionException("A aula", e);
+			}
 
 			setClassShiftListToRequest(request, userView, classView.getNome());
 
 			session.setAttribute(SessionConstants.CLASS_INFO_SHIFT_LIST_KEY, request.getAttribute(SHIFT_LIST_ATT));
 			session.removeAttribute(SessionConstants.AVAILABLE_INFO_SHIFT_LIST_KEY);		
-		} catch (Exception e) {
-			e.printStackTrace(System.out);
-			throw e;
+		} catch (FenixServiceException e) {
+			throw new FenixActionException("Aconteceu um erro",e);
 
 		}
 		return mapping.findForward("viewClassShiftList");

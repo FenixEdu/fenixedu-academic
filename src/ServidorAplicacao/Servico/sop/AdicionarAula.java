@@ -25,10 +25,13 @@ import Dominio.ITurno;
 import Dominio.ITurnoAula;
 import Dominio.Turno;
 import Dominio.TurnoAula;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.sop.exceptions.ExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoAula;
 
 public class AdicionarAula implements IServico {
@@ -54,7 +57,8 @@ public class AdicionarAula implements IServico {
 		return "AdicionarAula";
 	}
 
-	public Object run(InfoShift infoShift, InfoLesson infoLesson) {
+	public Object run(InfoShift infoShift, InfoLesson infoLesson)
+		throws FenixServiceException {
 
 		ITurnoAula turnoAula = null;
 		InfoShiftServiceResult result = null;
@@ -84,11 +88,16 @@ public class AdicionarAula implements IServico {
 
 			result = valid(turno1, aula1);
 
-			if (result.isSUCESS())
-				sp.getITurnoAulaPersistente().lockWrite(turnoAula);
+			if (result.isSUCESS()) {
+				try {
+					sp.getITurnoAulaPersistente().lockWrite(turnoAula);
+				} catch (ExistingPersistentException ex) {
+					throw new ExistingServiceException(ex);
+				}
+			}
 
 		} catch (ExcepcaoPersistencia ex) {
-			ex.printStackTrace();
+			throw new FenixServiceException(ex.getMessage());
 		}
 
 		return result;

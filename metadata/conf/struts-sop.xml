@@ -528,6 +528,9 @@
               path="/adicionarAulasForm"
               scope="session"
               type="ServidorApresentacao.Action.sop.AdicionarAulasFormAction">
+          <exception type="ServidorApresentacao.Action.sop.exceptions.ExistingActionException"
+               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+               />
         <forward name="Sucesso" path="/prepararEditarAulasDeTurno.do"/>
       </action>
 
@@ -563,6 +566,9 @@
               type="ServidorApresentacao.Action.sop.ClassShiftManagerDispatchAction"
               validate="false"
 		>
+		<exception type="ServidorApresentacao.Action.sop.exceptions.ExistingActionException"
+               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+               />
 	         <forward name="viewClassShiftList" path="/viewShiftList.jsp"/>  
 	         <forward name="viewAvailableShiftList" path="/viewShiftList.jsp"/>  
       </action>
