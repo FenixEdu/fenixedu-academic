@@ -140,6 +140,8 @@ public class EditGrantContractAction extends FenixDispatchAction {
                 infoGrantContractRegime.setInfoTeacher(infoGrantContract
                         .getGrantOrientationTeacherInfo().getOrientationTeacherInfo());
                 infoGrantContractRegime.setInfoGrantContract(infoGrantContract);
+            } else {
+                infoGrantContractRegime.setInfoGrantContract(infoGrantContract);
             }
 
             //Edit Grant Contract Regime
