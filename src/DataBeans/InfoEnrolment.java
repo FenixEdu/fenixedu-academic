@@ -57,6 +57,7 @@ public class InfoEnrolment implements Serializable {
 		result += "universityCode = " + this.universityCode + "]\n";
 		result += "infoEvaluations = " + this.infoEvaluations + "]\n";
 		
+		
 		return result;
 	}
 

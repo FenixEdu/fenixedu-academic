@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -26,6 +28,7 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import Util.EnrolmentState;
 
 /**
  * 
@@ -77,61 +80,48 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 				}			
 				
 			}else{ 
-				Object args[] = {infoStudentCurricularPlan};
-
+				
 				//get informations
-				List enrolmentList = null;
-				try {
-					enrolmentList = (List) serviceManager.executar(userView, "GetEnrolmentList", args);
+				List enrolmentList = null;				
+				if (certificate.equals("Inscrição")){
+					Object args[] = {infoStudentCurricularPlan, new EnrolmentState(EnrolmentState.ENROLED)};
+					try {
+						enrolmentList = (List) serviceManager.executar(userView, "GetEnrolmentList", args);
 
-				} catch (NonExistingServiceException e) {
-					throw new NonExistingActionException("Inscrição", e);
-				}
-System.out.print("infoEnrolment " + (InfoEnrolment) enrolmentList.get(0));				
-//				if (enrolmentList.size() == 0){
-////					throw new NonExistingActionException("Inscrição");
-////				   ActionErrors errors = new ActionErrors();
-////				   errors.add("EnrolmentNotExist",
-////							  new ActionError("error.enrolment.notExist"));
-////					saveErrors(request, errors);
-//					return mapping.findForward(mapping.getInput());
-//				}
-				if (certificate.equals("Inscrição")){			   
+					} catch (NonExistingServiceException e) {
+						throw new NonExistingActionException("Inscrição", e);
+					}
+					if (enrolmentList.size() == 0){
+						ActionErrors errors = new ActionErrors();
+						errors.add("AlunoNãoExiste",
+									new ActionError("error.enrolment.notExist"));
+						saveErrors(request, errors);
+						return new ActionForward(mapping.getInput());
+					}
+System.out.println("............" + enrolmentList.get(0));
 					session.setAttribute(SessionConstants.ENROLMENT, certificate.toUpperCase());
 					session.setAttribute(SessionConstants.ENROLMENT_LIST, enrolmentList);	
 				}
-				if (certificate.equals("Aproveitamento")){			   
+				if (certificate.equals("Aproveitamento")){
+					Object args[] = {infoStudentCurricularPlan, new EnrolmentState(EnrolmentState.APROVED)};
+					try {
+						enrolmentList = (List) serviceManager.executar(userView, "GetEnrolmentList", args);
+
+					} catch (NonExistingServiceException e) {
+						throw new NonExistingActionException("Inscrição", e);
+					}
+					if (enrolmentList.size() == 0){
+						ActionErrors errors = new ActionErrors();
+						errors.add("AlunoNãoExiste",
+									new ActionError("error.enrolment.notExist"));
+						saveErrors(request, errors);
+						return new ActionForward(mapping.getInput());
+					}
 					session.setAttribute(SessionConstants.APROVMENT, certificate.toUpperCase());
 					session.setAttribute(SessionConstants.ENROLMENT_LIST, enrolmentList);	
+			
 				}
-	
-			
 			}	
-//			newInfoStudentCurricularPlan = infoStudentCurricularPlan;
-			
-			
-//
-//			String nome = newInfoStudentCurricularPlan.getInfoStudent().getInfoPerson().getNome();
-//			String nomePai = newInfoStudentCurricularPlan.getInfoStudent().getInfoPerson().getNomePai();
-//			String nomeMae = newInfoStudentCurricularPlan.getInfoStudent().getInfoPerson().getNomeMae();
-//			String nacionalidade = newInfoStudentCurricularPlan.getInfoStudent().getInfoPerson().getNacionalidade();
-//			String naturalidade = newInfoStudentCurricularPlan.getInfoStudent().getInfoPerson().getFreguesiaNaturalidade();
-//			String curso = newInfoStudentCurricularPlan.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
-//			
-//			infoPerson.setNome(nome.toUpperCase());
-//			infoPerson.setNomePai(nomePai.toUpperCase());
-//			infoPerson.setNomeMae(nomeMae.toUpperCase());
-//			infoPerson.setNacionalidade(nacionalidade.toUpperCase());
-//			infoPerson.setFreguesiaNaturalidade(naturalidade.toUpperCase());
-//			
-//			infoStudent.setInfoPerson(infoPerson);
-//			infoStudent.setNumber(newInfoStudentCurricularPlan.getInfoStudent().getNumber());
-//			newInfoStudentCurricularPlan.setInfoStudent(infoStudent);
-//			
-//			infoDegree.setNome(curso.toUpperCase());
-//			infoDegreeCurricularPlan.setInfoDegree(infoDegree);
-//			newInfoStudentCurricularPlan.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
-//			
 			
   			session.setAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN, infoStudentCurricularPlan);
   			

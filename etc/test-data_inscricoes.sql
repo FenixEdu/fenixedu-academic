@@ -78,7 +78,8 @@ INSERT INTO CURRICULAR_COURSE_ENROLMENT_INFO VALUES (1, 11, 5, 0);
 
 
 #-----------------------------
-# Data for table 'ENROLMENT'  (ID_INTERNAL, KEY_STUDENT_CURRICULAR_PLAN, KEY_CURRICULAR_COURSE, KEY_EXECUTION_PERIOD, STATE)
+# Data for table 'ENROLMENT'  (ID_INTERNAL, KEY_STUDENT_CURRICULAR_PLAN, KEY_CURRICULAR_COURSE, KEY_EXECUTION_PERIOD, STATE, 
+#									CLASS_NAME, KEY_CURRICULAR_COURSE_FOR_OPTION, EVALUATION_TYPE, UNIVERSITY_CODE)
 # STATE: 1 = APPROVED
 # 		 2 = REPROVED
 # UNIQUE: KEY_STUDENT_CURRICULAR_PLAN, KEY_CURRICULAR_COURSE, KEY_EXECUTION_PERIOD
@@ -95,12 +96,23 @@ INSERT INTO ENROLMENT VALUES (6, 1, 14, 1, 2, 'Dominio.Enrolment', null, 1, "IST
 #-----------------------------
 #Angela
 #-----------------------------
-INSERT INTO ENROLMENT VALUES (7, 4, 2, 2, 2, 'Dominio.Enrolment', null,1, "IST");
-INSERT INTO ENROLMENT VALUES (8, 4, 2, 3, 2, 'Dominio.Enrolment', null,1, "IST");
-INSERT INTO ENROLMENT VALUES (9, 4, 14, 1, 2, 'Dominio.Enrolment', null,1, "IST");
-INSERT INTO ENROLMENT VALUES (10, 5, 1, 2, 2, 'Dominio.Enrolment', null,1, "IST");
-INSERT INTO ENROLMENT VALUES (11, 5, 2, 3, 2, 'Dominio.Enrolment', null,1, "IST");
-INSERT INTO ENROLMENT VALUES (12, 5, 14, 1, 2, 'Dominio.Enrolment', null,1, "IST");
+INSERT INTO ENROLMENT VALUES (7, 4, 2, 2, 1, 'Dominio.Enrolment', null, 1, "IST");
+INSERT INTO ENROLMENT VALUES (8, 4, 2, 3, 1, 'Dominio.Enrolment', null, 1, "IST");
+INSERT INTO ENROLMENT VALUES (9, 4, 14, 1, 3, 'Dominio.Enrolment', null, 1, "IST");
+INSERT INTO ENROLMENT VALUES (10, 5, 1, 2, 1, 'Dominio.Enrolment', null, 1, "IST");
+INSERT INTO ENROLMENT VALUES (11, 5, 2, 3, 3, 'Dominio.Enrolment', null, 1, "IST");
+INSERT INTO ENROLMENT VALUES (12, 5, 14, 3, 3, 'Dominio.EnrolmentInExtraCurricularCourse', null, 1, "IST");
+INSERT INTO ENROLMENT VALUES (13, 6, 1, 3, 3, 'Dominio.EnrolmentInExtraCurricularCourse', null, 1, "IST");
+#-----------------------------
+#Angela
+#-----------------------------
+#Data for table 'ENROLMENT_EVALUATION'  (int ID_INTERNAL, varchar GRADE, int EVALUATION_TYPE(unique), date EXAM_DATE, date GRADE_AVAILABLE_DATE, int RESPONSIBLE_TEACHER, int STATE, int KEY_ENROLMENT(unique))
+
+#DELETE FROM ENROLMENT_EVALUATION;
+INSERT INTO ENROLMENT_EVALUATION VALUES (1, '15', 1, '2003-02-12', '2003-03-20', 1, 1, 10);
+INSERT INTO ENROLMENT_EVALUATION VALUES (2, '18', 1, '2003-02-12', '2003-03-20', 1, 1, 7);
+INSERT INTO ENROLMENT_EVALUATION VALUES (3, '14', 1, '2003-02-12', '2003-03-20', 1, 1, 8);
+
 
 
 #-----------------------------

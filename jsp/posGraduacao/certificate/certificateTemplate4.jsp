@@ -23,15 +23,20 @@
 </logic:present>
 
 <logic:present name="<%= SessionConstants.APROVMENT%>">
+
 <logic:iterate id="itr" name="infoEnrolmentStudentCurricularPlan">
+
 <tr>
 <td>
  <bean:write name="itr" property="infoCurricularCourse.name" />
  <bean:write name="itr" property="infoExecutionPeriod.infoExecutionYear.year" />
- com <logic:iterate id="itr1" name="itr" property="infoEvaluations">
+ com 
+ <logic:iterate id="itr1" name="itr" property="infoEvaluations">
  <bean:write name="itr1" property="grade" />
  </logic:iterate>(nota) valores
 </td>
 </tr>
+
 </logic:iterate>
+
 </logic:present>

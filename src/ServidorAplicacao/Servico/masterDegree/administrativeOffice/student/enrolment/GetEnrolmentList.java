@@ -68,7 +68,7 @@ public class GetEnrolmentList implements IServico {
 			
 		List result = new ArrayList();
 		Iterator iterator = enrolmentList.iterator();
-		
+
 		while(iterator.hasNext()) {				
 			result.add(Cloner.copyIEnrolment2InfoEnrolment((IEnrolment) iterator.next()));	
 		}
