@@ -14,14 +14,16 @@ import Util.TipoCurso;
 /**
  * @author lmac1
  */
-public class DeleteDegreeServiceTest extends TestCaseNeedAuthorizationServices {
+public class DeleteDegreesServiceTest extends TestCaseNeedAuthorizationServices {
 
-	public DeleteDegreeServiceTest(String testName) {
+	public DeleteDegreesServiceTest(String testName) {
 			super(testName);
 		}
 		
 	protected void setUp() {
+			System.out.println("ENTRA NO SETUP");
 			super.setUp();
+		System.out.println("SAI DO SETUP");
 		}
 
 	protected void tearDown() {
@@ -29,7 +31,7 @@ public class DeleteDegreeServiceTest extends TestCaseNeedAuthorizationServices {
 		}
 		
 	protected String getNameOfServiceToBeTested() {
-			return "DeleteDegreeService";
+			return "DeleteDegreesService";
 		}
 		
 	protected boolean needsAuthorization() {
@@ -64,4 +66,5 @@ public class DeleteDegreeServiceTest extends TestCaseNeedAuthorizationServices {
 			}
 		
 	}
+
 }
