@@ -7,40 +7,24 @@ package ServidorAplicacao.Servico.sop;
  * @version
  **/
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoClass;
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
 import Dominio.ITurma;
 import Dominio.ITurmaTurno;
 import Dominio.ITurno;
-import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class RemoverTurno implements IServico {
+public class RemoverTurno implements IService {
 
-	private static RemoverTurno _servico = new RemoverTurno();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static RemoverTurno getService() {
-		return _servico;
+	
+	public RemoverTurno() {
 	}
 
-	/**
-	 * The actor of this class.
-	 **/
-	private RemoverTurno() {
-	}
-
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "RemoverTurno";
-	}
-
+	
 	public Object run(InfoShift infoShift, InfoClass infoClass) {
 
 		try {

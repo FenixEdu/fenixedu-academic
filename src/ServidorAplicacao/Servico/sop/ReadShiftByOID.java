@@ -5,11 +5,11 @@
  */
 package ServidorAplicacao.Servico.sop;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
 import Dominio.ITurno;
 import Dominio.Turno;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -21,24 +21,15 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * 
  *  
  */
-public class ReadShiftByOID implements IServico
+public class ReadShiftByOID implements IService
 {
 
-    private static ReadShiftByOID service = new ReadShiftByOID();
     /**
-	 * The singleton access method of this class.
+	 *  
 	 */
-    public static ReadShiftByOID getService()
+    public ReadShiftByOID()
     {
-        return service;
-    }
 
-    /**
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-    public String getNome()
-    {
-        return "ReadShiftByOID";
     }
 
     public InfoShift run(Integer oid) throws FenixServiceException
@@ -63,4 +54,5 @@ public class ReadShiftByOID implements IServico
 
         return result;
     }
+
 }
