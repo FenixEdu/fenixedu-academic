@@ -30,14 +30,22 @@ public class AccessTeachersAction extends FenixAction {
 
 		InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 
-		Object args[] = { infoSite.getInfoExecutionCourse()};
+		Object args[] = {infoSite.getInfoExecutionCourse()};
 		GestorServicos serviceManager = GestorServicos.manager();
-		boolean result = false;
+		
 		List teachers = (List) serviceManager.executar(userView, "ReadTeachersByExecutionCourseProfessorship", args);
 
-		if (teachers != null && !teachers.isEmpty()) {
-			session.removeAttribute(SessionConstants.TEACHERS_LIST);			
-			session.setAttribute(SessionConstants.TEACHERS_LIST, teachers);
+		List responsibleTeachers = (List) serviceManager.executar(userView, "ReadTeachersByExecutionCourseResponsibility", args);
+
+		if (responsibleTeachers != null && !responsibleTeachers.isEmpty()) {
+			session.removeAttribute(SessionConstants.RESPONSIBLE_TEACHERS_LIST);			
+			session.setAttribute(SessionConstants.RESPONSIBLE_TEACHERS_LIST, responsibleTeachers);
+
+			if (teachers != null && !teachers.isEmpty()) {
+				teachers.removeAll(responsibleTeachers);
+				session.removeAttribute(SessionConstants.TEACHERS_LIST);			
+				session.setAttribute(SessionConstants.TEACHERS_LIST, teachers);
+			}
 		}
 
 		return mapping.findForward("Teachers");

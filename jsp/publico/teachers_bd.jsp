@@ -8,18 +8,28 @@
 <table>
 	<tr>
 		<th>
-			<h2><bean:message key="label.teacherNumber"/></h2>	
+			<h2><bean:message key="label.responsableProfessor"/></h2>	
 		</th>
+	</tr>	
+
+	<logic:iterate id="infoResponsableTeacher" name="<%= SessionConstants.RESPONSIBLE_TEACHERS_LIST %>">
+		<tr>
+			<td>
+				<bean:write name="infoResponsableTeacher" property="infoPerson.nome" /> 
+			</td>
+		</tr>
+	</logic:iterate>	
+</table>
+</BR>
+<table>
+	<tr>
 		<th>
-			<h2><bean:message key="label.name"/></h2>	
+			<h2><bean:message key="label.professorShips"/></h2>	
 		</th>
 	</tr>	
 
 	<logic:iterate id="infoTeacher" name="<%= SessionConstants.TEACHERS_LIST %>">
 		<tr>
-			<td>
-				<bean:write name="infoTeacher"  property="teacherNumber"/>	
-			</td>
 			<td>
 				<bean:write name="infoTeacher" property="infoPerson.nome" /> 
 			</td>

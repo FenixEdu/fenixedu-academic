@@ -104,9 +104,10 @@ public class InfoTeacher {
 		 boolean result = false;
 		 if (obj instanceof InfoTeacher) {
 			InfoTeacher infoTeacher = (InfoTeacher) obj;
-			 result = (infoTeacher!=null) && 
-				 getTeacherNumber().equals(infoTeacher.getTeacherNumber())
-					 && getInfoPerson().equals(infoTeacher.getInfoPerson());
+			
+			 result = ((infoTeacher!=null) && 
+				 (getTeacherNumber().equals(infoTeacher.getTeacherNumber()))
+					 && (getInfoPerson().equals(infoTeacher.getInfoPerson())));
 		 }
 		 return result;
 	 }
