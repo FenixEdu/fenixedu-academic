@@ -1,4 +1,4 @@
-<div id="logoist"><img alt="[Logo] Instituto Superior Técnico" height="51" src="/img/wwwist.gif" width="234" /></div>
+<div id="logoist"><img alt="[Logo] Instituto Superior Técnico" height="51" src="<%= request.getContextPath() %>/images/wwwist.gif" width="234" /></div>
 	<div id="header_links"><a href="https://fenix.ist.utl.pt/loginPage.jsp">Login .IST</a> | <a href="http://www.ist.utl.pt/html/instituto/index.shtml#cont">Contactos</a> | <a href="http://www.ist.utl.pt/html/mapadosite/">Mapa do Site</a> </div>
 
 <div id="search">
