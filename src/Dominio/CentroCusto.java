@@ -5,7 +5,7 @@ package Dominio;
  * @author  Fernanda Quitério & Tania Pousão
  */
 
-public class CentroCusto {
+public class CentroCusto extends DomainObject {
 	private int codigoInterno;
 	private String sigla;
 	private String departamento;
