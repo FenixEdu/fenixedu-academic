@@ -172,6 +172,7 @@ public abstract class SessionConstants {
 	public static final String STUDENT = "student";
 	public static final String STATE = "state";
 	public static final String GUIDERS_LIST = "guiders_list";
+	public static final String EXTERNAL_GUIDERS_LIST = "external_guiders_list";
 	public static final String ASSISTENT_GUIDERS_LIST = "assistent_guiders_list";
 	public static final String EXTERNAL_ASSISTENT_GUIDERS_LIST = "external_assistent_guiders_list";
 	public static final String SEARCH_EXTERNAL_ASSISTENT_GUIDERS = "search_external_assistent_guiders";
@@ -182,6 +183,7 @@ public abstract class SessionConstants {
 	public static final String DISSERTATION_TITLE = "dissertation_title";
 	public static final String LAST_MODIFICATION = "last_modification";
 	public static final String JURIES_LIST = "juries_list";
+	public static final String EXTERNAL_JURIES_LIST = "external_juries_list";
 	public static final String CLASSIFICATION = "classification";
 	public static final String FINAL_RESULT = "final_result";
 	public static final String ATTACHED_COPIES_NUMBER = "attached_copies_number";
