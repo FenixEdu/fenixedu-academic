@@ -101,7 +101,6 @@ public class ServicoSeguroActualizarFuncionarios {
 				// Read The Corresponding Person
 				criteria = new Criteria();
 				query = null;
-				System.out.println(numeroDocumentoIdentificacao + "-" + tipoDocumentoIdentificacao);
 				criteria.addEqualTo("numeroDocumentoIdentificacao", numeroDocumentoIdentificacao);
 				criteria.addEqualTo("tipoDocumentoIdentificacao", tipoDocumentoIdentificacao);
 				query = new QueryByCriteria(Pessoa.class, criteria);
@@ -165,13 +164,14 @@ public class ServicoSeguroActualizarFuncionarios {
 				if (resultPersonUsername.size() != 0) {
 					personUsername = (Pessoa) resultPersonUsername.get(0);
 					if (person.getUsername().equals(personUsername.getUsername())) {
-						if (person.getNumeroDocumentoIdentificacao().equals(personUsername.getNumeroDocumentoIdentificacao())
-							&& person.getTipoDocumentoIdentificacao().equals(personUsername.getTipoDocumentoIdentificacao())) {
+						if (!((person.getNumeroDocumentoIdentificacao().equals(personUsername.getNumeroDocumentoIdentificacao())
+										&& person.getTipoDocumentoIdentificacao().equals(personUsername.getTipoDocumentoIdentificacao())))) {
 							personUsername.setUsername("X" + numeroMecanografico);
 							broker.store(personUsername);
+		
+							broker.commitTransaction();
+							broker.beginTransaction();
 						}
-						//						broker.commitTransaction();
-						//						broker.beginTransaction();
 					}
 				}
 

@@ -82,7 +82,7 @@ public class ServicoSeguroActualizarPessoas {
 						updatePerson((Pessoa) person2Write, (Pessoa) servico._pessoa);
 					}
 
-					IPersonRole personRole = RoleFunctions.readPersonRole((Pessoa) person2Write, RoleType.PERSON, broker);
+					IPersonRole personRole = RoleFunctions.readPersonRole((IPessoa) person2Write, RoleType.PERSON, broker);
 					if (personRole == null) {
 						criteria = new Criteria();
 						query = null;

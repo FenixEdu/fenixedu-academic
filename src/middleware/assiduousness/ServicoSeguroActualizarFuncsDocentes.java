@@ -14,11 +14,12 @@ import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
+import Dominio.FuncNaoDocente;
 import Dominio.Funcionario;
 import Dominio.IPersonRole;
+import Dominio.IPessoa;
 import Dominio.IRole;
 import Dominio.ITeacher;
-import Dominio.Pessoa;
 import Dominio.Role;
 import Dominio.Teacher;
 import Util.LeituraFicheiroFuncDocente;
@@ -67,11 +68,11 @@ public class ServicoSeguroActualizarFuncsDocentes {
 
 		/* ciclo para percorrer a Collection de Funcionarios */
 		/* algoritmo */
-
 		System.out.println("A converter " + lista.size() + " Docentes ... ");
 		int newTeachers = 0;
 		int newRoles = 0;
 
+		List persons = new ArrayList();
 		/* Procurar chaveFuncionario correspondente e criar funcNaoDocente */
 		Iterator iteradorNovo = lista.iterator();
 		Integer numeroMecanografico = null;
@@ -113,17 +114,20 @@ public class ServicoSeguroActualizarFuncsDocentes {
 					teacher = new Teacher();
 					teacher.setPerson(funcionario.getPerson());
 					teacher.setTeacherNumber(numeroMecanografico);
-					broker.store(teacher);
+
 					newTeachers++;
 				} else if (resultTeacher.size() == 1) {
-					teacher = (Teacher) resultTeacher.get(0);
+					teacher = (ITeacher) resultTeacher.get(0);
 					if (!teacher.getPerson().equals(funcionario.getPerson())) {
 						teacher.setPerson(funcionario.getPerson());
 					}
-					broker.store(teacher);
+				} else {
+					System.out.println("\nMais que um professor com o numero mecanografico 	" + numeroMecanografico + "\n");
+					continue;
 				}
+				broker.store(teacher);
 
-				IPersonRole personRole = RoleFunctions.readPersonRole((Pessoa) teacher.getPerson(), RoleType.TEACHER, broker);
+				IPersonRole personRole = RoleFunctions.readPersonRole((IPessoa) teacher.getPerson(), RoleType.TEACHER, broker);
 				if (personRole == null) {
 					criteria = new Criteria();
 					criteria.addEqualTo("roleType", RoleType.TEACHER);
@@ -138,13 +142,37 @@ public class ServicoSeguroActualizarFuncsDocentes {
 					}
 					newRoles++;
 				}
+
+				teacher.getPerson().setUsername("D" + numeroMecanografico);
 				broker.store(teacher.getPerson());
+
+				persons.add(teacher.getPerson());
 			} catch (Exception e) {
 				e.printStackTrace();
 				System.out.println("\nError Migrating Employee " + numeroMecanografico + "\n");
 				//broker.abortTransaction();
 				//throw new Exception("\nError Migrating Employee " + numeroMecanografico + "\n" + e);
 				continue;
+			}
+		}
+		broker.commitTransaction();
+
+		broker.beginTransaction();
+		Iterator iterator = persons.listIterator();
+		while (iterator.hasNext()) {
+			IPessoa pessoa = (IPessoa) iterator.next();
+
+			Criteria criteria = new Criteria();
+			Query query = null;
+
+			criteria.addEqualTo("funcionario.person.idInternal", pessoa.getIdInternal());
+			query = new QueryByCriteria(FuncNaoDocente.class, criteria);
+			List resultfuncionario = (List) broker.getCollectionByQuery(query);
+
+			Iterator iterator2 = resultfuncionario.listIterator();
+			while (iterator2.hasNext()) {
+				FuncNaoDocente funcNaoDocente = (FuncNaoDocente) iterator2.next();
+				broker.delete(funcNaoDocente);
 			}
 		}
 		broker.commitTransaction();

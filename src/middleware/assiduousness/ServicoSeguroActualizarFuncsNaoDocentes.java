@@ -17,7 +17,9 @@ import org.apache.ojb.broker.query.QueryByCriteria;
 import Dominio.FuncNaoDocente;
 import Dominio.Funcionario;
 import Dominio.IPersonRole;
-import Dominio.Pessoa;
+import Dominio.IPessoa;
+import Dominio.ITeacher;
+import Dominio.Teacher;
 import Util.LeituraFicheiroFuncNaoDocente;
 import Util.RoleType;
 
@@ -65,6 +67,7 @@ public class ServicoSeguroActualizarFuncsNaoDocentes {
 		int newEmployees = 0;
 		int newRoles = 0;
 
+		List persons = new ArrayList();
 		FuncNaoDocente funcNaoDocente = null;
 		Integer numeroMecanografico = null;
 
@@ -111,9 +114,9 @@ public class ServicoSeguroActualizarFuncsNaoDocentes {
 					broker.store(funcNaoDocente);
 					newEmployees++;
 
-					IPersonRole personRole = RoleFunctions.readPersonRole((Pessoa) funcionario.getPerson(), RoleType.EMPLOYEE, broker);
+					IPersonRole personRole = RoleFunctions.readPersonRole((IPessoa) funcionario.getPerson(), RoleType.EMPLOYEE, broker);
 					if (personRole == null) {
-						RoleFunctions.giveRole((Pessoa) funcionario.getPerson(), RoleType.EMPLOYEE, broker);
+						RoleFunctions.giveRole((IPessoa) funcionario.getPerson(), RoleType.EMPLOYEE, broker);
 						newRoles++;
 					}
 				} else if (resultFuncNaoDocente.size() > 0) {
@@ -123,6 +126,8 @@ public class ServicoSeguroActualizarFuncsNaoDocentes {
 					}
 					broker.store(funcNaoDocente);
 				}
+
+				persons.add(funcNaoDocente.getFuncionario().getPerson());
 			} catch (Exception e) {
 				e.printStackTrace();
 				System.out.println("Error migrating employee " + numeroMecanografico + "\n");
@@ -130,8 +135,36 @@ public class ServicoSeguroActualizarFuncsNaoDocentes {
 				//broker.commitTransaction();
 				//throw new Exception("Error migrating employee " + numeroMecanografico + "\n" + e);
 			}
-			broker.commitTransaction();
 		}
+		broker.commitTransaction();
+
+		broker.beginTransaction();
+		try {
+			Iterator iterator = persons.listIterator();
+			System.out.println("ALI----"+persons.size());
+			while (iterator.hasNext()) {
+				IPessoa pessoa = (IPessoa) iterator.next();
+			
+				Criteria criteria = new Criteria();
+				Query query = null;
+			
+				criteria.addEqualTo("keyPerson", pessoa.getIdInternal());
+				query = new QueryByCriteria(Teacher.class, criteria);
+				List resultTeacher = (List) broker.getCollectionByQuery(query);
+				System.out.println("AQUI----"+resultTeacher.size());
+				Iterator iterator2 = resultTeacher.listIterator();
+				while (iterator2.hasNext()) {
+					ITeacher teacher = (ITeacher) iterator2.next();
+					System.out.print("Vou apagar :"+teacher.getPerson().getUsername());
+					 broker.delete(teacher);
+				}
+			}
+		} catch (Exception e) {
+				e.printStackTrace(System.out);
+		}
+		
+		broker.commitTransaction();
+
 		System.out.println("New Funcionarios Nao Docentes added : " + newEmployees);
 		System.out.println("New Roles added : " + newRoles);
 		System.out.println("  Done !");
