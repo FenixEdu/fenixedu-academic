@@ -1,11 +1,13 @@
 package ServidorApresentacao.Action.coordinator;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -247,13 +249,13 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
 
         Object[] args = { infoExecutionDegreeId };
 
-        InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
+        InfoExecutionDegree infoExecutionDegree = null;
         try
         {
-            infoDegreeCurricularPlan =
-                (InfoDegreeCurricularPlan) ServiceManagerServiceFactory.executeService(
+            infoExecutionDegree =
+                (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
                     userView,
-                    "ReadActiveDegreeCurricularPlanByExecutionDegreeCode",
+                    "ReadExecutionDegreeByOID",
                     args);
         } catch (NotAuthorizedException e)
         {
@@ -272,7 +274,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
                 throw new FenixActionException(e);
             }
         }
-        if (infoDegreeCurricularPlan == null)
+        if (infoExecutionDegree == null || infoExecutionDegree.getInfoDegreeCurricularPlan() == null)
         {
             errors.add(
                 "noDegreeCurricularPlan",
@@ -284,15 +286,15 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
             return (new ActionForward(mapping.getInput()));
         }
 
-		request.setAttribute("infoDegreeCurricularPlanID", infoDegreeCurricularPlan.getIdInternal());
+		request.setAttribute("infoDegreeCurricularPlanID", infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
 		
         DynaActionForm descriptionCurricularPlanForm = (DynaActionForm) form;
         descriptionCurricularPlanForm.set(
             "descriptionDegreeCurricularPlan",
-            infoDegreeCurricularPlan.getDescription());
+            infoExecutionDegree.getInfoDegreeCurricularPlan().getDescription());
         descriptionCurricularPlanForm.set(
             "descriptionDegreeCurricularPlanEn",
-            infoDegreeCurricularPlan.getDescriptionEn());
+            infoExecutionDegree.getInfoDegreeCurricularPlan().getDescriptionEn());
 
         return mapping.findForward("viewDescriptionCurricularPlan");
     }
@@ -385,13 +387,13 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
                 (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(null, "ReadExecutionDegreeByOID", args);
         } catch (FenixServiceException e)
         {
-            errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
+            errors.add("impossibleHistoricDegreeSite", new ActionError("error.coordinator.impossibleHistoricDegreeSite"));
         }
         if (infoExecutionDegree == null
             || infoExecutionDegree.getInfoDegreeCurricularPlan() == null
             || infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree() == null)
         {
-            errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
+            errors.add("impossibleHistoricDegreeSite", new ActionError("error.coordinator.impossibleHistoricDegreeSite"));
         }
         if (!errors.isEmpty())
         {
@@ -416,8 +418,9 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
             return (new ActionForward(mapping.getInput()));
         }
 
+      	Collections.sort(infoExecutionDegrees, new BeanComparator("infoExecutionYear.beginDate"));
+        
         request.setAttribute("infoExecutionDegrees", infoExecutionDegrees);
-
 
         return mapping.findForward("viewHistoric");
     }

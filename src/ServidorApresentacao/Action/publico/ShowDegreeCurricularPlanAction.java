@@ -26,94 +26,114 @@ import ServidorApresentacao.Action.base.FenixContextDispatchAction;
 public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction
 {
 
-    public ActionForward showCurricularPlan(
-        ActionMapping mapping,
-        ActionForm actionForm,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
-        ActionErrors errors = new ActionErrors();
+	public ActionForward showCurricularPlan(
+		ActionMapping mapping,
+		ActionForm actionForm,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception
+	{
+		ActionErrors errors = new ActionErrors();
 
-        Integer degreeId = getFromRequest("degreeID", request);
-        request.setAttribute("degreeID", degreeId);
+		Integer degreeId = getFromRequest("degreeID", request);
+		request.setAttribute("degreeID", degreeId);
 
-        Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
-        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
+		Integer executionDegreeId = getFromRequest("executionDegreeID", request);
+		request.setAttribute("executionDegreeID", executionDegreeId);
 
-        Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
-        request.setAttribute("inEnglish", inEnglish);
+		Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
+		request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
-        Object[] args = { degreeCurricularPlanId };
+		Boolean inEnglish = getFromRequestBoolean("inEnglish", request);
+		request.setAttribute("inEnglish", inEnglish);
 
-        List activeCurricularCourseScopes = null;
-        try
-        {
-            activeCurricularCourseScopes =
-                (List) ServiceManagerServiceFactory.executeService(null, "ReadActiveDegreeCurricularPlanByID", args);
-        } catch (FenixServiceException e)
-        {
-            errors.add("impossibleCurricularPlan", new ActionError("error.impossibleCurricularPlan"));
-            saveErrors(request, errors);
-            return (new ActionForward(mapping.getInput()));
-        }
-        if (activeCurricularCourseScopes == null || activeCurricularCourseScopes.size() <= 0)
-        {
-            errors.add(
-                "noDegreeCurricularPlan",
-                new ActionError("error.coordinator.noDegreeCurricularPlan"));
-            saveErrors(request, errors);
-        }
+		Object[] args = { degreeCurricularPlanId };
 
-        //order list by year, next semester, next course
-        ComparatorChain comparatorChain = new ComparatorChain();
-        comparatorChain.addComparator(
-            new BeanComparator("infoCurricularSemester.infoCurricularYear.year"));
-        comparatorChain.addComparator(new BeanComparator("infoCurricularSemester.semester"));
-        comparatorChain.addComparator(new BeanComparator("infoCurricularCourse.name"));
-        Collections.sort(activeCurricularCourseScopes, comparatorChain);
+		List activeCurricularCourseScopes = null;
+		try
+		{
+			activeCurricularCourseScopes =
+				(List) ServiceManagerServiceFactory.executeService(
+					null,
+					"ReadActiveDegreeCurricularPlanByID",
+					args);
+		}
+		catch (FenixServiceException e)
+		{
+			errors.add("impossibleCurricularPlan", new ActionError("error.impossibleCurricularPlan"));
+			saveErrors(request, errors);
+			return (new ActionForward(mapping.getInput()));
+		}
+		if (activeCurricularCourseScopes == null || activeCurricularCourseScopes.size() <= 0)
+		{
+			errors.add(
+				"noDegreeCurricularPlan",
+				new ActionError("error.coordinator.noDegreeCurricularPlan"));
+			saveErrors(request, errors);
+		}
 
-        request.setAttribute("allActiveCurricularCourseScopes", activeCurricularCourseScopes);
-		request.setAttribute("infoDegreeCurricularPlan", ((InfoCurricularCourseScope)activeCurricularCourseScopes.get(0)).getInfoCurricularCourse().getInfoDegreeCurricularPlan());
-        
-        if (inEnglish == null || inEnglish.booleanValue() == false)
-        {
-            return mapping.findForward("showDegreeCurricularPlan");
-        } else
-        {
-            return mapping.findForward("showDegreeCurricularPlanEnglish");
-        }
-    }
+		try
+		{
+			//order list by year, next semester, next course
+			ComparatorChain comparatorChain = new ComparatorChain();
+			comparatorChain.addComparator(
+				new BeanComparator("infoCurricularSemester.infoCurricularYear.year"));
+			comparatorChain.addComparator(new BeanComparator("infoCurricularSemester.semester"));
+			comparatorChain.addComparator(new BeanComparator("infoCurricularCourse.name"));
+			Collections.sort(activeCurricularCourseScopes, comparatorChain);
+		}
+		catch (Exception e)
+		{
+			errors.add("impossibleCurricularPlan", new ActionError("error.impossibleCurricularPlan"));
+			saveErrors(request, errors);
+			return (new ActionForward(mapping.getInput()));
+		}
+		request.setAttribute("allActiveCurricularCourseScopes", activeCurricularCourseScopes);
+		request.setAttribute(
+			"infoDegreeCurricularPlan",
+			((InfoCurricularCourseScope) activeCurricularCourseScopes.get(0))
+				.getInfoCurricularCourse()
+				.getInfoDegreeCurricularPlan());
 
-    private Integer getFromRequest(String parameter, HttpServletRequest request)
-    {
-        Integer parameterCode = null;
-        String parameterCodeString = request.getParameter(parameter);
-        if (parameterCodeString == null)
-        {
-            parameterCodeString = (String) request.getAttribute(parameter);
-        }
-        if (parameterCodeString != null)
-        {
-            parameterCode = new Integer(parameterCodeString);
-        }
-        return parameterCode;
-    }
+		if (inEnglish == null || inEnglish.booleanValue() == false)
+		{
+			return mapping.findForward("showDegreeCurricularPlan");
+		}
+		else
+		{
+			return mapping.findForward("showDegreeCurricularPlanEnglish");
+		}
+	}
 
-    private Boolean getFromRequestBoolean(String parameter, HttpServletRequest request)
-    {
-        Boolean parameterBoolean = null;
+	private Integer getFromRequest(String parameter, HttpServletRequest request)
+	{
+		Integer parameterCode = null;
+		String parameterCodeString = request.getParameter(parameter);
+		if (parameterCodeString == null)
+		{
+			parameterCodeString = (String) request.getAttribute(parameter);
+		}
+		if (parameterCodeString != null)
+		{
+			parameterCode = new Integer(parameterCodeString);
+		}
+		return parameterCode;
+	}
 
-        String parameterCodeString = request.getParameter(parameter);
-        if (parameterCodeString == null)
-        {
-            parameterCodeString = (String) request.getAttribute(parameter);
-        }
-        if (parameterCodeString != null)
-        {
-            parameterBoolean = new Boolean(parameterCodeString);
-        }
+	private Boolean getFromRequestBoolean(String parameter, HttpServletRequest request)
+	{
+		Boolean parameterBoolean = null;
 
-        return parameterBoolean;
-    }
+		String parameterCodeString = request.getParameter(parameter);
+		if (parameterCodeString == null)
+		{
+			parameterCodeString = (String) request.getAttribute(parameter);
+		}
+		if (parameterCodeString != null)
+		{
+			parameterBoolean = new Boolean(parameterCodeString);
+		}
+
+		return parameterBoolean;
+	}
 }

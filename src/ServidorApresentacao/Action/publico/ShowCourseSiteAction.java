@@ -45,7 +45,11 @@ public class ShowCourseSiteAction extends FenixContextDispatchAction
         Integer degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);
 
-        request.setAttribute("degreeCurricularPlanID", request);
+        Integer executionDegreeId = getFromRequest("executionDegreeID", request);
+        request.setAttribute("executionDegreeID", executionDegreeId);
+        
+        Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
 
         Integer curricularCourseId = getFromRequest("curricularCourseID", request);
         request.setAttribute("curricularCourseID", curricularCourseId);
