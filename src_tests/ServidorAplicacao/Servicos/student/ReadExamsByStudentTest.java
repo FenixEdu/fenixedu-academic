@@ -11,9 +11,8 @@ package ServidorAplicacao.Servicos.student;
  */
 import java.util.List;
 
+import DataBeans.InfoExam;
 import DataBeans.InfoExamStudentRoom;
-import DataBeans.InfoPerson;
-import DataBeans.InfoShiftEnrolment;
 import DataBeans.InfoStudentSiteExams;
 import DataBeans.SiteView;
 import ServidorAplicacao.Servico.Autenticacao;
@@ -22,9 +21,6 @@ import ServidorAplicacao.Servicos.UtilsTestCase;
 
 public class ReadExamsByStudentTest
 	extends ServiceNeedsAuthenticationTestCase {
-
-	private InfoPerson infoPerson = null;
-	private InfoShiftEnrolment infoShiftEnrolment = null;
 
 	public ReadExamsByStudentTest(java.lang.String testName) {
 		super(testName);
@@ -76,7 +72,10 @@ public class ReadExamsByStudentTest
 			InfoStudentSiteExams infoStudentsSiteExams =
 				(InfoStudentSiteExams) result.getComponent();
 			List examsToEnroll = infoStudentsSiteExams.getExamsToEnroll();
+			List infoExamStudentRoomList = infoStudentsSiteExams.getExamsEnrolledDistributions();
+		
 			assertEquals(examsToEnroll.size(), 0);
+			assertEquals(infoExamStudentRoomList.size(), 0);
 
 			System.out.println(
 				"testNonExistingStudent was SUCCESSFULY runned by class: "
@@ -108,16 +107,26 @@ public class ReadExamsByStudentTest
 			List infoExamsStudentRoomList =
 				infoStudentsSiteExams.getExamsEnrolledDistributions();
 			assertEquals(infoExamsStudentRoomList.size(), 3);
+			
+			List examsToEnroll = infoStudentsSiteExams.getExamsToEnroll();
+			assertEquals(examsToEnroll.size(), 1);
 
+			
 			Object[] values = { new Integer(1), new Integer(2), new Integer(3)};
-
-			System.out.println(InfoExamStudentRoom.class);
 			
 			UtilsTestCase.readTestList(
 					infoExamsStudentRoomList,
 					values,
 					"idInternal",
 					InfoExamStudentRoom.class);
+			
+			Object[] values2 = { new Integer(1)};
+			
+			UtilsTestCase.readTestList(
+			examsToEnroll,
+					values2,
+					"idInternal",
+					InfoExam.class);
 
 			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/student/testReadExamsByStudentExpectedDataSet.xml");
 
