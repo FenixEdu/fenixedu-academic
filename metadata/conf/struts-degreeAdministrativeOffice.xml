@@ -20,6 +20,7 @@
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 			<form-property name="isOptional" type="java.lang.String"/>
 			<form-property name="courseType" type="java.lang.String"/>
+			<form-property name="degreeCurricularPlanID" type="java.lang.Integer"/>
 		</form-bean>
 
 		<form-bean name="curriculumForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
