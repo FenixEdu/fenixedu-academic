@@ -22,12 +22,14 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
 	private Date initialDate;
 	private Date endDate;
 	private Integer degreeDuration;
-	private Integer minimalYearForOptionalCourses;
 	private Double neededCredits;
 	private MarkType markType;
 	private Integer numerusClausus;
 	private String description;
 	private String descriptionEn;
+
+    // For enrollment purposes
+	private Integer minimalYearForOptionalCourses;
 	private String enrollmentStrategyClassName;
 	
 	private List curricularCourses;

@@ -36,11 +36,13 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse
     private List associatedExecutionCourses;
     private List scopes;
     private IScientificArea scientificArea;
+    private Double ectsCredits;
+    private Double weigth;
+
+    // For enrollment purposes
     private Integer maximumValueForAcumulatedEnrollments;
     private Integer minimumValueForAcumulatedEnrollments;
     private Integer enrollmentWeigth;
-    private Double ectsCredits;
-    private Double weigth;
     private Boolean mandatoryEnrollment;
 
     public CurricularCourse(Integer idInternal)
