@@ -16,5 +16,5 @@ public interface ISite {
 	List getSections();
 	ISection getInitialSection();
 	List getAnnouncements();
-
+	public void setInitialSection(ISection section);
 }
