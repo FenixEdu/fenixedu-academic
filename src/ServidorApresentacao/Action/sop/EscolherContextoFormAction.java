@@ -78,9 +78,11 @@ public class EscolherContextoFormAction extends FenixAction {
 				session.setAttribute(SessionConstants.INFO_EXECUTION_DEGREE_KEY, infoExecutionDegree);
 
 			} else {
+				session.removeAttribute(SessionConstants.CONTEXT_KEY);
+				session.removeAttribute(SessionConstants.CURRICULAR_YEAR_KEY);
+				session.removeAttribute(SessionConstants.INFO_EXECUTION_DEGREE_KEY);
 				return mapping.findForward("Licenciatura execucao inexistente");
 			}
-
 			return mapping.findForward("Sucesso");
 		} else
 			throw new Exception();

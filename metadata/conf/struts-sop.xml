@@ -33,9 +33,19 @@
                  dynamic="true">
         <form-property name="index" type="java.lang.String"/>
         <form-property name="anoCurricular" type="java.lang.Integer"/>
-        
-<!--        <form-property name="semestre" type="java.lang.Integer"/> -->
+        <!--        <form-property name="semestre" type="java.lang.Integer"/> -->
       </form-bean>
+
+      <!-- Dynamic-FormBean for Choose Context-->
+      <form-bean name="chooseContextForm"
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+        <form-property name="index" type="java.lang.String"/>
+        <form-property name="curricularYear" type="java.lang.Integer"/>
+        <form-property name="page" type="java.lang.Integer"/> 
+      </form-bean>
+
+
 
 	  <!-- AULAS -->
       <!-- Dynamic-FormBean para CriarAula -->
@@ -264,13 +274,14 @@
       </action>
 
 	  <!-- CONTEXTO -->
+
+	  <!-- Choose Context for Timetables Management-->
       <action path="/prepararEscolherContexto"
               type="ServidorApresentacao.Action.sop.PrepararEscolherContextoFormAction"
               scope="request">
           <forward name="Sucesso" path="/escolherContexto.jsp"/>
       </action>
 
-	  <!-- Contexto Gestao de Horarios-->
       <action attribute="escolherContextoForm"
               input="/prepararEscolherContexto.do"
               name="escolherContextoForm"
@@ -728,6 +739,24 @@
          <forward name="View Exams" path="/viewExamsByDayAndShift.jsp"/>
 	 </action>
 	
+	  <!-- Choose Context for Exams -->
+      <action input="/chooseExamsContextDA.do?method=prepare&amp;page=0"
+              name="chooseContextForm"
+              parameter="method"
+              path="/chooseExamsContextDA"
+              scope="request"
+              validate="true"
+              type="ServidorApresentacao.Action.commons.ChooseContextDispatchAction">
+        <forward name="formPage" path="/chooseContext.jsp"/>
+        <forward name="nextPage" path="/viewExamsByDegreeAndCurricularYear.do"/>
+      </action>
+	
+	<action path="/viewExamsByDegreeAndCurricularYear"
+    		type="ServidorApresentacao.Action.sop.ViewExamsByDegreeAndCurricularYearAction"
+	>
+    	<forward name="Sucess" path="/viewExamsByDegreeAndCurricularYear.jsp"/>
+	</action>
+
       
       <!-- ========== ADICIONADO POR DAVID SANTOS ================================ -->
 	  <action path="/siteViewer"

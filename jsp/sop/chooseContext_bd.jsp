@@ -1,10 +1,17 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-        <h2><bean:message key="title.manage.schedule"/></h2>
+<%@ page import="org.apache.struts.action.Action" %>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+
+
+
         <span class="error"><html:errors/></span>
-        <html:form action="/escolherContextoForm">
-        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+		<bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>" />
+        <html:form action="<%=path%>">
+        	<input type="hidden" value="nextPage" name="method"/>
+        	<html:hidden property="page" value="1"/>
+         <table width="100%" border="0" cellpadding="0" cellspacing="0">
           <tr>
             <td bgcolor="#FFFFFF" class="infoop">Por favor, proceda &agrave; escolha
               da licenciatura pretendida.</td>
@@ -27,7 +34,7 @@
 	 <table border="0" cellspacing="0" cellpadding="0">
 	   <tr>
 	     <td nowrap class="formTD"><bean:message key="property.context.curricular.year"/>:</td>
-	     <td nowrap class="formTD"><html:select property="anoCurricular" size="1">
+	     <td nowrap class="formTD"><html:select property="curricularYear" size="1">
        		<html:options collection="anosCurriculares" property="value" labelProperty="label"/>
        </html:select></td>
        </tr>
