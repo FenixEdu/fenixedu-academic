@@ -53,31 +53,33 @@
 				<td><report:computeDate /></td>
 			</tr>
 		</table>
-		<br />
-		<br />
-		<html:form action="/projectReport">
-			<html:hidden property="method" value="getReport" />
-			<html:hidden property="reportType" value="expensesReport" />
-			<html:hidden property="projectCode" value="<%=(pageContext.findAttribute("projectCode")).toString()%>" />
-			<table>
-				<tr>
-					<td><html:select property="rubric">
-						<html:option value="">
-							<bean:message key="label.allRubrics" />
-						</html:option>
-						<logic:iterate id="rubric" name="infoExpensesReport" property="rubricList">
-							<bean:define id="r" name="rubric" property="label" />
-							<html:option value="<%=r.toString()%>">
-								<bean:write name="rubric" property="label" />&nbsp;-&nbsp;<bean:write name="rubric" property="value" />
+		<logic:notEmpty name="infoExpensesReport" property="rubricList">
+			<br />
+			<br />
+			<html:form action="/projectReport">
+				<html:hidden property="method" value="getReport" />
+				<html:hidden property="reportType" value="expensesReport" />
+				<html:hidden property="projectCode" value="<%=(pageContext.findAttribute("projectCode")).toString()%>" />
+				<table>
+					<tr>
+						<td><html:select property="rubric">
+							<html:option value="">
+								<bean:message key="label.allRubrics" />
 							</html:option>
-						</logic:iterate>
-					</html:select></td>
-					<td><html:submit styleClass="inputbutton">
-						<bean:message key="label.select" />
-					</html:submit></td>
-				</tr>
-			</table>
-		</html:form>
+							<logic:iterate id="rubric" name="infoExpensesReport" property="rubricList">
+								<bean:define id="r" name="rubric" property="label" />
+								<html:option value="<%=r.toString()%>">
+									<bean:write name="rubric" property="label" />&nbsp;-&nbsp;<bean:write name="rubric" property="value" />
+								</html:option>
+							</logic:iterate>
+						</html:select></td>
+						<td><html:submit styleClass="inputbutton">
+							<bean:message key="label.select" />
+						</html:submit></td>
+					</tr>
+				</table>
+			</html:form>
+		</logic:notEmpty>
 		<br />
 		<br />
 		<logic:notEmpty name="infoExpensesReport" property="lines">
