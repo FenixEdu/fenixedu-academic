@@ -33,6 +33,7 @@ import DataBeans.InfoStudentCurricularPlan;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import Util.TipoCurso;
@@ -80,9 +81,12 @@ public class ShowStudentGroupInfo extends Action {
                     try {
                         shiftsAndGroups = (InfoSiteShiftsAndGroups) ServiceUtils.executeService(
                                 userView, "ReadShiftsAndGroups",
-                                new Integer[] { project.getIdInternal() });
+                                new Object[] { project.getIdInternal(),username});
 
-                    } catch (FenixServiceException e) {
+                    } catch (NotAuthorizedException e) {
+                        shiftsAndGroups = new InfoSiteShiftsAndGroups();
+                        shiftsAndGroups.setInfoSiteGroupsByShiftList(new ArrayList());
+                    }catch (FenixServiceException e) {
                         e.printStackTrace();
                         throw new FenixActionException(e);
                     }
