@@ -4,10 +4,8 @@
 <h3><bean:message key="title.editBibligraphicReference"/></h3>
 <html:form action="/bibliographicReferenceManager">
    	<html:hidden property="page" value="1"/>
-    <fieldset style="width: 500; height: 315; padding: 2">
-      	
-    		<h2><bean:message key="message.insertBibliographyData"/></h2>
-    	
+   	
+	<h2><bean:message key="message.insertBibliographyData"/></h2>    	
       
     <h2><bean:message key="message.bibliographicReferenceTitle"/></h2>
 	<span class="error"><html:errors property="title"/></span>
@@ -29,22 +27,33 @@
     <p><html:checkbox property="optional" value="yes"/></p>
     <p>
     
-    <center>
+    <h3>
+    <table>
+    
+    <tr align="center">    
+    <td>
+    <html:reset styleClass="inputbutton">
+		<bean:message key="label.clear"/>
+	</html:reset>    	    	
+	</td>
+    
+    <td>
     
     <logic:notPresent name="edit">
     	<html:hidden property="method" value="createBibliographicReference"/>
-   	 <h3>	<html:submit styleClass="inputbutton">
-    	   	<bean:message key="button.confirm"/>                    		         	
-    	</html:submit></h3>       
+   	 	<html:submit styleClass="inputbutton">
+    	   	<bean:message key="button.save"/>                    		         	
+    	</html:submit>       
     </logic:notPresent>
     
     <logic:present name="edit">
        	<html:hidden property="method" value="editBibliographicReference"/>
-   	 <h3>	<html:submit styleClass="inputbutton">
-    	   	<bean:message key="button.confirm"/>                    		         	
-    	</html:submit>  </h3>      
-    </logic:present>	
-    	
-    </center></p>
-    </fieldset>
+   	 	<html:submit styleClass="inputbutton">
+    	   	<bean:message key="button.save"/>                    		         	
+    	</html:submit> 
+    </logic:present>
+    </td>    
+	</tr>
+    </table>
+    </h3>    
 </html:form>

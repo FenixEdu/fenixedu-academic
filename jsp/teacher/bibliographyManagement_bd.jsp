@@ -27,26 +27,26 @@
             <logic:iterate id="bibliographicReference" name="BibliographicReferences">
                 <logic:notEqual name="bibliographicReference" property="optional" value="true">
                     <tr>
-                        <td>                            
-                            <bean:message key="message.bibliographicReferenceTitle"/>
+                        <td>                                               
+                          <!--  <bean:message key="message.bibliographicReferenceTitle"/> -->
                             <bean:write name="bibliographicReference" property="title"/>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <bean:message key="message.bibliographicReferenceAuthors"/>
+                         <!--   <bean:message key="message.bibliographicReferenceAuthors"/> -->
                             <bean:write name="bibliographicReference" property="authors"/>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <bean:message key="message.bibliographicReferenceReference"/>
+                         <!--   <bean:message key="message.bibliographicReferenceReference"/> -->
                             <bean:write name="bibliographicReference" property="reference"/>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <bean:message key="message.bibliographicReferenceYear"/>
+                        <!--    <bean:message key="message.bibliographicReferenceYear"/> -->
                             <bean:write name="bibliographicReference" property="year"/>                            
                         </td>
                     </tr>
@@ -78,27 +78,26 @@
              <logic:iterate id="bibliographicReference" name="BibliographicReferences">
                 <logic:notEqual name="bibliographicReference" property="optional" value="false">
                     <tr>
-                        <td>
-                            <br>
-                            <bean:message key="message.bibliographicReferenceTitle"/>
+                        <td>                            
+                         <!--   <bean:message key="message.bibliographicReferenceTitle"/> -->
                             <bean:write name="bibliographicReference" property="title"/>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <bean:message key="message.bibliographicReferenceAuthors"/>
+                        <!--    <bean:message key="message.bibliographicReferenceAuthors"/> -->
                             <bean:write name="bibliographicReference" property="authors"/>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <bean:message key="message.bibliographicReferenceReference"/>
+                       <!--     <bean:message key="message.bibliographicReferenceReference"/> -->
                             <bean:write name="bibliographicReference" property="reference"/>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <bean:message key="message.bibliographicReferenceYear"/>
+                       <!--     <bean:message key="message.bibliographicReferenceYear"/> -->
                             <bean:write name="bibliographicReference" property="year"/>                            
                         </td>
                     </tr>
