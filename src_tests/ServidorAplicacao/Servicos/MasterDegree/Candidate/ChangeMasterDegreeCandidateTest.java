@@ -22,7 +22,9 @@ package ServidorAplicacao.Servicos.MasterDegree.Candidate;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import DataBeans.InfoDegree;
 import DataBeans.InfoMasterDegreeCandidate;
+import DataBeans.util.Cloner;
 import Dominio.IMasterDegreeCandidate;
 import ServidorAplicacao.NotExecutedException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -64,21 +66,24 @@ public class ChangeMasterDegreeCandidateTest extends TestCaseServicosCandidato {
         try {
             suportePersistente.iniciarTransaccao();
             tempCandidate1 = persistentMasterDegreeCandidate.readMasterDegreeCandidateByUsername("Cand1");
+			assertNotNull(tempCandidate1);
             tempCandidate2 = persistentMasterDegreeCandidate.readMasterDegreeCandidateByUsername("Cand2");
+			assertNotNull(tempCandidate2);
             suportePersistente.confirmarTransaccao();
             
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Erro no teste");
         }
 
-        InfoMasterDegreeCandidate tempMasterDegreeCandidate = new InfoMasterDegreeCandidate(tempCandidate1);
+        
+		InfoMasterDegreeCandidate tempMasterDegreeCandidate = Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(tempCandidate1);
         ISuportePersistente sp = null;
         
 		tempMasterDegreeCandidate.setApplicationYear(tempCandidate2.getApplicationYear());
 		tempMasterDegreeCandidate.setUsername(tempCandidate2.getUsername());
 		tempMasterDegreeCandidate.setCandidateNumber(tempCandidate2.getCandidateNumber());
-		tempMasterDegreeCandidate.setDegreeName(tempCandidate2.getDegree().getNome());
-		tempMasterDegreeCandidate.setDegreeCode(tempCandidate2.getDegree().getSigla());
+				
+		tempMasterDegreeCandidate.setInfoDegree(new InfoDegree(tempCandidate2.getDegree().getSigla(), tempCandidate2.getDegree().getNome()));
 
 
 		Object args[] = new Object[1];
@@ -154,20 +159,23 @@ public class ChangeMasterDegreeCandidateTest extends TestCaseServicosCandidato {
         try {
             suportePersistente.iniciarTransaccao();
             tempCandidate1 = persistentMasterDegreeCandidate.readMasterDegreeCandidateByUsername("Cand1");
+			assertNotNull(tempCandidate1);
             tempCandidate2 = persistentMasterDegreeCandidate.readMasterDegreeCandidateByUsername("Cand2");
+			assertNotNull(tempCandidate2);
             suportePersistente.confirmarTransaccao();
             
         } catch (ExcepcaoPersistencia ex) {
             fail("    -> Erro no teste");
         }
 
-        InfoMasterDegreeCandidate masterDegreeCandidate = new InfoMasterDegreeCandidate(tempCandidate1);
-        
+		InfoMasterDegreeCandidate masterDegreeCandidate = Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(tempCandidate1);        
 		masterDegreeCandidate.setApplicationYear(tempCandidate2.getApplicationYear());
 		masterDegreeCandidate.setUsername("Inexistente");
 		masterDegreeCandidate.setCandidateNumber(new Integer(1000));
-		masterDegreeCandidate.setDegreeName(tempCandidate2.getDegree().getNome());
-		masterDegreeCandidate.setDegreeCode(tempCandidate2.getDegree().getSigla());
+
+
+    	masterDegreeCandidate.setInfoDegree(new InfoDegree(tempCandidate2.getDegree().getSigla(), tempCandidate2.getDegree().getNome()));
+
 
 		Object args[] = new Object[1];
 		args[0] = masterDegreeCandidate;

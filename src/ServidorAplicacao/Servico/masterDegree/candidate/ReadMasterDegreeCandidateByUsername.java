@@ -17,7 +17,12 @@
 
 package ServidorAplicacao.Servico.masterDegree.candidate;
 
+import java.util.Iterator;
+
+import DataBeans.InfoCandidateSituation;
 import DataBeans.InfoMasterDegreeCandidate;
+import DataBeans.util.Cloner;
+import Dominio.ICandidateSituation;
 import Dominio.IMasterDegreeCandidate;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.NotExecutedException;
@@ -26,6 +31,7 @@ import ServidorAplicacao.Servico.UserView;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.CandidateSituationValidation;
 
 public class ReadMasterDegreeCandidateByUsername implements IServico {
     
@@ -72,7 +78,21 @@ public class ReadMasterDegreeCandidateByUsername implements IServico {
 		if (masterDegreeCandidate == null)
 			throw new ExcepcaoInexistente("Unknown Candidate !!");	
 			
+		InfoMasterDegreeCandidate infoMasterDegreeCandidate = Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate);
 		
-		return new InfoMasterDegreeCandidate(masterDegreeCandidate);
+		// Search the candidate's active situation
+		Iterator iterator = masterDegreeCandidate.getSituations().iterator();
+
+		while(iterator.hasNext()){
+			ICandidateSituation candidateSituationTemp = (ICandidateSituation) iterator.next();
+			
+			if ((candidateSituationTemp.getValidation().getCandidateSituationValidation()).equals(new Integer(CandidateSituationValidation.ACTIVE))) {
+				infoMasterDegreeCandidate.setInfoCandidateSituation(new InfoCandidateSituation(candidateSituationTemp.getDate(),
+										 							candidateSituationTemp.getRemarks(),
+										  							candidateSituationTemp.getSituation().toString()));
+			}
+		}
+		
+		return infoMasterDegreeCandidate;
     }
 }

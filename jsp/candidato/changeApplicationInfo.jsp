@@ -31,12 +31,12 @@
         <!-- Nome do Curso -->
         <tr>
          <td><bean:message key="candidate.degreeName" /></td>
-          <td><bean:write name="candidateInformation" property="degreeName"/></td>
+          <td><bean:write name="candidateInformation" property="infoDegree.nome"/></td>
         </tr>
         <!-- Sigla do Curso -->
         <tr>
          <td><bean:message key="candidate.degreeCode" /></td>
-          <td><bean:write name="candidateInformation" property="degreeCode"/></td>
+          <td><bean:write name="candidateInformation" property="infoDegree.sigla"/></td>
         </tr>
         <!-- Especializacao -->
         <tr>

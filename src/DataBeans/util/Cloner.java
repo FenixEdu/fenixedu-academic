@@ -11,6 +11,7 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoLesson;
+import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.InfoPerson;
 import DataBeans.InfoRoom;
 import DataBeans.InfoShift;
@@ -29,12 +30,14 @@ import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
+import Dominio.IMasterDegreeCandidate;
 import Dominio.IPessoa;
 import Dominio.IPlanoCurricularCurso;
 import Dominio.ISala;
 import Dominio.IStudent;
 import Dominio.ITurma;
 import Dominio.ITurno;
+import Dominio.MasterDegreeCandidate;
 import Dominio.Pessoa;
 import Dominio.PlanoCurricularCurso;
 import Dominio.Sala;
@@ -453,10 +456,36 @@ public abstract class Cloner {
 	 * @param infoPerson
 	 * @return IPessoa
 	 */
-	private static IPessoa copyInfoPerson2IPerson(InfoPerson infoPerson) {
+	public static IPessoa copyInfoPerson2IPerson(InfoPerson infoPerson) {
 		IPessoa person = new Pessoa();
 		copyObjectProperties(person, infoPerson);
 		return person;
+	}
+
+	/**
+	 * Method copyInfoMasterDegreeCandidate2IMasterDegreCandidate
+	 * @param infoMasterDegreeCandidate
+	 * @return IMasterDegreeCandidate
+	 */
+	public static IMasterDegreeCandidate copyInfoMasterDegreeCandidate2IMasterDegreCandidate(InfoMasterDegreeCandidate infoMasterDegreeCandidate) {
+		IMasterDegreeCandidate masterDegreeCandidate = new MasterDegreeCandidate();
+		copyObjectProperties(masterDegreeCandidate, infoMasterDegreeCandidate);
+		return masterDegreeCandidate;
+	}
+
+	/**
+	 * Method copyIMasterDegreeCandidate2InfoMasterDegreCandidate
+	 * @param masterDegreeCandidate
+	 * @return InfoMasterDegreeCandidate 
+	 */
+	public static InfoMasterDegreeCandidate copyIMasterDegreeCandidate2InfoMasterDegreCandidate(IMasterDegreeCandidate masterDegreeCandidate) {
+		InfoMasterDegreeCandidate infoMasterDegreeCandidate = new InfoMasterDegreeCandidate();
+		copyObjectProperties(infoMasterDegreeCandidate, masterDegreeCandidate);
+		InfoDegree infoDegree = Cloner.copyIDegree2InfoDegree(masterDegreeCandidate.getDegree());
+		infoMasterDegreeCandidate.setInfoDegree(infoDegree);
+		infoMasterDegreeCandidate.setCountry(masterDegreeCandidate.getCountry().getName());
+		infoMasterDegreeCandidate.setIdentificationDocumentType(masterDegreeCandidate.getIdentificationDocumentType().toString2());
+		return infoMasterDegreeCandidate;
 	}
 
 }

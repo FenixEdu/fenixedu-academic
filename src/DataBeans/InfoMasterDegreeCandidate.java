@@ -1,11 +1,6 @@
 package DataBeans;
 
 import java.util.Date;
-import java.util.Iterator;
-
-import Dominio.ICandidateSituation;
-import Dominio.IMasterDegreeCandidate;
-import Util.CandidateSituationValidation;
 
 /*
  * InfoMasterDegreeCandidate.java
@@ -58,8 +53,10 @@ public class InfoMasterDegreeCandidate {
   
     private String sex = null;    
   
-    private String degreeName = null;
-    private String degreeCode = null;
+  
+  	private InfoDegree infoDegree = null;
+//    private String degreeName = null;
+//    private String degreeCode = null;
     private String country = null;
 
     private String identificationDocumentType = null;
@@ -105,10 +102,9 @@ public class InfoMasterDegreeCandidate {
         majorDegreeSchool = null;
         majorDegreeYear = null;
         average = null;
-		degreeName = null;
-		degreeCode = null;
 		country = null;		
 		infoCandidateSituation = null;
+		infoDegree = null;
 
     } // Fim do Construtor Sem Argumentos
     
@@ -122,9 +118,8 @@ public class InfoMasterDegreeCandidate {
     		String addressParish, String addressMunicipality, String addressDistrict, 
     		String telephone, String mobilePhone, String email, String webSite, 
     		String contributorNumber, String occupation, String sex, String identificationDocumentType, 
-			String maritalStatus, String country, String nationality, String specialization, String degreeName,
-			String degreeCode, Integer applicationYear, Integer candidateNumber, Double average,
-			Date birth, Date identificationDocumentIssueDate
+			String maritalStatus, String country, String nationality, String specialization, Integer applicationYear,
+			Integer candidateNumber, Double average, Date birth, Date identificationDocumentIssueDate
     		) {
 	    
         setIdentificationDocumentNumber(identificationDocumentNumber);
@@ -160,8 +155,6 @@ public class InfoMasterDegreeCandidate {
 		setSpecialization(specialization);		
         setAverage(average);
         setCountry(country);
-		setDegreeName(degreeName);
-		setDegreeCode(degreeCode);
 		setApplicationYear(applicationYear);
 		setCandidateNumber(candidateNumber);
         
@@ -169,104 +162,67 @@ public class InfoMasterDegreeCandidate {
         
     }
     
-    public InfoMasterDegreeCandidate(IMasterDegreeCandidate masterDegreeCandidate) {
-	    setIdentificationDocumentNumber(masterDegreeCandidate.getIdentificationDocumentNumber());
-        setIdentificationDocumentType(masterDegreeCandidate.getIdentificationDocumentType().toString2());
-        setIdentificationDocumentIssuePlace(masterDegreeCandidate.getIdentificationDocumentIssuePlace());
-        setIdentificationDocumentIssueDate(masterDegreeCandidate.getIdentificationDocumentIssueDate());
-        setName(masterDegreeCandidate.getName());
-        setSex(masterDegreeCandidate.getSex().toString());
-        setMaritalStatus(masterDegreeCandidate.getMaritalStatus().toString());
-		
-        setBirth(masterDegreeCandidate.getBirth());
-        setFatherName(masterDegreeCandidate.getFatherName());
-        setMotherName(masterDegreeCandidate.getMotherName());
-        setNationality(masterDegreeCandidate.getNationality());
-        setBirthPlaceParish(masterDegreeCandidate.getBirthPlaceParish());
-        setBirthPlaceMunicipality(masterDegreeCandidate.getBirthPlaceMunicipality());
-        setBirthPlaceDistrict(masterDegreeCandidate.getBirthPlaceDistrict());
-        setAddress(masterDegreeCandidate.getAddress());
-        setPlace(masterDegreeCandidate.getPlace());
-        setPostCode(masterDegreeCandidate.getPostCode());
-        setAddressParish(masterDegreeCandidate.getAddressParish());
-        setAddressMunicipality(masterDegreeCandidate.getAddressMunicipality());
-        setAddressDistrict(masterDegreeCandidate.getAddressDistrict());
-        setTelephone(masterDegreeCandidate.getTelephone());
-        setMobilePhone(masterDegreeCandidate.getMobilePhone());
-        setEmail(masterDegreeCandidate.getEmail());
-        setWebSite(masterDegreeCandidate.getWebSite());
-        setContributorNumber(masterDegreeCandidate.getContributorNumber());
-        setOccupation(masterDegreeCandidate.getOccupation());
-        setMajorDegree(masterDegreeCandidate.getMajorDegree());
-        setUsername(masterDegreeCandidate.getUsername());
-        setPassword(masterDegreeCandidate.getPassword());
-        setCandidateNumber(masterDegreeCandidate.getCandidateNumber());
-        setApplicationYear(masterDegreeCandidate.getApplicationYear());
-        setSpecialization(masterDegreeCandidate.getSpecialization().toString());
-        setMajorDegreeSchool(masterDegreeCandidate.getMajorDegreeSchool());
-        setMajorDegreeYear(masterDegreeCandidate.getMajorDegreeYear());
-        setAverage(masterDegreeCandidate.getAverage());
-  		setDegreeName(masterDegreeCandidate.getDegree().getNome());      
-  		setDegreeCode(masterDegreeCandidate.getDegree().getSigla());      
-		setCountry(masterDegreeCandidate.getCountry().getName());
-		
-		// Get Active Master Degree Candidate Situation
-		Iterator iterator = masterDegreeCandidate.getSituations().iterator();
-
-		while(iterator.hasNext()){
-			ICandidateSituation candidateSituationTemp = (ICandidateSituation) iterator.next();
-			
-			if ((candidateSituationTemp.getValidation().getCandidateSituationValidation()).equals(new Integer(CandidateSituationValidation.ACTIVE))) {
-				setInfoCandidateSituation(new InfoCandidateSituation(candidateSituationTemp.getDate(),
-										  candidateSituationTemp.getRemarks(),
-										  candidateSituationTemp.getSituation().toString()));
-			}
-		}
-		
-		
-    }
+//    public InfoMasterDegreeCandidate(IMasterDegreeCandidate masterDegreeCandidate) {
+//	    setIdentificationDocumentNumber(masterDegreeCandidate.getIdentificationDocumentNumber());
+//        setIdentificationDocumentType(masterDegreeCandidate.getIdentificationDocumentType().toString2());
+//        setIdentificationDocumentIssuePlace(masterDegreeCandidate.getIdentificationDocumentIssuePlace());
+//        setIdentificationDocumentIssueDate(masterDegreeCandidate.getIdentificationDocumentIssueDate());
+//        setName(masterDegreeCandidate.getName());
+//        setSex(masterDegreeCandidate.getSex().toString());
+//        setMaritalStatus(masterDegreeCandidate.getMaritalStatus().toString());
+//		
+//        setBirth(masterDegreeCandidate.getBirth());
+//        setFatherName(masterDegreeCandidate.getFatherName());
+//        setMotherName(masterDegreeCandidate.getMotherName());
+//        setNationality(masterDegreeCandidate.getNationality());
+//        setBirthPlaceParish(masterDegreeCandidate.getBirthPlaceParish());
+//        setBirthPlaceMunicipality(masterDegreeCandidate.getBirthPlaceMunicipality());
+//        setBirthPlaceDistrict(masterDegreeCandidate.getBirthPlaceDistrict());
+//        setAddress(masterDegreeCandidate.getAddress());
+//        setPlace(masterDegreeCandidate.getPlace());
+//        setPostCode(masterDegreeCandidate.getPostCode());
+//        setAddressParish(masterDegreeCandidate.getAddressParish());
+//        setAddressMunicipality(masterDegreeCandidate.getAddressMunicipality());
+//        setAddressDistrict(masterDegreeCandidate.getAddressDistrict());
+//        setTelephone(masterDegreeCandidate.getTelephone());
+//        setMobilePhone(masterDegreeCandidate.getMobilePhone());
+//        setEmail(masterDegreeCandidate.getEmail());
+//        setWebSite(masterDegreeCandidate.getWebSite());
+//        setContributorNumber(masterDegreeCandidate.getContributorNumber());
+//        setOccupation(masterDegreeCandidate.getOccupation());
+//        setMajorDegree(masterDegreeCandidate.getMajorDegree());
+//        setUsername(masterDegreeCandidate.getUsername());
+//        setPassword(masterDegreeCandidate.getPassword());
+//        setCandidateNumber(masterDegreeCandidate.getCandidateNumber());
+//        setApplicationYear(masterDegreeCandidate.getApplicationYear());
+//        setSpecialization(masterDegreeCandidate.getSpecialization().toString());
+//        setMajorDegreeSchool(masterDegreeCandidate.getMajorDegreeSchool());
+//        setMajorDegreeYear(masterDegreeCandidate.getMajorDegreeYear());
+//        setAverage(masterDegreeCandidate.getAverage());
+//  		setDegreeName(masterDegreeCandidate.getDegree().getNome());      
+//  		setDegreeCode(masterDegreeCandidate.getDegree().getSigla());      
+//		setCountry(masterDegreeCandidate.getCountry().getName());
+//		
+//		// Get Active Master Degree Candidate Situation
+//		Iterator iterator = masterDegreeCandidate.getSituations().iterator();
+//
+//		while(iterator.hasNext()){
+//			ICandidateSituation candidateSituationTemp = (ICandidateSituation) iterator.next();
+//			
+//			if ((candidateSituationTemp.getValidation().getCandidateSituationValidation()).equals(new Integer(CandidateSituationValidation.ACTIVE))) {
+//				setInfoCandidateSituation(new InfoCandidateSituation(candidateSituationTemp.getDate(),
+//										  candidateSituationTemp.getRemarks(),
+//										  candidateSituationTemp.getSituation().toString()));
+//			}
+//		}
+//		
+//		
+//    }
     
     public boolean equals(Object o) {
         return
         ((o instanceof InfoMasterDegreeCandidate) &&
-        (identificationDocumentNumber.equals(((InfoMasterDegreeCandidate)o).getIdentificationDocumentNumber())) &&
-        (identificationDocumentType.equals(((InfoMasterDegreeCandidate)o).getIdentificationDocumentType())) &&
-        (identificationDocumentIssuePlace.equals(((InfoMasterDegreeCandidate)o).getIdentificationDocumentIssuePlace())) &&
-        (identificationDocumentIssueDate.getTime() == (((InfoMasterDegreeCandidate)o).getIdentificationDocumentIssueDate().getTime())) &&
-        (name.equals(((InfoMasterDegreeCandidate)o).getName())) &&
-        (sex.equals(((InfoMasterDegreeCandidate)o).getSex())) &&
-        (maritalStatus.equals(((InfoMasterDegreeCandidate)o).getMaritalStatus())) &&
-        (birth.getTime() == (((InfoMasterDegreeCandidate)o).getBirth().getTime())) &&
-        (fatherName.equals(((InfoMasterDegreeCandidate)o).getFatherName())) &&
-        (motherName.equals(((InfoMasterDegreeCandidate)o).getMotherName())) &&
-        (nationality.equals(((InfoMasterDegreeCandidate)o).getNationality())) &&
-        (birthPlaceParish.equals(((InfoMasterDegreeCandidate)o).getBirthPlaceParish())) &&
-        (birthPlaceMunicipality.equals(((InfoMasterDegreeCandidate)o).getBirthPlaceMunicipality())) &&
-        (birthPlaceDistrict.equals(((InfoMasterDegreeCandidate)o).getBirthPlaceDistrict())) &&
-        (address.equals(((InfoMasterDegreeCandidate)o).getAddress())) &&
-        (place.equals(((InfoMasterDegreeCandidate)o).getPlace())) &&
-        (postCode.equals(((InfoMasterDegreeCandidate)o).getPostCode())) &&
-        (addressParish.equals(((InfoMasterDegreeCandidate)o).getAddressParish())) &&
-        (addressMunicipality.equals(((InfoMasterDegreeCandidate)o).getAddressMunicipality())) &&
-        (addressDistrict.equals(((InfoMasterDegreeCandidate)o).getAddressDistrict())) &&
-        (telephone.equals(((InfoMasterDegreeCandidate)o).getTelephone())) &&
-        (mobilePhone.equals(((InfoMasterDegreeCandidate)o).getMobilePhone())) &&
-        (email.equals(((InfoMasterDegreeCandidate)o).getEmail())) &&
-        (webSite.equals(((InfoMasterDegreeCandidate)o).getWebSite())) &&
-        (contributorNumber.equals(((InfoMasterDegreeCandidate)o).getContributorNumber())) &&
-        (occupation.equals(((InfoMasterDegreeCandidate)o).getOccupation())) &&
-        (majorDegree.equals(((InfoMasterDegreeCandidate)o).getMajorDegree())) &&
-        (username.equals(((InfoMasterDegreeCandidate)o).getUsername())) &&
-        (password.equals(((InfoMasterDegreeCandidate)o).getPassword())) &&
-        (candidateNumber == ((InfoMasterDegreeCandidate)o).getCandidateNumber()) &&
-		(applicationYear == ((InfoMasterDegreeCandidate)o).getApplicationYear()) &&
-		(specialization.equals(((InfoMasterDegreeCandidate)o).getSpecialization())) &&
-		(majorDegreeSchool.equals(((InfoMasterDegreeCandidate)o).getMajorDegreeSchool())) &&
-		(majorDegreeYear == ((InfoMasterDegreeCandidate)o).getMajorDegreeYear()) &&
-		(degreeName.equals(((InfoMasterDegreeCandidate)o).getDegreeName())) &&
-		(degreeCode.equals(((InfoMasterDegreeCandidate)o).getDegreeCode())) &&
-		(country.equals(((InfoMasterDegreeCandidate)o).getCountry())) &&
-		(average == ((InfoMasterDegreeCandidate)o).getAverage()));
+        (username.equals(((InfoMasterDegreeCandidate)o).getUsername())));
     }
 
     public String toString() {
@@ -306,10 +262,9 @@ public class InfoMasterDegreeCandidate {
         result += "\n  - Escola de Licenciatura : " + majorDegreeSchool;
         result += "\n  - Ano de Licenciatura : " + majorDegreeYear;
         result += "\n  - Media de Licenciatura : " + average;
-        result += "\n  - Nome do Curso : " + degreeName;
-        result += "\n  - Sigla do Curso : " + degreeCode;
 		result += "\n  - Pais : " + country;
 		result += "\n  - Situação Activa : " + infoCandidateSituation;
+		result += "\n  - InfoDegree : " + infoDegree;
         return result;
     }
     
@@ -420,21 +375,6 @@ public class InfoMasterDegreeCandidate {
 		return country;
 	}
 
-	/**
-	 * Returns the degreeCode.
-	 * @return String
-	 */
-	public String getDegreeCode() {
-		return degreeCode;
-	}
-
-	/**
-	 * Returns the degreeName.
-	 * @return String
-	 */
-	public String getDegreeName() {
-		return degreeName;
-	}
 
 	/**
 	 * Returns the email.
@@ -725,22 +665,6 @@ public class InfoMasterDegreeCandidate {
 	}
 
 	/**
-	 * Sets the degreeCode.
-	 * @param degreeCode The degreeCode to set
-	 */
-	public void setDegreeCode(String degreeCode) {
-		this.degreeCode = degreeCode;
-	}
-
-	/**
-	 * Sets the degreeName.
-	 * @param degreeName The degreeName to set
-	 */
-	public void setDegreeName(String degreeName) {
-		this.degreeName = degreeName;
-	}
-
-	/**
 	 * Sets the email.
 	 * @param email The email to set
 	 */
@@ -939,6 +863,21 @@ public class InfoMasterDegreeCandidate {
 	 */
 	public void setInfoCandidateSituation(InfoCandidateSituation infoCandidateSituation) {
 		this.infoCandidateSituation = infoCandidateSituation;
+	}
+
+	/**
+	 * @return InfoDegree
+	 */
+	public InfoDegree getInfoDegree() {
+		return infoDegree;
+	}
+
+	/**
+	 * Sets the infoDegree.
+	 * @param infoDegree The infoDegree to set
+	 */
+	public void setInfoDegree(InfoDegree infoDegree) {
+		this.infoDegree = infoDegree;
 	}
 
 }

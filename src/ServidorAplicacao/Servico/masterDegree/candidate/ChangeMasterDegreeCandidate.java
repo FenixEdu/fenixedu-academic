@@ -70,12 +70,12 @@ public class ChangeMasterDegreeCandidate implements IServico {
         } 
 
         try {
-            ICurso degreeTemp = sp.getICursoPersistente().readBySigla(newMasterDegreeCandidate.getDegreeCode());
+            ICurso degreeTemp = sp.getICursoPersistente().readBySigla(newMasterDegreeCandidate.getInfoDegree().getSigla());
             existingMasterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate().readMasterDegreeCandidateByNumberAndApplicationYearAndDegreeCode(newMasterDegreeCandidate.getCandidateNumber(), newMasterDegreeCandidate.getApplicationYear(), degreeTemp.getSigla());
         } catch (ExcepcaoPersistencia ex) {
             NotExecutedException newEx = new NotExecutedException("Persistence layer error");
             newEx.fillInStackTrace();
-            throw newEx;
+            throw newEx; 
         } 
 		if (existingMasterDegreeCandidate == null)
 			throw new ExcepcaoInexistente("Unknown Candidate !!");	

@@ -58,7 +58,7 @@ public class ChangeCandidateApplicationFormAction extends ServidorApresentacao.A
 					
  
       Object changeArgs[] = new Object[1];
-      changeArgs[0] = new InfoMasterDegreeCandidate( 
+      InfoMasterDegreeCandidate infoMasterDegreeCandidate = new InfoMasterDegreeCandidate( 
 						   (String) changePersonalInformationForm.get("name"), 
 						   (String) changePersonalInformationForm.get("password"), 
 						   (String) changePersonalInformationForm.get("majorDegree"), 
@@ -89,15 +89,20 @@ public class ChangeCandidateApplicationFormAction extends ServidorApresentacao.A
 						   (String) changePersonalInformationForm.get("country"), 
 						   (String) changePersonalInformationForm.get("nationality"), 
 						   (String) changePersonalInformationForm.get("specialization"),
-    					   (String) changePersonalInformationForm.get("degreeName"), 
-						   (String) changePersonalInformationForm.get("degreeCode"), 
 						   ((Integer) changePersonalInformationForm.get("applicationYear")), 
 						   ((Integer) changePersonalInformationForm.get("candidateNumber")),
 						   ((Double) changePersonalInformationForm.get("average")),
 						   birthDate.getTime(),
 						   idDocumentIssueDate.getTime());
       
-      gestor.executar(userView, "ChangeMasterDegreeCandidate", changeArgs);
+      
+      	InfoMasterDegreeCandidate sessionInfoMasterDegreeCandidate = (InfoMasterDegreeCandidate) sessao.getAttribute("candidateInformation"); 
+		
+		infoMasterDegreeCandidate.setInfoDegree(sessionInfoMasterDegreeCandidate.getInfoDegree());
+      
+		changeArgs[0] = infoMasterDegreeCandidate;
+
+        gestor.executar(userView, "ChangeMasterDegreeCandidate", changeArgs);
 
       return mapping.findForward("Success");
     } else

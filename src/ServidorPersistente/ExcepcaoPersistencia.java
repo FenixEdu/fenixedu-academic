@@ -19,8 +19,13 @@ public class ExcepcaoPersistencia extends java.lang.Exception {
     public static final int READ_LOCK = 6;
     public static final int QUERY = 7;
     public static final int CLOSE_DATABASE = 8;
+    
+    public static final int EXISTING = 9;
+    public static final String EXISTING_KEY = "exception.error.existing";
+	public static final String NON_EXISTING_KEY = "exception.error.nonExisting";
 
     private int _erro;
+    private String errorKey;
     /**
      * Creates a new instance of <code>ExcepcaoPersistencia</code> without detail message.
      */
@@ -32,15 +37,30 @@ public class ExcepcaoPersistencia extends java.lang.Exception {
       _erro = erro;
     }
 
+	public ExcepcaoPersistencia(String error, Exception ex) {
+	  super(ex);
+	  this.errorKey = error;
+	}
+
+
+
     /**
      * Constructs an instance of <code>ExcepcaoPersistencia</code> with the specified detail message.
      * @param msg the detail message.
      */
     public ExcepcaoPersistencia(String msg) {
         super(msg);
+        this.errorKey = msg;
     }
 
     public int getErro() {
         return _erro;
     }
+    
+	public String getErrorKey() {
+		return this.errorKey;
+	}
+    
+    
 }
+

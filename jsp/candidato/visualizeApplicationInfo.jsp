@@ -63,7 +63,7 @@
           <!-- Curso Pretendido -->
           <tr>
             <td><bean:message key="candidate.degreeName" /></td>
-            <td><bean:write name="applicationInfo" property="degreeName"/> - <bean:write name="applicationInfo" property="degreeCode"/></td>
+            <td><bean:write name="applicationInfo" property="infoDegree.nome"/> - <bean:write name="applicationInfo" property="infoDegree.sigla"/></td>
           </tr>
           <!-- Especializacao -->
           <tr>

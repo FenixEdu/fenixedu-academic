@@ -44,8 +44,22 @@ public class CursoOJB extends ObjectFenixOJB implements ICursoPersistente {
     }
     
     public void lockWrite(ICurso licenciatura) throws ExcepcaoPersistencia {
-        super.lockWrite(licenciatura);
+		try {
+			ICurso curso = null;
+			String oqlQuery = "select curso from " + Curso.class.getName();
+			oqlQuery += " where sigla = $1 ";
+			query.create(oqlQuery);
+			query.bind(licenciatura.getSigla());
+			List result = (List) query.execute();
+			lockRead(result);
+			if (result.size() != 0) 
+				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.EXISTING_KEY);
+			else super.lockWrite(licenciatura);				
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
     }
+
     
     public void delete(ICurso licenciatura) throws ExcepcaoPersistencia {
         super.delete(licenciatura);
