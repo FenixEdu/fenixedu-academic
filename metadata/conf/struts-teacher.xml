@@ -201,11 +201,11 @@
         
       </action>
 	 <!-- Action For LogOff -->
-      <action path="/logoff"
-      	      type="ServidorApresentacao.Action.commons.LogOffAction">
-      	  <forward name="Success" path="/index.do"/>
-      </action>
+      <action path="/logoff" 
+		      type="ServidorApresentacao.Action.base.FenixForwardAction"
+		      forward="/switchAction.do?prefix=&amp;page=/logoff.do"/>
 	
+	<action path="/switchAction" type="org.apache.struts.actions.SwitchAction"/>
 	<!-- Actions For Teachers  -->
 	<action 
 		input="/viewTeachers.jsp"
