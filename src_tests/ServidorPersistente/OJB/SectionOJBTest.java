@@ -85,7 +85,6 @@ public class SectionOJBTest extends TestCaseOJB {
 	calendar.set(Calendar.MONTH,Calendar.JANUARY);
 	calendar.set(Calendar.YEAR,2003);
 
-    Date date = Date.valueOf("2003-01-22");
  
    try {
 		persistentSupport.iniciarTransaccao();
@@ -108,30 +107,67 @@ public class SectionOJBTest extends TestCaseOJB {
 		
 	assertEquals(section.getName(), "Seccao1deTFCI");
 	assertEquals(section.getSectionOrder().intValue(), 0);
-	assertEquals(section.getLastModifiedDate(), date);
+	assertEquals(section.getLastModifiedDate(), Date.valueOf("2003-01-22"));
 	assertEquals(section.getSite(), site);
 	assertEquals(section.getSuperiorSection(), null);
 	assertEquals(section.getInferiorSections(), inferiorSections);
 	assertEquals(section.getItems(),itens);
 	
 	
-		
-//	inferiorSections.add("subSection1");
-//	inferiorSections.add("subSection2");
+//		//read existing section 2
+//
+//
+//		
+//	try {
+//		 persistentSupport.iniciarTransaccao();
+//		 executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("PO", "2002/2003", "LEEC");
+//	     assertNotNull(executionCourse);
+//	    
+//		 site = persistentSite.readByExecutionCourse(executionCourse);
+//		 assertNotNull(site);
 //	
-//	itens.add("item11");
-//	itens.add("item12");
-//	itens.add("item21");
-	
-
-
-
-
-
-
-
-
-
+//		 superiorSection = persistentSection.readBySiteAndSectionAndName(site, null,"Seccao1dePO");
+//		 
+//		 inferiorSection = 
+//		 
+//		 inferiorSections
+//		 
+//		 
+//		section = new Section("SubSeccao1dePO", 0, Date.valueOf("2003-01-23"), site, superiorSection, inferiorSections, null);
+//		 
+//		 persistentSupport.confirmarTransaccao();
+//		}
+//	
+//	catch (ExcepcaoPersistencia ex) 
+//		{
+//		 fail("testReadBySiteAndSectionAndName:fail read existing section ");
+//		}
+//	
+//		assertNotNull(section);
+//		
+//		assertEquals(section.getName(), "Seccao1deTFCI");
+//		assertEquals(section.getSectionOrder().intValue(), 0);
+//		assertEquals(section.getLastModifiedDate(), date);
+//		assertEquals(section.getSite(), site);
+//		assertEquals(section.getSuperiorSection(), null);
+//		assertEquals(section.getInferiorSections(), inferiorSections);
+//		assertEquals(section.getItems(),itens);
+////	inferiorSections.add("subSection1");
+////	inferiorSections.add("subSection2");
+////	
+////	itens.add("item11");
+////	itens.add("item12");
+////	itens.add("item21");
+//	
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
     
 	    
