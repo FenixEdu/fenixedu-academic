@@ -67,7 +67,7 @@ public void run(String className, Integer curricularCourseToAddPrecedenceID,
 
             IPersistentRestriction persistentRestriction = persistentSuport.getIPersistentRestriction();
             if (className.equals(RestrictionByNumberOfDoneCurricularCourses.class.getName().substring(
-                    RestrictionByNumberOfDoneCurricularCourses.class.getName().lastIndexOf(".") + 1))) {
+                    RestrictionByNumberOfDoneCurricularCourses.class.getName().lastIndexOf(".") + 1)) && number != null) {
                 IRestrictionByNumberOfCurricularCourses restriction = new RestrictionByNumberOfDoneCurricularCourses();
                 restriction.setNumberOfCurricularCourses(number);
                 restriction.setPrecedence(precedence);
@@ -75,7 +75,7 @@ public void run(String className, Integer curricularCourseToAddPrecedenceID,
                 persistentRestriction.lockWrite(restriction);
                 
             } else if (className.equals(RestrictionPeriodToApply.class.getName().substring(
-                    RestrictionPeriodToApply.class.getName().lastIndexOf(".") + 1))) {
+                    RestrictionPeriodToApply.class.getName().lastIndexOf(".") + 1)) && number != null) {
                 IRestrictionPeriodToApply restrictionPeriodToApply = new RestrictionPeriodToApply();
                 restrictionPeriodToApply.setPrecedence(precedence);
                 restrictionPeriodToApply.setPeriodToApplyRestriction(PeriodToApplyRestriction.getEnum(number.intValue()));
