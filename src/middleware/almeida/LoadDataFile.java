@@ -32,7 +32,7 @@ import Util.RoleType;
  */
 public abstract class LoadDataFile {
 
-	private int numberLinesProcessed = 0;
+	protected int numberLinesProcessed = 0;
 	protected int numberElementsWritten = 0;
 	protected int numberUntreatableElements = 0;
 	private Calendar startTime = null;
