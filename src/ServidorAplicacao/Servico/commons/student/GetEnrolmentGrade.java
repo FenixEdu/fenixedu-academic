@@ -53,11 +53,6 @@ public class GetEnrolmentGrade implements IServico {
 			return null;
 		}        
 		
-		// if there if no aproval in the enrolment ....
-		if (!enrolment.getEnrolmentState().equals(EnrolmentState.APROVED)){
-			return new InfoEnrolmentEvaluation(); 
-		}
-
 		// if there's only one evaluation ...
 		if (enrolmentEvaluations.size() == 1){
 			IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) enrolmentEvaluations.get(0);
@@ -69,12 +64,16 @@ public class GetEnrolmentGrade implements IServico {
 			return Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(enrolmentEvaluation);
 		}
 
-		BeanComparator dateComparator = new BeanComparator("gradeAvailableDate");
+		BeanComparator dateComparator = new BeanComparator("when");
 
 		Collections.sort(enrolmentEvaluations, dateComparator);
 		Collections.reverse(enrolmentEvaluations);
 
 		IEnrolmentEvaluation latestEvaluation = (IEnrolmentEvaluation) enrolmentEvaluations.get(0);
+
+		if (enrolment.getEnrolmentState().equals(EnrolmentState.NOT_APROVED)){
+			return Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(latestEvaluation);
+		}
 
 
 		// if the last evaluation is Not of "IMPROVEMENT" type
