@@ -229,7 +229,6 @@
 		<fk-pointing-to-this-class column="KEY_CURRICULAR_COURSE"/>
 		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE"/>
 	</collection-descriptor>
-<!--
 	<collection-descriptor
 			name="associatedBranches"
 			element-class-ref="Dominio.Branch"
@@ -238,6 +237,7 @@
 		<fk-pointing-to-this-class column="KEY_CURRICULAR_COURSE"/>
 		<fk-pointing-to-element-class column="KEY_BRANCH"/>
 	</collection-descriptor>
+<!--
 	<collection-descriptor
 			name="associatedCurricularSemesters"
 			element-class-ref="Dominio.CurricularSemester"
@@ -293,6 +293,14 @@
 			proxy="false">
 		<foreignkey field-ref="degreeCurricularPlanKey"/>
 	</reference-descriptor>
+	<collection-descriptor
+			name="associatedBranches"
+			element-class-ref="Dominio.Branch"
+			indirection-table="STUDENT_CURRICULAR_PLAN_BRANCH"
+			auto-retrieve="true">
+		<fk-pointing-to-this-class column="KEY_STUDENT_CURRICULAR_PLAN"/>
+		<fk-pointing-to-element-class column="KEY_BRANCH"/>
+	</collection-descriptor>
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
@@ -390,7 +398,6 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for Dominio.Branch -->
 <!-- ************************************************************************************************************ -->
-<!--
 <class-descriptor class="Dominio.Branch" table="BRANCH">
 	<field-descriptor id="1"
 		name="internalID"
@@ -400,12 +407,12 @@
 		autoincrement="true"
 	/>
 	<field-descriptor id="2"
-		name="branchCode"
+		name="code"
 		column="BRANCH_CODE"
 		jdbc-type="VARCHAR"
 	/>
 	<field-descriptor id="3"
-		name="branchName"
+		name="name"
 		column="BRANCH_NAME"
 		jdbc-type="VARCHAR"
 	/>
@@ -426,7 +433,7 @@
 		<fk-pointing-to-element-class column="KEY_STUDENT_CURRICULAR_PLAN"/>
 	</collection-descriptor>
 </class-descriptor>
--->
+
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for Dominio.Equivalence -->
 <!-- ************************************************************************************************************ -->

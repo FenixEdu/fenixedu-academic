@@ -8,6 +8,8 @@ package Dominio;
 
 import java.util.Date;
 
+import java.util.List;
+
 import Util.StudentCurricularPlanState;
 
 /**
@@ -25,6 +27,8 @@ public class StudentCurricularPlan implements IStudentCurricularPlan {
   protected IDegreeCurricularPlan degreeCurricularPlan;
   protected Date startDate;
   protected StudentCurricularPlanState currentState;
+  
+  private List associatedBranches;
     
     
   /** Construtor sem argumentos público requerido pela moldura de objectos OJB */
@@ -176,5 +180,20 @@ public class StudentCurricularPlan implements IStudentCurricularPlan {
 	public void setStudentKey(Integer studentKey) {
 		this.studentKey = studentKey;
 	}
+
+/**
+ * @return List
+ */
+public List getAssociatedBranches() {
+	return associatedBranches;
+}
+
+/**
+ * Sets the associatedBranches.
+ * @param associatedBranches The associatedBranches to set
+ */
+public void setAssociatedBranches(List associatedBranches) {
+	this.associatedBranches = associatedBranches;
+}
 
 }

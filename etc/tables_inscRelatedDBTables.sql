@@ -62,27 +62,47 @@ create table DEGREE_CURRICULAR_PLAN (
    unique U1 (NAME, KEY_DEGREE)
 )type=InnoDB;
 
-#----------------------------
-# Table structure for CURRICULAR_COURSE
-#----------------------------
+#------------------------------------------
+# Table structure for curricular_course
+# key_department should be not null
+#   ainda não se tem a disciplina departamento
+#------------------------------------------
 drop table if exists CURRICULAR_COURSE;
 create table CURRICULAR_COURSE (
    ID_INTERNAL int(11) not null auto_increment,
-   KEY_DEPARTMENT_COURSE int(11) not null default '0',
-   KEY_DEGREE_CURRICULAR_PLAN int(11) not null default '0',
+   KEY_DEPARTMENT_COURSE int(11),
+   KEY_DEGREE_CURRICULAR_PLAN int(11) not null,
    CREDITS double,
    THEORETICAL_HOURS double,
    PRATICAL_HOURS double,
    THEO_PRAT_HOURS double,
    LAB_HOURS double,
-   NAME varchar(100) not null,
+   CURRICULAR_YEAR int(11),
+   SEMESTER int(11),
+   NAME varchar(100),
    CODE varchar(50) not null,
-   PRIMARY KEY  (ID_INTERNAL),
-   UNIQUE KEY U1 (CODE, NAME, KEY_DEGREE_CURRICULAR_PLAN)
-)type=InnoDB;
-#  SEMESTER int(11),
-#  CURRICULAR_YEAR int(11) not null,
-#  UNIQUE KEY U1 (CURRICULAR_YEAR, SEMESTER, CODE, NAME, KEY_DEGREE_CURRICULAR_PLAN)
+   primary key (ID_INTERNAL ),
+   unique U1 (CODE, NAME, SEMESTER, CURRICULAR_YEAR,  KEY_DEGREE_CURRICULAR_PLAN))
+   type=InnoDB;
+
+#----------------------------
+# Table structure for CURRICULAR_COURSE
+#----------------------------
+#drop table if exists CURRICULAR_COURSE;
+#create table CURRICULAR_COURSE (
+#   ID_INTERNAL int(11) not null auto_increment,
+#   KEY_DEPARTMENT_COURSE int(11) not null default '0',
+#   KEY_DEGREE_CURRICULAR_PLAN int(11) not null default '0',
+#   CREDITS double,
+#   THEORETICAL_HOURS double,
+#   PRATICAL_HOURS double,
+#   THEO_PRAT_HOURS double,
+#   LAB_HOURS double,
+#   NAME varchar(100) not null,
+#   CODE varchar(50) not null,
+#   PRIMARY KEY  (ID_INTERNAL),
+#   UNIQUE KEY U1 (CODE, NAME, KEY_DEGREE_CURRICULAR_PLAN)
+#)type=InnoDB;
 
 #----------------------------
 # Table structure for STUDENT_CURRICULAR_PLAN
@@ -166,7 +186,7 @@ create table BRANCH (
    BRANCH_CODE varchar(50) not null,
    BRANCH_NAME varchar(255),
    primary key (ID_INTERNAL),
-   unique U1 (BRANCH_NAME)
+   unique U1 (BRANCH_NAME, BRANCH_CODE)
 )type=InnoDB;
 
 #==================================================================================

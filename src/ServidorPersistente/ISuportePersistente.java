@@ -59,4 +59,6 @@ public interface ISuportePersistente {
 	public IPersistentTeacher getIPersistentTeacher();
 	
 	public IPersistentExam getIPersistentExam();
+	
+	public IPersistentBranch getIPersistentBranch();
 }

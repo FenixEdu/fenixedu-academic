@@ -1,98 +1,122 @@
-/*
- * CurricularCourse.java
- *
- * Created on 28 of December 2002, 11:13
- */
-
-/**
- *
- * @author  Nuno Nunes & Joana Mota
- */
-
 package Dominio;
 
 import java.util.List;
 
-public class CurricularCourse implements ICurricularCourse{
+/**
+ * @author dcs-rjao
+ *
+ * 20/Mar/2003
+ */
 
-    private Integer internalCode;
-    private Integer departmentCourseKey;
-    private Integer degreeCurricularPlanKey;
-    private Double credits;
-    private Double theoreticalHours;
-    private Double praticalHours;
-    private Double theoPratHours;
-    private Double labHours;
-    private Integer curricularYear;
-    private Integer semester;
-    private String name;
-    private String code;
-    private IDisciplinaDepartamento departmentCourse;
-    private IDegreeCurricularPlan degreeCurricularPlan;
-    
-    private List associatedExecutionCourses = null;
-    
-    /* Construtores */
-    
-    public CurricularCourse() {
-    //	setDepartmentCourseKey(new Integer(-1));
-    }
+public class CurricularCourse implements ICurricularCourse {
 
-    public CurricularCourse(Double credits, Double theoreticalHours, Double praticalHours,
-     Double theoPratHours, Double labHours, Integer curricularYear, Integer semester, String name,
-     String code, IDisciplinaDepartamento departmentCourse, IDegreeCurricularPlan degreeCurricularPlan) {
-        this();
-        this.credits = credits;
-        this.theoreticalHours = theoreticalHours;
-        this.praticalHours = praticalHours;
-        this.theoPratHours = theoPratHours;
-        this.labHours = labHours;
-        this.curricularYear = curricularYear;
-        this.semester = semester;
-        this.name = name;
-        this.code = code;
-        this.departmentCourse = departmentCourse;
-        this.degreeCurricularPlan = degreeCurricularPlan;
-		
-        
-    }
+	private Integer internalCode;
+	private Integer departmentCourseKey;
+	private Integer degreeCurricularPlanKey;
+	private Double credits;
+	private Double theoreticalHours;
+	private Double praticalHours;
+	private Double theoPratHours;
+	private Double labHours;
+	private String name;
+	private String code;
+	private IDisciplinaDepartamento departmentCourse;
+	private IDegreeCurricularPlan degreeCurricularPlan;
 
-    public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof CurricularCourse ) {
-            CurricularCourse dc = (CurricularCourse)obj;
-            resultado = 
-            (getDepartmentCourseKey().equals(dc.getDepartmentCourseKey())) &&
-            (getDegreeCurricularPlanKey().equals(dc.getDegreeCurricularPlanKey())) &&
-            (getTheoreticalHours().equals(dc.getTheoreticalHours())) &&
-            (getPraticalHours().equals(dc.getPraticalHours())) &&
-            (getTheoPratHours().equals(dc.getTheoPratHours())) &&
-            (getLabHours().equals(dc.getLabHours())) &&
-            (getCurricularYear().equals(dc.getCurricularYear())) &&
-            (getSemester().equals(dc.getSemester())) &&
-            (getName().equals(dc.getName())) &&
-            (getCode().equals(dc.getCode()));
-        }
-        return resultado;
-    }
+	private List associatedExecutionCourses;
+	private List associatedBranches;
+	private List associatedCurricularSemesters;
 
-  public String toString() {
-    String result = "[CURRICULAR_COURSE";
-    result += ", Internal Code=" + internalCode;
-    result += ", Credits=" + credits;
-    result += ", Theoretical Hours=" + theoreticalHours;
-    result += ", PraticalHours=" + praticalHours;
-    result += ", Theoretical-Pratical Hours=" + theoPratHours;
-    result += ", Lab Hours=" + labHours;
-    result += ", Curricular Year=" + curricularYear;
-    result += ", Semester=" + semester;
-    result += ", Name=" + name;
-    result += ", Code=" + code;
-//    result += ", Department Course=" + departmentCourse;
-//    result += ", Degree Curricular Plan=" + degreeCurricularPlan;
-    result += "]";
-    return result;
-  }
+	// Para sair:
+	private Integer curricularYear;
+	private Integer semester;
+
+	public CurricularCourse() {
+		setInternalCode(null);
+
+		setCode(null);
+		setCredits(null);
+		setDegreeCurricularPlan(null);
+		setDegreeCurricularPlanKey(null);
+		setDepartmentCourse(null);
+		setDepartmentCourseKey(null);
+		setLabHours(null);
+		setName(null);
+		setPraticalHours(null);
+		setTheoPratHours(null);
+		setTheoreticalHours(null);
+
+		setAssociatedExecutionCourses(null);
+		setAssociatedBranches(null);
+		setAssociatedCurricularSemesters(null);
+
+		setCurricularYear(null);
+		setSemester(null);
+	}
+
+	public CurricularCourse(
+		Double credits,
+		Double theoreticalHours,
+		Double praticalHours,
+		Double theoPratHours,
+		Double labHours,
+		Integer curricularYear,
+		Integer semester,
+		String name,
+		String code,
+		IDisciplinaDepartamento departmentCourse,
+		IDegreeCurricularPlan degreeCurricularPlan) {
+
+		this();
+		setCode(code);
+		setCredits(credits);
+		setDegreeCurricularPlan(degreeCurricularPlan);
+		setDepartmentCourse(departmentCourse);
+		setLabHours(labHours);
+		setName(name);
+		setPraticalHours(praticalHours);
+		setTheoPratHours(theoPratHours);
+		setTheoreticalHours(theoreticalHours);
+
+		setCurricularYear(curricularYear);
+		setSemester(semester);
+
+	}
+
+	public boolean equals(Object obj) {
+		boolean resultado = false;
+		if (obj instanceof CurricularCourse) {
+			CurricularCourse dc = (CurricularCourse) obj;
+			resultado = (getDegreeCurricularPlanKey().equals(dc.getDegreeCurricularPlanKey()))
+					&& (getName().equals(dc.getName()))
+					&& (getCode().equals(dc.getCode()))
+
+					&& (getCurricularYear().equals(dc.getCurricularYear()))
+					&& (getSemester().equals(dc.getSemester()));
+		}
+		return resultado;
+	}
+
+	public String toString() {
+		String result = "[" + this.getClass().getName() + ": ";
+		result += "idInternal = " + this.internalCode + "; ";
+		result += "name = " + this.name + "; ";
+		result += "code = " + this.code + "; ";
+		result += "credits=" + credits + "; ";
+		result += "theoreticalHours = " + theoreticalHours + "; ";
+		result += "praticalHours = " + praticalHours + "; ";
+		result += "theoPratHours = " + theoPratHours + "; ";
+		result += "labHours = " + labHours + "; ";
+		result += "labHours = " + labHours + "; ";
+
+//		result += "associatedExecutionCourses = " + associatedExecutionCourses + "; ";
+//		result += "associatedBranches = " + associatedBranches + "; ";
+//		result += "associatedCurricularSemesters = " + associatedCurricularSemesters + "; ";
+
+		result += "curricularYear = " + curricularYear + "; ";
+		result += "semester = " + semester + "; ";
+		return result;
+	}
 
 	/**
 	 * Returns the code.
@@ -216,14 +240,6 @@ public class CurricularCourse implements ICurricularCourse{
 		this.code = code;
 	}
 
-//	/**
-//	 * Sets the credits.
-//	 * @param credits The credits to set
-//	 */
-//	public void setCredits(double credits) {
-//		this.credits = credits;
-//	}
-
 	/**
 	 * Sets the curricularYear.
 	 * @param curricularYear The curricularYear to set
@@ -273,14 +289,6 @@ public class CurricularCourse implements ICurricularCourse{
 		this.internalCode = internalCode;
 	}
 
-//	/**
-//	 * Sets the labHours.
-//	 * @param labHours The labHours to set
-//	 */
-//	public void setLabHours(double labHours) {
-//		this.labHours = labHours;
-//	}
-
 	/**
 	 * Sets the name.
 	 * @param name The name to set
@@ -288,14 +296,6 @@ public class CurricularCourse implements ICurricularCourse{
 	public void setName(String name) {
 		this.name = name;
 	}
-
-//	/**
-//	 * Sets the praticalHours.
-//	 * @param praticalHours The praticalHours to set
-//	 */
-//	public void setPraticalHours(double praticalHours) {
-//		this.praticalHours = praticalHours;
-//	}
 
 	/**
 	 * Sets the semester.
@@ -305,22 +305,6 @@ public class CurricularCourse implements ICurricularCourse{
 	public void setSemester(Integer semester) {
 		this.semester = semester;
 	}
-
-//	/**
-//	 * Sets the theoPratHours.
-//	 * @param theoPratHours The theoPratHours to set
-//	 */
-//	public void setTheoPratHours(double theoPratHours) {
-//		this.theoPratHours = theoPratHours;
-//	}
-//
-//	/**
-//	 * Sets the theoreticalHours.
-//	 * @param theoreticalHours The theoreticalHours to set
-//	 */
-//	public void setTheoreticalHours(double theoreticalHours) {
-//		this.theoreticalHours = theoreticalHours;
-//	}
 
 	/**
 	 * Returns the associatedExecutionCourses.
@@ -376,6 +360,36 @@ public class CurricularCourse implements ICurricularCourse{
 	 */
 	public void setTheoreticalHours(Double theoreticalHours) {
 		this.theoreticalHours = theoreticalHours;
+	}
+
+	/**
+	 * @return List
+	 */
+	public List getAssociatedBranches() {
+		return associatedBranches;
+	}
+
+	/**
+	 * @return List
+	 */
+	public List getAssociatedCurricularSemesters() {
+		return associatedCurricularSemesters;
+	}
+
+	/**
+	 * Sets the associatedBranches.
+	 * @param associatedBranches The associatedBranches to set
+	 */
+	public void setAssociatedBranches(List associatedBranches) {
+		this.associatedBranches = associatedBranches;
+	}
+
+	/**
+	 * Sets the associatedCurricularSemesters.
+	 * @param associatedCurricularSemesters The associatedCurricularSemesters to set
+	 */
+	public void setAssociatedCurricularSemesters(List associatedCurricularSemesters) {
+		this.associatedCurricularSemesters = associatedCurricularSemesters;
 	}
 
 }
