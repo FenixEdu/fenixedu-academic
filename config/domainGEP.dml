@@ -199,6 +199,7 @@ class net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.inquiries.OldInqu
 }
 
 
+
 /* 
  * THE FOLLOWING CLASSES DO NOT BELONG 
  * TO THE GEP DOMAIN MODEL, 
@@ -294,9 +295,11 @@ class net.sourceforge.fenixedu.domain.ExecutionPeriod extends net.sourceforge.fe
 	Integer semester;
 }
 
-
-
-
+/* 
+ * END OF THE CLASSES NOT BELONGING  
+ * TO THE GEP DOMAIN MODEL
+ *
+ */
 
 
 
