@@ -93,6 +93,44 @@
 		<move file="build.properties_backup"  tofile="build.properties"  overwrite="true" />
     </target>
 
+    <target name="deploy-ashes" description="Deploys application to fenix ashes">
+		<property name="server.hostname"  value="fenix-tests.ist.utl.pt" />
+		<property name="server.deployDirectory" value="/var/tomcat4/webapps"/>
+		<property name="server.restartCommand"
+				  value="/etc/init.d/httpd stop; /etc/init.d/tomcat4 restart; /etc/init.d/httpd start"
+				  />
+		<property name="server.startCommand" value="/etc/init.d/tomcat4 start" />
+		<property name="server.stopCommand" value="/etc/init.d/tomcat4 stop" />		
+
+		<!-- Prompt for username & password -->
+		<input message="Enter username for ${server.hostname}:" addproperty="server.username" />
+		<input message="Enter password for ${server.hostname}:" addproperty="server.password" />
+
+		<!-- Obtain propper build.properties -->
+		<move file="build.properties" tofile="build.properties_backup" />
+		<scp file="${server.username}:${server.password}@${server.hostname}:/root/configs/build_fenix-ashes_extra.properties" todir="./"/>
+		<move file="build_fenix-ashes_extra.properties"  tofile="build.properties" />
+	<!--
+		<property file="build.properties"/>
+	-->
+		<antcall target="stop-server"/>
+		<!-- Deploy the application-->
+		<antcall target="deploy"/>
+
+		<sleep seconds="5"/>
+
+		<delete file="build.properties"/>
+		<scp file="${server.username}:${server.password}@${server.hostname}:/root/configs/build_fenix-ashes_intra.properties" todir="./"/>
+
+		<move file="build_fenix-ashes_intra.properties"  tofile="build.properties"  />
+
+		<!-- Deploy the application-->
+		<antcall target="deploy" />
+
+		<antcall target="start-server" />
+		<!-- Restore original build.properties -->
+		<move file="build.properties_backup" tofile="build.properties" overwrite="true"/>
+    </target>
 
     <target name="deploy" description="Deploys application">
 		<property file="build.properties"/>
