@@ -459,6 +459,28 @@
     column="codigoCursoMestrado"
     jdbc-type="INTEGER"
   />
+  
+  <field-descriptor id="6"
+    name="creditos"
+    column="creditos"
+    jdbc-type="DOUBLE"
+  />
+  
+  <field-descriptor id="7"
+    name="sigla"
+    column="sigla"
+    jdbc-type="VARCHAR"
+  />
+  
+  
+  <field-descriptor id="8"
+    name="tipo"
+    column="tipo"
+    jdbc-type="VARCHAR"
+  />
+  
+  
+  
 </class-descriptor>
 
 <class-descriptor 

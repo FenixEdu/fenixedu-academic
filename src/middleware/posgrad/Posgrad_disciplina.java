@@ -12,6 +12,10 @@ public class Posgrad_disciplina
   private long codigointerno;
 
   private String nome;
+  
+  private Double creditos;
+  private String sigla;
+  private String tipo;
 
   public long getCodigocursomestrado()
   {
@@ -47,5 +51,47 @@ public class Posgrad_disciplina
     return  " [codigoCursoMestrado] " + codigocursomestrado + " [codigoInterno] " + codigointerno + " [nome] " + nome;
 
   }
+/**
+ * @return
+ */
+public Double getCreditos() {
+	return creditos;
+}
+
+/**
+ * @return
+ */
+public String getSigla() {
+	return sigla;
+}
+
+/**
+ * @return
+ */
+public String getTipo() {
+	return tipo;
+}
+
+/**
+ * @param double1
+ */
+public void setCreditos(Double double1) {
+	creditos = double1;
+}
+
+/**
+ * @param string
+ */
+public void setSigla(String string) {
+	sigla = string;
+}
+
+/**
+ * @param string
+ */
+public void setTipo(String string) {
+	tipo = string;
+}
+
 }
 
