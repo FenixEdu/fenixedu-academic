@@ -37,12 +37,16 @@ public class AlternativeSiteManagementAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 		HttpSession session = request.getSession();
-		String alternativeSite =
-			(String) session.getAttribute(SessionConstants.ALTERNATIVE_SITE);
-		String mail = (String) session.getAttribute(SessionConstants.MAIL);
+		InfoSite site = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
+		String alternativeSite =site.getAlternativeSite();
+		String mail = site.getMail();
+		String initialStatement = site.getMail();
+		String introduction = site.getIntroduction();
 		DynaValidatorForm alternativeSiteForm = (DynaValidatorForm) form;
 		alternativeSiteForm.set("siteAddress", alternativeSite);
-		alternativeSiteForm.set("mail", mail);		
+		alternativeSiteForm.set("mail", mail);	
+		alternativeSiteForm.set("initialStatement",initialStatement);
+		alternativeSiteForm.set("introduction",introduction);	
 		return mapping.findForward("editAlternativeSite");
 	}
 
@@ -66,8 +70,12 @@ public class AlternativeSiteManagementAction extends FenixDispatchAction {
 		String alternativeSite =
 			(String) alternativeSiteForm.get("siteAddress");
 		String mail = (String) alternativeSiteForm.get("mail");
+		String initialStatement = (String) alternativeSiteForm.get("initialStatement");
+		String introduction = (String) alternativeSiteForm.get("introduction");
 		infoSiteNew.setAlternativeSite(alternativeSite);
 		infoSiteNew.setMail(mail);
+		infoSiteNew.setInitialStatement(initialStatement);
+		infoSiteNew.setIntroduction(introduction);
 
 		UserView userView = (UserView) session.getAttribute("UserView");
 		Object args[] = { infoSite, infoSiteNew };
@@ -79,11 +87,11 @@ public class AlternativeSiteManagementAction extends FenixDispatchAction {
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-
-		session.setAttribute(
-			SessionConstants.ALTERNATIVE_SITE,
-			alternativeSite);
-		session.setAttribute(SessionConstants.MAIL, mail);
+		session.setAttribute(SessionConstants.INFO_SITE,infoSiteNew);
+//		session.setAttribute(
+//			SessionConstants.ALTERNATIVE_SITE,
+//			alternativeSite);
+//		session.setAttribute(SessionConstants.MAIL, mail);
 		session.setAttribute("alternativeSiteForm", alternativeSiteForm);
 
 		return mapping.findForward("editAlternativeSite");

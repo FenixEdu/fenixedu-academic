@@ -76,7 +76,9 @@
 				type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                 dynamic="true">        
             <form-property name="siteAddress" type="java.lang.String" />
-            <form-property name="mail" type="java.lang.String" />               
+            <form-property name="mail" type="java.lang.String" /> 
+            <form-property name="initialStatement" type="java.lang.String" />
+            <form-property name="introduction" type="java.lang.String" />              
             <form-property name="method" type="java.lang.String" />    
             <form-property name="page" type="java.lang.Integer" initial="0" />           
 	</form-bean>    			

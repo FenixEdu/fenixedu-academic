@@ -9,17 +9,19 @@
 
 <html:form action="/alternativeSite">
 
-<logic:present name="<%=SessionConstants.ALTERNATIVE_SITE%>">	
-	<html:link href="<%=(String)session.getAttribute(SessionConstants.ALTERNATIVE_SITE)%>" target="_blank">
-		<%=(String)session.getAttribute(SessionConstants.ALTERNATIVE_SITE)%>
+<logic:present name="<%=SessionConstants.INFO_SITE%>" property="alternativeSite">	
+	<bean:define id="alternativeSite" name="<%=SessionConstants.INFO_SITE%>" property="alternativeSite"/>
+	<html:link href="<%=(String)pageContext.findAttribute("alternativeSite") %>" target="_blank">
+			<bean:write name="alternativeSite" />
 	</html:link>	
 </logic:present>
 <br/>
 
-<logic:present name="<%=SessionConstants.MAIL%>">	
-	<html:link href="<%= "mailto:" + (String)session.getAttribute(SessionConstants.MAIL)%>">
-		<%=(String)session.getAttribute(SessionConstants.MAIL)%>
-	</html:link>
+<logic:present name="<%=SessionConstants.INFO_SITE%>" property="mail">	
+	<bean:define id="mail" name="<%=SessionConstants.INFO_SITE%>" property="mail"/>
+	<html:link href="<%= "mailto:" + pageContext.findAttribute("mail") %>">
+		<bean:write name="mail" />
+	</html:link>		
 </logic:present>
 <br/>
 
@@ -46,6 +48,28 @@
 		<span class="error" ><html:errors property="mail"/></span>
 	</td>
 </tr>
+<tr>
+	<td>
+		<h2><bean:message key="message.initialStatement"/></h2>
+	</td>	
+	<td>
+		<html:textarea property="initialStatement" rows="4" cols="56"/>
+	</td>
+	<td>
+		<span class="error" ><html:errors property="initialStatement"/></span>
+	</td>
+</tr>
+<tr>
+	<td>
+		<h2><bean:message key="message.introduction"/></h2>
+	</td>	
+	<td>
+		<html:textarea property="introduction" rows="4" cols="56"/>
+	</td>
+	<td>
+		<span class="error" ><html:errors property="introduction"/></span>
+	</td>
+</tr>
 </table>
 <h3><table>
 <html:hidden property="method" value="edit"/>
@@ -63,6 +87,7 @@
 	</td>
 </tr>
 </table></h3>
+<bean:message key="message.initialStatement.explanation" />
 </html:form>
 
 
