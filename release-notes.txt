@@ -27,6 +27,7 @@ NEW FEATURES:
 - New types of questions: multiple choice, multiple response, numerical (integer and decimal) and strings.
 - Allow showing the feedback specified in xml document.
 - Added local EJB interface.
+- Added serialization checking to service manager. (Service results are checked to ensure they are serializable)
 
 
 NOTES:
@@ -57,6 +58,7 @@ CHANGES:
 - Change the form for student tests.
 - The response field type in studentTestQuestion is now a xml string (using xmlEncode and XMLDecode) instead of an integer.
 - Changed search order of Service Manager (local EJB -> remote EJB -> direct calls)
+- Changed error page layout to show support for our country durring euro 2004 :)
 
 BUG FIXES:
 ==========
@@ -70,6 +72,7 @@ BUG FIXES:
 - fixed bug [ #244 ] Execution Course Listing: SOP interface for shift creation
 - fixed bug [ #248 ] masterDegree portal: curricular courses with p type must not appear for declaration and certificate purposes
 - [on 03-06-2004 by Fernanda Quitério] master degree portal: fixed grammar in text for declarations and certificates
+- fixed bug [ #256 ] Students unable to confirm final degree work attribution
 
 KNOWN ISSUES:
 =============
