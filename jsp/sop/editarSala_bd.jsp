@@ -4,6 +4,7 @@
 
 <center><font color='#034D7A' size='5'> <b> <bean:message key="title.editarSala"/> </b> </font></center>
 <br/>
+<span class="error"><html:errors/></span>
 <html:form action="/editarSala">
   <table align="center" cellspacing="10">
     <tr>

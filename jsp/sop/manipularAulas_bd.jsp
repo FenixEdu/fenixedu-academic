@@ -19,7 +19,7 @@
         <center><font color='#034D7A' size='5'> <b> <bean:message key="title.manage.aulas"/> </b> </font></center>
         <br/>
         <br/>
-        <html:errors/>
+        <span class="error"><html:errors/></span>
         <center> <b> <bean:message key="listAulas.existing"/> </b> </center>
         <html:form action="/manipularAulasForm">
             <logic:present name="listaAulas" scope="session">

@@ -411,7 +411,7 @@
       </action>
 
       <action attribute="criarSalaForm"
-      		  input="/manipularSalas.jsp"
+      		  input="/editarSala.jsp"
 	          path="/editarSala"
 	          name="roomForm"
               scope="request"
