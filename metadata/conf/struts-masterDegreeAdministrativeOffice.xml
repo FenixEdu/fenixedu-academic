@@ -831,7 +831,7 @@
               type="ServidorApresentacao.Action.masterDegree.administrativeOffice.contributor.ListContributorsDispatchAction"
               validate="true">
 	         <forward name="PrepareReady" path="/contributor/chooseContributor.jsp"/>  
-	         <forward name="ActionReady" path="contributor/visualizeContributor.jsp"/>  
+	         <forward name="ActionReady" path="/contributor/visualizeContributor.jsp"/>  
 	         <forward name="ChooseContributor" path="/contributor/selectContributorFromList.jsp"/>  
       </action>
 
@@ -973,7 +973,7 @@
 	         <forward name="PrepareSuccess" path="/guide/createGuide.jsp"/> 
 	         <forward name="CreateCandidateGuide" path="/guide/createGuideReady.jsp"/>  
 	         <forward name="CreateStudentGuide" path="/guide/guideMenu.jsp"/>  
-	         <forward name="CreateSuccess" path="printGuide.do?method=prepare"/>  	         
+	         <forward name="CreateSuccess" path="/printGuide.do?method=prepare"/>  	         
 			 <forward name="BackError" path="/backErrorPage.do" redirect="true"/>  
       </action>
 
@@ -1031,7 +1031,7 @@
 	  
       <!-- Choose Execution Year to Edit Candidates -->
       <action path="/chooseExecutionYearToEditCandidates"
-      		  input="chooseExecutionYear.jsp"
+      		  input="/chooseExecutionYear.jsp"
 		      attribute="chooseExecutionYearForm"
 		      name="chooseExecutionYearForm"
 		      parameter="method"
@@ -1044,7 +1044,7 @@
       
 	  <!-- Choose Execution Year to Select Candidates -->
       <action path="/chooseExecutionYearToSelectCandidates"
-      		  input="chooseExecutionYear.jsp"
+      		  input="/chooseExecutionYear.jsp"
 		      attribute="chooseExecutionYearForm"
 		      name="chooseExecutionYearForm"
 		      parameter="method"
@@ -1100,7 +1100,7 @@
 
 	  <!-- Choose Execution Year to Make Candidate Study Plan -->
       <action path="/chooseExecutionYearToCandidateStudyPlan"
-      		  input="chooseExecutionYear.jsp"
+      		  input="/chooseExecutionYear.jsp"
 		      attribute="chooseExecutionYearForm"
 		      name="chooseExecutionYearForm"
 		      parameter="method"
@@ -1170,7 +1170,7 @@
 
       <!-- Choose Execution Year To Create a Guide -->
       <action path="/chooseExecutionYearToCreateGuide"
-      		  input="chooseExecutionYear.jsp"
+      		  input="/chooseExecutionYear.jsp"
 		      attribute="chooseExecutionYearForm"
 		      name="chooseExecutionYearForm"
 		      parameter="method"
@@ -1437,7 +1437,7 @@
       
       <!-- Choose Execution Year to Register Candidates -->
       <action path="/chooseExecutionYearToCandidateRegistration"
-      		  input="chooseExecutionYear.jsp"
+      		  input="/chooseExecutionYear.jsp"
 		      attribute="chooseExecutionYearForm"
 		      parameter="method"
               type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
@@ -1477,11 +1477,11 @@
 			<exception type="ServidorApresentacao.Action.exceptions.ActiveStudentCurricularPlanAlreadyExistsActionException"
 		                key="ServidorApresentacao.Action.exceptions.ActiveStudentCurricularPlanAlreadyExistsActionException"
                         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-	         <forward name="ListCandidates" path="candidate/displayCandidateListForRegistration.jsp"/> 
-	         <forward name="ShowConfirmation" path="candidate/confirmCandidateRegistration.jsp"/> 
+	         <forward name="ListCandidates" path="/candidate/displayCandidateListForRegistration.jsp"/> 
+	         <forward name="ShowConfirmation" path="/candidate/confirmCandidateRegistration.jsp"/> 
 	         <forward name="PrepareCandidateList"  path="/candidateRegistration.do?method=getCandidateList"/>
-	         <forward name="ShowResult" path="candidate/candidateRegistered.jsp"/> 
-	         <forward name="Print" path="candidate/candidateRegistrationTemplatePrint.jsp"/> 
+	         <forward name="ShowResult" path="/candidate/candidateRegistered.jsp"/> 
+	         <forward name="Print" path="/candidate/candidateRegistrationTemplatePrint.jsp"/> 
 	         
       </action>
 
@@ -1504,11 +1504,11 @@
 			<exception type="ServidorApresentacao.Action.exceptions.ActiveStudentCurricularPlanAlreadyExistsActionException"
 		                key="ServidorApresentacao.Action.exceptions.ActiveStudentCurricularPlanAlreadyExistsActionException"
                         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-	         <forward name="ListCandidates" path="candidate/displayCandidateListForRegistration.jsp"/> 
-	         <forward name="ShowConfirmation" path="candidate/confirmCandidateRegistration.jsp"/> 
+	         <forward name="ListCandidates" path="/candidate/displayCandidateListForRegistration.jsp"/> 
+	         <forward name="ShowConfirmation" path="/candidate/confirmCandidateRegistration.jsp"/> 
 	         <forward name="PrepareCandidateList"  path="/candidateRegistration.do?method=getCandidateList"/>
-	         <forward name="ShowResult" path="candidate/candidateRegistered.jsp"/> 
-	         <forward name="Print" path="candidate/candidateRegistrationTemplate.jsp"/> 
+	         <forward name="ShowResult" path="/candidate/candidateRegistered.jsp"/> 
+	         <forward name="Print" path="/candidate/candidateRegistrationTemplate.jsp"/> 
 	         
       </action>
       
@@ -1555,7 +1555,7 @@
 				path="/seeStudentAndCurricularPlans"
 				parameter="method"
 				scope="request"
-				input="seeStudentAndCurricularPlans.do?method=start"
+				input="/seeStudentAndCurricularPlans.do?method=start"
 				validate="false">
 			<forward name="start" path="df.page.searchStudents"/>
 			<forward name="viewStudents" path="df.page.viewStudents"/>
