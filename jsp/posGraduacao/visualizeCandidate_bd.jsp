@@ -261,5 +261,10 @@
         </logic:present>
     </table>
     
+    <html:link page="/editCandidate.do?method=prepareEdit">
+    	<bean:message key="link.masterDegree.administrativeOffice.editCandidate" />
+    </html:link>
+    
+    
   </body>
 </html>

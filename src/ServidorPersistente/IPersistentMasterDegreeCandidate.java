@@ -26,7 +26,7 @@ public interface IPersistentMasterDegreeCandidate {
 	/**
 	 * 
 	 * @param username
-	 * @return
+	 * @return List
 	 * @throws ExcepcaoPersistencia
 	 */
     public List readMasterDegreeCandidatesByUsername(String username) throws ExcepcaoPersistencia;
@@ -35,7 +35,7 @@ public interface IPersistentMasterDegreeCandidate {
      * @param candidateNumber
      * @param applicationYear
      * @param degreeCode
-     * @return
+     * @return IMasterDegreeCandidate
      * @throws ExcepcaoPersistencia
      */
     public IMasterDegreeCandidate readCandidateByNumberAndApplicationYearAndDegreeCodeAndSpecialization(Integer candidateNumber, String applicationYear, String degreeCode, 
@@ -63,7 +63,7 @@ public interface IPersistentMasterDegreeCandidate {
 	 * @param executionYear
 	 * @param degreeName
 	 * @param specialization
-	 * @return
+	 * @return Candidate Number
 	 * @throws ExcepcaoPersistencia
 	 */
 	public Integer generateCandidateNumber(String executionYear, String degreeName, Specialization specialization) throws ExcepcaoPersistencia; 
@@ -74,7 +74,7 @@ public interface IPersistentMasterDegreeCandidate {
 	 * @param idDocumentType
 	 * @param executionDegree
 	 * @param specialization
-	 * @return
+	 * @return IMasterDegreeCandidate
 	 * @throws ExcepcaoPersistencia
 	 */
 	public IMasterDegreeCandidate readByIdentificationDocNumberAndTypeAndExecutionDegreeAndSpecialization(String idDocumentNumber, 
@@ -86,7 +86,7 @@ public interface IPersistentMasterDegreeCandidate {
 	 * @param username
 	 * @param executionDegree
 	 * @param specialization
-	 * @return
+	 * @return IMasterDegreeCandidate
 	 * @throws ExcepcaoPersistencia
 	 */
 	public IMasterDegreeCandidate readByUsernameAndExecutionDegreeAndSpecialization(String username, ICursoExecucao executionDegree, Specialization specialization) throws ExcepcaoPersistencia;
@@ -98,7 +98,7 @@ public interface IPersistentMasterDegreeCandidate {
 	 * @param candidateSituation
 	 * @param candidateNumber
 	 * @param executionYear
-	 * @return
+	 * @return List
 	 * @throws ExcepcaoPersistencia
 	 */
 	public List readCandidateList(String degreeName, Specialization degreeType, SituationName candidateSituation, Integer candidateNumber,
@@ -108,7 +108,7 @@ public interface IPersistentMasterDegreeCandidate {
 	/**
 	 * 
 	 * @param executionYear
-	 * @return
+	 * @return List
 	 * @throws ExcepcaoPersistencia
 	 */
 	public List readByExecutionYear(IExecutionYear executionYear) throws ExcepcaoPersistencia;
