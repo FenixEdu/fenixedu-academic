@@ -164,7 +164,7 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for Dominio.PublicationAuthor -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.PublicationAuthor" table="PUBLICATION_AUTHOR">
+<class-descriptor class="Dominio.publication.PublicationAuthor" table="PUBLICATION_AUTHOR">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -184,7 +184,7 @@
 	/>
 	<field-descriptor
 		name="order"
-		column="ORDER"
+		column="AUTHOR_ORDER"
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
@@ -195,14 +195,14 @@
 	/>
 	<reference-descriptor
 			name="author"
-			class-ref="Dominio.Author"
+			class-ref="Dominio.publication.Author"
 			proxy="true"
 			refresh="true">
 		<foreignkey field-ref="keyAuthor"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="publication"
-			class-ref="Dominio.Publication"
+			class-ref="Dominio.publication.Publication"
 			proxy="true"
 			refresh="true">
 		<foreignkey field-ref="keyPublication"/>
