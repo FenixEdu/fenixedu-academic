@@ -12,9 +12,10 @@
 </table>
 <html:form action="/bibliographicReferenceManager">
 <html:hidden property="page" value="0"/>
-<p><html:link page="/bibliographicReferenceManager.do?method=prepareEditBibliographicReference"><bean:message key="label.insertBibliographicReference"/>                    		     
-</html:link>
-</p>            
+<p><div class="gen-button"><img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" /> <html:link page="/bibliographicReferenceManager.do?method=prepareEditBibliographicReference"><bean:message key="label.insertBibliographicReference"/>                   		     
+</html:link></div>
+</p>
+<br />            
 <h2><bean:message key="message.recommendedBibliography"/></h2>
 <table cellspacing="0" cellpadding="0">
   		<tbody>
@@ -38,16 +39,18 @@
             </tr>
             <tr>
                	<td><!--    <bean:message key="message.bibliographicReferenceYear"/> --><bean:write name="bibliographicReference" property="year"/>                            
+              	<br />
+              	<br />
               	</td>
           	</tr>
           	<tr>
-            	<td><html:link page="/bibliographicReferenceManager.do?method=prepareEditBibliographicReference" indexId="index" indexed="true">			
-                   	(<bean:message key="button.edit"/>)                    		     
-                    </html:link>                               	       
-                 	<html:link page="/bibliographicReferenceManager.do?method=deleteBibliographicReference" indexId="index" indexed="true">			
-                    (<bean:message key="button.delete"/>)                    		     
-                    </html:link>&nbsp;&nbsp;
-    	            <br>
+            	<td><div class="gen-button"><html:link page="/bibliographicReferenceManager.do?method=prepareEditBibliographicReference" indexId="index" indexed="true">			
+                   	<bean:message key="button.edit"/>                    		     
+                    </html:link></div>                               	       
+                 	<div class="gen-button"><html:link page="/bibliographicReferenceManager.do?method=deleteBibliographicReference" indexId="index" indexed="true">			
+                    <bean:message key="button.delete"/>                  		     
+                    </html:link></div>
+    	            <br />
                	</td>
            	</tr>
            	</logic:notEqual>

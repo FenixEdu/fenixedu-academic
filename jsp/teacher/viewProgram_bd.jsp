@@ -26,9 +26,10 @@
 			<bean:write name="program" filter="false"/>
 		</td>
 	</tr>
-</table>	
-<html:hidden property="method" value="prepareEditProgram"/> 	
-<html:link page="/programManagerDA.do?method=prepareEditProgram">
-(<bean:message key="button.edit"/>)
-</html:link>	 
+</table>
+<br />	
+<html:hidden property="method" value="prepareEditProgram"/>
+<div class="gen-button"><html:link page="/programManagerDA.do?method=prepareEditProgram"><bean:message key="button.edit"/>
+</html:link>
+</div>	 
 </logic:present>

@@ -11,18 +11,21 @@
 <html:hidden property="page" value="1"/>
 <table>
 	<tr>
-		<td>
-			<html:link page="/editSection.do?method=prepareChangeParent" >
-				<bean:message key="message.parentSection"/>
+		<td><div class="gen-button"><html:link page="/editSection.do?method=prepareChangeParent" ><bean:message key="message.parentSection"/>
 			</html:link>
+			</div>
 			<br>
 		</td>
 	</tr>
 	<tr>
 		<td>
+		<br />
+		<br />
 			<bean:message key="message.sectionName"/>
 		</td>
 		<td>
+		<br />
+		<br />
 			<html:text name="<%=SessionConstants.INFO_SECTION %>" property="name" />
 			<span class="error"><html:errors property="name"/></span>
 		</td>
@@ -59,9 +62,9 @@
 						}
 						i++;
 					%>
-					<a href="editSection.do?method=changeParent&amp;index=<%= index %>" >
+					<div class="gen-button"><a href="editSection.do?method=changeParent&amp;index=<%= index %>" >
 						<bean:write name="section" property="name" />
-					</a>
+					</a></div>
 			</td>
 		</tr>	
 	<% index++; %>					
