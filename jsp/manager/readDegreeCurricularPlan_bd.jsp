@@ -162,7 +162,7 @@
 					</td>
 					<td class="listClasses">
 						<html:link page="<%= "/editExecutionDegree.do?method=prepareEdit&degreeId=" + request.getParameter("degreeId") + "&degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")%>" paramId="executionDegreeId" paramName="executionDegree" paramProperty="idInternal"><bean:message key="label.edit"/></html:link>
-						/<html:link page="<%= "/manageCoordinators.do?method=prepare&amp;view=true&amp;executionDegreeId=" + pageContext.getAttribute("executionDegreeId")%>" ><bean:message key="label.manager.edit.executionDegree.coordinators"/></html:link>
+						/<html:link page="<%= "/manageCoordinators.do?method=view&amp;executionDegreeId=" + pageContext.getAttribute("executionDegreeId")%>" ><bean:message key="label.manager.edit.executionDegree.coordinators"/></html:link>
 					</td>
 	 			</tr>
 	 			</logic:iterate>						

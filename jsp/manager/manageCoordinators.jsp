@@ -29,7 +29,7 @@
 	</table>
 	
 	<ul style="list-style-type: square;">
-		<li><html:link page="<%= "/manageCoordinators.do?method=prepare&amp;view=false&amp;executionDegreeId=" + pageContext.getAttribute("executionDegreeId")%>" >
+		<li><html:link page="<%= "/insertCoordinator.do?method=prepareInsert&amp;executionDegreeId=" + pageContext.getAttribute("executionDegreeId")%>" >
 				<bean:message key="label.manager.insert.coordinator.by.number"/>
 			</html:link>
 		</li>

@@ -34,20 +34,18 @@ import framework.factory.ServiceManagerServiceFactory;
  */
 public class ManageCoordinatorsAction extends FenixDispatchAction {
 
-	public ActionForward prepare(
+	public ActionForward view(
 		ActionMapping mapping,
 		ActionForm actionForm,
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		//System.out.println("ManageCoordinatorsAction");
+		System.out.println("ManageCoordinatorsAction: view");
 		ActionErrors errors = new ActionErrors();
 
 		Integer executionDegreeId =
 			getFromRequest("executionDegreeId", request);
 		request.setAttribute("executionDegreeId", executionDegreeId);
-
-		Boolean onlyForView = getFromRequestBoolean("view", request);
 
 		IUserView userView = SessionUtils.getUserView(request);
 
@@ -78,7 +76,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 		if (!errors.isEmpty()) {
 			saveErrors(request, errors);
 		}
-		//System.out.println("View Responsables " + infoExecutionDegree.getCoordinatorsList().size());
+		System.out.println("View Responsables " + infoExecutionDegree.getCoordinatorsList().size());
 		
 		Integer[] responsibleCoordinatorsIds = findResponsibleCoodinators(
 		infoExecutionDegree.getCoordinatorsList());
@@ -86,7 +84,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 		coordinatorsForm.set(
 			"responsibleCoordinatorsIds",
 			responsibleCoordinatorsIds);
-
+		System.out.println("View Responsables (form)" + responsibleCoordinatorsIds.length);
 		request.setAttribute("infoExecutionDegree", infoExecutionDegree);	
 		request.setAttribute(
 			"degreeId",
@@ -98,15 +96,11 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 			"degreeCurricularPlanId",
 			infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
 
-		System.out.println("A sair ... (ManageCoordinatorsAction)");
+		System.out.println("A sair ... (view ManageCoordinatorsAction)");
 
-		if (onlyForView == null || onlyForView.booleanValue()) {
-			return mapping.findForward("manageCoordinators");
-		} else {
-			return mapping.findForward("insertCoordinator");
-		}
+		return mapping.findForward("manageCoordinators");
 	}
-
+	
 	/**
 	 * Get all the responsible professors from the list of coordinators.
 	 * 
@@ -115,7 +109,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 	 */
 	private Integer[] findResponsibleCoodinators(List coordinatorsList) {
 		List responsibleCoordinatorsList =
-			(List) CollectionUtils.select(coordinatorsList, new Predicate() {
+		(List) CollectionUtils.select(coordinatorsList, new Predicate() {
 			public boolean evaluate(Object obj) {
 				InfoCoordinator infoCoordinator = (InfoCoordinator) obj;
 				return infoCoordinator.getResponsible().booleanValue();
@@ -130,17 +124,76 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 			
 			responsibleCoordinatorsIdsList.add(infoCoordinator.getIdInternal());
 		}
-				
+
 		return (Integer[]) responsibleCoordinatorsIdsList.toArray(new Integer[] {});
 	}
 
+	public ActionForward prepareInsert(
+			ActionMapping mapping,
+			ActionForm actionForm,
+			HttpServletRequest request,
+			HttpServletResponse response)
+	throws Exception {
+		System.out.println("ManageCoordinatorsAction: prepare insert");
+		ActionErrors errors = new ActionErrors();
+
+		Integer executionDegreeId =
+		getFromRequest("executionDegreeId", request);
+		request.setAttribute("executionDegreeId", executionDegreeId);
+
+
+		IUserView userView = SessionUtils.getUserView(request);
+
+		Object[] args = { executionDegreeId };
+		InfoExecutionDegree infoExecutionDegree = null;
+		try {
+			infoExecutionDegree =
+			(
+					InfoExecutionDegree) ServiceManagerServiceFactory
+			.executeService(
+					userView,
+					"ReadExecutionDegree",
+					args);
+		} catch (FenixServiceException e) {
+			e.printStackTrace();
+			errors.add(
+					"impossibleExecutionDegree",
+					new ActionError("error.invalidExecutionDegree"));
+		}
+		if (infoExecutionDegree == null
+				|| infoExecutionDegree.getInfoDegreeCurricularPlan() == null
+				|| infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
+				== null) {
+			errors.add(
+					"impossibleExecutionDegree",
+					new ActionError("error.invalidExecutionDegree"));
+		}
+		if (!errors.isEmpty()) {
+			saveErrors(request, errors);
+		}
+		
+		request.setAttribute("infoExecutionDegree", infoExecutionDegree);	
+		request.setAttribute(
+				"degreeId",
+				infoExecutionDegree
+				.getInfoDegreeCurricularPlan()
+				.getInfoDegree()
+				.getIdInternal());
+		request.setAttribute(
+				"degreeCurricularPlanId",
+				infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
+		System.out.println("A sair ... (prepare insert ManageCoordinatorsAction)");
+
+		return mapping.findForward("insertCoordinator");
+	}
+	
 	public ActionForward insert(
 		ActionMapping mapping,
 		ActionForm actionForm,
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		//System.out.println("ManageCoordinatorsAction: insert");
+		System.out.println("ManageCoordinatorsAction: insert");
 		ActionErrors errors = new ActionErrors();
 		IUserView userView = SessionUtils.getUserView(request);
 
@@ -175,7 +228,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 			saveErrors(request, errors);
 		}
 
-		//System.out.println("A sair ... (ManageCoordinatorsAction)");
+		System.out.println("A sair ... (insert ManageCoordinatorsAction)");
 		return mapping.findForward("viewCoordinators");
 	}
 
@@ -185,7 +238,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		
+		System.out.println("ManageCoordinatorsAction: edit");
 
 		ActionErrors errors = new ActionErrors();
 
@@ -211,7 +264,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 		if (responsibleCoordinatorsIds != null) {
 			List responsibleCoordinatorsIdsList =
 				Arrays.asList(responsibleCoordinatorsIds);
-			//System.out.println("ManageCoordinatorsAction: edit " + responsibleCoordinatorsIdsList.size());
+			System.out.println("ManageCoordinatorsAction: edit " + responsibleCoordinatorsIdsList.size());
 			Object[] args =
 				{ executionDegreeId, responsibleCoordinatorsIdsList };
 			try {
@@ -233,7 +286,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 		if (deletedCoordinatorsIds != null) {
 			List deletedCoordinatorsIdsList =
 				Arrays.asList(deletedCoordinatorsIds);
-			//System.out.println("ManageCoordinatorsAction: remove " + deletedCoordinatorsIdsList.size());
+			System.out.println("ManageCoordinatorsAction: remove " + deletedCoordinatorsIdsList.size());
 			Object[] args = { executionDegreeId, deletedCoordinatorsIdsList };
 			try {
 				ServiceManagerServiceFactory.executeService(
@@ -251,7 +304,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 			}
 		}
 
-		System.out.println("A sair ... (ManageCoordinatorsAction)");
+		System.out.println("A sair ... (edit ManageCoordinatorsAction)");
 		return mapping.findForward("viewCoordinators");
 	}
 

@@ -981,15 +981,27 @@
 	</action>	
 	
 	<!-- ========== Manage coordinators of a execution degree ========== -->
+	<action path="/insertCoordinator"
+		type="ServidorApresentacao.Action.manager.ManageCoordinatorsAction"
+		name="coordinatorForm"
+		parameter="method"
+		scope="request"
+		validate="true"
+		input="/insertCoordinator.do?method=prepareInsert&amp;page=0"
+		>
+		<forward name="viewCoordinators" path="/manageCoordinators.do?method=view" />
+		<forward name="insertCoordinator" path="insertCoordinator" />
+	</action>	
 	<action path="/manageCoordinators"
 		type="ServidorApresentacao.Action.manager.ManageCoordinatorsAction"
 		name="coordinatorForm"
 		parameter="method"
 		scope="request"
+		validate="false"
+		input="/manageCoordinators.do?method=view&amp;page=0"
 		>
-		<forward name="viewCoordinators" path="/manageCoordinators.do?method=prepare" />
-		<forward name="manageCoordinators" path="manageCoordinators" />
-		<forward name="insertCoordinator" path="insertCoordinator" />
+		<forward name="viewCoordinators" path="/manageCoordinators.do?method=view" />
+		<forward name="manageCoordinators" path="manageCoordinators" />		
 	</action>
 	
 	

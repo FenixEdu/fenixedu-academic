@@ -24,63 +24,73 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Tânia Pousão 12/Dez/2003
  *  
  */
-public class ResponsibleCoordinators implements IServico {
+public class ResponsibleCoordinators implements IServico
+{
 
-	private static ResponsibleCoordinators service =
-		new ResponsibleCoordinators();
+	private static ResponsibleCoordinators service = new ResponsibleCoordinators();
 
-	public static ResponsibleCoordinators getService() {
+	public static ResponsibleCoordinators getService()
+	{
 
 		return service;
 	}
 
-	private ResponsibleCoordinators() {
+	private ResponsibleCoordinators()
+	{
 
 	}
 
-	public final String getNome() {
+	public final String getNome()
+	{
 
 		return "ResponsibleCoordinators";
 	}
 
-	public Boolean run(Integer executionDegreeId, List coordinatorsIds)
-		throws FenixServiceException {
+	public Boolean run(Integer executionDegreeId, List coordinatorsIds) throws FenixServiceException
+	{
 
-		try {
+		try
+		{
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			ICursoExecucaoPersistente persistentExecutionDegree =
-				sp.getICursoExecucaoPersistente();
-			ICursoExecucao executionDegree =
-				new CursoExecucao(executionDegreeId);
+			ICursoExecucaoPersistente persistentExecutionDegree = sp.getICursoExecucaoPersistente();
+			ICursoExecucao executionDegree = new CursoExecucao(executionDegreeId);
 			executionDegree =
-				(ICursoExecucao) persistentExecutionDegree.readByOId(
-					executionDegree,
-					false);
-			if (executionDegree == null) {
+				(ICursoExecucao) persistentExecutionDegree.readByOId(executionDegree, false);
+			if (executionDegree == null)
+			{
 				throw new InvalidArgumentsServiceException();
 			}
 
-			IPersistentCoordinator persistentCoordinator =
-				sp.getIPersistentCoordinator();
-
-			Iterator iter = coordinatorsIds.iterator();
-			while (iter.hasNext()) {
-				ICoordinator coordinator =
-					new Coordinator((Integer) iter.next());
-				coordinator =
-					(ICoordinator) persistentCoordinator.readByOId(
-						coordinator,
-						true);
-				if (coordinator != null) {
+			IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
+			Iterator iterator = executionDegree.getCoordinatorsList().iterator();
+			while (iterator.hasNext())
+			{
+				ICoordinator coordinator = (ICoordinator) iterator.next();
+				Integer coordinatorId = coordinator.getIdInternal();
+				
+				coordinator = (ICoordinator) persistentCoordinator.readByOId(coordinator, true);
+				if(coordinator == null){
+					return new Boolean(false);
+				}
+				
+				if (coordinatorsIds.contains(coordinatorId))
+				{//coordinator is responsible
 					coordinator.setResponsible(Boolean.TRUE);
-				} 
+					System.out.println(
+							"Alterar responsabilidade(sim): " + coordinator.getTeacher().getTeacherNumber());	
+				} else {//coordinator isn't responsible
+					coordinator.setResponsible(Boolean.FALSE);
+					System.out.println(
+							"Alterar responsabilidade(não): " + coordinator.getTeacher().getTeacherNumber());
+				}
 			}
 
 			return new Boolean(true);
-		} catch (ExcepcaoPersistencia e) {
+		}
+		catch (ExcepcaoPersistencia e)
+		{
 			throw new FenixServiceException(e);
 		}
-
 	}
 }
