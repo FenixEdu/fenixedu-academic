@@ -9,11 +9,13 @@ package ServidorAplicacao.Servico.gesdis.teacher;
 import DataBeans.gesdis.InfoBibliographicReference;
 import Dominio.IBibliographicReference;
 import Dominio.IDisciplinaExecucao;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentBibliographicReference;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * @author PTRLV
@@ -32,9 +34,9 @@ public class EditBibliographicReference implements IServico {
 	public final String getNome() {
 		return "Techer.EditBibliographicReference";
 	}    
-//TODO: Pedro falta fazeres commit da excepcao
+
 	private IBibliographicReference validateData(IDisciplinaExecucao executionCourse,InfoBibliographicReference bibliographicReferenceOld, String title, String authors, String reference, String year)
-	throws /*ReferenciaBibliograficaJaExistenteException,*/ ExcepcaoPersistencia/*, ReferenciaBibliograficaInexistenteException */{        
+	throws ExistingPersistentException,ExcepcaoPersistencia {        
 		IBibliographicReference bibliographicReferenceRead = null;        
 		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 		IPersistentBibliographicReference persistentBibliographicReference = null;
@@ -49,7 +51,7 @@ public class EditBibliographicReference implements IServico {
 																			reference,
 																			year);            
 			if (bibliographicReferenceRead != null){}
-			//	throw new ReferenciaBibliograficaJaExistenteException();
+				throw new ExistingPersistentException();
 		}        
 		bibliographicReferenceRead = persistentBibliographicReference.readBibliographicReference(executionCourse,
 																		bibliographicReferenceOld.getTitle(),
@@ -57,8 +59,8 @@ public class EditBibliographicReference implements IServico {
 																		bibliographicReferenceOld.getReference(),
 																		bibliographicReferenceOld.getYear()
 																		);
-		if (bibliographicReferenceRead == null){}
-			//throw new ReferenciaBibliograficaInexistenteException();        
+		if (bibliographicReferenceRead == null)
+			throw new ExcepcaoPersistencia();        
 		return bibliographicReferenceRead;        
 	}
     
@@ -69,7 +71,8 @@ public class EditBibliographicReference implements IServico {
 					String reference,
 					String year,
 					Boolean optional)
-	throws Exception {       
+	throws FenixServiceException {
+		try {       		
 		ISuportePersistente sp = SuportePersistenteOJB.getInstance();       
 		IPersistentBibliographicReference persistentBibliographicReference= null;
 		persistentBibliographicReference = sp.getIPersistentBibliographicReference();        
@@ -81,5 +84,9 @@ public class EditBibliographicReference implements IServico {
 		bibliographicReference.setYear(year);
 		bibliographicReference.setOptional(optional);
 		persistentBibliographicReference.lockWrite(bibliographicReference);
-	}
+		}
+		catch (ExcepcaoPersistencia e) {
+			throw new FenixServiceException(e);
+		}	
+	}	
 }
