@@ -75,8 +75,6 @@
       
     </form>
     
-    <!--isto es mm assim a msg do AplicationResourses?????????-->
-    
     <!--validation to the form to insert and edit a CurricularCourse-->
     <form name="curricularCourseForm">
       <field property="name" depends="required" page="1" >
