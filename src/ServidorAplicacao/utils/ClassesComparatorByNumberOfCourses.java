@@ -37,7 +37,7 @@ public class ClassesComparatorByNumberOfCourses implements Comparator {
 
 	public ClassesComparatorByNumberOfCourses(List executionCoursesAttended) {
 		setExecutionCoursesAttended(executionCoursesAttended);
-	};
+	}
 
 	public int compare(Object obj1, Object obj2) {
 		ITurma domainClass1 = (ITurma) obj1;

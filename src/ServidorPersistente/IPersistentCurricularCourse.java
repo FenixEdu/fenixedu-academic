@@ -6,6 +6,8 @@ import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.IDegreeCurricularPlan;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.DegreeCurricularPlanState;
+import Util.TipoCurso;
 
 /**
  * @author dcs-rjao
@@ -42,11 +44,5 @@ public interface IPersistentCurricularCourse extends IPersistentObject {
 	 */
 	public List readbyCourseCodeAndDegreeCurricularPlan(String curricularCourseCode, IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia;
 
- 
-
-	/**
-	 * @param string
-	 * @return
-	 */
-	public List readbyCourseCode(String string) throws ExcepcaoPersistencia;
+ 	public List readbyCourseCodeAndDegreeTypeAndDegreeCurricularPlanState(String courseCode, TipoCurso degreeType, DegreeCurricularPlanState degreeCurricularPlanState) throws ExcepcaoPersistencia;
 }

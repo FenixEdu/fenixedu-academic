@@ -89,7 +89,7 @@ public class ReadStudentGroupInformationTest extends TestCaseReadServices {
 			infoSiteStudentGroup.setNrOfElements(new Integer(3));						
 			sp.confirmarTransaccao();
 		}catch (ExcepcaoPersistencia ex) {
-		ex.printStackTrace();;
+		ex.printStackTrace();
 		}
 		return infoSiteStudentGroup;
 		

@@ -82,7 +82,6 @@ public class ReadExecutionCourseProjectsTest extends TestCaseReadServices {
 			sp.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			ex.printStackTrace();
-			;
 		}
 		return infoSiteProjects;
 	}

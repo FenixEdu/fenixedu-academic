@@ -129,12 +129,12 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 			e.printStackTrace(System.out);
 		}
 
-		ReportEnrolment.report(new PrintWriter(System.out, true));
-
 		System.out.println("[INFO] DONE!");
 		System.out.println("[INFO] Total StudentCurricularPlans created: [" + CreateAndUpdateAllStudentsPastEnrolments.totalStudentCurricularPlansCreated + "].");
 		System.out.println("[INFO] Total Enrolments created: [" + CreateAndUpdateAllStudentsPastEnrolments.totalEnrollmentsCreated + "].");
 		System.out.println("[INFO] Total EnrolmentEvaluations created: [" + CreateAndUpdateAllStudentsPastEnrolments.totalEnrollmentEvaluationsCreated + "].");
+
+		ReportEnrolment.report(new PrintWriter(System.out, true));
 	}
 
 	/**
@@ -276,26 +276,15 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 		
 		if (mwBranch != null) {
 			String realBranchCode = null;
-//			String realBranchName = null;
 
 			if (mwBranch.getDescription().startsWith("CURSO DE ")) {
-//				realBranchName = new String("");
 				realBranchCode = new String("");
 			} else {
-//				realBranchName = mwBranch.getDescription();
 				realBranchCode = new String(mwBranch.getDegreecode().toString() + mwBranch.getBranchcode().toString() + mwBranch.getOrientationcode().toString());
 			}
 
 			branch = persistentBranch.readByDegreeCurricularPlanAndCode(degreeCurricularPlan, realBranchCode);
 
-
-
-//			String realBranchCode = new String(mwBranch.getDegreecode().toString() + mwBranch.getBranchcode().toString() + mwBranch.getOrientationcode().toString());
-//			branch = persistentBranch.readByDegreeCurricularPlanAndCode(degreeCurricularPlan, realBranchCode);
-//
-//			if (branch == null) {
-//				branch = persistentBranch.readByDegreeCurricularPlanAndBranchName(degreeCurricularPlan, "");
-//			}
 		} else {
 			branch = CreateAndUpdateAllPastCurriculums.solveBranchesProblemsForDegrees1And4And6And51And53And54And64(degreeCode, branchCode, degreeCurricularPlan, persistentBranch);
 		}
@@ -441,7 +430,6 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 
 		if (enrolment == null) {
 
-//			String key = executionYearName + executionPeriodName + mwEnrolment.getCoursecode() + mwEnrolment.getDegreecode() + mwEnrolment.getBranchcode() + mwEnrolment.getNumber();
 			String key = mwEnrolment.getNumber() + mwEnrolment.getEnrolmentyear().toString() + mwEnrolment.getCurricularcourseyear().toString() + mwEnrolment.getCurricularcoursesemester().toString() + mwEnrolment.getCoursecode() + mwEnrolment.getDegreecode();
 			enrolment = (IEnrolment) CreateAndUpdateAllStudentsPastEnrolments.enrollmentsCreated.get(key);
 
@@ -458,6 +446,8 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 				enrolment.setStudentCurricularPlan(studentCurricularPlan);
 
 				CreateAndUpdateAllStudentsPastEnrolments.enrollmentsCreated.put(key, enrolment);
+
+				ReportEnrolment.addEnrolmentMigrated();
 			}
 		}
 
@@ -466,7 +456,8 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 
 		if (enrolmentEvaluation == null) {
 
-			String key = executionYearName + executionPeriodName + curricularCourseScope.getCurricularCourse().getCode() + studentCurricularPlan.getStudent().getNumber() + mwEnrolment.getGrade() + mwEnrolment.getSeason() + enrolmentEvaluationType.getType().toString();
+//			String key = executionYearName + executionPeriodName + curricularCourseScope.getCurricularCourse().getCode() + studentCurricularPlan.getStudent().getNumber() + mwEnrolment.getGrade() + mwEnrolment.getSeason() + enrolmentEvaluationType.getType().toString();
+			String key = mwEnrolment.getNumber() + mwEnrolment.getEnrolmentyear().toString() + mwEnrolment.getCurricularcourseyear().toString() + mwEnrolment.getCurricularcoursesemester().toString() + mwEnrolment.getCoursecode() + mwEnrolment.getDegreecode() + mwEnrolment.getGrade() + mwEnrolment.getSeason() + enrolmentEvaluationType.getType().toString();
 			enrolmentEvaluation = (IEnrolmentEvaluation) CreateAndUpdateAllStudentsPastEnrolments.enrollmentEvaluationsCreated.get(key);
 
 			if (enrolmentEvaluation == null) {
@@ -490,8 +481,6 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 				CreateAndUpdateAllStudentsPastEnrolments.enrollmentEvaluationsCreated.put(key, enrolmentEvaluation);
 			}
 		}
-
-		ReportEnrolment.addEnrolmentMigrated();
 
 		return enrolment;
 	}
@@ -596,7 +585,7 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 		ITeacher teacher = persistentTeacher.readTeacherByNumber(mwEnrolment.getTeachernumber());
 		
 		if (teacher == null) {
-			System.out.println("[ERROR 10] No Teacher with number: [" + mwEnrolment.getTeachernumber() + "] was found in the Fenix DB!");
+			System.out.println("[WARNING 01] No Teacher with number: [" + mwEnrolment.getTeachernumber() + "] was found in the Fenix DB!");
 			return null;
 		}
 		

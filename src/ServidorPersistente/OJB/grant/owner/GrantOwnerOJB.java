@@ -18,7 +18,7 @@ public class GrantOwnerOJB
 	implements IPersistentGrantOwner {
 
 	public GrantOwnerOJB() {
-	};
+	}
 
 	public IGrantOwner readGrantOwnerByNumber(Integer grantOwnerNumber)
 		throws ExcepcaoPersistencia {

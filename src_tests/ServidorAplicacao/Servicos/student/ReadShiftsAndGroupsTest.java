@@ -99,7 +99,7 @@ public class ReadShiftsAndGroupsTest extends TestCaseReadServices {
 
 			sp.confirmarTransaccao();
 		}catch (ExcepcaoPersistencia ex) {
-		ex.printStackTrace();;
+		ex.printStackTrace();
 		}
 		return infoSiteShiftsAndGroups;
 
