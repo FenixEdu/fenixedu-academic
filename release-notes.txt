@@ -51,6 +51,8 @@ BUG FIXES:
 - fixed bug [ #197 ] Faculty Adm Office (edit Grant Payment Entities)
 - fixed bug [ #223 ] Faculty Adm Office (manageGrantContract)
 - fixed bug [ #158 ] Manager - number of cached objects
+- fixed bug [ #245 ] Associate rooms to exam: SOP interface for exams managment
+- fixed bug [ #244 ] Execution Course Listing: SOP interface for shift creation
 
 KNOWN ISSUES:
 =============

@@ -215,7 +215,10 @@ public class ExecutionCourseOJB extends ObjectFenixOJB implements IPersistentExe
 				executionDegree.getCurricularPlan().getIdInternal());
 		}
 		criteria.addEqualTo("keyExecutionPeriod", executionPeriod.getIdInternal());
-
+		criteria.addEqualTo(
+				"associatedCurricularCourses.scopes.curricularSemester.semester",
+				executionPeriod.getSemester());
+		
 		List temp = queryList(ExecutionCourse.class, criteria, true);
 
 		return temp;

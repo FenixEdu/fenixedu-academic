@@ -38,12 +38,14 @@ dia <bean:write name="<%=SessionConstants.EXAM_DATEANDTIME_STR%>"/>
 					 value="<%= pageContext.findAttribute(SessionConstants.CURRICULAR_YEAR_OID).toString() %>"/>
 	<html:hidden property="<%= SessionConstants.EXECUTION_COURSE_OID %>"
 					 value="<%= pageContext.findAttribute("executionCourseOID").toString() %>"/>
-	<html:hidden property="<%= SessionConstants.DATE %>"
-					 value="<%= pageContext.findAttribute("date").toString() %>"/>
-	<html:hidden property="<%= SessionConstants.START_TIME %>"
-					 value="<%= pageContext.findAttribute("start_time").toString() %>"/>
-	<html:hidden property="<%= SessionConstants.END_TIME %>"
-					 value="<%= pageContext.findAttribute("end_time").toString() %>"/>
+	<logic:present name="<%= SessionConstants.DATE %>">
+		<html:hidden property="<%= SessionConstants.DATE %>"
+						 value="<%= pageContext.findAttribute("date").toString() %>"/>
+		<html:hidden property="<%= SessionConstants.START_TIME %>"
+						 value="<%= pageContext.findAttribute("start_time").toString() %>"/>
+		<html:hidden property="<%= SessionConstants.END_TIME %>"
+						 value="<%= pageContext.findAttribute("end_time").toString() %>"/>
+	</logic:present>
 	
 	<html:hidden property="day" />
 	<html:hidden property="month" />
