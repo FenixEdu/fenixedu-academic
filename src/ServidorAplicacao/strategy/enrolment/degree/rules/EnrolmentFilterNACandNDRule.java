@@ -1,7 +1,6 @@
 package ServidorAplicacao.strategy.enrolment.degree.rules;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -24,7 +23,6 @@ public class EnrolmentFilterNACandNDRule implements IEnrolmentRule {
 		int possibleND = 0;
 		int year = 1;
 
-		HashMap acumulatedEnrolments = (HashMap) enrolmentContext.getAcumulatedEnrolments();
 
 		// FIXME: David-Ricardo: Parametrizar possibleND, possibleNAC e year
 		while ((possibleND < 7) && (possibleNAC < 10) && (year < 6)) {
@@ -42,10 +40,8 @@ public class EnrolmentFilterNACandNDRule implements IEnrolmentRule {
 					possibleScopes.add(curricularCourseScope);
 					possibleND = possibleND + 1;
 
-					if (acumulatedEnrolments.containsKey(curricularCourseScope.getCurricularCourse().getCode() + curricularCourseScope.getCurricularCourse().getName())) {
-						if (((Integer) acumulatedEnrolments.get(curricularCourseScope.getCurricularCourse().getCode() + curricularCourseScope.getCurricularCourse().getName())).intValue() > 0) {
-							possibleNAC = possibleNAC + 2;
-						}
+					if (enrolmentContext.getCurricularCourseAcumulatedEnrolments(curricularCourseScope.getCurricularCourse()).intValue() > 0) {
+						possibleNAC = possibleNAC + 2;
 					} else {
 						possibleNAC = possibleNAC + 1;
 					}

@@ -1,6 +1,5 @@
 package ServidorAplicacao.strategy.enrolment.degree.rules;
 
-import java.util.HashMap;
 import java.util.Iterator;
 
 import Dominio.ICurricularCourseScope;
@@ -16,16 +15,14 @@ public class EnrolmentValidateNACandNDRule implements IEnrolmentRule {
 
 	public EnrolmentContext apply(EnrolmentContext enrolmentContext) {
 		
-		HashMap acumulatedEnrolments = (HashMap) enrolmentContext.getAcumulatedEnrolments();
+
 		int NAC = 0;
 
 		Iterator iterator = enrolmentContext.getActualEnrolment().iterator();
 		while (iterator.hasNext()) {
 			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
-			if (acumulatedEnrolments.containsKey(curricularCourseScope.getCurricularCourse().getCode() + curricularCourseScope.getCurricularCourse().getName())) {
-				if (((Integer) acumulatedEnrolments.get(curricularCourseScope.getCurricularCourse().getCode() + curricularCourseScope.getCurricularCourse().getName())).intValue() > 0) {
-					NAC = NAC + 2;
-				}
+			if (enrolmentContext.getCurricularCourseAcumulatedEnrolments(curricularCourseScope.getCurricularCourse()).intValue() > 0) {
+				NAC = NAC + 2;
 			} else {
 				NAC = NAC + 1;
 			}
