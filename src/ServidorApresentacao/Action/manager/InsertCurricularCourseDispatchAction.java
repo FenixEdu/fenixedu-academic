@@ -49,7 +49,7 @@ public class InsertCurricularCourseDispatchAction extends FenixDispatchAction {
         String type = (String) dynaForm.get("type");
         String mandatory = (String) dynaForm.get("mandatory");
         String basic = (String) dynaForm.get("basic");
-
+        
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
         infoDegreeCurricularPlan.setIdInternal(degreeCurricularPlanId);
 
@@ -99,6 +99,8 @@ public class InsertCurricularCourseDispatchAction extends FenixDispatchAction {
         infoCurricularCourse
                 .setEnrollmentAllowed(new Boolean((String) dynaForm.get("enrollmentAllowed")));
         infoCurricularCourse.setEnrollmentWeigth(new Integer((String) dynaForm.get("enrollmentWeigth")));
+        
+        infoCurricularCourse.setAcronym((String) dynaForm.get("acronym"));
 
         Object args[] = { infoCurricularCourse };
 

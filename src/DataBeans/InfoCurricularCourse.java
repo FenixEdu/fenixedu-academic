@@ -65,6 +65,8 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
     private Boolean mandatoryEnrollment;
 
     private Boolean enrollmentAllowed;
+    
+    private String acronym;
 
     /**
      * @return
@@ -120,6 +122,7 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
         result += ", credits =" + this.credits;
         result += ", ectsCredits =" + this.ectsCredits;
         result += ", enrollmentWeigth =" + this.enrollmentWeigth;
+        result += ", acronym =" + this.acronym;
         result += "]\n";
         return result;
     }
@@ -521,6 +524,14 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
     public void setEnrollmentAllowed(Boolean enrollmentAllowed) {
         this.enrollmentAllowed = enrollmentAllowed;
     }
+    
+    public String getAcronym(){
+    	return acronym;
+    }
+    
+    public void setAcronym(String acronym){
+    	this.acronym = acronym;
+    }
 
     public void copyFromDomain(ICurricularCourse curricularCourse) {
         super.copyFromDomain(curricularCourse);
@@ -545,6 +556,7 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
             setWeigth(curricularCourse.getWeigth());
             setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan.newInfoFromDomain(curricularCourse
                     .getDegreeCurricularPlan()));
+            setAcronym(curricularCourse.getAcronym());
         }
     }
 

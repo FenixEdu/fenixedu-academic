@@ -83,6 +83,9 @@
       <field property="code" depends="required" page="1" >
         <arg0 key="label.manager.curricularCourse.code" resource="true"/>
       </field>
+	  <field property="acronym" depends="required" page="1" >
+		<arg0 key="message.manager.curricular.course.acronym"></arg0>
+	  </field>
       <field property="theoreticalHours" depends="double" page="1" >
         <arg0 key="message.manager.theoreticalHours" resource="true"/>
       </field>

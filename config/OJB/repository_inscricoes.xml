@@ -256,6 +256,11 @@
 		column="ENROLLMENT_ALLOWED"
 		jdbc-type="BIT"
 	/>
+	<field-descriptor
+		name="acronym"
+		column="ACRONYM"
+		jdbc-type="VARCHAR"
+	/>
 	<reference-descriptor
 			name="university"
 			class-ref="Dominio.University"

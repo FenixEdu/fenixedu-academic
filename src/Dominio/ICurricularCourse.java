@@ -56,6 +56,8 @@ public interface ICurricularCourse extends IDomainObject {
     public void setWeigth(Double weigth);
 
     public void setMandatoryEnrollment(Boolean mandatoryEnrollment);
+    
+    public void setAcronym(java.lang.String acronym);
 
     public Double getCredits();
 
@@ -96,6 +98,8 @@ public interface ICurricularCourse extends IDomainObject {
     public Double getWeigth();
 
     public Boolean getMandatoryEnrollment();
+    
+    public java.lang.String getAcronym();
 
     public boolean curricularCourseIsMandatory();
 

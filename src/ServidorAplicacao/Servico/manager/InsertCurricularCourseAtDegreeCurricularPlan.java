@@ -76,6 +76,7 @@ public class InsertCurricularCourseAtDegreeCurricularPlan implements IService {
             curricularCourse.setMandatoryEnrollment(infoCurricularCourse.getMandatoryEnrollment());
             curricularCourse.setEnrollmentAllowed(infoCurricularCourse.getEnrollmentAllowed());
             curricularCourse.setAssociatedExecutionCourses(new ArrayList());
+            curricularCourse.setAcronym(infoCurricularCourse.getAcronym());
 
         } catch (ExistingPersistentException existingException) {
             throw new ExistingServiceException("A disciplina curricular "

@@ -60,6 +60,8 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
     private Double ectsCredits;
 
     private Double weigth;
+    
+    private String acronym;
 
     // For enrollment purposes
     private Integer maximumValueForAcumulatedEnrollments;
@@ -303,6 +305,14 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
 
     public void setWeigth(Double weigth) {
         this.weigth = weigth;
+    }
+    
+    public String getAcronym() {
+    	return acronym;
+    }
+    
+    public void setAcronym(String acronym) {
+    	this.acronym = acronym;
     }
 
     public boolean curricularCourseIsMandatory() {
