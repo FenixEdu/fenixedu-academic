@@ -36,24 +36,14 @@ public class FrequentaOJB
 		IStudent aluno,
 		IDisciplinaExecucao disciplinaExecucao)
 		throws ExcepcaoPersistencia {
-		try {
-			IFrequenta frequenta = null;
-			String oqlQuery =
-				"select alunodisciplinaexecucao from "
-					+ Frequenta.class.getName();
-			oqlQuery += " where disciplinaExecucao.sigla = $1"
-				+ " and aluno.number = $2";
-			query.create(oqlQuery);
-			query.bind(disciplinaExecucao.getSigla());
-			query.bind(aluno.getNumber());
-			List result = (List) query.execute();
-			lockRead(result);
-			if (result.size() != 0)
-				frequenta = (IFrequenta) result.get(0);
-			return frequenta;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
+
+		Criteria crit = new Criteria();
+		crit.addEqualTo("chaveAluno", aluno.getIdInternal());
+		crit.addEqualTo(
+			"chaveDisciplinaExecucao",
+			disciplinaExecucao.getIdInternal());
+		return (IFrequenta) queryObject(Frequenta.class, crit);
+
 	}
 
 	public void lockWrite(IFrequenta attendanceToWrite)
@@ -94,7 +84,7 @@ public class FrequentaOJB
 		super.deleteAll(oqlQuery);
 	}
 
-	public List readByStudentId(Integer id) throws ExcepcaoPersistencia {
+	public List readByStudentNumber(Integer id) throws ExcepcaoPersistencia {
 		try {
 			String oqlQuery =
 				"select frequentas from " + Frequenta.class.getName();
@@ -136,16 +126,18 @@ public class FrequentaOJB
 
 	public Integer countStudentsAttendingExecutionCourse(IDisciplinaExecucao executionCourse)
 		throws ExcepcaoPersistencia {
-			PersistenceBroker pb = ((HasBroker)odmg.currentTransaction()).getBroker();
-			Criteria criteria = new Criteria();
-			criteria.addEqualTo(
-				"disciplinaExecucao.idInternal",
-				executionCourse.getIdInternal());
-			Query queryCriteria = new QueryByCriteria(Frequenta.class, criteria);
-			return new Integer(pb.getCount(queryCriteria));
+		PersistenceBroker pb =
+			((HasBroker) odmg.currentTransaction()).getBroker();
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo(
+			"disciplinaExecucao.idInternal",
+			executionCourse.getIdInternal());
+		Query queryCriteria = new QueryByCriteria(Frequenta.class, criteria);
+		return new Integer(pb.getCount(queryCriteria));
 	}
 
-	public IFrequenta readByEnrolment(IEnrolment enrolment) throws ExcepcaoPersistencia {
+	public IFrequenta readByEnrolment(IEnrolment enrolment)
+		throws ExcepcaoPersistencia {
 		try {
 			IFrequenta attend = null;
 			String oqlQuery = "select all from " + Frequenta.class.getName();
@@ -158,7 +150,7 @@ public class FrequentaOJB
 			List result = (List) query.execute();
 
 			lockRead(result);
-			if(result.size() != 0) {
+			if (result.size() != 0) {
 				attend = (IFrequenta) result.get(0);
 			}
 			return attend;
