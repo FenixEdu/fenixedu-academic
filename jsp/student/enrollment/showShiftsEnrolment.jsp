@@ -52,7 +52,20 @@
 				</ul>
 			</td>
 		</tr>
+		<br />
 		<logic:present name="infoShiftEnrollment" property="infoShiftEnrollment">
+			<tr>
+				<td colspan='5'>
+					<bean:define id="numberCourseWithShiftEnrollment" name="infoShiftEnrollment" property="numberCourseWithShiftEnrollment" />
+					<logic:lessEqual name="numberCourseWithShiftEnrollment" value="0">
+						<p><strong><bean:message key="message.student.shiftEnrollment.confirmation" /></strong></p>
+					</logic:lessEqual>
+					
+					<logic:greaterThan  name="numberCourseWithShiftEnrollment" value="0">
+						<p><strong><bean:message key="message.student.shiftEnrollment.lacksCourses" arg0="<%= numberCourseWithShiftEnrollment.toString()%>"/></strong></p>
+					</logic:greaterThan >
+				</td>
+			</tr>
 			<bean:define id="elem" value="" type="java.lang.String"/>
 			<logic:iterate id="infoShift" name="infoShiftEnrollment" property="infoShiftEnrollment" type="DataBeans.InfoShift">
 				<%-- COURSES --%>
