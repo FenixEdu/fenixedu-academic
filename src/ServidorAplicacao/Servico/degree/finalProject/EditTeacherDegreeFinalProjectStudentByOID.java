@@ -10,6 +10,7 @@ import DataBeans.util.Cloner;
 import Dominio.IDomainObject;
 import Dominio.IStudent;
 import Dominio.degree.finalProject.ITeacherDegreeFinalProjectStudent;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.framework.EditDomainObjectService;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
@@ -23,6 +24,20 @@ import Util.TipoCurso;
  */
 public class EditTeacherDegreeFinalProjectStudentByOID extends EditDomainObjectService
 {
+    /**
+	 * @author jpvl
+	 */
+    public class StudentNotFoundServiceException extends FenixServiceException
+    {
+
+        /**
+		 *  
+		 */
+        public StudentNotFoundServiceException()
+        {
+            super();
+        }
+    }
     private static EditTeacherDegreeFinalProjectStudentByOID service = new EditTeacherDegreeFinalProjectStudentByOID();
 
     /**
@@ -40,10 +55,9 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends EditDomainObjectS
 	 */
     protected IDomainObject clone2DomainObject(InfoObject infoObject)
     {
-        InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent =
-            (InfoTeacherDegreeFinalProjectStudent) infoObject;
+        InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = (InfoTeacherDegreeFinalProjectStudent) infoObject;
         return Cloner.copyInfoTeacherDegreeFinalProjectStudent2ITeacherDegreeFinalProjectStudent(
-            infoTeacherDegreeFinalProjectStudent);
+                infoTeacherDegreeFinalProjectStudent);
     }
     /*
 	 * (non-Javadoc)
@@ -72,22 +86,24 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends EditDomainObjectS
 	 *          ServidorPersistente.ISuportePersistente)
 	 */
     protected IDomainObject readObjectByUnique(IDomainObject domainObject, ISuportePersistente sp)
-        throws ExcepcaoPersistencia
+            throws ExcepcaoPersistencia, FenixServiceException
     {
-        ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent =
-            (ITeacherDegreeFinalProjectStudent) domainObject;
+        ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = (ITeacherDegreeFinalProjectStudent) domainObject;
         IStudent student = teacherDegreeFinalProjectStudent.getStudent();
         IPersistentStudent studentDAO = sp.getIPersistentStudent();
 
         student = studentDAO.readByNumero(student.getNumber(), TipoCurso.LICENCIATURA_OBJ);
-        
+        if (student == null)
+        {
+            throw new StudentNotFoundServiceException();
+        }
         teacherDegreeFinalProjectStudent.setStudent(student);
-        
-        IPersistentTeacherDegreeFinalProjectStudent teacherDFPStudentDAO =
-            sp.getIPersistentTeacherDegreeFinalProjectStudent();
 
-        teacherDegreeFinalProjectStudent =
-            teacherDFPStudentDAO.readByUnique(teacherDegreeFinalProjectStudent);
+        IPersistentTeacherDegreeFinalProjectStudent teacherDFPStudentDAO = sp
+                .getIPersistentTeacherDegreeFinalProjectStudent();
+
+        teacherDegreeFinalProjectStudent = teacherDFPStudentDAO.readByUnique(
+                teacherDegreeFinalProjectStudent);
 
         return teacherDegreeFinalProjectStudent;
     }
