@@ -43,6 +43,7 @@
                 dynamic="true">
                 <form-property name="degreeId" type="java.lang.Integer" />
                 <form-property name="degreeCurricularPlanId" type="java.lang.Integer" />
+                <form-property name="internalIds" type="java.lang.Integer[]" />
 				<form-property name="name" type="java.lang.String" />
 				<form-property name="code" type="java.lang.String" />
 				<form-property name="credits" type="java.lang.String" />
