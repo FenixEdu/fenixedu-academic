@@ -3,17 +3,15 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="org.apache.struts.action.Action" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-
- 
-
         <span class="error"><html:errors/></span>
 		<bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>" />
         <html:form action="<%=path%>">
         	<input type="hidden" value="nextPage" name="method"/>
         	<html:hidden property="page" value="1"/>
+        	
          <table width="100%" border="0" cellpadding="0" cellspacing="0">
           <tr>
-            <td bgcolor="#FFFFFF" class="infoop">Por favor, proceda &agrave; escolha
+            <td class="infoop">Por favor, proceda &agrave; escolha
               do curso pretendido.</td>
           </tr>
         </table>
@@ -26,7 +24,7 @@
 	 <br />
     <table width="100%" border="0" cellpadding="0" cellspacing="0">
           <tr>
-            <td bgcolor="#FFFFFF" class="infoop"><bean:message key="label.chooseYear" /></td>
+            <td class="infoop"><bean:message key="label.chooseYear" /></td>
           </tr>
     </table>
 	 <br />
