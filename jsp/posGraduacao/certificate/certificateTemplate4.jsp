@@ -33,6 +33,9 @@
  		com 
   		<bean:write name="itr" property="infoEnrolmentEvaluation.grade" />
  		valores
+ 		<logic:equal name="itr" property="infoCurricularCourse.type.curricularCourseType" value="8">
+	 		 (<bean:message key="label.curricularCourse.pType" />)
+ 		</logic:equal>
 	</logic:iterate>
 		</logic:present>
 		<logic:present name="<%= SessionConstants.EXTRA_CURRICULAR_APROVMENT%>">
