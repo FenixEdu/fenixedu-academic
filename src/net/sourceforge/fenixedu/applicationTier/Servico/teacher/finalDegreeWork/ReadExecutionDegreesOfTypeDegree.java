@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IExecutionDegree;
@@ -24,34 +23,27 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadExecutionDegreesOfTypeDegree implements IService {
 
-    /**
-     *  
-     */
-    public ReadExecutionDegreesOfTypeDegree() {
-        super();
-    }
+	public List run() throws ExcepcaoPersistencia {
+		List executionDegrees = null;
+		List infoExecutionDegrees = new ArrayList();
 
-    public List run() throws FenixServiceException {
-        List executionDegrees = null;
-        List infoExecutionDegrees = new ArrayList();
-        try {
-            SuportePersistenteOJB suportePersistenteOJB = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            executionDegrees = suportePersistenteOJB.getIPersistentExecutionDegree()
-                    .readExecutionDegreesOfTypeDegree();
+		SuportePersistenteOJB suportePersistenteOJB = PersistenceSupportFactory
+				.getDefaultPersistenceSupport();
+		executionDegrees = suportePersistenteOJB
+				.getIPersistentExecutionDegree()
+				.readExecutionDegreesOfTypeDegree();
 
-            if (executionDegrees != null) {
-                Iterator iterator = executionDegrees.iterator();
-                while (iterator.hasNext()) {
-                    IExecutionDegree cursoExecucao = (IExecutionDegree) iterator.next();
-                    InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) Cloner
-                            .get(cursoExecucao);
-                    infoExecutionDegrees.add(infoExecutionDegree);
-                }
-            }
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
+		if (executionDegrees != null) {
+			Iterator iterator = executionDegrees.iterator();
+			while (iterator.hasNext()) {
+				IExecutionDegree cursoExecucao = (IExecutionDegree) iterator
+						.next();
+				InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) Cloner
+						.get(cursoExecucao);
+				infoExecutionDegrees.add(infoExecutionDegree);
+			}
+		}
 
-        return infoExecutionDegrees;
-    }
+		return infoExecutionDegrees;
+	}
 }

@@ -761,6 +761,7 @@
 				   >
 			<form-property name="page" type="java.lang.Integer"/>
 			<form-property name="role" type="java.lang.String"/>
+			<form-property name="executionYear" type="java.lang.String"/>
 			<form-property name="degree" type="java.lang.String"/>
 			<form-property name="idInternal" type="java.lang.String"/>
 			<form-property name="title" type="java.lang.String"/>

@@ -25,8 +25,15 @@
 	<html:hidden property="responsibleCreditsPercentage"/>
 	<html:hidden property="coResponsibleCreditsPercentage"/>
 
-	<strong><bean:message key="label.teacher.finalWork.chooseDegree"/>:</strong><br />
-	<html:select property="degree">
+	<strong><bean:message key="label.teacher.finalWork.chooseDegreeAndYear"/>:</strong><br />
+	<html:select property="executionYear"
+			onchange="this.form.method.value='changeExecutionYear';this.form.submit();"
+			>
+		<html:options collection="infoExecutionYears" property="idInternal" labelProperty="year" />
+	</html:select>
+	<html:select property="degree"
+			onchange="this.form.method.value='chooseDegree';this.form.submit();"
+			>
 		<html:options collection="executionDegreeList" property="idInternal" labelProperty="infoDegreeCurricularPlan.infoDegree.nome" />
 	</html:select>
 	<br /><br />
@@ -68,17 +75,10 @@
 	    	    </td>
 			</tr>
 			<% java.util.Set processedExecutionDegreeIds = new java.util.HashSet(); %>
+			<bean:define id="degree" name="finalWorkInformationForm" property="degree"/>
 			<logic:iterate id="finalDegreeWorkProposalHeader" name="finalDegreeWorkProposalHeaders">
 				<bean:define id="executionDegreeId" name="finalDegreeWorkProposalHeader" property="executionDegreeOID"/>
-				<% if (executionDegreeId != null && !processedExecutionDegreeIds.contains(executionDegreeId)) { %>
-					<% processedExecutionDegreeIds.add(executionDegreeId); %>
-					<tr>
-						<td class="listClasses-header"colspan="7">
-							<bean:write name="finalDegreeWorkProposalHeader" property="degreeCode"/> -
-							<bean:write name="finalDegreeWorkProposalHeader" property="executionYear"/>
-						</td>				
-				</tr>
-				<% } %>
+				<logic:equal name="executionDegreeId"value="<%= degree.toString() %>">
 				<tr>
 					<td class="listClasses-header" rowspan="2" colspan="2">
 						<bean:message key="finalDegreeWorkProposalHeader.proposal"/>
@@ -245,6 +245,7 @@
 			</logic:iterate>
 			</html:form>
 			</logic:present>
+			</logic:equal>
 			</logic:iterate>
 		</table>
 	</logic:greaterEqual>
@@ -252,6 +253,7 @@
 		<span class="error"><bean:message key="finalDegreeWorkProposalHeaders.notPresent"/></span>
 	</logic:lessThan>
 </logic:present>
+
 <logic:notPresent name="finalDegreeWorkProposalHeaders">
 	<span class="error"><bean:message key="finalDegreeWorkProposalHeaders.notPresent"/></span>
 </logic:notPresent>

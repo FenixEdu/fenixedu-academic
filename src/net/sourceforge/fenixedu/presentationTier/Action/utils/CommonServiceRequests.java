@@ -67,4 +67,8 @@ public class CommonServiceRequests {
         return infoExecutionDegree;
     }
 
+	public static List getInfoExecutionYears() throws FenixFilterException, FenixServiceException {
+		return (List) ServiceUtils.executeService(null, "ReadExecutionYearsService", null);
+	}
+
 }

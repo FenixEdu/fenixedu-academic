@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -28,51 +27,60 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadExecutionDegreesByExecutionYear implements IService {
 
-    public ReadExecutionDegreesByExecutionYear() {
-    }
+	public List run(InfoExecutionYear infoExecutionYear)
+			throws ExcepcaoPersistencia {
 
-    public List run(InfoExecutionYear infoExecutionYear) throws FenixServiceException {
+		final List infoExecutionDegreeList = new ArrayList();
 
-        List infoExecutionDegreeList = null;
+		final ISuportePersistente sp = PersistenceSupportFactory
+				.getDefaultPersistenceSupport();
+		final IPersistentExecutionDegree executionDegreeDAO = sp
+				.getIPersistentExecutionDegree();
 
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
+		final List executionDegrees = readExecutionDegrees(infoExecutionYear,
+				sp, executionDegreeDAO);
 
-            List executionDegrees = null;
-            if (infoExecutionYear == null) {
-                IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-                IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
-                executionDegrees = executionDegreeDAO.readByExecutionYear(executionYear.getYear());
-            } else {
-                executionDegrees = executionDegreeDAO.readByExecutionYear(infoExecutionYear.getYear());
-            }
+		for (final Iterator iterator = executionDegrees.iterator(); iterator
+				.hasNext();) {
+			final IExecutionDegree executionDegree = (IExecutionDegree) iterator
+					.next();
+			final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYear
+					.newInfoFromDomain(executionDegree);
+			if (executionDegree.getCurricularPlan() != null) {
+				infoExecutionDegree
+						.setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan
+								.newInfoFromDomain(executionDegree
+										.getCurricularPlan()));
+				if (executionDegree.getCurricularPlan().getDegree() != null) {
+					infoExecutionDegree.getInfoDegreeCurricularPlan()
+							.setInfoDegree(
+									InfoDegree
+											.newInfoFromDomain(executionDegree
+													.getCurricularPlan()
+													.getDegree()));
+				}
+			}
+			infoExecutionDegreeList.add(infoExecutionDegree);
+		}
 
-            Iterator iterator = executionDegrees.iterator();
-            infoExecutionDegreeList = new ArrayList();
+		return infoExecutionDegreeList;
+	}
 
-            while (iterator.hasNext()) {
-                IExecutionDegree executionDegree = (IExecutionDegree) iterator.next();
-                InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYear
-                        .newInfoFromDomain(executionDegree);
-                if (executionDegree.getCurricularPlan() == null) {
-                } else {
-                    infoExecutionDegree.setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan
-                            .newInfoFromDomain(executionDegree.getCurricularPlan()));
-                    if (executionDegree.getCurricularPlan().getDegree() == null) {
-                    } else
-                        infoExecutionDegree.getInfoDegreeCurricularPlan().setInfoDegree(
-                                InfoDegree.newInfoFromDomain(executionDegree.getCurricularPlan()
-                                        .getDegree()));
-                }
-                infoExecutionDegreeList.add(infoExecutionDegree);
-            }
-
-        } catch (ExcepcaoPersistencia ex) {
-            ex.printStackTrace();
-            throw new FenixServiceException(ex);
-        }
-        return infoExecutionDegreeList;
-    }
+	private List readExecutionDegrees(
+			final InfoExecutionYear infoExecutionYear,
+			final ISuportePersistente sp,
+			final IPersistentExecutionDegree executionDegreeDAO)
+			throws ExcepcaoPersistencia {
+		if (infoExecutionYear == null) {
+			final IPersistentExecutionYear persistentExecutionYear = sp
+					.getIPersistentExecutionYear();
+			final IExecutionYear executionYear = persistentExecutionYear
+					.readCurrentExecutionYear();
+			return executionDegreeDAO.readByExecutionYear(executionYear
+					.getYear());
+		}
+		return executionDegreeDAO.readByExecutionYear(infoExecutionYear
+				.getYear());
+	}
 
 }
