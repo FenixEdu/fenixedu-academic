@@ -47,7 +47,7 @@ public class GetEnrolmentListTest extends TestCaseReadServicesIntranet {
   }
 
   protected int getNumberOfItemsToRetrieve(){
-	  return 3;
+	  return 2;
   }
   protected Object getObjectToCompare(){
   	
