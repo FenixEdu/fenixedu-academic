@@ -669,4 +669,11 @@
         <invocationTiming>1</invocationTiming>
         <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
     </filterChain>
+	<filterChain>
+		<name>ReadFinalDegreeWorkProposalAuthorization</name>
+		<expression>ReadFinalDegreeWorkProposalAuthorizationFilter || AccessFinalDegreeWorkProposalAuthorizationFilter</expression>
+		<description />
+		<invocationTiming>1</invocationTiming>
+		<filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
+	</filterChain>
 </filterChainsDefinitions>

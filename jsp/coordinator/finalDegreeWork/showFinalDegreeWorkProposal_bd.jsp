@@ -1,281 +1,216 @@
-<%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ page language="java" %><%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<%@ page import="DataBeans.InfoTeacher" %>
+<%@ page import="DataBeans.InfoPerson" %>
 
-<br />
-<br />
-<span class="error"><html:errors/></span>
-<logic:present name="finalDegreeWorkProposal">
-	<table>
+<h2><bean:message key="title.teacher.finalWorkInformation"/></h2>
+<span class="error">
+	<html:errors/><br />
+</span>
+<html:form action="/finalDegreeWorkProposal">
+	<html:hidden property="page" value="2"/>
+	<html:hidden property="method" value="submit"/>
+	<html:hidden property="degree"/>
+	<html:hidden property="idInternal"/>
+	<html:hidden property="orientatorOID"/>
+	<html:hidden property="coorientatorOID"/>
+	<html:hidden property="alteredField"/>
+
+	<b><bean:message key="label.teacher.finalWork.title"/>:</b>
+	<br><html:text property="title" size="85"/>
+	<hr><br>
+
+	<b><bean:message key="label.teacher.finalWork.responsable"/>:</b>
+	<table width="100%">
 		<tr>
-			<td class="listClasses-supheader" colspan="3">
-				<bean:message key="finalDegreeWorkProposalHeader.number"/>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses" colspan="3">
-				<bean:write name="finalDegreeWorkProposal" property="proposalNumber"/>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses-supheader" colspan="3">
-				<bean:message key="label.teacher.finalWork.title"/>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses" colspan="3">
-				<bean:write name="finalDegreeWorkProposal" property="title"/>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses-supheader" colspan="3">
-				<bean:message key="label.teacher.finalWork.responsable"/>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses-header">
-				<bean:message key="label.teacher.finalWork.number"/>
-			</td>
-			<td class="listClasses-header">
-				<bean:message key="label.teacher.finalWork.name"/>
-			</td>
-			<td class="listClasses-header">
-				<bean:message key="label.teacher.finalWork.credits.short"/>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses">
-				<bean:write name="finalDegreeWorkProposal" property="orientator.teacherNumber"/>
-			</td>
-			<td class="listClasses">
-				<bean:write name="finalDegreeWorkProposal" property="orientator.infoPerson.nome"/>
-			</td>
-			<td class="listClasses">
-				<bean:write name="finalDegreeWorkProposal" property="orientatorsCreditsPercentage"/>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses-header" colspan="3">
-				<bean:message key="label.teacher.finalWork.department"/>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses" colspan="3">
-				<logic:present name="finalDegreeWorkProposal" property="orientatorsDepartment">
-					<logic:present name="finalDegreeWorkProposal" property="orientatorsDepartment.name">
-						<bean:write name="finalDegreeWorkProposal" property="orientatorsDepartment.name"/>
-					</logic:present>
+			<th width="16%"><bean:message key="label.teacher.finalWork.number"/>:</th>
+			<td width="10%">
+				<logic:present name="orientator">
+					<html:text property="responsableTeacherNumber" maxlength="6" size="6"
+						value='<%= ((InfoTeacher) pageContext.findAttribute("orientator")).getTeacherNumber().toString() %>'
+						 onchange="this.form.method.value='showTeacherName';this.form.page.value='1';this.form.alteredField.value='orientator';this.form.submit();"  
+						/>
 				</logic:present>
+				<logic:notPresent name="orientator">
+					<html:text property="responsableTeacherNumber" maxlength="6" size="6"
+						 onchange="this.form.method.value='showTeacherName';this.form.page.value='1';this.form.alteredField.value='orientator';this.form.submit();"/>
+				</logic:notPresent>
 			</td>
-		</tr>
-		<logic:present name="finalDegreeWorkProposal" property="coorientator">
-			<tr>
-				<td class="listClasses-supheader" colspan="3">
-					<bean:message key="label.teacher.finalWork.coResponsable"/>
-				</td>
-			</tr>
-			<tr>
-				<td class="listClasses-header">
-					<bean:message key="label.teacher.finalWork.number"/>
-				</td>
-				<td class="listClasses-header">
-					<bean:message key="label.teacher.finalWork.name"/>
-				</td>
-				<td class="listClasses-header">
-					<bean:message key="label.teacher.finalWork.credits.short"/>
-				</td>
-			</tr>
-			<tr>
-				<td class="listClasses">
-					<bean:write name="finalDegreeWorkProposal" property="coorientator.teacherNumber"/>
-				</td>
-				<td class="listClasses">
-					<bean:write name="finalDegreeWorkProposal" property="coorientator.infoPerson.nome"/>
-				</td>
-				<td class="listClasses">
-					<bean:write name="finalDegreeWorkProposal" property="coorientatorsCreditsPercentage"/>
-				</td>
-			</tr>
-			<tr>
-				<td class="listClasses-header" colspan="3">
-					<bean:message key="label.teacher.finalWork.department"/>
-				</td>
-			</tr>
-			<tr>
-				<td class="listClasses" colspan="3">
-					<logic:present name="finalDegreeWorkProposal" property="coorientatorsDepartment">
-						<logic:present name="finalDegreeWorkProposal" property="coorientatorsDepartment.name">
-							<bean:write name="finalDegreeWorkProposal" property="coorientatorsDepartment.name"/>
-						</logic:present>
-					</logic:present>
-				</td>
-			</tr>
-		</logic:present>
-		<logic:notPresent name="finalDegreeWorkProposal" property="coorientator">
-			<tr>
-				<td class="listClasses-supheader" colspan="3">
-					<bean:message key="label.teacher.finalWork.companion"/>
-				</td>
-			</tr>
-			<tr>
-				<td class="listClasses-header">
-					<bean:message key="label.teacher.finalWork.name"/>
-				</td>
-				<td class="listClasses" colspan="2">
-					<bean:write name="finalDegreeWorkProposal" property="companionName"/>
-				</td>
-			</tr>			
-			<tr>
-				<td class="listClasses-header">
-					<bean:message key="label.teacher.finalWork.mail"/>
-				</td>
-				<td class="listClasses" colspan="2">
-					<bean:write name="finalDegreeWorkProposal" property="companionMail"/>
-				</td>
-			</tr>			
-			<tr>
-				<td class="listClasses-header">
-					<bean:message key="label.teacher.finalWork.phone"/>
-				</td>
-				<td class="listClasses" colspan="2">
-					<bean:write name="finalDegreeWorkProposal" property="companionPhone"/>
-				</td>
-			</tr>			
-			<tr>
-				<td class="listClasses-header">
-					<bean:message key="label.teacher.finalWork.companyName"/>
-				</td>
-				<td class="listClasses" colspan="2">
-					<bean:write name="finalDegreeWorkProposal" property="companyName"/>
-				</td>
-			</tr>			
-			<tr>
-				<td class="listClasses-header">
-					<bean:message key="label.teacher.finalWork.companyAdress"/>
-				</td>
-				<td class="listClasses" colspan="2">
-					<bean:write name="finalDegreeWorkProposal" property="companyAdress"/>
-				</td>
-			</tr>
-		</logic:notPresent>
-		<tr>
-			<td class="listClasses-supheader" colspan="3">
-				<bean:message key="label.teacher.finalWork.framing"/>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses" colspan="3">
-				<bean:write name="finalDegreeWorkProposal" property="framing"/>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses-supheader" colspan="3">
-				<bean:message key="label.teacher.finalWork.objectives"/>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses" colspan="3">
-				<bean:write name="finalDegreeWorkProposal" property="objectives"/>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses-supheader" colspan="3">
-				<bean:message key="label.teacher.finalWork.description"/>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses" colspan="3">
-				<bean:write name="finalDegreeWorkProposal" property="description"/>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses-supheader" colspan="3">
-				<bean:message key="label.teacher.finalWork.requirements"/>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses" colspan="3">
-				<bean:write name="finalDegreeWorkProposal" property="requirements"/>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses-supheader" colspan="3">
-				<bean:message key="label.teacher.finalWork.url"/>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses" colspan="3">
-				<bean:write name="finalDegreeWorkProposal" property="url"/>
-			</td>
-		</tr>
-		<logic:present name="finalDegreeWorkProposal" property="branches">
-			<tr>
-				<td class="listClasses-supheader" colspan="3">
-					<bean:message key="label.teacher.finalWork.priority.info"/>
-				</td>
-			</tr>
-			<logic:iterate id="branch" name="finalDegreeWorkProposal" property="branches">
-				<tr>
-					<td class="listClasses" colspan="3">
-						<bean:write name="branch" property="name"/>
-					</td>
-				</tr>
-			</logic:iterate>		
-		</logic:present>
-		<tr>
-			<td class="listClasses-supheader" colspan="3">
-				<bean:message key="label.teacher.finalWork.numberOfGroupElements"/>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses-header">
-				<bean:message key="label.teacher.finalWork.minimumNumberGroupElements"/>
-			</td>
-			<td class="listClasses" colspan="2">
-				<bean:write name="finalDegreeWorkProposal" property="minimumNumberOfGroupElements"/>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses-header">
-				<bean:message key="label.teacher.finalWork.maximumNumberGroupElements"/>
-			</td>
-			<td class="listClasses" colspan="2">
-				<bean:write name="finalDegreeWorkProposal" property="maximumNumberOfGroupElements"/>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses-supheader" colspan="3">
-				<bean:message key="label.teacher.finalWork.degreeType"/>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses" colspan="3">
-				<bean:write name="finalDegreeWorkProposal" property="degreeType"/>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses-supheader" colspan="3">
-				<bean:message key="label.teacher.finalWork.observations"/>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses" colspan="3">
-				<bean:write name="finalDegreeWorkProposal" property="observations"/>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses-supheader" colspan="3">
-				<bean:message key="label.teacher.finalWork.location"/>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses" colspan="3">
-				<bean:write name="finalDegreeWorkProposal" property="location"/>
+			<td width="1%"/>
+			<th width="7%"><bean:message key="label.teacher.finalWork.name"/>:</th>
+			<td width="66%">
+				<logic:present name="orientator">
+					<html:text property="responsableTeacherName" size="55"
+						value='<%= ((InfoTeacher) pageContext.findAttribute("orientator")).getInfoPerson().getNome().toString() %>'/>
+				</logic:present>
+				<logic:notPresent name="orientator">
+					<html:text property="responsableTeacherName" size="55"/>
+				</logic:notPresent>
 			</td>
 		</tr>
 	</table>
-</logic:present>
-<logic:notPresent name="finalDegreeWorkProposal">
-	<span class="error"><bean:message key="finalDegreeWorkProposal.notPresent"/></span>
-</logic:notPresent>
+	<br><br>
+
+	<logic:empty name="finalDegreeWorkProposal" property="companionName">
+	<logic:empty name="finalDegreeWorkProposal" property="companionMail">
+	<logic:empty name="finalDegreeWorkProposal" property="companionPhone">
+	<logic:empty name="finalDegreeWorkProposal" property="companyAdress">
+	<logic:empty name="finalDegreeWorkProposal" property="companyName">
+	<b><bean:message key="label.teacher.finalWork.coResponsable"/>:</b>
+	<table width="100%">
+		<tr>
+			<th width="16%"><bean:message key="label.teacher.finalWork.number"/>:</th>
+			<td width="10%">
+				<logic:present name="coorientator">
+					<html:text property="coResponsableTeacherNumber" maxlength="6" size="6"
+						value='<%= ((InfoTeacher) pageContext.findAttribute("coorientator")).getTeacherNumber().toString() %>'
+						 onchange="this.form.method.value='showTeacherName';this.form.page.value='1';this.form.alteredField.value='coorientator';this.form.submit();"  
+						/>
+				</logic:present>
+				<logic:notPresent name="coorientator">
+					<html:text property="coResponsableTeacherNumber" maxlength="6" size="6" 
+						 onchange="this.form.method.value='showTeacherName';this.form.page.value='1';this.form.alteredField.value='coorientator';this.form.submit();"  
+					/>
+				</logic:notPresent>
+			</td>
+			<td width="1%"/>
+			<th width="7%"><bean:message key="label.teacher.finalWork.name"/>:</th>
+			<td width="66%">
+				<logic:present name="coorientator">
+					<html:text property="coResponsableTeacherName" size="55"
+						value='<%= ((InfoTeacher) pageContext.findAttribute("coorientator")).getInfoPerson().getNome().toString() %>'/>
+				</logic:present>
+				<logic:notPresent name="coorientator">
+					<html:text property="coResponsableTeacherName" size="55"/>
+				</logic:notPresent>
+			</td>
+		</tr>
+	</table>
+	<br><br>
+	</logic:empty>
+	</logic:empty>
+	</logic:empty>
+	</logic:empty>
+	</logic:empty>
+
+	<logic:empty name="finalDegreeWorkProposal" property="coResponsableTeacherName" >
+	<b><bean:message key="label.teacher.finalWork.companion"/>:</b>
+	<table width="100%">
+		<tr>
+			<th width="9%"><bean:message key="label.teacher.finalWork.name"/>:</th>
+			<td>
+				<html:text property="companionName" size="70" 
+				onchange="this.form.method.value='coorientatorVisibility';this.form.page.value='1';this.form.alteredField.value='companion';this.form.submit();"  />						
+			</td>
+		</tr>
+		<tr>
+			<th width="9%"><bean:message key="label.teacher.finalWork.mail"/>:</th>
+			<td>		
+				<html:text property="companionMail" size="70" 
+				onchange="this.form.method.value='coorientatorVisibility';this.form.page.value='1';this.form.alteredField.value='companion';this.form.submit();"/>
+			</td>
+		</tr>
+		<tr>
+			<th width="9%"><bean:message key="label.teacher.finalWork.phone"/>:</th>
+			<td>
+				<html:text property="companionPhone" size="10" maxlength="9" 
+				onchange="this.form.method.value='coorientatorVisibility';this.form.page.value='1';this.form.alteredField.value='companion';this.form.submit();"/>						
+			</td>
+		</tr>	
+		<tr>
+			<th with="9%"><bean:message key="label.teacher.finalWork.companyName"/>:</th>
+			<td>
+				<html:text property="companyName" size="70"
+				onchange="this.form.method.value='coorientatorVisibility';this.form.page.value='1';this.form.alteredField.value='companion';this.form.submit();"/>
+			</td>
+		</tr>
+		<tr>
+			<th with="9%"><bean:message key="label.teacher.finalWork.companyAdress"/>:</th>
+			<td>
+				<html:text property="companyAdress" size="70"
+				onchange="this.form.method.value='coorientatorVisibility';this.form.page.value='1';this.form.alteredField.value='companion';this.form.submit();"/>
+			</td>
+		</tr>
+	</table>
+	<br><br>
+	</logic:empty>
+				
+	<b><bean:message key="label.teacher.finalWork.credits"/>:</b>
+	<html:text property="responsibleCreditsPercentage" size="3" maxlength="3"/>% /
+	<html:text property="coResponsibleCreditsPercentage" size="3" maxlength="3"/>%
+	<br><hr>
+
+	<b><bean:message key="label.teacher.finalWork.framing"/>:</b>
+	<br><html:textarea property="framing" rows="4" cols="80"/>
+	<br><br>
+	<b><bean:message key="label.teacher.finalWork.objectives"/>:</b>
+	<br><html:textarea property="objectives" rows="4" cols="80"/>
+	<br><br>
+	<b><bean:message key="label.teacher.finalWork.description"/>:</b>
+	<br><html:textarea property="description" rows="8" cols="80"/>
+	<br><br>
+	<b><bean:message key="label.teacher.finalWork.requirements"/>:</b>
+	<br><html:textarea property="requirements" rows="8" cols="80"/>
+	<br><br>
+	<b><bean:message key="label.teacher.finalWork.deliverable"/>:</b>
+	<br><html:textarea property="deliverable" rows="4" cols="80"/>
+	<br><br>
+	<b><bean:message key="label.teacher.finalWork.url"/>:</b>
+	<br><html:text property="url" size="80"/>
+	<br><hr>
+	<br><b><bean:message key="label.teacher.finalWork.priority.info"/></b><br><br>
+
+	<table>
+		<logic:iterate id="branch" name="branches">
+			<tr>
+				<td>
+					<bean:write name="branch" property="name"/>				
+				</td>
+				<td>
+					<html:multibox property="branchList">
+						<bean:write name="branch" property="idInternal"/>
+					</html:multibox>
+				</td>
+			</tr>
+		</logic:iterate>
+	</table>
+
+	<br><hr><br>
+	<table cellspacing="2">
+		<tr>
+			<th><bean:message key="label.teacher.finalWork.numberOfGroupElements"/>:</th>
+			<td>
+				<bean:message key="label.teacher.finalWork.minimumNumberGroupElements"/>
+				<html:text size="3" maxlength="2" property="minimumNumberOfGroupElements"/>
+			</td>		
+			<td>
+				<bean:message key="label.teacher.finalWork.maximumNumberGroupElements"/>
+				<html:text size="3" maxlength="2" property="maximumNumberOfGroupElements"/>
+			</td>
+		</tr>
+		<tr height="10"></tr>
+		<tr>
+			<th><bean:message key="label.teacher.finalWork.degreeType"/>:</th>
+			<td><html:radio value="<%= "" + Util.TipoCurso.LICENCIATURA %>" property="degreeType"/> <%= Util.TipoCurso.LICENCIATURA_STRING %> </td>
+			<td><html:radio value="<%= "" + Util.TipoCurso.MESTRADO %>" property="degreeType"/> <%= Util.TipoCurso.MESTRADO_STRING %> </td>
+		</tr>
+	</table>
+	<br><hr><br>
+	<b><bean:message key="label.teacher.finalWork.observations"/>:</b>
+	<br><html:textarea property="observations" rows="4" cols="80"/><br><br>
+	<b><bean:message key="label.teacher.finalWork.location"/>:</b>
+	<br><html:text property="location" size="81"/><br>
+
+	<br><hr><br>
+	<b><bean:message key="finalDegreeWorkProposal.status"/>:</b>
+	<br><html:select property="status" size="1">
+		<html:option value=""/>
+		<html:options property="value" 
+     				  labelProperty="label" 
+					  collection="finalDegreeWorkProposalStatusList" />
+	</html:select><br>
+
+	<br><br><html:submit styleClass="inputbutton"><bean:message key="button.submit"/></html:submit></td>
+</html:form>

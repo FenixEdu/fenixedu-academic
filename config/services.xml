@@ -6156,9 +6156,8 @@
             ServidorAplicacao.Servico.manager.ReadBranchesByDegreeCurricularPlan</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
-        <!--<filterChains>
-            <chain name=""/>
-        </filterChains>-->
+        <filterChains>
+        </filterChains>
     </service>
     <service>
         <name>ReadStudentsByPerson</name>
@@ -6184,6 +6183,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
+			<chain name="ReadFinalDegreeWorkProposalAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -6275,6 +6275,48 @@
         <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="ManagerAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>PublishAprovedFinalDegreeWorkProposals</name>
+        <implementationClass>ServidorAplicacao.Servico.coordinator.PublishAprovedFinalDegreeWorkProposals</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        	<chain name="ReadCoursesInformationAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ChangeStatusOfFinalDegreeWorkProposals</name>
+        <implementationClass>ServidorAplicacao.Servico.coordinator.ChangeStatusOfFinalDegreeWorkProposals</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        	<chain name="ReadCoursesInformationAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadExecutionDegreesByExecutionYearAndType</name>
+        <implementationClass>ServidorAplicacao.Servico.commons.ReadExecutionDegreesByExecutionYearAndType</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadExecutionYearsService</name>
+        <implementationClass>ServidorAplicacao.Servico.commons.ReadExecutionYearsService</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadPublishedFinalDegreeWorkProposalHeaders</name>
+        <implementationClass>ServidorAplicacao.Servico.publico.ReadPublishedFinalDegreeWorkProposalHeaders</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
         </filterChains>
     </service>
 </serviceDefinitions>

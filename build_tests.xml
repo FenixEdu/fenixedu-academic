@@ -22,6 +22,7 @@
 	<property name="build.tests" value="${build.home}/tests"/>
 	<property name="build.tests.cache" value="${build.tests}/cache"/>
 	<property name="build.tests.jboss" value="${build.tests}/jboss"/>
+	<property name="build.tests.services" value="${build.tests}/services"/>
 	
 	<property name="sshtools.home" location="lib"/>
 
@@ -55,7 +56,23 @@
   	<property name="compile.optimize"    value="on"/>
 
 	<property name="encoding" value="ISO-8859-15"/>	
-	
+
+	<target name="compile-app-server"
+            description="Compiles application server.">
+		<ant antfile="build_jboss.xml" target="compile-app-server"/>
+		<javac classpath="${build.app-server}"
+               destdir="${build.app-server}"
+               extdirs="${lib}" 
+               srcdir="${src}"
+               debug="true"
+               optimize="true"
+               deprecation="true"
+               encoding="${encoding}"
+               fork="yes">
+            <include name="Tools/*.java"/>
+		</javac>
+	</target>
+		
 	<target name="compile-tests-jboss"
             description="Compiles tests to verify correct jboss integration.">
 		<ant antfile="build_jboss.xml" target="compile-web-client"/>
@@ -73,8 +90,8 @@
 	</target>
 
 	<target name="compile-tests-cache"
+			depends="compile-app-server"
             description="Compiles tests to verify correct cache distribution.">
-		<ant antfile="build_jboss.xml" target="compile-app-server"/>
 		<mkdir dir="${build.tests.cache}"/>
 		<javac classpath="${build.app-server}"
                destdir="${build.tests.cache}"
@@ -89,8 +106,8 @@
 	</target>
 	
 	<target name="compile-tests"
+			depends="compile-app-server"
             description="Compiles tests to verify correct cache distribution.">
-		<ant antfile="build_jboss.xml" target="compile-app-server"/>
 		<mkdir dir="${build.tests.cache}"/>
 		<javac classpath="${build.app-server}"
                destdir="${build.tests}"
@@ -103,7 +120,6 @@
                fork="yes"
                />
 	</target>
-
 
 	<target name="run-tests-jboss"
 			depends="compile-tests-jboss"
@@ -172,7 +188,72 @@
 			</classpath>
 		</java>
 	</target>
+
+	<path id="runtime-classpath">
+    	<fileset dir="${libs.web}">
+    		<include  name="**/*.jar"/>
+    	</fileset>
+        <fileset dir="${lib}">
+    		<include  name="**/*.jar"/>
+    	</fileset>
+        <pathelement path="${build.app-server}"/> 
+    </path>
+
+	<!-- Access the classpath as a property -->
+    <property 	name="runtime.classpath" refid="runtime-classpath"/>
+
+	<target name="generate-dataset"
+			description="Generates a dataset using the parameters specified in SmartDataSetGenerator.properties"
+			depends="compile-app-server">
+		<java classname="Tools.SmartDataSetGeneratorMain" fork="true">
+			<classpath refid="runtime-classpath" />
+		</java>
+	</target>
+
+	<target name="compile-service-tests-luis-cruz"
+			depends="compile-app-server"
+            description="Compiles application server.">
+		<mkdir dir="${build.tests.services}"/>
+		<javac classpath="${build.app-server}"
+               destdir="${build.tests.services}"
+               extdirs="${lib}" 
+               srcdir="${src.tests}"
+               debug="true"
+               optimize="true"
+               deprecation="true"
+               encoding="${encoding}"
+               fork="yes">
+            <include name="Tools/*.java"/>
+            <include name="ServidorAplicacao/Servicos/*.java"/>
+            <include name="ServidorAplicacao/Servicos/publico/ReadPublishedFinalDegreeWorkProposalHeadersTest.java"/>
+		</javac>
+	</target>		
 	
+	<target name="run-tests-luis-cruz"
+    		depends="compile-service-tests-luis-cruz"
+            description="Executes tests for branch ExamsV4">
+        <ant antfile="build_dataBaseUtils.xml" target="create-tables"/>
+        <junit haltonfailure="false" printsummary="yes" dir="${basedir}">
+            <formatter type="plain" usefile="false"/>
+            <batchtest fork="yes">
+                <fileset dir="${src.tests}">
+	                <include name="ServidorAplicacao/Servicos/publico/ReadPublishedFinalDegreeWorkProposalHeadersTest.java"/>
+	                <!--
+                	<include name="Servicos/sop/exams/*Test.java"/>                  
+                	-->
+                </fileset>
+            </batchtest>
+            <classpath>
+                <pathelement path="${build.app-server}"/>
+                <pathelement path="${build.tests.services}"/>
+                <pathelement path="${sql}"/>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </junit>
+    </target>
+		
 	<target name="prepare">
 		<!-- Create build directories as needed -->
 		<mkdir dir="${webapp.classes}"/>	

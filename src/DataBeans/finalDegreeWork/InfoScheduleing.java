@@ -18,6 +18,8 @@ public class InfoScheduleing extends InfoObject {
 	private InfoExecutionDegree executionDegree;
 	private Date startOfProposalPeriod;
 	private Date endOfProposalPeriod;
+	private Date startOfCandidacyPeriod;
+	private Date endOfCandidacyPeriod;
 
 	/* Construtores */
 	public InfoScheduleing() {
@@ -84,4 +86,32 @@ public class InfoScheduleing extends InfoObject {
 		this.startOfProposalPeriod = startOfProposalPeriod;
 	}
 
+    /**
+     * @return Returns the startOfCandidacyPeriod.
+     */
+    public Date getStartOfCandidacyPeriod()
+    {
+        return startOfCandidacyPeriod;
+    }
+    /**
+     * @param startOfCandidacyPeriod The startOfCandidacyPeriod to set.
+     */
+    public void setStartOfCandidacyPeriod(Date startOfCandidacyPeriod)
+    {
+        this.startOfCandidacyPeriod = startOfCandidacyPeriod;
+    }
+    /**
+     * @return Returns the endOfCandidacyPeriod.
+     */
+    public Date getEndOfCandidacyPeriod()
+    {
+        return endOfCandidacyPeriod;
+    }
+    /**
+     * @param endOfCandidacyPeriod The endOfCandidacyPeriod to set.
+     */
+    public void setEndOfCandidacyPeriod(Date endOfCandidacyPeriod)
+    {
+        this.endOfCandidacyPeriod = endOfCandidacyPeriod;
+    }
 }

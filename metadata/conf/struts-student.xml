@@ -124,22 +124,16 @@
     
     <!-- ========== Global Exception Definitions ============================== -->
 	<global-exceptions>
-		<exception type="java.lang.Exception"
-			       key="java.lang.Exception"
-			       path="/naoExecutado.do"
-			       handler="ServidorApresentacao.config.FenixExceptionHandler"/>
-		<exception type="ServidorAplicacao.NotAuthorizedException"
-			       key="ServidorAplicacao.NotAuthorizedException"
-			       path="/naoAutorizado.do"
-			       handler="ServidorApresentacao.config.FenixExceptionHandler"/>
-		<exception type="ServidorAplicacao.NotExecutedException"
-		  	       key="ServidorAplicacao.NotExecutedException"
-		  	       path="/naoExecutado.do"
-		  	       handler="ServidorApresentacao.config.FenixExceptionHandler" />
-		<exception type="ServidorAplicacao.Servico.ExcepcaoInexistente"
-			       key="ServidorAplicacao.Servico.ExcepcaoInexistente"
-			       path="/naoExistente.do"
-			       handler="ServidorApresentacao.config.FenixExceptionHandler" />
+        <exception
+			type="java.lang.Exception"
+			key="error.Exception"
+            handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+			/>
+		<exception
+			type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+			key="error.NotAuthorized"
+			handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+			/>
 	</global-exceptions>
     
     <!-- ========== Global Forward Definitions =============================== -->

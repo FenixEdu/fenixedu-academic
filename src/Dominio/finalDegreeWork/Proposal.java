@@ -9,6 +9,7 @@ import java.util.List;
 import Dominio.DomainObject;
 import Dominio.ICursoExecucao;
 import Dominio.ITeacher;
+import Util.FinalDegreeWorkProposalStatus;
 import Util.TipoCurso;
 
 /**
@@ -44,6 +45,7 @@ public class Proposal extends DomainObject implements IProposal {
 	private String companyName;
 	private String companyAdress;
 	private List branches;
+	private FinalDegreeWorkProposalStatus status;
 
 	/* Construtores */
 	public Proposal() {
@@ -468,6 +470,20 @@ public class Proposal extends DomainObject implements IProposal {
 	public void setProposalNumber(Integer proposalNumber)
 	{
 		this.proposalNumber = proposalNumber;
+	}
+
+	/**
+	 * @return Returns the status.
+	 */
+	public FinalDegreeWorkProposalStatus getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status The status to set.
+	 */
+	public void setStatus(FinalDegreeWorkProposalStatus status) {
+		this.status = status;
 	}
 
 }

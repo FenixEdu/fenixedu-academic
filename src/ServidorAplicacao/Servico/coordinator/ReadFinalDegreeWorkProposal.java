@@ -8,8 +8,11 @@ import java.util.ArrayList;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoBranch;
+import DataBeans.InfoDegree;
+import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoDepartment;
 import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoExecutionYear;
 import DataBeans.InfoPerson;
 import DataBeans.InfoTeacher;
 import DataBeans.finalDegreeWork.InfoProposal;
@@ -116,6 +119,7 @@ public class ReadFinalDegreeWorkProposal implements IService {
 				infoProposal.setObservations(proposal.getObservations());
 				infoProposal.setCompanyName(proposal.getCompanyName());
 				infoProposal.setCompanyAdress(proposal.getCompanyAdress());
+				infoProposal.setStatus(proposal.getStatus());
 
 				if (proposal.getBranches() != null && !proposal.getBranches().isEmpty())
 				{
@@ -137,7 +141,34 @@ public class ReadFinalDegreeWorkProposal implements IService {
 				{
 					infoProposal.setExecutionDegree(new InfoExecutionDegree());
 					infoProposal.getExecutionDegree().setIdInternal(proposal.getExecutionDegree().getIdInternal());
-				}	
+
+					if (proposal.getExecutionDegree().getExecutionYear() != null)
+					{
+						infoProposal.getExecutionDegree().setInfoExecutionYear(
+								new InfoExecutionYear());
+						infoProposal.getExecutionDegree()
+								.getInfoExecutionYear().setYear(
+										proposal.getExecutionDegree()
+												.getExecutionYear().getYear());
+					}
+
+					if (proposal.getExecutionDegree().getCurricularPlan() != null
+						&& proposal.getExecutionDegree().getCurricularPlan().getDegree() != null )
+					{
+						infoProposal.getExecutionDegree()
+								.setInfoDegreeCurricularPlan(
+										new InfoDegreeCurricularPlan());
+						infoProposal.getExecutionDegree()
+								.getInfoDegreeCurricularPlan().setInfoDegree(
+										new InfoDegree());
+						infoProposal.getExecutionDegree()
+								.getInfoDegreeCurricularPlan().getInfoDegree()
+								.setNome(
+										proposal.getExecutionDegree()
+												.getCurricularPlan()
+												.getDegree().getNome());
+					}
+				}
 			}
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);

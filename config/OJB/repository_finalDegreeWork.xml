@@ -131,6 +131,12 @@
          column="COMPANY_ADRESS"
          jdbc-type="VARCHAR"
       />
+      <field-descriptor
+         name="status"
+         column="STATUS"
+         jdbc-type="INTEGER"
+         conversion="ServidorPersistente.Conversores.JavaFinalDegreeWorkProposalStatus2SqlFinalDegreeWorkProposalStatusFieldConversion"
+      />
       <reference-descriptor
          name="executionDegree"
          class-ref="Dominio.CursoExecucao">
@@ -185,16 +191,52 @@
          jdbc-type="INTEGER"
       />
       <field-descriptor
-         name="startOfProposalPeriod"
-         column="START_OF_PROPOSAL_PERIOD"
-         jdbc-type="TIMESTAMP"
-         conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+         name="startOfProposalPeriodDate"
+         column="START_OF_PROPOSAL_PERIOD_DATE"
+         jdbc-type="DATE"
+         conversion="ServidorPersistente.Conversores.JavaDate2SqlDateConversion"
       />      
       <field-descriptor
-         name="endOfProposalPeriod"
-         column="END_OF_PROPOSAL_PERIOD"
-         jdbc-type="TIMESTAMP"
-         conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+         name="startOfProposalPeriodTime"
+         column="START_OF_PROPOSAL_PERIOD_TIME"
+         jdbc-type="TIME"
+         conversion="ServidorPersistente.Conversores.Time2DateFieldConversion"
+      />      
+      <field-descriptor
+         name="endOfProposalPeriodDate"
+         column="END_OF_PROPOSAL_PERIOD_DATE"
+         jdbc-type="DATE"
+         conversion="ServidorPersistente.Conversores.JavaDate2SqlDateConversion"
+      />
+      <field-descriptor
+         name="endOfProposalPeriodTime"
+         column="END_OF_PROPOSAL_PERIOD_TIME"
+		 jdbc-type="TIME"
+         conversion="ServidorPersistente.Conversores.Time2DateFieldConversion"
+      />
+      <field-descriptor
+         name="startOfCandidacyPeriodDate"
+         column="START_OF_CANDIDACY_PERIOD_DATE"
+         jdbc-type="DATE"
+         conversion="ServidorPersistente.Conversores.JavaDate2SqlDateConversion"
+      />      
+      <field-descriptor
+         name="startOfCandidacyPeriodTime"
+         column="START_OF_CANDIDACY_PERIOD_TIME"
+         jdbc-type="TIME"
+         conversion="ServidorPersistente.Conversores.Time2DateFieldConversion"
+      />      
+      <field-descriptor
+         name="endOfCandidacyPeriodDate"
+         column="END_OF_CANDIDACY_PERIOD_DATE"
+         jdbc-type="DATE"
+         conversion="ServidorPersistente.Conversores.JavaDate2SqlDateConversion"
+      />
+      <field-descriptor
+         name="endOfCandidacyPeriodTime"
+         column="END_OF_CANDIDACY_PERIOD_TIME"
+         jdbc-type="TIME"
+         conversion="ServidorPersistente.Conversores.Time2DateFieldConversion"
       />
       <reference-descriptor
          name="executionDegree"

@@ -72,6 +72,7 @@ public class ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan
 						}
 						finalDegreeWorkProposalHeader.setCompanyLink(
 							proposal.getCompanionName());
+						finalDegreeWorkProposalHeader.setStatus(proposal.getStatus());
 
 						finalDegreeWorkProposalHeaders.add(
 							finalDegreeWorkProposalHeader);

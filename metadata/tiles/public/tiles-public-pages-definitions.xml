@@ -67,4 +67,14 @@
 		<put name="main_navigation" value="/publico/degreeSite/mainNavigation_without_teaching.jsp" />	
 		<put name="body" value="/publico/services/teachers/showProfessorships.jsp"/>
 	</definition>
+	<definition name="df.page.showFinalDegreeWorkList" extends="definition.public.mainPageIST">
+		<put name="main_navigation" value="/publico/finalDegreeWork/mainNavigation.jsp" />
+		<put name="profile_navigation" value="" />
+		<put name="body" value="/publico/finalDegreeWork/showFinalDegreeWorkList.jsp"/>
+	</definition>
+	<definition name="df.page.showFinalDegreeWorkProposal" extends="definition.public.mainPageIST">
+		<put name="main_navigation" value="/publico/finalDegreeWork/mainNavigation.jsp" />
+		<put name="profile_navigation" value="" />
+		<put name="body" value="/publico/finalDegreeWork/showFinalDegreeWorkProposal.jsp"/>
+	</definition>
 </tiles-definitions>

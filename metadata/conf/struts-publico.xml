@@ -119,33 +119,30 @@
         <form-property name="executionDegreeId" type="java.lang.Integer"/>
         <form-property name="departmentId" type="java.lang.Integer"/>
       </form-bean>
+
+     <form-bean name="finalDegreeWorksForm"
+                type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+		<form-property name="page" type="java.lang.Integer"/>
+        <form-property name="executionYearOID" type="java.lang.String"/>
+		<form-property name="executionDegreeOID" type="java.lang.String"/>
+      </form-bean>
+
   </form-beans>     
      
     
     <!-- ========== Global Exception Definitions ============================== -->
 	<global-exceptions>
-		
-		<exception type="java.lang.Exception"
-			       key="java.lang.Exception"
-			       path="/naoExecutado.do"
-			       handler="ServidorApresentacao.config.FenixPublicExceptionHandler"/>
-		<exception type="ServidorAplicacao.NotAuthorizedException"
-			       key="ServidorAplicacao.NotAuthorizedException"
-			       path="/naoAutorizado.do"
-			       handler="ServidorApresentacao.config.FenixPublicExceptionHandler"/>
-		<exception type="ServidorAplicacao.NotExecutedException"
-		  	       key="ServidorAplicacao.NotExecutedException"
-		  	       path="/naoExecutado.do"
-		  	       handler="ServidorApresentacao.config.FenixPublicExceptionHandler" />
-		<exception type="ServidorAplicacao.Servico.ExcepcaoInexistente"
-			       key="ServidorAplicacao.Servico.ExcepcaoInexistente"
-			       path="/naoExistente.do"
-			       handler="ServidorApresentacao.config.FenixPublicExceptionHandler" />
-		<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-			       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-			       path="/nonExistingError.jsp"
-			        handler="ServidorApresentacao.config.FenixPublicExceptionHandler" /> 
-			     	       	       
+        <exception
+			type="java.lang.Exception"
+			key="error.Exception"
+            handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+			/>
+		<exception
+			type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+			key="error.NotAuthorized"
+			handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+			/>
 	</global-exceptions>
 
 
@@ -463,6 +460,20 @@
 			scope="request"
 			validate="false">
 		<forward name="success" path="/migration/result.jsp"/>
+	</action>
+
+	<action path="/viewFinalDegreeWorkProposals" forward="/finalDegreeWorks.do?method=prepareSearch&amp;page=0"/>
+
+	<action path="/finalDegreeWorks"
+			type="ServidorApresentacao.Action.publico.FinalDegreeWorkProposalsDispatchAction"
+			input="/finalDegreeWorks.do?method=prepareSearch&amp;page=0"
+			name="finalDegreeWorksForm"
+			parameter="method"
+			scope="request"
+			validate="true"
+			>
+		<forward name="show-final-degree-work-list" path="df.page.showFinalDegreeWorkList"/>
+		<forward name="show-final-degree-work-proposal" path="df.page.showFinalDegreeWorkProposal"/>
 	</action>
 
      </action-mappings>     

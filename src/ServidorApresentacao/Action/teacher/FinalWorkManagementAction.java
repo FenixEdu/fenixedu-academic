@@ -6,7 +6,6 @@ package ServidorApresentacao.Action.teacher;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +31,7 @@ import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
-import Util.BranchType;
+import ServidorApresentacao.Action.utils.CommonServiceRequests;
 import Util.TipoCurso;
 /**
  * @author Nuno Correia
@@ -261,7 +260,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 		finalWorkForm.set("degreeType", "" + TipoCurso.LICENCIATURA);
 
 		InfoExecutionDegree infoExecutionDegree =
-			getInfoExecutionDegree(userView, new Integer(degreeId));
+			CommonServiceRequests.getInfoExecutionDegree(userView, new Integer(degreeId));
 
 		InfoScheduleing infoScheduleing = null;
 		try {
@@ -317,7 +316,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 		}
 
 		List branches =
-			getBranches(
+			CommonServiceRequests.getBranchesByDegreeCurricularPlan(
 				userView,
 				infoExecutionDegree
 					.getInfoDegreeCurricularPlan()
@@ -325,28 +324,6 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 		request.setAttribute("branches", branches);
 
 		return mapping.findForward("submitFinalWorkProposal");
-	}
-
-	/**
-	 * @param integer
-	 * @return
-	 */
-	private InfoExecutionDegree getInfoExecutionDegree(
-		IUserView userView,
-		Integer degreeOID)
-		throws FenixActionException {
-		InfoExecutionDegree infoExecutionDegree = null;
-		Object[] args = { degreeOID };
-		try {
-			infoExecutionDegree =
-				(InfoExecutionDegree) ServiceUtils.executeService(
-					userView,
-					"ReadExecutionDegreeByOID",
-					args);
-		} catch (FenixServiceException fse) {
-			throw new FenixActionException(fse);
-		}
-		return infoExecutionDegree;
 	}
 
 	public ActionForward showTeacherName(
@@ -740,11 +717,11 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 					}
 
 					InfoExecutionDegree infoExecutionDegree =
-						getInfoExecutionDegree(
+						CommonServiceRequests.getInfoExecutionDegree(
 							userView,
 							infoProposal.getExecutionDegree().getIdInternal());
 					List branches =
-						getBranches(
+						CommonServiceRequests.getBranchesByDegreeCurricularPlan(
 							userView,
 							infoExecutionDegree
 								.getInfoDegreeCurricularPlan()
@@ -758,39 +735,6 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 		}
 
 		return mapping.findForward("submitFinalWorkProposal");
-	}
-
-	/**
-	 * @param userView
-	 * @param integer
-	 * @return
-	 */
-	private List getBranches(
-		IUserView userView,
-		Integer degreeCurricularPlanOID)
-		throws FenixActionException {
-		Object[] argsBranches = { degreeCurricularPlanOID };
-		List branches = null;
-		try {
-			branches =
-				(List) ServiceUtils.executeService(
-					userView,
-					"ReadBranchesByDegreeCurricularPlanId",
-					argsBranches);
-		} catch (FenixServiceException fse) {
-			throw new FenixActionException(fse);
-		}
-
-		ArrayList newBranches = new ArrayList();
-		Iterator iterator = branches.iterator();
-		while (iterator.hasNext()) {
-			InfoBranch infoBranch = (InfoBranch) iterator.next();
-			if (infoBranch != null
-				&& infoBranch.getBranchType() != null
-				&& !infoBranch.getBranchType().equals(BranchType.COMMON_BRANCH))
-				newBranches.add(infoBranch);
-		}
-		return newBranches;
 	}
 
 	InfoTeacher getTeacher(IUserView userView) throws FenixActionException {

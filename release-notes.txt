@@ -3,6 +3,10 @@ Release XXXX (maybe 2004-04-14)
 ---------------------------------------------------------------------
 
 NEW FEATURES:
+- Added create/edit of final degree work proposals interface to coordinators portal.
+- task [#178] Publication of Final Degree Work Proposals.
+- task [#177] Public Listing of Final Degree Work Proposals.
+- Added definition of final degree work candidacy period interface to coordinators portal.
 
 
 NOTES:
@@ -14,10 +18,13 @@ CHANGES:
 
 
 BUG FIXES:
-
+- Bug [#106] The missing error page. Fixed.
  
 KNOWN ISSUES:
-
+- Final degree work proposals are associated with the execution degree prior to the one they
+  are proposed for. This is due to not yet having information regarding the next execution
+  year. This must be resolved by establishing dates when the information must be introduced
+  into the database.
 
 
 

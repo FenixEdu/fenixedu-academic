@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="iso-8859-15"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15" />
+<title>Fénix Manual</title>
+</head>
+
+<style type="text/css">
+	table.screen {
+		width: 95%;
+		font-family: courier, courier new, monospace;
+		font-size: 12pt;
+        border: 2px solid #A9A9A9;
+	  	background-color: #DCDCDC;
+		color: #000000;
+		padding: 0.5em;
+		margin-bottom: 0.5em;
+		margin-top: 0.5em;
+	}
+
+table.note, table.tip, table.important, table.caution, table.warning {
+		width: 95%;
+		font-family: helvetica, arial, sans-serif;
+		font-size: 12pt;
+	    border: 2px solid #B0C4DE;
+	  	background-color: #F0F8FF;
+		color: #000000;
+		/* padding inside table area */
+		padding: 0.5em; 
+		margin-bottom: 0.5em;
+		margin-top: 0.5em;
+	}
+
+	.computeroutput, .command {
+    	    font-family: courier, courier new, monospace;
+	        font-size: 12pt;
+	}
+</style>
+
+<body>
+<h2><center>Fénix Manual - Setting Up a Linux Box</center></h2>
+<br/>
+<br/>
+
+A. Setting Up a Linux Box
+<ul>
+	<li>
+		A.1 System Encoding
+	</li>
+	<li>
+		A.2 Java Virtual Machine
+	</li>
+	<li>
+		A.3 Apache Ant
+	</li>
+	<li>
+		A.4 Database
+	</li>
+	<li>
+		A.5 Application Server
+	</li>
+	<li>
+		A.6 Servlet Container
+	</li>
+</ul>
+
+<br/>
+
+<p>
+	Currently most linux distributions are fairly easy to install. The following text
+	provides step-by-step instructions for configuring a Fedora/Redhat box. The
+	configuration of other distributions is probably very similar. If anyone should
+	detect any differences or issues regarding the steps here describe we would
+	appreciate being informed at the following mailing list:
+		<a href="https://mlists.ist.utl.pt/mailman/listinfo/fenix-user">
+			https://mlists.ist.utl.pt/mailman/listinfo/fenix-user
+		</a>
+</p>
+
+<br/>
+
+<strong>A.1 System Encoding</strong>
+<p>
+	To set the system encoding to ISO-8859-15, edit the file: <tt class="command">
+	/etc/sysconfig/i18n</tt> so as to resemble the following:
+	<br /><br />
+	<table bgcolor="#DCDCDC" width="70%" class="screen" align="center"><tr><td>
+	<tt class="command">
+		LANG="en_US.iso885915"<br />
+		SUPPORTED="en_US.iso885915:en_US:en:pt_PT@euro:pt_PT:pt"<br />
+		SYSFONT="lat0-sun16"<br />
+		SYSFONTACM="iso15"<br />
+	</tt></td></tr></table>
+	<table bgcolor="#DCDCDC" width="70%" class="note" align="center">
+	<tr><th ALIGN="LEFT" VALIGN="CENTER"><b>Note:</b></th></tr>
+	<tr><td></td><td ALIGN="LEFT" VALIGN="TOP">
+	<p>
+		This alteration may require the installation of extra packages. Pay attention
+		to the boot messages.
+	</p>
+	</td></tr></table>
+</p>
+
+<strong>A.2 Java Virtual Machine</strong>
+<p>
+	Installing the Java Standard Development Kit is straightforward, simply execute the
+	downloaded package from Suns website. Once the package is installed the
+	<tt class="command">JAVA_HOME</tt> environment variable must be defined. To do so,
+	create a symbolic link pointing to the directory where Java was installed:
+	<br /><br />
+	<table bgcolor="#DCDCDC" width="70%" class="screen" align="center"><tr><td>
+	<tt class="command">
+		ln -s /usr/java/j2sdk1.4.X_xx /usr/java/java
+	</tt></td></tr></table>
+	<br />
+	Next, to define and export the <tt class="command">JAVA_HOME</tt> environment
+	variable, just add the following lines the file <tt class="command">/etc/profile</tt>:
+	<br /><br />
+	<table bgcolor="#DCDCDC" width="70%" class="screen" align="center"><tr><td>
+	<tt class="command">
+		export JAVA_HOME=/usr/java/java<br />
+		export PATH=${PATH}:${JAVA_HOME}/bin
+	</tt></td></tr></table>
+	<br />
+	Finally, indicate the amount of memory used by the Java Virtual Machine, defining
+	the <tt class="command">JAVA_OPTS</tt> environment variable in the
+	file <tt class="command">/etc/profile</tt>:
+	<br /><br />
+	<table bgcolor="#DCDCDC" width="70%" class="screen" align="center"><tr><td>
+	<tt class="command">
+		export JAVA_OPTS="-Xms256m -Xmx768m -server"
+	</tt></td></tr></table>
+	<br />
+	The -Xms option indicates the initial amount of memory allocated when the Java Virtual
+	Machine starts. The -Xmx option indicates the maximum amount of memory available to
+	the Java Virtual Machine. These values should be defined taking into consideration the
+	amount of physical memory of the underlying hardware. The values provided above are for
+	a development machine with 1GB of RAM. For a production server, both the -Xms option and
+	the -Xmx option should be set to the same value. This will cause a slower startup of Java
+	processes, but will minimize memory management overhead after startup.
+</p>
+
+<strong>A.3 Apache Ant</strong>
+<p>
+	To install Ant just download the latest archive from Ants website. Unzip the archive and
+	create a symbolic link as follows:
+	<br /><br />
+	<table bgcolor="#DCDCDC" width="70%" class="screen" align="center"><tr><td>
+	<tt class="command">
+		ln -s /usr/local/ant-1.6.X /usr/local/ant
+	</tt></td></tr></table>
+	<br />
+	Next, define and export the <tt class="command">ANT_HOME</tt> environment
+	variable. Just add the following lines the file <tt class="command">/etc/profile</tt>:
+	<br /><br />
+	<table bgcolor="#DCDCDC" width="70%" class="screen" align="center"><tr><td>
+	<tt class="command">
+		export ANT_HOME=/usr/local/ant<br />
+		export PATH=${PATH}:${ANT_HOME}/bin
+	</tt></td></tr></table>
+	<br />
+	Finally, indicate the amount of memory used by the ANT, defining the
+	<tt class="command">ANT_OPTS</tt> environment variable in the file
+	<tt class="command">/etc/profile</tt>:
+	<br /><br />
+	<table bgcolor="#DCDCDC" width="70%" class="screen" align="center"><tr><td>
+	<tt class="command">
+		export ANT_OPTS="-Xmx512m"
+	</tt></td></tr></table>
+	<br />
+	The -Xmx option indicates the maximum amount of memory available when running Ant
+	tasks. The -Xms option may also be defined. These values should be defined taking
+	into consideration the amount of physical memory of the underlying hardware, and
+	the amount of memory required to run the tasks. Setting these values too high
+	might be an unnecessary waste of system resources.
+</p>
+
+<strong>A.4 Database</strong>
+<p>
+	To setup the MySQL database download the necessary RPM packages from MySQLs
+	website and install them using the <tt class="command">rpm -ivh</tt> command. To
+	enable InnoDB tables (this will permit transactional support for applications)
+	and optimize the database for performance place the following content in the
+	<tt class="command">/etc/my.cnf</tt> file:
+	<br /><br />
+	<table bgcolor="#DCDCDC" width="70%" class="screen" align="center"><tr><td>
+	<tt class="command">
+		[client]<br />
+		port            = 3306<br />
+		socket          = /var/lib/mysql/mysql.sock<br />
+		<br />
+		[mysqld]<br />
+		port            = 3306<br />
+		datadir			= /var/lib/mysql<br />
+		socket          = /var/lib/mysql/mysql.sock<br />
+		skip-locking<br />
+		set-variable    = max_connections=500<br />
+		set-variable    = key_buffer=16M<br />
+		set-variable    = max_allowed_packet=11M<br />
+		set-variable    = table_cache=64<br />
+		set-variable    = sort_buffer=512K<br />
+		set-variable    = net_buffer_length=8K<br />
+		set-variable    = myisam_sort_buffer_size=8M<br />
+		log-bin<br />
+		server-id       = 4<br />
+		max_binlog_cache_size    = 4G<br />
+		#tmpdir         = /tmp/<br />
+		log-update      = /var/log/mysql/db-apl-log-update<br />
+		innodb_data_file_path = ibdata1:400M:autoextend<br />
+		innodb_data_home_dir = /var/lib/mysql/<br />
+		innodb_log_group_home_dir = /var/lib/mysql/<br />
+		innodb_log_arch_dir = /var/lib/mysql/<br />
+		set-variable = innodb_mirrored_log_groups=1<br />
+		set-variable = innodb_log_files_in_group=3<br />
+		set-variable = innodb_log_file_size=5M<br />
+		set-variable = innodb_log_buffer_size=8M<br />
+		innodb_flush_log_at_trx_commit=1<br />
+		innodb_log_archive=0<br />
+		set-variable = innodb_buffer_pool_size=16M<br />
+		set-variable = innodb_additional_mem_pool_size=2M<br />
+		set-variable = innodb_file_io_threads=4<br />
+		set-variable = innodb_lock_wait_timeout=50<br />
+		<br />
+		[mysqldump]<br />
+		quick<br />
+		set-variable    = max_allowed_packet=16M<br />
+		<br />
+		[mysql.server]<br />
+		user=mysql<br />
+		basedir=/var/lib<br />
+		set-variable = max_heap_table_size=512M<br />
+		<br />
+		[safe_mysqld]<br />
+		err-log=/var/log/mysqld.log<br />
+		pid-file=/var/run/mysqld/mysqld.pid<br />
+		<br />
+		[mysql]<br />
+		no-auto-rehash<br />
+		<br />
+		[isamchk]<br />
+		set-variable    = key_buffer=20M<br />
+		set-variable    = sort_buffer=20M<br />
+		set-variable    = read_buffer=2M<br />
+		set-variable    = write_buffer=2M<br />
+		<br />
+		[myisamchk]<br />
+		set-variable    = key_buffer=20M<br />
+		set-variable    = sort_buffer=20M<br />
+		set-variable    = read_buffer=2M<br />
+		set-variable    = write_buffer=2M<br />
+		<br />
+		[mysqlhotcopy]<br />
+		interactive-timeout<br />
+		socket=/var/lib/mysql/mysql.sock<br />
+		datadir=/var/lib/mysql<br />
+	</tt></td></tr></table>
+	<br />
+	The log-bin option is only necessary for production servers. If the machine
+	being installed is not a production server, then we recommend commenting this
+	option to save disk space.
+	<br /><br />
+	To start MySQL automatically when the system boots, type
+	<tt class="command">ntsysv</tt> as root and select <tt class="command">mysqld</tt>.<br />
+	<br />
+	Finally create a user for the Fénix application, an example of how to do so follows:
+	<br /><br />
+	<table bgcolor="#DCDCDC" width="70%" class="screen" align="center"><tr><td>
+	<tt class="command">
+		mysql -Dmysql -uroot<br />
+		insert into user values ('%', 'fenix', Password('xXxXxXxXxX'),<br />&nbsp;&nbsp;
+			'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N');<br />
+		insert into db values ('%', 'fenix', 'fenix',<br />&nbsp;&nbsp;
+			'Y', 'Y', 'Y', 'Y', 'N', 'N', 'N', 'N', 'N', 'N');<br />
+		quit<br />
+		mysqladmin -uroot flush-hosts flush-privileges
+	</tt></td></tr></table>
+	<br />
+</p>
+
+<strong>A.5 Application Server</strong>
+<p>
+	To install the JBoss application server simply download the archive from JBosss website
+	and unzip the archive. Create a symbolic link as follows:
+	<br /><br />
+	<table bgcolor="#DCDCDC" width="70%" class="screen" align="center"><tr><td>
+	<tt class="command">
+		ls -s /usr/local/jboss-3.2.X /usr/local/jboss
+	</tt></td></tr></table>
+	<br />
+	And define and export the <tt class="command">JBOSS_HOME</tt> environment
+	variable by adding the following lines the file <tt class="command">/etc/profile</tt>:
+	<br /><br />
+	<table bgcolor="#DCDCDC" width="70%" class="screen" align="center"><tr><td>
+	<tt class="command">
+		export JBOSS_HOME=/usr/local/jboss<br />
+		export PATH=${PATH}:${JBOSS_HOME}/bin
+	</tt></td></tr></table>
+	<br />
+	Next "create" a service installation script to start and stop the jboss server. On
+	Fedora/Redhat simply create a symbolic link as follows:
+	<br /><br />
+	<table bgcolor="#DCDCDC" width="70%" class="screen" align="center"><tr><td>
+	<tt class="command">
+		ln -s /usr/local/jboss/bin/jboss_init_redhat.sh /etc/init.d/jboss
+	</tt></td></tr></table>
+	<br />
+</p>
+
+<strong>A.6 Servlet Container</strong>
+<p>
+</p>
+
+
+</body>
+</html>

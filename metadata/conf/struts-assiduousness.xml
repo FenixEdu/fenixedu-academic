@@ -21,6 +21,20 @@
 
   </form-beans>
 
+    <!-- ========== Global Exception Definitions ============================== -->
+	<global-exceptions>
+        <exception
+			type="java.lang.Exception"
+			key="error.Exception"
+            handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+			/>
+		<exception
+			type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+			key="error.NotAuthorized"
+			handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+			/>
+	</global-exceptions>
+
   <!-- ========== Global Forward Definitions ============================== -->
   <global-forwards type="org.apache.struts.action.ActionForward">
 	<forward name="logoff" path="/logoff.do" contextRelative="true"/>

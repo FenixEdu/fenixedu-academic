@@ -57,6 +57,10 @@ public class ReadFinalDegreeWorkProposalSubmisionPeriod implements IService {
 							scheduleing.getStartOfProposalPeriod());
 						infoScheduleing.setEndOfProposalPeriod(
 							scheduleing.getEndOfProposalPeriod());
+						infoScheduleing.setStartOfCandidacyPeriod(
+							scheduleing.getStartOfCandidacyPeriod());
+						infoScheduleing.setEndOfCandidacyPeriod(
+							scheduleing.getEndOfCandidacyPeriod());
 					}
 				}
 			} catch (ExcepcaoPersistencia e) {

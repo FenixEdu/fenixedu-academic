@@ -9,6 +9,7 @@ import java.util.List;
 import Dominio.ICursoExecucao;
 import Dominio.IDomainObject;
 import Dominio.ITeacher;
+import Util.FinalDegreeWorkProposalStatus;
 import Util.TipoCurso;
 
 /**
@@ -113,5 +114,9 @@ public interface IProposal extends IDomainObject
 	public Integer getProposalNumber();
 
 	public void setProposalNumber(Integer proposalNumber);
+
+	public FinalDegreeWorkProposalStatus getStatus();
+
+	public void setStatus(FinalDegreeWorkProposalStatus status);
 
 }

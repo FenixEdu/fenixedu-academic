@@ -29,6 +29,7 @@ public class FenixRequestProcessorWithTiles extends TilesRequestProcessor {
 		HttpServletResponse response) {
 		String uri = request.getRequestURI();
 		if (((uri.indexOf("login.do") == -1)
+			&& (uri.indexOf("showErrorPage.do") == -1)
 			&& (uri.indexOf("/publico/index.do") == -1))) {
 			if (request.getRemoteUser() == null) {
 				ActionErrors errors = new ActionErrors();

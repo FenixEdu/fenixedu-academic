@@ -31,4 +31,13 @@ public interface IScheduleing extends IDomainObject
    public Integer getCurrentProposalNumber();
    
    public void setCurrentProposalNumber(Integer currentProposalNumber);
+
+   public Date getStartOfCandidacyPeriod();
+
+   public void setStartOfCandidacyPeriod(Date startOfCandidacyPeriod);
+
+   public Date getEndOfCandidacyPeriod();
+
+   public void setEndOfCandidacyPeriod(Date endOfCandidacyPeriod);
+
 }

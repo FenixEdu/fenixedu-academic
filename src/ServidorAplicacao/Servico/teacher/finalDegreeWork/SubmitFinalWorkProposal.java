@@ -155,6 +155,8 @@ public class SubmitFinalWorkProposal implements IService {
 					}
 				}
 			}
+
+			proposal.setStatus(infoProposal.getStatus());
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}

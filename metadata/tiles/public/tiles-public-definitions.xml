@@ -45,5 +45,5 @@
 			<put name="body" value="" />
   		<put name="footer" value="/publico/degreeSite/footer.jsp" />
 	</definition>	
-	
+
 </tiles-definitions>

@@ -32,10 +32,7 @@
             password="${db.pass}"
             encoding="${encoding}">
 	        <fileset dir="${sql}">
-			 <include name="tables_*.sql" />
-			 <exclude name="tables_AssiduousnessASSMARCAS.sql" />
-			 <exclude name="tables_inscricoes_backup.sql" />
-			 <exclude name="tables_slide.sql" />
+	        	<include name="tables.sql" />
   			</fileset>
             <classpath>
                 <fileset dir="${lib}">

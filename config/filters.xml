@@ -648,4 +648,12 @@
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
+    <filter>
+        <name>ReadFinalDegreeWorkProposalAuthorizationFilter</name>
+        <implementationClass>
+	        ServidorAplicacao.Filtro.ReadFinalDegreeWorkProposalAuthorization
+        </implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+    </filter>
 </filterDefinitions>

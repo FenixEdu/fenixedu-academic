@@ -4,6 +4,7 @@
  */
 package DataBeans.finalDegreeWork;
 
+import Util.FinalDegreeWorkProposalStatus;
 import DataBeans.InfoObject;
 
 /**
@@ -21,6 +22,7 @@ public class FinalDegreeWorkProposalHeader extends InfoObject {
 	private String companyLink;
 	private String degreeCode;
 	private Boolean editable;
+	private FinalDegreeWorkProposalStatus status;
 
 	public FinalDegreeWorkProposalHeader() {
 		super();
@@ -30,6 +32,7 @@ public class FinalDegreeWorkProposalHeader extends InfoObject {
 	 * @return Returns the companyLink.
 	 */
 	public String getCompanyLink() {
+		if (companyLink == null) return "";
 		return companyLink;
 	}
 
@@ -44,6 +47,7 @@ public class FinalDegreeWorkProposalHeader extends InfoObject {
 	 * @return Returns the coorientatorName.
 	 */
 	public String getCoorientatorName() {
+		if (coorientatorName == null) return "";
 		return coorientatorName;
 	}
 
@@ -154,6 +158,20 @@ public class FinalDegreeWorkProposalHeader extends InfoObject {
 	 */
 	public void setProposalNumber(Integer proposalNumber) {
 		this.proposalNumber = proposalNumber;
+	}
+
+	/**
+	 * @return Returns the status.
+	 */
+	public FinalDegreeWorkProposalStatus getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status The status to set.
+	 */
+	public void setStatus(FinalDegreeWorkProposalStatus status) {
+		this.status = status;
 	}
 
 }

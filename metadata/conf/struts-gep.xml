@@ -19,21 +19,21 @@
                 <form-property name="executionCourseId" type="java.lang.Integer" />
         </form-bean>
     </form-beans>
+
     <!-- ========== Global Exception Definitions ============================== -->
-    <global-exceptions>
-        <exception type="ServidorAplicacao.NotAuthorizedException" 
-            key="ServidorAplicacao.NotAuthorizedException" path="/naoAutorizado.do" 
-            handler="ServidorApresentacao.config.FenixExceptionHandler"/>
-        <exception type="ServidorAplicacao.NotExecutedException" 
-            key="ServidorAplicacao.NotExecutedException" path="/naoExecutado.do" 
-            handler="ServidorApresentacao.config.FenixExceptionHandler" />
-        <exception type="ServidorAplicacao.Servico.ExcepcaoInexistente" 
-            key="ServidorAplicacao.Servico.ExcepcaoInexistente" path="/naoExistente.do" 
-            handler="ServidorApresentacao.config.FenixExceptionHandler" />
-        <exception type="ServidorAplicacao.FenixServiceException" 
-            key="ServidorAplicacao.FenixServiceException" path="/naoExecutado.do" 
-            handler="ServidorApresentacao.config.FenixExceptionHandler" />
-    </global-exceptions>
+	<global-exceptions>
+        <exception
+			type="java.lang.Exception"
+			key="error.Exception"
+            handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+			/>
+		<exception
+			type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+			key="error.NotAuthorized"
+			handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+			/>
+	</global-exceptions>
+
     <!-- ========== Global Forward Definitions =============================== -->
     <global-forwards type="org.apache.struts.action.ActionForward">
     </global-forwards>

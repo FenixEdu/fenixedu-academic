@@ -336,4 +336,14 @@ public class CursoExecucaoOJB extends ObjectFenixOJB implements ICursoExecucaoPe
 		criteria.addEqualTo("executionYear.state", new PeriodState(PeriodState.CURRENT));
 		return queryList(CursoExecucao.class, criteria);
 	}
+    public List readByExecutionYearOIDAndDegreeType(Integer executionYearOID, TipoCurso degreeType)
+    	throws ExcepcaoPersistencia
+	{
+    	Criteria criteria = new Criteria();
+    	criteria.addEqualTo("executionYear.idInternal", executionYearOID);
+    	criteria.addEqualTo("curricularPlan.degree.tipoCurso", degreeType);
+    	criteria.addOrderBy("keyCurricularPlan", true);
+    	return queryList(CursoExecucao.class, criteria);
+	}
+
 }

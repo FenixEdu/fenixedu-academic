@@ -10,6 +10,7 @@ import DataBeans.InfoDepartment;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoObject;
 import DataBeans.InfoTeacher;
+import Util.FinalDegreeWorkProposalStatus;
 import Util.TipoCurso;
 
 /**
@@ -44,6 +45,7 @@ public class InfoProposal extends InfoObject {
 	private String companyName;
 	private String companyAdress;
 	private List branches;
+	private FinalDegreeWorkProposalStatus status;
 
 	/* Construtores */
 	public InfoProposal() {
@@ -459,6 +461,20 @@ public class InfoProposal extends InfoObject {
 	 */
 	public void setOrientatorsDepartment(InfoDepartment orientatorsDepartment) {
 		this.orientatorsDepartment = orientatorsDepartment;
+	}
+
+	/**
+	 * @return Returns the status.
+	 */
+	public FinalDegreeWorkProposalStatus getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status The status to set.
+	 */
+	public void setStatus(FinalDegreeWorkProposalStatus status) {
+		this.status = status;
 	}
 
 }

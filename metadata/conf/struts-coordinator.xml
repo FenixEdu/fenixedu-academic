@@ -173,28 +173,71 @@
 			<form-property name="startOfProposalPeriodHour" type="java.lang.String"/>
 			<form-property name="endOfProposalPeriodDate" type="java.lang.String"/>
 			<form-property name="endOfProposalPeriodHour" type="java.lang.String"/>
-		</form-bean>			      
-	
+			<form-property name="selectedProposals" type="java.lang.String[]"/>
+		</form-bean>
+
+		<form-bean name="finalDegreeWorkCandidacyPeriod" 
+				   type="org.apache.struts.validator.DynaValidatorForm" 
+				   dynamic="true">
+			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="startOfCandidacyPeriodDate" type="java.lang.String"/>
+			<form-property name="startOfCandidacyPeriodHour" type="java.lang.String"/>
+			<form-property name="endOfCandidacyPeriodDate" type="java.lang.String"/>
+			<form-property name="endOfCandidacyPeriodHour" type="java.lang.String"/>
+		</form-bean>
+
+		<!-- SUBMIT FINAL WORK PROPOSAL -->
+		<form-bean name="finalDegreeWorkProposal"
+				   type="org.apache.struts.validator.DynaValidatorForm" 
+				   dynamic="true"
+				   >
+			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="degree" type="java.lang.String"/>
+			<form-property name="idInternal" type="java.lang.String"/>
+			<form-property name="title" type="java.lang.String"/>
+			<form-property name="orientatorOID" type="java.lang.String"/>
+			<form-property name="coorientatorOID" type="java.lang.String"/>
+			<form-property name="responsibleCreditsPercentage" type="java.lang.String"/>
+			<form-property name="coResponsibleCreditsPercentage" type="java.lang.String"/>
+			<form-property name="framing" type="java.lang.String"/>
+			<form-property name="objectives" type="java.lang.String"/>
+			<form-property name="description" type="java.lang.String"/>
+			<form-property name="requirements" type="java.lang.String"/>
+			<form-property name="deliverable" type="java.lang.String"/>
+			<form-property name="url" type="java.lang.String"/>
+			<form-property name="branchList" type="java.lang.String[]" size="0"/>
+			<form-property name="minimumNumberOfGroupElements" type="java.lang.String"/>
+			<form-property name="maximumNumberOfGroupElements" type="java.lang.String"/>
+			<form-property name="degreeType" type="java.lang.String"/>
+			<form-property name="observations" type="java.lang.String"/>
+			<form-property name="location" type="java.lang.String"/>
+			<form-property name="companyName" type="java.lang.String"/>
+			<form-property name="companyAdress" type="java.lang.String"/>
+			<form-property name="companionName" type="java.lang.String" />
+			<form-property name="companionMail" type="java.lang.String" />			
+			<form-property name="companionPhone" type="java.lang.String" />				
+			<form-property name="responsableTeacherName" type="java.lang.String"/>
+			<form-property name="responsableTeacherNumber" type="java.lang.String"/>
+			<form-property name="coResponsableTeacherName" type="java.lang.String"/>
+			<form-property name="coResponsableTeacherNumber" type="java.lang.String"/>
+			<form-property name="alteredField" type="java.lang.String" />
+			<form-property name="status" type="java.lang.String" />
+		</form-bean>
+
     </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
 	<global-exceptions>
-		<exception type="java.lang.Exception"
-			       key="java.lang.Exception"
-			       path="/naoExecutado.do"
-			       handler="ServidorApresentacao.config.FenixExceptionHandler"/>
-		<exception type="ServidorAplicacao.NotAuthorizedException"
-			       key="ServidorAplicacao.NotAuthorizedException"
-			       path="/naoAutorizado.do"
-			       />
-		<exception type="ServidorAplicacao.FenixServiceException"
-		  	       key="ServidorAplicacao.FenixServiceException"
-		  	       path="/naoExecutado.do"
-		  	       handler="ServidorApresentacao.config.FenixExceptionHandler" />
-		<exception type="ServidorAplicacao.Servico.ExcepcaoInexistente"
-			       key="ServidorAplicacao.Servico.ExcepcaoInexistente"
-			       path="/naoExistente.do"
-			       handler="ServidorApresentacao.config.FenixExceptionHandler" />
+        <exception
+			type="java.lang.Exception"
+			key="error.Exception"
+            handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+			/>
+		<exception
+			type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+			key="error.NotAuthorized"
+			handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+			/>
 	</global-exceptions>
     
     <!-- ========== Global Forward Definitions =============================== -->
@@ -607,6 +650,29 @@
 			>
 		<forward name="show-final-degree-work-list" path="df.page.showFinalDegreeWorkList"/>
 		<forward name="show-final-degree-work-proposal" path="df.page.showFinalDegreeWorkProposal"/>
+	</action>
+
+	<action path="/setFinalDegreeWorkCandidacyPeriod"
+			type="ServidorApresentacao.Action.coordinator.ManageFinalDegreeWorkDispatchAction"
+			input="/manageFinalDegreeWork.do?method=prepare&amp;page=0"
+			name="finalDegreeWorkCandidacyPeriod"
+			attribute="finalDegreeWorkCandidacyPeriod"
+			parameter="method"
+			scope="request"
+			validate="true"
+			>
+		<forward name="Sucess" path="/manageFinalDegreeWork.do?method=prepare&amp;page=0"/>
+	</action>
+
+	<action path="/finalDegreeWorkProposal"
+	    	type="ServidorApresentacao.Action.coordinator.ManageFinalDegreeWorkDispatchAction"
+	    	parameter="method"
+	    	input="/finalDegreeWorkProposal.do?method=prepareFinalWorkInformation&amp;page=0"
+	    	name="finalDegreeWorkProposal" 
+	    	scope="request" 
+	    	validate="true">
+				<forward name="show-final-degree-work-proposal" path="df.page.showFinalDegreeWorkProposal"/>
+				<forward name="show-final-degree-work-list" path="/manageFinalDegreeWork.do?method=prepare&amp;page=0"/>
 	</action>
 
     </action-mappings>

@@ -4,6 +4,7 @@
  */
 package Dominio.finalDegreeWork;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import Dominio.DomainObject;
@@ -17,8 +18,14 @@ public class Scheduleing extends DomainObject implements IScheduleing {
 
 	private Integer keyExecutionDegree;
 	private ICursoExecucao executionDegree;
-	private Date startOfProposalPeriod;
-	private Date endOfProposalPeriod;
+	private Date startOfProposalPeriodDate;
+	private Date startOfProposalPeriodTime;
+	private Date endOfProposalPeriodDate;
+	private Date endOfProposalPeriodTime;
+	private Date startOfCandidacyPeriodDate;
+	private Date startOfCandidacyPeriodTime;
+	private Date endOfCandidacyPeriodDate;
+	private Date endOfCandidacyPeriodTime;
 	private Integer currentProposalNumber;
 
 	/* Construtores */
@@ -47,82 +54,282 @@ public class Scheduleing extends DomainObject implements IScheduleing {
 		return result;
 	}
 
-	/**
-	 * @return Returns the executionDegree.
-	 */
-	public ICursoExecucao getExecutionDegree()
-	{
-		return executionDegree;
-	}
+    /**
+     * @return Returns the currentProposalNumber.
+     */
+    public Integer getCurrentProposalNumber()
+    {
+        return currentProposalNumber;
+    }
+    /**
+     * @param currentProposalNumber The currentProposalNumber to set.
+     */
+    public void setCurrentProposalNumber(Integer currentProposalNumber)
+    {
+        this.currentProposalNumber = currentProposalNumber;
+    }
+    /**
+     * @return Returns the endOfCandidacyPeriodDate.
+     */
+    public Date getEndOfCandidacyPeriodDate()
+    {
+        return endOfCandidacyPeriodDate;
+    }
+    /**
+     * @param endOfCandidacyPeriodDate The endOfCandidacyPeriodDate to set.
+     */
+    public void setEndOfCandidacyPeriodDate(Date endOfCandidacyPeriodDate)
+    {
+        this.endOfCandidacyPeriodDate = endOfCandidacyPeriodDate;
+    }
+    /**
+     * @return Returns the endOfCandidacyPeriodTime.
+     */
+    public Date getEndOfCandidacyPeriodTime()
+    {
+        return endOfCandidacyPeriodTime;
+    }
+    /**
+     * @param endOfCandidacyPeriodTime The endOfCandidacyPeriodTime to set.
+     */
+    public void setEndOfCandidacyPeriodTime(Date endOfCandidacyPeriodTime)
+    {
+        this.endOfCandidacyPeriodTime = endOfCandidacyPeriodTime;
+    }
+    /**
+     * @return Returns the endOfProposalPeriodDate.
+     */
+    public Date getEndOfProposalPeriodDate()
+    {
+        return endOfProposalPeriodDate;
+    }
+    /**
+     * @param endOfProposalPeriodDate The endOfProposalPeriodDate to set.
+     */
+    public void setEndOfProposalPeriodDate(Date endOfProposalPeriodDate)
+    {
+        this.endOfProposalPeriodDate = endOfProposalPeriodDate;
+    }
+    /**
+     * @return Returns the endOfProposalPeriodTime.
+     */
+    public Date getEndOfProposalPeriodTime()
+    {
+        return endOfProposalPeriodTime;
+    }
+    /**
+     * @param endOfProposalPeriodTime The endOfProposalPeriodTime to set.
+     */
+    public void setEndOfProposalPeriodTime(Date endOfProposalPeriodTime)
+    {
+        this.endOfProposalPeriodTime = endOfProposalPeriodTime;
+    }
+    /**
+     * @return Returns the executionDegree.
+     */
+    public ICursoExecucao getExecutionDegree()
+    {
+        return executionDegree;
+    }
+    /**
+     * @param executionDegree The executionDegree to set.
+     */
+    public void setExecutionDegree(ICursoExecucao executionDegree)
+    {
+        this.executionDegree = executionDegree;
+    }
+    /**
+     * @return Returns the keyExecutionDegree.
+     */
+    public Integer getKeyExecutionDegree()
+    {
+        return keyExecutionDegree;
+    }
+    /**
+     * @param keyExecutionDegree The keyExecutionDegree to set.
+     */
+    public void setKeyExecutionDegree(Integer keyExecutionDegree)
+    {
+        this.keyExecutionDegree = keyExecutionDegree;
+    }
+    /**
+     * @return Returns the startOfCandidacyPeriodDate.
+     */
+    public Date getStartOfCandidacyPeriodDate()
+    {
+        return startOfCandidacyPeriodDate;
+    }
+    /**
+     * @param startOfCandidacyPeriodDate The startOfCandidacyPeriodDate to set.
+     */
+    public void setStartOfCandidacyPeriodDate(Date startOfCandidacyPeriodDate)
+    {
+        this.startOfCandidacyPeriodDate = startOfCandidacyPeriodDate;
+    }
+    /**
+     * @return Returns the startOfCandidacyPeriodTime.
+     */
+    public Date getStartOfCandidacyPeriodTime()
+    {
+        return startOfCandidacyPeriodTime;
+    }
+    /**
+     * @param startOfCandidacyPeriodTime The startOfCandidacyPeriodTime to set.
+     */
+    public void setStartOfCandidacyPeriodTime(Date startOfCandidacyPeriodTime)
+    {
+        this.startOfCandidacyPeriodTime = startOfCandidacyPeriodTime;
+    }
+    /**
+     * @return Returns the startOfProposalPeriodDate.
+     */
+    public Date getStartOfProposalPeriodDate()
+    {
+        return startOfProposalPeriodDate;
+    }
+    /**
+     * @param startOfProposalPeriodDate The startOfProposalPeriodDate to set.
+     */
+    public void setStartOfProposalPeriodDate(Date startOfProposalPeriodDate)
+    {
+        this.startOfProposalPeriodDate = startOfProposalPeriodDate;
+    }
+    /**
+     * @return Returns the startOfProposalPeriodTime.
+     */
+    public Date getStartOfProposalPeriodTime()
+    {
+        return startOfProposalPeriodTime;
+    }
+    /**
+     * @param startOfProposalPeriodTime The startOfProposalPeriodTime to set.
+     */
+    public void setStartOfProposalPeriodTime(Date startOfProposalPeriodTime)
+    {
+        this.startOfProposalPeriodTime = startOfProposalPeriodTime;
+    }
 
-	/**
-	 * @param executionDegree The executionDegree to set.
-	 */
-	public void setExecutionDegree(ICursoExecucao executionDegree)
-	{
-		this.executionDegree = executionDegree;
-	}
+    /* (non-Javadoc)
+     * @see Dominio.finalDegreeWork.IScheduleing#getEndOfProposalPeriod()
+     */
+    public Date getEndOfProposalPeriod()
+    {
+        if (this.getEndOfProposalPeriodDate() != null && this.getEndOfProposalPeriodTime() != null)
+        {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(this.getEndOfProposalPeriodDate().getTime());
+            Calendar calendarTime = Calendar.getInstance();
+            calendarTime.setTimeInMillis(this.getEndOfProposalPeriodTime().getTime());
+            calendar.set(Calendar.HOUR_OF_DAY, calendarTime.get(Calendar.HOUR_OF_DAY));
+            calendar.set(Calendar.MINUTE, calendarTime.get(Calendar.MINUTE));
+            calendar.set(Calendar.SECOND, calendarTime.get(Calendar.SECOND));
+            return calendar.getTime();
+        }
+        else
+        {
+            return null;
+        }
+    }
 
-	/**
-	 * @return Returns the keyExecutionDegree.
-	 */
-	public Integer getKeyExecutionDegree()
-	{
-		return keyExecutionDegree;
-	}
+    /* (non-Javadoc)
+     * @see Dominio.finalDegreeWork.IScheduleing#setEndOfProposalPeriod(java.util.Date)
+     */
+    public void setEndOfProposalPeriod(Date endOfProposalPeriod)
+    {
+        this.setEndOfProposalPeriodDate(endOfProposalPeriod);
+        this.setEndOfProposalPeriodTime(endOfProposalPeriod);
+    }
 
-	/**
-	 * @param keyExecutionDegree The keyExecutionDegree to set.
-	 */
-	public void setKeyExecutionDegree(Integer keyExecutionDegree)
-	{
-		this.keyExecutionDegree = keyExecutionDegree;
-	}
+    /* (non-Javadoc)
+     * @see Dominio.finalDegreeWork.IScheduleing#getStartOfProposalPeriod()
+     */
+    public Date getStartOfProposalPeriod()
+    {
+        if (this.getStartOfProposalPeriodDate() != null && this.getStartOfProposalPeriodTime() != null)
+        {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(this.getStartOfProposalPeriodDate().getTime());
+            Calendar calendarTime = Calendar.getInstance();
+            calendarTime.setTimeInMillis(this.getStartOfProposalPeriodTime().getTime());
+            calendar.set(Calendar.HOUR_OF_DAY, calendarTime.get(Calendar.HOUR_OF_DAY));
+            calendar.set(Calendar.MINUTE, calendarTime.get(Calendar.MINUTE));
+            calendar.set(Calendar.SECOND, calendarTime.get(Calendar.SECOND));
+            return calendar.getTime();
+        }
+        else
+        {
+            return null;
+        }
+    }
 
-	/**
-	 * @return Returns the endOfProposalPeriod.
-	 */
-	public Date getEndOfProposalPeriod()
-	{
-		return endOfProposalPeriod;
-	}
+    /* (non-Javadoc)
+     * @see Dominio.finalDegreeWork.IScheduleing#setStartOfProposalPeriod(java.util.Date)
+     */
+    public void setStartOfProposalPeriod(Date startOfProposalPeriod)
+    {
+        this.setStartOfProposalPeriodDate(startOfProposalPeriod);
+        this.setStartOfProposalPeriodTime(startOfProposalPeriod);
+    }
 
-	/**
-	 * @param endOfProposalPeriod The endOfProposalPeriod to set.
-	 */
-	public void setEndOfProposalPeriod(Date endOfProposalPeriod)
-	{
-		this.endOfProposalPeriod = endOfProposalPeriod;
-	}
+    /* (non-Javadoc)
+     * @see Dominio.finalDegreeWork.IScheduleing#getStartOfCandidacyPeriod()
+     */
+    public Date getStartOfCandidacyPeriod()
+    {
+        if (this.getStartOfCandidacyPeriodDate() != null && this.getStartOfCandidacyPeriodTime() != null)
+        {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(this.getStartOfCandidacyPeriodDate().getTime());
+            Calendar calendarTime = Calendar.getInstance();
+            calendarTime.setTimeInMillis(this.getStartOfCandidacyPeriodTime().getTime());
+            calendar.set(Calendar.HOUR_OF_DAY, calendarTime.get(Calendar.HOUR_OF_DAY));
+            calendar.set(Calendar.MINUTE, calendarTime.get(Calendar.MINUTE));
+            calendar.set(Calendar.SECOND, calendarTime.get(Calendar.SECOND));
+            return calendar.getTime();
+        }
+        else
+        {
+            return null;
+        }
+    }
 
-	/**
-	 * @return Returns the startOfProposalPeriod.
-	 */
-	public Date getStartOfProposalPeriod()
-	{
-		return startOfProposalPeriod;
-	}
+    /* (non-Javadoc)
+     * @see Dominio.finalDegreeWork.IScheduleing#setStartOfCandidacyPeriod(java.util.Date)
+     */
+    public void setStartOfCandidacyPeriod(Date startOfCandidacyPeriod)
+    {
+        this.setStartOfCandidacyPeriodDate(startOfCandidacyPeriod);
+        this.setStartOfCandidacyPeriodTime(startOfCandidacyPeriod);
+    }
 
-	/**
-	 * @param startOfProposalPeriod The startOfProposalPeriod to set.
-	 */
-	public void setStartOfProposalPeriod(Date startOfProposalPeriod)
-	{
-		this.startOfProposalPeriod = startOfProposalPeriod;
-	}
+    /* (non-Javadoc)
+     * @see Dominio.finalDegreeWork.IScheduleing#getEndOfCandidacyPeriod()
+     */
+    public Date getEndOfCandidacyPeriod()
+    {
+        if (this.getEndOfCandidacyPeriodDate() != null && this.getEndOfCandidacyPeriodTime() != null)
+        {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(this.getEndOfCandidacyPeriodDate().getTime());
+            Calendar calendarTime = Calendar.getInstance();
+            calendarTime.setTimeInMillis(this.getEndOfCandidacyPeriodTime().getTime());
+            calendar.set(Calendar.HOUR_OF_DAY, calendarTime.get(Calendar.HOUR_OF_DAY));
+            calendar.set(Calendar.MINUTE, calendarTime.get(Calendar.MINUTE));
+            calendar.set(Calendar.SECOND, calendarTime.get(Calendar.SECOND));
+            return calendar.getTime();
+        }
+        else
+        {
+            return null;
+        }
+    }
 
-	/**
-	 * @return Returns the currentProposalNumber.
-	 */
-	public Integer getCurrentProposalNumber() {
-		return currentProposalNumber;
-	}
-
-	/**
-	 * @param currentProposalNumber The currentProposalNumber to set.
-	 */
-	public void setCurrentProposalNumber(Integer currentProposalNumber) {
-		this.currentProposalNumber = currentProposalNumber;
-	}
-
+    /* (non-Javadoc)
+     * @see Dominio.finalDegreeWork.IScheduleing#setEndOfCandidacyPeriod(java.util.Date)
+     */
+    public void setEndOfCandidacyPeriod(Date endOfCandidacyPeriod)
+    {
+        this.setEndOfCandidacyPeriodDate(endOfCandidacyPeriod);
+        this.setEndOfCandidacyPeriodTime(endOfCandidacyPeriod);
+    }
 }

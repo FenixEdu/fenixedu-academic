@@ -14,6 +14,7 @@ import Dominio.finalDegreeWork.Proposal;
 import Dominio.finalDegreeWork.Scheduleing;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentFinalDegreeWork;
+import Util.FinalDegreeWorkProposalStatus;
 
 /**
  * @author Luis Cruz
@@ -44,6 +45,20 @@ public class FinalDegreeWorkOJB
 		Criteria criteriaCorientator = new Criteria();
 		criteriaCorientator.addEqualTo("coorientator.idInternal", teacherOID);
 		criteria.addOrCriteria(criteriaCorientator);
+		return queryList(Proposal.class, criteria);
+	}
+
+	public List readAprovedFinalDegreeWorkProposals(Integer executionDegreeOID) throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("executionDegree.idInternal", executionDegreeOID);
+		criteria.addEqualTo("status", FinalDegreeWorkProposalStatus.APPROVED_STATUS);
+		return queryList(Proposal.class, criteria);
+	}
+
+	public List readPublishedFinalDegreeWorkProposalsByExecutionDegree(Integer executionDegreeOID) throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("executionDegree.idInternal", executionDegreeOID);
+		criteria.addEqualTo("status", FinalDegreeWorkProposalStatus.PUBLISHED_STATUS);
 		return queryList(Proposal.class, criteria);
 	}
 

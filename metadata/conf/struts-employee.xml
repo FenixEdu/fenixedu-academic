@@ -4,7 +4,25 @@
       "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
 <struts-config>
 
+	<data-sources/>
+
   <!-- ========== Form Bean Definitions =================================== -->
+	<form-beans type="org.apache.struts.action.ActionFormBean">
+    </form-beans>
+
+    <!-- ========== Global Exception Definitions ============================== -->
+	<global-exceptions>
+        <exception
+			type="java.lang.Exception"
+			key="error.Exception"
+            handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+			/>
+		<exception
+			type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+			key="error.NotAuthorized"
+			handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+			/>
+	</global-exceptions>
 
   <!-- ========== Global Forward Definitions ============================== -->
   <global-forwards type="org.apache.struts.action.ActionForward">
