@@ -48,7 +48,10 @@ public class DegreeInfoOJB extends ObjectFenixOJB implements IPersistentDegreeIn
 				super.lockWrite(degreeInfoToWrite);
 			} else {
 				//degreeInfo has a id internal.
-				IDegreeInfo degreeInfoFromBD = (IDegreeInfo) this.readByOID(DegreeInfo.class, degreeInfoToWrite.getIdInternal());
+				IDegreeInfo degreeInfoFromBD = new DegreeInfo();
+				degreeInfoFromBD.setIdInternal(degreeInfoToWrite.getIdInternal());
+				
+				degreeInfoFromBD = (IDegreeInfo) readByOId(degreeInfoFromBD, true);
 				if (degreeInfoFromBD == null) {
 					System.out.println("if degreeInfo isn't in database, then write it.");
 					//if degreeInfo isn't in database, then write it.

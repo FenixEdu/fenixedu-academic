@@ -13,7 +13,6 @@ import Dominio.ICursoExecucao;
 import Dominio.IDegreeInfo;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentDegreeInfo;
 import ServidorPersistente.ISuportePersistente;
@@ -77,7 +76,7 @@ public class ReadDegreeInfoByExecutionDegree implements IServico {
 			//verify if the record finded is this execution period
 			//IPersistentExecutionPeriod persistentExecutionPeriod = suportePersistente.getIPersistentExecutionPeriod();
 			//IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
-		} catch (ExcepcaoPersistencia e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			throw new FenixServiceException(e);
 		}

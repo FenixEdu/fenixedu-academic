@@ -3,7 +3,8 @@ package Dominio;
 import java.sql.Timestamp;
 
 /**
- * @author Tânia Pousão Created on 30/Out/2003
+ * @author Tânia Pousão 
+ * Created on 30/Out/2003
  */
 public class DegreeInfo extends DomainObject implements IDegreeInfo {
 	private Integer degreeKey;

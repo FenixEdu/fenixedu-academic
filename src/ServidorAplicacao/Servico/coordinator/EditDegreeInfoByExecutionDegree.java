@@ -2,7 +2,6 @@ package ServidorAplicacao.Servico.coordinator;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.Date;
 
 import DataBeans.InfoDegreeInfo;
 import Dominio.CursoExecucao;
@@ -88,6 +87,7 @@ public class EditDegreeInfoByExecutionDegree implements IServico {
 		
 			persistentDegreeInfo.lockWrite(degreeInfo);
 			
+			System.out.println("--->Escreveu: " + degreeInfo);			
 			System.out.println("--->Terminou EditDegreeInfoByExecutionDegree...");			
 		} catch (ExcepcaoPersistencia e) {
 			System.out.println("--->EXCEPCAO: Ocorreu EditDegreeInfoByExecutionDegree...");
