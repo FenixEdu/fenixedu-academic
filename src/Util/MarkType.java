@@ -23,7 +23,8 @@ public class MarkType {
 	private static final Object[] REP_MARKS = {"RE" ,"R.E." ,"REP", "re", "rep"};
 	private static final Object[] NA_MARKS = {"NA","N.A.", "na"};
 	private static final Object[] OTHER_MARKS = {"RE" ,"R.E." ,"REP" , "NA","N.A.", "AP", "ap", "re", "rep", "na"};
-	private static final Object[] TYPE20_MARKS = {"10","11","12","13","14","15","16","17","18","19","20"}; 
+	private static final Object[] TYPE20_MARKS = {"10","11","12","13","14","15","16","17","18","19","20"};
+	private static final Object[] TYPE20EVALUATION_MARKS = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
 	private static final Object[] TYPE5_MARKS = {"3" , "4", "5"};
 
 	private Integer type;
@@ -70,6 +71,12 @@ public class MarkType {
 		if (markType.equals(MarkType.TYPE5_OBJ)) return MarkType.getType5Marks();
 		return null;		
 	}
+	
+	public static Collection getMarksEvaluation(MarkType markType){
+		if (markType.equals(MarkType.TYPE20_OBJ)) return MarkType.getType20EvaluationMarks();
+		if (markType.equals(MarkType.TYPE5_OBJ)) return MarkType.getType5Marks();
+		return null;		
+	}
 
 	public static Collection getRepMarks(){
 		ArrayList repMarks = new ArrayList();
@@ -97,6 +104,16 @@ public class MarkType {
 		
 		result.addAll(Arrays.asList(MarkType.OTHER_MARKS));
 		result.addAll(Arrays.asList(MarkType.TYPE5_MARKS));
+		
+		return result;
+	}
+	
+	private static Collection getType20EvaluationMarks(){
+	    Collection result = new ArrayList();
+	    
+	    result.addAll(Arrays.asList(MarkType.NA_MARKS));
+		result.addAll(Arrays.asList(MarkType.TYPE20EVALUATION_MARKS));
+		result.addAll(Arrays.asList(MarkType.TYPE20_MARKS));
 		
 		return result;
 	}
