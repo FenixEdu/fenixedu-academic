@@ -16,7 +16,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author João Mota
  *
  */
-public class ReadActualExecutionPeriodTest extends TestCaseServicos {
+public class ReadCurrentExecutionPeriodTest extends TestCaseServicos {
 	protected ISuportePersistente sp = null;
 	private IPersistentExecutionPeriod executionPeriodDAO = null;
 	
@@ -24,7 +24,7 @@ public class ReadActualExecutionPeriodTest extends TestCaseServicos {
 	 * Constructor for SelectShiftsTest.
 	 * @param testName
 	 */
-	public ReadActualExecutionPeriodTest(String testName) {
+	public ReadCurrentExecutionPeriodTest(String testName) {
 		super(testName);
 	}
 	public static void main(java.lang.String[] args) {
@@ -32,7 +32,7 @@ public class ReadActualExecutionPeriodTest extends TestCaseServicos {
 	}
 
 	public static Test suite() {
-		TestSuite suite = new TestSuite(ReadActualExecutionPeriodTest.class);
+		TestSuite suite = new TestSuite(ReadCurrentExecutionPeriodTest.class);
 		return suite;
 	}
 
