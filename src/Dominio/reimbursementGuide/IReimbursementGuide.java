@@ -16,7 +16,7 @@ import Dominio.IGuide;
  *13/Nov/2003
  *
  */
-public interface IReimbursementGuide extends IDomainObject{
+public interface IReimbursementGuide extends IDomainObject {
 	/**
 	 * @return
 	 */
@@ -49,4 +49,11 @@ public interface IReimbursementGuide extends IDomainObject{
 	 * @param value
 	 */
 	public void setValue(Double value);
+
+	public Integer getNumber();
+	
+	/**
+	* @param number
+	*/
+	public void setNumber(Integer number);
 }

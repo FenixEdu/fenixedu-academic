@@ -13,18 +13,13 @@ import Dominio.IGuide;
  * 
  * 
  * This class contains all the information regarding a Reimbursement Guide.
- * Value is the amount of money returned and cannot exceed the value of the Payment Guide
- * and the sum of all the Reimbursement Guides 's values cannot exceed the Payment Guide value. 
- * The employee is the employee who made the modification to the Reimbursement Guide.
- * The paymentGuide is the Guide from wich the reimbursement is made.
- * The justification is a text with the description of the reimbursement
- * The creationDate is the date in which the reimbursement guide is created
- * The modificationDate is the date in wich the reimbursement guide was last modified  
- *@author João Mota
+ * <br>
+ *@author <a href="mailto:joao.mota@ist.utl.pt">João Mota</a>
  *
  */
 public class ReimbursementGuide extends DomainObject implements IReimbursementGuide {
-	
+    
+    protected Integer number;
 	protected IGuide paymentGuide;
 	protected Double value;
 	protected String justification;
@@ -107,6 +102,20 @@ public class ReimbursementGuide extends DomainObject implements IReimbursementGu
 	 */
 	public void setKeyPaymentGuide(Integer keyPaymentGuide) {
 		this.keyPaymentGuide = keyPaymentGuide;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getNumber() {
+		return number;
+	}
+
+	/**
+	 * @param number
+	 */
+	public void setNumber(Integer number) {
+		this.number = number;
 	}
 
 }
