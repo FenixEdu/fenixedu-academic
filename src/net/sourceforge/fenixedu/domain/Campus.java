@@ -3,35 +3,23 @@ package net.sourceforge.fenixedu.domain;
 /**
  * @author Tânia Pousão Create on 10/Nov/2003
  */
-public class Campus extends DomainObject implements ICampus {
-    private String name;
+public class Campus extends Campus_Base {
 
-    public Campus() {
-        super();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public boolean equals(Object obj) {
-        boolean result = false;
+	public boolean equals(final Object obj) {
         if (obj instanceof ICampus) {
-            ICampus campus = (ICampus) obj;
-            result = getName().equals(campus.getName());
+            final ICampus campus = (ICampus) obj;
+            return getName().equals(campus.getName());
         }
-        return result;
+        return false;
     }
 
     public String toString() {
-        String result = "[INFODEGREE_INFO:";
-        result += " codigo interno= " + getIdInternal();
-        result += " name= " + getName();
-        result += "]";
-        return result;
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("[INFODEGREE_INFO: idInternal= ");
+		stringBuilder.append(getIdInternal());
+		stringBuilder.append(" name= ");
+		stringBuilder.append(getName());
+		stringBuilder.append("]");
+        return stringBuilder.toString();
     }
 }

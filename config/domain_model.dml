@@ -30,6 +30,11 @@ class net.sourceforge.fenixedu.domain.Building extends net.sourceforge.fenixedu.
 }
 
 
+class net.sourceforge.fenixedu.domain.Campus extends net.sourceforge.fenixedu.domain.DomainObject {
+	String name;
+}
+
+
 class net.sourceforge.fenixedu.domain.teacher.Category extends net.sourceforge.fenixedu.domain.DomainObject {
 	String code;
 	String longName;
