@@ -126,10 +126,10 @@ public class CaptureFilter implements Filter {
 		try {
 	        synchronized (fileWriterSynch) {
 	            FileWriter fileWriter = new FileWriter(filename, true);
-	            fileWriter.append(username);
-	            fileWriter.append(' ');
-	            fileWriter.append(requestString);
-	            fileWriter.append('\n');
+	            fileWriter.write(username);
+	            fileWriter.write(' ');
+	            fileWriter.write(requestString.toString());
+	            fileWriter.write('\n');
 	            fileWriter.close();
 	        }
 		} catch (IOException e) {
