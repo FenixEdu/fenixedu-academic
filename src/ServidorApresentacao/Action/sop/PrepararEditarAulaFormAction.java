@@ -40,7 +40,7 @@ public class PrepararEditarAulaFormAction extends FenixAction {
 	  //sessao.removeAttribute("indexAula");
 	  sessao.setAttribute("infoAula", infoAula);
 	
-	  editarAulaForm.set("diaSemana", String.valueOf(infoAula.getDiaSemana().getDiaSemana().intValue()));
+	  editarAulaForm.set("diaSemana", String.valueOf(infoAula.getWeekDay()));
 	  editarAulaForm.set("horaInicio", String.valueOf(infoAula.getInicio().get(Calendar.HOUR_OF_DAY)));
 	  editarAulaForm.set("minutosInicio", String.valueOf(infoAula.getInicio().get(Calendar.MINUTE)));
 	  editarAulaForm.set("horaFim", String.valueOf(infoAula.getFim().get(Calendar.HOUR_OF_DAY)));

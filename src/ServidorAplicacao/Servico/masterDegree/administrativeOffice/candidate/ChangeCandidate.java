@@ -23,6 +23,7 @@ import Dominio.CandidateSituation;
 import Dominio.ICandidateSituation;
 import Dominio.ICountry;
 import Dominio.IMasterDegreeCandidate;
+import Dominio.MasterDegreeCandidate;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
@@ -32,7 +33,6 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.SituationName;
-import Util.Specialization;
 import Util.State;
 
 public class ChangeCandidate implements IServico {
@@ -61,7 +61,7 @@ public class ChangeCandidate implements IServico {
     }
     
     
-    public InfoMasterDegreeCandidate run(InfoMasterDegreeCandidate oldCandidate, InfoMasterDegreeCandidate newCandidate) 
+    public InfoMasterDegreeCandidate run(Integer oldCandidateID, InfoMasterDegreeCandidate newCandidate) 
 	    throws ExcepcaoInexistente, FenixServiceException, IllegalAccessException, InvocationTargetException, ExcepcaoPersistencia {
 
         ISuportePersistente sp = null;
@@ -69,11 +69,11 @@ public class ChangeCandidate implements IServico {
 		IMasterDegreeCandidate masterDegreeCandidate = null;
         try {
 	        sp = SuportePersistenteOJB.getInstance();
-			masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate().readCandidateByNumberAndApplicationYearAndDegreeCodeAndSpecialization(
-				oldCandidate.getCandidateNumber(),
-				oldCandidate.getInfoExecutionDegree().getInfoExecutionYear().getYear(),
-				oldCandidate.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getInfoDegree().getSigla(),
-				new Specialization(oldCandidate.getSpecialization()));
+	        IMasterDegreeCandidate masterDegreeCandidateTemp = new MasterDegreeCandidate();
+	        masterDegreeCandidateTemp.setIdInternal(oldCandidateID);
+			
+			masterDegreeCandidate = (IMasterDegreeCandidate) sp.getIPersistentMasterDegreeCandidate().readByOId(masterDegreeCandidateTemp, true);
+			
 			masterDegreeCandidate.getPerson().setTipoDocumentoIdentificacao(newCandidate.getInfoPerson().getTipoDocumentoIdentificacao());
 			masterDegreeCandidate.getPerson().setNumeroDocumentoIdentificacao(newCandidate.getInfoPerson().getNumeroDocumentoIdentificacao());			
 
@@ -144,7 +144,8 @@ public class ChangeCandidate implements IServico {
 		ICandidateSituation candidateSituation = null;
 		Set situations = new HashSet();
 				
-		if (!oldCandidate.getInfoCandidateSituation().getSituation().equals(newCandidate.getInfoCandidateSituation().getSituation())){
+				
+		if (!masterDegreeCandidate.getActiveCandidateSituation().getSituation().equals(new SituationName(newCandidate.getInfoCandidateSituation().getSituation()))){
 
 			candidateSituation = new CandidateSituation();
 			

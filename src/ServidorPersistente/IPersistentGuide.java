@@ -5,6 +5,7 @@ import java.util.List;
 
 import Dominio.IGuide;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.TipoDocumentoIdentificacao;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -56,5 +57,24 @@ public interface IPersistentGuide extends IPersistentObject {
 	 */
 	public List readByYear(Integer year) throws ExcepcaoPersistencia;
 	
-	
+	/**
+	 * 
+	 * @param identificationDocumentNumber
+	 * @param identificationDocumentType
+	 * @return A list with the diferent Guides for This Person
+	 * @throws ExcepcaoPersistencia
+	 */
+	public List readByPerson(String identificationDocumentNumber, TipoDocumentoIdentificacao identificationDocumentType) throws ExcepcaoPersistencia;
+
+	/**
+	 * 
+	 * @param year
+	 * @param number
+	 * @return The Latest version for this Guide
+	 * @throws ExcepcaoPersistencia
+	 */
+	public IGuide readLatestVersion(Integer year, Integer number) throws ExcepcaoPersistencia;
+
+
+		
 }

@@ -19,7 +19,7 @@ create table ROOM (
 #----------------------------
 DROP TABLE IF EXISTS CLASS;
 CREATE TABLE CLASS (
-  ID_INTERNAL int(11) NOT NULL default '0',
+  ID_INTERNAL int(11) NOT NULL default '0' auto_increment,
   NAME varchar(50) NOT NULL default '',
   SEMESTER int(11),
   CURRICULAR_YEAR int(11) NOT NULL,

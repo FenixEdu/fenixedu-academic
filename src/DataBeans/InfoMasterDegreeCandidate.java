@@ -17,7 +17,7 @@ import java.util.List;
  */
 
 
-public class InfoMasterDegreeCandidate {
+public class InfoMasterDegreeCandidate extends InfoObject{
  
     private String majorDegree = null;
     private Integer candidateNumber = null;

@@ -114,15 +114,15 @@ public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersist
         	
 		if (masterDegreeCandidateBD1 != null &&
 				 (masterDegreeCandidateToWrite instanceof MasterDegreeCandidate) &&
-				 ((MasterDegreeCandidate) masterDegreeCandidateBD1).getInternalCode().equals(
-				 ((MasterDegreeCandidate) masterDegreeCandidateToWrite).getInternalCode())) {
+				 ((MasterDegreeCandidate) masterDegreeCandidateBD1).getIdInternal().equals(
+				 ((MasterDegreeCandidate) masterDegreeCandidateToWrite).getIdInternal())) {
 					super.lockWrite(masterDegreeCandidateToWrite);
 				   return;
 				 }
 	   if (masterDegreeCandidateBD2 != null &&
 				(masterDegreeCandidateToWrite instanceof MasterDegreeCandidate) &&
-				((MasterDegreeCandidate) masterDegreeCandidateBD2).getInternalCode().equals(
-				((MasterDegreeCandidate) masterDegreeCandidateToWrite).getInternalCode())) {
+				((MasterDegreeCandidate) masterDegreeCandidateBD2).getIdInternal().equals(
+				((MasterDegreeCandidate) masterDegreeCandidateToWrite).getIdInternal())) {
 				  super.lockWrite(masterDegreeCandidateToWrite);
 				  return;
 				}
@@ -406,5 +406,26 @@ public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersist
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}			
+    
+
+	public List readByPersonID(Integer personID) throws ExcepcaoPersistencia{
+		try {
+			String oqlQuery = "select all from " + MasterDegreeCandidate.class.getName()
+					+ " where person.idInternal = $1"; 
+	
+			query.create(oqlQuery);
+			query.bind(personID);
+
+			List result = (List) query.execute();
+	
+			lockRead(result);
+			if (result.size() == 0)
+				return null;
+			return result;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}			
+
     
 } // End of class definition

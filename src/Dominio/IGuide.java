@@ -12,7 +12,7 @@ import Util.PaymentType;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public interface IGuide {
+public interface IGuide extends IDomainObject {
   public Integer getNumber();
   public Integer getYear();
   public Double getTotal();

@@ -7,6 +7,7 @@ package ServidorAplicacao.Servico.masterDegree.administrativeOffice.candidate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import DataBeans.InfoMasterDegreeCandidate;
@@ -90,15 +91,17 @@ public class CreateMasterDegreeCandidate implements IServico {
 			// Create the Candidate
 			
 			// Set the Candidate's Situation
-			Set situations = new HashSet();
+			List situations = new ArrayList();
 			ICandidateSituation candidateSituation = new CandidateSituation();
+
+			sp.getIPersistentCandidateSituation().writeCandidateSituation(candidateSituation);
+
+
+			// First candidate situation
 			candidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
 			candidateSituation.setRemarks("Pré-Candidatura. Pagamento da candidatura por efectuar.");
 			candidateSituation.setSituation(new SituationName(SituationName.PRE_CANDIDATO));
 			candidateSituation.setValidation(new State(State.ACTIVE));
-			sp.getIPersistentCandidateSituation().writeCandidateSituation(candidateSituation);
-			
-			
 			
 			Calendar actualDate = Calendar.getInstance();
 			candidateSituation.setDate(actualDate.getTime());

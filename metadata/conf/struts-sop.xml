@@ -168,9 +168,9 @@
 
       <!-- Dynamic-FormBean para Adicionar Aulas De Turno -->
       <form-bean name="adicionarAulasForm"
-                          type="org.apache.struts.validator.DynaValidatorForm"
-                          dynamic="true">
-        <form-property name="indexAula" type="java.lang.Integer"/>
+                            type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+         <form-property name="lessonsList" type="java.lang.String[]" />  
       </form-bean>
 
 	  <!-- TURMAS -->
@@ -377,7 +377,7 @@
         		   key="ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException"
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                    />           
-		<forward name="Criar" path="/gestaoHorarios.do"/>
+		<forward name="Criar" path="/prepararAula.do"/>
 		<forward name="Atribuir Sala" path="/chooseLessonRoom.jsp"/>
       </action>
 
@@ -666,7 +666,7 @@
               input="/adicionarAulas.jsp"
               name="adicionarAulasForm"
               path="/adicionarAulasForm"
-              scope="session"
+              scope="request"
               type="ServidorApresentacao.Action.sop.AdicionarAulasFormAction">
           <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
           	   key="ServidorApresentacao.Action.exceptions.ExistingActionException"

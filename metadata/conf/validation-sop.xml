@@ -152,17 +152,11 @@
 
     <!-- Validacao para o formulario de Aula -->
     <form name="/editarAulaForm">
-      <field property="diaSemana" depends="required,integer,range">
+      <field property="diaSemana" depends="required,mask">
         <arg0 key="property.aula.weekDay"/>
-        <arg1 key="${var:min}" resource="false"/>
-        <arg2 key="${var:max}" resource="false"/>        
         <var>
-          <var-name>min</var-name>
-          <var-value>2</var-value>
-        </var>
-        <var>
-          <var-name>max</var-name>
-          <var-value>7</var-value>
+          <var-name>mask</var-name>
+          <var-value>[23456sSdD]</var-value>
         </var>
       </field>
 
@@ -180,17 +174,11 @@
         </var>
       </field>
 
-      <field property="minutosInicio" depends="required,integer,range">
+      <field property="minutosInicio" depends="required,mask">
         <arg0 key="property.aula.time.begining"/>
-        <arg1 key="${var:min}" resource="false"/>
-        <arg2 key="${var:max}" resource="false"/>        
         <var>
-          <var-name>min</var-name>
-          <var-value>0</var-value>
-        </var>
-        <var>
-          <var-name>max</var-name>
-          <var-value>59</var-value>
+          <var-name>mask</var-name>
+          <var-value>00|0|30</var-value>
         </var>
       </field>
       
@@ -208,17 +196,11 @@
         </var>
       </field>
 
-      <field property="minutosFim" depends="required,integer,range">
+      <field property="minutosFim" depends="required,mask">
         <arg0 key="property.aula.time.minutes.end"/>
-        <arg1 key="${var:min}" resource="false"/>
-        <arg2 key="${var:max}" resource="false"/>        
         <var>
-          <var-name>min</var-name>
-          <var-value>0</var-value>
-        </var>
-        <var>
-          <var-name>max</var-name>
-          <var-value>59</var-value>
+          <var-name>mask</var-name>
+          <var-value>00|0|30</var-value>
         </var>
       </field>
 
@@ -243,17 +225,11 @@
     </form>
 
     <form name="/criarAulaForm">
-      <field property="diaSemana" depends="required,integer,range">
+      <field property="diaSemana" depends="required,mask">
         <arg0 key="property.aula.weekDay"/>
-        <arg1 key="${var:min}" resource="false"/>
-        <arg2 key="${var:max}" resource="false"/>        
         <var>
-          <var-name>min</var-name>
-          <var-value>2</var-value>
-        </var>
-        <var>
-          <var-name>max</var-name>
-          <var-value>7</var-value>
+          <var-name>mask</var-name>
+          <var-value>[23456sSdD]</var-value>
         </var>
       </field>
 
@@ -271,21 +247,15 @@
         </var>
       </field>
 
-      <field property="minutosInicio" depends="required,integer,range">
+      <field property="minutosInicio" depends="required,mask">
         <arg0 key="property.aula.time.begining"/>
-        <arg1 key="${var:min}" resource="false"/>
-        <arg2 key="${var:max}" resource="false"/>        
         <var>
-          <var-name>min</var-name>
-          <var-value>0</var-value>
-        </var>
-        <var>
-          <var-name>max</var-name>
-          <var-value>59</var-value>
+          <var-name>mask</var-name>
+          <var-value>00|0|30</var-value>
         </var>
       </field>
       
-      <field property="horaFim" depends="required,integer,range">
+      <field property="horaFim" depends="required,integer,range,mask">
         <arg0 key="property.aula.time.end"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -297,19 +267,17 @@
           <var-name>max</var-name>
           <var-value>23</var-value>
         </var>
+        <var>
+          <var-name>mask</var-name>
+          <var-value>[23456sSdD]</var-value>
+        </var>
       </field>
 
-      <field property="minutosFim" depends="required,integer,range">
+      <field property="minutosFim" depends="required,mask">
         <arg0 key="property.aula.time.minutes.end"/>
-        <arg1 key="${var:min}" resource="false"/>
-        <arg2 key="${var:max}" resource="false"/>        
         <var>
-          <var-name>min</var-name>
-          <var-value>0</var-value>
-        </var>
-        <var>
-          <var-name>max</var-name>
-          <var-value>59</var-value>
+          <var-name>mask</var-name>
+          <var-value>00|0|30</var-value>
         </var>
       </field>
 
@@ -584,8 +552,16 @@
 
     <!-- Validacao para o formulario de Adicionar Aulas De Turno -->
     <form name="adicionarAulasForm">
-      <field property="indexAula" depends="required">
-        <arg0 key="property.aula"/>
+      	<field property="lessonsList" depends="validateMultiBox" >
+			<arg0 key="aula" resource="false"/>
+			<var>
+	        	<var-name>arrayProperty</var-name>
+	            <var-value>lessonsList</var-value>
+	        </var>
+	        <var>
+	        	<var-name>femininProperty</var-name>
+	            <var-value>true</var-value>
+	        </var>
       </field>
     </form>
     

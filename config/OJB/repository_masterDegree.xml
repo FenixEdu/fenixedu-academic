@@ -9,7 +9,7 @@
 		table="MASTER_DEGREE_CANDIDATE"
 	>
 	  <field-descriptor id="1"
-	     name="internalCode"    
+	     name="idInternal"    
 	     column="ID_INTERNAL"  
 	     jdbc-type="INTEGER"
 	     primarykey="true"
@@ -85,11 +85,10 @@
           
          <collection-descriptor
 	         name="situations"
-	         collection-class="org.apache.ojb.broker.util.collections.ManageableHashSet"
 	         element-class-ref="Dominio.CandidateSituation"
 	         refresh="true"
-           >
-           <inverse-foreignkey field-id-ref="5"/>
+	         auto-retrieve="true">
+           <inverse-foreignkey field-ref="candidateKey"/>
          </collection-descriptor>
 
 
@@ -206,7 +205,7 @@
 		table="GUIDE"
 	>
 	  <field-descriptor 
-	     name="internalCode"    
+	     name="idInternal"    
 	     column="ID_INTERNAL"  
 	     jdbc-type="INTEGER"
 	     primarykey="true"

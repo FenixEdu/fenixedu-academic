@@ -4,8 +4,8 @@
  */
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.candidate;
 
-import DataBeans.InfoPerson;
 import Dominio.IPessoa;
+import Dominio.Pessoa;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -45,7 +45,7 @@ public class ChangePersonPassword implements IServico {
 		return "ChangePersonPassword";
 	}
 
-	public void run(InfoPerson infoPerson)
+	public void run(Integer personID, String password)
 		throws
 			ExcepcaoInexistente,
 			FenixServiceException,
@@ -55,13 +55,14 @@ public class ChangePersonPassword implements IServico {
 
 		ISuportePersistente sp = null;
 
-
-		String username = new String(infoPerson.getUsername());
 		IPessoa person = null;
 		try {
 			sp = SuportePersistenteOJB.getInstance();
-			IPessoaPersistente personDAO = sp.getIPessoaPersistente();			
-			person = personDAO.lerPessoaPorUsername(username);
+			IPessoaPersistente personDAO = sp.getIPessoaPersistente();
+			
+			IPessoa personTemp = new Pessoa();
+			personTemp.setIdInternal(personID);			
+			person = (IPessoa) personDAO.readByOId(personTemp, true);
 		} catch (ExcepcaoPersistencia ex) {
 			FenixServiceException newEx =
 				new FenixServiceException("Persistence layer error");
@@ -73,6 +74,6 @@ public class ChangePersonPassword implements IServico {
 			throw new ExcepcaoInexistente("Unknown Person!");
 		
 		sp.getIPessoaPersistente().lockWrite(person);
-		person.setPassword(PasswordEncryptor.encryptPassword(infoPerson.getPassword()));
+		person.setPassword(PasswordEncryptor.encryptPassword(password));
 	}
 }

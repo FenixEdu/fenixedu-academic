@@ -150,7 +150,7 @@ public class ChangeApplicationInfo implements IServico {
 				Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(
 					existingMasterDegreeCandidate);
 
-			Set situationsFromBD =
+			List situationsFromBD =
 				existingMasterDegreeCandidate.getSituations();
 
 			Iterator situationIterator = situationsFromBD.iterator();

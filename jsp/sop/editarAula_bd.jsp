@@ -14,32 +14,27 @@
 <br />
 <span class="error"><html:errors/></span>
 	<html:form action="/editarAulaForm">
+	
 <table> 
 	<tr>
     	<td class="formTD"><bean:message key="property.aula.weekDay"/>: </td>
-      	<td class="formTD"><html:select property="diaSemana">
-            	<html:options collection="diasSemana" property="value" labelProperty="label"/>
-           	</html:select>
+      	<td class="formTD"><html:text property="diaSemana"  size="1"/>
       	</td>
    	</tr>
     <tr>
      	<td class="formTD"><bean:message key="property.aula.time.begining"/>: </td>
-       	<td class="formTD"><html:select property="horaInicio">
-            	<html:options name="horas"/>
-            </html:select> :
-            <html:select property="minutosInicio">
-            	<html:options name="minutos"/>
-           	</html:select>
+       	<td class="formTD"><html:text property="horaInicio"  size="1"/>
+            	 :
+            <html:text property="minutosInicio"  size="1"/>
+            
   		</td>
   	</tr>
     <tr>
        	<td class="formTD"><bean:message key="property.aula.time.end"/>: </td>
-       	<td class="formTD"><html:select property="horaFim">
-            	<html:options name="horas"/>
-            </html:select> :
-          	<html:select property="minutosFim">
-            	<html:options name="minutos"/>
-           	</html:select>
+       	<td class="formTD"><html:text property="horaFim"  size="1"/>
+            	:
+          	<html:text property="minutosFim"  size="1"/>
+            	
        	</td>
   	</tr>
     <tr>

@@ -60,6 +60,10 @@ public void setKeyExecutionPeriod(Integer keyExecutionPeriod) {
   /** Construtor sem argumentos p�blico requerido pela moldura de objectos OJB */
   public Aula() { }
     
+  public Aula(Integer idInternal) {
+  	setIdInternal(idInternal);
+  	 }
+    
   public Aula(DiaSemana diaSemana, Calendar inicio, Calendar fim, TipoAula tipo, ISala sala,
               IDisciplinaExecucao disciplinaExecucao) {
     setDiaSemana(diaSemana);

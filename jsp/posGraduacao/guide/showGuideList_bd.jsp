@@ -7,6 +7,7 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="DataBeans.InfoGuideSituation" %>
+<%@ page import="DataBeans.InfoMasterDegreeCandidate" %>
 <%@ page import="Util.State" %>
 <%@ page import="Util.Data" %>
 <%@ page import="Util.SituationOfGuide" %>
@@ -27,13 +28,14 @@
     		<td><bean:message key="label.masterDegree.administrativeOffice.guideNumber" /></td>
     		<td><bean:message key="label.masterDegree.administrativeOffice.situationDate" /></td>
     		<td><bean:message key="label.masterDegree.administrativeOffice.situation" /></td>
+    		<td><bean:message key="label.masterDegree.administrativeOffice.requesterName" /></td>    		
     	</tr>
     	
     	<logic:iterate id="guide" name="guideList">
         	<bean:define id="guideLink">
         		<bean:write name="link"/><bean:write name="guide" property="year"/><%= "&" %>number=<bean:write name="guide" property="number"/>
         	</bean:define>
-      	
+        	
         	<logic:iterate id="guideSituation" name="guide" property="infoGuideSituations">
                 <% if (((InfoGuideSituation) guideSituation).getState().equals(new State(State.ACTIVE))) { %>
                 	<tr>
@@ -46,6 +48,16 @@
 							<td><%= Data.format2DayMonthYear((Date) date) %></td>   
 						</logic:present>
                         <td><bean:write name="guideSituation" property="situation"/></td>
+                        
+                        
+			        	<bean:define id="personLink">
+			        		/guideListingByYear.do?method=chooseGuideByPerson<%= "&" %>page=0<%= "&" %>personID=<bean:write name="guide" property="infoPerson.idInternal"/>
+			        	</bean:define>
+
+                        <td><html:link page='<%= pageContext.findAttribute("personLink").toString() %>'>
+                			<bean:write name="guide" property="infoPerson.nome"/>
+                            </html:link>
+                        </td>
         			</tr>               
              	<% } %>
 			</logic:iterate>

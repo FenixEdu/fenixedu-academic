@@ -91,6 +91,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
 
 			session.setAttribute(SessionConstants.DEGREE_LIST, degreeList);
 			session.removeAttribute(SessionConstants.PRINT_PASSWORD);
+			session.removeAttribute(SessionConstants.PRINT_INFORMATION);
 			
 			List result = null; 			
 			try {
@@ -148,6 +149,9 @@ public class CreateGuideDispatchAction extends DispatchAction {
 			
 			Integer contributorNumber = null;
 			Integer contributorNumberFromList = null;
+			
+			
+			
 			
 			if ((contributorList != null) && (contributorList.length() > 0))
 				contributorNumberFromList = new Integer(contributorList);
@@ -216,6 +220,8 @@ public class CreateGuideDispatchAction extends DispatchAction {
 			session.setAttribute(SessionConstants.PAYMENT_TYPE, PaymentType.toArrayList());
 			session.setAttribute(SessionConstants.GUIDE_SITUATION_LIST, SituationOfGuide.toArrayList());
 
+			session.setAttribute(SessionConstants.REQUESTER_NUMBER, number);
+
 			if (requesterType.equals(GuideRequester.CANDIDATE_STRING)){
 				session.removeAttribute(SessionConstants.REQUESTER_TYPE);
 				session.setAttribute(SessionConstants.REQUESTER_TYPE, requesterType);
@@ -248,6 +254,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
 			// Get the information
 			
 			session.removeAttribute(SessionConstants.PRINT_PASSWORD);
+			session.removeAttribute(SessionConstants.PRINT_INFORMATION);
 
 			String othersRemarks = (String) createGuideForm.get("othersRemarks");
 			String othersPriceString = (String) createGuideForm.get("othersPrice");
@@ -296,46 +303,46 @@ public class CreateGuideDispatchAction extends DispatchAction {
 			session.removeAttribute(SessionConstants.REQUESTER_TYPE); 
 			
 			
-			// We need to check if the Guide has been payd 
-			if ((requesterType.equals(GuideRequester.CANDIDATE_STRING)) &&
-				(situationOfGuide.equals(SituationOfGuide.PAYED_TYPE))) {
+			// We need to check if the Guide has been payed 
+			if (requesterType.equals(GuideRequester.CANDIDATE_STRING)){ 
+			
+				if (situationOfGuide.equals(SituationOfGuide.PAYED_TYPE)) {
 
-				// The Candidate will now have a new Situation
-						
-				try {
-					Object args[] = { newInfoGuide.getInfoExecutionDegree(), newInfoGuide.getInfoPerson()};
-					serviceManager.executar(userView, "CreateCandidateSituation", args);
-				} catch (FenixServiceException e) {
-					throw new FenixActionException();
-				}
-
-				if ((newInfoGuide.getInfoPerson().getPassword() == null) || (newInfoGuide.getInfoPerson().getPassword().length() == 0)){
-					// Generate the password
-					password = RandomStringGenerator.getRandomStringGenerator(8);
-					newInfoGuide.getInfoPerson().setPassword(password);
-
-					// Write the Person
+					// The Candidate will now have a new Situation
+							
 					try {
-						Object args[] = {newInfoGuide.getInfoPerson() };
-						serviceManager.executar(userView, "ChangePersonPassword", args);
+						Object args[] = { newInfoGuide.getInfoExecutionDegree(), newInfoGuide.getInfoPerson()};
+						serviceManager.executar(userView, "CreateCandidateSituation", args);
 					} catch (FenixServiceException e) {
 						throw new FenixActionException();
 					}
-					
-					// Put variable in Session to Inform that it's necessary to print the password
-
-					session.setAttribute(SessionConstants.PRINT_PASSWORD, Boolean.TRUE);
-					try {
-						Object args[] = { newInfoGuide.getInfoExecutionDegree(), newInfoGuide.getInfoPerson()};
-						infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) serviceManager.executar(userView, "ReadCandidateListByPersonAndExecutionDegree", args);
-					} catch (FenixServiceException e) {
-						throw new FenixActionException();
+	
+	
+					if ((newInfoGuide.getInfoPerson().getPassword() == null) || (newInfoGuide.getInfoPerson().getPassword().length() == 0)){
+						// Generate the password
+						password = RandomStringGenerator.getRandomStringGenerator(8);
+						newInfoGuide.getInfoPerson().setPassword(password);
+	
+						// Write the Person
+						try {
+							Object args[] = {newInfoGuide.getInfoPerson().getIdInternal() , password};
+							serviceManager.executar(userView, "ChangePersonPassword", args);
+						} catch (FenixServiceException e) {
+							throw new FenixActionException();
+						}
+						
+						// Put variable in Session to Inform that it's necessary to print the password
+	
+						session.setAttribute(SessionConstants.PRINT_PASSWORD, Boolean.TRUE);
+	
+					} else {
+						session.setAttribute(SessionConstants.PRINT_INFORMATION, Boolean.TRUE);
 					}
 				}
 			} 
 			session.removeAttribute(SessionConstants.GUIDE);
 			session.setAttribute(SessionConstants.GUIDE, newInfoGuide);
-	
+
 			return mapping.findForward("CreateSuccess");
 			
 		} else throw new Exception();

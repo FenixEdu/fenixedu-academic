@@ -35,7 +35,10 @@ import ServidorAplicacao.Servico.exceptions.InterceptingServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidTimeIntervalServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.InterceptingActionException;
-import ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException;
+import ServidorApresentacao
+	.Action
+	.exceptions
+	.InvalidTimeIntervalActionException;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -107,7 +110,8 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 					 new InfoLesson(
 						new DiaSemana(
 							new Integer(
-								(String) criarAulaForm.get("diaSemana"))),
+								formDay2EnumerateDay(
+									(String) criarAulaForm.get("diaSemana")))),
 						inicio,
 						fim,
 						new TipoAula(
@@ -145,6 +149,35 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 
 		} else
 			throw new Exception();
+	}
+
+	/**
+	 * @param string
+	 */
+	private String formDay2EnumerateDay(String string) {
+		String result = string;
+		if (string.equalsIgnoreCase("2")) {
+			result = "2";
+		}
+		if (string.equalsIgnoreCase("3")) {
+			result = "3";
+		}
+		if (string.equalsIgnoreCase("4")) {
+			result = "4";
+		}
+		if (string.equalsIgnoreCase("5")) {
+			result = "5";
+		}
+		if (string.equalsIgnoreCase("6")) {
+			result = "6";
+		}
+		if (string.equalsIgnoreCase("S")) {
+			result = "7";
+		}
+		if (string.equalsIgnoreCase("D")) {
+			result = "1";
+		}
+		return result;
 	}
 
 	public ActionForward storeChanges(
@@ -198,7 +231,7 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 			InfoLesson iAula =
 				new InfoLesson(
 					new DiaSemana(
-						new Integer((String) editarAulaForm.get("diaSemana"))),
+						new Integer(formDay2EnumerateDay((String) editarAulaForm.get("diaSemana")))),
 					inicio,
 					fim,
 					new TipoAula(
@@ -206,11 +239,13 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 					infoSala,
 					iAulaAntiga.getInfoDisciplinaExecucao());
 
-//			InfoExecutionPeriod iExecutionPeriod =
-//				(InfoExecutionPeriod) sessao.getAttribute(
-//					SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+			//			InfoExecutionPeriod iExecutionPeriod =
+			//				(InfoExecutionPeriod) sessao.getAttribute(
+			//					SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 
-			Object argsEditarAula[] = { kAulaAntiga, iAula/*, iExecutionPeriod*/ };
+			Object argsEditarAula[] =
+				{ kAulaAntiga, iAula /*, iExecutionPeriod*/
+			};
 
 			InfoLessonServiceResult result = null;
 			try {
@@ -278,7 +313,7 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 
 			DiaSemana weekDay =
 				new DiaSemana(
-					new Integer((String) editarAulaForm.get("diaSemana")));
+					new Integer(formDay2EnumerateDay((String) editarAulaForm.get("diaSemana"))));
 
 			sessao.setAttribute("weekDayString", weekDay.toString());
 
@@ -334,7 +369,9 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 					saveErrors(request, actionErrors);
 					return mapping.getInputForward();
 				}
-				Collections.sort(emptyRoomsList,new RoomAlphabeticComparator());
+				Collections.sort(
+					emptyRoomsList,
+					new RoomAlphabeticComparator());
 				List listaSalas = new ArrayList();
 				listaSalas.add(
 					new LabelValueBean(infoSala.getNome(), infoSala.getNome()));
@@ -345,7 +382,6 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 				}
 				emptyRoomsList.add(0, infoSala);
 
-			
 				sessao.removeAttribute("listaSalas");
 				sessao.removeAttribute("listaInfoSalas");
 				sessao.setAttribute("listaSalas", listaSalas);
@@ -380,7 +416,7 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 
 			DiaSemana weekDay =
 				new DiaSemana(
-					new Integer((String) editarAulaForm.get("diaSemana")));
+					new Integer( formDay2EnumerateDay((String)editarAulaForm.get("diaSemana"))));
 
 			sessao.setAttribute("weekDayString", weekDay.toString());
 
@@ -425,7 +461,9 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 						SessionUtils.getUserView(request),
 						"ReadEmptyRoomsService",
 						args);
-				Collections.sort(emptyRoomsList,new RoomAlphabeticComparator());
+				Collections.sort(
+					emptyRoomsList,
+					new RoomAlphabeticComparator());
 				if (emptyRoomsList == null || emptyRoomsList.isEmpty()) {
 					actionErrors.add(
 						"search.empty.rooms.no.rooms",

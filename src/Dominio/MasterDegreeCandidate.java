@@ -15,12 +15,15 @@
 package Dominio;
 
 
+import java.util.Iterator;
 import java.util.Set;
+import java.util.List;
 
 import Util.Specialization;
+import Util.State;
  
 
-public class MasterDegreeCandidate implements IMasterDegreeCandidate {
+public class MasterDegreeCandidate extends DomainObject implements IMasterDegreeCandidate {
  
 
     private String majorDegree = null;
@@ -39,11 +42,10 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 
 	private IPessoa person;
 	// List of Situations
-    private Set situations;
+    private List situations;
  
     
     // Internal Codes from Database
-    private Integer internalCode;            // Internal code for Master Degree Candidate
     private Integer executionDegreeKey;               // Foreign Key from table Degree
 	private Integer personKey;				// Foreign Key from table Person
     
@@ -73,24 +75,37 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
     	   	
     }
     
+
+    public ICandidateSituation getActiveCandidateSituation(){
+		Iterator iterator = this.getSituations().iterator();
+		while(iterator.hasNext()) {
+			ICandidateSituation candidateSituationTemp = (ICandidateSituation) iterator.next();
+			if (candidateSituationTemp.getValidation().equals(new State(State.ACTIVE))){
+				return candidateSituationTemp;
+			}
+		}
+		return null;
+    }
      
     public boolean equals(Object o) {
-        return
-        ((o instanceof MasterDegreeCandidate) &&
-		
-		((this.person.equals(((MasterDegreeCandidate)o).getPerson())) &&
-		 (this.specialization.equals(((MasterDegreeCandidate)o).getSpecialization())) &&
-		 (this.executionDegree.equals(((MasterDegreeCandidate)o).executionDegree))) ||
-		 
-		((this.executionDegree.equals(((MasterDegreeCandidate)o).executionDegree)) &&
-		 (this.candidateNumber.equals(((MasterDegreeCandidate)o).getCandidateNumber())) &&
-		 (this.specialization.equals(((MasterDegreeCandidate)o).getSpecialization()))));       
         
+		boolean result = false;
+		if (o instanceof IMasterDegreeCandidate) {
+			result =		
+					((this.person.equals(((MasterDegreeCandidate)o).getPerson())) &&
+					 (this.specialization.equals(((MasterDegreeCandidate)o).getSpecialization())) &&
+					 (this.executionDegree.equals(((MasterDegreeCandidate)o).executionDegree))) ||
+				 
+					((this.executionDegree.equals(((MasterDegreeCandidate)o).executionDegree)) &&
+					 (this.candidateNumber.equals(((MasterDegreeCandidate)o).getCandidateNumber())) &&
+					 (this.specialization.equals(((MasterDegreeCandidate)o).getSpecialization())));
+		}
+		return result;
     }
 
     public String toString() {
         String result = "Master Degree Candidate :\n";
-        result += "\n  - Internal Code : " + internalCode;
+        result += "\n  - Internal Code : " + getIdInternal();
 		result += "\n  - Person : " + person;
         result += "\n  - Major Degree : " + majorDegree;
         result += "\n  - Candidate Number : " + candidateNumber;
@@ -101,7 +116,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 		result += "\n  - Master Degree : " + executionDegree;
 		result += "\n  - Specialization Area : " + specializationArea;
 
-        
         return result;
     }  
 
@@ -151,12 +165,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 		return executionDegreeKey;
 	}
 
-	/**
-	 * @return
-	 */
-	public Integer getInternalCode() {
-		return internalCode;
-	}
 
 	/**
 	 * @return
@@ -196,7 +204,7 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	/**
 	 * @return
 	 */
-	public Set getSituations() {
+	public List getSituations() {
 		return situations;
 	}
 
@@ -235,12 +243,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 		executionDegreeKey = integer;
 	}
 
-	/**
-	 * @param integer
-	 */
-	public void setInternalCode(Integer integer) {
-		internalCode = integer;
-	}
 
 	/**
 	 * @param string
@@ -280,8 +282,8 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	/**
 	 * @param set
 	 */
-	public void setSituations(Set set) {
-		situations = set;
+	public void setSituations(List list) {
+		situations = list;
 	}
 
 	/**

@@ -12,39 +12,31 @@
 <br />
 <h2><bean:message key="title.criarAula"/></h2>
     <span class="error"><html:errors/></span>
+<br/>
+<br/>
+<bean:message key="message.weekdays"/>
+<br/>
 <html:form action="/criarAulaForm">
 <table cellspacing="0">
 	<tr>
       	<td nowrap class="formTD"><bean:message key="property.aula.weekDay"/>: </td>
         <td nowrap class="formTD">
-        	<html:select property="diaSemana"  size="1">
-            	<option value="" selected="selected"></option>
-          	<html:options collection="diasSemana" property="value" labelProperty="label"/>
-           </html:select>
+        	<html:text property="diaSemana"  size="1"/>
        	</td>
    	</tr>
    	<tr>
     	<td nowrap="nowrap" class="formTD"><bean:message key="property.aula.time.begining"/>: </td>
         <td nowrap="nowrap">
-          	<html:select property="horaInicio"  size="1">
-            	<option value="" selected="selected"></option>                        
-            <html:options name="horas"/>
-            </html:select> :
-            <html:select property="minutosInicio" size="1">
-            	<html:options name="minutos"/>
-            </html:select>
+          	<html:text property="horaInicio"  size="1"/> :
+            <html:text property="minutosInicio" size="1"/>
      	</td>
    	</tr>
     <tr>
         <td nowrap="nowrap" class="formTD"><bean:message key="property.aula.time.end"/>: </td>
         <td nowrap="nowrap">
-         	<html:select property="horaFim"  size="1">
-            	<option value="" selected="selected"></option>                        
-            	<html:options name="horas"/>
-            </html:select> :
-            <html:select property="minutosFim"  size="1">
-               	<html:options name="minutos"/>
-            </html:select>
+         	<html:text property="horaFim"  size="1"/>
+            	:
+            <html:text property="minutosFim"  size="1"/>
         </td> 
  	</tr> 
     <tr>

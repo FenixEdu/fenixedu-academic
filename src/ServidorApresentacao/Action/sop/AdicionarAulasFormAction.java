@@ -1,5 +1,7 @@
 package ServidorApresentacao.Action.sop;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,7 +14,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import DataBeans.InfoLesson;
 import DataBeans.InfoShift;
 import DataBeans.InfoShiftServiceResult;
 import ServidorAplicacao.IUserView;
@@ -26,7 +27,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  * @author tfc130
  */
 public class AdicionarAulasFormAction extends FenixAction {
-	
+
 	public static String THEORETICAL_HOURS_LIMIT_EXCEEDED =
 		"errors.shift.theoretical.hours.limit.exceeded";
 	public static String PRATICAL_HOURS_LIMIT_EXCEEDED =
@@ -50,14 +51,15 @@ public class AdicionarAulasFormAction extends FenixAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		
+
 		DynaActionForm adicionarAulasForm = (DynaActionForm) form;
 
 		HttpSession sessao = request.getSession(false);
 		if (sessao != null) {
 			DynaActionForm manipularTurnosForm =
 				(DynaActionForm) sessao.getAttribute("manipularTurnosForm");
-			IUserView userView = (IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
+			IUserView userView =
+				(IUserView) sessao.getAttribute(SessionConstants.U_VIEW);
 			Integer indexTurno =
 				(Integer) manipularTurnosForm.get("indexTurno");
 			ArrayList infoTurnos =
@@ -65,131 +67,139 @@ public class AdicionarAulasFormAction extends FenixAction {
 					"infoTurnosDeDisciplinaExecucao");
 			InfoShift infoTurno =
 				(InfoShift) infoTurnos.get(indexTurno.intValue());
-			Integer indexAula = (Integer) adicionarAulasForm.get("indexAula");
-			ArrayList infoAulas =
-				(ArrayList) sessao.getAttribute(
-					"infoAulasDeDisciplinaExecucao");
-			InfoLesson infoAula =
-				(InfoLesson) infoAulas.get(indexAula.intValue());
-			Object argsAdicionarAula[] = { infoTurno, infoAula };
-			InfoShiftServiceResult result = null;
+
+			String[] classesList =
+				(String[]) adicionarAulasForm.get("lessonsList");
+
+			Object argsAdicionarAula[] = { infoTurno, classesList };
+			List serviceResult = null;
 			try {
-				result =
-					(InfoShiftServiceResult) ServiceUtils.executeService(
+				serviceResult =
+					(List) ServiceUtils.executeService(
 						userView,
 						"AdicionarAula",
 						argsAdicionarAula);
 			} catch (ExistingServiceException ex) {
-				throw new ExistingActionException("Essa relação Turno-Aula", ex);
+				throw new ExistingActionException(
+					"Essa relação Turno-Aula",
+					ex);
 			}
-			ActionErrors actionErrors = getActionErrors(result, infoTurno);
+			ActionErrors actionErrors =
+				getActionErrors(serviceResult, infoTurno);
 			if (actionErrors.isEmpty()) {
-				//		if (result.isSUCESS()) {
+
 				return mapping.findForward("Sucesso");
 			} else {
 				saveErrors(request, actionErrors);
 				return mapping.getInputForward();
 			}
 
-			//      gestor.executar(userView, "AdicionarAula", argsAdicionarAula);
-			//      return mapping.findForward("Sucesso");
 		} else
 			throw new Exception();
 		// nao ocorre... pedido passa pelo filtro Autorizacao
 	}
 
 	private ActionErrors getActionErrors(
-		InfoShiftServiceResult result,
+		List serviceResult,
 		InfoShift infoShift) {
 		ActionErrors actionErrors = new ActionErrors();
+		Iterator iter = serviceResult.iterator();
+		while (iter.hasNext()) {
+			InfoShiftServiceResult result =
+				(InfoShiftServiceResult) iter.next();
 
-		switch (result.getMessageType()) {
-			case InfoShiftServiceResult.SUCESS :
-				break;
-			case InfoShiftServiceResult.THEORETICAL_HOURS_LIMIT_EXCEEDED :
-				actionErrors.add(
-					THEORETICAL_HOURS_LIMIT_EXCEEDED,
-					new ActionError(
+			switch (result.getMessageType()) {
+				case InfoShiftServiceResult.SUCESS :
+					break;
+				case InfoShiftServiceResult.THEORETICAL_HOURS_LIMIT_EXCEEDED :
+					actionErrors.add(
 						THEORETICAL_HOURS_LIMIT_EXCEEDED,
-						""
-							+ infoShift
-								.getInfoDisciplinaExecucao()
-								.getTheoreticalHours()));
-				break;
-			case InfoShiftServiceResult.THEORETICAL_HOURS_LIMIT_REACHED :
-				actionErrors.add(
-					THEORETICAL_HOURS_LIMIT_REACHED,
-					new ActionError(
+						new ActionError(
+							THEORETICAL_HOURS_LIMIT_EXCEEDED,
+							""
+								+ infoShift
+									.getInfoDisciplinaExecucao()
+									.getTheoreticalHours()));
+					break;
+				case InfoShiftServiceResult.THEORETICAL_HOURS_LIMIT_REACHED :
+					actionErrors.add(
 						THEORETICAL_HOURS_LIMIT_REACHED,
-						""
-							+ infoShift
-								.getInfoDisciplinaExecucao()
-								.getTheoreticalHours()));
-				break;
-			case InfoShiftServiceResult.PRATICAL_HOURS_LIMIT_EXCEEDED :
-				actionErrors.add(
-					PRATICAL_HOURS_LIMIT_EXCEEDED,
-					new ActionError(
+						new ActionError(
+							THEORETICAL_HOURS_LIMIT_REACHED,
+							""
+								+ infoShift
+									.getInfoDisciplinaExecucao()
+									.getTheoreticalHours()));
+					break;
+				case InfoShiftServiceResult.PRATICAL_HOURS_LIMIT_EXCEEDED :
+					actionErrors.add(
 						PRATICAL_HOURS_LIMIT_EXCEEDED,
-						""
-							+ infoShift
-								.getInfoDisciplinaExecucao()
-								.getPraticalHours()));
-				break;
-			case InfoShiftServiceResult.PRATICAL_HOURS_LIMIT_REACHED :
-				actionErrors.add(
-					PRATICAL_HOURS_LIMIT_REACHED,
-					new ActionError(
+						new ActionError(
+							PRATICAL_HOURS_LIMIT_EXCEEDED,
+							""
+								+ infoShift
+									.getInfoDisciplinaExecucao()
+									.getPraticalHours()));
+					break;
+				case InfoShiftServiceResult.PRATICAL_HOURS_LIMIT_REACHED :
+					actionErrors.add(
 						PRATICAL_HOURS_LIMIT_REACHED,
-						""
-							+ infoShift
-								.getInfoDisciplinaExecucao()
-								.getPraticalHours()));
-				break;
-			case InfoShiftServiceResult.THEO_PRAT_HOURS_LIMIT_EXCEEDED :
-				actionErrors.add(
-					THEO_PRAT_HOURS_LIMIT_EXCEEDED,
-					new ActionError(
+						new ActionError(
+							PRATICAL_HOURS_LIMIT_REACHED,
+							""
+								+ infoShift
+									.getInfoDisciplinaExecucao()
+									.getPraticalHours()));
+					break;
+				case InfoShiftServiceResult.THEO_PRAT_HOURS_LIMIT_EXCEEDED :
+					actionErrors.add(
 						THEO_PRAT_HOURS_LIMIT_EXCEEDED,
-						""
-							+ infoShift
-								.getInfoDisciplinaExecucao()
-								.getTheoPratHours()));
-				break;
-			case InfoShiftServiceResult.THEO_PRAT_HOURS_LIMIT_REACHED :
-				actionErrors.add(
-					THEO_PRAT_HOURS_LIMIT_REACHED,
-					new ActionError(
+						new ActionError(
+							THEO_PRAT_HOURS_LIMIT_EXCEEDED,
+							""
+								+ infoShift
+									.getInfoDisciplinaExecucao()
+									.getTheoPratHours()));
+					break;
+				case InfoShiftServiceResult.THEO_PRAT_HOURS_LIMIT_REACHED :
+					actionErrors.add(
 						THEO_PRAT_HOURS_LIMIT_REACHED,
-						""
-							+ infoShift
-								.getInfoDisciplinaExecucao()
-								.getTheoPratHours()));
-				break;
-			case InfoShiftServiceResult.LAB_HOURS_LIMIT_EXCEEDED :
-				actionErrors.add(
-					LAB_HOURS_LIMIT_EXCEEDED,
-					new ActionError(
+						new ActionError(
+							THEO_PRAT_HOURS_LIMIT_REACHED,
+							""
+								+ infoShift
+									.getInfoDisciplinaExecucao()
+									.getTheoPratHours()));
+					break;
+				case InfoShiftServiceResult.LAB_HOURS_LIMIT_EXCEEDED :
+					actionErrors.add(
 						LAB_HOURS_LIMIT_EXCEEDED,
-						""
-							+ infoShift
-								.getInfoDisciplinaExecucao()
-								.getLabHours()));
-				break;
-			case InfoShiftServiceResult.LAB_HOURS_LIMIT_REACHED :
-				actionErrors.add(
-					LAB_HOURS_LIMIT_REACHED,
-					new ActionError(
+						new ActionError(
+							LAB_HOURS_LIMIT_EXCEEDED,
+							""
+								+ infoShift
+									.getInfoDisciplinaExecucao()
+									.getLabHours()));
+					break;
+				case InfoShiftServiceResult.LAB_HOURS_LIMIT_REACHED :
+					actionErrors.add(
 						LAB_HOURS_LIMIT_REACHED,
-						""
-							+ infoShift
-								.getInfoDisciplinaExecucao()
-								.getLabHours()));
-				break;
-			default :
-				actionErrors.add(UNKNOWN_ERROR, new ActionError(UNKNOWN_ERROR));
-				break;
+						new ActionError(
+							LAB_HOURS_LIMIT_REACHED,
+							""
+								+ infoShift
+									.getInfoDisciplinaExecucao()
+									.getLabHours()));
+					break;
+				default :
+					actionErrors.add(
+						UNKNOWN_ERROR,
+						new ActionError(UNKNOWN_ERROR));
+					break;
+			}
+
 		}
+
 		return actionErrors;
 	}
 

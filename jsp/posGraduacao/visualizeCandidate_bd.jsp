@@ -8,8 +8,16 @@
 <%@ page import="Util.Data" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="DataBeans.InfoCandidateSituation" %>
-<bean:define id="personalInfo" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE %>" scope="session" property="infoPerson"/>
-<bean:define id="masterDegreeCandidate" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE %>" scope="session"/>
+<%@ page import="DataBeans.InfoMasterDegreeCandidate" %>
+
+<bean:define id="personalInfo" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE %>" scope="request" property="infoPerson"/>
+<bean:define id="masterDegreeCandidate" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE %>" scope="request"/>
+
+
+<bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>" />
+<bean:define id="link">/editCandidate.do?method=prepareEdit&candidateID=</bean:define>
+
+
 <br />
 <table>
 	<logic:present name="personalInfo">
@@ -268,6 +276,10 @@
 	 </logic:iterate>
 	</logic:present>
 </table>
-    <html:link page="/editCandidate.do?method=prepareEdit">
-    	<bean:message key="link.masterDegree.administrativeOffice.editCandidate" />
+
+	<bean:define id="candidateLink">
+		<bean:write name="link"/><bean:write name="masterDegreeCandidate" property="idInternal"/>
+	</bean:define>
+
+    <html:link page='<%= pageContext.findAttribute("candidateLink").toString() %>'>    	<bean:message key="link.masterDegree.administrativeOffice.editCandidate" />
     </html:link>

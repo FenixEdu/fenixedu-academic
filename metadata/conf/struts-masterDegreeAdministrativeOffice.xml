@@ -30,6 +30,16 @@
         <form-property name="identificationDocumentType" type="java.lang.String" />
       </form-bean>
 
+      
+      <!-- Bean for The Choosing of a Person -->
+      <form-bean name="choosePersonForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+        <form-property name="page" type="java.lang.Integer" />
+        <form-property name="identificationDocumentNumber" type="java.lang.String" />
+        <form-property name="identificationDocumentType" type="java.lang.String" />
+      </form-bean>
+
 	  <!-- Bean for The List of Candidates -->
       <form-bean name="listCandidatesForm" 
                  type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
@@ -173,6 +183,8 @@
         	<form-property name="situationRemarks" type="java.lang.String" />
         	<form-property name="situation" type="java.lang.String" />
         	<form-property name="specializationArea" type="java.lang.String" />
+        	<form-property name="specializationArea" type="java.lang.String" />
+        	<form-property name="candidateID" type="java.lang.Integer" />
       </form-bean>
 
 
@@ -440,7 +452,8 @@
               type="ServidorApresentacao.Action.masterDegree.administrativeOffice.candidate.ListCandidatesDispatchAction"
               validate="true">
 	         <forward name="PrepareReady" path="/chooseCandidateList.jsp"/>  
-	         <forward name="ActionReady" path="/visualizeCandidate.jsp"/>  
+	         <forward name="ActionReady" path="/visualizePersonCandidateList.jsp"/>  
+	         <forward name="VisualizeCandidate" path="/visualizeCandidate.jsp"/>  
 	         <forward name="ChooseCandidate" path="/candidateList.jsp"/>  
       </action>
 
@@ -462,7 +475,7 @@
       </action>
       
       <action attribute="changeCandidateForm"
-      		  input="/changeCandidate.jsp"
+      		  input="/editCandidate.do?method=prepareEdit&amp;page=0&amp;error=1"
       	      name="changeCandidateForm"
 		      path="/editCandidate"
 		      parameter="method"
@@ -669,6 +682,21 @@
    	         <forward name="ShowVersionList" path="/guide/chooseVersionPage.jsp"/>  
       </action>
 
+      <!-- List Guides by Person -->
+      <action attribute="choosePersonForm"
+      		  input="/guideListingByPerson.do?method=prepareChoosePerson&amp;page=0"
+      	      name="choosePersonForm"
+		      path="/guideListingByPerson"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.GuideListingDispatchAction"
+              validate="true">
+              <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+	    		         key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+    	        		 handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+	         <forward name="PrepareSuccess" path="/guide/choosePerson.jsp"/> 
+	         <forward name="ShowGuideList" path="/guide/showGuideList.jsp"/> 
+      </action>
 
 
       <!-- Choose Execution Year to Visualize Candidates -->

@@ -54,8 +54,15 @@ public class PrintGuideDispatchAction extends DispatchAction {
 				// Read The Candidate
 				InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
 				try {
-					Object args[] = { infoGuide.getInfoExecutionDegree(), infoGuide.getInfoPerson()};
-					infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) serviceManager.executar(userView, "ReadMasterDegreeCandidate", args);
+					
+					if (session.getAttribute(SessionConstants.REQUESTER_NUMBER) == null){
+						Object args[] = { infoGuide.getInfoExecutionDegree(), infoGuide.getInfoPerson()};
+						infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) serviceManager.executar(userView, "ReadMasterDegreeCandidate", args);
+					} else {
+						Integer number = (Integer) session.getAttribute(SessionConstants.REQUESTER_NUMBER);
+						Object args[] = { infoGuide.getInfoExecutionDegree(), infoGuide.getInfoPerson(), number};
+						infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) serviceManager.executar(userView, "ReadCandidateListByPersonAndExecutionDegree", args);
+					}
 				} catch (FenixServiceException e) {
 					throw new FenixActionException();
 				}
@@ -99,6 +106,8 @@ public class PrintGuideDispatchAction extends DispatchAction {
 			Integer number = new Integer(request.getParameter("number"));
 			Integer year = new Integer(request.getParameter("year"));
 			Integer version = new Integer(request.getParameter("version"));
+
+			session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE);
 
 			InfoGuide infoGuide = null;			
 			try {

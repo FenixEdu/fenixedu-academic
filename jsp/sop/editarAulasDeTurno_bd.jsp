@@ -14,7 +14,12 @@
         </table>
         <br/>
 	   	<% ArrayList iA = (ArrayList) session.getAttribute("infoAulasDeTurno"); %>
-        <center>
+ <center>
+ 	<b><html:link page="/listClasses.do?method=showClasses"> <bean:message key="link.add.shift.classes"/></html:link></b>
+ </center>
+<br/>
+<br/>
+     <center>
             <span class="error">
                     <bean:message key="title.editAulaOfTurnoXPTO"/>
                     <bean:write name="infoTurno" property="nome" scope="session" filter="true"/>

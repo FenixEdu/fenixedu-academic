@@ -18,58 +18,64 @@
         <center><font color='#034D7A' size='5'> <b> <bean:message key="title.adicionarAulas"/> </b> </font></center>
         <br/>
         <br/>
-
+		 <center>  <bean:message key="message.add.lessons.to.shift"/>  </center>
+            <br/>
         <span class="error"><html:errors/></span>
         <html:form action="/adicionarAulasForm">
             <center> <b> <bean:message key="listAulas.available"/> </b> </center>
             <br/>
+			
             <!-- Cria a tabela das aulas -->
             <logic:present name="infoAulasDeDisciplinaExecucao" scope="session">
-                <table align="center" border=1 cellpadding='5'>
+                <table align="center"  cellpadding='5'>
                     <tr align='center'>
-                        <th>
-                        </th>
-                        <th>
+                        <td class="listClasses-header">
+							&nbsp;
+                        </td>
+                        <td class="listClasses-header">
                             <bean:message key="property.aula.weekDay"/>
-                        </th>
-                        <th>
+                        </td>
+                        <td class="listClasses-header">
                             <bean:message key="property.aula.time.begining"/>
-                        </th>
-                        <th>
+                        </td>
+                        <td class="listClasses-header">
                             <bean:message key="property.aula.time.end"/>
-                        </th>
-                        <th>
+                        </td>
+                        <td class="listClasses-header">
                             <bean:message key="property.aula.type"/>
-                        </th>
-                        <th>
+                        </td>
+                        <td class="listClasses-header">
                             <bean:message key="property.aula.sala"/>
-                        </th>
+                        </td class="listClasses-header">
                     </tr>
 
 		            <% int i = 0; %>
+					<bean:define id="lessonsList" name="infoAulasDeDisciplinaExecucao" />
+					
                     <logic:iterate id="elem" 
-                    	name="infoAulasDeDisciplinaExecucao">
+                    	name="infoAulasDeDisciplinaExecucao" type="DataBeans.InfoLesson">
+			<bean:define id="idInternal" name="elem" property="idInternal"/>
                        <% Integer iH = new Integer(((InfoLesson) iA.get(i)).getInicio().get(Calendar.HOUR_OF_DAY)); %>
                        <% Integer iM = new Integer(((InfoLesson) iA.get(i)).getInicio().get(Calendar.MINUTE)); %>
                        <% Integer fH = new Integer(((InfoLesson) iA.get(i)).getFim().get(Calendar.HOUR_OF_DAY)); %>
                        <% Integer fM = new Integer(((InfoLesson) iA.get(i)).getFim().get(Calendar.MINUTE)); %>
                        <tr align="center">
-                            <td>
-                            	<html:radio property="indexAula" value="<%= (new Integer(i)).toString() %>"/>
-                            </td>
-                            <td>
+					<td class="listClasses">
+						<html:multibox  property="lessonsList" value="<%=  idInternal.toString() %>" />
+					</td>
+                            <td class="listClasses">
                                 <bean:write name="elem" property="diaSemana" />
                             </td>
-                            <td>
+                            <td class="listClasses">
                             	<%= iH.toString()%> : <%= iM.toString()%>
                             </td>
-                            <td>
+                            <td class="listClasses">
                             	<%= fH.toString()%> : <%= fM.toString()%>
                             </td>
-                            <td>
+                            <td class="listClasses">
                             	<%= ((InfoLesson) iA.get(i)).getTipo().toString()%>
                             </td>
-                            <td>
+                            <td class="listClasses">
                                 <bean:write name="elem" property="infoSala.nome"/>
                             </td>
                         </tr>

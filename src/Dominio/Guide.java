@@ -12,8 +12,7 @@ import Util.PaymentType;
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class Guide implements IGuide {
-  protected Integer internalCode;
+public class Guide extends DomainObject implements IGuide  {
   protected Integer keyPerson;
   protected Integer keyContributor;
   protected Integer keyExecutionDegree;

@@ -3,7 +3,7 @@
 #-------------------------------------------
 DROP TABLE IF EXISTS EXECUTION_DEGREE;
 CREATE TABLE EXECUTION_DEGREE (
-  ID_INTERNAL int(11) NOT NULL default '0',
+  ID_INTERNAL int(11) NOT NULL default '0' auto_increment,
   ACADEMIC_YEAR int(11) NOT NULL,
   KEY_DEGREE_CURRICULAR_PLAN int(11) not null,
   KEY_TEACHER integer(11) not null,

@@ -139,7 +139,7 @@ public final class RenderTimeTableTag extends TagSupport {
 	}
 
 	private StringBuffer legenda(ArrayList listaAulas) {
-		StringBuffer result = new StringBuffer();
+		StringBuffer result = new StringBuffer("");
 		ArrayList listaAuxiliar = new ArrayList();
 		Iterator iterator = listaAulas.iterator();
 		while (iterator.hasNext()) {
@@ -151,21 +151,32 @@ public final class RenderTimeTableTag extends TagSupport {
 			if (!listaAuxiliar.contains(subtitleEntry))
 				listaAuxiliar.add(subtitleEntry);
 		}
-		Collections.sort(listaAuxiliar);
-		iterator = listaAuxiliar.iterator();
-		result.append(
-			"<br/><table align='center'><th colspan='3'>Legenda:</th>");
-		while (iterator.hasNext()) {
-			SubtitleEntry elem = (SubtitleEntry) iterator.next();
-			result.append("<tr><td>");
-			result.append(elem.getKey());
-			result.append("</td><td>");
-			result.append("-");
-			result.append("</td><td>");
-			result.append(elem.getValue());
-			result.append("</td></tr>");
+		
+		if (listaAuxiliar.size() > 1) {
+			Collections.sort(listaAuxiliar);
+			result.append(
+				"<br/><b>Legenda:</b><br /><br /><table cellpadding='0' cellspacing='0' style='margin-left:5px'>");
+			for (int i = 0; i < listaAuxiliar.size(); i ++ ) {
+				SubtitleEntry elem = (SubtitleEntry) listaAuxiliar.get(i);
+				boolean oddElement = (i % 2 == 1);
+				if (!oddElement) {
+					result.append("<tr>\r\n");
+				}
+				result.append("<td style='vertical-align:top'><b>");
+				result.append(elem.getKey());
+				result.append("</b></td><td  style='vertical-align:top'>-</td><td wrap='wrap'>");
+				result.append(elem.getValue());
+				result.append("</td>");
+				if (oddElement) {
+					result.append("</tr>\r\n");
+				}
+			}
+			if (listaAuxiliar.size() % 2 == 1) {
+				result.append("<td colspan='3'>&nbsp;</td></tr>");		
+			}
+			result.append("</table>");
+
 		}
-		result.append("</table>");
 		return result;
 	}
 

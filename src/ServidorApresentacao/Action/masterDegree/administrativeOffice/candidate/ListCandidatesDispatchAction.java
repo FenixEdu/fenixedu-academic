@@ -155,12 +155,10 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			}
 
 
-			InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
 			if (result.size() == 1) {
-
-				infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) result.get(0);
-				session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE);
-				session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
+				InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) result.get(0);
+				request.setAttribute("candidateID", infoMasterDegreeCandidate.getIdInternal());
+				request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST, result);
 				
 				return mapping.findForward("ActionReady");
 			}
@@ -206,19 +204,72 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			List candidateList = (List) session.getAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST);
 			
 
-			Integer choosenCandidatePosition = Integer.valueOf(request.getParameter("candidatePosition"));
+			Integer personID = Integer.valueOf(request.getParameter("personID"));
+			
+			// Read the Candidates for This Person
+			
+			List result = null;
+			
+			Object args[] = { personID };
+			try {
+				result = (List) serviceManager.executar(userView, "GetCandidatesByPerson", args);
+			} catch (Exception e) {
+				throw new Exception(e);
+			}
+			
+			InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) result.get(0);
+			request.setAttribute("candidateID", infoMasterDegreeCandidate.getIdInternal());
+			
+			request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST, result);
 			
 			
-			// Put the selected Candidate in Session
-			InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) candidateList.get(choosenCandidatePosition.intValue());
-		
-			session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
 			return mapping.findForward("ActionReady");
 			
 		} else
 	  		throw new Exception();  
 	}
 	  
+
+	public ActionForward visualize(ActionMapping mapping, ActionForm form,
+										 HttpServletRequest request,
+										 HttpServletResponse response)
+		throws Exception {
+
+		
+		HttpSession session = request.getSession(false);
+
+		if (session != null) {
+			
+			DynaActionForm listCandidatesForm = (DynaActionForm) form;
+
+
+			GestorServicos serviceManager = GestorServicos.manager();
+			
+			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+			Integer candidateID = (Integer) request.getAttribute("candidateID");
+			
+			if (candidateID == null){
+				candidateID = Integer.valueOf(request.getParameter("candidateID"));
+			}
+			
+			// Read the Candidates for This Person
+			
+			InfoMasterDegreeCandidate result = null;
+			
+			Object args[] = { candidateID };
+			try {
+				result = (InfoMasterDegreeCandidate) serviceManager.executar(userView, "GetCandidatesByID", args);
+			} catch (Exception e) {
+				throw new Exception(e);
+			}
+			
+			request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, result);
+			return mapping.findForward("VisualizeCandidate");
+			
+		} else
+			throw new Exception();  
+	}
+
 
 
 	public ActionForward prepareEdit(ActionMapping mapping, ActionForm form,
@@ -236,79 +287,28 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			GestorServicos serviceManager = GestorServicos.manager();
 
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) session.getAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE); 
-
-			// Fill in The Form
 			
-			InfoPerson infoPerson = infoMasterDegreeCandidate.getInfoPerson();
+			Integer candidateID = (Integer) request.getAttribute("candidateID");
+			if (candidateID == null){
+				candidateID = Integer.valueOf(request.getParameter("candidateID"));
+			}
 			
-			editCandidateForm.set("identificationDocumentNumber", infoPerson.getNumeroDocumentoIdentificacao());
-			editCandidateForm.set("identificationDocumentType", infoPerson.getTipoDocumentoIdentificacao().toString());
-			editCandidateForm.set("identificationDocumentIssuePlace", infoPerson.getLocalEmissaoDocumentoIdentificacao());
-			editCandidateForm.set("name", infoPerson.getNome());
-
-			Calendar birthDate = Calendar.getInstance();
-			if (infoPerson.getNascimento() == null) {
-				editCandidateForm.set("birthDay", Data.OPTION_DEFAULT);
-				editCandidateForm.set("birthMonth", Data.OPTION_DEFAULT);
-				editCandidateForm.set( "birthYear", Data.OPTION_DEFAULT);
-			} else {
-				birthDate.setTime(infoPerson.getNascimento());
-				editCandidateForm.set("birthDay", new Integer(birthDate.get(Calendar.DAY_OF_MONTH)).toString());
-				editCandidateForm.set("birthMonth", new Integer(birthDate.get(Calendar.MONTH)).toString());
-				editCandidateForm.set("birthYear", new Integer(birthDate.get(Calendar.YEAR)).toString());
+			
+			// Read the Candidates for This Person
+						
+			InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
+						
+			Object args[] = { candidateID };
+			try {
+				infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) serviceManager.executar(userView, "GetCandidatesByID", args);
+			} catch (Exception e) {
+				throw new Exception(e);
 			}
 
-			Calendar identificationDocumentIssueDate = Calendar.getInstance();
-			if (infoPerson.getDataEmissaoDocumentoIdentificacao() == null) {
-				editCandidateForm.set("idIssueDateDay", Data.OPTION_DEFAULT);
-				editCandidateForm.set("idIssueDateMonth", Data.OPTION_DEFAULT);
-				editCandidateForm.set("idIssueDateYear", Data.OPTION_DEFAULT);
-			} else {
-				identificationDocumentIssueDate.setTime(infoPerson.getDataEmissaoDocumentoIdentificacao());
-				editCandidateForm.set("idIssueDateDay", new Integer(identificationDocumentIssueDate.get(Calendar.DAY_OF_MONTH)).toString());
-				editCandidateForm.set("idIssueDateMonth", new Integer(identificationDocumentIssueDate.get(Calendar.MONTH)).toString());
-				editCandidateForm.set("idIssueDateYear", new Integer(identificationDocumentIssueDate.get(Calendar.YEAR)).toString());
+			boolean validationError = request.getParameter("error") != null;
+			if (!validationError){
+				populateForm(editCandidateForm, infoMasterDegreeCandidate);	
 			}
-
-			Calendar identificationDocumentExpirationDate = Calendar.getInstance();
-			if (infoPerson.getDataValidadeDocumentoIdentificacao() == null) {
-				editCandidateForm.set("idExpirationDateDay", Data.OPTION_DEFAULT);
-				editCandidateForm.set("idExpirationDateMonth", Data.OPTION_DEFAULT);
-				editCandidateForm.set("idExpirationDateYear", Data.OPTION_DEFAULT);
-			} else {
-				identificationDocumentExpirationDate.setTime(infoPerson.getDataValidadeDocumentoIdentificacao());
-				editCandidateForm.set("idExpirationDateDay", new Integer(identificationDocumentExpirationDate.get(Calendar.DAY_OF_MONTH)).toString());
-				editCandidateForm.set("idExpirationDateMonth", new Integer(identificationDocumentExpirationDate.get(Calendar.MONTH)).toString());
-				editCandidateForm.set("idExpirationDateYear",new Integer(identificationDocumentExpirationDate.get(Calendar.YEAR)).toString());
-			}
-
-			editCandidateForm.set("fatherName", infoPerson.getNomePai());
-			editCandidateForm.set("motherName", infoPerson.getNomeMae());
-			editCandidateForm.set("nationality", infoPerson.getInfoPais().getName());
-			editCandidateForm.set("birthPlaceParish", infoPerson.getFreguesiaNaturalidade());
-			editCandidateForm.set("birthPlaceMunicipality", infoPerson.getConcelhoNaturalidade());
-			editCandidateForm.set("birthPlaceDistrict", infoPerson.getDistritoNaturalidade());
-			editCandidateForm.set("address", infoPerson.getMorada());
-			editCandidateForm.set("place", infoPerson.getLocalidade());
-			editCandidateForm.set("postCode", infoPerson.getCodigoPostal());
-			editCandidateForm.set("addressParish",infoPerson.getFreguesiaMorada());
-			editCandidateForm.set("addressMunicipality",infoPerson.getConcelhoMorada());
-			editCandidateForm.set("addressDistrict",infoPerson.getDistritoMorada());
-			editCandidateForm.set("telephone", infoPerson.getTelefone());
-			editCandidateForm.set("mobilePhone", infoPerson.getTelemovel());
-			editCandidateForm.set("email", infoPerson.getEmail());
-			editCandidateForm.set("webSite", infoPerson.getEnderecoWeb());
-			editCandidateForm.set("contributorNumber",infoPerson.getNumContribuinte());
-			editCandidateForm.set("occupation", infoPerson.getProfissao());
-			editCandidateForm.set("username", infoPerson.getUsername());
-			editCandidateForm.set("areaOfAreaCode",infoPerson.getLocalidadeCodigoPostal());
-			editCandidateForm.set("situation",infoMasterDegreeCandidate.getInfoCandidateSituation().getSituation());
-			
-			if ((infoPerson.getSexo() != null))
-				editCandidateForm.set("sex", infoPerson.getSexo().toString());
-			if (infoPerson.getEstadoCivil() != null)
-				editCandidateForm.set("maritalStatus",infoPerson.getEstadoCivil().toString());
 
 			// Get List of available Countries
 			Object result = null;
@@ -325,26 +325,18 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 					new LabelValueBean(countryTemp.getNationality(),countryTemp.getNationality()));
 			}
 		
-			session.setAttribute(SessionConstants.NATIONALITY_LIST_KEY, nationalityList);
-			session.setAttribute(SessionConstants.MARITAL_STATUS_LIST_KEY, new EstadoCivil().toArrayList());
-			session.setAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY, TipoDocumentoIdentificacao.toArrayList());
-			session.setAttribute(SessionConstants.SEX_LIST_KEY, new Sexo().toArrayList());
-			session.setAttribute(SessionConstants.MONTH_DAYS_KEY, Data.getMonthDays());
-			session.setAttribute(SessionConstants.MONTH_LIST_KEY, Data.getMonths());
-			session.setAttribute(SessionConstants.YEARS_KEY, Data.getYears());
+			request.setAttribute(SessionConstants.NATIONALITY_LIST_KEY, nationalityList);
+			request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
+			request.setAttribute(SessionConstants.MARITAL_STATUS_LIST_KEY, new EstadoCivil().toArrayList());
+			request.setAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY, TipoDocumentoIdentificacao.toArrayList());
+			request.setAttribute(SessionConstants.SEX_LIST_KEY, new Sexo().toArrayList());
+			request.setAttribute(SessionConstants.MONTH_DAYS_KEY, Data.getMonthDays());
+			request.setAttribute(SessionConstants.MONTH_LIST_KEY, Data.getMonths());
+			request.setAttribute(SessionConstants.YEARS_KEY, Data.getYears());
 
-			session.setAttribute(SessionConstants.EXPIRATION_YEARS_KEY, Data.getExpirationYears());
+			request.setAttribute(SessionConstants.EXPIRATION_YEARS_KEY, Data.getExpirationYears());
 
-			session.setAttribute(SessionConstants.CANDIDATE_SITUATION_LIST, SituationName.toArrayList());
-
-			editCandidateForm.set("average", infoMasterDegreeCandidate.getAverage().toString());
-			editCandidateForm.set("majorDegree", infoMasterDegreeCandidate.getMajorDegree());
-			editCandidateForm.set("majorDegreeSchool", infoMasterDegreeCandidate.getMajorDegreeSchool());
-			
-			if ((infoMasterDegreeCandidate.getMajorDegreeYear().intValue() == 0))
-				editCandidateForm.set("majorDegreeYear", null);
-			else
-				editCandidateForm.set("majorDegreeYear", String.valueOf(infoMasterDegreeCandidate.getMajorDegreeYear()));
+			request.setAttribute(SessionConstants.CANDIDATE_SITUATION_LIST, SituationName.toArrayList());
 		
 			return mapping.findForward("PrepareReady");
 			
@@ -352,6 +344,8 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			throw new Exception();  
 	}
 	  
+
+
 
 	public ActionForward change(ActionMapping mapping, ActionForm form,
 										 HttpServletRequest request,
@@ -368,9 +362,9 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			GestorServicos serviceManager = GestorServicos.manager();
 
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			InfoMasterDegreeCandidate infoMasterDegreeCandidateInSession = (InfoMasterDegreeCandidate) session.getAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE); 
+			 
 
-
+			Integer candidateID = (Integer) editCandidateForm.get("candidateID");
 
 			
 			// FIXME: Check All if fields are empty 
@@ -470,8 +464,11 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			
 			newCandidate.setMajorDegree((String) editCandidateForm.get("majorDegree"));
 			newCandidate.setMajorDegreeSchool((String) editCandidateForm.get("majorDegreeSchool"));
+			newCandidate.setSpecializationArea((String) editCandidateForm.get("specializationArea"));
 			
 			String majorDegreeYearString = (String) editCandidateForm.get("majorDegreeYear");
+			
+			
 			
 			if ((majorDegreeYearString == null) || (majorDegreeYearString.length() == 0))
 				newCandidate.setMajorDegreeYear(null);
@@ -491,8 +488,11 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			infoCandidateSituation.setSituation(new SituationName(situation).toString());
 			newCandidate.setInfoCandidateSituation(infoCandidateSituation);
 
-			Object args[] = {infoMasterDegreeCandidateInSession, newCandidate};
+			Object args[] = {candidateID, newCandidate};
 			InfoMasterDegreeCandidate infoMasterDegreeCandidateChanged = null;
+			
+			
+			
 			try {
 				infoMasterDegreeCandidateChanged = (InfoMasterDegreeCandidate) serviceManager.executar(userView, "ChangeCandidate", args);
 			} catch(ExistingServiceException e){
@@ -502,21 +502,8 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			}
 
 
-			// Clear the Session
-			session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE);
-			session.removeAttribute(SessionConstants.NATIONALITY_LIST_KEY);
-			session.removeAttribute(SessionConstants.MARITAL_STATUS_LIST_KEY);
-			session.removeAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY);
-			session.removeAttribute(SessionConstants.SEX_LIST_KEY);
-			session.removeAttribute(SessionConstants.MONTH_DAYS_KEY);
-			session.removeAttribute(SessionConstants.MONTH_LIST_KEY);
-			session.removeAttribute(SessionConstants.YEARS_KEY);
-			session.removeAttribute(SessionConstants.EXPIRATION_YEARS_KEY);
-			session.removeAttribute(SessionConstants.CANDIDATE_SITUATION_LIST);
 
-
-
-			session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidateChanged);
+			request.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidateChanged);
 			return mapping.findForward("ChangeSuccess");
 			
 		} else
@@ -539,25 +526,134 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			GestorServicos serviceManager = GestorServicos.manager();
 
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			InfoMasterDegreeCandidate infoMasterDegreeCandidateInSession = (InfoMasterDegreeCandidate) session.getAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE); 
 
-			infoMasterDegreeCandidateInSession.getInfoPerson().setPassword(RandomStringGenerator.getRandomStringGenerator(8));					
+			// Read the Candidate
+
+			Integer candidateID = Integer.valueOf(request.getParameter("candidateID"));
+
+			InfoMasterDegreeCandidate infoMasterDegreeCandidate = null; 
+
+			try {
+				Object args[] = {candidateID };
+				infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) serviceManager.executar(userView, "GetCandidatesByID", args);
+			} catch (FenixServiceException e) {
+				throw new FenixActionException();
+			}
+
+			infoMasterDegreeCandidate.getInfoPerson().setPassword(RandomStringGenerator.getRandomStringGenerator(8));					
 	
-System.out.println("New Password: " + infoMasterDegreeCandidateInSession.getInfoPerson().getPassword());
+	
+System.out.println("New Password: " + infoMasterDegreeCandidate.getInfoPerson().getPassword());
 
 			// Write the Person
 			try {
-				Object args[] = {infoMasterDegreeCandidateInSession.getInfoPerson() };
+				Object args[] = {infoMasterDegreeCandidate.getInfoPerson().getIdInternal(), infoMasterDegreeCandidate.getInfoPerson().getPassword() };
 				serviceManager.executar(userView, "ChangePersonPassword", args);
 			} catch (FenixServiceException e) {
 				throw new FenixActionException();
 			}
 
+			session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
+			session.setAttribute(SessionConstants.PRINT_PASSWORD, Boolean.TRUE);
 			return mapping.findForward("ChangePasswordSuccess");
 						
 		} else
 			throw new Exception();  
 	}
+
+
+	private void populateForm(DynaActionForm editCandidateForm, InfoMasterDegreeCandidate infoMasterDegreeCandidate) {
+		// Fill in The Form
+		
+		InfoPerson infoPerson = infoMasterDegreeCandidate.getInfoPerson();
+		
+		editCandidateForm.set("identificationDocumentNumber", infoPerson.getNumeroDocumentoIdentificacao());
+		editCandidateForm.set("identificationDocumentType", infoPerson.getTipoDocumentoIdentificacao().toString());
+		editCandidateForm.set("identificationDocumentIssuePlace", infoPerson.getLocalEmissaoDocumentoIdentificacao());
+		editCandidateForm.set("name", infoPerson.getNome());
+		
+		Calendar birthDate = Calendar.getInstance();
+		if (infoPerson.getNascimento() == null) {
+			editCandidateForm.set("birthDay", Data.OPTION_DEFAULT);
+			editCandidateForm.set("birthMonth", Data.OPTION_DEFAULT);
+			editCandidateForm.set( "birthYear", Data.OPTION_DEFAULT);
+		} else {
+			birthDate.setTime(infoPerson.getNascimento());
+			editCandidateForm.set("birthDay", new Integer(birthDate.get(Calendar.DAY_OF_MONTH)).toString());
+			editCandidateForm.set("birthMonth", new Integer(birthDate.get(Calendar.MONTH)).toString());
+			editCandidateForm.set("birthYear", new Integer(birthDate.get(Calendar.YEAR)).toString());
+		}
+		
+		Calendar identificationDocumentIssueDate = Calendar.getInstance();
+		if (infoPerson.getDataEmissaoDocumentoIdentificacao() == null) {
+			editCandidateForm.set("idIssueDateDay", Data.OPTION_DEFAULT);
+			editCandidateForm.set("idIssueDateMonth", Data.OPTION_DEFAULT);
+			editCandidateForm.set("idIssueDateYear", Data.OPTION_DEFAULT);
+		} else {
+			identificationDocumentIssueDate.setTime(infoPerson.getDataEmissaoDocumentoIdentificacao());
+			editCandidateForm.set("idIssueDateDay", new Integer(identificationDocumentIssueDate.get(Calendar.DAY_OF_MONTH)).toString());
+			editCandidateForm.set("idIssueDateMonth", new Integer(identificationDocumentIssueDate.get(Calendar.MONTH)).toString());
+			editCandidateForm.set("idIssueDateYear", new Integer(identificationDocumentIssueDate.get(Calendar.YEAR)).toString());
+		}
+		
+		Calendar identificationDocumentExpirationDate = Calendar.getInstance();
+		if (infoPerson.getDataValidadeDocumentoIdentificacao() == null) {
+			editCandidateForm.set("idExpirationDateDay", Data.OPTION_DEFAULT);
+			editCandidateForm.set("idExpirationDateMonth", Data.OPTION_DEFAULT);
+			editCandidateForm.set("idExpirationDateYear", Data.OPTION_DEFAULT);
+		} else {
+			identificationDocumentExpirationDate.setTime(infoPerson.getDataValidadeDocumentoIdentificacao());
+			editCandidateForm.set("idExpirationDateDay", new Integer(identificationDocumentExpirationDate.get(Calendar.DAY_OF_MONTH)).toString());
+			editCandidateForm.set("idExpirationDateMonth", new Integer(identificationDocumentExpirationDate.get(Calendar.MONTH)).toString());
+			editCandidateForm.set("idExpirationDateYear",new Integer(identificationDocumentExpirationDate.get(Calendar.YEAR)).toString());
+		}
+		
+		editCandidateForm.set("fatherName", infoPerson.getNomePai());
+		editCandidateForm.set("motherName", infoPerson.getNomeMae());
+		editCandidateForm.set("nationality", infoPerson.getInfoPais().getName());
+		editCandidateForm.set("birthPlaceParish", infoPerson.getFreguesiaNaturalidade());
+		editCandidateForm.set("birthPlaceMunicipality", infoPerson.getConcelhoNaturalidade());
+		editCandidateForm.set("birthPlaceDistrict", infoPerson.getDistritoNaturalidade());
+		editCandidateForm.set("address", infoPerson.getMorada());
+		editCandidateForm.set("place", infoPerson.getLocalidade());
+		editCandidateForm.set("postCode", infoPerson.getCodigoPostal());
+		editCandidateForm.set("addressParish",infoPerson.getFreguesiaMorada());
+		editCandidateForm.set("addressMunicipality",infoPerson.getConcelhoMorada());
+		editCandidateForm.set("addressDistrict",infoPerson.getDistritoMorada());
+		editCandidateForm.set("telephone", infoPerson.getTelefone());
+		editCandidateForm.set("mobilePhone", infoPerson.getTelemovel());
+		editCandidateForm.set("email", infoPerson.getEmail());
+		editCandidateForm.set("webSite", infoPerson.getEnderecoWeb());
+		editCandidateForm.set("contributorNumber",infoPerson.getNumContribuinte());
+		editCandidateForm.set("occupation", infoPerson.getProfissao());
+		editCandidateForm.set("username", infoPerson.getUsername());
+		editCandidateForm.set("areaOfAreaCode",infoPerson.getLocalidadeCodigoPostal());
+		editCandidateForm.set("situation",infoMasterDegreeCandidate.getInfoCandidateSituation().getSituation());
+		editCandidateForm.set("specializationArea",infoMasterDegreeCandidate.getSpecializationArea());
+		editCandidateForm.set("average", infoMasterDegreeCandidate.getAverage().toString());
+		editCandidateForm.set("majorDegree", infoMasterDegreeCandidate.getMajorDegree());
+		editCandidateForm.set("majorDegreeSchool", infoMasterDegreeCandidate.getMajorDegreeSchool());
+
+
+
+		editCandidateForm.set("candidateID", infoMasterDegreeCandidate.getIdInternal());
+
+
+
+		if ((infoPerson.getSexo() != null))
+			editCandidateForm.set("sex", infoPerson.getSexo().toString());
+		if (infoPerson.getEstadoCivil() != null)
+			editCandidateForm.set("maritalStatus",infoPerson.getEstadoCivil().toString());
+		
+		if ((infoMasterDegreeCandidate.getMajorDegreeYear().intValue() == 0))
+			editCandidateForm.set("majorDegreeYear", null);
+		else
+			editCandidateForm.set("majorDegreeYear", String.valueOf(infoMasterDegreeCandidate.getMajorDegreeYear()));
+			
+			
+		
+	}
+
 
 	  
 }

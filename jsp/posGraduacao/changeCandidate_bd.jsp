@@ -13,7 +13,10 @@
 <%@ page import="ServidorAplicacao.Servico.UserView" %>
 <html:form action="/editCandidate?method=change">
 <html:hidden property="page" value="1"/>  
-	<bean:define id="infoCandidate" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE %>" scope="session"/>
+   	  <html:hidden property="candidateID" />  
+   	  
+   <table>
+ 		<bean:define id="infoCandidate" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE %>" scope="request"/>
    	<bean:define id="personalInfo" name="infoCandidate" property="infoPerson" />
     	<span class="error"><html:errors/></span>
 <h2><bean:message key="label.person.title.changePersonalInfo" /></h2>
@@ -52,9 +55,6 @@
          <td><html:text property="specializationArea"/></td>
          </td>
        </tr>
-        
-        
-        
         <!-- Nome do Pai -->
         <tr>
          <td width="30%"><bean:message key="label.person.fatherName" /></td>
@@ -298,12 +298,18 @@
 		 </td>
         </tr>
    </table>
-<br />
-   <html:submit property="Alterar" styleClass="inputbutton">Alterar Dados</html:submit>
-   <html:reset property="Reset" styleClass="inputbutton">Dados Originais</html:reset>
-   <% InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) session.getAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE); 
+   <html:submit property="Alterar">Alterar Dados</html:submit>
+   
+   <html:reset property="Reset">Dados Originais</html:reset>
+   
+   <% InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) request.getAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE); 
       if (!infoMasterDegreeCandidate.getInfoCandidateSituation().getSituation().equals(SituationName.PRE_CANDIDATO_STRING)) {	%>
-       <html:link page="/editCandidate.do?method=changePassword" target="_blank">
+
+		<bean:define id="link">/editCandidate.do?method=changePassword&candidateID=
+			<bean:write name="infoCandidate" property="idInternal"/>
+		</bean:define>
+
+        <html:link page='<%= pageContext.findAttribute("link").toString() %>' target="_blank">
        		<bean:message key="link.masterDegree.administrativeOffice.changePassword" />
        	</html:link>
    <% } %>

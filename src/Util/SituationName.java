@@ -32,6 +32,7 @@ public class SituationName {
 	public static final int FALTA_CERTIFICADO = 10;
 	public static final int PENDENT_COM_DADOS = 11;
 	public static final int PENDENT_CONFIRMADO = 12;
+	public static final int ANNULLED = 13;
     
     public static final String PENDENTE_STRING = "Pendente";
     public static final String ADMITIDO_STRING = "Admitido";
@@ -46,6 +47,7 @@ public class SituationName {
 	public static final String DEFAULT = "[Escolha uma Situação]";
 	public static final String PENDENTE_COM_DADOS_STRING = "Pendente com dados preenchidos";
 	public static final String PENDENTE_CONFIRMADO_STRING = "Pendente com dados confirmados";
+	public static final String ANNULLED_STRING = "Anulada";
     
     private Integer situationName;
 
@@ -85,6 +87,7 @@ public class SituationName {
 		if (nomeSituacao.equals(SituationName.FALTA_CERTIFICADO_STRING)) this.situationName = new Integer(SituationName.FALTA_CERTIFICADO);
 		if (nomeSituacao.equals(SituationName.PENDENTE_COM_DADOS_STRING)) this.situationName = new Integer(SituationName.PENDENT_COM_DADOS);
 		if (nomeSituacao.equals(SituationName.PENDENTE_CONFIRMADO_STRING)) this.situationName = new Integer(SituationName.PENDENT_CONFIRMADO);
+		if (nomeSituacao.equals(SituationName.ANNULLED_STRING)) this.situationName = new Integer(SituationName.ANNULLED);
     }
     
     public String toString() {
@@ -100,6 +103,7 @@ public class SituationName {
 		if (situationName.intValue()== SituationName.FALTA_CERTIFICADO) return SituationName.FALTA_CERTIFICADO_STRING;
 		if (situationName.intValue()== SituationName.PENDENT_COM_DADOS) return SituationName.PENDENTE_COM_DADOS_STRING;
 		if (situationName.intValue()== SituationName.PENDENT_CONFIRMADO) return SituationName.PENDENTE_CONFIRMADO_STRING;
+		if (situationName.intValue()== SituationName.ANNULLED) return SituationName.ANNULLED_STRING;
 	    return "ERRO!"; // Nunca e atingido
     }
     
@@ -118,6 +122,7 @@ public class SituationName {
 		result.add(new LabelValueBean(SituationName.FALTA_CERTIFICADO_STRING , SituationName.FALTA_CERTIFICADO_STRING));
 		result.add(new LabelValueBean(SituationName.PENDENTE_CONFIRMADO_STRING , SituationName.PENDENTE_CONFIRMADO_STRING));
 		result.add(new LabelValueBean(SituationName.PENDENTE_COM_DADOS_STRING , SituationName.PENDENTE_COM_DADOS_STRING));
+		result.add(new LabelValueBean(SituationName.ANNULLED_STRING , SituationName.ANNULLED_STRING));
 		
 		return result;	
     }

@@ -12,6 +12,7 @@ import Dominio.IGuide;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentGuide;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.TipoDocumentoIdentificacao;
 
 /**
  * 
@@ -39,8 +40,8 @@ public class GuideOJB extends ObjectFenixOJB implements IPersistentGuide {
 			super.lockWrite(guideToWrite);
 		// else if (guide is mapped to the database then write any existing changes)
 		else if ((guideToWrite instanceof IGuide) &&
-				 ((Guide) guideBD).getInternalCode().equals(
-		          ((Guide) guideToWrite).getInternalCode())) {
+				 ((Guide) guideBD).getIdInternal().equals(
+		          ((Guide) guideToWrite).getIdInternal())) {
 
 			guideBD.setTotal(guideToWrite.getTotal());
 			guideBD.setRemarks(guideToWrite.getRemarks());
@@ -119,18 +120,77 @@ public class GuideOJB extends ObjectFenixOJB implements IPersistentGuide {
 		}
 	}
 		
+
+
+	/**
+	 * IMPORTANT: If the ordering is changed here you must change the private method getLatestVersions in
+	 * the ChooseGuide Service 
+	 */
 	public List readByYear(Integer year) throws ExcepcaoPersistencia {
-
 		Criteria criteria = new Criteria();
-		QueryByCriteria query = new QueryByCriteria(Guide.class, criteria);
-		query.addGroupBy("number");
+		//QueryByCriteria query = new QueryByCriteria(Guide.class, criteria);
 		
+	//	criteria.addOrderByAscending("number");
+	//	criteria.addOrderByDescending("version");
+
 		criteria.addEqualTo("year", year);
+			
 
-		List result = (List) PersistenceBrokerFactory.defaultPersistenceBroker().getCollectionByQuery(query);
+		List result = queryList(Guide.class, criteria);
+		//(List) PersistenceBrokerFactory.defaultPersistenceBroker().getCollectionByQuery(query);
 
+		if ((result == null) || (result.size() == 0)) {
+			return null;
+		}
+		
 		lockRead(result);
 		return result;
 	}
 	
+	public IGuide readLatestVersion(Integer year, Integer number) throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		QueryByCriteria query = new QueryByCriteria(Guide.class, criteria);
+		query.addOrderByDescending("version");
+	
+		criteria.addEqualTo("year", year);
+		criteria.addEqualTo("number", number);
+	
+		List result = (List) PersistenceBrokerFactory.defaultPersistenceBroker().getCollectionByQuery(query);
+	
+	
+		if (result.size() != 0){
+			return (IGuide) result.get(0);
+		}
+		
+		return null;
+	}
+		
+
+	public List readByPerson(String identificationDocumentNumber, TipoDocumentoIdentificacao identificationDocumentType) throws ExcepcaoPersistencia {
+
+		Criteria criteria = new Criteria();
+		//QueryByCriteria query = new QueryByCriteria(Guide.class, criteria);
+		
+//		query.addGroupBy("number");
+
+		criteria.addEqualTo("person.numeroDocumentoIdentificacao", identificationDocumentNumber);
+		criteria.addEqualTo("person.tipoDocumentoIdentificacao", identificationDocumentType.getTipo());
+
+		List result = queryList(Guide.class, criteria);
+
+		
+		return result;
+	}
+	
+	public static void main(String args[]) throws ExcepcaoPersistencia{
+		
+		SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
+		sp.iniciarTransaccao();
+//		System.out.println(((IGuide) sp.getIPersistentGuide().readLatestVersion(new Integer(2003), new Integer(199))).getVersion());
+		sp.getIPersistentGuide().readByYear(new Integer(2003));
+		
+		sp.confirmarTransaccao();
+		
+	}
+
 }

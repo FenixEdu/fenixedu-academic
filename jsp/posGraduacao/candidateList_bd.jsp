@@ -7,14 +7,13 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="Util.Data" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<title><bean:message key="title.masterDegree.administrativeOffice.listCandidates" /></title>
     <span class="error"><html:errors/></span>
     	<bean:define id="candidateList" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE_LIST %>" scope="session" />
     	<bean:define id="findQuery" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE_QUERY %>" scope="session" />
     	<bean:define id="title" name="<%= SessionConstants.MASTER_DEGREE_CANDIDATE_ACTION %>" scope="session" /> 
     	<bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>" />
 		<bean:define id="link">
-		<bean:write name="path"/>.do?method=chooseCandidate<%= "&" %>candidatePosition=
+		<bean:write name="path"/>.do?method=chooseCandidate<%= "&" %>personID=
 		</bean:define>
 	<h2><bean:message name="title"/></h2>
     	<p><b>Critérios de procura:</b><br /><br /><bean:write name="findQuery" filter="false"/></p>
@@ -36,7 +35,7 @@
 		</tr>
     		<logic:iterate id="candidate" name="candidateList" indexId="indexCandidate">
     			<bean:define id="candidateLink">
-    				<bean:write name="link"/><bean:write name="indexCandidate"/>
+    				<bean:write name="link"/><bean:write name="candidate" property="infoPerson.idInternal"/>
     			</bean:define>
     	<tr>
     		<td class="listClasses">

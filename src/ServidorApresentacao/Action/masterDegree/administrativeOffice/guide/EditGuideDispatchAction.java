@@ -262,13 +262,14 @@ public class EditGuideDispatchAction extends DispatchAction {
  
 			String othersRemarks = (String) request.getParameter("othersRemarks");
 			
-			Object args[] = { guideNumber, guideYear, guideVersion };
+			
 			
 			// Read the Guide 
 			
 			InfoGuide infoGuide = null;
 			List contributors = null;			
 			try {
+				Object args[] = { guideNumber, guideYear, guideVersion };
 				infoGuide = (InfoGuide) serviceManager.executar(userView, "ChooseGuide", args);
 			} catch (FenixServiceException e) {
 				throw new FenixActionException(e);
@@ -277,11 +278,10 @@ public class EditGuideDispatchAction extends DispatchAction {
 			
 			String contributorString = (String) editGuideForm.get("contributor");
 
-
 			Integer contributorNumber = null;
 			if ((contributorString != null) && (contributorString.length() != 0))
 				contributorNumber = new Integer(contributorString);
-		
+			
 			// Fill in the quantity List
 			Enumeration arguments = request.getParameterNames();
 			
@@ -325,24 +325,38 @@ public class EditGuideDispatchAction extends DispatchAction {
 			}
 
 			
-			Object args2[] = {infoGuide, quantityList, contributorNumber , othersRemarks, othersQuantity, othersPrice};
+			
 			Integer oldGuideVersion = new Integer(infoGuide.getVersion().intValue());
 
 			InfoGuide result = null;
 			try {
-				result = (InfoGuide) serviceManager.executar(userView, "EditGuideInformation", args2);
+				Object args[] = {infoGuide, quantityList, contributorNumber , othersRemarks, othersQuantity, othersPrice};
+				result = (InfoGuide) serviceManager.executar(userView, "EditGuideInformation", args);
 			} catch (InvalidChangeServiceException e) {
 				throw new InvalidChangeActionException(e);
 			} catch (NoChangeMadeServiceException e) {
 				throw new NoChangeMadeActionException(e);
 			}
 
-			// Add the new Version to the Guide List
-			if (!oldGuideVersion.equals(result.getVersion())){
-				List guides = (List) session.getAttribute(SessionConstants.GUIDE_LIST);
-				guides.add(result);
-				session.setAttribute(SessionConstants.GUIDE_LIST, guides);
+
+			// Read The new Guide
+			
+			List guideList = null;
+			try {
+				Object args[] = { guideNumber, guideYear };
+				guideList = (List) serviceManager.executar(userView, "ChooseGuide", args);
+			} catch (NonExistingServiceException e) {
+				throw new NonExistingActionException("A Guia", e);
 			}
+			request.setAttribute(SessionConstants.GUIDE_LIST, guideList);
+
+
+			// Add the new Version to the Guide List
+//			if (!oldGuideVersion.equals(result.getVersion())){
+//				List guides = (List) session.getAttribute(SessionConstants.GUIDE_LIST);
+//				guides.add(result);
+//				session.setAttribute(SessionConstants.GUIDE_LIST, guides);
+//			}
 			
 			request.setAttribute(SessionConstants.GUIDE, result);
 			return mapping.findForward("EditInformationSuccess");			

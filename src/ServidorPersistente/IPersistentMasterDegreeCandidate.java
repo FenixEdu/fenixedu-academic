@@ -23,7 +23,7 @@ import Dominio.IPessoa;
 import Util.SituationName;
 import Util.Specialization;
 
-public interface IPersistentMasterDegreeCandidate {
+public interface IPersistentMasterDegreeCandidate extends IPersistentObject {
 	/**
 	 * 
 	 * @param username
@@ -155,6 +155,15 @@ public interface IPersistentMasterDegreeCandidate {
 	 * @throws ExcepcaoPersistencia
 	 */
 	public List readByExecutionDegree(ICursoExecucao executionDegree) throws ExcepcaoPersistencia;
+	
+	/**
+	 * 
+	 * @param personID
+	 * @return The Master degree candidate's for this person
+	 * @throws ExcepcaoPersistencia
+	 */
+	public List readByPersonID(Integer personID) throws ExcepcaoPersistencia;
+	
 	
 			
 } // End of class definition

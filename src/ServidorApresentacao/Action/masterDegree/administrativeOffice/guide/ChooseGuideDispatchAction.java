@@ -29,7 +29,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  * 
- * This is the Action to Choose choose, visualize and edit a Guide.
+ * This is the Action to choose, visualize and edit a Guide.
  * 
  */
 public class ChooseGuideDispatchAction extends DispatchAction {
@@ -51,6 +51,7 @@ public class ChooseGuideDispatchAction extends DispatchAction {
 			
 			session.removeAttribute(SessionConstants.GUIDE);
 			session.removeAttribute(SessionConstants.GUIDE_LIST);
+			session.removeAttribute(SessionConstants.REQUESTER_NUMBER);
 			
 			if (action.equals("visualize")) {
 				session.setAttribute(SessionConstants.ACTION, "label.action.visualizeGuide");
@@ -98,9 +99,8 @@ public class ChooseGuideDispatchAction extends DispatchAction {
 				throw new NonExistingActionException("A Guia", e);
 			}
 
-			session.setAttribute(SessionConstants.GUIDE_LIST, result);
+			request.setAttribute(SessionConstants.GUIDE_LIST, result);
 			if (result.size() == 1) {
-
 				request.setAttribute(SessionConstants.GUIDE, result.get(0));
 				return mapping.findForward("ActionReady");
 			}
@@ -134,17 +134,29 @@ public class ChooseGuideDispatchAction extends DispatchAction {
 			Integer guideNumber = new Integer((String) request.getParameter("number"));
 			Integer guideYear = new Integer((String) request.getParameter("year"));
 			Integer guideVersion = new Integer((String) request.getParameter("version"));
-					
-			Object args[] = { guideNumber, guideYear , guideVersion };
+			
+			
 	  
 			InfoGuide infoGuide = null;
 
 			try {
+				Object args[] = { guideNumber, guideYear , guideVersion };
 				infoGuide = (InfoGuide) serviceManager.executar(userView, "ChooseGuide", args);
 			} catch (NonExistingServiceException e) {
 				throw new NonExistingActionException("A Versão da Guia", e);
 			}
 
+	  
+			List guideList = null;
+			try {
+				Object args[] = { guideNumber, guideYear };
+				guideList = (List) serviceManager.executar(userView, "ChooseGuide", args);
+			} catch (NonExistingServiceException e) {
+				throw new NonExistingActionException("A Guia", e);
+			}
+			
+			
+			request.setAttribute(SessionConstants.GUIDE_LIST, guideList);
 			request.setAttribute(SessionConstants.GUIDE, infoGuide);
 			return mapping.findForward("ActionReady");
 		} else

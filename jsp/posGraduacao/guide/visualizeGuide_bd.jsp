@@ -160,7 +160,7 @@
     </bean:define>
 	
 
-			<% List guideList = (List) session.getAttribute(SessionConstants.GUIDE_LIST);
+			<% List guideList = (List) request.getAttribute(SessionConstants.GUIDE_LIST);
 			   InfoGuide guide = (InfoGuide) request.getAttribute(SessionConstants.GUIDE);
 			   if(guide.getVersion().equals(new Integer(guideList.size())) && !guide.getInfoGuideSituation().getSituation().equals(SituationOfGuide.ANNULLED_TYPE)) {
 			%>	

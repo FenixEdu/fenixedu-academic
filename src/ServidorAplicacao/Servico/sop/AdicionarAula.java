@@ -11,16 +11,16 @@ package ServidorAplicacao.Servico.sop;
  *
  * @author tfc130
  **/
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import DataBeans.InfoLesson;
 import DataBeans.InfoShift;
 import DataBeans.InfoShiftServiceResult;
 import DataBeans.util.Cloner;
+import Dominio.Aula;
 import Dominio.IAula;
 import Dominio.IDisciplinaExecucao;
-import Dominio.ISala;
 import Dominio.ITurno;
 import Dominio.ITurnoAula;
 import Dominio.Turno;
@@ -57,12 +57,12 @@ public class AdicionarAula implements IServico {
 		return "AdicionarAula";
 	}
 
-	public Object run(InfoShift infoShift, InfoLesson infoLesson)
+	public List run(InfoShift infoShift, String[] classesList)
 		throws FenixServiceException {
 
 		ITurnoAula turnoAula = null;
 		InfoShiftServiceResult result = null;
-
+		List serviceResult = new ArrayList();
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
@@ -74,34 +74,33 @@ public class AdicionarAula implements IServico {
 				sp.getITurnoPersistente().readByNameAndExecutionCourse(
 					infoShift.getNome(),
 					executionCourse);
-			ISala sala1 =
-				sp.getISalaPersistente().readByName(
-					infoLesson.getInfoSala().getNome());
-			IAula aula1 =
-				sp.getIAulaPersistente().readByDiaSemanaAndInicioAndFimAndSala(
-					infoLesson.getDiaSemana(),
-					infoLesson.getInicio(),
-					infoLesson.getFim(),
-					sala1,
-					executionCourse.getExecutionPeriod());
 
-			turnoAula = new TurnoAula(turno1, aula1);
-
-			result = valid(turno1, aula1);
-
-			if (result.isSUCESS()) {
-				try {
-					sp.getITurnoAulaPersistente().lockWrite(turnoAula);
-				} catch (ExistingPersistentException ex) {
-					throw new ExistingServiceException(ex);
+			int i = 0;
+			while (i < classesList.length) {
+				Integer lessonId = new Integer(classesList[i]);
+				IAula lesson = new Aula(lessonId);
+				lesson = (IAula) sp.getIAulaPersistente().readByOId(lesson,false);
+				if (lesson != null) {
+					turnoAula = new TurnoAula(turno1, lesson);
+					System.out.println("#################lesson->"+lesson);
+					result = valid(turno1, lesson);
+					serviceResult.add(result);
+					if (result.isSUCESS()) {
+						try {
+							sp.getITurnoAulaPersistente().lockWrite(turnoAula);
+						} catch (ExistingPersistentException ex) {
+							throw new ExistingServiceException(ex);
+						}
+					}
 				}
+				i++;
 			}
 
 		} catch (ExcepcaoPersistencia ex) {
 			throw new FenixServiceException(ex.getMessage());
 		}
 
-		return result;
+		return serviceResult;
 	}
 
 	private InfoShiftServiceResult valid(ITurno shift, IAula lesson)
@@ -196,7 +195,7 @@ public class AdicionarAula implements IServico {
 		for (int i = 0; i < lessonsOfShiftType.size(); i++) {
 			lesson = ((ITurnoAula) lessonsOfShiftType.get(i)).getAula();
 			duration += (getLessonDurationInMinutes(lesson).doubleValue() / 60);
-		
+
 		}
 		return duration;
 	}

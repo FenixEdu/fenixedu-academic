@@ -10,6 +10,8 @@
 	<li><html:link page="/chooseGuideDispatchAction.do?method=prepareChoose&page=0&action=visualize"><bean:message key="link.masterDegree.administrativeOffice.visualizeGuide" /></html:link></li>
 	<li><bean:message key="link.masterDegree.administrativeOffice.guideListing" /></li>
 <dd><html:link page="/guideListingByYear.do?method=prepareChooseYear"><bean:message key="link.masterDegree.administrativeOffice.guideListingByYear" /></html:link></dd>
+<dd><html:link page="/guideListingByPerson.do?method=prepareChoosePerson&amp;page=0"><bean:message key="link.masterDegree.administrativeOffice.guideListingByPerson" /></html:link></dd>
+
 </ul>
 <ul>
 	<li><html:link page="/studentSection.do"><bean:message key="label.coordinator.student" /></html:link></li>

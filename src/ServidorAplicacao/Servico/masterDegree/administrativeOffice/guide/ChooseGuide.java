@@ -5,19 +5,24 @@
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.guide;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 
 import DataBeans.InfoGuide;
 import DataBeans.util.Cloner;
 import Dominio.IGuide;
+import Dominio.IPessoa;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-
+import Util.TipoDocumentoIdentificacao;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -25,9 +30,8 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class ChooseGuide implements IServico {
 
-
 	private static ChooseGuide servico = new ChooseGuide();
-    
+
 	/**
 	 * The singleton access method of this class.
 	 **/
@@ -38,7 +42,7 @@ public class ChooseGuide implements IServico {
 	/**
 	 * The actor of this class.
 	 **/
-	private ChooseGuide() { 
+	private ChooseGuide() {
 	}
 
 	/**
@@ -55,47 +59,61 @@ public class ChooseGuide implements IServico {
 
 		try {
 			sp = SuportePersistenteOJB.getInstance();
-			guides = sp.getIPersistentGuide().readByNumberAndYear(guideNumber, guideYear);
-			
+			guides =
+				sp.getIPersistentGuide().readByNumberAndYear(
+					guideNumber,
+					guideYear);
+
 		} catch (ExcepcaoPersistencia ex) {
-			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+			FenixServiceException newEx =
+				new FenixServiceException("Persistence layer error");
 			newEx.fillInStackTrace();
 			throw newEx;
 		}
 
 		if (guides == null) {
-			throw new NonExistingServiceException();		
+			throw new NonExistingServiceException();
 		}
-		
+
 		Iterator iterator = guides.iterator();
 		List result = new ArrayList();
-		while(iterator.hasNext()){
+		while (iterator.hasNext()) {
 			IGuide guide = (IGuide) iterator.next();
 			result.add(Cloner.copyIGuide2InfoGuide(guide));
 		}
 		return result;
 	}
-	
-	public InfoGuide run(Integer guideNumber, Integer guideYear, Integer guideVersion) throws Exception {
+
+	public InfoGuide run(
+		Integer guideNumber,
+		Integer guideYear,
+		Integer guideVersion)
+		throws Exception {
 
 		ISuportePersistente sp = null;
 		InfoGuide infoGuide = null;
 		IGuide guide = null;
-		
+
 		try {
 			sp = SuportePersistenteOJB.getInstance();
-			guide = sp.getIPersistentGuide().readByNumberAndYearAndVersion(guideNumber, guideYear, guideVersion);
-			
+
+			guide =
+				sp.getIPersistentGuide().readByNumberAndYearAndVersion(
+					guideNumber,
+					guideYear,
+					guideVersion);
+
 		} catch (ExcepcaoPersistencia ex) {
-			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+			FenixServiceException newEx =
+				new FenixServiceException("Persistence layer error");
 			newEx.fillInStackTrace();
 			throw newEx;
 		}
 
 		if (guide == null) {
-			throw new NonExistingServiceException();		
+			throw new NonExistingServiceException();
 		}
-		
+
 		return Cloner.copyIGuide2InfoGuide(guide);
 	}
 
@@ -106,26 +124,114 @@ public class ChooseGuide implements IServico {
 
 		try {
 			sp = SuportePersistenteOJB.getInstance();
+
 			guides = sp.getIPersistentGuide().readByYear(guideYear);
-			
+
 		} catch (ExcepcaoPersistencia ex) {
-			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+			FenixServiceException newEx =
+				new FenixServiceException("Persistence layer error");
 			newEx.fillInStackTrace();
 			throw newEx;
 		}
 
 		if (guides == null) {
-			throw new NonExistingServiceException();		
+			throw new NonExistingServiceException();
 		}
-		
-		Iterator iterator = guides.iterator();
+		BeanComparator numberComparator = new BeanComparator("number");
+		BeanComparator versionComparator = new BeanComparator("version");
+		ComparatorChain chainComparator = new ComparatorChain();
+		chainComparator.addComparator(numberComparator);
+		chainComparator.addComparator(versionComparator);
+		Collections.sort(guides, chainComparator);
+
+		//	CollectionUtils.filter(guides,)
+		List result = getLatestVersions(guides);
+
+		return result;
+
+	}
+
+	/**
+	 * 
+	 * This function expects to receive a list ordered by number (Ascending) and version (Descending)
+	 * 
+	 * @param guides
+	 * @return The latest version for the guides
+	 */
+	private List getLatestVersions(List guides) {
 		List result = new ArrayList();
-		while(iterator.hasNext()){
+		Integer numberAux = null;
+
+		Collections.reverse(guides);
+
+		Iterator iterator = guides.iterator();
+		while (iterator.hasNext()) {
 			IGuide guide = (IGuide) iterator.next();
-			result.add(Cloner.copyIGuide2InfoGuide(guide));
+
+			if ((numberAux == null)
+				|| (numberAux.intValue() != guide.getNumber().intValue())) {
+				numberAux = guide.getNumber();
+				result.add(Cloner.copyIGuide2InfoGuide(guide));
+			}
 		}
+		Collections.reverse(result);
 		return result;
 	}
 
+	public List run(
+		String identificationDocumentNumber,
+		TipoDocumentoIdentificacao identificationDocumentType)
+		throws Exception {
+
+		ISuportePersistente sp = null;
+		List guides = null;
+		IPessoa person = null;
+
+		// Check if person exists
+
+		try {
+			sp = SuportePersistenteOJB.getInstance();
+			person =
+				sp.getIPessoaPersistente().lerPessoaPorNumDocIdETipoDocId(
+					identificationDocumentNumber,
+					identificationDocumentType);
+
+		} catch (ExcepcaoPersistencia ex) {
+			FenixServiceException newEx =
+				new FenixServiceException("Persistence layer error");
+			newEx.fillInStackTrace();
+			throw newEx;
+		}
+
+		if (person == null) {
+			throw new NonExistingServiceException();
+		}
+
+		try {
+			sp = SuportePersistenteOJB.getInstance();
+			guides =
+				sp.getIPersistentGuide().readByPerson(
+					identificationDocumentNumber,
+					identificationDocumentType);
+
+		} catch (ExcepcaoPersistencia ex) {
+			FenixServiceException newEx =
+				new FenixServiceException("Persistence layer error");
+			newEx.fillInStackTrace();
+			throw newEx;
+		}
+
+		if ((guides == null) || (guides.size() == 0)) {
+			return null;
+		}
+		BeanComparator numberComparator = new BeanComparator("number");
+		BeanComparator versionComparator = new BeanComparator("version");
+		ComparatorChain chainComparator = new ComparatorChain();
+		chainComparator.addComparator(numberComparator);
+		chainComparator.addComparator(versionComparator);
+		Collections.sort(guides, chainComparator);
+
+		return getLatestVersions(guides);
+	}
 
 }
