@@ -14,6 +14,8 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -208,6 +210,7 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 	{
 		IUserView userView = SessionUtils.getUserView(request);
 		DynaValidatorForm gratuityForm = (DynaValidatorForm) form;
+		ActionErrors errors = new ActionErrors();
 
 		String executionYear = (String) gratuityForm.get("executionYear");
 		String degree = (String) gratuityForm.get("degree");
@@ -230,7 +233,9 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 		}
 		catch (FenixServiceException ex)
 		{
-			throw new FenixActionException();
+			errors.add("gratuityValues", new ActionError(ex.getMessage()));
+			saveErrors(request, errors);
+
 		}
 
 		if (infoGratuityValues == null)
@@ -253,18 +258,15 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 		{
 			aForm.set("gratuityId", infoGratuityValues.getIdInternal().toString());
 		}
-		if (infoGratuityValues.getAnualValue() != null
-			&& infoGratuityValues.getAnualValue().toString().length() > 0)
+		if (doubleFilled(infoGratuityValues.getAnualValue()))
 		{
 			aForm.set("annualValue", infoGratuityValues.getAnualValue().toString());
 		}
-		if (infoGratuityValues.getScholarShipValue() != null
-			&& infoGratuityValues.getScholarShipValue().toString().length() > 0)
+		if (doubleFilled(infoGratuityValues.getScholarShipValue()))
 		{
 			aForm.set("scholarPart", infoGratuityValues.getScholarShipValue().toString());
 		}
-		if (infoGratuityValues.getFinalProofValue() != null
-			&& infoGratuityValues.getFinalProofValue().toString().length() > 0)
+		if (doubleFilled(infoGratuityValues.getFinalProofValue()))
 		{
 			aForm.set("thesisPart", infoGratuityValues.getFinalProofValue().toString());
 		}
@@ -273,13 +275,11 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 		{
 			aForm.set("paymentWhen", Boolean.TRUE);
 		}
-		if (infoGratuityValues.getCourseValue() != null
-			&& infoGratuityValues.getCourseValue().toString().length() > 0)
+		if (doubleFilled(infoGratuityValues.getCourseValue()))
 		{
 			aForm.set("unitaryValueCourse", infoGratuityValues.getCourseValue().toString());
 		}
-		if (infoGratuityValues.getCreditValue() != null
-			&& infoGratuityValues.getCreditValue().toString().length() > 0)
+		if (doubleFilled(infoGratuityValues.getCreditValue()))
 		{
 			aForm.set("unitaryValueCredit", infoGratuityValues.getCreditValue().toString());
 		}
@@ -324,6 +324,15 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 			Collections.sort(infoGratuityValues.getInfoPaymentPhases(), new BeanComparator("endDate"));
 		}
 
+	}
+
+	private boolean doubleFilled(Double field)
+	{
+		if (field != null && field.toString().length() > 0 && !field.toString().equals("0.0"))
+		{
+			return true;
+		}
+		return false;
 	}
 
 	private void removeRegistrationPaymentFromPhases(InfoGratuityValues infoGratuityValues)

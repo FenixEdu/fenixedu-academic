@@ -258,8 +258,30 @@ public class GratuityValues extends DomainObject implements IGratuityValues
 
 	public String toString()
 	{
-		//TODO: to make
-		return null;
+		StringBuffer result = new StringBuffer();
+		result =
+		result
+		.append("[GratuityValues: \n")
+		.append("idInternal= ")
+		.append(getIdInternal())
+		.append("\nanualValue= ")
+		.append(getAnualValue())
+		.append("\nscholarShipPart= ")
+		.append(getScholarShipValue())
+		.append("\nfinalProofValue= ")
+		.append(getFinalProofValue())
+		.append("\ncourseValue= ")
+		.append(getCourseValue())
+		.append("\ncreditValue= ")
+		.append(getCreditValue())
+		.append("\nproofRequestPayment= ")
+		.append(getProofRequestPayment())
+		.append("\nstartPayment= ")
+		.append(getStartPayment())
+		.append("\nendPayment= ")
+		.append(getEndPayment())
+		.append("]");
+		return result.toString();
 	}
 
 	public boolean equals(Object object)
