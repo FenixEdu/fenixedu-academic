@@ -169,6 +169,12 @@ public class PrepareCreateStudentGroup implements IServico {
         IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
 		.getGroupEnrolmentStrategyInstance(groupProperties);
         
+        if(strategy.checkHasShift(groupProperties)){
+        	 infoSiteStudentGroup.setHasShift(true);
+        }else{
+        	infoSiteStudentGroup.setHasShift(false);
+        }
+        
         return infoSiteStudentGroup;
 
     }

@@ -19,6 +19,8 @@ public class InfoSiteStudentGroup extends DataTranferObject implements ISiteComp
 
     private Object nrOfElements;
 
+    private boolean hasShift;
+    
     /**
      * @return
      */
@@ -61,6 +63,19 @@ public class InfoSiteStudentGroup extends DataTranferObject implements ISiteComp
         this.infoSiteStudentInformationList = infoSiteStudentInformationList;
     }
 
+
+    
+    public boolean getHasShift() {
+        return hasShift;
+    }
+
+
+    
+    public void setHasShift(boolean hasShift) {
+        this.hasShift = hasShift;
+    }
+
+    
     public boolean equals(Object objectToCompare) {
         boolean result = false;
 
@@ -88,6 +103,11 @@ public class InfoSiteStudentGroup extends DataTranferObject implements ISiteComp
             return false;
         }
 
+        if (!(((InfoSiteStudentGroup) objectToCompare).getHasShift()==this.getHasShift())){
+        	return false;
+        }
+        	
+        
         ListIterator iter1 = ((InfoSiteStudentGroup) objectToCompare)
                 .getInfoSiteStudentInformationList().listIterator();
         ListIterator iter2 = this.getInfoSiteStudentInformationList().listIterator();

@@ -96,7 +96,6 @@ import Dominio.IEvaluationMethod;
 import Dominio.IExam;
 import Dominio.IExecutionCourse;
 import Dominio.IFinalEvaluation;
-import Dominio.IFrequenta;
 import Dominio.IGroupProperties;
 import Dominio.IGroupPropertiesExecutionCourse;
 import Dominio.IItem;
@@ -1721,8 +1720,10 @@ public class TeacherAdministrationSiteComponentBuilder {
         
         if(strategy.checkHasShift(groupProperties)){
         	component.setInfoStudentGroup(InfoStudentGroupWithAllUntilLessons.newInfoFromDomain(studentGroup));
+        	component.setHasShift(true);
         }else{
         	component.setInfoStudentGroup(InfoStudentGroupWithoutShift.newInfoFromDomain(studentGroup));
+        	component.setHasShift(false);
         }
         
         

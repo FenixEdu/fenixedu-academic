@@ -86,9 +86,9 @@
 <html:hidden property="method" value="createStudentGroup"/>
 <html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
 <html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
-<logic:present name="shiftCode">
+<logic:equal name="infoSiteStudentGroup" property="hasShift" value="true">
 <html:hidden  property="shiftCode" value="<%= request.getParameter("shiftCode") %>" />
-</logic:present>
+</logic:equal>
 <table>
 <tr>
 	<td>

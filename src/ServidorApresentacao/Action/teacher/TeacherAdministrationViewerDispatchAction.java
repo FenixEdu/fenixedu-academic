@@ -1483,10 +1483,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		Integer studentGroupCode = new Integer(studentGroupCodeString);
 		String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
 		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
-
 		String shiftCodeString = request.getParameter("shiftCode");
-		request.setAttribute("shiftCode", shiftCodeString);
-
+		
 		ISiteComponent viewStudentGroup = new InfoSiteStudentGroup();
 		TeacherAdministrationSiteView result = (TeacherAdministrationSiteView) readSiteView(request,
 						viewStudentGroup, null, studentGroupCode, null);
@@ -2151,9 +2149,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		Integer objectCode = getObjectCode(request);
 		String groupPropertiesString = request.getParameter("groupPropertiesCode");
 		Integer groupPropertiesCode = new Integer(groupPropertiesString);
-		
-		String shiftCodeString = request.getParameter("shiftCode");
-		request.setAttribute("shiftCode", shiftCodeString);
 		 
 		InfoSiteStudentGroup infoSiteStudentGroup;
 		Object args[] = {objectCode, groupPropertiesCode};
