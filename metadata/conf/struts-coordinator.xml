@@ -13,7 +13,7 @@
 	  <!-- Bean to Choose the Situation for the Candidate  -->
       <form-bean name="chooseCandidateSituationForm" 
                  type="org.apache.struts.validator.DynaValidatorForm"
-                 dynamic="true">
+                 dynamic="true" >
 
             <form-property name="page" type="java.lang.Integer" />
             <form-property name="situations" type="java.lang.String[]"/>

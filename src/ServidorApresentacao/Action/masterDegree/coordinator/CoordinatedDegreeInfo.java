@@ -22,7 +22,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoExecutionDegree;
-import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
@@ -37,7 +36,6 @@ public class CoordinatedDegreeInfo extends FenixAction {
 
 	HttpSession session = request.getSession(false);
 	if (session != null) {
-	  IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 	  List degreeList = (List) session.getAttribute(SessionConstants.MASTER_DEGREE_LIST);
 	  List candidates = (List) session.getAttribute(SessionConstants.MASTER_DEGREE_CANDIDATES_AMMOUNT);
 			

@@ -62,7 +62,6 @@ public class ReadCoordinatedDegrees implements IServico {
 
         ISuportePersistente sp = null;
         
-        String username = new String(userView.getUtilizador());
         List degrees = null;
          
         try {
@@ -74,12 +73,11 @@ public class ReadCoordinatedDegrees implements IServico {
 			if (teacher == null)
 				throw new ExcepcaoInexistente("No Teachers Found !!");
 
-					
-            degrees = sp.getICursoExecucaoPersistente().readByTeacher(teacher);
+			degrees = sp.getIPersistentCoordinator().readExecutionDegreesByTeacher(teacher);		
+          //  degrees = sp.getICursoExecucaoPersistente().readByTeacher(teacher);
           
         } catch (ExcepcaoPersistencia ex) {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error",ex);            
             throw newEx;
         } 
 		if (degrees == null)
