@@ -27,7 +27,9 @@ import Util.TipoCurso;
 
 public class StudentOJB extends ObjectFenixOJB implements IPersistentStudent {
 
-	// feitos pelo Nortdas    
+	/**
+	 * @deprecated
+	 */    
 	public IStudent readByNumeroAndEstado(Integer numero, Integer estado, TipoCurso degreeType) throws ExcepcaoPersistencia {
 		try {
 			IStudent aluno = null;
@@ -167,6 +169,9 @@ public class StudentOJB extends ObjectFenixOJB implements IPersistentStudent {
 //
 //	}
 
+	/**
+	 * @deprecated
+	 */
 	public IStudent readByNumeroAndEstadoAndPessoa(Integer numero, Integer estado, IPessoa pessoa, TipoCurso degreeType)
 		throws ExcepcaoPersistencia {
 		try {
