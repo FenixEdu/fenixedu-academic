@@ -76,9 +76,11 @@ public class ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlanTest 
 			List infoGuiders = infoMasterDegreeThesisDataVersion.getInfoGuiders();
 			List infoAssistentGuiders = infoMasterDegreeThesisDataVersion.getInfoAssistentGuiders();
 			List infoExternalAssistentGuiders = infoMasterDegreeThesisDataVersion.getInfoExternalAssistentGuiders();
+			List infoExternalPersonExternalGuiders = infoMasterDegreeThesisDataVersion.getInfoExternalGuiders();
 			assertEquals(((InfoTeacher) infoGuiders.get(0)).getIdInternal(), new Integer(954));
 			assertEquals(((InfoTeacher) infoAssistentGuiders.get(0)).getIdInternal(), new Integer(955));
 			assertEquals(((InfoExternalPerson) infoExternalAssistentGuiders.get(0)).getIdInternal(), new Integer(1));
+			assertEquals(((InfoExternalPerson) infoExternalPersonExternalGuiders.get(0)).getIdInternal(), new Integer(2));
 			//ok
 
 		} catch (Exception ex) {

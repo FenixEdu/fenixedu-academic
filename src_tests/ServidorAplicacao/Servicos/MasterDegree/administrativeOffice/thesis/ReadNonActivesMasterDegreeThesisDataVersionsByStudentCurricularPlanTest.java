@@ -12,7 +12,6 @@ import Util.State;
 import Util.TipoCurso;
 
 /**
- * 
  * @author Shezad Anavarali (sana@mega.ist.utl.pt)
  * @author Nadir Tarmahomed (naat@mega.ist.utl.pt)
  */
@@ -94,11 +93,16 @@ public class ReadNonActivesMasterDegreeThesisDataVersionsByStudentCurricularPlan
             List infoAssistentGuiders = infoMasterDegreeThesisDataVersion.getInfoAssistentGuiders();
             List infoExternalAssistentGuiders =
                 infoMasterDegreeThesisDataVersion.getInfoExternalAssistentGuiders();
+            List infoExternalPersonExternalGuiders =
+                infoMasterDegreeThesisDataVersion.getInfoExternalGuiders();
             assertEquals(((InfoTeacher) infoGuiders.get(0)).getIdInternal(), new Integer(955));
             assertEquals(((InfoTeacher) infoAssistentGuiders.get(0)).getIdInternal(), new Integer(954));
             assertEquals(
                 ((InfoExternalPerson) infoExternalAssistentGuiders.get(0)).getIdInternal(),
                 new Integer(1));
+            assertEquals(
+                ((InfoExternalPerson) infoExternalPersonExternalGuiders.get(0)).getIdInternal(),
+                new Integer(2));
             //ok
 
         }

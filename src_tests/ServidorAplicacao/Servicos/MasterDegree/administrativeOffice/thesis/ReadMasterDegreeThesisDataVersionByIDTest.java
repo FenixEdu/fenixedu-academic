@@ -11,17 +11,14 @@ import ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.Administrati
 import Util.State;
 
 /**
- * 
- * @author
- *   - Shezad Anavarali (sana@mega.ist.utl.pt)
- *   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
+ * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed (naat@mega.ist.utl.pt)
  */
 public class ReadMasterDegreeThesisDataVersionByIDTest extends AdministrativeOfficeBaseTest
 {
 
     /**
-     * @param testName
-     */
+	 * @param testName
+	 */
     public ReadMasterDegreeThesisDataVersionByIDTest(String testName)
     {
         super(testName);
@@ -72,11 +69,16 @@ public class ReadMasterDegreeThesisDataVersionByIDTest extends AdministrativeOff
             List infoAssistentGuiders = infoMasterDegreeThesisDataVersion.getInfoAssistentGuiders();
             List infoExternalAssistentGuiders =
                 infoMasterDegreeThesisDataVersion.getInfoExternalAssistentGuiders();
+            List infoExternalPersonExternalGuiders =
+                infoMasterDegreeThesisDataVersion.getInfoExternalGuiders();
             assertEquals(((InfoTeacher) infoGuiders.get(0)).getIdInternal(), new Integer(954));
             assertEquals(((InfoTeacher) infoAssistentGuiders.get(0)).getIdInternal(), new Integer(955));
             assertEquals(
                 ((InfoExternalPerson) infoExternalAssistentGuiders.get(0)).getIdInternal(),
                 new Integer(1));
+            assertEquals(
+                ((InfoExternalPerson) infoExternalPersonExternalGuiders.get(0)).getIdInternal(),
+                new Integer(2));
             //ok
 
         }
@@ -91,7 +93,7 @@ public class ReadMasterDegreeThesisDataVersionByIDTest extends AdministrativeOff
     {
         try
         {
-            Object[] argsReadMasterDegreeThesisDataVersion = { new Integer(65456) };
+            Object[] argsReadMasterDegreeThesisDataVersion = { new Integer(65456)};
             InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion =
                 (InfoMasterDegreeThesisDataVersion) serviceManager.executar(
                     userView,
