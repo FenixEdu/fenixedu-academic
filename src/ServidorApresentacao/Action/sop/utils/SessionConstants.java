@@ -15,8 +15,90 @@ package ServidorApresentacao.Action.sop.utils;
  */
 public abstract class SessionConstants {
 
+
+	// -------------------------------------------------------------------------------
+	//    General Purpose Constants - For Specialized Action Mapping
+	// -------------------------------------------------------------------------------
+	public static final String INPUT_PAGE = "inputPage";
+	public static final String NEXT_PAGE  = "nextPage";
+
+
+	// -------------------------------------------------------------------------------
+	//    General Purpose Constants - For Context
+	// -------------------------------------------------------------------------------
+	public static final String DEGREES = "licenciaturas";
 	
 
+	// -------------------------------------------------------------------------------
+	//    GesDis Constants - For GesDis
+	// -------------------------------------------------------------------------------
+	public static final String INFO_SITE="info_site";
+	public static final String EXECUTION_COURSE_CURRICULUM= "execution_course_curriculum";
+	public static final String INFO_SITE_ANNOUNCEMENT= "info_site_announcement";
+	public static final String INFO_SITE_SECTION= "info_site_section";
+	public static final String INFO_SITE_ITEM= "info_site_item";
+	public static final String INFO_SITE_ANNOUNCEMENT_LIST= "info_site_announcement_list";
+	public static final String INFO_SITES_LIST = "info_sites_list";
+	public static final String INFO_TEACHER = "info_teacher";	
+	public static final String INFO_BIBLIOGRAPHIC_REFERENCE_LIST = "BibliographicReferences";		
+	public static final String INFO_BIBLIOGRAPHIC_REFERENCE = "BibliographicReference";
+	public static final String TEACHERS_LIST ="teachers_list";
+	public static final String RESPONSIBLE_TEACHERS_LIST = "responsible_teachers_list";
+	public static final String IS_RESPONSIBLE = "is_responsible";
+
+
+	// -------------------------------------------------------------------------------
+	//    Master Degree Constants - For Master Degree
+	// -------------------------------------------------------------------------------
+	public static final String SPECIALIZATIONS = "specializations"; 
+	public static final String DEGREE_LIST = "degree_list";
+	public static final String NEW_MASTER_DEGREE_CANDIDATE = "new_master_degree_candidate";
+	public static final String APPLICATION_INFO = "application_info";
+	public static final String CANDIDATE_SITUATION = "candidate_situation";
+	public static final String CANDIDATE_SITUATION_LIST = "candidate_situation_list";
+	public static final String MASTER_DEGREE_CANDIDATE = "master_degree_candidate";
+	public static final String MASTER_DEGREE_CANDIDATE_LIST = "master_degree_candidate_list";
+	public static final String MASTER_DEGREE_CANDIDATE_QUERY = "master_degree_candidate_query";
+
+
+	// -------------------------------------------------------------------------------
+	//    Person Constants - For Person
+	// -------------------------------------------------------------------------------
+	public static final String IDENTIFICATION_DOCUMENT_TYPE_LIST = "identification_document_type_list";
+
+	public static final String PERSONAL_INFO_KEY = "PERSONAL_INFO_KEY";
+	public static final String EXPIRATION_YEARS_KEY = "EXPIRATION_YEARS_KEY";
+	public static final String YEARS_KEY = "YEARS_KEY";
+	public static final String MONTH_LIST_KEY = "MONTH_LIST_KEY";
+	public static final String MONTH_DAYS_KEY = "MONTH_DAYS_KEY";
+
+	public static final String IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY =
+		"IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY";
+
+	public static final String MARITAL_STATUS_LIST_KEY =
+		"MARITAL_STATUS_LIST_KEY";
+
+	public static final String NATIONALITY_LIST_KEY = "NATIONALITY_LIST_KEY";
+	public static final String SEX_LIST_KEY ="SEX_LIST_KEY";	
+	
+	public static final String INFO_EXAMS_KEY = "INFO_EXAMS_KEY";
+
+	
+	// -------------------------------------------------------------------------------
+	//    SOP Constants - For Exams
+	// -------------------------------------------------------------------------------
+	public static final String EXAM_DATEANDTIME       = "examDateAndTime";
+	public static final String LABLELIST_DAYSOFMONTH  = "daysOfMonth";
+	public static final String LABLELIST_HOURS        = "horas";
+	public static final String LABLELIST_MONTHSOFYEAR = "monthsOfYear";
+	public static final String LABLELIST_YEARS        = "yearsList";
+	public static final String LIST_EXAMSANDINFO      = "infoExams";
+
+
+	// -------------------------------------------------------------------------------
+	//    Messy Constants Section - For All Sorts of Purposes
+	// -------------------------------------------------------------------------------
+	// TODO : Clean this up.
 	public static final String CONTEXT_PREFIX = "context.";
 
 	public static final String CONTEXT_KEY =
@@ -56,54 +138,5 @@ public abstract class SessionConstants {
 	public static final String REQUEST_CONTEXT="request_context";
 	
 	public static final String SESSION_IS_VALID="session_is_valid";
-	
-	//gesdis constants
-	public static final String INFO_SITE="info_site";
-	public static final String EXECUTION_COURSE_CURRICULUM= "execution_course_curriculum";
-	public static final String INFO_SITE_ANNOUNCEMENT= "info_site_announcement";
-	public static final String INFO_SITE_SECTION= "info_site_section";
-	public static final String INFO_SITE_ITEM= "info_site_item";
-	public static final String INFO_SITE_ANNOUNCEMENT_LIST= "info_site_announcement_list";
-	public static final String INFO_SITES_LIST = "info_sites_list";
-	public static final String INFO_TEACHER = "info_teacher";	
-	public static final String INFO_BIBLIOGRAPHIC_REFERENCE_LIST = "BibliographicReferences";		
-	public static final String INFO_BIBLIOGRAPHIC_REFERENCE = "BibliographicReference";
-	public static final String TEACHERS_LIST ="teachers_list";
-	public static final String RESPONSIBLE_TEACHERS_LIST = "responsible_teachers_list";
-	public static final String IS_RESPONSIBLE = "is_responsible";
-	// Master Degree 
-	public static final String SPECIALIZATIONS = "specializations"; 
-	public static final String DEGREE_LIST = "degree_list";
-	public static final String NEW_MASTER_DEGREE_CANDIDATE = "new_master_degree_candidate";
-	public static final String APPLICATION_INFO = "application_info";
-	public static final String CANDIDATE_SITUATION = "candidate_situation";
-	public static final String CANDIDATE_SITUATION_LIST = "candidate_situation_list";
-	public static final String MASTER_DEGREE_CANDIDATE = "master_degree_candidate";
-	public static final String MASTER_DEGREE_CANDIDATE_LIST = "master_degree_candidate_list";
-	public static final String MASTER_DEGREE_CANDIDATE_QUERY = "master_degree_candidate_query";
-
-
-	
-	// Person constants
-	public static final String IDENTIFICATION_DOCUMENT_TYPE_LIST = "identification_document_type_list";
-
-
-	public static final String PERSONAL_INFO_KEY = "PERSONAL_INFO_KEY";
-	public static final String EXPIRATION_YEARS_KEY = "EXPIRATION_YEARS_KEY";
-	public static final String YEARS_KEY = "YEARS_KEY";
-	public static final String MONTH_LIST_KEY = "MONTH_LIST_KEY";
-	public static final String MONTH_DAYS_KEY = "MONTH_DAYS_KEY";
-
-	public static final String IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY =
-		"IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY";
-
-	public static final String MARITAL_STATUS_LIST_KEY =
-		"MARITAL_STATUS_LIST_KEY";
-
-	public static final String NATIONALITY_LIST_KEY = "NATIONALITY_LIST_KEY";
-	public static final String SEX_LIST_KEY ="SEX_LIST_KEY";	
-	
-	
-	public static final String INFO_EXAMS_KEY = "INFO_EXAMS_KEY";
 
 }
