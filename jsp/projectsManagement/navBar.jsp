@@ -8,7 +8,7 @@
 <logic:present name="userView" name="<%= SessionConstants.U_VIEW %>" scope="session">
 	<%
         ServidorAplicacao.IUserView userView = (ServidorAplicacao.IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        if (userView.hasRoleType(Util.RoleType.PROJECTS_MANAGER)) {
+        if (userView.hasRoleType(net.sourceforge.fenixedu.util.RoleType.PROJECTS_MANAGER)) {
         %>
 	<p><strong><bean:message key="label.listByProject" /></strong></p>
 	<ul>

@@ -78,7 +78,7 @@
                 + ((Double) pageContext.findAttribute("totalEuro")).doubleValue();
         %> <strong><bean:message key="label.treasuryBalance" /></strong> (a)(b) <strong>:</strong> &nbsp; &nbsp; <%if (total < 0) {%> <font
 				color="red"> <%
-        }%> <%= Util.projectsManagement.FormatDouble.convertDoubleToString(total)%> <%
+        }%> <%= net.sourceforge.fenixedu.util.projectsManagement.FormatDouble.convertDoubleToString(total)%> <%
         if (total < 0) {%> </font> <%
         }
     %></td>

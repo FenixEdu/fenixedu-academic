@@ -107,8 +107,8 @@
 								<bean:define id="total" name="line" property="total" />
 							</tr>
 							<%
-        thisTotal = Util.projectsManagement.FormatDouble.round(thisTotal + ((Double) pageContext.findAttribute("total")).doubleValue());
-        totalJustified = Util.projectsManagement.FormatDouble.round(totalJustified + ((Double) pageContext.findAttribute("total")).doubleValue());%>
+        thisTotal = net.sourceforge.fenixedu.util.projectsManagement.FormatDouble.round(thisTotal + ((Double) pageContext.findAttribute("total")).doubleValue());
+        totalJustified = net.sourceforge.fenixedu.util.projectsManagement.FormatDouble.round(totalJustified + ((Double) pageContext.findAttribute("total")).doubleValue());%>
 						</logic:iterate>
 						<tr>
 							<td class="report-line-total-first" colspan="5"><bean:message key="label.total" /></td>
@@ -124,11 +124,11 @@
 						</tr>
 						<tr>
 							<td><strong><bean:message key="<%="label.totalExecuted."+reportType%>" />:</strong></td>
-							<td><%= Util.projectsManagement.FormatDouble.convertDoubleToString(thisTotal)%></td>
+							<td><%= net.sourceforge.fenixedu.util.projectsManagement.FormatDouble.convertDoubleToString(thisTotal)%></td>
 						</tr>
 						<tr>
 							<td><strong><bean:message key="<%="label.forExecute."+reportType%>" />:</strong></td>
-							<td><%= Util.projectsManagement.FormatDouble.convertDoubleToString(((Double) pageContext.findAttribute("parentValue")).doubleValue()
+							<td><%= net.sourceforge.fenixedu.util.projectsManagement.FormatDouble.convertDoubleToString(((Double) pageContext.findAttribute("parentValue")).doubleValue()
                         - thisTotal)%></td>
 						</tr>
 					</table>
@@ -145,15 +145,15 @@
 				</tr>
 				<tr>
 					<td><strong><bean:message key="<%="label.total."+reportType%>" />:</strong></td>
-					<td align="right"><%= Util.projectsManagement.FormatDouble.convertDoubleToString(parentTotal)%></td>
+					<td align="right"><%= net.sourceforge.fenixedu.util.projectsManagement.FormatDouble.convertDoubleToString(parentTotal)%></td>
 				</tr>
 				<tr>
 					<td><strong><bean:message key="<%="label.returnsExecuted."+reportType%>" />:</strong></td>
-					<td align="right"><%= Util.projectsManagement.FormatDouble.convertDoubleToString(totalJustified)%></td>
+					<td align="right"><%= net.sourceforge.fenixedu.util.projectsManagement.FormatDouble.convertDoubleToString(totalJustified)%></td>
 				</tr>
 				<tr>
 					<td><strong><bean:message key="<%="label.toExecute."+reportType%>" />:</strong></td>
-					<td align="right"><%= Util.projectsManagement.FormatDouble.convertDoubleToString(parentTotal - totalJustified)%></td>
+					<td align="right"><%= net.sourceforge.fenixedu.util.projectsManagement.FormatDouble.convertDoubleToString(parentTotal - totalJustified)%></td>
 				</tr>
 			</table>
 			<br />
