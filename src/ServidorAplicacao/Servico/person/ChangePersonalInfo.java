@@ -21,10 +21,10 @@ package ServidorAplicacao.Servico.person;
 import DataBeans.InfoPerson;
 import Dominio.ICountry;
 import Dominio.IPessoa;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.UserView;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -61,6 +61,8 @@ public class ChangePersonalInfo implements IServico {
         ISuportePersistente sp = null;
         IPessoa person = null;
 
+		System.out.println("EMAIL------------------------------------------"+ newInfoPerson.getEmail());
+
 
         try {
 	        sp = SuportePersistenteOJB.getInstance();
@@ -73,6 +75,16 @@ public class ChangePersonalInfo implements IServico {
 		if (person == null)
 			throw new ExcepcaoInexistente("Unknown Person !!");	
 
+			try {
+				sp.getIPessoaPersistente().escreverPessoa(person);
+			} catch (ExcepcaoPersistencia ex) {
+			  System.out.println("*************************************************************************************+");
+			  ex.printStackTrace(System.out);
+			  System.out.println("*************************************************************************************+");
+			  FenixServiceException newEx = new FenixServiceException("Persistence layer error " + ex);
+			  newEx.fillInStackTrace();
+			  throw newEx;
+			}
 
 
 		// Get new Country
@@ -128,13 +140,6 @@ public class ChangePersonalInfo implements IServico {
 		person.setNumContribuinte(newInfoPerson.getNumContribuinte());
 		person.setProfissao(newInfoPerson.getProfissao());
 		person.setNacionalidade(newInfoPerson.getNacionalidade());
-		try {
-            sp.getIPessoaPersistente().escreverPessoa(person);
-	    } catch (ExcepcaoPersistencia ex) {
-	      FenixServiceException newEx = new FenixServiceException("Persistence layer error " + ex);
-	      newEx.fillInStackTrace();
-	      throw newEx;
-	    }
 	    
 	    return userView;
     }
