@@ -14,12 +14,14 @@ import Dominio.IShiftProfessorship;
 import Dominio.ISupportLesson;
 import Dominio.ITeacher;
 import Dominio.ITurno;
+import Dominio.credits.IOtherTypeCreditLine;
 import Dominio.degree.finalProject.ITeacherDegreeFinalProjectStudent;
 import Dominio.teacher.workTime.ITeacherInstitutionWorkTime;
 import Dominio.util.TransformationUtils;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentShiftProfessorship;
 import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.credits.IPersistentOtherTypeCreditLine;
 import ServidorPersistente.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
 import ServidorPersistente.teacher.professorship.IPersistentSupportLesson;
 import ServidorPersistente.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
@@ -65,7 +67,10 @@ public class CreditsCalculator
         List shiftProfessorshipList = null;
         if (shiftProfessorshipDeleted.isEmpty())
         {
-            shiftProfessorshipList = shiftProfessorshipDAO.readByTeacherAndExecutionPeriod(professorship.getTeacher(), professorship.getExecutionCourse().getExecutionPeriod());
+            shiftProfessorshipList =
+                shiftProfessorshipDAO.readByTeacherAndExecutionPeriod(
+                    professorship.getTeacher(),
+                    professorship.getExecutionCourse().getExecutionPeriod());
         } else
         {
             List shiftProfessorshipsIds = TransformationUtils.transformToIds(shiftProfessorshipDeleted);
@@ -78,12 +83,11 @@ public class CreditsCalculator
 
         shiftProfessorshipList.removeAll(shiftProfessorshipAdded);
         shiftProfessorshipList.addAll(shiftProfessorshipAdded);
-        
+
         Iterator iterator = shiftProfessorshipList.iterator();
 
         double hours = 0;
 
-        
         while (iterator.hasNext())
         {
             IShiftProfessorship shiftProfessorship = (IShiftProfessorship) iterator.next();
@@ -350,4 +354,62 @@ public class CreditsCalculator
 
         return new Double(hours);
     }
+
+    /**
+     * @param teacher
+     * @param executionPeriod
+     * @param otherTypeCreditLine
+     * @param sp
+     * @return
+     */
+    public Double calcuteOtherTypeCreditLineAfterInsert(
+        ITeacher teacher,
+        IExecutionPeriod executionPeriod,
+        IOtherTypeCreditLine otherTypeCreditLine,
+        ISuportePersistente sp)
+        throws ExcepcaoPersistencia
+    {
+        IPersistentOtherTypeCreditLine otherTypeCreditLineDAO = sp.getIPersistentOtherTypeCreditLine();
+
+        List creditLines =
+            otherTypeCreditLineDAO.readByTeacherAndExecutionPeriod(teacher, executionPeriod);
+
+        double credits = otherTypeCreditLine.getCredits().doubleValue();
+        for (int i = 0; i < creditLines.size(); i++)
+        {
+            IOtherTypeCreditLine creditLine = (IOtherTypeCreditLine) creditLines.get(i);
+            if (!creditLine.getIdInternal().equals(otherTypeCreditLine.getIdInternal()))
+            {
+               credits += creditLine.getCredits().doubleValue(); 	
+            }
+        }
+
+        return new Double(credits);
+    }
+    
+    public Double calcuteOtherTypeCreditLineAfterDelete(
+            ITeacher teacher,
+            IExecutionPeriod executionPeriod,
+            IOtherTypeCreditLine otherTypeCreditLine,
+            ISuportePersistente sp)
+    throws ExcepcaoPersistencia
+    {
+        IPersistentOtherTypeCreditLine otherTypeCreditLineDAO = sp.getIPersistentOtherTypeCreditLine();
+
+        List creditLines =
+            otherTypeCreditLineDAO.readByTeacherAndExecutionPeriod(teacher, executionPeriod);
+
+        double credits = 0;
+        for (int i = 0; i < creditLines.size(); i++)
+        {
+            IOtherTypeCreditLine creditLine = (IOtherTypeCreditLine) creditLines.get(i);
+            if (!creditLine.getIdInternal().equals(otherTypeCreditLine.getIdInternal()))
+            {
+                credits += creditLine.getCredits().doubleValue(); 	
+            }
+        }
+
+        return new Double(credits);
+    }
+    
 }

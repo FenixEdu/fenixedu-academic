@@ -14,6 +14,7 @@ import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoProfessorship;
 import DataBeans.InfoTeacher;
+import DataBeans.credits.InfoOtherTypeCreditLine;
 import DataBeans.credits.TeacherCreditsSheetDTO;
 import DataBeans.degree.finalProject.InfoTeacherDegreeFinalProjectStudent;
 import DataBeans.teacher.credits.InfoCredits;
@@ -33,6 +34,7 @@ import Dominio.IShiftProfessorship;
 import Dominio.ISupportLesson;
 import Dominio.ITeacher;
 import Dominio.ResponsibleFor;
+import Dominio.credits.IOtherTypeCreditLine;
 import Dominio.degree.finalProject.ITeacherDegreeFinalProjectStudent;
 import Dominio.teacher.workTime.ITeacherInstitutionWorkTime;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -45,6 +47,7 @@ import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.credits.IPersistentCredits;
+import ServidorPersistente.credits.IPersistentOtherTypeCreditLine;
 import ServidorPersistente.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
 import ServidorPersistente.teacher.professorship.IPersistentSupportLesson;
 import ServidorPersistente.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
@@ -275,9 +278,7 @@ public class ReadTeacherCreditsSheet implements IService
         return infoTeacherDegreeFinalProjectStudentList;
     }
 
-    public TeacherCreditsSheetDTO run(
-        InfoTeacher infoTeacherParam,
-        Integer executionPeriodId)
+    public TeacherCreditsSheetDTO run(InfoTeacher infoTeacherParam, Integer executionPeriodId)
         throws FenixServiceException
     {
 
@@ -309,6 +310,8 @@ public class ReadTeacherCreditsSheet implements IService
 
             List detailedProfessorshipList = readDetailedProfessorships(teacher, executionPeriod, sp);
 
+            List otherTypeCreditLineList = readOtherTypeCreditLine(teacher, executionPeriod, sp);
+
             InfoCredits infoCredits = readCredits(teacher, executionPeriod, sp);
 
             InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
@@ -317,7 +320,7 @@ public class ReadTeacherCreditsSheet implements IService
             teacherCreditsSheetDTO.setInfoTeacher(infoTeacher);
             teacherCreditsSheetDTO.setInfoExecutionPeriod(infoExecutionPeriod);
             teacherCreditsSheetDTO.setInfoCredits(infoCredits);
-            
+
             teacherCreditsSheetDTO.setInfoMasterDegreeProfessorships(infoMasterDegreeProfessorships);
 
             teacherCreditsSheetDTO.setInfoTeacherInstitutionWorkingTimeList(
@@ -331,6 +334,8 @@ public class ReadTeacherCreditsSheet implements IService
                 infoTeacherDegreeFinalProjectStudentList);
 
             teacherCreditsSheetDTO.setDetailedProfessorshipList(detailedProfessorshipList);
+
+            teacherCreditsSheetDTO.setInfoTeacherOtherTypeCreditLineList(otherTypeCreditLineList);
 
         } catch (ExcepcaoPersistencia e)
         {
@@ -347,10 +352,45 @@ public class ReadTeacherCreditsSheet implements IService
      * @param sp
      * @return
      */
-    private InfoCredits readCredits(ITeacher teacher, IExecutionPeriod executionPeriod, ISuportePersistente sp) throws ExcepcaoPersistencia
+    private List readOtherTypeCreditLine(
+        ITeacher teacher,
+        IExecutionPeriod executionPeriod,
+        ISuportePersistente sp)
+        throws ExcepcaoPersistencia
     {
-        IPersistentCredits creditsDAO=sp.getIPersistentCredits();
-        ICredits credits= creditsDAO.readByTeacherAndExecutionPeriod(teacher, executionPeriod);
+        IPersistentOtherTypeCreditLine otherTypeCreditLineDAO = sp.getIPersistentOtherTypeCreditLine();
+
+        List otherCreditLines =
+            otherTypeCreditLineDAO.readByTeacherAndExecutionPeriod(teacher, executionPeriod);
+
+        List infoOtherCreditLines = (List) CollectionUtils.collect(otherCreditLines, new Transformer()
+        {
+
+            public Object transform(Object input)
+            {
+                IOtherTypeCreditLine otherTypeCreditLine = (IOtherTypeCreditLine) input;
+                InfoOtherTypeCreditLine infoOtherTypeCreditLine =
+                    Cloner.copyIOtherTypeCreditLine2InfoOtherCreditLine(otherTypeCreditLine);
+                return infoOtherTypeCreditLine;
+            }
+        });
+        return infoOtherCreditLines;
+    }
+
+    /**
+     * @param teacher
+     * @param executionPeriod
+     * @param sp
+     * @return
+     */
+    private InfoCredits readCredits(
+        ITeacher teacher,
+        IExecutionPeriod executionPeriod,
+        ISuportePersistente sp)
+        throws ExcepcaoPersistencia
+    {
+        IPersistentCredits creditsDAO = sp.getIPersistentCredits();
+        ICredits credits = creditsDAO.readByTeacherAndExecutionPeriod(teacher, executionPeriod);
         return credits == null ? null : Cloner.copyICredits2InfoCredits(credits);
     }
 

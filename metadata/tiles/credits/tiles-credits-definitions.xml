@@ -18,4 +18,10 @@
 	    <put name="link" value=""/>
    	    <put name="professorshipList" />
 	</definition>
+	
+	<definition name="creditsLegend" page="/credits/commons/creditsLegend.jsp"/>
+	<definition name="creditsResume" page="/credits/commons/creditsResume.jsp">
+		<put name="infoCredits"/>
+	</definition>
+	
 </tiles-definitions>

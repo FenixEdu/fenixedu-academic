@@ -62,5 +62,8 @@ public interface ICredits extends IDomainObject
     public abstract void setSupportLessons( Double supportLessons );
 
     void setTeacher( ITeacher teacher );
+    
+    void setOtherTypeCredits(Double credits);
+    Double getOtherTypeCredits();
 
 }

@@ -1,5 +1,6 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <h3>
@@ -7,13 +8,7 @@
 </h3>
 <br />
 
-<u><strong><bean:message key="label.credits.legenda" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></strong></u>:
-<p>
-<bean:message key="label.credits.lessons.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.lessons.code.explanation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,&nbsp;
-<bean:message key="label.credits.supportLessons.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.supportLessons.code.explanation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,&nbsp;
-<bean:message key="label.credits.degreeFinalProjectStudents.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.degreeFinalProjectStudents.code.explanation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,&nbsp;
-<bean:message key="label.credits.institutionWorkTime.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.institutionWorkTime.code.explanation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>.
-</p>
+<tiles:insert definition="creditsLegend"/>
 
 <bean:size id="listSize" name="infoTeacherList"/>
 <u><bean:message key="label.departmentTeachersList.teachersFound" arg0="<%= listSize.toString() %>"/></u>
@@ -66,32 +61,11 @@
 					</logic:notPresent>
 				</td>
 				<td class="listClasses">
-					<logic:present name="infoTeacherCreditsDetails" property="infoCredits">
-						<font size="-5">
-							<b>
-								<bean:write name="infoTeacherCreditsDetails" property="infoCredits.lessonsFormatted"/>						
-							</b>
-							<bean:message key="label.credits.lessons.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,
-							<b>	
-								<bean:write name="infoTeacherCreditsDetails" property="infoCredits.supportLessonsFormatted"/>						
-							</b>							
-							<bean:message key="label.credits.supportLessons.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,
-
-							<b>
-								<bean:write name="infoTeacherCreditsDetails" property="infoCredits.degreeFinalProjectStudentsFormatted"/>						
-							</b>							
-							<bean:message key="label.credits.degreeFinalProjectStudents.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,
-							<b>							
-								<bean:write name="infoTeacherCreditsDetails" property="infoCredits.institutionWorkTimeFormatted"/>						
-							</b>							
-							<bean:message key="label.credits.institutionWorkTime.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
-						</font>
-					</logic:present>
-					
-					<logic:notPresent name="infoTeacherCreditsDetails" property="infoCredits">
-						--
-					</logic:notPresent>
-					
+					<font size="-5">
+						<tiles:insert definition="creditsResume" flush="false">
+							<tiles:put name="infoCredits" beanName="infoTeacherCreditsDetails" beanProperty="infoCredits"/>
+						</tiles:insert>
+					</font>
 				</td>
 				<td class="listClasses">
 					<html:link page='<%= "/teacherSearchForTeacherCreditsSheet.do?method=doSearch&amp;page=1&amp;executionPeriodId=" + executionPeriodId %>'  paramId="teacherNumber" paramName="infoTeacherCreditsDetails" paramProperty="teacherNumber">

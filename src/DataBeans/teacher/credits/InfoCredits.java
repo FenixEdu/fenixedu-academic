@@ -15,14 +15,31 @@ public class InfoCredits extends InfoObject
     private InfoTeacher infoTeacher;
     private Double institutionWorkTime;
     private Double lessons;
+    private Double otherTypeCredits;
     private Double supportLessons;
 
+    /**
+     * @param double1
+     * @return
+     */
+    private String format(Double number)
+    {
+        if (number == null || number.doubleValue() == 0)
+        {
+            return "0";
+        }
+        return number.toString();
+    }
     /**
      * @return Returns the degreeFinalProjectStudents.
      */
     public Double getDegreeFinalProjectStudents()
     {
         return degreeFinalProjectStudents;
+    }
+    public String getDegreeFinalProjectStudentsFormatted()
+    {
+        return format(this.getDegreeFinalProjectStudents());
     }
 
     /**
@@ -48,6 +65,10 @@ public class InfoCredits extends InfoObject
     {
         return institutionWorkTime;
     }
+    public String getInstitutionWorkTimeFormatted()
+    {
+        return format(this.getInstitutionWorkTime());
+    }
 
     /**
      * @return Returns the lessons.
@@ -56,6 +77,22 @@ public class InfoCredits extends InfoObject
     {
         return lessons;
     }
+    public String getLessonsFormatted()
+    {
+        return format(this.getLessons());
+    }
+
+    /**
+     * @return Returns the otherTypeCredits.
+     */
+    public Double getOtherTypeCredits()
+    {
+        return otherTypeCredits;
+    }
+    
+    public String getOtherTypeCreditsFormatted(){
+        return format(this.getOtherTypeCredits());
+    }
 
     /**
      * @return Returns the supportLessons.
@@ -63,6 +100,11 @@ public class InfoCredits extends InfoObject
     public Double getSupportLessons()
     {
         return supportLessons;
+    }
+
+    public String getSupportLessonsFormatted()
+    {
+        return format(this.getSupportLessons());
     }
 
     /**
@@ -111,42 +153,20 @@ public class InfoCredits extends InfoObject
     }
 
     /**
+     * @param otherTypeCredits The otherTypeCredits to set.
+     */
+    public void setOtherTypeCredits(Double otherTypeCredits)
+    {
+        this.otherTypeCredits = otherTypeCredits;
+    }
+
+    /**
      * @param supportLessons
      *            The supportLessons to set.
      */
     public void setSupportLessons(Double supportLessons)
     {
         this.supportLessons = supportLessons;
-    }
-
-    public String getSupportLessonsFormatted()
-    {
-        return format(this.getSupportLessons());
-    }
-    public String getLessonsFormatted()
-    {
-        return format(this.getLessons());
-    }
-    public String getDegreeFinalProjectStudentsFormatted()
-    {
-        return format(this.getDegreeFinalProjectStudents());
-    }
-    public String getInstitutionWorkTimeFormatted()
-    {
-        return format(this.getInstitutionWorkTime());
-    }
-
-    /**
-     * @param double1
-     * @return
-     */
-    private String format(Double number)
-    {
-        if (number == null || number.doubleValue() == 0)
-        {
-            return "0";
-        }
-        return number.toString();
     }
 
 }

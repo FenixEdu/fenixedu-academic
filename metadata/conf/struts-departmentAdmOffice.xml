@@ -93,7 +93,16 @@
             <form-property name="idInternal" type="java.lang.Integer"/>
             <form-property name="executionPeriodId" type="java.lang.Integer"/>
         </form-bean>
-
+        <form-bean name="otherTypeCreditLineForm" type="org.apache.struts.validator.DynaValidatorForm" 
+            dynamic="true">
+            <form-property name="idInternal" type="java.lang.Integer"/>
+            <form-property name="page" type="java.lang.Integer"/>            
+            <form-property name="teacherId" type="java.lang.Integer"/>
+            <form-property name="executionPeriodId" type="java.lang.Integer"/>
+            <form-property name="reason" type="java.lang.String"/>
+            <form-property name="credits" type="java.lang.String"/>
+        </form-bean>
+		
     </form-beans>
     <!-- ========== Global Exception Definitions ============================== -->
     <global-exceptions>
@@ -464,6 +473,47 @@
             <forward name="successfull-read" path="showTeacherCreditsSheet"/>
         </action>
         <!-- =======================================================================  -->
+        <!-- =======================================================================  -->
+        <!-- =======  USE CASE : Read Teacher Other Type Credits =================== -->
+        <action path="/teacherSearchForOtherTypeCreditLine" 
+            input="search-for-otherTypeCreditLine" name="teacherSearchForm" 
+            scope="request" parameter="method" type="ServidorApresentacao.Action.framework.SearchAction" 
+            className="ServidorApresentacao.mapping.framework.SearchActionMapping">
+            <set-property property="serviceName" value="FindTeachersService"/>
+            <set-property property="objectAttribute" value="infoTeacher"/>
+            <set-property property="listAttribute" value="infoTeacherList"/>
+            <set-property property="notFoundMessageKey" value="errors.teacher.not.found"/>
+            <forward name="search-form" path="searchForOtherTypeCreditLine"/>
+            <forward name="list-one" path="/showOtherTypeCreditLines.do"/>
+            <forward name="list-many" path=""/>
+        </action>
+        <action path="/showOtherTypeCreditLines"
+			name="executionPeriodForm"
+            type="ServidorApresentacao.Action.credits.ReadTeacherOtherTypeCreditLinesAction">
+            <forward name="successfull-read" path="showOhterTypeCreditLines"/>
+        </action>
+		<!-- =======================================================================  -->        
+        <!-- =======  USE CASE : Edit and Delete Teacher Other Type Credits ======== -->
+        <action path="/crudOtherTypeCreditLine" name="otherTypeCreditLineForm" 
+            input="/crudOtherTypeCreditLine.do?method=prepareEdit&amp;page=0" 
+            type="ServidorApresentacao.Action.credits.CRUDOtherTypeCreditLineAction" 
+            parameter="method" scope="request" 
+            className="ServidorApresentacao.mapping.framework.CRUDMapping" validate="true">
+            <set-property property="editService" value="EditOtherTypeCreditLineService"/>
+            <set-property property="deleteService" value="DeleteOtherTypeCreditLineService"/>
+            <set-property property="readService" value="ReadOtherTypeCreditLineByOidService"/>
+            <set-property property="oidProperty" value="idInternal"/>
+            <set-property property="requestAttribute" value="infoOtherTypeCreditLine" />
+            <set-property property="infoObjectClassName" 
+                value="DataBeans.credits.InfoOtherTypeCreditLine" />
+            <forward name="show-form" path="editOtherTypeCreditLine"/>
+            <forward name="successfull-edit" 
+                path="/teacherSearchForOtherTypeCreditLine.do?method=doSearch"/>
+            <forward name="successfull-read" path=""/>
+            <forward name="successfull-delete" 
+                path="/teacherSearchForOtherTypeCreditLine.do?method=doSearch"/>
+        </action>		
+		<!-- =======================================================================  -->               
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->
     <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
@@ -476,7 +526,7 @@
     </plug-in>
     <plug-in className="org.apache.struts.tiles.TilesPlugin" >
         <set-property property="definitions-config" 
-            value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/departmentAdmOffice/tiles-departmentAdmOffice-definitions.xml,/WEB-INF/tiles/departmentAdmOffice/tiles-departmentAdmOffice-pages-definitions.xml" 
+            value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/credits/tiles-credits-definitions.xml,/WEB-INF/tiles/departmentAdmOffice/tiles-departmentAdmOffice-definitions.xml,/WEB-INF/tiles/departmentAdmOffice/tiles-departmentAdmOffice-pages-definitions.xml" 
             />
         <set-property property="moduleAware" value="true" />
         <set-property property="definitions-parser-validate" value="true" />

@@ -37,6 +37,8 @@ public class TeacherCreditsSheetDTO extends DataTranferObject
     private List infoTeacherDegreeFinalProjectStudentList;
 
     private List infoTeacherInstitutionWorkingTimeList;
+    
+    private List infoTeacherOtherTypeCreditLineList;
 
     private InfoCredits infoCredits;
     
@@ -235,6 +237,22 @@ public class TeacherCreditsSheetDTO extends DataTranferObject
     public void setInfoCredits(InfoCredits infoCredits)
     {
         this.infoCredits = infoCredits;
+    }
+
+    /**
+     * @return Returns the infoTeacherOtherTypeCreditLineList.
+     */
+    public List getInfoTeacherOtherTypeCreditLineList()
+    {
+        return infoTeacherOtherTypeCreditLineList;
+    }
+
+    /**
+     * @param infoTeacherOtherTypeCreditLineList The infoTeacherOtherTypeCreditLineList to set.
+     */
+    public void setInfoTeacherOtherTypeCreditLineList(List infoTeacherOtherTypeCreditLineList)
+    {
+        this.infoTeacherOtherTypeCreditLineList = infoTeacherOtherTypeCreditLineList;
     }
 
 }

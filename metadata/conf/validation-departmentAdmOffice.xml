@@ -170,6 +170,17 @@
 			</field>
    		</form>
 		<!-- ================================================================ -->    	   		
+		<!-- ================================================================ -->    	
+    	<form name="otherTypeCreditLineForm">
+			<field property="reason" depends="required" page="1">
+				<arg0 key="label.otherTypeCreditLine.reason" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+			</field>
+			<field property="credits" depends="required,double" page="1">
+				<arg0 key="label.otherTypeCreditLine.credits" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+			</field>
+    	</form>
+		<!-- ================================================================ -->    	
+		
     </formset>
 </form-validation>
 

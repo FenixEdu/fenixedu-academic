@@ -1234,7 +1234,7 @@
     </plug-in>
     <plug-in className="org.apache.struts.tiles.TilesPlugin" >
         <set-property property="definitions-config" 
-            value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/teacher/tiles-teacher-definitions.xml,/WEB-INF/tiles/teacher/tiles-teacher-pages-definitions.xml" 
+            value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/credits/tiles-credits-definitions.xml,/WEB-INF/tiles/teacher/tiles-teacher-definitions.xml,/WEB-INF/tiles/teacher/tiles-teacher-pages-definitions.xml" 
             />
         <set-property property="moduleAware" value="true" />
         <set-property property="definitions-parser-validate" value="true" />

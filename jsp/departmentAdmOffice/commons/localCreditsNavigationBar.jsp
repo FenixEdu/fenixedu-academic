@@ -39,6 +39,11 @@
 				</html:link>
 			</li>
 			<li>
+				<html:link page="/teacherSearchForOtherTypeCreditLine.do?method=searchForm&amp;page=0" paramId="executionPeriodId" paramName="executionPeriodId">
+					<bean:message key="link.other-type-credit-line" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+				</html:link>
+			</li>
+			<li>
 				<html:link page="/teacherSearchForTeacherCreditsSheet.do?method=searchForm&amp;page=0" paramId="executionPeriodId" paramName="executionPeriodId">
 					<bean:message key="link.teacher.sheet"/>
 				</html:link>

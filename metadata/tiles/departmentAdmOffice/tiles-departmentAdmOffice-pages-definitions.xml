@@ -96,4 +96,21 @@
     <definition name="createProfessorship" extends="departmentAdmOffice.masterPage">
         <put name="body" value="/departmentAdmOffice/teacher/professorship/createProfessorship.jsp"/>
     </definition>
+    
+    <definition name="searchForOtherTypeCreditLine" extends="creditsManagement.masterPage">
+        <put name="body" value="/credits/searchTeacherForOtherTypeCreditLine.jsp"/>
+    </definition>
+    <definition name="showOhterTypeCreditLines" extends="creditsManagement.masterPage">
+        <put name="body" value="/credits/showOtherTypeCreditLines.jsp"/>
+    </definition>
+
+    <definition name="editOtherTypeCreditLine" extends="creditsManagement.masterPage">
+        <put name="body" value="/credits/editOtherTypeCreditLine.jsp"/>
+    </definition>
+    
+
+    
+    
+    
+    
 </tiles-definitions>

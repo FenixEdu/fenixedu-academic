@@ -20,6 +20,8 @@ public class Credits extends DomainObject implements ICredits
     private Double supportLessons;
 
     private ITeacher teacher;
+    
+    private Double otherTypeCredits;
 
     public boolean equals( Object obj )
     {
@@ -168,4 +170,20 @@ public class Credits extends DomainObject implements ICredits
     {
         this.teacher = teacher;
     }
+    /**
+     * @return Returns the otherTypeCredits.
+     */
+    public Double getOtherTypeCredits()
+    {
+        return otherTypeCredits;
+    }
+
+    /**
+     * @param otherTypeCredits The otherTypeCredits to set.
+     */
+    public void setOtherTypeCredits(Double otherTypeCredits)
+    {
+        this.otherTypeCredits = otherTypeCredits;
+    }
+
 }

@@ -105,6 +105,7 @@ import DataBeans.Seminaries.InfoEquivalency;
 import DataBeans.Seminaries.InfoModality;
 import DataBeans.Seminaries.InfoSeminary;
 import DataBeans.Seminaries.InfoTheme;
+import DataBeans.credits.InfoOtherTypeCreditLine;
 import DataBeans.degree.finalProject.InfoTeacherDegreeFinalProjectStudent;
 import DataBeans.gaugingTests.physics.InfoGaugingTestResult;
 import DataBeans.gesdis.InfoCourseHistoric;
@@ -146,6 +147,8 @@ import Dominio.Seminaries.ICourseEquivalency;
 import Dominio.Seminaries.IModality;
 import Dominio.Seminaries.ISeminary;
 import Dominio.Seminaries.ITheme;
+import Dominio.credits.IOtherTypeCreditLine;
+import Dominio.credits.OtherTypeCreditLine;
 import Dominio.degree.finalProject.ITeacherDegreeFinalProjectStudent;
 import Dominio.degree.finalProject.TeacherDegreeFinalProjectStudent;
 import Dominio.gaugingTests.physics.IGaugingTestResult;
@@ -4877,5 +4880,39 @@ public abstract class Cloner
         studentCourseReport.setCurricularCourse(curricularCourse);
         
         return studentCourseReport;
+    }
+    public static InfoOtherTypeCreditLine copyIOtherTypeCreditLine2InfoOtherCreditLine(IOtherTypeCreditLine creditLine)
+    {
+        InfoTeacher infoTeacher =copyITeacher2InfoTeacher(creditLine.getTeacher());
+        InfoExecutionPeriod infoExecutionPeriod =copy(creditLine.getExecutionPeriod());
+     
+        InfoOtherTypeCreditLine infoOtherTypeCreditLine = new InfoOtherTypeCreditLine();
+        
+        copyObjectProperties(infoOtherTypeCreditLine, creditLine);
+        
+        infoOtherTypeCreditLine.setInfoTeacher(infoTeacher);
+        infoOtherTypeCreditLine.setInfoExecutionPeriod(infoExecutionPeriod);
+        return infoOtherTypeCreditLine;
+    }
+    public static IOtherTypeCreditLine copyInfoOtherTypeCreditLine2IOtherCreditLine(InfoOtherTypeCreditLine creditLine)
+    {
+        ITeacher teacher = null;
+        if (creditLine.getInfoTeacher() != null )
+        {
+            teacher = copyInfoTeacher2Teacher(creditLine.getInfoTeacher());
+        }
+        IExecutionPeriod executionPeriod = null;
+        if (creditLine.getInfoExecutionPeriod() != null)
+        {
+            executionPeriod = copyInfoExecutionPeriod2IExecutionPeriod(creditLine.getInfoExecutionPeriod());
+        }
+        
+        IOtherTypeCreditLine otherTypeCreditLine = new OtherTypeCreditLine();
+        
+        copyObjectProperties(otherTypeCreditLine, creditLine);
+        
+        otherTypeCreditLine.setTeacher(teacher);
+        otherTypeCreditLine.setExecutionPeriod(executionPeriod);
+        return otherTypeCreditLine;
     }
 }
