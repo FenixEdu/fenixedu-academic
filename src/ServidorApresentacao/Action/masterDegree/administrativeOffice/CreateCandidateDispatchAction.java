@@ -81,10 +81,10 @@ public class CreateCandidateDispatchAction extends DispatchAction {
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
-			DynaActionForm chooseExecutionYearForm = (DynaActionForm) form;
-			GestorServicos serviceManager = GestorServicos.manager();
-			
-			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+//			DynaActionForm chooseExecutionYearForm = (DynaActionForm) form;
+//			GestorServicos serviceManager = GestorServicos.manager();
+//			
+//			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			
 			request.setAttribute(SessionConstants.EXECUTION_YEAR, request.getParameter("executionYear"));
 						
