@@ -5,12 +5,15 @@
 package ServidorApresentacao.Action.teacher.professorship;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -76,12 +79,17 @@ public class CreateProfessorshipDispatchAction extends DispatchAction
 
     private List getExecutionDegrees(HttpServletRequest request) throws FenixServiceException
     {
-        Object[] arguments = {null, TipoCurso.LICENCIATURA_OBJ};
+        Object[] arguments = {null, null};
         List executionDegrees = (List) executeService(
                 "ReadExecutionDegreesByExecutionYearAndDegreeType", request, arguments);
 
-        Collections.sort(executionDegrees,
-                new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome"));
+        ComparatorChain comparatorChain = new ComparatorChain();
+        
+        comparatorChain.addComparator(new BeanComparator("infoDegreeCurricularPlan.infoDegree.tipoCurso.tipoCurso"));
+        comparatorChain.addComparator(new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome"));
+        
+        Collections.sort(executionDegrees,comparatorChain);
+                
         return executionDegrees;
     }
 

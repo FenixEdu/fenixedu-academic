@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ page import="Util.TipoCurso" %>
 <bean:define id="infoTeacher" name="infoTeacher" scope="request" />
 <p class="infoselected">
 	<b><bean:message key="label.teacher.name" /></b> <bean:write name="infoTeacher" property="infoPerson.nome"/><br />
@@ -36,7 +37,25 @@
 		</h2>
 		<html:select property="executionDegreeId" onchange="this.form.method.value='showExecutionDegreeExecutionCourses';this.form.submit();">
 			<option></option>
-			<html:options collection="executionDegrees" labelProperty="infoDegreeCurricularPlan.infoDegree.nome" property="idInternal"/>
+			<logic:iterate id="executionDegree" name="executionDegrees">
+				<bean:define id="executionDegreeId" name="executionDegree" property="idInternal"/>
+				<bean:define id="executionDegreeName" name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.nome"/>				
+				<logic:equal name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso.tipoCurso" value="<%= String.valueOf(TipoCurso.LICENCIATURA) %>">
+					<html:option value="<%= executionDegreeId.toString() %>">
+						<bean:message key="label.executionDegree.degree" arg0="<%= executionDegreeName.toString() %>"/>
+					</html:option>
+				</logic:equal>
+				<logic:equal name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso.tipoCurso" value="<%= String.valueOf(TipoCurso.MESTRADO) %>">
+					<html:option value="<%= executionDegreeId.toString() %>">
+						<bean:message key="label.executionDegree.masterDegree" arg0="<%= executionDegreeName.toString() %>"/>
+					</html:option>
+				</logic:equal>
+				
+			</logic:iterate>
+			
+			
+			
+
 		</html:select>
 	</logic:present>
 	
