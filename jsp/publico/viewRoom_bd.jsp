@@ -13,53 +13,27 @@
 
 	<logic:present name="publico.infoRoom" scope="session">
 
-            <table align="center" cellspacing="10">
-                <tr>
-                    <td align="right" height="40">
-                        <bean:message key="property.room.name"/>
+            <table cellspacing="0" cellpadding="0" width="100%">
+                <tr class="timeTable_line">
+                    <td class="horariosHoras_first">
+                        <b><bean:message key="property.room.name"/>: <bean:write name="publico.infoRoom" property="nome"/></b>
                     </td>
-                    <td align="left" height="40">
-                        <bean:write name="publico.infoRoom" property="nome"/>
+                    <td class="horariosHoras_first">
+                        <b><bean:message key="property.room.building"/>: <bean:write name="publico.infoRoom" property="edificio"/></b>
                     </td>
-                </tr>
-                <tr>
-                    <td align="right" height="40">
-                        <bean:message key="property.room.building"/>
-                    </td>
-                    <td align="left" height="40">
-                    	<bean:write name="publico.infoRoom" property="edificio"/>
+                    <td class="horariosHoras_first">
+                        <b><bean:message key="property.room.floor"/>: <bean:write name="publico.infoRoom" property="piso"/></b>
                     </td>
                 </tr>
-                <tr>
-                    <td align="right" height="40">
-                        <bean:message key="property.room.floor"/>
+                <tr class="timeTable_line">
+                    <td class="horariosHoras_first">
+                        <b><bean:message key="property.room.type"/>: <bean:write name="publico.infoRoom" property="tipo"/></b>
                     </td>
-                    <td align="left" height="40">
-                        <bean:write name="publico.infoRoom" property="piso"/>
+                    <td class="horariosHoras_first">
+                        <b><bean:message key="property.room.capacity.normal"/>: <bean:write name="publico.infoRoom" property="capacidadeNormal"/></b>
                     </td>
-                </tr>
-                <tr>
-                    <td align="right" height="40">
-                        <bean:message key="property.room.type"/>
-                    </td>
-                    <td align="left" height="40">
-                        <bean:write name="publico.infoRoom" property="tipo"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right" height="40">
-                        <bean:message key="property.room.capacity.normal"/>
-                    </td>
-                    <td align="left" height="40">
-                        <bean:write name="publico.infoRoom" property="capacidadeNormal"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right" height="40">
-                        <bean:message key="property.room.capacity.exame"/>
-                    </td>
-                    <td align="left" height="40">
-                        <bean:write name="publico.infoRoom" property="capacidadeExame"/>
+                    <td class="horariosHoras_first">
+                        <b><bean:message key="property.room.capacity.exame"/>: <bean:write name="publico.infoRoom" property="capacidadeExame"/></b>
                     </td>
                 </tr>
             </table>
