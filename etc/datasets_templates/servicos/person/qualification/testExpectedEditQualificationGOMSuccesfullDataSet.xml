@@ -184,7 +184,7 @@
   <!--Qualificacao de teacher-->
   <QUALIFICATION ID_INTERNAL='1' KEY_PERSON='18' YEAR='1999' MARK='mark' SCHOOL='ist' TITLE='Sr. Dr. Eng.'/>
   <!--Qualificacao de um bolseiro-->
-  <QUALIFICATION ID_INTERNAL='2' KEY_PERSON='14' YEAR='2003' MARK='mark' SCHOOL='NewSchool' TITLE='Sr. Dr. Eng.'/>
+  <QUALIFICATION ID_INTERNAL='2' KEY_PERSON='14' YEAR='2003' MARK='mark' SCHOOL='NewSchool' TITLE='title'/>
   <!--Qualificação de outro-->
   <QUALIFICATION ID_INTERNAL='3' KEY_PERSON='1' YEAR='1999' MARK='mark' SCHOOL='ist' TITLE='Sr. Dr. Eng.'/>
 

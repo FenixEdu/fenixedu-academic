@@ -182,7 +182,7 @@
 
   <!--Novas qualificacoes-->
   <!--Qualificacao de teacher-->
-  <QUALIFICATION ID_INTERNAL='1' KEY_PERSON='18' YEAR='2000' MARK='mark' SCHOOL='tagus' TITLE='Sr. Dr. Eng.'/>
+  <QUALIFICATION ID_INTERNAL='1' KEY_PERSON='18' YEAR='2000' MARK='mark' SCHOOL='tagus' TITLE='title'/>
   <!--Qualificacao de um bolseiro-->
   <QUALIFICATION ID_INTERNAL='2' KEY_PERSON='14' YEAR='1999' MARK='mark' SCHOOL='ist' TITLE='Sr. Dr. Eng.'/>
   <!--Qualificação de outro-->

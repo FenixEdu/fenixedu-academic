@@ -140,6 +140,8 @@ public class EditQualificationTest extends QualificationServiceNeedsAuthenticati
 		info.setIdInternal(new Integer(2));
 		info.setSchool("NewSchool");
 		info.setYear(new Integer(2003));
+		info.setMark("mark");
+		info.setTitle("title");
 		info.setInfoPerson(getInfoPersonGO());
 
 		Object[] args = { info.getIdInternal(), info };
@@ -153,6 +155,8 @@ public class EditQualificationTest extends QualificationServiceNeedsAuthenticati
 		info.setIdInternal(new Integer(1));
 		info.setYear(new Integer(2000));
 		info.setSchool("tagus");
+		info.setMark("mark");
+		info.setTitle("title");
 		info.setInfoPerson(getInfoPersonT());
 
 		Object[] args = { info.getIdInternal(), info };
