@@ -201,6 +201,7 @@
     <!-- ========== Global Forward Definitions =============================== -->
     <global-forwards type="org.apache.struts.action.ActionForward">
       <forward name="index" path="/index.do" redirect="true"/>
+      <forward name="firstPage" path="/autenticacaoSOP.jsp"/>
     </global-forwards>
     
     <!-- ========== Action Mapping Definitions =============================== -->
@@ -688,6 +689,14 @@
 <!--			<forward name="executionCourseViewer" path="/viewExecutionCourse.jsp"/>
 -->
 		</action>
+      
+      
+      
+      <!-- Action For LogOff -->
+      <action path="/logoff"
+      	      type="ServidorApresentacao.Action.sop.LogOffAction">
+      	  <forward name="Success" path="/index.do"/>      	      
+      </action>
       
       
      </action-mappings>     

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -55,6 +56,17 @@ public class FenixExceptionHandler extends ExceptionHandler {
 		throws ServletException {
 		ActionForward forward = null;
 
+
+		ActionError error = null;
+
+		if(!request.getSession().getAttributeNames().hasMoreElements()) {
+			ActionErrors errors = new ActionErrors();
+			error = new ActionError("error.invalid.session");
+			errors.add("error.invalid.session", error);
+			request.setAttribute(Globals.ERROR_KEY, errors);
+			return mapping.findForward("firstPage");
+		}
+
 		request.getSession().setAttribute(
 			SessionConstants.ORIGINAL_MAPPING_KEY,
 			mapping);
@@ -71,7 +83,6 @@ public class FenixExceptionHandler extends ExceptionHandler {
 			ae.setScope("session");
 		}
 
-		ActionError error = null;
 		String property = null;
 
 		// Figure out the error
