@@ -5,94 +5,73 @@
 }
 
 .courseList{
-	align:left;
+	text-align:left;
 	vertical-align: top;
 }
 
 .examMap{
-	border-style: solid;
-	border-color: #000;
-	border-width: 2px;
-	width: 100%;
+	border:1px solid #000;
 }
-.examMap_header_first{
-	border-style: solid;	
-	border-color: #000;
-	border-width: 0px;	
-	border-bottom-width: 2px;
+
+.examMap_header_first{	
+	font-weight: bold;
+	border-bottom: 1px solid #000;	
 	background-color: #33CCFF;
 	text-align: center;	
 	width: 16.7%;
-	font-weight: bold;
-}
+	}
 
 .examMap_header{
-	border-style: solid;
-	border-color: #000;	
-	border-width: 0px;
-	border-left-width: 2px;
-	border-bottom-width: 2px;
+	font-weight: bold;	
+	border-left: 1px solid #000;
+	border-bottom: 1px solid #000;
 	background-color: #33CCFF;
 	text-align: center;
 	width: 16.7%;	
-	font-weight: bold;	
-}
+	}
 
 .exam_cell_day_first{
-	background-color: #CCC;
-	text-align: right;
-	color: #FFF;
 	font-weight: bold;	
-}
+	color: #fff;
+	text-align: right;
+	background-color: #ccc;
+	}
 
 .exam_cell_day{
-	border-style: solid;
-	border-color: #000;	
-	border-width: 0px;
-	border-left-width: 2px;
-	background-color: #CCC;
-	text-align: right;
-	color: #FFF;
 	font-weight: bold;	
-}
-
+	color: #fff;
+	text-align: right;
+	border-left: 1px solid #000;
+	background-color: #ccc;
+	}
 
 .exam_cell_content{
-	border-style: solid;
-	border-color: #000;	
-	border-width: 0px;
-	border-left-width: 2px;
-	border-bottom-width: 1px;	
-	background-color: #CCC;
 	text-align: left;
 	color: #FFF;
-}
+	border-left: 1px solid #000;
+	border-bottom: 1px solid #000;	
+	background-color: #CCC;
+	}
 
 .exam_cell_content_first{
-	border-style: solid;
-	border-color: #000;	
-	border-width: 0px;
-	border-bottom-width: 1px;
-	background-color: #CCC;
 	text-align: left;
-	color: #FFF;
-}
+	color: #fff;
+	border-bottom: 1px solid #000;
+	background-color: #ccc;
+	}
 
 .exam_cell_content_bottom{
-	border-style: solid;
-	border-color: #000;	
-	border-width: 0px;
-	border-left-width: 2px;
-	background-color: #CCC;
 	text-align: left;
-	color: #FFF;
-}
+	color: #fff;
+	border-left: 1px solid #000;
+	background-color: #ccc;
+	}
 
 .exam_cell_content_first_bottom{
-	background-color: #CCC;
 	text-align: left;
-	color: #FFF;
-}
+	color: #fff;
+	background-color: #ccc;
+	}
 
 td a:link{
 	text-decoration: underline;

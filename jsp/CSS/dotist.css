@@ -9,6 +9,7 @@ body {
 	color: #333;
 	text-align: left;
 	margin: 0px;
+	background: #fff;
 	}
 
 table {
@@ -103,7 +104,6 @@ a:hover {
 	border-right-style: solid;
 	border-right-color: #CCCCCC;
 	padding: 20px;
-	width: 20%;
 	}
 
 .bodycontent {
@@ -239,15 +239,14 @@ a:hover {
 	background-color: #EBECED;
 	border: 1px solid #ccc;
 	text-align: center;
-	height: 20px;
-	padding: 0.5em;
+	height: 30px;
 	}
 	
 .listClasses-header	{
 	background-color: #ccc;
 	font-weight: bold;
 	text-align: center;
-	padding: 0.5em;
+	padding: 5px;
 	}
 
 .tall-td {
@@ -308,6 +307,7 @@ a:hover {
 ******************************************************************/
 
 .greytxt {
+	font: 11px  Arial, Helvetica, sans-serif;
 	color: #666;
 	}
 
