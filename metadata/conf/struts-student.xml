@@ -242,7 +242,6 @@
         scope="request"
         validate="false"
         input="/studentShiftEnrolmentManagerLoockup.do?method=proceedToShiftEnrolment&amp;page=0" > 
-	  <!-- :AQUI: jpvl - Acrescentei uma barra -->                        
         <forward name="enrollmentConfirmation" path="/studentShiftEnrolmentManager.do?method=chooseCourses"/>
       </action>
       
