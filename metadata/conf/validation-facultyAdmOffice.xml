@@ -2,6 +2,25 @@
 <!-- @validation.doctype@ -->
 <form-validation>
     <formset>
+
+        <!-- Initial form to serch a Grant Owner by Identification document 
+        <form name="searchGrantOwnerForm">
+            <field property="idNumber" depends="integer" page="1">
+                <msg name="number" key="errors.integer"/>
+                <arg0 key="idNumber"/>
+            </field>
+        </form> -->
+
+        <!-- Initial form to search a Grant Owner by number 
+        <form name="searchGrantOwnerByNumberForm">
+            <field property="idGrantOwner" depends="required, integer" page="1">~
+                <msg name="number" key="errors.integer"/>
+                <arg0 key="idGrantOwner"/>
+            </field>
+        </form>     -->   
+
+        
+        <!-- Edit a Grant Owner information form -->
     	<form name="createGrantOwnerForm">
     		<field property="dateSendCGD" depends="required, mask, date" page="1">
 				<msg name="date" key="errors.invalid.date"/>
