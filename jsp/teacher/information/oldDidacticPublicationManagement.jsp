@@ -16,7 +16,7 @@
 <bean:message key="message.publications.managementCleanExplanation" />
 <bean:message key="message.publications.managementInsertPubExplanation" />
 <bean:message key="message.publications.managementSeeExplanation" />
-<table border="0" style="margin-top:10px" cellspacing="1" cellpadding="5" width="100%">
+<table border="0" style="margin-top:10px" cellspacing="1" cellpadding="5" width="90%">
 <logic:iterate id="infoOldPublication" name="infoSiteOldPublications" property="infoOldPublications">
 <tr>
 	<td class="listClasses" style="text-align:left" width="60%">

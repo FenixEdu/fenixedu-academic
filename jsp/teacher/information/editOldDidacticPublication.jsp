@@ -30,7 +30,7 @@
 	<html:hidden property="infoTeacher#idInternal"/>
 	<html:hidden property="oldPublicationTypeString" value="Didactic"/>
 	<html:hidden property="method" value="edit"/>
-<table>
+<table width="90%">
 	<tr>
 		<td><bean:message key="message.publications.publication" /></td>
 	</tr>
