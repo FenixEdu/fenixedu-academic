@@ -15,6 +15,7 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -24,6 +25,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.ojb.broker.ManageableCollection;
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.metadata.ClassDescriptor;
+import org.apache.ojb.broker.metadata.CollectionDescriptor;
 import org.apache.ojb.broker.metadata.FieldDescriptor;
 import org.apache.ojb.broker.metadata.ObjectReferenceDescriptor;
 import org.apache.ojb.broker.metadata.fieldaccess.PersistentField;
@@ -121,7 +123,7 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 			List result = (List) query.execute();
 			ListIterator iterator = result.listIterator();
 			while (iterator.hasNext()) {
-				
+
 				delete(iterator.next());
 			}
 		} catch (QueryException ex) {
@@ -142,7 +144,7 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 	public Object executeQueryByCriteria(Class queryClass, Criteria crit)
 		throws org.odmg.QueryException {
 
-		Query query = QueryFactory.newQuery(queryClass, crit);
+		Query query = QueryFactory.newQuery(queryClass, crit, true);
 		//setBindIterator(flatten(query.getCriteria(), new Vector()).listIterator());
 		//setQuery(query);
 
@@ -217,6 +219,7 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 			//((EnhancedOQLQuery) query).create(queryClass, criteria);
 			//List result = (List) query.execute();
 			List result = (List) executeQueryByCriteria(queryClass, criteria);
+			
 			lockRead(result);
 			return result;
 		} catch (Exception e) {
@@ -281,6 +284,11 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 		Vector ref = cld.getObjectReferenceDescriptors();
 		Criteria crit = criteria;
 
+		System.out.println("c.name= " + c.getName());
+		System.out.println("ref.size= " + ref.size());
+
+		Vector col = cld.getCollectionDescriptors();
+
 		///////////////////////////////////////////////////////////////////////////////////////////
 		// From code up above...
 		///////////////////////////////////////////////////////////////////////////////////////////
@@ -291,6 +299,45 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 		}
 		///////////////////////////////////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////////////////////
+
+		for (int k = 0; k < col.size(); k++) {
+			CollectionDescriptor objCol = (CollectionDescriptor) col.get(k);
+			PropertyDescriptor[] xpto =
+				PropertyUtils.getPropertyDescriptors(anExample.getClass());
+			//objCol.
+
+			for (int j = 0; j < xpto.length; j++) {
+				Method getM = xpto[j].getReadMethod();
+				if (xpto[j].getName().equals(objCol.getAttributeName())) {
+					try {
+						Collection propValue =
+							(Collection) getM.invoke(anExample, null);
+
+						if (propValue != null) {
+
+							Iterator iter = propValue.iterator();
+							while (iter.hasNext()) {
+								Object element = iter.next();
+
+								crit =
+									criteriaBuilder(
+										criteria,
+										path + objCol.getAttributeName() + ".",
+										element);
+							}
+
+						}
+					} catch (IllegalAccessException ex) {
+						ex.printStackTrace(System.out);
+						LoggerFactory.getDefaultLogger().error(ex);
+					} catch (InvocationTargetException ex) {
+						ex.printStackTrace(System.out);
+						LoggerFactory.getDefaultLogger().error(ex);
+					}
+				}
+			}
+
+		}
 
 		for (int j = 0; j < ref.size(); j++) {
 			ObjectReferenceDescriptor objref =
@@ -313,8 +360,10 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 									propValue);
 						}
 					} catch (IllegalAccessException ex) {
+						ex.printStackTrace(System.out);
 						LoggerFactory.getDefaultLogger().error(ex);
 					} catch (InvocationTargetException ex) {
+						ex.printStackTrace(System.out);
 						LoggerFactory.getDefaultLogger().error(ex);
 					}
 				}
@@ -330,6 +379,7 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 					crit.addEqualTo(path + f.getName(), value);
 				}
 			} catch (Throwable ex) {
+				ex.printStackTrace(System.out);
 				LoggerFactory.getDefaultLogger().error(ex);
 			}
 		}
@@ -341,41 +391,42 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 	 * @see ServidorPersistente.IPersistentObject#getDeletedObjects()
 	 */
 	public void removeFromCacheDeletedObjects() {
-		
+
 		//		////////////////////////////////////////////////////////////////////////////////////
 		//		 Do this just to get the broker...
 		//		 There must be a simpler way!
 		//		////////////////////////////////////////////////////////////////////////////////////
 
 		//obtain current ODMG transaction
-		Transaction tx = OJB.getInstance().currentTransaction();//TxManagerFactory.instance().getCurrentTransaction();
+		Transaction tx = OJB.getInstance().currentTransaction();
+		//TxManagerFactory.instance().getCurrentTransaction();
 
 		// we allow queries even if no ODMG transaction is running.
 		// thus we have to provide a pseudo tx if necessary
-/*		boolean needsCommit = false;
-		if (tx == null) {
-			System.out.println("Transaction Null!");
-			//throw new org.odmg.QueryException("Transaction Null!");
-			//tx = OJBFactory.getInstance().newTransaction();
-		}
-
-		// we allow to work with unopened transactions.
-		// we assume that such a tx is to be closed after performing the query
-		if (!tx.isOpen()) {
-			tx.begin();
-			needsCommit = true;
-		}
-*/		// obtain a broker instance from the current transaction
+		/*		boolean needsCommit = false;
+				if (tx == null) {
+					System.out.println("Transaction Null!");
+					//throw new org.odmg.QueryException("Transaction Null!");
+					//tx = OJBFactory.getInstance().newTransaction();
+				}
+		
+				// we allow to work with unopened transactions.
+				// we assume that such a tx is to be closed after performing the query
+				if (!tx.isOpen()) {
+					tx.begin();
+					needsCommit = true;
+				}
+		*/ // obtain a broker instance from the current transaction
 		PersistenceBroker broker = ((HasBroker) tx).getBroker();
 		//		/////////////////////////////////////////////////////////////////////////////////////////
 		//		/////////////////////////////////////////////////////////////////////////////////////////
-/*		Iterator iterator = deletedObject.iterator();
-		while (iterator.hasNext()) {
-			System.out.println("AQQIWUEWQOIEOQWUIEOIQUWEOI????????????????????????");
-			Object element = (Object) iterator.next();
-			broker.removeFromCache(element);
-		}*/
-		broker.clearCache();		
+		/*		Iterator iterator = deletedObject.iterator();
+				while (iterator.hasNext()) {
+					System.out.println("AQQIWUEWQOIEOQWUIEOIQUWEOI????????????????????????");
+					Object element = (Object) iterator.next();
+					broker.removeFromCache(element);
+				}*/
+		broker.clearCache();
 	}
 
 }
