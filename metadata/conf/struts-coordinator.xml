@@ -35,7 +35,7 @@
     <!-- ========== Global Forward Definitions =============================== -->
     <global-forwards type="org.apache.struts.action.ActionForward">
 	  <forward name="index" path="index.do" redirect="true"/>
-      <forward name="Treasury" path="/indexCoordinator.jsp" contextRelative="true" redirect="true" />
+      <forward name="Coordinator" path="/indexCoordinator.jsp" contextRelative="true" redirect="true" />
       <forward name="firstPage" path="/index.do"/>
       <forward name="logoff" path="/logoff.do" contextRelative="true"/>
     </global-forwards>
@@ -46,12 +46,8 @@
       <action path="/index" forward="/indexCoordinator.jsp"/>
       <action path="/home" forward="/switchAction.do?prefix=&amp;page=/mainPortalPage.jsp"/>
       <action path="/switchAction" type="org.apache.struts.actions.SwitchAction" />
-      
-     
-
-     
-    
-
+      <action path="/candidateSection" forward="/candidate/indexCandidate.jsp"/>
+      <action path="/studentSection" forward="/student/indexStudent.jsp"/>
 
     </action-mappings>
     

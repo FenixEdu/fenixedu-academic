@@ -2,40 +2,6 @@
      to avoid mixing user defined and system mappings. -->   
 <!-- Mapping of User defined classes starts here -->
 
-<!-- Definitions for class CONTRIBUTOR -->
-
-	<class-descriptor
-		class="Dominio.Contributor"
-		table="CONTRIBUTOR"
-	>
-	  <field-descriptor 
-	     name="idInternal"    
-	     column="ID_INTERNAL"  
-	     jdbc-type="INTEGER"
-	     primarykey="true"
-	     autoincrement="true"
-	  />
-
-	  <field-descriptor
-	     name="contributorNumber"
-	     column="CONTRIBUTOR_NUMBER"
-	     jdbc-type="INTEGER"
-	  />
-
-	  <field-descriptor
-	     name="contributorName"
-	     column="CONTRIBUTOR_NAME"
-	     jdbc-type="VARCHAR"
-	  />
-	  <field-descriptor 
-	     name="contributorAddress"
-	     column="CONTRIBUTOR_ADDRESS"
-	     jdbc-type="VARCHAR"
-	  />
-
- </class-descriptor>
-
-<!-- End of definitions for class CONTRIBUTOR -->
 
 
 <!-- Mapping of User defined classes ends here -->

@@ -6,7 +6,7 @@
     <title><bean:message key="title.masterDegree.administrativeOffice.main" /></title>
   </head>
   <body>
-      <html:link page="/candidateSection.do"><bean:message key="link.masterDegree.administrativeOffice.candidate" />
+    <html:link page="/candidateSection.do"><bean:message key="link.masterDegree.administrativeOffice.candidate" />
     </html:link><br>
 
 	<br>
