@@ -57,9 +57,7 @@ public class PublicTilesComponentController extends ControllerSupport {
 			tileContext.putAttribute(
 				"body",
 				"/publico/viewExecutionCourse_bd.jsp");
-			tileContext.putAttribute(
-				"navbar",
-				"/publico/gesdisNavbarInitial.jsp");
+			
 
 		} else if (component instanceof InfoSiteAnnouncement) {
 			tileContext.putAttribute("body", "/publico/announcements_bd.jsp");
