@@ -75,7 +75,7 @@
     </form>
 
 
-<form name="executionCourseObjectivesForm">
+	<form name="executionCourseObjectivesForm">
       <field property="generalObjectives" depends="required" page="1">
         <arg0 key="message.generalObjectives" resource="true"/>
       </field>
@@ -184,8 +184,25 @@
         <arg0 key="message.itemOrder" resource="true"/>
       </field>
     </form>
-    
-    
-    
+    <!-- Credits Validation -->
+   <form name="creditsTeacherForm">
+		   <field property="tfcStudentsNumber" depends="integer" page="1">
+			   <arg0 key="message.tfcStudentsNumber" resource="true"/>
+		   </field>
+		   <field property="additionalCredits" depends="double" page="1">
+			   <arg0 key="message.additionalCredits" resource="true"/>
+		   </field>
+		   <field property="additionalCreditsJustification" depends="requiredif" page="1">
+			   <arg0 key="message.additionalCreditsJustification" resource="true"/>
+   			   <var>
+				   <var-name>field[0]</var-name>
+				   <var-value>additionalCredits</var-value>
+			   </var>
+   			   <var>
+				   <var-name>field-test[0]</var-name>
+				   <var-value>NOTNULL</var-value>
+			   </var>
+		   </field>		   
+   </form>    
   </formset>
 </form-validation>
