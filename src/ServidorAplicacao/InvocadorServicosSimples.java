@@ -1,5 +1,7 @@
 package ServidorAplicacao;
 
+import ServidorAplicacao.Filtro.GestorFiltros;
+
 /**
  * The InvocadorServicos subclass that simply invokes the services
  * without adding any special functionality.
@@ -10,11 +12,19 @@ package ServidorAplicacao;
 
 public class InvocadorServicosSimples extends InvocadorServicos {
 
-  public final static InvocadorServicosSimples invocador = new InvocadorServicosSimples();
+	public final static InvocadorServicosSimples invocador =
+		new InvocadorServicosSimples();
 
-  public final Object invoke(IServico servico, Object argumentos[])
-    throws Exception
-  {
-    return doInvocation(servico, "run", argumentos);
-  }
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.InvocadorServicos#invoke(ServidorAplicacao.IUserView, ServidorAplicacao.IServico, java.lang.Object[], ServidorAplicacao.Filtro.GestorFiltros)
+	 */
+	public Object invoke(
+		IUserView user,
+		IServico service,
+		Object[] argumentos,
+		GestorFiltros filterChain)
+		throws Exception {
+		filterChain.preFiltragem(user, service, argumentos);
+		return doInvocation(service, "run", argumentos);
+	}
 }

@@ -12,6 +12,7 @@ package ServidorAplicacao;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import ServidorAplicacao.Filtro.GestorFiltros;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidServiceException;
 
@@ -135,6 +136,6 @@ public abstract class InvocadorServicos {
     }
   }
 
-  public abstract Object invoke(IServico service, Object argumentos[]) 
+  public abstract Object invoke(IUserView user, IServico service, Object argumentos[], GestorFiltros filterChain) 
     throws Exception;
 }

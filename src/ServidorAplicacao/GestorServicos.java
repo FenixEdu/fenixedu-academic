@@ -225,8 +225,8 @@ public class GestorServicos {
     }
 
     try {
-		assoc.gestorFiltros.preFiltragem(id, assoc.servico, argumentos);
-		return assoc.invocador.invoke(assoc.servico, argumentos);
+		//assoc.gestorFiltros.preFiltragem(id, assoc.servico, argumentos);
+		return assoc.invocador.invoke(id, assoc.servico, argumentos, assoc.gestorFiltros);
 	}catch (FenixServiceException e) {	
 			throw e;} 
 	catch (Exception e) {
