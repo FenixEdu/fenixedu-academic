@@ -61,8 +61,9 @@ public class EditCurricularCourse implements IServico {
 				} catch (ExistingPersistentException ex) {
 					throw new ExistingServiceException("A disciplina curricular de nome "+newName+" e sigla "+newCode, ex);
 				}
-			}else
-			throw new NonExistingServiceException();
+			}
+			else
+				throw new NonExistingServiceException();
 		
 		
 			
