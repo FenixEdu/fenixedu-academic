@@ -27,7 +27,7 @@ import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionYear;
 import Dominio.ITeacher;
-import Dominio.ITurma;
+import Dominio.Turma;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -69,21 +69,17 @@ public class CursoExecucaoOJB
 			throw new ExistingPersistentException();
 	}
 
-	public void delete(ICursoExecucao executionDegree)
-		throws ExcepcaoPersistencia {
-		// Delete all Classes associated
-		List classes =
-			SuportePersistenteOJB
-				.getInstance()
-				.getITurmaPersistente()
-				.readByExecutionDegree(executionDegree);
-
-		Iterator iterator = classes.iterator();
-		while (iterator.hasNext()) {
-			SuportePersistenteOJB.getInstance().getITurmaPersistente().delete(
-				(ITurma) iterator.next());
-		}
+	public Boolean delete(ICursoExecucao executionDegree) throws ExcepcaoPersistencia {
+        
+        //Check for related classes
+		Criteria crit = new Criteria();
+		crit.addEqualTo("keyExecutionDegree", executionDegree.getIdInternal());
+		List result = queryList(Turma.class, crit);
+		if (!result.isEmpty())
+			return new Boolean(false);
+		
 		super.delete(executionDegree);
+		return new Boolean(true);
 	}
 
 	public void deleteAll() throws ExcepcaoPersistencia {
@@ -336,8 +332,8 @@ public class CursoExecucaoOJB
 
 			List result = (List) query.execute();
 			lockRead(result);
-			if (result.size() == 0)
-				return null;
+//			if (result.size() == 0)
+//				return null;
 			return result;
 		} catch (QueryException e) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, e);

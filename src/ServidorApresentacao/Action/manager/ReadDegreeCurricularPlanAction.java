@@ -45,8 +45,9 @@ public class ReadDegreeCurricularPlanAction extends FenixAction  {
 					(UserView) session.getAttribute(SessionConstants.U_VIEW);
 					
 				Integer degreeCurricularPlanId = (Integer) readDegreeForm.get("degreeCurricularPlanId");
-//				Integer degreeId = (Integer) readDegreeForm.get("degreeId");				
-					
+				
+				Integer	degreeId = new Integer(request.getParameter("degreeId"));	
+				
 				Object args[] = { degreeCurricularPlanId };
 				
 				GestorServicos manager = GestorServicos.manager();
@@ -64,6 +65,7 @@ public class ReadDegreeCurricularPlanAction extends FenixAction  {
 						ActionError error = new ActionError("message.nonExistingDegreeCurricularPlan");
 						actionErrors.add("message.nonExistingDegreeCurricularPlan", error);
 						saveErrors(request, actionErrors);
+					
 						return mapping.findForward("readDegree");
 				}
 				
@@ -76,9 +78,8 @@ public class ReadDegreeCurricularPlanAction extends FenixAction  {
 													args);	
 				} catch (FenixServiceException e) {
 						throw new FenixActionException(e);
-				}
-				if(executionDegrees!=null)		
-					Collections.sort(executionDegrees);
+				}		
+				Collections.sort(executionDegrees);
 								
 				List curricularCourses = null;
 				try {		
@@ -90,10 +91,8 @@ public class ReadDegreeCurricularPlanAction extends FenixAction  {
 						throw new FenixActionException(e);
 				}		
 //				Collections.sort(curricularCourses);
-			
 				request.setAttribute("curricularCoursesList", curricularCourses);
 				request.setAttribute("executionDegreesList", executionDegrees);
-//				request.setAttribute("degreeId", degreeId);
 				request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanId);
 				request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);					
 				return mapping.findForward("viewDegreeCurricularPlan");

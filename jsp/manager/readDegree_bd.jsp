@@ -25,13 +25,14 @@
 
 <ul style="list-style-type: square;">
 	<li><html:link page="/editDegree.do?method=prepareEdit"  paramId="degreeId" paramName="degreeId"><bean:message key="label.manager.edit.degree"/></html:link></li>
-</ul>
-
-<ul style="list-style-type: square;">
 	<li><html:link page="/insertDegreeCurricularPlan.do?method=prepareInsert" paramId="degreeId" paramName="degreeId"><bean:message key="label.manager.insert.degreeCurricularPlan"/></html:link></li>			
 </ul>
 
 <h3><bean:message key="label.manager.degreeCurricularPlans"/></h3>
+
+<logic:empty name="<%= SessionConstants.INFO_DEGREE_CURRICULAR_PLANS_LIST %>">
+<i><bean:message key="label.manager.degreeCurricularPlans.nonExisting"/></i>
+</logic:empty>
 
 <logic:present name="<%= SessionConstants.INFO_DEGREE_CURRICULAR_PLANS_LIST %>" scope="request">
 <logic:notEmpty name="<%= SessionConstants.INFO_DEGREE_CURRICULAR_PLANS_LIST %>">
@@ -54,7 +55,7 @@
 		<bean:write name="degreeCurricularPlan" property="idInternal"/>
 		</html:multibox>
 		</td>				
-		<td class="listClasses"><html:link page="/readDegreeCurricularPlan.do" paramId="degreeCurricularPlanId" paramName="degreeCurricularPlan" paramProperty="idInternal"><bean:write name="degreeCurricularPlan" property="name"/></html:link>
+		<td class="listClasses"><html:link page="<%= "/readDegreeCurricularPlan.do?degreeId=" + request.getAttribute("degreeId")%>" paramId="degreeCurricularPlanId" paramName="degreeCurricularPlan" paramProperty="idInternal"><bean:write name="degreeCurricularPlan" property="name"/></html:link>
 		</td>
 	 </tr>
 </logic:iterate>				

@@ -20,13 +20,7 @@
 
 <ul style="list-style-type: square;">
 	<li><html:link page="/editDegreeCurricularPlan.do?method=prepareEdit"  paramId="degreeCurricularPlanId" paramName="degreeCurricularPlanId"><bean:message key="label.manager.edit.degreeCurricularPlan"/></html:link></li>
-</ul>
-
-<ul style="list-style-type: square;">
 	<li><html:link page="/insertCurricularCourse.do?method=prepareInsert" paramId="degreeCurricularPlanId" paramName="degreeCurricularPlanId"><bean:message key="label.manager.insert.curricularCourse"/></html:link></li>			
-</ul>
-
-<ul style="list-style-type: square;">
 	<li><html:link page="/insertExecutionDegree.do?method=prepareInsert" paramId="degreeCurricularPlanId" paramName="degreeCurricularPlanId"><bean:message key="label.manager.insert.executionDegree"/></html:link></li>			
 </ul>
 
@@ -66,7 +60,7 @@
 					</td>
 	 			</tr>
 	 			</logic:iterate>			
-				<span class="error"><html:errors property="curricularCourse"/></span>		
+				<span class="error"><html:errors/></span>		
 			</table>
 			
 <br>	
@@ -80,14 +74,14 @@
 
 <h3><bean:message key="label.manager.executionDegrees"/></h3>
 
-<logic:empty name="curricularCoursesList">
+<logic:empty name="executionDegreesList">
 <i><bean:message key="label.manager.executionDegrees.nonExisting"/></i>
 </logic:empty>
 
 <logic:present name="executionDegreesList" scope="request">
 <logic:notEmpty name="executionDegreesList">
 	
-	<html:form action="/deleteDegreeCurricularPlans" method="get">
+	<html:form action="/deleteExecutionDegrees" method="get">
 		<html:hidden property="degreeCurricularPlanId" value="<%= degreeCurricularPlanId.toString() %>"/>
 			<table width="50%" cellpadding="0" border="0">
 				<tr>
@@ -115,7 +109,7 @@
 					</td>
 	 			</tr>
 	 			</logic:iterate>				
-				<span class="error"><html:errors property="executionDegree"/></span>		
+				<span class="error"><html:errors/></span>		
 			</table>
 			
 <br>	

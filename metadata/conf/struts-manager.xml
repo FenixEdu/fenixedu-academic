@@ -41,13 +41,7 @@
 				<form-property name="markType" type="java.lang.String" />
 				<form-property name="numerusClausus" type="java.lang.String" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
-		</form-bean>  
-		
-		<form-bean name="readForm"
-					type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
-					dynamic="true">        
-				<form-property name="idInternal" type="java.lang.Integer" />
-		</form-bean>  
+		</form-bean>    
     </form-beans>
 
 	 <!-- ========== Global Exception Definitions ============================== -->
@@ -139,14 +133,6 @@
        <forward name="editDegree" path="df.page.edit-degree"/>
        <forward name="readDegrees" path="df.page.read-degrees"/>      	      
 	</action>
-     
-     <!-- Action for reading all degree curricular plans  -->
-      <action path="/readDegreeCurricularPlans"
-      		 name="readForm"
-      		 scope="request"
-      	     type="ServidorApresentacao.Action.manager.ReadDegreeCurricularPlansAction">
-      	  <forward name="readDegreeCurricularPlans" path="df.page.read-degreeCurricularPlans"/>      	      
-      </action>
       
       <!-- Action for deleting degreeCurricularPlans --> 
       <action 
@@ -181,21 +167,6 @@
        <forward name="readDegree" path="/readDegree.do"/>      	      
 	</action>
 	
-	
-    
-    <!-- Action for editing a degree 
-	<action
-		path="/editDegree"
-		name="degreeForm"
-		input="/editDegreeInput.do"
-		parameter="method"
-		scope="request"
-		type="ServidorApresentacao.Action.manager.InsertDegreeDispatchAction"
-        validate="true">  
-       <forward name="insertDegree" path="df.page.insert-degree"/>
-       <forward name="readDegrees" path="df.page.read-degrees"/>      	      
-	</action>	-->	
-	
 	<!-- Action for deleting curricularCourses --> 
       <action 
       		 path="/deleteCurricularCourses"
@@ -205,6 +176,16 @@
       	     type="ServidorApresentacao.Action.manager.DeleteCurricularCoursesAction">
       	  <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>      	      
       </action>	  
+      
+      <!-- Action for deleting executionDegrees --> 
+      <action 
+      		 path="/deleteExecutionDegrees"
+      		 name="degreeCurricularPlanForm"
+      		 input="/readDegreeCurricularPlanInput.do"
+      		 scope="request"
+      	     type="ServidorApresentacao.Action.manager.DeleteExecutionDegreesAction">
+      	  <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>      	      
+      </action>	
     
       <!--Input actions-->
       <action path="/insertDegreeInput"
