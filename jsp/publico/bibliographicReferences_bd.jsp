@@ -3,9 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <logic:notPresent name="BibliographicReferences">
-	<span class="error">
-         <bean:message key="message.bibliography.not.available"/>
-	</span>
+	<h2><bean:message key="message.bibliography.not.available"/></h2>
 </logic:notPresent>
 <logic:present name="BibliographicReferences" >
 <table border="0" style="text-align: left;">
