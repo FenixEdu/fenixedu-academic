@@ -54,7 +54,7 @@ public class TeacherLoginAction extends FenixAction {
 					userView,
 					"ReadTeacherByUsername",
 					args);
-			
+			//TODO: fix the situation where the teacher is null
 			if (teacher==null) {throw new InvalidSessionActionException();		
 			}
 			List sites = null;
