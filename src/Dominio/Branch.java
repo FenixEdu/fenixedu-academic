@@ -16,12 +16,14 @@ public class Branch extends DomainObject implements IBranch {
 	private String code;
 	private List scopes;
 	private IDegreeCurricularPlan degreeCurricularPlan;
+	private String acronym;
 
 	public Branch() {
 		setName(null);
 		setCode(null);
 		setScopes(null);
 		setDegreeCurricularPlan(null);
+		setAcronym(null);
 	}
 
 	public Branch(String name, String code) {
@@ -34,7 +36,9 @@ public class Branch extends DomainObject implements IBranch {
 		boolean resultado = false;
 		if (obj instanceof IBranch) {
 			IBranch branch = (IBranch) obj;
-			resultado = this.getCode().equals(branch.getCode()) && this.getDegreeCurricularPlan().equals(branch.getDegreeCurricularPlan());
+			resultado =
+				this.getCode().equals(branch.getCode())
+					&& this.getDegreeCurricularPlan().equals(branch.getDegreeCurricularPlan());
 		}
 		return resultado;
 	}
@@ -43,7 +47,8 @@ public class Branch extends DomainObject implements IBranch {
 		String result = "[" + this.getClass().getName() + ": ";
 		result += "idInternal = " + getIdInternal() + "; ";
 		result += "name = " + this.name + "; ";
-		result += "code = " + this.code + "]\n";
+		result += "code = " + this.code + "; ";
+		result += "acronym = " + this.acronym + "]\n";
 		return result;
 	}
 
@@ -134,6 +139,23 @@ public class Branch extends DomainObject implements IBranch {
 	 */
 	public void setKeyDegreeCurricularPlan(Integer integer) {
 		keyDegreeCurricularPlan = integer;
+	}
+
+	/**
+	 * @author Nuno Correia
+	 * @author Ricardo Rodrigues
+	 */
+
+	/**
+	 * 
+	 * @param string
+	 */
+	public void setAcronym(String acronym) {
+		this.acronym = acronym;
+	}
+
+	public String getAcronym() {
+		return acronym;
 	}
 
 }
