@@ -7,7 +7,7 @@ package Dominio;
 /**
  * @author jpvl
  */
-abstract public class DomainObject {
+abstract public class DomainObject implements IDomainObject {
 	private Integer idInternal;
 	public DomainObject(){
 	}
