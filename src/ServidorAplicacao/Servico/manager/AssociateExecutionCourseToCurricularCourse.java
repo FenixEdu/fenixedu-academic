@@ -3,6 +3,7 @@
  */
 package ServidorAplicacao.Servico.manager;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -68,7 +69,9 @@ public class AssociateExecutionCourseToCurricularCourse implements IServico
                 throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
 
             List executionCourses = curricularCourse.getAssociatedExecutionCourses();
-
+            if (executionCourses == null) {
+                executionCourses = new ArrayList();
+            }
             Iterator iter = executionCourses.iterator();
 
             while (iter.hasNext())
