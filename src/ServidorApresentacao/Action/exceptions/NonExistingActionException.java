@@ -43,9 +43,9 @@ public class NonExistingActionException extends FenixActionException {
 		super(key, values, cause);
 	}
     
-    public NonExistingActionException(String value, ActionForward actionForward) {
+    public NonExistingActionException(String text, ActionForward actionForward) {
 		super(actionForward);
-		error = new ActionError(key, value);
+		error = new ActionError(text);
     }
 
 	/**

@@ -55,7 +55,7 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 				oldInfoDegreeCP = (InfoDegreeCurricularPlan) manager.executar(userView, "ReadDegreeCurricularPlan", args);
 			
 		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException("O plano curricular", mapping.findForward("readDegree"));
+			throw new NonExistingActionException("message.nonExistingDegreeCurricularPlan", mapping.findForward("readDegree"));
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
@@ -188,7 +188,7 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 		} catch (ExistingServiceException e) {
 			throw new ExistingActionException(e.getMessage(), e);
 		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException("O plano curricular", mapping.findForward("readDegree"));
+			throw new NonExistingActionException("message.nonExistingDegreeCurricularPlan", mapping.findForward("readDegree"));
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}

@@ -54,7 +54,7 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 		try {
 			oldInfoCurricularCourseScope = (InfoCurricularCourseScope) manager.executar(userView, "ReadCurricularCourseScope", args);
 		} catch (NonExistingServiceException ex) {
-			throw new NonExistingActionException("O âmbito", mapping.findForward("readCurricularCourse"));
+			throw new NonExistingActionException("message.nonExistingCurricularCourseScope", mapping.findForward("readCurricularCourse"));
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
@@ -197,7 +197,7 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 		try {
 			manager.executar(userView, "EditCurricularCourseScope", args);
 		} catch (NonExistingServiceException ex) {
-			throw new NonExistingActionException("O âmbito", mapping.findForward("readCurricularCourse"));
+			throw new NonExistingActionException("message.nonExistingCurricularCourseScope", mapping.findForward("readCurricularCourse"));
 		} catch (ExistingServiceException e) {
 			throw new ExistingActionException(e.getMessage(), e);
 		} catch (FenixServiceException fenixServiceException) {

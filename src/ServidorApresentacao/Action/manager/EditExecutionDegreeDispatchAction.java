@@ -56,7 +56,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 				oldInfoExecutionDegree = (InfoExecutionDegree) manager.executar(userView, "ReadExecutionDegree", args);
 				
 		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException("O curso execução", mapping.findForward("readDegreeCurricularPlan"));
+			throw new NonExistingActionException("message.nonExistingExecutionDegree", mapping.findForward("readDegreeCurricularPlan"));
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
@@ -155,7 +155,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 		} catch (ExistingServiceException e) {
 			throw new ExistingActionException(e.getMessage(), e);
 		} catch (NonExistingServiceException ex) {
-			throw new NonExistingActionException("O curso execução", mapping.findForward("readDegreeCurricularPlan"));
+			throw new NonExistingActionException("message.nonExistingExecutionDegree", mapping.findForward("readDegreeCurricularPlan"));
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}

@@ -50,7 +50,7 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 				oldInfoDegree = (InfoDegree) manager.executar(userView, "ReadDegree", args);
 		
 		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException("O curso", mapping.findForward("readDegrees"));
+			throw new NonExistingActionException("message.nonExistingDegree", mapping.findForward("readDegrees"));
 		}  catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
@@ -86,7 +86,7 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 				manager.executar(userView, "EditDegree", args);
 			
 		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException("O curso", mapping.findForward("readDegrees"));
+			throw new NonExistingActionException("message.nonExistingDegree", mapping.findForward("readDegrees"));
 		} catch (ExistingServiceException e) {
 			throw new ExistingActionException(e.getMessage(), e);
 		} catch (FenixServiceException fenixServiceException) {
