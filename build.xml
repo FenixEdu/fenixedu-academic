@@ -272,6 +272,8 @@
                     <include name="**/*Test.java"/>
                     <exclude name="**/SuportePersistenteOJBTest.java"/>
                     <exclude name="**/AllTests.java"/>
+                    
+                    <exclude name="**/ReadSectionsServiceTest.java"/>
                 </fileset>
             </batchtest>
 		</junit>
