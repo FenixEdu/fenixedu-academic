@@ -15,10 +15,11 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.TipoCurso;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- *  
+ * 
  */
 public class ReadExecutionPeriods implements IService {
 
@@ -42,4 +43,10 @@ public class ReadExecutionPeriods implements IService {
 
         return result;
     }
+
+    public List run(TipoCurso degreeType) throws FenixServiceException {
+        // the degree type is used in the pos-filtration
+        return this.run();
+    }
+    
 }
