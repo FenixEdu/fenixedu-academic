@@ -27,6 +27,9 @@ public interface IStudentCurricularPlan extends IDomainObject {
   public Specialization getSpecialization();
   public Double getGivenCredits();
   public List getEnrolments();
+  public Double getClassification();
+  public Integer getCompletedCourses();
+  public Integer getEnrolledCourses();
   
   public void setStudent(IStudent student);
   public void setBranch(IBranch branch);
@@ -36,5 +39,8 @@ public interface IStudentCurricularPlan extends IDomainObject {
   public void setSpecialization(Specialization specialization);
   public void setGivenCredits(Double givenCredits);
   public void setEnrolments(List enrolments);
-  
+  public void setClassification(Double double1);
+  public void setCompletedCourses(Integer integer);
+  public void setEnrolledCourses(Integer integer);
+
 }

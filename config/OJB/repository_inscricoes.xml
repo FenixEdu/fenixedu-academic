@@ -332,6 +332,25 @@
 		column="GIVEN_CREDITS"
 		jdbc-type="FLOAT"
 	/>
+	
+	<field-descriptor
+		name="completedCourses"
+		column="COMPLETED_COURSES"
+		jdbc-type="INTEGER"
+	/>
+
+	<field-descriptor
+		name="enrolledCourses"
+		column="ENROLLED_COURSES"
+		jdbc-type="INTEGER"
+	/>
+
+	<field-descriptor
+		name="classification"
+		column="CLASSIFICATION"
+		jdbc-type="FLOAT"
+	/>
+
 	<reference-descriptor
 			name="student"
 			class-ref="Dominio.Student"

@@ -20,6 +20,9 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 	protected Date startDate;
 	protected StudentCurricularPlanState currentState;
 	protected List enrolments;
+    protected Integer completedCourses;
+    protected Double classification;
+    protected Integer enrolledCourses;
 
 	public StudentCurricularPlan() {
 		setStudent(null);
@@ -235,5 +238,53 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 		enrolments = list;
 	}
 
+
+	/**
+	 * @return
+	 */
+	public Integer getCompletedCourses()
+	{
+		return completedCourses;
+	}
+
+	/**
+	 * @param integer
+	 */
+	public void setCompletedCourses(Integer integer)
+	{
+		completedCourses= integer;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getEnrolledCourses()
+	{
+		return enrolledCourses;
+	}
+
+	/**
+	 * @param integer
+	 */
+	public void setEnrolledCourses(Integer integer)
+	{
+		enrolledCourses= integer;
+	}
+
+	/**
+	 * @return
+	 */
+	public Double getClassification()
+	{
+		return classification;
+	}
+
+	/**
+	 * @param double1
+	 */
+	public void setClassification(Double double1)
+	{
+		classification= double1;
+	}
 
 }
