@@ -112,7 +112,7 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
 			infoCurricularCourseScope.setInfoCurricularCourse(infoCurricularCourse);
 			
 			InfoCurricularSemester infoCurricularSemester = new InfoCurricularSemester();
-			infoCurricularSemester.setIdInternal(new Integer((String) dynaForm.get("semesterId")));
+			infoCurricularSemester.setIdInternal(new Integer((String) dynaForm.get("curricularSemesterId")));
 			infoCurricularCourseScope.setInfoCurricularSemester(infoCurricularSemester);
 			
 			String labHours = (String) dynaForm.get("labHours");

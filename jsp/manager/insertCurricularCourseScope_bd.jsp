@@ -29,7 +29,7 @@
 				<bean:message key="label.manager.curricular.course.scope.semester"/>
 			</td>
 			<td>
-				<html:select property="semesterId">
+				<html:select property="curricularSemesterId">
 				<html:option key="option.curricular.course.scope.semester.1" value="1"/>
     			<html:option key="option.curricular.course.scope.semester.2" value="2"/>
     			<html:option key="option.curricular.course.scope.semester.3" value="3"/>

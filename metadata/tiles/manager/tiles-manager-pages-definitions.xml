@@ -42,7 +42,7 @@
 		<put name="body" value="/manager/editExecutionDegree_bd.jsp" />
 		<put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp" />
 	</definition>
-	<definition name="df.page.read-curricularCourse" extends="definition.manager.masterPage" >
+	<definition name="df.page.read-curricular-course" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/readCurricularCourse_bd.jsp" />
 		<put name="navLocal" value="/manager/degreeCurricularPlanNavLocalManager.jsp" />
 	</definition>

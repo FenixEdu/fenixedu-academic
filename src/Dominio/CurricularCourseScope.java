@@ -41,9 +41,9 @@ public class CurricularCourseScope extends DomainObject implements ICurricularCo
 		setCurricularSemesterKey(null);
 	}
 	
-	public CurricularCourseScope(Integer idInternal){
-		setIdInternal(idInternal);
-	}
+//	public CurricularCourseScope(Integer idInternal){
+//		setIdInternal(idInternal);
+//	}
 
 	public CurricularCourseScope(ICurricularCourse curricularCourse, ICurricularSemester curricularSemester, IBranch branch) {
 		this();

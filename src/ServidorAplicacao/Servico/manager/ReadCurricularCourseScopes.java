@@ -52,10 +52,8 @@ public class ReadCurricularCourseScopes implements IServico {
 		try {
 			
 			sp = SuportePersistenteOJB.getInstance();
-			ICurricularCourse curricularCourseToRead= new CurricularCourse();
-			curricularCourseToRead.setIdInternal(curricularCourseId);
-		  	ICurricularCourse curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse().readByOId(curricularCourseToRead, false);	
-		  	allCurricularCourseScopes = curricularCourse.getScopes();
+		  	ICurricularCourse curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse().readByOId(new CurricularCourse(curricularCourseId), false);
+			allCurricularCourseScopes = sp.getIPersistentCurricularCourseScope().readCurricularCourseScopesByCurricularCourse(curricularCourse);
 		    
  		} catch (ExcepcaoPersistencia excepcaoPersistencia){
 	  			throw new FenixServiceException(excepcaoPersistencia);

@@ -78,8 +78,6 @@ public class CurricularCourseScopeOJB extends ObjectFenixOJB implements IPersist
 			)
 			throws ExcepcaoPersistencia {
  
- System.out.println("AAAAAA"+curricularCourse.getIdInternal()+"AAAAAA"+curricularSemester.getIdInternal()+"AAAAAA"+branch.getIdInternal());
- 
 				Criteria criteria = new Criteria();
 				criteria.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
 				criteria.addEqualTo("curricularSemesterKey", curricularSemester.getIdInternal());
@@ -118,37 +116,9 @@ public class CurricularCourseScopeOJB extends ObjectFenixOJB implements IPersist
 	 * @see ServidorPersistente.IPersistentCurricularCourseScope#readCurricularCourseScopeByCurricularCourse(Dominio.ICurricularCourse)
 	 */
 	public List readCurricularCourseScopesByCurricularCourse(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia {
-		try {
-				String oqlQuery = "select all from " + CurricularCourseScope.class.getName();
-				oqlQuery += " where curricularCourse.name = $1";
-				oqlQuery += " and curricularCourse.code = $2";
-				oqlQuery += " and curricularCourse.degreeCurricularPlan.name = $3";
-				oqlQuery += " and curricularCourse.degreeCurricularPlan.degree.nome = $4";
-				oqlQuery += " and curricularCourse.degreeCurricularPlan.degree.sigla = $5";
-				oqlQuery += " and curricularSemester.semester = $6";
-
-				query.create(oqlQuery);
-
-				query.bind(curricularCourse.getName());
-				query.bind(curricularCourse.getCode());
-				query.bind(curricularCourse.getDegreeCurricularPlan().getName());
-				query.bind(curricularCourse.getDegreeCurricularPlan().getDegree().getNome());
-				query.bind(curricularCourse.getDegreeCurricularPlan().getDegree().getSigla());
-//				FIXME: semester is hard coded, it must be an argument 
-				query.bind(new Integer(2));
-
-				List result = (List) query.execute();
-				try {
-					lockRead(result);
-				} catch (ExcepcaoPersistencia ex) {
-					throw ex;
-				}
-
-				return result;
-
-			} catch (QueryException ex) {
-				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-			}
-
+		Criteria crit = new Criteria();
+		crit.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
+		List result = queryList(CurricularCourseScope.class, crit);
+		return result;
 	}
 }
