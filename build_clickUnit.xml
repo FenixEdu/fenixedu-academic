@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project basedir="." default="reverse-roleback-file" name="Build file for running ClickUnit tests">
+
+	<property file="build.properties"/>
+
+	<property name="config" location="config"/>
+	<property name="lib" location="lib" />
+
+	<property name="build.home" location="build"/>
+	<property name="build.app-server" value="${build.home}/app-server"/>
+
+	<property file="${config}/configurationSQLInstructions.properties"/>
+
+    <target name="reverse-roleback-file"
+    		description="Reverses the contents of the sql file with the roleback instructions.">
+		<java classname="Tools.io.ReverseFile" fork="true">
+			<arg value="${storageFileName}"/>
+			<classpath>
+				<pathelement path="${build.app-server}"/>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+			</classpath>
+		</java>
+    </target>
+
+    <target name="do-roleback"
+    		depends="reverse-roleback-file"
+    		description="Reverts the database state to that of before the test run.">
+        <sql
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost/${db.name}"
+            userid="${db.user}"
+            password="${db.pass}"
+            encoding="${encoding}"
+            src="${storageFileName}">
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </sql>
+        <delete file="${storageFileName}"/>
+    </target>
+
+</project>
