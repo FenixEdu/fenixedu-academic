@@ -63,7 +63,7 @@
 	<tr>
 		<td colspan="3"><h2>Turnos em que está inscrito:</h2></td>
 	</tr>
-		<logic:iterate name="infoStudentShiftEnrolment"  id="enroledShift" property="currentEnrolment" offset="1" type="DataBeans.InfoShift">
+		<logic:iterate name="infoStudentShiftEnrolment"  id="enroledShift" property="currentEnrolment"  type="DataBeans.InfoShift">
 	<tr>
 		<td class="listClasses"><bean:write name="enroledShift" property="infoDisciplinaExecucao.nome"/></td>
 		<td class="listClasses"><bean:write name="enroledShift" property="tipo.fullNameTipoAula"/></td>
