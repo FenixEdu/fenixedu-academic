@@ -31,7 +31,7 @@
 </table>
 <!-- End NavGeral -->
 <!-- Navbar Lateral e Body Content -->
-<td><tiles:insert attribute="body" /></td>
+<tiles:insert attribute="body" />
 <!--End Navbar Lateral e Body Content -->
 <!-- Footer -->
 <table width="100%" border="0" cellspacing="0" cellpadding="0">

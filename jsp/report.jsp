@@ -13,7 +13,7 @@
 <bean:size id="headerSize" name="headers" />	
 <table>		
 	<tr>
-	  <td colspan="<%= headerSize %>" class="centerContent">
+	  <td colspan="<%= headerSize %>" align="center">
 	 	<h3>
 	  	<bean:define id="title" >
 		  	<tiles:getAsString name="title" />
