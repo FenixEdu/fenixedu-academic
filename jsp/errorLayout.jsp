@@ -19,20 +19,10 @@
   </tr>
 </table>
 <!-- End Header -->
-<!-- NavGeral -->
-<table width="100%%" border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td class="navbargeral"><tiles:insert attribute="navGeral" ignore="true"/>
-    </td>
-  </tr>
-</table>
-<!-- End NavGeral -->
 <!-- Navbar Lateral e Body Content -->
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
    <tr>
-     <td width="25%" align="left" valign="top" nowrap="nowrap" class="navlateral"><tiles:insert attribute="navLocal" ignore="true"/>
-    </td>
-     <td width="100%" align="left" valign="top" bgcolor="#FFFFFF" class="bodycontent"><tiles:insert attribute="body" />
+    <td width="100%" align="left" valign="top" bgcolor="#FFFFFF" class="bodycontent"><tiles:insert attribute="body" />
 	</td>
   </tr>
 </table>
