@@ -27,7 +27,11 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
-import ServidorApresentacao.Action.sop.base.FenixClassAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
+import ServidorApresentacao
+	.Action
+	.sop
+	.base
+	.FenixClassAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -57,10 +61,13 @@ public class ClassShiftManagerDispatchAction
 			InfoShift infoShift =
 				getInfoShift(
 					request,
-					SessionConstants.AVAILABLE_INFO_SHIFT_LIST_KEY);
+					SHIFT_LIST_ATT);
 			InfoClass classView = getInfoTurma(request);
 
 			Object[] argsAdicionarTurno = { classView, infoShift };
+
+			System.out.println("classView= " + classView);
+			System.out.println("infoShift= " + infoShift);
 
 			try {
 				ServiceUtils.executeService(
