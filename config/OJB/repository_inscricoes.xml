@@ -285,7 +285,7 @@
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.	CurricularPlan -->
+<!-- Definitions for Dominio.StudentCurricularPlan -->
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="Dominio.StudentCurricularPlan" table="STUDENT_CURRICULAR_PLAN">
 	<field-descriptor

@@ -77,7 +77,8 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 		result += "specialization = " + this.specialization + "; ";
 		result += "currentState = " + this.currentState + "]\n";
 		result += "when alter = " + this.when + "]\n";
-		result += "employee = " + this.employee.getPerson().getNome()  + "]\n";
+		if (this.employee!=null) {
+		result += "employee = " + this.employee.getPerson().getNome()  + "]\n";}
 		return result;
 	}
 

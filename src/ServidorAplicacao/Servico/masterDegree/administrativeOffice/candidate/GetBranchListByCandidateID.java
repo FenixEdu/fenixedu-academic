@@ -63,8 +63,7 @@ public class GetBranchListByCandidateID implements IServico {
 			result = sp.getIPersistentBranch().readByExecutionDegree(masterDegreeCandidate.getExecutionDegree());
 
 		} catch (ExcepcaoPersistencia ex) {
-			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-			newEx.fillInStackTrace();
+			FenixServiceException newEx = new FenixServiceException("Persistence layer error",ex);
 			throw newEx;
 		} 
 

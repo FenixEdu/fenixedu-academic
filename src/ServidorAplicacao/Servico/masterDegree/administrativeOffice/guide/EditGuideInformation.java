@@ -288,8 +288,7 @@ public class EditGuideInformation implements IServico {
 			sp.getIPersistentGuide().write(newGuide);
 
 		} catch (ExcepcaoPersistencia ex) {
-			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-			newEx.fillInStackTrace();
+			FenixServiceException newEx = new FenixServiceException("Persistence layer error",ex);
 			throw newEx;
 		}
 		
@@ -311,8 +310,7 @@ public class EditGuideInformation implements IServico {
 			guides = sp.getIPersistentGuide().readByNumberAndYear(infoGuide.getNumber(), infoGuide.getYear());
 			
 		} catch (ExcepcaoPersistencia e) {
-			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-			newEx.fillInStackTrace();
+			FenixServiceException newEx = new FenixServiceException("Persistence layer error",e);			
 			throw newEx;
 		}
 
