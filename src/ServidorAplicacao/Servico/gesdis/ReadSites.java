@@ -1,4 +1,4 @@
-package ServidorAplicacao.Servico.gesdis.teacher;
+package ServidorAplicacao.Servico.gesdis;
 
 /**
  * Serviço ObterSitios.
