@@ -1,11 +1,11 @@
 <%@ page language="java" %>
 <%@ page import="org.apache.struts.util.RequestUtils" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %> 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <div id="nav">
-<h3>Navega&ccedil;&atilde;o Local</h3>	
+<h3><bean:message key="title.navigation.local"/></h3>	
 <ul>
 <li><html:link page="<%= "/viewSite.do?method=executionCourseViewer&exeCode=" + pageContext.findAttribute("exeCode") + "&amp;ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" + pageContext.findAttribute("eYName") %>">
 	<bean:message key="link.inicialPage"/>
@@ -15,7 +15,7 @@
 		<bean:message key="link.announcements"/>
 	</html:link>
 </li>
-<li> <a href="/" onclick="houdini('seccao');return false;">Informa&ccedil;&atilde;o Curricular</a></li>
+<li> <a href="/" onclick="houdini('seccao');return false;"><bean:message key="label.curricular.information"/></a></li>
 </ul>
  <dl id="seccao" style="display: none;">
             <dd><html:link page="<%= "/accessObjectives.do?method=acessObjectives" + "&amp;exeCode=" + pageContext.findAttribute("exeCode") + "&amp;ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" + pageContext.findAttribute("eYName") %>">
@@ -56,7 +56,7 @@
 <logic:present name="siteMail"  >
 <logic:notEmpty name="siteMail"  >	
 <div id="nav">
-   <h3 >Contacto</h3>	
+   <h3 >bean:message key="label.contact"/></h3>	
  	
 	<html:link href="<%= "mailto:" + pageContext.findAttribute("siteMail") %>">
 		<p class="contacto"><bean:write name="siteMail" /></p></html:link>

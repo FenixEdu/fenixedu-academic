@@ -6,6 +6,6 @@
 	 <br />
 	<bean:define id="shiftview" name="shift" />
    		<br/>
-		<h2>Horário do Turno:  <jsp:getProperty name="shiftview" property="nome"/></h2>
+		<h2><bean:message key="title.shift.timetable"/><jsp:getProperty name="shiftview" property="nome"/></h2>
 		<app:gerarHorario name="lessonList"/>		
 		<br />

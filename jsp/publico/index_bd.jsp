@@ -11,8 +11,7 @@
 	</table>
 <br />
 <p>
-Nesta área poderá efectuar uma pesquisa por curso (actualmente só encontrará licenciaturas) e ano lectivo.
-O semestre é o actual.
+<bean:message key="message.public.index.timetable.consult"/>
 </p>
 <br />
 	<table width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -22,8 +21,7 @@ O semestre é o actual.
 	</table>
 <br />
 <p>
-Nesta área encontrará a informação relativamente à disciplina que pretende. Informação essa que é: 
-turnos, horário e carga curricular
+<bean:message key="message.public.index.course.consult"/>
 </p>
 <br />
 	<table width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -33,9 +31,8 @@ turnos, horário e carga curricular
 	</table>
 <br />
 <p>
-Nesta área encontrará a informação relativamente a uma sala, onde poderá consultar o horário lectivo dessa mesma sala.
+<bean:message key="message.public.index.room.consult"/>
 </p>
-
 <br />
 	<table width="100%" border="0" cellpadding="0" cellspacing="0">
   		<tr>
@@ -44,7 +41,7 @@ Nesta área encontrará a informação relativamente a uma sala, onde poderá consult
 	</table>
 <br />
 <p>
-Nesta área encontrará a informação relativamente aos exames, onde poderá consultar as datas de avaliação (1ª e 2ª época).
+<bean:message key="message.public.index.exam.consult"/>
 </p>
 <br />
 <br />  

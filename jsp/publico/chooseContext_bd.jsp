@@ -4,17 +4,14 @@
 <%@ page import="org.apache.struts.action.Action" %>
         <span class="error"><html:errors/></span>
 		<bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>" />
-        <html:form action="<%=path%>">
+        <html:form action="<%=path%>" method="GET">
         	<input type="hidden" value="nextPagePublic" name="method"/>
         	<html:hidden property="page" value="1"/>
         	<html:hidden  property="ePName" value="<%= pageContext.findAttribute("ePName").toString() %>" />
 			<html:hidden  property="eYName" value="<%= pageContext.findAttribute("eYName").toString() %>" /> 
-	
-	
          <table width="100%" border="0" cellpadding="0" cellspacing="0">
           <tr>
-            <td class="infoop">Por favor, proceda &agrave; escolha
-              do curso pretendido.</td>
+            <td class="infoop"><bean:message key="message.public.degree.choose"/></td>
           </tr>
         </table>
 	<br />

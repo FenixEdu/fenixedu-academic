@@ -7,7 +7,6 @@
 <%@ page import="DataBeans.InfoShiftWithAssociatedInfoClassesAndInfoLessons"%>
 <%@ page import="DataBeans.InfoLesson"%>
 <%@ page import="java.util.Calendar" %>
-
 </br>
 	</br>
 		<bean:parameter id="ePName" name="ePName" />

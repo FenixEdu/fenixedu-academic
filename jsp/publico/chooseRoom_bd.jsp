@@ -6,13 +6,9 @@
 <%@ page import="java.util.ArrayList" %>
 <h2><bean:message key="title.chooseRoom"/></h2>
 <br/>
-
 	<logic:present name="publico.infoRooms" >
-	
-			
-		<html:form action="/viewRoom.do">
-			
-		<table border='0' cellpadding='10' cellspacing='0'>		
+			<html:form action="/viewRoom.do" method="GET">
+			<table border='0' cellpadding='10' cellspacing='0'>		
 			<logic:iterate id="infoRoom" name="publico.infoRooms" indexId="i_index">
 			<bean:define id="i" value="i_index" />
                 <tr>

@@ -6,7 +6,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="ServidorApresentacao.TagLib.sop.v3.TimeTableType" %>
 	<h2><bean:message key="title.info.room"/></h2>
-	<br/>
+	<br/> 
 	<logic:present name="publico.infoRoom" >
             <table cellspacing="0" cellpadding="0" width="90%">
                 <tr>

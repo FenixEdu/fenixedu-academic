@@ -4,8 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="org.apache.struts.action.Action" %>
 <span class="error"><html:errors/></span>
-
-<html:form action="/chooseExamsMapContextDA">
+<html:form action="/chooseExamsMapContextDA" method="GET">
 	<html:hidden  property="ePName" value="<%= pageContext.findAttribute("ePName").toString() %>" />
 	<html:hidden  property="eYName" value="<%= pageContext.findAttribute("eYName").toString() %>" /> 
 	
@@ -13,8 +12,7 @@
 	<html:hidden property="method" value="choose"/>
     <table width="100%" border="0" cellpadding="0" cellspacing="0">
     	<tr>
-        	<td bgcolor="#FFFFFF" class="infoop">Por favor, proceda &agrave; escolha
-            da licenciatura pretendida.</td>
+        	<td bgcolor="#FFFFFF" class="infoop"><bean:message key="message.public.degree.choose"/></td>
         </tr>
     </table>
 	<br />
@@ -37,7 +35,7 @@
 			<html:multibox property="selectedCurricularYears">
 				<bean:write name="item"/>
 			</html:multibox>
-			<bean:write name="item"/> º ano <br/>
+			<bean:write name="item"/><bean:message key="label.exam.year"/><br/>
 		</logic:iterate>
 		<html:checkbox property="selectAllCurricularYears">
 			<bean:message key="checkbox.show.all"/><br/>

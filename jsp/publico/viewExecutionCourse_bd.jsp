@@ -36,7 +36,7 @@
            <tr>
            		<td class="ultAnuncio">
            			<img alt="" border="0"  src="<%= request.getContextPath() %>/images/icon_anuncio.gif"  />
-           			<html:link  page="/accessAnnouncements.do">
+           			<html:link  page="<%="/accessAnnouncements.do"+"?exeCode=" + pageContext.findAttribute("exeCode") + "&amp;ePName=" + pageContext.findAttribute("ePName") + "&amp;eYName=" + pageContext.findAttribute("eYName") %>">
             		<bean:write name="lastAnnouncement" property="title"/>:
             		</html:link>	
             		<br>
@@ -105,7 +105,7 @@
 	</logic:iterate>	
 </table>
 </BR>
-</logic:notEmpty>
+</logic:notEmpty> 
 </logic:present>
 <logic:present name="lecTeacherList" >
 <logic:notEmpty name="lecTeacherList" >	

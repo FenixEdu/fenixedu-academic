@@ -6,8 +6,7 @@
 <%@ page import="ServidorApresentacao.TagLib.sop.v3.TimeTableType" %>
 <%@ page import="DataBeans.InfoShiftWithAssociatedInfoClassesAndInfoLessons"%>
 <%@ page import="DataBeans.InfoLesson"%>
-<%@ page import="java.util.Calendar" %>
- 
+<%@ page import="java.util.Calendar" %> 
 <logic:notPresent name="exeCode" >
 <table align="center"  cellpadding='0' cellspacing='0'>
 			<tr align="center">
@@ -17,9 +16,7 @@
 			</tr>
 		</table>
 </logic:notPresent>
-
 <logic:present name="exeCode" >
-
 	<h2><bean:message key="property.executionCourse.associatedCurricularCourses"/></h2>
 	<logic:present name="publico.infoCurricularCourses" >
 		<table align="center" cellspacing="0" cellpadding="5" >
@@ -65,8 +62,7 @@
 				</logic:iterate>
 			</logic:iterate>
 		</table>
-	</logic:present>
-	
+	</logic:present>	
 <logic:notPresent name="publico.infoCurricularCourses" >
 		<bean:message key="message.public.notfound.curricularCourses"/>
 </logic:notPresent>

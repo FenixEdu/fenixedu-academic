@@ -6,8 +6,7 @@
 <br/>
 <table width="80%" border="0" cellpadding="0" cellspacing="0" align="center">
 	<tr>
-		<td bgcolor="#FFFFFF" class="infoselected"><p>A licenciatura seleccionada
-        	&eacute;:</p>
+		<td bgcolor="#FFFFFF" class="infoselected"><p><bean:message key="title.selected.degree"/></p>
 			<strong><jsp:include page="examsMapContext.jsp"/></strong>
          </td>
     </tr>

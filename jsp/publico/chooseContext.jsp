@@ -1,4 +1,4 @@
-<%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
+<%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %> 
 <tiles:insert page="/publicGesDisLayout_2col.jsp" flush="true">
   <tiles:put name="title" value=".Instituto Superior T&eaccute;cnico" />
   <tiles:put name="serviceName" value="Instituto Superior T&eaccute;cnico" />

@@ -6,4 +6,4 @@
   <tiles:put name="navbarGeral" value="/publico/commonNavLocalPub.jsp" />
   <tiles:put name="body" value="/publico/viewClasses_bd.jsp" />
   <tiles:put name="footer" value="/publico/commonFooterPub.jsp" />
-</tiles:insert>
+</tiles:insert> 

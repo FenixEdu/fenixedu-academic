@@ -7,7 +7,7 @@
 <%@ page import="DataBeans.InfoShiftWithAssociatedInfoClassesAndInfoLessons"%>
 <%@ page import="DataBeans.InfoLesson"%>
 <%@ page import="java.util.Calendar" %>
-
+ 
 <h2><bean:message key="property.executionCourse.curricularHours"/></h2>
 <table cellspacing="0" cellpadding="0" width="90%">
        <tr> <td class="listClasses">

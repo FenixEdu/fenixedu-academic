@@ -2,12 +2,11 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-
     <br/>
         <h2><bean:message key="title.choose.discipline" /></h2>
         <br/>
         <span class="error"><html:errors/></span>        
-        <html:form action="/viewExecutionCourse">
+        <html:form action="/viewExecutionCourse" method="GET">
        		<input type="hidden" name="method" value="executionCourseViewerSelectedFromForm">
        		<html:hidden  property="ePName" value="<%= pageContext.findAttribute("ePName").toString() %>" />
 			<html:hidden  property="eYName" value="<%= pageContext.findAttribute("eYName").toString() %>" /> 
