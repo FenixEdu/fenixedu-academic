@@ -40,3 +40,5 @@ doc
 fenix.dump.sql.zip
 .tomcatplugin
 SESSIONS.ser
+build_fenix-tests_extra.properties
+build_fenix-tests_intra.properties
