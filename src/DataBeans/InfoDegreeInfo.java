@@ -19,13 +19,12 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent{
 	private Integer driftsFirst;
 	private Integer driftsSecond;
 	private String classifications;
-	private Float markMin;
-	private Float markMax;
-	private Float markAverage;
+	private Double markMin;
+	private Double markMax;
+	private Double markAverage;
 	private Timestamp lastModificationDate;
 				
 	public InfoDegreeInfo() {
-		super();
 	} 
 
 	public InfoDegreeInfo(
@@ -40,11 +39,10 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent{
 		Integer driftsFirst,
 		Integer driftsSecond,
 		String classifications,
-		Float markMin,
-		Float markMax,
-		Float markAverage,
+		Double markMin,
+		Double markMax,
+		Double markAverage,
 		Timestamp lastModificationDate) {
-		super();
 		this.infoDegree = infoDegree;
 		this.objectives = objectives;
 		this.history = history;
@@ -134,27 +132,27 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent{
 		this.links = links;
 	}
 
-	public Float getMarkAverage() {
+	public Double getMarkAverage() {
 		return markAverage;
 	}
 
-	public void setMarkAverage(Float markAverage) {
+	public void setMarkAverage(Double markAverage) {
 		this.markAverage = markAverage;
 	}
 
-	public Float getMarkMax() {
+	public Double getMarkMax() {
 		return markMax;
 	}
 
-	public void setMarkMax(Float markMax) {
+	public void setMarkMax(Double markMax) {
 		this.markMax = markMax;
 	}
 
-	public Float getMarkMin() {
+	public Double getMarkMin() {
 		return markMin;
 	}
 
-	public void setMarkMin(Float markMin) {
+	public void setMarkMin(Double markMin) {
 		this.markMin = markMin;
 	}
 
@@ -187,21 +185,7 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent{
 		if (obj instanceof InfoDegreeInfo) {
 			InfoDegreeInfo infoDegreeInfo = (InfoDegreeInfo) obj;
 			result =
-				getInfoDegree().equals(infoDegreeInfo.getInfoDegree()) &&
-				getLastModificationDate().equals(infoDegreeInfo.getLastModificationDate()) &&
-				getObjectives().equals(infoDegreeInfo.getObjectives()) &&
-				getHistory().equals(infoDegreeInfo.getHistory()) &&
-				getProfessionalExits().equals(infoDegreeInfo.getProfessionalExits()) &&
-				getAdditionalInfo().equals(infoDegreeInfo.getAdditionalInfo()) &&
-				getLinks().equals(infoDegreeInfo.getLinks()) &&
-				getTestIngression().equals(infoDegreeInfo.getTestIngression()) &&
-				getDriftsInitial().equals(infoDegreeInfo.getDriftsInitial()) &&
-				getDriftsFirst().equals(infoDegreeInfo.getDriftsFirst()) &&
-				getDriftsSecond().equals(infoDegreeInfo.getDriftsSecond()) &&
-				getClassifications().equals(infoDegreeInfo.getClassifications()) &&
-				getMarkMin().equals(infoDegreeInfo.getMarkMin()) &&
-				getMarkMax().equals(infoDegreeInfo.getMarkMax()) &&
-				getMarkAverage().equals(infoDegreeInfo.getMarkAverage());
+				getInfoDegree().equals(infoDegreeInfo.getInfoDegree()) ;
 		}
 		return result;
 	}

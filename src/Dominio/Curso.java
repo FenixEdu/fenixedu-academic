@@ -21,6 +21,7 @@ public class Curso extends DomainObject implements ICurso {
 	protected String nome;
 	protected TipoCurso tipoCurso;
 	private List degreeCurricularPlans;
+	private List degreeInfos;//added by Tânia Pousão
 //    private Integer idInternal;
 //
 //	public Integer getIdInternal() {
@@ -131,6 +132,20 @@ public class Curso extends DomainObject implements ICurso {
 	 */
 	public void setDegreeCurricularPlans(List degreeCurricularPlans) {
 		this.degreeCurricularPlans = degreeCurricularPlans;
+	}
+
+	/**
+	 * @return Returns the degreeInfos.
+	 */
+	public List getDegreeInfos() {
+		return degreeInfos;
+	}
+
+	/**
+	 * @param degreeInfos The degreeInfos to set.
+	 */
+	public void setDegreeInfos(List degreeInfos) {
+		this.degreeInfos = degreeInfos;
 	}
 
 }

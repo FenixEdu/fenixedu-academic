@@ -127,8 +127,8 @@
    		<field-descriptor
    			name="lastModificationDate"
    			column="LAST_MODIFICATION_DATE"
-   			jdbc-type="DATETIME"
-   		/>   		
+   			jdbc-type="TIMESTAMP"
+   		/>   				
 	    <reference-descriptor
 				name="degree"
 				class-ref="Dominio.Curso"

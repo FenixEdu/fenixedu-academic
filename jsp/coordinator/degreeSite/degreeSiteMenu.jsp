@@ -16,7 +16,7 @@
 	<p>
 	<ul>
 		<li>
-			<html:link page="<%= "/degreeSiteManagement.do?method=prepareEdit&amp;infoExecutionDegreeId=" + infoExecutionDegreeId.toString()%>">
+			<html:link page="<%= "/degreeSiteManagement.do?method=viewInformation&amp;infoExecutionDegreeId=" + infoExecutionDegreeId.toString()%>">
 			    <bean:message key="link.coordinator.degreeSite.edit" /></html:link>
 			    <br/>
 				<br/>

@@ -439,7 +439,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		HttpServletResponse response)
 		throws FenixActionException {
 		//ISiteComponent evaluationComponent = new InfoSiteEvaluationMethods();
-		//System.out.println("-->Ver Site ");
 			
 		ISiteComponent evaluationComponent = new InfoEvaluationMethod();
 		
@@ -513,25 +512,19 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
-			System.out.println("-->Action edit evalaution");
-			
 			HttpSession session = request.getSession(false);
 		
 			Integer objectCode = getObjectCode(request);
-			System.out.println("-->Object Code: " + objectCode);
 	
 			String evaluationMethodCodeString = request.getParameter("evaluationMethodCode");
 			Integer evaluationMethodCode = new Integer(evaluationMethodCodeString);
-			System.out.println("-->Evaluation Method Code: " + evaluationMethodCode);
-	
-			System.out.println("-->Form: ");
+			
 			DynaActionForm evaluationForm = (DynaActionForm) form;
 
 			InfoEvaluationMethod infoEvaluationMethod = new InfoEvaluationMethod();
 			infoEvaluationMethod.setIdInternal(evaluationMethodCode);
 			infoEvaluationMethod.setEvaluationElements((String) evaluationForm.get("evaluationElements"));
 			infoEvaluationMethod.setEvaluationElementsEn((String) evaluationForm.get("evaluationElementsEn"));
-			System.out.println("-->Update: " + infoEvaluationMethod.getEvaluationElementsEn());
 			
 			Object args[] = { objectCode, evaluationMethodCode, infoEvaluationMethod };
 

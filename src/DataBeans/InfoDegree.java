@@ -19,10 +19,12 @@ public class InfoDegree extends InfoObject implements Comparable {
 	protected String nome;
 	protected TipoCurso tipoCurso;
 
-//FIXME : Esta variavel e para sair
+	//FIXME : Esta variavel e para sair
 	protected String degreeTypeString;
+	
 	private List infoDegreeCurricularPlans;
-
+	private List infoDegreeInfos; //added by Tânia Pousão
+		
 	public InfoDegree() {
 	}
 
@@ -132,5 +134,19 @@ public class InfoDegree extends InfoObject implements Comparable {
 			InfoDegree degree =(InfoDegree) arg0;
 			return this.getNome().compareTo(degree.getNome());
 					}
+
+	/**
+	 * @return Returns the infoDegreeInfos.
+	 */
+	public List getInfoDegreeInfos() {
+		return infoDegreeInfos;
+	}
+
+	/**
+	 * @param infoDegreeInfos The infoDegreeInfos to set.
+	 */
+	public void setInfoDegreeInfos(List infoDegreeInfos) {
+		this.infoDegreeInfos = infoDegreeInfos;
+	}
 
 }

@@ -37,7 +37,6 @@ public class EditEvaluation implements IServico {
 		InfoEvaluationMethod infoEvaluationMethod)
 		throws FenixServiceException{
 
-		System.err.println("--->Vou escrever o elemento de avaliação!");
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			

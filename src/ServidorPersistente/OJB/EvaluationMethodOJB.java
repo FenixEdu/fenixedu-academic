@@ -102,20 +102,16 @@ public class EvaluationMethodOJB extends ObjectFenixOJB implements IPersistentEv
 
 		// If evaluation methodp is not in database, then write it.
 		if (evaluationFromDB == null) {
-			System.out.println("New EvaluationMethods");
 			super.lockWrite(evaluation);
 		} else {
-			System.out.println("EvaluationMethods: existing " + evaluationFromDB.getIdInternal());
-
+			
 			if (evaluation.getIdInternal() == null) {
-				evaluation.setIdInternal(evaluationFromDB.getIdInternal());
-				System.out.println("EvaluationMethods a actualizar!");
+				evaluation.setIdInternal(evaluationFromDB.getIdInternal());				
 			}
 
 			if (evaluationFromDB.getIdInternal().equals(evaluation.getIdInternal())) {
 				// else If the evaluation method is mapped to the database, then write any existing changes.
 				super.lockWrite(evaluation);
-				System.out.println("EvaluationMethods a actualizar na BD!");
 				// else Throw an already existing exception
 			} else {
 				throw new ExistingPersistentException();

@@ -538,7 +538,6 @@ public class ExecutionCourseSiteComponentBuilder {
 	 */
 	private ISiteComponent getInfoEvaluationMethod(InfoEvaluationMethod component, ISite site) throws FenixServiceException {
 		try {
-			System.out.println("Read !");
 			IDisciplinaExecucao executionCourse = site.getExecutionCourse();
 			
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();

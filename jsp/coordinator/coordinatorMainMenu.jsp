@@ -69,7 +69,7 @@
 		</ul>
 	</logic:notEqual> 
 	
-	<%-- Start of Common Options 
+	<%-- Start of Common Options --%>
 	<ul>
 		<li>
 			<html:link page="/executionCoursesInformation.do?method=prepareChoice">
@@ -95,5 +95,5 @@
 			<br/>
 			<br/>
 		</li>
-	</ul>--%>
+	</ul>
 </logic:present>

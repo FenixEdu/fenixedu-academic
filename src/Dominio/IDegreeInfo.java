@@ -19,9 +19,9 @@ public interface IDegreeInfo extends IDomainObject {
 	public Integer getDriftsFirst();
 	public Integer getDriftsSecond();
 	public String getClassifications();
-	public Float getMarkMin();
-	public Float getMarkMax();
-	public Float getMarkAverage();
+	public Double getMarkMin();
+	public Double getMarkMax();
+	public Double getMarkAverage();
 	public Timestamp getLastModificationDate();
 
 	public void setDegree(ICurso degree);
@@ -35,8 +35,8 @@ public interface IDegreeInfo extends IDomainObject {
 	public void setDriftsFirst(Integer driftsFirst);
 	public void setDriftsSecond(Integer driftsSecond);
 	public void setClassifications(String classifications);
-	public void setMarkMin(Float markMin);
-	public void setMarkMax(Float markMax);
-	public void setMarkAverage(Float markAverage);
+	public void setMarkMin(Double markMin);
+	public void setMarkMax(Double markMax);
+	public void setMarkAverage(Double markAverage);
 	public void setLastModificationDate(Timestamp lastModificationDate);		
 }
