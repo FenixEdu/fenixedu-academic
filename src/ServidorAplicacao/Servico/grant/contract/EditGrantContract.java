@@ -169,10 +169,11 @@ public class EditGrantContract extends EditDomainObjectService {
                     checkIfGrantOrientationTeacherExists(infoGrantContract
                             .getGrantOrientationTeacherInfo().getOrientationTeacherInfo()
                             .getTeacherNumber(), pTeacher));
-            
+            if (infoGrantContract.getGrantCostCenterInfo().getNumber().length()!=0){
             infoGrantContract.setGrantCostCenterInfo(
             		checkIfGrantCostContractExists(infoGrantContract.getGrantCostCenterInfo().getNumber()
                             , pCostContract));
+            }
 
             if (infoGrantContract.getContractNumber() == null) {
                 // set the contract number!
