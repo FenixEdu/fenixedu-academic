@@ -19,6 +19,7 @@ public class RoleType {
 	public static final int COORDINATOR_TYPE = 8;
 	public static final int EMPLOYEE_TYPE = 9;
 	public static final int MANAGEMENT_ASSIDUOUSNESS_TYPE = 10;
+	public static final int MANAGER_TYPE = 11;
 	
 	public static final RoleType PERSON = new RoleType(RoleType.PERSON_TYPE);
 	public static final RoleType STUDENT = new RoleType(RoleType.STUDENT_TYPE);
@@ -30,7 +31,7 @@ public class RoleType {
 	public static final RoleType COORDINATOR = new RoleType(RoleType.COORDINATOR_TYPE);
 	public static final RoleType EMPLOYEE =  new RoleType(RoleType.EMPLOYEE_TYPE);
 	public static final RoleType MANAGEMENT_ASSIDUOUSNESS =  new RoleType(RoleType.MANAGEMENT_ASSIDUOUSNESS_TYPE);
-	
+	public static final RoleType MANAGER = new RoleType(RoleType.MANAGER_TYPE);;
 	private int id;
 
 	private RoleType (int id){
