@@ -9,7 +9,7 @@ import org.apache.commons.collections.Transformer;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear;
 import DataBeans.InfoExecutionPeriodWithInfoExecutionYear;
-import DataBeans.InfoStudentCurricularPlanWithInfoStudent;
+import DataBeans.InfoStudentCurricularPlanWithInfoStudentAndInfoBranchAndSecondaryBranch;
 import DataBeans.enrollment.InfoCurricularCourse2EnrollWithInfoCurricularCourse;
 import Dominio.ICurricularCourse;
 import Dominio.IEnrollment;
@@ -123,7 +123,7 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
                                     }
                                 }));
         infoStudentEnrolmentContext
-                .setInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudent
+                .setInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudentAndInfoBranchAndSecondaryBranch
                         .newInfoFromDomain(studentCurricularPlan));
         infoStudentEnrolmentContext
                 .setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear
