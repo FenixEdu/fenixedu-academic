@@ -221,6 +221,7 @@
         <forward name="showAvailableShifts" path="show-available-shifts"/>
         <forward name="validateAndConfirmShiftEnrolment" path="/studentShiftEnrolmentManager.do?method=initializeShiftEnrolment"/>
         <forward name="classTimeTable" path="/classTimeTable.jsp"/>
+        <forward name="studentFirstPage" path="/dotIstPortal.do?prefix=/student&amp;page=/index.do" contextRelative="true"/>
       </action>
       
       <action 

@@ -18,6 +18,8 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -35,7 +37,6 @@ import DataBeans.InfoStudent;
 import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.student.WriteStudentAttendingCourses;
 import ServidorApresentacao.Action.commons.TransactionalDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.FenixTransactionException;
@@ -156,6 +157,15 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 
 	public ActionForward start(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws FenixActionException {
+		IUserView userView = SessionUtils.getUserView(request);
+		//TODO:FIXME:THIS IS JUST A TEMPORARY BYPASS TO PREVENT 1ST YEAR STUDENTS FROM ENROLLING IN SHIFTS
+		if ((new Integer(userView.getUtilizador().substring(1))).intValue()>53227){
+			ActionErrors actionErrors = new ActionErrors();
+			actionErrors.add("notAuthorizedShiftEnrollment", new ActionError("error.notAuthorized.ShiftEnrollment"));
+			saveErrors(request, actionErrors);
+			return mapping.findForward("studentFirstPage");
+		}
+			
 		boolean firstTime = request.getParameter("firstTime") != null;
 		if (firstTime) {
 			createToken(request);
@@ -163,7 +173,7 @@ public class ShiftStudentEnrolmentManagerDispatchAction extends TransactionalDis
 			validateToken(request, form, mapping, TRANSACTION_ERROR_MESSAGE_KEY);
 		}
 
-		IUserView userView = SessionUtils.getUserView(request);
+		
 
 		InfoStudent infoStudent = getInfoStudent(userView);
 		List infoAttendingCourses = getInfoAttendingCoursesList(request, userView, infoStudent);
