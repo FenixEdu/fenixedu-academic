@@ -20,7 +20,6 @@ import Dominio.IExecutionPeriod;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
-import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -59,10 +58,7 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular
 			IDisciplinaExecucaoPersistente executionCourseDAO =
 				sp.getIDisciplinaExecucaoPersistente();
 
-			IPersistentExecutionPeriod executionPeriodDAO =
-				sp.getIPersistentExecutionPeriod();
-
-			
+	
 			IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
 				
 
