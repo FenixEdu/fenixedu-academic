@@ -32,94 +32,96 @@ import UtilTests.ParseQuestion;
 /**
  * @author Susana Fernandes
  */
-public class ReadTestTest extends TestCaseReadServices {
+public class ReadTestTest extends TestCaseReadServices
+{
 
-	/**
-	* @param testName
-	*/
-	public ReadTestTest(String testName) {
-		super(testName);
+    /**
+    * @param testName
+    */
+    public ReadTestTest(String testName)
+    {
+        super(testName);
 
-	}
+    }
 
-	protected String getNameOfServiceToBeTested() {
-		return "ReadTest";
-	}
+    protected String getNameOfServiceToBeTested()
+    {
+        return "ReadTest";
+    }
 
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		return null;
-	}
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
+    {
+        return null;
+    }
 
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		Object[] args = { new Integer(26), new Integer(4)};
-		return args;
-	}
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
+    {
+        Object[] args = { new Integer(26), new Integer(4)};
+        return args;
+    }
 
-	protected int getNumberOfItemsToRetrieve() {
-		return 0;
-	}
+    protected int getNumberOfItemsToRetrieve()
+    {
+        return 0;
+    }
 
-	protected Object getObjectToCompare() {
-		InfoSiteTest bodyComponent = new InfoSiteTest();
-		InfoExecutionCourse infoExecutionCourse = null;
-		InfoTest infoTest = null;
-		List result = new ArrayList();
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			sp.iniciarTransaccao();
-			IDisciplinaExecucaoPersistente persistentExecutionCourse =
-				sp.getIDisciplinaExecucaoPersistente();
-			IDisciplinaExecucao executionCourse =
-				new DisciplinaExecucao(new Integer(26));
-			executionCourse =
-				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(
-					executionCourse,
-					false);
-			assertNotNull("executionCourse null", executionCourse);
-			IPersistentTest persistentTest = sp.getIPersistentTest();
-			ITest test = new Test(new Integer(4));
-			test = (ITest) persistentTest.readByOId(test, false);
-			assertNotNull("test null", test);
-			IPersistentTestQuestion persistentTestQuestion =
-				sp.getIPersistentTestQuestion();
-			ITestQuestion testQuestion = new TestQuestion(new Integer(8));
+    protected Object getObjectToCompare()
+    {
+        InfoSiteTest bodyComponent = new InfoSiteTest();
+        InfoExecutionCourse infoExecutionCourse = null;
+        InfoTest infoTest = null;
+        List result = new ArrayList();
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
+            IDisciplinaExecucaoPersistente persistentExecutionCourse =
+                sp.getIDisciplinaExecucaoPersistente();
+            IDisciplinaExecucao executionCourse = new DisciplinaExecucao(new Integer(26));
+            executionCourse =
+                (IDisciplinaExecucao) persistentExecutionCourse.readByOId(executionCourse, false);
+            assertNotNull("executionCourse null", executionCourse);
+            IPersistentTest persistentTest = sp.getIPersistentTest();
+            ITest test = new Test(new Integer(4));
+            test = (ITest) persistentTest.readByOId(test, false);
+            assertNotNull("test null", test);
+            IPersistentTestQuestion persistentTestQuestion = sp.getIPersistentTestQuestion();
+            ITestQuestion testQuestion = new TestQuestion(new Integer(8));
 
-			testQuestion =
-				(ITestQuestion) persistentTestQuestion.readByOId(
-					testQuestion,
-					false);
-			assertNotNull("testQuestion null", testQuestion);
-			sp.confirmarTransaccao();
-			infoExecutionCourse =
-				Cloner.copyIExecutionCourse2InfoExecutionCourse(
-					executionCourse);
-			infoTest = Cloner.copyITest2InfoTest(test);
+            testQuestion = (ITestQuestion) persistentTestQuestion.readByOId(testQuestion, false);
+            assertNotNull("testQuestion null", testQuestion);
+            sp.confirmarTransaccao();
+            infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+            infoTest = Cloner.copyITest2InfoTest(test);
 
-			ParseQuestion parse = new ParseQuestion();
-			InfoTestQuestion infoTestQuestion =
-				Cloner.copyITestQuestion2InfoTestQuestion(testQuestion);
-			try {
-				infoTestQuestion.setQuestion(
-					parse.parseQuestion(
-						infoTestQuestion.getQuestion().getXmlFile(),
-						infoTestQuestion.getQuestion(),""));
-			} catch (Exception e) {
-				fail("exception: ExcepcaoPersistencia ");
-			}
-			result.add(infoTestQuestion);
-		} catch (ExcepcaoPersistencia e) {
-			fail("exception: ExcepcaoPersistencia ");
-		}
+            ParseQuestion parse = new ParseQuestion();
+            InfoTestQuestion infoTestQuestion = Cloner.copyITestQuestion2InfoTestQuestion(testQuestion);
+            try
+            {
+                infoTestQuestion.setQuestion(
+                    parse.parseQuestion(
+                        infoTestQuestion.getQuestion().getXmlFile(),
+                        infoTestQuestion.getQuestion(),
+                        ""));
+            } catch (Exception e)
+            {
+                fail("exception: ExcepcaoPersistencia ");
+            }
+            result.add(infoTestQuestion);
+        } catch (ExcepcaoPersistencia e)
+        {
+            fail("exception: ExcepcaoPersistencia ");
+        }
 
-		bodyComponent.setExecutionCourse(infoExecutionCourse);
-		bodyComponent.setInfoTest(infoTest);
-		bodyComponent.setInfoTestQuestions(result);
-		SiteView siteView =
-			new ExecutionCourseSiteView(bodyComponent, bodyComponent);
-		return siteView;
-	}
+        bodyComponent.setExecutionCourse(infoExecutionCourse);
+        bodyComponent.setInfoTest(infoTest);
+        bodyComponent.setInfoTestQuestions(result);
+        SiteView siteView = new ExecutionCourseSiteView(bodyComponent, bodyComponent);
+        return siteView;
+    }
 
-	protected boolean needsAuthorization() {
-		return true;
-	}
+    protected boolean needsAuthorization()
+    {
+        return true;
+    }
 }

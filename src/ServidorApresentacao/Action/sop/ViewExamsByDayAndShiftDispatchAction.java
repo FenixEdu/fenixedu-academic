@@ -41,209 +41,192 @@ import ServidorApresentacao.Action.sop.utils.Util;
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
-public class ViewExamsByDayAndShiftDispatchAction
-	extends FenixDateAndTimeDispatchAction {
+public class ViewExamsByDayAndShiftDispatchAction extends FenixDateAndTimeDispatchAction
+{
 
-	public ActionForward view(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+    public ActionForward view(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws Exception
+    {
 
-		IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = SessionUtils.getUserView(request);
 
-		Calendar examDateAndTime =
-			RequestContextUtil.getExamDateAndTimeContext(request);
-		RequestContextUtil.setExamDateAndTimeContext(request, examDateAndTime);
+        Calendar examDateAndTime = RequestContextUtil.getExamDateAndTimeContext(request);
+        RequestContextUtil.setExamDateAndTimeContext(request, examDateAndTime);
 
-		InfoViewExam infoViewExams =
-			RequestContextUtil.getInfoViewExams(userView, examDateAndTime);
+        InfoViewExam infoViewExams = RequestContextUtil.getInfoViewExams(userView, examDateAndTime);
 
-		List infoExams = infoViewExams.getInfoViewExamsByDayAndShift();
+        List infoExams = infoViewExams.getInfoViewExamsByDayAndShift();
 
-		if (infoExams != null && infoExams.size() == 0)
-			infoExams = null;
+        if (infoExams != null && infoExams.size() == 0)
+            infoExams = null;
 
-		request.setAttribute(
-			SessionConstants.AVAILABLE_ROOM_OCCUPATION,
-			infoViewExams.getAvailableRoomOccupation());
-		request.removeAttribute(SessionConstants.LIST_EXAMSANDINFO);
-		request.setAttribute(SessionConstants.LIST_EXAMSANDINFO, infoExams);
+        request.setAttribute(
+            SessionConstants.AVAILABLE_ROOM_OCCUPATION,
+            infoViewExams.getAvailableRoomOccupation());
+        request.removeAttribute(SessionConstants.LIST_EXAMSANDINFO);
+        request.setAttribute(SessionConstants.LIST_EXAMSANDINFO, infoExams);
 
-		return mapping.findForward("View Exams");
-	}
+        return mapping.findForward("View Exams");
+    }
 
-	public ActionForward delete(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
+    public ActionForward delete(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
+    {
 
-		IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = SessionUtils.getUserView(request);
 
-		//List infoExams =
-		//	(List) request.getAttribute(SessionConstants.LIST_EXAMSANDINFO);
-		Calendar examDateAndTime =
-			RequestContextUtil.getExamDateAndTimeContext(request);
-		InfoViewExam infoViewExams;
-		try {
-			infoViewExams =
-				RequestContextUtil.getInfoViewExams(userView, examDateAndTime);
-		} catch (FenixServiceException e1) {
-			throw new FenixActionException(e1);
-		}
-		List infoExams = infoViewExams.getInfoViewExamsByDayAndShift();
+        //List infoExams =
+        //	(List) request.getAttribute(SessionConstants.LIST_EXAMSANDINFO);
+        Calendar examDateAndTime = RequestContextUtil.getExamDateAndTimeContext(request);
+        InfoViewExam infoViewExams;
+        try
+        {
+            infoViewExams = RequestContextUtil.getInfoViewExams(userView, examDateAndTime);
+        } catch (FenixServiceException e1)
+        {
+            throw new FenixActionException(e1);
+        }
+        List infoExams = infoViewExams.getInfoViewExamsByDayAndShift();
 
-		Integer indexExam = new Integer(request.getParameter("indexExam"));
+        Integer indexExam = new Integer(request.getParameter("indexExam"));
 
-		Object args[] =
-			{(InfoViewExamByDayAndShift) infoExams.get(indexExam.intValue())};
-		try {
-			ServiceUtils.executeService(userView, "DeleteExam", args);
-		} catch (notAuthorizedServiceDeleteException e) {
-			ActionErrors actionErrors = new ActionErrors();
-			actionErrors.add(
-				"notAuthorizedExamDelete",
-				new ActionError("error.notAuthorizedExamDelete"));
-			saveErrors(request, actionErrors);
+        Object args[] = {(InfoViewExamByDayAndShift) infoExams.get(indexExam.intValue())};
+        try
+        {
+            ServiceUtils.executeService(userView, "DeleteExam", args);
+        } catch (notAuthorizedServiceDeleteException e)
+        {
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add(
+                "notAuthorizedExamDelete",
+                new ActionError("error.notAuthorizedExamDelete"));
+            saveErrors(request, actionErrors);
 
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+        } catch (FenixServiceException e)
+        {
+            throw new FenixActionException(e);
+        }
 
-		return mapping.findForward("Deleted Exam");
-	}
+        return mapping.findForward("Deleted Exam");
+    }
 
-	public ActionForward edit(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+    public ActionForward edit(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws Exception
+    {
 
-		IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = SessionUtils.getUserView(request);
 
-		DynaValidatorForm editExamForm = (DynaValidatorForm) form;
+        DynaValidatorForm editExamForm = (DynaValidatorForm) form;
 
-		//List infoExams =
-		//	(List) request.getAttribute(SessionConstants.LIST_EXAMSANDINFO);
-		Calendar examDateAndTime =
-			RequestContextUtil.getExamDateAndTimeContext(request);
-		InfoViewExam infoViewExams;
-		try {
-			infoViewExams =
-				RequestContextUtil.getInfoViewExams(userView, examDateAndTime);
-		} catch (FenixServiceException e1) {
-			throw new FenixActionException(e1);
-		}
-		List infoExams = infoViewExams.getInfoViewExamsByDayAndShift();
-		
-		Integer indexExam = new Integer(request.getParameter("indexExam"));
+        //List infoExams =
+        //	(List) request.getAttribute(SessionConstants.LIST_EXAMSANDINFO);
+        Calendar examDateAndTime = RequestContextUtil.getExamDateAndTimeContext(request);
+        InfoViewExam infoViewExams;
+        try
+        {
+            infoViewExams = RequestContextUtil.getInfoViewExams(userView, examDateAndTime);
+        } catch (FenixServiceException e1)
+        {
+            throw new FenixActionException(e1);
+        }
+        List infoExams = infoViewExams.getInfoViewExamsByDayAndShift();
 
-		InfoViewExamByDayAndShift infoViewExam =
-			(InfoViewExamByDayAndShift) infoExams.get(indexExam.intValue());
+        Integer indexExam = new Integer(request.getParameter("indexExam"));
 
-		ArrayList horas = Util.getExamShifts();
-		request.setAttribute(SessionConstants.LABLELIST_HOURS, horas);
+        InfoViewExamByDayAndShift infoViewExam =
+            (InfoViewExamByDayAndShift) infoExams.get(indexExam.intValue());
 
-		ArrayList daysOfMonth = Util.getDaysOfMonth();
-		request.setAttribute(
-			SessionConstants.LABLELIST_DAYSOFMONTH,
-			daysOfMonth);
+        ArrayList horas = Util.getExamShifts();
+        request.setAttribute(SessionConstants.LABLELIST_HOURS, horas);
 
-		ArrayList monthsOfYear = Util.getMonthsOfYear();
-		request.setAttribute(
-			SessionConstants.LABLELIST_MONTHSOFYEAR,
-			monthsOfYear);
+        ArrayList daysOfMonth = Util.getDaysOfMonth();
+        request.setAttribute(SessionConstants.LABLELIST_DAYSOFMONTH, daysOfMonth);
 
-		ArrayList examSeasons = Util.getExamSeasons();
-		request.setAttribute(SessionConstants.LABLELIST_SEASONS, examSeasons);
+        ArrayList monthsOfYear = Util.getMonthsOfYear();
+        request.setAttribute(SessionConstants.LABLELIST_MONTHSOFYEAR, monthsOfYear);
 
-		Calendar date = Calendar.getInstance();
-		date = infoViewExam.getInfoExam().getDay();
+        ArrayList examSeasons = Util.getExamSeasons();
+        request.setAttribute(SessionConstants.LABLELIST_SEASONS, examSeasons);
 
-		editExamForm.set(
-			"day",
-			new Integer(date.get(Calendar.DAY_OF_MONTH)).toString());
-		editExamForm.set(
-			"month",
-			new Integer(date.get(Calendar.MONTH)).toString());
-		editExamForm.set(
-			"year",
-			new Integer(date.get(Calendar.YEAR)).toString());
-		if (infoViewExam.getInfoExam().getBeginning() != null) {
-			editExamForm.set(
-				"beginning",
-				new Integer(
-					infoViewExam.getInfoExam().getBeginning().get(
-						Calendar.HOUR_OF_DAY))
-					.toString());
-		}
-		editExamForm.set(
-			"season",
-			infoViewExam.getInfoExam().getSeason().getseason().toString());
+        Calendar date = Calendar.getInstance();
+        date = infoViewExam.getInfoExam().getDay();
 
-		request.setAttribute("input", "viewExamsByDayAndShift");
-		request.setAttribute(
-			SessionConstants.NEXT_PAGE,
-			"viewExamsByDayAndShift");
-		
-		request.setAttribute(SessionConstants.INFO_EXAMS_KEY, infoViewExam);
+        editExamForm.set("day", new Integer(date.get(Calendar.DAY_OF_MONTH)).toString());
+        editExamForm.set("month", new Integer(date.get(Calendar.MONTH)).toString());
+        editExamForm.set("year", new Integer(date.get(Calendar.YEAR)).toString());
+        if (infoViewExam.getInfoExam().getBeginning() != null)
+        {
+            editExamForm.set(
+                "beginning",
+                new Integer(infoViewExam.getInfoExam().getBeginning().get(Calendar.HOUR_OF_DAY))
+                    .toString());
+        }
+        editExamForm.set("season", infoViewExam.getInfoExam().getSeason().getseason().toString());
 
-		InfoExecutionPeriod infoExecutionPeriod =
-			(InfoExecutionPeriod) request.getAttribute(
-				SessionConstants.EXECUTION_PERIOD);
-		request.setAttribute(
-			SessionConstants.EXECUTION_PERIOD_OID,
-			infoExecutionPeriod.getIdInternal().toString());
+        request.setAttribute("input", "viewExamsByDayAndShift");
+        request.setAttribute(SessionConstants.NEXT_PAGE, "viewExamsByDayAndShift");
 
-		InfoExecutionCourse infoExecutionCourse =
-			(InfoExecutionCourse) infoViewExam.getInfoExecutionCourses().get(0);
-		request.setAttribute(
-			SessionConstants.EXECUTION_COURSE_OID,
-			infoExecutionCourse.getIdInternal().toString());
-		request.setAttribute(
-			SessionConstants.EXECUTION_COURSE,
-			infoExecutionCourse);
+        request.setAttribute(SessionConstants.INFO_EXAMS_KEY, infoViewExam);
 
-		return mapping.findForward("Edit Exam");
-	}
+        InfoExecutionPeriod infoExecutionPeriod =
+            (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+        request.setAttribute(
+            SessionConstants.EXECUTION_PERIOD_OID,
+            infoExecutionPeriod.getIdInternal().toString());
 
-	public ActionForward addExecutionCourse(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+        InfoExecutionCourse infoExecutionCourse =
+            (InfoExecutionCourse) infoViewExam.getInfoExecutionCourses().get(0);
+        request.setAttribute(
+            SessionConstants.EXECUTION_COURSE_OID,
+            infoExecutionCourse.getIdInternal().toString());
+        request.setAttribute(SessionConstants.EXECUTION_COURSE, infoExecutionCourse);
 
-		HttpSession session = request.getSession(false);
-		IUserView userView = SessionUtils.getUserView(request);
+        return mapping.findForward("Edit Exam");
+    }
 
-		//List infoViewExams =
-		//	(List) request.getAttribute(SessionConstants.LIST_EXAMSANDINFO);
-		Calendar examDateAndTime =
-			RequestContextUtil.getExamDateAndTimeContext(request);
-		InfoViewExam infoViewExams;
-		try {
-			infoViewExams =
-				RequestContextUtil.getInfoViewExams(userView, examDateAndTime);
-		} catch (FenixServiceException e1) {
-			throw new FenixActionException(e1);
-		}
-		List infoExams = infoViewExams.getInfoViewExamsByDayAndShift();
+    public ActionForward addExecutionCourse(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws Exception
+    {
 
-		Integer indexExam = new Integer(request.getParameter("indexExam"));
+        HttpSession session = request.getSession(false);
+        IUserView userView = SessionUtils.getUserView(request);
 
-		session.setAttribute(
-			SessionConstants.INFO_VIEW_EXAM,
-			((InfoViewExamByDayAndShift) infoExams
-				.get(indexExam.intValue())));
+        //List infoViewExams =
+        //	(List) request.getAttribute(SessionConstants.LIST_EXAMSANDINFO);
+        Calendar examDateAndTime = RequestContextUtil.getExamDateAndTimeContext(request);
+        InfoViewExam infoViewExams;
+        try
+        {
+            infoViewExams = RequestContextUtil.getInfoViewExams(userView, examDateAndTime);
+        } catch (FenixServiceException e1)
+        {
+            throw new FenixActionException(e1);
+        }
+        List infoExams = infoViewExams.getInfoViewExamsByDayAndShift();
 
-		request.setAttribute("input", "viewExamsByDayAndShift");
+        Integer indexExam = new Integer(request.getParameter("indexExam"));
 
-		return mapping.findForward("Add Execution Course");
-	}
+        session.setAttribute(SessionConstants.INFO_VIEW_EXAM, infoExams.get(indexExam.intValue()));
+
+        request.setAttribute("input", "viewExamsByDayAndShift");
+
+        return mapping.findForward("Add Execution Course");
+    }
 
 }

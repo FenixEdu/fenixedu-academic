@@ -28,57 +28,53 @@ import ServidorApresentacao.Action.sop.utils.ServiceUtils;
  * @author João Mota
  *
  */
-public class ViewShiftTimeTableAction extends FenixContextAction {
+public class ViewShiftTimeTableAction extends FenixContextAction
+{
 
-	/**
-	 * Constructor for ViewClassTimeTableAction.
-	 */
+    /**
+     * Constructor for ViewClassTimeTableAction.
+     */
 
-	public ActionForward execute(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+    public ActionForward execute(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws Exception
+    {
 
-		String shiftName = request.getParameter("shiftName");
+        String shiftName = request.getParameter("shiftName");
 
-		if (shiftName == null)
-			return mapping.getInputForward();
-		InfoExecutionCourse infoExecutionCourse =
-			(InfoExecutionCourse) RequestUtils.getExecutionCourseFromRequest(
-				request);
+        if (shiftName == null)
+            return mapping.getInputForward();
+        InfoExecutionCourse infoExecutionCourse = RequestUtils.getExecutionCourseFromRequest(request);
 
-		Object[] args = { new ShiftKey(shiftName, infoExecutionCourse)};
-		List lessons =
-			(List) ServiceUtils.executeService(null, "LerAulasDeTurno", args);
+        Object[] args = { new ShiftKey(shiftName, infoExecutionCourse)};
+        List lessons = (List) ServiceUtils.executeService(null, "LerAulasDeTurno", args);
 
-		GestorServicos manager = GestorServicos.manager();
+        GestorServicos manager = GestorServicos.manager();
 
-		Object argsReadCurricularCourseListOfExecutionCourse[] =
-			{ infoExecutionCourse };
-		List infoCurricularCourses =
-			(List) manager.executar(
-				null,
-				"ReadCurricularCourseListOfExecutionCourse",
-				argsReadCurricularCourseListOfExecutionCourse);
+        Object argsReadCurricularCourseListOfExecutionCourse[] = { infoExecutionCourse };
+        List infoCurricularCourses =
+            (List) manager.executar(
+                null,
+                "ReadCurricularCourseListOfExecutionCourse",
+                argsReadCurricularCourseListOfExecutionCourse);
 
-		if (infoCurricularCourses != null
-			&& !infoCurricularCourses.isEmpty()) {
-			request.setAttribute(
-				"publico.infoCurricularCourses",
-				infoCurricularCourses);
-		}
+        if (infoCurricularCourses != null && !infoCurricularCourses.isEmpty())
+        {
+            request.setAttribute("publico.infoCurricularCourses", infoCurricularCourses);
+        }
 
-		InfoShift shiftView = new InfoShift();
-		shiftView.setNome(shiftName);
-		request.setAttribute("shift", shiftView);
-		request.setAttribute("lessonList", lessons);
-		InfoSite site = RequestUtils.getSiteFromRequest(request);
-		RequestUtils.setExecutionCourseToRequest(request, infoExecutionCourse);
-		RequestUtils.setSectionsToRequest(request, site);
-		RequestUtils.setSectionToRequest(request);
+        InfoShift shiftView = new InfoShift();
+        shiftView.setNome(shiftName);
+        request.setAttribute("shift", shiftView);
+        request.setAttribute("lessonList", lessons);
+        InfoSite site = RequestUtils.getSiteFromRequest(request);
+        RequestUtils.setExecutionCourseToRequest(request, infoExecutionCourse);
+        RequestUtils.setSectionsToRequest(request, site);
+        RequestUtils.setSectionToRequest(request);
 
-		return mapping.findForward("Sucess");
-	}
+        return mapping.findForward("Sucess");
+    }
 }

@@ -21,95 +21,138 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
  * 24/Mar/2003
  */
 
-public class EquivalentEnrolmentForEnrolmentEquivalenceOJB extends ObjectFenixOJB implements IPersistentEquivalentEnrolmentForEnrolmentEquivalence {
+public class EquivalentEnrolmentForEnrolmentEquivalenceOJB
+    extends ObjectFenixOJB
+    implements IPersistentEquivalentEnrolmentForEnrolmentEquivalence
+{
 
-	public void deleteAll() throws ExcepcaoPersistencia {
-		try {
-			String oqlQuery = "select all from " + EquivalentEnrolmentForEnrolmentEquivalence.class.getName();
-			super.deleteAll(oqlQuery);
-		} catch (ExcepcaoPersistencia ex) {
-			throw ex;
-		}
-	}
+    public void deleteAll() throws ExcepcaoPersistencia
+    {
+        try
+        {
+            String oqlQuery =
+                "select all from " + EquivalentEnrolmentForEnrolmentEquivalence.class.getName();
+            super.deleteAll(oqlQuery);
+        } catch (ExcepcaoPersistencia ex)
+        {
+            throw ex;
+        }
+    }
 
-	public void lockWrite(IEquivalentEnrolmentForEnrolmentEquivalence enrolmentEquivalenceRestrictionToWrite) throws ExcepcaoPersistencia, ExistingPersistentException {
+    public void lockWrite(IEquivalentEnrolmentForEnrolmentEquivalence enrolmentEquivalenceRestrictionToWrite)
+        throws ExcepcaoPersistencia, ExistingPersistentException
+    {
 
-		IEquivalentEnrolmentForEnrolmentEquivalence equivalenceFromDB = null;
+        IEquivalentEnrolmentForEnrolmentEquivalence equivalenceFromDB = null;
 
-		// If there is nothing to write, simply return.
-		if (enrolmentEquivalenceRestrictionToWrite == null) {
-			return;
-		}
+        // If there is nothing to write, simply return.
+        if (enrolmentEquivalenceRestrictionToWrite == null)
+        {
+            return;
+        }
 
-		// Read IEquivalentEnrolmentForEnrolmentEquivalence from database.
+        // Read IEquivalentEnrolmentForEnrolmentEquivalence from database.
 
-		equivalenceFromDB = readByEnrolmentEquivalenceAndEquivalentEnrolment(enrolmentEquivalenceRestrictionToWrite.getEnrolmentEquivalence(), enrolmentEquivalenceRestrictionToWrite.getEquivalentEnrolment());
-		
-		// If IEquivalentEnrolmentForEnrolmentEquivalence is not in database, then write it.
-		if (equivalenceFromDB == null) {
-			super.lockWrite(enrolmentEquivalenceRestrictionToWrite);
-			// else If the EnrolmentEquivalence is mapped to the database, then write any existing changes.
-		} else if (
-			(enrolmentEquivalenceRestrictionToWrite instanceof IEquivalentEnrolmentForEnrolmentEquivalence)
-				&& ((IEquivalentEnrolmentForEnrolmentEquivalence) equivalenceFromDB).getIdInternal().equals(((IEquivalentEnrolmentForEnrolmentEquivalence) enrolmentEquivalenceRestrictionToWrite).getIdInternal())) {
-			super.lockWrite(enrolmentEquivalenceRestrictionToWrite);
-			// else Throw an already existing exception
-		} else
-			throw new ExistingPersistentException();
-	}
+        equivalenceFromDB =
+            readByEnrolmentEquivalenceAndEquivalentEnrolment(
+                enrolmentEquivalenceRestrictionToWrite.getEnrolmentEquivalence(),
+                enrolmentEquivalenceRestrictionToWrite.getEquivalentEnrolment());
 
-	public void delete(IEquivalentEnrolmentForEnrolmentEquivalence enrolmentEquivalenceRestriction) throws ExcepcaoPersistencia {
-		try {
-			super.delete(enrolmentEquivalenceRestriction);
-		} catch (ExcepcaoPersistencia ex) {
-			throw ex;
-		}
-	}
+        // If IEquivalentEnrolmentForEnrolmentEquivalence is not in database, then write it.
+        if (equivalenceFromDB == null)
+        {
+            super.lockWrite(enrolmentEquivalenceRestrictionToWrite);
+            // else If the EnrolmentEquivalence is mapped to the database, then write any existing changes.
+        } else if (
+            (enrolmentEquivalenceRestrictionToWrite
+                instanceof IEquivalentEnrolmentForEnrolmentEquivalence)
+                && ((IEquivalentEnrolmentForEnrolmentEquivalence) equivalenceFromDB)
+                    .getIdInternal()
+                    .equals(
+                    (
+                        (IEquivalentEnrolmentForEnrolmentEquivalence) enrolmentEquivalenceRestrictionToWrite)
+                        .getIdInternal()))
+        {
+            super.lockWrite(enrolmentEquivalenceRestrictionToWrite);
+            // else Throw an already existing exception
+        } else
+            throw new ExistingPersistentException();
+    }
 
-	public IEquivalentEnrolmentForEnrolmentEquivalence readByEnrolmentEquivalenceAndEquivalentEnrolment(IEnrolmentEquivalence enrolmentEquivalence, IEnrolment equivalentEnrolment) throws ExcepcaoPersistencia {
-		try {
-			Criteria criteria = new Criteria();
-			criteria.addEqualTo("enrolmentEquivalenceKey", enrolmentEquivalence.getIdInternal());
-			criteria.addEqualTo("equivalentEnrolmentKey", equivalentEnrolment.getIdInternal());
-			return (IEquivalentEnrolmentForEnrolmentEquivalence) queryObject(EquivalentEnrolmentForEnrolmentEquivalence.class, criteria);
-		} catch (ExcepcaoPersistencia e) {
-			throw e;
-		}
-	}
+    public void delete(IEquivalentEnrolmentForEnrolmentEquivalence enrolmentEquivalenceRestriction)
+        throws ExcepcaoPersistencia
+    {
+        try
+        {
+            super.delete(enrolmentEquivalenceRestriction);
+        } catch (ExcepcaoPersistencia ex)
+        {
+            throw ex;
+        }
+    }
 
-	public List readByEquivalentEnrolment(IEnrolment equivalentEnrolment) throws ExcepcaoPersistencia {
-		try {
-			Criteria criteria = new Criteria();
-			criteria.addEqualTo("equivalentEnrolmentKey", equivalentEnrolment.getIdInternal());
-			return queryList(EquivalentEnrolmentForEnrolmentEquivalence.class, criteria);
-		} catch (ExcepcaoPersistencia e) {
-			throw e;
-		}
-	}
+    public IEquivalentEnrolmentForEnrolmentEquivalence readByEnrolmentEquivalenceAndEquivalentEnrolment(
+        IEnrolmentEquivalence enrolmentEquivalence,
+        IEnrolment equivalentEnrolment)
+        throws ExcepcaoPersistencia
+    {
+        try
+        {
+            Criteria criteria = new Criteria();
+            criteria.addEqualTo("enrolmentEquivalenceKey", enrolmentEquivalence.getIdInternal());
+            criteria.addEqualTo("equivalentEnrolmentKey", equivalentEnrolment.getIdInternal());
+            return (IEquivalentEnrolmentForEnrolmentEquivalence) queryObject(
+                EquivalentEnrolmentForEnrolmentEquivalence.class,
+                criteria);
+        } catch (ExcepcaoPersistencia e)
+        {
+            throw e;
+        }
+    }
 
-	public ArrayList readAll() throws ExcepcaoPersistencia {
+    public List readByEquivalentEnrolment(IEnrolment equivalentEnrolment) throws ExcepcaoPersistencia
+    {
+        try
+        {
+            Criteria criteria = new Criteria();
+            criteria.addEqualTo("equivalentEnrolmentKey", equivalentEnrolment.getIdInternal());
+            return queryList(EquivalentEnrolmentForEnrolmentEquivalence.class, criteria);
+        } catch (ExcepcaoPersistencia e)
+        {
+            throw e;
+        }
+    }
 
-		try {
-			ArrayList list = new ArrayList();
-			String oqlQuery = "select all from " + EquivalentEnrolmentForEnrolmentEquivalence.class.getName();
-			query.create(oqlQuery);
-			List result = (List) query.execute();
+    public ArrayList readAll() throws ExcepcaoPersistencia
+    {
 
-			try {
-				lockRead(result);
-			} catch (ExcepcaoPersistencia ex) {
-				throw ex;
-			}
+        try
+        {
+            ArrayList list = new ArrayList();
+            String oqlQuery =
+                "select all from " + EquivalentEnrolmentForEnrolmentEquivalence.class.getName();
+            query.create(oqlQuery);
+            List result = (List) query.execute();
 
-			if ((result != null) && (result.size() != 0)) {
-				ListIterator iterator = result.listIterator();
-				while (iterator.hasNext())
-					list.add((IEquivalentEnrolmentForEnrolmentEquivalence) iterator.next());
-			}
-			return list;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
+            try
+            {
+                lockRead(result);
+            } catch (ExcepcaoPersistencia ex)
+            {
+                throw ex;
+            }
+
+            if ((result != null) && (result.size() != 0))
+            {
+                ListIterator iterator = result.listIterator();
+                while (iterator.hasNext())
+                    list.add(iterator.next());
+            }
+            return list;
+        } catch (QueryException ex)
+        {
+            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+        }
+    }
 
 }

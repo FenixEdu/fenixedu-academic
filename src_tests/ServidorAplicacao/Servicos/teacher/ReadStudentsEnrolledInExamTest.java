@@ -20,38 +20,38 @@ import ServidorAplicacao.Servicos.UtilsTestCase;
 public class ReadStudentsEnrolledInExamTest extends ServiceNeedsAuthenticationTestCase
 {
     /**
-	 * @param testName
-	 */
+     * @param testName
+     */
     public ReadStudentsEnrolledInExamTest(String testName)
     {
         super(testName);
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.TestCaseServices#getNameOfServiceToBeTested()
-	 */
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.TestCaseServices#getNameOfServiceToBeTested()
+     */
     protected String getNameOfServiceToBeTested()
     {
         return "ReadStudentsEnrolledInExam";
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getApplication()
-	 */
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getApplication()
+     */
     protected String getApplication()
     {
         return Autenticacao.EXTRANET;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthenticatedAndAuthorizedUser()
-	 */
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthenticatedAndAuthorizedUser()
+     */
     protected String[] getAuthenticatedAndAuthorizedUser()
     {
         String[] args = { "user", "pass", getApplication()};
@@ -59,10 +59,10 @@ public class ReadStudentsEnrolledInExamTest extends ServiceNeedsAuthenticationTe
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthenticatedAndUnauthorizedUser()
-	 */
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthenticatedAndUnauthorizedUser()
+     */
     protected String[] getAuthenticatedAndUnauthorizedUser()
     {
         String[] args = { "3", "pass", getApplication()};
@@ -70,10 +70,10 @@ public class ReadStudentsEnrolledInExamTest extends ServiceNeedsAuthenticationTe
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthorizeArguments()
-	 */
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthorizeArguments()
+     */
     protected Object[] getAuthorizeArguments()
     {
         Object[] args = { new Integer(27), new Integer(1)};
@@ -81,20 +81,20 @@ public class ReadStudentsEnrolledInExamTest extends ServiceNeedsAuthenticationTe
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.ServiceTestCase#getDataSetFilePath()
-	 */
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceTestCase#getDataSetFilePath()
+     */
     protected String getDataSetFilePath()
     {
         return "etc/datasets/servicos/teacher/testReadStudentsEnrolledInExamDataSet.xml";
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getNotAuthenticatedUser()
-	 */
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getNotAuthenticatedUser()
+     */
     protected String[] getNotAuthenticatedUser()
     {
         String[] args = { "13", "pass", getApplication()};
@@ -109,14 +109,14 @@ public class ReadStudentsEnrolledInExamTest extends ServiceNeedsAuthenticationTe
         {
 
             result =
-                (TeacherAdministrationSiteView)gestor.executar(
+                (TeacherAdministrationSiteView) gestor.executar(
                     userView,
                     getNameOfServiceToBeTested(),
                     getAuthorizeArguments());
 
             InfoSiteTeacherStudentsEnrolledList infoSiteTeacherStudentsEnrolledList =
-                (InfoSiteTeacherStudentsEnrolledList)result.getComponent();
-            InfoExam infoExam = (InfoExam)infoSiteTeacherStudentsEnrolledList.getInfoExam();
+                (InfoSiteTeacherStudentsEnrolledList) result.getComponent();
+            InfoExam infoExam = infoSiteTeacherStudentsEnrolledList.getInfoExam();
             List infoExamsStudentRoomList =
                 infoSiteTeacherStudentsEnrolledList.getInfoExamStudentRoomList();
             List infoStudents = infoSiteTeacherStudentsEnrolledList.getInfoStudents();
@@ -162,7 +162,7 @@ public class ReadStudentsEnrolledInExamTest extends ServiceNeedsAuthenticationTe
         {
 
             result =
-                (TeacherAdministrationSiteView)gestor.executar(
+                (TeacherAdministrationSiteView) gestor.executar(
                     userView,
                     getNameOfServiceToBeTested(),
                     args);
@@ -198,7 +198,7 @@ public class ReadStudentsEnrolledInExamTest extends ServiceNeedsAuthenticationTe
         {
 
             result =
-                (TeacherAdministrationSiteView)gestor.executar(
+                (TeacherAdministrationSiteView) gestor.executar(
                     userView,
                     getNameOfServiceToBeTested(),
                     args);

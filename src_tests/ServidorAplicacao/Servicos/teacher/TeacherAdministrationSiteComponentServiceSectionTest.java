@@ -33,126 +33,144 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Fernanda Quitério
  * 
  */
-public class TeacherAdministrationSiteComponentServiceSectionTest extends TestCaseReadServices {
+public class TeacherAdministrationSiteComponentServiceSectionTest extends TestCaseReadServices
+{
 
-	/**
-	 * @param testName
-	 */
-	public TeacherAdministrationSiteComponentServiceSectionTest(String testName) {
-		super(testName);
-	}
+    /**
+     * @param testName
+     */
+    public TeacherAdministrationSiteComponentServiceSectionTest(String testName)
+    {
+        super(testName);
+    }
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
-	 */
-	protected String getNameOfServiceToBeTested() {
-		return "TeacherAdministrationSiteComponentService";
-	}
+    /**
+     * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
+     */
+    protected String getNameOfServiceToBeTested()
+    {
+        return "TeacherAdministrationSiteComponentService";
+    }
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
-	 */
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		return null;
-	}
+    /**
+     * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
+     */
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
+    {
+        return null;
+    }
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedSuccessfuly()
-	 */
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+    /**
+     * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedSuccessfuly()
+     */
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
+    {
 
-		Object[] args = { new Integer(27), new InfoSiteCommon(), new InfoSiteSection(), null, new Integer(6), null };
-		return args;
-	}
+        Object[] args =
+            { new Integer(27), new InfoSiteCommon(), new InfoSiteSection(), null, new Integer(6), null };
+        return args;
+    }
 
-	protected Object getObjectToCompare() {
-		ISuportePersistente sp = null;
-		InfoExecutionCourse infoExecutionCourse = null;
-		ISite site = null;
-		List sections = null;
-		ISection iSection = null;
-		List itemsList = null;
-		
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-			sp.iniciarTransaccao();
+    protected Object getObjectToCompare()
+    {
+        ISuportePersistente sp = null;
+        InfoExecutionCourse infoExecutionCourse = null;
+        ISite site = null;
+        List sections = null;
+        ISection iSection = null;
+        List itemsList = null;
 
-			IDisciplinaExecucaoPersistente persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
-			IPersistentSite persistentSite = sp.getIPersistentSite();
-			IPersistentSection persistentSection = sp.getIPersistentSection();
-			IPersistentItem persistentItem = sp.getIPersistentItem();
-			
-			IDisciplinaExecucao executionCourse =
-				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(new Integer(27)), false);
-			infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+        try
+        {
+            sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
 
-			site = (ISite) persistentSite.readByExecutionCourse(executionCourse);
+            IDisciplinaExecucaoPersistente persistentExecutionCourse =
+                sp.getIDisciplinaExecucaoPersistente();
+            IPersistentSite persistentSite = sp.getIPersistentSite();
+            IPersistentSection persistentSection = sp.getIPersistentSection();
+            IPersistentItem persistentItem = sp.getIPersistentItem();
 
-			sections = persistentSection.readBySite(site);
+            IDisciplinaExecucao executionCourse =
+                (IDisciplinaExecucao) persistentExecutionCourse.readByOId(
+                    new DisciplinaExecucao(new Integer(27)),
+                    false);
+            infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
 
-			iSection = (ISection)persistentSection.readByOId(new Section(new Integer(6)), false);
-			
-			itemsList = persistentItem.readAllItemsBySection(iSection);
+            site = persistentSite.readByExecutionCourse(executionCourse);
 
-			sp.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia e) {
-			System.out.println("failed setting up the test data");
-			e.printStackTrace();
-		}
+            sections = persistentSection.readBySite(site);
 
-		List infoSections = new ArrayList();
-		ListIterator iter = sections.listIterator();
+            iSection = (ISection) persistentSection.readByOId(new Section(new Integer(6)), false);
 
-		while (iter.hasNext()) {
-			InfoSection infoSection = (InfoSection) Cloner.copyISection2InfoSection((ISection) iter.next());
-			infoSections.add(infoSection);
-		}
+            itemsList = persistentItem.readAllItemsBySection(iSection);
 
-		List infoItems = new ArrayList();
-		ListIterator iterator = itemsList.listIterator();
+            sp.confirmarTransaccao();
+        } catch (ExcepcaoPersistencia e)
+        {
+            System.out.println("failed setting up the test data");
+            e.printStackTrace();
+        }
 
-		while (iterator.hasNext()) {
-			InfoItem infoItem = (InfoItem) Cloner.copyIItem2InfoItem((IItem) iterator.next());
-			infoItems.add(infoItem);
-		}
+        List infoSections = new ArrayList();
+        ListIterator iter = sections.listIterator();
 
-		InfoSiteSection infoSiteSection = new InfoSiteSection();
-		Collections.sort(infoItems);
-		infoSiteSection.setSection(Cloner.copyISection2InfoSection(iSection));
-		infoSiteSection.setItems(infoItems);
-		
-		InfoSite infoSite = Cloner.copyISite2InfoSite(site);
-		Collections.sort(infoSections);
-		InfoSiteCommon infoSiteCommon = new InfoSiteCommon();
-		infoSiteCommon.setExecutionCourse(infoExecutionCourse);
-		infoSiteCommon.setMail(infoSite.getMail());
-		infoSiteCommon.setSections(infoSections);
-		infoSiteCommon.setTitle(infoExecutionCourse.getNome());
+        while (iter.hasNext())
+        {
+            InfoSection infoSection = Cloner.copyISection2InfoSection((ISection) iter.next());
+            infoSections.add(infoSection);
+        }
 
-		TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(infoSiteCommon, infoSiteSection);
+        List infoItems = new ArrayList();
+        ListIterator iterator = itemsList.listIterator();
 
-		return siteView;
-	}
+        while (iterator.hasNext())
+        {
+            InfoItem infoItem = Cloner.copyIItem2InfoItem((IItem) iterator.next());
+            infoItems.add(infoItem);
+        }
 
-	/**
-	 * This method must return 'true' if the service needs authorization to be runned and 'false' otherwise.
-	 */
-	protected boolean needsAuthorization() {
-		return true;
-	}
+        InfoSiteSection infoSiteSection = new InfoSiteSection();
+        Collections.sort(infoItems);
+        infoSiteSection.setSection(Cloner.copyISection2InfoSection(iSection));
+        infoSiteSection.setItems(infoItems);
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentListOfServiceToBeTestedUnsuccessfuly()
-	 */
-	protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly() {
-		return null;
-	}
+        InfoSite infoSite = Cloner.copyISite2InfoSite(site);
+        Collections.sort(infoSections);
+        InfoSiteCommon infoSiteCommon = new InfoSiteCommon();
+        infoSiteCommon.setExecutionCourse(infoExecutionCourse);
+        infoSiteCommon.setMail(infoSite.getMail());
+        infoSiteCommon.setSections(infoSections);
+        infoSiteCommon.setTitle(infoExecutionCourse.getNome());
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
-	 */
-	protected int getNumberOfItemsToRetrieve() {
-		return 0;
-	}
+        TeacherAdministrationSiteView siteView =
+            new TeacherAdministrationSiteView(infoSiteCommon, infoSiteSection);
+
+        return siteView;
+    }
+
+    /**
+     * This method must return 'true' if the service needs authorization to be runned and 'false' otherwise.
+     */
+    protected boolean needsAuthorization()
+    {
+        return true;
+    }
+
+    /* (non-Javadoc)
+     * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentListOfServiceToBeTestedUnsuccessfuly()
+     */
+    protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly()
+    {
+        return null;
+    }
+
+    /* (non-Javadoc)
+     * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
+     */
+    protected int getNumberOfItemsToRetrieve()
+    {
+        return 0;
+    }
 
 }

@@ -21,143 +21,177 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
  * 
  */
 
-public class MarkOJB extends ObjectFenixOJB implements IPersistentMark {
+public class MarkOJB extends ObjectFenixOJB implements IPersistentMark
+{
 
-	public MarkOJB() {
-		super();
-	}
+    public MarkOJB()
+    {
+        super();
+    }
 
-	public void deleteAll() throws ExcepcaoPersistencia {
-		try {
-			String oqlQuery = "select all from " + Mark.class.getName();
-			super.deleteAll(oqlQuery);
-		} catch (ExcepcaoPersistencia ex) {
-			throw ex;
-		}
-	}
+    public void deleteAll() throws ExcepcaoPersistencia
+    {
+        try
+        {
+            String oqlQuery = "select all from " + Mark.class.getName();
+            super.deleteAll(oqlQuery);
+        } catch (ExcepcaoPersistencia ex)
+        {
+            throw ex;
+        }
+    }
 
-	public void lockWrite(IMark markToWrite) throws ExcepcaoPersistencia, ExistingPersistentException {
+    public void lockWrite(IMark markToWrite) throws ExcepcaoPersistencia, ExistingPersistentException
+    {
 
-		IMark markFromDB = null;
-		// If there is nothing to write, simply return.
-		if (markToWrite == null) {
-			return;
-		}
+        IMark markFromDB = null;
+        // If there is nothing to write, simply return.
+        if (markToWrite == null)
+        {
+            return;
+        }
 
-		// Read mark from database.
-		markFromDB = this.readBy(markToWrite.getEvaluation(), markToWrite.getAttend());
-		// If mark is not in database, then write it.
-		if (markFromDB == null) {
-			super.lockWrite(markToWrite);
-			// else If the mark is mapped to the database, then write any existing changes.
-		} else if ((markToWrite instanceof Mark) && ((Mark) markFromDB).getIdInternal().equals(((Mark) markToWrite).getIdInternal())) {
-			super.lockWrite(markToWrite);
-			// else Throw an already existing exception
-		} else
-			throw new ExistingPersistentException();
-	}
+        // Read mark from database.
+        markFromDB = this.readBy(markToWrite.getEvaluation(), markToWrite.getAttend());
+        // If mark is not in database, then write it.
+        if (markFromDB == null)
+        {
+            super.lockWrite(markToWrite);
+            // else If the mark is mapped to the database, then write any existing changes.
+        } else if (
+            (markToWrite instanceof Mark)
+                && ((Mark) markFromDB).getIdInternal().equals(((Mark) markToWrite).getIdInternal()))
+        {
+            super.lockWrite(markToWrite);
+            // else Throw an already existing exception
+        } else
+            throw new ExistingPersistentException();
+    }
 
-	public void delete(IMark mark) throws ExcepcaoPersistencia {
-		try {
-			super.delete(mark);
-		} catch (ExcepcaoPersistencia ex) {
-			throw ex;
-		}
-	}
+    public void delete(IMark mark) throws ExcepcaoPersistencia
+    {
+        try
+        {
+            super.delete(mark);
+        } catch (ExcepcaoPersistencia ex)
+        {
+            throw ex;
+        }
+    }
 
-	public List readBy(IFrequenta attend) throws ExcepcaoPersistencia {
-		try {
+    public List readBy(IFrequenta attend) throws ExcepcaoPersistencia
+    {
+        try
+        {
 
-			String oqlQuery = "select all from " + Mark.class.getName();
-			oqlQuery += " where attend = $1";
-			query.create(oqlQuery);
-			query.bind(attend.getIdInternal());
-			List result = (List) query.execute();
-			lockRead(result);
-			return result;
+            String oqlQuery = "select all from " + Mark.class.getName();
+            oqlQuery += " where attend = $1";
+            query.create(oqlQuery);
+            query.bind(attend.getIdInternal());
+            List result = (List) query.execute();
+            lockRead(result);
+            return result;
 
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
+        } catch (QueryException ex)
+        {
+            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+        }
+    }
 
-	public List readBy(IEvaluation evaluation) throws ExcepcaoPersistencia {
+    public List readBy(IEvaluation evaluation) throws ExcepcaoPersistencia
+    {
 
-		try {
+        try
+        {
 
-			String oqlQuery = "select all from " + Mark.class.getName();
-			oqlQuery += " where evaluation = $1";
-			query.create(oqlQuery);
-			query.bind(evaluation.getIdInternal());
-			List result = (List) query.execute();
-			lockRead(result);
-			return result;
+            String oqlQuery = "select all from " + Mark.class.getName();
+            oqlQuery += " where evaluation = $1";
+            query.create(oqlQuery);
+            query.bind(evaluation.getIdInternal());
+            List result = (List) query.execute();
+            lockRead(result);
+            return result;
 
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
+        } catch (QueryException ex)
+        {
+            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+        }
+    }
 
-	public IMark readBy(IEvaluation evaluation, IFrequenta attend) throws ExcepcaoPersistencia {
+    public IMark readBy(IEvaluation evaluation, IFrequenta attend) throws ExcepcaoPersistencia
+    {
 
-		try {
-			IMark mark = null;
-			String oqlQuery = "select all from " + Mark.class.getName();
-			oqlQuery += " where evaluation = $1";
-			oqlQuery += " and attend = $2";
+        try
+        {
+            IMark mark = null;
+            String oqlQuery = "select all from " + Mark.class.getName();
+            oqlQuery += " where evaluation = $1";
+            oqlQuery += " and attend = $2";
 
-			query.create(oqlQuery);
-			query.bind(evaluation.getIdInternal());
-			query.bind(attend.getIdInternal());
-			List result = (List) query.execute();
-			try {
-				lockRead(result);
-			} catch (ExcepcaoPersistencia ex) {
-				throw ex;
-			}
+            query.create(oqlQuery);
+            query.bind(evaluation.getIdInternal());
+            query.bind(attend.getIdInternal());
+            List result = (List) query.execute();
+            try
+            {
+                lockRead(result);
+            } catch (ExcepcaoPersistencia ex)
+            {
+                throw ex;
+            }
 
-			if ((result != null) && (result.size() != 0)) {
-				mark = (IMark) result.get(0);
-			}
-			return mark;
+            if ((result != null) && (result.size() != 0))
+            {
+                mark = (IMark) result.get(0);
+            }
+            return mark;
 
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
+        } catch (QueryException ex)
+        {
+            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+        }
+    }
 
-	public List readAll() throws ExcepcaoPersistencia {
+    public List readAll() throws ExcepcaoPersistencia
+    {
 
-		try {
-			ArrayList list = new ArrayList();
-			String oqlQuery = "select all from " + Mark.class.getName();
-			query.create(oqlQuery);
-			List result = (List) query.execute();
+        try
+        {
+            ArrayList list = new ArrayList();
+            String oqlQuery = "select all from " + Mark.class.getName();
+            query.create(oqlQuery);
+            List result = (List) query.execute();
 
-			try {
-				lockRead(result);
-			} catch (ExcepcaoPersistencia ex) {
-				throw ex;
-			}
+            try
+            {
+                lockRead(result);
+            } catch (ExcepcaoPersistencia ex)
+            {
+                throw ex;
+            }
 
-			if ((result != null) && (result.size() != 0)) {
-				ListIterator iterator = result.listIterator();
-				while (iterator.hasNext())
-					list.add((IMark) iterator.next());
-			}
-			return list;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
+            if ((result != null) && (result.size() != 0))
+            {
+                ListIterator iterator = result.listIterator();
+                while (iterator.hasNext())
+                    list.add(iterator.next());
+            }
+            return list;
+        } catch (QueryException ex)
+        {
+            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+        }
+    }
 
-	public List readBy(IEvaluation evaluation, boolean published) throws ExcepcaoPersistencia {
+    public List readBy(IEvaluation evaluation, boolean published) throws ExcepcaoPersistencia
+    {
 
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("keyEvaluation", evaluation.getIdInternal());
-		if (published) {
-			criteria.addNotNull("publishedMark");
-		}
-		return queryList(Mark.class, criteria);
-	}
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("keyEvaluation", evaluation.getIdInternal());
+        if (published)
+        {
+            criteria.addNotNull("publishedMark");
+        }
+        return queryList(Mark.class, criteria);
+    }
 }
