@@ -58,6 +58,12 @@
  				 authenticationType = "userpass"
 	/>
 	
+	<sms-command expression = "HORARIO ${USERNAME:word} ${PASSWORD:word}"
+				 replyToSender = "true"
+				 serviceName = "ReadStudentTimeTable"
+				 serviceArgs ="USERNAME" 
+ 				 authenticationType = "userpass"
+	/>
 	
 </sms-commands>
 
