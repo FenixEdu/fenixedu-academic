@@ -55,6 +55,12 @@ public final class ConsultarFuncionarioEscolhaAction extends Action {
 		ActionErrors errors = new ActionErrors();
 		HttpSession session = request.getSession();
 
+		if (isCancelled(request)) {
+			if (mapping.getAttribute() != null)
+				session.removeAttribute(mapping.getAttribute());
+			return (mapping.findForward("PortalGestaoAssiduidadeAction"));
+		}
+
 		ConsultarFuncionarioMostrarForm formEscolha = (ConsultarFuncionarioMostrarForm) form;
 		Integer numMecanografico = (Integer) session.getAttribute("numMecanografico");
 
@@ -195,7 +201,7 @@ public final class ConsultarFuncionarioEscolhaAction extends Action {
 			ArrayList listaJustificacoes = servicoSeguroConsultarJustificacoes.getListaJustificacoes();
 
 			// ordena as justificacoes por decrescente porque a tabela e apresentada ao contrario no jsp
-			Comparador comparador = new Comparador(new String("Justificacao"), new String("decrescente"));
+			Comparador comparador = new Comparador(new String("Justificacao"), new String("crescente"));
 			Collections.sort((ArrayList) listaJustificacoes, comparador);
 
 			ServicoSeguroBuscarParamJustificacoes servicoSeguroBuscarParamJustificacoes =
@@ -218,6 +224,7 @@ public final class ConsultarFuncionarioEscolhaAction extends Action {
 
 			// criacao da tabela de justificacoes para mostrar no jsp
 			ArrayList listaJustificacoesBody = new ArrayList();
+			ArrayList listaBody = new ArrayList();
 			ListIterator iterListaParamJustificacoes = listaParamJustificacoes.listIterator();
 			Justificacao justificacao = null;
 			ParamJustificacao paramJustificacao = null;
@@ -226,13 +233,18 @@ public final class ConsultarFuncionarioEscolhaAction extends Action {
 				paramJustificacao = (ParamJustificacao) iterListaParamJustificacoes.next();
 				justificacao = (Justificacao) listaJustificacoes.get(iterListaParamJustificacoes.previousIndex());
 
+				listaJustificacoesBody.add(0, numMecanografico.toString());
 				IStrategyJustificacoes strategyJustificacoes =
 					SuporteStrategyJustificacoes.getInstance().callStrategy(paramJustificacao.getTipo());
 				strategyJustificacoes.setListaJustificacoesBody(paramJustificacao, justificacao, listaJustificacoesBody);
+				
+				listaBody.addAll(listaJustificacoesBody);
+				listaJustificacoesBody.clear();
 			}
 			ArrayList listagem = new ArrayList();
 			ArrayList listaHeaders = new ArrayList();
 
+			listaHeaders.add(messages.getMessage("prompt.funcionario"));
 			listaHeaders.add(messages.getMessage("prompt.sigla"));
 			listaHeaders.add(messages.getMessage("prompt.tipo"));
 			listaHeaders.add(messages.getMessage("prompt.diaInicio"));
@@ -241,7 +253,7 @@ public final class ConsultarFuncionarioEscolhaAction extends Action {
 			listaHeaders.add(messages.getMessage("prompt.horaFim"));
 
 			listagem.add(listaHeaders);
-			listagem.add(listaJustificacoesBody);
+			listagem.add(listaBody);
 
 			request.setAttribute("listagem", listagem);
 			request.setAttribute("forward", mapping.findForward("ConsultarJustificacoesMostrar"));
@@ -251,7 +263,7 @@ public final class ConsultarFuncionarioEscolhaAction extends Action {
 
 		} else if (formEscolha.getEscolha().equals("consultar.verbete")) {
 			//»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» Verbete «««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««
-			//			//ATENCAO: Servico acede à BD Oracle para ler as marcacoes ponto
+//			//ATENCAO: Servico acede à BD Oracle para ler as marcacoes ponto
 			ServicoAutorizacaoLer servicoAutorizacaoLer = new ServicoAutorizacaoLer();
 			ServicoSeguroConsultarVerbete servicoSeguroConsultarVerbete =
 				new ServicoSeguroConsultarVerbete(
@@ -260,33 +272,33 @@ public final class ConsultarFuncionarioEscolhaAction extends Action {
 					formEscolha.getDataInicioEscolha(),
 					formEscolha.getDataFimEscolha(),
 					locale);
+					
+//			try {
+//				SuportePersistenteOracle.getInstance().iniciarTransaccao();
 
-			//			try {
-			//				SuportePersistenteOracle.getInstance().iniciarTransaccao();
-
-			try {
-				Executor.getInstance().doIt(servicoSeguroConsultarVerbete);
-			} catch (NotAuthorizeException nae) {
-				errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nae.getMessage()));
-			} catch (NotExecuteException nee) {
-				errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nee.getMessage()));
-			} catch (PersistenceException pe) {
-				errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.server"));
-			} finally {
-				//					SuportePersistenteOracle.getInstance().cancelarTransaccao();
-				if (!errors.isEmpty()) {
-					saveErrors(request, errors);
-					return (new ActionForward(mapping.getInput()));
+				try {
+					Executor.getInstance().doIt(servicoSeguroConsultarVerbete);
+				} catch (NotAuthorizeException nae) {
+					errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nae.getMessage()));
+				} catch (NotExecuteException nee) {
+					errors.add(ActionErrors.GLOBAL_ERROR, new ActionError(nee.getMessage()));
+				} catch (PersistenceException pe) {
+					errors.add(ActionErrors.GLOBAL_ERROR, new ActionError("error.server"));
+				} finally {
+//					SuportePersistenteOracle.getInstance().cancelarTransaccao();
+					if (!errors.isEmpty()) {
+						saveErrors(request, errors);
+						return (new ActionForward(mapping.getInput()));
+					}
 				}
-			}
-			//				
-			//				SuportePersistenteOracle.getInstance().confirmarTransaccao();
-			//			} catch (Exception e) {
-			//				if (!errors.empty()) {
-			//					saveErrors(request, errors);
-			//					return (new ActionForward(mapping.getInput()));
-			//				}
-			//			}
+//				
+//				SuportePersistenteOracle.getInstance().confirmarTransaccao();
+//			} catch (Exception e) {
+//				if (!errors.empty()) {
+//					saveErrors(request, errors);
+//					return (new ActionForward(mapping.getInput()));
+//				}
+//			}
 
 			ArrayList listaHeaders = new ArrayList();
 			listaHeaders.add(messages.getMessage("prompt.data"));
@@ -310,7 +322,7 @@ public final class ConsultarFuncionarioEscolhaAction extends Action {
 			listaHeadersTrabExtra.add(messages.getMessage("prompt.primeiroEscalao"));
 			listaHeadersTrabExtra.add(messages.getMessage("prompt.segundoEscalao"));
 			listaHeadersTrabExtra.add(messages.getMessage("prompt.depoisSegundoEscalao"));
-
+			
 			ArrayList listaSaldos = servicoSeguroConsultarVerbete.getListaSaldos();
 			ArrayList listaResumo = new ArrayList();
 			Calendar calendario = Calendar.getInstance();
@@ -364,6 +376,7 @@ public final class ConsultarFuncionarioEscolhaAction extends Action {
 			calendario.setTimeInMillis(((Long) listaSaldos.get(10)).longValue());
 			listaTrabExtra.add(5, FormataCalendar.horasSaldo(calendario));
 
+
 			ArrayList listagem = new ArrayList();
 			listagem.add(listaHeaders);
 			listagem.add(servicoSeguroConsultarVerbete.getVerbete());
@@ -381,6 +394,7 @@ public final class ConsultarFuncionarioEscolhaAction extends Action {
 
 			return (mapping.findForward("MostrarListaAction"));
 		}
-		return (mapping.findForward("PortalAssiduidadeAction"));
+		return (mapping.findForward("PortalGestaoAssiduidadeAction"));
 	}
+
 }

@@ -1815,7 +1815,7 @@ public class Flexivel implements IStrategyHorarios {
 		MarcacaoPonto saida = null;
 
 		long saldo = ((Long)listaSaldos.get(0)).longValue();
-//		System.out.println("saldo antes dos calculos da refeicao: " + saldo);
+
 		long intervaloRefeicao = 0;
 
 		ListIterator iterador = listaMarcacoesPonto.listIterator();

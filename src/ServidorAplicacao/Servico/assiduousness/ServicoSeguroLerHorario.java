@@ -77,10 +77,8 @@ public class ServicoSeguroLerHorario extends ServicoSeguro {
 				&& ((_horario.getSigla().equals(Constants.DS)) || (_horario.getSigla().equals(Constants.DSC))
 				|| (_horario.getSigla().equals(Constants.FERIADO)))) {
 				//é um horário de descanso
-				System.out.println("NO TRANSFORMA DESCANSO");
 				_horario.transformaDescanso(_horarioTipo);
 			} else {
-				System.out.println("NO TRANSFORMA");
 				_horario.transforma(_horarioTipo);
 			}
 

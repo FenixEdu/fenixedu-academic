@@ -257,7 +257,7 @@ public class PessoaRelacional implements IPessoaPersistente {
 			PreparedStatement sql =
 				UtilRelacional.prepararComando(
 					"SELECT ass_CARGO.cargo FROM ass_CARGO "
-						+ "LEFT JOIN ass_PESSOA_CARGO ON ass_CARGO.cargo=ass_PESSOA_CARGO.chaveCargo "
+						+ "LEFT JOIN ass_PESSOA_CARGO ON ass_CARGO.chaveCargo=ass_PESSOA_CARGO.chaveCargo "
 						+ "WHERE ass_PESSOA_CARGO.chavePessoa = ?");
 			sql.setInt(1, chavePessoa);
 

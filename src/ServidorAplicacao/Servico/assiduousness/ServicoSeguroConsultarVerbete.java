@@ -171,7 +171,6 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 				// consulta das marcacoes do funcionario neste dia, tendo atencao ao expediente deste horario	
 				calcularIntervaloConsulta();
 
-				System.out.println("quero as marcacoes de ponto que estao entre " + _dataInicio + " e " + _dataFim);
 				try {
 					consultarMarcacoesPonto();
 				} catch (NotExecuteException nee) {
@@ -315,9 +314,7 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 
 					// saldo global dos dias de consulta não conta com o dia de hoje pois ainda não terminou
 					if (_dataConsulta.before(agoraTimestamp)) {
-						System.out.println("saldo a somar ao saldo global: " + ((Long) _listaSaldos.get(0)).longValue());
-						_saldoHNFinal = _saldoHNFinal + ((Long) _listaSaldos.get(0)).longValue();
-						System.out.println("saldo depois de somar: " + _saldoHNFinal);
+						_saldoHNFinal = _saldoHNFinal + ((Long) _listaSaldos.get(0)).longValue();						
 						_saldoPFFinal = _saldoPFFinal + ((Long) _listaSaldos.get(1)).longValue();
 						// calculo das horas extraordinarias diurnas e nocturnas
 						if (((Long) _listaSaldos.get(0)).longValue() != 0) {
@@ -819,7 +816,6 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 		_listaSaldos.add(new Long(0));
 		// trabalho extraordinário nocturno depois 2º escalao
 
-		//		System.out.println("saldo das marcacoes de ponto: " + saldo);
 		return marcacoes;
 	} /* formataMarcacoes */
 
@@ -876,7 +872,6 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 		} else {
 			_saldoNegativo = _saldoNegativo + saldo;
 		}
-		//System.out.println("\n Escalao ----- 1: " + _saldoPrimEscalao + " 2: " + _saldoSegEscalao + " +2: " + _saldoDepoisSegEscalao);
 	} /* calcularHorasEscalao */
 
 	private void descontaSaldoNegativo() {
@@ -901,7 +896,6 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 				_saldoDepoisSegEscalao = _saldoDepoisSegEscalao + _saldoNegativo;
 			}
 		}
-		//		System.out.println("\n Escalao ----- 1: " + _saldoPrimEscalao + " 2: " + _saldoSegEscalao + " +2: " + _saldoDepoisSegEscalao);
 	} /* descontaSaldoNegativo */
 
 	private void calcularTrabalhoNocturno(MarcacaoPonto entrada, MarcacaoPonto saida) {

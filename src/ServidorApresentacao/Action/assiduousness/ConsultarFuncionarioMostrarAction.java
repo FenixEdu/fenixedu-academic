@@ -44,7 +44,7 @@ public final class ConsultarFuncionarioMostrarAction extends Action {
 
 		ServicoAutorizacaoLer servicoAutorizacaoLer = new ServicoAutorizacaoLer();
 		ServicoSeguroLerFuncionario servicoSeguroLerFuncionario =
-			new ServicoSeguroLerFuncionario(servicoAutorizacaoLer, pessoa.getCodigoInterno().intValue());
+			new ServicoSeguroLerFuncionario(servicoAutorizacaoLer, pessoa.getIdInternal().intValue());
 
 		try {
 			Executor.getInstance().doIt(servicoSeguroLerFuncionario);

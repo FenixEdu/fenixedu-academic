@@ -1849,7 +1849,6 @@ public class IsencaoHorario implements IStrategyHorarios {
 		ArrayList listaMarcacoesPonto,
 		ArrayList listaSaldos) {
 		long saldo = ((Long) listaSaldos.get(0)).longValue();
-		System.out.println("saldo antes dos calculos da refeicao: " + saldo);
 
 		if (listaMarcacoesPonto.size() == 2
 			|| listaMarcacoesPonto.size() == 3) {
