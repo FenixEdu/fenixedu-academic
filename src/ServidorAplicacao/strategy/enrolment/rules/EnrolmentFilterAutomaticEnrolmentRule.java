@@ -14,6 +14,11 @@ import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
  * @author dcs-rjao
  *
  * 3/Abr/2003
+ * 
+ * This rule should be used when the intention is to remove from the
+ * list of curricular courses to be chosen for enrollment,
+ * the ANUAL curricular courses and put them in the list of curricular
+ * courses in witch the student will be automatically enrolled.
  */
 
 public class EnrolmentFilterAutomaticEnrolmentRule implements IEnrolmentRule {
@@ -48,7 +53,8 @@ public class EnrolmentFilterAutomaticEnrolmentRule implements IEnrolmentRule {
 
 			anualCurricularCourseScopes.removeAll(aux);
 
-			int year = 10; // este valor importa que seja maior que o numero maximo de anos curriculares dos cursos.
+//			int year = 10; // este valor importa que seja maior que o numero maximo de anos curriculares dos cursos.
+			int year = enrolmentContext.getStudentActiveCurricularPlan().getDegreeCurricularPlan().getDegreeDuration().intValue() + 1;
 			int index = 0;
 			Iterator iterator = aux.iterator();
 			while (iterator.hasNext()) {

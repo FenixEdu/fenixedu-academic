@@ -15,6 +15,10 @@ import Util.CurricularCourseExecutionScope;
  * @author dcs-rjao
  *
  * 3/Abr/2003
+ * 
+ * This rule should be used when the intention is to obtain ALL the degrees,
+ * so that one of them can be chosen, with the purpose of obtaining ALL it's curricular courses
+ * that can be enrolled as an optional course.
  */
 
 public class EnrolmentFilterAnualCurricularCourseRule implements IEnrolmentRule {
@@ -44,7 +48,8 @@ public class EnrolmentFilterAnualCurricularCourseRule implements IEnrolmentRule 
 
 				anualCurricularCourseScopes.removeAll(aux);
 
-				int year = 10; // este valor importa que seja maior que o numero maximo de anos curriculares dos cursos.
+//				int year = 10; // este valor importa que seja maior que o numero maximo de anos curriculares dos cursos.
+				int year = enrolmentContext.getStudentActiveCurricularPlan().getDegreeCurricularPlan().getDegreeDuration().intValue() + 1;
 				int index = 0;
 				Iterator iterator = aux.iterator();
 				while (iterator.hasNext()) {

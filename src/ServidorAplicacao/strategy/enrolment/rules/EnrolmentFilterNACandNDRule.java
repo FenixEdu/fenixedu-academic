@@ -11,6 +11,10 @@ import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
  * @author dcs-rjao
  *
  * 3/Abr/2003
+ * 
+ * This rule should be used when the intention is to remove curricular courses
+ * that cannot be enrolled due to overlaping the maximum number of acumulated enrolments
+ * or/and the maximum number of curricular courses that a student can be enrolled in one semester.
  */
 
 // NOTE DAVID-RICARDO: Esta regra para ser geral para todos os cursos TEM que ser a ultima a ser chamada

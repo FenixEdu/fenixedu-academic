@@ -24,6 +24,10 @@
 			<form-property name="optionalCourseIndex" type="java.lang.Integer"/>
 			<form-property name="optionalCurricularCourse" type="java.lang.Integer"/>
 		</form-bean>
+
+		<form-bean name="curricularCourseEnrolmentWithoutRulesForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String"/>
+		</form-bean>
 	</form-beans>
 
 	<!-- ========== Global Exception Definitions ============================ -->
@@ -88,13 +92,34 @@
 				scope="session"
 				validate="true">
 			<forward name="startCurricularCourseEnrolmentWithRules" path="/curricularCourseEnrolmentWithRulesManager.do?method=start"/>
-			<!--<forward name="startCurricularCourseEnrolmentWithoutRules" path="/curricularCourseEnrolmentWithoutRulesManager.do?method=start"/>-->
+			<forward name="startCurricularCourseEnrolmentWithoutRules" path="/curricularCourseEnrolmentWithoutRulesManager.do?method=start"/>
 		</action>
 
 		<action	name="curricularCourseEnrolmentWithRulesForm"
 				type="ServidorApresentacao.Action.degreeAdministrativeOffice.CurricularCourseEnrolmentWithRulesManagerDispatchAction"
 				path="/curricularCourseEnrolmentWithRulesManager"
 				input="/curricularCourseEnrolmentWithRulesManager.do?method=start"
+				parameter="method"
+				scope="session"
+				validate="false">
+			<exception	type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
+						key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+						handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
+			<exception	type="ServidorApresentacao.Action.exceptions.OutOfCurricularEnrolmentPeriodActionException"
+						key="ServidorApresentacao.Action.exceptions.OutOfCurricularEnrolmentPeriodActionException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+
+			<forward name="showAvailableCurricularCourses" path="df.page.showAvailableCurricularCourses"/>
+			<forward name="verifyEnrolment" path="df.page.verifyEnrolment"/>
+			<forward name="acceptEnrolment" path="df.page.acceptEnrolment"/>
+			<forward name="concreteOptionalList" path="df.page.concreteOptionalList"/>
+			<forward name="searchOptionalCurricularCourses" path="df.page.searchOptionalCurricularCourses"/>
+		</action>
+
+		<action	name="curricularCourseEnrolmentWithoutRulesForm"
+				type="ServidorApresentacao.Action.degreeAdministrativeOffice.CurricularCourseEnrolmentWithoutRulesManagerDispatchAction"
+				path="/curricularCourseEnrolmentWithoutRulesManager"
+				input="/curricularCourseEnrolmentWithoutRulesManager.do?method=start"
 				parameter="method"
 				scope="session"
 				validate="false">

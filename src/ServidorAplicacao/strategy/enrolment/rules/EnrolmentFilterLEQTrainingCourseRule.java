@@ -10,6 +10,9 @@ import Util.CurricularCourseType;
  * @author dcs-rjao
  *
  * 3/Abr/2003
+ * 
+ * This rule should be used when the intention is to remove the training curricular course
+ * in the LEQ degree from the list of curricular courses to choose from.
  */
 
 public class EnrolmentFilterLEQTrainingCourseRule implements IEnrolmentRule {

@@ -11,6 +11,10 @@ import ServidorAplicacao.strategy.enrolment.context.EnrolmentValidationResult;
  * @author dcs-rjao
  *
  * 3/Abr/2003
+ * 
+ * This rule should be used when the intention is to validate if the curricular courses
+ * the student has chosen to be enrolled in, overlap the maximum number of acumulated enrolments
+ * or/and the maximum number of curricular courses that a student can be enrolled in one semester
  */
 
 public class EnrolmentValidateNACandNDRule implements IEnrolmentRule {

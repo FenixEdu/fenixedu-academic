@@ -14,6 +14,10 @@ import Util.CurricularCourseType;
  * @author dcs-rjao
  *
  * 3/Abr/2003
+ * 
+ * This rule should be used when the intention is to validate if the student
+ * has chosen only one laboratory to be enrolled in, if this is a student
+ * from the LEQ degree.
  */
 
 public class EnrolmentValidateLEQLaboratoryRule implements IEnrolmentRule {

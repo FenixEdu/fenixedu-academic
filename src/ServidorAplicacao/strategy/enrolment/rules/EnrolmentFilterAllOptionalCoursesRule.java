@@ -22,9 +22,13 @@ import Util.DegreeCurricularPlanState;
 
 /**
  * @author dcs-rjao
- *
+ * 
  * 3/Abr/2003
+ * 
+ * This rule should be used when the intention is to obtain ALL the curricular courses of one degree,
+ * so that one of them can be chosen as an optional course to enroll.
  */
+
 public class EnrolmentFilterAllOptionalCoursesRule implements IEnrolmentRule {
 	
 	public EnrolmentContext apply(EnrolmentContext enrolmentContext) {

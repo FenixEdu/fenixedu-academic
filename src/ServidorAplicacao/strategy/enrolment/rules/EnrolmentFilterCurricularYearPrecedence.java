@@ -22,7 +22,12 @@ import Util.EnrolmentState;
  * @author dcs-rjao
  *
  * 3/Abr/2003
+ * 
+ * This rule should be used when the intention is to check,
+ * if there is a curricular course from a previous year that the student cannot be enrolled in,
+ * and remove all the curricular courses from that year beyond.
  */
+
 public class EnrolmentFilterCurricularYearPrecedence implements IEnrolmentRule {
 
 	public EnrolmentContext apply(EnrolmentContext enrolmentContext) {

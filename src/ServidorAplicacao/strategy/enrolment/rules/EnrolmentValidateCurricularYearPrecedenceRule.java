@@ -22,6 +22,11 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author dcs-rjao
  *
  * 3/Abr/2003
+ * 
+ * This rule should be used when the intention is to validate if the student
+ * has chosen to be enrolled in all the curricular courses of the curricular years
+ * below, before he can choose to be enrolled in curricular courses of later
+ * curricular years.
  */
 
 public class EnrolmentValidateCurricularYearPrecedenceRule implements IEnrolmentRule {
