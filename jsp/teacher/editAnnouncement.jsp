@@ -5,7 +5,7 @@
 
 <span class="error"><html:errors/></span>
 
-<html:form action="/announcementManagementAction2">
+<html:form action="/announcementManagementAction">
 		
 	<html:text name="insertAnnouncementForm" property="title" >
 	</html:text>

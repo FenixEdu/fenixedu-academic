@@ -41,8 +41,12 @@
             	</tr>
                 <tr>
                     <td>
-                        <html:submit indexed="true" property="option" value="Editar"/>&nbsp;&nbsp;
-                        <html:submit indexed="true" property="option" value="Apagar"/><br><br><hr>
+                        <html:submit indexed="true" property="method">
+                        	<bean:message key="button.edit"/>                    		     
+                        </html:submit>
+                        <html:submit indexed="true" property="method">
+                        	<bean:message key="button.delete"/>                    		     
+                        </html:submit>
                     </td>
                 </tr>
             </logic:iterate>
