@@ -13,25 +13,28 @@ import java.util.Date;
  * @author  Ivo Brandão
  */
 public class Funcionario {
+	private Date antiguidade = null;
+	private String calendario = null;
+	private int chaveCCCorrespondencia = 0;
+	private int chaveCCLocalTrabalho = 0;
+	private int chaveCCVencimento = 0;
+	private int chaveFuncResponsavel = 0;
+	private int chaveHorarioActual = 0;
+	private int chavePessoa = 0;
+	private int chaveStatus = 0;
 
 	private int codigoInterno = 0;
-	private int chavePessoa = 0;
-	private int numeroMecanografico = 0;
-	private int chaveHorarioActual = 0;
-	private Date antiguidade = null;
-	private int chaveFuncResponsavel = 0;
-	private int chaveCCLocalTrabalho = 0;
-	private int chaveCCCorrespondencia = 0;
-	private int chaveCCVencimento = 0;
-	private String calendario = null;
-	private int chaveStatus = 0;
-	private Date dataInicio = null;
 	private Date dataFim = null;
-	private int quem = 0;
-	private Timestamp quando = null;
+	private Date dataInicio = null;
+	private int numeroMecanografico = 0;
 	
 	private IPessoa person = null;
-	
+	private Timestamp quando = null;
+	private int quem = 0;
+//	private ICostCenter salaryCostCenter = null;
+	private ICostCenter workingPlaceCostCenter = null;
+	private ICostCenter mailingCostCenter = null;	
+
 	/** Construtor por omissao */
 	public Funcionario() {
 		this.codigoInterno = 0;
@@ -77,32 +80,6 @@ public class Funcionario {
 		int chavePessoa,
 		int numeroMecanografico,
 		int chaveHorarioActual,
-		int chaveCCLocalTrabalho,
-		int chaveCCCorrespondencia,
-		int chaveCCVencimento) {
-
-		this.codigoInterno = codigoInterno;
-		this.chavePessoa = chavePessoa;
-		this.numeroMecanografico = numeroMecanografico;
-		this.chaveHorarioActual = chaveHorarioActual;
-		this.antiguidade = new Date(0);
-		this.chaveFuncResponsavel = 0;
-		this.chaveCCLocalTrabalho = chaveCCLocalTrabalho;
-		this.chaveCCCorrespondencia = chaveCCCorrespondencia;
-		this.chaveCCVencimento = chaveCCVencimento;
-		this.calendario = new String("LISBOA");
-		this.chaveStatus = 0;
-		this.dataInicio = new Date(0);
-		this.dataFim = new Date(0);
-		this.quem = 0;
-		this.quando = new Timestamp(0);
-	}
-
-	public Funcionario(
-		int codigoInterno,
-		int chavePessoa,
-		int numeroMecanografico,
-		int chaveHorarioActual,
 		Date antiguidade,
 		int chaveFuncResponsavel,
 		int chaveCCLocalTrabalho,
@@ -132,6 +109,32 @@ public class Funcionario {
 		this.quando = quando;
 	}
 
+	public Funcionario(
+		int codigoInterno,
+		int chavePessoa,
+		int numeroMecanografico,
+		int chaveHorarioActual,
+		int chaveCCLocalTrabalho,
+		int chaveCCCorrespondencia,
+		int chaveCCVencimento) {
+
+		this.codigoInterno = codigoInterno;
+		this.chavePessoa = chavePessoa;
+		this.numeroMecanografico = numeroMecanografico;
+		this.chaveHorarioActual = chaveHorarioActual;
+		this.antiguidade = new Date(0);
+		this.chaveFuncResponsavel = 0;
+		this.chaveCCLocalTrabalho = chaveCCLocalTrabalho;
+		this.chaveCCCorrespondencia = chaveCCCorrespondencia;
+		this.chaveCCVencimento = chaveCCVencimento;
+		this.calendario = new String("LISBOA");
+		this.chaveStatus = 0;
+		this.dataInicio = new Date(0);
+		this.dataFim = new Date(0);
+		this.quem = 0;
+		this.quando = new Timestamp(0);
+	}
+
 	/** Verifica se outro objecto e identico a este */
 	public boolean equals(Object obj) {
 
@@ -152,70 +155,6 @@ public class Funcionario {
 				&& (dataFim == ((Funcionario) obj).getDataFim())
 				&& (quem == ((Funcionario) obj).getQuem())
 				&& (quando == ((Funcionario) obj).getQuando()));
-	}
-
-	/** Getter for property codigoInterno.
-	 * @return Value of property codigoInterno.
-	 *
-	 */
-	public int getCodigoInterno() {
-		return codigoInterno;
-	}
-
-	/** Setter for property codigoInterno.
-	 * @param codigoInterno New value of property codigoInterno.
-	 *
-	 */
-	public void setCodigoInterno(int codigoInterno) {
-		this.codigoInterno = codigoInterno;
-	}
-
-	/** Getter for property chavePessoa.
-	 * @return Value of property chavePessoa.
-	 *
-	 */
-	public int getChavePessoa() {
-		return chavePessoa;
-	}
-
-	/** Setter for property chavePessoa.
-	 * @param chavePessoa New value of property chavePessoa.
-	 *
-	 */
-	public void setChavePessoa(int chavePessoa) {
-		this.chavePessoa = chavePessoa;
-	}
-
-	/** Getter for property numeroMecanografico.
-	 * @return Value of property numeroMecanografico.
-	 *
-	 */
-	public int getNumeroMecanografico() {
-		return numeroMecanografico;
-	}
-
-	/** Setter for property numeroMecanografico.
-	 * @param numeroMecanografico New value of property numeroMecanografico.
-	 *
-	 */
-	public void setNumeroMecanografico(int numeroMecanografico) {
-		this.numeroMecanografico = numeroMecanografico;
-	}
-
-	/** Getter for property chaveHorarioActual.
-	 * @return Value of property chaveHorarioActual.
-	
-	 */
-	public int getChaveHorarioActual() {
-		return chaveHorarioActual;
-	}
-
-	/** Setter for property chaveHorarioActual.
-	 * @param chaveHorarioActual New value of property chaveHorarioActual.
-	 *
-	 */
-	public void setChaveHorarioActual(int chaveHorarioActual) {
-		this.chaveHorarioActual = chaveHorarioActual;
 	}
 
 	/**
@@ -260,6 +199,22 @@ public class Funcionario {
 		return chaveFuncResponsavel;
 	}
 
+	/** Getter for property chaveHorarioActual.
+	 * @return Value of property chaveHorarioActual.
+	
+	 */
+	public int getChaveHorarioActual() {
+		return chaveHorarioActual;
+	}
+
+	/** Getter for property chavePessoa.
+	 * @return Value of property chavePessoa.
+	 *
+	 */
+	public int getChavePessoa() {
+		return chavePessoa;
+	}
+
 	/** Getter for property chaveStatus.
 	 * @return Value of property chaveStatus.
 	 *
@@ -268,12 +223,12 @@ public class Funcionario {
 		return chaveStatus;
 	}
 
-	/** Setter for property chaveStatus.
-	 * @param chaveStatus New value of property chaveStatus.
+	/** Getter for property codigoInterno.
+	 * @return Value of property codigoInterno.
 	 *
 	 */
-	public void setChaveStatus(int chaveStatus) {
-		this.chaveStatus = chaveStatus;
+	public int getCodigoInterno() {
+		return codigoInterno;
 	}
 
 	/**
@@ -288,6 +243,56 @@ public class Funcionario {
 	 */
 	public Date getDataInicio() {
 		return dataInicio;
+	}
+	
+	/**
+	 * @return
+	 */
+	public ICostCenter getMailingCostCenter() {
+		return this.mailingCostCenter;
+	}
+
+	/** Getter for property numeroMecanografico.
+	 * @return Value of property numeroMecanografico.
+	 *
+	 */
+	public int getNumeroMecanografico() {
+		return numeroMecanografico;
+	}
+
+	/**
+	 * @return
+	 */
+	public IPessoa getPerson() {
+		return person;
+	}
+
+	/**
+	 * @return Timestamp
+	 */
+	public Timestamp getQuando() {
+		return quando;
+	}
+
+	/**
+	 * @return int
+	 */
+	public int getQuem() {
+		return quem;
+	}
+
+//	/**
+//	 * @return
+//	 */
+//	public ICostCenter getSalaryCostCenter() {
+//		return this.salaryCostCenter;
+//	}
+
+	/**
+	 * @return
+	 */
+	public ICostCenter getWorkingPlaceCostCenter() {
+		return this.workingPlaceCostCenter;
 	}
 
 	/**
@@ -338,6 +343,38 @@ public class Funcionario {
 		this.chaveFuncResponsavel = chaveFuncResponsavel;
 	}
 
+	/** Setter for property chaveHorarioActual.
+	 * @param chaveHorarioActual New value of property chaveHorarioActual.
+	 *
+	 */
+	public void setChaveHorarioActual(int chaveHorarioActual) {
+		this.chaveHorarioActual = chaveHorarioActual;
+	}
+
+	/** Setter for property chavePessoa.
+	 * @param chavePessoa New value of property chavePessoa.
+	 *
+	 */
+	public void setChavePessoa(int chavePessoa) {
+		this.chavePessoa = chavePessoa;
+	}
+
+	/** Setter for property chaveStatus.
+	 * @param chaveStatus New value of property chaveStatus.
+	 *
+	 */
+	public void setChaveStatus(int chaveStatus) {
+		this.chaveStatus = chaveStatus;
+	}
+
+	/** Setter for property codigoInterno.
+	 * @param codigoInterno New value of property codigoInterno.
+	 *
+	 */
+	public void setCodigoInterno(int codigoInterno) {
+		this.codigoInterno = codigoInterno;
+	}
+
 	/**
 	 * Sets the dataFim.
 	 * @param dataFim The dataFim to set
@@ -355,17 +392,25 @@ public class Funcionario {
 	}
 
 	/**
-	 * @return Timestamp
+	 * @param mailingCostCenter
 	 */
-	public Timestamp getQuando() {
-		return quando;
+	public void setMailingCostCenter(ICostCenter mailingCostCenter) {
+		this.mailingCostCenter = mailingCostCenter;
+	}
+
+	/** Setter for property numeroMecanografico.
+	 * @param numeroMecanografico New value of property numeroMecanografico.
+	 *
+	 */
+	public void setNumeroMecanografico(int numeroMecanografico) {
+		this.numeroMecanografico = numeroMecanografico;
 	}
 
 	/**
-	 * @return int
+	 * @param pessoa
 	 */
-	public int getQuem() {
-		return quem;
+	public void setPerson(IPessoa person) {
+		this.person = person;
 	}
 
 	/**
@@ -384,18 +429,18 @@ public class Funcionario {
 		this.quem = quem;
 	}
 
-	/**
-	 * @return
-	 */
-	public IPessoa getPerson() {
-		return person;
-	}
+//	/**
+//	 * @param salaryCostCenter
+//	 */
+//	public void setSalaryCostCenter(ICostCenter salaryCostCenter) {
+//		this.salaryCostCenter = salaryCostCenter;
+//	}
 
 	/**
-	 * @param pessoa
+	 * @param workingPlaceCostCenter
 	 */
-	public void setPerson(IPessoa person) {
-		this.person = person;
+	public void setWorkingPlaceCostCenter(ICostCenter workingPlaceCostCenter) {
+		this.workingPlaceCostCenter = workingPlaceCostCenter;
 	}
 
 }

@@ -29,8 +29,8 @@ public class Department extends DomainObject implements IDepartment {
     
     public boolean equals(Object obj) {
         boolean resultado = false;
-        if (obj instanceof Department ) {
-            Department d = (Department)obj;
+        if (obj instanceof IDepartment ) {
+            IDepartment d = (IDepartment)obj;
             resultado = getCode().equals(d.getCode());
         }
         return resultado;
