@@ -16,6 +16,7 @@ import DataBeans.RoomKey;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.FenixAction;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.TipoSala;
 
 /**
@@ -37,7 +38,7 @@ public class EditarSalaAction extends FenixAction {
 			(ArrayList) session.getAttribute("publico.infoRooms");
 		DynaActionForm posicaoSalaFormBean =
 			(DynaActionForm) session.getAttribute("posicaoFormBean");
-		IUserView userView = (IUserView) session.getAttribute("UserView");
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		DynaActionForm salaBean = (DynaActionForm) form;
 
