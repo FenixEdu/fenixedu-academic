@@ -11,8 +11,8 @@ import Util.State;
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class GuideSituation implements IGuideSituation {
-	protected Integer internalCode;
+public class GuideSituation extends DomainObject implements IGuideSituation {
+	
 	protected Integer keyGuide;
 
 	protected String remarks;
@@ -57,7 +57,7 @@ public class GuideSituation implements IGuideSituation {
 
 	public String toString() {
 		String result = "[GUIDE SITUATION";
-		result += ", codInt=" + internalCode;
+		
 		result += ", remarks=" + remarks;
 		result += ", guide=" + guide;
 		result += ", guide Situtation=" + situation;
@@ -81,13 +81,7 @@ public class GuideSituation implements IGuideSituation {
 		return guide;
 	}
 
-	/**
-	 * @return
-	 */
-	public Integer getInternalCode() {
-		return internalCode;
-	}
-
+	
 	/**
 	 * @return
 	 */
@@ -130,12 +124,7 @@ public class GuideSituation implements IGuideSituation {
 		this.guide = guide;
 	}
 
-	/**
-	 * @param integer
-	 */
-	public void setInternalCode(Integer integer) {
-		internalCode = integer;
-	}
+	
 
 	/**
 	 * @param integer

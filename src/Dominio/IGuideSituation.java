@@ -11,7 +11,7 @@ import Util.State;
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public interface IGuideSituation {
+public interface IGuideSituation extends IDomainObject{
   
   public SituationOfGuide getSituation();
   public Date getDate();
