@@ -130,6 +130,10 @@
 	    	<include name="**/**/IstFtpServerConfig.properties"/>
 	    	<include name="**/**/DegreeGradesFtpServerConfig.properties"/>
 			<include name="log4j.xml"/>
+			<include name="**/oscache.properties"/>
+			<include name="**/OJB.properties"/>
+			<include name="**/SMSConfiguration.properties"/>
+
 			<replacefilter token="&lt;!-- @validation.doctype@ -->"
 						   property="validation.doctype"/>
 
@@ -223,6 +227,39 @@
 
 			<replacefilter token="@log.profile.filename@"
 			   			   value="${log.profile.filename}"/>
+
+			<replacefilter token="@ObjectCacheClass@"
+		    			   property="ObjectCacheClass"/>
+			<replacefilter token="@cache.event.listeners@"
+		    			   property="cache.event.listeners"/>
+			<replacefilter token="@cache.cluster.multicast.ip@"
+		    			   property="cache.cluster.multicast.ip"/>
+
+			<replacefilter token="@sms.gateway.host@"
+		    			   property="sms.gateway.host"/>
+			<replacefilter token="@sms.gateway.port@"
+		    			   property="sms.gateway.port"/>
+			<replacefilter token="@sms.gateway.uri@"
+		    			   property="sms.gateway.uri"/>
+			<replacefilter token="@sms.gateway.protocol@"
+		    			   property="sms.gateway.protocol"/>
+			<replacefilter token="@sms.gateway.username@"
+		    			   property="sms.gateway.username"/>
+			<replacefilter token="@sms.gateway.password@"
+		    			   property="sms.gateway.password"/>
+			<replacefilter token="@sms.delivery.host@"
+		    			   property="sms.delivery.host"/>
+			<replacefilter token="@sms.delivery.port@"
+		    			   property="sms.delivery.port"/>
+			<replacefilter token="@sms.delivery.uri@"
+		    			   property="sms.delivery.uri"/>
+			<replacefilter token="@sms.delivery.protocol@"
+		    			   property="sms.delivery.protocol"/>
+			<replacefilter token="@sms.delivery.username@"
+		    			   property="sms.delivery.username"/>
+			<replacefilter token="@sms.delivery.password@"
+		    			   property="sms.delivery.password"/>
+
 		</replace>
 	</target>
 

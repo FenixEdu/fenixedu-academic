@@ -120,6 +120,61 @@ ftp.degree.grades.server.address=address
 #
 #
 #------------------------------------------------------------------------------
+# Cache Configuration
+#------------------------------------------------------------------------------
+#
+#   ObjectCacheClass: cache implementation to use. Possible values are:
+#                        - org.apache.ojb.broker.cache.ObjectCacheDefaultImpl
+#                        - org.apache.ojb.broker.cache.ObjectCacheEmptyImpl
+#                        - org.apache.ojb.broker.cache.ObjectCachePerBrokerImpl
+#                        - org.apache.ojb.broker.cache.ObjectCacheJCSPerClassImpl
+#                        - org.apache.ojb.broker.cache.ObjectCachePerClassImpl
+#                        - ServidorPersistente.cache.FenixObjectCacheDefaultImpl
+#                        - ServidorPersistente.cache.ObjectCacheOSCacheImpl
+#   cache.event.listeners: set this to:
+#       com.opensymphony.oscache.plugins.clustersupport.JavaGroupsBroadcastingListener
+#                          to use javagroups clustering. This must be set for use on 
+#                          distributed systems. Also, ObjectCacheOSCacheImpl must be
+#                          used for the distributed cache to work.
+#   cache.cluster.multicast.ip: multicast ip address to use with javagroups clustering.
+#
+ObjectCacheClass=ServidorPersistente.cache.ObjectCacheOSCacheImpl
+cache.event.listeners=
+cache.cluster.multicast.ip=231.12.21.132
+#
+#
+#------------------------------------------------------------------------------
+# SMS Configuration
+#------------------------------------------------------------------------------
+#
+#   sms.gateway.host:
+#   sms.gateway.port:
+#   sms.gateway.uri:
+#   sms.gateway.protocol:
+#   sms.gateway.username:
+#   sms.gateway.password:
+#   sms.delivery.host:
+#   sms.delivery.port:
+#   sms.delivery.uri:
+#   sms.delivery.protocol:
+#   sms.delivery.username:
+#   sms.delivery.password:
+#
+sms.gateway.host=localhost
+sms.gateway.port=13013
+sms.gateway.uri=/cgi-bin/sendsms
+sms.gateway.protocol=http
+sms.gateway.username=
+sms.gateway.password=
+sms.delivery.host=localhost
+sms.delivery.port=8080
+sms.delivery.uri=/ciapl/publico/updateSmsDeliveryReport.do
+sms.delivery.protocol=http
+sms.delivery.username=
+sms.delivery.password=
+#
+#
+#------------------------------------------------------------------------------
 # Validation/Verification Configuratio
 #------------------------------------------------------------------------------
 #
