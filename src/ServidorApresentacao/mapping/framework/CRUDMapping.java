@@ -19,7 +19,7 @@ public class CRUDMapping extends ActionMapping
     private String editService;
     private String readService;
     private String deleteService;
-    
+    private String infoObjectClassName;
     /**
      * @return Returns the oidProperty.
      */
@@ -98,6 +98,22 @@ public class CRUDMapping extends ActionMapping
     public void setReadService(String readService)
     {
         this.readService = readService;
+    }
+
+    /**
+     * @return Returns the infoObjectClassName.
+     */
+    public String getInfoObjectClassName()
+    {
+        return this.infoObjectClassName;
+    }
+
+    /**
+     * @param infoObjectClassName The infoObjectClassName to set.
+     */
+    public void setInfoObjectClassName(String infoObjectClassName)
+    {
+        this.infoObjectClassName = infoObjectClassName;
     }
 
 }
