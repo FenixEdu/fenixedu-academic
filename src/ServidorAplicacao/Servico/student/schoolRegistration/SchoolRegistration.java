@@ -78,7 +78,6 @@ public class SchoolRegistration implements IService {
             Integer executionPeriodId = persistentEP.readActualExecutionPeriod().getIdInternal();
             we.run(null,scp.getIdInternal(),cc.getIdInternal(),executionPeriodId,CurricularCourseEnrollmentType.DEFINITIVE);
         }
-        sp.confirmarTransaccao();
     }
 
     private void writeInquiryAnswers(ISuportePersistente sp, Integer studentNumber, HashMap answers) throws ExcepcaoPersistencia,
@@ -104,7 +103,6 @@ public class SchoolRegistration implements IService {
     private void updatePersonalInfo(ISuportePersistente sp, InfoPerson infoPerson)throws ExcepcaoPersistencia,
     		FenixServiceException {
         
-        sp.iniciarTransaccao();
         IPessoaPersistente pessoaPersistente = sp.getIPessoaPersistente();
         IPessoa pessoa = (IPessoa) pessoaPersistente.readByOID(Pessoa.class,infoPerson.getIdInternal());        
         pessoaPersistente.simpleLockWrite(pessoa);
@@ -133,7 +131,7 @@ public class SchoolRegistration implements IService {
         pessoa.setPassword(PasswordEncryptor.encryptPassword("pass"/*infoPerson.getPassword()*/));
         pessoa.setProfissao(infoPerson.getProfissao());       
         pessoa.setTelefone(infoPerson.getTelefone());
-        pessoa.setTelemovel(infoPerson.getTelemovel());
+        pessoa.setTelemovel(infoPerson.getTelemovel());        
         
     }
 }
