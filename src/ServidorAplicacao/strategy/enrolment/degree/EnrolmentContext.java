@@ -42,13 +42,6 @@ public class EnrolmentContext {
 	/**
 	 * @return
 	 */
-	public List getCurricularCourseNotDoneByStudent() {
-		return curricularCoursesNotDoneByStudent;
-	}
-
-	/**
-	 * @return
-	 */
 	public ICurso getDegree() {
 		return degree;
 	}
@@ -72,13 +65,6 @@ public class EnrolmentContext {
 	 */
 	public void setCurricularCoursesDoneByStudent(List list) {
 		curricularCoursesDoneByStudent = list;
-	}
-
-	/**
-	 * @param list
-	 */
-	public void setCurricularCourseNotDoneByStudent(List list) {
-		curricularCoursesNotDoneByStudent = list;
 	}
 
 	/**

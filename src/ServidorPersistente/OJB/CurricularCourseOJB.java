@@ -13,7 +13,6 @@ import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICurricularSemester;
 import Dominio.IDegreeCurricularPlan;
-import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -276,19 +275,19 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 		}
 	}
 
-	public ArrayList readAllCurricularCoursesBySemester(ICurricularSemester curricularSemester, IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia {
+	public ArrayList readAllCurricularCoursesBySemester(ICurricularSemester curricularSemester/*, IStudentCurricularPlan studentCurricularPlan*/) throws ExcepcaoPersistencia {
 		try {
 			ArrayList list = new ArrayList();
 			String oqlQuery = "select all from " + CurricularCourseScope.class.getName();
 			oqlQuery += " where curricularSemester.semester = $1";
-			oqlQuery += " and curricularCourse.degreeCurricularPlan.name = $2";
-			oqlQuery += " and curricularCourse.degreeCurricularPlan.degree.name = $3";
+//			oqlQuery += " and curricularCourse.degreeCurricularPlan.name = $2";
+//			oqlQuery += " and curricularCourse.degreeCurricularPlan.degree.name = $3";
 
 			query.create(oqlQuery);
 
 			query.bind(curricularSemester.getSemester());
-			query.bind(studentCurricularPlan.getDegreeCurricularPlan().getName());
-			query.bind(studentCurricularPlan.getDegreeCurricularPlan().getDegree().getNome());
+//			query.bind(studentCurricularPlan.getDegreeCurricularPlan().getName());
+//			query.bind(studentCurricularPlan.getDegreeCurricularPlan().getDegree().getNome());
 
 			List result = (List) query.execute();
 			try {
