@@ -17,8 +17,7 @@ import Dominio.IWrittenEvaluation;
  * @author Tânia Pousão
  *  
  */
-public class InfoWrittenEvaluationWithRoomOcupations extends
-        InfoWrittenEvaluation {
+public class InfoWrittenEvaluationWithRoomOcupations extends InfoWrittenEvaluation {
 
     public void copyFromDomain(IWrittenEvaluation writtenEvaluation) {
         super.copyFromDomain(writtenEvaluation);
@@ -32,23 +31,21 @@ public class InfoWrittenEvaluationWithRoomOcupations extends
      * @param associatedRoomOccupation
      * @return
      */
-    private List copyIRoomOccupation2InfoRoomOccupation(
-            List associatedRoomOccupation) {
+    private List copyIRoomOccupation2InfoRoomOccupation(List associatedRoomOccupation) {
         List infoRoomOccupation = null;
 
-        infoRoomOccupation = (List)CollectionUtils.collect(
-                associatedRoomOccupation, new Transformer() {
+        infoRoomOccupation = (List) CollectionUtils.collect(associatedRoomOccupation, new Transformer() {
 
-                    public Object transform(Object arg0) {
-                        IRoomOccupation roomOccupation = (IRoomOccupation) arg0;
-                        return InfoRoomOccupationWithInfoRoom.newInfoFromDomain(roomOccupation);
-                    }
-                });
+            public Object transform(Object arg0) {
+                IRoomOccupation roomOccupation = (IRoomOccupation) arg0;
+                return InfoRoomOccupationWithInfoRoom.newInfoFromDomain(roomOccupation);
+            }
+        });
 
         return infoRoomOccupation;
     }
 
-    public static InfoWrittenEvaluationWithRoomOcupations newInfoFromDomain(
+    public static InfoWrittenEvaluation newInfoFromDomain(
             IWrittenEvaluation writtenEvaluation) {
         InfoWrittenEvaluationWithRoomOcupations infoWrittenEvaluation = null;
         if (writtenEvaluation != null) {

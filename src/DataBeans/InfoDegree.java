@@ -6,6 +6,8 @@
 package DataBeans;
 
 import java.util.List;
+
+import Dominio.Curso;
 import Dominio.ICurso;
 import Util.TipoCurso;
 
@@ -140,5 +142,21 @@ public class InfoDegree extends InfoObject implements Comparable {
             infoDegree.copyFromDomain(degree);
         }
         return infoDegree;
+    }
+
+    public void copyToDomain(InfoDegree infoDegree, ICurso degree) {
+        super.copyToDomain(infoDegree, degree);
+        degree.setNome(infoDegree.getNome());
+        degree.setSigla(infoDegree.getSigla());
+        degree.setTipoCurso(infoDegree.getTipoCurso());
+    }
+    
+    public static ICurso newDomainFromInfo(InfoDegree infoDegree){
+        ICurso degree = null; 
+        if(infoDegree != null) {
+            degree = new Curso();
+            infoDegree.copyToDomain(infoDegree, degree);
+        }
+        return degree;
     }
 }

@@ -17,11 +17,13 @@ import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoCurricularYear;
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExam;
+import DataBeans.InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear;
 import DataBeans.InfoExamsMap;
 import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoExecutionCourseWithExecutionPeriodAndExams;
 import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoExecutionDegreeWithInfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionPeriod;
-import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
 import Dominio.ICursoExecucao;
 import Dominio.IExam;
@@ -118,10 +120,15 @@ public class ReadFilteredExamsMap implements IServico
         infoExamsMap.setEndSeason2(endSeason2);
 
         // Translate to execute following queries
-        ICursoExecucao executionDegree =
-            Cloner.copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
-        IExecutionPeriod executionPeriod =
-            Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
+        //CLONER
+        //ICursoExecucao executionDegree =
+           //Cloner.copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
+        ICursoExecucao executionDegree = InfoExecutionDegreeWithInfoDegreeCurricularPlan.newDomainFromInfo(infoExecutionDegree);
+        
+        //CLONER
+        //IExecutionPeriod executionPeriod =
+            //Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
+        IExecutionPeriod executionPeriod = InfoExecutionPeriod.newDomainFromInfo(infoExecutionPeriod);
 
         try
         {
@@ -148,9 +155,11 @@ public class ReadFilteredExamsMap implements IServico
                 // exams
                 for (int j = 0; j < executionCourses.size(); j++)
                 {
-                    InfoExecutionCourse infoExecutionCourse =
-                        (InfoExecutionCourse) Cloner.get((IExecutionCourse) executionCourses.get(j));
-
+                    //CLONER
+                    //InfoExecutionCourse infoExecutionCourse =
+                        //(InfoExecutionCourse) Cloner.get((IExecutionCourse) executionCourses.get(j));
+                    InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriodAndExams.newInfoFromDomain((IExecutionCourse) executionCourses.get(j));
+                    
                     infoExecutionCourse.setCurricularYear((Integer) curricularYears.get(i));
 
                     List associatedInfoCurricularCourses = new ArrayList();
@@ -159,9 +168,11 @@ public class ReadFilteredExamsMap implements IServico
                     // Curricular courses
                     for (int k = 0; k < associatedCurricularCourses.size(); k++)
                     {
-                        InfoCurricularCourse infoCurricularCourse =
-                            Cloner.copyCurricularCourse2InfoCurricularCourse(
-                                (ICurricularCourse) associatedCurricularCourses.get(k));
+                        //CLONER
+                        //InfoCurricularCourse infoCurricularCourse =
+                            //Cloner.copyCurricularCourse2InfoCurricularCourse(
+                                //(ICurricularCourse) associatedCurricularCourses.get(k));
+                        InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain((ICurricularCourse) associatedCurricularCourses.get(k));
                         associatedInfoCurricularCourses.add(infoCurricularCourse);
                     }
                     infoExecutionCourse.setAssociatedInfoCurricularCourses(
@@ -177,7 +188,9 @@ public class ReadFilteredExamsMap implements IServico
                         {
                             continue;
                         }
-                        InfoExam infoExam = Cloner.copyIExam2InfoExam((IExam) associatedExams.get(k));
+                        //CLONER
+                        //InfoExam infoExam = Cloner.copyIExam2InfoExam((IExam) associatedExams.get(k));
+                        InfoExam infoExam = InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear.newInfoFromDomain((IExam) associatedExams.get(k));
                         int numberOfStudentsForExam = 0;
                         List curricularCourseIDs = new ArrayList();
                         for (int l = 0; l < infoExam.getAssociatedCurricularCourseScope().size(); l++)

@@ -1,9 +1,9 @@
 package DataBeans;
 
 import Dominio.IEvaluation;
-import Dominio.IExam;
 import Dominio.IFinalEvaluation;
 import Dominio.IOnlineTest;
+import Dominio.IWrittenEvaluation;
 import Util.EvaluationType;
 
 /**
@@ -89,14 +89,17 @@ public class InfoEvaluation extends InfoObject implements ISiteComponent {
     public static InfoEvaluation newInfoFromDomain(IEvaluation evaluation) {
         InfoEvaluation infoEvaluation = null;
         if (evaluation != null) {
-            if (evaluation instanceof IExam) {
-                infoEvaluation = InfoExam.newInfoFromDomain((IExam) evaluation);
+            if (evaluation instanceof IWrittenEvaluation) {
+                infoEvaluation = InfoWrittenEvaluation.newInfoFromDomain((IWrittenEvaluation) evaluation);
             } else if (evaluation instanceof IFinalEvaluation) {
                 infoEvaluation = InfoFinalEvaluation
                         .newInfoFromDomain((IFinalEvaluation) evaluation);
             } else if (evaluation instanceof IOnlineTest) {
                 infoEvaluation = InfoOnlineTest
                         .newInfoFromDomain((IOnlineTest) evaluation);
+            } else {
+                infoEvaluation = new InfoEvaluation();
+                infoEvaluation.copyFromDomain(evaluation);
             }
         }
         return infoEvaluation;

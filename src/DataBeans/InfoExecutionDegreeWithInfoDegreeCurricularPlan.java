@@ -4,6 +4,7 @@
  */
 package DataBeans;
 
+import Dominio.CursoExecucao;
 import Dominio.ICursoExecucao;
 
 /**
@@ -32,5 +33,20 @@ public class InfoExecutionDegreeWithInfoDegreeCurricularPlan extends
             infoExecutionDegree.copyFromDomain(executionDegree);
         }
         return infoExecutionDegree;
+    }
+    
+    public void copyToDomain(InfoExecutionDegree infoExecutionDegree, ICursoExecucao executionDegree) {
+        super.copyToDomain(infoExecutionDegree, executionDegree);
+        executionDegree.setCurricularPlan(InfoDegreeCurricularPlanWithDegree.newDomainFromInfo(infoExecutionDegree.getInfoDegreeCurricularPlan()));
+    }
+    
+    public static ICursoExecucao newDomainFromInfo(InfoExecutionDegree infoExecutionDegree) {
+        ICursoExecucao executionDegree = null;
+        if(infoExecutionDegree != null) {
+            executionDegree = new CursoExecucao();
+            InfoExecutionDegreeWithInfoDegreeCurricularPlan infoExecutionDegreeWithInfoDegreeCurricularPlan = new InfoExecutionDegreeWithInfoDegreeCurricularPlan();
+            infoExecutionDegreeWithInfoDegreeCurricularPlan.copyToDomain(infoExecutionDegree, executionDegree);
+        }
+        return executionDegree;
     }
 }

@@ -3,6 +3,7 @@ package DataBeans;
 import java.io.Serializable;
 import java.util.Date;
 
+import Dominio.ExecutionPeriod;
 import Dominio.IExecutionPeriod;
 import Util.PeriodState;
 
@@ -190,6 +191,22 @@ public class InfoExecutionPeriod extends InfoObject implements Serializable{
         return buffer.toString();
     }
 
+    /**
+     * @return Returns the previousInfoExecutionPeriod.
+     */
+    public InfoExecutionPeriod getPreviousInfoExecutionPeriod() {
+        return previousInfoExecutionPeriod;
+    }
+
+    /**
+     * @param previousInfoExecutionPeriod
+     *            The previousInfoExecutionPeriod to set.
+     */
+    public void setPreviousInfoExecutionPeriod(
+            InfoExecutionPeriod previousInfoExecutionPeriod) {
+        this.previousInfoExecutionPeriod = previousInfoExecutionPeriod;
+    }
+    
     public void copyFromDomain(IExecutionPeriod period) {
         super.copyFromDomain(period);
         if (period != null) {
@@ -213,20 +230,22 @@ public class InfoExecutionPeriod extends InfoObject implements Serializable{
         }
         return infoExecutionPeriod;
     }
-
-    /**
-     * @return Returns the previousInfoExecutionPeriod.
-     */
-    public InfoExecutionPeriod getPreviousInfoExecutionPeriod() {
-        return previousInfoExecutionPeriod;
+    
+    public void copyToDomain(InfoExecutionPeriod infoExecutionPeriod, IExecutionPeriod executionPeriod) {
+        super.copyToDomain(infoExecutionPeriod, executionPeriod);
+        executionPeriod.setBeginDate(infoExecutionPeriod.getBeginDate());
+        executionPeriod.setEndDate(infoExecutionPeriod.getEndDate());
+        executionPeriod.setName(infoExecutionPeriod.getName());
+        executionPeriod.setSemester(infoExecutionPeriod.getSemester());
+        executionPeriod.setState(executionPeriod.getState());
     }
-
-    /**
-     * @param previousInfoExecutionPeriod
-     *            The previousInfoExecutionPeriod to set.
-     */
-    public void setPreviousInfoExecutionPeriod(
-            InfoExecutionPeriod previousInfoExecutionPeriod) {
-        this.previousInfoExecutionPeriod = previousInfoExecutionPeriod;
+    
+    public static IExecutionPeriod newDomainFromInfo(InfoExecutionPeriod infoExecutionPeriod) {
+        IExecutionPeriod executionPeriod = null;
+        if(infoExecutionPeriod != null) {
+            executionPeriod = new ExecutionPeriod();
+            infoExecutionPeriod.copyToDomain(infoExecutionPeriod, executionPeriod);
+        }
+        return executionPeriod;    
     }
 }

@@ -6,6 +6,8 @@
 package DataBeans;
 
 import java.util.List;
+
+import Dominio.CursoExecucao;
 import Dominio.ICursoExecucao;
 
 /**
@@ -164,5 +166,19 @@ public class InfoExecutionDegree extends InfoObject {
             infoExecutionDegree.copyFromDomain(executionDegree);
         }
         return infoExecutionDegree;
+    }
+    
+    public void copyToDomain(InfoExecutionDegree infoExecutionDegree, ICursoExecucao executionDegree) {
+        super.copyToDomain(infoExecutionDegree, executionDegree);
+        executionDegree.setTemporaryExamMap(infoExecutionDegree.getTemporaryExamMap());        
+    }
+    
+    public static ICursoExecucao newDomainFromInfo(InfoExecutionDegree infoExecutionDegree) {
+        ICursoExecucao executionDegree = null;
+        if(infoExecutionDegree != null) {
+            executionDegree = new CursoExecucao();
+            infoExecutionDegree.copyToDomain(infoExecutionDegree, executionDegree);
+        }
+        return executionDegree;
     }
 }

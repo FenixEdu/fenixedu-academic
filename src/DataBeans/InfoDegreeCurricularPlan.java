@@ -2,6 +2,8 @@ package DataBeans;
 
 import java.util.Date;
 import java.util.List;
+
+import Dominio.DegreeCurricularPlan;
 import Dominio.IDegreeCurricularPlan;
 import Util.DegreeCurricularPlanState;
 import Util.MarkType;
@@ -49,8 +51,8 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
         setInfoDegree(infoDegree);
     }
 
-    public InfoDegreeCurricularPlan(String nome, InfoDegree infoDegree,
-            DegreeCurricularPlanState state, Date initialDate, Date endDate) {
+    public InfoDegreeCurricularPlan(String nome, InfoDegree infoDegree, DegreeCurricularPlanState state,
+            Date initialDate, Date endDate) {
         setName(nome);
         setInfoDegree(infoDegree);
         setState(state);
@@ -62,8 +64,8 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
         boolean result = false;
         if (obj instanceof InfoDegreeCurricularPlan) {
             InfoDegreeCurricularPlan infoCurricularPlan = (InfoDegreeCurricularPlan) obj;
-            result = (this.getName().equals(infoCurricularPlan.getName()) && this
-                    .getInfoDegree().equals(infoCurricularPlan.getInfoDegree()));
+            result = (this.getName().equals(infoCurricularPlan.getName()) && this.getInfoDegree()
+                    .equals(infoCurricularPlan.getInfoDegree()));
         }
         return result;
     }
@@ -268,13 +270,31 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
      * @param plan
      * @return
      */
-    public static InfoDegreeCurricularPlan newInfoFromDomain(
-            IDegreeCurricularPlan plan) {
+    public static InfoDegreeCurricularPlan newInfoFromDomain(IDegreeCurricularPlan plan) {
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
         if (plan != null) {
             infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
             infoDegreeCurricularPlan.copyFromDomain(plan);
         }
         return infoDegreeCurricularPlan;
+    }
+
+    public void copyToDomain(InfoDegreeCurricularPlan infoDegreeCurricularPlan,
+            IDegreeCurricularPlan degreeCurricularPlan) {
+        super.copyToDomain(infoDegreeCurricularPlan, degreeCurricularPlan);
+        degreeCurricularPlan.setName(infoDegreeCurricularPlan.getName());
+        degreeCurricularPlan.setState(infoDegreeCurricularPlan.getState());
+        degreeCurricularPlan.setInitialDate(infoDegreeCurricularPlan.getInitialDate());
+        degreeCurricularPlan.setEndDate(infoDegreeCurricularPlan.getEndDate());
+        degreeCurricularPlan.setMarkType(infoDegreeCurricularPlan.getMarkType());
+    }
+    
+    public static IDegreeCurricularPlan newDomainFromInfo(InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
+        IDegreeCurricularPlan degreeCurricularPlan = null;
+        if(infoDegreeCurricularPlan != null) {
+            degreeCurricularPlan = new DegreeCurricularPlan();
+            infoDegreeCurricularPlan.copyToDomain(infoDegreeCurricularPlan, degreeCurricularPlan);            
+        }
+        return degreeCurricularPlan;
     }
 }

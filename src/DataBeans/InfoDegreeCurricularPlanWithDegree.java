@@ -4,6 +4,7 @@
  */
 package DataBeans;
 
+import Dominio.DegreeCurricularPlan;
 import Dominio.IDegreeCurricularPlan;
 
 /**
@@ -32,5 +33,22 @@ public class InfoDegreeCurricularPlanWithDegree extends
             infoDegreeCurricularPlan.copyFromDomain(plan);
         }
         return infoDegreeCurricularPlan;
+    }
+    
+    
+    public void copyToDomain(InfoDegreeCurricularPlan infoDegreeCurricularPlan, IDegreeCurricularPlan degreeCurricularPlan) {
+        super.copyToDomain(infoDegreeCurricularPlan, degreeCurricularPlan);
+        degreeCurricularPlan.setDegree(InfoDegree.newDomainFromInfo(infoDegreeCurricularPlan.getInfoDegree()));
+        
+    }
+    
+    public static IDegreeCurricularPlan newDomainFromInfo(InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
+        IDegreeCurricularPlan degreeCurricularPlan = null;
+        if(infoDegreeCurricularPlan != null) {
+            degreeCurricularPlan = new DegreeCurricularPlan();
+            InfoDegreeCurricularPlanWithDegree infoDegreeCurricularPlanWithDegree = new InfoDegreeCurricularPlanWithDegree();
+            infoDegreeCurricularPlanWithDegree.copyToDomain(infoDegreeCurricularPlan, degreeCurricularPlan);
+        }        
+        return degreeCurricularPlan;
     }
 }

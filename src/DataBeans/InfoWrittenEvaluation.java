@@ -7,7 +7,9 @@ package DataBeans;
 import java.util.Calendar;
 import java.util.List;
 
+import Dominio.IExam;
 import Dominio.IWrittenEvaluation;
+import Dominio.IWrittenTest;
 
 /**
  * @author Ana e Ricardo
@@ -179,6 +181,21 @@ public class InfoWrittenEvaluation extends InfoEvaluation{
             setEnrollmentEndDay(writtenEvaluation.getEnrollmentEndDay());
             setEnrollmentEndTime(writtenEvaluation.getEnrollmentEndTime());            
         }
+    }
+    
+    public static InfoWrittenEvaluation newInfoFromDomain(IWrittenEvaluation writtenEvaluation) {
+        InfoWrittenEvaluation infoWrittenEvaluation = null;
+        if(writtenEvaluation != null) {
+            if(writtenEvaluation instanceof IExam) {
+                infoWrittenEvaluation = InfoExam.newInfoFromDomain((IExam) writtenEvaluation);
+            } else if(writtenEvaluation instanceof IWrittenTest) {
+                infoWrittenEvaluation = InfoWrittenTest.newInfoFromDomain((IWrittenTest)writtenEvaluation);
+            } else {
+                infoWrittenEvaluation = new InfoWrittenEvaluation();
+                infoWrittenEvaluation.copyFromDomain(writtenEvaluation);
+            }
+        }
+        return infoWrittenEvaluation;
     }
 
 }
