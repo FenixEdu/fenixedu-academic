@@ -7,6 +7,7 @@
   </head>
   <body>
     <html:link page="/visualizeApplicationInfo.do"><bean:message key="link.candidate.visualizeSituation" /></html:link><br/>
+    <html:link page="/changeApplicationInfoDispatchAction.do?method=prepare"><bean:message key="link.candidate.changeApplicationInfo" /></html:link><br/>
     <html:link page="/logoff.do"><bean:message key="link.candidate.logoff" /></html:link><br/>
     
   </body>

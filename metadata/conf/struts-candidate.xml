@@ -72,6 +72,19 @@
       	  <forward name="Success" path="/visualizeApplicationInfo.jsp"/>      	      
       </action>
 
+      <!-- Dispatch Action to Change the Candidate's Application Information -->
+      <action path="/changeApplicationInfoDispatchAction"
+	     attribute="changeApplicationInfoForm"
+	          name="changeApplicationInfoForm"
+	         input="/changeApplicationInfo.jsp"
+	      validate="true"
+		 parameter="method"
+      	      type="ServidorApresentacao.Action.masterDegree.candidate.ChangeApplicationInfoDispatchAction">
+      	  <forward name="Success" path="/changeSuccess.jsp"/>
+      	  <forward name="prepareReady" path="/changeApplicationInfo.jsp"/>
+      </action>
+
+
       <!-- Action For LogOff -->
       <action path="/logoff"
       	      type="ServidorApresentacao.Action.commons.LogOffAction">

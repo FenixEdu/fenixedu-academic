@@ -80,9 +80,6 @@ public class ReadActiveCandidateSituation implements IServico {
 		
 		InfoMasterDegreeCandidate infoMasterDegreeCandidate = Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate);
 		
-		// Fill in the blanks
-		
-		
 		
 		// Search the candidate's active situation
 		Iterator iterator = masterDegreeCandidate.getSituations().iterator();
