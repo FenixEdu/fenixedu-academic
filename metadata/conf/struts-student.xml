@@ -112,7 +112,7 @@
 
 
       <action name="curricularCourseEnrolmentForm"
-              type="ServidorApresentacao.Action.student.CurricularCourseEnrolmentManagerDispatchAction2"
+              type="ServidorApresentacao.Action.student.CurricularCourseEnrolmentManagerDispatchAction"
               path="/curricularCourseEnrolmentManager"
               input="/curricularCourseEnrolmentManager.do?method=start"
               parameter="method"
