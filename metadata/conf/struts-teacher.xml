@@ -406,13 +406,13 @@
         </form-bean>
         <form-bean name="editAttendsSetForm" type="org.apache.struts.validator.DynaValidatorForm" 
             dynamic="true">
-            <form-property name="studentCodesToInsert" type="java.lang.Integer[]" />
+			<form-property name="studentCodesToInsert" type="java.lang.Integer[]" />
             <form-property name="studentsToRemove" type="java.lang.String[]" />
             <form-property name="page" type="java.lang.Integer" initial="0"/>
         </form-bean>
         <form-bean name="insertStudentsInAttendsSetForm" type="org.apache.struts.validator.DynaValidatorForm" 
             dynamic="true">
-            <form-property name="studentCodesToInsert" type="java.lang.Integer[]" />
+			<form-property name="selected" type="java.lang.String"/>
             <form-property name="page" type="java.lang.Integer" initial="0"/>
         </form-bean>
 						

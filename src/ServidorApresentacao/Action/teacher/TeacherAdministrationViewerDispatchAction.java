@@ -3144,14 +3144,13 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    Integer objectCode = getObjectCode(request);
 	    String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
 	    Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
-	    DynaActionForm insertAttendsSetForm = (DynaActionForm) form;
-	    List studentCodes = Arrays.asList((Integer[]) insertAttendsSetForm.get("studentCodesToInsert"));
+        String[] selected = request.getParameterValues("selected");
 
-	    Object args[] = {objectCode, groupPropertiesCode, studentCodes};
+	    Object args[] = {objectCode, groupPropertiesCode, selected};
 
 	    try
 	    {
-	        ServiceManagerServiceFactory.executeService(userView, "InsertAttendsSetMembers", args);
+	        ServiceManagerServiceFactory.executeService(userView, "InsertStudentsInAttendsSet", args);
 	    } catch (ExistingServiceException e)
 	    {
 	        ActionErrors actionErrors = new ActionErrors();

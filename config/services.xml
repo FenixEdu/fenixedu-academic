@@ -3756,10 +3756,21 @@
         <filterChains>
             <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
         </filterChains>
-    </service> <service>
+    </service>
+	<service>
         <name>InsertAttendsSetMembers</name>
         <implementationClass> 
             ServidorAplicacao.Servico.teacher.InsertAttendsSetMembers</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
+        </filterChains>
+    </service>
+	<service>
+        <name>InsertStudentsInAttendsSet</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.teacher.InsertStudentsInAttendsSet</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>

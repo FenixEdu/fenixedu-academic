@@ -7,6 +7,28 @@
 
 <h2><bean:message key="title.insertStudentsInAttendsSet"/></h2>
 
+<script language="Javascript" type="text/javascript">
+<!--
+var select = false;
+
+function invertSelect(){
+	if ( select == false ) { 
+		select = true; 
+	} else { 
+		select = false;
+	}
+	for (var i=0; i<document.forms[0].selected.length; i++){
+		var e = document.forms[0].selected[i];
+		if (select == true) { e.checked = true; } else { e.checked = false; }
+	}
+}
+
+function cleanSelect() { 
+	select = false; 
+	document.forms[0].selected[0].checked = false; 
+}
+// -->
+</script>
 
 <br/>
 
@@ -44,6 +66,14 @@
 
 <table width="50%" cellpadding="0" border="0">
 
+<tr><td></td>
+		<td><b><bean:message key="label.allStudents"/></b></td>
+		<td>
+		<html:multibox property="selected" onclick="invertSelect()">
+		    <bean:message key="label.allStudents"/>
+		</html:multibox> 
+		</td>
+	</tr>
 	
 	<tr>
 		<td class="listClasses-header">
@@ -60,10 +90,10 @@
 	<logic:iterate id="infoStudent" name="infoStudentList">			
 		<tr>	
 			<td class="listClasses">
-			<html:multibox property="studentCodesToInsert">
+			<html:multibox property="selected" onclick="cleanSelect()">
 			<bean:write name="infoStudent" property="idInternal"/>
 			</html:multibox>
-			</td>	
+			</td>
 			<td class="listClasses"><bean:write name="infoStudent" property="number"/>
 			</td>	
 			<bean:define id="infoPerson" name="infoStudent" property="infoPerson"/>		
