@@ -56,6 +56,7 @@ public class TestCaseServicos extends TestCase {
 			System.out.println("Setup failed: " + ex);
 		}
 
+		
 		_gestor = GestorServicos.manager();
 //		String argsAutenticacao1[] = { "user", "pass" , getApplication()};
 //		String argsAutenticacao2[] = { "julia", "pass" , getApplication()};

@@ -52,7 +52,7 @@ public class ReadExecutionCourseTest
 
 		return suite;
 	}
-
+	
 	protected void setUp() {
 		super.setUp();
 	}

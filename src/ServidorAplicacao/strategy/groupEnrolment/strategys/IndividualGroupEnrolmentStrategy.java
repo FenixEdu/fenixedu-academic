@@ -1,8 +1,6 @@
 /*
  * Created on 24/Jul/2003
  *
- * To change the template for this generated file go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 package ServidorAplicacao.strategy.groupEnrolment.strategys;
 
@@ -18,8 +16,6 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author asnr and scpo
  *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 
 public class IndividualGroupEnrolmentStrategy extends GroupEnrolmentStrategy implements IGroupEnrolmentStrategy {

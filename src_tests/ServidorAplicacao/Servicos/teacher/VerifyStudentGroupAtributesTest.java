@@ -1,8 +1,5 @@
 /*
  * Created on 30/Jul/2003
- *
- * To change the template for this generated file go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 package ServidorAplicacao.Servicos.teacher;
 
@@ -26,9 +23,6 @@ import Util.RoleType;
 
 /**
  * @author asnr and scpo
- *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class VerifyStudentGroupAtributesTest extends TestCaseServicos{
 
@@ -56,6 +50,7 @@ public class VerifyStudentGroupAtributesTest extends TestCaseServicos{
 			sp.iniciarTransaccao();
 			studentGroup = (IStudentGroup)sp.getIPersistentStudentGroup().readByOId(new StudentGroup(new Integer(6)),false);
 			sp.confirmarTransaccao();						
+		
 		} catch (ExcepcaoPersistencia ex) {
 			ex.printStackTrace();
 		  }

@@ -73,13 +73,38 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy{
 		
 	public boolean checkEnrolmentDate(IGroupProperties groupProperties,Calendar actualDate)
 	{
-		boolean result = false;
-		if(actualDate.after(groupProperties.getEnrolmentBeginDay()) && actualDate.before(groupProperties.getEnrolmentEndDay()))
-			result = true;
+		Long actualDateInMills = new Long(actualDate.getTimeInMillis());
+		Long enrolmentBeginDayInMills = null;
+		Long enrolmentEndDayInMills = null;
 		
-		return result;
+		if(groupProperties.getEnrolmentBeginDay()!=null)
+			enrolmentBeginDayInMills = new Long(groupProperties.getEnrolmentBeginDay().getTimeInMillis());
+		
+		if(groupProperties.getEnrolmentEndDay()!=null)
+			enrolmentEndDayInMills =new Long(groupProperties.getEnrolmentEndDay().getTimeInMillis());
+		
+		if(enrolmentBeginDayInMills==null && enrolmentEndDayInMills==null)
+		 	return true;
+		
+		if(enrolmentBeginDayInMills!=null && enrolmentEndDayInMills==null)
+		{	
+			if(actualDateInMills.compareTo(enrolmentBeginDayInMills)>0)		
+				return true;
+		}
+		
+		if(enrolmentBeginDayInMills==null && enrolmentEndDayInMills!=null)
+		{	
+			if(actualDateInMills.compareTo(enrolmentEndDayInMills)<0)		
+				return true;
+		}
+		
+		if(actualDateInMills.compareTo(enrolmentBeginDayInMills)>0 && actualDateInMills.compareTo(enrolmentEndDayInMills)<0 )
+			return true;
+		
+		return false;
 	}
 		
+	
 	public boolean checkShiftType(IGroupProperties groupProperties,ITurno shift)
 	{
 		boolean result = false;

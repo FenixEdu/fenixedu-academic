@@ -37,8 +37,6 @@ public class GroupEnrolmentStrategyFactory implements IGroupEnrolmentStrategyFac
 			}
 		}
 
-
-
 		public IGroupEnrolmentStrategy getGroupEnrolmentStrategyInstance(IGroupProperties groupProperties) {
 		
 			IGroupEnrolmentStrategy strategyInstance = null;
