@@ -26,6 +26,7 @@ import Dominio.IAula;
 import Dominio.IExecutionPeriod;
 import Dominio.ITurma;
 import Dominio.ITurno;
+import Dominio.Turma;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
@@ -83,9 +84,10 @@ public class ReadDegreesClassesLessons implements IServico {
 			List classes = new ArrayList();
 			for (int i = 0; i < infoExecutionDegrees.size(); i++) {
 				List degreeClasses =
-					classDAO.readByExecutionDegree(
+					classDAO.readByExecutionDegreeAndExecutionPeriod(
 						Cloner.copyInfoExecutionDegree2ExecutionDegree(
-							(InfoExecutionDegree) infoExecutionDegrees.get(i)));
+							(InfoExecutionDegree) infoExecutionDegrees.get(i)),
+							Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod));
 				Iterator iterator = degreeClasses.iterator();
 				CollectionUtils.addAll(classes, iterator);
 			}

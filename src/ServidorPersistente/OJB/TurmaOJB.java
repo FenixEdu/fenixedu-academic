@@ -288,4 +288,16 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 		Query queryPB = new QueryByCriteria(Turma.class, criteria);
 		return queryList(Turma.class, criteria);
 	}
+
+
+	public List readByExecutionDegreeAndExecutionPeriod(ICursoExecucao execucao, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("executionPeriod.executionYear.year", executionPeriod.getExecutionYear().getYear());
+		criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());
+		criteria.addEqualTo("executionDegree.executionYear.year", execucao.getExecutionYear().getYear());
+		criteria.addEqualTo("executionDegree.curricularPlan.name", execucao.getCurricularPlan().getName());
+		criteria.addEqualTo("executionDegree.curricularPlan.degree.sigla", execucao.getCurricularPlan().getDegree().getSigla());		
+		Query queryPB = new QueryByCriteria(Turma.class, criteria);
+		return queryList(Turma.class, criteria);
+	}
 }

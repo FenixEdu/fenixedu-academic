@@ -12,6 +12,7 @@ package ServidorPersistente;
  */
 import java.util.List;
 
+import DataBeans.InfoExecutionPeriod;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.ITurma;
@@ -54,5 +55,7 @@ public interface ITurmaPersistente extends IPersistentObject {
 		
 	public List readByExecutionDegree(ICursoExecucao executionDegree) throws ExcepcaoPersistencia;
 
-	public List readByExecutionPeriodAndDegreeType(IExecutionPeriod executionPeriod, TipoCurso curso) throws ExcepcaoPersistencia;;
+	public List readByExecutionPeriodAndDegreeType(IExecutionPeriod executionPeriod, TipoCurso curso) throws ExcepcaoPersistencia;
+
+	public List readByExecutionDegreeAndExecutionPeriod(ICursoExecucao execucao, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
 }
