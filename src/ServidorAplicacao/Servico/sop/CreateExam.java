@@ -12,6 +12,7 @@ package ServidorAplicacao.Servico.sop;
  * @author Luis Cruz & Sara Ribeiro
  **/
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import DataBeans.InfoExecutionCourse;
@@ -87,6 +88,7 @@ public class CreateExam implements IServico {
 			}
 
 			IExam exam = new Exam(examDate, examTime, null, season);
+			exam.setAssociatedRooms(new ArrayList());
 			IExamExecutionCourse examExecutionCourse = new ExamExecutionCourse(exam, executionCourse);
 
 			try {
