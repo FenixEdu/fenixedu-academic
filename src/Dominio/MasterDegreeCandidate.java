@@ -33,6 +33,7 @@ public class MasterDegreeCandidate extends DomainObject implements IMasterDegree
     private Double average = null;
     private String specializationArea;
     private Integer substituteOrder;
+    private Double givenCredits;
     
     
     // Instance from class Degree
@@ -118,6 +119,7 @@ result = getIdInternal().equals(((IMasterDegreeCandidate) o).getIdInternal());
 		result += "\n  - Master Degree : " + executionDegree;
 		result += "\n  - Specialization Area : " + specializationArea;
 		result += "\n  - Substitute Order : " + substituteOrder;
+		result += "\n  - Given Credits : " + givenCredits;
 
         return result;
     }  
@@ -308,6 +310,20 @@ result = getIdInternal().equals(((IMasterDegreeCandidate) o).getIdInternal());
 	 */
 	public void setSubstituteOrder(Integer integer) {
 		substituteOrder = integer;
+	}
+
+	/**
+	 * @return
+	 */
+	public Double getGivenCredits() {
+		return givenCredits;
+	}
+
+	/**
+	 * @param double1
+	 */
+	public void setGivenCredits(Double double1) {
+		givenCredits = double1;
 	}
 
 } // End of class definition

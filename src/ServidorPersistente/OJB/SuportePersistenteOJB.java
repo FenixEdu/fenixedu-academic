@@ -32,6 +32,7 @@ import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentAnnouncement;
 import ServidorPersistente.IPersistentBibliographicReference;
 import ServidorPersistente.IPersistentBranch;
+import ServidorPersistente.IPersistentCandidateEnrolment;
 import ServidorPersistente.IPersistentCandidateSituation;
 import ServidorPersistente.IPersistentChosenCurricularCourseForOptionalCurricularCourse;
 import ServidorPersistente.IPersistentContributor;
@@ -484,10 +485,13 @@ public IPersistentQualification getIPersistentQualification() {
 		return new QualificationOJB();
 	}
 	
-	
+	public IPersistentCandidateEnrolment getIPersistentCandidateEnrolment() {
+			return new CandidateEnrolmentOJB();
+		}
+		
 	public IPersistentStudentGroup getIPersistentStudentGroup() {
-		return new StudentGroupOJB();
-	}
+			return new StudentGroupOJB();
+		}
 
 	public IPersistentStudentGroupAttend getIPersistentStudentGroupAttend() {
 		return new StudentGroupAttendOJB();

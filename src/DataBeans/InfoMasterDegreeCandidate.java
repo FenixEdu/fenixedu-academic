@@ -31,6 +31,7 @@ public class InfoMasterDegreeCandidate extends InfoObject{
 	private List situationList = null;
 	private String specializationArea;
 	private Integer substituteOrder;
+	private Double givenCredits;
 	
     	
     /** Construtor sem argumentos público requerido pela moldura de objectos OJB */
@@ -261,6 +262,20 @@ public class InfoMasterDegreeCandidate extends InfoObject{
 	 */
 	public void setSubstituteOrder(Integer integer) {
 		substituteOrder = integer;
+	}
+
+	/**
+	 * @return
+	 */
+	public Double getGivenCredits() {
+		return givenCredits;
+	}
+
+	/**
+	 * @param double1
+	 */
+	public void setGivenCredits(Double double1) {
+		givenCredits = double1;
 	}
 
 }

@@ -32,7 +32,8 @@ public interface IMasterDegreeCandidate extends IDomainObject{
     void setSituations(List situations);
     void setPerson(IPessoa person);
     void setSpecializationArea(String specializationArea);
-    void setSubstituteOrder(Integer substituteOrder);
+	void setSubstituteOrder(Integer substituteOrder);
+	void setGivenCredits(Double givenCredits);
     
     // Get Methods
     String getMajorDegree();
@@ -46,6 +47,7 @@ public interface IMasterDegreeCandidate extends IDomainObject{
     IPessoa getPerson();
     String getSpecializationArea();
     Integer getSubstituteOrder();
+    Double getGivenCredits();
     
     /**
      * 

@@ -9,6 +9,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import DataBeans.InfoAnnouncement;
 import DataBeans.InfoBibliographicReference;
 import DataBeans.InfoBranch;
+import DataBeans.InfoCandidateEnrolment;
 import DataBeans.InfoCandidateSituation;
 import DataBeans.InfoClass;
 import DataBeans.InfoContributor;
@@ -43,6 +44,7 @@ import DataBeans.InfoItem;
 import DataBeans.InfoLesson;
 import DataBeans.InfoMark;
 import DataBeans.InfoMasterDegreeCandidate;
+import DataBeans.InfoObject;
 import DataBeans.InfoPerson;
 import DataBeans.InfoPrice;
 import DataBeans.InfoProfessorShip;
@@ -53,14 +55,110 @@ import DataBeans.InfoShift;
 import DataBeans.InfoSite;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
-import DataBeans.InfoStudentGroup;
-import DataBeans.InfoStudentGroupAttend;
 import DataBeans.InfoStudentKind;
 import DataBeans.InfoSummary;
 import DataBeans.InfoTeacher;
 import DataBeans.teacher.credits.InfoCredits;
 import DataBeans.teacher.credits.InfoTeacherShiftPercentage;
-import Dominio.*;
+import Dominio.Announcement;
+import Dominio.Aula;
+import Dominio.BibliographicReference;
+import Dominio.Branch;
+import Dominio.CandidateEnrolment;
+import Dominio.CandidateSituation;
+import Dominio.Contributor;
+import Dominio.Country;
+import Dominio.Credits;
+import Dominio.CurricularCourse;
+import Dominio.CurricularCourseScope;
+import Dominio.CurricularSemester;
+import Dominio.CurricularYear;
+import Dominio.Curriculum;
+import Dominio.Curso;
+import Dominio.CursoExecucao;
+import Dominio.DegreeCurricularPlan;
+import Dominio.DisciplinaExecucao;
+import Dominio.Enrolment;
+import Dominio.EnrolmentEvaluation;
+import Dominio.EnrolmentInOptionalCurricularCourse;
+import Dominio.EvaluationMethod;
+import Dominio.Exam;
+import Dominio.ExecutionPeriod;
+import Dominio.ExecutionYear;
+import Dominio.FinalEvaluation;
+import Dominio.Frequenta;
+import Dominio.Guide;
+import Dominio.GuideEntry;
+import Dominio.GuideSituation;
+import Dominio.IAnnouncement;
+import Dominio.IAula;
+import Dominio.IBibliographicReference;
+import Dominio.IBranch;
+import Dominio.ICandidateEnrolment;
+import Dominio.ICandidateSituation;
+import Dominio.IContributor;
+import Dominio.ICountry;
+import Dominio.ICredits;
+import Dominio.ICurricularCourse;
+import Dominio.ICurricularCourseScope;
+import Dominio.ICurricularSemester;
+import Dominio.ICurricularYear;
+import Dominio.ICurriculum;
+import Dominio.ICurso;
+import Dominio.ICursoExecucao;
+import Dominio.IDegreeCurricularPlan;
+import Dominio.IDepartment;
+import Dominio.IDisciplinaExecucao;
+import Dominio.IEnrolment;
+import Dominio.IEnrolmentEvaluation;
+import Dominio.IEnrolmentInExtraCurricularCourse;
+import Dominio.IEnrolmentInOptionalCurricularCourse;
+import Dominio.IEvaluation;
+import Dominio.IEvaluationMethod;
+import Dominio.IExam;
+import Dominio.IExamStudentRoom;
+import Dominio.IExecutionPeriod;
+import Dominio.IExecutionYear;
+import Dominio.IFinalEvaluation;
+import Dominio.IFrequenta;
+import Dominio.IGuide;
+import Dominio.IGuideEntry;
+import Dominio.IGuideSituation;
+import Dominio.IItem;
+import Dominio.IMark;
+import Dominio.IMasterDegreeCandidate;
+import Dominio.IPessoa;
+import Dominio.IPrice;
+import Dominio.IProfessorship;
+import Dominio.IRole;
+import Dominio.ISala;
+import Dominio.ISection;
+import Dominio.ISite;
+import Dominio.IStudent;
+import Dominio.IStudentCurricularPlan;
+import Dominio.IStudentKind;
+import Dominio.ISummary;
+import Dominio.ITeacher;
+import Dominio.ITeacherShiftPercentage;
+import Dominio.ITurma;
+import Dominio.ITurno;
+import Dominio.Item;
+import Dominio.Mark;
+import Dominio.MasterDegreeCandidate;
+import Dominio.Pessoa;
+import Dominio.Price;
+import Dominio.Professorship;
+import Dominio.Sala;
+import Dominio.Section;
+import Dominio.Site;
+import Dominio.Student;
+import Dominio.StudentCurricularPlan;
+import Dominio.StudentKind;
+import Dominio.Summary;
+import Dominio.Teacher;
+import Dominio.TeacherShiftPercentage;
+import Dominio.Turma;
+import Dominio.Turno;
 import Util.EvaluationType;
 import Util.State;
 
@@ -1962,6 +2060,36 @@ public abstract class Cloner {
 			return groupProperties;
 		}
 
+	/**
+	 * 
+	 * @param infoCandidateEnrolment
+	 * @return ICandidateEnrolment
+	 */
+	public static ICandidateEnrolment copyInfoCandidateEnrolment2ICandidateEnrolment(InfoCandidateEnrolment infoCandidateEnrolment) {
+
+		ICandidateEnrolment candidateEnrolment = new CandidateEnrolment();
+			
+		candidateEnrolment.setMasterDegreeCandidate(Cloner.copyInfoMasterDegreeCandidate2IMasterDegreCandidate(infoCandidateEnrolment.getInfoMasterDegreeCandidate()));
+		candidateEnrolment.setCurricularCourseScope(Cloner.copyInfoCurricularCourseScope2ICurricularCourseScope(infoCandidateEnrolment.getInfoCurricularCourseScope()));			
+		
+		return candidateEnrolment;	
+	}
+
+	/**
+	 * 
+	 * @param candidateEnrolment
+	 * @return InfoCandidateEnrolment
+	 */
+	public static InfoCandidateEnrolment copyICandidateEnrolment2InfoCandidateEnrolment(ICandidateEnrolment candidateEnrolment) {
+		
+		InfoCandidateEnrolment infoCandidateEnrolment = new InfoCandidateEnrolment();
+		infoCandidateEnrolment.setInfoCurricularCourseScope(Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(candidateEnrolment.getCurricularCourseScope()));
+		infoCandidateEnrolment.setInfoMasterDegreeCandidate(Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(candidateEnrolment.getMasterDegreeCandidate()));
+		
+		return infoCandidateEnrolment;
+	}
+
+			
 	/**
 	* @param studentGroup
 	* @return infoStudentGroup

@@ -297,6 +297,28 @@
    	        <form-property name="substitutes" type="java.lang.String[]"/>
        </form-bean>
       
+<!--kkkkkkkkkk -->
+	  <!-- Bean to Choose the second Master Degree for Study Plan -->
+      <form-bean name="chooseSecondMasterDegreeForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+
+         <form-property name="page" type="java.lang.Integer" />
+         <form-property name="masterDegree" type="java.lang.String" />
+         <form-property name="candidateID" type="java.lang.Integer"/>
+      </form-bean>
+      
+      <!-- Bean to Choose the Course List for Study Plan  -->
+      <form-bean name="chooseCourseListForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+
+            <form-property name="page" type="java.lang.Integer" />
+   	        <form-property name="candidateID" type="java.lang.Integer"/>
+        	<form-property name="selection" type="java.lang.String[]"/>
+        	<form-property name="attributedCredits" type="java.lang.Double"/>
+      </form-bean>
+      
    </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -831,8 +853,6 @@
 	         <forward name="ChooseSuccess" path="/editCandidates.do?method=prepareChoose&amp;action=edit&amp;page=0"/> 
       </action>
       
-<!-- XXXXXXXXXXXXXXXXXXXX -->
-	  
 	  <!-- Choose Execution Year to Select Candidates -->
       <action path="/chooseExecutionYearToSelectCandidates"
       		  input="chooseExecutionYear.jsp"
@@ -888,7 +908,72 @@
 	         <forward name="Success" path="/candidate/backErrorPage.jsp"/> 
       </action>
 
-	     
+<!-- XXXXXXXXXXXXXXXXXXXX -->     
+
+<!-- Choose Execution Year to Make Candidate Study Plan -->
+      <action path="/chooseExecutionYearToCandidateStudyPlan"
+      		  input="chooseExecutionYear.jsp"
+		      attribute="chooseExecutionYearForm"
+		      name="chooseExecutionYearForm"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
+			  >
+	         <forward name="PrepareSuccess" path="/chooseExecutionYear.jsp"/>  
+	         <forward name="ChooseSuccess" path="/chooseMasterDegreeToCandidateStudyPlan.do?method=prepareChooseMasterDegree&amp;page=0"/>  
+      </action>
+
+      <!-- Choose Master Degree To Make Candidate Study Plan -->
+      <action path="/chooseMasterDegreeToCandidateStudyPlan"
+	          input="/candidate/chooseMasterDegreeToSelectCandidates.jsp"
+		      attribute="chooseMasterDegreeForm"
+		      name="chooseMasterDegreeForm"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.commons.ChooseMasterDegreeDispatchAction"
+			  >
+	         <forward name="PrepareSuccess" path="/candidate/chooseMasterDegreeToSelectCandidates.jsp"/>  
+			 <forward name="ChooseSuccess" path="/displayCandidateListToMakeStudyPlan.do?method=prepareSelectCandidates&amp;page=0"/>
+      </action>                                   
+
+      <!-- Display List To Make Candidate Study Plan -->
+      <action path="/displayCandidateListToMakeStudyPlan"
+       		  input="/candidate/displayCandidateListToMakeStudyPlan.jsp"
+       		  attribute="chooseSecondMasterDegreeForm"
+		      name="chooseSecondMasterDegreeForm"
+		      parameter="method"
+		      scope="request"
+		      type="ServidorApresentacao.Action.masterDegree.commons.candidate.MakeCandidateStudyPlanDispatchAction"
+			  >
+	         <forward name="PrepareSuccess" path="/candidate/displayCandidateListToMakeStudyPlan.jsp"/>  
+	         <forward name="PrepareSecondChooseMasterDegreeReady" path="/candidate/secondChooseMasterDegree.jsp"/>
+	         <forward name="ChooseReady" path="/displayCourseListToStudyPlan.do?method=chooseMasterDegree&amp;page=0"/>
+     		 <forward name="ChooseSuccess" path="/displayCourseListToStudyPlan.do?method=prepareSelectCourseList&amp;page=0"/>
+		</action>
+
+     
+      <!-- Display Course List To Candidate Study Plan -->
+      <action path="/displayCourseListToStudyPlan"
+       		  input="/candidate/displayListOfCoursesToChoose.jsp"
+       		  attribute="chooseCourseListForm"
+		      name="chooseCourseListForm"
+		      parameter="method"
+		      scope="request"
+		      type="ServidorApresentacao.Action.masterDegree.commons.candidate.MakeCandidateStudyPlanDispatchAction"
+			  >
+	         
+    
+	         <forward name="PrepareSuccess" path="/candidate/displayListOfCoursesToChoose.jsp"/>  
+	         <forward name="ChooseSuccess" path="/candidate/displayCandidateEnrolments.jsp"/>
+     			 
+		</action>
+      
+      
+      
+      
+<!-- YYYYYYYYYYYYYYYYYYY -->  
+
+
       <!-- Choose Execution Year To Create a Guide -->
       <action path="/chooseExecutionYearToCreateGuide"
       		  input="chooseExecutionYear.jsp"
