@@ -7,7 +7,6 @@ package DataBeans.teacher;
 import java.util.List;
 
 import DataBeans.ISiteComponent;
-import DataBeans.InfoObject;
 import DataBeans.InfoTeacher;
 import Util.OldPublicationType;
 
@@ -16,7 +15,7 @@ import Util.OldPublicationType;
  * @author Sergio Montelobo
  *  
  */
-public class InfoSiteOldPublications extends InfoObject implements ISiteComponent
+public class InfoSiteOldPublications implements ISiteComponent
 {
 
     private List infoOldPublications;

@@ -11,13 +11,13 @@ import java.util.List;
 
 import org.apache.commons.beanutils.PropertyUtils;
 
-import DataBeans.teacher.IPublicationsNumber;
 import DataBeans.teacher.InfoOrientation;
 import DataBeans.teacher.InfoPublicationsNumber;
 import DataBeans.teacher.InfoServiceProviderRegime;
 import DataBeans.teacher.InfoWeeklyOcupation;
 import DataBeans.util.Cloner;
 import Dominio.teacher.IOrientation;
+import Dominio.teacher.IPublicationsNumber;
 import Dominio.teacher.IServiceProviderRegime;
 import Dominio.teacher.IWeeklyOcupation;
 import Dominio.teacher.Orientation;

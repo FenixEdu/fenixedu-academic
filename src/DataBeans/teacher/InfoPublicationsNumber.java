@@ -8,7 +8,6 @@ import java.util.Date;
 
 import DataBeans.InfoObject;
 import DataBeans.InfoTeacher;
-import Dominio.ITeacher;
 import Util.PublicationType;
 
 /**

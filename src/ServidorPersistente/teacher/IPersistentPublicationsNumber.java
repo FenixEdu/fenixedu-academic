@@ -6,8 +6,8 @@ package ServidorPersistente.teacher;
 
 import java.util.List;
 
-import DataBeans.teacher.IPublicationsNumber;
 import Dominio.ITeacher;
+import Dominio.teacher.IPublicationsNumber;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
 import Util.PublicationType;

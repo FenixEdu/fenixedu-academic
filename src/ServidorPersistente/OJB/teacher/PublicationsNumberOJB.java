@@ -8,8 +8,8 @@ import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
 
-import DataBeans.teacher.IPublicationsNumber;
 import Dominio.ITeacher;
+import Dominio.teacher.IPublicationsNumber;
 import Dominio.teacher.PublicationsNumber;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.ObjectFenixOJB;

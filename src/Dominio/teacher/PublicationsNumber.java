@@ -6,7 +6,6 @@ package Dominio.teacher;
 
 import java.util.Date;
 
-import DataBeans.teacher.IPublicationsNumber;
 import Dominio.DomainObject;
 import Dominio.ITeacher;
 import Util.PublicationType;

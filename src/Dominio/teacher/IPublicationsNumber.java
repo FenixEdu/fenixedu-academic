@@ -2,7 +2,7 @@
  * Created on 21/Nov/2003
  *
  */
-package DataBeans.teacher;
+package Dominio.teacher;
 
 import java.util.Date;
 

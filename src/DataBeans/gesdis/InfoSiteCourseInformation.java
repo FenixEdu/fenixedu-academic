@@ -9,14 +9,13 @@ import java.util.List;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoEvaluationMethod;
 import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoObject;
 
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
  *  
  */
-public class InfoSiteCourseInformation extends InfoObject implements ISiteComponent
+public class InfoSiteCourseInformation implements ISiteComponent
 {
 
     private InfoExecutionCourse infoExecutionCourse;

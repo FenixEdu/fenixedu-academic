@@ -9,7 +9,6 @@ import java.util.List;
 
 import DataBeans.ISiteComponent;
 import DataBeans.InfoExecutionPeriod;
-import DataBeans.InfoObject;
 import DataBeans.InfoTeacher;
 
 /**
@@ -17,7 +16,7 @@ import DataBeans.InfoTeacher;
  * @author Sergio Montelobo
  *  
  */
-public class InfoSiteTeacherInformation extends InfoObject implements ISiteComponent
+public class InfoSiteTeacherInformation implements ISiteComponent
 {
     private InfoTeacher infoTeacher;
     private List infoQualifications;

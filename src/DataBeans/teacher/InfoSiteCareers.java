@@ -7,7 +7,6 @@ package DataBeans.teacher;
 import java.util.List;
 
 import DataBeans.ISiteComponent;
-import DataBeans.InfoObject;
 import DataBeans.InfoTeacher;
 import Util.CareerType;
 
@@ -16,7 +15,7 @@ import Util.CareerType;
  * @author Sergio Montelobo
  *  
  */
-public class InfoSiteCareers extends InfoObject implements ISiteComponent
+public class InfoSiteCareers implements ISiteComponent
 {
 
     private List infoCareers;
