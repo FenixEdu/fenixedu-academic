@@ -134,8 +134,12 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
                 if (serviceLoggingIsOn || (userLoggingIsOn && id != null)) {
                     serviceStartTime = Calendar.getInstance();
                 }
+                // Do not delete. Usefull for profileing.
+                //Profiler.getInstance();
+                //Object key = Profiler.start(service);
                 Object serviceResult = manager.execute(id, service, method,
                         args);
+                //Profiler.stop(key);
 
                 if (serviceLoggingIsOn || (userLoggingIsOn && id != null)) {
                     serviceEndTime = Calendar.getInstance();
