@@ -10,6 +10,7 @@ package ServidorPersistente;
  *
  * @author  rpfi
  */
+import java.util.Collection;
 import java.util.List;
 
 import Dominio.ICursoExecucao;
@@ -113,4 +114,10 @@ public interface ICursoExecucaoPersistente extends IPersistentObject {
 		TipoCurso degreeType)
 		throws ExcepcaoPersistencia;
 		
+
+	/**
+	 * @param executionCourse
+	 * @param degreeCurricularPlans
+	 */
+	public List readByExecutionYearAndDegreeCurricularPlans(IExecutionYear executionYear, Collection degreeCurricularPlans) throws ExcepcaoPersistencia;
 }

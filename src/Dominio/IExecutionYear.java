@@ -9,7 +9,7 @@ import Util.PeriodState;
  * Dominio
  * 
  */
-public interface IExecutionYear {
+public interface IExecutionYear extends IDomainObject {
 	public String getYear();
 	public void setYear(String year);
 	void setState (PeriodState state);

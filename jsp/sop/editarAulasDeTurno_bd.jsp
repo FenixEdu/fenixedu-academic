@@ -15,7 +15,7 @@
         <br/>
 	   	<% ArrayList iA = (ArrayList) session.getAttribute("infoAulasDeTurno"); %>
  <center>
- 	<b><html:link page="/listClasses.do?method=showClasses"> <bean:message key="link.add.shift.classes"/></html:link></b>
+ 	<b><html:link page="/listClasses.do?method=showClasses" paramName="infoTurno" paramProperty="idInternal" paramId="shiftOID"> <bean:message key="link.add.shift.classes"/></html:link></b>
  </center>
 <br/>
 <br/>

@@ -225,6 +225,9 @@ public class CreateGuideDispatchAction extends DispatchAction {
 			if (requesterType.equals(GuideRequester.CANDIDATE_STRING)){
 				session.removeAttribute(SessionConstants.REQUESTER_TYPE);
 				session.setAttribute(SessionConstants.REQUESTER_TYPE, requesterType);
+				generateToken(request);
+				saveToken(request);
+				
 				return mapping.findForward("CreateCandidateGuide");
 			}			
 			
@@ -245,7 +248,14 @@ public class CreateGuideDispatchAction extends DispatchAction {
 		
 		HttpSession session = request.getSession(false);
 
-		if (session != null) {
+		if (!isTokenValid(request)){
+			return mapping.findForward("BackError");
+		} else {
+			generateToken(request);
+			saveToken(request);
+		}
+		
+		
 			DynaActionForm createGuideForm = (DynaActionForm) form;
 			GestorServicos serviceManager = GestorServicos.manager();
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -345,6 +355,6 @@ public class CreateGuideDispatchAction extends DispatchAction {
 
 			return mapping.findForward("CreateSuccess");
 			
-		} else throw new Exception();
+
 	}
 }

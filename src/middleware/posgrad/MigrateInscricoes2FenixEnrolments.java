@@ -250,7 +250,7 @@ public class MigrateInscricoes2FenixEnrolments {
 
 				criteria = new Criteria();
 				criteria.addEqualTo("semester", new Integer(1));
-				criteria.addEqualTo("keyExecutionYear", executionYear.getInternalCode());
+				criteria.addEqualTo("keyExecutionYear", executionYear.getIdInternal());
 				query = new QueryByCriteria(ExecutionPeriod.class,criteria);
 
 				result = (List) broker.getCollectionByQuery(query);		

@@ -255,7 +255,7 @@
         </var>
       </field>
       
-      <field property="horaFim" depends="required,integer,range,mask">
+      <field property="horaFim" depends="required,integer,range">
         <arg0 key="property.aula.time.end"/>
         <arg1 key="${var:min}" resource="false"/>
         <arg2 key="${var:max}" resource="false"/>        
@@ -266,10 +266,6 @@
         <var>
           <var-name>max</var-name>
           <var-value>23</var-value>
-        </var>
-        <var>
-          <var-name>mask</var-name>
-          <var-value>[23456sSdD]</var-value>
         </var>
       </field>
 

@@ -64,6 +64,7 @@
                  type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                  dynamic="true">
         <form-property name="courseInitials" type="java.lang.String"/>
+        <form-property name="page" type="java.lang.Integer"/>        
       </form-bean>
 
       <!-- Dynamic-FormBean para ManipularAulas -->
@@ -134,6 +135,11 @@
         <form-property name="name" type="java.lang.String"/>
       </form-bean>
       
+      <form-bean name="shiftForm"
+                type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+        <form-property name="shiftOID" type="java.lang.String"/>
+      </form-bean>
 
       <!-- Dynamic-FormBean para EscolherDisciplinaETipo -->
       <form-bean name="escolherDisciplinaETipoForm"
@@ -982,23 +988,22 @@
           <forward name="Sucess" path="/viewRoomForExams.jsp"/>
       </action>
 
-	<action 
-      		  path="/listClasses"
-              scope="request"
+	<action   path="/listClasses"
+              name="shiftForm"
+              attribute="shiftForm"
               type="ServidorApresentacao.Action.sop.AddShiftsToClassesDA"
               parameter="method"
-             >
+              scope="request">
           <forward name="showClasses" path="/addShiftToClasses.jsp"/>
       </action>
-      <action 
-			  input="/listClasses.do?method=showClasses"	
+
+      <action input="/listClasses.do?method=showClasses"	
 			  name="addShiftToClasses"	
       		  path="/addShiftToClasses"
               scope="request"
               type="ServidorApresentacao.Action.sop.AddShiftsToClassesDA"
               parameter="method"
               validate="true">
-         
            <forward name="sucess" path="/gestaoHorarios.do"/>         
       </action>
 

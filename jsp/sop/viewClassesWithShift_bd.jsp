@@ -16,16 +16,16 @@
 <table>
   	<tr>
       	<td class="listClasses-header"><bean:message key="property.class.name"/></td>
-      	<td class="listClasses-header"><bean:message key="label.class"/></td>
+<%--      	<td class="listClasses-header"><bean:message key="label.class"/></td> --%>
    	</tr>
 	<logic:iterate id="infoClass" name="classesWithShift">
     <tr>
    		<td class="listClasses"><bean:write name="infoClass" property="nome"/></td>
-        <td class="listClasses">
+<%--        <td class="listClasses">
 			<html:link page="/ClassManagerDA.do?method=viewClass" paramId="className" paramName="infoClass" paramProperty="nome">
 		    	<bean:message key="link.view"/>							
 			</html:link>
-         </td>
+         </td> --%>
   	</tr>
 	</logic:iterate>
 </table>

@@ -6,6 +6,7 @@ package ServidorApresentacao.Action.masterDegree.administrativeOffice.candidate;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -96,6 +98,10 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 			} catch (Exception e) {
 				throw new Exception(e);
 			}
+
+			BeanComparator nameComparator = new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome");
+			Collections.sort(degreeList, nameComparator);
+
 
 			session.setAttribute(SessionConstants.DEGREE_LIST, degreeList);
 						

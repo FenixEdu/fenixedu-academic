@@ -93,6 +93,9 @@ public class StudentGuideDispatchAction extends DispatchAction {
 				throw new NoChangeMadeActionException("error.exception.noCertificateChosen");
 				
 				
+			generateToken(request);
+			saveToken(request);
+			
 			request.setAttribute(SessionConstants.GUIDE, infoGuide);
 			
 			return mapping.findForward("CreateStudentGuideReady");			

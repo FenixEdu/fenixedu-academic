@@ -1,5 +1,6 @@
 package ServidorApresentacao.Action.sop;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -15,7 +17,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoShift;
 import DataBeans.ShiftKey;
@@ -33,20 +34,12 @@ public class ViewClassesWithShift extends Action {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		HttpSession session = request.getSession(false);
-		
 		try {
 			//DynaValidatorForm shiftForm = (DynaValidatorForm) form;
 			//String name = (String) shiftForm.get("name");
 			String name = request.getParameter("name");
-			
-			InfoExecutionDegree infoExecutionDegree =
-				(InfoExecutionDegree) session.getAttribute(
-					SessionConstants.INFO_EXECUTION_DEGREE_KEY);
-
 			InfoShift infoShift = getInfoShift(name, request);
-			
-			Object[] args = { infoShift, infoExecutionDegree };
+			Object[] args = { infoShift };
 			List infoClasses =
 				(List) ServiceUtils.executeService(
 					SessionUtils.getUserView(request),
@@ -58,12 +51,14 @@ public class ViewClassesWithShift extends Action {
 				actionErrors.add(
 					"message.shift.no.classes",
 					new ActionError("message.shift.no.classes", name));
-
 				saveErrors(request, actionErrors);
 				return mapping.getInputForward();
 			}
-
+			
+			Collections.sort(infoClasses, new BeanComparator("nome"));
 			request.setAttribute("classesWithShift", infoClasses);
+			
+			
 			return mapping.findForward("sucess");
 		} catch (Exception e) {
 			e.printStackTrace(System.out);

@@ -96,8 +96,7 @@ public class ExecutionYearOJB
 		// else If the execution Year is mapped to the database, then write any existing changes.
 		else if (
 			(executionYearToWrite instanceof ExecutionYear)
-				&& ((ExecutionYear) executionYearFromDB).getInternalCode().equals(
-					((ExecutionYear) executionYearToWrite).getInternalCode())) {
+				&& executionYearFromDB.getIdInternal().equals(executionYearToWrite.getIdInternal())) {
 			super.lockWrite(executionYearToWrite);
 			// else Throw an already existing exception
 		} else

@@ -9,11 +9,11 @@ import Util.PeriodState;
  * Dominio
  * 
  */
-public class ExecutionYear implements IExecutionYear {
+public class ExecutionYear extends DomainObject implements IExecutionYear {
 
 	private PeriodState state;
 	protected String year;
-	private Integer internalCode;
+	
 	/**
 	 * Constructor for ExecutionYear.
 	 */
@@ -43,21 +43,6 @@ public class ExecutionYear implements IExecutionYear {
 		this.year = year;
 	}
 
-	/**
-	 * Returns the internalCode.
-	 * @return Integer
-	 */
-	public Integer getInternalCode() {
-		return internalCode;
-	}
-
-	/**
-	 * Sets the internalCode.
-	 * @param internalCode The internalCode to set
-	 */
-	public void setInternalCode(Integer internalCode) {
-		this.internalCode = internalCode;
-	}
 
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
@@ -72,7 +57,7 @@ public class ExecutionYear implements IExecutionYear {
 
 	public String toString() {
 		String result = "[EXECUTION_YEAR";
-		result += ", internalCode=" + internalCode;
+		result += ", internalCode=" + getIdInternal();
 		result += ", year=" + year;
 		result += "]";
 		return result;

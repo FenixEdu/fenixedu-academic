@@ -11,9 +11,12 @@ package ServidorPersistente.OJB;
  * @author  rpfi
  */
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
@@ -300,6 +303,25 @@ public class CursoExecucaoOJB
 		criteria.addEqualTo("executionYear.year", executionYear.getYear());
 		criteria.addEqualTo("curricularPlan.degree.tipoCurso", degreeType);
 		criteria.addOrderBy("KEY_DEGREE_CURRICULAR_PLAN", true);
+		return queryList(CursoExecucao.class, criteria);
+	}
+
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.ICursoExecucaoPersistente#readByExecutionYearAndDegreeCurricularPlans(Dominio.IDisciplinaExecucao, java.util.Collection)
+	 */
+	public List readByExecutionYearAndDegreeCurricularPlans(IExecutionYear executionYear, Collection degreeCurricularPlans) throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("academicYear", executionYear.getIdInternal());
+		
+		Collection degreeCurricularPlansIds = CollectionUtils.collect(degreeCurricularPlans, new Transformer(){
+
+			public Object transform(Object input) {
+				IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) input;
+				return degreeCurricularPlan.getIdInternal();
+			}}); 
+		
+		criteria.addIn("keyCurricularPlan", degreeCurricularPlansIds);
 		return queryList(CursoExecucao.class, criteria);
 	}
 

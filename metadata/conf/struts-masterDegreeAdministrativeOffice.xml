@@ -689,6 +689,14 @@
 	         <forward name="CreateCandidateGuide" path="/guide/createGuideReady.jsp"/>  
 	         <forward name="CreateStudentGuide" path="/guide/guideMenu.jsp"/>  
 	         <forward name="CreateSuccess" path="printGuide.do?method=prepare"/>  	         
+			 <forward name="BackError" path="/backErrorPage.do" redirect="true"/>  
+      </action>
+
+
+      <action path="/backErrorPage"
+              type="ServidorApresentacao.Action.commons.VoidAction"
+			  >
+	         <forward name="Success" path="/guide/backErrorPage.jsp"/> 
       </action>
 
       <!-- List Guides by Year -->
