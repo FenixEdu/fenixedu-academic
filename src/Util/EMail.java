@@ -12,7 +12,6 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeUtility;
 
 public class EMail
 {
@@ -23,8 +22,8 @@ public class EMail
 	 */
 	public EMail(String Servidor, String Origem)
 	{
-		this.Servidor= Servidor;
-		this.Origem= Origem;
+		this.Servidor = Servidor;
+		this.Origem = Origem;
 	}
 	/**
 	 * Envia um mail utilizando o Servidor e Origem por Omissao
@@ -47,79 +46,66 @@ public class EMail
 	{
 		return _send(Servidor, Origem, Destino, Assunto, Texto);
 	}
-	public static List send(
-		String server,
-		String fromName,
-		String fromAddress,
-		String subject,
-		List tos,
-		List ccs,
-		List bccs,
-		String body)
+	public static List send(String server, String fromName, String fromAddress, String subject, List tos, List ccs, List bccs, String body)
 	{
-		List unsentMails= new LinkedList();
+		List unsentMails = new LinkedList();
 		/* Configura as propriedades do sistema */
-		Properties props= new Properties();
+		Properties props = new Properties();
 		props.put("mail.smtp.host", server);
 		/* Obtem a sessao */
-		Session sessao= Session.getDefaultInstance(props, null);
+		Session sessao = Session.getDefaultInstance(props, null);
 		/* Cria a mensagem */
-		MimeMessage mensagem= new MimeMessage(sessao);
+		MimeMessage mensagem = new MimeMessage(sessao);
 		try
 		{
-			String composedFrom= fromAddress;
+			String composedFrom = fromAddress;
 			if (fromName != null && !fromName.equals(""))
-				composedFrom= "\"" + fromName + "\"" + " <" + fromAddress + ">";
+				composedFrom = "\"" + fromName + "\"" + " <" + fromAddress + ">";
 			/* Define os parametros da mensagem */
 			mensagem.setFrom(new InternetAddress(composedFrom));
-			for (Iterator iter= bccs.iterator(); iter.hasNext();)
+			for (Iterator iter = bccs.iterator(); iter.hasNext();)
 			{
-				String bcc= (String) iter.next();
+				String bcc = (String) iter.next();
 				try
 				{
 					mensagem.addRecipient(Message.RecipientType.BCC, new InternetAddress(bcc));
-				}
-				catch (AddressException e)
+				} catch (AddressException e)
 				{
 					unsentMails.add(bcc);
 				}
 			}
-			for (Iterator iter= tos.iterator(); iter.hasNext();)
+			for (Iterator iter = tos.iterator(); iter.hasNext();)
 			{
-				String to= (String) iter.next();
+				String to = (String) iter.next();
 				try
 				{
 					mensagem.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-				}
-				catch (AddressException e)
-				{                    
+				} catch (AddressException e)
+				{
 					unsentMails.add(to);
 				}
 			}
-			for (Iterator iter= ccs.iterator(); iter.hasNext();)
+			for (Iterator iter = ccs.iterator(); iter.hasNext();)
 			{
-				String cc= (String) iter.next();
+				String cc = (String) iter.next();
 				try
 				{
 					mensagem.addRecipient(Message.RecipientType.CC, new InternetAddress(cc));
-				}
-				catch (AddressException e)
-				{                    
+				} catch (AddressException e)
+				{
 					unsentMails.add(cc);
 				}
 			}
 			mensagem.setSubject(subject);
 			mensagem.setText(body);
 			Transport.send(mensagem);
-		}
-		catch (SendFailedException e)
+		} catch (SendFailedException e)
 		{
 			System.out.println("EMail: Nao foi possivel enviar o email");
-			for (int i= 0; i < e.getValidUnsentAddresses().length; i++)
+			for (int i = 0; i < e.getValidUnsentAddresses().length; i++)
 				unsentMails.add(e.getValidUnsentAddresses()[i]);
 			e.printStackTrace(System.out);
-		}
-		catch (MessagingException e)
+		} catch (MessagingException e)
 		{
 			System.out.println("EMail: Nao foi possivel enviar o email");
 			e.printStackTrace(System.out);
@@ -129,30 +115,27 @@ public class EMail
 	private static boolean _send(String Servidor, String Origem, String Destino, String Assunto, String Texto)
 	{
 		/* Configura as propriedades do sistema */
-		Properties props= new Properties();
+		Properties props = new Properties();
 		props.put("mail.smtp.host", Servidor);
 		/* Obtem a sessao */
-		Session sessao= Session.getDefaultInstance(props, null);
+		Session sessao = Session.getDefaultInstance(props, null);
 		/* Cria a mensagem */
-		MimeMessage message= new MimeMessage(sessao);
-		
+		MimeMessage message = new MimeMessage(sessao);
+
 		try
 		{
 			/* Define os parametros da mensagem */
-			message.setHeader("Content-Type", "text/plain; charset=\"iso-8859-1\"");
 			message.setFrom(new InternetAddress(Origem));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(Destino));
 			message.setSubject(Assunto);
 			message.setText(Texto);
 			Transport.send(message);
-		}
-		catch (AddressException e)
+		} catch (AddressException e)
 		{
 			System.out.println("EMail: Nao foi possivel enviar o email");
 			e.printStackTrace(System.out);
 			return false;
-		}
-		catch (MessagingException e)
+		} catch (MessagingException e)
 		{
 			System.out.println("EMail: Nao foi possivel enviar o email");
 			e.printStackTrace(System.out);
