@@ -570,4 +570,11 @@
         <description/>
         <isTransactional>true</isTransactional>
     </filter>         
+    <filter>
+        <name>StudentCurriculumOwnerAuthorization</name>
+        <implementationClass> 
+            ServidorAplicacao.Filtro.StudentCurriculumOwnerAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+    </filter>         
 </filterDefinitions>

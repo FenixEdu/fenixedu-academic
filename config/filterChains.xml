@@ -58,7 +58,7 @@
     </filterChain>
     <filterChain>
         <name>StudentCurriculumAccess</name>
-        <expression>EnrollmentLEECAuthorization || MasterDegreeAdministrativeOfficeAuthorization || SeminaryCoordinatorOrStudent</expression>
+        <expression>EnrollmentLEECAuthorization || MasterDegreeAdministrativeOfficeAuthorization || SeminaryCoordinator || StudentCurriculumOwnerAuthorization</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
@@ -587,7 +587,7 @@
     </filterChain>
     <filterChain>
         <name>EnrollmentLEECAuthorization</name>
-        <expression>EnrollmentLEECAuthorization</expression>
+        <expression>EnrollmentLEECAuthorization </expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
@@ -595,6 +595,13 @@
     <filterChain>
         <name>ReadGratuityListAuthorization</name>
         <expression>MasterDegreeAdministrativeOfficeAuthorization || DirectiveCouncilAuthorization </expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
+    </filterChain>    
+    <filterChain>
+        <name>StudentCurriculumOwnerAuthorization</name>
+        <expression>StudentCurriculumOwnerAuthorization</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>

@@ -10,6 +10,8 @@ import java.util.List;
 
 import DataBeans.InfoRole;
 import Dominio.ICoordinator;
+import Dominio.IEnrolmentPeriod;
+import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.ITeacher;
@@ -18,6 +20,8 @@ import Dominio.StudentCurricularPlan;
 import ServidorAplicacao.IUserView;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCoordinator;
+import ServidorPersistente.IPersistentEnrolmentPeriod;
+import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.IPersistentTutor;
@@ -61,7 +65,7 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 		return roles;
 	}
 
-	protected boolean hasProvilege(IUserView id, Object[] arguments)
+	protected String hasProvilege(IUserView id, Object[] arguments)
 	{
 		try
 		{
@@ -76,22 +80,34 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 				IStudent student = readStudent(id, sp);
 				if (student == null)
 				{
-					return false;
+					return "noAuthorization";
 				}
 
-				if (!verifyStudentLEEC(arguments, sp) || verifyStudentWithTutor(student, sp))
+				if (!verifyStudentLEEC(arguments, sp))
 				{
-					return false;
-					
+					return new String("error.student.degreeCurricularPlan.LEEC");
+				}
+				if (!curriculumOwner(student, id))
+				{
+					return "noAuthorization";
+
+				}
+				ITutor tutor = verifyStudentWithTutor(student, sp);
+				if (tutor != null)
+				{
+					return new String(
+						"error.enrollment.student.withTutor+"
+							+ tutor.getTeacher().getTeacherNumber().toString()
+							+ "+"
+							+ tutor.getTeacher().getPerson().getNome());
 				}
 			}
 			else
 			{
-
 				//verify if the student to enroll is a LEEC degree student
 				if (!verifyStudentLEEC(arguments, sp))
 				{
-					return false;
+					return new String("error.student.degreeCurricularPlan.LEEC");
 				}
 
 				//verify if the coodinator is of the LEEC degree
@@ -100,12 +116,12 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 					ITeacher teacher = readTeacher(id, sp);
 					if (teacher == null)
 					{
-						return false;
+						return "noAuthorization";
 					}
 
 					if (!verifyCoordinatorLEEC(teacher, arguments, sp))
 					{
-						return false;
+						return "noAuthorization";
 					}
 				}
 				else if (roles.contains(RoleType.TEACHER))
@@ -113,18 +129,19 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 					ITeacher teacher = readTeacher(id, sp);
 					if (teacher == null)
 					{
-						return false;
+						return "noAuthorization";
 					}
 
 					IStudent student = readStudent(arguments, sp);
 					if (student == null)
 					{
-						return false;
+						return "noAuthorization";
 					}
 
 					if (!verifyStudentTutor(teacher, student, sp))
 					{
-						return false;
+						return new String(
+							"error.enrollment.notStudentTutor+" + student.getNumber().toString());
 					}
 
 				}
@@ -132,59 +149,82 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 					roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
 						|| roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))
 				{
-					return true;
+					IStudentCurricularPlan studentCurricularPlan =
+						readStudentCurricularPlan(arguments, sp);
+
+					if (studentCurricularPlan.getStudent() == null)
+					{
+						return "noAuthorization";
+					}
+					if (insideEnrollmentPeriod(studentCurricularPlan, sp))
+					{
+						ITutor tutor = verifyStudentWithTutor(studentCurricularPlan.getStudent(), sp);
+						if (tutor != null)
+						{
+							return new String(
+								"error.enrollment.student.withTutor+"
+									+ tutor.getTeacher().getTeacherNumber().toString()
+									+ "+"
+									+ tutor.getTeacher().getPerson().getNome());
+						}
+					}
+					return null;
 				}
 				else
 				{
-					return false;
+					return "noAuthorization";
 				}
 			}
 		}
 		catch (Exception exception)
 		{
 			exception.printStackTrace();
+			return "noAuthorization";
+		}
+		return null;
+	}
+
+	/**
+	 * @param arguments
+	 * @param sp
+	 * @return
+	 */
+	private boolean insideEnrollmentPeriod(
+		IStudentCurricularPlan studentCurricularPlan,
+		ISuportePersistente sp)
+		throws ExcepcaoPersistencia
+	{
+		IPersistentEnrolmentPeriod persistentEnrolmentPeriod = sp.getIPersistentEnrolmentPeriod();
+		IEnrolmentPeriod enrolmentPeriod =
+			persistentEnrolmentPeriod.readActualEnrolmentPeriodForDegreeCurricularPlan(
+				studentCurricularPlan.getDegreeCurricularPlan());
+
+		IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+		IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+
+		return executionPeriod.equals(enrolmentPeriod.getExecutionPeriod());
+	}
+
+	/**
+	 * @param arguments
+	 * @return
+	 */
+	private boolean studentWithTutor(Object[] arguments, ISuportePersistente sp)
+		throws ExcepcaoPersistencia
+	{
+		IStudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(arguments, sp);
+
+		IPersistentTutor persistentTutor = sp.getIPersistentTutor();
+		List tutors = persistentTutor.readTeachersByStudent(studentCurricularPlan.getStudent());
+		if (tutors == null)
+		{
 			return false;
 		}
+
 		return true;
 	}
 
-	private IStudent readStudent(IUserView id, ISuportePersistente sp) throws ExcepcaoPersistencia
-	{
-		IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-
-		return persistentStudent.readByUsername(id.getUtilizador());
-	}
-
-	private IStudent readStudent(Object[] arguments, ISuportePersistente sp) throws ExcepcaoPersistencia
-	{
-		IStudentCurricularPlanPersistente persistentStudentCurricularPlan =
-			sp.getIStudentCurricularPlanPersistente();
-
-		IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
-		if (arguments[1] != null)
-		{
-			studentCurricularPlan.setIdInternal((Integer) arguments[1]);
-			studentCurricularPlan =
-			(IStudentCurricularPlan) persistentStudentCurricularPlan.readByOId(
-					studentCurricularPlan,
-					false);
-		}
-		else
-		{
-			studentCurricularPlan =
-			persistentStudentCurricularPlan.readActiveByStudentNumberAndDegreeType(
-					(Integer) arguments[2],
-					TipoCurso.LICENCIATURA_OBJ);
-		}
-		if (studentCurricularPlan == null)
-		{
-			return null;
-		}
-
-		return studentCurricularPlan.getStudent();
-	}
-
-	private boolean verifyStudentLEEC(Object[] arguments, ISuportePersistente sp)
+	private IStudentCurricularPlan readStudentCurricularPlan(Object[] arguments, ISuportePersistente sp)
 		throws ExcepcaoPersistencia
 	{
 		IStudentCurricularPlanPersistente persistentStudentCurricularPlan =
@@ -206,6 +246,31 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 					(Integer) arguments[2],
 					TipoCurso.LICENCIATURA_OBJ);
 		}
+		return studentCurricularPlan;
+	}
+
+	private IStudent readStudent(IUserView id, ISuportePersistente sp) throws ExcepcaoPersistencia
+	{
+		IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+
+		return persistentStudent.readByUsername(id.getUtilizador());
+	}
+
+	private IStudent readStudent(Object[] arguments, ISuportePersistente sp) throws ExcepcaoPersistencia
+	{
+		IStudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(arguments, sp);
+		if (studentCurricularPlan == null)
+		{
+			return null;
+		}
+
+		return studentCurricularPlan.getStudent();
+	}
+
+	private boolean verifyStudentLEEC(Object[] arguments, ISuportePersistente sp)
+		throws ExcepcaoPersistencia
+	{
+		IStudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(arguments, sp);
 		if (studentCurricularPlan == null)
 		{
 			return false;
@@ -221,19 +286,28 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 		return DEGREE_LEEC_CODE.equals(degreeCode);
 	}
 
+	private boolean curriculumOwner(IStudent student, IUserView id) throws ExcepcaoPersistencia
+	{
+		if (!student.getPerson().getUsername().equals(id.getUtilizador()))
+		{
+			return false;
+		}
+		return true;
+	}
+
 	/**
 	 * @param integer
 	 * @param sp
 	 * @return
 	 */
-	private boolean verifyStudentWithTutor(IStudent student, ISuportePersistente sp)
+	private ITutor verifyStudentWithTutor(IStudent student, ISuportePersistente sp)
 		throws ExcepcaoPersistencia
 	{
 		IPersistentTutor persistentTutor = sp.getIPersistentTutor();
 
 		List tutors = persistentTutor.readTeachersByStudent(student);
 
-		return (tutors != null && tutors.size() > 0);
+		return ((tutors != null && tutors.size() > 0) ? (ITutor) tutors.get(0) : null);
 	}
 
 	private ITeacher readTeacher(IUserView id, ISuportePersistente sp) throws ExcepcaoPersistencia

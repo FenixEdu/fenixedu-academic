@@ -23,7 +23,6 @@ import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
  */
 public abstract class AuthorizationByManyRolesFilter extends Filtro
 {
-
 	/**
 	 * @param collection
 	 * @return boolean
@@ -41,15 +40,14 @@ public abstract class AuthorizationByManyRolesFilter extends Filtro
 			return false;
 		}
 	}
-		
+
 	/**
 	 * @return The Needed Roles to Execute The Service
 	 */
 	abstract protected Collection getNeededRoles();
 
 	/**
-	 * @return The Needed Roles to Execute The Service
-	 * but with InfoObjects
+	 * @return The Needed Roles to Execute The Service but with InfoObjects
 	 */
 	protected List getRoleList(List roles)
 	{
@@ -59,7 +57,7 @@ public abstract class AuthorizationByManyRolesFilter extends Filtro
 		{
 			result.add(((InfoRole) iterator.next()).getRoleType());
 		}
-		
+
 		return result;
 	}
 
@@ -69,24 +67,23 @@ public abstract class AuthorizationByManyRolesFilter extends Filtro
 	 * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
 	 *      pt.utl.ist.berserk.ServiceResponse)
 	 */
-	public void execute(ServiceRequest request, ServiceResponse response)
-	throws Exception
+	public void execute(ServiceRequest request, ServiceResponse response) throws Exception
 	{
 		IUserView id = (IUserView) request.getRequester();
+		String messageException = hasProvilege(id, request.getArguments());
 		if ((id != null && id.getRoles() != null && !containsRole(id.getRoles()))
-				|| (id != null && id.getRoles() != null && !hasProvilege(id, request.getArguments()))
-				|| (id == null)
-				|| (id.getRoles() == null))
+			|| (id != null && id.getRoles() != null && messageException != null)
+			|| (id == null)
+			|| (id.getRoles() == null))
 		{
-			throw new NotAuthorizedFilterException();
+			throw new NotAuthorizedFilterException(messageException);
 		}
-
 	}
-	
+
 	/**
 	 * @param id
 	 * @param argumentos
 	 * @return
 	 */
-	abstract protected boolean hasProvilege(IUserView id, Object[] arguments);	
+	abstract protected String hasProvilege(IUserView id, Object[] arguments);
 }

@@ -33,6 +33,7 @@ import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrolmentContext;
 import ServidorApresentacao.Action.commons.TransactionalDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import Util.Data;
 import Util.RoleType;
 import framework.factory.ServiceManagerServiceFactory;
 
@@ -51,23 +52,25 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		throws Exception
 	{
 		getExecutionDegree(request);
-		
+
 		return mapping.findForward("prepareEnrollmentChooseStudent");
 	}
 
 	private Integer getExecutionDegree(HttpServletRequest request)
 	{
 		Integer executionDegreeId = null;
-		
-		String executionDegreeIdString  = request.getParameter("executionDegreeId");
-		if(executionDegreeIdString == null) {
+
+		String executionDegreeIdString = request.getParameter("executionDegreeId");
+		if (executionDegreeIdString == null)
+		{
 			executionDegreeIdString = (String) request.getAttribute("executionDegreeId");
 		}
-		if(executionDegreeIdString != null){
+		if (executionDegreeIdString != null)
+		{
 			executionDegreeId = Integer.valueOf(executionDegreeIdString);
 		}
 		request.setAttribute("executionDegreeId", executionDegreeId);
-		
+
 		return executionDegreeId;
 	}
 
@@ -94,7 +97,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		DynaValidatorForm enrollmentForm = (DynaValidatorForm) form;
 		Integer studentNumber = new Integer((String) enrollmentForm.get("studentNumber"));
 
-		Integer executionDegreeId = getExecutionDegree(request);		
+		Integer executionDegreeId = getExecutionDegree(request);
 		InfoStudentEnrolmentContext infoStudentEnrolmentContext = null;
 		Object[] args = { executionDegreeId, null, studentNumber };
 		try
@@ -107,7 +110,14 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		}
 		catch (NotAuthorizedException e)
 		{
-			errors.add("notauthorized", new ActionError("error.exception.notAuthorized"));
+			if (e.getCause().getCause().getMessage() != null)
+			{
+				addAuthorizationErrors(errors, e);
+			}
+			else
+			{
+				errors.add("notauthorized", new ActionError("error.exception.notAuthorized"));
+			}
 		}
 		catch (ExistingServiceException e)
 		{
@@ -125,10 +135,15 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		catch (OutOfCurricularCourseEnrolmentPeriod e)
 		{
 			if (!(userView.getRoles().contains(new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE))
-				|| userView.getRoles().contains(new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))))
+				|| userView.getRoles().contains(
+					new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))))
 			{
-				System.out.println("vai lançar mensagem de erro: " +e.getMessage() + " " + e);
-				errors.add("enrolment", new ActionError(e.getMessageKey(), e.getStartDate(), e.getEndDate()));
+				errors.add(
+					"enrolment",
+					new ActionError(
+						e.getMessageKey(),
+						Data.format2DayMonthYear(e.getStartDate()),
+						Data.format2DayMonthYear(e.getEndDate())));
 			}
 		}
 		catch (FenixServiceException e)
@@ -165,6 +180,34 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		request.setAttribute("infoStudentEnrolmentContext", infoStudentEnrolmentContext);
 
 		return mapping.findForward("prepareEnrollmentChooseCurricularCourses");
+	}
+
+	private void addAuthorizationErrors(ActionErrors errors, NotAuthorizedException e)
+	{
+		String messageException = e.getCause().getCause().getMessage();
+		String message = null;
+		String arg1 = null;
+		String arg2 = null;
+		if (messageException.indexOf("+") != -1)
+		{
+			message = messageException.substring(0,messageException.indexOf("+"));
+			String newMessage = messageException.substring(messageException.indexOf("+") + 1);
+			if (newMessage.indexOf("+") != -1)
+			{
+				arg1 = newMessage.substring(0, newMessage.indexOf("+"));
+				arg2 = newMessage.substring(newMessage.indexOf("+") + 1);
+			}
+			else
+			{
+				arg1 = newMessage;
+			}
+			
+		}
+		else
+		{
+			message = messageException;
+		}
+		errors.add("notauthorized", new ActionError(message, arg1, arg2));
 	}
 
 	private Integer[] buildArrayForForm(List listToTransform)
@@ -220,7 +263,14 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		}
 		catch (NotAuthorizedException e)
 		{
-			errors.add("notauthorized", new ActionError("error.exception.notAuthorized"));
+			if (e.getMessage() != null)
+			{
+				addAuthorizationErrors(errors, e);
+			}
+			else
+			{
+				errors.add("notauthorized", new ActionError("error.exception.notAuthorized"));
+			}
 		}
 		catch (ExistingServiceException e)
 		{
@@ -239,7 +289,8 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		{
 			throw new FenixActionException();
 		}
-		if(!errors.isEmpty()) {
+		if (!errors.isEmpty())
+		{
 			saveErrors(request, errors);
 			return mapping.findForward("beginTransaction");
 		}
@@ -291,14 +342,22 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		Integer studentNumber = Integer.valueOf((String) enrollmentForm.get("studentNumber"));
 
 		Integer executionDegreeId = getExecutionDegree(request);
-		Object[] args = { executionDegreeId, studentCurricularPlanId, specializationArea, secondaryArea };
+		Object[] args =
+			{ executionDegreeId, studentCurricularPlanId, specializationArea, secondaryArea };
 		try
 		{
 			ServiceManagerServiceFactory.executeService(userView, "WriteStudentAreas", args);
 		}
 		catch (NotAuthorizedException e)
 		{
-			errors.add("notauthorized", new ActionError("error.exception.notAuthorized"));
+			if (e.getMessage() != null)
+			{
+				addAuthorizationErrors(errors, e);
+			}
+			else
+			{
+				errors.add("notauthorized", new ActionError("error.exception.notAuthorized"));
+			}
 		}
 		catch (BothAreasAreTheSameServiceException e)
 		{
@@ -362,7 +421,14 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 			}
 			catch (NotAuthorizedException e)
 			{
-				errors.add("notauthorized", new ActionError("error.exception.notAuthorized"));
+				if (e.getMessage() != null)
+				{
+					addAuthorizationErrors(errors, e);
+				}
+				else
+				{
+					errors.add("notauthorized", new ActionError("error.exception.notAuthorized"));
+				}
 				saveErrors(request, errors);
 				return mapping.findForward("prepareEnrollmentChooseCurricularCourses");
 			}
@@ -407,7 +473,14 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 			}
 			catch (NotAuthorizedException e)
 			{
-				errors.add("notauthorized", new ActionError("error.exception.notAuthorized"));
+				if (e.getMessage() != null)
+				{
+					addAuthorizationErrors(errors, e);
+				}
+				else
+				{
+					errors.add("notauthorized", new ActionError("error.exception.notAuthorized"));
+				}
 				saveErrors(request, errors);
 			}
 			catch (FenixServiceException e)
@@ -446,7 +519,14 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		}
 		catch (NotAuthorizedException e)
 		{
-			errors.add("notauthorized", new ActionError("error.exception.notAuthorized"));
+			if (e.getMessage() != null)
+			{
+				addAuthorizationErrors(errors, e);
+			}
+			else
+			{
+				errors.add("notauthorized", new ActionError("error.exception.notAuthorized"));
+			}
 		}
 		catch (ExistingServiceException e)
 		{
@@ -463,7 +543,17 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		}
 		catch (OutOfCurricularCourseEnrolmentPeriod e)
 		{
-			errors.add("enrolment", new ActionError(e.getMessage()));
+			if (!(userView.getRoles().contains(new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE))
+				|| userView.getRoles().contains(
+					new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))))
+			{
+				errors.add(
+					"enrolment",
+					new ActionError(
+						e.getMessageKey(),
+						Data.format2DayMonthYear(e.getStartDate()),
+						Data.format2DayMonthYear(e.getEndDate())));
+			}
 		}
 		catch (FenixServiceException e)
 		{
@@ -491,12 +581,19 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 			curriculum =
 				(ArrayList) ServiceManagerServiceFactory.executeService(
 					userView,
-					"ReadStudentCurriculumForEnrollmentConfirmation",
+					"ReadStudentCurriculum",
 					args2);
 		}
 		catch (NotAuthorizedException e)
 		{
-			errors.add("notAuthorized", new ActionError("error.enrollment.notAuthorized"));
+			if (e.getMessage() != null)
+			{
+				addAuthorizationErrors(errors, e);
+			}
+			else
+			{
+				errors.add("notauthorized", new ActionError("error.exception.notAuthorized"));
+			}
 			saveErrors(request, errors);
 			return prepareEnrollmentChooseCurricularCourses(mapping, form, request, response);
 		}

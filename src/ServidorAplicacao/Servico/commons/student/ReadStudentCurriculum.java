@@ -20,7 +20,6 @@ import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
-import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
