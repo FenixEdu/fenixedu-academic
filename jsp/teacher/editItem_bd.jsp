@@ -3,18 +3,19 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-
+<span class="error"><html:errors property="error.default" /></span>
 <logic:present name="<%= SessionConstants.INFO_ITEM %>" >	
 <bean:define id="item" name="<%= SessionConstants.INFO_ITEM %>" />
 </logic:present>	
 <table align="center">
 <html:form action="/editItem">
+	<html:hidden property="page" value="1"/>
 <tr>
 	<td>
 		<bean:message key="message.itemName"/>
 	</td>
 	<td>
-		<html:text name="item" property="name"/>
+		<html:text name="item" property="name"/> <span class="error"><html:errors property="name"/></span>
 	</td>
 </tr>
 
@@ -28,7 +29,7 @@
 			<html:options collection="items" labelProperty="name" property="itemOrder" />
 			<html:option value="-1">(fim)</html:option>
 		</html:select>
-		
+		<span class="error"><html:errors property="itemOrder"/></span>
 	</td>
 </tr>
 
@@ -44,6 +45,7 @@
 				<html:option value="false">não</html:option>
 				<html:option value="true">sim</html:option>
 		</html:select>
+		<span class="error"><html:errors property="urgent"/></span>
 	</td>
 </tr>
 <tr>
@@ -51,7 +53,8 @@
 		<bean:message key="message.itemInformation"/>
 	</td>
 	<td>
-		<html:textarea name="item" property="information" rows="8" cols="50"/>
+		<html:textarea name="item" property="information" rows="8" cols="40"/>
+		<span class="error"><html:errors property="information"/></span>
 	</td>
 </tr>
 
