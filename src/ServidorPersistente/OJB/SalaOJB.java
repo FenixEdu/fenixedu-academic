@@ -11,10 +11,10 @@ package ServidorPersistente.OJB;
  * @author  ars
  */
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.ojb.odmg.HasBroker;
 import org.odmg.QueryException;
 
 import Dominio.Aula;
@@ -211,17 +211,15 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
 		List availableRooms = null;
 
 		try {
-			String oqlQuery =
-				"select exam from " + Exam.class.getName();
+			String oqlQuery = "select exam from " + Exam.class.getName();
 			oqlQuery += " where idInternal = $1";
 			query.create(oqlQuery);
 			query.bind(((Exam) exam).getIdInternal());
 			List examList = (List) query.execute();
-			lockRead(examList);
-			exam = (IExam) examList.get(0);
 
-			oqlQuery =
-				"select occupiedrooms from " + Sala.class.getName();
+			IExam examFromDB = (IExam) examList.get(0);
+
+			oqlQuery = "select occupiedrooms from " + Sala.class.getName();
 			oqlQuery += " where associatedExams.day = $1";
 			oqlQuery += " and associatedExams.beginning = $2";
 			oqlQuery += " and associatedExams.idInternal != $3";
@@ -232,15 +230,15 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
 			query.create(oqlQuery);
 			query.bind(exam.getDay());
 			query.bind(exam.getBeginning());
-			query.bind(((Exam) exam).getIdInternal());
+			query.bind(((Exam) examFromDB).getIdInternal());
 			query.bind(
-				((IDisciplinaExecucao) exam
+				((IDisciplinaExecucao) examFromDB
 					.getAssociatedExecutionCourses()
 					.get(0))
 					.getExecutionPeriod()
 					.getName());
 			query.bind(
-				((IDisciplinaExecucao) exam
+				((IDisciplinaExecucao) examFromDB
 					.getAssociatedExecutionCourses()
 					.get(0))
 					.getExecutionPeriod()
@@ -248,7 +246,6 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
 					.getYear());
 			List occupiedRooms = (List) query.execute();
 			lockRead(occupiedRooms);
-			System.out.println("## Salas ocupadas="+occupiedRooms.size());
 
 			oqlQuery = "select allExamRooms from " + Sala.class.getName();
 			oqlQuery += " where tipo != $1";
@@ -256,7 +253,6 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
 			query.bind(new TipoSala(TipoSala.LABORATORIO));
 			List allExamRooms = (List) query.execute();
 			lockRead(allExamRooms);
-			System.out.println("## Todas as Salas="+allExamRooms.size());
 			availableRooms =
 				(List) CollectionUtils.subtract(allExamRooms, occupiedRooms);
 

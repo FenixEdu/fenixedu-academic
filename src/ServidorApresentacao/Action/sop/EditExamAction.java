@@ -14,8 +14,10 @@ import org.apache.struts.validator.DynaValidatorForm;
 import DataBeans.InfoViewExamByDayAndShift;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
+import ServidorAplicacao.Servico.exceptions.InterceptingRoomsServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
+import ServidorApresentacao.Action.exceptions.InterceptingRoomsActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -67,7 +69,10 @@ public class EditExamAction extends FenixAction {
 				ServiceUtils.executeService(userView, "EditExam", argsCreateExam);
 			} catch (ExistingServiceException ex) {
 				throw new ExistingActionException("O exame de " + season, ex);
+			} catch (InterceptingRoomsServiceException ex) {
+				throw new InterceptingRoomsActionException("O exame de " + season, ex);
 			}
+			
 
 			String input = (String) session.getAttribute("input");
 			return mapping.findForward(input);

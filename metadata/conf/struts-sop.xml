@@ -852,6 +852,10 @@
         		   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
         		   />
+    	<exception type="ServidorApresentacao.Action.exceptions.InterceptingRoomsActionException"
+        		   key="ServidorApresentacao.Action.exceptions.InterceptingRoomsActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+        		   />
     	<forward name="viewExamsByDayAndShift" path="/viewExamsDayAndShiftForm.do?method=view"/>
     	<forward name="viewExamsMap" path="/viewExamsMap.do?method=view"/>
 	</action>

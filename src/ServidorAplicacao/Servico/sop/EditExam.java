@@ -12,18 +12,22 @@ package ServidorAplicacao.Servico.sop;
  **/
 
 import java.util.Calendar;
+import java.util.List;
 
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoViewExamByDayAndShift;
 import DataBeans.util.Cloner;
+import Dominio.Exam;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExam;
 import Dominio.IExecutionPeriod;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
+import ServidorAplicacao.Servico.exceptions.InterceptingRoomsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.ISalaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.Season;
@@ -67,20 +71,30 @@ public class EditExam implements IServico {
 
 			IExecutionPeriod executionPeriod =
 				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
-					((InfoExecutionCourse) infoViewOldExam.getInfoExecutionCourses().get(0))
-					.getInfoExecutionPeriod());
+					((InfoExecutionCourse) infoViewOldExam
+						.getInfoExecutionCourses()
+						.get(0))
+						.getInfoExecutionPeriod());
 
 			IDisciplinaExecucao executionCourse =
 				executionCourseDAO
 					.readByExecutionCourseInitialsAndExecutionPeriod(
-					((InfoExecutionCourse) infoViewOldExam.getInfoExecutionCourses().get(0))
-					.getSigla(), executionPeriod);
+					((InfoExecutionCourse) infoViewOldExam
+						.getInfoExecutionCourses()
+						.get(0))
+						.getSigla(),
+					executionPeriod);
 
 			IExam examFromDBToBeEdited = null;
 			boolean newSeasonAlreadyScheduled = false;
-			for (int i = 0; i < executionCourse.getAssociatedExams().size(); i++) {
-				IExam exam = (IExam) executionCourse.getAssociatedExams().get(i);
-				if (exam.getSeason().equals(infoViewOldExam.getInfoExam().getSeason())) {
+			for (int i = 0;
+				i < executionCourse.getAssociatedExams().size();
+				i++) {
+				IExam exam =
+					(IExam) executionCourse.getAssociatedExams().get(i);
+				if (exam
+					.getSeason()
+					.equals(infoViewOldExam.getInfoExam().getSeason())) {
 					examFromDBToBeEdited = exam;
 				} else if (exam.getSeason().equals(season)) {
 					newSeasonAlreadyScheduled = true;
@@ -91,18 +105,53 @@ public class EditExam implements IServico {
 				throw new ExistingServiceException();
 			}
 
-			examFromDBToBeEdited.setBeginning(examTime);
-			examFromDBToBeEdited.setDay(examDate);
-			examFromDBToBeEdited.setEnd(null);
-			examFromDBToBeEdited.setSeason(season);
+			if (hasValidRooms(examFromDBToBeEdited, examDate, examTime)) {
+				examFromDBToBeEdited.setBeginning(examTime);
+				examFromDBToBeEdited.setDay(examDate);
+				examFromDBToBeEdited.setEnd(null);
+				examFromDBToBeEdited.setSeason(season);
 
-			result = new Boolean(true);
+				result = new Boolean(true);
+			} else {
+				throw new InterceptingRoomsServiceException();
+			}
+
 		} catch (ExcepcaoPersistencia ex) {
 
 			throw new FenixServiceException(ex.getMessage());
 		}
 
 		return result;
+	}
+
+	private boolean hasValidRooms(
+		IExam exam,
+		Calendar examDate,
+		Calendar examTime)
+		throws FenixServiceException {
+
+		ISuportePersistente sp;
+		try {
+			System.out.println("IN hasVAlidRooms");
+			sp = SuportePersistenteOJB.getInstance();
+			ISalaPersistente persistentRoom = sp.getISalaPersistente();
+			IExam examQuery = new Exam(examDate, examTime, null, null);
+			examQuery.setIdInternal(exam.getIdInternal());
+			List availableRooms = persistentRoom.readAvailableRooms(examQuery);
+
+			System.out.println("## Available Rooms.size() = "+availableRooms.size());
+			System.out.println("## exam.getAssociatedRooms().size() = "+exam.getAssociatedRooms().size());
+
+			if (availableRooms.containsAll(exam.getAssociatedRooms())) {
+				System.out.println("OUT hasVAlidRooms true");
+				return true;
+			}
+
+		} catch (ExcepcaoPersistencia e) {
+			throw new FenixServiceException(e.getMessage());
+		}
+		System.out.println("OUT hasVAlidRooms false");
+		return false;
 	}
 
 }
