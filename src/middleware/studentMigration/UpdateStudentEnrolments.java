@@ -247,7 +247,6 @@ public class UpdateStudentEnrolments
 			if (attend == null)
 			{
 //				System.out.println("Student " + mwEnrolment.getNumber() + " has no Attend for " + mwEnrolment.getCoursecode() + " from Degree " + mwEnrolment.getDegreecode());
-				attendsNotFound++;
 				continue;
 
 			}
@@ -286,7 +285,6 @@ public class UpdateStudentEnrolments
 			{
 				sp.getIFrequentaPersistente().simpleLockWrite(attend);
 				attend.setEnrolment(enrolment);
-				attendsUpdated++;
 			}
 
 		}
@@ -324,7 +322,6 @@ public class UpdateStudentEnrolments
 		enrolmentEvaluation.setPersonResponsibleForGrade(null);
 		enrolmentEvaluation.setWhen(null);
 
-		enrolmentWritten++;
 		return enrolment;
 	}
 
@@ -478,8 +475,6 @@ public class UpdateStudentEnrolments
 
 					System.out.println("---------");
 
-					curricularCourseScopesNotFound++;
-					enrolmentNotWritten++;
 
 					
 				}
@@ -532,8 +527,6 @@ public class UpdateStudentEnrolments
 				System.out.println("Curricular Course ID " + curricularCourse.getIdInternal());
 				System.out.println("---------");
 
-				curricularCourseScopesNotFound++;
-				enrolmentNotWritten++;
 
 			
 			}
