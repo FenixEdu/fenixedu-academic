@@ -59,15 +59,18 @@ public class FenixErrorExceptionHandler extends ExceptionHandler {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws ServletException {
-		ActionForward forward = null;
+		
 
 		ActionError error = null;
 		String property = null;
 
 		// Figure out the error
+		ActionForward forward = mapping.getInputForward();
 		if (ex instanceof FenixActionException) {
+			FenixActionException fenixActionException = (FenixActionException) ex;
 			error = ((FenixActionException) ex).getError();
 			property = ((FenixActionException) ex).getProperty();
+			forward = fenixActionException.getActionForward() != null ? fenixActionException.getActionForward() : mapping.getInputForward();
 		} else {
 			error = new ActionError(ae.getKey(), ex.getMessage());
 			property = error.getKey();
@@ -76,10 +79,8 @@ public class FenixErrorExceptionHandler extends ExceptionHandler {
 		// Store the exception
 		request.setAttribute(Globals.EXCEPTION_KEY, ex);
 		super.storeException(request, property, error, forward, ae.getScope());
-		// Executing super will remove error just added from session.
-		//super.execute(ex, ae, mapping, formInstance, request, response);
-
-		return mapping.getInputForward();
+		System.out.println("================================= AQUI");
+		return forward;
 	}
 
 }
