@@ -15,7 +15,6 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
-import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;

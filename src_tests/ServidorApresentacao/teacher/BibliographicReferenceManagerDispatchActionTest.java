@@ -317,7 +317,6 @@ public class BibliographicReferenceManagerDispatchActionTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInSessionForActionToBeTestedSuccessfuly()
 	 */
 	protected Map getItemsToPutInSessionForActionToBeTestedSuccessfuly() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -325,7 +324,6 @@ public class BibliographicReferenceManagerDispatchActionTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInSessionForActionToBeTestedUnsuccessfuly()
 	 */
 	protected Map getItemsToPutInSessionForActionToBeTestedUnsuccessfuly() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -333,7 +331,6 @@ public class BibliographicReferenceManagerDispatchActionTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInRequestForActionToBeTestedSuccessfuly()
 	 */
 	protected Map getItemsToPutInRequestForActionToBeTestedSuccessfuly() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -341,7 +338,6 @@ public class BibliographicReferenceManagerDispatchActionTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInRequestForActionToBeTestedUnsuccessfuly()
 	 */
 	protected Map getItemsToPutInRequestForActionToBeTestedUnsuccessfuly() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -349,7 +345,6 @@ public class BibliographicReferenceManagerDispatchActionTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getExistingAttributesListToVerifyInSuccessfulExecution()
 	 */
 	protected Map getExistingAttributesListToVerifyInSuccessfulExecution() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -357,7 +352,6 @@ public class BibliographicReferenceManagerDispatchActionTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getNonExistingAttributesListToVerifyInSuccessfulExecution()
 	 */
 	protected Map getNonExistingAttributesListToVerifyInSuccessfulExecution() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -365,7 +359,6 @@ public class BibliographicReferenceManagerDispatchActionTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getExistingAttributesListToVerifyInUnsuccessfulExecution()
 	 */
 	protected Map getExistingAttributesListToVerifyInUnsuccessfulExecution() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -373,7 +366,6 @@ public class BibliographicReferenceManagerDispatchActionTest
 	 * @see ServidorApresentacao.TestCaseActionExecution#getNonExistingAttributesListToVerifyInUnsuccessfulExecution()
 	 */
 	protected Map getNonExistingAttributesListToVerifyInUnsuccessfulExecution() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }
