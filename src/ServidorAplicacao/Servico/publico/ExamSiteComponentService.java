@@ -11,8 +11,6 @@ import DataBeans.SiteView;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
-import Dominio.ITurma;
-import Dominio.Turma;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Factory.ExamSiteComponentBuilder;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -21,7 +19,6 @@ import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.ITurmaPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
@@ -111,36 +108,5 @@ public class ExamSiteComponentService implements IServico
         }
 
         return siteView;
-    }
-
-    private ITurma getDomainClass(
-        String className,
-        Integer curricularYear,
-        IExecutionPeriod executionPeriod,
-        ICursoExecucao executionDegree,
-        ISuportePersistente sp)
-        throws ExcepcaoPersistencia, FenixServiceException
-    {
-
-        ITurmaPersistente persistentClass = sp.getITurmaPersistente();
-        ITurma domainClass = null;
-
-        if (curricularYear == null)
-        {
-            domainClass =
-                persistentClass.readByNameAndExecutionDegreeAndExecutionPeriod(
-                    className,
-                    executionDegree,
-                    executionPeriod);
-
-        } else
-        {
-            domainClass = new Turma();
-            domainClass.setAnoCurricular(curricularYear);
-            domainClass.setExecutionDegree(executionDegree);
-            domainClass.setExecutionPeriod(executionPeriod);
-
-        }
-        return domainClass;
     }
 }

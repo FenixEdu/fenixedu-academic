@@ -25,33 +25,17 @@ import Util.RoleType;
 public class RequestWrapperFilter implements Filter
 {
 
-	private FilterConfig config = null;
 
 	public void init(FilterConfig config) throws ServletException
 	{
-		this.config = config;
 	}
 
 	public void destroy()
 	{
-		config = null;
 	}
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException
 	{
-
-//		HttpServletRequest httpRequest = (HttpServletRequest) request;
-//
-//		ServletContext context = config.getServletContext();
-//
-//		HttpSession session = httpRequest.getSession(true);
-//
-//		/*:FIXME: remove this code */
-//		if (session.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY) == null)
-//		{
-//			session.setAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY, context.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY));
-//		}
-
 		chain.doFilter(new FenixHttpServletRequestWrapper((HttpServletRequest) request), response);
 	}
 	public class FenixHttpServletRequestWrapper extends HttpServletRequestWrapper

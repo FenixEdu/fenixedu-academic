@@ -5,15 +5,11 @@
 package ServidorAplicacao.Servico.student;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.InfoStudentTestQuestion;
-import DataBeans.comparators.CalendarDateComparator;
-import DataBeans.comparators.CalendarHourComparator;
 import DataBeans.util.Cloner;
-
 import Dominio.DistributedTest;
 import Dominio.IDistributedTest;
 import Dominio.IStudent;
@@ -115,21 +111,6 @@ public class ReadStudentTest implements IServico {
 			throw new FenixServiceException(e);
 		}
 		return infoStudentTestQuestionList;
-	}
-
-	private boolean compareDates(Calendar date, Calendar hour) {
-		Calendar calendar = Calendar.getInstance();
-		CalendarDateComparator dateComparator = new CalendarDateComparator();
-		CalendarHourComparator hourComparator = new CalendarHourComparator();
-		if (dateComparator.compare(calendar, date) <= 0) {
-			if (dateComparator.compare(calendar, date) == 0)
-				if (hourComparator.compare(calendar, hour) <= 0)
-					return true;
-				else
-					return false;
-			return true;
-		}
-		return false;
 	}
 
 }

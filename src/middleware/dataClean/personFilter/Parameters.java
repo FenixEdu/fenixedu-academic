@@ -14,7 +14,6 @@ import java.util.StringTokenizer;
 
 public class Parameters {
 
-	private static String separator = java.io.File.separator;
 	private static Parameters theInstance = null;
 
 	/**

@@ -73,14 +73,14 @@ public class ServiceDiscriptorProperty2XML extends FileUtil {
 			}
 			
 			String filterToApply =
-				StringUtils.trim(StringUtils.prechomp(line, "="));
+				StringUtils.trim(StringUtils.substringAfter(line, "="));
 			String discription = "";
 
 			String isTransactional = "false";
 			try {
 				String nextLine = bufferedReader.readLine();
 				if (StringUtils
-					.trim(StringUtils.prechomp(nextLine, "="))
+					.trim(StringUtils.substringAfter(nextLine, "="))
 					.equals("1")) {
 					isTransactional = "true";
 				}

@@ -17,8 +17,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoLesson;
 import DataBeans.InfoRoom;
@@ -40,6 +38,7 @@ import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.DiaSemana;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -191,8 +190,8 @@ public class ManageLessonDA
 			if (action != null && action.equals("edit")) {
 				// Permit selection of current room only if the day didn't
 				// change and the hour is contained within the original hour
-				InfoLesson infoLessonOld =
-					(InfoLesson) request.getAttribute(SessionConstants.LESSON);
+//				InfoLesson infoLessonOld =
+//					(InfoLesson) request.getAttribute(SessionConstants.LESSON);
 				manageLessonForm.set(
 					"nomeSala",
 					""
@@ -562,69 +561,6 @@ public class ManageLessonDA
 			saveErrors(request, actionErrors);
 			return mapping.getInputForward();
 		}
-	}
-
-	private boolean contained(
-		InfoLesson infoLessonOld,
-		InfoLesson infoLessonNew) {
-
-		if (!infoLessonOld
-			.getDiaSemana()
-			.getDiaSemana()
-			.equals(infoLessonNew.getDiaSemana().getDiaSemana())) {
-			return false;
-		}
-
-		String startTimeOld = "";
-		String startTimeNew = "";
-		String endTimeOld = "";
-		String endTimeNew = "";
-
-		if (infoLessonOld.getInicio().get(Calendar.HOUR_OF_DAY) < 10) {
-			startTimeOld += "0";
-		}
-		startTimeOld += infoLessonOld.getInicio().get(Calendar.HOUR_OF_DAY);
-		if (infoLessonOld.getInicio().get(Calendar.MINUTE) == 0) {
-			startTimeOld += "0";
-		}
-		startTimeOld += infoLessonOld.getInicio().get(Calendar.MINUTE);
-
-		if (infoLessonOld.getFim().get(Calendar.HOUR_OF_DAY) < 10) {
-			endTimeOld += "0";
-		}
-		endTimeOld += infoLessonOld.getFim().get(Calendar.HOUR_OF_DAY);
-		if (infoLessonOld.getFim().get(Calendar.MINUTE) == 0) {
-			endTimeOld += "0";
-		}
-		endTimeOld += infoLessonOld.getFim().get(Calendar.MINUTE);
-
-		if (infoLessonNew.getInicio().get(Calendar.HOUR_OF_DAY) < 10) {
-			startTimeNew += "0";
-		}
-		startTimeNew += infoLessonNew.getInicio().get(Calendar.HOUR_OF_DAY);
-		if (infoLessonNew.getInicio().get(Calendar.MINUTE) == 0) {
-			startTimeNew += "0";
-		}
-		startTimeNew += infoLessonNew.getInicio().get(Calendar.MINUTE);
-
-		if (infoLessonNew.getFim().get(Calendar.HOUR_OF_DAY) < 10) {
-			endTimeNew += "0";
-		}
-		endTimeNew += infoLessonNew.getFim().get(Calendar.HOUR_OF_DAY);
-		if (infoLessonNew.getFim().get(Calendar.MINUTE) == 0) {
-			endTimeNew += "0";
-		}
-		endTimeNew += infoLessonNew.getFim().get(Calendar.MINUTE);
-
-		if (startTimeOld.compareTo(startTimeNew) > 0) {
-			return false;
-		}
-
-		if (endTimeOld.compareTo(endTimeNew) < 0) {
-			return false;
-		}
-
-		return true;
 	}
 
 }

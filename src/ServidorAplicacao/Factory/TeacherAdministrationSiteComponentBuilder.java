@@ -581,47 +581,6 @@ public class TeacherAdministrationSiteComponentBuilder
 	 * @param integer
 	 * @return
 	 */
-    private ISiteComponent getInfoEvaluationMethod(
-        InfoCurriculum component,
-        ISite site,
-        Integer curricularCourseCode)
-        throws FenixServiceException
-    {
-        try
-        {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
-            ICurricularCourse curricularCourse = new CurricularCourse(curricularCourseCode);
-            curricularCourse =
-                (ICurricularCourse) persistentCurricularCourse.readByOId(curricularCourse, false);
-            IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
-            //if(curricularCourse.getBasic().booleanValue()){
-            //		throw new IllegalEditException();
-            //}
-            ICurriculum curriculum =
-                persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse);
-            InfoCurriculum infoCurriculum = null;
-
-            if (curriculum != null)
-            {
-                infoCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
-            }
-
-            return infoCurriculum;
-
-        }
-        catch (ExcepcaoPersistencia e)
-        {
-            throw new FenixServiceException(e);
-        }
-    }
-
-    /**
-	 * @param methods
-	 * @param site
-	 * @param integer
-	 * @return
-	 */
     private ISiteComponent getInfoCurriculum(
         InfoCurriculum component,
         ISite site,
@@ -1300,31 +1259,6 @@ public class TeacherAdministrationSiteComponentBuilder
             throw new FenixServiceException(e);
         }
         return component;
-    }
-
-    private List readCurriculum(ISite site) throws ExcepcaoPersistencia
-    {
-
-        IExecutionCourse executionCourse = site.getExecutionCourse();
-        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-        List curricularCourses = executionCourse.getAssociatedCurricularCourses();
-        List curriculums = new ArrayList();
-        Iterator iter = curricularCourses.iterator();
-        while (iter.hasNext())
-        {
-            ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
-
-            ICurriculum curriculum = null;
-            curriculum =
-                sp.getIPersistentCurriculum().readCurriculumByCurricularCourse(curricularCourse);
-            if (curriculum != null)
-            {
-                curriculums.add(curriculum);
-            }
-
-        }
-
-        return curriculums;
     }
 
     private List readInfoCurricularCourses(ISite site) throws ExcepcaoPersistencia

@@ -61,7 +61,7 @@ public class FilterDiscriptorProperty2XML extends FileUtil {
 				String filterAlias =
 					StringUtils.trim(StringUtils.chomp(line, "="));
 				String implementationClassName =
-					StringUtils.trim(StringUtils.prechomp(line, "="));
+					StringUtils.trim(StringUtils.substringAfter(line, "="));
 				String discription = "";
 				String isTransactional = "false";
 

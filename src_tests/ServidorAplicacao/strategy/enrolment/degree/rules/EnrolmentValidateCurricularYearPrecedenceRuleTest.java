@@ -6,7 +6,6 @@ import Dominio.ICurricularCourseScope;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.rules.EnrolmentValidateCurricularYearPrecedenceRule;
 import ServidorAplicacao.strategy.enrolment.rules.IEnrolmentRule;
-import Tools.dbaccess;
 
 /**
  * @author dcs-rjao
@@ -14,8 +13,6 @@ import Tools.dbaccess;
  * 15/Abr/2003
  */
 public class EnrolmentValidateCurricularYearPrecedenceRuleTest extends BaseEnrolmentRuleTestCase {
-
-	private dbaccess dbAcessPoint;
 
 	public static void main(java.lang.String[] args) {
 		junit.textui.TestRunner.run(suite());

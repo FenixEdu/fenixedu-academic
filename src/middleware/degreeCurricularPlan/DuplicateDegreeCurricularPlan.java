@@ -13,7 +13,6 @@ import org.apache.ojb.broker.query.QueryByCriteria;
 import Dominio.Branch;
 import Dominio.CurricularCourse;
 import Dominio.CurricularCourseScope;
-import Dominio.CursoExecucao;
 import Dominio.DegreeCurricularPlan;
 import Dominio.ExecutionCourse;
 import Dominio.ExecutionPeriod;
@@ -21,7 +20,6 @@ import Dominio.ExecutionYear;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
-import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
@@ -343,43 +341,6 @@ public class DuplicateDegreeCurricularPlan {
 		System.out.println("Done !");
 		System.out.println(" - " + curricularCoursesWritten + " Curricular Course(s) written ");
 		System.out.println(" - " + curricularCourseScopesWritten + " Curricular Course Scope(s) written ");
-
-	}
-
-	/**
-	 * @param originalDCPName
-	 * @param executionYear
-	 * @param degreeCurricularPlan
-	 * @param broker
-	 * 
-	 * Specific code For Master Degrees
-	 * 
-	 */
-	private static void updateExecutionDegrees(String originalDCPName, String executionYear, IDegreeCurricularPlan degreeCurricularPlan, PersistenceBroker broker) throws Exception {
-
-		Criteria criteria = new Criteria();
-		Query query = null;
-		List result = null;
-
-		broker.beginTransaction();
-
-		// Read Execution Degree
-
-		criteria.addEqualTo("curricularPlan.name", originalDCPName);
-		criteria.addEqualTo("executionYear.year", executionYear);
-		query = new QueryByCriteria(CursoExecucao.class, criteria);
-		result = (List) broker.getCollectionByQuery(query);
-
-		if (result.size() != 1) {
-			throw new Exception("Error Reading Execution Degree for Degree Curricular Plan [" + originalDCPName + "]");
-		}
-
-		ICursoExecucao executionDegree = (ICursoExecucao) result.get(0);
-
-		executionDegree.setCurricularPlan(degreeCurricularPlan);
-
-		broker.store(executionDegree);
-		broker.commitTransaction();
 
 	}
 

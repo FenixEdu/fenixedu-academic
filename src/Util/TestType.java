@@ -22,8 +22,6 @@ public class TestType implements Serializable {
 		"Ficha de Estudo (guardar última resposta)";
 
 	private Integer type;
-	private String typeString;
-	
 	public TestType() {
 	}
 

@@ -288,21 +288,6 @@ public class MigrateDisciplina2Fenix {
 		return (List) broker.getCollectionByQuery(query);
 	}
 
-	private Boolean checkIfMandatory(Posgrad_disciplina curricularCourse2Convert) {
-		
-		if (curricularCourse2Convert.getOptativa() == null){
-			return Boolean.TRUE;
-		} else if (curricularCourse2Convert.getOptativa().equalsIgnoreCase("f")){
-			return Boolean.TRUE;
-		} else if (curricularCourse2Convert.getOptativa().equalsIgnoreCase("o")){
-			return Boolean.FALSE;
-		}
-
-		
-		
-		return Boolean.FALSE;
-	}
-
 
 
 

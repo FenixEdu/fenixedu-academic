@@ -7,12 +7,9 @@
 
 package ServidorAplicacao.Servico.commons.student;
 
-import framework.factory.ServiceManagerServiceFactory;
 import DataBeans.InfoEnrolmentEvaluation;
 import Dominio.Enrolment;
 import Dominio.IEnrolment;
-import Dominio.IStudentCurricularPlan;
-
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
@@ -20,6 +17,7 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import framework.factory.ServiceManagerServiceFactory;
 
 public class ReadInfoEnrolmentEvaluationByEvaluationOID implements IServico
 {
@@ -56,7 +54,6 @@ public class ReadInfoEnrolmentEvaluationByEvaluationOID implements IServico
     {
         ISuportePersistente sp = null;
         
-		IStudentCurricularPlan studentCurricularPlan = null;
 		IEnrolment enrolment = null;
         try {
 	        sp = SuportePersistenteOJB.getInstance();

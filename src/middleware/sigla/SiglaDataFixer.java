@@ -267,32 +267,6 @@ public class SiglaDataFixer
 		return string.equals("True");
 	}
 	/**
-	 * @param element
-	 * @param broker
-	 * @param loader
-	 * @return
-	 */
-	private boolean isCurriculumEmpty(
-		ICurricularCourse curricularCourse,
-		PersistenceBroker broker,
-		SiglaDataFixer loader)
-	{
-
-		Criteria crit = new Criteria();
-		crit.addEqualTo("curricularCourse.idInternal", curricularCourse.getIdInternal());
-		Query query = new QueryByCriteria(Curriculum.class, crit);
-		ICurriculum curriculum = (ICurriculum) broker.getObjectByQuery(query);
-		if (curriculum == null
-			|| ((curriculum.getProgram() == null || curriculum.getProgram().equals(""))
-				&& (curriculum.getGeneralObjectives() == null
-					|| curriculum.getGeneralObjectives().equals(""))))
-		{
-			return true;
-		}
-		return false;
-	}
-
-	/**
 	 * @param broker
 	 * @param loader
 	 * @return

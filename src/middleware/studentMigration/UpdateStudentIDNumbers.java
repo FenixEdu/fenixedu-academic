@@ -8,7 +8,6 @@ import middleware.persistentMiddlewareSupport.IPersistentMWAluno;
 import middleware.persistentMiddlewareSupport.IPersistentMiddlewareSupport;
 import middleware.persistentMiddlewareSupport.OJBDatabaseSupport.PersistentMiddlewareSupportOJB;
 import middleware.personMigration.PersonUtils;
-import Dominio.IExecutionPeriod;
 import Dominio.IPessoa;
 import Dominio.IStudent;
 import Dominio.Pessoa;
@@ -20,9 +19,6 @@ import Util.TipoCurso;
  */
 
 public class UpdateStudentIDNumbers {
-
-	private static IExecutionPeriod executionPeriod = null;
-	
 
 	public static void main(String args[]) throws Exception {
 

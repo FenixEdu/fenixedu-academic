@@ -132,11 +132,6 @@ public class SectionMenuMapRenderer {
 		return strBuffer;
 	}
 	
-	private StringBuffer getStyleSectionChooser(List sections,int iterator) {
-			StringBuffer strBuffer = new StringBuffer("");
-			
-			return strBuffer;
-		}
 	/**
 	 * @return
 	 */

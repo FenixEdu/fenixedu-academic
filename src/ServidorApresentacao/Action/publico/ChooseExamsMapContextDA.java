@@ -230,58 +230,6 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
 		return curricularYearList;
 	}
 	/**
-	 * Method setSemesterList.
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 */
-	private List setSemesterList(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response) {
-
-		List semesterList = (List) request.getAttribute("semesterList");
-
-		if (semesterList == null) {
-
-			semesterList = new ArrayList();
-			semesterList.add(new LabelValueBean("1º", "1"));
-			semesterList.add(new LabelValueBean("2º", "2"));
-			request.getSession(false).setAttribute(
-				"semesterList",
-				semesterList);
-		}
-		return semesterList;
-	}
-	/**
-	 * Method setInfoDegreeList.
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 */
-	private List setInfoDegreeList(HttpServletRequest request)
-		throws Exception {
-
-		List infoExecutionDegreeList = null;
-		InfoExecutionPeriod infoExecutionPeriod =
-			(InfoExecutionPeriod) request.getAttribute(
-				SessionConstants.EXECUTION_PERIOD);
-		Object args[] = { infoExecutionPeriod.getInfoExecutionYear()};
-		infoExecutionDegreeList =
-			(List) ServiceUtils.executeService(
-				null,
-				"ReadExecutionDegreesByExecutionYear",
-				args);
-
-		request.setAttribute("degreeList", infoExecutionDegreeList);
-
-		return infoExecutionDegreeList;
-	}
-
-	/**
 	 * Method existencesOfInfoDegree.
 	 * @param executionDegreeList
 	 * @param infoExecutionDegree

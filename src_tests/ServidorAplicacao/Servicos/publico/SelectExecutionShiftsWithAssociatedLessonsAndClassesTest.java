@@ -3,8 +3,6 @@ package ServidorAplicacao.Servicos.publico;
 import java.util.Calendar;
 import java.util.List;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoExecutionCourse;
@@ -23,17 +21,17 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
-import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISalaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurmaTurnoPersistente;
 import ServidorPersistente.ITurnoAulaPersistente;
-import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.DiaSemana;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author tfc130
@@ -226,7 +224,7 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClassesTest
 				Cloner.copyIExecutionCourse2InfoExecutionCourse(
 					executionCourse);
 
-			ITurnoPersistente turnoPersistente = sp.getITurnoPersistente();
+//			ITurnoPersistente turnoPersistente = sp.getITurnoPersistente();
 //			ITurno shift =
 //				new Turno(
 //					"turno",

@@ -3,7 +3,6 @@ package Util;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -21,12 +20,12 @@ import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 public class LeituraFicheiroFuncNaoDocente {
 
 	/* sera' que posso ter aqui um Map? */
-	private Hashtable estrutura;
+//	private Hashtable estrutura;
 	private Collection ordem;
 	private ArrayList lista;
-	private File ficheiro;
+//	private File ficheiro;
 	private BufferedReader leitura;
-	private FileWriter escrita;
+//	private FileWriter escrita;
 
 	/** construtor por defeito */
 	public LeituraFicheiroFuncNaoDocente() {
@@ -37,12 +36,12 @@ public class LeituraFicheiroFuncNaoDocente {
 	/* os valores para cada chave da Hashtable sao Strings */
 	public Collection lerFicheiro(String ficheiroValidas, String delimitador, Hashtable estrutura, Collection ordem) throws NotExecuteException {
 
-		this.estrutura = estrutura;
+//		this.estrutura = estrutura;
 		this.ordem = ordem;
 		this.lista = new ArrayList();
-		this.ficheiro = null;
+//		this.ficheiro = null;
 		this.leitura = null;
-		this.escrita = null;
+//		this.escrita = null;
 
 		String linhaFicheiro = null;
 		Hashtable instancia = null;

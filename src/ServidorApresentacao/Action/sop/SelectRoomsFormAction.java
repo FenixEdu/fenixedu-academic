@@ -123,17 +123,4 @@ public class SelectRoomsFormAction extends FenixAction
             return null;
     }
 
-    private String readRequestValue(HttpServletRequest request, String name)
-    {
-        String obj = null;
-        if (request.getAttribute(name) != null && !((String) request.getAttribute(name)).equals(""))
-            obj = (String) request.getAttribute(name);
-        else if (
-            request.getParameter(name) != null
-                && !request.getParameter(name).equals("")
-                && !request.getParameter(name).equals("null"))
-            obj = request.getParameter(name);
-        return obj;
-    }
-
 }

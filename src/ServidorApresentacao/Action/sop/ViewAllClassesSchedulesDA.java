@@ -2,7 +2,6 @@ package ServidorApresentacao.Action.sop;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,8 +13,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import DataBeans.InfoDegree;
-import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import ServidorAplicacao.IUserView;
@@ -128,23 +125,5 @@ public class ViewAllClassesSchedulesDA extends FenixContextDispatchAction
         } else
             throw new Exception();
         // nao ocorre... pedido passa pelo filtro Autorizacao
-    }
-
-    private boolean duplicateInfoDegree(
-        List executionDegreeList,
-        InfoExecutionDegree infoExecutionDegree)
-    {
-        InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
-        Iterator iterator = executionDegreeList.iterator();
-
-        while (iterator.hasNext())
-        {
-            InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) iterator.next();
-            if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
-                && !(infoExecutionDegree.equals(infoExecutionDegree2)))
-                return true;
-
-        }
-        return false;
     }
 }

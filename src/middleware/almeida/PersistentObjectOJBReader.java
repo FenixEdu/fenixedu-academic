@@ -105,30 +105,6 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		}
 	}
 
-	private ICurricularCourse readCurricularCourseByCodeAndDegreeID(String code, Integer degreeID) {
-		// Delete blank space in the beggining of code1
-		if (code.charAt(0) == ' ') {
-			code = code.substring(1);
-		} else if (code.equals("ALG") && degreeID.intValue() == 5) {
-			code = "AP9";
-		} else if (code.equals("AWX") && degreeID.intValue() == 21) {
-			code = "AXK";
-		}
-
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("code", code);
-		criteria.addEqualTo("degreeCurricularPlan", degreeID);
-		List result = query(CurricularCourse.class, criteria);
-		if (result.size() == 1) {
-			return (ICurricularCourse) result.get(0);
-		} else if (result.size() > 1) {
-			System.out.println("readCurricularCourse: code = " + code + "  degreeID = " + degreeID + " result.size =" + result.size());
-		} else /* if (result.size() == 0) */ {
-			System.out.println("readCurricularCourse: code = " + code + "  degreeID = " + degreeID + " result.size =" + result.size());
-		}
-		return null;
-	}
-
 	public ICurricularCourse readCurricularCourseByNameAndDegreeIDAndCode(String name, Integer degreeID, String code) {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("name", name);

@@ -56,8 +56,6 @@ public class ReadFile extends LoadDataFile {
 
 	private static String logString = "";
 	private int numberLine = 0;
-	private List enrolmentsAlmeida = new ArrayList();
-
 	public ReadFile() {
 	}
 
@@ -447,51 +445,6 @@ public class ReadFile extends LoadDataFile {
 			return executionPeriod;
 		}
 	}
-
-	//Read enrolment's execution period
-	private IExecutionPeriod readExecutionPeriod(Almeida_enrolment almeida_enrolment) {
-		Integer semester = new Integer("" + almeida_enrolment.getSemdis());
-		Integer year = new Integer("" + almeida_enrolment.getAnoins());
-
-		String yearStr = null;
-		if (semester.equals(new Integer(1))) {
-			yearStr = new String(year.intValue() + "/" + (year.intValue() + 1));
-		} else if (semester.equals(new Integer(2))) {
-			yearStr = new String((year.intValue() - 1) + "/" + year.intValue());
-		}
-
-		IExecutionPeriod executionPeriod = null;
-		IExecutionYear executionYear = persistentObjectOJB.readExecutionYearByYear(yearStr);
-		if (executionYear == null) {
-			executionYear = new ExecutionYear();
-			executionYear.setState(PeriodState.CLOSED);
-			executionYear.setYear(yearStr);
-			writeElement(executionYear);
-		}
-
-		executionPeriod =
-			persistentObjectOJB.readExecutionPeriodByYearAndSemester(
-				executionYear,
-				new Integer(new Float(almeida_enrolment.getSemdis()).intValue()));
-		if (executionPeriod != null) {
-			return executionPeriod;
-		} else {
-			executionPeriod = new ExecutionPeriod();
-			executionPeriod.setExecutionYear(executionYear);
-			executionPeriod.setSemester(semester);
-			executionPeriod.setState(PeriodState.CLOSED);
-			String name = null;
-			if (semester.intValue() == 1) {
-				name = "1º Semestre";
-			} else if (semester.intValue() == 2) {
-				name = "2º Semestre";
-			}
-			executionPeriod.setName(name);
-			writeElement(executionPeriod);
-
-			return executionPeriod;
-		}
-	} //readExecutionPeriod
 
 	private IExecutionCourse readExecutionCourse(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod) {
 		return persistentObjectOJB.readExecutionCourse(curricularCourse, executionPeriod);

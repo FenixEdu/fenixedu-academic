@@ -2,7 +2,6 @@ package ServidorAplicacao.Servico.publico;
 
 import java.util.List;
 
-import DataBeans.InfoDegreeCurricularPlan;
 import Dominio.DegreeCurricularPlan;
 import Dominio.ExecutionPeriod;
 import Dominio.IDegreeCurricularPlan;
@@ -59,8 +58,6 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
 			e.printStackTrace(System.out);
 			throw new FenixServiceException("Problems on database!");
 		}
-
-		InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
 
 		IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan =
 			sp.getIPersistentDegreeCurricularPlan();

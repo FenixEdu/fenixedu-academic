@@ -202,31 +202,4 @@ public class LoadStudents extends DataFileLoader {
 		studentCurricularPlanDAO.lockWrite(studentCurricularPlan);
 		sp.confirmarTransaccao();
 	}
-
-	/**
-	 * Method createPerson.
-	 * @param bi
-	 * @param numero
-	 * @param nome
-	 * @param email
-	 * @return Pessoa
-	 * @deprecated
-	 */
-	private static Pessoa createPerson(
-		String bi,
-		String numero,
-		String nome,
-		String email) {
-
-		Pessoa p = new Pessoa();
-		p.setNumeroDocumentoIdentificacao(bi);
-		p.setTipoDocumentoIdentificacao(
-			new TipoDocumentoIdentificacao(
-				TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
-		p.setEmail(email);
-		p.setUsername(numero);
-		p.setNome(nome);
-		p.setPassword(PasswordEncryptor.encryptPassword(numero));
-		return p;
-	}
 }

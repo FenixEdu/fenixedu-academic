@@ -17,9 +17,6 @@ import Dominio.IExecutionCourse;
 import Dominio.IGroupProperties;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
-import ServidorAplicacao.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
-import ServidorAplicacao.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -73,15 +70,16 @@ public class ReadExecutionCourseProjects implements IServico
                 if (executionCourseProjects.size() != 0) 
                 {
                     infoSiteProjects = new InfoSiteProjects();
-                    IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
-                    IGroupEnrolmentStrategy strategy = null;
+//                    IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
+//                    IGroupEnrolmentStrategy strategy = null;
 
                     List infoGroupPropertiesList = new ArrayList();
                     Iterator iterator = executionCourseProjects.iterator();
 
                     while (iterator.hasNext()) {
                         IGroupProperties groupProperties = (IGroupProperties) iterator.next();
-                        strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
+//                        strategy =
+// enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
                             infoGroupPropertiesList.add(Cloner.copyIGroupProperties2InfoGroupProperties(groupProperties));
 
                     }

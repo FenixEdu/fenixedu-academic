@@ -14,15 +14,12 @@ import Dominio.ICurricularCourseScope;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.rules.EnrolmentFilterTFCRule;
 import ServidorAplicacao.strategy.enrolment.rules.IEnrolmentRule;
-import Tools.dbaccess;
 import Util.TipoCurso;
 
 /**
  * @author jpvl
  */
 public class EnrolmentFilterTFCRuleTest extends BaseEnrolmentRuleTestCase {
-
-	private dbaccess dbAcessPoint;
 
 	public static void main(java.lang.String[] args) {
 		junit.textui.TestRunner.run(suite());

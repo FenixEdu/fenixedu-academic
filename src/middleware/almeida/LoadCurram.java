@@ -103,17 +103,6 @@ public class LoadCurram extends LoadDataFile {
 		loader.writeToFile(logString);
 	}
 
-	private String getBranchCode(String almeidaBranchName) {
-		StringTokenizer stringTokenizer = new StringTokenizer(almeidaBranchName, " ");
-		int numberTokens = stringTokenizer.countTokens();
-		String code = "";
-		for(int i = 0; i < numberTokens; i++) {
-			String word = stringTokenizer.nextToken();
-			code += word.charAt(0);
-		}
-		return code;
-	}
-
 	private String getBranchCode(Almeida_curram almeida_curram) {
 		return "" + almeida_curram.getCodcur() + almeida_curram.getCodram() + almeida_curram.getCodorien();
 	}

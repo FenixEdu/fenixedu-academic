@@ -8,9 +8,9 @@ import Dominio.DegreeCurricularPlan;
 import Dominio.EnrolmentEvaluation;
 import Dominio.Frequenta;
 import Dominio.IDegreeCurricularPlan;
-import Dominio.IExecutionCourse;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
+import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
 import ServidorAplicacao.IServico;
@@ -20,8 +20,6 @@ import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
-import ServidorPersistente.IPersistentStudent;
-import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -37,9 +35,9 @@ import Util.StudentCurricularPlanState;
 public class ChangeEnrolmentStateFromTemporarilyToEnroled implements IServico {
 
 	private static ISuportePersistente persistentSupport = null;
-	private static IPersistentStudent studentDAO = null;
+//	private static IPersistentStudent studentDAO = null;
 	private static IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = null;
-	private static IStudentCurricularPlanPersistente persistentStudentCurricularPlan = null;
+//	private static IStudentCurricularPlanPersistente persistentStudentCurricularPlan = null;
 	private static IPersistentEnrolment persistentEnrolment = null;
 	private static IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = null;
 	private static IFrequentaPersistente frequentaPersistente = null;
@@ -76,7 +74,7 @@ public class ChangeEnrolmentStateFromTemporarilyToEnroled implements IServico {
 
 		try {
 			persistentSupport = SuportePersistenteOJB.getInstance();
-			persistentStudentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente();
+//			persistentStudentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente();
 			persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 			frequentaPersistente = persistentSupport.getIFrequentaPersistente();
 			persistentDegreeCurricularPlan = persistentSupport.getIPersistentDegreeCurricularPlan();

@@ -1,7 +1,6 @@
 package ServidorApresentacao.Action.sop;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -118,23 +117,5 @@ public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexCo
 			throw new FenixActionException();
 		}
 
-	}
-
-	/**
-	 * @returns the name of the selected sala.
-	 **/
-	private InfoRoom getSelectedRoom(
-		Integer index,
-		HttpServletRequest request)
-		throws FenixActionException {
-
-		List selectedRooms = (List) request.getAttribute(SessionConstants.SELECTED_ROOMS);
-
-		InfoRoom selectedRoom = null;
-		if (selectedRooms != null && !selectedRooms.isEmpty()) {
-			Collections.sort(selectedRooms);
-			selectedRoom = (InfoRoom) selectedRooms.get(index.intValue());
-		}
-		return selectedRoom;
 	}
 }

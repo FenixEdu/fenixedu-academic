@@ -27,7 +27,6 @@ import Util.RoleType;
  */
 public class ServicoSeguroActualizarFuncionarios {
 
-	private static String ficheiro = null;
 	private static String delimitador;
 	private static Hashtable estrutura;
 	private static Collection ordem;
@@ -35,7 +34,6 @@ public class ServicoSeguroActualizarFuncionarios {
 
 	/** Construtor */
 	public ServicoSeguroActualizarFuncionarios(String[] args) {
-		ficheiro = args[0];
 		delimitador = new String(";");
 
 		/* Inicializar Hashtable com atributos a recuperar do ficheiro de texto requeridos */
@@ -87,7 +85,7 @@ public class ServicoSeguroActualizarFuncionarios {
 				Hashtable instanciaTemporaria = (Hashtable) iteradorNovo.next();
 
 				String numeroDocumentoIdentificacao = (String) instanciaTemporaria.get("numeroDocumentoIdentificacao");
-				Integer tipoDocumentoIdentificacao = (Integer) instanciaTemporaria.get("tipoDocumentoIdentificacao");
+//				Integer tipoDocumentoIdentificacao = (Integer) instanciaTemporaria.get("tipoDocumentoIdentificacao");
 				numeroMecanografico = new Integer((String) instanciaTemporaria.get("numeroMecanografico"));
 
 				// Check if the Employee Exists

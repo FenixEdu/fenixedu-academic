@@ -11,7 +11,7 @@ import java.util.List;
 public class TimeTableRenderer {
 	 
 
-	private Integer endHour;
+//	private Integer endHour;
 	private Integer startHour;
 	private Integer slotSize;
 	private TimeTable timeTable;
@@ -40,7 +40,7 @@ public class TimeTableRenderer {
 		this.timeTable = timeTable;
 		this.lessonSlotContentRenderer = lessonSlotContentRenderer;
 
-		this.endHour = endHour;
+//		this.endHour = endHour;
 		this.startHour = startHour;
 		this.slotSize = slotSize;
 		this.colorPicker = colorPicker;

@@ -20,15 +20,11 @@ import Dominio.IExam;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
-import Dominio.IProfessorship;
-import Dominio.IResponsibleFor;
 import Dominio.ISite;
 import Dominio.ITurma;
 import Dominio.ITurmaTurno;
 import Dominio.ITurno;
 import Dominio.ITurnoAula;
-import Dominio.Professorship;
-import Dominio.ResponsibleFor;
 import Dominio.Site;
 import Dominio.Turma;
 import Dominio.TurmaTurno;
@@ -1107,134 +1103,6 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
         Criteria criteria = new Criteria();
         criteria.addEqualTo("executionYear.idInternal", executionYear.getIdInternal());
         return queryList(ExecutionPeriod.class, criteria);
-    }
-
-    /**
-	 * @param executionPeriodToImportDataTo
-	 * @param executionPeriodToExportDataFrom
-	 */
-    private void transferResponsibleFors(
-        IExecutionPeriod executionPeriodToImportDataTo,
-        IExecutionPeriod executionPeriodToExportDataFrom)
-        throws ExcepcaoPersistencia
-    {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo(
-            "executionCourse.executionPeriod.idInternal",
-            executionPeriodToExportDataFrom.getIdInternal());
-
-        int numberOfResponsibleFors = count(ResponsibleFor.class, criteria);
-
-        for (int i = 0; i < numberOfResponsibleFors; i++)
-        {
-            IResponsibleFor responsibleForToTransfer =
-                (IResponsibleFor) readSpan(
-                    ResponsibleFor.class,
-                    criteria,
-                    new Integer(1),
-                    new Integer(i + 1)).get(
-                    0);
-
-            createResponsibleFor(responsibleForToTransfer, executionPeriodToImportDataTo);
-        }
-    }
-
-    /**
-	 * @param responsibleForToTransfer
-	 * @param executionPeriodToImportDataTo
-	 */
-    private IResponsibleFor createResponsibleFor(
-        IResponsibleFor arg0,
-        IExecutionPeriod executionPeriodToImportDataTo)
-        throws ExcepcaoPersistencia
-    {
-        IResponsibleFor responsibleForToTransfer = arg0;
-        IResponsibleFor responsibleForToCreate = new ResponsibleFor();
-
-        ExecutionCourse executionCourse =
-            findCorrespondingExecutionCourse(
-                executionPeriodToImportDataTo,
-                responsibleForToTransfer.getExecutionCourse());
-
-        if (executionCourse != null)
-        {
-            responsibleForToCreate.setExecutionCourse(executionCourse);
-            responsibleForToCreate.setTeacher(responsibleForToTransfer.getTeacher());
-
-            try
-            {
-                store(responsibleForToCreate);
-            } catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
-
-        return responsibleForToCreate;
-    }
-
-    /**
-	 * @param executionPeriodToImportDataTo
-	 * @param executionPeriodToExportDataFrom
-	 */
-    private void transferProfessorships(
-        IExecutionPeriod executionPeriodToImportDataTo,
-        IExecutionPeriod executionPeriodToExportDataFrom)
-        throws ExcepcaoPersistencia
-    {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo(
-            "executionCourse.executionPeriod.idInternal",
-            executionPeriodToExportDataFrom.getIdInternal());
-
-        int numberOfProfessorships = count(Professorship.class, criteria);
-
-        for (int i = 0; i < numberOfProfessorships; i++)
-        {
-            IProfessorship professorshipToTransfer =
-                (IProfessorship) readSpan(
-                    Professorship.class,
-                    criteria,
-                    new Integer(1),
-                    new Integer(i + 1)).get(
-                    0);
-
-            createProfessorship(professorshipToTransfer, executionPeriodToImportDataTo);
-        }
-    }
-
-    /**
-	 * @param professorshipToTransfer
-	 * @param executionPeriodToImportDataTo
-	 */
-    private IProfessorship createProfessorship(
-        IProfessorship arg0,
-        IExecutionPeriod executionPeriodToImportDataTo)
-        throws ExcepcaoPersistencia
-    {
-        IProfessorship professorshipForToTransfer = arg0;
-        IProfessorship professorshipForToCreate = new Professorship();
-
-        ExecutionCourse executionCourse =
-            findCorrespondingExecutionCourse(
-                executionPeriodToImportDataTo,
-                professorshipForToTransfer.getExecutionCourse());
-
-        if (executionCourse != null)
-        {
-            professorshipForToCreate.setExecutionCourse(executionCourse);
-            professorshipForToCreate.setTeacher(professorshipForToTransfer.getTeacher());
-
-            try
-            {
-                store(professorshipForToCreate);
-            } catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
-
-        return professorshipForToCreate;
     }
 
     /**

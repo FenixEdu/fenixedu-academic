@@ -14,10 +14,6 @@ import Util.NumberUtils;
 public class InfoShiftGroupStatistics extends InfoObject {
 
 	private List shiftsInGroup;
-	private Integer totalCapacity;
-	private Double totalPercentage;
-	private Integer totalNumberOfStudents;
-	
 	public InfoShiftGroupStatistics() {
 		this.shiftsInGroup = new ArrayList();
 	}	

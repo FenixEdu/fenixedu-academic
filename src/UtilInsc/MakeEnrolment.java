@@ -7,14 +7,13 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoEnrolmentInOptionalCurricularCourse;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
 import Util.CurricularCourseType;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author David Santos
@@ -135,16 +134,5 @@ public class MakeEnrolment {
 			infoEnrolmentContext = executeService("ConfirmActualEnrolment", serviceArgs6);
 		}
 		MakeEnrolmentIO.showEnrolmentValidationResultMessages(infoEnrolmentContext);
-	}
-
-	private static void secureEnrolmentProssess() {
-
-		String name = "LEQ2003/2004";
-		Object serviceArgs[] = { name };
-
-		executeService("ChangeEnrolmentStateFromTemporarilyToEnroled", serviceArgs);
-
-		//		Object serviceArgs[] = { userView };
-		//		executeService("ChangeEnrolmentStateFromTemporarilyToEnroled", serviceArgs);
 	}
 }

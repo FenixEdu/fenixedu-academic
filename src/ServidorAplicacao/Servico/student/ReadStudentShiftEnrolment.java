@@ -9,7 +9,6 @@
 package ServidorAplicacao.Servico.student;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -526,104 +525,6 @@ public class ReadStudentShiftEnrolment implements IServico
             return (List) CollectionUtils.collect(classes, shiftClassTransformer);
         }
         return null;
-    }
-
-    /**
-     * Describe <code>sortClassesByNumberOfCoursesSatisfied</code> method here.
-     *
-     * @param classShifts a <code>List</code> value
-     * @return a <code>List</code> with the sorted classes.
-     */
-    private List sortClassesByNumberOfCoursesSatisfied(List classShifts, List courses)
-    {
-
-        List stats = new ArrayList();
-
-        Iterator iter = classShifts.iterator();
-        while (iter.hasNext())
-        {
-            ITurmaTurno classShift = (ITurmaTurno) iter.next();
-            for (int i = 0; i < stats.size(); i++)
-            {
-                if (((Object[]) stats.get(i))[0].equals(classShift.getTurma()))
-                {
-                    //Found the class
-                    for (int j = 0; j < ((ArrayList) ((Object[]) stats.get(i))[1]).size(); j++)
-                    {
-
-                        if (((ArrayList) ((Object[]) stats.get(i))[1])
-                            .get(j)
-                            .equals(classShift.getTurno().getDisciplinaExecucao()))
-                        {
-
-                            //Found the course, already there
-                            break;
-                        }
-                    } // end of for (int  = 0;  < ; ++)
-                    //Course not there, yet, adding it...
-                    ((ArrayList) (((Object[]) stats.get(i))[1])).add(
-                        classShift.getTurno().getDisciplinaExecucao());
-                }
-            } // end of for (int  = 0;  < ; ++)      
-            //Class not there, yet, add it with the course
-            Object[] obj = new Object[] { classShift.getTurma(), new ArrayList()};
-            ((ArrayList) obj[1]).add(classShift.getTurno().getDisciplinaExecucao());
-            stats.add(obj);
-
-        } // end of while ()
-
-        //stats has the following format:
-        // { ITurma class, ArrayList (IDisciplinaExecucao course) }
-
-        for (int i = 0; i < stats.size(); i++)
-        {
-            ((Object[]) stats.get(i))[1] =
-                new Integer(
-                    CollectionUtils
-                        .intersection(((ArrayList) ((Object[]) (stats.get(i)))[1]), (Collection) courses)
-                        .size());
-
-        } // end of for (int  = 0;  < ; ++)
-
-        List result = new ArrayList(stats.size());
-
-        Collections.sort(stats, new ObjArrayComparator());
-
-        for (int i = 0; i < stats.size(); i++)
-        {
-            result.add(i, ((Object[]) stats.get(i))[0]);
-        } // end of for (int  = 0;  < ; ++)
-
-        return result;
-    }
-
-    /**
-     * Describe class <code>ObjArrayComparator</code> here.
-     *
-     */
-    private class ObjArrayComparator implements Comparator
-    {
-
-        // Implementation of java.util.Comparator
-
-        public boolean equals(Object object)
-        {
-            return false;
-        }
-
-        /**
-         * Describe <code>compare</code> method here.
-         *
-         * @param object an <code>Object</code> value
-         * @param object1 an <code>Object</code> value
-         * @return an <code>int</code> value
-         */
-        public int compare(Object object1, Object object2)
-        {
-            return ((Integer) ((Object[]) object2)[1]).intValue()
-                - ((Integer) ((Object[]) object1)[1]).intValue();
-        }
-
     }
 
     /**
