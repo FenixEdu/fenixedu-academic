@@ -1,0 +1,1 @@
+alter table PROFESSORSHIPS add CREDITS int(11);
