@@ -161,9 +161,9 @@ create table SUMMARY (
 drop table if exists STUDENT_GROUP;
 create table STUDENT_GROUP (
    ID_INTERNAL int(11) unsigned not null auto_increment,   
-   GROUP_NUMBER int(11) unsigned not null default '0',
+   GROUP_NUMBER int(11) unsigned not null,
    KEY_SHIFT int(11),
-   KEY_GROUP_PROPERTIES int(11) unsigned not null default '0',
+   KEY_GROUP_PROPERTIES int(11) unsigned not null,
    primary key (ID_INTERNAL),
    unique ID_INTERNAL (GROUP_NUMBER, KEY_GROUP_PROPERTIES, KEY_SHIFT))
    type=InnoDB comment="InnoDB free: 372736 kB";
@@ -174,8 +174,8 @@ create table STUDENT_GROUP (
 drop table if exists STUDENT_GROUP_ATTEND;
 create table STUDENT_GROUP_ATTEND (
    ID_INTERNAL int(11) unsigned not null auto_increment,   
-   KEY_ATTEND int(11) unsigned not null default '0',
-   KEY_STUDENT_GROUP int(11) unsigned not null default '0',
+   KEY_ATTEND int(11) unsigned not null,
+   KEY_STUDENT_GROUP int(11) unsigned not null,
    primary key (ID_INTERNAL),
    unique ID_INTERNAL (KEY_ATTEND, KEY_STUDENT_GROUP))
    type=InnoDB comment="InnoDB free: 372736 kB";
@@ -196,7 +196,7 @@ create table GROUP_PROPERTIES (
    SHIFT_TYPE int(11),
    ENROLMENT_BEGIN_DAY date,
    ENROLMENT_END_DAY date,
-   KEY_EXECUTION_COURSE int(11) unsigned not null default'0',
+   KEY_EXECUTION_COURSE int(11) unsigned not null ,
    primary key (ID_INTERNAL),
    unique ID_INTERNAL (NAME,KEY_EXECUTION_COURSE))
    type=InnoDB comment="InnoDB free: 372736 kB";

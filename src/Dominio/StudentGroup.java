@@ -42,10 +42,10 @@ public class StudentGroup extends DomainObject implements IStudentGroup {
 	*/
 	public StudentGroup(Integer groupNumber,IGroupProperties groupProperties) {
 			
-			this.groupNumber = groupNumber;
-			this.groupProperties = groupProperties;
-			this.shift = null;
-		}
+		this.groupNumber = groupNumber;
+		this.groupProperties = groupProperties;
+		this.shift = null;
+	}
 	
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
