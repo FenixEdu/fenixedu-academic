@@ -167,4 +167,18 @@ public class Site implements ISite {
 		this.keyInitialSection = keyInitialSection;
 	}
 
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	public String toString() {
+		String result = "[SITE";
+		result += ", codInt=" + getInternalCode();
+		result += ", executionCourse=" + getExecutionCourse();
+		result += ", sections=" + getSections();
+		result += ", initialSection=" + getInitialSection();
+//		result += ", announcements=" + getAnnouncements();
+		result += "]";
+		return result;
+	}
+
 }

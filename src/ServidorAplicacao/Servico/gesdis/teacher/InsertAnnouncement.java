@@ -116,13 +116,11 @@ public class InsertAnnouncement implements IServico {
 		try {
 			newAnnouncement =
 				new Announcement(
-					null,
 					newAnnouncementTitle,
 					calendar.getTime(),
 					null,
 					newAnnouncementInformation,
-					site,
-					null);
+					site);
 			persistentAnnouncement.lockWrite(newAnnouncement);
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia.getMessage());

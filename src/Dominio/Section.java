@@ -219,4 +219,5 @@ public class Section implements ISection {
 		this.keySuperiorSection = keySuperiorSection;
 	}
 
+//TODO: toString
 }

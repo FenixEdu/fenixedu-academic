@@ -204,9 +204,9 @@
     	type="ServidorApresentacao.Action.teacher.AnnouncementManagementFormAction"
         path="/teacher/announcementManagementForm" input="teacher.announcementManagement"
         scope="request">
-        <forward name="InsertAnnouncement" path="/teacher/inserirAnuncio.do" redirect = "true"/>
-		<forward name="EditAnnouncement" path="/teacher/editarAnuncio.do" redirect = "true"/>
-		<forward name="DeleteAnnouncement" path="/teacher/apagarAnuncio.do" redirect = "true"/>
+        <forward name="InsertAnnouncement" path="/teacher/insertAnnouncement.do" redirect = "true"/>
+		<forward name="EditAnnouncement" path="/teacher/editAnnouncement.do" redirect = "true"/>
+		<forward name="DeleteAnnouncement" path="/teacher/deleteAnnouncement.do" redirect = "true"/>
 	</action>
 
 	<!--
