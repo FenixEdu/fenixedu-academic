@@ -48,8 +48,6 @@ public class LeituraFicheiroPessoa extends ObjectFenixOJB{
 		File erros = null;
 		BufferedWriter escritor = null;
 
-//		System.out.println("-->LeituraFicheiroPessoa.lerFicheiro");
-
 		//para escrita dos dados de pessoas invalidas num ficheiro
 		try {
 			erros = new File("pessoasInvalidas.txt");
@@ -112,8 +110,6 @@ public class LeituraFicheiroPessoa extends ObjectFenixOJB{
 			System.out.println("LeituraFicheiroPessoa.lerFicheiro:Erro ao fechar o ficheiro de erros.");
 		}
 
-//		System.out.println("Número de registos inválidos: " + contadorErros);
-
 		return listaPessoas;
 	}
 
@@ -157,8 +153,6 @@ public class LeituraFicheiroPessoa extends ObjectFenixOJB{
 		String codigoFiscal = new String();
 		ICountry country = null;
 		
-//		System.out.println("-->LeituraFicheiroPessoa.recuperarPessoa");
-
 		//parsing do primeiro ;
 		//stringTokenizer.nextToken();
 
@@ -352,7 +346,6 @@ public class LeituraFicheiroPessoa extends ObjectFenixOJB{
 			resultado = new Integer(EstadoCivil.UNIAO_DE_FACTO);
 		else resultado = new Integer(EstadoCivil.DESCONHECIDO);
 
-//		System.out.println("Estado Civil nao formatado: " + naoFormatado + " formatado: " + resultado);
 		return resultado;
 
 	}
@@ -379,8 +372,6 @@ public class LeituraFicheiroPessoa extends ObjectFenixOJB{
 		else if (naoFormatado.equals("06"))
 			resultado = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_FORCA_AEREA);
 		else resultado = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE);
-
-//		System.out.println("tipo documento nao formatado: " + naoFormatado + " formatado: " + resultado);
 
 		return resultado;
 	}

@@ -141,9 +141,7 @@ public class AssociarHorarioTipoForm extends ActionForm {
 
 		if (sigla != null) {
 			setSigla(sigla);
-			System.out.println("Outra Sigla na Lista " + sigla);
 		} else {
-			System.out.println("1º Sigla");
 			setSigla((String) _listaSiglas.get(0));
 		}
 

@@ -23,7 +23,6 @@ public class ServicoSeguroBuscarParamJustificacoes extends ServicoSeguro {
   }
   
   public void execute() throws NotExecuteException {
-    System.out.println("--->No ServicoSeguroBuscarParamJustificacoes...");
     
     IParamJustificacaoPersistente iParamJustificacaoPersistente = SuportePersistente.getInstance().iParamJustificacaoPersistente();
     if((_listaParamJustificacoes = iParamJustificacaoPersistente.lerParamJustificacoes(_listaJustificacoes)) == null){

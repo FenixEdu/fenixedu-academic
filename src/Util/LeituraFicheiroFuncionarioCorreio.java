@@ -43,9 +43,7 @@ public class LeituraFicheiroFuncionarioCorreio {
     this.escrita = null;
     
     String linhaFicheiro = null;
-    Hashtable instancia = null;
-    
-    System.out.println("-->LeituraFicheiroFuncionarioCorreio.lerFicheiro");    
+    Hashtable instancia = null; 
     
     try{
       /* ficheiro com dados de funcionario validos */
@@ -88,7 +86,6 @@ public class LeituraFicheiroFuncionarioCorreio {
     StringTokenizer stringTokenizer = new StringTokenizer(linha, delimitador);      
     Hashtable instancia = new Hashtable();          
     
-    System.out.println("-->LeituraFicheiroFuncionarioCorreio.recuperarInstancia");
     
     /* codigo de parsing dos atributos */
     Iterator iterador = ordem.iterator();

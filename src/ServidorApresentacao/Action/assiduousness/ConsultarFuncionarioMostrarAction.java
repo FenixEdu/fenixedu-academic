@@ -35,7 +35,6 @@ public final class ConsultarFuncionarioMostrarAction extends Action {
 
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
-		System.out.println("--->No ConsultarFuncionarioMostrarAction...");
 
 		ActionErrors errors = new ActionErrors();
 		HttpSession session = request.getSession();

@@ -34,7 +34,6 @@ public class ServicoSeguroLerHorario extends ServicoSeguro {
 	}
 
 	public void execute() throws NotExecuteException {
-		System.out.println("-->ServicoSeguroLerHorario...");
 		
 		IHorarioPersistente iHorarioPersistente = SuportePersistente.getInstance().iHorarioPersistente();
 		IRegimePersistente iRegimePersistente = SuportePersistente.getInstance().iRegimePersistente();

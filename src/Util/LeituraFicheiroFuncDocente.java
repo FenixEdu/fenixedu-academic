@@ -128,8 +128,6 @@ public class LeituraFicheiroFuncDocente {
 			resultado = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_FORCA_AEREA);
 		else resultado = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE);
 
-//		System.out.println("tipo documento nao formatado: " + naoFormatado + " formatado: " + resultado);
-
 		return resultado;
 	}
 }

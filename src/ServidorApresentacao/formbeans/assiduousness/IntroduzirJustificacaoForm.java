@@ -127,7 +127,6 @@ public class IntroduzirJustificacaoForm extends ActionForm {
   public void setForm(ArrayList listaSiglasJustificacao, String sigla){
     setListaSiglasJustificacao(listaSiglasJustificacao);
     if(sigla == null){
-    	System.out.println("sigla a null");
     	setSiglaJustificacao((String)_listaSiglasJustificacao.get(0));
     } else{
 			setSiglaJustificacao(sigla);

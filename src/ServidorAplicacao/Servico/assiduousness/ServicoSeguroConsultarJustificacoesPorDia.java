@@ -30,7 +30,6 @@ public class ServicoSeguroConsultarJustificacoesPorDia extends ServicoSeguro {
   }
   
   public void execute() throws NotExecuteException {
-    System.out.println("--->No ServicoSeguroConsultarJustificacoesPorDia...");
     
     IFuncionarioPersistente iFuncionarioPersistente = SuportePersistente.getInstance().iFuncionarioPersistente();
     if((_funcionario = iFuncionarioPersistente.lerFuncionarioPorNumMecanografico(_numMecanografico)) == null){

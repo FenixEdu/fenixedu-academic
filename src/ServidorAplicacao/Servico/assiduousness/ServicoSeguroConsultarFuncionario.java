@@ -48,7 +48,6 @@ public class ServicoSeguroConsultarFuncionario extends ServicoSeguro {
 	}
 
 	public void execute() throws NotExecuteException {
-		System.out.println("--->No ServicoSeguroConsultarFuncionario...");
 
 		IFuncionarioPersistente iFuncionarioPersistente =
 			SuportePersistente.getInstance().iFuncionarioPersistente();

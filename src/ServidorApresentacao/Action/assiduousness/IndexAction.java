@@ -37,7 +37,7 @@ public final class IndexAction extends Action {
 
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
-			System.out.println("--->No IndexAction...");
+			System.out.println("--->No Assiduidade...funcionario username");
 
 		Locale locale = request.getLocale();
 

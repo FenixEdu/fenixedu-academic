@@ -36,7 +36,6 @@ public final class PortalAssiduidadeAction extends Action {
   HttpServletRequest request,
   HttpServletResponse response)
   throws IOException, ServletException {
-		System.out.println("--->No PortalAssiduidadeAction...");
     Locale locale = getLocale(request);
     
     HttpSession session = request.getSession();
@@ -44,9 +43,7 @@ public final class PortalAssiduidadeAction extends Action {
     ActionErrors errors = new ActionErrors();
      
     Pessoa pessoa = (Pessoa)session.getAttribute(Constants.USER_KEY);
-    if(pessoa == null){
-    	System.out.println("Pessoa da sessao a null");
-    }
+
     
     ServicoAutorizacaoPortalAssiduidade servicoAutorizacaoPortalAssiduidade = 
     new ServicoAutorizacaoPortalAssiduidade(pessoa);

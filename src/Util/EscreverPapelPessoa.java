@@ -34,16 +34,13 @@ public class EscreverPapelPessoa {
 		} catch (PersistenceException pe) {
 			System.out.println(pe.getMessage());
 		}
-		System.out.println("PESSOAS: " + servicoSeguroLerTodasPessoas.getListaPessoas().size());
 		
 		
 		ListIterator iteradorFuncionario = servicoSeguroLerTodasPessoas.getListaPessoas().listIterator();
 		Pessoa pessoa = null;
 		while (iteradorFuncionario.hasNext()) {
 			pessoa = (Pessoa) iteradorFuncionario.next();
-			
-			//System.out.println("ROLE da PERSON: " + pessoa.getCodigoInterno());
-			
+						
 			// actualizar os papeis desta pessoa
 			ServicoSeguroEscreverPapelPessoa servicoSeguroEscreverPapelPessoa =
 				new ServicoSeguroEscreverPapelPessoa(servicoAutorizacaoLer, pessoa);

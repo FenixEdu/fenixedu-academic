@@ -136,9 +136,7 @@ public class FuncionarioRelacionalOracle implements IFuncionarioPersistente {
 									resultado.getString("ASS_HISEMP_DHFIM").substring(
 										0,
 										resultado.getString("ASS_HISEMP_DHFIM").indexOf(" ")));
-										
-					
-							//System.out.println("ler Funcionario: dataFim em ASS_HISEMPREG: " + dataFimHorario);
+				
 							funcionario.setDataFim(dataFimHorario);
 						}
 					}

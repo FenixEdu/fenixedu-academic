@@ -36,7 +36,6 @@ public class ServicoSeguroConsultarJustificacoes extends ServicoSeguro {
 	}
 
 	public void execute() throws NotExecuteException {
-		System.out.println("--->No ServicoSeguroConsultarJustificacoes...");
 
 		try {
 			lerFimAssiduidade();

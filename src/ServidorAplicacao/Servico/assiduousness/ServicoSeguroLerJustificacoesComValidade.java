@@ -34,7 +34,6 @@ public class ServicoSeguroLerJustificacoesComValidade extends ServicoSeguro {
 	}
 
 	public void execute() throws NotExecuteException {
-		System.out.println("--->No ServicoSeguroLerJustificacoesComValidade...");
 
 		IFuncionarioPersistente iFuncionarioPersistente =
 			SuportePersistente.getInstance().iFuncionarioPersistente();

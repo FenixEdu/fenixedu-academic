@@ -440,9 +440,6 @@ public class HorarioRelacionalOracle implements IHorarioPersistente {
 					status = Integer.valueOf(resultado.getString("ASS_EMPSTATUS")).intValue();
 					dataInicioHorario =
 						java.sql.Date.valueOf(resultado.getString("ASS_EMPDTINI").substring(0, resultado.getString("ASS_EMPDTINI").indexOf(" ")));
-					System.out.println("Horario Actual: horario em ASS_EMPREG: " + siglaHorario);
-					System.out.println("Horario Actual: dataInicio em ASS_EMPREG: " + dataInicioHorario);
-					System.out.println("Horario Actual: status em ASS_EMPREG: " + status);
 				} 
 				sql.close();
 
@@ -480,7 +477,6 @@ public class HorarioRelacionalOracle implements IHorarioPersistente {
 							dataFimHorario =
 								java.sql.Date.valueOf(
 									resultado.getString("ASS_HISEMP_DHFIM").substring(0, resultado.getString("ASS_HISEMP_DHFIM").indexOf(" ")));
-							System.out.println("Horario Actual: dataFim em ASS_HISEMPREG: " + dataFimHorario);
 						}
 					}
 					sql.close();
@@ -505,7 +501,6 @@ public class HorarioRelacionalOracle implements IHorarioPersistente {
 						resultadoChaveHorario = sqlChaveHorario.executeQuery();
 
 						if (resultadoChaveHorario.next()) {
-							System.out.println("Horario Actual: horario nos Horarios_tipo: " + resultadoChaveHorario.getInt("codigoInterno"));
 							listaHorariosActuais.add(
 								new Horario(
 									resultadoChaveHorario.getInt("codigoInterno"),

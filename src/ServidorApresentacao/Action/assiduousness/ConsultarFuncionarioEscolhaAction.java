@@ -48,7 +48,6 @@ public final class ConsultarFuncionarioEscolhaAction extends Action {
 
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
-		System.out.println("--->No ConsultarFuncionarioEscolhaAction...");
 
 		Locale locale = getLocale(request);
 		MessageResources messages = getResources(request);

@@ -45,8 +45,6 @@ public class LeituraFicheiroFuncNaoDocente {
 		String linhaFicheiro = null;
 		Hashtable instancia = null;
 
-//		System.out.println("-->LeituraFicheiroFuncionario.lerFicheiro");
-
 		try {
 			/* ficheiro com dados de funcionario validos */
 			ficheiro = new File(ficheiroValidas);
@@ -88,8 +86,6 @@ public class LeituraFicheiroFuncNaoDocente {
 		StringTokenizer stringTokenizer = new StringTokenizer(linha, delimitador);
 		Hashtable instancia = new Hashtable();
 
-//		System.out.println("-->LeituraFicheiroFuncionarios.recuperarInstancia");
-
 		/* codigo de parsing dos atributos */
 		Iterator iterador = ordem.iterator();
 
@@ -130,8 +126,6 @@ public class LeituraFicheiroFuncNaoDocente {
 		else if (naoFormatado.equals("06"))
 			resultado = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_FORCA_AEREA);
 		else resultado = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE);
-
-//		System.out.println("tipo documento nao formatado: " + naoFormatado + " formatado: " + resultado);
 
 		return resultado;
 	}
