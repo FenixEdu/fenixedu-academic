@@ -53,271 +53,268 @@ import Util.tests.TestType;
  */
 public class InsertDistributedTest implements IService {
 
-    private String contextPath = new String();
+	private String contextPath = new String();
 
-    public InsertDistributedTest() {
-    }
+	public InsertDistributedTest() {
+	}
 
-    public boolean run(Integer executionCourseId, Integer testId,
-            String testInformation, Calendar beginDate, Calendar beginHour,
-            Calendar endDate, Calendar endHour, TestType testType,
-            CorrectionAvailability correctionAvaiability, Boolean imsFeedback,
-            String[] selected, Boolean insertByShifts, String contextPath)
-            throws FenixServiceException {
-        this.contextPath = contextPath.replace('\\', '/');
-        try {
+	public boolean run(Integer executionCourseId, Integer testId,
+			String testInformation, Calendar beginDate, Calendar beginHour,
+			Calendar endDate, Calendar endHour, TestType testType,
+			CorrectionAvailability correctionAvaiability, Boolean imsFeedback,
+			String[] selected, Boolean insertByShifts, String contextPath)
+			throws FenixServiceException {
+		this.contextPath = contextPath.replace('\\', '/');
+		try {
 
-            ISuportePersistente persistentSuport = SuportePersistenteOJB
-                    .getInstance();
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentSuport
-                    .getIPersistentExecutionCourse().readByOId(
-                            new ExecutionCourse(executionCourseId), false);
-            if (executionCourse == null)
-                    throw new InvalidArgumentsServiceException();
+			ISuportePersistente persistentSuport = SuportePersistenteOJB
+					.getInstance();
+			IExecutionCourse executionCourse = (IExecutionCourse) persistentSuport
+					.getIPersistentExecutionCourse().readByOID(
+							ExecutionCourse.class, executionCourseId);
+			if (executionCourse == null)
+				throw new InvalidArgumentsServiceException();
 
-            IPersistentDistributedTest persistentDistributedTest = persistentSuport
-                    .getIPersistentDistributedTest();
-            IDistributedTest distributedTest = new DistributedTest();
+			IPersistentDistributedTest persistentDistributedTest = persistentSuport
+					.getIPersistentDistributedTest();
+			IDistributedTest distributedTest = new DistributedTest();
 
-            IPersistentTest persistentTest = persistentSuport
-                    .getIPersistentTest();
-            ITest test = new Test(testId);
-            test = (ITest) persistentTest.readByOId(test, false);
-            if (test == null) throw new InvalidArgumentsServiceException();
+			IPersistentTest persistentTest = persistentSuport
+					.getIPersistentTest();
+			ITest test = (ITest) persistentTest.readByOID(Test.class, testId);
+			if (test == null)
+				throw new InvalidArgumentsServiceException();
 
-            distributedTest.setTitle(test.getTitle());
-            distributedTest.setTestInformation(testInformation);
-            distributedTest.setBeginDate(beginDate);
-            distributedTest.setBeginHour(beginHour);
-            distributedTest.setEndDate(endDate);
-            distributedTest.setEndHour(endHour);
-            distributedTest.setTestType(testType);
-            distributedTest.setCorrectionAvailability(correctionAvaiability);
-            distributedTest.setImsFeedback(imsFeedback);
-            distributedTest.setNumberOfQuestions(test.getNumberOfQuestions());
+			distributedTest.setTitle(test.getTitle());
+			distributedTest.setTestInformation(testInformation);
+			distributedTest.setBeginDate(beginDate);
+			distributedTest.setBeginHour(beginHour);
+			distributedTest.setEndDate(endDate);
+			distributedTest.setEndHour(endHour);
+			distributedTest.setTestType(testType);
+			distributedTest.setCorrectionAvailability(correctionAvaiability);
+			distributedTest.setImsFeedback(imsFeedback);
+			distributedTest.setNumberOfQuestions(test.getNumberOfQuestions());
 
-            ITestScope testScope = (ITestScope) persistentSuport
-                    .getIPersistentTestScope().readByDomainObject(
-                            executionCourse);
-            if (testScope == null) {
-                testScope = new TestScope(executionCourse);
-                persistentSuport.getIPersistentTestScope().simpleLockWrite(
-                        testScope);
-            }
-            distributedTest.setTestScope(testScope);
-            persistentDistributedTest.simpleLockWrite(distributedTest);
+			ITestScope testScope = (ITestScope) persistentSuport
+					.getIPersistentTestScope().readByDomainObject(
+							executionCourse);
+			if (testScope == null) {
+				testScope = new TestScope(executionCourse);
+				persistentSuport.getIPersistentTestScope().simpleLockWrite(
+						testScope);
+			}
+			distributedTest.setTestScope(testScope);
+			persistentDistributedTest.simpleLockWrite(distributedTest);
 
-            List studentList = null;
-            if (insertByShifts.booleanValue())
-                studentList = returnStudentsFromShiftsArray(persistentSuport,
-                        selected);
-            else
-                studentList = returnStudentsFromStudentsArray(persistentSuport,
-                        selected, executionCourseId);
+			List studentList = null;
+			if (insertByShifts.booleanValue())
+				studentList = returnStudentsFromShiftsArray(persistentSuport,
+						selected);
+			else
+				studentList = returnStudentsFromStudentsArray(persistentSuport,
+						selected, executionCourse);
 
-            IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport
-                    .getIPersistentStudentTestQuestion();
-            IPersistentTestQuestion persistentTestQuestion = persistentSuport
-                    .getIPersistentTestQuestion();
+			IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport
+					.getIPersistentStudentTestQuestion();
+			IPersistentTestQuestion persistentTestQuestion = persistentSuport
+					.getIPersistentTestQuestion();
 
-            List testQuestionList = persistentTestQuestion.readByTest(test);
-            Iterator testQuestionIt = testQuestionList.iterator();
+			List testQuestionList = persistentTestQuestion.readByTest(test);
+			Iterator testQuestionIt = testQuestionList.iterator();
 
-            while (testQuestionIt.hasNext()) {
-                ITestQuestion testQuestion = (ITestQuestion) testQuestionIt
-                        .next();
-                List questionList = new ArrayList();
-                questionList.addAll(testQuestion.getQuestion().getMetadata()
-                        .getVisibleQuestions());
-                Iterator studentIt = studentList.iterator();
-                while (studentIt.hasNext()) {
-                    IStudent student = (IStudent) studentIt.next();
-                    IStudentTestQuestion studentTestQuestion = new StudentTestQuestion();
-                    persistentStudentTestQuestion
-                            .lockWrite(studentTestQuestion);
-                    studentTestQuestion.setStudent(student);
-                    studentTestQuestion.setDistributedTest(distributedTest);
-                    studentTestQuestion.setTestQuestionOrder(testQuestion
-                            .getTestQuestionOrder());
-                    studentTestQuestion.setTestQuestionValue(testQuestion
-                            .getTestQuestionValue());
-                    studentTestQuestion.setCorrectionFormula(testQuestion
-                            .getCorrectionFormula());
-                    studentTestQuestion.setTestQuestionMark(new Double(0));
-                    studentTestQuestion.setOldResponse(new Integer(0));
-                    studentTestQuestion.setResponse(null);
+			while (testQuestionIt.hasNext()) {
+				ITestQuestion testQuestion = (ITestQuestion) testQuestionIt
+						.next();
+				List questionList = new ArrayList();
+				questionList.addAll(testQuestion.getQuestion().getMetadata()
+						.getVisibleQuestions());
+				Iterator studentIt = studentList.iterator();
+				while (studentIt.hasNext()) {
+					IStudent student = (IStudent) studentIt.next();
+					IStudentTestQuestion studentTestQuestion = new StudentTestQuestion();
+					persistentStudentTestQuestion
+							.lockWrite(studentTestQuestion);
+					studentTestQuestion.setStudent(student);
+					studentTestQuestion.setDistributedTest(distributedTest);
+					studentTestQuestion.setTestQuestionOrder(testQuestion
+							.getTestQuestionOrder());
+					studentTestQuestion.setTestQuestionValue(testQuestion
+							.getTestQuestionValue());
+					studentTestQuestion.setCorrectionFormula(testQuestion
+							.getCorrectionFormula());
+					studentTestQuestion.setTestQuestionMark(new Double(0));
+					studentTestQuestion.setOldResponse(new Integer(0));
+					studentTestQuestion.setResponse(null);
 
-                    if (questionList.size() == 0)
-                            questionList.addAll(testQuestion.getQuestion()
-                                    .getMetadata().getVisibleQuestions());
-                    IQuestion question = getStudentQuestion(questionList);
-                    if (question == null) { throw new InvalidArgumentsServiceException(); }
-                    studentTestQuestion.setQuestion(question);
-                    questionList.remove(question);
-                }
-            }
-            //Create Evaluation - OnlineTest and Marks
-            if (distributedTest.getTestType().equals(
-                    new TestType(TestType.EVALUATION))) {
-                IOnlineTest onlineTest = new OnlineTest();
-                persistentSuport.getIPersistentEvaluation().simpleLockWrite(
-                        onlineTest);
-                onlineTest.setDistributedTest(distributedTest);
-                List executionCourseList = new ArrayList();
-                executionCourseList.add(executionCourse);
-                onlineTest.setAssociatedExecutionCourses(executionCourseList);
-            }
+					if (questionList.size() == 0)
+						questionList.addAll(testQuestion.getQuestion()
+								.getMetadata().getVisibleQuestions());
+					IQuestion question = getStudentQuestion(questionList);
+					if (question == null) {
+						throw new InvalidArgumentsServiceException();
+					}
+					studentTestQuestion.setQuestion(question);
+					questionList.remove(question);
+				}
+			}
+			//Create Evaluation - OnlineTest and Marks
+			if (distributedTest.getTestType().equals(
+					new TestType(TestType.EVALUATION))) {
+				IOnlineTest onlineTest = new OnlineTest();
+				persistentSuport.getIPersistentEvaluation().simpleLockWrite(
+						onlineTest);
+				onlineTest.setDistributedTest(distributedTest);
+				List executionCourseList = new ArrayList();
+				executionCourseList.add(executionCourse);
+				onlineTest.setAssociatedExecutionCourses(executionCourseList);
+			}
 
-            //Create Advisory
-            Iterator studentIt = studentList.iterator();
-            List group = new ArrayList();
-            while (studentIt.hasNext()) {
-                IStudent student = (IStudent) studentIt.next();
-                group.add(student.getPerson());
-            }
+			//Create Advisory
+			Iterator studentIt = studentList.iterator();
+			List group = new ArrayList();
+			while (studentIt.hasNext()) {
+				IStudent student = (IStudent) studentIt.next();
+				group.add(student.getPerson());
+			}
 
-            IAdvisory advisory = new Advisory();
-            advisory.setCreated(null);
-            advisory.setExpires(endDate.getTime());
-            advisory.setSender("Docente da disciplina "
-                    + executionCourse.getNome());
-            advisory.setSubject(distributedTest.getTitle());
-            String msgBeginning;
+			IAdvisory advisory = new Advisory();
+			advisory.setCreated(null);
+			advisory.setExpires(endDate.getTime());
+			advisory.setSender("Docente da disciplina "
+					+ executionCourse.getNome());
+			advisory.setSubject(distributedTest.getTitle());
+			String msgBeginning;
 
-            if (distributedTest.getTestType().equals(
-                    new TestType(TestType.INQUIRY)))
-                msgBeginning = new String(
-                        "Tem um <a href='"
-                                + this.contextPath
-                                + "/student/studentTests.do?method=prepareToDoTest&testCode="
-                                + distributedTest.getIdInternal()
-                                + "'>questionário</a> para responder entre ");
-            else
-                msgBeginning = new String(
-                        "Tem uma <a href='"
-                                + this.contextPath
-                                + "/student/studentTests.do?method=prepareToDoTest&testCode="
-                                + distributedTest.getIdInternal()
-                                + "'>Ficha de Trabalho</a> a realizar entre ");
-            advisory.setMessage(msgBeginning + " as "
-                    + getHourFormatted(beginHour) + " de "
-                    + getDateFormatted(beginDate) + " e as "
-                    + getHourFormatted(endHour) + " de "
-                    + getDateFormatted(endDate));
-            advisory.setOnlyShowOnce(new Boolean(false));
-            persistentSuport.getIPersistentAdvisory().write(advisory, group);
+			if (distributedTest.getTestType().equals(
+					new TestType(TestType.INQUIRY)))
+				msgBeginning = new String(
+						"Tem um <a href='"
+								+ this.contextPath
+								+ "/student/studentTests.do?method=prepareToDoTest&testCode="
+								+ distributedTest.getIdInternal()
+								+ "'>questionário</a> para responder entre ");
+			else
+				msgBeginning = new String(
+						"Tem uma <a href='"
+								+ this.contextPath
+								+ "/student/studentTests.do?method=prepareToDoTest&testCode="
+								+ distributedTest.getIdInternal()
+								+ "'>Ficha de Trabalho</a> a realizar entre ");
+			advisory.setMessage(msgBeginning + " as "
+					+ getHourFormatted(beginHour) + " de "
+					+ getDateFormatted(beginDate) + " e as "
+					+ getHourFormatted(endHour) + " de "
+					+ getDateFormatted(endDate));
+			advisory.setOnlyShowOnce(new Boolean(false));
+			persistentSuport.getIPersistentAdvisory().write(advisory, group);
 
-            //Create DistributedTestAdvisory
-            IDistributedTestAdvisory distributedTestAdvisory = new DistributedTestAdvisory();
-            persistentSuport.getIPersistentDistributedTestAdvisory()
-                    .simpleLockWrite(distributedTestAdvisory);
-            distributedTestAdvisory.setAdvisory(advisory);
-            distributedTestAdvisory.setDistributedTest(distributedTest);
+			//Create DistributedTestAdvisory
+			IDistributedTestAdvisory distributedTestAdvisory = new DistributedTestAdvisory();
+			persistentSuport.getIPersistentDistributedTestAdvisory()
+					.simpleLockWrite(distributedTestAdvisory);
+			distributedTestAdvisory.setAdvisory(advisory);
+			distributedTestAdvisory.setDistributedTest(distributedTest);
 
-            return true;
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        } catch (Exception e) {
-            throw new FenixServiceException(e);
-        }
-    }
+			return true;
+		} catch (ExcepcaoPersistencia e) {
+			throw new FenixServiceException(e);
+		} catch (Exception e) {
+			throw new FenixServiceException(e);
+		}
+	}
 
-    private IQuestion getStudentQuestion(List questions)
-            throws ExcepcaoPersistencia {
-        IQuestion question = null;
-        if (questions.size() != 0) {
-            Random r = new Random();
-            int questionIndex = r.nextInt(questions.size());
-            question = (IQuestion) questions.get(questionIndex);
-        }
-        return question;
-    }
+	private IQuestion getStudentQuestion(List questions)
+			throws ExcepcaoPersistencia {
+		IQuestion question = null;
+		if (questions.size() != 0) {
+			Random r = new Random();
+			int questionIndex = r.nextInt(questions.size());
+			question = (IQuestion) questions.get(questionIndex);
+		}
+		return question;
+	}
 
-    private List returnStudentsFromShiftsArray(
-            ISuportePersistente persistentSuport, String[] shifts)
-            throws FenixServiceException {
-        List studentsList = new ArrayList();
-        try {
+	private List returnStudentsFromShiftsArray(
+			ISuportePersistente persistentSuport, String[] shifts)
+			throws FenixServiceException {
+		List studentsList = new ArrayList();
+		try {
 
-            ITurnoPersistente persistentShift = persistentSuport
-                    .getITurnoPersistente();
-            for (int i = 0; i < shifts.length; i++) {
-                if (shifts[i].equals("Todos os Turnos")) {
-                    continue;
-                } else {
-                    ITurno shift = new Turno(new Integer(shifts[i]));
-                    shift = (ITurno) persistentShift.readByOId(shift, false);
-                    Iterator studentIt = persistentSuport
-                            .getITurnoAlunoPersistente().readByShift(shift)
-                            .iterator();
-                    while (studentIt.hasNext()) {
-                        IStudent student = (IStudent) studentIt.next();
-                        if (!studentsList.contains(student))
-                                studentsList.add(student);
-                    }
-                }
-            }
-        } catch (Exception e) {
-            throw new FenixServiceException(e);
-        }
-        return studentsList;
-    }
+			ITurnoPersistente persistentShift = persistentSuport
+					.getITurnoPersistente();
+			for (int i = 0; i < shifts.length; i++) {
+				if (shifts[i].equals("Todos os Turnos")) {
+					continue;
+				} else {
+					ITurno shift = (ITurno) persistentShift.readByOID(
+							Turno.class, new Integer(shifts[i]));
+					Iterator studentIt = persistentSuport
+							.getITurnoAlunoPersistente().readByShift(shift)
+							.iterator();
+					while (studentIt.hasNext()) {
+						IStudent student = (IStudent) studentIt.next();
+						if (!studentsList.contains(student))
+							studentsList.add(student);
+					}
+				}
+			}
+		} catch (Exception e) {
+			throw new FenixServiceException(e);
+		}
+		return studentsList;
+	}
 
-    private List returnStudentsFromStudentsArray(
-            ISuportePersistente persistentSuport, String[] students,
-            Integer executionCourseId) throws FenixServiceException {
-        List studentsList = new ArrayList();
-        try {
+	private List returnStudentsFromStudentsArray(
+			ISuportePersistente persistentSuport, String[] students,
+			IExecutionCourse executionCourse) throws FenixServiceException {
+		List studentsList = new ArrayList();
+		try {
 
-            for (int i = 0; i < students.length; i++) {
-                if (students[i].equals("Todos os Alunos")) {
-                    IExecutionCourse executionCourse = new ExecutionCourse(
-                            executionCourseId);
-                    executionCourse = (IExecutionCourse) persistentSuport
-                            .getIPersistentExecutionCourse().readByOId(
-                                    executionCourse, false);
-                    List attendList = persistentSuport
-                            .getIFrequentaPersistente().readByExecutionCourse(
-                                    executionCourse);
+			for (int i = 0; i < students.length; i++) {
+				if (students[i].equals("Todos os Alunos")) {
+					List attendList = persistentSuport
+							.getIFrequentaPersistente().readByExecutionCourse(
+									executionCourse);
 
-                    Iterator iterStudent = attendList.listIterator();
-                    while (iterStudent.hasNext()) {
-                        IFrequenta attend = (Frequenta) iterStudent.next();
-                        IStudent student = attend.getAluno();
-                        studentsList.add(student);
-                    }
-                    break;
-                } else {
-                    IStudent student = new Student(new Integer(students[i]));
-                    student = (IStudent) persistentSuport
-                            .getIPersistentStudent().readByOId(student, false);
+					Iterator iterStudent = attendList.listIterator();
+					while (iterStudent.hasNext()) {
+						IFrequenta attend = (Frequenta) iterStudent.next();
+						IStudent student = attend.getAluno();
+						studentsList.add(student);
+					}
+					break;
+				} else {
+					IStudent student = (IStudent) persistentSuport
+							.getIPersistentStudent().readByOID(Student.class,
+									new Integer(students[i]));
+					if (!studentsList.contains(student))
+						studentsList.add(student);
+				}
+			}
+		} catch (Exception e) {
+			throw new FenixServiceException(e);
+		}
+		return studentsList;
+	}
 
-                    if (!studentsList.contains(student))
-                            studentsList.add(student);
-                }
-            }
-        } catch (Exception e) {
-            throw new FenixServiceException(e);
-        }
-        return studentsList;
-    }
+	private String getDateFormatted(Calendar date) {
+		String result = new String();
+		result += date.get(Calendar.DAY_OF_MONTH);
+		result += "/";
+		result += date.get(Calendar.MONTH) + 1;
+		result += "/";
+		result += date.get(Calendar.YEAR);
+		return result;
+	}
 
-    private String getDateFormatted(Calendar date) {
-        String result = new String();
-        result += date.get(Calendar.DAY_OF_MONTH);
-        result += "/";
-        result += date.get(Calendar.MONTH) + 1;
-        result += "/";
-        result += date.get(Calendar.YEAR);
-        return result;
-    }
-
-    private String getHourFormatted(Calendar hour) {
-        String result = new String();
-        result += hour.get(Calendar.HOUR_OF_DAY);
-        result += ":";
-        if (hour.get(Calendar.MINUTE) < 10) result += "0";
-        result += hour.get(Calendar.MINUTE);
-        return result;
-    }
+	private String getHourFormatted(Calendar hour) {
+		String result = new String();
+		result += hour.get(Calendar.HOUR_OF_DAY);
+		result += ":";
+		if (hour.get(Calendar.MINUTE) < 10)
+			result += "0";
+		result += hour.get(Calendar.MINUTE);
+		return result;
+	}
 }

@@ -90,6 +90,8 @@ function getIndex(input){
 <html:hidden property="method" value="chooseDistributionFor"/>
 <html:hidden property="distributedTestCode" value="<%=(pageContext.findAttribute("distributedTestCode")).toString()%>"/>
 <html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
+<html:hidden property="inquiryInformation"/>
+<html:hidden property="notInquiryInformation"/>
 <br/>
 <table>
 	<tr>
@@ -196,7 +198,13 @@ function getIndex(input){
 <tr>
 	<td><html:submit styleClass="inputbutton" property="save"><bean:message key="button.save"/></html:submit></td>
 	<td><html:reset styleClass="inputbutton"><bean:message key="label.clear"/></html:reset></td>
-	<td><html:submit styleClass="inputbutton" onclick="changeMethod()"><bean:message key="label.back"/></html:submit></td>
+	</html:form>
+	<html:form action="/testDistribution">
+	<html:hidden property="page" value="0"/>
+	<html:hidden property="method" value="showDistributedTests"/>
+	<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
+		<td><html:submit styleClass="inputbutton"><bean:message key="label.back"/></html:submit></td>
+	</html:form>
+	
 </tr>
 </table>
-</html:form>

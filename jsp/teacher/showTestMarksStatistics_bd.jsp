@@ -48,7 +48,7 @@
 		<tr>
 		<logic:iterate id="correctAnswers" name="component" property="correctAnswersPercentage" indexId="correctAnswersIndex">
 			<logic:equal name="correctAnswersIndex" value="0">
-				<td class="listClasses"><bean:message key="label.correct"/>*</td>
+				<td class="listClasses"><bean:message key="label.correctAnswers"/>*</td>
 			</logic:equal>
 			<td class="listClasses"><bean:write name="correctAnswers"/></td>
 		</logic:iterate>

@@ -8,13 +8,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.util.Cloner;
-import Dominio.ExecutionCourse;
 import Dominio.DistributedTest;
-import Dominio.IExecutionCourse;
+import Dominio.ExecutionCourse;
 import Dominio.IDistributedTest;
+import Dominio.IExecutionCourse;
 import Dominio.ITurno;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -25,53 +25,40 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Susana Fernandes
  */
-public class ReadShiftsByDistributedTest implements IServico {
+public class ReadShiftsByDistributedTest implements IService {
 
-	private static ReadShiftsByDistributedTest service =
-		new ReadShiftsByDistributedTest();
-
-	public static ReadShiftsByDistributedTest getService() {
-		return service;
-	}
-
-	public String getNome() {
-		return "ReadShiftsByDistributedTest";
+	public ReadShiftsByDistributedTest() {
 	}
 
 	public Object run(Integer executionCourseId, Integer distributedTestId)
-		throws FenixServiceException {
+			throws FenixServiceException {
 
 		ISuportePersistente persistentSuport;
 		try {
 			persistentSuport = SuportePersistenteOJB.getInstance();
 
 			List studentsList = new ArrayList();
-			IDistributedTest distributedTest =
-				new DistributedTest(distributedTestId);
+			IDistributedTest distributedTest = new DistributedTest(
+					distributedTestId);
 			if (distributedTestId != null) //lista de alunos que tem teste
-				studentsList =
-					persistentSuport
+				studentsList = persistentSuport
 						.getIPersistentStudentTestQuestion()
 						.readStudentsByDistributedTest(distributedTest);
 
-			IExecutionCourse executionCourse =
-				new ExecutionCourse(executionCourseId);
-			executionCourse =
-				(IExecutionCourse) persistentSuport
-					.getIPersistentExecutionCourse()
-					.readByOId(executionCourse, false);
+			IExecutionCourse executionCourse = (IExecutionCourse) persistentSuport
+					.getIPersistentExecutionCourse().readByOID(
+							ExecutionCourse.class, executionCourseId);
 			if (executionCourse == null) {
 				throw new InvalidArgumentsServiceException();
 			}
 
-			List infoShiftList =
-				persistentSuport.getITurnoPersistente().readByExecutionCourse(
-					executionCourse);
+			List infoShiftList = persistentSuport.getITurnoPersistente()
+					.readByExecutionCourse(executionCourse);
 			Iterator itShiftList = infoShiftList.iterator();
 
 			List result = new ArrayList();
-			ITurnoAlunoPersistente turnoAlunoPersistente =
-				persistentSuport.getITurnoAlunoPersistente();
+			ITurnoAlunoPersistente turnoAlunoPersistente = persistentSuport
+					.getITurnoAlunoPersistente();
 			while (itShiftList.hasNext()) {
 				ITurno shift = (ITurno) itShiftList.next();
 				List shiftStudents = turnoAlunoPersistente.readByShift(shift);

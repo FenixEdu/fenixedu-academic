@@ -10,6 +10,7 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoDistributedTest;
 import DataBeans.InfoSiteStudentDistributedTests;
 import DataBeans.comparators.CalendarDateComparator;
@@ -19,7 +20,6 @@ import Dominio.ExecutionCourse;
 import Dominio.IDistributedTest;
 import Dominio.IExecutionCourse;
 import Dominio.IStudent;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -28,50 +28,38 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Susana Fernandes
  */
-public class ReadStudentTests implements IServico
-{
+public class ReadStudentTests implements IService {
 
-	private static ReadStudentTests service = new ReadStudentTests();
-
-	public static ReadStudentTests getService()
-	{
-		return service;
+	public ReadStudentTests() {
 	}
 
-	public String getNome()
-	{
-		return "ReadStudentTests";
-	}
-
-	public Object run(String userName, Integer executionCourseId) throws FenixServiceException
-	{
+	public Object run(String userName, Integer executionCourseId)
+			throws FenixServiceException {
 		InfoSiteStudentDistributedTests infoSite = new InfoSiteStudentDistributedTests();
-		try
-		{
-			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-			IStudent student = persistentSuport.getIPersistentStudent().readByUsername(userName);
+		try {
+			ISuportePersistente persistentSuport = SuportePersistenteOJB
+					.getInstance();
+			IStudent student = persistentSuport.getIPersistentStudent()
+					.readByUsername(userName);
 
 			IExecutionCourse executionCourse = (IExecutionCourse) persistentSuport
-					.getIPersistentExecutionCourse().readByOId(new ExecutionCourse(executionCourseId),
-							false);
+					.getIPersistentExecutionCourse().readByOID(
+							ExecutionCourse.class, executionCourseId);
 
-			List distributedTestList = persistentSuport.getIPersistentDistributedTest()
+			List distributedTestList = persistentSuport
+					.getIPersistentDistributedTest()
 					.readByStudentAndExecutionCourse(student, executionCourse);
 			List testToDoList = new ArrayList();
 			List doneTestsList = new ArrayList();
 			Iterator it = distributedTestList.iterator();
-			while (it.hasNext())
-			{
+			while (it.hasNext()) {
 				IDistributedTest distributedTest = (IDistributedTest) it.next();
-				if (testsToDo(distributedTest))
-				{
+				if (testsToDo(distributedTest)) {
 					InfoDistributedTest infoDistributedTest = Cloner
 							.copyIDistributedTest2InfoDistributedTest(distributedTest);
 					if (!testToDoList.contains(infoDistributedTest))
 						testToDoList.add(infoDistributedTest);
-				}
-				else if (doneTests(distributedTest))
-				{
+				} else if (doneTests(distributedTest)) {
 					InfoDistributedTest infoDistributedTest = Cloner
 							.copyIDistributedTest2InfoDistributedTest(distributedTest);
 					if (!doneTestsList.contains(infoDistributedTest))
@@ -81,29 +69,28 @@ public class ReadStudentTests implements IServico
 			}
 			infoSite.setInfoDistributedTestsToDo(testToDoList);
 			infoSite.setInfoDoneDistributedTests(doneTestsList);
-		}
-		catch (ExcepcaoPersistencia e)
-		{
+		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}
 		return infoSite;
 	}
 
-	private boolean testsToDo(IDistributedTest distributedTest)
-	{
+	private boolean testsToDo(IDistributedTest distributedTest) {
 		Calendar calendar = Calendar.getInstance();
 		CalendarDateComparator dateComparator = new CalendarDateComparator();
 		CalendarHourComparator hourComparator = new CalendarHourComparator();
 
-		if (dateComparator.compare(calendar, distributedTest.getBeginDate()) >= 0)
-		{
-			if (dateComparator.compare(calendar, distributedTest.getBeginDate()) == 0)
-				if (hourComparator.compare(calendar, distributedTest.getBeginHour()) < 0)
+		if (dateComparator.compare(calendar, distributedTest.getBeginDate()) >= 0) {
+			if (dateComparator
+					.compare(calendar, distributedTest.getBeginDate()) == 0)
+				if (hourComparator.compare(calendar, distributedTest
+						.getBeginHour()) < 0)
 					return false;
-			if (dateComparator.compare(calendar, distributedTest.getEndDate()) <= 0)
-			{
-				if (dateComparator.compare(calendar, distributedTest.getEndDate()) == 0)
-					if (hourComparator.compare(calendar, distributedTest.getEndHour()) <= 0)
+			if (dateComparator.compare(calendar, distributedTest.getEndDate()) <= 0) {
+				if (dateComparator.compare(calendar, distributedTest
+						.getEndDate()) == 0)
+					if (hourComparator.compare(calendar, distributedTest
+							.getEndHour()) <= 0)
 						return true;
 					else
 						return false;
@@ -113,15 +100,14 @@ public class ReadStudentTests implements IServico
 		return false;
 	}
 
-	private boolean doneTests(IDistributedTest distributedTest)
-	{
+	private boolean doneTests(IDistributedTest distributedTest) {
 		Calendar calendar = Calendar.getInstance();
 		CalendarDateComparator dateComparator = new CalendarDateComparator();
 		CalendarHourComparator hourComparator = new CalendarHourComparator();
-		if (dateComparator.compare(calendar, distributedTest.getEndDate()) <= 0)
-		{
+		if (dateComparator.compare(calendar, distributedTest.getEndDate()) <= 0) {
 			if (dateComparator.compare(calendar, distributedTest.getEndDate()) == 0)
-				if (hourComparator.compare(calendar, distributedTest.getEndHour()) <= 0)
+				if (hourComparator.compare(calendar, distributedTest
+						.getEndHour()) <= 0)
 					return false;
 				else
 					return true;

@@ -49,52 +49,48 @@ import UtilTests.ParseQuestionException;
 /**
  * @author Susana Fernandes
  */
-public class InsertExercise implements IService
-{
+public class InsertExercise implements IService {
 	private String path = new String();
 
-	public InsertExercise()
-	{
+	public InsertExercise() {
 	}
 
-	public List run(Integer executionCourseId, FormFile metadataFile, FormFile xmlZipFile, String path)
-		throws FenixServiceException, NotExecuteException
-	{
+	public List run(Integer executionCourseId, FormFile metadataFile,
+			FormFile xmlZipFile, String path) throws FenixServiceException,
+			NotExecuteException {
 		List badXmls = new ArrayList();
 		int xmlNumber = 0;
 		this.path = path.replace('\\', '/');
-		try
-		{
-			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionCourse persistentExecutionCourse =
-				persistentSuport.getIPersistentExecutionCourse();
-			IExecutionCourse executionCourse = new ExecutionCourse(executionCourseId);
-			executionCourse =
-				(IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
-			if (executionCourse == null)
-			{
+		try {
+			ISuportePersistente persistentSuport = SuportePersistenteOJB
+					.getInstance();
+			IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
+					.getIPersistentExecutionCourse();
+			IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
+					.readByOID(ExecutionCourse.class, executionCourseId);
+			if (executionCourse == null) {
 				throw new InvalidArgumentsServiceException();
 			}
 			ParseMetadata parseMetadata = new ParseMetadata();
 			String metadataString = null;
-			IPersistentMetadata persistentMetadata = persistentSuport.getIPersistentMetadata();
+			IPersistentMetadata persistentMetadata = persistentSuport
+					.getIPersistentMetadata();
 			IMetadata metadata = new Metadata();
 			metadata.setExecutionCourse(executionCourse);
 			metadata.setVisibility(new Boolean("true"));
-			try
-			{
-				if (metadataFile!= null && metadataFile.getFileData().length != 0)
-				{
-					metadataString = new String(metadataFile.getFileData(), "ISO-8859-1");
+			try {
+				if (metadataFile != null
+						&& metadataFile.getFileData().length != 0) {
+					metadataString = new String(metadataFile.getFileData(),
+							"ISO-8859-1");
 					metadata.setMetadataFile(metadataString);
-					metadata = parseMetadata.parseMetadata(metadataString, metadata, this.path);
+					metadata = parseMetadata.parseMetadata(metadataString,
+							metadata, this.path);
 				}
-			} catch (SAXParseException e)
-			{
+			} catch (SAXParseException e) {
 				badXmls.add(new String("badMetadata"));
 				return badXmls;
-			} catch (Exception e)
-			{
+			} catch (Exception e) {
 				badXmls.add(new String("badMetadata"));
 				return badXmls;
 			}
@@ -106,18 +102,18 @@ public class InsertExercise implements IService
 				throw new NotExecuteException("error.badMetadataFile");
 			Iterator it = xmlFilesList.iterator();
 
-			while (it.hasNext())
-			{
+			while (it.hasNext()) {
 				LabelValueBean labelValueBean = (LabelValueBean) it.next();
 				String xmlFile = labelValueBean.getValue();
 				String xmlFileName = labelValueBean.getLabel();
 
-				try
-				{
+				try {
 					ParseQuestion parseQuestion = new ParseQuestion();
-					IPersistentQuestion persistentQuestion = persistentSuport.getIPersistentQuestion();
+					IPersistentQuestion persistentQuestion = persistentSuport
+							.getIPersistentQuestion();
 
-					parseQuestion.parseQuestion(xmlFile, new InfoQuestion(), this.path);
+					parseQuestion.parseQuestion(xmlFile, new InfoQuestion(),
+							this.path);
 					IQuestion question = new Question();
 					question.setMetadata(metadata);
 					question.setXmlFile(xmlFile);
@@ -125,64 +121,55 @@ public class InsertExercise implements IService
 					question.setVisibility(new Boolean("true"));
 					persistentQuestion.simpleLockWrite(question);
 					xmlNumber++;
-				} catch (SAXParseException e)
-				{
-					if (metadataString != null)
-					{
+				} catch (SAXParseException e) {
+					if (metadataString != null) {
 						persistentMetadata.simpleLockWrite(metadata);
-						metadata.setMetadataFile(
-							removeLocation(metadataString, xmlZipFile.getFileName()));
+						metadata.setMetadataFile(removeLocation(metadataString,
+								xmlZipFile.getFileName()));
 					}
 					badXmls.add(xmlFileName);
-				} catch (ParseQuestionException e)
-				{
-					if (metadataString != null)
-					{
+				} catch (ParseQuestionException e) {
+					if (metadataString != null) {
 						persistentMetadata.simpleLockWrite(metadata);
-						metadata.setMetadataFile(
-							removeLocation(metadataString, xmlZipFile.getFileName()));
+						metadata.setMetadataFile(removeLocation(metadataString,
+								xmlZipFile.getFileName()));
 					}
 					badXmls.add(xmlFileName + e);
-				} catch (Exception e)
-				{
-					if (metadataString != null)
-					{
+				} catch (Exception e) {
+					if (metadataString != null) {
 						persistentMetadata.simpleLockWrite(metadata);
-						metadata.setMetadataFile(
-							removeLocation(metadataString, xmlZipFile.getFileName()));
+						metadata.setMetadataFile(removeLocation(metadataString,
+								xmlZipFile.getFileName()));
 					}
 					badXmls.add(xmlFileName);
 				}
 			}
 
-			if (xmlNumber == 0)
-			{
+			if (xmlNumber == 0) {
 				persistentMetadata.simpleLockWrite(metadata);
 				persistentMetadata.delete(metadata);
-			} else
-			{
+			} else {
 				persistentMetadata.simpleLockWrite(metadata);
 				metadata.setNumberOfMembers(new Integer(xmlNumber));
 			}
 
 			return badXmls;
-		} catch (ExcepcaoPersistencia e)
-		{
+		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}
 	}
 
-	private String removeLocation(String metadataFile, String xmlName) throws FenixServiceException
-	{
+	private String removeLocation(String metadataFile, String xmlName)
+			throws FenixServiceException {
 		TransformerFactory tf = TransformerFactory.newInstance();
 		java.io.StringWriter result = new java.io.StringWriter();
-		try
-		{
-			URL xsl = new URL("file:///" + path.concat("WEB-INF/ims/removeXmlLocation.xsl"));
-			String doctypePublic =
-				new String("-//Technical Superior Institute//DTD Test Metadata 1.1//EN");
-			String doctypeSystem =
-				new String("metadataFile://" + path.concat("WEB-INF/ims/imsmd2_rootv1p2.dtd"));
+		try {
+			URL xsl = new URL("file:///"
+					+ path.concat("WEB-INF/ims/removeXmlLocation.xsl"));
+			String doctypePublic = new String(
+					"-//Technical Superior Institute//DTD Test Metadata 1.1//EN");
+			String doctypeSystem = new String("metadataFile://"
+					+ path.concat("WEB-INF/ims/imsmd2_rootv1p2.dtd"));
 			String auxFile = new String();
 
 			//			<!DOCTYPE questestinterop SYSTEM "ims_qtiasiv1p2p1.dtd" [
@@ -193,17 +180,19 @@ public class InsertExercise implements IService
 			//			]>
 
 			int index = metadataFile.indexOf("<!DOCTYPE");
-			if (index != -1)
-			{
+			if (index != -1) {
 				auxFile = metadataFile.substring(0, index);
 				int index2 = metadataFile.indexOf(">", index) + 1;
 				auxFile = metadataFile.substring(index2, metadataFile.length());
 			}
 			metadataFile = auxFile;
 
-			Transformer transformer = tf.newTransformer(new StreamSource(xsl.openStream()));
-			transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, doctypeSystem);
-			transformer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC, doctypePublic);
+			Transformer transformer = tf.newTransformer(new StreamSource(xsl
+					.openStream()));
+			transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM,
+					doctypeSystem);
+			transformer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC,
+					doctypePublic);
 			transformer.setOutputProperty(OutputKeys.ENCODING, "ISO-LATIN-1");
 			transformer.setParameter("xmlDocument", xmlName);
 
@@ -211,44 +200,45 @@ public class InsertExercise implements IService
 
 			transformer.transform(source, new StreamResult(result));
 
-		} catch (javax.xml.transform.TransformerConfigurationException e)
-		{
+		} catch (javax.xml.transform.TransformerConfigurationException e) {
 			throw new FenixServiceException(e);
-		} catch (javax.xml.transform.TransformerException e)
-		{
+		} catch (javax.xml.transform.TransformerException e) {
 			throw new FenixServiceException(e);
-		} catch (FileNotFoundException e)
-		{
+		} catch (FileNotFoundException e) {
 			throw new FenixServiceException(e);
-		} catch (IOException e)
-		{
+		} catch (IOException e) {
 			throw new FenixServiceException(e);
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			throw new FenixServiceException(e);
 		}
 		return result.toString();
 	}
 
-	//	private String changeDocumentType(String file, boolean metadata) throws FenixServiceException
+	//	private String changeDocumentType(String file, boolean metadata) throws
+	// FenixServiceException
 	//	{
 	//		TransformerFactory tf = TransformerFactory.newInstance();
 	//		java.io.StringWriter result = new java.io.StringWriter();
 	//		try
 	//		{
-	//			URL xsl = new URL("file:///" + path.concat("WEB-INF/ims/changeDocumentType.xsl"));
+	//			URL xsl = new URL("file:///" +
+	// path.concat("WEB-INF/ims/changeDocumentType.xsl"));
 	//			String doctypePublic = null;
 	//			String doctypeSystem = null;
 	//			if (metadata)
 	//			{
-	//				doctypePublic = new String("-//Technical Superior Institute//DTD Test Metadata 1.1//EN");
-	//				doctypeSystem = new String("file:///" + path.concat("WEB-INF/ims/imsmd2_rootv1p2.dtd"));
+	//				doctypePublic = new String("-//Technical Superior Institute//DTD Test
+	// Metadata 1.1//EN");
+	//				doctypeSystem = new String("file:///" +
+	// path.concat("WEB-INF/ims/imsmd2_rootv1p2.dtd"));
 	//			}
 	//			else
 	//			{
 	//				doctypePublic =
-	//					new String("-//Technical Superior Institute//DTD Test XmlDocument 1.1//EN");
-	//				doctypeSystem = new String("file:///" + path.concat("WEB-INF/ims/qtiasiv1p2.dtd"));
+	//					new String("-//Technical Superior Institute//DTD Test XmlDocument
+	// 1.1//EN");
+	//				doctypeSystem = new String("file:///" +
+	// path.concat("WEB-INF/ims/qtiasiv1p2.dtd"));
 	//			}
 	//
 	//			String auxFile = new String();
@@ -260,7 +250,8 @@ public class InsertExercise implements IService
 	//				auxFile = file.substring(index2, file.length());
 	//			}
 	//			file = auxFile;
-	//			Transformer transformer = tf.newTransformer(new StreamSource(xsl.openStream()));
+	//			Transformer transformer = tf.newTransformer(new
+	// StreamSource(xsl.openStream()));
 	//			transformer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC, doctypePublic);
 	//			transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, doctypeSystem);
 	//			transformer.setOutputProperty(OutputKeys.ENCODING, "ISO-LATIN-1");
@@ -291,25 +282,20 @@ public class InsertExercise implements IService
 	//		return result.toString();
 	//	}
 
-	private List getXmlFilesList(FormFile xmlZipFile) throws FenixServiceException
-	{
+	private List getXmlFilesList(FormFile xmlZipFile)
+			throws FenixServiceException {
 		List xmlFilesList = new ArrayList();
 		ZipInputStream zipFile = null;
 
-		try
-		{
-			if (xmlZipFile.getContentType().equals("text/xml"))
-			{
-				xmlFilesList.add(
-					new LabelValueBean(
-						xmlZipFile.getFileName(),
+		try {
+			if (xmlZipFile.getContentType().equals("text/xml")) {
+				xmlFilesList.add(new LabelValueBean(xmlZipFile.getFileName(),
 						new String(xmlZipFile.getFileData(), "ISO-8859-1")));
-				//						changeDocumentType(new String(xmlZipFile.getFileData(), "ISO-8859-1"), false)));
-			} else
-			{
+				//						changeDocumentType(new String(xmlZipFile.getFileData(),
+				// "ISO-8859-1"), false)));
+			} else {
 				zipFile = new ZipInputStream(xmlZipFile.getInputStream());
-				while (true)
-				{
+				while (true) {
 
 					ZipEntry entry = zipFile.getNextEntry();
 					String xmlString = new String();
@@ -318,13 +304,14 @@ public class InsertExercise implements IService
 					byte[] b = new byte[1000];
 					int readed = 0;
 					while ((readed = zipFile.read(b)) > -1)
-						xmlString = xmlString.concat(new String(b, 0, readed, "ISO-8859-1"));
-					xmlFilesList.add(new LabelValueBean(entry.getName(), xmlString));
+						xmlString = xmlString.concat(new String(b, 0, readed,
+								"ISO-8859-1"));
+					xmlFilesList.add(new LabelValueBean(entry.getName(),
+							xmlString));
 				}
 				zipFile.close();
 			}
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			return null;
 		}
 		return xmlFilesList;

@@ -32,63 +32,63 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class ReadDistributedTestMarks implements IService {
 
-    public ReadDistributedTestMarks() {
-    }
+	public ReadDistributedTestMarks() {
+	}
 
-    public SiteView run(Integer executionCourseId, Integer distributedTestId)
-            throws FenixServiceException {
+	public SiteView run(Integer executionCourseId, Integer distributedTestId)
+			throws FenixServiceException {
 
-        ISuportePersistente persistentSuport;
-        InfoSiteStudentsTestMarks infoSiteStudentsTestMarks = new InfoSiteStudentsTestMarks();
-        try {
-            persistentSuport = SuportePersistenteOJB.getInstance();
-            IDistributedTest distributedTest = new DistributedTest(
-                    distributedTestId);
-            distributedTest = (IDistributedTest) persistentSuport
-                    .getIPersistentDistributedTest().readByOId(distributedTest,
-                            false);
-            if (distributedTest == null) { throw new InvalidArgumentsServiceException(); }
+		ISuportePersistente persistentSuport;
+		InfoSiteStudentsTestMarks infoSiteStudentsTestMarks = new InfoSiteStudentsTestMarks();
+		try {
+			persistentSuport = SuportePersistenteOJB.getInstance();
+			IDistributedTest distributedTest = (IDistributedTest) persistentSuport
+					.getIPersistentDistributedTest().readByOID(
+							DistributedTest.class, distributedTestId);
+			if (distributedTest == null) {
+				throw new InvalidArgumentsServiceException();
+			}
 
-            IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport
-                    .getIPersistentStudentTestQuestion();
-            List studentTestQuestionList = persistentStudentTestQuestion
-                    .readByDistributedTest(distributedTest);
-            Iterator it = studentTestQuestionList.iterator();
-            List infoStudentTestQuestionList = null;
+			IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport
+					.getIPersistentStudentTestQuestion();
+			List studentTestQuestionList = persistentStudentTestQuestion
+					.readByDistributedTest(distributedTest);
+			Iterator it = studentTestQuestionList.iterator();
+			List infoStudentTestQuestionList = null;
 
-            infoStudentTestQuestionList = (List) CollectionUtils.collect(
-                    studentTestQuestionList, new Transformer() {
+			infoStudentTestQuestionList = (List) CollectionUtils.collect(
+					studentTestQuestionList, new Transformer() {
 
-                        public Object transform(Object arg0) {
-                            IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) arg0;
-                            return Cloner
-                                    .copyIStudentTestQuestion2InfoStudentTestQuestionMark(studentTestQuestion);
-                        }
+						public Object transform(Object arg0) {
+							IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) arg0;
+							return Cloner
+									.copyIStudentTestQuestion2InfoStudentTestQuestionMark(studentTestQuestion);
+						}
 
-                    });
+					});
 
-            infoSiteStudentsTestMarks
-                    .setMaximumMark(persistentStudentTestQuestion
-                            .getMaximumDistributedTestMark(distributedTest));
-            infoSiteStudentsTestMarks
-                    .setInfoStudentTestQuestionList(infoStudentTestQuestionList);
-            infoSiteStudentsTestMarks
-                    .setExecutionCourse((InfoExecutionCourse) Cloner
-                            .get(distributedTest.getTestScope()
-                                    .getDomainObject()));
-            infoSiteStudentsTestMarks
-                    .setExecutionCourse((InfoExecutionCourse) Cloner
-                            .get(distributedTest.getTestScope()
-                                    .getDomainObject()));
-            infoSiteStudentsTestMarks.setInfoDistributedTest(Cloner
-                    .copyIDistributedTest2InfoDistributedTest(distributedTest));
+			infoSiteStudentsTestMarks
+					.setMaximumMark(persistentStudentTestQuestion
+							.getMaximumDistributedTestMark(distributedTest));
+			infoSiteStudentsTestMarks
+					.setInfoStudentTestQuestionList(infoStudentTestQuestionList);
+			infoSiteStudentsTestMarks
+					.setExecutionCourse((InfoExecutionCourse) Cloner
+							.get(distributedTest.getTestScope()
+									.getDomainObject()));
+			infoSiteStudentsTestMarks
+					.setExecutionCourse((InfoExecutionCourse) Cloner
+							.get(distributedTest.getTestScope()
+									.getDomainObject()));
+			infoSiteStudentsTestMarks.setInfoDistributedTest(Cloner
+					.copyIDistributedTest2InfoDistributedTest(distributedTest));
 
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-        SiteView siteView = new ExecutionCourseSiteView(
-                infoSiteStudentsTestMarks, infoSiteStudentsTestMarks);
-        return siteView;
-    }
+		} catch (ExcepcaoPersistencia e) {
+			throw new FenixServiceException(e);
+		}
+		SiteView siteView = new ExecutionCourseSiteView(
+				infoSiteStudentsTestMarks, infoSiteStudentsTestMarks);
+		return siteView;
+	}
 
 }

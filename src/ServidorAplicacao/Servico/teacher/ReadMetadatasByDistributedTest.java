@@ -34,55 +34,55 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class ReadMetadatasByDistributedTest implements IService {
 
-    private String path = new String();
+	private String path = new String();
 
-    public ReadMetadatasByDistributedTest() {
-    }
+	public ReadMetadatasByDistributedTest() {
+	}
 
-    public SiteView run(Integer executionCourseId, Integer distributedTestId,
-            String path) throws FenixServiceException {
-        this.path = path.replace('\\', '/');
-        try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB
-                    .getInstance();
-            IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
-                    .getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse = new ExecutionCourse(
-                    executionCourseId);
-            executionCourse = (IExecutionCourse) persistentExecutionCourse
-                    .readByOId(executionCourse, false);
-            if (executionCourse == null) { throw new InvalidArgumentsServiceException(); }
-            IPersistentMetadata persistentMetadata = persistentSuport
-                    .getIPersistentMetadata();
+	public SiteView run(Integer executionCourseId, Integer distributedTestId,
+			String path) throws FenixServiceException {
+		this.path = path.replace('\\', '/');
+		try {
+			ISuportePersistente persistentSuport = SuportePersistenteOJB
+					.getInstance();
+			IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
+					.getIPersistentExecutionCourse();
+			IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
+					.readByOID(ExecutionCourse.class, executionCourseId);
+			if (executionCourse == null) {
+				throw new InvalidArgumentsServiceException();
+			}
+			IPersistentMetadata persistentMetadata = persistentSuport
+					.getIPersistentMetadata();
 
-            IPersistentDistributedTest persistentDistributedTest = persistentSuport
-                    .getIPersistentDistributedTest();
+			IPersistentDistributedTest persistentDistributedTest = persistentSuport
+					.getIPersistentDistributedTest();
 
-            IDistributedTest distributedTest = new DistributedTest(
-                    distributedTestId);
-            distributedTest = (IDistributedTest) persistentDistributedTest
-                    .readByOId(distributedTest, false);
+			IDistributedTest distributedTest = (IDistributedTest) persistentDistributedTest
+					.readByOID(DistributedTest.class, distributedTestId);
 
-            if (distributedTest == null) { throw new InvalidArgumentsServiceException(); }
-            List metadatas = new ArrayList();
-            metadatas = persistentSuport
-                    .getIPersistentMetadata()
-                    .readByExecutionCourseAndNotDistributedTest(distributedTest);
-            List result = new ArrayList();
-            Iterator iter = metadatas.iterator();
-            while (iter.hasNext())
-                result.add(Cloner.copyIMetadata2InfoMetadata((IMetadata) iter
-                        .next()));
+			if (distributedTest == null) {
+				throw new InvalidArgumentsServiceException();
+			}
+			List metadatas = new ArrayList();
+			metadatas = persistentSuport
+					.getIPersistentMetadata()
+					.readByExecutionCourseAndNotDistributedTest(distributedTest);
+			List result = new ArrayList();
+			Iterator iter = metadatas.iterator();
+			while (iter.hasNext())
+				result.add(Cloner.copyIMetadata2InfoMetadata((IMetadata) iter
+						.next()));
 
-            InfoSiteMetadatas bodyComponent = new InfoSiteMetadatas();
-            bodyComponent.setInfoMetadatas(result);
-            bodyComponent.setExecutionCourse((InfoExecutionCourse) Cloner
-                    .get(executionCourse));
-            SiteView siteView = new ExecutionCourseSiteView(bodyComponent,
-                    bodyComponent);
-            return siteView;
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-    }
+			InfoSiteMetadatas bodyComponent = new InfoSiteMetadatas();
+			bodyComponent.setInfoMetadatas(result);
+			bodyComponent.setExecutionCourse((InfoExecutionCourse) Cloner
+					.get(executionCourse));
+			SiteView siteView = new ExecutionCourseSiteView(bodyComponent,
+					bodyComponent);
+			return siteView;
+		} catch (ExcepcaoPersistencia e) {
+			throw new FenixServiceException(e);
+		}
+	}
 }

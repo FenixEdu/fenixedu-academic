@@ -761,4 +761,7 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
         return object;
     }
 
+    protected IDomainObject materialize(IDomainObject domainObject) {
+    	return (IDomainObject) ProxyHelper.getRealObject(domainObject);
+    }
 }

@@ -39,8 +39,7 @@ public class EditTestQuestion implements IService
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
             IPersistentTestQuestion persistentTestQuestion = persistentSuport
                     .getIPersistentTestQuestion();
-            ITestQuestion testQuestion = new TestQuestion(testQuestionId);
-            testQuestion = (ITestQuestion) persistentTestQuestion.readByOId(testQuestion, true);
+            ITestQuestion testQuestion = (ITestQuestion) persistentTestQuestion.readByOID(TestQuestion.class, testQuestionId, true);
             if (testQuestion == null)
                 throw new InvalidArgumentsServiceException();
             testQuestion.setTestQuestionValue(questionValue);
@@ -48,8 +47,7 @@ public class EditTestQuestion implements IService
             if (!questionOrder.equals(new Integer(-2)))
             {
                 IPersistentTest persistentTest = persistentSuport.getIPersistentTest();
-                ITest test = new Test(testId);
-                test = (ITest) persistentTest.readByOId(test, false);
+                ITest test = (ITest) persistentTest.readByOID(Test.class, testId, false);
                 List testQuestionList = persistentTestQuestion.readByTest(test);
 
                 if (questionOrder.equals(new Integer(-1)))

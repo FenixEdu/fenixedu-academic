@@ -59,12 +59,10 @@ function cleanSelect() {
 <html:hidden property="page" value="2"/>
 <html:hidden property="method" value="editDistributedTest"/>
 <html:hidden property="insertByShifts" value="false"/>
-
 <table>
 	<tr>
 		<td><b><bean:message key="message.selectStudents"/></b></td><td/><td/><td/><td><span class="error"><html:errors property="selected"/></span></td>
 	</tr>
-	
 	<tr><td></td>
 		<td><b><bean:message key="label.allStudents"/></b></td>
 		<td>
@@ -73,13 +71,11 @@ function cleanSelect() {
 		</html:multibox> 
 		</td>
 	</tr>
-	
 	<tr><td></td>
 		<td class="listClasses-header"><bean:message key="label.number"/></td>
 		<td class="listClasses-header"><bean:message key="label.name"/></td>
 		<td class="listClasses-header"></td>
 	</tr>
-	
 	<logic:iterate id="student" name="students"> 
 		<tr><td></td>
 			<td class="listClasses"><bean:write name="student" property="number"/></td>
@@ -94,12 +90,7 @@ function cleanSelect() {
 </table>
 <table><tr>
 <td><html:submit styleClass="inputbutton"><bean:message key="link.student.room.distribution"/></html:submit><td>
+<td><html:submit styleClass="inputbutton" onclick="javascript:document.forms[0].method.value='prepareEditDistributedTest';this.form.page.value=0;"><bean:message key="label.back"/></html:submit></td>
 </logic:notEqual>
-</html:form>
-<html:form action="/testsManagement">
-<html:hidden property="page" value="0"/>
-<html:hidden property="method" value="testsFirstPage"/>
-<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
-<td><html:submit styleClass="inputbutton"><bean:message key="button.cancel"/></html:submit></td>
 </html:form>
 </tr></table>

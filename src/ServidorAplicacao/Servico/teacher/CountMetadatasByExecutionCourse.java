@@ -5,9 +5,9 @@
 
 package ServidorAplicacao.Servico.teacher;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -19,42 +19,27 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Susana Fernandes
  */
 
-public class CountMetadatasByExecutionCourse implements IServico
-{
-
-	private static CountMetadatasByExecutionCourse service = new CountMetadatasByExecutionCourse();
-
-	public static CountMetadatasByExecutionCourse getService()
-	{
-		return service;
+public class CountMetadatasByExecutionCourse implements IService {
+	public CountMetadatasByExecutionCourse() {
 	}
 
-	public String getNome()
-	{
-		return "CountMetadatasByExecutionCourse";
-	}
-	public Integer run(Integer executionCourseId) throws FenixServiceException
-	{
+	public Integer run(Integer executionCourseId) throws FenixServiceException {
 
-		try
-		{
-			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionCourse persistentExecutionCourse =
-				persistentSuport.getIPersistentExecutionCourse();
-			IExecutionCourse executionCourse = new ExecutionCourse(executionCourseId);
-			executionCourse =
-				(IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
-			if (executionCourse == null)
-			{
+		try {
+			ISuportePersistente persistentSuport = SuportePersistenteOJB
+					.getInstance();
+			IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
+					.getIPersistentExecutionCourse();
+			IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
+					.readByOID(ExecutionCourse.class, executionCourseId);
+			if (executionCourse == null) {
 				throw new InvalidArgumentsServiceException();
 			}
 
-			return new Integer(
-				persistentSuport.getIPersistentMetadata().countByExecutionCourse(executionCourse));
+			return new Integer(persistentSuport.getIPersistentMetadata()
+					.countByExecutionCourse(executionCourse));
 
-		}
-		catch (ExcepcaoPersistencia e)
-		{
+		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}
 	}

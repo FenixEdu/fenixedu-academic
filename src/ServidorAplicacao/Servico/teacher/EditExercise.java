@@ -6,9 +6,9 @@ package ServidorAplicacao.Servico.teacher;
 
 import java.util.Calendar;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.IMetadata;
 import Dominio.Metadata;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -17,49 +17,29 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- *
+ * 
  * @author Susana Fernandes
- *
+ *  
  */
-public class EditExercise implements IServico
-{
-	private static EditExercise service = new EditExercise();
+public class EditExercise implements IService {
 
-	public static EditExercise getService()
-	{
-		return service;
+	public EditExercise() {
 	}
 
-	public EditExercise()
-	{
-	}
+	public boolean run(Integer executionCourseId, Integer metadataId,
+			String author, String description, String difficulty,
+			Calendar learningTime, String level, String mainSubject,
+			String secondarySubject) throws FenixServiceException {
 
-	public String getNome()
-	{
-		return "EditExercise";
-	}
+		try {
+			ISuportePersistente persistentSuport = SuportePersistenteOJB
+					.getInstance();
 
-	public boolean run(
-		Integer executionCourseId,
-		Integer metadataId,
-		String author,
-		String description,
-		String difficulty,
-		Calendar learningTime,
-		String level,
-		String mainSubject,
-		String secondarySubject)
-		throws FenixServiceException
-	{
+			IPersistentMetadata persistentMetadata = persistentSuport
+					.getIPersistentMetadata();
 
-		try
-		{
-			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-
-			IPersistentMetadata persistentMetadata = persistentSuport.getIPersistentMetadata();
-
-			IMetadata metadata =
-				(IMetadata) persistentMetadata.readByOId(new Metadata(metadataId), true);
+			IMetadata metadata = (IMetadata) persistentMetadata.readByOID(
+					Metadata.class, metadataId, true);
 			if (metadata == null)
 				throw new InvalidArgumentsServiceException();
 			if (author != null)
@@ -72,9 +52,7 @@ public class EditExercise implements IServico
 			metadata.setMainSubject(mainSubject);
 			metadata.setSecondarySubject(secondarySubject);
 			persistentMetadata.simpleLockWrite(metadata);
-		}
-		catch (ExcepcaoPersistencia e)
-		{
+		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}
 		return true;

@@ -4,9 +4,9 @@
  */
 package ServidorAplicacao.Servico.teacher;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.ITest;
 import Dominio.Test;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentTest;
@@ -17,38 +17,27 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Susana Fernandes
  */
-public class DeleteTest implements IServico {
-
-	private static DeleteTest service = new DeleteTest();
-
-	public static DeleteTest getService() {
-
-		return service;
-	}
+public class DeleteTest implements IService {
 
 	public DeleteTest() {
 	}
 
-	public String getNome() {
-		return "DeleteTest";
-	}
-
 	public boolean run(Integer executionCourseId, Integer testId)
-		throws FenixServiceException {
+			throws FenixServiceException {
 
 		try {
-			ISuportePersistente persistentSuport =
-				SuportePersistenteOJB.getInstance();
+			ISuportePersistente persistentSuport = SuportePersistenteOJB
+					.getInstance();
 
-			IPersistentTest persistentTest =
-				persistentSuport.getIPersistentTest();
-			ITest test = new Test(testId);
-			test = (ITest) persistentTest.readByOId(test, true);
+			IPersistentTest persistentTest = persistentSuport
+					.getIPersistentTest();
+			ITest test = (ITest) persistentTest.readByOID(Test.class, testId,
+					true);
 			if (test == null)
 				throw new FenixServiceException();
 
-			IPersistentTestQuestion persistentTestQuestion =
-				persistentSuport.getIPersistentTestQuestion();
+			IPersistentTestQuestion persistentTestQuestion = persistentSuport
+					.getIPersistentTestQuestion();
 			persistentTestQuestion.deleteByTest(test);
 			persistentTest.delete(test);
 

@@ -8,14 +8,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.util.Cloner;
-import Dominio.ExecutionCourse;
 import Dominio.DistributedTest;
+import Dominio.ExecutionCourse;
 import Dominio.Frequenta;
-import Dominio.IExecutionCourse;
 import Dominio.IDistributedTest;
+import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -24,67 +24,51 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Susana Fernandes
  */
-public class ReadStudentsWithoutDistributedTest implements IServico
-{
+public class ReadStudentsWithoutDistributedTest implements IService {
 
-    private static ReadStudentsWithoutDistributedTest service = new ReadStudentsWithoutDistributedTest();
+	public ReadStudentsWithoutDistributedTest() {
+	}
 
-    public static ReadStudentsWithoutDistributedTest getService()
-    {
-        return service;
-    }
+	public List run(Integer executionCourseId, Integer distributedTestId)
+			throws FenixServiceException {
 
-    public String getNome()
-    {
-        return "ReadStudentsWithoutDistributedTest";
-    }
+		ISuportePersistente persistentSuport;
+		List infoStudentList = new ArrayList();
+		try {
+			persistentSuport = SuportePersistenteOJB.getInstance();
 
-    public List run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException
-    {
+			IExecutionCourse executionCourse = (IExecutionCourse) persistentSuport
+					.getIPersistentExecutionCourse().readByOID(
+							ExecutionCourse.class, executionCourseId);
+			if (executionCourse == null)
+				throw new FenixServiceException();
 
-        ISuportePersistente persistentSuport;
-        List infoStudentList = new ArrayList();
-        try
-        {
-            persistentSuport = SuportePersistenteOJB.getInstance();
+			IDistributedTest distributedTest = (IDistributedTest) persistentSuport
+					.getIPersistentDistributedTest().readByOID(
+							DistributedTest.class, distributedTestId);
+			if (distributedTest == null)
+				throw new FenixServiceException();
 
-            IExecutionCourse executionCourse = new ExecutionCourse(executionCourseId);
-            executionCourse =
-                (IExecutionCourse) persistentSuport.getIPersistentExecutionCourse().readByOId(
-                    executionCourse,
-                    false);
-            if (executionCourse == null)
-                throw new FenixServiceException();
+			//Todos os alunos
+			List attendList = persistentSuport.getIFrequentaPersistente()
+					.readByExecutionCourse(executionCourse);
+			//alunos que tem test
+			List studentList = persistentSuport
+					.getIPersistentStudentTestQuestion()
+					.readStudentsByDistributedTest(distributedTest);
 
-            IDistributedTest distributedTest = new DistributedTest(distributedTestId);
-            distributedTest =
-                (IDistributedTest) persistentSuport.getIPersistentDistributedTest().readByOId(
-                    distributedTest,
-                    false);
-            if (distributedTest == null)
-                throw new FenixServiceException();
+			Iterator it = attendList.iterator();
+			while (it.hasNext()) {
+				IFrequenta attend = (Frequenta) it.next();
 
-            //Todos os alunos
-            List attendList =
-                persistentSuport.getIFrequentaPersistente().readByExecutionCourse(executionCourse);
-            //alunos que tem test
-            List studentList =
-                persistentSuport.getIPersistentStudentTestQuestion().readStudentsByDistributedTest(
-                    distributedTest);
+				if (!studentList.contains(attend.getAluno()))
+					infoStudentList.add(Cloner.copyIStudent2InfoStudent(attend
+							.getAluno()));
+			}
 
-            Iterator it = attendList.iterator();
-            while (it.hasNext())
-            {
-                IFrequenta attend = (Frequenta) it.next();
-
-                if (!studentList.contains(attend.getAluno()))
-                    infoStudentList.add(Cloner.copyIStudent2InfoStudent(attend.getAluno()));
-            }
-
-        } catch (ExcepcaoPersistencia e)
-        {
-            throw new FenixServiceException(e);
-        }
-        return infoStudentList;
-    }
+		} catch (ExcepcaoPersistencia e) {
+			throw new FenixServiceException(e);
+		}
+		return infoStudentList;
+	}
 }

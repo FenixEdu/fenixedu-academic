@@ -42,10 +42,7 @@ public class ReadDistributedTests implements IService {
 
             IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
                     .getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse = new ExecutionCourse(
-                    executionCourseId);
-            executionCourse = (IExecutionCourse) persistentExecutionCourse
-                    .readByOId(executionCourse, false);
+            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseId);
             if (executionCourse == null) { throw new InvalidArgumentsServiceException(); }
             IPersistentDistributedTest persistentDistrubutedTest = persistentSuport
                     .getIPersistentDistributedTest();

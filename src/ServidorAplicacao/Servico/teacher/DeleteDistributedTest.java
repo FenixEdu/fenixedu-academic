@@ -18,39 +18,37 @@ import Util.tests.TestType;
 /**
  * @author Susana Fernandes
  */
-public class DeleteDistributedTest implements IService
-{
-    public DeleteDistributedTest() {
-    }
+public class DeleteDistributedTest implements IService {
+	public DeleteDistributedTest() {
+	}
 
-    public boolean run(Integer executionCourseId, Integer distributedTestId)
-            throws FenixServiceException
-    {
-        try
-        {
+	public boolean run(Integer executionCourseId, Integer distributedTestId)
+			throws FenixServiceException {
+		try {
 
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-            IPersistentDistributedTest persistentDistributedTest = persistentSuport
-                    .getIPersistentDistributedTest();
-            IDistributedTest distributedTest = (IDistributedTest) persistentDistributedTest.readByOId(
-                    new DistributedTest(distributedTestId), true);
-            if (distributedTest.getTestType().getType().intValue() == TestType.EVALUATION)
-            {
-                IOnlineTest onlineTest = (IOnlineTest) persistentSuport.getIPersistentOnlineTest()
-                        .readByDistributedTest(distributedTest);
-                persistentSuport.getIPersistentMark().deleteByEvaluation(onlineTest);
-                persistentSuport.getIPersistentOnlineTest().delete(onlineTest);
-            }
-            persistentSuport.getIPersistentDistributedTestAdvisory().deleteByDistributedTest(
-                    distributedTest);
-            persistentSuport.getIPersistentQuestion().cleanQuestions(distributedTest);
-            persistentSuport.getIPersistentMetadata().cleanMetadatas();
-            persistentDistributedTest.delete(distributedTest);
-        }
-        catch (ExcepcaoPersistencia e)
-        {
-            throw new FenixServiceException(e);
-        }
-        return true;
-    }
+			ISuportePersistente persistentSuport = SuportePersistenteOJB
+					.getInstance();
+			IPersistentDistributedTest persistentDistributedTest = persistentSuport
+					.getIPersistentDistributedTest();
+			IDistributedTest distributedTest = (IDistributedTest) persistentDistributedTest
+					.readByOID(DistributedTest.class, distributedTestId, true);
+			if (distributedTest.getTestType().getType().intValue() == TestType.EVALUATION) {
+				IOnlineTest onlineTest = (IOnlineTest) persistentSuport
+						.getIPersistentOnlineTest().readByDistributedTest(
+								distributedTest);
+				persistentSuport.getIPersistentMark().deleteByEvaluation(
+						onlineTest);
+				persistentSuport.getIPersistentOnlineTest().delete(onlineTest);
+			}
+			persistentSuport.getIPersistentDistributedTestAdvisory()
+					.deleteByDistributedTest(distributedTest);
+			persistentSuport.getIPersistentQuestion().cleanQuestions(
+					distributedTest);
+			persistentSuport.getIPersistentMetadata().cleanMetadatas();
+			persistentDistributedTest.delete(distributedTest);
+		} catch (ExcepcaoPersistencia e) {
+			throw new FenixServiceException(e);
+		}
+		return true;
+	}
 }

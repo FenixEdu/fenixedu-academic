@@ -27,96 +27,96 @@ import UtilTests.ParseQuestion;
  */
 public class ReadStudentTestQuestionImage implements IService {
 
-    private String path = new String();
+	private String path = new String();
 
-    public ReadStudentTestQuestionImage() {
-    }
+	public ReadStudentTestQuestionImage() {
+	}
 
-    public String run(String userName, Integer distributedTestId,
-            Integer questionId, Integer imageId, String feedbackId, String path)
-            throws FenixServiceException {
-        this.path = path.replace('\\', '/');
-        try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB
-                    .getInstance();
-            IStudent student = persistentSuport.getIPersistentStudent()
-                    .readByUsername(userName);
-            if (student == null) throw new FenixServiceException();
+	public String run(String userName, Integer distributedTestId,
+			Integer questionId, Integer imageId, String feedbackId, String path)
+			throws FenixServiceException {
+		this.path = path.replace('\\', '/');
+		try {
+			ISuportePersistente persistentSuport = SuportePersistenteOJB
+					.getInstance();
+			IStudent student = persistentSuport.getIPersistentStudent()
+					.readByUsername(userName);
+			if (student == null)
+				throw new FenixServiceException();
 
-            IDistributedTest distributedTest = new DistributedTest(
-                    distributedTestId);
-            distributedTest = (IDistributedTest) persistentSuport
-                    .getIPersistentDistributedTest().readByOId(distributedTest,
-                            false);
-            if (distributedTest == null) throw new FenixServiceException();
+			IDistributedTest distributedTest = (IDistributedTest) persistentSuport
+					.getIPersistentDistributedTest().readByOID(
+							DistributedTest.class, distributedTestId);
+			if (distributedTest == null)
+				throw new FenixServiceException();
 
-            List studentTestQuestionList = persistentSuport
-                    .getIPersistentStudentTestQuestion()
-                    .readByStudentAndDistributedTest(student, distributedTest);
+			List studentTestQuestionList = persistentSuport
+					.getIPersistentStudentTestQuestion()
+					.readByStudentAndDistributedTest(student, distributedTest);
 
-            Iterator it = studentTestQuestionList.iterator();
-            while (it.hasNext()) {
-                IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) it
-                        .next();
-                if (studentTestQuestion.getKeyQuestion().equals(questionId)) {
-                    ParseQuestion parse = new ParseQuestion();
-                    InfoStudentTestQuestion infoStudentTestQuestion = Cloner
-                            .copyIStudentTestQuestion2InfoStudentTestQuestion(studentTestQuestion);
-                    try {
-                        infoStudentTestQuestion = parse
-                                .parseStudentTestQuestion(
-                                        infoStudentTestQuestion, this.path);
-                    } catch (Exception e) {
-                        throw new FenixServiceException(e);
-                    }
-                    Iterator questionit = infoStudentTestQuestion.getQuestion()
-                            .getQuestion().iterator();
-                    int imgIndex = 0;
-                    while (questionit.hasNext()) {
-                        LabelValueBean lvb = (LabelValueBean) questionit.next();
-                        if (lvb.getLabel().startsWith("image/")) {
-                            imgIndex++;
-                            if (imgIndex == imageId.intValue())
-                                    return lvb.getValue();
-                        }
-                    }
-                    Iterator optionit = infoStudentTestQuestion.getQuestion()
-                            .getOptions().iterator();
+			Iterator it = studentTestQuestionList.iterator();
+			while (it.hasNext()) {
+				IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) it
+						.next();
+				if (studentTestQuestion.getKeyQuestion().equals(questionId)) {
+					ParseQuestion parse = new ParseQuestion();
+					InfoStudentTestQuestion infoStudentTestQuestion = Cloner
+							.copyIStudentTestQuestion2InfoStudentTestQuestion(studentTestQuestion);
+					try {
+						infoStudentTestQuestion = parse
+								.parseStudentTestQuestion(
+										infoStudentTestQuestion, this.path);
+					} catch (Exception e) {
+						throw new FenixServiceException(e);
+					}
+					Iterator questionit = infoStudentTestQuestion.getQuestion()
+							.getQuestion().iterator();
+					int imgIndex = 0;
+					while (questionit.hasNext()) {
+						LabelValueBean lvb = (LabelValueBean) questionit.next();
+						if (lvb.getLabel().startsWith("image/")) {
+							imgIndex++;
+							if (imgIndex == imageId.intValue())
+								return lvb.getValue();
+						}
+					}
+					Iterator optionit = infoStudentTestQuestion.getQuestion()
+							.getOptions().iterator();
 
-                    while (optionit.hasNext()) {
-                        LabelValueBean lvb = (LabelValueBean) optionit.next();
-                        if (lvb.getLabel().startsWith("image/")) {
-                            imgIndex++;
-                            if (imgIndex == imageId.intValue())
-                                    return lvb.getValue();
-                        }
-                    }
+					while (optionit.hasNext()) {
+						LabelValueBean lvb = (LabelValueBean) optionit.next();
+						if (lvb.getLabel().startsWith("image/")) {
+							imgIndex++;
+							if (imgIndex == imageId.intValue())
+								return lvb.getValue();
+						}
+					}
 
-                    if (feedbackId != null) {
-                        Iterator feedbackit = ((ResponseProcessing) infoStudentTestQuestion
-                                .getQuestion()
-                                .getResponseProcessingInstructions().get(
-                                        new Integer(feedbackId).intValue()))
-                                .getFeedback().iterator();
+					if (feedbackId != null) {
+						Iterator feedbackit = ((ResponseProcessing) infoStudentTestQuestion
+								.getQuestion()
+								.getResponseProcessingInstructions().get(
+										new Integer(feedbackId).intValue()))
+								.getFeedback().iterator();
 
-                        while (feedbackit.hasNext()) {
-                            LabelValueBean lvb = (LabelValueBean) feedbackit
-                                    .next();
-                            if (lvb.getLabel().startsWith("image/")) {
-                                imgIndex++;
-                                if (imgIndex == imageId.intValue())
-                                        return lvb.getValue();
-                            }
-                        }
-                    }
-                }
+						while (feedbackit.hasNext()) {
+							LabelValueBean lvb = (LabelValueBean) feedbackit
+									.next();
+							if (lvb.getLabel().startsWith("image/")) {
+								imgIndex++;
+								if (imgIndex == imageId.intValue())
+									return lvb.getValue();
+							}
+						}
+					}
+				}
 
-            }
+			}
 
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
-        }
-        return null;
-    }
+		} catch (ExcepcaoPersistencia e) {
+			throw new FenixServiceException(e);
+		}
+		return null;
+	}
 
 }

@@ -28,8 +28,11 @@ public class TestOJB extends ObjectFenixOJB implements IPersistentTest
 
 	public List readByTestScopeObject(IDomainObject object) throws ExcepcaoPersistencia
 	{
+		// Force object materialization to obtain correct class name for query.
+		IDomainObject materializedObject = materialize(object);
+
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("className", object.getClass().getName());
+		criteria.addEqualTo("className", materializedObject.getClass().getName());
 		criteria.addEqualTo("keyClass", object.getIdInternal());
 		ITestScope scope = (ITestScope) queryObject(TestScope.class, criteria);
 		if (scope == null)
