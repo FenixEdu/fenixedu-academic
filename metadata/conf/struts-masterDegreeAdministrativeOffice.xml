@@ -226,6 +226,14 @@
 			<form-property name="studentGuideList" type="java.lang.String"/>
       </form-bean>
 
+	  <!-- Bean to Choose Master Degree  -->
+      <form-bean name="chooseMasterDegreeForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+
+            <form-property name="page" type="java.lang.Integer" />
+            <form-property name="degree" type="java.lang.String" />
+      </form-bean>
 
 
    </form-beans>
@@ -301,6 +309,13 @@
 			  >
 	         <forward name="Success" path="/guide/indexGuideListing.jsp"/> 
       </action>    
+ 
+ 	  <action path="/marksSection"
+		      parameter="method"
+              type="ServidorApresentacao.Action.commons.VoidAction"
+			  >
+	         <forward name="Success" path="/marksManagement/indexMarksManagement.jsp"/> 
+      </action>
       
     
       
@@ -706,7 +721,31 @@
    		 <forward name="ChooseSuccess" path="/certificate/finalResultPage.jsp"/>
       </action>
     
-  
+      <!-- Choose Execution Year To Manage Marks -->
+      <action path="/chooseExecutionYearToManageMarks"
+      		  input="chooseExecutionYear.jsp"
+		      attribute="chooseExecutionYearForm"
+		      name="chooseExecutionYearForm"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
+			  >
+	         <forward name="PrepareSuccess" path="/marksManagement/chooseExecutionYearToManageMarks.jsp"/>  
+	         <forward name="ChooseSuccess" path="/marksManagementDispatchAction.do?method=chooseMasterDegree"/> 
+      </action>
+
+      <action path="/marksManagementDispatchAction"
+      		  input="/marksManagement/chooseMasterDegree.jsp"
+      	      name="chooseMasterDegreeForm"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.marksManagement.MarksManagementDispatchAction"
+              validate="true">
+     		 <exception type="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+		                key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+	         <forward name="ChooseMasterDegree" path="/marksManagement/chooseMasterDegree.jsp"/> 
+      </action>
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->

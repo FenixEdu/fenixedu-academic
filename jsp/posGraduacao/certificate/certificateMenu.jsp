@@ -11,6 +11,9 @@
     <li><html:link page="/chooseDeclarationInfoAction.do?method=prepare&page=0"><bean:message key="link.declarations" /></html:link></li>
     <li><html:link page="/chooseFinalResultInfoAction.do?method=prepare&page=0"><bean:message key="link.finalResult" /></html:link></li>
 </ul>
+<ul>
+	<li><html:link page="/marksSection.do"><bean:message key="link.masterDegree.administrativeOffice.marks" /></html:link></li>
+</ul>
 	   
   	
    
