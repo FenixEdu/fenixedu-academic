@@ -130,7 +130,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 					System.out.println("publico.infoShifts é vazio... :(");
 				}
 				
-				session.setAttribute("publico.infoExecCourse", infoExecCourse);
+				session.setAttribute(SessionConstants.EXECUTION_COURSE_KEY, infoExecCourse);
 			}
 			
 			// Read associated curricular courses to dispçlay curricular course information.

@@ -9,7 +9,7 @@
 <%@ page import="DataBeans.InfoLesson"%>
 <%@ page import="java.util.Calendar" %>
 
-<logic:notPresent name="publico.infoExecCourse" scope="session">
+<logic:notPresent name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" scope="session">
 <table align="center"  cellpadding='0' cellspacing='0'>
 			<tr align="center">
 				<td>
@@ -19,10 +19,10 @@
 		</table>
 </logic:notPresent>
 
-<logic:present name="publico.infoExecCourse" scope="session">
+<logic:present name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" scope="session">
 
 	<center> <font color='#034D7A' size='5'> <b>
-		<bean:write name="publico.infoExecCourse" property="nome"/>
+		<bean:write name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" property="nome"/>
 	</center> </b> </font>
 
 	</br>
@@ -74,27 +74,27 @@
 
 	<bean:message key="property.executionCourse.curricularHours"/>
 	<blockquote>
-		<logic:notEqual name="publico.infoExecCourse" property="theoreticalHours" value="0">
+		<logic:notEqual name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" property="theoreticalHours" value="0">
 			<bean:message key="property.executionCourse.theoreticalHours"/>
-			<bean:write name="publico.infoExecCourse" property="theoreticalHours"/>
+			<bean:write name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" property="theoreticalHours"/>
 			</br>
 		</logic:notEqual>
 
-		<logic:notEqual name="publico.infoExecCourse" property="praticalHours" value="0">
+		<logic:notEqual name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" property="praticalHours" value="0">
 			<bean:message key="property.executionCourse.practicalHours"/>
-			<bean:write name="publico.infoExecCourse" property="praticalHours"/>
+			<bean:write name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" property="praticalHours"/>
 			</br>
 		</logic:notEqual>
 
-		<logic:notEqual name="publico.infoExecCourse" property="theoPratHours" value="0">
+		<logic:notEqual name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" property="theoPratHours" value="0">
 			<bean:message key="property.executionCourse.theoreticalPracticalHours"/>
-			<bean:write name="publico.infoExecCourse" property="theoPratHours"/>
+			<bean:write name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" property="theoPratHours"/>
 			</br>
 		</logic:notEqual>
 		
-		<logic:notEqual name="publico.infoExecCourse" property="labHours" value="0">
+		<logic:notEqual name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" property="labHours" value="0">
 			<bean:message key="property.executionCourse.labHours"/>
-			<bean:write name="publico.infoExecCourse" property="labHours"/>		
+			<bean:write name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" property="labHours"/>		
 		</logic:notEqual>
 	</blockquote>
 
@@ -139,7 +139,9 @@
                        <% Integer fM = new Integer(((InfoLesson) infoLesson).getFim().get(Calendar.MINUTE)); %>
 						<tr>
 							<td rowspan="<%=((InfoShiftWithAssociatedInfoClassesAndInfoLessons) infoShift).getInfoLessons().size() %>">
-								<bean:write name="infoShift" property="infoShift.nome"/>
+								<html:link page="/viewShiftTimeTable.do" paramId="shiftName" paramName="infoShift" paramProperty="infoShift.nome">
+									<bean:write name="infoShift" property="infoShift.nome"/>
+								</html:link>
 							</td>
 							<td>
 							<bean:write name="infoLesson" property="diaSemana"/> &nbsp;
