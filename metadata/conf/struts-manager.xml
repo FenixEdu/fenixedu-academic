@@ -82,6 +82,20 @@
 				<form-property name="tempExamMap" type="java.lang.String" />
 				<form-property name="internalIds" type="java.lang.Integer[]" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+		
+		<form-bean name="curriculumForm"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                dynamic="true">
+				<form-property name="generalObjectives" type="java.lang.String" />
+				<form-property name="operacionalObjectives" type="java.lang.String" />
+				<form-property name="program" type="java.lang.String" />
+				<form-property name="generalObjectivesEn" type="java.lang.String" />
+				<form-property name="operacionalObjectivesEn" type="java.lang.String" />
+				<form-property name="programEn" type="java.lang.String" />
+				<form-property name="evaluationElements" type="java.lang.String" />
+				<form-property name="evaluationElementsEn" type="java.lang.String" />
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>    
 
 	  <!-- ========== EXECUTION PERIOD MANIPULATION ========== -->
@@ -525,6 +539,25 @@
          	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>  	          
        <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>      	      
+	</action>
+	
+	
+	 <!-- Action for editing a curriculum  -->
+	<action
+		path="/editCurriculum"
+		name="curriculumForm"
+		input="/editCurriculum.do?method=prepareEdit&amp;page=0"
+		parameter="method"
+		scope="request"
+		type="ServidorApresentacao.Action.manager.EditCurriculumDA"
+        validate="true">  
+        <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+         	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+       <forward name="editCurriculum" path="df.page.edit-curriculum"/>
+       <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>
+       <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>
+       <forward name="editCurriculumEnglish" path="df.page.edit-curriculum-english"/>  	      
 	</action>
     
       <!--Input actions-->  

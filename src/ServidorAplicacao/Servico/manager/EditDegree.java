@@ -43,7 +43,7 @@ public class EditDegree implements IServico {
 	}
 
 	/**
-	 * Executes the service. Returns the current infodegree.
+	 * Executes the service.
 	 */
 
 	public void run(InfoDegree newInfoDegree) throws FenixServiceException {
