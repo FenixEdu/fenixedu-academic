@@ -114,13 +114,13 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
                     }
                 });
 
-        Object args[] = { userView.getUtilizador() };
-
-        args[0] = infoTeacher;
+        Object args2[] = { infoTeacher };
         InfoDepartment teacherDepartment = (InfoDepartment) ServiceUtils.executeService(userView,
-                "ReadDepartmentByTeacher", args);
+                "ReadDepartmentByTeacher", args2);
 
         if (!request.isUserInRole(RoleType.CREDITS_MANAGER.getName())) {
+            Object args[] = { userView.getUtilizador() };
+
             InfoDepartment userDepartment = (InfoDepartment) ServiceUtils.executeService(userView,
                     "ReadDepartmentByUser", args);
             request.setAttribute("isDepartmentManager", Boolean.valueOf(userDepartment

@@ -35,6 +35,8 @@ BUG FIXES:
   information by degree curricular plan but by degree
 - Coordinator Portal - degree curricular plan management - fixed editing of curriculum
 - Website manager Portal - fixed links for other portals in events and news pages
+- Department office portal - fixed wrong argument for service call
+- Department office portal - fixed class ProfessorShip method afterInsert. It was generating nullPointerException 
 
 KNOWN ISSUES:
 =============
