@@ -13,7 +13,7 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoProfessorShip;
+import DataBeans.InfoProfessorship;
 import DataBeans.InfoTeacher;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -46,7 +46,7 @@ public class InsertProfessorShipByNumberDA extends FenixDispatchAction {
 		InfoTeacher infoTeacher = new InfoTeacher();
 		infoTeacher.setTeacherNumber(new Integer(number));
 		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse(executionCourseId);
-		InfoProfessorShip infoProfessorShip = new InfoProfessorShip();
+		InfoProfessorship infoProfessorShip = new InfoProfessorship();
 		infoProfessorShip.setInfoExecutionCourse(infoExecutionCourse);
 		infoProfessorShip.setInfoTeacher(infoTeacher);
     	

@@ -75,24 +75,6 @@ public class StudentOJB extends ObjectFenixOJB implements IPersistentStudent
 		return (IStudent) queryObject(Student.class, criteria);
 	}
 
-	//		try {
-	//			IStudent aluno = null;
-	//			String oqlQuery = "select aluno from " + Student.class.getName();
-	//			oqlQuery += " where number = $1 and degreeType = $2";
-	//			query.create(oqlQuery);
-	//			//query.bind(.getNome());
-	//			query.bind(numero);
-	//			query.bind(degreeType.getTipoCurso());
-	//			List result = (List) query.execute();
-	//			lockRead(result);
-	//			if (result.size() != 0)
-	//				aluno = (IStudent) result.get(0);
-	//			return aluno;
-	//		} catch (QueryException ex) {
-	//			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-	//		}
-	//	}
-
 	//
 	//	public void delete(IStudent student) throws ExcepcaoPersistencia {
 	//		// Delete all Attends
@@ -445,8 +427,7 @@ public class StudentOJB extends ObjectFenixOJB implements IPersistentStudent
 	{
 		Criteria criteria = new Criteria();
 		return readSpan(Student.class, criteria, numberOfElementsInSpan, spanNumber);
-	}
-	
+}
 	/* (non-Javadoc)
 	 * @see middleware.persistentMiddlewareSupport.IPersistentMWAluno#countAll()
 	 */

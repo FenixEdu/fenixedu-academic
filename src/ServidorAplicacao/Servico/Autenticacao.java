@@ -201,9 +201,6 @@ public class Autenticacao implements IServico
         InfoRole creditsManager = new InfoRole();
         creditsManager.setRoleType(RoleType.CREDITS_MANAGER);
         rolesIntranet.add(creditsManager);
-        //InfoRole person = new InfoRole();
-        //person.setRoleType(RoleType.PERSON);
-        //rolesIntranet.add(person);
 
         if (application.equalsIgnoreCase(Autenticacao.INTRANET))
         {

@@ -156,9 +156,9 @@
       </reference-descriptor>
       
      <collection-descriptor
-			name="associatedTeacherProfessorShipPercentage"
+			name="associatedShiftProfessorship"
 			collection-class="org.apache.ojb.broker.util.collections.RemovalAwareCollection"
-			element-class-ref="Dominio.TeacherShiftPercentage"
+			element-class-ref="Dominio.ShiftProfessorship"
 			proxy="true"
 			auto-retrieve="true"
 			refresh="true">

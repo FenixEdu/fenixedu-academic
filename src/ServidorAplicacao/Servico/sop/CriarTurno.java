@@ -84,7 +84,7 @@ public class CriarTurno implements IServico {
 			turno.setAvailabilityFinal(availabilityFinal);
 			turno.setAssociatedLessons(new ArrayList());
 			turno.setAssociatedClasses(new ArrayList());
-			turno.setAssociatedTeacherProfessorShipPercentage(new ArrayList());
+			turno.setAssociatedShiftProfessorship(new ArrayList());
 						
 			try {
 				sp.getITurnoPersistente().lockWrite(turno);

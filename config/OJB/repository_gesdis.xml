@@ -285,63 +285,30 @@
 </class-descriptor>
 
 <!-- ******************************************************************************************************************************* -->
-<!-- Definitions for Dominio.SupportLessonsTimetable -->
+<!-- Definitions for Dominio.SupportLesson -->
 <!-- ******************************************************************************************************************************* -->
-<class-descriptor class="Dominio.SupportLessonsTimetable"
-                  table="SUPPORT_LESSONS_TIMETABLE">
-	<field-descriptor
-    	name="idInternal"
-        column="ID_INTERNAL"
-        jdbc-type="INTEGER"
-        primarykey="true"
-        autoincrement="true"
-    />
-    <field-descriptor
-        name="weekDay"
-        column="WEEKDAY"
-        jdbc-type="INTEGER"
-        conversion="ServidorPersistente.Conversores.DiaSemana2EnumDiaSemanaFieldConversion"
-    />
-    <field-descriptor
-        name="startTime"
-        column="START_TIME"
-        jdbc-type="TIME"
-        conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
-    />
-    <field-descriptor
-        name="endTime"
-        column="END_TIME"
-        jdbc-type="TIME"
-        conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
-    />
-    <field-descriptor
-        name="place"
-        column="PLACE"
-        jdbc-type="VARCHAR"
-    />
-	<field-descriptor
-        name="keyTeacher"
-        column="KEY_TEACHER"
-        jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-        name="keyExecutionCourse"
-        column="KEY_EXECUTION_COURSE"
-        jdbc-type="INTEGER"
-	/>
-	<reference-descriptor
-        name="teacher"
-        class-ref="Dominio.Teacher"
-        >
-	<foreignkey field-ref="keyTeacher"/>
-    </reference-descriptor>
-	<reference-descriptor
-        name="executionCourse"
-        class-ref="Dominio.DisciplinaExecucao"
-        >
-	<foreignkey field-ref="keyExecutionCourse"/>
-    </reference-descriptor>
+<class-descriptor class="Dominio.SupportLesson"  table="SUPPORT_LESSON">
+	
+	<field-descriptor	name="idInternal"  column="ID_INTERNAL" jdbc-type="INTEGER"
+						        primarykey="true" autoincrement="true"/>
+						        
+    <field-descriptor  name="weekDay" column="WEEKDAY" jdbc-type="INTEGER"
+						        conversion="ServidorPersistente.Conversores.DiaSemana2EnumDiaSemanaFieldConversion" />
     
+    <field-descriptor  name="startTime" column="START_TIME" jdbc-type="TIME"
+    						    conversion="ServidorPersistente.Conversores.Time2DateFieldConversion"/>
+    						    
+    <field-descriptor name="endTime" column="END_TIME" jdbc-type="TIME"
+					           conversion="ServidorPersistente.Conversores.Time2DateFieldConversion" />
+        
+    <field-descriptor name="place" column="PLACE" jdbc-type="VARCHAR" />
+    
+	<field-descriptor name="keyProfessorship" column="KEY_PROFESSORSHIP" jdbc-type="INTEGER"/>
+
+	<reference-descriptor name="professorship"  class-ref="Dominio.Professorship">
+		<foreignkey field-ref="keyProfessorship"/>
+    </reference-descriptor>
+
 </class-descriptor>
 <!-- ******************************************************************************************************************************* -->
 <!-- Definitions for Dominio.Curriculum -->
@@ -496,13 +463,13 @@
 	<foreignkey field-ref="keyExecutionCourse"/>
     </reference-descriptor>
 	<collection-descriptor
-         name="associatedTeacherShiftPercentage"
-         element-class-ref="Dominio.TeacherShiftPercentage"
+         name="associatedShiftProfessorship"
+         element-class-ref="Dominio.ShiftProfessorship"
          collection-class="org.apache.ojb.broker.util.collections.ManageableVector"         
          auto-retrieve="true"
          refresh="true"
          proxy="true">
-		<inverse-foreignkey field-ref="keyProfessorShip"/>
+		<inverse-foreignkey field-ref="keyProfessorship"/>
     </collection-descriptor>
 </class-descriptor>
 

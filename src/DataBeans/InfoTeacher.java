@@ -27,6 +27,11 @@ public class InfoTeacher extends InfoObject{
 	public InfoTeacher() {
 		
 	}
+	
+	public InfoTeacher (Integer idInternal) {
+	    setIdInternal(idInternal);
+	}
+	
 	public InfoTeacher(Integer teacherNumber,InfoPerson infoPerson) {
 		setTeacherNumber(teacherNumber);
 		setInfoPerson(infoPerson);

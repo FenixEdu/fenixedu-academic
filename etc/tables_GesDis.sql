@@ -129,19 +129,18 @@ create table BIBLIOGRAPHIC_REFERENCE (
    type=InnoDB comment="InnoDB free: 372736 kB";
 
 #----------------------------
-# Table structure for support_lessons_timetable
+# Table structure for support_lesson
 #----------------------------
-drop table if exists SUPPORT_LESSONS_TIMETABLE;
-create table SUPPORT_LESSONS_TIMETABLE (
+drop table if exists SUPPORT_LESSON;
+create table SUPPORT_LESSON (
    ID_INTERNAL int(50) not null auto_increment,
    WEEKDAY varchar(50) not null,
-   START_TIME varchar(50) not null,
-   END_TIME varchar(50) not null,
+   START_TIME TIME not null,
+   END_TIME TIME not null,
    PLACE varchar(50) not null,
-   KEY_TEACHER int(11) not null default '0',
-   KEY_EXECUTION_COURSE int(11) not null default '0',
+   KEY_PROFESSORSHIP int(11) not null,
    primary key (ID_INTERNAL),
-   unique U1 (KEY_TEACHER, WEEKDAY, START_TIME, END_TIME))   
+   unique U1 (KEY_PROFESSORSHIP, WEEKDAY, START_TIME, END_TIME))   
    type=InnoDB comment="InnoDB free: 372736 kB";
 
 #----------------------------

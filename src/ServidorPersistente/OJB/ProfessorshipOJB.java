@@ -17,6 +17,7 @@ import Dominio.Professorship;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.TipoCurso;
 
 /**
  * @author João Mota
@@ -146,5 +147,14 @@ public class ProfessorshipOJB extends ObjectFenixOJB implements IPersistentProfe
 			throw new ExistingPersistentException();
 	}
 
-
+    /* (non-Javadoc)
+     * @see ServidorPersistente.IPersistentProfessorship#readByTeacherAndTypeOfDegree(Dominio.ITeacher, Util.TipoCurso)
+     */
+    public List readByTeacherAndTypeOfDegree(ITeacher teacher, TipoCurso degreeType) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("", teacher.getIdInternal());
+        criteria.addEqualTo("", degreeType);
+        return queryList(Professorship.class, criteria, true);
+    }
 }

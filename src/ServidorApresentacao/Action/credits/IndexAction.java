@@ -41,7 +41,7 @@ public class IndexAction extends Action {
 		ActionForward actionForward = null;
 		if (userView.hasRoleType(RoleType.CREDITS_MANAGER)) {
 			actionForward = mapping.findForward("creditsManager");
-		} else if (userView.hasRoleType(RoleType.CREDITS_MANAGER_DEPARTMENT)) {
+		} else if (userView.hasRoleType(RoleType.DEPARTMENT_CREDITS_MANAGER)) {
 			Object args[] = { userView.getUtilizador()};
 			List  departmentList =
 				(List) ServiceUtils.executeService(

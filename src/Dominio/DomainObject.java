@@ -10,8 +10,13 @@ package Dominio;
  */
 abstract public class DomainObject implements IDomainObject {
 	private Integer idInternal;
+	
 	public DomainObject() {
 	}
+	
+	public DomainObject(Integer idInternal) {
+	    setIdInternal(idInternal);
+	}	
 
 	/**
 	 * @return Integer

@@ -87,15 +87,15 @@ public class ReadTeacherShiftPercentageTest extends TestCaseServices {
 				switch (internalCode) {
 					case 1 :
 						assertEquals("shift 1 - 1", new Double(0), infoShiftPercentage.getAvailablePercentage());
-						assertEquals("shift 1 - 2", 2, infoShiftPercentage.getTeacherShiftPercentageList().size());
+						assertEquals("shift 1 - 2", 2, infoShiftPercentage.getInfoShiftProfessorshipList().size());
 						break;
 					case 2 :
 						assertEquals("shift 2 - 1", new Double(75), infoShiftPercentage.getAvailablePercentage());
-						assertEquals("shift 2 - 2", 1, infoShiftPercentage.getTeacherShiftPercentageList().size());
+						assertEquals("shift 2 - 2", 1, infoShiftPercentage.getInfoShiftProfessorshipList().size());
 						break;
 					default :
 						assertEquals("shift " + internalCode + " - 1", new Double(100), infoShiftPercentage.getAvailablePercentage());
-						assertEquals("shift " + internalCode + " - 2", 0, infoShiftPercentage.getTeacherShiftPercentageList().size());
+						assertEquals("shift " + internalCode + " - 2", 0, infoShiftPercentage.getInfoShiftProfessorshipList().size());
 						break;
 				}
 			}

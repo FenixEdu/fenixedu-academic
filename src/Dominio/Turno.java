@@ -22,7 +22,7 @@ public class Turno extends DomainObject implements ITurno {
 	protected Double percentage;
 	private   Integer  availabilityFinal;
 	protected IDisciplinaExecucao _disciplinaExecucao;
-	private List associatedTeacherProfessorShipPercentage;
+	private List associatedShiftProfessorship;
 	
 	private List associatedLessons;
 	private List associatedClasses;
@@ -117,15 +117,15 @@ public class Turno extends DomainObject implements ITurno {
 	/**
 	 * @return
 	 */
-	public List getAssociatedTeacherProfessorShipPercentage() {
-		return associatedTeacherProfessorShipPercentage;
+	public List getAssociatedShiftProfessorship() {
+		return associatedShiftProfessorship;
 	}
 
 	/**
 	 * @param list
 	 */
-	public void setAssociatedTeacherProfessorShipPercentage(List list) {
-		associatedTeacherProfessorShipPercentage = list;
+	public void setAssociatedShiftProfessorship(List list) {
+		associatedShiftProfessorship = list;
 	}
 
 	/**

@@ -1,0 +1,44 @@
+<class-descriptor	class="Dominio.degree.finalProject.DegreeFinalProject"
+		table="DEGREE_FINAL_PROJECT">
+	  <field-descriptor  name="idInternal" column="ID_INTERNAL"  
+							     jdbc-type="INTEGER"  primarykey="true" autoincrement="true"/>
+
+	  <field-descriptor name="keyExecutionYear" column="KEY_EXECUTION_YEAR" jdbc-type="INTEGER" />
+
+	  <field-descriptor  name="title" column="TITLE" jdbc-type="VARCHAR" />
+
+	  <reference-descriptor
+			name="executionYear"
+			class-ref="Dominio.ExecutionYear"
+			proxy="false">
+		<foreignkey field-ref="keyExecutionYear"/>
+	 </reference-descriptor>   
+ </class-descriptor>  
+
+<class-descriptor	class="Dominio.degree.finalProject.DegreeFinalProjectOrientation"
+		table="DEGREE_FINAL_PROJECT_ORIENTATION">
+	  <field-descriptor  name="idInternal" column="ID_INTERNAL"  
+							     jdbc-type="INTEGER"  primarykey="true" autoincrement="true"/>
+
+	  <field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER" />
+
+	  <field-descriptor   name="keyDegreeFinalProject"  column="KEY_DEGREE_FINAL_PROJECT" jdbc-type="INTEGER" />
+	  
+	  <field-descriptor  name="coOrientation" column="CO_ORIENTATION" jdbc-type="BIT" />
+
+	  <field-descriptor  name="percentage" column="PERCENTAGE" jdbc-type="DOUBLE"/>
+	  <reference-descriptor
+			name="teacher"
+			class-ref="Dominio.Teacher"
+			proxy="false">
+		<foreignkey field-ref="keyTeacher"/>
+	 </reference-descriptor>   
+	  <reference-descriptor
+			name="degreeFinalProject"
+			class-ref="Dominio.degree.finalProject.DegreeFinalProject"
+			proxy="false">
+		<foreignkey field-ref="keyDegreeFinalProject"/>
+	 </reference-descriptor>   
+
+ </class-descriptor>  
+   

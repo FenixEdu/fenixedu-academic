@@ -1,6 +1,6 @@
 /*
  * Created on 14/Mai/2003 by jpvl
- *
+ *  
  */
 package ServidorAplicacao.Servico.credits;
 
@@ -14,17 +14,22 @@ import org.apache.commons.collections.Transformer;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoTeacher;
 import DataBeans.teacher.credits.InfoShiftPercentage;
-import DataBeans.teacher.credits.InfoTeacherShiftPercentage;
+import DataBeans.teacher.credits.InfoShiftProfessorship;
+import DataBeans.teacher.professorship.TeacherExecutionCourseProfessorshipShiftsDTO;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
 import Dominio.IAula;
 import Dominio.IDisciplinaExecucao;
-import Dominio.ITeacherShiftPercentage;
+import Dominio.IShiftProfessorship;
+import Dominio.ITeacher;
 import Dominio.ITurno;
+import Dominio.Teacher;
 import Dominio.Turno;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -33,79 +38,129 @@ import Util.TipoAula;
 /**
  * @author Tânia & Alexandra
  */
-public class ReadTeacherExecutionCourseShiftsPercentage implements IServico {
-	private static ReadTeacherExecutionCourseShiftsPercentage service = new ReadTeacherExecutionCourseShiftsPercentage();
+public class ReadTeacherExecutionCourseShiftsPercentage implements IServico
+{
+    private static ReadTeacherExecutionCourseShiftsPercentage service =
+        new ReadTeacherExecutionCourseShiftsPercentage();
 
-	/**
+    /**
 	 * The singleton access method of this class.
 	 */
-	public static ReadTeacherExecutionCourseShiftsPercentage getService() {
-		return service;
-	}
+    public static ReadTeacherExecutionCourseShiftsPercentage getService()
+    {
+        return service;
+    }
 
-	/* (non-Javadoc)
+    /*
+	 * (non-Javadoc)
+	 * 
 	 * @see ServidorAplicacao.IServico#getNome()
 	 */
-	public String getNome() {
-		return "ReadTeacherExecutionCourseShiftsPercentage";
-	}
+    public String getNome()
+    {
+        return "ReadTeacherExecutionCourseProfessorshipShifts";
+    }
 
-	public List run(InfoTeacher infoTeacher, InfoExecutionCourse infoExecutionCourse) throws FenixServiceException {
+    public TeacherExecutionCourseProfessorshipShiftsDTO run(
+        InfoTeacher infoTeacher,
+        InfoExecutionCourse infoExecutionCourse)
+        throws FenixServiceException
+    {
 
-		List infoShiftPercentageList = new ArrayList();
+        TeacherExecutionCourseProfessorshipShiftsDTO result =
+            new TeacherExecutionCourseProfessorshipShiftsDTO();
 
-		try {
-			IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
-			executionCourse.setIdInternal(infoExecutionCourse.getIdInternal());
+        List infoShiftPercentageList = new ArrayList();
 
-			ITurno shiftExample = new Turno();
-			shiftExample.setDisciplinaExecucao(executionCourse);
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
+            IDisciplinaExecucao executionCourse = readExecutionCourse(infoExecutionCourse, sp);
+            ITeacher teacher = readTeacher(infoTeacher, sp);
 
-			List executionCourseShiftsList = null;
-			// cannot use mapped objects...with readByCriteria
-			executionCourseShiftsList = shiftDAO.readByCriteria(shiftExample);
+            result.setInfoExecutionCourse(
+                Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
+            result.setInfoTeacher(Cloner.copyITeacher2InfoTeacher(teacher));
 
-			Iterator iterator = executionCourseShiftsList.iterator();
-			while (iterator.hasNext()) {
-				ITurno shift = (ITurno) iterator.next();
+            ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
 
-				InfoShiftPercentage infoShiftPercentage = new InfoShiftPercentage();
-				infoShiftPercentage.setShift(Cloner.copyIShift2InfoShift(shift));
-				double availablePercentage = 100;
-				InfoTeacherShiftPercentage infoTeacherShiftPercentage = null;
+            List executionCourseShiftsList = null;
 
-								
-				if (shift.getTipo().getTipo().intValue() != TipoAula.LABORATORIAL) {
-					Iterator iter = shift.getAssociatedTeacherProfessorShipPercentage().iterator();
-					while (iter.hasNext()) {
-						ITeacherShiftPercentage teacherShiftPercentage = (ITeacherShiftPercentage) iter.next();
+            executionCourseShiftsList =
+                shiftDAO.readByExecutionCourseID(executionCourse.getIdInternal());
 
-						availablePercentage -= teacherShiftPercentage.getPercentage().doubleValue();
+            Iterator iterator = executionCourseShiftsList.iterator();
+            while (iterator.hasNext())
+            {
+                ITurno shift = (ITurno) iterator.next();
 
-						infoTeacherShiftPercentage = Cloner.copyITeacherShiftPercentage2InfoTeacherShiftPercentage(teacherShiftPercentage);
-						infoShiftPercentage.addInfoTeacherShiftPercentage(infoTeacherShiftPercentage);
-					}
-				}
+                InfoShiftPercentage infoShiftPercentage = new InfoShiftPercentage();
+                infoShiftPercentage.setShift(Cloner.copyIShift2InfoShift(shift));
+                double availablePercentage = 100;
+                InfoShiftProfessorship infoShiftProfessorship = null;
 
-				List infoLessons = (List) CollectionUtils.collect(shift.getAssociatedLessons(), new Transformer() {
-					public Object transform(Object input) {
-						IAula lesson = (IAula) input;
-						return Cloner.copyILesson2InfoLesson(lesson);
-					}
-				});
-				infoShiftPercentage.setInfoLessons(infoLessons);
+                Iterator iter = shift.getAssociatedShiftProfessorship().iterator();
+                while (iter.hasNext())
+                {
+                    IShiftProfessorship shiftProfessorship = (IShiftProfessorship) iter.next();
+                    /**
+					 * if shift's type is LABORATORIAL the shift professorship percentage can exceed
+					 * 100%
+					 */
+                    if ((shift.getTipo().getTipo().intValue() != TipoAula.LABORATORIAL)
+                        && (!shiftProfessorship.getProfessorship().getTeacher().equals(teacher)))
+                    {
+                        availablePercentage -= shiftProfessorship.getPercentage().doubleValue();
+                    }
+                    infoShiftProfessorship =
+                        Cloner.copyIShiftProfessorship2InfoShiftProfessorship(shiftProfessorship);
+                    infoShiftPercentage.addInfoShiftProfessorship(infoShiftProfessorship);
+                }
 
-				infoShiftPercentage.setAvailablePercentage(new Double(availablePercentage));
+                List infoLessons =
+                    (List) CollectionUtils.collect(shift.getAssociatedLessons(), new Transformer()
+                {
+                    public Object transform(Object input)
+                    {
+                        IAula lesson = (IAula) input;
+                        return Cloner.copyILesson2InfoLesson(lesson);
+                    }
+                });
+                infoShiftPercentage.setInfoLessons(infoLessons);
 
-				infoShiftPercentageList.add(infoShiftPercentage);
-			}
-		} catch (ExcepcaoPersistencia e) {
-			e.printStackTrace();
-			throw new FenixServiceException(e);
-		}
-		return infoShiftPercentageList;
-	}
+                infoShiftPercentage.setAvailablePercentage(new Double(availablePercentage));
+
+                infoShiftPercentageList.add(infoShiftPercentage);
+            }
+        }
+        catch (ExcepcaoPersistencia e)
+        {
+            e.printStackTrace();
+            throw new FenixServiceException(e);
+        }
+        result.setInfoShiftPercentageList(infoShiftPercentageList);
+        return result;
+    }
+
+    private ITeacher readTeacher(InfoTeacher infoTeacher, ISuportePersistente sp)
+    {
+        IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
+
+        ITeacher teacher =
+            (ITeacher) teacherDAO.readByOId(new Teacher(infoTeacher.getIdInternal()), false);
+        return teacher;
+    }
+    private IDisciplinaExecucao readExecutionCourse(
+        InfoExecutionCourse infoExecutionCourse,
+        ISuportePersistente sp)
+    {
+        IDisciplinaExecucaoPersistente executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
+
+        IDisciplinaExecucao executionCourse =
+            (IDisciplinaExecucao) executionCourseDAO.readByOId(
+                new DisciplinaExecucao(infoExecutionCourse.getIdInternal()),
+                false);
+        return executionCourse;
+    }
 }

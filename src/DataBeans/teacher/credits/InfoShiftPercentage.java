@@ -16,10 +16,10 @@ public class InfoShiftPercentage {
 	private List lessons;
 	private InfoShift shift;
 	private Double availablePercentage;
-	private List teacherShiftPercentageList;
+	private List infoShiftProfessorshipList;
 
 	public InfoShiftPercentage(){
-		teacherShiftPercentageList = new ArrayList();
+		infoShiftProfessorshipList = new ArrayList();
 	}
 	
 	/**
@@ -39,8 +39,8 @@ public class InfoShiftPercentage {
 	/**
 	 * @return
 	 */
-	public List getTeacherShiftPercentageList() {
-		return teacherShiftPercentageList;
+	public List getInfoShiftProfessorshipList() {
+		return infoShiftProfessorshipList;
 	}
 
 	/**
@@ -57,8 +57,8 @@ public class InfoShiftPercentage {
 		this.shift = shift;
 	}
 	
-	public void addInfoTeacherShiftPercentage(InfoTeacherShiftPercentage infoTeacherShiftPercentage){
-		teacherShiftPercentageList.add(infoTeacherShiftPercentage);	
+	public void addInfoShiftProfessorship(InfoShiftProfessorship infoTeacherShiftPercentage){
+		infoShiftProfessorshipList.add(infoTeacherShiftPercentage);	
 	}
 
 	public void setInfoLessons(List lessons) {

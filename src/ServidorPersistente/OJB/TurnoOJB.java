@@ -338,7 +338,7 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente
     public List readByExecutionCourseID(Integer id) throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("key_execution_course", id);
+        criteria.addEqualTo("chaveDisciplinaExecucao", id);
         return queryList(Turno.class, criteria);
     }
 

@@ -31,8 +31,8 @@ public interface ITurno extends IDomainObject {
   public void setLotacao(Integer Lotacao);
   public void setDisciplinaExecucao(IDisciplinaExecucao disciplinaExecucao);
   
-  public List getAssociatedTeacherProfessorShipPercentage();
-  public void setAssociatedTeacherProfessorShipPercentage(List list);
+  public List getAssociatedShiftProfessorship();
+  public void setAssociatedShiftProfessorship(List list);
   
   List getAssociatedLessons();
   void setAssociatedLessons(List lessons);

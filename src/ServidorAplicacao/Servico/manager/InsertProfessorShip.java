@@ -3,7 +3,7 @@
  */
 package ServidorAplicacao.Servico.manager;
 
-import DataBeans.InfoProfessorShip;
+import DataBeans.InfoProfessorship;
 import Dominio.DisciplinaExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IProfessorship;
@@ -40,7 +40,7 @@ public class InsertProfessorShip implements IServico {
 	}
 	
 
-	public void run(InfoProfessorShip infoProfessorShip) throws FenixServiceException {
+	public void run(InfoProfessorship infoProfessorShip) throws FenixServiceException {
 	
 		try {
 				ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();

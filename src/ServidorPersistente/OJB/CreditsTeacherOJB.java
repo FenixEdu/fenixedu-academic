@@ -17,7 +17,7 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 public class CreditsTeacherOJB extends ObjectFenixOJB implements IPersistentCreditsTeacher {
 
 	/* (non-Javadoc)
-	 * @see ServidorPersistente.IPersistentTeacherShiftPercentage#readByUnique(Dominio.ITeacherShiftPercentage)
+	 * @see ServidorPersistente.IPersistentTeacherShiftPercentage#readByUnique(Dominio.IShiftProfessorship)
 	 */
 	public ICredits readByUnique(ICredits creditsTeacher) throws ExcepcaoPersistencia {
 		ICredits creditsTeacherFromBD = null;

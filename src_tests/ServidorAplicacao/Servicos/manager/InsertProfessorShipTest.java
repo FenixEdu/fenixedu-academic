@@ -4,7 +4,7 @@
 package ServidorAplicacao.Servicos.manager;
 
 import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoProfessorShip;
+import DataBeans.InfoProfessorship;
 import DataBeans.InfoTeacher;
 
 /**
@@ -29,7 +29,7 @@ public class InsertProfessorShipTest extends TestCaseManagerInsertAndEditService
 				
 		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse(new Integer(24));
 				
-		InfoProfessorShip infoProfessorShip = new InfoProfessorShip();
+		InfoProfessorship infoProfessorShip = new InfoProfessorship();
 		infoProfessorShip.setInfoExecutionCourse(infoExecutionCourse);
 		infoProfessorShip.setInfoTeacher(infoTeacher);
 		
@@ -46,7 +46,7 @@ public class InsertProfessorShipTest extends TestCaseManagerInsertAndEditService
 		
 		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse(new Integer(24));
 		
-		InfoProfessorShip infoProfessorShip = new InfoProfessorShip();
+		InfoProfessorship infoProfessorShip = new InfoProfessorship();
 		infoProfessorShip.setInfoExecutionCourse(infoExecutionCourse);
 		infoProfessorShip.setInfoTeacher(infoTeacher);
 

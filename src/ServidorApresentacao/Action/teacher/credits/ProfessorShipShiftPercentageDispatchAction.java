@@ -27,7 +27,7 @@ import DataBeans.CreditsView;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShift;
 import DataBeans.InfoTeacher;
-import DataBeans.teacher.credits.InfoTeacherShiftPercentage;
+import DataBeans.teacher.credits.InfoShiftProfessorship;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -174,8 +174,8 @@ public class ProfessorShipShiftPercentageDispatchAction
 		ActionErrors actionErrors) {
 		List infoTeacherShiftPercentageList = new ArrayList();
 
-		InfoTeacherShiftPercentage infoTeacherShiftPercentage =
-			new InfoTeacherShiftPercentage();
+		InfoShiftProfessorship infoTeacherShiftPercentage =
+			new InfoShiftProfessorship();
 
 		Integer[] shiftProfessorships =
 			(Integer[]) form.get("shiftProfessorships");
@@ -211,7 +211,7 @@ public class ProfessorShipShiftPercentageDispatchAction
 						actionErrors.add("error.non.positive", actionError);
 					}
 					infoTeacherShiftPercentage =
-						new InfoTeacherShiftPercentage();
+						new InfoShiftProfessorship();
 					infoTeacherShiftPercentage.setPercentage(percentage);
 
 					InfoShift infoShift = new InfoShift();

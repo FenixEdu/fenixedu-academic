@@ -85,7 +85,11 @@ public class ExecutionCourseSiteComponentService implements IServico {
 				siteView = new ExecutionCourseSiteView(commonComponent, bodyComponent);
 			}
 		} catch (ExcepcaoPersistencia e) {
+		    e.printStackTrace(System.out);
 			throw new FenixServiceException(e);
+		} catch (Exception e) {
+		    e.printStackTrace(System.out);
+		    throw new FenixServiceException(e);
 		}
 
 		return siteView;

@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.CreditsView;
-import DataBeans.InfoProfessorShip;
+import DataBeans.InfoProfessorship;
 import DataBeans.teacher.credits.InfoCredits;
 import DataBeans.util.Cloner;
 import Dominio.Credits;
@@ -101,7 +101,7 @@ public class ReadCreditsTeacher implements IServico {
 		
 		while (iter.hasNext()) {
 			IProfessorship professorship = (IProfessorship) iter.next();
-			InfoProfessorShip infoProfessorShip = Cloner.copyIProfessorShip2InfoProfessorShip(professorship);
+			InfoProfessorship infoProfessorShip = Cloner.copyIProfessorship2InfoProfessorship(professorship);
 			infoProfessorShip.getInfoExecutionCourse().getNome();
 			infoProfessorshipList.add(infoProfessorShip);
 		}

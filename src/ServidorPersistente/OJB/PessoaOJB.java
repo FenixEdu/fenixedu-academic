@@ -148,5 +148,5 @@ public class PessoaOJB extends ObjectFenixOJB implements IPessoaPersistente {
     
     public void alterarPessoa(String numDocId, TipoDocumentoIdentificacao tipoDocId, IPessoa pessoa) throws ExcepcaoPersistencia {
     }
-    
+   
 }

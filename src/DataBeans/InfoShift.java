@@ -36,7 +36,15 @@ public class InfoShift extends InfoObject {
 		setLotacao(lotacao);
 		setInfoDisciplinaExecucao(infoDisciplinaExecucao);
 	}
-	public Integer getSize() {
+	/**
+     * @param shiftIdInternal
+     */
+    public InfoShift(Integer shiftIdInternal)
+    {
+        setIdInternal(shiftIdInternal);
+    }
+
+    public Integer getSize() {
 		return new Integer(infoClasses.size());
 	}
 
@@ -201,17 +209,4 @@ public class InfoShift extends InfoObject {
 		this.percentage = percentage;
 	}
 
-	/**
-	 * @return
-	 */
-	public Integer get_lotacao() {
-		return _lotacao;
-	}
-
-	/**
-	 * @param _lotacao
-	 */
-	public void set_lotacao(Integer _lotacao) {
-		this._lotacao = _lotacao;
-	}
 }

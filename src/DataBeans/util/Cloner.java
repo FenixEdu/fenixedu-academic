@@ -63,7 +63,7 @@ import DataBeans.InfoMasterDegreeThesisDataVersion;
 import DataBeans.InfoMetadata;
 import DataBeans.InfoPerson;
 import DataBeans.InfoPrice;
-import DataBeans.InfoProfessorShip;
+import DataBeans.InfoProfessorship;
 import DataBeans.InfoQuestion;
 import DataBeans.InfoRole;
 import DataBeans.InfoRoom;
@@ -92,8 +92,7 @@ import DataBeans.Seminaries.InfoEquivalency;
 import DataBeans.Seminaries.InfoModality;
 import DataBeans.Seminaries.InfoSeminary;
 import DataBeans.Seminaries.InfoTheme;
-import DataBeans.degree.finalProject.InfoDegreeFinalProject;
-import DataBeans.degree.finalProject.InfoOrientation;
+import DataBeans.degree.finalProject.InfoTeacherDegreeFinalProjectStudent;
 import DataBeans.gaugingTests.physics.InfoGaugingTestResult;
 import DataBeans.gesdis.InfoCourseReport;
 import DataBeans.grant.contract.InfoGrantContract;
@@ -114,8 +113,9 @@ import DataBeans.teacher.InfoServiceProviderRegime;
 import DataBeans.teacher.InfoTeachingCareer;
 import DataBeans.teacher.InfoWeeklyOcupation;
 import DataBeans.teacher.credits.InfoCredits;
-import DataBeans.teacher.credits.InfoTeacherShiftPercentage;
-import DataBeans.teacher.professorship.InfoShiftProfessorship;
+import DataBeans.teacher.credits.InfoShiftProfessorship;
+import DataBeans.teacher.professorship.InfoSupportLesson;
+import DataBeans.teacher.workTime.InfoTeacherInstitutionWorkTime;
 import Dominio.*;
 import Dominio.Seminaries.Candidacy;
 import Dominio.Seminaries.CaseStudyChoice;
@@ -126,8 +126,8 @@ import Dominio.Seminaries.ICourseEquivalency;
 import Dominio.Seminaries.IModality;
 import Dominio.Seminaries.ISeminary;
 import Dominio.Seminaries.ITheme;
-import Dominio.degree.finalProject.IDegreeFinalProject;
-import Dominio.degree.finalProject.IDegreeFinalProjectOrientation;
+import Dominio.degree.finalProject.ITeacherDegreeFinalProjectStudent;
+import Dominio.degree.finalProject.TeacherDegreeFinalProjectStudent;
 import Dominio.gaugingTests.physics.IGaugingTestResult;
 import Dominio.gesdis.CourseReport;
 import Dominio.gesdis.ICourseReport;
@@ -162,8 +162,8 @@ import Dominio.teacher.PublicationsNumber;
 import Dominio.teacher.ServiceProviderRegime;
 import Dominio.teacher.TeachingCareer;
 import Dominio.teacher.WeeklyOcupation;
-import Dominio.teacher.professorship.IShiftProfessorship;
-import Dominio.teacher.professorship.ShiftProfessorship;
+import Dominio.teacher.workTime.ITeacherInstitutionWorkTime;
+import Dominio.teacher.workTime.TeacherInstitutionWorkTime;
 import Util.EvaluationType;
 import Util.State;
 
@@ -575,9 +575,16 @@ public abstract class Cloner
     {
 
         IExecutionPeriod executionPeriod = new ExecutionPeriod();
-
-        IExecutionYear executionYear =
-            Cloner.copyInfoExecutionYear2IExecutionYear(infoExecutionPeriod.getInfoExecutionYear());
+        InfoExecutionYear infoExecutionYear = infoExecutionPeriod.getInfoExecutionYear();
+        IExecutionYear executionYear = null;
+        if (infoExecutionYear != null)
+        {
+            executionYear = Cloner.copyInfoExecutionYear2IExecutionYear(infoExecutionYear);
+        }
+        else
+        {
+            copyObjectProperties(executionYear, infoExecutionYear);
+        }
 
         copyObjectProperties(executionPeriod, infoExecutionPeriod);
 
@@ -796,11 +803,11 @@ public abstract class Cloner
     }
 
     /**
-	 * Method copyInfoGrantContract2IGrantContract.
-	 * 
-	 * @param infoGrantContract
-	 * @return IGrantContract
-	 */
+     * Method copyInfoGrantContract2IGrantContract.
+     * 
+     * @param infoGrantContract
+     * @return IGrantContract
+     */
     public static IGrantContract copyInfoGrantContract2IGrantContract(InfoGrantContract infoGrantContract)
     {
         IGrantContract grantContract = null;
@@ -820,11 +827,11 @@ public abstract class Cloner
     }
 
     /**
-	 * Method copyIGrantContract2InfoGrantContract.
-	 * 
-	 * @param grantContract
-	 * @return InfoGrantContract
-	 */
+     * Method copyIGrantContract2InfoGrantContract.
+     * 
+     * @param grantContract
+     * @return InfoGrantContract
+     */
     public static InfoGrantContract copyIGrantContract2InfoGrantContract(IGrantContract grantContract)
     {
         InfoGrantContract infoGrantContract = null;
@@ -847,11 +854,11 @@ public abstract class Cloner
     }
 
     /**
-	 * Method copyInfoGrantType2IGrantType.
-	 * 
-	 * @param infoGrantType
-	 * @return IGrantType
-	 */
+     * Method copyInfoGrantType2IGrantType.
+     * 
+     * @param infoGrantType
+     * @return IGrantType
+     */
     public static IGrantType copyInfoGrantType2IGrantType(InfoGrantType infoGrantType)
     {
         IGrantType grantType = null;
@@ -865,11 +872,11 @@ public abstract class Cloner
     }
 
     /**
-	 * Method copyIGrantType2InfoGrantType.
-	 * 
-	 * @param grantType
-	 * @return InfoGrantType
-	 */
+     * Method copyIGrantType2InfoGrantType.
+     * 
+     * @param grantType
+     * @return InfoGrantType
+     */
     public static InfoGrantType copyIGrantType2InfoGrantType(IGrantType grantType)
     {
         InfoGrantType infoGrantType = null;
@@ -883,11 +890,11 @@ public abstract class Cloner
     }
 
     /**
-	 * Method copyInfoGrantResponsibleTeacher2IGrantResponsibleTeacher.
-	 * 
-	 * @param infoGrantResponsibleTeacher
-	 * @return IGrantResponsibleTeacher
-	 */
+    	* Method copyInfoGrantResponsibleTeacher2IGrantResponsibleTeacher.
+    	* 
+    	* @param infoGrantResponsibleTeacher
+    	* @return IGrantResponsibleTeacher
+    	*/
     public static IGrantResponsibleTeacher copyInfoGrantResponsibleTeacher2IGrantResponsibleTeacher(InfoGrantResponsibleTeacher infoGrantResponsibleTeacher)
     {
         IGrantResponsibleTeacher grantResponsibleTeacher = null;
@@ -913,11 +920,11 @@ public abstract class Cloner
     }
 
     /**
-	 * Method copyIGrantResponsibleTeacher2InfoGrantResponsibleTeacher.
-	 * 
-	 * @param grantResponsibleTeacher
-	 * @return InfoGrantResponsibleTeacher
-	 */
+    	* Method copyIGrantResponsibleTeacher2InfoGrantResponsibleTeacher.
+    	* 
+    	* @param grantResponsibleTeacher
+    	* @return InfoGrantResponsibleTeacher
+    	*/
     public static InfoGrantResponsibleTeacher copyIGrantResponsibleTeacher2InfoGrantResponsibleTeacher(IGrantResponsibleTeacher grantResponsibleTeacher)
     {
         InfoGrantResponsibleTeacher infoGrantResponsibleTeacher = null;
@@ -941,11 +948,11 @@ public abstract class Cloner
     }
 
     /**
-	 * Method copyInfoGrantOrientationTeacher2IGrantOrientationTeacher.
-	 * 
-	 * @param infoGrantOrientationTeacher
-	 * @return IGrantOrientationTeacher
-	 */
+    	* Method copyInfoGrantOrientationTeacher2IGrantOrientationTeacher.
+    	* 
+    	* @param infoGrantOrientationTeacher
+    	* @return IGrantOrientationTeacher
+    	*/
     public static IGrantOrientationTeacher copyInfoGrantOrientationTeacher2IGrantOrientationTeacher(InfoGrantOrientationTeacher infoGrantOrientationTeacher)
     {
         IGrantOrientationTeacher grantOrientationTeacher = null;
@@ -971,11 +978,11 @@ public abstract class Cloner
     }
 
     /**
-	 * Method copyIGrantOrientationTeacher2InfoGrantOrientationTeacher.
-	 * 
-	 * @param grantOrientationTeacher
-	 * @return InfoGrantOrientationTeacher
-	 */
+    	* Method copyIGrantOrientationTeacher2InfoGrantOrientationTeacher.
+    	* 
+    	* @param grantOrientationTeacher
+    	* @return InfoGrantOrientationTeacher
+    	*/
     public static InfoGrantOrientationTeacher copyIGrantOrientationTeacher2InfoGrantOrientationTeacher(IGrantOrientationTeacher grantOrientationTeacher)
     {
         InfoGrantOrientationTeacher infoGrantOrientationTeacher = null;
@@ -2456,12 +2463,12 @@ public abstract class Cloner
         return infoEvaluation;
     }
 
-    public static InfoTeacherShiftPercentage copyITeacherShiftPercentage2InfoTeacherShiftPercentage(ITeacherShiftPercentage teacherShiftPercentage)
+    public static InfoShiftProfessorship copyIShiftProfessorship2InfoShiftProfessorship(IShiftProfessorship teacherShiftPercentage)
     {
-        InfoTeacherShiftPercentage infoTeacherShiftPercentage = new InfoTeacherShiftPercentage();
+        InfoShiftProfessorship infoTeacherShiftPercentage = new InfoShiftProfessorship();
 
-        InfoProfessorShip infoProfessorShip =
-            Cloner.copyIProfessorShip2InfoProfessorShip(teacherShiftPercentage.getProfessorShip());
+        InfoProfessorship infoProfessorShip =
+            Cloner.copyIProfessorship2InfoProfessorship(teacherShiftPercentage.getProfessorship());
         InfoShift infoShift = Cloner.copyIShift2InfoShift(teacherShiftPercentage.getShift());
 
         copyObjectProperties(infoTeacherShiftPercentage, teacherShiftPercentage);
@@ -2472,11 +2479,12 @@ public abstract class Cloner
         return infoTeacherShiftPercentage;
     }
 
-    public static InfoProfessorShip copyIProfessorShip2InfoProfessorShip(IProfessorship professorship)
+    public static InfoProfessorship copyIProfessorship2InfoProfessorship(IProfessorship professorship)
     {
-        InfoProfessorShip infoProfessorShip = new InfoProfessorShip();
+        InfoProfessorship infoProfessorShip = new InfoProfessorship();
 
         InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(professorship.getTeacher());
+
         InfoExecutionCourse infoExecutionCourse =
             Cloner.copyIExecutionCourse2InfoExecutionCourse(professorship.getExecutionCourse());
 
@@ -2488,37 +2496,53 @@ public abstract class Cloner
         return infoProfessorShip;
     }
 
-    public static ITeacherShiftPercentage copyInfoTeacherPercentage2ITeacherShiftPercentage(InfoTeacherShiftPercentage infoTeacherShiftPercentage)
+    public static IShiftProfessorship copyInfoShiftProfessorship2IShiftProfessorship(InfoShiftProfessorship infoTeacherShiftPercentage)
     {
         InfoShift infoShift = infoTeacherShiftPercentage.getInfoShift();
-        InfoProfessorShip infoProfessorShip = infoTeacherShiftPercentage.getInfoProfessorship();
+        InfoProfessorship infoProfessorShip = infoTeacherShiftPercentage.getInfoProfessorship();
 
-        ITeacherShiftPercentage teacherShiftPercentage = new TeacherShiftPercentage();
-        IProfessorship professorship = Cloner.copyInfoProfessorShip2IProfessorShip(infoProfessorShip);
+        IShiftProfessorship teacherShiftPercentage = new ShiftProfessorship();
+        IProfessorship professorship = Cloner.copyInfoProfessorship2IProfessorship(infoProfessorShip);
         ITurno shift = Cloner.copyInfoShift2IShift(infoShift);
 
         copyObjectProperties(teacherShiftPercentage, infoTeacherShiftPercentage);
 
         teacherShiftPercentage.setPercentage(infoTeacherShiftPercentage.getPercentage());
         teacherShiftPercentage.setShift(shift);
-        teacherShiftPercentage.setProfessorShip(professorship);
+        teacherShiftPercentage.setProfessorship(professorship);
 
         return teacherShiftPercentage;
     }
 
-    public static IProfessorship copyInfoProfessorShip2IProfessorShip(InfoProfessorShip infoProfessorShip)
+    public static IProfessorship copyInfoProfessorship2IProfessorship(InfoProfessorship infoProfessorShip)
     {
         InfoExecutionCourse infoExecutionCourse = infoProfessorShip.getInfoExecutionCourse();
         InfoTeacher infoTeacher = infoProfessorShip.getInfoTeacher();
 
         IProfessorship professorship = new Professorship();
-        IDisciplinaExecucao disciplinaExecucao =
-            Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
-        ITeacher teacher = Cloner.copyInfoTeacher2Teacher(infoTeacher);
 
         copyObjectProperties(professorship, infoProfessorShip);
+        IDisciplinaExecucao executionCourse = null;
+        if (infoExecutionCourse != null)
+        {
+            executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
+        }
+        else
+        {
+            copyObjectProperties(executionCourse, infoExecutionCourse);
+        }
+        professorship.setExecutionCourse(executionCourse);
 
-        professorship.setExecutionCourse(disciplinaExecucao);
+        ITeacher teacher = null;
+
+        if (infoTeacher != null)
+        {
+            teacher = Cloner.copyInfoTeacher2Teacher(infoTeacher);
+        }
+        else
+        {
+            copyObjectProperties(teacher, infoTeacher);
+        }
         professorship.setTeacher(teacher);
 
         return professorship;
@@ -3931,51 +3955,6 @@ public abstract class Cloner
         return serviceProviderRegime;
     }
 
-    /**
-	 * @param project
-	 * @return @author jpvl
-	 */
-    public static InfoDegreeFinalProject copyIDegreeFinalProject2InfoDegreeFinalProject(IDegreeFinalProject project)
-    {
-        InfoDegreeFinalProject infoDegreeFinalProject = new InfoDegreeFinalProject();
-        InfoExecutionYear infoExecutionYear =
-            copyIExecutionYear2InfoExecutionYear(project.getExecutionYear());
-        infoDegreeFinalProject.setInfoExecutionYear(infoExecutionYear);
-        copyObjectProperties(infoDegreeFinalProject, project);
-        return infoDegreeFinalProject;
-    }
-    public static InfoOrientation copyIDegreeFinalProjectOrientation2InfoDegreeFinalProjectOrientation(IDegreeFinalProjectOrientation degreeFinalProjectOrientation)
-    {
-        InfoOrientation infoOrientation = new InfoOrientation();
-
-        InfoTeacher infoTeacher = copyITeacher2InfoTeacher(degreeFinalProjectOrientation.getTeacher());
-        InfoDegreeFinalProject infoDegreeFinalProject =
-            copyIDegreeFinalProject2InfoDegreeFinalProject(
-                degreeFinalProjectOrientation.getDegreeFinalProject());
-        infoOrientation.setInfoTeacher(infoTeacher);
-        infoOrientation.setInfoDegreeFinalProject(infoDegreeFinalProject);
-
-        copyObjectProperties(infoOrientation, degreeFinalProjectOrientation);
-
-        return infoOrientation;
-    }
-    /**
-	 * @param infoObject
-	 * @return
-	 */
-    public static IShiftProfessorship copyInfoShiftProfessorship2IShiftProfessorshift(InfoShiftProfessorship infoShiftProfessorship)
-    {
-        IShiftProfessorship shiftProfessorship = new ShiftProfessorship();
-        InfoProfessorShip infoProfessorShip = infoShiftProfessorship.getInfoProfessorship();
-        InfoShift infoShift = infoShiftProfessorship.getInfoShift();
-        IProfessorship professorship = copyInfoProfessorShip2IProfessorShip(infoProfessorShip);
-        ITurno shift = copyInfoShift2IShift(infoShift);
-
-        copyObjectProperties(shiftProfessorship, infoShiftProfessorship);
-        shiftProfessorship.setProfessorship(professorship);
-        shiftProfessorship.setShift(shift);
-        return shiftProfessorship;
-    }
     public static IQualification copyInfoQualification2IQualification(InfoQualification infoQualification)
     {
         IQualification qualification = new Qualification();
@@ -3985,7 +3964,6 @@ public abstract class Cloner
         qualification.setPerson(person);
         return qualification;
     }
-
     public static InfoQualification copyIQualification2InfoQualification(IQualification qualification)
     {
         InfoQualification infoQualification = new InfoQualification();
@@ -4006,6 +3984,7 @@ public abstract class Cloner
 
         return infoReimbursementGuide;
     }
+
     public static InfoReimbursementGuideSituation copyIReimbursementGuideSituation2InfoReimbursementGuideSituation(IReimbursementGuideSituation reimbursementGuideSituation)
     {
         InfoReimbursementGuideSituation infoReimbursementGuideSituation =
@@ -4032,7 +4011,6 @@ public abstract class Cloner
         infoOrientation.setInfoTeacher(infoTeacher);
         return infoOrientation;
     }
-
     public static IOrientation copyInfoOrientation2IOrientation(
         DataBeans.teacher.InfoOrientation infoOrientation)
     {
@@ -4084,6 +4062,7 @@ public abstract class Cloner
         return oldPublication;
     }
 
+
     public static InfoGaugingTestResult copyIGaugingTestResult2IngoGaugingTestResult(IGaugingTestResult gaugingTestResult)
     {
         InfoStudent infoStudent = copyIStudent2InfoStudent(gaugingTestResult.getStudent());
@@ -4091,5 +4070,127 @@ public abstract class Cloner
         copyObjectProperties(infoGaugingTestResult, gaugingTestResult);
         infoGaugingTestResult.setInfoStudent(infoStudent);
         return infoGaugingTestResult;
+    }
+
+    /**
+	 * @param supportLesson
+	 * @return
+	 */
+    public static InfoSupportLesson copyISupportLesson2InfoSupportLesson(ISupportLesson supportLesson)
+    {
+        InfoSupportLesson infoSupportLesson = new InfoSupportLesson();
+        InfoProfessorship infoProfessorship =
+            Cloner.copyIProfessorship2InfoProfessorship(supportLesson.getProfessorship());
+
+        copyObjectProperties(infoSupportLesson, supportLesson);
+
+        infoSupportLesson.setInfoProfessorship(infoProfessorship);
+
+        return infoSupportLesson;
+    }
+
+    /**
+	 * @param supportLesson
+	 * @return
+	 */
+    public static ISupportLesson copyInfoSupportLesson2ISupportLesson(InfoSupportLesson infoSupportLesson)
+    {
+        ISupportLesson supportLesson = new SupportLesson();
+        IProfessorship professorship =
+            Cloner.copyInfoProfessorship2IProfessorship(infoSupportLesson.getInfoProfessorship());
+
+        copyObjectProperties(supportLesson, infoSupportLesson);
+
+        supportLesson.setProfessorship(professorship);
+
+        return supportLesson;
+    }
+    /**
+	 * @param teacherDegreeFinalProjectStudent
+	 * @return
+	 */
+    public static InfoTeacherDegreeFinalProjectStudent copyITeacherDegreeFinalProjectStudent2InfoTeacherDegreeFinalProjectStudent(ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent)
+    {
+        InfoTeacher infoTeacher =
+            Cloner.copyITeacher2InfoTeacher(teacherDegreeFinalProjectStudent.getTeacher());
+        InfoExecutionYear infoExecutionYear =
+            Cloner.copyIExecutionYear2InfoExecutionYear(
+                teacherDegreeFinalProjectStudent.getExecutionYear());
+        InfoStudent infoStudent =
+            Cloner.copyIStudent2InfoStudent(teacherDegreeFinalProjectStudent.getStudent());
+
+        InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent =
+            new InfoTeacherDegreeFinalProjectStudent();
+
+        copyObjectProperties(infoTeacherDegreeFinalProjectStudent, teacherDegreeFinalProjectStudent);
+
+        infoTeacherDegreeFinalProjectStudent.setInfoExecutionYear(infoExecutionYear);
+        infoTeacherDegreeFinalProjectStudent.setInfoStudent(infoStudent);
+        infoTeacherDegreeFinalProjectStudent.setInfoTeacher(infoTeacher);
+
+        return infoTeacherDegreeFinalProjectStudent;
+    }
+
+    /**
+	 * @param teacherDegreeFinalProjectStudent
+	 * @return
+	 */
+    public static ITeacherDegreeFinalProjectStudent copyInfoTeacherDegreeFinalProjectStudent2ITeacherDegreeFinalProjectStudent(InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent)
+    {
+        ITeacher teacher =
+            Cloner.copyInfoTeacher2Teacher(infoTeacherDegreeFinalProjectStudent.getInfoTeacher());
+        IExecutionYear executionYear =
+            Cloner.copyInfoExecutionYear2IExecutionYear(
+                infoTeacherDegreeFinalProjectStudent.getInfoExecutionYear());
+        IStudent student =
+            Cloner.copyInfoStudent2IStudent(infoTeacherDegreeFinalProjectStudent.getInfoStudent());
+
+        TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent =
+            new TeacherDegreeFinalProjectStudent();
+
+        copyObjectProperties(teacherDegreeFinalProjectStudent, infoTeacherDegreeFinalProjectStudent);
+
+        teacherDegreeFinalProjectStudent.setExecutionYear(executionYear);
+        teacherDegreeFinalProjectStudent.setStudent(student);
+        teacherDegreeFinalProjectStudent.setTeacher(teacher);
+
+        return teacherDegreeFinalProjectStudent;
+    }
+
+    public static ITeacherInstitutionWorkTime copyInfoTeacherInstitutionWorkingTime2ITeacherInstitutionWorkTime(InfoTeacherInstitutionWorkTime infoTeacherInstitutionWorkTime)
+    {
+        ITeacher teacher =
+            Cloner.copyInfoTeacher2Teacher(infoTeacherInstitutionWorkTime.getInfoTeacher());
+        IExecutionPeriod executionPeriod =
+            Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
+                infoTeacherInstitutionWorkTime.getInfoExecutionPeriod());
+
+        ITeacherInstitutionWorkTime teacherInstitutionWorkTime = new TeacherInstitutionWorkTime();
+
+        copyObjectProperties(teacherInstitutionWorkTime, infoTeacherInstitutionWorkTime);
+
+        teacherInstitutionWorkTime.setTeacher(teacher);
+        teacherInstitutionWorkTime.setExecutionPeriod(executionPeriod);
+
+        return teacherInstitutionWorkTime;
+    }
+
+    public static InfoTeacherInstitutionWorkTime copyITeacherInstitutionWorkingTime2InfoTeacherInstitutionWorkTime(ITeacherInstitutionWorkTime teacherInstitutionWorkTime)
+    {
+        InfoTeacher infoTeacher =
+            Cloner.copyITeacher2InfoTeacher(teacherInstitutionWorkTime.getTeacher());
+        InfoExecutionPeriod infoExecutionPeriod =
+            Cloner.copyIExecutionPeriod2InfoExecutionPeriod(
+                teacherInstitutionWorkTime.getExecutionPeriod());
+
+        InfoTeacherInstitutionWorkTime infoTeacherInstitutionWorkTime =
+            new InfoTeacherInstitutionWorkTime();
+
+        copyObjectProperties(infoTeacherInstitutionWorkTime, teacherInstitutionWorkTime);
+
+        infoTeacherInstitutionWorkTime.setInfoTeacher(infoTeacher);
+        infoTeacherInstitutionWorkTime.setInfoExecutionPeriod(infoExecutionPeriod);
+
+        return infoTeacherInstitutionWorkTime;
     }
 }

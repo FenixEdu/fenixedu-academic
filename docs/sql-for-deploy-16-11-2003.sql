@@ -26,6 +26,20 @@ CREATE TABLE MASTER_DEGREE_THESIS_DATA_VERSION_EXTERNAL_GUIDER (
   UNIQUE KEY U1 (KEY_MASTER_DEGREE_THESIS_DATA_VERSION,KEY_EXTERNAL_PERSON)
 ) TYPE=InnoDB;
 
+drop table if exists TEACHER_SHIFT_PERCENTAGE;
+----------------------------
+-- Table structure for SHIFT_PROFESSORSHIP
+----------------------------
+drop table if exists SHIFT_PROFESSORSHIP;
+create table SHIFT_PROFESSORSHIP (
+   ID_INTERNAL int(11) not null auto_increment,
+   KEY_PROFESSOR_SHIP int(11) not null,
+   KEY_SHIFT int(11) not null,
+   PERCENTAGE float not null,
+   primary key (ID_INTERNAL),
+   unique U1 (KEY_PROFESSOR_SHIP, KEY_SHIFT))
+   type=InnoDB;
+
 --Branch
 alter table BRANCH ADD BRANCH_ACRONYM VARCHAR(50);
 
@@ -47,11 +61,50 @@ alter table EXECUTION_DEGREE DROP INDEX U1;
 alter table EXECUTION_DEGREE ADD UNIQUE U1 (ACADEMIC_YEAR,KEY_DEGREE_CURRICULAR_PLAN, KEY_CAMPUS);
 update EXECUTION_DEGREE set KEY_CAMPUS = 1;
 update EXECUTION_DEGREE set KEY_CAMPUS = 2 where ID_INTERNALin (19, 22, 77, 78, 97);
+   
+drop table if exists SUPPORT_LESSONS_TIMETABLE;
+drop table if exists SUPPORT_LESSON;
+create table SUPPORT_LESSON (
+   ID_INTERNAL int(50) not null auto_increment,
+   WEEKDAY varchar(50) not null,
+   START_TIME TIME not null,
+   END_TIME TIME not null,
+   PLACE varchar(50) not null,
+   KEY_PROFESSORSHIP int(11) not null,
+   primary key (ID_INTERNAL),
+   unique U1 (KEY_PROFESSORSHIP, WEEKDAY, START_TIME, END_TIME))   
+   type=InnoDB comment="InnoDB free: 372736 kB";
 
--- DEGREE_CURRICULAR_PLAN
+drop table if exists TEACHER_DEGREE_FINAL_PROJECT_STUDENT;
+create table TEACHER_DEGREE_FINAL_PROJECT_STUDENT (
+   ID_INTERNAL int(11) not null auto_increment,
+   KEY_STUDENT int(11) not null,
+   KEY_TEACHER int(11) not null,   
+   KEY_EXECUTION_YEAR int(11) not null,
+   primary key (ID_INTERNAL),
+   unique U1 (KEY_STUDENT, KEY_TEACHER, KEY_EXECUTION_YEAR)
+)type=InnoDB;
+
+drop table if exists TEACHER_INSTITUTION_WORK_TIME;
+create table TEACHER_INSTITUTION_WORK_TIME (
+   ID_INTERNAL int(11) not null auto_increment,
+   KEY_TEACHER int(11) not null,
+   KEY_EXECUTION_PERIOD int(11) not null,
+   WEEKDAY int(11) not null,
+   START_TIME time,
+   END_TIME time,   
+   primary key (ID_INTERNAL),
+   unique U1 (KEY_TEACHER, KEY_EXECUTION_PERIOD, WEEKDAY, START_TIME)
+)type=InnoDB;
+
+INSERT INTO ROLE (id_internal, role_type, portal_sub_application, page, page_name_property) values (24,24, "/departmentAdmOffice", "/index.do", "portal.departmentAdmOffice");
+
+update ROLE set page="/index.do" where id_internal in (13,14);
+update ROLE set portal_sub_application="/departmentAdmOffice" where id_internal in (14);
+
+-- in updateDegreeCurricularPlan.sql
 alter table DEGREE_CURRICULAR_PLAN add DESCRIPTION text;
 alter table DEGREE_CURRICULAR_PLAN add DESCRIPTION_EN text;
-
 --CURRICULUM
 alter table CURRICULUM DROP EVALUATION_ELEMENTS ;
 alter table CURRICULUM DROP EVALUATION_ELEMENTS_EN ;

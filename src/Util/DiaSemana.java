@@ -19,6 +19,7 @@ public class DiaSemana {
     public static final int SEXTA_FEIRA = 6;
     public static final int SABADO = 7;
 
+
     private Integer _diaSemana;
 
     public DiaSemana() { }

@@ -11,6 +11,7 @@ import Dominio.IDisciplinaExecucao;
 import Dominio.IProfessorship;
 import Dominio.ITeacher;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.TipoCurso;
 
 /**
  * @author João Mota
@@ -37,5 +38,12 @@ public interface IPersistentProfessorship extends IPersistentObject
         ITeacher teacher,
         IDisciplinaExecucao executionCourse)
         throws ExcepcaoPersistencia;
+    /**
+     * Read ProfessorShips from a teacher, given a type of degree.
+     * @param teacher
+     * @param curso
+     * @return List of  Dominio.IProfessorship
+     */
+    public List readByTeacherAndTypeOfDegree(ITeacher teacher, TipoCurso degreeType) throws ExcepcaoPersistencia;
 
 }

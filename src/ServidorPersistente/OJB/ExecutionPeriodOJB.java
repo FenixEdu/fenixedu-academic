@@ -186,25 +186,6 @@ public class ExecutionPeriodOJB
 	 */
 	public IExecutionPeriod readActualExecutionPeriod()
 		throws ExcepcaoPersistencia {
-		//		try {
-		//			IExecutionPeriod executionPeriod = null;
-		//			String oqlQuery =
-		//				"select all from "
-		//					+ ExecutionPeriod.class.getName()
-		//					+ " where state = $1";
-		//
-		//			query.create(oqlQuery);
-		//			query.bind(PeriodState.CURRENT);
-		//
-		//			List result = (List) query.execute();
-		//			lockRead(result);
-		//			if ((result != null) && (!result.isEmpty()))
-		//				executionPeriod = (IExecutionPeriod) result.get(0);
-		//			return executionPeriod;
-		//		} catch (QueryException e) {
-		//			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, e);
-		//		}
-
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("state", PeriodState.CURRENT);
 		return (IExecutionPeriod) queryObject(ExecutionPeriod.class, criteria);
@@ -1068,7 +1049,7 @@ public class ExecutionPeriodOJB
 
 		if (executionCourse != null) {
 			shiftToCreate.setAssociatedLessons(new ArrayList());
-			shiftToCreate.setAssociatedTeacherProfessorShipPercentage(
+			shiftToCreate.setAssociatedShiftProfessorship(
 				new ArrayList());
 			shiftToCreate.setDisciplinaExecucao(executionCourse);
 			shiftToCreate.setIdInternal(null);

@@ -5,4 +5,12 @@
 	<definition name="index" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/facultyAdmOffice/index.jsp"></put>
 	</definition>
+	<definition name="teacher-search-form" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/searchTeacher.jsp"></put>
+	</definition>
+	<definition name="teacher-search-form" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/teacherSearch.do?method=searchForm"></put>
+	</definition>
+
+
 </tiles-definitions>

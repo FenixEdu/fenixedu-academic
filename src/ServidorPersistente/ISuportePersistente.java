@@ -14,7 +14,7 @@ import ServidorPersistente.Seminaries.IPersistentSeminaryCaseStudyChoice;
 import ServidorPersistente.Seminaries.IPersistentSeminaryCurricularCourseEquivalency;
 import ServidorPersistente.Seminaries.IPersistentSeminaryModality;
 import ServidorPersistente.Seminaries.IPersistentSeminaryTheme;
-import ServidorPersistente.degree.finalProject.IPersistentDegreeFinalProjectOrientation;
+import ServidorPersistente.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
 import ServidorPersistente.gesdis.IPersistentCourseReport;
 import ServidorPersistente.grant.IPersistentGrantContract;
 import ServidorPersistente.grant.IPersistentGrantOrientationTeacher;
@@ -31,6 +31,8 @@ import ServidorPersistente.teacher.IPersistentOrientation;
 import ServidorPersistente.teacher.IPersistentPublicationsNumber;
 import ServidorPersistente.teacher.IPersistentServiceProviderRegime;
 import ServidorPersistente.teacher.IPersistentWeeklyOcupation;
+import ServidorPersistente.teacher.professorship.IPersistentSupportLesson;
+import ServidorPersistente.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
 
 /**
  * @author ars
@@ -120,7 +122,7 @@ public interface ISuportePersistente
 
     public IPersistentStudentKind getIPersistentStudentKind();
 
-    public IPersistentTeacherShiftPercentage getIPersistentTeacherShiftPercentage();
+    public IPersistentShiftProfessorship getIPersistentTeacherShiftPercentage();
     public IPersistentCreditsTeacher getIPersistentCreditsTeacher();
 
     public IPersistentExamStudentRoom getIPersistentExamStudentRoom();
@@ -203,11 +205,6 @@ public interface ISuportePersistente
 
     public IPersistentUniversity getIPersistentUniversity();
 
-    /**
-     * @return
-     */
-    public IPersistentDegreeFinalProjectOrientation getIPersistentDegreeFinalProjectOrientation();
-
     public IPersistentCourseReport getIPersistentCourseReport();
     public IPersistentCategory getIPersistentCategory();
     public IPersistentCareer getIPersistentCareer();
@@ -215,9 +212,6 @@ public interface ISuportePersistente
     public IPersistentExternalActivity getIPersistentExternalActivity();
     public IPersistentServiceProviderRegime getIPersistentServiceProviderRegime();
 
-    /**
-     * @return
-     */
     public IPersistentShiftProfessorship getIPersistentShiftProfessorship();
 
     public IPersistentReimbursementGuide getIPersistentReimbursementGuide();
@@ -226,4 +220,10 @@ public interface ISuportePersistente
     public IPersistentPublicationsNumber getIPersistentPublicationsNumber();
     public IPersistentOldPublication getIPersistentOldPublication();
     public IPersistentGaugingTestResult getIPersistentGaugingTestResult();
+
+    public IPersistentSupportLesson getIPersistentSupportLesson();
+
+    public IPersistentTeacherDegreeFinalProjectStudent getIPersistentTeacherDegreeFinalProjectStudent();
+	public IPersistentTeacherInstitutionWorkingTime getIPersistentTeacherInstitutionWorkingTime();
+  
 }

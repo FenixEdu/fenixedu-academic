@@ -16,7 +16,7 @@ public class Professorship extends DomainObject implements IProfessorship {
 	
 	private Integer keyTeacher;
 	private Integer keyExecutionCourse;
-	private List associatedTeacherShiftPercentage;
+	private List associatedShiftProfessorshift;
 	private Double credits;
 	/**
 	 * 
@@ -96,12 +96,12 @@ public class Professorship extends DomainObject implements IProfessorship {
 			return result;
 		}
 
-	public List getAssociatedTeacherShiftPercentage() {
-		return associatedTeacherShiftPercentage;
+	public List getAssociatedShiftProfessorship() {
+		return associatedShiftProfessorshift;
 	}
 
-	public void setAssociatedTeacherShiftPercentage(List associatedTeacherShiftPercentage) {
-		this.associatedTeacherShiftPercentage = associatedTeacherShiftPercentage;
+	public void setAssociatedShiftProfessorship(List associatedTeacherShiftPercentage) {
+		this.associatedShiftProfessorshift = associatedTeacherShiftPercentage;
 	}
 	
 	

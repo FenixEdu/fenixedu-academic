@@ -129,12 +129,12 @@ public class EditCareerTest extends ServiceNeedsAuthenticationTestCase
             infoTeacher.setIdInternal(new Integer(1));
 
             infoCareer.setInfoTeacher(infoTeacher);
-            Object[] args = { null, infoCareer };
+            Object[] args = { null,  infoCareer };
 
             result = (Boolean) gestor.executar(userView, getNameOfServiceToBeTested(), args);
 
-            assertTrue(result.booleanValue());
             compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/teacher/testExpectedCreateProfessionalCareerDataSet.xml");
+            assertTrue("Assert false!",result.booleanValue());
         } catch (FenixServiceException ex)
         {
             fail("Creating a new professional career " + ex);

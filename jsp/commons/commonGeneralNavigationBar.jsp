@@ -13,20 +13,22 @@
 		<logic:iterate id="role" name="userView" property="roles">
 			<logic:notEqual name="role" property="roleType.name" value="grantOwnerManager">
 				<logic:notEqual name="role" property="roleType.name" value="creditsManager">
-					<bean:define id="bundleKeyPageName"><bean:write name="role" property="pageNameProperty"/>.name</bean:define>
-					<bean:define id="link"><%= request.getContextPath() %>/dotIstPortal.do?prefix=<bean:write name="role" property="portalSubApplication"/>&amp;page=<bean:write name="role" property="page"/></bean:define>
-					<li>
-						<logic:equal name="role" property="portalSubApplication" value="<%= modulePrefix %>">
-				    		<html:link href='<%= link %>' styleClass="active">
-				    			<bean:message name="bundleKeyPageName" bundle="PORTAL_RESOURCES"/>
-				    		</html:link>
-						</logic:equal>
-						<logic:notEqual name="role" property="portalSubApplication" value="<%= modulePrefix %>">
-				    		<html:link href='<%= link %>'>
-				    			<bean:message name="bundleKeyPageName" bundle="PORTAL_RESOURCES"/>
-				    			</html:link>
-						</logic:notEqual>
-					</li>
+					<logic:notEqual name="role" property="roleType.name" value="role.department.credits.manager">				
+						<bean:define id="bundleKeyPageName"><bean:write name="role" property="pageNameProperty"/>.name</bean:define>
+						<bean:define id="link"><%= request.getContextPath() %>/dotIstPortal.do?prefix=<bean:write name="role" property="portalSubApplication"/>&amp;page=<bean:write name="role" property="page"/></bean:define>
+						<li>
+							<logic:equal name="role" property="portalSubApplication" value="<%= modulePrefix %>">
+					    		<html:link href='<%= link %>' styleClass="active">
+					    			<bean:message name="bundleKeyPageName" bundle="PORTAL_RESOURCES"/>
+					    		</html:link>
+							</logic:equal>
+							<logic:notEqual name="role" property="portalSubApplication" value="<%= modulePrefix %>">
+					    		<html:link href='<%= link %>'>
+					    			<bean:message name="bundleKeyPageName" bundle="PORTAL_RESOURCES"/>
+					    			</html:link>
+							</logic:notEqual>
+						</li>
+					</logic:notEqual>
 				</logic:notEqual>
 			</logic:notEqual>
 		</logic:iterate>	

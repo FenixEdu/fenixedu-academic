@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import DataBeans.InfoProfessorShip;
+import DataBeans.InfoProfessorship;
 import DataBeans.util.Cloner;
 import Dominio.IProfessorship;
 import Dominio.ITeacher;
@@ -63,7 +63,7 @@ public class ReadProfessorships implements IServico {
 			while (iter.hasNext()) {
 				
 				IProfessorship professorship = (IProfessorship) iter.next();			
-				InfoProfessorShip infoProfessorShip = Cloner.copyIProfessorShip2InfoProfessorShip(professorship);
+				InfoProfessorship infoProfessorShip = Cloner.copyIProfessorship2InfoProfessorship(professorship);
 				infoProfessorShip.getInfoExecutionCourse().getNome();
 				infoProfessorshipsList.add(infoProfessorShip);
 			}

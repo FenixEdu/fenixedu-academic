@@ -26,7 +26,6 @@ public class CopyUtils
 		interfacesNotToCopy.add(Collection.class);
 		interfacesNotToCopy.add(IDomainObject.class);
 	}
-
 	public static Object copyProperties(Object destinationBean, Object sourceBean)
 		throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException
 	{

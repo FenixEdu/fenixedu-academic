@@ -20,11 +20,11 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoRole;
 import DataBeans.InfoShift;
 import DataBeans.InfoTeacher;
-import DataBeans.teacher.credits.InfoTeacherShiftPercentage;
+import DataBeans.teacher.credits.InfoShiftProfessorship;
 import DataBeans.util.Cloner;
 import Dominio.IProfessorship;
 import Dominio.ITeacher;
-import Dominio.ITeacherShiftPercentage;
+import Dominio.IShiftProfessorship;
 import Dominio.ITurno;
 import Dominio.Professorship;
 import Dominio.Teacher;
@@ -37,7 +37,7 @@ import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentTeacher;
-import ServidorPersistente.IPersistentTeacherShiftPercentage;
+import ServidorPersistente.IPersistentShiftProfessorship;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -184,13 +184,13 @@ public class AcceptTeacherShiftPercentageTest extends TestCaseServices {
 		try {
 			sp = SuportePersistenteOJB.getInstance();
 
-			IPersistentTeacherShiftPercentage teacherShiftPercentageDAO = sp.getIPersistentTeacherShiftPercentage();
-			ITeacherShiftPercentage teacherShiftPercentage = null;
+			IPersistentShiftProfessorship teacherShiftPercentageDAO = sp.getIPersistentTeacherShiftPercentage();
+			IShiftProfessorship teacherShiftPercentage = null;
 
 			Iterator iterator = infoTeacherShiftPercentageList.listIterator();
 			while (iterator.hasNext()) {
-				InfoTeacherShiftPercentage infoTeacherShiftPercentage = (InfoTeacherShiftPercentage) iterator.next();
-				teacherShiftPercentage = Cloner.copyInfoTeacherPercentage2ITeacherShiftPercentage(infoTeacherShiftPercentage);
+				InfoShiftProfessorship infoTeacherShiftPercentage = (InfoShiftProfessorship) iterator.next();
+				teacherShiftPercentage = Cloner.copyInfoShiftProfessorship2IShiftProfessorship(infoTeacherShiftPercentage);
 
 				teacherShiftPercentage = teacherShiftPercentageDAO.readByUnique(teacherShiftPercentage);
 				assertNull("Not deleted!!", teacherShiftPercentage);
@@ -222,7 +222,7 @@ public class AcceptTeacherShiftPercentageTest extends TestCaseServices {
 		assertEquals(
 			"Size is not the same on professorship!",
 			expectedSizeOfAssociatedTeacherPercentage.intValue(),
-			professorship.getAssociatedTeacherShiftPercentage().size());
+			professorship.getAssociatedShiftProfessorship().size());
 
 	}
 
@@ -244,12 +244,12 @@ public class AcceptTeacherShiftPercentageTest extends TestCaseServices {
 			e.printStackTrace();
 			fail("Reading shift! id=" + shiftId);
 		}
-		List associatedTeacherProfessorShipPercentage = shift.getAssociatedTeacherProfessorShipPercentage();
+		List associatedTeacherProfessorShipPercentage = shift.getAssociatedShiftProfessorship();
 
 		Iterator iterator = associatedTeacherProfessorShipPercentage.iterator();
 		double realPercentage = 0;
 		while (iterator.hasNext()) {
-			ITeacherShiftPercentage teacherShiftPercentage = (ITeacherShiftPercentage) iterator.next();
+			IShiftProfessorship teacherShiftPercentage = (IShiftProfessorship) iterator.next();
 			realPercentage += teacherShiftPercentage.getPercentage().doubleValue();
 		}
 		assertEquals("Percentage test! Shift with id=" + shiftId, expectedPercentage, new Double(realPercentage));
@@ -266,7 +266,7 @@ public class AcceptTeacherShiftPercentageTest extends TestCaseServices {
 			infoShift.setIdInternal(shiftId);
 
 			//Elemento da lista
-			InfoTeacherShiftPercentage infoTeacherShiftPercentage = new InfoTeacherShiftPercentage();
+			InfoShiftProfessorship infoTeacherShiftPercentage = new InfoShiftProfessorship();
 			infoTeacherShiftPercentage.setInfoShift(infoShift);
 			infoTeacherShiftPercentage.setInfoProfessorship(null);
 			infoTeacherShiftPercentage.setPercentage(percentage);

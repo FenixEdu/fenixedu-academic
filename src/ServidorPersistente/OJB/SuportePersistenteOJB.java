@@ -98,7 +98,6 @@ import ServidorPersistente.IPersistentStudentTestLog;
 import ServidorPersistente.IPersistentStudentTestQuestion;
 import ServidorPersistente.IPersistentSummary;
 import ServidorPersistente.IPersistentTeacher;
-import ServidorPersistente.IPersistentTeacherShiftPercentage;
 import ServidorPersistente.IPersistentTest;
 import ServidorPersistente.IPersistentTestQuestion;
 import ServidorPersistente.IPersistentUniversity;
@@ -120,7 +119,7 @@ import ServidorPersistente.OJB.Seminaries.CaseStudyOJB;
 import ServidorPersistente.OJB.Seminaries.EquivalencyOJB;
 import ServidorPersistente.OJB.Seminaries.ModalityOJB;
 import ServidorPersistente.OJB.Seminaries.ThemeOJB;
-import ServidorPersistente.OJB.degree.finalProject.PersistentDegreeFinalProjectOJB;
+import ServidorPersistente.OJB.degree.finalProject.TeacherDegreeFinalProjectStudentOJB;
 import ServidorPersistente.OJB.gaugingTests.physics.GaugingTestResultOJB;
 import ServidorPersistente.OJB.gaugingTests.physics.IPersistentGaugingTestResult;
 import ServidorPersistente.OJB.gesdis.CourseReportOJB;
@@ -140,7 +139,9 @@ import ServidorPersistente.OJB.teacher.OrientationOJB;
 import ServidorPersistente.OJB.teacher.PublicationsNumberOJB;
 import ServidorPersistente.OJB.teacher.ServiceProviderRegimeOJB;
 import ServidorPersistente.OJB.teacher.WeeklyOcupationOJB;
-import ServidorPersistente.OJB.teacher.professorship.PersistentShiftProfessorship;
+import ServidorPersistente.OJB.teacher.professorship.ShiftProfessorshipOJB;
+import ServidorPersistente.OJB.teacher.professorship.SupportLessonOJB;
+import ServidorPersistente.OJB.teacher.workingTime.TeacherInstitutionWorkingTimeOJB;
 import ServidorPersistente.Seminaries.IPersistentSeminary;
 import ServidorPersistente.Seminaries.IPersistentSeminaryCandidacy;
 import ServidorPersistente.Seminaries.IPersistentSeminaryCaseStudy;
@@ -148,7 +149,7 @@ import ServidorPersistente.Seminaries.IPersistentSeminaryCaseStudyChoice;
 import ServidorPersistente.Seminaries.IPersistentSeminaryCurricularCourseEquivalency;
 import ServidorPersistente.Seminaries.IPersistentSeminaryModality;
 import ServidorPersistente.Seminaries.IPersistentSeminaryTheme;
-import ServidorPersistente.degree.finalProject.IPersistentDegreeFinalProjectOrientation;
+import ServidorPersistente.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
 import ServidorPersistente.gesdis.IPersistentCourseReport;
 import ServidorPersistente.grant.IPersistentGrantContract;
 import ServidorPersistente.grant.IPersistentGrantOrientationTeacher;
@@ -165,6 +166,8 @@ import ServidorPersistente.teacher.IPersistentOrientation;
 import ServidorPersistente.teacher.IPersistentPublicationsNumber;
 import ServidorPersistente.teacher.IPersistentServiceProviderRegime;
 import ServidorPersistente.teacher.IPersistentWeeklyOcupation;
+import ServidorPersistente.teacher.professorship.IPersistentSupportLesson;
+import ServidorPersistente.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
 
 public class SuportePersistenteOJB implements ISuportePersistente
 {
@@ -642,9 +645,9 @@ public class SuportePersistenteOJB implements ISuportePersistente
         return new StudentKindOJB();
     }
 
-    public IPersistentTeacherShiftPercentage getIPersistentTeacherShiftPercentage()
+    public IPersistentShiftProfessorship getIPersistentTeacherShiftPercentage()
     {
-        return new TeacherShiftPercentageOJB();
+        return new ShiftProfessorshipOJB();
     }
 
     public IPersistentCreditsTeacher getIPersistentCreditsTeacher()
@@ -933,22 +936,11 @@ public class SuportePersistenteOJB implements ISuportePersistente
     /*
 	 * (non-Javadoc)
 	 * 
-	 * @see ServidorPersistente.ISuportePersistente#getIPersistentDegreeFinalProjectOrientation()
-	 */
-    public IPersistentDegreeFinalProjectOrientation getIPersistentDegreeFinalProjectOrientation()
-    {
-        return new PersistentDegreeFinalProjectOJB();
-    }
-
-    /*
-	 * (non-Javadoc)
-	 * 
 	 * @see ServidorPersistente.ISuportePersistente#getIPersistentShiftProfessorship()
 	 */
     public IPersistentShiftProfessorship getIPersistentShiftProfessorship()
     {
-
-        return new PersistentShiftProfessorship();
+        return new ShiftProfessorshipOJB();
     }
 
     public IPersistentReimbursementGuide getIPersistentReimbursementGuide()
@@ -1007,4 +999,36 @@ public class SuportePersistenteOJB implements ISuportePersistente
 
         return new GaugingTestResultOJB();
     }
+
+
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentSupportLesson()
+	 */
+    public IPersistentSupportLesson getIPersistentSupportLesson()
+    {
+        return new SupportLessonOJB();
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentTeacherDegreeFinalProjectStudent()
+	 */
+    public IPersistentTeacherDegreeFinalProjectStudent getIPersistentTeacherDegreeFinalProjectStudent()
+    {
+        return new TeacherDegreeFinalProjectStudentOJB();
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentTeacherInstitutionWorkingTime()
+	 */
+    public IPersistentTeacherInstitutionWorkingTime getIPersistentTeacherInstitutionWorkingTime()
+    {
+        return new TeacherInstitutionWorkingTimeOJB();
+    }
+
 }

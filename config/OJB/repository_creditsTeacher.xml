@@ -1,88 +1,115 @@
 <!-- Please keep user defined mappings in this file only
      to avoid mixing user defined and system mappings. -->   
 <!-- Mapping of User defined classes starts here -->
-<!-- Definitions for Dominio.TeacherShiftPercentage -->
-   <class-descriptor
-   	  class="Dominio.TeacherShiftPercentage"
-   	  table="TEACHER_SHIFT_PERCENTAGE"
-   >
-      <field-descriptor
-         name="idInternal"
-         column="ID_INTERNAL"
-         jdbc-type="INTEGER"
-         primarykey="true"
-         autoincrement="true"
-      />
-      <field-descriptor
-         name="keyProfessorShip"
-         column="KEY_PROFESSOR_SHIP"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor
-         name="keyShift"
-         column="KEY_SHIFT"
-         jdbc-type="INTEGER"
-      />
-      <field-descriptor
-         name="percentage"
-         column="PERCENTAGE"
-         jdbc-type="DOUBLE"
-      />
+<!-- Definitions for Dominio.ShiftProfessorship -->
+<class-descriptor  class="Dominio.ShiftProfessorship"  table="SHIFT_PROFESSORSHIP">
+
+      <field-descriptor  name="idInternal"  column="ID_INTERNAL"  jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
+
+      <field-descriptor name="keyProfessorship" column="KEY_PROFESSOR_SHIP" jdbc-type="INTEGER"/>
+
+      <field-descriptor name="keyShift" column="KEY_SHIFT" jdbc-type="INTEGER"/>
+
+      <field-descriptor name="percentage" column="PERCENTAGE" jdbc-type="DOUBLE"/>
       
-      <reference-descriptor
-         name="professorShip"
-         class-ref="Dominio.Professorship"
-      >
-         <foreignkey field-ref="keyProfessorShip"/>
+      <reference-descriptor name="professorship" class-ref="Dominio.Professorship">
+         <foreignkey field-ref="keyProfessorship"/>
       </reference-descriptor>
             
-      <reference-descriptor
-         name="shift"
-         class-ref="Dominio.Turno"
-      >
+      <reference-descriptor name="shift" class-ref="Dominio.Turno">
          <foreignkey field-ref="keyShift"/>
       </reference-descriptor>    
-   </class-descriptor>
+</class-descriptor>
 
 
 <!-- Definitions for Dominio.Credits -->
    <class-descriptor class="Dominio.Credits" table="CREDITS">
       <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER"
-				        primarykey="true" autoincrement="true"/>
+				        		 primarykey="true" autoincrement="true"/>
+
       <field-descriptor name="keyExecutionPeriod" column="KEY_EXECUTION_PERIOD" jdbc-type="INTEGER"/>
+
       <field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
+
       <field-descriptor name="tfcStudentsNumber" column="TFC_STUDENTS_NUMBER" jdbc-type="INTEGER"/>
+
       <field-descriptor name="credits" column="CREDITS" jdbc-type="DOUBLE"/>
+
       <field-descriptor name="additionalCredits" column="ADDITIONAL_CREDITS" jdbc-type="DOUBLE"/>
+
       <field-descriptor name="additionalCreditsJustification" column="ADDITIONAL_CREDITS_JUSTIFICATION" jdbc-type="VARCHAR"/>
       
       <reference-descriptor name="teacher" class-ref="Dominio.Teacher">
          <foreignkey field-ref="keyTeacher"/>
       </reference-descriptor>
+
       <reference-descriptor name="executionPeriod" class-ref="Dominio.ExecutionPeriod">
          <foreignkey field-ref="keyExecutionPeriod"/>
       </reference-descriptor> 
-    </class-descriptor>
-      
+</class-descriptor>
+
+<class-descriptor class="Dominio.degree.finalProject.TeacherDegreeFinalProjectStudent" table="TEACHER_DEGREE_FINAL_PROJECT_STUDENT">
+      <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER"
+				        		 primarykey="true" autoincrement="true"/>
+
+      <field-descriptor name="keyExecutionYear" column="KEY_EXECUTION_YEAR" jdbc-type="INTEGER"/>
+
+      <field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
+
+      <field-descriptor name="keyStudent" column="KEY_STUDENT" jdbc-type="INTEGER"/>
+
+      <reference-descriptor name="executionYear" class-ref="Dominio.ExecutionYear">
+         <foreignkey field-ref="keyExecutionYear"/>
+      </reference-descriptor> 
+
+      <reference-descriptor name="teacher" class-ref="Dominio.Teacher">
+         <foreignkey field-ref="keyTeacher"/>
+      </reference-descriptor>
+
+      <reference-descriptor name="student" class-ref="Dominio.Student">
+         <foreignkey field-ref="keyStudent"/>
+      </reference-descriptor>
+
+</class-descriptor>      
+
+<class-descriptor class="Dominio.teacher.workTime.TeacherInstitutionWorkTime"  table="TEACHER_INSTITUTION_WORK_TIME">
+	
+	<field-descriptor	name="idInternal"  column="ID_INTERNAL" jdbc-type="INTEGER"
+						        primarykey="true" autoincrement="true"/>
+						        
+    <field-descriptor  name="weekDay" column="WEEKDAY" jdbc-type="INTEGER"
+						        conversion="ServidorPersistente.Conversores.DiaSemana2EnumDiaSemanaFieldConversion" />
+    
+    <field-descriptor  name="startTime" column="START_TIME" jdbc-type="TIME"
+    						    conversion="ServidorPersistente.Conversores.Time2DateFieldConversion"/>
+    						    
+    <field-descriptor name="endTime" column="END_TIME" jdbc-type="TIME"
+					           conversion="ServidorPersistente.Conversores.Time2DateFieldConversion" />
+    
+	<field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
+
+	<field-descriptor name="keyExecutionPeriod" column="KEY_EXECUTION_PERIOD" jdbc-type="INTEGER"/>
+	
+	<reference-descriptor name="teacher"  class-ref="Dominio.Teacher">
+		<foreignkey field-ref="keyTeacher"/>
+    </reference-descriptor>
+
+    <reference-descriptor name="executionPeriod" class-ref="Dominio.ExecutionPeriod">
+       <foreignkey field-ref="keyExecutionPeriod"/>
+    </reference-descriptor>
+
+</class-descriptor>
+
+
 <!-- Definitions for Dominio.teacher.Category -->
-   <class-descriptor class="Dominio.teacher.Category" table="CATEGORY">
-      <field-descriptor name="idInternal" 
-      					column="ID_INTERNAL" 
-      					jdbc-type="INTEGER"
-      					primarykey="true" 
-      					autoincrement="true"/>
+<class-descriptor class="Dominio.teacher.Category" table="CATEGORY">
+
+      <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
       					
-      <field-descriptor name="code" 
-      					column="CODE" 
-      					jdbc-type="VARCHAR"/>
-      <field-descriptor name="longName" 
-      					column="LONG_NAME" 
-      					jdbc-type="VARCHAR"/>
-      <field-descriptor name="shortName" 
-      					column="SHORT_NAME" 
-      					jdbc-type="VARCHAR"/>
-      
-   </class-descriptor>
+      <field-descriptor name="code" column="CODE" jdbc-type="VARCHAR"/>
 
+      <field-descriptor name="longName" column="LONG_NAME" jdbc-type="VARCHAR"/>
 
+      <field-descriptor name="shortName" column="SHORT_NAME" jdbc-type="VARCHAR"/>
+</class-descriptor>
 

@@ -4,9 +4,9 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="facultyAdmOffice.masterPage" extends="df.layout.two-column">
-	  <put name="title" value=".IST - Portal de Gerência" />
-	  <put name="serviceName" value="Portal de Gerência" />
-	  <put name="navLocal" value="/facultyAdmOffice/commons/commonNavLocalManager.jsp" />
+	  <put name="title" value=".IST - Secretaria de Pessoal Docente" />
+	  <put name="serviceName" value="Secretaria de Pessoal Docente" />
+	  <put name="navLocal" value="/facultyAdmOffice/commons/localNavigationBar.jsp" />
 	  <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />
 	  <put name="body-context" value=""/>
       <put name="body" value="" />

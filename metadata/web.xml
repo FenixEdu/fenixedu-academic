@@ -11,10 +11,6 @@
 	    <filter-name>indexFilter</filter-name>
 	    <url-pattern>/*</url-pattern>
 	</filter-mapping>
-<!--	<filter-mapping>
-	    <filter-name>indexFilter</filter-name>
-	    <url-pattern>/loginPage.jsp</url-pattern>
-	</filter-mapping> -->
 	
     <servlet>
         <servlet-name>StartupServlet</servlet-name>
@@ -107,6 +103,10 @@
         <init-param>
             <param-name>config/facultyAdmOffice</param-name>
             <param-value>/WEB-INF/conf/struts-facultyAdmOffice.xml</param-value>
+        </init-param>
+        <init-param>
+            <param-name>config/departmentAdmOffice</param-name>
+            <param-value>/WEB-INF/conf/struts-departmentAdmOffice.xml</param-value>
         </init-param>
         <init-param>
             <param-name>debug</param-name>

@@ -58,7 +58,7 @@ public class CreditsAuthorizationFilter extends Filtro {
 		} else if (
 			AuthorizationUtils.containsRole(
 				roles,
-				RoleType.CREDITS_MANAGER_DEPARTMENT)) {
+				RoleType.DEPARTMENT_CREDITS_MANAGER)) {
 			ITeacher teacherToEdit = readTeacher(arguments[0], sp);
 
 			IPessoaPersistente personDAO = sp.getIPessoaPersistente();
