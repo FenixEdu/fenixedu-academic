@@ -310,7 +310,7 @@ public class StudentsGratuityListAction extends DispatchAction {
         
         Date executionDegreeDate = infoExecutionDegree.getInfoExecutionYear().getBeginDate();
         String year1 = ((InfoExecutionYear)executionYearList.get(0)).getYear();
-        String year2 = ((InfoExecutionYear)executionYearList.get(1)).getYear();;
+        String year2 = ((InfoExecutionYear)executionYearList.get(1)).getYear();
         
 //        String year1 = null;
 //        String year2 = null;

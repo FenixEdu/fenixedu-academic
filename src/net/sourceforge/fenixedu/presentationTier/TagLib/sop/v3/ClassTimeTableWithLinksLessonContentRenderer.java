@@ -37,7 +37,6 @@ public class ClassTimeTableWithLinksLessonContentRenderer implements LessonSlotC
                     "\">");
             strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla())
                     .append("</a>");
-            ;
 
             strBuffer.append("&nbsp;");
             List infoShiftList = lesson.getInfoShiftList();

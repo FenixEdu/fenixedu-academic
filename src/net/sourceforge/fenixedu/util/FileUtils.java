@@ -40,8 +40,7 @@ public class FileUtils {
         final byte[] buffer = new byte[fileSize];
 
         if (fileSize > 0) {
-            for (int n = 0; (n = fileInputStream.read(buffer, n, fileSize - n)) != -1;)
-                ;
+            for (int n = 0; (n = fileInputStream.read(buffer, n, fileSize - n)) != -1;) {}
         }
 
         fileInputStream.close();

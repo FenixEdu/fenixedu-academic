@@ -45,7 +45,7 @@ public class ReadStudentCurricularPlansByPersonAndCriteria implements IService
 {
 	public ReadStudentCurricularPlansByPersonAndCriteria()
 	{
-	};
+	}
 
 	/*
 	 * devolve InfoXxxx com:
