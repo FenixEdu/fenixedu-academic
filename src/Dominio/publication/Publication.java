@@ -626,7 +626,7 @@ public class Publication extends DomainObject implements IPublication {
 		String publication;
 		publication = "";
 
-		if (getType() != null) {
+		/*if (getType() != null) {
 			if (getType()
 				.getPublicationType()
 				.equalsIgnoreCase("Outra Publicacao")) {
@@ -635,164 +635,173 @@ public class Publication extends DomainObject implements IPublication {
 				publication =
 					getType().getPublicationType().toUpperCase() + " : '\n'";
 			}
+		}*/
+
+		publication += getTitle();
+		
+		//System.out.println("pub = " + getPublicationType());
+		
+		String str = "";
+		if(getType().getPublicationType().equalsIgnoreCase("translation"))
+		    str = " Translation";
+		else if(getType().getPublicationType().equalsIgnoreCase("critique"))
+		    str = " Critique";
+		
+		if (getSubType() != null && getSubType().length() != 0) {
+		    publication = publication + " (" + getSubType() + str + ")";
 		}
-
-		publication += " Title : " + getTitle();
-
-		publication += ", Author : ";
+		
+		publication += " - ";
 
 		Iterator iteratorAuthors = publicationAuthors.iterator();
-
 		while (iteratorAuthors.hasNext()) {
 			IAuthor author = (IAuthor) iteratorAuthors.next();
-
 			if (author.getKeyPerson() != null && author.getKeyPerson().intValue()!= 0 ) {
-
 				publication += author.getPerson().getNome();
-
 			} else {
-
-				publication += author.getAuthor();
-
+				publication += author.getAuthor() + ", ";
 			}
-
-			publication += ", ";
-
+			//publication += ", ";
 		}
 
 		if (getJournalName() != null && getJournalName().length() != 0) {
-			publication = publication + ", Journal = " + getJournalName();
+			publication = publication + ", " + getJournalName();
 		}
+		
+		if (getCriticizedAuthor() != null
+				&& getCriticizedAuthor().length() != 0) {
+				publication =
+					publication + ", Original Author: " + getCriticizedAuthor();
+			}
 
 		if (getConference() != null && getConference().length() != 0) {
-			publication = publication + ", Conference = " + getConference();
+			publication = publication + ", " + getConference();
+		}
+		
+		if (getOriginalLanguage() != null
+				&& getOriginalLanguage().length() != 0
+				&& getLanguage() != null
+				&& getLanguage().length() != 0) {
+				publication =
+					publication + ", Translation " + getOriginalLanguage() + " - " + getLanguage();
+			}
+
+		if (getTranslatedAuthor() != null
+			&& getTranslatedAuthor().length() != 0)
+		{
+			publication =
+				publication + ", Original Author: " + getTranslatedAuthor();
 		}
 
-		if (getSubType() != null && getSubType().length() != 0) {
-			publication = publication + ", Sub-Type = " + getSubType();
+		String ola = null;
+		switch(getEdition().intValue())
+		{
+			case 1: ola = "st"; break;
+			case 2: ola = "nd"; break;
+			case 3: ola = "rd"; break;
+			default: ola = "th"; break;
+		}
+		
+		if (getEdition() != null && getEdition().intValue() != 0) {
+			publication = publication + " " + getEdition() + ola + " Edition";
 		}
 
 		if (getFascicle() != null && getFascicle().intValue() != 0) {
-			publication = publication + ", Fascicle = " + getFascicle();
+			publication = publication + ", Fasc. " + getFascicle();
 		}
 
 		if (getNumber() != null && getNumber().intValue() != 0) {
-			publication = publication + ", Number = " + getNumber();
-		}
-
-		if (getEdition() != null && getEdition().intValue() != 0) {
-			publication = publication + ", Edition  " + getEdition();
+			publication = publication + ", No. " + getNumber();
 		}
 
 		if (getVolume() != null && getVolume().length() != 0) {
-			publication = publication + ", Volume  " + getVolume();
+			publication = publication + ", Vol. " + getVolume();
 		}
 
 		if (getFirstPage() != null && getFirstPage().intValue() != 0) {
-			publication = publication + ", First Page = " + getFirstPage();
+			publication = publication + " (Pag. " + getFirstPage();
 		}
 
 		if (getLastPage() != null && getLastPage().intValue() != 0) {
-			publication = publication + ", Last Page = " + getLastPage();
+			publication = publication + " - " + getLastPage() + ")";
 		}
 
-		if (getNumberPages() != null && getNumberPages().intValue() != 0) {
+		/*if (getNumberPages() != null && getNumberPages().intValue() != 0) {
 			publication = publication + ", Number Pages = " + getNumberPages();
-		}
-
-		if (getLanguage() != null && getLanguage().length() != 0) {
-			publication = publication + ", Language = " + getLanguage();
-		}
+		}*/
 
 		if (getSerie() != null && getSerie().intValue() != 0) {
-			publication = publication + ", Serie = " + getSerie();
+			publication = publication + ", Serie " + getSerie();
 		}
 
 		if (getEditor() != null && getEditor().length() != 0) {
-			publication = publication + ", Editor = " + getEditor();
+			publication = publication + ", " + getEditor();
 		}
 
-		if (getEditorCity() != null && getEditorCity().length() != 0) {
-			publication = publication + ", City Editor = " + getEditorCity();
-		}
-
-		if (getIssn() != null && getIssn().intValue() != 0) {
+		/*if (getIssn() != null && getIssn().intValue() != 0) {
 			publication = publication + ", ISSN = " + getIssn();
 		}
 
 		if (getIsbn() != null && getIsbn().intValue() != 0) {
 			publication = publication + ", ISBN = " + getIsbn();
-		}
+		}*/
 
-		if (getOriginalLanguage() != null
-			&& getOriginalLanguage().length() != 0) {
-			publication =
-				publication + ", Language Original : " + getOriginalLanguage();
-		}
-
-		if (getTranslatedAuthor() != null
-			&& getTranslatedAuthor().length() != 0) {
-			publication =
-				publication + ", Translated Author : " + getTranslatedAuthor();
-		}
-
-		if (getCriticizedAuthor() != null
-			&& getCriticizedAuthor().length() != 0) {
-			publication =
-				publication + ", Criticized Author : " + getCriticizedAuthor();
-		}
-
-		if (getFormat() != null && getFormat().length() != 0) {
-			publication = publication + ", Format : " + getFormat();
-		}
-
-		if (getScope() != null && getScope().length() != 0) {
+		/*if (getScope() != null && getScope().length() != 0) {
 			publication = publication + ", Scope : " + getScope();
-		}
+		}*/
 
 		if (getLocal() != null && getLocal().length() != 0) {
-			publication = publication + ", Local :" + getLocal();
+			publication = publication + ", " + getLocal();
 		}
 
 		if (getUniversity() != null && getUniversity().length() != 0) {
-			publication = publication + ", University : " + getUniversity();
+			publication = publication + ", " + getUniversity();
 		}
 
 		if (getInstituition() != null && getInstituition().length() != 0) {
-			publication = publication + ", Instituition : " + getInstituition();
+			publication = publication + ", " + getInstituition();
 		}
-
-		if (getCountry() != null && getCountry().length() != 0) {
-			publication = publication + ", Country : " + getCountry();
-		}
-
-		if (getUrl() != null && getUrl().length() != 0) {
-			publication = publication + ", URL : " + getUrl();
-		}
-
+		
 		if (getMonth() != null && getMonth().length() != 0) {
-			publication = publication + ", Month : " + getMonth();
+			publication = publication + " " + getMonth();
 		}
 
 		if (getYear() != null && getYear().intValue() != 0) {
-			publication = publication + ", Year : " + getYear();
+			publication = publication + " " + getYear();
 		}
-
+		
 		if (getMonth_end() != null && getMonth_end().length() != 0) {
-			publication = publication + ", Month End : " + getMonth_end();
+		    publication = publication + " a " + getMonth_end();
 		}
 
 		if (getYear_end() != null && getYear_end().intValue() != 0) {
-			publication = publication + ", Year End : " + getYear_end();
+		    publication = publication + " " + getYear_end();
 		}
 
-		if (getObservation() != null && getObservation().length() != 0) {
-			publication = publication + ", Observation : " + getObservation();
+		if (getEditorCity() != null && getEditorCity().length() != 0) {
+			publication = publication + " " + getEditorCity();
 		}
-		publication = publication + ".";
+		
+		if (getCountry() != null && getCountry().length() != 0) {
+			publication = publication + ", " + getCountry();
+		}
+
+		/*if (getObservation() != null && getObservation().length() != 0) {
+			publication = publication + ", Observation : " + getObservation();
+		}*/
+		//publication = publication + ".";
+		
+		if (getFormat() != null && getFormat().length() != 0) {
+			publication = publication + ", (" + getFormat() + " format)";
+		}
+		
+		if (getUrl() != null && getUrl().length() != 0) {
+			publication = publication + " " + getUrl();
+		}
 
 		return publication;
 	}
+
 
 	/**
 	 * @return Returns the publicationPersons.
@@ -824,22 +833,22 @@ public class Publication extends DomainObject implements IPublication {
 		this.publicationAuthors = publicationAuthors;
 	}
 
-	public boolean equals(Object object) {
-		if (object == null) {
-			return false;
-		}
-		if (!(object instanceof IPublication)) {
-			return false;
-		} 
-			if(this.publicationString != null && this.publicationString.length()!= 0){
-				return this.publicationString.equals(((IPublication)object).getPublicationString());
-			}
-			
-				return this.getIdInternal().equals(((IPublication)object).getIdInternal());
-			
-
-		
-
-	}
+//	public boolean equals(Object object) {
+//		if (object == null) {
+//			return false;
+//		}
+//		if (!(object instanceof IPublication)) {
+//			return false;
+//		} else {
+//			if(this.publicationString != null && this.publicationString.length()!= 0){
+//				return this.publicationString.equals(((IPublication)object).getPublicationString());
+//			}
+//			else{
+//				return this.getIdInternal().equals(((IPublication)object).getIdInternal());
+//			}
+//
+//		}
+//
+//	}
 
 }

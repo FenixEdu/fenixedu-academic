@@ -71,7 +71,7 @@ public class InsertPublicationInTeacherList implements IServico {
 			IPublication publication = (IPublication) persistentPublication.readByOID(Publication.class,
 					publicationId);
 
-			List infoPublications = getInfoPublications(teacher, publication, persistentTeacher);
+			List infoPublications = getInfoPublications(teacher, publication, persistentTeacher, persistentPublication);
 
 			List infoPublicationCientifics = getInfoPublicationsType(infoPublications, PublicationConstants.CIENTIFIC);
 
@@ -87,7 +87,7 @@ public class InsertPublicationInTeacherList implements IServico {
 	}
 
 	public List getInfoPublications(ITeacher teacher, IPublication publication,
-			IPersistentTeacher persistentTeacher) throws FenixServiceException {
+			IPersistentTeacher persistentTeacher, IPersistentPublication persistentPublication) throws FenixServiceException {
 		List publications = teacher.getTeacherPublications();
 		List infoPublications = new ArrayList();
 
@@ -102,10 +102,12 @@ public class InsertPublicationInTeacherList implements IServico {
 		//publications.add(publication);
 		//teacher.setTeacherPublications(publications);
 		try {
-			teacher.getTeacherPublications().add(publication);
 			persistentTeacher.simpleLockWrite(teacher);
-			ITeacher teacherEdited = (ITeacher)persistentTeacher.readByOID(Teacher.class, teacher.getIdInternal());
-			List newPublications = teacherEdited.getTeacherPublications();
+			persistentPublication.simpleLockWrite(publication);
+			
+			publication.getPublicationTeachers().add(teacher);
+			teacher.getTeacherPublications().add(publication);
+			List newPublications = teacher.getTeacherPublications();
 			infoPublications = (List) CollectionUtils.collect(newPublications, new Transformer() {
 				public Object transform(Object object) {
 					IPublication publication = (IPublication) object;

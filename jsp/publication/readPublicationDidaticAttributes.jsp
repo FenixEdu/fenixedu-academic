@@ -87,7 +87,7 @@
 <table>
 		<logic:iterate id="att" name="infoRequiredAttributeList">
 						
-			<logic:equal name="att" property="attributeType" value="Sub-tipo">
+			<logic:equal name="att" property="attributeType" value="subtype">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.subType" />
@@ -102,7 +102,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Nome do Jornal">
+			<logic:equal name="att" property="attributeType" value="journalName">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.journalName" />
@@ -115,7 +115,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Titulo">
+			<logic:equal name="att" property="attributeType" value="title">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.title" />
@@ -128,7 +128,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Volume">
+			<logic:equal name="att" property="attributeType" value="volume">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.volume" />
@@ -141,7 +141,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Editora">
+			<logic:equal name="att" property="attributeType" value="editor">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.editor" />
@@ -154,7 +154,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Mes">
+			<logic:equal name="att" property="attributeType" value="month">
 				<tr>
 					<td>
 						<bean:define id="valueMonth" name="publicationManagementForm" property="infoPublicationTypeId"/>
@@ -180,7 +180,7 @@
 			</logic:equal>
 			
 				
-			<logic:equal name="att" property="attributeType" value="Ano">
+			<logic:equal name="att" property="attributeType" value="year">
 				<tr>
 					<td>
 						<bean:define id="valueYear" name="publicationManagementForm" property="infoPublicationTypeId"/>
@@ -199,7 +199,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Mes de Fim">
+			<logic:equal name="att" property="attributeType" value="month_end">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.month_end" />
@@ -219,7 +219,7 @@
 			</logic:equal>
 			
 				
-			<logic:equal name="att" property="attributeType" value="Ano de Fim">
+			<logic:equal name="att" property="attributeType" value="year_end">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.year_end" />
@@ -232,7 +232,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Pagina Inicial">
+			<logic:equal name="att" property="attributeType" value="firstPage">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.inicialPage" />
@@ -245,7 +245,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Pagina Final">
+			<logic:equal name="att" property="attributeType" value="lastPage">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.finalPage" />
@@ -258,7 +258,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Idioma">
+			<logic:equal name="att" property="attributeType" value="language">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.language" />
@@ -271,7 +271,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Pais">
+			<logic:equal name="att" property="attributeType" value="country">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.country" />
@@ -284,7 +284,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="ISSN">
+			<logic:equal name="att" property="attributeType" value="issn">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.issn" />
@@ -297,7 +297,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="ISBN">
+			<logic:equal name="att" property="attributeType" value="isbn">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.isbn" />
@@ -310,7 +310,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Formato">
+			<logic:equal name="att" property="attributeType" value="format">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.format" />
@@ -325,7 +325,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Ambito">
+			<logic:equal name="att" property="attributeType" value="scope">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.scope" />
@@ -344,7 +344,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Observacoes">
+			<logic:equal name="att" property="attributeType" value="observation">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.observations" />
@@ -357,7 +357,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Edicao">
+			<logic:equal name="att" property="attributeType" value="edition">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.edition" />
@@ -370,7 +370,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Cidade da Editora">
+			<logic:equal name="att" property="attributeType" value="editorCity">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.editorCity" />
@@ -383,7 +383,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Numero de Paginas">
+			<logic:equal name="att" property="attributeType" value="numberPages">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.numberPages" />
@@ -396,7 +396,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Fasciculo">
+			<logic:equal name="att" property="attributeType" value="fascicle">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.fascicle" />
@@ -409,7 +409,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Serie">
+			<logic:equal name="att" property="attributeType" value="serie">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.serie" />
@@ -422,7 +422,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="URL">
+			<logic:equal name="att" property="attributeType" value="url">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.url" />
@@ -435,7 +435,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Universidade">
+			<logic:equal name="att" property="attributeType" value="university">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.university" />
@@ -448,7 +448,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Local">
+			<logic:equal name="att" property="attributeType" value="local">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.local" />
@@ -461,7 +461,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Autor Traduzido">
+			<logic:equal name="att" property="attributeType" value="translatedAuthor">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.translatedAuthor" />
@@ -474,7 +474,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Idioma Original">
+			<logic:equal name="att" property="attributeType" value="originalLanguage">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.originalLanguage" />
@@ -487,7 +487,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Autor Criticado">
+			<logic:equal name="att" property="attributeType" value="criticizedAuthor">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.criticizedAuthor" />
@@ -500,7 +500,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Tipo de Publicacao">
+			<logic:equal name="att" property="attributeType" value="publicationType">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.publicationType" />
@@ -513,7 +513,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Conferencia">
+			<logic:equal name="att" property="attributeType" value="conference">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.conference" />
@@ -526,7 +526,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Instituicao">
+			<logic:equal name="att" property="attributeType" value="instituition">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.instituition" />
@@ -539,7 +539,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Numero">
+			<logic:equal name="att" property="attributeType" value="number">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.required" /><bean:message key="message.publicationAttribute.number" />
@@ -556,7 +556,7 @@
 
 		<logic:iterate id="att" name="infoNonRequiredAttributeList">
 						
-			<logic:equal name="att" property="attributeType" value="Sub-tipo">
+			<logic:equal name="att" property="attributeType" value="subtype">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.subType" />
@@ -571,7 +571,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Nome do Jornal">
+			<logic:equal name="att" property="attributeType" value="journalName">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.journalName" />
@@ -584,7 +584,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Titulo">
+			<logic:equal name="att" property="attributeType" value="title">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.title" />
@@ -597,7 +597,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Volume">
+			<logic:equal name="att" property="attributeType" value="volume">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.volume" />
@@ -610,7 +610,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Editora">
+			<logic:equal name="att" property="attributeType" value="editor">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.editor" />
@@ -623,7 +623,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Mes">
+			<logic:equal name="att" property="attributeType" value="month">
 				<tr>
 					<td>
 						<bean:define id="valueMonth" name="publicationManagementForm" property="infoPublicationTypeId"/>
@@ -649,7 +649,7 @@
 			</logic:equal>
 			
 				
-			<logic:equal name="att" property="attributeType" value="Ano">
+			<logic:equal name="att" property="attributeType" value="year">
 				<tr>
 					<td>
 						<bean:define id="valueYear" name="publicationManagementForm" property="infoPublicationTypeId"/>
@@ -668,7 +668,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Mes de Fim">
+			<logic:equal name="att" property="attributeType" value="month_end">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.month_end" />
@@ -688,7 +688,7 @@
 			</logic:equal>
 			
 				
-			<logic:equal name="att" property="attributeType" value="Ano de Fim">
+			<logic:equal name="att" property="attributeType" value="year_end">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.year_end" />
@@ -701,7 +701,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Pagina Inicial">
+			<logic:equal name="att" property="attributeType" value="firstPage">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.inicialPage" />
@@ -714,7 +714,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Pagina Final">
+			<logic:equal name="att" property="attributeType" value="lastPage">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.finalPage" />
@@ -727,7 +727,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Idioma">
+			<logic:equal name="att" property="attributeType" value="language">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.language" />
@@ -740,7 +740,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Pais">
+			<logic:equal name="att" property="attributeType" value="country">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.country" />
@@ -753,7 +753,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="ISSN">
+			<logic:equal name="att" property="attributeType" value="issn">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.issn" />
@@ -766,7 +766,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="ISBN">
+			<logic:equal name="att" property="attributeType" value="isbn">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.isbn" />
@@ -779,7 +779,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Formato">
+			<logic:equal name="att" property="attributeType" value="format">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.format" />
@@ -794,7 +794,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Ambito">
+			<logic:equal name="att" property="attributeType" value="scope">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.scope" />
@@ -813,7 +813,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Observacoes">
+			<logic:equal name="att" property="attributeType" value="observation">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.observations" />
@@ -826,7 +826,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Edicao">
+			<logic:equal name="att" property="attributeType" value="edition">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.edition" />
@@ -839,7 +839,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Cidade da Editora">
+			<logic:equal name="att" property="attributeType" value="editorCity">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.editorCity" />
@@ -852,7 +852,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Numero de Paginas">
+			<logic:equal name="att" property="attributeType" value="numberPages">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.numberPages" />
@@ -865,7 +865,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Fasciculo">
+			<logic:equal name="att" property="attributeType" value="fascicle">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.fascicle" />
@@ -878,7 +878,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Serie">
+			<logic:equal name="att" property="attributeType" value="serie">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.serie" />
@@ -891,7 +891,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="URL">
+			<logic:equal name="att" property="attributeType" value="url">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.url" />
@@ -904,7 +904,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Universidade">
+			<logic:equal name="att" property="attributeType" value="university">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.university" />
@@ -917,7 +917,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Local">
+			<logic:equal name="att" property="attributeType" value="local">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.local" />
@@ -930,7 +930,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Autor Traduzido">
+			<logic:equal name="att" property="attributeType" value="translatedAuthor">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.translatedAuthor" />
@@ -943,7 +943,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Idioma Original">
+			<logic:equal name="att" property="attributeType" value="originalLanguage">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.originalLanguage" />
@@ -956,7 +956,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Autor Criticado">
+			<logic:equal name="att" property="attributeType" value="criticizedAuthor">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.criticizedAuthor" />
@@ -969,7 +969,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Tipo de Publicacao">
+			<logic:equal name="att" property="attributeType" value="publicationType">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.publicationType" />
@@ -982,7 +982,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Conferencia">
+			<logic:equal name="att" property="attributeType" value="conference">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.conference" />
@@ -995,7 +995,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Instituicao">
+			<logic:equal name="att" property="attributeType" value="instituition">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.instituition" />
@@ -1008,7 +1008,7 @@
 				<tr></tr>
 			</logic:equal>
 			
-			<logic:equal name="att" property="attributeType" value="Numero">
+			<logic:equal name="att" property="attributeType" value="number">
 				<tr>
 					<td>
 						<bean:message key="message.publicationAttribute.number" />
