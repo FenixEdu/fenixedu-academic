@@ -78,7 +78,7 @@ public class GeraXml
         Hashtable dadosConfiguracao = leFicheiroPropriedades();
         String number = args[0];
         String file = args[1];
-        
+
         System.out.println(number + "-" + file);
         String filePath = (String) dadosConfiguracao.get(CC_FILE_PATH);
 
@@ -100,11 +100,11 @@ public class GeraXml
         }
         catch (FileNotFoundException e1)
         {
-           
+
         }
         catch (IOException e1)
         {
-           
+
         }
 
         filePath = filePath + "/" + number + "/" + file + ".txt";
@@ -226,30 +226,31 @@ public class GeraXml
                     .readbyCourseNameAndDegreeCurricularPlan(
                             curricularCourseName, degreeCurricularPlan);
 
-            ICurricularCourse curricularCourse=null;
+            ICurricularCourse curricularCourse = null;
             try
             {
-                curricularCourse = (ICurricularCourse) curricularCourses
-                        .get(0);
-           
-            IStudentCurricularPlan studentCurricularPlan = studentCurricularPlanPersistente
-                    .readActiveByStudentNumberAndDegreeType(studentNumber,
-                            TipoCurso.LICENCIATURA_OBJ);
+                curricularCourse = (ICurricularCourse) curricularCourses.get(0);
 
-            IExecutionPeriod executionPeriod = persistentExecutionPeriod
-                    .readActualExecutionPeriod();
+                IStudentCurricularPlan studentCurricularPlan = studentCurricularPlanPersistente
+                        .readActiveByStudentNumberAndDegreeType(studentNumber,
+                                TipoCurso.LICENCIATURA_OBJ);
 
-            enrolment = new Enrolment();
-            persistentEnrolment.lockWrite(enrolment);
-            enrolment.setCurricularCourse(curricularCourse);
-            enrolment.setStudentCurricularPlan(studentCurricularPlan);
-            enrolment.setExecutionPeriod(executionPeriod);
-            enrolment.setEnrolmentState(enrolmentState);
-            enrolment.setEnrolmentEvaluationType(enrolmentEvaluationType);
+                IExecutionPeriod executionPeriod = persistentExecutionPeriod
+                        .readActualExecutionPeriod();
+
+                enrolment = new Enrolment();
+                persistentEnrolment.lockWrite(enrolment);
+                enrolment.setCurricularCourse(curricularCourse);
+                enrolment.setStudentCurricularPlan(studentCurricularPlan);
+                enrolment.setExecutionPeriod(executionPeriod);
+                enrolment.setEnrolmentState(enrolmentState);
+                enrolment.setEnrolmentEvaluationType(enrolmentEvaluationType);
             }
             catch (RuntimeException e1)
             {
-                System.out.println("Disciplina não encontrada no planos curricular: "+curricularCourseName);
+                System.out
+                        .println("Disciplina não encontrada no planos curricular: "
+                                + curricularCourseName);
             }
             suportePersistente.confirmarTransaccao();
         }

@@ -21,15 +21,18 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.ojb.broker.PersistenceBroker;
+import org.apache.ojb.broker.PersistenceBrokerFactory;
 
 import DataBeans.InfoCurricularCourse;
-import Dominio.ICurricularCourse;
+import DataBeans.InfoEnrolment;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrolmentContext;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import framework.factory.ServiceManagerServiceFactory;
+import Tools.dbaccess;
 
 /**
  * @author Nuno Correia
@@ -38,6 +41,7 @@ import framework.factory.ServiceManagerServiceFactory;
 
 public class ShowAvailableCurricularCoursesTest extends TestCase
 {
+    private dbaccess dbAcessPoint = null;
 
     private static String EXPECTED_SECONDARY_CREDITS_PROPERTY = "CreditsInSecundaryArea";
 
@@ -48,6 +52,57 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
     private static String ITERATION = "";
 
     private static String STUDENT_NUMBER = "StudentNumber";
+
+    protected void setUp()
+    {
+        System.out.println("setup start");
+        try
+        {
+            System.out.println("1");
+            dbAcessPoint = new dbaccess();
+            System.out.println("2");
+            dbAcessPoint.openConnection();
+            System.out.println("3");
+          //  dbAcessPoint.backUpDataBaseContents("etc/testBackup.xml");
+            System.out.println("4");
+            System.out.println(getDataSetFilePath());
+            try
+            {
+                dbAcessPoint.loadDataBase("c:/jmota/eclipse-M6/workspace/fenix-head/"+getDataSetFilePath());
+            }
+            catch (RuntimeException e)
+            {
+                System.out.println(e);
+            }
+            System.out.println("5");
+            dbAcessPoint.closeConnection();
+            //            PersistenceBroker persistenceBroker = PersistenceBrokerFactory
+            //                    .defaultPersistenceBroker();
+            //            persistenceBroker.clearCache();
+            System.out.println("setup end");
+        }
+        catch (Exception ex)
+        {
+            System.out.println("Setup failed: " + ex);
+        }
+
+    }
+
+    protected void tearDown()
+    {
+//        System.out.println("tearDown start");
+//        try
+//        {
+//            dbAcessPoint.openConnection();
+//         //   dbAcessPoint.loadDataBase("etc/testBackup.xml");
+//            dbAcessPoint.closeConnection();
+//            System.out.println("tearDown end");
+//        }
+//        catch (Exception ex)
+//        {
+//            System.out.println("Tear down failed: " + ex);
+//        }
+    }
 
     /**
      * @param name
@@ -97,6 +152,13 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
                 + "/output.txt";
 
     }
+    
+    protected String getDatabaseBackupFilePath()
+    {
+        return "etc/LEEC_Enrollment_Tests_Arguments/" + ITERATION
+        + "/backupDataSet.xml";
+
+    }
 
     /*
      * (non-Javadoc)
@@ -105,12 +167,13 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
      */
     protected String[] getAuthenticatedAndAuthorizedUser()
     {
-
+        System.out.println("getUser start");
         try
         {
             ResourceBundle bundle = new PropertyResourceBundle(
                     new FileInputStream(getConfigFilePath()));
             USER = bundle.getString(STUDENT_NUMBER);
+            System.out.println("getUser end");
         }
         catch (FileNotFoundException e)
         {
@@ -164,7 +227,7 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
 
     public boolean testShowAvailableCurricularCoursesTest()
     {
-
+        System.out.println("1");
         String[] args = getAuthenticatedAndAuthorizedUser();
         IUserView id = authenticateUser(args);
         Object[] args2 = getArguments();
@@ -177,13 +240,14 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
         }
         catch (FenixServiceException e)
         {
-            System.out.println("service execution failed");
+            System.out.println("service execution failed:" + e);
             fail("Executing Service: " + getNameOfServiceToBeTested());
             e.printStackTrace();
         }
+        System.out.println("2");
         System.out.println("service executed: comparing results");
         boolean result = CompareExpectedCCAndCreditsWithDataReturnedFromService(infoSEC);
-
+        System.out.println("3");
         if (result)
         {
             System.out
@@ -232,7 +296,32 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
                         return curricularCourse.getName();
                     }
                 });
+        if (infoSEC.getStudentCurrentSemesterInfoEnrollments() != null)
+        {
 
+            List forcedEnrollments = (List) CollectionUtils.collect(infoSEC
+                    .getStudentCurrentSemesterInfoEnrollments(),
+                    new Transformer()
+                    {
+
+                        public Object transform(Object arg0)
+                        {
+                            InfoEnrolment infoEnrolment = (InfoEnrolment) arg0;
+                            if (infoEnrolment.getInfoCurricularCourse()
+                                    .getMandatory().booleanValue())
+                            {
+                                return infoEnrolment.getInfoCurricularCourse()
+                                        .getName();
+                            }
+                            else
+                            {
+                                return "XPTO";
+                            }
+
+                        }
+                    });
+            curricularCoursesNames.addAll(forcedEnrollments);
+        }
         CollectionUtils.filter(curricularCoursesNames, new Predicate()
         {
 

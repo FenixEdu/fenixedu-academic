@@ -117,11 +117,11 @@ public class DataSetGenerator
                 if (propertyName.endsWith(".columns")
                         || propertyName.endsWith(".whereCondition")
                         || propertiesToIgnore.contains(propertyName)) continue; //we
-                                                                                // have
-                                                                                // already
-                                                                                // processed
-                                                                                // this
-                                                                                // properties
+                // have
+                // already
+                // processed
+                // this
+                // properties
 
                 String tableName = this.props.getProperty(propertyName);
                 String tableColumns = this.props.getProperty(propertyName
