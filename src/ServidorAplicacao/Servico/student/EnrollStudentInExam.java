@@ -60,7 +60,7 @@ public class EnrollStudentInExam implements IServico {
 				throw new ExistingServiceException();
 			}
 			persistentStudent.lockWrite(student);
-		//	exam.getStudentsEnrolled().add(student);
+	
 			student.getExamsEnrolled().add(exam);
 
 			
