@@ -12,8 +12,9 @@
             <tr>
                 <td>
                     <br>
-                    <html:submit property="method" value="createAnnouncement" styleClass="inputbutton"/>
-	                <bean:message key="label.insertAnnouncement" />
+					<html:link page="/announcementManagementAction.do?method=createAnnouncement">
+						<bean:message key="label.insertAnnouncement" />
+					</html:link>
                     &nbsp;&nbsp;
                     <br><br><hr>
                 </td>
@@ -28,10 +29,7 @@
                 </tr>
                 <tr>
                     <td>
-                         <% String title =  ((InfoAnnouncement) announcement).getInformation();
-	                        title = title.replaceAll("\n","<br>");
-                            out.println(title);
-                          %>
+						<bean:write name="announcement" property="information"/>
                         <br><br>
                     </td>
                 </tr>
@@ -43,12 +41,14 @@
             	</tr>
                 <tr>
                     <td>
-                        <html:submit indexed="true" property="method" value="prepareEditAnnouncement" styleClass="inputbutton">
-                        	<bean:message key="button.edit"/>
-                        </html:submit>
-                        <html:submit indexed="true" property="method" value="deleteAnnouncement" styleClass="inputbutton">
-                        	<bean:message key="button.delete"/>
-                        </html:submit>
+						<html:link page="/announcementManagementAction.do?method=prepareEditAnnouncement">
+							<bean:message key="button.edit" />
+						</html:link>
+						<html:link page="/announcementManagementAction.do?method=deleteAnnouncement">
+							<bean:message key="button.delete" />
+						</html:link>
+	                    &nbsp;&nbsp;
+    	                <br><hr>
                     </td>
                 </tr>
             </logic:iterate>

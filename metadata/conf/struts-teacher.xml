@@ -5,7 +5,6 @@
 <struts-config>
 
 	<!-- ========== Data Source Configuration =============================== -->
-	<data-sources />
 
 	<!-- ========== Form Bean Definitions ================================== -->
 	<form-beans type="org.apache.struts.action.ActionFormBean">
@@ -27,6 +26,39 @@
 		<form-property name="program" type="java.lang.String" />
 	</form-bean>
 	
+    	<form-bean name="executionCourseObjectivesForm"
+    		type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">		
+    		<form-property name="generalObjectives" type="java.lang.String" />
+    		<form-property name="operacionalObjectives" type="java.lang.String" />
+    	</form-bean>
+    	
+    	<form-bean name="executionCourseProgramForm"
+    		type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+    		<form-property name="program" type="java.lang.String" />
+    	</form-bean>
+    	<!-- Announcement Forms  -->
+    	<form-bean name="announcementManagementForm"
+    		type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+    		<form-property name="index" type="java.lang.Integer" />
+    		<form-property name="option" type="java.lang.String" />
+    	</form-bean>
+    	
+    	<form-bean name="bibliographicReferenceForm"
+                    type="org.apache.struts.validator.DynaValidatorForm"
+                    dynamic="true">        
+                <form-property name="title" type="java.lang.String" />
+                <form-property name="authors" type="java.lang.String" />
+                <form-property name="reference" type="java.lang.String" />
+                <form-property name="year" type="java.lang.String" />
+                <form-property name="optional" type="java.lang.String" />
+    	</form-bean>    			
+    
+    	<form-bean name="insertAnnouncementForm"
+                    type="org.apache.struts.validator.DynaValidatorForm"
+                    dynamic="true">        
+                <form-property name="title" type="java.lang.String" />
+                <form-property name="information" type="java.lang.String" />
+    	</form-bean>    			
 	<form-bean name="executionCourseObjectivesForm"
 		type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">		
 		<form-property name="generalObjectives" type="java.lang.String" />
@@ -59,133 +91,6 @@
             <form-property name="method" type="java.lang.String"/>
 	</form-bean>    			
 
-	<form-bean name="insertAnnouncementForm"
-                type="org.apache.struts.validator.DynaValidatorForm"
-                dynamic="true">        
-            <form-property name="title" type="java.lang.String" />
-            <form-property name="information" type="java.lang.String" />
-	</form-bean>    			
-	
-	<!--
-	
-	<form-bean name="autenticacaoForm"
-			type="org.apache.struts.validator.DynaValidatorForm"
-			dynamic="true">
-		<form-property name="utilizador" type="java.lang.String" />
-		<form-property name="password" type="java.lang.String" />
-	</form-bean>
-
-	<form-bean name="obterSitioForm"
-			type="org.apache.struts.validator.DynaValidatorForm"
-			dynamic="true">
-		<form-property name="nomeSitio" type="java.lang.String" />
-		<form-property name="seccaoId" type="java.lang.Integer" />
-	</form-bean>
-
-	<form-bean name="docente.inserirSeccaoForm"
-			type="org.apache.struts.validator.DynaValidatorForm"
-			dynamic="true">
-		<form-property name="nomeSeccao" type="java.lang.String" />
-		<form-property name="inicial" type="java.lang.String" />
-		<form-property name="ordem" type="java.lang.String" />
-	</form-bean>
-
-	<form-bean name="docente.apagarSeccaoForm"
-			type="org.apache.struts.validator.DynaValidatorForm"
-			dynamic="true">
-		<form-property name="opcao" type="java.lang.String" />
-	</form-bean>
-
-	<form-bean name="docente.editarSeccaoParcialForm"
-			type="org.apache.struts.validator.DynaValidatorForm"
-			dynamic="true">
-		<form-property name="nomeSeccao" type="java.lang.String" />
-                <form-property name="SeccaoPaiId" type="java.lang.String" />
-		<form-property name="inicial" type="java.lang.String" />
-	</form-bean>
-        
-        <form-bean name="docente.editarSeccaoForm"
-			type="org.apache.struts.validator.DynaValidatorForm"
-			dynamic="true">
-		<form-property name="ordem" type="java.lang.String" />
-	</form-bean>
-
-          <form-bean name="docente.associarDocenteForm"
-                   type="org.apache.struts.validator.DynaValidatorForm"
-                   dynamic="true">
-         <form-property name="numeroDocente" type="java.lang.String" />
-         </form-bean>
-
-
-         <form-bean name="docente.dissociarDocenteForm"
-                   type="org.apache.struts.validator.DynaValidatorForm"
-                   dynamic="true">
-         <form-property name="numeroDocente" type="java.lang.String" />
-         </form-bean>
-
-	<form-bean name="docente.inserirItemForm"
-			type="org.apache.struts.validator.DynaValidatorForm"
-			dynamic="true">
-		<form-property name="nome" type="java.lang.String" />
-		<form-property name="urgente" type="java.lang.String" />
-		<form-property name="texto" type="java.lang.String" />
-		<form-property name="ordem" type="java.lang.String" />
-	</form-bean>
-
-	<form-bean name="docente.editarItemForm"
-			type="org.apache.struts.validator.DynaValidatorForm"
-			dynamic="true">
-		<form-property name="nome" type="java.lang.String" />
-		<form-property name="urgente" type="java.lang.String" />
-		<form-property name="texto" type="java.lang.String" />
-		<form-property name="ordem" type="java.lang.String" />
-	</form-bean>
-
-	<form-bean name="docente.associarDocenteForm"
-			type="org.apache.struts.validator.DynaValidatorForm"
-			dynamic="true">
-		<form-property name="numeroDocente" type="java.lang.String" />
-	</form-bean>
-
-	<form-bean name="docente.dissociarDocenteForm"
-			type="org.apache.struts.validator.DynaValidatorForm"
-			dynamic="true">
-		<form-property name="numeroDocente" type="java.lang.String" />
-	</form-bean>
-        
-	<form-bean name="docente.inserirAnuncioForm"
-                type="org.apache.struts.validator.DynaValidatorForm"
-                dynamic="true">
-            <form-property name="opcao" type="java.lang.String" />
-            <form-property name="titulo" type="java.lang.String" />
-            <form-property name="informacao" type="java.lang.String" />
-	</form-bean>
-        
-       <form-bean name="docente.editarAnuncioForm"
-                type="org.apache.struts.validator.DynaValidatorForm"
-                dynamic="true">
-            <form-property name="opcao" type="java.lang.String" />
-            <form-property name="titulo" type="java.lang.String" />
-            <form-property name="informacao" type="java.lang.String" />
-	</form-bean>
-    
-        <form-bean name="docente.gestaoCurriculumForm"
-                type="org.apache.struts.validator.DynaValidatorForm"
-                dynamic="true">
-            <form-property name="opcao" type="java.lang.String" />
-	</form-bean>
-           
-         <form-bean name="docente.editarCurriculumForm"
-                type="org.apache.struts.validator.DynaValidatorForm"
-                dynamic="true">
-             <form-property name="objectivosGerais" type="java.lang.String" />
-             <form-property name="objectivosOperacionais" type="java.lang.String" />
-             <form-property name="programa" type="java.lang.String" />
-           
-             <form-property name="opcao" type="java.lang.String" />
-	</form-bean>
-                                                                      
-	-->
     </form-beans>
 
 	 <!-- ========== Global Exception Definitions ============================== -->
@@ -212,19 +117,12 @@
 	<global-forwards type="org.apache.struts.action.ActionForward">
      <forward name="index" path="/index.do" redirect="true"/>
      <forward name="firstPage" path="/switchAction.do?prefix=&amp;page=/loginPage.jsp"/>
-     
     </global-forwards>
 
 	<!-- ========== Action Mapping Definitions =============================== -->
 	<action-mappings type="org.apache.struts.action.ActionMapping">
-     
      <action path="/naoExecutado" forward="/error.jsp"/>
 	 <action path="/naoAutorizado" forward="/notAuthorizedError.jsp"/>
-	
-		<action type="ServidorApresentacao.Action.teacher.AccessAnnouncementManagementAction" 
-    	path="/accessAnnouncementManagementAction">
-        <forward name="AnnouncementManagement"  path="/announcementManagementAction.do?method=Mostrar Anuncios" />
-	</action>
 
 	<action     path="/bibliographicReferenceManager"
 				parameter="method"      			
@@ -237,25 +135,34 @@
 				<forward name="bibliographyManagement" path="/bibliographyManagement.jsp"/>
 	</action>             
 
-	<!-- input of actions for announcement management -->	
+	<!-- access to announcement management -->
 	<action 
+		type="ServidorApresentacao.Action.teacher.AccessAnnouncementManagementAction" 
+		path="/accessAnnouncementManagementAction">
+        <forward name="AnnouncementManagement" path="/announcementManagementAction.do?method=showAnnouncements" />
+	</action>
+
+	<!-- input of actions for announcement management -->	
+	<action name="insertAnnouncementForm"
 		type="ServidorApresentacao.Action.teacher.AnnouncementManagementAction"
-		scope="request"
+		scope="session"
 		parameter="method"      			
         path="/announcementManagementAction" 
-        input="announcementManagement.jsp"
+        input="/announcementManagement.jsp"
 		validate="false">
 		<forward name="accessAnnouncementManagement" path="/accessAnnouncementManagementAction"/>	            
 
+        <forward name="showAnnouncements" path="/announcementManagement.jsp" />
+        
         <forward name="insertAnnouncement" path="/insertAnnouncement.jsp" />
-		<forward name="editAnnouncement" path="/editAnnouncement" />
+		<forward name="editAnnouncement" path="/editAnnouncement.do" />
 		<forward name="deleteAnnouncement" path="/deleteAnnouncement.jsp" />
 	</action>
 
 	<!-- input of actions for edit announcement -->
 	<action name="insertAnnouncementForm"
     	type="ServidorApresentacao.Action.teacher.AnnouncementManagementAction"
-		scope="request"
+		scope="session"
 		parameter="method"
 		input="/editAnnouncement.jsp"
         path="/editAnnouncement"
@@ -308,324 +215,24 @@
 		path="/curriculumManagerDA"
         type="ServidorApresentacao.Action.teacher.CurriculumManagerDispatchAction"
 		>    
-   		<!--  <forward name="viewCurriculum" path="/viewSite.jsp"/>  trocar depois dos css-->
+   <!--  <forward name="viewCurriculum" path="/viewSite.jsp"/>  trocar depois dos css-->
       <forward name="viewCurriculum" path="/navbar.jsp"/>
-     </action>
-
-	<action 
-		path="/index"
+	</action>
+	
+	<action	path="/index"
         type="ServidorApresentacao.Action.teacher.TeacherLoginAction"
 		>    
      <forward name="viewProfessorships" path="/viewProfessorships.jsp"/>         
 	</action>
 	
-	<action 
-		path="/viewSite"
-        type="ServidorApresentacao.Action.teacher.ReadSite"
-		>    
+	<action path="/viewSite"
+        type="ServidorApresentacao.Action.teacher.ReadSite">    
      <forward name="viewSite" path="/viewSite.jsp"/>         
 	</action>
-	
-	<!--
-	<action path="/index" forward="/obterSitios.do"/>
-	<action path="/autenticacao" forward="/autenticacao.jsp"/>
-	<action path="/naoExistente" forward="/naoExistente.jsp"/>
-	<action path="/naoAutorizado" forward="/naoAutorizado.jsp"/>
-	<action path="/naoExecutado" forward="/naoExecutado.jsp"/>
-        <action path="/login" forward="/autenticacao.jsp"/>
-            
-	<action name="autenticacaoForm"
-			type="ServidorApresentacao.Action.AutenticacaoFormAction"
-			path="/autenticacaoForm"
-			input="/autenticacao.jsp"
-			scope="request"
-			attribute="autenticacaoForm">
-		<exception type="ServidorAplicacao.NotExecutedException"
-				key="ServidorAplicacao.NotExecutedException"
-				path="/naoExecutado.do"/>
-		<exception type="ServidorAplicacao.Servico.ExcepcaoAutenticacao"
-				key="ServidorAplicacao.Servico.ExcepcaoAutenticacao"
-				path="/autenticacao.do"/>
-		<forward name="InterfaceDocente"
-				path="/docente/obterSitios.do"
-				redirect="true"/>
-	</action>
-
-	<action type="ServidorApresentacao.Action.ObterSitiosAction"
-			path="/obterSitios">
-		<forward name="Inicio" path="inicio"/>
-	</action>
-
-	<action name="obterSitioForm"
-                type="ServidorApresentacao.Action.ObterSitioAction"
-                path="/obterSitio">
-            <exception type="ServidorAplicacao.Servico.ExcepcaoInexistente"
-                key="ServidorAplicacao.Servico.ExcepcaoInexistente"
-                path="/obterSitios.do"/>
-            <forward name="ObterSeccao" path="/obterSeccao.do"/>
-            <forward name="MostrarSitio" path="mostrarSitio"/>
-	</action>
-
-	<action attribute="obterSeccaoForm"
-			name="obterSitioForm"
-			type="ServidorApresentacao.Action.ObterSeccaoAction"
-			path="/obterSeccao">
-		<exception type="ServidorApresentacao.Action.FenixAction.ExcepcaoSessaoInexistente"
-				key="ServidorApresentacao.Action.FenixAction.ExcepcaoSessaoInexistente"
-				path="/obterSitios.do"/>
-		<forward name="MostrarSeccao" path="mostrarSitio"/>
-	</action>
-
-        <action path="/visualizarAnuncios"
-			type="ServidorApresentacao.Action.VisualizarAnunciosAction">
-            <forward name="MostrarAnuncios" path="mostrarAnuncios"
-				redirect="true"/>
-	</action>
-        
-        <action path="/visualizarCurriculum"
-			type="ServidorApresentacao.Action.VisualizarCurriculumAction">
-            <forward name="MostrarCurriculum" path="mostrarCurriculum"
-				redirect="true"/>
-	</action>
-        
-	<action type="ServidorApresentacao.Action.Docente.LogoutAction"
-			path="/docente/logout">
-		<forward name="Inicio" path="/obterSitios.do"
-				redirect="true"/>
-	</action>
-
-	<action type="ServidorApresentacao.Action.Docente.ObterSitiosAction"
-			path="/docente/obterSitios">
-		<forward name="MostrarSitios" path="docente.seleccionarSitio"/>
-		<forward name="NaoHaSitios" path = "docente.NaoHaSitios"/>
-	</action>
-
-	<action name="docente.obterSitioForm"
-			type="ServidorApresentacao.Action.Docente.ObterSitioAction"
-			path="/docente/obterSitio">
-		<forward name="MostrarSitio" path="docente.mostrarSitio"/>
-		<forward name="NaoExistente" path="/naoExistente.jsp"/>
-	</action>
-
-	<action path="/docente/mostrarGestaoSitio"
-			type="ServidorApresentacao.Action.Docente.MostrarGestaoSitioAction">
-		<forward name="mostrarGestaoSitio" path="docente.mostrarSitio"
-				redirect="true"/>
-	</action>
-        
-        <action name="docente.obterSeccao"
-			type="ServidorApresentacao.Action.Docente.ObterSeccaoAction"
-			path="/docente/obterSeccao">
-		<forward name="MostrarSeccao" path="docente.mostrarSeccao"/>
-		<forward name="NaoHaSeccao" path="docente.naoHaSeccao"/>
-	</action>
-
-	<action path="/docente/inserirSeccao" forward="docente.inserirSeccao"/>
-
-	<action name="docente.inserirSeccaoForm"
-			type="ServidorApresentacao.Action.Docente.InserirSeccaoFormAction"
-			path="/docente/inserirSeccaoForm"
-			input="/docente/inserirSeccao.jsp"
-			scope="request"
-			attribute="docente.inserirSeccaoForm">
-		<forward name="mostrarNovaSeccao" path="docente.mostrarSeccao"
-				redirect="true"/>
-		<forward name="seccaoJaExistente" path="docente.seccaoJaExiste"
-				redirect="true"/>
-        </action>
-
-	<action path="/docente/apagarSeccao" forward="docente.apagarSeccao"/>
-
-	<action name="docente.apagarSeccaoForm"
-			type="ServidorApresentacao.Action.Docente.ApagarSeccaoFormAction"
-			path="/docente/apagarSeccaoForm"
-			input="/docente/apagarSeccaoForm.jsp"
-			scope="request"
-			attribute="docente.apagarSeccaoForm">
-		<forward name="AcederGestaoSeccao" path="/docente/obterSeccao.do"
-				redirect = "true"/>
-		<forward name="AcederGestaoSitio" path="/docente/obterSitio.do"
-				redirect = "true"/>
-	</action>
-
-         <action name="docente.editarSeccaoParcialForm"
-			type="ServidorApresentacao.Action.Docente.EditarSeccaoParcialFormAction"
-			path="/docente/editarSeccaoParcialForm"
-			input="/docente/gestaoSeccaoBody1.jsp"
-			scope="request"
-			attribute="docente.editarSeccaoParcialForm">
-		<forward name="AcederGestaoSeccao" path="docente.nomeSeccaoJaExiste"
-				redirect = "true"/>
-		<forward name="EditarSeccao" path="docente.editarSeccao"
-				redirect="true"/>
-        </action>
-      
-        <action name="docente.editarSeccaoForm"
-			type="ServidorApresentacao.Action.Docente.EditarSeccaoFormAction"
-			path="/docente/editarSeccaoForm"
-                        input="/docente/editarSeccao.jsp"
-			scope="request"
-			attribute="docente.editarSeccaoForm">
-		<forward name="AcederGestaoSeccao" path="/docente/obterSeccao.do"
-				redirect = "true"/>
-		<forward name="SeccaoJaExiste" path="docente.seccaoJaExiste"
-				redirect="true"/>
-        </action>
-
-	<action name="docente.acederGestaoItens"
-			type="ServidorApresentacao.Action.Docente.AcederGestaoItensAction"
-			path="/docente/acederGestaoItens">
-		<forward name="GestaoDeItens"  path="docente.gestaoDeItens"/>
-	</action>
-
-	<action path="/docente/inserirItem" forward="docente.inserirItem"/>
-
-	<action name="docente.inserirItemForm"
-			type="ServidorApresentacao.Action.Docente.InserirItemFormAction"
-			path="/docente/inserirItemForm"
-			input="docente.inserirItem"
-			scope="request"
-			attribute="docente.inserirItemForm">
-		<forward name="AcederGestaoSeccao" path="/docente/obterSeccao.do"
-				redirect = "true"/>
-		<exception type="ServidorAplicacao.Servico.Docente.ItemJaExistenteException"
-				key="ServidorAplicacao.Servico.Docente.ItemJaExistenteException"
-				path="docente.itemJaExistenteInserir"/>
-	</action>
-
-	<action type="ServidorApresentacao.Action.Docente.ObterItemAction"
-			path="/docente/obterItemAction">
-		<forward name="EditarItem"  path="docente.editarItem"/>
-	</action>
-
-	<action name="docente.editarItemForm"
-			type="ServidorApresentacao.Action.Docente.EditarItemFormAction"
-			path="/docente/editarItemForm"
-			input="docente.editarItem"
-			scope="request"
-			attribute="docente.editarItemForm">
-		<forward name="AcederGestaoSeccao" path="/docente/obterSeccao.do"
-				redirect = "true"/>
-		<exception type="ServidorAplicacao.Servico.Docente.ItemJaExistenteException"
-				key="ServidorAplicacao.Servico.Docente.ItemJaExistenteException"
-				path="docente.itemJaExistenteInserir"/>
-		<exception type="ServidorAplicacao.Servico.Docente.ItemInexistenteException"
-				key="ServidorAplicacao.Servico.Docente.ItemInexistenteException"
-				path="docente.itemInexistente"/>
-	</action>
-
-	<action type="ServidorApresentacao.Action.Docente.ApagarItemAction"
-			path="/docente/apagarItem">
-		<forward name="AcederGestaoSeccao" path="/docente/obterSeccao.do"
-				redirect = "true"/>
-		<exception type="ServidorAplicacao.Servico.Docente.ItemInexistenteException"
-				key="ServidorAplicacao.Servico.Docente.ItemInexistenteException"
-				path="docente.itemInexistente"/>
-	</action>
-
-    <action path="/docente/associarDocente" forward="docente.associarDocente"/>
-
-	<action name="docente.associarDocenteForm"
-			type="ServidorApresentacao.Action.Docente.AssociarDocenteFormAction"
-            path="/docente/associarDocenteForm"
-            input="/docente/associarDocente.jsp"
-            scope="request"
-            attribute="docente.associarDocenteForm">
-    	<forward name="docenteNaoAssociado" path="docente.associacaoInvalida"
-				redirect="true"/>
-		<forward name="docenteAssociado" path="/docente/obterSitio.do"
-				redirect="true"/>
-	</action>
-
-	<action path="/docente/dissociarDocente" forward="docente.dissociarDocente"/>
-
-	<action name="docente.dissociarDocenteForm"
-            type="ServidorApresentacao.Action.Docente.DissociarDocenteFormAction"
-            path="/docente/dissociarDocenteForm"
-            input="/docente/dissociarDocente.jsp"
-            scope="request"
-            attribute="docente.dissociarDocenteForm">
-		<forward name="docenteNaoDissociado" path="docente.associacaoInvalida"
-				redirect="true"/>
-		<forward name="docenteDissociado" path="/docente/obterSitio.do"
-				redirect="true"/>
-	</action>
-        
-        <action path="/docente/inserirAnuncio" forward="docente.inserirAnuncio"/>
-        
-        <action name="docente.inserirAnuncioForm"
-                type="ServidorApresentacao.Action.Docente.InserirAnuncioFormAction"
-                path="/docente/inserirAnuncioForm"
-                input="docente.inserirAnuncio"
-                scope="request">
-            <forward name="AcederGestaoAnuncios" path="/docente/acederGestaoAnuncios.do"
-                redirect = "true"/>
-            <exception type="ServidorAplicacao.Servico.AnuncioJaExistenteException"
-                        key="ServidorAplicacao.Servico.AnuncioJaExistenteException"
-                        path="docente.anuncioJaExistenteInserir"/>
-	</action>
-
-        <action path="/docente/editarAnuncio" forward="docente.editarAnuncio"/>
-
-	<action name="docente.editarAnuncioForm"
-                type="ServidorApresentacao.Action.Docente.EditarAnuncioFormAction"
-                path="/docente/editarAnuncioForm"
-                input="docente.editarAnuncio"
-                scope="request">
-            <forward name="AcederGestaoAnuncios" path="/docente/acederGestaoAnuncios.do"
-                redirect = "true"/>
-            <exception type="ServidorAplicacao.Servico.AnuncioJaExistenteException"
-                        key="ServidorAplicacao.Servico.AnuncioJaExistenteException"
-                        path="docente.anuncioJaExistenteInserir"/>
-            <exception type="ServidorAplicacao.Servico.AnuncioInexistenteException"
-                        key="ServidorAplicacao.Servico.AnuncioInexistenteException"
-                        path="docente.anuncioInexistente"/>
-	</action>
-
-	<action name="docente.apagarAnuncio"
-                type="ServidorApresentacao.Action.Docente.ApagarAnuncioAction"
-		path="/docente/apagarAnuncio">
-            <forward name="AcederGestaoAnuncios" path="/docente/acederGestaoAnuncios.do"
-                redirect = "true"/>
-	</action>
-        
-        <action name="docente.acederGestaoCurriculum"
-                type="ServidorApresentacao.Action.Docente.AcederGestaoCurriculumAction"
-                path="/docente/acederGestaoCurriculum">
-            <forward name="GestaoDeCurriculum"  path="/docente/gestaoDeCurriculum.do"
-                redirect="true"/>
-	</action>
-        
-        <action path="/docente/gestaoDeCurriculum" forward="docente.gestaoDeCurriculum"/>
-        
-        <action name="docente.gestaoCurriculumForm"
-                type="ServidorApresentacao.Action.Docente.GestaoCurriculumFormAction"
-                path="/docente/gestaoCurriculumForm"
-                input="docente.gestaoDeCurriculum"
-                scope="request">
-            <forward name="EditarCurriculum" path="/docente/editarCurriculum.do"
-		redirect = "true"/>
-	</action>
-        
-        <action path="/docente/editarCurriculum" forward="docente.editarCurriculum"/>
-        
-         <action name="docente.editarCurriculumForm"
-                type="ServidorApresentacao.Action.Docente.EditarCurriculumFormAction"
-                path="/docente/editarCurriculumForm"
-                input="docente.editarCurriculum"
-                scope="request">
-            <forward name="GestaoDeCurriculum" path="/docente/acederGestaoCurriculum.do"
-		redirect = "true"/>
-	</action>
-        
-
-	-->   
-	
-	    
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
- <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessor"/>
+    <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessor"/>
 
 	<!-- ========== Message Resources Definitions ============================ -->
 	<message-resources parameter="ServidorApresentacao.ApplicationResources" />
@@ -637,5 +244,3 @@
 	</plug-in>
 
 </struts-config>
-
-
