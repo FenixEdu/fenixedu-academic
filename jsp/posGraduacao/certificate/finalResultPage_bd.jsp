@@ -34,12 +34,17 @@
  		<td class="cell-last"><bean:write name="itr" property="infoCurricularCourseScope.infoCurricularCourse.credits" /></td>  	
      </tr>
 	</logic:iterate>
+	<logic:present name="givenCredits" >
+		<td class="cell-first"><bean:message key="label.masterDegree.givenCredits" /></td> 	
+     	<td class="cell-middle">*</td>
+     	<td class="cell-last"><bean:write name="infoStudentCurricularPlan" property="givenCredits" /></td>  	
+     </logic:present>
 	<tr>
 		<td class="results" align="right"><b>Total de créditos:</b></td>
 		<td class="results">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 		<td class="results" align="center"><b><bean:write name="total"/></b></td>
 	</tr>
 	</table>
-	
+	<%-- BRUNO ESTA PARTE DEVERÁ SER IMPRESSA NO VERSO DA ÚLTIMA PAGINA --%> 		
 	<%--The Final Result --%>
 	<jsp:include page="./finalResultTemplate1.jsp" flush="true" />

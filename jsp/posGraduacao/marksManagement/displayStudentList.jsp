@@ -2,7 +2,7 @@
 <tiles:insert page="/fenixLayout_posGrad.jsp" flush="true">
   <tiles:put name="title" value=".IST - Secretaria de Pós-Graduação" />
   <tiles:put name="serviceName" value="Secretaria de Pós-Graduação" />
-  <tiles:put name="navLocal" value="/posGraduacao/lists/listsMenu.jsp" />
+  <tiles:put name="navLocal" value="/posGraduacao/pgMainMenu.jsp" />
   <tiles:put name="navGeral" value="/posGraduacao/commonNavGeralPosGraduacao.jsp" />
   <tiles:put name="body-context" value=""/>  
   <tiles:put name="body" value="/posGraduacao/marksManagement/displayStudentList_bd.jsp" />

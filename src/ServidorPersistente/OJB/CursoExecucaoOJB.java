@@ -284,4 +284,42 @@ public class CursoExecucaoOJB extends ObjectFenixOJB implements ICursoExecucaoPe
 
 	}
 
+	public ICursoExecucao readbyDegreeCurricularPlanID(Integer degreeCurricularPlanID) throws ExcepcaoPersistencia {
+		try {
+			String oqlQuery = "select all from " + CursoExecucao.class.getName() + " where curricularPlan.idInternal = $1";
+
+			query.create(oqlQuery);
+
+			query.bind(degreeCurricularPlanID);
+
+			List result = (List) query.execute();
+			lockRead(result);
+			if (result.size() == 0)
+				return null;
+			return (ICursoExecucao) result.get(0);
+		} catch (QueryException e) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, e);
+		}
+	}
+
+	public ICursoExecucao readByDegreeCodeAndDegreeCurricularPlanName(String code, String name) throws ExcepcaoPersistencia {
+		try {
+			String oqlQuery = "select all from " + CursoExecucao.class.getName() 
+							+ " where curricularPlan.degree.sigla = $1" 
+							+ " and curricularPlan.name = $2";
+			query.create(oqlQuery);
+
+			query.bind(code);
+			query.bind(name);
+
+			List result = (List) query.execute();
+			lockRead(result);
+			if (result.size() != 0)
+				return (ICursoExecucao) result.get(0);
+			return null;
+		} catch (QueryException e) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, e);
+		}
+	}
+
 }

@@ -34,6 +34,7 @@ import ServidorAplicacao.Servico.exceptions.NonExistingContributorServiceExcepti
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.exceptions.InvalidInformationInFormActionException;
 import ServidorApresentacao.Action.exceptions.InvalidSituationActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -276,6 +277,18 @@ public class CreateGuideDispatchAction extends DispatchAction {
 			String guideSituationString = (String) createGuideForm.get("guideSituation");
 			String paymentType = (String) createGuideForm.get("paymentType");
 			
+			Double othersPrice = null;
+			
+			try {
+				if ((othersPriceString != null) && (othersPriceString.length() != 0)){
+					othersPrice = new Double(othersPriceString);
+					if (othersPrice.floatValue() < 0){
+						throw new NumberFormatException();
+					}
+				}
+			} catch(NumberFormatException e){
+				throw new InvalidInformationInFormActionException(null);
+			}
 			
 //			session.setAttribute(SessionConstants.PRINT_PASSWORD, Boolean.FALSE);
 			
@@ -290,11 +303,6 @@ public class CreateGuideDispatchAction extends DispatchAction {
 			}
 			
 			
-			
-			Double othersPrice = null;
-			if ((othersPriceString != null) && (othersPriceString.length() != 0))
-				othersPrice = new Double(othersPriceString);
-				
 			SituationOfGuide situationOfGuide = new SituationOfGuide(guideSituationString);
 			InfoGuide infoGuide = (InfoGuide) session.getAttribute(SessionConstants.GUIDE);
 	

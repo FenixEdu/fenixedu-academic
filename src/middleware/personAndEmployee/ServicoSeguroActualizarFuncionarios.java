@@ -14,6 +14,8 @@ import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
+import sun.security.action.GetBooleanAction;
+
 import Dominio.Funcionario;
 import Dominio.IPersonRole;
 import Dominio.IPessoa;
@@ -99,17 +101,25 @@ public class ServicoSeguroActualizarFuncionarios {
 				List resultFuncionario = (List) broker.getCollectionByQuery(query);
 
 				// Read The Corresponding Person
-				criteria = new Criteria();
-				query = null;
-				criteria.addEqualTo("numeroDocumentoIdentificacao", numeroDocumentoIdentificacao);
-				criteria.addEqualTo("tipoDocumentoIdentificacao", tipoDocumentoIdentificacao);
-				query = new QueryByCriteria(Pessoa.class, criteria);
-				List resultPerson = (List) broker.getCollectionByQuery(query);
-
-				if (resultPerson.size() == 0) {
-					throw new Exception("Erro a Ler a pessoa do Funcionario " + numeroMecanografico);
+				
+				IPessoa person = PersonUtils.getPerson(numeroMecanografico.toString(), numeroDocumentoIdentificacao, "F", broker);
+				if (person == null) {
+					person = PersonUtils.getPerson(numeroMecanografico.toString(), numeroDocumentoIdentificacao, "D", broker);
+					if (person == null) {
+						throw new Exception("Erro a Ler a pessoa do Funcionario " + numeroMecanografico);
+					}
 				}
-				Pessoa person = (Pessoa) resultPerson.get(0);
+//				criteria = new Criteria();
+//				query = null;
+//				criteria.addEqualTo("numeroDocumentoIdentificacao", numeroDocumentoIdentificacao);
+//				criteria.addEqualTo("tipoDocumentoIdentificacao", tipoDocumentoIdentificacao);
+//				query = new QueryByCriteria(Pessoa.class, criteria);
+//				List resultPerson = (List) broker.getCollectionByQuery(query);
+//
+//				if (resultPerson.size() == 0) {
+//					throw new Exception("Erro a Ler a pessoa do Funcionario " + numeroMecanografico);
+//				}
+//				//Pessoa person = (Pessoa) resultPerson.get(0);
 
 				Funcionario funcionario2Write = null;
 				if (resultFuncionario.size() == 0) {

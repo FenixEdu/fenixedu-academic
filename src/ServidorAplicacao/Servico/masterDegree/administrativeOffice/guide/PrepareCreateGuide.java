@@ -178,14 +178,11 @@ public class PrepareCreateGuide implements IServico {
 				
 				IStudentCurricularPlan studentCurricularPlan = sp.getIStudentCurricularPlanPersistente().readActiveStudentCurricularPlan(student.getNumber(),
 										TipoCurso.MESTRADO_OBJ);
-				
-				executionDegree = sp.getICursoExecucaoPersistente().readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(
+
+				executionDegree = sp.getICursoExecucaoPersistente().readByDegreeCodeAndDegreeCurricularPlanName(
 										studentCurricularPlan.getDegreeCurricularPlan().getDegree().getSigla(),
-										studentCurricularPlan.getDegreeCurricularPlan().getName(),
-										executionYear);
-				System.out.println(executionDegree);
-				
-								
+										studentCurricularPlan.getDegreeCurricularPlan().getName());
+
 			} catch (ExcepcaoPersistencia ex) {
 				FenixServiceException newEx = new FenixServiceException("Persistence layer error");
 				newEx.fillInStackTrace();

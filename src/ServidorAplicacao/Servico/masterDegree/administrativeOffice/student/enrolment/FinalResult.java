@@ -56,7 +56,7 @@ public class FinalResult implements IServico {
 		// verify if the school part is concluded
 		result = masterDegreeCurricularPlanStrategy.checkEndOfScholarship(studentCurricularPlan);
 
-		if (result){
+		if (result == true){
 			InfoFinalResult infoFinalResult = new InfoFinalResult();
 			
 			masterDegreeCurricularPlanStrategy.calculateStudentAverage(studentCurricularPlan, infoFinalResult);

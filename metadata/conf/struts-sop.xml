@@ -645,11 +645,32 @@
               name="indexForm"
       		  path="/viewRoom"
               scope="session"
-              validate="true"
+              
               type="ServidorApresentacao.Action.sop.ViewRoomFormAction">
           <forward name="Sucess" path="/sopViewRoom.jsp"/>
       </action>
+<!-- Angela -->
+	<!-- executionCourseSite -->
+	<action 
+		path="/viewSite"	
+		parameter="method"
+        type="ServidorApresentacao.Action.sop.SiteViewerDispatchAction">  
 
+        <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+			       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+			       handler="ServidorApresentacao.config.FenixErrorExceptionHandler" /> 
+		<exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+	               key="ServidorApresentacao.Action.exceptions.FenixActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>  
+		<exception type="ServidorApresentacao.Action.exceptions.NonExistingAssociatedCurricularCoursesActionException"
+			       key="ServidorApresentacao.Action.exceptions.NonExistingAssociatedCurricularCoursesActionException"
+			       handler="ServidorApresentacao.config.FenixErrorExceptionHandler" /> 
+        <forward name="erro" path="/executionCourseNotFound.jsp"/>
+     	<forward name="sucess" path="/viewExecutionCourse.jsp"/>  
+      
+     	
+     	 
+   	</action>
       
 	  <!-- TURNOS -->
       <action path="/prepararCriarTurno"

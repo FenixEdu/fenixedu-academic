@@ -155,9 +155,7 @@ InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
 			request.setAttribute("showMarks","showMarks");
 		}
 		
-		System.out.println("-------------- " + curricularCourseCode);		
-		System.out.println("------------- " + studentNumber);		
-		System.out.println("------------- " + executionYear);		
+
 		
 		try {
 			Object args[] = {curricularCourseCode,studentNumber,executionYear };
@@ -175,9 +173,7 @@ InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
 		}
 	
 	
-		System.out.println("------------------- " + ((InfoSiteEnrolmentEvaluation) infoSiteEnrolmentEvaluations.get(0)).getEnrolmentEvaluations().size());
-	
-		
+
 		if (infoSiteEnrolmentEvaluations.size() == 0){
 
 			ActionErrors actionErrors = new ActionErrors();

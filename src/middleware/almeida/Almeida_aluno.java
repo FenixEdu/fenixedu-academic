@@ -44,6 +44,10 @@ public class Almeida_aluno {
 	private String sexo;
 
 	private String telefone;
+	
+	private Integer ano;
+
+	private String polo;
 
 	public String getBi() {
 		return this.bi;
@@ -219,4 +223,32 @@ public class Almeida_aluno {
 			+ telefone;
 
 	}
+	/**
+	 * @return
+	 */
+	public Integer getAno() {
+		return ano;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getPolo() {
+		return polo;
+	}
+
+	/**
+	 * @param integer
+	 */
+	public void setAno(Integer integer) {
+		ano = integer;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setPolo(String string) {
+		polo = string;
+	}
+
 }

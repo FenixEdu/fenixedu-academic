@@ -26,6 +26,7 @@ import Dominio.Turno;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class LerAlunosDeTurno implements IServico {
@@ -65,10 +66,11 @@ public class LerAlunosDeTurno implements IServico {
       
       IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(keyTurno.getInfoExecutionCourse());
 
-      shift.setDisciplinaExecucao(executionCourse);
-      shift.setNome(keyTurno.getShiftName());
+//      shift.setDisciplinaExecucao(executionCourse);
+//      shift.setNome(keyTurno.getShiftName());
       
-      
+      ITurnoPersistente persistentShift = sp.getITurnoPersistente();
+     	shift = persistentShift.readByNameAndExecutionCourse(keyTurno.getShiftName(),executionCourse);
 
       alunos = sp.getITurnoAlunoPersistente().readByShift(shift);
       

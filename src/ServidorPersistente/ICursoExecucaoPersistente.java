@@ -129,5 +129,24 @@ public interface ICursoExecucaoPersistente extends IPersistentObject {
 	 */
 	public List readByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia;
 	
+	/**
+	 * @param degreeCurricularPlanID
+	 * @return ICursoExecucao
+	 * This method assumes thar there's only one Execution Degree for each Degree Curricular Plan. This is the case with the 
+	 * Master Degrees
+	 */
+	public ICursoExecucao readbyDegreeCurricularPlanID(Integer degreeCurricularPlanID) throws ExcepcaoPersistencia;
+	
+	
+	/**
+	 * 
+	 * @param code
+	 * @param name
+	 * @return
+	 * @throws ExcepcaoPersistencia
+	 */
+	public ICursoExecucao readByDegreeCodeAndDegreeCurricularPlanName(String code, String name) throws ExcepcaoPersistencia;
+	
+	
 	
 }

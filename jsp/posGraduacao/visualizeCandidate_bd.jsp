@@ -39,7 +39,7 @@
     <!-- Specialization Area -->
     <tr>
         <td width="30%"><bean:message key="label.candidate.specializationArea" /></td>
-        <td class="greytxt><bean:write name="masterDegreeCandidate" property="specializationArea"/></td>
+        <td class="greytxt"><bean:write name="masterDegreeCandidate" property="specializationArea"/></td>
     </tr>
 </table>
 <br />

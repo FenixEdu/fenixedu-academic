@@ -26,5 +26,12 @@ public class EmployeeOJB
 		criteria.addEqualTo("numeroMecanografico", number);
 		return (Funcionario) queryObject(Funcionario.class, criteria);
 	}
+	public Funcionario readByCodigoInterno(int idInternal) throws ExcepcaoPersistencia {
+			// TODO Auto-generated method stub
+			Criteria criteria = new Criteria ();
+			criteria.addEqualTo("codigoInterno", new Integer(String.valueOf(idInternal)));
+			return (Funcionario) queryObject(Funcionario.class, criteria);
+		}
+	
 
 }

@@ -101,37 +101,38 @@ public class Pessoa extends DomainObject implements IPessoa {
 	}
 
 	public Pessoa(TipoDocumentoIdentificacao idDocumentType, String userName) {
-		this.numeroDocumentoIdentificacao = "";
+//		this.numeroDocumentoIdentificacao = "";
 		this.tipoDocumentoIdentificacao = idDocumentType;
-		this.localEmissaoDocumentoIdentificacao = "";
-		this.dataEmissaoDocumentoIdentificacao = null;
-		this.dataValidadeDocumentoIdentificacao = null;
-		this.nome = "";
-		this.sexo = null;
-		this.estadoCivil = null;
-		this.nascimento = null;
-		this.nomePai = "";
-		this.nomeMae = "";
-		this.nacionalidade = "";
-		this.freguesiaNaturalidade = "";
-		this.concelhoNaturalidade = "";
-		this.distritoNaturalidade = "";
-		this.morada = "";
-		this.localidade = "";
-		this.codigoPostal = "";
-		this.localidadeCodigoPostal = "";
-		this.freguesiaMorada = "";
-		this.concelhoMorada = "";
-		this.distritoMorada = "";
-		this.telefone = "";
-		this.telemovel = "";
-		this.email = "";
-		this.enderecoWeb = "";
-		this.numContribuinte = "";
-		this.profissao = "";
 		this.username = userName;
-		this.pais = null;
-		this.codigoFiscal = "";
+//		this.localEmissaoDocumentoIdentificacao = "";
+//		this.dataEmissaoDocumentoIdentificacao = null;
+//		this.dataValidadeDocumentoIdentificacao = null;
+//		this.nome = "";
+//		this.sexo = null;
+//		this.estadoCivil = null;
+//		this.nascimento = null;
+//		this.nomePai = "";
+//		this.nomeMae = "";
+//		this.nacionalidade = "";
+//		this.freguesiaNaturalidade = "";
+//		this.concelhoNaturalidade = "";
+//		this.distritoNaturalidade = "";
+//		this.morada = "";
+//		this.localidade = "";
+//		this.codigoPostal = "";
+//		this.localidadeCodigoPostal = "";
+//		this.freguesiaMorada = "";
+//		this.concelhoMorada = "";
+//		this.distritoMorada = "";
+//		this.telefone = "";
+//		this.telemovel = "";
+//		this.email = "";
+//		this.enderecoWeb = "";
+//		this.numContribuinte = "";
+//		this.profissao = "";
+//		this.username = userName;
+//		this.pais = null;
+//		this.codigoFiscal = "";
 	}
 
 	/* Construtor sem país

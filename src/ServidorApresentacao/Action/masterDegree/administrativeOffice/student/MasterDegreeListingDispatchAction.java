@@ -16,10 +16,13 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
+import DataBeans.InfoExecutionDegree;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.TipoCurso;
@@ -121,42 +124,50 @@ public class MasterDegreeListingDispatchAction extends DispatchAction {
 	
 			HttpSession session = request.getSession(false);
 
-			if (session != null) {
+			GestorServicos serviceManager = GestorServicos.manager();
+	
+			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		
-				GestorServicos serviceManager = GestorServicos.manager();
-		
-				IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			
-				//Get the Selected Degree Curricular Plan
-				Integer degreeCurricularPlanID = new Integer((String) request.getParameter("curricularPlanID"));
+			//Get the Selected Degree Curricular Plan
+			Integer degreeCurricularPlanID = new Integer((String) request.getParameter("curricularPlanID"));
 
-			
+		
+			List result = null;
+		
+			try {
 				Object args[] = { degreeCurricularPlanID , TipoCurso.MESTRADO_OBJ };
-				List result = null;
+				result = (List) serviceManager.executar(userView, "ReadStudentsFromDegreeCurricularPlan", args);
+			} catch (NotAuthorizedException e) {
+				return mapping.findForward("NotAuthorized");
+			} catch (NonExistingServiceException e) {
+				Integer degreeID = new Integer((String) request.getParameter("degreeID"));
+				request.setAttribute("degreeID", degreeID);
+				
+				ActionErrors errors = new ActionErrors();
+				errors.add("error.exception.noStudents", new ActionError("error.exception.noStudents"));
+				saveErrors(request, errors);
+									
+				return mapping.findForward("NoStudents");
+			}
+			BeanComparator numberComparator = new BeanComparator("infoStudent.number");
+			Collections.sort(result, numberComparator);
+
+			request.setAttribute(SessionConstants.STUDENT_LIST, result);
 			
-				try {
-
-					result = (List) serviceManager.executar(userView, "ReadStudentsFromDegreeCurricularPlan", args);
-
-				} catch (NotAuthorizedException e) {
-					return mapping.findForward("NotAuthorized");
-				} catch (NonExistingServiceException e) {
-					Integer degreeID = new Integer((String) request.getParameter("degreeID"));
-					request.setAttribute("degreeID", degreeID);
-					
-					ActionErrors errors = new ActionErrors();
-					errors.add("error.exception.noStudents", new ActionError("error.exception.noStudents"));
-					saveErrors(request, errors);
-										
-					return mapping.findForward("NoStudents");
-				}
-				BeanComparator numberComparator = new BeanComparator("infoStudent.number");
-				Collections.sort(result, numberComparator);
-
-				request.setAttribute(SessionConstants.STUDENT_LIST, result);
+			InfoExecutionDegree infoExecutionDegree = null;
+			try {
+				Object args[] = { degreeCurricularPlanID };
+				infoExecutionDegree = (InfoExecutionDegree) serviceManager.executar(userView, "ReadExecutionDegreeByDCPID", args);
+			} catch (NonExistingServiceException e) {
+				
+			} catch (FenixServiceException e) {
+				throw new FenixActionException(e);
+			}	
 			
-				return mapping.findForward("CurricularPlanReady");
-			} else
-			  throw new Exception();   
+			if (infoExecutionDegree != null){
+				request.setAttribute("infoExecutionDegree", infoExecutionDegree);
+			}
+		
+			return mapping.findForward("CurricularPlanReady");
 	  }
 }

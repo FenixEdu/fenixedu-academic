@@ -33,14 +33,17 @@ import ServidorPersistente.OJB.ObjectFenixOJB;
  * @author Ivo Brandão
  * 
  */
-public class LeituraFicheiroPessoa extends ObjectFenixOJB{
+public class LeituraFicheiroPessoa extends ObjectFenixOJB {
 
 	/** construtor por defeito */
 	public LeituraFicheiroPessoa() {
 	}
 
 	/** retorna uma Collection (ArrayList) com instancias de Pessoa */
-	public static Collection lerFicheiro(String ficheiroValidas, String delimitador) throws NotExecuteException {
+	public static Collection lerFicheiro(
+		String ficheiroValidas,
+		String delimitador)
+		throws NotExecuteException {
 		ArrayList listaPessoas = new ArrayList();
 		File ficheiro = null;
 		BufferedReader leitura = null;
@@ -56,23 +59,26 @@ public class LeituraFicheiroPessoa extends ObjectFenixOJB{
 			erros = new File("pessoasInvalidas.txt");
 			escritor = new BufferedWriter(new FileWriter(erros));
 		} catch (Exception exception) {
-			System.out.println("LeituraFicheiroPessoa.lerFicheiro:Erro ao abrir o ficheiro de erros.");
+			throw new RuntimeException(exception);
 		}
 
 		try {
 			/* ficheiro com dados de pessoa validos */
-			File file =  new  File(ficheiroValidas);
+			File file = new File(ficheiroValidas);
 			InputStream inputStream = new FileInputStream(file);
-			leitura = new BufferedReader(new InputStreamReader(inputStream,"8859_1"), new Long(file.length()).intValue());
+			leitura =
+				new BufferedReader(
+					new InputStreamReader(inputStream, "8859_1"),
+					new Long(file.length()).intValue());
 		} catch (IOException e) {
-			throw new NotExecuteException("error.ficheiro.naoEncontrado");
+			throw new RuntimeException(e);
 		}
 
 		/* primeira linha contem os cabecalhos */
 		try {
 			linhaFicheiro = leitura.readLine();
 		} catch (IOException e) {
-			throw new NotExecuteException("error.ficheiro.impossivelLer");
+			throw new RuntimeException(e);
 		}
 
 		do {
@@ -80,7 +86,7 @@ public class LeituraFicheiroPessoa extends ObjectFenixOJB{
 			try {
 				linhaFicheiro = leitura.readLine();
 			} catch (IOException e) {
-				throw new NotExecuteException("error.ficheiro.impossivelLer");
+				throw new RuntimeException(e);
 			}
 
 			if ((linhaFicheiro != null) && (linhaFicheiro.length() > 10)) {
@@ -91,35 +97,44 @@ public class LeituraFicheiroPessoa extends ObjectFenixOJB{
 					pessoa = recuperarPessoa(linhaFicheiro, delimitador);
 					listaPessoas.add(pessoa);
 				} catch (Exception exception) {
-					System.out.println("LeituraFicheiroPessoa.lerFicheiro: " + exception.toString());
+					System.out.println(
+						"LeituraFicheiroPessoa.lerFicheiro: "
+							+ exception.toString());
 					//recuperar dados de numeroDocumentoIdentificacao, tipoDocumentoIdentificacao e nome
 					//ou fazer dump de linhaFicheiro
 					contadorErros++;
-					System.out.println("LeituraFicheiroPessoa.lerFicheiro:Erro a recuperar: " + exception.toString());
+
+					exception.printStackTrace(System.out);
+					System.out.println(
+						"LeituraFicheiroPessoa.lerFicheiro:Erro a recuperar: "
+							+ exception.toString());
 					try {
 						escritor.write(linhaFicheiro);
 						escritor.newLine();
 					} catch (Exception exception2) {
 						System.out.println(
-							"LeituraFicheiroPessoa.lerFicheiro:Erro a escrever ficheiro de erros " + exception2.toString());
+							"LeituraFicheiroPessoa.lerFicheiro:Erro a escrever ficheiro de erros "
+								+ exception2.toString());
 					}
 				}
-
 			}
 		} while ((linhaFicheiro != null));
 
 		try {
 			escritor.close();
 		} catch (Exception exception) {
-			System.out.println("LeituraFicheiroPessoa.lerFicheiro:Erro ao fechar o ficheiro de erros.");
+			System.out.println(
+				"LeituraFicheiroPessoa.lerFicheiro:Erro ao fechar o ficheiro de erros.");
 		}
 
 		return listaPessoas;
 	}
 
 	/** recuperar os atributos para construir a instancia de pessoa */
-	private static Pessoa recuperarPessoa(String linha, String delimitador) throws Exception {
-		StringTokenizer stringTokenizer = new StringTokenizer(linha, delimitador);
+	private static Pessoa recuperarPessoa(String linha, String delimitador)
+		throws Exception {
+		StringTokenizer stringTokenizer =
+			new StringTokenizer(linha, delimitador);
 		Pessoa pessoa = new Pessoa();
 
 		/* atributos */
@@ -156,28 +171,38 @@ public class LeituraFicheiroPessoa extends ObjectFenixOJB{
 		Integer nacionalidadeCompleta = new Integer(0);
 		String codigoFiscal = new String();
 		ICountry country = null;
-		
+
 		//parsing do primeiro ;
 		//stringTokenizer.nextToken();
 
 		/* codigo de parsing dos atributos */
 
 		/* campo a formatar */
-		numeroDocumentoIdentificacao = new String(stringTokenizer.nextToken().trim());
+		numeroDocumentoIdentificacao =
+			new String(stringTokenizer.nextToken().trim());
 		pessoa.setNumeroDocumentoIdentificacao(numeroDocumentoIdentificacao);
 
-		tipoDocumentoIdentificacao = formataTipoDocumentoIdentificacao(stringTokenizer.nextToken().trim());
-		pessoa.setTipoDocumentoIdentificacao(new TipoDocumentoIdentificacao(tipoDocumentoIdentificacao.intValue()));
+		tipoDocumentoIdentificacao =
+			formataTipoDocumentoIdentificacao(
+				stringTokenizer.nextToken().trim());
+		pessoa.setTipoDocumentoIdentificacao(
+			new TipoDocumentoIdentificacao(
+				tipoDocumentoIdentificacao.intValue()));
 
-		localEmissaoDocumentoIdentificacao = new String(stringTokenizer.nextToken().trim());
-		pessoa.setLocalEmissaoDocumentoIdentificacao(StringUtils.capitaliseAllWords(StringUtils.lowerCase(localEmissaoDocumentoIdentificacao)));
+		localEmissaoDocumentoIdentificacao =
+			new String(stringTokenizer.nextToken().trim());
+		pessoa.setLocalEmissaoDocumentoIdentificacao(
+			StringUtils.capitaliseAllWords(
+				StringUtils.lowerCase(localEmissaoDocumentoIdentificacao)));
 
-		dataEmissaoDocumentoIdentificacao = formataData(stringTokenizer.nextToken().trim());
-		pessoa.setDataEmissaoDocumentoIdentificacao(dataEmissaoDocumentoIdentificacao);
+		dataEmissaoDocumentoIdentificacao =
+			formataData(stringTokenizer.nextToken().trim());
+		pessoa.setDataEmissaoDocumentoIdentificacao(
+			dataEmissaoDocumentoIdentificacao);
 
 		nome = new String(stringTokenizer.nextToken().trim());
-		pessoa.setNome(StringUtils.capitaliseAllWords(StringUtils.lowerCase(nome)));
-
+		pessoa.setNome(
+			StringUtils.capitaliseAllWords(StringUtils.lowerCase(nome)));
 
 		/* campo a formatar */
 		sexo = formataSexo(stringTokenizer.nextToken().trim());
@@ -191,40 +216,58 @@ public class LeituraFicheiroPessoa extends ObjectFenixOJB{
 		pessoa.setNascimento(nascimento);
 
 		nomePai = new String(stringTokenizer.nextToken().trim());
-		pessoa.setNomePai(StringUtils.capitaliseAllWords(StringUtils.lowerCase(nomePai)));
+		pessoa.setNomePai(
+			StringUtils.capitaliseAllWords(StringUtils.lowerCase(nomePai)));
 
 		nomeMae = new String(stringTokenizer.nextToken().trim());
-		pessoa.setNomeMae(StringUtils.capitaliseAllWords(StringUtils.lowerCase(nomeMae)));
+		pessoa.setNomeMae(
+			StringUtils.capitaliseAllWords(StringUtils.lowerCase(nomeMae)));
 
 		nacionalidade = new String(stringTokenizer.nextToken().trim());
-		pessoa.setNacionalidade(StringUtils.capitaliseAllWords(StringUtils.lowerCase(nacionalidade)));
+		pessoa.setNacionalidade(
+			StringUtils.capitaliseAllWords(
+				StringUtils.lowerCase(nacionalidade)));
 
 		freguesiaNaturalidade = new String(stringTokenizer.nextToken().trim());
-		pessoa.setFreguesiaNaturalidade(StringUtils.capitaliseAllWords(StringUtils.lowerCase(freguesiaNaturalidade)));
+		pessoa.setFreguesiaNaturalidade(
+			StringUtils.capitaliseAllWords(
+				StringUtils.lowerCase(freguesiaNaturalidade)));
 
 		concelhoNaturalidade = new String(stringTokenizer.nextToken().trim());
-		pessoa.setConcelhoNaturalidade(StringUtils.capitaliseAllWords(StringUtils.lowerCase(concelhoNaturalidade)));
+		pessoa.setConcelhoNaturalidade(
+			StringUtils.capitaliseAllWords(
+				StringUtils.lowerCase(concelhoNaturalidade)));
 
 		distritoNaturalidade = new String(stringTokenizer.nextToken().trim());
-		pessoa.setDistritoNaturalidade(StringUtils.capitaliseAllWords(StringUtils.lowerCase(distritoNaturalidade)));
+		pessoa.setDistritoNaturalidade(
+			StringUtils.capitaliseAllWords(
+				StringUtils.lowerCase(distritoNaturalidade)));
 
 		morada = new String(stringTokenizer.nextToken().trim());
-		pessoa.setMorada(StringUtils.capitaliseAllWords(StringUtils.lowerCase(morada)));
+		pessoa.setMorada(
+			StringUtils.capitaliseAllWords(StringUtils.lowerCase(morada)));
 
 		localidade = new String(stringTokenizer.nextToken().trim());
-		pessoa.setLocalidade(StringUtils.capitaliseAllWords(StringUtils.lowerCase(localidade)));
+		pessoa.setLocalidade(
+			StringUtils.capitaliseAllWords(StringUtils.lowerCase(localidade)));
 
 		codigoPostal = new String(stringTokenizer.nextToken().trim());
 		pessoa.setCodigoPostal(codigoPostal);
 
 		freguesiaMorada = new String(stringTokenizer.nextToken().trim());
-		pessoa.setFreguesiaMorada(StringUtils.capitaliseAllWords(StringUtils.lowerCase(freguesiaMorada)));
+		pessoa.setFreguesiaMorada(
+			StringUtils.capitaliseAllWords(
+				StringUtils.lowerCase(freguesiaMorada)));
 
 		concelhoMorada = new String(stringTokenizer.nextToken().trim());
-		pessoa.setConcelhoMorada(StringUtils.capitaliseAllWords(StringUtils.lowerCase(concelhoMorada)));
+		pessoa.setConcelhoMorada(
+			StringUtils.capitaliseAllWords(
+				StringUtils.lowerCase(concelhoMorada)));
 
 		distritoMorada = new String(stringTokenizer.nextToken().trim());
-		pessoa.setDistritoMorada(StringUtils.capitaliseAllWords(StringUtils.lowerCase(distritoMorada)));
+		pessoa.setDistritoMorada(
+			StringUtils.capitaliseAllWords(
+				StringUtils.lowerCase(distritoMorada)));
 
 		telefone = new String(stringTokenizer.nextToken().trim());
 		pessoa.setTelefone(telefone);
@@ -242,7 +285,8 @@ public class LeituraFicheiroPessoa extends ObjectFenixOJB{
 		pessoa.setNumContribuinte(numContribuinte);
 
 		profissao = new String(stringTokenizer.nextToken().trim());
-		pessoa.setProfissao(StringUtils.capitaliseAllWords(StringUtils.lowerCase(profissao)));
+		pessoa.setProfissao(
+			StringUtils.capitaliseAllWords(StringUtils.lowerCase(profissao)));
 
 		username = new String(stringTokenizer.nextToken().trim());
 		//pessoa.setUsername(username);
@@ -250,36 +294,52 @@ public class LeituraFicheiroPessoa extends ObjectFenixOJB{
 
 		password = new String(stringTokenizer.nextToken().trim());
 		//pessoa.setPassword(password);
-		pessoa.setPassword(PasswordEncryptor.encryptPassword(numeroDocumentoIdentificacao));
+		pessoa.setPassword(
+			PasswordEncryptor.encryptPassword(numeroDocumentoIdentificacao));
 
 		/* campo a formatar */
+
+		pessoa.setPais(
+			formataNacionalidadeCompleta(stringTokenizer.nextToken().trim()));
 		
-		pessoa.setPais(formataNacionalidadeCompleta(stringTokenizer.nextToken().trim()));
-		pessoa.getPais().setName(StringUtils.capitaliseAllWords(StringUtils.lowerCase(pessoa.getPais().getName())));
-		pessoa.getPais().setNationality(StringUtils.capitaliseAllWords(StringUtils.lowerCase(pessoa.getPais().getNationality())));
-		
+		pessoa.getPais().setName(
+			StringUtils.capitaliseAllWords(
+				StringUtils.lowerCase(pessoa.getPais().getName())));
+		pessoa.getPais().setNationality(
+			StringUtils.capitaliseAllWords(
+				StringUtils.lowerCase(pessoa.getPais().getNationality())));
+
 		//nacionalidadeCompleta = formataNacionalidadeCompleta(stringTokenizer.nextToken().trim());
 		//pessoa.setNacionalidadeCompleta(nacionalidadeCompleta.intValue());
 
 		localidadeCodigoPostal = new String(stringTokenizer.nextToken().trim());
-		pessoa.setLocalidadeCodigoPostal(StringUtils.capitaliseAllWords(StringUtils.lowerCase(localidadeCodigoPostal)));
+		pessoa.setLocalidadeCodigoPostal(
+			StringUtils.capitaliseAllWords(
+				StringUtils.lowerCase(localidadeCodigoPostal)));
 
 		codigoFiscal = new String(stringTokenizer.nextToken().trim());
-		pessoa.setCodigoFiscal(StringUtils.capitaliseAllWords(StringUtils.lowerCase(codigoFiscal)));
-
+		pessoa.setCodigoFiscal(
+			StringUtils.capitaliseAllWords(
+				StringUtils.lowerCase(codigoFiscal)));
+	
 		/* este atributo esta invalido, contem zeros no ficheiro */
-		dataValidadeDocumentoIdentificacao = formataData(stringTokenizer.nextToken().trim());
-		pessoa.setDataValidadeDocumentoIdentificacao(dataValidadeDocumentoIdentificacao);
-
-		codigoFiscal = new String(stringTokenizer.nextToken().trim());
-		pessoa.setCodigoFiscal(StringUtils.capitaliseAllWords(StringUtils.lowerCase(codigoFiscal)));
+		dataValidadeDocumentoIdentificacao =
+			formataData(stringTokenizer.nextToken().trim());
+		
+		pessoa.setDataValidadeDocumentoIdentificacao(
+			dataValidadeDocumentoIdentificacao);
+			
 
 		//ignorar localidade codigo fiscal
+//		codigoFiscal = new String(stringTokenizer.nextToken().trim());
+//		pessoa.setCodigoFiscal(
+//			StringUtils.capitaliseAllWords(
+//				StringUtils.lowerCase(codigoFiscal)));
 		stringTokenizer.nextToken();
 
 		//teste a pessoa lida
-//		System.out.println("Valores lidos para instancia de pessoa");
-//		System.out.println(pessoa.toString());
+		//		System.out.println("Valores lidos para instancia de pessoa");
+		//		System.out.println(pessoa.toString());
 
 		return pessoa;
 	}
@@ -290,29 +350,36 @@ public class LeituraFicheiroPessoa extends ObjectFenixOJB{
 	 */
 	private static Date formataData(String naoFormatada) {
 		Date resultado = null;
+		if (naoFormatada != null && !naoFormatada.equals("")) {
+			Integer todaData = new Integer(naoFormatada);
 
-		Integer todaData = new Integer(naoFormatada);
+			//teste para verificar se se retorna data invalida
+			if (todaData.intValue() == 0) {
+				resultado = null;
+				return resultado;
+			}
 
-		//teste para verificar se se retorna data invalida
-		if (todaData.intValue() == 0) {
-			resultado = null;
-			return resultado;
-		}
-		
-		try {
-			Integer anoTexto = new Integer(todaData.toString().substring(0, 4));
-			Integer mesTexto = new Integer(todaData.toString().substring(4, 6));
-			Integer diaTexto = new Integer(todaData.toString().substring(6, 8));
+			try {
+				Integer anoTexto =
+					new Integer(todaData.toString().substring(0, 4));
+				Integer mesTexto =
+					new Integer(todaData.toString().substring(4, 6));
+				Integer diaTexto =
+					new Integer(todaData.toString().substring(6, 8));
 
-			//construir data com zeros nas horas
-			Calendar calendario = Calendar.getInstance();
-			calendario.setLenient(false);
-			calendario.clear();
-			calendario.set(anoTexto.intValue(), mesTexto.intValue() - 1, diaTexto.intValue());
-			//      resultado = new Date(anoTexto.intValue()-1900, mesTexto.intValue()-1, diaTexto.intValue());
-			resultado = new Date(calendario.getTimeInMillis());
-		} catch (IllegalArgumentException iae) {
-			resultado = null;
+				//construir data com zeros nas horas
+				Calendar calendario = Calendar.getInstance();
+				calendario.setLenient(false);
+				calendario.clear();
+				calendario.set(
+					anoTexto.intValue(),
+					mesTexto.intValue() - 1,
+					diaTexto.intValue());
+				//      resultado = new Date(anoTexto.intValue()-1900, mesTexto.intValue()-1, diaTexto.intValue());
+				resultado = new Date(calendario.getTimeInMillis());
+			} catch (IllegalArgumentException iae) {
+				resultado = null;
+			}
 		}
 		return resultado;
 	}
@@ -324,9 +391,12 @@ public class LeituraFicheiroPessoa extends ObjectFenixOJB{
 		Integer resultado = null;
 
 		//trocar estes valores 8 e 9 por constantes
-		if (naoFormatado.equalsIgnoreCase(Sexo.FEMININO_STRING))
+		if (naoFormatado.equalsIgnoreCase(Sexo.FEMININO_STRING)
+			|| naoFormatado.equalsIgnoreCase("F"))
 			resultado = new Integer(Sexo.FEMININO);
-		else if (naoFormatado.equalsIgnoreCase(Sexo.MASCULINO_STRING))
+		else if (
+			naoFormatado.equalsIgnoreCase(Sexo.MASCULINO_STRING)
+				|| naoFormatado.equalsIgnoreCase("M"))
 			resultado = new Integer(Sexo.MASCULINO);
 
 		return resultado;
@@ -339,19 +409,25 @@ public class LeituraFicheiroPessoa extends ObjectFenixOJB{
 		Integer resultado = null;
 
 		//trocar estes valores por constantes
-		if (naoFormatado.equalsIgnoreCase(EstadoCivil.SOLTEIRO_STRING))
+		if (naoFormatado == null || naoFormatado.equals("")) {
+			resultado = new Integer(EstadoCivil.SOLTEIRO);
+		} else if (naoFormatado.equalsIgnoreCase(EstadoCivil.SOLTEIRO_STRING))
 			resultado = new Integer(EstadoCivil.SOLTEIRO);
 		else if (naoFormatado.equalsIgnoreCase(EstadoCivil.CASADO_STRING))
 			resultado = new Integer(EstadoCivil.CASADO);
 		else if (naoFormatado.equalsIgnoreCase(EstadoCivil.DIVORCIADO_STRING))
 			resultado = new Integer(EstadoCivil.DIVORCIADO);
-		else if ((naoFormatado.equalsIgnoreCase(EstadoCivil.VIUVO_STRING)) || (naoFormatado.equalsIgnoreCase("viuvo")))
+		else if (
+			(naoFormatado.equalsIgnoreCase(EstadoCivil.VIUVO_STRING))
+				|| (naoFormatado.equalsIgnoreCase("viuvo")))
 			resultado = new Integer(EstadoCivil.VIUVO);
 		else if (naoFormatado.equalsIgnoreCase(EstadoCivil.SEPARADO_STRING))
 			resultado = new Integer(EstadoCivil.SEPARADO);
-		else if (naoFormatado.equalsIgnoreCase(EstadoCivil.UNIAO_DE_FACTO_STRING))
+		else if (
+			naoFormatado.equalsIgnoreCase(EstadoCivil.UNIAO_DE_FACTO_STRING))
 			resultado = new Integer(EstadoCivil.UNIAO_DE_FACTO);
-		else resultado = new Integer(EstadoCivil.DESCONHECIDO);
+		else
+			resultado = new Integer(EstadoCivil.DESCONHECIDO);
 
 		return resultado;
 
@@ -367,45 +443,68 @@ public class LeituraFicheiroPessoa extends ObjectFenixOJB{
 		if (naoFormatado.equals("00"))
 			resultado = new Integer(TipoDocumentoIdentificacao.OUTRO);
 		else if (naoFormatado.equals("01"))
-			resultado = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE);
+			resultado =
+				new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE);
 		else if (naoFormatado.equals("02"))
 			resultado = new Integer(TipoDocumentoIdentificacao.PASSAPORTE);
 		else if (naoFormatado.equals("03"))
-			resultado = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_MARINHA);
+			resultado =
+				new Integer(
+					TipoDocumentoIdentificacao
+						.BILHETE_DE_IDENTIDADE_DA_MARINHA);
 		else if (naoFormatado.equals("04"))
-			resultado = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DE_CIDADAO_ESTRANGEIRO);
+			resultado =
+				new Integer(
+					TipoDocumentoIdentificacao
+						.BILHETE_DE_IDENTIDADE_DE_CIDADAO_ESTRANGEIRO);
 		else if (naoFormatado.equals("05"))
-			resultado = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DO_PAIS_DE_ORIGEM);
+			resultado =
+				new Integer(
+					TipoDocumentoIdentificacao
+						.BILHETE_DE_IDENTIDADE_DO_PAIS_DE_ORIGEM);
 		else if (naoFormatado.equals("06"))
-			resultado = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_FORCA_AEREA);
-		else resultado = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE);
+			resultado =
+				new Integer(
+					TipoDocumentoIdentificacao
+						.BILHETE_DE_IDENTIDADE_DA_FORCA_AEREA);
+		else
+			resultado =
+				new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE);
 
 		return resultado;
 	}
 
 	/** retorna um Integer com o codigoInterno do pais */
-	private static ICountry formataNacionalidadeCompleta(String naoFormatada) throws Exception {
-		PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
-		Integer chavePais = new Integer(naoFormatada);
+	private static ICountry formataNacionalidadeCompleta(String naoFormatada)
+		throws Exception {
 
-		Criteria criteria = new Criteria();
-		Query query = null;
-		
-		if (chavePais.equals(new Integer(1))){
-			criteria.addEqualTo("name", "PORTUGAL");	
-		} else {
-			criteria.addEqualTo("name", "ESTRANGEIRO");
+		if (naoFormatada == null || naoFormatada.equals(""))  {
+			naoFormatada = "1";
 		}
-		
-		query = new QueryByCriteria(Country.class,criteria);
-		List result = (List) broker.getCollectionByQuery(query);	
-		broker.close();
-		
-		if (result.size() == 0)
-			throw new Exception("Error Reading Country");
-		else return (ICountry) result.get(0);
-	
-		
+				
+			PersistenceBroker broker =
+				PersistenceBrokerFactory.defaultPersistenceBroker();
+
+			Integer chavePais = new Integer(naoFormatada);
+
+			Criteria criteria = new Criteria();
+			Query query = null;
+
+			if (chavePais.equals(new Integer(1))) {
+				criteria.addEqualTo("name", "PORTUGAL");
+			} else {
+				criteria.addEqualTo("name", "ESTRANGEIRO");
+			}
+
+			query = new QueryByCriteria(Country.class, criteria);
+			List result = (List) broker.getCollectionByQuery(query);
+			broker.close();
+
+			if (result.size() == 0)
+				throw new Exception("Error Reading Country");
+			else
+				return (ICountry) result.get(0);
+
 	}
 
 }

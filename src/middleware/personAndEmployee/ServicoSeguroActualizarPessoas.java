@@ -43,16 +43,21 @@ public class ServicoSeguroActualizarPessoas {
 
 	/** executa a actualizacao da tabela Pessoa na Base de Dados */
 	public static void main(String[] args) throws Exception {
-		ServicoSeguroActualizarPessoas servico = new ServicoSeguroActualizarPessoas(args);
+		ServicoSeguroActualizarPessoas servico =
+			new ServicoSeguroActualizarPessoas(args);
 
 		Collection listaPessoasFromFile = null;
 
 		try {
-			listaPessoasFromFile = LeituraFicheiroPessoa.lerFicheiro(servico._ficheiro, servico._delimitador);
+			listaPessoasFromFile =
+				LeituraFicheiroPessoa.lerFicheiro(
+					servico._ficheiro,
+					servico._delimitador);
 		} catch (NotExecuteException nee) {
 			throw new NotExecuteException(nee.getMessage());
 		}
-		System.out.println("Converting Persons " + listaPessoasFromFile.size() + " ... ");
+		System.out.println(
+			"Converting Persons " + listaPessoasFromFile.size() + " ... ");
 
 		actualizaPessoas(listaPessoasFromFile);
 
@@ -68,12 +73,14 @@ public class ServicoSeguroActualizarPessoas {
 		try {
 			if (listaPessoasFromFile != null) {
 				//open databases
-				PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
+				PersistenceBroker broker =
+					PersistenceBrokerFactory.defaultPersistenceBroker();
 				broker.clearCache();
 				broker.beginTransaction();
 
 				DB.iniciarTransaccao();
-				LimpaNaturalidades limpaNaturalidades = new LimpaNaturalidades();
+				LimpaNaturalidades limpaNaturalidades =
+					new LimpaNaturalidades();
 
 				Iterator iterador = listaPessoasFromFile.iterator();
 				Pessoa pessoa = null;
@@ -86,8 +93,12 @@ public class ServicoSeguroActualizarPessoas {
 						Criteria criteria = new Criteria();
 						Query query = null;
 
-						criteria.addEqualTo("numeroDocumentoIdentificacao", pessoa.getNumeroDocumentoIdentificacao());
-						criteria.addEqualTo("tipoDocumentoIdentificacao", pessoa.getTipoDocumentoIdentificacao());
+						criteria.addEqualTo(
+							"numeroDocumentoIdentificacao",
+							pessoa.getNumeroDocumentoIdentificacao());
+						criteria.addEqualTo(
+							"tipoDocumentoIdentificacao",
+							pessoa.getTipoDocumentoIdentificacao());
 						query = new QueryByCriteria(Pessoa.class, criteria);
 						List result = (List) broker.getCollectionByQuery(query);
 
@@ -99,27 +110,44 @@ public class ServicoSeguroActualizarPessoas {
 						} else {
 							// A Pessoa Existe
 							person2Write = (IPessoa) result.get(0);
-							updatePerson((Pessoa) person2Write, (Pessoa) pessoa);
+							PersonUtils.updatePerson(
+								(Pessoa) person2Write,
+								(Pessoa) pessoa);
 						}
 
 						//roles
-						IPersonRole personRole = RoleFunctions.readPersonRole((IPessoa) person2Write, RoleType.PERSON, broker);
+						IPersonRole personRole =
+							RoleFunctions.readPersonRole(
+								(IPessoa) person2Write,
+								RoleType.PERSON,
+								broker);
 						if (personRole == null) {
 							if (person2Write.getPersonRoles() == null) {
 								person2Write.setPersonRoles(new ArrayList());
 							}
-							person2Write.getPersonRoles().add(descobreRole(broker, RoleType.PERSON));
+							person2Write.getPersonRoles().add(
+								descobreRole(broker, RoleType.PERSON));
 							newRoles++;
 						}
 
-						if (person2Write.getEstadoCivil().getEstadoCivil().intValue() > 7) {
-							System.out.println("Erro : " + person2Write.getEstadoCivil().getEstadoCivil().intValue());
+						if (person2Write
+							.getEstadoCivil()
+							.getEstadoCivil()
+							.intValue()
+							> 7) {
+							System.out.println(
+								"Erro : "
+									+ person2Write
+										.getEstadoCivil()
+										.getEstadoCivil()
+										.intValue());
 						}
 
 						broker.store(person2Write);
 					} catch (Exception e) {
 						e.printStackTrace();
-						System.out.println("Erro a converter a pessoa " + pessoa + "\n");
+						System.out.println(
+							"Erro a converter a pessoa " + pessoa + "\n");
 						continue;
 					}
 				}
@@ -136,7 +164,10 @@ public class ServicoSeguroActualizarPessoas {
 		System.out.println("New Roles added : " + newRoles);
 	}
 
-	private static Role descobreRole(PersistenceBroker broker, RoleType roleType) throws Exception {
+	private static Role descobreRole(
+		PersistenceBroker broker,
+		RoleType roleType)
+		throws Exception {
 		Role role = null;
 
 		Criteria criteria = new Criteria();
@@ -153,7 +184,9 @@ public class ServicoSeguroActualizarPessoas {
 		return role;
 	}
 
-	private static void personFilter(LimpaNaturalidades limpaNaturalidades, Pessoa pessoa) {
+	private static void personFilter(
+		LimpaNaturalidades limpaNaturalidades,
+		Pessoa pessoa) {
 		try {
 			//locais da naturalidade
 			LimpaOutput limpaOutput =
@@ -164,13 +197,19 @@ public class ServicoSeguroActualizarPessoas {
 					pessoa.getConcelhoNaturalidade(),
 					pessoa.getFreguesiaNaturalidade());
 			if (limpaOutput.getNomeDistrito() != null) {
-				pessoa.setDistritoNaturalidade(StringUtils.capitaliseAllWords(limpaOutput.getNomeDistrito()));
+				pessoa.setDistritoNaturalidade(
+					StringUtils.capitaliseAllWords(
+						limpaOutput.getNomeDistrito()));
 			}
 			if (limpaOutput.getNomeConcelho() != null) {
-				pessoa.setConcelhoNaturalidade(StringUtils.capitaliseAllWords(limpaOutput.getNomeConcelho()));
+				pessoa.setConcelhoNaturalidade(
+					StringUtils.capitaliseAllWords(
+						limpaOutput.getNomeConcelho()));
 			}
 			if (limpaOutput.getNomeFreguesia() != null) {
-				pessoa.setFreguesiaNaturalidade(StringUtils.capitaliseAllWords(limpaOutput.getNomeFreguesia()));
+				pessoa.setFreguesiaNaturalidade(
+					StringUtils.capitaliseAllWords(
+						limpaOutput.getNomeFreguesia()));
 			}
 
 			//locais da Morada
@@ -182,54 +221,30 @@ public class ServicoSeguroActualizarPessoas {
 					pessoa.getConcelhoMorada(),
 					pessoa.getFreguesiaMorada());
 			if (limpaOutput.getNomeDistrito() != null) {
-				pessoa.setDistritoMorada(StringUtils.capitaliseAllWords(limpaOutput.getNomeDistrito()));
+				pessoa.setDistritoMorada(
+					StringUtils.capitaliseAllWords(
+						limpaOutput.getNomeDistrito()));
 			}
 			if (limpaOutput.getNomeConcelho() != null) {
-				pessoa.setConcelhoMorada(StringUtils.capitaliseAllWords(limpaOutput.getNomeConcelho()));
+				pessoa.setConcelhoMorada(
+					StringUtils.capitaliseAllWords(
+						limpaOutput.getNomeConcelho()));
 			}
 			if (limpaOutput.getNomeFreguesia() != null) {
-				pessoa.setFreguesiaMorada(StringUtils.capitaliseAllWords(limpaOutput.getNomeFreguesia()));
+				pessoa.setFreguesiaMorada(
+					StringUtils.capitaliseAllWords(
+						limpaOutput.getNomeFreguesia()));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-	}
-
-	private static void updatePerson(Pessoa person2Write, Pessoa person2Convert) throws Exception {
-
-		try {
-			// Password Backup
-			String password = new String(person2Write.getPassword());
-			Integer internalCode = new Integer(person2Write.getIdInternal().intValue());
-			String username = new String(person2Write.getUsername());
-			String mobilePhone = new String(person2Write.getTelemovel());
-			String email = new String(person2Write.getEmail());
-			String url = new String(person2Write.getEnderecoWeb());
-			Collection rolesLists = person2Write.getPersonRoles();
-			List credtisLists = person2Write.getManageableDepartmentCredits();
-
-			BeanUtils.copyProperties(person2Write, person2Convert);
-
-			person2Write.setIdInternal(internalCode);
-			person2Write.setPassword(password);
-			person2Write.setUsername(username);
-			person2Write.setEmail(email);
-			person2Write.setTelemovel(mobilePhone);
-			person2Write.setEnderecoWeb(url);
-			person2Write.setPersonRoles(rolesLists);
-			person2Write.setManageableDepartmentCredits(credtisLists);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("Erro a converter a Pessoa " + person2Convert.getNome());
-			throw new Exception(e);
 		}
 	}
 
 	private static void desactivarPessoas(Collection listaPessoasFromFile) {
 		if (listaPessoasFromFile != null) {
 			//Open databases
-			PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
+			PersistenceBroker broker =
+				PersistenceBrokerFactory.defaultPersistenceBroker();
 			broker.clearCache();
 			broker.beginTransaction();
 
@@ -239,45 +254,64 @@ public class ServicoSeguroActualizarPessoas {
 
 				Iterator iterador = listaPessoasFromDB.iterator();
 				IPessoa pessoaFromDB = null;
+				int counter = 0;
 				while (iterador.hasNext()) {
 					pessoaFromDB = (IPessoa) iterador.next();
 					try {
 						final IPessoa pessoaPredicate = pessoaFromDB;
 						//Find if the person from BD exists in file with active persons.
-						IPessoa pessoaFromFile = (IPessoa) CollectionUtils.find(listaPessoasFromFile, new Predicate() {
+						IPessoa pessoaFromFile =
+							(
+								IPessoa) CollectionUtils
+									.find(
+										listaPessoasFromFile,
+										new Predicate() {
 							public boolean evaluate(Object obj) {
 								IPessoa pessoa = (IPessoa) obj;
-								return pessoa.getNumeroDocumentoIdentificacao().equals(pessoaPredicate.getNumeroDocumentoIdentificacao())
-									&& pessoa.getTipoDocumentoIdentificacao().equals(pessoaPredicate.getTipoDocumentoIdentificacao());
+								return pessoa
+									.getNumeroDocumentoIdentificacao()
+									.equals(
+									pessoaPredicate
+										.getNumeroDocumentoIdentificacao())
+									&& pessoa
+										.getTipoDocumentoIdentificacao()
+										.equals(
+										pessoaPredicate
+											.getTipoDocumentoIdentificacao());
 							}
 						});
 
 						if (pessoaFromFile == null) {
 							//person is inactive, then delete roles and put password null
 							pessoaFromDB.setPassword(null);
+							pessoaFromDB.setUsername("INA"+pessoaFromDB.getNumeroDocumentoIdentificacao());
+							
+							pessoaFromDB.getPersonRoles().remove(
+								descobreRole(broker, RoleType.EMPLOYEE));
+							pessoaFromDB.getPersonRoles().remove(
+								descobreRole(broker, RoleType.TEACHER));
 
-							pessoaFromDB.getPersonRoles().remove(descobreRole(broker, RoleType.EMPLOYEE));
-							pessoaFromDB.getPersonRoles().remove(descobreRole(broker, RoleType.TEACHER));
-
-							Role rolePerson = descobreRole(broker, RoleType.PERSON);
-							if (pessoaFromDB.getPersonRoles().size() == 1 && pessoaFromDB.getPersonRoles().contains(rolePerson)) {
-								pessoaFromDB.getPersonRoles().remove(rolePerson);
+							Role rolePerson =
+								descobreRole(broker, RoleType.PERSON);
+							if (pessoaFromDB.getPersonRoles().size() == 1
+								&& pessoaFromDB.getPersonRoles().contains(
+									rolePerson)) {
+								pessoaFromDB.getPersonRoles().remove(
+									rolePerson);
 							}
 
 							broker.store(pessoaFromDB);
-
-							System.out.println(
-								"Inactive person: "
-									+ pessoaFromDB.getNumeroDocumentoIdentificacao()
-									+ "-"
-									+ pessoaFromDB.getTipoDocumentoIdentificacao().getTipo());
+							counter++;
+							//							System.out.println("Inactive person: " + pessoaFromDB.getNumeroDocumentoIdentificacao() + "-" + pessoaFromDB.getTipoDocumentoIdentificacao().getTipo());							
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
-						System.out.println("Error with person: " + pessoaFromDB);
+						System.out.println(
+							"Error with person: " + pessoaFromDB);
 						continue;
 					}
 				}
+				System.out.println("Inactive person: " + counter);
 			}
 
 			//close databases
@@ -295,7 +329,8 @@ public class ServicoSeguroActualizarPessoas {
 
 		List result = (List) broker.getCollectionByQuery(query);
 
-		System.out.println("Finished read persons from DB(" + result.size() + ")");
+		System.out.println(
+			"Finished read persons from DB(" + result.size() + ")");
 		return result;
 	}
 

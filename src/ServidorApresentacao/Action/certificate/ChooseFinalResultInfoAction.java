@@ -31,9 +31,11 @@ import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.FinalResulUnreachedActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import Util.Data;
 import Util.EnrolmentState;
 import Util.Specialization;
 import Util.TipoCurso;
@@ -97,6 +99,8 @@ public class ChooseFinalResultInfoAction extends DispatchAction {
 			session.removeAttribute(SessionConstants.ENROLMENT_LIST);
 			session.removeAttribute(SessionConstants.INFO_EXECUTION_YEAR);
 			session.removeAttribute(SessionConstants.CONCLUSION_DATE);
+			session.removeAttribute("total");
+			session.removeAttribute("givenCredits");
 			
 
 			
@@ -156,7 +160,22 @@ public class ChooseFinalResultInfoAction extends DispatchAction {
 					else {
 						//check the last exam date
 						InfoEnrolmentEvaluation infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();
-						String conclusionDate = "00/00/00";
+
+
+						String conclusionDate = null;
+							
+						Date endOfScholarshipDate = null;
+						try {
+							Object argsTemp[] = { infoStudentCurricularPlan };
+							endOfScholarshipDate = (Date) serviceManager.executar(userView, "GetEndOfScholarshipDate", argsTemp);
+			
+						} catch (FenixServiceException e) {
+							throw new FenixActionException(e);
+						}
+							
+						conclusionDate = Data.format2DayMonthYear(endOfScholarshipDate);
+
+
 						String dataAux = null;					
 						Object result = null;
 						Iterator iterator = enrolmentList.iterator();
@@ -180,7 +199,6 @@ public class ChooseFinalResultInfoAction extends DispatchAction {
 							InfoEnrolment infoEnrolment2 = (InfoEnrolment) result;
 							InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) infoEnrolment2.getInfoCurricularCourseScope();
 							sum = sum + Double.parseDouble(String.valueOf(infoCurricularCourseScope.getInfoCurricularCourse().getCredits()));
-
 							List aux = (List) infoEnrolment2.getInfoEvaluations();
 
 							if (aux.size() > 1){
@@ -192,6 +210,10 @@ public class ChooseFinalResultInfoAction extends DispatchAction {
 							infoEnrolment2.setInfoEnrolmentEvaluation(latestEvaluation);
 							newEnrolmentList.add(infoEnrolment2);
 
+						}
+						if (!infoStudentCurricularPlan.getGivenCredits().equals(new Double(0)) ){
+								sum =sum + Double.parseDouble(String.valueOf(infoStudentCurricularPlan.getGivenCredits()));
+								session.setAttribute("givenCredits", "POR ATRIBUIÇÃO DE CRÉDITOS");			
 						}
 						session.setAttribute("total",String.valueOf(sum));
 					

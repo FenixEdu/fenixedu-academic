@@ -509,6 +509,7 @@
 			auto-retrieve="true"
 			auto-update="false"
 			auto-delete="false"
+			refresh="true"
 			>
 		<fk-pointing-to-this-class column="KEY_EVALUATION"/>
 		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE"/>

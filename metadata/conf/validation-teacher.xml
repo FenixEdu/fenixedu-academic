@@ -81,7 +81,7 @@
         </var>
         <var>
            <var-name>mask</var-name>
-           <var-value>^((.||..)/(.||..)/2...)</var-value>
+           <var-value>^((.||..)/(.||..)/2...)$</var-value>
         </var>
    	</field>
    	<field property="summaryHourFormatted" depends="required,date" page="1" >
@@ -116,7 +116,7 @@
         </var>
         <var>
            <var-name>mask</var-name>
-           <var-value>^((.||..)/(.||..)/2...)</var-value>
+           <var-value>^((.||..)/(.||..)/2...)$</var-value>
         </var>
    	</field>
    	<field property="enrollmentBeginTimeFormatted" depends="required,date" page="1" >
@@ -137,7 +137,7 @@
         </var>
          <var>
            <var-name>mask</var-name>
-           <var-value>^((.||..)/(.||..)/2...)</var-value>
+           <var-value>^((.||..)/(.||..)/2...)$</var-value>
         </var>
    	</field>
    	<field property="enrollmentEndTimeFormatted" depends="required,date" page="1" >
@@ -159,7 +159,6 @@
    	</field>
    	
    </form>
-   
    <!-- Validacao para o formulario de executionCourseCurriculumForm -->
     <form name="executionCourseCurriculumForm">
       <field property="generalObjectives" depends="required" page="1">

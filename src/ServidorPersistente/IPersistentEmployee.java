@@ -11,4 +11,5 @@ import Dominio.Funcionario;
  */
 public interface IPersistentEmployee extends IPersistentObject {
 	Funcionario readByNumber(Integer number)  throws ExcepcaoPersistencia;
+	public Funcionario readByCodigoInterno(int idInternal) throws ExcepcaoPersistencia ;
 }

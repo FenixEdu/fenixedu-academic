@@ -182,7 +182,7 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 	}
 
 	public void deleteByCriteria(Object obj) throws ExcepcaoPersistencia {
-		List result = readByCriteria(obj);
+		List result = (List) readByCriteria(obj);
 		ListIterator iterator = result.listIterator();
 		while (iterator.hasNext())
 			delete(iterator.next());
@@ -556,10 +556,15 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 
 	protected List queryList(Class classToQuery, Criteria criteria)
 		throws ExcepcaoPersistencia {
+		return queryList(classToQuery, criteria, false);
+	}
+	
+	protected List queryList(Class classToQuery, Criteria criteria, boolean distinct)
+		throws ExcepcaoPersistencia {
 		PersistenceBroker pb =
 			((HasBroker) odmg.currentTransaction()).getBroker();
 
-		Query queryCriteria = new QueryByCriteria(classToQuery, criteria, true);
+		Query queryCriteria = new QueryByCriteria(classToQuery, criteria, distinct);
 		List list = (List) pb.getCollectionByQuery(queryCriteria);
 
 		lockRead(list);

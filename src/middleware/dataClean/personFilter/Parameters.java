@@ -6,6 +6,9 @@ package middleware.dataClean.personFilter;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.Enumeration;
 import java.util.NoSuchElementException;
 import java.util.Properties;
@@ -68,7 +71,11 @@ public class Parameters {
 		try {
 			String confFile = "/personFilter.properties";
 
-			BufferedReader br = new BufferedReader(new FileReader(confFile));
+			//BufferedReader br = new BufferedReader(new FileReader(confFile));
+			InputStream input = this.getClass().getResourceAsStream(confFile) ;
+			
+			BufferedReader br = new BufferedReader(new InputStreamReader(input));
+			
 			cleanProperties = new Properties();
 			String line = br.readLine();
 			while (line != null) {

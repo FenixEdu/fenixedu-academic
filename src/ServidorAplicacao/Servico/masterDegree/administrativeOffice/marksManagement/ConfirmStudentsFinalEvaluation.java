@@ -90,17 +90,12 @@ public class ConfirmStudentsFinalEvaluation implements IServico {
 				ListIterator iterEnrolmentEvaluations = enrolmentEvaluations.listIterator();
 				while (iterEnrolmentEvaluations.hasNext()) {
 					IEnrolmentEvaluation enrolmentEvaluationElem = (IEnrolmentEvaluation) iterEnrolmentEvaluations.next();
-					persistentEnrolmentEvaluation.simpleLockWrite(enrolmentEvaluationElem);
-
-					enrolmentEvaluationElem.setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ);
-					Calendar calendar = Calendar.getInstance();
-					enrolmentEvaluationElem.setWhen(calendar.getTime());
-					enrolmentEvaluationElem.setEmployee(employee);
-					//					TODO: checksum
-					enrolmentEvaluationElem.setCheckSum("");
-
-					// update state of enrolment: aproved, notAproved or notEvaluated
-					updateEnrolmentState(persistentEnrolment, enrolmentEvaluationElem);
+					if (enrolmentEvaluationElem.getGrade() != null
+						&& enrolmentEvaluationElem.getGrade().length() > 0
+						&& enrolmentEvaluationElem.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.TEMPORARY_OBJ)) {
+							
+						updateEnrolmentEvaluation(persistentEnrolmentEvaluation, persistentEnrolment, employee, enrolmentEvaluationElem);
+					}
 				}
 			}
 		} catch (ExcepcaoPersistencia ex) {
@@ -111,6 +106,21 @@ public class ConfirmStudentsFinalEvaluation implements IServico {
 		}
 
 		return Boolean.TRUE;
+	}
+
+	private void updateEnrolmentEvaluation(IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation, IPersistentEnrolment persistentEnrolment, Funcionario employee, IEnrolmentEvaluation enrolmentEvaluationElem) throws ExcepcaoPersistencia {
+		persistentEnrolmentEvaluation.simpleLockWrite(enrolmentEvaluationElem);
+		
+		enrolmentEvaluationElem.setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ);
+		Calendar calendar = Calendar.getInstance();
+		enrolmentEvaluationElem.setWhen(calendar.getTime());
+		enrolmentEvaluationElem.setEmployee(employee);
+		enrolmentEvaluationElem.setObservation("Lançamento de Notas na Secretaria");
+		//					TODO: checksum
+		enrolmentEvaluationElem.setCheckSum("");
+		
+		// update state of enrolment: aproved, notAproved or notEvaluated
+		updateEnrolmentState(persistentEnrolment, enrolmentEvaluationElem);
 	}
 
 	private void updateEnrolmentState(IPersistentEnrolment persistentEnrolment, IEnrolmentEvaluation enrolmentEvaluationElem)

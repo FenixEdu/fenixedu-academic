@@ -54,7 +54,7 @@
 					<tr>      
 						<td>      
 							<logic:iterate id="group" name="infoGroup" >
-								<h2><bean:write name="group" property="situationName"/>s</h2>
+								<h2>Situação: <bean:write name="group" property="situationName"/></h2>
 						  		<table width="100%">
 						        	<logic:iterate id="candidate" name="group" property="candidates">
 						        		<tr width="100%">

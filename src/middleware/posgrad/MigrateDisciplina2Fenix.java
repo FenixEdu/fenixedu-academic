@@ -84,7 +84,7 @@ public class MigrateDisciplina2Fenix {
 				curricularCourse2Convert = (Posgrad_disciplina) iterator.next();
 				
 				broker.beginTransaction();
-				broker.clearCache();
+				//broker.clearCache();
 
 				
 				// Delete unwanted courses
@@ -145,6 +145,9 @@ public class MigrateDisciplina2Fenix {
 				
 				criteria = new Criteria();
 				criteria.addEqualTo("name", curricularCourse2Convert.getNome());
+					if (degreeCurricularPlan.getIdInternal().intValue() == 113)
+						System.out.println("BUMMM ESTOU A MEXER EM COISAS QUE NÃO DEVO!");
+					
 				criteria.addEqualTo("degreeCurricularPlanKey", degreeCurricularPlan.getIdInternal());
 				query = new QueryByCriteria(CurricularCourse.class,criteria);
 				result = (List) broker.getCollectionByQuery(query);		
@@ -196,6 +199,8 @@ public class MigrateDisciplina2Fenix {
 				}
 				
 				broker.store(curricularCourse2Write);
+				broker.commitTransaction();
+				broker.beginTransaction();
 				coursesWritten++;
 				curricularCourse2Convert.setCodigoCurricularCourse(curricularCourse2Write.getIdInternal());
 				broker.store(curricularCourse2Convert);

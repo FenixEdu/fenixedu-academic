@@ -16,6 +16,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.Country;
@@ -88,6 +89,13 @@ public abstract class LoadDataFile {
 		numberElementsWritten++;
 	}
 
+	protected void deleteElement(Object persistentObject) {
+		persistentObjectOJB.delete(persistentObject);
+	}
+
+	protected PersistenceBroker getBroker() {
+		return persistentObjectOJB.getBroker();
+	}
 	protected List query(Class classToQuery, Criteria criteria) {
 		return persistentObjectOJB.query(classToQuery, criteria);
 	}

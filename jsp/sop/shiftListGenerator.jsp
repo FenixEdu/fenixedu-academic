@@ -68,6 +68,12 @@
 				<bean:message key="property.turno.capacity"/>
 			</td>
 			<td class="listClasses-header">
+				<bean:message key="property.shift.ocupation"/>
+			</td>
+            <td class="listClasses-header">
+            	<bean:message key="property.shift.percentage"/>
+            </td>
+			<td class="listClasses-header">
 				<logic:present name="available">
 					<bean:message key="label.add"/>
 				</logic:present>
@@ -95,6 +101,12 @@
 				<td class="listClasses">
 					<jsp:getProperty name="shiftView" property="lotacao"/>
 				</td>
+				<td class="listClasses">
+					<jsp:getProperty name="shiftView" property="ocupation"/>
+				</td>
+              	<td class="listClasses">
+              		<jsp:getProperty name="shiftView" property="percentage"/> %
+              	</td>
 				<logic:present name="available">
 					<td class="listClasses">
 		   		<html:link page="<%= "/ClassShiftManagerDA.do?method=addClassShift&amp;shiftIndex="

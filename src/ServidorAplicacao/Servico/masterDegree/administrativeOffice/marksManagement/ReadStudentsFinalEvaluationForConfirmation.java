@@ -89,11 +89,12 @@ public class ReadStudentsFinalEvaluationForConfirmation implements IServico {
 			}
 
 			if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {
-				
+
+				List temporaryEnrolmentEvaluations = null;
 				try {
-					
-					checkForInvalidSituations(enrolmentEvaluations);
-					
+
+					temporaryEnrolmentEvaluations = checkForInvalidSituations(enrolmentEvaluations);
+
 				} catch (ExistingServiceException e) {
 					throw new ExistingServiceException();
 				} catch (InvalidSituationServiceException e) {
@@ -102,12 +103,12 @@ public class ReadStudentsFinalEvaluationForConfirmation implements IServico {
 
 				//				get teacher responsible for final evaluation - he is responsible for all evaluations for this
 				//				curricularCourseScope
-				IPessoa person = ((IEnrolmentEvaluation) enrolmentEvaluations.get(0)).getPersonResponsibleForGrade();
+				IPessoa person = ((IEnrolmentEvaluation) temporaryEnrolmentEvaluations.get(0)).getPersonResponsibleForGrade();
 				ITeacher teacher = persistentTeacher.readTeacherByUsername(person.getUsername());
 				infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
 
 				//				transform evaluations in databeans
-				ListIterator iter = enrolmentEvaluations.listIterator();
+				ListIterator iter = temporaryEnrolmentEvaluations.listIterator();
 				while (iter.hasNext()) {
 					IEnrolmentEvaluation elem = (IEnrolmentEvaluation) iter.next();
 					InfoEnrolmentEvaluation infoEnrolmentEvaluation = Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(elem);
@@ -135,17 +136,23 @@ public class ReadStudentsFinalEvaluationForConfirmation implements IServico {
 		return infoSiteEnrolmentEvaluation;
 	}
 
-	private void checkForInvalidSituations(List enrolmentEvaluations)
+	private List checkForInvalidSituations(List enrolmentEvaluations)
 		throws ExistingServiceException, InvalidSituationServiceException {
 		//			evaluations can only be confirmated if they are not already confirmated
-		if (((IEnrolmentEvaluation) enrolmentEvaluations.get(0))
-			.getEnrolmentEvaluationState()
-			.equals(EnrolmentEvaluationState.FINAL_OBJ)) {
+		List temporaryEnrolmentEvaluations = (List) CollectionUtils.select(enrolmentEvaluations, new Predicate() {
+			public boolean evaluate(Object arg0) {
+				IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) arg0;
+				if (enrolmentEvaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.TEMPORARY_OBJ))
+					return true;
+				return false;
+			}
+		});
+
+		if (temporaryEnrolmentEvaluations == null || temporaryEnrolmentEvaluations.size() == 0) {
 			throw new ExistingServiceException();
 		}
 
-		//				and if all students have final evaluation
-		List enrolmentEvaluationsWithoutGrade = (List) CollectionUtils.select(enrolmentEvaluations, new Predicate() {
+		List enrolmentEvaluationsWithoutGrade = (List) CollectionUtils.select(temporaryEnrolmentEvaluations, new Predicate() {
 			public boolean evaluate(Object input) {
 					//						see if there are evaluations without grade
 	IEnrolmentEvaluation enrolmentEvaluationInput = (IEnrolmentEvaluation) input;
@@ -154,8 +161,14 @@ public class ReadStudentsFinalEvaluationForConfirmation implements IServico {
 				return false;
 			}
 		});
-		if (enrolmentEvaluationsWithoutGrade.size() > 0) {
-			throw new InvalidSituationServiceException();
+		if (enrolmentEvaluationsWithoutGrade != null) {
+			if (enrolmentEvaluationsWithoutGrade.size() == temporaryEnrolmentEvaluations.size()) {
+				throw new InvalidSituationServiceException();
+			}
+			temporaryEnrolmentEvaluations =
+				(List) CollectionUtils.subtract(temporaryEnrolmentEvaluations, enrolmentEvaluationsWithoutGrade);
 		}
+
+		return temporaryEnrolmentEvaluations;
 	}
 }

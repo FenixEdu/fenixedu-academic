@@ -6,6 +6,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="ServidorApresentacao.TagLib.sop.v3.TimeTableType" %>
+<span class="error"><html:errors/></span>  
 <h2><bean:message key="title.view.room"/></h2>
 <br />
 <html:form action="/chooseExecutionPeriod">
@@ -72,7 +73,7 @@
             </table>
 	<br />
 	<br />	
-	<div align="center"><app:gerarHorario name="<%= SessionConstants.LESSON_LIST_ATT %>" type="<%= TimeTableType.SOP_ROOM_TIMETABLE %>"/></div>
+	<div align="center"><app:gerarHorario name="<%= SessionConstants.LESSON_LIST_ATT %>" type="<%= TimeTableType.SOP_CLASS_ROOM_TIMETABLE %>"/></div>
 	</logic:present>
 	<logic:notPresent name="<%= SessionConstants.ROOM%>" scope="request">
 		<table align="center">

@@ -16,13 +16,16 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
+import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoSiteEnrolmentEvaluation;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
@@ -33,12 +36,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  */
 public class ChooseCurricularCourseDispatchAction extends DispatchAction {
 
-	public ActionForward prepareChooseCurricularCourse(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+	public ActionForward prepareChooseCurricularCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		HttpSession session = request.getSession();
 
@@ -71,13 +69,8 @@ public class ChooseCurricularCourseDispatchAction extends DispatchAction {
 		return mapping.findForward("PrepareSuccess");
 	}
 
-	public ActionForward chooseCurricularCourse(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
-			
+	public ActionForward chooseCurricularCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
 		HttpSession session = request.getSession(false);
 		String executionYear = (String) getFromRequest("executionYear", request);
 		Integer courseID = Integer.valueOf(getFromRequest("courseID", request));
@@ -88,16 +81,15 @@ public class ChooseCurricularCourseDispatchAction extends DispatchAction {
 		request.setAttribute("executionYear", getFromRequest("executionYear", request));
 		request.setAttribute("degree", getFromRequest("degree", request));
 		request.setAttribute("jspTitle", getFromRequest("jspTitle", request));
-		
+
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		Object args[] = {userView,courseID,executionYear};
+		Object args[] = { userView, courseID, executionYear };
 		GestorServicos serviceManager = GestorServicos.manager();
 		InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
 		List listEnrolmentEvaluation = null;
 		try {
-		 listEnrolmentEvaluation =
-				(List) serviceManager.executar(userView, "ReadStudentMarksListByCurricularCourse", args);
-		} catch (NotAuthorizedException e){
+			listEnrolmentEvaluation = (List) serviceManager.executar(userView, "ReadStudentMarksListByCurricularCourse", args);
+		} catch (NotAuthorizedException e) {
 			return mapping.findForward("NotAuthorized");
 		} catch (NonExistingServiceException e) {
 			ActionErrors errors = new ActionErrors();
@@ -106,26 +98,17 @@ public class ChooseCurricularCourseDispatchAction extends DispatchAction {
 			return mapping.findForward("NoStudents");
 		}
 
-		if (listEnrolmentEvaluation.size() == 0){
+		if (listEnrolmentEvaluation.size() == 0) {
 			ActionErrors actionErrors = new ActionErrors();
-			actionErrors.add(
-					"StudentNotEnroled",
-					new ActionError(
-						"error.students.Mark.NotAvailable"));
+			actionErrors.add("StudentNotEnroled", new ActionError("error.students.Mark.NotAvailable"));
 			saveErrors(request, actionErrors);
 			return mapping.findForward("NoStudents");
 		}
 
-
 		return mapping.findForward("ChooseSuccess");
 	}
 
-	public ActionForward chooseCurricularCourseByID(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+	public ActionForward chooseCurricularCourseByID(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		HttpSession session = request.getSession();
 
@@ -154,6 +137,20 @@ public class ChooseCurricularCourseDispatchAction extends DispatchAction {
 			errors.add("nonExisting", new ActionError("error.exception.noStudents"));
 			saveErrors(request, errors);
 			return mapping.findForward("NoStudents");
+		}
+
+		InfoCurricularCourse infoCurricularCourse = null;
+		try {
+			Object args[] = { courseID};
+			infoCurricularCourse = (InfoCurricularCourse) serviceManager.executar(userView, "ReadCurricularCourseByID", args);
+		} catch (NonExistingServiceException e) {
+			
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		if (infoCurricularCourse != null){
+			request.setAttribute("infoCurricularCourse", infoCurricularCourse);
 		}
 
 		request.setAttribute("enrolment_list", studentList);

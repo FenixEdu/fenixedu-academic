@@ -86,14 +86,16 @@ public class SelectCandidatesDispatchAction extends DispatchAction {
 		//Create the Candidate Situation List
 		 List situationsList = new ArrayList();
 		 situationsList.add(new LabelValueBean(SituationName.ADMITIDO_STRING , SituationName.ADMITIDO_STRING));
-		 situationsList.add(new LabelValueBean(SituationName.NAO_ACEITE_STRING , SituationName.NAO_ACEITE_STRING));
+		 situationsList.add(new LabelValueBean(SituationName.ADMITED_SPECIALIZATION_STRING , SituationName.ADMITED_SPECIALIZATION_STRING));	
 		 situationsList.add(new LabelValueBean(SituationName.ADMITED_CONDICIONAL_CURRICULAR_STRING , SituationName.ADMITED_CONDICIONAL_CURRICULAR_STRING));	
 		 situationsList.add(new LabelValueBean(SituationName.ADMITED_CONDICIONAL_FINALIST_STRING, SituationName.ADMITED_CONDICIONAL_FINALIST_STRING));	
 		 situationsList.add(new LabelValueBean(SituationName.ADMITED_CONDICIONAL_OTHER_STRING, SituationName.ADMITED_CONDICIONAL_OTHER_STRING));
+ 		 situationsList.add(new LabelValueBean(SituationName.NAO_ACEITE_STRING , SituationName.NAO_ACEITE_STRING));
 		 situationsList.add(new LabelValueBean(SituationName.SUPLENTE_STRING, SituationName.SUPLENTE_STRING));	
 		 situationsList.add(new LabelValueBean(SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING, SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING));	
 		 situationsList.add(new LabelValueBean(SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING, SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING));
 		 situationsList.add(new LabelValueBean(SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING, SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING));
+		 
 
 		 request.setAttribute(SessionConstants.CANDIDATE_SITUATION_LIST, situationsList);  
 					
@@ -581,7 +583,8 @@ public class SelectCandidatesDispatchAction extends DispatchAction {
 			InfoCandidateApprovalGroup infoCandidateApprovalGroup = (InfoCandidateApprovalGroup) iterator.next();
 			BeanComparator comparator = null;
 			
-			if (infoCandidateApprovalGroup.getSituationName().equals(SituationName.ADMITIDO_STRING)){
+			if ((infoCandidateApprovalGroup.getSituationName().equals(SituationName.ADMITIDO_STRING)) || 
+				(infoCandidateApprovalGroup.getSituationName().equals(SituationName.ADMITED_SPECIALIZATION_STRING))){
 				comparator = new BeanComparator("candidateName");
 			} else if (infoCandidateApprovalGroup.getSituationName().equals(SituationName.SUPLENTE_STRING)){
 				comparator = new BeanComparator("orderPosition");	
@@ -610,6 +613,8 @@ public class SelectCandidatesDispatchAction extends DispatchAction {
 		InfoCandidateApprovalGroup substitutesList = new InfoCandidateApprovalGroup();
 		substitutesList.setSituationName(SituationName.SUPLENTE_STRING);
 		
+		InfoCandidateApprovalGroup specializationList = new InfoCandidateApprovalGroup();
+		specializationList.setSituationName(SituationName.ADMITED_SPECIALIZATION_STRING);
 		
 		
 		for (int i = 0; i < candidateList.length; i++){
@@ -625,7 +630,9 @@ public class SelectCandidatesDispatchAction extends DispatchAction {
 			infoCandidateApproval.setRemarks(remarks[i]);
 			infoCandidateApproval.setSituationName(candidateList[i]);
 			
-			if((candidateList[i].equals(SituationName.ADMITIDO_STRING)) || 
+			if ((candidateList[i].equals(SituationName.ADMITED_SPECIALIZATION_STRING))){
+				specializationList.getCandidates().add(infoCandidateApproval);
+			} else if((candidateList[i].equals(SituationName.ADMITIDO_STRING)) || 
 				(candidateList[i].equals(SituationName.ADMITED_CONDICIONAL_CURRICULAR_STRING)) ||
 				(candidateList[i].equals(SituationName.ADMITED_CONDICIONAL_FINALIST_STRING)) ||
 			   	(candidateList[i].equals(SituationName.ADMITED_CONDICIONAL_OTHER_STRING))) {
@@ -638,13 +645,13 @@ public class SelectCandidatesDispatchAction extends DispatchAction {
 			} else if (candidateList[i].equals(SituationName.NAO_ACEITE_STRING)){
 				notApprovedList.getCandidates().add(infoCandidateApproval);
 			}
-			
 		}
 
 		List result = new ArrayList();
 		result.add(approvedList);
 		result.add(substitutesList);
 		result.add(notApprovedList);
+		result.add(specializationList);
 		
 		return result;
 	}

@@ -32,6 +32,10 @@ public class Util {
 			edificios.add(new LabelValueBean(name, value));
 
 		edificios.add(
+			new LabelValueBean(
+				"Edifício Ciência",
+				"Edifício Ciência"));
+		edificios.add(
 			new LabelValueBean("Pavilhão Central", "Pavilhão Central"));
 
 		edificios.add(new LabelValueBean("Pavilhão Civil", "Pavilhão Civil"));

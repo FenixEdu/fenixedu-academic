@@ -80,7 +80,7 @@ public class CreateGuide implements IServico {
 			throw new InvalidSituationServiceException();
 
 		InfoGuideEntry infoGuideEntry = new InfoGuideEntry();
-		if (othersPrice != null){
+		if ((othersPrice != null) && (othersPrice.floatValue() > 0)){
 			infoGuideEntry.setDescription(othersRemarks);
 			infoGuideEntry.setPrice(othersPrice);
 			infoGuideEntry.setInfoGuide(infoGuide);

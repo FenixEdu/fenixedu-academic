@@ -13,6 +13,31 @@
 	<h2><bean:write name="jspTitle" /></h2>
 	<br />
 </logic:present>
+
+  <logic:present name="infoCurricularCourse">
+  	<table>
+  		<tr>
+	  		<td>
+				<strong><bean:message key="label.degree" /></strong>
+	  		</td>
+	  		<td>
+	  			<bean:write name="infoCurricularCourse" property="infoDegreeCurricularPlan.infoDegree.nome"/>
+
+	  		</td>
+  		</tr>
+  		<tr>
+	  		<td>
+	  			<strong><bean:message key="property.aula.disciplina" /></strong>
+	  		</td>
+	  		<td>
+	  			<bean:write name="infoCurricularCourse" property="name"/>
+	  		</td>
+  		</tr>
+  	</table>
+  </logic:present>
+
+
+
    <span class="error"><html:errors/></span>
   <bean:define id="enrolmentList" name="enrolment_list" scope="request" />
   <bean:define id="link">/studentCurriculum.do?method=getCurriculum<%= "&" %>page=0<%= "&" %>studentCPID=</bean:define>

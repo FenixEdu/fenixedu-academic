@@ -28,7 +28,6 @@
       <form-bean name="chooseSecondMasterDegreeForm" 
                  type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                  dynamic="true">
-
          <form-property name="page" type="java.lang.Integer" />
          <form-property name="masterDegree" type="java.lang.String" />
          <form-property name="candidateID" type="java.lang.Integer"/>
@@ -45,8 +44,6 @@
         	<form-property name="selection" type="java.lang.Integer[]"/>
         	<form-property name="attributedCredits" type="java.lang.String"/>
       </form-bean>     
-     
-     
     </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -219,11 +216,11 @@
 	         <forward name="Cancel" path="/displayListToSelectCandidates.do?method=prepareSelectCandidates&amp;page=0"/> 
 	         <forward name="OrderCandidatesReady" path="/candidate/displayChosenSelection.jsp"/> 
 	         <forward name="NumerusClaususNotDefined" path="/chooseMasterDegreeToSelectCandidates.do?method=prepareChooseMasterDegree&amp;page=0"/>  	         
-			 <forward name="BackError" path="/backError.do" redirect="true"/>
+			 <forward name="BackError" path="/backErrorCandidateApprovalPage.do" redirect="true"/>
 			 <forward name="PrintReady" path="/candidate/approvalDispatchTemplate.jsp" />  
 		</action>
 		
-		<action path="/backError"
+		<action path="/backErrorCandidateApprovalPage"
               type="ServidorApresentacao.Action.commons.VoidAction"
 			  >
 	         <forward name="Success" path="/candidate/backErrorPage.jsp"/> 

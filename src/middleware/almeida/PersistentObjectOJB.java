@@ -43,6 +43,7 @@ public class PersistentObjectOJB {
 		try {
 			broker.store(obj);
 		} catch (org.apache.ojb.broker.PersistenceBrokerSQLException ex) {
+			System.out.print(obj);
 		}
 	}
 
@@ -53,6 +54,10 @@ public class PersistentObjectOJB {
 
 	public List query(Object object) {
 		return (List) broker.getCollectionByQuery(new QueryByCriteria(object));
+	}
+	
+	public PersistenceBroker getBroker() {
+		return this.broker;
 	}
 
 }

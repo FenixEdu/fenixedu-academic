@@ -20,6 +20,8 @@ public class InfoShift extends InfoObject {
 	protected String _nome;
 	protected TipoAula _tipo;
 	protected Integer _lotacao;
+	protected Integer ocupation;
+	protected Double percentage;
 	protected Integer availabilityFinal;
 	protected InfoExecutionCourse _infoDisciplinaExecucao;
 	protected List infoLessons;
@@ -28,11 +30,7 @@ public class InfoShift extends InfoObject {
 	public InfoShift() {
 	}
 
-	public InfoShift(
-		String nome,
-		TipoAula tipo,
-		Integer lotacao,
-		InfoExecutionCourse infoDisciplinaExecucao) {
+	public InfoShift(String nome, TipoAula tipo, Integer lotacao, InfoExecutionCourse infoDisciplinaExecucao) {
 		setNome(nome);
 		setTipo(tipo);
 		setLotacao(lotacao);
@@ -74,14 +72,28 @@ public class InfoShift extends InfoObject {
 		_lotacao = lotacao;
 	}
 
+	public Integer getOcupation() {
+		return ocupation;
+	}
+
+	public void setOcupation(Integer ocupation) {
+		this.ocupation = ocupation;
+	}
+		
+	public Double getPercentage() {
+		return percentage;
+	}
+
+	public void setPercentage(Double percentage) {
+		this.percentage = percentage;
+	}
+	
+	
 	public boolean equals(Object obj) {
 		boolean resultado = false;
 		if (obj instanceof InfoShift) {
 			InfoShift infoTurno = (InfoShift) obj;
-			resultado =
-				(getNome().equals(infoTurno.getNome()))
-					&& (getInfoDisciplinaExecucao()
-						.equals(infoTurno.getInfoDisciplinaExecucao()));
+			resultado = (getNome().equals(infoTurno.getNome())) && (getInfoDisciplinaExecucao().equals(infoTurno.getInfoDisciplinaExecucao()));
 		}
 		return resultado;
 	}
@@ -98,13 +110,14 @@ public class InfoShift extends InfoObject {
 	}
 
 	public String getLessons() {
+
+		String result = new String();
+
 		List infoLessonsList = getInfoLessons();
 		Iterator itLesson = infoLessonsList.iterator();
-		String result = new String();
 		int index = 0;
-		
 		while (itLesson.hasNext()) {
-			index = index+1;
+			index = index + 1;
 			InfoLesson lesson = (InfoLesson) itLesson.next();
 			result += lesson.getDiaSemana().toString();
 			result += " (";
@@ -118,24 +131,22 @@ public class InfoShift extends InfoObject {
 			result += ") ";
 			result += lesson.getInfoSala().getNome().toString();
 			int last = (infoLessonsList.size());
-			if ( index != last || (index != 1 && index != last)) {
+			if (index != last || (index != 1 && index != last)) {
 				result += " , ";
 			} else {
 				result += " ";
 			}
-
 		}
-
 		return result;
 	}
 
-	private String minutesFormatter(int minute){
-		String result="";
-		if (minute<10){
-			result+="0";
+	private String minutesFormatter(int minute) {
+		String result = "";
+		if (minute < 10) {
+			result += "0";
 		}
-		result+=minute;
-		
+		result += minute;
+
 		return result;
 	}
 

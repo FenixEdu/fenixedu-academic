@@ -10,6 +10,29 @@
 
   <bean:define id="studentList" name="<%= SessionConstants.STUDENT_LIST %>" scope="request" />
   
+  <logic:present name="infoExecutionDegree">
+  	<table>
+  		<tr>
+	  		<td>
+				<strong><bean:message key="label.degree" /></strong>
+	  		</td>
+	  		<td>
+	  			<bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.nome"/>
+
+	  		</td>
+  		</tr>
+  		<tr>
+	  		<td>
+	  			<strong><bean:message key="label.masterDegree.administrativeOffice.executionYear" /></strong>
+	  		</td>
+	  		<td>
+	  			<bean:write name="infoExecutionDegree" property="infoExecutionYear.year"/>
+	  		</td>
+  		</tr>
+  	</table>
+  </logic:present>
+  
+  
   <bean:define id="link">/studentCurriculum.do?method=getCurriculum<%= "&" %>page=0<%= "&" %>studentCPID=</bean:define>
   	<p>
     <h3><%= ((List) studentList).size()%> <bean:message key="label.masterDegree.administrativeOffice.studentsFound"/></h3>        

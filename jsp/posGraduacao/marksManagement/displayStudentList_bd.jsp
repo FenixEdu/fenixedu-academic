@@ -37,7 +37,6 @@
     			<td class="listClasses-header"><bean:message key="label.enrolmentEvaluationType" /></td>
     			<td class="listClasses-header"><bean:message key="label.teacherName"  /></td>
     			<td class="listClasses-header"><bean:message key="label.employee"  /></td>
-    			<td class="listClasses-header"><bean:message key="label.when"  /></td>
     			<td class="listClasses-header"><bean:message key="label.observation"  /></td>
     			
     		</tr>

@@ -13,11 +13,9 @@ import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.util.Cloner;
 import Dominio.Enrolment;
 import Dominio.EnrolmentEvaluation;
-import Dominio.Funcionario;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
-import Dominio.IPessoa;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.ITeacher;
@@ -33,12 +31,10 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPersistentTeacher;
-import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistenteJDBC.IFuncionarioPersistente;
-import ServidorPersistenteJDBC.SuportePersistente;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * @author Fernanda Quitério
@@ -69,67 +65,44 @@ public class InsertStudentsFinalEvaluation implements IServico {
 		return _servico;
 	}
 
-	public List run(List evaluations, Integer teacherNumber, Date evaluationDate, IUserView userView)
-		throws FenixServiceException {
+	public List run(List evaluations, Integer teacherNumber, Date evaluationDate, IUserView userView) throws FenixServiceException {
 
 		List infoEvaluationsWithError = null;
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp.getIPersistentEnrolmentEvaluation();
-			IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
+			//			IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
 			IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
-			//			responsible teacher
-			ITeacher teacher = persistentTeacher.readTeacherByNumber(teacherNumber);
-			if (teacher == null) {
-				throw new NonExistingServiceException();
-			}
 			//			employee
-			IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
-			Funcionario employee = readEmployee(person);
+			//			IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+			//			Funcionario employee = readEmployee(person);
 
 			infoEvaluationsWithError = new ArrayList();
-			Calendar calendario = Calendar.getInstance();
 			ListIterator iterEnrolmentEvaluations = evaluations.listIterator();
 			while (iterEnrolmentEvaluations.hasNext()) {
 				InfoEnrolmentEvaluation infoEnrolmentEvaluation = (InfoEnrolmentEvaluation) iterEnrolmentEvaluations.next();
 
 				infoEnrolmentEvaluation = completeEnrolmentEvaluation(infoEnrolmentEvaluation);
-
-				if (!isValidEvaluation(infoEnrolmentEvaluation)) {
-					infoEvaluationsWithError.add(infoEnrolmentEvaluation);
-				} else {
-					IEnrolment enrolmentForCriteria = new Enrolment();
-					enrolmentForCriteria.setIdInternal(infoEnrolmentEvaluation.getInfoEnrolment().getIdInternal());
-
-					IEnrolmentEvaluation enrolmentEvaluationForCriteria = new EnrolmentEvaluation();
-					enrolmentEvaluationForCriteria.setEnrolment(enrolmentForCriteria);
-					List enrolmentEvaluationsForEnrolment =
-						(List) persistentEnrolmentEvaluation.readByCriteria(enrolmentEvaluationForCriteria);
-					if (enrolmentEvaluationsForEnrolment.size() == 0) {
-						//		it will never happen!!
-						throw new FenixServiceException();
+				IEnrolmentEvaluation enrolmentEvaluationFromDb =
+					getEnrolmentEvaluation(persistentEnrolmentEvaluation, infoEnrolmentEvaluation);
+				if (infoEnrolmentEvaluation.getGrade() == null || infoEnrolmentEvaluation.getGrade().length() == 0) {
+					if (enrolmentEvaluationFromDb.getGrade() != null && enrolmentEvaluationFromDb.getGrade().length() > 0) {
+						// if there was a grade and now there is not we have to delete written information
+						cleanEnrolmentEvaluation(persistentEnrolmentEvaluation, enrolmentEvaluationFromDb);
 					}
-					Collections.sort(enrolmentEvaluationsForEnrolment, new BeanComparator("enrolment.idInternal"));
-
-					//		we want last enrolment evaluation in case of improvement
-					IEnrolmentEvaluation enrolmentEvaluation =
-						(IEnrolmentEvaluation) enrolmentEvaluationsForEnrolment.get(enrolmentEvaluationsForEnrolment.size() - 1);
-
-					persistentEnrolmentEvaluation.lockWrite(enrolmentEvaluation);
-
-					if (evaluationDate != null) {
-						enrolmentEvaluation.setExamDate(evaluationDate);
+				} else if (infoEnrolmentEvaluation.getGrade() != null && infoEnrolmentEvaluation.getGrade().length() > 0) {
+					if (!isValidEvaluation(infoEnrolmentEvaluation)) {
+						infoEvaluationsWithError.add(infoEnrolmentEvaluation);
 					} else {
-						enrolmentEvaluation.setExamDate(calendario.getTime());
+						fillEnrolmentEvaluation(
+							evaluationDate,
+							persistentEnrolmentEvaluation,
+							persistentTeacher,
+							teacherNumber,
+							infoEnrolmentEvaluation,
+							enrolmentEvaluationFromDb);
 					}
-					enrolmentEvaluation.setGrade(infoEnrolmentEvaluation.getGrade());
-					enrolmentEvaluation.setPersonResponsibleForGrade(teacher.getPerson());
-					enrolmentEvaluation.setGradeAvailableDate(calendario.getTime());
-					enrolmentEvaluation.setEmployee(employee);
-					enrolmentEvaluation.setWhen(calendario.getTime());
-					enrolmentEvaluation.setObservation("Lançamento de Notas na Secretaria");
-					enrolmentEvaluation.setCheckSum("");
 				}
 			}
 		} catch (ExcepcaoPersistencia ex) {
@@ -142,30 +115,96 @@ public class InsertStudentsFinalEvaluation implements IServico {
 		return infoEvaluationsWithError;
 	}
 
-	private Funcionario readEmployee(IPessoa person) {
-		Funcionario employee = null;
-		SuportePersistente spJDBC = SuportePersistente.getInstance();
-		IFuncionarioPersistente persistentEmployee = spJDBC.iFuncionarioPersistente();
-
-		try {
-			spJDBC.iniciarTransaccao();
-
-			try {
-				employee = persistentEmployee.lerFuncionarioPorPessoa(person.getIdInternal().intValue());
-
-			} catch (Exception e) {
-				spJDBC.cancelarTransaccao();
-				e.printStackTrace();
-				return employee;
-			}
-
-			spJDBC.confirmarTransaccao();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			return employee;
+	private void fillEnrolmentEvaluation(
+		Date evaluationDate,
+		IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation,
+		IPersistentTeacher persistentTeacher,
+		Integer teacherNumber,
+		InfoEnrolmentEvaluation infoEnrolmentEvaluation,
+		IEnrolmentEvaluation enrolmentEvaluationFromDb)
+		throws ExcepcaoPersistencia, ExistingPersistentException, NonExistingServiceException {
+			
+		//			responsible teacher
+		ITeacher teacher = persistentTeacher.readTeacherByNumber(teacherNumber);
+		if (teacher == null) {
+			throw new NonExistingServiceException();
 		}
+		Calendar calendario = Calendar.getInstance();
+
+		persistentEnrolmentEvaluation.lockWrite(enrolmentEvaluationFromDb);
+
+		if (evaluationDate != null) {
+			enrolmentEvaluationFromDb.setExamDate(evaluationDate);
+		} else {
+			enrolmentEvaluationFromDb.setExamDate(calendario.getTime());
+		}
+		enrolmentEvaluationFromDb.setGrade(infoEnrolmentEvaluation.getGrade());
+		enrolmentEvaluationFromDb.setPersonResponsibleForGrade(teacher.getPerson());
+		enrolmentEvaluationFromDb.setGradeAvailableDate(calendario.getTime());
+		//					enrolmentEvaluation.setEmployee(employee);
+		//					enrolmentEvaluation.setWhen(calendario.getTime());
+		//					enrolmentEvaluation.setObservation("Lançamento de Notas na Secretaria");
+		enrolmentEvaluationFromDb.setCheckSum("");
 	}
+
+	private void cleanEnrolmentEvaluation(
+		IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation,
+		IEnrolmentEvaluation enrolmentEvaluationFromDb)
+		throws ExcepcaoPersistencia, ExistingPersistentException {
+		persistentEnrolmentEvaluation.lockWrite(enrolmentEvaluationFromDb);
+		enrolmentEvaluationFromDb.setCheckSum(null);
+		enrolmentEvaluationFromDb.setExamDate(null);
+		enrolmentEvaluationFromDb.setGrade(null);
+		enrolmentEvaluationFromDb.setGradeAvailableDate(null);
+		enrolmentEvaluationFromDb.setPersonResponsibleForGrade(null);
+	}
+
+	private IEnrolmentEvaluation getEnrolmentEvaluation(
+		IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation,
+		InfoEnrolmentEvaluation infoEnrolmentEvaluation)
+		throws ExcepcaoPersistencia, FenixServiceException {
+		IEnrolment enrolmentForCriteria = new Enrolment();
+		enrolmentForCriteria.setIdInternal(infoEnrolmentEvaluation.getInfoEnrolment().getIdInternal());
+
+		IEnrolmentEvaluation enrolmentEvaluationForCriteria = new EnrolmentEvaluation();
+		enrolmentEvaluationForCriteria.setEnrolment(enrolmentForCriteria);
+		List enrolmentEvaluationsForEnrolment = (List) persistentEnrolmentEvaluation.readByCriteria(enrolmentEvaluationForCriteria);
+		if (enrolmentEvaluationsForEnrolment.size() == 0) {
+			//		it will never happen!!
+			throw new FenixServiceException();
+		}
+		Collections.sort(enrolmentEvaluationsForEnrolment, new BeanComparator("enrolment.idInternal"));
+
+		//		we want last enrolment evaluation in case of improvement
+		IEnrolmentEvaluation enrolmentEvaluation =
+			(IEnrolmentEvaluation) enrolmentEvaluationsForEnrolment.get(enrolmentEvaluationsForEnrolment.size() - 1);
+		return enrolmentEvaluation;
+	}
+
+	//	private Funcionario readEmployee(IPessoa person) {
+	//		Funcionario employee = null;
+	//		SuportePersistente spJDBC = SuportePersistente.getInstance();
+	//		IFuncionarioPersistente persistentEmployee = spJDBC.iFuncionarioPersistente();
+	//
+	//		try {
+	//			spJDBC.iniciarTransaccao();
+	//
+	//			try {
+	//				employee = persistentEmployee.lerFuncionarioPorPessoa(person.getIdInternal().intValue());
+	//
+	//			} catch (Exception e) {
+	//				spJDBC.cancelarTransaccao();
+	//				e.printStackTrace();
+	//				return employee;
+	//			}
+	//
+	//			spJDBC.confirmarTransaccao();
+	//		} catch (Exception e) {
+	//			e.printStackTrace();
+	//		} finally {
+	//			return employee;
+	//		}
+	//	}
 
 	private InfoEnrolmentEvaluation completeEnrolmentEvaluation(InfoEnrolmentEvaluation infoEnrolmentEvaluation)
 		throws FenixServiceException {
@@ -209,10 +248,10 @@ public class InsertStudentsFinalEvaluation implements IServico {
 		IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory.getInstance();
 		IDegreeCurricularPlanStrategy degreeCurricularPlanStrategy =
 			degreeCurricularPlanStrategyFactory.getDegreeCurricularPlanStrategy(degreeCurricularPlan);
-		if (infoEnrolmentEvaluation.getGrade() == null || infoEnrolmentEvaluation.getGrade().length() == 0) {
-			return false;
-		} else {
-			return degreeCurricularPlanStrategy.checkMark(infoEnrolmentEvaluation.getGrade());
-		}
+		//		if (infoEnrolmentEvaluation.getGrade() == null || infoEnrolmentEvaluation.getGrade().length() == 0) {
+		//			return false;
+		//		} else {
+		return degreeCurricularPlanStrategy.checkMark(infoEnrolmentEvaluation.getGrade());
+		//		}
 	}
 }

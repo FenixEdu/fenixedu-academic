@@ -99,7 +99,7 @@ public class ServicoSeguroActualizarFuncsDocentes {
 				List resultTeacher = (List) broker.getCollectionByQuery(query);
 
 				if (funcionario == null && resultTeacher.size() == 0) {
-					throw new Exception("Erro ao Ler o Funcionario " + numeroMecanografico);
+					throw new Exception("Não encontro o funcionário para o professor " + numeroMecanografico);
 				}
 				if (funcionario == null && resultTeacher.size() != 0) {
 					throw new Exception(
@@ -148,11 +148,8 @@ public class ServicoSeguroActualizarFuncsDocentes {
 
 				persons.add(teacher.getPerson());
 			} catch (Exception e) {
-				e.printStackTrace();
 				System.out.println("\nError Migrating Employee " + numeroMecanografico + "\n");
-				//broker.abortTransaction();
-				//throw new Exception("\nError Migrating Employee " + numeroMecanografico + "\n" + e);
-				continue;
+				e.printStackTrace(System.out);
 			}
 		}
 		broker.commitTransaction();

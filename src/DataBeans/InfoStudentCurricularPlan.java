@@ -26,6 +26,20 @@ public class InfoStudentCurricularPlan extends InfoObject implements Serializabl
 	protected Specialization specialization;
 	protected Double givenCredits; 
 
+	/**
+	 * @return
+	 */
+	public Double getGivenCredits() {
+		return givenCredits;
+	}
+
+	/**
+	 * @param givenCredits
+	 */
+	public void setGivenCredits(Double givenCredits) {
+		this.givenCredits = givenCredits;
+	}
+
 	public InfoStudentCurricularPlan() {
 		setInfoDegreeCurricularPlan(null);
 		setInfoStudent(null);
@@ -72,23 +86,6 @@ public class InfoStudentCurricularPlan extends InfoObject implements Serializabl
 		result += "currentState = " + this.currentState + "]\n";
 		return result;
 	}
-
-
-	/**
-	 * @return
-	 */
-	public Double getGivenCredits() {
-		return givenCredits;
-	}
-
-	/**
-	 * @param givenCredits
-	 */
-	public void setGivenCredits(Double givenCredits) {
-		this.givenCredits = givenCredits;
-	}
-
-
 
 	/**
 	 * @return StudentCurricularPlanState

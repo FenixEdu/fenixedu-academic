@@ -51,12 +51,12 @@ public class StudentListDispatchAction extends DispatchAction {
 			infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan(); 
 
 			Integer id = infoDegreeCurricularPlan.getIdInternal();
-			Object args[] = { id , TipoCurso.MESTRADO_OBJ };
+
 			List result = null;
 	
 			try {
-
-			result = (List) serviceManager.executar(userView, "ReadStudentsFromDegreeCurricularPlan", args);
+				Object args[] = { id , TipoCurso.MESTRADO_OBJ };
+				result = (List) serviceManager.executar(userView, "ReadStudentsFromDegreeCurricularPlan", args);
 
 			} catch (NotAuthorizedException e) {
 				return mapping.findForward("NotAuthorized");
@@ -65,9 +65,25 @@ public class StudentListDispatchAction extends DispatchAction {
 			}
 
 			BeanComparator numberComparator = new BeanComparator("infoStudent.number");
-				Collections.sort(result, numberComparator);
+			Collections.sort(result, numberComparator);
 
 			request.setAttribute(SessionConstants.STUDENT_LIST, result);
+			
+			InfoExecutionDegree infoExecutionDegreeForRequest = null;
+			try {
+				Object args[] = { id };
+				infoExecutionDegreeForRequest = (InfoExecutionDegree) serviceManager.executar(userView, "ReadExecutionDegreeByDCPID", args);
+			} catch (NonExistingServiceException e) {
+				
+			} catch (FenixServiceException e) {
+				throw new FenixActionException(e);
+			}	
+			
+			if (infoExecutionDegreeForRequest != null){
+				request.setAttribute("infoExecutionDegree", infoExecutionDegreeForRequest);
+			}
+			
+			
 			return mapping.findForward("PrepareSuccess");
 		} else
 		  throw new Exception();   

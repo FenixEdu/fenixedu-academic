@@ -23,9 +23,6 @@ public class ClassTimeTableWithoutLinksLessonContentRenderer
 
 		List infoShiftList = lesson.getInfoShiftList();
 		for (int index = 0; index < infoShiftList.size(); index++) {
-			//InfoShift infoShift = (InfoShift) infoShiftList.get(index);
-			//InfoExecutionCourse infoExecutionCourse =
-			//	infoShift.getInfoDisciplinaExecucao();
 			strBuffer.append("&nbsp;(").append(lesson.getTipo()).append(
 				")&nbsp;");
 		}

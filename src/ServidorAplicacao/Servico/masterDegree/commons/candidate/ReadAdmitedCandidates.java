@@ -62,6 +62,7 @@ public class ReadAdmitedCandidates implements IServico {
 			int i = 0;
 			for (i=0; i<size; i++){ 
 				if(candidateList[i].equals(SituationName.ADMITIDO_STRING)
+					|| candidateList[i].equals(SituationName.ADMITED_SPECIALIZATION_STRING)
 					|| candidateList[i].equals(SituationName.ADMITED_CONDICIONAL_CURRICULAR_STRING)
 					|| candidateList[i].equals(SituationName.ADMITED_CONDICIONAL_FINALIST_STRING)
 					|| candidateList[i].equals(SituationName.ADMITED_CONDICIONAL_OTHER_STRING)) {

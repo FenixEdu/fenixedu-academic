@@ -29,21 +29,23 @@ public class ExamStudentRoom extends DomainObject implements IExamStudentRoom {
 		setStudent(student);
 		setRoom(room);
 	}
-	
+
 	public boolean equals(Object obj) {
 		boolean resultado = false;
 
 		if (obj instanceof IExamStudentRoom) {
 			IExamStudentRoom examStudentRoom = (IExamStudentRoom) obj;
-			
+			ISala room = examStudentRoom.getRoom();
+			ISala thisRoom = this.getRoom();
 			resultado =
 				this.getExam().equals(examStudentRoom.getExam())
-					&& this.getRoom().equals(examStudentRoom.getRoom())
+					&& (((thisRoom == null) && (room == null))
+						|| ((thisRoom != null) && (thisRoom.equals(room))))
 					&& this.getStudent().equals(examStudentRoom.getStudent());
 		}
 		return resultado;
 	}
-	
+
 	/**
 	 * @return
 	 */

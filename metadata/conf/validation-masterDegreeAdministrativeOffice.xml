@@ -41,9 +41,6 @@
 			</field>
 		</form>
 
-
-
-
     <!-- validation for the Create Candidate Form -->
     <form name="createCandidateForm">
       <field property="specialization" depends="required" page="1">
@@ -427,7 +424,6 @@
       </field>
 	</form>
   
-  
    <form name="chooseCourseListForm">
       <field property="attributedCredits" depends="floatGreaterThen" page="1">
         <arg0 key="message.additionalCredits" />
@@ -459,9 +455,6 @@
       </field>
 	</form>
 
-
-
-  
   </formset>
 
 </form-validation>

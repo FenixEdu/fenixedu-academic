@@ -14,11 +14,13 @@ import Dominio.Site;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Factory.ExecutionCourseSiteComponentBuilder;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingAssociatedCurricularCoursesServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
@@ -53,21 +55,18 @@ public class ExecutionCourseSiteComponentService implements IServico {
 		return _servico;
 	}
 
-	public Object run(
-		ISiteComponent commonComponent,
-		ISiteComponent bodyComponent,
-		Integer infoSiteCode,
-		Integer infoExecutionCourseCode,
-		Integer sectionIndex,
-		Integer curricularCourseId)
-		throws FenixServiceException {
+	public Object run(ISiteComponent commonComponent, ISiteComponent bodyComponent, Integer infoSiteCode, Integer infoExecutionCourseCode, Integer sectionIndex, Integer curricularCourseId)
+		throws FenixServiceException, NonExistingAssociatedCurricularCoursesServiceException {
 		ExecutionCourseSiteView siteView = null;
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IDisciplinaExecucaoPersistente persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
 			IPersistentSite persistentSite = sp.getIPersistentSite();
+			ITurnoPersistente turnoPersistente = sp.getITurnoPersistente();
+
 			ISite site = null;
+			ISite siteShift = null;
 			if (infoSiteCode != null) {
 
 				site = (ISite) persistentSite.readByOId(new Site(infoSiteCode), false);
@@ -75,18 +74,18 @@ public class ExecutionCourseSiteComponentService implements IServico {
 					throw new NonExistingServiceException();
 				}
 			} else {
-				IDisciplinaExecucao executionCourse =
-					(IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(infoExecutionCourseCode), false);
+				IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(infoExecutionCourseCode), false);
 				if (executionCourse == null) {
-					throw new NonExistingServiceException();
+					throw new FenixServiceException();
 				}
 				site = persistentSite.readByExecutionCourse(executionCourse);
 			}
-			ExecutionCourseSiteComponentBuilder componentBuilder = ExecutionCourseSiteComponentBuilder.getInstance();
-			commonComponent = componentBuilder.getComponent(commonComponent, site, null, null,null);
-			bodyComponent = componentBuilder.getComponent(bodyComponent, site, commonComponent, sectionIndex,curricularCourseId);
-
-			siteView = new ExecutionCourseSiteView(commonComponent, bodyComponent);
+			if (site != null) {
+				ExecutionCourseSiteComponentBuilder componentBuilder = ExecutionCourseSiteComponentBuilder.getInstance();
+				commonComponent = componentBuilder.getComponent(commonComponent, site, null, null, null);
+				bodyComponent = componentBuilder.getComponent(bodyComponent, site, commonComponent, sectionIndex, curricularCourseId);
+				siteView = new ExecutionCourseSiteView(commonComponent, bodyComponent);
+			}
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}

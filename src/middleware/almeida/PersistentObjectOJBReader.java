@@ -971,6 +971,44 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		return null;
 	}
 
+	public IBranch readBranchByCodeAndDegree(
+		String branchCode,
+		Integer degreeCode) {
+		Criteria criteria = new Criteria();
+		if (branchCode != null && branchCode.length() > 0) {
+			criteria.addEqualTo("code", branchCode);
+		} else {
+			criteria.addEqualTo("code", new String());
+			//criteria.addLike("code", null);
+		}
+		criteria.addEqualTo(
+			"degreeCurricularPlan.degree.idInternal",
+			degreeCode);
+		criteria.addLessOrEqualThan(
+			"degreeCurricularPlan.idInternal",
+			new Integer(23));
+
+		List result = query(Branch.class, criteria);
+
+		if (result.size() == 1) {
+			return (IBranch) result.get(0);
+		} else {
+			System.out.println(
+				"Found: ["
+					+ result.size()
+					+ "] branches for degree ["
+					+ degreeCode
+					+ "] code ["
+					+ branchCode
+					+ "]");
+			if (result.size() == 2) {
+				System.out.println(result.get(0));
+				System.out.println(result.get(1));
+			}
+			return null;
+		}
+	}
+
 	public List readAllExecutionPeriods() {
 		List result = query(ExecutionPeriod.class, null);
 		if (result.size() > 0) {
@@ -1036,5 +1074,11 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 			return null;
 		}
 		return result;
+	}
+	/**
+	 * @param persistentObject
+	 */
+	public void delete(Object persistentObject) {
+		super.broker.delete(persistentObject);
 	}
 }

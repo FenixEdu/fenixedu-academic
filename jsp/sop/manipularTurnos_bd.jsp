@@ -30,6 +30,8 @@
 		        <td class="listClasses-header"><bean:message key="property.shift.type"/></td>
 				<td class="listClasses-header"><bean:message key="property.lessons"/></td>
 	          	<td class="listClasses-header"><bean:message key="property.shift.capacity"/></td>
+            	<td class="listClasses-header"><bean:message key="property.shift.ocupation"/></td>
+            	<td class="listClasses-header"><bean:message key="property.shift.percentage"/></td>
             	<td class="listClasses-header"><bean:message key="label.link.shift.classes"/></td>
             </tr>
     	<logic:iterate id="infoTurno" name="infoTurnosDeDisciplinaExecucao">
@@ -39,6 +41,8 @@
               	<td class="listClasses"><bean:write name="infoTurno" property="tipo"/></td>
               	<td class="listClasses"><bean:write name="infoTurno" property="lessons"/></td> 
               	<td class="listClasses"><bean:write name="infoTurno" property="lotacao"/></td>
+    	       	<td class="listClasses"><bean:write name="infoTurno" property="ocupation"/></td>
+              	<td class="listClasses"><bean:write name="infoTurno" property="percentage"/> %</td>
 			   	<td class="listClasses">
 			   		<bean:define id="shiftOID" name="infoTurno" property="idInternal"/>
                		<html:link page="<%= "/viewClassesWithShift.do?"

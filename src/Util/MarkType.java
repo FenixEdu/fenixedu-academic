@@ -20,9 +20,9 @@ public class MarkType {
 	public static final MarkType TYPE20_OBJ = new MarkType(20);
 	public static final MarkType TYPE5_OBJ = new MarkType(5);
 	
-	private static final Object[] REP_MARKS = {"RE" ,"R.E." ,"REP"};
-	private static final Object[] NA_MARKS = {"NA","N.A."};
-	private static final Object[] OTHER_MARKS = {"RE" ,"R.E." ,"REP" , "NA","N.A.", "AP"};
+	private static final Object[] REP_MARKS = {"RE" ,"R.E." ,"REP", "re", "rep"};
+	private static final Object[] NA_MARKS = {"NA","N.A.", "na"};
+	private static final Object[] OTHER_MARKS = {"RE" ,"R.E." ,"REP" , "NA","N.A.", "AP", "ap", "re", "rep", "na"};
 	private static final Object[] TYPE20_MARKS = {"10","11","12","13","14","15","16","17","18","19","20"}; 
 	private static final Object[] TYPE5_MARKS = {"3" , "4", "5"};
 

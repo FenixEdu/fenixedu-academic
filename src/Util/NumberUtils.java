@@ -18,6 +18,10 @@ public class NumberUtils {
 	 */
 	public static Double formatNumber(Double numberToFormat, int decimalPlacement){
 
+		if (decimalPlacement == 0){
+			return new Double(Math.round(numberToFormat.floatValue()));
+		}
+
 		NumberFormat numberFormat = NumberFormat.getInstance();
 		StringBuffer stringBuffer = new StringBuffer();
 		FieldPosition fieldPosition = new FieldPosition(0);

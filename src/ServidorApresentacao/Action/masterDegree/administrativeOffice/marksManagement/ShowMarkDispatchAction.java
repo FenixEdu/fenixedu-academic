@@ -14,6 +14,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.InfoEnrolment;
+import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoSiteEnrolmentEvaluation;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
@@ -43,7 +44,7 @@ public class ShowMarkDispatchAction extends DispatchAction {
 		String degree = getFromRequest("degree", request);
 		String curricularCourse = getFromRequest("curricularCourse", request);
 		Integer curricularCourseCode = new Integer(getFromRequest("curricularCourseCode", request));
-//		List enrolmentStudentList = (List) request.getAttribute("studentList");
+
 		
 		
 		//put request
@@ -84,6 +85,9 @@ public class ShowMarkDispatchAction extends DispatchAction {
 			return mapping.findForward("NoStudents");
 		}
 		InfoEnrolment infoEnrolment = (InfoEnrolment)listEnrolmentEvaluation.get(0);
+		InfoEnrolmentEvaluation eva = (InfoEnrolmentEvaluation)infoEnrolment.getInfoEvaluations().get(0);
+		
+
 		request.setAttribute("showMarks", "showMarks");
 		request.setAttribute("studentList", listEnrolmentEvaluation);
 		return mapping.findForward("displayStudentList");

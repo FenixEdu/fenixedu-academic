@@ -214,7 +214,7 @@ public class SimilarWaterman {
 
   }
 
-  public static int sw(char str1[], char str2[], int len1, int len2, int maxDist) {
+  public int sw(char str1[], char str2[], int len1, int len2, int maxDist) {
 
     //System.out.println("entering sw: str1: " +  String.valueOf(str1, 0, len1)+ " str2: " + String.valueOf(str2, 0, len2)+ " len1: " + len1 + " len2: " + len2 +  " maxDist: " + maxDist );
 
@@ -271,7 +271,7 @@ public class SimilarWaterman {
   }
 
   /* Smith-Waterman algorithm with Ukonnen simplification*/
-  public static int computeDistance(char str1[], char str2[], int len1, int len2, int maxDist) {
+  public int computeDistance(char str1[], char str2[], int len1, int len2, int maxDist) {
     int lenDiff;
 
     /*if (abs(len1 - len2) > maxDist)

@@ -30,8 +30,10 @@ import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import Util.Data;
 import Util.EnrolmentState;
 import Util.Specialization;
 
@@ -109,7 +111,8 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 				//get informations
 				List enrolmentList = null;				
 				if (certificate.equals("Inscrição")){
-					Object args[] = {infoStudentCurricularPlan, EnrolmentState.ENROLED};
+//					, EnrolmentState.ENROLED
+					Object args[] = {infoStudentCurricularPlan};
 					try {
 						enrolmentList = (List) serviceManager.executar(userView, "GetEnrolmentList", args);
 
@@ -275,7 +278,21 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 								return new ActionForward(mapping.getInput());
 							}
 							InfoEnrolmentEvaluation infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();
-							String conclusionDate = "00/00/00";
+							
+							
+							String conclusionDate = null;
+							
+							Date endOfScholarshipDate = null;
+							try {
+								Object argsTemp[] = { infoStudentCurricularPlan };
+								endOfScholarshipDate = (Date) serviceManager.executar(userView, "GetEndOfScholarshipDate", argsTemp);
+			
+							} catch (FenixServiceException e) {
+								throw new FenixActionException(e);
+							}
+							
+							conclusionDate = Data.format2DayMonthYear(endOfScholarshipDate);
+							
 							String dataAux = null;					
 //							Object result = null;
 							List normalEnrolment = new ArrayList();

@@ -116,7 +116,7 @@ public class LoadStudents extends DataFileLoader {
 		sp.iniciarTransaccao();
 
 		IPessoa pessoaTemp = new Pessoa();
-		pessoaTemp.setUsername(numero);
+		pessoaTemp.setNumeroDocumentoIdentificacao(bi);
 
 		IPessoa pessoa =
 			(IPessoa)
@@ -125,12 +125,15 @@ public class LoadStudents extends DataFileLoader {
 		if (pessoa == null) {
 			pessoa = pessoaTemp;
 		}
+		iPessoaPersistente.simpleLockWrite(pessoa);
+		
 		pessoa.setNumeroDocumentoIdentificacao(bi);
 		pessoa.setEmail(email);
 		pessoa.setNome(nome);
 		pessoa.setTipoDocumentoIdentificacao(new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
+		pessoa.setUsername("L"+numero);
 
-		iPessoaPersistente.escreverPessoa(pessoa);
+		//iPessoaPersistente.escreverPessoa(pessoa);
 
 		IStudent studentTemp = new Student(null, null, pessoa, null);
 
@@ -141,11 +144,13 @@ public class LoadStudents extends DataFileLoader {
 		if (student == null) {
 			student = studentTemp;
 		}
+		iAlunoPersistente.simpleLockWrite(student);
+		
 		student.setDegreeType(new TipoCurso(TipoCurso.LICENCIATURA));
 		student.setNumber(new Integer(numero));
 		student.setState(new StudentState(0));
 
-		iAlunoPersistente.lockWrite(student);
+		//iAlunoPersistente.lockWrite(student);
 
 		/* Create Student Curricular Plan */
 
@@ -204,6 +209,7 @@ public class LoadStudents extends DataFileLoader {
 	 * @param nome
 	 * @param email
 	 * @return Pessoa
+	 * @deprecated
 	 */
 	private static Pessoa createPerson(
 		String bi,

@@ -883,6 +883,9 @@
      		 <exception type="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
 		                key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
                         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+     		 <exception type="ServidorApresentacao.Action.exceptions.InvalidInformationInFormActionException"
+		                key="ServidorApresentacao.Action.exceptions.InvalidInformationInFormActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
 	         <forward name="PrepareSuccess" path="/guide/createGuide.jsp"/> 
 	         <forward name="CreateCandidateGuide" path="/guide/createGuideReady.jsp"/>  
 	         <forward name="CreateStudentGuide" path="/guide/guideMenu.jsp"/>  
@@ -1146,7 +1149,7 @@
             key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
             handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
       	  <forward name="PrepareReady" path="/certificate/chooseCertificate.jsp"/>
-      	  <forward name="ChooseSuccess" path="/printCertificate.do?method=prepare&amp;page=0"/>     	  
+      	  <forward name="ChooseSuccess" path="/printCertificate.do?method=prepare"/>     	  
       </action>
 
 		<!-- Action to prepare the chooseCertificateInfoForm -->
@@ -1162,7 +1165,7 @@
             key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
             handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
       	 <forward name="PrepareReady" path="/certificate/chooseDeclaration.jsp"/>
-   		 <forward name="ChooseSuccess" path="/printDeclaration.do?method=prepare&amp;page=0"/>
+   		 <forward name="ChooseSuccess" path="/printDeclaration.do?method=prepare"/>
       </action>
       
       	<!-- Action to prepare the chooseFinalResultInfoForm -->
