@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
 
+import Dominio.AreaCurricularCourseGroup;
 import Dominio.CurricularCourseGroup;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
@@ -36,7 +37,7 @@ public class CurricularCourseGroupOJB extends ObjectFenixOJB implements IPersist
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("keyBranch", branch.getIdInternal());
 		criteria.addEqualTo("areaType", areaType);
-		return queryList(CurricularCourseGroup.class, criteria);
+		return queryList(AreaCurricularCourseGroup.class, criteria);
 	}
 
     public List readByBranch(IBranch branch) throws ExcepcaoPersistencia
@@ -56,7 +57,7 @@ public class CurricularCourseGroupOJB extends ObjectFenixOJB implements IPersist
 		criteria.addEqualTo("branch.idInternal", branch.getIdInternal());
 		criteria.addEqualTo("curricularCourses.idInternal", curricularCourse.getIdInternal());
 		criteria.addEqualTo("areaType", areaType);
-		return (ICurricularCourseGroup) queryObject(CurricularCourseGroup.class, criteria);
+		return (ICurricularCourseGroup) queryObject(AreaCurricularCourseGroup.class, criteria);
 	}
 
 	public ICurricularCourseGroup readByBranchAndScientificAreaAndAreaType(
@@ -69,7 +70,7 @@ public class CurricularCourseGroupOJB extends ObjectFenixOJB implements IPersist
     	criteria.addEqualTo("branch.idInternal", branch.getIdInternal());
     	criteria.addEqualTo("scientificAreas.idInternal", scientificArea.getIdInternal());
     	criteria.addEqualTo("areaType", areaType);
-    	return (ICurricularCourseGroup) queryObject(CurricularCourseGroup.class, criteria);
+    	return (ICurricularCourseGroup) queryObject(AreaCurricularCourseGroup.class, criteria);
     }
 
 }
