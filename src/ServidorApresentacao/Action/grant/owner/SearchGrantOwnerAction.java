@@ -32,13 +32,13 @@ public class SearchGrantOwnerAction extends SearchAction {
         String idNumber = (String) searchGrantOwnerForm.get("idNumber");
         Integer idType = (Integer) searchGrantOwnerForm.get("idType");
         Integer startIndex = (Integer) searchGrantOwnerForm.get("startIndex");
-
+        String justGrantOwner = (String)searchGrantOwnerForm.get("justGrantOwner");
+        
         Boolean onlyGrantOwner = new Boolean(false);
-        if (searchGrantOwnerForm.get("justGrantOwner") != null &&
-                !searchGrantOwnerForm.get("justGrantOwner").equals("null")) {
-            request.setAttribute("justGrantOwner", "yes");
+        if (justGrantOwner.equals("on")) {
             onlyGrantOwner = new Boolean(true);
         }
+        request.setAttribute("justGrantOwner", justGrantOwner);
         request.setAttribute("name", name);
 
         Object[] args = { name, idNumber, idType, null, onlyGrantOwner, startIndex };
@@ -78,7 +78,7 @@ public class SearchGrantOwnerAction extends SearchAction {
     
     private boolean hasNextSpan(Integer startIndex, Integer numberOfElementsInResult) {
         
-        if((startIndex.intValue() + SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue() - 1) < numberOfElementsInResult.intValue()) {
+        if((startIndex.intValue() + SessionConstants.NUMBER_OF_ELEMENTS_IN_SPAN.intValue()) < numberOfElementsInResult.intValue()) {
             return true;
         }            
         return false;
