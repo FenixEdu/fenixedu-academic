@@ -195,6 +195,8 @@ public abstract class SessionConstants {
 	public static final String INFO_BRANCH = "info_branch";
 	public static final String MASTER_DEGREE_THESIS_HISTORY = "master_degree_thesis_history";
 	public static final String MASTER_DEGREE_PROOF_HISTORY = "master_degree_proof_history";
+	public static final String SEARCH_EXTERNAL_JURIES = "search_external_juries";
+	public static final String EXTERNAL_JURIES_SEARCH_RESULTS = "external_juries_search_results";
 	
 	
 
