@@ -81,9 +81,9 @@ public class EditGuideDispatchActionEditGuideInformationMethodTest
 		requestParameters.put("othersPrice","10.25");
 		requestParameters.put("othersRemarks","Stamps");
 		requestParameters.put("contributor","456");
-		requestParameters.put("quantityList1","2");
-		requestParameters.put("quantityList2","3");
-		requestParameters.put("quantityList3","4");
+		requestParameters.put("quantityList0","2");
+		requestParameters.put("quantityList1","3");
+		requestParameters.put("quantityList2","4");
 		return requestParameters;
 	}
 
@@ -100,9 +100,13 @@ public class EditGuideDispatchActionEditGuideInformationMethodTest
 	protected Map getExistingAttributesListToVerifyInSuccessfulExecution() {
 		HashMap attributes = new HashMap();
 		List sessionAttributes = new ArrayList();
-		sessionAttributes.add(SessionConstants.GUIDE);
 		sessionAttributes.add(SessionConstants.GUIDE_LIST);
 		attributes.put(new Integer(ScopeConstants.SESSION),sessionAttributes);
+
+		List requestAttributes = new ArrayList();
+		requestAttributes.add(SessionConstants.GUIDE);
+		attributes.put(new Integer(ScopeConstants.REQUEST),requestAttributes);
+
 		return attributes;
 	}
 
