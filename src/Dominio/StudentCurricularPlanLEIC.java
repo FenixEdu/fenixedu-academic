@@ -12,6 +12,7 @@ import ServidorAplicacao.Servico.exceptions.BothAreasAreTheSameServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import Util.AreaType;
+import Util.enrollment.CurricularCourseEnrollmentType;
 
 /**
  * @author João Mota
@@ -97,6 +98,69 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlan implements 
     }
     
  
+    public CurricularCourseEnrollmentType getCurricularCourseEnrollmentType(
+            ICurricularCourse curricularCourse, IExecutionPeriod currentExecutionPeriod) {
+
+        if (!curricularCourse.hasActiveScopeInGivenSemester(currentExecutionPeriod.getSemester())) {
+            return CurricularCourseEnrollmentType.NOT_ALLOWED;
+        }
+
+        if (isCurricularCourseApproved(curricularCourse)) {
+            return CurricularCourseEnrollmentType.NOT_ALLOWED;
+        }
+
+        List enrollmentsWithEnrolledStateInCurrentExecutionPeriod = getAllStudentEnrolledEnrollmentsInExecutionPeriod(currentExecutionPeriod);
+
+        for (int i = 0; i < enrollmentsWithEnrolledStateInCurrentExecutionPeriod.size(); i++) {
+            IEnrollment enrollment = (IEnrollment) enrollmentsWithEnrolledStateInCurrentExecutionPeriod
+                    .get(i);
+            if (curricularCourse.equals(enrollment.getCurricularCourse())) {
+                return CurricularCourseEnrollmentType.NOT_ALLOWED;
+            }
+        }
+        //        List result = (List) CollectionUtils.collect(
+        //                enrollmentsWithEnrolledStateInCurrentExecutionPeriod, new Transformer() {
+        //                    public Object transform(Object obj) {
+        //                        IEnrollment enrollment = (IEnrollment) obj;
+        //                        return enrollment.getCurricularCourse();
+        //                    }
+        //                });
+        //        if (result.contains(curricularCourse)) {
+        //            return CurricularCourseEnrollmentType.NOT_ALLOWED;
+        //        }
+
+        List enrollmentsWithEnrolledStateInPreviousExecutionPeriod = getAllStudentEnrolledEnrollmentsInExecutionPeriod(currentExecutionPeriod
+                .getPreviousExecutionPeriod());
+
+        //        List result = (List)
+        // CollectionUtils.collect(enrollmentsWithEnrolledStateInPreviousExecutionPeriod,
+        //                new Transformer() {
+        //                    public Object transform(Object obj) {
+        //                        IEnrollment enrollment = (IEnrollment) obj;
+        //                        return enrollment.getCurricularCourse();
+        //                    }
+        //                });
+        //
+        //        if (result.contains(curricularCourse)) {
+        //            return CurricularCourseEnrollmentType.TEMPORARY;
+        //        }
+        for (int i = 0; i < enrollmentsWithEnrolledStateInPreviousExecutionPeriod.size(); i++) {
+            IEnrollment enrollment = (IEnrollment) enrollmentsWithEnrolledStateInPreviousExecutionPeriod
+                    .get(i);
+            if (curricularCourse.equals(enrollment.getCurricularCourse())) {
+                return CurricularCourseEnrollmentType.TEMPORARY;
+            }
+        }
+
+        if (isMathematicalCourse(curricularCourse)) {
+            if (hasCurricularCourseEquivalenceIn(curricularCourse,
+                    enrollmentsWithEnrolledStateInPreviousExecutionPeriod))
+                return CurricularCourseEnrollmentType.TEMPORARY;
+        }
+
+        return CurricularCourseEnrollmentType.DEFINITIVE;
+    }
+    
     private boolean checkCredits(int specAreaCredits, int specCredits, int secAreaCredits, int secCredits) {
         if((specCredits > specAreaCredits) || (secCredits > secAreaCredits))
             return false;
