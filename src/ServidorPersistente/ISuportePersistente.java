@@ -15,6 +15,7 @@ import ServidorPersistente.Seminaries.IPersistentSeminaryModality;
 import ServidorPersistente.Seminaries.IPersistentSeminaryTheme;
 import ServidorPersistente.gesdis.IPersistentCourseReport;
 import ServidorPersistente.grant.IPersistentGrantOwner;
+import ServidorPersistente.teacher.IPersistentCareer;
 import ServidorPersistente.teacher.IPersistentCategory;
 
 
@@ -189,4 +190,5 @@ public interface ISuportePersistente {
 	
 	public IPersistentCourseReport getIPersistentCourseReport();
 	public IPersistentCategory getIPersistentCategory();
+	public IPersistentCareer getIPersistentCareer();
 }

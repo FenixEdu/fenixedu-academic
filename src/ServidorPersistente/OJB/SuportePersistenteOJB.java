@@ -122,6 +122,7 @@ import ServidorPersistente.OJB.Seminaries.ModalityOJB;
 import ServidorPersistente.OJB.Seminaries.ThemeOJB;
 import ServidorPersistente.OJB.gesdis.CourseReportOJB;
 import ServidorPersistente.OJB.grant.owner.GrantOwnerOJB;
+import ServidorPersistente.OJB.teacher.CareerOJB;
 import ServidorPersistente.OJB.teacher.CategoryOJB;
 import ServidorPersistente.Seminaries.IPersistentSeminary;
 import ServidorPersistente.Seminaries.IPersistentSeminaryCandidacy;
@@ -132,6 +133,7 @@ import ServidorPersistente.Seminaries.IPersistentSeminaryModality;
 import ServidorPersistente.Seminaries.IPersistentSeminaryTheme;
 import ServidorPersistente.gesdis.IPersistentCourseReport;
 import ServidorPersistente.grant.IPersistentGrantOwner;
+import ServidorPersistente.teacher.IPersistentCareer;
 import ServidorPersistente.teacher.IPersistentCategory;
 
 public class SuportePersistenteOJB implements ISuportePersistente {
@@ -733,5 +735,9 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	
 	public IPersistentCategory getIPersistentCategory() {
 		return new CategoryOJB();
+	}
+	
+	public IPersistentCareer getIPersistentCareer() {
+		return new CareerOJB();
 	}
 }
