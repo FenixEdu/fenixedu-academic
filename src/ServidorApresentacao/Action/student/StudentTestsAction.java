@@ -18,7 +18,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.dbunit.util.Base64;
+import org.apache.xerces.impl.dv.util.Base64;
 
 import DataBeans.InfoSiteDistributedTests;
 import DataBeans.InfoStudentTestQuestion;
@@ -195,7 +195,7 @@ public class StudentTestsAction extends FenixDispatchAction {
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-		byte[] imageData = Base64.decode(img);
+		byte[] imageData = Base64.decode(img.getBytes());
 		try {
 			response.reset();
 			response.setContentType(imgTypeString);
