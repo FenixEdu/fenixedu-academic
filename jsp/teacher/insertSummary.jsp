@@ -213,11 +213,11 @@
 
 <br/>
 <br/>
-<html:submit styleClass="inputbutton" onclick="this.form.save.value='0'"><bean:message key="button.save"/>                    		         	
+<html:submit styleClass="inputbutton" titleKey="message.button.save" onclick="this.form.save.value='0'"><bean:message key="button.save"/>                    		         	
 </html:submit> 
-<html:submit styleClass="inputbutton" onclick="this.form.save.value='1'" ><bean:message key="button.save.new"/>                    		         	
+<html:submit styleClass="inputbutton" titleKey="message.button.save.new" onclick="this.form.save.value='1'" ><bean:message key="button.save.new"/>                    		         	
 </html:submit> 
-<html:submit styleClass="inputbutton" onclick="this.form.save.value='2'"><bean:message key="button.save.equal"/>                    		         	
+<html:submit styleClass="inputbutton" titleKey="message.button.save.equal" onclick="this.form.save.value='2'"><bean:message key="button.save.equal"/>                    		         	
 </html:submit> 
 <html:reset styleClass="inputbutton"><bean:message key="label.clear"/>
 </html:reset>  
