@@ -39,7 +39,7 @@ public class UnEnrollStudentInExam implements IServico {
 		return "UnEnrollStudentInExam";
 	}
 
-	public boolean run(String username, Integer examId)
+	public Boolean run(String username, Integer examId)
 		throws FenixServiceException {
 			
 		try {
@@ -62,7 +62,7 @@ public class UnEnrollStudentInExam implements IServico {
 			throw new FenixServiceException(e);
 		}
 
-		return true;
+		return new Boolean(true);
 
 	}
 
