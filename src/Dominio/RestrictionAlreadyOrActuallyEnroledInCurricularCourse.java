@@ -11,7 +11,7 @@ import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 /**
  * @author jpvl
  */
-public class RestrictionEnrolmentInCurricularCourse extends Restriction implements IRestrictionCurricularCourseAlreadyEnrolled {
+public class RestrictionAlreadyOrActuallyEnroledInCurricularCourse extends Restriction implements IRestrictionCurricularCourseAlreadyEnrolled {
 	private ICurricularCourse curricularCourseAlreadyEnroled;
 	private Integer keyCurricularCourseAlreadyEnroled;
 	/* (non-Javadoc)
