@@ -3,9 +3,12 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-
-
 <span class="error"><html:errors/></span>	
+<logic:notPresent name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>">
+<jsp:include page="curriculumForm.jsp"/>
+</logic:notPresent>
+<logic:present name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" >
+
 <bean:message key="title.program"/>
 <table>
 <tr>
@@ -27,3 +30,4 @@
 	</td>
 </tr>	
 </table>
+</logic:present>

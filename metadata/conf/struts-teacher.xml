@@ -19,14 +19,25 @@
         <form-property name="subject" type="java.lang.String" />
         <form-property name="body" type="java.lang.String" />
       </form-bean>
-      
-      
+     <!--curriculum forms --> 
+     <form-bean name="executionCourseCurriculumForm"
+		type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">		
+		<form-property name="generalObjectives" type="java.lang.String" />
+		<form-property name="operacionalObjectives" type="java.lang.String" />
+		<form-property name="program" type="java.lang.String" />
+	</form-bean>
+	
 	<form-bean name="executionCourseObjectivesForm"
 		type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">		
 		<form-property name="generalObjectives" type="java.lang.String" />
 		<form-property name="operacionalObjectives" type="java.lang.String" />
 	</form-bean>
-
+	
+	<form-bean name="executionCourseProgramForm"
+		type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+		<form-property name="program" type="java.lang.String" />
+	</form-bean>
+	<!-- Announcement Forms  -->
 	<form-bean name="announcementManagementForm"
 		type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 		<form-property name="index" type="java.lang.Integer" />
@@ -34,10 +45,7 @@
 	</form-bean>
 	
 	
-	<form-bean name="executionCourseProgramForm"
-		type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-		<form-property name="program" type="java.lang.String" />
-	</form-bean>
+	
 	
 	
 	<form-bean name="bibliographicReferenceForm"
@@ -289,6 +297,17 @@
 		>    
      <forward name="viewProgram" path="/viewProgram.jsp"/>
      <forward name="editProgram" path="/editProgram.jsp"/>
+     
+	</action>
+	
+	<action 
+		name="executionCourseCurriculumForm"
+		parameter="method"
+		path="/curriculumManagerDA"
+        type="ServidorApresentacao.Action.teacher.CurriculumManagerDispatchAction"
+		>    
+     <forward name="viewCurriculum" path="/viewSite.jsp"/>
+    
      
 	</action>
 	

@@ -39,9 +39,9 @@ public class EditCurriculum implements IServico {
 	public Boolean run(InfoCurriculum oldInfoCurriculum, InfoCurriculum newInfoCurriculum)
 		throws FenixServiceException {
 		try {
-			System.out.println("entrei no serviço");
+			
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			System.out.println("######## oldInfoCurriculum: "+oldInfoCurriculum);
+			
             ICurriculum oldCurriculum = Cloner.copyInfoCurriculum2ICurriculum(oldInfoCurriculum);
 			ICurriculum newCurriculum = Cloner.copyInfoCurriculum2ICurriculum(newInfoCurriculum);
             
