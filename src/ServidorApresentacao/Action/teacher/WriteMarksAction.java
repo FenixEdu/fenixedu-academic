@@ -1,5 +1,6 @@
 package ServidorApresentacao.Action.teacher;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -12,11 +13,14 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.InfoDegreeCurricularPlan;
+import DataBeans.InfoFrequenta;
 import DataBeans.InfoMark;
 import DataBeans.InfoSiteMarks;
+import DataBeans.InfoStudent;
 import DataBeans.TeacherAdministrationSiteView;
 import DataBeans.util.Cloner;
 import Dominio.IDegreeCurricularPlan;
@@ -44,10 +48,27 @@ public class WriteMarksAction extends DispatchAction {
 		HttpSession session = request.getSession();
 		ActionErrors actionErrors = new ActionErrors();
 
-		List marksList = null;
-		
-		//TODO: transform form into list with student's number and students's mark
-		
+		List marksList = new ArrayList();
+				
+		DynaActionForm marksForm = (DynaActionForm) form;
+		Integer[] studentsNumbers = (Integer[]) marksForm.get("studentsNumbers");
+		String[] marks	= (String[]) marksForm.get("marks");
+		//transform form into list with student's number and students's mark
+		for (int i = 0; i < marks.length; i++) {
+			InfoStudent infoStudent = new InfoStudent();
+			infoStudent.setNumber((Integer) studentsNumbers[i]);		
+			
+			InfoFrequenta infoFrequenta = new InfoFrequenta();
+			infoFrequenta.setAluno(infoStudent);
+			
+			InfoMark infoMark = new InfoMark();
+			infoMark.setInfoFrequenta(infoFrequenta);
+			
+			infoMark.setMark((String) marks[i]);
+			
+			marksList.add(infoMark);	
+		}
+				
 		Integer objectCode = getObjectCode(request);
 		Integer examCode = getExamCode(request);
 
@@ -56,23 +77,26 @@ public class WriteMarksAction extends DispatchAction {
 		Object[] args = { objectCode, examCode, marksList };
 		GestorServicos manager = GestorServicos.manager();
 		TeacherAdministrationSiteView siteView = null;
-		
+
 		try {
 			siteView = (TeacherAdministrationSiteView) manager.executar(userView, "InsertExamMarks", args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-		
-		//		check for errors in service
+
+		// check for errors in service
 		InfoSiteMarks infoSiteMarks = (InfoSiteMarks) siteView.getComponent();
 		if (infoSiteMarks.getMarksListErrors() != null && infoSiteMarks.getMarksListErrors().size() > 0) {
 			ListIterator iterator = infoSiteMarks.getMarksListErrors().listIterator();
 			while (iterator.hasNext()) {
 				InfoMark infoMark = (InfoMark) iterator.next();
 				if (isValidMark(infoMark)) {
-					actionErrors.add("studentExistence", new ActionError("errors.student.nonExisting", infoMark.getInfoFrequenta().getAluno().getNumber()));
+					actionErrors.add(
+						"studentExistence",
+						new ActionError("errors.student.nonExisting", infoMark.getInfoFrequenta().getAluno().getNumber()));
 				} else {
-					actionErrors.add("invalidMark",
+					actionErrors.add(
+						"invalidMark",
 						new ActionError("errors.invalidMark", infoMark.getMark(), infoMark.getInfoFrequenta().getAluno().getNumber()));
 				}
 			}
@@ -109,9 +133,8 @@ public class WriteMarksAction extends DispatchAction {
 
 	private boolean isValidMark(InfoMark infoMark) {
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
-			infoMark.getInfoFrequenta().getEnrolment().getInfoStudentCurricularPlan().getInfoDegreeCurricularPlan();
-		IDegreeCurricularPlan degreeCurricularPlan =
-			Cloner.copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(infoDegreeCurricularPlan);
+			infoMark.getInfoFrequenta().getInfoEnrolment().getInfoStudentCurricularPlan().getInfoDegreeCurricularPlan();
+		IDegreeCurricularPlan degreeCurricularPlan = Cloner.copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(infoDegreeCurricularPlan);
 
 		// test marks by execution course: strategy 
 		IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory.getInstance();

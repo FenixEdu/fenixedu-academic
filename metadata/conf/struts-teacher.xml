@@ -150,6 +150,15 @@
 			<form-property name="page" type="java.lang.Integer"></form-property>               
 		</form-bean> 		          
 	
+		<!-- Form for marks list -->
+		<form-bean name="marksForm"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+        	dynamic="true">
+	        <form-property name="examCode" type="java.lang.Integer" />
+    	    <form-property name="objectCode" type="java.lang.Integer" />
+        	<form-property name="studentsNumbers"  type="java.lang.Integer[]" />
+	        <form-property name="marks"  type="java.lang.String[]" />
+		</form-bean>	
 
     </form-beans>
 
@@ -560,6 +569,7 @@
 		  >
        <forward name="showStudents" path="showStudentsEnrolledInExam.jsp"/>
 	</action>	
+	
 	<action path="/distributeStudentsByRoom"
 		name="roomDistributionForm"
 		scope="request"
@@ -611,6 +621,34 @@
 				<forward name="success" path="/viewStudents.jsp" />
 		</action>				
 	<!-- End Students list -->
+	
+	<!-- Marks List -->	
+	<action 
+		path="/showMarksListOptions"
+		scope="request"
+		type="ServidorApresentacao.Action.teacher.ShowMarksListOptionsAction"
+		  >
+		  
+       <forward name="showMarksListOptions" path="/showMarksListOptions.jsp" />       
+	</action>
+	<action 
+		path="/marksList"
+		scope="request"
+		parameter="method"
+		type="ServidorApresentacao.Action.teacher.MarksListAction"
+		  >
+       <forward name="marksList" path="/marksList.jsp" />       
+	</action>
+	<action 
+		path="/writeMarks"
+		input="/marksList.do?method=loadMarksOnline"
+		name="marksForm"
+		scope="request"
+		type="ServidorApresentacao.Action.teacher.WriteMarksAction"
+		  >
+       <forward name="marksList" path="/marksList.jsp" />       
+	</action>
+	<!-- End Marks List -->
 	
 	</action-mappings>
 

@@ -15,6 +15,7 @@ import java.util.ListIterator;
  */
 public class InfoSiteAssociatedCurricularCourses implements ISiteComponent {
 
+
 	private List associatedCurricularCourses;
 
 	public boolean equals(Object objectToCompare) {

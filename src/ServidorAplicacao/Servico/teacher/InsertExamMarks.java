@@ -13,7 +13,6 @@ import DataBeans.TeacherAdministrationSiteView;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
 import Dominio.Exam;
-import Dominio.ICurricularCourseScope;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExam;
@@ -71,7 +70,6 @@ public class InsertExamMarks implements IServico {
 
 		ISite site = null;
 		IDisciplinaExecucao executionCourse = null;
-		ICurricularCourseScope curricularCourseScope = null;
 		IExam exam = null;
 		List infoMarksList = null;
 		List marksErrors = null;
@@ -158,7 +156,7 @@ public class InsertExamMarks implements IServico {
 
 	private boolean isValidMark(InfoMark infoMark) {
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
-			infoMark.getInfoFrequenta().getEnrolment().getInfoStudentCurricularPlan().getInfoDegreeCurricularPlan();
+			infoMark.getInfoFrequenta().getInfoEnrolment().getInfoStudentCurricularPlan().getInfoDegreeCurricularPlan();
 		IDegreeCurricularPlan degreeCurricularPlan =
 			Cloner.copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(infoDegreeCurricularPlan);
 

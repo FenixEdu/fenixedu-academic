@@ -10,16 +10,11 @@ package DataBeans;
  *
  * @author  tfc130
  */
-public class InfoFrequenta  {
+public class InfoFrequenta  extends InfoObject{
 	protected InfoStudent _aluno;
 	protected InfoExecutionCourse _disciplinaExecucao;
-	protected InfoEnrolment _enrolment;
-
-	// códigos internos da base de dados
-	private Integer _chaveAluno;
-	private Integer _chaveDisciplinaExecucao;
-
-	private Integer _keyEnrolment;
+	protected InfoEnrolment infoEnrolment;
+	
 
 	/** Construtor sem argumentos público requerido pela moldura de objectos OJB */
 	public InfoFrequenta() {
@@ -33,7 +28,7 @@ public class InfoFrequenta  {
 	public InfoFrequenta(InfoStudent aluno, InfoExecutionCourse disciplinaExecucao, InfoEnrolment enrolment) {
 		setAluno(aluno);
 		setDisciplinaExecucao(disciplinaExecucao);
-		setEnrolment(enrolment);
+		setInfoEnrolment(enrolment);
 	}
 
 	public InfoStudent getAluno() {
@@ -44,28 +39,12 @@ public class InfoFrequenta  {
 		_aluno = aluno;
 	}
 
-	public Integer getChaveAluno() {
-		return _chaveAluno;
-	}
-
-	public void setChaveAluno(Integer chaveAluno) {
-		_chaveAluno = chaveAluno;
-	}
-
 	public InfoExecutionCourse getDisciplinaExecucao() {
 		return _disciplinaExecucao;
 	}
 
 	public void setDisciplinaExecucao(InfoExecutionCourse disciplinaExecucao) {
 		_disciplinaExecucao = disciplinaExecucao;
-	}
-
-	public Integer getChaveDisciplinaExecucao() {
-		return _chaveDisciplinaExecucao;
-	}
-
-	public void setChaveDisciplinaExecucao(Integer chaveDisciplinaExecucao) {
-		_chaveDisciplinaExecucao = chaveDisciplinaExecucao;
 	}
 
 	public boolean equals(Object obj) {
@@ -82,31 +61,17 @@ public class InfoFrequenta  {
 		String result = "[ATTEND";
 		result += ", Student=" + _aluno;
 		result += ", ExecutionCourse=" + _disciplinaExecucao;
-		result += ", Enrolment=" + _enrolment;
+		result += ", Enrolment=" + infoEnrolment;
 		result += "]";
 		return result;
 	}
 
-	/**
-	 * @return
-	 */
-	public Integer getKeyEnrolment() {
-		return _keyEnrolment;
+	public InfoEnrolment getInfoEnrolment() {
+		return infoEnrolment;
 	}
 
-	/**
-	 * @param integer
-	 */
-	public void setKeyEnrolment(Integer integer) {
-		_keyEnrolment = integer;
-	}
-
-	public InfoEnrolment getEnrolment() {
-		return _enrolment;
-	}
-
-	public void setEnrolment(InfoEnrolment enrolment) {
-		this._enrolment = enrolment;
+	public void setInfoEnrolment(InfoEnrolment enrolment) {
+		this.infoEnrolment = enrolment;
 		
 	}
 
