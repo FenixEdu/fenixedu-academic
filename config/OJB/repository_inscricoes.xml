@@ -1454,7 +1454,6 @@
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for Dominio.CreditsInSpecificScientificArea -->
 <!-- ************************************************************************************************************ -->
-<!--
 <class-descriptor class="Dominio.CreditsInSpecificScientificArea" table="CREDITS_IN_SPECIFIC_SCIENTIFIC_AREA">
 	<field-descriptor 
 		name="idInternal"
@@ -1508,11 +1507,10 @@
 		<foreignkey field-ref="enrolmentKey"/>
 	</reference-descriptor>		
 </class-descriptor>
--->
+
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for Dominio.CreditsInAnySecundaryArea -->
 <!-- ************************************************************************************************************ -->
-<!--
 <class-descriptor class="Dominio.CreditsInAnySecundaryArea" table="CREDITS_IN_ANY_SECUNDARY_AREA">
 	<field-descriptor 
 		name="idInternal"
@@ -1555,5 +1553,5 @@
 		<foreignkey field-ref="enrolmentKey"/>
 	</reference-descriptor>		
 </class-descriptor>
--->
+
 <!-- Mapping of User defined classes ends here -->

@@ -142,19 +142,22 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements IStudent
 	}
 
 	public List readAllFromStudent(int studentNumber) throws ExcepcaoPersistencia {
-		try {
-			String oqlQuery = "select all from " + StudentCurricularPlan.class.getName();
-			oqlQuery += " where student.number = " + studentNumber;
-
-			// ACRESCENTAR AQUI A VERIFICACAO DO TIPO DE ALUNO
-
-			query.create(oqlQuery);
-			List result = (List) query.execute();
-			lockRead(result);
-			return result;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
+//		try {
+//			String oqlQuery = "select all from " + StudentCurricularPlan.class.getName();
+//			oqlQuery += " where student.number = " + studentNumber;
+//
+//			// ACRESCENTAR AQUI A VERIFICACAO DO TIPO DE ALUNO
+//
+//			query.create(oqlQuery);
+//			List result = (List) query.execute();
+//			lockRead(result);
+//			return result;
+//		} catch (QueryException ex) {
+//			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+//		}
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("student.number", new Integer(studentNumber));
+		return queryList(StudentCurricularPlan.class, criteria);
 	}
 
 	public IStudentCurricularPlan readActiveStudentAndSpecializationCurricularPlan(

@@ -464,7 +464,7 @@ public class CreateAndUpdateAllPastCurriculums
 	 * @return
 	 * @throws Throwable
 	 */
-	protected static IBranch solveBranchesProblemsForDegrees1And4And6And51And53And54And64(Integer degreeCode, Integer branchCode, IDegreeCurricularPlan degreeCurricularPlan, IPersistentBranch persistentBranch) throws Throwable
+	public static IBranch solveBranchesProblemsForDegrees1And4And6And51And53And54And64(Integer degreeCode, Integer branchCode, IDegreeCurricularPlan degreeCurricularPlan, IPersistentBranch persistentBranch) throws Throwable
 	{
 		if ((degreeCode.intValue() == 6) ||
 			(degreeCode.intValue() == 1) ||
