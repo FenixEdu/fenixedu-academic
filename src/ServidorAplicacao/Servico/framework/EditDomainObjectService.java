@@ -26,7 +26,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public abstract class EditDomainObjectService implements IServico
 {
-    public Boolean run(Integer objectId, InfoObject infoObject) throws FenixServiceException
+    public Boolean run(InfoObject infoObject) throws FenixServiceException
     {
         try
         {
@@ -37,14 +37,13 @@ public abstract class EditDomainObjectService implements IServico
             if (canCreate(oldDomainObject, sp))
             {
                 /**
-				 * FIXME: Edit an existing object problems. It seems that we can't upgrade lock.
-				 * 
-				 * @see ServidorAplicacao.Servicos.teacher.EditWeeklyOcupationTest#testEditExistingWeeklyOcupation()
-				 *      Without this two lines the test above doesn't run.
-				 */
+                 * FIXME: Edit an existing object problems. It seems that we can't upgrade lock.
+                 * @see ServidorAplicacao.Servicos.teacher.EditWeeklyOcupationTest#testEditExistingWeeklyOcupation()
+                 * Without this two lines the test above doesn't run.
+                 */
                 sp.confirmarTransaccao();
                 sp.iniciarTransaccao();
-                /** ********************************************************************************************* */
+                /************************************************************************************************/
 
                 IDomainObject newDomainObject = (IDomainObject) oldDomainObject.getClass().newInstance();
                 newDomainObject.setIdInternal(oldDomainObject.getIdInternal());
@@ -61,7 +60,6 @@ public abstract class EditDomainObjectService implements IServico
         {
             throw new FenixServiceException(e);
         }
-
     }
 
     /**
@@ -100,16 +98,30 @@ public abstract class EditDomainObjectService implements IServico
     protected boolean canCreate(IDomainObject domainObject, ISuportePersistente sp)
         throws ExcepcaoPersistencia
     {
-        return true;
+        IDomainObject existingDomainObject = readObjectByUnique(newDomainObject, sp);
+
+        if (!isNew(newDomainObject)
+            && ((existingDomainObject != null)
+                && (newDomainObject.getIdInternal().equals(existingDomainObject.getIdInternal())))
+            || ((existingDomainObject == null) && isNew(newDomainObject)))
+            return true;
+        return false;
     }
 
     /**
-	 * Checks if the internalId of the object is null or 0
-	 * 
-	 * @param domainObject
-	 * @return
-	 */
+     * @param sp
+     * @return
+     */
+    protected abstract IPersistentObject getIPersistentObject(ISuportePersistente sp)
+        throws ExcepcaoPersistencia;
+
+    /* Checks if the internalId of the object is null or 0
+    * 
+    * @param domainObject
+    * @return
+    */
     protected boolean isNew(IDomainObject domainObject)
+    
     {
         Integer objectId = domainObject.getIdInternal();
 
@@ -117,18 +129,22 @@ public abstract class EditDomainObjectService implements IServico
     }
 
     /**
-	 * @param sp
-	 * @return
-	 */
-    protected abstract IPersistentObject getIPersistentObject(ISuportePersistente sp)
-        throws ExcepcaoPersistencia;
-
-    /**
-	 * This method invokes the Cloner to convert from InfoObject to IDomainObject
-	 * 
-	 * @param infoObject
-	 * @return
-	 */
+     * This method invokes the Cloner to convert from InfoObject to IDomainObject
+     * 
+     * @param infoObject
+     * @return
+     */
     protected abstract IDomainObject clone2DomainObject(InfoObject infoObject);
 
+    /**
+     * This method invokes a persistent method to read an IDomainObject from database
+     * 
+     * @param domainObject
+     * @return
+     */
+    protected IDomainObject readObjectByUnique(IDomainObject domainObject, ISuportePersistente sp)
+        throws ExcepcaoPersistencia
+    {
+        return domainObject;
+    }
 }
