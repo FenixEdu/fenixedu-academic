@@ -72,6 +72,7 @@ public class EditStudentCurricularCoursePlan extends DispatchAction {
 		request.setAttribute(
 			"studentCurricularPlan",
 			infoStudentCurricularPlan);
+	    request.setAttribute("state",infoStudentCurricularPlan.getCurrentState());	
 		editStudentCurricularPlanForm.set(
 			"currentState",
 			infoStudentCurricularPlan.getCurrentState().toString());

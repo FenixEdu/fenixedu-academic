@@ -29,9 +29,9 @@ public class StudentCurricularPlanState {
 	public static final StudentCurricularPlanState INACTIVE_OBJ = new StudentCurricularPlanState(StudentCurricularPlanState.INACTIVE);
 	public static final String ACTIVE_STRING = "Activo";
 	public static final String CONCLUDED_STRING = "Concluido";
-	public static final String INCOMPLETE_STRING = "Inactivo";
+	public static final String INCOMPLETE_STRING = "Incompleto";
 	public static final String SCHOOLPARTCONCLUDED_STRING = "Parte Escolar Concluida";
-	public static final String INACTIVE_STRING = "Incompleto";
+	public static final String INACTIVE_STRING = "Inactivo";
 	private Integer state;
 
 	public StudentCurricularPlanState() {

@@ -41,8 +41,8 @@
 	<tr>
 		<td>
 			<b><bean:message key="label.student.state" /></b>
-			<logic:present name="<%= SessionConstants.STATE %>">
-				<html:select name="studentCurricularPlanForm" property="currentState">	
+			<logic:present name="<%= SessionConstants.STATE %>">   
+				<html:select property="currentState" value="<%= state.getState() %>">	 	
 	          	 <html:options collection="<%= SessionConstants.STATE %>" property="value" labelProperty="label"/>
 	    	 	</html:select>   
 			</logic:present>

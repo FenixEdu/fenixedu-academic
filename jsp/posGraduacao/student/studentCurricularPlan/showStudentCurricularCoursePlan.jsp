@@ -3,7 +3,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="DataBeans.InfoEnrolment" %>
 <%@ page import="DataBeans.InfoEnrolmentInExtraCurricularCourse" %>
 <%@ page import="DataBeans.InfoEnrolmentInOptionalCurricularCourse" %>
