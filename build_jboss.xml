@@ -319,7 +319,7 @@
     		description="Compile web client"
     		depends="prepare-web-client">
 		<javac destdir="${build.web-client.webinf.classes}"
-               extdirs="${lib}"
+               extdirs="${lib};${env.JBOSS_HOME}/client"
                debug="${compile.debug}"
                optimize="${compile.optimize}"
                deprecation="${compile.deprecation}"
