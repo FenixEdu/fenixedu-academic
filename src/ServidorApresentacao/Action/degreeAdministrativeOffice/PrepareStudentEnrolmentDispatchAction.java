@@ -33,7 +33,7 @@ import Util.TipoCurso;
 
 public class PrepareStudentEnrolmentDispatchAction extends DispatchAction {
 	
-	private final String[] forwards = { "startCurricularCourseEnrolmentWithRules", "startCurricularCourseEnrolmentWithoutRules", "errorWithRules", "errorWithoutRules"};
+	private final String[] forwards = { "startCurricularCourseEnrolmentWithRules", "startCurricularCourseEnrolmentWithoutRules", "errorWithRules", "errorWithoutRules", "startCurricularCourseEnrolmentOptionalWithoutRules", "errorOptionalWithoutRules"};
 	private final String[] messages = { "error.no.student.in.database", "error.no.degree.type.selected", "error.no.student.selected" };
 
 	public ActionForward withRules(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -106,6 +106,15 @@ public class PrepareStudentEnrolmentDispatchAction extends DispatchAction {
 			}
 		} else {
 			return mapping.findForward(forwards[3]);
+		}
+	}
+
+	public ActionForward optionalWithoutRules(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ActionForward result = this.withRules(mapping, form, request, response);
+		if(result.getName().equals(forwards[0])) {
+			return mapping.findForward(forwards[4]);
+		} else /*if(result.getName().equals(forwards[2]))*/ {
+			return mapping.findForward(forwards[5]);
 		}
 	}
 

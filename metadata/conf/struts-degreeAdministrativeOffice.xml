@@ -36,6 +36,13 @@
 			<form-property name="curricularCourses" type="java.lang.Integer[]"/>
 			<form-property name="enrolmentToRemoveIndex" type="java.lang.Integer"/>
 		</form-bean>
+
+		<form-bean name="optionalCurricularCourseEnrolmentWithoutRulesForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String"/>
+			<form-property name="curricularCourses" type="java.lang.Integer[]"/>
+			<form-property name="optionalCourseIndex" type="java.lang.Integer"/>
+			<form-property name="optionalCurricularCourse" type="java.lang.Integer"/>
+		</form-bean>
 	</form-beans>
 
 	<!-- ========== Global Exception Definitions ============================ -->
@@ -101,8 +108,10 @@
 				validate="true">
 			<forward name="startCurricularCourseEnrolmentWithRules" path="/curricularCourseEnrolmentWithRulesManager.do?method=start"/>
 			<forward name="startCurricularCourseEnrolmentWithoutRules" path="df.page.chooseDegreeAndCurricularSemesterAndCurricularYear"/>
+			<forward name="startCurricularCourseEnrolmentOptionalWithoutRules" path="/optionalCurricularCourseEnrolmentWithoutRulesManager.do?method=start"/>
 			<forward name="errorWithRules" path="/setStartMode.do?method=withRules"/>
 			<forward name="errorWithoutRules" path="/setStartMode.do?method=withoutRules"/>
+			<forward name="errorOptionalWithoutRules" path="/setStartMode.do?method=optionalWithoutRules"/>
 		</action>
 
 		<action name="getDegreeAndCurricularSemesterAndCurricularYearForm"
@@ -150,6 +159,17 @@
 			<forward name="verifyEnrolment" path="df.page.verifyEnrolmentWithoutRules"/>
 			<forward name="acceptEnrolment" path="df.page.acceptEnrolmentWithoutRules"/>
 			<forward name="cancel" path="/prepareStudentEnrolment.do?method=withoutRules"/>
+			<forward name="home" path="df.page.main"/>
+		</action>
+
+		<action	name="optionalCurricularCourseEnrolmentWithoutRulesForm"
+				type="ServidorApresentacao.Action.degreeAdministrativeOffice.OptionalCurricularCourseEnrolmentWithoutRulesManagerDispatchAction"
+				path="/optionalCurricularCourseEnrolmentWithoutRulesManager"
+				parameter="method"
+				scope="session"
+				validate="false">
+			<forward name="showAvailableOptionalCurricularCourses" path="df.page.showAvailableOptionalCurricularCoursesWithoutRules"/>
+			<forward name="cancel" path="/prepareStudentEnrolment.do?method=optionalWithoutRules"/>
 			<forward name="home" path="df.page.main"/>
 		</action>
 	</action-mappings>
