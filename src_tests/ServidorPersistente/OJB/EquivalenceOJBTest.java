@@ -6,7 +6,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import Dominio.CurricularCourse;
 import Dominio.Enrolment;
-import Dominio.Equivalence;
+import Dominio.EnrolmentEquivalence;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
@@ -14,7 +14,7 @@ import Dominio.ICurricularSemester;
 import Dominio.ICurricularYear;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrolment;
-import Dominio.IEquivalence;
+import Dominio.IEnrolmentEquivalence;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -23,7 +23,7 @@ import ServidorPersistente.IPersistentCurricularCourseScope;
 import ServidorPersistente.IPersistentCurricularSemester;
 import ServidorPersistente.IPersistentCurricularYear;
 import ServidorPersistente.IPersistentEnrolment;
-import ServidorPersistente.IPersistentEquivalence;
+import ServidorPersistente.IPersistentEnrolmentEquivalence;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -44,7 +44,7 @@ public class EquivalenceOJBTest extends TestCaseOJB {
 	IPersistentEnrolment persistentEnrolment = null;
 	IStudentCurricularPlanPersistente persistentStudentCurricularPlan = null;
 	IPersistentCurricularCourse persistentCurricularCourse = null;
-	IPersistentEquivalence persistentEquivalence = null;
+	IPersistentEnrolmentEquivalence persistentEquivalence = null;
 	IPersistentCurricularCourseScope persistentCurricularCourseScope = null;
 	IPersistentCurricularYear persistentCurricularYear = null;
 	IPersistentCurricularSemester persistentCurricularSemester = null;
@@ -92,7 +92,7 @@ public class EquivalenceOJBTest extends TestCaseOJB {
 
 	public void testReadByEnrolmentAndEquivalentEnrolment(){
 		loadEnrolments(true);
-		IEquivalence equivalence = null;
+		IEnrolmentEquivalence equivalence = null;
 		try {
 			persistentSupport.iniciarTransaccao();
 			equivalence = persistentEquivalence.readEquivalenceByEnrolmentAndEquivalentEnrolment(this.enrolment, this.equivalentEnrolment);
@@ -101,57 +101,57 @@ public class EquivalenceOJBTest extends TestCaseOJB {
 			e.printStackTrace(System.out);
 			fail("Unexpected exception!");
 		}
-		assertNotNull("Equivalence is null!",equivalence);
+		assertNotNull("EnrolmentEquivalence is null!",equivalence);
 	}
 
 
 	public void testWriteEquivalence() {
 
-		System.out.println("\n- Test 1.1 : Write Existing Equivalence\n");
+		System.out.println("\n- Test 1.1 : Write Existing EnrolmentEquivalence\n");
 
-		// Equivalence ja existente
+		// EnrolmentEquivalence ja existente
 		this.loadEnrolments(true);
 		
-		IEquivalence equivalence = new Equivalence(this.enrolment, this.equivalentEnrolment, new EquivalenceType(EquivalenceType.EQUIVALENT_COURSE));
+		IEnrolmentEquivalence equivalence = new EnrolmentEquivalence(this.enrolment, this.equivalentEnrolment, new EquivalenceType(EquivalenceType.EQUIVALENT_COURSE));
 
 		try {
 			persistentSupport.iniciarTransaccao();
 			persistentEquivalence.lockWrite(equivalence);
 			persistentSupport.confirmarTransaccao();
-			fail("Write Existing Equivalence");
+			fail("Write Existing EnrolmentEquivalence");
 		} catch (ExistingPersistentException ex) {
 			// All Is OK
 			try {
 				persistentSupport.cancelarTransaccao();
 			} catch (ExcepcaoPersistencia e) {
 				e.printStackTrace();
-				fail("cancelarTransaccao() in Write Existing Equivalence");
+				fail("cancelarTransaccao() in Write Existing EnrolmentEquivalence");
 			}
 		} catch (ExcepcaoPersistencia ex) {
-			fail("Unexpected exception in Write Existing Equivalence");
+			fail("Unexpected exception in Write Existing EnrolmentEquivalence");
 		}
 
-		// Equivalence inexistente
+		// EnrolmentEquivalence inexistente
 		this.loadEnrolments(false);
-		equivalence = new Equivalence(this.enrolment, this.equivalentEnrolment, new EquivalenceType(EquivalenceType.EQUIVALENT_COURSE));
+		equivalence = new EnrolmentEquivalence(this.enrolment, this.equivalentEnrolment, new EquivalenceType(EquivalenceType.EQUIVALENT_COURSE));
 
-		System.out.println("\n- Test 1.2 : Write Non Existing Equivalence\n");
+		System.out.println("\n- Test 1.2 : Write Non Existing EnrolmentEquivalence\n");
 		try {
 			persistentSupport.iniciarTransaccao();
 			persistentEquivalence.lockWrite(equivalence);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex2) {
-			fail("Write Non Existing Equivalence");
+			fail("Write Non Existing EnrolmentEquivalence");
 		}
 
-		IEquivalence equivalence2 = null;
+		IEnrolmentEquivalence equivalence2 = null;
 
 		try {
 			persistentSupport.iniciarTransaccao();
 			equivalence2 = persistentEquivalence.readEquivalenceByEnrolmentAndEquivalentEnrolment(this.enrolment, this.equivalentEnrolment);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
-			fail("Reading New Existing Equivalence Just Writen Before");
+			fail("Reading New Existing EnrolmentEquivalence Just Writen Before");
 		}
 
 		assertNotNull(equivalence2);
@@ -191,26 +191,26 @@ public class EquivalenceOJBTest extends TestCaseOJB {
 
 	public void testReadEquivalence() {
 
-		System.out.println("\n- Test 3.1 : Read Existing Equivalence\n");
+		System.out.println("\n- Test 3.1 : Read Existing EnrolmentEquivalence\n");
 
-		// Equivalence ja existente
+		// EnrolmentEquivalence ja existente
 		this.loadEnrolments(true);
-		IEquivalence equivalence = null;
+		IEnrolmentEquivalence equivalence = null;
 
 		try {
 			persistentSupport.iniciarTransaccao();
 			equivalence = persistentEquivalence.readEquivalenceByEnrolmentAndEquivalentEnrolment(this.enrolment, this.equivalentEnrolment);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex2) {
-			fail("Read Existing Equivalence");
+			fail("Read Existing EnrolmentEquivalence");
 		}
 		assertNotNull(equivalence);
 		assertTrue(equivalence.getEnrolment().equals(this.enrolment));
 		assertTrue(equivalence.getEquivalentEnrolment().equals(this.equivalentEnrolment));
 		assertTrue(equivalence.getEquivalenceType().equals(new EquivalenceType(EquivalenceType.EQUIVALENT_COURSE)));
 
-		// Equivalence inexistente
-		System.out.println("\n- Test 3.2 : Read Non Existing Equivalence");
+		// EnrolmentEquivalence inexistente
+		System.out.println("\n- Test 3.2 : Read Non Existing EnrolmentEquivalence");
 
 		this.loadEnrolments(false);
 
@@ -219,7 +219,7 @@ public class EquivalenceOJBTest extends TestCaseOJB {
 			equivalence = persistentEquivalence.readEquivalenceByEnrolmentAndEquivalentEnrolment(this.enrolment, this.equivalentEnrolment);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex2) {
-			fail("Read Non Existing Equivalence");
+			fail("Read Non Existing EnrolmentEquivalence");
 		}
 		assertNull(equivalence);
 	}
@@ -228,17 +228,17 @@ public class EquivalenceOJBTest extends TestCaseOJB {
 
 	public void testDeleteEquivalence() {
 
-		// Equivalence ja existente
-		System.out.println("\n- Test 4.1 : Delete Existing Equivalence\n");
+		// EnrolmentEquivalence ja existente
+		System.out.println("\n- Test 4.1 : Delete Existing EnrolmentEquivalence\n");
 		this.loadEnrolments(true);
-		IEquivalence equivalence = null;
+		IEnrolmentEquivalence equivalence = null;
 
 		try {
 			persistentSupport.iniciarTransaccao();
 			equivalence = persistentEquivalence.readEquivalenceByEnrolmentAndEquivalentEnrolment(this.enrolment, this.equivalentEnrolment);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
-			fail("Reading Existing Equivalence To Delete");
+			fail("Reading Existing EnrolmentEquivalence To Delete");
 		}
 		assertNotNull(equivalence);
 
@@ -247,7 +247,7 @@ public class EquivalenceOJBTest extends TestCaseOJB {
 			persistentEquivalence.delete(equivalence);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex3) {
-			fail("Delete Existing Equivalence");
+			fail("Delete Existing EnrolmentEquivalence");
 		}
 
 		try {
@@ -255,18 +255,18 @@ public class EquivalenceOJBTest extends TestCaseOJB {
 			equivalence = persistentEquivalence.readEquivalenceByEnrolmentAndEquivalentEnrolment(this.enrolment, this.equivalentEnrolment);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
-			fail("Reading Just Deleted Equivalence");
+			fail("Reading Just Deleted EnrolmentEquivalence");
 		}
 		assertNull(equivalence);
 
-		// Equivalence inexistente
-		System.out.println("\n- Test 4.2 : Delete Non Existing Equivalence\n");
+		// EnrolmentEquivalence inexistente
+		System.out.println("\n- Test 4.2 : Delete Non Existing EnrolmentEquivalence\n");
 		try {
 			persistentSupport.iniciarTransaccao();
-			persistentEquivalence.delete(new Equivalence());
+			persistentEquivalence.delete(new EnrolmentEquivalence());
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex2) {
-			fail("Delete Existing Equivalence");
+			fail("Delete Existing EnrolmentEquivalence");
 		}
 	}
 
@@ -276,7 +276,7 @@ public class EquivalenceOJBTest extends TestCaseOJB {
 
 		ArrayList list = null;
 
-		System.out.println("\n- Test 5 : Read All Existing Equivalence\n");
+		System.out.println("\n- Test 5 : Read All Existing EnrolmentEquivalence\n");
 		try {
 			persistentSupport.iniciarTransaccao();
 			list = persistentEquivalence.readAll();

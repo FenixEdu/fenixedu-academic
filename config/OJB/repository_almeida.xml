@@ -212,6 +212,11 @@
     column="creditos"
     jdbc-type="DOUBLE"
   />
+  <field-descriptor
+    name="anoLectivo"
+    column="anoLectivo"
+    jdbc-type="INTEGER"
+  />
 </class-descriptor>
 
 <class-descriptor 

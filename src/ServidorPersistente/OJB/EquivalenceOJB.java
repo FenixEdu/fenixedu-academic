@@ -6,11 +6,11 @@ import java.util.ListIterator;
 
 import org.odmg.QueryException;
 
-import Dominio.Equivalence;
+import Dominio.EnrolmentEquivalence;
 import Dominio.IEnrolment;
-import Dominio.IEquivalence;
+import Dominio.IEnrolmentEquivalence;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentEquivalence;
+import ServidorPersistente.IPersistentEnrolmentEquivalence;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
@@ -19,41 +19,41 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
  * 24/Mar/2003
  */
 
-public class EquivalenceOJB extends ObjectFenixOJB implements IPersistentEquivalence {
+public class EquivalenceOJB extends ObjectFenixOJB implements IPersistentEnrolmentEquivalence {
 
 	public void deleteAll() throws ExcepcaoPersistencia {
 		try {
-			String oqlQuery = "select all from " + Equivalence.class.getName();
+			String oqlQuery = "select all from " + EnrolmentEquivalence.class.getName();
 			super.deleteAll(oqlQuery);
 		} catch (ExcepcaoPersistencia ex) {
 			throw ex;
 		}
 	}
 
-	public void lockWrite(IEquivalence equivalenceToWrite) throws ExcepcaoPersistencia, ExistingPersistentException {
+	public void lockWrite(IEnrolmentEquivalence equivalenceToWrite) throws ExcepcaoPersistencia, ExistingPersistentException {
 
-		IEquivalence equivalenceFromDB = null;
+		IEnrolmentEquivalence equivalenceFromDB = null;
 
 		// If there is nothing to write, simply return.
 		if (equivalenceToWrite == null) {
 			return;
 		}
 
-		// Read Equivalence from database.
+		// Read EnrolmentEquivalence from database.
 		equivalenceFromDB = this.readEquivalenceByEnrolmentAndEquivalentEnrolment(equivalenceToWrite.getEnrolment(), equivalenceToWrite.getEquivalentEnrolment());
 
-		// If Equivalence is not in database, then write it.
+		// If EnrolmentEquivalence is not in database, then write it.
 		if (equivalenceFromDB == null) {
 			super.lockWrite(equivalenceToWrite);
-			// else If the Equivalence is mapped to the database, then write any existing changes.
-		} else if ((equivalenceToWrite instanceof Equivalence) && ((Equivalence) equivalenceFromDB).getInternalID().equals(((Equivalence) equivalenceToWrite).getInternalID())) {
+			// else If the EnrolmentEquivalence is mapped to the database, then write any existing changes.
+		} else if ((equivalenceToWrite instanceof EnrolmentEquivalence) && ((EnrolmentEquivalence) equivalenceFromDB).getInternalID().equals(((EnrolmentEquivalence) equivalenceToWrite).getInternalID())) {
 			super.lockWrite(equivalenceToWrite);
 			// else Throw an already existing exception
 		} else
 			throw new ExistingPersistentException();
 	}
 
-	public void delete(IEquivalence enrolment) throws ExcepcaoPersistencia {
+	public void delete(IEnrolmentEquivalence enrolment) throws ExcepcaoPersistencia {
 		try {
 			super.delete(enrolment);
 		} catch (ExcepcaoPersistencia ex) {
@@ -61,11 +61,11 @@ public class EquivalenceOJB extends ObjectFenixOJB implements IPersistentEquival
 		}
 	}
 
-	public IEquivalence readEquivalenceByEnrolmentAndEquivalentEnrolment(IEnrolment enrolment, IEnrolment equivalentEnrolment) throws ExcepcaoPersistencia {
+	public IEnrolmentEquivalence readEquivalenceByEnrolmentAndEquivalentEnrolment(IEnrolment enrolment, IEnrolment equivalentEnrolment) throws ExcepcaoPersistencia {
 
 		try {
-			IEquivalence equivalence = null;
-			String oqlQuery = "select all from " + Equivalence.class.getName();
+			IEnrolmentEquivalence equivalence = null;
+			String oqlQuery = "select all from " + EnrolmentEquivalence.class.getName();
 			oqlQuery += " where enrolment.studentCurricularPlan.student.number = $1";
 			oqlQuery += " and enrolment.studentCurricularPlan.student.degreeType = $2";
 			oqlQuery += " and enrolment.studentCurricularPlan.currentState = $3";
@@ -153,7 +153,7 @@ public class EquivalenceOJB extends ObjectFenixOJB implements IPersistentEquival
 			}
 
 			if ((result != null) && (result.size() != 0)) {
-				equivalence = (IEquivalence) result.get(0);
+				equivalence = (IEnrolmentEquivalence) result.get(0);
 			}
 			return equivalence;
 
@@ -166,7 +166,7 @@ public class EquivalenceOJB extends ObjectFenixOJB implements IPersistentEquival
 
 		try {
 			ArrayList list = new ArrayList();
-			String oqlQuery = "select all from " + Equivalence.class.getName();
+			String oqlQuery = "select all from " + EnrolmentEquivalence.class.getName();
 			query.create(oqlQuery);
 			List result = (List) query.execute();
 
@@ -179,7 +179,7 @@ public class EquivalenceOJB extends ObjectFenixOJB implements IPersistentEquival
 			if ((result != null) && (result.size() != 0)) {
 				ListIterator iterator = result.listIterator();
 				while (iterator.hasNext())
-					list.add((IEquivalence) iterator.next());
+					list.add((IEnrolmentEquivalence) iterator.next());
 			}
 			return list;
 		} catch (QueryException ex) {

@@ -46,7 +46,7 @@ import ServidorPersistente.IPersistentDegreeCurricularPlanEnrolmentInfo;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentEnrolmentPeriod;
-import ServidorPersistente.IPersistentEquivalence;
+import ServidorPersistente.IPersistentEnrolmentEquivalence;
 import ServidorPersistente.IPersistentEvaluation;
 import ServidorPersistente.IPersistentEvaluationExecutionCourse;
 import ServidorPersistente.IPersistentEvaluationMethod;
@@ -115,7 +115,6 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	}
 
 	private void init() throws ExcepcaoPersistencia {
-		
 		_odmg = OJB.getInstance();
 		try {
 			openDatabase();
@@ -356,7 +355,7 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 		return new CurricularSemesterOJB();
 	}
 
-	public IPersistentEquivalence getIPersistentEquivalence() {
+	public IPersistentEnrolmentEquivalence getIPersistentEquivalence() {
 		return new EquivalenceOJB();
 	}
 
@@ -413,7 +412,6 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	public IPersistentEvaluationMethod getIPersistentEvaluationMethod() {
 		return new EvaluationMethodOJB();
 	}
-	
 
 	public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod() {
 		return new PersistentEnrolmentPeriod();
@@ -439,6 +437,9 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 		return new CreditsTeacherOJB();
 	}
 
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentExamStudentRoom()
+	 */
 	public IPersistentExamStudentRoom getIPersistentExamStudentRoom() {
 		return new ExamStudentRoomOJB();
 	}

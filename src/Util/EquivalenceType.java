@@ -10,6 +10,8 @@ package Util;
 public class EquivalenceType {
 
 	public static final int EQUIVALENT_COURSE = 1;
+	
+	public static final EquivalenceType EQUIVALENT_COURSE_OBJ = new EquivalenceType(EquivalenceType.EQUIVALENT_COURSE);
 
 	private Integer type;
 

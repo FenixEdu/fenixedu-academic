@@ -76,7 +76,7 @@ import Dominio.DisciplinaExecucao;
 import Dominio.Enrolment;
 import Dominio.EnrolmentEvaluation;
 import Dominio.EnrolmentInOptionalCurricularCourse;
-import Dominio.Equivalence;
+import Dominio.EnrolmentEquivalence;
 import Dominio.Evaluation;
 import Dominio.EvaluationMethod;
 import Dominio.Exam;
@@ -108,7 +108,7 @@ import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IEnrolmentInExtraCurricularCourse;
 import Dominio.IEnrolmentInOptionalCurricularCourse;
-import Dominio.IEquivalence;
+import Dominio.IEnrolmentEquivalence;
 import Dominio.IEvaluation;
 import Dominio.IEvaluationMethod;
 import Dominio.IExam;
@@ -1610,7 +1610,7 @@ public abstract class Cloner {
 		* @param copyIEquivalence2InfoEquivalence
 		* @return InfoEquivalence
 		*/
-	public static InfoEquivalence copyIEquivalence2InfoEquivalence(IEquivalence equivalence) {
+	public static InfoEquivalence copyIEquivalence2InfoEquivalence(IEnrolmentEquivalence equivalence) {
 
 		InfoEquivalence infoEquivalence = new InfoEquivalence();
 
@@ -1628,11 +1628,11 @@ public abstract class Cloner {
 	/**
 		* @author dcs-rjao
 		* @param copyInfoEquivalence2IEquivalence
-		* @return IEquivalence
+		* @return IEnrolmentEquivalence
 		*/
-	public static IEquivalence copyInfoEquivalence2IEquivalence(InfoEquivalence infoEquivalence) {
+	public static IEnrolmentEquivalence copyInfoEquivalence2IEquivalence(InfoEquivalence infoEquivalence) {
 
-		IEquivalence equivalence = new Equivalence();
+		IEnrolmentEquivalence equivalence = new EnrolmentEquivalence();
 
 		IEnrolment enrolment = Cloner.copyInfoEnrolment2IEnrolment(infoEquivalence.getInfoEnrolment());
 		IEnrolment equivalentEnrolment = Cloner.copyInfoEnrolment2IEnrolment(infoEquivalence.getInfoEquivalentEnrolment());

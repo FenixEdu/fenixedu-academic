@@ -20,6 +20,7 @@ public interface IEnrolment {
 	public EnrolmentEvaluationType getEnrolmentEvaluationType();
 	public List getEvaluations();
 	public ICurricularCourseScope getCurricularCourseScope();
+	public Integer getInternalID();
 
 	public void setEnrolmentState(EnrolmentState state);
 //	public void setCurricularCourse(ICurricularCourse curricularCourse);

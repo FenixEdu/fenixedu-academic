@@ -8,7 +8,7 @@ import Util.EquivalenceType;
  * 24/Mar/2003
  */
 
-public class Equivalence implements IEquivalence {
+public class EnrolmentEquivalence implements IEnrolmentEquivalence {
 
 	private IEnrolment enrolment;
 	private IEnrolment equivalentEnrolment;
@@ -18,7 +18,7 @@ public class Equivalence implements IEquivalence {
 	private Integer enrolmentKey;
 	private Integer equivalentEnrolmentKey;
 
-	public Equivalence() {
+	public EnrolmentEquivalence() {
 		setEnrolment(null);
 		setEquivalentEnrolment(null);
 		setEquivalenceType(null);
@@ -28,7 +28,7 @@ public class Equivalence implements IEquivalence {
 		setEquivalentEnrolmentKey(null);
 	}
 
-	public Equivalence(IEnrolment enrolment, IEnrolment equivalentEnrolment, EquivalenceType equivalenceType) {
+	public EnrolmentEquivalence(IEnrolment enrolment, IEnrolment equivalentEnrolment, EquivalenceType equivalenceType) {
 		setEnrolment(enrolment);
 		setEquivalentEnrolment(equivalentEnrolment);
 		setEquivalenceType(equivalenceType);
@@ -41,8 +41,8 @@ public class Equivalence implements IEquivalence {
 	public boolean equals(Object obj) {
 		boolean resultado = false;
 
-		if (obj instanceof IEquivalence) {
-			IEquivalence equivalence = (IEquivalence) obj;
+		if (obj instanceof IEnrolmentEquivalence) {
+			IEnrolmentEquivalence equivalence = (IEnrolmentEquivalence) obj;
 
 			resultado = (this.getEnrolment().equals(equivalence.getEnrolment())) &&
 									(this.getEquivalentEnrolment().equals(equivalence.getEquivalentEnrolment()));

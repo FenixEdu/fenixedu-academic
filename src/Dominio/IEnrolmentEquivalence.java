@@ -8,7 +8,7 @@ import Util.EquivalenceType;
  * 24/Mar/2003
  */
 
-public interface IEquivalence {
+public interface IEnrolmentEquivalence {
 
 	public IEnrolment getEnrolment();
 	public EquivalenceType getEquivalenceType();

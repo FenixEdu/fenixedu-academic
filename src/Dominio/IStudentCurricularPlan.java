@@ -25,6 +25,7 @@ public interface IStudentCurricularPlan {
   public Date getStartDate();
   public Specialization getSpecialization();
   public Double getGivenCredits();
+  public Integer getInternalCode();
   
   public void setStudent(IStudent student);
   public void setBranch(IBranch branch);

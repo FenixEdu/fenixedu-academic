@@ -16,6 +16,7 @@ public interface IBranch {
 	public List getScopes();
 	public Integer getInternalID();
 	public IDegreeCurricularPlan getDegreeCurricularPlan();
+	public void setInternalID(Integer internalID);
 
 	public void setCode(String code);
 	public void setName(String name);
