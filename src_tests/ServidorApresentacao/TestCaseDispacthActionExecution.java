@@ -10,7 +10,6 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import DataBeans.CurricularYearAndSemesterAndInfoExecutionDegree;
@@ -25,12 +24,12 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  * 26/Fev/2003
  */
 
-public abstract class TestCaseActionExecution extends TestCasePresentation {
+public abstract class TestCaseDispacthActionExecution extends TestCasePresentation {
 
 	protected GestorServicos gestor = null;
 	protected IUserView userView = null;
 
-	public TestCaseActionExecution(String testName) {
+	public TestCaseDispacthActionExecution(String testName) {
 		super(testName);
 	}
 
@@ -58,29 +57,13 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 
 // -------------------------------------------------------------------------------------------------------
 
-	public void testSuccessfulExecutionOfAction() {
-
-		testIt(	(HashMap) getItemsToPutInRequestForActionToBeTestedSuccessfuly(),
-				(HashMap) getItemsToPutInSessionForActionToBeTestedSuccessfuly(),
-				getSuccessfulForward(), getExistingAttributesListToVerifyInSuccessfulExecution(),
-				getNonExistingAttributesListToVerifyInSuccessfulExecution());
-	}
-
-	public void testUnsuccessfulExecutionOfAction() {
-
-		testIt(	(HashMap) getItemsToPutInRequestForActionToBeTestedUnsuccessfuly(),
-				(HashMap) getItemsToPutInSessionForActionToBeTestedUnsuccessfuly(),
-				getUnsuccessfulForward(), getExistingAttributesListToVerifyInUnsuccessfulExecution(),
-				getNonExistingAttributesListToVerifyInUnsuccessfulExecution()	);
-	}
-   
-	/**
-	 * @param itemsToPutInRequest
-	 * @param itemsToPutInSession
-	 * @param forward
-	 * @param existingAttributesList
-	 * @param nonExistingAttributesList
-	 */
+   /**
+	* @param itemsToPutInRequest
+	* @param itemsToPutInSession
+	* @param forward
+	* @param existingAttributesList
+	* @param nonExistingAttributesList
+	*/
 	protected void testIt(HashMap itemsToPutInRequest, HashMap itemsToPutInSession, String forward,
 	List existingAttributesList, List nonExistingAttributesList) {
 
@@ -179,74 +162,6 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 // -------------------------------------------------------------------------------------------------------
 
 	/**
-	 * This method must return a Map with all the items that should be in session to execute
-	 * the action successfuly.
-	 * The Map must be an HashMap and it's keys must be the SessionUtils string constants
-	 * correspondent to each object to put in session.
-	 * This method must return null if not to be used.
-	 */
-	protected abstract Map getItemsToPutInSessionForActionToBeTestedSuccessfuly();
-
-	/**
-	 * This method must return a Map with all the items that should be in session to execute
-	 * the action unsuccessfuly.
-	 * The Map must be an HashMap and it's keys must be the SessionUtils string constants
-	 * correspondent to each object to put in session.
-	 * This method must return null if not to be used.
-	 */
-	protected abstract Map getItemsToPutInSessionForActionToBeTestedUnsuccessfuly();
-
-	/**
-	 * This method must return a Map with all the items that should be in request (form) to execute
-	 * the action successfuly.
-	 * The Map must be an HashMap and it's keys must be the form fiel names
-	 * correspondent to each property to get out of the request.
-	 * This method must return null if not to be used.
-	 */
-	protected abstract Map getItemsToPutInRequestForActionToBeTestedSuccessfuly();
-
-	/**
-	 * This method must return a Map with all the items that should be in request (form) to execute
-	 * the action unsuccessfuly.
-	 * The Map must be an HashMap and it's keys must be the form fiel names
-	 * correspondent to each property to get out of the request.
-	 * This method must return null if not to be used.
-	 */
-	protected abstract Map getItemsToPutInRequestForActionToBeTestedUnsuccessfuly();
-
-	/**
-	 * This method must return a List with the attributes that are supose to be present in a specified scope
-	 * when the action executes successfuly.
-	 * The scope is specified by the method getScope().
-	 * This method must return null if not to be used.
-	 */
-	protected abstract List getExistingAttributesListToVerifyInSuccessfulExecution();
-
-	/**
-	 * This method must return a List with the attributes that are not supose to be present in a specified scope
-	 * when the action executes successfuly.
-	 * The scope is specified by the method getScope().
-	 * This method must return null if not to be used.
-	 */
-	protected abstract List getNonExistingAttributesListToVerifyInSuccessfulExecution();
-
-	/**
-	 * This method must return a List with the attributes that are supose to be present in a specified scope
-	 * when the action executes unsuccessfuly.
-	 * The scope is specified by the method getScope().
-	 * This method must return null if not to be used.
-	 */
-	protected abstract List getExistingAttributesListToVerifyInUnsuccessfulExecution();
-
-	/**
-	 * This method must return a List with the attributes that are not supose to be present in a specified scope
-	 * when the action executes unsuccessfuly.
-	 * The scope is specified by the method getScope().
-	 * This method must return null if not to be used.
-	 */
-	protected abstract List getNonExistingAttributesListToVerifyInUnsuccessfulExecution();
-
-	/**
 	 * This method must return one of these 3 constants: ScopeConstants.SESSION;
 	 * ScopeConstants.REQUEST; ScopeConstants.APP_CONTEXT.
 	 */
@@ -266,15 +181,5 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	 * This method must a string identifying the action name of the request path.
 	 */
 	protected abstract String getRequestPathInfoNameAction();
-
-	/**
-	 * This method must a string identifying the forward when the action executes successfuly.
-	 */
-	protected abstract String getSuccessfulForward();
-
-	/**
-	 * This method must a string identifying the forward when the action executes unsuccessfuly.
-	 */
-	protected abstract String getUnsuccessfulForward();
 
 }
