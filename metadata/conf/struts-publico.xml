@@ -224,7 +224,7 @@
 	<action 
 		path="/viewSiteExecutionCourse"
 		name="chooseExecutionCourseForm"
-		input="/chooseContextDA.do?method=nextPagePublic"
+		input="/chooseContextDA.do?method=nextPagePublic&amp;nextPage=executionCourseSearch"
 		parameter="method"
         type="ServidorApresentacao.Action.publico.SiteViewerDispatchAction">    
      		<forward name="sucess" path="/executionCourseSite.jsp"/> 
