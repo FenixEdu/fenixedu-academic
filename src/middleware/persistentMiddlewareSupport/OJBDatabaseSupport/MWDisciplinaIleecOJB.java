@@ -1,9 +1,18 @@
 package middleware.persistentMiddlewareSupport.OJBDatabaseSupport;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import middleware.middlewareDomain.MWDisciplinaIleec;
+import middleware.middlewareDomain.MWDisciplinasIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMWDisciplinasIleec;
+import middleware.persistentMiddlewareSupport.IPersistentMiddlewareSupport;
+import middleware.persistentMiddlewareSupport.exceptions.PersistentMiddlewareSupportException;
+import middleware.middlewareDomain.MWDisciplinaGrupoIleec;
+import middleware.middlewareDomain.MWGruposIleec;
+import middleware.persistentMiddlewareSupport.IPersistentMWDisciplinaGrupoIleec;
+
 
 import org.apache.ojb.broker.query.Criteria;
 
@@ -15,30 +24,61 @@ import ServidorPersistente.OJB.ObjectFenixOJB;
  * 3/Dez/2003
  */
 
-public class MWDisciplinaIleecOJB extends ObjectFenixOJB implements IPersistentMWDisciplinasIleec {
-    
-    public MWDisciplinaIleecOJB() {
-    }
+public class MWDisciplinaIleecOJB extends ObjectFenixOJB implements IPersistentMWDisciplinasIleec
+{
 
-	public List readAll() throws ExcepcaoPersistencia {
+	public MWDisciplinaIleecOJB()
+	{
+	}
+
+	public List readAll() throws ExcepcaoPersistencia
+	{
 		Criteria criteria = new Criteria();
 		return queryList(MWDisciplinaIleec.class, criteria);
 	}
 
-	public MWDisciplinaIleec readByCodigoDisciplina(String codigoDisciplina) throws ExcepcaoPersistencia {
+	public MWDisciplinaIleec readByCodigoDisciplina(String codigoDisciplina) throws ExcepcaoPersistencia
+	{
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("codigoDisciplina", codigoDisciplina);
 		return (MWDisciplinaIleec) queryObject(MWDisciplinaIleec.class, criteria);
 	}
 
-	public List readAllBySpan(Integer spanNumber, Integer numberOfElementsInSpan) throws ExcepcaoPersistencia
+	public List readAllBySpan(Integer spanNumber, Integer numberOfElementsInSpan)
+		throws ExcepcaoPersistencia
 	{
 		Criteria criteria = new Criteria();
 		return readSpan(MWDisciplinaIleec.class, criteria, numberOfElementsInSpan, spanNumber);
 	}
-	
+
 	public Integer countAll()
 	{
 		return new Integer(count(MWDisciplinaIleec.class, new Criteria()));
+	}
+
+	public ArrayList readByGroup(MWGruposIleec grupoILeec)
+		throws PersistentMiddlewareSupportException, ExcepcaoPersistencia
+	{
+
+		IPersistentMiddlewareSupport pmws = PersistentMiddlewareSupportOJB.getInstance();
+		IPersistentMWDisciplinaGrupoIleec mwDGIleecOJB = pmws.getIPersistentMWDisciplinaGrupoIleec();
+
+		List grupoIleec = mwDGIleecOJB.readByGrupo(grupoILeec);
+
+		Iterator iter = grupoIleec.iterator();
+		MWDisciplinaGrupoIleec mwDGIleec;
+		MWDisciplinasIleec mwDiscIleec;
+
+		ArrayList courses = new ArrayList();
+		while (iter.hasNext())
+		{
+			Criteria criteria = new Criteria();
+			mwDGIleec = (MWDisciplinaGrupoIleec) iter.next();
+			criteria.addEqualTo("idDisciplina", mwDGIleec.getIdDisciplina());
+			mwDiscIleec = (MWDisciplinasIleec) queryObject(MWDisciplinasIleec.class, criteria);
+			courses.add(mwDiscIleec);
+		}
+
+		return courses;
 	}
 }
