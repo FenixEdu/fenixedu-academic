@@ -47,7 +47,7 @@
     			<bean:write name="studentCP" property="startDate" />
         	</bean:define>
         	<logic:present name="executionDegreeId">
-	            <html:link page='<%= pageContext.findAttribute("studentCPLink").toString() + "&amp;executionDegreeId=" pageContext.findAttribute("executionDegreeId").toString() %>'>
+	            <html:link page='<%= pageContext.findAttribute("studentCPLink").toString() + "&amp;executionDegreeId=" + pageContext.findAttribute("executionDegreeId").toString() %>'>
 	    			<bean:write name="linkDescription"/>
 	            </html:link>
             </logic:present>
