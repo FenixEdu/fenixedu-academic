@@ -221,7 +221,7 @@ public class UpdateStudent {
 	 */
 	private static IDegreeCurricularPlan getDegreeCurricularPlan(MWAluno oldStudent, ISuportePersistente sp) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia {
 	
-		IDegreeCurricularPlan degreeCurricularPlan = null;
+//		IDegreeCurricularPlan degreeCurricularPlan = null;
 		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
 		IPersistentMWBranch persistentBranch = mws.getIPersistentMWBranch();
 

@@ -37,6 +37,9 @@ public class ReportEnrolment
 	private static HashMap curricularCourses = new HashMap();
 	private static HashMap degrees = new HashMap();
 
+	// For control:
+	private static boolean smallReport = true;
+
 	/**
 	 * @param courseCode
 	 * @param degreeCode
@@ -155,8 +158,10 @@ public class ReportEnrolment
 	 */
 	public static void addAttendNotFound(String courseCode, String degreeCode, String studentNumber)
 	{
-		addCurricularCourseName(courseCode);
-		addDegreeName(degreeCode);
+		if(!smallReport) {
+			addCurricularCourseName(courseCode);
+			addDegreeName(degreeCode);
+		}
 
 		StringBuffer key = new StringBuffer(courseCode).append(" - ").append(degreeCode);
 
@@ -353,17 +358,19 @@ public class ReportEnrolment
 				Map.Entry mapEntry = (Map.Entry) iterator5.next();
 				String key = (String) mapEntry.getKey();
 				List studentList = (List) mapEntry.getValue();
-				out.print("\tCadeira - Curso = " + key);
-				out.println(" Aconteceu " + studentList.size() + " veze(s)...");
-				out.println("\t\tAlunos = "+ studentList.toString());
+				if(!smallReport) {
+					out.print("\tCadeira - Curso = " + key);
+					out.println(" Aconteceu " + studentList.size() + " veze(s)...");
+					out.println("\t\tAlunos = "+ studentList.toString());
+				}
 				totalAttendsNotFound = totalAttendsNotFound + studentList.size();
 			}
 			out.println("TOTAL: " + totalAttendsNotFound);
 		}
 
-		int aux = totalCurricularCoursesFoundInOtherDegree + totalExecutionCoursesNotFound + totalCurricularCourseScopesNotFound + totalCurricularCoursesNotFound;
-		if(aux > 0) {
-			out.println("\nTOTAL ENROLMENTS NÃO MIGRADOS: " + aux);
+		int totalEnrolmentsNotMigrated = totalCurricularCoursesFoundInOtherDegree + totalExecutionCoursesNotFound + totalCurricularCourseScopesNotFound + totalCurricularCoursesNotFound;
+		if(totalEnrolmentsNotMigrated > 0) {
+			out.println("\nTOTAL ENROLMENTS NÃO MIGRADOS: " + totalEnrolmentsNotMigrated);
 		}
 
 		out.println("\n---------------------------------------------------------------------------");
@@ -391,21 +398,23 @@ public class ReportEnrolment
 
 		if(!createdAttends.entrySet().isEmpty()) {
 			out.println("\nATTENDS CRIADOS");
-			Iterator iterator8 = createdAttends.entrySet().iterator();
 			int totalCreatedAttends = 0;
+			Iterator iterator8 = createdAttends.entrySet().iterator();
 			while (iterator8.hasNext())
 			{
 				Map.Entry mapEntry = (Map.Entry) iterator8.next();
 				String key = (String) mapEntry.getKey();
-				out.println("\tCurso - Aluno = " + key);
 				List courseList = (List) mapEntry.getValue();
-				out.println("\t\tDisciplinas = "+ courseList.toString());
+				if(!smallReport) {
+					out.println("\tCurso - Aluno = " + key);
+					out.println("\t\tDisciplinas = "+ courseList.toString());
+				}
 				totalCreatedAttends = totalCreatedAttends + courseList.size();
 			}
 			out.println("TOTAL: " + totalCreatedAttends);
 		}
 		
-		if(!curricularCourses.entrySet().isEmpty()) {
+		if((!curricularCourses.entrySet().isEmpty()) && (totalEnrolmentsNotMigrated > 0)) {
 			out.println("\nDISCIPLINAS");
 			Iterator iterator9 = curricularCourses.entrySet().iterator();
 			while (iterator9.hasNext())
@@ -417,7 +426,7 @@ public class ReportEnrolment
 			}
 		}
 		
-		if(!degrees.entrySet().isEmpty()) {
+		if((!degrees.entrySet().isEmpty()) && (totalEnrolmentsNotMigrated > 0)) {
 			out.println("\nCURSOS");
 			Iterator iterator10 = degrees.entrySet().iterator();
 			while (iterator10.hasNext())
