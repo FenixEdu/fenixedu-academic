@@ -16,6 +16,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.LabelValueBean;
+import org.apache.struts.util.MessageResources;
 
 import DataBeans.InfoContributor;
 import DataBeans.InfoExecutionDegree;
@@ -55,6 +56,7 @@ public class MarksManagementDispatchAction extends DispatchAction {
 									HttpServletResponse response)
 		throws Exception {
 		
+		MessageResources messages = getResources(request);
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
@@ -72,6 +74,8 @@ public class MarksManagementDispatchAction extends DispatchAction {
 			} catch (ExistingServiceException e) {
 				throw new ExistingActionException(e);
 			}
+			request.setAttribute("useCase", messages.getMessage("label.masterDegree.administrativeOffice.marksSubmission"));
+			request.setAttribute("whereToGo", "chooseExecutionCourse");
 
 			request.setAttribute(SessionConstants.DEGREE_LIST, degreeList);
 			
