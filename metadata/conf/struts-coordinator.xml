@@ -114,9 +114,6 @@
         <form-property name="generalObjectivesEn" type="java.lang.String"/>
         <form-property name="operacionalObjectivesEn" type="java.lang.String"/>
         <form-property name="programEn" type="java.lang.String"/>        
-<!--        <form-property name="infoExecutionDegreeCode" type="java.lang.String"/>        
-        <form-property name="infoCurricularCourseCode" type="java.lang.String"/>        
-        <form-property name="infoCurriculumCode" type="java.lang.String"/>        -->
       </form-bean>
 			
     </form-beans>
