@@ -272,4 +272,9 @@ UPDATE PERSON SET KEY_COUNTRY = 1 WHERE ID_INTERNAL=3;
 
 UPDATE PERSON SET DOCUMENT_ID_NUMBER = 999000999 WHERE ID_INTERNAL=2;
 
-   
+ CREATE TABLE almeida_coddisc (
+  codint int(11) NOT NULL auto_increment,
+  coddis varchar(200) default NULL,
+  nomedis varchar(200) default NULL,
+  PRIMARY KEY  (codInt)
+) TYPE=MyISAM;
