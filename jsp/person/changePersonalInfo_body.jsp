@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ page import="java.util.Collection" %>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="Util.RoleType" %>
 <%@ page import="DataBeans.InfoRole" %>
 <%@ page import="ServidorAplicacao.Servico.UserView" %>
@@ -13,6 +14,7 @@
   <body>
 
    <table>
+   		<bean:define id="personalInfo" name="<%= SessionConstants.PERSONAL_INFO_KEY %>" scope="session"/>
   	  <html:form action="/changePersonalInfoDispatchAction?method=change">
    	  <html:hidden property="page" value="1"/>
       <span class="error"><html:errors/></span>
@@ -41,7 +43,7 @@
          <td><bean:message key="label.person.maritalStatus" /></td>
          <td>
             <html:select property="maritalStatus">
-                <html:options collection="maritalStatusList" property="value" labelProperty="label"/>
+                <html:options collection="<%= SessionConstants.MARITAL_STATUS_LIST_KEY %>" property="value" labelProperty="label"/>
              </html:select>          
          </td>
         </tr>
@@ -65,13 +67,13 @@
         <tr>
          <td><bean:message key="label.person.birth" /></td>
           <td><html:select property="birthYear">
-                <html:options collection="years" property="value" labelProperty="label"/>
+                <html:options collection="<%= SessionConstants.YEARS_KEY %>" property="value" labelProperty="label"/>
              </html:select>
              <html:select property="birthMonth">
-                <html:options collection="months" property="value" labelProperty="label"/>
+                <html:options collection="<%= SessionConstants.MONTH_LIST_KEY %>" property="value" labelProperty="label"/>
              </html:select>
              <html:select property="birthDay">
-                <html:options collection="monthDays" property="value" labelProperty="label"/>
+                <html:options collection="<%= SessionConstants.MONTH_DAYS_KEY %>" property="value" labelProperty="label"/>
              </html:select>
           </td>          
         </tr>
@@ -107,13 +109,13 @@
         <tr>
          <td><bean:message key="label.person.identificationDocumentIssueDate" /></td>
           <td><html:select property="idIssueDateYear">
-                <html:options collection="years" property="value" labelProperty="label"/>
+                <html:options collection="<%= SessionConstants.YEARS_KEY %>" property="value" labelProperty="label"/>
              </html:select>
              <html:select property="idIssueDateMonth">
-                <html:options collection="months" property="value" labelProperty="label"/>
+                <html:options collection="<%= SessionConstants.MONTH_LIST_KEY %>" property="value" labelProperty="label"/>
              </html:select>
              <html:select property="idIssueDateDay">
-                <html:options collection="monthDays" property="value" labelProperty="label"/>
+                <html:options collection="<%= SessionConstants.MONTH_DAYS_KEY %>" property="value" labelProperty="label"/>
              </html:select>
           </td>          
         </tr>
@@ -122,13 +124,13 @@
         <tr>
          <td><bean:message key="label.person.identificationDocumentExpirationDate" /></td>
          <td><html:select property="idExpirationDateYear">
-                <html:options collection="expirationYears" property="value" labelProperty="label"/>
+                <html:options collection="<%= SessionConstants.EXPIRATION_YEARS_KEY %>" property="value" labelProperty="label"/>
              </html:select>
              <html:select property="idExpirationDateMonth">
-                <html:options collection="months" property="value" labelProperty="label"/>
+                <html:options collection="<%= SessionConstants.MONTH_LIST_KEY %>" property="value" labelProperty="label"/>
              </html:select>
              <html:select property="idExpirationDateDay">
-                <html:options collection="monthDays" property="value" labelProperty="label"/>
+                <html:options collection="<%= SessionConstants.MONTH_DAYS_KEY %>" property="value" labelProperty="label"/>
              </html:select>
           </td>          
         </tr>
@@ -139,7 +141,7 @@
          <td><bean:message key="label.person.identificationDocumentType" /></td>
          <td>
             <html:select property="identificationDocumentType">
-                <html:options collection="identificationDocumentTypeList" property="value" labelProperty="label"/>
+                <html:options collection="<%= SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST_KEY %>" property="value" labelProperty="label"/>
              </html:select>          
          </td>
         </tr>
@@ -213,7 +215,7 @@
          <td><bean:message key="label.person.sex" /></td>
          <td>
             <html:select property="sex">
-                <html:options collection="sexList" property="value" labelProperty="label"/>
+                <html:options collection="<%= SessionConstants.SEX_LIST_KEY %>" property="value" labelProperty="label"/>
              </html:select>          
          </td>
         </tr>
@@ -223,7 +225,7 @@
          <td><bean:message key="label.person.nationality" /></td>
          <td>
             <html:select property="nationality">
-                <html:options collection="nationalityList" property="value" labelProperty="label"/>
+                <html:options collection="<%= SessionConstants.NATIONALITY_LIST_KEY %>" property="value" labelProperty="label"/>
              </html:select>          
          </td>
         </tr>
