@@ -22,14 +22,14 @@ public final class InfoStudentEnrolmentContext extends InfoObject
 {
     //deprecated
 	private InfoExecutionPeriod infoExecutionPeriod;
-	private InfoStudentCurricularPlan infoStudentCurricularPlan;
-	private List studentCurrentSemesterInfoEnrollments;
 	private List finalInfoCurricularCoursesWhereStudentCanBeEnrolled;
 	private Integer creditsInSecundaryArea;
 	private Integer creditsInSpecializationArea;
 
 	//not deprecated
+	private List studentCurrentSemesterInfoEnrollments;
 	private List curricularCourses2Enroll;
+	private InfoStudentCurricularPlan infoStudentCurricularPlan;
 	
 	
 	public InfoStudentEnrolmentContext() {}

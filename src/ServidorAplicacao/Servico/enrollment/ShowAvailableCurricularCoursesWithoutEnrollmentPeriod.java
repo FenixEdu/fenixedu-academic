@@ -7,6 +7,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
+import DataBeans.InfoExecutionPeriodWithInfoExecutionYear;
+import DataBeans.InfoStudentCurricularPlanWithInfoStudent;
 import DataBeans.enrollment.InfoCurricularCourse2EnrollWithInfoCurricularCourse;
 import Dominio.ICurricularCourse;
 import Dominio.IEnrolmentPeriod;
@@ -55,29 +57,7 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
                 if (studentCurricularPlan != null) {
                     //					
                     try {
-                        List curricularCourses2Enroll = (List) CollectionUtils
-                                .collect(studentCurricularPlan
-                                        .getCurricularCoursesToEnroll(null,
-                                                EnrollmentRuleType.TOTAL),
-                                        new Transformer() {
-
-                                            public Object transform(Object arg0) {
-                                                ICurricularCourse curricularCourse = (ICurricularCourse) arg0;
-
-                                                return new CurricularCourse2Enroll(
-                                                        curricularCourse,
-                                                        CurricularCourseEnrollmentType.TEMPORARY);
-                                            }
-                                        });
-                        
-                        InfoStudentEnrolmentContext infoStudentEnrolmentContext = new InfoStudentEnrolmentContext();
-                        infoStudentEnrolmentContext.setCurricularCourses2Enroll((List) CollectionUtils.collect(curricularCourses2Enroll,new Transformer() {
-
-                            public Object transform(Object arg0) {
-                               
-                                return InfoCurricularCourse2EnrollWithInfoCurricularCourse.newInfoFromDomain((CurricularCourse2Enroll) arg0);
-                            }}));
-                        
+                        getInfoStudentEnrollmentContext(studentCurricularPlan);
                         return executeServiceLogics(studentCurricularPlan);
                     } catch (IllegalArgumentException e) {
                         throw new FenixServiceException("degree");
@@ -93,6 +73,47 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
 
             throw new FenixServiceException(e);
         }
+    }
+
+    /**
+     * @param studentCurricularPlan
+     * @throws ExcepcaoPersistencia
+     */
+    protected void getInfoStudentEnrollmentContext(
+            IStudentCurricularPlan studentCurricularPlan)
+            throws ExcepcaoPersistencia {
+        List curricularCourses2Enroll = (List) CollectionUtils.collect(
+                studentCurricularPlan.getCurricularCoursesToEnroll(null,
+                        EnrollmentRuleType.TOTAL), new Transformer() {
+
+                    public Object transform(Object arg0) {
+                        ICurricularCourse curricularCourse = (ICurricularCourse) arg0;
+
+                        return new CurricularCourse2Enroll(curricularCourse,
+                                CurricularCourseEnrollmentType.TEMPORARY);
+                    }
+                });
+
+        InfoStudentEnrolmentContext infoStudentEnrolmentContext = new InfoStudentEnrolmentContext();
+        infoStudentEnrolmentContext
+                .setCurricularCourses2Enroll((List) CollectionUtils.collect(
+                        curricularCourses2Enroll, new Transformer() {
+
+                            public Object transform(Object arg0) {
+
+                                return InfoCurricularCourse2EnrollWithInfoCurricularCourse
+                                        .newInfoFromDomain((CurricularCourse2Enroll) arg0);
+                            }
+                        }));
+        infoStudentEnrolmentContext
+                .setStudentCurrentSemesterInfoEnrollments(studentCurricularPlan
+                        .getStudentEnrolledEnrollmentsInExecutionPeriod(null));
+        infoStudentEnrolmentContext
+                .setInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudent
+                        .newInfoFromDomain(studentCurricularPlan));
+        infoStudentEnrolmentContext
+                .setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear
+                        .newInfoFromDomain(null));
     }
 
     /**
