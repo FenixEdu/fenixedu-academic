@@ -43,30 +43,26 @@
 	
 		<!-- Dissertation Title -->
 		<tr>
-			<th align="left" colspan="2">
+			<th align="left" >
 				<bean:message key="label.masterDegree.administrativeOffice.dissertationTitle"/>&nbsp;
+			</th>
+			<th align="left" >
 				<bean:write name="dissertationTitle"/>
-				
-				
 			</th>
 		</tr>
 		<tr> 
 			<td>&nbsp;</td>
 		</tr>
 		
-	</table>
-	
-	<table cellspacing="3" cellpadding="10" width="100%" border="0" >					
-		
 		<!-- Proof Date -->
 		<tr >
-			<th align="left"><bean:message key="label.masterDegree.administrativeOffice.proofDate"/>&nbsp;</th>
+			<th align="left" ><bean:message key="label.masterDegree.administrativeOffice.proofDate"/>&nbsp;</th>
 			<td><bean:write name="proofDate"/></td>
 		</tr>
 		
 		<!-- Thesis Delivery Date -->
 		<tr >
-			<th align="left"><bean:message key="label.masterDegree.administrativeOffice.thesisDeliveryDate"/>&nbsp;</th>
+			<th align="left" ><bean:message key="label.masterDegree.administrativeOffice.thesisDeliveryDate"/>&nbsp;</th>
 			<td><bean:write name="thesisDeliveryDate"/></td>
 		</tr>
 			
@@ -93,19 +89,17 @@
 				
 		<!-- Juries -->
 		<tr>
-			<th align="left" colspan="4"><bean:message key="label.masterDegree.administrativeOffice.juries"/></th>				
+			<th align="left" colspan="2"><bean:message key="label.masterDegree.administrativeOffice.juries"/></th>				
 		</tr>
 			<logic:present name="<%= SessionConstants.JURIES_LIST %>" scope="request">
 				<bean:define id="juriesList" name="<%= SessionConstants.JURIES_LIST %>" type="java.util.List"/>
 				<tr>
 					<th align="left"><bean:message key="label.masterDegree.administrativeOffice.teacherNumber"/></th>
-					<th align="left" width="40%"><bean:message key="label.masterDegree.administrativeOffice.teacherName"/></th>
-					<td width="30%">&nbsp;</td>
-					<td>&nbsp;</td>						
+					<th align="left"><bean:message key="label.masterDegree.administrativeOffice.teacherName"/></th>				
 				</tr>					
 				<logic:iterate id="jury" name="juriesList">
 					<tr>
-						<td align="left"><bean:write name="jury" property="teacherNumber"/></td>
+						<td align="left" ><bean:write name="jury" property="teacherNumber"/></td>
 						<td align="left"><bean:write name="jury" property="infoPerson.nome"/></td>					
 					</tr>				
 				</logic:iterate>
@@ -116,7 +110,7 @@
 		</tr>
 
 		<tr>
-			<td align="left" colspan="4">
+			<td align="left" colspan="2">
 				<bean:message key="label.masterDegree.administrativeOffice.lastModification"/>
 				<bean:write name="lastModification" /><br/>
 				<bean:message key="label.masterDegree.administrativeOffice.employee"/>
