@@ -2,7 +2,7 @@
  * Created on Nov 15, 2003 by jpvl
  *  
  */
-package ServidorApresentacao.framework.actions;
+package ServidorApresentacao.Action.framework;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +19,7 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
-import ServidorApresentacao.framework.actions.mappings.CRUDMapping;
+import ServidorApresentacao.mapping.framework.CRUDMapping;
 
 /**
  * 

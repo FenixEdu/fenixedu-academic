@@ -2,7 +2,7 @@
  * Created on Nov 15, 2003 by jpvl
  *  
  */
-package ServidorApresentacao.framework.actions;
+package ServidorApresentacao.Action.framework;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -23,7 +23,7 @@ import DataBeans.InfoObject;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
-import ServidorApresentacao.framework.actions.mappings.SearchActionMapping;
+import ServidorApresentacao.mapping.framework.SearchActionMapping;
 
 /**
  * Example:

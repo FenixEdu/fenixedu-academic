@@ -2,7 +2,7 @@
  * Created on Nov 18, 2003 by jpvl
  *
  */
-package ServidorApresentacao.framework.actions.mappings;
+package ServidorApresentacao.mapping.framework;
 
 import org.apache.struts.action.ActionMapping;
 
