@@ -29,6 +29,12 @@
 	<html:link page="/teachersManagerDA.do?method=viewTeachersByProfessorship">
 	<li><bean:message key="link.teachers"/></li>
 </html:link>
+
+<html:link page="/prepareInsertSection.do?method=prepareInsertRootSection">
+	<li><bean:message key="link.createRootSection"/></li>
+</html:link>
+
+
 <logic:present name="<%= SessionConstants.SECTIONS %>" >
 	<logic:present name="<%= SessionConstants.INFO_SECTION %>" >
 	<app:generateSectionMenu name="<%= SessionConstants.SECTIONS %>" path="<%=  request.getContextPath() + RequestUtils.getModuleName(request,application)%>" activeSectionName="<%= SessionConstants.INFO_SECTION %>" renderer="teacher" />

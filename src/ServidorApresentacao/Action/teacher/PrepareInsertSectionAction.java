@@ -16,15 +16,13 @@ import javax.servlet.http.HttpSession;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.gesdis.InfoSection;
 import DataBeans.gesdis.InfoSite;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
-import ServidorApresentacao.Action.base.FenixAction;
+import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
@@ -34,9 +32,9 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  * To change this generated comment go to 
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class PrepareInsertSectionAction extends FenixAction {
+public class PrepareInsertSectionAction extends FenixDispatchAction {
 
-	public ActionForward execute(
+	public ActionForward prepareInsertRegularSection(
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
@@ -57,24 +55,62 @@ public class PrepareInsertSectionAction extends FenixAction {
 		ArrayList sections;
 		Object args[] = { infoSite, parentSection };
 		GestorServicos manager = GestorServicos.manager();
-		
+
 		try {
-			sections = 
-				(ArrayList)manager.executar(
+			sections =
+				(ArrayList) manager.executar(
 					userView,
 					"ReadSectionsBySiteAndSuperiorSection",
-					args);					
+					args);
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
-		}		
-					
+		}
+
 		if (sections.size() != 0) {
 			Collections.sort(sections);
 			session.setAttribute(SessionConstants.CHILDREN_SECTIONS, sections);
-		}
-		else
+		} else
 			session.removeAttribute(SessionConstants.CHILDREN_SECTIONS);
 
 		return mapping.findForward("createSection");
+	}
+
+	public ActionForward prepareInsertRootSection(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		HttpSession session = request.getSession();
+
+		InfoSite infoSite =
+			(InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
+
+		UserView userView =
+			(UserView) session.getAttribute(SessionConstants.U_VIEW);
+
+		ArrayList sections;
+		Object args[] = { infoSite, null };
+		GestorServicos manager = GestorServicos.manager();
+
+		try {
+			sections =
+				(ArrayList) manager.executar(
+					userView,
+					"ReadSectionsBySiteAndSuperiorSection",
+					args);
+		} catch (FenixServiceException fenixServiceException) {
+			throw new FenixActionException(fenixServiceException.getMessage());
+		}
+
+		if (sections.size() != 0) {
+			Collections.sort(sections);
+			session.setAttribute(SessionConstants.CHILDREN_SECTIONS, sections);
+		} else
+			session.removeAttribute(SessionConstants.CHILDREN_SECTIONS);
+
+		return mapping.findForward("createSection");
+
 	}
 }

@@ -290,7 +290,7 @@
 		path="/createSection"
 		scope="request"
 		type="ServidorApresentacao.Action.teacher.InsertSectionAction"
-        validate="false">    
+        validate="true">    
        <forward name="viewSite" path="/viewSite.jsp"/>
 	</action>
 
@@ -310,6 +310,7 @@
 	<action name="sectionForm"
 		input="/viewSection.jsp"
 		path="/prepareInsertSection"
+		parameter="method"
 		type="ServidorApresentacao.Action.teacher.PrepareInsertSectionAction"
         validate="false">    
        <forward name="createSection" path="/createSection.jsp"/>

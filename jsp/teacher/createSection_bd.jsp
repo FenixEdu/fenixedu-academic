@@ -22,6 +22,7 @@
 	<td>
 		<html:select name="sectionForm" property="sectionOrder">
 			<html:options collection="<%= SessionConstants.CHILDREN_SECTIONS %>" property="name"/>
+			<html:option value="(Fim)"/>
 		</html:select>
 	</td>
 	</logic:present>

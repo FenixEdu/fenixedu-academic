@@ -128,32 +128,46 @@ public class InsertSection implements IServico {
 							.getInfoExecutionCourse()
 							.getSigla(),
 						executionPeriod);
+
 			site =
 				persistentSuport.getIPersistentSite().readByExecutionCourse(
 					executionCourse);
 
-			InfoSection fatherInfoSection =
-				infoSection.getSuperiorInfoSection();
+			if (!isRoot(infoSection)) {
 
-			if (fatherInfoSection.getSuperiorInfoSection() != null) {
+				InfoSection infoFatherSection =
+					infoSection.getSuperiorInfoSection();
 
-				fatherSection =
-					persistentSection.readBySiteAndSectionAndName(
-						site,
-						Cloner.copyInfoSection2ISection(
-							fatherInfoSection.getSuperiorInfoSection()),
-						fatherInfoSection.getName());
+				System.out.println("INFOFATHERSECTION:" + infoFatherSection);
+
+				if (infoFatherSection.getSuperiorInfoSection() != null) {
+
+					fatherSection =
+						persistentSection.readBySiteAndSectionAndName(
+							site,
+							Cloner.copyInfoSection2ISection(
+								infoFatherSection.getSuperiorInfoSection()),
+							infoFatherSection.getName());
+				} else {
+					fatherSection =
+						persistentSection.readBySiteAndSectionAndName(
+							site,
+							null,
+							infoFatherSection.getName());
+				}
+				
+				fatherSection.setSite(site);											
+				section =
+					new Section(infoSection.getName(), site, fatherSection);
+				section.setSectionOrder(infoSection.getSectionOrder());
+
 			} else {
-				fatherSection =
-					persistentSection.readBySiteAndSectionAndName(
-						site,
-						null,
-						fatherInfoSection.getName());
+				section = new Section();
+				section.setSuperiorSection(null);
+				section.setName(infoSection.getName());
+				section.setSite(site);
+				section.setSectionOrder(infoSection.getSectionOrder());
 			}
-			fatherSection.setSite(site);
-
-			section = new Section(infoSection.getName(), site, fatherSection);
-			section.setSectionOrder(infoSection.getSectionOrder());
 
 			organizeExistingSectionsOrder(
 				fatherSection,
@@ -170,4 +184,10 @@ public class InsertSection implements IServico {
 		return new Boolean(true);
 	}
 
+	private boolean isRoot(InfoSection infoSection) {
+		if (infoSection.getSuperiorInfoSection() == null)
+			return true;
+		else
+			return false;
+	}
 }

@@ -56,10 +56,12 @@ public class ReadSectionsBySiteAndSuperiorSection implements IServico {
 		ISuportePersistente sp;
 		List allSections = null;
 
-		ISection superiorSection =
-			Cloner.copyInfoSection2ISection(infoSuperiorSection);
-		superiorSection.setSite(site);
-
+		ISection superiorSection = null;
+		if (infoSuperiorSection != null) {		
+			superiorSection = Cloner.copyInfoSection2ISection(infoSuperiorSection);
+			superiorSection.setSite(site);
+		}
+		
 		try {
 			sp = SuportePersistenteOJB.getInstance();
 			allSections =

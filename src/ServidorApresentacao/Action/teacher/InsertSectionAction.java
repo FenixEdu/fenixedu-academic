@@ -25,7 +25,7 @@ import DataBeans.gesdis.InfoSite;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
-import ServidorApresentacao.Action.base.FenixAction;
+import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
@@ -35,9 +35,9 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  * To change this generated comment go to 
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class InsertSectionAction extends FenixAction {
+public class InsertSectionAction extends FenixDispatchAction {
 
-	public ActionForward execute(
+	public ActionForward insertRegularSection(
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
@@ -58,11 +58,12 @@ public class InsertSectionAction extends FenixAction {
 
 		InfoSection parentSection =
 			(InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
-
+		
 		Integer sectionOrder = new Integer(0);
 		ArrayList childrenSections =
 			(ArrayList) session.getAttribute(
 				SessionConstants.CHILDREN_SECTIONS);
+
 		if (childrenSections != null) {
 			Iterator iterator = childrenSections.iterator();
 			while (iterator.hasNext()) {
@@ -74,71 +75,32 @@ public class InsertSectionAction extends FenixAction {
 			}
 		}
 
-		if (parentSection == null) {
+		if (order.equals("(Fim)"))
+			sectionOrder = new Integer(childrenSections.size());
 
-			InfoSection infoSection =
-				new InfoSection(sectionName, sectionOrder, infoSite);
+		InfoSection infoSection =
+			new InfoSection(sectionName, sectionOrder, infoSite, parentSection);
 
-			Object args[] = { infoSection };
-			GestorServicos manager = GestorServicos.manager();
-			try {
-				manager.executar(userView, "InsertSection", args);
-			} catch (FenixServiceException fenixServiceException) {
-				throw new FenixActionException(
-					fenixServiceException.getMessage());
-			}
-			Object args1[] = { infoSite };
-			ArrayList sections;
-			try {
-				sections =
-					(ArrayList) manager.executar(
-						userView,
-						"ReadSections",
-						args1);
-			} catch (FenixServiceException fenixServiceException) {
-				throw new FenixActionException(
-					fenixServiceException.getMessage());
-			}
-
-			Collections.sort(sections);
-			session.setAttribute(SessionConstants.SECTIONS, sections);
-
-			return mapping.findForward("viewSite");
-
-		} else {
-
-			InfoSection infoSection =
-				new InfoSection(
-					sectionName,
-					sectionOrder,
-					infoSite,
-					parentSection);
-
-			Object args[] = { infoSection };
-			GestorServicos manager = GestorServicos.manager();
-			try {
-				manager.executar(userView, "InsertSection", args);
-			} catch (FenixServiceException fenixServiceException) {
-				throw new FenixActionException(
-					fenixServiceException.getMessage());
-			}
-
-			Object args1[] = { infoSite };
-			ArrayList sections;
-			try {
-				sections =
-					(ArrayList) manager.executar(
-						userView,
-						"ReadSections",
-						args1);
-			} catch (FenixServiceException fenixServiceException) {
-				throw new FenixActionException(
-					fenixServiceException.getMessage());
-			}
-
-			Collections.sort(sections);
-			session.setAttribute(SessionConstants.SECTIONS, sections);
-			return mapping.findForward("viewSite");
+		Object args[] = { infoSection };
+		GestorServicos manager = GestorServicos.manager();
+		try {
+			manager.executar(userView, "InsertSection", args);
+		} catch (FenixServiceException fenixServiceException) {
+			throw new FenixActionException(fenixServiceException.getMessage());
 		}
+
+		Object args1[] = { infoSite };
+		ArrayList sections;
+		try {
+			sections =
+				(ArrayList) manager.executar(userView, "ReadSections", args1);
+		} catch (FenixServiceException fenixServiceException) {
+			throw new FenixActionException(fenixServiceException.getMessage());
+		}
+
+		Collections.sort(sections);
+		session.setAttribute(SessionConstants.SECTIONS, sections);
+		return mapping.findForward("viewSite");
 	}
+			
 }

@@ -21,7 +21,7 @@
 
 </tr>
 <tr>
-	<td class="listClasses"><html:link page="/prepareInsertSection.do">
+	<td class="listClasses"><html:link page="/prepareInsertSection.do?method=prepareInsertRegularSection">
 			<bean:message key="button.insertSubSection"/>
 			</html:link>
 		</td>
