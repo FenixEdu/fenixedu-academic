@@ -39,7 +39,7 @@
              	</td>
         	</tr>
             <tr>
-              <td colspan='2'><br />
+              <td colspan="2"><br />
                 <html:submit property="submit" styleClass="inputbutton">
                 	<bean:message key="botao.ok"/>
                 </html:submit>
@@ -52,7 +52,7 @@
        <br />
        <br />
        <div class="infotable" style="display: inline;">
-	   <table width=60%" align="center">
+	   <table width="60%" align="center">
             <tr>
               <th colspan="2" class="bottomborder" align="left">
                 <span class="inline"><h2>
@@ -103,7 +103,7 @@
             </tr>
             <%--
             <tr>
-              <td colspan='2' align="right">
+              <td colspan="2" align="right">
                 <br>
                 <html:link forward="PortalAssiduidadeAction"><bean:message key="link.menu"/></html:link>&nbsp;&nbsp;
               </td>
@@ -128,7 +128,7 @@
             </tr>
     			<logic:iterate id="horario" name="ConsultarFuncionarioMostrarForm" property="rotacaoHorario">
               <tr>
-                <td colspan='2'>
+                <td colspan="2">
                 </td>       
               </tr>                       
               <tr>
@@ -241,7 +241,7 @@
             </logic:iterate>          
 			<%--
             <tr>
-              <td colspan='2' align="right">
+              <td colspan="2" align="right">
                 <br>
                 <html:link forward="PortalAssiduidadeAction"><bean:message key="link.menu"/></html:link>&nbsp;&nbsp;
               </td>
