@@ -61,22 +61,15 @@ public class GenerateNewPasswordDispatchAction extends DispatchAction {
 		return mapping.findForward("Confirm");
 	}
 
-
 	public ActionForward generatePassword(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		HttpSession session = request.getSession();
 
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			
-
 
 		Integer personID = new Integer(request.getParameter("personID"));
 
-
-
-
 		String password = RandomStringGenerator.getRandomStringGenerator(8);
-		
 	
 		// Change the Password
 		try {
@@ -96,12 +89,8 @@ public class GenerateNewPasswordDispatchAction extends DispatchAction {
 			throw new NonExistingActionException("A Pessoa", e);
 		}
 
-
 		request.setAttribute("infoPerson", infoPerson);
-
 
 		return mapping.findForward("Success");
 	}
-
-
 }

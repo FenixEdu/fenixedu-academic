@@ -10,11 +10,11 @@
     <!-- ========== Form Bean Definitions ================================== -->
     <form-beans type="org.apache.struts.action.ActionFormBean">
 
-      <form-bean name="newPasswordForm"
+      <form-bean name="personForm"
       			type="org.apache.struts.validator.DynaValidatorForm"
       			dynamic="true">
-		<form-property name="userType" type="java.lang.String"/>
 		<form-property name="username" type="java.lang.String"/>
+		<form-property name="documentIdNumber" type="java.lang.String"/>
 		<form-property name="page" type="java.lang.Integer"/>
       </form-bean>
       
@@ -46,24 +46,32 @@
     <action-mappings type="org.apache.struts.action.ActionMapping">
       <!-- page fronting actions -->
       <action path="/index" forward="/index.jsp"/>
-
-		<action	name="newPasswordForm"
-				attribute="newPasswordForm"
-				type="ServidorApresentacao.Action.commons.password.GenerateNewPasswordDispatchAction"
-				path="/generateNewPassword"
-				input="/generateNewPassword.do?method=prepare&amp;page=0"
-				parameter="method"
-				scope="request"
-				validate="true">
-			<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-			<forward name="PrepareSuccess" path="/password/choosePersonPage.jsp"/>
-			<forward name="Confirm" path="/password/confirmPasswordChange.jsp"/>
-			<forward name="Success" path="/password/newPasswordTemplate.jsp"/>
-		</action>
-
-
+			<action	name="personForm"
+					attribute="personForm"
+					type="ServidorApresentacao.Action.operator.FindPersonAction"
+					path="/findPerson"
+					input="/findPerson.do?method=prepare&amp;page=0"
+					parameter="method"
+					scope="request"
+					validate="true">
+				<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+							key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+							handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+				<forward name="choosePerson" path="/password/choosePersonPage.jsp"/>
+				<forward name="confirmPasswordChange" path="/password/confirmPasswordChange.jsp"/>
+			</action>
+	      
+			<action	type="ServidorApresentacao.Action.commons.password.GenerateNewPasswordDispatchAction"
+					path="/generateNewPassword"
+					input="/generateNewPassword.do?method=prepare&amp;page=0"
+					parameter="method"
+					scope="request"
+					validate="true">
+				<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+							key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+							handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+				<forward name="Success" path="/password/newPasswordTemplate.jsp"/>
+			</action>
      </action-mappings>     
 
     

@@ -33,16 +33,6 @@ import framework.factory.ServiceManagerServiceFactory;
  */
 public class FindPersonAction extends FenixDispatchAction
 {
-	public ActionForward firstPage(
-			ActionMapping mapping,
-			ActionForm actionForm,
-			HttpServletRequest request,
-			HttpServletResponse response)
-	throws Exception
-	{		
-		return mapping.findForward("firstPage");
-	}
-	
 	public ActionForward prepareFindPerson(
 		ActionMapping mapping,
 		ActionForm actionForm,
@@ -123,15 +113,5 @@ public class FindPersonAction extends FenixDispatchAction
 		});
 				
 		return employeeAndTeacherRoles != null && employeeAndTeacherRoles.size() > 0;
-	}
-
-	public ActionForward findEmployee(
-			ActionMapping mapping,
-			ActionForm actionForm,
-			HttpServletRequest request,
-			HttpServletResponse response)
-	throws Exception
-	{		
-		return mapping.findForward("displayEmployee");
 	}
 }
