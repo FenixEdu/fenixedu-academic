@@ -10,11 +10,7 @@
 <bean:message key="label.masterDegree.administrativeOffice.degree"/>:<bean:write name="degree" />
 &nbsp;-&nbsp;
 <bean:message key="label.masterDegree.administrativeOffice.curricularCourse"/>:<bean:write name="curricularCourse" />
-<html:hidden property="degree" value="<%= pageContext.findAttribute("degree").toString()%>"/>
 
-<%-- don´t forget to take above parameters - degree and curricularCourse and executionCourseCode - 
-	to actions to maintain state of jsp --%>
-<%-- don't forget to take above parameters - executionYear, degree, curricularCourse and curricularCourseCode - 
 <%-- don't forget to take above parameters - executionYear, degree, curricularCourse and scopeCode - 
 	to actions to maintain jsp state --%>
 <ul>
@@ -23,9 +19,6 @@
     		<bean:message key="link.masterDegree.administrativeOffice.marksView" />
 		</html:link>
 	</li>
-   <%-- <li><html:link page="<%="/marksSubmission.do?method=prepare&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") + "&amp;curricularCourseCode=" + pageContext.findAttribute("curricularCourseCode") %>">
-    	</html:link>
-    </li> --%>
     <li><html:link page="<%="/marksSubmission.do?method=prepare&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") + "&amp;scopeCode=" + pageContext.findAttribute("scopeCode") %>">
     		<bean:message key="link.masterDegree.administrativeOffice.marksSubmission" />
     	</html:link>
