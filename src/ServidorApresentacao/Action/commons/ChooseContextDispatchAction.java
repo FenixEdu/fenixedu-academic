@@ -50,6 +50,7 @@ public class ChooseContextDispatchAction extends DispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
+			
 			HttpSession session = request.getSession();
 			if (session != null) {
 				IUserView userView = SessionUtils.getUserView(request);
@@ -308,8 +309,6 @@ public class ChooseContextDispatchAction extends DispatchAction {
 				new Object[0]);
 		HttpSession session = request.getSession();
 		
-		System.out.println("******************************************");
-		System.out.println("("+infoExecutionPeriod.getName()+")");
 		
 		session.setAttribute(
 			SessionConstants.INFO_EXECUTION_PERIOD_KEY,

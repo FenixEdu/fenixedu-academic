@@ -38,14 +38,9 @@ public abstract class RequestUtils {
 		
 		infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
 		infoExecutionCourse.setSigla(infoExecutionCourseInitials);
-		System.out.println("*******************************************");
-		System.out.println(infoExecutionPeriod.getName());
-		System.out.println(infoExecutionCourseInitials);
 		int indexOf =
 			executionCourseList.indexOf(infoExecutionCourse);
 
-		System.out.println("INDEX OF "+ indexOf+" *****************************");
-		System.out.println("*******************************************");
 		if (indexOf != -1)
 			return (InfoExecutionCourse) executionCourseList.get(indexOf);
 		else

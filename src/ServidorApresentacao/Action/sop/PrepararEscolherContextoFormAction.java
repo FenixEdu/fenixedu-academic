@@ -152,8 +152,6 @@ public class PrepararEscolherContextoFormAction extends Action {
 				new Object[0]);
 		HttpSession session = request.getSession();
 		
-		System.out.println("******************************************");
-		System.out.println("("+infoExecutionPeriod.getName()+")");
 		
 		session.setAttribute(
 			SessionConstants.INFO_EXECUTION_PERIOD_KEY,
