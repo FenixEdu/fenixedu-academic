@@ -5,7 +5,7 @@ drop table if exists CAREER;
 create table CAREER (
    ID_INTERNAL integer(11) not null auto_increment,
    CLASS_NAME varchar(20) not null,
-   BEGIN_YEAR integer(10)
+   BEGIN_YEAR integer(10),
    END_YEAR integer(10),
    ENTITY varchar(50),
    FUNCTION varchar(50),
