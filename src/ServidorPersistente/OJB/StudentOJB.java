@@ -12,14 +12,19 @@ package ServidorPersistente.OJB;
  */
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
 import org.odmg.QueryException;
 
+import Dominio.Frequenta;
+import Dominio.IFrequenta;
 import Dominio.IPessoa;
 import Dominio.IStudent;
+import Dominio.IStudentCurricularPlan;
 import Dominio.Student;
+import Dominio.StudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentStudent;
 import Util.TipoCurso;
@@ -107,8 +112,42 @@ public class StudentOJB extends ObjectFenixOJB implements IPersistentStudent {
     
     
      
-    public void delete(IStudent aluno) throws ExcepcaoPersistencia {
-        super.delete(aluno);
+    public void delete(IStudent student) throws ExcepcaoPersistencia {
+    	// Delete all Student Curricular Plans
+		try {
+			String oqlQuery = "select all from " + StudentCurricularPlan.class.getName();
+			oqlQuery += " where student.number = $1"
+			+ " and student.degreeType = $2";
+			query.create(oqlQuery);
+			query.bind(student.getNumber());
+			query.bind(student.getDegreeType());
+			List result = (List) query.execute();
+			ListIterator iterator = result.listIterator();
+			while(iterator.hasNext())
+				SuportePersistenteOJB.getInstance().getIStudentCurricularPlanPersistente().delete((IStudentCurricularPlan) iterator.next());
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+
+    	// Delete all Attends
+		try {
+			String oqlQuery = "select all from " + Frequenta.class.getName();
+			oqlQuery += " where aluno.number = $1"
+			+ " and aluno.degreeType = $2";
+			query.create(oqlQuery);
+			query.bind(student.getNumber());
+			query.bind(student.getDegreeType());
+			List result = (List) query.execute();
+			ListIterator iterator = result.listIterator();
+			while(iterator.hasNext())
+				SuportePersistenteOJB.getInstance().getIFrequentaPersistente().delete((IFrequenta) iterator.next());
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+    	
+    	
+    	// Delete Student
+        super.delete(student);
     }
 
 /*    
@@ -130,8 +169,18 @@ public class StudentOJB extends ObjectFenixOJB implements IPersistentStudent {
 */ 
     
     public void deleteAll() throws ExcepcaoPersistencia {
-        String oqlQuery = "select all from " + Student.class.getName();
-        super.deleteAll(oqlQuery);
+		try {
+	        String oqlQuery = "select all from " + Student.class.getName();
+			query.create(oqlQuery);
+			List result = (List) query.execute();
+			Iterator iterator = result.iterator();
+			while(iterator.hasNext()){
+				delete((IStudent) iterator.next());
+			}
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+
     }
     
     public IStudent readByNumeroAndEstadoAndPessoa(Integer numero, Integer estado, IPessoa pessoa, TipoCurso degreeType) throws ExcepcaoPersistencia {

@@ -187,6 +187,41 @@ public class Pessoa implements IPessoa {
 //        (codigoFiscal.equals(((Pessoa)o).getCodigoFiscal())));
     }
 
+	public String toString() {
+		String result = "Person :\n";
+		result += "\n  - Internal Code : " + codigoInterno;
+		result += "\n  - Identification Document Number : " + numeroDocumentoIdentificacao;
+		result += "\n  - Identification Document Type : " + tipoDocumentoIdentificacao;
+		result += "\n  - Identification Document Issue Place : " + localEmissaoDocumentoIdentificacao;
+		result += "\n  - Identification Document Issue Date : " + dataEmissaoDocumentoIdentificacao;
+		result += "\n  - Name : " + nome;
+		result += "\n  - Sex : " + sexo;
+		result += "\n  - Marital Status : " + estadoCivil;
+		result += "\n  - Birth : " + nascimento;
+		result += "\n  - Father Name : " + nomePai;
+		result += "\n  - Mother Name : " + nomeMae;
+		result += "\n  - Nationality : " + nacionalidade;
+		result += "\n  - Birth Place Parish : " + freguesiaNaturalidade;
+		result += "\n  - Birth Place Municipality : " + concelhoNaturalidade;
+		result += "\n  - Birth Place District : " + distritoNaturalidade;
+		result += "\n  - Address : " + morada;
+		result += "\n  - Place : " + localidade;
+		result += "\n  - Post Code : " + codigoPostal;
+		result += "\n  - Address Parish : " + freguesiaMorada;
+		result += "\n  - Address Municipality : " + concelhoMorada;
+		result += "\n  - Address District : " + distritoMorada;
+		result += "\n  - Telephone : " + telefone;
+		result += "\n  - MobilePhone : " + telemovel;
+		result += "\n  - E-Mail : " + email;
+		result += "\n  - HomePage : " + enderecoWeb;
+		result += "\n  - Contributor Number : " + numContribuinte;
+		result += "\n  - Username : " + username;
+		result += "\n  - Password : " + password;
+		return result;
+	}  
+
+
+
     /** Getter for property chavePais.
      * @return Value of property chavePais.
      *
