@@ -40,8 +40,7 @@ public class GetAttendaciesByStudentList implements IService
     {
     }
 
-    public InfoAttendsSummary run(Integer executionCourseID, List infoStudents)
-            throws BDException
+    public InfoAttendsSummary run(Integer executionCourseID, List infoStudents) throws BDException
     {
         List attendacies = new LinkedList();
         InfoAttendsSummary attendsSummary = new InfoAttendsSummary();
@@ -49,23 +48,16 @@ public class GetAttendaciesByStudentList implements IService
         Map enrollmentDistribution = new HashMap();
         try
         {
-            ISuportePersistente persistenceSupport = SuportePersistenteOJB
-                    .getInstance();
-            IFrequentaPersistente persistentAttendacy = persistenceSupport
-                    .getIFrequentaPersistente();
-            IPersistentStudent persistentStudent = persistenceSupport
-                    .getIPersistentStudent();
-            IPersistentEnrolment persistentEnrolment = persistenceSupport
-                    .getIPersistentEnrolment();
+            ISuportePersistente persistenceSupport = SuportePersistenteOJB.getInstance();
+            IFrequentaPersistente persistentAttendacy = persistenceSupport.getIFrequentaPersistente();
+            IPersistentStudent persistentStudent = persistenceSupport.getIPersistentStudent();
+            IPersistentEnrolment persistentEnrolment = persistenceSupport.getIPersistentEnrolment();
             List students = new LinkedList();
-            for (Iterator infoStudentsIterator = infoStudents.iterator(); infoStudentsIterator
-                    .hasNext(); )
+            for (Iterator infoStudentsIterator = infoStudents.iterator(); infoStudentsIterator.hasNext(); )
             {
-                InfoStudent infoStudent = (InfoStudent) infoStudentsIterator
-                        .next();
+                InfoStudent infoStudent = (InfoStudent) infoStudentsIterator.next();
                 IStudent student = new Student(infoStudent.getIdInternal());
-                student = (IStudent) persistentStudent
-                        .readByOId(student, false);
+                student = (IStudent) persistentStudent.readByOId(student, false);
                 if (student != null)
                 {
                     students.add(student);
@@ -73,50 +65,43 @@ public class GetAttendaciesByStudentList implements IService
 
             }
 
-            for (Iterator studentsIterator = students.iterator(); studentsIterator
-                    .hasNext(); )
+            for (Iterator studentsIterator = students.iterator(); studentsIterator.hasNext(); )
             {
                 IStudent student = (IStudent) studentsIterator.next();
-                IFrequenta attendacy = persistentAttendacy
-                        .readByAlunoIdAndDisciplinaExecucaoId(student
-                                .getIdInternal(), executionCourseID);
+                IFrequenta attendacy = persistentAttendacy.readByAlunoIdAndDisciplinaExecucaoId(student
+                        .getIdInternal(), executionCourseID);
 
                 Integer enrollments = new Integer(0);
                 if (attendacy.getEnrolment() != null)
                 {
                     List enrollmentList = persistentEnrolment
                             .readEnrollmentsByStudentAndCurricularCourseNameAndCurricularCourseDegree(
-                                    attendacy.getEnrolment()
-                                            .getStudentCurricularPlan()
-                                            .getStudent(), attendacy
-                                            .getEnrolment()
-                                            .getCurricularCourse());
+                                    attendacy.getEnrolment().getStudentCurricularPlan().getStudent(),
+                                    attendacy.getEnrolment().getCurricularCourse());
                     enrollments = new Integer(enrollmentList.size());
-                    if (keys.contains(enrollments))
+                    if (enrollments.intValue() == 0)
                     {
-                        enrollmentDistribution.put(enrollments, new Integer(
-                                ((Integer) enrollmentDistribution
-                                        .get(enrollments)).intValue() + 1));
-                    }
-                    else
-                    {
-                        keys.add(enrollments);
-                        enrollmentDistribution.put(enrollments, new Integer(1));
+                        enrollments = new Integer(1);
                     }
 
                 }
-
-                InfoFrequenta infoFrequenta = Cloner
-                        .copyIFrequenta2InfoFrequenta(attendacy);
+                if (keys.contains(enrollments))
+                {
+                    enrollmentDistribution.put(enrollments, new Integer(
+                            ((Integer) enrollmentDistribution.get(enrollments)).intValue() + 1));
+                }
+                else
+                {
+                    keys.add(enrollments);
+                    enrollmentDistribution.put(enrollments, new Integer(1));
+                }
+                InfoFrequenta infoFrequenta = Cloner.copyIFrequenta2InfoFrequenta(attendacy);
                 InfoAttendWithEnrollment infoAttendWithEnrollment = new InfoAttendWithEnrollment();
                 infoAttendWithEnrollment.setAluno(infoFrequenta.getAluno());
-                infoAttendWithEnrollment.setDisciplinaExecucao(infoFrequenta
-                        .getDisciplinaExecucao());
-                infoAttendWithEnrollment.setIdInternal(infoFrequenta
-                        .getIdInternal());
+                infoAttendWithEnrollment.setDisciplinaExecucao(infoFrequenta.getDisciplinaExecucao());
+                infoAttendWithEnrollment.setIdInternal(infoFrequenta.getIdInternal());
                 infoAttendWithEnrollment.setEnrollments(enrollments);
-                infoAttendWithEnrollment.setInfoEnrolment(infoFrequenta
-                        .getInfoEnrolment());
+                infoAttendWithEnrollment.setInfoEnrolment(infoFrequenta.getInfoEnrolment());
                 attendacies.add(infoAttendWithEnrollment);
 
             }
@@ -124,12 +109,11 @@ public class GetAttendaciesByStudentList implements IService
             attendsSummary.setEnrollmentDistribution(enrollmentDistribution);
             Collections.sort(keys);
             attendsSummary.setNumberOfEnrollments(keys);
-            
+
         }
         catch (ExcepcaoPersistencia ex)
         {
-            throw new BDException(
-                    "Got an error while trying to get info about a student's work group",
+            throw new BDException("Got an error while trying to get info about a student's work group",
                     ex);
         }
         return attendsSummary;
