@@ -151,8 +151,6 @@ public class ListContributorsDispatchAction extends DispatchAction {
 										 HttpServletResponse response)
 		throws Exception {
 
-System.out.println("Prepare Edit");
-
 		SessionUtils.validSessionVerification(request, mapping);
 		HttpSession session = request.getSession(false);
 
@@ -164,8 +162,6 @@ System.out.println("Prepare Edit");
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			InfoContributor infoContributor = (InfoContributor) session.getAttribute(SessionConstants.CONTRIBUTOR); 
 
-
-System.out.println("Contribuinte em sessao : " + infoContributor);
 
 			// Fill in The Form
 			

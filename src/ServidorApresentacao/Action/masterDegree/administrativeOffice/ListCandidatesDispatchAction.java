@@ -149,10 +149,13 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 				throw new Exception(e);
 			}
 
+			InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
 			if (result.size() == 1) {
-				InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) result.get(0);
+
+				infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) result.get(0);
 				session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE);
 				session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
+				
 				return mapping.findForward("ActionReady");
 			}
 		  // Create find query String
@@ -227,7 +230,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) session.getAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE); 
-			
+
 			// Fill in The Form
 			
 			InfoPerson infoPerson = infoMasterDegreeCandidate.getInfoPerson();

@@ -6,7 +6,7 @@
  * Created on 24 de Outubro de 2002, 12:00
  */
 
-package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice;
+package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.candidate;
 
 /**
  *

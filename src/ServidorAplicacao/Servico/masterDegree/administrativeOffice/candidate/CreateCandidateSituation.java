@@ -55,6 +55,8 @@ public class CreateCandidateSituation implements IServico {
 		return "CreateCandidateSituation";
 	}
 
+	// FIXME: Should this receive the new Situation ?
+
 	public void run(InfoExecutionDegree infoExecutionDegree, InfoPerson infoPerson) throws Exception{
 
 		IMasterDegreeCandidate masterDegreeCandidate = new MasterDegreeCandidate();

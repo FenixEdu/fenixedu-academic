@@ -6,6 +6,8 @@
 <%@ page import="Util.RoleType" %>
 <%@ page import="DataBeans.InfoRole" %>
 <%@ page import="ServidorAplicacao.Servico.UserView" %>
+
+
   <html:form action="/editCandidate?method=change">
    	  <html:hidden property="page" value="1"/>  
    <table>

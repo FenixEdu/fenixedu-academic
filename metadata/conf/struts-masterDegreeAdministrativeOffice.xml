@@ -222,7 +222,7 @@
 		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
                         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
 	         <forward name="PrepareReady" path="/chooseCandidateList.jsp"/>  
-	         <forward name="ActionReady" path="/editCandidate.do?method=prepareEdit"/>  
+	         <forward name="ActionReady" path="/editCandidate.do?method=prepareEdit&amp;page=0"/>  
 	         <forward name="ChooseCandidate" path="/candidateList.jsp"/>  
       </action>
       
