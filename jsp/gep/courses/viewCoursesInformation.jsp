@@ -305,6 +305,14 @@
 							</ul>
 						</td>
 						<td class="listClasses" >&nbsp;
+					    	<logic:lessThan name="infoSiteCourseInformation" property="numberOfFieldsFilled" value="5">
+					    		<font color="#FF0000"><bean:write name="infoSiteCourseInformation" property="numberOfFieldsFilled"/>/5</font>
+					    	</logic:lessThan>
+					    	<logic:greaterEqual name="infoSiteCourseInformation" property="numberOfFieldsFilled" value="5">
+					    		<font color="#008000"><bean:write name="infoSiteCourseInformation" property="numberOfFieldsFilled"/>/5</font>
+					    	</logic:greaterEqual>							
+						</td>
+						<td class="listClasses" >&nbsp;
 							<logic:present name="infoSiteCourseInformation" property="lastModificationDate"> 
 								<bean:define id="formatDate">
 									<dt:format pattern="dd/MM/yyyy">
