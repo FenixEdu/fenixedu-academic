@@ -154,4 +154,19 @@ public class InfoSite {
 		}
 		return resultado;
 	}
+	
+
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	public String toString() {
+		String result = "[INFOSITE";
+		result += ", infoExecutionCourse=" + getInfoExecutionCourse();
+		result += ", initialInfoSection=" + getInitialInfoSection();
+		result += ", sections=" + getInfoSections();
+		result += ", announcements=" + getInfoAnnouncements();		
+		result += "]";
+		return result;
+	}
+	
 }
