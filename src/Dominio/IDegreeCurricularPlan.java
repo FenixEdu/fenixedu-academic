@@ -62,6 +62,7 @@ public interface IDegreeCurricularPlan extends IDomainObject
     public List getListOfEnrollmentRulesForOptionalCourses(IStudentCurricularPlan studentCurricularPlan,
             IExecutionPeriod executionPeriod);
     public List getCurricularCoursesByYearAndSemesterAndBranch(int year, Integer semester,IBranch area);
+    public List getSpecialListOfCurricularCourses();
 	
 	// -------------------------------------------------------------
 	// END: Only for enrollment purposes

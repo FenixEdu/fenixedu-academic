@@ -419,6 +419,10 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
         return finalCurricularCourses;
     }
 
+    public List getSpecialListOfCurricularCourses() {
+        return new ArrayList();
+    }
+
     private boolean belongsToSemester(ICurricularCourse curricularCourse, Integer semester) {
         List scopes = curricularCourse.getScopes();
         ICurricularCourseScope ccs = null;

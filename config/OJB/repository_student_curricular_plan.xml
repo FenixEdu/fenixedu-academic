@@ -271,6 +271,7 @@
 		<inverse-foreignkey field-ref="studentCurricularPlanKey"/>
 	</collection-descriptor>
 </class-descriptor>
+
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for Dominio.StudentCurricularPlanLEIC -->
 <!-- ************************************************************************************************************ -->
@@ -317,11 +318,6 @@
 	<field-descriptor
 		name="branchKey"
 		column="KEY_SPECIALIZATION_BRANCH"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="secundaryBranchKey"
-		column="KEY_SECUNDARY_BRANCH"
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
@@ -383,12 +379,6 @@
 			class-ref="Dominio.Branch"
 			proxy="true">
 		<foreignkey field-ref="branchKey"/>
-	</reference-descriptor>
-	<reference-descriptor
-			name="secundaryBranch"
-			class-ref="Dominio.Branch"
-			proxy="true">
-		<foreignkey field-ref="secundaryBranchKey"/>
 	</reference-descriptor>
 	<reference-descriptor
 			name="employee"

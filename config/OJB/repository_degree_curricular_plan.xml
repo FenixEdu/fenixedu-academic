@@ -233,3 +233,120 @@
 		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
 	</collection-descriptor>
 </class-descriptor>
+
+<!-- *************************************************************************************************************** -->
+<!-- Definitions for Dominio.DegreeCurricularPlanLEIC --> 
+<!-- *************************************************************************************************************** -->
+<class-descriptor class="Dominio.DegreeCurricularPlanLEIC" table="DEGREE_CURRICULAR_PLAN">
+	<field-descriptor
+		name="ojbConcreteClass"
+		column="CLASS_NAME"
+		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+		name="name"
+		column="NAME"
+		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+		name="state"
+		column="STATE"
+		jdbc-type="INTEGER"
+		conversion="ServidorPersistente.Conversores.JavaDegreeCurricularPlanState2SqlDegreeCurricularPlanStateFieldConversion"
+	/>
+	<field-descriptor
+		name="initialDate"
+		column="INITIAL_DATE"
+		jdbc-type="DATE"
+		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
+	/>
+	<field-descriptor
+		name="endDate"
+		column="END_DATE"
+		jdbc-type="DATE"
+		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
+	/>
+	<field-descriptor
+		name="degreeKey"
+		column="KEY_DEGREE"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="degreeDuration"
+		column="DEGREE_DURATION"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="minimalYearForOptionalCourses"
+		column="MINIMAL_YEAR_FOR_OPTIONAL_COURSES"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="neededCredits"
+		column="NEEDED_CREDITS"
+		jdbc-type="DOUBLE"
+	/>
+	<field-descriptor
+		name="markType"
+		column="MARK_TYPE"
+		jdbc-type="INTEGER"
+		conversion="ServidorPersistente.Conversores.JavaMarkType2SqlMarkTypeFieldConversion"
+	/>
+	<field-descriptor
+		name="numerusClausus"
+		column="NUMERUS_CLAUSUS"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="description"
+		column="DESCRIPTION"
+		jdbc-type="LONGVARCHAR"
+	/>	
+	<field-descriptor
+		name="descriptionEn"
+		column="DESCRIPTION_EN"
+		jdbc-type="LONGVARCHAR"
+	/>	  
+	<field-descriptor
+		name="ackOptLock"
+		column="ACK_OPT_LOCK"
+		jdbc-type="INTEGER"
+		locking="true"
+	/>
+	<field-descriptor
+		name="concreteClassForStudentCurricularPlans"
+		column="CLASS_NAME_FOR_STUDENT_CURRICULAR_PLANS"
+		jdbc-type="VARCHAR"
+	/>
+	<reference-descriptor
+			name="degree"
+			class-ref="Dominio.Curso"
+			proxy="true">
+		<foreignkey field-ref="degreeKey"/>
+	</reference-descriptor>
+	<collection-descriptor
+			name="curricularCourses"
+			element-class-ref="Dominio.CurricularCourse"
+			proxy="true">
+		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
+	</collection-descriptor>
+	<collection-descriptor
+			name="areas"
+			element-class-ref="Dominio.Branch"
+			proxy="true">
+		<inverse-foreignkey field-ref="keyDegreeCurricularPlan"/>
+	</collection-descriptor>
+	<collection-descriptor
+			name="curricularCourseEquivalences"
+			element-class-ref="Dominio.CurricularCourseEquivalence"
+			proxy="true">
+		<inverse-foreignkey field-ref="degreeCurricularPlanKey"/>
+	</collection-descriptor>
+</class-descriptor>
