@@ -6,6 +6,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import Dominio.IPessoa;
 import Dominio.IStudent;
+import Dominio.Pessoa;
 import Dominio.Student;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentStudent;
@@ -59,6 +60,40 @@ public class StudentOJBTest extends TestCaseOJB {
 
 	// -------------------------------------------------------------------------------------------------------------------------
 
+	public void testReadByUserName() {
+		IPessoa person = null;
+		IStudent student = null;
+		System.out.println("1->read existing student");
+		try {
+			person= new Pessoa();
+			person.setIdInternal(new Integer(3));
+			persistentSupport.iniciarTransaccao();
+			person = (IPessoa)persistentPerson.readByOId(person);
+			assertNotNull(person);
+			String username = person.getUsername();
+			student = new Student();
+			student.setIdInternal(new Integer(3));
+			student = (IStudent) persistentStudent.readByOId(student);
+			assertNotNull(student);
+			IStudent studentFromDb = persistentStudent.readByUsername(username);
+			assertNotNull(studentFromDb);
+			assertEquals(student,studentFromDb);
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia e) {
+			fail("failed reading by Username");
+		}
+		System.out.println("read by useername a unexisting student");
+		try {
+			persistentSupport.iniciarTransaccao();
+					IStudent studentFromDb = persistentStudent.readByUsername("istonãoéumusername");
+					assertNull(studentFromDb);
+				
+					persistentSupport.confirmarTransaccao();
+				} catch (ExcepcaoPersistencia e) {
+					fail("failed reading by Username");
+				}
+	}
+
 	public void testWriteStudent() {
 
 		IPessoa person = null;
@@ -74,7 +109,12 @@ public class StudentOJBTest extends TestCaseOJB {
 		assertNotNull(person);
 
 		// Student ja existente
-		IStudent student = new Student(new Integer(600), new StudentState(567), person, new TipoCurso(1));
+		IStudent student =
+			new Student(
+				new Integer(600),
+				new StudentState(567),
+				person,
+				new TipoCurso(1));
 
 		System.out.println("\n- Test 1.1 : Write Existing Student\n");
 		try {
@@ -95,7 +135,12 @@ public class StudentOJBTest extends TestCaseOJB {
 		}
 
 		// Student inexistente
-		student = new Student(new Integer(123), new StudentState(1), person, new TipoCurso(10));
+		student =
+			new Student(
+				new Integer(123),
+				new StudentState(1),
+				person,
+				new TipoCurso(10));
 
 		System.out.println("\n- Test 1.2 : Write Non Existing Student\n");
 		try {
@@ -110,7 +155,10 @@ public class StudentOJBTest extends TestCaseOJB {
 
 		try {
 			persistentSupport.iniciarTransaccao();
-			st = persistentStudent.readStudentByNumberAndDegreeType(new Integer(123), new TipoCurso(10));
+			st =
+				persistentStudent.readStudentByNumberAndDegreeType(
+					new Integer(123),
+					new TipoCurso(10));
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("Reading Non Existing Student Just Writen Before");
@@ -164,14 +212,17 @@ public class StudentOJBTest extends TestCaseOJB {
 		}
 
 		assertNotNull(person);
-		
+
 		IStudent student = null;
 
 		// Student ja existente
 		System.out.println("\n- Test 3.1 : Read Existing Student\n");
 		try {
 			persistentSupport.iniciarTransaccao();
-			student = persistentStudent.readStudentByDegreeTypeAndPerson(new TipoCurso(1), person);
+			student =
+				persistentStudent.readStudentByDegreeTypeAndPerson(
+					new TipoCurso(1),
+					person);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex2) {
 			fail("Read Existing Student");
@@ -184,7 +235,10 @@ public class StudentOJBTest extends TestCaseOJB {
 		System.out.println("\n- Test 3.2 : Read Non Existing Student");
 		try {
 			persistentSupport.iniciarTransaccao();
-			student = persistentStudent.readStudentByNumberAndDegreeType(new Integer(123), new TipoCurso(10));
+			student =
+				persistentStudent.readStudentByNumberAndDegreeType(
+					new Integer(123),
+					new TipoCurso(10));
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex2) {
 			fail("Read Non Existing Student");
@@ -202,7 +256,10 @@ public class StudentOJBTest extends TestCaseOJB {
 		System.out.println("\n- Test 4.1 : Delete Existing Student\n");
 		try {
 			persistentSupport.iniciarTransaccao();
-			student = persistentStudent.readStudentByNumberAndDegreeType(new Integer(600), new TipoCurso(1));
+			student =
+				persistentStudent.readStudentByNumberAndDegreeType(
+					new Integer(600),
+					new TipoCurso(1));
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("Reading Existing Student To Delete");
@@ -220,7 +277,10 @@ public class StudentOJBTest extends TestCaseOJB {
 		IStudent st = null;
 		try {
 			persistentSupport.iniciarTransaccao();
-			st = persistentStudent.readStudentByNumberAndDegreeType(new Integer(600), new TipoCurso(1));
+			st =
+				persistentStudent.readStudentByNumberAndDegreeType(
+					new Integer(600),
+					new TipoCurso(1));
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("Reading Just Deleted Student");
