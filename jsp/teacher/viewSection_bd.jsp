@@ -59,11 +59,30 @@
 <bean:define id="itemsList" name="infoSiteSection" property="items"/>
 
 <logic:iterate id="item" name="itemsList">
+<bean:define id="itemCode" name="item" property="idInternal"/>
 <h4><bean:write name="item" property="name"/></h4>
     <logic:equal name="item" property="urgent" value="true"><font color="red"></logic:equal> 		
   	<bean:write name="item" property="information" filter="false" />
   	<logic:equal name="item" property="urgent" value="true"></font></logic:equal>
-  	<bean:define id="itemCode" name="item" property="idInternal"/>
+  	<logic:present name="item" property="links">
+  	<br/>
+  	<br/>
+  		<table>
+  			<tr><td class="listClasses-header">
+  			Ficheiros:
+  			</td><td class="listClasses-header">&nbsp;</td></tr>
+		<logic:iterate id="infoLink" name="item" property="links">
+		<tr><td class="listClasses">
+			<html:link page="<%= "/fileDownload.do?itemCode=" + itemCode %>" paramId="fileName" paramName="infoLink" paramProperty="link" ><bean:write name="infoLink" property="linkName"/></html:link>
+		</td>
+		<td class="listClasses"><html:link page="<%= "/fileDelete.do?method=deleteFile&objectCode=" + pageContext.findAttribute("objectCode") + "&amp;itemCode=" + itemCode + "&amp;currentSectionCode=" + currentSectionCode%>" paramId="fileName" paramName="infoLink" paramProperty="link" >Apagar Ficheiro</html:link>
+		
+		</td>
+		</tr>
+		</logic:iterate>
+		</table>
+  	</logic:present>
+  	
 <br />
 <br />
 <table>
@@ -79,6 +98,13 @@
 			<div class="gen-button">
 				<html:link page="<%= "/deleteItem.do?method=deleteItem&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;itemCode=" + itemCode + "&amp;currentSectionCode=" + currentSectionCode%>">
 					<bean:message key="button.deleteItem"/>
+				</html:link>
+			</div>
+		</td>
+		<td>
+			<div class="gen-button">
+				<html:link page="<%="/prepareFileUpload.do?method=prepareFileUpload&objectCode=" + pageContext.findAttribute("objectCode") + "&amp;itemCode=" + itemCode + "&amp;currentSectionCode=" + currentSectionCode%>">
+					Inserir Ficheiro
 				</html:link>
 			</div>
 		</td>
