@@ -480,3 +480,10 @@ select.courseEnroll {
 	color: #000;
 	background: #EBECED;
 	}
+	
+/* photos bodycontent */	
+
+.photo img {
+	border: 5px solid #ccc;
+	margin: 5px;
+	}
