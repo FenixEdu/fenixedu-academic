@@ -9,7 +9,6 @@
 package ServidorApresentacao.Action.commons;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 
@@ -23,10 +22,10 @@ import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionDegree;
 import Dominio.Curso;
 import Dominio.CursoExecucao;
+import Dominio.DegreeCurricularPlan;
 import Dominio.ExecutionYear;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
-import Dominio.DegreeCurricularPlan;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -212,8 +211,6 @@ public class ChooseContextDispatchActionTest extends MockStrutsTestCase {
 		HttpSession session,
 		List existingAttributesList,
 		List nonExistingAttributesList) {
-		Enumeration attNames = session.getAttributeNames();
-
 		verifySessionAttributes(session, existingAttributesList, true);
 		verifySessionAttributes(session, nonExistingAttributesList, false);
 	}
