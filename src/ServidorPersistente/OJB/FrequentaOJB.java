@@ -1,0 +1,73 @@
+/*
+ * FrequentaOJB.java
+ *
+ * Created on 20 de Outubro de 2002, 15:36
+ */
+
+package ServidorPersistente.OJB;
+
+/**
+ *
+ * @author  tfc130
+ */
+import java.util.List;
+
+import org.odmg.QueryException;
+
+import Dominio.Frequenta;
+import Dominio.IDisciplinaExecucao;
+import Dominio.IFrequenta;
+import Dominio.IStudent;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IFrequentaPersistente;
+
+public class FrequentaOJB extends ObjectFenixOJB implements IFrequentaPersistente {
+    
+    public IFrequenta readByAlunoAndDisciplinaExecucao(IStudent aluno,
+                    IDisciplinaExecucao disciplinaExecucao) throws ExcepcaoPersistencia {
+        try {
+            IFrequenta frequenta = null;
+            String oqlQuery = "select alunodisciplinaexecucao from " + Frequenta.class.getName();
+				   oqlQuery += " where disciplinaExecucao.sigla = $1"
+				            +  " and aluno.number = $2";
+            query.create(oqlQuery);
+            query.bind(disciplinaExecucao.getSigla());
+            query.bind(aluno.getNumber());
+            List result = (List) query.execute();
+            lockRead(result);
+            if (result.size() != 0)
+                frequenta = (IFrequenta) result.get(0);
+            return frequenta;
+        } catch (QueryException ex) {
+            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+        }
+    }
+
+    public void lockWrite(IFrequenta frequenta) throws ExcepcaoPersistencia {
+        super.lockWrite(frequenta);
+    }
+    
+    public void delete(IFrequenta frequenta) throws ExcepcaoPersistencia {
+        super.delete(frequenta);
+    }
+    
+    public void deleteAll() throws ExcepcaoPersistencia {
+        String oqlQuery = "select all from " + Frequenta.class.getName();
+        super.deleteAll(oqlQuery);
+    }
+    
+	public List readByStudentId(Integer id) throws ExcepcaoPersistencia {
+		try {
+			String oqlQuery = "select frequentas from " + Frequenta.class.getName();
+			oqlQuery += " where aluno.number = $1";
+			query.create(oqlQuery);
+			query.bind(id);
+			List result = (List) query.execute();
+			lockRead(result);
+			return result;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
+    
+}

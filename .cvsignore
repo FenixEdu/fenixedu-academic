@@ -1,0 +1,9 @@
+classes
+classes_tests
+output
+deploy
+.classpath
+.project
+.metadata
+junit*
+web

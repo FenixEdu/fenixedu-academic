@@ -1,0 +1,598 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC 
+      "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+      "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+    
+    <!-- ========== Data Source Configuration =============================== -->
+
+    
+    <!-- ========== Form Bean Definitions ================================== -->
+    <form-beans type="org.apache.struts.action.ActionFormBean">
+      <!-- AUTORIZACAO -->
+      <!-- Dynamic-FormBean para Autorizacao -->
+      <form-bean name="autenticacaoSOPForm" 
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="utilizador" type="java.lang.String" />
+        <form-property name="password" type="java.lang.String" />
+      </form-bean>
+
+	  <!-- CONTEXTO -->
+      <!-- Dynamic-FormBean para EscolherContexto -->
+      <form-bean name="escolherContextoForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="sigla" type="java.lang.String"/>
+        <form-property name="anoCurricular" type="java.lang.Integer"/>
+        <form-property name="semestre" type="java.lang.Integer"/>
+      </form-bean>
+
+	  <!-- AULAS -->
+      <!-- Dynamic-FormBean para CriarAula -->
+      <form-bean name="aulaForm"
+                 type="org.apache.struts.validator.DynaValidatorActionForm"
+                 dynamic="true">
+        <form-property name="diaSemana" type="java.lang.String"/>
+        <form-property name="horaInicio" type="java.lang.String"/>
+        <form-property name="minutosInicio" type="java.lang.String"/>
+        <form-property name="horaFim" type="java.lang.String"/>
+        <form-property name="minutosFim" type="java.lang.String"/>
+        <form-property name="tipoAula" type="java.lang.String"/>
+        <form-property name="courseInitials" type="java.lang.String"/>
+        <form-property name="nomeSala" type="java.lang.String"/>
+      </form-bean>
+
+      <!-- Dynamic-FormBean para EscolherDisciplinaExecucao -->
+      <form-bean name="chooseExecutionCourseForm"
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+        <form-property name="courseInitials" type="java.lang.String"/>
+      </form-bean>
+
+      <!-- Dynamic-FormBean para ManipularAulas -->
+      <form-bean name="manipularAulasForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="indexAula" type="java.lang.Integer"/>
+      </form-bean>
+
+	  <!-- SALAS -->
+      <!-- Dynamic-FormBean para CriarSala -->
+      <form-bean name="roomForm"
+                type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+        <form-property name="name" type="java.lang.String"/>
+        <form-property name="building" type="java.lang.String"/>
+        <form-property name="floor" type="java.lang.String"/>
+        <form-property name="type" type="java.lang.String"/>
+        <form-property name="capacityNormal" type="java.lang.String"/>
+        <form-property name="capacityExame" type="java.lang.String"/>
+      </form-bean>
+
+      <!-- Dynamic-FormBean para PesquisarSalas -->
+      <form-bean name="posicaoFormBean"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="posicao" type="java.lang.Integer"/>
+      </form-bean>
+
+	  <form-bean name="salaFormBean"
+                 type="DataBeans.InfoRoom"
+                 dynamic="true">
+      </form-bean>
+      
+      <form-bean name="indexForm"
+                type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+        <form-property name="index" type="java.lang.Integer"/>
+      </form-bean>
+
+	  <form-bean name="searchEmptyRoomsForm"
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+	        <form-property name="weekDay" type="java.lang.String"/>
+	        <form-property name="startHour" type="java.lang.String"/>
+	        <form-property name="endHour" type="java.lang.String"/>
+	        <form-property name="startMinutes" type="java.lang.String"/>
+			<form-property name="endMinutes" type="java.lang.String"/>	        	        
+	        <form-property name="normalCapacity" type="java.lang.String"/>
+	        <form-property name="page" type="java.lang.Integer"/>
+	  </form-bean>
+
+	  <!-- TURNOS -->
+      <!-- Dynamic-FormBean para CriarTurno -->
+      <form-bean name="criarTurnoForm"
+                          type="org.apache.struts.validator.DynaValidatorForm"
+                          dynamic="true">
+        <form-property name="nome" type="java.lang.String"/>
+        <form-property name="courseInitials" type="java.lang.String"/>
+        <form-property name="tipoAula" type="java.lang.Integer"/>
+        <form-property name="lotacao" type="java.lang.Integer"/>
+      </form-bean>
+      
+      <form-bean name="shiftNameForm"
+                type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+        <form-property name="name" type="java.lang.String"/>
+      </form-bean>
+      
+
+      <!-- Dynamic-FormBean para EscolherDisciplinaETipo -->
+      <form-bean name="escolherDisciplinaETipoForm"
+                          type="org.apache.struts.validator.DynaValidatorForm"
+                          dynamic="true">
+        <form-property name="indexDisciplinaExecucao" type="java.lang.Integer"/>
+      </form-bean>
+
+      <!-- Dynamic-FormBean para ManipularTurnos -->
+      <form-bean name="manipularTurnosForm"
+                          type="org.apache.struts.validator.DynaValidatorForm"
+                          dynamic="true">
+        <form-property name="indexTurno" type="java.lang.Integer"/>
+      </form-bean>
+
+      <!-- Dynamic-FormBean para EditarTurno -->
+      <form-bean name="editarTurnoForm"
+                          type="org.apache.struts.validator.DynaValidatorForm"
+                          dynamic="true">
+        <form-property name="nome" type="java.lang.String"/>
+        <form-property name="lotacao" type="java.lang.Integer"/>
+      </form-bean>
+      
+      
+      
+      <!-- Dynamic-FormBean para Editar Aulas De Turno -->
+      <form-bean name="editarAulasDeTurnoForm"
+                          type="org.apache.struts.validator.DynaValidatorForm"
+                          dynamic="true">
+        <form-property name="indexAula" type="java.lang.Integer"/>
+      </form-bean>
+
+      <!-- Dynamic-FormBean para Adicionar Aulas De Turno -->
+      <form-bean name="adicionarAulasForm"
+                          type="org.apache.struts.validator.DynaValidatorForm"
+                          dynamic="true">
+        <form-property name="indexAula" type="java.lang.Integer"/>
+      </form-bean>
+
+	  <!-- TURMAS -->
+      <!-- Dynamic-FormBean para Criar Turma -->
+
+     <form-bean name="classForm" type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
+        <form-property name="className" type="java.lang.String"/>
+        <form-property name="method" type="java.lang.String" initial="createClass"/>
+        <form-property name="page" type="java.lang.Integer" initial="0"/>        
+      </form-bean>
+     </form-beans>
+
+
+    
+    <!-- ========== Global Exception Definitions ============================== -->
+	<global-exceptions>
+		<exception type="ServidorAplicacao.NotAuthorizedException"
+			       key="ServidorAplicacao.NotAuthorizedException"
+			       path="/naoAutorizado.do"/>
+		<exception type="ServidorAplicacao.NotExecutedException"
+		  	       key="ServidorAplicacao.NotExecutedException"
+		  	       path="/naoExecutado.do"/>
+		<exception type="ServidorAplicacao.Servico.ExcepcaoInexistente"
+			       key="ServidorAplicacao.Servico.ExcepcaoInexistente"
+			       path="/naoExistente.do"/>
+	</global-exceptions>
+
+    
+    <!-- ========== Global Forward Definitions =============================== -->
+    <global-forwards type="org.apache.struts.action.ActionForward">
+      <forward name="index" path="/index.do" redirect="true"/>
+    </global-forwards>
+    
+    <!-- ========== Action Mapping Definitions =============================== -->
+    <action-mappings type="org.apache.struts.action.ActionMapping">
+      <!-- page fronting actions -->
+      <action path="/index" forward="/autenticacaoSOP.jsp"/>
+      <action path="/autenticacaoSOP" forward="/autenticacaoSOP.jsp"/>
+      <action path="/naoAutorizado" forward="/naoAutorizado.jsp"/>
+      <action path="/naoExecutado" forward="/naoExecutado.jsp"/>
+      <action path="/principalSalas" forward="/principalSalas.jsp"/>
+      <action path="/criarSala" forward="/criarSala.jsp"/>
+      <action path="/gestaoHorarios" forward="/gestaoHorarios.jsp"/>
+      <action path="/principalAulas" forward="/principalAulas.jsp"/>
+      <action path="/principalTurnos" forward="/principalTurnos.jsp"/>
+      <action path="/criarTurno" forward="/criarTurno.jsp"/>
+      <action path="/escolherDisciplinaETipo" forward="/escolherDisciplinaETipo.jsp"/>
+      <action path="/manipularTurnos" forward="/manipularTurnos.jsp"/>
+     
+<!--      <action path="/editarTurno" forward="/editarTurno.jsp"/>-->
+
+      <!-- action definitions -->
+      <!-- AUTORIZACAO -->
+      <action name="autenticacaoSOPForm"
+              type="ServidorApresentacao.Action.sop.AutenticacaoSOPFormAction"
+              path="/autenticacaoSOPForm"
+              input="/autenticacaoSOP.jsp"
+              scope="request"
+              attribute="autenticacaoSOPForm">
+        <exception type="ServidorAplicacao.NotExecutedException"
+                   key="ServidorAplicacao.NotExecutedException"
+                   path="/autenticacaoSOP.do"/>
+        <exception type="ServidorAplicacao.Servico.ExcepcaoAutenticacao"
+                   key="ServidorAplicacao.Servico.ExcepcaoAutenticacao"
+                   path="/autenticacaoSOP.do"/>
+        <forward name="SOP"
+                 path="/sop/paginaPrincipal.jsp"
+                 contextRelative="true"
+                 redirect="true"/>
+      </action>
+
+	  <!-- CONTEXTO -->
+      <action path="/prepararEscolherContexto"
+              type="ServidorApresentacao.Action.sop.PrepararEscolherContextoFormAction"
+              scope="request">
+          <forward name="Sucesso" path="/escolherContexto.jsp"/>
+      </action>
+
+      <action attribute="escolherContextoForm"
+              input="/escolherContexto.jsp"
+              name="escolherContextoForm"
+              path="/escolherContextoForm"
+              scope="request"
+              type="ServidorApresentacao.Action.sop.EscolherContextoFormAction">
+        <exception type="ServidorAplicacao.Servico.ExcepcaoInexistente"
+                   key="ServidorAplicacao.Servico.ExcepcaoInexistente"
+                   path="/sop/paginaPrincipal.do"/>
+        <forward name="Sucesso" path="/gestaoHorarios.do"/>
+        <forward name="Licenciatura execucao inexistente" path="/naoExecutado.do"/>
+      </action>
+
+     <!-- Gestao de Horarios -->
+	  <!-- AULAS -->
+      <action path="/prepararAula"
+              type="ServidorApresentacao.Action.sop.PrepararAulaFormAction"
+              scope="request">
+          <forward name="Sucesso" path="/criarAula.jsp"/>
+      </action>
+
+      <action attribute="aulaForm"
+              input="/criarAula.jsp"
+              name="aulaForm"
+              path="/criarAulaForm"
+              scope="request"
+              type="ServidorApresentacao.Action.sop.CriarAulaFormAction"
+              validate="true">
+<!--        <forward name="Sucesso" path="/principalAulas.do"/> -->
+			<forward name="Sucesso" path="/gestaoHorarios.do"/>
+      </action>
+
+      <action path="/escolherAulas"
+              type="ServidorApresentacao.Action.sop.EscolherAulasFormAction"
+              scope="session">
+          <forward name="Sucesso" path="/manipularAulas.jsp"/>
+      </action>
+     
+      <action attribute="manipularAulasForm"
+              input="/manipularAulas.jsp"
+              name="manipularAulasForm"
+              path="/manipularAulasForm"
+              scope="session"
+              type="ServidorApresentacao.Action.sop.ManipularAulasFormAction">
+         <forward name="Editar" path="/prepararEditarAula.do"/>
+         <forward name="Apagar" path="/apagarAula.do"/>
+         <forward name="Voltar" path="/gestaoHorarios.do"/>
+      </action>
+
+      <action path="/apagarAula"
+              input="/manipularAulas.jsp"
+              type="ServidorApresentacao.Action.sop.ApagarAulaFormAction">
+          <forward name="Sucesso" path="/manipularAulas.jsp"/>
+      </action>
+
+     <action path="/prepararEditarAula"
+     	     attribute="aulaForm"
+             name="aulaForm"
+             validate="false"
+             type="ServidorApresentacao.Action.sop.PrepararEditarAulaFormAction"
+             input="manipularAulas.jsp"
+             scope="request">
+         <forward name="Sucesso" path="/editarAula.jsp"/>
+     </action>
+
+     <action attribute="aulaForm"
+             path="/editarAulaForm"
+             type="ServidorApresentacao.Action.sop.EditarAulaFormAction"
+             name="aulaForm"
+             scope="request"
+             input="/editarAula.jsp">
+         <forward name="Sucesso" path="/manipularAulas.jsp"/>
+	 </action>
+
+      <!-- Gestao de Salas -->
+      
+      <action path="/prepararSalaForm"
+              type="ServidorApresentacao.Action.sop.PrepararCriarSalaFormAction"
+              scope="request"
+	      parameter="method">
+          <forward name="CriarSala" path="/criarSala.jsp"/>
+          <forward name="PesquisarSalas" path="/pesquisarSalas.jsp"/>
+      </action>
+
+      <action path="/criarSalaForm"
+      		  attribute="roomForm"
+              input="/criarSala.jsp"
+			  name="roomForm"
+              scope="request"
+              type="ServidorApresentacao.Action.sop.CriarSalaFormAction"
+              validate="true">
+        <forward name="Sucesso" path="/principalSalas.do"/>
+      </action>
+
+      <action attribute="searchEmptyRoomsForm"
+              input="/searchEmptyRooms.jsp"
+              name="searchEmptyRoomsForm"
+              path="/searchEmptyRoomsDA"
+              scope="request"
+              parameter="method"
+              type="ServidorApresentacao.Action.sop.SearchEmptyRoomsDispatchAction"
+              validate="true"
+              >
+              <forward name="showSearchResult" path="/showEmptyRooms.jsp"/>
+              <forward name="searchPage" path="/searchEmptyRooms.jsp"/>              
+      </action>
+
+      <action attribute="roomForm"
+              input="/pesquisarSalas.jsp"
+              name="roomForm"
+              path="/pesquisarSala"
+              scope="request"
+              type="ServidorApresentacao.Action.publico.SelectRoomsFormAction"
+              validate="false">
+        <forward name="Sucess" path="/manipularSalas.jsp" />
+<!--        <forward name="Voltar" path="/principalSalas.do"/> -->
+      </action>
+
+      <action input="/manipularSalas.jsp"
+              name="posicaoFormBean"
+              path="/manipularSalas"
+              scope="session"
+              type="ServidorApresentacao.Action.sop.ManipularSalasAction">
+        <forward name="SalaApagada" path="/manipularSalas.jsp" />
+        <forward name="VerSala" path="/verSala.jsp" />
+        <forward name="EditarSala" path="/editarSala.jsp" />
+      </action>
+
+      <action 
+      	attribute="criarSalaForm"
+      		input="/manipularSalas.jsp"
+	      path="/editarSala"
+	      name="roomForm"
+              scope="request"
+              type="ServidorApresentacao.Action.sop.EditarSalaAction">
+        <forward name="Sucesso" path="/manipularSalas.jsp" />
+      </action>
+
+      <action attribute="pesquisarSalaForm"
+              input="/pesquisarSala.jsp"
+              name="pesquisarSalaForm"
+              path="/pesquisarSalas"
+              scope="request"
+              type="ServidorApresentacao.Action.publico.SelectRoomsFormAction">
+        <forward name="Sucesso" path="/manipularSalas.jsp" />
+        <forward name="Voltar" path="/principalSalas.do"/>
+      </action>
+      
+      <action path="/prepareViewRoomOcupation"
+              type="ServidorApresentacao.Action.publico.SelectSemesterAction"
+              >
+          <forward name="Sucess" path="/chooseSemester.jsp"/>
+      </action>
+      
+      <action attribute="indexForm"
+              input="/chooseSemester.jsp"
+              name="indexForm"
+      		  path="/viewRoomOcupation"
+              scope="request"
+              validate="true"
+              type="ServidorApresentacao.Action.publico.ViewRoomOcupationAction"
+              >
+          <forward name="Sucess" path="/viewRoomOcupation.jsp"/>
+      </action>
+      
+      
+	  <!-- TURNOS -->
+      <action path="/prepararCriarTurno"
+              type="ServidorApresentacao.Action.sop.PrepararCriarTurnoFormAction"
+              scope="request">
+          <forward name="Sucesso" path="/criarTurno.jsp"/>
+      </action>
+      <action attribute="criarTurnoForm"
+              input="/criarTurno.jsp"
+              name="criarTurnoForm"
+              path="/criarTurnoForm"
+              scope="request"
+              type="ServidorApresentacao.Action.sop.CriarTurnoFormAction">
+	        <forward name="Sucesso" path="/gestaoHorarios.do"/> 
+      </action>
+
+      <action attribute="shiftNameForm"
+              input="/manipularTurnos.jsp"
+              name="shiftNameForm"
+              path="/viewClassesWithShift"
+              scope="request"
+              type="ServidorApresentacao.Action.sop.ViewClassesWithShift">
+	        <forward name="sucess" path="/viewClassesWithShift.jsp"/> 
+      </action>
+     
+    <action path="/prepararManipularTurnos"
+              type="ServidorApresentacao.Action.sop.PrepararManipularTurnosFormAction"
+              scope="request">
+          <forward name="Sucesso" path="/manipularTurnos.jsp"/>
+      </action>
+      
+      <action attribute="manipularTurnosForm"
+              input="/manipularTurnos.jsp"
+              name="manipularTurnosForm"
+              path="/manipularTurnosForm"
+              scope="session"
+              type="ServidorApresentacao.Action.sop.ManipularTurnosFormAction">
+        <forward name="Ver Turno" path="/prepararVerTurno.do"/>
+        <forward name="Editar Turno" path="/prepararEditarTurno.do"/>
+        <forward name="Apagar Turno" path="/apagarTurno.do"/>
+        <forward name="Ver Alunos Inscritos" path="/prepararVerAlunosDeTurno.do"/>
+        <forward name="Voltar" path="/gestaoHorarios.do"/>
+      </action>
+      
+      <action path="/apagarTurno"
+              input="/manipularTurnos.jsp"
+              type="ServidorApresentacao.Action.sop.ApagarTurnoFormAction">
+          <forward name="Sucesso" path="/manipularTurnos.jsp"/>
+      </action>
+
+     <action path="/prepararVerTurno"
+             input="/manipularTurnos.jsp"
+             type="ServidorApresentacao.Action.sop.PrepararVerTurnoFormAction">
+         <forward name="Sucesso" path="/verTurno.jsp"/>
+     </action>
+
+     <action path="/prepararEditarTurno"
+      		  attribute="editarTurnoForm"
+      		  name="editarTurnoForm"
+      		  validate="false"
+              type="ServidorApresentacao.Action.sop.PrepararEditarTurnoFormAction"
+              input="manipularTurnos.jsp"
+              scope="request">
+          <forward name="Sucesso" path="/editarTurno.jsp"/>
+      </action>
+
+      <action attribute="editarTurnoForm"
+              input="/editarTurno.jsp"
+              name="editarTurnoForm"
+              path="/editarTurnoForm"
+              scope="request"
+              type="ServidorApresentacao.Action.sop.EditarTurnoFormAction">
+        <forward name="Guardar" path="/manipularTurnos.do"/>
+      </action>
+
+      <action path="/prepararEditarAulasDeTurno"
+              type="ServidorApresentacao.Action.sop.PrepararEditarAulasDeTurnoFormAction"
+              scope="request">
+          <forward name="Sucesso" path="/editarAulasDeTurno.jsp"/>
+      </action>
+
+      <action attribute="editarAulasDeTurnoForm"
+              input="/editarAulasDeTurno.jsp"
+              name="editarAulasDeTurnoForm"
+              path="/editarAulasDeTurnoForm"
+              scope="session"
+              type="ServidorApresentacao.Action.sop.EditarAulasDeTurnoFormAction">
+        <forward name="Adicionar Aulas" path="/prepararAdicionarAulasDeTurno.do"/>
+        <forward name="Remover Aula" path="/removerAulaDeTurno.do"/>        
+      </action>
+
+      <action path="/removerAulaDeTurno"
+              input="/editarAulasDeTurno.jsp"
+              type="ServidorApresentacao.Action.sop.RemoverAulaDeTurnoFormAction">
+          <forward name="Sucesso" path="/editarAulasDeTurno.jsp"/>
+      </action>
+
+      <action path="/prepararAdicionarAulasDeTurno"
+              type="ServidorApresentacao.Action.sop.PrepararAdicionarAulasDeTurnoFormAction"
+              scope="request">
+          <forward name="Sucesso" path="/adicionarAulas.jsp"/>
+      </action>
+
+      <action attribute="adicionarAulasForm"
+              input="/adicionarAulas.jsp"
+              name="adicionarAulasForm"
+              path="/adicionarAulasForm"
+              scope="session"
+              type="ServidorApresentacao.Action.sop.AdicionarAulasFormAction">
+        <forward name="Sucesso" path="/prepararEditarAulasDeTurno.do"/>
+      </action>
+
+     <action path="/prepararVerAlunosDeTurno"
+             input="/manipularTurnos.jsp"
+             type="ServidorApresentacao.Action.sop.PrepararVerAlunosDeTurnoFormAction">
+         <forward name="Sucesso" path="/verAlunosDeTurno.jsp"/>
+     </action>
+
+
+     <!-- TURMAS -->      
+      <action parameter="method"
+		      path="/ClassesManagerDA"
+              type="ServidorApresentacao.Action.sop.ClassesManagerDispatchAction"
+		>
+        <forward name="listClasses" path="/listClasses.jsp"/>
+      </action>
+      
+     <action parameter="method"
+     		 input="/viewTimeTable.jsp"
+     		 name="classForm"
+		     path="/ClassManagerDA"
+             type="ServidorApresentacao.Action.sop.ClassManagerDispatchAction"
+             validate="true"
+             scope="request">
+             <forward name="viewTimeTable" path="/viewTimeTable.jsp"/>
+	         <forward name="listClasses" path="ClassesManagerDA.do?method=listClasses"/>             
+      </action>
+
+      <action parameter="method"
+      	      input = "/viewShiftList.jsp"
+		      path="/ClassShiftManagerDA"
+              type="ServidorApresentacao.Action.sop.ClassShiftManagerDispatchAction"
+              validate="false"
+		>
+	         <forward name="viewClassShiftList" path="/viewShiftList.jsp"/>  
+	         <forward name="viewAvailableShiftList" path="/viewShiftList.jsp"/>  
+      </action>
+
+
+
+	  <!-- Choose Execution Course Form for lessons -->
+      <action name="chooseExecutionCourseForm"
+		      input="/escolherDisciplinaExecucao.jsp"
+              path="/escolherDisciplinaExecucaoForm"
+              scope="request"
+              type="ServidorApresentacao.Action.sop.ChooseExecutionCourseAction"
+              validate="true">
+        <forward name="forwardChoose" path="/escolherAulas.do"/>
+        <forward name="showForm" path="/escolherDisciplinaExecucao.jsp"/>        
+      </action>
+
+	  <!-- Choose Execution Course Form for shifts in timetables -->
+      <action name="chooseExecutionCourseForm"
+      		  input="/escolherDisciplinaExecucao.jsp"
+              path="/chooseExecutionCourse"
+              scope="request"
+              type="ServidorApresentacao.Action.sop.ChooseExecutionCourseAction"
+              validate="true"
+              >
+        <forward name="forwardChoose" path="/ClassShiftManagerDA.do?method=listAvailableShifts"/>
+        <forward name="showForm" path="/escolherDisciplinaExecucao.jsp"/>        
+      </action>
+      
+	  <!-- Choose Execution Course Form for Shifts -->   
+      <action input="/escolherDisciplinaExecucao.jsp"
+              name="chooseExecutionCourseForm"
+              path="/escolherDisciplinaETipoForm"
+              scope="request"
+              type="ServidorApresentacao.Action.sop.ChooseExecutionCourseAction"
+              validate="true"
+              >
+        <forward name="forwardChoose" path="/prepararManipularTurnos.do"/>
+      	<forward name="showForm" path="/escolherDisciplinaExecucao.jsp"/>	
+      </action>
+     </action-mappings>     
+
+    
+    <!-- ========== Controller Configuration ================================ -->
+
+    
+    <!-- ========== Message Resources Definitions ============================ -->
+    <message-resources parameter="ServidorApresentacao.ApplicationResources" />
+    
+    <!-- ========== Plug Ins Configuration ================================= -->
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+      <set-property property="pathnames" 
+                    value="/WEB-INF/validator-rules.xml,/WEB-INF/conf/validation-sop.xml"/>
+    </plug-in>
+</struts-config>

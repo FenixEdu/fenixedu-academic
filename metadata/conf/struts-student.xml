@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC 
+      "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+      "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+    
+    <!-- ========== Data Source Configuration =============================== -->
+
+    
+    <!-- ========== Form Bean Definitions ================================== -->
+    <form-beans type="org.apache.struts.action.ActionFormBean">
+      <!-- AUTORIZACAO -->
+      <!-- Dynamic-FormBean for Student Authentication -->
+      <form-bean name="authenticationStudentForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="username" type="java.lang.String" />
+        <form-property name="password" type="java.lang.String" />
+      </form-bean>
+
+	  <!-- Dynamic-FormBean para EscolherCertidao -->
+      <form-bean name="escolherCertidaoForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="certidao" type="java.lang.String"/>
+      </form-bean>
+
+	  <form-bean name="shiftEnrolmentForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="shiftName" type="java.lang.String" />
+      </form-bean>
+      
+      
+
+	  <form-bean name="selectShiftEnrolmentForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="index" type="java.lang.String" />
+      </form-bean>
+
+     </form-beans>
+    
+    <!-- ========== Global Exception Definitions ============================== -->
+	<global-exceptions>
+		<exception type="ServidorAplicacao.NotAuthorizedException"
+			       key="ServidorAplicacao.NotAuthorizedException"
+			       path="/naoAutorizado.do"/>
+		<exception type="ServidorAplicacao.NotExecutedException"
+		  	       key="ServidorAplicacao.NotExecutedException"
+		  	       path="/naoExecutado.do"/>
+		<exception type="ServidorAplicacao.Servico.ExcepcaoInexistente"
+			       key="ServidorAplicacao.Servico.ExcepcaoInexistente"
+			       path="/naoExistente.do"/>
+	</global-exceptions>
+
+    
+    <!-- ========== Global Forward Definitions =============================== -->
+    <global-forwards type="org.apache.struts.action.ActionForward">
+      <forward name="index" path="/index.do" redirect="true"/>
+    </global-forwards>
+    
+    <!-- ========== Action Mapping Definitions =============================== -->
+    <action-mappings type="org.apache.struts.action.ActionMapping">
+      <!-- page fronting actions -->
+      <action path="/index" forward="/authenticationStudent.jsp"/>
+      <action path="/authenticationStudent" forward="/authenticationStudent.jsp"/>
+      <action path="/naoAutorizado" forward="/naoAutorizado.jsp"/>
+      <action path="/naoExecutado" forward="/naoExecutado.jsp"/>
+      <!--<action path="/obtainCertificate" forward="/obtainCertificate.jsp"/>-->
+
+      <!-- action definitions -->
+      <!-- AUTHENTICATION -->
+      <action name="authenticationStudentForm"
+              type="ServidorApresentacao.Action.student.AuthenticationStudentFormAction"
+              path="/authenticationStudentForm"
+              input="/authenticationStudent.jsp"
+              scope="request"
+              attribute="authenticationStudentForm">
+        <exception type="ServidorAplicacao.NotExecutedException"
+                   key="ServidorAplicacao.NotExecutedException"
+                   path="/authenticationStudent.do"/>
+        <exception type="ServidorAplicacao.Servico.ExcepcaoAutenticacao"
+                   key="ServidorAplicacao.Servico.ExcepcaoAutenticacao"
+                   path="/authenticationStudent.do"/>
+        <forward name="Student"
+                 path="/student/main.jsp"
+                 contextRelative="true"
+                 redirect="true"/>
+      </action>
+      <!-- SHIFT ENROLMENT -->
+      <action 
+              type="ServidorApresentacao.Action.student.ViewEnrolmentAction"
+              path="/viewEnrolment"
+              >
+        <forward name="sucess"
+                 path="/viewEnrolment.jsp"/>
+      </action>
+
+      <action name="selectShiftEnrolmentForm"
+              type="ServidorApresentacao.Action.student.ShowShiftListAction"
+              path="/viewShiftsList"
+              input="/viewEnrolment.jsp"
+              validate="true"
+             >
+        <forward name="viewShiftsList"
+                 path="/viewShiftsList.jsp"
+                 />
+      </action>
+
+      <action
+              type="ServidorApresentacao.Action.student.ShiftEnrolmentAction"
+              path="/shiftEnrolment"
+              input="/viewShiftsList.do"
+              scope="request"
+              name="shiftEnrolmentForm"
+              validate="true"
+             >
+        <forward name="sucess"
+                 path="/viewEnrolment.do"/>
+      </action>
+
+      <action 
+              type="ServidorApresentacao.Action.student.ChooseOtherCourseAction"
+              path="/chooseOtherCourse"
+              >
+        <forward name="sucess"
+                 path="/chooseOtherCourse.jsp"/>
+      </action>
+
+      <!-- VIEW SCHEDULE -->
+      <action 
+              type="ServidorApresentacao.Action.student.ViewScheduleAction"
+              path="/viewSchedule"
+              >
+        <forward name="sucess"
+                 path="/viewSchedule.jsp"/>
+      </action>
+      <action
+              type="ServidorApresentacao.Action.student.ViewShiftScheduleAction"
+              path="/viewShiftSchedule"
+              input="/viewShiftsList.do"
+              scope="request"
+              name="shiftEnrolmentForm"
+              validate="true"
+             >
+        <forward name="sucess"
+                 path="/viewSchedule.jsp"/>
+      </action>
+      
+      
+      
+      
+      <action 
+              type="ServidorApresentacao.Action.student.GrauMestreAction"
+              path="/obtainCertificateTipo1"
+              redirect="true"
+             >
+        
+        <forward name="GrauMestre"
+                 path="/student/obtainCertificateTipo1.jsp"
+                 contextRelative="true"
+                 redirect="true"/>
+        <forward name="PrestouProvas"
+                 path="/student/obtainCertificateTipo2.jsp"
+                 contextRelative="true"
+                 redirect="true"/>
+      </action>
+      
+      <action 
+              type="ServidorApresentacao.Action.student.ShowDisciplineListAction"
+              path="/obtainCertificateTipo3"
+              redirect="true"
+             >
+        
+        <forward name="viewDisciplinesList"
+                 path="/student/obtainCertificateTipo3.jsp"
+                 contextRelative="true"
+                 redirect="true"/>
+      </action>
+      
+      <action 
+              type="ServidorApresentacao.Action.student.ShowDisciplineListAction"
+              path="/obtainCertificateTipo4"
+              redirect="true"
+             >
+        
+        <forward name="viewDisciplinesList"
+                 path="/student/obtainCertificateTipo4.jsp"
+                 contextRelative="true"
+                 redirect="true"/>
+      </action>
+      
+      <!-- VIEW DISCIPLINE -->
+    	<action 
+              type="ServidorApresentacao.Action.student.ShowDisciplineListAction"
+              path="/obtainCertificateTipo5"
+              redirect="true"
+             >
+        
+        <forward name="viewDisciplinesList"
+                 path="/student/obtainCertificateTipo5.jsp"
+                 contextRelative="true"
+                 redirect="true"/>
+      </action>-->
+      
+      <action 
+              type="ServidorApresentacao.Action.student.PrepararEscolherCertidoesAction"
+              path="/chooseObtainCertificate"
+              redirect="true"
+             >
+        
+        <forward name="sucesso"
+                 path="/chooseObtainCertificate.jsp"
+				 />
+      </action>
+      
+      
+      
+      <action attribute="escolherCertidaoForm"
+      		  name="escolherCertidaoForm"
+      		  input="/chooseObtainCertificate.jsp"
+              path="/escolherCertidaoForm"
+              type="ServidorApresentacao.Action.student.EscolherCertidoesAction">
+        <forward name="Tipo1" path="/obtainCertificateTipo1.do"/>
+        <forward name="Tipo2" path="/obtainCertificateTipo1.do"/>
+        <forward name="Tipo3" path="/obtainCertificateTipo3.do"/>
+        <forward name="Tipo4" path="/obtainCertificateTipo4.do"/>
+        <forward name="Tipo5" path="/obtainCertificateTipo5.do"/>
+        <forward name="Inexistente" path="/naoExecutado.do"/>
+      </action>
+
+     </action-mappings>     
+
+    
+    <!-- ========== Controller Configuration ================================ -->
+
+    
+    <!-- ========== Message Resources Definitions ============================ -->
+    <message-resources parameter="ServidorApresentacao.ApplicationResources" />
+    
+    <!-- ========== Plug Ins Configuration ================================= -->
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+      <set-property property="pathnames" 
+                    value="/WEB-INF/validator-rules.xml,/WEB-INF/conf/validation-student.xml"/>
+    </plug-in>
+</struts-config>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE form-validation SYSTEM "file:///validation_1_1.dtd"> 
+<form-validation>
+  <formset>
+    <!-- Validation for student authentication form -->
+    <form name="authenticationStudentForm">
+      <field property="username" depends="required">
+        <arg0 key="Username" resource="false"/>
+      </field>
+
+      <field property="password" depends="required">
+        <arg0 key="Password" resource="false"/>
+      </field>
+    </form>
+
+
+    <form name="selectShiftEnrolmentForm">
+      <field property="index" depends="required">
+        <arg0 key="message.student.shift.enrolment"/>
+      </field>
+    </form>
+
+    <!-- Validation for student info form -->
+    <form name="studentInfoForm">
+      <field property="id" depends="required">
+        <arg0 key="Id" resource="false"/>
+      </field>
+
+      <field property="name" depends="required">
+        <arg0 key="Name" resource="false"/>
+      </field>
+    </form>
+
+    <form name="shiftEnrolmentForm">
+      <field property="shiftName" depends="required">
+        <arg0 key="property.shift"/>
+      </field>
+    </form>
+    
+  </formset>
+</form-validation>

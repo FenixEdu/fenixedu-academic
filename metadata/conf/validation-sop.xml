@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE form-validation SYSTEM "file:///validation_1_1.dtd"> 
+<form-validation>
+  <formset>
+  
+    <!-- Validacao para o formulario de autenticacao -->
+    <form name="autenticacaoSOPForm">
+      <field property="utilizador" depends="required">
+        <arg0 key="label.username"/>
+      </field>
+
+      <field property="password" depends="required">
+        <arg0 key="label.password"/>
+      </field>
+    </form>
+
+    <!-- Validacao para o formulario de Escolher Contexto -->
+    <form name="escolherContextoForm">
+      <field property="sigla" depends="required">
+        <arg0 key="property.context.degree" />
+      </field>
+
+      <field property="anoCurricular" depends="range,required">
+        <arg0 key="property.context.curricular.year"/>
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
+        <var>
+          <var-name>min</var-name>
+          <var-value>1</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>5</var-value>
+        </var>
+      </field>
+
+      <field property="semestre" depends="range, required">
+        <arg0 key="property.context.semester"/>
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
+        <var>
+          <var-name>min</var-name>
+          <var-value>1</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>2</var-value>
+        </var>
+      </field>
+      
+    </form>
+
+    <!-- Validacao para o formulario de Aula -->
+    <form name="/editarAulaForm">
+      <field property="diaSemana" depends="required,integer,range">
+        <arg0 key="property.aula.weekDay"/>
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
+        <var>
+          <var-name>min</var-name>
+          <var-value>2</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>7</var-value>
+        </var>
+      </field>
+
+      <field property="horaInicio" depends="required,integer,range">
+        <arg0 key="property.aula.time.begining"/>
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
+        <var>
+          <var-name>min</var-name>
+          <var-value>0</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>23</var-value>
+        </var>
+      </field>
+
+      <field property="minutosInicio" depends="required,integer,range">
+        <arg0 key="property.aula.time.begining"/>
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
+        <var>
+          <var-name>min</var-name>
+          <var-value>0</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>59</var-value>
+        </var>
+      </field>
+      
+      <field property="horaFim" depends="required,integer,range">
+        <arg0 key="property.aula.time.end"/>
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
+        <var>
+          <var-name>min</var-name>
+          <var-value>0</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>23</var-value>
+        </var>
+      </field>
+
+      <field property="minutosFim" depends="required,integer,range">
+        <arg0 key="property.aula.time.minutes.end"/>
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
+        <var>
+          <var-name>min</var-name>
+          <var-value>0</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>59</var-value>
+        </var>
+      </field>
+
+      <field property="tipoAula" depends="required,integer,range">
+        <arg0 key="property.aula.type"/>
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
+        <var>
+          <var-name>min</var-name>
+          <var-value>1</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>6</var-value>
+        </var>
+      </field>        
+      <field property="nomeSala" depends="required">
+        <arg0 key="property.aula.sala"/>
+      </field>
+    </form>
+
+    <form name="/criarAulaForm">
+      <field property="diaSemana" depends="required,integer,range">
+        <arg0 key="property.aula.weekDay"/>
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
+        <var>
+          <var-name>min</var-name>
+          <var-value>2</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>7</var-value>
+        </var>
+      </field>
+
+      <field property="horaInicio" depends="required,integer,range">
+        <arg0 key="property.aula.time.begining"/>
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
+        <var>
+          <var-name>min</var-name>
+          <var-value>0</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>23</var-value>
+        </var>
+      </field>
+
+      <field property="minutosInicio" depends="required,integer,range">
+        <arg0 key="property.aula.time.begining"/>
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
+        <var>
+          <var-name>min</var-name>
+          <var-value>0</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>59</var-value>
+        </var>
+      </field>
+      
+      <field property="horaFim" depends="required,integer,range">
+        <arg0 key="property.aula.time.end"/>
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
+        <var>
+          <var-name>min</var-name>
+          <var-value>0</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>23</var-value>
+        </var>
+      </field>
+
+      <field property="minutosFim" depends="required,integer,range">
+        <arg0 key="property.aula.time.minutes.end"/>
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
+        <var>
+          <var-name>min</var-name>
+          <var-value>0</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>59</var-value>
+        </var>
+      </field>
+
+      <field property="tipoAula" depends="required,integer,range">
+        <arg0 key="property.aula.type"/>
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
+        <var>
+          <var-name>min</var-name>
+          <var-value>1</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>6</var-value>
+        </var>
+      </field>        
+
+      <field property="courseInitials" depends="required">
+        <arg0 key="property.course"/>
+      </field>
+
+      <field property="nomeSala" depends="required">
+        <arg0 key="property.aula.sala"/>
+      </field>
+    </form>
+        
+    <!-- Validacao para o formulario de Escolher Disciplina Execucao -->
+    <!--<form name="escolherDisciplinaExecucaoForm">
+      <field property="indexDisciplinaExecucao" depends="required">
+        <arg0 key="property.course"/>
+      </field>
+    </form> -->
+    
+    <form name="chooseExecutionCourseForm">
+      <field property="courseInitials" depends="required" page="1">
+        <arg0 key="property.course"/>
+      </field>
+    </form>
+
+
+    <!-- Validacao para o formulario de Manipular Aulas -->
+    <form name="manipularAulasForm">
+      <field property="indexAula" depends="required">
+        <arg0 key="property.lesson" resource="false"/>
+      </field>
+    </form>
+
+    <form name="searchEmptyRoomsForm">
+
+      <field property="weekDay" depends="required,integer,range" page="1">
+        <arg0 key="property.aula.weekDay"/>
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
+        <var>
+          <var-name>min</var-name>
+          <var-value>2</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>7</var-value>
+        </var>
+      </field>
+
+      <field property="startHour" depends="required,integer,range" page="1">
+        <arg0 key="property.aula.time.begining"/>
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
+        <var>
+          <var-name>min</var-name>
+          <var-value>0</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>23</var-value>
+        </var>
+      </field>
+
+      <field property="startMinutes" depends="required,integer,range" page="1">
+        <arg0 key="property.aula.time.begining"/>
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
+        <var>
+          <var-name>min</var-name>
+          <var-value>0</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>59</var-value>
+        </var>
+      </field>
+      
+      <field property="endHour" depends="required,integer,range" page="1">
+        <arg0 key="property.aula.time.end"/>
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
+        <var>
+          <var-name>min</var-name>
+          <var-value>0</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>23</var-value>
+        </var>
+      </field>
+
+      <field property="endMinutes" depends="required,integer,range" page="1">
+        <arg0 key="property.aula.time.minutes.end"/>
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
+        <var>
+          <var-name>min</var-name>
+          <var-value>0</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>59</var-value>
+        </var>
+      </field>
+
+      <field property="normalCapacity" depends="integer" page="1">
+        <arg0 key="property.room.capacity.normal"/>
+      </field>
+
+    </form>
+
+    <form name="indexForm">
+      <field property="index" depends="required, integer">
+        <arg0 key="property.index"/>
+      </field>
+    </form>
+
+
+    <!-- Validacao para o formulario de Criar Sala -->
+    <form name="roomForm">
+      <field property="name" depends="required">
+        <arg0 key="property.room.name" />
+      </field>
+      <field property="building" depends="required">
+        <arg0 key="property.room.building" />
+      </field>
+      <field property="floor" depends="required">
+        <arg0 key="property.room.floor"/>
+      </field>
+      <field property="type" depends="required, integer, range">
+        <arg0 key="property.room.floor" />
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>        
+        <var>
+          <var-name>min</var-name>
+          <var-value>1</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>3</var-value>
+        </var>
+      </field>
+      <field property="capacityNormal" depends="required, integer, range">
+        <arg0 key="property.room.capacity.normal" />
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>
+        <var>
+          <var-name>min</var-name>
+          <var-value>1</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>1000</var-value>
+        </var>
+      </field>
+      <field property="capacityExame" depends="required, integer, range">
+        <arg0 key="property.room.capacity.exame"/>
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>
+        <var>
+          <var-name>min</var-name>
+          <var-value>1</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>1000</var-value>
+        </var>
+      </field>
+    </form>
+        
+    <!-- Validacao para o formulario de Criar Turno -->
+    <form name="shiftNameForm">
+      <field property="name" depends="required">
+        <arg0 key="property.shift.name"/>
+      </field>
+
+    </form>
+        
+    <!-- Validacao para o formulario de Escolher Disciplina e Tipo -->
+    <form name="escolherDisciplinaETipoForm">
+      <field property="indexDisciplinaExecucao" depends="required">
+        <arg0 key="property.course"/>
+      </field>
+    </form>
+
+    <!-- Validacao para o formulario de Manipular Turnos -->
+        <form name="manipularTurnosForm">
+      <field property="indexTurno" depends="required">
+        <arg0 key="property.shift"/>
+      </field>
+    </form>
+
+    <!-- Validacao para o formulario de Editar Turnos -->
+    <form name="editarTurnoForm">
+      <field property="nome" depends="required">
+        <arg0 key="property.shift.name"/>
+      </field>
+      <field property="lotacao" depends="required,range">
+        <arg0 key="property.shift.capacity" />
+        <arg1 key="${var:min}" resource="false"/>
+        <arg2 key="${var:max}" resource="false"/>
+        <var>
+          <var-name>min</var-name>
+          <var-value>1</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>1000</var-value>
+        </var>
+      </field>
+    </form>
+
+    <!-- Validacao para o formulario de Editar Aulas De Turno -->
+     <form name="editarAulasDeTurnoForm">
+      <field property="indexAula" depends="required">
+        <arg0 key="property.aula" />
+      </field>
+    </form>
+
+    <!-- Validacao para o formulario de Adicionar Aulas De Turno -->
+    <form name="adicionarAulasForm">
+      <field property="indexAula" depends="required">
+        <arg0 key="property.aula"/>
+      </field>
+    </form>
+    
+    <!-- Validacao para o formulario de criar turma -->
+    <form name="classForm">
+      <field property="className" depends="required" page="1">
+        <arg0 key="property.class.name"/>
+      </field>
+    </form>
+  </formset>
+</form-validation>

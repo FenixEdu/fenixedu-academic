@@ -1,0 +1,26 @@
+/*
+ * IPersistentCountry.java
+ *
+ * Created on 28 of December 2002, 10:11
+ */
+ 
+/**
+ *
+ * @author  Nuno Nunes & Joana Mota
+ */
+
+package ServidorPersistente;
+
+import java.util.ArrayList;
+
+import Dominio.ICountry;
+
+public interface IPersistentCountry extends IPersistentObject {
+    
+    public ICountry readCountryByName(String name) throws ExcepcaoPersistencia;
+    public ArrayList readAllCountrys() throws ExcepcaoPersistencia;
+    public void writeCountry(ICountry country) throws ExcepcaoPersistencia;
+    public void deleteCountryByName(String name) throws ExcepcaoPersistencia;
+    public void deleteCountry(ICountry country) throws ExcepcaoPersistencia;
+    public void deleteAllCountrys() throws ExcepcaoPersistencia;
+}

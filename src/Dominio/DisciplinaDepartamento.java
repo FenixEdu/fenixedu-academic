@@ -1,0 +1,138 @@
+/*
+ * DisciplinaDepartamento.java
+ *
+ * Created on 6 de Novembro de 2002, 15:57
+ */
+
+/**
+ *
+ * @author  dcs-rjao
+ */
+
+package Dominio;
+
+
+public class DisciplinaDepartamento implements IDisciplinaDepartamento{
+    
+    private Integer codigoInterno;
+    private Integer chaveDepartamento;
+    
+    private String nome;
+    private String sigla;
+    private IDepartamento departamento;
+        
+    public DisciplinaDepartamento() {
+        setNome("");
+        setSigla("");
+        setDepartamento(null);
+    }
+    
+    public DisciplinaDepartamento(String nome, String sigla, IDepartamento departamento) {
+        setCodigoInterno(null);
+        setNome(nome);
+        setSigla(sigla);
+        setDepartamento(departamento);
+    }
+    
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+        if (obj instanceof DisciplinaDepartamento ) {
+            DisciplinaDepartamento d = (DisciplinaDepartamento)obj;
+            resultado = ( getNome().equals(d.getNome()) && getSigla().equals(d.getSigla()) );
+        }
+        return resultado;
+    }
+    
+  public String toString() {
+    String result = "[DISCIPLINA_DEPARTAMENTO";
+    result += ", codInt=" + codigoInterno;
+    result += ", sigla=" + sigla;
+    result += ", nome=" + nome;
+    result += ", departamento=" + departamento;
+    result += "]";
+    return result;
+  }    
+        
+    
+    /** Getter for property codigoInterno.
+     * @return Value of property codigoInterno.
+     *
+     */
+    public java.lang.Integer getCodigoInterno() {
+        return codigoInterno;
+    }    
+    
+    /** Setter for property codigoInterno.
+     * @param codigoInterno New value of property codigoInterno.
+     *
+     */
+    public void setCodigoInterno(java.lang.Integer codigoInterno) {
+        this.codigoInterno = codigoInterno;
+    }    
+    
+    /** Getter for property nome.
+     * @return Value of property nome.
+     *
+     */
+    public java.lang.String getNome() {
+        return nome;
+    }
+    
+    /** Setter for property nome.
+     * @param nome New value of property nome.
+     *
+     */
+    public void setNome(java.lang.String nome) {
+        this.nome = nome;
+    }
+    
+    /** Getter for property sigla.
+     * @return Value of property sigla.
+     *
+     */
+    public java.lang.String getSigla() {
+        return sigla;
+    }
+    
+    /** Setter for property sigla.
+     * @param sigla New value of property sigla.
+     *
+     */
+    public void setSigla(java.lang.String sigla) {
+        this.sigla = sigla;
+    }
+    
+    /** Getter for property chaveDepartamento.
+     * @return Value of property chaveDepartamento.
+     *
+     */
+    public java.lang.Integer getChaveDepartamento() {
+        return chaveDepartamento;
+    }
+    
+    /** Setter for property chaveDepartamento.
+     * @param chaveDepartamento New value of property chaveDepartamento.
+     *
+     */
+    public void setChaveDepartamento(java.lang.Integer chaveDepartamento) {
+        this.chaveDepartamento = chaveDepartamento;
+    }
+    
+    
+	/**
+	 * Returns the departamento.
+	 * @return IDepartamento
+	 */
+	public IDepartamento getDepartamento() {
+		return departamento;
+	}
+
+	/**
+	 * Sets the departamento.
+	 * @param departamento The departamento to set
+	 */
+	public void setDepartamento(IDepartamento departamento) {
+		this.departamento = departamento;
+	}
+
+}
