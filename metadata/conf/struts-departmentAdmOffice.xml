@@ -10,7 +10,7 @@
 	<form-beans type="org.apache.struts.action.ActionFormBean">  
 		<form-bean name="objectOIDForm" 
 			type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-			<form-property name="idInternal" type="java.lang.String"/>
+			<form-property name="idInternal" type="java.lang.Integer"/>
 		</form-bean>
 
 		<form-bean name="teacherSearchForm" 
@@ -87,9 +87,9 @@
 
 	 <!-- ========== Global Exception Definitions ============================== -->
 	<global-exceptions>
-		<exception type="java.lang.Exception"
+<!--		<exception type="java.lang.Exception"
 		  	       key="message.unknown-error"
-		  	       path="/index.do" />
+		  	       path="/index.do" /> -->
 		<exception type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
 		  	       key="message.not-authorized"
 		  	       path="/index.do"/>
@@ -286,6 +286,32 @@
 			<forward name="successfull-delete" path="/manageTeacherInstitutionWorkingTime.do?page=0&amp;method=list"/>
 			<forward name="list-teacher-institution-working-time" path="list-teacher-institution-working-time"/>   		
 		</action>
+ 	   <!-- =======================================================================  -->
+ 	   
+		<!-- =======  USE CASE : List deparment teachers ===================================== -->
+		<action path="/prepareListDepartmentTeachers"  
+					type="ServidorApresentacao.Action.department.PrepareListDepartmentTeachersAction"  
+					input="/index.do" 
+					scope="request"> 
+			<forward name="successfull-prepare" path="/listDepartmentTeachers.do?method=doSearch"/> 
+		</action> 	 
+		
+		<action path="/listDepartmentTeachers"  
+					type="ServidorApresentacao.Action.department.ListDepartmentTeachersAction"  
+					name="objectOIDForm" 
+					input="/index.do" 
+					scope="request" 
+					parameter="method"
+					className="ServidorApresentacao.mapping.framework.SearchActionMapping"> 
+			<set-property property="serviceName" value="ReadDepartmentTeachersService"/>
+			<set-property property="objectAttribute" value="infoTeacher"/>
+			<set-property property="listAttribute" value="infoTeacherList"/>
+			<set-property property="notFoundMessageKey" value="message.not-found-teachers"/>
+<!--			<set-property property="defaultSortBy" value="infoPerson.nome"/> -->
+			<forward name="search-form" path=""/> 
+			<forward name="list-one" path="listDepartmentTeachers"/> 
+			<forward name="list-many" path="listDepartmentTeachers"/>
+		</action> 	   
  	   <!-- =======================================================================  -->
 	</action-mappings>
 
