@@ -741,20 +741,7 @@
         <forward name="forwardChoose" path="/prepararManipularTurnos.do"/>
       	<forward name="showForm" path="/escolherDisciplinaExecucao.jsp"/>	
       </action>
-      
-       <!-- Choose Execution Course Form for Shifts -->   
-      <action input="/escolherDisciplinaExecucao.jsp"
-              name="chooseExecutionCourseForm"
-              path="/escolherDisciplinaETipoForm"
-              scope="request"
-              type="ServidorApresentacao.Action.sop.ChooseExecutionCourseAction"
-              validate="true"
-              >
-        <forward name="forwardChoose" path="/prepararManipularTurnos.do"/>
-      	<forward name="showForm" path="/escolherDisciplinaExecucao.jsp"/>	
-      </action>
-      
-      
+     
 
 	<!-- ========== EXAMS ========== -->
 	<action path="/chooseDayAndShiftForm"

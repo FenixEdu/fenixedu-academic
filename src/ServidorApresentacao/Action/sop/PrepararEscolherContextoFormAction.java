@@ -83,9 +83,6 @@ public class PrepararEscolherContextoFormAction extends Action {
 						.getInfoDegreeCurricularPlan()
 						.getInfoDegree()
 						.getNome();
-				String value =
-					infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla();
-
 				name
 					+= duplicateInfoDegree(
 						executionDegreeList,
@@ -139,24 +136,31 @@ public class PrepararEscolherContextoFormAction extends Action {
 		}
 		return false;
 	}
+	
 	/**
 	 * Method setExecutionContext.
 	 * @param request
 	 */
 	private InfoExecutionPeriod setExecutionContext(HttpServletRequest request)
 		throws Exception {
-		IUserView userView = SessionUtils.getUserView(request);
-		InfoExecutionPeriod infoExecutionPeriod =
-			(InfoExecutionPeriod) ServiceUtils.executeService(
-				userView,
-				"ReadActualExecutionPeriod",
-				new Object[0]);
+
 		HttpSession session = request.getSession(false);
-		
-		
-		session.setAttribute(
-			SessionConstants.INFO_EXECUTION_PERIOD_KEY,
-			infoExecutionPeriod);
+		InfoExecutionPeriod infoExecutionPeriod =
+			(InfoExecutionPeriod) session.getAttribute(
+				SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+		if (infoExecutionPeriod == null) {
+			IUserView userView = SessionUtils.getUserView(request);
+			infoExecutionPeriod =
+				(InfoExecutionPeriod) ServiceUtils.executeService(
+					userView,
+					"ReadActualExecutionPeriod",
+					new Object[0]);
+
+			session.setAttribute(
+				SessionConstants.INFO_EXECUTION_PERIOD_KEY,
+				infoExecutionPeriod);
+		}
 		return infoExecutionPeriod;
 	}
+
 }

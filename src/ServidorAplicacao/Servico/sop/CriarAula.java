@@ -97,7 +97,7 @@ public class CriarAula implements IServico {
 				throw new InvalidTimeIntervalServiceException();
 			}
 
-			boolean resultB = validNoInterceptingLesson(aula);
+			boolean resultB = validNoInterceptingLesson(aula, executionPeriod);
 
 			if (result.isSUCESS() && resultB) {
 				try {
@@ -122,7 +122,9 @@ public class CriarAula implements IServico {
 	 * @param aula
 	 * @return InfoLessonServiceResult
 	 */
-	private boolean validNoInterceptingLesson(IAula lesson)
+	private boolean validNoInterceptingLesson(
+		IAula lesson,
+		IExecutionPeriod executionPeriod)
 		throws ExistingServiceException, InterceptingServiceException {
 
 		try {
@@ -131,7 +133,10 @@ public class CriarAula implements IServico {
 			IAulaPersistente persistentLesson = sp.getIAulaPersistente();
 
 			List lessonMatchList =
-				persistentLesson.readLessonsInBroadPeriod(lesson, null);
+				persistentLesson.readLessonsInBroadPeriod(
+					lesson,
+					null,
+					executionPeriod);
 
 			if (lessonMatchList.size() > 0) {
 				if (lessonMatchList.contains(lesson)) {

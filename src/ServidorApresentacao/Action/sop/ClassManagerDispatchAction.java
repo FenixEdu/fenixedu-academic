@@ -227,6 +227,8 @@ public class ClassManagerDispatchAction extends DispatchAction {
 //		ClassKey keyClass = new ClassKey(className);
 		Object argsApagarTurma[] = { infoClass };
 		ServiceUtils.executeService(userView, "ApagarTurma", argsApagarTurma);
+		
+		session.removeAttribute(SessionConstants.CLASS_VIEW);
 
 		return mapping.findForward("listClasses");
 	}

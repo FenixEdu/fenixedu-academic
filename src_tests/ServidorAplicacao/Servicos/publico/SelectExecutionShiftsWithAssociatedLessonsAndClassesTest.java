@@ -82,7 +82,6 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClassesTest
 
 		Object result = null;
 
-
 		//execution course with 10 shifts with 1st shift with 1 associated lessons and 1 associated classes
 		this.prepareTestCase(1);
 
@@ -125,7 +124,7 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClassesTest
 		this.prepareTestCase(2);
 		try {
 			result =
-			_gestor.executar(
+				_gestor.executar(
 					_userView,
 					"SelectExecutionShiftsWithAssociatedLessonsAndClasses",
 					argsSelectExecutionShiftsWithAssociatedLessonsAndClasses);
@@ -168,12 +167,13 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClassesTest
 				0,
 				((List) result).size());
 		} catch (Exception ex) {
-			fail("testReadAll: no shiftsWithAssociatedLessonsAndClasses to read: " + ex);
+			fail(
+				"testReadAll: no shiftsWithAssociatedLessonsAndClasses to read: "
+					+ ex);
 		}
 	}
 
-	private void prepareTestCase(
-		int testCase) {
+	private void prepareTestCase(int testCase) {
 
 		ISuportePersistente sp = null;
 
@@ -251,14 +251,16 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClassesTest
 			fim.set(Calendar.HOUR_OF_DAY, 9);
 			fim.set(Calendar.MINUTE, 30);
 			fim.set(Calendar.SECOND, 0);
+
 			IAula lesson =
 				aulaPersistente.readByDiaSemanaAndInicioAndFimAndSala(
 					diaSemana,
 					inicio,
 					fim,
-					room1);
+					room1,
+					executionPeriod);
 			assertNotNull(lesson);
-			
+
 			ITurnoAulaPersistente turnoAulaPersistente =
 				sp.getITurnoAulaPersistente();
 

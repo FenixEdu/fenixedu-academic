@@ -37,9 +37,7 @@ public class EditarTurnoFormAction extends FenixAction {
 			IUserView userView =
 				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			GestorServicos gestor = GestorServicos.manager();
-			InfoExecutionCourse executionCourse =
-				(InfoExecutionCourse) session.getAttribute(
-					SessionConstants.EXECUTION_COURSE_KEY);
+
 			ArrayList infoTurnos =
 				(ArrayList) session.getAttribute(
 					"infoTurnosDeDisciplinaExecucao");

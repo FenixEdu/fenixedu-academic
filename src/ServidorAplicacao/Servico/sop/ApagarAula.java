@@ -11,8 +11,11 @@ package ServidorAplicacao.Servico.sop;
  *
  * @author tfc130
  **/
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.KeyLesson;
+import DataBeans.util.Cloner;
 import Dominio.IAula;
+import Dominio.IExecutionPeriod;
 import Dominio.ISala;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -21,47 +24,62 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class ApagarAula implements IServico {
 
-  private static ApagarAula _servico = new ApagarAula();
-  /**
-   * The singleton access method of this class.
-   **/
-  public static ApagarAula getService() {
-    return _servico;
-  }
+	private static ApagarAula _servico = new ApagarAula();
+	/**
+	 * The singleton access method of this class.
+	 **/
+	public static ApagarAula getService() {
+		return _servico;
+	}
 
-  /**
-   * The actor of this class.
-   **/
-  private ApagarAula() { }
+	/**
+	 * The actor of this class.
+	 **/
+	private ApagarAula() {
+	}
 
-  /**
-   * Devolve o nome do servico
-   **/
-  public final String getNome() {
-    return "ApagarAula";
-  }
+	/**
+	 * Devolve o nome do servico
+	 **/
+	public final String getNome() {
+		return "ApagarAula";
+	}
 
-  public Object run(KeyLesson keyAula) {
+	public Object run(
+		KeyLesson keyAula,
+		InfoExecutionPeriod infoExecutionPeriod) {
 
-    IAula aula1 = null;
-    boolean result = false;
+		IAula aula1 = null;
+		boolean result = false;
 
-    try {
-      ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+		try {
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-	  ISala sala = sp.getISalaPersistente().readByName(keyAula.getKeySala().getNomeSala());
-      aula1 = sp.getIAulaPersistente().readByDiaSemanaAndInicioAndFimAndSala(keyAula.getDiaSemana(),
-                    keyAula.getInicio(), keyAula.getFim(), sala);
-      
-      if (aula1 != null) {
-          sp.getIAulaPersistente().delete(aula1);
-          result = true;
-      }
-    } catch (ExcepcaoPersistencia ex) {
-      ex.printStackTrace();
-    }
-    
-    return new Boolean (result);
-  }
+			ISala sala =
+				sp.getISalaPersistente().readByName(
+					keyAula.getKeySala().getNomeSala());
+
+			IExecutionPeriod executionPeriod =
+				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
+					infoExecutionPeriod);
+
+			aula1 =
+				sp.getIAulaPersistente().readByDiaSemanaAndInicioAndFimAndSala(
+					keyAula.getDiaSemana(),
+					keyAula.getInicio(),
+					keyAula.getFim(),
+					sala,
+					executionPeriod);
+
+			if (aula1 != null) {
+				sp.getIAulaPersistente().delete(aula1);
+				result = true;
+			}
+		} catch (ExcepcaoPersistencia ex) {
+			ex.printStackTrace();
+		}
+
+		return new Boolean(result);
+	}
 
 }

@@ -123,7 +123,8 @@ public class AulaOJBTest extends TestCaseOJB {
 					weekDay,
 					startTime,
 					endTime,
-					room);
+					room,
+					executionCourse.getExecutionPeriod());
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("testReadByDiaSemanaAndInicioAndFimAndSala:fail read existing aula");
@@ -162,7 +163,8 @@ public class AulaOJBTest extends TestCaseOJB {
 					new DiaSemana(DiaSemana.DOMINGO),
 					startTime,
 					endTime,
-					room);
+					room,
+					executionCourse.getExecutionPeriod());
 			persistentSupport.confirmarTransaccao();
 			assertNull(
 				"testReadByDiaSemanaAndInicioAndFimAndSala:fail read unexisting aula",
@@ -309,7 +311,8 @@ public class AulaOJBTest extends TestCaseOJB {
 					weekDay,
 					startTime,
 					endTime,
-					room);
+					room,
+					executionCourse.getExecutionPeriod());
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("testReadByDiaSemanaAndInicioAndFimAndSala:fail read existing aula");
@@ -362,7 +365,8 @@ public class AulaOJBTest extends TestCaseOJB {
 					weekDay,
 					startTime,
 					endTime,
-					room);
+					room,
+					executionCourse.getExecutionPeriod());
 			assertNotNull(lesson1);
 			lesson1.setDiaSemana(new DiaSemana(DiaSemana.DOMINGO));
 
@@ -378,7 +382,8 @@ public class AulaOJBTest extends TestCaseOJB {
 					new DiaSemana(DiaSemana.DOMINGO),
 					startTime,
 					endTime,
-					room);
+					room,
+					executionCourse.getExecutionPeriod());
 			assertNotNull(lesson2);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
@@ -420,7 +425,8 @@ public class AulaOJBTest extends TestCaseOJB {
 					weekDay,
 					startTime,
 					endTime,
-					room);
+					room,
+					executionCourse.getExecutionPeriod());
 			persistentSupport.confirmarTransaccao();
 
 			assertNotNull(lesson);
@@ -437,7 +443,8 @@ public class AulaOJBTest extends TestCaseOJB {
 					weekDay,
 					startTime,
 					endTime,
-					room);
+					room,
+					executionCourse.getExecutionPeriod());
 			persistentSupport.confirmarTransaccao();
 
 			assertNull("testDeleteAula", lesson);
@@ -598,6 +605,11 @@ public class AulaOJBTest extends TestCaseOJB {
 			persistentSupport.iniciarTransaccao();
 			ISala room = persistentRoom.readByName("Ga1");
 			assertNotNull(room);
+
+			IExecutionPeriod executionPeriod =
+				persistentExecutionPeriod.readActualExecutionPeriod();
+			assertNotNull(executionPeriod);
+			
 			persistentSupport.confirmarTransaccao();
 
 			IAula lesson = new Aula();
@@ -622,7 +634,7 @@ public class AulaOJBTest extends TestCaseOJB {
 
 			persistentSupport.iniciarTransaccao();
 			List result =
-				persistentLesson.readLessonsInBroadPeriod(lesson, null);
+				persistentLesson.readLessonsInBroadPeriod(lesson, null, executionPeriod);
 			persistentSupport.confirmarTransaccao();
 			assertNotNull(result);
 			assertEquals(result.size(), 1);
@@ -641,7 +653,8 @@ public class AulaOJBTest extends TestCaseOJB {
 			lesson.setFim(endTime);
 
 			persistentSupport.iniciarTransaccao();
-			result = persistentLesson.readLessonsInBroadPeriod(lesson, null);
+			
+			result = persistentLesson.readLessonsInBroadPeriod(lesson, null,executionPeriod);
 			persistentSupport.confirmarTransaccao();
 			assertNotNull(result);
 			assertEquals(result.size(), 1);
@@ -660,7 +673,7 @@ public class AulaOJBTest extends TestCaseOJB {
 			lesson.setFim(endTime);
 
 			persistentSupport.iniciarTransaccao();
-			result = persistentLesson.readLessonsInBroadPeriod(lesson, null);
+			result = persistentLesson.readLessonsInBroadPeriod(lesson, null, executionPeriod);
 			persistentSupport.confirmarTransaccao();
 			assertNotNull(result);
 			assertEquals(result.size(), 1);
@@ -679,7 +692,7 @@ public class AulaOJBTest extends TestCaseOJB {
 			lesson.setFim(endTime);
 
 			persistentSupport.iniciarTransaccao();
-			result = persistentLesson.readLessonsInBroadPeriod(lesson, null);
+			result = persistentLesson.readLessonsInBroadPeriod(lesson, null, executionPeriod);
 			persistentSupport.confirmarTransaccao();
 			assertNotNull(result);
 			assertEquals(result.size(), 1);
@@ -698,7 +711,7 @@ public class AulaOJBTest extends TestCaseOJB {
 			lesson.setFim(endTime);
 
 			persistentSupport.iniciarTransaccao();
-			result = persistentLesson.readLessonsInBroadPeriod(lesson, null);
+			result = persistentLesson.readLessonsInBroadPeriod(lesson, null, executionPeriod);
 			persistentSupport.confirmarTransaccao();
 			assertNotNull(result);
 			assertEquals(result.size(), 0);
@@ -717,7 +730,7 @@ public class AulaOJBTest extends TestCaseOJB {
 			lesson.setFim(endTime);
 
 			persistentSupport.iniciarTransaccao();
-			result = persistentLesson.readLessonsInBroadPeriod(lesson, null);
+			result = persistentLesson.readLessonsInBroadPeriod(lesson, null, executionPeriod);
 			persistentSupport.confirmarTransaccao();
 			assertNotNull(result);
 			assertEquals(result.size(), 0);
@@ -736,7 +749,7 @@ public class AulaOJBTest extends TestCaseOJB {
 			lesson.setFim(endTime);
 
 			persistentSupport.iniciarTransaccao();
-			result = persistentLesson.readLessonsInBroadPeriod(lesson, null);
+			result = persistentLesson.readLessonsInBroadPeriod(lesson, null, executionPeriod);
 			persistentSupport.confirmarTransaccao();
 			assertNotNull(result);
 			assertEquals(result.size(), 1);
@@ -755,7 +768,7 @@ public class AulaOJBTest extends TestCaseOJB {
 			lesson.setFim(endTime);
 
 			persistentSupport.iniciarTransaccao();
-			result = persistentLesson.readLessonsInBroadPeriod(lesson, null);
+			result = persistentLesson.readLessonsInBroadPeriod(lesson, null, executionPeriod);
 			persistentSupport.confirmarTransaccao();
 			assertNotNull(result);
 			assertEquals(result.size(), 1);
@@ -774,7 +787,7 @@ public class AulaOJBTest extends TestCaseOJB {
 			lesson.setFim(endTime);
 
 			persistentSupport.iniciarTransaccao();
-			result = persistentLesson.readLessonsInBroadPeriod(lesson, null);
+			result = persistentLesson.readLessonsInBroadPeriod(lesson, null, executionPeriod);
 			persistentSupport.confirmarTransaccao();
 			assertNotNull(result);
 			assertEquals(result.size(), 1);
@@ -793,7 +806,7 @@ public class AulaOJBTest extends TestCaseOJB {
 			lesson.setFim(endTime);
 
 			persistentSupport.iniciarTransaccao();
-			result = persistentLesson.readLessonsInBroadPeriod(lesson, null);
+			result = persistentLesson.readLessonsInBroadPeriod(lesson, null, executionPeriod);
 			persistentSupport.confirmarTransaccao();
 			assertNotNull(result);
 			assertEquals(result.size(), 1);
@@ -812,7 +825,7 @@ public class AulaOJBTest extends TestCaseOJB {
 			lesson.setFim(endTime);
 
 			persistentSupport.iniciarTransaccao();
-			result = persistentLesson.readLessonsInBroadPeriod(lesson, null);
+			result = persistentLesson.readLessonsInBroadPeriod(lesson, null, executionPeriod);
 			persistentSupport.confirmarTransaccao();
 			assertNotNull(result);
 			assertEquals(result.size(), 1);
@@ -831,7 +844,7 @@ public class AulaOJBTest extends TestCaseOJB {
 			lesson.setFim(endTime);
 
 			persistentSupport.iniciarTransaccao();
-			result = persistentLesson.readLessonsInBroadPeriod(lesson, null);
+			result = persistentLesson.readLessonsInBroadPeriod(lesson, null, executionPeriod);
 			persistentSupport.confirmarTransaccao();
 			assertNotNull(result);
 			assertEquals(result.size(), 0);
@@ -850,7 +863,7 @@ public class AulaOJBTest extends TestCaseOJB {
 			lesson.setFim(endTime);
 
 			persistentSupport.iniciarTransaccao();
-			result = persistentLesson.readLessonsInBroadPeriod(lesson, null);
+			result = persistentLesson.readLessonsInBroadPeriod(lesson, null, executionPeriod);
 			persistentSupport.confirmarTransaccao();
 			assertNotNull(result);
 			assertEquals(result.size(), 0);

@@ -38,10 +38,10 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.DiaSemana;
 import Util.TipoAula;
 
-public class RemoverAulaServicosTest extends TestCaseNeedAuthorizationServices {
+public class RemoverAulaServicosTest
+	extends TestCaseNeedAuthorizationServices {
 	private InfoLesson infoLesson = null;
 	private InfoShift infoShift = null;
-
 
 	public RemoverAulaServicosTest(java.lang.String testName) {
 		super(testName);
@@ -73,31 +73,43 @@ public class RemoverAulaServicosTest extends TestCaseNeedAuthorizationServices {
 		return true;
 	}
 
-
 	public void testRemoveLessonExisting() {
 		this.ligarSuportePersistente(true);
-		
-		Object argsRemoveLesson[] = {this.infoLesson, this.infoShift} ;
+
+		Object argsRemoveLesson[] = { this.infoLesson, this.infoShift };
 
 		Object result = null;
 		try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsRemoveLesson);
-			assertEquals("testRemoverAula",	Boolean.TRUE.booleanValue(), ((Boolean) result).booleanValue());
+			result =
+				_gestor.executar(
+					_userView,
+					getNameOfServiceToBeTested(),
+					argsRemoveLesson);
+			assertEquals(
+				"testRemoverAula",
+				Boolean.TRUE.booleanValue(),
+				((Boolean) result).booleanValue());
 		} catch (Exception ex) {
 			assertNull("testUnauthorizedRemoveAula", result);
 		}
 	}
 
-
 	public void testRemoveUnexistingLessonExisting() {
 		this.ligarSuportePersistente(false);
-		
-		Object argsRemoveLesson[] = {this.infoLesson, this.infoShift} ;
+
+		Object argsRemoveLesson[] = { this.infoLesson, this.infoShift };
 
 		Object result = null;
 		try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsRemoveLesson);
-			assertEquals("testRemoverAula",	Boolean.TRUE.booleanValue(), ((Boolean) result).booleanValue());
+			result =
+				_gestor.executar(
+					_userView,
+					getNameOfServiceToBeTested(),
+					argsRemoveLesson);
+			assertEquals(
+				"testRemoverAula",
+				Boolean.TRUE.booleanValue(),
+				((Boolean) result).booleanValue());
 		} catch (Exception ex) {
 			assertNull("testUnauthorizedRemoveAula", result);
 		}
@@ -111,18 +123,18 @@ public class RemoverAulaServicosTest extends TestCaseNeedAuthorizationServices {
 			sp = SuportePersistenteOJB.getInstance();
 			sp.iniciarTransaccao();
 
-			IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-			IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
+			IPersistentExecutionYear persistentExecutionYear =
+				sp.getIPersistentExecutionYear();
+			IExecutionYear executionYear =
+				persistentExecutionYear.readExecutionYearByName("2002/2003");
 			assertNotNull(executionYear);
-			
+
 			ICursoPersistente persistentDegree = sp.getICursoPersistente();
 			ICurso degree = persistentDegree.readBySigla("LEIC");
 			assertNotNull(degree);
-			
-
 
 			DiaSemana weekDay = new DiaSemana(DiaSemana.SEGUNDA_FEIRA);
-    
+
 			Calendar startTime = Calendar.getInstance();
 			startTime.set(Calendar.HOUR_OF_DAY, 8);
 			startTime.set(Calendar.MINUTE, 00);
@@ -138,18 +150,32 @@ public class RemoverAulaServicosTest extends TestCaseNeedAuthorizationServices {
 			IAula lesson = null;
 			IAulaPersistente persistentLesson = sp.getIAulaPersistente();
 
-			IDisciplinaExecucaoPersistente persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
-			IDisciplinaExecucao executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+			IDisciplinaExecucaoPersistente persistentExecutionCourse =
+				sp.getIDisciplinaExecucaoPersistente();
+			IDisciplinaExecucao executionCourse =
+				persistentExecutionCourse
+					.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
+					"TFCI",
+					"2002/2003",
+					"LEIC");
 			assertNotNull(executionCourse);
-			
+
 			ITurnoPersistente persistentShift = sp.getITurnoPersistente();
 			ITurno shift = null;
 
-
-			if(existing) {
-				lesson = persistentLesson.readByDiaSemanaAndInicioAndFimAndSala(weekDay, startTime, endTime, room);
+			if (existing) {
+				lesson =
+					persistentLesson.readByDiaSemanaAndInicioAndFimAndSala(
+						weekDay,
+						startTime,
+						endTime,
+						room,
+						executionCourse.getExecutionPeriod());
 				assertNotNull(lesson);
-				shift = persistentShift.readByNameAndExecutionCourse("turno1", executionCourse);
+				shift =
+					persistentShift.readByNameAndExecutionCourse(
+						"turno1",
+						executionCourse);
 				assertNotNull(shift);
 
 			} else {
@@ -160,10 +186,15 @@ public class RemoverAulaServicosTest extends TestCaseNeedAuthorizationServices {
 				lesson.setSala(room);
 				lesson.setTipo(new TipoAula(TipoAula.DUVIDAS));
 				lesson.setDisciplinaExecucao(executionCourse);
-				shift = new Turno("desc", new TipoAula(TipoAula.RESERVA), new Integer(1000), executionCourse);
+				shift =
+					new Turno(
+						"desc",
+						new TipoAula(TipoAula.RESERVA),
+						new Integer(1000),
+						executionCourse);
 
 			}
-			
+
 			this.infoLesson = Cloner.copyILesson2InfoLesson(lesson);
 			this.infoShift = Cloner.copyShift2InfoShift(shift);
 
@@ -178,6 +209,5 @@ public class RemoverAulaServicosTest extends TestCaseNeedAuthorizationServices {
 			fail("ligarSuportePersistente: confirmarTransaccao");
 		}
 	}
-
 
 }

@@ -18,6 +18,7 @@ import DataBeans.comparators.InfoLessonComparatorByWeekDayAndTime;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixAction;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.DiaSemana;
 import Util.TipoAula;
 
@@ -105,7 +106,7 @@ public class EscolherAulasFormAction extends FenixAction {
 			Collections.sort(infoAulas, new InfoLessonComparatorByWeekDayAndTime());        	
 	        sessao.setAttribute("listaAulas", infoAulas);
         }
-
+		sessao.removeAttribute(SessionConstants.CLASS_VIEW);
 		return mapping.findForward("Sucesso");
     } else
       throw new Exception();  // nao ocorre... pedido passa pelo filtro Autorizacao 

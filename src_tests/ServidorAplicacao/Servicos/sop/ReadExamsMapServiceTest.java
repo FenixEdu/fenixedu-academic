@@ -67,9 +67,11 @@ public class ReadExamsMapServiceTest extends TestCaseRequeiersAuthorizationServi
 				"Licenciatura de Engenharia Informatica e de Computadores");
 		infoDegreeCurricularPlan =
 			new InfoDegreeCurricularPlan("plano1", infoDegree);
+		infoDegreeCurricularPlan.setInfoEnrolmentInfo(new ArrayList());
 		infoExecutionYear = new InfoExecutionYear("2002/2003");
 		infoExecutionPeriod =
 			new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
+		infoExecutionPeriod.setSemester(new Integer(2));			
 		infoExecutionDegree =
 			new InfoExecutionDegree(
 				infoDegreeCurricularPlan,
@@ -150,7 +152,7 @@ public class ReadExamsMapServiceTest extends TestCaseRequeiersAuthorizationServi
 			infoExamsMap.getExecutionCourses());
 		assertEquals(
 			"Unexpected number of execution courses!",
-			2,
+			1,
 			infoExamsMap.getExecutionCourses().size());
 	}
 

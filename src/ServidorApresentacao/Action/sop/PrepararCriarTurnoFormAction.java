@@ -39,7 +39,9 @@ public class PrepararCriarTurnoFormAction extends Action {
         tiposAula.add(new LabelValueBean("Duvidas", (new Integer(TipoAula.DUVIDAS)).toString() ));
         tiposAula.add(new LabelValueBean("Reserva", (new Integer(TipoAula.RESERVA)).toString() ));
         sessao.setAttribute("tiposAula", tiposAula);
+        
 	  sessao.removeAttribute(SessionConstants.EXECUTION_COURSE_KEY);
+	  sessao.removeAttribute(SessionConstants.CLASS_VIEW);
       return mapping.findForward("Sucesso");
     } else
       throw new Exception();  // nao ocorre... pedido passa pelo filtro Autorizacao 

@@ -32,20 +32,26 @@ public class ApagarAulaFormActionTest extends TestCasePresentationSopPortal {
 		super.setUp();
 	}
 
-
 	public ApagarAulaFormActionTest(String testName) {
 		super(testName);
 	}
 
 	private void prepareRequest() {
 		//required to put form manipularTurnosForm in request
-		getSession().setAttribute(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);		
+		getSession().setAttribute(
+			SessionConstants.SESSION_IS_VALID,
+			SessionConstants.SESSION_IS_VALID);
+		getSession().setAttribute(
+			SessionConstants.INFO_EXECUTION_PERIOD_KEY,
+			new InfoExecutionPeriod(
+				"2º Semestre",
+				new InfoExecutionYear("2002/2003")));
 		setRequestPathInfo("/sop", "/manipularAulasForm");
 		addRequestParameter("indexAula", new Integer(0).toString());
 		addRequestParameter("operation", "Apagar Aula");
-		actionPerform();		
+		actionPerform();
 	}
-	
+
 	/**dummy method to prevent super.testUnsuccessfulExecutionOfAction() 
 	 * from executing 
 	 */
@@ -55,9 +61,11 @@ public class ApagarAulaFormActionTest extends TestCasePresentationSopPortal {
 	protected Map getItemsToPutInSessionForActionToBeTestedSuccessfuly() {
 
 		Map items = new HashMap();
-		
-		items.put(SessionConstants.SESSION_IS_VALID, SessionConstants.SESSION_IS_VALID);
-				
+
+		items.put(
+			SessionConstants.SESSION_IS_VALID,
+			SessionConstants.SESSION_IS_VALID);
+
 		try {
 			GestorServicos gestor = GestorServicos.manager();
 			InfoExecutionCourse iDE =
@@ -73,10 +81,13 @@ public class ApagarAulaFormActionTest extends TestCasePresentationSopPortal {
 						"2º Semestre",
 						new InfoExecutionYear("2002/2003")));
 			items.put("infoDisciplinaExecucao", iDE);
-			
+
 			Object argsLerSalas[] = new Object[0];
 			ArrayList infoSalas =
-				(ArrayList) gestor.executar(getAuthorizedUser(), "LerSalas", argsLerSalas);
+				(ArrayList) gestor.executar(
+					getAuthorizedUser(),
+					"LerSalas",
+					argsLerSalas);
 			getSession().setAttribute("listaSalas", infoSalas);
 			Object argsLerAulas[] = new Object[1];
 			argsLerAulas[0] = iDE;
@@ -86,7 +97,7 @@ public class ApagarAulaFormActionTest extends TestCasePresentationSopPortal {
 					"LerAulasDeDisciplinaExecucao",
 					argsLerAulas);
 			items.put("listaAulas", infoAulas);
-						
+
 			InfoLesson infoAula = (InfoLesson) infoAulas.get(0);
 			items.put("infoAula", infoAula);
 
@@ -94,13 +105,20 @@ public class ApagarAulaFormActionTest extends TestCasePresentationSopPortal {
 			ex.printStackTrace(System.out);
 			fail("Using services at getItemsToPutInSessionForActionToBeTestedSuccessfuly()!");
 		}
-		
-		return items;		
+
+		return items;
 	}
-	
+
 	public void testSuccessfulExecutionOfAction() {
 		prepareRequest();
-		doTest(null, getItemsToPutInSessionForActionToBeTestedSuccessfuly(), getSuccessfulForward(), null, null, null, null);
+		doTest(
+			null,
+			getItemsToPutInSessionForActionToBeTestedSuccessfuly(),
+			getSuccessfulForward(),
+			null,
+			null,
+			null,
+			null);
 	}
 
 	/**
@@ -135,7 +153,7 @@ public class ApagarAulaFormActionTest extends TestCasePresentationSopPortal {
 	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInSessionForActionToBeTestedUnsuccessfuly()
 	 */
 	protected Map getItemsToPutInSessionForActionToBeTestedUnsuccessfuly() {
-		
+
 		return null;
 	}
 
@@ -143,7 +161,7 @@ public class ApagarAulaFormActionTest extends TestCasePresentationSopPortal {
 	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInRequestForActionToBeTestedSuccessfuly()
 	 */
 	protected Map getItemsToPutInRequestForActionToBeTestedSuccessfuly() {
-		
+
 		return null;
 	}
 
@@ -151,7 +169,7 @@ public class ApagarAulaFormActionTest extends TestCasePresentationSopPortal {
 	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInRequestForActionToBeTestedUnsuccessfuly()
 	 */
 	protected Map getItemsToPutInRequestForActionToBeTestedUnsuccessfuly() {
-		
+
 		return null;
 	}
 
@@ -159,7 +177,7 @@ public class ApagarAulaFormActionTest extends TestCasePresentationSopPortal {
 	 * @see ServidorApresentacao.TestCaseActionExecution#getExistingAttributesListToVerifyInSuccessfulExecution()
 	 */
 	protected Map getExistingAttributesListToVerifyInSuccessfulExecution() {
-		
+
 		return null;
 	}
 
@@ -167,7 +185,7 @@ public class ApagarAulaFormActionTest extends TestCasePresentationSopPortal {
 	 * @see ServidorApresentacao.TestCaseActionExecution#getNonExistingAttributesListToVerifyInSuccessfulExecution()
 	 */
 	protected Map getNonExistingAttributesListToVerifyInSuccessfulExecution() {
-		
+
 		return null;
 	}
 
@@ -175,7 +193,7 @@ public class ApagarAulaFormActionTest extends TestCasePresentationSopPortal {
 	 * @see ServidorApresentacao.TestCaseActionExecution#getExistingAttributesListToVerifyInUnsuccessfulExecution()
 	 */
 	protected Map getExistingAttributesListToVerifyInUnsuccessfulExecution() {
-		
+
 		return null;
 	}
 
@@ -183,7 +201,7 @@ public class ApagarAulaFormActionTest extends TestCasePresentationSopPortal {
 	 * @see ServidorApresentacao.TestCaseActionExecution#getNonExistingAttributesListToVerifyInUnsuccessfulExecution()
 	 */
 	protected Map getNonExistingAttributesListToVerifyInUnsuccessfulExecution() {
-		
+
 		return null;
 	}
 

@@ -11,6 +11,8 @@ package ServidorAplicacao.Servicos.sop;
  *
  * @author tfc130
  */
+import java.util.ArrayList;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoDegree;
@@ -61,19 +63,24 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricularServicosT
 	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
 	 */
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+		InfoDegree infoDegree =
+			new InfoDegree(
+				"LEIC",
+				"Licenciatura de Engenharia Informatica e de Computadores");
+		infoDegree.setTipoCurso(new TipoCurso(TipoCurso.LICENCIATURA_STRING));
+		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
+			new InfoDegreeCurricularPlan("plano1", infoDegree);
+		infoDegreeCurricularPlan.setInfoEnrolmentInfo(new ArrayList());
+
 		InfoExecutionDegree infoExecutionDegree =
 			new InfoExecutionDegree(
-				new InfoDegreeCurricularPlan(
-					"plano1",
-					new InfoDegree(
-						"LEIC",
-						"Licenciatura de Engenharia Informatica e de Computadores",
-						TipoCurso.LICENCIATURA_STRING)),
+				infoDegreeCurricularPlan,
 				new InfoExecutionYear("2002/2003"));
 		InfoExecutionPeriod infoExecutionPeriod =
 			new InfoExecutionPeriod(
 				"2º Semestre",
 				new InfoExecutionYear("2002/2003"));
+		infoExecutionPeriod.setSemester(new Integer(2));
 		Integer curricularYear = new Integer(6);
 		Object[] result =
 			{ infoExecutionDegree, infoExecutionPeriod, curricularYear };
@@ -84,19 +91,24 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricularServicosT
 	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedSuccessfuly()
 	 */
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+		InfoDegree infoDegree =
+			new InfoDegree(
+				"LEIC",
+				"Licenciatura de Engenharia Informatica e de Computadores");
+		infoDegree.setTipoCurso(new TipoCurso(TipoCurso.LICENCIATURA_STRING));
+		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
+			new InfoDegreeCurricularPlan("plano1", infoDegree);
+		infoDegreeCurricularPlan.setInfoEnrolmentInfo(new ArrayList());
+
 		InfoExecutionDegree infoExecutionDegree =
 			new InfoExecutionDegree(
-				new InfoDegreeCurricularPlan(
-					"plano1",
-					new InfoDegree(
-						"LEIC",
-						"Licenciatura de Engenharia Informatica e de Computadores",
-						TipoCurso.LICENCIATURA_STRING)),
+				infoDegreeCurricularPlan,
 				new InfoExecutionYear("2002/2003"));
 		InfoExecutionPeriod infoExecutionPeriod =
 			new InfoExecutionPeriod(
 				"2º Semestre",
 				new InfoExecutionYear("2002/2003"));
+		infoExecutionPeriod.setSemester(new Integer(2));				
 		Integer curricularYear = new Integer(1);
 		Object[] result =
 			{ infoExecutionDegree, infoExecutionPeriod, curricularYear };

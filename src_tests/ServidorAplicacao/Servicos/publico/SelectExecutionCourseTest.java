@@ -71,14 +71,13 @@ public class SelectExecutionCourseTest extends TestCaseServicos {
 		argsSelectExecutionCourses[0] = infoExecutionDegree;
 		argsSelectExecutionCourses[1] = infoExecutionPeriod;
 		argsSelectExecutionCourses[2] = curricularYear; 
-
 		try {
 			result =
 				_gestor.executar(null,"SelectExecutionCourse",argsSelectExecutionCourses);
 			assertNotNull("test reading executionCourses",result);
 			assertTrue("test reading executionCourses",((List)result).size()>0 );
 		} catch (Exception e) {
-			fail("test reading execution courses");
+			fail("test reading execution courses" + e);
 			e.printStackTrace();
 		}
 		
@@ -95,7 +94,7 @@ public class SelectExecutionCourseTest extends TestCaseServicos {
 				_gestor.executar(null,"SelectExecutionCourse",argsSelectExecutionCourses);
 			assertTrue("test reading executionCourses",((List)result).size()==0);
 		} catch (Exception e) {
-			fail("test reading execution courses");
+			fail("test reading execution courses" + e);
 			e.printStackTrace();
 		}
 		
@@ -146,14 +145,13 @@ public class SelectExecutionCourseTest extends TestCaseServicos {
 							
 			this.infoExecutionDegree = Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);			
 			this.infoExecutionPeriod = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionPeriod);
-			this.curricularYear = new Integer(2);
+			this.curricularYear = new Integer(1);
 
 			if (!hasExecutionCourses) {
 				sp.getIDisciplinaExecucaoPersistente().apagarTodasAsDisciplinasExecucao();
 				PersistenceBroker pb = PersistenceBrokerFactory.defaultPersistenceBroker();
 				pb.clearCache(); 
 			}
-
 			sp.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia excepcao) {
 			try {

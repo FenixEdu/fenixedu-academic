@@ -13,6 +13,7 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.LabelValueBean;
 
@@ -22,10 +23,7 @@ import DataBeans.InfoRoom;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.InvalidTimeIntervalServiceException;
-import ServidorApresentacao
-	.Action
-	.exceptions
-	.InvalidTimeIntervalActionException;
+import ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -64,6 +62,20 @@ public class SearchEmptyRoomsDispatchAction extends DispatchAction {
 				userView,
 				"ReadExecutionPeriods",
 				argsReadExecutionPeriods);
+
+		// if executionPeriod was previously selected,form has that
+		// value as default
+		InfoExecutionPeriod selectedExecutionPeriod =
+			(InfoExecutionPeriod) session.getAttribute(
+				SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+		if (selectedExecutionPeriod != null) {
+			DynaActionForm searchForm = (DynaActionForm) form;
+			searchForm.set(
+				"executionPeriodIndex",
+				new Integer(executionPeriods.indexOf(selectedExecutionPeriod)));
+		}
+		//----------------------------------------------
+
 
 		ArrayList executionPeriodsLabelValueList = new ArrayList();
 		for (int i = 0; i < executionPeriods.size(); i++) {

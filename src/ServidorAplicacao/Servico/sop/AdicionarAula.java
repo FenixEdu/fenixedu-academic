@@ -82,7 +82,8 @@ public class AdicionarAula implements IServico {
 					infoLesson.getDiaSemana(),
 					infoLesson.getInicio(),
 					infoLesson.getFim(),
-					sala1);
+					sala1,
+					executionCourse.getExecutionPeriod());
 
 			turnoAula = new TurnoAula(turno1, aula1);
 

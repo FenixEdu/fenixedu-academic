@@ -126,13 +126,14 @@ public class DisciplinaExecucaoOJB
 				"select all from "
 					+ DisciplinaExecucao.class.getName()
 					+ " where associatedCurricularCourses.scopes.curricularSemester.curricularYear.year = $1"
-					+ " and associatedCurricularCourses.scopes.curricularSemester.semester = 2"
-					+ " and associatedCurricularCourses.degreeCurricularPlan.name = $2"
-					+ " and associatedCurricularCourses.degreeCurricularPlan.degree.sigla = $3"
-					+ " and executionPeriod.name = $4 "
-					+ " and executionPeriod.executionYear.year = $5";
+					+ " and associatedCurricularCourses.scopes.curricularSemester.semester = $2"
+					+ " and associatedCurricularCourses.degreeCurricularPlan.name = $3"
+					+ " and associatedCurricularCourses.degreeCurricularPlan.degree.sigla = $4"
+					+ " and executionPeriod.name = $5 "
+					+ " and executionPeriod.executionYear.year = $6";
 			query.create(oqlQuery);
 			query.bind(curricularYear);
+			query.bind(executionPeriod.getSemester());
 			query.bind(executionDegree.getCurricularPlan().getName());
 			query.bind(executionDegree.getCurricularPlan().getDegree().getSigla());
 			query.bind(executionPeriod.getName());

@@ -15,6 +15,8 @@ import java.util.Calendar;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import DataBeans.InfoExecutionPeriod;
+import DataBeans.InfoExecutionYear;
 import DataBeans.KeyLesson;
 import DataBeans.RoomKey;
 import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
@@ -65,9 +67,13 @@ public class ApagarAulaServicosTest extends TestCaseDeleteAndEditServices {
 
 		RoomKey keySala = new RoomKey("Ga1");
 
-		Object argsDeleteAula[] = new Object[1];
+		Object argsDeleteAula[] = new Object[2];
 		argsDeleteAula[0] = new KeyLesson(diaSemana, inicio, fim, keySala);
-
+		argsDeleteAula[1] =
+			new InfoExecutionPeriod(
+				"2º Semestre",
+				new InfoExecutionYear("2002/2003"));
+		
 		return argsDeleteAula;
 	}
 
@@ -88,9 +94,13 @@ public class ApagarAulaServicosTest extends TestCaseDeleteAndEditServices {
 
 		RoomKey keySala = new RoomKey("Ga1");
 
-		Object argsDeleteAula[] = new Object[1];
+		Object argsDeleteAula[] = new Object[2];
 		argsDeleteAula[0] = new KeyLesson(diaSemana, inicio, fim, keySala);
-
+		argsDeleteAula[1] =
+					new InfoExecutionPeriod(
+						"2º Semestre",
+						new InfoExecutionYear("2002/2003"));
+		
 		return argsDeleteAula;
 	}
 }

@@ -13,11 +13,14 @@ package ServidorAplicacao.Servico.sop;
  **/
 import java.util.List;
 
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoLesson;
 import DataBeans.InfoLessonServiceResult;
 import DataBeans.KeyLesson;
+import DataBeans.util.Cloner;
 import Dominio.Aula;
 import Dominio.IAula;
+import Dominio.IExecutionPeriod;
 import Dominio.ISala;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
@@ -52,7 +55,9 @@ public class EditarAula implements IServico {
 		return "EditarAula";
 	}
 
-	public Object run(KeyLesson aulaAntiga, InfoLesson aulaNova)
+	public Object run(
+		KeyLesson aulaAntiga,
+		InfoLesson aulaNova)
 		throws FenixServiceException {
 
 		IAula aula = null;
@@ -67,12 +72,20 @@ public class EditarAula implements IServico {
 			ISala salaNova =
 				sp.getISalaPersistente().readByName(
 					aulaNova.getInfoSala().getNome());
+
+			IExecutionPeriod executionPeriod =
+				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
+					aulaNova
+						.getInfoDisciplinaExecucao()
+						.getInfoExecutionPeriod());
+
 			aula =
 				sp.getIAulaPersistente().readByDiaSemanaAndInicioAndFimAndSala(
 					aulaAntiga.getDiaSemana(),
 					aulaAntiga.getInicio(),
 					aulaAntiga.getFim(),
-					salaAntiga);
+					salaAntiga,
+					executionPeriod);
 
 			IAula newLesson =
 				new Aula(
@@ -88,7 +101,8 @@ public class EditarAula implements IServico {
 				if (result.getMessageType() == 1) {
 					throw new InvalidTimeIntervalServiceException();
 				}
-				boolean resultB = validNoInterceptingLesson(newLesson, aula);
+				boolean resultB =
+					validNoInterceptingLesson(newLesson, aula, executionPeriod);
 
 				if (result.isSUCESS() && resultB) {
 					aula.setDiaSemana(aulaNova.getDiaSemana());
@@ -102,7 +116,6 @@ public class EditarAula implements IServico {
 		} catch (ExcepcaoPersistencia ex) {
 			throw new FenixServiceException(ex.getMessage());
 		}
-
 		return result;
 	}
 
@@ -147,7 +160,10 @@ public class EditarAula implements IServico {
 		}
 	*/
 
-	private boolean validNoInterceptingLesson(IAula newLesson, IAula oldLesson)
+	private boolean validNoInterceptingLesson(
+		IAula newLesson,
+		IAula oldLesson,
+		IExecutionPeriod executionPeriod)
 		throws ExistingServiceException, InterceptingServiceException {
 
 		try {
@@ -156,7 +172,10 @@ public class EditarAula implements IServico {
 			IAulaPersistente persistentLesson = sp.getIAulaPersistente();
 
 			List lessonMatchList =
-				persistentLesson.readLessonsInBroadPeriod(newLesson, oldLesson);
+				persistentLesson.readLessonsInBroadPeriod(
+					newLesson,
+					oldLesson,
+					executionPeriod);
 
 			if (lessonMatchList.size() > 0) {
 				if (lessonMatchList.contains(newLesson)) {

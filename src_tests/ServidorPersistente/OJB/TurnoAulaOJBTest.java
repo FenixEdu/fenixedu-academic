@@ -47,7 +47,7 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.DiaSemana;
 
 public class TurnoAulaOJBTest extends TestCaseOJB {
-	
+
 	SuportePersistenteOJB persistentSupport = null;
 	ITurnoAulaPersistente persistentShiftLesson = null;
 	IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
@@ -55,7 +55,6 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 	ISalaPersistente persistentRoom = null;
 	IAulaPersistente persistentLesson = null;
 
-	
 	public TurnoAulaOJBTest(java.lang.String testName) {
 		super(testName);
 	}
@@ -79,7 +78,8 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 			fail("Error");
 		}
 		persistentShiftLesson = persistentSupport.getITurnoAulaPersistente();
-		persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
+		persistentExecutionCourse =
+			persistentSupport.getIDisciplinaExecucaoPersistente();
 		persistentShift = persistentSupport.getITurnoPersistente();
 		persistentRoom = persistentSupport.getISalaPersistente();
 		persistentLesson = persistentSupport.getIAulaPersistente();
@@ -104,7 +104,6 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 			executionCourse.setSigla("APR");
 			executionCourse.setExecutionPeriod(executionPeriod);
 
-		
 			try {
 				persistentSupport.iniciarTransaccao();
 				shift =
@@ -118,11 +117,9 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 				fail("Read existing shift : turno_apr_teorico1");
 			}
 
-		
 			ISala room = new Sala();
 			room.setNome("Ga1");
-			
-			
+
 			try {
 				persistentSupport.iniciarTransaccao();
 				List lessonRoomList =
@@ -136,14 +133,13 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 			} catch (Exception e) {
 				fail("Reading lesson");
 			}
-		
 
 			write(shift, lesson);
-			
+
 			writeDuplicateShiftLesson(shift, lesson);
-						
+
 			update(new TurnoAula(shift, lesson));
-			
+
 			updateWithModifications(new TurnoAula(shift, lesson));
 
 		} catch (Exception e) {
@@ -167,7 +163,6 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 			executionCourse.setSigla("APR");
 			executionCourse.setExecutionPeriod(executionPeriod);
 
-		
 			try {
 				persistentSupport.iniciarTransaccao();
 				shift =
@@ -181,11 +176,9 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 				fail("Read existing shift : turno_apr_teorico1");
 			}
 
-		
 			ISala room = new Sala();
 			room.setNome("Ga1");
-			
-			
+
 			try {
 				persistentSupport.iniciarTransaccao();
 				List lessonRoomList =
@@ -200,9 +193,9 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 				fail("Reading lesson");
 			}
 
-			assertNotNull("Missing shift",shift);
+			assertNotNull("Missing shift", shift);
 			assertNotNull("Missing lesson", lesson);
-			
+
 			persistentSupport.iniciarTransaccao();
 			persistentShiftLesson.delete(new TurnoAula(shift, lesson));
 			persistentSupport.confirmarTransaccao();
@@ -212,7 +205,7 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 				persistentShiftLesson.readByShiftAndLesson(shift, lesson);
 			persistentSupport.confirmarTransaccao();
 			assertEquals(turnoAula, null);
-			
+
 		} catch (ExcepcaoPersistencia ex) {
 			fail("testDeleteTurnoAula");
 		}
@@ -265,9 +258,14 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 	public void testReadAulasDeTurno() {
 		try {
 			List aulas = null;
-      
+
 			persistentSupport.iniciarTransaccao();
-			IDisciplinaExecucao executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+			IDisciplinaExecucao executionCourse =
+				persistentExecutionCourse
+					.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
+					"TFCI",
+					"2002/2003",
+					"LEIC");
 			assertNotNull(executionCourse);
 
 			/* Testa metodo qdo ha mais do q uma aula de um turno na BD */
@@ -275,7 +273,7 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 				persistentShiftLesson.readByShift(
 					new Turno("turno4", null, null, executionCourse));
 			persistentSupport.confirmarTransaccao();
-			
+
 			assertEquals(
 				"testReadAulasDeTurno: qdo ha 2 aulas da turma na BD",
 				aulas.size(),
@@ -303,7 +301,7 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 
 	/** Test of delete method, of class ServidorPersistente.OJB.TurnoAulaOJB. */
 	public void testDeleteTurnoAulaByKeys() {
-		
+
 		Calendar startTime = Calendar.getInstance();
 		startTime.set(Calendar.HOUR_OF_DAY, 8);
 		startTime.set(Calendar.MINUTE, 00);
@@ -313,32 +311,51 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 		endTime.set(Calendar.MINUTE, 30);
 		endTime.set(Calendar.SECOND, 00);
 
-	    try {
-	      persistentSupport.iniciarTransaccao();
-		  IDisciplinaExecucao executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCII", "2002/2003", "MEEC");
-		  assertNotNull(executionCourse);
-  
-		  ITurno shift = persistentShift.readByNameAndExecutionCourse("turno3", executionCourse);
-		  assertNotNull(shift);
+		try {
+			persistentSupport.iniciarTransaccao();
+			IDisciplinaExecucao executionCourse =
+				persistentExecutionCourse
+					.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
+					"TFCII",
+					"2002/2003",
+					"MEEC");
+			assertNotNull(executionCourse);
 
-		  ISala room = persistentRoom.readByName("Ga1");
-		  assertNotNull(room);
-		  DiaSemana weekDay = new DiaSemana(DiaSemana.SEGUNDA_FEIRA);
-		  	      
-	      persistentShiftLesson.delete(shift, weekDay, startTime, endTime, room);
-	      persistentSupport.confirmarTransaccao();
-	
-	
-	      persistentSupport.iniciarTransaccao();
-	      IAula lesson = persistentLesson.readByDiaSemanaAndInicioAndFimAndSala(weekDay, startTime, endTime, room);
-	      ITurnoAula turnoAula = persistentShiftLesson.readByShiftAndLesson(shift, lesson);
-		  assertNull(turnoAula);
-	
-	      persistentSupport.confirmarTransaccao();
-	
-	    } catch (ExcepcaoPersistencia ex) {
+			ITurno shift =
+				persistentShift.readByNameAndExecutionCourse(
+					"turno3",
+					executionCourse);
+			assertNotNull(shift);
+
+			ISala room = persistentRoom.readByName("Ga1");
+			assertNotNull(room);
+			DiaSemana weekDay = new DiaSemana(DiaSemana.SEGUNDA_FEIRA);
+
+			persistentShiftLesson.delete(
+				shift,
+				weekDay,
+				startTime,
+				endTime,
+				room);
+			persistentSupport.confirmarTransaccao();
+
+			persistentSupport.iniciarTransaccao();
+			IAula lesson =
+				persistentLesson.readByDiaSemanaAndInicioAndFimAndSala(
+					weekDay,
+					startTime,
+					endTime,
+					room,
+					executionCourse.getExecutionPeriod());
+			ITurnoAula turnoAula =
+				persistentShiftLesson.readByShiftAndLesson(shift, lesson);
+			assertNull(turnoAula);
+
+			persistentSupport.confirmarTransaccao();
+
+		} catch (ExcepcaoPersistencia ex) {
 			fail("testDeleteTurnoAula");
-	    }
+		}
 	}
 
 	/** Test of ReadLessonsByStudent method, of class ServidorPersistente.OJB.TurnoAulaOJB. */
@@ -365,26 +382,31 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 		try {
 			/** get with keys */
 			persistentSupport.iniciarTransaccao();
-			 shiftLesson = persistentShiftLesson.readByShiftAndLesson(shiftLesson.getTurno(), shiftLesson.getAula());
+			shiftLesson =
+				persistentShiftLesson.readByShiftAndLesson(
+					shiftLesson.getTurno(),
+					shiftLesson.getAula());
 			persistentSupport.confirmarTransaccao();
-				
+
 			persistentSupport.iniciarTransaccao();
-			List lessonList = (List) persistentLesson.readByExecutionCourse(shiftLesson.getTurno().getDisciplinaExecucao());
-			
+			List lessonList =
+				(List) persistentLesson.readByExecutionCourse(
+					shiftLesson.getTurno().getDisciplinaExecucao());
+
 			IAula lesson = (IAula) lessonList.get(1);
-			persistentSupport.confirmarTransaccao();		
+			persistentSupport.confirmarTransaccao();
 
 			shiftLesson.setAula(lesson);
-			
+
 			persistentSupport.iniciarTransaccao();
 			persistentShiftLesson.lockWrite(shiftLesson);
 			persistentSupport.confirmarTransaccao();
-						
+
 		} catch (Exception e) {
 			/* to lockWrite shift and lesson must be mapped */
 			fail("Update (with modification) shift lesson");
 		}
-		
+
 	}
 
 	/**
@@ -396,14 +418,16 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 		try {
 			/** get with keys */
 			persistentSupport.iniciarTransaccao();
-			shiftLesson = persistentShiftLesson.readByShiftAndLesson(shiftLesson.getTurno(), shiftLesson.getAula());
+			shiftLesson =
+				persistentShiftLesson.readByShiftAndLesson(
+					shiftLesson.getTurno(),
+					shiftLesson.getAula());
 			persistentSupport.confirmarTransaccao();
-				
-		
+
 			persistentSupport.iniciarTransaccao();
 			persistentShiftLesson.lockWrite(shiftLesson);
 			persistentSupport.confirmarTransaccao();
-						
+
 		} catch (Exception e) {
 			/* to lockWrite shift and lesson must be mapped */
 			fail("Update (no modification) shift lesson");
@@ -443,7 +467,7 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 
 	private void writeDuplicateShiftLesson(ITurno shift, IAula lesson) {
 		ITurnoAula turnoAula = new TurnoAula(shift, lesson);
-		
+
 		try {
 			persistentSupport.iniciarTransaccao();
 			persistentShiftLesson.lockWrite(turnoAula);
@@ -455,6 +479,5 @@ public class TurnoAulaOJBTest extends TestCaseOJB {
 			fail("testCreateExistingTurnoAula: Unexpected Excpetion");
 		}
 	}
-
 
 }

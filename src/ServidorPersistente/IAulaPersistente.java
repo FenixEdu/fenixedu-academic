@@ -21,16 +21,28 @@ import Util.DiaSemana;
 import Util.TipoAula;
 
 public interface IAulaPersistente extends IPersistentObject {
-    public IAula readByDiaSemanaAndInicioAndFimAndSala(DiaSemana diaSemana,
-                    Calendar inicio, Calendar fim, ISala sala)
-               throws ExcepcaoPersistencia;
+	public IAula readByDiaSemanaAndInicioAndFimAndSala(
+		DiaSemana diaSemana,
+		Calendar inicio,
+		Calendar fim,
+		ISala sala,
+		IExecutionPeriod executionPeriod)
+		throws ExcepcaoPersistencia;
 	public List readAll() throws ExcepcaoPersistencia;
-    public void lockWrite(IAula aula) throws ExcepcaoPersistencia;
-    public void delete(IAula aula) throws ExcepcaoPersistencia;
-    public void deleteAll() throws ExcepcaoPersistencia;
-    public List readByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia;
-    public List readByRoomAndExecutionPeriod(ISala room, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
-	public List readLessonsInBroadPeriod(IAula newLesson, IAula oldLesson) throws ExcepcaoPersistencia ;
+	public void lockWrite(IAula aula) throws ExcepcaoPersistencia;
+	public void delete(IAula aula) throws ExcepcaoPersistencia;
+	public void deleteAll() throws ExcepcaoPersistencia;
+	public List readByExecutionCourse(IDisciplinaExecucao executionCourse)
+		throws ExcepcaoPersistencia;
+	public List readByRoomAndExecutionPeriod(
+		ISala room,
+		IExecutionPeriod executionPeriod)
+		throws ExcepcaoPersistencia;
+	public List readLessonsInBroadPeriod(
+		IAula newLesson,
+		IAula oldLesson,
+		IExecutionPeriod executionPeriod)
+		throws ExcepcaoPersistencia;
 	/**
 	 * Method readByDisciplinaExecucaoETipo.
 	 * @param executionCourse
@@ -39,8 +51,9 @@ public interface IAulaPersistente extends IPersistentObject {
 	 */
 	List readByExecutionCourseAndLessonType(
 		IDisciplinaExecucao executionCourse,
-		TipoAula lessonType)throws ExcepcaoPersistencia;
-		
+		TipoAula lessonType)
+		throws ExcepcaoPersistencia;
+
 	/**
 	 * 
 	 * @param lesson
@@ -51,6 +64,8 @@ public interface IAulaPersistente extends IPersistentObject {
 	//              Use readLessonsInBroadPeriodInAnyRoom instead.	
 	public List readLessonsInPeriod(IAula lesson) throws ExcepcaoPersistencia;
 
-	public List readLessonsInBroadPeriodInAnyRoom(IAula lesson, IExecutionPeriod executionPeriod)
-			throws ExcepcaoPersistencia;
+	public List readLessonsInBroadPeriodInAnyRoom(
+		IAula lesson,
+		IExecutionPeriod executionPeriod)
+		throws ExcepcaoPersistencia;
 }

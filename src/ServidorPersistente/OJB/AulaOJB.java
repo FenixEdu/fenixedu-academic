@@ -36,7 +36,8 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 		DiaSemana diaSemana,
 		Calendar inicio,
 		Calendar fim,
-		ISala sala)
+		ISala sala,
+		IExecutionPeriod executionPeriod)
 		throws ExcepcaoPersistencia {
 		try {
 			IAula aula = null;
@@ -46,11 +47,15 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 			oqlQuery += " and inicio = $2";
 			oqlQuery += " and fim = $3";
 			oqlQuery += " and sala.nome = $4";
+			oqlQuery += " and disciplinaExecucao.executionPeriod.name = $5";
+			oqlQuery += " and disciplinaExecucao.executionPeriod.executionYear.year = $6";
 			query.create(oqlQuery);
 			query.bind(diaSemana);
 			query.bind(inicio);
 			query.bind(fim);
 			query.bind(sala.getNome());
+			query.bind(executionPeriod.getName());
+			query.bind(executionPeriod.getExecutionYear().getYear());
 			List result = (List) query.execute();
 			lockRead(result);
 			if (result.size() != 0)
@@ -88,7 +93,8 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 				lessonToWrite.getDiaSemana(),
 				lessonToWrite.getInicio(),
 				lessonToWrite.getFim(),
-				lessonToWrite.getSala());
+				lessonToWrite.getSala(),
+				lessonToWrite.getDisciplinaExecucao().getExecutionPeriod());
 
 		// if (lesson not in database) then write it
 		if (lessonFromDB == null)
@@ -250,12 +256,12 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 		}
 	}
 
-	public List readLessonsInBroadPeriod(IAula newLesson, IAula oldLesson)
+	public List readLessonsInBroadPeriod(IAula newLesson, IAula oldLesson, IExecutionPeriod executionPeriod)
 		throws ExcepcaoPersistencia {
 		try {
 			List lessonList = null;
 			String oqlQuery = "select aulas from " + Aula.class.getName();
-			oqlQuery += " where ( inicio >$1 "
+			oqlQuery += " where (( inicio >$1 "
 				+ "and inicio <$2 "
 				+ "and diaSemana = $3 "
 				+ "and sala.nome = $4 ) "
@@ -274,7 +280,9 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 				+ "or ( inicio = $17 "
 				+ "and fim <= $18 "
 				+ "and diaSemana = $19 "
-				+ "and sala.nome = $20 )";
+				+ "and sala.nome = $20 ))"
+				+ "and disciplinaExecucao.executionPeriod.name = $21"
+				+ "and disciplinaExecucao.executionPeriod.executionYear.year = $22";
 			
 			query.create(oqlQuery);
 			query.bind(newLesson.getInicio());
@@ -301,6 +309,9 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 			query.bind(newLesson.getFim());
 			query.bind(newLesson.getDiaSemana());
 			query.bind(newLesson.getSala().getNome());
+			
+			query.bind(executionPeriod.getName());
+			query.bind(executionPeriod.getExecutionYear().getYear());
 
 			lessonList = (List) query.execute();
 			lockRead(lessonList);

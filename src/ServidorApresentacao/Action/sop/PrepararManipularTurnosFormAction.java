@@ -44,6 +44,8 @@ public class PrepararManipularTurnosFormAction extends Action {
 		sessao.removeAttribute(SessionConstants.INFO_SHIFTS_EXECUTION_COURSE_KEY);
 		if (infoTurnosDeDisciplinaExecucao.size() > 0)
 			sessao.setAttribute(SessionConstants.INFO_SHIFTS_EXECUTION_COURSE_KEY, infoTurnosDeDisciplinaExecucao);
+			
+		sessao.removeAttribute(SessionConstants.CLASS_VIEW);
       return mapping.findForward("Sucesso");
     } else
       throw new Exception();  // nao ocorre... pedido passa pelo filtro Autorizacao 

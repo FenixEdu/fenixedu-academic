@@ -42,6 +42,19 @@ public class ExecutionPeriodDA extends DispatchAction {
 				"ReadExecutionPeriods",
 				argsReadExecutionPeriods);
 
+		// if executionPeriod was previously selected,form has that
+		// value as default
+		InfoExecutionPeriod selectedExecutionPeriod =
+			(InfoExecutionPeriod) session.getAttribute(
+				SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+		if (selectedExecutionPeriod != null) {
+			DynaActionForm indexForm = (DynaActionForm) form;
+			indexForm.set(
+				"index",
+				new Integer(executionPeriods.indexOf(selectedExecutionPeriod)));
+		}
+		//----------------------------------------------
+
 		ArrayList executionPeriodsLabelValueList = new ArrayList();
 		for (int i = 0; i < executionPeriods.size(); i++) {
 			InfoExecutionPeriod infoExecutionPeriod =
@@ -61,7 +74,7 @@ public class ExecutionPeriodDA extends DispatchAction {
 		request.setAttribute(
 			SessionConstants.LABELLIST_EXECUTIONPERIOD,
 			executionPeriodsLabelValueList);
-			
+
 		return mapping.findForward("showForm");
 	}
 

@@ -129,6 +129,7 @@ public class CursoExecucaoOJB
 			String oqlQuery =
 				"select all from " + CursoExecucao.class.getName();
 			oqlQuery += " where executionYear.year = $1";
+			
 			query.create(oqlQuery);
 			query.bind(executionYear.getYear());
 			List result = (List) query.execute();

@@ -100,6 +100,8 @@ public class PrepararAulaFormAction extends Action {
 				request);
 
 			sessao.removeAttribute(SessionConstants.EXECUTION_COURSE_KEY);
+			sessao.removeAttribute(SessionConstants.CLASS_VIEW);
+
 			return mapping.findForward("Sucesso");
 		} else
 			throw new Exception();

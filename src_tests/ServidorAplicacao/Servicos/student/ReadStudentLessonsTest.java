@@ -69,7 +69,7 @@ public class ReadStudentLessonsTest extends TestCaseReadServices {
   }
 
   protected int getNumberOfItemsToRetrieve() {
-	  return 1;
+	  return 2;
   }
 
   protected Object getObjectToCompare() {

@@ -20,6 +20,7 @@ import org.apache.struts.actions.LookupDispatchAction;
 import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoLesson;
 import DataBeans.InfoLessonServiceResult;
 import DataBeans.InfoRoom;
@@ -32,7 +33,10 @@ import ServidorAplicacao.Servico.exceptions.InterceptingServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidTimeIntervalServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.InterceptingActionException;
-import ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException;
+import ServidorApresentacao
+	.Action
+	.exceptions
+	.InvalidTimeIntervalActionException;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -58,14 +62,13 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 		return map;
 	}
 
-
 	public ActionForward createRoom(
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-			
+
 		DynaActionForm criarAulaForm = (DynaActionForm) form;
 		HttpSession sessao = request.getSession(false);
 		if (sessao != null) {
@@ -122,10 +125,10 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 						"CriarAula",
 						argsCriarAula);
 			} catch (InterceptingServiceException ex) {
-				
+
 				throw new InterceptingActionException(infoSala.getNome(), ex);
 			} catch (ExistingServiceException ex) {
-				
+
 				throw new ExistingActionException("A aula", ex);
 			} catch (InvalidTimeIntervalServiceException ex) {
 				throw new InvalidTimeIntervalActionException(ex);
@@ -151,7 +154,7 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		
+
 		DynaActionForm editarAulaForm = (DynaActionForm) form;
 
 		HttpSession sessao = request.getSession(false);
@@ -204,7 +207,11 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 					infoSala,
 					iAulaAntiga.getInfoDisciplinaExecucao());
 
-			Object argsEditarAula[] = { kAulaAntiga, iAula };
+//			InfoExecutionPeriod iExecutionPeriod =
+//				(InfoExecutionPeriod) sessao.getAttribute(
+//					SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+
+			Object argsEditarAula[] = { kAulaAntiga, iAula/*, iExecutionPeriod*/ };
 
 			InfoLessonServiceResult result = null;
 			try {
@@ -260,7 +267,7 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		
+
 		DynaActionForm editarAulaForm = (DynaActionForm) form;
 
 		HttpSession sessao = request.getSession(false);
@@ -274,7 +281,7 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 				new DiaSemana(
 					new Integer((String) editarAulaForm.get("diaSemana")));
 
-			sessao.setAttribute("weekDayString", weekDay.toString());			
+			sessao.setAttribute("weekDayString", weekDay.toString());
 
 			Calendar inicio = Calendar.getInstance();
 			inicio.set(
@@ -308,7 +315,12 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 				infoLesson.setInicio(inicio);
 				infoLesson.setFim(fim);
 
-				Object args[] = { infoRoom, infoLesson };
+				InfoExecutionPeriod infoExecutionPeriod =
+					(InfoExecutionPeriod) (sessao
+						.getAttribute(
+							SessionConstants.INFO_EXECUTION_PERIOD_KEY));
+
+				Object args[] = { infoRoom, infoLesson, infoExecutionPeriod };
 
 				List emptyRoomsList =
 					(List) ServiceUtils.executeService(
@@ -325,10 +337,12 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 				}
 
 				ArrayList listaSalas = new ArrayList();
-				listaSalas.add(new LabelValueBean(infoSala.getNome(), infoSala.getNome()));
+				listaSalas.add(
+					new LabelValueBean(infoSala.getNome(), infoSala.getNome()));
 				for (int i = 0; i < emptyRoomsList.size(); i++) {
 					InfoRoom elem = (InfoRoom) emptyRoomsList.get(i);
-					listaSalas.add(new LabelValueBean(elem.getNome(), elem.getNome()));
+					listaSalas.add(
+						new LabelValueBean(elem.getNome(), elem.getNome()));
 				}
 				emptyRoomsList.add(0, infoSala);
 
@@ -337,7 +351,8 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 				sessao.setAttribute("listaSalas", listaSalas);
 				sessao.setAttribute("listaInfoSalas", emptyRoomsList);
 
-				String parameter = request.getParameter(new String("operation"));
+				String parameter =
+					request.getParameter(new String("operation"));
 				return mapping.findForward(parameter);
 			} else {
 				saveErrors(request, actionErrors);
@@ -353,7 +368,7 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		
+
 		DynaActionForm editarAulaForm = (DynaActionForm) form;
 
 		HttpSession sessao = request.getSession(false);
@@ -398,7 +413,12 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 				infoLesson.setInicio(inicio);
 				infoLesson.setFim(fim);
 
-				Object args[] = { infoRoom, infoLesson };
+				InfoExecutionPeriod infoExecutionPeriod =
+					(InfoExecutionPeriod) (sessao
+						.getAttribute(
+							SessionConstants.INFO_EXECUTION_PERIOD_KEY));
+
+				Object args[] = { infoRoom, infoLesson, infoExecutionPeriod };
 
 				List emptyRoomsList =
 					(List) ServiceUtils.executeService(
@@ -418,7 +438,8 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 				listaSalas.add(new LabelValueBean("Escolher", ""));
 				for (int i = 0; i < emptyRoomsList.size(); i++) {
 					InfoRoom elem = (InfoRoom) emptyRoomsList.get(i);
-					listaSalas.add(new LabelValueBean(elem.getNome(), elem.getNome()));
+					listaSalas.add(
+						new LabelValueBean(elem.getNome(), elem.getNome()));
 				}
 
 				sessao.removeAttribute("listaSalas");
@@ -426,7 +447,8 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 				sessao.setAttribute("listaSalas", listaSalas);
 				sessao.setAttribute("listaInfoSalas", emptyRoomsList);
 
-				String parameter = request.getParameter(new String("operation"));
+				String parameter =
+					request.getParameter(new String("operation"));
 				return mapping.findForward(parameter);
 			} else {
 				saveErrors(request, actionErrors);
@@ -435,7 +457,6 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 		} else
 			throw new Exception();
 	}
-
 
 	private ActionErrors checkTimeInterval(Calendar begining, Calendar end) {
 		ActionErrors actionErrors = new ActionErrors();

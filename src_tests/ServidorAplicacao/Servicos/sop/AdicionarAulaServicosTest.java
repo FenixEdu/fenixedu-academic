@@ -234,7 +234,7 @@ public class AdicionarAulaServicosTest extends TestCaseNeedAuthorizationServices
 			ISala is = isp.readByName("Ga1");
 
 			IAulaPersistente iap = sp.getIAulaPersistente();
-			IAula ia = iap.readByDiaSemanaAndInicioAndFimAndSala(diaSemana, inicio, fim, is);
+			IAula ia = iap.readByDiaSemanaAndInicioAndFimAndSala(diaSemana, inicio, fim, is,iep);
 			
 			String nomeDisciplinaExecucao = null;
 			if(nomeTurno.equals("turno1") || nomeTurno.equals("turno2")) {

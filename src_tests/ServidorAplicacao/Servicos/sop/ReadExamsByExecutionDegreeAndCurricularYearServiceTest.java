@@ -57,17 +57,20 @@ public class ReadExamsByExecutionDegreeAndCurricularYearServiceTest
 	}
 
 	public void testReadValidResult() {
+		
 		InfoExecutionYear infoExecutionYear =
 			new InfoExecutionYear("2002/2003");
 		InfoDegree infoDegree =
 			new InfoDegree(
 				"LEIC",
-				"Licenciatura de Engenharia Informatica e de Computadores",
-				TipoCurso.LICENCIATURA_STRING);
+				"Licenciatura de Engenharia Informatica e de Computadores");
+		infoDegree.setTipoCurso(new TipoCurso(TipoCurso.LICENCIATURA_STRING));
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
 			new InfoDegreeCurricularPlan("plano1", infoDegree);
+		infoDegreeCurricularPlan.setInfoEnrolmentInfo(new ArrayList());
 		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree(infoDegreeCurricularPlan, infoExecutionYear);
 		InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod("2º Semestre",new InfoExecutionYear("2002/2003"));
+		infoExecutionPeriod.setSemester(new Integer(2));
 		Integer curricularYear = new Integer(1);
 
 		args = new Object[3];

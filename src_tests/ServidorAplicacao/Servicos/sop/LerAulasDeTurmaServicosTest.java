@@ -11,6 +11,7 @@ package ServidorAplicacao.Servicos.sop;
  *
  * @author tfc130
  */
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import junit.framework.Test;
@@ -64,21 +65,26 @@ public class LerAulasDeTurmaServicosTest extends TestCaseReadServices {
 	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
 	 */
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+		InfoDegree infoDegree =
+			new InfoDegree(
+				"LEIC",
+				"Licenciatura de Engenharia Informatica e de Computadores");
+		infoDegree.setTipoCurso(new TipoCurso(TipoCurso.LICENCIATURA_STRING));
+		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
+			new InfoDegreeCurricularPlan("plano1", infoDegree);
+		infoDegreeCurricularPlan.setInfoEnrolmentInfo(new ArrayList());
+
 		InfoClass infoClass =
 			new InfoClass(
 				"xpto",
 				new Integer(1),
 				new InfoExecutionDegree(
-					new InfoDegreeCurricularPlan(
-						"plano1",
-						new InfoDegree(
-							"LEIC",
-							"Licenciatura de Engenharia Informatica e de Computadores",
-							TipoCurso.LICENCIATURA_STRING)),
+					infoDegreeCurricularPlan,
 					new InfoExecutionYear("2002/2003")),
 				new InfoExecutionPeriod(
 					"2º Semestre",
 					new InfoExecutionYear("2002/2003")));
+		System.out.println("###### Unsuccess" + infoClass);
 		Object[] result = { infoClass };
 		return result;
 	}
@@ -87,21 +93,27 @@ public class LerAulasDeTurmaServicosTest extends TestCaseReadServices {
 	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedSuccessfuly()
 	 */
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+		InfoDegree infoDegree =
+			new InfoDegree(
+				"LEIC",
+				"Licenciatura de Engenharia Informatica e de Computadores");
+		infoDegree.setTipoCurso(new TipoCurso(TipoCurso.LICENCIATURA_STRING));
+		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
+			new InfoDegreeCurricularPlan("plano1", infoDegree);
+		infoDegreeCurricularPlan.setInfoEnrolmentInfo(new ArrayList());
+
+
 		InfoClass infoClass =
 			new InfoClass(
 				"10501",
 				new Integer(1),
 				new InfoExecutionDegree(
-					new InfoDegreeCurricularPlan(
-						"plano1",
-						new InfoDegree(
-							"LEIC",
-							"Licenciatura de Engenharia Informatica e de Computadores",
-							TipoCurso.LICENCIATURA_STRING)),
+					infoDegreeCurricularPlan,
 					new InfoExecutionYear("2002/2003")),
 				new InfoExecutionPeriod(
 					"2º Semestre",
 					new InfoExecutionYear("2002/2003")));
+		System.out.println("###### Sucess " + infoClass);
 		Object[] result = { infoClass };
 		return result;
 	}
@@ -152,9 +164,9 @@ public class LerAulasDeTurmaServicosTest extends TestCaseReadServices {
 						new InfoExecutionYear("2002/2003"))));
 		return infoLesson;
 	}
-	
+
 	protected boolean needsAuthorization() {
-			return true;
-		}
+		return true;
+	}
 
 }
