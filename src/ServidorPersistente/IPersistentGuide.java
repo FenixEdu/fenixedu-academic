@@ -5,6 +5,7 @@ import java.util.List;
 
 import Dominio.IGuide;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.SituationOfGuide;
 import Util.TipoDocumentoIdentificacao;
 
 /**
@@ -74,6 +75,13 @@ public interface IPersistentGuide extends IPersistentObject {
 	 * @throws ExcepcaoPersistencia
 	 */
 	public IGuide readLatestVersion(Integer year, Integer number) throws ExcepcaoPersistencia;
+
+	/**
+	 * @param guideYear
+	 * @param situationOfGuide
+	 * @return
+	 */
+	public List readByYearAndState(Integer guideYear, SituationOfGuide situationOfGuide) throws ExcepcaoPersistencia; 
 
 
 		

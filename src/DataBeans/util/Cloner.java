@@ -540,7 +540,10 @@ public abstract class Cloner {
 		InfoPerson infoPerson = null;
 		if (person != null) {
 			infoPerson = new InfoPerson();
-			InfoCountry infoCountry = Cloner.copyICountry2InfoCountry(person.getPais());
+			InfoCountry infoCountry = null;
+			if (person.getPais() != null) {
+				infoCountry = Cloner.copyICountry2InfoCountry(person.getPais());
+			}
 
 			copyObjectProperties(infoPerson, person);
 			infoPerson.setInfoPais(infoCountry);

@@ -18,6 +18,12 @@
 		<put name="navLocal" value="/posGraduacao/student/studentMenu.jsp"/>
 	</definition>
 
+
+	<definition name="definition.masterDegreeAdministrativeOffice.guideListing" extends="definition.masterDegreeAdministrativeOffice.masterPage">
+		<put name="navLocal" value="/posGraduacao/guide/guideListingMenu.jsp"/>
+	</definition>
+
+
 	<definition name="definition.masterDegreeAdministrativeOffice.studentOperations.studentCurricularPlan" extends="definition.masterDegreeAdministrativeOffice.studentOperations">
 		<put name="body-context" value="/posGraduacao/student/studentCurricularPlan/studentContext.jsp"/>
 	</definition>

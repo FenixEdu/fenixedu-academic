@@ -447,6 +447,17 @@
       </form-bean>
 
 
+      <form-bean name="chooseGuideStateForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+
+            <form-property name="page" type="java.lang.Integer" />
+   	        <form-property name="year" type="java.lang.String"/>
+   	        <form-property name="state" type="java.lang.String"/>
+      </form-bean>
+
+
+
 
 
    </form-beans>
@@ -1560,6 +1571,23 @@
 				validate="false">
 			<forward name="viewStudentCurricularPlans" path="df.page.viewStudentCurricularPlans"/>
 		</action>
+		
+		
+
+	  <action	name="chooseGuideStateForm"
+				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.GuideListingByStateDispatchAction"
+				path="/guideListingByState"
+				parameter="method"
+				scope="request"
+				input="/guideListingByState.do?method=prepareChooseState&amp;page=0"
+				validate="true">
+			<forward name="PrepareSuccess" path="df.page.searchGuideByState"/>
+			<forward name="ShowList" path="df.page.showSearchGuideListResult"/>
+		</action>
+
+
+
+
 
     </action-mappings>
     

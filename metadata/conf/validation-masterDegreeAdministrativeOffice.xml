@@ -606,8 +606,15 @@
 			<arg0 key="error.no.student.selected" resource="true"/>
 	  </field>
     </form>
-    
-    
+
+
+
+	<form name="chooseGuideStateForm">
+		<field property="year" depends="integer" page="1">
+			<arg0 key="label.masterDegree.administrativeOffice.guideYear" resource="true"/>
+		</field>
+	</form>
+
   </formset>
 
 

@@ -11,6 +11,16 @@
 		<put name="body" value="/posGraduacao/student/studentCurricularPlan/viewStudents.jsp"/>
 	</definition>
 
+	<definition name="df.page.searchGuideByState" extends="definition.masterDegreeAdministrativeOffice.studentOperations.studentCurricularPlan">
+		<put name="body" value="/posGraduacao/guide/chooseGuideState.jsp"/>
+	</definition>
+
+
+	<definition name="df.page.showSearchGuideListResult" extends="definition.masterDegreeAdministrativeOffice.guideListing">
+		<put name="body" value="/posGraduacao/guide/showGuideByStateList.jsp"/>
+	</definition>
+
+
 	<definition name="df.page.viewStudentCurricularPlans" extends="definition.masterDegreeAdministrativeOffice.studentOperations.studentCurricularPlan">
 		<put name="body" value="/posGraduacao/student/studentCurricularPlan/viewStudentCurricularPlans.jsp"/>
 	</definition>

@@ -11,6 +11,8 @@ import Dominio.IGuide;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentGuide;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.SituationOfGuide;
+import Util.State;
 import Util.TipoDocumentoIdentificacao;
 
 /**
@@ -19,7 +21,7 @@ import Util.TipoDocumentoIdentificacao;
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
 public class GuideOJB extends ObjectFenixOJB implements IPersistentGuide {
-
+ 
 	public GuideOJB() {}
 
 	public void write(IGuide guideToWrite) throws ExcepcaoPersistencia, ExistingPersistentException {
@@ -179,6 +181,21 @@ public class GuideOJB extends ObjectFenixOJB implements IPersistentGuide {
 
 		
 		return result;
+	}
+
+	public List readByYearAndState(Integer guideYear, SituationOfGuide situationOfGuide) throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		
+		if (guideYear != null) {
+			criteria.addEqualTo("year", guideYear);
+		}
+
+		if (situationOfGuide != null) {
+			criteria.addEqualTo("guideSituations.state", new State(State.ACTIVE));
+			criteria.addEqualTo("guideSituations.situation", situationOfGuide);
+		}
+
+		return queryList(Guide.class, criteria);
 	}
 	
 //	public static void main(String args[]) throws ExcepcaoPersistencia{
