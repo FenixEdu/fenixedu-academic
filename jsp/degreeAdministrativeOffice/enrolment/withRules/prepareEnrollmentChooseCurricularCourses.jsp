@@ -52,6 +52,16 @@
 		</tr>
 	</table>
 	<br />
+	<table>
+		<tr>
+			<td>
+				<logic:equal name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoStudent.payedTuition" value="false">
+					<span class="error"><bean:message key="message.student.noPayed.tuition" /></span>
+				</logic:equal>
+			</td>
+		</tr>
+	</table>
+	<br />
 	<table>	
 		<tr>
 			<td class="listClasses-header"><bean:message key="label.student.enrollment.specializationArea" />/<bean:message key="label.student.enrollment.branch" bundle="STUDENT_RESOURCES" /></td>
