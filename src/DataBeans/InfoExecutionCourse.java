@@ -401,20 +401,6 @@ public class InfoExecutionCourse extends InfoObject {
             setPraticalHours(executionCourse.getPraticalHours());
             setComment(executionCourse.getComment());
             List associatedCurricularCourses = new ArrayList();
-            //##########################################
-            // Who forgot this ?????? >:-( (by gedl)
-            setIdInternal(executionCourse.getIdInternal());
-
-            for (Iterator iter = executionCourse.getAssociatedCurricularCourses().iterator(); iter
-                    .hasNext();) {
-                ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
-                associatedCurricularCourses
-                        .add(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
-            }
-
-            setAssociatedInfoCurricularCourses(associatedCurricularCourses);
-            //##########################################
-
         }
     }
 
