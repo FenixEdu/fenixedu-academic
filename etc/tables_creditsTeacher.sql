@@ -1,6 +1,6 @@
-#----------------------------
-# Table structure for TEACHER_SHIFT_PERCENTAGE
-#----------------------------
+----------------------------
+-- Table structure for TEACHER_SHIFT_PERCENTAGE
+----------------------------
 drop table if exists TEACHER_SHIFT_PERCENTAGE;
 create table TEACHER_SHIFT_PERCENTAGE (
    ID_INTERNAL int(11) not null auto_increment,
@@ -8,5 +8,5 @@ create table TEACHER_SHIFT_PERCENTAGE (
    KEY_SHIFT int(11) not null,
    PERCENTAGE float not null,
    primary key (ID_INTERNAL),
-   unigue(KEY_TEACHER, KEY_SHIFT))
+   unique U1 (KEY_PROFESSOR_SHIP, KEY_SHIFT))
    type=InnoDB;
