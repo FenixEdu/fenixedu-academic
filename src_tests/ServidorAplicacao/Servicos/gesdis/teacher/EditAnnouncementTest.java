@@ -60,8 +60,8 @@ public class EditAnnouncementTest extends TestCaseDeleteAndEditServices {
 		calendar.set(Calendar.YEAR, 2003);
 		calendar.set(Calendar.MONTH, Calendar.JANUARY);
 		calendar.set(Calendar.DATE, 21);
-		calendar.set(Calendar.HOUR_OF_DAY, 0);
-		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.HOUR_OF_DAY, 13);
+		calendar.set(Calendar.MINUTE, 20);
 		calendar.set(Calendar.SECOND, 0);
 		calendar.set(Calendar.MILLISECOND, 0);
 		
@@ -104,8 +104,8 @@ public class EditAnnouncementTest extends TestCaseDeleteAndEditServices {
 		calendar.set(Calendar.YEAR, 2003);
 		calendar.set(Calendar.MONTH, Calendar.JANUARY);
 		calendar.set(Calendar.DATE, 21);
-		calendar.set(Calendar.HOUR_OF_DAY, 0);
-		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.HOUR_OF_DAY, 13);
+		calendar.set(Calendar.MINUTE, 20);
 		calendar.set(Calendar.SECOND, 0);
 		calendar.set(Calendar.MILLISECOND, 0);
 		

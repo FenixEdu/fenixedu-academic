@@ -156,18 +156,6 @@ public class AnnouncementOJBTest extends TestCaseOJB {
     public void testDeleteAllAnnouncements() {
 		IAnnouncement announcement = null;
 		
-		//read something
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(Calendar.YEAR, 2003);
-		calendar.set(Calendar.MONTH, Calendar.JANUARY);
-		calendar.set(Calendar.DATE, 21);
-		calendar.set(Calendar.HOUR_OF_DAY, 0);
-		calendar.set(Calendar.MINUTE, 0);
-		calendar.set(Calendar.SECOND, 0);
-		calendar.set(Calendar.MILLISECOND, 0);
-		
-		Timestamp date = new Timestamp(calendar.getTime().getTime());
-		
 		try {
 			persistentSupport.iniciarTransaccao();
 			List announcements = persistentAnnouncement.readAll();
