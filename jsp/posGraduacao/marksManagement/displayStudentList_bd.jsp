@@ -15,6 +15,11 @@
 	<br />
 <h2><bean:message key="label.students.listMarks"/></h2>
 	<br />
+<bean:message key="label.masterDegree.administrativeOffice.executionYear"/>:<bean:write name="executionYear" />
+&nbsp;-&nbsp;
+<bean:message key="label.masterDegree.administrativeOffice.degree"/>:<bean:write name="degree" />
+&nbsp;-&nbsp;
+<bean:message key="label.masterDegree.administrativeOffice.curricularCourse"/>:<bean:write name="curricularCourse" />
 
 
 <logic:present name="studentList">
@@ -25,8 +30,7 @@
     <h3><%= ((List) studentList).size()%> <bean:message key="label.masterDegree.administrativeOffice.studentsFound"/></h3>        
     <% if (((List) studentList).size() != 0) { %>
         </p>
-        <bean:message key="label.masterDegree.chooseOne"/><br><br><br>
-    
+       
         <table>
         	<tr>
     			<td class="listClasses-header"><bean:message key="label.candidate.number" /></td>
@@ -104,9 +108,9 @@
 				<td  class="listClasses" >
 				&nbsp;	
 				</td> 
-				<td  class="listClasses" >
+<%--			<td  class="listClasses" >
 				&nbsp;	
-				</td> 
+				</td> --%>
 			</logic:empty>
 			<logic:notEmpty name="enrolment" property="infoEnrolmentEvaluation.infoEmployee" >	
 				<td  class="listClasses" >
@@ -142,4 +146,7 @@
 	</logic:present>
 	
 	<html:hidden property="page" value="2"/>
+	<html:link page="<%="/printMarks.do?method=prepare&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") + "&amp;courseID=" + pageContext.findAttribute("curricularCourseCode")%>">
+		<bean:message key="link.masterDegree.administrativeOffice.print" />
+	</html:link>
 	</logic:present>
