@@ -96,7 +96,6 @@ import Dominio.IEvaluationMethod;
 import Dominio.IExam;
 import Dominio.IExecutionCourse;
 import Dominio.IFinalEvaluation;
-import Dominio.IFrequenta;
 import Dominio.IGroupProperties;
 import Dominio.IGroupPropertiesExecutionCourse;
 import Dominio.IItem;
@@ -1877,6 +1876,8 @@ public class TeacherAdministrationSiteComponentBuilder {
                     component.setShifts(null);
                     return component;
                 }
+                
+                component.setOldShift(InfoShift.newInfoFromDomain(studentGroup.getShift()));
             }
          
             IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory

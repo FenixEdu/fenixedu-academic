@@ -3581,6 +3581,16 @@
         </filterChains>
     </service>
     <service>
+        <name>EnrollStudentGroupShift</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.teacher.EnrollStudentGroupShift</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
         <name>CheckIfStudentGroupShiftIsCorrect</name>
         <implementationClass> 
             ServidorAplicacao.Servico.teacher.CheckIfStudentGroupShiftIsCorrect</implementationClass>

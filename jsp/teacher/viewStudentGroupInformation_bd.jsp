@@ -218,7 +218,7 @@
 	</logic:present>
 	
 	<logic:present name="StudentGroupWithoutShift">
-    <html:link page="<%="/editStudentGroupShift.do?method=prepareEditStudentGroupShift&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
+    <html:link page="<%="/enrollStudentGroupShift.do?method=prepareEnrollStudentGroupShift&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
     	<bean:message key="link.enrollStudentGroupInShift"/></html:link>&nbsp|&nbsp
 	</logic:present>
 	
@@ -324,7 +324,7 @@
     	<bean:message key="link.editGroupShift"/></html:link><br/>
     	</logic:present>
     <logic:present name="StudentGroupWithoutShift">
-    <html:link page="<%="/editStudentGroupShift.do?method=prepareEditStudentGroupShift&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
+    <html:link page="<%="/enrollStudentGroupShift.do?method=prepareEnrollStudentGroupShift&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
     	<bean:message key="link.enrollStudentGroupInShift"/></html:link>&nbsp|&nbsp
 	</logic:present>
   

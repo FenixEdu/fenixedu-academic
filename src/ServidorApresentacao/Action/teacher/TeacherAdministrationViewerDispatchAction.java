@@ -85,7 +85,6 @@ import ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.mapping.SiteManagementActionMapping;
-import ServidorPersistente.ExcepcaoPersistencia;
 import Util.EnrolmentGroupPolicyType;
 import Util.TipoAula;
 import fileSuport.FileSuportObject;
@@ -2289,10 +2288,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 		Integer studentGroupCode = new Integer(studentGroupCodeString);
 		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
-		Integer shiftCode = null;
-		if(shiftCodeString!=null){
-		shiftCode = new Integer(shiftCodeString);
-		}
+		Integer shiftCode = new Integer(shiftCodeString);
 		ISiteComponent viewShifts = new InfoSiteShifts();
 		TeacherAdministrationSiteView shiftsView = (TeacherAdministrationSiteView) readSiteView(request,
 						viewShifts, null, groupPropertiesCode, studentGroupCode);
@@ -2326,7 +2322,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		}
 
 		ArrayList shiftsList = new ArrayList();
-		InfoShift oldInfoShift = new InfoShift();
+		InfoShift oldInfoShift = ((InfoSiteShifts) shiftsView.getComponent()).getOldShift();
 		
 		if (shifts.size() != 0)
 		{
@@ -2337,10 +2333,6 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 			while (iter.hasNext())
 			{
 				infoShift = (InfoShift) iter.next();
-				if (infoShift.getIdInternal().equals(shiftCode))
-				{
-					oldInfoShift = infoShift;
-				}
 				value = infoShift.getIdInternal().toString();
 				label = infoShift.getNome();
 				shiftsList.add(new LabelValueBean(label, value));
@@ -2422,6 +2414,156 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		}
 	}
 
+//////////////////	
+	public ActionForward prepareEnrollStudentGroupShift(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws FenixActionException
+			{
+
+		String studentGroupCodeString = request.getParameter("studentGroupCode");
+		String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
+
+		Integer studentGroupCode = new Integer(studentGroupCodeString);
+		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
+		
+		ISiteComponent viewShifts = new InfoSiteShifts();
+		TeacherAdministrationSiteView shiftsView = (TeacherAdministrationSiteView) readSiteView(request,
+				viewShifts, null, groupPropertiesCode, studentGroupCode);
+		if(((InfoSiteShifts) shiftsView.getComponent()) == null){
+			ActionErrors actionErrors = new ActionErrors();
+			ActionError error = null;
+			error = new ActionError("error.noGroupProperties");
+			actionErrors.add("error.noGroupProperties", error);
+			saveErrors(request, actionErrors);
+			return prepareViewExecutionCourseProjects(mapping, form, request, response);
+		}
+
+		List shifts = ((InfoSiteShifts) shiftsView.getComponent()).getShifts();
+		if (shifts == null)
+		{
+			ActionErrors actionErrors = new ActionErrors();
+			ActionError error = null;
+			error = new ActionError("error.noGroup");
+			actionErrors.add("error.noGroup", error);
+			saveErrors(request, actionErrors);
+			return viewShiftsAndGroups(mapping, form, request, response);
+		}
+		if (shifts.size()==0)
+		{
+			ActionErrors actionErrors = new ActionErrors();
+			ActionError error = null;
+			error = new ActionError("errors.shifts.not.available");
+			actionErrors.add("errors.shifts.not.available", error);
+			saveErrors(request, actionErrors);
+			return viewShiftsAndGroups(mapping, form, request, response);
+		}
+
+		ArrayList shiftsList = new ArrayList();
+		
+		if (shifts.size() != 0)
+		{
+			shiftsList.add(new LabelValueBean("(escolher)", ""));
+			InfoShift infoShift;
+			Iterator iter = shifts.iterator();
+			String label, value;
+			while (iter.hasNext())
+			{
+				infoShift = (InfoShift) iter.next();
+				value = infoShift.getIdInternal().toString();
+				label = infoShift.getNome();
+				shiftsList.add(new LabelValueBean(label, value));
+			}
+			request.setAttribute("shiftsList", shiftsList);
+		}
+		
+		return mapping.findForward("enrollStudentGroupShift");
+			}
+	
+////////////////
+
+	public ActionForward enrollStudentGroupShift(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws FenixActionException
+			{
+		HttpSession session = request.getSession(false);
+		Integer objectCode = getObjectCode(request);
+		DynaActionForm enrollStudentGroupForm = (DynaActionForm) form;
+		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+		String studentGroupCodeString = request.getParameter("studentGroupCode");
+		Integer studentGroupCode = new Integer(studentGroupCodeString);
+		String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
+		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
+		String newShiftString = (String) enrollStudentGroupForm.get("shift");
+		if (newShiftString.equals(""))
+		{
+			ActionErrors actionErrors = new ActionErrors();
+			ActionError error = null;
+			error = new ActionError("errors.invalid.insert.studentGroupShift");
+			actionErrors.add("errors.invalid.insert.studentGroupShift", error);
+			saveErrors(request, actionErrors);
+			return prepareEnrollStudentGroupShift(mapping, form, request, response);
+		} else
+		{
+			
+			Integer newShiftCode = new Integer(newShiftString);
+			Object args[] = {objectCode, studentGroupCode, groupPropertiesCode, newShiftCode};
+	System.out.println("objectCode" + objectCode);
+	System.out.println("studentGroupCode" + studentGroupCode);
+	System.out.println("groupPropertiesCode" + groupPropertiesCode);
+	System.out.println("newShiftCode" + newShiftCode);
+			
+			try
+			{
+				ServiceManagerServiceFactory.executeService(userView, "EnrollStudentGroupShift", args);
+			}catch (ExistingServiceException e)
+			{
+				ActionErrors actionErrors = new ActionErrors();
+				ActionError error = null;
+				error = new ActionError("error.noGroupProperties");
+				actionErrors.add("error.noGroupProperties", error);
+				saveErrors(request, actionErrors);
+				return prepareViewExecutionCourseProjects(mapping, form, request, response);
+			}catch (InvalidArgumentsServiceException e)
+			{
+				ActionErrors actionErrors = new ActionErrors();
+				ActionError error = null;
+				error = new ActionError("error.noGroup");
+				actionErrors.add("error.noGroup", error);
+				saveErrors(request, actionErrors);
+				return viewShiftsAndGroups(mapping, form, request, response);
+
+			} catch (InvalidSituationServiceException e)
+			{
+				ActionErrors actionErrors = new ActionErrors();
+				ActionError error = null;
+				error = new ActionError("error.noShift");
+				actionErrors.add("error.noShift", error);
+				saveErrors(request, actionErrors);
+				return viewShiftsAndGroups(mapping, form, request, response);
+
+			} catch (InvalidChangeServiceException e)
+			{
+				ActionErrors actionErrors = new ActionErrors();
+				ActionError error = null;
+				error = new ActionError("error.GroupPropertiesShiftTypeChanged");
+				actionErrors.add("error.GroupPropertiesShiftTypeChanged", error);
+				saveErrors(request, actionErrors);
+				return viewShiftsAndGroups(mapping, form, request, response);
+				
+			} catch (FenixServiceException e)
+			{
+				throw new FenixActionException(e);
+			}
+
+			return viewShiftsAndGroups(mapping, form, request, response);
+		}
+			}
+//////////////////////
+	
+	
+	
+	
+	
 	public ActionForward prepareEditStudentGroupMembers(ActionMapping mapping, ActionForm form,
 					HttpServletRequest request, HttpServletResponse response)
 					throws FenixActionException

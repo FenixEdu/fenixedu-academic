@@ -19,6 +19,8 @@ public class InfoSiteShifts extends DataTranferObject implements ISiteComponent 
     private String infoExecutionYearName;
 
     private List shifts;
+    
+    private InfoShift oldShift;
 
     /**
      * @return
@@ -33,6 +35,21 @@ public class InfoSiteShifts extends DataTranferObject implements ISiteComponent 
     public void setShifts(List list) {
         shifts = list;
     }
+    
+    /**
+     * @return InfoShift
+     */
+    public InfoShift getOldShift() {
+        return oldShift;
+    }
+
+    /**
+     * @param InfoShift
+     */
+    public void setOldShift(InfoShift oldShift) {
+    	this.oldShift = oldShift;
+    }
+
 
     /**
      * @return
