@@ -1,22 +1,14 @@
 package ServidorApresentacao.sop;
   
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashSet;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.action.DynaActionFormClass;
-import org.apache.struts.config.FormBeanConfig;
-import org.apache.struts.config.FormPropertyConfig;
-import org.apache.struts.validator.DynaValidatorForm;
-
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
-import DataBeans.InfoLesson;
 import DataBeans.InfoRoom;
 import DataBeans.InfoShift;
 import ServidorAplicacao.GestorServicos;
@@ -57,48 +49,43 @@ public class AdicionarAulasFormActionTest extends TestCasePresentation {
 
 	public void testSuccessfulAdicionarAulas() {
 
-		// Necessario para colocar form adicionarAulasForm em sessao
-		setRequestPathInfo("/sop", "/adicionarAulasForm");
-
 		// coloca credenciais na sessao
 		HashSet privilegios = new HashSet();
+		privilegios.add("VerTurno");
+		privilegios.add("LerAlunosDeTurno");
+		privilegios.add("LerTurnosDeDisciplinaExecucao");
+
+		// Necessario para colocar form manipularTurnosForm em sessao
+		setRequestPathInfo("/sop", "/manipularTurnosForm");
+		addRequestParameter("indexTurno", new Integer(0).toString());
+		actionPerform();
+
+		// coloca credenciais na sessao
+		privilegios = new HashSet();
 		privilegios.add("LerSalas");
 		privilegios.add("LerAulasDeDisciplinaExecucao");
-		privilegios.add("LerDisciplinasExecucaoDeCursoExecucaoEAnoCurricular");		
+		privilegios.add("LerDisciplinasExecucaoDeCursoExecucaoEAnoCurricular");
 		privilegios.add("AdicionarAula");
 		privilegios.add("LerTurnosDeDisciplinaExecucao");
 		IUserView userView = new UserView("user", privilegios);
 
 		getSession().setAttribute(SessionConstants.U_VIEW, userView);
 
-		DynaActionForm manipularTurnosForm = null;
-		
-		FormBeanConfig formBeanConfig = new FormBeanConfig();
-		formBeanConfig.addFormPropertyConfig(new FormPropertyConfig("indexTurno",Integer.class.getName(),null));
-		formBeanConfig.setName("manipularTurnosForm");
-		formBeanConfig.setType(DynaValidatorForm.class.getName());
-		formBeanConfig.setDynamic(true);		
-		try {
-			manipularTurnosForm = (DynaActionForm) DynaActionFormClass.createDynaActionFormClass(formBeanConfig).newInstance();
-		} catch (Exception e) {
-			e.printStackTrace(System.out);
-			fail("AdicionarAulasFormActionTest.testSuccessfulAdicionarAulas");
-		}
-		manipularTurnosForm.set("indexTurno", new Integer(0));
-		getSession().setAttribute("manipularTurnosForm", manipularTurnosForm);
+		// define mapping de origem
+		setRequestPathInfo("/sop", "/adicionarAulasForm");
 
 		try {
 			GestorServicos gestor = GestorServicos.manager();
-			
+
 			InfoExecutionCourse infoExecutionCourse =
 				new InfoExecutionCourse(
-					"Trabalho Final de Curso I",
-					"TFCI",
+					"Trabalho Final de Curso II",
+					"TFCII",
 					"programa1",
-					new Double(0),
-					new Double(0),
-					new Double(0),
-					new Double(0),
+					new Double(1.5),
+					new Double(2),
+					new Double(1.5),
+					new Double(2),
 					new InfoExecutionPeriod(
 						"2º Semestre",
 						new InfoExecutionYear("2002/2003")));
@@ -111,30 +98,14 @@ public class AdicionarAulasFormActionTest extends TestCasePresentation {
 				new Integer(50));
 			
 			//create infoShift
-			InfoShift infoShift = new InfoShift("turno454", 
+			InfoShift infoShift = new InfoShift("turno_adicionar_aula", 
 				new TipoAula(TipoAula.TEORICA), new Integer(100), infoExecutionCourse); 
-
-			//create infoLesson
-			Calendar startTime = Calendar.getInstance();
-			startTime.set(Calendar.HOUR_OF_DAY, 8);
-			startTime.set(Calendar.MINUTE, 00);
-			startTime.set(Calendar.SECOND, 00);
-
-			Calendar endTime = Calendar.getInstance();
-			endTime.set(Calendar.HOUR_OF_DAY, 9);
-			endTime.set(Calendar.MINUTE, 30);
-			endTime.set(Calendar.SECOND, 00);
-
-			InfoLesson infoLesson = null;
 
 			//create lessons			
 			Object argsLerAulas[] = new Object[1];
 			argsLerAulas[0] = infoExecutionCourse;
 			ArrayList infoLessons = (ArrayList) gestor.executar(userView, "LerAulasDeDisciplinaExecucao", argsLerAulas);
 			getSession().setAttribute("infoAulasDeDisciplinaExecucao", infoLessons);
-
-			infoLesson = (InfoLesson) infoLessons.get(0);
-			getSession().setAttribute("infoAula", infoLesson);
 
 			//create shifts
 			Object argsLerTurnos[] = new Object[1];
@@ -149,10 +120,11 @@ public class AdicionarAulasFormActionTest extends TestCasePresentation {
 		// invoca acção
 		actionPerform();
 
+		//verifica ausencia de erros
+		verifyNoActionErrors();
+
 		// verifica reencaminhamento
 		verifyForward("Sucesso");
 
-		//verifica ausencia de erros
-		verifyNoActionErrors();
 	}
 }
