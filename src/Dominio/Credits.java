@@ -26,7 +26,22 @@ public class Credits extends DomainObject implements ICredits
     private ITeacher teacher;
     
     private Double otherTypeCredits;
+    
+    private Double masterDegreeCredits;
 
+	/**
+	 * @return Returns the masterDegreeCredits.
+	 */
+	public Double getMasterDegreeCredits() {
+		return masterDegreeCredits;
+	}
+	/**
+	 * @param masterDegreeCredits The masterDegreeCredits to set.
+	 */
+	public void setMasterDegreeCredits(Double masterDegreeCredits) {
+		this.masterDegreeCredits = masterDegreeCredits;
+	}
+	
     public boolean equals( Object obj )
     {
         boolean result = false;

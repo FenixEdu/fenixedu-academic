@@ -9,66 +9,82 @@ package Dominio;
 /**
  * @author Alexandra Alves
  */
-public interface ICredits extends IDomainObject
-{
+public interface ICredits extends IDomainObject {
 
-    /**
-     * @return Returns the degreeFinalProjectStudents.
-     */
-    public abstract Double getDegreeFinalProjectStudents();
-    public abstract IExecutionPeriod getExecutionPeriod();
+	Boolean getContainsManagementPositions();
 
-    /**
-     * @return Returns the institutionWorkTime.
-     */
-    public abstract Double getInstitutionWorkTime();
+	Boolean getContainsServiceExemptionsSituations();
 
-    /**
-     * @return Returns the lessons.
-     */
-    public abstract Double getLessons();
+	/**
+	 * @return Returns the degreeFinalProjectStudents.
+	 */
+	public abstract Double getDegreeFinalProjectStudents();
 
-    /**
-     * @return Returns the supportLessons.
-     */
-    public abstract Double getSupportLessons();
+	public abstract IExecutionPeriod getExecutionPeriod();
 
-    public abstract ITeacher getTeacher();
+	/**
+	 * @return Returns the institutionWorkTime.
+	 */
+	public abstract Double getInstitutionWorkTime();
 
-    /**
-     * @param degreeFinalProjectStudents
-     *            The degreeFinalProjectStudents to set.
-     */
-    public abstract void setDegreeFinalProjectStudents(Double degreeFinalProjectStudents);
+	/**
+	 * @return Returns the lessons.
+	 */
+	public abstract Double getLessons();
 
-    void setExecutionPeriod(IExecutionPeriod executionPeriod);
+	/**
+	 * @return Returns the masterDegreeCredits.
+	 */
+	public Double getMasterDegreeCredits();
 
-    /**
-     * @param institutionWorkTime
-     *            The institutionWorkTime to set.
-     */
-    public abstract void setInstitutionWorkTime(Double institutionWorkTime);
+	Double getOtherTypeCredits();
 
-    /**
-     * @param lessons
-     *            The lessons to set.
-     */
-    public abstract void setLessons(Double lessons);
+	/**
+	 * @return Returns the supportLessons.
+	 */
+	public abstract Double getSupportLessons();
 
-    /**
-     * @param supportLessons
-     *            The supportLessons to set.
-     */
-    public abstract void setSupportLessons(Double supportLessons);
+	public abstract ITeacher getTeacher();
 
-    void setTeacher(ITeacher teacher);
+	void setContainsManagementPositions(Boolean inSabattical);
 
-    void setOtherTypeCredits(Double credits);
-    Double getOtherTypeCredits();
+	void setContainsServiceExemptionsSituations(
+			Boolean containsServiceExemptionsSituations);
 
-    Boolean getContainsServiceExemptionsSituations();
-    void setContainsServiceExemptionsSituations(Boolean containsServiceExemptionsSituations);
-    Boolean getContainsManagementPositions();
-    void setContainsManagementPositions(Boolean inSabattical);
+	/**
+	 * @param degreeFinalProjectStudents
+	 *            The degreeFinalProjectStudents to set.
+	 */
+	public abstract void setDegreeFinalProjectStudents(
+			Double degreeFinalProjectStudents);
 
+	void setExecutionPeriod(IExecutionPeriod executionPeriod);
+
+	/**
+	 * @param institutionWorkTime
+	 *            The institutionWorkTime to set.
+	 */
+	public abstract void setInstitutionWorkTime(Double institutionWorkTime);
+
+	/**
+	 * @param lessons
+	 *            The lessons to set.
+	 */
+	public abstract void setLessons(Double lessons);
+
+	/**
+	 * @param masterDegreeCredits
+	 *            The masterDegreeCredits to set.
+	 */
+	public void setMasterDegreeCredits(Double masterDegreeCredits);
+
+	void setOtherTypeCredits(Double credits);
+
+	/**
+	 * @param supportLessons
+	 *            The supportLessons to set.
+	 */
+	public abstract void setSupportLessons(Double supportLessons);
+
+	void setTeacher(ITeacher teacher);
 }
