@@ -81,7 +81,7 @@ create table SECTION (
    KEY_SUPERIOR_SECTION int(10) unsigned,
    LAST_MODIFIED_DATE date,
    primary key (ID_INTERNAL),
-   UNIQUE KEY U1(NAME, KEY_SITE, KEY_SUPERIOR_SECTION, SECTION_ORDER))
+   UNIQUE KEY U1(NAME, KEY_SITE, KEY_SUPERIOR_SECTION))
    type=InnoDB comment="InnoDB free: 372736 kB; InnoDB free: 372736 kB";
 
 #----------------------------
