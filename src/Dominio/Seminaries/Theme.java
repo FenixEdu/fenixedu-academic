@@ -18,7 +18,6 @@ import Dominio.DomainObject;
  */
 public class Theme extends DomainObject implements ITheme
 {
-	private Integer idInternal;
 	private String description;
 	private String name;
     private String shortName;
@@ -45,13 +44,6 @@ public class Theme extends DomainObject implements ITheme
 	/**
 	 * @return
 	 */
-	public Integer getIdInternal()
-	{
-		return this.idInternal;
-	}
-	/**
-	 * @return
-	 */
 	public String getName()
 	{
 		return this.name;
@@ -62,13 +54,6 @@ public class Theme extends DomainObject implements ITheme
 	public void setDescription(String description)
 	{
 		this.description= description;
-	}
-	/**
-	 * @param integer
-	 */
-	public void setIdInternal(Integer idInternal)
-	{
-		this.idInternal= idInternal;
 	}
 	/**
 	 * @param string

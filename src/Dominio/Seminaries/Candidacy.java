@@ -18,7 +18,6 @@ import Dominio.DomainObject;
  */
 public class Candidacy extends DomainObject implements ICandidacy {
 
-	private Integer idInternal;
 	private List caseStudyChoices;
     private String motivation;
     
@@ -68,14 +67,6 @@ public class Candidacy extends DomainObject implements ICandidacy {
 	/**
 	 * @return
 	 */
-	public Integer getIdInternal()
-	{
-		return idInternal;
-	}
-
-	/**
-	 * @return
-	 */
 	public Integer getModalityIdInternal()
 	{
 		return modalityIdInternal;
@@ -119,14 +110,6 @@ public class Candidacy extends DomainObject implements ICandidacy {
 	public void setCurricularCourseIdInternal(Integer integer)
 	{
 		curricularCourseIdInternal= integer;
-	}
-
-	/**
-	 * @param integer
-	 */
-	public void setIdInternal(Integer integer)
-	{
-		idInternal= integer;
 	}
 
 	/**

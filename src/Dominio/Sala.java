@@ -29,7 +29,7 @@ public class Sala extends DomainObject implements ISala {
 
 	public Sala(Integer idInternal) {
 		setIdInternal(idInternal);
-		}
+	}
 	
 	public Sala(
 		String nome,

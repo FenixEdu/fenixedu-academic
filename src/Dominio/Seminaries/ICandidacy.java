@@ -21,17 +21,9 @@ public interface ICandidacy extends IDomainObject
 	 */
 	public abstract List getCaseStudyChoices();
 	/**
-	 * @return
-	 */
-	public abstract Integer getIdInternal();
-	/**
 	 * @param list
 	 */
 	public abstract void setCaseStudyChoices(List list);
-	/**
-	 * @param integer
-	 */
-	public abstract void setIdInternal(Integer integer);
 
 	public abstract Integer getModalityIdInternal();
 	/**
