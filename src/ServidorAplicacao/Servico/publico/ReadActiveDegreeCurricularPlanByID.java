@@ -1,7 +1,16 @@
 package ServidorAplicacao.Servico.publico;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
+
+import DataBeans.InfoCurricularCourse;
+import DataBeans.InfoCurricularCourseScope;
+import DataBeans.InfoCurricularYear;
 import Dominio.DegreeCurricularPlan;
 import Dominio.ExecutionPeriod;
 import Dominio.IDegreeCurricularPlan;
@@ -21,75 +30,112 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlanBaseService
 {
 
-	private static ReadActiveDegreeCurricularPlanByID service = new ReadActiveDegreeCurricularPlanByID();
+    public ReadActiveDegreeCurricularPlanByID()
+    {
 
-	public static ReadActiveDegreeCurricularPlanByID getService()
-	{
+    }
 
-		return service;
-	}
+    public List run(Integer degreeCurricularPlanCode, Integer executionPeriodCode)
+        throws FenixServiceException
+    {
+        if (degreeCurricularPlanCode == null)
+        {
+            throw new FenixServiceException("nullDegree");
+        }
 
-	private ReadActiveDegreeCurricularPlanByID()
-	{
+        ISuportePersistente sp;
+        try
+        {
+            sp = SuportePersistenteOJB.getInstance();
+        }
+        catch (ExcepcaoPersistencia e)
+        {
+            e.printStackTrace(System.out);
+            throw new FenixServiceException("Problems on database!");
+        }
 
-	}
+        IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan =
+            sp.getIPersistentDegreeCurricularPlan();
 
-	public final String getNome()
-	{
+        IDegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
+        degreeCurricularPlan.setIdInternal(degreeCurricularPlanCode);
+        degreeCurricularPlan =
+            (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOId(
+                degreeCurricularPlan,
+                false);
+        if (degreeCurricularPlan == null)
+        {
+            throw new FenixServiceException("nullDegree");
+        }
 
-		return "ReadActiveDegreeCurricularPlanByID";
-	}
+        if (executionPeriodCode == null)
+        {
+            return groupScopesByCurricularYearAndCurricularCourse(
+                super.readActiveCurricularCourseScopes(degreeCurricularPlan, sp));
+        }
+        else
+        {
+            IExecutionPeriod executionPeriod = new ExecutionPeriod();
+            executionPeriod.setIdInternal(executionPeriodCode);
 
-	public List run(Integer degreeCurricularPlanCode, Integer executionPeriodCode)
-		throws FenixServiceException
-	{
-		if (degreeCurricularPlanCode == null)
-		{
-			throw new FenixServiceException("nullDegree");
-		}
+            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+            executionPeriod =
+                (IExecutionPeriod) persistentExecutionPeriod.readByOId(executionPeriod, false);
+            if (executionPeriod == null || executionPeriod.getExecutionYear() == null)
+            {
+                throw new FenixServiceException("nullDegree");
+            }
 
-		ISuportePersistente sp;
-		try
-		{
-			sp = SuportePersistenteOJB.getInstance();
-		}
-		catch (ExcepcaoPersistencia e)
-		{
-			e.printStackTrace(System.out);
-			throw new FenixServiceException("Problems on database!");
-		}
+            return groupScopesByCurricularYearAndCurricularCourse(
+                super.readActiveCurricularCourseScopesInExecutionYear(
+                    degreeCurricularPlan,
+                    executionPeriod.getExecutionYear(),
+                    sp));
+        }
+    }
 
-		IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan =
-			sp.getIPersistentDegreeCurricularPlan();
+    private List groupScopesByCurricularYearAndCurricularCourse(List scopes)
+    {
+        List result = new ArrayList();
+        List temp = new ArrayList();
+        ComparatorChain comparatorChain = new ComparatorChain();
+        comparatorChain.addComparator(
+                new BeanComparator("infoCurricularSemester.infoCurricularYear.year"));
+        comparatorChain.addComparator(new BeanComparator("infoCurricularSemester.semester"));
+        comparatorChain.addComparator(new BeanComparator("infoCurricularCourse.name"));
+        Collections.sort(scopes, comparatorChain);
+        Iterator iter = scopes.iterator();
+        InfoCurricularYear year = null;
+        InfoCurricularCourse curricularCourse = null;
+        while (iter.hasNext())
+        {
+            InfoCurricularCourseScope scope = (InfoCurricularCourseScope) iter.next();
+            InfoCurricularYear scopeYear = scope.getInfoCurricularSemester().getInfoCurricularYear();
+            InfoCurricularCourse scopeCurricularCourse = scope.getInfoCurricularCourse();
+            if (year == null)
+            {
+                year = scopeYear;
+            }
+            if (curricularCourse == null)
+            {
+                curricularCourse = scopeCurricularCourse;
+            }
+            if (scopeYear.equals(year) && scopeCurricularCourse.equals(curricularCourse))
+            {
+                temp.add(scope);
+            }
+            else
+            {
+                result.add(temp);
+                temp = new ArrayList();
+                year = scopeYear;
+                curricularCourse = scopeCurricularCourse;
+                temp.add(scope);
+            }
 
-		IDegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
-		degreeCurricularPlan.setIdInternal(degreeCurricularPlanCode);
-		degreeCurricularPlan =
-			(IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOId(
-				degreeCurricularPlan,
-				false);
-		if (degreeCurricularPlan == null)
-		{
-			throw new FenixServiceException("nullDegree");
-		}
+        }
 
-		if (executionPeriodCode == null)
-		{
-			return super.readActiveCurricularCourseScopes(degreeCurricularPlan, sp);
-		}
-		else
-		{
-			IExecutionPeriod executionPeriod = new ExecutionPeriod();
-			executionPeriod.setIdInternal(executionPeriodCode);
-			
-			IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-			executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOId(executionPeriod, false);
-			if(executionPeriod == null || executionPeriod.getExecutionYear() == null)
-			{
-				throw new FenixServiceException("nullDegree");
-			}
-			
-			return super.readActiveCurricularCourseScopesInExecutionYear(degreeCurricularPlan, executionPeriod.getExecutionYear(), sp);
-		}
-	}
+        return result;
+    }
+
 }

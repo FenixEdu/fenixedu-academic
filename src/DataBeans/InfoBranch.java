@@ -81,7 +81,7 @@ public class InfoBranch extends InfoObject
     {
         if (representsCommonBranch().booleanValue())
         {
-            return new String("-");
+            return new String("");
         }
         StringBuffer prettyCode = new StringBuffer();
         String namePart = null;

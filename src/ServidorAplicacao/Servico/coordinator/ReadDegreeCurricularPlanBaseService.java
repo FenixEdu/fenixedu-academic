@@ -6,11 +6,11 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourseScope;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionYear;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourseScope;
@@ -20,7 +20,7 @@ import ServidorPersistente.ISuportePersistente;
  * @author Fernanda Quitério 5/Dez/2003
  *  
  */
-abstract public class ReadDegreeCurricularPlanBaseService implements IServico
+abstract public class ReadDegreeCurricularPlanBaseService implements IService
 {
 	protected List readActiveCurricularCourseScopes(
 		IDegreeCurricularPlan degreeCurricularPlan,

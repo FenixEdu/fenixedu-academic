@@ -72,26 +72,11 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction
 			saveErrors(request, errors);
 		}
 
-		try
-		{
-			//order list by year, next semester, next course
-			ComparatorChain comparatorChain = new ComparatorChain();
-			comparatorChain.addComparator(
-				new BeanComparator("infoCurricularSemester.infoCurricularYear.year"));
-			comparatorChain.addComparator(new BeanComparator("infoCurricularSemester.semester"));
-			comparatorChain.addComparator(new BeanComparator("infoCurricularCourse.name"));
-			Collections.sort(activeCurricularCourseScopes, comparatorChain);
-		}
-		catch (Exception e)
-		{
-			errors.add("impossibleCurricularPlan", new ActionError("error.impossibleCurricularPlan"));
-			saveErrors(request, errors);
-			return (new ActionForward(mapping.getInput()));
-		}
+		
 		request.setAttribute("allActiveCurricularCourseScopes", activeCurricularCourseScopes);
 		request.setAttribute(
 			"infoDegreeCurricularPlan",
-			((InfoCurricularCourseScope) activeCurricularCourseScopes.get(0))
+			((InfoCurricularCourseScope)((List) activeCurricularCourseScopes.get(0)).get(0))
 				.getInfoCurricularCourse()
 				.getInfoDegreeCurricularPlan());
 
