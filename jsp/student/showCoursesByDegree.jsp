@@ -82,6 +82,11 @@
 	//-->
 </script>
 
+<br/>
+<bean:define id="link"><%= request.getContextPath() %>/dotIstPortal.do?prefix=/student&amp;page=/index.do</bean:define>
+<html:link href='<%= link %>'><b>Sair do processo de inscrição</b></html:link>
+<br/>
+<br/>
 
 <div  align="center" >
 	<span class="error">

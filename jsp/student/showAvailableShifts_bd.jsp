@@ -7,9 +7,15 @@
 <%@ page import="java.util.Calendar" %>
 <%@ page import="DataBeans.InfoLesson" %>
 <br/>
-<table width="50%" align="center">
+<bean:define id="link"><%= request.getContextPath() %>/dotIstPortal.do?prefix=/student&amp;page=/index.do</bean:define>
+<html:link href='<%= link %>'><b>Sair do processo de inscrição</b></html:link>
+<br/>
+<br/>
+
+<br/>
+<table >
 	<tr>
-		<td style="text-align: left;"><h2 class="redtxt">Informações de utilização:</h2>
+		<td style="text-align: center;"><h2 class="redtxt">Informações de utilização:</h2>
 		</td>
 	</tr>
 	<tr>
@@ -77,13 +83,15 @@
 
 				
 				<br /> 
-
+<logic:notEmpty name="infoStudentShiftEnrolment" property="dividedList">
 <div align="center"><h3>Turnos onde se pode inscrever:</h3></div>
 <div align="center"><table width="50%">
 				<html:form action="studentShiftEnrolmentManager">
 					<html:hidden property="method" value="validateAndConfirmShiftEnrolment"/>
 					<bean:define id="index" value="0"/>
-					<logic:notEmpty name="infoStudentShiftEnrolment" property="dividedList"	>							
+
+				<%--<bean:size id="shiftNumber" name="infoStudentShiftEnrolment" property="dividedList"	/>	
+					<logic:notEqual name="shiftNumber" value="<%=  shiftNumber%>"	>	--%>						
 
 					<logic:iterate name="infoStudentShiftEnrolment"  id="list" property="dividedList" indexId="courseIndex">
 
@@ -131,14 +139,14 @@
 				</tr>
 						</logic:iterate>
 					</logic:iterate>
-					</logic:notEmpty>
+					
 
 </table></div>
 <br/>
 <br/>
 			<div align="center"><html:submit value="Inscrever"/></div>
 				</html:form> 
-		
+	</logic:notEmpty>	
 
 
 </logic:present>			

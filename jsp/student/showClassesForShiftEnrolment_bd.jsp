@@ -5,9 +5,9 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="ServidorApresentacao.TagLib.sop.v3.TimeTableType" %>
-
+<br/>
 <bean:define id="link"><%= request.getContextPath() %>/dotIstPortal.do?prefix=/student&amp;page=/index.do</bean:define>
-<html:link href='<%= link %>'>Sair do processo de inscrição</html:link>
+<html:link href='<%= link %>'><b>Sair do processo de inscrição</b></html:link>
 <br/>
 <br/>
 <bean:define id="infoStudentShiftEnrolment" name="<%= SessionConstants.INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY %>" />
@@ -15,7 +15,7 @@
 <br />	
 	<table width="70%" align="center">
 		<tr>
-			<td colspan="3"><h2 class="redtxt">Informações de utilização:</h2><p>Na lista abaixo estão as turmas que dispõem de vagas na disciplina a que se quer inscrever. Para facilitar a escolha, encontram-se ordenadas por número de disciplinas em que se pode inscrever. Seleccione, por favor, a turma desejada.</p><h2>Turmas</h2></td>
+			<td colspan="3"><h2 class="redtxt">Informações de utilização:</h2><p>Na lista abaixo estão as turmas que dispõem de vagas nas disciplinas a que pretende frequentar. Para facilitar a escolha, encontram-se ordenadas, por ordem decrescente, de número de disciplinas que se pretende frequentar. Seleccione, por favor, a turma desejada.</p><h2>Turmas</h2></td>
 		</tr>
 		<tr>
 			<td class="listClasses-header">Ano</td>
@@ -46,7 +46,7 @@
 </logic:present>
 <table width="70%" align="center">
 	<tr>
-		<td><h2>Disciplinas em que está inscrito:</h2></td>
+		<td><h2>Disciplinas que pretende frequentar:</h2></td>
 	</tr>
 	<tr>
 		<td class="listClasses" style="text-align: left; padding: 10px;">
