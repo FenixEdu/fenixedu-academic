@@ -39,8 +39,6 @@ public class ListContributorsDispatchAction extends DispatchAction {
 		throws Exception {
 
 
-System.out.println("Prepare");
-
 		SessionUtils.validSessionVerification(request, mapping);
 		HttpSession session = request.getSession(false);
 
@@ -74,8 +72,6 @@ System.out.println("Prepare");
 										HttpServletResponse response)
 		throws Exception {
 
-System.out.println("Get Contributors");
-
 
 		SessionUtils.validSessionVerification(request, mapping);
 		HttpSession session = request.getSession(false);
@@ -91,7 +87,6 @@ System.out.println("Get Contributors");
 			// Get the Information
 
 			String contributorNumberString = (String) createCandidateForm.get("contributorNumber");
-
 			Integer contributorNumber = null;		
 			if ((contributorNumberString != null) && (contributorNumberString.length() != 0))
 				contributorNumber = new Integer(contributorNumberString);
@@ -115,7 +110,6 @@ System.out.println("Get Contributors");
 			
 		  session.removeAttribute(SessionConstants.CONTRIBUTOR_LIST);
 		  session.setAttribute(SessionConstants.CONTRIBUTOR_LIST, contributors);
-		  
 		  return mapping.findForward("ChooseContributor");
 		} else
 		  throw new Exception();   
