@@ -14,7 +14,7 @@ import Util.TipoCurso;
  * @author lmac1
  */
 
-public class InsertDegreeTest extends TestCaseManagerInsertServices {
+public class InsertDegreeTest extends TestCaseManagerInsertAndEditServices {
 
 	public InsertDegreeTest(String testName) {
 			super(testName);

@@ -13,7 +13,7 @@ import DataBeans.InfoTeacher;
 /**
  * @author lmac1
  */
-public class InsertExecutionDegreeAtDegreeCurricularPlanTest extends TestCaseManagerInsertServices {
+public class InsertExecutionDegreeAtDegreeCurricularPlanTest extends TestCaseManagerInsertAndEditServices {
 
 	public InsertExecutionDegreeAtDegreeCurricularPlanTest(String testName) {
 			super(testName);
@@ -42,9 +42,9 @@ public class InsertExecutionDegreeAtDegreeCurricularPlanTest extends TestCaseMan
 		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
 		infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 		infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
-		infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
+		infoExecutionDegree.setInfoCoordinator(infoTeacher);
 		
-		Object[] args = { infoDegreeCurricularPlan };
+		Object[] args = { infoExecutionDegree };
 					return args;
 	}
 
@@ -63,9 +63,9 @@ public class InsertExecutionDegreeAtDegreeCurricularPlanTest extends TestCaseMan
 		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
 		infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 		infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
-		infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
+		infoExecutionDegree.setInfoCoordinator(infoTeacher);
 		
-		Object[] args = { infoDegreeCurricularPlan };
+		Object[] args = { infoExecutionDegree };
 					return args;
 }
 

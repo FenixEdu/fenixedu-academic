@@ -12,7 +12,7 @@ import Util.DegreeCurricularPlanState;
 /**
  * @author lmac1
  */
-public class InsertDegreeCurricularPlanTest extends TestCaseManagerInsertServices {
+public class InsertDegreeCurricularPlanTest extends TestCaseManagerInsertAndEditServices {
 
 	public InsertDegreeCurricularPlanTest(String testName) {
 			super(testName);

@@ -11,7 +11,7 @@ import DataBeans.InfoDegreeCurricularPlan;
 /**
  * @author lmac1
  */
-public class InsertCurricularCourseAtDegreeCurricularPlanTest extends TestCaseManagerInsertServices {
+public class InsertCurricularCourseAtDegreeCurricularPlanTest extends TestCaseManagerInsertAndEditServices {
 
 	public InsertCurricularCourseAtDegreeCurricularPlanTest(String testName) {
 			super(testName);
@@ -24,7 +24,7 @@ public class InsertCurricularCourseAtDegreeCurricularPlanTest extends TestCaseMa
 	protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly(){
 		return null;
 	}
-	
+//	insert curricular course with name,code already existing in DB but with another key_degree_curricular_plan
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly(){
 			InfoDegreeCurricularPlan infoDegreeCP = new InfoDegreeCurricularPlan();
 			infoDegreeCP.setIdInternal(new Integer(2));

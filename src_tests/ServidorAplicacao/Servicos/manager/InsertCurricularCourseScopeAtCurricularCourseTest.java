@@ -13,7 +13,7 @@ import DataBeans.InfoCurricularSemester;
 /**
  * @author lmac1
  */
-public class InsertCurricularCourseScopeAtCurricularCourseTest extends TestCaseManagerInsertServices {
+public class InsertCurricularCourseScopeAtCurricularCourseTest extends TestCaseManagerInsertAndEditServices {
 
 	public InsertCurricularCourseScopeAtCurricularCourseTest(String testName) {
 			super(testName);
