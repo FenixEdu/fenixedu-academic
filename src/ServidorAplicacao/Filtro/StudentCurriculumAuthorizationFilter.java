@@ -45,10 +45,6 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
 
 	public void preFiltragem(IUserView id, IServico servico, Object[] argumentos) throws Exception {
 		
-		System.out.println("Entrei no Filtro");
-		System.out.println("Contains Role " + !containsRole(id.getRoles()));
-		System.out.println("has Privilege " + !hasProvilege(id, argumentos));
-
 		if ((id != null && id.getRoles() != null && !containsRole(id.getRoles()))
 			|| (id != null && id.getRoles() != null && !hasProvilege(id, argumentos))
 			|| (id == null)
