@@ -14,6 +14,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import DataBeans.grant.list.InfoListGrantOwnerComplete;
 import DataBeans.grant.list.InfoSpanListGrantOwner;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -163,12 +164,14 @@ public class ListGrantOwnerAction extends FenixDispatchAction
 				{
 					//Read all the information about the grant owner
 					Object[] args = { grantOwnerId };
-					List listGrantOwnerCompleteInfo = (List) ServiceUtils.executeService(userView, "ShowGrantOwner", args);
+					InfoListGrantOwnerComplete listGrantOwnerCompleteInfo = (InfoListGrantOwnerComplete) ServiceUtils.executeService(userView, "ShowGrantOwner", args);
 
-					if(listGrantOwnerCompleteInfo != null && listGrantOwnerCompleteInfo.size() != 0)
+					if(listGrantOwnerCompleteInfo != null)
 					{
 						//Set the request
-						request.setAttribute("listGrantOwner", listGrantOwnerCompleteInfo);
+						request.setAttribute("infoGrantOwner",listGrantOwnerCompleteInfo.getInfoGrantOwner());
+						request.setAttribute("infoQualificationList", listGrantOwnerCompleteInfo.getInfoQualifications());
+						request.setAttribute("infoListGrantContractList", listGrantOwnerCompleteInfo.getInfoListGrantContracts());
 					}
 				}
 				catch (FenixServiceException e)

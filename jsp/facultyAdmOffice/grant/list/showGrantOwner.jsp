@@ -491,6 +491,7 @@
 			</td>
 		</tr>
 	</table>
+</logic:iterate>
 </logic:present>
 
 
@@ -557,7 +558,7 @@
 	</table>
 	<br/>
 	<%-- Contract Regime --%>
-	<logic:iterate id="infoGrantContractRegime" name="infoListGrantContractList.infoGrantContractRegimes">
+	<logic:iterate id="infoGrantContractRegime" name="infoListGrantContract" property="infoGrantContractRegimes">
 	<center><b><bean:message key="label.grant.contract.regime.list.information"/></b></center>
 	<table>
 		<tr>
@@ -649,9 +650,9 @@
 				<bean:message key="label.grant.contract.regime.dateDispatchCD"/>:&nbsp;
 			</td>
 			<td>
-				<logic:present name="infoGrantContractRegime" property="dateDispatchCD.time">
+				<logic:present name="infoGrantContractRegime" property="dateDispatchCD">
 					<dt:format pattern="yyyy-MM-dd">
-					<bean:write name="infoGrantContractRegime" property="dateDispatchCD"/>				
+					<bean:write name="infoGrantContractRegime" property="dateDispatchCD.time"/>				
 					</dt:format>
 				</logic:present>
 			</td>
@@ -661,7 +662,7 @@
 	<br/>
 	<%-- Subsidy --%>
 	<center><b><bean:message key="label.grant.subsidy.information"/></b></center>
-	<logic:iterate id="infoListGrantSubsidy" name="infoListGrantContractList.infoListGrantSubsidys">
+	<logic:iterate id="infoListGrantSubsidy" name="infoListGrantContract" property="infoListGrantSubsidys">
 	
 		<%--  --%>
 		<table>
@@ -670,9 +671,9 @@
 					<bean:message key="label.grant.subsidy.dateBeginSubsidy"/>:&nbsp;
 				</td>
 				<td>
-					<logic:present name="infoListGrantSubsidy.infoGrantSubsidy" property="dateBeginSubsidy">
+					<logic:present name="infoListGrantSubsidy" property="infoGrantSubsidy.dateBeginSubsidy">
 						<dt:format pattern="yyyy-MM-dd">
-						<bean:write name="infoListGrantSubsidy.infoGrantSubsidy" property="dateBeginSubsidy.time"/>				
+						<bean:write name="infoListGrantSubsidy" property="infoGrantSubsidy.dateBeginSubsidy.time"/>				
 						</dt:format>
 					</logic:present>				
 				</td>
@@ -682,9 +683,9 @@
 					<bean:message key="label.grant.subsidy.dateEndSubsidy"/>:&nbsp;
 				</td>
 				<td>
-					<logic:present name="infoListGrantSubsidy.infoGrantSubsidy" property="dateEndSubsidy">
+					<logic:present name="infoListGrantSubsidy" property="infoGrantSubsidy.dateEndSubsidy">
 						<dt:format pattern="yyyy-MM-dd">
-						<bean:write name="infoListGrantSubsidy.infoGrantSubsidy" property="dateEndSubsidy.time"/>				
+						<bean:write name="infoListGrantSubsidy" property="infoGrantSubsidy.dateEndSubsidy.time"/>				
 						</dt:format>
 					</logic:present>				
 				</td>
@@ -694,10 +695,10 @@
 					<bean:message key="label.grant.subsidy.state"/>:&nbsp;
 				</td>
 				<td>
-					<logic:equal name="infoListGrantSubsidy.infoGrantSubsidy" property="state" value="1">
+					<logic:equal name="infoListGrantSubsidy" property="infoGrantSubsidy.state" value="1">
 					    <bean:message key="label.grant.subsidy.state.actual"/>
 	                </logic:equal>
-	                <logic:equal name="infoListGrantSubsidy.infoGrantSubsidy" property="state" value="0">
+	                <logic:equal name="infoListGrantSubsidy" property="infoGrantSubsidy.state" value="0">
 					    <bean:message key="label.grant.subsidy.state.past"/>
 	                </logic:equal>
 				</td>
@@ -707,8 +708,8 @@
 					<bean:message key="label.grant.subsidy.value"/>:&nbsp;
 				</td>
 				<td>
-					<logic:present name="infoListGrantSubsidy.infoGrantSubsidy" property="value">
-						<bean:write name="infoListGrantSubsidy.infoGrantSubsidy" property="value"/>				
+					<logic:present name="infoListGrantSubsidy" property="infoGrantSubsidy.value">
+						<bean:write name="infoListGrantSubsidy" property="infoGrantSubsidy.value"/>				
 					</logic:present>				
 				</td>
 			</tr>
@@ -717,8 +718,8 @@
 					<bean:message key="label.grant.subsidy.valueFullName"/>:&nbsp;
 				</td>
 				<td>
-					<logic:present name="infoListGrantSubsidy.infoGrantSubsidy" property="valueFullName">
-						<bean:write name="infoListGrantSubsidy.infoGrantSubsidy" property="valueFullName"/>				
+					<logic:present name="infoListGrantSubsidy" property="infoGrantSubsidy.valueFullName">
+						<bean:write name="infoListGrantSubsidy" property="infoGrantSubsidy.valueFullName"/>				
 					</logic:present>				
 				</td>
 			</tr>
@@ -727,8 +728,8 @@
 					<bean:message key="label.grant.subsidy.totalCost"/>:&nbsp;
 				</td>
 				<td>
-					<logic:present name="infoListGrantSubsidy.infoGrantSubsidy" property="totalCost">
-						<bean:write name="infoListGrantSubsidy.infoGrantSubsidy" property="totalCost"/>				
+					<logic:present name="infoListGrantSubsidy" property="infoGrantSubsidy.totalCost">
+						<bean:write name="infoListGrantSubsidy" property="infoGrantSubsidy.totalCost"/>				
 					</logic:present>				
 				</td>
 			</tr>			
@@ -736,7 +737,7 @@
 	
 		<%-- Parts --%>
 		<center><b><bean:message key="label.grant.part.information"/></b></center>
-		<logic:iterate id="infoGrantPart" name="infoListGrantSubsidy.infoGrantParts">
+		<logic:iterate id="infoGrantPart" name="infoListGrantSubsidy" property="infoGrantParts">
 		<table>
 			<tr>
 				<td align="left">
