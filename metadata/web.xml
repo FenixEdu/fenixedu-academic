@@ -57,6 +57,10 @@
             <param-value>/WEB-INF/conf/struts-candidate.xml</param-value>
         </init-param>
         <init-param>
+            <param-name>config/posGraduacao</param-name>
+            <param-value>/WEB-INF/conf/struts-masterDegreeAdministrativeOffice.xml</param-value>
+        </init-param>
+        <init-param>
             <param-name>debug</param-name>
             <param-value>3</param-value>
         </init-param>
