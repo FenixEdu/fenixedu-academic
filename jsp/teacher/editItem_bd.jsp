@@ -34,7 +34,10 @@
 		<bean:message key="message.itemUrgent"/>
 	</td>
 	<td>
-		<html:text name="item" property="urgent"/>
+		<html:select property="urgent" size="1" >
+				<html:option value="true">sim</html:option>
+				<html:option value="false">não</html:option>
+		</html:select>
 	</td>
 </tr>
 <tr>

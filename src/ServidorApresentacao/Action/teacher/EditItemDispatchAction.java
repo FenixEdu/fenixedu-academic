@@ -51,7 +51,7 @@ public class EditItemDispatchAction extends FenixDispatchAction {
 
 		InfoItem oldInfoItem = (InfoItem) infoItemsList.get(index.intValue());
 		session.setAttribute(SessionConstants.INFO_ITEM, oldInfoItem);
-		
+	
 		return mapping.findForward("editItem");
 	}
 
