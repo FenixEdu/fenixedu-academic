@@ -82,6 +82,7 @@ public class ReadCurricularCoursesByDegree implements IServico
 			while (iterator.hasNext())
 			{
 				ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
+
 				InfoCurricularCourse infoCurricularCourse =
 					Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
 				infoCurricularCourse
@@ -111,4 +112,63 @@ public class ReadCurricularCoursesByDegree implements IServico
 
 		return infoCurricularCourses;
 	}
+	public List run(String executionYearString, String degreeName,String curricularPlanCode) throws FenixServiceException
+		{
+			List infoCurricularCourses = null;
+			try
+			{
+				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+
+				IExecutionYear executionYear =
+					sp.getIPersistentExecutionYear().readExecutionYearByName(executionYearString);
+
+				// Read degree
+
+				ICursoExecucao cursoExecucao =
+					sp.getICursoExecucaoPersistente().readByDegreeInitialsAndNameDegreeCurricularPlanAndExecutionYear(
+						degreeName,
+				curricularPlanCode,
+					executionYear);
+
+				if (cursoExecucao.getCurricularPlan().getCurricularCourses() == null
+					|| cursoExecucao.getCurricularPlan().getCurricularCourses().size() == 0)
+				{
+					throw new NonExistingServiceException();
+				}
+
+				infoCurricularCourses = new ArrayList();
+				ListIterator iterator =
+					cursoExecucao.getCurricularPlan().getCurricularCourses().listIterator();
+				while (iterator.hasNext())
+				{
+					ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
+					InfoCurricularCourse infoCurricularCourse =
+						Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+					infoCurricularCourse
+						.setInfoScopes(
+							(List) CollectionUtils
+							.collect(curricularCourse.getScopes(), new Transformer()
+					{
+
+						public Object transform(Object arg0)
+						{
+							ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
+							return Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(
+								curricularCourseScope);
+						}
+					}));
+
+					infoCurricularCourses.add(infoCurricularCourse);
+				}
+
+			}
+			catch (ExcepcaoPersistencia ex)
+			{
+				FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+				newEx.fillInStackTrace();
+				throw newEx;
+			}
+
+			return infoCurricularCourses;
+		}
 }
