@@ -198,6 +198,11 @@ public abstract class SessionConstants {
 	
 
 	// -------------------------------------------------------------------------------
+	//    SOP Constants - For Context
+	// -------------------------------------------------------------------------------	
+	public static final String LABELLIST_CURRICULAR_YEARS         = "anosCurriculares";
+
+	// -------------------------------------------------------------------------------
 	//    SOP Constants - For Working Area
 	// -------------------------------------------------------------------------------	
 	public static String LIST_EXECUTION_PERIODS            = "listExecutionPeriods";

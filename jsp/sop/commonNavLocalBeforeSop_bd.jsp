@@ -13,7 +13,15 @@
   							+ SessionConstants.EXECUTION_PERIOD_OID
   							+ "="
   							+ pageContext.findAttribute("executionPeriodOID") %>">
-  		<bean:message key="link.schedules.chooseContext"/>
+  		<bean:message key="link.schedules.chooseContext"/> - Old Version
+  	</html:link>
+  </li>
+  <li>
+  	<html:link page="<%= "/chooseContext.do?method=prepare&amp;"
+  							+ SessionConstants.EXECUTION_PERIOD_OID
+  							+ "="
+  							+ pageContext.findAttribute("executionPeriodOID") %>">
+  		<bean:message key="link.schedules.chooseContext"/> - New Version
   	</html:link>
   </li>
 </ul>
