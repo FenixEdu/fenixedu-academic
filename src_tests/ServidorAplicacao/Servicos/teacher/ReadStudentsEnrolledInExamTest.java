@@ -1,34 +1,24 @@
 package ServidorAplicacao.Servicos.teacher;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
-
-import DataBeans.ISiteComponent;
 import DataBeans.InfoExam;
+import DataBeans.InfoExamStudentRoom;
 import DataBeans.InfoSiteTeacherStudentsEnrolledList;
 import DataBeans.InfoStudent;
-import DataBeans.SiteView;
-import DataBeans.util.Cloner;
-import Dominio.Exam;
-import Dominio.IExam;
-import Dominio.IExamStudentRoom;
-import Dominio.IStudent;
-import Dominio.Student;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentExam;
-import ServidorPersistente.IPersistentExamStudentRoom;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+import DataBeans.TeacherAdministrationSiteView;
+import ServidorAplicacao.Servico.Autenticacao;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
+import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
+import ServidorAplicacao.Servicos.UtilsTestCase;
 
 /**
  * @author João Mota
- *
+ *  
  */
-public class ReadStudentsEnrolledInExamTest extends TestCaseReadServices {
+public class ReadStudentsEnrolledInExamTest
+	extends ServiceNeedsAuthenticationTestCase {
 	/**
 	 * @param testName
 	 */
@@ -36,74 +26,198 @@ public class ReadStudentsEnrolledInExamTest extends TestCaseReadServices {
 		super(testName);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see ServidorAplicacao.Servicos.TestCaseServices#getNameOfServiceToBeTested()
 	 */
 	protected String getNameOfServiceToBeTested() {
 		return "ReadStudentsEnrolledInExam";
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getApplication()
 	 */
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-
-		return null;
+	protected String getApplication() {
+		return Autenticacao.EXTRANET;
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedSuccessfuly()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthenticatedAndAuthorizedUser()
 	 */
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		Object[] args = { new Integer(25), new Integer(2)};
+	protected String[] getAuthenticatedAndAuthorizedUser() {
+		String[] args = { "user", "pass", getApplication()};
 		return args;
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthenticatedAndUnauthorizedUser()
 	 */
-	protected int getNumberOfItemsToRetrieve() {
-
-		return 0;
+	protected String[] getAuthenticatedAndUnauthorizedUser() {
+		String[] args = { "3", "pass", getApplication()};
+		return args;
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getObjectToCompare()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthorizeArguments()
 	 */
-	protected Object getObjectToCompare() {
-		ISiteComponent component = null;
+	protected Object[] getAuthorizeArguments() {
+		Object[] args = { new Integer(27), new Integer(1)};
+		return args;
+	}
 
-		List infoStudents = new ArrayList();
-		SiteView siteView = new SiteView();
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorAplicacao.Servicos.ServiceTestCase#getDataSetFilePath()
+	 */
+	protected String getDataSetFilePath() {
+		return "etc/datasets/servicos/teacher/testReadStudentsEnrolledInExamDataSet.xml";
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getNotAuthenticatedUser()
+	 */
+	protected String[] getNotAuthenticatedUser() {
+		String[] args = { "13", "pass", getApplication()};
+		return args;
+	}
+
+	public void testReadExecutionCourseExam() {
+		TeacherAdministrationSiteView result = null;
+
 		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentExamStudentRoom examStudentRoomDAO = sp.getIPersistentExamStudentRoom();
-			sp.iniciarTransaccao();
-			IStudent student = new Student(new Integer(3));
-			student = (IStudent) sp.getIPersistentStudent().readByOId(student, false);
-			InfoStudent infoStudent = Cloner.copyIStudent2InfoStudent(student);
-			infoStudents.add(infoStudent);
-			IExam exam = new Exam();
-			exam.setIdInternal(new Integer(2));
-			IPersistentExam persistentExam = sp.getIPersistentExam();
-			exam = (IExam) persistentExam.readByOId(exam, false);
-			InfoExam infoExam = Cloner.copyIExam2InfoExam(exam);
-			
-			
-			List examStudentRoomList = examStudentRoomDAO.readBy(exam);
-			List infoExamStudentRoomList = (List) CollectionUtils.collect(examStudentRoomList, new Transformer() {
 
-				public Object transform(Object input) {
-					IExamStudentRoom examStudentRoom = (IExamStudentRoom) input;
-					return Cloner.copyIExamStudentRoom2InfoExamStudentRoom(examStudentRoom);
-				}}  );   
-			
-			component = new InfoSiteTeacherStudentsEnrolledList(infoStudents,infoExam, infoExamStudentRoomList);
-			siteView.setComponent(component);
-			sp.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia e) {
+			result =
+				(TeacherAdministrationSiteView) gestor.executar(
+					userView,
+					getNameOfServiceToBeTested(),
+					getAuthorizeArguments());
+
+			InfoSiteTeacherStudentsEnrolledList infoSiteTeacherStudentsEnrolledList =
+				(InfoSiteTeacherStudentsEnrolledList) result.getComponent();
+			InfoExam infoExam =
+				(InfoExam) infoSiteTeacherStudentsEnrolledList.getInfoExam();
+			List infoExamsStudentRoomList =
+				infoSiteTeacherStudentsEnrolledList
+					.getInfoExamStudentRoomList();
+			List infoStudents =
+				infoSiteTeacherStudentsEnrolledList.getInfoStudents();
+
+			assertEquals(new Integer(1), infoExam.getIdInternal());
+			assertEquals(4, infoExamsStudentRoomList.size());
+
+			Object[] args1 =
+				{
+					new Integer(1),
+					new Integer(2),
+					new Integer(3),
+					new Integer(4)};
+
+			UtilsTestCase.readTestList(
+				infoExamsStudentRoomList,
+				args1,
+				"idInternal",
+				InfoExamStudentRoom.class);
+
+			assertEquals(4, infoStudents.size());
+
+			Object[] args2 =
+				{
+					new Integer(600),
+					new Integer(700),
+					new Integer(800),
+					new Integer(900)};
+
+			UtilsTestCase.readTestList(
+				infoExamsStudentRoomList,
+				args2,
+				"number",
+				InfoStudent.class);
+
+			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/teacher/testReadStudentsEnrolledInExamExpectedDataSet.xml");
+
+			System.out.println(
+				"testReadExecutionCourseExam was SUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.println(
+				"testReadExecutionCourseExam was UNSUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+			fail("testReadExecutionCourseExam");
 		}
+	}
 
-		return siteView;
+	public void testNonExistingExecutionCourse() {
+		TeacherAdministrationSiteView result = null;
+		Object[] args = { new Integer(100), new Integer(1)};
+
+		try {
+
+			result =
+				(TeacherAdministrationSiteView) gestor.executar(
+					userView,
+					getNameOfServiceToBeTested(),
+					args);
+
+			System.out.println(
+				"testNonExistingExecutionCourse was UNSUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+			fail("testNonExistingExecutionCourse");
+
+		} catch (NotAuthorizedException ex) {
+			ex.printStackTrace();
+			System.out.println(
+				"testNonAuthenticatedUser was SUCCESSFULY runned by service: "
+					+ this.getClass().getName());
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.println(
+				"testNonAuthenticatedUser was UNSUCCESSFULY runned by service: "
+					+ this.getClass().getName());
+			fail("Unable to run service: " + this.getClass().getName());
+		}
+	}
+
+	public void testNonExistingExam() {
+		TeacherAdministrationSiteView result = null;
+		Object[] args = { new Integer(27), new Integer(100)};
+
+		try {
+
+			result =
+				(TeacherAdministrationSiteView) gestor.executar(
+					userView,
+					getNameOfServiceToBeTested(),
+					args);
+
+			System.out.println(
+				"testNonExistingExam was UNSUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+			fail("testNonExistingExam");
+		} catch (FenixServiceException ex) {
+			System.out.println(
+				"testReadNonExistingSection was SUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.println(
+				"testNonAuthenticatedUser was UNSUCCESSFULY runned by service: "
+					+ this.getClass().getName());
+			fail("Unable to run service: " + this.getClass().getName());
+		}
 	}
 }
