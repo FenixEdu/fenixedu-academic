@@ -88,15 +88,9 @@
    			   int requiredFields = 0;%>
 			<logic:present name="infoSiteTeacherInformation" property="infoQualifications">
 				<%	if (infoSiteTeacherInformation.getInfoQualifications().size() > 0){
-						numberOfFields++;
 						requiredFields++; 
 				   	}
 				%>
-			</logic:present>
-			<logic:present name="infoSiteTeacherInformation" property="infoProfessionalCareers">
-				<% 	if (infoSiteTeacherInformation.getInfoProfessionalCareers().size() > 0)
-						numberOfFields++; 
-				 %>
 			</logic:present>
 			<logic:present name="infoSiteTeacherInformation" property="infoTeachingCareers">
 				<% 	if (infoSiteTeacherInformation.getInfoTeachingCareers().size() > 0){
@@ -105,36 +99,9 @@
 					}
 				 %>
 			</logic:present>
-			<logic:present name="infoSiteTeacherInformation" property="infoExternalActivities">
-				<% 	if (infoSiteTeacherInformation.getInfoExternalActivities().size() > 0)
-						numberOfFields++; 
-				 %>
-			</logic:present>
-			<logic:present name="infoSiteTeacherInformation" property="infoServiceProviderRegime">
-				<% numberOfFields++; %>
-			</logic:present>
 			<logic:present name="infoSiteTeacherInformation" property="infoOldCientificPublications">
 				<% 	if (infoSiteTeacherInformation.getInfoOldCientificPublications().size() > 0){
-						numberOfFields++; 
-						
 						InfoOldPublication infoOldPublication = (InfoOldPublication) CollectionUtils.find(infoSiteTeacherInformation.getInfoOldCientificPublications(), new Predicate(){ 
-							public boolean evaluate(Object arg0){
-								InfoOldPublication elem = (InfoOldPublication) arg0;
-								if(StringUtils.deleteWhitespace(elem.getPublication()).length() == 0){
-									return false;
-								}
-								return true;
-						}});
-						if(infoOldPublication != null){
-							requiredFields++; 
-						}
-					}
-				 %>
-			</logic:present>
-			<logic:present name="infoSiteTeacherInformation" property="infoOldDidacticPublications">
-				<% 	if (infoSiteTeacherInformation.getInfoOldDidacticPublications().size() > 0){
-						numberOfFields++; 
-						InfoOldPublication infoOldPublication = (InfoOldPublication) CollectionUtils.find(infoSiteTeacherInformation.getInfoOldDidacticPublications(), new Predicate(){ 
 								public boolean evaluate(Object arg0){
 									InfoOldPublication elem = (InfoOldPublication) arg0;
 									if(StringUtils.deleteWhitespace(elem.getPublication()).length() == 0){
@@ -148,23 +115,35 @@
 					}
 				 %>
 			</logic:present>
-			<logic:present name="infoSiteTeacherInformation" property="infoWeeklyOcupation">
-				<% numberOfFields++; %>
+			<logic:present name="infoSiteTeacherInformation" property="infoOldDidacticPublications">
+				<% 	if (infoSiteTeacherInformation.getInfoOldDidacticPublications().size() > 0){
+						InfoOldPublication infoOldPublication = (InfoOldPublication) CollectionUtils.find(infoSiteTeacherInformation.getInfoOldDidacticPublications(), new Predicate(){ 
+								public boolean evaluate(Object arg0){
+									InfoOldPublication elem = (InfoOldPublication) arg0;
+									if(StringUtils.deleteWhitespace(elem.getPublication()).length() == 0){
+										return false;
+									}
+									return true;
+						}});
+						if(infoOldPublication != null){
+							requiredFields++; 
+						}
+					} 
+				 %>
 			</logic:present>
 			<logic:present name="infoSiteTeacherInformation" property="infoComunicationPublicationsNumber">
-				<% 	numberOfFields++; %>
 				<logic:notEmpty name="infoSiteTeacherInformation" property="infoComunicationPublicationsNumber.national">
 					<%	requiredFields++; %>				
 				</logic:notEmpty>
 			</logic:present>
 			
-			<% if (!statistics.containsKey(new Integer(numberOfFields)))
-					statistics.put(new Integer(numberOfFields), new Integer(1));
+			<% if (!statistics.containsKey(new Integer(requiredFields)))
+					statistics.put(new Integer(requiredFields), new Integer(1));
 				else
 				{
-					int value = ((Integer) statistics.get(new Integer(numberOfFields))).intValue();
+					int value = ((Integer) statistics.get(new Integer(requiredFields))).intValue();
 					value++;
-					statistics.put(new Integer(numberOfFields), new Integer(value));
+					statistics.put(new Integer(requiredFields), new Integer(value));
 				}
 			%>
 			
@@ -257,71 +236,15 @@
 		</logic:present>
 	</logic:iterate>
 	<br />
-	<bean:message key="label.gep.numberOfCoursesTotal" bundle="GEP_RESOURCES"/>: 10
-	<br />
 	<br />
 	<table width="50%" border="0" cellspacing="1" style="margin-top:10px">
 		<tr>
-			<td class="listClasses"><bean:message key="label.gep.numberOfFields" bundle="GEP_RESOURCES"/></td>
-			<td class="listClasses"><bean:message key="label.gep.numberOfFieldsWithInfo" bundle="GEP_RESOURCES"/></td>
+			<td class="listClasses-header"><bean:message key="label.gep.situation" bundle="GEP_RESOURCES"/></td>
+			<td class="listClasses-header"><bean:message key="label.gep.numberOfFieldsWithInfo" bundle="GEP_RESOURCES"/></td>
+			<td class="listClasses-header"><bean:message key="label.gep.stats" bundle="GEP_RESOURCES"/>&nbsp;(%)</td>
 		</tr>
 		<tr>
-			<td class="listClasses">10</td>
-			<td class="listClasses">
-			<%
-				Integer value10 = new Integer(0);
-				if (statistics.containsKey(new Integer(10)))
-					value10 = (Integer) statistics.get(new Integer(10));
-			%>
-			<%= value10 %>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses">9</td>
-			<td class="listClasses">
-			<%
-				Integer value9 = new Integer(0);
-				if (statistics.containsKey(new Integer(9)))
-					value9 = (Integer) statistics.get(new Integer(9));
-			%>
-			<%= value9 %>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses">8</td>
-			<td class="listClasses">
-			<%
-				Integer value8 = new Integer(0);
-				if (statistics.containsKey(new Integer(8)))
-					value8 = (Integer) statistics.get(new Integer(8));
-			%>
-			<%= value8 %>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses">7</td>
-			<td class="listClasses">
-			<%
-				Integer value7 = new Integer(0);
-				if (statistics.containsKey(new Integer(7)))
-					value7 = (Integer) statistics.get(new Integer(7));
-			%>
-			<%= value7 %>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses">6</td>
-			<td class="listClasses">
-			<%
-				Integer value6 = new Integer(0);
-				if (statistics.containsKey(new Integer(6)))
-					value6 = (Integer) statistics.get(new Integer(6));
-			%>
-			<%= value6 %>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses">5</td>
+			<td class="listClasses"><font color="#008000">5/5</font></td>
 			<td class="listClasses">
 			<%
 				Integer value5 = new Integer(0);
@@ -330,9 +253,10 @@
 			%>
 			<%= value5 %>
 			</td>
+			<td class="listClasses"><%= new Float((value5.floatValue()/length.floatValue())*100).intValue() %></td>
 		</tr>
 		<tr>
-			<td class="listClasses">4</td>
+			<td class="listClasses"><font color="#FF0000">4/5</font></td>
 			<td class="listClasses">			
 			<%
 				Integer value4 = new Integer(0);
@@ -341,9 +265,10 @@
 			%>
 			<%= value4 %>
 			</td>
+			<td class="listClasses"><%= new Float((value4.floatValue()/length.floatValue())*100).intValue() %></td>
 		</tr>
 		<tr>
-			<td class="listClasses">3</td>
+			<td class="listClasses"><font color="#FF0000">3/5</font></td>
 			<td class="listClasses">
 			<%
 				Integer value3 = new Integer(0);
@@ -352,9 +277,10 @@
 			%>
 			<%= value3 %>
 			</td>
+			<td class="listClasses"><%= new Float((value3.floatValue()/length.floatValue())*100).intValue() %></td>
 		</tr>
 		<tr>
-			<td class="listClasses">2</td>
+			<td class="listClasses"><font color="#FF0000">2/5</font></td>
 			<td class="listClasses">
 			<%
 				Integer value2 = new Integer(0);
@@ -363,9 +289,10 @@
 			%>
 			<%= value2 %>
 			</td>
+			<td class="listClasses"><%= new Float((value2.floatValue()/length.floatValue())*100).intValue() %></td>
 		</tr>
 		<tr>
-			<td class="listClasses">1</td>
+			<td class="listClasses"><font color="#FF0000">1/5</font></td>
 			<td class="listClasses">
 			<%
 				Integer value1 = new Integer(0);
@@ -374,9 +301,10 @@
 			%>
 			<%= value1 %>
 			</td>
+			<td class="listClasses"><%= new Float((value1.floatValue()/length.floatValue())*100).intValue() %></td>
 		</tr>
 		<tr>
-			<td class="listClasses">0</td>
+			<td class="listClasses"><font color="#FF0000">0/5</font></td>
 			<td class="listClasses">
 			<%
 				Integer value0 = new Integer(0);
@@ -385,6 +313,7 @@
 			%>
 			<%= value0 %>
 			</td>
+			<td class="listClasses"><%= new Float((value0.floatValue()/length.floatValue())*100).intValue() %></td>
 		</tr>
 	</table>
 	<br />

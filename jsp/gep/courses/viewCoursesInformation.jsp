@@ -136,12 +136,10 @@
 		</tr>
 		<% 
 			HashMap statistics = new HashMap();
-			HashMap statistics_en = new HashMap();			
 		%>
 		<logic:iterate id="infoSiteCourseInformation" name="infoSiteCoursesInformation" type="DataBeans.gesdis.InfoSiteCourseInformation">		
 			<% 
                 Integer numberOfFields = infoSiteCourseInformation.getNumberOfFieldsFilled();
-                Integer numberOfFields_en = infoSiteCourseInformation.getNumberOfFieldsFilledEn();
 				if (!statistics.containsKey(numberOfFields))
 					statistics.put(numberOfFields, new Integer(1));
 				else
@@ -149,14 +147,6 @@
 					int value = ((Integer) statistics.get(numberOfFields)).intValue();
 					value++;
 					statistics.put(numberOfFields, new Integer(value));
-				}
-				if (!statistics_en.containsKey(numberOfFields_en))
-					statistics_en.put(numberOfFields_en, new Integer(1));
-				else
-				{
-					int value = ((Integer) statistics_en.get(numberOfFields_en)).intValue();
-					value++;
-					statistics_en.put(numberOfFields_en, new Integer(value));
 				}
 			%>
 			<logic:iterate id="infoCurricularCourse" name="infoSiteCourseInformation" property="infoCurricularCourses">
@@ -292,7 +282,7 @@
 				       			<bean:message key="label.no" bundle="GEP_RESOURCES"/>
 			       			</logic:notEqual>
 			       		</td>
-						<td class="listClasses" >&nbsp;
+						<td class="listClasses" style="text-align:left">&nbsp;
 							<ul>
 							<logic:iterate id="infoTeacher" name="infoSiteCourseInformation" property="infoLecturingTeachers">
 								<li><bean:write name="infoTeacher" property="infoPerson.nome" />
@@ -355,17 +345,16 @@
 	<bean:message key="label.gep.numberOfCourses" bundle="GEP_RESOURCES"/>:
 	<bean:write name="length"/>
 	<br />
-	<bean:message key="label.gep.numberOfCoursesTotal" bundle="GEP_RESOURCES"/>: 5
 	<br />
-	<br />
-	<bean:message key="label.gep.coursesInformation.statistics" bundle="GEP_RESOURCES"/>
 	<table width="50%" border="0" cellspacing="1" style="margin-top:10px">
 		<tr>
-			<td class="listClasses"><bean:message key="label.gep.numberOfFields" bundle="GEP_RESOURCES"/></td>
-			<td class="listClasses"><bean:message key="label.gep.numberOfFieldsWithInfo" bundle="GEP_RESOURCES"/></td>
+			<td class="listClasses-header"><bean:message key="label.gep.situation" bundle="GEP_RESOURCES"/></td>
+			<td class="listClasses-header"><bean:message key="label.gep.numberOfFieldsWithInfo" bundle="GEP_RESOURCES"/></td>
+			<td class="listClasses-header"><bean:message key="label.gep.stats" bundle="GEP_RESOURCES"/>&nbsp;(%)</td>
+			
 		</tr>
 		<tr>
-			<td class="listClasses">5</td>
+			<td class="listClasses"><font color="#008000">5/5</font></td>
 			<td class="listClasses">
 			<%
 				Integer value5 = new Integer(0);
@@ -374,9 +363,10 @@
 			%>
 			<%= value5 %>
 			</td>
+			<td class="listClasses"><%= new Float((value5.floatValue()/length.floatValue())*100).intValue() %></td>
 		</tr>
 		<tr>
-			<td class="listClasses">4</td>
+			<td class="listClasses"><font color="#FF0000">4/5</font></td>
 			<td class="listClasses">			
 			<%
 				Integer value4 = new Integer(0);
@@ -385,9 +375,10 @@
 			%>
 			<%= value4 %>
 			</td>
+			<td class="listClasses"><%= new Float((value4.floatValue()/length.floatValue())*100).intValue() %></td>
 		</tr>
 		<tr>
-			<td class="listClasses">3</td>
+			<td class="listClasses"><font color="#FF0000">3/5</font></td>
 			<td class="listClasses">
 			<%
 				Integer value3 = new Integer(0);
@@ -396,9 +387,10 @@
 			%>
 			<%= value3 %>
 			</td>
+			<td class="listClasses"><%= new Float((value3.floatValue()/length.floatValue())*100).intValue() %></td>
 		</tr>
 		<tr>
-			<td class="listClasses">2</td>
+			<td class="listClasses"><font color="#FF0000">2/5</font></td>
 			<td class="listClasses">
 			<%
 				Integer value2 = new Integer(0);
@@ -407,9 +399,10 @@
 			%>
 			<%= value2 %>
 			</td>
+			<td class="listClasses"><%= new Float((value2.floatValue()/length.floatValue())*100).intValue() %></td>
 		</tr>
 		<tr>
-			<td class="listClasses">1</td>
+			<td class="listClasses"><font color="#FF0000">1/5</font></td>
 			<td class="listClasses">
 			<%
 				Integer value1 = new Integer(0);
@@ -418,9 +411,10 @@
 			%>
 			<%= value1 %>
 			</td>
+			<td class="listClasses"><%= new Float((value1.floatValue()/length.floatValue())*100).intValue() %></td>
 		</tr>
 		<tr>
-			<td class="listClasses">0</td>
+			<td class="listClasses"><font color="#FF0000">0/5</font></td>
 			<td class="listClasses">
 			<%
 				Integer value0 = new Integer(0);
@@ -429,81 +423,7 @@
 			%>
 			<%= value0 %>
 			</td>
-		</tr>
-	</table>
-	<br />
-	<br />
-	<bean:message key="label.gep.ects.statistics" bundle="GEP_RESOURCES"/>
-	<table width="50%" border="0" cellspacing="1" style="margin-top:10px">
-		<tr>
-			<td class="listClasses"><bean:message key="label.gep.numberOfFields" bundle="GEP_RESOURCES"/></td>
-			<td class="listClasses"><bean:message key="label.gep.numberOfFieldsWithInfo" bundle="GEP_RESOURCES"/></td>
-		</tr>
-		<tr>
-			<td class="listClasses">5</td>
-			<td class="listClasses">
-			<%
-				Integer value5_en = new Integer(0);
-				if (statistics_en.containsKey(new Integer(5)))
-					value5_en = (Integer) statistics_en.get(new Integer(5));
-			%>
-			<%= value5_en %>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses">4</td>
-			<td class="listClasses">			
-			<%
-				Integer value4_en = new Integer(0);
-				if (statistics_en.containsKey(new Integer(4)))
-					value4_en = (Integer) statistics_en.get(new Integer(4));
-			%>
-			<%= value4_en %>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses">3</td>
-			<td class="listClasses">
-			<%
-				Integer value3_en = new Integer(0);
-				if (statistics_en.containsKey(new Integer(3)))
-					value3_en = (Integer) statistics_en.get(new Integer(3));
-			%>
-			<%= value3_en %>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses">2</td>
-			<td class="listClasses">
-			<%
-				Integer value2_en = new Integer(0);
-				if (statistics_en.containsKey(new Integer(2)))
-					value2_en = (Integer) statistics_en.get(new Integer(2));
-			%>
-			<%= value2_en %>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses">1</td>
-			<td class="listClasses">
-			<%
-				Integer value1_en = new Integer(0);
-				if (statistics_en.containsKey(new Integer(1)))
-					value1_en = (Integer) statistics_en.get(new Integer(1));
-			%>
-			<%= value1_en %>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses">0</td>
-			<td class="listClasses">
-			<%
-				Integer value0_en = new Integer(0);
-				if (statistics_en.containsKey(new Integer(0)))
-					value0_en = (Integer) statistics_en.get(new Integer(0));
-			%>
-			<%= value0_en %>
-			</td>
+			<td class="listClasses"><%= new Float((value0.floatValue()/length.floatValue())*100).intValue() %></td>
 		</tr>
 	</table>
 	<br />
