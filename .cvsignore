@@ -31,3 +31,4 @@ buildToDeployFenix.properties
 data
 responsavel.sql
 fenix.dump.sql
+ciapl.sql
