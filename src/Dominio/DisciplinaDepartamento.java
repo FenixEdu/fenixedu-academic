@@ -12,7 +12,7 @@
 package Dominio;
 
 
-public class DisciplinaDepartamento implements IDisciplinaDepartamento{
+public class DisciplinaDepartamento extends DomainObject implements IDisciplinaDepartamento{
     
     private Integer codigoInterno;
     private Integer chaveDepartamento;

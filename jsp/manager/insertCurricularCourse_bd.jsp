@@ -1,6 +1,8 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ page import="DataBeans.InfoDepartmentCourse" %>
+<%@ page language="java" %>
 
 <h2><bean:message key="label.manager.insert.curricularCourse" /></h2>
 
@@ -99,6 +101,16 @@
 		</tr>
 		<tr>
 			<td>
+				<bean:message key="message.departmentCourse"/>
+			</td>
+			<td>
+				<html:select property="departmentCourse">
+					<html:options collection="departmentCoursesList" property="value" labelProperty="label"/>
+				</html:select>
+			</td>
+		</tr>
+		<tr>
+			<td>
 				<bean:message key="message.manager.type"/>
 			</td>
 			<td>
@@ -117,9 +129,6 @@
     			<html:option key="option.curricularCourse.mlType" value="11"/>
     			</html:select>
 			</td>
-			<td>
-				<span class="error"><html:errors property="type" /></span>
-			</td>
 		</tr>
 		<tr>
 			<td>
@@ -132,9 +141,6 @@
     			<html:option key="option.manager.false" value="false"/>
     			</html:select>
 			</td>
-			<td>
-				<span class="error"><html:errors property="mandatory" /></span>
-			</td>
 		</tr>
 		<tr>
 			<td>
@@ -146,9 +152,6 @@
 				<html:option key="option.manager.true" value="true"/>
     			<html:option key="option.manager.false" value="false"/>
     			</html:select>
-			</td>
-			<td>
-				<span class="error"><html:errors property="basic" /></span>
 			</td>
 		</tr>
 	</table>

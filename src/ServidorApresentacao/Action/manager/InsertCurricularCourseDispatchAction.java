@@ -3,6 +3,8 @@
  */
 package ServidorApresentacao.Action.manager;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,8 +17,10 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import DataBeans.InfoDepartmentCourse;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -37,9 +41,37 @@ public class InsertCurricularCourseDispatchAction extends FenixDispatchAction {
 			HttpServletRequest request,
 			HttpServletResponse response)
 			throws FenixActionException {
+
+				HttpSession session = request.getSession(false);
+				UserView userView =	(UserView) session.getAttribute(SessionConstants.U_VIEW);
 				
 				Integer degreeId = new Integer(request.getParameter("degreeId"));
 				Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
+				
+				GestorServicos manager = GestorServicos.manager();
+				List result = null;
+				try {
+						result = (List) manager.executar(userView, "ReadDepartmentCoursesService", null);
+				} catch (FenixServiceException e) {
+					throw new FenixActionException(e);
+				}
+				
+//			creation of bean of InfoDepartmentCourses for use in jsp
+				ArrayList departmentCoursesList = new ArrayList();
+				if(result != null) {
+					departmentCoursesList.add(new LabelValueBean("", ""));
+					InfoDepartmentCourse infoDepartmentCourse;
+					Iterator iter = result.iterator();
+					String label, value;
+					while(iter.hasNext()) {
+						infoDepartmentCourse = (InfoDepartmentCourse) iter.next();
+						value = infoDepartmentCourse.getCode() + "-" + infoDepartmentCourse.getName();
+						label = infoDepartmentCourse.getCode() + " - " + infoDepartmentCourse.getName();
+						departmentCoursesList.add(new LabelValueBean(label, value));
+					}
+				}
+				
+				request.setAttribute("departmentCoursesList", departmentCoursesList);
 				request.setAttribute("degreeId", degreeId);
 				request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanId);
 				return mapping.findForward("insertCurricularCourse");
@@ -61,14 +93,13 @@ public class InsertCurricularCourseDispatchAction extends FenixDispatchAction {
     	
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
 //		A universidade ainda não está bem pois não existe universityOJB. implica + tard alterar o jsp...
-//		ver melhor o departamento
 		
 		Object args[] = { (String) dynaForm.get("name"), (String) dynaForm.get("code"),
 			            	(String) dynaForm.get("credits"), (String) dynaForm.get("theoreticalHours"),
 							(String) dynaForm.get("praticalHours"), (String) dynaForm.get("theoPratHours"),
 							(String) dynaForm.get("labHours"), (String) dynaForm.get("type"),
 							(String) dynaForm.get("mandatory"), (String) dynaForm.get("basic"),
-							degreeCurricularPlanId };
+							(String) dynaForm.get("departmentCourse"), degreeCurricularPlanId };
 		GestorServicos manager = GestorServicos.manager();
 		List serviceResult = null;
 		try {

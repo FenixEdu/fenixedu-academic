@@ -7,7 +7,7 @@
 
 package ServidorPersistente.OJB;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -15,8 +15,8 @@ import Dominio.DisciplinaDepartamento;
 import Dominio.IDepartment;
 import Dominio.IDisciplinaDepartamento;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentDepartment;
 import ServidorPersistente.IDisciplinaDepartamentoPersistente;
+import ServidorPersistente.IPersistentDepartment;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class DisciplinaDepartamentoOJBTest extends TestCaseOJB {
@@ -184,7 +184,7 @@ public class DisciplinaDepartamentoOJBTest extends TestCaseOJB {
             fail("testApagarTodasAsDisciplinas: iniciarTransaccao_2");
         }
         
-        ArrayList result = null;
+        List result = null;
         try {
             result = persistentDepartmentCourse.lerTodasAsDisciplinasDepartamento();
         } catch(ExcepcaoPersistencia ex1) {
@@ -336,7 +336,7 @@ public class DisciplinaDepartamentoOJBTest extends TestCaseOJB {
             fail("testLerTodasDisciplinas: iniciarTransaccao_1");
         }
  
-        ArrayList listap = null;
+        List listap = null;
         try {
             listap = persistentDepartmentCourse.lerTodasAsDisciplinasDepartamento();
         } catch(ExcepcaoPersistencia ex) {

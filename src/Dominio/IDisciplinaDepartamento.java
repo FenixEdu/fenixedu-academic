@@ -10,7 +10,7 @@ package Dominio;
  *
  * @author  dcs-rjao
  */
-public interface IDisciplinaDepartamento {
+public interface IDisciplinaDepartamento extends IDomainObject{
     public java.lang.String getNome();
     public java.lang.String getSigla();
     public IDepartment getDepartamento();

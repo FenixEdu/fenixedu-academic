@@ -24,6 +24,7 @@ import DataBeans.InfoCurriculum;
 import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoDepartment;
+import DataBeans.InfoDepartmentCourse;
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoEnrolmentInExtraCurricularCourse;
@@ -2152,6 +2153,13 @@ public abstract class Cloner {
 		copyObjectProperties(infoDeparment, department);
 		return infoDeparment;
 	}
+	
+	public static IDepartment copyInfoDepartment2IDepartment(InfoDepartment infoDepartment) {
+			IDepartment department = new Department();
+			copyObjectProperties(department, infoDepartment);
+			return department;
+		}
+	
 	public static InfoSummary copyISummary2InfoSummary(ISummary summary) {
 		InfoSummary infoSummary = new InfoSummary();
 		copyObjectProperties(infoSummary, summary);
@@ -2374,6 +2382,33 @@ public abstract class Cloner {
 		InfoCurricularYear infoCurricularYear = new InfoCurricularYear();
 		copyObjectProperties(infoCurricularYear, curricularYear);
 		return infoCurricularYear;
+	}
+	
+	/**
+	 * Method copyIDepartmentCourse2InfoDepartmentCourse.
+	 * @param IDepartmentCourse
+	 * @return InfoDepartmentCourse
+	 */
+	public static InfoDepartmentCourse copyIDepartmentCourse2InfoDepartmentCourse(IDisciplinaDepartamento departmentCourse) {
+			InfoDepartmentCourse infoDepartmentCourse = new InfoDepartmentCourse();
+			infoDepartmentCourse.setCode(departmentCourse.getSigla());
+			infoDepartmentCourse.setName(departmentCourse.getNome());
+//			infoDepartmentCourse.setIdInternal(departmentCourse.getIdInternal());
+			infoDepartmentCourse.setInfoDepartment(Cloner.copyIDepartment2InfoDepartment(departmentCourse.getDepartamento()));
+			return infoDepartmentCourse;
+		}
+	/**
+	 * Method copyInfoDepartmentCourse2IDepartmentCourse.
+	 * @param InfoDepartmentCourse
+	 * @return IDepartmentCourse
+	 */
+	public static IDisciplinaDepartamento copyInfoDepartmentCourse2IDepartmentCourse(InfoDepartmentCourse infoDepartmentCourse) {
+		IDisciplinaDepartamento departmentCourse = new DisciplinaDepartamento();
+		departmentCourse.setSigla(infoDepartmentCourse.getCode());
+		departmentCourse.setNome(infoDepartmentCourse.getName());
+//		departmentCourse.setIdInternal(infoDepartmentCourse.getIdInternal());
+		departmentCourse.setDepartamento(Cloner.copyInfoDepartment2IDepartment(infoDepartmentCourse.getInfoDepartment()));
+		return departmentCourse;
 	}
 
 }

@@ -95,6 +95,8 @@
 					</td>
 					<td class="listClasses-header"><bean:message key="label.manager.executionDegree.coordinator" />
 					</td>
+					<td class="listClasses-header"><bean:message key="label.manager.executionDegree.temporaryExamMap" />
+					</td>
 				</tr>
 				<logic:iterate id="executionDegree" name="executionDegreesList">
 				<tr>	 
@@ -108,7 +110,15 @@
 					</td>
 					<bean:define id="coordinator" name="executionDegree" property="infoCoordinator"/>
 					<bean:define id="person" name="coordinator" property="infoPerson"/>
-					<td class="listClasses"><html:link page="/readTeacher.do"><bean:write name="person" property="nome"/></html:link>
+					<td class="listClasses"><html:link page="/readTeacher.do"><bean:write name="person" property="username"/></html:link>
+					</td>
+					<bean:define id="tempExamMap" name="executionDegree" property="temporaryExamMap"/>
+					<% String printing;
+					   if(tempExamMap.toString() == "true")
+					   		printing="Sim";
+					   else
+					    	printing="Não"; %>
+					<td class="listClasses"><%= printing %>
 					</td>
 	 			</tr>
 	 			</logic:iterate>						

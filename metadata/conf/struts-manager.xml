@@ -54,7 +54,7 @@
 				<form-property name="mandatory" type="java.lang.String" />
 				<form-property name="universityId" type="java.lang.String" />
 				<form-property name="basic" type="java.lang.String" />
-				<form-property name="departmentCourseId" type="java.lang.String" />
+				<form-property name="departmentCourse" type="java.lang.String" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>    
 
@@ -236,7 +236,7 @@
 	<action
 		path="/insertCurricularCourse"
 		name="curricularCourseForm"
-		input="/insertCurricularCourseInput.do"
+		input="/insertCurricularCourse.do?method=prepareInsert&amp;page=0"
 		parameter="method"
 		scope="request"
 		type="ServidorApresentacao.Action.manager.InsertCurricularCourseDispatchAction"
@@ -254,11 +254,6 @@
       <action path="/insertDegreeCurricularPlanInput"
       	      type="ServidorApresentacao.Action.commons.VoidAction">
       	  <forward name="Success" path="df.page.insert-degree-curricular-plan"/>      	      
-      </action>
-      
-      <action path="/insertCurricularCourseInput"
-      	      type="ServidorApresentacao.Action.commons.VoidAction">
-      	  <forward name="Success" path="df.page.insert-curricular-course"/>      	      
       </action>
             
        <action path="/editDegreeInput"

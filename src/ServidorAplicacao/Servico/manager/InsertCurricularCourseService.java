@@ -10,9 +10,11 @@ import Dominio.CurricularCourse;
 import Dominio.DegreeCurricularPlan;
 import Dominio.ICurricularCourse;
 import Dominio.IDegreeCurricularPlan;
+import Dominio.IDisciplinaDepartamento;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IDisciplinaDepartamentoPersistente;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.ISuportePersistente;
@@ -42,14 +44,18 @@ public class InsertCurricularCourseService implements IServico {
 	public List run(String name, String code, String credits, String theoreticalHours,
 						String praticalHours, String theoPratHours, String labHours,
 						String type, String mandatory, String basic,
-						Integer degreeCurricularPlanId) throws FenixServiceException {
+						String departmentCourseCodeAndName, Integer degreeCurricularPlanId) throws FenixServiceException {
 
 		IPersistentCurricularCourse persistentCurricularCourse = null;
 	
 		try {
 				ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+				
+				IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSuport.getIPersistentDegreeCurricularPlan();
+				IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOId(new DegreeCurricularPlan(degreeCurricularPlanId), false);
+				
 				persistentCurricularCourse = persistentSuport.getIPersistentCurricularCourse();
-//deveria ser lido tambem plo degreeCurricularPlan    o degreeCurricularPlan ta em baixo
+//deveria ser lido tambem plo degreeCurricularPlan
 				ICurricularCourse curricularCourse = persistentCurricularCourse.readCurricularCourseByNameAndCode(name, code);
 				// if it doesn´t exist in the database yet
 				if(curricularCourse == null) {
@@ -87,22 +93,21 @@ public class InsertCurricularCourseService implements IServico {
 						curricularCourse.setBasic(new Boolean(basic));
 					}
 					
-//					Integer departmentCourseId = new Integer(fieldsList[11]);
-//					IDisciplinaDepartamentoPersistente persistentDepartmentCourse = persistentSuport.getIDisciplinaDepartamentoPersistente();
-//					DisciplinaDepartamento dc = new DisciplinaDepartamento();
-//					dc.setCodigoInterno(departmentCourseId);
-//					IDisciplinaDepartamento departmentCourse = (IDisciplinaDepartamento) persistentDepartmentCourse.readByOId(dc, false);
-//					curricularCourse.setDepartmentCourse(departmentCourse);
-					
-					IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSuport.getIPersistentDegreeCurricularPlan();
-					IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOId(new DegreeCurricularPlan(degreeCurricularPlanId), false);
-					curricularCourse.setDegreeCurricularPlan(degreeCurricularPlan);
+					if(departmentCourseCodeAndName.compareTo("") != 0) {
+					String[] codeAndName = departmentCourseCodeAndName.split("-");
+					String departmentCourseCode = codeAndName[0];
+					String departmentCourseName = codeAndName[1];
+					IDisciplinaDepartamentoPersistente persistentDepartmentCourse = persistentSuport.getIDisciplinaDepartamentoPersistente();
+					IDisciplinaDepartamento departmentCourse = (IDisciplinaDepartamento) persistentDepartmentCourse.lerDisciplinaDepartamentoPorNomeESigla(departmentCourseName, departmentCourseCode);
+					curricularCourse.setDepartmentCourse(departmentCourse);
+					}
 					
 //  curricularCourseExecutionScope? scopes?
 				
 					// associatedExecutionCourses? nao pode ser null qd se insere, pk dp n da papagar
-					List emptyList = new ArrayList();
-					curricularCourse.setAssociatedExecutionCourses(emptyList);
+					curricularCourse.setAssociatedExecutionCourses(new ArrayList());
+					
+					curricularCourse.setDegreeCurricularPlan(degreeCurricularPlan);
 
 					persistentCurricularCourse.simpleLockWrite(curricularCourse);
 					return null;
