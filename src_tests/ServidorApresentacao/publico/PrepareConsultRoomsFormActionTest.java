@@ -39,7 +39,8 @@ public class PrepareConsultRoomsFormActionTest extends TestCasePresentation {
 	// colocar qq coisa na sessão.
 	// O simulator tem que lá ter qq coisa para funcionar.
 	String xpto = "This is strange, I cannot explain it!";
-	getSession().setAttribute("UserView", xpto);
+	//getSession().setAttribute(SessionConstants.U_VIEW, xpto);
+	getSession();
 
     // invoca acção
     actionPerform();

@@ -11,6 +11,7 @@ package ServidorApresentacao;
  */
 
 import servletunit.struts.MockStrutsTestCase;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Tools.dbaccess;
 public class TestCasePresentation extends MockStrutsTestCase {
 
@@ -28,7 +29,7 @@ public class TestCasePresentation extends MockStrutsTestCase {
 			e.printStackTrace();
 			fail("Setting up!");
 		}
-		
+		getSession().setAttribute(SessionConstants.SESSION_IS_VALID,"");
 		// The following code backs up the contents of the database
 		// and loads the database with the data set required to run
 		// the test cases.
