@@ -383,6 +383,20 @@
                 </fileset>
             </classpath>
         </sql>
+        <sql
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost/ciapl"
+            userid="root"
+            password=""
+            encoding="${encoding}"
+            src="${sql}/GesDis-test-data.sql"
+        >
+            <classpath>
+                <fileset dir="${libs}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </sql>
     </target>
 
     <target name="dump-db"

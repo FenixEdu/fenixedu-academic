@@ -90,7 +90,7 @@ drop table if exists site;
 create table site (
    ID_INTERNAL int(11) unsigned not null auto_increment,
    KEY_EXECUTION_COURSE int(11) unsigned not null default '0',
-   KEY_INITIAL_SECTION int(11) not null default '0',
+   KEY_INITIAL_SECTION int(11) default '0',
    primary key (ID_INTERNAL),
    unique ID_INTERNAL (ID_INTERNAL, KEY_EXECUTION_COURSE))
    type=InnoDB comment="InnoDB free: 372736 kB";
