@@ -1,0 +1,27 @@
+select CONCAT("insert into CURRICULUM (",
+         CONCAT_WS(",",	 "ID_INTERNAL",
+         		 "KEY_CURRICULAR_COURSE",
+         		 "GENERAL_OBJECTIVES" ,
+                         "OPERACIONAL_OBJECTIVES",
+                         "PROGRAM",
+                         "GENERAL_OBJECTIVES_EN",
+                         "OPERACIONAL_OBJECTIVES_EN",
+                         "PROGRAM_EN",
+                         "EVALUATION_ELEMENTS",
+                         "EVALUATION_ELEMENTS_EN"
+                 ),")",
+         " values (",
+         CONCAT_WS(",",
+                 c.ID_INTERNAL,
+                 c.KEY_CURRICULAR_COURSE,
+                 c.GENERAL_OBJECTIVES,
+                 c.OPERACIONAL_OBJECTIVES,
+                 c.PROGRAM,
+                 c.GENERAL_OBJECTIVES_EN,
+                 c.OPERACIONAL_OBJECTIVES_EN,
+                 c.PROGRAM_EN,
+               	 em.EVALUATION_ELEMENTS,
+                 em.EVALUATION_ELEMENTS),
+         ");") as ""
+         from
+           CURRICULUM as c inner join EVALUATION_METHOD as em on c.KEY_CURRICULAR_COURSE=em.KEY_CURRICULAR_COURSE ;
