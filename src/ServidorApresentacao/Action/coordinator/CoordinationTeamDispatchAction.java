@@ -11,7 +11,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import DataBeans.InfoCoordinator;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
@@ -34,39 +33,73 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
 		throws FenixActionException {
 
 		HttpSession session = request.getSession(false);
-		IUserView userView =
-			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		String infoExecutionDegreeIdString =
-			(String) request.getParameter("infoExecutionDegreeId");
-		Integer infoExecutionDegreeId =
-			new Integer(infoExecutionDegreeIdString);
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		String infoExecutionDegreeIdString = (String) request.getParameter("infoExecutionDegreeId");
+		Integer infoExecutionDegreeId = new Integer(infoExecutionDegreeIdString);
+		request.setAttribute("infoExecutionDegreeId",infoExecutionDegreeId);
 		Object[] args = { infoExecutionDegreeId };
 		List coordinators = new ArrayList();
 		try {
-			coordinators =
-				(List) ServiceUtils.executeService(
-					userView,
-					"ReadCoordinationTeam",
-					args);
+			coordinators = (List) ServiceUtils.executeService(userView, "ReadCoordinationTeam", args);
 
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-		InfoCoordinator coordinator = null;
+		Boolean result = new Boolean(false);
+		Object[] args1 = { infoExecutionDegreeId, userView };
 		try {
-			coordinator =
-				(InfoCoordinator) ServiceUtils.executeService(
-					userView,
-					"ReadResponsibleCoordinator",
-					args);
+			result = (Boolean) ServiceUtils.executeService(userView, "ReadCoordinationResponsibility", args1);
 
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-		
-		request.setAttribute("responsibleCoordinator",coordinator);
+
+		request.setAttribute("isResponsible", result);
 		request.setAttribute("coordinators", coordinators);
-		return mapping.findForward("sucess");
+		return mapping.findForward("coordinationTeam");
 	}
 
+	public ActionForward prepareAddCoordinator(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+		HttpSession session = request.getSession(false);
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		String infoExecutionDegreeIdString = (String) request.getParameter("infoExecutionDegreeId");
+		Integer infoExecutionDegreeId = new Integer(infoExecutionDegreeIdString);
+		request.setAttribute("infoExecutionDegreeId",infoExecutionDegreeId);
+		Boolean result = new Boolean(false);
+		Object[] args1 = { infoExecutionDegreeId, userView };
+		try {
+			result = (Boolean) ServiceUtils.executeService(userView, "ReadCoordinationResponsibility", args1);
+
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		request.setAttribute("isResponsible", result);
+
+		return mapping.findForward("addCoordinator");
+
+	}
+
+	public ActionForward AddCoordinator(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+		return null;
+	}
+
+	public ActionForward removeCoordinators(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+		return null;
+	}
 }

@@ -2,10 +2,9 @@ package ServidorPersistente;
 
 import java.util.List;
 
+import Dominio.ICoordinator;
 import Dominio.ICursoExecucao;
 import Dominio.ITeacher;
-
-
 
 /**
  * Created on 2003/10/27
@@ -16,9 +15,13 @@ import Dominio.ITeacher;
 public interface IPersistentCoordinator extends IPersistentObject {
 
 	public List readExecutionDegreesByTeacher(ITeacher teacher)
-			throws ExcepcaoPersistencia;	
-			
+		throws ExcepcaoPersistencia;
+
 	public List readCoordinatorsByExecutionDegree(ICursoExecucao executionDegree)
-			throws ExcepcaoPersistencia;		
-			
+		throws ExcepcaoPersistencia;
+
+	public ICoordinator readCoordinatorByTeacherAndExecutionDegreeId(
+		ITeacher teacher,
+		Integer executionDegreeId)
+		throws ExcepcaoPersistencia;
 }

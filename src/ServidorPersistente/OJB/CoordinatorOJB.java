@@ -55,4 +55,13 @@ public class CoordinatorOJB
 
 	}
 
+	public ICoordinator readCoordinatorByTeacherAndExecutionDegreeId(
+		ITeacher teacher,
+		Integer executionDegreeId)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("executionDegree.idInternal", executionDegreeId);
+		criteria.addEqualTo("teacher.idInternal",teacher.getIdInternal());
+		return (ICoordinator) queryObject(Coordinator.class,criteria);
+	}
 }
