@@ -40,7 +40,7 @@
 	  <!-- AULAS -->
       <!-- Dynamic-FormBean para CriarAula -->
       <form-bean name="aulaForm"
-                 type="org.apache.struts.validator.DynaValidatorActionForm"
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorActionForm"
                  dynamic="true">
         <form-property name="diaSemana" type="java.lang.String"/>
         <form-property name="horaInicio" type="java.lang.String"/>
@@ -50,6 +50,7 @@
         <form-property name="tipoAula" type="java.lang.String"/>
         <form-property name="courseInitials" type="java.lang.String"/>
         <form-property name="nomeSala" type="java.lang.String"/>
+        <form-property name="page" type="java.lang.Integer"/>
       </form-bean>
 
       <!-- Dynamic-FormBean para EscolherDisciplinaExecucao -->

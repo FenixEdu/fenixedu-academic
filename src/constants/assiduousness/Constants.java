@@ -8,7 +8,9 @@ public final class Constants {
 	public static final String CARGOS = "cargo";
 	public static final String SEXO = "sexo";
 	public static final String ESTADOCIVIL = "estadoCivil";
-
+	/**
+	 * dias
+	 */
 	public static final String DIAS = "dias";
 	public static final String MESES = "meses";
 	public static final String ANOS = "anos";

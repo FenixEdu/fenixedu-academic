@@ -178,7 +178,7 @@ public class MarksListAction extends DispatchAction {
 
 		request.setAttribute("objectCode", objectCode);
 
-		return mapping.findForward("viewExams");
+		return mapping.findForward("viewMarksOptions");
 	}
 
 	public ActionForward submitMarks(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

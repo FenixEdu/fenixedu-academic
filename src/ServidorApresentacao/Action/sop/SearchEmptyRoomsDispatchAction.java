@@ -2,6 +2,7 @@ package ServidorApresentacao.Action.sop;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ import org.apache.struts.util.LabelValueBean;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoLesson;
 import DataBeans.InfoRoom;
+import DataBeans.comparators.RoomAlphabeticComparator;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.InvalidTimeIntervalServiceException;
@@ -174,7 +176,7 @@ public class SearchEmptyRoomsDispatchAction extends DispatchAction {
 					SessionUtils.getUserView(request),
 					"ReadEmptyRoomsService",
 					args);
-
+			Collections.sort(emptyRoomsList,new RoomAlphabeticComparator());
 			if (emptyRoomsList == null || emptyRoomsList.isEmpty()) {
 				ActionErrors actionErrors = new ActionErrors();
 				actionErrors.add(

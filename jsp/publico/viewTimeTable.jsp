@@ -1,7 +1,7 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 
 <tiles:insert page="/publicGesDisLayout_2col.jsp" flush="true">
-  <tiles:put name="serviceName" value="Instituto Superior T&eaccute;cnico" />
+  <tiles:put name="serviceName" value="Instituto Superior T&eacute;cnico" />
   <tiles:put name="executionCourseName" beanName="exeName" />
   <tiles:put name="degrees" value="/publico/associatedDegrees.jsp" />
   	<tiles:put name="body" value="/publico/viewTimeTable_bd.jsp" />

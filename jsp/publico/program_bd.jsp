@@ -8,21 +8,12 @@
 		<h2><bean:message key="message.program.not.available"/></h2>
 	</logic:empty>
 	<logic:notEmpty name="component" property="program">
-	<table>
-		<tr>
-			<td>
-				<h2><bean:message key="label.program" /></h2>	
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<bean:write name="component" property="program" filter="false"/>
-			</td>
-		</tr>
-	</table>
+		<h2><bean:message key="label.program" /></h2>	
+		<p>
+			<bean:write name="component" property="program" filter="false" />
+		</p>	
 	</logic:notEmpty>
 </logic:present>
 <logic:notPresent name="siteView" property="component" >
-<h2><bean:message key="message.program.not.available"/>
-</h2>
+	<h2><bean:message key="message.program.not.available" /></h2>
 </logic:notPresent>

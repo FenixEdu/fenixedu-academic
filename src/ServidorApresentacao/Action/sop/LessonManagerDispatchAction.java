@@ -2,6 +2,7 @@ package ServidorApresentacao.Action.sop;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,7 @@ import DataBeans.InfoLessonServiceResult;
 import DataBeans.InfoRoom;
 import DataBeans.KeyLesson;
 import DataBeans.RoomKey;
+import DataBeans.comparators.RoomAlphabeticComparator;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
@@ -332,8 +334,8 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 					saveErrors(request, actionErrors);
 					return mapping.getInputForward();
 				}
-
-				ArrayList listaSalas = new ArrayList();
+				Collections.sort(emptyRoomsList,new RoomAlphabeticComparator());
+				List listaSalas = new ArrayList();
 				listaSalas.add(
 					new LabelValueBean(infoSala.getNome(), infoSala.getNome()));
 				for (int i = 0; i < emptyRoomsList.size(); i++) {
@@ -343,6 +345,7 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 				}
 				emptyRoomsList.add(0, infoSala);
 
+			
 				sessao.removeAttribute("listaSalas");
 				sessao.removeAttribute("listaInfoSalas");
 				sessao.setAttribute("listaSalas", listaSalas);
@@ -422,7 +425,7 @@ public class LessonManagerDispatchAction extends LookupDispatchAction {
 						SessionUtils.getUserView(request),
 						"ReadEmptyRoomsService",
 						args);
-
+				Collections.sort(emptyRoomsList,new RoomAlphabeticComparator());
 				if (emptyRoomsList == null || emptyRoomsList.isEmpty()) {
 					actionErrors.add(
 						"search.empty.rooms.no.rooms",

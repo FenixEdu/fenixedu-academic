@@ -56,8 +56,9 @@ create table LESSON (
    KEY_ROOM int(11) not null,
    KEY_EXECUTION_COURSE int(11) not null,
    TYPE int(11) not null,
+   KEY_EXECUTION_PERIOD int(11) not null,
    primary key (ID_INTERNAL),
-   unique U1 (WEEKDAY, START_TIME, END_TIME, KEY_ROOM))
+   unique U1 (WEEKDAY, START_TIME, END_TIME, KEY_ROOM, KEY_EXECUTION_PERIOD))
    type=InnoDB;
 
 #----------------------------

@@ -224,7 +224,9 @@
         </var>
       </field>        
       <field property="nomeSala" depends="required">
+     
         <arg0 key="property.aula.sala"/>
+        
       </field>
     </form>
 
@@ -317,7 +319,7 @@
         <arg0 key="property.course"/>
       </field>
 
-      <field property="nomeSala" depends="required" page="2">
+      <field property="nomeSala" depends="required" page="1" >   
         <arg0 key="property.aula.sala"/>
       </field>
     </form>

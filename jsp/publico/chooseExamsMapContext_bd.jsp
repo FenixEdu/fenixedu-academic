@@ -9,25 +9,25 @@
 	<html:hidden  property="eYName" value="<%= pageContext.findAttribute("eYName").toString() %>" /> 
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="method" value="choose"/>
-    <table width="100%" border="0" cellpadding="0" cellspacing="0">
-    	<tr>
-        	<td class="infoop"><bean:message key="message.public.degree.choose"/></td>
-        </tr>
-    </table>
-	<br />
-    <p><bean:message key="property.context.degree"/>:
+
+	<p style="font-size:12px">
+		<b style="color: #f00">Nota:</b> Para os exames das <b>Licenciaturas LERCI, LESIM e LEGI</b> <u>onde se lê 9:00 dever-se-á ler 10:00</u>, com excepção, de <b>PE</b>
+		 e <b>CG</b> que se mantém às 9:00.
+	</p>
+	<br/>
+	<br/>	
+	<p class="infoop">
+		<bean:message key="message.public.degree.choose"/>
+	</p>
+	<p><bean:message key="property.context.degree"/>:
 	<html:select property="index" size="1">
     	<html:options collection="degreeList" property="value" labelProperty="label"/>
     </html:select>
 	</p>
 	<br />
-    <table width="100%" border="0" cellpadding="0" cellspacing="0">
-    	<tr>
-        	<td class="infoop"><bean:message key="label.select.curricularYears" /></td>
-        </tr>
-    </table>
-	<br />
-	<br />   
+	<p class="infoop">
+		<bean:message key="label.select.curricularYears" />
+	</p>
    	<bean:message key="property.context.curricular.year"/>:<br/>
 	<logic:present name="curricularYearList" >
 		<logic:iterate id="item" name="curricularYearList">
@@ -41,7 +41,9 @@
 		</html:checkbox>
 	</logic:present>
 	<br/>
-   <p><html:submit value="Submeter" styleClass="inputbutton">
-   		<bean:message key="label.next"/>
-   </html:submit></p>
+   <p>
+	   <html:submit value="Submeter" styleClass="inputbutton">
+	   		<bean:message key="label.next"/>
+	   </html:submit>
+   </p>
 </html:form>

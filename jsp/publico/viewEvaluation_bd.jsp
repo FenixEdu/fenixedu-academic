@@ -5,24 +5,15 @@
 <logic:present name="siteView" property="component" > 
 	<bean:define id="component" name="siteView" property="component"/>
 	<logic:notEmpty name="component" property="evaluationElements">
-	<table>
-		<tr>
-			<td>
-				<h2><bean:message key="label.evaluation" /></h2>	
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<bean:write name="component" property="evaluationElements" filter="false"/>
-			</td>
-		</tr>
-	</table>
+	<h2><bean:message key="label.evaluation" /></h2>	
+	<p>
+		<bean:write name="component" property="evaluationElements" filter="false"/>
+	</p>
 	</logic:notEmpty>
 	<logic:empty name="component" property="evaluationElements">
 		<h2><bean:message key="message.evaluation.not.available"/></h2>
 	</logic:empty>	
 </logic:present>
 <logic:notPresent name="siteView" property="component">
-<h2><bean:message key="message.evaluation.not.available"/>
-</h2>
+	<h2><bean:message key="message.evaluation.not.available"/></h2>
 </logic:notPresent>

@@ -13,7 +13,7 @@
 <h2><bean:message key="title.criarAula"/></h2>
 <span class="error"><html:errors/></span>
 	<html:form action="/criarAulaForm">
-	<html:hidden property="page" value="1"/>
+	<html:hidden property="page" value="2"/>
 <table cellspacing="0">
 	<tr>
     	<td nowrap class="formTD"><bean:message key="property.aula.weekDay"/>: </td>
@@ -59,4 +59,3 @@
 <html:submit property="operation" styleClass="inputbutton"><bean:message key="label.create"/></html:submit>
 <html:reset value="Limpar" styleClass="inputbutton"><bean:message key="label.clear"/></html:reset>
 	</html:form>
-</html:html>

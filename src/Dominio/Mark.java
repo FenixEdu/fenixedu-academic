@@ -22,7 +22,7 @@ public class Mark extends DomainObject implements IMark {
 	public Mark() {
 
 	}
-	
+
 	public Mark(
 		String mark,
 		String publishedMark,
@@ -35,14 +35,20 @@ public class Mark extends DomainObject implements IMark {
 	}
 
 	public boolean equals(Object obj) {
-		
-		
+
 		boolean resultado = false;
 		if (obj instanceof Mark) {
 			Mark mark = (Mark) obj;
 			resultado =
-				this.getMark().equals(mark.getMark())
-					&& this.getPublishedMark().equals(mark.getPublishedMark());
+				(this.getMark() == null
+					&& mark == null
+					&& this.getPublishedMark() == null
+					&& mark.getPublishedMark() == null)
+					|| (this.getMark() != null
+						&& this.getPublishedMark() != null
+						&& this.getMark().equals(mark.getMark())
+						&& this.getPublishedMark().equals(
+							mark.getPublishedMark()));
 		}
 		return resultado;
 	}

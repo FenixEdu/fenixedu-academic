@@ -7,7 +7,7 @@
 package ServidorAplicacao.Servico.sop;
 
 /**
- * Serviï¿½o AdicionarTurno.
+ * Serviço AdicionarTurno.
  *
  * @author tfc130
  **/

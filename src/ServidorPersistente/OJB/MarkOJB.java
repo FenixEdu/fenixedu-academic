@@ -134,4 +134,15 @@ public class MarkOJB extends ObjectFenixOJB implements IPersistentMark {
 		}
 	}
 
+	public List readBy(IExam exam, boolean published)
+		throws ExcepcaoPersistencia {
+
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("keyExam", exam.getIdInternal());
+		if (published) {
+			criteria.addNotNull("publishedMark");
+		} 
+		return queryList(Mark.class, criteria);
+	}
+
 }

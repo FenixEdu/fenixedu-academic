@@ -60,9 +60,12 @@ public class WriteMarksAction extends DispatchAction {
 		DynaActionForm marksForm = (DynaActionForm) form;
 		
 		FormFile formFile = (FormFile) marksForm.get("theFile");
-		if (!(formFile.getContentType().equals("application/vnd.ms-excel")) && !(formFile.getContentType().equals("text/plain"))) {
-			prepareInputForward(request, session, objectCode, evaluationCode);
-			actionErrors.add("FileNotExist", new ActionError("error.ficheiro.impossivelLer"));
+        if (!(formFile.getContentType().equals("text/plain"))){
+			prepareInputForward(request, session, objectCode, examCode);
+			actionErrors.add(
+					"FileNotExist",
+					new ActionError(
+						"error.ficheiro.impossivelLer"));
 
 			saveErrors(request, actionErrors);
 			return mapping.findForward("loadMarks");
@@ -79,6 +82,7 @@ public class WriteMarksAction extends DispatchAction {
 			throw new NotExecuteException("error.ficheiro.impossivelLer");
 		}
 		do {
+		
 			if ((lineReader != null) && (lineReader.length() != 0)) {
 				n++;
 			}
@@ -87,12 +91,13 @@ public class WriteMarksAction extends DispatchAction {
 			} catch (IOException e) {
 				throw new NotExecuteException("error.ficheiro.impossivelLer");
 			}
-
-		} while ((lineReader != null) && (lineReader.length() != 0));
-		if (n == 0) {
-			prepareInputForward(request, session, objectCode, evaluationCode);
-			actionErrors.add("BadFormatFile", new ActionError("error.file.badFormat"));
-
+		}while ((lineReader != null) );
+		if (n == 0){
+			prepareInputForward(request, session, objectCode, examCode);
+			actionErrors.add(
+					"BadFormatFile",
+					new ActionError(
+						"error.file.badFormat"));
 			saveErrors(request, actionErrors);
 			return mapping.findForward("loadMarks");
 
@@ -135,7 +140,7 @@ public class WriteMarksAction extends DispatchAction {
 				throw new NotExecuteException("error.ficheiro.impossivelLer");
 			}
 
-		} while ((lineReader != null) && (lineReader.length() != 0));
+		} while ((lineReader != null) );
 		reader.close();
 		
 		
@@ -288,7 +293,7 @@ public class WriteMarksAction extends DispatchAction {
 				ListIterator iterator = infoSiteMarks.getMarksListErrors().listIterator();
 				while (iterator.hasNext()) {
 					InfoMark infoMark = (InfoMark) iterator.next();
-					System.out.println("Ocorreu erro: studentExistence");
+				
 					actionErrors.add(
 						"studentExistence",
 						new ActionError(
@@ -300,14 +305,14 @@ public class WriteMarksAction extends DispatchAction {
 			return mapping.getInputForward();
 		}
 
-		return mapping.findForward("viewExams");
+		return mapping.findForward("viewMarksOptions");
 	}
 
 	private InfoMark getMark(HttpServletRequest request, int index) {
 		String mark = request.getParameter("markElem[" + index + "].mark");
 		Integer studentCode = Integer.valueOf(request.getParameter("markElem[" + index + "].studentCode"));
 
-		if (mark != null && studentCode != null) {
+		if ( studentCode != null) {
 			//infoMark with only student code and mark
 			InfoStudent infoStudent = new InfoStudent();
 			infoStudent.setIdInternal(studentCode);
@@ -319,7 +324,7 @@ public class WriteMarksAction extends DispatchAction {
 			infoMark.setInfoFrequenta(infoFrequenta);
 
 			infoMark.setMark(mark);
-			infoMark.setPublishedMark("0");
+
 
 			return infoMark;
 		}

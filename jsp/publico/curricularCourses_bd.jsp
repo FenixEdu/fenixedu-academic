@@ -19,7 +19,7 @@
 	<bean:define id="component" name="siteView" property="component"/>
 
 	<logic:notEmpty name="component" property="associatedCurricularCourses" >
-		<table align="center" cellspacing="0" cellpadding="5" >
+		<table align="center" cellspacing="1" cellpadding="5" >
 			<tr>
 				<td class="listClasses-header">
 					<bean:message key="property.curricularCourse.name"/>

@@ -19,9 +19,12 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
  */
 public interface IPersistentMark extends IPersistentObject {
 	public List readAll() throws ExcepcaoPersistencia;
-	public void lockWrite(IMark mark) throws ExcepcaoPersistencia, ExistingPersistentException;
+	public void lockWrite(IMark mark)
+		throws ExcepcaoPersistencia, ExistingPersistentException;
     public void deleteAll() throws ExcepcaoPersistencia;
 	public IMark readBy(IEvaluation evaluation , IFrequenta attend) throws ExcepcaoPersistencia;
 	public List readBy(IEvaluation evaluation) throws ExcepcaoPersistencia;
+	public List readBy(IExam exam, boolean published)
+		throws ExcepcaoPersistencia;
 	public void delete(IMark mark)throws ExcepcaoPersistencia;
 }

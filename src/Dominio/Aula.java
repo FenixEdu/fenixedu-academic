@@ -22,11 +22,41 @@ public class Aula extends DomainObject implements IAula {
   protected TipoAula _tipo;
   protected ISala _sala;
   protected IDisciplinaExecucao _disciplinaExecucao;
+  protected IExecutionPeriod executionPeriod;
     
   // c�digos internos da base de dados
   private Integer _chaveSala;
   private Integer _chaveDisciplinaExecucao;
+  private Integer keyExecutionPeriod;
     
+/**
+ * @return
+ */
+public IExecutionPeriod getExecutionPeriod() {
+	return executionPeriod;
+}
+
+/**
+ * @param executionPeriod
+ */
+public void setExecutionPeriod(IExecutionPeriod executionPeriod) {
+	this.executionPeriod = executionPeriod;
+}
+
+/**
+ * @return
+ */
+public Integer getKeyExecutionPeriod() {
+	return keyExecutionPeriod;
+}
+
+/**
+ * @param keyExecutionPeriod
+ */
+public void setKeyExecutionPeriod(Integer keyExecutionPeriod) {
+	this.keyExecutionPeriod = keyExecutionPeriod;
+}
+
   /** Construtor sem argumentos p�blico requerido pela moldura de objectos OJB */
   public Aula() { }
     
@@ -94,6 +124,8 @@ public class Aula extends DomainObject implements IAula {
     
   public void setDisciplinaExecucao(IDisciplinaExecucao disciplinaExecucao) {
     _disciplinaExecucao = disciplinaExecucao;
+    if (disciplinaExecucao!=null){
+    setExecutionPeriod(disciplinaExecucao.getExecutionPeriod());}
   }
   
   public ISala getSala() {
