@@ -22,6 +22,7 @@ import Dominio.ICurricularCourseScope;
 import Dominio.IEnrolment;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
+import ServidorAplicacao.strategy.enrolment.degree.exceptions.EnrolmentValidationResult;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
@@ -103,8 +104,6 @@ public abstract class EnrolmentContextManager {
 		List curricularCoursesFromStudentDegreeCurricularPlan,
 		List aprovedCurricularCoursesFromStudent)
 		throws ExcepcaoPersistencia {
-
-		List scopesNotDone = new ArrayList();
 
 		List coursesNotDone = (List) CollectionUtils.subtract(curricularCoursesFromStudentDegreeCurricularPlan, aprovedCurricularCoursesFromStudent);
 
