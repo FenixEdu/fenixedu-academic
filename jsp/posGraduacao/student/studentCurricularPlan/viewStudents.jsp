@@ -7,7 +7,7 @@
 <bean:define id="studentList" name="studentList" scope="request"/>
 
 <h2 align="center"><bean:message key="title.masterDegree.administrativeOffice.chooseStudent"/></h2>
-<html:errors/>
+<span class="error"><html:errors/></span>
 <center>
 <br/>
 <br/>

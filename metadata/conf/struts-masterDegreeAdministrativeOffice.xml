@@ -1463,6 +1463,7 @@
 				path="/seeStudentCurricularPlans"
 				parameter="method"
 				scope="request"
+				input="seeStudentCurricularPlans.do?method=start"
 				validate="true">
 			<forward name="start" path="df.page.searchStudents"/>
 			<forward name="viewStudents" path="df.page.viewStudents"/>

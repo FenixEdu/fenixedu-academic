@@ -10,6 +10,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -62,7 +64,19 @@ public class SeeStudentCurricularPlansDispatchAction extends DispatchAction {
 		}
 
 		if(!studentNumber1.equals("")) {
-			studentNumber2 = new Integer(studentNumber1);
+			try {
+				studentNumber2 = new Integer(studentNumber1);
+			} catch (NumberFormatException e) {
+				ActionError actionError = new ActionError("error.numberFormat");
+				ActionErrors actionErrors = new ActionErrors();
+				actionErrors.add("idNumber", actionError);
+				saveErrors(request, actionErrors);
+				return mapping.getInputForward();
+			}
+		}
+		
+		if(!this.isValid(mapping, request, idNumber2, idType2)) {
+			return mapping.getInputForward();
 		}
 
 		Object args[] = { studentName2, idNumber2, idType2, studentNumber2 };
@@ -99,5 +113,24 @@ public class SeeStudentCurricularPlansDispatchAction extends DispatchAction {
 		if(listOfInfoStudents != null) {
 			Collections.sort(listOfInfoStudents, comparatorChain);
 		}
+	}
+
+	private boolean isValid(ActionMapping mapping, HttpServletRequest request, String idNumber, TipoDocumentoIdentificacao idType) {
+		boolean result = true;
+
+		if(idNumber != null && idType == null) {
+			ActionError actionError = new ActionError("error.required.idType");
+			ActionErrors actionErrors = new ActionErrors();
+			actionErrors.add("idType", actionError);
+			saveErrors(request, actionErrors);
+			result = false;
+		} else if(idNumber == null && idType != null) {
+			ActionError actionError = new ActionError("error.required.idNumber");
+			ActionErrors actionErrors = new ActionErrors();
+			actionErrors.add("idNumber", actionError);
+			saveErrors(request, actionErrors);
+			result = false;
+		}
+		return result;
 	}
 }
