@@ -578,7 +578,7 @@
 	<filterChain>
 		<idInternal>483191</idInternal>
 		<name>DegreeOrMasterDegreeAdmininstrativeOfficeChain</name>
-		<expression>MasterDegreeAdministrativeOfficeAuthorization || DegreeAdministrativeOfficeAuthorization</expression>
+		<expression>MasterDegreeAdministrativeOfficeAuthorization</expression>
 		<description></description>
 		<invocationTiming>1</invocationTiming>
 		<filterClass>ServidorAplicacao.Filtro.AuthorizationByRoleFilter</filterClass>
