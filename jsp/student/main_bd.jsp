@@ -16,7 +16,7 @@
 			<html:link page="/curricularCourseEnrolmentManager.do?method=start">
 				<bean:message key="link.curricular.course.enrolment"/>
 			</html:link>
-		</td>
+		</td> 
 	</tr>
 	<tr>
 		<td>
