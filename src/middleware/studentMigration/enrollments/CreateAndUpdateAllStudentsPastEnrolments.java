@@ -649,6 +649,10 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 			return EnrolmentState.NOT_EVALUATED;
 		}
 
+		if (grade.equals("0")) {
+			return EnrolmentState.NOT_EVALUATED;
+		}
+
 		if (grade.equals("RE")) {
 			return EnrolmentState.NOT_APROVED;
 		}
