@@ -4,9 +4,10 @@
  */
 package ServidorAplicacao.security;
 
-import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import sun.security.util.BigInt;
 
 /**
  * @author jpvl
@@ -22,8 +23,9 @@ public abstract class PasswordEncryptor {
 		algorithm.update(buffer);
 
 		byte[] digest = algorithm.digest();
-		BigInteger bi = new BigInteger(digest);
-		String pairLength = bi.toString(16);
+		BigInt bi = new BigInt(digest);
+		String pairLength = bi.toBigInteger().toString(16);
+
 		// append 0 if length is even
 		if (pairLength.length() % 2 != 0){
 			pairLength = "0"+pairLength;
@@ -34,7 +36,10 @@ public abstract class PasswordEncryptor {
 	static public boolean areEquals(
 		String encryptedPassword,
 		String notEncryptedPassword) {
+		System.out.println("Pass:"+notEncryptedPassword);
 		String digest = encryptPassword(notEncryptedPassword);
+		System.out.println("Enc:"+encryptedPassword);
+		System.out.println("Dig:"+digest);
 		return digest.equals(encryptedPassword);
 	}
 
