@@ -13,27 +13,14 @@ import org.apache.commons.collections.Transformer;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoClass;
-import DataBeans.InfoDegree;
-import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoExecutionDegree;
-import DataBeans.InfoExecutionPeriod;
-import DataBeans.InfoExecutionYear;
-import DataBeans.InfoLesson;
-import DataBeans.InfoRoom;
 import DataBeans.InfoShift;
 import DataBeans.InfoStudent;
 import DataBeans.enrollment.shift.ExecutionCourseShiftEnrollmentDetails;
 import DataBeans.enrollment.shift.InfoClassEnrollmentDetails;
 import DataBeans.enrollment.shift.ShiftEnrollmentDetails;
-import Dominio.IAula;
-import Dominio.ICurso;
-import Dominio.ICursoExecucao;
-import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
-import Dominio.IExecutionYear;
-import Dominio.ISala;
 import Dominio.IStudent;
 import Dominio.ITurma;
 import Dominio.ITurno;
@@ -144,7 +131,7 @@ public class ReadClassShiftEnrollmentDetails implements IService {
 
                     public Object transform(Object input) {
                         ITurno shift = (ITurno) input;
-                        InfoShift infoShift = copyShift2InfoShift(shift);
+                        InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
                         return infoShift;
                     }
                 });
@@ -193,7 +180,7 @@ public class ReadClassShiftEnrollmentDetails implements IService {
 
             //Clone class
             ITurma klass = (ITurma) classList.get(i);
-            InfoClass infoClass = copyIClass2InfoClass(klass);
+            InfoClass infoClass = InfoClass.newInfoFromDomain(klass);
             infoClassList.add(infoClass);
 
             Integer klassId = klass.getIdInternal();
@@ -251,7 +238,7 @@ public class ReadClassShiftEnrollmentDetails implements IService {
 
         if (executionCourseShiftEnrollmentDetails == null) {
             executionCourseShiftEnrollmentDetails = new ExecutionCourseShiftEnrollmentDetails();
-            InfoExecutionCourse infoExecutionCourse = copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+            InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
             executionCourseShiftEnrollmentDetails
                     .setInfoExecutionCourse(infoExecutionCourse);
 
@@ -276,7 +263,7 @@ public class ReadClassShiftEnrollmentDetails implements IService {
         if (shiftEnrollmentDetails == null) {
             shiftEnrollmentDetails = new ShiftEnrollmentDetails();
 
-            InfoShift infoShift = copyShift2InfoShift(shift);
+            InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
             int occupation = shiftStudentDAO.readNumberOfStudentsByShift(shift);
             shiftEnrollmentDetails.setInfoShift(infoShift);
             shiftEnrollmentDetails.setVacancies(new Integer(shift.getLotacao()
@@ -320,211 +307,211 @@ public class ReadClassShiftEnrollmentDetails implements IService {
         return infoStudent;
     }
 
-    private InfoShift copyShift2InfoShift(ITurno shift) {
-        InfoShift infoShift = null;
-        if (shift != null) {
-            infoShift = new InfoShift();
-            infoShift.setIdInternal(shift.getIdInternal());
-            infoShift.setNome(shift.getNome());
-            infoShift
-                    .setInfoDisciplinaExecucao(copyIExecutionCourse2InfoExecutionCourse(shift
-                            .getDisciplinaExecucao()));
-            infoShift.setInfoLessons(copyILessons2InfoLessons(shift
-                    .getAssociatedLessons()));
-            infoShift.setTipo(shift.getTipo());
-            infoShift.setLotacao(shift.getLotacao());
-            infoShift.setOcupation(shift.getOcupation());
-            infoShift.setPercentage(shift.getPercentage());
-            infoShift.setInfoClasses(copyIClasses2InfoClasses(shift
-                    .getAssociatedClasses()));
-        }
-        return infoShift;
-    }
-
-    /**
-     * @param list
-     * @return
-     */
-    private List copyIClasses2InfoClasses(List list) {
-        List infoClasses = null;
-        if (list != null) {
-            infoClasses = (List) CollectionUtils.collect(list,
-                    new Transformer() {
-
-                        public Object transform(Object arg0) {
-
-                            return copyIClass2InfoClass((ITurma) arg0);
-                        }
-
-                    });
-        }
-        return infoClasses;
-    }
-
-    private InfoClass copyIClass2InfoClass(ITurma turma) {
-        InfoClass infoClass = null;
-        if (turma != null) {
-            infoClass = new InfoClass();
-            infoClass.setIdInternal(turma.getIdInternal());
-            infoClass.setNome(turma.getNome());
-            infoClass
-                    .setInfoExecutionDegree(copyIExecutionDegree2InfoExecutionDegree(turma
-                            .getExecutionDegree()));
-
-        }
-        return infoClass;
-    }
-
-    /**
-     * @param executionDegree
-     * @return
-     */
-    private InfoExecutionDegree copyIExecutionDegree2InfoExecutionDegree(
-            ICursoExecucao executionDegree) {
-        InfoExecutionDegree infoExecutionDegree = null;
-        if (executionDegree != null) {
-            infoExecutionDegree = new InfoExecutionDegree();
-            infoExecutionDegree.setIdInternal(executionDegree.getIdInternal());
-            infoExecutionDegree
-                    .setInfoExecutionYear(copyIExecutionYear2InfoExecutionYear(executionDegree
-                            .getExecutionYear()));
-            infoExecutionDegree
-                    .setInfoDegreeCurricularPlan(copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(executionDegree
-                            .getCurricularPlan()));
-        }
-        return infoExecutionDegree;
-    }
-
-    /**
-     * @param plan
-     * @return
-     */
-    private InfoDegreeCurricularPlan copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(
-            IDegreeCurricularPlan plan) {
-        InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
-        if (plan != null) {
-            infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
-            infoDegreeCurricularPlan.setIdInternal(plan.getIdInternal());
-            infoDegreeCurricularPlan.setName(plan.getName());
-            infoDegreeCurricularPlan.setInfoDegree(copyIDegree2InfoDegree(plan
-                    .getDegree()));
-        }
-        return infoDegreeCurricularPlan;
-    }
-
-    /**
-     * @param degree
-     * @return
-     */
-    private InfoDegree copyIDegree2InfoDegree(ICurso degree) {
-        InfoDegree infoDegree = null;
-        if (degree != null) {
-            infoDegree = new InfoDegree();
-            infoDegree.setIdInternal(degree.getIdInternal());
-            infoDegree.setNome(degree.getNome());
-            infoDegree.setSigla(degree.getSigla());
-            infoDegree.setTipoCurso(degree.getTipoCurso());
-        }
-        return infoDegree;
-    }
-
-    /**
-     * @param list
-     * @return
-     */
-    private List copyILessons2InfoLessons(List list) {
-        List infoLessons = null;
-        if (list != null) {
-            infoLessons = (List) CollectionUtils.collect(list,
-                    new Transformer() {
-
-                        public Object transform(Object arg0) {
-
-                            return copyILesson2InfoLesson((IAula) arg0);
-                        }
-
-                    });
-        }
-        return infoLessons;
-    }
-
-    private Object copyILesson2InfoLesson(IAula lesson) {
-        InfoLesson infoLesson = null;
-        if (lesson != null) {
-            infoLesson = new InfoLesson();
-            infoLesson.setIdInternal(lesson.getIdInternal());
-            infoLesson.setDiaSemana(lesson.getDiaSemana());
-            infoLesson.setFim(lesson.getFim());
-            infoLesson.setInicio(lesson.getInicio());
-            infoLesson.setTipo(lesson.getTipo());
-            infoLesson.setInfoSala(copyISala2InfoRoom(lesson.getSala()));
-        }
-        return infoLesson;
-    }
-
-    /**
-     * @param sala
-     * @return
-     */
-    private InfoRoom copyISala2InfoRoom(ISala sala) {
-        InfoRoom infoRoom = null;
-        if (sala != null) {
-            infoRoom = new InfoRoom();
-            infoRoom.setIdInternal(sala.getIdInternal());
-            infoRoom.setNome(sala.getNome());
-        }
-        return infoRoom;
-    }
-
-    /**
-     * @param executionCourse
-     * @return
-     */
-    private InfoExecutionCourse copyIExecutionCourse2InfoExecutionCourse(
-            IExecutionCourse executionCourse) {
-        InfoExecutionCourse infoExecutionCourse = null;
-        if (executionCourse != null) {
-            infoExecutionCourse = new InfoExecutionCourse();
-            infoExecutionCourse.setIdInternal(executionCourse.getIdInternal());
-            infoExecutionCourse.setNome(executionCourse.getNome());
-            infoExecutionCourse.setSigla(executionCourse.getSigla());
-            infoExecutionCourse
-                    .setInfoExecutionPeriod(copyIExecutionPeriod2InfoExecutionPeriod(executionCourse
-                            .getExecutionPeriod()));
-        }
-        return infoExecutionCourse;
-    }
-
-    /**
-     * @param period
-     * @return
-     */
-    private InfoExecutionPeriod copyIExecutionPeriod2InfoExecutionPeriod(
-            IExecutionPeriod period) {
-        InfoExecutionPeriod infoExecutionPeriod = null;
-        if (period != null) {
-            infoExecutionPeriod = new InfoExecutionPeriod();
-            infoExecutionPeriod.setIdInternal(period.getIdInternal());
-            infoExecutionPeriod.setName(period.getName());
-            infoExecutionPeriod
-                    .setInfoExecutionYear(copyIExecutionYear2InfoExecutionYear(period
-                            .getExecutionYear()));
-        }
-        return infoExecutionPeriod;
-    }
-
-    /**
-     * @param year
-     * @return
-     */
-    private InfoExecutionYear copyIExecutionYear2InfoExecutionYear(
-            IExecutionYear year) {
-        InfoExecutionYear infoExecutionYear = null;
-        if (year != null) {
-            infoExecutionYear = new InfoExecutionYear();
-            infoExecutionYear.setIdInternal(year.getIdInternal());
-            infoExecutionYear.setYear(year.getYear());
-        }
-        return infoExecutionYear;
-    }
+//   private InfoShift copyShift2InfoShift(ITurno shift) {
+//        InfoShift infoShift = null;
+//        if (shift != null) {
+//            infoShift = new InfoShift();
+//            infoShift.setIdInternal(shift.getIdInternal());
+//            infoShift.setNome(shift.getNome());
+//            infoShift
+//                    .setInfoDisciplinaExecucao(copyIExecutionCourse2InfoExecutionCourse(shift
+//                            .getDisciplinaExecucao()));
+//            infoShift.setInfoLessons(copyILessons2InfoLessons(shift
+//                    .getAssociatedLessons()));
+//            infoShift.setTipo(shift.getTipo());
+//            infoShift.setLotacao(shift.getLotacao());
+//            infoShift.setOcupation(shift.getOcupation());
+//            infoShift.setPercentage(shift.getPercentage());
+//            infoShift.setInfoClasses(copyIClasses2InfoClasses(shift
+//                    .getAssociatedClasses()));
+//        }
+//        return infoShift;
+//    }
+//
+//    /**
+//     * @param list
+//     * @return
+//     */
+//    private List copyIClasses2InfoClasses(List list) {
+//        List infoClasses = null;
+//        if (list != null) {
+//            infoClasses = (List) CollectionUtils.collect(list,
+//                    new Transformer() {
+//
+//                        public Object transform(Object arg0) {
+//
+//                            return copyIClass2InfoClass((ITurma) arg0);
+//                        }
+//
+//                    });
+//        }
+//        return infoClasses;
+//    }
+//
+//    private InfoClass copyIClass2InfoClass(ITurma turma) {
+//        InfoClass infoClass = null;
+//        if (turma != null) {
+//            infoClass = new InfoClass();
+//            infoClass.setIdInternal(turma.getIdInternal());
+//            infoClass.setNome(turma.getNome());
+//            infoClass
+//                    .setInfoExecutionDegree(copyIExecutionDegree2InfoExecutionDegree(turma
+//                            .getExecutionDegree()));
+//
+//        }
+//        return infoClass;
+//    }
+//
+//    /**
+//     * @param executionDegree
+//     * @return
+//     */
+//    private InfoExecutionDegree copyIExecutionDegree2InfoExecutionDegree(
+//            ICursoExecucao executionDegree) {
+//        InfoExecutionDegree infoExecutionDegree = null;
+//        if (executionDegree != null) {
+//            infoExecutionDegree = new InfoExecutionDegree();
+//            infoExecutionDegree.setIdInternal(executionDegree.getIdInternal());
+//            infoExecutionDegree
+//                    .setInfoExecutionYear(copyIExecutionYear2InfoExecutionYear(executionDegree
+//                            .getExecutionYear()));
+//            infoExecutionDegree
+//                    .setInfoDegreeCurricularPlan(copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(executionDegree
+//                            .getCurricularPlan()));
+//        }
+//        return infoExecutionDegree;
+//    }
+//
+//    /**
+//     * @param plan
+//     * @return
+//     */
+//    private InfoDegreeCurricularPlan copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(
+//            IDegreeCurricularPlan plan) {
+//        InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
+//        if (plan != null) {
+//            infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
+//            infoDegreeCurricularPlan.setIdInternal(plan.getIdInternal());
+//            infoDegreeCurricularPlan.setName(plan.getName());
+//            infoDegreeCurricularPlan.setInfoDegree(copyIDegree2InfoDegree(plan
+//                    .getDegree()));
+//        }
+//        return infoDegreeCurricularPlan;
+//    }
+//
+//    /**
+//     * @param degree
+//     * @return
+//     */
+//    private InfoDegree copyIDegree2InfoDegree(ICurso degree) {
+//        InfoDegree infoDegree = null;
+//        if (degree != null) {
+//            infoDegree = new InfoDegree();
+//            infoDegree.setIdInternal(degree.getIdInternal());
+//            infoDegree.setNome(degree.getNome());
+//            infoDegree.setSigla(degree.getSigla());
+//            infoDegree.setTipoCurso(degree.getTipoCurso());
+//        }
+//        return infoDegree;
+//    }
+//
+//    /**
+//     * @param list
+//     * @return
+//     */
+//    private List copyILessons2InfoLessons(List list) {
+//        List infoLessons = null;
+//        if (list != null) {
+//            infoLessons = (List) CollectionUtils.collect(list,
+//                    new Transformer() {
+//
+//                        public Object transform(Object arg0) {
+//
+//                            return copyILesson2InfoLesson((IAula) arg0);
+//                        }
+//
+//                    });
+//        }
+//        return infoLessons;
+//    }
+//
+//    private Object copyILesson2InfoLesson(IAula lesson) {
+//        InfoLesson infoLesson = null;
+//        if (lesson != null) {
+//            infoLesson = new InfoLesson();
+//            infoLesson.setIdInternal(lesson.getIdInternal());
+//            infoLesson.setDiaSemana(lesson.getDiaSemana());
+//            infoLesson.setFim(lesson.getFim());
+//            infoLesson.setInicio(lesson.getInicio());
+//            infoLesson.setTipo(lesson.getTipo());
+//            infoLesson.setInfoSala(copyISala2InfoRoom(lesson.getSala()));
+//        }
+//        return infoLesson;
+//    }
+//
+//    /**
+//     * @param sala
+//     * @return
+//     */
+//    private InfoRoom copyISala2InfoRoom(ISala sala) {
+//        InfoRoom infoRoom = null;
+//        if (sala != null) {
+//            infoRoom = new InfoRoom();
+//            infoRoom.setIdInternal(sala.getIdInternal());
+//            infoRoom.setNome(sala.getNome());
+//        }
+//        return infoRoom;
+//    }
+//
+//    /**
+//     * @param executionCourse
+//     * @return
+//     */
+//    private InfoExecutionCourse copyIExecutionCourse2InfoExecutionCourse(
+//            IExecutionCourse executionCourse) {
+//        InfoExecutionCourse infoExecutionCourse = null;
+//        if (executionCourse != null) {
+//            infoExecutionCourse = new InfoExecutionCourse();
+//            infoExecutionCourse.setIdInternal(executionCourse.getIdInternal());
+//            infoExecutionCourse.setNome(executionCourse.getNome());
+//            infoExecutionCourse.setSigla(executionCourse.getSigla());
+//            infoExecutionCourse
+//                    .setInfoExecutionPeriod(copyIExecutionPeriod2InfoExecutionPeriod(executionCourse
+//                            .getExecutionPeriod()));
+//        }
+//        return infoExecutionCourse;
+//    }
+//
+//    /**
+//     * @param period
+//     * @return
+//     */
+//    private InfoExecutionPeriod copyIExecutionPeriod2InfoExecutionPeriod(
+//            IExecutionPeriod period) {
+//        InfoExecutionPeriod infoExecutionPeriod = null;
+//        if (period != null) {
+//            infoExecutionPeriod = new InfoExecutionPeriod();
+//            infoExecutionPeriod.setIdInternal(period.getIdInternal());
+//            infoExecutionPeriod.setName(period.getName());
+//            infoExecutionPeriod
+//                    .setInfoExecutionYear(copyIExecutionYear2InfoExecutionYear(period
+//                            .getExecutionYear()));
+//        }
+//        return infoExecutionPeriod;
+//    }
+//
+//    /**
+//     * @param year
+//     * @return
+//     */
+//    private InfoExecutionYear copyIExecutionYear2InfoExecutionYear(
+//            IExecutionYear year) {
+//        InfoExecutionYear infoExecutionYear = null;
+//        if (year != null) {
+//            infoExecutionYear = new InfoExecutionYear();
+//            infoExecutionYear.setIdInternal(year.getIdInternal());
+//            infoExecutionYear.setYear(year.getYear());
+//        }
+//        return infoExecutionYear;
+//    }
 }

@@ -27,8 +27,9 @@ public class InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan
      */
     public static InfoExecutionDegree newInfoFromDomain(
             ICursoExecucao executionDegree) {
-        InfoExecutionDegreeWithInfoDegreeCurricularPlan infoExecutionDegree = null;
-        if (infoExecutionDegree != null) {
+        InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan infoExecutionDegree = null;
+        if (executionDegree != null) {
+            infoExecutionDegree = new InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan();
             infoExecutionDegree.copyFromDomain(executionDegree);
         }
         return infoExecutionDegree;

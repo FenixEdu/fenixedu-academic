@@ -63,6 +63,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
             infoShiftEnrollment = (InfoShiftEnrollment) ServiceManagerServiceFactory.executeService(
                     userView, "PrepareInfoShiftEnrollmentByStudentNumber", args);
         } catch (FenixServiceException serviceException) {
+            serviceException.printStackTrace();
             errors.add("error", new ActionError(serviceException.getMessage()));
             saveErrors(request, errors);
             return mapping.findForward("studentFirstPage");
