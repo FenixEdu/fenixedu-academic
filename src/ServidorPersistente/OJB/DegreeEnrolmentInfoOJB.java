@@ -7,9 +7,8 @@ import org.odmg.QueryException;
 import Dominio.DegreeEnrolmentInfo;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IDegreeEnrolmentInfo;
-import ServidorPersistente.*;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.exceptions.*;
+import ServidorPersistente.IPersistentDegreeEnrolmentInfo;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
