@@ -22,7 +22,7 @@ public class JavaPeriodToApplyRestriction2SqlPeriodToApplyRestrictionFieldConver
     public Object sqlToJava(Object source) {
         if (source instanceof Integer) {
             Integer src = (Integer) source;
-            return new PeriodToApplyRestriction("", src.intValue());
+            return new Integer(src.intValue());
         }
         return source;
 
