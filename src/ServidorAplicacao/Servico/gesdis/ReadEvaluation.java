@@ -5,11 +5,11 @@
  */
 package ServidorAplicacao.Servico.gesdis;
 
-import DataBeans.InfoEvaluation;
+import DataBeans.InfoEvaluationMethod;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
-import Dominio.IEvaluation;
+import Dominio.IEvaluationMethod;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -45,12 +45,12 @@ public class ReadEvaluation implements IServico {
 		return "ReadEvaluation";
 	}
 
-	public InfoEvaluation run(InfoExecutionCourse infoExecutionCourse) throws FenixServiceException {
+	public InfoEvaluationMethod run(InfoExecutionCourse infoExecutionCourse) throws FenixServiceException {
 		try {
-			InfoEvaluation infoEvaluation = null;
+			InfoEvaluationMethod infoEvaluation = null;
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
-			IEvaluation  evaluation = sp.getIPersistentEvaluation().readByExecutionCourse(executionCourse);
+			IEvaluationMethod  evaluation = sp.getIPersistentEvaluation().readByExecutionCourse(executionCourse);
 			if (evaluation != null) {
 				infoEvaluation=Cloner.copyIEvaluation2InfoEvaluation(evaluation);
 			}

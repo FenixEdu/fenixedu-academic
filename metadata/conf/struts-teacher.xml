@@ -533,7 +533,7 @@
 		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"
 		validate="true"
         className="ServidorApresentacao.mapping.SiteManagementActionMapping">		
-			<set-property property="componentClassName" value="DataBeans.InfoEvaluation"/>
+			<set-property property="componentClassName" value="DataBeans.InfoEvaluationMethod"/>
 			<set-property property="inputForwardName" value="editEvaluation"/>
        <forward name="viewEvaluation" path="/viewEvaluation.jsp"/>
        <forward name="editEvaluation" path="/editEvaluation.jsp"/>

@@ -10,18 +10,18 @@ package DataBeans;
  *
  * 
  */
-public class InfoEvaluation implements ISiteComponent{
+public class InfoEvaluationMethod implements ISiteComponent{
 
 	private InfoExecutionCourse infoExecutionCourse;
 	private String evaluationElements;
 	private String evaluationElementsEn;
 
-	public InfoEvaluation() {
+	public InfoEvaluationMethod() {
 	}
-	public InfoEvaluation(InfoExecutionCourse infoExecutionCourse) {
+	public InfoEvaluationMethod(InfoExecutionCourse infoExecutionCourse) {
 		setInfoExecutionCourse(infoExecutionCourse);
 	}
-	public InfoEvaluation(
+	public InfoEvaluationMethod(
 		InfoExecutionCourse infoExecutionCourse,
 		String evaluationElements,
 		String evaluationElementsEn) {
@@ -59,7 +59,7 @@ public class InfoEvaluation implements ISiteComponent{
 	}
 
 	public String toString() {
-		String result = "[Evaluation";
+		String result = "[EvaluationMethod";
 
 		result += ", evaluationElements =" + getEvaluationElements();
 		result += ", evaluationElementsEn =" + getEvaluationElementsEn();
@@ -70,10 +70,10 @@ public class InfoEvaluation implements ISiteComponent{
 
 	public boolean equals(Object arg0) {
 		boolean result = false;
-		if (arg0 instanceof InfoEvaluation) {
+		if (arg0 instanceof InfoEvaluationMethod) {
 			result =
 				getInfoExecutionCourse().equals(
-					((InfoEvaluation) arg0).getInfoExecutionCourse());
+					((InfoEvaluationMethod) arg0).getInfoExecutionCourse());
 		}
 		return result;
 	}

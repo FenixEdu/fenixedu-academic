@@ -1,15 +1,15 @@
 package ServidorAplicacao.Servico.teacher;
 
-import DataBeans.InfoEvaluation;
+import DataBeans.InfoEvaluationMethod;
 import Dominio.DisciplinaExecucao;
-import Dominio.Evaluation;
+import Dominio.EvaluationMethod;
 import Dominio.IDisciplinaExecucao;
-import Dominio.IEvaluation;
+import Dominio.IEvaluationMethod;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
-import ServidorPersistente.IPersistentEvaluation;
+import ServidorPersistente.IPersistentEvaluationMethod;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -31,17 +31,17 @@ public class EditEvaluation implements IServico {
 		return "EditEvaluation";
 	}
 
-	public boolean run(Integer infoExecutionCourseCode, InfoEvaluation infoEvaluationNew) throws FenixServiceException {
+	public boolean run(Integer infoExecutionCourseCode, InfoEvaluationMethod infoEvaluationNew) throws FenixServiceException {
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IDisciplinaExecucaoPersistente persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
-			IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
+			IPersistentEvaluationMethod persistentEvaluation = sp.getIPersistentEvaluation();
 
 			IDisciplinaExecucao executionCourse =
 				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(infoExecutionCourseCode), false);
 
-			IEvaluation evaluation = null;
+			IEvaluationMethod evaluation = null;
 			evaluation = persistentEvaluation.readByExecutionCourse(executionCourse);
 
 			persistentEvaluation.lockWrite(evaluation);
@@ -52,7 +52,7 @@ public class EditEvaluation implements IServico {
 				evaluation.setEvaluationElementsEn(infoEvaluationNew.getEvaluationElementsEn());
 			} else {
 				evaluation =
-					new Evaluation(
+					new EvaluationMethod(
 						executionCourse,
 						infoEvaluationNew.getEvaluationElements(),
 						infoEvaluationNew.getEvaluationElementsEn());

@@ -386,6 +386,14 @@
       </reference-descriptor> 
    </class-descriptor>   
 
+
+<!-- Definitions for Dominio.Evaluation -->
+<class-descriptor class="Dominio.Evaluation">
+    <extent-class class-ref="Dominio.Exam" />
+</class-descriptor>
+
+
+
 <!-- Definitions for Dominio.Exam -->
    <class-descriptor
    	  class="Dominio.Exam"
@@ -587,6 +595,7 @@
       </reference-descriptor>
    </class-descriptor>
    
+
 
 
 

@@ -126,10 +126,10 @@ create table BIBLIOGRAPHIC_REFERENCE (
    type=InnoDB comment="InnoDB free: 372736 kB";
 
 #----------------------------
-# Table structure for Evaluation
+# Table structure for EvaluationMethod
 #----------------------------
-drop table if exists EVALUATION;
-create table EVALUATION (
+drop table if exists EVALUATION_METHOD;
+create table EVALUATION_METHOD (
    ID_INTERNAL int(11) unsigned not null auto_increment,   
    KEY_EXECUTION_COURSE int(11) unsigned not null default '0',
    EVALUATION_ELEMENTS text,

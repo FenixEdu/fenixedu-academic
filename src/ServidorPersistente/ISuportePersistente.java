@@ -86,7 +86,7 @@ public interface ISuportePersistente {
 	public IPersistentPrecedence getIPersistentPrecedence();
 	public IPersistentRestriction getIPersistentRestriction();
 	
-	public IPersistentEvaluation getIPersistentEvaluation();
+	public IPersistentEvaluationMethod getIPersistentEvaluation();
 
 	public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod();
 	public IPersistentDegreeCurricularPlanEnrolmentInfo getIPersistentDegreeEnrolmentInfo();

@@ -10,11 +10,11 @@ import java.util.List;
 
 import org.odmg.QueryException;
 
-import Dominio.Evaluation;
+import Dominio.EvaluationMethod;
 import Dominio.IDisciplinaExecucao;
-import Dominio.IEvaluation;
+import Dominio.IEvaluationMethod;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentEvaluation;
+import ServidorPersistente.IPersistentEvaluationMethod;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
@@ -22,18 +22,18 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
  *
  * 
  */
-public class EvaluationOJB
+public class EvaluationMethodOJB
 	extends ObjectFenixOJB
-	implements IPersistentEvaluation {
+	implements IPersistentEvaluationMethod {
 
 	/* (non-Javadoc)
-	 * @see ServidorPersistente.IPersistentEvaluation#readByExecutionCourse(Dominio.IDisciplinaExecucao)
+	 * @see ServidorPersistente.IPersistentEvaluationMethod#readByExecutionCourse(Dominio.IDisciplinaExecucao)
 	 */
-	public IEvaluation readByExecutionCourse(IDisciplinaExecucao executionCourse)
+	public IEvaluationMethod readByExecutionCourse(IDisciplinaExecucao executionCourse)
 		throws ExcepcaoPersistencia {
 			try {
-				IEvaluation evaluation= null;
-				String oqlQuery = "select all from " + Evaluation.class.getName();
+				IEvaluationMethod evaluation= null;
+				String oqlQuery = "select all from " + EvaluationMethod.class.getName();
 				oqlQuery += " where executionCourse.sigla = $1 ";
 				oqlQuery += " and executionCourse.executionPeriod.name = $2 ";
 				oqlQuery += " and executionCourse.executionPeriod.executionYear.year = $3 ";
@@ -45,7 +45,7 @@ public class EvaluationOJB
 				
 				lockRead(result);
 				if (result.size() != 0){
-					evaluation = (IEvaluation) result.get(0);
+					evaluation = (IEvaluationMethod) result.get(0);
 				}
 				return evaluation;
 			} catch (QueryException ex) {
@@ -54,11 +54,11 @@ public class EvaluationOJB
 	}
 
 	/* (non-Javadoc)
-	 * @see ServidorPersistente.IPersistentEvaluation#readAll()
+	 * @see ServidorPersistente.IPersistentEvaluationMethod#readAll()
 	 */
 	public List readAll() throws ExcepcaoPersistencia {
 		try {
-			String oqlQuery = "select all from " + Evaluation.class.getName();
+			String oqlQuery = "select all from " + EvaluationMethod.class.getName();
 			query.create(oqlQuery);
 			List result = (List) query.execute();
 			lockRead(result);
@@ -69,24 +69,24 @@ public class EvaluationOJB
 	}
 
 	/* (non-Javadoc)
-	 * @see ServidorPersistente.IPersistentEvaluation#delete(Dominio.IEvaluation)
+	 * @see ServidorPersistente.IPersistentEvaluationMethod#delete(Dominio.IEvaluationMethod)
 	 */
-	public void delete(IEvaluation evaluation) throws ExcepcaoPersistencia {
+	public void delete(IEvaluationMethod evaluation) throws ExcepcaoPersistencia {
 		super.delete(evaluation);
 	//TODO: add to the execution Course delete methods to delete all evaluations, all curriculums and all sites
 	}
 
 	/* (non-Javadoc)
-	 * @see ServidorPersistente.IPersistentEvaluation#deleteAll()
+	 * @see ServidorPersistente.IPersistentEvaluationMethod#deleteAll()
 	 */
 	public void deleteAll() throws ExcepcaoPersistencia {
-		String oqlQuery = "select all from " + Evaluation.class.getName();
+		String oqlQuery = "select all from " + EvaluationMethod.class.getName();
 		super.deleteAll(oqlQuery);
 
 	}
 	
-	public void lockWrite(IEvaluation evaluation) throws ExcepcaoPersistencia {
-		IEvaluation evaluationFromDB = null;
+	public void lockWrite(IEvaluationMethod evaluation) throws ExcepcaoPersistencia {
+		IEvaluationMethod evaluationFromDB = null;
 
 					// If there is nothing to write, simply return.
 					if (evaluation == null)
@@ -103,9 +103,9 @@ public class EvaluationOJB
 				
 					// else If the professorship is mapped to the database, then write any existing changes.
 					else if (
-						(evaluation instanceof Evaluation)
-							&& ((Evaluation) evaluationFromDB).getIdInternal().equals(
-								((Evaluation) evaluation).getIdInternal())) {
+						(evaluation instanceof EvaluationMethod)
+							&& ((EvaluationMethod) evaluationFromDB).getIdInternal().equals(
+								((EvaluationMethod) evaluation).getIdInternal())) {
 						super.lockWrite(evaluation);
 						// else Throw an already existing exception
 					} else

@@ -11,7 +11,7 @@ import org.apache.struts.tiles.ComponentContext;
 import org.apache.struts.tiles.ControllerSupport;
 
 import DataBeans.ISiteComponent;
-import DataBeans.InfoEvaluation;
+import DataBeans.InfoEvaluationMethod;
 import DataBeans.InfoSiteAnnouncement;
 import DataBeans.InfoSiteAssociatedCurricularCourses;
 import DataBeans.InfoSiteBibliography;
@@ -61,7 +61,7 @@ public class PublicTilesComponentController extends ControllerSupport {
 		} else if (component instanceof InfoSiteProgram) {
 			tileContext.putAttribute("body", "/publico/program_bd.jsp");
 
-		} else if (component instanceof InfoEvaluation) {
+		} else if (component instanceof InfoEvaluationMethod) {
 			tileContext.putAttribute("body", "/publico/viewEvaluation_bd.jsp");
 		} else if (component instanceof InfoSiteBibliography) {
 			tileContext.putAttribute(

@@ -1,112 +1,44 @@
-/*
- * Created on 23/Abr/2003
- *
- * 
- */
 package Dominio;
 
 /**
- * @author João Mota
- *
- * 
+ * @author Tânia Pousão
+ * 24 de Junho de 2003	
  */
-public class Evaluation extends DomainObject implements IEvaluation {
+public abstract class Evaluation extends DomainObject implements IEvaluation {
+	private String ojbConcreteClass;
+	protected String publishmentMessage;
 
-	private String evaluationElements;
-	private String evaluationElementsEn;
-	private Integer keyExecutionCourse;
-	private IDisciplinaExecucao executionCourse;
-
-	/**
-	 * 
-	 */
 	public Evaluation() {
+		super();
+		this.ojbConcreteClass = this.getClass().getName();
 	}
-
-	public Evaluation(IDisciplinaExecucao executionCourse) {
-		setExecutionCourse(executionCourse);
-	}
-
-	public Evaluation(IDisciplinaExecucao executionCourse, String evaluationElements) {
-		setExecutionCourse(executionCourse);
-		setEvaluationElements(evaluationElements);
-	}
-	public Evaluation(IDisciplinaExecucao executionCourse, String evaluationElements, String evaluationElementsEn) {
-		setExecutionCourse(executionCourse);
-		setEvaluationElements(evaluationElements);
-		setEvaluationElementsEn(evaluationElementsEn);
-	}
+	
 	/**
-	 * @return
+	 * @return String
 	 */
-	public String getEvaluationElements() {
-		return evaluationElements;
+	public String getOjbConcreteClass() {
+		return ojbConcreteClass;
 	}
 
 	/**
 	 * @param string
 	 */
-	public void setEvaluationElements(String string) {
-		evaluationElements = string;
+	public void setOjbConcreteClass(String string) {
+		ojbConcreteClass = string;
 	}
 
 	/**
-	 * @return
+	 * @return String
 	 */
-	public IDisciplinaExecucao getExecutionCourse() {
-		return executionCourse;
-	}
-
-	/**
-	 * @return
-	 */
-	public Integer getKeyExecutionCourse() {
-		return keyExecutionCourse;
-	}
-
-	/**
-	 * @param execucao
-	 */
-	public void setExecutionCourse(IDisciplinaExecucao execucao) {
-		executionCourse = execucao;
-	}
-
-	/**
-	 * @param integer
-	 */
-	public void setKeyExecutionCourse(Integer integer) {
-		keyExecutionCourse = integer;
-	}
-
-	public String toString() {
-		String result = "[Evaluation";
-		result += ", codInt=" + getIdInternal();
-		result += ", evaluationElements =" + getEvaluationElements();
-		result += ", executionCourse =" + getExecutionCourse();
-		result += "]";
-		return result;
-	}
-
-	public boolean equals(Object arg0) {
-		boolean result = false;
-		if (arg0 instanceof IEvaluation) {
-			result = getExecutionCourse().equals(((IEvaluation) arg0).getExecutionCourse());
-		}
-		return result;
-	}
-
-	/**
-	 * @return
-	 */
-	public String getEvaluationElementsEn() {
-		return evaluationElementsEn;
+	public String getPublishmentMessage() {
+		return publishmentMessage;
 	}
 
 	/**
 	 * @param string
 	 */
-	public void setEvaluationElementsEn(String string) {
-		evaluationElementsEn = string;
+	public void setPublishmentMessage(String string) {
+		publishmentMessage = string;
 	}
 
 }

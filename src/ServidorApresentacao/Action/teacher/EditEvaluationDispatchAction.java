@@ -15,7 +15,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import DataBeans.InfoEvaluation;
+import DataBeans.InfoEvaluationMethod;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSite;
 import ServidorAplicacao.IUserView;
@@ -48,10 +48,10 @@ public class EditEvaluationDispatchAction extends FenixDispatchAction {
 
 		//execute action main service
 		Object[] args = { infoExecutionCourse };
-		InfoEvaluation infoEvaluation = null;
+		InfoEvaluationMethod infoEvaluation = null;
 		try {
 			infoEvaluation =
-				(InfoEvaluation) ServiceUtils.executeService(
+				(InfoEvaluationMethod) ServiceUtils.executeService(
 					null,
 					"ReadEvaluation",
 					args);
@@ -88,7 +88,7 @@ public class EditEvaluationDispatchAction extends FenixDispatchAction {
 			HttpSession session = request.getSession(false);	
 			
 			//get old evaluation from session
-			InfoEvaluation oldEvaluation = (InfoEvaluation) session.getAttribute(SessionConstants.INFO_EVALUATION);
+			InfoEvaluationMethod oldEvaluation = (InfoEvaluationMethod) session.getAttribute(SessionConstants.INFO_EVALUATION);
 			
 			//get new infoEvaluation data from the form
 			DynaActionForm evaluationForm = (DynaActionForm) form;
@@ -102,7 +102,7 @@ public class EditEvaluationDispatchAction extends FenixDispatchAction {
 			else {
 				executionCourse = oldEvaluation.getInfoExecutionCourse();
 			}
-			InfoEvaluation newEvaluation = new InfoEvaluation(executionCourse,evaluationElements,evaluationElementsEn);
+			InfoEvaluationMethod newEvaluation = new InfoEvaluationMethod(executionCourse,evaluationElements,evaluationElementsEn);
 			
 			//get userView
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);

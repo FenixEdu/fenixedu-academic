@@ -58,10 +58,10 @@
 </class-descriptor>
 
 <!-- ******************************************************************************************************************************* -->
-<!-- Definitions for Dominio.Evaluation -->
+<!-- Definitions for Dominio.EvaluationMethod -->
 <!-- ******************************************************************************************************************************* -->
-<class-descriptor class="Dominio.Evaluation"
-                  table="EVALUATION">
+<class-descriptor class="Dominio.EvaluationMethod"
+                  table="EVALUATION_METHOD">
     <field-descriptor id="1"
         name="idInternal"
         column="ID_INTERNAL"

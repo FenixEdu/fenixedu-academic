@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 
-import DataBeans.InfoEvaluation;
+import DataBeans.InfoEvaluationMethod;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSection;
 import DataBeans.InfoSite;
@@ -14,7 +14,7 @@ import DataBeans.TeacherAdministrationSiteView;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
 import Dominio.IDisciplinaExecucao;
-import Dominio.IEvaluation;
+import Dominio.IEvaluationMethod;
 import Dominio.ISection;
 import Dominio.ISite;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
@@ -57,7 +57,7 @@ public class TeacherAdministrationSiteComponentServiceEvaluationTest extends Tes
 	 */
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
-		Object[] args = { new Integer(24), new InfoSiteCommon(), new InfoEvaluation(), null, null, null };
+		Object[] args = { new Integer(24), new InfoSiteCommon(), new InfoEvaluationMethod(), null, null, null };
 		return args;
 	}
 
@@ -66,7 +66,7 @@ public class TeacherAdministrationSiteComponentServiceEvaluationTest extends Tes
 		InfoExecutionCourse infoExecutionCourse = null;
 		ISite site = null;
 		List sections = null;
-		IEvaluation evaluation = null;
+		IEvaluationMethod evaluation = null;
 
 		try {
 			sp = SuportePersistenteOJB.getInstance();
@@ -100,7 +100,7 @@ public class TeacherAdministrationSiteComponentServiceEvaluationTest extends Tes
 			infoSections.add(infoSection);
 		}
 
-		InfoEvaluation infoEvaluation = Cloner.copyIEvaluation2InfoEvaluation(evaluation);
+		InfoEvaluationMethod infoEvaluation = Cloner.copyIEvaluation2InfoEvaluation(evaluation);
 
 		InfoSite infoSite = Cloner.copyISite2InfoSite(site);
 

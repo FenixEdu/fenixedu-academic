@@ -1,6 +1,6 @@
 package ServidorAplicacao.Servicos.teacher;
 
-import DataBeans.InfoEvaluation;
+import DataBeans.InfoEvaluationMethod;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
@@ -59,7 +59,7 @@ public class EditEvaluationTest extends TestCaseDeleteAndEditServices {
 			System.out.println("failed setting up the test data");
 			e.printStackTrace();
 		}
-		InfoEvaluation infoEvaluation = new InfoEvaluation();
+		InfoEvaluationMethod infoEvaluation = new InfoEvaluationMethod();
 		infoEvaluation.setEvaluationElements("evaluationElements");
 		infoEvaluation.setEvaluationElementsEn("evaluationElementsEn");
 		infoEvaluation.setInfoExecutionCourse(infoExecutionCourse);

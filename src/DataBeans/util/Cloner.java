@@ -25,7 +25,7 @@ import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoEnrolmentInExtraCurricularCourse;
 import DataBeans.InfoEnrolmentInOptionalCurricularCourse;
 import DataBeans.InfoEquivalence;
-import DataBeans.InfoEvaluation;
+import DataBeans.InfoEvaluationMethod;
 import DataBeans.InfoExam;
 import DataBeans.InfoExamStudentRoom;
 import DataBeans.InfoExecutionCourse;
@@ -75,7 +75,7 @@ import Dominio.Enrolment;
 import Dominio.EnrolmentEvaluation;
 import Dominio.EnrolmentInOptionalCurricularCourse;
 import Dominio.Equivalence;
-import Dominio.Evaluation;
+import Dominio.EvaluationMethod;
 import Dominio.Exam;
 import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
@@ -105,7 +105,7 @@ import Dominio.IEnrolmentEvaluation;
 import Dominio.IEnrolmentInExtraCurricularCourse;
 import Dominio.IEnrolmentInOptionalCurricularCourse;
 import Dominio.IEquivalence;
-import Dominio.IEvaluation;
+import Dominio.IEvaluationMethod;
 import Dominio.IExam;
 import Dominio.IExamStudentRoom;
 import Dominio.IExecutionPeriod;
@@ -1687,9 +1687,9 @@ public abstract class Cloner {
 	}
 
 	//	---------------------------------------------- DCS-RJAO -----------------------------------------------
-	public static IEvaluation copyInfoEvaluation2IEvaluation(InfoEvaluation infoEvaluation) {
+	public static IEvaluationMethod copyInfoEvaluation2IEvaluation(InfoEvaluationMethod infoEvaluation) {
 
-		IEvaluation evaluation = new Evaluation();
+		IEvaluationMethod evaluation = new EvaluationMethod();
 		IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoEvaluation.getInfoExecutionCourse());
 
 		copyObjectProperties(evaluation, infoEvaluation);
@@ -1699,9 +1699,9 @@ public abstract class Cloner {
 		return evaluation;
 	}
 
-	public static InfoEvaluation copyIEvaluation2InfoEvaluation(IEvaluation evaluation) {
+	public static InfoEvaluationMethod copyIEvaluation2InfoEvaluation(IEvaluationMethod evaluation) {
 
-		InfoEvaluation infoEvaluation = new InfoEvaluation();
+		InfoEvaluationMethod infoEvaluation = new InfoEvaluationMethod();
 		InfoExecutionCourse infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(evaluation.getExecutionCourse());
 
 		copyObjectProperties(infoEvaluation, evaluation);

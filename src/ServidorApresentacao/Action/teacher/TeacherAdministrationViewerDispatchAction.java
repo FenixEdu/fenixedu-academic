@@ -16,7 +16,7 @@ import org.apache.struts.validator.DynaValidatorForm;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoAnnouncement;
 import DataBeans.InfoBibliographicReference;
-import DataBeans.InfoEvaluation;
+import DataBeans.InfoEvaluationMethod;
 import DataBeans.InfoItem;
 import DataBeans.InfoSite;
 import DataBeans.InfoSiteAnnouncement;
@@ -417,7 +417,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		return viewProgram(mapping, form, request, response);
 	}
 
-	//	========================  Evaluation Management  ========================
+	//	========================  EvaluationMethod Management  ========================
 
 	public ActionForward viewEvaluation(
 		ActionMapping mapping,
@@ -426,7 +426,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		ISiteComponent evaluationComponent = new InfoEvaluation();
+		ISiteComponent evaluationComponent = new InfoEvaluationMethod();
 		readSiteView(request, evaluationComponent, null, null, null);
 
 		return mapping.findForward("viewEvaluation");
@@ -439,14 +439,14 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		ISiteComponent evaluationComponent = new InfoEvaluation();
+		ISiteComponent evaluationComponent = new InfoEvaluationMethod();
 		readSiteView(request, evaluationComponent, null, null, null);
 
 		TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) request.getAttribute("siteView");
 
 		DynaActionForm evaluationForm = (DynaActionForm) form;
-		evaluationForm.set("evaluationElements", ((InfoEvaluation) siteView.getComponent()).getEvaluationElements());
-		evaluationForm.set("evaluationElementsEn", ((InfoEvaluation) siteView.getComponent()).getEvaluationElementsEn());
+		evaluationForm.set("evaluationElements", ((InfoEvaluationMethod) siteView.getComponent()).getEvaluationElements());
+		evaluationForm.set("evaluationElementsEn", ((InfoEvaluationMethod) siteView.getComponent()).getEvaluationElementsEn());
 
 		return mapping.findForward("editEvaluation");
 	}
@@ -462,7 +462,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		Integer objectCode = getObjectCode(request);
 
 		DynaActionForm evaluationForm = (DynaActionForm) form;
-		InfoEvaluation infoEvaluationNew = new InfoEvaluation();
+		InfoEvaluationMethod infoEvaluationNew = new InfoEvaluationMethod();
 		infoEvaluationNew.setEvaluationElements((String) evaluationForm.get("evaluationElements"));
 		infoEvaluationNew.setEvaluationElementsEn((String) evaluationForm.get("evaluationElementsEn"));
 

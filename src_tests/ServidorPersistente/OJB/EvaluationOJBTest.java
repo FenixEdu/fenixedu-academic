@@ -5,14 +5,14 @@ import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import Dominio.Evaluation;
+import Dominio.EvaluationMethod;
 import Dominio.IDisciplinaExecucao;
-import Dominio.IEvaluation;
+import Dominio.IEvaluationMethod;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
-import ServidorPersistente.IPersistentEvaluation;
+import ServidorPersistente.IPersistentEvaluationMethod;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 
@@ -31,7 +31,7 @@ public class EvaluationOJBTest extends TestCaseOJB {
 
 	SuportePersistenteOJB persistentSupport = null;
 	IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
-	IPersistentEvaluation persistentEvaluation = null;
+	IPersistentEvaluationMethod persistentEvaluation = null;
 	IPersistentExecutionPeriod persistentExecutionPeriod = null;
 	IPersistentExecutionYear persistentExecutionYear = null;
 
@@ -82,7 +82,7 @@ public class EvaluationOJBTest extends TestCaseOJB {
 			List evaluationList = persistentEvaluation.readAll();
 			Iterator iter = evaluationList.iterator();
 			while (iter.hasNext()) {
-				System.out.println("evaluation= " + (IEvaluation) iter.next());
+				System.out.println("evaluation= " + (IEvaluationMethod) iter.next());
 			}
 
 			assertEquals(2, evaluationList.size());
@@ -125,8 +125,8 @@ public class EvaluationOJBTest extends TestCaseOJB {
 		IExecutionYear executionYear;
 		IExecutionPeriod executionPeriod;
 		IDisciplinaExecucao executionCourse;
-		IEvaluation evaluation;
-		IEvaluation evaluationFromDB;
+		IEvaluationMethod evaluation;
+		IEvaluationMethod evaluationFromDB;
 
 		try {
 			System.out.println("3.1 - write unexisting evaluation");
@@ -146,7 +146,7 @@ public class EvaluationOJBTest extends TestCaseOJB {
 					executionPeriod);
 			assertNotNull("failed reading executionCourse", executionCourse);
 
-			evaluation = new Evaluation(executionCourse, "blablabla");
+			evaluation = new EvaluationMethod(executionCourse, "blablabla");
 			persistentEvaluation.lockWrite(evaluation);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
@@ -205,7 +205,7 @@ public class EvaluationOJBTest extends TestCaseOJB {
 					executionPeriod);
 			assertNotNull("failed reading executionCourse", executionCourse);
 
-			evaluation = new Evaluation(executionCourse, "blablabla");
+			evaluation = new EvaluationMethod(executionCourse, "blablabla");
 			persistentEvaluation.lockWrite(evaluation);
 			persistentSupport.confirmarTransaccao();
 			fail("    -> Failed  writting existing evaluation");
@@ -281,8 +281,8 @@ public class EvaluationOJBTest extends TestCaseOJB {
 		IExecutionYear executionYear;
 		IExecutionPeriod executionPeriod;
 		IDisciplinaExecucao executionCourse;
-		IEvaluation evaluation;
-		IEvaluation evaluationFromDB;
+		IEvaluationMethod evaluation;
+		IEvaluationMethod evaluationFromDB;
 		try {
 			System.out.println("4.1 - delete existing evaluation");
 			persistentSupport.iniciarTransaccao();
@@ -343,8 +343,8 @@ public class EvaluationOJBTest extends TestCaseOJB {
 		IExecutionYear executionYear;
 		IExecutionPeriod executionPeriod;
 		IDisciplinaExecucao executionCourse;
-		IEvaluation evaluation;
-		IEvaluation evaluationFromDB;
+		IEvaluationMethod evaluation;
+		IEvaluationMethod evaluationFromDB;
 		try {
 			System.out.println("5.1 - read unexisting evaluation");
 			persistentSupport.iniciarTransaccao();

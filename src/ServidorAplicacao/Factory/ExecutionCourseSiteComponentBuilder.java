@@ -17,7 +17,7 @@ import DataBeans.InfoBibliographicReference;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoCurriculum;
-import DataBeans.InfoEvaluation;
+import DataBeans.InfoEvaluationMethod;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoLesson;
 import DataBeans.InfoSection;
@@ -42,7 +42,7 @@ import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICurriculum;
 import Dominio.IDisciplinaExecucao;
-import Dominio.IEvaluation;
+import Dominio.IEvaluationMethod;
 import Dominio.IExam;
 import Dominio.IItem;
 import Dominio.IProfessorship;
@@ -105,8 +105,8 @@ public class ExecutionCourseSiteComponentBuilder {
 		} else if (component instanceof InfoSiteProgram) {
 			return getInfoSiteProgram((InfoSiteProgram) component, site);
 
-		} else if (component instanceof InfoEvaluation) {
-			return getInfoEvaluation((InfoEvaluation) component, site);
+		} else if (component instanceof InfoEvaluationMethod) {
+			return getInfoEvaluation((InfoEvaluationMethod) component, site);
 		} else if (component instanceof InfoSiteBibliography) {
 			return getInfoSiteBibliography(
 				(InfoSiteBibliography) component,
@@ -469,14 +469,14 @@ public class ExecutionCourseSiteComponentBuilder {
 	 * @return
 	 */
 	private ISiteComponent getInfoEvaluation(
-		InfoEvaluation component,
+		InfoEvaluationMethod component,
 		ISite site)
 		throws FenixServiceException {
 		try {
 
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IDisciplinaExecucao executionCourse = site.getExecutionCourse();
-			IEvaluation evaluation =
+			IEvaluationMethod evaluation =
 				sp.getIPersistentEvaluation().readByExecutionCourse(
 					executionCourse);
 			if (evaluation != null) {
