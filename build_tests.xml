@@ -38,12 +38,7 @@
 	<target name="run-tests-cache"
 			depends="compile-tests-cache"
             description="Verifies correct cache distribution.">
-		<java classname="ServidorPersistente.cache.DistributedCacheTest"
-           fork="true"
-           failonerror="true"
-           maxmemory="128m"
-           >
-			<arg value="-h"/>
+		<java classname="ServidorPersistente.cache.DistributedCacheTest">
 			<classpath>
 				<pathelement path="${build.tests.cache}"/>
 				<pathelement path="${build.app-server}"/>

@@ -9,7 +9,7 @@ import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
 
-import Dominio.ExecutionCourse;
+import Dominio.ExecutionPeriod;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.ObjectFenixOJB;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -51,6 +51,7 @@ public class DistributedCacheTest extends ObjectFenixOJB
 		{
 			readAlotOfObjects();
 			readAlotOfObjects();
+			editSomeObject();
 		}
 		catch (Exception e)
 		{
@@ -58,12 +59,27 @@ public class DistributedCacheTest extends ObjectFenixOJB
 		}
 	}
 
+	/**
+	 * 
+	 */
+	private static void editSomeObject() throws ExcepcaoPersistencia
+	{
+		System.out.println("Obtainning object to edit");
+		persistentSupport.iniciarTransaccao();
+		List executionPeriods = cacheTest.readAllExecutionPeriods();
+		ExecutionPeriod executionPeriod = (ExecutionPeriod) executionPeriods.get(0);
+		cacheTest.simpleLockWrite(executionPeriod);
+		executionPeriod.setBeginDate(Calendar.getInstance().getTime());
+		persistentSupport.confirmarTransaccao();
+		System.out.println("Altered one column of retieved object.");
+	}
+
 	private static void readAlotOfObjects() throws ExcepcaoPersistencia
 	{
 		persistentSupport.iniciarTransaccao();
 		System.out.println("Reading all execution courses...");
 		startTime = Calendar.getInstance();
-		List executionCourses = cacheTest.readAllExecutionCourses();
+		List executionCourses = cacheTest.readAllExecutionPeriods();
 		endTime = Calendar.getInstance();
 		System.out.println(
 			"Read a total of "
@@ -74,9 +90,9 @@ public class DistributedCacheTest extends ObjectFenixOJB
 		persistentSupport.confirmarTransaccao();
 	}
 
-	private List readAllExecutionCourses() throws ExcepcaoPersistencia
+	private List readAllExecutionPeriods() throws ExcepcaoPersistencia
 	{
-		return queryList(ExecutionCourse.class, new Criteria());
+		return queryList(ExecutionPeriod.class, new Criteria());
 	}
 
 	private long calculateServiceExecutionTime(Calendar serviceStartTime, Calendar serviceEndTime)
