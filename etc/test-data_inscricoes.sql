@@ -60,6 +60,23 @@ INSERT INTO STUDENT_CURRICULAR_PLAN VALUES (5, 7, 2, 1, '2002-10-21',1, 3);
 INSERT INTO STUDENT_CURRICULAR_PLAN VALUES (6, 8, 2, 1, '2002-10-21',1, 2);
 
 
+
+--
+-- Data for table 'DEGREE_CURRICULAR_PLAN_ENROLMENT_INFO' 
+-- (ID_INTERNAL, KEY_STUDENT, DEGREE_DURATION, MINIMAL_YEAR_FOR_OPTIONAL_COURSES)
+--
+DELETE FROM DEGREE_CURRICULAR_PLAN_ENROLMENT_INFO;
+INSERT INTO DEGREE_CURRICULAR_PLAN_ENROLMENT_INFO VALUES (1, 2, 0);
+
+
+--
+-- Data for table 'CURRICULAR_COURSE_ENROLMENT_INFO' 
+-- (ID_INTERNAL, MAX_INCREMENT_NAC, MIN_INCREMENT_NAC, WEIGTH)
+--
+DELETE FROM CURRICULAR_COURSE_ENROLMENT_INFO;
+INSERT INTO CURRICULAR_COURSE_ENROLMENT_INFO VALUES (1, 11, 5, 0);
+
+
 #-----------------------------
 # Data for table 'ENROLMENT'  (ID_INTERNAL, KEY_STUDENT_CURRICULAR_PLAN, KEY_CURRICULAR_COURSE, KEY_EXECUTION_PERIOD, STATE)
 # STATE: 1 = APPROVED
@@ -74,6 +91,17 @@ INSERT INTO ENROLMENT VALUES (3, 1, 1, 2, 2, 'Dominio.EnrolmentInOptionalCurricu
 INSERT INTO ENROLMENT VALUES (4, 1, 2, 2, 2, 'Dominio.Enrolment', null, 1, "IST");
 INSERT INTO ENROLMENT VALUES (5, 1, 2, 3, 2, 'Dominio.Enrolment', null, 1, "IST");
 INSERT INTO ENROLMENT VALUES (6, 1, 14, 1, 2, 'Dominio.Enrolment', null, 1, "IST");
+
+#-----------------------------
+#Angela
+#-----------------------------
+INSERT INTO ENROLMENT VALUES (7, 4, 2, 2, 2, 'Dominio.Enrolment', null,1, "IST");
+INSERT INTO ENROLMENT VALUES (8, 4, 2, 3, 2, 'Dominio.Enrolment', null,1, "IST");
+INSERT INTO ENROLMENT VALUES (9, 4, 14, 1, 2, 'Dominio.Enrolment', null,1, "IST");
+INSERT INTO ENROLMENT VALUES (10, 5, 1, 2, 2, 'Dominio.Enrolment', null,1, "IST");
+INSERT INTO ENROLMENT VALUES (11, 5, 2, 3, 2, 'Dominio.Enrolment', null,1, "IST");
+INSERT INTO ENROLMENT VALUES (12, 5, 14, 1, 2, 'Dominio.Enrolment', null,1, "IST");
+
 
 #-----------------------------
 # Data for table 'DEPARTMENT'
@@ -97,9 +125,9 @@ INSERT INTO DEPARTMENT_COURSE VALUES (2, 'Nao sei', 'mvt', 1);
 ;
 DELETE FROM DEGREE;
 INSERT INTO DEGREE VALUES (8,'LEIC','Licenciatura de Engenharia Informatica e de Computadores',1);
-INSERT INTO DEGREE VALUES (9,'MEEC','Mestrado em Engenharia Electrotecnica e de Computadores',2);
-INSERT INTO DEGREE VALUES (10,'MIC','Mestrado em Informatica e Computadores',2);
-INSERT INTO DEGREE VALUES (11,'MEM','Mestrado em Engenharia Mecanica',2);
+INSERT INTO DEGREE VALUES (9,'MEEC','Engenharia Electrotecnica e de Computadores',2);
+INSERT INTO DEGREE VALUES (10,'MIC','Informatica e Computadores',2);
+INSERT INTO DEGREE VALUES (11,'MEM','Engenharia Mecanica',2);
 INSERT INTO DEGREE VALUES (12,'CURSO','Curso para apagar',1);
 
 #-----------------------------

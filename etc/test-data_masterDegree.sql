@@ -79,10 +79,12 @@ INSERT INTO GUIDE_SITUATION values (6, 5, 1, '2003-5-4', 'Ainda nao foi pago', 1
 #-----------------------------
 DELETE FROM PRICE;
 DELETE FROM PRICE;
-INSERT INTO PRICE values (1, 1, 1, 'De conclusão de mestrado', '11.47');
+INSERT INTO PRICE values (1, 2, 1, 'Duração do Curso', '11.47');
 INSERT INTO PRICE values (2, 1, 2, 'Doc2', '12.45');
 INSERT INTO PRICE values (3, 1, 3, 'Doc3', '13.47');
-INSERT INTO PRICE values (4, 2, 4, 'Mestrado', '75');
-INSERT INTO PRICE values (5, 2, 4, 'Integrado', '75');
-INSERT INTO PRICE values (6, 2, 4, 'Especialização', '75');
+INSERT INTO PRICE values (4, 2, 1, 'Matrícula', '75');
+INSERT INTO PRICE values (5, 2, 1, 'Inscrição', '75');
+INSERT INTO PRICE values (6, 2, 1, 'Matrícula e Inscrição', '75');
+INSERT INTO PRICE values (7, 2, 1, 'Aproveitamento', '75');
+
 
