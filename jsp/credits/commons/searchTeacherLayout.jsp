@@ -8,7 +8,8 @@
 <p class="infoop">
 	<bean:message name="searchInfo"/>
 </p>
-<html:errors />
+<span class="error"><html:errors/></span>
+
 <bean:define id="path" name="<%= Globals.MAPPING_KEY %>" property="path" type="java.lang.String"/>
 <html:form action="<%= path %>" focus="teacherNumber">
 	<input type="hidden" name="method" value="doSearch"/>
