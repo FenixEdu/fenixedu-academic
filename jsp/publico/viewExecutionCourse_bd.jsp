@@ -13,7 +13,7 @@
 <table align="center"  cellpadding='0' cellspacing='0'>
 			<tr align="center">
 				<td>
-					<font color='red'> <bean:message key="message.public.notfound.executionCourse"/> </font>
+					<span class="error"> <bean:message key="message.public.notfound.executionCourse"/> </span>
 				</td>
 			</tr>
 		</table>
@@ -56,8 +56,7 @@
              </td>
              <td  class="ultAnuncioAviso">
              </td>
-             <td  class="ultAnuncioAviso">
-             </td>
+            
            
            </tr>
           
