@@ -21,8 +21,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.comparators.ComparatorChain;
-import org.apache.ojb.broker.PersistenceBroker;
-import org.apache.ojb.broker.PersistenceBrokerFactory;
 
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoEnrolment;
@@ -31,8 +29,8 @@ import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrolmentContext;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import framework.factory.ServiceManagerServiceFactory;
 import Tools.dbaccess;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Nuno Correia
@@ -58,27 +56,25 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
         System.out.println("setup start");
         try
         {
-            System.out.println("1");
+        
             dbAcessPoint = new dbaccess();
-            System.out.println("2");
+           
             dbAcessPoint.openConnection();
-            System.out.println("3");
-          //  dbAcessPoint.backUpDataBaseContents("etc/testBackup.xml");
-            System.out.println("4");
+           
+//            dbAcessPoint.backUpDataBaseContents("etc/testBackup.xml");
+           
             System.out.println(getDataSetFilePath());
             try
             {
-                dbAcessPoint.loadDataBase("c:/jmota/eclipse-M6/workspace/fenix-head/"+getDataSetFilePath());
+                dbAcessPoint.loadDataBase(getDataSetFilePath());
             }
             catch (RuntimeException e)
             {
                 System.out.println(e);
             }
-            System.out.println("5");
+          
             dbAcessPoint.closeConnection();
-            //            PersistenceBroker persistenceBroker = PersistenceBrokerFactory
-            //                    .defaultPersistenceBroker();
-            //            persistenceBroker.clearCache();
+           
             System.out.println("setup end");
         }
         catch (Exception ex)
@@ -90,18 +86,6 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
 
     protected void tearDown()
     {
-//        System.out.println("tearDown start");
-//        try
-//        {
-//            dbAcessPoint.openConnection();
-//         //   dbAcessPoint.loadDataBase("etc/testBackup.xml");
-//            dbAcessPoint.closeConnection();
-//            System.out.println("tearDown end");
-//        }
-//        catch (Exception ex)
-//        {
-//            System.out.println("Tear down failed: " + ex);
-//        }
     }
 
     /**
@@ -227,7 +211,7 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
 
     public boolean testShowAvailableCurricularCoursesTest()
     {
-        System.out.println("1");
+        System.out.println("test start");
         String[] args = getAuthenticatedAndAuthorizedUser();
         IUserView id = authenticateUser(args);
         Object[] args2 = getArguments();

@@ -229,7 +229,7 @@
 	<target name="leec-test-battery-loop" >
 		<property file="etc/LEEC_Enrollment_Tests_Arguments/LEEC_Test_Battery.properties"/>
 		
-		<!--script language="javascript">
+		<script language="javascript">
 		  <![CDATA[
       
         
@@ -244,12 +244,12 @@
 		  var param2 = callTask.createParam();
           param2.setName("file");
 		  param2.setValue("input");
-		  leec_test_battery.addTask(callTask); 
+		  leec_test_battery_datasets.addTask(callTask); 
          
          }
 
 			  ]]>
-		 </script-->
+		 </script>
 		
 	</target>
 	
@@ -277,7 +277,11 @@
 		
 	</target>
 	
-	<target name="leec_test_battery" depends="compile-proj,leec-test-battery-loop,leec-test-execution-loop">
+	<target name="leec_test_battery" depends="compile-proj,leec-test-execution-loop">
+		<property file="etc/LEEC_Enrollment_Tests_Arguments/LEEC_Test_Battery.properties"/>
+	</target>
+	
+	<target name="leec_test_battery_datasets" depends="compile-proj,leec-test-battery-loop">
 		<property file="etc/LEEC_Enrollment_Tests_Arguments/LEEC_Test_Battery.properties"/>
 	</target>
 	

@@ -48,7 +48,7 @@ import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Tools.DataSetGenerator;
+import Tools.SmartDataSetGeneratorForLEECTestBattery;
 
 /**
  * @author Nuno Correia
@@ -132,8 +132,8 @@ public class GeraXml
         try
         {
             String newFilePath = filePath.replaceFirst(".txt", ".xml");
-            DataSetGenerator dataSetGen = new DataSetGenerator(DATASET_CONFIG,
-                    newFilePath);
+            SmartDataSetGeneratorForLEECTestBattery dataSetGen = new SmartDataSetGeneratorForLEECTestBattery(
+                    DATASET_CONFIG, newFilePath, studentNumber.toString());
             dataSetGen.writeDataSet();
         }
         catch (NullPointerException e)
@@ -146,6 +146,16 @@ public class GeraXml
         }
         catch (IOException e)
         {
+            e.printStackTrace();
+        }
+        catch (SQLException e)
+        {
+
+            e.printStackTrace();
+        }
+        catch (Exception e)
+        {
+
             e.printStackTrace();
         }
 

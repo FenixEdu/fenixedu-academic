@@ -37,7 +37,7 @@ import org.dbunit.dataset.xml.FlatXmlDataSet;
  *         (naat@mega.ist.utl.pt) Description: Generates datasets using
  *         reachability graphs
  */
-public class SmartDataSetGenerator
+public class SmartDataSetGeneratorForLEECTestBattery
 {
 
     //constants
@@ -65,6 +65,8 @@ public class SmartDataSetGenerator
 
     private static final String FOREIGN_KEY_CONVENTIONS_CONFIG = "/ForeignKeyConventions.properties";
 
+    private static String STUDENT_NUMBER = "";
+
     //attributes
     private Properties props;
 
@@ -90,7 +92,7 @@ public class SmartDataSetGenerator
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public SmartDataSetGenerator(String configFilename)
+    public SmartDataSetGeneratorForLEECTestBattery(String configFilename)
             throws NullPointerException, FileNotFoundException, IOException
     {
         this.props = new Properties();
@@ -111,9 +113,34 @@ public class SmartDataSetGenerator
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public SmartDataSetGenerator(String configFilename, String filePath)
-            throws NullPointerException, FileNotFoundException, IOException
+    public SmartDataSetGeneratorForLEECTestBattery(String configFilename,
+            String filePath) throws NullPointerException,
+            FileNotFoundException, IOException
     {
+        this.props = new Properties();
+        this.props.load(new FileInputStream(configFilename));
+        this.props.put("destination.dataset", filePath);
+        addPropertiesToIgnore();
+        this.processedTables = new HashMap();
+        this.fkConventionsProps = new Properties();
+        this.fkConventionsProps.load(SmartDataSetGenerator.class
+                .getResourceAsStream(FOREIGN_KEY_CONVENTIONS_CONFIG));
+        readConventions();
+        readManyToManyTablesNamesAndValidReferences();
+
+    }
+
+    /**
+     * @param configFilename
+     * @throws NullPointerException
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public SmartDataSetGeneratorForLEECTestBattery(String configFilename,
+            String filePath, String studentNumber) throws NullPointerException,
+            FileNotFoundException, IOException
+    {
+        STUDENT_NUMBER = studentNumber;
         this.props = new Properties();
         this.props.load(new FileInputStream(configFilename));
         this.props.put("destination.dataset", filePath);
@@ -131,7 +158,8 @@ public class SmartDataSetGenerator
      * @throws IOException
      * @throws NullPointerException
      */
-    public SmartDataSetGenerator() throws IOException, NullPointerException
+    public SmartDataSetGeneratorForLEECTestBattery() throws IOException,
+            NullPointerException
     {
         this.props = new Properties();
         this.props.load(SmartDataSetGenerator.class
@@ -182,7 +210,8 @@ public class SmartDataSetGenerator
             String mainTableWhereCondition = this.props
                     .getProperty(MAIN_TABLE_WHERE_CONDITION_PROPERTY);
             String sqlInst = "SELECT " + mainTableColumns + " FROM "
-                    + mainTableName + " WHERE " + mainTableWhereCondition;
+                    + mainTableName + " WHERE " + mainTableWhereCondition
+                    + " AND NUMBER=" + STUDENT_NUMBER;
 
             Statement stmt = this.connection.createStatement();
             ResultSet resultSet = stmt.executeQuery(sqlInst);
@@ -205,11 +234,11 @@ public class SmartDataSetGenerator
             int totalTables = 1;
             for (int tableCounter = 0; tableCounter < totalTables; tableCounter++)
             {
-                //System.out.println(tableCounter);
+
                 TableInfo tableInfo = (TableInfo) tablesToProcess
                         .get(tableCounter);
                 tableNameInProcess = tableInfo.getTableName();
-
+               
                 TableInfo processedTableInfo = (TableInfo) this.processedTables
                         .get(tableInfo.getTableName());
                 if (processedTableInfo == null)
@@ -308,10 +337,19 @@ public class SmartDataSetGenerator
                                 }
 
                             }
-
-                            sqlQuery = "SELECT * FROM " + manyToManyTableName
-                                    + " WHERE " + fkName + " = "
-                                    + primaryKeyValue;
+                            if (manyToManyTableName == "DEGREE_CURRICULAR_PLAN")
+                            {
+                                sqlQuery = "SELECT * FROM "
+                                        + manyToManyTableName + " WHERE "
+                                        + fkName + " = " + primaryKeyValue
+                                        + " AND ID_INTERNAL=48";
+                            }
+                            else
+                            {
+                                sqlQuery = "SELECT * FROM "
+                                        + manyToManyTableName + " WHERE "
+                                        + fkName + " = " + primaryKeyValue;
+                            }
 
                             manyToManyResultSet = stmtManyToMany
                                     .executeQuery(sqlQuery);
