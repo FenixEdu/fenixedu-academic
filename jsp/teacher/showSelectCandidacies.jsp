@@ -14,6 +14,8 @@
 			</html:option>
 			<html:options collection="seminaries" property="idInternal" labelProperty="name"/>
 		</html:select>
+		<html:submit styleClass="button" value="OK" property="submition"/>
+
 		<table>
 			<tr>
 				<td class="listClasses-header">
