@@ -25,6 +25,7 @@ import ServidorPersistente.guide.IPersistentReimbursementGuideSituation;
 import ServidorPersistente.teacher.IPersistentCareer;
 import ServidorPersistente.teacher.IPersistentCategory;
 import ServidorPersistente.teacher.IPersistentExternalActivity;
+import ServidorPersistente.teacher.IPersistentOldPublication;
 import ServidorPersistente.teacher.IPersistentOrientation;
 import ServidorPersistente.teacher.IPersistentPublicationsNumber;
 import ServidorPersistente.teacher.IPersistentServiceProviderRegime;
@@ -222,4 +223,5 @@ public interface ISuportePersistente
     public IPersistentReimbursementGuideSituation getIPersistentReimbursementGuideSituation();
     public IPersistentOrientation getIPersistentOrientation();
     public IPersistentPublicationsNumber getIPersistentPublicationsNumber();
+    public IPersistentOldPublication getIPersistentOldPublication();
 }

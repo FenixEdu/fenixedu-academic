@@ -87,3 +87,17 @@ create table PUBLICATIONS_NUMBER (
 	primary key (ID_INTERNAL),
 	unique U1 (KEY_TEACHER, PUBLICATION_TYPE))
 	type=InnoDB;
+
+----------------------------	
+-- Table structure for OLD_PUBLICATION
+-----------------------------
+drop table if exists OLD_PUBLICATION;
+create table OLD_PUBLICATION (
+	ID_INTERNAL integer(11) not null auto_increment,
+	OLD_PUBLICATION_TYPE integer(10),
+	LAST_MODIFICATION_DATE timestamp(14) not null,
+	PUBLICATION text,
+	KEY_TEACHER integer(11) not null,
+	primary key (ID_INTERNAL),
+	unique U1 (KEY_TEACHER))
+	type=InnoDB;

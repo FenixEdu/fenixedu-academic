@@ -8,22 +8,24 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.enum.ValuedEnum;
+
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
  *  
  */
-public class OldPublicationType extends ValueEnum
+public class OldPublicationType extends ValuedEnum
 {
 	public static final int DIDACTIC_TYPE = 1;
 	public static final int CIENTIFIC_TYPE = 2;
 
-	public static OldPublicationType DIDACTIC = new PublicationType("Didactic", DIDACTIC_TYPE);
-	public static OldPublicationType CIENTIFIC = new PublicationType("Cientific", CIENTIFIC_TYPE);
+	public static OldPublicationType DIDACTIC = new OldPublicationType("Didactic", DIDACTIC_TYPE);
+	public static OldPublicationType CIENTIFIC = new OldPublicationType("Cientific", CIENTIFIC_TYPE);
 
 	public OldPublicationType(String name, int value)
 	{
-		super(name, value);
+	    super(name, value);
 	}
 
 	public static OldPublicationType getEnum(String oldPublicationType)

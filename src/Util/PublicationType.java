@@ -48,17 +48,17 @@ public class PublicationType extends ValuedEnum
 
     public static Map getEnumMap()
     {
-        return getEnumMap(OrientationType.class);
+        return getEnumMap(PublicationType.class);
     }
 
     public static List getEnumList()
     {
-        return getEnumList(OrientationType.class);
+        return getEnumList(PublicationType.class);
     }
 
     public static Iterator iterator()
     {
-        return iterator(OrientationType.class);
+        return iterator(PublicationType.class);
     }
 
     public String toString()
