@@ -141,6 +141,20 @@ public class InfoAnnouncement implements Comparable{
 	}
 	}
 	
+	public String getCreationDateFormatted() {
+		String result = this.creationDate.toString();
+		
+		return result.substring(0,result.indexOf("."));
+		
+		}
+	
+	public String getLastModifiedDateFormatted() {
+			String result = this.lastModifiedDate.toString();
+		
+			return result.substring(0,result.indexOf("."));
+		
+			}
+	
 	private Timestamp getYoungerDate() {
 	
 			
