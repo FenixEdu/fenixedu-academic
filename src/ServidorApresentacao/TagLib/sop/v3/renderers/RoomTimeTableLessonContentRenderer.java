@@ -16,16 +16,12 @@ public class RoomTimeTableLessonContentRenderer
 	public StringBuffer render(LessonSlot lessonSlot) {
 		StringBuffer strBuffer = new StringBuffer();
 		InfoLesson lesson = lessonSlot.getInfoLessonWrapper().getInfoLesson();
-		strBuffer.append(lesson.getInfoDisciplinaExecucao().getSigla());
 
-		strBuffer.append("(");
-		strBuffer.append(lesson.getTipo()).append(")");
-		strBuffer
-			.append("<a href='siteViewer.do?method=roomViewer&amp;roomName=")
-			.append(lesson.getInfoSala().getNome())
-			.append("'>")
-			.append(lesson.getInfoSala().getNome())
-			.append("</a>");
+		strBuffer.append("<a href='siteViewer.do?method=executionCourseViewer&amp;exeCourseCode=");
+		strBuffer.append(lesson.getInfoDisciplinaExecucao().getSigla());
+		strBuffer.append("'>").append(lesson.getInfoDisciplinaExecucao().getSigla()).append("</a>");
+		strBuffer.append("(").append(lesson.getTipo()).append(")&nbsp;");		
+
 		return strBuffer;
 	}
 
