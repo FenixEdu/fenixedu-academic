@@ -26,8 +26,7 @@ public abstract class DeleteDomainObjectService implements IServico
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentObject persistentObject = getIPersistentObject(sp);
 
-            IDomainObject domainObject =
-                (IDomainObject) persistentObject.readByOID(getDomainObjectClass(), objectId);
+            IDomainObject domainObject = persistentObject.readByOID(getDomainObjectClass(), objectId);
 
             if ((domainObject != null) && canDelete(domainObject, sp))
             {
@@ -46,26 +45,27 @@ public abstract class DeleteDomainObjectService implements IServico
     }
 
     /**
-	 * By default returns true
-	 * 
-	 * @param newDomainObject
-	 * @return
-	 */
-    protected boolean canDelete(IDomainObject newDomainObject, ISuportePersistente sp) throws ExcepcaoPersistencia
+     * By default returns true
+     * 
+     * @param newDomainObject
+     * @return
+     */
+    protected boolean canDelete(IDomainObject newDomainObject, ISuportePersistente sp)
+        throws ExcepcaoPersistencia
     {
         return true;
     }
 
     /**
-	 * This is the class in witch the broker will read and delete the DomainObject
-	 * 
-	 * @return
-	 */
+     * This is the class in witch the broker will read and delete the DomainObject
+     * 
+     * @return
+     */
     protected abstract Class getDomainObjectClass();
 
     /**
-	 * @param sp
-	 * @return
-	 */
+     * @param sp
+     * @return
+     */
     protected abstract IPersistentObject getIPersistentObject(ISuportePersistente sp);
 }

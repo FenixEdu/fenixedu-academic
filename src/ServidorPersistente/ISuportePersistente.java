@@ -16,6 +16,8 @@ import ServidorPersistente.Seminaries.IPersistentSeminaryTheme;
 import ServidorPersistente.degree.finalProject.IPersistentDegreeFinalProjectOrientation;
 import ServidorPersistente.gesdis.IPersistentCourseReport;
 import ServidorPersistente.grant.IPersistentGrantOwner;
+import ServidorPersistente.guide.IPersistentReimbursementGuide;
+import ServidorPersistente.guide.IPersistentReimbursementGuideSituation;
 import ServidorPersistente.teacher.IPersistentCareer;
 import ServidorPersistente.teacher.IPersistentCategory;
 import ServidorPersistente.teacher.IPersistentExternalActivity;
@@ -185,10 +187,10 @@ public interface ISuportePersistente
 
     public IPersistentUniversity getIPersistentUniversity();
 
-	/**
-	 * @return
-	 */
-	public IPersistentDegreeFinalProjectOrientation getIPersistentDegreeFinalProjectOrientation();
+    /**
+     * @return
+     */
+    public IPersistentDegreeFinalProjectOrientation getIPersistentDegreeFinalProjectOrientation();
 
     public IPersistentCourseReport getIPersistentCourseReport();
     public IPersistentCategory getIPersistentCategory();
@@ -201,4 +203,7 @@ public interface ISuportePersistente
      * @return
      */
     public IPersistentShiftProfessorship getIPersistentShiftProfessorship();
+
+    public IPersistentReimbursementGuide getIPersistentReimbursementGuide();
+    public IPersistentReimbursementGuideSituation getIPersistentReimbursementGuideSituation();
 }

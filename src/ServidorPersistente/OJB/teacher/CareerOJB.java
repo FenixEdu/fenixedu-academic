@@ -4,7 +4,6 @@
  */
 package ServidorPersistente.OJB.teacher;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;

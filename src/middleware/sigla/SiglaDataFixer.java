@@ -248,12 +248,12 @@ public class SiglaDataFixer {
 		return (List) broker.getCollectionByQuery(query);
 	}
 
-	private Integer sigla2FenixDegreeNumbers(Integer siglaDegreeNumber) {
-		if (siglaDegreeNumber.intValue() == 24) {
-			siglaDegreeNumber = new Integer(51);
-		}
-		return siglaDegreeNumber;
-	}
+//	private Integer sigla2FenixDegreeNumbers(Integer siglaDegreeNumber) {
+//		if (siglaDegreeNumber.intValue() == 24) {
+//			siglaDegreeNumber = new Integer(51);
+//		}
+//		return siglaDegreeNumber;
+//	}
 
 	private Integer fenix2SiglaFenixDegreeNumbers(Integer siglaDegreeNumber) {
 		if (siglaDegreeNumber.intValue() == 51) {

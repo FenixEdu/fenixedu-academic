@@ -5,7 +5,6 @@
 package ServidorAplicacao.Servicos.teacher;
 
 import DataBeans.SiteView;
-import DataBeans.teacher.InfoCareer;
 import DataBeans.teacher.InfoWeeklyOcupation;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;

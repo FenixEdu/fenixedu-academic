@@ -10,7 +10,6 @@ import java.util.List;
 
 import DataBeans.SiteView;
 import DataBeans.teacher.InfoExternalActivity;
-import DataBeans.teacher.InfoSiteCareers;
 import DataBeans.teacher.InfoSiteExternalActivities;
 import DataBeans.util.Cloner;
 import Dominio.ITeacher;

@@ -30,7 +30,7 @@ public abstract class ReadDomainObjectService implements IServico
             IPersistentObject persistentObject = getIPersistentObject(sp);
 
             IDomainObject domainObject =
-                (IDomainObject) persistentObject.readByOID(getDomainObjectClass(), objectId);
+                persistentObject.readByOID(getDomainObjectClass(), objectId);
 
             InfoObject infoObject = clone2InfoObject(domainObject);
             ISiteComponent bodyComponent = getISiteComponent(infoObject);

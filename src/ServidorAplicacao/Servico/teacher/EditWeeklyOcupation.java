@@ -31,17 +31,17 @@ public class EditWeeklyOcupation extends EditDomainObjectService
     }
 
     /**
-	 *  
-	 */
+     *  
+     */
     private EditWeeklyOcupation()
     {
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
     public String getNome()
     {
         return "EditWeeklyOcupation";
@@ -66,11 +66,11 @@ public class EditWeeklyOcupation extends EditDomainObjectService
         IWeeklyOcupation oldWeeklyOcupation = (IWeeklyOcupation) domainObject;
         IPersistentWeeklyOcupation persistentWeeklyOcupation = sp.getIPersistentWeeklyOcupation();
         IWeeklyOcupation newWeeklyOcupation =
-            (IWeeklyOcupation) persistentWeeklyOcupation.readByTeacher(oldWeeklyOcupation.getTeacher());
+            persistentWeeklyOcupation.readByTeacher(oldWeeklyOcupation.getTeacher());
 
         Integer oldIdInternal = oldWeeklyOcupation.getIdInternal();
         boolean newObject = (oldIdInternal == null) || (oldIdInternal.equals(new Integer(0)));
-        
+
         return (
             !newObject
                 && (newWeeklyOcupation != null)

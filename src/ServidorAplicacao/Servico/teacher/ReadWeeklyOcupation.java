@@ -6,18 +6,14 @@ package ServidorAplicacao.Servico.teacher;
 
 import DataBeans.ISiteComponent;
 import DataBeans.InfoObject;
-import DataBeans.teacher.InfoCareer;
 import DataBeans.teacher.InfoWeeklyOcupation;
 import DataBeans.util.Cloner;
 import Dominio.IDomainObject;
-import Dominio.teacher.Career;
-import Dominio.teacher.ICareer;
 import Dominio.teacher.IWeeklyOcupation;
 import Dominio.teacher.WeeklyOcupation;
 import ServidorAplicacao.Servico.framework.ReadDomainObjectService;
 import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.teacher.IPersistentCareer;
 import ServidorPersistente.teacher.IPersistentWeeklyOcupation;
 
 /**

@@ -48,7 +48,6 @@ import org.odmg.OQLQuery;
 import org.odmg.QueryException;
 import org.odmg.Transaction;
 
-import Dominio.DomainObject;
 import Dominio.IDomainObject;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;

@@ -5,13 +5,8 @@
 package ServidorAplicacao.Servicos.teacher;
 
 import DataBeans.InfoTeacher;
-import DataBeans.teacher.InfoCareer;
-import DataBeans.teacher.InfoCategory;
 import DataBeans.teacher.InfoExternalActivity;
-import DataBeans.teacher.InfoProfessionalCareer;
-import DataBeans.teacher.InfoTeachingCareer;
 import ServidorAplicacao.Servico.Autenticacao;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 
 /**

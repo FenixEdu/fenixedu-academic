@@ -6,7 +6,6 @@ package ServidorAplicacao.Servico.teacher;
 
 import DataBeans.ISiteComponent;
 import DataBeans.InfoObject;
-import DataBeans.teacher.InfoCareer;
 import DataBeans.teacher.InfoExternalActivity;
 import DataBeans.util.Cloner;
 import Dominio.IDomainObject;
