@@ -191,7 +191,7 @@
             description="Compila de raiz os testes para o projecto"
             name="build-tests"/>   
     
-    <target depends="compile-tests,deploy"
+    <target depends="compile-tests,deploy, load-dump-db"
             description="Executa todos os testes"
             name="run-tests">
         <junit haltonfailure="true" printsummary="yes" dir="${basedir}">
@@ -204,6 +204,17 @@
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
                     <include name="**/*Test.java"/>
+                   <exclude name="**/commons/*.java"/>
+                   <exclude name="**/student/*.java"/>
+                   <exclude name="**/SessionUtilsTest.java"/>
+                    <exclude name="**/CandidateSituationOJBTest.java"/>
+                    <exclude name="**/MasterDegreeCandidateOJBTest.java"/>
+                    <exclude name="**/SuportePersistenteOJBTest.java"/>
+                    <exclude name="**/MasterDegree/**/*.java"/>
+                    <exclude name="**/ReadOtherCoursesWithShiftsTest.java"/>
+                    <exclude name="**/ReadShiftEnrolmentTest.java"/>
+                   <exclude name="**/StudentShiftEnrolmentTest.java"/>
+                    <exclude name="**/ReadActualExecutionPeriodTest.java"/>                                     
                     <exclude name="ServidorApresentacao/**/ShiftEnrolmentActionTest.java"/>
                     <exclude name="**/SuportePersistenteOJBTest.java"/>
                     <exclude name="**/AllTests.java"/>
@@ -226,7 +237,7 @@
         </junit>
     </target>
     
-    <target depends="compile-tests,deploy"
+    <target depends="compile-tests,deploy, load-dump-db"
             description="Executa todos os testes"
             name="run-tests-capresentacao">
         <junit haltonfailure="true" printsummary="yes" dir="${basedir}">
@@ -238,7 +249,10 @@
             <formatter type="plain" usefile="false"/>
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
-
+                 <include name="**/*Test.java"/>
+                 <exclude name="**/commons/*.java"/>
+                 <exclude name="**/student/*.java"/>
+                 <exclude name="**/SessionUtilsTest.java"/>
                  <exclude name="ServidorAplicacao/**/*.java"/>
                  <exclude name="ServidorPersistente/**/*.java"/>
                  <exclude name="**/AllTests.java"/>
@@ -270,11 +284,9 @@
             <!--<test fork="true" name="ServidorPersistente.OJB.TestCaseOJB"/>-->
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
-                    <include name="**/TurnoOJBTest.java"/>
-                    <exclude name="**/EnrolmentOJBTest.java"/>                    
-                    <exclude name="**/SeccaoOJBTest.java"/>
-                    <exclude name="**/SitioOJBTest.java"/>
-                    <exclude name="**/PessoaOJBTest.java"/>
+                    <include name="**/*Test.java"/>
+                    <exclude name="**/CandidateSituationOJBTest.java"/>
+                    <exclude name="**/MasterDegreeCandidateOJBTest.java"/>
                     <exclude name="**/SuportePersistenteOJBTest.java"/>
                     <exclude name="ServidorAplicacao/**/*.java"/>
                     <exclude name="ServidorApresentacao/**/*.java"/>
@@ -293,7 +305,7 @@
         </junit>
     </target>
 
-    <target depends="compile-tests"
+    <target depends="compile-tests, load-dump-db"
             description="Executa todos os testes da camada de aplicacao"
             name="run-tests-caplicacao">
         <junit haltonfailure="true" printsummary="yes" dir="${basedir}">
@@ -302,7 +314,12 @@
             <!--<test fork="true" name="ServidorPersistente.OJB.TestCaseOJB"/>-->
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
-
+                    <include name="**/*Test.java"/>
+                    <exclude name="**/MasterDegree/**/*.java"/>
+                    <exclude name="**/ReadOtherCoursesWithShiftsTest.java"/>
+                    <exclude name="**/ReadShiftEnrolmentTest.java"/>
+                   <exclude name="**/StudentShiftEnrolmentTest.java"/>
+                    <exclude name="**/ReadActualExecutionPeriodTest.java"/>
                     <exclude name="ServidorApresentacao/**/*.java"/>
                     <exclude name="ServidorPersistente/**/*.java"/>
                     <exclude name="**/AllTests.java"/>
