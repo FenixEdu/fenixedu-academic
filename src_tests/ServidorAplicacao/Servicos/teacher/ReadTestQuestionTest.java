@@ -109,7 +109,7 @@ public class ReadTestQuestionTest extends TestCaseReadServices {
 				infoQuestion =
 					parse.parseQuestion(
 						infoQuestion.getXmlFile(),
-						infoQuestion);
+						infoQuestion,"");
 			} catch (Exception e) {
 				fail("exception: ExcepcaoPersistencia ");
 			}

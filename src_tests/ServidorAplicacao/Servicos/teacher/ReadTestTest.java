@@ -102,7 +102,7 @@ public class ReadTestTest extends TestCaseReadServices {
 				infoTestQuestion.setQuestion(
 					parse.parseQuestion(
 						infoTestQuestion.getQuestion().getXmlFile(),
-						infoTestQuestion.getQuestion()));
+						infoTestQuestion.getQuestion(),""));
 			} catch (Exception e) {
 				fail("exception: ExcepcaoPersistencia ");
 			}

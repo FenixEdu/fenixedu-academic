@@ -101,7 +101,7 @@ public class ReadQuestionTest extends TestCaseReadServices {
 			ParseMetadata p = new ParseMetadata();
 			try {
 				infoMetadata =
-					p.parseMetadata(metadata.getMetadataFile(), infoMetadata);
+					p.parseMetadata(metadata.getMetadataFile(), infoMetadata,"");
 			} catch (Exception e) {
 				fail("exception: ExcepcaoPersistencia ");
 			}
@@ -112,7 +112,7 @@ public class ReadQuestionTest extends TestCaseReadServices {
 				infoQuestion =
 					parse.parseQuestion(
 						infoQuestion.getXmlFile(),
-						infoQuestion);
+						infoQuestion,"");
 			} catch (Exception e) {
 				fail("exception: ExcepcaoPersistencia ");
 			}

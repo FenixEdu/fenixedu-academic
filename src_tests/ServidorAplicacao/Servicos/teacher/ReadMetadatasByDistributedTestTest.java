@@ -107,13 +107,13 @@ public class ReadMetadatasByDistributedTestTest extends TestCaseReadServices {
 			ParseMetadata p = new ParseMetadata();
 			try {
 				infoMetadata2 =
-					p.parseMetadata(metadata2.getMetadataFile(), infoMetadata2);
+					p.parseMetadata(metadata2.getMetadataFile(), infoMetadata2,"");
 				infoMetadata3 =
-					p.parseMetadata(metadata3.getMetadataFile(), infoMetadata3);
+					p.parseMetadata(metadata3.getMetadataFile(), infoMetadata3,"");
 				infoMetadata4 =
-					p.parseMetadata(metadata4.getMetadataFile(), infoMetadata4);
+					p.parseMetadata(metadata4.getMetadataFile(), infoMetadata4,"");
 				infoMetadata6 =
-					p.parseMetadata(metadata6.getMetadataFile(), infoMetadata6);
+					p.parseMetadata(metadata6.getMetadataFile(), infoMetadata6,"");
 			} catch (Exception e) {
 				fail("exception: ExcepcaoPersistencia ");
 			}

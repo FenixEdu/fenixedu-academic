@@ -126,19 +126,19 @@ public class ReadMetadatasTest extends TestCaseReadServices {
 			ParseMetadata p = new ParseMetadata();
 			try {
 				infoMetadata1 =
-					p.parseMetadata(metadata1.getMetadataFile(), infoMetadata1);
+					p.parseMetadata(metadata1.getMetadataFile(), infoMetadata1,"");
 				infoMetadata2 =
-					p.parseMetadata(metadata2.getMetadataFile(), infoMetadata2);
+					p.parseMetadata(metadata2.getMetadataFile(), infoMetadata2,"");
 				infoMetadata3 =
-					p.parseMetadata(metadata3.getMetadataFile(), infoMetadata3);
+					p.parseMetadata(metadata3.getMetadataFile(), infoMetadata3,"");
 				infoMetadata4 =
-					p.parseMetadata(metadata4.getMetadataFile(), infoMetadata4);
+					p.parseMetadata(metadata4.getMetadataFile(), infoMetadata4,"");
 				infoMetadata5 =
-					p.parseMetadata(metadata5.getMetadataFile(), infoMetadata5);
+					p.parseMetadata(metadata5.getMetadataFile(), infoMetadata5,"");
 				infoMetadata6 =
-					p.parseMetadata(metadata6.getMetadataFile(), infoMetadata6);
+					p.parseMetadata(metadata6.getMetadataFile(), infoMetadata6,"");
 				infoMetadata7 =
-					p.parseMetadata(metadata7.getMetadataFile(), infoMetadata7);
+					p.parseMetadata(metadata7.getMetadataFile(), infoMetadata7,"");
 			} catch (Exception e) {
 				fail("exception: ExcepcaoPersistencia ");
 			}

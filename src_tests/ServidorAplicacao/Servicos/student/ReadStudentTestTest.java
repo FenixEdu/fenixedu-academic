@@ -70,9 +70,9 @@ public class ReadStudentTestTest extends TestCaseReadServices {
 				infoStudentTestQuestion.setQuestion(
 					parse.parseQuestion(
 						infoStudentTestQuestion.getQuestion().getXmlFile(),
-						infoStudentTestQuestion.getQuestion()));
+						infoStudentTestQuestion.getQuestion(),""));
 				infoStudentTestQuestion =
-					parse.getOptionsShuffle(infoStudentTestQuestion);
+					parse.getOptionsShuffle(infoStudentTestQuestion,"");
 			} catch (Exception e) {
 				fail("exception: Parse ");
 			}
