@@ -56,7 +56,7 @@ public class ExamsMapRenderer {
 			}
 
 			strBuffer.append(
-				"<table class='examMapContainer'cellspacing='0' cellpadding='3' width='100%'>");
+				"<table class='examMapContainer' cellspacing='0' cellpadding='3' width='100%'>");
 			strBuffer.append("<tr>");
 
 			// Generate Exam Map
