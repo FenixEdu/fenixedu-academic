@@ -13,7 +13,7 @@
 	<tr>
 		<td><h2><bean:message key="label.generalObjectives" />	</h2>
 		</td>
-		<td><html:textarea  property="generalObjectives" />
+		<td><html:textarea rows="4" cols="56" property="generalObjectives" />
 		</td>
 		<td> <span class="error" ><html:errors property="generalObjectives"/></span>	
 		</td>
@@ -21,7 +21,7 @@
 	<tr>
 		<td><h2><bean:message key="label.operacionalObjectives" /></h2>
 		</td>
-		<td><html:textarea  property="operacionalObjectives" />
+		<td><html:textarea rows="4" cols="56" property="operacionalObjectives" />
 		</td>
 		<td> <span class="error" ><html:errors property="operacionalObjectives"/></span>	
 		</td>
@@ -32,7 +32,7 @@
 <tr>
 		<td><h2><bean:message key="label.program" />	</h2>
 		</td>
-		<td><html:textarea  property="program" />
+		<td><html:textarea rows="4" cols="56" property="program" />
 		</td>
 		<td> <span class="error" ><html:errors property="program"/></span>	
 		</td>

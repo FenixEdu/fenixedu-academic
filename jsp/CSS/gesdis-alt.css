@@ -66,17 +66,38 @@ h4	{
 /******************************************
 	links - geral
 *******************************************/
-
-a, a:visited	{
+a{
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: #900;
+	color: #000;
 	text-decoration: underline;
+/*	background-color: transparent;*/
+}
+a:link {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #000;
+	text-decoration: underline;
+/*	background-color: transparent;*/
+	}
+
+a:active {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #000;
+	text-decoration: underline;
+/*	background-color: transparent;*/
+}	
+	
+a:visited	{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #000;
+	text-decoration: underline;
+/*	background-color: transparent;*/
 	}
 
 a:hover {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: #900;
+	color: #000;
 	text-decoration: none;
+/*	background-color: transparent;*/
 	}
 
 /******************************************
@@ -163,10 +184,10 @@ a:hover {
 /******************************************
  	links para menu de navegação
  *******************************************/	
- 
+
 #nav ul li a:link, ul li a:visited {
 	display: block;
-	color: #666;
+	color: red; /*#900;*/
 	text-indent: 5px;
 	text-decoration: none;
 	padding: 5px 0 5px 0;
@@ -175,17 +196,17 @@ a:hover {
 	voice-family: "\"}\""; 
   	voice-family:inherit;
 	width: 176px;
-	} 
+} 
 
 	
 #nav ul li a:hover {
 	text-decoration: none;
-	color: #fff;
+	color: red;/*#900;*/
 	background-color: #333;
 	}
 
 .selected	{
-	color: #666;
+	color: #900;
 	text-indent: 5px;
 	padding: 5px 0 5px 0;
 	background-color: #ccc;
@@ -205,7 +226,7 @@ dd a:link, dd a:visited {
 	}
 	
 dd a:hover {
-	color: #900;
+	color: red;/*#900;*/
 	text-decoration: underline;
 	}
 
@@ -280,7 +301,7 @@ p.citation-author	{
 	}
 
 .mais-anuncio a:link, a:active, a:visited	{
-	color: #fff;
+	color: #000;
 	text-decoration: underline;
 	background-color: transparent;
 	}

@@ -13,8 +13,8 @@
 	<tr>
 		<td><h2><bean:message key="label.generalObjectives" /></h2>	
 		</td>
-		<td><html:text name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="generalObjectives" >
-	</html:text>
+		<td><html:textarea rows="4" cols="56" name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="generalObjectives" >
+	</html:textarea>
 		</td>
 		<td> <span class="error" ><html:errors property="generalObjectives"/></span>	
 		</td>
@@ -22,30 +22,25 @@
 	<tr>
 		<td><h2><bean:message key="label.operacionalObjectives" /></h2>
 		</td>
-		<td><html:text name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="operacionalObjectives" >
-	</html:text>
+		<td><html:textarea rows="4" cols="56" name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="operacionalObjectives" >
+	</html:textarea>
 		</td>
 		<td> <span class="error" ><html:errors property="operacionalObjectives"/></span>	
 		</td>
 	</tr>
-	
-	<tr>
-		<td>
-			<html:reset  styleClass="inputbutton">
+</table>	
+	<h3><html:reset  styleClass="inputbutton">
           <bean:message key="label.clear"/>
     </html:reset>
-		</td>
-		<td>
+		
 			 <html:hidden property="method" value="editObjectives"/>
-    <html:submit >
+    <html:submit styleClass="inputbutton">
 	<bean:message key="button.save"/>
 	</html:submit>
-		</td>
-		
-	</tr>
 	
 	
+	</h3>
 	
    
-</table>	
+	
 </html:form>

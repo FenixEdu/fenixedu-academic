@@ -11,29 +11,26 @@
 	<tr>
 		<td><h2><bean:message key="label.program" />	</h2>
 		</td>
-		<td><html:text name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="program" >
-	</html:text>
+		<td><html:textarea rows="4" cols="56" name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="program" >
+	</html:textarea>
 		</td>
 		<td> <span class="error" ><html:errors property="program"/></span>	
 		</td>
 	</tr>
-	<tr>
-		<td>
-			<html:reset  styleClass="inputbutton">
-          <bean:message key="label.clear"/>
+</table>		
+	
+	<h3><html:reset  styleClass="inputbutton">
+    <bean:message key="label.clear"/>
     </html:reset>
-		</td>
-		<td>
+	
 			 <html:hidden property="method" value="editProgram"/>
-    <html:submit >
+    <html:submit styleClass="inputbutton">
 	<bean:message key="button.save"/>
-	</html:submit>
-		</td>
+	</html:submit></h3>
 		
-	</tr>
 	
 	
 	
    
-</table>	
+
 </html:form>
