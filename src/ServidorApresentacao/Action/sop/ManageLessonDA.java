@@ -45,6 +45,7 @@ public class ManageLessonDA
 
 	public static String INVALID_TIME_INTERVAL =
 		"errors.lesson.invalid.time.interval";
+	public static String INVALID_WEEKDAY = "errors.lesson.invalid.weekDay";
 	public static String UNKNOWN_ERROR = "errors.unknown";
 
 	public ActionForward prepareCreate(
@@ -124,7 +125,8 @@ public class ManageLessonDA
 		InfoRoom infoSala = new InfoRoom();
 		infoSala.setNome((String) manageLessonForm.get("nomeSala"));
 
-		ActionErrors actionErrors = checkTimeInterval(inicio, fim);
+		ActionErrors actionErrors =
+			checkTimeIntervalAndWeekDay(inicio, fim, weekDay);
 
 		if (actionErrors.isEmpty()) {
 			InfoRoom infoRoom = new InfoRoom();
@@ -216,7 +218,8 @@ public class ManageLessonDA
 		InfoRoom infoSala = new InfoRoom();
 		infoSala.setNome((String) manageLessonForm.get("nomeSala"));
 
-		ActionErrors actionErrors = checkTimeInterval(inicio, fim);
+		ActionErrors actionErrors =
+			checkTimeIntervalAndWeekDay(inicio, fim, weekDay);
 
 		if (actionErrors.isEmpty()) {
 			InfoRoom infoRoom = new InfoRoom();
@@ -276,7 +279,10 @@ public class ManageLessonDA
 		return result;
 	}
 
-	private ActionErrors checkTimeInterval(Calendar begining, Calendar end) {
+	private ActionErrors checkTimeIntervalAndWeekDay(
+		Calendar begining,
+		Calendar end,
+		DiaSemana weekday) {
 		ActionErrors actionErrors = new ActionErrors();
 		String beginMinAppend = "";
 		String endMinAppend = "";
@@ -302,6 +308,14 @@ public class ManageLessonDA
 						+ end.get(Calendar.MINUTE)
 						+ endMinAppend));
 		}
+
+		if (weekday.getDiaSemana().intValue() < 1
+			|| weekday.getDiaSemana().intValue() > 7) {
+			actionErrors.add(
+				INVALID_WEEKDAY,
+				new ActionError(INVALID_WEEKDAY, ""));
+		}
+
 		return actionErrors;
 	}
 
@@ -317,9 +331,9 @@ public class ManageLessonDA
 		IUserView userView = (IUserView) sessao.getAttribute("UserView");
 		GestorServicos gestor = GestorServicos.manager();
 
-//		System.out.println(
-//			"##### lessonOID = "
-//				+ request.getParameter(SessionConstants.LESSON_OID));
+		//		System.out.println(
+		//			"##### lessonOID = "
+		//				+ request.getParameter(SessionConstants.LESSON_OID));
 		Object argsReadLessonByOID[] =
 			{ new Integer(request.getParameter(SessionConstants.LESSON_OID))};
 
