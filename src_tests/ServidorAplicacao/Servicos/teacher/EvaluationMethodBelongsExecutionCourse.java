@@ -60,7 +60,7 @@ public abstract class EvaluationMethodBelongsExecutionCourse
 		try {
 			result =
 				gestor.executar(
-					userView3,		//isto aqui deve ser com a userView para ele dar erro que o metodo avaliacao
+					userView,		//isto aqui deve ser com a userView para ele dar erro que o metodo avaliacao
 									//n pertence ao execution course e n dar erro de autorizado ou n
 					getNameOfServiceToBeTested(),
 					serviceArguments);

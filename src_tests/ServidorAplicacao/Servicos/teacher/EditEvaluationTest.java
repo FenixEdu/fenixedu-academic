@@ -1,22 +1,9 @@
 package ServidorAplicacao.Servicos.teacher;
 
-import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurriculum;
-import DataBeans.InfoEvaluationMethod;
-import DataBeans.InfoExecutionCourse;
-import DataBeans.util.Cloner;
-import Dominio.CurricularCourse;
-import Dominio.DisciplinaExecucao;
-import Dominio.ICurricularCourse;
-import Dominio.IDisciplinaExecucao;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
-import ServidorPersistente.IPersistentCurriculum;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Nuno Correia
@@ -43,6 +30,14 @@ public class EditEvaluationTest
 	protected String getDataSetFilePath() {
 		return "etc/testEditEvaluationMethodDataSet.xml";
 	}
+	
+	protected String getExpectedDataSetFilePath() {
+		return "etc/testExpectedEditEvaluationMethodDataSet.xml";
+	}
+	
+	protected String getExpectedNewCurriculumDataSetFilePath() {
+		return "etc/testExpectedNewCurriculumEvaluatioMethodDataSet.xml";
+	}
 
 	protected String[] getAuthorizedUser() {
 
@@ -58,15 +53,14 @@ public class EditEvaluationTest
 
 	protected String[] getNonTeacherUser() {
 
-		String[] args = { "jccm", "pass", getApplication()};
+		String[] args = { "fiado", "pass", getApplication()};
 		return args;
 	}
 
 	protected Object[] getAuthorizeArguments() {
 
-		// escolher nrs correctos
 		Integer executionCourseCode = new Integer(24);
-		Integer curricularCourseCode = new Integer(123);
+		Integer curricularCourseCode = new Integer(14);
 
 		String evaluationMethodPT = "Evaluation Methods in Portuguese";
 		String evaluationMethodEN = "Evaluation Methods in English";
@@ -75,7 +69,7 @@ public class EditEvaluationTest
 
 		infoCurriculum.setIdInternal(curricularCourseCode);
 		infoCurriculum.setEvaluationElements(evaluationMethodPT);
-		infoCurriculum.setEvaluationElements(evaluationMethodEN);
+		infoCurriculum.setEvaluationElementsEn(evaluationMethodEN);
 
 		Object[] args =
 			{ executionCourseCode, curricularCourseCode, infoCurriculum };
@@ -85,9 +79,8 @@ public class EditEvaluationTest
 
 	protected Object[] getTestEvaluationMethodSuccessfullArguments() {
 
-		// escolher nrs correctos
 		Integer executionCourseCode = new Integer(24);
-		Integer curricularCourseCode = new Integer(123);
+		Integer curricularCourseCode = new Integer(14);
 
 		String evaluationMethodPT = "Evaluation Methods in Portuguese";
 		String evaluationMethodEN = "Evaluation Methods in English";
@@ -96,7 +89,7 @@ public class EditEvaluationTest
 
 		infoCurriculum.setIdInternal(curricularCourseCode);
 		infoCurriculum.setEvaluationElements(evaluationMethodPT);
-		infoCurriculum.setEvaluationElements(evaluationMethodEN);
+		infoCurriculum.setEvaluationElementsEn(evaluationMethodEN);
 
 		Object[] args =
 			{ executionCourseCode, curricularCourseCode, infoCurriculum };
@@ -117,7 +110,7 @@ public class EditEvaluationTest
 				
 		infoCurriculum.setIdInternal(curricularCourseCode);
 		infoCurriculum.setEvaluationElements(evaluationMethodPT);
-		infoCurriculum.setEvaluationElements(evaluationMethodEN);		
+		infoCurriculum.setEvaluationElementsEn(evaluationMethodEN);		
 
 		Object[] args =
 			{
@@ -127,16 +120,36 @@ public class EditEvaluationTest
 			};
 		return args;
 	}
+	
+	protected Object[] getTestEvaluationMethodCurricularCourseWithNoCurriculumArguments()
+	{
+		Integer executionCourseCode = new Integer(26);	
+		Integer curricularCourseCode = new Integer(16);
+
+		String evaluationMethodPT = "Evaluation Methods in Portuguese";
+		String evaluationMethodEN = "Evaluation Methods in English";
+
+		InfoCurriculum infoCurriculum = new InfoCurriculum();
+		
+		infoCurriculum.setIdInternal(curricularCourseCode);
+		infoCurriculum.setEvaluationElements(evaluationMethodPT);
+		infoCurriculum.setEvaluationElementsEn(evaluationMethodEN);		
+
+		Object[] args = {executionCourseCode, curricularCourseCode, infoCurriculum };
+		return args;
+	}
 
 	protected String getApplication() {
 		return Autenticacao.EXTRANET;
 	}
+	
 
 	public void testSuccessfull() {
 
 		try {
 			String[] args = getAuthorizedUser();
 			IUserView userView = authenticateUser(args);
+			String[] tables = {"CURRICULUM"};  
 
 			gestor.executar(
 				userView,
@@ -144,13 +157,40 @@ public class EditEvaluationTest
 				getAuthorizeArguments());
 
 			// verificar as alteracoes da bd
-			compareDataSet(getDataSetFilePath());
+			compareDataSet(getExpectedDataSetFilePath());
+		
 		}
 		catch (FenixServiceException ex) {
 			fail("EditEvaluationTest" + ex);
 		}
 		catch (Exception ex) {
-			fail("EditEvaluatioTest error on compareDataSet" + ex);
+			fail("EditEvaluationTest error on compareDataSet" + ex);
+		}
+	}
+	
+	public void testSuccessfullEditEvaluationMethodWithNoCurriculum() {
+
+		System.out.println("Starting: testSuccessfullEditEvaluationMethodWithNoCurriculum");
+		try {
+			String[] args = getAuthorizedUser();
+			IUserView userView = authenticateUser(args);
+			String[] tables = {"CURRICULUM"};  
+	
+			gestor.executar(
+				userView,
+				getNameOfServiceToBeTested(),
+				getTestEvaluationMethodCurricularCourseWithNoCurriculumArguments());
+	
+			// verificar as alteracoes da bd
+			compareDataSet(getExpectedNewCurriculumDataSetFilePath());
+			
+			System.out.println("Finished: testSuccessfullEditEvaluationMethodWithNoCurriculum");
+		}
+		catch (FenixServiceException ex) {
+			fail("EditEvaluationTest" + ex);
+		}
+		catch (Exception ex) {
+			fail("EditEvaluationTest error on compareDataSet" + ex);
 		}
 	}
 
