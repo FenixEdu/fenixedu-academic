@@ -25,4 +25,8 @@
 	<definition name="definition.myExamRooms" page="/student/myExamRooms.jsp" controllerClass="ServidorApresentacao.tiles.controller.MyExamRooms">
 	</definition>
 	
+	<definition name="definition.cant.enroll" extends="definition.student.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/commons/cantEnroll.jsp"/>
+	</definition>
+
 </tiles-definitions>

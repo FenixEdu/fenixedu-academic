@@ -35,7 +35,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 public class CurricularCourseEnrolmentWithRulesManagerDispatchAction extends GeneralCurricularCourseEnrolmentManagerDispatchAction {
 
-	private final String[] forwards = { "showAvailableCurricularCourses", "verifyEnrolment", "acceptEnrolment", "cancel" };
+	private final String[] forwards = { "showAvailableCurricularCourses", "verifyEnrolment", "acceptEnrolment", "cancel", "cantEnroll" };
 
 	public ActionForward start(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -66,7 +66,11 @@ public class CurricularCourseEnrolmentWithRulesManagerDispatchAction extends Gen
 
 		super.initializeRemovedCurricularCourseScopesList(request, infoEnrolmentContext);
 
-		return mapping.findForward(forwards[0]);
+		if(infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().isEmpty()) {
+			return mapping.findForward(forwards[4]);
+		} else {
+			return mapping.findForward(forwards[0]);
+		}
 	}
 
 	public ActionForward outOfPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {

@@ -58,7 +58,12 @@ public class CurricularCourseEnrolmentManagerDispatchAction extends GeneralCurri
 		session.setAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY, infoEnrolmentContext);
 		this.initializeForm(infoEnrolmentContext, (DynaActionForm) form);
 		super.initializeRemovedCurricularCourseScopesList(request, infoEnrolmentContext);
-		return mapping.findForward(forwards[0]);
+
+		if(infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().isEmpty()) {
+			return mapping.findForward("cantEnroll");
+		} else {
+			return mapping.findForward(forwards[0]);
+		}
 	}
 
 	public ActionForward verifyEnrolment(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {

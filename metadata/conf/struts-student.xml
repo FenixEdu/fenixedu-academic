@@ -82,6 +82,7 @@
     <action-mappings type="org.apache.struts.action.ActionMapping">
       <!-- page fronting actions -->
 <!--      <action path="/index" forward="/main.jsp"/> -->
+		<action path="/cantEnroll" forward="definition.cant.enroll"/>
       <action type="ServidorApresentacao.Action.commons.VoidAction"
               path="/index">
         <forward name="Success" path="df.page.main"/>
@@ -134,6 +135,7 @@
         <forward name="concreteOptionalList" path="df.page.concreteOptionalList"/>
         <forward name="searchOptionalCurricularCourses" path="df.page.searchOptionalCurricularCourses"/>
 		<forward name="cancel" path="/dotIstPortal.do?prefix=/student&amp;page=/index.do" contextRelative="true"/>
+		<forward name="cantEnroll" path="/cantEnroll.do"/>
       </action>
 
       <!-- TODO: tdi-dev (bruno) -> redo this-->
