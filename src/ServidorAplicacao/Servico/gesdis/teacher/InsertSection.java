@@ -141,12 +141,10 @@ public class InsertSection implements IServico {
 				persistentSuport.getIPersistentSite().readByExecutionCourse(
 					executionCourse);
 
-			if (!isRoot(infoSection)) {
+			if (!isRoot(infoSection)) {				
 
 				InfoSection infoFatherSection =
-					infoSection.getSuperiorInfoSection();
-
-				System.out.println("INFOFATHERSECTION:" + infoFatherSection);
+					infoSection.getSuperiorInfoSection();				
 
 				if (infoFatherSection.getSuperiorInfoSection() != null) {
 
@@ -169,7 +167,7 @@ public class InsertSection implements IServico {
 					new Section(infoSection.getName(), site, fatherSection);
 				section.setSectionOrder(infoSection.getSectionOrder());
 
-			} else {
+			} else {								
 				section = new Section();
 				section.setSuperiorSection(null);
 				section.setName(infoSection.getName());

@@ -82,6 +82,7 @@ public class PrepareInsertSectionAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 
+		
 		HttpSession session = request.getSession();
 
 		InfoSite infoSite =
@@ -89,6 +90,8 @@ public class PrepareInsertSectionAction extends FenixDispatchAction {
 
 		UserView userView =
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);
+
+		session.removeAttribute(SessionConstants.INFO_SECTION);
 
 		ArrayList sections;
 		Object args[] = { infoSite, null };

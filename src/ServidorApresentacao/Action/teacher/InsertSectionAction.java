@@ -8,7 +8,6 @@ package ServidorApresentacao.Action.teacher;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -57,27 +56,16 @@ public class InsertSectionAction extends FenixAction {
 
 		UserView userView =
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);
-
-		InfoSection parentSection =
-			(InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
+						
+		InfoSection parentSection = (InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
 		
-		Integer sectionOrder = new Integer(0);
+		Integer sectionOrder = new Integer(order);
+		
 		ArrayList childrenSections =
 			(ArrayList) session.getAttribute(
-				SessionConstants.CHILDREN_SECTIONS);
+				SessionConstants.CHILDREN_SECTIONS);		
 
-		if (childrenSections != null) {
-			Iterator iterator = childrenSections.iterator();
-			while (iterator.hasNext()) {
-				InfoSection infoSection = (InfoSection) iterator.next();
-				if (infoSection.getName().equals(order)) {
-					sectionOrder = infoSection.getSectionOrder();
-					break;
-				}
-			}
-		}
-
-		if (order.equals("(Fim)"))
+		if (sectionOrder.equals(new Integer(-1)))
 			sectionOrder = new Integer(childrenSections.size());
 
 		InfoSection infoSection =
@@ -108,5 +96,7 @@ public class InsertSectionAction extends FenixAction {
 		session.setAttribute(SessionConstants.SECTIONS, sections);
 		return mapping.findForward("viewSite");
 	}
+	
+	
 			
 }
