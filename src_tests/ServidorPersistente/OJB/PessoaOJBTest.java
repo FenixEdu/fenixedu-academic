@@ -18,6 +18,7 @@ import org.odmg.QueryException;
 import Dominio.IPessoa;
 import Dominio.Pessoa;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoDocumentoIdentificacao;
 
 
@@ -92,10 +93,12 @@ public class PessoaOJBTest extends TestCaseOJB {
       //persistentPerson.lockWrite(pessoa);
       persistentPerson.escreverPessoa(pessoa);
       persistentSupport.confirmarTransaccao();
-      fail("testCreateExistingPessoa");
-    } catch (ExcepcaoPersistencia ex) {
-      //all is ok
-    }
+      fail("testCreateExistingPessoa: expected an exception");
+    } catch (ExistingPersistentException ex) {
+	    assertNotNull("Write Existing", ex);
+	} catch (ExcepcaoPersistencia ex) {
+		fail("Write Existing: unexpected exception");
+  	}
   }
 
   // write new non-existing item

@@ -16,15 +16,42 @@ import Dominio.IPessoa;
 import Dominio.Pessoa;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPessoaPersistente;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoDocumentoIdentificacao;
 
 public class PessoaOJB extends ObjectFenixOJB implements IPessoaPersistente {
     
     public PessoaOJB() {}
     
-    public void escreverPessoa(IPessoa pessoa) throws ExcepcaoPersistencia {
-        super.lockWrite(pessoa);
-    }
+	public void escreverPessoa(IPessoa personToWrite)
+		throws ExcepcaoPersistencia, ExistingPersistentException {
+
+		IPessoa personFromDB = null;
+
+		// If there is nothing to write, simply return.
+		if (personToWrite == null)
+			return;
+
+		// Read person from database.
+		personFromDB =
+			this.lerPessoaPorUsername(personToWrite.getUsername());
+
+		// If person is not in database, then write it.
+		if (personFromDB == null)
+			super.lockWrite(personToWrite);
+		// else If the person is mapped to the database, then write any existing changes.
+		else if (
+			(personToWrite instanceof Pessoa)
+				&& ((Pessoa) personFromDB)
+					.getCodigoInterno()
+					.equals(
+					((Pessoa) personToWrite)
+						.getCodigoInterno())) {
+			super.lockWrite(personToWrite);
+			// else Throw an already existing exception
+		} else
+			throw new ExistingPersistentException();
+	}
     
     public void apagarPessoaPorNumDocIdETipoDocId(String numeroDocumentoIdentificacao, TipoDocumentoIdentificacao tipoDocumentoIdentificacao) throws ExcepcaoPersistencia {
         try {
