@@ -115,7 +115,7 @@
         <implementationClass> 
             ServidorAplicacao.Filtro.StudentCurriculumAuthorizationFilter</implementationClass>
         <description/>
-        <isTransactional>false</isTransactional>
+        <isTransactional>true</isTransactional>
     </filter>
     <filter>
         <name>StudentListByCurricularCourseAuthorization</name>

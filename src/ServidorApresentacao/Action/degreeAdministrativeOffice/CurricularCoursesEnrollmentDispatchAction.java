@@ -102,11 +102,24 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		Object[] args = { executionDegreeId, null, studentNumber };
 		try
 		{
-			infoStudentEnrolmentContext =
-				(InfoStudentEnrolmentContext) ServiceManagerServiceFactory.executeService(
-					userView,
-					"ShowAvailableCurricularCoursesNew",
-					args);
+			if (!(userView.getRoles().contains(new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE))
+				|| userView.getRoles().contains(
+					new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))))
+			{
+				infoStudentEnrolmentContext =
+					(InfoStudentEnrolmentContext) ServiceManagerServiceFactory.executeService(
+						userView,
+						"ShowAvailableCurricularCoursesNew",
+						args);
+			}
+			else
+			{
+				infoStudentEnrolmentContext =
+					(InfoStudentEnrolmentContext) ServiceManagerServiceFactory.executeService(
+						userView,
+						"ShowAvailableCurricularCoursesWithoutEnrollmentPeriod",
+						args);
+			}
 		}
 		catch (NotAuthorizedException e)
 		{
@@ -134,17 +147,13 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		}
 		catch (OutOfCurricularCourseEnrolmentPeriod e)
 		{
-			if (!(userView.getRoles().contains(new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE))
-				|| userView.getRoles().contains(
-					new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))))
-			{
-				errors.add(
-					"enrolment",
-					new ActionError(
-						e.getMessageKey(),
-						Data.format2DayMonthYear(e.getStartDate()),
-						Data.format2DayMonthYear(e.getEndDate())));
-			}
+
+			errors.add(
+				"enrolment",
+				new ActionError(
+					e.getMessageKey(),
+					Data.format2DayMonthYear(e.getStartDate()),
+					Data.format2DayMonthYear(e.getEndDate())));
 		}
 		catch (FenixServiceException e)
 		{
@@ -190,7 +199,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		String arg2 = null;
 		if (messageException.indexOf("+") != -1)
 		{
-			message = messageException.substring(0,messageException.indexOf("+"));
+			message = messageException.substring(0, messageException.indexOf("+"));
 			String newMessage = messageException.substring(messageException.indexOf("+") + 1);
 			if (newMessage.indexOf("+") != -1)
 			{
@@ -201,7 +210,6 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 			{
 				arg1 = newMessage;
 			}
-			
 		}
 		else
 		{
@@ -511,11 +519,24 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		Object[] args = { executionDegreeId, null, studentNumber };
 		try
 		{
-			infoStudentEnrolmentContext =
+			if (!(userView.getRoles().contains(new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE))
+					|| userView.getRoles().contains(
+							new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))))
+			{
+				infoStudentEnrolmentContext =
 				(InfoStudentEnrolmentContext) ServiceManagerServiceFactory.executeService(
-					userView,
-					"ShowAvailableCurricularCoursesNew",
-					args);
+						userView,
+						"ShowAvailableCurricularCoursesNew",
+						args);
+			}
+			else
+			{
+				infoStudentEnrolmentContext =
+				(InfoStudentEnrolmentContext) ServiceManagerServiceFactory.executeService(
+						userView,
+						"ShowAvailableCurricularCoursesWithoutEnrollmentPeriod",
+						args);
+			}
 		}
 		catch (NotAuthorizedException e)
 		{
@@ -537,23 +558,18 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 			else if (e.getMessage().equals("studentCurricularPlan"))
 			{
 				errors.add(
-					"studentCurricularPlan",
-					new ActionError("error.student.curricularPlan.nonExistent"));
+						"studentCurricularPlan",
+						new ActionError("error.student.curricularPlan.nonExistent"));
 			}
 		}
 		catch (OutOfCurricularCourseEnrolmentPeriod e)
 		{
-			if (!(userView.getRoles().contains(new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE))
-				|| userView.getRoles().contains(
-					new InfoRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER))))
-			{
-				errors.add(
+			errors.add(
 					"enrolment",
 					new ActionError(
-						e.getMessageKey(),
-						Data.format2DayMonthYear(e.getStartDate()),
-						Data.format2DayMonthYear(e.getEndDate())));
-			}
+							e.getMessageKey(),
+							Data.format2DayMonthYear(e.getStartDate()),
+							Data.format2DayMonthYear(e.getEndDate())));
 		}
 		catch (FenixServiceException e)
 		{
@@ -581,7 +597,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 			curriculum =
 				(ArrayList) ServiceManagerServiceFactory.executeService(
 					userView,
-					"ReadStudentCurriculum",
+					"ReadStudentCurriculumForEnrollmentConfirmation",
 					args2);
 		}
 		catch (NotAuthorizedException e)

@@ -5621,7 +5621,7 @@
     </service>          
 	<service>
     	<name>ShowAvailableCurricularCoursesNew</name>
-    	<description>Returns information about student enrollments in curricular courses</description>
+    	<description>Returns information about student enrollments in curricular courses testing enrollment period</description>
     	<implementationClass>ServidorAplicacao.Servico.enrolment.ShowAvailableCurricularCourses</implementationClass>
     	<isTransactional>True</isTransactional>
         <filterChains>
@@ -5747,4 +5747,13 @@
     	<isTransactional>True</isTransactional>
         <filterChains/>
     </service> 
+	<service>
+    	<name>ShowAvailableCurricularCoursesWithoutEnrollmentPeriod</name>
+    	<description>Returns information about student enrollments in curricular courses</description>
+    	<implementationClass>ServidorAplicacao.Servico.enrolment.ShowAvailableCurricularCoursesWithoutEnrollmentPeriod</implementationClass>
+    	<isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="EnrollmentLEECAuthorization"/>
+        </filterChains>
+    </service>      
 </serviceDefinitions>

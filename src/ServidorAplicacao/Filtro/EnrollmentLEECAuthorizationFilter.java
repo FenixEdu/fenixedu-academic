@@ -10,18 +10,16 @@ import java.util.List;
 
 import DataBeans.InfoRole;
 import Dominio.ICoordinator;
-import Dominio.IEnrolmentPeriod;
-import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.ITeacher;
 import Dominio.ITutor;
 import Dominio.StudentCurricularPlan;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.enrolment.ShowAvailableCurricularCoursesWithoutEnrollmentPeriod;
+import ServidorAplicacao.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCoordinator;
-import ServidorPersistente.IPersistentEnrolmentPeriod;
-import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.IPersistentTutor;
@@ -194,33 +192,11 @@ public class EnrollmentLEECAuthorizationFilter extends AuthorizationByManyRolesF
 		ISuportePersistente sp)
 		throws ExcepcaoPersistencia
 	{
-		IPersistentEnrolmentPeriod persistentEnrolmentPeriod = sp.getIPersistentEnrolmentPeriod();
-		IEnrolmentPeriod enrolmentPeriod =
-			persistentEnrolmentPeriod.readActualEnrolmentPeriodForDegreeCurricularPlan(
-				studentCurricularPlan.getDegreeCurricularPlan());
-
-		IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-		IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
-
-		return executionPeriod.equals(enrolmentPeriod.getExecutionPeriod());
-	}
-
-	/**
-	 * @param arguments
-	 * @return
-	 */
-	private boolean studentWithTutor(Object[] arguments, ISuportePersistente sp)
-		throws ExcepcaoPersistencia
-	{
-		IStudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(arguments, sp);
-
-		IPersistentTutor persistentTutor = sp.getIPersistentTutor();
-		ITutor tutor = persistentTutor.readTeachersByStudent(studentCurricularPlan.getStudent());
-		if (tutor == null)
-		{
+		try {
+			ShowAvailableCurricularCoursesWithoutEnrollmentPeriod.getEnrolmentPeriod(studentCurricularPlan);
+		}catch(OutOfCurricularCourseEnrolmentPeriod e) {
 			return false;
 		}
-
 		return true;
 	}
 
