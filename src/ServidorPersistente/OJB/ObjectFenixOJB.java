@@ -102,7 +102,7 @@ public abstract class ObjectFenixOJB implements IPersistentObject
 
     }
 
-    private void lockRead(List list) throws ExcepcaoPersistencia
+    protected void lockRead(List list) throws ExcepcaoPersistencia
     {
         try
         {
