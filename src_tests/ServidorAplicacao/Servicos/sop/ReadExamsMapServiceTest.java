@@ -11,6 +11,7 @@ package ServidorAplicacao.Servicos.sop;
  * 
  */
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import junit.framework.Test;
@@ -21,18 +22,17 @@ import DataBeans.InfoExamsMap;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
+import ServidorAplicacao.Servicos.TestCaseServices;
 
-public class ReadExamsMapServiceTest
-	extends TestCaseReadServices {
-		
-		InfoDegree infoDegree = null;
-		InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
-		InfoExecutionYear infoExecutionYear = null;
-		InfoExecutionPeriod infoExecutionPeriod = null;
-		InfoExecutionDegree infoExecutionDegree = null;
-		List curricularYears = null;
-		
+public class ReadExamsMapServiceTest extends TestCaseServices {
+
+	InfoDegree infoDegree = null;
+	InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
+	InfoExecutionYear infoExecutionYear = null;
+	InfoExecutionPeriod infoExecutionPeriod = null;
+	InfoExecutionDegree infoExecutionDegree = null;
+	List curricularYears = null;
+
 	public ReadExamsMapServiceTest(java.lang.String testName) {
 		super(testName);
 	}
@@ -42,8 +42,7 @@ public class ReadExamsMapServiceTest
 	}
 
 	public static Test suite() {
-		TestSuite suite =
-			new TestSuite(ReadExamsMapServiceTest.class);
+		TestSuite suite = new TestSuite(ReadExamsMapServiceTest.class);
 
 		return suite;
 	}
@@ -56,61 +55,102 @@ public class ReadExamsMapServiceTest
 		super.tearDown();
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNameOfServiceToBeTested()
-	 */
 	protected String getNameOfServiceToBeTested() {
 		return "ReadExamsMap";
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
-	 */
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		// Service always returns a result.
-		return null;
+	protected boolean needsAuthorization() {
+		return true;
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedSuccessfuly()
-	 */
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		infoDegree = new InfoDegree("LEIC", "Licenciatura de Engenharia Informatica e de Computadores");
-		infoDegreeCurricularPlan = new InfoDegreeCurricularPlan("plano1", infoDegree);
+	protected Object[] getArgumentsForCallToService() {
+		infoDegree =
+			new InfoDegree(
+				"LEIC",
+				"Licenciatura de Engenharia Informatica e de Computadores");
+		infoDegreeCurricularPlan =
+			new InfoDegreeCurricularPlan("plano1", infoDegree);
 		infoExecutionYear = new InfoExecutionYear("2002/2003");
-		infoExecutionPeriod = new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
-		infoExecutionDegree = new InfoExecutionDegree(infoDegreeCurricularPlan, infoExecutionYear);
+		infoExecutionPeriod =
+			new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
+		infoExecutionDegree =
+			new InfoExecutionDegree(
+				infoDegreeCurricularPlan,
+				infoExecutionYear);
 		curricularYears = new ArrayList();
 		curricularYears.add(new Integer(1));
 		curricularYears.add(new Integer(3));
 		curricularYears.add(new Integer(5));
 
-		Object[] result = { infoExecutionDegree, curricularYears, infoExecutionPeriod };
+		Object[] result =
+			{ infoExecutionDegree, curricularYears, infoExecutionPeriod };
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
-	 */
-	protected int getNumberOfItemsToRetrieve() {
-		return 1;
-	}
+	protected boolean verifyServiceResult(Object result) {
+		Calendar startSeason1 = Calendar.getInstance();
+		startSeason1.set(Calendar.YEAR, 2003);
+		startSeason1.set(Calendar.MONTH, Calendar.JUNE);
+		startSeason1.set(Calendar.DAY_OF_MONTH, 23);
+		startSeason1.set(Calendar.HOUR_OF_DAY, 0);
+		startSeason1.set(Calendar.MINUTE, 0);
+		startSeason1.set(Calendar.SECOND, 0);
+		startSeason1.set(Calendar.MILLISECOND, 0);
+		Calendar endSeason2 = Calendar.getInstance();
+		endSeason2.set(Calendar.YEAR, 2003);
+		endSeason2.set(Calendar.MONTH, Calendar.JULY);
+		endSeason2.set(Calendar.DAY_OF_MONTH, 26);
+		endSeason2.set(Calendar.HOUR_OF_DAY, 0);
+		endSeason2.set(Calendar.MINUTE, 0);
+		endSeason2.set(Calendar.SECOND, 0);
+		endSeason2.set(Calendar.MILLISECOND, 0);
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getObjectToCompare()
-	 */
-	protected Object getObjectToCompare() {
-		InfoExamsMap infoExamsMap = new InfoExamsMap();
-		infoExamsMap.setCurricularYears(curricularYears);
-		List infoExecutionCourses = new ArrayList();
-		infoExecutionCourses.add("1");
-		infoExecutionCourses.add("2");
-		infoExamsMap.setExecutionCourses(infoExecutionCourses);
-		
-		return infoExamsMap;
-	}
+		assertNotNull("Result of call to service was null!", result);
+		assertEquals(
+			"Type of result was unexpected!",
+			InfoExamsMap.class.getName(),
+			result.getClass().getName());
+		InfoExamsMap infoExamsMap = (InfoExamsMap) result;
+		assertEquals(
+			"Start of exam season1 was unexpected!",
+			startSeason1,
+			infoExamsMap.getStartSeason1());
+		assertEquals(
+			"End of exam season1 was unexpected!",
+			null,
+			infoExamsMap.getEndSeason1());
+		assertEquals(
+			"Start of exam season2 was unexpected!",
+			null,
+			infoExamsMap.getStartSeason2());
+		assertEquals(
+			"End of exam season2 was unexpected!",
+			endSeason2,
+			infoExamsMap.getEndSeason2());
+		assertNotNull(
+			"Curricular years list was null!",
+			infoExamsMap.getCurricularYears());
+		assertEquals(
+			"Unexpected number of curricular years!",
+			3,
+			infoExamsMap.getCurricularYears().size());
+		assertTrue(
+			"Curricular year 1 not in list!",
+			infoExamsMap.getCurricularYears().contains(new Integer(1)));
+		assertTrue(
+			"Curricular year 3 not in list!",
+			infoExamsMap.getCurricularYears().contains(new Integer(3)));
+		assertTrue(
+			"Curricular year 5 not in list!",
+			infoExamsMap.getCurricularYears().contains(new Integer(5)));
+		assertNotNull(
+			"Execution course list was null!",
+			infoExamsMap.getExecutionCourses());
+		assertEquals(
+			"Unexpected number of execution courses!",
+			2,
+			infoExamsMap.getExecutionCourses().size());
 
-	protected boolean needsAuthorization() {
 		return true;
 	}
 
