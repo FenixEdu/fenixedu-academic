@@ -9,16 +9,21 @@
   <span class="error"><html:errors/></span>
   <bean:define id="curriculum" name="<%= SessionConstants.CURRICULUM %>" scope="request" />
   <bean:define id="student" name="<%= SessionConstants.STUDENT_CURRICULAR_PLAN %>" scope="request" />
-  <bean:message key="label.person.name" />
-  <bean:write name="student" property="infoStudent.infoPerson.nome"/>
-  </br>
-  <bean:message key="label.degree" />:
-  <bean:write name="student" property="infoDegreeCurricularPlan.infoDegree.nome"/>
-  </br>
-  <bean:message key="property.number" />
-  <bean:write name="student" property="infoStudent.number"/>
-  </br>
-  </br>
+  <table>
+  	<tr>
+		 <td width="100px"><strong><bean:message key="label.person.name" /></strong></td>
+		 <td><bean:write name="student" property="infoStudent.infoPerson.nome"/></td>
+  	</tr>
+  	<tr>
+	  	<td width="100px"><strong><bean:message key="label.degree" />:</strong></td>
+	  	<td><bean:write name="student" property="infoDegreeCurricularPlan.infoDegree.nome"/></td>
+  	</tr>
+  	<tr>
+  	 	<td width="100px"><strong><bean:message key="property.number" /></strong></td>
+  	 	<td><bean:write name="student" property="infoStudent.number"/><td>
+  	</tr>
+</table>
+  <br />
   <table>
   	<logic:iterate id="enrolment" name="curriculum">
   		<tr>
