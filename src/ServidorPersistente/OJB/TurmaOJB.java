@@ -10,6 +10,7 @@ package ServidorPersistente.OJB;
  *
  * @author  tfc130
  */
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -260,5 +261,28 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
+
+
+	public ArrayList readByExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
+		try {
+			String oqlQuery = "select turmas from " + Turma.class.getName();
+			oqlQuery += " where executionPeriod.name = $1"
+				+ " and executionPeriod.executionYear.year = $2";
+
+			query.create(oqlQuery);
+			query.bind(executionPeriod.getName());
+			query.bind(executionPeriod.getExecutionYear().getYear());
+			
+			ArrayList result = (ArrayList) query.execute();
+			lockRead(result);
+
+			return result;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
+	
+	
+	
 
 }

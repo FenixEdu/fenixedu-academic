@@ -10,6 +10,7 @@ package ServidorPersistente;
  *
  * @author  tfc130
  */
+import java.util.ArrayList;
 import java.util.List;
 
 import Dominio.ICursoExecucao;
