@@ -15,7 +15,9 @@ import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
 import Dominio.IDisciplinaExecucao;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.ISuportePersistente;
@@ -52,12 +54,17 @@ public class EditExecutionCourse implements IServico {
 			IDisciplinaExecucaoPersistente executionCourseDAO =
 				sp.getIDisciplinaExecucaoPersistente();
 
+			
+			IDisciplinaExecucao executionCourseAux = new DisciplinaExecucao(infoExecutionCourse.getIdInternal());
+						
 			IDisciplinaExecucao executionCourse =
-				(IDisciplinaExecucao) executionCourseDAO.readByOID(
-					DisciplinaExecucao.class,
-					infoExecutionCourse.getIdInternal());
+				(IDisciplinaExecucao) executionCourseDAO.readByOId(executionCourseAux, true);
+				
+			if (executionCourse == null) {
+				throw new NonExistingServiceException();
+			}
 
-			executionCourseDAO.lockWrite(executionCourse);
+			//executionCourseDAO.lockWrite(executionCourse);
 
 			executionCourse.setTheoreticalHours(
 				infoExecutionCourse.getTheoreticalHours());
