@@ -5,6 +5,7 @@
 package DataBeans.teacher;
 
 import DataBeans.InfoObject;
+import Dominio.teacher.ICategory;
 
 /**
  * @author Leonor Almeida
@@ -98,4 +99,26 @@ public class InfoCategory extends InfoObject
     {
         this.shortName = shortName;
     }
+        
+    /* (non-Javadoc)
+     * @see DataBeans.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     */
+    public void copyFromDomain(ICategory category) {
+        super.copyFromDomain(category);
+        if(category != null) {
+            setCanBeExecutionCourseResponsible(category.getCanBeExecutionCourseResponsible());
+            setCode(category.getCode());
+            setLongName(category.getLongName());
+            setShortName(category.getShortName());
+        }        
+    }
+    
+    public static InfoCategory newInfoFromDomain(ICategory category) {
+        InfoCategory infoCategory = null;
+        if(category != null) {
+            infoCategory = new InfoCategory();
+            infoCategory.copyFromDomain(category);
+        }
+        return infoCategory;
+    }    
 }

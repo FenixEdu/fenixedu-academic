@@ -23,6 +23,7 @@
 			</tr>
 		</table>
 	</logic:present>
+	
 	<br />
 	<logic:present name="infoExecutionDegree">
 		<logic:present name="basic">
@@ -77,7 +78,7 @@
 				</html:link>
 			</div>
 		</logic:notPresent>
-	</logic:present>
+	</logic:present> 
 	<logic:notPresent name="infoExecutionDegree">
 		<logic:present name="basic">
 			<div class="button">

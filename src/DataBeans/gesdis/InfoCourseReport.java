@@ -8,6 +8,7 @@ import java.util.Date;
 
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoObject;
+import Dominio.gesdis.ICourseReport;
 
 /**
  * @author Leonor Almeida
@@ -61,4 +62,20 @@ public class InfoCourseReport extends InfoObject
         this.lastModificationDate = lastModificationDate;
     }
 
+    public void copyFromDomain(ICourseReport courseReport) {
+        super.copyFromDomain(courseReport);
+        if(courseReport != null) {
+            setLastModificationDate(courseReport.getLastModificationDate());
+            setReport(courseReport.getReport());
+        }
+    }
+    
+    public static InfoCourseReport newInfoFromDomain(ICourseReport courseReport) {
+        InfoCourseReport infoCourseReport = null;
+        if(courseReport != null) {
+            infoCourseReport = new InfoCourseReport();
+            infoCourseReport.copyFromDomain(courseReport);
+        }
+        return infoCourseReport;
+    }
 }

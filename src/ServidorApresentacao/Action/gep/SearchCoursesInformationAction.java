@@ -48,6 +48,11 @@ public class SearchCoursesInformationAction extends SearchAction
     {
         final InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
                 .getAttribute("infoExecutionDegree");
+        if(infoExecutionDegree != null) {
+            System.out.println("----------->infoExecutionDegree é " + infoExecutionDegree.getIdInternal());
+        } else {
+            System.out.println("----------->infoExecutionDegree é null");
+        }
 
         //      sort the execution course list
         ComparatorChain comparatorChain1 = new ComparatorChain();
@@ -202,6 +207,7 @@ public class SearchCoursesInformationAction extends SearchAction
                     userView, "ReadExecutionDegreeByOID", args);
             request.setAttribute("infoExecutionDegree", infoExecutionDegree);
         }
+        
         String basic = request.getParameter("basic");
         if (basic != null && basic.length() > 0)
             request.setAttribute("basic", basic);

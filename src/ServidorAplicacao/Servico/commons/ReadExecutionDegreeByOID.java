@@ -9,8 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import DataBeans.InfoCoordinatorWithInfoPerson;
 import DataBeans.InfoExecutionDegree;
-import DataBeans.util.Cloner;
+import DataBeans.InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlanAndInfoCampus;
 import Dominio.CursoExecucao;
 import Dominio.ICoordinator;
 import Dominio.ICursoExecucao;
@@ -58,8 +59,10 @@ public class ReadExecutionDegreeByOID implements IServico
                 (ICursoExecucao) executionDegreeDAO.readByOID(CursoExecucao.class, oid);
             if (executionDegree != null)
             {
-                infoExecutionDegree = (InfoExecutionDegree) Cloner.get(executionDegree);
-
+                //CLONER
+                //infoExecutionDegree = (InfoExecutionDegree) Cloner.get(executionDegree);
+                infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlanAndInfoCampus.newInfoFromDomain(executionDegree);
+                
                 if (executionDegree.getCoordinatorsList() != null)
                 {
                     List infoCoordinatorList = new ArrayList();
@@ -69,7 +72,8 @@ public class ReadExecutionDegreeByOID implements IServico
                     {
                         ICoordinator coordinator = (ICoordinator) iteratorCoordinator.next();
 
-                        infoCoordinatorList.add(Cloner.copyICoordinator2InfoCoordenator(coordinator));
+                        //infoCoordinatorList.add(Cloner.copyICoordinator2InfoCoordenator(coordinator));
+                        infoCoordinatorList.add(InfoCoordinatorWithInfoPerson.newInfoFromDomain(coordinator));
                     }
 
                     infoExecutionDegree.setCoordinatorsList(infoCoordinatorList);

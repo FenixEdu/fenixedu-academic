@@ -5,91 +5,111 @@
  */
 package DataBeans;
 
+import Dominio.IEvaluationMethod;
+
 /**
  * @author João Mota
- *
  * 
+ *  
  */
-public class InfoEvaluationMethod extends InfoObject implements ISiteComponent{
+public class InfoEvaluationMethod extends InfoObject implements ISiteComponent {
 
-	private InfoExecutionCourse infoExecutionCourse;
-	private String evaluationElements;
-	private String evaluationElementsEn;
+    private InfoExecutionCourse infoExecutionCourse;
 
-	public InfoEvaluationMethod() {
-	}
-	public InfoEvaluationMethod(InfoExecutionCourse infoExecutionCourse) {
-		setInfoExecutionCourse(infoExecutionCourse);
-	}
-	public InfoEvaluationMethod(
-		InfoExecutionCourse infoExecutionCourse,
-		String evaluationElements,
-		String evaluationElementsEn) {
-		setInfoExecutionCourse(infoExecutionCourse);
-		setEvaluationElements(evaluationElements);
-		setEvaluationElementsEn(evaluationElementsEn);
-	}
+    private String evaluationElements;
 
-	/**
-	 * @return
-	 */
-	public String getEvaluationElements() {
-		return evaluationElements;
-	}
+    private String evaluationElementsEn;
 
-	/**
-	 * @return
-	 */
-	public InfoExecutionCourse getInfoExecutionCourse() {
-		return infoExecutionCourse;
-	}
+    public InfoEvaluationMethod() {
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setEvaluationElements(String string) {
-		evaluationElements = string;
-	}
+    public InfoEvaluationMethod(InfoExecutionCourse infoExecutionCourse) {
+        setInfoExecutionCourse(infoExecutionCourse);
+    }
 
-	/**
-	 * @param course
-	 */
-	public void setInfoExecutionCourse(InfoExecutionCourse course) {
-		infoExecutionCourse = course;
-	}
+    public InfoEvaluationMethod(InfoExecutionCourse infoExecutionCourse,
+            String evaluationElements, String evaluationElementsEn) {
+        setInfoExecutionCourse(infoExecutionCourse);
+        setEvaluationElements(evaluationElements);
+        setEvaluationElementsEn(evaluationElementsEn);
+    }
 
-	public String toString() {
-		String result = "[EvaluationMethod";
+    /**
+     * @return
+     */
+    public String getEvaluationElements() {
+        return evaluationElements;
+    }
 
-		result += ", evaluationElements =" + getEvaluationElements();
-		result += ", evaluationElementsEn =" + getEvaluationElementsEn();
-		result += ", executionCourse =" + getInfoExecutionCourse();
-		result += "]";
-		return result;
-	}
+    /**
+     * @return
+     */
+    public InfoExecutionCourse getInfoExecutionCourse() {
+        return infoExecutionCourse;
+    }
 
-	public boolean equals(Object arg0) {
-		boolean result = false;
-		if (arg0 instanceof InfoEvaluationMethod) {
-			result =
-				getInfoExecutionCourse().equals(
-					((InfoEvaluationMethod) arg0).getInfoExecutionCourse());
-		}
-		return result;
-	}
+    /**
+     * @param string
+     */
+    public void setEvaluationElements(String string) {
+        evaluationElements = string;
+    }
 
-	/**
-	 * @return
-	 */
-	public String getEvaluationElementsEn() {
-		return evaluationElementsEn;
-	}
+    /**
+     * @param course
+     */
+    public void setInfoExecutionCourse(InfoExecutionCourse course) {
+        infoExecutionCourse = course;
+    }
 
-	/**
-	 * @param string
-	 */
-	public void setEvaluationElementsEn(String string) {
-		evaluationElementsEn = string;
-	}
+    public String toString() {
+        String result = "[EvaluationMethod";
 
+        result += ", evaluationElements =" + getEvaluationElements();
+        result += ", evaluationElementsEn =" + getEvaluationElementsEn();
+        result += ", executionCourse =" + getInfoExecutionCourse();
+        result += "]";
+        return result;
+    }
+
+    public boolean equals(Object arg0) {
+        boolean result = false;
+        if (arg0 instanceof InfoEvaluationMethod) {
+            result = getInfoExecutionCourse().equals(
+                    ((InfoEvaluationMethod) arg0).getInfoExecutionCourse());
+        }
+        return result;
+    }
+
+    /**
+     * @return
+     */
+    public String getEvaluationElementsEn() {
+        return evaluationElementsEn;
+    }
+
+    /**
+     * @param string
+     */
+    public void setEvaluationElementsEn(String string) {
+        evaluationElementsEn = string;
+    }
+
+    public void copyFromDomain(IEvaluationMethod evaluationMethod) {
+        super.copyFromDomain(evaluationMethod);
+        if (evaluationMethod != null) {
+            setEvaluationElements(evaluationMethod.getEvaluationElements());
+            setEvaluationElementsEn(evaluationMethod.getEvaluationElementsEn());
+        }
+    }
+
+    public static InfoEvaluationMethod newInfoFromDomain(
+            IEvaluationMethod evaluationMethod) {
+        InfoEvaluationMethod infoEvaluationMethod = null;
+        if (evaluationMethod != null) {
+            infoEvaluationMethod = new InfoEvaluationMethod();
+            infoEvaluationMethod.copyFromDomain(evaluationMethod);
+        }
+        return infoEvaluationMethod;
+    }
 }
