@@ -15,6 +15,9 @@ import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoExecutionCourse;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
+import ServidorApresentacao.Action.exceptions.ExistingActionException;
+import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import ServidorApresentacao.Action.sop.utils.Util;
@@ -78,6 +81,12 @@ public class CreateExamActionDA extends DispatchAction {
 			examDateAndTime.set(Calendar.SECOND, 0);
 
 			// Create an exam with season, examDateAndTime and executionCourse
+			Object argsCreateExam[] = { examDateAndTime, season, executionCourse };
+			try {
+				ServiceUtils.executeService(userView, "CreateExam", argsCreateExam);
+			} catch (ExistingServiceException ex) {
+				throw new ExistingActionException("O exame", ex);
+			}
 
 			return mapping.findForward("Sucess");
 	}
