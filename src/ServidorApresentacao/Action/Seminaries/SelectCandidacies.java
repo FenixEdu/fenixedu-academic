@@ -261,7 +261,10 @@ public class SelectCandidacies extends FenixDispatchAction
         {
             throw new FenixActionException(ex);
         }
-        destiny = mapping.findForward("prepareForm");
-        return destiny;
+        
+        // modified by Fernanda Quitério
+        //destiny = mapping.findForward("prepareForm");
+        //return destiny;
+        return prepare(mapping,form,request,response);
     }
 }

@@ -7,7 +7,8 @@
 	<h2>
 		<bean:message key="label.selectCandicaciesGrid.Title"/>
 	</h2>
-	<html:form action="/selectCandidacies.do" method="get">
+	<html:form action="/selectCandidacies.do">
+		<html:hidden property="method" value="prepare"/>
 		<html:select property="seminaryID">
 			<html:option value="-1" key="label.seminary.candidaciesGrid.select">
 				<bean:message key="label.seminary.candidaciesGrid.select"/>
@@ -15,7 +16,8 @@
 			<html:options collection="seminaries" property="idInternal" labelProperty="name"/>
 		</html:select>
 		<html:submit styleClass="button" value="OK" property="submition"/>
-
+	</html:form>
+	<html:form action="/selectCandidacies.do">
 		<table>
 			<tr>
 				<td class="listClasses-header">
@@ -111,6 +113,7 @@
 				<html:hidden property="previousUnselected" value="<%=candidacy.getIdInternal().toString()%>"/>
 			</logic:notEqual>
 		</logic:iterate>
+		<html:hidden property="seminaryID"/>
 		<html:hidden property="method" value="changeSelection"/>
 	</html:form>
 </logic:present>

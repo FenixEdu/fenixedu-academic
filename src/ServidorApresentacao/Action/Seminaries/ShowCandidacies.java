@@ -424,6 +424,11 @@ public class ShowCandidacies extends FenixAction
 					newName = infoDegreeCurricularPlan.getName().replaceAll("2003/2004", "");
 					infoDegreeCurricularPlan.setName(newName);
 					avaliableCurricularPlans.add(infoDegreeCurricularPlan);
+				} else if (infoDegreeCurricularPlan.getName().indexOf("2") != -1){
+					String newName = new String();
+					newName = infoDegreeCurricularPlan.getName().replaceAll("2003", "");
+					infoDegreeCurricularPlan.setName(newName);
+				    avaliableCurricularPlans.add(infoDegreeCurricularPlan);
 				}
 		}
 		Collections.sort(avaliableCurricularPlans, new BeanComparator("name"));

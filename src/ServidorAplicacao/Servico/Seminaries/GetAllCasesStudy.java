@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import DataBeans.util.Cloner;
+import DataBeans.Seminaries.InfoCaseStudy;
 import Dominio.Seminaries.ICaseStudy;
 import ServidorAplicacao.IServico;
 import ServidorApresentacao.Action.Seminaries.Exceptions.BDException;
@@ -60,7 +60,10 @@ public class GetAllCasesStudy implements IServico
             for (Iterator iterator = cases.iterator(); iterator.hasNext();)
             {
                 ICaseStudy caseStudy = (ICaseStudy) iterator.next();
-                infoCases.add(Cloner.copyICaseStudy2InfoCaseStudy(caseStudy));
+                
+                //CLONER
+                //infoCases.add(Cloner.copyICaseStudy2InfoCaseStudy(caseStudy));
+                infoCases.add(InfoCaseStudy.newInfoFromDomain(caseStudy));
             }
 
         } catch (ExcepcaoPersistencia ex)

@@ -10,7 +10,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import DataBeans.Seminaries.InfoTheme;
-import DataBeans.util.Cloner;
 import Dominio.Seminaries.ITheme;
 import ServidorAplicacao.IServico;
 import ServidorApresentacao.Action.Seminaries.Exceptions.BDException;
@@ -58,7 +57,10 @@ public class GetAllThemes implements IServico
                 List themes= persistentTheme.readAll();            
                 for (Iterator iterator= themes.iterator(); iterator.hasNext();)
                 {
-                    InfoTheme infoTheme= Cloner.copyITheme2InfoTheme((ITheme) iterator.next());
+                    //CLONER
+                    //InfoTheme infoTheme= Cloner.copyITheme2InfoTheme((ITheme) iterator.next());
+                    InfoTheme infoTheme= InfoTheme.newInfoFromDomain((ITheme) iterator.next());
+                    
                     seminariesInfo.add(infoTheme);
                 }
             }

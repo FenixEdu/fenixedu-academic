@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import DataBeans.util.Cloner;
+import DataBeans.InfoDegreeCurricularPlanWithDegree;
 import Dominio.IDegreeCurricularPlan;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -64,7 +64,10 @@ public class ReadDegreeCurricularPlans implements IServico
         for (Iterator iter= curricularPlans.iterator(); iter.hasNext();)
 			{
 				IDegreeCurricularPlan curricularPlan= (IDegreeCurricularPlan) iter.next();
-                infoCurricularPlans.add(Cloner.copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(curricularPlan));
+				
+				//CLONER
+				//infoCurricularPlans.add(Cloner.copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(curricularPlan));
+				infoCurricularPlans.add(InfoDegreeCurricularPlanWithDegree.newInfoFromDomain(curricularPlan));
 			}  
         return infoCurricularPlans;
       }

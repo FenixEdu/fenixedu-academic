@@ -9,8 +9,8 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
 import DataBeans.Seminaries.InfoSeminary;
-import DataBeans.util.Cloner;
 import Dominio.Seminaries.ISeminary;
 import ServidorAplicacao.IServico;
 import ServidorApresentacao.Action.Seminaries.Exceptions.BDException;
@@ -57,7 +57,10 @@ public class GetAllSeminaries implements IServico
 			List seminaries= persistentSeminary.readAll();            
 			for (Iterator iterator= seminaries.iterator(); iterator.hasNext();)
 			{
-				InfoSeminary infoSeminary= Cloner.copyISeminary2InfoSeminary((ISeminary) iterator.next());
+			    //CLONER
+//			    InfoSeminary infoSeminary= Cloner.copyISeminary2InfoSeminary((ISeminary) iterator.next());
+			    InfoSeminary infoSeminary = InfoSeminary.newInfoFromDomain((ISeminary) iterator.next());
+			    
 				Calendar now = new GregorianCalendar();
 				Calendar endDate = new GregorianCalendar();
 				Calendar beginDate = new GregorianCalendar();

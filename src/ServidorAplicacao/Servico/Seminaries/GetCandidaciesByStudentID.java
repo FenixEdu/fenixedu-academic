@@ -10,7 +10,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import DataBeans.Seminaries.InfoCandidacy;
-import DataBeans.util.Cloner;
 import Dominio.Seminaries.ICandidacy;
 import Dominio.Seminaries.ISeminary;
 import Dominio.Seminaries.Seminary;
@@ -63,7 +62,11 @@ public class GetCandidaciesByStudentID implements IServico
                 for (Iterator iterator= candidacies.iterator(); iterator.hasNext();)
                 {
                     ICandidacy candidacy = (ICandidacy) iterator.next();
-                    InfoCandidacy infoCandidacy= Cloner.copyICandicacy2InfoCandidacy(candidacy);
+                    
+                    //CLONER
+                    //InfoCandidacy infoCandidacy= Cloner.copyICandicacy2InfoCandidacy(candidacy);
+                    InfoCandidacy infoCandidacy= InfoCandidacy.newInfoFromDomain(candidacy);
+                    
                     ISeminary seminary = (ISeminary) persistentSeminary.readByOID(Seminary.class,candidacy.getSeminaryIdInternal());
                     infoCandidacy.setSeminaryName(seminary.getName());
                     candidaciesInfo.add(infoCandidacy);

@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import DataBeans.util.Cloner;
+import DataBeans.Seminaries.InfoModality;
 import Dominio.Seminaries.IModality;
 import ServidorAplicacao.IServico;
 import ServidorApresentacao.Action.Seminaries.Exceptions.BDException;
@@ -60,7 +60,10 @@ public class GetAllModalities implements IServico
             for (Iterator iterator = cases.iterator(); iterator.hasNext();)
             {
                 IModality modality = (IModality) iterator.next();
-                infoCases.add(Cloner.copyIModality2InfoModality(modality));
+                
+                //CLONER
+                //infoCases.add(Cloner.copyIModality2InfoModality(modality));
+                infoCases.add(InfoModality.newInfoFromDomain(modality));
             }
 
         } catch (ExcepcaoPersistencia ex)

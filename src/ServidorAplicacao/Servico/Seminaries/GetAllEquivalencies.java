@@ -7,7 +7,8 @@ package ServidorAplicacao.Servico.Seminaries;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import DataBeans.util.Cloner;
+
+import DataBeans.Seminaries.InfoEquivalency;
 import Dominio.Seminaries.ICourseEquivalency;
 import ServidorAplicacao.IServico;
 import ServidorApresentacao.Action.Seminaries.Exceptions.BDException;
@@ -56,7 +57,10 @@ public class GetAllEquivalencies implements IServico
             for (Iterator iterator = equivalencies.iterator(); iterator.hasNext();)
             {
                 ICourseEquivalency equivalency = (ICourseEquivalency) iterator.next();
-                infoEquivalencies.add(Cloner.copyIEquivalency2InfoEquivalency(equivalency));
+                
+                //CLONER
+                //infoEquivalencies.add(Cloner.copyIEquivalency2InfoEquivalency(equivalency));
+                infoEquivalencies.add(InfoEquivalency.newInfoFromDomain(equivalency));
             }
         } catch (ExcepcaoPersistencia ex)
         {
