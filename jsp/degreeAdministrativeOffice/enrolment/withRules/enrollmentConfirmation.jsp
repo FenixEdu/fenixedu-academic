@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="Util.EnrollmentState, Util.CurricularCourseType" %>
 <%@ page import="DataBeans.InfoEnrolmentInExtraCurricularCourse" %>
+<%@ page import="DataBeans.InfoEnrolment" %>
 
 <h2><bean:message key="title.student.enrollment" bundle="STUDENT_RESOURCES"/></h2>
 <span class="error"><html:errors/></span>
@@ -148,7 +149,9 @@
 				</td>
 				<td class="listClasses" style="text-align:left">
 					<bean:write name="curriculumElem" property="infoCurricularCourse.name"/>
-					<bean:message name="curriculumElem" property="enrollmentTypeResourceKey" bundle="DEFAULT"/>
+					<% if ( !((InfoEnrolment) curriculumElem).getEnrollmentTypeResourceKey().equals("option.curricularCourse.normal") ) {%>
+						(<bean:message name="curriculumElem" property="enrollmentTypeResourceKey" bundle="DEFAULT"/>)
+					<% } %>
 				</td>
 			  <td class="listClasses">
 				<logic:notEqual name="curriculumElem" property="enrollmentState" value="<%= EnrollmentState.APROVED.toString() %>">

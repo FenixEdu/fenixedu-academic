@@ -5,6 +5,7 @@
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants, Util.CurricularCourseType" %>
 <%@ page import="Util.EnrollmentState" %>
 <%@ page import="DataBeans.InfoEnrolmentInExtraCurricularCourse" %>
+<%@ page import="DataBeans.InfoEnrolment" %>
 
   <span class="error"><html:errors/></span>
 
@@ -66,7 +67,9 @@
 			  </td>
 			  <td class="listClasses" style="text-align:left">
 			    <bean:write name="enrolment" property="infoCurricularCourse.name"/>
-				<bean:message name="enrolment" property="enrollmentTypeResourceKey" bundle="DEFAULT"/>
+				<% if ( !((InfoEnrolment) enrolment).getEnrollmentTypeResourceKey().equals("option.curricularCourse.normal") ) {%>
+					(<bean:message name="enrolment" property="enrollmentTypeResourceKey" bundle="DEFAULT"/>)
+				<% } %>
 			  </td>
 			  <td class="listClasses">
 				<logic:notEqual name="enrolment" property="enrollmentState" value="<%= EnrollmentState.APROVED.toString() %>">
