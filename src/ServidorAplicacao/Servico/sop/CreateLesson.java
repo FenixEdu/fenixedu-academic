@@ -1,27 +1,30 @@
 /*
- * CriarAula.java
+ * CreateLesson.java
  *
- * Created on 26 de Outubro de 2002, 15:09
+ * Created on 2003/08/12
  */
 
 package ServidorAplicacao.Servico.sop;
 
 /**
- * Servi�o CriarAula.
+ * Servi�o CreateLesson.
  *
- * @author tfc130
+ * @author Luis Cruz & Sara Ribeiro
  **/
 
 import java.util.List;
 
 import DataBeans.InfoLesson;
 import DataBeans.InfoLessonServiceResult;
+import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
 import Dominio.Aula;
 import Dominio.IAula;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.ISala;
+import Dominio.ITurno;
+import Dominio.Turno;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -34,30 +37,32 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
-public class CriarAula implements IServico {
+public class CreateLesson implements IServico {
 
-	private static CriarAula _servico = new CriarAula();
+	private static CreateLesson _servico = new CreateLesson();
 	/**
 	 * The singleton access method of this class.
 	 **/
-	public static CriarAula getService() {
+	public static CreateLesson getService() {
 		return _servico;
 	}
 
 	/**
 	 * The actor of this class.
 	 **/
-	private CriarAula() {
+	private CreateLesson() {
 	}
 
 	/**
 	 * Devolve o nome do servico
 	 **/
 	public final String getNome() {
-		return "CriarAula";
+		return "CreateLesson";
 	}
 
-	public InfoLessonServiceResult run(InfoLesson infoLesson)
+	public InfoLessonServiceResult run(
+		InfoLesson infoLesson,
+		InfoShift infoShift)
 		throws FenixServiceException {
 
 		InfoLessonServiceResult result = null;
@@ -67,9 +72,6 @@ public class CriarAula implements IServico {
 			ISala sala =
 				sp.getISalaPersistente().readByName(
 					infoLesson.getInfoSala().getNome());
-
-			System.out.println("infoLesson.getInfoSala().getNome()= " + infoLesson.getInfoSala().getNome());
-			System.out.println("sala= " + sala);
 
 			IDisciplinaExecucaoPersistente executionCourseDAO =
 				sp.getIDisciplinaExecucaoPersistente();
@@ -105,8 +107,15 @@ public class CriarAula implements IServico {
 			if (result.isSUCESS() && resultB) {
 				try {
 					sp.getIAulaPersistente().lockWrite(aula);
-				} catch (ExistingPersistentException ex) {
 
+					ITurno shift =
+						(ITurno) sp.getITurnoPersistente().readByOID(
+							Turno.class,
+							infoShift.getIdInternal());
+					sp.getITurnoPersistente().lockWrite(shift);
+					shift.getAssociatedLessons().add(aula);
+
+				} catch (ExistingPersistentException ex) {
 					throw new ExistingServiceException(ex);
 				}
 			} else {

@@ -4,16 +4,22 @@
  */
 package ServidorApresentacao.Action.utils;
 
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 
 import DataBeans.InfoClass;
 import DataBeans.InfoCurricularYear;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
+import DataBeans.InfoLesson;
 import DataBeans.InfoRoom;
 import DataBeans.InfoShift;
 import ServidorAplicacao.GestorServicos;
@@ -273,6 +279,52 @@ public class ContextUtils {
 			}
 
 			if (infoShift != null) {
+				/* Sort the list of lesson */
+				ComparatorChain chainComparator = new ComparatorChain();
+				chainComparator.addComparator(
+					new BeanComparator("diaSemana.diaSemana"));
+				chainComparator.addComparator(new Comparator() {
+
+					public int compare(Object o1, Object o2) {
+						Calendar ctime1 = ((InfoLesson) o1).getInicio();
+						Calendar ctime2 = ((InfoLesson) o2).getInicio();
+
+						Integer time1 =
+							new Integer(
+								ctime1.get(Calendar.HOUR_OF_DAY) * 60
+									+ ctime1.get(Calendar.MINUTE));
+
+						Integer time2 =
+							new Integer(
+								ctime2.get(Calendar.HOUR_OF_DAY) * 60
+									+ ctime2.get(Calendar.MINUTE));
+
+						return time1.compareTo(time2);
+					}
+				});
+				chainComparator.addComparator(new Comparator() {
+
+					public int compare(Object o1, Object o2) {
+						Calendar ctime1 = ((InfoLesson) o1).getFim();
+						Calendar ctime2 = ((InfoLesson) o2).getFim();
+
+						Integer time1 =
+							new Integer(
+								ctime1.get(Calendar.HOUR_OF_DAY) * 60
+									+ ctime1.get(Calendar.MINUTE));
+
+						Integer time2 =
+							new Integer(
+								ctime2.get(Calendar.HOUR_OF_DAY) * 60
+									+ ctime2.get(Calendar.MINUTE));
+
+						return time1.compareTo(time2);
+					}
+				});
+				chainComparator.addComparator(
+					new BeanComparator("infoSala.nome"));
+				Collections.sort(infoShift.getInfoLessons(), chainComparator);
+
 				// Place it in request
 				request.setAttribute(SessionConstants.SHIFT, infoShift);
 			} else {
@@ -287,8 +339,7 @@ public class ContextUtils {
 	 */
 	public static void setClassContext(HttpServletRequest request) {
 		String classOIDString =
-			(String) request.getAttribute(
-				SessionConstants.CLASS_VIEW_OID);
+			(String) request.getAttribute(SessionConstants.CLASS_VIEW_OID);
 		System.out.println("Class from request: " + classOIDString);
 		if (classOIDString == null) {
 			classOIDString =
@@ -317,11 +368,9 @@ public class ContextUtils {
 			}
 
 			// Place it in request
-			request.setAttribute(
-				SessionConstants.CLASS_VIEW,
-				infoClass);
+			request.setAttribute(SessionConstants.CLASS_VIEW, infoClass);
 		}
-	}	
+	}
 
 	public static void setSelectedRoomsContext(HttpServletRequest request)
 		throws FenixActionException {
@@ -463,4 +512,5 @@ public class ContextUtils {
 		else
 			return null;
 	}
+
 }

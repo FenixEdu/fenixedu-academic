@@ -74,8 +74,8 @@
 			<td width="10">
 			</td>
 			<td>
-				<html:form action="/manageShifts">
-					<html:hidden property="method" value="listShifts"/>
+				<html:form action="/manageLesson">
+					<html:hidden property="method" value="prepare"/>
 					<html:hidden property="page" value="0"/>
 
 					<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
@@ -84,6 +84,10 @@
 							 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
 					<html:hidden property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
 							 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
+					<html:hidden property="<%= SessionConstants.EXECUTION_COURSE_OID %>"
+							 value="<%= pageContext.findAttribute("executionCourseOID").toString() %>"/>
+					<html:hidden property="<%= SessionConstants.SHIFT_OID %>"
+							 value="<%= pageContext.findAttribute("shiftOID").toString() %>"/>
 
 					<html:submit styleClass="inputbutton">
 						<bean:message key="label.lesson.create"/>

@@ -238,6 +238,7 @@ public abstract class SessionConstants {
 	public static final String INFO_EXECUTION_DEGREE_LIST   = "INFO_EXECUTION_DEGREE_LIST";
 	public static final String PAVILLIONS_NAMES_LIST        = "PAVILLIONS_NAMES_LIST";
 	public static final String SHIFTS = "shifts";
+	public static final String LESSON = "lesson";
 
 	// -------------------------------------------------------------------------------
 	//    Messy Constants Section - For All Sorts of Purposes

@@ -61,6 +61,18 @@
         <form-property name="tipoAula" type="java.lang.Integer"/>
       </form-bean>
 
+      <!-- Dynamic-FormBean for lesson manipulation -->
+      <form-bean name="manageLessonForm"
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorActionForm"
+                 dynamic="true">
+        <form-property name="diaSemana" type="java.lang.String"/>
+        <form-property name="horaInicio" type="java.lang.String"/>
+        <form-property name="minutosInicio" type="java.lang.String"/>
+        <form-property name="horaFim" type="java.lang.String"/>
+        <form-property name="minutosFim" type="java.lang.String"/>
+        <form-property name="nomeSala" type="java.lang.String"/>
+        <form-property name="page" type="java.lang.Integer"/>
+      </form-bean>
 
 	  <!-- AULAS -->
       <!-- Dynamic-FormBean para CriarAula -->
@@ -1137,6 +1149,19 @@
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                    />
     	<forward name="EditShift" path="/manageShift.jsp"/>
+	</action>
+
+	<action path="/manageLesson"
+			input="/manageLesson.do?method=prepare&amp;page=0"
+            type="ServidorApresentacao.Action.sop.ManageLessonDA"
+            name="manageLessonForm"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+    	<forward name="ShowLessonForm" path="/manageLesson.jsp"/>
+    	<forward name="ShowChooseRoomForm" path="/chooseRoomForLesson.jsp"/>
+    	<forward name="EditShift" path="/manageShift.do?method=prepareEditShift&amp;page=0"/>
 	</action>
 
       <!-- ========== ADICIONADO POR DAVID SANTOS ================================ -->
