@@ -25,7 +25,7 @@ public class CorrectionFormula extends FenixUtil {
 
     public static final String LID_SIMPLE_FORMULA = "<br/>cotação * 1 / (num de opções -1)";
 
-    public static final String IMS_STRING = "Utilizar cotações indicada no ficheiro.";
+    public static final String IMS_STRING = "Utilizar cotações indicadas no ficheiro.";
 
     private Integer formula;
 

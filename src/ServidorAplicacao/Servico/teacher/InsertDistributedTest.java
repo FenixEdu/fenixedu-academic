@@ -39,6 +39,7 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentDistributedTest;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentStudentTestQuestion;
 import ServidorPersistente.IPersistentTest;
 import ServidorPersistente.IPersistentTestQuestion;
@@ -69,9 +70,10 @@ public class InsertDistributedTest implements IService {
 
 			ISuportePersistente persistentSuport = SuportePersistenteOJB
 					.getInstance();
-			IExecutionCourse executionCourse = (IExecutionCourse) persistentSuport
-					.getIPersistentExecutionCourse().readByOID(
-							ExecutionCourse.class, executionCourseId);
+			IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
+					.getIPersistentExecutionCourse();
+			IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
+					.readByOID(ExecutionCourse.class, executionCourseId);
 			if (executionCourse == null)
 				throw new InvalidArgumentsServiceException();
 
@@ -99,8 +101,10 @@ public class InsertDistributedTest implements IService {
 			ITestScope testScope = (ITestScope) persistentSuport
 					.getIPersistentTestScope().readByDomainObject(
 							executionCourse);
+
 			if (testScope == null) {
-				testScope = new TestScope(executionCourse);
+				testScope = new TestScope(persistentExecutionCourse
+						.materialize(executionCourse));
 				persistentSuport.getIPersistentTestScope().simpleLockWrite(
 						testScope);
 			}

@@ -60,4 +60,5 @@ public interface IPersistentObject
             Integer numberOfElementsInSpan, Integer spanNumber);
     
     public Iterator readIteratorByCriteria(Class classToQuery, Criteria criteria);
+    public IDomainObject materialize(IDomainObject domainObject);
 }
