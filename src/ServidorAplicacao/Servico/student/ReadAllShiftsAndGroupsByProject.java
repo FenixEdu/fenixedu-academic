@@ -56,7 +56,7 @@ public class ReadAllShiftsAndGroupsByProject implements IServico {
 
 		InfoSiteAllGroups infoSiteAllGroups = new InfoSiteAllGroups();
 		List infoSiteGroupsByShiftList=null;
-		System.out.println("ENTRA No SERVICO READ ALL GROUPS");
+		
 			
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -115,8 +115,7 @@ public class ReadAllShiftsAndGroupsByProject implements IServico {
 
 			}
 			infoSiteAllGroups.setInfoSiteGroupsByShiftList(infoSiteGroupsByShiftList);
-			System.out.println("INFOSITEALLGROUPS-size"+infoSiteGroupsByShiftList.size());
-			System.out.println("INFOSITEALLGROUPS"+infoSiteAllGroups);
+			
 		
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();

@@ -44,6 +44,7 @@
                		
 	           		<bean:define id="infoGroupProperties" name="infoStudentGroup" property="infoGroupProperties"/>
                		<bean:define id="idInternal" name="infoGroupProperties" property="idInternal"/>
+               		
 					<bean:define id="shiftCode" name="infoShift" property="idInternal"/>
                		
                		<td class="listClasses">
