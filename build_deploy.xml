@@ -48,10 +48,14 @@
 		<move file="build_fenix-tests_extra.properties"
 			  tofile="build.properties"
 			  />
+	<!--
 		<property file="build.properties"/>
+	-->
 
 		<!-- Deploy the application-->
 		<antcall target="deploy"/>
+
+		<sleep seconds="5"/>
 
 		<delete file="build.properties"/>
 		<scp file="${server.username}:${server.password}@${server.hostname}:/root/configs/build_fenix-tests_intra.properties"
@@ -60,7 +64,9 @@
 		<move file="build_fenix-tests_intra.properties"
 			  tofile="build.properties"
 			  />
+	<!--
 		<property file="build.properties"/>
+	-->
 
 		<!-- Deploy the application-->
 		<antcall target="deploy"/>
@@ -104,7 +110,9 @@
 		<move file="build_fenix.properties"
 			  tofile="build.properties"
 			  />
+	<!--
 		<property file="build.properties"/>
+	-->
 
 		<!-- Deploy the application-->
 		<antcall target="deploy"/>
@@ -120,6 +128,9 @@
     <target name="deploy"
             description="Deploys application"
             >
+
+	<property file="build.properties"/>
+
 		<!-- Clean-all -->
         <ant antfile="build.xml"
         	 target="clean-all"
