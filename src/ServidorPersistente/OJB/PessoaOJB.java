@@ -10,6 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.apache.ojb.broker.PersistenceBroker;
+import org.apache.ojb.broker.query.Criteria;
+import org.apache.ojb.broker.query.Query;
+import org.apache.ojb.broker.query.QueryByCriteria;
+import org.apache.ojb.odmg.HasBroker;
 import org.odmg.QueryException;
 
 import Dominio.IPessoa;
@@ -86,20 +91,32 @@ public class PessoaOJB extends ObjectFenixOJB implements IPessoaPersistente {
     }
 
     public IPessoa lerPessoaPorUsername(String username) throws ExcepcaoPersistencia {
-        try {
-            IPessoa pessoa = null;
-            String oqlQuery = "select all from " + Pessoa.class.getName();
-            oqlQuery += " where username = $1";
-            query.create(oqlQuery);
-            query.bind(username);
-            List result = (List) query.execute();
-            lockRead(result);
-            if(result.size() != 0)
-                pessoa = (IPessoa) result.get(0);
-            return pessoa;
-        } catch(QueryException ex) {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
+		IPessoa person = null;
+
+		PersistenceBroker broker = ((HasBroker) odmg.currentTransaction()).getBroker(); 
+		//PersistenceBrokerFactory.defaultPersistenceBroker();
+		//((HasBroker) tx).getBroker();
+
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("username",username);
+		Query queryPB = new QueryByCriteria(Pessoa.class, criteria);
+		person = (IPessoa) broker.getObjectByQuery(queryPB);
+		return person;
+    	
+//        try {
+//            
+//            String oqlQuery = "select all from " + Pessoa.class.getName();
+//            oqlQuery += " where username = $1";
+//            query.create(oqlQuery);
+//            query.bind(username);
+//            List result = (List) query.execute();
+//            lockRead(result);
+//            if(result.size() != 0)
+//                pessoa = (IPessoa) result.get(0);
+//            return pessoa;
+//        } catch(QueryException ex) {
+//            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+//        }
     }
 
     public IPessoa lerPessoaPorNumDocIdETipoDocId(String numeroDocumentoIdentificacao, TipoDocumentoIdentificacao tipoDocumentoIdentificacao) throws ExcepcaoPersistencia {
