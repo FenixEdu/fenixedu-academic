@@ -13,6 +13,13 @@
 		<bean:write name="infoWorkingArea" property="infoExecutionYear.year" />
 		<bean:define id="year" name="infoWorkingArea" property="infoExecutionYear.year"/>
 		<bean:define id="semester" name="infoWorkingArea" property="semester"/>
+		<html:link page="<%= "/manageWorkingArea.do?method=publishWorkingArea"
+								+ "&amp;year="
+								+ year
+								+ "&amp;semester="
+								+ semester %>" >
+			<bean:message key="link.publish.working.area"/>
+		</html:link> 
 		<html:link page="<%= "/manageWorkingArea.do?method=deleteWorkingArea"
 								+ "&amp;year="
 								+ year

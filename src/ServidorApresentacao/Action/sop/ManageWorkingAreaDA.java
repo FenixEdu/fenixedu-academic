@@ -24,6 +24,7 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.sop.CreateWorkingArea.ExistingExecutionPeriod;
 import ServidorAplicacao.Servico.sop.CreateWorkingArea.InvalidExecutionPeriod;
+import ServidorAplicacao.Servico.sop.PublishWorkingArea.InvalidWorkingAreaException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -163,6 +164,53 @@ public class ManageWorkingAreaDA extends FenixDispatchAction {
 		}
 
 		return mapping.findForward("Sucess");
+	}
+
+	/**
+	 * Prepare information to show existing execution periods
+	 * and working areas.
+	 **/
+	public ActionForward publishWorkingArea(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception {
+
+		String year = request.getParameter("year");
+		Integer semester = new Integer(request.getParameter("semester"));
+
+		InfoExecutionYear infoExecutionYear = new InfoExecutionYear(year);
+		InfoExecutionPeriod infoExecutionPeriod =
+			new InfoExecutionPeriod(
+				"AT:" + semester + "º Semestre",
+				infoExecutionYear);
+		infoExecutionPeriod.setSemester(new Integer(semester.intValue()));
+
+		IUserView userView = SessionUtils.getUserView(request);
+
+		Object[] argsDeleteWorkingArea = { infoExecutionPeriod };
+		try {
+			Boolean result =
+				(Boolean) ServiceUtils.executeService(
+					userView,
+					"PublishWorkingArea",
+					argsDeleteWorkingArea);
+		} catch (InvalidWorkingAreaException ex) {
+			throw new InvalidArgumentsActionException(
+				"A área de trabalho indicada",
+				ex);
+		} catch (InvalidExecutionPeriod ex) {
+			throw new InvalidArgumentsActionException(
+				"A área de trabalho indicada",
+				ex);
+		} catch (FenixServiceException ex) {
+			throw new FenixActionException(
+				"Problemas a apagar a área de trabalho.",
+				ex);
+		}
+
+		return prepare(mapping, form, request, response);
 	}
 
 	/**
