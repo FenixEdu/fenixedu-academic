@@ -12,7 +12,7 @@
 
 <html:form action="/executionCourseShiftsPercentageManager">
 	<html:hidden property="method" value="accept"/>
-	<html:hidden property="executionCourseInternalCode"/>
+	<html:hidden property="objectCode"/>
 	
 	<table border="1">
 		<tr>
