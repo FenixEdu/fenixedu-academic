@@ -102,15 +102,19 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 			String oqlQuery = "select aulas from " + Aula.class.getName();
 			oqlQuery += " where disciplinaExecucao.sigla = $1";
 			oqlQuery += " and disciplinaExecucao.executionPeriod.name = $2";
-			oqlQuery += " and disciplinaExecucao.executionPeriod.executionYear.year = $3";
+			oqlQuery
+				+= " and disciplinaExecucao.executionPeriod.executionYear.year = $3";
 
 			query.create(oqlQuery);
-			
+
 			query.bind(executionCourse.getSigla());
 			query.bind(executionCourse.getExecutionPeriod().getName());
-			query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
-			
-			
+			query.bind(
+				executionCourse
+					.getExecutionPeriod()
+					.getExecutionYear()
+					.getYear());
+
 			List result = (List) query.execute();
 			lockRead(result);
 			return result;
@@ -154,15 +158,17 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 					+ " and disciplinaExecucao.executionPeriod.name = $3"
 					+ " and disciplinaExecucao.executionPeriod.executionYear.year = $4";
 			query.create(oqlQuery);
-			
+
 			query.bind(lessonType);
-			
+
 			query.bind(executionCourse.getSigla());
-			
+
 			query.bind(executionCourse.getExecutionPeriod().getName());
-			query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
-
-
+			query.bind(
+				executionCourse
+					.getExecutionPeriod()
+					.getExecutionYear()
+					.getYear());
 
 			List result = (List) query.execute();
 			lockRead(result);
@@ -172,18 +178,20 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 		}
 	}
 
-	public List readByRoomAndExecutionPeriod(ISala room, IExecutionPeriod executionPeriod)
+	public List readByRoomAndExecutionPeriod(
+		ISala room,
+		IExecutionPeriod executionPeriod)
 		throws ExcepcaoPersistencia {
 		try {
 			String oqlQuery = "select aulas from " + Aula.class.getName();
 			oqlQuery += " where sala.nome = $1"
-						+ " and disciplinaExecucao.executionPeriod.name = $2"
-						+ " and disciplinaExecucao.executionPeriod.executionYear.year = $3";
+				+ " and disciplinaExecucao.executionPeriod.name = $2"
+				+ " and disciplinaExecucao.executionPeriod.executionYear.year = $3";
 			query.create(oqlQuery);
 			query.bind(room.getNome());
 			query.bind(executionPeriod.getName());
 			query.bind(executionPeriod.getExecutionYear().getYear());
-			
+
 			List result = (List) query.execute();
 			lockRead(result);
 			return result;
