@@ -14,6 +14,7 @@ import org.apache.commons.collections.Predicate;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScope;
+import DataBeans.InfoEvaluationMethod;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoLesson;
 import DataBeans.InfoSiteCommon;
@@ -27,8 +28,8 @@ import Dominio.IBibliographicReference;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICurriculum;
-import Dominio.IExecutionCourse;
 import Dominio.IEvaluationMethod;
+import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
 import Dominio.ISite;
 import Dominio.ITeacher;
@@ -39,10 +40,10 @@ import ServidorAplicacao.Factory.TeacherAdministrationSiteComponentBuilder;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
-import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentBibliographicReference;
 import ServidorPersistente.IPersistentCurriculum;
 import ServidorPersistente.IPersistentEvaluationMethod;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentResponsibleFor;
 import ServidorPersistente.IPersistentSite;
@@ -113,8 +114,16 @@ public class ReadCourseInformation implements IServico
             IPersistentEvaluationMethod persistentEvaluationMethod = sp.getIPersistentEvaluationMethod();
             IEvaluationMethod evaluationMethod =
                 persistentEvaluationMethod.readByExecutionCourse(executionCourse);
+            if (evaluationMethod == null)
+            {
+                InfoEvaluationMethod infoEvaluationMethod = new InfoEvaluationMethod();
+                infoEvaluationMethod.setInfoExecutionCourse(infoExecutionCourse);
+                infoSiteCourseInformation.setInfoEvaluationMethod(infoEvaluationMethod);
+            
+            } else {
             infoSiteCourseInformation.setInfoEvaluationMethod(
                 Cloner.copyIEvaluationMethod2InfoEvaluationMethod(evaluationMethod));
+            }
 
             List infoResponsibleTeachers = getInfoResponsibleTeachers(executionCourse, sp);
             infoSiteCourseInformation.setInfoResponsibleTeachers(infoResponsibleTeachers);
@@ -133,7 +142,7 @@ public class ReadCourseInformation implements IServico
             infoSiteCourseInformation.setInfoBibliographicReferences(infoBibliographicReferences);
 
             List infoLessons = getInfoLessons(executionCourse, sp);
-            infoSiteCourseInformation.setInfoLessons(getFilteredLessons(infoLessons));
+            infoSiteCourseInformation.setInfoLessons(getFilteredInfoLessons(infoLessons));
 
             IPersistentCourseReport persistentCourseReport = sp.getIPersistentCourseReport();
             ICourseReport courseReport =
@@ -172,53 +181,44 @@ public class ReadCourseInformation implements IServico
      * @param infoLessons
      * @return
      */
-    private List getFilteredLessons(List infoLessons)
+    private List getFilteredInfoLessons(List infoLessons)
     {
         List filteredInfoLessons = new ArrayList();
-        Object obj = CollectionUtils.find(infoLessons, new Predicate()
-        {
-            public boolean evaluate(Object o)
-            {
-                InfoLesson infoLesson = (InfoLesson) o;
-                return infoLesson.getTipo().equals(new TipoAula(TipoAula.TEORICA));
-            }
-        });
-        if (obj != null)
-            filteredInfoLessons.add(obj);
+        InfoLesson infoLesson = getFilteredInfoLessonByType(infoLessons, new TipoAula(TipoAula.TEORICA));
+        if (infoLesson != null)
+            filteredInfoLessons.add(infoLesson);
 
-        obj = CollectionUtils.find(infoLessons, new Predicate()
-        {
-            public boolean evaluate(Object o)
-            {
-                InfoLesson infoLesson = (InfoLesson) o;
-                return infoLesson.getTipo().equals(new TipoAula(TipoAula.PRATICA));
-            }
-        });
-        if (obj != null)
-            filteredInfoLessons.add(obj);
+        infoLesson = getFilteredInfoLessonByType(infoLessons, new TipoAula(TipoAula.PRATICA));
+        if (infoLesson != null)
+            filteredInfoLessons.add(infoLesson);
 
-        obj = CollectionUtils.find(infoLessons, new Predicate()
-        {
-            public boolean evaluate(Object o)
-            {
-                InfoLesson infoLesson = (InfoLesson) o;
-                return infoLesson.getTipo().equals(new TipoAula(TipoAula.LABORATORIAL));
-            }
-        });
-        if (obj != null)
-            filteredInfoLessons.add(obj);
+        infoLesson = getFilteredInfoLessonByType(infoLessons, new TipoAula(TipoAula.LABORATORIAL));
+        if (infoLesson != null)
+            filteredInfoLessons.add(infoLesson);
 
-        obj = CollectionUtils.find(infoLessons, new Predicate()
-        {
-            public boolean evaluate(Object o)
-            {
-                InfoLesson infoLesson = (InfoLesson) o;
-                return infoLesson.getTipo().equals(new TipoAula(TipoAula.TEORICO_PRATICA));
-            }
-        });
-        if (obj != null)
-            filteredInfoLessons.add(obj);
+        infoLesson = getFilteredInfoLessonByType(infoLessons, new TipoAula(TipoAula.TEORICO_PRATICA));
+        if (infoLesson != null)
+            filteredInfoLessons.add(infoLesson);
         return filteredInfoLessons;
+    }
+
+    /**
+     * Filter the lessons to select the first element of the given type
+     * @param infoLessons
+     * @return
+     */
+    private InfoLesson getFilteredInfoLessonByType(List infoLessons, TipoAula type)
+    {
+        final TipoAula lessonType = type;
+        InfoLesson infoLesson = (InfoLesson) CollectionUtils.find(infoLessons, new Predicate()
+        {
+            public boolean evaluate(Object o)
+            {
+                InfoLesson infoLesson = (InfoLesson) o;
+                return infoLesson.getTipo().equals(lessonType);
+            }
+        });
+        return infoLesson;
     }
 
     /**

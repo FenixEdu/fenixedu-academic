@@ -39,6 +39,62 @@
 <form-validation>
 
    <global>
+   
+   	 <validator name="greaterThanOrEqual"
+            classname="ServidorApresentacao.validator.form.ValidateCompareTwoFields"
+               method="validateGreaterThanOrEqual"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.struts.action.ActionErrors,
+                       javax.servlet.http.HttpServletRequest,
+                       javax.servlet.ServletContext"
+                  msg="error.greaterThanOrEqual"/>
+
+   	 <validator name="greaterThan"
+            classname="ServidorApresentacao.validator.form.ValidateCompareTwoFields"
+               method="validateGreaterThan"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.struts.action.ActionErrors,
+                       javax.servlet.http.HttpServletRequest,
+                       javax.servlet.ServletContext"
+                  msg="error.greaterThan"/>
+
+   	 <validator name="Equal"
+            classname="ServidorApresentacao.validator.form.ValidateCompareTwoFields"
+               method="validateEqual"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.struts.action.ActionErrors,
+                       javax.servlet.http.HttpServletRequest,
+                       javax.servlet.ServletContext"
+                  msg="error.equal"/>
+
+   	 <validator name="lessThan"
+            classname="ServidorApresentacao.validator.form.ValidateCompareTwoFields"
+               method="validateLessThan"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.struts.action.ActionErrors,
+                       javax.servlet.http.HttpServletRequest,
+                       javax.servlet.ServletContext"
+                  msg="error.lessThan"/>                                        
+                  
+   	 <validator name="lessThanOrEqual"
+            classname="ServidorApresentacao.validator.form.ValidateCompareTwoFields"
+               method="validateLessThanOrEqual"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.struts.action.ActionErrors,
+                       javax.servlet.http.HttpServletRequest,
+                       javax.servlet.ServletContext"
+                  msg="error.lessThanOrEqual"/>
+
      <validator name="twoFields"
             classname="ServidorApresentacao.validator.form.ValidateTwoFields"
                method="validate"

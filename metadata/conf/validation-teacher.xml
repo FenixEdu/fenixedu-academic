@@ -633,10 +633,15 @@
 	
 	<form name="teachingCareerForm">
 		<field property="beginYear" depends="required,integer" page="1">
-			<arg0 key="label.career.year"/>
+			<arg0 key="label.career.beginYear"/>
 		</field>
-		<field property="endYear" depends="required,integer" page="1">
-			<arg0 key="label.career.year"/>
+		<field property="endYear" depends="required,integer,greaterThan" page="1">
+			<arg0 key="label.career.beginYear"/>
+			<arg1 key="label.career.endYear"/>
+			<var>
+            	<var-name>secondProperty</var-name>
+                <var-value>beginYear</var-value>
+            </var>
 		</field>		
 		<field property="courseOrPosition" depends="required" page="1">
 			<arg0 key="label.teachingCareer.courseOrPosition"/>
@@ -647,8 +652,12 @@
 		<field property="beginYear" depends="required,integer" page="1">
 			<arg0 key="label.career.year"/>
 		</field>
-		<field property="endYear" depends="required,integer" page="1">
+		<field property="endYear" depends="required,integer,greaterThan" page="1">
 			<arg0 key="label.career.year"/>
+			<var>
+            	<var-name>secondProperty</var-name>
+                <var-value>beginYear</var-value>
+            </var>
 		</field>		
 		<field property="entity" depends="required" page="1">
 			<arg0 key="label.professionalCareer.entity"/>
