@@ -97,13 +97,34 @@
 							</logic:notPresent>
 						 	<logic:present name="enrollment" property="infoNormalEnrolmentEvaluation.grade">
 							 	<logic:equal name="enrollment" property="infoNormalEnrolmentEvaluation.grade" value="NA">
-									<bean:message key="msg.notEvaluated" bundle="ENUMERATION_RESOURCES" />
+									<logic:notEqual name="enrollment" property="infoEnrolmentEvaluation.state" 
+										value="<%= new EnrolmentEvaluationState(EnrolmentEvaluationState.FINAL).toString() %>">
+										<bean:message key="msg.enrolled" bundle="ENUMERATION_RESOURCES" />
+									</logic:notEqual>
+									<logic:equal name="enrollment" property="infoEnrolmentEvaluation.state" 
+										value="<%= new EnrolmentEvaluationState(EnrolmentEvaluationState.FINAL).toString() %>">
+										<bean:message key="msg.notEvaluated" bundle="ENUMERATION_RESOURCES" />
+									</logic:equal>
 								</logic:equal>
 								<logic:equal name="enrollment" property="infoNormalEnrolmentEvaluation.grade" value="RE">
-									<bean:message key="msg.notApproved" bundle="ENUMERATION_RESOURCES" />
+									<logic:notEqual name="enrollment" property="infoEnrolmentEvaluation.state" 
+										value="<%= new EnrolmentEvaluationState(EnrolmentEvaluationState.FINAL).toString() %>">
+										<bean:message key="msg.enrolled" bundle="ENUMERATION_RESOURCES" />
+									</logic:notEqual>
+									<logic:equal name="enrollment" property="infoEnrolmentEvaluation.state" 
+										value="<%= new EnrolmentEvaluationState(EnrolmentEvaluationState.FINAL).toString() %>">
+										<bean:message key="msg.notApproved" bundle="ENUMERATION_RESOURCES" />
+									</logic:equal>									
 								</logic:equal>
 								<logic:equal name="enrollment" property="infoNormalEnrolmentEvaluation.grade" value="AP">
-									<bean:message key="msg.approved" bundle="ENUMERATION_RESOURCES" />
+									<logic:notEqual name="enrollment" property="infoEnrolmentEvaluation.state" 
+										value="<%= new EnrolmentEvaluationState(EnrolmentEvaluationState.FINAL).toString() %>">
+										<bean:message key="msg.enrolled" bundle="ENUMERATION_RESOURCES" />
+									</logic:notEqual>
+									<logic:equal name="enrollment" property="infoEnrolmentEvaluation.state" 
+										value="<%= new EnrolmentEvaluationState(EnrolmentEvaluationState.FINAL).toString() %>">
+										<bean:message key="msg.approved" bundle="ENUMERATION_RESOURCES" />
+									</logic:equal>																		
 								</logic:equal>
 								<logic:greaterThan name="enrollment" property="infoNormalEnrolmentEvaluation.grade" value="0">
 									 <logic:lessThan name="enrollment" property="infoNormalEnrolmentEvaluation.grade" value="101">
