@@ -17,9 +17,9 @@
 <logic:notEqual name="testsSize" value="0">
 <table>
 	<tr>
-		<td width="100" class="listClasses-header"><bean:message key="label.test.title"/></td>
-		<td width="100" class="listClasses-header"><bean:message key="label.test.creationDate"/></td>
-		<td width="100" class="listClasses-header"><bean:message key="label.test.lastModifiedDate"/></td>
+		<td class="listClasses-header"><bean:message key="label.test.title"/></td>
+		<td class="listClasses-header"><bean:message key="label.test.creationDate"/></td>
+		<td class="listClasses-header"><bean:message key="label.test.lastModifiedDate"/></td>
 		<td width="100" class="listClasses-header"><bean:message key="label.test.numberOfQuestions"/></td>
 	</tr>
 	<logic:iterate id="tests" name="component" property="infoTests" type="DataBeans.InfoTest">

@@ -18,9 +18,9 @@
 
 <table>
 	<tr>
-		<td width="100" class="listClasses-header"><bean:message key="label.test.title"/></td>
-		<td width="100" class="listClasses-header"><bean:message key="message.testBeginDate"/></td>
-		<td width="100" class="listClasses-header"><bean:message key="message.testEndDate"/></td>
+		<td class="listClasses-header"><bean:message key="label.test.title"/></td>
+		<td class="listClasses-header"><bean:message key="message.testBeginDate"/></td>
+		<td class="listClasses-header"><bean:message key="message.testEndDate"/></td>
 	</tr>
 	<logic:iterate id="distributedTest" name="component" property="infoDistributedTests" type="DataBeans.InfoDistributedTest">
 	<tr>
@@ -36,6 +36,12 @@
 		<div class="gen-button">
 		<html:link page="<%= "/distributedTestEdition.do?method=prepareEditDistributedTest&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;distributedTestCode=" + distributedTestCode %>">
 		<bean:message key="label.edit" />
+		</html:link></div>
+		</td>
+		<td>
+		<div class="gen-button">
+		<html:link page="<%= "/testDistribution.do?method=showTestMarks&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;distributedTestCode=" + distributedTestCode %>">
+		<bean:message key="label.test.marks" />
 		</html:link></div>
 		</td>
 	</tr>

@@ -21,21 +21,51 @@
 	<html:hidden property="testCode" value="<%= testCode.toString() %>"/>
 	
 		<h2><bean:write name="distributedTest" property="title"/></h2>
-		<b><bean:write name="distributedTest" property="testInformation"/></b>	
+		<b><bean:write name="distributedTest" property="testInformation"/></b>
 	</center>
+	<br/>
+	<br/>
+	<b><bean:message key="label.test.totalClassification"/>:</b>&nbsp;<bean:write name="classification"/>
 	<br/>
 	<br/>
 	<table width="100%" border="0" cellpadding="0" cellspacing="10">
 		<logic:iterate id="testQuestion" name="infoStudentTestQuestionList" type="DataBeans.InfoStudentTestQuestion">
 			<tr><td><hr></td></tr>
 			<bean:define id="question" name="testQuestion" property="question" type="DataBeans.InfoQuestion"/>
+			<bean:define id="testQuestionValue" name="testQuestion" property="testQuestionValue"/>
 			<bean:define id="questionCode" name="question" property="idInternal"/>
 			<bean:define id="questionOrder" name="testQuestion" property="testQuestionOrder"/>
 			<tr>
 				<td><b><bean:message key="label.test.questionOrder" />:</b>&nbsp;<bean:write name="questionOrder"/></td>
 			</tr>
 			<tr>
-				<td><b><bean:message key="label.test.questionValue" />:</b>&nbsp;<bean:write name="testQuestion" property="testQuestionValue"/></td>
+				<td><b><bean:message key="label.test.questionValue" />:</b>&nbsp;<bean:write name="testQuestionValue"/></td>
+			</tr>
+			
+			
+			<bean:define id="correct" value="false"/>
+			<bean:define id="responsed" name="testQuestion" property="response"/>
+
+			<tr>
+				<logic:equal name="responsed" value="0">
+					<td><b><bean:message key="label.test.classification" />:</b>&nbsp;<bean:write name="responsed"/></td>
+				</logic:equal>
+				<logic:notEqual name="responsed" value="0">
+					<logic:iterate id="correctResponse" name="question" property="correctResponse">
+						<logic:equal name="correctResponse" value="<%= responsed.toString() %>">
+							<bean:define id="correct" value="true"/>
+						</logic:equal>
+					</logic:iterate>
+
+					<logic:equal name="correct" value="true">
+						<td><b><bean:message key="label.test.classification" />:</b>&nbsp;<bean:write name="testQuestionValue"/></td>
+					</logic:equal>
+					<logic:notEqual name="correct" value="true">
+						<bean:define id="optionNumber" name="question" property="optionNumber"/>
+						<bean:define id="value" value="<%= (new java.text.DecimalFormat("#0.##").format(new Double(-((Double.parseDouble(testQuestionValue.toString()))*java.lang.Math.pow((Integer.parseInt(optionNumber.toString())-1), -1))))).toString() %>"/>
+						<td><b><bean:message key="label.test.classification" />:</b>&nbsp;<bean:write name="value"/></td>	
+					</logic:notEqual>
+				</logic:notEqual>
 			</tr>
 			<tr>
 				<td>

@@ -920,6 +920,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 		request.setAttribute("objectCode", objectCode);
 		return mapping.findForward("addStudentsToDistributedTest");
 	}
+	
 	public ActionForward editDistributedTest(
 		ActionMapping mapping,
 		ActionForm form,
@@ -997,6 +998,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
+		Collections.sort(infoStudentList, new BeanComparator("number"));
 		request.setAttribute("distributedTestCode", distributedTestCode);
 		request.setAttribute("infoStudentList", infoStudentList);
 		readSiteView(request);
@@ -1099,6 +1101,38 @@ public class TestsManagementAction extends FenixDispatchAction {
 		request.setAttribute("distributedTestCode", distributedTestCode);
 		return mapping.findForward("showStudentTestLog");
 	}
+	
+	
+	public ActionForward showTestMarks(
+			ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response)
+			throws FenixActionException {
+
+			HttpSession session = getSession(request);
+			UserView userView =
+				(UserView) session.getAttribute(SessionConstants.U_VIEW);
+			Integer objectCode = getCodeFromRequest(request, "objectCode");
+			Integer distributedTestCode =
+				getCodeFromRequest(request, "distributedTestCode");
+			Object[] args = { objectCode, distributedTestCode };
+			List infoStudentsTestQuestionsList = null;
+			try {
+				infoStudentsTestQuestionsList =
+					(List) ServiceUtils.executeService(
+						userView,
+						"ReadDistributedTestMarks",
+						args);
+			} catch (FenixServiceException e) {
+				throw new FenixActionException(e);
+			}
+			request.setAttribute("objectCode", objectCode);
+			request.setAttribute("infoStudentsTestQuestionsList", infoStudentsTestQuestionsList);
+			readSiteView(request);
+			return mapping.findForward("showTestMarks");
+		}
+	
 
 	public ActionForward exercicesFirstPage(
 		ActionMapping mapping,
@@ -1163,9 +1197,11 @@ public class TestsManagementAction extends FenixDispatchAction {
 			error(request, "error.badMetadataFile");
 			return mapping.findForward("insertNewExercice");
 		}
+		
+		//&& !(xmlZipFile.getContentType().equals("application/x-gzip"))
 		if (!(xmlZipFile
 			.getContentType()
-			.equals("application/x-zip-compressed"))) {
+			.equals("application/x-zip-compressed")) && !(xmlZipFile.getContentType().equals("application/zip")) ) {
 			error(request, "error.badXmlZipFile");
 			return mapping.findForward("insertNewExercice");
 		}

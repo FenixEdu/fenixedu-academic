@@ -18,6 +18,7 @@ public class InfoQuestion extends InfoObject {
 	private List correctResponse;
 	private Integer questionValue;
 	private String questionCardinality;
+	private Integer optionNumber;
 
 	public InfoQuestion() {
 	}
@@ -77,13 +78,21 @@ public class InfoQuestion extends InfoObject {
 	public void setQuestionCardinality(String string) {
 		questionCardinality = string;
 	}
-	
+
 	public List getCorrectResponse() {
-			return correctResponse;
+		return correctResponse;
 	}
 
 	public void setCorrectResponse(List list) {
 		correctResponse = list;
+	}
+	
+	public Integer getOptionNumber() {
+		return optionNumber;
+	}
+
+	public void setOptionNumber(Integer integer) {
+		optionNumber = integer;
 	}
 	
 	public boolean equals(Object obj) {
@@ -106,8 +115,13 @@ public class InfoQuestion extends InfoObject {
 						&& (infoQuestion.getQuestion().containsAll(getQuestion()))
 						&& (getOptions().containsAll(infoQuestion.getOptions()))
 						&& (infoQuestion.getOptions().containsAll(getOptions()))
-						&& (getCorrectResponse().containsAll(infoQuestion.getCorrectResponse()))
-						&& (infoQuestion.getCorrectResponse().containsAll(getCorrectResponse())));
+						&& (getCorrectResponse()
+							.containsAll(infoQuestion.getCorrectResponse()))
+						&& (infoQuestion
+							.getCorrectResponse()
+							.containsAll(getCorrectResponse()))
+						&& (getOptionNumber().equals(infoQuestion.getOptionNumber()))
+						);
 		}
 		return result;
 	}

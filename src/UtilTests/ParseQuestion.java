@@ -185,8 +185,10 @@ public class ParseQuestion extends DefaultHandler {
 			}
 		}
 		infoQuestion.setQuestion(auxList);
+		
 		it = listOptions.iterator();
 		auxList = new ArrayList();
+		int optionNumber =0;
 		while (it.hasNext()) {
 			Element element = (Element) it.next();
 			String tag = element.getQName();
@@ -201,6 +203,7 @@ public class ParseQuestion extends DefaultHandler {
 					new LabelValueBean(
 						"response_label",
 						atts.getValue("ident")));
+				optionNumber ++;
 			} else if ((tag.equals("mattext"))) {
 				auxList.add(new LabelValueBean("text", element.getValue()));
 			} else if ((tag.equals("matimage"))) {
@@ -218,7 +221,7 @@ public class ParseQuestion extends DefaultHandler {
 			}
 		}
 		infoQuestion.setOptions(auxList);
-
+		infoQuestion.setOptionNumber(new Integer(optionNumber));
 		it = listResponse.iterator();
 		auxList = new ArrayList();
 		while (it.hasNext()) {

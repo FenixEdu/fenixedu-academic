@@ -5,6 +5,7 @@
 package ServidorApresentacao.Action.student;
 
 import java.io.OutputStream;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Iterator;
@@ -22,6 +23,7 @@ import org.apache.xerces.impl.dv.util.Base64;
 
 import DataBeans.InfoSiteDistributedTests;
 import DataBeans.InfoStudentTestQuestion;
+
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
@@ -370,13 +372,32 @@ public class StudentTestsAction extends FenixDispatchAction {
 
 		Iterator it = infoStudentTestQuestionList.iterator();
 		String[] option = new String[numQuestions];
+		Double classification = new Double(0);
 		while (it.hasNext()) {
 			InfoStudentTestQuestion infoStudentTestQuestion =
 				(InfoStudentTestQuestion) it.next();
 			option[infoStudentTestQuestion.getTestQuestionOrder().intValue()
 				- 1] =
 				infoStudentTestQuestion.getResponse().toString();
+			if (infoStudentTestQuestion.getResponse().intValue() != 0)
+				if (infoStudentTestQuestion
+					.getQuestion()
+					.getCorrectResponse()
+					.contains(infoStudentTestQuestion.getResponse()))
+					classification =
+						new Double(
+							classification.doubleValue()
+								+ infoStudentTestQuestion
+									.getTestQuestionValue()
+									.intValue());
+				else
+					classification = new Double((classification.doubleValue()- (infoStudentTestQuestion.getTestQuestionValue().intValue()*(java.lang.Math.pow(infoStudentTestQuestion.getQuestion().getOptionNumber().intValue() - 1, -1)))));
+				
 		}
+		DecimalFormat df = new DecimalFormat("#0.##");
+		if (classification.doubleValue()<0)
+			classification = new Double(0);
+		request.setAttribute("classification", df.format(classification));
 		((DynaActionForm) form).set("option", option);
 		return mapping.findForward("showTestCorrection");
 	}

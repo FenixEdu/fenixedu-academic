@@ -911,6 +911,7 @@
 				<forward name="showDistributedTestStudents" path="/showDistributedTestStudents.jsp"/>
 				<forward name="distributeTestByShifts" path="/distributeTestByShifts.jsp"/>
 				<forward name="distributeTestByStudents" path="/distributeTestByStudents.jsp"/>
+				<forward name="showTestMarks" path="/showTestMarks.jsp"/>
 		</action>
 		<action path="/testDistributionByShifts"
 				name="distributedTestForm"

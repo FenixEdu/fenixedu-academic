@@ -11,10 +11,17 @@
 </logic:equal>
 
 <logic:notEqual name="distrubutedTestsSize" value="0">
+<b>
+<bean:message key="message.exist"/>&nbsp;
+<bean:write name="distrubutedTestsSize"/>&nbsp;
+<bean:message key="message.studentsWithDistributedTest"/>
+</b>
+<br/>
+<br/>
 <table>
 	<tr>
 		<td width="100" class="listClasses-header"><bean:message key="label.number"/></td>
-		<td width="100" class="listClasses-header"><bean:message key="label.name"/></td>
+		<td class="listClasses-header"><bean:message key="label.name"/></td>
 	</tr>
 	<logic:iterate id="student" name="infoStudentList" type="DataBeans.InfoStudent">
 		<bean:define id="person" name="student" property="infoPerson"/>
