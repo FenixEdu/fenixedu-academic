@@ -13,6 +13,6 @@
         &nbsp;&nbsp;- <html:link page="/editContributors.do?method=prepare&action=edit&page=0"><bean:message key="link.masterDegree.administrativeOffice.editContributor" /></html:link><br><br>
 	
 	<html:link page="/guideSection.do"><bean:message key="link.masterDegree.administrativeOffice.guide" /></html:link><br>
-	<html:link page="/certificateSection.do"><bean:message key="label.coordinator.student" /></html:link><br>
+<%-- <html:link page="/certificateSection.do"><bean:message key="label.coordinator.student" /></html:link><br> --%>
     
    
