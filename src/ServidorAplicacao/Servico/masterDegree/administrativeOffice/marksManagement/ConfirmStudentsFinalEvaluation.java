@@ -118,11 +118,11 @@ public class ConfirmStudentsFinalEvaluation implements IServico {
 					IEnrolment enrolmentToEdit = enrolmentEvaluation.getEnrolment();
 					persistentEnrolment.simpleLockWrite(enrolmentToEdit);
 					
-					EnrolmentState newEnrolmentState = EnrolmentState.APROVED_OBJ;
+					EnrolmentState newEnrolmentState = EnrolmentState.APROVED;
 					try{
 						Integer grade = new Integer(enrolmentEvaluation.getGrade()); 
 					} catch(NumberFormatException e){
-						newEnrolmentState = EnrolmentState.NOT_APROVED_OBJ;
+						newEnrolmentState = EnrolmentState.NOT_APROVED;
 					}
 					enrolmentToEdit.setEnrolmentState(newEnrolmentState);
 				}
