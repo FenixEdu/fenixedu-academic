@@ -162,7 +162,7 @@
 		    token="@application@" 
 		    property="application"/>
 		</replace>
-		<!--<antcall target="validate-xml"/> -->
+		<antcall target="validate-xml"/>
     </target>
     
     <target name="compile-tests"
