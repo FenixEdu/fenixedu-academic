@@ -276,7 +276,16 @@
         type="ServidorApresentacao.Action.teacher.ReadSite">    
      <forward name="viewSite" path="/viewExecutionCourse.jsp"/>         
 	</action>
+	
+	
+	<!-- Section viewer -->
+	<action path="/viewSection"
+        type="ServidorApresentacao.Action.publico.ViewSectionAction">    
+     <forward name="Sucess" path="/viewSection.jsp"/>         
+	</action>
+	
 <!-- End of Gesdis-->
+
 
     <!-- ========== ADICIONADO POR DAVID SANTOS ================================ -->
 		<action path="/siteViewer"
