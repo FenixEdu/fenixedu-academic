@@ -76,7 +76,7 @@ public class CriarSalaFormActionTest extends TestCasePresentation {
     actionPerform();
     verifyForwardPath("/autenticacaoSOP.jsp");
     
-    verifyActionErrors(new String[] {"ServidorAplicacao.FenixServiceException"});
+	verifyActionErrors(new String[] {"error.invalid.session"});
   }
   
 
