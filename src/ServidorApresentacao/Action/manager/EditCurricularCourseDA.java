@@ -57,12 +57,25 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 			} catch (FenixServiceException fenixServiceException) {
 				throw new FenixActionException(fenixServiceException.getMessage());
 			}
-			System.out.println("VELHO CURRICULAR COURSE"+oldInfoCurricularCourse);
-			
 
 			dynaForm.set("name", oldInfoCurricularCourse.getName());
 			dynaForm.set("code", oldInfoCurricularCourse.getCode());
 			
+//			if(oldInfoCurricularCourse.getCredits() != null)
+//				dynaForm.set("credits", oldInfoCurricularCourse.getCredits().toString());
+//			
+//			if(oldInfoCurricularCourse.getTheoreticalHours() != null)
+//				dynaForm.set("theoreticalHours", oldInfoCurricularCourse.getTheoreticalHours().toString());
+//			
+//			if(oldInfoCurricularCourse.getPraticalHours() != null)
+//				dynaForm.set("praticalHours", oldInfoCurricularCourse.getPraticalHours().toString());
+//			
+//			if(oldInfoCurricularCourse.getTheoPratHours() != null)
+//				dynaForm.set("theoPratHours", oldInfoCurricularCourse.getTheoPratHours().toString());
+//			
+//			if(oldInfoCurricularCourse.getLabHours() != null)
+//				dynaForm.set("labHours", oldInfoCurricularCourse.getLabHours().toString());
+//			
 			if(oldInfoCurricularCourse.getType() != null)
 				dynaForm.set("type", oldInfoCurricularCourse.getType().toString());
 			
@@ -105,6 +118,11 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 		String name = (String) dynaForm.get("name");
 		String code = (String) dynaForm.get("code");
 				
+//		String creditsString = (String) dynaForm.get("credits");
+//		String theoreticalHoursString = (String) dynaForm.get("theoreticalHours");
+//		String praticalHoursString = (String) dynaForm.get("praticalHours");
+//		String theoPratHoursString = (String) dynaForm.get("theoPratHours");
+//		String labHoursString = (String) dynaForm.get("labHours");
 		String typeString = (String) dynaForm.get("type");
 		String mandatoryString = (String) dynaForm.get("mandatory");
 //		String universityString = (String) dynaForm.get("university");
@@ -112,7 +130,31 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 		
 		newInfoCurricularCourse.setName(name);
 		newInfoCurricularCourse.setCode(code);
-
+					
+//		if(creditsString.compareTo("") != 0) {
+//			Double credits = new Double(creditsString); 
+//			newInfoCurricularCourse.setCredits(credits);
+//		}
+//		
+//		if(theoreticalHoursString.compareTo("") != 0) {
+//			Double theoreticalHours = new Double(theoreticalHoursString); 
+//			newInfoCurricularCourse.setTheoreticalHours(theoreticalHours);
+//		}
+//				
+//		if(praticalHoursString.compareTo("") != 0) {
+//			Double praticalHours = new Double(praticalHoursString); 
+//			newInfoCurricularCourse.setPraticalHours(praticalHours);
+//		}
+//		
+//		if(theoPratHoursString.compareTo("") != 0) {
+//			Double theoPratHours = new Double(theoPratHoursString); 
+//			newInfoCurricularCourse.setTheoPratHours(theoPratHours);
+//		}
+//		
+//		if(labHoursString.compareTo("") != 0) {
+//			Double labHours = new Double(labHoursString); 
+//			newInfoCurricularCourse.setLabHours(labHours);
+//		}
 		
 		if(typeString.compareTo("") != 0) {
 			CurricularCourseType type = new CurricularCourseType(new Integer(typeString)); 
