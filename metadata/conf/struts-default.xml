@@ -110,6 +110,8 @@
     <!-- ========== Message Resources Definitions ============================ -->
     <message-resources parameter="ServidorApresentacao.ApplicationResources" />
     <message-resources parameter="ServidorApresentacao.PortalResources" key="PORTAL_RESOURCES" null="false"/>    
+    <message-resources parameter="ServidorApresentacao.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
+    
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
       <set-property property="pathnames" 
