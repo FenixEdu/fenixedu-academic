@@ -47,7 +47,7 @@ create table PERSON (
 drop table if exists ROLE;
 create table ROLE(
   ID_INTERNAL int(11) not null,
-  ROLE_NAME enum('PERSON','SOP','TEACHER','STUDENT') not null,
+  ROLE_NAME enum('PERSON','TIME_TABLE_MANAGER','TEACHER','STUDENT') not null,
   PORTAL_ACTION varchar(100),
   PRIMARY KEY (ID_INTERNAL),
   UNIQUE U1 (ROLE_NAME)
