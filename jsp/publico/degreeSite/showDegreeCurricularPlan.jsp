@@ -42,6 +42,8 @@
 <br />
 		
 <logic:present name="allActiveCurricularCourseScopes">
+<logic:notEmpty name="allActiveCurricularCourseScopes">
+
 	<logic:iterate id="curricularCourseScopeElem" name="allActiveCurricularCourseScopes" type="DataBeans.InfoCurricularCourseScope" length="1">
 			<bean:define id="currentSemester" name="curricularCourseScopeElem" property="infoCurricularSemester.semester"/>
 	</logic:iterate>
@@ -102,10 +104,14 @@
 			</logic:iterate>
 		</logic:iterate>
 	</table>
+</logic:notEmpty>
 </logic:present>
 
 <logic:notPresent name="allActiveCurricularCourseScopes">
-	<h1><p><bean:message key="error.impossibleDegreeSite" /></p></h1>
+	<p><span class="error"><bean:message key="error.impossibleCurricularPlan" /></span></p>
 </logic:notPresent>
+<logic:empty name="allActiveCurricularCourseScopes">
+	<p><span class="error"><bean:message key="error.impossibleCurricularPlan" /></span></p>
+</logic:empty>
 
 </logic:present>
