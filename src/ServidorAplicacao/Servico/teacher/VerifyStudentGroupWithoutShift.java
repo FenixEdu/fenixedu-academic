@@ -86,6 +86,10 @@ public class VerifyStudentGroupWithoutShift implements IServico {
             	shiftCode = new Integer(shiftCodeString);
             }
             
+            if(studentGroup.getShift() != null && shiftCode == null){
+            	throw new InvalidArgumentsServiceException();
+            }
+            
             if(studentGroup.getShift() == null){
             	if(shiftCode != null) throw new InvalidArgumentsServiceException();
             }

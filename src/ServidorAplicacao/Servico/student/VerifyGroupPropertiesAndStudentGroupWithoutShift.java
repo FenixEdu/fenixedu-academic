@@ -78,6 +78,10 @@ public class VerifyGroupPropertiesAndStudentGroupWithoutShift implements IServic
              	shiftCode = new Integer(shiftCodeString);
              }
              
+             if(studentGroup.getShift() != null && shiftCode == null){
+            	throw new InvalidArgumentsServiceException();
+            }
+             
              if(studentGroup.getShift() == null){
              	if(shiftCode != null) throw new InvalidArgumentsServiceException();
              }
