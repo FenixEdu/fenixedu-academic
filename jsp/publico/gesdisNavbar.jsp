@@ -24,7 +24,7 @@
 <html:link page="/bibliographicReferenceManager.do?method=viewBibliographicReference">
 	<li><bean:message key="link.bibliography"/></li>
 </html:link>
-	<html:link page="/teachersManagerDA.do?method=viewTeachersByProfessorship">
+	<html:link page="/accessTeachers.do">
 	<li><bean:message key="link.teachers"/></li>
 </html:link>
 <html:link page="/viewTimeTable.do">

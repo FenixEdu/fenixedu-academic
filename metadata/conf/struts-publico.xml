@@ -265,25 +265,12 @@
 
 	<!-- Actions For Teachers  -->
 	<action 
-		input="/viewTeachers.jsp"
-		parameter="method"
-		path="/teachersManagerDA"
-        type="ServidorApresentacao.Action.teacher.TeacherManagerDispatchAction" >
-                	
-    <forward name="viewTeachers" path="/viewTeachers.jsp"/>  
-    
-	</action>
-	<action 
-		input="/associateTeacher.jsp"
-		parameter="method"
-		path="/teacherManagerDA"
-		type="ServidorApresentacao.Action.teacher.TeacherManagerDispatchAction"
-        >    
-
-    <forward name="viewTeachers" path="/viewTeachers.jsp"/>  
-    
+		path="/accessTeachers"
+        type="ServidorApresentacao.Action.publico.AccessTeachersAction" >
+    <forward name="Teachers" path="/teachers.jsp"/>  
 	</action>
 
+	<!-- Site viewer -->
 	<action path="/viewSite"
         type="ServidorApresentacao.Action.teacher.ReadSite">    
      <forward name="viewSite" path="/viewExecutionCourse.jsp"/>         
