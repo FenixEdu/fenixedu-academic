@@ -9,6 +9,7 @@ import java.util.List;
 
 import Dominio.IGroupProperties;
 import Dominio.IStudentGroup;
+import Dominio.ITurno;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -26,14 +27,14 @@ public class IndividualGroupEnrolmentStrategy extends GroupEnrolmentStrategy imp
 	}
 	
 		
-	public boolean enrolmentPolicy(IGroupProperties groupProperties,int numberOfStudentsToEnrole,IStudentGroup studentGroup){
+	public boolean enrolmentPolicy(IGroupProperties groupProperties,int numberOfStudentsToEnrole,IStudentGroup studentGroup,ITurno shift){
 		boolean result = false;
 		
 		if(checkEnrolmentDate(groupProperties,Calendar.getInstance()))
 		{
 			if(studentGroup == null)
 			{
-				if(checkNumberOfGroups(groupProperties) )
+				if(checkNumberOfGroups(groupProperties,shift) )
 					result=true;
 			}
 			else

@@ -3,11 +3,12 @@
  *
  */
  
-package ServidorAplicacao.Servico.teacher;
+package ServidorAplicacao.Servico.student;
 
 import DataBeans.InfoStudentGroup;
 import DataBeans.util.Cloner;
 import Dominio.IGroupProperties;
+import Dominio.IStudentGroup;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
@@ -55,9 +56,9 @@ public class VerifyStudentGroupAtributes implements IServico {
 		IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
 		IGroupProperties groupProperties = Cloner.copyInfoGroupProperties2IGroupProperties(infoStudentGroup.getInfoGroupProperties());
 		IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
+		IStudentGroup studentGroup = Cloner.copyInfoStudentGroup2IStudentGroup(infoStudentGroup);
 		
-		
-		boolean result = strategy.enrolmentPolicy(groupProperties,numberOfStudentsToEnrole.intValue(),Cloner.copyInfoStudentGroup2IStudentGroup(infoStudentGroup));
+		boolean result = strategy.enrolmentPolicy(groupProperties,numberOfStudentsToEnrole.intValue(),studentGroup,studentGroup.getShift());
 		
 		return new Boolean(result);
 	}

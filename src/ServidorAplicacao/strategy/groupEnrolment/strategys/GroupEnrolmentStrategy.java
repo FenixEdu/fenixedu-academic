@@ -23,8 +23,9 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy{
 
 	private IGroupProperties groupProperties = null;
-	int numberOfStudentsToEnrole;
+	private int numberOfStudentsToEnrole;
 	private IStudentGroup studentGroup = null;
+	private ITurno shift = null;
 	
 	public IGroupProperties getGroupProperties() {
 		return groupProperties;
@@ -50,14 +51,22 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy{
 		this.studentGroup = studentGroup;
 	}
 	
-	public boolean checkNumberOfGroups(IGroupProperties groupProperties)
+	public ITurno getShift() {
+		return shift;
+	}
+
+	public void setShift(ITurno shift) {
+		this.shift = shift;
+	}
+		
+	public boolean checkNumberOfGroups(IGroupProperties groupProperties,ITurno shift)
 	{
 		boolean result = false;
 		try
 		{
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentStudentGroup persistentStudentGroup = sp.getIPersistentStudentGroup();
-			List groups = persistentStudentGroup.readAllStudentGroupByGroupProperties(groupProperties);
+			List groups = persistentStudentGroup.readAllStudentGroupByGroupPropertiesAndShift(groupProperties,shift);
 			int numberOfGroups = groups.size();
 			if(numberOfGroups < groupProperties.getGroupMaximumNumber().intValue())
 				result = true;
@@ -111,5 +120,5 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy{
 	}
 
 	
-	public abstract boolean enrolmentPolicy(IGroupProperties groupProperties,int numberOfStudentsToEnrole,IStudentGroup studentGroup);
+	public abstract boolean enrolmentPolicy(IGroupProperties groupProperties,int numberOfStudentsToEnrole,IStudentGroup studentGroup,ITurno shift);
 }

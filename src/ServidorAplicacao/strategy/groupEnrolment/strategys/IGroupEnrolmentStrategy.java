@@ -16,9 +16,9 @@ import Dominio.ITurno;
  */
 public interface IGroupEnrolmentStrategy {
 	
-	public boolean checkNumberOfGroups(IGroupProperties groupProperties);
+	public boolean checkNumberOfGroups(IGroupProperties groupProperties,ITurno shift);
 	public boolean checkEnrolmentDate(IGroupProperties groupProperties,Calendar actualDate);
 	public boolean checkShiftType(IGroupProperties groupProperties,ITurno shift);
-	public boolean enrolmentPolicy(IGroupProperties groupProperties,int numberOfStudentsToEnrole,IStudentGroup studentGroup);
+	public boolean enrolmentPolicy(IGroupProperties groupProperties,int numberOfStudentsToEnrole,IStudentGroup studentGroup,ITurno shift);
 	
 }

@@ -8,6 +8,7 @@ import java.util.Calendar;
 
 import Dominio.IGroupProperties;
 import Dominio.IStudentGroup;
+import Dominio.ITurno;
 
 /**
  * @author asnr and scpo
@@ -20,10 +21,10 @@ public class AtomicGroupEnrolmentStrategy extends GroupEnrolmentStrategy impleme
 	public AtomicGroupEnrolmentStrategy(){
 	}
 
-	public boolean enrolmentPolicy(IGroupProperties groupProperties,int numberOfStudentsToEnrole,IStudentGroup studentGroup)
+	public boolean enrolmentPolicy(IGroupProperties groupProperties,int numberOfStudentsToEnrole,IStudentGroup studentGroup,ITurno shift)
 	{
 		boolean result = false;
-		if(checkNumberOfGroups(groupProperties) && checkEnrolmentDate(groupProperties,Calendar.getInstance()))
+		if(checkNumberOfGroups(groupProperties,shift) && checkEnrolmentDate(groupProperties,Calendar.getInstance()))
 		{
 			if(numberOfStudentsToEnrole >= groupProperties.getMinimumCapacity().intValue()&& numberOfStudentsToEnrole <= groupProperties.getMaximumCapacity().intValue())
 				result = true;
