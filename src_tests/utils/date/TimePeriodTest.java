@@ -31,21 +31,28 @@ public class TimePeriodTest extends TestCase
         Date startDate = getDate(3,30);
         Date endDate = getDate(4,0);
         TimePeriod timePeriod = new TimePeriod(startDate, endDate);
-        assertEquals("half hour!", 0.5, timePeriod.hours().doubleValue(), 2);
+        assertEquals("half hour!", 0.5, timePeriod.hours().doubleValue(), 0);
     }
 
     public void testHourAndAHalf() {
         Date startDate = getDate(3,30);
         Date endDate = getDate(5,0);
         TimePeriod timePeriod = new TimePeriod(startDate, endDate);
-        assertEquals("hour and half!", 1.5, timePeriod.hours().doubleValue(), 2);
+        assertEquals("hour and half!", 1.5, timePeriod.hours().doubleValue(), 0);
     }
     
     public void testQuarterOfHour() {
         Date startDate = getDate(3,15);
         Date endDate = getDate(3,30);
         TimePeriod timePeriod = new TimePeriod(startDate, endDate);
-        assertEquals("Quarter of hour!", 0.25, timePeriod.hours().doubleValue(), 2);
+        assertEquals("Quarter of hour!", 0.25, timePeriod.hours().doubleValue(), 0);
+    }    
+
+    public void testOne() {
+    	Date startDate = getDate(10,30);
+    	Date endDate = getDate(11,45);
+    	TimePeriod timePeriod = new TimePeriod(startDate, endDate);
+    	assertEquals("Quarter of hour!", 1.25, timePeriod.hours().doubleValue(), 0);
     }    
     
     /**
