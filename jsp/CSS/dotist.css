@@ -282,6 +282,13 @@ select.courseEnroll {
 	padding: 10px 10px;
 	border-bottom: 1px solid #ccc;
 	}
+
+.infoop-blue {
+	background-color: #9CF;
+	vertical-align: middle;
+	padding: 10px 10px;
+	border-bottom: 1px solid #ccc;
+	}
 	
 .infoselected {
 	background: #ffc;
@@ -319,6 +326,25 @@ select.courseEnroll {
 	text-align: center;
 	padding: 5px;
 	}
+
+.listClasses-subheader{
+	color:#FFF;
+	background:#999; 
+	padding:5px;
+	font-weight:bold;
+}
+
+.listClasses-subheader a:link, .listClasses-subheader a:visited{
+	color:#FFF;
+	text-decoration:underline;
+	font-weight:normal;	
+}
+
+.listClasses-subheader a:hover{
+	color:#FFF;
+	text-decoration:none;
+	font-weight:normal;
+}
 
 .tall-td {
 	height: 50px;
