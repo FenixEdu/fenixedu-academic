@@ -114,7 +114,6 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 		} catch (ExistingPersistentException ex) {
 			// All Is OK
 			try {
-				//				NOTE DAVID-RICARDO: Aqui devia estar um cancelarTransaccao mas nao esta porque rebenta (java.util.ConcurrentModificationException)
 				persistentSupport.confirmarTransaccao();
 			} catch (ExcepcaoPersistencia e) {
 				e.printStackTrace();
