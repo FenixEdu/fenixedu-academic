@@ -18,8 +18,7 @@ import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.NumberOfCurricularCourseDoneRestriction;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
-import ServidorAplicacao.strategy.enrolment.degree.EnrolmentStrategyFactory;
-import ServidorAplicacao.strategy.enrolment.degree.strategys.IEnrolmentStrategy;
+import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContextManager;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentPrecedence;
@@ -152,7 +151,7 @@ public class RestrictionOJBTest extends BaseEnrolmentRestrictionOJBTest {
 	}
 	
 	public EnrolmentContext getEnrolmentContext(){
-		EnrolmentContext enrolmentContext = new EnrolmentContext();
+		EnrolmentContext enrolmentContext = null;
 		
 		IStudentCurricularPlanPersistente studentCurricularPlanDAO = sp.getIStudentCurricularPlanPersistente();
 		
@@ -168,13 +167,10 @@ public class RestrictionOJBTest extends BaseEnrolmentRestrictionOJBTest {
 			assertNotNull(studentCurricularPlan);
 
 			student = studentCurricularPlan.getStudent();
-
 			assertNotNull(student);
-			enrolmentContext.setSemester(semester);
-			enrolmentContext.setStudent(student);
 
-			IEnrolmentStrategy enrolmentStrategy = EnrolmentStrategyFactory.getEnrolmentStrategyInstance(enrolmentContext);
-			enrolmentContext = enrolmentStrategy.getEnrolmentContext();
+			enrolmentContext = EnrolmentContextManager.initialEnrolmentContext(student, semester);
+
 			sp.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();

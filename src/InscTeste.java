@@ -1,14 +1,9 @@
-import java.util.ArrayList;
-
-import Dominio.IBranch;
-import Dominio.ICurso;
 import Dominio.IStudent;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContextManager;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentStrategyFactory;
 import ServidorAplicacao.strategy.enrolment.degree.strategys.IEnrolmentStrategy;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ICursoPersistente;
-import ServidorPersistente.IPersistentBranch;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoCurso;
@@ -24,12 +19,8 @@ public class InscTeste {
 	public static void main(String[] args) {
 
 		SuportePersistenteOJB persistentSupport = null;
-		IPersistentBranch persistentBranch = null;
 		IPersistentStudent persistentStudent = null;
-		ICursoPersistente persistentDegree = null;
 //		IStudentCurricularPlanPersistente persistentStudentCurricularPlan = null;
-		ArrayList list = null;
-		IBranch branch = null;
 
 		//		try {
 		//			persistentSupport = SuportePersistenteOJB.getInstance();
@@ -73,24 +64,22 @@ public class InscTeste {
 
 		try {
 			IEnrolmentStrategy strategyLERCI = null;
-			EnrolmentContext enrolmentContext = new EnrolmentContext();
+			
 			IStudent student = null;
-			ICurso degree = null;
+
 //			IStudentCurricularPlan studentActiveCurricularPlan = null;
 
 			persistentSupport = SuportePersistenteOJB.getInstance();
 			persistentStudent = persistentSupport.getIPersistentStudent();
-			persistentDegree = persistentSupport.getICursoPersistente();
+
 //			persistentStudentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente();
 			persistentSupport.iniciarTransaccao();
 
-			degree = persistentDegree.readBySigla("LERCI");
+
 			student = persistentStudent.readStudentByNumberAndDegreeType(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA));
-//			studentActiveCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(student.getNumber(), student.getDegreeType());
+
+			EnrolmentContext enrolmentContext = EnrolmentContextManager.initialEnrolmentContext(student, new Integer(1));
 			
-			enrolmentContext.setStudent(student);
-			enrolmentContext.setSemester(new Integer(1));
-//			enrolmentContext.setStudentActiveCurricularPlan(studentActiveCurricularPlan);
 
 			strategyLERCI = EnrolmentStrategyFactory.getEnrolmentStrategyInstance(enrolmentContext);
 			enrolmentContext = strategyLERCI.getAvailableCurricularCourses();
