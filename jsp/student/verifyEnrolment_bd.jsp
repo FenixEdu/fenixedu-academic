@@ -4,21 +4,26 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <bean:define id="infoEnrolmentContext" name="<%= SessionConstants.INFO_ENROLMENT_CONTEXT_KEY %>" />
-
-Actual Enrolment <br />
+<br />
+<bean:message key="label.curricular.courses.choosen" />
 <html:form action="curricularCourseEnrolmentManager">
 	<html:hidden property="method" value="accept" />
 	<html:hidden property="step" value="1"/>	
-	
-	<logic:iterate id="curricularScope" name="infoEnrolmentContext" property="actualEnrolment" indexId="index">
-		<bean:write name="curricularScope" property="infoCurricularCourse.name"/><br/>
-	</logic:iterate>
-	
-	<logic:iterate id="optionalEnrolment" name="infoEnrolmentContext" property="infoOptionalCurricularCoursesEnrolments">
-			<bean:write name="optionalEnrolment" property="infoCurricularCourse.name"/> - <bean:write name="optionalEnrolment" property="infoCurricularCourseForOption.name"/>
-	</logic:iterate>
-	
-	<html:submit value="Finalizar"/>
-	<html:cancel value="Cancelar"/>		
+	<ul>
+		<logic:iterate id="curricularScope" name="infoEnrolmentContext" property="actualEnrolment" indexId="index">
+			<li><bean:write name="curricularScope" property="infoCurricularCourse.name"/></li>
+		</logic:iterate>
+		<logic:iterate id="optionalEnrolment" name="infoEnrolmentContext" property="infoOptionalCurricularCoursesEnrolments">
+			<li>
+				<bean:write name="optionalEnrolment" property="infoCurricularCourse.name"/> - <bean:write name="optionalEnrolment" property="infoCurricularCourseForOption.name"/>
+			</li>
+		</logic:iterate>
+	</ul>	
+	<html:submit styleClass="inputbutton">	
+		<bean:message key="button.finalize.enrolment"/>
+	</html:submit>
+	<html:cancel styleClass="inputbutton">
+		<bean:message key="button.change.enrolment"/>	
+	</html:cancel>		
 </html:form>
 
