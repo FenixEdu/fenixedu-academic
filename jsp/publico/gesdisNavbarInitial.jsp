@@ -15,7 +15,9 @@
 <li><html:link page="/viewTimeTable.do">
 		<bean:message key="link.executionCourse.timeTable"/>
 </html:link></li>
-
+<li><html:link page="/viewExecutionCourseShifts.do">
+		<bean:message key="link.executionCourse.shifts"/>
+</html:link></li>
 <li> <a href="/" onclick="houdini('seccao');return false;">Informa&ccedil;&atilde;o Curricular</a></li>
 </ul>
  <dl id="seccao" style="display: none;">
