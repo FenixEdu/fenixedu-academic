@@ -17,8 +17,8 @@
 	    <li><html:link page="/insertExternalPerson.do?method=prepare"><bean:message key="link.masterDegree.administrativeOffice.externalPersons.insert" /></html:link></li>
 	    <li><html:link page=""><bean:message key="link.masterDegree.administrativeOffice.externalPersons.find" /></html:link></li>
 	    <li><html:link page=""><bean:message key="link.masterDegree.administrativeOffice.externalPersons.visualize" /></html:link></li>
-	    <li><html:link page=""><bean:message key="link.masterDegree.administrativeOffice.externalPersons.insertWorkLocation"/></html:link></li>
-	    <li><html:link page=""><bean:message key="link.masterDegree.administrativeOffice.externalPersons.editWorkLocation"/></html:link></li>
+	    <li><html:link page="/insertWorkLocation.do?method=prepare&amp;page=0"><bean:message key="link.masterDegree.administrativeOffice.externalPersons.insertWorkLocation"/></html:link></li>
+	    <li><html:link page="/editWorkLocation.do?method=prepare&amp;page=0"><bean:message key="link.masterDegree.administrativeOffice.externalPersons.editWorkLocation"/></html:link></li>
 	</blockquote>
 </ul>
 <ul>
