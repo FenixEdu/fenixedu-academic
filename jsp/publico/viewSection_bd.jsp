@@ -15,6 +15,20 @@
 	  <h3><bean:write name="item" property="name"/></h3>
   	  <bean:write name="item" property="information" filter="false"/><br/>
   <logic:equal name="item" property="urgent" value="true"></font></logic:equal>
+  	<logic:present name="item" property="links">
+  		<br/>
+  		<br/>
+  		<table>
+  			
+		<logic:iterate id="infoLink" name="item" property="links">
+		<bean:define id="itemCode" name="item" property="idInternal"/>
+		<tr><td>
+			<html:link page="<%= "/fileDownload.do?itemCode=" + itemCode %>" paramId="fileName" paramName="infoLink" paramProperty="link" ><bean:write name="infoLink" property="linkName"/></html:link>
+		</td>
+		</tr>
+		</logic:iterate>
+		</table>
+  	</logic:present>
 </logic:iterate>
 </logic:notEmpty>
 </logic:present>
