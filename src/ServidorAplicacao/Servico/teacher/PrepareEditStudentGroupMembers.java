@@ -21,7 +21,6 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IFrequentaPersistente;
-import ServidorPersistente.IPersistentGroupProperties;
 import ServidorPersistente.IPersistentStudentGroup;
 import ServidorPersistente.IPersistentStudentGroupAttend;
 import ServidorPersistente.ISuportePersistente;
@@ -64,7 +63,6 @@ public class PrepareEditStudentGroupMembers  implements IServico {
 
 		IFrequentaPersistente persistentAttend = null;
 		IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
-		IPersistentGroupProperties persistentGroupProperties = null;
 		IPersistentStudentGroup persistentStudentGroup = null;
 		IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
 		List frequentas = new ArrayList();

@@ -73,8 +73,7 @@ public class ReadStudentGroupInformation implements IServico {
 
 		} catch (ExcepcaoPersistencia ex) {
 			ex.printStackTrace();
-
-			
+			throw new FenixServiceException("error.impossibleReadStudentGroupInformation");
 		}
 
 		studentGroupAttendInformationList = new ArrayList(studentGroupAttendList.size());

@@ -1082,9 +1082,9 @@
         type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"
        	validate="true">  
        	<exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
-         	   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
-               /> 
+         	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+        /> 
        	<forward name="insertGroupProperties" path="/insertGroupProperties.jsp"/>
        	<forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
 	</action>    
@@ -1118,9 +1118,9 @@
 		validate="true"
      	type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">            
        	<exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
-         	   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
-               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
-               /> 
+         	   	   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+        /> 
        	<forward name="insertStudentGroup" path="/insertStudentGroup.jsp"/>
 		<forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.jsp"/>
 	</action>
@@ -1145,8 +1145,8 @@
 		validate="true"
      	type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">            
      	<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-         	   key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+         	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
         />          
        	<forward name="editStudentGroupMembers" path="/editStudentGroupMembers.jsp"/>
 		<forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.jsp"/>

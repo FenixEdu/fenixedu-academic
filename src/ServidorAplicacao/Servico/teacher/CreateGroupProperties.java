@@ -26,7 +26,6 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class CreateGroupProperties implements IServico {
 
-	
 	private static CreateGroupProperties service = new CreateGroupProperties();
 
 	/**
@@ -47,32 +46,30 @@ public class CreateGroupProperties implements IServico {
 		return "CreateGroupProperties";
 	}
 
-
 	/**
 	 * Executes the service.
 	 */
-	public boolean run(Integer executionCourseCode, InfoGroupProperties infoGroupProperties)
-		throws FenixServiceException {
-		
+	public boolean run(Integer executionCourseCode, InfoGroupProperties infoGroupProperties) throws FenixServiceException {
+
 		IDisciplinaExecucao executionCourse = null;
 		try {
-			
+
 			ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
 			IDisciplinaExecucaoPersistente persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
 			IPersistentGroupProperties persistentGroupProperties = persistentSupport.getIPersistentGroupProperties();
-			
-			executionCourse =(IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseCode), false);
-			
-		
+
+			executionCourse =
+				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseCode), false);
+
 			infoGroupProperties.setInfoExecutionCourse(Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
-			
-			IGroupProperties newGroupProperties = Cloner.copyInfoGroupProperties2IGroupProperties(infoGroupProperties);	
+
+			IGroupProperties newGroupProperties = Cloner.copyInfoGroupProperties2IGroupProperties(infoGroupProperties);
 
 			persistentGroupProperties.lockWrite(newGroupProperties);
 
 		} catch (ExistingPersistentException excepcaoPersistencia) {
-					throw new ExistingServiceException(excepcaoPersistencia);
-			
+			throw new ExistingServiceException(excepcaoPersistencia);
+
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia.getMessage());
 		}
