@@ -41,9 +41,9 @@ import ServidorAplicacao.Servico.exceptions.InvalidStudentNumberServiceException
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.EnrollmentState;
 import Util.EnrolmentEvaluationState;
 import Util.EnrolmentEvaluationType;
-import Util.EnrolmentState;
 import Util.EntryPhase;
 import Util.GratuityState;
 import Util.RoleType;
@@ -214,7 +214,7 @@ public class RegisterCandidate implements IService {
                 enrolment
                         .setEnrolmentEvaluationType(new EnrolmentEvaluationType(
                                 EnrolmentEvaluationType.NORMAL));
-                enrolment.setEnrolmentState(EnrolmentState.ENROLED);
+                enrolment.setEnrollmentState(EnrollmentState.ENROLLED);
                 enrolment.setExecutionPeriod(sp.getIPersistentExecutionPeriod()
                         .readActualExecutionPeriod());
                 enrolment.setStudentCurricularPlan(studentCurricularPlan);
