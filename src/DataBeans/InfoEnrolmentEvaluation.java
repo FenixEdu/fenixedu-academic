@@ -18,9 +18,11 @@ public class InfoEnrolmentEvaluation extends InfoObject implements Serializable 
 	private Date examDate;
 	private Date gradeAvailableDate;
 	private String observation;
+	private Date when;
 	private EnrolmentEvaluationState state;
 	private InfoEnrolment infoEnrolment;
 	private InfoPerson infoPersonResponsibleForGrade;
+	private InfoPerson infoEmployee;
 	
 	public InfoEnrolmentEvaluation() {
 	}
@@ -46,6 +48,8 @@ public class InfoEnrolmentEvaluation extends InfoObject implements Serializable 
 		result += "state = " + this.state + "; ";
 		result += "infoEnrolment = " + this.infoEnrolment + "; ";
 		result += "gradeAvailableDate = " + this.gradeAvailableDate + "]\n";
+		result += "employee = " + this.infoEmployee + "]\n";
+		result += "when = " + this.when + "]\n";
 		return result;
 	}
 
@@ -119,6 +123,34 @@ public class InfoEnrolmentEvaluation extends InfoObject implements Serializable 
 	 */
 	public void setObservation(String string) {
 		observation = string;
+	}
+
+	/**
+	 * @return
+	 */
+	public InfoPerson getInfoEmployee() {
+		return infoEmployee;
+	}
+
+	/**
+	 * @param person
+	 */
+	public void setInfoEmployee(InfoPerson person) {
+		infoEmployee = person;
+	}
+
+	/**
+	 * @return
+	 */
+	public Date getWhen() {
+		return when;
+	}
+
+	/**
+	 * @param date
+	 */
+	public void setWhen(Date date) {
+		when = date;
 	}
 
 }

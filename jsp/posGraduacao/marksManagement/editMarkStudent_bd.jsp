@@ -5,8 +5,10 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <span class="error"><html:errors/></span>
-<h2><bean:message key="title.masterDegree.administrativeOffice.chooseStudent" /></h2>
-<br />
+<logic:present name="jspTitle">
+	<h2><bean:write name="jspTitle" /></h2>
+	<br />	
+</logic:present>
 <bean:message key="label.masterDegree.administrativeOffice.executionYear"/>:<bean:write name="executionYear" />
 &nbsp;-&nbsp;
 <bean:message key="label.masterDegree.administrativeOffice.degree"/>:<bean:write name="degree" />
@@ -27,5 +29,7 @@
 	<html:hidden property="degree" value="<%= pageContext.findAttribute("degree").toString() %>" />
 	<html:hidden property="curricularCourse" value="<%= pageContext.findAttribute("curricularCourse").toString() %>" />
 	<html:hidden property="curricularCourseCode" value="<%= pageContext.findAttribute("curricularCourseCode").toString() %>" />
+	<html:hidden property="scopeCode" value="<%= pageContext.findAttribute("curricularCourseCode").toString() %>" />
+	<html:hidden property="jspTitle" value="<%= pageContext.findAttribute("jspTitle").toString() %>" />
 	<html:submit value="Seguinte" styleClass="inputbutton" property="ok"/>
 </html:form>

@@ -13,7 +13,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
-import DataBeans.InfoEnrolment;
 import DataBeans.InfoSiteEnrolmentEvaluation;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
@@ -45,12 +44,15 @@ public class ShowMarkDispatchAction extends DispatchAction {
 		Integer curricularCourseCode = new Integer(getFromRequest("curricularCourseCode", request));
 		List enrolmentStudentList = (List) request.getAttribute("studentList");
 		
+		
 		//put request
 		request.setAttribute("executionYear",executionYear);
 		request.setAttribute("curricularCourseCode",curricularCourseCode);
 		request.setAttribute("scopeCode",curricularCourseCode);
 		request.setAttribute("curricularCourse", curricularCourse);
+		
 		request.setAttribute("degree", degree);
+		request.setAttribute("jspTitle", getFromRequest("jspTitle", request));
 
 		// Get students List			
 		
@@ -71,9 +73,17 @@ public class ShowMarkDispatchAction extends DispatchAction {
 			saveErrors(request, errors);
 			return mapping.findForward("NoStudents");
 		}
-
-System.out.println(((InfoEnrolment)listEnrolmentEvaluation.get(0)));
-
+		
+		if (listEnrolmentEvaluation.size() == 0){
+			ActionErrors actionErrors = new ActionErrors();
+			actionErrors.add(
+					"StudentNotEnroled",
+					new ActionError(
+						"error.students.Mark.NotAvailable"));
+			saveErrors(request, actionErrors);
+			return mapping.findForward("insucesso");
+		}
+		request.setAttribute("showMarks", "showMarks");
 		request.setAttribute("studentList", listEnrolmentEvaluation);
 		return mapping.findForward("displayStudentList");
 	

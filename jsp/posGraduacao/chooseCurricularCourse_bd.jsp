@@ -21,13 +21,13 @@
 		<!-- CurricularCourse -->
 		<logic:iterate id="curricularCourseElem" name="curricularCourses"  type="DataBeans.InfoCurricularCourse">
 		   	<bean:define id="curricularCourse" name="curricularCourseElem" property="name"/>
-			<tr>
-				<td>
-					<html:link page="<%= path + ".do?method=chooseCurricularCourse&amp;courseID=" + curricularCourseElem.getIdInternal() + "&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") %>">
-						<bean:write name="curricularCourseElem" property="name"/>
-					</html:link>
-				</td>
-			</tr>
+				<tr>
+					<td>
+						<html:link page="<%= path + ".do?method=chooseCurricularCourseByID&amp;courseID=" + curricularCourseElem.getIdInternal() + "&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;jspTitle=" + pageContext.findAttribute("jspTitle") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") %>">
+							<bean:write name="curricularCourseElem" property="name"/>
+						</html:link>
+					</td>
+				</tr>
 		</logic:iterate>
 	</table>
 </logic:present>

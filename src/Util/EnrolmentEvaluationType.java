@@ -81,10 +81,13 @@ public class EnrolmentEvaluationType {
 
 		switch (value) {
 			case IMPROVEMENT :
-				valueS = "IMPROVEMENT";
+				valueS = "Melhoria";
 				break;
 			case NORMAL :
-				valueS = "NORMAL";
+				valueS = "Normal";
+				break;
+			case EQUIVALENCE :
+				valueS = "Equivalência";
 				break;
 			default :
 				break;

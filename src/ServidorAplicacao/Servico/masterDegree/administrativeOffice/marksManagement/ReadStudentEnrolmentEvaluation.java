@@ -98,6 +98,8 @@ public class ReadStudentEnrolmentEvaluation implements IServico {
 			
 			infoEnrolmentEvaluation = Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(enrolmentEvaluation);
 			infoEnrolmentEvaluation.setInfoPersonResponsibleForGrade(infoTeacher.getInfoPerson());
+			if (enrolmentEvaluation.getEmployee() != null)
+				infoEnrolmentEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(enrolmentEvaluation.getEmployee().getPerson()));
 			infoEnrolmentEvaluation.setInfoEnrolment(infoEnrolment);
 			infoEnrolmentEvaluations.add(infoEnrolmentEvaluation);
 

@@ -36,6 +36,7 @@ import Dominio.IExecutionYear;
 import Dominio.IPessoa;
 import Dominio.IStudentCurricularPlan;
 import Dominio.ITeacher;
+import Dominio.Pessoa;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -204,14 +205,21 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 		return null;
 	}
 
-	public List run(Integer curricularCourseCode, Integer studentNumber) throws FenixServiceException {
-
+	public List run(Integer curricularCourseID, Integer studentNumber, String executionYear) 
+		throws FenixServiceException {
+		
 		List enrolmentEvaluations = null;
 		InfoTeacher infoTeacher = null;
 		InfoStudent infoStudent = null;
 		List infoSiteEnrolmentEvaluations = new ArrayList();
+		ICurricularCourse curricularCourse = null;
+		IEnrolment enrolment = new Enrolment();
+		IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
+		
+		
+		
+			
 		try {
-
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 			IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp.getIPersistentEnrolmentEvaluation();
@@ -219,17 +227,13 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 			IPersistentCurricularCourseScope persistentCurricularCourseScope = sp.getIPersistentCurricularCourseScope();
 			IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 			IStudentCurricularPlanPersistente persistentStudentCurricularPlan = sp.getIStudentCurricularPlanPersistente();
+			
+			//read curricularCourse by ID
+			ICurricularCourse curricularCourseTemp = new CurricularCourse();
+			curricularCourseTemp.setIdInternal(curricularCourseID);
+			curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse().readByOId(curricularCourseTemp, false);
 
-			//			get curricularCourseScope for enrolmentEvaluation
-			ICurricularCourseScope curricularCourseScope = new CurricularCourseScope();
-			curricularCourseScope.setIdInternal(curricularCourseCode);
-			curricularCourseScope = (ICurricularCourseScope) persistentCurricularCourseScope.readByOId(curricularCourseScope, false);
 
-			//			this becomes necessary to use criteria
-			InfoCurricularCourseScope infoCurricularCourseScope =
-				Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
-			ICurricularCourseScope curricularCourseScopeForCriteria =
-				Cloner.copyInfoCurricularCourseScope2ICurricularCourseScope(infoCurricularCourseScope);
 			//			get student curricular Plan
 			IStudentCurricularPlan studentCurricularPlan =
 				sp.getIStudentCurricularPlanPersistente().readActiveStudentCurricularPlan(
@@ -238,15 +242,14 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 			if (studentCurricularPlan == null) {
 				throw new ExistingServiceException();
 			}
-			IEnrolment enrolment = new Enrolment();
-
-			IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
+			
 
 			enrolment =
-				(IEnrolment) sp.getIPersistentEnrolment().readEnrolmentByStudentCurricularPlanAndCurricularCourseScope(
+				(IEnrolment) sp.getIPersistentEnrolment().readEnrolmentByStudentCurricularPlanAndCurricularCourse(
 					studentCurricularPlan,
-					curricularCourseScope);
-
+					curricularCourse,
+					executionYear);
+			
 			if (enrolment != null) {
 
 				//						ListIterator iter1 = enrolments.listIterator();
@@ -258,6 +261,8 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 					(List) persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolmentEvaluationState(
 						enrolment,
 						enrolmentEvaluationState);
+//				enrolmentEvaluations = enrolment.getEvaluations();
+
 				List infoTeachers = new ArrayList();
 				if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {
 					IPessoa person = ((IEnrolmentEvaluation) enrolmentEvaluations.get(0)).getPersonResponsibleForGrade();
@@ -275,23 +280,32 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 							Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(enrolmentEvaluation);
 						infoEnrolmentEvaluation.setInfoEnrolment(
 							Cloner.copyIEnrolment2InfoEnrolment(enrolmentEvaluation.getEnrolment()));
-						infoEnrolmentEvaluations.add(infoEnrolmentEvaluation);
 
+						if (enrolmentEvaluation != null) {
+							if(enrolmentEvaluation.getEmployee() != null){
+								IPessoa person = new Pessoa();
+								person.setIdInternal(new Integer(enrolmentEvaluation.getEmployee().getChavePessoa()));
+								IPessoa person2 = (IPessoa) sp.getIPessoaPersistente().readByOId(person,false);
+								infoEnrolmentEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(person2));
+							}
+			
+						}
+						infoEnrolmentEvaluations.add(infoEnrolmentEvaluation);
 					}
 
 				}
 				InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = new InfoSiteEnrolmentEvaluation();
 				infoSiteEnrolmentEvaluation.setEnrolmentEvaluations(infoEnrolmentEvaluations);
-				infoSiteEnrolmentEvaluation.setInfoTeacher(infoTeacher);
+				infoSiteEnrolmentEvaluation.setInfoTeacher(infoTeacher);				
 				infoSiteEnrolmentEvaluations.add(infoSiteEnrolmentEvaluation);
-				//				}
 
 			}
 		} catch (ExcepcaoPersistencia ex) {
-			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-			newEx.fillInStackTrace();
-			throw newEx;
-		}
+							FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+							newEx.fillInStackTrace();
+							throw newEx;
+					}
+	
 
 		return infoSiteEnrolmentEvaluations;
 	}

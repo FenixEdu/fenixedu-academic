@@ -82,7 +82,7 @@ public class AlterStudentEnrolmentEvaluation implements IServico {
 		if (teacher == null) {
 			throw new NonExistingServiceException();
 		}
-		//			employee
+		//		employee
 		IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
 		Funcionario employee = readEmployee(person);
 
@@ -117,7 +117,8 @@ public class AlterStudentEnrolmentEvaluation implements IServico {
 			
 			
 			enrolmentEvaluation.setEnrolment(iEnrolmentEvaluation.getEnrolment());
-
+			enrolmentEvaluation.setWhen(calendario.getTime());
+			persistentEnrolmentEvaluation.lockWrite(enrolmentEvaluation);
 			if (infoEnrolmentEvaluation.getExamDate() != null) {
 				enrolmentEvaluation.setExamDate(infoEnrolmentEvaluation.getExamDate());
 			} else {
@@ -129,8 +130,7 @@ public class AlterStudentEnrolmentEvaluation implements IServico {
 			enrolmentEvaluation.setGradeAvailableDate(calendario.getTime());
 			enrolmentEvaluation.setEnrolmentEvaluationType(infoEnrolmentEvaluation.getEnrolmentEvaluationType());
 			enrolmentEvaluation.setEnrolmentEvaluationState(enrolmentEvaluationState);
-			enrolmentEvaluation.setEmployee(employee);
-			enrolmentEvaluation.setWhen(calendario.getTime());
+			enrolmentEvaluation.setEmployee(employee);		
 			enrolmentEvaluation.setObservation(infoEnrolmentEvaluation.getObservation());
 			enrolmentEvaluation.setCheckSum("");
 

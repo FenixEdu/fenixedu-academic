@@ -13,6 +13,8 @@ import DataBeans.util.Cloner;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import Util.EnrolmentEvaluationState;
 
 
@@ -46,23 +48,21 @@ public class GetEnrolmentMark implements IServico {
     }
     
     
-    public InfoEnrolmentEvaluation run(IEnrolment enrolment)  {
+    public InfoEnrolmentEvaluation run(IUserView userView, IEnrolment enrolment) throws FenixServiceException {
 
 		List enrolmentEvaluations = enrolment.getEvaluations();
-
+		
+		
 		if ((enrolment == null) || (enrolment.getEvaluations() == null) || (enrolment.getEvaluations().size() == 0)) {
 			return null;
-		}        
-
+		}      
+		
 		// if there's only one evaluation ...
 		if (enrolmentEvaluations.size() == 1) {
 			if (!((IEnrolmentEvaluation) enrolmentEvaluations.get(0)).getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.TEMPORARY_OBJ)){
 				IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) enrolmentEvaluations.get(0);
 				return Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(enrolmentEvaluation);
-			} else {
-				return null;
-			}
-
+			} 
 		}
 
 		Iterator iterator = enrolmentEvaluations.iterator();
@@ -78,8 +78,12 @@ public class GetEnrolmentMark implements IServico {
 
 		Collections.sort(enrolmentEvaluationsFinal, dateComparator);
 		Collections.reverse(enrolmentEvaluationsFinal);
+		
 
-		return Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation((IEnrolmentEvaluation) enrolmentEvaluationsFinal.get(0));
+		InfoEnrolmentEvaluation infoEnrolmentEvaluation = Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation((IEnrolmentEvaluation) enrolmentEvaluationsFinal.get(0));	
+		infoEnrolmentEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(((IEnrolmentEvaluation)enrolmentEvaluationsFinal.get(0)).getEmployee().getPerson()));
+		return infoEnrolmentEvaluation ;
     }
+	
     
 }

@@ -427,5 +427,15 @@ public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment
  	return (List) queryList(Enrolment.class, crit);
 
  }
+ public IEnrolment readEnrolmentByStudentCurricularPlanAndCurricularCourse(IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse , String year)  throws ExcepcaoPersistencia {
+		   		   
+	 Criteria crit = new Criteria();
+	 crit.addEqualTo("curricularCourseScope.curricularCourse.idInternal", curricularCourse.getIdInternal());
+	 crit.addEqualTo("executionPeriod.executionYear.year", year);
+	 crit.addEqualTo("studentCurricularPlan.student.number", studentCurricularPlan.getStudent().getNumber());
+ 
+	 return (IEnrolment) queryObject(Enrolment.class, crit);
+
+  }
 
 }

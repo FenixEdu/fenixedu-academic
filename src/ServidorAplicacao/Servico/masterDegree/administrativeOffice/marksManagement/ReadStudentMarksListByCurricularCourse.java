@@ -111,17 +111,18 @@ public class ReadStudentMarksListByCurricularCourse implements IServico {
 				|| (numberAux.intValue() != enrolment.getStudentCurricularPlan().getStudent().getNumber().intValue())) {
 				numberAux = enrolment.getStudentCurricularPlan().getStudent().getNumber();
 				
-				Object args[] = { enrolment };
+				Object args[] = {userView,enrolment };
 				InfoEnrolmentEvaluation infoEnrolmentEvaluation =(InfoEnrolmentEvaluation) serviceManager.executar(userView, "GetEnrolmentMark", args);
-
-				InfoEnrolment infoEnrolment = Cloner.copyIEnrolment2InfoEnrolment(enrolment);
-				infoEnrolment.setInfoEnrolmentEvaluation(infoEnrolmentEvaluation);
-
-				result.add(infoEnrolment);
+				if (infoEnrolmentEvaluation != null){	
+					InfoEnrolment infoEnrolment = Cloner.copyIEnrolment2InfoEnrolment(enrolment);
+					infoEnrolment.setInfoEnrolmentEvaluation(infoEnrolmentEvaluation);
+					result.add(infoEnrolment);
+				}
 			}
 		}
 
 		return result;
 	}
+	
 
 }

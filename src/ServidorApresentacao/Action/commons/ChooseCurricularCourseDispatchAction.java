@@ -7,7 +7,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -83,6 +82,7 @@ public class ChooseCurricularCourseDispatchAction extends DispatchAction {
 		request.setAttribute("curricularCourse", getFromRequest("curricularCourse", request));
 		request.setAttribute("executionYear", getFromRequest("executionYear", request));
 		request.setAttribute("degree", getFromRequest("degree", request));
+		request.setAttribute("jspTitle", getFromRequest("jspTitle", request));
 
 		return mapping.findForward("ChooseSuccess");
 	}
@@ -102,6 +102,7 @@ public class ChooseCurricularCourseDispatchAction extends DispatchAction {
 		request.setAttribute("curricularCourse", getFromRequest("curricularCourse", request));
 		request.setAttribute("executionYear", getFromRequest("executionYear", request));
 		request.setAttribute("degree", getFromRequest("degree", request));
+		request.setAttribute("jspTitle", getFromRequest("jspTitle", request));
 
 		String executionYear = getFromRequest("executionYear", request);
 

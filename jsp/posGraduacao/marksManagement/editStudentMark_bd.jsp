@@ -9,7 +9,11 @@
 
 
 <span class="error"><html:errors/></span>
-<h2><bean:message key="title.masterDegree.administrativeOffice.chooseStudent" /></h2>
+
+<logic:present name="jspTitle">
+	<h2><bean:write name="jspTitle" /></h2>
+	<br />	
+</logic:present>
 <logic:present name="infoSiteEnrolmentEvaluation">
 
 <br />
@@ -126,6 +130,7 @@
 	<html:hidden property="curricularCourse" value="<%= pageContext.findAttribute("curricularCourse").toString() %>" />
 	<html:hidden property="curricularCourseCode" value="<%= pageContext.findAttribute("curricularCourseCode").toString() %>" />
 	<html:hidden property="scopeCode" value="<%= pageContext.findAttribute("curricularCourseCode").toString() %>" />
+	<html:hidden property="jspTitle" value="<%= pageContext.findAttribute("jspTitle").toString() %>" />
 	<html:submit styleClass="inputbutton"><bean:message key="button.save"/></html:submit>
  </html:form>
 </logic:present>   
