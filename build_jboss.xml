@@ -285,7 +285,7 @@
        		<include name="Util/**/*.java"/>
        		<include name="UtilInsc/**/*.java"/>
        		<include name="UtilTests/**/*.java"/>
-			<include name="Tools/**/*.java"/>
+       		<include name="Tools/**/*.java"/>
 		</javac>
 	</target>
 
