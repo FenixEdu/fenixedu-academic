@@ -461,17 +461,17 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 
             IEnrollment enrollment = (IEnrollment) allEnrollments.get(i);
 
+            ICurricularCourse curricularCourse = null;
+            if (enrollment instanceof IEnrolmentInOptionalCurricularCourse) {
+                curricularCourse = (((IEnrolmentInOptionalCurricularCourse) enrollment).getCurricularCourseForOption());
+            } else {
+                curricularCourse = enrollment.getCurricularCourse();
+            }
+
             for (int j = 0; j < curricularCourseEquivalencesSize; j++) {
 
                 ICurricularCourseEquivalence curricularCourseEquivalence = (ICurricularCourseEquivalence)
                     curricularCourseEquivalences.get(j);
-
-                ICurricularCourse curricularCourse = null;
-                if (enrollment instanceof IEnrolmentInOptionalCurricularCourse) {
-                    curricularCourse = (((IEnrolmentInOptionalCurricularCourse) enrollment).getCurricularCourseForOption());
-                } else {
-                    curricularCourse = enrollment.getCurricularCourse();
-                }
 
                 if (curricularCourseEquivalence.getOldCurricularCourse().equals(curricularCourse)) {
                     IEnrollment virtualEnrollment = new Enrolment();
@@ -544,7 +544,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
         });
     }
 
-    protected List getCommonBranchAndStudentBranchesCourses(final Integer semester) {
+    protected List getCommonBranchAndStudentBranchesCourses(final Integer semester) throws ExcepcaoPersistencia {
         
         List curricularCourses = new ArrayList();
 

@@ -1,5 +1,6 @@
 package Dominio;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -7,6 +8,10 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 import Dominio.degree.enrollment.rules.EnrollmentRulesFactory;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentCurricularCourseScope;
+import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.AreaType;
 import Util.BranchType;
 import Util.DegreeCurricularPlanState;
@@ -257,8 +262,30 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
                 enrollmentRuleType);
     }
 
-    public List getCurricularCoursesFromArea(IBranch area, AreaType areaType) {
-        return EnrollmentRulesFactory.getInstance().getCurricularCoursesFromArea(this, area, areaType);
+    public List getCurricularCoursesFromArea(IBranch area, AreaType areaType) throws ExcepcaoPersistencia {
+
+        ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+		IPersistentCurricularCourseScope curricularCourseScopeDAO = persistentSuport.getIPersistentCurricularCourseScope();
+
+		List scopes = curricularCourseScopeDAO.readByBranch(area);
+		
+		List curricularCourses = new ArrayList();
+		
+		int scopesSize = scopes.size();
+
+		for (int i = 0; i < scopesSize; i++)
+		{
+			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) scopes.get(i);
+			
+			ICurricularCourse curricularCourse = curricularCourseScope.getCurricularCourse();
+
+			if (curricularCourses.contains(curricularCourse))
+			{
+				curricularCourses.add(curricularCourse);
+			}
+		}
+		
+		return curricularCourses;
     }
 
     public List getCommonAreas() {
