@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -222,8 +223,6 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
                 .getInfoSummaries(), Collections.reverseOrder());
         request.setAttribute("siteView", siteView);
 
-        List lista = ((InfoSiteSummaries) siteView.getComponent()).getInfoShifts();
-        
         return mapping.findForward("sucess");
 
     }
@@ -385,6 +384,9 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         try {
             ExecutionCourseSiteView siteView = (ExecutionCourseSiteView) ServiceUtils.executeService(
                     null, "ExecutionCourseSiteComponentService", args);
+
+            List curricularCoursesByDegree = ((InfoSiteCommon) siteView.getCommonComponent()).getAssociatedDegreesByDegree();
+            Collections.sort(curricularCoursesByDegree, new BeanComparator("infoDegreeCurricularPlan.infoDegree.sigla"));
 
             if (siteView != null) {
                 if (infoExecutionCourseCode != null) {
