@@ -55,7 +55,7 @@
 			<td>
 			</td>
 			<td>
-				<html:radio property="recipients" value="AdvisoryRecipients.STUDENTS"/>
+				<html:radio property="recipients" value="<%= "" + AdvisoryRecipients.STUDENTS %>"/>
 				<bean:message key="property.advisory.recipients.students"/>
 			</td>
 		</tr>
@@ -63,7 +63,7 @@
 			<td>
 			</td>
 			<td>
-				<html:radio property="recipients" value="AdvisoryRecipients.TEACHERS"/>
+				<html:radio property="recipients" value="<%= "" + AdvisoryRecipients.TEACHERS %>"/>
 				<bean:message key="property.advisory.recipients.teachers"/>
 			</td>
 		</tr>
@@ -71,7 +71,7 @@
 			<td>
 			</td>
 			<td>
-				<html:radio property="recipients" value="AdvisoryRecipients.EMPLOYEES"/>
+				<html:radio property="recipients" value="<%= "" + AdvisoryRecipients.EMPLOYEES %>"/>
 				<bean:message key="property.advisory.recipients.employees"/>
 			</td>
 		</tr>
