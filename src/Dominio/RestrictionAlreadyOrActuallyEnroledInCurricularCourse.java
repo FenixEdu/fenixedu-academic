@@ -1,7 +1,3 @@
-/**
- * Created on 9/Mai/2003 by jpvl
- *
- */
 package Dominio;
 
 import java.util.List;
@@ -11,24 +7,16 @@ import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
 /**
  * @author jpvl
  */
-public class RestrictionAlreadyOrActuallyEnroledInCurricularCourse extends Restriction implements IRestrictionCurricularCourseAlreadyEnrolled {
-	private ICurricularCourse curricularCourseAlreadyEnroled;
-	private Integer keyCurricularCourseAlreadyEnroled;
 
-	/**
-	 *
-	 */
+public class RestrictionAlreadyOrActuallyEnroledInCurricularCourse extends RestrictionDoneOrAlreadyEnrolledInCurricularCourse implements IRestrictionByCurricularCourse {
 
-	/* (non-Javadoc)
-	 * @see Dominio.IRestriction#evaluate(ServidorAplicacao.strategy.enrolment.EnrolmentContext)
-	 */
+	public RestrictionAlreadyOrActuallyEnroledInCurricularCourse() {
+		super();
+	}
+
 	public boolean evaluate(EnrolmentContext enrolmentContext) {
 
-		Integer acumulatedEnrolments = enrolmentContext.getCurricularCourseAcumulatedEnrolments(curricularCourseAlreadyEnroled);
-
-		ICurricularCourse curricularCourse = this.getCurricularCourseAlreadyEnroled();
-
-		System.out.println("CurricularCourseAlreadyEnroled: " + curricularCourse.getName());
+		ICurricularCourse curricularCourse = super.getPrecedentCurricularCourse();
 
 		List scopes = curricularCourse.getScopes();
 		for (int scopeIndex = 0; scopeIndex < scopes.size();scopeIndex++) {
@@ -38,35 +26,6 @@ public class RestrictionAlreadyOrActuallyEnroledInCurricularCourse extends Restr
 			}
 		}
 
-		return enrolmentContext.isCurricularCourseDone(this.getCurricularCourseAlreadyEnroled()) || acumulatedEnrolments.intValue() > 0;
+		return super.evaluate(enrolmentContext);
 	}
-
-	/**
-	 * @return
-	 */
-	public ICurricularCourse getCurricularCourseAlreadyEnroled() {
-		return curricularCourseAlreadyEnroled;
-	}
-
-	/**
-	 * @param course
-	 */
-	public void setCurricularCourseAlreadyEnroled(ICurricularCourse course) {
-		curricularCourseAlreadyEnroled = course;
-	}
-
-	/**
-	 * @return
-	 */
-	public Integer getKeyCurricularCourseAlreadyEnroled() {
-		return keyCurricularCourseAlreadyEnroled;
-	}
-
-	/**
-	 * @param integer
-	 */
-	public void setKeyCurricularCourseAlreadyEnroled(Integer integer) {
-		keyCurricularCourseAlreadyEnroled = integer;
-	}
-
 }

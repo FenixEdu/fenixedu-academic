@@ -9,16 +9,12 @@ import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
 /**
  * @author jpvl
  */
+
 public interface IRestriction {
-	/**
-	 * @return
-	 */
+
 	public abstract IPrecedence getPrecedence();
-	/**
-	 * @param precedence
-	 */
+
 	public abstract void setPrecedence(IPrecedence precedence);
-	
 
 	/**
 	 * This method evaluates if this restriction using one list of curricularCourses.

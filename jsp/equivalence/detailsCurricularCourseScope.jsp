@@ -43,6 +43,10 @@
 					<td align="center"><bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.nome"/></td>
 				</tr>
 				<tr>
+					<td align="left"><b><bean:message key="label.execution.period"/></b></td>
+					<td align="center"><bean:write name="infoEnrolment" property="infoExecutionPeriod.infoExecutionYear.year"/>&nbsp;-&nbsp;<bean:write name="infoEnrolment" property="infoExecutionPeriod.name"/></td>
+				</tr>
+				<tr>
 					<td align="left"><b><bean:message key="label.student.number"/></b></td>
 					<td align="center"><bean:write name="infoEnrolment" property="infoStudentCurricularPlan.infoStudent.number"/></td>
 				</tr>

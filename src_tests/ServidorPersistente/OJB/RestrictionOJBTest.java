@@ -19,7 +19,7 @@ import Dominio.IRestriction;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.RestrictionCurricularCourseDone;
-import Dominio.RestrictionNumberOfCurricularCourseDone;
+import Dominio.RestrictionByNumberOfDoneCurricularCourses;
 import ServidorAplicacao.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentContextManager;
@@ -161,7 +161,7 @@ public class RestrictionOJBTest extends BaseEnrolmentRestrictionOJBTest {
 		assertEquals(1, precedence.getRestrictions().size());
 		
 		IRestriction restriction = (IRestriction) precedence.getRestrictions().get(0);
-		assertEquals(RestrictionNumberOfCurricularCourseDone.class, restriction.getClass());
+		assertEquals(RestrictionByNumberOfDoneCurricularCourses.class, restriction.getClass());
 		assertEquals(false,restriction.evaluate(getEnrolmentContext()));
 	}
 	

@@ -1,7 +1,3 @@
-/*
- * Created on 9/Mai/2003 by jpvl
- *
- */
 package ServidorAplicacao.strategy.enrolment.rules;
 
 import java.util.Iterator;
@@ -15,13 +11,11 @@ import ServidorAplicacao.strategy.enrolment.context.EnrolmentValidationResult;
 import Util.PrecedenceScopeToApply;
 
 /**
- * @author jpvl
+ * @author David Santos
  */
+
 public class EnrolmentValidatePrecedenceDuringEnrolmentRule extends EnrolmentPrecedenceRule{
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.strategy.enrolment.rules.EnrolmentPrecedenceRule#getScopeToApply()
-	 */
 	protected PrecedenceScopeToApply getScopeToApply() {
 		return PrecedenceScopeToApply.TO_APPLY_DURING_ENROLMENT;
 	}
@@ -37,7 +31,7 @@ public class EnrolmentValidatePrecedenceDuringEnrolmentRule extends EnrolmentPre
 			if (this.contains(curricularCourseToApply, precedenceCurricularCourse)){
 				
 				if (!precedence.evaluate(enrolmentContext)){
-					// TODO: A mensagem tem de ser mais clara incluindo os nomes das disciplinas precedentes.
+					// TODO DAVID-RICARDO: A mensagem tem de ser mais clara incluindo os nomes das disciplinas precedentes.
 					enrolmentValidationResult.setErrorMessage(EnrolmentValidationResult.PRECEDENCE_DURING_ENROLMENT, precedenceCurricularCourse.getName());
 				}
 			}

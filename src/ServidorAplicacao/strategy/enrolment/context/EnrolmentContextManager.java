@@ -644,8 +644,6 @@ public abstract class EnrolmentContextManager {
 		IPersistentEnrolment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 		IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSupport.getIPersistentDegreeCurricularPlan();
 
-		IStudentCurricularPlan studentActiveCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(student.getNumber(), student.getDegreeType());
-
 		ICurso degreeCriteria = new Curso();
 		degreeCriteria.setDegreeCurricularPlans(null);
 		degreeCriteria.setIdInternal(null);
@@ -663,6 +661,8 @@ public abstract class EnrolmentContextManager {
 		degreeCurricularPlanCriteria.setState(executionDegree.getCurricularPlan().getState());
 
 		final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readDomainObjectByCriteria(degreeCurricularPlanCriteria);
+
+		IStudentCurricularPlan studentActiveCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(student.getNumber(), student.getDegreeType());
 
 		List curricularCoursesFromDegreeCurricularPlan = degreeCurricularPlan.getCurricularCourses();
 
