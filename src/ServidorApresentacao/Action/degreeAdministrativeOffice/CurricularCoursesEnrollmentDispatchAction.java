@@ -25,6 +25,7 @@ import DataBeans.enrollment.InfoAreas2Choose;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.BothAreasAreTheSameServiceException;
 import ServidorAplicacao.Servico.exceptions.ChosenAreasAreIncompatibleServiceException;
+import ServidorAplicacao.Servico.exceptions.EnrolmentRuleServiceException;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
@@ -37,6 +38,7 @@ import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.Data;
 import Util.RoleType;
+import Util.SecretaryEnrolmentStudentReason;
 import Util.enrollment.CurricularCourseEnrollmentType;
 import framework.factory.ServiceManagerServiceFactory;
 
@@ -112,7 +114,12 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 
             errors.add("enrolment", new ActionError(e.getMessageKey(), Data.format2DayMonthYear(e
                     .getStartDate()), Data.format2DayMonthYear(e.getEndDate())));
-        } catch (FenixServiceException e) {
+        }catch ( EnrolmentRuleServiceException e) {
+            
+            SecretaryEnrolmentStudentReason reason = SecretaryEnrolmentStudentReason.getEnum(e.getErrorType());            
+            errors.add("enrolmentRule", new ActionError(reason.getName()));           
+        }  
+        catch (FenixServiceException e) {
             if (e.getMessage().equals("degree")) {
                 errors.add("degree", new ActionError("error.student.degreeCurricularPlan.LEEC"));
             }

@@ -1276,4 +1276,8 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
     public IPersistentPaymentTransaction getIPersistentPaymentTransaction() {
         return new PaymentTransactionOJB();
     }
+
+    public IPersistentSecretaryEnrolmentStudent getIPersistentSecretaryEnrolmentStudent() {
+        return new SecretaryEnrolmentStudentOJB();
+    }
 }

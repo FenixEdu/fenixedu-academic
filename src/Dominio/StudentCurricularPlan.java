@@ -13,6 +13,7 @@ import org.apache.commons.collections.Transformer;
 import Dominio.degree.enrollment.CurricularCourse2Enroll;
 import Dominio.degree.enrollment.INotNeedToEnrollInCurricularCourse;
 import Dominio.degree.enrollment.rules.IEnrollmentRule;
+import Dominio.exceptions.FenixDomainException;
 import ServidorAplicacao.Servico.exceptions.BothAreasAreTheSameServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -314,7 +315,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
         });
     }
 
-    public List getCurricularCoursesToEnroll(IExecutionPeriod executionPeriod) {
+    public List getCurricularCoursesToEnroll(IExecutionPeriod executionPeriod) throws FenixDomainException {
 
         calculateStudentAcumulatedEnrollments();
 

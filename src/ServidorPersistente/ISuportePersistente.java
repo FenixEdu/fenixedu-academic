@@ -456,4 +456,6 @@ public interface ISuportePersistente {
     public IPersistentMoneyCostCenter getIPersistentMoneyCostCenter();
     
     public IPersistentExtraWork getIPersistentExtraWork();
+    
+    public IPersistentSecretaryEnrolmentStudent getIPersistentSecretaryEnrolmentStudent();
 }

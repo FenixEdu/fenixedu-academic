@@ -26,7 +26,7 @@ public class ReadPublicExecutionDegreeByDCPID implements IService {
      * @param name
      * @param infoExecutionYear
      * @return InfoExecutionDegree
-     * @throws FenixServiceException
+     * @throws FenixDomainException
      *             This method assumes thar there's only one Execution Degree
      *             for each Degree Curricular Plan. This is the case with the
      *             Master Degrees

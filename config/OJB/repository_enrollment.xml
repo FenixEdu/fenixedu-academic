@@ -325,3 +325,43 @@
 	</reference-descriptor>
 </class-descriptor>
 
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for Dominio.SecretaryEnrolmentStudent -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="Dominio.SecretaryEnrolmentStudent" table="SECRETARY_ENROLMENT_STUDENT">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+    />
+	<field-descriptor
+		name="keyStudent"
+		column="KEY_STUDENT"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="reasonType"
+		column="REASON_TYPE"
+		jdbc-type="INTEGER"
+		conversion="ServidorPersistente.Conversores.JavaSecretaryEnrolmentStudentReason2sqlSecretaryEnrolmentStudentReasonFieldConversion"
+	/>	
+	<field-descriptor
+		name="reasonDescription"
+		column="REASON_DESCRIPTION"
+		jdbc-type="VARCHAR"
+	/>
+	<reference-descriptor
+			name="student"
+			class-ref="Dominio.Student"
+			proxy="true">
+		<foreignkey field-ref="keyStudent"/>
+	</reference-descriptor>
+</class-descriptor>

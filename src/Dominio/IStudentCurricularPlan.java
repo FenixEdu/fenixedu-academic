@@ -3,6 +3,7 @@ package Dominio;
 import java.util.Date;
 import java.util.List;
 
+import Dominio.exceptions.FenixDomainException;
 import ServidorAplicacao.Servico.exceptions.BothAreasAreTheSameServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -82,7 +83,7 @@ public interface IStudentCurricularPlan extends IDomainObject {
     // -------------------------------------------------------------
     // BEGIN: Only for enrollment purposes
     // -------------------------------------------------------------
-    public List getCurricularCoursesToEnroll(IExecutionPeriod executionPeriod);
+    public List getCurricularCoursesToEnroll(IExecutionPeriod executionPeriod) throws FenixDomainException;
 
     //	public List getAllStudentEnrolledEnrollments();
     public List getAllStudentEnrolledEnrollmentsInExecutionPeriod(IExecutionPeriod executionPeriod);

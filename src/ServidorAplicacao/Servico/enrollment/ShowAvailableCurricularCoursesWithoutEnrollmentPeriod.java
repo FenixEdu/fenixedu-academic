@@ -21,6 +21,8 @@ import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.degree.enrollment.CurricularCourse2Enroll;
+import Dominio.exceptions.FenixDomainException;
+import ServidorAplicacao.Servico.exceptions.EnrolmentRuleServiceException;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
@@ -75,16 +77,22 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements IS
     /**
      * @param studentCurricularPlan
      * @throws ExcepcaoPersistencia
+     * @throws EnrolmentRuleServiceException 
      */
     protected InfoStudentEnrollmentContext getInfoStudentEnrollmentContext(
-            final IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia {
+            final IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia, EnrolmentRuleServiceException {
 
         final IExecutionPeriod executionPeriod = getExecutionPeriod(null);
 
         InfoStudentEnrollmentContext infoStudentEnrolmentContext = new InfoStudentEnrollmentContext();
 
-        List curricularCourses2Enroll = studentCurricularPlan
-                .getCurricularCoursesToEnroll(executionPeriod);
+        List curricularCourses2Enroll;
+        try {
+            curricularCourses2Enroll = studentCurricularPlan
+                    .getCurricularCoursesToEnroll(executionPeriod);
+        } catch (FenixDomainException e) {
+            throw new EnrolmentRuleServiceException(e.getErrorType());
+        }
 
         infoStudentEnrolmentContext
                 .setCurricularCourses2Enroll(getInfoCurricularCoursesToEnrollFromCurricularCourses(
