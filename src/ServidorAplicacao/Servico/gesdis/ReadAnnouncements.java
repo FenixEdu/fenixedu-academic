@@ -25,13 +25,13 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class ReadAnnouncements implements IServico {
     
-	private static ReadAnnouncements _servico = new ReadAnnouncements();
+	private static ReadAnnouncements service = new ReadAnnouncements();
     
 	/**
 	 * The singleton access method of this class.
 	 **/
 	public static ReadAnnouncements getService() {
-		return _servico;
+		return service;
 	}
     
 	/**

@@ -11,7 +11,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import DataBeans.gesdis.InfoSite;
 import DataBeans.util.Cloner;
+import Dominio.ISection;
 import Dominio.ISite;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
@@ -20,52 +22,56 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class ReadSites implements IServico {
+public class ReadSections implements IServico {
 
-  private static ReadSites service = new ReadSites();
+  private static ReadSections service = new ReadSections();
 
   /**
    * The singleton access method of this class.
    */
-  public static ReadSites getService() {
+  public static ReadSections getService() {
     return service;
   }
 
   /**
    * The constructor of this class.
    */
-  private ReadSites() { }
+  private ReadSections() { }
 
   /**
    * Service name
    */
   public final String getNome() {
-    return "ReadSites";
+    return "ReadSections";
   }
 
   /**
-   * Executes the service. Returns the current collection of infosites .
+   * Executes the service. Returns the current collection of infosections.
    */
-  public List run() throws FenixServiceException {
-    ISite site = null;
+  public List run(InfoSite infoSite) throws FenixServiceException {
+    
+    ISite site = Cloner.copyInfoSite2ISite(infoSite);
     ISuportePersistente sp;
-    List allSites = null;
+    List allSections = null;
 
+	
 	try {
     	sp = SuportePersistenteOJB.getInstance();
-    	allSites = sp.getIPersistentSite().readAll();
+    	allSections = sp.getIPersistentSection().readBySite(site);
+    	    	
+    	
 	} catch (ExcepcaoPersistencia excepcaoPersistencia){
 		throw new FenixServiceException(excepcaoPersistencia);
 	}
 
-    if (allSites == null || allSites.isEmpty()) throw new InvalidArgumentsServiceException();
+    if (allSections == null || allSections.isEmpty()) throw new InvalidArgumentsServiceException();
 
     // build the result of this service
-    Iterator iterator = allSites.iterator();
-    List result = new ArrayList(allSites.size());
+    Iterator iterator = allSections.iterator();
+    List result = new ArrayList(allSections.size());
     
     while (iterator.hasNext())
-		result.add( Cloner.copyISite2InfoSite((ISite) iterator.next()) );
+		result.add(Cloner.copyISection2InfoSection((ISection) iterator.next()) );
 
     return result;
   }
