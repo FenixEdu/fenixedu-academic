@@ -3,7 +3,8 @@
 ----------------------------------
 drop table if exists PUBLICATION;
 create table PUBLICATION (
-   ID_INTERNAL int(11) not null auto_increment,
+   ID_INTERNAL int(11) unsigned not null auto_increment,
+   ACKOPTLOCK int(11),
    CLASS_NAME varchar(250) not null,
    CONFERENCE varchar(100) not null,
    JOURNAL varchar(100) not null,

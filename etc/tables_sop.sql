@@ -4,6 +4,7 @@
 drop table if exists ROOM;
 create table ROOM (
    ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    NAME varchar(100) not null,
    BUILDING varchar(50) not null,
    FLOOR int(11) not null,
@@ -20,6 +21,7 @@ create table ROOM (
 DROP TABLE IF EXISTS CLASS;
 CREATE TABLE CLASS (
   ID_INTERNAL int(11) NOT NULL default '0' auto_increment,
+  ACKOPTLOCK int(11),
   NAME varchar(50) NOT NULL default '',
   SEMESTER int(11),
   CURRICULAR_YEAR int(11) NOT NULL,
@@ -36,6 +38,7 @@ CREATE TABLE CLASS (
 drop table if exists SHIFT;
 create table SHIFT (
    ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    NAME varchar(50) not null,
    KEY_EXECUTION_COURSE int(11) not null,
    TYPE int(11) not null,
@@ -51,6 +54,7 @@ create table SHIFT (
 drop table if exists LESSON;
 create table LESSON (
    ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    WEEKDAY int(11) not null,
    START_TIME time not null,
    END_TIME time not null,
@@ -68,6 +72,7 @@ create table LESSON (
 drop table if exists CLASS_SHIFT;
 create table CLASS_SHIFT (
    ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    KEY_CLASS int(11) not null,
    KEY_SHIFT int(11) not null,
    primary key (ID_INTERNAL),
@@ -80,6 +85,7 @@ create table CLASS_SHIFT (
 drop table if exists SHIFT_STUDENT;
 create table SHIFT_STUDENT (
    ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    KEY_SHIFT int(11) not null,
    KEY_STUDENT int(11) not null,
    primary key (ID_INTERNAL),
@@ -92,6 +98,7 @@ create table SHIFT_STUDENT (
 drop table if exists SHIFT_LESSON;
 create table SHIFT_LESSON (
    ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    KEY_SHIFT int(11) unsigned not null,
    KEY_LESSON int(11) unsigned not null,
    primary key (ID_INTERNAL),
@@ -104,6 +111,7 @@ create table SHIFT_LESSON (
 drop table if exists ATTEND;
 create table ATTEND (
    ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    KEY_STUDENT int(11) not null,
    KEY_EXECUTION_COURSE int(11) not null,
    KEY_ENROLMENT int(11),
@@ -118,6 +126,7 @@ create table ATTEND (
 drop table if exists EXECUTION_PERIOD;
 create table EXECUTION_PERIOD (
    ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    NAME varchar(50) not null,
    KEY_EXECUTION_YEAR int(11) not null,
    STATE varchar(3) not null default "NO",
@@ -135,6 +144,7 @@ create table EXECUTION_PERIOD (
 drop table if exists EXECUTION_YEAR;
 create table EXECUTION_YEAR (
    ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    `YEAR` varchar(9) not null,
    STATE varchar(3) not null default "NO",   
    BEGIN_DATE date NOT NULL default '0000-00-00',
@@ -149,6 +159,7 @@ create table EXECUTION_YEAR (
 DROP TABLE IF EXISTS EVALUATION;
 CREATE TABLE EVALUATION (
   ID_INTERNAL int(11) not null auto_increment,
+  ACKOPTLOCK int(11),
   CLASS_NAME varchar(250) NOT NULL,
   DAY date,
   BEGINNING time,
@@ -168,6 +179,7 @@ CREATE TABLE EVALUATION (
 drop table if exists EXAM_EXECUTION_COURSE;
 create table EXAM_EXECUTION_COURSE (
    ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    KEY_EVALUATION int(11) not null,
    KEY_EXECUTION_COURSE int(11) not null,
    primary key (ID_INTERNAL),
@@ -180,6 +192,7 @@ create table EXAM_EXECUTION_COURSE (
 drop table if exists EXAM_ROOM;
 create table EXAM_ROOM (
    ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    KEY_EVALUATION int(11) not null,
    KEY_ROOM int(11) not null,
    primary key (ID_INTERNAL),
@@ -192,6 +205,7 @@ create table EXAM_ROOM (
 drop table if exists EXAM_STUDENT;
 create table EXAM_STUDENT (
    ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    KEY_EVALUATION int(11) not null,
    KEY_STUDENT int(11) not null,
    primary key (ID_INTERNAL),
@@ -203,7 +217,8 @@ create table EXAM_STUDENT (
 #----------------------------
 drop table if exists EXAM_STUDENT_ROOM;
 create table EXAM_STUDENT_ROOM (
-   ID_INTERNAL int(11) not null auto_increment,
+   ID_INTERNAL int(11) unsigned not null auto_increment,
+   ACKOPTLOCK int(11),
    KEY_EVALUATION int(11) not null,
    KEY_STUDENT int(11) not null,
    KEY_ROOM int(11) ,   

@@ -4,6 +4,7 @@
 drop table if exists WEBSITE;
 create table WEBSITE (
    ID_INTERNAL int(11) unsigned not null auto_increment,
+   ACKOPTLOCK int(11),
    NAME varchar(100) not null,
    MAIL varchar(50),
    STYLE varchar(255),
@@ -18,6 +19,7 @@ create table WEBSITE (
 drop table if exists WEBSITE_SECTION;
 create table WEBSITE_SECTION (
    ID_INTERNAL int(11) unsigned not null auto_increment,
+   ACKOPTLOCK int(11),
    NAME varchar(100) not null,
    SIZE int(11) unsigned not null,
    SORTING_ORDER enum('ascendent', 'descendent'),
@@ -33,6 +35,7 @@ create table WEBSITE_SECTION (
 drop table if exists WEBSITE_ITEM;
 create table WEBSITE_ITEM (
    ID_INTERNAL int(11) unsigned not null auto_increment,
+   ACKOPTLOCK int(11),
    TITLE varchar(100) not null,
    MAIN_ENTRY_TEXT text not null,
    EXCERPT text,

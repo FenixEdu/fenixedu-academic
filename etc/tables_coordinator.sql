@@ -5,6 +5,7 @@
 drop table if exists COORDINATOR;
 create table COORDINATOR (
    ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    KEY_EXECUTION_DEGREE int(11) not null,
    KEY_TEACHER int(11) not null,
    RESPONSIBLE bit not null default '0',
@@ -18,6 +19,7 @@ create table COORDINATOR (
 drop table if exists DEGREE_INFO;
 create table DEGREE_INFO(
 	ID_INTERNAL int(11) not null auto_increment,
+    ACKOPTLOCK int(11),
 	KEY_DEGREE int(11) not null,
 	DESCRIPTION text,
 	OBJECTIVES text,
@@ -45,8 +47,3 @@ create table DEGREE_INFO(
 	primary key (ID_INTERNAL),
 	unique U1 (KEY_DEGREE, LAST_MODIFICATION_DATE)
 ) type=InnoDB;
-
-
-
-
-

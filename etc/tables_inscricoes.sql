@@ -8,6 +8,7 @@
 drop table if exists DEPARTMENT;
 create table DEPARTMENT (
    ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    NAME varchar(50) not null,
    CODE varchar(50) not null,
    primary key (ID_INTERNAL),
@@ -21,6 +22,7 @@ create table DEPARTMENT (
 drop table if exists DEPARTMENT_COURSE;
 create table DEPARTMENT_COURSE (
    ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    NAME varchar(50) not null,
    CODE varchar(50) not null,
    KEY_DEPARTMENT int(11) not null,
@@ -39,6 +41,7 @@ create table DEPARTMENT_COURSE (
 drop table if exists DEGREE;
 create table DEGREE (
    ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    CODE varchar(100) not null,
    NAME varchar(100) not null,
    TYPE_DEGREE int(11) not null,
@@ -53,6 +56,7 @@ create table DEGREE (
 drop table if exists DEGREE_CURRICULAR_PLAN;
 create table DEGREE_CURRICULAR_PLAN (
    ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    NAME varchar(50) not null,
    KEY_DEGREE int(11) not null,
    STATE int(11) not null,
@@ -72,6 +76,7 @@ create table DEGREE_CURRICULAR_PLAN (
 drop table if exists BRANCH;
 create table BRANCH (
    ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    BRANCH_CODE varchar(50) not null,
    BRANCH_NAME varchar(255) not null,
    KEY_DEGREE_CURRICULAR_PLAN integer(11) not null,
@@ -86,6 +91,7 @@ create table BRANCH (
 drop table if exists CURRICULAR_COURSE;
 create table CURRICULAR_COURSE (
    ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    KEY_DEPARTMENT_COURSE int(11),
    KEY_DEGREE_CURRICULAR_PLAN int(11) not null default '0',
    CREDITS double,
@@ -110,6 +116,7 @@ create table CURRICULAR_COURSE (
 drop table if exists STUDENT_CURRICULAR_PLAN;
 create table STUDENT_CURRICULAR_PLAN (
    ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    KEY_STUDENT int(11) not null,
    KEY_DEGREE_CURRICULAR_PLAN int(11) not null,
    CURRENT_STATE int(11) not null,
@@ -137,6 +144,7 @@ create table STUDENT_CURRICULAR_PLAN (
 drop table if exists ENROLMENT;
 create table ENROLMENT (
    ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    KEY_STUDENT_CURRICULAR_PLAN int(11) not null,
    KEY_CURRICULAR_COURSE_SCOPE int(11) not null,
    KEY_EXECUTION_PERIOD int(11) not null,
@@ -154,6 +162,7 @@ create table ENROLMENT (
 drop table if exists ENROLMENT_EVALUATION;
 create table ENROLMENT_EVALUATION (
    ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    GRADE varchar(11),
    EVALUATION_TYPE int(11) not null,
    EXAM_DATE date,
@@ -172,6 +181,7 @@ create table ENROLMENT_EVALUATION (
 drop table if exists CURRICULAR_COURSE_SCOPE;
 create table CURRICULAR_COURSE_SCOPE (
    ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    KEY_CURRICULAR_SEMESTER int(11) not null,
    KEY_CURRICULAR_COURSE int(11) not null,
    KEY_BRANCH int(11) not null,
@@ -197,6 +207,7 @@ create table CURRICULAR_COURSE_SCOPE (
 drop table if exists ENROLMENT_EQUIVALENCE;
 create table ENROLMENT_EQUIVALENCE (
    ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    KEY_ENROLMENT int(11) not null,
    unique U1 (KEY_ENROLMENT),
    primary key (ID_INTERNAL)
@@ -208,6 +219,7 @@ create table ENROLMENT_EQUIVALENCE (
 drop table if exists EQUIVALENT_ENROLMENT_FOR_ENROLMENT_EQUIVALENCE;
 create table EQUIVALENT_ENROLMENT_FOR_ENROLMENT_EQUIVALENCE (
    ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    KEY_ENROLMENT_EQUIVALENCE int(11) not null,
    KEY_EQUIVALENT_ENROLMENT int(11) not null,
    primary key (ID_INTERNAL),
@@ -220,6 +232,7 @@ create table EQUIVALENT_ENROLMENT_FOR_ENROLMENT_EQUIVALENCE (
 drop table if exists POSSIBLE_CURRICULAR_COURSE_FOR_OPTIONAL_CURRICULAR_COURSE;
 create table POSSIBLE_CURRICULAR_COURSE_FOR_OPTIONAL_CURRICULAR_COURSE (
    ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    KEY_POSSIBLE_CURRICULAR_COURSE int(11) not null,
    KEY_OPTIONAL_CURRICULAR_COURSE int(11) not null,
    primary key (ID_INTERNAL),
@@ -232,6 +245,7 @@ create table POSSIBLE_CURRICULAR_COURSE_FOR_OPTIONAL_CURRICULAR_COURSE (
 drop table if exists STUDENT_KIND;
 create table STUDENT_KIND (
    ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    STUDENT_TYPE int(11) not null,
    MIN_COURSES_TO_ENROL int(11) not null,
    MAX_COURSES_TO_ENROL int(11) not null,
@@ -250,6 +264,7 @@ create table STUDENT_KIND (
 drop table if exists PRECEDENCE;
 create table PRECEDENCE (
    ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    KEY_CURRICULAR_COURSE int(11) not null,
    SCOPE_TO_APPLY varchar(3) not null,
    primary key (ID_INTERNAL))
@@ -260,7 +275,8 @@ create table PRECEDENCE (
 -- ----------------------------
 DROP TABLE IF EXISTS RESTRICTION;
 CREATE TABLE RESTRICTION (
-  ID_INTERNAL int(11) NOT NULL auto_increment,
+  ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
   CLASS_NAME varchar(250) NOT NULL,
   KEY_PRECEDENCE int(11) not null,
   KEY_CURRICULAR_COURSE int (11),
@@ -273,6 +289,7 @@ CREATE TABLE RESTRICTION (
 drop table if exists EXECUTION_YEAR;
 create table EXECUTION_YEAR (
    ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    `YEAR` varchar(9) not null,
    STATE varchar(3) not null default "NO",  
 	 BEGIN_DATE date NOT NULL default '0000-00-00',
@@ -287,6 +304,7 @@ create table EXECUTION_YEAR (
 drop table if exists CURRICULAR_COURSE_EQUIVALENCE;
 create table CURRICULAR_COURSE_EQUIVALENCE (
    ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    KEY_CURRICULAR_COURSE int(11) not null,
    primary key (ID_INTERNAL)
 )type=InnoDB;
@@ -297,6 +315,7 @@ create table CURRICULAR_COURSE_EQUIVALENCE (
 drop table if exists CURRICULAR_COURSE_EQUIVALENCE_RESTRICTION;
 create table CURRICULAR_COURSE_EQUIVALENCE_RESTRICTION (
    ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    KEY_CURRICULAR_COURSE_EQUIVALENCE int(11) not null,
    KEY_EQUIVALENT_CURRICULAR_COURSE int(11) not null,
    YEAR_OF_EQUIVALENCE varchar(9) not null,
@@ -310,6 +329,7 @@ create table CURRICULAR_COURSE_EQUIVALENCE_RESTRICTION (
 drop table if exists ENROLMENT_PERIOD;
 create table ENROLMENT_PERIOD (
 	ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
 	KEY_DEGREE_CURRICULAR_PLAN int(11) not null,
 	KEY_EXECUTION_PERIOD int(11) not null,
 	START_DATE date not null,
@@ -324,6 +344,7 @@ create table ENROLMENT_PERIOD (
 drop table if exists CURRICULAR_YEAR;
 create table CURRICULAR_YEAR (
    ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    YEAR int(11) not null,
    primary key (ID_INTERNAL),
    unique U1 (YEAR)
@@ -335,6 +356,7 @@ create table CURRICULAR_YEAR (
 drop table if exists CURRICULAR_SEMESTER;
 create table CURRICULAR_SEMESTER (
    ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    KEY_CURRICULAR_YEAR int(11) not null,
    SEMESTER int(11) not null,
    primary key (ID_INTERNAL),
@@ -346,7 +368,8 @@ create table CURRICULAR_SEMESTER (
 -- ----------------------------
 drop table if exists UNIVERSITY;
 create table UNIVERSITY (
-   ID_INTERNAL int(11) not null auto_increment,
+   ID_INTERNAL int(11) unsigned not null auto_increment,
+   ACKOPTLOCK int(11),
    CODE varchar(10) not null,
    NAME varchar(150) not null,
    primary key (ID_INTERNAL),

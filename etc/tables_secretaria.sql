@@ -4,6 +4,7 @@
 DROP TABLE IF EXISTS EXECUTION_DEGREE;
 CREATE TABLE EXECUTION_DEGREE (
   ID_INTERNAL int(11) NOT NULL default '0' auto_increment,
+  ACKOPTLOCK int(11),
   ACADEMIC_YEAR int(11) NOT NULL,
   KEY_DEGREE_CURRICULAR_PLAN int(11) not null,
   KEY_TEACHER integer(11) not null,
@@ -19,6 +20,7 @@ CREATE TABLE EXECUTION_DEGREE (
 drop table if exists COUNTRY;
 create table COUNTRY (
    ID_INTERNAL integer(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    NAME varchar(50) not null,
    NATIONALITY varchar(50) not null,
    CODE varchar(10) not null,
@@ -34,6 +36,7 @@ create table COUNTRY (
 drop table if exists QUALIFICATION;
 create table QUALIFICATION(
    ID_INTERNAL integer(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    KEY_PERSON integer(11) not null ,
    YEAR integer(11) not null,
    MARK varchar(200),
@@ -49,7 +52,8 @@ create table QUALIFICATION(
 #------------------------------------------
 DROP TABLE IF EXISTS EXECUTION_COURSE;
 CREATE TABLE EXECUTION_COURSE (
-  ID_INTERNAL int(11) NOT NULL auto_increment,
+  ID_INTERNAL int(11) unsigned not null auto_increment,
+  ACKOPTLOCK int(11),
   NAME varchar(100) default NULL,
   CODE varchar(100) NOT NULL default '',
   THEORETICAL_HOURS double default NULL,
@@ -69,6 +73,7 @@ CREATE TABLE EXECUTION_COURSE (
 drop table if exists CURRICULAR_COURSE_EXECUTION_COURSE;
 create table CURRICULAR_COURSE_EXECUTION_COURSE (
    INTERNAL_CODE integer(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    KEY_CURRICULAR_COURSE integer(11) not null,
    KEY_EXECUTION_COURSE integer(11) not null,
    primary key (INTERNAL_CODE),

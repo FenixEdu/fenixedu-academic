@@ -7,6 +7,7 @@
 drop table if exists PRECEDENCE;
 create table PRECEDENCE (
    ID_INTERNAL int(11) not null auto_increment,
+   ACKOPTLOCK int(11),
    KEY_CURRICULAR_COURSE int(11) not null,
    SCOPE_TO_APPLY varchar(3) not null,
    primary key (ID_INTERNAL))
@@ -17,7 +18,8 @@ create table PRECEDENCE (
 ------------------------------
 DROP TABLE IF EXISTS RESTRICTION;
 CREATE TABLE RESTRICTION (
-  ID_INTERNAL int(11) NOT NULL auto_increment,
+  ID_INTERNAL int(11) unsigned not null auto_increment,
+  ACKOPTLOCK int(11),
   CLASS_NAME varchar(250) NOT NULL,
   KEY_PRECEDENCE int(11) not null,
   KEY_CURRICULAR_COURSE int (11),
