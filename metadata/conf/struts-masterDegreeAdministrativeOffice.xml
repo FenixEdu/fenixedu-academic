@@ -235,7 +235,14 @@
             <form-property name="degree" type="java.lang.String" />
             <form-property name="curricularCourseCode" type="java.lang.Integer" />
       </form-bean>
+	  <!-- Bean for The Choosing of a Year -->
+      <form-bean name="studentNumberForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
 
+         <form-property name="page" type="java.lang.Integer" />
+         <form-property name="studentNumber" type="java.lang.String" />
+      </form-bean>
 
    </form-beans>
     
@@ -750,6 +757,20 @@
 	         <forward name="ShowMarksManagementMenu" path="/marksManagement/showMarksManagementMenu.jsp"/> 
 	         
       </action>
+      <action path="/changeMarkDispatchAction"
+      		  input="/marksManagement/showMarksManagementMenu.jsp"
+      	      name="studentNumberForm"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.marksManagement.ChangeMarkDispatchAction"
+              validate="true">
+     		 <exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+		                key="ServidorApresentacao.Action.exceptions.FenixActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+	         <forward name="editStudentNumber" path="/marksManagement/editMarkStudent.jsp"/> 
+	         <forward name="changeStudentMark" path="/marksManagement/showMarksManagementMenu.jsp"/> 
+      </action>
+      
       <action path="/marksSubmissionAction"
       		  input="/marksManagement/marksSubmission.jsp"
       	      name="marksSubmissionForm"
