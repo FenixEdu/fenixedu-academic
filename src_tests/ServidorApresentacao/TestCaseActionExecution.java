@@ -148,22 +148,34 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 			Set keys = null;
 			Iterator keysIterator = null;
 			
-			// FIXME : must test the two collections (existing and nonexisting): if we want that x attribute exists and attribute y not exists.  			
+			// Test existing attributes  			
 			if (existingAttributesList != null) {
 				keys = existingAttributesList.keySet();
-				keysIterator = keys.iterator();
-			} else if (nonExistingAttributesList != null) {
-				keys = nonExistingAttributesList.keySet();
-				keysIterator = keys.iterator();
-			}
-			if (keys != null) {
-				while (keysIterator.hasNext()) {
-					Integer key = (Integer) keysIterator.next();
-					verifyScopeAttributes(
-						key.intValue(),
-						(List) existingAttributesList.get(key),
-						(List) nonExistingAttributesList.get(key));
+				if (keys != null) {
+					keysIterator = keys.iterator();
+					while (keysIterator.hasNext()) {
+						Integer key = (Integer) keysIterator.next();
+						verifyScopeAttributes(
+							key.intValue(),
+							(List) existingAttributesList.get(key),
+							null);
+					}
 				}
+			}
+//			Test non existing attributes 
+			if (nonExistingAttributesList != null) {
+				keys = nonExistingAttributesList.keySet();
+				if (keys != null) {
+					keysIterator = keys.iterator();
+					while (keysIterator.hasNext()) {
+						Integer key = (Integer) keysIterator.next();
+						verifyScopeAttributes(
+							key.intValue(),
+							null,
+							(List) nonExistingAttributesList.get(key));
+					}
+				}
+				
 			}
 		}
 
