@@ -57,17 +57,21 @@ public class SectionMenuContentRenderer extends TagSupport
 			
 			
 			strBuffer.append(infoSection.getName());
+			
+			
+			
 			strBuffer.append("</a>");
 			strBuffer.append("</li></ul>\n");}
 			else {
 				//adds the info
 			strBuffer.append("<dd>");
 					
-			
+			strBuffer.append(renderDepthIdent(getInfoSection()));
 			strBuffer.append("<a href=\"viewSection.do?index="+i+"\" >");
 			//falta o index 
-			strBuffer.append(renderDepthIdent(getInfoSection()));
+			
 			strBuffer.append(infoSection.getName());
+		
 			strBuffer.append("</a>");
 			strBuffer.append("</dd>\n");}
 			
