@@ -8,7 +8,6 @@ import java.util.Calendar;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.jcs.access.exception.InvalidArgumentException;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -35,17 +34,21 @@ import Util.MarkType;
  * @author lmac1
  */
 
-public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchAction {
+public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchAction
+{
 
-	public ActionForward prepareInsert(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+	public ActionForward prepareInsert(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+		throws FenixActionException
+	{
 
 		return mapping.findForward("insertDegreeCurricularPlan");
 	}
 
 	public ActionForward insert(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws FenixActionException, InvalidArgumentException {
+		throws FenixActionException
+	{
 
-			IUserView userView = SessionUtils.getUserView(request);
+		IUserView userView = SessionUtils.getUserView(request);
 
 		Integer degreeId = new Integer(request.getParameter("degreeId"));
 
@@ -65,7 +68,8 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
 		DegreeCurricularPlanState state = new DegreeCurricularPlanState(stateInt);
 
 		Calendar initialDate = Calendar.getInstance();
-		if (initialDateString.compareTo("") != 0) {
+		if (initialDateString.compareTo("") != 0)
+		{
 			String[] initialDateTokens = initialDateString.split("/");
 			initialDate.set(Calendar.DAY_OF_MONTH, (new Integer(initialDateTokens[0])).intValue());
 			initialDate.set(Calendar.MONTH, (new Integer(initialDateTokens[1])).intValue() - 1);
@@ -74,7 +78,8 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
 		}
 
 		Calendar endDate = Calendar.getInstance();
-		if (endDateString.compareTo("") != 0) {
+		if (endDateString.compareTo("") != 0)
+		{
 			String[] endDateTokens = endDateString.split("/");
 			endDate.set(Calendar.DAY_OF_MONTH, (new Integer(endDateTokens[0])).intValue());
 			endDate.set(Calendar.MONTH, (new Integer(endDateTokens[1])).intValue() - 1);
@@ -85,7 +90,8 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
 		if (endDate.before(initialDate))
 			throw new InvalidArgumentsActionException("message.manager.date.restriction");
 
-		if (neededCreditsString.compareTo("") != 0) {
+		if (neededCreditsString.compareTo("") != 0)
+		{
 			Double neededCredits = new Double(neededCreditsString);
 			infoDegreeCurricularPlan.setNeededCredits(neededCredits);
 		}
@@ -93,7 +99,8 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
 		MarkType markType = new MarkType(new Integer(markTypeString));
 		infoDegreeCurricularPlan.setMarkType(markType);
 
-		if (numerusClaususString.compareTo("") != 0) {
+		if (numerusClaususString.compareTo("") != 0)
+		{
 			Integer numerusClausus = new Integer(numerusClaususString);
 			infoDegreeCurricularPlan.setNumerusClausus(numerusClausus);
 		}
@@ -108,16 +115,19 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
 		infoDegreeCurricularPlan.setInfoDegree(infoDegree);
 
 		Object args[] = { infoDegreeCurricularPlan };
-		
 
-		try {
+		try
+		{
 			ServiceUtils.executeService(userView, "InsertDegreeCurricularPlan", args);
 
-		} catch (ExistingServiceException ex) {
+		} catch (ExistingServiceException ex)
+		{
 			throw new ExistingActionException(ex.getMessage(), ex);
-		} catch (NonExistingServiceException exception) {
+		} catch (NonExistingServiceException exception)
+		{
 			throw new NonExistingActionException("message.nonExistingDegree", mapping.findForward("readDegree"));
-		} catch (FenixServiceException e) {
+		} catch (FenixServiceException e)
+		{
 			throw new FenixActionException(e);
 		}
 
