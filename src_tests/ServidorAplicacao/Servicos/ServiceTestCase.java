@@ -12,6 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
@@ -22,6 +23,7 @@ import junit.framework.TestCase;
 import org.dbunit.Assertion;
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
+import org.dbunit.dataset.FilteredDataSet;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
@@ -41,7 +43,10 @@ public abstract class ServiceTestCase extends TestCase {
 
 		Class driverClass = Class.forName("com.mysql.jdbc.Driver");
 		Connection jdbcConnection =
-			DriverManager.getConnection("jdbc:mysql://localhost/ciapl", "root", "");
+			DriverManager.getConnection(
+				"jdbc:mysql://localhost/ciapl",
+				"root",
+				"");
 		return new DatabaseConnection(jdbcConnection);
 	}
 
@@ -52,13 +57,15 @@ public abstract class ServiceTestCase extends TestCase {
 	public void backUpDataBaseContents() throws Exception {
 
 		IDataSet fullDataSet = getConnection().createDataSet();
-		FileWriter fileWriter = new FileWriter(new File(getBackUpDataSetFilePath()));
+		FileWriter fileWriter =
+			new FileWriter(new File(getBackUpDataSetFilePath()));
 		FlatXmlDataSet.write(fullDataSet, fileWriter, "ISO-8859-1");
 	}
 
 	public void loadDataBase() throws Exception {
 
-		FileReader fileReader = new FileReader(new File(getBackUpDataSetFilePath()));
+		FileReader fileReader =
+			new FileReader(new File(getBackUpDataSetFilePath()));
 		IDataSet dataSet = new FlatXmlDataSet(fileReader);
 		DatabaseOperation.CLEAN_INSERT.execute(getConnection(), dataSet);
 	}
@@ -68,17 +75,18 @@ public abstract class ServiceTestCase extends TestCase {
 		try {
 			super.setUp();
 
-			//IDatabaseConnection connection = getConnection();
-			//			IDataSet dataSet = getDataSet();
-			//
-			//			backUpDataBaseContents();
-			//
-			//			DatabaseOperation.CLEAN_INSERT.execute(connection, dataSet);
+			backUpDataBaseContents();
+
+			IDatabaseConnection connection = getConnection();
+			IDataSet dataSet = getDataSet();
+
+			DatabaseOperation.CLEAN_INSERT.execute(connection, dataSet);
 
 			gestor = GestorServicos.manager();
 
-			//connection.close();
-		} catch (Exception ex) {
+			connection.close();
+		}
+		catch (Exception ex) {
 			fail("Setup failed loading database with test data set: " + ex);
 		}
 	}
@@ -97,42 +105,24 @@ public abstract class ServiceTestCase extends TestCase {
 
 		try {
 
-			ITable expectedDataSetTable;
-			ITable currentDataSetTable;
-
 			FileReader fileReader = new FileReader(new File(expectedFileName));
 			IDataSet expectedDataSet = new FlatXmlDataSet(fileReader);
 
 			IDataSet currentDataSet = getConnection().createDataSet();
 
-			String[] tableNames = currentDataSet.getTableNames();
-			Object[] filteredTables = filterTablesToBeComparedByDataSet(tableNames);
+			LinkedList tableNamesToFilter = readTableNamesToFilter();
 
-
-			for (int iter = 0; iter < filteredTables.length; iter++) {
-
-				currentDataSetTable = currentDataSet.getTable((String) filteredTables[iter]);
-				expectedDataSetTable = expectedDataSet.getTable((String) filteredTables[iter]);
-				Assertion.assertEquals(expectedDataSetTable, currentDataSetTable);
-			}
-
-		} catch (Exception ex) {
+			int size =  tableNamesToFilter.size();
+			String[] tableNames = new String[size];
+			for(int i = 0; i < size; i++)
+				tableNames[i] = (String) tableNamesToFilter.get(i);
+			 
+			IDataSet filteredDateSet = new FilteredDataSet(tableNames, currentDataSet);
+			Assertion.assertEquals(expectedDataSet, filteredDateSet);
+		}
+		catch (Exception ex) {
 			fail("compareDataSet failed to read data set files" + ex);
 		}
-	}
-
-	protected Object[] filterTablesToBeComparedByDataSet(String[] tableNames) {
-
-		LinkedList filteredTablesList = new LinkedList();
-		LinkedList tableNamesToFilter = readTableNamesToFilter();
-
-		for (int iter = 0; iter < tableNames.length; iter++) {
-			if (!tableNamesToFilter.contains(tableNames[iter]))
-				filteredTablesList.add(tableNames[iter]);
-		}
-		Object[] filteredTables = filteredTablesList.toArray();
-
-		return filteredTables;
 	}
 
 	protected LinkedList readTableNamesToFilter() {
@@ -144,13 +134,21 @@ public abstract class ServiceTestCase extends TestCase {
 
 		try {
 			ResourceBundle bundle =
-				new PropertyResourceBundle(new FileInputStream(getTableNamesToFilterFilePath()));
-			stringTableNamesToFilter = bundle.getString(getNameOfServiceToBeTested());
+				new PropertyResourceBundle(
+					new FileInputStream(getTableNamesToFilterFilePath()));
+			stringTableNamesToFilter =
+				bundle.getString(getNameOfServiceToBeTested());
 			defaultStringTableNamesToFilter = bundle.getString("Default");
-		} catch (FileNotFoundException fex) {
+		}
+		catch (FileNotFoundException ex) {
 			fail("File " + getTableNamesToFilterFilePath() + " not found.");
-		} catch (IOException ioex) {
-			fail("IOException reading file " + getTableNamesToFilterFilePath() + " " + ioex);
+		}
+		catch (IOException ex) {
+			fail(
+				"IOException reading file "
+					+ getTableNamesToFilterFilePath()
+					+ " "
+					+ ex);
 		}
 
 		StringTokenizer st = new StringTokenizer(stringTableNamesToFilter, ",");
