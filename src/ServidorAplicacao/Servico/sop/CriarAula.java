@@ -124,7 +124,7 @@ public class CriarAula implements IServico {
 			IAulaPersistente persistentLesson = sp.getIAulaPersistente();
 
 			List lessonMatchList =
-				persistentLesson.readLessonsInBroadPeriod(lesson);
+				persistentLesson.readLessonsInBroadPeriod(lesson, null);
 
 			if (lessonMatchList.size() > 0) {
 				if (lessonMatchList.contains(lesson)) {

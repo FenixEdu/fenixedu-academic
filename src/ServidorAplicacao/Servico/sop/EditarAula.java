@@ -27,7 +27,6 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class EditarAula implements IServico {
 
@@ -85,7 +84,7 @@ public class EditarAula implements IServico {
 
 			if (aula != null) {
 				result = valid(newLesson);
-				boolean resultB = validNoInterceptingLesson(newLesson);
+				boolean resultB = validNoInterceptingLesson(newLesson, aula);
 
 				if (result.isSUCESS() && resultB) {
 					aula.setDiaSemana(aulaNova.getDiaSemana());
@@ -93,11 +92,6 @@ public class EditarAula implements IServico {
 					aula.setFim(aulaNova.getFim());
 					aula.setTipo(aulaNova.getTipo());
 					aula.setSala(salaNova);
-					try {
-						sp.getIAulaPersistente().lockWrite(aula);
-					} catch (ExistingPersistentException ex) {
-						throw new ExistingServiceException(ex);
-					}
 				} 
 			}
 
@@ -149,7 +143,7 @@ public class EditarAula implements IServico {
 		}
 	*/
 
-	private boolean validNoInterceptingLesson(IAula lesson)
+	private boolean validNoInterceptingLesson(IAula newLesson, IAula oldLesson)
 		throws ExistingServiceException, InterceptingServiceException {
 
 		try {
@@ -158,10 +152,10 @@ public class EditarAula implements IServico {
 			IAulaPersistente persistentLesson = sp.getIAulaPersistente();
 
 			List lessonMatchList =
-				persistentLesson.readLessonsInBroadPeriod(lesson);
+				persistentLesson.readLessonsInBroadPeriod(newLesson, oldLesson);
 
 			if (lessonMatchList.size() > 0) {
-				if (lessonMatchList.contains(lesson)) {
+				if (lessonMatchList.contains(newLesson)) {
 					throw new ExistingServiceException();
 				} else {
 					throw new InterceptingServiceException();

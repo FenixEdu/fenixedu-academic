@@ -235,7 +235,7 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 		}
 	}
 
-	public List readLessonsInBroadPeriod(IAula lesson)
+	public List readLessonsInBroadPeriod(IAula newLesson, IAula oldLesson)
 		throws ExcepcaoPersistencia {
 		try {
 			List lessonList = null;
@@ -260,35 +260,45 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 				+ "and fim <= $18 "
 				+ "and diaSemana = $19 "
 				+ "and sala.nome = $20 )";
-
+			
 			query.create(oqlQuery);
-			query.bind(lesson.getInicio());
-			query.bind(lesson.getFim());
-			query.bind(lesson.getDiaSemana());
-			query.bind(lesson.getSala().getNome());
+			query.bind(newLesson.getInicio());
+			query.bind(newLesson.getFim());
+			query.bind(newLesson.getDiaSemana());
+			query.bind(newLesson.getSala().getNome());
 
-			query.bind(lesson.getInicio());
-			query.bind(lesson.getFim());
-			query.bind(lesson.getDiaSemana());
-			query.bind(lesson.getSala().getNome());
+			query.bind(newLesson.getInicio());
+			query.bind(newLesson.getFim());
+			query.bind(newLesson.getDiaSemana());
+			query.bind(newLesson.getSala().getNome());
 
-			query.bind(lesson.getInicio());
-			query.bind(lesson.getFim());
-			query.bind(lesson.getDiaSemana());
-			query.bind(lesson.getSala().getNome());
+			query.bind(newLesson.getInicio());
+			query.bind(newLesson.getFim());
+			query.bind(newLesson.getDiaSemana());
+			query.bind(newLesson.getSala().getNome());
 
-			query.bind(lesson.getInicio());
-			query.bind(lesson.getFim());
-			query.bind(lesson.getDiaSemana());
-			query.bind(lesson.getSala().getNome());
+			query.bind(newLesson.getInicio());
+			query.bind(newLesson.getFim());
+			query.bind(newLesson.getDiaSemana());
+			query.bind(newLesson.getSala().getNome());
 
-			query.bind(lesson.getInicio());
-			query.bind(lesson.getFim());
-			query.bind(lesson.getDiaSemana());
-			query.bind(lesson.getSala().getNome());
+			query.bind(newLesson.getInicio());
+			query.bind(newLesson.getFim());
+			query.bind(newLesson.getDiaSemana());
+			query.bind(newLesson.getSala().getNome());
 
 			lessonList = (List) query.execute();
 			lockRead(lessonList);
+
+			// Remove the Lesson that is being edited from the list
+			// of intercepting lessons.
+			if (oldLesson != null && oldLesson instanceof Aula)
+				for (int ipto = 0; ipto < lessonList.size(); ipto++)
+					if (((Aula) lessonList.get(ipto))
+						.getCodigoInterno()
+						.equals(((Aula) oldLesson).getCodigoInterno()))
+						lessonList.remove(ipto);
+			
 			return lessonList;
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
