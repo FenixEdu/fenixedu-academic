@@ -13,6 +13,8 @@ NEW FEATURES:
 - [ #267 ] GEP - "Ficha de Docente" and "Ficha de Disciplina" - Extra column with number of filled fields
 - Department office portal - added possibility do add professorships in execution years other than the current
 - Department office portal - added the possibility to view professorships other than in current execution year
+- Plugable request cache.
+- Profiling analysis interface.
 
 NOTES:
 ======
