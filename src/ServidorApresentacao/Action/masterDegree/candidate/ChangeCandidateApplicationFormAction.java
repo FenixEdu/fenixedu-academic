@@ -58,6 +58,7 @@ public class ChangeCandidateApplicationFormAction extends ServidorApresentacao.A
  	  
 	  Calendar birthDate = Calendar.getInstance();
 	  Calendar idDocumentIssueDate = Calendar.getInstance();
+	  Calendar idDocumentExpirationDate = Calendar.getInstance();
  	  
  	  birthDate.set(new Integer(((String) changePersonalInformationForm.get("birthYear"))).intValue(), 
 					new Integer(((String) changePersonalInformationForm.get("birthMonth"))).intValue(),
@@ -66,6 +67,10 @@ public class ChangeCandidateApplicationFormAction extends ServidorApresentacao.A
 	  idDocumentIssueDate.set(new Integer(((String) changePersonalInformationForm.get("idIssueDateYear"))).intValue(), 
 							  new Integer(((String) changePersonalInformationForm.get("idIssueDateMonth"))).intValue(),
 							  new Integer(((String) changePersonalInformationForm.get("idIssueDateDay"))).intValue());
+
+      idDocumentExpirationDate.set(new Integer(((String) changePersonalInformationForm.get("idExpirationDateYear"))).intValue(), 
+						   		   new Integer(((String) changePersonalInformationForm.get("idExpirationDateMonth"))).intValue(),
+								   new Integer(((String) changePersonalInformationForm.get("idExpirationDateDay"))).intValue());
 					
  	  InfoCountry country = new InfoCountry();
  	  country.setName((String) changePersonalInformationForm.get("country"));
@@ -112,7 +117,8 @@ public class ChangeCandidateApplicationFormAction extends ServidorApresentacao.A
 						   ((Integer) changePersonalInformationForm.get("candidateNumber")),
 						   (new Double(Double.parseDouble((String) changePersonalInformationForm.get("average")))),
 						   birthDate.getTime(),
-						   idDocumentIssueDate.getTime());
+						   idDocumentIssueDate.getTime(),
+						   idDocumentExpirationDate.getTime());
            
       	InfoMasterDegreeCandidate sessionInfoMasterDegreeCandidate = (InfoMasterDegreeCandidate) sessao.getAttribute("candidateInformation"); 
 		
@@ -152,8 +158,19 @@ public class ChangeCandidateApplicationFormAction extends ServidorApresentacao.A
 
 	if (!Data.validDate(day, month)){
 		result = false;
-		actionErrors.add("invalidBirthDate", new ActionError("errors.invalid.date", "Data de Emissão do Documento de Identificação"));
+		actionErrors.add("invalidIdIssueDate", new ActionError("errors.invalid.date", "Data de Emissão do Documento de Identificação"));
 	}
+
+	
+	// Validate the document expiration date 
+	month = new Integer(((String) form.get("idExpirationDateMonth")));
+	day = new Integer(((String) form.get("idExpirationDateDay")));
+
+	if (!Data.validDate(day, month)){
+		result = false;
+		actionErrors.add("invalidIdExpirationDate", new ActionError("errors.invalid.date", "Data de Validade do Documento de Identificação"));
+	}
+
   	
   	if (!result) 
 		saveErrors(request, actionErrors);

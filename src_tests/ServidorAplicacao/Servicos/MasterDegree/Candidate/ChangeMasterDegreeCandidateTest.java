@@ -133,7 +133,8 @@ public class ChangeMasterDegreeCandidateTest extends TestCaseServicosCandidato {
         assertEquals(masterDegreeCandidate.getIdentificationDocumentType(), new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
         assertTrue(masterDegreeCandidate.getIdentificationDocumentIssuePlace().equals("Lisboa"));
         
-//        assertTrue(masterDegreeCandidate.getIdentificationDocumentIssueDate().toString().equals("2002-11-17"));
+//		assertTrue(masterDegreeCandidate.getIdentificationDocumentIssueDate().toString().equals("2002-11-17"));
+//		assertTrue(masterDegreeCandidate.getIdentificationDocumentExpirationDate().toString().equals("2004-11-17"));
         assertTrue(masterDegreeCandidate.getName().equals("Nuno Nunes"));
         assertEquals(masterDegreeCandidate.getSex(), new Sexo(Sexo.MASCULINO));
         assertEquals(masterDegreeCandidate.getMaritalStatus(), new EstadoCivil(EstadoCivil.SOLTEIRO));

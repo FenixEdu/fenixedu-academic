@@ -106,7 +106,8 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         assertEquals(masterDegreeCandidateTemp.getIdentificationDocumentType(), new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
         assertTrue(masterDegreeCandidateTemp.getIdentificationDocumentIssuePlace().equals("Lisboa"));
         
-        assertTrue(masterDegreeCandidateTemp.getIdentificationDocumentIssueDate().toString().equals("2002-11-17"));
+		assertTrue(masterDegreeCandidateTemp.getIdentificationDocumentIssueDate().toString().equals("2002-11-17"));
+		assertTrue(masterDegreeCandidateTemp.getIdentificationDocumentExpirationDate().toString().equals("2004-11-17"));
         assertTrue(masterDegreeCandidateTemp.getName().equals("Nuno Nunes"));
         assertEquals(masterDegreeCandidateTemp.getSex(), new Sexo(Sexo.MASCULINO));
         assertEquals(masterDegreeCandidateTemp.getMaritalStatus(), new EstadoCivil(EstadoCivil.SOLTEIRO));
@@ -183,7 +184,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         }
 
 
-        IMasterDegreeCandidate candidateTemp = new MasterDegreeCandidate("1", new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE), "1", data.getTime(), "Nome", new Sexo(Sexo.MASCULINO), new EstadoCivil(EstadoCivil.SOLTEIRO), data.getTime(), "1", "1", countryTemp, "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "Cand1", "Pass1", new Integer(1), executionYear, new Specialization(Specialization.MESTRADO), "1", new Integer(1), new Double(1.0), masterDegreeTemp, countryTemp);
+        IMasterDegreeCandidate candidateTemp = new MasterDegreeCandidate("1", new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE), "1", data.getTime(), "Nome", new Sexo(Sexo.MASCULINO), new EstadoCivil(EstadoCivil.SOLTEIRO), data.getTime(), "1", "1", countryTemp, "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "Cand1", "Pass1", new Integer(1), executionYear, new Specialization(Specialization.MESTRADO), "1", new Integer(1), new Double(1.0), masterDegreeTemp, countryTemp, data.getTime());
         try {
             persistentSupport.iniciarTransaccao();
             persistentMasterDegreeCandidate.writeMasterDegreeCandidate(candidateTemp);
@@ -225,7 +226,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 		assertNotNull(masterDegreeTemp);
 		assertNotNull(countryTemp);
 
-        IMasterDegreeCandidate candidateTemp = new MasterDegreeCandidate("3", new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE), "2", data.getTime(), "Nome2", new Sexo(Sexo.MASCULINO), new EstadoCivil(EstadoCivil.SOLTEIRO), data.getTime(), "12", "12", countryTemp, "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "Cand3", "Pass12", new Integer(12), executionYear, new Specialization(Specialization.MESTRADO), "12", new Integer(12), new Double(2.0), masterDegreeTemp, countryTemp);
+        IMasterDegreeCandidate candidateTemp = new MasterDegreeCandidate("3", new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE), "2", data.getTime(), "Nome2", new Sexo(Sexo.MASCULINO), new EstadoCivil(EstadoCivil.SOLTEIRO), data.getTime(), "12", "12", countryTemp, "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "Cand3", "Pass12", new Integer(12), executionYear, new Specialization(Specialization.MESTRADO), "12", new Integer(12), new Double(2.0), masterDegreeTemp, countryTemp, data.getTime());
         
         try {
             persistentSupport.iniciarTransaccao();

@@ -125,7 +125,8 @@ public class ChangeMasterDegreeCandidate implements IServico {
 								newMasterDegreeCandidate.getSpecialization(), 
 							    newMasterDegreeCandidate.getAverage(), 
 							    newMasterDegreeCandidate.getBirth(), 
-							    newMasterDegreeCandidate.getIdentificationDocumentIssueDate()); 
+							    newMasterDegreeCandidate.getIdentificationDocumentIssueDate(),
+							    newMasterDegreeCandidate.getIdentificationDocumentExpirationDate()); 
 
 		try {
             sp.getIPersistentMasterDegreeCandidate().writeMasterDegreeCandidate(existingMasterDegreeCandidate);

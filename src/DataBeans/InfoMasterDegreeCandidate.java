@@ -21,7 +21,8 @@ public class InfoMasterDegreeCandidate {
  
     private String identificationDocumentNumber = null;
     private String identificationDocumentIssuePlace = null;
-    private Date identificationDocumentIssueDate;
+	private Date identificationDocumentIssueDate;
+	private Date identificationDocumentExpirationDate;
     private String name = null;
     private Date birth;
     private String fatherName = null;
@@ -70,7 +71,8 @@ public class InfoMasterDegreeCandidate {
         identificationDocumentNumber = null;
 	    identificationDocumentType = null;
         identificationDocumentIssuePlace = null;
-        identificationDocumentIssueDate = null;
+		identificationDocumentIssueDate = null;
+		identificationDocumentExpirationDate = null;
         name = null;
         sex = null;
         maritalStatus = null;
@@ -119,13 +121,14 @@ public class InfoMasterDegreeCandidate {
     		String telephone, String mobilePhone, String email, String webSite, 
     		String contributorNumber, String occupation, String sex, String identificationDocumentType, 
 			String maritalStatus, InfoCountry country, InfoCountry nationality, String specialization, InfoExecutionYear infoExecutionYear,
-			Integer candidateNumber, Double average, Date birth, Date identificationDocumentIssueDate
+			Integer candidateNumber, Double average, Date birth, Date identificationDocumentIssueDate, Date identificationDocumentExpirationDate
     		) {
 	    
         setIdentificationDocumentNumber(identificationDocumentNumber);
         setIdentificationDocumentType(identificationDocumentType);
         setIdentificationDocumentIssuePlace(identificationDocumentIssuePlace);
-        setIdentificationDocumentIssueDate(identificationDocumentIssueDate);
+		setIdentificationDocumentIssueDate(identificationDocumentIssueDate);
+		setIdentificationDocumentExpirationDate(identificationDocumentExpirationDate);
         setName(name);
         setSex(sex);
         setMaritalStatus(maritalStatus);
@@ -157,68 +160,8 @@ public class InfoMasterDegreeCandidate {
         setInfoCountry(country);
 		setInfoExecutionYear(infoExecutionYear);
 		setCandidateNumber(candidateNumber);
-        
-        
-        
     }
-    
-//    public InfoMasterDegreeCandidate(IMasterDegreeCandidate masterDegreeCandidate) {
-//	    setIdentificationDocumentNumber(masterDegreeCandidate.getIdentificationDocumentNumber());
-//        setIdentificationDocumentType(masterDegreeCandidate.getIdentificationDocumentType().toString2());
-//        setIdentificationDocumentIssuePlace(masterDegreeCandidate.getIdentificationDocumentIssuePlace());
-//        setIdentificationDocumentIssueDate(masterDegreeCandidate.getIdentificationDocumentIssueDate());
-//        setName(masterDegreeCandidate.getName());
-//        setSex(masterDegreeCandidate.getSex().toString());
-//        setMaritalStatus(masterDegreeCandidate.getMaritalStatus().toString());
-//		
-//        setBirth(masterDegreeCandidate.getBirth());
-//        setFatherName(masterDegreeCandidate.getFatherName());
-//        setMotherName(masterDegreeCandidate.getMotherName());
-//        setNationality(masterDegreeCandidate.getNationality());
-//        setBirthPlaceParish(masterDegreeCandidate.getBirthPlaceParish());
-//        setBirthPlaceMunicipality(masterDegreeCandidate.getBirthPlaceMunicipality());
-//        setBirthPlaceDistrict(masterDegreeCandidate.getBirthPlaceDistrict());
-//        setAddress(masterDegreeCandidate.getAddress());
-//        setPlace(masterDegreeCandidate.getPlace());
-//        setPostCode(masterDegreeCandidate.getPostCode());
-//        setAddressParish(masterDegreeCandidate.getAddressParish());
-//        setAddressMunicipality(masterDegreeCandidate.getAddressMunicipality());
-//        setAddressDistrict(masterDegreeCandidate.getAddressDistrict());
-//        setTelephone(masterDegreeCandidate.getTelephone());
-//        setMobilePhone(masterDegreeCandidate.getMobilePhone());
-//        setEmail(masterDegreeCandidate.getEmail());
-//        setWebSite(masterDegreeCandidate.getWebSite());
-//        setContributorNumber(masterDegreeCandidate.getContributorNumber());
-//        setOccupation(masterDegreeCandidate.getOccupation());
-//        setMajorDegree(masterDegreeCandidate.getMajorDegree());
-//        setUsername(masterDegreeCandidate.getUsername());
-//        setPassword(masterDegreeCandidate.getPassword());
-//        setCandidateNumber(masterDegreeCandidate.getCandidateNumber());
-//        setApplicationYear(masterDegreeCandidate.getApplicationYear());
-//        setSpecialization(masterDegreeCandidate.getSpecialization().toString());
-//        setMajorDegreeSchool(masterDegreeCandidate.getMajorDegreeSchool());
-//        setMajorDegreeYear(masterDegreeCandidate.getMajorDegreeYear());
-//        setAverage(masterDegreeCandidate.getAverage());
-//  		setDegreeName(masterDegreeCandidate.getDegree().getNome());      
-//  		setDegreeCode(masterDegreeCandidate.getDegree().getSigla());      
-//		setCountry(masterDegreeCandidate.getCountry().getName());
-//		
-//		// Get Active Master Degree Candidate Situation
-//		Iterator iterator = masterDegreeCandidate.getSituations().iterator();
-//
-//		while(iterator.hasNext()){
-//			ICandidateSituation candidateSituationTemp = (ICandidateSituation) iterator.next();
-//			
-//			if ((candidateSituationTemp.getValidation().getCandidateSituationValidation()).equals(new Integer(CandidateSituationValidation.ACTIVE))) {
-//				setInfoCandidateSituation(new InfoCandidateSituation(candidateSituationTemp.getDate(),
-//										  candidateSituationTemp.getRemarks(),
-//										  candidateSituationTemp.getSituation().toString()));
-//			}
-//		}
-//		
-//		
-//    }
-    
+        
     public boolean equals(Object o) {
         return
         ((o instanceof InfoMasterDegreeCandidate) &&
@@ -230,7 +173,8 @@ public class InfoMasterDegreeCandidate {
         result += "\n  - Numero do Documento de Identificacao : " + identificationDocumentNumber;
         result += "\n  - Tipo do Documento de Identificacao : " + identificationDocumentType;
         result += "\n  - Local de Emissao do Documento de Identificacao : " + identificationDocumentIssuePlace;
-        result += "\n  - Data de Emissao do Documento de Identificacao : " + identificationDocumentIssueDate;
+		result += "\n  - Data de Emissao do Documento de Identificacao : " + identificationDocumentIssueDate;
+		result += "\n  - Data de Validade do Documento de Identificacao : " + identificationDocumentExpirationDate;
         result += "\n  - Nome do Candidato : " + name;
         result += "\n  - Sexo : " + sex;
         result += "\n  - Estado Civil : " + maritalStatus;
@@ -837,6 +781,22 @@ public void setInfoCountry(InfoCountry infoCountry) {
 	 */
 	public void setWebSite(String webSite) {
 		this.webSite = webSite;
+	}
+
+	/**
+	 * @return Date
+	 */
+	public Date getIdentificationDocumentExpirationDate() {
+		return identificationDocumentExpirationDate;
+	}
+
+	/**
+	 * Sets the identificationDocumentExpirationDate.
+	 * @param identificationDocumentExpirationDate The identificationDocumentExpirationDate to set
+	 */
+	public void setIdentificationDocumentExpirationDate(Date identificationDocumentExpirationDate) {
+		this.identificationDocumentExpirationDate =
+			identificationDocumentExpirationDate;
 	}
 
 }

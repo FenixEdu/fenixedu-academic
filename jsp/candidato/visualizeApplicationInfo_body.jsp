@@ -129,6 +129,11 @@
             <td><bean:message key="candidate.identificationDocumentIssueDate" /></td>
             <td><bean:write name="applicationInfo" property="identificationDocumentIssueDate"/></td>
           </tr>
+          <!-- Data de Validade do Documento de Identificacao -->
+          <tr>
+            <td><bean:message key="candidate.identificationDocumentExpirationDate" /></td>
+            <td><bean:write name="applicationInfo" property="identificationDocumentExpirationDate"/></td>
+          </tr>
           <!-- Numero de Contribuinte -->
           <tr>
             <td><bean:message key="candidate.contributorNumber" /></td>

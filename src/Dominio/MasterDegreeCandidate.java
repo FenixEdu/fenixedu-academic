@@ -23,12 +23,14 @@ import Util.Sexo;
 import Util.Specialization;
 import Util.TipoDocumentoIdentificacao;
  
+
 public class MasterDegreeCandidate implements IMasterDegreeCandidate {
  
     private String identificationDocumentNumber = null;
     private TipoDocumentoIdentificacao identificationDocumentType;
     private String identificationDocumentIssuePlace = null;
-    private Date identificationDocumentIssueDate;
+	private Date identificationDocumentIssueDate;
+	private Date identificationDocumentExpirationDate;
     private String name = null;
     private Sexo sex = null;
 	private EstadoCivil maritalStatus = null;
@@ -83,7 +85,8 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
         identificationDocumentNumber = null;
         identificationDocumentType = null;
         identificationDocumentIssuePlace = null;
-        identificationDocumentIssueDate = null;
+		identificationDocumentIssueDate = null;
+		identificationDocumentExpirationDate = null;
         name = null;
         sex = null;
         maritalStatus = null;
@@ -131,7 +134,7 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
     String webSite, String contributorNumber, String occupation, String majorDegree,
     String username, String password, Integer candidateNumber, IExecutionYear executionYear,
     Specialization specialization, String majorDegreeSchool, Integer majorDegreeYear, 
-    Double average, ICurso masterDegree, ICountry country) {
+    Double average, ICurso masterDegree, ICountry country, Date identificationDocumentExpirationDate) {
         
         setIdentificationDocumentNumber(identificationDocumentNumber);
         setIdentificationDocumentType(identificationDocumentType);
@@ -170,6 +173,7 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
         setAverage(average);
         setDegree(masterDegree);
         setCountry(country);
+        setIdentificationDocumentExpirationDate(identificationDocumentExpirationDate);
     } 
     
      
@@ -196,7 +200,8 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
         result += "\n  - Identification Document Number : " + identificationDocumentNumber;
         result += "\n  - Identification Document Type : " + identificationDocumentType;
         result += "\n  - Identification Document Issue Place : " + identificationDocumentIssuePlace;
-        result += "\n  - Identification Document Issue Date : " + identificationDocumentIssueDate;
+		result += "\n  - Identification Document Issue Date : " + identificationDocumentIssueDate;
+		result += "\n  - Identification Document Expiration Date : " + identificationDocumentExpirationDate;
         result += "\n  - Candidate Name : " + name;
         result += "\n  - Sex : " + sex;
         result += "\n  - Marital Status : " + maritalStatus;
@@ -245,11 +250,12 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
     		String telephone, String mobilePhone, String email, String webSite, 
     		String contributorNumber, String occupation, String sex, String identificationDocumentType,
     		String maritalStatus, ICountry country , ICountry nationality, String specialization, Double average,
-    		Date birth, Date identificationDocumentIssueDate
+    		Date birth, Date identificationDocumentIssueDate, Date identificationDocumentExpirationDate
     		) {
         setIdentificationDocumentNumber(identificationDocumentNumber);
 		setIdentificationDocumentIssuePlace(identificationDocumentIssuePlace);
 		setIdentificationDocumentIssueDate(identificationDocumentIssueDate);
+		setIdentificationDocumentExpirationDate(identificationDocumentExpirationDate);
 		setIdentificationDocumentType(new TipoDocumentoIdentificacao(identificationDocumentType));
         setName(name);
         setFatherName(fatherName);
@@ -281,6 +287,7 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 		setNationality(nationality);  
 		setSpecialization(new Specialization(specialization));  
 		setAverage(average);
+		
 	}
  
 
@@ -929,6 +936,22 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	 */
 	public void setWebSite(String webSite) {
 		this.webSite = webSite;
+	}
+
+	/**
+	 * @return Date
+	 */
+	public Date getIdentificationDocumentExpirationDate() {
+		return identificationDocumentExpirationDate;
+	}
+
+	/**
+	 * Sets the identificationDocumentExpirationDate.
+	 * @param identificationDocumentExpirationDate The identificationDocumentExpirationDate to set
+	 */
+	public void setIdentificationDocumentExpirationDate(Date identificationDocumentExpirationDate) {
+		this.identificationDocumentExpirationDate =
+			identificationDocumentExpirationDate;
 	}
 
 } // End of class definition

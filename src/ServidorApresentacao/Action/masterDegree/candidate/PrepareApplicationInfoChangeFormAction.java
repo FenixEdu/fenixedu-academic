@@ -104,6 +104,19 @@ public class PrepareApplicationInfoChangeFormAction extends ServidorApresentacao
 			  changePersonalInfoForm.set("idIssueDateYear", new Integer(identificationDocumentIssueDate.get(Calendar.YEAR)).toString());
 		  }
 
+		  Calendar identificationDocumentExpirationDate = Calendar.getInstance();
+		  if (masterDegreeCandidate.getIdentificationDocumentExpirationDate() == null){
+			  changePersonalInfoForm.set("idExpirationDateDay", Data.OPTION_DEFAULT.toString());
+			  changePersonalInfoForm.set("idExpirationDateMonth", Data.OPTION_DEFAULT.toString());
+			  changePersonalInfoForm.set("idExpirationDateYear", Data.OPTION_DEFAULT.toString());
+		  } else {
+			  identificationDocumentIssueDate.setTime(masterDegreeCandidate.getIdentificationDocumentExpirationDate());
+			  changePersonalInfoForm.set("idExpirationDateDay", new Integer(identificationDocumentExpirationDate.get(Calendar.DAY_OF_MONTH)).toString());
+			  changePersonalInfoForm.set("idExpirationDateMonth", new Integer(identificationDocumentExpirationDate.get(Calendar.MONTH)).toString());
+			  changePersonalInfoForm.set("idExpirationDateYear", new Integer(identificationDocumentExpirationDate.get(Calendar.YEAR)).toString());
+		  }
+
+
 		  changePersonalInfoForm.set("fatherName", masterDegreeCandidate.getFatherName()); 
 		  changePersonalInfoForm.set("motherName", masterDegreeCandidate.getMotherName()); 
 		  changePersonalInfoForm.set("nationality", masterDegreeCandidate.getInfoNationality().getNationality());
@@ -160,6 +173,9 @@ public class PrepareApplicationInfoChangeFormAction extends ServidorApresentacao
 		  session.setAttribute("monthDays", Data.getMonthDays());
 		  session.setAttribute("months", Data.getMonths());
 		  session.setAttribute("years", Data.getYears());
+		  
+		  session.setAttribute("expirationYears", Data.getExpirationYears());
+		  
 		  		 
 
 

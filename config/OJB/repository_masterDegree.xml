@@ -211,6 +211,13 @@
 	     jdbc-type="INTEGER"
 	  />
 	  
+	 <field-descriptor id="39"
+	     name="identificationDocumentExpirationDate"
+	     column="IDENTIFICATION_DOCUMENT_EXPIRATION_DATE"
+	     jdbc-type="DATE"
+	  />
+	  
+	  
       	  <reference-descriptor
          	name="degree"
          	class-ref="Dominio.Curso"

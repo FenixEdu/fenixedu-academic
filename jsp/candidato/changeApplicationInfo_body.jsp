@@ -190,6 +190,26 @@
           </td>          
         </tr>
 
+	<!-- Data de Validade do Documento de Identificacao -->
+        <tr>
+         <td><bean:message key="candidate.identificationDocumentExpirationDate" /></td>
+          <td><bean:message key="candidate.year" />   
+             <html:select property="idExpirationDateYear">
+                <html:options collection="expirationYears" property="value" labelProperty="label"/>
+             </html:select>
+          </td>          
+          <td><bean:message key="candidate.month" />   
+             <html:select property="idExpirationDateMonth">
+                <html:options collection="months" property="value" labelProperty="label"/>
+             </html:select>
+          </td>          
+          <td><bean:message key="candidate.day" />   
+             <html:select property="idExpirationDateDay">
+                <html:options collection="monthDays" property="value" labelProperty="label"/>
+             </html:select>
+          </td>          
+        </tr>
+
 
         <!-- Tipo do Documento de Identificacao -->
         <tr>

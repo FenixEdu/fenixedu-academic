@@ -30,6 +30,7 @@ public interface IMasterDegreeCandidate {
     void setIdentificationDocumentType(TipoDocumentoIdentificacao identificationDocumentType);
     void setIdentificationDocumentIssuePlace(String identificationDocumentIssuePlace);
     void setIdentificationDocumentIssueDate(Date identificationDocumentIssueDate);
+    void setIdentificationDocumentExpirationDate(Date identificationDocumentExpirationDate);
     void setName(String name);
     void setSex(Sexo sex);
     void setMaritalStatus(EstadoCivil maritalStatus);
@@ -69,7 +70,8 @@ public interface IMasterDegreeCandidate {
     String getIdentificationDocumentNumber();
     TipoDocumentoIdentificacao getIdentificationDocumentType();
     String getIdentificationDocumentIssuePlace();
-    Date getIdentificationDocumentIssueDate();
+	Date getIdentificationDocumentIssueDate();
+	Date getIdentificationDocumentExpirationDate();
     String getName();
     Sexo getSex();
     EstadoCivil getMaritalStatus();
@@ -115,7 +117,7 @@ public interface IMasterDegreeCandidate {
     		String telephone, String mobilePhone, String email, String webSite, 
     		String contributorNumber, String occupation, String sex, String identificationDocumentType, 
     		String maritalStatus, ICountry country, ICountry nationality, String specialization, Double average,
-    		Date birth, Date identificationDocumentIssueDate 
+    		Date birth, Date identificationDocumentIssueDate , Date identificationDocumentExpirationDate
     );
     
     
