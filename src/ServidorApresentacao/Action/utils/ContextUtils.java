@@ -232,7 +232,7 @@ public class ContextUtils
 	 */
     public static void setCurricularYearsContext(HttpServletRequest request)
     {
-        List curricularYearsB = (List) request.getAttribute(SessionConstants.CURRICULAR_YEARS_LIST);
+//        List curricularYearsB = (List) request.getAttribute(SessionConstants.CURRICULAR_YEARS_LIST);
 
         String curricularYears_1 = (String) request.getAttribute(SessionConstants.CURRICULAR_YEARS_1);
         String curricularYears_2 = (String) request.getAttribute(SessionConstants.CURRICULAR_YEARS_2);

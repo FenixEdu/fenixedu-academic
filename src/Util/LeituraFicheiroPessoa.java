@@ -43,7 +43,6 @@ public class LeituraFicheiroPessoa extends ObjectFenixOJB {
 	/** retorna uma Collection (ArrayList) com instancias de Pessoa */
 	public static Collection lerFicheiro(String ficheiroValidas, String delimitador) throws NotExecuteException {
 		ArrayList listaPessoas = new ArrayList();
-		File ficheiro = null;
 		BufferedReader leitura = null;
 		String linhaFicheiro = null;
 		Pessoa pessoa = null;
@@ -152,11 +151,9 @@ public class LeituraFicheiroPessoa extends ObjectFenixOJB {
 		String enderecoWeb = new String();
 		String numContribuinte = new String();
 		String profissao = new String();
-		String username = new String();
-		String password = new String();
-		Integer nacionalidadeCompleta = new Integer(0);
+//		String username = null;
+//		String password = null;
 		String codigoFiscal = new String();
-		ICountry country = null;
 
 		//parsing do primeiro ;
 		//stringTokenizer.nextToken();
@@ -259,11 +256,11 @@ public class LeituraFicheiroPessoa extends ObjectFenixOJB {
 		pessoa.setProfissao(WordUtils.capitalize(StringUtils.lowerCase(profissao)));
 		//		StringUtils.capitaliseAllWords(StringUtils.lowerCase(profissao)));
 
-		username = new String(stringTokenizer.nextToken().trim());
+//		username = new String(stringTokenizer.nextToken().trim());
 		//pessoa.setUsername(username);
 		pessoa.setUsername(numeroDocumentoIdentificacao);
 
-		password = new String(stringTokenizer.nextToken().trim());
+//		password = new String(stringTokenizer.nextToken().trim());
 		//pessoa.setPassword(password);
 		pessoa.setPassword(PasswordEncryptor.encryptPassword(numeroDocumentoIdentificacao));
 
