@@ -60,8 +60,6 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 			} catch (FenixServiceException fenixServiceException) {
 				throw new FenixActionException(fenixServiceException.getMessage());
 			}
-			
-			//VER S ELE TA A LER BEM DA BD-SE O ID DO SEMESTER AQUI JA EH 0
 		System.out.println("11111111111111111111111111111VELHO CURRICULAR COURSEScope"+oldInfoCurricularCourseScope);
 			
 			if(oldInfoCurricularCourseScope.getTheoreticalHours() != null)
@@ -90,13 +88,9 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 			
 			dynaForm.set("branchId", oldInfoCurricularCourseScope.getInfoBranch().getIdInternal().toString());
 
-
-//			InfoCurricularSemester infoCurricularSemester =oldInfoCurricularCourseScope.getInfoCurricularSemester();
-//			ICurricularSemester curricularSemester=Cloner.copyInfoCurricularSemester2CurricularSemester(infoCurricularSemester);
-
 //TODO:!!!!!!!!!!1111ISTO TA A AVIR A 0 EMBORA ESCREVA BEM NA BD
 			dynaForm.set("curricularSemesterId", oldInfoCurricularCourseScope.getInfoCurricularSemester().getIdInternal().toString());
-System.out.println("PREPARE->AAAAAAAAAAAAAAAaaaaaa"+oldInfoCurricularCourseScope.getInfoBranch().getIdInternal()+"BBBBBBBBBBBBBBBBBBBBBBBBBBbbbbb"+oldInfoCurricularCourseScope.getInfoCurricularSemester().getIdInternal());
+System.out.println("PREPARE->AAAAAAAAAAAAAAAaaaaaa"+oldInfoCurricularCourseScope.getInfoBranch().getIdInternal()+"BBBBBBBBBBBBBBBBBBBBBBBBBBbbbbb"+oldInfoCurricularCourseScope.getInfoCurricularSemester());
 
 
 			request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanId);
@@ -143,17 +137,7 @@ System.out.println("PREPARE->AAAAAAAAAAAAAAAaaaaaa"+oldInfoCurricularCourseScope
 		
 		InfoCurricularSemester infoCurricularSemester = new InfoCurricularSemester();
 		infoCurricularSemester.setIdInternal(curricularSemesterId);
-		
-//		Object args1[] = { curricularSemesterId };
-//				 GestorServicos manager = GestorServicos.manager();
-//				 InfoCurricularSemester infoCurricularSemester = null;
-//				 try {
-//					infoCurricularSemester = (InfoCurricularSemester) manager.executar(userView, "ReadCurricularSemester", args1);
-//				 } catch (FenixServiceException e) {
-//					 throw new FenixActionException(e);
-//				 }
-//		 
-				newInfoCurricularCourseScope.setInfoCurricularSemester(infoCurricularSemester);
+		newInfoCurricularCourseScope.setInfoCurricularSemester(infoCurricularSemester);
 				
 				System.out.println("CCCCCCCCCCCCCCCCCCCcccccccccc"+infoCurricularSemester);
 			System.out.println("CCCCCCCCCCCCCCCCCCCcccccccccc"+newInfoCurricularCourseScope);
@@ -233,12 +217,11 @@ System.out.println("PREPARE->AAAAAAAAAAAAAAAaaaaaa"+oldInfoCurricularCourseScope
 			throw new FenixActionException(e);
 		}
 		
-		System.out.println("1111111111111111DP DO EDIT111111111111111");
 		if(serviceResult != null) {
 			ActionErrors actionErrors = new ActionErrors();
 			ActionError error = null;
 			if(serviceResult.get(0) != null) {
-				error = new ActionError("message.existingCurricularCourseScope", serviceResult.get(0),  serviceResult.get(1));
+				error = new ActionError("message.existingCurricularCourseScope", serviceResult.get(0),  serviceResult.get(1),  serviceResult.get(2));
 				actionErrors.add("message.existingCurricularCourseScope", error);
 			}			
 			saveErrors(request, actionErrors);

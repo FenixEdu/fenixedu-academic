@@ -77,11 +77,11 @@ public class EditCurricularCourseScope implements IServico {
 			Integer curricularSemesterId = newInfoCurricularCourseScope.getInfoCurricularSemester().getIdInternal();
 			
 			
-			//so da com o construtor como ta/COM O OUTRO TAVA A VIR A NULL 
-			ICurricularSemester curricularSemester = new CurricularSemester();
-			curricularSemester.setIdInternal(curricularSemesterId);
-			ICurricularSemester newCurricularSemester = (ICurricularSemester) persistentCurricularSemester.readByOId(curricularSemester, false);
-//			System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDd"+ new CurricularSemester(curricularSemesterId)+"DDDDD"+newBranch+"DDDDD"+curricularCourse);
+			//so da com o construtor como ta
+//			ICurricularSemester curricularSemester = new CurricularSemester();
+//			curricularSemester.setIdInternal(curricularSemesterId);
+			ICurricularSemester newCurricularSemester = (ICurricularSemester) persistentCurricularSemester.readByOId(new CurricularSemester(curricularSemesterId), false);
+			System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDd"+ new CurricularSemester(curricularSemesterId)+"DDDDD"+newBranch+"DDDDD"+curricularCourse);
 				
 			ICurricularCourseScope newCurricularCourseScope = 
 			        persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(curricularCourse, newCurricularSemester, newBranch );
@@ -108,10 +108,11 @@ System.out.println("AAAAAAAAAAAAAAAAAAaAAAAAAAAAAAnewCurricularCourseScope"+newC
 				return null;
 			}
 		
-			List errors = new ArrayList(2);
+			List errors = new ArrayList(3);
 			
-			errors.add(0, newCurricularSemester.getSemester());
-			errors.add(1, newBranch.getCode());	
+			errors.add(0,newCurricularSemester.getCurricularYear().getYear());	
+			errors.add(1, newCurricularSemester.getSemester());
+			errors.add(2, newBranch.getCode());	
 			
 			return errors;
 			

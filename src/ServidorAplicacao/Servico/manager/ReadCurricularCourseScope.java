@@ -56,7 +56,14 @@ public class ReadCurricularCourseScope implements IServico {
 			return null;
 		}
 
+		//TODO:perguntar joao funciona no branch(so tem o getInternalId) e nao funciona no semester:NAO SEI ENTAO QUAL O ERRO(getInternalID( se eu nao usar este o ID vem a null)(e eh este que ta  a usar) e tem getInternalId)
+		Integer curricularSemesterId = curricularCourseScope.getCurricularSemester().getInternalID();
 		InfoCurricularCourseScope infoCurricularCourseScope = Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
+		
+		infoCurricularCourseScope.getInfoCurricularSemester().setIdInternal(curricularSemesterId);
+		
+		System.out.println("IIIIIIIIIIIIIIIIII"+curricularCourseScope.getCurricularSemester().getInternalID());
+		
 		return infoCurricularCourseScope;
 	}
 }
