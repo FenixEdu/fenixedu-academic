@@ -71,17 +71,42 @@
 		<!-- Proof Date -->
 		<tr >
 			<th align="left"><bean:message key="label.masterDegree.administrativeOffice.proofDate"/>&nbsp;</th>
-			<th><html:text property="proofDateDay" size="2"/></th>
-			<th><html:text property="proofDateMonth" size="2"/></th>
-			<th><html:text property="proofDateYear" size="4"/></th>
+			<th>
+				<html:select property="proofDateDay">
+			    	<html:options collection="<%= SessionConstants.DAYS_LIST %>" property="value" labelProperty="label" />
+			   </html:select> 
+			</th>
+			<th>
+				<html:select property="proofDateMonth">
+			    	<html:options collection="<%= SessionConstants.MONTHS_LIST %>" property="value" labelProperty="label" />
+			   </html:select> 
+			</th>
+			<th>
+				<html:select property="proofDateYear">
+			    	<html:options collection="<%= SessionConstants.YEARS_LIST %>" property="value" labelProperty="label" />
+			   </html:select> 
+			</th>						
+
 		</tr>
 		
 		<!-- Thesis Delivery Date -->
 		<tr >
 			<th align="left"><bean:message key="label.masterDegree.administrativeOffice.thesisDeliveryDate"/>&nbsp;</th>
-			<th><html:text property="thesisDeliveryDateDay" size="2"/></th>
-			<th><html:text property="thesisDeliveryDateMonth" size="2"/></th>
-			<th><html:text property="thesisDeliveryDateYear" size="4"/></th>
+			<th>
+				<html:select property="thesisDeliveryDateDay">
+			    	<html:options collection="<%= SessionConstants.DAYS_LIST %>" property="value" labelProperty="label" />
+			   </html:select> 
+			</th>
+			<th>
+				<html:select property="thesisDeliveryDateMonth">
+			    	<html:options collection="<%= SessionConstants.MONTHS_LIST %>" property="value" labelProperty="label" />
+			   </html:select> 
+			</th>
+			<th>
+				<html:select property="thesisDeliveryDateYear">
+			    	<html:options collection="<%= SessionConstants.YEARS_LIST %>" property="value" labelProperty="label" />
+			   </html:select> 
+			</th>	
 		</tr>
 			
 	</table>				
