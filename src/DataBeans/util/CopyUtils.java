@@ -34,6 +34,9 @@ public class CopyUtils
 	public static Object copyProperties(Object destinationBean, Object sourceBean)
 		throws IllegalAccessException, InvocationTargetException, NoSuchMethodException
 	{
+	    
+//		    BeanUtils.copyProperties(destinationBean, sourceBean);
+//		    return destinationBean;
 		/**
 		 * FIXME: The code below have some problems with introspection. To see the problem try to use
 		 * this code on use case Criar Candidato on post-graduation office...
