@@ -37,7 +37,7 @@ import Util.RoleType;
 
 public class LoadDBForCurricularCourseEnrollmentTest {
 
-    private static final String FILE = "D:/Fenix/Files/others/dataSet.xml";
+    private static final String FILE = "D:/Fenix/Files/others/dataSetLEIC.xml";
     private static final String DB_DRIVER = "com.mysql.jdbc.Driver";
     private static final String DB_ALIAS = "jdbc:mysql://localhost/";
     private static final String DEFAULT_DB_NAME = "ciapl";

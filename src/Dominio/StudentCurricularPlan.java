@@ -477,6 +477,72 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
         }));
     }
 
+    public CurricularCourseEnrollmentType getCurricularCourseEnrollmentType(ICurricularCourse curricularCourse,
+            IExecutionPeriod currentExecutionPeriod) throws ExcepcaoPersistencia {
+
+        if (isCurricularCourseApproved(curricularCourse)) {
+            return CurricularCourseEnrollmentType.NOT_ALLOWED;
+        }
+
+        if (!curricularCourse.hasActiveScopeInGivenSemester(currentExecutionPeriod.getSemester())) {
+            return CurricularCourseEnrollmentType.NOT_ALLOWED;
+        }
+
+        List enrollmentsWithEnrolledStateInCurrentExecutionPeriod = getAllStudentEnrolledEnrollmentsInExecutionPeriod(
+                currentExecutionPeriod);
+
+        List result = (List) CollectionUtils.collect(enrollmentsWithEnrolledStateInCurrentExecutionPeriod, new Transformer() {
+            public Object transform(Object obj) {
+                IEnrollment enrollment = (IEnrollment) obj;
+                return enrollment.getCurricularCourse();
+            }
+        });
+
+        if (result.contains(curricularCourse)) {
+            return CurricularCourseEnrollmentType.NOT_ALLOWED;
+        }
+
+        List enrollmentsWithEnrolledStateInPreviousExecutionPeriod = getAllStudentEnrolledEnrollmentsInExecutionPeriod(
+                currentExecutionPeriod.getPreviousExecutionPeriod());
+
+        result = (List) CollectionUtils.collect(enrollmentsWithEnrolledStateInPreviousExecutionPeriod, new Transformer() {
+            public Object transform(Object obj) {
+                IEnrollment enrollment = (IEnrollment) obj;
+                return enrollment.getCurricularCourse();
+            }
+        });
+
+        if (result.contains(curricularCourse)) {
+            return CurricularCourseEnrollmentType.TEMPORARY;
+        }
+
+        return CurricularCourseEnrollmentType.DEFINITIVE;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see Dominio.IStudentCurricularPlan#areNewAreasCompatible(Dominio.IBranch,
+     *      Dominio.IBranch)
+     */
+    public boolean areNewAreasCompatible(IBranch specializationArea,
+            IBranch secundaryArea) throws ExcepcaoPersistencia,
+            BothAreasAreTheSameServiceException, InvalidArgumentsServiceException {
+        return true;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see Dominio.IStudentCurricularPlan#getCanChangeSpecializationArea()
+     */
+    public boolean getCanChangeSpecializationArea() {
+        if (getBranch() != null) {
+            return false;
+        }
+        return true;
+    }
+
     // -------------------------------------------------------------
     // END: Only for enrollment purposes (PUBLIC)
     // -------------------------------------------------------------
@@ -501,44 +567,8 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 
     protected CurricularCourse2Enroll transformToCurricularCourse2Enroll(ICurricularCourse curricularCourse,
             IExecutionPeriod currentExecutionPeriod) throws ExcepcaoPersistencia {
-
-        if (isCurricularCourseApproved(curricularCourse)) {
-            return new CurricularCourse2Enroll(curricularCourse, CurricularCourseEnrollmentType.NOT_ALLOWED);
-        }
-
-        if (!curricularCourse.hasActiveScopeInGivenSemester(currentExecutionPeriod.getSemester())) {
-            return new CurricularCourse2Enroll(curricularCourse, CurricularCourseEnrollmentType.NOT_ALLOWED);
-        }
-
-        List enrollmentsWithEnrolledStateInCurrentExecutionPeriod = getAllStudentEnrolledEnrollmentsInExecutionPeriod(
-                currentExecutionPeriod);
-
-        List result = (List) CollectionUtils.collect(enrollmentsWithEnrolledStateInCurrentExecutionPeriod, new Transformer() {
-            public Object transform(Object obj) {
-                IEnrollment enrollment = (IEnrollment) obj;
-                return enrollment.getCurricularCourse();
-            }
-        });
-
-        if (result.contains(curricularCourse)) {
-            return new CurricularCourse2Enroll(curricularCourse, CurricularCourseEnrollmentType.NOT_ALLOWED);
-        }
-
-        List enrollmentsWithEnrolledStateInPreviousExecutionPeriod = getAllStudentEnrolledEnrollmentsInExecutionPeriod(
-                currentExecutionPeriod.getPreviousExecutionPeriod());
-
-        result = (List) CollectionUtils.collect(enrollmentsWithEnrolledStateInPreviousExecutionPeriod, new Transformer() {
-            public Object transform(Object obj) {
-                IEnrollment enrollment = (IEnrollment) obj;
-                return enrollment.getCurricularCourse();
-            }
-        });
-
-        if (result.contains(curricularCourse)) {
-            return new CurricularCourse2Enroll(curricularCourse, CurricularCourseEnrollmentType.TEMPORARY);
-        }
-
-        return new CurricularCourse2Enroll(curricularCourse, CurricularCourseEnrollmentType.DEFINITIVE);
+        return new CurricularCourse2Enroll(curricularCourse, getCurricularCourseEnrollmentType(
+                curricularCourse, currentExecutionPeriod));
     }
 
     protected List initAcumulatedEnrollments(List elements) {
@@ -727,30 +757,6 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
         }
 
         return executionPeriod2Return;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see Dominio.IStudentCurricularPlan#areNewAreasCompatible(Dominio.IBranch,
-     *      Dominio.IBranch)
-     */
-    public boolean areNewAreasCompatible(IBranch specializationArea,
-            IBranch secundaryArea) throws ExcepcaoPersistencia,
-            BothAreasAreTheSameServiceException, InvalidArgumentsServiceException {
-        return true;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see Dominio.IStudentCurricularPlan#getCanChangeSpecializationArea()
-     */
-    public boolean getCanChangeSpecializationArea() {
-        if (getBranch() != null) {
-            return false;
-        }
-        return true;
     }
 
     // -------------------------------------------------------------

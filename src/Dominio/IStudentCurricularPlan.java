@@ -7,6 +7,7 @@ import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import Util.Specialization;
 import Util.StudentCurricularPlanState;
+import Util.enrollment.CurricularCourseEnrollmentType;
 import Util.enrollment.EnrollmentRuleType;
 
 /**
@@ -67,12 +68,10 @@ public interface IStudentCurricularPlan extends IDomainObject
 	public List getNotNeedToEnrollCurricularCourses();
 	public void setNotNeedToEnrollCurricularCourses(List notNeedToEnrollCurricularCourses);
 	public boolean areNewAreasCompatible(IBranch specializationArea,IBranch secundaryArea) throws ExcepcaoPersistencia, BothAreasAreTheSameServiceException, InvalidArgumentsServiceException;
+    public boolean getCanChangeSpecializationArea();
+    public CurricularCourseEnrollmentType getCurricularCourseEnrollmentType(ICurricularCourse curricularCourse,
+            IExecutionPeriod currentExecutionPeriod) throws ExcepcaoPersistencia;
 	// -------------------------------------------------------------
 	// END: Only for enrollment purposes
 	// -------------------------------------------------------------
-    /**
-     * @return
-     */
-    public boolean getCanChangeSpecializationArea();
-
 }
