@@ -40,17 +40,17 @@ public class CreateAnnouncementTest
 		return "CreateAnnouncement";
 	}
 
-	protected String[] getAuthorizedUser() {
+	protected String[] getAuthenticatedAndAuthorizedUser() {
 		String[] args = { "user", "pass", getApplication()};
 		return args;
 	}
 
-	protected String[] getUnauthorizedUser() {
+	protected String[] getAuthenticatedAndUnauthorizedUser() {
 		String[] args = { "nmsn", "pass", getApplication()};
 		return args;
 	}
 
-	protected String[] getNonTeacherUser() {
+	protected String[] getNotAuthenticatedUser() {
 		String[] args = { "fiado", "pass", getApplication()};
 		return args;
 	}
@@ -70,7 +70,7 @@ public class CreateAnnouncementTest
 	public void testCreateAnnouncementSuccessful() {
 		try {
 			boolean result = false;
-			String[] args = getAuthorizedUser();
+			String[] args = getAuthenticatedAndAuthorizedUser();
 			IUserView id = authenticateUser(args);
 			Object[] args2 = getAuthorizeArguments();
 
@@ -97,7 +97,6 @@ public class CreateAnnouncementTest
 				infoExecutionCourseCode,
 				newAnnouncementTitle,
 				newAnnouncementInformation };
-
 		try {
 			gestor.executar(userView, getNameOfServiceToBeTested(), args);
 			System.out.println(
