@@ -1,5 +1,6 @@
 package Util.enrollment;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +12,7 @@ import Util.FenixValuedEnum;
  * 
  * 2/Abr/2003
  */
-public class CurricularCourseEnrollmentType extends FenixValuedEnum {
+public class CurricularCourseEnrollmentType extends FenixValuedEnum implements Serializable {
 
     public static final int TEMPORARY_TYPE = 1;
 
