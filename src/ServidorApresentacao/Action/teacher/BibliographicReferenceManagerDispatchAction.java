@@ -26,6 +26,7 @@ import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorApresentacao.Action.base.FenixLookupDispatchAction;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
@@ -42,7 +43,7 @@ public class BibliographicReferenceManagerDispatchAction
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws Exception {
+		throws FenixActionException{
 
 		SessionUtils.validSessionVerification(request, mapping);
 		HttpSession session = request.getSession(false);
@@ -71,8 +72,8 @@ public class BibliographicReferenceManagerDispatchAction
 		try {
 			gestor.executar(userView, "InsertBibliographicReference", args);
 		} catch (FenixServiceException e) {
-			throw e;
-		} //verificar o tipo de excepção a lançar
+			throw new FenixActionException(e);
+		} 		
 		return mapping.findForward("bibliographyManagement");
 	}
 
@@ -81,8 +82,8 @@ public class BibliographicReferenceManagerDispatchAction
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws Exception {
-
+		throws FenixActionException{
+		
 		SessionUtils.validSessionVerification(request, mapping);
 		HttpSession session = request.getSession(false);
 
@@ -114,11 +115,9 @@ public class BibliographicReferenceManagerDispatchAction
 		InfoExecutionCourse infoExecutionCourse =
 			(InfoExecutionCourse) session.getAttribute("InfoExecutionCourse");
 
-		UserView userView = (UserView) session.getAttribute("UserView");
+		UserView userView = (UserView) session.getAttribute("UserView");		
 
-		InfoBibliographicReference infoBibliographicReference = null;
-
-		infoBibliographicReference =
+		InfoBibliographicReference  infoBibliographicReference =
 			(InfoBibliographicReference) session.getAttribute(
 				"BibliographicReference");
 
@@ -132,8 +131,8 @@ public class BibliographicReferenceManagerDispatchAction
 		try {
 			gestor.executar(userView, "EditBibliographicReference", args);
 		} catch (FenixServiceException e) {
-			throw e;
-		} //verificar excepção a lançar
+			throw new FenixActionException(e);
+		} 
 		return mapping.findForward("bibliographyManagement");
 	}
 
@@ -142,7 +141,7 @@ public class BibliographicReferenceManagerDispatchAction
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws Exception {					
+		throws FenixActionException {									
 
 		SessionUtils.validSessionVerification(request, mapping);
 		HttpSession session = request.getSession(false);
@@ -156,45 +155,43 @@ public class BibliographicReferenceManagerDispatchAction
 		String infoBiblioRefIndex =
 			(String) request.getParameter("infoBibliographicReferenceIndex");
 				
-		Integer index = new Integer(infoBiblioRefIndex);		
-		
-		System.out.println("index"+index);
+		Integer index = new Integer(infoBiblioRefIndex);				
 				
 		InfoBibliographicReference infoBibliographicReference =
 			(InfoBibliographicReference) bibliographicReferences.get(
 				index.intValue());
-
+		
 		UserView userView = (UserView) session.getAttribute("UserView");
 		Object args[] = { infoExecutionCourse, infoBibliographicReference };
 		GestorServicos gestor = GestorServicos.manager();
 		try {
 			gestor.executar(userView, "DeleteBibliographicReference", args);
-		} catch (FenixServiceException e) {
-			throw e;
+		} catch (FenixServiceException e) {			
+			throw new FenixActionException(e);
 		}
 		
 		Object args1[] = { infoExecutionCourse, null };		
-		List references = null;
+		ArrayList references = null;
 		try {
 			references =
 				(ArrayList) gestor.executar(
 					userView,
 					"ReadBibliographicReference",
 					args1);
-		} catch (FenixServiceException e) {
-			throw e;
-		}
-		session.setAttribute("BibliographicReferences",references);
-		//confirmar excepção a lançar*/
-		return mapping.getInputForward();
+		} catch (FenixServiceException e) {			
+			throw new FenixActionException(e);			
+		}				
+		session.setAttribute("BibliographicReferences",references);		
+		return mapping.findForward("bibliographyManagement");
 	}
+
 
 	public ActionForward viewBibliographicReference(
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws Exception {
+		throws FenixActionException {
 
 		SessionUtils.validSessionVerification(request, mapping);
 		HttpSession session = request.getSession(false);
@@ -215,8 +212,8 @@ public class BibliographicReferenceManagerDispatchAction
 					"ReadBibliographicReference",
 					args);
 		} catch (FenixServiceException e) {
-			throw e;
-		} //confirmar excepção a lançar
+			throw new FenixActionException(e);	
+			}				
 		session.setAttribute("BibliographicReferences", references);
 		return mapping.findForward("bibliographyManagement");
 	}
