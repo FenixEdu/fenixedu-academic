@@ -13,7 +13,7 @@ INSERT INTO CURRICULAR_COURSE_EXECUTION_COURSE VALUES (45,20,34);
 #-----------------------------
 # Data for table 'EXECUTION_DEGREE'
 #-----------------------------
-INSERT INTO EXECUTION_DEGREE VALUES (14, 2, 1, 7, 1);
+INSERT INTO EXECUTION_DEGREE VALUES (14, 2, 1, 7, 1, 1);
 
 #-----------------------------
 # Data for table 'CURRICULAR_COURSE_SCOPE'
