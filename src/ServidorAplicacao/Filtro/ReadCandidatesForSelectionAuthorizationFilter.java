@@ -11,10 +11,9 @@ import org.apache.commons.collections.CollectionUtils;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import DataBeans.InfoRole;
-import Dominio.ExecutionYear;
+import Dominio.CursoExecucao;
 import Dominio.ICoordinator;
 import Dominio.ICursoExecucao;
-import Dominio.IExecutionYear;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -41,6 +40,7 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro
      */
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception
     {
+		
         IUserView id = getRemoteUser(request);
         Object[] argumentos = getServiceCallArguments(request);
         if ((id != null && id.getRoles() != null && !containsRole(id.getRoles()))
@@ -94,22 +94,29 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro
      */
     private boolean hasPrivilege(IUserView id, Object[] arguments)
     {
-
+		
         List roles = getRoleList((List) id.getRoles());
         CollectionUtils.intersection(roles, getNeededRoles());
 
-        String executionYearString = (String) arguments[0];
-        String degreeCode = (String) arguments[1];
-
+        /*String executionYearString = (String) arguments[0];
+        String degreeCode = (String) arguments[1];*/
+		
+		Integer executionDegreeID =(Integer) arguments[0];
+	
         ICursoExecucao executionDegree = null;
 
         // Read The DegreeCurricularPlan
         try
         {
-            IExecutionYear executionYear = new ExecutionYear();
-            executionYear.setYear(executionYearString);
-            executionDegree = SuportePersistenteOJB.getInstance().getICursoExecucaoPersistente()
-                            .readByDegreeCodeAndExecutionYear(degreeCode, executionYear);
+           /* IExecutionYear executionYear = new ExecutionYear();
+            executionYear.setYear(executionYearString);*/
+			ICursoExecucao cursoExecucao = new CursoExecucao();
+			cursoExecucao.setIdInternal(executionDegreeID);
+
+            /*executionDegree = SuportePersistenteOJB.getInstance().getICursoExecucaoPersistente()
+                            .readByDegreeCodeAndExecutionYear(degreeCode, executionYear);*/
+			executionDegree = (CursoExecucao) SuportePersistenteOJB.getInstance().getICursoExecucaoPersistente()
+                            .readByOId(cursoExecucao,false);	
 
         }
         catch (Exception e)
@@ -129,6 +136,7 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro
             if (executionDegree.getCurricularPlan().getDegree().getTipoCurso().equals(
                             TipoCurso.MESTRADO_OBJ))
             {
+
                 return true;
             }
             else
