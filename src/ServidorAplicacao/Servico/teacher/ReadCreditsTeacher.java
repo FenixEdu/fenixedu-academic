@@ -7,11 +7,13 @@ import Dominio.Credits;
 import Dominio.ICredits;
 import Dominio.IExecutionPeriod;
 import Dominio.ITeacher;
+import Dominio.Teacher;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCreditsTeacher;
 import ServidorPersistente.IPersistentExecutionPeriod;
+import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -36,15 +38,18 @@ public class ReadCreditsTeacher implements IServico {
 		return "ReadCreditsTeacher";
 	}
 
-	public Object run(InfoTeacher infoTeacher) throws FenixServiceException {
+	public Object run(Integer teacherOID) throws FenixServiceException {
 		InfoCredits infoCreditsTeacher = null;
 	
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 			//teacher
-			ITeacher teacher = Cloner.copyInfoTeacher2Teacher(infoTeacher);
-
+			IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
+			ITeacher teacher = new Teacher();
+			teacher.setIdInternal(teacherOID);
+			teacher = (ITeacher) teacherDAO.readByOId(teacher, false);
+			
 			//read actual execution period
 			IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
 			IExecutionPeriod executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
@@ -56,13 +61,17 @@ public class ReadCreditsTeacher implements IServico {
 			//read teacher's credits
 			IPersistentCreditsTeacher creditsTeacherDAO = sp.getIPersistentCreditsTeacher();
 			ICredits creditsTeacher = creditsTeacherDAO.readByUnique(creditsTeacherExample);
-
-			infoCreditsTeacher = Cloner.copyICreditsTeacher2InfoCreditsTeacher(creditsTeacher);						
+			
+			if (creditsTeacher != null) {
+				infoCreditsTeacher = Cloner.copyICreditsTeacher2InfoCreditsTeacher(creditsTeacher);
+			}else  {
+				infoCreditsTeacher = Cloner.copyICreditsTeacher2InfoCreditsTeacher(creditsTeacherExample);
+			}
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();
 			throw new FenixServiceException();
-		} finally {
-			return infoCreditsTeacher;
-		}
+		} 
+		return infoCreditsTeacher;
+		
 	}
 }

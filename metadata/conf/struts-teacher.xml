@@ -129,6 +129,7 @@
 			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
 			dynamic="true">
 			<form-property name="objectCode" type="java.lang.Integer"/>
+			<form-property name="teacherOID"  type="java.lang.String"/>			
 			<form-property name="shiftProfessorships"  type="java.lang.Integer[]"/>
 			<form-property name="method" type="java.lang.String"></form-property>       
 		</form-bean> 		          
@@ -136,6 +137,7 @@
 			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
 			dynamic="true">
 			<form-property name="tfcStudentsNumber"  type="java.lang.Integer"/>
+			<form-property name="teacherOID"  type="java.lang.String"/>			
 			<form-property name="method" type="java.lang.String"></form-property>       
 			<form-property name="page" type="java.lang.Integer"></form-property>               
 		</form-bean> 		          

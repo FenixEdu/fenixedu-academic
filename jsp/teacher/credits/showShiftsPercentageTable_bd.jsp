@@ -13,6 +13,7 @@
 <html:form action="/executionCourseShiftsPercentageManager">
 	<html:hidden property="method" value="accept"/>
 	<html:hidden property="objectCode"/>
+	<html:hidden property="teacherOID"/>
 	
 	<table width="100%">
 		<tr>

@@ -58,7 +58,7 @@ public class IndexTeacherAction extends FenixAction {
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-
+		request.setAttribute("infoTeacher", teacher);
 		return mapping.findForward("success");
 	}
 

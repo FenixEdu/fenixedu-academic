@@ -6,6 +6,7 @@ import Dominio.Credits;
 import Dominio.ICredits;
 import Dominio.IExecutionPeriod;
 import Dominio.ITeacher;
+import Dominio.Teacher;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -36,14 +37,14 @@ public class WriteCreditsTeacher implements IServico {
 		return "WriteCreditsTeacher";
 	}
 
-	public Boolean run(InfoTeacher infoTeacher, Integer tfcStudentNumber)
+	public Boolean run(Integer teacherOID, Integer tfcStudentNumber)
 		throws FenixServiceException {
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 			IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
-			ITeacher teacherParam = Cloner.copyInfoTeacher2Teacher(infoTeacher);
+			ITeacher teacherParam = new Teacher(teacherOID);
 			ITeacher teacher =
 				(ITeacher) teacherDAO.readByOId(teacherParam, false);
 

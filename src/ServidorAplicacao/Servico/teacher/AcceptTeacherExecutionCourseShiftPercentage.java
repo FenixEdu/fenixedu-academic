@@ -18,6 +18,7 @@ import Dominio.IProfessorship;
 import Dominio.ITeacher;
 import Dominio.ITeacherShiftPercentage;
 import Dominio.ITurno;
+import Dominio.Teacher;
 import Dominio.TeacherShiftPercentage;
 import Dominio.Turno;
 import ServidorAplicacao.IServico;
@@ -76,7 +77,7 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IServico {
 			executionCourse = (IDisciplinaExecucao) executionCourseDAO.readByOId(executionCourse, false);
 
 			//read teacher
-			ITeacher teacherParam = Cloner.copyInfoTeacher2Teacher(infoTeacher);
+			ITeacher teacherParam = new Teacher(infoTeacher.getIdInternal());
 			ITeacher teacher = (ITeacher) teacherDAO.readByOId(teacherParam, false);
 
 			//read professorship
