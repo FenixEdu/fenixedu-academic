@@ -1,0 +1,174 @@
+
+class Dominio.publication.Author {
+	Integer keyPerson;
+	Integer ackOptLock;
+	Integer idInternal;
+	String organisation;
+	String author;
+}
+
+class Dominio.publication.PublicationType {
+	Integer ackOptLock;
+	String publicationType;
+	Integer idInternal;
+}
+
+class Dominio.publication.PublicationTeacher {
+	Integer keyTeacher;
+	Integer keyPublication;
+	Integer ackOptLock;
+	Integer idInternal;
+}
+
+class Dominio.publication.Publication {
+	Integer issn;
+	String volume;
+	String observation;
+	String subType;
+	String title;
+	Integer idInternal;
+	String editorCity;
+	String criticizedAuthor;
+	String instituition;
+	String translatedAuthor;
+	Integer edition;
+	String local;
+	String scope;
+	Integer year_end;
+	String url;
+	Integer fascicle;
+	String originalLanguage;
+	Integer firstPage;
+	Integer number;
+	String month_end;
+	String month;
+	Integer serie;
+	String conference;
+	String publicationType;
+	String university;
+	Integer isbn;
+	String journalName;
+	String language;
+	Integer numberPages;
+	String editor;
+	String country;
+	Integer year;
+	Integer ackOptLock;
+	Integer didatic;
+	String format;
+	Integer keyPublicationType;
+}
+
+class Dominio.teacher.PublicationsNumber {
+	Integer national;
+	Integer keyTeacher;
+	Date lastModificationDate;
+	Integer ackOptLock;
+	Integer idInternal;
+	Integer international;
+}
+
+class Dominio.publication.PublicationFormat {
+	Integer ackOptLock;
+	Integer idInternal;
+	String format;
+}
+
+class Dominio.publication.Attribute {
+	Integer ackOptLock;
+	Integer idInternal;
+	String attributeType;
+}
+
+class Dominio.publication.PublicationAuthor {
+	Integer keyAuthor;
+	Integer keyPublication;
+	Integer order;
+	Integer ackOptLock;
+	Integer idInternal;
+}
+
+class Dominio.publication.PublicationSubtype {
+	String subtype;
+	Integer ackOptLock;
+	Integer idInternal;
+	Integer keyPublicationType;
+}
+
+relation PublicationTeacherPublication {
+	Dominio.publication.PublicationTeacher playsRole publicationTeacher {
+		multiplicity *;
+	}
+	Dominio.publication.Publication playsRole publication;
+}
+
+relation PublicationTeacherTeacher {
+	Dominio.publication.PublicationTeacher playsRole teacherPublications {
+		multiplicity *;
+	}
+	Dominio.Teacher playsRole teacher;
+}
+
+relation PublicationAuthorPublication {
+	Dominio.publication.PublicationAuthor playsRole publicationAuthors {
+		multiplicity *;
+	}
+	Dominio.publication.Publication playsRole publication;
+}
+
+relation PublicationAuthorAuthor {
+	Dominio.publication.PublicationAuthor playsRole authorPublications {
+		multiplicity *;
+	}
+	Dominio.publication.Author playsRole author;
+}
+
+relation AuthorPerson {
+	Dominio.publication.Author playsRole author;
+	Dominio.Person playsRole person;
+}
+
+relation PublicationTypeNonRequiredAttributes {
+	Dominio.publication.PublicationType playsRole publicationType {
+		multiplicity 1;
+	}
+	Dominio.publication.Attribute playsRole nonRequiredAttributes {
+		multiplicity *;
+	}
+}
+
+relation PublicationTypeRequiredAttributes {
+	Dominio.publication.PublicationType playsRole publicationType;
+	Dominio.publication.Attribute playsRole requiredAttributes {
+		multiplicity *;
+	}
+}
+
+relation PublicationTypePublication {
+	Dominio.publication.PublicationType playsRole publicationType;
+	Dominio.publication.Publication playsRole publication {
+		multiplicity *;
+	}
+}
+
+relation PublicationTypePublicationSubtype {
+	Dominio.publication.PublicationType playsRole publicationType;
+	Dominio.publication.PublicationSubtype playsRole publicationSubtypes {
+		multiplicity *;
+	}
+}
+
+relation PublicationTypePublicationsNumber {
+	Dominio.publication.PublicationType playsRole publicationType;
+	Dominio.teacher.PublicationNumber playsRole publicationsNumber;
+}
+
+relation PublicationsNumberTeacher {
+	Dominio.teacher.PublicationsNumber playsRole publicationsNumber;
+	Dominio.Teacher playsRole teacher;
+}
+
+relation TeacherPerson {
+	Dominio.Teacher playsRole teacher;
+	Dominio.Person playsRole Person;
+}
