@@ -6,25 +6,35 @@
 
 <logic:present name="siteView">
 	<html:form action="/editEvaluationMethod">
-		
+
+	<logic:present name="objectCode">
+		<html:hidden property="objectCode" value="<%= request.getAttribute("objectCode").toString() %>"/>
+	</logic:present>
+
 	<logic:present name="siteView" property="component">
 		<bean:define id="infoEvaluationMethod" name="siteView" property="component"/>
-		<bean:define id="evaluationMethodCode" name="infoEvaluationMethod" property="idInternal"/>
-		<bean:define id="executionCourseCode" name="infoEvaluationMethod" property="infoExecutionCourse.idInternal"/>
-
-		<html:hidden property="evaluationMethodCode" value="<%= evaluationMethodCode.toString() %>"/>
-		<html:hidden property="objectCode" value="<%= executionCourseCode.toString() %>"/>
+		<logic:notEmpty name="infoEvaluationMethod" property="idInternal">
+			<bean:define id="evaluationMethodCode" name="infoEvaluationMethod" property="idInternal"/>
+			<html:hidden property="evaluationMethodCode" value="<%= evaluationMethodCode.toString() %>"/>	
+		</logic:notEmpty>
+		<logic:notEmpty name="infoEvaluationMethod" property="infoExecutionCourse">
+			<bean:define id="infoExecutionCourse" name="infoEvaluationMethod" property="infoExecutionCourse" />
+			<logic:notEmpty name="infoExecutionCourse" property="idInternal">			
+				<bean:define id="executionCourseCode" name="infoExecutionCourse" property="idInternal"/>
+				<html:hidden property="objectCode" value="<%= pageContext.findAttribute("executionCourseCode").toString() %>"/>
+			</logic:notEmpty>								
+		</logic:notEmpty>	
 	</logic:present>
 		
 	<logic:notPresent name="siteView" property="component">
-		<bean:define id="evaluationMethodCode" name="infoEvaluationMethod" property="idInternal"/>
-
-		<html:hidden property="evaluationMethodCode" value="<%= evaluationMethodCode.toString() %>"/>			
+		<logic:notEmpty name="infoEvaluationMethod" property="idInternal">
+			<bean:define id="evaluationMethodCode" name="infoEvaluationMethod" property="idInternal"/>
+			<html:hidden property="evaluationMethodCode" value="<%= pageContext.findAttribute("evaluationMethodCode").toString() %>"/>			
+		</logic:notEmpty>
 	</logic:notPresent> 
 	
 	<h2><bean:message key="label.evaluation"/></h2> 
-	
-	<html:hidden property="page" value="1"/>
+		
 	<table>	
 		<tr>
 			<td><strong><bean:message key="label.evaluation"/></strong></td>
@@ -49,8 +59,9 @@
 			</td>
 		</tr>
 	</table>   
+	
 	<html:hidden property="method" value="editEvaluationMethod" />
-	<html:hidden property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+	<html:hidden property="page" value="1"/>	
 	
 	</html:form>
 </logic:present>

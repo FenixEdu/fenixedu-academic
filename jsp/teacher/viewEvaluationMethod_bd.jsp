@@ -17,6 +17,7 @@
 	<blockquote>
 			
 		<h2><bean:message key="title.evaluationMethod"/></h2>				
+		<logic:notEmpty name="component" property="evaluationElements">
 		<table>
 			<tr>
 				<td> 
@@ -24,14 +25,15 @@
 	 			</td>
 			</tr>
 		</table>
-		
+		</logic:notEmpty>		
 		<br />
 		
+		
+		<h2><bean:message key="title.evaluationMethod.eng"/></h2>
 		<logic:notEmpty name="component" property="evaluationElementsEn">	
-			<h2><bean:message key="title.evaluationMethod.eng"/></h2>
-			<table>	
-				<tr>
-					<td> 
+		<table>	
+			<tr>
+				<td> 
 						<bean:write name="component" property="evaluationElementsEn" filter="false"/>
 					</td>
 				</tr>

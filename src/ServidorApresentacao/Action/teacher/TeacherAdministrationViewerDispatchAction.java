@@ -633,10 +633,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         HttpSession session = request.getSession(false);
 
         Integer objectCode = getObjectCode(request);
-
-        String evaluationMethodCodeString = request.getParameter("evaluationMethodCode");
-        Integer evaluationMethodCode = new Integer(evaluationMethodCodeString);
-
+		Integer evaluationMethodCode = getParameter(request, "evaluationMethodCode");
+        
         DynaActionForm evaluationForm = (DynaActionForm) form;
 
         InfoEvaluationMethod infoEvaluationMethod = new InfoEvaluationMethod();
@@ -1506,6 +1504,20 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         }
         return objectCode;
     }
+	private Integer getParameter(HttpServletRequest request, String name)
+	{
+		Integer objectCode = null;
+		String objectCodeString = request.getParameter(name);
+		if (objectCodeString == null)
+		{
+			objectCodeString = (String) request.getAttribute(name);
+		}
+		if (objectCodeString != null)
+		{
+			objectCode = new Integer(objectCodeString);
+		}
+		return objectCode;
+	}
     private SiteView readSiteView(
         HttpServletRequest request,
         ISiteComponent firstPageComponent,
