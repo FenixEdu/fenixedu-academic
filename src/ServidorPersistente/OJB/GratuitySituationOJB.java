@@ -84,15 +84,17 @@ public class GratuitySituationOJB extends ObjectFenixOJB implements IPersistentG
 		}
 		
 		//student curricular plan actives or with school part conclued
-		criteria.addEqualTo(
-				"studentCurricularPlan.currentState",
-				StudentCurricularPlanState.ACTIVE_OBJ);
-		
-		Criteria criteriaState = new Criteria();
+		Criteria criteriaState = new Criteria();		
 		criteriaState.addEqualTo(
 				"studentCurricularPlan.currentState",
+				StudentCurricularPlanState.ACTIVE_OBJ);
+		Criteria criteriaStateConclued = new Criteria();	
+		criteriaStateConclued.addEqualTo(
+				"studentCurricularPlan.currentState",
 				StudentCurricularPlanState.SCHOOLPARTCONCLUDED_OBJ);
-		criteria.addOrCriteria(criteriaState);
+		criteriaState.addOrCriteria(criteriaStateConclued);
+		
+		criteria.addAndCriteria(criteriaState);
 		
 		return queryList(GratuitySituation.class, criteria);
 	}

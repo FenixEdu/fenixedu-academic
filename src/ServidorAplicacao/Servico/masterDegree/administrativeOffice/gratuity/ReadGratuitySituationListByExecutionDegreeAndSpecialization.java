@@ -126,6 +126,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 
 			if (gratuitySituationList != null && gratuitySituationList.size() > 0)
 			{
+				System.out.println("gratuitySituationList: " + gratuitySituationList.size());
 				ListIterator listIterator = gratuitySituationList.listIterator();
 				//while it is cloner each element of the list
 				//it is calculate the total values of payed and remaning values.
@@ -194,22 +195,34 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 		InfoGratuitySituation infoGratuitySituation,
 		IExecutionYear executionYear)
 	{
-		boolean result = false;
-		List enrolmentsList = infoGratuitySituation.getInfoStudentCurricularPlan().getInfoEnrolments();
-		InfoExecutionPeriod executionPeriodEnrollment = null;
-		if (enrolmentsList != null && enrolmentsList.size() > 0)
+		boolean result = true;
+
+		if (infoGratuitySituation
+			.getInfoStudentCurricularPlan()
+			.getSpecialization()
+			.equals(Specialization.ESPECIALIZACAO_TYPE))
 		{
-			executionPeriodEnrollment = ((InfoEnrolment) enrolmentsList.get(0)).getInfoExecutionPeriod();
-			if (executionPeriodEnrollment.getInfoExecutionYear() != null
-				&& executionPeriodEnrollment.getInfoExecutionYear().getYear() != null
-				&& executionPeriodEnrollment.getInfoExecutionYear().getYear().equals(
-					executionYear.getYear()))
+			List enrolmentsList =
+				infoGratuitySituation.getInfoStudentCurricularPlan().getInfoEnrolments();
+			InfoExecutionPeriod executionPeriodEnrollment = null;
+			if (enrolmentsList != null && enrolmentsList.size() > 0)
 			{
-				result = true;
+				executionPeriodEnrollment =
+					((InfoEnrolment) enrolmentsList.get(0)).getInfoExecutionPeriod();
+				if (executionPeriodEnrollment.getInfoExecutionYear() != null
+					&& executionPeriodEnrollment.getInfoExecutionYear().getYear() != null
+					&& !executionPeriodEnrollment.getInfoExecutionYear().getYear().equals(
+						executionYear.getYear()))
+				{
+					result = false;
+				}
 			}
-		} else {
-			result = true; //hasn't enrolments, but appear in list		
+			else
+			{
+				result = true; //hasn't enrolments, but appear in list
+			}
 		}
+		System.out.println("verifySpecializationOfThisYear: " + result);
 		return result;
 	}
 
@@ -284,7 +297,10 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 					InfoGuideEntry infoGuideEntry = (InfoGuideEntry) iteratorGuideEntries.next();
 					if (infoGuideEntry.getDocumentType().equals(DocumentType.GRATUITY_TYPE))
 					{
-						payedValue = payedValue + (infoGuideEntry.getPrice().doubleValue() * infoGuideEntry.getQuantity().intValue());
+						payedValue =
+							payedValue
+								+ (infoGuideEntry.getPrice().doubleValue()
+									* infoGuideEntry.getQuantity().intValue());
 					}
 					else if (infoGuideEntry.getDocumentType().equals(DocumentType.INSURANCE_TYPE))
 					{

@@ -16,9 +16,7 @@ import Util.ExemptionGratuityType;
 public interface IGratuitySituation extends IDomainObject
 {
 	
-	/**@deprecated**/
 	public Double getPayedValue();
-	/**@deprecated**/
 	public Double getRemainingValue();
 	public Integer getExemptionPercentage();
 	public ExemptionGratuityType getExemptionType();
@@ -30,9 +28,8 @@ public interface IGratuitySituation extends IDomainObject
 	public Date getWhen();
 	
 
-	/**@deprecated**/
+
 	public void setPayedValue(Double payedValue);
-	/**@deprecated**/
 	public void setRemainingValue(Double remainingValue);
 	public void setExemptionPercentage(Integer exemptionPercentage);
 	public void setExemptionType(ExemptionGratuityType exemptionType);
