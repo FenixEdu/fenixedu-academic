@@ -169,6 +169,12 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 
 			throw new FenixServiceException("error.masterDegree.gratuity.impossible.studentsGratuityList");
 		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+
+			throw new FenixServiceException("error.masterDegree.gratuity.impossible.studentsGratuityList");
+		}
 
 		return result;
 	}
@@ -180,7 +186,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 	private void calculateGratuityPayedValue(
 		ISuportePersistente sp,
 		InfoGratuitySituation infoGratuitySituation)
-		throws ExcepcaoPersistencia
+		throws ExcepcaoPersistencia, Exception
 	{
 		//all guides of this student that aren't annulled but payed
 		IPersistentGuide persistentGuide = sp.getIPersistentGuide();
@@ -211,6 +217,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 	 * @return
 	 */
 	private void addPayedGuide(InfoGratuitySituation infoGratuitySituation, List infoGuideList)
+	throws Exception
 	{
 		double payedValue = 0;
 
@@ -248,7 +255,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 	 */
 	private void calculateGratuityTotalValue(
 		ISuportePersistente sp,
-		InfoGratuitySituation infoGratuitySituation)
+		InfoGratuitySituation infoGratuitySituation) throws Exception
 	{
 
 		if (infoGratuitySituation.getInfoStudentCurricularPlan().getSpecialization() != null
@@ -319,7 +326,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 		}
 	}
 
-	private void fillSituationType(InfoGratuitySituation infoGratuitySituation)
+	private void fillSituationType(InfoGratuitySituation infoGratuitySituation) throws Exception
 	{
 		//infoGratuitySituation.getRemainingValue() contains the total value that a student has to
 		// payed.
