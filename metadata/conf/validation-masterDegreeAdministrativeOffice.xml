@@ -125,9 +125,9 @@
 
     <!-- validation for the Create Guide Form -->
     <form name="createGuideForm">
-      <field property="degree" depends="required" page="1">
+      <!--<field property="degree" depends="required" page="1">
         <arg0 key="label.masterDegree.administrativeOffice.degree" />
-      </field>
+      </field> -->
 
       <field property="number" depends="required, integer" page="1">
         <arg0 key="label.masterDegree.administrativeOffice.requesterNumber" />

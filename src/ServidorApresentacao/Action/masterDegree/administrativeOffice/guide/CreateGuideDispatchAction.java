@@ -5,7 +5,6 @@
 package ServidorApresentacao.Action.masterDegree.administrativeOffice.guide;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -26,7 +25,6 @@ import DataBeans.InfoContributor;
 import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoGuide;
-import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -71,6 +69,8 @@ public class CreateGuideDispatchAction extends DispatchAction
 
         HttpSession session = request.getSession(false);
 
+        DynaActionForm createGuideForm = (DynaActionForm) form;
+
         if (session != null)
         {
 
@@ -83,32 +83,60 @@ public class CreateGuideDispatchAction extends DispatchAction
             session.setAttribute(SessionConstants.SPECIALIZATIONS, specializations);
             String executionYear = (String) session.getAttribute(SessionConstants.EXECUTION_YEAR);
 
-            // Get the Degree List
+            // Transport chosen Execution Degree
+            String executionDegreeIDParam =
+                getFromRequest(SessionConstants.EXECUTION_DEGREE_OID, request);
+            Integer executionDegreeID = Integer.valueOf(executionDegreeIDParam);
+            createGuideForm.set("executionDegreeID", executionDegreeID);
+            request.setAttribute(SessionConstants.EXECUTION_DEGREE_OID, executionDegreeID);
 
-            Object args[] = { executionYear };
-
-            ArrayList degreeList = null;
+            InfoExecutionDegree infoExecutionDegree = null;
             try
             {
-                degreeList =
-                    (ArrayList) ServiceManagerServiceFactory.executeService(
+                Object[] readExecutionDegreeArgs = { executionDegreeID };
+                infoExecutionDegree =
+                    (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
                         userView,
-                        "ReadMasterDegrees",
-                        args);
+                        "ReadExecutionDegreeByOID",
+                        readExecutionDegreeArgs);
             }
-            catch (ExistingServiceException e)
+            catch (FenixServiceException e)
             {
-                throw new ExistingActionException(e);
+                throw new FenixActionException(e);
+
+            }
+            
+            if (infoExecutionDegree != null)
+            {
+                request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
             }
 
-            //BeanComparator nameComparator = new
-			// BeanComparator("infoDegreeCurricularPlan.infoDegree.nome");
-            //Collections.sort(degreeList, nameComparator);
-            Collections.sort(degreeList, new ComparatorByNameForInfoExecutionDegree());
-            List newDegreeList = degreeList;
-            List executionDegreeLabels = buildExecutionDegreeLabelValueBean(newDegreeList);
-
-            session.setAttribute(SessionConstants.DEGREE_LIST, executionDegreeLabels);
+//            // Get the Degree List
+//
+//            Object args[] = { executionYear };
+//
+//            ArrayList degreeList = null;
+//            try
+//            {
+//                degreeList =
+//                    (ArrayList) ServiceManagerServiceFactory.executeService(
+//                        userView,
+//                        "ReadMasterDegrees",
+//                        args);
+//            }
+//            catch (ExistingServiceException e)
+//            {
+//                throw new ExistingActionException(e);
+//            }
+//
+//            //BeanComparator nameComparator = new
+//            // BeanComparator("infoDegreeCurricularPlan.infoDegree.nome");
+//            //Collections.sort(degreeList, nameComparator);
+//            Collections.sort(degreeList, new ComparatorByNameForInfoExecutionDegree());
+//            List newDegreeList = degreeList;
+//            List executionDegreeLabels = buildExecutionDegreeLabelValueBean(newDegreeList);
+//
+//            session.setAttribute(SessionConstants.DEGREE_LIST, executionDegreeLabels);
             session.removeAttribute(SessionConstants.PRINT_PASSWORD);
             session.removeAttribute(SessionConstants.PRINT_INFORMATION);
 
@@ -169,8 +197,10 @@ public class CreateGuideDispatchAction extends DispatchAction
 
             // Get the Information
             String graduationType = (String) createGuideForm.get("graduationType");
-            String degree = (String) createGuideForm.get("degree");
+            //String degree = (String) createGuideForm.get("degree");
             String numberString = (String) createGuideForm.get("number");
+
+            Integer executionDegreeID = (Integer) createGuideForm.get("executionDegreeID");
             String executionYear = (String) session.getAttribute(SessionConstants.EXECUTION_YEAR);
 
             Integer number = new Integer(numberString);
@@ -202,25 +232,38 @@ public class CreateGuideDispatchAction extends DispatchAction
             types.add(DocumentType.GRATUITY_TYPE);
 
             InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
-
             try
             {
-                Object args[] = { executionYear, degree };
+                Object args[] = { executionDegreeID };
                 infoExecutionDegree =
                     (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
                         userView,
-                        "ReadDegreeByYearAndCode",
+                        "ReadExecutionDegreeByOID",
                         args);
-
-            }
-            catch (NonExistingServiceException e)
-            {
-                throw new NonExistingActionException("A lista de guias para estudantes", e);
             }
             catch (FenixServiceException e)
             {
                 throw new FenixActionException(e);
             }
+
+            //            try
+            //            {
+            //                Object args[] = { executionYear, degree };
+            //                infoExecutionDegree =
+            //                    (InfoExecutionDegree) ServiceManagerServiceFactory.executeService(
+            //                        userView,
+            //                        "ReadDegreeByYearAndCode",
+            //                        args);
+            //
+            //            }
+            //            catch (NonExistingServiceException e)
+            //            {
+            //                throw new NonExistingActionException("A lista de guias para estudantes", e);
+            //            }
+            //            catch (FenixServiceException e)
+            //            {
+            //                throw new FenixActionException(e);
+            //            }
 
             Object argsAux[] = { GraduationType.MASTER_DEGREE_TYPE, types };
 
@@ -560,5 +603,15 @@ public class CreateGuideDispatchAction extends DispatchAction
 
         }
         return false;
+    }
+
+    private String getFromRequest(String parameter, HttpServletRequest request)
+    {
+        String parameterString = request.getParameter(parameter);
+        if (parameterString == null)
+        {
+            parameterString = (String) request.getAttribute(parameter);
+        }
+        return parameterString;
     }
 }

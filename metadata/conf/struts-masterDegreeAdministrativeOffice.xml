@@ -156,7 +156,7 @@
 			    dynamic="true">
 
             <form-property name="page" type="java.lang.Integer" />
-        	<form-property name="degree" type="java.lang.String" />
+        	<!--<form-property name="degree" type="java.lang.String" /> -->
         	<form-property name="number" type="java.lang.String" />
         	<form-property name="requester" type="java.lang.String" />
         	<form-property name="graduationType" type="java.lang.String" />
@@ -164,7 +164,7 @@
         	<form-property name="contributorName" type="java.lang.String" />
         	<form-property name="contributorAddress" type="java.lang.String" />
         	<form-property name="contributorList" type="java.lang.String" />
-
+        	<form-property name="executionDegreeID" type="java.lang.Integer" />
       </form-bean>
 
 	  <!-- Bean for ready to create a guide  -->
@@ -2177,6 +2177,22 @@
 		<forward name="chooseStudentsGratuityList" path="chooseStudentsGratuityList"/>
 		<forward name="studentsGratuityList" path="studentsGratuityList" />
 	</action>
+	
+	<!-- Choose Master Degree to create guide -->
+	  <action path="/chooseDataToCreateGuide"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.ChooseDataToCreateGuideDispatchAction"
+			  >
+			<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+	                key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>			  
+	         <forward name="DisplayMasterDegreeList" path="/guide/chooseMasterDegreeToCreateGuide.jsp"/>
+	         <forward name="DisplayMasterDegreeCurricularPlanList" path="/guide/chooseMasterDegreeCurricularPlanToCreateGuide.jsp"/>
+	         <forward name="DisplayExecutionDegreeList" path="/guide/chooseExecutionDegreeToCreateGuide.jsp"/>
+	  </action>
+	
+	
     </action-mappings>
     
     

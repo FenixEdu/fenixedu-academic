@@ -5,18 +5,22 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <span class="error"><html:errors/></span>
+<logic:present name="<%= SessionConstants.EXECUTION_DEGREE %>" scope="request">
    <table>
     <html:form action="/createGuideDispatchAction?method=requesterChosen">
       <!-- Degree -->
-       <tr>
-         <td><bean:message key="label.masterDegree.administrativeOffice.degree"/>: </td>
-         <td>
-            <html:select property="degree">
-			   <option value="" selected="selected"><bean:message key="label.candidate.degree.default"/></option>
-               <html:options collection="<%= SessionConstants.DEGREE_LIST %>" property="value" labelProperty="label"/>
-             </html:select>          
+      <tr>
+   		<td align="center" class="infoselected" colspan="2">
+			<bean:define id="executionDegree" name="<%= SessionConstants.EXECUTION_DEGREE %>" scope="request" />
+   			<b><bean:message key="label.masterDegree.administrativeOffice.degree"/>: &nbsp;</b>
+			<bean:write name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.nome" /> -
+			<bean:write name="executionDegree" property="infoDegreeCurricularPlan.name" /> -
+			<bean:write name="executionDegree" property="infoExecutionYear.year" />
          </td>
-        </tr>
+      </tr>
+      <tr>
+      	<td>&nbsp;</td>
+      </tr>
        <!-- Requester Number -->
        <tr>
          <td><bean:message key="label.masterDegree.administrativeOffice.requesterNumber"/>: </td>
@@ -41,12 +45,17 @@
              </html:select>          
          </td>
         </tr>
+        
+   	   <!-- Execution Degree ID-->
+       <html:hidden property="executionDegreeID"/>
+       
        <!-- Contributor -->
        <tr>
          <td><bean:message key="label.masterDegree.administrativeOffice.contributorNumber"/>: </td>
          <td><html:text property="contributorNumber"/>
          <logic:notPresent name="<%= SessionConstants.UNEXISTING_CONTRIBUTOR %>">
      	  <html:hidden property="page" value="1"/>
+     	  
                   &nbsp;&nbsp;ou&nbsp;&nbsp; 
                  <html:select property="contributorList">
                    <option value="" selected="selected"><bean:message key="label.masterDegree.administrativeOffice.contributor.default"/></option>
@@ -69,8 +78,14 @@
              <td><html:text property="contributorAddress"/>
     		</tr>
 		</logic:present >
-      </table>
-<html:submit value="Seguinte" styleClass="inputbutton" property="ok"/>
-<html:reset value="Limpar" styleClass="inputbutton"/>
-</html:form>
+		<tr>
+			<td>
+				<html:submit value="Seguinte" styleClass="inputbutton" property="ok"/>
+			</td>
+			<td>
+				<html:reset value="Limpar" styleClass="inputbutton"/>
+			</td>
+		</tr>
+	  </html:form>
+	</table>
 </logic:present>
