@@ -181,7 +181,7 @@ public class EditCustomizationOptionsTest
 			 * o serviço nem sequer chega a ser invocado
 			 */
 			//Comparacao do dataset
-			compareDataSet(getExpectedDataSetFilePath());
+			compareDataSetUsingExceptedDataSetTableColumns(getExpectedDataSetFilePath());
 		} catch (FenixServiceException ex) {
 			fail("Editing Customization Options of a Site " + ex);
 		} catch (Exception ex) {
