@@ -94,6 +94,7 @@ public class Executor {
 		//        Does it make sense?
 		} catch (Exception e) {
 			if (!(e instanceof NotExecuteException)) {
+				e.printStackTrace(System.out);
 				System.out.println(
 					"LOGTIME= "
 						+ new Date()
