@@ -7,8 +7,6 @@ package Dominio;
  */
 public interface ICurricularYear extends IDomainObject {
 
-	public Integer getYear();
-	//public Integer getInternalID();
-	
+	public Integer getYear();	
 	public void setYear(Integer year);
 }

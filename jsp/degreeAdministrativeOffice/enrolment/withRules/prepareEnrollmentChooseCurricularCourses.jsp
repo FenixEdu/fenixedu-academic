@@ -188,6 +188,7 @@
 		<td class="listClasses-header"><bean:message key="label.course.type"/></td>		
 		<td class="listClasses-header"><bean:message key="label.course.enrollment.weight"/></td>
 		<td class="listClasses-header"><bean:message key="label.course.enrollment.acumulated.enrollments"/></td>
+		<td class="listClasses-header"><bean:message key="label.course.enrollment.curricularYear"/></td>
 		<td class="listClasses-header"><bean:message key="label.course.enrollment.state"/></td>
 		<td class="listClasses-header">&nbsp;</td>		
 		</tr>
@@ -208,6 +209,9 @@
 				</td>
 				<td class="listClasses">
 					<bean:write name="curricularCourse" property="accumulatedWeight"/>
+				</td>
+				<td class="listClasses">
+					<bean:write name="curricularCourse" property="curricularYear.year"/>
 				</td>
 				<td class="listClasses">
 					<bean:message name="curricularCourse" property="enrollmentType.name" bundle="ENUMERATION_RESOURCES"/>

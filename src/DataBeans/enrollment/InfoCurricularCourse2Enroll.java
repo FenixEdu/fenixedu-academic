@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 import DataBeans.DataTranferObject;
 import DataBeans.InfoCurricularCourse;
+import DataBeans.InfoCurricularYear;
 import Dominio.degree.enrollment.CurricularCourse2Enroll;
 import Util.enrollment.CurricularCourseEnrollmentType;
 
@@ -21,7 +22,20 @@ public class InfoCurricularCourse2Enroll extends DataTranferObject implements Se
 
     private CurricularCourseEnrollmentType enrollmentType;
     private Integer accumulatedWeight;
+    private InfoCurricularYear curricularYear;
 
+    /**
+     * @return Returns the curricularYear.
+     */
+    public InfoCurricularYear getCurricularYear() {
+        return curricularYear;
+    }
+    /**
+     * @param curricularYear The curricularYear to set.
+     */
+    public void setCurricularYear(InfoCurricularYear curricularYear) {
+        this.curricularYear = curricularYear;
+    }
     /**
      * @return Returns the enrollmentRuleType.
      */
@@ -59,6 +73,7 @@ public class InfoCurricularCourse2Enroll extends DataTranferObject implements Se
             setEnrollmentType(curricularCourse2Enroll
                     .getEnrollmentType());
             setAccumulatedWeight(curricularCourse2Enroll.getAccumulatedWeight());
+            
         }
     }
 

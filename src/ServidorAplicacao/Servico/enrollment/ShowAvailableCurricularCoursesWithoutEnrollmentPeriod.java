@@ -7,9 +7,11 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
+import DataBeans.InfoCurricularYear;
 import DataBeans.InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear;
 import DataBeans.InfoExecutionPeriodWithInfoExecutionYear;
 import DataBeans.InfoStudentCurricularPlanWithInfoStudentAndInfoBranchAndSecondaryBranch;
+import DataBeans.enrollment.InfoCurricularCourse2Enroll;
 import DataBeans.enrollment.InfoCurricularCourse2EnrollWithInfoCurricularCourse;
 import Dominio.IEnrollment;
 import Dominio.IEnrolmentPeriod;
@@ -76,7 +78,7 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
      * @throws ExcepcaoPersistencia
      */
     protected InfoStudentEnrollmentContext getInfoStudentEnrollmentContext(
-            IStudentCurricularPlan studentCurricularPlan)
+            final IStudentCurricularPlan studentCurricularPlan)
             throws ExcepcaoPersistencia {
 
         InfoStudentEnrollmentContext infoStudentEnrolmentContext = new InfoStudentEnrollmentContext();
@@ -88,9 +90,29 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
                         curricularCourses2Enroll, new Transformer() {
 
                             public Object transform(Object arg0) {
-
-                                return InfoCurricularCourse2EnrollWithInfoCurricularCourse
+                                InfoCurricularCourse2Enroll infoCurricularCourse = InfoCurricularCourse2EnrollWithInfoCurricularCourse
                                         .newInfoFromDomain((CurricularCourse2Enroll) arg0);
+                                try {
+                                    infoCurricularCourse
+                                            .setCurricularYear(InfoCurricularYear
+                                                    .newInfoFromDomain(((CurricularCourse2Enroll) arg0)
+                                                            .getCurricularCourse()
+                                                            .getCurricularYearByBranchAndSemester(
+                                                                    studentCurricularPlan
+                                                                            .getBranch(),
+                                                                    getCurrentExecutionPeriod()
+                                                                            .getSemester())));
+                                } catch (ExcepcaoPersistencia e) {
+                                    infoCurricularCourse
+                                            .setCurricularYear(InfoCurricularYear
+                                                    .newInfoFromDomain(((CurricularCourse2Enroll) arg0)
+                                                            .getCurricularCourse()
+                                                            .getCurricularYearByBranchAndSemester(
+                                                                    studentCurricularPlan
+                                                                            .getBranch(),
+                                                                    null)));
+                                }
+                                return infoCurricularCourse;
                             }
                         }));
         infoStudentEnrolmentContext
