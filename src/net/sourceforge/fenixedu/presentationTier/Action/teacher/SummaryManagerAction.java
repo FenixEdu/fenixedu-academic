@@ -360,9 +360,10 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             InfoSummary infoSummaryToInsert = buildSummaryToInsert(request);
             
             HtmlValidator htmlValidator = new HtmlValidator();     
+            htmlValidator.validateHTMLString(infoSummaryToInsert.getSummaryText());
             String errors = htmlValidator.getErrors();           
             
-            if(!errors.equals("")){
+            if((errors != null) && (!errors.equals(""))){
                 ActionErrors actionErrors = new ActionErrors();
                 request.setAttribute("errors", errors);
                 actionErrors.add("htmlErrors", new ActionError("html.validate.error"));
@@ -494,6 +495,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
     
     public ActionForward prepareEditSummary(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+       
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
         
@@ -507,7 +509,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
         SiteView siteView = null;
         try {
             siteView = (SiteView) ServiceUtils.executeService(userView, "ReadSummary", args);
-            
+                               
             if(request.getAttribute("summaryTextFlag")!=null)
                 ((InfoSiteSummary) siteView.getComponent()).getInfoSummary().setSummaryText((String) request.getAttribute("summaryTextFlag"));
             
@@ -630,10 +632,11 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             InfoSummary infoSummaryToEdit = buildSummaryToInsert(request);
             infoSummaryToEdit.setIdInternal(summaryId);
             
-            HtmlValidator htmlValidator = new HtmlValidator();     
-            String errors = htmlValidator.getErrors();           
-            
-            if(!errors.equals("")){
+            HtmlValidator htmlValidator = new HtmlValidator();
+            htmlValidator.validateHTMLString(infoSummaryToEdit.getSummaryText());
+            String errors = htmlValidator.getErrors();        
+                       
+            if((errors != null) && (!errors.equals(""))){
                 ActionErrors actionErrors = new ActionErrors();
                 request.setAttribute("errors", errors);
                 actionErrors.add("htmlErrors", new ActionError("html.validate.error"));
