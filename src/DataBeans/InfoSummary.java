@@ -21,10 +21,10 @@ import Util.TipoAula;
  * DataBeans
  * 
  */
-public class InfoSummary extends InfoObject implements Comparable{
+public class InfoSummary extends InfoObject implements Comparable {
 	private String title;
 	private Calendar summaryDate;
-	private Calendar summaryHour;	
+	private Calendar summaryHour;
 	private Date lastModifiedDate;
 	private String summaryText;
 	private TipoAula summaryType;
@@ -128,83 +128,91 @@ public class InfoSummary extends InfoObject implements Comparable{
 		this.title = title;
 	}
 
-	public String getSummaryDateFormatted(){
-		String result="";
+	public String getSummaryDateFormatted() {
+		String result = "";
 		Calendar date = getSummaryDate();
-		result+=date.get(Calendar.DAY_OF_MONTH); 
-		result+="/";
-		result+=date.get(Calendar.MONTH)+1;
-		result+="/";
-		result+=date.get(Calendar.YEAR);
+		result += date.get(Calendar.DAY_OF_MONTH);
+		result += "/";
+		result += date.get(Calendar.MONTH) + 1;
+		result += "/";
+		result += date.get(Calendar.YEAR);
 		return result;
 	}
-	
-	public String getSummaryHourFormatted(){
-			String result="";
-			Calendar date = getSummaryHour();
-			result+=date.get(Calendar.HOUR_OF_DAY); 
-			result+=":";
-			result+=date.get(Calendar.MINUTE);			
-			return result;
+
+	public String getSummaryHourFormatted() {
+		String result = "";
+		Calendar date = getSummaryHour();
+		result += date.get(Calendar.HOUR_OF_DAY);
+		result += ":";
+		if (date.get(Calendar.MINUTE) < 10) {
+			result += "0";
 		}
-	
-	public String getSummaryTypeFormatted(){
-		String result="";
-		int value = getSummaryType().getTipo().intValue();
-				switch (value) {
-					case 1 : return "Teórica";
-					case 2 : return "Prática";
-					case 3 : return "Teórico-Prática";
-					case 4 : return "Laboratorial";
-					case 5 : return "Dúvidas";
-					case 6 : return "Reserva";
-				}		
+		result += date.get(Calendar.MINUTE);
+
 		return result;
-	}	
-	
+	}
+
+	public String getSummaryTypeFormatted() {
+		String result = "";
+		int value = getSummaryType().getTipo().intValue();
+		switch (value) {
+			case 1 :
+				return "Teórica";
+			case 2 :
+				return "Prática";
+			case 3 :
+				return "Teórico-Prática";
+			case 4 :
+				return "Laboratorial";
+		}
+		return result;
+	}
+
 	public String getLastModifiedDateFormatted() {
-		String result="";
+		String result = "";
 		Date date = getLastModifiedDate();
-//		result+=date.getDay();
-//		result+="/";
-//		result+=date.getMonth();
-//		result+="/";
-//		result+=date.getYear();
-//		result+=" ";
-//		result+=date.getHours();
-//		result+=":";
-//		result+=date.getMinutes();
+		
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTimeInMillis(date.getTime());
-		result+=calendar.get(Calendar.DAY_OF_MONTH); 
-		result+="/";
-		result+=calendar.get(Calendar.MONTH)+1;
-		result+="/";
-		result+=calendar.get(Calendar.YEAR);
-		result+=" ";
-		result+=calendar.get(Calendar.HOUR_OF_DAY); 
-		result+=":";
-		result+=calendar.get(Calendar.MINUTE);			
-		
+		result += calendar.get(Calendar.DAY_OF_MONTH);
+		result += "/";
+		result += calendar.get(Calendar.MONTH) + 1;
+		result += "/";
+		result += calendar.get(Calendar.YEAR);
+		result += " ";
+		result += calendar.get(Calendar.HOUR_OF_DAY);
+		result += ":";
+		if (calendar.get(Calendar.MINUTE)<10){
+			result+="0";
+		}
+		result += calendar.get(Calendar.MINUTE);
+
 		return result;
 	}
-	
-	public boolean equals(Object obj){
-		boolean result=false;
-		if (obj instanceof InfoSummary){
+
+	public boolean equals(Object obj) {
+		boolean result = false;
+		if (obj instanceof InfoSummary) {
 			InfoSummary infoSummary = (InfoSummary) obj;
 			result = getIdInternal().equals(infoSummary.getIdInternal());
-			result = result || 
-			(getInfoExecutionCourse().equals(infoSummary.getInfoExecutionCourse())&&
-			getSummaryDate().get(Calendar.DAY_OF_MONTH)==infoSummary.getSummaryDate().get(Calendar.DAY_OF_MONTH)&&
-			getSummaryDate().get(Calendar.MONTH)==infoSummary.getSummaryDate().get(Calendar.MONTH)&&
-			getSummaryDate().get(Calendar.YEAR)==infoSummary.getSummaryDate().get(Calendar.YEAR)&&
-			getSummaryHour().get(Calendar.HOUR_OF_DAY)==infoSummary.getSummaryHour().get(Calendar.HOUR_OF_DAY)&&
-			getSummaryHour().get(Calendar.MINUTE)==infoSummary.getSummaryHour().get(Calendar.MINUTE)
-			);
+			result =
+				result
+					|| (getInfoExecutionCourse()
+						.equals(infoSummary.getInfoExecutionCourse())
+						&& getSummaryDate().get(Calendar.DAY_OF_MONTH)
+							== infoSummary.getSummaryDate().get(
+								Calendar.DAY_OF_MONTH)
+						&& getSummaryDate().get(Calendar.MONTH)
+							== infoSummary.getSummaryDate().get(Calendar.MONTH)
+						&& getSummaryDate().get(Calendar.YEAR)
+							== infoSummary.getSummaryDate().get(Calendar.YEAR)
+						&& getSummaryHour().get(Calendar.HOUR_OF_DAY)
+							== infoSummary.getSummaryHour().get(
+								Calendar.HOUR_OF_DAY)
+						&& getSummaryHour().get(Calendar.MINUTE)
+							== infoSummary.getSummaryHour().get(Calendar.MINUTE));
 		}
-		
-		
+
 		return result;
 	}
 
@@ -212,20 +220,25 @@ public class InfoSummary extends InfoObject implements Comparable{
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	public int compareTo(Object arg0) {
-		InfoSummary infoSummary=(InfoSummary) arg0;
+		InfoSummary infoSummary = (InfoSummary) arg0;
 		CalendarDateComparator dateComparator = new CalendarDateComparator();
 		CalendarHourComparator hourComparator = new CalendarHourComparator();
-		if (getSummaryType().compareTo(infoSummary.getSummaryType())==0){
-			if (dateComparator.compare(getSummaryDate(),infoSummary.getSummaryDate())==0){
-				return hourComparator.compare(getSummaryHour(),infoSummary.getSummaryHour());
-			}else{
-				return dateComparator.compare(getSummaryDate(),infoSummary.getSummaryDate());
+		if (getSummaryType().compareTo(infoSummary.getSummaryType()) == 0) {
+			if (dateComparator
+				.compare(getSummaryDate(), infoSummary.getSummaryDate())
+				== 0) {
+				return hourComparator.compare(
+					getSummaryHour(),
+					infoSummary.getSummaryHour());
+			} else {
+				return dateComparator.compare(
+					getSummaryDate(),
+					infoSummary.getSummaryDate());
 			}
-		}
-		else {
+		} else {
 			return getSummaryType().compareTo(infoSummary.getSummaryType());
 		}
-		
-	}	
-	
+
+	}
+
 }

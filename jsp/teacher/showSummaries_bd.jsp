@@ -27,19 +27,21 @@
       </tr>
 
 <logic:iterate id="summary" name="component" property="infoSummaries" type="DataBeans.InfoSummary">
+	 
+	  <tr>
+         <td>			
+			<strong><bean:message key="label.summary.lesson"/>
+			<bean:write name="summary" property="summaryTypeFormatted"/>
+            <bean:write name="summary" property="summaryDateFormatted"/>
+            <bean:write name="summary" property="summaryHourFormatted"/></strong>
+          </td>
+      </tr>
 	 <tr>
          <td>
              <strong><bean:write name="summary" property="title"/></strong>
          </td>
      </tr>
-     <tr>
-         <td>			
-			<bean:message key="label.summary.lesson"/>
-			<bean:write name="summary" property="summaryTypeFormatted"/>
-            <bean:write name="summary" property="summaryDateFormatted"/>
-            <bean:write name="summary" property="summaryHourFormatted"/>
-          </td>
-      </tr>
+    
 	  	 <tr>
          <td>
              <bean:write name="summary" property="summaryText" filter="false"/>

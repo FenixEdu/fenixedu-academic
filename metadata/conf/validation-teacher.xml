@@ -30,9 +30,9 @@
    		<field property="summaryType" depends="required" page="1">
    	<arg0 key="message.summaryType" resource="true"/>
    	</field> 
-   	 <field property="title" depends="required" page="1">
+   	<!-- <field property="title" depends="required" page="1">
     	<arg0 key="message.title" resource="true"/>
-       	</field>	
+       	</field>	-->
    	<field property="summaryText" depends="required" page="1">
    	<arg0 key="message.summaryText" resource="true"/>
    	</field>
@@ -65,9 +65,9 @@
    		<field property="summaryType" depends="required" page="1">
    	<arg0 key="message.summaryType" resource="true"/>
    	</field> 
-   	 <field property="title" depends="required" page="1">
+   	<!-- <field property="title" depends="required" page="1">
     	<arg0 key="message.title" resource="true"/>
-       	</field>	
+       	</field>	-->
    	<field property="summaryText" depends="required" page="1">
    	<arg0 key="message.summaryText" resource="true"/>
    	</field>

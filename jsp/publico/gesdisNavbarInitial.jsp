@@ -12,6 +12,11 @@
 		<bean:message key="link.announcements"/>
 	</html:link>
 </li>
+<li>
+	<html:link page="<%= "/viewSite.do" + "?method=summaries&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
+		<bean:message key="link.summaries.public"/>
+	</html:link>
+</li>
 <li> <a href="/" onclick="houdini('seccao');return false;"><bean:message key="label.curricular.information"/></a></li>
 </ul>
  <dl id="seccao" style="display: none;">

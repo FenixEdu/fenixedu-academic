@@ -22,6 +22,7 @@ import DataBeans.InfoSiteObjectives;
 import DataBeans.InfoSiteProgram;
 import DataBeans.InfoSiteSection;
 import DataBeans.InfoSiteShifts;
+import DataBeans.InfoSiteSummaries;
 import DataBeans.InfoSiteTimetable;
 import DataBeans.SiteView;
 
@@ -48,11 +49,17 @@ public class PublicTilesComponentController extends ControllerSupport {
 		ISiteComponent component = siteView.getComponent();
 
 		if (component instanceof InfoSiteFirstPage) {
-			tileContext.putAttribute("body", "/publico/viewExecutionCourse_bd.jsp");
-			tileContext.putAttribute("navbar", "/publico/gesdisNavbarInitial.jsp");
+			tileContext.putAttribute(
+				"body",
+				"/publico/viewExecutionCourse_bd.jsp");
+			tileContext.putAttribute(
+				"navbar",
+				"/publico/gesdisNavbarInitial.jsp");
 
 		} else if (component instanceof InfoSiteAnnouncement) {
 			tileContext.putAttribute("body", "/publico/announcements_bd.jsp");
+		} else if (component instanceof InfoSiteSummaries) {
+			tileContext.putAttribute("body", "/publico/summaries_bd.jsp");
 		} else if (component instanceof InfoSiteObjectives) {
 			tileContext.putAttribute("body", "/publico/objectives_bd.jsp");
 		} else if (component instanceof InfoSiteProgram) {
@@ -61,20 +68,28 @@ public class PublicTilesComponentController extends ControllerSupport {
 		} else if (component instanceof InfoEvaluationMethod) {
 			tileContext.putAttribute("body", "/publico/viewEvaluation_bd.jsp");
 		} else if (component instanceof InfoSiteBibliography) {
-			tileContext.putAttribute("body", "/publico/bibliographicReferences_bd.jsp");
+			tileContext.putAttribute(
+				"body",
+				"/publico/bibliographicReferences_bd.jsp");
 		} else if (component instanceof InfoSiteAssociatedCurricularCourses) {
-			tileContext.putAttribute("body", "/publico/curricularCourses_bd.jsp");
+			tileContext.putAttribute(
+				"body",
+				"/publico/curricularCourses_bd.jsp");
 		} else if (component instanceof InfoSiteTimetable) {
 			tileContext.putAttribute("body", "/publico/viewTimeTable_bd.jsp");
 		} else if (component instanceof InfoSiteShifts) {
-			tileContext.putAttribute("body", "/publico/viewExecutionCourseShifts_bd.jsp");
+			tileContext.putAttribute(
+				"body",
+				"/publico/viewExecutionCourseShifts_bd.jsp");
 
 		} else if (component instanceof InfoSiteSection) {
 			tileContext.putAttribute("body", "/publico/viewSection_bd.jsp");
 		} else if (component instanceof InfoSiteEvaluation) {
 			tileContext.putAttribute("body", "/publico/exam.jsp");
 		} else if (component instanceof InfoSiteMarks) {
-			tileContext.putAttribute("body", "/publico/viewPublishedMarks_bd.jsp");
+			tileContext.putAttribute(
+				"body",
+				"/publico/viewPublishedMarks_bd.jsp");
 		}
 
 	}

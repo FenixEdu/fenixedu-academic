@@ -25,6 +25,7 @@ import DataBeans.InfoSiteProgram;
 import DataBeans.InfoSiteRoomTimeTable;
 import DataBeans.InfoSiteSection;
 import DataBeans.InfoSiteShifts;
+import DataBeans.InfoSiteSummaries;
 import DataBeans.InfoSiteTimetable;
 import DataBeans.RoomKey;
 import DataBeans.SiteView;
@@ -183,6 +184,19 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 
 		return mapping.findForward("sucess");
 	}
+	
+	public ActionForward summaries(
+			ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response)
+			throws FenixActionException {
+
+				ISiteComponent summariesComponent = new InfoSiteSummaries();
+				readSiteView(request, summariesComponent, null, null);
+				return mapping.findForward("sucess");
+
+		}
 
 	private void readSiteView(
 		HttpServletRequest request,
