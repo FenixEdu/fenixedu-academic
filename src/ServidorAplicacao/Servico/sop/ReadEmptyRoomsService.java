@@ -12,7 +12,9 @@ import DataBeans.InfoRoom;
 import DataBeans.util.Cloner;
 import Dominio.IAula;
 import Dominio.ISala;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.exceptions.InvalidTimeIntervalServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.ISalaPersistente;
@@ -48,12 +50,21 @@ public class ReadEmptyRoomsService implements IServico {
 	  return "ReadEmptyRoomsService";
 	}
 
-	public Object run(InfoRoom infoRoom, InfoLesson infoLesson) {
+	public Object run(InfoRoom infoRoom, InfoLesson infoLesson) throws FenixServiceException{
+
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			
 			IAulaPersistente lessonDAO = sp.getIAulaPersistente();
 			ISalaPersistente roomDAO = sp.getISalaPersistente();
+
+
+			// Check is time interval is valid
+			
+			if (!validTimeInterval(infoLesson)) {
+				throw new InvalidTimeIntervalServiceException();
+			}
+
 			
 			// Read all Rooms with a capacity
 			List roomList = roomDAO.readSalas(
@@ -96,12 +107,8 @@ public class ReadEmptyRoomsService implements IServico {
 			return infoRoomList;
 			
 		} catch (ExcepcaoPersistencia e) {
-			e.printStackTrace(System.out);
-			return null;
-		} catch (Exception e){
-			e.printStackTrace(System.out);
-			return null;
-		}
+			throw new FenixServiceException(e);
+		} 
 	}
 	
 	private class RoomLessonPredicate implements Predicate{
@@ -116,5 +123,16 @@ public class ReadEmptyRoomsService implements IServico {
 		}
 	}
  	
+ 	
+	private boolean validTimeInterval(InfoLesson lesson) {
+		boolean result = true;
+
+		if (lesson.getInicio().getTime().getTime()
+			>= lesson.getFim().getTime().getTime()) {
+			result = false;
+		}
+
+		return result;
+	}
 
 }

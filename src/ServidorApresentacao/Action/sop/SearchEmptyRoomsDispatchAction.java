@@ -16,6 +16,8 @@ import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.InfoLesson;
 import DataBeans.InfoRoom;
+import ServidorAplicacao.Servico.exceptions.InvalidTimeIntervalServiceException;
+import ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import ServidorApresentacao.Action.sop.utils.Util;
@@ -111,6 +113,9 @@ public class SearchEmptyRoomsDispatchAction extends DispatchAction {
 			}
 			request.setAttribute("roomList", emptyRoomsList);
 			return mapping.findForward("showSearchResult");
+			
+		} catch (InvalidTimeIntervalServiceException ex) {
+			throw new InvalidTimeIntervalActionException(ex);
 		} catch (Exception e) {
 			e.printStackTrace(System.out);
 			throw new RuntimeException(e.getMessage());
