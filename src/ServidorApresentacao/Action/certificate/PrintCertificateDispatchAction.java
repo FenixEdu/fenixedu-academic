@@ -92,8 +92,18 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 				if (certificate.equals("Matrícula e Inscrição"))
 							session.setAttribute(SessionConstants.MATRICULA_ENROLMENT, certificate.toUpperCase());
 				if (certificate.equals("Duração do Curso")){
+					
+					if (infoStudentCurricularPlan.getSpecialization().equals(new Specialization(Specialization.MESTRADO))){
 							certificate=new String("Matrícula");
 							session.setAttribute(SessionConstants.DURATION_DEGREE, certificate.toUpperCase());
+					}
+					else{
+						ActionErrors errors = new ActionErrors();
+						errors.add("AlunoNãoExiste",
+									new ActionError("error.invalidStudentType"));
+						saveErrors(request, errors);
+						return new ActionForward(mapping.getInput());
+					}
 				}			
 				
 			}else{ 
