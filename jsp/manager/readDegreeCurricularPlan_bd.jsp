@@ -41,7 +41,6 @@
 			<table width="70%" cellpadding="0" border="0">
 				<tr>
 					<td class="listClasses-header">
-			
 					</td>
 					<td class="listClasses-header"><bean:message key="label.manager.curricularCourse.name" />
 					</td>
