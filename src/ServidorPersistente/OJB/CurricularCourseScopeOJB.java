@@ -140,4 +140,31 @@ public class CurricularCourseScopeOJB extends ObjectFenixOJB implements IPersist
 		return queryList(CurricularCourseScope.class, crit);
 		
 	}
+
+	public List readByCurricularCourseAndYearAndSemester(ICurricularCourse curricularCourse, Integer year, Integer semester) throws ExcepcaoPersistencia {
+		Criteria crit = new Criteria();
+		crit.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
+		crit.addEqualTo("curricularSemester.semester", semester);
+		crit.addEqualTo("curricularSemester.curricularYear.year", year);
+		
+		return queryList(CurricularCourseScope.class, crit);
+	}
+
+	public List readByCurricularCourseAndYear(ICurricularCourse curricularCourse, Integer year) throws ExcepcaoPersistencia {
+		Criteria crit = new Criteria();
+		crit.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
+		crit.addEqualTo("curricularSemester.curricularYear.year", year);
+		
+		return queryList(CurricularCourseScope.class, crit);
+	}
+
+	public List readByCurricularCourseAndSemester(ICurricularCourse curricularCourse, Integer semester) throws ExcepcaoPersistencia {
+		Criteria crit = new Criteria();
+		crit.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
+		crit.addEqualTo("curricularSemester.semester", semester);
+		
+		return queryList(CurricularCourseScope.class, crit);
+
+	}
+	
 }

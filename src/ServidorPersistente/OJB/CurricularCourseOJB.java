@@ -14,6 +14,8 @@ import Dominio.IDegreeCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.DegreeCurricularPlanState;
+import Util.TipoCurso;
 
 /**
  * @author dcs-rjao
@@ -455,6 +457,16 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("code", curricularCourseCode);
 		criteria.addEqualTo("degreeCurricularPlanKey", degreeCurricularPlan.getIdInternal());
+
+		return queryList(CurricularCourse.class, criteria);
+	}
+
+	public List readbyCourseCode(String courseCode) throws ExcepcaoPersistencia {
+		
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("code", courseCode);
+		criteria.addEqualTo("degreeCurricularPlan.degree.tipoCurso", TipoCurso.LICENCIATURA_OBJ);
+		criteria.addEqualTo("degreeCurricularPlan.state", DegreeCurricularPlanState.ACTIVE_OBJ);
 
 		return queryList(CurricularCourse.class, criteria);
 	}

@@ -34,6 +34,8 @@ public interface IPersistentMWAluno  {
      * @return The Student corresponding to this number from the Old Database
      * @throws PersistentMiddlewareSupportException
      */
-    public MWAluno readByNumber(Integer number)throws PersistentMiddlewareSupportException, ExcepcaoPersistencia; 
+    public MWAluno readByNumber(Integer number)throws PersistentMiddlewareSupportException, ExcepcaoPersistencia;
+
+
 	
 }

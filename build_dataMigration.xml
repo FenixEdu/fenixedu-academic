@@ -673,7 +673,7 @@
 	
 
 
-    <target name="load-data"
+    <target name="load-data-from-old-system"
     		depends="create-tables, replace-tokens"
             description="Carrega os dados nas tabelas">
         <sql
@@ -692,6 +692,12 @@
             </classpath>
         </sql>
 
+    </target>
+
+
+    <target name="load-data"
+    		depends="load-data-from-old-system, clean-persons-with-duplicate-id"
+            description="Carrega as tabelas e limpa as pessoas e alunos duplicados">
     </target>
 
 	
@@ -718,7 +724,7 @@
 	
 	
 	<target name="create-new-students"
-	        depends="compile-proj, load-new-students">
+	        depends="compile-proj, load-new-students, clean-persons-with-duplicate-id">
 		<java classname="middleware.studentMigration.CreateStudent"
 			fork="yes"
 			failonerror="false"
@@ -763,7 +769,7 @@
 
 
 	<target name="update-existing-students"
-	        depends="compile-proj, load-existing-students">
+	        depends="compile-proj, load-existing-students, clean-persons-with-duplicate-id">
 		<java classname="middleware.studentMigration.UpdateStudent"
 			fork="yes"
 			failonerror="false"
@@ -808,7 +814,7 @@
 
 
 	<target name="update-students-with-new-ID"
-	        depends="compile-proj, load-new-ID-Students">
+	        depends="compile-proj, load-new-ID-Students, clean-persons-with-duplicate-id">
 		<java classname="middleware.studentMigration.UpdateStudentIDNumbers"
 			fork="yes"
 			failonerror="false"
@@ -827,10 +833,10 @@
 	
 	</target>
 
-
 	<target name="update-students"
-	        depends="compile-proj, update-students-with-new-ID, update-existing-students, create-new-students">
+	        depends="compile-proj, clean-persons-with-duplicate-id, update-students-with-new-ID, update-existing-students, create-new-students">
 	</target>
+
 
     <target name="load-2003-enrolments"
     		depends="load-data"
@@ -881,8 +887,30 @@
     	</replace>
 	</target>
 
-	<target name="update-students-enrolments"
-	        depends="compile-proj, load-2003-enrolments">
+
+    <target name="load-semester-students">
+        <sql driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost/${db.name}"
+            userid="${db.user}"
+            password="${db.pass}"
+            encoding="${encoding}">
+	        <fileset dir="${sql}">
+			 <include name="middleware/LoadSemesterStudents.sql" />
+  			</fileset>
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </sql>
+    </target>
+
+
+<!--
+	        depends="compile-proj, load-2003-enrolments, clean-persons-with-duplicate-id, load-semester-students">
+-->
+
+	<target name="update-students-enrolments">
 		<java classname="middleware.studentMigration.UpdateStudentEnrolments"
 			fork="yes"
 			failonerror="false"
@@ -944,7 +972,6 @@
 
 
 
-
 	<target name="distribute-student-by-class"
 	        depends="compile-proj, load-data">
 		<java classname="middleware.studentMigration.DistributeStudentsByClass"
@@ -963,5 +990,21 @@
 	        </classpath>
 		</java>
 	</target>
+
+
+
+	<target name="clean-persons-with-duplicate-id"
+	        depends="compile-proj">
+	        
+	    <exec executable="${sql}/middleware/commands/cleanPersonsWithDuplicateID.sh"
+	  	      os="Linux, Unix">
+		  <arg value="stop"/>
+	  	</exec>
+	  	<exec executable="${sql}/middleware/commands/cleanPersonsWithDuplicateID.bat"
+	  	      vmlauncher="true"
+	  	      os="Windows, Windows 2000, Windows XP">
+	  	</exec>
+	</target>
+
 	
 </project>

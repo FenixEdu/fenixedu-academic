@@ -16,7 +16,8 @@ create table mw_ALUNO_temp(
   answer5 varchar(1),
   answer6 varchar(1),
   answer7 varchar(1),
-  primary key (documentIdNumber)
+  idInternal integer(11) not null auto_increment,
+  primary key (idInternal)
 )type= InnoDB;
 
 
@@ -52,7 +53,8 @@ create table mw_PESSOA(
   fiscalCode varchar(250),
   documentIdValidation date,
   financialRepCode varchar(250),
-  primary key (documentIdNumber)
+  idInternal integer(11) not null auto_increment,
+  primary key (idInternal)
 )type= InnoDB;
 
 

@@ -41,4 +41,12 @@ public interface IPersistentCurricularCourse extends IPersistentObject {
 	 * @return
 	 */
 	public List readbyCourseCodeAndDegreeCurricularPlan(String curricularCourseCode, IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia;
+
+ 
+
+	/**
+	 * @param string
+	 * @return
+	 */
+	public List readbyCourseCode(String string) throws ExcepcaoPersistencia;
 }

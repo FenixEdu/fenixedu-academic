@@ -52,6 +52,7 @@ public class CreateStudent {
 		SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
 		sp.iniciarTransaccao();
 		List result = persistentAluno.readAll();
+
 		sp.confirmarTransaccao();
 		
 		System.out.println("Creating " + result.size() + " new Students ...");
@@ -113,7 +114,7 @@ public class CreateStudent {
 	}
 
 
-	private static void createStudentCurricularPlan(ISuportePersistente sp, IStudent student, MWAluno oldStudent) throws ExcepcaoPersistencia, PersistentMiddlewareSupportException {
+	private static void createStudentCurricularPlan(ISuportePersistente sp, IStudent student, MWAluno oldStudent) throws Exception {
 		
 		
 		IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
@@ -132,7 +133,7 @@ public class CreateStudent {
 			System.out.println("Error : Branch [Degree:" + oldStudent.getDegreecode() + " Branch:" + oldStudent.getBranchcode() + "] not found !");
 
 			return;			
-		}		
+		}		 
 		
 		
 		studentCurricularPlan.setCurrentState(StudentCurricularPlanState.ACTIVE_OBJ);
@@ -147,7 +148,7 @@ public class CreateStudent {
 	 * @param oldStudent
 	 * @return The Degree Curricular Plan
 	 */
-	private static IDegreeCurricularPlan getDegreeCurricularPlan(MWAluno oldStudent, ISuportePersistente sp) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia {
+	private static IDegreeCurricularPlan getDegreeCurricularPlan(MWAluno oldStudent, ISuportePersistente sp) throws Exception {
 	
 		IDegreeCurricularPlan degreeCurricularPlan = null;
 		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
@@ -157,6 +158,11 @@ public class CreateStudent {
 		// Get the Old Degree
 		
 		MWBranch mwBranch = persistentBranch.readByDegreeCodeAndBranchCode(oldStudent.getDegreecode(), new Integer(0));
+
+		if (mwBranch == null) {
+			System.out.println("Error reading Branch " + oldStudent.getBranchcode() + " for degree " + oldStudent.getDegreecode());
+			throw new Exception();
+		}
 		
 		// Get the Actual Degree Curricular Plan for this Degree
 

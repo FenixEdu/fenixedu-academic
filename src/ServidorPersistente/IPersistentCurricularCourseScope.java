@@ -24,7 +24,40 @@ public interface IPersistentCurricularCourseScope extends IPersistentObject {
 	public List readCurricularCourseScopesByCurricularCourse(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia;
 	public ArrayList readAll() throws ExcepcaoPersistencia;
 
-
+	/**
+	 * 
+	 * @param curricularCourse
+	 * @param semester
+	 * @param branch
+	 * @return
+	 * @throws ExcepcaoPersistencia
+	 */
 	public List readByCurricularCourseAndSemesterAndBranch(ICurricularCourse curricularCourse, Integer semester, IBranch branch) throws ExcepcaoPersistencia;
+
+	/**
+	 * 
+	 * @param curricularCourse
+	 * @param year
+	 * @param semester
+	 * @return
+	 * @throws ExcepcaoPersistencia
+	 */
+	public List readByCurricularCourseAndYearAndSemester(ICurricularCourse curricularCourse, Integer year, Integer semester) throws ExcepcaoPersistencia;
+	
+	/**
+	 * 
+	 * @param curricularCourse
+	 * @param year
+	 * @return
+	 * @throws ExcepcaoPersistencia
+	 */
+	public List readByCurricularCourseAndYear(ICurricularCourse curricularCourse, Integer year) throws ExcepcaoPersistencia;
+	
+	/**
+	 * @param curricularCourse
+	 * @param integer
+	 * @return
+	 */
+	public List readByCurricularCourseAndSemester(ICurricularCourse curricularCourse, Integer semester) throws ExcepcaoPersistencia;
 
 }
