@@ -5232,6 +5232,14 @@
 		<filterChains></filterChains>
 	</service>
 	<service>
+		<idInternal>592</idInternal>
+		<name>ReadAllCampus</name>
+		<implementationClass>ServidorAplicacao.Servico.places.campus.ReadAllCampus</implementationClass>
+		<description></description>
+		<isTransactional>true</isTransactional>
+		<filterChains></filterChains>
+	</service>
+		<service>
 		<idInternal>590</idInternal>
 		<name>FindTeachersService</name>
 		<implementationClass>ServidorAplicacao.Servico.commons.searchers.FindTeachersService</implementationClass>
@@ -5240,11 +5248,13 @@
 		<filterChains></filterChains>
 	</service>
 	<service>
-		<idInternal>592</idInternal>
-		<name>ReadAllCampus</name>
-		<implementationClass>ServidorAplicacao.Servico.places.campus.ReadAllCampus</implementationClass>
-		<description></description>
+		<idInternal>430951</idInternal>
+		<name>MergeExecutionCourses</name>
+		<implementationClass>ServidorAplicacao.Servico.manager.MergeExecutionCourses</implementationClass>
+		<description>This service merges 2 execution courses</description>
 		<isTransactional>true</isTransactional>
-		<filterChains></filterChains>
+		<filterChains>
+		    <chain id="13"/>
+		 </filterChains>
 	</service>
 </serviceDefinitions>

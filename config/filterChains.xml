@@ -1,16 +1,16 @@
 <filterChainsDefinitions>
 	<filterChain>
-		<idInternal>2</idInternal>
-		<name>Autorizacao</name>
-		<expression>Autorizacao</expression>
+		<idInternal>3</idInternal>
+		<name>AA</name>
+		<expression>AA</expression>
 		<description></description>
 		<invocationTiming>1</invocationTiming>
 		<filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
 	</filterChain>
 	<filterChain>
-		<idInternal>3</idInternal>
-		<name>AA</name>
-		<expression>AA</expression>
+		<idInternal>2</idInternal>
+		<name>Autorizacao</name>
+		<expression>Autorizacao</expression>
 		<description></description>
 		<invocationTiming>1</invocationTiming>
 		<filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>

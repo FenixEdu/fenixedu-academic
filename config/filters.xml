@@ -1,12 +1,5 @@
 <filterDefinitions>
 	<filter>
-		<idInternal>2</idInternal>
-		<name>Autorizacao</name>
-		<implementationClass>ServidorAplicacao.Filtro.FiltroAutorizacao</implementationClass>
-		<description></description>
-		<isTransactional>false</isTransactional>
-	</filter>
-	<filter>
 		<idInternal>3</idInternal>
 		<name>AA</name>
 		<implementationClass>ServidorAplicacao.Filtro.FiltroAutorizacao</implementationClass>
@@ -17,6 +10,13 @@
 		<idInternal>4</idInternal>
 		<name>CandidateAuthentication</name>
 		<implementationClass>ServidorAplicacao.Filtro.CandidateAuthorizationFilter</implementationClass>
+		<description></description>
+		<isTransactional>false</isTransactional>
+	</filter>
+	<filter>
+		<idInternal>2</idInternal>
+		<name>Autorizacao</name>
+		<implementationClass>ServidorAplicacao.Filtro.FiltroAutorizacao</implementationClass>
 		<description></description>
 		<isTransactional>false</isTransactional>
 	</filter>
