@@ -196,8 +196,8 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 			ListIterator iterator = enrolments.listIterator();
 			while (iterator.hasNext())
 			{
-				IEnrolment	enrolment = (IEnrolment) iterator.next();
-				
+				IEnrolment enrolment = (IEnrolment) iterator.next();
+
 				infoEnrolments.add(Cloner.copyIEnrolment2InfoEnrolment(enrolment));
 			}
 		}
@@ -302,12 +302,12 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 					.getSpecialization()
 					.equals(Specialization.ESPECIALIZACAO_TYPE)))
 		{
-			
+
 			if (infoGratuitySituation.getInfoStudentCurricularPlan().getInfoEnrolments() != null
 				&& infoGratuitySituation.getInfoStudentCurricularPlan().getInfoEnrolments().size() > 0)
 			{
-
-				if (infoGratuitySituation.getInfoGratuityValues().getCourseValue() != null)
+				if (infoGratuitySituation.getInfoGratuityValues().getCourseValue() != null
+				&& infoGratuitySituation.getInfoGratuityValues().getCourseValue().doubleValue() != 0)
 				{
 					infoGratuitySituation.setRemainingValue(
 						new Double(
