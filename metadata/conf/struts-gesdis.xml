@@ -191,6 +191,13 @@
 	<!-- ========== Action Mapping Definitions =============================== -->
 	<action-mappings type="org.apache.struts.action.ActionMapping">
 
+	<action name="teacher.accessAnnouncementManagement"
+    	type="ServidorApresentacao.Action.teacher.AccessAnnouncementManagement" path="/teacher/accessAnnouncementManagement">
+        <forward name="AnnouncementManagement"  path="/teacher/announcementManagement.do" redirect="true"/>
+	</action>
+
+	<action path="/teacher/announcementManagement" forward="teacher.announcementManagement"/>
+
 	<!--
 	<action path="/index" forward="/obterSitios.do"/>
 	<action path="/autenticacao" forward="/autenticacao.jsp"/>
@@ -416,17 +423,10 @@
 				redirect="true"/>
 	</action>
         
-	<action name="teacher.acederGestaoAnuncios"
-    	type="ServidorApresentacao.Action.teacher.AcessAnnouncementManagement" path="/teacher/acessAnnouncementManagement">
-        <forward name="GestaoDeAnuncios"  path="/teacher/gestaoDeAnuncios.do" redirect="true"/>
-	</action>
-        
-        <action path="/docente/gestaoDeAnuncios" forward="docente.gestaoDeAnuncios"/>
-	
         <action name="docente.gestaoAnunciosForm"
                 type="ServidorApresentacao.Action.Docente.GestaoAnunciosFormAction"
                 path="/docente/gestaoAnunciosForm"
-                input="docente.gestaoDeAnuncios"
+                input="docente.announcementManagement"
                 scope="request">
             <forward name="InserirAnuncio" path="/docente/inserirAnuncio.do"
 		redirect = "true"/>
@@ -578,12 +578,14 @@
 		value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-gesdis.xml"/>
 	</plug-in>
 
+	<!--
 	<plug-in className="org.apache.struts.tiles.TilesPlugin">
 		<set-property property="definitions-config" value="/WEB-INF/conf/tiles-definition.xml"/>
 		<set-property property="definitions-debug" value="2"/>
 		<set-property property="definitions-parser-details" value="2"/>
 		<set-property property="definitions-parser-validate" value="true"/>
 	</plug-in>
+	-->
 
 </struts-config>
 

@@ -56,6 +56,6 @@ public class AccessAnnouncementManagement extends FenixAction {
 //		  userView.setAnunciosNome("Announcements");
 		  session.setAttribute("AnnouncementsName", "Announcements");
 		  
-		return mapping.findForward("GestaoDeAnuncios");
+		return mapping.findForward("AnnouncementManagement");
 	}
 }
