@@ -54,8 +54,8 @@ public class ViewClassesAction extends FenixContextAction {
 
 		Integer degreeId = (Integer) request.getAttribute("degreeID");
 		request.setAttribute("degreeID", degreeId);
-        String degreeInitials = (String) infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla();
-		String nameDegreeCurricularPlan = (String) infoExecutionDegree.getInfoDegreeCurricularPlan().getName();
+        String degreeInitials = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla();
+		String nameDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan().getName();
         Integer curricularYear = (Integer) request.getAttribute("curYear");
         
 		ActionErrors errors = new ActionErrors();
