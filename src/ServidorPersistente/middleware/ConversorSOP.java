@@ -325,7 +325,7 @@ public class ConversorSOP {
 			(List) migrationExecutionCourseCollection,
 			new ComparatorExecutionCourseByInitials());
 
-		// REMOVE println
+		
 		System.out.println(
 			migrationExecutionCourseCollection.size()
 				+ " executionCourse created.");
@@ -352,13 +352,6 @@ public class ConversorSOP {
 			"c:\\middleware\\disciplinasExecucaoComDisciplinasCurricularesSoltas.txt",
 			new PredicateExecutionCourseWithDanglingCurricularCourse());
 
-		// REMOVE this
-		Collection coll =
-			CollectionUtils.select(
-				consistentMigrationLessonList,
-				new PredicateLessonsFromClass((ITurma) classList.get(20)));
-		PrintUtil.printList(coll, "c:\\middleware\\aulasDeUmaTurma.txt");
-		// *************************
 
 		List migrationShiftList =
 			createShiftList(classList, consistentMigrationLessonList);
@@ -940,10 +933,7 @@ public class ConversorSOP {
 			}
 
 		}
-		// REMOVE println
-		System.out.println("not ok:" + notOk);
 		out.println("Not ok " + notOk);
-		System.out.println("Shifts Created:" + migrationShiftList.size());
 		out.println("Shifts Created:" + migrationShiftList.size());
 		out.close();
 		return migrationShiftList;
