@@ -24,7 +24,7 @@ p 	{
 
 /* Nome da disciplina */
 h1 {
-	font: 18pt "Trebuchet MS", Georgia, Arial, Helvetica, sans-serif;
+	font: 16pt "Trebuchet MS", Georgia, Arial, Helvetica, sans-serif;
 	font-weight: bold;
 	color: #333;
 	text-align: center;
@@ -42,7 +42,7 @@ h2 {
 	background-color: transparent;
 	}
 	
-/* Sub-t—picos */
+/* Sub-tópicos */
 h4	{
 	font: 11pt Arial, Helvetica, sans-serif;
 	font-weight: bold;
@@ -78,7 +78,7 @@ a:link {
 #principal {
 	width: 100%;
 	margin: 0;
-	padding: 2.5em 5em 2.5em 5em;
+	padding: 0;
 	border: 0;
 	vertical-align: top;
 	}
@@ -106,8 +106,13 @@ a:link {
 	color: #333;
 	text-decoration: underline;
 	}
-
+#invisible {
+	display: none;
+	}
 	
+.listClasses {
+	display: none;
+}	
 /******************************************
  	citação (opcional)
  *******************************************/
