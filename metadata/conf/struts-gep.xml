@@ -35,7 +35,7 @@
     <action-mappings type="org.apache.struts.action.ActionMapping">
         <action path="/index" forward="index" />
         <action path="/searchTeachersInformation" 
-            type="ServidorApresentacao.Action.gep.SearchInformationAction" 
+            type="ServidorApresentacao.Action.gep.SearchTeachersInformationAction" 
             name="searchInformationForm" 
             input="/searchTeachersInformation?method=searchForm" scope="request" parameter="method" 
             className="ServidorApresentacao.mapping.framework.SearchActionMapping">
@@ -48,7 +48,7 @@
             <forward name="list-many" path="view-teachers-information"/>
         </action>
         <action path="/searchCoursesInformation" 
-            type="ServidorApresentacao.Action.gep.SearchInformationAction" 
+            type="ServidorApresentacao.Action.gep.SearchCoursesInformationAction" 
             name="searchInformationForm" 
             input="/searchCoursesInformation.do?method=searchForm" scope="request" parameter="method" 
             className="ServidorApresentacao.mapping.framework.SearchActionMapping">
@@ -72,7 +72,7 @@
         </action>
         
         <action path="/listCoursesInformation" 
-            type="ServidorApresentacao.Action.gep.SearchInformationAction" 
+            type="ServidorApresentacao.Action.gep.SearchCoursesInformationAction" 
             input="/listCoursesInformation.do?method=searchForm" scope="request" parameter="method" 
             className="ServidorApresentacao.mapping.framework.SearchActionMapping">
             <set-property property="serviceName" value="ReadCoursesInformation"/>
@@ -84,7 +84,7 @@
             <forward name="list-many" path="list-courses-information"/>
         </action>
          <action path="/listCoursesAcreditation" 
-            type="ServidorApresentacao.Action.gep.SearchInformationAction" 
+            type="ServidorApresentacao.Action.gep.SearchCoursesInformationAction" 
             input="/listCoursesAcreditation.do?method=searchForm" scope="request" parameter="method" 
             className="ServidorApresentacao.mapping.framework.SearchActionMapping">
             <set-property property="serviceName" value="ReadCoursesInformation"/>
@@ -96,7 +96,7 @@
             <forward name="list-many" path="list-courses-acreditation"/>
         </action>
         <action path="/listTeachersAcreditation" 
-            type="ServidorApresentacao.Action.gep.SearchInformationAction" 
+            type="ServidorApresentacao.Action.gep.SearchTeachersInformationAction" 
             input="/listTeachersAcreditation.do?method=searchForm" scope="request" parameter="method" 
             className="ServidorApresentacao.mapping.framework.SearchActionMapping">
             <set-property property="serviceName" value="ReadTeachersInformation"/>

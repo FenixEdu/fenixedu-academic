@@ -38,7 +38,7 @@
 						   paramId="executionDegreeId" 
 						   paramName="infoExecutionDegree" 
 						   paramProperty="idInternal">
-					<bean:message key="label.list.acred" bundle="GEP_RESOURCES" />
+					<bean:message key="label.list.acred" bundle="GEP_RESOURCES"/>
 				</html:link>
 			</div>
 		</logic:present>
@@ -52,7 +52,7 @@
 				</html:link>
 			</div>
 			<div class="button">
-				<html:link page="/listCoursesAcreditation.do?method=doSearch" target="_blank"
+				<html:link page="/listCoursesAcreditation.do?method=doSearch&amp;basic=false" target="_blank"
 						   paramId="executionDegreeId" 
 						   paramName="infoExecutionDegree" 
 						   paramProperty="idInternal">
@@ -61,6 +61,22 @@
 			</div>
 		</logic:notPresent>
 	</logic:present>
+	<logic:notPresent name="infoExecutionDegree">
+		<logic:present name="basic">
+			<div class="button">
+				<html:link page="/listCoursesAcreditation.do?method=doSearch&amp;basic=basic" target="_blank">
+					<bean:message key="label.list.acred" bundle="GEP_RESOURCES" />
+				</html:link>
+			</div>
+		</logic:present>
+		<logic:notPresent name="basic">
+			<div class="button">
+				<html:link page="/listCoursesAcreditation.do?method=doSearch&amp;basic=false" target="_blank">
+					<bean:message key="label.list.acred" bundle="GEP_RESOURCES" />
+				</html:link>
+			</div>
+		</logic:notPresent>
+	</logic:notPresent>
 	<h2>
 		<bean:message key="link.gep.executionCoursesInformation"
 					  bundle="GEP_RESOURCES"/>
@@ -293,7 +309,7 @@
 						   paramId="executionDegreeId" 
 						   paramName="infoExecutionDegree" 
 						   paramProperty="idInternal">
-					<bean:message key="label.list.acred" bundle="GEP_RESOURCES" />
+					<bean:message key="label.list.acred" bundle="GEP_RESOURCES"/>
 				</html:link>
 			</div>
 		</logic:present>
@@ -307,7 +323,7 @@
 				</html:link>
 			</div>
 			<div class="button">
-				<html:link page="/listCoursesAcreditation.do?method=doSearch" target="_blank"
+				<html:link page="/listCoursesAcreditation.do?method=doSearch&amp;basic=false" target="_blank"
 						   paramId="executionDegreeId" 
 						   paramName="infoExecutionDegree" 
 						   paramProperty="idInternal">
@@ -316,4 +332,20 @@
 			</div>
 		</logic:notPresent>
 	</logic:present>
+	<logic:notPresent name="infoExecutionDegree">
+		<logic:present name="basic">
+			<div class="button">
+				<html:link page="/listCoursesAcreditation.do?method=doSearch&amp;basic=basic" target="_blank">
+					<bean:message key="label.list.acred" bundle="GEP_RESOURCES" />
+				</html:link>
+			</div>
+		</logic:present>
+		<logic:notPresent name="basic">
+			<div class="button">
+				<html:link page="/listCoursesAcreditation.do?method=doSearch&amp;basic=false" target="_blank">
+					<bean:message key="label.list.acred" bundle="GEP_RESOURCES" />
+				</html:link>
+			</div>
+		</logic:notPresent>
+	</logic:notPresent>
 </logic:present>

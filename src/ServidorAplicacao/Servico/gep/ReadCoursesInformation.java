@@ -86,7 +86,7 @@ public class ReadCoursesInformation implements IService
                 IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
                 List executionDegrees = persistentExecutionDegree.readByExecutionYear(executionYear);
 
-                if (basic.equals(Boolean.FALSE))
+                if (basic == null)
                     professorships = persistentProfessorship.readByExecutionDegrees(executionDegrees);
                 else
                     professorships =
@@ -98,7 +98,7 @@ public class ReadCoursesInformation implements IService
                         CursoExecucao.class,
                         executionDegreeId);
 
-                if (basic.equals(Boolean.FALSE))
+                if (basic == null)
                     professorships = persistentProfessorship.readByExecutionDegree(executionDegree);
                 else
                     professorships =

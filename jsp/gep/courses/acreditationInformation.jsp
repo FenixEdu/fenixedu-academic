@@ -6,8 +6,19 @@
 	<logic:iterate id="infoSiteCourseInformation" name="infoSiteCoursesInformation">
 		<logic:iterate id="curricularCourse" name="infoSiteCourseInformation" property="infoCurricularCourses">
 			<h2><bean:message key="label.acred.courseInfo" bundle="GEP_RESOURCES"/></h2>
-			<h2><bean:message key="label.acred.degree" bundle="GEP_RESOURCES"/>
-			<bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.nome"/></h2>
+			<logic:present name="infoExecutionDegree">
+				<h2><bean:message key="label.acred.degree" bundle="GEP_RESOURCES"/>
+				<bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.nome"/></h2>
+			</logic:present>
+			<logic:notPresent name="infoExecutionDegree">
+				<logic:iterate id="infoCurricularCourse" name="infoSiteCourseInformation" property="infoCurricularCourses">
+					<h2>
+						<bean:message key="label.acred.degree" bundle="GEP_RESOURCES"/>
+						<bean:write name="infoCurricularCourse" property="infoDegreeCurricularPlan.infoDegree.nome"/>
+					</h2>
+					<br/>
+				</logic:iterate>
+			</logic:notPresent>
 			<h3><bean:message key="label.acred.course" bundle="GEP_RESOURCES"/>
 			<bean:write name="curricularCourse" property="name"/></h3>
 			<table width="90%" cellspacing="1" border="0">
@@ -27,8 +38,10 @@
 							<br/ >
 						</logic:iterate>
 					</td>
-					<td><strong><bean:message key="label.ects.mandatoryOrOptional"
-											  bundle="GEP_RESOURCES"/></strong></td>
+					<td>
+						<strong><bean:message key="label.ects.mandatoryOrOptional"
+											  bundle="GEP_RESOURCES"/></strong>
+					</td>
 					<td>
 						<logic:equal name="curricularCourse" property="mandatory" value="true">
 				  			<bean:message key="message.courseInformation.mandatory" />
@@ -214,15 +227,7 @@
 					<td colspan="7">
 						<strong>
 							<br />
-				    		5.&nbsp;<bean:message key="label.acred.praticalWork" bundle="GEP_RESOURCES"/>
-			    		</strong>
-	    			</td>
-				</tr>
-				<tr>
-					<td colspan="7">
-						<strong>
-							<br />
-				    		6.&nbsp;<bean:message key="label.ects.avaliation" bundle="GEP_RESOURCES"/>
+				    		5.&nbsp;<bean:message key="label.ects.avaliation" bundle="GEP_RESOURCES"/>
 			    		</strong>
 				  	</td>
 				</tr>
@@ -234,14 +239,6 @@
 										filter="false"/>
 						</p>
 					</td>
-				</tr>
-				<tr>
-					<td colspan="7">
-						<strong>
-							<br />
-				    		<bean:message key="label.ects.lastModificationDate" bundle="GEP_RESOURCES"/>
-			    		</strong>
-				  	</td>
 				</tr>
 			</table>
 		</logic:iterate>

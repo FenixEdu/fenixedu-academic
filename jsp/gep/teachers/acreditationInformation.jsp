@@ -100,9 +100,6 @@
 									  property="infoServiceProviderRegime.providerRegimeType.name" 
 									  bundle="ENUMERATION_RESOURCES"/>
 				  	</logic:present>
-					<logic:notPresent name="infoSiteTeacherInformation" property="infoServiceProviderRegime.providerRegimeType">
-						<bean:message key="label.teachersInformation.notModified"  />
-				  	</logic:notPresent>
 				</td>
 			</tr>
 		</table>
@@ -177,30 +174,36 @@
 			</tr>
 		</table>
 		<br/>
-		<p class="infoop"><span class="emphasis-box">7</span>
-		<bean:message key="message.teacherInformation.ownPublications" /></p>
-		<table width="100%" border="0" cellspacing="1" style="margin-top:10px">	
-			<logic:iterate id="infoOldPublication" name="infoSiteTeacherInformation" property="infoOldDidacticPublications">
-				<tr>
-					<td style="text-align:left">
+		<p class="infoop">
+			<span class="emphasis-box">7</span>
+			<bean:message key="message.teacherInformation.ownPublications" />
+		</p>
+		<table width="100%" border="0" cellspacing="1">	
+			<tr>
+				<td style="text-align:left">
+					<logic:iterate id="infoOldPublication" name="infoSiteTeacherInformation" property="infoOldDidacticPublications">
 						<bean:write name="infoOldPublication" property="publication" />
-					</td>
-				</tr>
-			</logic:iterate>
+						<br/>
+						<br/>
+					</logic:iterate>
+				</td>
+			</tr>
 		<br />
 		</table>
 		<br />
 		<p class="infoop"><span class="emphasis-box">8</span>
 			<bean:message key="message.teacherInformation.cientificPublications" />
 		</p>
-		<table id="ects" width="100%" border="0" cellspacing="1" style="margin-top:10px">	
-			<logic:iterate id="infoOldPublication" name="infoSiteTeacherInformation" property="infoOldCientificPublications">
-				<tr>
-					<td style="text-align:left">
+		<table id="ects" width="100%" border="0" cellspacing="1">	
+			<tr>
+				<td style="text-align:left">
+					<logic:iterate id="infoOldPublication" name="infoSiteTeacherInformation" property="infoOldCientificPublications">
 						<bean:write name="infoOldPublication" property="publication" />
-					</td>
-				</tr>
-			</logic:iterate>
+						<br/>
+						<br/>
+					</logic:iterate>
+				</td>
+			</tr>
 			<br />
 		</table>
 		<br />

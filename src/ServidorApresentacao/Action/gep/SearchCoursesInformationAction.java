@@ -4,8 +4,11 @@
  */
 package ServidorApresentacao.Action.gep;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,8 +16,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 
+import DataBeans.InfoCurricularCourse;
+import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionYear;
+import DataBeans.gesdis.InfoSiteCourseInformation;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.framework.SearchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -27,8 +33,84 @@ import Util.TipoCurso;
  * @author Sergio Montelobo
  *  
  */
-public class SearchInformationAction extends SearchAction
+public class SearchCoursesInformationAction extends SearchAction
 {
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorApresentacao.Action.framework.SearchAction#doAfterSearch(ServidorApresentacao.mapping.framework.SearchActionMapping,
+	 *      javax.servlet.http.HttpServletRequest, java.util.Collection)
+	 */
+    protected void doAfterSearch(
+        SearchActionMapping mapping,
+        HttpServletRequest request,
+        Collection result)
+        throws Exception
+    {
+        Collections.sort((List) result, new Comparator()
+        {
+            public List getInfoScopes(List infoCurricularCourses)
+            {
+                Iterator iter = infoCurricularCourses.iterator();
+                List infoScopes = new ArrayList();
+                while (iter.hasNext())
+                {
+                    InfoCurricularCourse infoCurricularCourse = (InfoCurricularCourse) iter.next();
+                    infoScopes.addAll(infoCurricularCourse.getInfoScopes());
+
+                }
+                return infoScopes;
+            }
+
+            public int compare(Object o1, Object o2)
+            {
+                InfoSiteCourseInformation infoSiteCourseInformation1 = (InfoSiteCourseInformation) o1;
+                InfoSiteCourseInformation infoSiteCourseInformation2 = (InfoSiteCourseInformation) o2;
+
+                List infoScopes1 = getInfoScopes(infoSiteCourseInformation1.getInfoCurricularCourses());
+                Collections.sort(infoScopes1, new Comparator()
+                {
+                    public int compare(Object o1, Object o2)
+                    {
+                        InfoCurricularCourseScope infoScope1 = (InfoCurricularCourseScope) o1;
+                        InfoCurricularCourseScope infoScope2 = (InfoCurricularCourseScope) o2;
+                        return infoScope1
+                            .getInfoCurricularSemester()
+                            .getInfoCurricularYear()
+                            .getYear()
+                            .compareTo(
+                            infoScope2.getInfoCurricularSemester().getInfoCurricularYear().getYear());
+                    }
+
+                });
+                List infoScopes2 = getInfoScopes(infoSiteCourseInformation2.getInfoCurricularCourses());
+                Collections.sort(infoScopes2, new Comparator()
+                {
+                    public int compare(Object o1, Object o2)
+                    {
+                        InfoCurricularCourseScope infoScope1 = (InfoCurricularCourseScope) o1;
+                        InfoCurricularCourseScope infoScope2 = (InfoCurricularCourseScope) o2;
+                        return infoScope1
+                            .getInfoCurricularSemester()
+                            .getInfoCurricularYear()
+                            .getYear()
+                            .compareTo(
+                            infoScope2.getInfoCurricularSemester().getInfoCurricularYear().getYear());
+                    }
+
+                });
+                InfoCurricularCourseScope infoScope1 = (InfoCurricularCourseScope) infoScopes1.get(0);
+                InfoCurricularCourseScope infoScope2 = (InfoCurricularCourseScope) infoScopes2.get(0);
+                return infoScope1
+                    .getInfoCurricularSemester()
+                    .getInfoCurricularYear()
+                    .getYear()
+                    .compareTo(
+                    infoScope2.getInfoCurricularSemester().getInfoCurricularYear().getYear());
+            }
+        });
+    }
+
     /*
 	 * (non-Javadoc)
 	 * 
@@ -74,9 +156,11 @@ public class SearchInformationAction extends SearchAction
         if (!request.getParameter("executionDegreeId").equals("all"))
             executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
 
-        Boolean basic = Boolean.FALSE;
+        Boolean basic = null;
         if (request.getParameter("basic") != null)
             basic = Boolean.TRUE;
+        if ((request.getParameter("basic") != null) && request.getParameter("basic").equals("false"))
+            basic = Boolean.FALSE;
 
         return new Object[] { executionDegreeId, basic };
     }
