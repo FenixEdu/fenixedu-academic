@@ -35,10 +35,10 @@ db.personFilter.errorFile=FicheiroErros.txt
 db.personFilter.log=true
 
 db.slide.driver=com.mysql.jdbc.Driver
-db.slide.alias=mysql://localhost:3306/myDB
+db.slide.alias=mysql://localhost:3306/slide
 db.slide.user=root
 db.slide.pass=
-slide.config=C:\\\\Programas\\\\Eclipse\\\\eclipse\\\\workspace\\\\fenix\\\\build\\\\app\\\\WEB-INF\\\\classes\\\\Domain.xml
+slide.config=D:\\\\eclipse-M3\\\\workspace\\\\fenix-head\\\\build\\\\app\\\\WEB-INF\\\\classes\\\\Domain.xml
 
 ftp.IST.server.user=ciist
 ftp.IST.server.pass=desenvolvimento
@@ -46,4 +46,4 @@ ftp.IST.server.address=saladd2.ist.utl.pt
 
 login.page=https://fenix.ist.utl.pt/privado
 application=extranet
-validation.doctype=<!DOCTYPE form-validation SYSTEM "file:///C:/Programas/Eclipse/eclipse/workspace/fenix/metadata/conf/dtds/validator_1_0.dtd">
+validation.doctype=<!DOCTYPE form-validation PUBLIC "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.0//EN" "file:///D:/eclipse-M3/workspace/fenix-head/metadata/dtds/validator_1_0.dtd">
