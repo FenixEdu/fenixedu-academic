@@ -12,22 +12,22 @@
 	<logic:notEqual name="numberAdvisories" value="0">
 	<table width="90%" cellspacing="0" cellpadding="0" style="border: 1px solid #333;">
 		<tr>
-			<td colspan="3" style="background: #333; color:#fff; padding: 5px 0 5px 10px;"><strong>AVISOS</strong></td>
+			<td colspan="3" style="background: #333; color:#fff; padding: 5px 0 5px 10px; border: 1px solid #333;"><strong>AVISOS</strong></td>
 		</tr>
 		<logic:iterate id="advisory" name="<%= SessionConstants.LIST_ADVISORY %>" scope="request">
 			<bean:define id="activeAdvisory" name="activeAdvisory"/>
 			<logic:equal name="advisory" property="idInternal" value="<%= activeAdvisory.toString() %>">
 				<tr>
-					<td colspan="3" style="background: #EBECED; padding: 10px 0 0 10px;"><strong><bean:message key="label.from"/></strong> <bean:write name="advisory" property="sender"/></td>
+					<td colspan="3" style="background: #EBECED; padding: 10px 0 0 10px;"><strong><bean:message key="label.from"/>:</strong> <bean:write name="advisory" property="sender"/></td>
 				</tr>
 				<tr>
-					<td colspan="3" style="background: #EBECED; padding: 5px 0 0 10px"><strong><bean:message key="label.sendDate"/></strong> <date:format pattern="yyyy.MM.dd"><bean:write name="advisory" property="created.time"/></date:format></td
+					<td colspan="3" style="background: #EBECED; padding: 5px 0 0 10px"><strong><bean:message key="label.sendDate"/>:</strong> <date:format pattern="yyyy.MM.dd"><bean:write name="advisory" property="created.time"/></date:format></td
 				</tr>
 				<tr>
-					<td colspan="3" style="background: #EBECED; padding: 5px 0 0 10px"><strong><bean:message key="label.subject"/></strong> <bean:write name="advisory" property="subject"/><td>
+					<td colspan="3" style="background: #EBECED; padding: 5px 0 0 10px"><strong><bean:message key="label.subject"/>:</strong> <bean:write name="advisory" property="subject"/><td>
 				</tr>
 				<tr>
-					<td colspan="3" style="background: #EBECED; padding: 5px 0 10px 10px; border-bottom: 1px solid #333;"><bean:write name="advisory" property="message" filter="false" /></td>
+					<td colspan="3" style="background: #EBECED; padding: 10px; border-bottom: 1px solid #333;"><bean:write name="advisory" property="message" filter="false" /></td>
 				</tr>
 			</logic:equal>
 			<logic:notEqual name="advisory" property="idInternal" value="<%= activeAdvisory.toString() %>">

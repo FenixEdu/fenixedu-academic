@@ -10,7 +10,7 @@
 		<table width="100%" cellpadding="0" cellspacing="0">
           <!-- Dados Pessoais -->
           <tr>
-            <td class="infoop" width="25"><img src="<%= request.getContextPath() %>/images/number_1.gif" alt="" /></td>
+            <td class="infoop" width="25"><span class="emphasis-box">1</span></td>
             <td class="infoop"><strong><bean:message key="label.person.title.personal.info" /></strong></td>
           </tr>
 		</table>
@@ -82,7 +82,7 @@
 		<table width="100%" cellpadding="0" cellspacing="0">
           <!-- Filiação -->
           <tr>
-          	<td class="infoop" width="25"><img src="<%= request.getContextPath() %>/images/number_2.gif" alt="" /></td>
+          	<td class="infoop" width="25"><span class="emphasis-box">2</span></td>
           	<td class="infoop"><strong><bean:message key="label.person.title.filiation" /></strong></td>
           </tr>
 		</table>
@@ -131,7 +131,7 @@
 		<table width="100%" cellpadding="0" cellspacing="0">
           <!-- Dados de Residencia -->
           <tr>
-            <td class="infoop" width="25"><img src="<%= request.getContextPath() %>/images/number_3.gif" alt="" /></td>
+            <td class="infoop" width="25"><span class="emphasis-box">3</span></td>
             <td class="infoop"><strong><bean:message key="label.person.title.addressInfo" /></strong></td>
           </tr>
 		</table>
@@ -177,7 +177,7 @@
 		<table width="100%" cellpadding="0" cellspacing="0">
           <!-- Contactos -->
           <tr>
-            <td class="infoop" width="25"><img src="<%= request.getContextPath() %>/images/number_4.gif" alt="" />
+            <td class="infoop" width="25"><span class="emphasis-box">4</span></td>
             <td class="infoop"><strong><bean:message key="label.person.title.contactInfo" /></strong></td>
           </tr>
 		</table>

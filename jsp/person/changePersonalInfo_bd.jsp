@@ -19,7 +19,7 @@
   <html:hidden property="name" />
   <html:hidden property="username" />
 <h2><bean:message key="label.person.title.changePersonalInfo" /></h2>
-        <table>
+        <table width="100%" cellspacing="0">
       		<tr>
 
 <%--
@@ -233,18 +233,20 @@
               	<html:hidden property="idExpirationDateYear" />
               	<html:hidden property="areaOfAreaCode" />
 				<tr>
-         			<td colspan="2">
-         				<span class="error"> A informação que vai alterar terá efeito apenas nesta aplicação</span> e tem como objectivo, 
+					<td class="infoop" ><span class="emphasis-box">info</span>
+         			<td class="infoop">
+ 						<strong>A informação que vai alterar terá efeito apenas nesta aplicação</strong> e tem como objectivo, 
          				serem enviadas mensagens de correio electrónico e sms.
          				<br/>
-						<i>
          				As alterações dos seus dados pessoais com efeitos administrativos devem ser feitas directamente na secção de pessoal, secretaria de graduação
          				ou secretaria de pós-graduação, consoante o seu caso. 
-         				</i><br/><br/>
          			</td>
          		</tr>
+         	</table>
 <%--         	<% } %>
 --%>
+	<br />
+	<table>
           <!-- Telemovel -->
           <tr>
             <td width="15%"><bean:message key="label.person.mobilePhone" /></td>
