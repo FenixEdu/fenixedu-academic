@@ -117,15 +117,16 @@ public class ReadStudentsWithoutGroup implements IServico {
                 throw new FenixServiceException();
 
             infoSiteStudentsWithoutGroup.setGroupNumber(groupNumber);
-
+            
+            userStudent = persistentStudent.readByUsername(username);
+            infoSiteStudentsWithoutGroup.setInfoUserStudent(Cloner.copyIStudent2InfoStudent(userStudent));
+            
             if (groupProperties.getEnrolmentPolicy().equals(
                     new EnrolmentGroupPolicyType(2))) {
                 return infoSiteStudentsWithoutGroup;
             }
 
             frequentas = groupProperties.getAttendsSet().getAttends();
-
-            userStudent = persistentStudent.readByUsername(username);
 
             List allStudentGroupAttend = new ArrayList();
             Iterator iterator = allStudentsGroups.iterator();

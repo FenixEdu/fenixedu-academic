@@ -35,6 +35,34 @@
 
 </table>
 
+
+<logic:present name="infoUserStudent"> 
+	
+	<br>
+	<table width="50%" cellpadding="0" border="0">	
+		<tr>
+		<td class="listClasses-header"><bean:message key="label.numberWord" />
+		</td>
+		<td class="listClasses-header"><bean:message key="label.nameWord" />
+		</td>
+		<td class="listClasses-header"><bean:message key="label.emailWord" />
+		</td>
+		</tr>
+			<tr>	
+				<td class="listClasses"><bean:write name="infoUserStudent" property="number"/>
+				</td>	
+				<bean:define id="infoPerson" name="infoUserStudent" property="infoPerson"/>		
+				<td class="listClasses"><bean:write name="infoPerson" property="nome"/>
+				</td>
+				<td class="listClasses"><bean:write name="infoPerson" property="email"/>
+				</td>
+	 		</tr>	
+		</table>
+	</logic:present>
+	<br>
+<bean:message key="label.student.viewGroupEnrolment.user.description" />
+
+<br/>
 <br/>
 <logic:present name="infoStudents"> 
 	<logic:empty name="infoStudents">

@@ -133,6 +133,7 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 		request.setAttribute("groupNumber", studentsNotEnroled.getGroupNumber());
 		request.setAttribute("groupPropertiesCode", groupPropertiesCode);
 		request.setAttribute("shiftCode", shiftCode);
+		request.setAttribute("infoUserStudent", studentsNotEnroled.getInfoUserStudent());
 
 		return mapping.findForward("sucess");
 
