@@ -35,8 +35,8 @@ public abstract class SessionConstants {
 	public static final String INFO_SITE="info_site";
 	public static final String EXECUTION_COURSE_CURRICULUM= "execution_course_curriculum";
 	public static final String INFO_SITE_ANNOUNCEMENT= "info_site_announcement";
-	public static final String INFO_SITE_SECTION= "info_site_section";
-	public static final String INFO_SITE_ITEM= "info_site_item";
+	public static final String INFO_SECTION= "info_section";
+	public static final String INFO_ITEM= "info_item";
 	public static final String INFO_SITES_LIST = "info_sites_list";
 	public static final String INFO_TEACHER = "info_teacher";	
 	public static final String INFO_BIBLIOGRAPHIC_REFERENCE_LIST = "BibliographicReferences";		
