@@ -939,7 +939,7 @@
     <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessor"/>
     
     <!-- ========== Message Resources Definitions ============================ -->
-    
+     <message-resources parameter="ServidorApresentacao.ApplicationResources" />   
 
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
