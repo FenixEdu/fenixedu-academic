@@ -4,26 +4,27 @@
 <html:html xhtml="true">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<link href="<%= request.getContextPath() %>/CSS/dotist.css" rel="stylesheet" type="text/css" />
-<link href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" rel="stylesheet" type="text/css" />
+<link href="<%= request.getContextPath() %>/CSS/dotist.css" rel="stylesheet" media="screen" type="text/css" />
+<link href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" rel="stylesheet" media="screen" type="text/css" />
+<link href="<%= request.getContextPath() %>/CSS/dotist_print.css" rel="stylesheet" media="print" type="text/css" />
 <title><tiles:getAsString name="title" ignore="true" /></title>
 </head>
 <body>
 <%-- Layout component parameters : title, header, navGeral, navLocal, body, footer --%>
 <!-- Header -->
-<table width="100%%" border="0" cellspacing="0" cellpadding="0">
+<table id="header" width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td class="header" width="25%"><img alt="" height="60" src="<%= request.getContextPath() %>/images/dotist_sop.gif" width="192" />
+    <td class="header-td" width="25%"><img alt="" height="60" src="<%= request.getContextPath() %>/images/dotist_sop.gif" width="192" />
 	</td>
-    <td class="header"><div align="right"><h1><tiles:getAsString name="serviceName" /></h1></div>
+    <td class="header-td"><div align="right"><h1><tiles:getAsString name="serviceName" /></h1></div>
     </td>
   </tr>
 </table>
 <!-- End Header -->
 <!-- NavGeral -->
-<table width="100%%" border="0" cellspacing="0" cellpadding="0">
+<table id="navbargeral" width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td class="navbargeral"><tiles:insert attribute="navGeral" ignore="true"/>
+    <td class="navbargeral-td"><tiles:insert attribute="navGeral" ignore="true"/>
     </td>
   </tr>
 </table>
@@ -31,21 +32,20 @@
 <!-- Navbar Lateral e Body Content -->
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
    <tr>
-     <td width="25%" align="left" valign="top" nowrap="nowrap" class="navlateral"><tiles:insert attribute="navLocal" ignore="true"/>
+     <td class="navlateral-td" width="25%" align="left" valign="top" nowrap="nowrap"><tiles:insert attribute="navLocal" ignore="true"/>
     </td>
-     <td width="100%" align="left" valign="top" class="bodycontent"><tiles:insert attribute="body" />
+     <td class="bodycontent" width="100%" align="left" valign="top" ><tiles:insert attribute="body" />
 	</td>
   </tr>
 </table>
 <!--End Navbar Lateral e Body Content -->
 <!-- Footer -->
-<table width="100%%" border="0" cellspacing="0" cellpadding="0">
+<table id="footer" width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td class="footer"><tiles:insert attribute="footer" />
+    <td class="footer-td"><tiles:insert attribute="footer" />
     </td>
   </tr>
 </table>
 <!--End Footer -->
 </body>
 </html:html>
-
