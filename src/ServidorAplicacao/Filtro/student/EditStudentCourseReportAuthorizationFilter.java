@@ -92,7 +92,11 @@ public class EditStudentCourseReportAuthorizationFilter extends DomainObjectAuth
                         executionYear,
                         DelegateYearType.getEnum(year.intValue()));
 
-                return delegate.getStudent().equals(student);
+                if (delegate == null)
+                    continue;
+
+                if (delegate.getStudent().equals(student))
+                    return true;
             }
             return false;
         } catch (ExcepcaoPersistencia e)
@@ -112,14 +116,14 @@ public class EditStudentCourseReportAuthorizationFilter extends DomainObjectAuth
 	 */
     private List removeDuplicates(List years)
     {
-       List result = new ArrayList();
-       Iterator iter = years.iterator();
-       while (iter.hasNext())
-       {
-           Integer year = (Integer) iter.next();
-           if (!result.contains(year))
-               result.add(year);
-       }
-       return result;
+        List result = new ArrayList();
+        Iterator iter = years.iterator();
+        while (iter.hasNext())
+        {
+            Integer year = (Integer) iter.next();
+            if (!result.contains(year))
+                result.add(year);
+        }
+        return result;
     }
 }

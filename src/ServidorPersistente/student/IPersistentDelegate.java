@@ -25,7 +25,7 @@ public interface IPersistentDelegate extends IPersistentObject
         throws ExcepcaoPersistencia;
     public IDelegate readByDegreeAndExecutionYearAndYearType(
         ICurso degree,
-        IExecutionYear executionYear,
+		IExecutionYear executionYear,
         DelegateYearType type)
         throws ExcepcaoPersistencia;
     public IDelegate readByStudent(IStudent student) throws ExcepcaoPersistencia;

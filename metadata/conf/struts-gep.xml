@@ -83,6 +83,30 @@
             <forward name="list-one" path="list-courses-information"/>
             <forward name="list-many" path="list-courses-information"/>
         </action>
+         <action path="/listCoursesAcreditation" 
+            type="ServidorApresentacao.Action.gep.SearchInformationAction" 
+            input="/listCoursesAcreditation.do?method=searchForm" scope="request" parameter="method" 
+            className="ServidorApresentacao.mapping.framework.SearchActionMapping">
+            <set-property property="serviceName" value="ReadCoursesInformation"/>
+            <set-property property="objectAttribute" value="infoSiteCourseInformation"/>
+            <set-property property="listAttribute" value="infoSiteCoursesInformation"/>
+            <set-property property="notFoundMessageKey" value="label.gep.notFound"/>
+            <forward name="search-form" path="search-courses-information"/>
+            <forward name="list-one" path="list-courses-acreditation"/>
+            <forward name="list-many" path="list-courses-acreditation"/>
+        </action>
+        <action path="/listTeachersAcreditation" 
+            type="ServidorApresentacao.Action.gep.SearchInformationAction" 
+            input="/listTeachersAcreditation.do?method=searchForm" scope="request" parameter="method" 
+            className="ServidorApresentacao.mapping.framework.SearchActionMapping">
+            <set-property property="serviceName" value="ReadTeachersInformation"/>
+            <set-property property="objectAttribute" value="infoSiteTeacherInformation"/>
+            <set-property property="listAttribute" value="infoSiteTeachersInformation"/>
+            <set-property property="notFoundMessageKey" value="label.gep.notFound"/>
+            <forward name="search-form" path="search-teachers-information"/>
+            <forward name="list-one" path="list-teachers-acreditation"/>
+            <forward name="list-many" path="list-teachers-acreditation"/>
+        </action>
     </action-mappings>
     <!-- ========== Controller Configuration ================================ -->
     <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>

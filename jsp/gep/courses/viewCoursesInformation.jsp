@@ -30,7 +30,15 @@
 						   paramId="executionDegreeId" 
 						   paramName="infoExecutionDegree" 
 						   paramProperty="idInternal">
-					<bean:message key="label.list" bundle="GEP_RESOURCES" />
+					<bean:message key="label.list.ects" bundle="GEP_RESOURCES" />
+				</html:link>
+			</div>
+			<div class="button">
+				<html:link page="/listCoursesAcreditation.do?method=doSearch&amp;basic=basic" target="_blank"
+						   paramId="executionDegreeId" 
+						   paramName="infoExecutionDegree" 
+						   paramProperty="idInternal">
+					<bean:message key="label.list.acred" bundle="GEP_RESOURCES" />
 				</html:link>
 			</div>
 		</logic:present>
@@ -40,7 +48,15 @@
 						   paramId="executionDegreeId" 
 						   paramName="infoExecutionDegree" 
 						   paramProperty="idInternal">
-					<bean:message key="label.list" bundle="GEP_RESOURCES"/>
+					<bean:message key="label.list.ects" bundle="GEP_RESOURCES"/>
+				</html:link>
+			</div>
+			<div class="button">
+				<html:link page="/listCoursesAcreditation.do?method=doSearch" target="_blank"
+						   paramId="executionDegreeId" 
+						   paramName="infoExecutionDegree" 
+						   paramProperty="idInternal">
+					<bean:message key="label.list.acred" bundle="GEP_RESOURCES"/>
 				</html:link>
 			</div>
 		</logic:notPresent>
@@ -269,7 +285,15 @@
 						   paramId="executionDegreeId" 
 						   paramName="infoExecutionDegree" 
 						   paramProperty="idInternal">
-					<bean:message key="label.list" bundle="GEP_RESOURCES" />
+					<bean:message key="label.list.ects" bundle="GEP_RESOURCES" />
+				</html:link>
+			</div>
+			<div class="button">
+				<html:link page="/listCoursesAcreditation.do?method=doSearch&amp;basic=basic" target="_blank"
+						   paramId="executionDegreeId" 
+						   paramName="infoExecutionDegree" 
+						   paramProperty="idInternal">
+					<bean:message key="label.list.acred" bundle="GEP_RESOURCES" />
 				</html:link>
 			</div>
 		</logic:present>
@@ -279,7 +303,15 @@
 						   paramId="executionDegreeId" 
 						   paramName="infoExecutionDegree" 
 						   paramProperty="idInternal">
-					<bean:message key="label.list" bundle="GEP_RESOURCES"/>
+					<bean:message key="label.list.ects" bundle="GEP_RESOURCES"/>
+				</html:link>
+			</div>
+			<div class="button">
+				<html:link page="/listCoursesAcreditation.do?method=doSearch" target="_blank"
+						   paramId="executionDegreeId" 
+						   paramName="infoExecutionDegree" 
+						   paramProperty="idInternal">
+					<bean:message key="label.list.acred" bundle="GEP_RESOURCES"/>
 				</html:link>
 			</div>
 		</logic:notPresent>

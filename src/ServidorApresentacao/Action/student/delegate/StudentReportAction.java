@@ -284,7 +284,11 @@ public class StudentReportAction extends DispatchAction
     {
         InfoSiteStudentCourseReport infoSiteStudentCourseReport =
             readInfoSiteStudentCourseReport(mapping, form, request);
+        InfoSiteCourseHistoric infoSiteCourseHistoric =
+            readInfoSiteCourseHistoric(mapping, form, request);
+
         setInfoSiteStudentCourseReportToRequest(request, infoSiteStudentCourseReport, mapping);
+        setInfoSiteCourseHistoricToRequest(request, infoSiteCourseHistoric, mapping);
         return mapping.findForward("successfull-read");
     }
 }

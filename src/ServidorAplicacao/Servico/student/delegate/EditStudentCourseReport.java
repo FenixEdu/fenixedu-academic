@@ -20,7 +20,6 @@ import ServidorPersistente.ISuportePersistente;
  */
 public class EditStudentCourseReport extends EditDomainObjectService
 {
-
     /*
 	 * (non-Javadoc)
 	 * 

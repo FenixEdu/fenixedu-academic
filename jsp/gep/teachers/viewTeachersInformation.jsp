@@ -19,6 +19,29 @@
 			</td>
 		</tr>
 	</table>
+	<br/>
+	<logic:present name="infoExecutionDegree">
+		<logic:present name="basic">
+			<div class="button">
+				<html:link page="/listTeachersAcreditation.do?method=doSearch&amp;basic=basic" target="_blank"
+						   paramId="executionDegreeId" 
+						   paramName="infoExecutionDegree" 
+						   paramProperty="idInternal">
+					<bean:message key="label.list.acred" bundle="GEP_RESOURCES" />
+				</html:link>
+			</div>
+		</logic:present>
+		<logic:notPresent name="basic">
+			<div class="button">
+				<html:link page="/listTeachersAcreditation.do?method=doSearch" target="_blank"
+						   paramId="executionDegreeId" 
+						   paramName="infoExecutionDegree" 
+						   paramProperty="idInternal">
+					<bean:message key="label.list.acred" bundle="GEP_RESOURCES"/>
+				</html:link>
+			</div>
+		</logic:notPresent>
+	</logic:present>
 	<h2>
 		<bean:message key="title.gep.teachersInformation"
 					  bundle="GEP_RESOURCES"/>
@@ -118,4 +141,27 @@
 	<bean:message key="label.gep.filled" bundle="GEP_RESOURCES"/>: <%= filled %>
 	<br/>
 	<%--<bean:message key="label.gep.stats" bundle="GEP_RESOURCES"/>: <%= stats %>%--%>
+	<br/>
+	<logic:present name="infoExecutionDegree">
+		<logic:present name="basic">
+			<div class="button">
+				<html:link page="/listTeachersAcreditation.do?method=doSearch&amp;basic=basic" target="_blank"
+						   paramId="executionDegreeId" 
+						   paramName="infoExecutionDegree" 
+						   paramProperty="idInternal">
+					<bean:message key="label.list.acred" bundle="GEP_RESOURCES" />
+				</html:link>
+			</div>
+		</logic:present>
+		<logic:notPresent name="basic">
+			<div class="button">
+				<html:link page="/listTeachersAcreditation.do?method=doSearch" target="_blank"
+						   paramId="executionDegreeId" 
+						   paramName="infoExecutionDegree" 
+						   paramProperty="idInternal">
+					<bean:message key="label.list.acred" bundle="GEP_RESOURCES"/>
+				</html:link>
+			</div>
+		</logic:notPresent>
+	</logic:present>
 </logic:present>
