@@ -34,8 +34,8 @@
 				<logic:equal name="evaluation" property="evaluationType" value="<%= EvaluationType.EXAM_STRING %>">
 					<h2>
 					&nbsp;-&nbsp;				
-					<bean:write name="evaluationt" property="season"/>&nbsp;
-					<bean:write name="evaluation" property="date"/> <i>às</i> <bean:write name="marksListComponent" property="infoEvaluation.beginningHour"/><br />
+					<bean:write name="evaluation" property="season"/>&nbsp;
+					<bean:write name="evaluation" property="date"/> <i><bean:message key="label.at" /></i> <bean:write name="marksListComponent" property="infoEvaluation.beginningHour"/><br />
 					</h2>
 				</logic:equal>
 				<logic:equal name="evaluation" property="evaluationType" value="<%= EvaluationType.FINAL_STRING %>">
