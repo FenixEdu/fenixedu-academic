@@ -2,7 +2,6 @@ package ServidorPersistente.OJB.grant.owner;
 
 import org.apache.ojb.broker.query.Criteria;
 
-import Dominio.IPessoa;
 import Dominio.grant.owner.GrantOwner;
 import Dominio.grant.owner.IGrantOwner;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -33,8 +32,6 @@ public class GrantOwnerOJB
 	public IGrantOwner readGrantOwnerByPerson(Integer personIdInternal)
 		throws ExcepcaoPersistencia {
 		IGrantOwner grantOwner = null;
-		IPessoa person = null;
-
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("key_person", personIdInternal);
 		grantOwner = (IGrantOwner) queryObject(GrantOwner.class, criteria);

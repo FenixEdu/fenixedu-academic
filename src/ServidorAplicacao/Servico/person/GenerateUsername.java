@@ -5,7 +5,6 @@
 package ServidorAplicacao.Servico.person;
 
 import Dominio.IMasterDegreeCandidate;
-import Dominio.IPessoa;
 import ServidorAplicacao.Servico.exceptions.NotExecutedException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -29,8 +28,7 @@ public class GenerateUsername  {
 		// Verify if the Username already Exists 
 		try {
 			sp = SuportePersistenteOJB.getInstance();
-            IPessoa person = null;
-			while ((person = sp.getIPessoaPersistente().lerPessoaPorUsername(username)) != null)
+            while ((sp.getIPessoaPersistente().lerPessoaPorUsername(username)) != null)
 				username = RandomStringGenerator.getRandomStringGenerator(6);
 		} catch (ExcepcaoPersistencia ex) {
 			NotExecutedException newEx = new NotExecutedException("Persistence layer error");
@@ -60,9 +58,8 @@ public class GenerateUsername  {
 		String username2Test = username;
 		try {
 			sp = SuportePersistenteOJB.getInstance();
-			IPessoa person = null;
 			int i = 1;
-			while ((person = sp.getIPessoaPersistente().lerPessoaPorUsername(username2Test)) != null){
+			while ((sp.getIPessoaPersistente().lerPessoaPorUsername(username2Test)) != null){
 			//while ((person = sp.getIPessoaPersistente().lerPessoaPorUsername(username)) != null){	
 				username2Test = new String(username + i++);
 			}

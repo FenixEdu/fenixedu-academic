@@ -5,7 +5,6 @@
  */
 package ServidorApresentacao.TagLib.publico.sectionMenu;
 
-import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.InfoSection;
@@ -69,7 +68,6 @@ public class SectionMenuMapRenderer {
 	public StringBuffer render() {
 		StringBuffer strBuffer = new StringBuffer("");
 		List sections = getSectionMenuMap().getSections();
-		Iterator iter = sections.iterator();
 		if (sections!=null && !sections.isEmpty()) {
 		int i = 0;
 		

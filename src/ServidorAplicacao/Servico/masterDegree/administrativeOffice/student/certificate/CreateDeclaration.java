@@ -9,8 +9,6 @@ package ServidorAplicacao
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.util.Cloner;
-import Dominio.IPessoa;
-import Dominio.IRole;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
@@ -57,8 +55,6 @@ public class CreateDeclaration implements IServico {
 
 		ISuportePersistente sp = null;
 
-		IRole role = null;
-		IPessoa person = null;
 		sp = SuportePersistenteOJB.getInstance();
 		
 		try {
