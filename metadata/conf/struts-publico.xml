@@ -427,6 +427,6 @@
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
       <set-property property="pathnames" 
-                    value="/WEB-INF/validator-rules.xml,/WEB-INF/conf/validation-publico.xml"/>
+                    value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-publico.xml"/>
     </plug-in>
 </struts-config>
