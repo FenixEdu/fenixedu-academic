@@ -13,7 +13,9 @@
 </table>
 <logic:present name="siteView" property="component">
 	<bean:define id="infoEvaluationList" name="siteView" property="component.infoEvaluations"/>  
+	<p></p>
 	<span class="error"><html:errors/></span>	
+	<p></p>
 	<bean:size id="infoEvaluationListSize" name="infoEvaluationList"/>
 	<logic:equal name="infoEvaluationListSize" value="0">
 		<span class="error"><bean:message key="message.no.evaluation.registered"/></span>

@@ -688,6 +688,7 @@
        <forward name="viewMarksOptions" path="/showMarksListOptions.do"/>
        <forward name="prepareSubmitMarks" path="/prepareSubmitMarks.jsp" />
        <forward name="submitMarksOK" path="/submitMarksOK.jsp" />
+       <forward name="impossibleSubmitMarks" path="/viewEvaluation.do?method=viewEvaluation" />
 	</action>
 	<action 
 		path="/writeMarks"

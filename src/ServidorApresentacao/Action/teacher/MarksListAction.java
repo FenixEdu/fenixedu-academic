@@ -196,7 +196,7 @@ public class MarksListAction extends DispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-
+		ActionErrors actionErrors = new ActionErrors();
 		HttpSession session = request.getSession();
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
@@ -204,7 +204,28 @@ public class MarksListAction extends DispatchAction {
 
 		Integer executionCourseCode = getFromRequest("objectCode", request);
 
-		//Read evaluations
+		//valiadate if is possible submit marks
+		Object[] args = { evaluationCode, evaluationCode, userView };
+
+		GestorServicos gestorServicos = GestorServicos.manager();
+		InfoSiteSubmitMarks infoSiteSubmitMarks = null;
+		try {
+			infoSiteSubmitMarks = (InfoSiteSubmitMarks) gestorServicos.executar(userView, "ValidateSubmitMarks", args);
+		} catch (FenixServiceException exception) {
+			//exception.printStackTrace();
+
+			actionErrors.add("impossibleSubmit", new ActionError(exception.getMessage()));
+			saveErrors(request, actionErrors);
+
+			return mapping.findForward("impossibleSubmitMarks");
+		}
+		actionErrors = sendErrors(infoSiteSubmitMarks);
+		if (actionErrors.size() > 0) {
+			saveErrors(request, actionErrors);
+			return mapping.findForward("impossibleSubmitMarks");
+		}
+
+		//Read evaluations for find evaluation date
 		Object[] argsReadEvaluations = { executionCourseCode };
 
 		List infoEvaluationsList;
@@ -217,22 +238,27 @@ public class MarksListAction extends DispatchAction {
 
 		ISiteComponent commonComponent = new InfoSiteCommon();
 
-		Object[] args = { executionCourseCode, commonComponent, new InfoEvaluation(), null, evaluationCode, null };
+		Object[] args2 = { executionCourseCode, commonComponent, new InfoEvaluation(), null, evaluationCode, null };
 
 		TeacherAdministrationSiteView siteView = null;
 		try {
 			siteView =
-				(TeacherAdministrationSiteView) ServiceUtils.executeService(userView, "TeacherAdministrationSiteComponentService", args);
+				(TeacherAdministrationSiteView) ServiceUtils.executeService(userView, "TeacherAdministrationSiteComponentService", args2);
 
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
 
 		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(evaluationDate);
+
+		//fill date with last evaluation date or now if evalaution date is after now
+		if (evaluationDate.before(calendar.getTime())) {
+			calendar.setTime(evaluationDate);
+		}
+
 		DynaValidatorForm dateAvaliationForm = (DynaValidatorForm) form;
 		dateAvaliationForm.set("day", new Integer(calendar.get(Calendar.DAY_OF_MONTH)));
-		dateAvaliationForm.set("month", new Integer(calendar.get(Calendar.MONTH)+1));
+		dateAvaliationForm.set("month", new Integer(calendar.get(Calendar.MONTH) + 1));
 		dateAvaliationForm.set("year", new Integer(calendar.get(Calendar.YEAR)));
 
 		request.setAttribute("siteView", siteView);
@@ -271,6 +297,7 @@ public class MarksListAction extends DispatchAction {
 	 */
 	public ActionForward submitMarks(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
+		ActionErrors actionErrors = new ActionErrors();
 		HttpSession session = request.getSession();
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
@@ -302,8 +329,13 @@ public class MarksListAction extends DispatchAction {
 		try {
 			administrationSiteView = (TeacherAdministrationSiteView) gestorServicos.executar(userView, "SubmitMarks", args);
 		} catch (FenixServiceException exception) {
+			System.out.println("exception no action");
 			exception.printStackTrace();
-			throw new FenixActionException();
+
+			actionErrors.add("impossibleSubmit", new ActionError(exception.getMessage()));
+			saveErrors(request, actionErrors);
+
+			return mapping.findForward("impossibleSubmitMarks");
 		}
 
 		request.setAttribute("siteView", administrationSiteView);
@@ -311,7 +343,7 @@ public class MarksListAction extends DispatchAction {
 		request.setAttribute("evaluationCode", evaluationCode);
 
 		InfoSiteSubmitMarks infoSiteSubmitMarks = (InfoSiteSubmitMarks) administrationSiteView.getComponent();
-		ActionErrors actionErrors = sendErrors(infoSiteSubmitMarks);
+		actionErrors = sendErrors(infoSiteSubmitMarks);
 		if (actionErrors.size() > 0) {
 			saveErrors(request, actionErrors);
 			return mapping.findForward("submitMarksOK");

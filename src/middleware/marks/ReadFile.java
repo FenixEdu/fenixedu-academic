@@ -1,5 +1,6 @@
 package middleware.marks;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -250,7 +251,7 @@ public class ReadFile extends LoadDataFile {
 			}
 
 			Calendar calendar = Calendar.getInstance();
-			enrolmentEvaluation.setWhen(calendar.getTime());
+			enrolmentEvaluation.setWhen(new Timestamp(calendar.getTimeInMillis()));
 
 			writeElement(enrolmentEvaluation);
 		}

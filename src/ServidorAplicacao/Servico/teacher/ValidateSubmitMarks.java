@@ -1,65 +1,43 @@
 package ServidorAplicacao.Servico.teacher;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import middleware.marks.CreateFile;
-import DataBeans.ISiteComponent;
 import DataBeans.InfoMark;
-import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteSubmitMarks;
-import DataBeans.TeacherAdministrationSiteView;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
 import Dominio.Enrolment;
-import Dominio.EnrolmentEvaluation;
 import Dominio.Evaluation;
 import Dominio.Frequenta;
-import Dominio.Funcionario;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IEvaluation;
 import Dominio.IFrequenta;
 import Dominio.IMark;
-import Dominio.IPessoa;
-import Dominio.ISite;
-import Dominio.ITeacher;
-import Dominio.ResponsibleFor;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.Factory.TeacherAdministrationSiteComponentBuilder;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentEvaluation;
 import ServidorPersistente.IPersistentMark;
-import ServidorPersistente.IPersistentResponsibleFor;
-import ServidorPersistente.IPersistentSite;
-import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistenteJDBC.IFuncionarioPersistente;
-import ServidorPersistenteJDBC.SuportePersistente;
-import Util.EnrolmentEvaluationState;
-import Util.EnrolmentEvaluationType;
 
 /**
  * @author Tânia Pousão
  *
  */
-public class SubmitMarks implements IServico {
-	private static SubmitMarks _service = new SubmitMarks();
+public class ValidateSubmitMarks implements IServico {
+	private static ValidateSubmitMarks _service = new ValidateSubmitMarks();
 
 	private List enrolmentEvaluationList = new ArrayList();
 	private List errorsNotEnrolmented = new ArrayList();
@@ -70,7 +48,7 @@ public class SubmitMarks implements IServico {
 	/**
 	 * The actor of this class.
 	 **/
-	private SubmitMarks() {
+	private ValidateSubmitMarks() {
 
 	}
 
@@ -78,18 +56,18 @@ public class SubmitMarks implements IServico {
 	 * Returns Service Name
 	 */
 	public String getNome() {
-		return "SubmitMarks";
+		return "ValidateSubmitMarks";
 	}
 
 	/**
 	 * Returns the _servico.
 	 * @return ReadExecutionCourse
 	 */
-	public static SubmitMarks getService() {
+	public static ValidateSubmitMarks getService() {
 		return _service;
 	}
 
-	public Object run(Integer executionCourseCode, Integer evaluationCode, Date evaluationDate, UserView userView)
+	public InfoSiteSubmitMarks run(Integer executionCourseCode, Integer evaluationCode, UserView userView)
 		throws FenixServiceException {
 
 		try {
@@ -102,9 +80,6 @@ public class SubmitMarks implements IServico {
 			executionCourse.setIdInternal(executionCourseCode);
 			executionCourse = (IDisciplinaExecucao) persistentExecutionCourse.readByOId(executionCourse, false);
 
-			IPersistentSite persistentSite = sp.getIPersistentSite();
-			ISite site = persistentSite.readByExecutionCourse(executionCourse);
-
 			//evaluation
 			IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
 			IEvaluation evaluation = new Evaluation();
@@ -115,33 +90,17 @@ public class SubmitMarks implements IServico {
 			IPersistentMark persistentMark = sp.getIPersistentMark();
 			List marksList = persistentMark.readBy(evaluation);
 
-			List infoMarksList = submitMarks(userView, evaluationDate, executionCourse, evaluation, marksList);
+			List infoMarksList = verifySubmitMarks(marksList);
 
-			CreateFile.fileWithMarksList(executionCourse.getAssociatedCurricularCourses(), enrolmentEvaluationList);
-
-			return createSiteView(
-				site,
-				evaluation,
-				infoMarksList,
-				errorsNotEnrolmented,
-				errorsMarkNotPublished,
-				allMarksNotPublished,
-				noMarks);
+			return createInfoErrors(evaluation, infoMarksList, errorsNotEnrolmented, errorsMarkNotPublished, allMarksNotPublished, noMarks);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new FenixServiceException(e.getMessage());
 		}
 	}
 
-	private List submitMarks(
-		UserView userView,
-		Date evaluationDate,
-		IDisciplinaExecucao executionCourse,
-		IEvaluation evaluation,
-		List marksList)
-		throws FenixServiceException {
+	private List verifySubmitMarks(List marksList) throws FenixServiceException {
 		List infoMarksList = null;
-
 		ISuportePersistente sp;
 
 		errorsMarkNotPublished.clear();
@@ -156,7 +115,6 @@ public class SubmitMarks implements IServico {
 				IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
 
 				infoMarksList = new ArrayList();
-
 				Iterator iterador = marksList.listIterator();
 				while (iterador.hasNext()) {
 					IMark mark = (IMark) iterador.next();
@@ -188,11 +146,12 @@ public class SubmitMarks implements IServico {
 						errorsNotEnrolmented.add(Cloner.copyIMark2InfoMark(mark));
 						continue;
 					}
-
+					
 					//data for enrolment evaluation				
-					setEnrolmentEvaluation(executionCourse, evaluationDate, enrolment, mark.getPublishedMark(), userView);
-
+					verifyYetSubmitMarks(enrolment);
+					
 					InfoMark infoMark = Cloner.copyIMark2InfoMark(mark);
+
 					infoMarksList.add(infoMark);
 				}
 			}
@@ -211,15 +170,8 @@ public class SubmitMarks implements IServico {
 		}
 	}
 
-	private void setEnrolmentEvaluation(
-		IDisciplinaExecucao executionCourse,
-		Date evaluationDate,
-		IEnrolment enrolment,
-		String publishedMark,
-		UserView userView)
-		throws FenixServiceException {
+	private void verifyYetSubmitMarks(IEnrolment enrolment) throws FenixServiceException {
 		ISuportePersistente sp;
-		EnrolmentEvaluation enrolmentEvaluation = null;
 
 		try {
 			sp = SuportePersistenteOJB.getInstance();
@@ -227,96 +179,26 @@ public class SubmitMarks implements IServico {
 			IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp.getIPersistentEnrolmentEvaluation();
 
 			//verify if marks yet submit
-			List allEnrolmentEvaluationList = persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolment(enrolment);
-			if (allEnrolmentEvaluationList != null && allEnrolmentEvaluationList.size() > 0) {
-				List enrolmentEvaluationListWithGrade = (List) CollectionUtils.select(allEnrolmentEvaluationList, new Predicate() {
+			List enrolmentEvaluationList = persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolment(enrolment);
+			if (enrolmentEvaluationList != null && enrolmentEvaluationList.size() > 0) {
+				List enrolmentEvaluationListWithGrade = (List) CollectionUtils.select(enrolmentEvaluationList, new Predicate() {
 					public boolean evaluate(Object obj) {
 						IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) obj;
 						return enrolmentEvaluation.getGrade().length() > 0;
 					}
 				});
-				if (allEnrolmentEvaluationList.size() == enrolmentEvaluationListWithGrade.size()) {
+				if (enrolmentEvaluationList.size() == enrolmentEvaluationListWithGrade.size()) {
 					throw new FenixServiceException("errors.submitMarks.yetSubmited");
 				}
 			}
-			
-			
-			enrolmentEvaluation =
-				(EnrolmentEvaluation) persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(
-					enrolment,
-					EnrolmentEvaluationType.NORMAL_OBJ,
-					publishedMark);
-			if (enrolmentEvaluation == null) {
-				enrolmentEvaluation = new EnrolmentEvaluation();
-				//throw new FenixServiceException();
-			}
 
-			enrolmentEvaluation.setGrade(publishedMark);
-			enrolmentEvaluation.setEnrolment(enrolment);
-			enrolmentEvaluation.setEnrolmentEvaluationType(enrolment.getEnrolmentEvaluationType());
-			enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
-			enrolmentEvaluation.setObservation(new String("Submissão da Pauta"));
-
-			//teacher responsible for execution course
-			IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
-			List professors = persistentResponsibleFor.readByExecutionCourse(executionCourse);
-			ITeacher teacher = ((ResponsibleFor) professors.listIterator().next()).getTeacher();
-			enrolmentEvaluation.setPersonResponsibleForGrade(teacher.getPerson());
-
-			//employee logged
-			IPessoaPersistente pessoaPersistente = sp.getIPessoaPersistente();
-			IPessoa pessoa = pessoaPersistente.lerPessoaPorUsername(userView.getUtilizador());
-			Funcionario funcionario = lerFuncionario(pessoa);
-			enrolmentEvaluation.setEmployee(funcionario);
-			//enrolmentEvaluation.setEmployeeKey(new Integer(funcionario.getCodigoInterno()));
-
-			Calendar calendar = Calendar.getInstance();
-			enrolmentEvaluation.setWhen(new Timestamp(calendar.getTimeInMillis()));
-			enrolmentEvaluation.setGradeAvailableDate(calendar.getTime());
-			if (evaluationDate != null) {
-				enrolmentEvaluation.setExamDate(evaluationDate);
-			} else {
-				enrolmentEvaluation.setExamDate(calendar.getTime());
-			}
-
-			enrolmentEvaluation.setCheckSum("");
-
-			enrolmentEvaluationList.add(enrolmentEvaluation);
-
-			persistentEnrolmentEvaluation.lockWrite(enrolmentEvaluation);
-		} catch (ExcepcaoPersistencia e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			throw new FenixServiceException(e.getMessage());
 		}
 	}
 
-	private Funcionario lerFuncionario(IPessoa pessoa) {
-		Funcionario funcionario = null;
-		SuportePersistente spJDBC = SuportePersistente.getInstance();
-		IFuncionarioPersistente funcionarioPersistente = spJDBC.iFuncionarioPersistente();
-
-		try {
-			spJDBC.iniciarTransaccao();
-
-			try {
-				funcionario = funcionarioPersistente.lerFuncionarioPorPessoa(pessoa.getIdInternal().intValue());
-
-			} catch (Exception e) {
-				spJDBC.cancelarTransaccao();
-				e.printStackTrace();
-				return funcionario;
-			}
-
-			spJDBC.confirmarTransaccao();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			return funcionario;
-		}
-	}
-
-	private Object createSiteView(
-		ISite site,
+	private InfoSiteSubmitMarks createInfoErrors(
 		IEvaluation evaluation,
 		List marksList,
 		List errorsNotEnrolmented,
@@ -334,10 +216,6 @@ public class SubmitMarks implements IServico {
 		infoSiteSubmitMarks.setAllMarksNotPublished(allMarksNotPublished);
 		infoSiteSubmitMarks.setNoMarks(noMarks);
 
-		TeacherAdministrationSiteComponentBuilder componentBuilder = new TeacherAdministrationSiteComponentBuilder();
-		ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site, null, null, null);
-
-		TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(commonComponent, infoSiteSubmitMarks);
-		return siteView;
+		return infoSiteSubmitMarks;
 	}
 }
