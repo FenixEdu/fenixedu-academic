@@ -91,4 +91,6 @@ public interface IStudent extends IDomainObject {
     public List getStudentCurricularPlans();
     
     public void setStudentCurricularPlans(List studentCurricularPlans);
+    
+    public IStudentCurricularPlan getActiveStudentCurricularPlan();
 }

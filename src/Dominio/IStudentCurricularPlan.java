@@ -74,7 +74,9 @@ public interface IStudentCurricularPlan extends IDomainObject
     public Integer getCreditsInSpecializationArea() ;
     public void setCreditsInSpecializationArea(
             Integer creditsInSpecializationArea) ;
+    public List getOptionalCurricularCoursesToEnroll(IExecutionPeriod executionPeriod);
 	// -------------------------------------------------------------
 	// END: Only for enrollment purposes
 	// -------------------------------------------------------------
+    
 }

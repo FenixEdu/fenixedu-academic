@@ -108,6 +108,9 @@
 	<definition name="df.page.prepareEnrollmentChooseCurricularCourses" extends="definition.student.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/withRules/prepareEnrollmentChooseCurricularCourses.jsp"/>
 	</definition>
+    <definition name="df.page.showOptionalCourses" extends="definition.student.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/enrolment/withRules/prepareEnrollmentChooseOptionalCurricularCourses.jsp"/>
+	</definition>
 	<definition name="df.page.enrollmentConfirmation" extends="definition.student.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/withRules/enrollmentConfirmation.jsp"/>
 	</definition>

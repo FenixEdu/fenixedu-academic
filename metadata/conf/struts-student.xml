@@ -534,6 +534,18 @@
 			<forward name="prepareEnrollmentChooseCurricularCourses" path="df.page.prepareEnrollmentChooseCurricularCourses"/>
 			<forward name="enrollmentConfirmation" path="df.page.enrollmentConfirmation"/>
 		</action>
+        
+        <action	path="/optionalCurricularCoursesEnrollment"
+				type="ServidorApresentacao.Action.degreeAdministrativeOffice.OptionalCurricularCoursesEnrollmentDispatchAction"							
+				name="curricularCoursesEnrollmentForm"	
+                parameter="method"
+				scope="request"				
+				input="df.page.main">
+			<exception	type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
+						key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+						handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
+			<forward name="showOptionalCourses" path="df.page.showOptionalCourses"/>
+		</action>
     
     	<action	path="/warningFirst"
 				type="ServidorApresentacao.Action.commons.VoidAction">

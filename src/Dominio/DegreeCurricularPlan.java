@@ -27,8 +27,7 @@ import Util.MarkType;
  * @author David Santos in Jun 25, 2004
  */
 
-public class DegreeCurricularPlan extends DomainObject implements
-        IDegreeCurricularPlan {
+public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricularPlan {
 
     protected Integer degreeKey;
 
@@ -75,10 +74,8 @@ public class DegreeCurricularPlan extends DomainObject implements
         IStudentCurricularPlan studentCurricularPlan = null;
 
         try {
-            Class classDefinition = Class
-                    .forName(getConcreteClassForStudentCurricularPlans());
-            studentCurricularPlan = (IStudentCurricularPlan) classDefinition
-                    .newInstance();
+            Class classDefinition = Class.forName(getConcreteClassForStudentCurricularPlans());
+            studentCurricularPlan = (IStudentCurricularPlan) classDefinition.newInstance();
         } catch (InstantiationException e) {
             System.out.println(e);
         } catch (IllegalAccessException e) {
@@ -90,7 +87,6 @@ public class DegreeCurricularPlan extends DomainObject implements
         return studentCurricularPlan;
     }
 
-    
     public String toString() {
         String result = "[" + this.getClass().getName() + ": ";
         result += "idInternal = " + getIdInternal() + "; ";
@@ -110,8 +106,7 @@ public class DegreeCurricularPlan extends DomainObject implements
         return curricularCourseEquivalences;
     }
 
-    public void setCurricularCourseEquivalences(
-            List curricularCourseEquivalences) {
+    public void setCurricularCourseEquivalences(List curricularCourseEquivalences) {
         this.curricularCourseEquivalences = curricularCourseEquivalences;
     }
 
@@ -215,8 +210,7 @@ public class DegreeCurricularPlan extends DomainObject implements
         this.markType = markType;
     }
 
-    public void setMinimalYearForOptionalCourses(
-            Integer minimalYearForOptionalCourses) {
+    public void setMinimalYearForOptionalCourses(Integer minimalYearForOptionalCourses) {
         this.minimalYearForOptionalCourses = minimalYearForOptionalCourses;
     }
 
@@ -244,8 +238,7 @@ public class DegreeCurricularPlan extends DomainObject implements
         return ojbConcreteClass;
     }
 
-    public void setConcreteClassForStudentCurricularPlans(
-            String concreteClassForStudentCurricularPlans) {
+    public void setConcreteClassForStudentCurricularPlans(String concreteClassForStudentCurricularPlans) {
         this.concreteClassForStudentCurricularPlans = concreteClassForStudentCurricularPlans;
     }
 
@@ -257,17 +250,29 @@ public class DegreeCurricularPlan extends DomainObject implements
     // BEGIN: Only for enrollment purposes
     // -------------------------------------------------------------
 
-    public List getListOfEnrollmentRules(
-            IStudentCurricularPlan studentCurricularPlan,
+    public List getListOfEnrollmentRules(IStudentCurricularPlan studentCurricularPlan,
             IExecutionPeriod executionPeriod) {
-        
+
         List result = new ArrayList();
-        
-        result.add(new PreviousYearsCurricularCourseEnrollmentRule(studentCurricularPlan, executionPeriod));
+
+        result.add(new PreviousYearsCurricularCourseEnrollmentRule(studentCurricularPlan,
+                executionPeriod));
         result.add(new MaximumNumberOfAcumulatedEnrollmentsRule(studentCurricularPlan, executionPeriod));
-        result.add(new MaximumNumberOfCurricularCoursesEnrollmentRule(studentCurricularPlan, executionPeriod));
+        result.add(new MaximumNumberOfCurricularCoursesEnrollmentRule(studentCurricularPlan,
+                executionPeriod));
         result.add(new PrecedencesEnrollmentRule(studentCurricularPlan, executionPeriod));
-        
+
+        return result;
+    }
+    
+    public List getListOfEnrollmentRulesForOptionalCourses(IStudentCurricularPlan studentCurricularPlan,
+            IExecutionPeriod executionPeriod) {
+
+        List result = new ArrayList();       
+//        result.add(new MaximumNumberOfAcumulatedEnrollmentsRule(studentCurricularPlan, executionPeriod));
+//        result.add(new MaximumNumberOfCurricularCoursesEnrollmentRule(studentCurricularPlan,
+//                executionPeriod));
+//        result.add(new PrecedencesEnrollmentRule(studentCurricularPlan, executionPeriod));
         return result;
     }
 
@@ -306,8 +311,7 @@ public class DegreeCurricularPlan extends DomainObject implements
             public boolean evaluate(Object obj) {
                 IBranch branch = (IBranch) obj;
                 if (branch.getBranchType() == null) {
-                    return branch.getName().equals("")
-                            && branch.getCode().equals("");
+                    return branch.getName().equals("") && branch.getCode().equals("");
                 }
                 return branch.getBranchType().equals(BranchType.COMMON_BRANCH);
 
@@ -326,6 +330,7 @@ public class DegreeCurricularPlan extends DomainObject implements
 
         return curricularCourses;
     }
+
     /*
      * (non-Javadoc)
      * 
@@ -337,8 +342,7 @@ public class DegreeCurricularPlan extends DomainObject implements
 
             public boolean evaluate(Object arg0) {
                 IBranch branch = (IBranch) arg0;
-                return branch.getBranchType().equals(
-                        BranchType.SPECIALIZATION_BRANCH);
+                return branch.getBranchType().equals(BranchType.SPECIALIZATION_BRANCH);
             }
 
         });
@@ -354,14 +358,29 @@ public class DegreeCurricularPlan extends DomainObject implements
 
             public boolean evaluate(Object arg0) {
                 IBranch branch = (IBranch) arg0;
-                return branch.getBranchType().equals(
-                        BranchType.SECUNDARY_BRANCH);
+                return branch.getBranchType().equals(BranchType.SECUNDARY_BRANCH);
             }
 
         });
     }
 
-    public List getCurricularCoursesByYearAndSemesterAndBranch(int year, Integer semester,IBranch area){
+    /*
+     * (non-Javadoc)
+     * 
+     * @see Dominio.IDegreeCurricularPlan#getOptionalCurricularCourses()
+     */
+    public List getOptionalCurricularCourses() {
+        List courses = (List) CollectionUtils.select(getCurricularCourses(), new Predicate() {
+
+            public boolean evaluate(Object arg0) {
+                ICurricularCourse curricularCourse = (ICurricularCourse) arg0;
+                return curricularCourse.getType().equals(CurricularCourseType.OPTIONAL_COURSE_OBJ);
+            }
+        });
+        return courses;
+    }
+
+   public List getCurricularCoursesByYearAndSemesterAndBranch(int year, Integer semester,IBranch area){
         
         List finalCurricularCourses = new ArrayList();
         final Integer wantedSemester = semester;
@@ -408,6 +427,7 @@ public class DegreeCurricularPlan extends DomainObject implements
         return false;
     }
     
+
     // -------------------------------------------------------------
     // END: Only for enrollment purposes
     // -------------------------------------------------------------

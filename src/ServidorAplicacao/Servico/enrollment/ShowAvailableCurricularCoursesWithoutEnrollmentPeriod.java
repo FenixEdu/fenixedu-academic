@@ -38,15 +38,13 @@ import Util.TipoCurso;
  * @author David Santos in Jan 27, 2004
  */
 
-public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
-        IService {
+public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements IService {
     public ShowAvailableCurricularCoursesWithoutEnrollmentPeriod() {
     }
 
     // some of these arguments may be null. they are only needed for filter
-    public InfoStudentEnrollmentContext run(Integer executionDegreeId,
-            Integer studentCurricularPlanId, Integer studentNumber)
-            throws FenixServiceException {
+    public InfoStudentEnrollmentContext run(Integer executionDegreeId, Integer studentCurricularPlanId,
+            Integer studentNumber) throws FenixServiceException {
         try {
             IStudent student = getStudent(studentNumber);
 
@@ -79,17 +77,48 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
      * @throws ExcepcaoPersistencia
      */
     protected InfoStudentEnrollmentContext getInfoStudentEnrollmentContext(
-            final IStudentCurricularPlan studentCurricularPlan)
-            throws ExcepcaoPersistencia {
+            final IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia {
 
         final IExecutionPeriod executionPeriod = getExecutionPeriod(null);
 
         InfoStudentEnrollmentContext infoStudentEnrolmentContext = new InfoStudentEnrollmentContext();
-        
+
         List curricularCourses2Enroll = studentCurricularPlan
                 .getCurricularCoursesToEnroll(executionPeriod);
 
-        infoStudentEnrolmentContext.setCurricularCourses2Enroll((List) CollectionUtils.collect(
+        infoStudentEnrolmentContext.setCurricularCourses2Enroll(getInfoCurricularCoursesToEnrollFromCurricularCourses(studentCurricularPlan, executionPeriod, curricularCourses2Enroll));
+
+        Collections.sort(infoStudentEnrolmentContext.getCurricularCourses2Enroll(), new Comparator() {
+
+            public int compare(Object o1, Object o2) {
+                InfoCurricularCourse2Enroll obj1 = (InfoCurricularCourse2Enroll) o1;
+                InfoCurricularCourse2Enroll obj2 = (InfoCurricularCourse2Enroll) o2;
+                return obj1.getCurricularYear().getYear().compareTo(obj2.getCurricularYear().getYear());
+            }
+        });
+        infoStudentEnrolmentContext
+                .setStudentCurrentSemesterInfoEnrollments(getStudentEnrollmentsWithStateEnrolledInExecutionPeriod(
+                        studentCurricularPlan, executionPeriod));
+        infoStudentEnrolmentContext
+                .setInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudentAndInfoBranchAndSecondaryBranch
+                        .newInfoFromDomain(studentCurricularPlan));
+        infoStudentEnrolmentContext.setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear
+                .newInfoFromDomain(executionPeriod));
+        infoStudentEnrolmentContext.setCreditsInSpecializationArea(studentCurricularPlan
+                .getCreditsInSpecializationArea());
+        infoStudentEnrolmentContext.setCreditsInSecundaryArea(studentCurricularPlan
+                .getCreditsInSecundaryArea());
+        return infoStudentEnrolmentContext;
+    }
+
+    /**
+     * @param studentCurricularPlan
+     * @param executionPeriod
+     * @param curricularCourses2Enroll
+     * @return
+     */
+    protected List getInfoCurricularCoursesToEnrollFromCurricularCourses(final IStudentCurricularPlan studentCurricularPlan, final IExecutionPeriod executionPeriod, List curricularCourses2Enroll) {
+        return (List) CollectionUtils.collect(
                 curricularCourses2Enroll, new Transformer() {
 
                     public Object transform(Object arg0) {
@@ -103,44 +132,25 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
                                                 executionPeriod.getSemester())));
                         return infoCurricularCourse;
                     }
-                }));
+                });
+    }
 
-        Collections.sort(infoStudentEnrolmentContext
-                .getCurricularCourses2Enroll(), new Comparator() {
+    /**
+     * @param studentCurricularPlan
+     * @param executionPeriod
+     * @return
+     */
+    protected List getStudentEnrollmentsWithStateEnrolledInExecutionPeriod(
+            final IStudentCurricularPlan studentCurricularPlan, final IExecutionPeriod executionPeriod) {
+        return (List) CollectionUtils.collect(studentCurricularPlan
+                .getAllStudentEnrolledEnrollmentsInExecutionPeriod(executionPeriod), new Transformer() {
 
-            public int compare(Object o1, Object o2) {
-                InfoCurricularCourse2Enroll obj1 = (InfoCurricularCourse2Enroll) o1;
-                InfoCurricularCourse2Enroll obj2 = (InfoCurricularCourse2Enroll) o2;
-                return obj1.getCurricularYear().getYear().compareTo(
-                        obj2.getCurricularYear().getYear());
+            public Object transform(Object arg0) {
+
+                return InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear
+                        .newInfoFromDomain((IEnrollment) arg0);
             }
         });
-        infoStudentEnrolmentContext
-                .setStudentCurrentSemesterInfoEnrollments((List) CollectionUtils
-                        .collect(
-                                studentCurricularPlan
-                                        .getAllStudentEnrolledEnrollmentsInExecutionPeriod(executionPeriod),
-                                new Transformer() {
-
-                                    public Object transform(Object arg0) {
-
-                                        return InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear
-                                                .newInfoFromDomain((IEnrollment) arg0);
-                                    }
-                                }));
-        infoStudentEnrolmentContext
-                .setInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudentAndInfoBranchAndSecondaryBranch
-                        .newInfoFromDomain(studentCurricularPlan));
-        infoStudentEnrolmentContext
-                .setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear
-                        .newInfoFromDomain(executionPeriod));
-        infoStudentEnrolmentContext
-                .setCreditsInSpecializationArea(studentCurricularPlan
-                        .getCreditsInSpecializationArea());
-        infoStudentEnrolmentContext
-                .setCreditsInSecundaryArea(studentCurricularPlan
-                        .getCreditsInSecundaryArea());
-        return infoStudentEnrolmentContext;
     }
 
     /**
@@ -149,13 +159,10 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
      * @throws ExcepcaoPersistencia
      * @throws OutOfCurricularCourseEnrolmentPeriod
      */
-    public static IEnrolmentPeriod getEnrolmentPeriod(
-            IStudentCurricularPlan studentActiveCurricularPlan)
+    public static IEnrolmentPeriod getEnrolmentPeriod(IStudentCurricularPlan studentActiveCurricularPlan)
             throws ExcepcaoPersistencia, OutOfCurricularCourseEnrolmentPeriod {
-        ISuportePersistente persistentSuport = SuportePersistenteOJB
-                .getInstance();
-        IPersistentEnrolmentPeriod enrolmentPeriodDAO = persistentSuport
-                .getIPersistentEnrolmentPeriod();
+        ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+        IPersistentEnrolmentPeriod enrolmentPeriodDAO = persistentSuport.getIPersistentEnrolmentPeriod();
         IEnrolmentPeriod enrolmentPeriod = enrolmentPeriodDAO
                 .readActualEnrolmentPeriodForDegreeCurricularPlan(studentActiveCurricularPlan
                         .getDegreeCurricularPlan());
@@ -179,15 +186,11 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
      * @return IStudent
      * @throws ExcepcaoPersistencia
      */
-    protected IStudent getStudent(Integer studentNumber)
-            throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = SuportePersistenteOJB
-                .getInstance();
-        IPersistentStudent studentDAO = persistentSuport
-                .getIPersistentStudent();
+    protected IStudent getStudent(Integer studentNumber) throws ExcepcaoPersistencia {
+        ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+        IPersistentStudent studentDAO = persistentSuport.getIPersistentStudent();
 
-        return studentDAO.readStudentByNumberAndDegreeType(studentNumber,
-                TipoCurso.LICENCIATURA_OBJ);
+        return studentDAO.readStudentByNumberAndDegreeType(studentNumber, TipoCurso.LICENCIATURA_OBJ);
     }
 
     /**
@@ -197,16 +200,16 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
      */
     protected IStudentCurricularPlan getStudentCurricularPlan(IStudent student)
             throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = SuportePersistenteOJB
-                .getInstance();
+        ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
         IStudentCurricularPlanPersistente studentCurricularPlanDAO = persistentSuport
                 .getIStudentCurricularPlanPersistente();
 
-        return studentCurricularPlanDAO.readActiveStudentCurricularPlan(student
-                .getNumber(), student.getDegreeType());
+        return studentCurricularPlanDAO.readActiveStudentCurricularPlan(student.getNumber(), student
+                .getDegreeType());
     }
 
-    protected IExecutionPeriod getExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
+    protected IExecutionPeriod getExecutionPeriod(IExecutionPeriod executionPeriod)
+            throws ExcepcaoPersistencia {
 
         IExecutionPeriod executionPeriod2Return = executionPeriod;
 

@@ -6841,5 +6841,16 @@
         <filterChains>         
         </filterChains>
     </service>
+     <service>
+        <name>ShowOptionalCoursesForEnrollment</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.enrollment.ShowOptionalCoursesForEnrollment</implementationClass>
+        <description>Returns a list of Optional Curricular Courses in which the student can be enrolled.
+             Enrollment rules are applied to the list.
+        </description>
+        <isTransactional>true</isTransactional>
+        <filterChains>         
+        </filterChains>
+    </service>
 
 </serviceDefinitions>
