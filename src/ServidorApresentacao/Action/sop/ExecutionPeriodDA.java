@@ -192,7 +192,7 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 		request.setAttribute(SessionConstants.ROOM, infoRoom);
 		request.setAttribute(SessionConstants.ROOM_OID,	infoRoom.getIdInternal());
 
-		Object argsReadLessons[] = { selectedInfoExecutionPeriod, infoRoom };
+		Object argsReadLessons[] = { selectedInfoExecutionPeriod, infoRoom,null };
 
 		try {
 			List lessons;

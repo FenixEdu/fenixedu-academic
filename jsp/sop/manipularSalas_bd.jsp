@@ -10,6 +10,7 @@
 	<html:hidden property="selectRoomCriteria_Type" value="<%= ""+request.getAttribute("selectRoomCriteria_Type")%>"/>
 	<html:hidden property="selectRoomCriteria_CapacityNormal" value="<%= ""+request.getAttribute("selectRoomCriteria_CapacityNormal")%>"/>
 	<html:hidden property="selectRoomCriteria_CapacityExame" value="<%= ""+request.getAttribute("selectRoomCriteria_CapacityExame")%>"/>
+	<html:hidden property="executionPeriodId" value="<%= ""+request.getAttribute("executionPeriodId")%>"/>	
 <h2><bean:message key="manipularSalas.titleSuccess"/></h2>
   <br/>
   <span class="error"><html:errors/></span>

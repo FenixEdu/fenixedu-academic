@@ -20,7 +20,7 @@ public class SopRoomTimeTableLessonContentRenderer
 
 		strBuffer
 				.append("<a href='manageExecutionCourse.do?method=prepare&amp;page=0")
-				.append("&amp;" + SessionConstants.EXECUTION_PERIOD_OID)
+				.append("&amp;" + SessionConstants.EXECUTION_PERIOD_OID+"=")
 				.append(lesson.getInfoDisciplinaExecucao().getInfoExecutionPeriod().getIdInternal())
 				.append("&amp;execution_course_oid=")
 				.append(lesson.getInfoDisciplinaExecucao().getIdInternal())

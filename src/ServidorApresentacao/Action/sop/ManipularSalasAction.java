@@ -16,17 +16,15 @@ import org.apache.struts.action.DynaActionFormClass;
 import org.apache.struts.config.FormBeanConfig;
 import org.apache.struts.config.ModuleConfig;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import DataBeans.InfoRoom;
 import DataBeans.RoomKey;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.sop.ApagarSala.NotAuthorizedServiceDeleteRoomException;
-import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException;
 import ServidorApresentacao.Action.sop.base.FenixSelectedRoomsContextAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.Util;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Nuno Antão
@@ -201,7 +199,6 @@ public class ManipularSalasAction extends FenixSelectedRoomsContextAction
      * @returns the name of the selected sala.
      **/
     private InfoRoom getSelectedSala(ActionForm form, HttpServletRequest request)
-        throws FenixActionException
     {
 
         DynaActionForm posicaoSalaFormBean = (DynaActionForm) form;

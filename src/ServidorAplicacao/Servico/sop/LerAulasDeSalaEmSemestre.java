@@ -1,86 +1,83 @@
 /*
- * LerAulasDeSalaEmSemestre.java
- *
- * Created on 29 de Outubro de 2002, 15:44
+ * LerAulasDeSalaEmSemestre.java Created on 29 de Outubro de 2002, 15:44
  */
 
 package ServidorAplicacao.Servico.sop;
 
 /**
  * Servi�o LerAulasDeSalaEmSemestre.
- *
+ * 
  * @author tfc130
- **/
+ */
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoLesson;
 import DataBeans.InfoRoom;
 import DataBeans.util.Cloner;
+import Dominio.ExecutionPeriod;
 import Dominio.IAula;
 import Dominio.IExecutionPeriod;
 import Dominio.ISala;
-import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
+import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class LerAulasDeSalaEmSemestre implements IServico {
+public class LerAulasDeSalaEmSemestre implements IService
+{
 
-	private static LerAulasDeSalaEmSemestre _servico =
-		new LerAulasDeSalaEmSemestre();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static LerAulasDeSalaEmSemestre getService() {
-		return _servico;
-	}
+    public LerAulasDeSalaEmSemestre()
+    {
+    }
 
-	/**
-	 * The actor of this class.
-	 **/
-	private LerAulasDeSalaEmSemestre() {
-	}
+    public List run(InfoExecutionPeriod infoExecutionPeriod, InfoRoom infoRoom,
+            Integer executionPeriodId)
+    {
+        List infoAulas = null;
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "LerAulasDeSalaEmSemestre";
-	}
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentExecutionPeriod persistentExecutionPeriod = sp
+                    .getIPersistentExecutionPeriod();
+            IAulaPersistente lessonDAO = sp.getIAulaPersistente();
+            IExecutionPeriod executionPeriod = null;
+            if (executionPeriodId != null)
+            {
+                executionPeriod = (IExecutionPeriod) persistentExecutionPeriod
+                        .readByOId(new ExecutionPeriod(executionPeriodId),
+                                false);
+            }
+            else
+            {
+                executionPeriod = Cloner
+                        .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
+            }
 
-	public List run(
-		InfoExecutionPeriod infoExecutionPeriod,
-		InfoRoom infoRoom) {
-		List infoAulas = null;
+            ISala room = Cloner.copyInfoRoom2Room(infoRoom);
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            List lessonList = lessonDAO.readByRoomAndExecutionPeriod(room,
+                    executionPeriod);
 
-			IAulaPersistente lessonDAO = sp.getIAulaPersistente();
-
-			IExecutionPeriod executionPeriod =
-				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
-					infoExecutionPeriod);
-			ISala room = Cloner.copyInfoRoom2Room(infoRoom);
-
-			List lessonList =
-				lessonDAO.readByRoomAndExecutionPeriod(room, executionPeriod);
-
-			Iterator iterator = lessonList.iterator();
-			infoAulas = new ArrayList();
-			while (iterator.hasNext()) {
-				IAula elem = (IAula) iterator.next();
-				InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem);
-				infoAulas.add(infoLesson);
-			}
-		} catch (ExcepcaoPersistencia ex) {
-			ex.printStackTrace();
-		}
-		return infoAulas;
-	}
+            Iterator iterator = lessonList.iterator();
+            infoAulas = new ArrayList();
+            while (iterator.hasNext())
+            {
+                IAula elem = (IAula) iterator.next();
+                InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem);
+                infoAulas.add(infoLesson);
+            }
+        }
+        catch (ExcepcaoPersistencia ex)
+        {
+            ex.printStackTrace();
+        }
+        return infoAulas;
+    }
 
 }
