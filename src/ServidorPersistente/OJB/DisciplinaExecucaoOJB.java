@@ -32,6 +32,7 @@ public class DisciplinaExecucaoOJB
 	}
 
 	public boolean apagarTodasAsDisciplinasExecucao() {
+		// TODO : delete exam_executionCoursees too		
 		try {
 			String oqlQuery =
 				"select all from " + DisciplinaExecucao.class.getName();
@@ -218,6 +219,7 @@ public class DisciplinaExecucaoOJB
 
 	public void deleteExecutionCourse(IDisciplinaExecucao executionCourse)
 		throws ExcepcaoPersistencia {
+		// TODO : delete exam_executionCoursees too
 		try {
 			String oqlQuery =
 				"select all from " + DisciplinaExecucao.class.getName();

@@ -160,10 +160,12 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
 	}
 
 	public void delete(IExam exam) throws ExcepcaoPersistencia {
+		// TODO : delete exam_executionCoursees too
 		super.delete(exam);
 	}
 
 	public void deleteAll() throws ExcepcaoPersistencia {
+		// TODO : delete exam_executionCoursees too
 		String oqlQuery = "select all from " + Exam.class.getName();
 		super.deleteAll(oqlQuery);
 	}

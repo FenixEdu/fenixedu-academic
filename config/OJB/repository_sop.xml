@@ -401,5 +401,41 @@
          <foreignkey field-ref="keyExecutionCourse"/>
       </reference-descriptor>      
    </class-descriptor>
--->
+
+<!-- Definitions for Dominio.ExamExecutionCourse -->
+   <class-descriptor
+   	  class="Dominio.ExamExecutionCourse"
+   	  table="EXAM_EXECUTION_COURSE"
+   >
+      <field-descriptor id="1"
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+      <field-descriptor id="2"
+         name="keyExam"
+         column="KEY_EXAM"
+         jdbc-type="INTEGER"
+      />
+      <field-descriptor id="3"
+         name="keyExecutionCourse"
+         column="KEY_EXECUTION_COURSE"
+         jdbc-type="INTEGER"
+      />
+      <reference-descriptor
+         name="exam"
+         class-ref="Dominio.Exam"
+      >
+         <foreignkey field-ref="keyExam"/>
+      </reference-descriptor> 
+      <reference-descriptor
+         name="executionCourse"
+         class-ref="Dominio.DisciplinaExecucao"
+      >
+         <foreignkey field-ref="keyExecutionCourse"/>
+      </reference-descriptor> 
+   </class-descriptor>
+
 <!-- Mapping of User defined classes ends here -->

@@ -147,3 +147,15 @@ CREATE TABLE EXAM (
   UNIQUE U1 (KEY_EXECUTION_COURSE, SEASON),
   UNIQUE U2 (KEY_EXECUTION_COURSE, DAY, BEGINNING)
 ) TYPE=InnoDB;
+
+#----------------------------
+# Table structure for exam_executionDegree
+#----------------------------
+drop table if exists EXAM_EXECUTION_COURSE;
+create table EXAM_EXECUTION_COURSE (
+   ID_INTERNAL int(11) not null auto_increment,
+   KEY_EXAM int(11) not null,
+   KEY_EXECUTION_COURSE int(11) not null,
+   primary key (ID_INTERNAL),
+   unique U1 (KEY_EXAM, KEY_EXECUTION_COURSE))
+   type=InnoDB;
