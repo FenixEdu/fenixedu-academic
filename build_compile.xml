@@ -436,6 +436,7 @@
 	       		<include name="net/sourceforge/fenixedu/utilInsc/**/*.class"/>
 	       		<include name="net/sourceforge/fenixedu/utilTests/**/*.class"/>
 	       		<include name="net/sourceforge/fenixedu/tools/**/*.class"/>
+				<include name="org/**/*.class"/>
 			</fileset>
 		</jar>
 	</target>
