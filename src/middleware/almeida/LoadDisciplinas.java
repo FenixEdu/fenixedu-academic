@@ -8,6 +8,8 @@ package middleware.almeida;
 
 import java.util.StringTokenizer;
 
+import Dominio.ICurricularCourse;
+
 /**
  *
  * @author  Luis Cruz & Sara Ribeiro
@@ -33,11 +35,11 @@ public class LoadDisciplinas extends LoadDataFile {
 		String ano = stringTokenizer.nextToken();
 		String semestre = stringTokenizer.nextToken();
 		String codigoDisciplina = stringTokenizer.nextToken();
-		stringTokenizer.nextToken();   // ???
-		String teorica = stringTokenizer.nextToken().replace(',','.');
-		String pratica = stringTokenizer.nextToken().replace(',','.');
-		String laboratorio = stringTokenizer.nextToken().replace(',','.');
-		String teoricopratica = stringTokenizer.nextToken().replace(',','.');
+		stringTokenizer.nextToken(); // ???
+		String teorica = stringTokenizer.nextToken().replace(',', '.');
+		String pratica = stringTokenizer.nextToken().replace(',', '.');
+		String laboratorio = stringTokenizer.nextToken().replace(',', '.');
+		String teoricopratica = stringTokenizer.nextToken().replace(',', '.');
 		String nomeDisciplina = stringTokenizer.nextToken();
 
 		Almeida_disc almeida_disc = new Almeida_disc();
@@ -53,11 +55,25 @@ public class LoadDisciplinas extends LoadDataFile {
 		almeida_disc.setLab((new Double(laboratorio)).doubleValue());
 		almeida_disc.setNomedis(nomeDisciplina);
 
-		writeElement(almeida_disc);
+		//writeElement(almeida_disc);
+		processCurricularCourse(almeida_disc);
+	}
+
+	/**
+	 * @param almeida_disc
+	 */
+	private void processCurricularCourse(Almeida_disc almeida_disc) {
+		ICurricularCourse curricularCourse =
+			persistentObjectOJB.readCurricularCourse(
+				almeida_disc.getNomedis(),
+				new Integer("" + almeida_disc.getCodcur()));
+		if (curricularCourse == null) {
+			numberUntreatableElements++;
+		}
 	}
 
 	protected String getFilename() {
-		return "migration/DISCIPLINAS.TXT";
+		return "etc/migration/DISCIPLINAS.TXT";
 	}
 
 	protected String getFieldSeperator() {

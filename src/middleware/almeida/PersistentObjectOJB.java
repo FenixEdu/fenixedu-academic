@@ -28,7 +28,6 @@ public class PersistentObjectOJB {
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}
-		//super();
 	}
 
 	public void beginTransaction() {

@@ -57,7 +57,7 @@ public class LoadCurram extends LoadDataFile {
 	}
 
 	protected String getFilename() {
-		return "migration/CURRAM.TXT";
+		return "etc/migration/CURRAM.TXT";
 	}
 
 	protected String getFieldSeperator() {

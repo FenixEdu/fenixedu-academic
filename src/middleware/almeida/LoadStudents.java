@@ -11,7 +11,6 @@ import java.util.StringTokenizer;
 
 import org.apache.ojb.broker.query.Criteria;
 
-import Dominio.DegreeCurricularPlan;
 import Dominio.Funcionario;
 import Dominio.IPersonRole;
 import Dominio.IPessoa;
@@ -102,7 +101,7 @@ public class LoadStudents extends LoadDataFile {
 	}
 
 	protected String getFilename() {
-		return "migration/ALUNOS.TXT";
+		return "etc/migration/ALUNOS.TXT";
 	}
 
 	protected String getFieldSeperator() {

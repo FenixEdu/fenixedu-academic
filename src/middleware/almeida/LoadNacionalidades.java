@@ -41,7 +41,7 @@ public class LoadNacionalidades extends LoadDataFile {
 	}
 
 	protected String getFilename() {
-		return "migration/NACIONALIDADES.TXT";
+		return "etc/migration/NACIONALIDADES.TXT";
 	}
 
 	protected String getFieldSeperator() {

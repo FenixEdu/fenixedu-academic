@@ -32,10 +32,11 @@ public abstract class LoadDataFile {
 
 	private int numberLinesProcessed = 0;
 	protected int numberElementsWritten = 0;
+	protected int numberUntreatableElements = 0;
 	private Calendar startTime = null;
 	private Calendar endTime = null;
 
-	protected PersistentObjectOJB persistentObjectOJB = null;
+	protected PersistentObjectOJBReader persistentObjectOJB = null;
 
 	public void load() {
 		System.out.println("Loading " + getFilename());
@@ -101,7 +102,7 @@ public abstract class LoadDataFile {
 	}
 
 	private void setupDAO() {
-		persistentObjectOJB = new PersistentObjectOJB();
+		persistentObjectOJB = new PersistentObjectOJBReader();
 		persistentObjectOJB.beginTransaction();
 	}
 
@@ -121,6 +122,7 @@ public abstract class LoadDataFile {
 		System.out.println("   Report for loading of file: " + getFilename());
 		System.out.println("      Number of lines parsed: " + numberLinesProcessed);
 		System.out.println("      Number of elements added: " + numberElementsWritten);
+		System.out.println("      Number of untreatable elements: " + numberUntreatableElements);
 		System.out.println(
 			"      Total processing time: "
 				+ durationHour
