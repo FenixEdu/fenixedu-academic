@@ -11,9 +11,4 @@
 		<put name="body" value="/person/welcomeScreen.jsp"/>
 		<put name="footer" value="/copyright.jsp"/>
 	</definition>
-
-
-<!-- **************************************************************************************************************************** -->
-
-
 </tiles-definitions>
