@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+
+	<!-- ========== Data Source Configuration =============================== -->
+
+	<!-- ========== Form Bean Definitions ================================== -->
+	<form-beans type="org.apache.struts.action.ActionFormBean">
+		<form-bean name="teacherSearchForm" 
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
+			<form-property name="teacherNumber" type="java.lang.String"/>
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+		<form-bean name="creditsTeacherForm"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+			dynamic="true">
+			<form-property name="tfcStudentsNumber"  type="java.lang.String"/>
+			<form-property name="additionalCredits"  type="java.lang.String"/>
+			<form-property name="additionalCreditsJustification"  type="java.lang.String"/>						
+			<form-property name="teacherOID"  type="java.lang.String"/>			
+			<form-property name="method" type="java.lang.String"></form-property>       
+			<form-property name="page" type="java.lang.Integer"></form-property>               
+		</form-bean> 		          
+		<form-bean name="executionCourseShiftsPercentageForm"
+			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
+			<form-property name="objectCode" type="java.lang.Integer"/>
+			<form-property name="teacherOID"  type="java.lang.String"/>			
+			<form-property name="shiftProfessorships"  type="java.lang.Integer[]"/>
+			<form-property name="method" type="java.lang.String"></form-property>       
+		</form-bean> 		
+    </form-beans>
+	 <!-- ========== Global Exception Definitions ============================== -->
+	<global-exceptions>
+		<exception type="java.lang.Exception"
+			       key="java.lang.Exception"
+			       path="/naoExecutado.do"
+			       handler="ServidorApresentacao.config.FenixExceptionHandler"/>
+		<exception type="ServidorAplicacao.NotAuthorizedException"
+			       key="ServidorAplicacao.NotAuthorizedException"
+			       path="/naoAutorizado.do"
+			       />
+		<exception type="ServidorAplicacao.FenixServiceException"
+		  	       key="ServidorAplicacao.FenixServiceException"
+		  	       path="/naoExecutado.do"
+		  	       handler="ServidorApresentacao.config.FenixExceptionHandler" />
+		<exception type="ServidorAplicacao.Servico.ExcepcaoInexistente"
+			       key="ServidorAplicacao.Servico.ExcepcaoInexistente"
+			       path="/naoExistente.do"
+			       handler="ServidorApresentacao.config.FenixExceptionHandler" /> 
+	</global-exceptions>
+
+	<!-- ========== Global Forward Definitions =============================== -->
+	<global-forwards type="org.apache.struts.action.ActionForward">
+		<forward name="index" path="/index.do" redirect="true"/>
+		<forward name="home" path="/home.do" contextRelative="true"/>  
+		<forward name="logoff" path="/logoff.do" contextRelative="true"/>
+    </global-forwards>
+
+	<!-- ========== Action Mapping Definitions =============================== -->
+	<action-mappings type="org.apache.struts.action.ActionMapping">
+		<action path="/index" type="org.apache.struts.actions.ForwardAction" parameter="df.index"/>
+	   
+	   	<action path="/teacherSearch" type="ServidorApresentacao.Action.credits.TeacherSearchDispatchAction" 
+	   			name="teacherSearchForm"
+	   			input="/index.do"
+	   			parameter="method"
+	   			scope="request">
+	   		<forward name="one" path="/creditsManagement.do?page=0&amp;method=prepare"></forward>
+	   	</action>
+	   
+		<!-- Actions for Teacher credits -->
+		<action path="/creditsManagement" name="creditsTeacherForm" 
+				input="/creditsManagement.do?page=0&amp;method=prepare"
+				type="ServidorApresentacao.Action.teacher.credits.TeacherCreditsDispatchAction"
+				parameter="method"
+				validate="true"
+				scope="request">
+			<forward name="showForm" path="df.page.management.credits" />
+		</action>
+		
+		<action 
+			name="executionCourseShiftsPercentageForm"
+			input="/executionCourseShiftsPercentageManager.do?method=show"
+			path="/executionCourseShiftsPercentageManager"
+			parameter="method"
+			scope="request"
+			type="ServidorApresentacao.Action.teacher.credits.ProfessorShipShiftPercentageDispatchAction"
+			validate="false">
+		   <forward name="showTable" path="shift.percentage.form"/>
+		   <forward name="acceptSuccess" path="/creditsManagement.do?page=0&amp;method=prepare" redirect="true"/>
+		</action>	
+	<!-- End Marks List -->
+	
+	</action-mappings>
+
+	<!-- ========== Controller Configuration ================================ -->
+	<controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
+
+	<!-- ========== Message Resources Definitions ============================ -->
+	<message-resources parameter="ServidorApresentacao.ApplicationResources" />
+
+	<!-- ========== Plug Ins Configuration ================================= -->
+	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+      <set-property property="pathnames" 
+		value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-credits.xml"/>
+	</plug-in>
+
+	<plug-in className="org.apache.struts.tiles.TilesPlugin" >
+		<set-property property="definitions-config"
+					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/credits/tiles-credits-definitions.xml,/WEB-INF/tiles/credits/tiles-credits-pages-definitions.xml" />
+		<set-property property="moduleAware" value="true" />
+		<set-property property="definitions-parser-validate" value="true" />
+	</plug-in>    
+</struts-config>
