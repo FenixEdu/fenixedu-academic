@@ -364,7 +364,6 @@ public abstract class Cloner {
 		ICurso degree = new Curso();
 		try {
 			BeanUtils.copyProperties(degree, infoDegree);
-			degree.setTipoCurso(new TipoCurso(infoDegree.getDegreeType()));
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
