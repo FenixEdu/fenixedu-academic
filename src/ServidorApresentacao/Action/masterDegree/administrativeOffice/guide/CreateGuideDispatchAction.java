@@ -238,7 +238,13 @@ public class CreateGuideDispatchAction extends DispatchAction {
 			session.setAttribute(SessionConstants.GUIDE, infoGuide);
 			
 			session.setAttribute(SessionConstants.PAYMENT_TYPE, PaymentType.toArrayList());
-			session.setAttribute(SessionConstants.GUIDE_SITUATION_LIST, SituationOfGuide.toArrayList());
+			
+			
+			ArrayList guideSituations = new ArrayList();
+			guideSituations.add(new LabelValueBean(SituationOfGuide.NON_PAYED_STRING, SituationOfGuide.NON_PAYED_STRING));
+			guideSituations.add(new LabelValueBean(SituationOfGuide.PAYED_STRING, SituationOfGuide.PAYED_STRING));
+			
+			session.setAttribute(SessionConstants.GUIDE_SITUATION_LIST, guideSituations);
 
 			session.setAttribute(SessionConstants.REQUESTER_NUMBER, number);
 
