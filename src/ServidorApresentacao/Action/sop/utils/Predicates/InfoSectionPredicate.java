@@ -22,11 +22,18 @@ public class InfoSectionPredicate extends FenixPredicate {
 	 * 
 	 */
 	public InfoSectionPredicate(InfoSection supSection) {
-		this.supSection=supSection;
+		this.supSection = supSection;
 	}
-	
+
 	public boolean evaluate(Object arg0) {
-		return (arg0 instanceof InfoSection )&&(((InfoSection)arg0).getSuperiorInfoSection().equals(this.supSection));
-			
-		}
+		System.out.println("arg0: " + arg0);
+		return (arg0 != null)
+			&& (arg0 instanceof InfoSection)
+			&& (((((InfoSection) arg0).getSuperiorInfoSection() == null)
+				&& (this.supSection == null))
+				|| ((((InfoSection) arg0).getSuperiorInfoSection() != null)&&(((InfoSection) arg0)
+					.getSuperiorInfoSection()
+					.equals(this.supSection))));
+
+	}
 }

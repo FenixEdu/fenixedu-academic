@@ -308,6 +308,7 @@ public class Util {
 		List sortedSections= new ArrayList();
 		List tempList = null;
 		Predicate pred=new InfoSectionPredicate(null);
+		System.out.println("predicate: "+pred);
 		tempList= (List) CollectionUtils.select(sections,pred);
 		Collections.sort(tempList);
 		sortedSections.addAll(tempList);
