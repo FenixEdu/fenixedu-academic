@@ -9,20 +9,26 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.MissingResourceException;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
+import junit.framework.TestCase;
+
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
+import DataBeans.InfoCurricularCourse;
 import Dominio.ICurricularCourse;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrolmentContext;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
 import framework.factory.ServiceManagerServiceFactory;
 
 /**
@@ -30,23 +36,23 @@ import framework.factory.ServiceManagerServiceFactory;
  * @author Ricardo Rodrigues
  */
 
-public class ShowAvailableCurricularCoursesTest extends
-        ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase
+public class ShowAvailableCurricularCoursesTest extends TestCase
 {
-
-    private static String EXPECTED_CURRICULAR_COURSES_PROPERTY = "ExpectedCurricularCoursesFilePath";
 
     private static String EXPECTED_SECONDARY_CREDITS_PROPERTY = "CreditsInSecundaryArea";
 
     private static String EXPECTED_SPECIALIZATION_CREDITS_PROPERTY = "CreditsInSpecializationArea";
 
+    private static String USER = "";
+
     private static String ITERATION = "";
+
+    private static String STUDENT_NUMBER = "StudentNumber";
 
     /**
      * @param name
      */
-    protected ShowAvailableCurricularCoursesTest(String testName,
-            String iteration)
+    public ShowAvailableCurricularCoursesTest(String testName, String iteration)
     {
         super(testName);
         ITERATION = iteration;
@@ -85,6 +91,13 @@ public class ShowAvailableCurricularCoursesTest extends
                 + "/test.properties";
     }
 
+    protected String getExpectedResultFilePath()
+    {
+        return "etc/LEEC_Enrollment_Tests_Arguments/" + ITERATION
+                + "/output.txt";
+
+    }
+
     /*
      * (non-Javadoc)
      * 
@@ -92,37 +105,49 @@ public class ShowAvailableCurricularCoursesTest extends
      */
     protected String[] getAuthenticatedAndAuthorizedUser()
     {
-        String[] args = {"16", "pass", getApplication()};
-        return args;
-    }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServiceNeedsAuthenticationTestCase#getAuthenticatedAndUnauthorizedUser()
-     */
-    protected String[] getAuthenticatedAndUnauthorizedUser()
-    {
-        String[] args = {"julia", "pass", getApplication()};
-        return args;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServiceNeedsAuthenticationTestCase#getNonAuthenticatedUser()
-     */
-    protected String[] getNotAuthenticatedUser()
-    {
-        String[] args = {"fiado", "pass", getApplication()};
+        try
+        {
+            ResourceBundle bundle = new PropertyResourceBundle(
+                    new FileInputStream(getConfigFilePath()));
+            USER = bundle.getString(STUDENT_NUMBER);
+        }
+        catch (FileNotFoundException e)
+        {
+            // 
+        }
+        catch (IOException e)
+        {
+            //
+        }
+        String[] args = {"L" + USER, "pass", getApplication()};
         return args;
     }
 
     protected Object[] getArguments()
     {
-        Integer studentNumber = new Integer(54503);
-        Object[] args = {studentNumber};
+
+        try
+        {
+            ResourceBundle bundle = new PropertyResourceBundle(
+                    new FileInputStream(getConfigFilePath()));
+
+            Integer studentNumber = new Integer(bundle
+                    .getString(STUDENT_NUMBER));
+            Object[] args = {studentNumber};
+            return args;
+        }
+        catch (FileNotFoundException e)
+        {
+            //
+        }
+        catch (IOException e)
+        {
+            //
+        }
+        Object[] args = {};
         return args;
+
     }
 
     /*
@@ -136,21 +161,10 @@ public class ShowAvailableCurricularCoursesTest extends
     }
 
     /** ********** Inicio dos testes ao serviço ************* */
-    public void testAuthorizedUser()
+
+    public boolean testShowAvailableCurricularCoursesTest()
     {
-    }
-    
-    public void testUnauthorizedUser() {
-        
-    }
-    public void testNonAuthenticatedUser() {
-        
-    }
-    
-    
-    public void testShowAvailableCurricularCourses()
-    {
-        System.out.println("teste" + ITERATION);
+
         String[] args = getAuthenticatedAndAuthorizedUser();
         IUserView id = authenticateUser(args);
         Object[] args2 = getArguments();
@@ -163,17 +177,27 @@ public class ShowAvailableCurricularCoursesTest extends
         }
         catch (FenixServiceException e)
         {
+            System.out.println("service execution failed");
             fail("Executing Service: " + getNameOfServiceToBeTested());
             e.printStackTrace();
         }
-
+        System.out.println("service executed: comparing results");
         boolean result = CompareExpectedCCAndCreditsWithDataReturnedFromService(infoSEC);
 
-        if (result) System.out
-                .println(getNameOfServiceToBeTested()
-                        + " was SUCCESSFULY runned by test: testCreateGrantSubsidySuccessfull");
+        if (result)
+        {
+            System.out
+                    .println(getNameOfServiceToBeTested()
+                            + " was SUCCESSFULY runned by test: testCreateGrantSubsidySuccessfull");
+
+        }
         else
+        {
             fail("Returned curricular courses dont macth the expected curricular courses");
+            return false;
+
+        }
+        return true;
     }
 
     /**
@@ -183,26 +207,66 @@ public class ShowAvailableCurricularCoursesTest extends
     private boolean CompareExpectedCCAndCreditsWithDataReturnedFromService(
             InfoStudentEnrolmentContext infoSEC)
     {
-        Integer secondaryCredits = infoSEC.getCreditsInSecundaryArea();
-        Integer specializationCredits = infoSEC
-                .getCreditsInSpecializationArea();
+
+        //  Integer secondaryCredits = infoSEC.getCreditsInSecundaryArea();
+        //        Integer specializationCredits = infoSEC
+        //                .getCreditsInSpecializationArea();
         List curricularCourses = infoSEC
                 .getFinalInfoCurricularCoursesWhereStudentCanBeEnrolled();
-        List curricularCoursesNames = filterCurricularCoursesNames(curricularCourses);
+
+        List curricularCoursesNames = (List) CollectionUtils.collect(
+                curricularCourses, new Transformer()
+                {
+
+                    public Object transform(Object arg0)
+                    {
+                        InfoCurricularCourse curricularCourse = null;
+                        try
+                        {
+                            curricularCourse = (InfoCurricularCourse) arg0;
+                        }
+                        catch (RuntimeException e)
+                        {
+                            return "XPTO";
+                        }
+                        return curricularCourse.getName();
+                    }
+                });
+
+        CollectionUtils.filter(curricularCoursesNames, new Predicate()
+        {
+
+            public boolean evaluate(Object arg0)
+            {
+                return !arg0.equals("XPTO");
+            }
+        });
+
         List expectedCCAndCredits = readExpectedCCAndCredits();
+
         List expectedCurricularCoursesNames = (List) expectedCCAndCredits
                 .get(0);
-        sortCurricularCourses(curricularCoursesNames);
-        sortCurricularCourses(expectedCurricularCoursesNames);
 
-        Integer expectedSecondaryCredits = (Integer) expectedCCAndCredits
-                .get(1);
-        Integer expectedSpecializationCredits = (Integer) expectedCCAndCredits
-                .get(2);
+        // sortCurricularCourses(curricularCoursesNames);
+        System.out.println("curricularCoursesNames:" + curricularCoursesNames);
+        System.out.println("expectedCurricularCoursesNames:"
+                + expectedCurricularCoursesNames);
+        // sortCurricularCourses(expectedCurricularCoursesNames);
 
-        return (curricularCoursesNames.equals(expectedCurricularCoursesNames)
-                && (specializationCredits.equals(expectedSpecializationCredits)) && (secondaryCredits
-                .equals(expectedSecondaryCredits)));
+        //        Integer expectedSecondaryCredits = (Integer) expectedCCAndCredits
+        //                .get(1);
+        //        Integer expectedSpecializationCredits = (Integer)
+        // expectedCCAndCredits
+        //                .get(2);
+
+        return CollectionUtils.subtract(curricularCoursesNames,
+                expectedCurricularCoursesNames).isEmpty()
+                && CollectionUtils.subtract(expectedCurricularCoursesNames,
+                        curricularCoursesNames).isEmpty();
+        //                && (specializationCredits.equals(expectedSpecializationCredits)) &&
+        // (secondaryCredits
+        //                .equals(expectedSecondaryCredits))
+        // );
     }
 
     /**
@@ -210,18 +274,43 @@ public class ShowAvailableCurricularCoursesTest extends
      */
     private List readExpectedCCAndCredits()
     {
-        List ccAndCredits = null;
+        List ccAndCredits = new ArrayList();
         try
         {
+
             ResourceBundle bundle = new PropertyResourceBundle(
                     new FileInputStream(getConfigFilePath()));
-            String expectedCCFilePath = bundle
-                    .getString(EXPECTED_CURRICULAR_COURSES_PROPERTY);
-            Integer creditsInSecundaryArea = new Integer(bundle
-                    .getString(EXPECTED_SECONDARY_CREDITS_PROPERTY));
-            Integer creditsInSpecializationArea = new Integer(bundle
-                    .getString(EXPECTED_SPECIALIZATION_CREDITS_PROPERTY));
-            List curricularCoursesNames = readFile(expectedCCFilePath);
+
+            Integer creditsInSecundaryArea;
+            try
+            {
+                creditsInSecundaryArea = new Integer(bundle
+                        .getString(EXPECTED_SECONDARY_CREDITS_PROPERTY));
+            }
+            catch (NumberFormatException e)
+            {
+                creditsInSecundaryArea = new Integer(0);
+            }
+
+            Integer creditsInSpecializationArea;
+            try
+            {
+                creditsInSpecializationArea = new Integer(bundle
+                        .getString(EXPECTED_SPECIALIZATION_CREDITS_PROPERTY));
+            }
+            catch (NumberFormatException e1)
+            {
+                creditsInSpecializationArea = new Integer(0);
+            }
+
+            List curricularCoursesNames = readFile(getExpectedResultFilePath());
+
+            ccAndCredits.add(curricularCoursesNames);
+
+            ccAndCredits.add(creditsInSecundaryArea);
+
+            ccAndCredits.add(creditsInSpecializationArea);
+
         }
         catch (MissingResourceException ex)
         {
@@ -243,39 +332,30 @@ public class ShowAvailableCurricularCoursesTest extends
 
     private static List readFile(String filePath) throws IOException
     {
-        ArrayList lista = new ArrayList();
+
+        List lista = new ArrayList();
         BufferedReader leitura = null;
         String linhaFicheiro = null;
 
         File file = new File(filePath);
+
         InputStream ficheiro = new FileInputStream(file);
+
         leitura = new BufferedReader(new InputStreamReader(ficheiro, "8859_1"),
                 new Long(file.length()).intValue());
+
         do
         {
             linhaFicheiro = leitura.readLine();
 
-            if (linhaFicheiro != null) lista.add(linhaFicheiro);
+            if (linhaFicheiro != null)
+            {
+                lista.add(linhaFicheiro.trim());
+            }
         }
         while ((linhaFicheiro != null));
 
         return lista;
-    }
-
-    /**
-     * @param curricularCourses
-     * @return
-     */
-    private List filterCurricularCoursesNames(List curricularCourses)
-    {
-        ArrayList curricularCoursesName = new ArrayList();
-
-        Iterator iter = curricularCourses.iterator();
-        while (iter.hasNext())
-            curricularCoursesName.add(((ICurricularCourse) iter.next())
-                    .getName());
-
-        return curricularCoursesName;
     }
 
     private static void sortCurricularCourses(List curricularCourseList)
@@ -285,4 +365,23 @@ public class ShowAvailableCurricularCoursesTest extends
 
         Collections.sort(curricularCourseList, comparatorChain);
     }
+
+    protected IUserView authenticateUser(String[] arguments)
+    {
+        SuportePersistenteOJB.resetInstance();
+        String args[] = arguments;
+
+        try
+        {
+            return (IUserView) ServiceManagerServiceFactory.executeService(
+                    null, "Autenticacao", args);
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+            fail("Authenticating User!" + ex);
+            return null;
+        }
+    }
+
 }

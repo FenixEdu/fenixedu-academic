@@ -26,10 +26,10 @@ public class EnrolmentState extends ValuedEnum implements Serializable {
 	public static final EnrolmentState NOT_APROVED =
 		new EnrolmentState("msg.notApproved", EnrolmentState.NOT_APROVED_TYPE);
 	public static final EnrolmentState ENROLED =
-		new EnrolmentState("msg.enroled", EnrolmentState.ENROLED_TYPE);
+		new EnrolmentState("msg.enrolled", EnrolmentState.ENROLED_TYPE);
 	public static final EnrolmentState TEMPORARILY_ENROLED =
 		new EnrolmentState(
-			"msg.temporarilyEnroled",
+			"msg.temporarilyEnrolled",
 			EnrolmentState.TEMPORARILY_ENROLED_TYPE);
 	public static final EnrolmentState ANNULED =
 		new EnrolmentState("msg.annuled", EnrolmentState.ANNULED_TYPE);

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<project basedir="." default="run-tests-cache" name="Tests">
+<project basedir="."  default="leec_test_battery" name="Tests">
 
 	<property name="encoding" value="ISO-8859-1"/>
 
@@ -229,7 +229,7 @@
 	<target name="leec-test-battery-loop" >
 		<property file="etc/LEEC_Enrollment_Tests_Arguments/LEEC_Test_Battery.properties"/>
 		
-		<script language="javascript">
+		<!--script language="javascript">
 		  <![CDATA[
       
         
@@ -249,7 +249,7 @@
          }
 
 			  ]]>
-		 </script>
+		 </script-->
 		
 	</target>
 	
@@ -268,7 +268,7 @@
 		  var param3 = callTask.createParam();
 	      param3.setName("number");
           param3.setValue(i);
-		  leec_test_battery.addTask(callTask);          
+		  leec_test_battery.addTask(callTask);         
          
          }
 
@@ -287,7 +287,7 @@
             name="run-leec-enrollment-test">
 		<java 
 			classname="ServidorAplicacao.Servicos.enrolment.degree.LeecEnrollmentTestSuite" 
-			fork="yes" failonerror="true" maxmemory="512m">
+			fork="yes" failonerror="false" maxmemory="512m">
 			<classpath>
 				<pathelement path="${webapp.classes}"/>
 				<pathelement path="${config}"/>

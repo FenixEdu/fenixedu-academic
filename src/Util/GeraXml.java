@@ -153,7 +153,7 @@ public class GeraXml
 
         apagaEnrolments(enrolments);
 
-        System.out.println("Ja crei os enrolments");
+        System.out.println("Ja criei os enrolments");
 
         loadEnrolments(backupDataSetFilePath);
 
@@ -226,10 +226,13 @@ public class GeraXml
                     .readbyCourseNameAndDegreeCurricularPlan(
                             curricularCourseName, degreeCurricularPlan);
 
-            ICurricularCourse curricularCourse = (ICurricularCourse) curricularCourses
-                    .get(0);
-
-            IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) studentCurricularPlanPersistente
+            ICurricularCourse curricularCourse=null;
+            try
+            {
+                curricularCourse = (ICurricularCourse) curricularCourses
+                        .get(0);
+           
+            IStudentCurricularPlan studentCurricularPlan = studentCurricularPlanPersistente
                     .readActiveByStudentNumberAndDegreeType(studentNumber,
                             TipoCurso.LICENCIATURA_OBJ);
 
@@ -243,7 +246,11 @@ public class GeraXml
             enrolment.setExecutionPeriod(executionPeriod);
             enrolment.setEnrolmentState(enrolmentState);
             enrolment.setEnrolmentEvaluationType(enrolmentEvaluationType);
-
+            }
+            catch (RuntimeException e1)
+            {
+                System.out.println("Disciplina não encontrada no planos curricular: "+curricularCourseName);
+            }
             suportePersistente.confirmarTransaccao();
         }
         catch (ExcepcaoPersistencia e)
@@ -268,7 +275,7 @@ public class GeraXml
 
             suportePersistente.iniciarTransaccao();
 
-            IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) studentCurricularPlanPersistente
+            IStudentCurricularPlan studentCurricularPlan = studentCurricularPlanPersistente
                     .readActiveByStudentNumberAndDegreeType(studentNumber,
                             TipoCurso.LICENCIATURA_OBJ);
 

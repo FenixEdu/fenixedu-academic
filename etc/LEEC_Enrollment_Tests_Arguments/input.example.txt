@@ -1,0 +1,6 @@
+approved
+notApproved
+enrolled
+temporarilyEnrolled
+annuled
+notEvaluated
