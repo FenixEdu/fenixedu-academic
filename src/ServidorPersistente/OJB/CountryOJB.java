@@ -77,6 +77,24 @@ public class CountryOJB extends ObjectFenixOJB implements IPersistentCountry {
         }
     }
     
+	public ICountry readCountryByNationality(String nationality) throws ExcepcaoPersistencia {
+		try {
+			ICountry country = null;
+			String oqlQuery = "select all from " + Country.class.getName();
+			oqlQuery += " where nationality = $1";
+			query.create(oqlQuery);
+			query.bind(nationality);
+			List result = (List) query.execute();
+			super.lockRead(result);
+			if (result.size() != 0)
+				country = (ICountry) result.get(0);
+			return country;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
+
+
     public void deleteCountryByName(String name) throws ExcepcaoPersistencia {
         try {
             String oqlQuery = "select all from " + Country.class.getName();

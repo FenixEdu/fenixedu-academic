@@ -18,6 +18,8 @@ import Dominio.ICountry;
 public interface IPersistentCountry extends IPersistentObject {
     
     public ICountry readCountryByName(String name) throws ExcepcaoPersistencia;
+	public ICountry readCountryByNationality(String nationality) throws ExcepcaoPersistencia;
+	
     public ArrayList readAllCountrys() throws ExcepcaoPersistencia;
     public void writeCountry(ICountry country) throws ExcepcaoPersistencia;
     public void deleteCountryByName(String name) throws ExcepcaoPersistencia;
