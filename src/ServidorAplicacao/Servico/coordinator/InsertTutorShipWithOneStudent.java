@@ -12,7 +12,6 @@ import Dominio.ITutor;
 import Dominio.Tutor;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
-import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPersistentTeacher;
@@ -79,11 +78,12 @@ public class InsertTutorShipWithOneStudent extends InsertTutorShip
 				throw new NonExistingServiceException("error.tutor.unExistStudent");
 			}
 
-			if(verifyStudentAlreadyTutor(student, teacher).booleanValue()){
+			if (verifyStudentAlreadyTutor(student, teacher).booleanValue())
+			{
 				//student already with tutor...
 				throw new FenixServiceException("error.tutor.studentAlreadyWithTutor");
 			}
-			
+
 			if (!verifyStudentOfThisDegree(student, TipoCurso.LICENCIATURA_OBJ, degreeCode)
 				.booleanValue())
 			{
@@ -104,10 +104,15 @@ public class InsertTutorShipWithOneStudent extends InsertTutorShip
 
 			result = Boolean.TRUE;
 		}
-		catch (ExcepcaoPersistencia e)
+		catch (Exception e)
 		{
 			e.printStackTrace();
-			throw new FenixServiceException("error.tutor.associateOneStudent");
+			if (e.getMessage() == null)
+			{
+				throw new FenixServiceException("error.tutor.associateOneStudent");
+			} else {
+				throw new FenixServiceException(e.getMessage());
+			}
 		}
 
 		return result;

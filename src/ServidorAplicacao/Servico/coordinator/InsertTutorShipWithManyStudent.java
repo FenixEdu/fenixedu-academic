@@ -15,7 +15,6 @@ import Dominio.ITutor;
 import Dominio.Tutor;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
-import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPersistentTeacher;
@@ -118,10 +117,15 @@ public class InsertTutorShipWithManyStudent extends InsertTutorShip
 				}
 			}
 		}
-		catch (ExcepcaoPersistencia e)
+		catch (Exception e)
 		{
 			e.printStackTrace();
-			throw new FenixServiceException("error.tutor.associateManyStudent");
+			if (e.getMessage() == null)
+			{
+				throw new FenixServiceException("error.tutor.associateManyStudent");
+			} else {
+				throw new FenixServiceException(e.getMessage());
+			}
 		}
 
 		//return student's number list that unchained an error

@@ -74,29 +74,33 @@ public class TutorManagementLookupDispatchAction extends LookupDispatchAction
 		catch (NonExistingServiceException e1)
 		{
 			e1.printStackTrace();
-			if (e1.getMessage().endsWith("Teacher"))
+			if (e1.getMessage() != null && e1.getMessage().endsWith("Teacher"))
 			{
 				errors.add("errors", new ActionError(e1.getMessage(), tutorNumber));
 			}
-			if (e1.getMessage().endsWith("Student"))
+			if (e1.getMessage() != null && e1.getMessage().endsWith("Student"))
 			{
 				errors.add("errors", new ActionError(e1.getMessage(), studentNumber));
+			}
+			else
+			{
+				errors.add("errors", new ActionError("error.tutor.impossibleOperation"));
 			}
 		}
 		catch (FenixServiceException e2)
 		{
 			e2.printStackTrace();
-			if (e2.getMessage().endsWith("NoDegree"))
+			if (e2.getMessage() != null && e2.getMessage().endsWith("NoDegree"))
 			{
 				errors.add("errors", new ActionError(e2.getMessage(), studentNumber));
 			}
-			else if (e2.getMessage().endsWith("Tutor"))
+			else if (e2.getMessage() != null && e2.getMessage().endsWith("Tutor"))
 			{
 				errors.add("errors", new ActionError(e2.getMessage(), studentNumber));
 			}
 			else
 			{
-				errors.add("errors", new ActionError(e2.getMessage()));
+				errors.add("errors", new ActionError("error.tutor.impossibleOperation"));
 			}
 		}
 		if (!errors.isEmpty())
@@ -160,26 +164,36 @@ public class TutorManagementLookupDispatchAction extends LookupDispatchAction
 		catch (NonExistingServiceException e1)
 		{
 			e1.printStackTrace();
-			if (e1.getMessage().endsWith("Teacher"))
+			if (e1.getMessage() != null && e1.getMessage().endsWith("Teacher"))
 			{
 				errors.add("errors", new ActionError(e1.getMessage(), tutorNumber));
+			}
+			else
+			{
+				errors.add("errors", new ActionError("error.tutor.impossibleOperation"));
 			}
 		}
 		catch (FenixServiceException e)
 		{
 			e.printStackTrace();
-			errors.add("errors", new ActionError(e.getMessage()));
+			if (e.getMessage() != null)
+			{
+				errors.add("errors", new ActionError(e.getMessage()));
+			}
+			else
+			{
+				errors.add("errors", new ActionError("error.tutor.impossibleOperation"));
+			}
+			if (!errors.isEmpty())
+			{
+				saveErrors(request, errors);
+				return mapping.getInputForward();
+			}
+			if (studentsWithErros != null && studentsWithErros.size() > 0)
+			{
+				request.setAttribute("studentsWithErros", studentsWithErros);
+			}
 		}
-		if (!errors.isEmpty())
-		{
-			saveErrors(request, errors);
-			return mapping.getInputForward();
-		}
-		if (studentsWithErros != null && studentsWithErros.size() > 0)
-		{
-			request.setAttribute("studentsWithErros", studentsWithErros);
-		}
-
 		return mapping.findForward("confirmation");
 	}
 
@@ -213,7 +227,14 @@ public class TutorManagementLookupDispatchAction extends LookupDispatchAction
 		catch (FenixServiceException e)
 		{
 			e.printStackTrace();
-			errors.add("errors", new ActionError(e.getMessage()));
+			if (e.getMessage() != null)
+			{
+				errors.add("errors", new ActionError(e.getMessage()));
+			}
+			else
+			{
+				errors.add("errors", new ActionError("error.tutor.impossibleOperation"));
+			}
 		}
 		if (!errors.isEmpty())
 		{
