@@ -30,14 +30,14 @@
 		O username dos alunos é constituído pelo seu número mecanográfico precedido da letra "L" (por
 		exemplo, L90123). Os pedidos de novas passwords devem ser efectuados na Recepção do CIIST.
 	</p>
---%>
+
 	<p><font color='#FF0000'><strong>
 		Aviso:<br /><br />
 		Por razões de segurança, foram alteradas as passwords de acesso de todos os utilizadores 
 		que tinham como password o número de BI.<br /><br />
 		Os pedidos de novas passwords devem ser efectuados na Recepção do CIIST.
 	</strong></font></p>
-
+--%>
 	<div id="alert">	
 		<p><span class="error"><html:errors property="invalidAuthentication"/></span></p>
 		<p><span class="error"><html:errors property="errors.noAuthorization"/></span></p>
