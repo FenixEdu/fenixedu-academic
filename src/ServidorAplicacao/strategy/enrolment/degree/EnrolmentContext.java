@@ -26,7 +26,7 @@ public final class EnrolmentContext {
 	private Map acumulatedEnrolments;
 
 	private IStudent student;
-	private Integer semester;
+	
 	private IExecutionPeriod executionPeriod;
 	private IStudentCurricularPlan studentActiveCurricularPlan;
 	private EnrolmentValidationResult enrolmentValidationResult;
@@ -42,7 +42,7 @@ public final class EnrolmentContext {
 	private List degreesForOptionalCurricularCourses;
 	private List optionalCurricularCoursesToChooseFromDegree;
 	private List optionalCurricularCoursesEnrolments;
-
+	
 	/**
 	 *  
 	 */
@@ -62,7 +62,7 @@ public final class EnrolmentContext {
 	 * @return
 	 */
 	public Integer getSemester() {
-		return semester;
+		return this.executionPeriod.getSemester();
 	}
 
 	/**
@@ -77,13 +77,6 @@ public final class EnrolmentContext {
 	 */
 	public void setCurricularCoursesDoneByStudent(List list) {
 		curricularCoursesDoneByStudent = list;
-	}
-
-	/**
-	 * @param integer
-	 */
-	public void setSemester(Integer integer) {
-		semester = integer;
 	}
 
 	/**
