@@ -45,7 +45,7 @@ public class UnEnrollStudentInGroupDispatchAction extends FenixDispatchAction {
 
 		Integer studentGroupCode = new Integer(studentGroupCodeString);
 
-		Object[] args1 = { null, studentGroupCode, userView.getUtilizador(), new Integer(3)};
+		Object[] args1 = { null,null, studentGroupCode, userView.getUtilizador(), new Integer(3)};
 		try {
 			ServiceUtils.executeService(userView, "VerifyStudentGroupAtributes", args1);
 

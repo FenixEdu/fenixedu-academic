@@ -49,7 +49,7 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction {
 		Integer shiftCode = new Integer(shiftCodeString);
 		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 
-		Object[] args1 = { null, studentGroupCode, userView.getUtilizador(), new Integer(4)};
+		Object[] args1 = { null,null, studentGroupCode, userView.getUtilizador(), new Integer(4)};
 		try {
 			ServiceUtils.executeService(userView, "VerifyStudentGroupAtributes", args1);
 

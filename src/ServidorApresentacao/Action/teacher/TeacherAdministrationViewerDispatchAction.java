@@ -915,20 +915,17 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		ActionErrors actionErrors = new ActionErrors();
 		try {
 			serviceResult = (Boolean) ServiceUtils.executeService(userView, "StoreItemFile", args);
-		}
-		catch (FileAlreadyExistsServiceException e1) {
-					actionErrors.add("fileAlreadyExists", new ActionError("errors.fileAlreadyExists", file.getFileName()));
-					saveErrors(request, actionErrors);
-					return prepareFileUpload(mapping, form, request, response);
+		} catch (FileAlreadyExistsServiceException e1) {
+			actionErrors.add("fileAlreadyExists", new ActionError("errors.fileAlreadyExists", file.getFileName()));
+			saveErrors(request, actionErrors);
+			return prepareFileUpload(mapping, form, request, response);
 
-				}	
-		catch (FileNameTooLongServiceException e1) {
-				actionErrors.add("fileNameTooLong", new ActionError("errors.fileNameTooLong", file.getFileName()));
-				saveErrors(request, actionErrors);
-				return prepareFileUpload(mapping, form, request, response);
+		} catch (FileNameTooLongServiceException e1) {
+			actionErrors.add("fileNameTooLong", new ActionError("errors.fileNameTooLong", file.getFileName()));
+			saveErrors(request, actionErrors);
+			return prepareFileUpload(mapping, form, request, response);
 
-							}			
-		 catch (FenixServiceException e1) {
+		} catch (FenixServiceException e1) {
 			actionErrors.add("unableToStoreFile", new ActionError("errors.unableToStoreFile", file.getFileName()));
 			saveErrors(request, actionErrors);
 			return prepareFileUpload(mapping, form, request, response);
@@ -1829,6 +1826,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 		return viewShiftsAndGroups(mapping, form, request, response);
 	}
+	
+
 	public ActionForward prepareCreateStudentGroup(
 		ActionMapping mapping,
 		ActionForm form,
@@ -1841,24 +1840,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		Integer objectCode = getObjectCode(request);
 		String groupPropertiesString = (String) request.getParameter("groupPropertiesCode");
 		Integer groupPropertiesCode = new Integer(groupPropertiesString);
-		ISiteComponent viewShifts = new InfoSiteShifts();
-		TeacherAdministrationSiteView shiftsView =
-			(TeacherAdministrationSiteView) readSiteView(request, viewShifts, null, groupPropertiesCode, null);
-		List shifts = (List) ((InfoSiteShifts) shiftsView.getComponent()).getShifts();
-		ArrayList shiftsList = new ArrayList();
-		if (shifts.size() != 0) {
-			shiftsList.add(new LabelValueBean("(escolher)", ""));
-			InfoShift infoShift;
-			Iterator iter = shifts.iterator();
-			String label, value;
-			while (iter.hasNext()) {
-				infoShift = (InfoShift) iter.next();
-				value = infoShift.getIdInternal().toString();
-				label = infoShift.getNome();
-				shiftsList.add(new LabelValueBean(label, value));
-			}
-			request.setAttribute("shiftsList", shiftsList);
-		}
+		String shiftString = (String) request.getParameter("shiftCode");
+		Integer shiftCode = new Integer(shiftString);
+
 		InfoSiteStudentGroup infoSiteStudentGroup;
 		Object args[] = { objectCode, groupPropertiesCode };
 		GestorServicos gestor = GestorServicos.manager();
@@ -1886,6 +1870,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		String groupPropertiesCodeString = (String) request.getParameter("groupPropertiesCode");
 		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 
+		String shiftCodeString = (String) request.getParameter("shiftCode");
+		Integer shiftCode = new Integer(shiftCodeString);
+
 		DynaActionForm insertStudentGroupForm = (DynaActionForm) form;
 
 		List studentCodes = Arrays.asList((String[]) insertStudentGroupForm.get("studentCodes"));
@@ -1893,47 +1880,36 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		String groupNumberString = (String) insertStudentGroupForm.get("nrOfElements");
 		Integer groupNumber = new Integer(groupNumberString);
 
-		String newShiftString = (String) insertStudentGroupForm.get("shift");
+		Object args[] = { objectCode, groupNumber, groupPropertiesCode, shiftCode, studentCodes };
+		GestorServicos gestor = GestorServicos.manager();
+		try {
+			gestor.executar(userView, "CreateStudentGroup", args);
 
-		if (newShiftString.equals("")) {
+		} catch (ExistingServiceException e) {
 			ActionErrors actionErrors = new ActionErrors();
 			ActionError error = null;
 			// Create an ACTION_ERROR 
-			error = new ActionError("errors.invalid.insert.studentGroupShift");
-			actionErrors.add("errors.invalid.insert.studentGroupShift", error);
+			error = new ActionError("errors.invalid.insert.studentGroup");
+			actionErrors.add("errors.invalid.insert.studentGroup", error);
 			saveErrors(request, actionErrors);
 			return prepareCreateStudentGroup(mapping, form, request, response);
-		} else {
-			Integer shiftCode = new Integer(newShiftString);
-			Object args[] = { objectCode, groupNumber, groupPropertiesCode, shiftCode, studentCodes };
-			GestorServicos gestor = GestorServicos.manager();
-			try {
-				gestor.executar(userView, "CreateStudentGroup", args);
 
-			} catch (ExistingServiceException e) {
-				ActionErrors actionErrors = new ActionErrors();
-				ActionError error = null;
-				// Create an ACTION_ERROR 
-				error = new ActionError("errors.invalid.insert.studentGroup");
-				actionErrors.add("errors.invalid.insert.studentGroup", error);
-				saveErrors(request, actionErrors);
-				return prepareCreateStudentGroup(mapping, form, request, response);
+		} catch (InvalidSituationServiceException e) {
+			ActionErrors actionErrors = new ActionErrors();
+			ActionError error = null;
+			// Create an ACTION_ERROR 
+			error = new ActionError("errors.existing.studentEnrolment");
+			actionErrors.add("errors.existing.studentEnrolment", error);
+			saveErrors(request, actionErrors);
+			return prepareCreateStudentGroup(mapping, form, request, response);
 
-			} catch (InvalidSituationServiceException e) {
-				ActionErrors actionErrors = new ActionErrors();
-				ActionError error = null;
-				// Create an ACTION_ERROR 
-				error = new ActionError("errors.existing.studentEnrolment");
-				actionErrors.add("errors.existing.studentEnrolment", error);
-				saveErrors(request, actionErrors);
-				return prepareCreateStudentGroup(mapping, form, request, response);
-
-			} catch (FenixServiceException e) {
-				throw new FenixActionException(e);
-			}
-			return viewShiftsAndGroups(mapping, form, request, response);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
 		}
+		return viewShiftsAndGroups(mapping, form, request, response);
+
 	}
+
 	public ActionForward prepareEditStudentGroupShift(
 		ActionMapping mapping,
 		ActionForm form,

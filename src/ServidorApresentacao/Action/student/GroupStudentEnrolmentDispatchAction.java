@@ -49,7 +49,7 @@ public class GroupStudentEnrolmentDispatchAction extends FenixDispatchAction {
 
 		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 
-		Object[] args1 = { null, studentGroupCode, userView.getUtilizador(), new Integer(1)};
+		Object[] args1 = { null,null, studentGroupCode, userView.getUtilizador(), new Integer(1)};
 		try {
 			ServiceUtils.executeService(userView, "VerifyStudentGroupAtributes", args1);
 

@@ -5,9 +5,14 @@
 package ServidorAplicacao.Servico.student;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.beanutils.BeanComparator;
+
+import DataBeans.ISiteComponent;
+import DataBeans.InfoSiteStudentsWithoutGroup;
 import DataBeans.util.Cloner;
 import Dominio.GroupProperties;
 import Dominio.IFrequenta;
@@ -32,8 +37,7 @@ import Util.EnrolmentGroupPolicyType;
  */
 public class ReadStudentsWithoutGroup implements IServico {
 
-	private static ReadStudentsWithoutGroup service =
-		new ReadStudentsWithoutGroup();
+	private static ReadStudentsWithoutGroup service = new ReadStudentsWithoutGroup();
 
 	/**
 		* The singleton access method of this class.
@@ -57,46 +61,59 @@ public class ReadStudentsWithoutGroup implements IServico {
 	 * Executes the service.
 	 */
 
-	public List run(Integer groupPropertiesCode,String username)
-		throws FenixServiceException {
-		
+	public ISiteComponent run(Integer groupPropertiesCode, String username) throws FenixServiceException {
 
 		List frequentas = new ArrayList();
 		IStudent userStudent = null;
-		List infoStudentList = null;		
+		List infoStudentList = null;
+		InfoSiteStudentsWithoutGroup infoSiteStudentsWithoutGroup = new InfoSiteStudentsWithoutGroup();
 		try {
-		
+
 			ISuportePersistente ps = SuportePersistenteOJB.getInstance();
 			IPersistentStudent persistentStudent = ps.getIPersistentStudent();
 			IFrequentaPersistente persistentAttend = ps.getIFrequentaPersistente();
 			IPersistentStudentGroup persistentStudentGroup = ps.getIPersistentStudentGroup();
-			IPersistentStudentGroupAttend  persistentStudentGroupAttend = ps.getIPersistentStudentGroupAttend();
+			IPersistentStudentGroupAttend persistentStudentGroupAttend = ps.getIPersistentStudentGroupAttend();
+
+			IGroupProperties groupProperties =
+				(IGroupProperties) ps.getIPersistentGroupProperties().readByOId(new GroupProperties(groupPropertiesCode), false);
 			
-			IGroupProperties groupProperties = (IGroupProperties)ps.getIPersistentGroupProperties().readByOId(new GroupProperties(groupPropertiesCode),false);
-			
+			List allStudentGroup = new ArrayList();
+			allStudentGroup = persistentStudentGroup.readAllStudentGroupByGroupProperties(groupProperties);
+			Integer groupNumber = new Integer(1);
+			if (allStudentGroup.size() != 0) {
+				Collections.sort(allStudentGroup, new BeanComparator("groupNumber"));
+				Integer lastGroupNumber = ((IStudentGroup) allStudentGroup.get(allStudentGroup.size() - 1)).getGroupNumber();
+				groupNumber = new Integer(lastGroupNumber.intValue() + 1);
+
+			}
+
+			IStudentGroup newStudentGroup =
+				persistentStudentGroup.readStudentGroupByGroupPropertiesAndGroupNumber(groupProperties, groupNumber);
+
+			if (newStudentGroup != null)
+				throw new FenixServiceException();
 				
-			if(groupProperties.getEnrolmentPolicy().equals(new EnrolmentGroupPolicyType(2)))
-				return null;
-			else
-			{
+			infoSiteStudentsWithoutGroup.setGroupNumber(groupNumber);
+
+			if (groupProperties.getEnrolmentPolicy().equals(new EnrolmentGroupPolicyType(2)))
+				return infoSiteStudentsWithoutGroup;
+			else {
 				frequentas = persistentAttend.readByExecutionCourse(groupProperties.getExecutionCourse());
 
-				List allStudentsGroups =persistentStudentGroup.readAllStudentGroupByGroupProperties(groupProperties);
-				
+				List allStudentsGroups = persistentStudentGroup.readAllStudentGroupByGroupProperties(groupProperties);
+
 				userStudent = persistentStudent.readByUsername(username);
-				
+
 				List allStudentGroupAttend = new ArrayList();
 				Iterator iterator = allStudentsGroups.iterator();
 				IFrequenta frequenta = null;
-				while (iterator.hasNext()) 
-				{
-					allStudentGroupAttend = persistentStudentGroupAttend.readAllByStudentGroup((IStudentGroup) iterator.next()); 
+				while (iterator.hasNext()) {
+					allStudentGroupAttend = persistentStudentGroupAttend.readAllByStudentGroup((IStudentGroup) iterator.next());
 					Iterator iter = allStudentGroupAttend.iterator();
-					while(iter.hasNext())
-					{
-						frequenta =((IStudentGroupAttend)iter.next()).getAttend();
-						if(frequentas.contains(frequenta))
-						{
+					while (iter.hasNext()) {
+						frequenta = ((IStudentGroupAttend) iter.next()).getAttend();
+						if (frequentas.contains(frequenta)) {
 							frequentas.remove(frequenta);
 						}
 					}
@@ -104,20 +121,20 @@ public class ReadStudentsWithoutGroup implements IServico {
 				IStudent student = null;
 				Iterator iterStudent = frequentas.iterator();
 				infoStudentList = new ArrayList();
-				while (iterStudent.hasNext()) 
-				{
+				while (iterStudent.hasNext()) {
 					student = ((IFrequenta) iterStudent.next()).getAluno();
-					if(!student.equals(userStudent))
-						infoStudentList.add(Cloner.copyIStudent2InfoStudent(student));		
+					if (!student.equals(userStudent))
+						infoStudentList.add(Cloner.copyIStudent2InfoStudent(student));
 				}
-			}
-		
-			} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-				throw new FenixServiceException(excepcaoPersistencia.getMessage());
-		  	}
-		
-		
 				
-		return infoStudentList;
+			infoSiteStudentsWithoutGroup.setInfoStudentList(infoStudentList);
+			}
+
+		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
+			throw new FenixServiceException(excepcaoPersistencia.getMessage());
+		}
+		
+		
+		return infoSiteStudentsWithoutGroup;
 	}
 }

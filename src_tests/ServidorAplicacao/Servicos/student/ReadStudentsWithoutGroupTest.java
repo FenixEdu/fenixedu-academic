@@ -9,9 +9,20 @@ package ServidorAplicacao.Servicos.student;
  *
  * @author asnr and scpo
  */
+import java.util.ArrayList;
+import java.util.List;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import DataBeans.InfoSiteStudentsWithoutGroup;
+import DataBeans.util.Cloner;
+import Dominio.IStudent;
+import Dominio.Student;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentStudent;
+import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class ReadStudentsWithoutGroupTest extends TestCaseReadServices {
 
@@ -40,7 +51,7 @@ public class ReadStudentsWithoutGroupTest extends TestCaseReadServices {
 	protected String getNameOfServiceToBeTested() {
 		return "ReadStudentsWithoutGroup";
 	}
-	
+
 	//WHEN ALL STUDENTS HAVE GROUPS
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 		return null;
@@ -53,12 +64,38 @@ public class ReadStudentsWithoutGroupTest extends TestCaseReadServices {
 	}
 
 	protected int getNumberOfItemsToRetrieve() {
-		return 4;
+		return 0;
 	}
 
 	protected Object getObjectToCompare() {
+		InfoSiteStudentsWithoutGroup infoSiteStudentsWithoutGroup = new InfoSiteStudentsWithoutGroup();
 
-		return null;
+		try {
+			ISuportePersistente ps = SuportePersistenteOJB.getInstance();
+			IPersistentStudent persistentStudent = ps.getIPersistentStudent();
+			ps.iniciarTransaccao();
+			IStudent student = null;
+			List infoStudentList = new ArrayList();
+
+			student = (IStudent) ps.getIPersistentStudent().readByOId(new Student(new Integer(6)), false);
+			infoStudentList.add(Cloner.copyIStudent2InfoStudent(student));
+
+			student = (IStudent) ps.getIPersistentStudent().readByOId(new Student(new Integer(7)), false);
+			infoStudentList.add(Cloner.copyIStudent2InfoStudent(student));
+
+			student = (IStudent) ps.getIPersistentStudent().readByOId(new Student(new Integer(10)), false);
+			infoStudentList.add(Cloner.copyIStudent2InfoStudent(student));
+
+			student = (IStudent) ps.getIPersistentStudent().readByOId(new Student(new Integer(11)), false);
+			infoStudentList.add(Cloner.copyIStudent2InfoStudent(student));
+			
+			infoSiteStudentsWithoutGroup.setGroupNumber(new Integer(5));
+			infoSiteStudentsWithoutGroup.setInfoStudentList(infoStudentList);
+
+		} catch (ExcepcaoPersistencia e) {
+			System.out.println("failed setting up the test data");
+		}
+		return infoSiteStudentsWithoutGroup;
 	}
 
 }

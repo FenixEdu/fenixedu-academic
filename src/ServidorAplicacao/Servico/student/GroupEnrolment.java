@@ -5,11 +5,8 @@
 package ServidorAplicacao.Servico.student;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-
-import org.apache.commons.beanutils.BeanComparator;
 
 import Dominio.GroupProperties;
 import Dominio.IFrequenta;
@@ -67,7 +64,7 @@ public class GroupEnrolment implements IServico {
 		return "GroupEnrolment";
 	}
 
-	public boolean run(Integer groupPropertiesCode, Integer shiftCode, List studentCodes, String username)
+	public boolean run(Integer groupPropertiesCode, Integer shiftCode, Integer groupNumber, List studentCodes, String username)
 		throws FenixServiceException {
 
 		try {
@@ -100,18 +97,12 @@ public class GroupEnrolment implements IServico {
 
 			List allStudentGroup = new ArrayList();
 			allStudentGroup = persistentStudentGroup.readAllStudentGroupByGroupProperties(groupProperties);
-			Integer groupNumber = new Integer(1);
-			if (allStudentGroup.size() != 0) {
-				Collections.sort(allStudentGroup, new BeanComparator("groupNumber"));
-				Integer lastGroupNumber = ((IStudentGroup) allStudentGroup.get(allStudentGroup.size() - 1)).getGroupNumber();
-				groupNumber = new Integer(lastGroupNumber.intValue() + 1);
-
-			}
+			
 
 			IStudentGroup newStudentGroup =
 				persistentStudentGroup.readStudentGroupByGroupPropertiesAndGroupNumber(groupProperties, groupNumber);
 			
-			if (newStudentGroup != null)
+			if (newStudentGroup!= null)
 				throw new FenixServiceException();
 
 			newStudentGroup = new StudentGroup(groupNumber, groupProperties, shift);

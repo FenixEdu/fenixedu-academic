@@ -51,41 +51,23 @@
 
 	<br/>
 	<br/>
-	
-	<table width="95%" border="0" style="text-align: left;">
-	<tbody>
-		<tr>
-		<td>
-		
-			<html:link page="<%="/groupEnrolment.do?method=prepareEnrolment&executionCourseCode=" + request.getParameter("executionCourseCode")+ "&groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
-				<bean:message key="link.insertGroup"/>
-			</html:link>	
-
-		</td>
-		</tr>
-	</tbody>
-	</table>
-	
-	
-		<br>
-		<br>
 
   <table align="left" width="95%" cellspacing='1' cellpadding='1'>	
 	<tbody>		
 	
 		<tr >
-			<td class="listClasses-header" width="20%" rowspan="2">
+			<td class="listClasses-header" width="15%" rowspan="2">
 				<bean:message key="property.turno"/>
 			</td>
-			<td class="listClasses-header" colspan="4" width="50%"> 
+			<td class="listClasses-header" colspan="4" width="45%"> 
 				<bean:message key="property.lessons"/>
 			</td>
-			<td class="listClasses-header" width="30%" rowspan="2" colspan="2">
+			<td class="listClasses-header" width="40%" rowspan="2" colspan="3">
 				<bean:message key="property.groups"/>
 			</td>
 		</tr>
 		<tr>
-			<td class="listClasses-header" width="20%">
+			<td class="listClasses-header" width="15%">
 				<bean:message key="property.lesson.weekDay"/>
 			</td>
 			<td class="listClasses-header" width="10%">
@@ -135,6 +117,14 @@
 				 			
 				 			
 						</td>
+				 		
+				 		<td class="listClasses" width="13%" rowspan="<%=((InfoShift) infoShift).getInfoLessons().size() %>">
+					 		<html:link page="<%="/groupEnrolment.do?method=prepareEnrolment&executionCourseCode=" + request.getParameter("executionCourseCode")+ "&amp;shiftCode=" + shiftCode.toString()+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
+								<bean:message key="link.insertGroup"/>
+							</html:link>	
+
+   
+						</td>		
 				 		
 						
 						 <td class="listClasses" width="20%" rowspan="<%=((InfoShift) infoShift).getInfoLessons().size()%>">

@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
 
-<logic:present name="shiftsList">
+
 
 
 <h2><bean:message key="title.enrolmentGroup.insertNewGroup"/></h2>
@@ -17,34 +17,25 @@
 	</table>
 	<br>
 
-
-<logic:empty name="shiftsList">
-<h2>
-<bean:message key="message.infoSiteShiftList.not.available" />
-</h2>
-</logic:empty>
-
-
 <html:form action="/groupEnrolment" method="get">
 
 <br>
 
 <h2><span class="error"><html:errors/></span></h2>		 
-		<table width="50%" cellpadding="0" border="0">
-		<tr>
-			<td><bean:message key="label.shiftWord"/></td>
-		
-			<td>
-				<html:select property="shift" size="1">
-    			<html:options collection="shiftsList" property="value" labelProperty="label"/>
-    			</html:select>
-    		</td>
-			
-		</tr>	
-		</table>
-		<br>
-		<br>
 
+<bean:define id="groupNumber" name="groupNumber"/>
+
+<table width="100%" cellpadding="0" cellspacing="0">
+	<tr>
+		<td>
+			<b><bean:message key="label.GroupNumber"/> </b><bean:write name="groupNumber"/>
+		</td>
+		
+	</tr>
+
+</table>
+
+<br/>
 <logic:present name="infoStudents"> 
 	<logic:empty name="infoStudents">
 	<h2>
@@ -53,7 +44,7 @@
 	</logic:empty>
 	
 	<logic:notEmpty name="infoStudents">
-	<bean:message key="label.infoStudents.studentsWithoutGroup" />
+	<b><bean:message key="label.infoStudents.studentsWithoutGroup" /></b>
 	<br>
 	<br>
 	<table width="50%" cellpadding="0" border="0">	
@@ -94,7 +85,8 @@
 <html:hidden property="method" value="enrolment"/>
 <html:hidden  property="executionCourseCode" value="<%= request.getParameter("executionCourseCode")%>"/>
 <html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
-
+<html:hidden  property="shiftCode" value="<%= request.getParameter("shiftCode") %>" />
+<html:hidden  property="groupNumber" value="<%= groupNumber.toString() %>" />
 
 <table>
 <tr>
@@ -121,11 +113,4 @@
 </tr>
 </table>
 			
-</logic:present>
 
-<logic:notPresent name="shiftsList">
-<h2><span class="error"><html:errors/></span></h2>
-<h2>
-<bean:message key="message.infoSiteShiftList.not.available" />
-</h2>
-</logic:notPresent>

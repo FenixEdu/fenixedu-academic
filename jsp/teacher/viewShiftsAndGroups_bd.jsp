@@ -29,7 +29,9 @@
 	<h2><bean:message key="message.shifts.not.available"/></h2>
 	
 	<span class="error"><html:errors/></span> 	
-
+	<br/>
+	<br/>
+	
 	<table width="95%" border="0" style="text-align: left;">
 	<tbody>
 	<html:link page="<%= "/editGroupProperties.do?method=prepareEditGroupProperties&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="objectCode" paramName="objectCode" >
@@ -63,30 +65,23 @@
 		</html:link>
 	</table>
 	<br/>
-<table width="95%" border="0" style="text-align: left;">	
-	
-	<html:link page="<%= "/insertStudentGroup.do?method=prepareCreateStudentGroup&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
-					<bean:message key="link.insertGroup"/></html:link>
-    
-</table>
-<br>
 
   <table align="left" width="95%" cellspacing='1' cellpadding='1'>	
 	<tbody>		
 	
 		<tr >
-			<td class="listClasses-header" width="20%" rowspan="2">
+			<td class="listClasses-header" width="15%" rowspan="2">
 				<bean:message key="property.shift"/>
 			</td>
-			<td class="listClasses-header" colspan="4" width="50%"> 
+			<td class="listClasses-header" colspan="4" width="45%"> 
 				<bean:message key="property.lessons"/>
 			</td>
-			<td class="listClasses-header" width="30%" rowspan="2" colspan="2">
+			<td class="listClasses-header" width="40%" rowspan="2" colspan="3">
 				<bean:message key="property.groups"/>
 			</td>
 		</tr>
 		<tr>
-			<td class="listClasses-header" width="20%">
+			<td class="listClasses-header" width="15%">
 				<bean:message key="property.lesson.weekDay"/>
 			</td>
 			<td class="listClasses-header" width="10%">
@@ -136,9 +131,16 @@
 				 			
 				 			
 						</td>
-				 		
 						
-						 <td class="listClasses" width="20%" rowspan="<%=((InfoShift) infoShift).getInfoLessons().size()%>">
+						<td class="listClasses" width="13%" rowspan="<%=((InfoShift) infoShift).getInfoLessons().size() %>">
+					 		<html:link page="<%= "/insertStudentGroup.do?method=prepareCreateStudentGroup&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;shiftCode=" + shiftCode.toString()+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
+								<bean:message key="link.insertGroup"/>
+							</html:link>
+   
+						</td>					
+	
+	
+						 <td class="listClasses" width="17%" rowspan="<%=((InfoShift) infoShift).getInfoLessons().size()%>">
                         <logic:notEmpty name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList">
                         [<logic:iterate id="infoSiteStudentGroup" name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList" >
 							<bean:define id="infoStudentGroup" name="infoSiteStudentGroup" property="infoStudentGroup"/>	

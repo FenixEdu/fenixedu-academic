@@ -7,7 +7,6 @@ package ServidorApresentacao.Action.student;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,9 +20,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.util.LabelValueBean;
 
-import DataBeans.InfoShift;
+import DataBeans.InfoSiteStudentsWithoutGroup;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -55,11 +53,22 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 		String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
 
 		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
+		String shiftCodeString = request.getParameter("shiftCode");
 
-		Object[] args1 = { groupPropertiesCode, null, userView.getUtilizador(), new Integer(2)};
+		Integer shiftCode = new Integer(shiftCodeString);
+
+		Object[] args1 = { groupPropertiesCode, shiftCode, null, userView.getUtilizador(), new Integer(2)};
 		try {
+
 			ServiceUtils.executeService(userView, "VerifyStudentGroupAtributes", args1);
 
+		} catch (InvalidArgumentsServiceException e) {
+			ActionErrors actionErrors2 = new ActionErrors();
+			ActionError error2 = null;
+			error2 = new ActionError("errors.impossible.nrOfGroups.groupEnrolment");
+			actionErrors2.add("errors.impossible.nrOfGroups.groupEnrolment", error2);
+			saveErrors(request, actionErrors2);
+			return mapping.findForward("viewShiftsAndGroups");
 		} catch (InvalidSituationServiceException e) {
 			ActionErrors actionErrors2 = new ActionErrors();
 			ActionError error2 = null;
@@ -73,58 +82,34 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 
 		}
 
-		List shifts = null;
-		Object[] args2 = { groupPropertiesCode, null };
+		InfoSiteStudentsWithoutGroup studentsNotEnroled = null;
+		Object[] args3 = { groupPropertiesCode, userView.getUtilizador()};
 		try {
-			shifts = (List) ServiceUtils.executeService(userView, "ReadGroupPropertiesShifts", args2);
+			studentsNotEnroled =
+				(InfoSiteStudentsWithoutGroup) ServiceUtils.executeService(userView, "ReadStudentsWithoutGroup", args3);
 
 		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-
-		if (shifts.size() == 0) {
-			ActionErrors actionErrors = new ActionErrors();
-			ActionError error = null;
-			error = new ActionError("errors.fullShift");
-			actionErrors.add("errors.fullShift", error);
-			saveErrors(request, actionErrors);
-
-			return mapping.findForward("viewShiftsAndGroups");
-
-		} else {
-			ArrayList shiftsList = new ArrayList();
-			InfoShift oldInfoShift = new InfoShift();
-
-			shiftsList.add(new LabelValueBean("(escolher)", ""));
-			InfoShift infoShift;
-			Iterator iter = shifts.iterator();
-			String label, value;
-			while (iter.hasNext()) {
-				infoShift = (InfoShift) iter.next();
-				value = infoShift.getIdInternal().toString();
-				label = infoShift.getNome();
-				shiftsList.add(new LabelValueBean(label, value));
-			}
-
-			request.setAttribute("shiftsList", shiftsList);
-
-			List studentsNotEnroled = null;
-			Object[] args3 = { groupPropertiesCode, userView.getUtilizador()};
-			try {
-				studentsNotEnroled = (List) ServiceUtils.executeService(userView, "ReadStudentsWithoutGroup", args3);
-
-			} catch (FenixServiceException e) {
-				throw new FenixActionException(e);
-			}
-			if (studentsNotEnroled != null) {
-				Collections.sort(studentsNotEnroled, new BeanComparator("number"));
-				request.setAttribute("infoStudents", studentsNotEnroled);
-			}
-			request.setAttribute("groupPropertiesCode", groupPropertiesCode);
-
-			return mapping.findForward("sucess");
+			ActionErrors actionErrors1 = new ActionErrors();
+			ActionError error1 = null;
+			// Create an ACTION_ERROR 
+			error1 = new ActionError("error.existingGroup");
+			actionErrors1.add("error.existingGroup", error1);
+			saveErrors(request, actionErrors1);
+			return prepareEnrolment(mapping, form, request, response);
 
 		}
+
+		List infoStudentList = studentsNotEnroled.getInfoStudentList();
+		if (infoStudentList != null) {
+			Collections.sort(infoStudentList, new BeanComparator("number"));
+			request.setAttribute("infoStudents", infoStudentList);
+		}
+		request.setAttribute("groupNumber", studentsNotEnroled.getGroupNumber());
+		request.setAttribute("groupPropertiesCode", groupPropertiesCode);
+		request.setAttribute("shiftCode", shiftCode);
+
+		return mapping.findForward("sucess");
+
 	}
 	public ActionForward enrolment(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws FenixActionException {
@@ -137,24 +122,16 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 		String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
 		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 
-		String shiftCodeString = (String) enrolmentForm.get("shift");
+		String groupNumberString = request.getParameter("groupNumber");
+		Integer groupNumber = new Integer(groupNumberString);
 
-		if (shiftCodeString.equals("")) {
-			ActionErrors actionErrors1 = new ActionErrors();
-			ActionError error1 = null;
-			// Create an ACTION_ERROR 
-			error1 = new ActionError("errors.invalid.shift.groupEnrolment");
-			actionErrors1.add("errors.invalid.shift.groupEnrolment", error1);
-			saveErrors(request, actionErrors1);
-			return prepareEnrolment(mapping, form, request, response);
-		}
-
+		String shiftCodeString = request.getParameter("shiftCode");
 		Integer shiftCode = new Integer(shiftCodeString);
 
 		List studentCodes = new ArrayList();
 		studentCodes = Arrays.asList((Integer[]) enrolmentForm.get("studentsNotEnroled"));
 
-		Object[] args = { groupPropertiesCode, shiftCode, studentCodes, userView.getUtilizador()};
+		Object[] args = { groupPropertiesCode, shiftCode, groupNumber, studentCodes, userView.getUtilizador()};
 		try {
 
 			ServiceUtils.executeService(userView, "GroupEnrolment", args);
@@ -203,17 +180,18 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 			return mapping.findForward("viewShiftsAndGroups");
 
 		} catch (FenixServiceException e) {
-			ActionErrors actionErrors1 = new ActionErrors();
-			ActionError error1 = null;
-			// Create an ACTION_ERROR 
-			error1 = new ActionError("error.existingGroup");
-			actionErrors1.add("error.existingGroup", error1);
-			saveErrors(request, actionErrors1);
-			return prepareEnrolment(mapping, form, request, response);
+		   ActionErrors actionErrors1 = new ActionErrors();
+		   ActionError error1 = null;
+		   // Create an ACTION_ERROR 
+		   error1 = new ActionError("error.existingGroup");
+		   actionErrors1.add("error.existingGroup", error1);
+		   saveErrors(request, actionErrors1);
+		   return prepareEnrolment(mapping, form, request, response);
 
 		}
 
 		request.setAttribute("groupPropertiesCode", groupPropertiesCode);
+		request.setAttribute("shiftCode", shiftCode);
 
 		return mapping.findForward("viewShiftsAndGroups");
 

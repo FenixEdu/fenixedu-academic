@@ -48,7 +48,7 @@ public class GroupEnrolmentTest extends TestCaseCreateServices {
 		List studentCodes = new ArrayList();
 		studentCodes.add(new Integer(10));
 		studentCodes.add(new Integer(6));
-		Object[] args = { new Integer(5), new Integer(9), studentCodes, "15" };
+		Object[] args = { new Integer(5), new Integer(9), new Integer(2),studentCodes, "15" };
 		return args;
 	}
 
@@ -66,12 +66,7 @@ public class GroupEnrolmentTest extends TestCaseCreateServices {
 		HashMap hashMap = new HashMap();
 
 		List args = new ArrayList();
-		args.add(0, new Integer(3));
-		args.add(1, new Integer(9));
-		args.add(2, null);
-		args.add(3, "15");
-		hashMap.put("O turno já está cheio!", args);
-
+		
 		args.add(0, new Integer(5));
 		args.add(1, new Integer(34));
 		args.add(2, null);
