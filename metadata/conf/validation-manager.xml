@@ -101,7 +101,7 @@
       <field property="minIncrementNac" depends="required,integer" page="1" >
         <arg0 key="message.manager.curricular.course.minIncrementNac" resource="true"/>
       </field>
-      <field property="weight" depends="required,integer" page="1" >
+      <field property="weight" depends="required,double" page="1" >
         <arg0 key="message.manager.curricular.course.weight" resource="true"/>
       </field>
       <field property="credits" depends="double" page="1">

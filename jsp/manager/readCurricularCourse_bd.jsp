@@ -83,7 +83,7 @@
 			<bean:write name="infoCurricularCourse" property="ectsCredits"/>
 		</td>
 		<td class="listClasses">
-			<bean:write name="infoCurricularCourse" property="enrollmentWeigth"/>
+			<bean:write name="infoCurricularCourse" property="weigth"/>
 		</td>
 </table>
 <br>

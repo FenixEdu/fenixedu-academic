@@ -43,13 +43,12 @@ public class EditCurricularCourse implements IService
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
             persistentCurricularCourse = persistentSuport.getIPersistentCurricularCourse();
             oldCurricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(
-                    new CurricularCourse(newInfoCurricularCourse.getIdInternal()), false);
+                    new CurricularCourse(newInfoCurricularCourse.getIdInternal()), true);
 
             newName = newInfoCurricularCourse.getName();
             newCode = newInfoCurricularCourse.getCode();
 
             if (oldCurricularCourse == null) { throw new NonExistingServiceException(); }
-            persistentCurricularCourse.simpleLockWrite(oldCurricularCourse);
             oldCurricularCourse.setName(newName);
             oldCurricularCourse.setCode(newCode);
             oldCurricularCourse.setType(newInfoCurricularCourse.getType());

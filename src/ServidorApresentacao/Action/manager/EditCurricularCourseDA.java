@@ -86,7 +86,7 @@ public class EditCurricularCourseDA extends FenixDispatchAction
 		dynaForm.set(
 			"minIncrementNac",
 			oldInfoCurricularCourse.getMinimumValueForAcumulatedEnrollments().toString());
-		dynaForm.set("weight", oldInfoCurricularCourse.getEnrollmentWeigth().toString());
+		dynaForm.set("weight", oldInfoCurricularCourse.getWeigth().toString());
 
 		return mapping.findForward("editCurricularCourse");
 	}
