@@ -78,7 +78,6 @@
 	</tr>
 	<%-- Table with result of search --%>
 	<logic:iterate id="infoGrantOwner" name="infoGrantOwnerList">
-		<logic:present name="infoGrantOwner" property="personInfo">
 		<tr>
 			<td class="listClasses">
 				<bean:write name="infoGrantOwner" property="personInfo.nome"/>
@@ -118,10 +117,39 @@
 				</logic:notPresent>
 			</td>
 		</tr>
-		</logic:present>
 	</logic:iterate>
 </table>
 <br/>
+<table align="center">
+<tr>
+	<logic:present name="beforeSpan">
+	<td>
+       	<html:link page='<%= "/searchGrantOwner.do?page=0&amp;method=doSearch&amp;startIndex=" + request.getAttribute("beforeSpan") + "&amp;name=" + request.getAttribute("name") + "&amp;justGrantOwner=" + request.getAttribute("justGrantOwner") %>' >
+		   	<bean:message key="link.grant.owner.list.before.page"/>
+		</html:link>
+	</td>
+	</logic:present>
+	<td>
+		&nbsp;
+	</td>
+	<td>
+        <logic:present name="actualPage">            
+    		<bean:write name="actualPage"/>/<bean:write name="numberOfPages"/>
+        </logic:present>
+	</td>
+	<td>
+		&nbsp;
+	</td>
+	<td>
+	<logic:present name="nextSpan">
+		<html:link page='<%= "/searchGrantOwner.do?page=0&amp;method=doSearch&amp;startIndex=" + request.getAttribute("nextSpan") + "&amp;name=" + request.getAttribute("name") + "&amp;justGrantOwner=" + request.getAttribute("justGrantOwner") %>' >
+ 		   	<bean:message key="link.grant.owner.list.after.page"/>
+		</html:link>
+	</td>
+	</logic:present>
+</tr>
+</table>
+
 <br/><br/>
 
 <%-- Create a new person Grant Owner --%>

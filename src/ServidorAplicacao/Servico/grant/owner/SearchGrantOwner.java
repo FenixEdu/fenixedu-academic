@@ -99,7 +99,7 @@ public class SearchGrantOwner implements IService {
                     else {
                         //The person is NOT a GrantOwner
                         infoGrantOwner
-                                .setPersonInfo(InfoPersonWithInfoCountry.newInfoFromDomain(person));
+                                .setPersonInfo(InfoPersonWithInfoCountry.newInfoFromDomain(newPerson));
                     }
                     infoGrantOwnerList.add(infoGrantOwner);
                 }
