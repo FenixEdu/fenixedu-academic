@@ -272,7 +272,7 @@ public class DuplicateDegreeCurricularPlan {
 			broker.beginTransaction();
 
 			newCurrilarCourse.setAssociatedExecutionCourses(null);
-			newCurrilarCourse.setBasic(curricularCourseFromBD.getBasic());
+//			newCurrilarCourse.setBasic(curricularCourseFromBD.getBasic());
 			newCurrilarCourse.setCode(curricularCourseFromBD.getCode());
 			newCurrilarCourse.setCredits(curricularCourseFromBD.getCredits());
 			newCurrilarCourse.setDegreeCurricularPlan(degreeCurricularPlan);

@@ -48,7 +48,7 @@ public class ChooseStudentDispatchAction extends DispatchAction {
 		
 		try {
 			Object args[] = { studentNumber , TipoCurso.MESTRADO_OBJ};
-			result = (List) serviceManager.executar(userView, "ReadStudentCurricularPlans", args);
+			result = (List) serviceManager.executar(userView, "ReadStudentCurricularPlansByNumberAndDegreeType", args);
 		} catch (NonExistingServiceException e) {
 			throw new NonExistingActionException("O Aluno");
 		}
