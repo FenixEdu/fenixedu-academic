@@ -8331,4 +8331,15 @@
 			<chain name="ExecutionPeriodsEnrollmentFenix"/>
 		</filterChains>
 	</service>
+	<service>
+		<name>ChangeStudentCurricularPlanState</name>
+		<implementationClass> 
+			ServidorAplicacao.Servico.manager.ChangeStudentCurricularPlanState
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagerAuthorization"/>
+		</filterChains>
+	</service>
 </serviceDefinitions>

@@ -447,6 +447,8 @@
 			<form-property name="page" type="java.lang.Integer"/>
 			<form-property name="number" type="java.lang.String"/>
 			<form-property name="degreeType" type="java.lang.String"/>
+			<form-property name="studentCurricularPlanState" type="java.lang.String"/>
+			<form-property name="selectedStudentCurricularPlanId" type="java.lang.String"/>
 		</form-bean>
 		
     </form-beans>

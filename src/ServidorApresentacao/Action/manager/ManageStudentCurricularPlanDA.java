@@ -24,6 +24,7 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import Util.StudentCurricularPlanState;
 import Util.TipoCurso;
 
 /**
@@ -41,6 +42,8 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
         final String degreeTypeString = (String) dynaActionForm.get("degreeType");
 
         if (isPresent(studentNumberString) && isPresent(degreeTypeString)) {
+            putStudentCurricularPlanStateLabelListInRequest(request);
+
             final Integer studentNumber = new Integer(studentNumberString);
             final TipoCurso degreeType = new TipoCurso(new Integer(degreeTypeString));
             putStudentCurricularInformationInRequest(request, studentNumber, degreeType);
@@ -58,6 +61,23 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
         final IUserView userView = SessionUtils.getUserView(request);
         final Object[] args = new Object[] { studentCurricularPlanId };
         ServiceUtils.executeService(userView, "DeleteStudentCurricularPlan", args);
+
+        return show(mapping, form, request, response);
+    }
+
+    public ActionForward changeStudentCurricularPlanState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+
+        final DynaActionForm dynaActionForm = (DynaActionForm) form;
+        final String selectedStudentCurricularPlanIdString = (String) dynaActionForm.get("selectedStudentCurricularPlanId");
+        final String studentCurricularPlanStateString = (String) dynaActionForm.get("studentCurricularPlanState");
+
+        final Integer selectedStudentCurricularPlanId = new Integer(selectedStudentCurricularPlanIdString);
+        final StudentCurricularPlanState studentCurricularPlanState = new StudentCurricularPlanState(studentCurricularPlanStateString);
+
+        final IUserView userView = SessionUtils.getUserView(request);
+        final Object[] args = new Object[] { selectedStudentCurricularPlanId, studentCurricularPlanState };
+        ServiceUtils.executeService(userView, "ChangeStudentCurricularPlanState", args);
 
         return show(mapping, form, request, response);
     }
@@ -80,7 +100,7 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
             FenixServiceException {
         final IUserView userView = SessionUtils.getUserView(request);
         final Object[] args = new Object[] { studentNumber, degreeType };
-        List infoStudentCurricularPlans = (List) ServiceUtils.executeService(userView,
+        final List infoStudentCurricularPlans = (List) ServiceUtils.executeService(userView,
                 "ReadStudentCurricularInformation", args);
         sortInformation(infoStudentCurricularPlans);
         request.setAttribute("infoStudentCurricularPlans", infoStudentCurricularPlans);
@@ -88,14 +108,18 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
 
     protected void sortInformation(final List infoStudentCurricularPlans) {
         for (final Iterator iterator = infoStudentCurricularPlans.iterator(); iterator.hasNext(); ) {
-            InfoStudentCurricularPlan infoStudentCurricularPlan = (InfoStudentCurricularPlan) iterator.next();
-            List infoEnrollmentGrades = infoStudentCurricularPlan.getInfoEnrolments();
+            final InfoStudentCurricularPlan infoStudentCurricularPlan = (InfoStudentCurricularPlan) iterator.next();
+            final List infoEnrollmentGrades = infoStudentCurricularPlan.getInfoEnrolments();
             Collections.sort(infoEnrollmentGrades, new BeanComparator("infoEnrollment.infoCurricularCourse.name"));
         }
     }
 
-    protected void putDegreeTypeLabelListInRequest(HttpServletRequest request) {
+    protected void putDegreeTypeLabelListInRequest(final HttpServletRequest request) {
         request.setAttribute("degreeTypes", TipoCurso.toLabelValueBeanList());
+    }
+
+    protected void putStudentCurricularPlanStateLabelListInRequest(final HttpServletRequest request) {
+        request.setAttribute("studentCurricularPlanStates", StudentCurricularPlanState.toArrayList());
     }
 
     protected boolean isPresent(final String string) {

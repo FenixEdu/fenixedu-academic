@@ -55,6 +55,8 @@ public class StudentCurricularPlanState extends FenixUtil {
 
     public static final String INACTIVE_STRING = "Inactivo";
 
+    public static final String PAST_STRING = "Passado";
+
     private Integer state;
 
     public StudentCurricularPlanState() {
@@ -79,6 +81,8 @@ public class StudentCurricularPlanState extends FenixUtil {
             this.state = new Integer(StudentCurricularPlanState.SCHOOLPARTCONCLUDED);
         if (state.equals(StudentCurricularPlanState.INACTIVE_STRING))
             this.state = new Integer(StudentCurricularPlanState.INACTIVE);
+        if (state.equals(StudentCurricularPlanState.PAST_STRING))
+            this.state = new Integer(StudentCurricularPlanState.PAST);
     }
 
     public Integer getState() {
@@ -170,6 +174,8 @@ public class StudentCurricularPlanState extends FenixUtil {
                 StudentCurricularPlanState.INCOMPLETE_STRING));
         result.add(new LabelValueBean(StudentCurricularPlanState.SCHOOLPARTCONCLUDED_STRING,
                 StudentCurricularPlanState.SCHOOLPARTCONCLUDED_STRING));
+        result.add(new LabelValueBean(StudentCurricularPlanState.PAST_STRING,
+                StudentCurricularPlanState.PAST_STRING));
         return result;
     }
 
@@ -186,6 +192,8 @@ public class StudentCurricularPlanState extends FenixUtil {
                 StudentCurricularPlanState.INCOMPLETE_STRING));
         result.add(new LabelValueBean(StudentCurricularPlanState.SCHOOLPARTCONCLUDED_STRING,
                 StudentCurricularPlanState.SCHOOLPARTCONCLUDED_STRING));
+        result.add(new LabelValueBean(StudentCurricularPlanState.PAST_STRING,
+                StudentCurricularPlanState.PAST_STRING));
         return result;
     }
 }
