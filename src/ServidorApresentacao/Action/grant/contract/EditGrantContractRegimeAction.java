@@ -76,11 +76,12 @@ public class EditGrantContractRegimeAction extends FenixDispatchAction {
                         request.setAttribute("contractNumber", infoGrantContract.getContractNumber());
                     }
                     grantContractRegimeForm.set("state", new Integer(-1));
-                   
-                            
-                    grantContractRegimeForm.set("grantCostCenterId",infoGrantContract.getGrantCostCenterInfo().getIdInternal());
-                    grantContractRegimeForm.set ("keyCostCenterNumber",infoGrantContract.getGrantCostCenterInfo().getNumber());
-                    grantContractRegimeForm.set ("designation",infoGrantContract.getGrantCostCenterInfo().getDesignation());
+                    if (infoGrantContract.getGrantCostCenterInfo()!=null){                         
+	                    grantContractRegimeForm.set("grantCostCenterId",infoGrantContract.getGrantCostCenterInfo().getIdInternal());
+	                  
+	                    grantContractRegimeForm.set ("keyCostCenterNumber",infoGrantContract.getGrantCostCenterInfo().getNumber());
+	                    grantContractRegimeForm.set ("designation",infoGrantContract.getGrantCostCenterInfo().getDesignation());
+                    }
                 } else {
                     //Read the subsidy
                     Object[] args = { idGrantContractRegime };
