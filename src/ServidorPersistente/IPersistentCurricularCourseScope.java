@@ -8,6 +8,7 @@ import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICurricularSemester;
+import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionPeriod;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
@@ -27,6 +28,7 @@ public interface IPersistentCurricularCourseScope extends IPersistentObject {
 	public ICurricularCourseScope readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndBeginDate(ICurricularCourse curricularCourse, ICurricularSemester curricularSemester, IBranch branch, Calendar beginDate) throws ExcepcaoPersistencia;
 	public List readCurricularCourseScopesByCurricularCourse(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia;
 	public List readActiveCurricularCourseScopesByCurricularCourse(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia;
+	public List readActiveCurricularCourseScopesByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia;
 	public List readCurricularCourseScopesByCurricularCourseInExecutionPeriod(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
 	public ArrayList readAll() throws ExcepcaoPersistencia;
 

@@ -15,6 +15,7 @@ import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICurricularSemester;
+import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionPeriod;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourseScope;
@@ -205,6 +206,14 @@ public class CurricularCourseScopeOJB extends ObjectFenixOJB implements IPersist
 	public List readActiveCurricularCourseScopesByCurricularCourse(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia {
 		Criteria crit = new Criteria();
 		crit.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
+		crit.addIsNull("endDate");
+		List result = queryList(CurricularCourseScope.class, crit);
+		return result;
+	}
+
+	public List readActiveCurricularCourseScopesByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia {
+		Criteria crit = new Criteria();
+		crit.addEqualTo("curricularCourse.degreeCurricularPlanKey", degreeCurricularPlan.getIdInternal());
 		crit.addIsNull("endDate");
 		List result = queryList(CurricularCourseScope.class, crit);
 		return result;
