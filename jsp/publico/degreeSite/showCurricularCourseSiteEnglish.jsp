@@ -89,7 +89,7 @@
 			<li>
 				<logic:notEmpty name="infoCurricularCourseScope" property="infoBranch.name">
 					<logic:notEqual name="infoCurricularCourseScope" property="infoBranch.name" value="">	
-	 					<bean:message key="property.curricularCourse.branch"/>&nbsp;<bean:message key="label.the"/>&nbsp;<bean:write name="infoCurricularCourseScope" property="infoBranch.name"/>&nbsp;
+	 					<bean:write name="infoCurricularCourseScope" property="infoBranch.name"/>&nbsp;
 	 				</logic:notEqual>
 				</logic:notEmpty>
 				
