@@ -34,7 +34,7 @@
 				
 <tr>
 	<td>
-		<bean:message key="message.degreeType"/>
+		<bean:message key="message.manager.degreeType"/>
 	</td>
 	<td>
 		
