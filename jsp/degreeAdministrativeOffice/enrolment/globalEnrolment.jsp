@@ -7,14 +7,14 @@
 
 <h2><bean:message key="tilte.welcome"/></h2>
 <ul>
-	<li>
+<%--	<li>
 		<html:link page="/functionRedirect.do?method=chooseStudentAndDegreeTypeForEnrolmentWithRules"><bean:message key="link.student.enrolment.with.rules"/></html:link>
-	</li>
-	<%--<li>
-		<html:link page="/curricularCoursesEnrollment.do?method=prepareEnrollmentChooseStudent"><bean:message key="link.student.LEEC.enrollment"/></html:link>
 	</li>--%>
+	<li>
+		<html:link page="/curricularCoursesEnrollment.do?method=prepareEnrollmentChooseStudent"><bean:message key="link.student.LEEC.enrollment"/></html:link>
+	</li>
 </ul>
-
+<%--
 <%	IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 	if (userView.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) { %>
 		<b><bean:message key="title.student.enrolment.without.rules"/>:</b>
@@ -27,3 +27,4 @@
 			</li>
 		</ul>
 <%	}%>
+--%>

@@ -8,7 +8,7 @@
 	<li>
 		<html:link forward="enrolment"><bean:message key="link.student.enrolment"/></html:link>
 	</li>
-	<li> 
+<%--<li> 
 		<html:link forward="equivalenceForDegreeAdministrativeOffice"><bean:message key="link.manual.equivalence"/></html:link>
-	</li>
+	</li>--%>
 </ul>     
