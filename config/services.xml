@@ -3700,6 +3700,16 @@
         </filterChains>
     </service>
     <service>
+		<name>UpdateProfessorshipsHours</name>
+		<implementationClass> 
+			ServidorAplicacao.Servico.teacher.professorship.UpdateProfessorshipsHours</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="CreditsManagerAuthorization"/>
+		</filterChains>
+	</service>
+    <service>
         <name>ReadProfessorshipSupportLessons</name>
         <implementationClass> 
             ServidorAplicacao.Servico.teacher.professorship.ReadProfessorshipSupportLessons</implementationClass>
