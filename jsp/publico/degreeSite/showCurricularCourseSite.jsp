@@ -32,16 +32,6 @@
 	&nbsp;&gt;&nbsp;<bean:write name="infoCurricularCourse" property="name" />	
 </div>	
 
-<!-- PÁGINA EM INGLÊS -->
-<!--<div class="version">
-	<span class="px10">
-		<html:link page="<%= "/showCourseSite.do?method=showCurricularCourseSite&amp;inEnglish=true&amp;curricularCourseID=" +  pageContext.findAttribute("curricularCourseID") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.getAttribute("degreeCurricularPlanID") %>" >
-			<bean:message key="label.version.english" />
-		</html:link>
-		<img src="<%= request.getContextPath() %>/images/icon_uk.gif" alt="Icon: English version!" width="16" height="12" />
-	</span>
-</div> -->
-
 <h1>
 	<bean:write name="infoDegree" property="tipoCurso" />
 	<bean:message key="label.in" />

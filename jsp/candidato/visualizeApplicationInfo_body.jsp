@@ -73,7 +73,8 @@
 	          </tr>
 	          <!-- Situacao -->
 	          <tr>
-	            <td colspan="2"><span class="error">Não tem situação activa. Contacte-nos clicando <a href="mailto:suporte@dot.ist.utl.pt?subject=Situacao Indefinida (pos-graduacao)">aqui</a></span></td>
+				<bean:define id="supportMail" type="java.lang.String">mailto:<bean:message key="suporte.mail" bundle="GLOBAL_RESOURCES"/>?subject=Situacao Indefinida (pos-graduacao)</bean:define>
+	            <td colspan="2"><span class="error">Não tem situação activa. Contacte-nos clicando <a href="<%= supportMail %>">aqui</a></span></td>
 	          </tr>
 	
 	      </logic:notPresent>
