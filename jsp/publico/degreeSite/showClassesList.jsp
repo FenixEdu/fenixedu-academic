@@ -26,7 +26,6 @@
 </logic:present>
 
 
-<bean:define id="nextSemester" name="nextInfoExecutionPeriod" property="semester"/>
 <bean:define id="currentSemester" name="execution_period" property="semester"/>
 
 <table class="tab_lay" cellspacing="0" width="75%">
@@ -81,6 +80,7 @@
 	</tr>
 	<% } %>
 
+<logic:present name="nextInfoExecutionPeriod">
 	<tr>
 		<th colspan="5" scope="col">
 			<bean:write name="nextInfoExecutionPeriod" property="semester"/><bean:message key="label.ordinal.semester.abbr"/>
@@ -130,6 +130,7 @@
 		</logic:iterate>		
 	</tr>
 	<% } %>
+</logic:present>
 
 </table>
 

@@ -119,7 +119,7 @@ public class ShowClassesDispatchAction extends FenixContextDispatchAction {
         for (Iterator iterator = classViews.iterator(); iterator.hasNext();) {
             ClassView classView = (ClassView) iterator.next();
 
-            if (classView.getExecutionPeriodOID().equals(previousExecutionPeriod.getIdInternal())) {
+            if (previousExecutionPeriod != null && classView.getExecutionPeriodOID().equals(previousExecutionPeriod.getIdInternal())) {
                 classViewsTablePrevious.appendToColumn(classView.getCurricularYear().intValue() - 1,
                         classView);
             } else {

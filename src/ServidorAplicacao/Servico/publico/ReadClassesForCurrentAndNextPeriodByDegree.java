@@ -61,8 +61,7 @@ public class ReadClassesForCurrentAndNextPeriodByDegree implements IService {
         List classViews = new ArrayList();
         for (Iterator iterator = classes.iterator(); iterator.hasNext();) {
             ITurma klass = (ITurma) iterator.next();
-            if (isInPeriodsAndForDegree(klass, degree, currentExecutionPeriod,
-                    nextExecutionPeriod)) {
+            if (isInPeriodsAndForDegree(klass, degree, currentExecutionPeriod, nextExecutionPeriod)) {
                 ClassView classView = new ClassView();
                 classView.setClassName(klass.getNome());
                 classView.setClassOID(klass.getIdInternal());
@@ -81,8 +80,8 @@ public class ReadClassesForCurrentAndNextPeriodByDegree implements IService {
     private boolean isInPeriodsAndForDegree(ITurma klass, ICurso degree,
             IExecutionPeriod currentExecutionPeriod, IExecutionPeriod nextExecutionPeriod) {
         return (klass.getExecutionPeriod().getIdInternal()
-                .equals(currentExecutionPeriod.getIdInternal()) || klass.getExecutionPeriod()
-                .getIdInternal().equals(nextExecutionPeriod.getIdInternal()))
+                .equals(currentExecutionPeriod.getIdInternal()) || (nextExecutionPeriod != null && klass.getExecutionPeriod()
+                .getIdInternal().equals(nextExecutionPeriod.getIdInternal())))
                 && klass.getExecutionDegree().getCurricularPlan().getDegree().getIdInternal().equals(
                         degree.getIdInternal());
     }
