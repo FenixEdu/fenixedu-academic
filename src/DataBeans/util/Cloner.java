@@ -3361,6 +3361,10 @@ public abstract class Cloner
 	//by gedl AT rnl DOT ist DOT utl DOT pt (August the 3rd, 2003)
 	public static InfoModality copyIModality2InfoModality(IModality modality)
 	{
+        if (modality == null) {
+            return null;
+            
+        }
 		InfoModality infoModality = new InfoModality();
 		copyObjectProperties(infoModality, modality);
 

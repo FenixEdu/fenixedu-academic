@@ -42,7 +42,7 @@ public interface ISeminary extends IDomainObject
 	 */
 	public abstract void setEquivalencies(List list);
     
-    public abstract Integer getIdInternal();
+   
     
     public abstract Integer getAllowedCandidaciesPerStudent();
     public void setAllowedCandidaciesPerStudent(Integer integer);

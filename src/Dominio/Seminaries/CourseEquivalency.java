@@ -19,7 +19,7 @@ import Dominio.ICurricularCourse;
  */
 public class CourseEquivalency extends DomainObject implements ICourseEquivalency
 {
-    private Integer idInternal;
+ 
     private ISeminary seminary;
     private ICurricularCourse curricularCourse;
     private IModality modality;
@@ -44,14 +44,7 @@ public class CourseEquivalency extends DomainObject implements ICourseEquivalenc
 		return curricularCourseIdInternal;
 	}
 
-	/**
-	 * @return
-	 */
-	public Integer getIdInternal()
-	{
-		return idInternal;
-	}
-
+	
 	/**
 	 * @return
 	 */
@@ -84,13 +77,7 @@ public class CourseEquivalency extends DomainObject implements ICourseEquivalenc
 		curricularCourseIdInternal= integer;
 	}
 
-	/**
-	 * @param integer
-	 */
-	public void setIdInternal(Integer integer)
-	{
-		idInternal= integer;
-	}
+	
 
 	/**
 	 * @param seminary

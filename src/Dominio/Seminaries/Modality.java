@@ -16,7 +16,7 @@ import Dominio.DomainObject;
  */
 public class Modality extends DomainObject implements IModality
 {
-    private Integer idInternal;
+   
     private String description;
     private String name;
     
@@ -36,13 +36,7 @@ public class Modality extends DomainObject implements IModality
 	{
 		return this.description;
 	}
-	/**
-	 * @return
-	 */
-	public Integer getIdInternal()
-	{
-		return this.idInternal;
-	}
+	
 	/**
 	 * @return
 	 */
@@ -57,13 +51,7 @@ public class Modality extends DomainObject implements IModality
 	{
 		this.description= description;
 	}
-	/**
-	 * @param integer
-	 */
-	public void setIdInternal(Integer idInternal)
-	{
-		this.idInternal= idInternal;
-	}
+	
 	/**
 	 * @param string
 	 */

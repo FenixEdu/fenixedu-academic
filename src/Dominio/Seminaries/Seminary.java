@@ -16,7 +16,7 @@ import Dominio.DomainObject;
  */
 public class Seminary extends DomainObject implements ISeminary
 {
-	private Integer idInternal;
+
 	private String name;
 	private String description;
 	private List equivalencies;
@@ -83,20 +83,8 @@ public class Seminary extends DomainObject implements ISeminary
 	{
 		equivalencies = list;
 	}
-	/**
-	 * @return
-	 */
-	public Integer getIdInternal()
-	{
-		return idInternal;
-	}
-	/**
-	 * @param integer
-	 */
-	public void setIdInternal(Integer integer)
-	{
-		idInternal = integer;
-	}
+	
+	
 	public String toString()
 	{
 		String result;

@@ -2595,6 +2595,14 @@
         <filterChains/>
     </service>
     <service>
+        <name>ReadStudentCurricularPlansForSeminaries</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.commons.student.ReadStudentCurricularPlansForSeminaries</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains/>
+    </service>
+    <service>
         <name>ReadStudentCurricularPlan</name>
         <implementationClass> 
             ServidorAplicacao.Servico.commons.student.ReadStudentCurricularPlan</implementationClass>

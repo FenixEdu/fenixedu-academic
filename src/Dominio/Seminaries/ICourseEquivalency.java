@@ -27,10 +27,7 @@ public interface ICourseEquivalency extends IDomainObject
 	 * @return
 	 */
 	public abstract Integer getCurricularCourseIdInternal();
-	/**
-	 * @return
-	 */
-	public abstract Integer getIdInternal();
+	
 	/**
 	 * @return
 	 */
@@ -47,10 +44,7 @@ public interface ICourseEquivalency extends IDomainObject
 	 * @param integer
 	 */
 	public abstract void setCurricularCourseIdInternal(Integer integer);
-	/**
-	 * @param integer
-	 */
-	public abstract void setIdInternal(Integer integer);
+	
 	/**
 	 * @param seminary
 	 */

@@ -258,7 +258,7 @@ public class ShowCandidacies extends FenixAction
 				List cps =
 					(ArrayList) ServiceManagerServiceFactory.executeService(
 						userView,
-						"ReadStudentCurricularPlans",
+						"ReadStudentCurricularPlansForSeminaries",
 						argsReadStudentCurricularPlans);
 				long startDate = Long.MAX_VALUE;
 				for (Iterator iter = cps.iterator(); iter.hasNext();)
@@ -286,7 +286,7 @@ public class ShowCandidacies extends FenixAction
 				{
 					InfoEnrolment ie = (InfoEnrolment) iter.next();
 					String stringGrade = ie.getInfoEnrolmentEvaluation().getGrade();
-					if (!stringGrade.equals("RE") && !stringGrade.equals("NA"))
+					if (stringGrade!=null && !stringGrade.equals("RE") && !stringGrade.equals("NA"))
 					{
 						grade = new Float(stringGrade).floatValue();
 						acc += grade;
