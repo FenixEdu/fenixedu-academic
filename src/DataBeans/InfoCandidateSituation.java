@@ -3,6 +3,7 @@ package DataBeans;
 import java.util.Date;
 
 import Dominio.ICandidateSituation;
+import Util.SituationName;
 import Util.State;
 
 /*
@@ -24,7 +25,7 @@ public class InfoCandidateSituation {
     
     private Date date = null;                // Situation Date
     private String remarks = null; 	 		 // Remarks
-    private String situation = null;         // Situation
+    private SituationName situation = null;         // Situation
 	private State validation = null; 
   
     public InfoCandidateSituation() {
@@ -35,13 +36,13 @@ public class InfoCandidateSituation {
     } 
     
     public InfoCandidateSituation(Date date, String remarks, String situation) {
-        setSituation(situation);
+        setSituation(new SituationName(situation));
         setDate(date);
         setRemarks(remarks);
     } 
 
     public InfoCandidateSituation(ICandidateSituation candidateSituation) {
-        setSituation(candidateSituation.getSituation().toString());
+        setSituation(candidateSituation.getSituation());
         setDate(candidateSituation.getDate());
         setRemarks(candidateSituation.getRemarks());
     } 
@@ -73,11 +74,7 @@ public class InfoCandidateSituation {
 		return remarks;
 	}
 
-	/**
-	 * Returns the situation.
-	 * @return String
-	 */
-	public String getSituation() {
+	public SituationName getSituation() {
 		return situation;
 	}
 
@@ -101,7 +98,7 @@ public class InfoCandidateSituation {
 	 * Sets the situation.
 	 * @param situation The situation to set
 	 */
-	public void setSituation(String situation) {
+	public void setSituation(SituationName situation) {
 		this.situation = situation;
 	}
 
