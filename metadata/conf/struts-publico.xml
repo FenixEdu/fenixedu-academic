@@ -219,11 +219,10 @@
           <forward name="Sucess" path="/viewShiftTimeTable.jsp"/>
       </action>
 
-<!-- Start of Gesdis-->
-<action path="/viewTimeTable" forward="/viewTimeTable.jsp"/>
+	<!-- Start of Gesdis-->
+	<action path="/viewTimeTable" forward="/viewTimeTable.jsp"/>
 
-
-<action     path="/bibliographicReferenceManager"
+	<action     path="/bibliographicReferenceManager"
 				parameter="method"      			
 				scope="session"
       			input="/editBibliographicReference.jsp"
@@ -232,11 +231,18 @@
 				<forward name="bibliographyManagement" path="/bibliographyManagement.jsp"/>
 	</action>             
 
-	<!-- access to announcement management -->
+	<!-- access to announcements -->
 	<action 
 		type="ServidorApresentacao.Action.publico.AccessAnnouncementsAction" 
-		path="/accessAnnouncementsAction">
-        <forward name="AnnouncementManagement" path="/announcements.jsp" />       
+		path="/accessAnnouncements">
+        <forward name="Announcements" path="/announcements.jsp" />       
+	</action>
+
+	<!-- access to alternative site -->
+	<action 
+		type="ServidorApresentacao.Action.publico.AccessAlternativeSiteAction" 
+		path="/accessAlternativeSite">
+        <forward name="AlternativeSite" path="/alternativeSite.jsp" />       
 	</action>
 
 	<!-- Actions For Teachers  -->
