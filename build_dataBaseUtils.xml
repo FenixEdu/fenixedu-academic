@@ -132,7 +132,7 @@
         		 command="rm ${server.dumpFilename}.zip"
         		 />
 
-		<unzip file="${server.dumpFilename}.zip" dest="${basedir}"/>
+		<unzip src="${server.dumpFilename}.zip" dest="${basedir}"/>
 		<delete file="${server.dumpFilename}.zip"/>		
 
     </target>
