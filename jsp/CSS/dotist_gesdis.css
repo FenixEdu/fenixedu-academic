@@ -273,6 +273,16 @@ a:hover {
 	height: 50px;
 	}
 	
+.infotable {
+	background-color: #EBECED;
+	padding: 20px;
+	border: 1px solid #ccc;
+	}
+
+.bottomborder {
+	border-bottom: 1px solid #ccc;
+	}  	
+	
 /* logout orange span */
 .logout {color: #f93;}
 
