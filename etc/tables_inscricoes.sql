@@ -108,9 +108,10 @@ create table ENROLMENT (
    ID_INTERNAL int(11) not null auto_increment,
    KEY_STUDENT_CURRICULAR_PLAN int(11) not null,
    KEY_CURRICULAR_COURSE int(11) not null,
+   KEY_EXECUTION_PERIOD int(11) not null,
    STATE int(11) not null,
    primary key (ID_INTERNAL),
-   unique U1 (KEY_STUDENT_CURRICULAR_PLAN, KEY_CURRICULAR_COURSE)
+   unique U1 (KEY_STUDENT_CURRICULAR_PLAN, KEY_CURRICULAR_COURSE, KEY_EXECUTION_PERIOD)
 )type=InnoDB;
 
 #==================================================================================
