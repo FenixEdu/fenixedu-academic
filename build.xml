@@ -263,10 +263,10 @@
 
 		  <formatter type="xml"/>
 
-		  <test name="my.test.TestCase" haltonfailure="no" todir="${reports.tests}" outfile="resultTEST">
+<!--		  <test name="my.test.TestCase" haltonfailure="no" todir="${reports.tests}" outfile="resultTEST">
 		    <formatter type="xml"/>
 		  </test>
-
+-->
             <batchtest fork="yes" todir="${reports.tests}">
                 <fileset dir="${src.tests}">
                     <!--<include name="**/*Test.java"/>-->
