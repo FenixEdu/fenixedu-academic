@@ -17,8 +17,12 @@
 <logic:messagesNotPresent>
 <p class="infoselected">
 	<b><bean:message key="label.grant.subsidy.information"/></b><br/>
-    <bean:message key="label.grant.subsidy.value"/>:&nbsp;<bean:write name="subsidyValue"/><br/>
-    <bean:message key="label.grant.subsidy.totalCost"/>:&nbsp;<bean:write name="subsidyTotalCost"/>
+	<logic:present name="subsidyValue">
+    	<bean:message key="label.grant.subsidy.value"/>:&nbsp;<bean:write name="subsidyValue"/><br/>
+    </logic:present>
+    <logic:present name="subsidyTotalCost">
+    	<bean:message key="label.grant.subsidy.totalCost"/>:&nbsp;<bean:write name="subsidyTotalCost"/>
+    </logic:present>
 </p>
 
 <p><b><bean:message key="label.grant.part.information"/></b></p><br/>
