@@ -1351,7 +1351,9 @@ public abstract class Cloner {
 	public static IBranch copyInfoBranch2IBranch(InfoBranch infoBranch) {
 
 		IBranch branch = new Branch();
+		IDegreeCurricularPlan degreeCurricularPlan = Cloner.copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(infoBranch.getInfoDegreeCurricularPlan());
 		copyObjectProperties(branch, infoBranch);
+		branch.setDegreeCurricularPlan(degreeCurricularPlan);
 		return branch;
 	}
 
@@ -1363,7 +1365,9 @@ public abstract class Cloner {
 	public static InfoBranch copyIBranch2InfoBranch(IBranch branch) {
 
 		InfoBranch infoBranch = new InfoBranch();
+		InfoDegreeCurricularPlan infoDegreeCurricularPlan = Cloner.copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(branch.getDegreeCurricularPlan());
 		copyObjectProperties(infoBranch, branch);
+		infoBranch.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 		return infoBranch;
 	}
 

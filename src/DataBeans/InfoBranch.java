@@ -1,6 +1,5 @@
 package DataBeans;
 
-import java.util.List;
 
 
 /**
@@ -14,15 +13,17 @@ public class InfoBranch {
 	private String name;
 	private String code;
 //	private List associatedCurricularCourses;
-	private List associatedStudentCurricularPlans;
-	private List infoScopes;
+//	private List associatedStudentCurricularPlans;
+//	private List infoScopes;
+	private InfoDegreeCurricularPlan infoDegreeCurricularPlan;
 
 	public InfoBranch() {
 		setName(null);
 		setCode(null);
+		setInfoDegreeCurricularPlan(null);
 //		setAssociatedCurricularCourses(null);
-		setAssociatedStudentCurricularPlans(null);
-		setInfoScopes(null);
+//		setAssociatedStudentCurricularPlans(null);
+//		setInfoScopes(null);
 	}
 
 	public InfoBranch(String name, String code) {
@@ -77,49 +78,36 @@ public class InfoBranch {
 		this.name = name;
 	}
 
-//	/**
-//	 * @return List
-//	 */
 //	public List getAssociatedCurricularCourses() {
 //		return associatedCurricularCourses;
 //	}
 
-	/**
-	 * @return List
-	 */
-	public List getAssociatedStudentCurricularPlans() {
-		return associatedStudentCurricularPlans;
-	}
+//	public List getAssociatedStudentCurricularPlans() {
+//		return associatedStudentCurricularPlans;
+//	}
 
-//	/**
-//	 * Sets the associatedCurricularCourses.
-//	 * @param associatedCurricularCourses The associatedCurricularCourses to set
-//	 */
 //	public void setAssociatedCurricularCourses(List associatedCurricularCourses) {
 //		this.associatedCurricularCourses = associatedCurricularCourses;
 //	}
 
-	/**
-	 * Sets the associatedStudentCurricularPlans.
-	 * @param associatedStudentCurricularPlans The associatedStudentCurricularPlans to set
-	 */
-	public void setAssociatedStudentCurricularPlans(List associatedStudentCurricularPlans) {
-		this.associatedStudentCurricularPlans = associatedStudentCurricularPlans;
+//	public void setAssociatedStudentCurricularPlans(List associatedStudentCurricularPlans) {
+//		this.associatedStudentCurricularPlans = associatedStudentCurricularPlans;
+//	}
+
+//	public List getInfoScopes() {
+//		return infoScopes;
+//	}
+//
+//	public void setInfoScopes(List infoScopes) {
+//		this.infoScopes = infoScopes;
+//	}
+
+	public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan() {
+		return infoDegreeCurricularPlan;
 	}
 
-	/**
-	 * @return List
-	 */
-	public List getInfoScopes() {
-		return infoScopes;
-	}
-
-	/**
-	 * Sets the infoScopes.
-	 * @param infoScopes The infoScopes to set
-	 */
-	public void setInfoScopes(List infoScopes) {
-		this.infoScopes = infoScopes;
+	public void setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan plan) {
+		infoDegreeCurricularPlan = plan;
 	}
 
 }
