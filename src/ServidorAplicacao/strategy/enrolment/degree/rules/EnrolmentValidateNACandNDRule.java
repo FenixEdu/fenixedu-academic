@@ -34,7 +34,7 @@ public class EnrolmentValidateNACandNDRule implements IEnrolmentRule {
 		// FIXME: David-Ricardo: Parametrizar possibleND, possibleNAC e year
 		// FIXME: David-Ricardo: Aqui as strings devem ser keys do aplication resource.
 
-		//		FIXME: David-Ricardo: A regra dos 3 nao se aplica aos trabalhadores estudantes
+		// FIXME: David-Ricardo: A regra dos 3 nao se aplica aos trabalhadores estudantes
 		if (enrolmentContext.getActualEnrolment().size() < 3) {
 			enrolmentContext.getEnrolmentValidationResult().setMessage("Deve inscrever-se a pelo menos 3 disciplinas");
 		}
