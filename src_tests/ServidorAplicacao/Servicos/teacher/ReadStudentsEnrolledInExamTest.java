@@ -4,14 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DataBeans.ISiteComponent;
+import DataBeans.InfoExam;
 import DataBeans.InfoSiteTeacherStudentsEnrolledList;
 import DataBeans.InfoStudent;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
+import Dominio.Exam;
+import Dominio.IExam;
 import Dominio.IStudent;
 import Dominio.Student;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentExam;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -73,7 +77,12 @@ public class ReadStudentsEnrolledInExamTest extends TestCaseReadServices {
 			student = (IStudent) sp.getIPersistentStudent().readByOId(student);
 			InfoStudent infoStudent = Cloner.copyIStudent2InfoStudent(student);
 			infoStudents.add(infoStudent);
-			component = new InfoSiteTeacherStudentsEnrolledList(infoStudents);
+			IExam exam = new Exam();
+			exam.setIdInternal(new Integer(2));
+			IPersistentExam persistentExam = sp.getIPersistentExam();
+			exam = (IExam) persistentExam.readByOId(exam);
+			InfoExam infoExam = Cloner.copyIExam2InfoExam(exam);
+			component = new InfoSiteTeacherStudentsEnrolledList(infoStudents,infoExam);
 			siteView.setComponent(component);
 			sp.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e) {

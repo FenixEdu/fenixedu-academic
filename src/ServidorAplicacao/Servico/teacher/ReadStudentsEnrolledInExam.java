@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.ISiteComponent;
+import DataBeans.InfoExam;
 import DataBeans.InfoSiteTeacherStudentsEnrolledList;
 import DataBeans.InfoStudent;
 import DataBeans.SiteView;
@@ -62,8 +63,9 @@ public class ReadStudentsEnrolledInExam implements IServico {
 					Cloner.copyIStudent2InfoStudent(student);
 				infoStudents.add(infoStudent);
 			}
+			InfoExam infoExam = Cloner.copyIExam2InfoExam(exam);
 			ISiteComponent component =
-				new InfoSiteTeacherStudentsEnrolledList(infoStudents);
+				new InfoSiteTeacherStudentsEnrolledList(infoStudents,infoExam);
 
 			SiteView siteView = new SiteView(component);
 			return siteView;

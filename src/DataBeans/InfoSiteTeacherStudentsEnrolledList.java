@@ -13,13 +13,15 @@ import java.util.List;
  */
 public class InfoSiteTeacherStudentsEnrolledList implements ISiteComponent {
 	private List infoStudents;
+	private InfoExam infoExam;
 	/**
 	 * 
 	 */
 	public InfoSiteTeacherStudentsEnrolledList() {
 
 	}
-	public InfoSiteTeacherStudentsEnrolledList(List infoStudents) {
+	public InfoSiteTeacherStudentsEnrolledList(List infoStudents,InfoExam infoExam) {
+		setInfoExam(infoExam);
 		setInfoStudents(infoStudents);
 	}
 
@@ -58,6 +60,20 @@ public class InfoSiteTeacherStudentsEnrolledList implements ISiteComponent {
 		}
 
 		return result;
+	}
+
+	/**
+	 * @return
+	 */
+	public InfoExam getInfoExam() {
+		return infoExam;
+	}
+
+	/**
+	 * @param exam
+	 */
+	public void setInfoExam(InfoExam exam) {
+		infoExam = exam;
 	}
 
 }
