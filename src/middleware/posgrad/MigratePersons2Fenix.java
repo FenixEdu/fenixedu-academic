@@ -81,6 +81,7 @@ public class MigratePersons2Fenix {
 				
 				if ((person2Convert.getUsername().equalsIgnoreCase("posgrad2002")) && (person2Convert.getPassword().equalsIgnoreCase("aplica2002"))){
 					personsNotWritten++;
+					broker.commitTransaction();
 					continue;
 				}
 					

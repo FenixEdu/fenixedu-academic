@@ -278,6 +278,10 @@ public class MigrateInscricoes2FenixEnrolments {
 
 				// Read Student 
 				criteria = new Criteria();
+				
+				if (posgrad_aluno_mestrado.getNumero() == 253){
+					posgrad_aluno_mestrado.setNumero(245);
+				}
 				criteria.addEqualTo("number", new Integer(String.valueOf(posgrad_aluno_mestrado.getNumero())));
 				criteria.addEqualTo("degreeType", new TipoCurso(TipoCurso.MESTRADO));
 				query = new QueryByCriteria(Student.class,criteria);
@@ -294,6 +298,7 @@ public class MigrateInscricoes2FenixEnrolments {
 				// Read Student Curricular Plan
 				criteria = new Criteria();
 				criteria.addEqualTo("studentKey", student.getIdInternal());
+				criteria.addEqualTo("degreeCurricularPlanKey", curricularCourse.getDegreeCurricularPlan().getIdInternal());
 				query = new QueryByCriteria(StudentCurricularPlan.class,criteria);
 
 				result = (List) broker.getCollectionByQuery(query);		
@@ -366,7 +371,15 @@ public class MigrateInscricoes2FenixEnrolments {
 					result = (List) broker.getCollectionByQuery(query);		
 
 					if (result.size() != 1) {
-						throw new Exception("Error Reading Funcionario [" + inscricao.getCreditos() + "]");
+
+System.out.println("TEMPORARIO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111 [" + inscricao.getCreditos() + "]");
+broker.commitTransaction();
+continue;
+
+
+
+//						throw new Exception("Error Reading Funcionario [" + inscricao.getCreditos() + "]");
+						
 					}
 
 					Funcionario funcionario = (Funcionario) result.get(0);

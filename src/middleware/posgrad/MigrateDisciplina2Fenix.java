@@ -209,6 +209,7 @@ public class MigrateDisciplina2Fenix {
 				executionCourse.setPraticalHours(curricularCourse2Write.getPraticalHours());
 				executionCourse.setNome(curricularCourse2Write.getName());
 				executionCourse.setSigla(curricularCourse2Write.getCode());
+				executionCourse.setComment("Vazio");
 				
 				criteria = new Criteria();
 				criteria.addEqualTo("name", "2 Semestre");

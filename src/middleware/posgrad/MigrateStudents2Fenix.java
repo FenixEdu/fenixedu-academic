@@ -113,6 +113,10 @@ public class MigrateStudents2Fenix {
 				broker.clearCache();
 				
 				criteria = new Criteria();
+				if (student2Convert.getNumero() == 253){
+					student2Convert.setNumero(245);
+				}
+				
 				criteria.addEqualTo("number", new Integer(String.valueOf(student2Convert.getNumero())));
 				criteria.addEqualTo("degreeType", new TipoCurso(TipoCurso.MESTRADO));
 				query = new QueryByCriteria(Student.class,criteria);
@@ -161,8 +165,16 @@ public class MigrateStudents2Fenix {
 					student2Write.setPerson(person);
 					student2Write.setState(new StudentState(StudentState.INSCRITO));
 					student2Write.setStudentKind(studentGroupInfo);
-					broker.store(student2Write);
+					try {
+						broker.store(student2Write);
+					} catch(Exception e) { 
+						throw new Exception(e);
+					}
+					
 					studentsWritten++;
+				} else if (resultStudent.size() == 1) {
+				
+					student2Write = (IStudent) resultStudent.get(0);
 					
 					IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
 					studentCurricularPlan.setCurrentState(StudentCurricularPlanState.ACTIVE_OBJ);
@@ -234,9 +246,12 @@ public class MigrateStudents2Fenix {
 					if ((student2Convert.getCreditos() != null) && (student2Convert.getCreditos().length() != 0)){
 						studentCurricularPlan.setGivenCredits(new Double(student2Convert.getCreditos()));
 					}
-					 
-					broker.store(studentCurricularPlan);
-					
+
+					try {
+						broker.store(studentCurricularPlan);
+					} catch(Exception e) { 
+						throw new Exception(e);
+					}
 				} 
 
 				// Give the Student Role (This student may not exist but the person may already be a 
@@ -276,7 +291,11 @@ public class MigrateStudents2Fenix {
 //						person.setUsername("E" + student2Convert.getNumero());
 //					}
 					
-					broker.store(person);
+					try {
+						broker.store(person);
+					} catch(Exception e) { 
+						throw new Exception(e);
+					}
 				} 
 				broker.commitTransaction();
 			}
