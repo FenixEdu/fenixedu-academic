@@ -103,9 +103,10 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IServico {
 					} else {
 						//delete because is zero
 						teacherShiftPercentage = teacherShiftPercentageDAO.readByUnique(teacherShiftPercentage);
-						if(teacherShiftPercentage == null) {
+						
+						if(teacherShiftPercentage != null) {
 							teacherShiftPercentageDAO.delete(teacherShiftPercentage);
-						}
+						} 
 					}
 				} else {
 					shiftWithErrors.add(Cloner.copyIShift2InfoShift(shift));

@@ -1,12 +1,14 @@
 package ServidorAplicacao.Servico.student;
 
 import Dominio.Exam;
+import Dominio.ExamStudentRoom;
 import Dominio.IExam;
 import Dominio.IStudent;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExam;
+import ServidorPersistente.IPersistentExamStudentRoom;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -39,25 +41,30 @@ public class UnEnrollStudentInExam implements IServico {
 		return "UnEnrollStudentInExam";
 	}
 
-	public Boolean run(String username, Integer examId)
-		throws FenixServiceException {
-			
+	public Boolean run(String username, Integer examId) throws FenixServiceException {
+
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+
 			IPersistentStudent persistentStudent = sp.getIPersistentStudent();
 			IStudent student = persistentStudent.readByUsername(username);
-			IPersistentExam persistentExam = sp.getIPersistentExam();
-			IExam exam = new Exam();
-			exam.setIdInternal(examId);
-			exam = (IExam) persistentExam.readByOId(exam, true);
-			
-			if (student!=null){
+
+			if (student != null) {
+				IPersistentExam persistentExam = sp.getIPersistentExam();
+
+				IExam exam = new Exam();
+				exam.setIdInternal(examId);
+				exam = (IExam) persistentExam.readByOId(exam, true);
+
 				persistentStudent.lockWrite(student);
 				student.getExamsEnrolled().remove(exam);
-				
+
+				IPersistentExamStudentRoom persistentExamStudentRoom = sp.getIPersistentExamStudentRoom();
+				ExamStudentRoom examStudentRoom = (ExamStudentRoom) persistentExamStudentRoom.readBy(exam, student);
+				if (examStudentRoom != null) {
+					persistentExamStudentRoom.delete(examStudentRoom);
+				}
 			}
-			
-			
 
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
