@@ -11,15 +11,17 @@ package ServidorAplicacao.Servicos.sop;
  *
  * @author tfc130
  */
-import java.util.List;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.ExecutionCourseKeyAndLessonType;
-import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
+import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoExecutionPeriod;
+import DataBeans.InfoExecutionYear;
+import ServidorAplicacao.Servicos.TestCaseReadServices;
 import Util.TipoAula;
 
-public class LerAulasDeDisciplinaExecucaoETipoServicosTest extends TestCaseNeedAuthorizationServices {
+public class LerAulasDeDisciplinaExecucaoETipoServicosTest
+	extends TestCaseReadServices {
 
 	public LerAulasDeDisciplinaExecucaoETipoServicosTest(
 		java.lang.String testName) {
@@ -45,52 +47,75 @@ public class LerAulasDeDisciplinaExecucaoETipoServicosTest extends TestCaseNeedA
 		super.tearDown();
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
+	 */
+	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+		ExecutionCourseKeyAndLessonType tipoAulaAndKeyDisciplinaExecucao =
+			new ExecutionCourseKeyAndLessonType(new TipoAula(3), "xpto");
+		InfoExecutionCourse infoExecutionCourse =
+			new InfoExecutionCourse(
+				"Trabalho Final de Curso I",
+				"TFCI",
+				"programa1",
+				new Double(0),
+				new Double(0),
+				new Double(0),
+				new Double(0),
+				new InfoExecutionPeriod(
+					"2º Semestre",
+					new InfoExecutionYear("2002/2003")));
+		Object[] result =
+			{ tipoAulaAndKeyDisciplinaExecucao, infoExecutionCourse };
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedSuccessfuly()
+	 */
+	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+		ExecutionCourseKeyAndLessonType tipoAulaAndKeyDisciplinaExecucao =
+			new ExecutionCourseKeyAndLessonType(new TipoAula(1), "TFCI");
+		InfoExecutionCourse infoExecutionCourse =
+			new InfoExecutionCourse(
+				"Trabalho Final de Curso I",
+				"TFCI",
+				"programa1",
+				new Double(0),
+				new Double(0),
+				new Double(0),
+				new Double(0),
+				new InfoExecutionPeriod(
+					"2º Semestre",
+					new InfoExecutionYear("2002/2003")));
+		Object[] result =
+			{ tipoAulaAndKeyDisciplinaExecucao, infoExecutionCourse };
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
+	 */
+	protected int getNumberOfItemsToRetrieve() {
+		return 6;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getObjectToCompare()
+	 */
+	protected Object getObjectToCompare() {
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNameOfServiceToBeTested()
 	 */
 	protected String getNameOfServiceToBeTested() {
+
 		return "LerAulasDeDisciplinaExecucaoETipo";
 	}
 
-	// read existing aulas
-	public void testReadExistingAulas() {
-		Object argsLerAulas[] = new Object[1];
-		argsLerAulas[0] =
-			new ExecutionCourseKeyAndLessonType(
-				new TipoAula(TipoAula.TEORICA),
-				_disciplinaExecucao1.getSigla());
-
-		Object result = null;
-		try {
-			result =
-				_gestor.executar(
-					_userView,
-					getNameOfServiceToBeTested(),
-					argsLerAulas);
-			assertEquals("testLerExistingAulas", 1, ((List) result).size());
-		} catch (Exception ex) {
-			fail("testLerExistingAulas");
-		}
-	}
-
-	// read non-existing aulas
-	public void testReadNonExistingAulas() {
-		Object argsLerAulas[] = new Object[1];
-		argsLerAulas[0] =
-			new ExecutionCourseKeyAndLessonType(
-				new TipoAula(TipoAula.PRATICA),
-				_disciplinaExecucao2.getSigla());
-
-		Object result = null;
-		try {
-			result =
-				_gestor.executar(
-					_userView,
-					getNameOfServiceToBeTested(),
-					argsLerAulas);
-			assertTrue("testLerNonExistingAulas", ((List) result).isEmpty());
-		} catch (Exception ex) {
-			fail("testLerNonExistingAulas");
-		}
+	protected boolean needsAuthorization() {
+		return true;
 	}
 }

@@ -146,5 +146,9 @@ public class LerAulasDeTurnoServicosTest extends TestCaseReadServices {
 						new InfoExecutionYear("2002/2003"))));
 		return infoLesson;
 	}
+	
+	protected boolean needsAuthorization() {
+				return true;
+			}
 
 }
