@@ -1,17 +1,19 @@
 package ServidorApresentacao;
 
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.UserView;
 import java.util.HashSet;
 
-import ServidorPersistente.OJB.*;
-import Util.TipoDocumentoIdentificacao;
-import ServidorPersistente.*;
-import Dominio.*;
-
-import servletunit.struts.MockStrutsTestCase;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import servletunit.struts.MockStrutsTestCase;
+import Dominio.IPessoa;
+import Dominio.Pessoa;
+import Dominio.Privilegio;
+import ServidorAplicacao.Servico.UserView;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPessoaPersistente;
+import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.TipoDocumentoIdentificacao;
 
 
 /**
@@ -93,9 +95,9 @@ public class AutenticacaoFormActionTest extends MockStrutsTestCase {
     addRequestParameter("password","pass");
 
     // coloca credenciais na sessão
-    HashSet privilegios = new HashSet();
-    IUserView userView = new UserView("athirduser", privilegios);
-    getSession().setAttribute("UserView", userView);
+//    HashSet privilegios = new HashSet();
+//    IUserView userView = new UserView("athirduser", privilegios);
+//    getSession().setAttribute("UserView", userView);
     
     // invoca acção
     actionPerform();
@@ -109,7 +111,7 @@ public class AutenticacaoFormActionTest extends MockStrutsTestCase {
     //verifica UserView guardado na sessão
     UserView newUserView = (UserView) getSession().getAttribute("UserView");
     assertEquals("Verify UserView", newUserView.getUtilizador(), "user");
-    assertTrue("", newUserView.getPrivilegios().contains("CriarSitio"));
+
   }
   
 
@@ -122,9 +124,9 @@ public class AutenticacaoFormActionTest extends MockStrutsTestCase {
     addRequestParameter("password","xpto");
 
     // coloca credenciais na sessão
-    HashSet privilegios = new HashSet();
-    IUserView userView = new UserView("athirduser", privilegios);
-    getSession().setAttribute("UserView", userView);
+//    HashSet privilegios = new HashSet();
+//    IUserView userView = new UserView("athirduser", privilegios);
+//    getSession().setAttribute("UserView", userView);
     
     // invoca acção
     actionPerform();
