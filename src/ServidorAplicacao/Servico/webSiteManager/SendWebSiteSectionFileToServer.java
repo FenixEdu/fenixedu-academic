@@ -76,8 +76,13 @@ public class SendWebSiteSectionFileToServer implements IServico {
 			InfoWebSiteSection infoWebSiteSection = Cloner.copyIWebSiteSection2InfoWebSiteSection(webSiteSection);
 			infoWebSiteSection.setInfoItemsList(infoWebSiteItems);
 
+			BeanComparator beanComparator = getBeanComparator(infoWebSiteSection);
+			Collections.sort(infoWebSiteSection.getInfoItemsList(), beanComparator);
+			if (infoWebSiteSection.getSortingOrder().equals("descendent")) {
+				Collections.reverse(infoWebSiteSection.getInfoItemsList());
+			}
+
 			Calendar currentMonth = Calendar.getInstance();
-			//			shtml
 			String currentMonthFileName = infoWebSiteSection.getName() + ".html";
 
 			//****************************** build excerpts file ********************************************
@@ -94,12 +99,6 @@ public class SendWebSiteSectionFileToServer implements IServico {
 				excerptsFile = excerptsFile.concat("</p>\n");
 
 			} else {
-				BeanComparator beanComparator = getBeanComparator(infoWebSiteSection);
-				Collections.sort(excerptsList, beanComparator);
-				if (infoWebSiteSection.getSortingOrder().equals("descendent")) {
-					Collections.reverse(excerptsList);
-				}
-
 				// limits number of items to mandatory section size in website
 				if (excerptsList.size() > infoWebSiteSection.getSize().intValue()) {
 					List limitedList = new ArrayList();
@@ -215,13 +214,7 @@ public class SendWebSiteSectionFileToServer implements IServico {
 				} else {
 					thisMonthList = monthList;
 				}
-				
-				BeanComparator beanComparator = getBeanComparator(infoWebSiteSection);
-				Collections.sort(thisMonthList, beanComparator);
-				if (infoWebSiteSection.getSortingOrder().equals("descendent")) {
-					Collections.reverse(thisMonthList);
-				}				
-				
+
 				// build body for items
 				String itemsFile = new String();
 				itemsFile = putBegginingOfItemFile(itemsFile, infoWebSiteSection);
