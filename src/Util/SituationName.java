@@ -37,6 +37,7 @@ public class SituationName extends FenixUtil {
 	public static final int SUBSTITUTE_CONDICIONAL_OTHER= 19;
 	public static final int ADMITED_SPECIALIZATION = 20;
 	public static final int ENROLLED = 21;
+	public static final int PENDENT_CONDICIONAL_CURRICULAR = 22;
 	
 	
 	public static final SituationName PENDENTE_OBJ = new SituationName(SituationName.PENDENTE);
@@ -60,6 +61,7 @@ public class SituationName extends FenixUtil {
 	public static final SituationName SUBSTITUTE_CONDICIONAL_OTHER_OBJ = new SituationName(SituationName.SUBSTITUTE_CONDICIONAL_OTHER);
 	public static final SituationName ADMITED_SPECIALIZATION_OBJ = new SituationName(SituationName.ADMITED_SPECIALIZATION);
 	public static final SituationName ENROLLED_OBJ = new SituationName(SituationName.ENROLLED);
+	public static final SituationName PENDENT_CONDICIONAL_CURRICULAR_OBJ = new SituationName(SituationName.PENDENT_CONDICIONAL_CURRICULAR);
 	
     
 	public static final String PENDENTE_STRING = "Pendente";
@@ -84,6 +86,7 @@ public class SituationName extends FenixUtil {
 	public static final String SUBSTITUTE_CONDICIONAL_FINALIST_STRING = "Suplente Condicional - Finalista";
 	public static final String SUBSTITUTE_CONDICIONAL_OTHER_STRING = "Suplente Condicional - Outro";
 	public static final String ENROLLED_STRING = "Inscrito";
+	public static final String PENDENT_CONDICIONAL_CURRICULAR_STRING = "Pendente Condicional - Apreciação Curricular";
 
     
     
@@ -146,6 +149,7 @@ public class SituationName extends FenixUtil {
 		if (nomeSituacao.equals(SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING)) this.situationName = new Integer(SituationName.SUBSTITUTE_CONDICIONAL_FINALIST);
 		if (nomeSituacao.equals(SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING)) this.situationName = new Integer(SituationName.SUBSTITUTE_CONDICIONAL_OTHER);
 		if (nomeSituacao.equals(SituationName.ENROLLED_STRING)) this.situationName = new Integer(SituationName.ENROLLED);
+		if (nomeSituacao.equals(SituationName.PENDENT_CONDICIONAL_CURRICULAR_STRING)) this.situationName = new Integer(SituationName.PENDENT_CONDICIONAL_CURRICULAR);
 
 	}
     
@@ -171,6 +175,8 @@ public class SituationName extends FenixUtil {
 		if (situationName.intValue()== SituationName.SUBSTITUTE_CONDICIONAL_FINALIST) return SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING;
 		if (situationName.intValue()== SituationName.SUBSTITUTE_CONDICIONAL_OTHER) return SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING;
 		if (situationName.intValue()== SituationName.ENROLLED) return SituationName.ENROLLED_STRING;
+		if (situationName.intValue()== SituationName.PENDENT_CONDICIONAL_CURRICULAR) return SituationName.PENDENT_CONDICIONAL_CURRICULAR_STRING;
+		
 		return "ERRO!"; // Nunca e atingido
 	}
     
@@ -198,6 +204,7 @@ public class SituationName extends FenixUtil {
 		result.add(new LabelValueBean(SituationName.PENDENTE_COM_DADOS_STRING , SituationName.PENDENTE_COM_DADOS_STRING));
 		result.add(new LabelValueBean(SituationName.ANNULLED_STRING , SituationName.ANNULLED_STRING));
 		result.add(new LabelValueBean(SituationName.ENROLLED_STRING , SituationName.ENROLLED_STRING));
+		result.add(new LabelValueBean(SituationName.PENDENT_CONDICIONAL_CURRICULAR_STRING, SituationName.PENDENT_CONDICIONAL_CURRICULAR_STRING));
 		
 		return result;	
 	}
