@@ -48,9 +48,11 @@ public class MigrateDisciplina2Fenix {
 		
 		migrateDisciplina2Fenix.broker.beginTransaction();
 		migrateDisciplina2Fenix.broker.clearCache();
-		migrateDisciplina2Fenix.migratePosGradDisciplina2Fenix();
-		
 		migrateDisciplina2Fenix.broker.commitTransaction();
+		
+		
+		migrateDisciplina2Fenix.migratePosGradDisciplina2Fenix();
+
 	}
 
 

@@ -5,6 +5,6 @@
   <tiles:put name="navLocal" value="/posGraduacao/student/studentMenu.jsp" />
   <tiles:put name="navGeral" value="/posGraduacao/commonNavGeralPosGraduacao.jsp" />
   <tiles:put name="body-context" value=""/>  
-  <tiles:put name="body" value="/posGraduacao/student/displayStudentListByCourse_bd.jsp" />
+  <tiles:put name="body" value="/posGraduacao/student/notAuthorized_bd.jsp" />
   <tiles:put name="footer" value="/posGraduacao/copyrightDefault.jsp" />
 </tiles:insert>

@@ -9,7 +9,7 @@ import Util.RoleType;
 /**
  * @author jpvl
  */
-public class InfoRole{
+public class InfoRole extends InfoObject {
 	private String portalSubApplication;
 	private String page;
 	private String pageNameProperty;

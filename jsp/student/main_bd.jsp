@@ -29,3 +29,16 @@
                 </td>
             </tr>
         </table>
+
+		<br />
+		<br />
+
+        <table cellpadding="0" cellspacing="0" border="0">
+			<tr>
+				<th>
+                    <html:link page="/viewCurriculum.do?method=getStudentCP" > <bean:message key="link.student.curriculum"/> </html:link>
+				</th>
+			</tr>
+
+
+        </table>

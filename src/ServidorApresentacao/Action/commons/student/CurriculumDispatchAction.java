@@ -19,6 +19,8 @@ import DataBeans.InfoStudentCurricularPlan;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
@@ -52,8 +54,8 @@ public class CurriculumDispatchAction extends DispatchAction {
 		try {
 			Object args[] = { userView, studentCurricularPlanID };
 			result = (ArrayList) serviceManager.executar(userView, "ReadStudentCurriculum", args);
-		} catch (ExistingServiceException e) {
-			throw new ExistingActionException(e);
+		} catch (NotAuthorizedException e) {
+			return mapping.findForward("NotAuthorized");
 		}
 
 		BeanComparator executionYear = new BeanComparator("infoExecutionPeriod.infoExecutionYear.year");
@@ -80,5 +82,35 @@ public class CurriculumDispatchAction extends DispatchAction {
 
 		return mapping.findForward("ShowStudentCurriculum");
 	}
+
+	public ActionForward getStudentCP(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception {
+
+		HttpSession session = request.getSession();
+
+		GestorServicos serviceManager = GestorServicos.manager();
+		
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		
+
+		List result = null;
+		try {
+			Object args[] = { userView };
+			result = (ArrayList) serviceManager.executar(userView, "ReadStudentCurricularPlans", args);
+		} catch (NonExistingServiceException e) {
+			request.setAttribute("studentCPs", new ArrayList());
+			return mapping.findForward("ShowStudentCurricularPlans");
+		}
+		
+		request.setAttribute("studentCPs", result);
+
+		return mapping.findForward("ShowStudentCurricularPlans");
+	}
+
+
 
 }

@@ -30,4 +30,12 @@ public interface IPersistentEnrolment extends IPersistentObject {
 	public IEnrolment readEnrolmentByStudentCurricularPlanAndCurricularCourseScope(IStudentCurricularPlan studentCurricularPlan, ICurricularCourseScope curricularCourseScope) throws ExcepcaoPersistencia;
 	public List readEnrolmentByStudentCurricularPlanAndCurricularCourseScopeList(IStudentCurricularPlan studentCurricularPlan, ICurricularCourseScope curricularCourseScope) throws ExcepcaoPersistencia;
 	public IEnrolment readEnrolmentByStudentCurricularPlanAndCurricularCourseScopeAndExecutionPeriod(IStudentCurricularPlan studentCurricularPlan, ICurricularCourseScope curricularCourseScope, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
+	
+	/**
+	 * 
+	 * @param curricularCourseScope
+	 * @return
+	 * @throws ExcepcaoPersistencia
+	 */
+	public List readByCurricularCourseScope(ICurricularCourseScope curricularCourseScope) throws ExcepcaoPersistencia;  
 }

@@ -1,6 +1,7 @@
 package ServidorApresentacao.Action.commons;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +18,7 @@ import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
@@ -72,12 +74,36 @@ public class ChooseCurricularCourseDispatchAction extends DispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 
+		HttpSession session = request.getSession();
+
+
 		request.setAttribute("scopeCode", getFromRequest("scopeCode", request));
 
 		//		parameters necessary to write in jsp
 		request.setAttribute("curricularCourse", getFromRequest("curricularCourse", request));
 		request.setAttribute("executionYear", getFromRequest("executionYear", request));
 		request.setAttribute("degree", getFromRequest("degree", request));
+
+		
+		Integer courseScope = new Integer(getFromRequest("scopeCode", request));
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		GestorServicos serviceManager = GestorServicos.manager();
+
+
+		List studentList = null;
+		try {
+			Object args[] = { userView, courseScope };
+			studentList = (List) serviceManager.executar(userView, "ReadStudentListByCurricularCourseScope", args);
+		} catch (NotAuthorizedException e){
+			return mapping.findForward("NotAuthorized");
+		} catch (NonExistingServiceException e) {
+			ActionErrors errors = new ActionErrors();
+			errors.add("nonExisting", new ActionError("error.exception.noStudents"));
+			saveErrors(request, errors);
+			return mapping.findForward("NoStudents");
+		}
+
+		request.setAttribute("enrolment_list", studentList);
 
 		return mapping.findForward("ChooseSuccess");
 	}

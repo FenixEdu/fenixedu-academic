@@ -6,15 +6,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
-<logic:present name="jspTitle">
-	<h2><bean:write name="jspTitle" /></h2>
-	<br />
-	<bean:message key="title.studentListByDegree" />
-</logic:present>
-<logic:notPresent name="jspTitle">
-	<h2><bean:message key="title.studentListByDegree" /></h2>
-</logic:notPresent>
-
    <span class="error"><html:errors/></span>
 
     <bean:define id="masterDegreeList" name="<%= SessionConstants.MASTER_DEGREE_LIST %>" scope="request" />

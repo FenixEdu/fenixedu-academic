@@ -1,0 +1,127 @@
+
+/**
+ *
+ * Autores :
+ *   - Nuno Nunes (nmsn@rnl.ist.utl.pt)
+ *   - Joana Mota (jccm@rnl.ist.utl.pt)
+ *
+ */
+
+package ServidorAplicacao.Servico.commons.student;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
+import org.apache.commons.beanutils.BeanComparator;
+
+import DataBeans.InfoEnrolment;
+import DataBeans.InfoEnrolmentEvaluation;
+import DataBeans.util.Cloner;
+import Dominio.CurricularCourseScope;
+import Dominio.ICurricularCourseScope;
+import Dominio.IEnrolment;
+import ServidorAplicacao.GestorServicos;
+import ServidorAplicacao.IServico;
+import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.ExcepcaoInexistente;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
+
+public class ReadStudentListByCurricularCourseScope implements IServico {
+    
+    private static ReadStudentListByCurricularCourseScope servico = new ReadStudentListByCurricularCourseScope();
+    
+    /**
+     * The singleton access method of this class.
+     **/
+    public static ReadStudentListByCurricularCourseScope getService() {
+        return servico;
+    }
+    
+    /**
+     * The actor of this class.
+     **/
+    private ReadStudentListByCurricularCourseScope() { 
+    }
+    
+    /**
+     * Returns The Service Name */
+    
+    public final String getNome() {
+        return "ReadStudentListByCurricularCourseScope";
+    }
+    
+    
+    public List run(IUserView userView, Integer curricularCourseScopeID) throws ExcepcaoInexistente, FenixServiceException {
+
+        ISuportePersistente sp = null;
+        
+        List enrolmentList = null;
+         
+        ICurricularCourseScope curricularCourseScope = null;
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+            
+            // Read the Students
+            
+            ICurricularCourseScope curricularCourseScopeTemp = new CurricularCourseScope();
+            curricularCourseScopeTemp.setIdInternal(curricularCourseScopeID);
+            curricularCourseScope = (ICurricularCourseScope) sp.getIPersistentCurricularCourseScope().readByOId(curricularCourseScopeTemp, false);
+
+			enrolmentList = sp.getIPersistentEnrolment().readByCurricularCourseScope(curricularCourseScope);
+
+        } catch (ExcepcaoPersistencia ex) {
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+            newEx.fillInStackTrace();
+            throw newEx;
+        } 
+
+
+		if ((enrolmentList == null) || (enrolmentList.size() == 0)){
+			throw new NonExistingServiceException();
+		}
+		
+		return cleanList(enrolmentList, userView);		
+    }
+
+	/**
+	 * @param studentCurricularPlans
+	 * @return A list of Student curricular Plans without the duplicates
+	 */
+	private List cleanList(List studentCurricularPlans, IUserView userView) throws FenixServiceException {
+		List result = new ArrayList();
+		Integer numberAux = null;
+
+		GestorServicos serviceManager = GestorServicos.manager();
+
+		BeanComparator numberComparator = new BeanComparator("studentCurricularPlan.student.number");
+		Collections.sort(studentCurricularPlans, numberComparator);
+
+
+		Iterator iterator = studentCurricularPlans.iterator();
+		while (iterator.hasNext()) {
+			IEnrolment enrolment = (IEnrolment) iterator.next();
+
+			if ((numberAux == null)
+				|| (numberAux.intValue() != enrolment.getStudentCurricularPlan().getStudent().getNumber().intValue())) {
+				numberAux = enrolment.getStudentCurricularPlan().getStudent().getNumber();
+				
+				Object args[] = { enrolment };
+				InfoEnrolmentEvaluation infoEnrolmentEvaluation =(InfoEnrolmentEvaluation) serviceManager.executar(userView, "GetEnrolmentGrade", args);
+
+				InfoEnrolment infoEnrolment = Cloner.copyIEnrolment2InfoEnrolment(enrolment);
+				infoEnrolment.setInfoEnrolmentEvaluation(infoEnrolmentEvaluation);
+
+				result.add(infoEnrolment);
+			}
+		}
+
+		return result;
+	}
+
+}

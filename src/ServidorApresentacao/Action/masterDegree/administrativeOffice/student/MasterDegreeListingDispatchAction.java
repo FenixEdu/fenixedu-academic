@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -17,6 +19,7 @@ import org.apache.struts.actions.DispatchAction;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.TipoCurso;
@@ -79,6 +82,9 @@ public class MasterDegreeListingDispatchAction extends DispatchAction {
 			
 			//Get the Chosen Master Degree
 			Integer masterDegreeID = new Integer((String) request.getParameter("degreeID"));
+			if (masterDegreeID == null){
+				masterDegreeID = (Integer) request.getAttribute("degreeID");
+			}
 			
 			Object args[] = { masterDegreeID };
 			List result = null;
@@ -123,18 +129,27 @@ public class MasterDegreeListingDispatchAction extends DispatchAction {
 			
 				//Get the Selected Degree Curricular Plan
 				Integer degreeCurricularPlanID = new Integer((String) request.getParameter("curricularPlanID"));
+
 			
 				Object args[] = { degreeCurricularPlanID , TipoCurso.MESTRADO_OBJ };
 				List result = null;
 			
 				try {
 
-				result = (List) serviceManager.executar(userView, "ReadStudentsFromDegreeCurricularPlan", args);
+					result = (List) serviceManager.executar(userView, "ReadStudentsFromDegreeCurricularPlan", args);
 
+				} catch (NotAuthorizedException e) {
+					return mapping.findForward("NotAuthorized");
 				} catch (NonExistingServiceException e) {
-					throw new NonExistingActionException("error.exception.noStudents", "");
+					Integer degreeID = new Integer((String) request.getParameter("degreeID"));
+					request.setAttribute("degreeID", degreeID);
+					
+					ActionErrors errors = new ActionErrors();
+					errors.add("error.exception.noStudents", new ActionError("error.exception.noStudents"));
+					saveErrors(request, errors);
+										
+					return mapping.findForward("NoStudents");
 				}
-
 				BeanComparator numberComparator = new BeanComparator("infoStudent.number");
 				Collections.sort(result, numberComparator);
 
@@ -144,6 +159,4 @@ public class MasterDegreeListingDispatchAction extends DispatchAction {
 			} else
 			  throw new Exception();   
 	  }
-  
-	  
 }

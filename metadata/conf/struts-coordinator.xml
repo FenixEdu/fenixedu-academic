@@ -105,6 +105,8 @@
                         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>	
       	  <forward name="ViewList" path="/candidate/selectCandidateFromList.jsp"/>
       	  <forward name="ActionReady" path="/candidate/visualizeCandidate.jsp"/>
+      	  <forward name="ShowCourseList" path="/student/chooseCurricularCourse.jsp"/>
+      	  
       </action>
 
 
@@ -117,6 +119,20 @@
 	         <forward name="PrepareSuccess" path="/student/displayStudentListByDegree.jsp"/> 
 	  </action>
 
+ 	  <!-- Action for the Coordinator to List the Students by CurricularCourse -->
+	  <action path="/listStudentsByCourse"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.commons.ChooseCurricularCourseDispatchAction"
+			  >
+	         <forward name="ChooseSuccess" path="/student/displayStudentListByCourse.jsp"/>
+	         <forward name="PrepareSuccess" path="/student/displayStudentListByDegree.jsp"/> 
+	         <forward name="NoStudents" path="/studentListByDegree.do?method=getCurricularCourses"/> 
+   	         <forward name="NotAuthorized" path="/student/notAuthorized.jsp"/> 	         
+	  </action>
+
+
+
         <!-- List Student Curriculum -->
         <action path="/studentCurriculum"
 		      parameter="method"
@@ -124,6 +140,7 @@
               type="ServidorApresentacao.Action.commons.student.CurriculumDispatchAction"
 			  >
 	         <forward name="ShowStudentCurriculum" path="/student/displayStudentCurriculum.jsp"/>
+	         <forward name="NotAuthorized" path="/student/notAuthorized.jsp"/>
 	  </action>
 
     </action-mappings>

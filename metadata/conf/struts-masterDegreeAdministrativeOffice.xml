@@ -328,6 +328,13 @@
 			  >
 	         <forward name="Success" path="/candidateIndex.jsp"/> 
       </action>
+
+      <action path="/listingSection"
+		      parameter="method"
+              type="ServidorApresentacao.Action.commons.VoidAction"
+			  >
+	         <forward name="Success" path="/lists/indexLists.jsp"/> 
+      </action>
             
 	  <action path="/contributorSection"
 		      parameter="method"
@@ -372,22 +379,28 @@
 	  <action path="/listMasterDegrees"
 		      parameter="method"
 		      scope="request"
+		      input="/lists/displayCurricularPlanByChosenMasterDegree.jsp"
               type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.MasterDegreeListingDispatchAction"
 			  >
-	         <forward name="DisplayMasterDegreeList" path="/student/displayMasterDegrees.jsp"/>
-	         <forward name="MasterDegreeReady" path="/student/displayCurricularPlanByChosenMasterDegree.jsp"/> 
-	         <forward name="CurricularPlanReady" path="/student/displayStudentListByDegree.jsp"/> 
+			<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+	                key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>			  
+	         <forward name="DisplayMasterDegreeList" path="/lists/displayMasterDegrees.jsp"/>
+	         <forward name="MasterDegreeReady" path="/lists/displayCurricularPlanByChosenMasterDegree.jsp"/> 
+	         <forward name="CurricularPlanReady" path="/lists/displayStudentListByDegree.jsp"/> 
+   	         <forward name="NotAuthorized" path="/student/notAuthorized.jsp" /> 
+  	         <forward name="NoStudents" path="/listMasterDegrees.do?method=chooseMasterDegree&amp;page=0"/> 
 	  </action>
 	  
-      <!-- List Student Curriculum -->
-      <action path="/studentCurriculum"
+        <!-- List Student Curriculum -->
+        <action path="/studentCurriculum"
 		      parameter="method"
 		      scope="request"
               type="ServidorApresentacao.Action.commons.student.CurriculumDispatchAction"
 			  >
 	         <forward name="ShowStudentCurriculum" path="/student/displayStudentCurriculum.jsp"/>
+ 			 <forward name="NotAuthorized" path="/student/notAuthorized.jsp" />
 	  </action>
-
 
 	  <!-- Action to choose an Execution Year to List the students by course -->
       <action attribute="chooseExecutionYearToListCourseStudents"
@@ -398,31 +411,34 @@
 		      scope="request"
               type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
               validate="true">
-	         <forward name="PrepareSuccess" path="/student/chooseExecutionYearToCourseStudentList.jsp"/>  
+	         <forward name="PrepareSuccess" path="/lists/chooseExecutionYearToCourseStudentList.jsp"/>  
 	         <forward name="ChooseSuccess" path="/chooseMasterDegreeToCourseStudentList.do?method=prepareChooseMasterDegree&amp;page=0"/>  
       </action>
 
       <!-- Choose Master Degree To List the students by course -->
       <action path="/chooseMasterDegreeToCourseStudentList"
-	          input="/student/chooseMasterDegreeToDegreeStudentList.jsp"
+	          input="/lists/chooseMasterDegreeToDegreeStudentList.jsp"
 		      attribute="chooseMasterDegreeForm"
 		      name="chooseMasterDegreeForm"
 		      parameter="method"
 		      scope="request"
               type="ServidorApresentacao.Action.commons.ChooseMasterDegreeDispatchAction"
 			  >
-	         <forward name="PrepareSuccess" path="/student/chooseMasterDegreeToCourseStudentList.jsp"/>  
+	         <forward name="PrepareSuccess" path="/lists/chooseMasterDegreeToCourseStudentList.jsp"/>  
 	         <forward name="ChooseSuccess" path="/chooseCurricularCourseToCourseStudentList.do?method=prepareChooseCurricularCourse"/>
       </action>
 
       <!-- Choose CurricularCourse To List the students by course -->
       <action path="/chooseCurricularCourseToCourseStudentList"
-      		  input="/student/chooseCurricularCourseToCourseStudentList.jsp"
+      		  input="/lists/chooseCurricularCourseToCourseStudentList.jsp"
 		      parameter="method"
               type="ServidorApresentacao.Action.commons.ChooseCurricularCourseDispatchAction"
 			  >
-	         <forward name="PrepareSuccess" path="/student/chooseCurricularCourseToCourseStudentList.jsp"/>  
-	         <forward name="ChooseSuccess" path="/student/displayStudentListByCourse.jsp"/> 
+	         <forward name="PrepareSuccess" path="/lists/chooseCurricularCourseToCourseStudentList.jsp"/>  
+	         <forward name="ChooseSuccess" path="/lists/displayStudentListByCourse.jsp"/> 
+	         <forward name="NoStudents" path="/chooseMasterDegreeToCourseStudentList.do?method=chooseMasterDegree"/> 
+   	         <forward name="NotAuthorized" path="/student/notAuthorized.jsp"/> 
+	         
       </action>
 
 
@@ -433,9 +449,9 @@
               type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.CourseListingDispatchAction"
 			  >
 	   <!-- TO UPDATE -->
-	         <forward name="DisplayMasterDegreeList" path="/student/displayMasterDegrees.jsp"/>
-	         <forward name="MasterDegreeReady" path="/student/displayCurricularPlanByChosenMasterDegree.jsp"/> 
-	         <forward name="CurricularPlanReady" path="/student/displayStudentListByDegree.jsp"/> 
+	         <forward name="DisplayMasterDegreeList" path="/lists/displayMasterDegrees.jsp"/>
+	         <forward name="MasterDegreeReady" path="/lists/displayCurricularPlanByChosenMasterDegree.jsp"/> 
+	         <forward name="CurricularPlanReady" path="/lists/displayStudentListByDegree.jsp"/> 
 	  </action>
 
 <!-- ////////////////// CHECK UTILITY ON STUDENTS LISTINGS BEFORE DELETING ///////////////////// -->
@@ -448,31 +464,31 @@
 		      scope="request"
               type="ServidorApresentacao.Action.commons.ChooseExecutionYearDispatchAction"
               validate="true">
-	         <forward name="PrepareSuccess" path="/student/chooseExecutionYearToDegreeStudentList.jsp"/>  
+	         <forward name="PrepareSuccess" path="/lists/chooseExecutionYearToDegreeStudentList.jsp"/>  
 	         <forward name="ChooseSuccess" path="/chooseMasterDegreeToDegreeStudentList.do?method=prepareChooseMasterDegree&amp;page=0"/>  
       </action>
 -->
       <!-- Choose Master Degree To List the students by degree -->
 <!--      <action path="/chooseMasterDegreeToDegreeStudentList"
-      		  input="/student/chooseMasterDegreeToDegreeStudentList.jsp"
+      		  input="/lists/chooseMasterDegreeToDegreeStudentList.jsp"
 		      attribute="chooseMasterDegreeForm"
 		      name="chooseMasterDegreeForm"
 		      parameter="method"
 		      scope="request"
               type="ServidorApresentacao.Action.commons.ChooseMasterDegreeDispatchAction"
 			  >
-	         <forward name="PrepareSuccess" path="/student/chooseMasterDegreeToDegreeStudentList.jsp"/>  
+	         <forward name="PrepareSuccess" path="/lists/chooseMasterDegreeToDegreeStudentList.jsp"/>  
 	         <forward name="ChooseSuccess" path="/displayStudentListByDegree.do?method=prepareReading&amp;page=0"/>
       </action>
 -->      
       <!-- List the students by Degree -->
 <!--      <action path="/displayStudentListByDegree"
-      		  input="/student/displayStudentListByDegree.jsp"
+      		  input="/lists/displayStudentListByDegree.jsp"
 		      parameter="method"
 		      scope="request"
               type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.StudentListingByDegreeDispatchAction"
 			  >
-	         <forward name="PrepareSuccess" path="/student/displayStudentListByDegree.jsp"/>  
+	         <forward name="PrepareSuccess" path="/lists/displayStudentListByDegree.jsp"/>  
 	  </action>
 -->	    
   
@@ -933,6 +949,7 @@
 			  >
 	         <forward name="PrepareSuccess" path="/marksManagement/chooseCurricularCourseToManageMarks.jsp"/>  
 	         <forward name="ChooseSuccess" path="/marksManagement/showMarksManagementMenu.jsp"/> 
+   	         <forward name="NotAuthorized" path="/student/notAuthorized.jsp"/> 
       </action>
       
       <action path="/changeMarkDispatchAction"
@@ -949,7 +966,6 @@
 	         <forward name="changeStudentMark" path="/marksManagement/showMarksManagementMenu.jsp"/>
 			 <forward name="studentMarks" path="/marksManagement/showStudentMarks.jsp"/> 
 			 <forward name="editStudentMark" path="/marksManagement/editStudentMark.jsp"/> 
-			 <forward name="editStudentMarkChanged" path="/changeMarkDispatchAction.do?method=chooseStudentMarks"/> 			 
 			 <forward name="chooseCurricularCourse" path="/marksManagement/chooseCurricularCourseToManageMarks.jsp"/>
       </action>
       <action path="/marksSubmission"

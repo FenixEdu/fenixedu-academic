@@ -92,6 +92,18 @@
         <forward name="viewShiftsList" path="/viewShiftsList.jsp"/>
       </action>
 
+
+      <action path="/viewCurriculum"
+              parameter="method"
+		      type="ServidorApresentacao.Action.commons.student.CurriculumDispatchAction">
+        <forward name="ShowStudentCurricularPlans" path="df.page.showStudentCurricularPlans"/>
+        <forward name="ShowStudentCurriculum" path="df.page.showStudentCurriculum"/>
+        <forward name="NotAuthorized" path="df.page.notAuthorized"/>
+        
+      </action>
+
+
+
       <action name="curricularCourseEnrolmentForm"
               type="ServidorApresentacao.Action.student.CurricularCourseEnrolmentManagerDispatchAction"
               path="/curricularCourseEnrolmentManager"

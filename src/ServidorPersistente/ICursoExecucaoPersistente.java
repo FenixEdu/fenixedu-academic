@@ -120,4 +120,14 @@ public interface ICursoExecucaoPersistente extends IPersistentObject {
 	 * @param degreeCurricularPlans
 	 */
 	public List readByExecutionYearAndDegreeCurricularPlans(IExecutionYear executionYear, Collection degreeCurricularPlans) throws ExcepcaoPersistencia;
+	
+	/**
+	 * 
+	 * @param degreeCurricularPlan
+	 * @return The List Of executions for this degree
+	 * @throws ExcepcaoPersistencia
+	 */
+	public List readByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia;
+	
+	
 }

@@ -60,7 +60,9 @@ public class GetEnrolmentGrade implements IServico {
 
 		// if there's only one evaluation ...
 		if (enrolmentEvaluations.size() == 1){
-			return Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation((IEnrolmentEvaluation) enrolmentEvaluations.get(0));
+			IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) enrolmentEvaluations.get(0);
+			enrolmentEvaluation.setGrade((new Integer(enrolmentEvaluation.getGrade())).toString());
+			return Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(enrolmentEvaluation);
 		}
 
 		BeanComparator dateComparator = new BeanComparator("gradeAvailableDate");
@@ -73,14 +75,23 @@ public class GetEnrolmentGrade implements IServico {
 
 		// if the last evaluation is Not of "IMPROVEMENT" type
 		if (!latestEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT_OBJ)){
+			latestEvaluation.setGrade((new Integer(latestEvaluation.getGrade())).toString());
 			return Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(latestEvaluation);
 		} else {
-			IEnrolmentEvaluation previousEvaluation = (IEnrolmentEvaluation) enrolmentEvaluations.get(1);
+			IEnrolmentEvaluation previousEvaluation = null;
+			for (int i = 1; i < enrolmentEvaluations.size(); i++){
+				previousEvaluation = (IEnrolmentEvaluation) enrolmentEvaluations.get(i);
+				if (!previousEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT_OBJ)){
+					break;
+				}
+			}
+			
 			Integer latestMark = null;
 			try{
 				latestMark = new Integer(latestEvaluation.getGrade());
 			} catch (NumberFormatException e) {
 				// If there's an Exception , the the student wasn't able to improve
+				previousEvaluation.setGrade((new Integer(previousEvaluation.getGrade())).toString());
 				return Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(previousEvaluation);
 			}
 			
@@ -89,8 +100,10 @@ public class GetEnrolmentGrade implements IServico {
 			Integer previousMark = new Integer(previousEvaluation.getGrade());
 			
 			if (previousMark.intValue() >= latestMark.intValue()){
+				previousEvaluation.setGrade((new Integer(previousEvaluation.getGrade())).toString());
 				return Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(previousEvaluation);
 			} else {
+				latestEvaluation.setGrade((new Integer(latestEvaluation.getGrade())).toString());
 				return Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(latestEvaluation);
 			}
 		}

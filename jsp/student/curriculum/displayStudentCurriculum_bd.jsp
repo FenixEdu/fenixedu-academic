@@ -13,15 +13,15 @@
   <bean:define id="student" name="<%= SessionConstants.STUDENT_CURRICULAR_PLAN %>" scope="request" />
   
   
-  <bean:message key="label.person.name" />
+  <bean:message key="label.student.name" />
   <bean:write name="student" property="infoStudent.infoPerson.nome"/>
   </br>
   
-  <bean:message key="label.degree" />:
+  <bean:message key="label.student.degree" />:
   <bean:write name="student" property="infoDegreeCurricularPlan.infoDegree.nome"/>
   </br>
 
-  <bean:message key="property.number" />
+  <bean:message key="property.student.number" />
   <bean:write name="student" property="infoStudent.number"/>
   </br>
   </br>

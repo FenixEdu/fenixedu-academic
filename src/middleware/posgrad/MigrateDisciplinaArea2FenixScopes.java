@@ -232,6 +232,8 @@ public class MigrateDisciplinaArea2FenixScopes {
 				if (result.size() != 1){
 					throw new Exception("Error Reading Curricular Semester");
 				}
+				
+				
 //				Iterator iteratorCurricularSemester = result.iterator();
 //				while(iteratorCurricularSemester.hasNext()) {
 					// Create the Scope
@@ -242,7 +244,7 @@ public class MigrateDisciplinaArea2FenixScopes {
 					curricularCourseScope.setMaxIncrementNac(new Integer(2));
 					curricularCourseScope.setMinIncrementNac(new Integer(1));
 					curricularCourseScope.setWeigth(new Integer(1));
-					curricularCourseScope.setCurricularSemester((ICurricularSemester) result);
+					curricularCourseScope.setCurricularSemester((ICurricularSemester) result.get(0));
 					curricularCourseScope.setPraticalHours(new Double(0));
 					curricularCourseScope.setTheoPratHours(new Double(0));
 					curricularCourseScope.setTheoreticalHours(new Double(0));

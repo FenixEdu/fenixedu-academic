@@ -2,6 +2,7 @@ package ServidorPersistente.OJB;
 
 import java.util.List;
 
+import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.Enrolment;
@@ -404,4 +405,14 @@ public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
+	
+	public List readByCurricularCourseScope(ICurricularCourseScope curricularCourseScope) throws ExcepcaoPersistencia {
+		   		   
+	   Criteria crit = new Criteria();
+	   crit.addEqualTo("curricularCourseScope.curricularCourse.idInternal", curricularCourseScope.getCurricularCourse().getIdInternal());
+   
+	   return (List) queryList(Enrolment.class, crit);
+
+	}
+
 }

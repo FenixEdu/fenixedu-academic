@@ -20,5 +20,15 @@
 	<definition name="df.page.searchOptionalCurricularCourses" extends="definition.student.choose.optional.curricular.course.enrolment" >
 		<put name="body" value="/student/searchOptionalCurricularCourses_bd.jsp" />
 	</definition>	
+	<definition name="df.page.notAuthorized" extends="definition.student.masterPage" >
+		<put name="body" value="/student/notAuthorized_bd.jsp" />
+	</definition>	
+	<definition name="df.page.showStudentCurriculum" extends="definition.student.masterPage" >
+		<put name="body" value="/student/curriculum/displayStudentCurriculum_bd.jsp" />
+	</definition>	
+	<definition name="df.page.showStudentCurricularPlans" extends="definition.student.masterPage" >
+		<put name="body" value="/student/curriculum/viewCurricularPlans_bd.jsp" />
+	</definition>	
+
 	
 </tiles-definitions>

@@ -78,6 +78,8 @@ public class ReadCurricularCoursesByDegree implements IServico {
 						return Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
 					}
 				}));
+				
+
 				infoCurricularCourses.add(infoCurricularCourse);
 			}
 

@@ -324,5 +324,28 @@ public class CursoExecucaoOJB
 		criteria.addIn("keyCurricularPlan", degreeCurricularPlansIds);
 		return queryList(CursoExecucao.class, criteria);
 	}
+	
+	
+	
+	public List readByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia {
+		try {
+			String oqlQuery = "select all from " + CursoExecucao.class.getName()
+					+ " where curricularPlan.idInternal = $1";
+
+			query.create(oqlQuery);
+
+			query.bind(degreeCurricularPlan.getIdInternal());
+
+			List result = (List) query.execute();
+			if (result.size() == 0)
+				return null;
+			return result;
+		} catch (QueryException e) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, e);
+		}
+
+	}
+	
+	
 
 }

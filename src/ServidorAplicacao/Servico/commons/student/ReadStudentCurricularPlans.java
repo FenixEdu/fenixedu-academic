@@ -14,10 +14,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.util.Cloner;
-import Dominio.DegreeCurricularPlan;
-import Dominio.IDegreeCurricularPlan;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -26,48 +25,40 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoCurso;
 
-public class ReadStudentsFromDegreeCurricularPlan implements IServico {
+public class ReadStudentCurricularPlans implements IServico {
     
-    private static ReadStudentsFromDegreeCurricularPlan servico = new ReadStudentsFromDegreeCurricularPlan();
+    private static ReadStudentCurricularPlans servico = new ReadStudentCurricularPlans();
     
     /**
      * The singleton access method of this class.
      **/
-    public static ReadStudentsFromDegreeCurricularPlan getService() {
+    public static ReadStudentCurricularPlans getService() {
         return servico;
     }
     
     /**
      * The actor of this class.
      **/
-    private ReadStudentsFromDegreeCurricularPlan() { 
+    private ReadStudentCurricularPlans() { 
     }
     
     /**
      * Returns The Service Name */
     
     public final String getNome() {
-        return "ReadStudentsFromDegreeCurricularPlan";
+        return "ReadStudentCurricularPlans";
     }
     
     
-    public List run(Integer degreeCurricularPlanID, TipoCurso degreeType)
-	    throws ExcepcaoInexistente, FenixServiceException {
-
+    public List run(IUserView userView) throws ExcepcaoInexistente, FenixServiceException {
         ISuportePersistente sp = null;
         
-        List students = null;
+		List studentCurricularPlans = null;
          
         try {
             sp = SuportePersistenteOJB.getInstance();
             
-            // Read the Students
-            
-            IDegreeCurricularPlan degreeCurricularPlanTemp = new DegreeCurricularPlan();
-            degreeCurricularPlanTemp.setIdInternal(degreeCurricularPlanID);
-            IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) sp.getIPersistentDegreeCurricularPlan().readByOId(degreeCurricularPlanTemp, false);
-            
-			students = sp.getIStudentCurricularPlanPersistente().readByDegreeCurricularPlan(degreeCurricularPlan);
+            studentCurricularPlans = (List) sp.getIStudentCurricularPlanPersistente().readByUsername(userView.getUtilizador());
           
         } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");
@@ -75,18 +66,28 @@ public class ReadStudentsFromDegreeCurricularPlan implements IServico {
             throw newEx;
         } 
 
-		if ((students == null) || (students.size() == 0)){
+		if ((studentCurricularPlans == null) || (studentCurricularPlans.size() == 0)){
 			throw new NonExistingServiceException();
 		}
-				
-		Iterator iterator = students.iterator();
+		
+		Iterator iterator = studentCurricularPlans.iterator();
 		List result = new ArrayList();
+		
+		// FIXME: There's a problem with data of the Graduation Students
+		//        For now only Master Degree Students can view their Curriculum 
+		
 		while(iterator.hasNext()){
 			IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator.next();
-
-			result.add(Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan));
+			
+			if (studentCurricularPlan.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(TipoCurso.MESTRADO_OBJ)){
+				result.add(Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan));	
+			}
 		}
-		
+
+		if ((result.size() == 0)){
+			throw new NonExistingServiceException();
+		}
+
 		return result;
     }
 }

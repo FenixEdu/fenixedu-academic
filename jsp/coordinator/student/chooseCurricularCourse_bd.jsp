@@ -10,20 +10,16 @@
 </logic:present>
 <span class="error"><html:errors/></span>
 <br />
-
 <logic:present name="curricularCourses">
-	<bean:message key="label.masterDegree.administrativeOffice.executionYear"/>:<bean:write name="executionYear" />
-	&nbsp;-&nbsp;
-	<bean:message key="label.masterDegree.administrativeOffice.degree"/>:<bean:write name="degree" />
-	<br />
 	<bean:message key="title.masterDegree.administrativeOffice.chooseCurricularCourse" />
 	<br /><br />
-	<bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>" />
+	<bean:define id="path" value="/listStudentsByCourse" />
 	<table>
 		<!-- CurricularCourse -->
 		<logic:iterate id="curricularCourseElem" name="curricularCourses">
 		   	<bean:size id="scopesSize" name="curricularCourseElem" property="infoScopes"/>
 		   	<bean:define id="curricularCourse" name="curricularCourseElem" property="name"/>
+
 			<logic:equal name="scopesSize" value="1">
 				<!-- CurricularCourseScope -->
 				<logic:iterate id="scopeElem" name="curricularCourseElem" property="infoScopes">
@@ -37,6 +33,9 @@
 				</tr>
 				</logic:iterate>						   	
 			</logic:equal>
+
+
+
 		   	<logic:greaterThan name="scopesSize" value="1">
 				<tr>
 					<td><bean:write name="curricularCourseElem" property="name"/></td>
@@ -61,6 +60,8 @@
 				</tr>
 				</logic:iterate>						   	
 	   		</logic:greaterThan>
+	   		
+
 		</logic:iterate>
 	</table>
 </logic:present>

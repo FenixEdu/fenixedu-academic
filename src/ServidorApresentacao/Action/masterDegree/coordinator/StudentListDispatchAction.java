@@ -18,7 +18,10 @@ import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionDegree;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.TipoCurso;
@@ -55,6 +58,11 @@ public class StudentListDispatchAction extends DispatchAction {
 
 			result = (List) serviceManager.executar(userView, "ReadStudentsFromDegreeCurricularPlan", args);
 
+			} catch (NotAuthorizedException e) {
+				
+				System.out.println("NAO AUTORIZADO");
+				
+				return mapping.findForward("NotAuthorized");
 			} catch (NonExistingServiceException e) {
 				throw new NonExistingActionException("error.exception.noStudents", "");
 			}
@@ -67,5 +75,39 @@ public class StudentListDispatchAction extends DispatchAction {
 		} else
 		  throw new Exception();   
   }
+  
+  public ActionForward getCurricularCourses(ActionMapping mapping, ActionForm form,
+											  HttpServletRequest request,
+											  HttpServletResponse response)
+	  throws Exception {
+
+	  HttpSession session = request.getSession(false);
+	  GestorServicos serviceManager = GestorServicos.manager();
+	  IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
+	  InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.MASTER_DEGREE);
+
+	  Object args[] = { infoExecutionDegree.getInfoExecutionYear().getYear(), infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla() };
+	  List result = null;
+
+	  try {
+
+	  result = (List) serviceManager.executar(userView, "ReadCurricularCoursesByDegree", args);
+
+	  } catch (FenixServiceException e) {
+		  throw new FenixActionException();
+	  }
+
+	  BeanComparator nameComparator = new BeanComparator("name");
+      Collections.sort(result, nameComparator);
+
+	  request.setAttribute("executionYear", infoExecutionDegree.getInfoExecutionYear().getYear());
+	  request.setAttribute("degree", infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome());
+
+	  request.setAttribute("curricularCourses", result);
+	  
+	  return mapping.findForward("ShowCourseList");
+	}
+  
 			
 }
