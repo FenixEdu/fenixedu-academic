@@ -1,73 +1,145 @@
 package ServidorAplicacao.Servico.teacher;
 
+import java.util.Calendar;
+
 import DataBeans.InfoCurriculum;
 import Dominio.CurricularCourse;
 import Dominio.Curriculum;
 import Dominio.ICurricularCourse;
 import Dominio.ICurriculum;
+import Dominio.IExecutionYear;
+import Dominio.IPessoa;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentCurriculum;
+import ServidorPersistente.IPersistentExecutionYear;
+import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Fernanda Quitério
- *
- * @deprecated
+ * 
+ * Modified by Tânia Pousão at 2/Dez/2003
  */
-public class EditProgram implements IServico {
+public class EditProgram implements IServico
+{
 
-	private static EditProgram service = new EditProgram();
-	public static EditProgram getService() {
-		return service;
-	}
+    private static EditProgram service = new EditProgram();
+    public static EditProgram getService()
+    {
+        return service;
+    }
 
-	private EditProgram() {
-	}
-	public final String getNome() {
-		return "EditProgram";
-	}
+    private EditProgram()
+    {
+    }
+    public final String getNome()
+    {
+        return "EditProgram";
+    }
 
-	public boolean run(
-		Integer infoExecutionCourseCode,
-		Integer infoCurricularCourseCode,
-		InfoCurriculum infoCurriculumNew)
-		throws FenixServiceException {
+    public boolean run(
+        Integer infoExecutionCourseCode,
+        Integer infoCurricularCourseCode,
+        InfoCurriculum infoCurriculumNew, 
+		String username)
+        throws FenixServiceException
+    {
+		System.out.println("-->Service EditProgram");
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-		try {
-			
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentCurricularCourse persistentCurricularCourse =
-				sp.getIPersistentCurricularCourse();
+            //Person who change all information
+            IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
+            IPessoa person = persistentPerson.lerPessoaPorUsername(username);
+            if (person == null)
+            {
+                throw new NonExistingServiceException("noPerson");
+            }
 
-			ICurricularCourse curricularCourse =
-				(ICurricularCourse) persistentCurricularCourse.readByOId(new CurricularCourse(infoCurricularCourseCode),false);
-				
-			IPersistentCurriculum persistentCurriculum =
-				sp.getIPersistentCurriculum();
+            //inexistent new information
+            if (infoCurriculumNew == null)
+            {
+                throw new FenixServiceException("nullCurriculum");
+            }
 
-			ICurriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse);
-			
-			if (curriculum != null) {
-				curriculum.setCurricularCourse(curricularCourse);
-				curriculum.setProgram(infoCurriculumNew.getProgram());
-				curriculum.setProgramEn(infoCurriculumNew.getProgramEn());
-				persistentCurriculum.lockWrite(curriculum);
-				
-			} else {
-				curriculum = new Curriculum();
-				curriculum.setCurricularCourse(curricularCourse);
-				curriculum.setProgram(infoCurriculumNew.getProgram());
-				curriculum.setProgramEn(infoCurriculumNew.getProgramEn());
-				persistentCurriculum.lockWrite(curriculum);
-			}
+            //Curricular Course
+            if (infoCurricularCourseCode == null)
+            {
+                throw new FenixServiceException("nullCurricularCourseCode");
+            }
 
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-		return true;
-	}
+            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+
+            ICurricularCourse curricularCourse =
+                (ICurricularCourse) persistentCurricularCourse.readByOId(
+                    new CurricularCourse(infoCurricularCourseCode),
+                    false);
+            if (curricularCourse == null)
+            {
+                throw new NonExistingServiceException("noCurricularCourse");
+            }
+
+            //Curriculum
+            IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
+            ICurriculum curriculum =
+                persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse);
+
+            //information doesn't exists, so it's necessary create it
+            if (curriculum == null)
+            {
+                curriculum = new Curriculum();
+
+                persistentCurriculum.simpleLockWrite(curriculum);
+
+                curriculum.setCurricularCourse(curricularCourse);
+
+                Calendar today = Calendar.getInstance();
+                curriculum.setLastModificationDate(today.getTime());
+            }
+
+            IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+            IExecutionYear currentExecutionYear = persistentExecutionYear.readCurrentExecutionYear();
+            // modification of curriculum is made in context of an execution year
+            if (!curriculum.getLastModificationDate().before(currentExecutionYear.getBeginDate())
+                && !curriculum.getLastModificationDate().after(currentExecutionYear.getEndDate()))
+            {
+                // let's edit curriculum
+                curriculum.setCurricularCourse(curricularCourse);
+
+				infoCurriculumNew.setProgram(infoCurriculumNew.getProgram());
+				infoCurriculumNew.setProgramEn(infoCurriculumNew.getProgramEn());
+
+                curriculum.setPersonWhoAltered(person);
+
+                Calendar today = Calendar.getInstance();
+                curriculum.setLastModificationDate(today.getTime());
+            } else
+            {
+                // creates new information
+                ICurriculum newCurriculum = new Curriculum();
+                persistentCurriculum.simpleLockWrite(newCurriculum);
+
+                newCurriculum.setCurricularCourse(curricularCourse);
+
+                newCurriculum.setProgram(infoCurriculumNew.getProgram());
+                newCurriculum.setProgramEn(infoCurriculumNew.getProgramEn());
+
+                newCurriculum.setPersonWhoAltered(person);
+
+                Calendar today = Calendar.getInstance();
+                newCurriculum.setLastModificationDate(today.getTime()); 
+            }
+
+        } catch (ExcepcaoPersistencia e)
+        {
+            throw new FenixServiceException(e);
+        }
+        return true;
+    }
 }

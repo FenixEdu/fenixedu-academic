@@ -679,6 +679,7 @@
 		<set-property property="componentClassName" value="DataBeans.InfoSiteObjectives"/>
 		<set-property property="inputForwardName" value="editObjectives"/>
 
+		<forward name="notAuthorized" path="/objectivesManagerDA.do?method=viewObjectives" />
 	    <forward name="viewObjectives" path="/viewObjectives.jsp"/>    
     	<forward name="editObjectives" path="/editObjectives.jsp"/>
 	</action>
@@ -694,6 +695,7 @@
         className="ServidorApresentacao.mapping.SiteManagementActionMapping">		
 			<set-property property="componentClassName" value="DataBeans.InfoSitePrograms"/>
 			<set-property property="inputForwardName" value="editProgram"/>
+			<forward name="notAuthorized" path="/programManagerDA.do?method=viewProgram" />
 			<forward name="viewProgram" path="/viewProgram.jsp"/>
 			<forward name="editProgram" path="/editProgram.jsp"/>
 	</action>
