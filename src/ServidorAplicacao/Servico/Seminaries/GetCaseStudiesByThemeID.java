@@ -25,48 +25,48 @@ import ServidorPersistente.Seminaries.IPersistentSeminaryCaseStudy;
  */
 public class GetCaseStudiesByThemeID implements IServico
 {
-	private static GetCaseStudiesByThemeID service= new GetCaseStudiesByThemeID();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static GetCaseStudiesByThemeID getService()
-	{
-		return service;
-	}
-	/**
-	 * The actor of this class.
-	 **/
-	private GetCaseStudiesByThemeID()
-	{
-	}
-	/**
-	 * Returns The Service Name */
-	public final String getNome()
-	{
-		return "Seminaries.GetCaseStudiesByThemeID";
-	}
-	public List run(Integer themeID) throws BDException
-	{
-		List infoCases = new LinkedList();
-		try
-		{
-			ISuportePersistente persistenceSupport= SuportePersistenteOJB.getInstance();
-			IPersistentSeminaryCaseStudy persistentCaseStudy= persistenceSupport.getIPersistentSeminaryCaseStudy();      
-			List cases = (List) persistentCaseStudy.readByThemeID(themeID);
-                          
-			for (Iterator iterator= cases.iterator(); iterator.hasNext();)
-			{
-				ICaseStudy caseStudy= (ICaseStudy) iterator.next();
-                infoCases.add(Cloner.copyICaseStudy2InfoCaseStudy(caseStudy));
-			}
+    private static GetCaseStudiesByThemeID service = new GetCaseStudiesByThemeID();
+    /**
+     * The singleton access method of this class.
+     **/
+    public static GetCaseStudiesByThemeID getService()
+    {
+        return service;
+    }
+    /**
+     * The actor of this class.
+     **/
+    private GetCaseStudiesByThemeID()
+    {
+    }
+    /**
+     * Returns The Service Name */
+    public final String getNome()
+    {
+        return "Seminaries.GetCaseStudiesByThemeID";
+    }
+    public List run(Integer themeID) throws BDException
+    {
+        List infoCases = new LinkedList();
+        try
+        {
+            ISuportePersistente persistenceSupport = SuportePersistenteOJB.getInstance();
+            IPersistentSeminaryCaseStudy persistentCaseStudy =
+                persistenceSupport.getIPersistentSeminaryCaseStudy();
+            List cases = persistentCaseStudy.readByThemeID(themeID);
 
-		}
-		catch (ExcepcaoPersistencia ex)
-		{
-			throw new BDException(
-				"Got an error while trying to retrieve mutiple case studies from the database",
-				ex);
-		}
-		return infoCases;
-	}
+            for (Iterator iterator = cases.iterator(); iterator.hasNext();)
+            {
+                ICaseStudy caseStudy = (ICaseStudy) iterator.next();
+                infoCases.add(Cloner.copyICaseStudy2InfoCaseStudy(caseStudy));
+            }
+
+        } catch (ExcepcaoPersistencia ex)
+        {
+            throw new BDException(
+                "Got an error while trying to retrieve mutiple case studies from the database",
+                ex);
+        }
+        return infoCases;
+    }
 }

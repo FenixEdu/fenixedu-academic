@@ -22,66 +22,80 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author lmac1
  */
-public class ReadExecutionCoursesByExecutionPeriod implements IServico {
+public class ReadExecutionCoursesByExecutionPeriod implements IServico
+{
 
-  private static ReadExecutionCoursesByExecutionPeriod service = new ReadExecutionCoursesByExecutionPeriod();
+    private static ReadExecutionCoursesByExecutionPeriod service =
+        new ReadExecutionCoursesByExecutionPeriod();
 
-  /**
-   * The singleton access method of this class.
-   */
-  public static ReadExecutionCoursesByExecutionPeriod getService() {
-	return service;
-  }
+    /**
+     * The singleton access method of this class.
+     */
+    public static ReadExecutionCoursesByExecutionPeriod getService()
+    {
+        return service;
+    }
 
-  /**
-   * The constructor of this class.
-   */
-  private ReadExecutionCoursesByExecutionPeriod() { }
+    /**
+     * The constructor of this class.
+     */
+    private ReadExecutionCoursesByExecutionPeriod()
+    {
+    }
 
-  /**
-   * Service name
-   */
-  public final String getNome() {
-	return "ReadExecutionCoursesByExecutionPeriod";
-  }
+    /**
+     * Service name
+     */
+    public final String getNome()
+    {
+        return "ReadExecutionCoursesByExecutionPeriod";
+    }
 
-  /**
-   * Executes the service. Returns the current collection of infoExecutionCourses.
-   */
-  public List run(Integer executionPeriodId) throws FenixServiceException {
-	ISuportePersistente sp;
-	List allExecutionCoursesFromExecutionPeriod = null;
-	List allExecutionCourses = null;
-	try {
-			sp = SuportePersistenteOJB.getInstance();
-			IExecutionPeriod executionPeriodToRead = new ExecutionPeriod();
-			executionPeriodToRead.setIdInternal(executionPeriodId);
-		
-			IExecutionPeriod executionPeriod = (IExecutionPeriod) sp.getIPersistentExecutionPeriod().readByOId(executionPeriodToRead, false);
-			
-			if(executionPeriod == null)
-				throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
-			
-			allExecutionCoursesFromExecutionPeriod = 
-				(List) sp.getIDisciplinaExecucaoPersistente().readByExecutionPeriod(executionPeriod);
+    /**
+     * Executes the service. Returns the current collection of infoExecutionCourses.
+     */
+    public List run(Integer executionPeriodId) throws FenixServiceException
+    {
+        ISuportePersistente sp;
+        List allExecutionCoursesFromExecutionPeriod = null;
+        List allExecutionCourses = null;
+        try
+        {
+            sp = SuportePersistenteOJB.getInstance();
+            IExecutionPeriod executionPeriodToRead = new ExecutionPeriod();
+            executionPeriodToRead.setIdInternal(executionPeriodId);
 
-			if(allExecutionCoursesFromExecutionPeriod == null || allExecutionCoursesFromExecutionPeriod.isEmpty()) 
-				return allExecutionCoursesFromExecutionPeriod;
-				
-			InfoExecutionCourse infoExecutionCourse = null;
-		    allExecutionCourses = new ArrayList(allExecutionCoursesFromExecutionPeriod.size()); 
-		    Iterator iter = allExecutionCoursesFromExecutionPeriod.iterator();
-		    while(iter.hasNext()){
-		    	IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) iter.next();
-		    	Integer executionCourseId = executionCourse.getIdInternal();
-				Boolean hasSite = (Boolean) sp.getIDisciplinaExecucaoPersistente().readSite(executionCourseId);
-				infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
-				infoExecutionCourse.setHasSite(hasSite);
-				allExecutionCourses.add(infoExecutionCourse);
-		    }    
-	} catch (ExcepcaoPersistencia excepcaoPersistencia){
-		throw new FenixServiceException(excepcaoPersistencia);
-	}
-	return allExecutionCourses;
-  }
+            IExecutionPeriod executionPeriod =
+                (IExecutionPeriod) sp.getIPersistentExecutionPeriod().readByOId(
+                    executionPeriodToRead,
+                    false);
+
+            if (executionPeriod == null)
+                throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
+
+            allExecutionCoursesFromExecutionPeriod =
+                sp.getIDisciplinaExecucaoPersistente().readByExecutionPeriod(executionPeriod);
+
+            if (allExecutionCoursesFromExecutionPeriod == null
+                || allExecutionCoursesFromExecutionPeriod.isEmpty())
+                return allExecutionCoursesFromExecutionPeriod;
+
+            InfoExecutionCourse infoExecutionCourse = null;
+            allExecutionCourses = new ArrayList(allExecutionCoursesFromExecutionPeriod.size());
+            Iterator iter = allExecutionCoursesFromExecutionPeriod.iterator();
+            while (iter.hasNext())
+            {
+                IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) iter.next();
+                Integer executionCourseId = executionCourse.getIdInternal();
+                Boolean hasSite = sp.getIDisciplinaExecucaoPersistente().readSite(executionCourseId);
+                infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+                infoExecutionCourse.setHasSite(hasSite);
+                allExecutionCourses.add(infoExecutionCourse);
+            }
+        } catch (ExcepcaoPersistencia excepcaoPersistencia)
+        {
+            throw new FenixServiceException(excepcaoPersistencia);
+        }
+        return allExecutionCourses;
+    }
 }

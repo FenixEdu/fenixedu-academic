@@ -21,35 +21,35 @@ import ServidorPersistente.Seminaries.*;
  */
 public class CaseStudyChoiceOJB extends ObjectFenixOJB implements IPersistentSeminaryCaseStudyChoice
 {
-	public List readByCandidacyIdInternal(Integer id) throws ExcepcaoPersistencia
-	{
-		Criteria criteria= new Criteria();
-		criteria.addEqualTo("candidacy_id_internal", id);
-		return super.queryList(CaseStudyChoice.class, criteria);
-	}
-	public List readByCaseStudyIdInternal(Integer id) throws ExcepcaoPersistencia
-	{
-		Criteria criteria= new Criteria();
-		criteria.addEqualTo("casestudy_id_internal", id);
-		return super.queryList(CaseStudyChoice.class, criteria);
-	}
-	public ICaseStudyChoice readByCaseStudyIdInternalAndCandidacyIdInternal(
-		Integer idCaseStudy,
-		Integer idCandidacy)
-		throws ExcepcaoPersistencia
-	{
-		Criteria criteria= new Criteria();
-		criteria.addEqualTo("casestudy_id_internal", idCaseStudy);
+    public List readByCandidacyIdInternal(Integer id) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("candidacy_id_internal", id);
+        return super.queryList(CaseStudyChoice.class, criteria);
+    }
+    public List readByCaseStudyIdInternal(Integer id) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("casestudy_id_internal", id);
+        return super.queryList(CaseStudyChoice.class, criteria);
+    }
+    public ICaseStudyChoice readByCaseStudyIdInternalAndCandidacyIdInternal(
+        Integer idCaseStudy,
+        Integer idCandidacy)
+        throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("casestudy_id_internal", idCaseStudy);
         criteria.addEqualTo("candidacy_id_internal", idCandidacy);
-		return (ICaseStudyChoice) super.queryObject(CaseStudyChoice.class, criteria);
-	}
-	public List readAll() throws ExcepcaoPersistencia
-	{
-		Criteria criteria= new Criteria();
-		return (List) super.queryList(CaseStudyChoice.class, criteria);
-	}
-	public void delete(ICaseStudyChoice choice) throws ExcepcaoPersistencia
-	{
-		super.delete(choice);
-	}
+        return (ICaseStudyChoice) super.queryObject(CaseStudyChoice.class, criteria);
+    }
+    public List readAll() throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        return super.queryList(CaseStudyChoice.class, criteria);
+    }
+    public void delete(ICaseStudyChoice choice) throws ExcepcaoPersistencia
+    {
+        super.delete(choice);
+    }
 }

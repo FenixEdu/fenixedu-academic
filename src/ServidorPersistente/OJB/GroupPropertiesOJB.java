@@ -22,102 +22,121 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
  * @author asnr and scpo
  *
  */
-public class GroupPropertiesOJB extends ObjectFenixOJB implements IPersistentGroupProperties{
-	
-	
-	public List readAllGroupPropertiesByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia {
+public class GroupPropertiesOJB extends ObjectFenixOJB implements IPersistentGroupProperties
+{
 
-			Criteria criteria = new Criteria(); 
-			criteria.addEqualTo("KEY_EXECUTION_COURSE", executionCourse.getIdInternal());	
-            List temp = (List) queryList(GroupProperties.class, criteria);
-			return temp;
-	}
-    
-    public List readAllGroupPropertiesByExecutionCourseID(Integer id) throws ExcepcaoPersistencia {
+    public List readAllGroupPropertiesByExecutionCourse(IDisciplinaExecucao executionCourse)
+        throws ExcepcaoPersistencia
+    {
 
-            Criteria criteria = new Criteria(); 
-            criteria.addEqualTo("KEY_EXECUTION_COURSE", id); 
-            return (List) queryList(GroupProperties.class, criteria);
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("KEY_EXECUTION_COURSE", executionCourse.getIdInternal());
+        List temp = queryList(GroupProperties.class, criteria);
+        return temp;
     }
-    
-	
-	public IGroupProperties readGroupPropertiesByExecutionCourseAndName(IDisciplinaExecucao executionCourse,String name) throws ExcepcaoPersistencia {
 
-			Criteria criteria = new Criteria(); 
-			criteria.addEqualTo("KEY_EXECUTION_COURSE", executionCourse.getIdInternal());	
-			criteria.addEqualTo("name", name);	
-			return (IGroupProperties) queryObject(GroupProperties.class, criteria);
-		}
-		
-	public List readAll() throws ExcepcaoPersistencia {
+    public List readAllGroupPropertiesByExecutionCourseID(Integer id) throws ExcepcaoPersistencia
+    {
 
-	try {
-			ArrayList list = new ArrayList();
-			String oqlQuery = "select all from " + GroupProperties.class.getName();
-			query.create(oqlQuery);
-			List result = (List) query.execute();
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("KEY_EXECUTION_COURSE", id);
+        return queryList(GroupProperties.class, criteria);
+    }
 
-			try {
-				lockRead(result);
-			} catch (ExcepcaoPersistencia ex) {
-					throw ex;
-			}
+    public IGroupProperties readGroupPropertiesByExecutionCourseAndName(
+        IDisciplinaExecucao executionCourse,
+        String name)
+        throws ExcepcaoPersistencia
+    {
 
-			if ((result != null) && (result.size() != 0)) {
-				ListIterator iterator = result.listIterator();
-				while (iterator.hasNext())
-				list.add((IGroupProperties) iterator.next());
-			}
-			return list;
-			} catch (QueryException ex) {
-				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-			}
-		}
-			
-	public void lockWrite(IGroupProperties groupPropertiesToWrite) throws ExcepcaoPersistencia {
-       
-		IGroupProperties groupPropertiesFromDB = null;
-		if (groupPropertiesToWrite == null)
-		// If there is nothing to write, simply return.
-			return;
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("KEY_EXECUTION_COURSE", executionCourse.getIdInternal());
+        criteria.addEqualTo("name", name);
+        return (IGroupProperties) queryObject(GroupProperties.class, criteria);
+    }
 
-		// read studentGroup from DB	
-		groupPropertiesFromDB = readGroupPropertiesByExecutionCourseAndName(groupPropertiesToWrite.getExecutionCourse(),groupPropertiesToWrite.getName());
-		
+    public List readAll() throws ExcepcaoPersistencia
+    {
 
-		// if (studentGroup not in database) then write it
-		if (groupPropertiesFromDB == null)
-			super.lockWrite(groupPropertiesToWrite);
-		// else if (item is mapped to the database then write any existing changes)
-			 else if ((groupPropertiesToWrite instanceof IGroupProperties) &&
-					   ((IGroupProperties) groupPropertiesFromDB).getIdInternal().equals(
-						((IGroupProperties) groupPropertiesToWrite).getIdInternal())) {
+        try
+        {
+            ArrayList list = new ArrayList();
+            String oqlQuery = "select all from " + GroupProperties.class.getName();
+            query.create(oqlQuery);
+            List result = (List) query.execute();
 
-						  super.lockWrite(groupPropertiesToWrite);
-				  // else throw an AlreadyExists exception.
-			  } else
-				  throw new ExistingPersistentException();
-		  }
-		  
-	
-		  
-    
-	public void delete(IGroupProperties groupProperties) throws ExcepcaoPersistencia {
-			try {
-				super.delete(groupProperties);
-			} catch (ExcepcaoPersistencia ex) {
-				throw ex;
-			}
-		}
-		
-		
-	public void deleteAll() throws ExcepcaoPersistencia {
-			try {
-				String oqlQuery = "select all from " + GroupProperties.class.getName();
-				super.deleteAll(oqlQuery);
-			} catch (ExcepcaoPersistencia ex) {
-				throw ex;
-			}
-		}
-	
+            try
+            {
+                lockRead(result);
+            } catch (ExcepcaoPersistencia ex)
+            {
+                throw ex;
+            }
+
+            if ((result != null) && (result.size() != 0))
+            {
+                ListIterator iterator = result.listIterator();
+                while (iterator.hasNext())
+                    list.add(iterator.next());
+            }
+            return list;
+        } catch (QueryException ex)
+        {
+            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+        }
+    }
+
+    public void lockWrite(IGroupProperties groupPropertiesToWrite) throws ExcepcaoPersistencia
+    {
+
+        IGroupProperties groupPropertiesFromDB = null;
+        if (groupPropertiesToWrite == null)
+            // If there is nothing to write, simply return.
+            return;
+
+        // read studentGroup from DB	
+        groupPropertiesFromDB =
+            readGroupPropertiesByExecutionCourseAndName(
+                groupPropertiesToWrite.getExecutionCourse(),
+                groupPropertiesToWrite.getName());
+
+        // if (studentGroup not in database) then write it
+        if (groupPropertiesFromDB == null)
+            super.lockWrite(groupPropertiesToWrite);
+        // else if (item is mapped to the database then write any existing changes)
+        else if (
+            (groupPropertiesToWrite instanceof IGroupProperties)
+                && ((IGroupProperties) groupPropertiesFromDB).getIdInternal().equals(
+                    ((IGroupProperties) groupPropertiesToWrite).getIdInternal()))
+        {
+
+            super.lockWrite(groupPropertiesToWrite);
+            // else throw an AlreadyExists exception.
+        } else
+            throw new ExistingPersistentException();
+    }
+
+    public void delete(IGroupProperties groupProperties) throws ExcepcaoPersistencia
+    {
+        try
+        {
+            super.delete(groupProperties);
+        } catch (ExcepcaoPersistencia ex)
+        {
+            throw ex;
+        }
+    }
+
+    public void deleteAll() throws ExcepcaoPersistencia
+    {
+        try
+        {
+            String oqlQuery = "select all from " + GroupProperties.class.getName();
+            super.deleteAll(oqlQuery);
+        } catch (ExcepcaoPersistencia ex)
+        {
+            throw ex;
+        }
+    }
+
 }

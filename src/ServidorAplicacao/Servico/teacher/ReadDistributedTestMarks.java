@@ -38,165 +38,138 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Susana Fernandes
  *
  */
-public class ReadDistributedTestMarks implements IServico {
+public class ReadDistributedTestMarks implements IServico
+{
 
-	private static ReadDistributedTestMarks service =
-		new ReadDistributedTestMarks();
+    private static ReadDistributedTestMarks service = new ReadDistributedTestMarks();
 
-	public static ReadDistributedTestMarks getService() {
-		return service;
-	}
+    public static ReadDistributedTestMarks getService()
+    {
+        return service;
+    }
 
-	public String getNome() {
-		return "ReadDistributedTestMarks";
-	}
+    public String getNome()
+    {
+        return "ReadDistributedTestMarks";
+    }
 
-	public SiteView run(Integer executionCourseId, Integer distributedTestId)
-		throws FenixServiceException {
+    public SiteView run(Integer executionCourseId, Integer distributedTestId)
+        throws FenixServiceException
+    {
 
-		ISuportePersistente persistentSuport;
+        ISuportePersistente persistentSuport;
 
-		InfoSiteDistributedTestMarks infoSiteDistributedTestMarks =
-			new InfoSiteDistributedTestMarks();
-		List infoDistributedTestMarksList = new ArrayList();
+        InfoSiteDistributedTestMarks infoSiteDistributedTestMarks = new InfoSiteDistributedTestMarks();
+        List infoDistributedTestMarksList = new ArrayList();
 
-		try {
-			persistentSuport = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente persistentExecutionCourse =
-				persistentSuport.getIDisciplinaExecucaoPersistente();
-			IDisciplinaExecucao executionCourse =
-				new DisciplinaExecucao(executionCourseId);
-			executionCourse =
-				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(
-					executionCourse,
-					false);
-			if (executionCourse == null) {
-				throw new InvalidArgumentsServiceException();
-			}
-			IDistributedTest distributedTest =
-				new DistributedTest(distributedTestId);
-			distributedTest =
-				(IDistributedTest) persistentSuport
-					.getIPersistentDistributedTest()
-					.readByOId(
-					distributedTest,
-					false);
-			if (distributedTest == null)
-				throw new InvalidArgumentsServiceException();
+        try
+        {
+            persistentSuport = SuportePersistenteOJB.getInstance();
+            IDisciplinaExecucaoPersistente persistentExecutionCourse =
+                persistentSuport.getIDisciplinaExecucaoPersistente();
+            IDisciplinaExecucao executionCourse = new DisciplinaExecucao(executionCourseId);
+            executionCourse =
+                (IDisciplinaExecucao) persistentExecutionCourse.readByOId(executionCourse, false);
+            if (executionCourse == null)
+            {
+                throw new InvalidArgumentsServiceException();
+            }
+            IDistributedTest distributedTest = new DistributedTest(distributedTestId);
+            distributedTest =
+                (IDistributedTest) persistentSuport.getIPersistentDistributedTest().readByOId(
+                    distributedTest,
+                    false);
+            if (distributedTest == null)
+                throw new InvalidArgumentsServiceException();
 
-			int numberOfQuestions =
-				distributedTest.getNumberOfQuestions().intValue();
-			int[] correctAnswers = new int[(numberOfQuestions)],
-				wrongAnswers = new int[(numberOfQuestions)],
-				notAnswered = new int[(numberOfQuestions)];
+            int numberOfQuestions = distributedTest.getNumberOfQuestions().intValue();
+            int[] correctAnswers = new int[(numberOfQuestions)],
+                wrongAnswers = new int[(numberOfQuestions)],
+                notAnswered = new int[(numberOfQuestions)];
 
-			List studentList =
-				(List) persistentSuport
-					.getIPersistentStudentTestQuestion()
-					.readStudentsByDistributedTest(distributedTest);
-			if (studentList == null || studentList.size() == 0)
-				throw new FenixServiceException();
-			Collections.sort(studentList, new BeanComparator("number"));
+            List studentList =
+                persistentSuport.getIPersistentStudentTestQuestion().readStudentsByDistributedTest(
+                    distributedTest);
+            if (studentList == null || studentList.size() == 0)
+                throw new FenixServiceException();
+            Collections.sort(studentList, new BeanComparator("number"));
 
-			Iterator studentIt = studentList.iterator();
-			while (studentIt.hasNext()) {
-				IStudent student = (Student) studentIt.next();
-				List studentTestQuestionList =
-					(List) persistentSuport
-						.getIPersistentStudentTestQuestion()
-						.readByStudentAndDistributedTest(
-							student,
-							distributedTest);
-				if (studentTestQuestionList == null
-					|| studentTestQuestionList.size() == 0)
-					throw new FenixServiceException();
-				Collections.sort(
-					studentTestQuestionList,
-					new BeanComparator("testQuestionOrder"));
+            Iterator studentIt = studentList.iterator();
+            while (studentIt.hasNext())
+            {
+                IStudent student = (Student) studentIt.next();
+                List studentTestQuestionList =
+                    persistentSuport
+                        .getIPersistentStudentTestQuestion()
+                        .readByStudentAndDistributedTest(
+                        student,
+                        distributedTest);
+                if (studentTestQuestionList == null || studentTestQuestionList.size() == 0)
+                    throw new FenixServiceException();
+                Collections.sort(studentTestQuestionList, new BeanComparator("testQuestionOrder"));
 
-				List infoStudentTestQuestionList = new ArrayList();
-				Double finalMark = new Double(0);
-				Iterator studentTestQuestionIt =
-					studentTestQuestionList.iterator();
-				while (studentTestQuestionIt.hasNext()) {
-					IStudentTestQuestion studentTestQuestion =
-						(IStudentTestQuestion) studentTestQuestionIt.next();
-					InfoStudentTestQuestion infoStudentTestQuestion =
-						Cloner
-							.copyIStudentTestQuestion2InfoStudentTestQuestion(
-							studentTestQuestion);
+                List infoStudentTestQuestionList = new ArrayList();
+                Double finalMark = new Double(0);
+                Iterator studentTestQuestionIt = studentTestQuestionList.iterator();
+                while (studentTestQuestionIt.hasNext())
+                {
+                    IStudentTestQuestion studentTestQuestion =
+                        (IStudentTestQuestion) studentTestQuestionIt.next();
+                    InfoStudentTestQuestion infoStudentTestQuestion =
+                        Cloner.copyIStudentTestQuestion2InfoStudentTestQuestion(studentTestQuestion);
 
-					int index =
-						studentTestQuestion.getTestQuestionOrder().intValue()
-							- 1;
-					if (studentTestQuestion.getTestQuestionMark().doubleValue() != 0) {
-						if (studentTestQuestion
-							.getTestQuestionMark()
-							.doubleValue()
-							> 0)
-							correctAnswers[index] = correctAnswers[index] + 1;
-						else
-							wrongAnswers[index] = wrongAnswers[index] + 1;
-						finalMark =
-							new Double(
-								finalMark.doubleValue()
-									+ studentTestQuestion
-										.getTestQuestionMark()
-										.doubleValue());
-					} else
-						notAnswered[index] = notAnswered[index] + 1;
+                    int index = studentTestQuestion.getTestQuestionOrder().intValue() - 1;
+                    if (studentTestQuestion.getTestQuestionMark().doubleValue() != 0)
+                    {
+                        if (studentTestQuestion.getTestQuestionMark().doubleValue() > 0)
+                            correctAnswers[index] = correctAnswers[index] + 1;
+                        else
+                            wrongAnswers[index] = wrongAnswers[index] + 1;
+                        finalMark =
+                            new Double(
+                                finalMark.doubleValue()
+                                    + studentTestQuestion.getTestQuestionMark().doubleValue());
+                    } else
+                        notAnswered[index] = notAnswered[index] + 1;
 
-					infoStudentTestQuestionList.add(infoStudentTestQuestion);
-				}
-				InfoDistributedTestMarks infoDistributedTestMarks =
-					new InfoDistributedTestMarks();
-				infoDistributedTestMarks.setInfoStudentTestQuestionList(
-					infoStudentTestQuestionList);
-				if (finalMark.doubleValue() < 0)
-					finalMark = new Double(0);
-				infoDistributedTestMarks.setStudentTestMark(finalMark);
-				infoDistributedTestMarksList.add(infoDistributedTestMarks);
-			}
+                    infoStudentTestQuestionList.add(infoStudentTestQuestion);
+                }
+                InfoDistributedTestMarks infoDistributedTestMarks = new InfoDistributedTestMarks();
+                infoDistributedTestMarks.setInfoStudentTestQuestionList(infoStudentTestQuestionList);
+                if (finalMark.doubleValue() < 0)
+                    finalMark = new Double(0);
+                infoDistributedTestMarks.setStudentTestMark(finalMark);
+                infoDistributedTestMarksList.add(infoDistributedTestMarks);
+            }
 
-			infoSiteDistributedTestMarks.setInfoDistributedTestMarks(
-				infoDistributedTestMarksList);
-			List correctAnswersList = new ArrayList(),
-				wrongAnswersList = new ArrayList(),
-				notAnsweredList = new ArrayList();
-			DecimalFormat df = new DecimalFormat("0%");
-			for (int i = 0; i < correctAnswers.length; i++) {
-				correctAnswersList.add(
-					df.format(
-						correctAnswers[i]
-							* java.lang.Math.pow(studentList.size(), -1)));
-				wrongAnswersList.add(
-					df.format(
-						wrongAnswers[i]
-							* java.lang.Math.pow(studentList.size(), -1)));
-				notAnsweredList.add(
-					df.format(
-						notAnswered[i]
-							* java.lang.Math.pow(studentList.size(), -1)));
-			}
+            infoSiteDistributedTestMarks.setInfoDistributedTestMarks(infoDistributedTestMarksList);
+            List correctAnswersList = new ArrayList(),
+                wrongAnswersList = new ArrayList(),
+                notAnsweredList = new ArrayList();
+            DecimalFormat df = new DecimalFormat("0%");
+            for (int i = 0; i < correctAnswers.length; i++)
+            {
+                correctAnswersList.add(
+                    df.format(correctAnswers[i] * java.lang.Math.pow(studentList.size(), -1)));
+                wrongAnswersList.add(
+                    df.format(wrongAnswers[i] * java.lang.Math.pow(studentList.size(), -1)));
+                notAnsweredList.add(
+                    df.format(notAnswered[i] * java.lang.Math.pow(studentList.size(), -1)));
+            }
 
-			infoSiteDistributedTestMarks.setCorrectAnswersPercentage(
-				correctAnswersList);
-			infoSiteDistributedTestMarks.setWrongAnswersPercentage(
-				wrongAnswersList);
-			infoSiteDistributedTestMarks.setNotAnsweredPercentage(
-				notAnsweredList);
+            infoSiteDistributedTestMarks.setCorrectAnswersPercentage(correctAnswersList);
+            infoSiteDistributedTestMarks.setWrongAnswersPercentage(wrongAnswersList);
+            infoSiteDistributedTestMarks.setNotAnsweredPercentage(notAnsweredList);
 
-			infoSiteDistributedTestMarks.setExecutionCourse(
-				Cloner.copyIExecutionCourse2InfoExecutionCourse(
-					executionCourse));
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
+            infoSiteDistributedTestMarks.setExecutionCourse(
+                Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
+        } catch (ExcepcaoPersistencia e)
+        {
+            throw new FenixServiceException(e);
+        }
 
-		SiteView siteView =
-			new ExecutionCourseSiteView(
-				infoSiteDistributedTestMarks,
-				infoSiteDistributedTestMarks);
-		return siteView;
-	}
+        SiteView siteView =
+            new ExecutionCourseSiteView(infoSiteDistributedTestMarks, infoSiteDistributedTestMarks);
+        return siteView;
+    }
 }

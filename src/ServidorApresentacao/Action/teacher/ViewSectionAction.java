@@ -23,44 +23,42 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  * @author asnr and scpo
  */
 
-public class ViewSectionAction extends FenixAction {
+public class ViewSectionAction extends FenixAction
+{
 
-	public ActionForward execute(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+    public ActionForward execute(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws Exception
+    {
 
-		HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession(false);
 
-		String indexString = (String) request.getParameter("index");
+        String indexString = request.getParameter("index");
 
-		if (indexString != null) {
+        if (indexString != null)
+        {
 
-			Integer index = new Integer(indexString);
+            Integer index = new Integer(indexString);
 
-			List sectionsList =
-				(List) session.getAttribute(SessionConstants.SECTIONS);
+            List sectionsList = (List) session.getAttribute(SessionConstants.SECTIONS);
 
-			InfoSection infoSection =
-				(InfoSection) sectionsList.get(index.intValue());
+            InfoSection infoSection = (InfoSection) sectionsList.get(index.intValue());
 
-			session.setAttribute(SessionConstants.INFO_SECTION, infoSection);
+            session.setAttribute(SessionConstants.INFO_SECTION, infoSection);
 
-			GestorServicos gestor = GestorServicos.manager();
+            GestorServicos gestor = GestorServicos.manager();
 
-			Object argsViewSection[] = { infoSection };
+            Object argsViewSection[] = { infoSection };
 
-			List infoItems =
-				(List) gestor.executar(null, "ReadItems", argsViewSection);
+            List infoItems = (List) gestor.executar(null, "ReadItems", argsViewSection);
 
-			session.setAttribute(
-				SessionConstants.INFO_SECTION_ITEMS_LIST,
-				infoItems);
-				
-		}
-		return mapping.findForward("Sucess");
+            session.setAttribute(SessionConstants.INFO_SECTION_ITEMS_LIST, infoItems);
 
-	}
+        }
+        return mapping.findForward("Sucess");
+
+    }
 }

@@ -40,422 +40,395 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  * ServidorApresentacao.Action.scientificCouncil
  * 
  */
-public class CurricularCourseManagerDA extends FenixDispatchAction {
+public class CurricularCourseManagerDA extends FenixDispatchAction
+{
 
-	public ActionForward prepareSelectDegree(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
-		HttpSession session = request.getSession(false);
-		if (session != null) {
-			IUserView userView =
-				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			ISiteComponent component = new InfoSiteSCDegrees();
-			readSiteView(request, userView, null, null, null, component);
-			return mapping.findForward("selectDegree");
-		} else
-			throw new FenixActionException();
-		//			 nao ocorre... pedido passa pelo filtro Autorizacao
+    public ActionForward prepareSelectDegree(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
+    {
+        HttpSession session = request.getSession(false);
+        if (session != null)
+        {
+            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            ISiteComponent component = new InfoSiteSCDegrees();
+            readSiteView(request, userView, null, null, null, component);
+            return mapping.findForward("selectDegree");
+        } else
+            throw new FenixActionException();
+        //			 nao ocorre... pedido passa pelo filtro Autorizacao
 
-	}
+    }
 
-	public ActionForward showDegreeCurricularPlans(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
-		HttpSession session = request.getSession(false);
-		if (session != null) {
-			IUserView userView =
-				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+    public ActionForward showDegreeCurricularPlans(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
+    {
+        HttpSession session = request.getSession(false);
+        if (session != null)
+        {
+            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-			String degreeIdString = (String) request.getParameter("index");
+            String degreeIdString = request.getParameter("index");
 
-			Integer degreeId = new Integer(degreeIdString);
-			ISiteComponent component = new InfoSiteDegreeCurricularPlans();
-			readSiteView(request, userView, degreeId, null, null, component);
-			return mapping.findForward("showDegreeCurricularPlans");
-		} else
-			throw new FenixActionException();
-		//			 nao ocorre... pedido passa pelo filtro Autorizacao
+            Integer degreeId = new Integer(degreeIdString);
+            ISiteComponent component = new InfoSiteDegreeCurricularPlans();
+            readSiteView(request, userView, degreeId, null, null, component);
+            return mapping.findForward("showDegreeCurricularPlans");
+        } else
+            throw new FenixActionException();
+        //			 nao ocorre... pedido passa pelo filtro Autorizacao
 
-	}
+    }
 
-	public ActionForward showCurricularCourses(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
-		HttpSession session = request.getSession(false);
-		if (session != null) {
-			IUserView userView =
-				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+    public ActionForward showCurricularCourses(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
+    {
+        HttpSession session = request.getSession(false);
+        if (session != null)
+        {
+            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-			String degreeCurricularPlanIdString =
-				(String) request.getParameter("index");
-			Integer degreeCurricularPlanId =
-				new Integer(degreeCurricularPlanIdString);
+            String degreeCurricularPlanIdString = request.getParameter("index");
+            Integer degreeCurricularPlanId = new Integer(degreeCurricularPlanIdString);
 
-			ISiteComponent component = new InfoSiteCurricularCourses();
-			readSiteView(
-				request,
-				userView,
-				null,
-				null,
-				degreeCurricularPlanId,
-				component);
-			return mapping.findForward("showCurricularCourses");
-		} else
-			throw new FenixActionException();
-		//			 nao ocorre... pedido passa pelo filtro Autorizacao
+            ISiteComponent component = new InfoSiteCurricularCourses();
+            readSiteView(request, userView, null, null, degreeCurricularPlanId, component);
+            return mapping.findForward("showCurricularCourses");
+        } else
+            throw new FenixActionException();
+        //			 nao ocorre... pedido passa pelo filtro Autorizacao
 
-	}
+    }
 
-	public ActionForward showBasicCurricularCourses(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
-		HttpSession session = request.getSession(false);
-		if (session != null) {
-			IUserView userView =
-				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+    public ActionForward showBasicCurricularCourses(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
+    {
+        HttpSession session = request.getSession(false);
+        if (session != null)
+        {
+            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-			String degreeCurricularPlanIdString =
-				(String) request.getParameter("index");
-			Integer degreeCurricularPlanId =
-				new Integer(degreeCurricularPlanIdString);
+            String degreeCurricularPlanIdString = request.getParameter("index");
+            Integer degreeCurricularPlanId = new Integer(degreeCurricularPlanIdString);
 
-			ISiteComponent component = new InfoSiteBasicCurricularCourses();
-			SiteView siteView =
-				readSiteView(
-					request,
-					userView,
-					null,
-					null,
-					degreeCurricularPlanId,
-					component);
+            ISiteComponent component = new InfoSiteBasicCurricularCourses();
+            SiteView siteView =
+                readSiteView(request, userView, null, null, degreeCurricularPlanId, component);
 
-			DynaActionForm coursesForm = (DynaActionForm) form;
-			List curricularCoursesIds =
-				((InfoSiteBasicCurricularCourses) siteView.getComponent())
-					.getBasicCurricularCoursesIds();
-			List nonBasicCurricularCourses =
-				((InfoSiteBasicCurricularCourses) siteView.getComponent())
-					.getNonBasicCurricularCourses();
+            DynaActionForm coursesForm = (DynaActionForm) form;
+            List curricularCoursesIds =
+                ((InfoSiteBasicCurricularCourses) siteView.getComponent())
+                    .getBasicCurricularCoursesIds();
+            List nonBasicCurricularCourses =
+                ((InfoSiteBasicCurricularCourses) siteView.getComponent())
+                    .getNonBasicCurricularCourses();
 
-			String[] formValues =
-				new String[curricularCoursesIds.size()
-					+ nonBasicCurricularCourses.size()];
-			int i = 0;
-			for (Iterator iter = curricularCoursesIds.iterator();
-				iter.hasNext();
-				) {
-				Integer courseId = (Integer) iter.next();
-				formValues[i] = courseId.toString();
-				i++;
-			}
+            String[] formValues =
+                new String[curricularCoursesIds.size() + nonBasicCurricularCourses.size()];
+            int i = 0;
+            for (Iterator iter = curricularCoursesIds.iterator(); iter.hasNext();)
+            {
+                Integer courseId = (Integer) iter.next();
+                formValues[i] = courseId.toString();
+                i++;
+            }
 
-			coursesForm.set("basicCurricularCourses", formValues);
-			return mapping.findForward("showCurricularCourses");
-		} else
-			throw new FenixActionException();
-		//			 nao ocorre... pedido passa pelo filtro Autorizacao
+            coursesForm.set("basicCurricularCourses", formValues);
+            return mapping.findForward("showCurricularCourses");
+        } else
+            throw new FenixActionException();
+        //			 nao ocorre... pedido passa pelo filtro Autorizacao
 
-	}
+    }
 
-	public ActionForward setBasicCurricularCourses(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
-		HttpSession session = request.getSession(false);
-		if (session != null) {
-			IUserView userView =
-				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+    public ActionForward setBasicCurricularCourses(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
+    {
+        HttpSession session = request.getSession(false);
+        if (session != null)
+        {
+            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-			DynaActionForm basicCoursesList = (DynaActionForm) form;
-			String[] coursesIdsString =
-				(String[]) basicCoursesList.get("basicCurricularCourses");
-			List coursesIds = new ArrayList();
-			for (int i = 0; i < coursesIdsString.length; i++) {
-				coursesIds.add(new Integer(coursesIdsString[i]));
-			}
+            DynaActionForm basicCoursesList = (DynaActionForm) form;
+            String[] coursesIdsString = (String[]) basicCoursesList.get("basicCurricularCourses");
+            List coursesIds = new ArrayList();
+            for (int i = 0; i < coursesIdsString.length; i++)
+            {
+                coursesIds.add(new Integer(coursesIdsString[i]));
+            }
 
-			String curricularPlanId =
-				(String) request.getParameter("curricularIndex");
+            String curricularPlanId = request.getParameter("curricularIndex");
 
-			Object[] args = { coursesIds, new Integer(curricularPlanId)};
+            Object[] args = { coursesIds, new Integer(curricularPlanId)};
 
-			try {
-				ServiceUtils.executeService(
-					userView,
-					"setBasicCurricularCourses",
-					args);
-			} catch (FenixServiceException e) {
-				throw new FenixActionException(e);
-			}
+            try
+            {
+                ServiceUtils.executeService(userView, "setBasicCurricularCourses", args);
+            } catch (FenixServiceException e)
+            {
+                throw new FenixActionException(e);
+            }
 
-			return mapping.findForward("firstPage");
-		} else
-			throw new FenixActionException();
-		//			 nao ocorre... pedido passa pelo filtro Autorizacao
+            return mapping.findForward("firstPage");
+        } else
+            throw new FenixActionException();
+        //			 nao ocorre... pedido passa pelo filtro Autorizacao
 
-	}
+    }
 
-	public ActionForward viewCurriculum(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
-		HttpSession session = request.getSession(false);
-		if (session != null) {
-			IUserView userView =
-				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+    public ActionForward viewCurriculum(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
+    {
+        HttpSession session = request.getSession(false);
+        if (session != null)
+        {
+            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-			String curricularCourseIdString =
-				(String) request.getParameter("index");
+            String curricularCourseIdString = request.getParameter("index");
 
-			Object[] args =
-				{
-					new InfoSiteCurriculum(),
-					new Integer(curricularCourseIdString),
-					null };
-			SiteView siteView = null;
-			try {
-				siteView =
-					(SiteView) ServiceUtils.executeService(
-						userView,
-						"ScientificCouncilCurricularCourseCurriculumComponentService",
-						args);
-			} catch (FenixServiceException e) {
-				throw new FenixActionException(e);
-			}
-			request.setAttribute("siteView", siteView);
-			return mapping.findForward("viewCurriculum");
-		} else
-			throw new FenixActionException();
-		//			 nao ocorre... pedido passa pelo filtro Autorizacao
+            Object[] args = { new InfoSiteCurriculum(), new Integer(curricularCourseIdString), null };
+            SiteView siteView = null;
+            try
+            {
+                siteView =
+                    (SiteView) ServiceUtils.executeService(
+                        userView,
+                        "ScientificCouncilCurricularCourseCurriculumComponentService",
+                        args);
+            } catch (FenixServiceException e)
+            {
+                throw new FenixActionException(e);
+            }
+            request.setAttribute("siteView", siteView);
+            return mapping.findForward("viewCurriculum");
+        } else
+            throw new FenixActionException();
+        //			 nao ocorre... pedido passa pelo filtro Autorizacao
 
-	}
+    }
 
-	public ActionForward prepareEditCurriculum(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
-		HttpSession session = request.getSession(false);
-		if (session != null) {
-			IUserView userView =
-				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+    public ActionForward prepareEditCurriculum(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
+    {
+        HttpSession session = request.getSession(false);
+        if (session != null)
+        {
+            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-			String curriculumIdString = (String) request.getParameter("index");
+            String curriculumIdString = request.getParameter("index");
 
-			Object[] args = { new Integer(curriculumIdString)};
-			SiteView siteView = null;
-			try {
-				siteView =
-					(SiteView) ServiceUtils.executeService(
-						userView,
-						"ReadCurriculumByOIdService",
-						args);
-			} catch (FenixServiceException e) {
-				throw new FenixActionException(e);
-			}
-			request.setAttribute("siteView", siteView);
-			return mapping.findForward("editCurriculum");
-		} else
-			throw new FenixActionException();
-		//			 nao ocorre... pedido passa pelo filtro Autorizacao
+            Object[] args = { new Integer(curriculumIdString)};
+            SiteView siteView = null;
+            try
+            {
+                siteView =
+                    (SiteView) ServiceUtils.executeService(userView, "ReadCurriculumByOIdService", args);
+            } catch (FenixServiceException e)
+            {
+                throw new FenixActionException(e);
+            }
+            request.setAttribute("siteView", siteView);
+            return mapping.findForward("editCurriculum");
+        } else
+            throw new FenixActionException();
+        //			 nao ocorre... pedido passa pelo filtro Autorizacao
 
-	}
+    }
 
-	public ActionForward editCurriculum(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
-		HttpSession session = request.getSession(false);
-		if (session != null) {
-			IUserView userView =
-				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+    public ActionForward editCurriculum(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
+    {
+        HttpSession session = request.getSession(false);
+        if (session != null)
+        {
+            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-			String program = request.getParameter("program");
-			String programEn = request.getParameter("programEn");
-			String operacionalObjectives =
-				request.getParameter("operacionalObjectives");
-			String operacionalObjectivesEn =
-				request.getParameter("operacionalObjectivesEn");
-			String generalObjectives =
-				request.getParameter("generalObjectives");
-			String generalObjectivesEn =
-				request.getParameter("generalObjectivesEn");
-			String curriculumIdString = request.getParameter("curriculumId");
-			
-			
-			Object[] args =
-				{
-					new Integer(curriculumIdString),
-					program,
-					programEn,
-					operacionalObjectives,
-					operacionalObjectivesEn,
-					generalObjectives,
-					generalObjectivesEn,
-					new Boolean(true)};
-			
-			Boolean result;
-			try {
-				result= (Boolean) ServiceUtils.executeService(
-						userView,
-						"EditCurriculum",
-						args);
-			} catch (FenixServiceException e) {
-				throw new FenixActionException(e);
-			}
-			
-			if (result.booleanValue()) {
-				return showCurricularCourses(
-							 mapping,
-							 form,
-							 request,
-							 response);
-			} else {
-				return null;
-			}
-			
-			
-		} else
-			throw new FenixActionException();
-		//			 nao ocorre... pedido passa pelo filtro Autorizacao
+            String program = request.getParameter("program");
+            String programEn = request.getParameter("programEn");
+            String operacionalObjectives = request.getParameter("operacionalObjectives");
+            String operacionalObjectivesEn = request.getParameter("operacionalObjectivesEn");
+            String generalObjectives = request.getParameter("generalObjectives");
+            String generalObjectivesEn = request.getParameter("generalObjectivesEn");
+            String curriculumIdString = request.getParameter("curriculumId");
 
-	}
-	
-	public ActionForward prepareInsertCurriculum(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response)
-			throws FenixActionException {
-			HttpSession session = request.getSession(false);
-			if (session != null) {
-				IUserView userView =
-					(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+            Object[] args =
+                {
+                    new Integer(curriculumIdString),
+                    program,
+                    programEn,
+                    operacionalObjectives,
+                    operacionalObjectivesEn,
+                    generalObjectives,
+                    generalObjectivesEn,
+                    new Boolean(true)};
 
-				String curricularCourseIdString = (String) request.getParameter("index");
+            Boolean result;
+            try
+            {
+                result = (Boolean) ServiceUtils.executeService(userView, "EditCurriculum", args);
+            } catch (FenixServiceException e)
+            {
+                throw new FenixActionException(e);
+            }
 
-				Object[] args = { new Integer(curricularCourseIdString)};
-				SiteView siteView = null;
-				try {
-					siteView =
-						(SiteView) ServiceUtils.executeService(
-							userView,
-							"ReadCurricularCourseByOIdService",
-							args);
-				} catch (FenixServiceException e) {
-					throw new FenixActionException(e);
-				}
-				request.setAttribute("siteView", siteView);
-				return mapping.findForward("insertCurriculum");
-			} else
-				throw new FenixActionException();
-			//			 nao ocorre... pedido passa pelo filtro Autorizacao
+            if (result.booleanValue())
+            {
+                return showCurricularCourses(mapping, form, request, response);
+            } else
+            {
+                return null;
+            }
 
-		}
+        } else
+            throw new FenixActionException();
+        //			 nao ocorre... pedido passa pelo filtro Autorizacao
 
-		public ActionForward insertCurriculum(
-			ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response)
-			throws FenixActionException {
-			HttpSession session = request.getSession(false);
-			if (session != null) {
-				IUserView userView =
-					(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+    }
 
-				String program = request.getParameter("program");
-				String programEn = request.getParameter("programEn");
-				String operacionalObjectives =
-					request.getParameter("operacionalObjectives");
-				String operacionalObjectivesEn =
-					request.getParameter("operacionalObjectivesEn");
-				String generalObjectives =
-					request.getParameter("generalObjectives");
-				String generalObjectivesEn =
-					request.getParameter("generalObjectivesEn");
-				String curricularCourseIdString = request.getParameter("curricularCourseId");
-			
-			
-				Object[] args =
-					{
-						new Integer(curricularCourseIdString),
-						program,
-						programEn,
-						operacionalObjectives,
-						operacionalObjectivesEn,
-						generalObjectives,
-						generalObjectivesEn,
-						new Boolean(true)};
-			
-				Boolean result;
-				try {
-					result= (Boolean) ServiceUtils.executeService(
-							userView,
-							"InsertCurriculum",
-							args);
-				} catch (FenixServiceException e) {
-					throw new FenixActionException(e);
-				}
-			
-				if (result.booleanValue()) {
-					return showCurricularCourses(
-								 mapping,
-								 form,
-								 request,
-								 response);
-				} else {
-					return null;
-				}
-			
-			
-			} else
-				throw new FenixActionException();
-			//			 nao ocorre... pedido passa pelo filtro Autorizacao
+    public ActionForward prepareInsertCurriculum(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
+    {
+        HttpSession session = request.getSession(false);
+        if (session != null)
+        {
+            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		}
+            String curricularCourseIdString = request.getParameter("index");
 
-	private SiteView readSiteView(
-		HttpServletRequest request,
-		IUserView userView,
-		Integer degreeId,
-		List coursesIds,
-		Integer degreeCurricularPlanId,
-		ISiteComponent component)
-		throws FenixActionException {
-		Object[] args =
-			{ component, degreeId, coursesIds, degreeCurricularPlanId };
-		SiteView siteView = null;
-		try {
-			siteView =
-				(SiteView) ServiceUtils.executeService(
-					userView,
-					"ScientificCouncilComponentService",
-					args);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-		request.setAttribute("siteView", siteView);
-		return siteView;
-	}
+            Object[] args = { new Integer(curricularCourseIdString)};
+            SiteView siteView = null;
+            try
+            {
+                siteView =
+                    (SiteView) ServiceUtils.executeService(
+                        userView,
+                        "ReadCurricularCourseByOIdService",
+                        args);
+            } catch (FenixServiceException e)
+            {
+                throw new FenixActionException(e);
+            }
+            request.setAttribute("siteView", siteView);
+            return mapping.findForward("insertCurriculum");
+        } else
+            throw new FenixActionException();
+        //			 nao ocorre... pedido passa pelo filtro Autorizacao
+
+    }
+
+    public ActionForward insertCurriculum(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
+    {
+        HttpSession session = request.getSession(false);
+        if (session != null)
+        {
+            IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
+            String program = request.getParameter("program");
+            String programEn = request.getParameter("programEn");
+            String operacionalObjectives = request.getParameter("operacionalObjectives");
+            String operacionalObjectivesEn = request.getParameter("operacionalObjectivesEn");
+            String generalObjectives = request.getParameter("generalObjectives");
+            String generalObjectivesEn = request.getParameter("generalObjectivesEn");
+            String curricularCourseIdString = request.getParameter("curricularCourseId");
+
+            Object[] args =
+                {
+                    new Integer(curricularCourseIdString),
+                    program,
+                    programEn,
+                    operacionalObjectives,
+                    operacionalObjectivesEn,
+                    generalObjectives,
+                    generalObjectivesEn,
+                    new Boolean(true)};
+
+            Boolean result;
+            try
+            {
+                result = (Boolean) ServiceUtils.executeService(userView, "InsertCurriculum", args);
+            } catch (FenixServiceException e)
+            {
+                throw new FenixActionException(e);
+            }
+
+            if (result.booleanValue())
+            {
+                return showCurricularCourses(mapping, form, request, response);
+            } else
+            {
+                return null;
+            }
+
+        } else
+            throw new FenixActionException();
+        //			 nao ocorre... pedido passa pelo filtro Autorizacao
+
+    }
+
+    private SiteView readSiteView(
+        HttpServletRequest request,
+        IUserView userView,
+        Integer degreeId,
+        List coursesIds,
+        Integer degreeCurricularPlanId,
+        ISiteComponent component)
+        throws FenixActionException
+    {
+        Object[] args = { component, degreeId, coursesIds, degreeCurricularPlanId };
+        SiteView siteView = null;
+        try
+        {
+            siteView =
+                (SiteView) ServiceUtils.executeService(
+                    userView,
+                    "ScientificCouncilComponentService",
+                    args);
+        } catch (FenixServiceException e)
+        {
+            throw new FenixActionException(e);
+        }
+        request.setAttribute("siteView", siteView);
+        return siteView;
+    }
 
 }

@@ -20,55 +20,66 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author lmac1
  */
 
-public class ReadExecutionCourseResponsiblesIds implements IServico {
+public class ReadExecutionCourseResponsiblesIds implements IServico
+{
 
-	private static ReadExecutionCourseResponsiblesIds service = new ReadExecutionCourseResponsiblesIds();
+    private static ReadExecutionCourseResponsiblesIds service = new ReadExecutionCourseResponsiblesIds();
 
-	/**
-	 * The singleton access method of this class.
-	 */
-	public static ReadExecutionCourseResponsiblesIds getService() {
-		return service;
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static ReadExecutionCourseResponsiblesIds getService()
+    {
+        return service;
+    }
 
-	/**
-	 * The constructor of this class.
-	 */
-	private ReadExecutionCourseResponsiblesIds() {
-	}
+    /**
+     * The constructor of this class.
+     */
+    private ReadExecutionCourseResponsiblesIds()
+    {
+    }
 
-	/**
-	 * Service name
-	 */
-	public final String getNome() {
-		return "ReadExecutionCourseResponsiblesIds";
-	}
+    /**
+     * Service name
+     */
+    public final String getNome()
+    {
+        return "ReadExecutionCourseResponsiblesIds";
+    }
 
-	/**
-	 * Executes the service. Returns the current collection of ids of teachers.
-	 */
+    /**
+     * Executes the service. Returns the current collection of ids of teachers.
+     */
 
-	public List run(Integer executionCourseId) throws FenixServiceException {
-		
-		List responsibles = null;
-		try {
-				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-				IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) sp.getIDisciplinaExecucaoPersistente().readByOId(new DisciplinaExecucao(executionCourseId), false);
-				responsibles = (List) sp.getIPersistentResponsibleFor().readByExecutionCourse(executionCourse);
-		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-			throw new FenixServiceException(excepcaoPersistencia);
-		}
-		
-		if(responsibles == null || responsibles.isEmpty())
-			return new ArrayList();
-			
-		List ids = new ArrayList();
-		Iterator iter = responsibles.iterator();
-			
-		while(iter.hasNext()) {
-			ids.add(((IResponsibleFor) iter.next()).getTeacher().getIdInternal());
-		}
-			
-		return ids;
-	}
+    public List run(Integer executionCourseId) throws FenixServiceException
+    {
+
+        List responsibles = null;
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IDisciplinaExecucao executionCourse =
+                (IDisciplinaExecucao) sp.getIDisciplinaExecucaoPersistente().readByOId(
+                    new DisciplinaExecucao(executionCourseId),
+                    false);
+            responsibles = sp.getIPersistentResponsibleFor().readByExecutionCourse(executionCourse);
+        } catch (ExcepcaoPersistencia excepcaoPersistencia)
+        {
+            throw new FenixServiceException(excepcaoPersistencia);
+        }
+
+        if (responsibles == null || responsibles.isEmpty())
+            return new ArrayList();
+
+        List ids = new ArrayList();
+        Iterator iter = responsibles.iterator();
+
+        while (iter.hasNext())
+        {
+            ids.add(((IResponsibleFor) iter.next()).getTeacher().getIdInternal());
+        }
+
+        return ids;
+    }
 }

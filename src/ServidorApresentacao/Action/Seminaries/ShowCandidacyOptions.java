@@ -34,62 +34,93 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  * Created at 31/Jul/2003, 19:23:52
  * 
  */
-public class ShowCandidacyOptions extends FenixAction {
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws FenixActionException {
-		HttpSession session = this.getSession(request);
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		String seminaryIDString = (String) request.getParameter("objectCode");
-		Integer seminaryID;
-		if (seminaryIDString == null)
-			throw new FenixActionException(mapping.findForward("invalidQueryString"));
-		try {
-			seminaryID = new Integer(seminaryIDString);
-		} catch (Exception ex) {
-			throw new FenixActionException(mapping.findForward("invalidQueryString"));
-		}
-		InfoSeminary seminary = null;
-		InfoStudent student = null;
-		List disciplines = null;
-		ActionForward destiny = null;
-		try {
-			Object[] argsReadSeminary = { seminaryID };
-			Object[] argsReadStudent = { userView.getUtilizador()};
-			GestorServicos gestor = GestorServicos.manager();
-			seminary = (InfoSeminary) gestor.executar(userView, "Seminaries.GetSeminary", argsReadSeminary);
-			student = (InfoStudent) gestor.executar(userView, "ReadStudentByUsername", argsReadStudent);
-			Object[] ReadCurricularCoursesByUsername = { userView.getUtilizador()};
-			disciplines = (List) gestor.executar(userView, "student.ReadCurricularCoursesByUsername", ReadCurricularCoursesByUsername);
-			List avaliableEquivalencies = new LinkedList();
-			for (Iterator iterator = disciplines.iterator(); iterator.hasNext();) {
-				InfoCurricularCourse curricularCourse = (InfoCurricularCourse) iterator.next();
-				for (Iterator equivalencyIterator = seminary.getEquivalencies().iterator(); equivalencyIterator.hasNext();) {
-					InfoEquivalency equivalency = (InfoEquivalency) equivalencyIterator.next();
-					if (equivalency.getCurricularCourseIdInternal().equals(curricularCourse.getIdInternal())) {
-						avaliableEquivalencies.add(equivalency);
-						break;
-					}
-				}
-			}
-			seminary.setEquivalencies(avaliableEquivalencies);
-			Object[] argsReadCandidacies = { student.getIdInternal()};
-			List candidacies = (List) gestor.executar(userView, "Seminaries.GetCandidaciesByStudentID", argsReadCandidacies);
-			if (candidacies.size() >= seminary.getAllowedCandidaciesPerStudent().intValue()) {
-				ActionErrors actionErrors = new ActionErrors();
-				
-				ActionError actionError = new ActionError("error.seminaries.candidaciesLimitReached",seminary.getAllowedCandidaciesPerStudent());
-				actionErrors.add("error.seminaries.candidaciesLimitReached",actionError);
-				saveErrors(request, actionErrors);
-				destiny =mapping.findForward("candidaciesLimitReached");
-			} else {
-				destiny = mapping.findForward("showCandidacyOptions");
-				request.setAttribute("seminary", seminary);
-			}
+public class ShowCandidacyOptions extends FenixAction
+{
+    public ActionForward execute(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
+    {
+        HttpSession session = this.getSession(request);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        String seminaryIDString = request.getParameter("objectCode");
+        Integer seminaryID;
+        if (seminaryIDString == null)
+            throw new FenixActionException(mapping.findForward("invalidQueryString"));
+        try
+        {
+            seminaryID = new Integer(seminaryIDString);
+        } catch (Exception ex)
+        {
+            throw new FenixActionException(mapping.findForward("invalidQueryString"));
+        }
+        InfoSeminary seminary = null;
+        InfoStudent student = null;
+        List disciplines = null;
+        ActionForward destiny = null;
+        try
+        {
+            Object[] argsReadSeminary = { seminaryID };
+            Object[] argsReadStudent = { userView.getUtilizador()};
+            GestorServicos gestor = GestorServicos.manager();
+            seminary =
+                (InfoSeminary) gestor.executar(userView, "Seminaries.GetSeminary", argsReadSeminary);
+            student = (InfoStudent) gestor.executar(userView, "ReadStudentByUsername", argsReadStudent);
+            Object[] ReadCurricularCoursesByUsername = { userView.getUtilizador()};
+            disciplines =
+                (List) gestor.executar(
+                    userView,
+                    "student.ReadCurricularCoursesByUsername",
+                    ReadCurricularCoursesByUsername);
+            List avaliableEquivalencies = new LinkedList();
+            for (Iterator iterator = disciplines.iterator(); iterator.hasNext();)
+            {
+                InfoCurricularCourse curricularCourse = (InfoCurricularCourse) iterator.next();
+                for (Iterator equivalencyIterator = seminary.getEquivalencies().iterator();
+                    equivalencyIterator.hasNext();
+                    )
+                {
+                    InfoEquivalency equivalency = (InfoEquivalency) equivalencyIterator.next();
+                    if (equivalency
+                        .getCurricularCourseIdInternal()
+                        .equals(curricularCourse.getIdInternal()))
+                    {
+                        avaliableEquivalencies.add(equivalency);
+                        break;
+                    }
+                }
+            }
+            seminary.setEquivalencies(avaliableEquivalencies);
+            Object[] argsReadCandidacies = { student.getIdInternal()};
+            List candidacies =
+                (List) gestor.executar(
+                    userView,
+                    "Seminaries.GetCandidaciesByStudentID",
+                    argsReadCandidacies);
+            if (candidacies.size() >= seminary.getAllowedCandidaciesPerStudent().intValue())
+            {
+                ActionErrors actionErrors = new ActionErrors();
 
-		} catch (Exception e) {
-			throw new FenixActionException();
-		}
+                ActionError actionError =
+                    new ActionError(
+                        "error.seminaries.candidaciesLimitReached",
+                        seminary.getAllowedCandidaciesPerStudent());
+                actionErrors.add("error.seminaries.candidaciesLimitReached", actionError);
+                saveErrors(request, actionErrors);
+                destiny = mapping.findForward("candidaciesLimitReached");
+            } else
+            {
+                destiny = mapping.findForward("showCandidacyOptions");
+                request.setAttribute("seminary", seminary);
+            }
 
-		return destiny;
-	}
+        } catch (Exception e)
+        {
+            throw new FenixActionException();
+        }
+
+        return destiny;
+    }
 }

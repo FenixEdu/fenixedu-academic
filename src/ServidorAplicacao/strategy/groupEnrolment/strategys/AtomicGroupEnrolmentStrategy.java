@@ -20,67 +20,81 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  *
  */
 
-public class AtomicGroupEnrolmentStrategy extends GroupEnrolmentStrategy implements IGroupEnrolmentStrategy {
+public class AtomicGroupEnrolmentStrategy
+    extends GroupEnrolmentStrategy
+    implements IGroupEnrolmentStrategy
+{
 
-	public AtomicGroupEnrolmentStrategy() {
-	}
+    public AtomicGroupEnrolmentStrategy()
+    {
+    }
 
-	public Integer enrolmentPolicyNewGroup(IGroupProperties groupProperties, int numberOfStudentsToEnrole, ITurno shift) {
-		
-		if (checkNumberOfGroups(groupProperties, shift)) {
-			Integer maximumCapacity = groupProperties.getMaximumCapacity();
-			Integer minimumCapacity = groupProperties.getMinimumCapacity();
-			Integer nrStudents = new Integer(numberOfStudentsToEnrole);
-			
-			if(maximumCapacity == null && minimumCapacity == null)
-				return new Integer(1);
-			if(minimumCapacity!=null)
-			{
-				if(nrStudents.compareTo(minimumCapacity)<0)
-					return new Integer(-2);
-			}
-			if(maximumCapacity!=null)
-			{		
-				if (nrStudents.compareTo(maximumCapacity)>0)
-					return new Integer(-3);
-			}	
-		}
-		else
-			return new Integer(-1);
-		
-		return new Integer(1);
+    public Integer enrolmentPolicyNewGroup(
+        IGroupProperties groupProperties,
+        int numberOfStudentsToEnrole,
+        ITurno shift)
+    {
 
-	}
+        if (checkNumberOfGroups(groupProperties, shift))
+        {
+            Integer maximumCapacity = groupProperties.getMaximumCapacity();
+            Integer minimumCapacity = groupProperties.getMinimumCapacity();
+            Integer nrStudents = new Integer(numberOfStudentsToEnrole);
 
-	public boolean checkNumberOfGroupElements(IGroupProperties groupProperties, IStudentGroup studentGroup)
-		throws ExcepcaoPersistencia {
+            if (maximumCapacity == null && minimumCapacity == null)
+                return new Integer(1);
+            if (minimumCapacity != null)
+            {
+                if (nrStudents.compareTo(minimumCapacity) < 0)
+                    return new Integer(-2);
+            }
+            if (maximumCapacity != null)
+            {
+                if (nrStudents.compareTo(maximumCapacity) > 0)
+                    return new Integer(-3);
+            }
+        } else
+            return new Integer(-1);
 
-		boolean result = false;
-		Integer minimumCapacity = groupProperties.getMinimumCapacity();
+        return new Integer(1);
 
-		if (minimumCapacity == null)
-			result = true;
-		else {
+    }
 
-			List allStudentGroupAttend = new ArrayList();
-			try {
+    public boolean checkNumberOfGroupElements(
+        IGroupProperties groupProperties,
+        IStudentGroup studentGroup)
+        throws ExcepcaoPersistencia
+    {
 
-				ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-				IPersistentStudentGroupAttend persistentStudentGroupAttend = persistentSuport.getIPersistentStudentGroupAttend();
+        boolean result = false;
+        Integer minimumCapacity = groupProperties.getMinimumCapacity();
 
-				allStudentGroupAttend = (List) persistentStudentGroupAttend.readAllByStudentGroup(studentGroup);
+        if (minimumCapacity == null)
+            result = true;
+        else
+        {
 
-			} catch (ExcepcaoPersistencia ex) {
-				throw ex;
-			}
+            List allStudentGroupAttend = new ArrayList();
+            try
+            {
 
-			int numberOfGroupElements = allStudentGroupAttend.size();
+                ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+                IPersistentStudentGroupAttend persistentStudentGroupAttend =
+                    persistentSuport.getIPersistentStudentGroupAttend();
 
-			if (numberOfGroupElements > minimumCapacity.intValue())
-				result = true;
+                allStudentGroupAttend = persistentStudentGroupAttend.readAllByStudentGroup(studentGroup);
 
-		}
-		return result;
-	}
+            } catch (ExcepcaoPersistencia ex)
+            {
+                throw ex;
+            }
+
+            int numberOfGroupElements = allStudentGroupAttend.size();
+
+            if (numberOfGroupElements > minimumCapacity.intValue())
+                result = true;
+
+        }
+        return result;
+    }
 }
-

@@ -30,63 +30,71 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  */
 public class ShowCandidacySecondForm extends FenixAction
 {
-	public ActionForward execute(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException
-	{
-		HttpSession session= this.getSession(request);
-		IUserView userView= (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		//idInternal is equivalency's IdInternal
-		String equivalencyIDString= (String) request.getParameter("idInternal");
-		String themeIDString= (String) request.getParameter("themeID");
-		Integer equivalencyID= null;
-		Integer themeID= null;
-		if (equivalencyIDString == null)
-			throw new FenixActionException(mapping.findForward("invalidQueryString"));
-		try
-		{
-			if (themeIDString != null)
-				themeID= new Integer(themeIDString);
-			equivalencyID= new Integer(equivalencyIDString);
-		}
-		catch (Exception ex)
-		{
-			throw new FenixActionException(mapping.findForward("invalidQueryString"));
-		}
-		InfoEquivalency equivalency= null;
-		List cases= null;
-		ActionForward destiny= null;
-		try
-		{
-			Object[] argsReadEquivalency= { equivalencyID };
-			GestorServicos gestor= GestorServicos.manager();
-			equivalency=
-				(InfoEquivalency) gestor.executar(userView, "Seminaries.GetEquivalency", argsReadEquivalency);
-			
+    public ActionForward execute(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
+    {
+        HttpSession session = this.getSession(request);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        //idInternal is equivalency's IdInternal
+        String equivalencyIDString = request.getParameter("idInternal");
+        String themeIDString = request.getParameter("themeID");
+        Integer equivalencyID = null;
+        Integer themeID = null;
+        if (equivalencyIDString == null)
+            throw new FenixActionException(mapping.findForward("invalidQueryString"));
+        try
+        {
+            if (themeIDString != null)
+                themeID = new Integer(themeIDString);
+            equivalencyID = new Integer(equivalencyIDString);
+        } catch (Exception ex)
+        {
+            throw new FenixActionException(mapping.findForward("invalidQueryString"));
+        }
+        InfoEquivalency equivalency = null;
+        List cases = null;
+        ActionForward destiny = null;
+        try
+        {
+            Object[] argsReadEquivalency = { equivalencyID };
+            GestorServicos gestor = GestorServicos.manager();
+            equivalency =
+                (InfoEquivalency) gestor.executar(
+                    userView,
+                    "Seminaries.GetEquivalency",
+                    argsReadEquivalency);
+
             //
-			if (themeID != null) // we want the cases of ONE theme
+            if (themeID != null) // we want the cases of ONE theme
             {
-                Object[] argsReadCases= { themeID };
-				cases= (List) gestor.executar(userView, "Seminaries.GetCaseStudiesByThemeID", argsReadCases);
+                Object[] argsReadCases = { themeID };
+                cases =
+                    (List) gestor.executar(
+                        userView,
+                        "Seminaries.GetCaseStudiesByThemeID",
+                        argsReadCases);
+            } else // we want ALL the cases of the equivalency (its a "Completa" modality)
+                {
+                Object[] argsReadCases = { equivalencyID };
+                cases =
+                    (List) gestor.executar(
+                        userView,
+                        "Seminaries.GetCaseStudiesByEquivalencyID",
+                        argsReadCases);
             }
-			else // we want ALL the cases of the equivalency (its a "Completa" modality)
-            {
-                Object[] argsReadCases= { equivalencyID };
-				cases= (List) gestor.executar(userView, "Seminaries.GetCaseStudiesByEquivalencyID", argsReadCases);
-            }
-		}
-		catch (Exception e)
-		{
+        } catch (Exception e)
+        {
             throw new FenixActionException();
-		}
-		destiny= mapping.findForward("showCandidacyFormNonCompleteModalitySecondInfo");
-		request.setAttribute("equivalency", equivalency);
-		request.setAttribute("unselectedCases", cases);
-		request.setAttribute("selectedCases", new LinkedList());
-		request.setAttribute("hiddenSelectedCases", new LinkedList());
-		return destiny;
-	}
+        }
+        destiny = mapping.findForward("showCandidacyFormNonCompleteModalitySecondInfo");
+        request.setAttribute("equivalency", equivalency);
+        request.setAttribute("unselectedCases", cases);
+        request.setAttribute("selectedCases", new LinkedList());
+        request.setAttribute("hiddenSelectedCases", new LinkedList());
+        return destiny;
+    }
 }

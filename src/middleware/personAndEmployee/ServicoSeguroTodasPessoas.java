@@ -87,11 +87,11 @@ public class ServicoSeguroTodasPessoas {
 					} else {
 						// A Pessoa Existe
 						person2Write = (IPessoa) result.get(0);
-						updatePerson((Pessoa) person2Write, (Pessoa) servico._pessoa);
+						updatePerson((Pessoa) person2Write, servico._pessoa);
 					}
 
 					//roles
-					IPersonRole personRole = RoleFunctions.readPersonRole((IPessoa) person2Write, RoleType.PERSON, broker);
+					IPersonRole personRole = RoleFunctions.readPersonRole(person2Write, RoleType.PERSON, broker);
 					if (personRole == null) {
 						criteria = new Criteria();
 						query = null;
@@ -106,7 +106,7 @@ public class ServicoSeguroTodasPessoas {
 							if (person2Write.getPersonRoles() == null) {
 								person2Write.setPersonRoles(new ArrayList());
 							}
-							person2Write.getPersonRoles().add((Role) result.get(0));
+							person2Write.getPersonRoles().add(result.get(0));
 							newRoles++;
 						}
 					}

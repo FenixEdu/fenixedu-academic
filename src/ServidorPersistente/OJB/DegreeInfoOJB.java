@@ -13,29 +13,35 @@ import ServidorPersistente.IPersistentDegreeInfo;
 /**
  * @author Tânia Pousão Created on 30/Out/2003
  */
-public class DegreeInfoOJB extends ObjectFenixOJB implements IPersistentDegreeInfo {
+public class DegreeInfoOJB extends ObjectFenixOJB implements IPersistentDegreeInfo
+{
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorPersistente.IPersistentDegreeInfo#readDegreeInfoByDegree(Dominio.ICurso)
-	 */
-	public List readDegreeInfoByDegree(ICurso degree) throws ExcepcaoPersistencia {
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("degreeKey", degree.getIdInternal());
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorPersistente.IPersistentDegreeInfo#readDegreeInfoByDegree(Dominio.ICurso)
+     */
+    public List readDegreeInfoByDegree(ICurso degree) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("degreeKey", degree.getIdInternal());
 
-		return (List) queryList(DegreeInfo.class, criteria);
-	}
+        return queryList(DegreeInfo.class, criteria);
+    }
 
+    /* (non-Javadoc)
+     * @see ServidorPersistente.IPersistentDegreeInfo#readDegreeInfoByDegreeAndExecutionYear(Dominio.ICurso, Dominio.IExecutionYear)
+     */
+    public List readDegreeInfoByDegreeAndExecutionYear(ICurso degree, IExecutionYear executionYear)
+        throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("degreeKey", degree.getIdInternal());
+        criteria.addBetween(
+            "lastModificationDate",
+            executionYear.getBeginDate(),
+            executionYear.getEndDate());
 
-	/* (non-Javadoc)
-	 * @see ServidorPersistente.IPersistentDegreeInfo#readDegreeInfoByDegreeAndExecutionYear(Dominio.ICurso, Dominio.IExecutionYear)
-	 */
-	public List readDegreeInfoByDegreeAndExecutionYear(ICurso degree, IExecutionYear executionYear) throws ExcepcaoPersistencia {
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("degreeKey", degree.getIdInternal());
-		criteria.addBetween("lastModificationDate", executionYear.getBeginDate(), executionYear.getEndDate());
-
-		return (List) queryList(DegreeInfo.class, criteria);
-	}
+        return queryList(DegreeInfo.class, criteria);
+    }
 }

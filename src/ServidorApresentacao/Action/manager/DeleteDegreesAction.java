@@ -26,41 +26,47 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  * @author lmac1
  */
 
-public class DeleteDegreesAction extends FenixAction {
+public class DeleteDegreesAction extends FenixAction
+{
 
-	public ActionForward execute(ActionMapping mapping, 
-	                             ActionForm form,
-	                             HttpServletRequest request, 
-	                             HttpServletResponse response)
-		throws FenixActionException {
+    public ActionForward execute(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
+    {
 
-			IUserView userView = SessionUtils.getUserView(request);
-		DynaActionForm deleteDegreesForm = (DynaActionForm) form;
+        IUserView userView = SessionUtils.getUserView(request);
+        DynaActionForm deleteDegreesForm = (DynaActionForm) form;
 
-		
-		List degreesInternalIds = Arrays.asList((Integer[]) deleteDegreesForm.get("internalIds"));
+        List degreesInternalIds = Arrays.asList((Integer[]) deleteDegreesForm.get("internalIds"));
 
-		Object args[] = { degreesInternalIds };
-		
-		List errorNames = new ArrayList();
+        Object args[] = { degreesInternalIds };
 
-		try {
-				errorNames = (List) ServiceUtils.executeService(userView, "DeleteDegrees", args);
-		} catch (FenixServiceException fenixServiceException) {
-			throw new FenixActionException(fenixServiceException.getMessage());
-		}
-		
-		if (!errorNames.isEmpty()) {
-				ActionErrors actionErrors = new ActionErrors();
-				Iterator namesIter = errorNames.iterator();
-				ActionError error = null;
-				while (namesIter.hasNext()) {
-						// CRIO UM ACTION ERROR PARA CADA DEGREE
-						error = new ActionError("errors.invalid.delete.not.empty.degree", (String) namesIter.next());
-						actionErrors.add("errors.invalid.delete.not.empty.degree", error);
-				}
-				saveErrors(request, actionErrors);
-		}
-		return mapping.findForward("readDegrees");
-	}
+        List errorNames = new ArrayList();
+
+        try
+        {
+            errorNames = (List) ServiceUtils.executeService(userView, "DeleteDegrees", args);
+        } catch (FenixServiceException fenixServiceException)
+        {
+            throw new FenixActionException(fenixServiceException.getMessage());
+        }
+
+        if (!errorNames.isEmpty())
+        {
+            ActionErrors actionErrors = new ActionErrors();
+            Iterator namesIter = errorNames.iterator();
+            ActionError error = null;
+            while (namesIter.hasNext())
+            {
+                // CRIO UM ACTION ERROR PARA CADA DEGREE
+                error = new ActionError("errors.invalid.delete.not.empty.degree", namesIter.next());
+                actionErrors.add("errors.invalid.delete.not.empty.degree", error);
+            }
+            saveErrors(request, actionErrors);
+        }
+        return mapping.findForward("readDegrees");
+    }
 }

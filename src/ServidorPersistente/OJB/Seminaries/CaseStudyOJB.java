@@ -24,28 +24,28 @@ import ServidorPersistente.Seminaries.IPersistentSeminaryCaseStudy;
  */
 public class CaseStudyOJB extends ObjectFenixOJB implements IPersistentSeminaryCaseStudy
 {
-	public ICaseStudy readByName(String name) throws ExcepcaoPersistencia
-	{
-        Criteria criteria = new Criteria();   
-        criteria.addEqualTo("name",name);
-        return (ICaseStudy)super.queryObject(CaseStudy.class,criteria);
+    public ICaseStudy readByName(String name) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("name", name);
+        return (ICaseStudy) super.queryObject(CaseStudy.class, criteria);
     }
 
-	public List readAll() throws ExcepcaoPersistencia
-	{
-        Criteria criteria = new Criteria();   
-        return (List)super.queryList(CaseStudy.class,criteria);
-	}
+    public List readAll() throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        return super.queryList(CaseStudy.class, criteria);
+    }
 
-	public void delete(ICaseStudy caseStudy) throws ExcepcaoPersistencia
-	{
-        super.deleteByOID(CaseStudy.class,caseStudy.getIdInternal());
-	}
+    public void delete(ICaseStudy caseStudy) throws ExcepcaoPersistencia
+    {
+        super.deleteByOID(CaseStudy.class, caseStudy.getIdInternal());
+    }
 
-	public List readByThemeID(Integer id) throws ExcepcaoPersistencia
-	{
-        Criteria criteria = new Criteria();   
-        criteria.addEqualTo("seminary_theme_Id_Internal",id);
-        return (List)super.queryList(CaseStudy.class,criteria);
-	}
- }
+    public List readByThemeID(Integer id) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("seminary_theme_Id_Internal", id);
+        return super.queryList(CaseStudy.class, criteria);
+    }
+}

@@ -30,41 +30,43 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 public class ShowCandidacyForm extends FenixAction
 {
     public ActionForward execute(
-         ActionMapping mapping,
-         ActionForm form,
-         HttpServletRequest request,
-         HttpServletResponse response)
-         throws FenixActionException
-     {
-         HttpSession session= this.getSession(request);
-         IUserView userView= (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-         String equivalencyIDString= (String) request.getParameter("objectCode");
-         Integer equivalencyID;
-         if (equivalencyIDString == null)
-             throw new FenixActionException(mapping.findForward("invalidQueryString"));
-         try
-         {
-             equivalencyID= new Integer(equivalencyIDString);
-         }
-         catch (Exception ex)
-         {
-             throw new FenixActionException(mapping.findForward("invalidQueryString"));
-         }
-         InfoEquivalency equivalency= null;
-         ActionForward destiny= null;
-         try
-         {
-             Object[] argsReadSeminary= { equivalencyID };
-             GestorServicos gestor= GestorServicos.manager();
-             equivalency= (InfoEquivalency) gestor.executar(userView, "Seminaries.GetEquivalency", argsReadSeminary);             
-         }
-         catch (Exception e)
-         {
-             throw new FenixActionException();
-         }
- 
-         destiny= mapping.findForward("showCandidacyFormNonCompleteModality");
-         request.setAttribute("equivalency", equivalency);
-         return destiny;
-     }
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
+    {
+        HttpSession session = this.getSession(request);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        String equivalencyIDString = request.getParameter("objectCode");
+        Integer equivalencyID;
+        if (equivalencyIDString == null)
+            throw new FenixActionException(mapping.findForward("invalidQueryString"));
+        try
+        {
+            equivalencyID = new Integer(equivalencyIDString);
+        } catch (Exception ex)
+        {
+            throw new FenixActionException(mapping.findForward("invalidQueryString"));
+        }
+        InfoEquivalency equivalency = null;
+        ActionForward destiny = null;
+        try
+        {
+            Object[] argsReadSeminary = { equivalencyID };
+            GestorServicos gestor = GestorServicos.manager();
+            equivalency =
+                (InfoEquivalency) gestor.executar(
+                    userView,
+                    "Seminaries.GetEquivalency",
+                    argsReadSeminary);
+        } catch (Exception e)
+        {
+            throw new FenixActionException();
+        }
+
+        destiny = mapping.findForward("showCandidacyFormNonCompleteModality");
+        request.setAttribute("equivalency", equivalency);
+        return destiny;
+    }
 }

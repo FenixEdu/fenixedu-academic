@@ -33,124 +33,104 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Susana Fernandes
  *
  */
-public class ReadDistributedTestMarksToString implements IServico {
-	private static ReadDistributedTestMarksToString service =
-		new ReadDistributedTestMarksToString();
+public class ReadDistributedTestMarksToString implements IServico
+{
+    private static ReadDistributedTestMarksToString service = new ReadDistributedTestMarksToString();
 
-	public static ReadDistributedTestMarksToString getService() {
-		return service;
-	}
+    public static ReadDistributedTestMarksToString getService()
+    {
+        return service;
+    }
 
-	public String getNome() {
-		return "ReadDistributedTestMarksToString";
-	}
+    public String getNome()
+    {
+        return "ReadDistributedTestMarksToString";
+    }
 
-	public String run(Integer executionCourseId, Integer distributedTestId)
-		throws FenixServiceException {
+    public String run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException
+    {
 
-		ISuportePersistente persistentSuport;
-		try {
-			persistentSuport = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente persistentExecutionCourse =
-				persistentSuport.getIDisciplinaExecucaoPersistente();
-			IDisciplinaExecucao executionCourse =
-				new DisciplinaExecucao(executionCourseId);
-			executionCourse =
-				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(
-					executionCourse,
-					false);
-			if (executionCourse == null) {
-				throw new InvalidArgumentsServiceException();
-			}
+        ISuportePersistente persistentSuport;
+        try
+        {
+            persistentSuport = SuportePersistenteOJB.getInstance();
+            IDisciplinaExecucaoPersistente persistentExecutionCourse =
+                persistentSuport.getIDisciplinaExecucaoPersistente();
+            IDisciplinaExecucao executionCourse = new DisciplinaExecucao(executionCourseId);
+            executionCourse =
+                (IDisciplinaExecucao) persistentExecutionCourse.readByOId(executionCourse, false);
+            if (executionCourse == null)
+            {
+                throw new InvalidArgumentsServiceException();
+            }
 
-			IDistributedTest distributedTest =
-				new DistributedTest(distributedTestId);
-			distributedTest =
-				(IDistributedTest) persistentSuport
-					.getIPersistentDistributedTest()
-					.readByOId(
-					distributedTest,
-					false);
-			if (distributedTest == null)
-				throw new InvalidArgumentsServiceException();
+            IDistributedTest distributedTest = new DistributedTest(distributedTestId);
+            distributedTest =
+                (IDistributedTest) persistentSuport.getIPersistentDistributedTest().readByOId(
+                    distributedTest,
+                    false);
+            if (distributedTest == null)
+                throw new InvalidArgumentsServiceException();
 
-			int numberOfQuestions =
-				distributedTest.getNumberOfQuestions().intValue();
-			String result = new String("Número\tNome\t");
-			for (int i = 1;
-				i <= distributedTest.getNumberOfQuestions().intValue();
-				i++) {
-				result = result.concat("P" + i + "\t");
-			}
-			result = result.concat("Nota\n");
+            int numberOfQuestions = distributedTest.getNumberOfQuestions().intValue();
+            String result = new String("Número\tNome\t");
+            for (int i = 1; i <= distributedTest.getNumberOfQuestions().intValue(); i++)
+            {
+                result = result.concat("P" + i + "\t");
+            }
+            result = result.concat("Nota\n");
 
-			List studentList =
-				(List) persistentSuport
-					.getIPersistentStudentTestQuestion()
-					.readStudentsByDistributedTest(distributedTest);
-			if (studentList == null || studentList.size() == 0)
-				throw new FenixServiceException();
+            List studentList =
+                persistentSuport.getIPersistentStudentTestQuestion().readStudentsByDistributedTest(
+                    distributedTest);
+            if (studentList == null || studentList.size() == 0)
+                throw new FenixServiceException();
 
-			Collections.sort(studentList, new BeanComparator("number"));
+            Collections.sort(studentList, new BeanComparator("number"));
 
-			Iterator studentIt = studentList.iterator();
-			DecimalFormat df = new DecimalFormat("#0.##");
+            Iterator studentIt = studentList.iterator();
+            DecimalFormat df = new DecimalFormat("#0.##");
 
-			while (studentIt.hasNext()) {
-				IStudent student = (Student) studentIt.next();
-				List studentTestQuestionList =
-					(List) persistentSuport
-						.getIPersistentStudentTestQuestion()
-						.readByStudentAndDistributedTest(
-							student,
-							distributedTest);
-				if (studentTestQuestionList == null
-					|| studentTestQuestionList.size() == 0)
-					throw new FenixServiceException();
-				Collections.sort(
-					studentTestQuestionList,
-					new BeanComparator("testQuestionOrder"));
+            while (studentIt.hasNext())
+            {
+                IStudent student = (Student) studentIt.next();
+                List studentTestQuestionList =
+                    persistentSuport
+                        .getIPersistentStudentTestQuestion()
+                        .readByStudentAndDistributedTest(
+                        student,
+                        distributedTest);
+                if (studentTestQuestionList == null || studentTestQuestionList.size() == 0)
+                    throw new FenixServiceException();
+                Collections.sort(studentTestQuestionList, new BeanComparator("testQuestionOrder"));
 
-				result =
-					result.concat(
-						student.getNumber()
-							+ "\t"
-							+ student.getPerson().getNome()
-							+ "\t");
+                result =
+                    result.concat(student.getNumber() + "\t" + student.getPerson().getNome() + "\t");
 
-				Double finalMark = new Double(0);
-				Iterator studentTestQuestionIt =
-					studentTestQuestionList.iterator();
-				while (studentTestQuestionIt.hasNext()) {
-					IStudentTestQuestion studentTestQuestion =
-						(IStudentTestQuestion) studentTestQuestionIt.next();
-					InfoStudentTestQuestion infoStudentTestQuestion =
-						Cloner
-							.copyIStudentTestQuestion2InfoStudentTestQuestion(
-							studentTestQuestion);
+                Double finalMark = new Double(0);
+                Iterator studentTestQuestionIt = studentTestQuestionList.iterator();
+                while (studentTestQuestionIt.hasNext())
+                {
+                    IStudentTestQuestion studentTestQuestion =
+                        (IStudentTestQuestion) studentTestQuestionIt.next();
+                    InfoStudentTestQuestion infoStudentTestQuestion =
+                        Cloner.copyIStudentTestQuestion2InfoStudentTestQuestion(studentTestQuestion);
 
-					result =
-						result.concat(
-							df.format(
-								studentTestQuestion.getTestQuestionMark())
-								+ "\t");
-					finalMark =
-						new Double(
-							finalMark.doubleValue()
-								+ studentTestQuestion
-									.getTestQuestionMark()
-									.doubleValue());
-				}
-				if (finalMark.doubleValue() < 0)
-					result = result.concat("0\n");
-				else
-					result =
-						result.concat(
-							df.format(finalMark.doubleValue()) + "\n");
-			}
-			return result;
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-	}
+                    result = result.concat(df.format(studentTestQuestion.getTestQuestionMark()) + "\t");
+                    finalMark =
+                        new Double(
+                            finalMark.doubleValue()
+                                + studentTestQuestion.getTestQuestionMark().doubleValue());
+                }
+                if (finalMark.doubleValue() < 0)
+                    result = result.concat("0\n");
+                else
+                    result = result.concat(df.format(finalMark.doubleValue()) + "\n");
+            }
+            return result;
+        } catch (ExcepcaoPersistencia e)
+        {
+            throw new FenixServiceException(e);
+        }
+    }
 }

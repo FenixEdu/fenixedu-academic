@@ -31,305 +31,273 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  * @author PTRLV
  *
  */
-public class BibliographicReferenceManagerDispatchAction
-	extends FenixDispatchAction {
+public class BibliographicReferenceManagerDispatchAction extends FenixDispatchAction
+{
 
-	public ActionForward createBibliographicReference(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
-	
-	
-		
-		HttpSession session = request.getSession(false);
-		session.removeAttribute(SessionConstants.INFO_SECTION);
-		DynaActionForm insertBibliographicReferenceForm = (DynaActionForm) form;
-				
-		
-		String title = (String) insertBibliographicReferenceForm.get("title");
-		String authors =
-			(String) insertBibliographicReferenceForm.get("authors");
-		String reference =
-			(String) insertBibliographicReferenceForm.get("reference");
-		String year = (String) insertBibliographicReferenceForm.get("year");
-		String optionalStr =
-			(String) insertBibliographicReferenceForm.get("optional");
-		Boolean optional;				
-		
-		if (optionalStr.equals(this.getResources(request).getMessage("message.optional"))) {		
-			optional = new Boolean(true);			
-		} else {
-			optional = new Boolean(false);
-		}
+    public ActionForward createBibliographicReference(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
+    {
 
-		InfoSite infoSite =
-			(InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
+        HttpSession session = request.getSession(false);
+        session.removeAttribute(SessionConstants.INFO_SECTION);
+        DynaActionForm insertBibliographicReferenceForm = (DynaActionForm) form;
 
-		InfoExecutionCourse infoExecutionCourse =
-			infoSite.getInfoExecutionCourse();
+        String title = (String) insertBibliographicReferenceForm.get("title");
+        String authors = (String) insertBibliographicReferenceForm.get("authors");
+        String reference = (String) insertBibliographicReferenceForm.get("reference");
+        String year = (String) insertBibliographicReferenceForm.get("year");
+        String optionalStr = (String) insertBibliographicReferenceForm.get("optional");
+        Boolean optional;
 
-		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-		Object args[] =
-			{ infoExecutionCourse, title, authors, reference, year, optional };
-		GestorServicos gestor = GestorServicos.manager();
-		try {
-			gestor.executar(userView, "InsertBibliographicReference", args);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+        if (optionalStr.equals(this.getResources(request).getMessage("message.optional")))
+        {
+            optional = new Boolean(true);
+        } else
+        {
+            optional = new Boolean(false);
+        }
 
-		Object args1[] = { infoExecutionCourse, null };
-		ArrayList references = null;
-		try {
-			references =
-				(ArrayList) gestor.executar(
-					userView,
-					"ReadBibliographicReference",
-					args1);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-		session.setAttribute(
-			SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE_LIST,
-			references);
-		return mapping.findForward("bibliographyManagement");
-	}
+        InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 
-	public ActionForward editBibliographicReference(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
+        InfoExecutionCourse infoExecutionCourse = infoSite.getInfoExecutionCourse();
 
-		
-		HttpSession session = request.getSession(false);
-		session.removeAttribute(SessionConstants.INFO_SECTION);
-		DynaActionForm editBibliographicReferenceForm = (DynaActionForm) form;				
-	
+        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        Object args[] = { infoExecutionCourse, title, authors, reference, year, optional };
+        GestorServicos gestor = GestorServicos.manager();
+        try
+        {
+            gestor.executar(userView, "InsertBibliographicReference", args);
+        } catch (FenixServiceException e)
+        {
+            throw new FenixActionException(e);
+        }
 
-		String title = (String) editBibliographicReferenceForm.get("title");
-		String authors = (String) editBibliographicReferenceForm.get("authors");
-		String reference =
-			(String) editBibliographicReferenceForm.get("reference");
-		String year = (String) editBibliographicReferenceForm.get("year");
-		String optionalStr =
-			(String) editBibliographicReferenceForm.get("optional");
-	
-		Boolean optional;							
-			
-		if (optionalStr.equals("opcional")) {
-			optional = new Boolean(true);
-		} else {
-			optional = new Boolean(false);
-		}
+        Object args1[] = { infoExecutionCourse, null };
+        ArrayList references = null;
+        try
+        {
+            references = (ArrayList) gestor.executar(userView, "ReadBibliographicReference", args1);
+        } catch (FenixServiceException e)
+        {
+            throw new FenixActionException(e);
+        }
+        session.setAttribute(SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE_LIST, references);
+        return mapping.findForward("bibliographyManagement");
+    }
 
-		InfoBibliographicReference infoBibliographicReferenceNew =
-			new InfoBibliographicReference(
-				title,
-				authors,
-				reference,
-				year,
-				optional);
+    public ActionForward editBibliographicReference(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
+    {
 
-		InfoSite infoSite =
-			(InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
+        HttpSession session = request.getSession(false);
+        session.removeAttribute(SessionConstants.INFO_SECTION);
+        DynaActionForm editBibliographicReferenceForm = (DynaActionForm) form;
 
-		InfoExecutionCourse infoExecutionCourse =
-			infoSite.getInfoExecutionCourse();
+        String title = (String) editBibliographicReferenceForm.get("title");
+        String authors = (String) editBibliographicReferenceForm.get("authors");
+        String reference = (String) editBibliographicReferenceForm.get("reference");
+        String year = (String) editBibliographicReferenceForm.get("year");
+        String optionalStr = (String) editBibliographicReferenceForm.get("optional");
 
-		InfoBibliographicReference infoBibliographicReference =
-			(InfoBibliographicReference) session.getAttribute(
-				SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE);
+        Boolean optional;
 
-		Object args[] =
-			{
-				infoExecutionCourse,
-				infoBibliographicReference,
-				infoBibliographicReferenceNew };
+        if (optionalStr.equals("opcional"))
+        {
+            optional = new Boolean(true);
+        } else
+        {
+            optional = new Boolean(false);
+        }
 
-		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-		GestorServicos gestor = GestorServicos.manager();
-		try {
-			gestor.executar(userView, "EditBibliographicReference", args);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+        InfoBibliographicReference infoBibliographicReferenceNew =
+            new InfoBibliographicReference(title, authors, reference, year, optional);
 
-		Object args1[] = { infoExecutionCourse, null };
-		ArrayList references = null;
-		try {
-			references =
-				(ArrayList) gestor.executar(
-					userView,
-					"ReadBibliographicReference",
-					args1);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-		session.setAttribute(
-			SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE_LIST,
-			references);
+        InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 
-		return mapping.findForward("bibliographyManagement");
-	}
+        InfoExecutionCourse infoExecutionCourse = infoSite.getInfoExecutionCourse();
 
-	public ActionForward deleteBibliographicReference(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
+        InfoBibliographicReference infoBibliographicReference =
+            (InfoBibliographicReference) session.getAttribute(
+                SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE);
 
-		
-		HttpSession session = request.getSession(false);
-		session.removeAttribute(SessionConstants.INFO_SECTION);
-		InfoSite infoSite =
-			(InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
+        Object args[] =
+            { infoExecutionCourse, infoBibliographicReference, infoBibliographicReferenceNew };
 
-		InfoExecutionCourse infoExecutionCourse =
-			infoSite.getInfoExecutionCourse();
+        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        GestorServicos gestor = GestorServicos.manager();
+        try
+        {
+            gestor.executar(userView, "EditBibliographicReference", args);
+        } catch (FenixServiceException e)
+        {
+            throw new FenixActionException(e);
+        }
 
-		ArrayList bibliographicReferences =
-			(ArrayList) session.getAttribute(
-				SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE_LIST);
+        Object args1[] = { infoExecutionCourse, null };
+        ArrayList references = null;
+        try
+        {
+            references = (ArrayList) gestor.executar(userView, "ReadBibliographicReference", args1);
+        } catch (FenixServiceException e)
+        {
+            throw new FenixActionException(e);
+        }
+        session.setAttribute(SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE_LIST, references);
 
-		String infoBiblioRefIndex = (String) request.getParameter("index");
+        return mapping.findForward("bibliographyManagement");
+    }
 
-		Integer index = new Integer(infoBiblioRefIndex);
+    public ActionForward deleteBibliographicReference(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
+    {
 
-		InfoBibliographicReference infoBibliographicReference =
-			(InfoBibliographicReference) bibliographicReferences.get(
-				index.intValue());
+        HttpSession session = request.getSession(false);
+        session.removeAttribute(SessionConstants.INFO_SECTION);
+        InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 
-		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-		Object args[] = { infoExecutionCourse, infoBibliographicReference };
-		GestorServicos gestor = GestorServicos.manager();
-		try {
-			gestor.executar(userView, "DeleteBibliographicReference", args);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+        InfoExecutionCourse infoExecutionCourse = infoSite.getInfoExecutionCourse();
 
-		Object args1[] = { infoExecutionCourse, null };
-		ArrayList references = null;
-		try {
-			references =
-				(ArrayList) gestor.executar(
-					userView,
-					"ReadBibliographicReference",
-					args1);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-		session.setAttribute(
-			SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE_LIST,
-			references);
-		return mapping.findForward("bibliographyManagement");
-	}
+        ArrayList bibliographicReferences =
+            (ArrayList) session.getAttribute(SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE_LIST);
 
-	public ActionForward viewBibliographicReference(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
+        String infoBiblioRefIndex = request.getParameter("index");
 
-		
-		HttpSession session = request.getSession(false);
-		session.removeAttribute(SessionConstants.INFO_SECTION);
-		InfoSite infoSite =
-			(InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
+        Integer index = new Integer(infoBiblioRefIndex);
 
-		InfoExecutionCourse infoExecutionCourse =
-			infoSite.getInfoExecutionCourse();
+        InfoBibliographicReference infoBibliographicReference =
+            (InfoBibliographicReference) bibliographicReferences.get(index.intValue());
 
-		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-		Object args[] = { infoExecutionCourse, null };
-		GestorServicos gestor = GestorServicos.manager();
-		List references = null;
-		try {
-			references =
-				(ArrayList) gestor.executar(
-					userView,
-					"ReadBibliographicReference",
-					args);		
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-		
-		session.setAttribute(
-			SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE_LIST,
-			references);
+        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        Object args[] = { infoExecutionCourse, infoBibliographicReference };
+        GestorServicos gestor = GestorServicos.manager();
+        try
+        {
+            gestor.executar(userView, "DeleteBibliographicReference", args);
+        } catch (FenixServiceException e)
+        {
+            throw new FenixActionException(e);
+        }
 
-		if(references.size() == 0) {
-			session.removeAttribute("bibliographicReferenceForm");
-			return mapping.findForward("editBibliographicReference");						
-		}		
-		
-		return mapping.findForward("bibliographyManagement");
-	}
+        Object args1[] = { infoExecutionCourse, null };
+        ArrayList references = null;
+        try
+        {
+            references = (ArrayList) gestor.executar(userView, "ReadBibliographicReference", args1);
+        } catch (FenixServiceException e)
+        {
+            throw new FenixActionException(e);
+        }
+        session.setAttribute(SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE_LIST, references);
+        return mapping.findForward("bibliographyManagement");
+    }
 
-	public ActionForward prepareEditBibliographicReference(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
+    public ActionForward viewBibliographicReference(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
+    {
 
-		
-		DynaValidatorForm referenceForm = (DynaValidatorForm) form;
-										
-		String index = request.getParameter("index");
+        HttpSession session = request.getSession(false);
+        session.removeAttribute(SessionConstants.INFO_SECTION);
+        InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 
-		HttpSession session = request.getSession(false);
-		session.removeAttribute(SessionConstants.INFO_SECTION);
-		ArrayList referenceList = null;
-		if (index != null) {
-			session.setAttribute("edit", "Editar");
-			Integer indexInt = new Integer(index);
-			referenceList =
-				(ArrayList) session.getAttribute(
-					SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE_LIST);
+        InfoExecutionCourse infoExecutionCourse = infoSite.getInfoExecutionCourse();
 
-			InfoBibliographicReference infoBibRef =
-				(InfoBibliographicReference) referenceList.get(
-					indexInt.intValue());
+        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        Object args[] = { infoExecutionCourse, null };
+        GestorServicos gestor = GestorServicos.manager();
+        List references = null;
+        try
+        {
+            references = (ArrayList) gestor.executar(userView, "ReadBibliographicReference", args);
+        } catch (FenixServiceException e)
+        {
+            throw new FenixActionException(e);
+        }
 
-			session.setAttribute(
-				SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE,
-				infoBibRef);
-							
-			referenceForm.set("title", infoBibRef.getTitle());
-			referenceForm.set("authors", infoBibRef.getAuthors());
-			referenceForm.set("reference", infoBibRef.getReference());
-			referenceForm.set("year", infoBibRef.getYear());						
-																								
-			if (infoBibRef.getOptional().equals(new Boolean(true)))
-				referenceForm.set("optional", this.getResources(request).getMessage("message.optional"));
-			else
-				referenceForm.set("optional", this.getResources(request).getMessage("message.recommended"));
-		} else {
-			session.removeAttribute("edit");			
-			session.removeAttribute("bibliographicReferenceForm");		
-		}
-				
-		return mapping.findForward("editBibliographicReference");
-	}
+        session.setAttribute(SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE_LIST, references);
 
-	/* (non-Javadoc)
-	 * @see ServidorApresentacao.Action.FenixLookupDispatchAction#getKeyMethodMap()
-	 */
-/*	protected Map getKeyMethodMap() {
-		Map map = new HashMap();
-		map.put("button.insert", "prepareEditBibliographicReference");
-		map.put("button.confirmInsert", "createBibliographicReference");
-		map.put("button.delete", "deleteBibliographicReference");
-		map.put("button.edit", "prepareEditBibliographicReference");
-		map.put("button.confirmEdit", "editBibliographicReference");
-		map.put("button.view", "viewBibliographicReference");
-		return map;
-	}*/
+        if (references.size() == 0)
+        {
+            session.removeAttribute("bibliographicReferenceForm");
+            return mapping.findForward("editBibliographicReference");
+        }
+
+        return mapping.findForward("bibliographyManagement");
+    }
+
+    public ActionForward prepareEditBibliographicReference(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
+    {
+
+        DynaValidatorForm referenceForm = (DynaValidatorForm) form;
+
+        String index = request.getParameter("index");
+
+        HttpSession session = request.getSession(false);
+        session.removeAttribute(SessionConstants.INFO_SECTION);
+        ArrayList referenceList = null;
+        if (index != null)
+        {
+            session.setAttribute("edit", "Editar");
+            Integer indexInt = new Integer(index);
+            referenceList =
+                (ArrayList) session.getAttribute(SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE_LIST);
+
+            InfoBibliographicReference infoBibRef =
+                (InfoBibliographicReference) referenceList.get(indexInt.intValue());
+
+            session.setAttribute(SessionConstants.INFO_BIBLIOGRAPHIC_REFERENCE, infoBibRef);
+
+            referenceForm.set("title", infoBibRef.getTitle());
+            referenceForm.set("authors", infoBibRef.getAuthors());
+            referenceForm.set("reference", infoBibRef.getReference());
+            referenceForm.set("year", infoBibRef.getYear());
+
+            if (infoBibRef.getOptional().equals(new Boolean(true)))
+                referenceForm.set("optional", this.getResources(request).getMessage("message.optional"));
+            else
+                referenceForm.set(
+                    "optional",
+                    this.getResources(request).getMessage("message.recommended"));
+        } else
+        {
+            session.removeAttribute("edit");
+            session.removeAttribute("bibliographicReferenceForm");
+        }
+
+        return mapping.findForward("editBibliographicReference");
+    }
+
+    /* (non-Javadoc)
+     * @see ServidorApresentacao.Action.FenixLookupDispatchAction#getKeyMethodMap()
+     */
+    /*	protected Map getKeyMethodMap() {
+    		Map map = new HashMap();
+    		map.put("button.insert", "prepareEditBibliographicReference");
+    		map.put("button.confirmInsert", "createBibliographicReference");
+    		map.put("button.delete", "deleteBibliographicReference");
+    		map.put("button.edit", "prepareEditBibliographicReference");
+    		map.put("button.confirmEdit", "editBibliographicReference");
+    		map.put("button.view", "viewBibliographicReference");
+    		return map;
+    	}*/
 }

@@ -21,121 +21,143 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 /**
  * @author Ivo Brandão
  */
-public class AnnouncementManagementDispatchAction extends FenixDispatchAction {
+public class AnnouncementManagementDispatchAction extends FenixDispatchAction
+{
 
-	public ActionForward prepareCreateAnnouncement(
-		ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws Exception {
+    public ActionForward prepareCreateAnnouncement(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws Exception
+    {
 
-			
-			HttpSession session = request.getSession(false);
-			session.removeAttribute(SessionConstants.INFO_SECTION);
-			session.removeAttribute("insertAnnouncementForm");
-			
-			return mapping.findForward("insertAnnouncement");
-	}
+        HttpSession session = request.getSession(false);
+        session.removeAttribute(SessionConstants.INFO_SECTION);
+        session.removeAttribute("insertAnnouncementForm");
 
-	public ActionForward createAnnouncement(
-		ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws Exception {
+        return mapping.findForward("insertAnnouncement");
+    }
 
-		
-		HttpSession session = request.getSession(false);
-		session.removeAttribute(SessionConstants.INFO_SECTION);
-		DynaActionForm insertAnnouncementForm = (DynaActionForm) form;
-		String title = (String) insertAnnouncementForm.get("title");
-		String information = (String) insertAnnouncementForm.get("information");
+    public ActionForward createAnnouncement(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws Exception
+    {
 
-		InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
-		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        HttpSession session = request.getSession(false);
+        session.removeAttribute(SessionConstants.INFO_SECTION);
+        DynaActionForm insertAnnouncementForm = (DynaActionForm) form;
+        String title = (String) insertAnnouncementForm.get("title");
+        String information = (String) insertAnnouncementForm.get("information");
 
-		Object args[] = { infoSite, title, information };
-		GestorServicos manager = GestorServicos.manager();
-		manager.executar(userView, "InsertAnnouncement", args);
+        InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
+        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		//return to announcementManagement
-		return mapping.findForward("accessAnnouncementManagement");
-	}
+        Object args[] = { infoSite, title, information };
+        GestorServicos manager = GestorServicos.manager();
+        manager.executar(userView, "InsertAnnouncement", args);
 
-	public ActionForward prepareEditAnnouncement(
-		ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws Exception {
+        //return to announcementManagement
+        return mapping.findForward("accessAnnouncementManagement");
+    }
 
-			HttpSession session = request.getSession(false);
-			session.removeAttribute(SessionConstants.INFO_SECTION);
-			//retrieve announcement
-			List announcements = (List) session.getAttribute(SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST);
-			String announcementIndex = (String) request.getParameter("index");
-			Integer index = new Integer(announcementIndex);
-			InfoAnnouncement infoAnnouncement = (InfoAnnouncement) announcements.get(index.intValue());
-			
-			session.setAttribute("Announcement", infoAnnouncement);
+    public ActionForward prepareEditAnnouncement(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws Exception
+    {
 
-			return mapping.findForward("editAnnouncement");
-	}
+        HttpSession session = request.getSession(false);
+        session.removeAttribute(SessionConstants.INFO_SECTION);
+        //retrieve announcement
+        List announcements = (List) session.getAttribute(SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST);
+        String announcementIndex = request.getParameter("index");
+        Integer index = new Integer(announcementIndex);
+        InfoAnnouncement infoAnnouncement = (InfoAnnouncement) announcements.get(index.intValue());
 
-	public ActionForward editAnnouncement(
-		ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws Exception {
+        session.setAttribute("Announcement", infoAnnouncement);
 
-			
-			HttpSession session = request.getSession(false);
-			session.removeAttribute(SessionConstants.INFO_SECTION);
-			DynaActionForm insertAnnouncementForm = (DynaActionForm) form;
-			String newTitle = (String) insertAnnouncementForm.get("title");
-			String newInformation = (String) insertAnnouncementForm.get("information");
+        return mapping.findForward("editAnnouncement");
+    }
 
-			InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
-			InfoAnnouncement infoAnnouncement = (InfoAnnouncement) session.getAttribute("Announcement");
-			UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+    public ActionForward editAnnouncement(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws Exception
+    {
 
-			Object args[] = { infoSite, infoAnnouncement, newTitle, newInformation };
-			GestorServicos manager = GestorServicos.manager();
-			manager.executar(userView, "EditAnnouncement", args);                        
+        HttpSession session = request.getSession(false);
+        session.removeAttribute(SessionConstants.INFO_SECTION);
+        DynaActionForm insertAnnouncementForm = (DynaActionForm) form;
+        String newTitle = (String) insertAnnouncementForm.get("title");
+        String newInformation = (String) insertAnnouncementForm.get("information");
 
-			//remove index from session
-			session.removeAttribute("index");
-		
-			//return to announcementManagement
-			return mapping.findForward("accessAnnouncementManagement");
-	}
+        InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
+        InfoAnnouncement infoAnnouncement = (InfoAnnouncement) session.getAttribute("Announcement");
+        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
-	public ActionForward deleteAnnouncement(
-		ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws Exception {
+        Object args[] = { infoSite, infoAnnouncement, newTitle, newInformation };
+        GestorServicos manager = GestorServicos.manager();
+        manager.executar(userView, "EditAnnouncement", args);
 
-			/*
-			 * session: Site, Announcement; 
-			 * action: delete Announcement.
-			 */
-			
-			HttpSession session = request.getSession(false);
-			session.removeAttribute(SessionConstants.INFO_SECTION);
-			InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
-			
-			List announcements = (List) session.getAttribute(SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST);
-			String announcementIndex = (String) request.getParameter("index");
-			Integer index = new Integer(announcementIndex);
-			InfoAnnouncement infoAnnouncement = (InfoAnnouncement) announcements.get(index.intValue());
+        //remove index from session
+        session.removeAttribute("index");
 
-			UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        //return to announcementManagement
+        return mapping.findForward("accessAnnouncementManagement");
+    }
 
-			Object args[] = { infoSite.getInfoExecutionCourse(),infoSite, infoAnnouncement };
-			GestorServicos manager = GestorServicos.manager();
-			manager.executar(userView, "DeleteAnnouncement", args);
-		
-			//remove index from session
-			session.removeAttribute("index");
-		
-			//return to announcementManagement
-			return mapping.findForward("accessAnnouncementManagement");
-	}
+    public ActionForward deleteAnnouncement(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws Exception
+    {
 
-	public ActionForward showAnnouncements(
-		ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws Exception {
-			//return to announcementManagement
-			return mapping.findForward("showAnnouncements");
-	}
+        /*
+         * session: Site, Announcement; 
+         * action: delete Announcement.
+         */
+
+        HttpSession session = request.getSession(false);
+        session.removeAttribute(SessionConstants.INFO_SECTION);
+        InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
+
+        List announcements = (List) session.getAttribute(SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST);
+        String announcementIndex = request.getParameter("index");
+        Integer index = new Integer(announcementIndex);
+        InfoAnnouncement infoAnnouncement = (InfoAnnouncement) announcements.get(index.intValue());
+
+        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+
+        Object args[] = { infoSite.getInfoExecutionCourse(), infoSite, infoAnnouncement };
+        GestorServicos manager = GestorServicos.manager();
+        manager.executar(userView, "DeleteAnnouncement", args);
+
+        //remove index from session
+        session.removeAttribute("index");
+
+        //return to announcementManagement
+        return mapping.findForward("accessAnnouncementManagement");
+    }
+
+    public ActionForward showAnnouncements(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws Exception
+    {
+        //return to announcementManagement
+        return mapping.findForward("showAnnouncements");
+    }
 
 }

@@ -27,50 +27,49 @@ import ServidorPersistente.Seminaries.IPersistentSeminaryModality;
  */
 public class GetAllModalities implements IServico
 {
-    private static GetAllModalities service= new GetAllModalities();
-           /**
-            * The singleton access method of this class.
-            **/
-           public static GetAllModalities getService()
-           {
-               return service;
-           }
-           /**
-            * The actor of this class.
-            **/
-           private GetAllModalities()
-           {
-           }
-           /**
-            * Returns The Service Name */
-           public final String getNome()
-           {
-               return "Seminaries.GetAllModalities";
-           }
-           public List run() throws BDException
-           {
-               List infoCases = new LinkedList();
-               try
-               {
-                   ISuportePersistente persistenceSupport= SuportePersistenteOJB.getInstance();
-                   IPersistentSeminaryModality persistentModality= persistenceSupport.getIPersistentSeminaryModality();      
-                   List cases = (List) persistentModality.readAll();
-                          
-                   for (Iterator iterator= cases.iterator(); iterator.hasNext();)
-                   {
-                       IModality modality= (IModality) iterator.next();
-                       infoCases.add(Cloner.copyIModality2InfoModality(modality));
-                   }
+    private static GetAllModalities service = new GetAllModalities();
+    /**
+     * The singleton access method of this class.
+     **/
+    public static GetAllModalities getService()
+    {
+        return service;
+    }
+    /**
+     * The actor of this class.
+     **/
+    private GetAllModalities()
+    {
+    }
+    /**
+     * Returns The Service Name */
+    public final String getNome()
+    {
+        return "Seminaries.GetAllModalities";
+    }
+    public List run() throws BDException
+    {
+        List infoCases = new LinkedList();
+        try
+        {
+            ISuportePersistente persistenceSupport = SuportePersistenteOJB.getInstance();
+            IPersistentSeminaryModality persistentModality =
+                persistenceSupport.getIPersistentSeminaryModality();
+            List cases = persistentModality.readAll();
 
-               }
-               catch (ExcepcaoPersistencia ex)
-               {
-                   throw new BDException(
-                       "Got an error while trying to retrieve mutiple modalities from the database",
-                       ex);
-               }
-               return infoCases;
-           }
+            for (Iterator iterator = cases.iterator(); iterator.hasNext();)
+            {
+                IModality modality = (IModality) iterator.next();
+                infoCases.add(Cloner.copyIModality2InfoModality(modality));
+            }
 
-    
+        } catch (ExcepcaoPersistencia ex)
+        {
+            throw new BDException(
+                "Got an error while trying to retrieve mutiple modalities from the database",
+                ex);
+        }
+        return infoCases;
+    }
+
 }

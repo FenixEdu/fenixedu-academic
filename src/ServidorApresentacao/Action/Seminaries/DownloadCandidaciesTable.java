@@ -59,14 +59,14 @@ public class DownloadCandidaciesTable extends FenixAction
 		Boolean approved=null;
 		//
 		//
-		String stringApproved= (String) request.getParameter("approved");
+		String stringApproved= request.getParameter("approved");
 		if (stringApproved != null && (stringApproved.equals("true") || stringApproved.equals("false")))
 			approved= new Boolean(stringApproved);
 		//
 		//
 		try
 		{
-			themeID= new Integer((String) request.getParameter("themeID"));
+			themeID= new Integer(request.getParameter("themeID"));
 		}
 		catch (NumberFormatException ex)
 		{
@@ -74,7 +74,7 @@ public class DownloadCandidaciesTable extends FenixAction
 		}
 		try
 		{
-			modalityID= new Integer((String) request.getParameter("modalityID"));
+			modalityID= new Integer(request.getParameter("modalityID"));
 		}
 		catch (NumberFormatException ex)
 		{
@@ -82,7 +82,7 @@ public class DownloadCandidaciesTable extends FenixAction
 		}
 		try
 		{
-			seminaryID= new Integer((String) request.getParameter("seminaryID"));
+			seminaryID= new Integer(request.getParameter("seminaryID"));
 		}
 		catch (NumberFormatException ex)
 		{
@@ -90,7 +90,7 @@ public class DownloadCandidaciesTable extends FenixAction
 		}
 		try
 		{
-			case1Id= new Integer((String) request.getParameter("case1ID"));
+			case1Id= new Integer(request.getParameter("case1ID"));
 		}
 		catch (NumberFormatException ex)
 		{
@@ -98,7 +98,7 @@ public class DownloadCandidaciesTable extends FenixAction
 		}
 		try
 		{
-			case2Id= new Integer((String) request.getParameter("case2ID"));
+			case2Id= new Integer(request.getParameter("case2ID"));
 		}
 		catch (NumberFormatException ex)
 		{
@@ -106,7 +106,7 @@ public class DownloadCandidaciesTable extends FenixAction
 		}
 		try
 		{
-			case3Id= new Integer((String) request.getParameter("case3ID"));
+			case3Id= new Integer(request.getParameter("case3ID"));
 		}
 		catch (NumberFormatException ex)
 		{
@@ -114,7 +114,7 @@ public class DownloadCandidaciesTable extends FenixAction
 		}
 		try
 		{
-			case4Id= new Integer((String) request.getParameter("case4ID"));
+			case4Id= new Integer(request.getParameter("case4ID"));
 		}
 		catch (NumberFormatException ex)
 		{
@@ -122,7 +122,7 @@ public class DownloadCandidaciesTable extends FenixAction
 		}
 		try
 		{
-			case5Id= new Integer((String) request.getParameter("case5ID"));
+			case5Id= new Integer(request.getParameter("case5ID"));
 		}
 		catch (NumberFormatException ex)
 		{
@@ -130,7 +130,7 @@ public class DownloadCandidaciesTable extends FenixAction
 		}
 		try
 		{
-			curricularCourseID= new Integer((String) request.getParameter("courseID"));
+			curricularCourseID= new Integer(request.getParameter("courseID"));
 		}
 		catch (NumberFormatException ex)
 		{
@@ -138,7 +138,7 @@ public class DownloadCandidaciesTable extends FenixAction
 		}
 		try
 		{
-			degreeID= new Integer((String) request.getParameter("degreeID"));
+			degreeID= new Integer(request.getParameter("degreeID"));
 		}
 		catch (NumberFormatException ex)
 		{
@@ -182,7 +182,7 @@ public class DownloadCandidaciesTable extends FenixAction
 				InfoCurricularCourse curricularCourse= null;
 				InfoTheme theme= null;
 				InfoModality modality= null;
-				String motivation= null;
+				//String motivation= null;
 				InfoSeminary seminary= null;
 				List casesChoices= null;
 				InfoStudentCurricularPlan studentCurricularPlan= null;
@@ -207,7 +207,7 @@ public class DownloadCandidaciesTable extends FenixAction
 				theme= (InfoTheme) gestor.executar(userView, "Seminaries.GetThemeById", argsReadTheme);
 				modality= (InfoModality) gestor.executar(userView, "Seminaries.GetModalityById", argsReadModality);
 				seminary= (InfoSeminary) gestor.executar(userView, "Seminaries.GetSeminary", argsReadSeminary);
-				motivation= candidacy.getMotivation();
+			//	motivation= candidacy.getMotivation();
 				casesChoices= candidacy.getCaseStudyChoices();
 				//
 				for (Iterator casesIterator= casesChoices.iterator(); casesIterator.hasNext();)

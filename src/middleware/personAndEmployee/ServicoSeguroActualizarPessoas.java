@@ -98,11 +98,11 @@ public class ServicoSeguroActualizarPessoas {
 						} else {
 							// A Pessoa Existe
 							person2Write = (IPessoa) result.get(0);
-							PersonUtils.updatePerson((Pessoa) person2Write, (Pessoa) pessoa);
+							PersonUtils.updatePerson(person2Write, pessoa);
 						}
 
 						//roles
-						IPersonRole personRole = RoleFunctions.readPersonRole((IPessoa) person2Write, RoleType.PERSON, broker);
+						IPersonRole personRole = RoleFunctions.readPersonRole(person2Write, RoleType.PERSON, broker);
 						if (personRole == null) {
 							if (person2Write.getPersonRoles() == null) {
 								person2Write.setPersonRoles(new ArrayList());

@@ -50,7 +50,7 @@ public class ShowCandidacyDetails extends FenixAction
          {
              HttpSession session= this.getSession(request);
              IUserView userView= (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-             String candidacyIDString= (String) request.getParameter("objectCode");
+             String candidacyIDString= request.getParameter("objectCode");
              Integer candidacyID;
              if (candidacyIDString == null)
                  throw new FenixActionException(mapping.findForward("invalidQueryString"));

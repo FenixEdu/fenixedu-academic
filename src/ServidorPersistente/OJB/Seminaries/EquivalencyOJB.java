@@ -22,15 +22,17 @@ import ServidorPersistente.Seminaries.IPersistentSeminaryCurricularCourseEquival
  * Created at 4/Ago/2003, 13:08:05
  * 
  */
-public class EquivalencyOJB extends ObjectFenixOJB implements IPersistentSeminaryCurricularCourseEquivalency
+public class EquivalencyOJB
+    extends ObjectFenixOJB
+    implements IPersistentSeminaryCurricularCourseEquivalency
 {
-	public List readAll() throws ExcepcaoPersistencia
-	{
-		Criteria criteria= new Criteria();
-		return (List) super.queryList(CourseEquivalency.class, criteria);
-	}
-	public void delete(ICourseEquivalency courseEquivalency) throws ExcepcaoPersistencia
-	{
-		super.deleteByOID(CourseEquivalency.class, courseEquivalency.getIdInternal());
-	}
+    public List readAll() throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        return super.queryList(CourseEquivalency.class, criteria);
+    }
+    public void delete(ICourseEquivalency courseEquivalency) throws ExcepcaoPersistencia
+    {
+        super.deleteByOID(CourseEquivalency.class, courseEquivalency.getIdInternal());
+    }
 }

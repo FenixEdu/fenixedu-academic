@@ -27,49 +27,49 @@ import ServidorPersistente.Seminaries.IPersistentSeminaryCaseStudy;
  */
 public class GetAllCasesStudy implements IServico
 {
-    private static GetAllCasesStudy service= new GetAllCasesStudy();
-        /**
-         * The singleton access method of this class.
-         **/
-        public static GetAllCasesStudy getService()
+    private static GetAllCasesStudy service = new GetAllCasesStudy();
+    /**
+     * The singleton access method of this class.
+     **/
+    public static GetAllCasesStudy getService()
+    {
+        return service;
+    }
+    /**
+     * The actor of this class.
+     **/
+    private GetAllCasesStudy()
+    {
+    }
+    /**
+     * Returns The Service Name */
+    public final String getNome()
+    {
+        return "Seminaries.GetAllCasesStudy";
+    }
+    public List run() throws BDException
+    {
+        List infoCases = new LinkedList();
+        try
         {
-            return service;
-        }
-        /**
-         * The actor of this class.
-         **/
-        private GetAllCasesStudy()
-        {
-        }
-        /**
-         * Returns The Service Name */
-        public final String getNome()
-        {
-            return "Seminaries.GetAllCasesStudy";
-        }
-        public List run() throws BDException
-        {
-            List infoCases = new LinkedList();
-            try
-            {
-                ISuportePersistente persistenceSupport= SuportePersistenteOJB.getInstance();
-                IPersistentSeminaryCaseStudy persistentCaseStudy= persistenceSupport.getIPersistentSeminaryCaseStudy();      
-                List cases = (List) persistentCaseStudy.readAll();
-                          
-                for (Iterator iterator= cases.iterator(); iterator.hasNext();)
-                {
-                    ICaseStudy caseStudy= (ICaseStudy) iterator.next();
-                    infoCases.add(Cloner.copyICaseStudy2InfoCaseStudy(caseStudy));
-                }
+            ISuportePersistente persistenceSupport = SuportePersistenteOJB.getInstance();
+            IPersistentSeminaryCaseStudy persistentCaseStudy =
+                persistenceSupport.getIPersistentSeminaryCaseStudy();
+            List cases = persistentCaseStudy.readAll();
 
-            }
-            catch (ExcepcaoPersistencia ex)
+            for (Iterator iterator = cases.iterator(); iterator.hasNext();)
             {
-                throw new BDException(
-                    "Got an error while trying to retrieve mutiple case studies from the database",
-                    ex);
+                ICaseStudy caseStudy = (ICaseStudy) iterator.next();
+                infoCases.add(Cloner.copyICaseStudy2InfoCaseStudy(caseStudy));
             }
-            return infoCases;
+
+        } catch (ExcepcaoPersistencia ex)
+        {
+            throw new BDException(
+                "Got an error while trying to retrieve mutiple case studies from the database",
+                ex);
         }
+        return infoCases;
+    }
 
 }

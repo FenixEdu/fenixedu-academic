@@ -22,19 +22,19 @@ import ServidorPersistente.Seminaries.*;
  */
 public class ThemeOJB extends ObjectFenixOJB implements IPersistentSeminaryTheme
 {
-	public ITheme readByName(String name) throws ExcepcaoPersistencia
-	{
-		Criteria criteria= new Criteria();
-		criteria.addEqualTo("name", name);
-		return (ITheme) super.queryObject(Theme.class, criteria);
-	}
-	public List readAll() throws ExcepcaoPersistencia
-	{
-        Criteria criteria = new Criteria();   
-        return (List)super.queryList(Theme.class,criteria);
-	}
-	public void delete(ITheme theme) throws ExcepcaoPersistencia
-	{
-        super.deleteByOID(Theme.class,theme.getIdInternal());
-	}
+    public ITheme readByName(String name) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("name", name);
+        return (ITheme) super.queryObject(Theme.class, criteria);
+    }
+    public List readAll() throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        return super.queryList(Theme.class, criteria);
+    }
+    public void delete(ITheme theme) throws ExcepcaoPersistencia
+    {
+        super.deleteByOID(Theme.class, theme.getIdInternal());
+    }
 }

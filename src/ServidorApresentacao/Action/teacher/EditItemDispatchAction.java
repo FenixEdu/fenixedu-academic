@@ -27,148 +27,128 @@ import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
-public class EditItemDispatchAction extends FenixDispatchAction {
+public class EditItemDispatchAction extends FenixDispatchAction
+{
 
-	public ActionForward prepareEdit(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
+    public ActionForward prepareEdit(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
+    {
 
+        String indexString = request.getParameter("index");
 
-	
-		String indexString = (String) request.getParameter("index");
-	
-		Integer index = new Integer(indexString);
-		
-		HttpSession session = request.getSession(false);
-		
-		List infoItemsList =
-					(List) session.getAttribute(
-						SessionConstants.INFO_SECTION_ITEMS_LIST);
+        Integer index = new Integer(indexString);
 
-		InfoItem oldInfoItem = (InfoItem) infoItemsList.get(index.intValue());
-		session.setAttribute(SessionConstants.INFO_ITEM, oldInfoItem);
-		
-		
-//		GestorServicos manager = GestorServicos.manager();
-//		Object readSectionArgs[] = { oldInfoItem.getInfoSection() };
-//		ArrayList items;
-//		try {
-//			infoItemsList =(ArrayList) manager.executar(null,"ReadItems",readSectionArgs);
-//			} catch (FenixServiceException fenixServiceException) {
-//				throw new FenixActionException(fenixServiceException.getMessage());
-//			}
-//			
-//		//infoItemsList.remove(oldInfoItem);
-//			
-//		
-//		
-//	 
-//	   session.setAttribute(SessionConstants.INFO_SECTION_ITEMS_LIST,infoItemsList);
-		return mapping.findForward("editItem");
-	}
+        HttpSession session = request.getSession(false);
 
-	public ActionForward edit(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws FenixActionException {
-	
-		
-	
-		DynaActionForm itemForm = (DynaActionForm) form;
-		HttpSession session = request.getSession(false);
-		
+        List infoItemsList = (List) session.getAttribute(SessionConstants.INFO_SECTION_ITEMS_LIST);
 
-		
+        InfoItem oldInfoItem = (InfoItem) infoItemsList.get(index.intValue());
+        session.setAttribute(SessionConstants.INFO_ITEM, oldInfoItem);
 
-		UserView userView =
-			(UserView) session.getAttribute(SessionConstants.U_VIEW);
+        //		GestorServicos manager = GestorServicos.manager();
+        //		Object readSectionArgs[] = { oldInfoItem.getInfoSection() };
+        //		ArrayList items;
+        //		try {
+        //			infoItemsList =(ArrayList) manager.executar(null,"ReadItems",readSectionArgs);
+        //			} catch (FenixServiceException fenixServiceException) {
+        //				throw new FenixActionException(fenixServiceException.getMessage());
+        //			}
+        //			
+        //		//infoItemsList.remove(oldInfoItem);
+        //			
+        //		
+        //		
+        //	 
+        //	   session.setAttribute(SessionConstants.INFO_SECTION_ITEMS_LIST,infoItemsList);
+        return mapping.findForward("editItem");
+    }
 
-		InfoSection infoSection =
-			(InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
-		
-		InfoItem oldInfoItem =
-						(InfoItem) session.getAttribute(SessionConstants.INFO_ITEM);
-		
-		//InfoItem newInfoItem = (InfoItem) session.getAttribute(SessionConstants.INFO_ITEM);
-		GestorServicos manager = GestorServicos.manager();
-		Object readSectionArgs[] = { infoSection };
-				ArrayList items;
-				try {
-					items =
-						(ArrayList) manager.executar(
-							null,
-							"ReadItems",
-						readSectionArgs);
-				} catch (FenixServiceException fenixServiceException) {
-					throw new FenixActionException(fenixServiceException.getMessage());
-				}
+    public ActionForward edit(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
+    {
 
-				
+        DynaActionForm itemForm = (DynaActionForm) form;
+        HttpSession session = request.getSession(false);
 
+        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		InfoItem newInfoItem = new InfoItem();
-		newInfoItem.setInfoSection(infoSection);
-		newInfoItem.setInformation((String) itemForm.get("information"));
-		Integer order = new Integer((String) itemForm.get("itemOrder"));
-		if (items!=null && items.size()!=0 ){
-		
-		switch (order.intValue()) {
-			case -1 :
-				order=new Integer(items.size()- 1);
-				break;
-			
-			default :
-				order= new Integer(order.intValue()-1);
-				break;
-		}
-		}
-		else {
-			order = new Integer(0);
-		}
-		newInfoItem.setItemOrder(order);
-		newInfoItem.setName((String) itemForm.get("name"));
-		newInfoItem.setUrgent(new Boolean((String) itemForm.get("urgent")));
+        InfoSection infoSection = (InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
 
-		Object editItemArgs[] = { oldInfoItem, newInfoItem };
-		
-		
-		
-		
-		try {
-			manager.executar(userView, "EditItem", editItemArgs);
-		} catch (ExistingServiceException e) {
-		throw new ExistingActionException("Um item com esse nome",e);
-	}
-		 catch (FenixServiceException fenixServiceException) {
+        InfoItem oldInfoItem = (InfoItem) session.getAttribute(SessionConstants.INFO_ITEM);
 
-			throw new FenixActionException(fenixServiceException.getMessage());
-		}
-		
-		session.setAttribute(SessionConstants.INFO_ITEM, newInfoItem);
-	
-		//			read section items 
+        //InfoItem newInfoItem = (InfoItem) session.getAttribute(SessionConstants.INFO_ITEM);
+        GestorServicos manager = GestorServicos.manager();
+        Object readSectionArgs[] = { infoSection };
+        ArrayList items;
+        try
+        {
+            items = (ArrayList) manager.executar(null, "ReadItems", readSectionArgs);
+        } catch (FenixServiceException fenixServiceException)
+        {
+            throw new FenixActionException(fenixServiceException.getMessage());
+        }
 
-		
-		try {
-			items =
-				(ArrayList) manager.executar(
-					null,
-					"ReadItems",
-				readSectionArgs);
-		} catch (FenixServiceException fenixServiceException) {
-			throw new FenixActionException(fenixServiceException.getMessage());
-		}
+        InfoItem newInfoItem = new InfoItem();
+        newInfoItem.setInfoSection(infoSection);
+        newInfoItem.setInformation((String) itemForm.get("information"));
+        Integer order = new Integer((String) itemForm.get("itemOrder"));
+        if (items != null && items.size() != 0)
+        {
 
-		
-		session.setAttribute(SessionConstants.INFO_SECTION_ITEMS_LIST, items);
+            switch (order.intValue())
+            {
+                case -1 :
+                    order = new Integer(items.size() - 1);
+                    break;
 
-		return mapping.findForward("viewSection");
-	}
+                default :
+                    order = new Integer(order.intValue() - 1);
+                    break;
+            }
+        } else
+        {
+            order = new Integer(0);
+        }
+        newInfoItem.setItemOrder(order);
+        newInfoItem.setName((String) itemForm.get("name"));
+        newInfoItem.setUrgent(new Boolean((String) itemForm.get("urgent")));
+
+        Object editItemArgs[] = { oldInfoItem, newInfoItem };
+
+        try
+        {
+            manager.executar(userView, "EditItem", editItemArgs);
+        } catch (ExistingServiceException e)
+        {
+            throw new ExistingActionException("Um item com esse nome", e);
+        } catch (FenixServiceException fenixServiceException)
+        {
+
+            throw new FenixActionException(fenixServiceException.getMessage());
+        }
+
+        session.setAttribute(SessionConstants.INFO_ITEM, newInfoItem);
+
+        //			read section items 
+
+        try
+        {
+            items = (ArrayList) manager.executar(null, "ReadItems", readSectionArgs);
+        } catch (FenixServiceException fenixServiceException)
+        {
+            throw new FenixActionException(fenixServiceException.getMessage());
+        }
+
+        session.setAttribute(SessionConstants.INFO_SECTION_ITEMS_LIST, items);
+
+        return mapping.findForward("viewSection");
+    }
 }
-		
-		

@@ -26,98 +26,93 @@ import UtilTests.ParseQuestion;
  * @author Susana Fernandes
  *
  */
-public class UpdateStudentTestQuestionMark implements IServico {
+public class UpdateStudentTestQuestionMark implements IServico
+{
 
-	private static UpdateStudentTestQuestionMark service =
-		new UpdateStudentTestQuestionMark();
+    private static UpdateStudentTestQuestionMark service = new UpdateStudentTestQuestionMark();
 
-	public static UpdateStudentTestQuestionMark getService() {
-		return service;
-	}
+    public static UpdateStudentTestQuestionMark getService()
+    {
+        return service;
+    }
 
-	public String getNome() {
-		return "UpdateStudentTestQuestionMark";
-	}
+    public String getNome()
+    {
+        return "UpdateStudentTestQuestionMark";
+    }
 
-	public boolean run(Integer executionCourseId, Integer distributedTestId)
-		throws FenixServiceException {
-		try {
-			ISuportePersistente persistentSuport =
-				SuportePersistenteOJB.getInstance();
+    public boolean run(Integer executionCourseId, Integer distributedTestId)
+        throws FenixServiceException
+    {
+        try
+        {
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 
-			IPersistentStudentTestQuestion persistentStudentTestQuestion =
-				persistentSuport.getIPersistentStudentTestQuestion();
+            IPersistentStudentTestQuestion persistentStudentTestQuestion =
+                persistentSuport.getIPersistentStudentTestQuestion();
 
-			IDistributedTest distributedTest =
-				new DistributedTest(distributedTestId);
-			distributedTest =
-				(IDistributedTest) persistentSuport
-					.getIPersistentDistributedTest()
-					.readByOId(
-					distributedTest,
-					false);
-			if (distributedTest == null)
-				throw new InvalidArgumentsServiceException();
+            IDistributedTest distributedTest = new DistributedTest(distributedTestId);
+            distributedTest =
+                (IDistributedTest) persistentSuport.getIPersistentDistributedTest().readByOId(
+                    distributedTest,
+                    false);
+            if (distributedTest == null)
+                throw new InvalidArgumentsServiceException();
 
-			List studentsTestQuestionList =
-				(List) persistentStudentTestQuestion.readByDistributedTest(
-					distributedTest);
+            List studentsTestQuestionList =
+                persistentStudentTestQuestion.readByDistributedTest(distributedTest);
 
-			Iterator studentsTestQuestionIt =
-				studentsTestQuestionList.iterator();
+            Iterator studentsTestQuestionIt = studentsTestQuestionList.iterator();
 
-			ParseQuestion parse = new ParseQuestion();
-			while (studentsTestQuestionIt.hasNext()) {
-				IStudentTestQuestion studentTestQuestion =
-					(IStudentTestQuestion) studentsTestQuestionIt.next();
-				InfoStudentTestQuestion infoStudentTestQuestion =
-					Cloner.copyIStudentTestQuestion2InfoStudentTestQuestion(
-						studentTestQuestion);
-				try {
-					infoStudentTestQuestion.setQuestion(
-						parse.parseQuestion(
-							infoStudentTestQuestion.getQuestion().getXmlFile(),
-							infoStudentTestQuestion.getQuestion()));
-					infoStudentTestQuestion =
-						parse.getOptionsShuffle(infoStudentTestQuestion);
-				} catch (Exception e) {
-					throw new FenixServiceException(e);
-				}
-				if (infoStudentTestQuestion.getResponse().intValue() != 0) {
+            ParseQuestion parse = new ParseQuestion();
+            while (studentsTestQuestionIt.hasNext())
+            {
+                IStudentTestQuestion studentTestQuestion =
+                    (IStudentTestQuestion) studentsTestQuestionIt.next();
+                InfoStudentTestQuestion infoStudentTestQuestion =
+                    Cloner.copyIStudentTestQuestion2InfoStudentTestQuestion(studentTestQuestion);
+                try
+                {
+                    infoStudentTestQuestion.setQuestion(
+                        parse.parseQuestion(
+                            infoStudentTestQuestion.getQuestion().getXmlFile(),
+                            infoStudentTestQuestion.getQuestion()));
+                    infoStudentTestQuestion = parse.getOptionsShuffle(infoStudentTestQuestion);
+                } catch (Exception e)
+                {
+                    throw new FenixServiceException(e);
+                }
+                if (infoStudentTestQuestion.getResponse().intValue() != 0)
+                {
 
-					if (infoStudentTestQuestion
-						.getQuestion()
-						.getCorrectResponse()
-						.contains(studentTestQuestion.getResponse()))
-						studentTestQuestion.setTestQuestionMark(
-							new Double(
-								studentTestQuestion
-									.getTestQuestionValue()
-									.doubleValue()));
-					else
-						studentTestQuestion.setTestQuestionMark(
-							new Double(
-								- (
-									infoStudentTestQuestion
-										.getTestQuestionValue()
-										.intValue()
-										* (java
-											.lang
-											.Math
-											.pow(
-												infoStudentTestQuestion
-													.getQuestion()
-													.getOptionNumber()
-													.intValue()
-													- 1,
-												-1)))));
-					persistentStudentTestQuestion.lockWrite(
-						studentTestQuestion);
-				}
-			}
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-		return true;
-	}
+                    if (infoStudentTestQuestion
+                        .getQuestion()
+                        .getCorrectResponse()
+                        .contains(studentTestQuestion.getResponse()))
+                        studentTestQuestion.setTestQuestionMark(
+                            new Double(studentTestQuestion.getTestQuestionValue().doubleValue()));
+                    else
+                        studentTestQuestion.setTestQuestionMark(
+                            new Double(
+                                - (
+                                    infoStudentTestQuestion.getTestQuestionValue().intValue()
+                                        * (java
+                                            .lang
+                                            .Math
+                                            .pow(
+                                                infoStudentTestQuestion
+                                                    .getQuestion()
+                                                    .getOptionNumber()
+                                                    .intValue()
+                                                    - 1,
+                                                -1)))));
+                    persistentStudentTestQuestion.lockWrite(studentTestQuestion);
+                }
+            }
+        } catch (ExcepcaoPersistencia e)
+        {
+            throw new FenixServiceException(e);
+        }
+        return true;
+    }
 }

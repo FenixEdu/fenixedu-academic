@@ -23,111 +23,130 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
  * @author asnr and scpo
  *
  */
-public class StudentGroupOJB extends ObjectFenixOJB implements IPersistentStudentGroup{
+public class StudentGroupOJB extends ObjectFenixOJB implements IPersistentStudentGroup
+{
 
+    public IStudentGroup readStudentGroupByGroupPropertiesAndGroupNumber(
+        IGroupProperties groupProperties,
+        Integer studentGroupNumber)
+        throws ExcepcaoPersistencia
+    {
 
+        Criteria criteria = new Criteria();
 
+        criteria.addEqualTo("keyGroupProperties", groupProperties.getIdInternal());
+        criteria.addEqualTo("groupNumber", studentGroupNumber);
 
-	public IStudentGroup readStudentGroupByGroupPropertiesAndGroupNumber(IGroupProperties groupProperties,Integer studentGroupNumber) throws ExcepcaoPersistencia {
+        return (IStudentGroup) queryObject(StudentGroup.class, criteria);
+    }
 
-		
-		Criteria criteria = new Criteria();
-		
-		criteria.addEqualTo("keyGroupProperties",groupProperties.getIdInternal());
-		criteria.addEqualTo("groupNumber",studentGroupNumber);
-		
-		return (IStudentGroup) queryObject(StudentGroup.class, criteria);
-	}
-	
-	public List readAllStudentGroupByGroupProperties(IGroupProperties groupProperties) throws ExcepcaoPersistencia {
+    public List readAllStudentGroupByGroupProperties(IGroupProperties groupProperties)
+        throws ExcepcaoPersistencia
+    {
 
-		Criteria criteria = new Criteria();
-		
-		criteria.addEqualTo("keyGroupProperties",groupProperties.getIdInternal());
-		
-		
-		return (List) queryList(StudentGroup.class, criteria);
-	}
-	
-	public List readAllStudentGroupByGroupPropertiesAndShift(IGroupProperties groupProperties,ITurno shift) throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
 
-			Criteria criteria = new Criteria();
-		   		
-			criteria.addEqualTo("keyGroupProperties",groupProperties.getIdInternal());
-			criteria.addEqualTo("keyShift",shift.getIdInternal());
-			
-			return (List) queryList(StudentGroup.class, criteria);
-		}
-			
-	public List readAll() throws ExcepcaoPersistencia {
+        criteria.addEqualTo("keyGroupProperties", groupProperties.getIdInternal());
 
-	try {
-			ArrayList list = new ArrayList();
-			String oqlQuery = "select all from " + StudentGroup.class.getName();
-			query.create(oqlQuery);
-			List result = (List) query.execute();
+        return queryList(StudentGroup.class, criteria);
+    }
 
-			try {
-				lockRead(result);
-			} catch (ExcepcaoPersistencia ex) {
-					throw ex;
-			}
+    public List readAllStudentGroupByGroupPropertiesAndShift(
+        IGroupProperties groupProperties,
+        ITurno shift)
+        throws ExcepcaoPersistencia
+    {
 
-			if ((result != null) && (result.size() != 0)) {
-				ListIterator iterator = result.listIterator();
-				while (iterator.hasNext())
-				list.add((IStudentGroup) iterator.next());
-			}
-			return list;
-			} catch (QueryException ex) {
-				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-			}
-		}
-			
-	public void lockWrite(IStudentGroup studentGroupToWrite) throws ExcepcaoPersistencia {
-       
-		IStudentGroup studentGroupFromDB = null;
-		if (studentGroupToWrite == null)
-		// If there is nothing to write, simply return.
-			return;
+        Criteria criteria = new Criteria();
 
-		// read studentGroup from DB	
-		studentGroupFromDB = readStudentGroupByGroupPropertiesAndGroupNumber(studentGroupToWrite.getGroupProperties(),studentGroupToWrite.getGroupNumber());
-		
-		// if (studentGroup not in database) then write it
-		if (studentGroupFromDB == null)
-			super.lockWrite(studentGroupToWrite);
-		// else if (item is mapped to the database then write any existing changes)
-			 else if ((studentGroupToWrite instanceof IStudentGroup) &&
-					   ((IStudentGroup) studentGroupFromDB).getIdInternal().equals(
-						((IStudentGroup) studentGroupToWrite).getIdInternal())) {
+        criteria.addEqualTo("keyGroupProperties", groupProperties.getIdInternal());
+        criteria.addEqualTo("keyShift", shift.getIdInternal());
 
-						  super.lockWrite(studentGroupToWrite);
-				  // else throw an AlreadyExists exception.
-			  } else
-				  throw new ExistingPersistentException();
-		  }
-		  
-	
-		  
-    
-	public void delete(IStudentGroup studentGroup) throws ExcepcaoPersistencia {
-			try {
-				super.delete(studentGroup);
-			} catch (ExcepcaoPersistencia ex) {
-				throw ex;
-			}
-		}
-		
-		
-	public void deleteAll() throws ExcepcaoPersistencia {
-			try {
-				String oqlQuery = "select all from " + StudentGroup.class.getName();
-				super.deleteAll(oqlQuery);
-			} catch (ExcepcaoPersistencia ex) {
-				throw ex;
-			}
-		}
-	
-	
+        return queryList(StudentGroup.class, criteria);
+    }
+
+    public List readAll() throws ExcepcaoPersistencia
+    {
+
+        try
+        {
+            ArrayList list = new ArrayList();
+            String oqlQuery = "select all from " + StudentGroup.class.getName();
+            query.create(oqlQuery);
+            List result = (List) query.execute();
+
+            try
+            {
+                lockRead(result);
+            } catch (ExcepcaoPersistencia ex)
+            {
+                throw ex;
+            }
+
+            if ((result != null) && (result.size() != 0))
+            {
+                ListIterator iterator = result.listIterator();
+                while (iterator.hasNext())
+                    list.add(iterator.next());
+            }
+            return list;
+        } catch (QueryException ex)
+        {
+            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+        }
+    }
+
+    public void lockWrite(IStudentGroup studentGroupToWrite) throws ExcepcaoPersistencia
+    {
+
+        IStudentGroup studentGroupFromDB = null;
+        if (studentGroupToWrite == null)
+            // If there is nothing to write, simply return.
+            return;
+
+        // read studentGroup from DB	
+        studentGroupFromDB =
+            readStudentGroupByGroupPropertiesAndGroupNumber(
+                studentGroupToWrite.getGroupProperties(),
+                studentGroupToWrite.getGroupNumber());
+
+        // if (studentGroup not in database) then write it
+        if (studentGroupFromDB == null)
+            super.lockWrite(studentGroupToWrite);
+        // else if (item is mapped to the database then write any existing changes)
+        else if (
+            (studentGroupToWrite instanceof IStudentGroup)
+                && ((IStudentGroup) studentGroupFromDB).getIdInternal().equals(
+                    ((IStudentGroup) studentGroupToWrite).getIdInternal()))
+        {
+
+            super.lockWrite(studentGroupToWrite);
+            // else throw an AlreadyExists exception.
+        } else
+            throw new ExistingPersistentException();
+    }
+
+    public void delete(IStudentGroup studentGroup) throws ExcepcaoPersistencia
+    {
+        try
+        {
+            super.delete(studentGroup);
+        } catch (ExcepcaoPersistencia ex)
+        {
+            throw ex;
+        }
+    }
+
+    public void deleteAll() throws ExcepcaoPersistencia
+    {
+        try
+        {
+            String oqlQuery = "select all from " + StudentGroup.class.getName();
+            super.deleteAll(oqlQuery);
+        } catch (ExcepcaoPersistencia ex)
+        {
+            throw ex;
+        }
+    }
+
 }

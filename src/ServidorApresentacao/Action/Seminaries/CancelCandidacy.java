@@ -13,7 +13,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import DataBeans.Seminaries.InfoEquivalency;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixAction;
@@ -30,40 +29,40 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 public class CancelCandidacy extends FenixAction
 {
     public ActionForward execute(
-         ActionMapping mapping,
-         ActionForm form,
-         HttpServletRequest request,
-         HttpServletResponse response)
-         throws FenixActionException
-     {
-         HttpSession session= this.getSession(request);
-         IUserView userView= (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-         String candidacyIDString= (String) request.getParameter("objectCode");
-         Integer candidacyID;
-         if (candidacyIDString == null)
-             throw new FenixActionException(mapping.findForward("invalidQueryString"));
-         try
-         {
-             candidacyID= new Integer(candidacyIDString);
-         }
-         catch (Exception ex)
-         {
-             throw new FenixActionException(mapping.findForward("invalidQueryString"));
-         }
-         InfoEquivalency equivalency= null;
-         ActionForward destiny= null;
-         try
-         {
-             Object[] argsReadSeminary= { candidacyID };
-             GestorServicos gestor= GestorServicos.manager();
-             equivalency= (InfoEquivalency) gestor.executar(userView, "Seminaries.DeleteCandidacy", argsReadSeminary);
-         }
-         catch (Exception e)
-         {
-             throw new FenixActionException();
-         }
- 
-         destiny= mapping.findForward("candidacyCanceled");
-         return destiny;
-     }
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
+    {
+        HttpSession session = this.getSession(request);
+        IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+        String candidacyIDString = request.getParameter("objectCode");
+        Integer candidacyID;
+        if (candidacyIDString == null)
+            throw new FenixActionException(mapping.findForward("invalidQueryString"));
+        try
+        {
+            candidacyID = new Integer(candidacyIDString);
+        } catch (Exception ex)
+        {
+            throw new FenixActionException(mapping.findForward("invalidQueryString"));
+        }
+        ActionForward destiny = null;
+        try
+        {
+            Object[] argsReadSeminary = { candidacyID };
+            GestorServicos gestor = GestorServicos.manager();
+            gestor.executar(
+                    userView,
+                    "Seminaries.DeleteCandidacy",
+                    argsReadSeminary);
+        } catch (Exception e)
+        {
+            throw new FenixActionException();
+        }
+
+        destiny = mapping.findForward("candidacyCanceled");
+        return destiny;
+    }
 }

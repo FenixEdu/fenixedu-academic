@@ -196,10 +196,10 @@ public class ManageCaseStudyChoices extends FenixAction
 		String[] selectedCasesArray= (String[]) selectCases.get("selectedCases");
 		String[] unselectedCasesArray= (String[]) selectCases.get("unselectedCases");
 		String[] hiddenSelectedCasesArray= (String[]) selectCases.get("hiddenSelectedCases");
-		String equivalencyIDString= (String) request.getParameter("equivalencyID");
-		String themeIDString= (String) request.getParameter("themeID");
-		String motivation= (String) request.getParameter("motivation");
-		String submition= (String) request.getParameter("submition");
+		String equivalencyIDString= request.getParameter("equivalencyID");
+		String themeIDString= request.getParameter("themeID");
+		String motivation= request.getParameter("motivation");
+		String submition= request.getParameter("submition");
 		IUserView userView= (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		Integer equivalencyID= null;
 		Integer themeID= null;

@@ -25,18 +25,18 @@ import ServidorPersistente.Seminaries.*;
 public class SeminaryOJB extends ObjectFenixOJB implements IPersistentSeminary
 {
     public ISeminary readByName(String name) throws ExcepcaoPersistencia
-        {
-            Criteria criteria= new Criteria();
-            criteria.addEqualTo("name", name);
-            return (ISeminary) super.queryObject(Seminary.class, criteria);
-        }
-        public List readAll() throws ExcepcaoPersistencia
-        {
-            Criteria criteria = new Criteria();   
-            return (List)super.queryList(Seminary.class,criteria);
-        }
-        public void delete(ISeminary seminary) throws ExcepcaoPersistencia
-        {
-            super.deleteByOID(Seminary.class,seminary.getIdInternal());
-        }
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("name", name);
+        return (ISeminary) super.queryObject(Seminary.class, criteria);
+    }
+    public List readAll() throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        return super.queryList(Seminary.class, criteria);
+    }
+    public void delete(ISeminary seminary) throws ExcepcaoPersistencia
+    {
+        super.deleteByOID(Seminary.class, seminary.getIdInternal());
+    }
 }
