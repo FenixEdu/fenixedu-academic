@@ -190,11 +190,11 @@ public abstract class Cloner
         return shift;
     }
     /**
-     * Method copyInfoExecutionCourse2ExecutionCourse.
-     * 
-     * @param infoExecutionCourse
-     * @return IDisciplinaExecucao
-     */
+	 * Method copyInfoExecutionCourse2ExecutionCourse.
+	 * 
+	 * @param infoExecutionCourse
+	 * @return IDisciplinaExecucao
+	 */
     public static IExecutionCourse copyInfoExecutionCourse2ExecutionCourse(InfoExecutionCourse infoExecutionCourse)
     {
         IExecutionCourse executionCourse = new ExecutionCourse();
@@ -230,11 +230,11 @@ public abstract class Cloner
     }
 
     /**
-     * Method copyInfoLesson2Lesson.
-     * 
-     * @param lessonExample
-     * @return IAula
-     */
+	 * Method copyInfoLesson2Lesson.
+	 * 
+	 * @param lessonExample
+	 * @return IAula
+	 */
     public static IAula copyInfoLesson2Lesson(InfoLesson infoLesson)
     {
         IAula lesson = new Aula();
@@ -256,10 +256,10 @@ public abstract class Cloner
         return lesson;
     }
     /**
-     * Method copyInfoRoom2Room.
-     * 
-     * @param infoRoom
-     */
+	 * Method copyInfoRoom2Room.
+	 * 
+	 * @param infoRoom
+	 */
     public static ISala copyInfoRoom2Room(InfoRoom infoRoom)
     {
         ISala room = new Sala();
@@ -267,9 +267,9 @@ public abstract class Cloner
         return room;
     }
     /**
-     * @param room
-     * @return IAula
-     */
+	 * @param room
+	 * @return IAula
+	 */
     public static InfoRoom copyRoom2InfoRoom(ISala room)
     {
 
@@ -284,11 +284,11 @@ public abstract class Cloner
     }
 
     /**
-     * Method copyInfoLesson2Lesson.
-     * 
-     * @param lessonExample
-     * @return IAula
-     */
+	 * Method copyInfoLesson2Lesson.
+	 * 
+	 * @param lessonExample
+	 * @return IAula
+	 */
     public static InfoLesson copyILesson2InfoLesson(IAula lesson)
     {
         InfoLesson infoLesson = new InfoLesson();
@@ -305,11 +305,11 @@ public abstract class Cloner
     }
 
     /**
-     * Method copyInfoShift2Shift.
-     * 
-     * @param infoShift
-     * @return ITurno
-     */
+	 * Method copyInfoShift2Shift.
+	 * 
+	 * @param infoShift
+	 * @return ITurno
+	 */
     public static ITurno copyInfoShift2IShift(InfoShift infoShift)
     {
         if (infoShift == null)
@@ -325,11 +325,11 @@ public abstract class Cloner
         return shift;
     }
     /**
-     * Method copyInfoShift2Shift.
-     * 
-     * @param infoShift
-     * @return ITurno
-     */
+	 * Method copyInfoShift2Shift.
+	 * 
+	 * @param infoShift
+	 * @return ITurno
+	 */
     public static InfoShift copyShift2InfoShift(ITurno shift)
     {
         InfoShift infoShift = new InfoShift();
@@ -364,11 +364,11 @@ public abstract class Cloner
     }
 
     /**
-     * Method copyInfoShift2Shift.
-     * 
-     * @param infoShift
-     * @return ITurno
-     */
+	 * Method copyInfoShift2Shift.
+	 * 
+	 * @param infoShift
+	 * @return ITurno
+	 */
     public static InfoClass copyClass2InfoClass(ITurma classD)
     {
         InfoClass infoClass = new InfoClass();
@@ -384,11 +384,11 @@ public abstract class Cloner
         return infoClass;
     }
     /**
-     * Method copyIExecutionPeriod2InfoExecutionPeriod.
-     * 
-     * @param iExecutionPeriod
-     * @return InfoExecutionPeriod
-     */
+	 * Method copyIExecutionPeriod2InfoExecutionPeriod.
+	 * 
+	 * @param iExecutionPeriod
+	 * @return InfoExecutionPeriod
+	 */
 
     public static InfoExecutionPeriod copyIExecutionPeriod2InfoExecutionPeriod(IExecutionPeriod executionPeriod)
     {
@@ -418,9 +418,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param infoExecutionDegree
-     * @return ICursoExecucao
-     */
+	 * @param infoExecutionDegree
+	 * @return ICursoExecucao
+	 */
     public static ICursoExecucao copyInfoExecutionDegree2ExecutionDegree(InfoExecutionDegree infoExecutionDegree)
     {
 
@@ -431,9 +431,9 @@ public abstract class Cloner
 
         IExecutionYear executionYear =
             Cloner.copyInfoExecutionYear2IExecutionYear(infoExecutionDegree.getInfoExecutionYear());
-        //        ITeacher coordinator = null;
-        //        if (infoExecutionDegree.getInfoCoordinator() != null)
-        //            coordinator = Cloner.copyInfoTeacher2Teacher(infoExecutionDegree.getInfoCoordinator());
+//        ITeacher coordinator = null;
+//        if (infoExecutionDegree.getInfoCoordinator() != null)
+//            coordinator = Cloner.copyInfoTeacher2Teacher(infoExecutionDegree.getInfoCoordinator());
 
         copyObjectProperties(executionDegree, infoExecutionDegree);
 
@@ -450,9 +450,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param executionDegree
-     * @return InfoExecutionDegree
-     */
+	 * @param executionDegree
+	 * @return InfoExecutionDegree
+	 */
 
     public static InfoExecutionDegree copyIExecutionDegree2InfoExecutionDegree(ICursoExecucao executionDegree)
     {
@@ -463,10 +463,10 @@ public abstract class Cloner
             Cloner.copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(
                 executionDegree.getCurricularPlan());
         InfoTeacher infoCoordinator = null;
-        //        if (executionDegree.getCoordinator() != null)
-        //        {
-        //            infoCoordinator = Cloner.copyITeacher2InfoTeacher(executionDegree.getCoordinator());
-        //        }
+//        if (executionDegree.getCoordinator() != null)
+//        {
+//            infoCoordinator = Cloner.copyITeacher2InfoTeacher(executionDegree.getCoordinator());
+//        }
 
         InfoExecutionYear infoExecutionYear =
             Cloner.copyIExecutionYear2InfoExecutionYear(executionDegree.getExecutionYear());
@@ -494,11 +494,11 @@ public abstract class Cloner
 
     }
     /**
-     * Method copyInfoExecutionYear2IExecutionYear.
-     * 
-     * @param infoExecutionYear
-     * @return IExecutionYear
-     */
+	 * Method copyInfoExecutionYear2IExecutionYear.
+	 * 
+	 * @param infoExecutionYear
+	 * @return IExecutionYear
+	 */
     public static IExecutionYear copyInfoExecutionYear2IExecutionYear(InfoExecutionYear infoExecutionYear)
     {
         IExecutionYear executionYear = new ExecutionYear();
@@ -514,11 +514,11 @@ public abstract class Cloner
         return executionYear;
     }
     /**
-     * Method copyInfoExecutionYear2IExecutionYear.
-     * 
-     * @param infoExecutionYear
-     * @return IExecutionYear
-     */
+	 * Method copyInfoExecutionYear2IExecutionYear.
+	 * 
+	 * @param infoExecutionYear
+	 * @return IExecutionYear
+	 */
     public static InfoExecutionYear copyIExecutionYear2InfoExecutionYear(IExecutionYear executionYear)
     {
         InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
@@ -527,11 +527,11 @@ public abstract class Cloner
     }
 
     /**
-     * Method copyIDegree2InfoDegree.
-     * 
-     * @param iCurso
-     * @return InfoDegree
-     */
+	 * Method copyIDegree2InfoDegree.
+	 * 
+	 * @param iCurso
+	 * @return InfoDegree
+	 */
     public static InfoDegree copyIDegree2InfoDegree(ICurso degree)
     {
         InfoDegree infoDegree = new InfoDegree();
@@ -552,11 +552,11 @@ public abstract class Cloner
         return infoDegree;
     }
     /**
-     * Method copyInfoDegree2IDegree.
-     * 
-     * @param infoDegree
-     * @return ICurso
-     */
+	 * Method copyInfoDegree2IDegree.
+	 * 
+	 * @param infoDegree
+	 * @return ICurso
+	 */
     public static ICurso copyInfoDegree2IDegree(InfoDegree infoDegree)
     {
         ICurso degree = new Curso();
@@ -572,11 +572,11 @@ public abstract class Cloner
 
     }
     /**
-     * Method copyInfoExecutionPeriod2IExecutionPeriod.
-     * 
-     * @param infoExecutionPeriod
-     * @return IExecutionPeriod
-     */
+	 * Method copyInfoExecutionPeriod2IExecutionPeriod.
+	 * 
+	 * @param infoExecutionPeriod
+	 * @return IExecutionPeriod
+	 */
     public static IExecutionPeriod copyInfoExecutionPeriod2IExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod)
     {
 
@@ -599,11 +599,11 @@ public abstract class Cloner
         return executionPeriod;
     }
     /**
-     * Method copyInfoClass2Class.
-     * 
-     * @param infoTurma
-     * @return ITurma
-     */
+	 * Method copyInfoClass2Class.
+	 * 
+	 * @param infoTurma
+	 * @return ITurma
+	 */
     public static ITurma copyInfoClass2Class(InfoClass infoClass)
     {
         ITurma domainClass = new Turma();
@@ -620,11 +620,11 @@ public abstract class Cloner
         return domainClass;
     }
     /**
-     * Method copyIShift2InfoShift.
-     * 
-     * @param elem
-     * @return Object
-     */
+	 * Method copyIShift2InfoShift.
+	 * 
+	 * @param elem
+	 * @return Object
+	 */
     public static InfoShift copyIShift2InfoShift(ITurno shift)
     {
 
@@ -661,11 +661,11 @@ public abstract class Cloner
         return infoShift;
     }
     /**
-     * Method copyInfoStudent2IStudent.
-     * 
-     * @param infoStudent
-     * @return IStudent
-     */
+	 * Method copyInfoStudent2IStudent.
+	 * 
+	 * @param infoStudent
+	 * @return IStudent
+	 */
     public static IStudent copyInfoStudent2IStudent(InfoStudent infoStudent)
     {
         IStudent student = new Student();
@@ -682,11 +682,11 @@ public abstract class Cloner
     }
 
     /**
-     * Method copyIStudent2InfoStudent.
-     * 
-     * @param elem
-     * @return Object
-     */
+	 * Method copyIStudent2InfoStudent.
+	 * 
+	 * @param elem
+	 * @return Object
+	 */
     public static InfoStudent copyIStudent2InfoStudent(IStudent student)
     {
         InfoStudent infoStudent = new InfoStudent();
@@ -702,11 +702,11 @@ public abstract class Cloner
     }
 
     /**
-     * Method copyInfoPerson2IPerson.
-     * 
-     * @param infoPerson
-     * @return IPessoa
-     */
+	 * Method copyInfoPerson2IPerson.
+	 * 
+	 * @param infoPerson
+	 * @return IPessoa
+	 */
     public static IPessoa copyInfoPerson2IPerson(InfoPerson infoPerson)
     {
         IPessoa person = null;
@@ -721,11 +721,11 @@ public abstract class Cloner
     }
 
     /**
-     * Method copyIPerson2InfoPerson.
-     * 
-     * @param Person
-     * @return InfoPerson
-     */
+	 * Method copyIPerson2InfoPerson.
+	 * 
+	 * @param Person
+	 * @return InfoPerson
+	 */
     public static InfoPerson copyIPerson2InfoPerson(IPessoa person)
     {
         InfoPerson infoPerson = null;
@@ -763,11 +763,11 @@ public abstract class Cloner
     }
 
     /**
-     * Method copyInfoGrantOwner2IGrantOwner.
-     * 
-     * @param infoGrantOwner
-     * @return IGrantOwner
-     */
+	 * Method copyInfoGrantOwner2IGrantOwner.
+	 * 
+	 * @param infoGrantOwner
+	 * @return IGrantOwner
+	 */
     public static IGrantOwner copyInfoGrantOwner2IGrantOwner(InfoGrantOwner infoGrantOwner)
     {
         IGrantOwner grantOwner = null;
@@ -786,11 +786,11 @@ public abstract class Cloner
     }
 
     /**
-     * Method copyIGrantOwner2InfoGrantOwner.
-     * 
-     * @param grantOwner
-     * @return InfoGrantOwner
-     */
+	 * Method copyIGrantOwner2InfoGrantOwner.
+	 * 
+	 * @param grantOwner
+	 * @return InfoGrantOwner
+	 */
     public static InfoGrantOwner copyIGrantOwner2InfoGrantOwner(IGrantOwner grantOwner)
     {
         InfoGrantOwner infoGrantOwner = null;
@@ -798,9 +798,11 @@ public abstract class Cloner
         {
             infoGrantOwner = new InfoGrantOwner();
             InfoPerson infoPerson = null;
-            if (grantOwner.getPerson() != null)
-                infoPerson = Cloner.copyIPerson2InfoPerson(grantOwner.getPerson());
-
+			IPessoa person = grantOwner.getPerson();
+            if ( person != null)
+            {
+				infoPerson = Cloner.copyIPerson2InfoPerson(person);
+            }
             infoGrantOwner.setGrantOwnerNumber(grantOwner.getNumber());
             copyObjectProperties(infoGrantOwner, grantOwner);
             infoGrantOwner.setPersonInfo(infoPerson);
@@ -809,11 +811,11 @@ public abstract class Cloner
     }
 
     /**
-     * Method copyInfoGrantContract2IGrantContract.
-     * 
-     * @param infoGrantContract
-     * @return IGrantContract
-     */
+	 * Method copyInfoGrantContract2IGrantContract.
+	 * 
+	 * @param infoGrantContract
+	 * @return IGrantContract
+	 */
     public static IGrantContract copyInfoGrantContract2IGrantContract(InfoGrantContract infoGrantContract)
     {
         IGrantContract grantContract = null;
@@ -833,11 +835,11 @@ public abstract class Cloner
     }
 
     /**
-     * Method copyIGrantContract2InfoGrantContract.
-     * 
-     * @param grantContract
-     * @return InfoGrantContract
-     */
+	 * Method copyIGrantContract2InfoGrantContract.
+	 * 
+	 * @param grantContract
+	 * @return InfoGrantContract
+	 */
     public static InfoGrantContract copyIGrantContract2InfoGrantContract(IGrantContract grantContract)
     {
         InfoGrantContract infoGrantContract = null;
@@ -860,11 +862,11 @@ public abstract class Cloner
     }
 
     /**
-     * Method copyInfoGrantType2IGrantType.
-     * 
-     * @param infoGrantType
-     * @return IGrantType
-     */
+	 * Method copyInfoGrantType2IGrantType.
+	 * 
+	 * @param infoGrantType
+	 * @return IGrantType
+	 */
     public static IGrantType copyInfoGrantType2IGrantType(InfoGrantType infoGrantType)
     {
         IGrantType grantType = null;
@@ -878,11 +880,11 @@ public abstract class Cloner
     }
 
     /**
-     * Method copyIGrantType2InfoGrantType.
-     * 
-     * @param grantType
-     * @return InfoGrantType
-     */
+	 * Method copyIGrantType2InfoGrantType.
+	 * 
+	 * @param grantType
+	 * @return InfoGrantType
+	 */
     public static InfoGrantType copyIGrantType2InfoGrantType(IGrantType grantType)
     {
         InfoGrantType infoGrantType = null;
@@ -896,11 +898,11 @@ public abstract class Cloner
     }
 
     /**
-    	* Method copyInfoGrantResponsibleTeacher2IGrantResponsibleTeacher.
-    	* 
-    	* @param infoGrantResponsibleTeacher
-    	* @return IGrantResponsibleTeacher
-    	*/
+	 * Method copyInfoGrantResponsibleTeacher2IGrantResponsibleTeacher.
+	 * 
+	 * @param infoGrantResponsibleTeacher
+	 * @return IGrantResponsibleTeacher
+	 */
     public static IGrantResponsibleTeacher copyInfoGrantResponsibleTeacher2IGrantResponsibleTeacher(InfoGrantResponsibleTeacher infoGrantResponsibleTeacher)
     {
         IGrantResponsibleTeacher grantResponsibleTeacher = null;
@@ -926,11 +928,11 @@ public abstract class Cloner
     }
 
     /**
-    	* Method copyIGrantResponsibleTeacher2InfoGrantResponsibleTeacher.
-    	* 
-    	* @param grantResponsibleTeacher
-    	* @return InfoGrantResponsibleTeacher
-    	*/
+	 * Method copyIGrantResponsibleTeacher2InfoGrantResponsibleTeacher.
+	 * 
+	 * @param grantResponsibleTeacher
+	 * @return InfoGrantResponsibleTeacher
+	 */
     public static InfoGrantResponsibleTeacher copyIGrantResponsibleTeacher2InfoGrantResponsibleTeacher(IGrantResponsibleTeacher grantResponsibleTeacher)
     {
         InfoGrantResponsibleTeacher infoGrantResponsibleTeacher = null;
@@ -954,11 +956,11 @@ public abstract class Cloner
     }
 
     /**
-    	* Method copyInfoGrantOrientationTeacher2IGrantOrientationTeacher.
-    	* 
-    	* @param infoGrantOrientationTeacher
-    	* @return IGrantOrientationTeacher
-    	*/
+	 * Method copyInfoGrantOrientationTeacher2IGrantOrientationTeacher.
+	 * 
+	 * @param infoGrantOrientationTeacher
+	 * @return IGrantOrientationTeacher
+	 */
     public static IGrantOrientationTeacher copyInfoGrantOrientationTeacher2IGrantOrientationTeacher(InfoGrantOrientationTeacher infoGrantOrientationTeacher)
     {
         IGrantOrientationTeacher grantOrientationTeacher = null;
@@ -984,11 +986,11 @@ public abstract class Cloner
     }
 
     /**
-    	* Method copyIGrantOrientationTeacher2InfoGrantOrientationTeacher.
-    	* 
-    	* @param grantOrientationTeacher
-    	* @return InfoGrantOrientationTeacher
-    	*/
+	 * Method copyIGrantOrientationTeacher2InfoGrantOrientationTeacher.
+	 * 
+	 * @param grantOrientationTeacher
+	 * @return InfoGrantOrientationTeacher
+	 */
     public static InfoGrantOrientationTeacher copyIGrantOrientationTeacher2InfoGrantOrientationTeacher(IGrantOrientationTeacher grantOrientationTeacher)
     {
         InfoGrantOrientationTeacher infoGrantOrientationTeacher = null;
@@ -1012,9 +1014,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param advisory
-     * @return
-     */
+	 * @param advisory
+	 * @return
+	 */
     public static InfoAdvisory copyIAdvisory2InfoAdvisory(IAdvisory advisory)
     {
         InfoAdvisory infoAdvisory = new InfoAdvisory();
@@ -1023,9 +1025,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param advisory
-     * @return
-     */
+	 * @param advisory
+	 * @return
+	 */
     public static IAdvisory copyInfoAdvisory2IAdvisory(InfoAdvisory infoAdvisory)
     {
         IAdvisory advisory = new Advisory();
@@ -1034,11 +1036,11 @@ public abstract class Cloner
     }
 
     /**
-     * Method copyInfoCandidateSituation2ICandidateSituation
-     * 
-     * @param infoCandidateSituation
-     * @return
-     */
+	 * Method copyInfoCandidateSituation2ICandidateSituation
+	 * 
+	 * @param infoCandidateSituation
+	 * @return
+	 */
     public static ICandidateSituation copyInfoCandidateSituation2ICandidateSituation(InfoCandidateSituation infoCandidateSituation)
     {
         ICandidateSituation candidateSituation = new CandidateSituation();
@@ -1054,11 +1056,11 @@ public abstract class Cloner
     }
 
     /**
-     * Method copyInfoMasterDegreeCandidate2IMasterDegreCandidate
-     * 
-     * @param infoMasterDegreeCandidate
-     * @return IMasterDegreeCandidate
-     */
+	 * Method copyInfoMasterDegreeCandidate2IMasterDegreCandidate
+	 * 
+	 * @param infoMasterDegreeCandidate
+	 * @return IMasterDegreeCandidate
+	 */
     public static IMasterDegreeCandidate copyInfoMasterDegreeCandidate2IMasterDegreCandidate(InfoMasterDegreeCandidate infoMasterDegreeCandidate)
     {
         IMasterDegreeCandidate masterDegreeCandidate = new MasterDegreeCandidate();
@@ -1074,11 +1076,11 @@ public abstract class Cloner
     }
 
     /**
-     * Method copyIMasterDegreeCandidate2InfoMasterDegreCandidate
-     * 
-     * @param masterDegreeCandidate
-     * @return InfoMasterDegreeCandidate
-     */
+	 * Method copyIMasterDegreeCandidate2InfoMasterDegreCandidate
+	 * 
+	 * @param masterDegreeCandidate
+	 * @return InfoMasterDegreeCandidate
+	 */
     public static InfoMasterDegreeCandidate copyIMasterDegreeCandidate2InfoMasterDegreCandidate(IMasterDegreeCandidate masterDegreeCandidate)
     {
         if (masterDegreeCandidate == null)
@@ -1105,11 +1107,11 @@ public abstract class Cloner
     }
 
     /**
-     * Method copyInfoCountry2ICountry
-     * 
-     * @param infoCountry
-     * @return
-     */
+	 * Method copyInfoCountry2ICountry
+	 * 
+	 * @param infoCountry
+	 * @return
+	 */
     public static ICountry copyInfoCountry2ICountry(InfoCountry infoCountry)
     {
         ICountry country = new Country();
@@ -1118,11 +1120,11 @@ public abstract class Cloner
     }
 
     /**
-     * Method copyICountry2InfoCountry
-     * 
-     * @param country
-     * @return
-     */
+	 * Method copyICountry2InfoCountry
+	 * 
+	 * @param country
+	 * @return
+	 */
     public static InfoCountry copyICountry2InfoCountry(ICountry country)
     {
         InfoCountry infoCountry = new InfoCountry();
@@ -1130,9 +1132,9 @@ public abstract class Cloner
         return infoCountry;
     }
     /**
-     * @param role
-     * @return InfoRole
-     */
+	 * @param role
+	 * @return InfoRole
+	 */
     public static InfoRole copyIRole2InfoRole(IRole role)
     {
         InfoRole infoRole = new InfoRole();
@@ -1161,11 +1163,11 @@ public abstract class Cloner
         return infoBibliographicReference;
     }
     /**
-     * Method copyInfoSite2ISite.
-     * 
-     * @param infoSite
-     * @return ISite
-     */
+	 * Method copyInfoSite2ISite.
+	 * 
+	 * @param infoSite
+	 * @return ISite
+	 */
 
     public static ISite copyInfoSite2ISite(InfoSite infoSite)
     {
@@ -1191,11 +1193,11 @@ public abstract class Cloner
     }
 
     /**
-     * Method copyISite2InfoSite.
-     * 
-     * @param site
-     * @return InfoSite
-     */
+	 * Method copyISite2InfoSite.
+	 * 
+	 * @param site
+	 * @return InfoSite
+	 */
 
     public static InfoSite copyISite2InfoSite(ISite site)
     {
@@ -1223,11 +1225,11 @@ public abstract class Cloner
     }
 
     /**
-     * Method copyInfoSection2ISection.
-     * 
-     * @param infoSection
-     * @return ISection
-     */
+	 * Method copyInfoSection2ISection.
+	 * 
+	 * @param infoSection
+	 * @return ISection
+	 */
 
     public static ISection copyInfoSection2ISection(InfoSection infoSection)
     {
@@ -1265,11 +1267,11 @@ public abstract class Cloner
     }
 
     /**
-     * Method copyISection2InfoSection.
-     * 
-     * @param section
-     * @return InfoSection
-     */
+	 * Method copyISection2InfoSection.
+	 * 
+	 * @param section
+	 * @return InfoSection
+	 */
 
     public static InfoSection copyISection2InfoSection(ISection section)
     {
@@ -1307,9 +1309,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param listInfoSections
-     * @return listISections
-     */
+	 * @param listInfoSections
+	 * @return listISections
+	 */
 
     public static List copyListInfoSections2ListISections(List listInfoSections)
     {
@@ -1329,9 +1331,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param listISections
-     * @return listInfoSections
-     */
+	 * @param listISections
+	 * @return listInfoSections
+	 */
 
     public static List copyListISections2ListInfoSections(List listISections)
     {
@@ -1354,11 +1356,11 @@ public abstract class Cloner
     }
 
     /**
-     * Method copyInfoItem2IItem.
-     * 
-     * @param infoItem
-     * @return IItem
-     */
+	 * Method copyInfoItem2IItem.
+	 * 
+	 * @param infoItem
+	 * @return IItem
+	 */
 
     public static IItem copyInfoItem2IItem(InfoItem infoItem)
     {
@@ -1376,11 +1378,11 @@ public abstract class Cloner
     }
 
     /**
-     * Method copyIItem2InfoItem.
-     * 
-     * @param item
-     * @return InfoItem
-     */
+	 * Method copyIItem2InfoItem.
+	 * 
+	 * @param item
+	 * @return InfoItem
+	 */
 
     public static InfoItem copyIItem2InfoItem(IItem item)
     {
@@ -1397,9 +1399,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param listInfoItems
-     * @return listIItems
-     */
+	 * @param listInfoItems
+	 * @return listIItems
+	 */
 
     public static List copyListInfoItems2ListIItems(List listInfoItems)
     {
@@ -1418,9 +1420,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param listIItems
-     * @return listInfoItems
-     */
+	 * @param listIItems
+	 * @return listInfoItems
+	 */
 
     public static List copyListIItems2ListInfoItems(List listIItems)
     {
@@ -1439,11 +1441,11 @@ public abstract class Cloner
     }
 
     /**
-     * Method copyInfoAnnouncement2IAnnouncement.
-     * 
-     * @param infoAnnouncement
-     * @return IAnnouncement
-     */
+	 * Method copyInfoAnnouncement2IAnnouncement.
+	 * 
+	 * @param infoAnnouncement
+	 * @return IAnnouncement
+	 */
     public static IAnnouncement copyInfoAnnouncement2IAnnouncement(InfoAnnouncement infoAnnouncement)
     {
         IAnnouncement announcement = new Announcement();
@@ -1457,11 +1459,11 @@ public abstract class Cloner
     }
 
     /**
-     * Method copyIAnnouncement2InfoAnnouncement.
-     * 
-     * @param announcement
-     * @return InfoAnnouncement
-     */
+	 * Method copyIAnnouncement2InfoAnnouncement.
+	 * 
+	 * @param announcement
+	 * @return InfoAnnouncement
+	 */
     public static InfoAnnouncement copyIAnnouncement2InfoAnnouncement(IAnnouncement announcement)
     {
         InfoAnnouncement infoAnnouncement = new InfoAnnouncement();
@@ -1475,9 +1477,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param listInfoAnnouncements
-     * @return listIAnnouncements
-     */
+	 * @param listInfoAnnouncements
+	 * @return listIAnnouncements
+	 */
 
     private static List copyListInfoAnnouncements2ListIAnnouncements(List listInfoAnnouncements)
     {
@@ -1496,9 +1498,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param listIAnnouncements
-     * @return listInfoAnnouncements
-     */
+	 * @param listIAnnouncements
+	 * @return listInfoAnnouncements
+	 */
 
     private static List copyListIAnnouncements2ListInfoAnnouncements(List listIAnnouncements)
     {
@@ -1517,9 +1519,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param curriculum
-     * @return InfoCurriculum
-     */
+	 * @param curriculum
+	 * @return InfoCurriculum
+	 */
     public static InfoCurriculum copyICurriculum2InfoCurriculum(ICurriculum curriculum)
     {
         InfoCurriculum infoCurriculum = new InfoCurriculum();
@@ -1537,9 +1539,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param infoCurriculum
-     * @return ICurriculum
-     */
+	 * @param infoCurriculum
+	 * @return ICurriculum
+	 */
     public static ICurriculum copyInfoCurriculum2ICurriculum(InfoCurriculum infoCurriculum)
     {
         ICurriculum curriculum = new Curriculum();
@@ -1557,9 +1559,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param exam
-     * @return InfoExam
-     */
+	 * @param exam
+	 * @return InfoExam
+	 */
     public static InfoExam copyIExam2InfoExam(IExam exam)
     {
         InfoExam infoExam = new InfoExam();
@@ -1580,9 +1582,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param infoExam
-     * @return IExam
-     */
+	 * @param infoExam
+	 * @return IExam
+	 */
     public static IExam copyInfoExam2IExam(InfoExam infoExam)
     {
         IExam exam = new Exam();
@@ -1604,9 +1606,9 @@ public abstract class Cloner
         return exam;
     }
     /**
-     * @param teacher
-     * @return
-     */
+	 * @param teacher
+	 * @return
+	 */
     public static InfoTeacher copyITeacher2InfoTeacher(ITeacher teacher)
     {
         InfoTeacher infoTeacher = new InfoTeacher();
@@ -1621,9 +1623,9 @@ public abstract class Cloner
         return infoTeacher;
     }
     /**
-     * @param infoTeacher
-     * @return
-     */
+	 * @param infoTeacher
+	 * @return
+	 */
     public static ITeacher copyInfoTeacher2Teacher(InfoTeacher infoTeacher)
     {
         ITeacher teacher = new Teacher();
@@ -1639,9 +1641,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param category
-     * @return
-     */
+	 * @param category
+	 * @return
+	 */
     public static InfoCategory copyICategory2InfoCategory(ICategory category)
     {
         InfoCategory infoCategory = new InfoCategory();
@@ -1650,9 +1652,9 @@ public abstract class Cloner
         return infoCategory;
     }
     /**
-     * @param infoCategory
-     * @return
-     */
+	 * @param infoCategory
+	 * @return
+	 */
     public static ICategory copyInfoCategory2ICategory(InfoCategory infoCategory)
     {
         ICategory category = new Category();
@@ -1662,9 +1664,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param courseReport
-     * @return
-     */
+	 * @param courseReport
+	 * @return
+	 */
     public static InfoCourseReport copyICourseReport2InfoCourseReport(ICourseReport courseReport)
     {
         InfoCourseReport infoCourseReport = new InfoCourseReport();
@@ -1678,9 +1680,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param infoCourseReport
-     * @return
-     */
+	 * @param infoCourseReport
+	 * @return
+	 */
     public static ICourseReport copyInfoCourseReport2ICourseReport(InfoCourseReport infoCourseReport)
     {
         ICourseReport courseReport = new CourseReport();
@@ -1694,10 +1696,10 @@ public abstract class Cloner
     }
 
     /**
-     * @author joana-nuno
-     * @param IContributor
-     * @return InfoContributor
-     */
+	 * @author joana-nuno
+	 * @param IContributor
+	 * @return InfoContributor
+	 */
 
     public static InfoContributor copyIContributor2InfoContributor(IContributor contributor)
     {
@@ -1708,9 +1710,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param contributor
-     * @return IContributor
-     */
+	 * @param contributor
+	 * @return IContributor
+	 */
     public static IContributor copyInfoContributor2IContributor(InfoContributor infoContributor)
     {
 
@@ -1720,9 +1722,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param infoGuide
-     * @return IGuide
-     */
+	 * @param infoGuide
+	 * @return IGuide
+	 */
     public static IGuide copyInfoGuide2IGuide(InfoGuide infoGuide)
     {
         IGuide guide = new Guide();
@@ -1750,9 +1752,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param guide
-     * @return InfoGuide
-     */
+	 * @param guide
+	 * @return InfoGuide
+	 */
     public static InfoGuide copyIGuide2InfoGuide(IGuide guide)
     {
 
@@ -1814,9 +1816,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param guideEntry
-     * @return InfoGuideEntry
-     */
+	 * @param guideEntry
+	 * @return InfoGuideEntry
+	 */
     public static InfoGuideEntry copyIGuideEntry2InfoGuideEntry(IGuideEntry guideEntry)
     {
         InfoGuideEntry infoGuideEntry = new InfoGuideEntry();
@@ -1826,9 +1828,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param infoGuideEntry
-     * @return IGuideEntry
-     */
+	 * @param infoGuideEntry
+	 * @return IGuideEntry
+	 */
     public static IGuideEntry copyInfoGuideEntry2IGuideEntry(InfoGuideEntry infoGuideEntry)
     {
         IGuideEntry guideEntry = new GuideEntry();
@@ -1838,9 +1840,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param guideSituation
-     * @return InfoGuideSituation
-     */
+	 * @param guideSituation
+	 * @return InfoGuideSituation
+	 */
     public static InfoGuideSituation copyIGuideSituation2InfoGuideSituation(IGuideSituation guideSituation)
     {
         InfoGuideSituation infoGuideSituation = new InfoGuideSituation();
@@ -1850,9 +1852,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param infoGuideSituation
-     * @return IGuideSituation
-     */
+	 * @param infoGuideSituation
+	 * @return IGuideSituation
+	 */
     public static IGuideSituation copyInfoGuideSituation2IGuideSituation(InfoGuideSituation infoGuideSituation)
     {
         IGuideSituation guideSituation = new GuideSituation();
@@ -1865,10 +1867,10 @@ public abstract class Cloner
     // -----------------------------------------------
 
     /**
-     * @author dcs-rjao
-     * @param InfoDegreeCurricularPlan
-     * @return IDegreeCurricularPlan
-     */
+	 * @author dcs-rjao
+	 * @param InfoDegreeCurricularPlan
+	 * @return IDegreeCurricularPlan
+	 */
     public static IDegreeCurricularPlan copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(InfoDegreeCurricularPlan infoDegreeCurricularPlan)
     {
         IDegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
@@ -1883,10 +1885,10 @@ public abstract class Cloner
     }
 
     /**
-     * @author dcs-rjao
-     * @param IDegreeCurricularPlan
-     * @return InfoDegreeCurricularPlan
-     */
+	 * @author dcs-rjao
+	 * @param IDegreeCurricularPlan
+	 * @return InfoDegreeCurricularPlan
+	 */
     public static InfoDegreeCurricularPlan copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan)
     {
 
@@ -1902,10 +1904,10 @@ public abstract class Cloner
     }
 
     /**
-     * @author dcs-rjao
-     * @param InfoBranch
-     * @return IBranch
-     */
+	 * @author dcs-rjao
+	 * @param InfoBranch
+	 * @return IBranch
+	 */
     public static IBranch copyInfoBranch2IBranch(InfoBranch infoBranch)
     {
 
@@ -1919,10 +1921,10 @@ public abstract class Cloner
     }
 
     /**
-     * @author dcs-rjao
-     * @param IBranch
-     * @return InfoBranch
-     */
+	 * @author dcs-rjao
+	 * @param IBranch
+	 * @return InfoBranch
+	 */
     public static InfoBranch copyIBranch2InfoBranch(IBranch branch)
     {
 
@@ -1942,10 +1944,10 @@ public abstract class Cloner
     }
 
     /**
-     * @author dcs-rjao
-     * @param InfoCurricularCourse
-     * @return ICurricularCourse
-     */
+	 * @author dcs-rjao
+	 * @param InfoCurricularCourse
+	 * @return ICurricularCourse
+	 */
     public static ICurricularCourse copyInfoCurricularCourse2CurricularCourse(InfoCurricularCourse infoCurricularCourse)
     {
 
@@ -1963,10 +1965,10 @@ public abstract class Cloner
     }
 
     /**
-     * @author dcs-rjao
-     * @param ICurricularCourse
-     * @return InfoCurricularCourse
-     */
+	 * @author dcs-rjao
+	 * @param ICurricularCourse
+	 * @return InfoCurricularCourse
+	 */
 
     public static InfoCurricularCourse copyCurricularCourse2InfoCurricularCourse(ICurricularCourse curricularCourse)
     {
@@ -1985,10 +1987,10 @@ public abstract class Cloner
     }
 
     /**
-     * @author dcs-rjao
-     * @param ICurricularCourseScope
-     * @return InfoCurricularCourseScope
-     */
+	 * @author dcs-rjao
+	 * @param ICurricularCourseScope
+	 * @return InfoCurricularCourseScope
+	 */
 
     public static InfoCurricularCourseScope copyICurricularCourseScope2InfoCurricularCourseScope(ICurricularCourseScope curricularCourseScope)
     {
@@ -2011,10 +2013,10 @@ public abstract class Cloner
     }
 
     /**
-     * @author dcs-rjao
-     * @param InfoCurricularCourseScope
-     * @return ICurricularCourseScope
-     */
+	 * @author dcs-rjao
+	 * @param InfoCurricularCourseScope
+	 * @return ICurricularCourseScope
+	 */
     public static ICurricularCourseScope copyInfoCurricularCourseScope2ICurricularCourseScope(InfoCurricularCourseScope infoCurricularCourseScope)
     {
 
@@ -2038,10 +2040,10 @@ public abstract class Cloner
     }
 
     /**
-     * @author dcs-rjao
-     * @param InfoCurricularSemester
-     * @return ICurricularSemester
-     */
+	 * @author dcs-rjao
+	 * @param InfoCurricularSemester
+	 * @return ICurricularSemester
+	 */
     public static ICurricularSemester copyInfoCurricularSemester2CurricularSemester(InfoCurricularSemester infoCurricularSemester)
     {
         //		List infoCurricularCoursesList = null;
@@ -2073,10 +2075,10 @@ public abstract class Cloner
     }
 
     /**
-     * @author dcs-rjao
-     * @param ICurricularSemester
-     * @return InfoCurricularSemester
-     */
+	 * @author dcs-rjao
+	 * @param ICurricularSemester
+	 * @return InfoCurricularSemester
+	 */
     public static InfoCurricularSemester copyCurricularSemester2InfoCurricularSemester(ICurricularSemester curricularSemester)
     {
         //		List infoCurricularCoursesList = new ArrayList();
@@ -2109,10 +2111,10 @@ public abstract class Cloner
     }
 
     /**
-     * @author dcs-rjao
-     * @param InfoCurricularYear
-     * @return ICurricularYear
-     */
+	 * @author dcs-rjao
+	 * @param InfoCurricularYear
+	 * @return ICurricularYear
+	 */
     public static ICurricularYear copyInfoCurricularYear2CurricularYear(InfoCurricularYear infoCurricularYear)
     {
         ICurricularYear curricularYear = new CurricularYear();
@@ -2121,10 +2123,10 @@ public abstract class Cloner
     }
 
     /**
-     * @author dcs-rjao
-     * @param ICurricularYear
-     * @return InfoCurricularYear
-     */
+	 * @author dcs-rjao
+	 * @param ICurricularYear
+	 * @return InfoCurricularYear
+	 */
     public static InfoCurricularYear copyCurricularYear2InfoCurricularYear(ICurricularYear curricularYear)
     {
         InfoCurricularYear infoCurricularYear = new InfoCurricularYear();
@@ -2133,10 +2135,10 @@ public abstract class Cloner
     }
 
     /**
-     * @author dcs-rjao
-     * @param copyInfoStudentCurricularPlan2IStudentCurricularPlan
-     * @return IStudentCurricularPlan
-     */
+	 * @author dcs-rjao
+	 * @param copyInfoStudentCurricularPlan2IStudentCurricularPlan
+	 * @return IStudentCurricularPlan
+	 */
     public static IStudentCurricularPlan copyInfoStudentCurricularPlan2IStudentCurricularPlan(InfoStudentCurricularPlan infoStudentCurricularPlan)
     {
 
@@ -2165,10 +2167,10 @@ public abstract class Cloner
     }
 
     /**
-     * @author dcs-rjao
-     * @param copyIStudentCurricularPlan2InfoStudentCurricularPlan
-     * @return InfoStudentCurricularPlan
-     */
+	 * @author dcs-rjao
+	 * @param copyIStudentCurricularPlan2InfoStudentCurricularPlan
+	 * @return InfoStudentCurricularPlan
+	 */
     public static InfoStudentCurricularPlan copyIStudentCurricularPlan2InfoStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan)
     {
 
@@ -2197,10 +2199,10 @@ public abstract class Cloner
     }
 
     /**
-     * @author dcs-rjao
-     * @param copyIEnrolment2InfoEnrolment
-     * @return InfoEnrolment
-     */
+	 * @author dcs-rjao
+	 * @param copyIEnrolment2InfoEnrolment
+	 * @return InfoEnrolment
+	 */
     public static InfoEnrolment copyIEnrolment2InfoEnrolment(IEnrolment enrolment)
     {
 
@@ -2263,10 +2265,10 @@ public abstract class Cloner
     }
 
     /**
-     * @author dcs-rjao
-     * @param copyInfoEnrolment2IEnrolment
-     * @return IEnrolment
-     */
+	 * @author dcs-rjao
+	 * @param copyInfoEnrolment2IEnrolment
+	 * @return IEnrolment
+	 */
     public static IEnrolment copyInfoEnrolment2IEnrolment(InfoEnrolment infoEnrolment)
     {
 
@@ -2326,10 +2328,10 @@ public abstract class Cloner
     }
 
     /**
-     * @author dcs-rjao
-     * @param copyIEquivalence2InfoEquivalence
-     * @return InfoEquivalence
-     */
+	 * @author dcs-rjao
+	 * @param copyIEquivalence2InfoEquivalence
+	 * @return InfoEquivalence
+	 */
     //	public static InfoEquivalence
     // copyIEquivalence2InfoEquivalence(IEnrolmentEquivalence equivalence) {
     //
@@ -2349,10 +2351,10 @@ public abstract class Cloner
     //	}
 
     /**
-     * @author dcs-rjao
-     * @param copyInfoEquivalence2IEquivalence
-     * @return IEnrolmentEquivalence
-     */
+	 * @author dcs-rjao
+	 * @param copyInfoEquivalence2IEquivalence
+	 * @return IEnrolmentEquivalence
+	 */
     //	public static IEnrolmentEquivalence
     // copyInfoEquivalence2IEquivalence(InfoEquivalence infoEquivalence) {
     //
@@ -2372,10 +2374,10 @@ public abstract class Cloner
     //	}
 
     /**
-     * @author dcs-rjao
-     * @param IStudentKind
-     * @return InfoStudentKind
-     */
+	 * @author dcs-rjao
+	 * @param IStudentKind
+	 * @return InfoStudentKind
+	 */
     public static InfoStudentKind copyIStudentKind2InfoStudentKind(IStudentKind studentGroupInfo)
     {
         InfoStudentKind infoStudentKind = new InfoStudentKind();
@@ -2384,10 +2386,10 @@ public abstract class Cloner
     }
 
     /**
-     * @author dcs-rjao
-     * @param IStudentKind
-     * @return InfoStudentKind
-     */
+	 * @author dcs-rjao
+	 * @param IStudentKind
+	 * @return InfoStudentKind
+	 */
     public static IStudentKind copyInfoStudentKind2IStudentKind(InfoStudentKind infoStudentGroupInfo)
     {
         IStudentKind studentKind = new StudentKind();
@@ -2396,10 +2398,10 @@ public abstract class Cloner
     }
 
     /**
-     * @author dcs-rjao
-     * @param IEnrolmentEvaluation
-     * @return InfoEnrolmentEvaluation
-     */
+	 * @author dcs-rjao
+	 * @param IEnrolmentEvaluation
+	 * @return InfoEnrolmentEvaluation
+	 */
     public static InfoEnrolmentEvaluation copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(IEnrolmentEvaluation enrolmentEvaluation)
     {
         //		properties of infoEnrolment are not copied for not to get into loop
@@ -2412,10 +2414,10 @@ public abstract class Cloner
     }
 
     /**
-     * @author dcs-rjao
-     * @param IEnrolmentEvaluation
-     * @return InfoEnrolmentEvaluation
-     */
+	 * @author dcs-rjao
+	 * @param IEnrolmentEvaluation
+	 * @return InfoEnrolmentEvaluation
+	 */
     public static IEnrolmentEvaluation copyInfoEnrolmentEvaluation2IEnrolmentEvaluation(InfoEnrolmentEvaluation infoEnrolmentEvaluation)
     {
         //		properties of infoEnrolment are not copied for not to get into loop
@@ -2592,9 +2594,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param mark
-     * @return
-     */
+	 * @param mark
+	 * @return
+	 */
     public static InfoMark copyIMark2InfoMark(IMark mark)
     {
         InfoMark infoMark = new InfoMark();
@@ -2612,9 +2614,9 @@ public abstract class Cloner
         return infoMark;
     }
     /**
-     * @param infoMark
-     * @return IMark
-     */
+	 * @param infoMark
+	 * @return IMark
+	 */
     public static IMark copyInfoMark2IMark(InfoMark infoMark)
     {
         IMark mark = new Mark();
@@ -2632,9 +2634,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param IFrquenta
-     * @return InfoFrequenta
-     */
+	 * @param IFrquenta
+	 * @return InfoFrequenta
+	 */
     public static InfoFrequenta copyIFrequenta2InfoFrequenta(IFrequenta frequenta)
     {
         if (frequenta == null)
@@ -2669,9 +2671,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param infoFrequenta
-     * @return IFrequenta
-     */
+	 * @param infoFrequenta
+	 * @return IFrequenta
+	 */
     public static IFrequenta copyInfoFrequenta2IFrequenta(InfoFrequenta infoFrequenta)
     {
         IFrequenta frequenta = new Frequenta();
@@ -2699,9 +2701,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param infoPrice
-     * @return IPrice
-     */
+	 * @param infoPrice
+	 * @return IPrice
+	 */
     public static IPrice copyInfoPrice2IPrice(InfoPrice infoPrice)
     {
         IPrice price = new Price();
@@ -2710,9 +2712,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param price
-     * @return InfoPrice
-     */
+	 * @param price
+	 * @return InfoPrice
+	 */
     public static InfoPrice copyIPrice2InfoPrice(IPrice price)
     {
 
@@ -2721,9 +2723,9 @@ public abstract class Cloner
         return infoPrice;
     }
     /**
-     * @param examStudentRoom
-     * @return
-     */
+	 * @param examStudentRoom
+	 * @return
+	 */
     public static InfoExamStudentRoom copyIExamStudentRoom2InfoExamStudentRoom(IExamStudentRoom examStudentRoom)
     {
 
@@ -2775,9 +2777,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param infoGratuity
-     * @return IGratuity
-     */
+	 * @param infoGratuity
+	 * @return IGratuity
+	 */
     public static IGratuity copyInfoGratuity2IGratuity(InfoGratuity infoGratuity)
     {
         IGratuity gratuity = new Gratuity();
@@ -2790,9 +2792,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param gratuity
-     * @return InfoGratuity
-     */
+	 * @param gratuity
+	 * @return InfoGratuity
+	 */
     public static InfoGratuity copyIGratuity2InfoGratuity(IGratuity gratuity)
     {
 
@@ -2806,9 +2808,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param infoCandidateEnrolment
-     * @return ICandidateEnrolment
-     */
+	 * @param infoCandidateEnrolment
+	 * @return ICandidateEnrolment
+	 */
     public static ICandidateEnrolment copyInfoCandidateEnrolment2ICandidateEnrolment(InfoCandidateEnrolment infoCandidateEnrolment)
     {
 
@@ -2825,9 +2827,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param candidateEnrolment
-     * @return InfoCandidateEnrolment
-     */
+	 * @param candidateEnrolment
+	 * @return InfoCandidateEnrolment
+	 */
     public static InfoCandidateEnrolment copyICandidateEnrolment2InfoCandidateEnrolment(ICandidateEnrolment candidateEnrolment)
     {
 
@@ -2843,9 +2845,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param groupProperties
-     * @return infoGroupProperties
-     */
+	 * @param groupProperties
+	 * @return infoGroupProperties
+	 */
 
     public static InfoGroupProperties copyIGroupProperties2InfoGroupProperties(IGroupProperties groupProperties)
     {
@@ -2871,9 +2873,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param infoGroupProperties
-     * @return IGroupProperties
-     */
+	 * @param infoGroupProperties
+	 * @return IGroupProperties
+	 */
 
     public static IGroupProperties copyInfoGroupProperties2IGroupProperties(InfoGroupProperties infoGroupProperties)
     {
@@ -2899,9 +2901,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param studentGroup
-     * @return infoStudentGroup
-     */
+	 * @param studentGroup
+	 * @return infoStudentGroup
+	 */
 
     public static InfoStudentGroup copyIStudentGroup2InfoStudentGroup(IStudentGroup studentGroup)
     {
@@ -2922,9 +2924,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param infoStudentGroup
-     * @return IStudentGroup
-     */
+	 * @param infoStudentGroup
+	 * @return IStudentGroup
+	 */
 
     public static IStudentGroup copyInfoStudentGroup2IStudentGroup(InfoStudentGroup infoStudentGroup)
     {
@@ -2943,9 +2945,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param studentGroupAttend
-     * @return infoStudentGroupAttend
-     */
+	 * @param studentGroupAttend
+	 * @return infoStudentGroupAttend
+	 */
 
     public static InfoStudentGroupAttend copyIStudentGroupAttend2InfoStudentGroupAttend(IStudentGroupAttend studentGroupAttend)
     {
@@ -2963,9 +2965,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param infoStudentGroupAttend
-     * @return IStudentGroupAttend
-     */
+	 * @param infoStudentGroupAttend
+	 * @return IStudentGroupAttend
+	 */
 
     public static IStudentGroupAttend copyInfoStudentGroupAttend2IStudentGroupAttend(InfoStudentGroupAttend infoStudentGroupAttend)
     {
@@ -3132,11 +3134,11 @@ public abstract class Cloner
     }
 
     /**
-     * Method copyIDepartmentCourse2InfoDepartmentCourse.
-     * 
-     * @param IDepartmentCourse
-     * @return InfoDepartmentCourse
-     */
+	 * Method copyIDepartmentCourse2InfoDepartmentCourse.
+	 * 
+	 * @param IDepartmentCourse
+	 * @return InfoDepartmentCourse
+	 */
     public static InfoDepartmentCourse copyIDepartmentCourse2InfoDepartmentCourse(IDisciplinaDepartamento departmentCourse)
     {
         InfoDepartmentCourse infoDepartmentCourse = new InfoDepartmentCourse();
@@ -3148,11 +3150,11 @@ public abstract class Cloner
         return infoDepartmentCourse;
     }
     /**
-     * Method copyInfoDepartmentCourse2IDepartmentCourse.
-     * 
-     * @param InfoDepartmentCourse
-     * @return IDepartmentCourse
-     */
+	 * Method copyInfoDepartmentCourse2IDepartmentCourse.
+	 * 
+	 * @param InfoDepartmentCourse
+	 * @return IDepartmentCourse
+	 */
     public static IDisciplinaDepartamento copyInfoDepartmentCourse2IDepartmentCourse(InfoDepartmentCourse infoDepartmentCourse)
     {
         IDisciplinaDepartamento departmentCourse = new DisciplinaDepartamento();
@@ -3745,8 +3747,8 @@ public abstract class Cloner
     }
 
     /**
-     * @author Tânia Pousão Created on 30/Out/2003
-     */
+	 * @author Tânia Pousão Created on 30/Out/2003
+	 */
     public static InfoDegreeInfo copyIDegreeInfo2InfoDegree(IDegreeInfo degreeInfo)
     {
         InfoDegreeInfo infoDegreeInfo = new InfoDegreeInfo();
@@ -3759,8 +3761,8 @@ public abstract class Cloner
     }
 
     /**
-     * @author Tânia Pousão Created on 30/Out/2003
-     */
+	 * @author Tânia Pousão Created on 30/Out/2003
+	 */
     public static IDegreeInfo copyInfoDegreeInfo2IDegreeInfo(InfoDegreeInfo infoDegreeInfo)
     {
         IDegreeInfo degreeInfo = new DegreeInfo();
@@ -3773,8 +3775,8 @@ public abstract class Cloner
     }
 
     /**
-     * @author Tânia Pousão Created on 13/Nov/2003
-     */
+	 * @author Tânia Pousão Created on 13/Nov/2003
+	 */
     public static InfoCampus copyICampus2InfoCampus(ICampus campus)
     {
         InfoCampus infoCampus = new InfoCampus();
@@ -3784,8 +3786,8 @@ public abstract class Cloner
     }
 
     /**
-     * @author Tânia Pousão Created on 13/Nov/2003
-     */
+	 * @author Tânia Pousão Created on 13/Nov/2003
+	 */
     public static ICampus copyInfoCampus2ICampus(InfoCampus infoCampus)
     {
         ICampus campus = new Campus();
@@ -3878,9 +3880,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param weeklyOcupation
-     * @return
-     */
+	 * @param weeklyOcupation
+	 * @return
+	 */
     public static InfoWeeklyOcupation copyIWeeklyOcupation2InfoWeeklyOcupation(IWeeklyOcupation weeklyOcupation)
     {
         InfoWeeklyOcupation infoWeeklyOcupation = new InfoWeeklyOcupation();
@@ -3893,9 +3895,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param infoWeeklyOcupation
-     * @return
-     */
+	 * @param infoWeeklyOcupation
+	 * @return
+	 */
     public static IWeeklyOcupation copyInfoWeeklyOcupation2IWeeklyOcupation(InfoWeeklyOcupation infoWeeklyOcupation)
     {
         IWeeklyOcupation weeklyOcupation = new WeeklyOcupation();
@@ -3908,9 +3910,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param externalActivity
-     * @return
-     */
+	 * @param externalActivity
+	 * @return
+	 */
     public static InfoExternalActivity copyIExternalActivity2InfoExternalActivity(IExternalActivity externalActivity)
     {
         InfoExternalActivity infoExternalActivity = new InfoExternalActivity();
@@ -3923,9 +3925,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param infoExternalActivity
-     * @return
-     */
+	 * @param infoExternalActivity
+	 * @return
+	 */
     public static IExternalActivity copyInfoExternalActivity2IExternalActivity(InfoExternalActivity infoExternalActivity)
     {
         IExternalActivity externalActivity = new ExternalActivity();
@@ -3938,9 +3940,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param serviceProviderRegime
-     * @return
-     */
+	 * @param serviceProviderRegime
+	 * @return
+	 */
     public static InfoServiceProviderRegime copyIServiceProviderRegime2InfoServiceProviderRegime(IServiceProviderRegime serviceProviderRegime)
     {
         InfoServiceProviderRegime infoServiceProviderRegime = new InfoServiceProviderRegime();
@@ -3953,9 +3955,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param infoServiceProviderRegime
-     * @return
-     */
+	 * @param infoServiceProviderRegime
+	 * @return
+	 */
     public static IServiceProviderRegime copyInfoServiceProviderRegime2IServiceProviderRegime(InfoServiceProviderRegime infoServiceProviderRegime)
     {
         IServiceProviderRegime serviceProviderRegime = new ServiceProviderRegime();
@@ -4084,9 +4086,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param supportLesson
-     * @return
-     */
+	 * @param supportLesson
+	 * @return
+	 */
     public static InfoSupportLesson copyISupportLesson2InfoSupportLesson(ISupportLesson supportLesson)
     {
         InfoSupportLesson infoSupportLesson = new InfoSupportLesson();
@@ -4101,9 +4103,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param supportLesson
-     * @return
-     */
+	 * @param supportLesson
+	 * @return
+	 */
     public static ISupportLesson copyInfoSupportLesson2ISupportLesson(InfoSupportLesson infoSupportLesson)
     {
         ISupportLesson supportLesson = new SupportLesson();
@@ -4117,9 +4119,9 @@ public abstract class Cloner
         return supportLesson;
     }
     /**
-     * @param teacherDegreeFinalProjectStudent
-     * @return
-     */
+	 * @param teacherDegreeFinalProjectStudent
+	 * @return
+	 */
     public static InfoTeacherDegreeFinalProjectStudent copyITeacherDegreeFinalProjectStudent2InfoTeacherDegreeFinalProjectStudent(ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent)
     {
         InfoTeacher infoTeacher =
@@ -4143,9 +4145,9 @@ public abstract class Cloner
     }
 
     /**
-     * @param teacherDegreeFinalProjectStudent
-     * @return
-     */
+	 * @param teacherDegreeFinalProjectStudent
+	 * @return
+	 */
     public static ITeacherDegreeFinalProjectStudent copyInfoTeacherDegreeFinalProjectStudent2ITeacherDegreeFinalProjectStudent(InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent)
     {
         ITeacher teacher =
@@ -4237,73 +4239,72 @@ public abstract class Cloner
         return infoWorkLocation;
     }
 
-    public static InfoResponsibleFor copyIResponsibleFor2InfoResponsibleFor(IResponsibleFor responsibleFor)
-    {
-        IExecutionCourse executionCourse = responsibleFor.getExecutionCourse();
-        ITeacher teacher = responsibleFor.getTeacher();
+	public static InfoResponsibleFor copyIResponsibleFor2InfoResponsibleFor(IResponsibleFor responsibleFor)
+	{
+		IExecutionCourse executionCourse = responsibleFor.getExecutionCourse();
+		ITeacher teacher = responsibleFor.getTeacher();
 
-        InfoResponsibleFor infoResponsibleFor = new InfoResponsibleFor();
-        copyObjectProperties(infoResponsibleFor, responsibleFor);
-
-        InfoExecutionCourse infoExecutionCourse = null;
+		InfoResponsibleFor infoResponsibleFor = new InfoResponsibleFor();
+		copyObjectProperties(infoResponsibleFor, responsibleFor);
+		
+		InfoExecutionCourse infoExecutionCourse = null;
         if (executionCourse != null)
-        {
+		{
             infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
         }
         else
         {
-            copyObjectProperties(infoExecutionCourse, executionCourse);
-        }
-        infoResponsibleFor.setInfoExecutionCourse(infoExecutionCourse);
+			copyObjectProperties(infoExecutionCourse, executionCourse);
+		}
+		infoResponsibleFor.setInfoExecutionCourse(infoExecutionCourse);
 
-        InfoTeacher infoTeacher = null;
+		InfoTeacher infoTeacher = null;
         if (teacher != null)
-        {
+		{
             infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
         }
         else
         {
-            copyObjectProperties(infoTeacher, teacher);
-        }
-        infoResponsibleFor.setInfoTeacher(infoTeacher);
+			copyObjectProperties(infoTeacher, teacher);
+		}
+		infoResponsibleFor.setInfoTeacher(infoTeacher);
+	
+		return infoResponsibleFor;
+	}
 
-        return infoResponsibleFor;
-    }
-
-    public static IResponsibleFor copyInfoResponsibleFor2IResponsibleFor(InfoResponsibleFor infoResponsibleFor)
-    {
-        InfoExecutionCourse infoExecutionCourse = infoResponsibleFor.getInfoExecutionCourse();
-        InfoTeacher infoTeacher = infoResponsibleFor.getInfoTeacher();
-
-        IResponsibleFor responsibleFor = new ResponsibleFor();
-
-        copyObjectProperties(responsibleFor, infoResponsibleFor);
-        IExecutionCourse executionCourse = null;
-        if (infoExecutionCourse != null)
-        {
-            executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
-        }
-        else
-        {
-            copyObjectProperties(executionCourse, infoExecutionCourse);
-        }
-        responsibleFor.setExecutionCourse(executionCourse);
-
-        ITeacher teacher = null;
-
-        if (infoTeacher != null)
-        {
-            teacher = Cloner.copyInfoTeacher2Teacher(infoTeacher);
+	public static IResponsibleFor copyInfoResponsibleFor2IResponsibleFor(InfoResponsibleFor infoResponsibleFor)
+	{
+		InfoExecutionCourse infoExecutionCourse = infoResponsibleFor.getInfoExecutionCourse();
+		InfoTeacher infoTeacher = infoResponsibleFor.getInfoTeacher();
+	
+		IResponsibleFor responsibleFor = new ResponsibleFor();
+	
+		copyObjectProperties(responsibleFor, infoResponsibleFor);
+		IExecutionCourse executionCourse = null;
+		if (infoExecutionCourse != null)
+		{
+			executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
         }
         else
-        {
-            copyObjectProperties(teacher, infoTeacher);
+		{
+			copyObjectProperties(executionCourse, infoExecutionCourse);
+		}
+		responsibleFor.setExecutionCourse(executionCourse);
+	
+		ITeacher teacher = null;
+	
+		if (infoTeacher != null)
+		{
+			teacher = Cloner.copyInfoTeacher2Teacher(infoTeacher);
         }
-        responsibleFor.setTeacher(teacher);
-
-        return responsibleFor;
-    }
-    
+        else
+		{
+			copyObjectProperties(teacher, infoTeacher);
+		}
+		responsibleFor.setTeacher(teacher);
+	
+		return responsibleFor;
+	}
     public static List copyListIWorkLocation2ListInfoWorkLocation(List workLocations)
     {
         List listInfoWorkLocations = new ArrayList();
