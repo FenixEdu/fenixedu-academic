@@ -4,6 +4,7 @@
  */
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.candidate;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,11 +15,9 @@ import Dominio.CandidateSituation;
 import Dominio.ICandidateSituation;
 import Dominio.ICursoExecucao;
 import Dominio.IMasterDegreeCandidate;
-import Dominio.IPersonRole;
 import Dominio.IPessoa;
 import Dominio.IRole;
 import Dominio.MasterDegreeCandidate;
-import Dominio.PersonRole;
 import Dominio.Pessoa;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
@@ -127,8 +126,11 @@ public class CreateMasterDegreeCandidate implements IServico {
 				String username = GenerateUsername.getCandidateUsername(masterDegreeCandidate);
 				person.setUsername(username);
 				
+				
+				person.setPersonRoles(new ArrayList());
 				// Give the Person Role
-				role = sp.getIPersistentRole().readByRoleType(RoleType.PERSON);
+				person.getPersonRoles().add(sp.getIPersistentRole().readByRoleType(RoleType.PERSON));
+				
 			}			
 			masterDegreeCandidate.setPerson(person);
 			
@@ -145,13 +147,9 @@ public class CreateMasterDegreeCandidate implements IServico {
 
 		try {
 			// Give the Master Degree Candidate Role
-			IPersonRole candidateRole = new PersonRole();
-			role = sp.getIPersistentRole().readByRoleType(RoleType.MASTER_DEGREE_CANDIDATE);
-
-			person.getPersonRoles().add(role);
+			person.getPersonRoles().add(sp.getIPersistentRole().readByRoleType(RoleType.MASTER_DEGREE_CANDIDATE));
 
 			sp.getIPessoaPersistente().escreverPessoa(person);
-
 
 		} catch (ExistingPersistentException ex) {
 			// This person is already a Candidate. No need to give the role again

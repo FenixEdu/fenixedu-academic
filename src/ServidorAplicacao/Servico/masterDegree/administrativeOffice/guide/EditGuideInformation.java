@@ -93,29 +93,30 @@ public class EditGuideInformation implements IServico {
 		}
 		
 		// check if it's needed to change the Contributor		
+		
+		
+		
+		
 		if ((contributorNumber != null) && (!infoGuide.getInfoContributor().getContributorNumber().equals(contributorNumber))){
-			// Read the new Contributor
 			change = true;
-			try {
-				sp = SuportePersistenteOJB.getInstance();
-				
-				contributor = sp.getIPersistentContributor().readByContributorNumber(contributorNumber);
-				guide.setContributor(contributor);
-				
-				// Make sure that everything is written before reading ...
-				sp.confirmarTransaccao();
-				sp.iniciarTransaccao();
-
-				
-			} catch (ExcepcaoPersistencia ex) {
-				FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-				newEx.fillInStackTrace();
-				throw newEx;
-			}
-			
-			
-			infoGuide.setInfoContributor(Cloner.copyIContributor2InfoContributor(contributor));
+		} else {
+			contributorNumber = infoGuide.getInfoContributor().getContributorNumber();
 		}
+		
+		
+		// Read the Contributor
+		try {
+			sp = SuportePersistenteOJB.getInstance();
+			
+			contributor = sp.getIPersistentContributor().readByContributorNumber(contributorNumber);
+		} catch (ExcepcaoPersistencia ex) {
+			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+			newEx.fillInStackTrace();
+			throw newEx;
+		}
+			
+			
+		infoGuide.setInfoContributor(Cloner.copyIContributor2InfoContributor(contributor));
 
 		// Check the quantities of the Guide Entries
 		// The items without a quantity or with a 0 quantity will be deleted if the guide is NON PAYED or
@@ -258,11 +259,15 @@ public class EditGuideInformation implements IServico {
 		
 		if (!change)
 			throw new NoChangeMadeServiceException();
+
+		guide.setContributor(contributor);
+
 		
 		InfoGuide newInfoGuide = null;
 		IGuide newGuide = null;
 		try {
 			sp = SuportePersistenteOJB.getInstance();
+
 			
 			// write the Others Guide Entry if necessary
 			if (othersGuideEntry != null)
