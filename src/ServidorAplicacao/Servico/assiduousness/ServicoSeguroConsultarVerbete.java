@@ -137,10 +137,10 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 			calendario.setLenient(false);
 
 			limpaListaSaldos(0);
-			
+
 			//==================================== Inicio da construcao da lista a mostrar no jsp =======================================
-			while (_dataConsulta.before((Timestamp) _dataFimEscolha)) {			
-				
+			while (_dataConsulta.before((Timestamp) _dataFimEscolha)) {
+
 				calendario.clear();
 				calendario.setTimeInMillis(_dataConsulta.getTime());
 
@@ -172,7 +172,7 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 					_diasInjustificados = false;
 					continue;
 				}
-				
+
 				//consulta das marcacoes do funcionario neste dia, tendo atencao ao expediente deste horario
 				calcularIntervaloConsulta();
 				try {
@@ -278,9 +278,7 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 						_saldoHNFinal = _saldoHNFinal + ((Long) _listaSaldos.get(0)).longValue();
 						_saldoPFFinal = _saldoPFFinal + ((Long) _listaSaldos.get(1)).longValue();
 						// calculo das horas extraordinarias diurnas e nocturnas
-						if (((Long) _listaSaldos.get(0)).longValue() != 0) {
-							calcularHorasEscalao();
-						}
+						calcularHorasEscalao();
 					}
 					calendario.clear();
 					calendario.setTimeInMillis(((Long) _listaSaldos.get(0)).longValue());
@@ -312,7 +310,7 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 		_listaSaldos.set(8, new Long(_saldoNoctPrimEscalao));
 		_listaSaldos.set(9, new Long(_saldoNoctSegEscalao));
 		_listaSaldos.set(10, new Long(_saldoNoctDepoisSegEscalao));
-		
+
 	}
 
 	private void lerStatusAssiduidade() throws NotExecuteException {

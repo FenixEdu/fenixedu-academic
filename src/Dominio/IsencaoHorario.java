@@ -31,7 +31,7 @@ public class IsencaoHorario implements IStrategyHorarios {
 
 		ActionErrors errors = new ActionErrors();
 
-		AssociarHorarioForm formHorario = (AssociarHorarioForm)form;
+		AssociarHorarioForm formHorario = (AssociarHorarioForm) form;
 
 		Calendar calendar = Calendar.getInstance();
 		calendar.setLenient(false);
@@ -405,7 +405,7 @@ public class IsencaoHorario implements IStrategyHorarios {
 	public ActionErrors validateAssociarHorarioTipo(ActionForm form, HorarioTipo horarioTipo, ArrayList listaRegimes) {
 		ActionErrors errors = new ActionErrors();
 
-		AssociarHorarioTipoForm formHorario = (AssociarHorarioTipoForm)form;
+		AssociarHorarioTipoForm formHorario = (AssociarHorarioTipoForm) form;
 		Calendar calendar = Calendar.getInstance();
 		calendar.setLenient(false);
 
@@ -508,7 +508,7 @@ public class IsencaoHorario implements IStrategyHorarios {
 	} /* validateAssociarHorarioTipo */
 
 	public void setHorario(Horario horario, ActionForm form) {
-		AssociarHorarioForm formHorario = (AssociarHorarioForm)form;
+		AssociarHorarioForm formHorario = (AssociarHorarioForm) form;
 		Calendar calendar = Calendar.getInstance();
 
 		horario.setModalidade(formHorario.getModalidade());
@@ -765,7 +765,7 @@ public class IsencaoHorario implements IStrategyHorarios {
 	} /* setHorario */
 
 	public void setHorarioTipoRotativo(Horario horario, ActionForm form) {
-		AssociarHorarioTipoForm formHorario = (AssociarHorarioTipoForm)form;
+		AssociarHorarioTipoForm formHorario = (AssociarHorarioTipoForm) form;
 
 		Calendar calendar = Calendar.getInstance();
 		calendar.setLenient(false);
@@ -780,7 +780,7 @@ public class IsencaoHorario implements IStrategyHorarios {
 	} /* setHorarioRotativo */
 
 	public void setDatasHorario(Horario horario, ActionForm form) {
-		AssociarHorarioTipoForm formHorario = (AssociarHorarioTipoForm)form;
+		AssociarHorarioTipoForm formHorario = (AssociarHorarioTipoForm) form;
 
 		Calendar calendar = Calendar.getInstance();
 		calendar.setLenient(false);
@@ -819,7 +819,7 @@ public class IsencaoHorario implements IStrategyHorarios {
 		Horario horario,
 		ArrayList listaRegime,
 		boolean isExcepcaoHorario) {
-		AssociarHorarioForm formHorario = (AssociarHorarioForm)form;
+		AssociarHorarioForm formHorario = (AssociarHorarioForm) form;
 
 		Calendar calendar = Calendar.getInstance();
 		calendar.setLenient(false);
@@ -1021,7 +1021,7 @@ public class IsencaoHorario implements IStrategyHorarios {
 		Horario horario,
 		ArrayList listaRegime,
 		boolean isExcepcaoHorario) {
-		AssociarHorarioTipoConfirmarForm formHorario = (AssociarHorarioTipoConfirmarForm)form;
+		AssociarHorarioTipoConfirmarForm formHorario = (AssociarHorarioTipoConfirmarForm) form;
 
 		Calendar calendar = Calendar.getInstance();
 		calendar.setLenient(false);
@@ -1236,8 +1236,8 @@ public class IsencaoHorario implements IStrategyHorarios {
 			descricao = descricao.concat(" ");
 
 			while (iterListaRegimes.hasNext()) {
-				regime = (String)iterListaRegimes.next();
-				auxRegime = (String)bundle.getString(regime);
+				regime = (String) iterListaRegimes.next();
+				auxRegime = (String) bundle.getString(regime);
 				if (auxRegime != null) {
 					regime = auxRegime;
 				}
@@ -1285,8 +1285,8 @@ public class IsencaoHorario implements IStrategyHorarios {
 		String auxRegime = null;
 		descricao = descricao.concat(" ");
 		while (iterListaRegimes.hasNext()) {
-			regime = (String)iterListaRegimes.next();
-			auxRegime = (String)bundle.getString(regime);
+			regime = (String) iterListaRegimes.next();
+			auxRegime = (String) bundle.getString(regime);
 			if (auxRegime != null)
 				regime = auxRegime;
 			if (!iterListaRegimes.hasNext()) {
@@ -1376,7 +1376,7 @@ public class IsencaoHorario implements IStrategyHorarios {
 		ArrayList listaMarcacoesPonto,
 		ArrayList listaSaldos) {
 
-		long saldo = ((Long)listaSaldos.get(0)).longValue();
+		long saldo = ((Long) listaSaldos.get(0)).longValue();
 		long intervaloRefeicao = 0;
 
 		Calendar calendario = Calendar.getInstance();
@@ -1392,7 +1392,7 @@ public class IsencaoHorario implements IStrategyHorarios {
 			// o intervalo para refeicao deve ser feito no meio de dois periodos de trabalho.
 			// por isso conta o primeiro intervalo que estiver contido no intervalo para refeicao 
 			// estipulado para este horario. 
-			entrada = (MarcacaoPonto)iterador.next(); // primeira entrada
+			entrada = (MarcacaoPonto) iterador.next(); // primeira entrada
 			// se a primeira entrada do dia está contida no intervalo de refeicao é como se
 			// a pessoa tivesse feito a refeicao antes de entrar ao servico 
 			if (entrada.getData().getTime() > horario.getInicioRefeicao().getTime()
@@ -1406,9 +1406,9 @@ public class IsencaoHorario implements IStrategyHorarios {
 					// se no intervalo de uma saida do dia com uma entrada está contida no intervalo de refeicao é como se
 					// a pessoa tivesse feito a refeicao nesse intervalo
 					while (iterador.hasNext()) {
-						saida = (MarcacaoPonto)iterador.next();
+						saida = (MarcacaoPonto) iterador.next();
 						if (iterador.hasNext()) {
-							entrada = (MarcacaoPonto)iterador.next();
+							entrada = (MarcacaoPonto) iterador.next();
 
 							// testar a saida
 							if (saida.getData().getTime() >= horario.getInicioRefeicao().getTime()
@@ -1443,7 +1443,7 @@ public class IsencaoHorario implements IStrategyHorarios {
 					// valor que seja diferente de zero para o caso de duas marcacoes que nao estao contidas no intervalo de refeicao.
 					// neste caso nao desconta a hora de refeicao
 					if ((listaMarcacoesPonto.size() == 2)) { //apenas com duas marcaçoes
-						saida = (MarcacaoPonto)iterador.next();
+						saida = (MarcacaoPonto) iterador.next();
 						if (saida.getData().getTime() > horario.getInicioRefeicao().getTime()
 							&& saida.getData().getTime() < horario.getFimRefeicao().getTime()) {
 							intervaloRefeicao = horario.getFimRefeicao().getTime() - saida.getData().getTime();
@@ -1455,10 +1455,9 @@ public class IsencaoHorario implements IStrategyHorarios {
 				}
 			}
 
-			if (intervaloRefeicao < horario.getDescontoObrigatorioRefeicao().getTime()
-			&& saldo >= Constants.MAX_TRABALHO_ISENCAO) {
+			if (intervaloRefeicao < horario.getDescontoObrigatorioRefeicao().getTime() && saldo >= Constants.MAX_TRABALHO_ISENCAO) {
 				saldo = saldo - (horario.getDescontoObrigatorioRefeicao().getTime() - intervaloRefeicao);
-			}		
+			}
 		}
 
 		// saldo do horario normal 
@@ -1477,16 +1476,17 @@ public class IsencaoHorario implements IStrategyHorarios {
 		// calculo do trabalho nocturno normal para os horario que ultrapassem o inicio do trabalho nocturno
 		if (horario.getFimHN2().getTime() >= Constants.INICIO_TRABALHO_NOCTURNO) {
 			if (entrada.getData().getTime() >= Constants.INICIO_TRABALHO_NOCTURNO
-				&& entrada.getData().getTime() <= horario.getFimHN2().getTime()) {
-				saldoNocturno = saldoNocturno + (horario.getFimHN2().getTime() - entrada.getData().getTime());
+				&& entrada.getData().getTime() <= Constants.FIM_TRABALHO_NOCTURNO) {
+				saldoNocturno = saldoNocturno + (Constants.FIM_TRABALHO_NOCTURNO - entrada.getData().getTime());
 			} else if (entrada.getData().getTime() < Constants.INICIO_TRABALHO_NOCTURNO) {
-				saldoNocturno = saldoNocturno + (horario.getFimHN2().getTime() - Constants.INICIO_TRABALHO_NOCTURNO);
+				saldoNocturno = saldoNocturno + (Constants.FIM_TRABALHO_NOCTURNO - Constants.INICIO_TRABALHO_NOCTURNO);
 			}
+
 			if (saida.getData().getTime() >= Constants.INICIO_TRABALHO_NOCTURNO
-				&& saida.getData().getTime() <= horario.getFimHN2().getTime()) {
-				saldoNocturno = saldoNocturno + (saida.getData().getTime() - horario.getFimHN2().getTime());
+				&& saida.getData().getTime() <= Constants.FIM_TRABALHO_NOCTURNO) {
+				saldoNocturno = saldoNocturno + (saida.getData().getTime() - Constants.FIM_TRABALHO_NOCTURNO);
 			} else if (saida.getData().getTime() < Constants.INICIO_TRABALHO_NOCTURNO) {
-				saldoNocturno = saldoNocturno - (horario.getFimHN2().getTime() - Constants.INICIO_TRABALHO_NOCTURNO);
+				saldoNocturno = saldoNocturno - (Constants.FIM_TRABALHO_NOCTURNO - Constants.INICIO_TRABALHO_NOCTURNO);
 			}
 		}
 		return saldoNocturno;
@@ -1530,6 +1530,6 @@ public class IsencaoHorario implements IStrategyHorarios {
 	} /* duracaoDiaria */
 
 	public int mapeamentoFechoMes(Horario horario, ArrayList listaRegimes) {
-			return Constants.MAP_ISE;
+		return Constants.MAP_ISE;
 	} /* mapeamentoFechoMes */
 }

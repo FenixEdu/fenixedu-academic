@@ -2039,15 +2039,18 @@ public class Especifico implements IStrategyHorarios {
 
 		// calculo do trabalho nocturno normal para os horario que ultrapassem o inicio do trabalho nocturno
 		if (fimHorario >= Constants.INICIO_TRABALHO_NOCTURNO) {
-			if (entrada.getData().getTime() >= Constants.INICIO_TRABALHO_NOCTURNO && entrada.getData().getTime() <= fimHorario) {
-				saldoNocturno = saldoNocturno + (fimHorario - entrada.getData().getTime());
+			if (entrada.getData().getTime() >= Constants.INICIO_TRABALHO_NOCTURNO
+				&& entrada.getData().getTime() <= Constants.FIM_TRABALHO_NOCTURNO) {
+				saldoNocturno = saldoNocturno + (Constants.FIM_TRABALHO_NOCTURNO - entrada.getData().getTime());
 			} else if (entrada.getData().getTime() < Constants.INICIO_TRABALHO_NOCTURNO) {
-				saldoNocturno = saldoNocturno + (fimHorario - Constants.INICIO_TRABALHO_NOCTURNO);
+				saldoNocturno = saldoNocturno + (Constants.FIM_TRABALHO_NOCTURNO - Constants.INICIO_TRABALHO_NOCTURNO);
 			}
-			if (saida.getData().getTime() >= Constants.INICIO_TRABALHO_NOCTURNO && saida.getData().getTime() <= fimHorario) {
-				saldoNocturno = saldoNocturno + (saida.getData().getTime() - fimHorario);
+
+			if (saida.getData().getTime() >= Constants.INICIO_TRABALHO_NOCTURNO
+				&& saida.getData().getTime() <= Constants.FIM_TRABALHO_NOCTURNO) {
+				saldoNocturno = saldoNocturno + (saida.getData().getTime() - Constants.FIM_TRABALHO_NOCTURNO);
 			} else if (saida.getData().getTime() < Constants.INICIO_TRABALHO_NOCTURNO) {
-				saldoNocturno = saldoNocturno - (fimHorario - Constants.INICIO_TRABALHO_NOCTURNO);
+				saldoNocturno = saldoNocturno - (Constants.FIM_TRABALHO_NOCTURNO - Constants.INICIO_TRABALHO_NOCTURNO);
 			}
 		}
 		return saldoNocturno;
