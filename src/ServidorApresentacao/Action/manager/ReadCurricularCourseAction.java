@@ -62,7 +62,7 @@ public class ReadCurricularCourseAction extends FenixAction {
 			throw new FenixActionException(e);
 		}
 		if (executionCourses != null)
-			Collections.sort(executionCourses, new BeanComparator("_nome"));
+			Collections.sort(executionCourses, new BeanComparator("nome"));
 
 		List curricularCourseScopes = new ArrayList();
 		try {

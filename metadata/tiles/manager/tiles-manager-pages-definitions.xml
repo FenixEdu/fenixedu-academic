@@ -65,6 +65,9 @@
 	<definition name="df.page.read-execution-periods" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/readExecutionPeriods_bd.jsp" />
 	</definition>
+	<definition name="df.page.read-execution-courses" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/readExecutionCoursesByExecutionPeriod_bd.jsp" />
+	</definition>
 
 	<!-- ========== EXECUTION PERIOD MANIPULATION ========== -->
 	<definition name="df.page.manage-execution-periods" extends="definition.manager.masterPage" >

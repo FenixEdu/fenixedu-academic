@@ -10,7 +10,8 @@
 				<h3><bean:message key="label.manager.curricularCourse.administrating"/></h3>
 			</td>
 			<td>
-				<h2><b><bean:write name="infoCurricularCourse" property="name"/></b></h2>
+				<bean:define id="curricularCourseName" name="infoCurricularCourse" property="name"/>
+				<h2><b><bean:write name="curricularCourseName"/></b></h2>
 			</td>
 		</logic:present>		
 	</tr>
@@ -19,9 +20,11 @@
 <ul style="list-style-type: square;">
 	<li><html:link page="<%="/editCurricularCourse.do?method=prepareEdit&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>"><bean:message key="label.manager.edit.curricularCourse"/></html:link></li>
 	<li><html:link page="<%="/insertCurricularCourseScope.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>"><bean:message key="label.manager.insert.curricularCourseScope"/></html:link></li>
+	<li><html:link page="<%="/readExecutionPeriodToAssociateExecutionCoursesAction.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="name" paramName="curricularCourseName"><bean:message key="label.manager.associate.executionCourses"/></html:link></li>
 </ul>
 
 <br>
+
 <logic:present name="basic">
 		<h2><font color="#0066CC><bean:message key="label.manager.curricularCourse.message.basic"/></font></h2>
 </logic:present>
@@ -30,22 +33,18 @@
 		<h2><font color="#0066CC"><bean:message key="label.manager.curricularCourse.message.non.basic"/></font></h2>
 </logic:notPresent>
 
+<br>
 
 <span class="error"><html:errors/></span>
 	
-	<h3><bean:message key="label.manager.executionCourses"/></h3>
-<ul style="list-style-type: square;">
-	<li><html:link page="<%="/readExecutionPeriodToAssociateExecutionCoursesAction.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId") + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>"><bean:message key="label.manager.associate.executionCourses"/></html:link></li>
-</ul>
+<h3><bean:message key="label.manager.executionCourses"/></h3>
 
-<br>
 	<logic:empty name="executionCoursesList">
 		<i><bean:message key="label.manager.executionCourses.nonExisting"/></i>
 	</logic:empty>
 	
 	<logic:present name="executionCoursesList" scope="request">
 		<logic:notEmpty name="executionCoursesList">
-			
 			<table width="50%" cellpadding="0" border="0">
 				<tr>
 					<td class="listClasses-header"><bean:message key="label.manager.executionCourse.name" />
@@ -68,11 +67,9 @@
 	 				</tr>
 	 			</logic:iterate>						
 			</table>
-			
-			<br>
 		</logic:notEmpty>	 	
 	</logic:present>
-	
+
 	<h3><bean:message key="label.manager.curricularCourseScopes"/></h3>
 
 	<logic:empty name="curricularCourseScopesList">
@@ -81,7 +78,6 @@
 
 	<logic:present name="curricularCourseScopesList" scope="request">
 		<logic:notEmpty name="curricularCourseScopesList">
-	
 			<table width="70%" cellpadding="0" border="0">
 				<tr>
 					<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularYear" />
@@ -147,8 +143,6 @@
 	 				</tr>
 	 			</logic:iterate>			
 			</table>
-			
-			<br>
 		</logic:notEmpty>	 	
 	</logic:present>
 	

@@ -155,31 +155,13 @@ public class DisciplinaExecucaoOJB
 		String courseInitials,
 		IExecutionPeriod executionPeriod)
 		throws ExcepcaoPersistencia {
-		try {
-
-			String oqlQuery =
-				"select distinct all from "
-					+ DisciplinaExecucao.class.getName();
-			oqlQuery += " where executionPeriod.name = $1 ";
-			oqlQuery += " and executionPeriod.executionYear.year = $2 "
-				+ " and sigla = $3 ";
-
-			query.create(oqlQuery);
-
-			query.bind(executionPeriod.getName());
-			query.bind(executionPeriod.getExecutionYear().getYear());
-			query.bind(courseInitials);
-
-			List result = (List) query.execute();
-			lockRead(result);
-
-			IDisciplinaExecucao executionCourse = null;
-			if (!result.isEmpty())
-				executionCourse = (IDisciplinaExecucao) result.get(0);
-			return executionCourse;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
+		
+		Criteria criteria = new Criteria();
+		
+		criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());
+		criteria.addEqualTo("executionPeriod.executionYear.year",executionPeriod.getExecutionYear().getYear() );
+		criteria.addEqualTo("sigla",courseInitials);
+		return (IDisciplinaExecucao) queryObject(DisciplinaExecucao.class, criteria);
 	}
 
 	public void deleteExecutionCourse(IDisciplinaExecucao executionCourse)

@@ -14,14 +14,11 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import DataBeans.InfoCurricularCourse;
 import DataBeans.comparators.ExecutionPeriodComparator;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
-import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
@@ -34,25 +31,7 @@ public class ReadExecutionPeriodToAssociateExecutionCoursesAction extends FenixA
 
 		HttpSession session = request.getSession(false);
 
-		//		IUserView userView = SessionUtils.getUserView(request);
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-		Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
-
-		Object args[] = { curricularCourseId };
-
-		InfoCurricularCourse infoCurricularCourse = null;
-
-		try {
-			infoCurricularCourse = (InfoCurricularCourse) ServiceUtils.executeService(userView, "ReadCurricularCourse", args);
-
-		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException("message.nonExistingCurricularCourse", "", e);
-		} catch (FenixServiceException fenixServiceException) {
-			throw new FenixActionException(fenixServiceException.getMessage());
-		}
-
-		if (infoCurricularCourse.getBasic().booleanValue())
-			request.setAttribute("basic", "");
 
 		try {
 			List infoExecutionPeriods = (List) ServiceUtils.executeService(userView, "ReadExecutionPeriods", null);
@@ -69,8 +48,6 @@ public class ReadExecutionPeriodToAssociateExecutionCoursesAction extends FenixA
 		} catch (FenixServiceException ex) {
 			throw new FenixActionException("Problemas de comunicação com a base de dados.", ex);
 		}
-		request.setAttribute("infoCurricularCourse", infoCurricularCourse);
-		//System.out.println("INFOCURRICULARCOURSE"+infoCurricularCourse);
 
 		return mapping.findForward("viewExecutionPeriods");
 	}

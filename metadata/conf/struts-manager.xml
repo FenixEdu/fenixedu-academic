@@ -48,6 +48,7 @@
 				<!--copiei pq a falta tava a dar erro-->
 				<form-property name="branchId" type="java.lang.String" />
 				<form-property name="curricularSemesterId" type="java.lang.String" />
+				<form-property name="executionCourseId" type="java.lang.String" />
 			
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
@@ -465,6 +466,28 @@
               >
           <forward name="viewExecutionPeriods" path="df.page.read-execution-periods"/>
       </action>
+      
+      <!-- Action... -->
+      <action path="/readExecutionCoursesToAssociateCurricularCourseAction"
+              type="ServidorApresentacao.Action.manager.ReadExecutionCoursesToAssociateCurricularCourseAction"
+              parameter="method"
+              scope="request"
+              >
+          <forward name="viewExecutionCourses" path="df.page.read-execution-courses"/>
+      </action>
+      
+      <!-- Action... -->
+      <action 
+      	path="/associateExecutionCoursesToCurricularCourse"
+      	name="curricularCourseForm"
+      	input="/readExecutionCoursesToAssociateCurricularCourse.do"
+      	scope="request"
+      	type="ServidorApresentacao.Action.manager.AssociateExecutionCoursesToCurricularCourseAction">
+      	<exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+         	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+       <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>      	           	      
+    </action>
     
       <!--Input actions-->  
      <action path="/readDegreesInput"
