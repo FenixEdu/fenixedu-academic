@@ -27,11 +27,19 @@ public interface IDegreeCurricularPlanStrategy {
 	
 	
 	/**
-	 * Calculate's the Student's average 
+	 * Calculate's the Student's regular average 
 	 * @param The student's Curricular Plan
 	 * @param The list of the students enrolment
 	 * @return The Student's Average
 	 */
-	public Double calculateStudentAverage(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia;
+	public Double calculateStudentRegularAverage(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia;
+
+	/**
+	 * Calculate's the Student's weighted average 
+	 * @param The student's Curricular Plan
+	 * @param The list of the students enrolment
+	 * @return The Student's Average
+	 */
+	public Double calculateStudentWeightedAverage(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia;
 
 }

@@ -1,5 +1,7 @@
 package ServidorAplicacao.strategy.degreeCurricularPlan.strategys;
 
+import java.util.Date;
+
 import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 
@@ -15,8 +17,17 @@ public interface IMasterDegreeCurricularPlanStrategy extends IDegreeCurricularPl
 	 * Checks if the Master Degree Student has finished his scholar part.<br>
 	 * All his credits are added and compared to the ones required by his Degree Curricular Plan.
 	 * @param The Student's Curricular Plan
-	 * @return A boolean indicating if he has fineshed it or not.
+	 * @return A boolean indicating if he has finished it or not.
 	 */
 	public boolean checkEndOfScholarship(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia;
+	
+	
+	/**
+	 * 
+	 * @param studentCurricularPlan
+	 * @return The Date of the student's end of his scholar part. 
+	 * @throws ExcepcaoPersistencia
+	 */
+	public Date dateOfEndOfScholarship(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia;
 
 }

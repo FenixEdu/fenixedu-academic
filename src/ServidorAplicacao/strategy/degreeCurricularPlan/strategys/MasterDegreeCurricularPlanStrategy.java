@@ -1,18 +1,17 @@
 package ServidorAplicacao.strategy.degreeCurricularPlan.strategys;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import Dominio.ICurso;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrolment;
+import Dominio.IEnrolmentEvaluation;
 import Dominio.IStudentCurricularPlan;
-import ServidorAplicacao.strategy.degreeCurricularPlan.DegreeCurricularPlanStrategyFactory;
-import ServidorAplicacao.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.EnrolmentState;
-import Util.TipoCurso;
 
 
 /**
@@ -57,33 +56,92 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
 		
 		return (studentCredits >= degreeCurricularPlan.getNeededCredits().floatValue());
 	}
+	
+	
+	public Date dateOfEndOfScholarship(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia{
+		
+		Calendar date = null;
+		
+		boolean result = false;
+		float studentCredits = 0;
+		
+		IDegreeCurricularPlan degreeCurricularPlan = super.getDegreeCurricularPlan();
+		
+		List enrolments = SuportePersistenteOJB.getInstance().getIPersistentEnrolment().readAllByStudentCurricularPlan(studentCurricularPlan);
+		
+		Iterator iterator = enrolments.iterator();
+		
+		while(iterator.hasNext()){
+			IEnrolment enrolment = (IEnrolment) iterator.next();
+			if (enrolment.getEnrolmentState().equals(EnrolmentState.APROVED_OBJ)){
+				Iterator evaluations = enrolment.getEvaluations().iterator();
+				while(evaluations.hasNext()){
+					IEnrolmentEvaluation evaluation = (IEnrolmentEvaluation) evaluations.next(); 
+					if (evaluation.getExamDate() == null){
+						continue;
+					}
+					
+					if (date == null){
+						date = Calendar.getInstance();
+						date.setTime(evaluation.getExamDate());
+						continue;
+					}
+					
+					Calendar examDate = Calendar.getInstance();
+					examDate.setTime(evaluation.getExamDate());
+					
+					if (examDate.get(Calendar.YEAR) > date.get(Calendar.YEAR)){
+						date.setTime(evaluation.getExamDate());
+						continue;
+					}
 
 
+					if ((examDate.get(Calendar.MONTH) > date.get(Calendar.MONTH )) &&
+						(examDate.get(Calendar.YEAR) > date.get(Calendar.YEAR ))){
+							date.setTime(evaluation.getExamDate());
+							continue;
+					}
 
-	public static void main(String[] args) throws ExcepcaoPersistencia{
+					
+					if ((examDate.get(Calendar.DAY_OF_MONTH) > date.get(Calendar.DAY_OF_MONTH )) &&
+						(examDate.get(Calendar.MONTH) > date.get(Calendar.MONTH )) &&
+						(examDate.get(Calendar.YEAR) > date.get(Calendar.YEAR ))){
+							date.setTime(evaluation.getExamDate());
+					}
+					
+				}
+			}
+		}
 		
-		SuportePersistenteOJB.getInstance().iniciarTransaccao();
-		ICurso degree = SuportePersistenteOJB.getInstance().getICursoPersistente().readBySigla("MC");
-		
-		IDegreeCurricularPlan degreeCurricularPlan = SuportePersistenteOJB.getInstance().getIPersistentDegreeCurricularPlan().readByNameAndDegree(
-			"MC02/03", degree);
-			
-			
-			
-		System.out.println();
-			
-		IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory.getInstance();
-		IMasterDegreeCurricularPlanStrategy degreeCurricularPlanStrategy = (IMasterDegreeCurricularPlanStrategy) degreeCurricularPlanStrategyFactory.getDegreeCurricularPlanStrategy(degreeCurricularPlan);
-		
-		
-		IStudentCurricularPlan studentCurricularPlan = SuportePersistenteOJB.getInstance().getIStudentCurricularPlanPersistente().readActiveStudentCurricularPlan(
-				new Integer(5124), TipoCurso.MESTRADO_OBJ);
-		
-		
-		System.out.println(degreeCurricularPlanStrategy.checkEndOfScholarship(studentCurricularPlan));
-				
-		SuportePersistenteOJB.getInstance().confirmarTransaccao();
-		
+		return date.getTime();
 	}
+
+
+
+//	public static void main(String[] args) throws ExcepcaoPersistencia{
+//		
+//		SuportePersistenteOJB.getInstance().iniciarTransaccao();
+//		ICurso degree = SuportePersistenteOJB.getInstance().getICursoPersistente().readBySigla("MC");
+//		
+//		IDegreeCurricularPlan degreeCurricularPlan = SuportePersistenteOJB.getInstance().getIPersistentDegreeCurricularPlan().readByNameAndDegree(
+//			"MC02/03", degree);
+//			
+//			
+//			
+//		System.out.println();
+//			
+//		IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory.getInstance();
+//		IMasterDegreeCurricularPlanStrategy degreeCurricularPlanStrategy = (IMasterDegreeCurricularPlanStrategy) degreeCurricularPlanStrategyFactory.getDegreeCurricularPlanStrategy(degreeCurricularPlan);
+//		
+//		
+//		IStudentCurricularPlan studentCurricularPlan = SuportePersistenteOJB.getInstance().getIStudentCurricularPlanPersistente().readActiveStudentCurricularPlan(
+//				new Integer(5124), TipoCurso.MESTRADO_OBJ);
+//		
+//		
+//		System.out.println(Data.format2DayMonthYear(degreeCurricularPlanStrategy.dateOfEndOfScholarship(studentCurricularPlan)));
+//				
+//		SuportePersistenteOJB.getInstance().confirmarTransaccao();
+//		
+//	}
 
 }
