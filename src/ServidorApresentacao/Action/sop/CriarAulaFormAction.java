@@ -68,6 +68,10 @@ public class CriarAulaFormAction extends FenixAction {
 			
 			InfoExecutionCourse courseView = RequestUtils.getExecutionCourseBySigla(request, initials);
 
+			if (courseView==null){
+				return mapping.getInputForward();
+			}
+			
 			InfoRoom infoSala = new InfoRoom();
 			infoSala.setNome((String) criarAulaForm.get("nomeSala"));
 			Object argsCriarAula[] =

@@ -24,7 +24,14 @@ public class InfoLesson {
   protected InfoExecutionCourse _infoDisciplinaExecucao;
     
   public InfoLesson() { }
-    
+  /**
+   * @param diaSemana
+   * @param inicio
+   * @param fim
+   * @param tipo
+   * @param infoSala
+   * @param infoDisciplinaExecucao
+   */  
   public InfoLesson(DiaSemana diaSemana, Calendar inicio, Calendar fim, TipoAula tipo,
                   InfoRoom infoSala, InfoExecutionCourse infoDisciplinaExecucao) {
     setDiaSemana(diaSemana);
@@ -35,7 +42,7 @@ public class InfoLesson {
     setInfoDisciplinaExecucao(infoDisciplinaExecucao);
   }
 
- 
+
   public DiaSemana getDiaSemana() {
     return _diaSemana;
   }
