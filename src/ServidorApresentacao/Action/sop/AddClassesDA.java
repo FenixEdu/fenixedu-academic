@@ -13,16 +13,11 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import DataBeans.InfoClass;
 import DataBeans.InfoShift;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
-import ServidorApresentacao
-	.Action
-	.sop
-	.base
-	.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
+import ServidorApresentacao.Action.sop.base.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -77,7 +72,8 @@ public class AddClassesDA
 			(InfoShift) request.getAttribute(SessionConstants.SHIFT);
 
 		DynaActionForm addClassesForm = (DynaActionForm) form;
-		String[] selectedClasses = (String[]) addClassesForm.get("selectedItems");
+		String[] selectedClasses =
+			(String[]) addClassesForm.get("selectedItems");
 
 		List classOIDs = new ArrayList();
 		for (int i = 0; i < selectedClasses.length; i++) {
@@ -85,10 +81,18 @@ public class AddClassesDA
 		}
 
 		Object args[] = { infoShift, classOIDs };
-		ServiceUtils.executeService(
-			SessionUtils.getUserView(request),
-			"AddClassesToShift",
-			args);
+		try {
+			ServiceUtils.executeService(
+				SessionUtils.getUserView(request),
+				"AddClassesToShift",
+				args);
+		} catch (FenixServiceException ex) {
+			// No probem, the user refreshed the page after adding classes
+			request.setAttribute("selectMultipleItemsForm", null);
+			return mapping.getInputForward();
+		}
+
+		request.setAttribute("selectMultipleItemsForm", null);
 
 		return mapping.findForward("EditShift");
 	}

@@ -38,9 +38,22 @@
 
 <br/>
 <logic:present name="<%= SessionConstants.CLASSES %>" scope="request">
+  <html:form action="/deleteClasses">
+
+	<html:hidden property="method" value="deleteClasses"/>
+	<html:hidden property="page" value="1"/>
+
+	<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
+				 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
+	<html:hidden property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
+				 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
+	<html:hidden property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
+				 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
+
 <table cellpadding="0" border="0">
 	<tr>
-		<!-- Table headers: Nome e Apagar -->
+		<td class="listClasses-header">
+		</td>
 		<td class="listClasses-header">
 			<bean:message key="label.name"/>
 		</td>
@@ -57,6 +70,11 @@
 					 name="classView"
 					 property="idInternal"/>
 		<tr>
+       		<td class="listClasses">
+				<html:multibox property="selectedItems">
+					<bean:write name="classView" property="idInternal"/>
+				</html:multibox>
+			</td>
 			<td nowrap="nowrap" class="listClasses">
 				<html:link page="<%= "/manageClass.do?method=prepare&amp;"
 						+ SessionConstants.CLASS_VIEW_OID
@@ -105,6 +123,10 @@
 		</tr>
 	</logic:iterate>
 </table>
+	<html:submit styleClass="inputbutton">
+		<bean:message key="link.delete"/>
+	</html:submit>
+  </html:form>
 </logic:present>
 <logic:notPresent name="<%= SessionConstants.CLASSES %>" scope="request">
 	<span class="error"><bean:message key="listClasses.emptyClasses"/></span>

@@ -1,5 +1,8 @@
 package ServidorApresentacao.Action.sop;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,11 +21,7 @@ import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.sop.EditarTurno.InvalidNewShiftExecutionCourse;
 import ServidorAplicacao.Servico.sop.EditarTurno.InvalidNewShiftType;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
-import ServidorApresentacao
-	.Action
-	.sop
-	.base
-	.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
+import ServidorApresentacao.Action.sop.base.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -121,7 +120,8 @@ public class ManageShiftDA
 			SessionConstants.EXECUTION_COURSE,
 			infoExecutionCourseNew);
 
-		request.setAttribute(SessionConstants.SHIFT, infoShiftNew);
+		//request.setAttribute(SessionConstants.SHIFT, infoShiftNew);
+		ContextUtils.setShiftContext(request);
 
 		return prepareEditShift(mapping, form, request, response);
 	}
@@ -151,6 +151,57 @@ public class ManageShiftDA
 		request.removeAttribute(SessionConstants.CLASS_VIEW);
 
 		return prepareEditShift(mapping, form, request, response);
+	}
+
+	public ActionForward removeClasses(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception {
+
+		DynaActionForm removeClassesForm = (DynaActionForm) form;
+		String[] selectedClasses = (String[]) removeClassesForm.get("selectedItems");
+
+		List classOIDs = new ArrayList();
+		for (int i = 0; i < selectedClasses.length; i++) {
+			classOIDs.add(new Integer(selectedClasses[i]));
+		}
+
+		InfoShift infoShift =
+			(InfoShift) request.getAttribute(SessionConstants.SHIFT);
+
+		Object args[] = { infoShift, classOIDs };
+		ServiceUtils.executeService(
+			SessionUtils.getUserView(request),
+			"RemoveClasses",
+			args);
+
+		return mapping.findForward("EditShift");
+	}
+
+	public ActionForward deleteLessons(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception {
+
+		DynaActionForm deleteLessonsForm = (DynaActionForm) form;
+		String[] selectedLessons = (String[]) deleteLessonsForm.get("selectedItems");
+
+		List lessonOIDs = new ArrayList();
+		for (int i = 0; i < selectedLessons.length; i++) {
+			lessonOIDs.add(new Integer(selectedLessons[i]));
+		}
+
+		Object args[] = { lessonOIDs };
+		ServiceUtils.executeService(
+			SessionUtils.getUserView(request),
+			"DeleteLessons",
+			args);
+
+		return mapping.findForward("EditShift");
 	}
 
 }

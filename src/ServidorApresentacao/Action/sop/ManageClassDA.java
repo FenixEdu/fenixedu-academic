@@ -61,16 +61,18 @@ public class ManageClassDA
 				"ReadShiftsByClass",
 				args);
 
-		/* Sort the list of shifts */
-		ComparatorChain chainComparator = new ComparatorChain();
-		chainComparator.addComparator(
-			new BeanComparator("infoDisciplinaExecucao.nome"));
-		chainComparator.addComparator(new BeanComparator("tipo.tipo"));
-		chainComparator.addComparator(new BeanComparator("nome"));
-		Collections.sort(infoShifts, chainComparator);
+		if (infoShifts != null && !infoShifts.isEmpty()) {
+			/* Sort the list of shifts */
+			ComparatorChain chainComparator = new ComparatorChain();
+			chainComparator.addComparator(
+				new BeanComparator("infoDisciplinaExecucao.nome"));
+			chainComparator.addComparator(new BeanComparator("tipo.tipo"));
+			chainComparator.addComparator(new BeanComparator("nome"));
+			Collections.sort(infoShifts, chainComparator);
 
-		/* Place list of shifts in request */
-		request.setAttribute(SessionConstants.SHIFTS, infoShifts);
+			/* Place list of shifts in request */
+			request.setAttribute(SessionConstants.SHIFTS, infoShifts);
+		}
 
 		return mapping.findForward("EditClass");
 	}
@@ -213,6 +215,33 @@ public class ManageClassDA
 		request.setAttribute(SessionConstants.LESSON_LIST_ATT, lessonList);
 
 		return mapping.findForward("ViewSchedule");
+	}
+
+	public ActionForward removeShifts(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception {
+
+		DynaActionForm removeShiftsForm = (DynaActionForm) form;
+		String[] selectedShifts = (String[]) removeShiftsForm.get("selectedItems");
+
+		List shiftOIDs = new ArrayList();
+		for (int i = 0; i < selectedShifts.length; i++) {
+			shiftOIDs.add(new Integer(selectedShifts[i]));
+		}
+
+		InfoClass infoClass =
+			(InfoClass) request.getAttribute(SessionConstants.CLASS_VIEW);
+
+		Object args[] = { infoClass, shiftOIDs };
+		ServiceUtils.executeService(
+			SessionUtils.getUserView(request),
+			"RemoveShifts",
+			args);
+
+		return mapping.findForward("EditClass");
 	}
 
 }

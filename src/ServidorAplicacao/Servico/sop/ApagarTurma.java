@@ -51,16 +51,26 @@ public class ApagarTurma implements IServico {
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoClass.getInfoExecutionPeriod());
-			ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoClass.getInfoExecutionDegree());
+			IExecutionPeriod executionPeriod =
+				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
+					infoClass.getInfoExecutionPeriod());
+			ICursoExecucao executionDegree =
+				Cloner.copyInfoExecutionDegree2ExecutionDegree(
+					infoClass.getInfoExecutionDegree());
 
-			turma = sp.getITurmaPersistente().readByNameAndExecutionDegreeAndExecutionPeriod(infoClass.getNome(), executionDegree, executionPeriod);
+			turma =
+				sp
+					.getITurmaPersistente()
+					.readByNameAndExecutionDegreeAndExecutionPeriod(
+					infoClass.getNome(),
+					executionDegree,
+					executionPeriod);
 			try {
-				if(turma != null) {
+				if (turma != null) {
 					sp.getITurmaPersistente().delete(turma);
 					result = true;
 				}
-			} catch(ExcepcaoPersistencia ex1) {
+			} catch (ExcepcaoPersistencia ex1) {
 				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex1);
 			}
 
@@ -71,35 +81,4 @@ public class ApagarTurma implements IServico {
 		return new Boolean(result);
 	}
 
-/*
-	public Object run(ClassKey keyTurma) {
-
-		ITurma turma1 = new Turma();
-		boolean result = false;
-
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			turma1.setNome(keyTurma.getNomeTurma());
-
-			sp.iniciarTransaccao();
-			List classes = sp.getITurmaPersistente().readByCriteria(turma1);
-			sp.confirmarTransaccao();
-			sp.iniciarTransaccao();
-			sp.getITurmaPersistente().deleteByCriteria(turma1);
-			sp.confirmarTransaccao();
-			sp.iniciarTransaccao();
-			List classes1 = sp.getITurmaPersistente().readByCriteria(turma1);
-			sp.confirmarTransaccao();
-
-			if (!classes.isEmpty() && classes1.isEmpty()) {
-				result = true;
-			}
-
-		} catch (ExcepcaoPersistencia ex) {
-			ex.printStackTrace();
-		}
-
-		return new Boolean(result);
-	}
-*/
 }

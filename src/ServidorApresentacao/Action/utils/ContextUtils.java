@@ -409,10 +409,6 @@ public class ContextUtils {
 						null,
 						"ReadLessonByOID",
 						args);
-						
-			System.out.println("##### infoLesson: "+infoLesson);
-			System.out.println("##### infoLesson.getIdInternal: "+infoLesson.getIdInternal());
-			
 			} catch (FenixServiceException e) {
 				e.printStackTrace();
 			}
@@ -426,7 +422,6 @@ public class ContextUtils {
 
 	public static void setSelectedRoomsContext(HttpServletRequest request)
 		throws FenixActionException {
-		//		System.out.println("### setSelectedRoomsContext - IN");
 		GestorServicos gestor = GestorServicos.manager();
 
 		Object argsSelectRooms[] =
@@ -461,14 +456,12 @@ public class ContextUtils {
 
 		setRoomSearchCriteriaContext(request);
 
-		//		System.out.println("### setSelectedRoomsContext - OUT");
 	}
 
 	/**
 	 * @param request
 	 */
 	private static void setRoomSearchCriteriaContext(HttpServletRequest request) {
-		//		System.out.println("### setRoomSearchCriteriaContext - IN");
 
 		request.setAttribute(
 			"selectRoomCriteria_Name",
@@ -489,7 +482,6 @@ public class ContextUtils {
 			"selectRoomCriteria_CapacityExame",
 			readRequestValue(request, "selectRoomCriteria_CapacityExame"));
 
-		//		System.out.println("### setRoomSearchCriteriaContext - OUT");		
 	}
 
 	/**
@@ -498,14 +490,10 @@ public class ContextUtils {
 	public static void setSelectedRoomIndexContext(HttpServletRequest request) {
 		String selectedRoomIndexString =
 			(String) request.getAttribute(SessionConstants.SELECTED_ROOM_INDEX);
-		System.out.println(
-			"SelectedRoomIndex from request: " + selectedRoomIndexString);
+
 		if (selectedRoomIndexString == null) {
 			selectedRoomIndexString =
 				request.getParameter(SessionConstants.SELECTED_ROOM_INDEX);
-			System.out.println(
-				"SelectedRoomIndexString from parameter: "
-					+ selectedRoomIndexString);
 		}
 
 		Integer selectedRoomIndex = null;
@@ -536,12 +524,6 @@ public class ContextUtils {
 				&& !request.getParameter(name).equals("null"))
 			obj = request.getParameter(name);
 
-		if (obj != null) {
-			System.out.println(name + " in request: " + obj);
-		} else {
-			System.out.println(
-				"ERROR: Missing (or null) " + name + " in request");
-		}
 		return obj;
 	}
 

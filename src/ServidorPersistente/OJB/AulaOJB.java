@@ -48,7 +48,8 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 			oqlQuery += " and fim = $3";
 			oqlQuery += " and sala.nome = $4";
 			oqlQuery += " and disciplinaExecucao.executionPeriod.name = $5";
-			oqlQuery += " and disciplinaExecucao.executionPeriod.executionYear.year = $6";
+			oqlQuery
+				+= " and disciplinaExecucao.executionPeriod.executionYear.year = $6";
 			query.create(oqlQuery);
 			query.bind(diaSemana);
 			query.bind(inicio);
@@ -100,9 +101,10 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 		if (lessonFromDB == null)
 			super.lockWrite(lessonToWrite);
 		// else if (lesson is mapped to the database then write any existing changes)
-		else if ((lessonToWrite instanceof Aula) &&
-				 ((Aula) lessonFromDB).getIdInternal().equals(
-		          ((Aula) lessonToWrite).getIdInternal())) {
+		else if (
+			(lessonToWrite instanceof Aula)
+				&& ((Aula) lessonFromDB).getIdInternal().equals(
+					((Aula) lessonToWrite).getIdInternal())) {
 
 			lessonFromDB.setDisciplinaExecucao(
 				lessonToWrite.getDisciplinaExecucao());
@@ -115,30 +117,33 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 	}
 
 	public void delete(IAula aula) throws ExcepcaoPersistencia {
-		try {
-			ITurnoAula turnoAula = null;
-			TurnoAulaOJB turnoAulaOJB = new TurnoAulaOJB();
-			String oqlQuery = "select all from " + TurnoAula.class.getName();
-			oqlQuery += " where aula.diaSemana = $1"
-				+ " and  aula.inicio = $2"
-				+ " and aula.fim = $3"
-				+ " and aula.sala.nome= $4";
-			query.create(oqlQuery);
-			query.bind(aula.getDiaSemana());
-			query.bind(aula.getInicio());
-			query.bind(aula.getFim());
-			query.bind(aula.getSala().getNome());
-			List result = (List) query.execute();
-			lockRead(result);
-			Iterator iterador = result.iterator();
-			while (iterador.hasNext()) {
-				turnoAula = (ITurnoAula) iterador.next();
-				turnoAulaOJB.delete(turnoAula);
+		if (aula != null) {
+			try {
+				ITurnoAula turnoAula = null;
+				TurnoAulaOJB turnoAulaOJB = new TurnoAulaOJB();
+				String oqlQuery =
+					"select all from " + TurnoAula.class.getName();
+				oqlQuery += " where aula.diaSemana = $1"
+					+ " and  aula.inicio = $2"
+					+ " and aula.fim = $3"
+					+ " and aula.sala.nome= $4";
+				query.create(oqlQuery);
+				query.bind(aula.getDiaSemana());
+				query.bind(aula.getInicio());
+				query.bind(aula.getFim());
+				query.bind(aula.getSala().getNome());
+				List result = (List) query.execute();
+				lockRead(result);
+				Iterator iterador = result.iterator();
+				while (iterador.hasNext()) {
+					turnoAula = (ITurnoAula) iterador.next();
+					turnoAulaOJB.delete(turnoAula);
+				}
+			} catch (QueryException ex) {
+				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 			}
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+			super.delete(aula);
 		}
-		super.delete(aula);
 	}
 
 	public void deleteAll() throws ExcepcaoPersistencia {
@@ -231,7 +236,6 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 		}
 	}
 
-
 	// Depricated : This Method does not meet it's requierments...
 	//              Use readLessonsInBroadPeriodInAnyRoom instead.
 	public List readLessonsInPeriod(IAula lesson) throws ExcepcaoPersistencia {
@@ -256,7 +260,10 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 		}
 	}
 
-	public List readLessonsInBroadPeriod(IAula newLesson, IAula oldLesson, IExecutionPeriod executionPeriod)
+	public List readLessonsInBroadPeriod(
+		IAula newLesson,
+		IAula oldLesson,
+		IExecutionPeriod executionPeriod)
 		throws ExcepcaoPersistencia {
 		try {
 			List lessonList = null;
@@ -283,7 +290,7 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 				+ "and sala.nome = $20 ))"
 				+ "and disciplinaExecucao.executionPeriod.name = $21"
 				+ "and disciplinaExecucao.executionPeriod.executionYear.year = $22";
-			
+
 			query.create(oqlQuery);
 			query.bind(newLesson.getInicio());
 			query.bind(newLesson.getFim());
@@ -309,7 +316,7 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 			query.bind(newLesson.getFim());
 			query.bind(newLesson.getDiaSemana());
 			query.bind(newLesson.getSala().getNome());
-			
+
 			query.bind(executionPeriod.getName());
 			query.bind(executionPeriod.getExecutionYear().getYear());
 
@@ -325,14 +332,16 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 						.getIdInternal()
 						.equals(((Aula) oldLesson).getIdInternal()))
 						lessonList.remove(ipto);
-			
+
 			return lessonList;
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
 
-	public List readLessonsInBroadPeriodInAnyRoom(IAula lesson, IExecutionPeriod executionPeriod)
+	public List readLessonsInBroadPeriodInAnyRoom(
+		IAula lesson,
+		IExecutionPeriod executionPeriod)
 		throws ExcepcaoPersistencia {
 		try {
 			List lessonList = null;
@@ -354,7 +363,7 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 				+ "and diaSemana = $15 ))"
 				+ "and disciplinaExecucao.executionPeriod.name = $16"
 				+ "and disciplinaExecucao.executionPeriod.executionYear.year = $17";
-				
+
 			query.create(oqlQuery);
 			query.bind(lesson.getInicio());
 			query.bind(lesson.getFim());
@@ -378,7 +387,7 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 
 			query.bind(executionPeriod.getName());
 			query.bind(executionPeriod.getExecutionYear().getYear());
-			
+
 			lessonList = (List) query.execute();
 			lockRead(lessonList);
 

@@ -34,6 +34,8 @@
 		<table>
 			<tr>
 				<td class="listClasses-header">
+		        </td>
+				<td class="listClasses-header">
 					<bean:message key="property.executionCourse"/>
 				</td>
 				<td class="listClasses-header">
@@ -48,13 +50,16 @@
 				<td class="listClasses-header">
 		        	<bean:message key="property.shift.capacity"/>
 		        </td>
-				<td class="listClasses-header">
-		        </td>
 			</tr>
 			<logic:iterate id="infoShift" name="<%= SessionConstants.SHIFTS %>">
 				<bean:define id="infoShiftOID" name="infoShift" property="idInternal"/>
 				<bean:define id="infoExecutionCourseOID" name="infoShift" property="infoDisciplinaExecucao.idInternal"/>
 				<tr align="center">
+	              	<td class="listClasses">
+						<html:multibox property="selectedItems">
+							<bean:write name="infoShift" property="idInternal"/>
+						</html:multibox>
+					</td>
 					<td class="listClasses">
 						<bean:write name="infoShift" property="infoDisciplinaExecucao.sigla"/>
 					</td>
@@ -100,11 +105,6 @@
 	              	<td class="listClasses">
 	              		<bean:write name="infoShift" property="lotacao"/>
 	              	</td>
-	              	<td class="listClasses">
-						<html:multibox property="selectedItems">
-							<bean:write name="infoShift" property="idInternal"/>
-						</html:multibox>
-					</td>
 				</tr>
 			</logic:iterate>
 		</table>

@@ -1,5 +1,6 @@
 package ServidorApresentacao.Action.sop;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -157,6 +158,30 @@ public class ManageShiftsDA
 		ServiceUtils.executeService(userView, "DeleteShift", args);
 
 		return listShifts(mapping, form, request, response);
+	}
+
+	public ActionForward deleteShifts(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception {
+
+		DynaActionForm deleteShiftsForm = (DynaActionForm) form;
+		String[] selectedShifts = (String[]) deleteShiftsForm.get("selectedItems");
+
+		List shiftOIDs = new ArrayList();
+		for (int i = 0; i < selectedShifts.length; i++) {
+			shiftOIDs.add(new Integer(selectedShifts[i]));
+		}
+
+		Object args[] = { shiftOIDs };
+		ServiceUtils.executeService(
+			SessionUtils.getUserView(request),
+			"DeleteShifts",
+			args);
+
+		return mapping.findForward("ShowShiftList");
 	}
 
 }

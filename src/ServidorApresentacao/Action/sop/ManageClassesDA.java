@@ -1,5 +1,6 @@
 package ServidorApresentacao.Action.sop;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoClass;
@@ -145,6 +147,30 @@ public class ManageClassesDA
 		request.removeAttribute(SessionConstants.CLASS_VIEW);
 
 		return listClasses(mapping, form, request, response);
+	}
+
+	public ActionForward deleteClasses(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception {
+
+		DynaActionForm deleteClassesForm = (DynaActionForm) form;
+		String[] selectedClasses = (String[]) deleteClassesForm.get("selectedItems");
+
+		List classOIDs = new ArrayList();
+		for (int i = 0; i < selectedClasses.length; i++) {
+			classOIDs.add(new Integer(selectedClasses[i]));
+		}
+
+		Object args[] = { classOIDs };
+		ServiceUtils.executeService(
+			SessionUtils.getUserView(request),
+			"DeleteClasses",
+			args);
+
+		return mapping.findForward("ShowShiftList");
 	}
 
 }

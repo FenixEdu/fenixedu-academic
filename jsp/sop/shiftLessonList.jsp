@@ -9,8 +9,26 @@
 Aulas já atribuidas ao turno
 <br />
 	<logic:present name="shift" property="infoLessons">
+  <html:form action="/manageShiftMultipleItems">
+
+	<html:hidden property="method" value="deleteLessons"/>
+	<html:hidden property="page" value="1"/>
+
+	<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
+				 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
+	<html:hidden property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
+				 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
+	<html:hidden property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
+				 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
+	<html:hidden property="<%= SessionConstants.EXECUTION_COURSE_OID %>"
+				 value="<%= pageContext.findAttribute("executionCourseOID").toString() %>"/>
+	<html:hidden property="<%= SessionConstants.SHIFT_OID %>"
+				 value="<%= pageContext.findAttribute("shiftOID").toString() %>"/>
+
 		<table>
 			<tr>
+				<td class="listClasses-header">
+				</td>
 				<td class="listClasses-header">
 					<bean:message key="property.weekday"/>
 				</td>
@@ -37,6 +55,11 @@ Aulas já atribuidas ao turno
 			<logic:iterate id="lesson" name="shift" property="infoLessons">
 				<bean:define id="lessonOID" name="lesson" property="idInternal"/>
 				<tr align="center">
+              		<td class="listClasses">
+						<html:multibox property="selectedItems">
+							<bean:write name="lesson" property="idInternal"/>
+						</html:multibox>
+					</td>
 					<td class="listClasses">
 						<bean:write name="lesson" property="diaSemana"/>
 					</td>
@@ -116,9 +139,14 @@ Aulas já atribuidas ao turno
 				</tr>
 			</logic:iterate>
 		</table>
+		<html:submit styleClass="inputbutton">
+			<bean:message key="link.delete"/>
+		</html:submit>
+	  </html:form>
 	</logic:present>
 	<logic:notPresent name="shift" property="infoLessons">
 		<span class="error">
 			<bean:message key="message.shift.lessons.none"/>
 		</span>
+		<br />
 	</logic:notPresent>

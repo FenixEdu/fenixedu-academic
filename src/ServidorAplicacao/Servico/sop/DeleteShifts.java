@@ -9,6 +9,8 @@ package ServidorAplicacao.Servico.sop;
  *
  * @author Luis Cruz & Sara Ribeiro
  **/
+import java.util.List;
+
 import DataBeans.InfoShift;
 import Dominio.IAula;
 import Dominio.ITurno;
@@ -19,34 +21,35 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class DeleteShift implements IServico {
+public class DeleteShifts implements IServico {
 
-	private static DeleteShift _servico = new DeleteShift();
+	private static DeleteShifts _servico = new DeleteShifts();
 	/**
 	 * The singleton access method of this class.
 	 **/
-	public static DeleteShift getService() {
+	public static DeleteShifts getService() {
 		return _servico;
 	}
 
 	/**
 	 * The actor of this class.
 	 **/
-	private DeleteShift() {
+	private DeleteShifts() {
 	}
 
 	/**
 	 * Devolve o nome do servico
 	 **/
 	public final String getNome() {
-		return "DeleteShift";
+		return "DeleteShifts";
 	}
 
-	public Object run(InfoShift infoShift) throws FenixServiceException {
+	public Object run(List shiftOIDs) throws FenixServiceException {
 
 		boolean result = false;
 
-		if (infoShift != null) {
+		for (int j = 0; j < shiftOIDs.size(); j++) {
+			Integer shiftOID = (Integer) shiftOIDs.get(j);
 
 			try {
 				final ISuportePersistente sp =
@@ -55,7 +58,7 @@ public class DeleteShift implements IServico {
 				ITurno shift =
 					(ITurno) sp.getITurnoPersistente().readByOID(
 						Turno.class,
-						infoShift.getIdInternal());
+						shiftOID);
 
 				if (shift != null) {
 					for (int i = 0;

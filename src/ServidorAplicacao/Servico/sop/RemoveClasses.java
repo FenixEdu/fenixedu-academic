@@ -6,6 +6,7 @@
 package ServidorAplicacao.Servico.sop;
 
 /**
+ * Serviço AdicionarTurno.
  *
  * @author Luis Cruz & Sara Ribeiro
  **/
@@ -13,40 +14,36 @@ import java.util.List;
 
 import DataBeans.InfoShift;
 import Dominio.ITurma;
-import Dominio.ITurmaTurno;
 import Dominio.ITurno;
 import Dominio.Turma;
-import Dominio.TurmaTurno;
 import Dominio.Turno;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 
-public class AddClassesToShift implements IServico {
+public class RemoveClasses implements IServico {
 
-	private static AddClassesToShift _servico = new AddClassesToShift();
+	private static RemoveClasses _servico = new RemoveClasses();
 	/**
 	 * The singleton access method of this class.
 	 **/
-	public static AddClassesToShift getService() {
+	public static RemoveClasses getService() {
 		return _servico;
 	}
 
 	/**
 	 * The actor of this class.
 	 **/
-	private AddClassesToShift() {
+	private RemoveClasses() {
 	}
 
 	/**
 	 * Devolve o nome do servico
 	 **/
 	public final String getNome() {
-		return "AddClassesToShift";
+		return "RemoveClasses";
 	}
 
 	public Boolean run(InfoShift infoShift, List classOIDs)
@@ -62,18 +59,15 @@ public class AddClassesToShift implements IServico {
 					Turno.class,
 					infoShift.getIdInternal());
 
+			sp.getITurnoPersistente().lockWrite(shift);
+
 			for (int i = 0; i < classOIDs.size(); i++) {
 				ITurma schoolClass =
 					(ITurma) sp.getITurmaPersistente().readByOID(
 						Turma.class,
 						(Integer) classOIDs.get(i));
 
-				ITurmaTurno classShift = new TurmaTurno(schoolClass, shift);
-				try {
-					sp.getITurmaTurnoPersistente().lockWrite(classShift);
-				} catch (ExistingPersistentException e) {
-					throw new ExistingServiceException(e);
-				}
+				shift.getAssociatedClasses().remove(schoolClass);
 			}
 
 			result = true;

@@ -36,28 +36,28 @@
 		<table>
 			<tr>
 				<td class="listClasses-header">
+				</td>
+				<td class="listClasses-header">
 					<bean:message key="label.name"/>
 				</td>
 				<td class="listClasses-header">
 					<bean:message key="label.degree"/>
-				</td>
-				<td class="listClasses-header">
 				</td>
 			</tr>
 			<logic:iterate id="infoClass" name="<%= SessionConstants.CLASSES %>">
 				<bean:define id="infoClassOID" name="infoClass" property="idInternal"/>
 				<bean:define id="infoExecutionDegreeOID" name="infoClass" property="infoExecutionDegree.idInternal"/>
 				<tr align="center">
+	              	<td class="listClasses">
+						<html:multibox property="selectedItems">
+							<bean:write name="infoClass" property="idInternal"/>
+						</html:multibox>
+					</td>
 					<td class="listClasses">
 						<bean:write name="infoClass" property="nome"/>
 					</td>
 					<td class="listClasses">
 						<bean:write name="infoClass" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.sigla"/>
-					</td>
-	              	<td class="listClasses">
-						<html:multibox property="selectedItems">
-							<bean:write name="infoClass" property="idInternal"/>
-						</html:multibox>
 					</td>
 				</tr>
 			</logic:iterate>

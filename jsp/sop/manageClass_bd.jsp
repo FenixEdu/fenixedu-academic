@@ -81,8 +81,24 @@
 Turnos:
 <br />
 <logic:present name="<%= SessionConstants.SHIFTS %>" scope="request">
+
+	<html:form action="/removeShifts">
+		<html:hidden property="method" value="removeShifts"/>
+		<html:hidden property="page" value="1"/>
+
+		<html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
+					 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
+		<html:hidden property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
+					 value="<%= pageContext.findAttribute("executionDegreeOID").toString() %>"/>
+		<html:hidden property="<%= SessionConstants.CURRICULAR_YEAR_OID %>"
+					 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
+		<html:hidden property="<%= SessionConstants.CLASS_VIEW_OID %>"
+					 value="<%= pageContext.findAttribute("classOID").toString() %>"/>
+
 	<table>
 		<tr>
+			<td class="listClasses-header">
+	        </td>
 			<td class="listClasses-header">
 				<bean:message key="property.executionCourse"/>
 			</td>
@@ -108,6 +124,11 @@ Turnos:
 			<bean:define id="infoShiftOID" name="infoShift" property="idInternal"/>
 			<bean:define id="infoExecutionCourseOID" name="infoShift" property="infoDisciplinaExecucao.idInternal"/>
 			<tr align="center">
+              	<td class="listClasses">
+					<html:multibox property="selectedItems">
+						<bean:write name="infoShift" property="idInternal"/>
+					</html:multibox>
+				</td>
 				<td class="listClasses">
 					<bean:write name="infoShift" property="infoDisciplinaExecucao.sigla"/>
 				</td>
@@ -181,6 +202,11 @@ Turnos:
 			</tr>
 		</logic:iterate>
 	</table>
+
+	<html:submit styleClass="inputbutton">
+		<bean:message key="link.remove"/>
+	</html:submit>			
+  </html:form>
 </logic:present>
 
 <logic:notPresent name="<%= SessionConstants.SHIFTS %>" scope="request">

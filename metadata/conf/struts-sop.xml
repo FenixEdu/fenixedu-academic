@@ -1224,6 +1224,50 @@
     	<forward name="EditShift" path="/manageShift.do?method=prepareEditShift&amp;page=0"/>
 	</action>
 
+	<action path="/deleteShifts"
+			input="/manageShifts.do?method=listShifts&amp;page=0"
+            type="ServidorApresentacao.Action.sop.ManageShiftsDA"
+            name="selectMultipleItemsForm"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+    	<forward name="ShowShiftList" path="/manageShifts.do?method=listShifts&amp;page=0"/>
+	</action>
+
+	<action path="/manageShiftMultipleItems"
+			input="/manageShift.do?method=prepareEditShift&amp;page=0"
+            type="ServidorApresentacao.Action.sop.ManageShiftDA"
+            name="selectMultipleItemsForm"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+    	<forward name="EditShift" path="/manageShift.do?method=prepareEditShift&amp;page=0"/>
+	</action>
+
+	<action path="/deleteClasses"
+			input="/manageClasses.do?method=listClasses&amp;page=0"
+            type="ServidorApresentacao.Action.sop.ManageClassesDA"
+            name="selectMultipleItemsForm"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+    	<forward name="ShowShiftList" path="/manageClasses.do?method=listClasses&amp;page=0"/>
+	</action>
+
+	<action path="/removeShifts"
+			input="/manageClass.do?method=prepare&amp;page=0"
+            type="ServidorApresentacao.Action.sop.ManageClassDA"
+            name="selectMultipleItemsForm"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+    	<forward name="EditClass" path="/manageClass.do?method=prepare&amp;page=0"/>
+	</action>
+
       <!-- ========== ADICIONADO POR DAVID SANTOS ================================ -->
 	  <action path="/siteViewer"
 				input="/siteViewerError.jsp"
