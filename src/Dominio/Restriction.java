@@ -4,12 +4,13 @@
  */
 package Dominio;
 
+
 /**
  * @author jpvl
  */
 public abstract class Restriction extends DomainObject implements IRestriction {
 	private String ojbConcreteClass;
-	private Precedence precedence;
+	private IPrecedence precedence;
 	private Integer keyPrecedence; 
 	/**
 	 * 
@@ -36,7 +37,7 @@ public abstract class Restriction extends DomainObject implements IRestriction {
 	/**
 	 * @return
 	 */
-	public Precedence getPrecedence() {
+	public IPrecedence getPrecedence() {
 		return precedence;
 	}
 
@@ -57,8 +58,20 @@ public abstract class Restriction extends DomainObject implements IRestriction {
 	/**
 	 * @param precedence
 	 */
-	public void setPrecedence(Precedence precedence) {
+	public void setPrecedence(IPrecedence precedence) {
 		this.precedence = precedence;
 	}
 
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	public boolean equals(Object obj) {
+		boolean result = false;
+		if (obj instanceof IRestriction){
+			IRestriction restriction = (IRestriction) obj;
+			result = restriction.getPrecedence().getCurricularCourse().equals(this.getPrecedence().getCurricularCourse());
+		}
+		return result;
+	}
 }
