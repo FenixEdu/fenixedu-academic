@@ -1,7 +1,10 @@
 package ServidorApresentacao.Action.publico;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -25,10 +28,14 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
+			HttpSession session = request.getSession(true);
+
 		Integer executionPeriodOId = getFromRequest("executionPeriodOId", request);
 		Integer degreeId = getFromRequest("degreeId", request);
 
 		GestorServicos gestorServicos = GestorServicos.manager();
+		
+		//degree information
 		Object[] args = { executionPeriodOId, degreeId };
 
 		InfoDegreeInfo infoDegreeInfo = null;
@@ -38,11 +45,23 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction {
 			throw new FenixActionException(e);
 		}
 
-		System.out.println(infoDegreeInfo);
+		System.out.println("------>Degree info: " + infoDegreeInfo.getLastModificationDate());
+		
+		//execution degrees of this degree
+		List executionDegreeList = null;
+		try {
+			executionDegreeList = (List) gestorServicos.executar(null, "ReadExecutionDegreesByDegreeAndExecutionPeriod", args);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
+		}
+
+		System.out.println("------>Execution degree(size): " + executionDegreeList.size());
+		System.out.println("------>Execution degree: " + executionDegreeList.get(0));
 		
 		request.setAttribute(SessionConstants.EXECUTION_PERIOD, executionPeriodOId);
 		request.setAttribute("degreeId", degreeId);
 		request.setAttribute("infoDegreeInfo", infoDegreeInfo);
+		request.setAttribute("infoExecutionDegrees", executionDegreeList);
 		return mapping.findForward("showDescription");
 	}
 
