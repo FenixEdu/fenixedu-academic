@@ -55,16 +55,10 @@ public class LerAlunosDeTurnoServicosTest extends TestCaseReadServices {
 		super.tearDown();
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
-	 */
 	protected String getNameOfServiceToBeTested() {
 		return "LerAlunosDeTurno";
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedSuccessfuly()
-	 */
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
 		this.ligarSuportePersistente(true);
@@ -75,9 +69,6 @@ public class LerAlunosDeTurnoServicosTest extends TestCaseReadServices {
 		return argsLerAlunos;
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
-	 */
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 
 		this.ligarSuportePersistente(false);
@@ -88,16 +79,10 @@ public class LerAlunosDeTurnoServicosTest extends TestCaseReadServices {
 		return argsLerAlunos;
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
-	 */
 	protected int getNumberOfItemsToRetrieve() {
 		return 1;
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getObjectToCompare()
-	 */
 	protected Object getObjectToCompare() {
 		return null;
 	}
@@ -106,41 +91,6 @@ public class LerAlunosDeTurnoServicosTest extends TestCaseReadServices {
 		return true;
 	}
 
-/*
-	// read existing alunos
-	public void testReadExistingAlunos() {
-
-		this.ligarSuportePersistente(true);
-
-		Object argsLerAlunos[] = new Object[1];
-		argsLerAlunos[0] = new ShiftKey(this.infoShift.getNome(), this.infoShift.getInfoDisciplinaExecucao());
-
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsLerAlunos);
-			assertEquals("testLerExistingAlunos", 1, ((List) result).size());
-		} catch (Exception ex) {
-			fail("testLerExistingAlunos");
-		}
-	}
-
-	// read non-existing alunos
-	public void testReadNonExistingAlunos() {
-
-		this.ligarSuportePersistente(false);
-
-		Object argsLerAlunos[] = new Object[1];
-		argsLerAlunos[0] = new ShiftKey(this.infoShift.getNome(), this.infoShift.getInfoDisciplinaExecucao());
-
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsLerAlunos);
-			assertTrue("testLerExistingAlunos", ((List) result).isEmpty());
-		} catch (Exception ex) {
-			fail("testLerExistingAlunos");
-		}
-	}
-*/
 	private void ligarSuportePersistente(boolean existing) {
 
 		ISuportePersistente sp = null;

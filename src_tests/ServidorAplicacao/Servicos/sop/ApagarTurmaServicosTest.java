@@ -59,16 +59,10 @@ public class ApagarTurmaServicosTest extends TestCaseDeleteAndEditServices {
 		super.tearDown();
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
-	 */
 	protected String getNameOfServiceToBeTested() {
 		return "ApagarTurma";
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedSuccessfuly()
-	 */
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
 		this.ligarSuportePersistente(true);
@@ -77,9 +71,6 @@ public class ApagarTurmaServicosTest extends TestCaseDeleteAndEditServices {
 		return argsDeleteTurma;
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
-	 */
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 
 		this.ligarSuportePersistente(false);
@@ -87,37 +78,7 @@ public class ApagarTurmaServicosTest extends TestCaseDeleteAndEditServices {
 
 		return argsDeleteTurma;
 	}
-/*
-	// delete existing turma
-	public void testDeleteExistingTurma() {
 
-		this.ligarSuportePersistente(true);
-		Object argsDeleteTurma[] = {this.infoClass};
-
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsDeleteTurma);
-			assertEquals("testDeleteExistingTurma", Boolean.TRUE.booleanValue(), ((Boolean) result).booleanValue());
-		} catch (Exception ex) {
-			fail("testDeleteExistingTurma");
-		}
-	}
-
-	// delete non-existing turma
-	public void testDeleteNonExistingTurma() {
-
-		this.ligarSuportePersistente(false);
-		Object argsDeleteTurma[] = {this.infoClass};
-
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsDeleteTurma);
-			assertEquals("testDeleteNonExistingTurma", Boolean.FALSE.booleanValue(), ((Boolean) result).booleanValue());
-		} catch (Exception ex) {
-			fail("testDeleteNonExistingTurma");
-		}
-	}
-*/
 	private void ligarSuportePersistente(boolean existing) {
 
 		ISuportePersistente sp = null;

@@ -42,16 +42,10 @@ public class EditarSalaServicosTest extends TestCaseDeleteAndEditServices {
 		super.tearDown();
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
-	 */
 	protected String getNameOfServiceToBeTested() {
 		return "EditarSala";
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentsOfServiceToBeTestedSuccessfuly()
-	 */
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
 		Object argsEditarSala[] = new Object[2];
@@ -61,9 +55,6 @@ public class EditarSalaServicosTest extends TestCaseDeleteAndEditServices {
 		return argsEditarSala;
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
-	 */
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 
 		Object argsEditarSala[] = new Object[2];
@@ -72,37 +63,4 @@ public class EditarSalaServicosTest extends TestCaseDeleteAndEditServices {
 
 		return argsEditarSala;
 	}
-/*
-	// edit existing sala
-	public void testEditExistingSala() {
-
-		Object argsEditarSala[] = new Object[2];
-		argsEditarSala[0] = new RoomKey("Ga1");
-		argsEditarSala[1] = new InfoRoom(new String("Ga1"), new String("Pavilhilhão Central"), new Integer(1), new TipoSala(TipoSala.ANFITEATRO), new Integer(150), new Integer(25));
-
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsEditarSala);
-			assertEquals("testEditNonExistingSala", Boolean.TRUE.booleanValue(), ((Boolean) result).booleanValue());
-		} catch (Exception ex) {
-			fail("testEditNonExistingSala");
-		}
-	}
-
-	// edit non-existing sala
-	public void testEditarNonExistingSala() {
-
-		Object argsEditarSala[] = new Object[2];
-		argsEditarSala[0] = new RoomKey("Ga4");
-		argsEditarSala[1] = new InfoRoom(new String("Ga4"), new String("Pavilhilhão Central"), new Integer(1), new TipoSala(TipoSala.ANFITEATRO), new Integer(100), new Integer(50));
-
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsEditarSala);
-			assertEquals("testEditNonExistingSala", Boolean.FALSE.booleanValue(), ((Boolean) result).booleanValue());
-		} catch (Exception ex) {
-			fail("testEditNonExistingSala");
-		}
-	}
-*/
 }

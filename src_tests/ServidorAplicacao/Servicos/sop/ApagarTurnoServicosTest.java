@@ -58,16 +58,10 @@ public class ApagarTurnoServicosTest extends TestCaseDeleteAndEditServices {
 		super.tearDown();
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
-	 */
 	protected String getNameOfServiceToBeTested() {
 		return "ApagarTurno";
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedSuccessfuly()
-	 */
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
 		this.ligarSuportePersistente(true);
@@ -77,9 +71,6 @@ public class ApagarTurnoServicosTest extends TestCaseDeleteAndEditServices {
 		return argsDeleteTurno;
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
-	 */
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 
 		this.ligarSuportePersistente(false);
@@ -88,39 +79,7 @@ public class ApagarTurnoServicosTest extends TestCaseDeleteAndEditServices {
 
 		return argsDeleteTurno;
 	}
-/*
-	// delete existing turno
-	public void testDeleteExistingTurno() {
 
-		this.ligarSuportePersistente(true);
-
-		Object argsDeleteTurno[] = { new ShiftKey(this.infoShift.getNome(), this.infoShift.getInfoDisciplinaExecucao()) };
-
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsDeleteTurno);
-			assertEquals("testDeleteExistingTurno", Boolean.TRUE.booleanValue(), ((Boolean) result).booleanValue());
-		} catch (Exception ex) {
-			fail("testDeleteExistingTurno");
-		}
-	}
-
-	// delete non-existing turno
-	public void testDeleteNonExistingTurno() {
-
-		this.ligarSuportePersistente(false);
-
-		Object argsDeleteTurno[] = { new ShiftKey(this.infoShift.getNome(), this.infoShift.getInfoDisciplinaExecucao()) };
-
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsDeleteTurno);
-			assertEquals("testDeleteNonExistingTurno", Boolean.FALSE.booleanValue(), ((Boolean) result).booleanValue());
-		} catch (Exception ex) {
-			fail("testDeleteNonExistingTurno");
-		}
-	}
-*/
 	private void ligarSuportePersistente(boolean existing) {
 
 		ISuportePersistente sp = null;

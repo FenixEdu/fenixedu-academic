@@ -61,16 +61,10 @@ public class CriarTurmaServicosTest extends TestCaseCreateServices {
 		super.tearDown();
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
-	 */
 	protected String getNameOfServiceToBeTested() {
 		return "CriarTurma";
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentsOfServiceToBeTestedSuccessfuly()
-	 */
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
 		this. ligarSuportePersistente(false);
@@ -80,9 +74,6 @@ public class CriarTurmaServicosTest extends TestCaseCreateServices {
 		return argsCriarTurma;
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
-	 */
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 
 		this. ligarSuportePersistente(true);
@@ -92,46 +83,11 @@ public class CriarTurmaServicosTest extends TestCaseCreateServices {
 		return argsCriarTurma;
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentListOfServiceToBeTestedUnsuccessfuly()
-	 */
 	protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly() {
 		return null;
 	}
 
-/*
-	// write existing turma
-	public void testCreateExistingTurma() {
 
-		this. ligarSuportePersistente(true);
-
-		Object argsCriarTurma[] = { this.infoClass };
-
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsCriarTurma);
-			fail("testCreateExistingTurma");
-		} catch (Exception ex) {
-			assertNull("testCreateExistingTurma", result);
-		}
-	}
-
-	// write new non-existing turma
-	public void testCreateNonExistingTurma() {
-
-		this. ligarSuportePersistente(false);
-
-		Object argsCriarTurma[] = { this.infoClass };
-
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsCriarTurma);
-			assertEquals("testCreateNonExistingTurma", Boolean.TRUE.booleanValue(), ((Boolean) result).booleanValue());
-		} catch (Exception ex) {
-			fail("testCreateNonExistingTurma");
-		}
-	}
-*/
 	private void ligarSuportePersistente(boolean existing) {
 
 		ISuportePersistente sp = null;

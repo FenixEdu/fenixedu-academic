@@ -56,16 +56,10 @@ public class EditarTurnoServicosTest extends TestCaseDeleteAndEditServices {
 		super.tearDown();
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
-	 */
 	protected String getNameOfServiceToBeTested() {
 		return "EditarTurno";
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedSuccessfuly()
-	 */
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
 		this.ligarSuportePersistente(true);
@@ -82,9 +76,6 @@ public class EditarTurnoServicosTest extends TestCaseDeleteAndEditServices {
 		return argsEditarTurno;
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
-	 */
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 
 		this.ligarSuportePersistente(false);
@@ -100,53 +91,7 @@ public class EditarTurnoServicosTest extends TestCaseDeleteAndEditServices {
 
 		return argsEditarTurno;
 	}
-/*
-	// edit existing turno
-	public void testEditExistingTurno() {
 
-		this.ligarSuportePersistente(true);
-
-		Object argsEditarTurno[] = new Object[2];
-		argsEditarTurno[0] = this.infoShift;
-		ITurno turno = Cloner.copyInfoShift2Shift(this.infoShift);
-		InfoShift newInfoShift = Cloner.copyShift2InfoShift(turno);
-		newInfoShift.setLotacao(new Integer(200));
-		newInfoShift.setTipo(new TipoAula(TipoAula.DUVIDAS));
-		newInfoShift.setNome("turno3243324324sdv");
-		argsEditarTurno[1] = newInfoShift;
-
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsEditarTurno);
-			assertEquals("testEditNonExistingTurno", Boolean.TRUE.booleanValue(), ((Boolean) result).booleanValue());
-		} catch (Exception ex) {
-			fail("testEditNonExistingTurno");
-		}
-	}
-
-	// edit non-existing turno
-	public void testEditarNonExistingTurno() {
-
-		this.ligarSuportePersistente(false);
-
-		Object argsEditarTurno[] = new Object[2];
-		argsEditarTurno[0] = this.infoShift;
-		ITurno turno = Cloner.copyInfoShift2Shift(this.infoShift);
-		InfoShift newInfoShift = Cloner.copyShift2InfoShift(turno);
-		newInfoShift.setLotacao(new Integer(200));
-		newInfoShift.setTipo(new TipoAula(TipoAula.DUVIDAS));
-		newInfoShift.setNome("turno3243324324sdv");
-		argsEditarTurno[1] = newInfoShift;
-
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsEditarTurno);
-			assertEquals("testEditNonExistingTurno", Boolean.FALSE.booleanValue(), ((Boolean) result).booleanValue());
-		} catch (Exception ex) {
-			fail("testEditNonExistingTurno");
-		}
-	}
-*/
 	private void ligarSuportePersistente(boolean existing) {
 
 		ISuportePersistente sp = null;

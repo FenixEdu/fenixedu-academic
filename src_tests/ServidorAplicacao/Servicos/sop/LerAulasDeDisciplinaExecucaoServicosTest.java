@@ -55,16 +55,10 @@ public class LerAulasDeDisciplinaExecucaoServicosTest extends TestCaseReadServic
 		super.tearDown();
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
-	 */
 	protected String getNameOfServiceToBeTested() {
 		return "LerAulasDeDisciplinaExecucao";
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedSuccessfuly()
-	 */
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
 		ligarSuportePersistente(true);
@@ -74,9 +68,6 @@ public class LerAulasDeDisciplinaExecucaoServicosTest extends TestCaseReadServic
 		return argsLerAulas;
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
-	 */
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 
 		ligarSuportePersistente(false);
@@ -86,59 +77,18 @@ public class LerAulasDeDisciplinaExecucaoServicosTest extends TestCaseReadServic
 		return argsLerAulas;
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
-	 */
 	protected int getNumberOfItemsToRetrieve() {
 		return 6;
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getObjectToCompare()
-	 */
 	protected Object getObjectToCompare() {
 		return null;
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#needsAuthorization()
-	 */
 	protected boolean needsAuthorization() {
 		return true;
 	}
-/*
-	// read existing aulas
-	public void testReadExistingAulas() {
 
-		ligarSuportePersistente(true);
-
-		Object argsLerAulas[] = { this.infoExecutionCourse };
-
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsLerAulas);
-			assertEquals("testLerExistingAulas", 6, ((List) result).size());
-		} catch (Exception ex) {
-			fail("testLerExistingAulas");
-		}
-	}
-
-	// read new non-existing aulas
-	public void testReadNonExistingAulas() {
-
-		ligarSuportePersistente(false);
-
-		Object argsLerAulas[] = { this.infoExecutionCourse };
-
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsLerAulas);
-			assertTrue("testLerNonExistingAulas", ((List) result).isEmpty());
-		} catch (Exception ex) {
-			fail("testLerNonExistingAulas");
-		}
-	}
-*/
 	private void ligarSuportePersistente(boolean existing) {
 
 		ISuportePersistente sp = null;

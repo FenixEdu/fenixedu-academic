@@ -58,16 +58,10 @@ public class CriarTurnoServicosTest extends TestCaseCreateServices {
 		super.tearDown();
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
-	 */
 	protected String getNameOfServiceToBeTested() {
 		return "CriarTurno";
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentsOfServiceToBeTestedSuccessfuly()
-	 */
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
 		this.ligarSuportePersistente(false);
@@ -77,9 +71,6 @@ public class CriarTurnoServicosTest extends TestCaseCreateServices {
 		return argsCriarTurno;
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
-	 */
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 
 		this.ligarSuportePersistente(true);
@@ -89,46 +80,10 @@ public class CriarTurnoServicosTest extends TestCaseCreateServices {
 		return argsCriarTurno;
 	}
 
-	/**
-	 * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentListOfServiceToBeTestedUnsuccessfuly()
-	 */
 	protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly() {
 		return null;
 	}
 
-/*
-	// write existing turno
-	public void testCreateExistingTurno() {
-
-		this.ligarSuportePersistente(true);
-
-		Object argsCriarTurno[] = { this.infoShift };
-
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsCriarTurno);
-			fail("testCreateExistingTurno");
-		} catch (Exception ex) {
-			assertNull("testCreateExistingTurno", result);
-		}
-	}
-
-	// write new non-existing turno
-	public void testCreateNonExistingTurno() {
-
-		this.ligarSuportePersistente(false);
-
-		Object argsCriarTurno[] = { this.infoShift };
-
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView, getNameOfServiceToBeTested(), argsCriarTurno);
-			assertEquals("testCreateNonExistingTurno", Boolean.TRUE.booleanValue(), ((Boolean) result).booleanValue());
-		} catch (Exception ex) {
-			fail("testCreateNonExistingTurno");
-		}
-	}
-*/
 	private void ligarSuportePersistente(boolean existing) {
 
 		ISuportePersistente sp = null;

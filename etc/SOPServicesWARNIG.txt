@@ -1,0 +1,15 @@
+MANHOSOS:
+=========
+. AdicionarAulaServicosTest
+. CriarAulaServicosTest
+. EditarAulaServicosTest
+
+OUTRAS QUESTÕES A TER EM CONTA:
+===============================
+
+. TestCaseDeleteAndEditServices ->	É possivel que venha a ser necessário fazer um testCase
+									para serviços de edição ou arranjar uma forma de incluir o teste a
+									esses serviços no TestCaseCreateServices.
+
+------------------------------------------------------------------------------------------------------------
+

@@ -11,11 +11,8 @@ package ServidorAplicacao.Servicos.sop;
  *
  * @author tfc130
  */
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -27,12 +24,12 @@ import DataBeans.InfoLessonServiceResult;
 import DataBeans.InfoRoom;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
-import ServidorAplicacao.Servicos.TestCaseCreateServices;
+import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
 import Util.DiaSemana;
 import Util.TipoAula;
 import Util.TipoSala;
 
-public class CriarAulaServicosTest extends TestCaseCreateServices {
+public class CriarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 
 	public CriarAulaServicosTest(java.lang.String testName) {
 		super(testName);
@@ -56,16 +53,26 @@ public class CriarAulaServicosTest extends TestCaseCreateServices {
 		super.tearDown();
 	}
 
+	// TODO This class must extend class TestCaseCreateServices so this method will be gonne
+	protected boolean needsAuthorization() {
+		return true;
+	}
+
+	protected String getNameOfServiceToBeTested() {
+		return "CriarAula";
+	}
+
+/*
 	protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly() {
 		
 		HashMap hashMap = new HashMap();
 
 		// write existing lesson with complete match
 		InfoRoom infoSala = new InfoRoom("Ga1", "Pavilhao Central", new Integer(0), new TipoSala(1), new Integer(100), new Integer(50));
-		InfoExecutionCourse infoDisciplinaExecucao = new InfoExecutionCourse( "Trabalho Final de Curso I", "TFCI", "programa1",
-																				new Double(0), new Double(0), new Double(0),
-																				new Double(0), new InfoExecutionPeriod("2º Semestre", new InfoExecutionYear("2002/2003")));
-/*
+		InfoExecutionCourse infoDisciplinaExecucao = new InfoExecutionCourse("Trabalho Final de Curso I", "TFCI", "programa1",
+																			new Double(0), new Double(0), new Double(0),
+																			new Double(0), new InfoExecutionPeriod("2º Semestre", new InfoExecutionYear("2002/2003")));
+
 		Object argsCriarAula[] = new Object[1];
 		Calendar inicio = Calendar.getInstance();
 		Calendar fim = Calendar.getInstance();
@@ -79,7 +86,8 @@ public class CriarAulaServicosTest extends TestCaseCreateServices {
 
 		List argsInList = Arrays.asList(argsCriarAula);
 		hashMap.put("write new existing lesson with complete match", argsInList);
-*/
+
+		// write new existing lesson with intercepting match
 		Object argsCriarAula2[] = new Object[1];
 		Calendar inicio2 = Calendar.getInstance();
 		Calendar fim2 = Calendar.getInstance();
@@ -94,7 +102,7 @@ public class CriarAulaServicosTest extends TestCaseCreateServices {
 		List argsInList2 = Arrays.asList(argsCriarAula2);
 		hashMap.put("write new existing lesson with intercepting match", argsInList2);
 
-		return null; //hashMap;
+		return hashMap;
 	}
 
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
@@ -108,38 +116,16 @@ public class CriarAulaServicosTest extends TestCaseCreateServices {
 	protected String getNameOfServiceToBeTested() {
 		return "CriarAula";
 	}
+*/
 
-
-
-
-
-
-
-
-
-/*
 	// write new existing lesson with complete match
 	public void testCreateExistingLessonCompleteMatch() {
-		InfoRoom infoSala =
-			new InfoRoom(
-				"Ga1",
-				"Pavilhao Central",
-				new Integer(0),
-				new TipoSala(1),
-				new Integer(100),
-				new Integer(50));
-		InfoExecutionCourse infoDisciplinaExecucao =
-			new InfoExecutionCourse(
-				"Trabalho Final de Curso I",
-				"TFCI",
-				"programa1",
-				new Double(0),
-				new Double(0),
-				new Double(0),
-				new Double(0), 
-				new InfoExecutionPeriod(
-					"2º Semestre",
-					new InfoExecutionYear("2002/2003")));
+
+		InfoRoom infoSala = new InfoRoom("Ga1", "Pavilhao Central", new Integer(0), new TipoSala(1), new Integer(100), new Integer(50));
+		InfoExecutionCourse infoDisciplinaExecucao = new InfoExecutionCourse("Trabalho Final de Curso I", "TFCI", "programa1",
+																			new Double(0), new Double(0), new Double(0),
+																			new Double(0), new InfoExecutionPeriod("2º Semestre", new InfoExecutionYear("2002/2003")));
+
 		Object argsCriarAula[] = new Object[1];
 		Calendar inicio = Calendar.getInstance();
 		Calendar fim = Calendar.getInstance();
@@ -149,14 +135,8 @@ public class CriarAulaServicosTest extends TestCaseCreateServices {
 		fim.set(Calendar.HOUR_OF_DAY, 9);
 		fim.set(Calendar.MINUTE, 30);
 		fim.set(Calendar.SECOND, 0);
-		argsCriarAula[0] =
-			new InfoLesson(
-				new DiaSemana(2),
-				inicio,
-				fim,
-				new TipoAula(1),
-				infoSala,
-				infoDisciplinaExecucao);
+		argsCriarAula[0] = new InfoLesson(new DiaSemana(DiaSemana.SEGUNDA_FEIRA), inicio, fim, new TipoAula(1), infoSala, infoDisciplinaExecucao);
+
 		GestorServicos serviceManager = GestorServicos.manager();
 		Object result = null;
 		HashSet privileges = new HashSet();
@@ -169,33 +149,16 @@ public class CriarAulaServicosTest extends TestCaseCreateServices {
 		
 		} catch (Exception ex) {
 			// all is ok
-			
-
 		}
 	}
-*/
+
 //	write new existing lesson with intercepting match
 	 public void testCreateExistingLessonInterceptingMatch() {
-		 InfoRoom infoSala =
-			 new InfoRoom(
-				 "Ga1",
-				 "Pavilhao Central",
-				 new Integer(0),
-				 new TipoSala(1),
-				 new Integer(100),
-				 new Integer(50));
-		 InfoExecutionCourse infoDisciplinaExecucao =
-			 new InfoExecutionCourse(
-				 "Trabalho Final de Curso I",
-				 "TFCI",
-				 "programa1",
-				 new Double(0),
-				 new Double(0),
-				 new Double(0),
-				 new Double(0), 
-				 new InfoExecutionPeriod(
-					 "2º Semestre",
-					 new InfoExecutionYear("2002/2003")));
+
+		 InfoRoom infoSala = new InfoRoom("Ga1", "Pavilhao Central", new Integer(0), new TipoSala(1), new Integer(100), new Integer(50));
+		 InfoExecutionCourse infoDisciplinaExecucao = new InfoExecutionCourse("Trabalho Final de Curso I", "TFCI", "programa1",
+		 																	new Double(0), new Double(0), new Double(0),
+		 																	new Double(0), new InfoExecutionPeriod("2º Semestre", new InfoExecutionYear("2002/2003")));
 		 Object argsCriarAula[] = new Object[1];
 		 Calendar inicio = Calendar.getInstance();
 		 Calendar fim = Calendar.getInstance();
@@ -205,14 +168,7 @@ public class CriarAulaServicosTest extends TestCaseCreateServices {
 		 fim.set(Calendar.HOUR_OF_DAY, 9);
 		 fim.set(Calendar.MINUTE, 0);
 		 fim.set(Calendar.SECOND, 0);
-		 argsCriarAula[0] =
-			 new InfoLesson(
-				 new DiaSemana(2),
-				 inicio,
-				 fim,
-				 new TipoAula(1),
-				 infoSala,
-				 infoDisciplinaExecucao);
+		 argsCriarAula[0] = new InfoLesson(new DiaSemana(2), inicio, fim, new TipoAula(1), infoSala, infoDisciplinaExecucao);
 		 GestorServicos serviceManager = GestorServicos.manager();
 		 Object result = null;
 		 HashSet privileges = new HashSet();
@@ -220,8 +176,8 @@ public class CriarAulaServicosTest extends TestCaseCreateServices {
 		 privileges.add("LerAulasDeDisciplinaExecucaoETipo");
 		 UserView userView = new UserView("user", privileges);
 		 try {
-			 result = serviceManager.executar(userView, "CriarAula", argsCriarAula);
-			fail("testCreateExistingLessonInterceptingMatch");
+			result = serviceManager.executar(userView, "CriarAula", argsCriarAula);
+			assertEquals("testCreateExistingLessonInterceptingMatch", ((InfoLessonServiceResult) result).getMessageType(), InfoLessonServiceResult.CLASSES_EXISTING_IN_TIME_INTERVAL);
 		 } catch (Exception ex) {
 			ex.printStackTrace();
 		 }
