@@ -13,6 +13,6 @@
 	</definition>
 	<definition name="definition.schoolRegistration.changePassword" extends="definition.firstTimeStudent.one-column">
 		<put name="navGeral" value="" />
-		<put name="body" value="/person/changePassword_bd.jsp" />
+		<put name="body" value="/student/schoolRegistration/changePassword_bd.jsp" />
 	</definition>
 </tiles-definitions>
