@@ -142,7 +142,9 @@
       			input="/alternativeSiteManagement.jsp"
                 type="ServidorApresentacao.Action.teacher.AlternativeSiteManagementAction"            
                 validate="true">	           
-				<forward name="editAlternativeSite" path="/alternativeSiteManagement.jsp"/>				
+				<forward name="editAlternativeSite" path="/alternativeSiteManagement.jsp"/>	
+				<forward name="viewSite" path="/viewSite.jsp"/>	
+							
 	</action>             
 	
 
