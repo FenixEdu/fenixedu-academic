@@ -4,13 +4,12 @@
  */
 package DataBeans.gesdis;
 
-import java.io.Serializable;
 
 /**
  * @author Ivo Brandão
  */
-public class InfoItem implements Serializable {
-
+public class InfoItem implements Comparable {
+//Serializable
 	private String information;
 	private String name;
 	private Integer itemOrder;
@@ -143,5 +142,10 @@ public class InfoItem implements Serializable {
 	public void setInfoSection(InfoSection infoSection) {
 		this.infoSection = infoSection;
 	}
-
+	
+	public int compareTo(Object arg0) { 
+		
+			
+		return this.getItemOrder().intValue()-((InfoItem)arg0).getItemOrder().intValue();}	
+	
 }

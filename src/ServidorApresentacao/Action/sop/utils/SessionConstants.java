@@ -32,6 +32,7 @@ public abstract class SessionConstants {
 	// -------------------------------------------------------------------------------
 	//    GesDis Constants - For GesDis
 	// -------------------------------------------------------------------------------
+	public static final String INDEX="index";
 	public static final String INFO_SITE="info_site";
 	public static final String EXECUTION_COURSE_CURRICULUM= "execution_course_curriculum";
 	public static final String INFO_SITE_ANNOUNCEMENT= "info_site_announcement";

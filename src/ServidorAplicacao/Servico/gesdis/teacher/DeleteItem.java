@@ -64,7 +64,6 @@ System.out.println("entra no servico");
 			Integer orderOfDeletedItem = deletedItem.getItemOrder();
 
 			persistentItem.delete(deletedItem);
-System.out.println("dp d apagar o item");			
 			persistentSuport.confirmarTransaccao();
 			persistentSuport.iniciarTransaccao();
 			
@@ -72,7 +71,6 @@ System.out.println("dp d apagar o item");
 			List itemsList = null;
 
 			itemsList = persistentItem.readAllItemsBySection(section);
-System.out.println("tamanho : " + itemsList.size());
 			Iterator iterItems = itemsList.iterator();
 
 			while (iterItems.hasNext()) {
@@ -90,7 +88,6 @@ System.out.println("tamanho : " + itemsList.size());
 				}
 
 			}
-System.out.println("sai do servico");
 			return new Boolean(true);
 
 		} catch (ExcepcaoPersistencia e) {
