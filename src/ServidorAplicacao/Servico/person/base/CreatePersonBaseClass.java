@@ -5,6 +5,7 @@
 package ServidorAplicacao.Servico.person.base;
 
 import DataBeans.InfoPerson;
+import Dominio.Country;
 import Dominio.ICountry;
 import Dominio.IPersonRole;
 import Dominio.IPessoa;
@@ -81,7 +82,7 @@ public class CreatePersonBaseClass
 
         if (newPerson.getInfoPais() != null)
         {
-            ICountry country = pCountry.readCountryByCode(newPerson.getInfoPais().getCode());
+            ICountry country = (ICountry) pCountry.readByOID(Country.class,newPerson.getInfoPais().getIdInternal());
             personToLock.setPais(country);
         }
 
