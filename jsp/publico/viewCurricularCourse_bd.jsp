@@ -62,12 +62,12 @@
 			<bean:write name="curriculum" property="generalObjectives" filter="false"/>
 		</p>
 	</logic:notEmpty>
-	<logic:notEmpty name="curriculum" property="generalObjectives">
+	 <logic:notEmpty name="curriculum" property="operacionalObjectives">
 		<h2><bean:message key="label.operacionalObjectives" /></h2>
 		<p>
 			<bean:write name="curriculum" property="operacionalObjectives" filter="false"/>
 		</p>
-	</logic:notEmpty>
+	</logic:notEmpty> 
 <br/>
 <br/>
 	<logic:notEmpty name="curriculum" property="program">
