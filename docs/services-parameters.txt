@@ -1,9 +1,11 @@
+Notação: campos precedidos por * são opcionais
+
 ----------------------------------------------
 Public Services (before Gesdis):
 ----------------------------------------------
 ----------------------------------------------
 Nome:ReadCurricularCourseListOfExecutionCourse
-Parametros:InfoExecutionCourse infoExecCourse
+Parametros:InfoExecutionCourse infoExecCourse (sigla,executionPeriod)
 Role: none
 ----------------------------------------------
 Nome:ReadExecutionCourse
@@ -15,7 +17,7 @@ Parametros:InfoExecutionYear infoExecutionYear,	String degreeInitials,String nam
 Role: none
 ----------------------------------------------
 Nome:SelectClasses
-Parametros:InfoClass infoClass
+Parametros:InfoClass infoClass (executionPeriod,executionDegree, anoCurricular)
 Role: none
 ----------------------------------------------
 Nome:SelectExecutionCourse
@@ -27,11 +29,11 @@ Parametros:InfoExecutionCourse infoExecutionCourse
 Role: none
 ----------------------------------------------
 Nome:SelectRooms
-Parametros:InfoRoom InfoRoom
+Parametros:InfoRoom InfoRoom (*Nome, *Edificio, *Piso, *tipo,  *CapacidadeNormal,  *CapacidadeExame) 
 Role: none
 ----------------------------------------------
 Nome:SelectShifts
-Parametros:InfoShift infoShift
+Parametros:InfoShift infoShift (DisciplinaExecucao)
 Role: none
 ----------------------------------------------
 
@@ -39,47 +41,54 @@ Role: none
 Teacher Services:
 ----------------------------------------------
 Nome:AssociateTeacher
-Parametros:InfoExecutionCourse infoExecutionCourse,Integer teacherNumber
+Parametros:InfoExecutionCourse infoExecutionCourse,Integer teacherNumber (executionCourse->sigla,executionPeriod)
 Role: teacher
 ----------------------------------------------
 Nome:DeleteAnnouncement
-Parametros:InfoSite infoSite, InfoAnnouncement infoAnnouncement
+Parametros:InfoSite infoSite, InfoAnnouncement infoAnnouncement (announcement->title,CreationDate)
 Role: teacher
 ----------------------------------------------
 Nome:DeleteBibliographicReference
-Parametros:	InfoExecutionCourse infoExecutionCourse,InfoBibliographicReference infoBibliographicReference
+Parametros:	InfoExecutionCourse infoExecutionCourse,InfoBibliographicReference infoBibliographicReference 
+(bibligraphicReference->title,authors,reference,year)
 Role: teacher
 ----------------------------------------------
 Nome:DeleteItem
-Parametros:InfoItem infoItem
+Parametros:InfoItem infoItem (item->section,name) (section->site) (site->executionCourse)
 Role: teacher
 ----------------------------------------------
 Nome:DeleteSection
-Parametros:InfoSection infoSection
+Parametros:InfoSection infoSection (section->site,name,*superiorSection) (site->executionCourse)
 Role: teacher
 ----------------------------------------------
 Nome:EditAnnouncement
 Parametros:InfoSite infoSite, InfoAnnouncement infoAnnouncement, String announcementNewTitle, String announcementNewInformation
+(announcement-> title) (site->executionCourse) (executionCourse->executionPeriod) (executionPeriod->executionYear)
 Role: teacher
 ----------------------------------------------
 Nome:EditBibliographicReference
 Parametros:InfoExecutionCourse infoExecutionCourse,	InfoBibliographicReference infoBibliographicReferenceOld,InfoBibliographicReference infoBibliographicReferenceNew 
+(executionYear->name) (executionPeriod->name,executionYear) (executionCourse->exectutionPeriod,sigla) (infoBibliographicReferenceOld->title,Authors,Reference,Year)
 Role: teacher
 ----------------------------------------------
 Nome:EditCurriculum
 Parametros:InfoCurriculum oldInfoCurriculum, InfoCurriculum newInfoCurriculum
+(oldCurriculum->executionCourse)(newCurriculum->*generalObjectives,*operationalObjectives,*program)
 Role: teacher
 ----------------------------------------------
 Nome:EditItem
 Parametros:InfoItem oldInfoItem, InfoItem newInfoItem
+(oldinfoItem->section,name,order) (newInfoItem->order,*information,*name,urgent)
 Role: teacher
 ----------------------------------------------
 Nome:EditSection
 Parametros:InfoSection oldInfoSection, InfoSection newInfoSection
+(oldInfoSection->site,name,order,*superiorSection)(newInfoSection->order,*superiorSection) (site->executionCourse) (executionCourse->sigla,executionPeriod)(executionPeriod->name,executionYear) (executionYear->name)
 Role: teacher
 ----------------------------------------------
 Nome:EditSite
 Parametros:InfoSite infoSiteOld, InfoSite infoSiteNew
+(siteOld->executionCourse) (sitenew->*mail,*alternativeSite,*introduction,*statement)
 Role: teacher
 ----------------------------------------------
 Nome:InsertAnnouncement
