@@ -46,5 +46,10 @@ public interface IAulaPersistente extends IPersistentObject {
 	 * @return List
 	 * @throws ExcepcaoPersistencia when query fails.
 	 */
-	public List readLessonsInPeriod(IAula lesson) throws ExcepcaoPersistencia;		
+	// Depricated : This Method does not meet it's requierments...
+	//              Use readLessonsInBroadPeriodInAnyRoom instead.	
+	public List readLessonsInPeriod(IAula lesson) throws ExcepcaoPersistencia;
+
+	public List readLessonsInBroadPeriodInAnyRoom(IAula lesson)
+			throws ExcepcaoPersistencia;
 }

@@ -213,6 +213,9 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 		}
 	}
 
+
+	// Depricated : This Method does not meet it's requierments...
+	//              Use readLessonsInBroadPeriodInAnyRoom instead.
 	public List readLessonsInPeriod(IAula lesson) throws ExcepcaoPersistencia {
 		try {
 			List lessonList = null;
@@ -300,6 +303,57 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 						.equals(((Aula) oldLesson).getCodigoInterno()))
 						lessonList.remove(ipto);
 			
+			return lessonList;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
+
+	public List readLessonsInBroadPeriodInAnyRoom(IAula lesson)
+		throws ExcepcaoPersistencia {
+		try {
+			List lessonList = null;
+			String oqlQuery = "select aulas from " + Aula.class.getName();
+			oqlQuery += " where ( inicio >$1 "
+				+ "and inicio <$2 "
+				+ "and diaSemana = $3 ) "
+				+ "or ( fim > $4 "
+				+ "and fim < $5 "
+				+ "and diaSemana = $6 ) "
+				+ "or ( inicio = $7 "
+				+ "and fim = $8 "
+				+ "and diaSemana = $9 ) "
+				+ "or ( inicio <= $10 "
+				+ "and fim >= $11 "
+				+ "and diaSemana = $12 ) "
+				+ "or ( inicio = $13 "
+				+ "and fim <= $14 "
+				+ "and diaSemana = $15 )";
+			
+			query.create(oqlQuery);
+			query.bind(lesson.getInicio());
+			query.bind(lesson.getFim());
+			query.bind(lesson.getDiaSemana());
+
+			query.bind(lesson.getInicio());
+			query.bind(lesson.getFim());
+			query.bind(lesson.getDiaSemana());
+
+			query.bind(lesson.getInicio());
+			query.bind(lesson.getFim());
+			query.bind(lesson.getDiaSemana());
+
+			query.bind(lesson.getInicio());
+			query.bind(lesson.getFim());
+			query.bind(lesson.getDiaSemana());
+
+			query.bind(lesson.getInicio());
+			query.bind(lesson.getFim());
+			query.bind(lesson.getDiaSemana());
+
+			lessonList = (List) query.execute();
+			lockRead(lessonList);
+
 			return lessonList;
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);

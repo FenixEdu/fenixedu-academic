@@ -294,7 +294,7 @@ public class ConversorSOP {
 		createClassList(sopAulas);
 
 		/* this will run only once */
-		//insertSalas();
+		insertSalas();
 
 		createMigrationLessonList(sopAulas);
 
@@ -355,11 +355,11 @@ public class ConversorSOP {
 
 		List migrationShiftList =
 			createShiftList(classList, consistentMigrationLessonList);
-
+/*
 		saveExecutionCourse(migrationExecutionCourseCollection);
 		saveClasses(classList);
 		saveLessons(consistentMigrationLessonList);
-
+*/
 	}
 
 	/**

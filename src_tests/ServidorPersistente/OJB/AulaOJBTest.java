@@ -19,9 +19,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.ojb.odmg.OJB;
-import org.odmg.Database;
 import org.odmg.Implementation;
-import org.odmg.ODMGException;
 import org.odmg.OQLQuery;
 import org.odmg.QueryException;
 
@@ -371,21 +369,6 @@ public class AulaOJBTest extends TestCaseOJB {
       List result = null;
       try {
         Implementation odmg = OJB.getInstance();
-
-		///////////////////////////////////////////////////////////////////
-		// Added Code due to Upgrade from OJB 0.9.5 to OJB rc1
-		///////////////////////////////////////////////////////////////////
-		Database db = odmg.newDatabase();
-
-		try {
-			db.open("OJB/repository.xml", Database.OPEN_READ_WRITE);
-		} catch (ODMGException e) {
-			e.printStackTrace();
-		}
-		///////////////////////////////////////////////////////////////////
-		// End of Added Code
-		///////////////////////////////////////////////////////////////////
-        
         OQLQuery query = odmg.newOQLQuery();;
         String oqlQuery = "select aula from " + Aula.class.getName();
         query.create(oqlQuery);
@@ -775,15 +758,72 @@ public class AulaOJBTest extends TestCaseOJB {
 		persistentSupport.confirmarTransaccao();
 		assertNotNull(result);
 		assertEquals(result.size(), 0);
-
-
-
-
   	} catch (ExcepcaoPersistencia ex) {
 		fail("testReadByRoomAndExecutionPeriod : fail");
     }
   }
 
-  
-  
+  public void testReadLessonsInBroadPeriodInAnyRoom() {
+  	try {
+  		// will contain Query result
+  		List lessonsInBroadPeriodInAnyRoom = null;
+
+		// prepare query input
+		IAula lesson = new Aula();
+		lesson.setDiaSemana(new DiaSemana(DiaSemana.SEGUNDA_FEIRA));
+		Calendar start = Calendar.getInstance();
+		start.set(Calendar.HOUR_OF_DAY, 8);
+		start.set(Calendar.MINUTE, 0);
+		start.set(Calendar.SECOND, 0);
+		lesson.setInicio(start);
+		Calendar end = Calendar.getInstance();
+		start.set(Calendar.HOUR_OF_DAY, 9);
+		start.set(Calendar.MINUTE, 0);
+		start.set(Calendar.SECOND, 0);
+		lesson.setFim(end);
+
+		// execute query
+		persistentSupport.iniciarTransaccao();
+		lessonsInBroadPeriodInAnyRoom = persistentLesson.readLessonsInBroadPeriodInAnyRoom(lesson);
+		persistentSupport.confirmarTransaccao();
+
+		assertNotNull("testReadLessonsInBroadPeriodInAnyRoom: result was null", lessonsInBroadPeriodInAnyRoom);
+		assertEquals(7, lessonsInBroadPeriodInAnyRoom.size());
+
+		// prepare query input
+		start.set(Calendar.HOUR_OF_DAY, 9);
+		lesson.setInicio(start);
+		start.set(Calendar.HOUR_OF_DAY, 10);
+		start.set(Calendar.MINUTE, 30);
+		lesson.setFim(end);
+
+		// execute query
+		persistentSupport.iniciarTransaccao();
+		lessonsInBroadPeriodInAnyRoom = persistentLesson.readLessonsInBroadPeriodInAnyRoom(lesson);
+		persistentSupport.confirmarTransaccao();
+
+		assertNotNull("testReadLessonsInBroadPeriodInAnyRoom: result was null", lessonsInBroadPeriodInAnyRoom);
+		assertEquals(5, lessonsInBroadPeriodInAnyRoom.size());
+
+		// prepare query input
+		lesson.setDiaSemana(new DiaSemana(DiaSemana.SEXTA_FEIRA));
+		start.set(Calendar.HOUR_OF_DAY, 19);
+		lesson.setInicio(start);
+		start.set(Calendar.HOUR_OF_DAY, 20);
+		start.set(Calendar.MINUTE, 0);
+		lesson.setFim(end);
+
+		// execute query
+		persistentSupport.iniciarTransaccao();
+		lessonsInBroadPeriodInAnyRoom = persistentLesson.readLessonsInBroadPeriodInAnyRoom(lesson);
+		persistentSupport.confirmarTransaccao();
+
+		assertNotNull("testReadLessonsInBroadPeriodInAnyRoom: result was null", lessonsInBroadPeriodInAnyRoom);
+		assertEquals(0, lessonsInBroadPeriodInAnyRoom.size());
+	} catch (ExcepcaoPersistencia ex) {
+		fail("testReadLessonsInBroadPeriodInAnyRoom: Unexpected Exception :" + ex);
+	}
+  	
+  }
+
 }
