@@ -42,6 +42,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		SessionUtils.validSessionVerification(request, mapping);
 
 		HttpSession session = request.getSession(false);
+		session.removeAttribute(SessionConstants.INFO_SECTION);
 		String roomName = (String) request.getParameter("roomName");
 		ActionErrors errors = new ActionErrors();
 		RoomKey roomKey = null;
@@ -107,6 +108,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		SessionUtils.validSessionVerification(request, mapping);
 
 		HttpSession sessao = request.getSession(false);
+		sessao.removeAttribute(SessionConstants.INFO_SECTION);
 		if (sessao != null) {
 			DynaActionForm courseForm = (DynaActionForm) form;
 
@@ -131,6 +133,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		SessionUtils.validSessionVerification(request, mapping);
 
 		HttpSession session = request.getSession(false);
+		session.removeAttribute(SessionConstants.INFO_SECTION);
 		ActionErrors errors = new ActionErrors();
 		InfoExecutionPeriod infoExecPeriod = null;
 		InfoExecutionCourse infoExecCourse = null;
@@ -159,6 +162,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		SessionUtils.validSessionVerification(request, mapping);
 
 		HttpSession session = request.getSession(false);
+		session.removeAttribute(SessionConstants.INFO_SECTION);
 		ActionErrors errors = new ActionErrors();
 		InfoExecutionPeriod infoExecPeriod = null;
 		InfoExecutionCourse infoExecCourse = null;

@@ -29,7 +29,7 @@ public class AnnouncementManagementDispatchAction extends FenixDispatchAction {
 
 			
 			HttpSession session = request.getSession(false);
-			
+			session.removeAttribute(SessionConstants.INFO_SECTION);
 			session.removeAttribute("insertAnnouncementForm");
 			
 			return mapping.findForward("insertAnnouncement");
@@ -41,7 +41,7 @@ public class AnnouncementManagementDispatchAction extends FenixDispatchAction {
 
 		
 		HttpSession session = request.getSession(false);
-
+		session.removeAttribute(SessionConstants.INFO_SECTION);
 		DynaActionForm insertAnnouncementForm = (DynaActionForm) form;
 		String title = (String) insertAnnouncementForm.get("title");
 		String information = (String) insertAnnouncementForm.get("information");
@@ -62,7 +62,7 @@ public class AnnouncementManagementDispatchAction extends FenixDispatchAction {
 		throws Exception {
 
 			HttpSession session = request.getSession(false);
-
+			session.removeAttribute(SessionConstants.INFO_SECTION);
 			//retrieve announcement
 			List announcements = (List) session.getAttribute(SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST);
 			String announcementIndex = (String) request.getParameter("index");
@@ -80,7 +80,7 @@ public class AnnouncementManagementDispatchAction extends FenixDispatchAction {
 
 			
 			HttpSession session = request.getSession(false);
-
+			session.removeAttribute(SessionConstants.INFO_SECTION);
 			DynaActionForm insertAnnouncementForm = (DynaActionForm) form;
 			String newTitle = (String) insertAnnouncementForm.get("title");
 			String newInformation = (String) insertAnnouncementForm.get("information");
@@ -110,7 +110,7 @@ public class AnnouncementManagementDispatchAction extends FenixDispatchAction {
 			 */
 			
 			HttpSession session = request.getSession(false);
-
+			session.removeAttribute(SessionConstants.INFO_SECTION);
 			InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 			
 			List announcements = (List) session.getAttribute(SessionConstants.INFO_SITE_ANNOUNCEMENT_LIST);

@@ -48,7 +48,7 @@ public class BibliographicReferenceManagerDispatchAction
 	
 		SessionUtils.validSessionVerification(request, mapping);
 		HttpSession session = request.getSession(false);
-
+		session.removeAttribute(SessionConstants.INFO_SECTION);
 		DynaActionForm insertBibliographicReferenceForm = (DynaActionForm) form;
 				
 		
@@ -110,7 +110,7 @@ public class BibliographicReferenceManagerDispatchAction
 
 		SessionUtils.validSessionVerification(request, mapping);
 		HttpSession session = request.getSession(false);
-
+		session.removeAttribute(SessionConstants.INFO_SECTION);
 		DynaActionForm editBibliographicReferenceForm = (DynaActionForm) form;				
 	
 
@@ -189,7 +189,7 @@ public class BibliographicReferenceManagerDispatchAction
 
 		SessionUtils.validSessionVerification(request, mapping);
 		HttpSession session = request.getSession(false);
-
+		session.removeAttribute(SessionConstants.INFO_SECTION);
 		InfoSite infoSite =
 			(InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 
@@ -246,7 +246,7 @@ public class BibliographicReferenceManagerDispatchAction
 
 		SessionUtils.validSessionVerification(request, mapping);
 		HttpSession session = request.getSession(false);
-
+		session.removeAttribute(SessionConstants.INFO_SECTION);
 		InfoSite infoSite =
 			(InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 
@@ -291,7 +291,7 @@ public class BibliographicReferenceManagerDispatchAction
 		String index = request.getParameter("index");
 
 		HttpSession session = request.getSession();
-
+		session.removeAttribute(SessionConstants.INFO_SECTION);
 		ArrayList referenceList = null;
 		if (index != null) {
 			session.setAttribute("edit", "Editar");

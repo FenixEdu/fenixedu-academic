@@ -37,6 +37,7 @@ public class AlternativeSiteManagementAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 		HttpSession session = request.getSession();
+		session.removeAttribute(SessionConstants.INFO_SECTION);
 		InfoSite site = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 		String alternativeSite =site.getAlternativeSite();
 		String mail = site.getMail();
@@ -60,7 +61,7 @@ public class AlternativeSiteManagementAction extends FenixDispatchAction {
 		DynaValidatorForm alternativeSiteForm = (DynaValidatorForm) form;
 
 		HttpSession session = request.getSession();
-
+		session.removeAttribute(SessionConstants.INFO_SECTION);
 		InfoSite infoSite =
 			(InfoSite) session.getAttribute(SessionConstants.INFO_SITE);
 

@@ -48,7 +48,7 @@ public class ViewShiftTimeTableAction extends Action {
 		if (shiftName == null)
 			return mapping.getInputForward();
 		HttpSession session = request.getSession(false);		
-		
+		session.removeAttribute(SessionConstants.INFO_SECTION);
 		InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) session.getAttribute(SessionConstants.EXECUTION_COURSE_KEY);
 
 		Object[] args = { new ShiftKey(shiftName, infoExecutionCourse)};

@@ -40,7 +40,7 @@ public class ViewClassTimeTableWithClassNameAndDegreeInitialsAction extends Acti
 		SessionUtils.validSessionVerification(request, mapping);
 			
 		HttpSession session = request.getSession(false);
-		
+		session.removeAttribute(SessionConstants.INFO_SECTION);
 		String degreeInitials = request.getParameter("degreeInitials");
 		String nameDegreeCurricularPlan = request.getParameter("nameDegreeCurricularPlan");
 

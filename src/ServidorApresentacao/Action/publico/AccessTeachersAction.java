@@ -23,9 +23,9 @@ public class AccessTeachersAction extends FenixAction {
 
 	public ActionForward execute(ActionMapping mapping, ActionForm form,  
 		HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-		HttpSession session = getSession(request);
 		
+		HttpSession session = getSession(request);
+		session.removeAttribute(SessionConstants.INFO_SECTION);
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);

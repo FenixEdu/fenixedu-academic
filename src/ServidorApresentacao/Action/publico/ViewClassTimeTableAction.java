@@ -44,7 +44,7 @@ public class ViewClassTimeTableAction extends Action {
 		SessionUtils.validSessionVerification(request, mapping);
 			
 		HttpSession session = request.getSession(false);
-		
+		session.removeAttribute(SessionConstants.INFO_SECTION);
 		String className = request.getParameter("className");
 
 		if (className == null)

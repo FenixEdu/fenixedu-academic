@@ -13,6 +13,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.LabelValueBean;
 
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import ServidorApresentacao.Action.sop.utils.Util;
 import Util.TipoSala;
@@ -30,6 +31,7 @@ public class PrepareConsultRoomsFormAction extends Action {
 	SessionUtils.validSessionVerification(request, mapping);      	
     
     HttpSession sessao = request.getSession(false);
+	sessao.removeAttribute(SessionConstants.INFO_SECTION);
     if (sessao != null) {
     	/* No futuro, os edificios devem ser lidos da BD */
         List buildings = Util.readExistingBuldings("*",null);

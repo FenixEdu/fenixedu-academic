@@ -45,6 +45,7 @@ public class ReadSite extends FenixAction {
 		throws FenixActionException {
 		SessionUtils.validSessionVerification(request, mapping);
 		HttpSession session = getSession(request);
+		session.removeAttribute(SessionConstants.INFO_SECTION);
 		UserView userView =
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);
 

@@ -50,6 +50,7 @@ public class TeacherManagerDispatchAction extends FenixDispatchAction {
 		try {
 			
 			HttpSession session = getSession(request);
+			session.removeAttribute(SessionConstants.INFO_SECTION);
 			UserView userView =
 				(UserView) session.getAttribute(SessionConstants.U_VIEW);
 			InfoSite infoSite =
@@ -98,6 +99,7 @@ public class TeacherManagerDispatchAction extends FenixDispatchAction {
 		throws FenixActionException {
 		
 		HttpSession session = getSession(request);
+		session.removeAttribute(SessionConstants.INFO_SECTION);
 		UserView userView =
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);
 		GestorServicos serviceManager = GestorServicos.manager();
@@ -133,6 +135,7 @@ public class TeacherManagerDispatchAction extends FenixDispatchAction {
 			throws FenixActionException {
 		
 			HttpSession session = getSession(request);
+			session.removeAttribute(SessionConstants.INFO_SECTION);
 			UserView userView =
 				(UserView) session.getAttribute(SessionConstants.U_VIEW);
 			GestorServicos serviceManager = GestorServicos.manager();

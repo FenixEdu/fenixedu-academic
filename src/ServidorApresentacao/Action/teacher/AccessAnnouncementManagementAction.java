@@ -26,7 +26,7 @@ public class AccessAnnouncementManagementAction extends FenixAction {
 		HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		HttpSession session = request.getSession();
-		
+		session.removeAttribute(SessionConstants.INFO_SECTION);
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		InfoSite infoSite = (InfoSite) session.getAttribute(SessionConstants.INFO_SITE);

@@ -33,6 +33,7 @@ public class PrepareSelectExecutionCourseAction extends FenixAction {
 		SessionUtils.validSessionVerification(request, mapping);
 
 		HttpSession sessao = request.getSession(false);
+		sessao.removeAttribute(SessionConstants.INFO_SECTION);
 		if (sessao != null) {
 			
 			GestorServicos gestor = GestorServicos.manager();

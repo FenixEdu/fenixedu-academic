@@ -15,6 +15,7 @@ import org.apache.struts.action.DynaActionForm;
 import DataBeans.InfoRoom;
 import ServidorAplicacao.GestorServicos;
 import ServidorApresentacao.Action.base.FenixAction;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.TipoSala;
 
@@ -35,6 +36,7 @@ public class SelectRoomsFormAction extends FenixAction {
 		DynaActionForm roomForm = (DynaActionForm) form;
 
 		HttpSession sessao = request.getSession(false);
+		sessao.removeAttribute(SessionConstants.INFO_SECTION);
 		if (sessao != null) {
 			GestorServicos gestor = GestorServicos.manager();
 

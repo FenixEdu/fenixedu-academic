@@ -33,6 +33,7 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 		try {
 			SessionUtils.validSessionVerification(request, mapping);
 			HttpSession session = getSession(request);
+			session.removeAttribute(SessionConstants.INFO_SECTION);
 			UserView userView =
 				(UserView) session.getAttribute(SessionConstants.U_VIEW);
 			InfoSite infoSite =
@@ -72,6 +73,7 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 		try {
 			SessionUtils.validSessionVerification(request, mapping);
 			HttpSession session = request.getSession();
+			session.removeAttribute(SessionConstants.INFO_SECTION);
 			DynaActionForm objectivesForm = (DynaActionForm) form;
 			InfoCurriculum oldCurriculum =
 				(InfoCurriculum) session.getAttribute(
@@ -119,6 +121,7 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 		try {
 			SessionUtils.validSessionVerification(request, mapping);
 			HttpSession session = getSession(request);
+			session.removeAttribute(SessionConstants.INFO_SECTION);
 			UserView userView =
 				(UserView) session.getAttribute(SessionConstants.U_VIEW);
 			InfoSite infoSite =
@@ -149,6 +152,7 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 		try {
 			SessionUtils.validSessionVerification(request, mapping);
 			HttpSession session = request.getSession();
+			session.removeAttribute(SessionConstants.INFO_SECTION);
 			DynaActionForm objectivesForm = (DynaActionForm) form;
 			InfoCurriculum oldCurriculum =
 				(InfoCurriculum) session.getAttribute(
@@ -202,6 +206,7 @@ public class CurriculumManagerDispatchAction extends FenixDispatchAction {
 			
 		SessionUtils.validSessionVerification(request, mapping);
 		HttpSession session = request.getSession();
+		session.removeAttribute(SessionConstants.INFO_SECTION);
 		DynaActionForm curriculumForm = (DynaActionForm) form;
 		InfoCurriculum infoCurriculum = new InfoCurriculum();
 		infoCurriculum.setGeneralObjectives((String) curriculumForm.get("generalObjectives"));
