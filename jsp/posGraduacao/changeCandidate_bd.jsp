@@ -44,7 +44,11 @@
         <!-- Username -->
         <tr>
          <td><bean:message key="label.person.username" /></td>
-          <td><html:text property="username"/></td>
+          <td><bean:write name="personalInfo" property="username"/></td>
+		  <html:hidden property="username" />
+          
+<%--          <html:text property="username"/>
+--%>          
         </tr>
         <!-- Nome do Pai -->
         <tr>
