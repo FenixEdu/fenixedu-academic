@@ -164,7 +164,7 @@ public class ReadEvaluationServiceTest extends TestCaseReadServices {
 
 			InfoExecutionCourse infoExecutionCourse =
 				Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
-		InfoEvaluation infoEvaluation = new InfoEvaluation(infoExecutionCourse,"bla");	
+		InfoEvaluation infoEvaluation = new InfoEvaluation(infoExecutionCourse,"bla",null);	
 		return infoEvaluation;
 	}
 

@@ -14,6 +14,15 @@
 	</tr>
 </table>
 <br />	
+<h2><bean:message key="title.evaluation.eng"/></h2>
+<table>	
+	<tr>
+		<td><bean:define id="evaluationElementsEn" name="<%= SessionConstants.INFO_EVALUATION %>" property="evaluationElementsEn"></bean:define> 
+			<bean:write name="evaluationElementsEn" filter="false"/>
+	 	</td>
+	</tr>
+</table>
+<br />	
 <div class="gen-button"><html:link page="/viewEvaluation.do?method=prepareEditEvaluation">
 <bean:message key="button.edit"/>
 </html:link></div>

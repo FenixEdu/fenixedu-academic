@@ -33,6 +33,23 @@
 	</td>
 	</logic:notPresent>
 </tr>
+<tr>
+<td>
+		<strong><bean:message key="label.evaluation.eng"/></strong>
+	</td>
+</tr>	
+<tr>
+	<logic:present name="evaluation">
+	<td>
+		<html:textarea name="evaluation" property="evaluationElementsEn" cols="50" rows="8"/>
+	</td>
+	</logic:present>	
+	<logic:notPresent name="evaluation">
+	<td>
+		<html:textarea  property="evaluationElementsEn" cols="50" rows="8"/>
+	</td>
+	</logic:notPresent>
+</tr>
 <tr></tr>
 <html:hidden property="method" value="editEvaluation" />
 <tr><td> <html:submit styleClass="inputbutton">
