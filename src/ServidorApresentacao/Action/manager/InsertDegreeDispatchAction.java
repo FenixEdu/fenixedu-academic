@@ -65,7 +65,7 @@ public class InsertDegreeDispatchAction extends FenixDispatchAction {
 		List serviceResult = null;
 		
 		try {
-				serviceResult = (List) manager.executar(userView, "InsertDegreeService", args);
+				serviceResult = (List) manager.executar(userView, "InsertDegree", args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e.getMessage());
 		}

@@ -110,7 +110,7 @@
 					</td>
 					<bean:define id="coordinator" name="executionDegree" property="infoCoordinator"/>
 					<bean:define id="person" name="coordinator" property="infoPerson"/>
-					<td class="listClasses"><html:link page="/readTeacher.do"><bean:write name="person" property="username"/></html:link>
+					<td class="listClasses"><bean:write name="person" property="username"/>
 					</td>
 					<bean:define id="tempExamMap" name="executionDegree" property="temporaryExamMap"/>
 					<% String printing;

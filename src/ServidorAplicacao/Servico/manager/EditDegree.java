@@ -20,27 +20,27 @@ import Util.TipoCurso;
 /**
  * @author lmac1
  */
-public class EditDegreeService implements IServico {
+public class EditDegree implements IServico {
 
-  private static EditDegreeService service = new EditDegreeService();
+  private static EditDegree service = new EditDegree();
 
   /**
    * The singleton access method of this class.
    */
-  public static EditDegreeService getService() {
+  public static EditDegree getService() {
 	return service;
   }
 
   /**
    * The constructor of this class.
    */
-  private EditDegreeService () { }
+  private EditDegree () { }
 
   /**
    * Service name
    */
   public final String getNome() {
-	return "EditDegreeService";
+	return "EditDegree";
   }
 
   /**

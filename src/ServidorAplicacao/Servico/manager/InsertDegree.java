@@ -22,19 +22,19 @@ import Util.TipoCurso;
  * @author lmac1
  */
 
-public class InsertDegreeService implements IServico {
+public class InsertDegree implements IServico {
 
-	private static InsertDegreeService service = new InsertDegreeService();
+	private static InsertDegree service = new InsertDegree();
 
-	public static InsertDegreeService getService() {
+	public static InsertDegree getService() {
 		return service;
 	}
 
-	private InsertDegreeService() {
+	private InsertDegree() {
 	}
 
 	public final String getNome() {
-		return "InsertDegreeService";
+		return "InsertDegree";
 	}
 	
 

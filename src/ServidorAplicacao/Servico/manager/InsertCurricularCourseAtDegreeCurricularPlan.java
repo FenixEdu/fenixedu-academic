@@ -25,19 +25,19 @@ import Util.CurricularCourseType;
  * @author lmac1
  */
 
-public class InsertCurricularCourseService implements IServico {
+public class InsertCurricularCourseAtDegreeCurricularPlan implements IServico {
 
-	private static InsertCurricularCourseService service = new InsertCurricularCourseService();
+	private static InsertCurricularCourseAtDegreeCurricularPlan service = new InsertCurricularCourseAtDegreeCurricularPlan();
 
-	public static InsertCurricularCourseService getService() {
+	public static InsertCurricularCourseAtDegreeCurricularPlan getService() {
 		return service;
 	}
 
-	private InsertCurricularCourseService() {
+	private InsertCurricularCourseAtDegreeCurricularPlan() {
 	}
 
 	public final String getNome() {
-		return "InsertCurricularCourseService";
+		return "InsertCurricularCourseAtDegreeCurricularPlan";
 	}
 	
 

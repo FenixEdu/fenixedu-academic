@@ -53,7 +53,7 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 			GestorServicos manager = GestorServicos.manager();
 			
 			try {
-					oldInfoDegree = (InfoDegree) manager.executar(userView, "ReadDegreeService", args);
+					oldInfoDegree = (InfoDegree) manager.executar(userView, "ReadDegree", args);
 			} catch (FenixServiceException fenixServiceException) {
 				throw new FenixActionException(fenixServiceException.getMessage());
 			}
@@ -92,7 +92,7 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 		List serviceResult = null;
 		
 		try {
-				serviceResult = (List) manager.executar(userView, "EditDegreeService", args);
+				serviceResult = (List) manager.executar(userView, "EditDegree", args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e.getMessage());
 		}

@@ -13,27 +13,27 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author lmac1
  */
 
-public class ReadDegreeService implements IServico {
+public class ReadDegree implements IServico {
 
-  private static ReadDegreeService service = new ReadDegreeService();
+  private static ReadDegree service = new ReadDegree();
 
   /**
    * The singleton access method of this class.
    */
-  public static ReadDegreeService getService() {
+  public static ReadDegree getService() {
 	return service;
   }
 
   /**
    * The constructor of this class.
    */
-  private ReadDegreeService() { }
+  private ReadDegree() { }
 
   /**
    * Service name
    */
   public final String getNome() {
-	return "ReadDegreeService";
+	return "ReadDegree";
   }
 
   /**

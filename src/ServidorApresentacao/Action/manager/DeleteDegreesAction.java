@@ -46,7 +46,7 @@ public class DeleteDegreesAction extends FenixAction {
 		List errorNames = new ArrayList();
 
 		try {
-				errorNames = (List) manager.executar(userView, "DeleteDegreesService", args);
+				errorNames = (List) manager.executar(userView, "DeleteDegrees", args);
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}

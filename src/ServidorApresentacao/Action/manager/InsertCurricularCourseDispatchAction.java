@@ -51,7 +51,7 @@ public class InsertCurricularCourseDispatchAction extends FenixDispatchAction {
 				GestorServicos manager = GestorServicos.manager();
 				List result = null;
 				try {
-						result = (List) manager.executar(userView, "ReadDepartmentCoursesService", null);
+						result = (List) manager.executar(userView, "ReadAllDepartmentCourses", null);
 				} catch (FenixServiceException e) {
 					throw new FenixActionException(e);
 				}
@@ -105,7 +105,7 @@ public class InsertCurricularCourseDispatchAction extends FenixDispatchAction {
 		List serviceResult = null;
 		
 		try {
-				serviceResult = (List) manager.executar(userView, "InsertCurricularCourseService", args);
+				serviceResult = (List) manager.executar(userView, "InsertCurricularCourseAtDegreeCurricularPlan", args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}

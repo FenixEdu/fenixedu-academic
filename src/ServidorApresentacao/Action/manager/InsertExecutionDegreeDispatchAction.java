@@ -55,7 +55,7 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
 				
 		/*   Needed service and creation of bean of InfoTeachers for use in jsp   */    
 				try {
-						result = (List) manager.executar(userView, "ReadTeachersService", null);
+						result = (List) manager.executar(userView, "ReadAllTeachers", null);
 				} catch (FenixServiceException e) {
 					throw new FenixActionException(e);
 				}
@@ -76,7 +76,7 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
 		/*   Needed service and creation of bean of InfoExecutionYears for use in jsp   */
 				result = null;
 				try {
-						result = (List) manager.executar(userView, "ReadExecutionYearsService", null);
+						result = (List) manager.executar(userView, "ReadAllExecutionYears", null);
 				} catch (FenixServiceException e) {
 					throw new FenixActionException(e);
 				}
@@ -122,7 +122,7 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
 		String serviceResult = null;
 		
 		try {
-				serviceResult = (String) manager.executar(userView, "InsertExecutionDegreeService", args);
+				serviceResult = (String) manager.executar(userView, "InsertExecutionDegreeAtDegreeCurricularPlan", args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}

@@ -24,19 +24,19 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author lmac1
  */
 
-public class InsertExecutionDegreeService implements IServico {
+public class InsertExecutionDegreeAtDegreeCurricularPlan implements IServico {
 
-	private static InsertExecutionDegreeService service = new InsertExecutionDegreeService();
+	private static InsertExecutionDegreeAtDegreeCurricularPlan service = new InsertExecutionDegreeAtDegreeCurricularPlan();
 
-	public static InsertExecutionDegreeService getService() {
+	public static InsertExecutionDegreeAtDegreeCurricularPlan getService() {
 		return service;
 	}
 
-	private InsertExecutionDegreeService() {
+	private InsertExecutionDegreeAtDegreeCurricularPlan() {
 	}
 
 	public final String getNome() {
-		return "InsertExecutionDegreeService";
+		return "InsertExecutionDegreeAtDegreeCurricularPlan";
 	}
 	
 

@@ -19,27 +19,27 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author lmac1
  */
 
-public class ReadTeachersService implements IServico {
+public class ReadAllTeachers implements IServico {
 
-  private static ReadTeachersService service = new ReadTeachersService();
+  private static ReadAllTeachers service = new ReadAllTeachers();
 
   /**
    * The singleton access method of this class.
    */
-  public static ReadTeachersService getService() {
+  public static ReadAllTeachers getService() {
 	return service;
   }
 
   /**
    * The constructor of this class.
    */
-  private ReadTeachersService() { }
+  private ReadAllTeachers() { }
 
   /**
    * Service name
    */
   public final String getNome() {
-	return "ReadTeachersService";
+	return "ReadAllTeachers";
   }
 
   /**

@@ -58,7 +58,7 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 			GestorServicos manager = GestorServicos.manager();
 			
 			try {
-					oldInfoDegreeCP = (InfoDegreeCurricularPlan) manager.executar(userView, "ReadDegreeCurricularPlanService", args);
+					oldInfoDegreeCP = (InfoDegreeCurricularPlan) manager.executar(userView, "ReadDegreeCurricularPlan", args);
 			} catch (FenixServiceException fenixServiceException) {
 				throw new FenixActionException(fenixServiceException.getMessage());
 			}
@@ -215,7 +215,7 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 		GestorServicos manager = GestorServicos.manager();
 		List serviceResult = null;
 		try {
-				serviceResult = (List) manager.executar(userView, "EditDegreeCurricularPlanService", args);
+				serviceResult = (List) manager.executar(userView, "EditDegreeCurricularPlan", args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}

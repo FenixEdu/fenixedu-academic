@@ -16,19 +16,19 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author lmac1
  */
 
-public class DeleteDegreesService implements IServico {
+public class DeleteDegrees implements IServico {
 
-	private static DeleteDegreesService service = new DeleteDegreesService();
+	private static DeleteDegrees service = new DeleteDegrees();
 
-	public static DeleteDegreesService getService() {
+	public static DeleteDegrees getService() {
 		return service;
 	}
 
-	private DeleteDegreesService() {
+	private DeleteDegrees() {
 	}
 
 	public final String getNome() {
-		return "DeleteDegreesService";
+		return "DeleteDegrees";
 	}
 	
 // delete a set of degrees

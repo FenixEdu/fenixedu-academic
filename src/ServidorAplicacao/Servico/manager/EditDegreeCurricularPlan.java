@@ -22,19 +22,19 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author lmac1
  */
-public class EditDegreeCurricularPlanService implements IServico {
+public class EditDegreeCurricularPlan implements IServico {
 
-	private static EditDegreeCurricularPlanService service = new EditDegreeCurricularPlanService();
+	private static EditDegreeCurricularPlan service = new EditDegreeCurricularPlan();
 
-	public static EditDegreeCurricularPlanService getService() {
+	public static EditDegreeCurricularPlan getService() {
 		return service;
 	}
 
-	private EditDegreeCurricularPlanService() {
+	private EditDegreeCurricularPlan() {
 	}
 
 	public final String getNome() {
-		return "EditDegreeCurricularPlanService";
+		return "EditDegreeCurricularPlan";
 	}
 	
 

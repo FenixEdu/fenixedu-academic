@@ -115,7 +115,7 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
 		GestorServicos manager = GestorServicos.manager();
 		List serviceResult = null;
 		try {
-				serviceResult = (List) manager.executar(userView, "InsertDegreeCurricularPlanService", args);
+				serviceResult = (List) manager.executar(userView, "InsertDegreeCurricularPlan", args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
