@@ -4,13 +4,10 @@
  */
 package ServidorAplicacao.Servico.teacher;
 
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.URL;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipEntry;
@@ -92,7 +89,7 @@ public class InsertExercice implements IServico {
 				//new String(metadataFile.getFileData()
 				metadataString =
 					changeDocumentType(
-						new String(metadataFile.getFileData(),"ISO-8859-1"),
+						new String(metadataFile.getFileData(), "Latin1"),
 						true);
 				xmls = parseMetadata.parseMetadata(metadataString);
 			} catch (Exception e) {
@@ -211,5 +208,5 @@ public class InsertExercice implements IServico {
 	}
 	//<?xml version="1.0" encoding="Latin1"?>
 	//ISO-8859-1
-	
+
 }
