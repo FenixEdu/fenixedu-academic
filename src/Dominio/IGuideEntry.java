@@ -9,7 +9,7 @@ import Util.GraduationType;
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public interface IGuideEntry {
+public interface IGuideEntry extends IDomainObject{
   public Integer getQuantity();
   public GraduationType getGraduationType();
   public Double getPrice();

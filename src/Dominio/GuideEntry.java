@@ -9,8 +9,8 @@ import Util.GraduationType;
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class GuideEntry implements IGuideEntry {
-	protected Integer internalCode;
+public class GuideEntry extends DomainObject implements IGuideEntry {
+	
 	protected Integer keyGuide;
 
 	protected GraduationType graduationType;
@@ -66,7 +66,7 @@ public class GuideEntry implements IGuideEntry {
 
 	public String toString() {
 		String result = "[GUIDE ENTRY";
-		result += ", codInt=" + internalCode;
+		
 		result += ", description=" + description;
 		result += ", guide=" + guide;
 		result += ", documentType=" + documentType;
@@ -105,12 +105,7 @@ public class GuideEntry implements IGuideEntry {
 		return guide;
 	}
 
-	/**
-	 * @return
-	 */
-	public Integer getInternalCode() {
-		return internalCode;
-	}
+	
 
 	/**
 	 * @return
@@ -161,13 +156,7 @@ public class GuideEntry implements IGuideEntry {
 		this.guide = guide;
 	}
 
-	/**
-	 * @param integer
-	 */
-	public void setInternalCode(Integer integer) {
-		internalCode = integer;
-	}
-
+	
 	/**
 	 * @param integer
 	 */
