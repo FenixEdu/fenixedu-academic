@@ -46,6 +46,7 @@ public class EditCurricularCourse implements IService {
             }
             oldCurricularCourse.setName(newName);
             oldCurricularCourse.setCode(newCode);
+            oldCurricularCourse.setAcronym(newInfoCurricularCourse.getAcronym());
             oldCurricularCourse.setType(newInfoCurricularCourse.getType());
             oldCurricularCourse.setMandatory(newInfoCurricularCourse.getMandatory());
             oldCurricularCourse.setBasic(newInfoCurricularCourse.getBasic());

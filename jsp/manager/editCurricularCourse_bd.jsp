@@ -36,6 +36,15 @@
 			</td>
 			
 		</tr>
+		
+		<tr>
+			<td>
+				<bean:message key="message.manager.curricular.course.acronym"/>
+			</td>
+			<td>
+				<html:text size="12" property="acronym" />
+			</td>
+		</tr>
 
 		<tr>
 			<td>

@@ -54,6 +54,7 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 
         dynaForm.set("name", oldInfoCurricularCourse.getName());
         dynaForm.set("code", oldInfoCurricularCourse.getCode());
+        dynaForm.set("acronym", oldInfoCurricularCourse.getAcronym());
 
         dynaForm.set("type", oldInfoCurricularCourse.getType().getCurricularCourseType().toString());
         dynaForm.set("mandatory", oldInfoCurricularCourse.getMandatory().toString());
@@ -91,12 +92,14 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 
         String name = (String) dynaForm.get("name");
         String code = (String) dynaForm.get("code");
+        String acronym = (String) dynaForm.get("acronym");
         String typeString = (String) dynaForm.get("type");
         String mandatoryString = (String) dynaForm.get("mandatory");
         String basicString = (String) dynaForm.get("basic");
 
         newInfoCurricularCourse.setName(name);
         newInfoCurricularCourse.setCode(code);
+        newInfoCurricularCourse.setAcronym(acronym);
         newInfoCurricularCourse.setIdInternal(oldCurricularCourseId);
 
         CurricularCourseType type = new CurricularCourseType(new Integer(typeString));
