@@ -1,0 +1,205 @@
+<!-- Please keep user defined mappings in this file only
+     to avoid mixing user defined and system mappings. -->   
+<!-- Mapping of User defined classes starts here -->
+
+<!-- ******************************************************************************************************************************* -->
+<!-- Definitions for Dominio.Site -->
+<!-- ******************************************************************************************************************************* -->
+<class-descriptor class="Dominio.Site"
+                  table="SITE">
+    <field-descriptor id="1"
+        name="INTERNAL_CODE"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />
+    <field-descriptor id="2"
+        name="keyExecutionCourse"
+        column="KEY_EXECUTION_COURSE"
+        jdbc-type="INTEGER"
+	/>
+	
+    <reference-descriptor
+         name="executionCourse"
+         class-ref="Dominio.DisciplinaExecucao"
+         proxy="true"
+    >
+	<foreignkey field-id-ref="2"/>
+    </reference-descriptor>
+    
+</class-descriptor>
+
+<!-- ******************************************************************************************************************************* -->
+<!-- Definitions for Dominio.Announcement -->
+<!-- ******************************************************************************************************************************* -->
+<class-descriptor class="Dominio.Announcement"
+                  table="ANNOUNCEMENT">
+    <field-descriptor id="1"
+        name="internalCode"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />
+    <field-descriptor id="2"
+        name="title"
+        column="TITLE"
+        jdbc-type="VARCHAR"
+	/>
+    <field-descriptor id="3"
+        name="date"
+        column="DATE"
+        jdbc-type="DATE"
+	/>
+    <field-descriptor id="4"
+        name="lastModifiedDate"
+        column="DATE"
+        jdbc-type="DATE"
+	/>
+    <field-descriptor id="5"
+        name="information"
+        column="INFORMATION"
+        jdbc-type="VARCHAR"
+	/>
+    <field-descriptor id="6"
+        name="keySite"
+        column="KEY_SITE"
+        jdbc-type="INTEGER"
+	/>
+	
+    <reference-descriptor
+         name="site"
+         class-ref="Dominio.Site"
+         proxy="true"
+    >
+	<foreignkey field-id-ref="6"/>
+    </reference-descriptor>
+    
+</class-descriptor>
+
+<!-- ******************************** -->
+<!-- **********   SECCAO   ********** -->
+<!-- ******************************** -->
+   
+<!-- Definitions for Dominio.Section -->
+   <class-descriptor
+   	  class="Dominio.Section"
+   	  table="SECTION"
+   >
+    <field-descriptor id="1"
+        name="internalCode"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />
+      <field-descriptor id="2"
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+      />
+      <field-descriptor id="3"
+         name="order
+         column="ORDER"
+         jdbc-type="INTEGER"
+      />
+      <field-descriptor id="4"
+         name="keySite
+         column="KEY_SITE"
+         jdbc-type="INTEGER"
+      />
+      <field-descriptor id="5"
+         name="keySuperiorSection"
+         column="KEY_SUPERIOR_SECTION"
+         jdbc-type="INTEGER"
+      />
+      <field-descriptor id="6"
+         name="lastModifiedDate"
+         column="LAST_MODIFIED_DATE"
+         jdbc-type="DATE"
+      />
+      <reference-descriptor
+         name="site"
+         class-ref="Dominio.Site"
+         proxy="true"
+      >
+         <foreignkey field-id-ref="4"/>
+      </reference-descriptor>
+      <reference-descriptor
+         name="superiorSection"
+         class-ref="Dominio.Section"
+         proxy="true"
+      >
+         <foreignkey field-id-ref="5"/>
+      </reference-descriptor>
+      <collection-descriptor
+         name="inferiorSections"
+         element-class-ref="Dominio.Section"
+         orderby="order"
+         sort="ASC"
+      >
+         <inverse-foreignkey field-id-ref="5"/>
+      </collection-descriptor>
+      <collection-descriptor
+         name="items"
+         element-class-ref="Dominio.Item"
+         orderby="order"
+         sort="ASC"
+      >
+         <inverse-foreignkey field-id-ref="6"/>
+      </collection-descriptor>
+</class-descriptor>
+
+<!-- ****************************** -->
+<!-- **********   ITEM   ********** -->
+<!-- ****************************** --> 
+
+<!-- Definitions for Dominio.Item -->
+   <class-descriptor
+   	  class="Dominio.Item"
+   	  table="ITEM"
+   >
+      <field-descriptor id="1"
+         name="internalCode"
+         column="INTERNAL_CODE"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+      <field-descriptor id="2"
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+      />
+      <field-descriptor id="3"
+         name="order"
+         column="ORDER"
+         jdbc-type="INTEGER"
+      />
+      <field-descriptor id="4"
+         name="information"
+         column="INFORMATION"
+         jdbc-type="LONGVARCHAR"
+      />
+      <field-descriptor id="5"
+         name="urgent"
+         column="URGENT"
+         jdbc-type="INTEGER"
+         conversion="org.apache.ojb.broker.accesslayer.conversions.Boolean2IntFieldConversion"
+      />
+      <field-descriptor id="6"
+         name="keySection"
+         column="KEY_SECTION"
+         jdbc-type="INTEGER"
+      />
+      <reference-descriptor
+         name="section"
+         class-ref="Dominio.Seccao"
+         proxy="true"
+      >
+         <foreignkey field-id-ref="6"/>
+      </reference-descriptor>
+   </class-descriptor>
+
+<!-- Mapping of User defined classes ends here -->
