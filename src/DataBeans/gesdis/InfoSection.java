@@ -229,8 +229,7 @@ public class InfoSection implements Comparable {
 	public int compareTo(Object arg0) {	
 	
 		InfoSection section =(InfoSection) arg0;
-		System.out.println("this: "+this);
-		System.out.println("arg0: "+section);
+		
 		if (getSectionDepth().intValue()== section.getSectionDepth().intValue()) {
 			if (getSuperiorInfoSection()==null)  {
 				 if (section.getSuperiorInfoSection()==null) {
