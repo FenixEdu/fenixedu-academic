@@ -82,4 +82,26 @@ public class ContributorOJB extends ObjectFenixOJB implements IPersistentContrib
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
+	
+	
+	public List readContributorListByNumber(Integer contributorNumber) throws ExcepcaoPersistencia{
+		try {
+			String oqlQuery = "select all from " + Contributor.class.getName();
+			
+			if (contributorNumber != null) {
+				oqlQuery += " where contributorNumber = $1";
+				query.create(oqlQuery);
+				query.bind(contributorNumber);
+			} else query.create(oqlQuery);
+			
+			List result = (List) query.execute();
+			super.lockRead(result);
+			return result;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+		
+		 
+	}
+
 }

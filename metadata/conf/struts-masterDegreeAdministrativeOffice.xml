@@ -44,6 +44,16 @@
       </form-bean>
       
 
+      <!-- Bean for The Choosing of a Contributor -->
+      <form-bean name="chooseContributorForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+
+            <form-property name="page" type="java.lang.Integer" />
+        	<form-property name="contributorNumber" type="java.lang.String" />
+      </form-bean>
+
+
 		<!-- Bean for The Creation of a Guide -->
 	    <form-bean name="createGuideForm" 
      			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
@@ -191,6 +201,54 @@
       	  <forward name="CreateSuccess" path="/contributor/createContributorSuccess.jsp"/>
       	  <forward name="PrepareReady" path="/contributor/createContributor.jsp"/>
       </action>
+
+
+      <!-- action to visualize Contributors -->
+      <action attribute="chooseContributorForm"
+      		  input="/chooseContributorList.jsp"
+      	      name="chooseContributorForm"
+		      path="/visualizeContributors"
+		      parameter="method"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.contributor.ListContributorsDispatchAction"
+              validate="true">
+	         <forward name="PrepareReady" path="/contributor/chooseContributor.jsp"/>  
+	         <forward name="ActionReady" path="contributor/visualizeContributor.jsp"/>  
+	         <forward name="ChooseContributor" path="/chooseContributorList.jsp"/>  
+      </action>
+
+      <!-- action to edit Contributors -->
+      <action attribute="chooseContributorForm"
+      		  input="/chooseContributorList.jsp"
+      	      name="chooseContributorForm"
+		      path="/editContributors"
+		      parameter="method"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.contributor.ListContributorsDispatchAction"
+              validate="true">
+     		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+	         <forward name="PrepareReady" path="/contributor/chooseContributor.jsp"/>  
+	         <forward name="ActionReady" path="/editContributor.do?method=prepareEdit"/>  
+	         <forward name="ChooseContributor" path="/chooseContributorList.jsp"/>  
+      </action>
+
+	  <!-- Action to Edit ONE contributor -->
+      <action attribute="createContributorForm"
+      		  input="/editContributor.jsp"
+      	      name="createContributorForm"
+		      path="/editContributor"
+		      parameter="method"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.contributor.ListContributorsDispatchAction"
+              validate="true">
+     		 <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+	         <forward name="EditReady" path="/contributor/editContributor.jsp"/>  
+	         <forward name="EditSuccess" path="/contributor/editContributorSuccess.jsp"/>  
+      </action>
+      
+      
+      
 
       <!-- action to create a guide -->
       <action attribute="createGuideForm"

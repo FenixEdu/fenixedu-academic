@@ -1,0 +1,9 @@
+<%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
+<tiles:insert page="/fenixLayout_2col.jsp" flush="true">
+  <tiles:put name="title" value=".IST - Secretaria de Pós-Graduação" />
+  <tiles:put name="serviceName" value="Secretaria de Pós-Graduação" />
+  <tiles:put name="navLocal" value="/posGraduacao/contributor/contributorMenu.jsp" />
+  <tiles:put name="navGeral" value="/posGraduacao/globalNav.jsp" />
+  <tiles:put name="body" value="/posGraduacao/contributor/editContributor_bd.jsp" />
+  <tiles:put name="footer" value="/posGraduacao/copyrightDefault.jsp" />
+</tiles:insert>

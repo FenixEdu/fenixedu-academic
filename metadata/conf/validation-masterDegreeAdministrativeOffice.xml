@@ -78,6 +78,15 @@
       </field>
     </form>
 
+   <!-- validation for the Choose Contributor Form -->
+    <form name="chooseContributorForm">
+      <field property="contributorNumber" depends="integer" page="1">
+        <arg0 key="label.masterDegree.administrativeOffice.contributorNumber" />
+      </field>
+      
+    </form>
+
+
 
   </formset>
 </form-validation>

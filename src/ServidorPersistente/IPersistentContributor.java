@@ -40,4 +40,12 @@ public interface IPersistentContributor extends IPersistentObject {
 		 */
 		public List readAll() throws ExcepcaoPersistencia, ExistingPersistentException;
 		
+		/**
+		 * 
+		 * @param contributorNumber
+		 * @return List
+		 * @throws ExcepcaoPersistencia
+		 */
+		public List readContributorListByNumber(Integer contributorNumber) throws ExcepcaoPersistencia; 
+		
 }
