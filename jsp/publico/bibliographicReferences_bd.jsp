@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<logic:present name="BibliographicReferences" >
 <table border="0" style="text-align: left;">
 	<tbody>
 		<tr>
@@ -71,3 +72,4 @@
             </logic:iterate>
         </tbody>
 </table>
+</logic:present>
