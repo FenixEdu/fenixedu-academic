@@ -164,6 +164,7 @@ public class ExecutionPeriodOJBTest extends TestCaseOJB {
 			persistentSupport.iniciarTransaccao();
 			executionPeriod = new ExecutionPeriod("2º Semestre", executionYear);
 			executionPeriod.setState(PeriodState.NOT_OPEN);
+			executionPeriod.setSemester(new Integer(2));
 			persistentExecutionPeriod.writeExecutionPeriod(executionPeriod);
 			persistentSupport.confirmarTransaccao();
 
