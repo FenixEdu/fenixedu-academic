@@ -34,6 +34,9 @@ public class TimeTableRenderer {
 		Integer startHour,
 		Integer endHour,
 		ColorPicker colorPicker) {
+		if (colorPicker == null)
+			throw new IllegalArgumentException(
+				this.getClass().getName() + ":Color picker must be not null!");
 		this.timeTable = timeTable;
 		this.lessonSlotContentRenderer = lessonSlotContentRenderer;
 
@@ -49,7 +52,7 @@ public class TimeTableRenderer {
 		TimeTableSlot[][] grid = timeTable.getTimeTableGrid();
 
 		strBuffer.append(
-			"<table cellspacing='0' cellpadding='0' width='100%'>");
+			"<table cellspacing='0' cellpadding='2px' width='100%'>");
 
 		renderHeader(strBuffer);
 
