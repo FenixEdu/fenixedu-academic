@@ -52,12 +52,14 @@
 		<br/>
 		<b><bean:message key="message.no.curricular.course.for.enrolment" arg0="<%= studentNumber.toString() %>" arg1="<%= degreeName.toString() %>"/></b>
 	</logic:equal>
+	<logic:notEqual name="sizeToBeEnroled" value="0">
+		<br/>
+		<hr>
+	</logic:notEqual>
 </logic:notEqual>
 <logic:notEqual name="sizeToBeEnroled" value="0">
 	<html:form action="/curricularCourseEnrolmentWithoutRulesManager.do">
 		<html:hidden property="method" value="verifyEnrolment"/>
-		<br/>
-		<hr>
 		<br/>
 		<b><bean:message key="label.enrolment.curricular.courses" bundle="STUDENT_RESOURCES"/></b>
 		<br/>
