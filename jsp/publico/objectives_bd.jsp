@@ -7,20 +7,27 @@
 <logic:present name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" >
 <table>
 <tr>
-	<td><h2><bean:message key="label.generalObjectives" />	</h2>
-	</td>
 	<td>
-	<bean:define id="generalObjectives" name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="generalObjectives">
-	</bean:define> 
-	<bean:write name="generalObjectives" />
+		<h2><bean:message key="label.generalObjectives" />	</h2>
+	</td>
+</tr>
+<tr>
+	<td>
+		<bean:define id="generalObjectives" name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="generalObjectives">
+		</bean:define> 
+		<bean:write name="generalObjectives" />
 	</td>
 </tr>
 <tr>
 	<td>	
-	<h2><bean:message key="label.operacionalObjectives" /></h2>
-	</td><td><bean:define id="operacionalObjectives" name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="operacionalObjectives">
-	</bean:define> 
-	<bean:write name="operacionalObjectives" />
+		<h2><bean:message key="label.operacionalObjectives" /></h2>
+	</td>
+</tr>
+<tr>
+	<td>
+		<bean:define id="operacionalObjectives" name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="operacionalObjectives">
+		</bean:define> 
+		<bean:write name="operacionalObjectives" />
 	</td>
 </tr>
 </table>
