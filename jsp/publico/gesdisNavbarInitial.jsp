@@ -31,7 +31,7 @@
 				<bean:message key="link.bibliography"/>
 				</html:link></dd>
 			<dd><html:link page="/curricularCourses.do">
-				<bean:message key="property.executionCourse.associatedCurricularCourses"/>
+				<bean:message key="link.associatedCurricularCourses"/>
 				</html:link></dd>	
   </dl>
 		
