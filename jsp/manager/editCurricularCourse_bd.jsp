@@ -3,14 +3,14 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
-<h2><bean:message key="label.manager.insert.curricularCourse" /></h2>
+<h2><bean:message key="label.manager.edit.curricularCourse" /></h2>
 <br/>
 <table>
 <html:form action="/editCurricularCourse" method="get">
 	<html:hidden property="page" value="1"/>
 
 	<html:hidden property="method" value="edit"/>
-	<%--<html:hidden property="degreeId"/>--%>
+	<html:hidden property="degreeId"/>
 	<html:hidden property="degreeCurricularPlanId"/>
 	<html:hidden property="curricularCourseId"/>
 	

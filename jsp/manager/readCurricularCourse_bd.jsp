@@ -17,7 +17,7 @@
 </table>
 
 <ul style="list-style-type: square;">
-	<li><html:link page="<%="/editCurricularCourse.do?method=prepareEdit&amp;degreeCurricularPlanId="  + request.getAttribute("degreeCurricularPlanId")%>"  paramId="curricularCourseId" paramName="curricularCourseId"><bean:message key="label.manager.edit.curricularCourse"/></html:link></li>
+	<li><html:link page="<%="/editCurricularCourse.do?method=prepareEdit&amp;degreeId="  + request.getAttribute("degreeId") + "&amp;degreeCurricularPlanId="  + request.getAttribute("degreeCurricularPlanId")%>"  paramId="curricularCourseId" paramName="curricularCourseId"><bean:message key="label.manager.edit.curricularCourse"/></html:link></li>
 </ul>
 
 <h3><bean:message key="label.manager.executionCourses"/></h3>
@@ -28,6 +28,7 @@
 
 <bean:define id="degreeCurricularPlanId" name="degreeCurricularPlanId"/>
 <bean:define id="curricularCourseId" name="curricularCourseId"/>
+<bean:define id="degreeId" name="degreeId"/>
 
 <logic:present name="executionCoursesList" scope="request">
 <logic:notEmpty name="executionCoursesList">
@@ -35,6 +36,8 @@
 	<html:form action="/deleteCurricularCourses" method="get">
 		<html:hidden property="degreeCurricularPlanId" value="<%= degreeCurricularPlanId.toString() %>"/>
 		<html:hidden property="curricularCourseId" value="<%= curricularCourseId.toString() %>"/>
+		<html:hidden property="degreeId" value=" degreeId.toString() "/>
+			
 			<table width="50%" cellpadding="0" border="0">
 				<tr>
 					<%--<td class="listClasses-header">

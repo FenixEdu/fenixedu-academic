@@ -88,7 +88,7 @@ public class InsertCurricularCourseDispatchAction extends FenixDispatchAction {
 		HttpSession session = request.getSession(false);
 		UserView userView =	(UserView) session.getAttribute(SessionConstants.U_VIEW);
 		
-		Integer degreeId = new Integer(request.getParameter("degreeId"));
+//		Integer degreeId = new Integer(request.getParameter("degreeId"));
 		Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
     	
 		DynaActionForm dynaForm = (DynaValidatorForm) form;

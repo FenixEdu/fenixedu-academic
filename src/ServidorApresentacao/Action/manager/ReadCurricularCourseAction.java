@@ -36,11 +36,13 @@ public class ReadCurricularCourseAction extends FenixAction  {
 			throws FenixActionException {
 				
 				HttpSession session = request.getSession(false);
+//				DynaActionForm dynaForm = (DynaActionForm) form;
 						
 				UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 				
 				Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
 				Integer	curricularCourseId = new Integer(request.getParameter("curricularCourseId"));	
+				Integer	degreeId = new Integer(request.getParameter("degreeId"));
 
 				Object args[] = { curricularCourseId };
 				
@@ -92,7 +94,7 @@ public class ReadCurricularCourseAction extends FenixAction  {
 //				Collections.sort(studentCurricularPlans, new BeanComparator("name"));
 				request.setAttribute("executionCoursesList", executionCourses);
 				request.setAttribute("studentCurricularPlansList", studentCurricularPlans);
-//				request.setAttribute("degreeId", degreeId);
+				request.setAttribute("degreeId", degreeId);
 				request.setAttribute("curricularCourseId", curricularCourseId);
 				request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanId);
 				request.setAttribute("infoCurricularCourse", infoCurricularCourse);					

@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+
 <logic:present name="Lista de licenciaturas" scope="request">
 <logic:notEmpty name="Lista de licenciaturas" >
 		<h2><bean:message key="label.manager.degrees"/></h2>
@@ -40,9 +41,9 @@
 			</td>
 	 	</tr>	
 	 </logic:iterate>
-	<span class="error"><html:errors/></span>		
+	
 </table>
-
+<span class="error"><html:errors/></span>
 <br>
 <br>	
 <html:submit><bean:message key="label.manager.delete.selected.degrees"/></html:submit>

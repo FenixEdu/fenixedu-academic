@@ -4,7 +4,6 @@
 package ServidorAplicacao.Servico.manager;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.InfoCurricularCourse;
@@ -37,48 +36,29 @@ public class EditCurricularCourse implements IServico {
 	
 
 	public List run(Integer oldCurricularCourseId,InfoCurricularCourse  newInfoCurricularCourse,Integer degreeCPId) throws FenixServiceException {
-
 	
 		IPersistentCurricularCourse persistentCurricularCourse = null;
 		ICurricularCourse oldCurricularCourse = null;
-//		IPersistentDegreeCurricularPlan persistentDegreeCP = null;
-
 		
 		try {
-				ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-				persistentCurricularCourse = persistentSuport.getIPersistentCurricularCourse();
-				oldCurricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(new CurricularCourse(oldCurricularCourseId), false);
-				
-				List CurricularCourses = persistentCurricularCourse.readAll();
-				CurricularCourses.remove((ICurricularCourse)oldCurricularCourse);
-				
-//				persistentDegreeCP = persistentSuport.getIPersistentDegreeCurricularPlan();
-//				degreeCP = (IDegreeCurricularPlan) persistentDegreeCP.readByOId(new DegreeCurricularPlan(degreeCPId), false);	
+			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+			persistentCurricularCourse = persistentSuport.getIPersistentCurricularCourse();
+			oldCurricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(new CurricularCourse(oldCurricularCourseId), false);
 			
-			
-				String newName = newInfoCurricularCourse.getName();
-				String newCode = newInfoCurricularCourse.getCode();
-			
-				List errors = new ArrayList(2);
-				errors.add(null);
-				errors.add(null);
-				
-					int modified = 0; 
-				
-					Iterator iter = CurricularCourses.iterator();
-					while(iter.hasNext()) {
-						ICurricularCourse curricularCourseIter = (ICurricularCourse) iter.next();
-						if(newName.compareToIgnoreCase(curricularCourseIter.getName())==0 || newCode.compareToIgnoreCase(curricularCourseIter.getCode())==0){
-							modified++;
-							errors.set(0, newName);
-							errors.set(1, newCode);
-						}
-					}
-//					System.out.println("ERRO ERRO ERRO ERRO"+errors);
 
-					if(modified == 0) {
-						errors = null; 
-					
+						
+			String newName = newInfoCurricularCourse.getName();
+			String newCode = newInfoCurricularCourse.getCode();
+
+//			For a curricular Course with name UNIQUE and code UNIQUE-separated
+//			but  the methods	readCurricularCoursesByName/Code supose that there still in Data Base
+	
+			List curricularCoursesByName = persistentCurricularCourse.readCurricularCoursesByName(newName);
+		
+			if(curricularCoursesByName == null || curricularCoursesByName.isEmpty()) {
+				List curricularCoursesByCode = persistentCurricularCourse.readCurricularCoursesByCode(newCode);
+				if(curricularCoursesByCode == null || curricularCoursesByCode.isEmpty()) {
+								
 					oldCurricularCourse.setName(newName);
 					oldCurricularCourse.setCode(newCode);
 					oldCurricularCourse.setCredits(newInfoCurricularCourse.getCredits());
@@ -91,10 +71,15 @@ public class EditCurricularCourse implements IServico {
 					oldCurricularCourse.setBasic(newInfoCurricularCourse.getBasic());
 				
 					persistentCurricularCourse.simpleLockWrite(oldCurricularCourse);
-//					System.out.println("TA NO SERVICO INSERT DEGREE CURRICULAR PLAN!!!DEPOIS DOS SETS");
-
-				}
-							
+					return null;
+			}
+		}
+		
+			List errors = new ArrayList(2);
+			
+			errors.add(0, newName);
+			errors.add(1, newCode);	
+			
 				return errors;
 			
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {

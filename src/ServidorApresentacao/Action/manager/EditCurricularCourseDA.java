@@ -45,8 +45,7 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 			UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 			Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
 			Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
-			//pois o degreeId tava a vir a null/tb nao sei s preciso dele
-//			Integer degreeId = new Integer(request.getParameter("degreeId"));
+			Integer degreeId = new Integer(request.getParameter("degreeId"));
 
 			InfoCurricularCourse oldInfoCurricularCourse = null;
 
@@ -91,7 +90,7 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 			
 			
 			request.setAttribute("degreeCurricularPlanId", degreeCurricularPlanId);
-//			request.setAttribute("degreeId", degreeId);
+			request.setAttribute("degreeId", degreeId);
 			request.setAttribute("curricularCourseId", curricularCourseId);
 			return mapping.findForward("editCurricularCourse");
 		}
@@ -111,7 +110,7 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 		
 		Integer degreeCPId = (Integer) dynaForm.get("degreeCurricularPlanId");
 		Integer oldCurricularCourseId = new Integer(request.getParameter("curricularCourseId"));
-//		Integer degreeId = (Integer) dynaForm.get("degreeId");
+		Integer degreeId = (Integer) dynaForm.get("degreeId");
 		
 		InfoCurricularCourse newInfoCurricularCourse = new InfoCurricularCourse();	
 		
@@ -200,7 +199,7 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 			}			
 			saveErrors(request, actionErrors);
 		}
-		
+		request.setAttribute("degreeId", degreeId);
 		return mapping.findForward("readDegreeCP");
 	}			
 }
