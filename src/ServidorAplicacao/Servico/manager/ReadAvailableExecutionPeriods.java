@@ -21,64 +21,72 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author lmac1
  */
-public class ReadAvailableExecutionPeriods  implements IServico {
+public class ReadAvailableExecutionPeriods implements IServico
+{
 
-	private ReadAvailableExecutionPeriods() {
-	}
+    private ReadAvailableExecutionPeriods()
+    {
+    }
 
-	/* (non-Javadoc)
+    /*
+	 * (non-Javadoc)
+	 * 
 	 * @see ServidorAplicacao.IServico#getNome()
 	 */
-	public String getNome() {
-		return "ReadAvailableExecutionPeriods";
-	}
+    public String getNome()
+    {
+        return "ReadAvailableExecutionPeriods";
+    }
 
-	private static ReadAvailableExecutionPeriods service =
-		new ReadAvailableExecutionPeriods();
+    private static ReadAvailableExecutionPeriods service = new ReadAvailableExecutionPeriods();
 
-	public static ReadAvailableExecutionPeriods getService() {
-		return service;
-	}
+    public static ReadAvailableExecutionPeriods getService()
+    {
+        return service;
+    }
 
-	
-	public List run(List unavailableExecutionPeriodsIds) throws FenixServiceException {
+    public List run(List unavailableExecutionPeriodsIds) throws FenixServiceException
+    {
 
-			List infoExecutionPeriods = null;
-		IExecutionPeriod executionPeriod = null;
-		
-		
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionPeriod persistentExecutionPeriod =
-							sp.getIPersistentExecutionPeriod();
-			List executionPeriods = persistentExecutionPeriod.readAllExecutionPeriod();
+        List infoExecutionPeriods = null;
+        IExecutionPeriod executionPeriod = null;
 
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+            List executionPeriods = persistentExecutionPeriod.readAllExecutionPeriod();
 
-			Iterator iter = unavailableExecutionPeriodsIds.iterator();
-			while(iter.hasNext()){
-			ExecutionPeriod executionPeriodToRead = new ExecutionPeriod();
-			executionPeriodToRead.setIdInternal((Integer) iter.next());
-			
-			executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOId(executionPeriodToRead, false);
-			executionPeriods.remove(executionPeriod);
-			}
+            Iterator iter = unavailableExecutionPeriodsIds.iterator();
+            while (iter.hasNext())
+            {
+                ExecutionPeriod executionPeriodToRead = new ExecutionPeriod();
+                executionPeriodToRead.setIdInternal((Integer) iter.next());
 
-						
+                executionPeriod =
+                    (IExecutionPeriod) persistentExecutionPeriod.readByOId(executionPeriodToRead, false);
+                executionPeriods.remove(executionPeriod);
+            }
 
-			infoExecutionPeriods = (List) CollectionUtils.collect(
-				executionPeriods,
-				TRANSFORM_EXECUTIONPERIOD_TO_INFOEXECUTIONPERIOD);
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
+            infoExecutionPeriods =
+                (List) CollectionUtils.collect(
+                    executionPeriods,
+                    TRANSFORM_EXECUTIONPERIOD_TO_INFOEXECUTIONPERIOD);
+        }
+        catch (ExcepcaoPersistencia e)
+        {
+            throw new FenixServiceException(e);
+        }
 
-		return infoExecutionPeriods;
-	}
+        return infoExecutionPeriods;
+    }
 
-	private Transformer TRANSFORM_EXECUTIONPERIOD_TO_INFOEXECUTIONPERIOD = new Transformer() {
-		public Object transform(Object executionPeriod) {
-			return Cloner.get((IExecutionPeriod) executionPeriod);
-		}
-	};
+    private Transformer TRANSFORM_EXECUTIONPERIOD_TO_INFOEXECUTIONPERIOD = new Transformer()
+    {
+        public Object transform(Object executionPeriod)
+        {
+            return Cloner.copyIExecutionPeriod2InfoExecutionPeriod((IExecutionPeriod) executionPeriod);
+        }
+    };
 
 }

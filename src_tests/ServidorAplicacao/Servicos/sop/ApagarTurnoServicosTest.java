@@ -105,7 +105,7 @@ public class ApagarTurnoServicosTest extends TestCaseDeleteAndEditServices {
 				it = new Turno("qqqqq", new TipoAula(1), new Integer(100), ide);
 			}
 			
-			this.infoShift = (InfoShift) Cloner.get(it);
+			this.infoShift =  Cloner.copyIShift2InfoShift(it);
 
 			sp.confirmarTransaccao();
 

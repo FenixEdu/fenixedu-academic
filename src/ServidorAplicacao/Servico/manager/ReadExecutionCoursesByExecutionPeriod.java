@@ -27,80 +27,80 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 public class ReadExecutionCoursesByExecutionPeriod implements IServico
 {
 
-	private static ReadExecutionCoursesByExecutionPeriod service =
-		new ReadExecutionCoursesByExecutionPeriod();
+    private static ReadExecutionCoursesByExecutionPeriod service =
+        new ReadExecutionCoursesByExecutionPeriod();
 
-	/**
+    /**
 	 * The singleton access method of this class.
 	 */
-	public static ReadExecutionCoursesByExecutionPeriod getService()
-	{
-		return service;
-	}
+    public static ReadExecutionCoursesByExecutionPeriod getService()
+    {
+        return service;
+    }
 
-	/**
+    /**
 	 * The constructor of this class.
 	 */
-	private ReadExecutionCoursesByExecutionPeriod()
-	{
-	}
+    private ReadExecutionCoursesByExecutionPeriod()
+    {
+    }
 
-	/**
+    /**
 	 * Service name
 	 */
-	public final String getNome()
-	{
-		return "ReadExecutionCoursesByExecutionPeriod";
-	}
+    public final String getNome()
+    {
+        return "ReadExecutionCoursesByExecutionPeriod";
+    }
 
-	/**
-	 * Executes the service. Returns the current collection of infoExecutionCourses.
+    /**
+	 * Executes the service. Returns the current collection of
+	 * infoExecutionCourses.
 	 */
-	public List run(Integer executionPeriodId) throws FenixServiceException
-	{
-		List allExecutionCoursesFromExecutionPeriod = null;
-		List allExecutionCourses = null;
-		try
-		{
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-			IPersistentExecutionCourse persistentExecutionCourse =
-				sp.getIPersistentExecutionCourse();
+    public List run(Integer executionPeriodId) throws FenixServiceException
+    {
+        List allExecutionCoursesFromExecutionPeriod = null;
+        List allExecutionCourses = null;
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
 
-			IExecutionPeriod executionPeriodToRead = new ExecutionPeriod();
-			executionPeriodToRead.setIdInternal(executionPeriodId);
+            IExecutionPeriod executionPeriodToRead = new ExecutionPeriod();
+            executionPeriodToRead.setIdInternal(executionPeriodId);
 
-			IExecutionPeriod executionPeriod =
-				(IExecutionPeriod) persistentExecutionPeriod.readByOId(executionPeriodToRead, false);
+            IExecutionPeriod executionPeriod =
+                (IExecutionPeriod) persistentExecutionPeriod.readByOId(executionPeriodToRead, false);
 
-			if (executionPeriod == null)
-			{
-				throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
-			}
-			allExecutionCoursesFromExecutionPeriod =
-				persistentExecutionCourse.readByExecutionPeriod(executionPeriod);
+            if (executionPeriod == null)
+            {
+                throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
+            }
+            allExecutionCoursesFromExecutionPeriod =
+                persistentExecutionCourse.readByExecutionPeriod(executionPeriod);
 
-			if (allExecutionCoursesFromExecutionPeriod == null
-				|| allExecutionCoursesFromExecutionPeriod.isEmpty())
-			{
-				return allExecutionCoursesFromExecutionPeriod;
-			}
-			InfoExecutionCourse infoExecutionCourse = null;
-			allExecutionCourses = new ArrayList(allExecutionCoursesFromExecutionPeriod.size());
-			Iterator iter = allExecutionCoursesFromExecutionPeriod.iterator();
-			while (iter.hasNext())
-			{
-				IExecutionCourse executionCourse = (IExecutionCourse) iter.next();
-				Boolean hasSite = persistentExecutionCourse.readSite(executionCourse.getIdInternal());
-				infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
-				infoExecutionCourse.setHasSite(hasSite);
-				allExecutionCourses.add(infoExecutionCourse);
-			}
-		}
-		catch (ExcepcaoPersistencia excepcaoPersistencia)
-		{
-			throw new FenixServiceException(excepcaoPersistencia);
-		}
-		return allExecutionCourses;
-	}
+            if (allExecutionCoursesFromExecutionPeriod == null
+                || allExecutionCoursesFromExecutionPeriod.isEmpty())
+            {
+                return allExecutionCoursesFromExecutionPeriod;
+            }
+            InfoExecutionCourse infoExecutionCourse = null;
+            allExecutionCourses = new ArrayList(allExecutionCoursesFromExecutionPeriod.size());
+            Iterator iter = allExecutionCoursesFromExecutionPeriod.iterator();
+            while (iter.hasNext())
+            {
+                IExecutionCourse executionCourse = (IExecutionCourse) iter.next();
+                Boolean hasSite = persistentExecutionCourse.readSite(executionCourse.getIdInternal());
+                infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+                infoExecutionCourse.setHasSite(hasSite);
+                allExecutionCourses.add(infoExecutionCourse);
+            }
+        }
+        catch (ExcepcaoPersistencia excepcaoPersistencia)
+        {
+            throw new FenixServiceException(excepcaoPersistencia);
+        }
+        return allExecutionCourses;
+    }
 }

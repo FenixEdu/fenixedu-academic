@@ -14,72 +14,82 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoCurso;
 
-
 /**
  * @author Ricardo Nortadas & Rui Figueiredo
- *
+ *  
  */
-			   
-public class ReadDisciplinesByStudent implements IServico {
 
-	private static ReadDisciplinesByStudent _servico =
-		new ReadDisciplinesByStudent();
-	/**
+public class ReadDisciplinesByStudent implements IServico
+{
+
+    private static ReadDisciplinesByStudent _servico = new ReadDisciplinesByStudent();
+    /**
 	 * The singleton access method of this class.
-	 **/
-	public static ReadDisciplinesByStudent getService() {
-		return _servico;
-	}
+	 */
+    public static ReadDisciplinesByStudent getService()
+    {
+        return _servico;
+    }
 
-	/**
+    /**
 	 * The actor of this class.
-	 **/
-	private ReadDisciplinesByStudent() {
-	}
+	 */
+    private ReadDisciplinesByStudent()
+    {
+    }
 
-	/**
+    /**
 	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "ReadDisciplinesByStudent";
-	}
+	 */
+    public final String getNome()
+    {
+        return "ReadDisciplinesByStudent";
+    }
 
-	public Object run(Integer number, TipoCurso degreeType) {
-		ArrayList disciplines = new ArrayList();
-		ArrayList courses = new ArrayList();
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IStudent student = sp.getIPersistentStudent().readByNumero(number,degreeType);
-			
-			if (student != null) {
-				List frequencies = sp.getIFrequentaPersistente().readByStudentNumberInCurrentExecutionPeriod(number);
-				for(int i = 0; i < frequencies.size(); i++) {
-					IFrequenta frequent = (IFrequenta) frequencies.get(i);
-					IExecutionCourse executionCourse = frequent.getDisciplinaExecucao();
-				/*InfoExecutionCourse infoExecutionDiscipline = new InfoExecutionCourse(
-												ExecutionDiscipline.getNome(),
-												ExecutionDiscipline.getNome(),
-												ExecutionDiscipline.getPrograma(),
-												null);*/
-				//disciplines.add(infoExecutionDiscipline);
-				disciplines.add(executionCourse);
-				
-				
-				}
-			}
-			if (disciplines != null)
-				for (int i = 0; i < disciplines.size(); i++) {
-					IExecutionCourse executionCourse = (IExecutionCourse) disciplines.get(i);
-					InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
-					courses.add(infoExecutionCourse);
-				}
-		
-		} catch (ExcepcaoPersistencia e) {
-			e.printStackTrace();
-		}
-		return courses;
+    public Object run(Integer number, TipoCurso degreeType)
+    {
+        ArrayList disciplines = new ArrayList();
+        ArrayList courses = new ArrayList();
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IStudent student = sp.getIPersistentStudent().readByNumero(number, degreeType);
 
-	}
+            if (student != null)
+            {
+                List frequencies =
+                    sp.getIFrequentaPersistente().readByStudentNumberInCurrentExecutionPeriod(number);
+                for (int i = 0; i < frequencies.size(); i++)
+                {
+                    IFrequenta frequent = (IFrequenta) frequencies.get(i);
+                    IExecutionCourse executionCourse = frequent.getDisciplinaExecucao();
+                    /*
+					 * InfoExecutionCourse infoExecutionDiscipline = new
+					 * InfoExecutionCourse( ExecutionDiscipline.getNome(),
+					 * ExecutionDiscipline.getNome(),
+					 * ExecutionDiscipline.getPrograma(),
+					 */
+                    //disciplines.add(infoExecutionDiscipline);
+                    disciplines.add(executionCourse);
+
+                }
+            }
+            if (disciplines != null)
+                for (int i = 0; i < disciplines.size(); i++)
+                {
+                    IExecutionCourse executionCourse = (IExecutionCourse) disciplines.get(i);
+                    InfoExecutionCourse infoExecutionCourse =
+                        Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+                    courses.add(infoExecutionCourse);
+                }
+
+        }
+        catch (ExcepcaoPersistencia e)
+        {
+            e.printStackTrace();
+        }
+        return courses;
+
+    }
 
 }
-

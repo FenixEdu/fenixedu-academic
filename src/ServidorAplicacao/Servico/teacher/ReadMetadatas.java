@@ -1,6 +1,6 @@
 /*
  * Created on 23/Jul/2003
- *
+ *  
  */
 
 package ServidorAplicacao.Servico.teacher;
@@ -10,12 +10,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.ExecutionCourseSiteView;
-import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoMetadata;
 import DataBeans.InfoSiteMetadatas;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
-
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IMetadata;
@@ -76,7 +74,8 @@ public class ReadMetadatas implements IServico
                 try
                 {
                     infoMetadata = p.parseMetadata(metadata.getMetadataFile(), infoMetadata, path);
-                } catch (Exception e)
+                }
+                catch (Exception e)
                 {
                     throw new FenixServiceException(e);
                 }
@@ -85,11 +84,12 @@ public class ReadMetadatas implements IServico
             InfoSiteMetadatas bodyComponent = new InfoSiteMetadatas();
             bodyComponent.setInfoMetadatas(result);
             bodyComponent.setExecutionCourse(
-                (InfoExecutionCourse) Cloner.get(executionCourse));
+                Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
             SiteView siteView = new ExecutionCourseSiteView(bodyComponent, bodyComponent);
 
             return siteView;
-        } catch (ExcepcaoPersistencia e)
+        }
+        catch (ExcepcaoPersistencia e)
         {
             throw new FenixServiceException(e);
         }

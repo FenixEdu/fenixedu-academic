@@ -93,7 +93,7 @@ public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod
 								.get(
 								j);
 						infoExecutionCourses.add(
-							Cloner.get(
+							Cloner.copyIExecutionCourse2InfoExecutionCourse(
 								tempExecutionCourse));
 
 						// prepare degrees associated with exam

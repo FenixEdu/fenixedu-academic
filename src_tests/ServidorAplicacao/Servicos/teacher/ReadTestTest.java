@@ -1,6 +1,6 @@
 /*
  * Created on 11/Ago/2003
- *
+ *  
  */
 package ServidorAplicacao.Servicos.teacher;
 
@@ -36,8 +36,8 @@ public class ReadTestTest extends TestCaseReadServices
 {
 
     /**
-    * @param testName
-    */
+	 * @param testName
+	 */
     public ReadTestTest(String testName)
     {
         super(testName);
@@ -75,8 +75,7 @@ public class ReadTestTest extends TestCaseReadServices
         {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
-            IPersistentExecutionCourse persistentExecutionCourse =
-                sp.getIPersistentExecutionCourse();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             IExecutionCourse executionCourse = new ExecutionCourse(new Integer(26));
             executionCourse =
                 (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
@@ -91,7 +90,7 @@ public class ReadTestTest extends TestCaseReadServices
             testQuestion = (ITestQuestion) persistentTestQuestion.readByOId(testQuestion, false);
             assertNotNull("testQuestion null", testQuestion);
             sp.confirmarTransaccao();
-            infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
+            infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
             infoTest = Cloner.copyITest2InfoTest(test);
 
             ParseQuestion parse = new ParseQuestion();
@@ -103,12 +102,14 @@ public class ReadTestTest extends TestCaseReadServices
                         infoTestQuestion.getQuestion().getXmlFile(),
                         infoTestQuestion.getQuestion(),
                         ""));
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 fail("exception: ExcepcaoPersistencia ");
             }
             result.add(infoTestQuestion);
-        } catch (ExcepcaoPersistencia e)
+        }
+        catch (ExcepcaoPersistencia e)
         {
             fail("exception: ExcepcaoPersistencia ");
         }

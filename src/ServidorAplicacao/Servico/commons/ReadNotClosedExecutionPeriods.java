@@ -20,46 +20,52 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Luis Cruz & Sara Ribeiro
  *  
  */
-public class ReadNotClosedExecutionPeriods implements IServico {
+public class ReadNotClosedExecutionPeriods implements IServico
+{
 
-	private static ReadNotClosedExecutionPeriods service =
-		new ReadNotClosedExecutionPeriods();
-	/**
+    private static ReadNotClosedExecutionPeriods service = new ReadNotClosedExecutionPeriods();
+    /**
 	 * The singleton access method of this class.
 	 */
-	public static ReadNotClosedExecutionPeriods getService() {
-		return service;
-	}
+    public static ReadNotClosedExecutionPeriods getService()
+    {
+        return service;
+    }
 
-	/**
+    /**
 	 * @see ServidorAplicacao.IServico#getNome()
 	 */
-	public String getNome() {
-		return "ReadNotClosedExecutionPeriods";
-	}
+    public String getNome()
+    {
+        return "ReadNotClosedExecutionPeriods";
+    }
 
-	public List run() throws FenixServiceException {
+    public List run() throws FenixServiceException
+    {
 
-		List result = new ArrayList();
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionPeriod executionPeriodDAO =
-				sp.getIPersistentExecutionPeriod();
+        List result = new ArrayList();
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
 
-			List executionPeriods =
-				executionPeriodDAO.readNotClosedExecutionPeriods();
+            List executionPeriods = executionPeriodDAO.readNotClosedExecutionPeriods();
 
-			if (executionPeriods != null) {
-				for (int i = 0; i < executionPeriods.size(); i++) {
-					result.add(
-						Cloner.get(
-							(IExecutionPeriod) executionPeriods.get(i)));
-				}
-			}
-		} catch (ExcepcaoPersistencia ex) {
-			throw new FenixServiceException(ex);
-		}
+            if (executionPeriods != null)
+            {
+                for (int i = 0; i < executionPeriods.size(); i++)
+                {
+                    result.add(
+                        Cloner.copyIExecutionPeriod2InfoExecutionPeriod(
+                            (IExecutionPeriod) executionPeriods.get(i)));
+                }
+            }
+        }
+        catch (ExcepcaoPersistencia ex)
+        {
+            throw new FenixServiceException(ex);
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

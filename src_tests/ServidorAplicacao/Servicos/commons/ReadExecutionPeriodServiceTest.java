@@ -1,6 +1,6 @@
 /*
  * Created on 23/Abr/2003
- *
+ * 
  * To change the template for this generated file go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
@@ -20,93 +20,114 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author jmota
- *
+ * 
  * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class ReadExecutionPeriodServiceTest extends TestCaseReadServices {
+public class ReadExecutionPeriodServiceTest extends TestCaseReadServices
+{
 
-	/**
+    /**
 	 * @param testName
 	 */
-	public ReadExecutionPeriodServiceTest(String testName) {
-		super(testName);
-		
-	}
+    public ReadExecutionPeriodServiceTest(String testName)
+    {
+        super(testName);
 
-	/* (non-Javadoc)
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * 
 	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
 	 */
-	protected String getNameOfServiceToBeTested() {
-		return "ReadExecutionPeriod";
-	}
+    protected String getNameOfServiceToBeTested()
+    {
+        return "ReadExecutionPeriod";
+    }
 
-	/* (non-Javadoc)
+    /*
+	 * (non-Javadoc)
+	 * 
 	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
 	 */
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		return null;
-	}
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
+    {
+        return null;
+    }
 
-	/* (non-Javadoc)
+    /*
+	 * (non-Javadoc)
+	 * 
 	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedSuccessfuly()
 	 */
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		ISuportePersistente sp = null;
-			IExecutionYear executionYear = null;
-			
-			try {
-				sp = SuportePersistenteOJB.getInstance();
-				sp.iniciarTransaccao();
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
+    {
+        ISuportePersistente sp = null;
+        IExecutionYear executionYear = null;
 
-				IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
-				executionYear = ieyp.readExecutionYearByName("2002/2003");
+        try
+        {
+            sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
 
-				sp.confirmarTransaccao();
-			} catch (ExcepcaoPersistencia e) {
-				System.out.println("failed setting up the test data");
-			}
-		InfoExecutionYear infoExecutionYear = (InfoExecutionYear) Cloner.get(executionYear);
-		Object[] args = {"2º Semestre",infoExecutionYear};
-		return args;
-	}
+            IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
+            executionYear = ieyp.readExecutionYearByName("2002/2003");
 
-	/* (non-Javadoc)
+            sp.confirmarTransaccao();
+        }
+        catch (ExcepcaoPersistencia e)
+        {
+            System.out.println("failed setting up the test data");
+        }
+        InfoExecutionYear infoExecutionYear = Cloner.copyIExecutionYear2InfoExecutionYear(executionYear);
+        Object[] args = { "2º Semestre", infoExecutionYear };
+        return args;
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * 
 	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
 	 */
-	protected int getNumberOfItemsToRetrieve() {
-		
-		return 0;
-	}
+    protected int getNumberOfItemsToRetrieve()
+    {
 
-	/* (non-Javadoc)
+        return 0;
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * 
 	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getObjectToCompare()
 	 */
-	protected Object getObjectToCompare() {
-		ISuportePersistente sp = null;
-			IExecutionYear executionYear = null;
-			IExecutionPeriod executionPeriod = null;
-			
-			try {
-				sp = SuportePersistenteOJB.getInstance();
-				sp.iniciarTransaccao();
+    protected Object getObjectToCompare()
+    {
+        ISuportePersistente sp = null;
+        IExecutionYear executionYear = null;
+        IExecutionPeriod executionPeriod = null;
 
-				IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
-				executionYear = ieyp.readExecutionYearByName("2002/2003");
+        try
+        {
+            sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
 
-				IPersistentExecutionPeriod iepp =
-					sp.getIPersistentExecutionPeriod();
+            IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
+            executionYear = ieyp.readExecutionYearByName("2002/2003");
 
-				executionPeriod =
-					iepp.readByNameAndExecutionYear("2º Semestre", executionYear);
+            IPersistentExecutionPeriod iepp = sp.getIPersistentExecutionPeriod();
 
-				
-				sp.confirmarTransaccao();
-			} catch (ExcepcaoPersistencia e) {
-				System.out.println("failed setting up the test data");
-			}
-			InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(executionPeriod);
-		return infoExecutionPeriod;
-	}
+            executionPeriod = iepp.readByNameAndExecutionYear("2º Semestre", executionYear);
+
+            sp.confirmarTransaccao();
+        }
+        catch (ExcepcaoPersistencia e)
+        {
+            System.out.println("failed setting up the test data");
+        }
+        InfoExecutionPeriod infoExecutionPeriod =
+            Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionPeriod);
+        return infoExecutionPeriod;
+    }
 
 }

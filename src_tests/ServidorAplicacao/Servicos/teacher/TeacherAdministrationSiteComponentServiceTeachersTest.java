@@ -34,38 +34,38 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Fernanda Quitério
- * 
+ *  
  */
 public class TeacherAdministrationSiteComponentServiceTeachersTest extends TestCaseReadServices
 {
 
     /**
-     * @param testName
-     */
+	 * @param testName
+	 */
     public TeacherAdministrationSiteComponentServiceTeachersTest(String testName)
     {
         super(testName);
     }
 
     /**
-     * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
-     */
+	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
+	 */
     protected String getNameOfServiceToBeTested()
     {
         return "TeacherAdministrationSiteComponentService";
     }
 
     /**
-     * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
-     */
+	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
+	 */
     protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
     {
         return null;
     }
 
     /**
-     * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedSuccessfuly()
-     */
+	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedSuccessfuly()
+	 */
     protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
     {
 
@@ -94,8 +94,7 @@ public class TeacherAdministrationSiteComponentServiceTeachersTest extends TestC
         try
         {
             sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionCourse persistentExecutionCourse =
-                sp.getIPersistentExecutionCourse();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             IPersistentSite persistentSite = sp.getIPersistentSite();
             IPersistentSection persistentSection = sp.getIPersistentSection();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
@@ -106,7 +105,7 @@ public class TeacherAdministrationSiteComponentServiceTeachersTest extends TestC
                 (IExecutionCourse) persistentExecutionCourse.readByOId(
                     new ExecutionCourse(new Integer(26)),
                     false);
-            infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
+            infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
 
             site = persistentSite.readByExecutionCourse(executionCourse);
 
@@ -121,7 +120,8 @@ public class TeacherAdministrationSiteComponentServiceTeachersTest extends TestC
                 persistentResponsibleFor.readByTeacherAndExecutionCourse(teacher, executionCourse);
 
             sp.confirmarTransaccao();
-        } catch (ExcepcaoPersistencia e)
+        }
+        catch (ExcepcaoPersistencia e)
         {
             System.out.println("failed setting up the test data");
             e.printStackTrace();
@@ -192,24 +192,29 @@ public class TeacherAdministrationSiteComponentServiceTeachersTest extends TestC
     }
 
     /**
-     * This method must return 'true' if the service needs authorization to be runned and 'false' otherwise.
-     */
+	 * This method must return 'true' if the service needs authorization to be
+	 * runned and 'false' otherwise.
+	 */
     protected boolean needsAuthorization()
     {
         return true;
     }
 
-    /* (non-Javadoc)
-     * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentListOfServiceToBeTestedUnsuccessfuly()
-     */
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorAplicacao.Servicos.TestCaseCreateServices#getArgumentListOfServiceToBeTestedUnsuccessfuly()
+	 */
     protected HashMap getArgumentListOfServiceToBeTestedUnsuccessfuly()
     {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
-     */
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
+	 */
     protected int getNumberOfItemsToRetrieve()
     {
         return 0;

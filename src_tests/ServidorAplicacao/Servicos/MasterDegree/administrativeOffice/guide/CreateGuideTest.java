@@ -1,19 +1,15 @@
 package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.guide;
 
 /**
- *
- * @author Nuno Nunes & Joana Mota 
+ * @author Nuno Nunes & Joana Mota
  */
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoGuide;
 import DataBeans.InfoGuideEntry;
 import DataBeans.InfoRole;
@@ -34,6 +30,7 @@ import Util.PaymentType;
 import Util.RoleType;
 import Util.SituationOfGuide;
 import Util.Specialization;
+import framework.factory.ServiceManagerServiceFactory;
 
 public class CreateGuideTest extends TestCaseServicos
 {
@@ -85,8 +82,7 @@ public class CreateGuideTest extends TestCaseServicos
             person = sp.getIPessoaPersistente().lerPessoaPorUsername("nmsn");
             assertNotNull(person);
 
-            contributor =
-                sp.getIPersistentContributor().readByContributorNumber(new Integer(123));
+            contributor = sp.getIPersistentContributor().readByContributorNumber(new Integer(123));
             assertNotNull(contributor);
 
             price =
@@ -109,7 +105,8 @@ public class CreateGuideTest extends TestCaseServicos
             assertNotNull(executionDegree);
 
             sp.confirmarTransaccao();
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             fail(e.toString());
         }
@@ -126,7 +123,7 @@ public class CreateGuideTest extends TestCaseServicos
         infoGuide.setCreationDate(Calendar.getInstance().getTime());
 
         infoGuide.setInfoExecutionDegree(
-            (InfoExecutionDegree) Cloner.get(executionDegree));
+            Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree));
 
         InfoGuideEntry infoGuideEntry = new InfoGuideEntry();
         infoGuideEntry.setDescription(price.getDescription());
@@ -154,11 +151,14 @@ public class CreateGuideTest extends TestCaseServicos
         InfoGuide result = null;
         try
         {
-            result = (InfoGuide) ServiceManagerServiceFactory.executeService(userView, "CreateGuide", args);
-        } catch (FenixServiceException ex)
+            result =
+                (InfoGuide) ServiceManagerServiceFactory.executeService(userView, "CreateGuide", args);
+        }
+        catch (FenixServiceException ex)
         {
             fail("Fenix Service Exception" + ex);
-        } catch (Exception ex)
+        }
+        catch (Exception ex)
         {
             fail("Eception");
         }

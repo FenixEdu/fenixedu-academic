@@ -9,13 +9,12 @@ import org.apache.commons.collections.CollectionUtils;
 
 import DataBeans.InfoExam;
 import DataBeans.InfoExamStudentRoom;
-import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoStudentSiteExams;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
-import Dominio.IExecutionCourse;
 import Dominio.IExam;
 import Dominio.IExamStudentRoom;
+import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
 import ServidorAplicacao.IServico;
@@ -27,7 +26,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author João Mota
- *
+ *  
  */
 
 public class ReadExamsByStudent implements IServico
@@ -35,23 +34,23 @@ public class ReadExamsByStudent implements IServico
 
     private static ReadExamsByStudent _servico = new ReadExamsByStudent();
     /**
-     * The singleton access method of this class.
-     **/
+	 * The singleton access method of this class.
+	 */
     public static ReadExamsByStudent getService()
     {
         return _servico;
     }
 
     /**
-     * The actor of this class.
-     **/
+	 * The actor of this class.
+	 */
     private ReadExamsByStudent()
     {
     }
 
     /**
-     * Devolve o nome do servico
-     **/
+	 * Devolve o nome do servico
+	 */
     public final String getNome()
     {
         return "ReadExamsByStudent";
@@ -88,7 +87,7 @@ public class ReadExamsByStudent implements IServico
                     infoExamStudentRoom.setInfoExam(
                         Cloner.copyIExam2InfoExam(examStudentRoom.getExam()));
                     infoExamStudentRoom.getInfoExam().setInfoExecutionCourse(
-                        (InfoExecutionCourse) Cloner.get(
+                        Cloner.copyIExecutionCourse2InfoExecutionCourse(
                             (IExecutionCourse) examStudentRoom
                                 .getExam()
                                 .getAssociatedExecutionCourses()
@@ -121,10 +120,12 @@ public class ReadExamsByStudent implements IServico
                 //
                 //					if (!isInDate(exam)) {
                 //						//closedEnrollmentExams.add(infoExam);
-                //						IExamStudentRoom examStudentRoom = examStudentRoomDAO.readBy(exam, student);
+                //						IExamStudentRoom examStudentRoom =
+                // examStudentRoomDAO.readBy(exam, student);
                 //						InfoExamStudentRoom infoExamStudentRoom = null;
                 //						if (examStudentRoom != null) {
-                //							infoExamStudentRoom = Cloner.copyIExamStudentRoom2InfoExamStudentRoom(examStudentRoom);							
+                //							infoExamStudentRoom =
+                // Cloner.copyIExamStudentRoom2InfoExamStudentRoom(examStudentRoom);
                 //						} else {
                 //							infoExamStudentRoom = new InfoExamStudentRoom();
                 //							infoExamStudentRoom.setInfoRoom(null);
@@ -158,7 +159,7 @@ public class ReadExamsByStudent implements IServico
                     {
                         InfoExam infoExam = Cloner.copyIExam2InfoExam(exam);
                         infoExam.setInfoExecutionCourse(
-                            (InfoExecutionCourse) Cloner.get(
+                            Cloner.copyIExecutionCourse2InfoExecutionCourse(
                                 (IExecutionCourse) exam.getAssociatedExecutionCourses().get(0)));
                         infoExamsToEnroll.add(infoExam);
                     }
@@ -166,7 +167,8 @@ public class ReadExamsByStudent implements IServico
 
             }
 
-        } catch (ExcepcaoPersistencia e)
+        }
+        catch (ExcepcaoPersistencia e)
         {
             e.printStackTrace();
         }
@@ -179,9 +181,9 @@ public class ReadExamsByStudent implements IServico
     }
 
     /**
-     * @param examEnrollment
-     * @return
-     */
+	 * @param examEnrollment
+	 * @return
+	 */
     private boolean isInDate(IExam exam)
     {
         if (exam.getEnrollmentBeginDay() == null
@@ -190,7 +192,8 @@ public class ReadExamsByStudent implements IServico
             || exam.getEnrollmentEndTime() == null)
         {
             return false;
-        } else
+        }
+        else
         {
             Calendar begin = Calendar.getInstance();
             begin.set(Calendar.YEAR, exam.getEnrollmentBeginDay().get(Calendar.YEAR));

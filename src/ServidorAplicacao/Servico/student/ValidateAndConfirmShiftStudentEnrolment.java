@@ -47,24 +47,24 @@ import Util.TipoAula;
 
 /**
  * @author tdi-dev
- *
  * 
+ *  
  */
 public class ValidateAndConfirmShiftStudentEnrolment implements IServico
 {
     /**
-     * @author stocker
-     * 
-     * Transforms a shift of the type IShift in an object of the type InfoShift
-     *
-     */
+	 * @author stocker
+	 * 
+	 * Transforms a shift of the type IShift in an object of the type InfoShift
+	 *  
+	 */
     private class ShiftTransformer implements Transformer
     {
 
         public Object transform(Object arg0)
         {
             ITurno shift = (ITurno) arg0;
-            return Cloner.get(shift);
+            return Cloner.copyIShift2InfoShift(shift);
         }
     }
     private static ValidateAndConfirmShiftStudentEnrolment _service =
@@ -78,19 +78,20 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
     {
         return _service;
     }
-    /* (non-Javadoc)
-     * @see ServidorAplicacao.IServico#getNome()
-     */
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorAplicacao.IServico#getNome()
+	 */
     public final String getNome()
     {
         return "ValidateAndConfirmShiftStudentEnrolment";
     }
 
     /**
-     * Works with SHIFT_STUDENT table.
-     * Inserts and updates table.
-     * 
-     * */
+	 * Works with SHIFT_STUDENT table. Inserts and updates table.
+	 *  
+	 */
     public InfoShiftStudentEnrolment run(InfoShiftStudentEnrolment infoShiftStudentEnrolment)
         throws FenixServiceException, ExcepcaoPersistencia
     {
@@ -99,46 +100,34 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
             throw new IllegalArgumentException("InfoShiftStudentEnrolment must be not null!");
         }
         /**
-         * Steps to validate the user's choices:
-         * 
-         * It can deal with shift changes (from the same course).
-         * It cannot deal with shifts removal.
-         * 
-         * Obtain from the action: 
-         *  actualShifts - actual shifts for the student (currentEnrolment);
-         *  wantedShifts - wanted shifts;
-         * Create:
-         *  filledShifts - table for shifts without vacancies;
-         *  newShifts - table for pairs of shifts (old and new, after validation)
-         * Algorithm:
-         * 	1) Pick a shift from the wantedShifts
-         *   1.1) Check if it there is any shift of the same kind, of the 
-         *        same course in the wantedShifts (throws an error!);
-         *   1.2) Check if it there is any shift of the same kind, of the 
-         *        same class in the wantedShifts (throws an error!);
-         *   1.3) Filter entries that already exists in actualShifts:
-         *        - insert the pair in newShifts in the form (actualShift . NULL);
-         *        - remove the shifts from actualShifts;
-         *   1.4) Filter shifts that are not associated with the classes the user 
-         *          is allowed to be in.
-         *   1.5) (IF (the wanted shift has FNL vacancies?)
-         *          (THEN
-         *             - Decrement the FNL vacancies for the shift; 
-         *             (IF the shift already exists in actualShifts (type, executionCourse))
-         *  		    (THEN - Insert in newShifts a new 
-         *                      pair with (old-shift . new-shift) -> changed shift
-         *                    - Increment the FNL vacancies for the old shift;
-         *                    - remove the old-shift from the actualShifts)
-         * 				(ELSE Insert in newShifts a new 
-         *                    pair with (NULL . new-shift) -> new shift
-         *               ))
-         *  		(ELSE insert the shift in the filledShifts))
-         * 
-         *  2) If the actualShifts is not null, throw an exception;
-         *  3) Return the lists:
-         *       - newShifts 
-         * 	     - filledShifts - shifts that could not be booked
-         * */
+		 * Steps to validate the user's choices:
+		 * 
+		 * It can deal with shift changes (from the same course). It cannot
+		 * deal with shifts removal.
+		 * 
+		 * Obtain from the action: actualShifts - actual shifts for the student
+		 * (currentEnrolment); wantedShifts - wanted shifts; Create:
+		 * filledShifts - table for shifts without vacancies; newShifts - table
+		 * for pairs of shifts (old and new, after validation) Algorithm: 1)
+		 * Pick a shift from the wantedShifts 1.1) Check if it there is any
+		 * shift of the same kind, of the same course in the wantedShifts
+		 * (throws an error!); 1.2) Check if it there is any shift of the same
+		 * kind, of the same class in the wantedShifts (throws an error!); 1.3)
+		 * Filter entries that already exists in actualShifts: - insert the
+		 * pair in newShifts in the form (actualShift . NULL); - remove the
+		 * shifts from actualShifts; 1.4) Filter shifts that are not associated
+		 * with the classes the user is allowed to be in. 1.5) (IF (the wanted
+		 * shift has FNL vacancies?) (THEN - Decrement the FNL vacancies for
+		 * the shift; (IF the shift already exists in actualShifts (type,
+		 * executionCourse)) (THEN - Insert in newShifts a new pair with
+		 * (old-shift . new-shift) -> changed shift - Increment the FNL
+		 * vacancies for the old shift; - remove the old-shift from the
+		 * actualShifts) (ELSE Insert in newShifts a new pair with (NULL .
+		 * new-shift) -> new shift )) (ELSE insert the shift in the
+		 * filledShifts)) 2) If the actualShifts is not null, throw an
+		 * exception; 3) Return the lists: - newShifts - filledShifts - shifts
+		 * that could not be booked
+		 */
 
         IStudent student = new Student();
         student.setDegreeType(infoShiftStudentEnrolment.getInfoStudent().getDegreeType());
@@ -178,7 +167,8 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
         ITurnoAluno shiftStudentExample = new ShiftStudent();
         shiftStudentExample.setStudent(student);
         List actualShifts = shiftStudentDAO.readByCriteria(shiftStudentExample);
-        //actualShifts are ITurno objects, from now on, and are read from the database
+        //actualShifts are ITurno objects, from now on, and are read from the
+        // database
         for (int i = 0; i < actualShifts.size(); i++)
         {
             actualShifts.set(i, ((ITurnoAluno) actualShifts.get(i)).getShift());
@@ -208,7 +198,8 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
                 continue;
             }
 
-            //1.1 - Produce an error if the shift is of the same type and same course than another pretended one.
+            //1.1 - Produce an error if the shift is of the same type and same
+            // course than another pretended one.
             if ((listTmp = obtainShiftsOfSameTypeAndCourse(pretendedNewShifts, shift)).size() > 1)
             {
 
@@ -218,11 +209,13 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
                     listTmp,
                     "ValidadeShiftStudentEnrolment - Não se pode escolher mais que um turno para a mesma cadeira que sejam do mesmo tipo!");
 
-                //don't remove the shift, to make sure the other shift is reported as a bogus one.
+                //don't remove the shift, to make sure the other shift is
+                // reported as a bogus one.
                 continue;
             }
 
-            //1.2 - Produce an error if the shift is of the same course than another pretended one but of different classes.
+            //1.2 - Produce an error if the shift is of the same course than
+            // another pretended one but of different classes.
             //checks in all the shifts (both pretended and actual)
             if ((listTmp = obtainShiftsOfDifferentClassesAndSameCourse(wantedShifts, shift)).size() > 1)
             {
@@ -232,20 +225,22 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
                     actualShifts,
                     listTmp,
                     "ValidadeShiftStudentEnrolment - Não se pode escolher mais que um turno para a mesma cadeira em turmas diferentes!");
-                //don't remove the shift, to make sure the other shift is reported as a bogus one.
+                //don't remove the shift, to make sure the other shift is
+                // reported as a bogus one.
                 continue;
             }
 
-            //1.3		
+            //1.3
             if (actualShifts.contains(shift))
             {
-                /*    Filter entries that already exists in actualShifts:
-                 *    - insert the pair in newShifts in the form (actualShift . NULL);
-                 *    - remove the shifts from actualShifts;
-                 */
+                /*
+				 * Filter entries that already exists in actualShifts: - insert
+				 * the pair in newShifts in the form (actualShift . NULL); -
+				 * remove the shifts from actualShifts;
+				 */
 
                 InfoShift pair[] = new InfoShift[2];
-                pair[0] = (InfoShift) Cloner.get(shift);
+                pair[0] = Cloner.copyIShift2InfoShift(shift);
                 pair[1] = null;
 
                 newShifts.add(pair);
@@ -255,7 +250,8 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
                 continue;
             }
 
-            //1.4  Filter shifts that are not associated with the classes the user is allowed to be in.
+            //1.4 Filter shifts that are not associated with the classes the
+            // user is allowed to be in.
             if (!theClassIsAllowed(getClassesAssociatedWithShift(shift, sp), studentsAllowedClasses))
             {
                 ShiftConflict error =
@@ -269,7 +265,8 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
 
             //1.5
             ITurno shiftExample = new Turno();
-            //Added support to idInternal -> it should be the only thing necessary
+            //Added support to idInternal -> it should be the only thing
+            // necessary
             shiftExample.setIdInternal(shift.getIdInternal());
 
             ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
@@ -284,7 +281,9 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
                 actualShifts.remove(shift);
                 i.remove();
                 continue;
-                //throw new FenixServiceException("ValidateAndConfirmShiftStudentEnrolment - non existent shift!");
+                //throw new
+                // FenixServiceException("ValidateAndConfirmShiftStudentEnrolment
+                // - non existent shift!");
             }
 
             int availabilityFinal = obtainedShift.getAvailabilityFinal().intValue();
@@ -292,22 +291,27 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
             if (availabilityFinal > 0)
             {
                 //decrement the value of FNL
-                //TODO: tdi-dev (edgar.goncalves) -> make sure the database is updated successfully
+                //TODO: tdi-dev (edgar.goncalves) -> make sure the database is
+                // updated successfully
                 obtainedShift.setAvailabilityFinal(new Integer(availabilityFinal - 1));
 
                 ITurno oldShift = obtainShiftOfSameTypeAndCourse(actualShifts, shift);
 
                 if (oldShift != null)
                 {
-                    /* the shift already exixts in actual shifts  (type, executionCourse) */
-                    /*  - Insert in newShifts a new 
-                     *     pair with (old-shift . new-shift) -> changed shift
-                     *  - Increment the FNL vacancies for the old shift;
-                     */
+                    /*
+					 * the shift already exixts in actual shifts (type,
+					 * executionCourse)
+					 */
+                    /*
+					 * - Insert in newShifts a new pair with (old-shift .
+					 * new-shift) -> changed shift - Increment the FNL
+					 * vacancies for the old shift;
+					 */
 
                     InfoShift pair[] = new InfoShift[2];
-                    pair[0] = (InfoShift) Cloner.get(oldShift);
-                    pair[1] = (InfoShift) Cloner.get(shift);
+                    pair[0] = Cloner.copyIShift2InfoShift(oldShift);
+                    pair[1] = Cloner.copyIShift2InfoShift(shift);
                     newShifts.add(pair);
 
                     //Removing the old shift
@@ -358,15 +362,17 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
                     shiftDAO.lockWrite(oldShift);
 
                     i.remove();
-                } else
+                }
+                else
                 {
-                    /*Insert in newShifts a new 
-                     * pair with (NULL . new-shift) -> new shift
-                     */
+                    /*
+					 * Insert in newShifts a new pair with (NULL . new-shift) ->
+					 * new shift
+					 */
 
                     InfoShift pair[] = new InfoShift[2];
                     pair[0] = null;
-                    pair[1] = (InfoShift) Cloner.get(shift);
+                    pair[1] = Cloner.copyIShift2InfoShift(shift);
                     newShifts.add(pair);
 
                     //Updates the availability on the database
@@ -386,33 +392,34 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
                     ((ServidorPersistente.OJB.TurnoAlunoOJB) shiftStudentDAO).simpleLockWrite(
                         newShiftStudent);
                 }
-            } else
+            }
+            else
             {
                 /*
-                 * insert the shift in the filledShifts, for the 
-                 * shift is full!
-                 */
+				 * insert the shift in the filledShifts, for the shift is full!
+				 */
                 filledShifts.add(shift);
 
             }
 
         }
 
-        /*	
-         * 2) If the actualShifts is not null, throw an exception
-         */
+        /*
+		 * 2) If the actualShifts is not null, throw an exception
+		 */
 
         //		if (actualShifts.size() != 0) {
         //			//errors.add("error.wanted.shifts.do.not.contain.current.shifts");
-        //			throw new FenixServiceException("ValidateAndConfirmShiftStudentEnrolment - 
-        //  conflicts in the current enrolment: wanted shifts do not contain the current shifts!");
+        //			throw new
+        // FenixServiceException("ValidateAndConfirmShiftStudentEnrolment -
+        //  conflicts in the current enrolment: wanted shifts do not contain the
+        // current shifts!");
         //		}
 
-        /*  3) Return the lists:
-         *       - newShifts 
-         * 	  - filledShifts - shifts that could not be booked
-         * 	  - currentEnrollment - old shift configuration
-         */
+        /*
+		 * 3) Return the lists: - newShifts - filledShifts - shifts that could
+		 * not be booked - currentEnrollment - old shift configuration
+		 */
 
         InfoShiftStudentEnrolment result = infoShiftStudentEnrolment;
         result.setFilledShifts((List) CollectionUtils.collect(filledShifts, shiftTransformerInverse));
@@ -421,7 +428,8 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
         if (errors.size() == 0)
         {
             result.setErrors(null);
-        } else
+        }
+        else
         {
             result.setErrors(errors);
         }
@@ -433,15 +441,16 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
     }
 
     /**
-     * @param list
-     * @return
-     */
+	 * @param list
+	 * @return
+	 */
     private List setLessons2InfoShifts(List list) throws ExcepcaoPersistencia
     {
         if (list == null)
         {
             return null;
-        } else
+        }
+        else
         {
             List infoShiftsWithLessons = new ArrayList();
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -472,9 +481,9 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
     }
 
     /**
-     * @param wantedShifts
-     * @return
-     */
+	 * @param wantedShifts
+	 * @return
+	 */
     private List getPersistentShifts(List wantedShifts) throws ExcepcaoPersistencia
     {
         ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -494,10 +503,14 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
     }
 
     /**
-     * @param wantedShifts - list with all the shifts the student wants to be in (ITurma's)
-     * @param actualShifts - list with the actual shifts the student is enrolled with (ITurma's)
-     * @return
-     */
+	 * @param wantedShifts -
+	 *            list with all the shifts the student wants to be in
+	 *            (ITurma's)
+	 * @param actualShifts -
+	 *            list with the actual shifts the student is enrolled with
+	 *            (ITurma's)
+	 * @return
+	 */
     private List getNewShiftsOnly(List wantedShifts, List actualShifts)
     {
         List result = new ArrayList();
@@ -515,12 +528,15 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
     }
 
     /**
-     * getStudentsAllowedClasses
-     * @param student
-     * @param sp Persistent Suport
-     * @return list of classes (ITurma) with the allowed classes for the student
-     * @throws ExcepcaoPersistencia
-     */
+	 * getStudentsAllowedClasses
+	 * 
+	 * @param student
+	 * @param sp
+	 *            Persistent Suport
+	 * @return list of classes (ITurma) with the allowed classes for the
+	 *         student
+	 * @throws ExcepcaoPersistencia
+	 */
     private List getStudentsAllowedClasses(IStudent student, ISuportePersistente sp)
         throws ExcepcaoPersistencia
     {
@@ -544,9 +560,9 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
     }
 
     /**
-     * @param classShifts
-     * @return List with distinct classes (IClass)
-     */
+	 * @param classShifts
+	 * @return List with distinct classes (IClass)
+	 */
     private List getDistinctClassesFromListOfClassShifts(List classShifts)
     {
         Iterator i = classShifts.iterator();
@@ -577,13 +593,16 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
     }
 
     /**
-    	 * theClassIsAllowed returns true if the fist list (with the classes of one shift)
-    	 *    intersects the second list (with the classes the student is allowed to be in).
-    	 *  
-    	 * @param list1 of classes
-    	 * @param list2 of classes
-    	 * @return true if list1 intersected with list2 is not null
-    	 */
+	 * theClassIsAllowed returns true if the fist list (with the classes of one
+	 * shift) intersects the second list (with the classes the student is
+	 * allowed to be in).
+	 * 
+	 * @param list1
+	 *            of classes
+	 * @param list2
+	 *            of classes
+	 * @return true if list1 intersected with list2 is not null
+	 */
     private boolean theClassIsAllowed(List shiftClasses, List studentAllowedClasses)
     {
         Iterator iterator = shiftClasses.iterator();
@@ -605,9 +624,10 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
     }
 
     /**
-     * @param shift - Shift to be used in OJB usage
-     * @return
-     */
+	 * @param shift -
+	 *            Shift to be used in OJB usage
+	 * @return
+	 */
     private List getClassesAssociatedWithShift(ITurno shift, ISuportePersistente sp)
         throws FenixServiceException
     {
@@ -618,7 +638,8 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
             try
             {
                 classes = shiftClassDAO.readClassesWithShift(shift);
-            } catch (ExcepcaoPersistencia e)
+            }
+            catch (ExcepcaoPersistencia e)
             {
                 e.printStackTrace(System.out);
                 throw new FenixServiceException(e);
@@ -632,16 +653,17 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
     }
 
     /**
-     * @param errors
-     * @param actualShifts
-     * @param listTmp
-     * @param msg
-     */
+	 * @param errors
+	 * @param actualShifts
+	 * @param listTmp
+	 * @param msg
+	 */
     private void treatShiftInErrors(List errors, List actualShifts, ArrayList listTmp, String msg)
     {
         Iterator iteratorTmp;
         Iterator iteratorTmp2;
-        //Remove from the bug list and from the actualShifts the fake erroneous Shifts that are already enroled
+        //Remove from the bug list and from the actualShifts the fake
+        // erroneous Shifts that are already enroled
         iteratorTmp = listTmp.iterator();
         boolean shiftIsInActualShifts = false;
 
@@ -671,14 +693,15 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
     }
 
     /**
-     * alreadyReportedAsBogusShift
-     * 
-     * self-explaining...
-     * 
-     * @param errors - List list of errors
-     * @param shift
-     * @return true if the shift is already in the error list, false otherwise
-     */
+	 * alreadyReportedAsBogusShift
+	 * 
+	 * self-explaining...
+	 * 
+	 * @param errors -
+	 *            List list of errors
+	 * @param shift
+	 * @return true if the shift is already in the error list, false otherwise
+	 */
     private boolean alreadyReportedAsBogusShift(List errors, ITurno shift)
     {
         Iterator errorIterator = errors.iterator();
@@ -694,14 +717,17 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
     }
 
     /**
-     * obtainShiftsOfSameTypeAndCourse
-     * 
-     * self-explaining...
-     * 
-     * @param list List with InfoShift objects
-     * @param shift InfoShift object that is going to be used as a search criteria 
-     * @returnArrayList with the shift in the list that satisfied this criteria
-     */
+	 * obtainShiftsOfSameTypeAndCourse
+	 * 
+	 * self-explaining...
+	 * 
+	 * @param list
+	 *            List with InfoShift objects
+	 * @param shift
+	 *            InfoShift object that is going to be used as a search
+	 *            criteria @returnArrayList with the shift in the list that
+	 *            satisfied this criteria
+	 */
     private ArrayList obtainShiftsOfSameTypeAndCourse(List list, ITurno shift)
     {
 
@@ -722,14 +748,17 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
     }
 
     /**
-     * obtainShiftOfSameTypeAndCourse
-     * 
-     * self-explaining...
-     * 
-     * @param l List with InfoShift objects
-     * @param shift InfoShift object that is going to be used as a search criteria 
-     * @return match the shift in the list (the first one only!)
-     */
+	 * obtainShiftOfSameTypeAndCourse
+	 * 
+	 * self-explaining...
+	 * 
+	 * @param l
+	 *            List with InfoShift objects
+	 * @param shift
+	 *            InfoShift object that is going to be used as a search
+	 *            criteria
+	 * @return match the shift in the list (the first one only!)
+	 */
     private ITurno obtainShiftOfSameTypeAndCourse(List l, ITurno shift)
     {
 
@@ -748,15 +777,18 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
     }
 
     /**
-     * obtainShiftsOfSameClassAndCourses
-     * 
-     * Checks wether there is not any more Shifts in the list l belonging to the same course that are not of the 
-     * same class
-     * 
-     * @param l List with InfoShift objects
-     * @param shift InfoShift object that is going to be used as a search criteria 
-     * @return ArrayList: list of shifts tht should not be processed
-     */
+	 * obtainShiftsOfSameClassAndCourses
+	 * 
+	 * Checks wether there is not any more Shifts in the list l belonging to
+	 * the same course that are not of the same class
+	 * 
+	 * @param l
+	 *            List with InfoShift objects
+	 * @param shift
+	 *            InfoShift object that is going to be used as a search
+	 *            criteria
+	 * @return ArrayList: list of shifts tht should not be processed
+	 */
 
     private ArrayList obtainShiftsOfDifferentClassesAndSameCourse(List l, ITurno shift)
         throws ExcepcaoPersistencia
@@ -795,13 +827,14 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
     }
 
     /**
-     * @author tdi-dev
-     * 
-     * Container (bean) for an error message and the erroneous shift.  
-     * 
-     * TODO: tdi-dev -> get a proper place (package) for this subclass: ShiftConflict. (posted by edgar.goncalves)
-     * 	 
-     */
+	 * @author tdi-dev
+	 * 
+	 * Container (bean) for an error message and the erroneous shift.
+	 * 
+	 * TODO: tdi-dev -> get a proper place (package) for this subclass:
+	 * ShiftConflict. (posted by edgar.goncalves)
+	 *  
+	 */
     public class ShiftConflict
     {
 
@@ -815,36 +848,37 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
         public ShiftConflict(ITurno s, String m)
         {
             this.setMsg(m);
-            this.setShift((InfoShift) Cloner.get(s));
+            this.setShift(Cloner.copyIShift2InfoShift(s));
         }
 
         /**
-         * @return the error message
-         */
+		 * @return the error message
+		 */
         public String getMsg()
         {
             return msg;
         }
 
         /**
-         * @return the shift with an error
-         */
+		 * @return the shift with an error
+		 */
         public InfoShift getShift()
         {
             return shift;
         }
 
         /**
-         * @param string: an error message
-         */
+		 * @param string:
+		 *            an error message
+		 */
         public void setMsg(String string)
         {
             msg = string;
         }
 
         /**
-         * @param turno
-         */
+		 * @param turno
+		 */
         public void setShift(InfoShift turno)
         {
             shift = turno;
@@ -853,9 +887,9 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
     }
 
     /**
-    		 * @author tdi-dev
-    		 *
-    		 */
+	 * @author tdi-dev
+	 *  
+	 */
     private class ShiftClassTransformer implements Transformer
     {
 
@@ -868,11 +902,11 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
     }
 
     /**
-     * @author tdi-dev
-     * 
-     * Transforms a shift of the type  InfoShift in an object of the type IShift  
-     *
-     */
+	 * @author tdi-dev
+	 * 
+	 * Transforms a shift of the type InfoShift in an object of the type IShift
+	 *  
+	 */
     private class ShiftTransformerInverse implements Transformer
     {
 
@@ -884,13 +918,14 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
     }
 
     /**
-     * @author tdi-dev
-     * 
-     * Container (bean) for a shift and its associated classes.  
-     * 
-     * TODO: tdi-dev -> get a proper place (package) for this subclass: ShiftWithAssociatedClasses (posted by edgar.goncalves).
-     *
-     */
+	 * @author tdi-dev
+	 * 
+	 * Container (bean) for a shift and its associated classes.
+	 * 
+	 * TODO: tdi-dev -> get a proper place (package) for this subclass:
+	 * ShiftWithAssociatedClasses (posted by edgar.goncalves).
+	 *  
+	 */
     public class ShiftWithAssociatedClasses
     {
 
@@ -898,16 +933,16 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
         private InfoShift shift;
 
         /**
-        		 * 
-        		 */
+		 *  
+		 */
         public ShiftWithAssociatedClasses()
         {
             super();
         }
 
         /**
-         * 
-         */
+		 *  
+		 */
         public ShiftWithAssociatedClasses(InfoShift shift, ArrayList classes)
         {
             this.setClasses(classes);
@@ -915,32 +950,32 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico
         }
 
         /**
-         * @return
-         */
+		 * @return
+		 */
         public ArrayList getClasses()
         {
             return classes;
         }
 
         /**
-         * @return
-         */
+		 * @return
+		 */
         public InfoShift getShift()
         {
             return shift;
         }
 
         /**
-         * @param list
-         */
+		 * @param list
+		 */
         public void setClasses(ArrayList list)
         {
             classes = list;
         }
 
         /**
-         * @param turno
-         */
+		 * @param turno
+		 */
         public void setShift(InfoShift turno)
         {
             shift = turno;

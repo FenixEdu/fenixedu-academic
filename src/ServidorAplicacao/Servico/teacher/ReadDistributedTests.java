@@ -10,19 +10,18 @@ import java.util.List;
 
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.InfoDistributedTest;
-import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSiteDistributedTests;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
 import Dominio.ExecutionCourse;
-import Dominio.IExecutionCourse;
 import Dominio.IDistributedTest;
+import Dominio.IExecutionCourse;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentDistributedTest;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -75,7 +74,7 @@ public class ReadDistributedTests implements IServico
             InfoSiteDistributedTests bodyComponent = new InfoSiteDistributedTests();
             bodyComponent.setInfoDistributedTests(result);
             bodyComponent.setExecutionCourse(
-                (InfoExecutionCourse) Cloner.get(executionCourse));
+                 Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
             SiteView siteView = new ExecutionCourseSiteView(bodyComponent, bodyComponent);
             return siteView;
         } catch (ExcepcaoPersistencia e)

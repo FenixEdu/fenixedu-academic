@@ -13,7 +13,6 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  * @author Joana Mota (jccm@rnl.ist.utl.pt)
  */
@@ -24,16 +23,16 @@ public class ReadExecutionDegreeByExecutionYearAndDegreeCode implements IServico
     private static ReadExecutionDegreeByExecutionYearAndDegreeCode service =
         new ReadExecutionDegreeByExecutionYearAndDegreeCode();
     /**
-     * The singleton access method of this class.
-     **/
+	 * The singleton access method of this class.
+	 */
     public static ReadExecutionDegreeByExecutionYearAndDegreeCode getService()
     {
         return service;
     }
 
     /**
-     * @see ServidorAplicacao.IServico#getNome()
-     */
+	 * @see ServidorAplicacao.IServico#getNome()
+	 */
     public String getNome()
     {
         return "ReadExecutionDegreeByExecutionYearAndDegreeCode";
@@ -57,9 +56,10 @@ public class ReadExecutionDegreeByExecutionYearAndDegreeCode implements IServico
 
             if (executionDegree != null)
             {
-                result = (InfoExecutionDegree) Cloner.get(executionDegree);
+                result = Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);
             }
-        } catch (ExcepcaoPersistencia ex)
+        }
+        catch (ExcepcaoPersistencia ex)
         {
             throw new FenixServiceException(ex);
         }

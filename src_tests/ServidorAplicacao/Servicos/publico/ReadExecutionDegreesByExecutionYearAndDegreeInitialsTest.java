@@ -1,6 +1,5 @@
 package ServidorAplicacao.Servicos.publico;
 
-import framework.factory.ServiceManagerServiceFactory;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoExecutionDegree;
@@ -18,172 +17,169 @@ import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author tfc130
- *
+ *  
  */
-public class ReadExecutionDegreesByExecutionYearAndDegreeInitialsTest
-	extends TestCaseServicos {
+public class ReadExecutionDegreesByExecutionYearAndDegreeInitialsTest extends TestCaseServicos
+{
 
-		private InfoExecutionDegree infoExecutionDegree = null;
-		private String degreeInitials = null;
-		private String nameDegreeCurricularPlan = null;
-		private InfoExecutionYear infoExecutionYear = null;		
+    private InfoExecutionDegree infoExecutionDegree = null;
+    private String degreeInitials = null;
+    private String nameDegreeCurricularPlan = null;
+    private InfoExecutionYear infoExecutionYear = null;
 
-	/**
+    /**
 	 * Constructor for SelectClassesTest.
 	 */
-	public ReadExecutionDegreesByExecutionYearAndDegreeInitialsTest(
-		java.lang.String testName) {
-		super(testName);
-	}
+    public ReadExecutionDegreesByExecutionYearAndDegreeInitialsTest(java.lang.String testName)
+    {
+        super(testName);
+    }
 
-	public static void main(java.lang.String[] args) {
-		junit.textui.TestRunner.run(suite());
-	}
+    public static void main(java.lang.String[] args)
+    {
+        junit.textui.TestRunner.run(suite());
+    }
 
-	public static Test suite() {
-		TestSuite suite =
-			new TestSuite(
-			ReadExecutionDegreesByExecutionYearAndDegreeInitialsTest.class);
+    public static Test suite()
+    {
+        TestSuite suite = new TestSuite(ReadExecutionDegreesByExecutionYearAndDegreeInitialsTest.class);
 
-		return suite;
-	}
+        return suite;
+    }
 
-	protected void setUp() {
-		super.setUp();
-	}
+    protected void setUp()
+    {
+        super.setUp();
+    }
 
-	protected void tearDown() {
-		super.tearDown();
-	}
+    protected void tearDown()
+    {
+        super.tearDown();
+    }
 
-	public void testReadAll() {
+    public void testReadAll()
+    {
 
-		Object argsReadExecutionDegreesByExecutionYearAndDegreeInitials[] =
-			new Object[3];
+        Object argsReadExecutionDegreesByExecutionYearAndDegreeInitials[] = new Object[3];
 
-		Object result = null;
+        Object result = null;
 
-		// executionDegree exists in database
-		this.prepareTestCase(true);
+        // executionDegree exists in database
+        this.prepareTestCase(true);
 
-		argsReadExecutionDegreesByExecutionYearAndDegreeInitials[0] =
-			this.infoExecutionYear;
-		argsReadExecutionDegreesByExecutionYearAndDegreeInitials[1] =
-			this.degreeInitials;
-		argsReadExecutionDegreesByExecutionYearAndDegreeInitials[2] =
-			this.nameDegreeCurricularPlan;
-		
-		try {
-			result =
-				ServiceManagerServiceFactory.executeService(
-					_userView,
-					"ReadExecutionDegreesByExecutionYearAndDegreeInitials",
-					argsReadExecutionDegreesByExecutionYearAndDegreeInitials);
-			assertTrue(((InfoExecutionDegree)result).equals(infoExecutionDegree));
-			
-		} catch (Exception ex) {
-			fail("testReadAll: executionCourse with 1 curricularCourses: " + ex);
-		}
+        argsReadExecutionDegreesByExecutionYearAndDegreeInitials[0] = this.infoExecutionYear;
+        argsReadExecutionDegreesByExecutionYearAndDegreeInitials[1] = this.degreeInitials;
+        argsReadExecutionDegreesByExecutionYearAndDegreeInitials[2] = this.nameDegreeCurricularPlan;
 
-		// Empty database - executionDegrees does not exist in db
-		this.prepareTestCase(false);
-		argsReadExecutionDegreesByExecutionYearAndDegreeInitials[0] =
-			this.infoExecutionYear;
-		argsReadExecutionDegreesByExecutionYearAndDegreeInitials[1] =
-			this.degreeInitials;
-		argsReadExecutionDegreesByExecutionYearAndDegreeInitials[2] =
-			this.nameDegreeCurricularPlan;
-		
-		try {
-			result =
-				ServiceManagerServiceFactory.executeService(
-					_userView,
-					"ReadExecutionDegreesByExecutionYearAndDegreeInitials",
-					argsReadExecutionDegreesByExecutionYearAndDegreeInitials);
-			assertNull(result);
-		} catch (Exception ex) {
-			fail("testReadAll: no curricularCourses of executionCourse: " + ex);
-		}
-	
-	}
+        try
+        {
+            result =
+                ServiceManagerServiceFactory.executeService(
+                    _userView,
+                    "ReadExecutionDegreesByExecutionYearAndDegreeInitials",
+                    argsReadExecutionDegreesByExecutionYearAndDegreeInitials);
+            assertTrue(((InfoExecutionDegree) result).equals(infoExecutionDegree));
 
-	private void prepareTestCase(
-		boolean exists) {
+        }
+        catch (Exception ex)
+        {
+            fail("testReadAll: executionCourse with 1 curricularCourses: " + ex);
+        }
 
-		ISuportePersistente sp = null;
+        // Empty database - executionDegrees does not exist in db
+        this.prepareTestCase(false);
+        argsReadExecutionDegreesByExecutionYearAndDegreeInitials[0] = this.infoExecutionYear;
+        argsReadExecutionDegreesByExecutionYearAndDegreeInitials[1] = this.degreeInitials;
+        argsReadExecutionDegreesByExecutionYearAndDegreeInitials[2] = this.nameDegreeCurricularPlan;
 
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-			sp.iniciarTransaccao();
+        try
+        {
+            result =
+                ServiceManagerServiceFactory.executeService(
+                    _userView,
+                    "ReadExecutionDegreesByExecutionYearAndDegreeInitials",
+                    argsReadExecutionDegreesByExecutionYearAndDegreeInitials);
+            assertNull(result);
+        }
+        catch (Exception ex)
+        {
+            fail("testReadAll: no curricularCourses of executionCourse: " + ex);
+        }
 
-			ICursoPersistente cursoPersistente = sp.getICursoPersistente();
-			ICurso degree = cursoPersistente.readBySigla("LEIC");
-			assertNotNull(degree);
+    }
 
-			IPersistentDegreeCurricularPlan planoCurricularCursoPersistente =
-				sp.getIPersistentDegreeCurricularPlan();
-			IDegreeCurricularPlan degreeCurricularPlan =
-				planoCurricularCursoPersistente.readByNameAndDegree(
-					"plano1",
-					degree);
-			assertNotNull(degreeCurricularPlan);
+    private void prepareTestCase(boolean exists)
+    {
 
-			IPersistentExecutionYear persistenExecutionYear =
-				sp.getIPersistentExecutionYear();
-			IExecutionYear executionYear =
-				persistenExecutionYear.readExecutionYearByName("2002/2003");
-			assertNotNull(executionYear);
+        ISuportePersistente sp = null;
 
-			ICursoExecucaoPersistente cursoExecucaoPersistente =
-				sp.getICursoExecucaoPersistente();
-			ICursoExecucao executionDegree =
-				cursoExecucaoPersistente
-					.readByDegreeCurricularPlanAndExecutionYear(
-					degreeCurricularPlan,
-					executionYear);
-			assertNotNull(executionDegree);
+        try
+        {
+            sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
 
-/*			IPersistentExecutionPeriod persistentExecutionPeriod =
-				sp.getIPersistentExecutionPeriod();
-			IExecutionPeriod executionPeriod =
-				persistentExecutionPeriod.readByNameAndExecutionYear(
-					"2º Semestre",
-					executionYear);
-			assertNotNull(executionPeriod);
+            ICursoPersistente cursoPersistente = sp.getICursoPersistente();
+            ICurso degree = cursoPersistente.readBySigla("LEIC");
+            assertNotNull(degree);
 
-			IDisciplinaExecucaoPersistente disciplinaExecucaoPersistente =
-				sp.getIDisciplinaExecucaoPersistente();
-			IDisciplinaExecucao executionCourse =
-				disciplinaExecucaoPersistente
-					.readByExecutionCourseInitialsAndExecutionPeriod(
-					"TFCI",
-					executionPeriod);
-			assertNotNull(executionCourse);
-*/
-			this.degreeInitials = degree.getSigla();
-			this.nameDegreeCurricularPlan = degreeCurricularPlan.getName();
-			this.infoExecutionYear =  (InfoExecutionYear) Cloner.get(executionYear);
+            IPersistentDegreeCurricularPlan planoCurricularCursoPersistente =
+                sp.getIPersistentDegreeCurricularPlan();
+            IDegreeCurricularPlan degreeCurricularPlan =
+                planoCurricularCursoPersistente.readByNameAndDegree("plano1", degree);
+            assertNotNull(degreeCurricularPlan);
 
+            IPersistentExecutionYear persistenExecutionYear = sp.getIPersistentExecutionYear();
+            IExecutionYear executionYear = persistenExecutionYear.readExecutionYearByName("2002/2003");
+            assertNotNull(executionYear);
 
-			if (!exists)
-				cursoExecucaoPersistente.delete(executionDegree);
+            ICursoExecucaoPersistente cursoExecucaoPersistente = sp.getICursoExecucaoPersistente();
+            ICursoExecucao executionDegree =
+                cursoExecucaoPersistente.readByDegreeCurricularPlanAndExecutionYear(
+                    degreeCurricularPlan,
+                    executionYear);
+            assertNotNull(executionDegree);
 
-			this.infoExecutionDegree =
-				(InfoExecutionDegree) Cloner.get(executionDegree);
+            /*
+			 * IPersistentExecutionPeriod persistentExecutionPeriod =
+			 * sp.getIPersistentExecutionPeriod(); IExecutionPeriod
+			 * executionPeriod =
+			 * persistentExecutionPeriod.readByNameAndExecutionYear( "2º
+			 * Semestre", executionYear); assertNotNull(executionPeriod);
+			 * 
+			 * IDisciplinaExecucaoPersistente disciplinaExecucaoPersistente =
+			 * sp.getIDisciplinaExecucaoPersistente(); IDisciplinaExecucao
+			 * executionCourse = disciplinaExecucaoPersistente
+			 * .readByExecutionCourseInitialsAndExecutionPeriod( "TFCI",
+			 * executionPeriod); assertNotNull(executionCourse);
+			 */
+            this.degreeInitials = degree.getSigla();
+            this.nameDegreeCurricularPlan = degreeCurricularPlan.getName();
+            this.infoExecutionYear = Cloner.copyIExecutionYear2InfoExecutionYear(executionYear);
 
-			sp.confirmarTransaccao();
+            if (!exists)
+                cursoExecucaoPersistente.delete(executionDegree);
 
-		} catch (ExcepcaoPersistencia excepcao) {
-			try {
-				sp.cancelarTransaccao();
-			} catch (ExcepcaoPersistencia ex) {
-				fail("ligarSuportePersistente: cancelarTransaccao: " + ex);
-			}
-			fail("ligarSuportePersistente: confirmarTransaccao: " + excepcao);
-		}
-	}
+            this.infoExecutionDegree = Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);
+
+            sp.confirmarTransaccao();
+
+        }
+        catch (ExcepcaoPersistencia excepcao)
+        {
+            try
+            {
+                sp.cancelarTransaccao();
+            }
+            catch (ExcepcaoPersistencia ex)
+            {
+                fail("ligarSuportePersistente: cancelarTransaccao: " + ex);
+            }
+            fail("ligarSuportePersistente: confirmarTransaccao: " + excepcao);
+        }
+    }
 
 }

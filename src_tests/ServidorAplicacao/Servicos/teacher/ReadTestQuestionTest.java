@@ -1,6 +1,6 @@
 /*
  * Created on 12/Ago/2003
- *
+ *  
  */
 package ServidorAplicacao.Servicos.teacher;
 
@@ -36,8 +36,8 @@ public class ReadTestQuestionTest extends TestCaseReadServices
 {
 
     /**
-    * @param testName
-    */
+	 * @param testName
+	 */
     public ReadTestQuestionTest(String testName)
     {
         super(testName);
@@ -77,8 +77,7 @@ public class ReadTestQuestionTest extends TestCaseReadServices
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
 
-            IPersistentExecutionCourse persistentExecutionCourse =
-                sp.getIPersistentExecutionCourse();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             IExecutionCourse executionCourse = new ExecutionCourse(new Integer(26));
             executionCourse =
                 (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
@@ -100,20 +99,22 @@ public class ReadTestQuestionTest extends TestCaseReadServices
             assertNotNull("TestQuestion null", testQuestion);
 
             sp.confirmarTransaccao();
-            infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
+            infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
 
             infoQuestion = Cloner.copyIQuestion2InfoQuestion(question);
             ParseQuestion parse = new ParseQuestion();
             try
             {
                 infoQuestion = parse.parseQuestion(infoQuestion.getXmlFile(), infoQuestion, "");
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 fail("exception: ExcepcaoPersistencia ");
             }
             infoTestQuestion = Cloner.copyITestQuestion2InfoTestQuestion(testQuestion);
             infoTestQuestion.setQuestion(infoQuestion);
-        } catch (ExcepcaoPersistencia e)
+        }
+        catch (ExcepcaoPersistencia e)
         {
             fail("exception: ExcepcaoPersistencia ");
         }

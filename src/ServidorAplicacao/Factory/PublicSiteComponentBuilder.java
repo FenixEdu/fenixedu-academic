@@ -1,7 +1,7 @@
 /*
  * Created on 5/Mai/2003
- *
  * 
+ *  
  */
 package ServidorAplicacao.Factory;
 
@@ -29,119 +29,127 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author João Mota
- *
  * 
+ *  
  */
-public class PublicSiteComponentBuilder {
+public class PublicSiteComponentBuilder
+{
 
-	private static PublicSiteComponentBuilder instance = null;
+    private static PublicSiteComponentBuilder instance = null;
 
-	public PublicSiteComponentBuilder() {
-	}
+    public PublicSiteComponentBuilder()
+    {
+    }
 
-	public static PublicSiteComponentBuilder getInstance() {
-		if (instance == null) {
-			instance = new PublicSiteComponentBuilder();
-		}
-		return instance;
-	}
+    public static PublicSiteComponentBuilder getInstance()
+    {
+        if (instance == null)
+        {
+            instance = new PublicSiteComponentBuilder();
+        }
+        return instance;
+    }
 
-	public ISiteComponent getComponent(
-		ISiteComponent component,
-		ITurma domainClass)
-		throws FenixServiceException {
+    public ISiteComponent getComponent(ISiteComponent component, ITurma domainClass)
+        throws FenixServiceException
+    {
 
-		if (component instanceof InfoSiteTimetable) {
-			return getInfoSiteTimetable(
-				(InfoSiteTimetable) component,
-				domainClass);
-		} else if (component instanceof InfoSiteClasses) {
-			return getInfoSiteClasses((InfoSiteClasses) component, domainClass);
-		}
+        if (component instanceof InfoSiteTimetable)
+        {
+            return getInfoSiteTimetable((InfoSiteTimetable) component, domainClass);
+        }
+        else if (component instanceof InfoSiteClasses)
+        {
+            return getInfoSiteClasses((InfoSiteClasses) component, domainClass);
+        }
 
-		return null;
+        return null;
 
-	}
+    }
 
-	/**
+    /**
 	 * @param classes
 	 * @return
 	 */
-	private ISiteComponent getInfoSiteClasses(
-		InfoSiteClasses component,
-		ITurma domainClass)
-		throws FenixServiceException {
-		List classes = new ArrayList();
-		List infoClasses = new ArrayList();
+    private ISiteComponent getInfoSiteClasses(InfoSiteClasses component, ITurma domainClass)
+        throws FenixServiceException
+    {
+        List classes = new ArrayList();
+        List infoClasses = new ArrayList();
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			ITurmaPersistente classDAO = sp.getITurmaPersistente();
+            ITurmaPersistente classDAO = sp.getITurmaPersistente();
 
-			IExecutionPeriod executionPeriod = domainClass.getExecutionPeriod();
-			ICursoExecucao executionDegree = domainClass.getExecutionDegree();
+            IExecutionPeriod executionPeriod = domainClass.getExecutionPeriod();
+            ICursoExecucao executionDegree = domainClass.getExecutionDegree();
 
-			classes =
-				classDAO
-					.readByExecutionPeriodAndCurricularYearAndExecutionDegree(
-					executionPeriod,
-					domainClass.getAnoCurricular(),
-					executionDegree);
+            classes =
+                classDAO.readByExecutionPeriodAndCurricularYearAndExecutionDegree(
+                    executionPeriod,
+                    domainClass.getAnoCurricular(),
+                    executionDegree);
 
-			for (int i = 0; i < classes.size(); i++) {
-				ITurma taux = (ITurma) classes.get(i);
-				infoClasses.add(Cloner.copyClass2InfoClass(taux));
-			}
+            for (int i = 0; i < classes.size(); i++)
+            {
+                ITurma taux = (ITurma) classes.get(i);
+                infoClasses.add(Cloner.copyClass2InfoClass(taux));
+            }
 
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
+        }
+        catch (ExcepcaoPersistencia e)
+        {
+            throw new FenixServiceException(e);
+        }
 
-		component.setClasses(infoClasses);
-		return component;
-	}
+        component.setClasses(infoClasses);
+        return component;
+    }
 
-	/**
+    /**
 	 * @param timetable
 	 * @param site
 	 * @return
 	 */
-	private ISiteComponent getInfoSiteTimetable(
-		InfoSiteTimetable component,
-		ITurma domainClass)
-		throws FenixServiceException {
-		ArrayList infoLessonList = null;
+    private ISiteComponent getInfoSiteTimetable(InfoSiteTimetable component, ITurma domainClass)
+        throws FenixServiceException
+    {
+        ArrayList infoLessonList = null;
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			ITurnoAulaPersistente shiftLessonDAO =
-				sp.getITurnoAulaPersistente();
-			List shiftList =
-				sp.getITurmaTurnoPersistente().readByClass(domainClass);
-			Iterator iterator = shiftList.iterator();
-			infoLessonList = new ArrayList();
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ITurnoAulaPersistente shiftLessonDAO = sp.getITurnoAulaPersistente();
+            List shiftList = sp.getITurmaTurnoPersistente().readByClass(domainClass);
+            Iterator iterator = shiftList.iterator();
+            infoLessonList = new ArrayList();
 
-			while (iterator.hasNext()) {
-				ITurno shift = (ITurno) iterator.next();
-				InfoShift infoShift = (InfoShift) Cloner.get(shift);
-				List lessonList = shiftLessonDAO.readByShift(shift);
-				Iterator lessonIterator = lessonList.iterator();
-				while (lessonIterator.hasNext()) {
-					IAula elem = (IAula) lessonIterator.next();
-					InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem);
+            while (iterator.hasNext())
+            {
+                ITurno shift = (ITurno) iterator.next();
+                InfoShift infoShift = Cloner.copyIShift2InfoShift(shift);
+                List lessonList = shiftLessonDAO.readByShift(shift);
+                Iterator lessonIterator = lessonList.iterator();
+                while (lessonIterator.hasNext())
+                {
+                    IAula elem = (IAula) lessonIterator.next();
+                    InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem);
 
-					infoLesson.getInfoShiftList().add(infoShift);
-					infoLessonList.add(infoLesson);
+                    infoLesson.getInfoShiftList().add(infoShift);
+                    infoLessonList.add(infoLesson);
 
-				}
-			}
-		} catch (ExcepcaoPersistencia ex) {
-			throw new FenixServiceException(ex);
-		}
+                }
+            }
+        }
+        catch (ExcepcaoPersistencia ex)
+        {
+            throw new FenixServiceException(ex);
+        }
 
-		component.setLessons(infoLessonList);
-		return component;
-	}
+        component.setLessons(infoLessonList);
+        return component;
+    }
 
 }

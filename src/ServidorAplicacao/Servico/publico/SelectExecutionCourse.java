@@ -19,66 +19,81 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author João Mota
  */
-public class SelectExecutionCourse implements IServico {
+public class SelectExecutionCourse implements IServico
+{
 
-	private static SelectExecutionCourse _servico = new SelectExecutionCourse();
+    private static SelectExecutionCourse _servico = new SelectExecutionCourse();
 
-	/**
-	  * The actor of this class.
-	  **/
+    /**
+	 * The actor of this class.
+	 */
 
-	private SelectExecutionCourse() {
+    private SelectExecutionCourse()
+    {
 
-	}
+    }
 
-	/**
+    /**
 	 * Returns Service Name
 	 */
-	public String getNome() {
-		return "SelectExecutionCourse";
-	}
+    public String getNome()
+    {
+        return "SelectExecutionCourse";
+    }
 
-	/**
+    /**
 	 * Returns the _servico.
+	 * 
 	 * @return SelectExecutionCourse
 	 */
-	public static SelectExecutionCourse getService() {
-		return _servico;
-	}
+    public static SelectExecutionCourse getService()
+    {
+        return _servico;
+    }
 
-	public Object run(
-		InfoExecutionDegree infoExecutionDegree,
-		InfoExecutionPeriod infoExecutionPeriod,
-		Integer curricularYear) {
+    public Object run(
+        InfoExecutionDegree infoExecutionDegree,
+        InfoExecutionPeriod infoExecutionPeriod,
+        Integer curricularYear)
+    {
 
-		List infoExecutionCourseList = new ArrayList();
+        List infoExecutionCourseList = new ArrayList();
 
-		try {
-			List executionCourseList = null;
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			
-			IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
+        try
+        {
+            List executionCourseList = null;
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
- 			ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
- 			IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
- 			
-			executionCourseList =
-					executionCourseDAO.readByCurricularYearAndExecutionPeriodAndExecutionDegree(curricularYear,executionPeriod,executionDegree);
+            IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 
-			for (int i = 0; i < executionCourseList.size(); i++) {
-				IExecutionCourse aux =
-					(IExecutionCourse) executionCourseList.get(i);
-				InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) Cloner.get(aux);
-				infoExecutionCourseList.add(infoExecutionCourse);
-			}
+            ICursoExecucao executionDegree =
+                Cloner.copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
+            IExecutionPeriod executionPeriod =
+                Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
 
-		} catch (ExcepcaoPersistencia e) {
+            executionCourseList =
+                executionCourseDAO.readByCurricularYearAndExecutionPeriodAndExecutionDegree(
+                    curricularYear,
+                    executionPeriod,
+                    executionDegree);
 
-			e.printStackTrace();
-		}
+            for (int i = 0; i < executionCourseList.size(); i++)
+            {
+                IExecutionCourse aux = (IExecutionCourse) executionCourseList.get(i);
+                InfoExecutionCourse infoExecutionCourse =
+                    Cloner.copyIExecutionCourse2InfoExecutionCourse(aux);
+                infoExecutionCourseList.add(infoExecutionCourse);
+            }
 
-		return infoExecutionCourseList;
+        }
+        catch (ExcepcaoPersistencia e)
+        {
 
-	}
+            e.printStackTrace();
+        }
+
+        return infoExecutionCourseList;
+
+    }
 
 }

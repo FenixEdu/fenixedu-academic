@@ -108,7 +108,7 @@ public class ReadCourseInformation implements IServico
             InfoSiteCourseInformation infoSiteCourseInformation = new InfoSiteCourseInformation();
 
             InfoExecutionCourse infoExecutionCourse =
-                (InfoExecutionCourse) Cloner.get(executionCourse);
+                 Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
             infoSiteCourseInformation.setInfoExecutionCourse(infoExecutionCourse);
 
             IPersistentEvaluationMethod persistentEvaluationMethod = sp.getIPersistentEvaluationMethod();

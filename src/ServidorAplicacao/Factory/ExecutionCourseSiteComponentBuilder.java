@@ -51,10 +51,10 @@ import Dominio.IBibliographicReference;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICurriculum;
-import Dominio.IExecutionCourse;
 import Dominio.IEvaluation;
 import Dominio.IEvaluationMethod;
 import Dominio.IExam;
+import Dominio.IExecutionCourse;
 import Dominio.IItem;
 import Dominio.IProfessorship;
 import Dominio.IResponsibleFor;
@@ -296,7 +296,7 @@ public class ExecutionCourseSiteComponentBuilder
             component.setInfoSummaries(result);
             component.setInfoSite(Cloner.copyISite2InfoSite(site));
             component.setExecutionCourse(
-                (InfoExecutionCourse) Cloner.get(executionCourse));
+                Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
 
             return component;
         }
@@ -396,8 +396,8 @@ public class ExecutionCourseSiteComponentBuilder
         component.setMail(site.getMail());
         component.setSections(infoSectionsList);
         InfoExecutionCourse executionCourse;
-		executionCourse = (InfoExecutionCourse) Cloner.get(site.getExecutionCourse());
-		component.setExecutionCourse(executionCourse);
+        executionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(site.getExecutionCourse());
+        component.setExecutionCourse(executionCourse);
         return component;
     }
 
@@ -1028,8 +1028,8 @@ public class ExecutionCourseSiteComponentBuilder
 
         component.setAssociatedCurricularCourses(infoCurricularCourseList);
         InfoExecutionCourse executionCourse;
-		executionCourse = (InfoExecutionCourse) Cloner.get(site.getExecutionCourse());
-		component.setInfoExecutionCourse(executionCourse);
+        executionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(site.getExecutionCourse());
+        component.setInfoExecutionCourse(executionCourse);
         component.setInfoShiftsWithAssociatedClassesList(infoShiftsWithAssociatedClassesList);
 
         return component;

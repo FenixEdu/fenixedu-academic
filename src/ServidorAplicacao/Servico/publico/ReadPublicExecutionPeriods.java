@@ -52,7 +52,7 @@ public class ReadPublicExecutionPeriods implements IServico {
 			if (executionPeriods != null) {
 				for (int i = 0; i < executionPeriods.size(); i++) {
 					result.add(
-						Cloner.get(
+						Cloner.copyIExecutionPeriod2InfoExecutionPeriod(
 							(IExecutionPeriod) executionPeriods.get(i)));
 				}
 			}

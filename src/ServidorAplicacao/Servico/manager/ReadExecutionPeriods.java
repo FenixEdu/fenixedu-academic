@@ -66,7 +66,7 @@ public class ReadExecutionPeriods implements IServico {
 
 	private Transformer TRANSFORM_EXECUTIONPERIOD_TO_INFOEXECUTIONPERIOD = new Transformer() {
 		public Object transform(Object executionPeriod) {
-			return Cloner.get((IExecutionPeriod) executionPeriod);
+			return Cloner.copyIExecutionPeriod2InfoExecutionPeriod((IExecutionPeriod) executionPeriod);
 		}
 	};
 

@@ -39,7 +39,7 @@ public class ReadExecutionDegreesByExecutionYearAndDegreeType implements IServic
     }
 
     public List run(InfoExecutionYear infoExecutionYear, TipoCurso degreeType)
-            throws FenixServiceException
+        throws FenixServiceException
     {
 
         ArrayList infoExecutionDegreeList = null;
@@ -68,22 +68,22 @@ public class ReadExecutionDegreesByExecutionYearAndDegreeType implements IServic
             }
             else
             {
-                executionDegrees = executionDegreeDAO.readByExecutionYearAndDegreeType(executionYear,
-                        degreeType);
+                executionDegrees =
+                    executionDegreeDAO.readByExecutionYearAndDegreeType(executionYear, degreeType);
             }
 
-            infoExecutionDegreeList = (ArrayList) CollectionUtils.collect(executionDegrees,
-                    new Transformer()
-                    {
+            infoExecutionDegreeList =
+                (ArrayList) CollectionUtils.collect(executionDegrees, new Transformer()
+            {
 
-                        public Object transform(Object input)
-                        {
-                            ICursoExecucao executionDegree = (ICursoExecucao) input;
-                            InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) Cloner
-									        .get(executionDegree);
-                            return infoExecutionDegree;
-                        }
-                    });
+                public Object transform(Object input)
+                {
+                    ICursoExecucao executionDegree = (ICursoExecucao) input;
+                    InfoExecutionDegree infoExecutionDegree =
+                        Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);
+                    return infoExecutionDegree;
+                }
+            });
         }
         catch (ExcepcaoPersistencia ex)
         {

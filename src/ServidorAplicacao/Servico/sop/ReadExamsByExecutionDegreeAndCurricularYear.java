@@ -78,7 +78,7 @@ public class ReadExamsByExecutionDegreeAndCurricularYear implements IServico {
 					new InfoExecutionCourseAndExams();
 
 				infoExecutionCourseAndExams.setInfoExecutionCourse(
-					(InfoExecutionCourse) Cloner.get(
+					 Cloner.copyIExecutionCourse2InfoExecutionCourse(
 						executionCourse));
 
 				for (int j = 0; j < executionCourse.getAssociatedExams().size(); j++) {

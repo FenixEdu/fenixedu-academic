@@ -66,7 +66,7 @@ public class ReadExecutionDegreesByExecutionYearId implements IService
             {
                 ICursoExecucao executionDegree = (ICursoExecucao) iterator.next();
                 infoExecutionDegreeList.add(
-                    Cloner.get(executionDegree));
+                    Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree));
             }
 
         }

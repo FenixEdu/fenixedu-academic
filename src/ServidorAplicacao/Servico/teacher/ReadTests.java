@@ -9,7 +9,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.ExecutionCourseSiteView;
-import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSiteTests;
 import DataBeans.InfoTest;
 import DataBeans.SiteView;
@@ -73,7 +72,7 @@ public class ReadTests implements IServico
             InfoSiteTests bodyComponent = new InfoSiteTests();
             bodyComponent.setInfoTests(result);
             bodyComponent.setExecutionCourse(
-                (InfoExecutionCourse) Cloner.get(executionCourse));
+                 Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
             SiteView siteView = new ExecutionCourseSiteView(bodyComponent, bodyComponent);
             return siteView;
         } catch (ExcepcaoPersistencia e)

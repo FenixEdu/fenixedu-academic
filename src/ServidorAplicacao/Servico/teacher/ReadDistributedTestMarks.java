@@ -1,9 +1,8 @@
 /*
  * Created on Oct 14, 2003
- *
+ *  
  */
 package ServidorAplicacao.Servico.teacher;
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,16 +13,14 @@ import org.apache.commons.beanutils.BeanComparator;
 
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.InfoDistributedTestMarks;
-import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSiteDistributedTestMarks;
 import DataBeans.InfoStudentTestQuestion;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
-
-import Dominio.ExecutionCourse;
 import Dominio.DistributedTest;
-import Dominio.IExecutionCourse;
+import Dominio.ExecutionCourse;
 import Dominio.IDistributedTest;
+import Dominio.IExecutionCourse;
 import Dominio.IStudent;
 import Dominio.IStudentTestQuestion;
 import Dominio.Student;
@@ -35,9 +32,10 @@ import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
+
 /**
  * @author Susana Fernandes
- *
+ *  
  */
 public class ReadDistributedTestMarks implements IServico
 {
@@ -130,7 +128,8 @@ public class ReadDistributedTestMarks implements IServico
                             new Double(
                                 finalMark.doubleValue()
                                     + studentTestQuestion.getTestQuestionMark().doubleValue());
-                    } else
+                    }
+                    else
                         notAnswered[index] = notAnswered[index] + 1;
 
                     infoStudentTestQuestionList.add(infoStudentTestQuestion);
@@ -163,8 +162,9 @@ public class ReadDistributedTestMarks implements IServico
             infoSiteDistributedTestMarks.setNotAnsweredPercentage(notAnsweredList);
 
             infoSiteDistributedTestMarks.setExecutionCourse(
-                (InfoExecutionCourse) Cloner.get(executionCourse));
-        } catch (ExcepcaoPersistencia e)
+                Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
+        }
+        catch (ExcepcaoPersistencia e)
         {
             throw new FenixServiceException(e);
         }

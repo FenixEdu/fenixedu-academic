@@ -299,12 +299,12 @@ public class TeacherAdministrationSiteComponentBuilder
 
             Collections.sort(infoSectionsList);
 
-			component.setTitle(site.getExecutionCourse().getNome());
-			component.setMail(site.getMail());
-			component.setSections(infoSectionsList);
-			InfoExecutionCourse executionCourse =
-				(InfoExecutionCourse) Cloner.get(site.getExecutionCourse());
-			component.setExecutionCourse(executionCourse);
+            component.setTitle(site.getExecutionCourse().getNome());
+            component.setMail(site.getMail());
+            component.setSections(infoSectionsList);
+            InfoExecutionCourse executionCourse =
+                Cloner.copyIExecutionCourse2InfoExecutionCourse(site.getExecutionCourse());
+            component.setExecutionCourse(executionCourse);
         }
         catch (ExcepcaoPersistencia excepcaoPersistencia)
         {
@@ -344,15 +344,16 @@ public class TeacherAdministrationSiteComponentBuilder
 	 * @param site
 	 * @return
 	 */
-    private ISiteComponent getInfoSiteCustomizationOptions(InfoSite component, ISite site) throws FenixServiceException
+    private ISiteComponent getInfoSiteCustomizationOptions(InfoSite component, ISite site)
+        throws FenixServiceException
     {
         component.setAlternativeSite(site.getAlternativeSite());
         component.setMail(site.getMail());
         component.setInitialStatement(site.getInitialStatement());
         component.setIntroduction(site.getIntroduction());
         component.setIdInternal(site.getIdInternal());
-		component.setInfoExecutionCourse(
-		    (InfoExecutionCourse) Cloner.get(site.getExecutionCourse()));
+        component.setInfoExecutionCourse(
+            Cloner.copyIExecutionCourse2InfoExecutionCourse(site.getExecutionCourse()));
         component.setStyle(site.getStyle());
 
         return component;
@@ -910,8 +911,7 @@ public class TeacherAdministrationSiteComponentBuilder
                 {
                     IExecutionCourse element = (IExecutionCourse) iter.next();
                     List attendingStudents = element.getAttendingStudents();
-                    InfoExecutionCourse infoExecutionCourse =
-                        (InfoExecutionCourse) Cloner.get(element);
+                    InfoExecutionCourse infoExecutionCourse =  Cloner.copyIExecutionCourse2InfoExecutionCourse(element);
                     infoExecutionCourse.setNumberOfAttendingStudents(
                         new Integer(attendingStudents.size()));
                     infoExecutionCourses.add(infoExecutionCourse);
@@ -1406,7 +1406,7 @@ public class TeacherAdministrationSiteComponentBuilder
                             shift);
 
                     infoSiteShift = new InfoSiteShift();
-                    infoSiteShift.setInfoShift((InfoShift) Cloner.get(shift));
+                    infoSiteShift.setInfoShift( Cloner.copyIShift2InfoShift(shift));
 
                     if (groupProperties.getGroupMaximumNumber() != null)
                     {
@@ -1658,7 +1658,7 @@ public class TeacherAdministrationSiteComponentBuilder
                                 shift.getNome(),
                                 shift.getTipo(),
                                 shift.getLotacao(),
-                                (InfoExecutionCourse) Cloner.get(executionCourse));
+                                 Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
 
                         List lessons = sp.getITurnoAulaPersistente().readByShift(shift);
                         List infoLessons = new ArrayList();

@@ -1,10 +1,9 @@
 /*
  * Created on 28/Jul/2003
- *
-*/
+ *  
+ */
 package ServidorAplicacao.Servico.teacher;
 
-import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoGroupProperties;
 import DataBeans.util.Cloner;
 import Dominio.ExecutionCourse;
@@ -22,58 +21,75 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * @author asnr and scpo
- *
+ *  
  */
 
-public class CreateGroupProperties implements IServico {
+public class CreateGroupProperties implements IServico
+{
 
-	private static CreateGroupProperties service = new CreateGroupProperties();
+    private static CreateGroupProperties service = new CreateGroupProperties();
 
-	/**
+    /**
 	 * The singleton access method of this class.
 	 */
-	public static CreateGroupProperties getService() {
-		return service;
-	}
-	/**
+    public static CreateGroupProperties getService()
+    {
+        return service;
+    }
+    /**
 	 * The constructor of this class.
 	 */
-	private CreateGroupProperties() {
-	}
-	/**
+    private CreateGroupProperties()
+    {
+    }
+    /**
 	 * The name of the service
 	 */
-	public final String getNome() {
-		return "CreateGroupProperties";
-	}
+    public final String getNome()
+    {
+        return "CreateGroupProperties";
+    }
 
-	/**
+    /**
 	 * Executes the service.
 	 */
-	public boolean run(Integer executionCourseCode, InfoGroupProperties infoGroupProperties) throws FenixServiceException {
+    public boolean run(Integer executionCourseCode, InfoGroupProperties infoGroupProperties)
+        throws FenixServiceException
+    {
 
-		IExecutionCourse executionCourse = null;
-		try {
+        IExecutionCourse executionCourse = null;
+        try
+        {
 
-			ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
-			IPersistentGroupProperties persistentGroupProperties = persistentSupport.getIPersistentGroupProperties();
+            ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
+            IPersistentExecutionCourse persistentExecutionCourse =
+                persistentSupport.getIPersistentExecutionCourse();
+            IPersistentGroupProperties persistentGroupProperties =
+                persistentSupport.getIPersistentGroupProperties();
 
-			executionCourse =
-				(IExecutionCourse) persistentExecutionCourse.readByOId(new ExecutionCourse(executionCourseCode), false);
+            executionCourse =
+                (IExecutionCourse) persistentExecutionCourse.readByOId(
+                    new ExecutionCourse(executionCourseCode),
+                    false);
 
-			infoGroupProperties.setInfoExecutionCourse((InfoExecutionCourse) Cloner.get(executionCourse));
+            infoGroupProperties.setInfoExecutionCourse(
+                Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
 
-			IGroupProperties newGroupProperties = Cloner.copyInfoGroupProperties2IGroupProperties(infoGroupProperties);
+            IGroupProperties newGroupProperties =
+                Cloner.copyInfoGroupProperties2IGroupProperties(infoGroupProperties);
 
-			persistentGroupProperties.lockWrite(newGroupProperties);
+            persistentGroupProperties.lockWrite(newGroupProperties);
 
-		} catch (ExistingPersistentException excepcaoPersistencia) {
-			throw new ExistingServiceException(excepcaoPersistencia);
+        }
+        catch (ExistingPersistentException excepcaoPersistencia)
+        {
+            throw new ExistingServiceException(excepcaoPersistencia);
 
-		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-			throw new FenixServiceException(excepcaoPersistencia.getMessage());
-		}
-		return true;
-	}
+        }
+        catch (ExcepcaoPersistencia excepcaoPersistencia)
+        {
+            throw new FenixServiceException(excepcaoPersistencia.getMessage());
+        }
+        return true;
+    }
 }

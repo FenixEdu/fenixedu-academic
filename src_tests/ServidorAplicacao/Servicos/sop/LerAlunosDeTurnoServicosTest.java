@@ -1,14 +1,12 @@
 /*
- * LerAlunosDeTurnoServicosTest.java
- * JUnit based test
- *
+ * LerAlunosDeTurnoServicosTest.java JUnit based test
+ * 
  * Created on 27 de Outubro de 2002, 22:42
  */
 
 package ServidorAplicacao.Servicos.sop;
 
 /**
- *
  * @author tfc130
  */
 import junit.framework.Test;
@@ -29,105 +27,129 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class LerAlunosDeTurnoServicosTest extends TestCaseReadServices {
-	
-	private InfoShift infoShift = null;
+public class LerAlunosDeTurnoServicosTest extends TestCaseReadServices
+{
 
-	public LerAlunosDeTurnoServicosTest(java.lang.String testName) {
-		super(testName);
-	}
+    private InfoShift infoShift = null;
 
-	public static void main(java.lang.String[] args) {
-		junit.textui.TestRunner.run(suite());
-	}
+    public LerAlunosDeTurnoServicosTest(java.lang.String testName)
+    {
+        super(testName);
+    }
 
-	public static Test suite() {
-		TestSuite suite = new TestSuite(LerAlunosDeTurnoServicosTest.class);
+    public static void main(java.lang.String[] args)
+    {
+        junit.textui.TestRunner.run(suite());
+    }
 
-		return suite;
-	}
+    public static Test suite()
+    {
+        TestSuite suite = new TestSuite(LerAlunosDeTurnoServicosTest.class);
 
-	protected void setUp() {
-		super.setUp();
-	}
+        return suite;
+    }
 
-	protected void tearDown() {
-		super.tearDown();
-	}
+    protected void setUp()
+    {
+        super.setUp();
+    }
 
-	protected String getNameOfServiceToBeTested() {
-		return "LerAlunosDeTurno";
-	}
+    protected void tearDown()
+    {
+        super.tearDown();
+    }
 
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+    protected String getNameOfServiceToBeTested()
+    {
+        return "LerAlunosDeTurno";
+    }
 
-		this.ligarSuportePersistente(true);
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
+    {
 
-		Object argsLerAlunos[] = new Object[1];
-		argsLerAlunos[0] = new ShiftKey(this.infoShift.getNome(), this.infoShift.getInfoDisciplinaExecucao());
+        this.ligarSuportePersistente(true);
 
-		return argsLerAlunos;
-	}
+        Object argsLerAlunos[] = new Object[1];
+        argsLerAlunos[0] =
+            new ShiftKey(this.infoShift.getNome(), this.infoShift.getInfoDisciplinaExecucao());
 
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+        return argsLerAlunos;
+    }
 
-		this.ligarSuportePersistente(false);
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
+    {
 
-		Object argsLerAlunos[] = new Object[1];
-		argsLerAlunos[0] = new ShiftKey(this.infoShift.getNome(), this.infoShift.getInfoDisciplinaExecucao());
+        this.ligarSuportePersistente(false);
 
-		return argsLerAlunos;
-	}
+        Object argsLerAlunos[] = new Object[1];
+        argsLerAlunos[0] =
+            new ShiftKey(this.infoShift.getNome(), this.infoShift.getInfoDisciplinaExecucao());
 
-	protected int getNumberOfItemsToRetrieve() {
-		return 1;
-	}
+        return argsLerAlunos;
+    }
 
-	protected Object getObjectToCompare() {
-		return null;
-	}
+    protected int getNumberOfItemsToRetrieve()
+    {
+        return 1;
+    }
 
-	protected boolean needsAuthorization() {
-		return true;
-	}
+    protected Object getObjectToCompare()
+    {
+        return null;
+    }
 
-	private void ligarSuportePersistente(boolean existing) {
+    protected boolean needsAuthorization()
+    {
+        return true;
+    }
 
-		ISuportePersistente sp = null;
+    private void ligarSuportePersistente(boolean existing)
+    {
 
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-			sp.iniciarTransaccao();
+        ISuportePersistente sp = null;
 
-			IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
-			IExecutionYear iey = ieyp.readExecutionYearByName("2002/2003");
+        try
+        {
+            sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
 
-			IPersistentExecutionPeriod iepp = sp.getIPersistentExecutionPeriod();
-			IExecutionPeriod iep = iepp.readByNameAndExecutionYear("2º Semestre", iey);
+            IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
+            IExecutionYear iey = ieyp.readExecutionYearByName("2002/2003");
 
-			IPersistentExecutionCourse idep = sp.getIPersistentExecutionCourse();
-			IExecutionCourse ide = idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI", iep);
-			
-			ITurnoPersistente itp = sp.getITurnoPersistente();
-			ITurno it = null;
+            IPersistentExecutionPeriod iepp = sp.getIPersistentExecutionPeriod();
+            IExecutionPeriod iep = iepp.readByNameAndExecutionYear("2º Semestre", iey);
 
-			if(existing) {
-				it = itp.readByNameAndExecutionCourse("turno4", ide);
-			} else {
-				it = itp.readByNameAndExecutionCourse("turno1", ide);
-			}
+            IPersistentExecutionCourse idep = sp.getIPersistentExecutionCourse();
+            IExecutionCourse ide = idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI", iep);
 
-			this.infoShift = (InfoShift) Cloner.get(it);
+            ITurnoPersistente itp = sp.getITurnoPersistente();
+            ITurno it = null;
 
-			sp.confirmarTransaccao();
+            if (existing)
+            {
+                it = itp.readByNameAndExecutionCourse("turno4", ide);
+            }
+            else
+            {
+                it = itp.readByNameAndExecutionCourse("turno1", ide);
+            }
 
-		} catch (ExcepcaoPersistencia excepcao) {
-			try {
-				sp.cancelarTransaccao();
-			} catch (ExcepcaoPersistencia ex) {
-				fail("ligarSuportePersistente: cancelarTransaccao");
-			}
-			fail("ligarSuportePersistente: confirmarTransaccao");
-		}
-	}
+            this.infoShift = Cloner.copyIShift2InfoShift(it);
+
+            sp.confirmarTransaccao();
+
+        }
+        catch (ExcepcaoPersistencia excepcao)
+        {
+            try
+            {
+                sp.cancelarTransaccao();
+            }
+            catch (ExcepcaoPersistencia ex)
+            {
+                fail("ligarSuportePersistente: cancelarTransaccao");
+            }
+            fail("ligarSuportePersistente: confirmarTransaccao");
+        }
+    }
 }

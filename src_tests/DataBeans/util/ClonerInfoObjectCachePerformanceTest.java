@@ -10,7 +10,7 @@ import java.util.List;
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.ExecutionCourse;
-import Dominio.IDomainObject;
+import Dominio.IExecutionCourse;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.ObjectFenixOJB;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -74,7 +74,7 @@ public class ClonerInfoObjectCachePerformanceTest extends ObjectFenixOJB
 		startTime = Calendar.getInstance();
 		for (int i = 0; i < infoExecutionCourses.size(); i++)
 		{
-			Cloner.get((IDomainObject) infoExecutionCourses.get(i));
+			Cloner.copyIExecutionCourse2InfoExecutionCourse((IExecutionCourse) infoExecutionCourses.get(i));
 		}
 		endTime = Calendar.getInstance();
 		System.out.println(

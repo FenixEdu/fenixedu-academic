@@ -94,7 +94,7 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular
 					(IExecutionCourse) iterator.next();
 
 				listInfoDE.add(
-					Cloner.get(elem));
+					Cloner.copyIExecutionCourse2InfoExecutionCourse(elem));
 
 			}
 		} catch (ExcepcaoPersistencia ex) {

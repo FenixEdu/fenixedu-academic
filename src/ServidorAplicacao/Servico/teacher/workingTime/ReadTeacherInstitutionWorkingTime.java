@@ -72,7 +72,7 @@ public class ReadTeacherInstitutionWorkingTime implements IServico
 
             IExecutionPeriod executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
             InfoExecutionPeriod infoExecutionPeriod =
-                (InfoExecutionPeriod) Cloner.get(executionPeriod);
+                Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionPeriod);
 
             List teacherInstitutionWorkTimeList =
                 teacherInstitutionWorkingTimeDAO.readByTeacherAndExecutionPeriod(
@@ -93,10 +93,11 @@ public class ReadTeacherInstitutionWorkingTime implements IServico
                     return infoTeacherInstitutionWorkTime;
                 }
             });
-            
+
             teacherInstitutionWorkingTimeDTO.setInfoExecutionPeriod(infoExecutionPeriod);
-			teacherInstitutionWorkingTimeDTO.setInfoTeacher(infoTeacher2);
-			teacherInstitutionWorkingTimeDTO.setInfoTeacherInstitutionWorkTimeList(infoTeacherInstitutionWorkTimeList);
+            teacherInstitutionWorkingTimeDTO.setInfoTeacher(infoTeacher2);
+            teacherInstitutionWorkingTimeDTO.setInfoTeacherInstitutionWorkTimeList(
+                infoTeacherInstitutionWorkTimeList);
         }
         catch (ExcepcaoPersistencia e)
         {

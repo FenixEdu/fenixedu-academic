@@ -26,7 +26,8 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 public class ReadExecutionPeriodsByExecutionYear implements IServico
 {
 
-    private static ReadExecutionPeriodsByExecutionYear service = new ReadExecutionPeriodsByExecutionYear();
+    private static ReadExecutionPeriodsByExecutionYear service =
+        new ReadExecutionPeriodsByExecutionYear();
     /**
 	 * The singleton access method of this class.
 	 */
@@ -70,8 +71,8 @@ public class ReadExecutionPeriodsByExecutionYear implements IServico
                 public Object transform(Object input)
                 {
                     IExecutionPeriod executionPeriod = (IExecutionPeriod) input;
-                    InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) Cloner
-							        .get(executionPeriod);
+                    InfoExecutionPeriod infoExecutionPeriod =
+                        Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionPeriod);
                     return infoExecutionPeriod;
                 }
             });

@@ -1,7 +1,6 @@
 package ServidorAplicacao.Servico.manager.executionCourseManagement;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -22,70 +21,74 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /*
  * 
- * @author Fernanda Quitério
- * 22/Dez/2003
- * 
+ * @author Fernanda Quitério 22/Dez/2003
+ *  
  */
-public class ReadInfoExecutionCourseByOID implements IServico {
+public class ReadInfoExecutionCourseByOID implements IServico
+{
 
-	private static ReadInfoExecutionCourseByOID service = new ReadInfoExecutionCourseByOID();
-	/**
+    private static ReadInfoExecutionCourseByOID service = new ReadInfoExecutionCourseByOID();
+    /**
 	 * The singleton access method of this class.
-	 **/
-	public static ReadInfoExecutionCourseByOID getService() {
-		return service;
-	}
+	 */
+    public static ReadInfoExecutionCourseByOID getService()
+    {
+        return service;
+    }
 
-	/**
+    /**
 	 * The actor of this class.
-	 **/
-	private ReadInfoExecutionCourseByOID() {
-	}
+	 */
+    private ReadInfoExecutionCourseByOID()
+    {
+    }
 
+    public final String getNome()
+    {
+        return "ReadInfoExecutionCourseByOID";
+    }
 
-	public final String getNome() {
-		return "ReadInfoExecutionCourseByOID";
-	}
+    public InfoExecutionCourse run(Integer executionCourseOID) throws FenixServiceException
+    {
 
-	public InfoExecutionCourse run(Integer executionCourseOID) throws FenixServiceException {
+        InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
 
-		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
-		
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			ICursoExecucaoPersistente persistentExecutionCourse = sp.getICursoExecucaoPersistente();
-			IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
-			
-			if (executionCourseOID == null) {
-				throw new FenixServiceException("nullId");
-			}
-			
-			IExecutionCourse executionCourse = new ExecutionCourse();
-			executionCourse.setIdInternal(executionCourseOID);
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ICursoExecucaoPersistente persistentExecutionCourse = sp.getICursoExecucaoPersistente();
+            if (executionCourseOID == null)
+            {
+                throw new FenixServiceException("nullId");
+            }
 
-			executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
+            IExecutionCourse executionCourse = new ExecutionCourse();
+            executionCourse.setIdInternal(executionCourseOID);
 
-			List curricularCourses = executionCourse.getAssociatedCurricularCourses();
-			
+            executionCourse =
+                (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
 
-			Iterator iterator = curricularCourses.iterator();
-			List infoCurricularCourses = new ArrayList();
+            List curricularCourses = executionCourse.getAssociatedCurricularCourses();
 
-			CollectionUtils.collect(curricularCourses, new Transformer()
-			{
-				public Object transform(Object input)
-				{
-					ICurricularCourse curricularCourse  =(ICurricularCourse) input;
-						
-					return Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
-				}
-			}, infoCurricularCourses);
+            List infoCurricularCourses = new ArrayList();
 
-			infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
-			infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
-		} catch (ExcepcaoPersistencia ex) {
-			throw new FenixServiceException(ex);
-		}
-		return infoExecutionCourse;
-	}
+            CollectionUtils.collect(curricularCourses, new Transformer()
+            {
+                public Object transform(Object input)
+                {
+                    ICurricularCourse curricularCourse = (ICurricularCourse) input;
+
+                    return Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+                }
+            }, infoCurricularCourses);
+
+            infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+            infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
+        }
+        catch (ExcepcaoPersistencia ex)
+        {
+            throw new FenixServiceException(ex);
+        }
+        return infoExecutionCourse;
+    }
 }

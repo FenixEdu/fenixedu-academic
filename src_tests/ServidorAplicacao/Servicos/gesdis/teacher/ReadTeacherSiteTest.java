@@ -1,8 +1,8 @@
 /*
  * Created on 14/Mar/2003
- *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code Template
+ * 
+ * To change this generated comment go to Window>Preferences>Java>Code
+ * Generation>Code Template
  */
 package ServidorAplicacao.Servicos.gesdis.teacher;
 
@@ -27,135 +27,144 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author jmota
  */
-public class ReadTeacherSiteTest extends TestCaseReadServices {
+public class ReadTeacherSiteTest extends TestCaseReadServices
+{
 
-	/**
+    /**
 	 * @param testName
 	 */
-	public ReadTeacherSiteTest(String testName) {
-		super(testName);
+    public ReadTeacherSiteTest(String testName)
+    {
+        super(testName);
 
-	}
+    }
 
-	/* (non-Javadoc)
+    /*
+	 * (non-Javadoc)
+	 * 
 	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#getNameOfServiceToBeTested()
 	 */
-	protected String getNameOfServiceToBeTested() {
-		return "ReadExecutionCourseSite";
+    protected String getNameOfServiceToBeTested()
+    {
+        return "ReadExecutionCourseSite";
 
-	}
+    }
 
-	/* (non-Javadoc)
+    /*
+	 * (non-Javadoc)
+	 * 
 	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
 	 */
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		
-		return null;
-	}
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
+    {
 
-	/* (non-Javadoc)
+        return null;
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * 
 	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedSuccessfuly()
 	 */
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		ISuportePersistente sp = null;
-		IExecutionYear executionYear = null;
-		IExecutionPeriod executionPeriod = null;
-		IExecutionCourse executionCourse = null;
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-			sp.iniciarTransaccao();
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
+    {
+        ISuportePersistente sp = null;
+        IExecutionYear executionYear = null;
+        IExecutionPeriod executionPeriod = null;
+        IExecutionCourse executionCourse = null;
+        try
+        {
+            sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
 
-			IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
-			executionYear = ieyp.readExecutionYearByName("2002/2003");
+            IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
+            executionYear = ieyp.readExecutionYearByName("2002/2003");
 
-			IPersistentExecutionPeriod iepp =
-				sp.getIPersistentExecutionPeriod();
+            IPersistentExecutionPeriod iepp = sp.getIPersistentExecutionPeriod();
 
-			executionPeriod =
-				iepp.readByNameAndExecutionYear("2º Semestre", executionYear);
+            executionPeriod = iepp.readByNameAndExecutionYear("2º Semestre", executionYear);
 
-			IPersistentExecutionCourse idep =
-				sp.getIPersistentExecutionCourse();
-			executionCourse =
-				idep.readByExecutionCourseInitialsAndExecutionPeriod(
-					"TFCI",
-					executionPeriod);
+            IPersistentExecutionCourse idep = sp.getIPersistentExecutionCourse();
+            executionCourse =
+                idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI", executionPeriod);
 
-			InfoExecutionCourse infoExecutionCourse =
-				(InfoExecutionCourse) Cloner.get(executionCourse);
-			Object[] args = { infoExecutionCourse };
+            InfoExecutionCourse infoExecutionCourse =
+                Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+            Object[] args = { infoExecutionCourse };
 
-			sp.confirmarTransaccao();
-			return args;
-		} catch (ExcepcaoPersistencia e) {
-			System.out.println("failed setting up the test data");
-		}
+            sp.confirmarTransaccao();
+            return args;
+        }
+        catch (ExcepcaoPersistencia e)
+        {
+            System.out.println("failed setting up the test data");
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	/* (non-Javadoc)
+    /*
+	 * (non-Javadoc)
+	 * 
 	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
 	 */
-	protected int getNumberOfItemsToRetrieve() {
-		
-		return 0;
+    protected int getNumberOfItemsToRetrieve()
+    {
 
-	}
+        return 0;
 
-	/* (non-Javadoc)
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * 
 	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getObjectToCompare()
 	 */
-	protected Object getObjectToCompare() {
-		ISuportePersistente sp = null;
-		IExecutionYear executionYear = null;
-		IExecutionPeriod executionPeriod = null;
-		IExecutionCourse executionCourse = null;
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-			sp.iniciarTransaccao();
+    protected Object getObjectToCompare()
+    {
+        ISuportePersistente sp = null;
+        IExecutionYear executionYear = null;
+        IExecutionPeriod executionPeriod = null;
+        IExecutionCourse executionCourse = null;
+        try
+        {
+            sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
 
-			IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
-			executionYear = ieyp.readExecutionYearByName("2002/2003");
+            IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
+            executionYear = ieyp.readExecutionYearByName("2002/2003");
 
-			IPersistentExecutionPeriod iepp =
-				sp.getIPersistentExecutionPeriod();
+            IPersistentExecutionPeriod iepp = sp.getIPersistentExecutionPeriod();
 
-			executionPeriod =
-				iepp.readByNameAndExecutionYear("2º Semestre", executionYear);
+            executionPeriod = iepp.readByNameAndExecutionYear("2º Semestre", executionYear);
 
-			IPersistentExecutionCourse idep =
-				sp.getIPersistentExecutionCourse();
-			executionCourse =
-				idep.readByExecutionCourseInitialsAndExecutionPeriod(
-					"TFCI",
-					executionPeriod);
+            IPersistentExecutionCourse idep = sp.getIPersistentExecutionCourse();
+            executionCourse =
+                idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI", executionPeriod);
 
-			InfoExecutionCourse infoExecutionCourse =
-				(InfoExecutionCourse) Cloner.get(executionCourse);
-			List infoSections = new ArrayList();
-			InfoSite infoSite = new InfoSite(infoExecutionCourse);
-			infoSections.add(
-				new InfoSection(
-					"Seccao1deTFCI",
-					new Integer(0),
-					infoSite,
-					null));
+            InfoExecutionCourse infoExecutionCourse =
+                Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+            List infoSections = new ArrayList();
+            InfoSite infoSite = new InfoSite(infoExecutionCourse);
+            infoSections.add(new InfoSection("Seccao1deTFCI", new Integer(0), infoSite, null));
 
-			//the site no longer knows his sections
-			//	infoSite.setInfoSections(infoSections);
+            //the site no longer knows his sections
+            //	infoSite.setInfoSections(infoSections);
 
-			sp.confirmarTransaccao();
+            sp.confirmarTransaccao();
 
-			return infoSite;
-		} catch (ExcepcaoPersistencia e) {
-			System.out.println("failed setting up the test data");
-		}
+            return infoSite;
+        }
+        catch (ExcepcaoPersistencia e)
+        {
+            System.out.println("failed setting up the test data");
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	protected boolean needsAuthorization() {
-		return true;
-	}
+    protected boolean needsAuthorization()
+    {
+        return true;
+    }
 }

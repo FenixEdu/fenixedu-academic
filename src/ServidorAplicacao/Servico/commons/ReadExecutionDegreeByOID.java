@@ -1,7 +1,7 @@
 /*
  * Created on 2003/07/29
- *
- *
+ * 
+ *  
  */
 package ServidorAplicacao.Servico.commons;
 
@@ -23,61 +23,64 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- *
  * 
+ *  
  */
-public class ReadExecutionDegreeByOID implements IServico {
+public class ReadExecutionDegreeByOID implements IServico
+{
 
-	private static ReadExecutionDegreeByOID service =
-		new ReadExecutionDegreeByOID();
-	/**
+    private static ReadExecutionDegreeByOID service = new ReadExecutionDegreeByOID();
+    /**
 	 * The singleton access method of this class.
-	 **/
-	public static ReadExecutionDegreeByOID getService() {
-		return service;
-	}
+	 */
+    public static ReadExecutionDegreeByOID getService()
+    {
+        return service;
+    }
 
-	/**
+    /**
 	 * @see ServidorAplicacao.IServico#getNome()
 	 */
-	public String getNome() {
-		return "ReadExecutionDegreeByOID";
-	}
+    public String getNome()
+    {
+        return "ReadExecutionDegreeByOID";
+    }
 
-	public InfoExecutionDegree run(Integer oid) throws FenixServiceException {
+    public InfoExecutionDegree run(Integer oid) throws FenixServiceException
+    {
 
-		InfoExecutionDegree infoExecutionDegree = null;
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			ICursoExecucaoPersistente executionDegreeDAO =
-				sp.getICursoExecucaoPersistente();
-			ICursoExecucao executionDegree =
-				(ICursoExecucao) executionDegreeDAO.readByOID(
-					CursoExecucao.class,
-					oid);
-			if (executionDegree != null) {
-				infoExecutionDegree =
-					(InfoExecutionDegree) Cloner.get(
-						executionDegree);
-				
-				if (executionDegree.getCoordinatorsList() != null)
-				{
-					List infoCoordinatorList = new ArrayList();
-					ListIterator iteratorCoordinator = executionDegree.getCoordinatorsList().listIterator();
-					while (iteratorCoordinator.hasNext())
-					{
-						ICoordinator coordinator = (ICoordinator) iteratorCoordinator.next();
+        InfoExecutionDegree infoExecutionDegree = null;
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ICursoExecucaoPersistente executionDegreeDAO = sp.getICursoExecucaoPersistente();
+            ICursoExecucao executionDegree =
+                (ICursoExecucao) executionDegreeDAO.readByOID(CursoExecucao.class, oid);
+            if (executionDegree != null)
+            {
+                infoExecutionDegree = Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);
 
-						infoCoordinatorList.add(Cloner.copyICoordinator2InfoCoordenator(coordinator));
-					}
+                if (executionDegree.getCoordinatorsList() != null)
+                {
+                    List infoCoordinatorList = new ArrayList();
+                    ListIterator iteratorCoordinator =
+                        executionDegree.getCoordinatorsList().listIterator();
+                    while (iteratorCoordinator.hasNext())
+                    {
+                        ICoordinator coordinator = (ICoordinator) iteratorCoordinator.next();
 
-					infoExecutionDegree.setCoordinatorsList(infoCoordinatorList);
-				}			
-			}
-		} catch (ExcepcaoPersistencia ex) {
-			throw new FenixServiceException(ex);
-		}
+                        infoCoordinatorList.add(Cloner.copyICoordinator2InfoCoordenator(coordinator));
+                    }
 
-		return infoExecutionDegree;
-	}
+                    infoExecutionDegree.setCoordinatorsList(infoCoordinatorList);
+                }
+            }
+        }
+        catch (ExcepcaoPersistencia ex)
+        {
+            throw new FenixServiceException(ex);
+        }
+
+        return infoExecutionDegree;
+    }
 }

@@ -53,55 +53,58 @@ import Util.TipoAula;
 
 /**
  * Describe class <code>ReadStudentShiftEnrolment</code> here.
- *
+ * 
  * @author tdi-dev
- *
- *
+ * 
+ * 
  * @version 1.0
  */
 public class ReadStudentShiftEnrolment implements IServico
 {
     /**
-     * <code>_service</code> is the instance of the service
-     *
-     */
+	 * <code>_service</code> is the instance of the service
+	 *  
+	 */
     private static ReadStudentShiftEnrolment _service = new ReadStudentShiftEnrolment();
 
     /**
-     * Creates a new <code>ReadStudentShiftEnrolment</code>.
-     *
-     */
+	 * Creates a new <code>ReadStudentShiftEnrolment</code>.
+	 *  
+	 */
     private ReadStudentShiftEnrolment()
     {
     }
 
     /**
-     * Describe <code>getService</code> method here.
-     *
-     * @return a <code>ReadStudentShiftEnrolment</code> value
-     */
+	 * Describe <code>getService</code> method here.
+	 * 
+	 * @return a <code>ReadStudentShiftEnrolment</code> value
+	 */
     public static ReadStudentShiftEnrolment getService()
     {
         return _service;
     }
-    /* (non-Javadoc)
-     * @see ServidorAplicacao.IServico#getNome()
-     */
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorAplicacao.IServico#getNome()
+	 */
     public final String getNome()
     {
         return "ReadStudentShiftEnrolment";
     }
 
     /**
-     * Works with SHIFT_STUDENT table.
-     * Inserts and updates table.
-     * 
-     *
-     * @param infoShiftStudentEnrolment an <code>InfoShiftStudentEnrolment</code> value
-     * @return an <code>InfoShiftStudentEnrolment</code> value
-     * @exception FenixServiceException if an error occurs
-     * @exception ExcepcaoPersistencia if an error occurs
-     */
+	 * Works with SHIFT_STUDENT table. Inserts and updates table.
+	 * 
+	 * @param infoShiftStudentEnrolment
+	 *            an <code>InfoShiftStudentEnrolment</code> value
+	 * @return an <code>InfoShiftStudentEnrolment</code> value
+	 * @exception FenixServiceException
+	 *                if an error occurs
+	 * @exception ExcepcaoPersistencia
+	 *                if an error occurs
+	 */
     public InfoShiftStudentEnrolment run(InfoShiftStudentEnrolment infoShiftStudentEnrolment)
         throws FenixServiceException, ExcepcaoPersistencia
     {
@@ -128,7 +131,7 @@ public class ReadStudentShiftEnrolment implements IServico
 
         infoShiftStudentEnrolment.setEnrolledExecutionCourses(courses);
         //*********************************************************************
-        //Get the classes to wich the student is entitled to be in, 
+        //Get the classes to wich the student is entitled to be in,
         //  in the current execution year:
         List studentAllowedClasses = getStudentsAllowedClasses(student, sp, courses);
 
@@ -137,7 +140,8 @@ public class ReadStudentShiftEnrolment implements IServico
 
         List allowedClasses = (List) CollectionUtils.collect(studentAllowedClasses, classTransformer);
 
-        // And the result is: shifts with vacancies, of the courses the student is enrolled with
+        // And the result is: shifts with vacancies, of the courses the student
+		// is enrolled with
         infoShiftStudentEnrolment.setAllowedClasses(allowedClasses);
 
         //************************************************
@@ -153,13 +157,14 @@ public class ReadStudentShiftEnrolment implements IServico
         List infoShiftStudentEnrolmentTmp;
         infoShiftStudentEnrolmentTmp = shiftStudentDAO.readByCriteria(shiftStudentExample);
 
-        //Copy the Shifts (ITurno objects) associated with the course in which 
+        //Copy the Shifts (ITurno objects) associated with the course in which
         // the student is enrolled to InfoShifts
         ShiftStudentTransformer shiftStudentTransformer = new ShiftStudentTransformer();
         List infoShiftEnrolment =
             (List) CollectionUtils.collect(infoShiftStudentEnrolmentTmp, shiftStudentTransformer);
 
-        // And the result is: shifts with vacancies, of the courses the student is enrolled with
+        // And the result is: shifts with vacancies, of the courses the student
+		// is enrolled with
         infoShiftStudentEnrolment.setCurrentEnrolment(infoShiftEnrolment);
 
         //************************************************
@@ -169,7 +174,8 @@ public class ReadStudentShiftEnrolment implements IServico
         //Open a OJB entrypoint for the Shift table
         ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
 
-        //read all the shifts associated with the course in which the student is enrolled
+        //read all the shifts associated with the course in which the student
+		// is enrolled
         IExecutionCourse executionCourseExample = new ExecutionCourse();
         List associatedStudents = new ArrayList();
         associatedStudents.add(student);
@@ -181,14 +187,16 @@ public class ReadStudentShiftEnrolment implements IServico
         //do something to the execution period, get the current period...
         //executionCourse.setExecutionPeriod(executionPeriod);
 
-        //And the result is: shifts (ITurno's) associated with the course in which the student is enrolled
+        //And the result is: shifts (ITurno's) associated with the course in
+		// which the student is enrolled
         List currentEnrolment = shiftDAO.readByCriteria(shiftExample);
 
-        //Copy the Shifts associated with the course in which the student is enrolled
+        //Copy the Shifts associated with the course in which the student is
+		// enrolled
         ShiftTransformer shiftTransformer = new ShiftTransformer();
         List infoShiftEnrolmentTmp = (List) CollectionUtils.collect(currentEnrolment, shiftTransformer);
 
-        //Remove the full shifts and the shifts that aren't theo. or prat.  
+        //Remove the full shifts and the shifts that aren't theo. or prat.
         List availableShifts = new ArrayList();
         CollectionUtils.select(infoShiftEnrolmentTmp, new Predicate()
         {
@@ -209,7 +217,7 @@ public class ReadStudentShiftEnrolment implements IServico
                 availableShifts,
                 infoShiftStudentEnrolment.getCurrentEnrolment());
 
-        //Get the classes for each shift that is in  infoAvailableShifts,
+        //Get the classes for each shift that is in infoAvailableShifts,
         // using the list currentEnrollment to search in OJB
         List infoAvailableShiftsFiltered = new ArrayList();
         for (int i = 0; i < infoAvailableShifts.size(); i++)
@@ -224,10 +232,10 @@ public class ReadStudentShiftEnrolment implements IServico
             {
                 //the shift is OK to proceed:
                 //Replace the arrayList element with an array
-                //[InfoShift, ArrayListWithAssociatedClasses]  
+                //[InfoShift, ArrayListWithAssociatedClasses]
                 //	Object obj[] = new Object[2];
                 //	obj[0] = (Object) thisInfoShift;
-                //	obj[1] = (Object) classList;	
+                //	obj[1] = (Object) classList;
                 InfoShiftWithAssociatedInfoClassesAndInfoLessons composedShift =
                     new InfoShiftWithAssociatedInfoClassesAndInfoLessons();
 
@@ -239,7 +247,8 @@ public class ReadStudentShiftEnrolment implements IServico
                         (ITurno) (sp
                             .getITurnoPersistente()
                             .readByOId(Cloner.copyInfoShift2IShift(thisInfoShift), false))));
-                //Copy the Shifts associated with the course in which the student is enrolled
+                //Copy the Shifts associated with the course in which the
+				// student is enrolled
                 composedShift.setInfoLessons(
                     (List) CollectionUtils.collect(
                         composedShift.getInfoLessons(),
@@ -250,7 +259,7 @@ public class ReadStudentShiftEnrolment implements IServico
 
         }
 
-        //Shifts with vacancies of the courses the student is enrolled with 
+        //Shifts with vacancies of the courses the student is enrolled with
         infoShiftStudentEnrolment.setAvailableShift(infoAvailableShiftsFiltered);
 
         //adds the student lessons to the structure for timetable display
@@ -261,15 +270,16 @@ public class ReadStudentShiftEnrolment implements IServico
     }
 
     /**
-    	 * @param list
-    	 * @return
-    	 */
+	 * @param list
+	 * @return
+	 */
     private List setLessons2InfoShifts(List list) throws ExcepcaoPersistencia
     {
         if (list == null)
         {
             return null;
-        } else
+        }
+        else
         {
             List infoShiftsWithLessons = new ArrayList();
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -300,8 +310,8 @@ public class ReadStudentShiftEnrolment implements IServico
     }
 
     /**
-     * @return
-     */
+	 * @return
+	 */
     private List getStudentLessons(InfoShiftStudentEnrolment infoShiftStudentEnrolment)
         throws ExcepcaoPersistencia
     {
@@ -334,13 +344,17 @@ public class ReadStudentShiftEnrolment implements IServico
     }
 
     /**
-     * getStudentsAllowedClasses
-     * @param student
-     * @param sp Persistent Suport
-     * @param courses a <code>List</code> with the attending courses
-     * @return list of classes (ITurma) with the allowed classes for the student
-     * @exception ExcepcaoPersistencia
-     */
+	 * getStudentsAllowedClasses
+	 * 
+	 * @param student
+	 * @param sp
+	 *            Persistent Suport
+	 * @param courses
+	 *            a <code>List</code> with the attending courses
+	 * @return list of classes (ITurma) with the allowed classes for the
+	 *         student
+	 * @exception ExcepcaoPersistencia
+	 */
     private List getStudentsAllowedClasses(IStudent student, ISuportePersistente sp, List courses)
         throws ExcepcaoPersistencia
     {
@@ -384,15 +398,16 @@ public class ReadStudentShiftEnrolment implements IServico
     }
 
     /**
-     * @param classShifts
-     * @return
-     */
+	 * @param classShifts
+	 * @return
+	 */
     private List getClassesFromShifts(List classShifts)
     {
         if (classShifts == null)
         {
             return new ArrayList();
-        } else
+        }
+        else
         {
             Iterator iter = classShifts.iterator();
             List classes = new ArrayList();
@@ -407,9 +422,9 @@ public class ReadStudentShiftEnrolment implements IServico
     }
 
     /**
-     * @param classShifts
-     * @return List with distinct classes (IClass)
-     */
+	 * @param classShifts
+	 * @return List with distinct classes (IClass)
+	 */
     private List getDistinctClassesFromListOfClasses(List classes)
     {
         Iterator i = classes.iterator();
@@ -437,10 +452,12 @@ public class ReadStudentShiftEnrolment implements IServico
     }
 
     /**
-     * Creates a new <code>removeFullShiftsFromListOfClassShifts</code> instance.
-     *
-     * @param classShifts a <code>List</code> value
-     */
+	 * Creates a new <code>removeFullShiftsFromListOfClassShifts</code>
+	 * instance.
+	 * 
+	 * @param classShifts
+	 *            a <code>List</code> value
+	 */
     private List removeFullShiftsFromListOfClassShifts(List classShifts)
     {
         Iterator i = classShifts.iterator();
@@ -458,14 +475,16 @@ public class ReadStudentShiftEnrolment implements IServico
     }
 
     /**
-     * theClassIsAllowed returns true if the fist list (with
-     * the classes of one shift) intersects the second list
-     * (with the classes the student is allowed to be in).
-     *  
-     * @param list1 of classes
-     * @param list2 of classes
-     * @return true if list1 intersected with list2 is not null
-     */
+	 * theClassIsAllowed returns true if the fist list (with the classes of one
+	 * shift) intersects the second list (with the classes the student is
+	 * allowed to be in).
+	 * 
+	 * @param list1
+	 *            of classes
+	 * @param list2
+	 *            of classes
+	 * @return true if list1 intersected with list2 is not null
+	 */
     private boolean theClassIsAllowed(List list1, List list2)
     {
         Iterator iterator = list1.iterator();
@@ -487,10 +506,12 @@ public class ReadStudentShiftEnrolment implements IServico
     }
 
     /**
-     * @param thisInfoShift - Shift to be used in OJB usage
-     * @param currentEnrolment - list of shifts (ITurno)
-     * @return
-     */
+	 * @param thisInfoShift -
+	 *            Shift to be used in OJB usage
+	 * @param currentEnrolment -
+	 *            list of shifts (ITurno)
+	 * @return
+	 */
     private List getClassesAssociatedWithShift(
         InfoShift thisInfoShift,
         List currentEnrolment,
@@ -514,7 +535,8 @@ public class ReadStudentShiftEnrolment implements IServico
             try
             {
                 classes = shiftClassDAO.readClassesWithShift(shift);
-            } catch (ExcepcaoPersistencia e)
+            }
+            catch (ExcepcaoPersistencia e)
             {
                 e.printStackTrace();
                 return null;
@@ -528,9 +550,9 @@ public class ReadStudentShiftEnrolment implements IServico
     }
 
     /**
-     * @author tdi-dev
-     *
-     */
+	 * @author tdi-dev
+	 *  
+	 */
     private class ShiftClassTransformer implements Transformer
     {
 
@@ -543,15 +565,16 @@ public class ReadStudentShiftEnrolment implements IServico
     }
 
     /**
-     * ReadStudentShiftEnrolment.java
-     *
-     *
-     * Created: Tue Jul 22 01:05:42 2003
-     *
-     * @author <a href="mailto:tfi-dev@tagus.ist.utl.pt">tdi-dev</a>
-     * @author <a href="mailto:edgar.gonçalves@tagus.ist.utl.pt">Edgar Gonçalves</a>
-     * @version 1.0
-     */
+	 * ReadStudentShiftEnrolment.java
+	 * 
+	 * 
+	 * Created: Tue Jul 22 01:05:42 2003
+	 * 
+	 * @author <a href="mailto:tfi-dev@tagus.ist.utl.pt">tdi-dev</a>
+	 * @author <a href="mailto:edgar.gonçalves@tagus.ist.utl.pt">Edgar
+	 *         Gonçalves</a>
+	 * @version 1.0
+	 */
     public class LessonTransformer implements Transformer
     {
         public LessonTransformer()
@@ -562,12 +585,13 @@ public class ReadStudentShiftEnrolment implements IServico
         // Implementation of org.apache.commons.collections.Transformer
 
         /**
-         * <code>transform</code> takes an Dominio.IAula and
-         * returns an InfoLesson
-         *
-         * @param object an <code>Object</code> value
-         * @return an <code>Object</code> value representing an InfoLesson
-         */
+		 * <code>transform</code> takes an Dominio.IAula and returns an
+		 * InfoLesson
+		 * 
+		 * @param object
+		 *            an <code>Object</code> value
+		 * @return an <code>Object</code> value representing an InfoLesson
+		 */
         public Object transform(Object object)
         {
             return Cloner.copyILesson2InfoLesson((Dominio.IAula) object);
@@ -576,9 +600,9 @@ public class ReadStudentShiftEnrolment implements IServico
     } // LessonTransformer
 
     /**
-     * @author tdi-dev
-     *
-     */
+	 * @author tdi-dev
+	 *  
+	 */
     private class ClassTransformer implements Transformer
     {
 
@@ -592,9 +616,9 @@ public class ReadStudentShiftEnrolment implements IServico
     }
 
     /**
-     * @author tdi-dev
-     *
-     */
+	 * @author tdi-dev
+	 *  
+	 */
     private class ShiftStudentTransformer implements Transformer
     {
 
@@ -604,9 +628,10 @@ public class ReadStudentShiftEnrolment implements IServico
             InfoShift shift = new InfoShift();
             shift.setAvailabilityFinal(shiftStudent.getShift().getAvailabilityFinal());
             InfoExecutionCourse infoExecutionCourse;
-			infoExecutionCourse = (InfoExecutionCourse) Cloner.get(
-				    shiftStudent.getShift().getDisciplinaExecucao());
-			shift.setInfoDisciplinaExecucao(infoExecutionCourse);
+            infoExecutionCourse =
+                Cloner.copyIExecutionCourse2InfoExecutionCourse(
+                    shiftStudent.getShift().getDisciplinaExecucao());
+            shift.setInfoDisciplinaExecucao(infoExecutionCourse);
 
             shift.setLotacao(shiftStudent.getShift().getLotacao());
             shift.setNome(shiftStudent.getShift().getNome());
@@ -617,16 +642,16 @@ public class ReadStudentShiftEnrolment implements IServico
     }
 
     /**
-     * @author tdi-dev
-     *
-     */
+	 * @author tdi-dev
+	 *  
+	 */
     private class ShiftTransformer implements Transformer
     {
 
         public Object transform(Object arg0)
         {
             ITurno shift = (ITurno) arg0;
-            return Cloner.get(shift);
+            return Cloner.copyIShift2InfoShift(shift);
         }
     }
 

@@ -85,7 +85,7 @@ public class LerTurnosDeTurma implements IServico {
 
 			while (iterator.hasNext()) {
 				ITurno turno = (ITurno) iterator.next();
-				InfoShift infoTurno = (InfoShift) Cloner.get(turno);
+				InfoShift infoTurno =  Cloner.copyIShift2InfoShift(turno);
 				
 				List aulas = turno.getAssociatedLessons();
 				Iterator itLessons = aulas.iterator();

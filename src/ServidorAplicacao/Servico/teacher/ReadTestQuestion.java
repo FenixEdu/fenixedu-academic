@@ -1,17 +1,15 @@
 /*
  * Created on 6/Ago/2003
- *
+ *  
  */
 package ServidorAplicacao.Servico.teacher;
 
 import DataBeans.ExecutionCourseSiteView;
-import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoQuestion;
 import DataBeans.InfoSiteTestQuestion;
 import DataBeans.InfoTestQuestion;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
-
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IQuestion;
@@ -81,7 +79,8 @@ public class ReadTestQuestion implements IServico
             try
             {
                 infoQuestion = parse.parseQuestion(infoQuestion.getXmlFile(), infoQuestion, path);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw new FenixServiceException(e);
             }
@@ -94,11 +93,12 @@ public class ReadTestQuestion implements IServico
             bodyComponent.setInfoTestQuestion(infoTestQuestion);
             bodyComponent.setInfoQuestion(infoQuestion);
             bodyComponent.setExecutionCourse(
-                (InfoExecutionCourse) Cloner.get(executionCourse));
+                Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
             SiteView siteView = new ExecutionCourseSiteView(bodyComponent, bodyComponent);
             return siteView;
 
-        } catch (ExcepcaoPersistencia e)
+        }
+        catch (ExcepcaoPersistencia e)
         {
             throw new FenixServiceException(e);
         }

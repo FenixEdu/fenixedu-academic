@@ -1,14 +1,12 @@
 /*
- * LerAulasDeDisciplinaExecucaoServicosTest.java
- * JUnit based test
- *
+ * LerAulasDeDisciplinaExecucaoServicosTest.java JUnit based test
+ * 
  * Created on 27 de Outubro de 2002, 23:34
  */
 
 package ServidorAplicacao.Servicos.sop;
 
 /**
- *
  * @author tfc130
  */
 import junit.framework.Test;
@@ -27,102 +25,130 @@ import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class LerAulasDeDisciplinaExecucaoServicosTest extends TestCaseReadServices {
-		
-	private InfoExecutionCourse infoExecutionCourse = null;
+public class LerAulasDeDisciplinaExecucaoServicosTest extends TestCaseReadServices
+{
 
-	public LerAulasDeDisciplinaExecucaoServicosTest(
-		java.lang.String testName) {
-		super(testName);
-	}
+    private InfoExecutionCourse infoExecutionCourse = null;
 
-	public static void main(java.lang.String[] args) {
-		junit.textui.TestRunner.run(suite());
-	}
+    public LerAulasDeDisciplinaExecucaoServicosTest(java.lang.String testName)
+    {
+        super(testName);
+    }
 
-	public static Test suite() {
-		TestSuite suite =
-			new TestSuite(LerAulasDeDisciplinaExecucaoServicosTest.class);
+    public static void main(java.lang.String[] args)
+    {
+        junit.textui.TestRunner.run(suite());
+    }
 
-		return suite;
-	}
+    public static Test suite()
+    {
+        TestSuite suite = new TestSuite(LerAulasDeDisciplinaExecucaoServicosTest.class);
 
-	protected void setUp() {
-		super.setUp();
-	}
+        return suite;
+    }
 
-	protected void tearDown() {
-		super.tearDown();
-	}
+    protected void setUp()
+    {
+        super.setUp();
+    }
 
-	protected String getNameOfServiceToBeTested() {
-		return "LerAulasDeDisciplinaExecucao";
-	}
+    protected void tearDown()
+    {
+        super.tearDown();
+    }
 
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+    protected String getNameOfServiceToBeTested()
+    {
+        return "LerAulasDeDisciplinaExecucao";
+    }
 
-		ligarSuportePersistente(true);
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
+    {
 
-		Object argsLerAulas[] = { this.infoExecutionCourse };
+        ligarSuportePersistente(true);
 
-		return argsLerAulas;
-	}
+        Object argsLerAulas[] = { this.infoExecutionCourse };
 
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+        return argsLerAulas;
+    }
 
-		ligarSuportePersistente(false);
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
+    {
 
-		Object argsLerAulas[] = { this.infoExecutionCourse };
+        ligarSuportePersistente(false);
 
-		return argsLerAulas;
-	}
+        Object argsLerAulas[] = { this.infoExecutionCourse };
 
-	protected int getNumberOfItemsToRetrieve() {
-		return 6;
-	}
+        return argsLerAulas;
+    }
 
-	protected Object getObjectToCompare() {
-		return null;
-	}
+    protected int getNumberOfItemsToRetrieve()
+    {
+        return 6;
+    }
 
-	protected boolean needsAuthorization() {
-		return true;
-	}
+    protected Object getObjectToCompare()
+    {
+        return null;
+    }
 
-	private void ligarSuportePersistente(boolean existing) {
+    protected boolean needsAuthorization()
+    {
+        return true;
+    }
 
-		ISuportePersistente sp = null;
+    private void ligarSuportePersistente(boolean existing)
+    {
 
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-			sp.iniciarTransaccao();
+        ISuportePersistente sp = null;
 
-			IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
-			IExecutionYear iey = ieyp.readExecutionYearByName("2002/2003");
+        try
+        {
+            sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
 
-			IPersistentExecutionPeriod iepp = sp.getIPersistentExecutionPeriod();
-			IExecutionPeriod iep = iepp.readByNameAndExecutionYear("2º Semestre", iey);
-			
-			IPersistentExecutionCourse idep = sp.getIPersistentExecutionCourse();
-			IExecutionCourse ide = null;
-			
-			if(existing) {
-				ide = idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI", iep);
-			} else {
-				ide = new ExecutionCourse("NOME", "SIGLA", new Double(1.5), new Double(1.5), new Double(1.5), new Double(1.5), iep);
-			}
-			
-			this.infoExecutionCourse = (InfoExecutionCourse) Cloner.get(ide);
+            IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
+            IExecutionYear iey = ieyp.readExecutionYearByName("2002/2003");
 
-			sp.confirmarTransaccao();
+            IPersistentExecutionPeriod iepp = sp.getIPersistentExecutionPeriod();
+            IExecutionPeriod iep = iepp.readByNameAndExecutionYear("2º Semestre", iey);
 
-		} catch (ExcepcaoPersistencia excepcao) {
-			try {
-				sp.cancelarTransaccao();
-			} catch (ExcepcaoPersistencia ex) {
-				fail("ligarSuportePersistente: cancelarTransaccao");
-			}
-			fail("ligarSuportePersistente: confirmarTransaccao");
-		}
-	}
+            IPersistentExecutionCourse idep = sp.getIPersistentExecutionCourse();
+            IExecutionCourse ide = null;
+
+            if (existing)
+            {
+                ide = idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI", iep);
+            }
+            else
+            {
+                ide =
+                    new ExecutionCourse(
+                        "NOME",
+                        "SIGLA",
+                        new Double(1.5),
+                        new Double(1.5),
+                        new Double(1.5),
+                        new Double(1.5),
+                        iep);
+            }
+
+            this.infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(ide);
+
+            sp.confirmarTransaccao();
+
+        }
+        catch (ExcepcaoPersistencia excepcao)
+        {
+            try
+            {
+                sp.cancelarTransaccao();
+            }
+            catch (ExcepcaoPersistencia ex)
+            {
+                fail("ligarSuportePersistente: cancelarTransaccao");
+            }
+            fail("ligarSuportePersistente: confirmarTransaccao");
+        }
+    }
 }

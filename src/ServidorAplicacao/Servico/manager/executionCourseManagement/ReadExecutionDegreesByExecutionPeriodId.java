@@ -4,78 +4,87 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import DataBeans.InfoExecutionYear;
 import DataBeans.util.Cloner;
 import Dominio.ExecutionPeriod;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionPeriod;
-import Dominio.IExecutionYear;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.IPersistentExecutionPeriod;
-import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /*
  * 
- * @author Fernanda Quitério
- * 22/Dez/2003
- * 
+ * @author Fernanda Quitério 22/Dez/2003
+ *  
  */
-public class ReadExecutionDegreesByExecutionPeriodId implements IServico {
+public class ReadExecutionDegreesByExecutionPeriodId implements IServico
+{
 
-	private static ReadExecutionDegreesByExecutionPeriodId service = new ReadExecutionDegreesByExecutionPeriodId();
-	/**
+    private static ReadExecutionDegreesByExecutionPeriodId service =
+        new ReadExecutionDegreesByExecutionPeriodId();
+    /**
 	 * The singleton access method of this class.
-	 **/
-	public static ReadExecutionDegreesByExecutionPeriodId getService() {
-		return service;
-	}
+	 */
+    public static ReadExecutionDegreesByExecutionPeriodId getService()
+    {
+        return service;
+    }
 
-	/**
+    /**
 	 * The actor of this class.
-	 **/
-	private ReadExecutionDegreesByExecutionPeriodId() {
-	}
+	 */
+    private ReadExecutionDegreesByExecutionPeriodId()
+    {
+    }
 
+    public final String getNome()
+    {
+        return "ReadExecutionDegreesByExecutionPeriodId";
+    }
 
-	public final String getNome() {
-		return "ReadExecutionDegreesByExecutionPeriodId";
-	}
+    public List run(Integer executionPeriodId) throws FenixServiceException
+    {
 
-	public List run(Integer executionPeriodId) throws FenixServiceException {
+        ArrayList infoExecutionDegreeList = null;
 
-		ArrayList infoExecutionDegreeList = null;
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ICursoExecucaoPersistente executionDegreeDAO = sp.getICursoExecucaoPersistente();
+            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			ICursoExecucaoPersistente executionDegreeDAO = sp.getICursoExecucaoPersistente();
-			IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-			
-			if (executionPeriodId == null) {
-				throw new FenixServiceException("nullId");
-			}
-			
-			IExecutionPeriod executionPeriod = new ExecutionPeriod();
-			executionPeriod.setIdInternal(executionPeriodId);
-			executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOId(executionPeriod, false);
+            if (executionPeriodId == null)
+            {
+                throw new FenixServiceException("nullId");
+            }
 
-			List executionDegrees = executionDegreeDAO.readByExecutionYear(executionPeriod.getExecutionYear());
+            IExecutionPeriod executionPeriod = new ExecutionPeriod();
+            executionPeriod.setIdInternal(executionPeriodId);
+            executionPeriod =
+                (IExecutionPeriod) persistentExecutionPeriod.readByOId(executionPeriod, false);
 
-			Iterator iterator = executionDegrees.iterator();
-			infoExecutionDegreeList = new ArrayList();
+            List executionDegrees =
+                executionDegreeDAO.readByExecutionYear(executionPeriod.getExecutionYear());
 
-			while (iterator.hasNext()) {
-				ICursoExecucao executionDegree = (ICursoExecucao) iterator.next();
-				infoExecutionDegreeList.add(Cloner.get(executionDegree));
-			}
+            Iterator iterator = executionDegrees.iterator();
+            infoExecutionDegreeList = new ArrayList();
 
-		} catch (ExcepcaoPersistencia ex) {
-			throw new FenixServiceException(ex);
-		}
-		return infoExecutionDegreeList;
-	}
+            while (iterator.hasNext())
+            {
+                ICursoExecucao executionDegree = (ICursoExecucao) iterator.next();
+                infoExecutionDegreeList.add(
+                    Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree));
+            }
+
+        }
+        catch (ExcepcaoPersistencia ex)
+        {
+            throw new FenixServiceException(ex);
+        }
+        return infoExecutionDegreeList;
+    }
 }

@@ -1,6 +1,6 @@
 /*
  * Created on 19/Set/2003
- *
+ *  
  */
 package ServidorAplicacao.Servicos.teacher;
 
@@ -19,54 +19,65 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Susana Fernandes
  */
-public class ReadShiftsByDistributedTestTest extends TestCaseReadServices {
+public class ReadShiftsByDistributedTestTest extends TestCaseReadServices
+{
 
-	/**
-	* @param testName
-	*/
-	public ReadShiftsByDistributedTestTest(String testName) {
-		super(testName);
+    /**
+	 * @param testName
+	 */
+    public ReadShiftsByDistributedTestTest(String testName)
+    {
+        super(testName);
 
-	}
+    }
 
-	protected String getNameOfServiceToBeTested() {
-		return "ReadShiftsByDistributedTest";
-	}
+    protected String getNameOfServiceToBeTested()
+    {
+        return "ReadShiftsByDistributedTest";
+    }
 
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		return null;
-	}
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
+    {
+        return null;
+    }
 
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		Object[] args = { new Integer(26), new Integer(25)};
-		return args;
-	}
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
+    {
+        Object[] args = { new Integer(26), new Integer(25)};
+        return args;
+    }
 
-	protected int getNumberOfItemsToRetrieve() {
-		return 1;
-	}
+    protected int getNumberOfItemsToRetrieve()
+    {
+        return 1;
+    }
 
-	protected Object getObjectToCompare() {
-		List shiftList = new ArrayList();
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			sp.iniciarTransaccao();
-			ITurno shift = new Turno(new Integer(19));
+    protected Object getObjectToCompare()
+    {
+        List shiftList = new ArrayList();
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
+            ITurno shift = new Turno(new Integer(19));
 
-			shift = (ITurno) sp.getITurnoPersistente().readByOId(shift, false);
-			assertNotNull("shift null", shift);
-			sp.confirmarTransaccao();
+            shift = (ITurno) sp.getITurnoPersistente().readByOId(shift, false);
+            assertNotNull("shift null", shift);
+            sp.confirmarTransaccao();
 
-			InfoShift infoShift = (InfoShift) Cloner.get(shift);
+            InfoShift infoShift = Cloner.copyIShift2InfoShift(shift);
 
-			shiftList.add(infoShift);
-		} catch (ExcepcaoPersistencia e) {
-			fail("exception: ExcepcaoPersistencia ");
-		}
-		return shiftList;
-	}
+            shiftList.add(infoShift);
+        }
+        catch (ExcepcaoPersistencia e)
+        {
+            fail("exception: ExcepcaoPersistencia ");
+        }
+        return shiftList;
+    }
 
-	protected boolean needsAuthorization() {
-		return true;
-	}
+    protected boolean needsAuthorization()
+    {
+        return true;
+    }
 }

@@ -1,6 +1,6 @@
 /*
  * CreateExam.java
- *
+ * 
  * Created on 2003/03/26
  */
 
@@ -8,9 +8,9 @@ package ServidorAplicacao.Servico.sop;
 
 /**
  * Servi�o CriarAula.
- *
+ * 
  * @author Luis Cruz & Sara Ribeiro
- **/
+ */
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,79 +33,89 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.Season;
 
-public class CreateExam implements IServico {
+public class CreateExam implements IServico
+{
 
-	private static CreateExam _servico = new CreateExam();
-	/**
+    private static CreateExam _servico = new CreateExam();
+    /**
 	 * The singleton access method of this class.
-	 **/
-	public static CreateExam getService() {
-		return _servico;
-	}
+	 */
+    public static CreateExam getService()
+    {
+        return _servico;
+    }
 
-	/**
+    /**
 	 * The actor of this class.
-	 **/
-	private CreateExam() {
-	}
+	 */
+    private CreateExam()
+    {
+    }
 
-	/**
+    /**
 	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "CreateExam";
-	}
+	 */
+    public final String getNome()
+    {
+        return "CreateExam";
+    }
 
-	public Boolean run(
-		Calendar examDate,
-		Calendar examTime,
-		Season season,
-		InfoExecutionCourse infoExecutionCourse)
-		throws FenixServiceException {
+    public Boolean run(
+        Calendar examDate,
+        Calendar examTime,
+        Season season,
+        InfoExecutionCourse infoExecutionCourse)
+        throws FenixServiceException
+    {
 
-		Boolean result = new Boolean(false);
+        Boolean result = new Boolean(false);
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionCourse executionCourseDAO =
-				sp.getIPersistentExecutionCourse();
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 
-			IExecutionPeriod executionPeriod =
-				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
-					infoExecutionCourse.getInfoExecutionPeriod());
+            IExecutionPeriod executionPeriod =
+                Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
+                    infoExecutionCourse.getInfoExecutionPeriod());
 
-			IExecutionCourse executionCourse =
-				executionCourseDAO
-					.readByExecutionCourseInitialsAndExecutionPeriod(
-					infoExecutionCourse.getSigla(),
-					executionPeriod);
+            IExecutionCourse executionCourse =
+                executionCourseDAO.readByExecutionCourseInitialsAndExecutionPeriod(
+                    infoExecutionCourse.getSigla(),
+                    executionPeriod);
 
-			for (int i = 0; i < executionCourse.getAssociatedExams().size(); i++) {
-				IExam exam = (IExam) executionCourse.getAssociatedExams().get(i);
-				if (exam.getSeason().equals(season)) {
-					throw new ExistingServiceException();
-				}
-			}
+            for (int i = 0; i < executionCourse.getAssociatedExams().size(); i++)
+            {
+                IExam exam = (IExam) executionCourse.getAssociatedExams().get(i);
+                if (exam.getSeason().equals(season))
+                {
+                    throw new ExistingServiceException();
+                }
+            }
 
-			IExam exam = new Exam(examDate, examTime, null, season);
-			exam.setAssociatedRooms(new ArrayList());
-			IExamExecutionCourse examExecutionCourse = new ExamExecutionCourse(exam, executionCourse);
+            IExam exam = new Exam(examDate, examTime, null, season);
+            exam.setAssociatedRooms(new ArrayList());
+            IExamExecutionCourse examExecutionCourse = new ExamExecutionCourse(exam, executionCourse);
 
-			try {
-				sp.getIPersistentExam().lockWrite(exam);
-				sp.getIPersistentExamExecutionCourse().lockWrite(examExecutionCourse);
-			} catch (ExistingPersistentException ex) {
-				throw new ExistingServiceException(ex);
-			}
+            try
+            {
+                sp.getIPersistentExam().lockWrite(exam);
+                sp.getIPersistentExamExecutionCourse().lockWrite(examExecutionCourse);
+            }
+            catch (ExistingPersistentException ex)
+            {
+                throw new ExistingServiceException(ex);
+            }
 
+            result = new Boolean(true);
+        }
+        catch (ExcepcaoPersistencia ex)
+        {
 
-			result = new Boolean(true);
-		} catch (ExcepcaoPersistencia ex) {
+            throw new FenixServiceException(ex.getMessage());
+        }
 
-			throw new FenixServiceException(ex.getMessage());
-		}
-
-		return result;
-	}
+        return result;
+    }
 
 }

@@ -174,7 +174,7 @@ System.out.println("EXCEPCAO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 													
 
 					}
-					infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
+					infoExecutionCourse =  Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
 					List capacities = new ArrayList();
 					
 					if (theoreticalCapacity.intValue() != 0) {

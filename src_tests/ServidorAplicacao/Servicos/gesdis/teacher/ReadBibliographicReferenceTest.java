@@ -1,8 +1,8 @@
 /*
  * Created on 17/Mar/2003
- *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * 
+ * To change this generated comment go to Window>Preferences>Java>Code
+ * Generation>Code and Comments
  */
 package ServidorAplicacao.Servicos.gesdis.teacher;
 
@@ -21,67 +21,72 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author PTRLV
- *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * 
+ * To change this generated comment go to Window>Preferences>Java>Code
+ * Generation>Code and Comments
  */
-public class ReadBibliographicReferenceTest extends TestCaseReadServices {
+public class ReadBibliographicReferenceTest extends TestCaseReadServices
+{
 
-	public ReadBibliographicReferenceTest(String testName) {
-		super(testName);
-	}
+    public ReadBibliographicReferenceTest(String testName)
+    {
+        super(testName);
+    }
 
-	protected String getNameOfServiceToBeTested() {
-		return "ReadBibliographicReference";
-	}
+    protected String getNameOfServiceToBeTested()
+    {
+        return "ReadBibliographicReference";
+    }
 
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		ISuportePersistente sp = null;
-		IExecutionYear executionYear = null;
-		IExecutionPeriod executionPeriod = null;
-		IExecutionCourse executionCourse = null;
-	
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-			sp.iniciarTransaccao();
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
+    {
+        ISuportePersistente sp = null;
+        IExecutionYear executionYear = null;
+        IExecutionPeriod executionPeriod = null;
+        IExecutionCourse executionCourse = null;
 
-			IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
-			executionYear = ieyp.readExecutionYearByName("2002/2003");
+        try
+        {
+            sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
 
-			IPersistentExecutionPeriod iepp =
-				sp.getIPersistentExecutionPeriod();
-			executionPeriod =
-				iepp.readByNameAndExecutionYear("2º Semestre", executionYear);
+            IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
+            executionYear = ieyp.readExecutionYearByName("2002/2003");
 
-			IPersistentExecutionCourse idep =
-				sp.getIPersistentExecutionCourse();
-			executionCourse =
-				idep.readByExecutionCourseInitialsAndExecutionPeriod(
-					"TFCI",
-					executionPeriod);
+            IPersistentExecutionPeriod iepp = sp.getIPersistentExecutionPeriod();
+            executionPeriod = iepp.readByNameAndExecutionYear("2º Semestre", executionYear);
 
-			InfoExecutionCourse infoExecutionCourse =
-				(InfoExecutionCourse) Cloner.get(executionCourse);
-			Object[] testArgs = { infoExecutionCourse, null};
+            IPersistentExecutionCourse idep = sp.getIPersistentExecutionCourse();
+            executionCourse =
+                idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI", executionPeriod);
 
-			sp.confirmarTransaccao();
-			return testArgs;
-		} catch (ExcepcaoPersistencia e) {
-			System.out.println("failed setting up the test data");
-			e.printStackTrace();
-		}
+            InfoExecutionCourse infoExecutionCourse =
+                Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+            Object[] testArgs = { infoExecutionCourse, null };
 
-		return null;
-	}
+            sp.confirmarTransaccao();
+            return testArgs;
+        }
+        catch (ExcepcaoPersistencia e)
+        {
+            System.out.println("failed setting up the test data");
+            e.printStackTrace();
+        }
 
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		return null;
-	}
+        return null;
+    }
 
-	protected int getNumberOfItemsToRetrieve() {
-		return 3;
-	}
-	protected Object getObjectToCompare() {
-		return null;
-	}
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
+    {
+        return null;
+    }
+
+    protected int getNumberOfItemsToRetrieve()
+    {
+        return 3;
+    }
+    protected Object getObjectToCompare()
+    {
+        return null;
+    }
 }

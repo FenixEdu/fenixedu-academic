@@ -1,7 +1,7 @@
 /*
  * Created on 23/Abr/2003
- *
  * 
+ *  
  */
 package ServidorAplicacao.Servico.commons;
 
@@ -18,40 +18,49 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author João Mota
- *
  * 
+ *  
  */
-public class ReadExecutionPeriodByOID implements IServico {
+public class ReadExecutionPeriodByOID implements IServico
+{
 
-		private static ReadExecutionPeriodByOID service = new ReadExecutionPeriodByOID();
-	/**
+    private static ReadExecutionPeriodByOID service = new ReadExecutionPeriodByOID();
+    /**
 	 * The singleton access method of this class.
-	 **/
-	public static ReadExecutionPeriodByOID getService() {
-	  return service;
-	}
+	 */
+    public static ReadExecutionPeriodByOID getService()
+    {
+        return service;
+    }
 
-	/**
+    /**
 	 * @see ServidorAplicacao.IServico#getNome()
 	 */
-	public String getNome() {
-		return "ReadExecutionPeriodByOID";
-	}
-	
-	public InfoExecutionPeriod run(Integer oid) throws FenixServiceException {
-                        
-	  InfoExecutionPeriod result =null;
-	  try {
-		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-		IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
-		IExecutionPeriod executionPeriod =(IExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class, oid);
-		if ( executionPeriod != null) {
-			result = (InfoExecutionPeriod) Cloner.get(executionPeriod);
-		}
-	  } catch (ExcepcaoPersistencia ex) {
-	  	throw new FenixServiceException(ex);
-	  }
-    
-	  return result;
-	}
+    public String getNome()
+    {
+        return "ReadExecutionPeriodByOID";
+    }
+
+    public InfoExecutionPeriod run(Integer oid) throws FenixServiceException
+    {
+
+        InfoExecutionPeriod result = null;
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
+            IExecutionPeriod executionPeriod =
+                (IExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class, oid);
+            if (executionPeriod != null)
+            {
+                result = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionPeriod);
+            }
+        }
+        catch (ExcepcaoPersistencia ex)
+        {
+            throw new FenixServiceException(ex);
+        }
+
+        return result;
+    }
 }

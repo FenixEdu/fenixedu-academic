@@ -67,7 +67,7 @@ public class ReadTeacherDFPStudentsService implements IServico
 
             IExecutionYear executionYear = executionYearDAO.readCurrentExecutionYear();
             InfoExecutionYear infoExecutionYear =
-                (InfoExecutionYear) Cloner.get(executionYear);
+                Cloner.copyIExecutionYear2InfoExecutionYear(executionYear);
 
             ITeacher teacher =
                 (ITeacher) teacherDAO.readByOId(new Teacher(infoTeacher.getIdInternal()), false);

@@ -70,8 +70,7 @@ public class ReadCurriculumByCurricularCourseCode implements IServico
             IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
             IPersistentCurricularCourseScope persistentCurricularCourseScope =
                 sp.getIPersistentCurricularCourseScope();
-            IPersistentExecutionCourse persistentExecutionCourse =
-                sp.getIPersistentExecutionCourse();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
             if (curricularCourseCode == null)
@@ -118,7 +117,8 @@ public class ReadCurriculumByCurricularCourseCode implements IServico
                 if (executionPeriodId == null)
                 {
                     executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
-                } else
+                }
+                else
                 {
                     executionPeriod = new ExecutionPeriod();
                     executionPeriod.setIdInternal(executionPeriodId);
@@ -136,7 +136,8 @@ public class ReadCurriculumByCurricularCourseCode implements IServico
 
                 infoCurriculum = createInfoCurriculum(curriculum, persistentExecutionCourse);
             }
-        } catch (ExcepcaoPersistencia e)
+        }
+        catch (ExcepcaoPersistencia e)
         {
             throw new FenixServiceException(e);
         }
@@ -171,7 +172,7 @@ public class ReadCurriculumByCurricularCourseCode implements IServico
         {
             IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourses.next();
             InfoExecutionCourse infoExecutionCourse =
-                (InfoExecutionCourse) Cloner.get(executionCourse);
+                Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
             infoExecutionCourse.setHasSite(
                 persistentExecutionCourse.readSite(executionCourse.getIdInternal()));
             infoExecutionCourses.add(infoExecutionCourse);

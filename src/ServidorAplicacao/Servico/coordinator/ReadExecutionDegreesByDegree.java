@@ -48,7 +48,8 @@ public class ReadExecutionDegreesByDegree implements IServico
     }
 
     /**
-	 * Executes the service. Returns the current collection of infoExecutionDegrees.
+	 * Executes the service. Returns the current collection of
+	 * infoExecutionDegrees.
 	 */
     public List run(Integer idDegree) throws FenixServiceException
     {
@@ -58,12 +59,13 @@ public class ReadExecutionDegreesByDegree implements IServico
         {
             ICurso degree = new Curso();
             degree.setIdInternal(idDegree);
-                        
+
             sp = SuportePersistenteOJB.getInstance();
-            ICursoExecucaoPersistente cursoExecucaoPersistente  = sp.getICursoExecucaoPersistente();
-            
-            allExecutionDegrees = cursoExecucaoPersistente.readExecutionsDegreesByDegree(degree);         
-        } catch (ExcepcaoPersistencia excepcaoPersistencia)
+            ICursoExecucaoPersistente cursoExecucaoPersistente = sp.getICursoExecucaoPersistente();
+
+            allExecutionDegrees = cursoExecucaoPersistente.readExecutionsDegreesByDegree(degree);
+        }
+        catch (ExcepcaoPersistencia excepcaoPersistencia)
         {
             throw new FenixServiceException(excepcaoPersistencia);
         }
@@ -79,7 +81,7 @@ public class ReadExecutionDegreesByDegree implements IServico
 
         while (iterator.hasNext())
             allInfoExecutionDegrees.add(
-                Cloner.get((ICursoExecucao) iterator.next()));
+                Cloner.copyIExecutionDegree2InfoExecutionDegree((ICursoExecucao) iterator.next()));
 
         return allInfoExecutionDegrees;
     }

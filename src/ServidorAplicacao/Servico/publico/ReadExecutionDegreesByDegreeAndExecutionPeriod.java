@@ -61,7 +61,8 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriod implements IServico
             if (executionPeriodId == null)
             {
                 executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
-            } else
+            }
+            else
             {
                 executionPeriod.setIdInternal(executionPeriodId);
 
@@ -107,24 +108,26 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriod implements IServico
                 ICursoExecucao executionDegree = (ICursoExecucao) listIterator.next();
 
                 InfoExecutionDegree infoExecutionDegree =
-                    (InfoExecutionDegree) Cloner.get(executionDegree);
+                    Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);
                 if (executionDegree.getCoordinatorsList() != null)
                 {
-                	List infoCoordinatorList = new ArrayList();
-                	ListIterator iteratorCoordinator = executionDegree.getCoordinatorsList().listIterator();
-                	while (iteratorCoordinator.hasNext())
-                	{
-                		ICoordinator coordinator = (ICoordinator) iteratorCoordinator.next();
+                    List infoCoordinatorList = new ArrayList();
+                    ListIterator iteratorCoordinator =
+                        executionDegree.getCoordinatorsList().listIterator();
+                    while (iteratorCoordinator.hasNext())
+                    {
+                        ICoordinator coordinator = (ICoordinator) iteratorCoordinator.next();
 
-                		infoCoordinatorList.add(Cloner.copyICoordinator2InfoCoordenator(coordinator));
-                	}
+                        infoCoordinatorList.add(Cloner.copyICoordinator2InfoCoordenator(coordinator));
+                    }
 
-                	infoExecutionDegree.setCoordinatorsList(infoCoordinatorList);
+                    infoExecutionDegree.setCoordinatorsList(infoCoordinatorList);
                 }
-                
+
                 infoExecutionDegreeList.add(infoExecutionDegree);
             }
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
             throw new FenixServiceException(e);

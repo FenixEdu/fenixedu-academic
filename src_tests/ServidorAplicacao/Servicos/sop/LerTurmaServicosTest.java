@@ -1,14 +1,12 @@
 /*
- * LerTurmaServicosTest.java
- * JUnit based test
- *
+ * LerTurmaServicosTest.java JUnit based test
+ * 
  * Created on 26 de Outubro de 2002, 11:47
  */
 
 package ServidorAplicacao.Servicos.sop;
 
 /**
- *
  * @author tfc130
  */
 import junit.framework.Test;
@@ -35,129 +33,151 @@ import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class LerTurmaServicosTest extends TestCaseReadServices {
-	
-	private InfoExecutionDegree infoExecutionDegree = null;
-	private InfoExecutionPeriod infoExecutionPeriod = null;
-	
-	public LerTurmaServicosTest(java.lang.String testName) {
-		super(testName);
-	}
+public class LerTurmaServicosTest extends TestCaseReadServices
+{
 
-	public static void main(java.lang.String[] args) {
-		junit.textui.TestRunner.run(suite());
-	}
+    private InfoExecutionDegree infoExecutionDegree = null;
+    private InfoExecutionPeriod infoExecutionPeriod = null;
 
-	public static Test suite() {
-		TestSuite suite = new TestSuite(LerTurmaServicosTest.class);
+    public LerTurmaServicosTest(java.lang.String testName)
+    {
+        super(testName);
+    }
 
-		return suite;
-	}
+    public static void main(java.lang.String[] args)
+    {
+        junit.textui.TestRunner.run(suite());
+    }
 
-	protected void setUp() {
-		super.setUp();
-	}
+    public static Test suite()
+    {
+        TestSuite suite = new TestSuite(LerTurmaServicosTest.class);
 
-	protected void tearDown() {
-		super.tearDown();
-	}
+        return suite;
+    }
 
-	protected String getNameOfServiceToBeTested() {
-		return "LerTurma";
-	}
+    protected void setUp()
+    {
+        super.setUp();
+    }
 
-	protected int getNumberOfItemsToRetrieve(){
-		return 0;
-	}
-	protected Object getObjectToCompare(){
-		InfoClass infoClass = new InfoClass();
-		infoClass.setNome("10501");
-		this.ligarSuportePersistente(true);
-		
-		infoClass.setInfoExecutionDegree(this.infoExecutionDegree);
-		infoClass.setInfoExecutionPeriod(this.infoExecutionPeriod);
+    protected void tearDown()
+    {
+        super.tearDown();
+    }
 
-		return infoClass;
-	}
-	
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+    protected String getNameOfServiceToBeTested()
+    {
+        return "LerTurma";
+    }
 
-		this.ligarSuportePersistente(true);
-		
-		Object argsLerTurma[] = {"10501", this.infoExecutionDegree, this.infoExecutionPeriod}; 
+    protected int getNumberOfItemsToRetrieve()
+    {
+        return 0;
+    }
+    protected Object getObjectToCompare()
+    {
+        InfoClass infoClass = new InfoClass();
+        infoClass.setNome("10501");
+        this.ligarSuportePersistente(true);
 
-		return argsLerTurma;
-	}
-	
+        infoClass.setInfoExecutionDegree(this.infoExecutionDegree);
+        infoClass.setInfoExecutionPeriod(this.infoExecutionPeriod);
 
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+        return infoClass;
+    }
 
-		this.ligarSuportePersistente(false);
-		
-		Object argsLerTurma[] = {"10501", this.infoExecutionDegree, this.infoExecutionPeriod}; 
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
+    {
 
-		return argsLerTurma;
-	}
+        this.ligarSuportePersistente(true);
 
-	private void ligarSuportePersistente(boolean existing) {
+        Object argsLerTurma[] = { "10501", this.infoExecutionDegree, this.infoExecutionPeriod };
 
-		ISuportePersistente sp = null;
-	
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-			sp.iniciarTransaccao();
-	
-	
-			ICursoPersistente persistentDegree = sp.getICursoPersistente();
-			ICurso degree = persistentDegree.readBySigla("LEIC");
-			assertNotNull(degree);
-	
-			IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-			IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
-			assertNotNull(executionYear);
-	
-			IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp.getIPersistentDegreeCurricularPlan();
-			IDegreeCurricularPlan degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
-			assertNotNull(degreeCurricularPlan);
-	
-			IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-			IExecutionPeriod executionPeriod = null;
-	
-			ICursoExecucaoPersistente persistentExecutionDegree = sp.getICursoExecucaoPersistente();
-			ICursoExecucao executionDegree = null;
-		
-		
-	
-			if(existing) {
-			
-				executionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
-				assertNotNull(executionDegree);
-			
-				executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
-				assertNotNull(executionPeriod); 
-	
-			} else {
-	
-				executionYear = new ExecutionYear("desc");
-				executionDegree = new CursoExecucao(executionYear, degreeCurricularPlan);
-			
-				executionPeriod = new ExecutionPeriod("desc", executionYear);
-			}
-		
-			this.infoExecutionDegree = (InfoExecutionDegree) Cloner.get(executionDegree);
-			this.infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(executionPeriod);
-	
-			sp.confirmarTransaccao();
-	
-		} catch (ExcepcaoPersistencia excepcao) {
-			try {
-				sp.cancelarTransaccao();
-			} catch (ExcepcaoPersistencia ex) {
-				fail("ligarSuportePersistente: cancelarTransaccao");
-			}
-			fail("ligarSuportePersistente: confirmarTransaccao");
-		}
-	}
-	
+        return argsLerTurma;
+    }
+
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
+    {
+
+        this.ligarSuportePersistente(false);
+
+        Object argsLerTurma[] = { "10501", this.infoExecutionDegree, this.infoExecutionPeriod };
+
+        return argsLerTurma;
+    }
+
+    private void ligarSuportePersistente(boolean existing)
+    {
+
+        ISuportePersistente sp = null;
+
+        try
+        {
+            sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
+
+            ICursoPersistente persistentDegree = sp.getICursoPersistente();
+            ICurso degree = persistentDegree.readBySigla("LEIC");
+            assertNotNull(degree);
+
+            IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+            IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
+            assertNotNull(executionYear);
+
+            IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan =
+                sp.getIPersistentDegreeCurricularPlan();
+            IDegreeCurricularPlan degreeCurricularPlan =
+                persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
+            assertNotNull(degreeCurricularPlan);
+
+            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+            IExecutionPeriod executionPeriod = null;
+
+            ICursoExecucaoPersistente persistentExecutionDegree = sp.getICursoExecucaoPersistente();
+            ICursoExecucao executionDegree = null;
+
+            if (existing)
+            {
+
+                executionDegree =
+                    persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(
+                        degreeCurricularPlan,
+                        executionYear);
+                assertNotNull(executionDegree);
+
+                executionPeriod =
+                    persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
+                assertNotNull(executionPeriod);
+
+            }
+            else
+            {
+
+                executionYear = new ExecutionYear("desc");
+                executionDegree = new CursoExecucao(executionYear, degreeCurricularPlan);
+
+                executionPeriod = new ExecutionPeriod("desc", executionYear);
+            }
+
+            this.infoExecutionDegree = Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);
+            this.infoExecutionPeriod = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionPeriod);
+
+            sp.confirmarTransaccao();
+
+        }
+        catch (ExcepcaoPersistencia excepcao)
+        {
+            try
+            {
+                sp.cancelarTransaccao();
+            }
+            catch (ExcepcaoPersistencia ex)
+            {
+                fail("ligarSuportePersistente: cancelarTransaccao");
+            }
+            fail("ligarSuportePersistente: confirmarTransaccao");
+        }
+    }
 
 }

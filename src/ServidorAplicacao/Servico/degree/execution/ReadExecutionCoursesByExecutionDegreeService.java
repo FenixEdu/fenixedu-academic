@@ -71,37 +71,42 @@ public class ReadExecutionCoursesByExecutionDegreeService implements IService
             }
             else
             {
-                executionPeriod = (IExecutionPeriod) executionCourseDAO.readByOId(new ExecutionPeriod(
-                        executionPeriodId),
+                executionPeriod =
+                    (IExecutionPeriod) executionCourseDAO.readByOId(
+                        new ExecutionPeriod(executionPeriodId),
                         false);
             }
 
             ICursoExecucaoPersistente executionDegreeDAO = sp.getICursoExecucaoPersistente();
 
-            ICursoExecucao executionDegree = (ICursoExecucao) executionDegreeDAO.readByOId(
-                    new CursoExecucao(executionDegreeId), false);
+            ICursoExecucao executionDegree =
+                (ICursoExecucao) executionDegreeDAO.readByOId(
+                    new CursoExecucao(executionDegreeId),
+                    false);
 
             if (executionDegree == null)
             {
                 throw new NonExistingExecutionDegree();
             }
 
-            List executionCourseList = executionCourseDAO.readByExecutionDegreeAndExecutionPeriod(
-                    executionDegree, executionPeriod);
+            List executionCourseList =
+                executionCourseDAO.readByExecutionDegreeAndExecutionPeriod(
+                    executionDegree,
+                    executionPeriod);
 
-            infoExecutionCourseList = (List) CollectionUtils.collect(executionCourseList,
-                    new Transformer()
-                    {
+            infoExecutionCourseList =
+                (List) CollectionUtils.collect(executionCourseList, new Transformer()
+            {
 
-                        public Object transform(Object input)
-                        {
-                            IExecutionCourse executionCourse = (IExecutionCourse) input;
-                            InfoExecutionCourse infoExecutionCourse;
-							infoExecutionCourse = (InfoExecutionCourse) Cloner
-									        .get(executionCourse);
-							return infoExecutionCourse;
-                        }
-                    });
+                public Object transform(Object input)
+                {
+                    IExecutionCourse executionCourse = (IExecutionCourse) input;
+                    InfoExecutionCourse infoExecutionCourse;
+                    infoExecutionCourse =
+                        Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+                    return infoExecutionCourse;
+                }
+            });
         }
         catch (ExcepcaoPersistencia e)
         {

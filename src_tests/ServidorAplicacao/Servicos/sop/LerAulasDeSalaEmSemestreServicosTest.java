@@ -1,14 +1,12 @@
 /*
- * LerAulasDeSalaEmSemestreServicosTest.java
- * JUnit based test
- *
+ * LerAulasDeSalaEmSemestreServicosTest.java JUnit based test
+ * 
  * Created on 29 de Outubro de 2002, 15:49
  */
 
 package ServidorAplicacao.Servicos.sop;
 
 /**
- *
  * @author tfc130
  */
 import junit.framework.Test;
@@ -26,99 +24,134 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoSala;
 
-public class LerAulasDeSalaEmSemestreServicosTest extends TestCaseReadServices {
+public class LerAulasDeSalaEmSemestreServicosTest extends TestCaseReadServices
+{
 
-	private InfoExecutionPeriod infoExecutionPeriod = null;
-	private InfoRoom infoRoom = null;
-	
-	public LerAulasDeSalaEmSemestreServicosTest(java.lang.String testName) {
-		super(testName);
-	}
+    private InfoExecutionPeriod infoExecutionPeriod = null;
+    private InfoRoom infoRoom = null;
 
-	public static void main(java.lang.String[] args) {
-		junit.textui.TestRunner.run(suite());
-	}
+    public LerAulasDeSalaEmSemestreServicosTest(java.lang.String testName)
+    {
+        super(testName);
+    }
 
-	public static Test suite() {
-		TestSuite suite =
-			new TestSuite(LerAulasDeSalaEmSemestreServicosTest.class);
+    public static void main(java.lang.String[] args)
+    {
+        junit.textui.TestRunner.run(suite());
+    }
 
-		return suite;
-	}
+    public static Test suite()
+    {
+        TestSuite suite = new TestSuite(LerAulasDeSalaEmSemestreServicosTest.class);
 
-	protected void setUp() {
-		super.setUp();
-	}
+        return suite;
+    }
 
-	protected void tearDown() {
-		super.tearDown();
-	}
+    protected void setUp()
+    {
+        super.setUp();
+    }
 
-	protected String getNameOfServiceToBeTested() {
-		return "LerAulasDeSalaEmSemestre";
-	}
+    protected void tearDown()
+    {
+        super.tearDown();
+    }
 
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+    protected String getNameOfServiceToBeTested()
+    {
+        return "LerAulasDeSalaEmSemestre";
+    }
 
-		this.ligarSuportePersistente(true);
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
+    {
 
-		Object argsLerAulas[] = { this.infoExecutionPeriod, this.infoRoom };
+        this.ligarSuportePersistente(true);
 
-		return argsLerAulas;
-	}
+        Object argsLerAulas[] = { this.infoExecutionPeriod, this.infoRoom };
 
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+        return argsLerAulas;
+    }
 
-		this.ligarSuportePersistente(false);
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
+    {
 
-		Object argsLerAulas[] = { this.infoExecutionPeriod, this.infoRoom };
+        this.ligarSuportePersistente(false);
 
-		return argsLerAulas;
-	}
+        Object argsLerAulas[] = { this.infoExecutionPeriod, this.infoRoom };
 
-	protected int getNumberOfItemsToRetrieve() {
-		return 21;
-	}
+        return argsLerAulas;
+    }
 
-	protected Object getObjectToCompare() {
-		return null;
-	}
+    protected int getNumberOfItemsToRetrieve()
+    {
+        return 21;
+    }
 
-	protected boolean needsAuthorization() {
-		return true;
-	}
+    protected Object getObjectToCompare()
+    {
+        return null;
+    }
 
-	private void ligarSuportePersistente(boolean existing) {
+    protected boolean needsAuthorization()
+    {
+        return true;
+    }
 
-		ISuportePersistente sp = null;
+    private void ligarSuportePersistente(boolean existing)
+    {
 
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-			sp.iniciarTransaccao();
+        ISuportePersistente sp = null;
 
-			IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
-			IExecutionYear iey = ieyp.readExecutionYearByName("2002/2003");
+        try
+        {
+            sp = SuportePersistenteOJB.getInstance();
+            sp.iniciarTransaccao();
 
-			IPersistentExecutionPeriod iepp = sp.getIPersistentExecutionPeriod();
-			IExecutionPeriod iep = iepp.readByNameAndExecutionYear("2º Semestre", iey);
-			
-			if(existing) {
-				this.infoRoom = new InfoRoom(new String("Ga1"), new String("Pavilhilhão Central"), new Integer(0), new TipoSala(TipoSala.ANFITEATRO), new Integer(100), new Integer(50));
-			} else {
-				this.infoRoom = new InfoRoom(new String("Ga4"), new String("Pavilhilhão Central"), new Integer(1), new TipoSala(TipoSala.ANFITEATRO), new Integer(100), new Integer(50));
-			}
-			
-			this.infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(iep);
+            IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
+            IExecutionYear iey = ieyp.readExecutionYearByName("2002/2003");
 
-			sp.confirmarTransaccao();
+            IPersistentExecutionPeriod iepp = sp.getIPersistentExecutionPeriod();
+            IExecutionPeriod iep = iepp.readByNameAndExecutionYear("2º Semestre", iey);
 
-		} catch (ExcepcaoPersistencia excepcao) {
-			try {
-				sp.cancelarTransaccao();
-			} catch (ExcepcaoPersistencia ex) {
-				fail("ligarSuportePersistente: cancelarTransaccao");
-			}
-			fail("ligarSuportePersistente: confirmarTransaccao");
-		}
-	}
+            if (existing)
+            {
+                this.infoRoom =
+                    new InfoRoom(
+                        new String("Ga1"),
+                        new String("Pavilhilhão Central"),
+                        new Integer(0),
+                        new TipoSala(TipoSala.ANFITEATRO),
+                        new Integer(100),
+                        new Integer(50));
+            }
+            else
+            {
+                this.infoRoom =
+                    new InfoRoom(
+                        new String("Ga4"),
+                        new String("Pavilhilhão Central"),
+                        new Integer(1),
+                        new TipoSala(TipoSala.ANFITEATRO),
+                        new Integer(100),
+                        new Integer(50));
+            }
+
+            this.infoExecutionPeriod = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(iep);
+
+            sp.confirmarTransaccao();
+
+        }
+        catch (ExcepcaoPersistencia excepcao)
+        {
+            try
+            {
+                sp.cancelarTransaccao();
+            }
+            catch (ExcepcaoPersistencia ex)
+            {
+                fail("ligarSuportePersistente: cancelarTransaccao");
+            }
+            fail("ligarSuportePersistente: confirmarTransaccao");
+        }
+    }
 }

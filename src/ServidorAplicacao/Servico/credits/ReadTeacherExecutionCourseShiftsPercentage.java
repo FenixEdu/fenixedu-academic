@@ -12,7 +12,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoShift;
 import DataBeans.InfoTeacher;
 import DataBeans.teacher.credits.InfoShiftPercentage;
 import DataBeans.teacher.credits.InfoShiftProfessorship;
@@ -80,7 +79,7 @@ public class ReadTeacherExecutionCourseShiftsPercentage implements IServico
             ITeacher teacher = readTeacher(infoTeacher, sp);
 
             result.setInfoExecutionCourse(
-                (InfoExecutionCourse) Cloner.get(executionCourse));
+                Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
             result.setInfoTeacher(Cloner.copyITeacher2InfoTeacher(teacher));
 
             ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
@@ -96,7 +95,7 @@ public class ReadTeacherExecutionCourseShiftsPercentage implements IServico
                 ITurno shift = (ITurno) iterator.next();
 
                 InfoShiftPercentage infoShiftPercentage = new InfoShiftPercentage();
-                infoShiftPercentage.setShift((InfoShift) Cloner.get(shift));
+                infoShiftPercentage.setShift(Cloner.copyIShift2InfoShift(shift));
                 double availablePercentage = 100;
                 InfoShiftProfessorship infoShiftProfessorship = null;
 
@@ -105,8 +104,8 @@ public class ReadTeacherExecutionCourseShiftsPercentage implements IServico
                 {
                     IShiftProfessorship shiftProfessorship = (IShiftProfessorship) iter.next();
                     /**
-					 * if shift's type is LABORATORIAL the shift professorship percentage can exceed
-					 * 100%
+					 * if shift's type is LABORATORIAL the shift professorship
+					 * percentage can exceed 100%
 					 */
                     if ((shift.getTipo().getTipo().intValue() != TipoAula.LABORATORIAL)
                         && (!shiftProfessorship.getProfessorship().getTeacher().equals(teacher)))

@@ -18,46 +18,60 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoCurso;
 
 /**
- * @author David Santos
- * 10/Jun/2003
+ * @author David Santos 10/Jun/2003
  */
 
-public class ReadExecutionDegreesByExecutionYearAndDegreeType implements IServico {
+public class ReadExecutionDegreesByExecutionYearAndDegreeType implements IServico
+{
 
-	private static ReadExecutionDegreesByExecutionYearAndDegreeType service = new ReadExecutionDegreesByExecutionYearAndDegreeType();
+    private static ReadExecutionDegreesByExecutionYearAndDegreeType service =
+        new ReadExecutionDegreesByExecutionYearAndDegreeType();
 
-	public static ReadExecutionDegreesByExecutionYearAndDegreeType getService() {
-		return service;
-	}
+    public static ReadExecutionDegreesByExecutionYearAndDegreeType getService()
+    {
+        return service;
+    }
 
-	private ReadExecutionDegreesByExecutionYearAndDegreeType() {
-	}
+    private ReadExecutionDegreesByExecutionYearAndDegreeType()
+    {
+    }
 
-	public final String getNome() {
-		return "ReadExecutionDegreesByExecutionYearAndDegreeType";
-	}
+    public final String getNome()
+    {
+        return "ReadExecutionDegreesByExecutionYearAndDegreeType";
+    }
 
-	public List run(InfoExecutionYear infoExecutionYear, TipoCurso degreeType) throws FenixServiceException {
+    public List run(InfoExecutionYear infoExecutionYear, TipoCurso degreeType)
+        throws FenixServiceException
+    {
 
-		List infoExecutionDegreeList = null;
+        List infoExecutionDegreeList = null;
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			ICursoExecucaoPersistente executionDegreeDAO = sp.getICursoExecucaoPersistente();
-			IExecutionYear executionYear = Cloner.copyInfoExecutionYear2IExecutionYear(infoExecutionYear);
-			List executionDegreeList = executionDegreeDAO.readByExecutionYearAndDegreeType(executionYear, degreeType);
-			if ( (executionDegreeList != null) && (!executionDegreeList.isEmpty()) ) {
-				infoExecutionDegreeList = new ArrayList();
-				Iterator iterator = executionDegreeList.iterator();
-				while(iterator.hasNext()) {
-					ICursoExecucao executionDegree = (ICursoExecucao) iterator.next();
-					InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) Cloner.get(executionDegree);
-					infoExecutionDegreeList.add(infoExecutionDegree);
-				}
-			}
-		} catch (ExcepcaoPersistencia ex) {
-			throw new FenixServiceException(ex);
-		}
-		return infoExecutionDegreeList;
-	}
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ICursoExecucaoPersistente executionDegreeDAO = sp.getICursoExecucaoPersistente();
+            IExecutionYear executionYear =
+                Cloner.copyInfoExecutionYear2IExecutionYear(infoExecutionYear);
+            List executionDegreeList =
+                executionDegreeDAO.readByExecutionYearAndDegreeType(executionYear, degreeType);
+            if ((executionDegreeList != null) && (!executionDegreeList.isEmpty()))
+            {
+                infoExecutionDegreeList = new ArrayList();
+                Iterator iterator = executionDegreeList.iterator();
+                while (iterator.hasNext())
+                {
+                    ICursoExecucao executionDegree = (ICursoExecucao) iterator.next();
+                    InfoExecutionDegree infoExecutionDegree =
+                        Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree);
+                    infoExecutionDegreeList.add(infoExecutionDegree);
+                }
+            }
+        }
+        catch (ExcepcaoPersistencia ex)
+        {
+            throw new FenixServiceException(ex);
+        }
+        return infoExecutionDegreeList;
+    }
 }

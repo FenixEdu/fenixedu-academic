@@ -87,7 +87,7 @@ public class ReadEnroledExecutionCourses implements IServico {
 				List allGroupProperties = persistentGroupProperties.readAllGroupPropertiesByExecutionCourse(executionCourse);
 				boolean result = checkPeriodEnrollment(allGroupProperties);
 				if (result) {
-					allInfoExecutionCourses.add(Cloner.get(executionCourse));
+					allInfoExecutionCourses.add(Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
 				}
 
 			}

@@ -21,59 +21,59 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 public class ReadExecutionCourse implements IServico
 {
 
-	private static ReadExecutionCourse service = new ReadExecutionCourse();
+    private static ReadExecutionCourse service = new ReadExecutionCourse();
 
-	/**
+    /**
 	 * The singleton access method of this class.
 	 */
-	public static ReadExecutionCourse getService()
-	{
-		return service;
-	}
+    public static ReadExecutionCourse getService()
+    {
+        return service;
+    }
 
-	/**
+    /**
 	 * The constructor of this class.
 	 */
-	private ReadExecutionCourse()
-	{
-	}
+    private ReadExecutionCourse()
+    {
+    }
 
-	/**
+    /**
 	 * Service name
 	 */
-	public final String getNome()
-	{
-		return "ReadExecutionCourse";
-	}
+    public final String getNome()
+    {
+        return "ReadExecutionCourse";
+    }
 
-	/**
+    /**
 	 * Executes the service. Returns the current InfoExecutionCourse.
 	 */
-	public InfoExecutionCourse run(Integer idInternal) throws FenixServiceException
-	{
+    public InfoExecutionCourse run(Integer idInternal) throws FenixServiceException
+    {
 
-		IExecutionCourse executionCourse = null;
-		InfoExecutionCourse infoExecutionCourse = null;
-		try
-		{
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			executionCourse =
-				(IExecutionCourse) sp.getIPersistentExecutionCourse().readByOId(
-					new ExecutionCourse(idInternal),
-					false);
+        IExecutionCourse executionCourse = null;
+        InfoExecutionCourse infoExecutionCourse = null;
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            executionCourse =
+                (IExecutionCourse) sp.getIPersistentExecutionCourse().readByOId(
+                    new ExecutionCourse(idInternal),
+                    false);
 
-			if (executionCourse == null)
-			{
-				throw new NonExistingServiceException();
-			}
+            if (executionCourse == null)
+            {
+                throw new NonExistingServiceException();
+            }
 
-			infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
-		}
-		catch (ExcepcaoPersistencia excepcaoPersistencia)
-		{
-			throw new FenixServiceException(excepcaoPersistencia);
-		}
+            infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+        }
+        catch (ExcepcaoPersistencia excepcaoPersistencia)
+        {
+            throw new FenixServiceException(excepcaoPersistencia);
+        }
 
-		return infoExecutionCourse;
-	}
+        return infoExecutionCourse;
+    }
 }

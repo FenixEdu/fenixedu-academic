@@ -11,7 +11,6 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
 import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoTeacher;
 import DataBeans.SiteView;
 import DataBeans.teacher.InfoOrientation;
@@ -111,7 +110,8 @@ public class ReadTeacherInformation implements IServico
                 InfoServiceProviderRegime infoServiceProviderRegime = new InfoServiceProviderRegime();
                 infoServiceProviderRegime.setInfoTeacher(infoTeacher);
                 infoSiteTeacherInformation.setInfoServiceProviderRegime(infoServiceProviderRegime);
-            } else
+            }
+            else
             {
                 InfoServiceProviderRegime infoServiceProviderRegime =
                     Cloner.copyIServiceProviderRegime2InfoServiceProviderRegime(serviceProviderRegime);
@@ -120,8 +120,10 @@ public class ReadTeacherInformation implements IServico
 
             infoSiteTeacherInformation.setInfoExternalActivities(getInfoExternalActivities(sp, teacher));
 
-            infoSiteTeacherInformation.setInfoLecturingExecutionCourses(getInfoLecturingExecutionCourses(sp, teacher));
-            infoSiteTeacherInformation.setInfoResponsibleExecutionCourses(getInfoResponsibleExecutionCourses(sp, teacher));
+            infoSiteTeacherInformation.setInfoLecturingExecutionCourses(
+                getInfoLecturingExecutionCourses(sp, teacher));
+            infoSiteTeacherInformation.setInfoResponsibleExecutionCourses(
+                getInfoResponsibleExecutionCourses(sp, teacher));
 
             IPersistentWeeklyOcupation persistentWeeklyOcupation = sp.getIPersistentWeeklyOcupation();
             IWeeklyOcupation weeklyOcupation = persistentWeeklyOcupation.readByTeacher(teacher);
@@ -135,7 +137,8 @@ public class ReadTeacherInformation implements IServico
                 infoWeeklyOcupation.setSupport(new Integer(0));
                 infoWeeklyOcupation.setOther(new Integer(0));
                 infoSiteTeacherInformation.setInfoWeeklyOcupation(infoWeeklyOcupation);
-            } else
+            }
+            else
             {
                 InfoWeeklyOcupation infoWeeklyOcupation =
                     Cloner.copyIWeeklyOcupation2InfoWeeklyOcupation(weeklyOcupation);
@@ -168,21 +171,23 @@ public class ReadTeacherInformation implements IServico
             IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
             IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
             infoSiteTeacherInformation.setInfoExecutionPeriod(
-                (InfoExecutionPeriod) Cloner.get(executionPeriod));
+                Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionPeriod));
 
             return new SiteView(infoSiteTeacherInformation);
-        } catch (ExcepcaoPersistencia e)
+        }
+        catch (ExcepcaoPersistencia e)
         {
             throw new FenixServiceException(e);
         }
     }
 
     /**
-     * @param sp
-     * @param teacher
-     * @return
-     */
-    private List getInfoResponsibleExecutionCourses(ISuportePersistente sp, ITeacher teacher) throws ExcepcaoPersistencia
+	 * @param sp
+	 * @param teacher
+	 * @return
+	 */
+    private List getInfoResponsibleExecutionCourses(ISuportePersistente sp, ITeacher teacher)
+        throws ExcepcaoPersistencia
     {
         IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
         final IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
@@ -217,8 +222,8 @@ public class ReadTeacherInformation implements IServico
                     }
                 });
                 InfoExecutionCourse infoExecutionCourse;
-				infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
-				infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
+                infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+                infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
                 return infoExecutionCourse;
             }
         });
@@ -279,8 +284,8 @@ public class ReadTeacherInformation implements IServico
                     }
                 });
                 InfoExecutionCourse infoExecutionCourse;
-				infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
-				infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
+                infoExecutionCourse =  Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+                infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
                 return infoExecutionCourse;
             }
         });
@@ -354,7 +359,8 @@ public class ReadTeacherInformation implements IServico
         if (orientation != null)
         {
             infoOrientation = Cloner.copyIOrientation2InfoOrientation(orientation);
-        } else
+        }
+        else
         {
             InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
             infoOrientation = new InfoOrientation();
@@ -379,7 +385,8 @@ public class ReadTeacherInformation implements IServico
         {
             infoPublicationsNumber =
                 Cloner.copyIPublicationsNumber2InfoPublicationsNumber(publicationsNumber);
-        } else
+        }
+        else
         {
             InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
             infoPublicationsNumber = new InfoPublicationsNumber();

@@ -56,7 +56,7 @@ public class LerTurno implements IServico {
 					executionCourse);
 
 			if (turno != null) {
-				infoTurno = (InfoShift) Cloner.get(turno);
+				infoTurno =  Cloner.copyIShift2InfoShift(turno);
 			}
 		} catch (ExcepcaoPersistencia ex) {
 			ex.printStackTrace();

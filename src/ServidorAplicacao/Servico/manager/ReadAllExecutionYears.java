@@ -55,7 +55,7 @@ public class ReadAllExecutionYears implements IService
         List result = new ArrayList(allExecutionYears.size());
 
         while (iterator.hasNext())
-            result.add(Cloner.get((IExecutionYear) iterator.next()));
+            result.add(Cloner.copyIExecutionYear2InfoExecutionYear((IExecutionYear) iterator.next()));
 
         return result;
     }

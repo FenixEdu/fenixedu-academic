@@ -5,13 +5,11 @@
 package ServidorAplicacao.Servico.teacher;
 
 import DataBeans.ExecutionCourseSiteView;
-import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoMetadata;
 import DataBeans.InfoQuestion;
 import DataBeans.InfoSiteQuestion;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
-
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IMetadata;
@@ -118,7 +116,7 @@ public class ReadQuestion implements IServico {
 			InfoSiteQuestion bodyComponent = new InfoSiteQuestion();
 			bodyComponent.setInfoQuestion(infoQuestion);
 			bodyComponent.setExecutionCourse(
-				(InfoExecutionCourse) Cloner.get(
+				 Cloner.copyIExecutionCourse2InfoExecutionCourse(
 					executionCourse));
 			SiteView siteView =
 				new ExecutionCourseSiteView(bodyComponent, bodyComponent);

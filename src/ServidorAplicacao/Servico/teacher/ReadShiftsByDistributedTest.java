@@ -76,7 +76,7 @@ public class ReadShiftsByDistributedTest implements IServico {
 				ITurno shift = (ITurno) itShiftList.next();
 				List shiftStudents = turnoAlunoPersistente.readByShift(shift);
 				if (!studentsList.containsAll(shiftStudents))
-					result.add(Cloner.get(shift));
+					result.add(Cloner.copyIShift2InfoShift(shift));
 			}
 			return result;
 		} catch (ExcepcaoPersistencia e) {

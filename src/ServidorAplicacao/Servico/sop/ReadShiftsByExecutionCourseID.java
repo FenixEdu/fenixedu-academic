@@ -1,12 +1,9 @@
-
 package ServidorAplicacao.Servico.sop;
-
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionCourseOccupancy;
 import DataBeans.util.Cloner;
 import Dominio.ExecutionCourse;
@@ -19,69 +16,80 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.NumberUtils;
 
 /**
- * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  */
 
-public class ReadShiftsByExecutionCourseID implements IServico {
+public class ReadShiftsByExecutionCourseID implements IServico
+{
 
-	private static ReadShiftsByExecutionCourseID _servico = new ReadShiftsByExecutionCourseID();
-	/**
+    private static ReadShiftsByExecutionCourseID _servico = new ReadShiftsByExecutionCourseID();
+    /**
 	 * The singleton access method of this class.
-	 **/
-	public static ReadShiftsByExecutionCourseID getService() {
-		return _servico;
-	}
+	 */
+    public static ReadShiftsByExecutionCourseID getService()
+    {
+        return _servico;
+    }
 
-	/**
+    /**
 	 * The actor of this class.
-	 **/
-	private ReadShiftsByExecutionCourseID() {
-	}
+	 */
+    private ReadShiftsByExecutionCourseID()
+    {
+    }
 
-	/**
+    /**
 	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "ReadShiftsByExecutionCourseID";
-	}
+	 */
+    public final String getNome()
+    {
+        return "ReadShiftsByExecutionCourseID";
+    }
 
-	public InfoExecutionCourseOccupancy run(Integer executionCourseID) throws FenixServiceException {
+    public InfoExecutionCourseOccupancy run(Integer executionCourseID) throws FenixServiceException
+    {
 
-		InfoExecutionCourseOccupancy infoExecutionCourseOccupancy = new InfoExecutionCourseOccupancy();
-		infoExecutionCourseOccupancy.setInfoShifts(new ArrayList());
-		
-		
-		try {
-			SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
-			
-			IExecutionCourse executionCourseTemp = new ExecutionCourse(executionCourseID);
-			IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse().readByOId(executionCourseTemp, false);
-	
-	
-			List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse);
-		
-			infoExecutionCourseOccupancy.setInfoExecutionCourse((InfoExecutionCourse) Cloner.get(executionCourse));
-			
-			Iterator iterator = shifts.iterator();
-			while(iterator.hasNext()) {
-				ITurno shift = (ITurno) iterator.next();
-		
-				List studentsInShift = sp.getITurnoAlunoPersistente().readByShift(shift);
-		
-				shift.setOcupation(new Integer(studentsInShift.size()));
-				shift.setPercentage(NumberUtils.formatNumber(new Double(shift.getOcupation().floatValue() * 100 / shift.getLotacao().floatValue()), 1));
-				infoExecutionCourseOccupancy.getInfoShifts().add(Cloner.get(shift));		
-			}
-		
-						
-		
-		} catch(ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-		
-		return infoExecutionCourseOccupancy;
-	}
-	
-	
+        InfoExecutionCourseOccupancy infoExecutionCourseOccupancy = new InfoExecutionCourseOccupancy();
+        infoExecutionCourseOccupancy.setInfoShifts(new ArrayList());
+
+        try
+        {
+            SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
+
+            IExecutionCourse executionCourseTemp = new ExecutionCourse(executionCourseID);
+            IExecutionCourse executionCourse =
+                (IExecutionCourse) sp.getIPersistentExecutionCourse().readByOId(
+                    executionCourseTemp,
+                    false);
+
+            List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse);
+
+            infoExecutionCourseOccupancy.setInfoExecutionCourse(
+                Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
+
+            Iterator iterator = shifts.iterator();
+            while (iterator.hasNext())
+            {
+                ITurno shift = (ITurno) iterator.next();
+
+                List studentsInShift = sp.getITurnoAlunoPersistente().readByShift(shift);
+
+                shift.setOcupation(new Integer(studentsInShift.size()));
+                shift.setPercentage(
+                    NumberUtils.formatNumber(
+                        new Double(
+                            shift.getOcupation().floatValue() * 100 / shift.getLotacao().floatValue()),
+                        1));
+                infoExecutionCourseOccupancy.getInfoShifts().add(Cloner.copyIShift2InfoShift(shift));
+            }
+
+        }
+        catch (ExcepcaoPersistencia e)
+        {
+            throw new FenixServiceException(e);
+        }
+
+        return infoExecutionCourseOccupancy;
+    }
+
 }

@@ -76,7 +76,7 @@ public class ReadExecutionPeriod implements IServico
             throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
         }
 
-        infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(executionPeriod);
+        infoExecutionPeriod = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionPeriod);
         return infoExecutionPeriod;
     }
 }

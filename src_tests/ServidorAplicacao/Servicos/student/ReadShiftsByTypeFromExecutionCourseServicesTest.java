@@ -9,74 +9,102 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoAula;
 
-public class ReadShiftsByTypeFromExecutionCourseServicesTest extends TestCaseReadServices {
-	public ReadShiftsByTypeFromExecutionCourseServicesTest(java.lang.String testName) {
-		super(testName);
-	}
+public class ReadShiftsByTypeFromExecutionCourseServicesTest extends TestCaseReadServices
+{
+    public ReadShiftsByTypeFromExecutionCourseServicesTest(java.lang.String testName)
+    {
+        super(testName);
+    }
 
-	public static void main(java.lang.String[] args) {
-		junit.textui.TestRunner.run(suite());
-	}
+    public static void main(java.lang.String[] args)
+    {
+        junit.textui.TestRunner.run(suite());
+    }
 
-	public static Test suite() {
-		TestSuite suite =
-			new TestSuite(ReadShiftsByTypeFromExecutionCourseServicesTest.class);
+    public static Test suite()
+    {
+        TestSuite suite = new TestSuite(ReadShiftsByTypeFromExecutionCourseServicesTest.class);
 
-		return suite;
-	}
+        return suite;
+    }
 
-	protected void setUp() {
-		super.setUp();
-	}
+    protected void setUp()
+    {
+        super.setUp();
+    }
 
-	protected void tearDown() {
-		super.tearDown();
-	}
+    protected void tearDown()
+    {
+        super.tearDown();
+    }
 
+    protected String getNameOfServiceToBeTested()
+    {
+        return "ReadShiftsByTypeFromExecutionCourse";
+    }
 
+    protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly()
+    {
 
-	protected String getNameOfServiceToBeTested() {
-		return "ReadShiftsByTypeFromExecutionCourse";
-	}
+        IExecutionCourse executionCourse = null;
+        try
+        {
+            SuportePersistenteOJB.getInstance().iniciarTransaccao();
+            executionCourse =
+                SuportePersistenteOJB
+                    .getInstance()
+                    .getIPersistentExecutionCourse()
+                    .readBySiglaAndAnoLectivoAndSiglaLicenciatura("APR", "2002/2003", "LEIC");
+            assertNotNull(executionCourse);
+            SuportePersistenteOJB.getInstance().confirmarTransaccao();
+            Object[] result =
+                {
+                    Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse),
+                    new TipoAula(TipoAula.RESERVA)};
+            return result;
+        }
+        catch (ExcepcaoPersistencia ex)
+        {
+            ex.printStackTrace();
+        }
+        return null;
+    }
 
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+    protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly()
+    {
+        IExecutionCourse executionCourse = null;
+        try
+        {
+            SuportePersistenteOJB.getInstance().iniciarTransaccao();
+            executionCourse =
+                SuportePersistenteOJB
+                    .getInstance()
+                    .getIPersistentExecutionCourse()
+                    .readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+            assertNotNull(executionCourse);
+            SuportePersistenteOJB.getInstance().confirmarTransaccao();
+            Object[] result =
+                {
+                    Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse),
+                    new TipoAula(TipoAula.TEORICA)};
+            return result;
+        }
+        catch (ExcepcaoPersistencia ex)
+        {
+            ex.printStackTrace();
+        }
 
-		IExecutionCourse executionCourse = null; 
-		try {
-			SuportePersistenteOJB.getInstance().iniciarTransaccao();
-			executionCourse = SuportePersistenteOJB.getInstance().getIPersistentExecutionCourse().readBySiglaAndAnoLectivoAndSiglaLicenciatura("APR", "2002/2003", "LEIC");
-			assertNotNull(executionCourse);
-			SuportePersistenteOJB.getInstance().confirmarTransaccao();
-			Object[] result = { Cloner.get(executionCourse), new TipoAula(TipoAula.RESERVA) };
-			return result;
-		} catch (ExcepcaoPersistencia ex) {
-			ex.printStackTrace();
-		}
-		return null;
-	  }
+        return null;
+    }
 
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-	  IExecutionCourse executionCourse = null; 
-	  try {
-		  SuportePersistenteOJB.getInstance().iniciarTransaccao();
-		  executionCourse = SuportePersistenteOJB.getInstance().getIPersistentExecutionCourse().readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
-		  assertNotNull(executionCourse);
-		  SuportePersistenteOJB.getInstance().confirmarTransaccao();
-		  Object[] result = { Cloner.get(executionCourse), new TipoAula(TipoAula.TEORICA) };
-		  return result;
-	  } catch (ExcepcaoPersistencia ex) {
-		  ex.printStackTrace();
-	  }
-	  
-	  return null;
-	}
+    protected int getNumberOfItemsToRetrieve()
+    {
+        return 5;
+    }
 
-	protected int getNumberOfItemsToRetrieve() {
-		return 5;
-	}
-
-	protected Object getObjectToCompare() {
-	  return null;
-	}
+    protected Object getObjectToCompare()
+    {
+        return null;
+    }
 
 }
