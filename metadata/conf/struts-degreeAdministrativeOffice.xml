@@ -100,7 +100,7 @@
 				type="ServidorApresentacao.Action.degreeAdministrativeOffice.FunctionRedirectDispatchAction"
 				path="/functionRedirect"
 				parameter="method"
-				scope="session"
+				scope="request"
 				validate="false">
 			<forward name="chooseStudentAndDegreeTypeForEnrolmentWithRules" path="df.page.chooseStudentAndDegreeTypeForEnrolmentWithRules"/>
 			<forward name="chooseStudentAndDegreeTypeForEnrolmentWithoutRules" path="df.page.chooseStudentAndDegreeTypeForEnrolmentWithoutRules"/>
@@ -113,7 +113,7 @@
 				path="/prepareStudentDataForEnrolmentWithRules"
 				input="/prepareStudentDataForEnrolmentWithRules.do?method=error&amp;page=0"
 				parameter="method"
-				scope="session"
+				scope="request"
 				validate="true">
 			<forward name="startCurricularCourseEnrolmentWithRules" path="/curricularCourseEnrolmentWithRulesManager.do?method=start"/>
 			<forward name="error" path="/functionRedirect.do?method=chooseStudentAndDegreeTypeForEnrolmentWithRules"/>
@@ -135,7 +135,7 @@
 				path="/prepareStudentDataForEnrolmentInOptionalWithoutRules"
 				input="/prepareStudentDataForEnrolmentInOptionalWithoutRules.do?method=error&amp;page=0"
 				parameter="method"
-				scope="session"
+				scope="request"
 				validate="true">
 			<forward name="startOptionalCurricularCourseEnrolmentWithoutRules" path="/optionalCurricularCourseEnrolmentWithoutRulesManager.do?method=start"/>
 			<forward name="error" path="/functionRedirect.do?method=chooseStudentAndDegreeTypeForEnrolmentInOptionalWithoutRules"/>
@@ -146,7 +146,7 @@
 				path="/prepareStudentDataForManualEquivalence"
 				input="/prepareStudentDataForManualEquivalence.do?method=error&amp;page=0"
 				parameter="method"
-				scope="session"
+				scope="request"
 				validate="true">
 			<forward name="startManualEquivalence" path="/equivalence/manualEquivalenceManagerForDegreeAdministrativeOffice.do?method=show" contextRelative="true"/>
 			<forward name="error" path="/functionRedirect.do?method=chooseStudentAndDegreeTypeForManualEquivalence"/>
@@ -157,7 +157,7 @@
 				path="/prepareEnrolmentContext"
 				input="/prepareEnrolmentContext.do?method=error&amp;page=0"
 				parameter="method"
-				scope="session"
+				scope="request"
 				validate="true">
 			<forward name="showAvailableCurricularCourses" path="/curricularCourseEnrolmentWithoutRulesManager.do?method=start"/>
 			<forward name="error" path="df.page.chooseDegreeAndCurricularSemesterAndCurricularYear"/>
@@ -198,7 +198,7 @@
 			<forward name="showAvailableCurricularCourses" path="df.page.showAvailableCurricularCoursesWithoutRules"/>
 			<forward name="verifyEnrolment" path="df.page.verifyEnrolmentWithoutRules"/>
 			<forward name="acceptEnrolment" path="df.page.acceptEnrolmentWithoutRules"/>
-			<forward name="cancel" path="/prepareStudentEnrolment.do?method=withoutRules"/>
+			<forward name="cancel" path="/prepareStudentDataForEnrolmentWithoutRules.do?method=getStudentAndDegreeTypeForEnrolmentWithoutRules"/>
 			<forward name="home" path="df.page.main"/>
 		</action>
 
