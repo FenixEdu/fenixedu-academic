@@ -9,16 +9,21 @@ NEW FEATURES:
 - Listing all grant contracts by criteria and by various orders (facultyAdmOffice Portal).
 - Create stat of Grant Owner by criteria (facultyAdmOffice Portal).
 - The results of the search of persons is no presented by pages (avoiding Out Of Memory in search by name *)(facultyAdmOffice Portal).
+- Added teacher master degree execution course lecturing hours management for CreditsManager
 
 NOTES:
 ======
 - It is necessary to run the script of creation of table GRANT_CONTRACT_MOVEMENT and a script to delete
 unnecessary columns. Both files are in the folder deploy_scripts/deploy 30-07-2004 of project middleware (see
 readme.txt - section grant).
+- It is necessary to run credits.sql script
 
 CHANGES:
 ========
-
+- Column MASTER_DEGREE_CREDITS added to crd_CREDITS table
+- Column CREDITS renamed to HOURS on table PROFESSORSHIPS.
+- Added a method in Turno and Shift classes called hours to give the duration in hours.
+	
 BUG FIXES:
 ==========
 

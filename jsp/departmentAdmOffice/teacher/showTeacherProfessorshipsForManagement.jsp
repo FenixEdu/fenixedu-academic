@@ -55,6 +55,13 @@
 				<td class="listClasses-header">
 					<bean:message key="label.professorship.responsibleFor"/>
 				</td>
+				
+				<logic:present role="creditsManager">
+					<td class="listClasses-header">
+						<bean:message key="label.professorship.hours"/>
+					</td>
+				</logic:present>
+				
 				<logic:present role="role.department.credits.manager">
 					<logic:equal name="isDepartmentManager" value="true">
 						<td class="listClasses-header">
@@ -66,8 +73,14 @@
 			<logic:iterate id="detailedProfessorship" name="detailedProfessorshipList">
 				<bean:define id="professorship" name="detailedProfessorship" property="infoProfessorship"/>
 				<bean:define id="infoExecutionCourse" name="professorship" property="infoExecutionCourse"/>
+				<bean:define id="executionCourseId" name="infoExecutionCourse" property="idInternal" />
+
 				<tr>
 					<td class="listClasses" style="text-align:left">
+						<logic:present role="role.department.credits.manager">
+							<html:hidden property='<%= "hours("+ executionCourseId +")" %>' />							
+						</logic:present>
+					
 						<bean:write name="infoExecutionCourse" property="nome"/>
 					</td>
 					<td class="listClasses" style="text-align:left">&nbsp;
@@ -85,7 +98,7 @@
 						<bean:write name="infoExecutionCourse" property="infoExecutionPeriod.infoExecutionYear.year"/>
 					</td>
 					<td class="listClasses">
-						<logic:present role="role.department.credits.manager">
+						<logic:present role="role.department.credits.manager,creditsManager">
 							<logic:equal name="isDepartmentManager" value="true">
 								<bean:define id="executionCourseId" name="infoExecutionCourse" property="idInternal" />
 									<html:multibox property="executionCourseResponsability" value="<%= executionCourseId.toString() %>" />
@@ -100,6 +113,17 @@
 							</logic:equal>
 						</logic:present>
 					</td>
+					<logic:present role="creditsManager">
+						<td class="listClasses">
+							<logic:equal name="detailedProfessorship" property="masterDegreeOnly" value="true">
+								<html:text property='<%= "hours("+ executionCourseId +")" %>' size="5"/>
+							</logic:equal>
+							<logic:equal name="detailedProfessorship" property="masterDegreeOnly" value="false" >
+								-- 
+							</logic:equal>
+						</td>
+					</logic:present>
+
 					<logic:present role="role.department.credits.manager">
 						<logic:equal name="isDepartmentManager" value="true">					
 							<td class="listClasses">
@@ -122,6 +146,12 @@
 			 	</html:submit>
 			</logic:equal>
 		</logic:present>		 	
+		<logic:present role="creditsManager">
+			<html:submit property="save" styleClass="inputbutton">
+				<bean:message key="button.submit" />
+			</html:submit>
+		</logic:present>
+		
 	</html:form>		 	
 </logic:notEmpty>
 <logic:present role="role.department.credits.manager">

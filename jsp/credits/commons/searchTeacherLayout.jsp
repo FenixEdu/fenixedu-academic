@@ -4,7 +4,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ page import="org.apache.struts.Globals" %>
-
 <tiles:useAttribute id="searchInfo" name="searchInfo"/>
 <p class="infoop">
 	<bean:message name="searchInfo"/>

@@ -42,7 +42,7 @@
 <logic:notEmpty name="detailedProfessorshipList">
 	<logic:iterate id="detailedProfessorship" name="detailedProfessorshipList">
 		<bean:define id="infoProfessorship" name="detailedProfessorship" property="infoProfessorship"/>
-		<h4>
+		<h4 style="display:inline">
 			<span class="bluetxt">		
 				<bean:write name="infoProfessorship" property="infoExecutionCourse.nome"/>
 				<bean:define id="infoDegreeList" name="detailedProfessorship" property="infoDegreeList" />
@@ -55,7 +55,11 @@
 				</logic:iterate>)
 			</span>
 		</h4>
-		
+		<logic:equal name="detailedProfessorship" property="masterDegreeOnly" value="true" >
+			<span class="bluetxt">		
+				(<bean:write name="infoProfessorship" property="hours" format="#.##"/>&nbsp;<bean:message key="label.hours" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>)
+			</span>
+		</logic:equal>
 <%-- ========================= EXECUTION COURSE SHIFT PROFESSORSHIP ========================== --%>
 		<bean:define id="executionCourseId" name="infoProfessorship" property="infoExecutionCourse.idInternal"/>
 		<bean:define id="teacherId" name="infoTeacher" property="idInternal"/>
@@ -380,7 +384,7 @@
 
 <table width="100%" cellspacing="1" cellpadding="3" style="margin-bottom:0;margin-top:0">
 	<tr>
-		<td colspan="3" class="listClasses-subheader">
+		<td colspan="4" class="listClasses-subheader">
 				<bean:message key="label.teacherCreditsSheet.managementPositionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 <%--				<logic:present role="role.credits.manager">
 					<bean:define id="teacherNumber" name="infoTeacher" property="teacherNumber"/>
