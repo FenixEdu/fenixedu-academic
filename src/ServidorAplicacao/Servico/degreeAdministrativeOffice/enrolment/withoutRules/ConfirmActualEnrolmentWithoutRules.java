@@ -9,6 +9,7 @@ import org.apache.commons.collections.Predicate;
 
 import Dominio.Enrolment;
 import Dominio.ICurricularCourseScope;
+import Dominio.ICurso;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IFrequenta;
@@ -89,8 +90,8 @@ public class ConfirmActualEnrolmentWithoutRules implements IServico {
 				}
 			});
 
-//			List enrolmentsToDelete = (List) CollectionUtils.subtract(studentEnroledAndTemporarilyEnroledEnrolments, enrolmentContext.getOptionalCurricularCoursesEnrolments());
-			List enrolmentsToDelete = this.subtract(studentEnroledAndTemporarilyEnroledEnrolments, enrolmentContext.getActualEnrolments());
+			List enrolmentsToDelete = this.subtract(studentEnroledAndTemporarilyEnroledEnrolments, enrolmentContext.getActualEnrolments(), enrolmentContext.getChosenOptionalDegree());
+
 			// Delete from data base the enrolments that don't mather.
 			Iterator iterator = enrolmentsToDelete.iterator();
 			while(iterator.hasNext()) {
@@ -104,11 +105,9 @@ public class ConfirmActualEnrolmentWithoutRules implements IServico {
 				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
 
 				IEnrolment enrolment =
-//					(IEnrolment) persistentEnrolment.readEnrolmentByStudentCurricularPlanAndCurricularCourseScopeAndExecutionPeriod(
 					(IEnrolment) persistentEnrolment.readEnrolmentByStudentCurricularPlanAndCurricularCourseScope(
 						enrolmentContext.getStudentActiveCurricularPlan(),
 						curricularCourseScope);
-//						enrolmentContext.getExecutionPeriod());
 
 				if(enrolment == null) {
 
@@ -141,11 +140,19 @@ public class ConfirmActualEnrolmentWithoutRules implements IServico {
 		}
 	}
 
-	private List subtract(List fromList, List toRemoveList) {
+	private List subtract(List fromList, List toRemoveList, ICurso chosenDegree) {
 		List result = new ArrayList();
 		if( (fromList != null) && (toRemoveList != null) && (!fromList.isEmpty()) ) {
-			result.addAll(fromList);
+
 			Iterator iterator = fromList.iterator();
+			while(iterator.hasNext()) {
+				IEnrolment enrolment = (IEnrolment) iterator.next();
+				if(enrolment.getCurricularCourseScope().getCurricularCourse().getDegreeCurricularPlan().getDegree().equals(chosenDegree)) {
+					result.add(enrolment);
+				}
+			}
+			
+			iterator = fromList.iterator();
 			while(iterator.hasNext()) {
 				IEnrolment enrolment = (IEnrolment) iterator.next();
 				if(toRemoveList.contains(enrolment.getCurricularCourseScope())) {
