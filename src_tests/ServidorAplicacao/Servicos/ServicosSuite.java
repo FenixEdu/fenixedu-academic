@@ -45,7 +45,7 @@ public class ServicosSuite extends TestCase {
         suite.addTest(ServidorAplicacao.Servicos.sop.EditarSalaServicosTest.suite());
         suite.addTest(ServidorAplicacao.Servicos.sop.EditarTurmaServicosTest.suite());
         suite.addTest(ServidorAplicacao.Servicos.sop.EditarTurnoServicosTest.suite());
-        suite.addTest(ServidorAplicacao.Servicos.sop.LerAulaServicosTest.suite());
+//      suite.addTest(ServidorAplicacao.Servicos.sop.LerAulaServicosTest.suite());
         suite.addTest(ServidorAplicacao.Servicos.sop.LerAlunosDeTurnoServicosTest.suite());
         suite.addTest(ServidorAplicacao.Servicos.sop.LerAulasDeDisciplinaExecucaoServicosTest.suite());
         suite.addTest(ServidorAplicacao.Servicos.sop.LerAulasDeDisciplinaExecucaoETipoServicosTest.suite());

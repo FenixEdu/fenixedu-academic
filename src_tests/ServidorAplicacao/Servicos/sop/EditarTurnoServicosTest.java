@@ -20,7 +20,7 @@ import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.ITurno;
 import Dominio.Turno;
-import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
+import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentExecutionPeriod;
@@ -30,7 +30,7 @@ import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoAula;
 
-public class EditarTurnoServicosTest extends TestCaseNeedAuthorizationServices {
+public class EditarTurnoServicosTest extends TestCaseDeleteAndEditServices {
 
 	private InfoShift infoShift = null;
 
@@ -63,6 +63,44 @@ public class EditarTurnoServicosTest extends TestCaseNeedAuthorizationServices {
 		return "EditarTurno";
 	}
 
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedSuccessfuly()
+	 */
+	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+
+		this.ligarSuportePersistente(true);
+
+		Object argsEditarTurno[] = new Object[2];
+		argsEditarTurno[0] = this.infoShift;
+		ITurno turno = Cloner.copyInfoShift2Shift(this.infoShift);
+		InfoShift newInfoShift = Cloner.copyShift2InfoShift(turno);
+		newInfoShift.setLotacao(new Integer(200));
+		newInfoShift.setTipo(new TipoAula(TipoAula.DUVIDAS));
+		newInfoShift.setNome("turno3243324324sdv");
+		argsEditarTurno[1] = newInfoShift;
+
+		return argsEditarTurno;
+	}
+
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
+	 */
+	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+
+		this.ligarSuportePersistente(false);
+
+		Object argsEditarTurno[] = new Object[2];
+		argsEditarTurno[0] = this.infoShift;
+		ITurno turno = Cloner.copyInfoShift2Shift(this.infoShift);
+		InfoShift newInfoShift = Cloner.copyShift2InfoShift(turno);
+		newInfoShift.setLotacao(new Integer(200));
+		newInfoShift.setTipo(new TipoAula(TipoAula.DUVIDAS));
+		newInfoShift.setNome("turno3243324324sdv");
+		argsEditarTurno[1] = newInfoShift;
+
+		return argsEditarTurno;
+	}
+/*
 	// edit existing turno
 	public void testEditExistingTurno() {
 
@@ -108,7 +146,7 @@ public class EditarTurnoServicosTest extends TestCaseNeedAuthorizationServices {
 			fail("testEditNonExistingTurno");
 		}
 	}
-
+*/
 	private void ligarSuportePersistente(boolean existing) {
 
 		ISuportePersistente sp = null;
