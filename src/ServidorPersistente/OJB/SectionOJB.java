@@ -201,7 +201,7 @@ public List readBySite(ISite site) throws ExcepcaoPersistencia {
 	  		     delete(inferiorSection);
 		        }
 		    
-	  		//super.delete(inferiorSection);
+//	  		super.delete(inferiorSection);
 	
 
 
@@ -232,8 +232,13 @@ public List readBySite(ISite site) throws ExcepcaoPersistencia {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 		
+		ISection section1 = readBySiteAndSectionAndName(section.getSite(),section.getSuperiorSection(), section.getName());
+//		super.delete(section);
+		super.delete(section1);
+		ISection section2 = readBySiteAndSectionAndName(section.getSite(),section.getSuperiorSection(), section.getName());
 		
-		super.delete(section);
+		System.out.println("section1: " + section1);
+		System.out.println("section2: " + section2);
 	}
 
 
