@@ -13,6 +13,7 @@ import DataBeans.InfoTeacher;
 import DataBeans.teacher.credits.InfoShiftPercentage;
 import DataBeans.teacher.credits.InfoTeacherShiftPercentage;
 import DataBeans.util.Cloner;
+import Dominio.DisciplinaExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.ITeacherShiftPercentage;
 import Dominio.ITurno;
@@ -20,7 +21,6 @@ import Dominio.Turno;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -50,29 +50,29 @@ public class ReadTeacherExecutionCourseShiftsPercentage implements IServico {
 		InfoTeacher infoTeacher,
 		InfoExecutionCourse infoExecutionCourse)
 		throws FenixServiceException {
-
+		
 		List infoShiftPercentageList = new ArrayList();
 
 		try {
-			IDisciplinaExecucao executionCourse =
-				Cloner.copyInfoExecutionCourse2ExecutionCourse(
-					infoExecutionCourse);
+			IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
+			executionCourse.setIdInternal(infoExecutionCourse.getIdInternal());
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente executionCourseDAO =
-				sp.getIDisciplinaExecucaoPersistente();
+//			IDisciplinaExecucaoPersistente executionCourseDAO =
+//				sp.getIDisciplinaExecucaoPersistente();
 
-			executionCourse =
-				(IDisciplinaExecucao) executionCourseDAO.readByOId(
-					executionCourse);
+//			IDisciplinaExecucao executionCourseFromBD =
+//				(IDisciplinaExecucao) executionCourseDAO.readByOId(executionCourse);
 
 			ITurno shiftExample = new Turno();
 			shiftExample.setDisciplinaExecucao(executionCourse);
 
 			ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
-
-			List executionCourseShiftsList =
-				shiftDAO.readByCriteria(shiftExample);
-
+			
+			List executionCourseShiftsList = null;
+			// cannot use mapped objects... with readByCriteria
+			executionCourseShiftsList = shiftDAO.readByCriteria(shiftExample);
+			
+			
 			Iterator iterator = executionCourseShiftsList.iterator();
 			while (iterator.hasNext()) {
 				ITurno shift = (ITurno) iterator.next();
