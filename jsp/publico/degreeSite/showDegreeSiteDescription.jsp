@@ -42,17 +42,20 @@
 	<logic:present name="infoExecutionDegrees" >
 	  	<bean:size id="campusSize" name="infoExecutionDegrees" />
 	  	<h2 class="blue">
+	  	
+		<bean:define id="campus" value="" />
 	  	<logic:iterate id="executionDegree" name="infoExecutionDegrees" indexId="indexCampus" >
-			<bean:write name="executionDegree" property="infoCampus.name" />
-						
-			<logic:greaterThan name="campusSize" value="1">
-				<logic:lessThan name="indexCampus" value="<%= String.valueOf(campusSize.intValue() - 2) %>" >
-					&nbsp;,&nbsp;
-				</logic:lessThan>						  
-				<logic:equal name="indexCampus" value="<%= String.valueOf(campusSize.intValue() - 1) %>" >
-					&nbsp;<bean:message key="label.and" />&nbsp;
-				</logic:equal>
-		  	</logic:greaterThan>
+			<bean:define id="campusName" name="executionDegree" property="infoCampus.name"/>
+	  		<logic:notMatch name="campus" value="<%= campusName.toString()%>">
+				<bean:write name="campusName" />&nbsp;&nbsp;&nbsp;&nbsp;			
+				<%--<logic:greaterThan name="campusSize" value="1">
+					<logic:lessThan name="indexCampus" value="<%= String.valueOf(campusSize.intValue() - 1) %>" >
+						&nbsp;&nbsp;
+					</logic:lessThan>						  
+			  	</logic:greaterThan>--%>
+			  	
+			  	<bean:define id="campus" value="<%= campus.toString().concat(campusName.toString()) %>" />	
+	  		</logic:notMatch>
 		</logic:iterate>
 		</h2>
 	</logic:present>
