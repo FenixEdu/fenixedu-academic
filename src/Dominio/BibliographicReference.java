@@ -17,9 +17,15 @@ public class BibliographicReference extends DomainObject implements IBibliograph
 	/** Creates a new instance of ReferenciaBibliografica */
 	public BibliographicReference() {
 	}
-	
-	public BibliographicReference(Integer idInternal){
+
+	public BibliographicReference(Integer idInternal) {
 		setIdInternal(idInternal);
+	}
+
+	public BibliographicReference(IDisciplinaExecucao executionCourse, String reference, Boolean facultative) {
+		setExecutionCourse(executionCourse);
+		setReference(reference);
+		setOptional(facultative);
 	}
 
 	public BibliographicReference(
@@ -37,7 +43,6 @@ public class BibliographicReference extends DomainObject implements IBibliograph
 		setExecutionCourse(executionCourse);
 	}
 
-	
 	public Integer getKeyExecutionCourse() {
 		return keyExecutionCourse;
 	}
@@ -107,16 +112,16 @@ public class BibliographicReference extends DomainObject implements IBibliograph
 		return result;
 	}
 
-	    public String toString() {
-	        String result = "[REFERENCIA BIBLIOGRAFICA";
-	        result += ", codInt=" + getIdInternal();
-	        result += ", disciplinaExecucao=" + getExecutionCourse();
-	        result += ", titulo=" + getTitle();
-	        result += ", autor=" + getAuthors();
-	        result += ", ano=" + getYear();
-	        result += ", referencia=" + getReference();
-	        result += ", facultativo=" + getOptional();
-	        result += "]";
-	        return result;
-	    }
+	public String toString() {
+		String result = "[REFERENCIA BIBLIOGRAFICA";
+		result += ", codInt=" + getIdInternal();
+		result += ", disciplinaExecucao=" + getExecutionCourse();
+		result += ", titulo=" + getTitle();
+		result += ", autor=" + getAuthors();
+		result += ", ano=" + getYear();
+		result += ", referencia=" + getReference();
+		result += ", facultativo=" + getOptional();
+		result += "]";
+		return result;
+	}
 }
