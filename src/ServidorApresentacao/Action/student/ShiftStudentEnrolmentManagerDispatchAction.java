@@ -213,12 +213,13 @@ public class ShiftStudentEnrolmentManagerDispatchAction
 		}
 
 		//Update the student's attending courses:
-		String[] wantedCourses = { };
-		
-		if (request.getParameter("wantedCourse") != null){
-			wantedCourses = ((String[]) ((DynaActionForm) form).get("wantedCourse"));
+		String[] wantedCourses = {
+		};
+
+		if (request.getParameter("wantedCourse") != null) {
+			wantedCourses =
+				((String[]) ((DynaActionForm) form).get("wantedCourse"));
 		}
-			
 
 		if (wantedCourses != null && !firstTime) {
 
@@ -264,7 +265,9 @@ public class ShiftStudentEnrolmentManagerDispatchAction
 		// already selected
 		String selectedDegreeAbbrev = request.getParameter("degree");
 		InfoExecutionDegree selectedDegree = null, idtemp = null;
-		Collections.sort(degreeList,new ComparatorByNameForInfoExecutionDegree());
+		Collections.sort(
+			degreeList,
+			new ComparatorByNameForInfoExecutionDegree());
 		// if there is no selected degree
 		if (selectedDegreeAbbrev == null) {
 			// retrieve the student's own curricular plan
@@ -321,21 +324,16 @@ public class ShiftStudentEnrolmentManagerDispatchAction
 		}
 
 		// retrieve all courses pertaining to the selected degree
-		ArrayList infoExecutionCourses = new ArrayList();
-		for (int j = 1; j < 6; j++) {
-			try {
-				infoExecutionCourses.addAll(
-					(List) ServiceUtils.executeService(
-						userView,
-						"SelectExecutionCourse",
-						new Object[] {
-							selectedDegree,
-							currentExecutionPeriod,
-							new Integer(j)}));
-			} catch (FenixServiceException e4) {
-				throw new FenixActionException(e4);
-			}
+		List infoExecutionCourses = new ArrayList();
 
+		try {
+			infoExecutionCourses =
+				(List) ServiceUtils.executeService(
+					userView,
+					"ReadExecutionCoursesByDegreeAndExecutionPeriod",
+					new Object[] { selectedDegree, currentExecutionPeriod });
+		} catch (FenixServiceException e4) {
+			throw new FenixActionException(e4);
 		}
 
 		request.setAttribute("courseList", infoExecutionCourses);
