@@ -55,11 +55,13 @@ public class ReadPrecedencesFromDegreeCurricularPlan implements IService {
 
     private void putInMap(Map finalListOfInfoPrecedences, ICurricularCourse curricularCourse, List precedences) {
 
-		InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
+        if (!precedences.isEmpty()) {
+    		InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
 
-		List infoPrecedences = clone(precedences);
+    		List infoPrecedences = clone(precedences);
 
-		finalListOfInfoPrecedences.put(infoCurricularCourse, infoPrecedences);
+    		finalListOfInfoPrecedences.put(infoCurricularCourse, infoPrecedences);
+        }
     }
 
     private List clone(List precedences) {
