@@ -357,6 +357,8 @@ public class UpdateStudentEnrolments
 		enrolmentEvaluation.setObservation(null);
 		enrolmentEvaluation.setPersonResponsibleForGrade(null);
 		enrolmentEvaluation.setWhen(null);
+		
+		ReportEnrolment.addEnrolmentMigrated();
 
 		return enrolment;
 	}

@@ -36,6 +36,7 @@ public class ReportEnrolment
 	private static HashMap createdAttends = new HashMap();
 	private static HashMap curricularCourses = new HashMap();
 	private static HashMap degrees = new HashMap();
+	private static int enrolmentsMigrated = 0;
 
 	// For control:
 	private static boolean smallReport = true;
@@ -266,6 +267,22 @@ public class ReportEnrolment
 		if (value == null) {
 			degrees.put(key, degreeName);
 		}
+	}
+
+	/**
+	 * @param value
+	 */
+	public static void addEnrolmentMigrated(int value)
+	{
+		enrolmentsMigrated = enrolmentsMigrated + value;
+	}
+
+	/**
+	 *
+	 */
+	public static void addEnrolmentMigrated()
+	{
+		enrolmentsMigrated++;
 	}
 
 //	------------------------------------------------------------------------------------------------------------------------------
