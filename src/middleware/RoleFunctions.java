@@ -31,7 +31,7 @@ public class RoleFunctions {
 	public RoleFunctions(){};
 
 
-	public static void giveRole(Pessoa person, RoleType role, PersistenceBroker broker) throws Exception {
+	public static void giveRole(IPessoa person, RoleType role, PersistenceBroker broker) throws Exception {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("roleType", role);
 		
@@ -115,7 +115,7 @@ System.out.println(newRole.getRole().getRoleType());
 		broker.store(newRole);
 	}
 
-	public static IPersonRole readPersonRole(Pessoa person, RoleType roleType, PersistenceBroker broker) throws Exception {
+	public static IPersonRole readPersonRole(IPessoa person, RoleType roleType, PersistenceBroker broker) throws Exception {
 		
 		// Read The Role
 		Criteria criteria = new Criteria();
