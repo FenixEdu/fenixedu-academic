@@ -105,6 +105,7 @@
                  dynamic="true">
         <form-property name="username" type="java.lang.String" />
         <form-property name="password" type="java.lang.String" />
+        <form-property name="ids" type="java.lang.String" />
       </form-bean>
       
 	

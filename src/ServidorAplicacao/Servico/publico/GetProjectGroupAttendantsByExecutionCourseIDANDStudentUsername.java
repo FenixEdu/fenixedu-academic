@@ -1,6 +1,6 @@
 /*
  * Created on 10/Set/2003, 20:47:24
- *
+ * changed on 4/Jan/2004, 19:33:11 (generalize for any execution course)
  *By Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  */
 package ServidorAplicacao.Servico.publico;
