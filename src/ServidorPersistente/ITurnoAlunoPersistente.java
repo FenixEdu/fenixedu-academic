@@ -15,6 +15,7 @@ import java.util.List;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
+import Dominio.ITurma;
 import Dominio.ITurno;
 import Dominio.ITurnoAluno;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -36,4 +37,7 @@ public interface ITurnoAlunoPersistente extends IPersistentObject {
 	// FIXME : Method is all messed up !! Query, name and parameters 
 	public ITurno readByStudentIdAndShiftType(Integer id, TipoAula shiftType, String nameExecutionCourse)
 				throws ExcepcaoPersistencia;
+
+	public List readByStudent(IStudent student) throws ExcepcaoPersistencia;
+    public ITurnoAluno readByStudentAndExecutionCourseAndLessonTypeAndGroup(IStudent student, IDisciplinaExecucao executionCourse, TipoAula lessonType, ITurma group) throws ExcepcaoPersistencia;
 }

@@ -20,6 +20,7 @@ import org.odmg.QueryException;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
+import Dominio.ITurma;
 import Dominio.ITurno;
 import Dominio.ITurnoAluno;
 import Dominio.ShiftStudent;
@@ -51,36 +52,47 @@ public class TurnoAlunoOJB extends ObjectFenixOJB implements ITurnoAlunoPersiste
 
 	public ITurnoAluno readByTurnoAndAluno(ITurno turno, IStudent aluno) throws ExcepcaoPersistencia
 	{
-		try
-		{
-			ITurnoAluno turnoAluno = null;
-			String oqlQuery =
-				"select turnoaluno from "
-					+ ShiftStudent.class.getName()
-					+ " where student.number = $1"
-					+ " and student.degreeType = $2"
-					+ " and turno.nome = $3"
-					+ " and turno.disciplinaExecucao.sigla = $4"
-					+ " and turno.disciplinaExecucao.executionPeriod.name = $5"
-					+ " and turno.disciplinaExecucao.executionPeriod.executionYear.year = $6";
-
-			query.create(oqlQuery);
-			query.bind(aluno.getNumber());
-			query.bind(aluno.getDegreeType());
-			query.bind(turno.getNome());
-			query.bind(turno.getDisciplinaExecucao().getSigla());
-			query.bind(turno.getDisciplinaExecucao().getExecutionPeriod().getName());
-			query.bind(turno.getDisciplinaExecucao().getExecutionPeriod().getExecutionYear().getYear());
-
-			List result = (List) query.execute();
-			lockRead(result);
-			if (result.size() != 0)
-				turnoAluno = (ITurnoAluno) result.get(0);
-			return turnoAluno;
-		} catch (QueryException ex)
-		{
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
+	    Criteria criteria = new Criteria();
+	    
+	    criteria.addEqualTo("student.number", aluno.getNumber());
+		criteria.addEqualTo("student.degreeType", aluno.getDegreeType());
+		criteria.addEqualTo("turno.nome", turno.getNome());
+		criteria.addEqualTo("turno.disciplinaExecucao.sigla", turno.getDisciplinaExecucao().getSigla());
+		criteria.addEqualTo("turno.disciplinaExecucao.executionPeriod.name", turno.getDisciplinaExecucao().getExecutionPeriod().getName());
+		criteria.addEqualTo("turno.disciplinaExecucao.executionPeriod.executionYear.year", turno.getDisciplinaExecucao().getExecutionPeriod().getExecutionYear().getYear());
+	    
+	    return (ITurnoAluno) queryObject(ShiftStudent.class, criteria);
+	    
+//		try
+//		{
+//			ITurnoAluno turnoAluno = null;
+//			String oqlQuery =
+//				"select turnoaluno from "
+//					+ ShiftStudent.class.getName()
+//					+ " where student.number = $1"
+//					+ " and student.degreeType = $2"
+//					+ " and turno.nome = $3"
+//					+ " and turno.disciplinaExecucao.sigla = $4"
+//					+ " and turno.disciplinaExecucao.executionPeriod.name = $5"
+//					+ " and turno.disciplinaExecucao.executionPeriod.executionYear.year = $6";
+//
+//			query.create(oqlQuery);
+//			query.bind(aluno.getNumber());
+//			query.bind(aluno.getDegreeType());
+//			query.bind(turno.getNome());
+//			query.bind(turno.getDisciplinaExecucao().getSigla());
+//			query.bind(turno.getDisciplinaExecucao().getExecutionPeriod().getName());
+//			query.bind(turno.getDisciplinaExecucao().getExecutionPeriod().getExecutionYear().getYear());
+//
+//			List result = (List) query.execute();
+//			lockRead(result);
+//			if (result.size() != 0)
+//				turnoAluno = (ITurnoAluno) result.get(0);
+//			return turnoAluno;
+//		} catch (QueryException ex)
+//		{
+//			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+//		}
 	}
 
 	public void lockWrite(ITurnoAluno shiftStudentToWrite) throws ExcepcaoPersistencia, ExistingPersistentException
@@ -220,4 +232,28 @@ public class TurnoAlunoOJB extends ObjectFenixOJB implements ITurnoAlunoPersiste
 		criteria.addEqualTo("key_shift", id);
 		return queryList(ShiftStudent.class, criteria);
 	}
+
+    /* (non-Javadoc)
+     * @see ServidorPersistente.ITurnoAlunoPersistente#readByStudent(Dominio.IStudent)
+     */
+    public List readByStudent(IStudent student) throws ExcepcaoPersistencia
+    {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("keyStudent", student.getIdInternal());
+        return queryList(ShiftStudent.class, criteria);
+    }
+
+    /* (non-Javadoc)
+     * @see ServidorPersistente.ITurnoAlunoPersistente#readByStudentAndExecutionCourseAndLessonTypeAndGroup(Dominio.IStudent, Dominio.IDisciplinaExecucao, Util.TipoAula, Dominio.ITurma)
+     */
+    public ITurnoAluno readByStudentAndExecutionCourseAndLessonTypeAndGroup(IStudent student, IDisciplinaExecucao executionCourse, TipoAula lessonType, ITurma group) throws ExcepcaoPersistencia
+    {
+		Criteria criteria = new Criteria();
+	    
+		criteria.addEqualTo("keyStudent", student.getIdInternal());
+		criteria.addEqualTo("shift.tipo", lessonType);
+		criteria.addEqualTo("shift.chaveDisciplinaExecucao", executionCourse.getIdInternal());
+		criteria.addEqualTo("shift.associatedClasses.idInternal", group.getIdInternal());
+		return (ITurnoAluno) queryObject(ShiftStudent.class, criteria);
+    }
 }
