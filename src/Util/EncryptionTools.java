@@ -90,19 +90,4 @@ public class EncryptionTools extends FenixUtil {
 
     }
 
-    /**
-     * Uncoment to teste the class
-     * 
-     * @param args
-     */
-    //	public static void main(String args[]){
-    //		String teste = encrypt("Nuno Nunes");
-    //		
-    //		System.out.println("Encrypted Password : " + teste);
-    //		System.out.println(compareEncryptedPasswords(teste, teste));
-    //		
-    //		System.out.println(compareEncryptedPasswordAndNonEncrypted(teste, "Nuno
-    // Nunes"));
-    //		
-    //	}
 }

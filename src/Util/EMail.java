@@ -129,9 +129,7 @@ public class EMail extends FenixUtil {
 
                 }
             }
-            e.printStackTrace(System.out);
         } catch (MessagingException e) {
-            e.printStackTrace(System.out);
         }
         return unsentMails;
     }
@@ -154,10 +152,8 @@ public class EMail extends FenixUtil {
             message.setText(Texto);
             Transport.send(message);
         } catch (AddressException e) {
-            e.printStackTrace(System.out);
             return false;
         } catch (MessagingException e) {
-            e.printStackTrace(System.out);
             return false;
         }
         return true;
@@ -201,10 +197,8 @@ public class EMail extends FenixUtil {
 
             Transport.send(mensagem);
         } catch (AddressException e) {
-            e.printStackTrace(System.out);
             return false;
         } catch (MessagingException e) {
-            e.printStackTrace(System.out);
             return false;
         }
         return true;

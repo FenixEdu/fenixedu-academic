@@ -38,7 +38,6 @@ public class StartupServlet extends HttpServlet {
             setScheduleForGratuitySituationCreation();
 
         } catch (Throwable e) {
-            e.printStackTrace(System.out);
             throw new ServletException("Error reading actual execution period!", e);
         }
     }
@@ -59,9 +58,6 @@ public class StartupServlet extends HttpServlet {
                             "CreateGratuitySituationsForCurrentExecutionYear", args);
 
                 } catch (Exception e) {
-                    //TODO: This should be written in log file
-                    System.out.println("Gratuity Situation Creator task failed to execute");
-                    e.printStackTrace();
                 }
 
                 //temporary
@@ -72,10 +68,6 @@ public class StartupServlet extends HttpServlet {
                             args2003_2004);
 
                 } catch (Exception e) {
-                    //TODO: This should be written in log file
-                    System.out
-                            .println("Gratuity Situation Creator task failed to execute");
-                    e.printStackTrace();
                 }
 
             }
@@ -104,17 +96,11 @@ public class StartupServlet extends HttpServlet {
             }
             Date firstTimeDate = calendar.getTime();
 
-            //System.out.println("Timer scheduled for: " +
-            // firstTimeDate.toString());
-
             Timer timer = new Timer();
 
             timer.schedule(gratuitySituationCreatorTask, firstTimeDate, 3600 * 24 * 1000);
 
         } catch (Exception e) {
-            //TODO: This should be written in log file
-            System.out.println("Error loading Gratuity Situation Creator Task config file");
-            e.printStackTrace();
         }
 
     }

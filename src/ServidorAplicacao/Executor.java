@@ -1,7 +1,5 @@
 package ServidorAplicacao;
 
-import java.util.Date;
-
 import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import ServidorPersistenteJDBC.SuportePersistente;
 import Util.ErrorConstants;
@@ -52,29 +50,17 @@ public class Executor {
 
     public void doIt(ServicoSeguro ss) throws NotExecuteException, PersistenceException {
         try {
-            System.out.println("LOGTIME= " + new Date() + " : SERVICE= " + ss.getClass().getName());
             begin();
-            System.out.println("LOGTIME= " + new Date() + " : SERVICE= " + ss.getClass().getName()
-                    + "Finished begin Transaction");
             ss.authorize();
-            System.out.println("LOGTIME= " + new Date() + " : SERVICE= " + ss.getClass().getName()
-                    + "Finished Authentication");
             ss.execute();
             end();
-            System.out.println("LOGTIME= " + new Date() + " : SERVICE= " + ss.getClass().getName()
-                    + " finished sucessfully.");
         } catch (NotExecuteException e) {
-            System.out.println("LOGTIME= " + new Date() + " : SERVICE= " + ss.getClass().getName()
-                    + " aborted.");
             cancel();
             throw e;
             // TODO : this case was never considered.
             //        Does it make sense?
         } catch (Exception e) {
             if (!(e instanceof NotExecuteException)) {
-                e.printStackTrace(System.out);
-                System.out.println("LOGTIME= " + new Date() + " : SERVICE= " + ss.getClass().getName()
-                        + " Caught an unhandled exception!!!!!!!!!!!!");
                 cancel();
                 throw new NotExecuteException(e.getLocalizedMessage());
             }

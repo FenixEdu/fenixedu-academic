@@ -84,13 +84,11 @@ public class CRUDServiceExemptionAction extends CRUDActionByOID {
         try {
             infoServiceExemptionCreditLine.setStart(df.parse(start));
         } catch (ParseException e) {
-            e.printStackTrace(System.out);
             throw new RuntimeException("Problems parsing end date!" + start);
         }
         try {
             infoServiceExemptionCreditLine.setEnd(df.parse(end));
         } catch (ParseException e) {
-            e.printStackTrace(System.out);
             throw new RuntimeException("Problems parsing end date!" + end);
         }
 

@@ -59,13 +59,6 @@ public class ReadOldIquiriesSummaryByDegreeID implements IServico{
                     	ex.printStackTrace();
                     }
                     
-                    //TODO: DEBUG
-//                    System.out.println("Transform:");
-//                    System.out.println("getAverage2_3 original: " + ((IOldInquiriesSummary)oldInquiriesSummary).getAverage2_3());
-//                    System.out.println("getAverage2_3 Transformado:" + iois.getAverage2_3());
-//                    System.out.println("getAverage2_7 original: \"" + ((IOldInquiriesSummary)oldInquiriesSummary).getAverage2_7() + "\"");
-//                    System.out.println("getAverage2_7 Transformado: \"" + iois.getAverage2_7() + "\"\n\n");
-                    
                     return iois;
                 }
              	});

@@ -48,7 +48,6 @@ public class PrecedencesEnrollmentRule implements IEnrollmentRule {
                 precedenceList = precedenceDAO.readByCurricularCourse(curricularCourse2Enroll
                         .getCurricularCourse());
             } catch (ExcepcaoPersistencia e) {
-                e.printStackTrace(System.out);
                 throw new RuntimeException(e);
             }
 

@@ -174,7 +174,6 @@ public class SearchEmptyRoomsDispatchAction extends FenixContextDispatchAction {
         } catch (InvalidTimeInterval ex) {
             throw new InvalidTimeIntervalActionException(ex);
         } catch (Exception e) {
-            e.printStackTrace(System.out);
             throw new RuntimeException(e.getMessage());
         }
     }

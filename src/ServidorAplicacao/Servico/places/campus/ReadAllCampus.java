@@ -62,7 +62,6 @@ public class ReadAllCampus implements IServico {
                 }
             });
         } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace(System.out);
             throw new FenixServiceException("Problems on database!", e);
         }
         return infoCampusList;

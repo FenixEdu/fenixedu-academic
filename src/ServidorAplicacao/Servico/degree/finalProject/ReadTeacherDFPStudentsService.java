@@ -71,7 +71,6 @@ public class ReadTeacherDFPStudentsService implements IService {
             teacherDfpStudentsDTO.setInfoExecutionPeriod(infoExecutionPeriod);
             teacherDfpStudentsDTO.setInfoTeacherDegreeFinalProjectStudentList(infoteacherDFPStudentList);
         } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace(System.out);
             throw new FenixServiceException("Problems on database!");
         }
 

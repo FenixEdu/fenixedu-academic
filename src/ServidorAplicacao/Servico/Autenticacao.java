@@ -91,8 +91,7 @@ public class Autenticacao implements IServico {
                             .getIPersistentMasterDegreeCandidate().readMasterDegreeCandidatesByUsername(
                                     userView.getUtilizador());
                 } catch (ExcepcaoPersistencia ex) {
-                    ex.printStackTrace(System.out);
-                    throw new FenixServiceException(ex.getMessage());
+                    throw new FenixServiceException(ex);
                 }
 
                 // Create a list with the active situations of the Candidate

@@ -202,8 +202,6 @@ public abstract class Cloner {
         } catch (SecurityException e) {
             throw new RuntimeException(e);
         } catch (NoSuchMethodException e) {
-            System.out
-                    .println("Could not find method for copying: " + domainObject.getClass().getName());
             throw new RuntimeException(e);
         } catch (IllegalArgumentException e) {
             throw new RuntimeException(e);
@@ -304,7 +302,6 @@ public abstract class Cloner {
         try {
             BeanUtils.copyProperties(lesson, infoLesson);
         } catch (Exception e) {
-            e.printStackTrace(System.out);
             throw new RuntimeException(e.getMessage());
         }
 
@@ -567,7 +564,6 @@ public abstract class Cloner {
         try {
             BeanUtils.copyProperties(infoExecutionDegree, executionDegree);
         } catch (Exception e) {
-            e.printStackTrace(System.out);
             throw new RuntimeException(e.getMessage());
         }
 

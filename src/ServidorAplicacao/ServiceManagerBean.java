@@ -13,6 +13,7 @@ import javax.ejb.SessionBean;
 import javax.ejb.SessionContext;
 
 import org.apache.commons.collections.FastHashMap;
+import org.apache.log4j.Logger;
 
 import pt.utl.ist.berserk.logic.serviceManager.IServiceManager;
 import pt.utl.ist.berserk.logic.serviceManager.ServiceManager;
@@ -33,6 +34,8 @@ import ServidorAplicacao.logging.UserExecutionLog;
  */
 public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
 
+    private static final Logger logger = Logger.getLogger(ServiceManagerBean.class);
+
     private static boolean serviceLoggingIsOn;
 
     private static FastHashMap mapServicesToWatch;
@@ -41,7 +44,7 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
 
     private static FastHashMap mapUsersToWatch;
 
-    //just for the sake of verifying serialization of objects
+    // just for the sake of verifying serialization of objects
     private static Properties serProps = null;
 
     private static Boolean verifySerializable = null;
@@ -77,13 +80,13 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
                             || "on".equalsIgnoreCase(propSerVerify)
                             || "yes".equalsIgnoreCase(propSerVerify)) {
                         verifySerializable = Boolean.TRUE;
-                        System.out.println("Serialization verification is turned on.");
+                        logger.info("Serialization verification is turned on.");
                     } else {
-                        System.out.println("Serialization verification is turned off.");
+                        logger.info("Serialization verification is turned off.");
                     }
                 }
             } catch (java.io.IOException ex) {
-                System.out.println("Couldn't load serialization_verifier.properties file!");
+                logger.error("Couldn't load serialization_verifier.properties file!", ex);
             }
         }
     }
@@ -116,44 +119,40 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
      */
     public Object execute(IUserView id, String service, String method, Object[] args)
             throws FenixServiceException, EJBException {
-            try {
-                Calendar serviceStartTime = null;
-                Calendar serviceEndTime = null;
+        try {
+            Calendar serviceStartTime = null;
+            Calendar serviceEndTime = null;
 
-                IServiceManager manager = ServiceManager.getInstance();
-                if (serviceLoggingIsOn || (userLoggingIsOn && id != null)) {
-                    serviceStartTime = Calendar.getInstance();
-                }
-                // Do not delete. Usefull for profileing.
-                //Profiler.getInstance();
-                //Object key = Profiler.start(service);
-                Object serviceResult = manager.execute(id, service, method, args);
-                //Profiler.stop(key);
-                if (serviceLoggingIsOn || (userLoggingIsOn && id != null)) {
-                    serviceEndTime = Calendar.getInstance();
-                }
-                if (serviceLoggingIsOn) {
-                    registerServiceExecutionTime(service, method, args, serviceStartTime, serviceEndTime);
-                }
-                if (userLoggingIsOn && id != null) {
-                    registerUserExecutionOfService(id, service, method, args, serviceStartTime,
-                            serviceEndTime);
-                }
-                if (verifySerializable.booleanValue()) {
-                    verifyResultIsSerializable(service, method, serviceResult);
-                }
-                return serviceResult;
+            IServiceManager manager = ServiceManager.getInstance();
+            if (serviceLoggingIsOn || (userLoggingIsOn && id != null)) {
+                serviceStartTime = Calendar.getInstance();
+            }
+            Object serviceResult = manager.execute(id, service, method, args);
+            if (serviceLoggingIsOn || (userLoggingIsOn && id != null)) {
+                serviceEndTime = Calendar.getInstance();
+            }
+            if (serviceLoggingIsOn) {
+                registerServiceExecutionTime(service, method, args, serviceStartTime, serviceEndTime);
+            }
+            if (userLoggingIsOn && id != null) {
+                registerUserExecutionOfService(id, service, method, args, serviceStartTime,
+                        serviceEndTime);
+            }
+            if (verifySerializable.booleanValue()) {
+                verifyResultIsSerializable(service, method, serviceResult);
+            }
+            return serviceResult;
         } catch (Exception e) {
-            System.out.println("###################Exception= " + e.getClass().getName());
-            e.printStackTrace();
+            if (e instanceof FenixServiceException) {
+                logger.warn(e);
+            } else {
+                logger.error(e);
+            }
             throw (EJBException) new EJBException(e).initCause(e);
+        } catch (Throwable t) {
+            logger.error(t);
+            throw (EJBException) new EJBException(t.getMessage());
         }
-	        catch (Throwable t)
-	        {
-	            System.out.println("##################Throwable: " + t);
-	            t.printStackTrace();
-	            throw (EJBException) new EJBException(t.getMessage());
-	        }
     }
 
     private void verifyResultIsSerializable(Object service, String method, Object serviceResult) {
@@ -164,12 +163,17 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
                 oos.writeObject(serviceResult);
                 oos.flush();
             } catch (Exception e) {
-                System.out.println("Executing service= " + service + "." + method + "()");
-                System.out.println("Problem serializing service result!");
+                StringBuffer stringBuffer = new StringBuffer(90);
+                stringBuffer.append("Problem serializing service result for service: ");
+                stringBuffer.append(service);
+                stringBuffer.append('.');
+                stringBuffer.append(method);
+                stringBuffer.append("().");
                 if (serviceResult != null) {
-                    System.out.println(serviceResult.getClass().getName() + " is not serializable.");
+                    stringBuffer.append(serviceResult.getClass().getName());
+                    stringBuffer.append(" is not serializable.");
                 }
-                //e.printStackTrace();
+                logger.fatal(stringBuffer.toString(), e);
             } finally {
                 if (oos != null)
                     try {
@@ -185,7 +189,7 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
                     }
             }
         } catch (IOException e1) {
-            System.out.println("IOException while verifying service result serialization.");
+            logger.error("IOException while verifying service result serialization.");
         }
     }
 

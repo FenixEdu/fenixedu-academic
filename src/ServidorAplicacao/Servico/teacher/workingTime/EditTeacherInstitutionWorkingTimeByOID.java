@@ -108,7 +108,6 @@ public class EditTeacherInstitutionWorkingTimeByOID extends EditDomainObjectServ
                 throw new OverlappingInstitutionWorkingPeriod();
             }
         } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace(System.out);
             throw new FenixServiceException("Problems on database!", e);
         }
 

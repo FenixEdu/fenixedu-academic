@@ -678,8 +678,6 @@ public class Publication extends DomainObject implements IPublication {
 
         publication += getTitle();
 
-        //System.out.println("pub = " + getPublicationType());
-
         String str = "";
         if (getType()!=null && getType().getPublicationType()!=null && getType().getPublicationType().equalsIgnoreCase("translation"))
             str = " Translation";

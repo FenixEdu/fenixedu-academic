@@ -153,17 +153,14 @@ public class ParseQuestion extends DefaultHandler {
     }
 
     public void error(SAXParseException e) throws SAXParseException {
-        System.out.println("-->ERROR:parseException" + e);
         throw e;
     }
 
     public void fatalError(SAXParseException e) throws SAXParseException {
-        System.out.println("-->FATAL_ERROR:parseException" + e);
         throw e;
     }
 
     public void warning(SAXParseException e) throws SAXParseException {
-        System.out.println("-->WARNING:parseException" + e);
         throw e;
     }
 

@@ -33,7 +33,6 @@ public abstract class DeleteDomainObjectService implements IService {
             persistentObject.deleteByOID(getDomainObjectClass(), objectId);
             doAfterDelete(domainObject, sp);
         } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace(System.out);
             throw new FenixServiceException("Problems on database!", e);
         }
     }

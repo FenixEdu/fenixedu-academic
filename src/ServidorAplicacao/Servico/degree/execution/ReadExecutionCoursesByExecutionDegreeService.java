@@ -89,7 +89,6 @@ public class ReadExecutionCoursesByExecutionDegreeService implements IService {
                         }
                     });
         } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace(System.out);
             throw new FenixServiceException("Problems on database", e);
         }
         return infoExecutionCourseList;

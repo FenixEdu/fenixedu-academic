@@ -68,7 +68,6 @@ public class ShowShiftListAction extends Action {
             }
 
         } catch (Exception e) {
-            e.printStackTrace(System.out);
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("unableToReadShifts", new ActionError("errors.unableToReadShifts"));
             saveErrors(request, actionErrors);
@@ -93,7 +92,6 @@ public class ShowShiftListAction extends Action {
                 request.setAttribute("vacancies", vacancies);
             }
         } catch (Exception e) {
-            e.printStackTrace(System.out);
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("unableToReadVacancies", new ActionError("errors.unableToReadVacancies"));
             saveErrors(request, actionErrors);

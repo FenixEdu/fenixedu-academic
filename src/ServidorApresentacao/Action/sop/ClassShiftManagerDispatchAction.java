@@ -116,8 +116,6 @@ public class ClassShiftManagerDispatchAction extends
 
             return (InfoShift) infoShiftList.get(infoShiftIndex.intValue());
         } catch (RuntimeException e) {
-            e.printStackTrace(System.out);
-
         }
         return null;
 

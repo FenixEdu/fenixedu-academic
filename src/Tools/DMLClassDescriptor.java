@@ -68,7 +68,6 @@ public class DMLClassDescriptor
 
         protected boolean isSupportedDMLField(final Class fieldType)
         {
-            // System.out.println("fieldType: " + fieldType);
             return fieldType.getName().startsWith("java.lang.") || fieldType.getName().equals("java.util.Date");
         }
 
@@ -153,16 +152,6 @@ public class DMLClassDescriptor
     public DMLClassDescriptor(final String className, final ClassDescriptor classDescriptor)
     {
         this.classDescriptor = classDescriptor;
-
-        // Vector vector = classDescriptor.getExtentClassNames();
-        // if (vector != null) {
-        // System.out.println("className= " + className);
-        // for (final Iterator iterator = vector.iterator();
-        // iterator.hasNext();) {
-        // String extentClassName = (String) iterator.next();
-        // System.out.println("extentClassName= " + extentClassName);
-        // }
-        // }
 
         final FieldDescriptor[] fieldDescriptors = classDescriptor.getFieldDescriptions();
 

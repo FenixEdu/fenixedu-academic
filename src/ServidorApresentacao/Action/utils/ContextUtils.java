@@ -90,10 +90,6 @@ public class ContextUtils {
             if (infoExecutionPeriod.getInfoExecutionYear() != null) {
                 request.setAttribute("schoolYear", infoExecutionPeriod.getInfoExecutionYear().getYear());
             }
-
-        } else {
-            System.out
-                    .println("#### ERROR: Unexisting or invalid executionPeriod - throw proper exception: Someone was playing with the links");
         }
     }
 
@@ -141,9 +137,6 @@ public class ContextUtils {
                 request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
                 request.setAttribute(SessionConstants.EXECUTION_DEGREE_OID, infoExecutionDegree
                         .getIdInternal().toString());
-            } else {
-                System.out
-                        .println("#### ERROR: Unexisting or invalid executionDegree - throw proper exception: Someone was playing with the links");
             }
         }
     }
@@ -182,9 +175,6 @@ public class ContextUtils {
                 request.setAttribute(SessionConstants.CURRICULAR_YEAR, infoCurricularYear);
                 request.setAttribute(SessionConstants.CURRICULAR_YEAR_OID, infoCurricularYear
                         .getIdInternal().toString());
-            } else {
-                System.out
-                        .println("#### ERROR: Unexisting or invalid curricularYear - throw proper exception: Someone was playing with the links");
             }
 
         }
@@ -287,9 +277,6 @@ public class ContextUtils {
             if (infoExecutionCourse != null) {
                 // Place it in request
                 request.setAttribute(SessionConstants.EXECUTION_COURSE, infoExecutionCourse);
-            } else {
-                System.out
-                        .println("#### ERROR: Unexisting or invalid executionCourse - throw proper exception: Someone was playing with the links");
             }
         }
     }
@@ -375,9 +362,6 @@ public class ContextUtils {
 
                 // Place it in request
                 request.setAttribute(SessionConstants.SHIFT, infoShift);
-            } else {
-                System.out
-                        .println("#### ERROR: Unexisting or invalid shift - throw proper exception: Someone was playing with the links");
             }
         }
     }

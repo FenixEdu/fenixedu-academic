@@ -47,7 +47,6 @@ public class ReadDetailedTeacherProfessorshipsByExecutionYear extends
 
             return getDetailedProfessorships(professorships, responsibleFors, sp);
         } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace(System.out);
             throw new FenixServiceException();
         }
     }

@@ -146,7 +146,6 @@ public class EditSupportLessonByOID extends EditDomainObjectService {
                 throw new OverlappingSupportLessonPeriod();
             }
         } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace(System.out);
             throw new FenixServiceException("Problems on database!", e);
         }
 

@@ -200,11 +200,6 @@ public class InsertPublicationAction extends CRUDActionByOID {
 
         InfoObject infoObject = populateInfoObjectFromForm(form, crudMapping, request);
 
-        /*
-         * if (infoObject == null) { System.out.println("Prepareedit2");
-         * prepareEdit2(mapping, form, request, response); }
-         */
-
         IUserView userView = SessionUtils.getUserView(request);
 
         //InfoPublication pub = (InfoPublication) infoObject;

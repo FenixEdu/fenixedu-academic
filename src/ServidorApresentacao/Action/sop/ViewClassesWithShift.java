@@ -54,7 +54,6 @@ public class ViewClassesWithShift extends
 
             return mapping.findForward("sucess");
         } catch (Exception e) {
-            e.printStackTrace(System.out);
             throw new RuntimeException(e.getMessage());
         }
     }

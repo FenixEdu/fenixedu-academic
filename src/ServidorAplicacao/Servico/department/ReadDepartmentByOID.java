@@ -33,7 +33,6 @@ public class ReadDepartmentByOID implements IService {
             IDepartment department = (IDepartment)departmentDAO.readByOID(Department.class, oid);
             infoDepartment = Cloner.copyIDepartment2InfoDepartment(department);
         } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace(System.out);
             throw new FenixServiceException("Problems on database!", e);
         }
         return infoDepartment;

@@ -53,7 +53,6 @@ public class ReadDetailedTeacherProfessorshipsByExecutionPeriod extends
             List detailedProfessorships = getDetailedProfessorships(professorships, responsibleFors, sp);
             return detailedProfessorships;
         } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace(System.out);
             throw new FenixServiceException("Problems on database!", e);
         }
 

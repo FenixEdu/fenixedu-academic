@@ -145,7 +145,6 @@ public class ClassManagerDispatchAction extends
             } catch (NotAuthorizedException e) {
                 throw e;
             } catch (FenixServiceException e) {
-                e.printStackTrace(System.out);
                 oldClassView.setNome(newClassView.getNome());
                 ActionErrors actionErrors = new ActionErrors();
                 actionErrors.add("existingClass", new ActionError("errors.existClass", className));

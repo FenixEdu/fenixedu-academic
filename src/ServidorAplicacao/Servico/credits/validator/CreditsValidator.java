@@ -49,7 +49,6 @@ public abstract class CreditsValidator {
                 break;
             }
         } catch (ExcepcaoPersistencia e1) {
-            e1.printStackTrace(System.out);
             throw new FenixServiceException("Problems on database!", e1);
         }
     }

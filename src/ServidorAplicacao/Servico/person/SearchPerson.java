@@ -42,7 +42,6 @@ public class SearchPerson implements IService {
             sp = SuportePersistenteOJB.getInstance();
             result = doSearch(searchParameters, sp);
         } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace(System.out);
             throw new FenixServiceException("Problems with database!", e);
         }
         if (result == null || result.size() < 2) {

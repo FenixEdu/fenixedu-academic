@@ -128,7 +128,6 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IService {
             }
 
         } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace(System.out);
             throw new FenixServiceException(e);
         }
 

@@ -31,57 +31,47 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class LerAulasDeTurma implements IService {
 
-    /**
-     * The actor of this class.
-     */
-    public LerAulasDeTurma() {
-    }
-
-    public List run(InfoClass infoClass) {
+    public List run(InfoClass infoClass) throws ExcepcaoPersistencia {
         ArrayList infoLessonList = null;
 
-        try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-            ITurmaPersistente persistentDomainClass = sp.getITurmaPersistente();
-            ITurma group = null;
-            if (infoClass.getIdInternal() != null) {
+        ITurmaPersistente persistentDomainClass = sp.getITurmaPersistente();
+        ITurma group = null;
+        if (infoClass.getIdInternal() != null) {
 
-                group = (ITurma) persistentDomainClass.readByOID(Turma.class, infoClass.getIdInternal());
-            } else {
-                group = Cloner.copyInfoClass2Class(infoClass);
-            }
+            group = (ITurma) persistentDomainClass.readByOID(Turma.class, infoClass.getIdInternal());
+        } else {
+            group = Cloner.copyInfoClass2Class(infoClass);
+        }
 
-            List shiftList = sp.getITurmaTurnoPersistente().readByClass(group);
+        List shiftList = sp.getITurmaTurnoPersistente().readByClass(group);
 
-            Iterator iterator = shiftList.iterator();
+        Iterator iterator = shiftList.iterator();
 
-            infoLessonList = new ArrayList();
+        infoLessonList = new ArrayList();
 
-            while (iterator.hasNext()) {
-                ITurno shift = (ITurno) iterator.next();
-                List lessonList = shift.getAssociatedLessons();
-                Iterator lessonIterator = lessonList.iterator();
-                while (lessonIterator.hasNext()) {
-                    IAula elem = (IAula) lessonIterator.next();
-                    //IAula lesson = (IAula)
-                    // sp.getIAulaPersistente().readByOID(
-                    //        Aula.class, elem.getIdInternal());
-                    //InfoLesson infoLesson =
-                    // Cloner.copyILesson2InfoLesson(elem);
-                    InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem);
+        while (iterator.hasNext()) {
+            ITurno shift = (ITurno) iterator.next();
+            List lessonList = shift.getAssociatedLessons();
+            Iterator lessonIterator = lessonList.iterator();
+            while (lessonIterator.hasNext()) {
+                IAula elem = (IAula) lessonIterator.next();
+                // IAula lesson = (IAula)
+                // sp.getIAulaPersistente().readByOID(
+                // Aula.class, elem.getIdInternal());
+                // InfoLesson infoLesson =
+                // Cloner.copyILesson2InfoLesson(elem);
+                InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem);
 
-                    InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
-                    infoLesson.setInfoShift(infoShift);
+                InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
+                infoLesson.setInfoShift(infoShift);
 
-                    if (infoLesson != null) {
-                        infoLessonList.add(infoLesson);
-                    }
-
+                if (infoLesson != null) {
+                    infoLessonList.add(infoLesson);
                 }
+
             }
-        } catch (ExcepcaoPersistencia ex) {
-            ex.printStackTrace(System.out);
         }
 
         return infoLessonList;

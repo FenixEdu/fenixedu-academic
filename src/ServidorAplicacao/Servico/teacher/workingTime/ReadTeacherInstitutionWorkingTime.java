@@ -94,7 +94,6 @@ public class ReadTeacherInstitutionWorkingTime implements IServico {
             teacherInstitutionWorkingTimeDTO
                     .setInfoTeacherInstitutionWorkTimeList(infoTeacherInstitutionWorkTimeList);
         } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace(System.out);
             throw new FenixServiceException("Problems on database!", e);
         }
         return teacherInstitutionWorkingTimeDTO;

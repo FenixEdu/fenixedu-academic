@@ -111,7 +111,6 @@ public class ReadClassShiftEnrollmentDetails implements IService {
                     .setClassExecutionCourseShiftEnrollmentDetailsMap(classExecutionCourseShiftEnrollmentDetailsMap);
 
         } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace(System.out);
             throw new FenixServiceException("Problems on database!", e);
         }
 

@@ -160,7 +160,6 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends EditDomainObjectS
                 throw new StudentPercentageExceed(infoTeacherDegreeFinalProjectStudentList);
             }
         } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace(System.out);
             throw new FenixServiceException("Problems on database!", e);
         }
     } /*

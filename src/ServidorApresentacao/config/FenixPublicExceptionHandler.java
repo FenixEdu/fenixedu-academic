@@ -83,8 +83,6 @@ public class FenixPublicExceptionHandler extends ExceptionHandler {
         request.setAttribute(Globals.EXCEPTION_KEY, ex);
         super.storeException(request, property, error, forward, ae.getScope());
 
-        // Print info to standard output
-        ex.printStackTrace(System.out);
         return super.execute(ex, ae, mapping, formInstance, request, response);
     }
 

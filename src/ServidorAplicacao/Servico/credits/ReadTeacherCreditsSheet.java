@@ -195,7 +195,6 @@ public class ReadTeacherCreditsSheet implements IService {
         try {
             teacher = teacherDAO.readByNumber(teacherNumber);
         } catch (ExcepcaoPersistencia e2) {
-            e2.printStackTrace(System.out);
             throw new FenixServiceException("Error getting teacher!", e2);
         }
         return teacher;
@@ -291,7 +290,6 @@ public class ReadTeacherCreditsSheet implements IService {
             teacherCreditsSheetDTO.setInfoServiceExemptions(infoServiceExemptions);
 
         } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace(System.out);
             throw new FenixServiceException("Problems with database!", e);
         }
 

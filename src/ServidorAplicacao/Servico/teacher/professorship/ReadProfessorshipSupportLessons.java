@@ -78,7 +78,6 @@ public class ReadProfessorshipSupportLessons implements IServico {
             professorshipSupportLessonsDTO.setInfoSupportLessonList(infoSupportLessons);
 
         } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace(System.out);
             throw new FenixServiceException("Problems on database!", e);
         }
 

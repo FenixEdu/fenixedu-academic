@@ -39,7 +39,6 @@ public abstract class SearchService implements IService {
             sp = SuportePersistenteOJB.getInstance();
             domainList = doSearch(searchParameters, sp);
         } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace(System.out);
             throw new FenixServiceException("Problems with database!", e);
         }
 

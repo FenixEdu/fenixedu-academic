@@ -67,7 +67,6 @@ public class EditExamRooms implements IService {
             return Cloner.copyIExam2InfoExam(exam);
 
         } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace(System.out);
             throw new FenixServiceException(e);
         }
 
@@ -77,7 +76,6 @@ public class EditExamRooms implements IService {
         try {
             sp = SuportePersistenteOJB.getInstance();
         } catch (ExcepcaoPersistencia e1) {
-            e1.printStackTrace(System.out);
             throw new FenixServiceException();
         }
         persistentRoom = sp.getISalaPersistente();

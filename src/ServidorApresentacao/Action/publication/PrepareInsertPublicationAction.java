@@ -66,12 +66,8 @@ public class PrepareInsertPublicationAction extends FenixDispatchAction {
         IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm dynaForm = (DynaActionForm) actionForm;
 
-        System.out.println("Vamos a ver: " + dynaForm.get("authorIdInternal"));
         ArrayList authors = (ArrayList) dynaForm.get("authors");
         Integer selectedId = Integer.valueOf(request.getParameter("idInternal"));
-        System.out.println("Vamos a ver o id: " + selectedId);
-        
-        System.out.println("Size do authors: "+authors.size());
 
         Iterator iterator = authors.iterator();
         for (int iter = 0; iterator.hasNext(); iter++) {
@@ -102,7 +98,6 @@ public class PrepareInsertPublicationAction extends FenixDispatchAction {
         IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm dynaForm = (DynaActionForm) actionForm;
 
-        System.out.println("Vamos a ver: " + dynaForm.get("idInternal"));
         ArrayList authors = (ArrayList) dynaForm.get("authors");
         Integer selectedId = (Integer) request.getAttribute("idInternal");
 

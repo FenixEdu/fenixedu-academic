@@ -291,8 +291,6 @@ public class CRUDActionByOID extends DispatchAction {
                 }
             }
         } catch (Exception e1) {
-
-            e1.printStackTrace(System.out);
             throw new FenixActionException(e1);
         }
     }

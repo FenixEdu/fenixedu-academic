@@ -73,7 +73,6 @@ public class ReadExecutionDegreesByExecutionYearAndDegreeType implements IServic
                         }
                     });
         } catch (ExcepcaoPersistencia ex) {
-            ex.printStackTrace(System.out);
             throw new FenixServiceException("Problems on database!", ex);
         }
         return infoExecutionDegreeList;

@@ -76,7 +76,6 @@ public class ReadDepartmentTeachersCreditsDetailsService implements IService {
             }
             return list;
         } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace(System.out);
             throw new FenixServiceException("Problems with database!", e);
         }
     }

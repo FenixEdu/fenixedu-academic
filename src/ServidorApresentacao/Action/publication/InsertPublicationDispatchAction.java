@@ -53,12 +53,6 @@ public class InsertPublicationDispatchAction extends FenixDispatchAction {
 		
         DynaActionForm dynaForm = (DynaActionForm) form;
 
-
-        /*
-         * if (infoObject == null) { System.out.println("Prepareedit2");
-         * prepareEdit2(mapping, form, request, response); }
-         */
-
         IUserView userView = SessionUtils.getUserView(request);
 
         //InfoPublication pub = (InfoPublication) infoObject;
@@ -439,7 +433,6 @@ public class InsertPublicationDispatchAction extends FenixDispatchAction {
             	InfoAuthor infoAuthor = (InfoAuthor) ServiceUtils.executeService(userView, "ReadAuthorByPersonId", new Object[] { pessoa.getIdInternal() });
             	if (pessoa.getIdInternal() != null)
             		infoAuthor.setKeyPerson(pessoa.getIdInternal());
-            	//if (infoAuthor.getIdInternal()==null) System.out.println("aqui: "+pessoa.getIdInternal());
             	infoAuthor.setAuthor(pessoa.getNome());
             	if (infoAuthor.getIdInternal()!=null) 
             		authorsList.add(infoAuthor);

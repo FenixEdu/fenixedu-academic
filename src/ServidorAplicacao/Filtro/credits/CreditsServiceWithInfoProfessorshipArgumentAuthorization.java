@@ -16,30 +16,16 @@ import ServidorPersistente.ISuportePersistente;
  */
 public class CreditsServiceWithInfoProfessorshipArgumentAuthorization extends
         AbstractTeacherDepartmentAuthorization {
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.Filtro.credits.AbstractTeacherDepartmentAuthorization#getTeacherId(java.lang.Object[])
-     */
+
     protected Integer getTeacherId(Object[] arguments, ISuportePersistente sp)
-            throws FenixServiceException {
+            throws FenixServiceException, ExcepcaoPersistencia {
         InfoProfessorship infoProfessorship = (InfoProfessorship) arguments[0];
 
         IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
-        ITeacher teacher = null;
-        try {
-            teacher = teacherDAO.readByNumber(infoProfessorship.getInfoTeacher().getTeacherNumber());
-        } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace(System.out);
-            throw new FenixServiceException("Problems on database!", e);
-        }
+        ITeacher teacher = teacherDAO
+                .readByNumber(infoProfessorship.getInfoTeacher().getTeacherNumber());
+
         return teacher == null ? null : teacher.getIdInternal();
     }
 
-    /**
-     *  
-     */
-    public CreditsServiceWithInfoProfessorshipArgumentAuthorization() {
-        super();
-    }
 }

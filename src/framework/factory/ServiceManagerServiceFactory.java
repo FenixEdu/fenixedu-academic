@@ -6,6 +6,8 @@ import java.util.Map;
 
 import javax.ejb.EJBException;
 
+import org.apache.log4j.Logger;
+
 import pt.utl.ist.berserk.logic.filterManager.FilterInvocationTimingType;
 import pt.utl.ist.berserk.logic.serviceManager.exceptions.FilterChainFailedException;
 
@@ -26,6 +28,8 @@ import framework.ejb.EJBHomeFactory;
  */
 public class ServiceManagerServiceFactory {
 
+    private static final Logger logger = Logger.getLogger(ServiceManagerServiceFactory.class);
+
     private static ServiceManagerServiceFactory instance = null;
 
     private IServiceManagerWrapper service = null;
@@ -42,7 +46,6 @@ public class ServiceManagerServiceFactory {
 
     private void init() {
         if (service != null) {
-            System.out.println("ServiceManager instance allready resolved.");
             return;
         }
 
@@ -50,14 +53,15 @@ public class ServiceManagerServiceFactory {
             ServiceManagerLocalHome serviceManagerLocalHome = (ServiceManagerLocalHome) EJBHomeFactory
                     .getInstance().lookupLocalHome("Fenix/ServidorAplicacao/ServiceManagerLocal",
                             ServiceManagerLocalHome.class);
-            System.out.println("Using local ejb service manager calls.");
+            
+            logger.info("Using local ejb service manager calls.");
             service = serviceManagerLocalHome.create();
         } catch (Exception e) {
             try {
                 ServiceManagerHome serviceManagerHome = (ServiceManagerHome) EJBHomeFactory
                         .getInstance().lookupHome("Fenix/ServidorAplicacao/ServiceManager",
                                 ServiceManagerHome.class);
-                System.out.println("Using remote ejb service manager calls.");
+                logger.info("Using remote ejb service manager calls.");
                 service = serviceManagerHome.create();
             } catch (Exception e2) {
                 try {
@@ -65,7 +69,7 @@ public class ServiceManagerServiceFactory {
                             .forName("ServidorAplicacao.ServiceManagerBean");
                     service = (IServiceManagerWrapper) serviceMagagerBeanClass.getConstructor(null)
                             .newInstance(null);
-                    System.out.println("Using direct service manager calls.");
+                    logger.info("Using direct service manager calls.");
                 } catch (Exception e1) {
                     service = null;
                     throw new RuntimeException("Unable to create any service manager.", e2);

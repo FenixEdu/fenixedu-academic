@@ -89,17 +89,14 @@ public class ParseMetadata extends DefaultHandler {
     }
 
     public void error(SAXParseException e) throws SAXParseException {
-        System.out.println("--->ERROR: " + e);
         throw e;
     }
 
     public void fatalError(SAXParseException e) throws SAXParseException {
-        System.out.println("--->FATALERROR: " + e);
         throw e;
     }
 
     public void warning(SAXParseException e) throws SAXParseException {
-        System.out.println("--->WARNING: " + e);
         throw e;
     }
 
