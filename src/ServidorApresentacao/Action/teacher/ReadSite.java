@@ -6,7 +6,6 @@
  */
 package ServidorApresentacao.Action.teacher;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -89,10 +88,10 @@ public class ReadSite extends FenixAction {
 
 
 		// read sections		
-		ArrayList sections = null;
+		List sections = null;
 		try {
 			sections =
-				(ArrayList) manager.executar(
+				(List) manager.executar(
 					userView,
 					"ReadSections",
 					args);
