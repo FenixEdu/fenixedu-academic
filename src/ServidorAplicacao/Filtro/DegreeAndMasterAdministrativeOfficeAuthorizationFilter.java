@@ -37,6 +37,7 @@ public class DegreeAndMasterAdministrativeOfficeAuthorizationFilter extends Auth
 	public void execute(ServiceRequest arg0, ServiceResponse arg1) throws Exception
 	{
 		IUserView id = (IUserView) arg0.getRequester();
+		// TODO : Verify this works, i.e., that it doesn't result in a class cast exception
 		IServico servico = (IServico) arg0.getService();
 		Object[] argumentos = arg0.getArguments();
 
