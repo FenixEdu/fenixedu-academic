@@ -20,12 +20,30 @@ public class InfoGratuityValues extends InfoObject implements Serializable
 	private Date startPayment;
 	private Date endPayment;
 	
+	private Boolean registrationPayment;
+	
 	private InfoExecutionDegree infoExecutionDegree;
 	
 	private InfoEmployee infoEmployee;
 	
 	private List infoPaymentPhases;
 	
+	/**
+	 * @return Returns the registrationPayment.
+	 */
+	public Boolean getRegistrationPayment()
+	{
+		return registrationPayment;
+	}
+
+	/**
+	 * @param registrationPayment The registrationPayment to set.
+	 */
+	public void setRegistrationPayment(Boolean registrationPayment)
+	{
+		this.registrationPayment = registrationPayment;
+	}
+
 	/**
 	 * @return Returns the anualValue.
 	 */

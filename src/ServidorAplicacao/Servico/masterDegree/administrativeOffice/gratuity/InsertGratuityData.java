@@ -9,8 +9,15 @@ import java.util.ListIterator;
 
 import DataBeans.InfoGratuityValues;
 import DataBeans.InfoPaymentPhase;
+import Dominio.GratuityValues;
+import Dominio.IGratuityValues;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorApresentacao.Action.masterDegree.utils.SessionConstants;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentGratuityValues;
+import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Tânia Pousão
@@ -52,7 +59,47 @@ public class InsertGratuityData implements IServico
 			throw new FenixServiceException();
 		}
 
-		Double gratuityValue = null;
+		validateGratuity(infoGratuityValues);
+
+		//write gratuity values
+		ISuportePersistente sp = null;
+
+		try
+		{
+			sp = SuportePersistenteOJB.getInstance();
+			IPersistentGratuityValues persistentGratuityValues = sp.getIPersistentGrtuityValues();
+
+			IGratuityValues gratuityValues = new GratuityValues();
+			gratuityValues.setIdInternal(infoGratuityValues.getIdInternal());
+
+			gratuityValues = (IGratuityValues) persistentGratuityValues.readByOId(gratuityValues, true);
+			if (gratuityValues == null)//it doesn't exists in database, then write it
+			{
+				
+				gratuityValues = new GratuityValues();
+				
+				
+				
+				
+			}
+
+		}
+		catch (ExcepcaoPersistencia e)
+		{
+			e.printStackTrace();
+			throw new FenixServiceException("exception persistent error!");
+		}
+
+		//write all payment phases
+
+		//update gratuity values in all student curricular plan that belong to this execution degree
+
+		return Boolean.TRUE;
+	}
+
+	private void validateGratuity(InfoGratuityValues infoGratuityValues) throws FenixServiceException
+	{
+		Double gratuityValue = null; //save gratuity's value
 
 		if (infoGratuityValues.getAnualValue() != null)
 		{
@@ -75,19 +122,29 @@ public class InsertGratuityData implements IServico
 		}
 
 		List paymentPhasesList = infoGratuityValues.getInfoPaymentPhases();
-		if(paymentPhasesList != null && paymentPhasesList.size() > 0){
+		if (paymentPhasesList != null && paymentPhasesList.size() > 0)
+		{
 			ListIterator iterator = paymentPhasesList.listIterator();
-			
+			double totalValuePaymentPhases = 0; //total of all payment phases
 			while (iterator.hasNext())
 			{
 				InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) iterator.next();
-				
+				totalValuePaymentPhases = +infoPaymentPhase.getValue().floatValue();
 			}
-			
+
+			if (totalValuePaymentPhases > gratuityValue.doubleValue())
+			{
+				throw new FenixServiceException("error.masterDegree.gatuyiuty.totalValuePaymentPhases");
+			}
+
+			//TODO: datas dos pagamentos sobrepostas
+
+			if (infoGratuityValues.getRegistrationPayment().equals(Boolean.TRUE))
+			{
+				iterator = paymentPhasesList.listIterator();
+				InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) iterator.next();
+				infoPaymentPhase.setDescription(SessionConstants.REGISTRATION_PAYMENT);
+			}
 		}
-		
-		
-		
-		return Boolean.TRUE;
 	}
 }
