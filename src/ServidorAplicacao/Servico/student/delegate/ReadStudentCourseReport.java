@@ -1,5 +1,4 @@
 /*
- * Created on Feb 18, 2004
  *  
  */
 package ServidorAplicacao.Servico.student.delegate;
@@ -106,7 +105,7 @@ public class ReadStudentCourseReport implements IService {
                 executionPeriod = (IExecutionPeriod) executionPeriods.get(1);
 
             List infoSiteEvaluationHistory = getInfoSiteEvaluationsHistory(
-                    executionPeriod.getSemester(), curricularCourse, sp);
+                    executionPeriod, curricularCourse, sp);
 
             InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = getInfoSiteEvaluationStatistics(
                     executionPeriod, curricularCourse, sp);
@@ -148,7 +147,7 @@ public class ReadStudentCourseReport implements IService {
      * @param sp
      * @return
      */
-    private List getInfoSiteEvaluationsHistory(Integer semester, ICurricularCourse curricularCourse,
+    private List getInfoSiteEvaluationsHistory(IExecutionPeriod executionPeriodToTest, ICurricularCourse curricularCourse,
             ISuportePersistente sp) throws ExcepcaoPersistencia {
         List infoSiteEvaluationsHistory = new ArrayList();
         List executionPeriods = (List) CollectionUtils.collect(curricularCourse
@@ -160,11 +159,12 @@ public class ReadStudentCourseReport implements IService {
 
         });
         // filter the executionPeriods by semester
-        final Integer historySemester = semester;
+        // also, information regarding execution years after the course's execution year must not be shown
+        final IExecutionPeriod historyExecutionPeriod = executionPeriodToTest;
         executionPeriods = (List) CollectionUtils.select(executionPeriods, new Predicate() {
             public boolean evaluate(Object arg0) {
                 IExecutionPeriod executionPeriod = (IExecutionPeriod) arg0;
-                return executionPeriod.getSemester().equals(historySemester);
+                return (executionPeriod.getSemester().equals(historyExecutionPeriod.getSemester()) && executionPeriod.getExecutionYear().getBeginDate().before(historyExecutionPeriod.getExecutionYear().getBeginDate()));
             }
         });
         Collections.sort(executionPeriods, new Comparator() {
