@@ -522,12 +522,12 @@
    	        <form-property name="removedJuriesNumbers" type="java.lang.Integer[]"/>
    	        <form-property name="finalResult" type="java.lang.Integer"/>
    	        <form-property name="attachedCopiesNumber" type="java.lang.Integer"/>
-   	        <form-property name="proofDateDay" type="java.lang.Integer"/>
-   	        <form-property name="proofDateMonth" type="java.lang.Integer"/>
-   	        <form-property name="proofDateYear" type="java.lang.Integer"/>
-   	        <form-property name="thesisDeliveryDateDay" type="java.lang.Integer"/>
-   	        <form-property name="thesisDeliveryDateMonth" type="java.lang.Integer"/>
-   	        <form-property name="thesisDeliveryDateYear" type="java.lang.Integer"/>   	        
+   	        <form-property name="proofDateDay" type="java.lang.String"/>
+   	        <form-property name="proofDateMonth" type="java.lang.String"/>
+   	        <form-property name="proofDateYear" type="java.lang.String"/>
+   	        <form-property name="thesisDeliveryDateDay" type="java.lang.String"/>
+   	        <form-property name="thesisDeliveryDateMonth" type="java.lang.String"/>
+   	        <form-property name="thesisDeliveryDateYear" type="java.lang.String"/>   	        
 	  </form-bean>
 
    </form-beans>
