@@ -4,8 +4,11 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-	<html:errors />
 
+		<br>
+        <span class="error"><html:errors/></span>
+        
+        
 		<logic:present name="<%= SessionConstants.CLASS_INFO_SHIFT_LIST_KEY %>" >
 			<bean:define id="list" name="<%= SessionConstants.CLASS_INFO_SHIFT_LIST_KEY %>" />
 		</logic:present>
