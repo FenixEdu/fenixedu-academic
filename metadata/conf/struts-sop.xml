@@ -729,7 +729,7 @@
             >
          <forward name="Show Choose Form" path="/chooseDayAndShift.jsp"/>
          <forward name="View Exams" path="/viewExamsDayAndShiftForm.do?method=view"/>
-	 </action>
+	</action>
 	
 	<action path="/viewExamsDayAndShiftForm"
 			input="/viewExamsDayAndShift.jsp"
@@ -737,23 +737,23 @@
             parameter="method"
             >
          <forward name="View Exams" path="/viewExamsByDayAndShift.jsp"/>
-	 </action>
+	</action>
 	
-	  <!-- Choose Context for Exams -->
-      <action input="/chooseExamsContextDA.do?method=prepare&amp;page=0"
-              name="chooseContextForm"
-              parameter="method"
-              path="/chooseExamsContextDA"
-              scope="request"
-              validate="true"
-              type="ServidorApresentacao.Action.commons.ChooseContextDispatchAction">
+	<!-- Choose Context for Exams -->
+    <action input="/chooseExamsContextDA.do?method=prepare&amp;page=0"
+            name="chooseContextForm"
+            parameter="method"
+            path="/chooseExamsContextDA"
+            scope="request"
+            validate="true"
+            type="ServidorApresentacao.Action.commons.ChooseContextDispatchAction">
         <forward name="formPage" path="/chooseContext.jsp"/>
         <forward name="nextPage" path="/viewExamsByDegreeAndCurricularYear.do"/>
-      </action>
+    </action>
 	
 	<action path="/viewExamsByDegreeAndCurricularYear"
     		type="ServidorApresentacao.Action.sop.ViewExamsByDegreeAndCurricularYearAction"
-	>
+    		>
     	<forward name="Sucess" path="/viewExamsByDegreeAndCurricularYear.jsp"/>
 	</action>
 
