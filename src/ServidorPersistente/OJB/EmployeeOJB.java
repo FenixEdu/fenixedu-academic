@@ -4,34 +4,80 @@
  */
 package ServidorPersistente.OJB;
 
+import java.util.Calendar;
+import java.util.List;
+
 import org.apache.ojb.broker.query.Criteria;
 
-import Dominio.Funcionario;
+import Dominio.Employee;
+import Dominio.EmployeeHistoric;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEmployee;
 
 /**
  * @author jpvl
  */
-public class EmployeeOJB
-	extends ObjectFenixOJB
-	implements IPersistentEmployee {
+public class EmployeeOJB extends ObjectFenixOJB implements IPersistentEmployee {
 
-	/* (non-Javadoc)
-	 * @see ServidorPersistente.IPersistentEmployee#readByNumber(java.lang.Integer)
-	 */
-	public Funcionario readByNumber(Integer number) throws ExcepcaoPersistencia {
-		// TODO Auto-generated method stub
-		Criteria criteria = new Criteria ();
-		criteria.addEqualTo("numeroMecanografico", number);
-		return (Funcionario) queryObject(Funcionario.class, criteria);
+	public Employee readByNumber(Integer number) throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("employeeNumber", number);
+		return (Employee) queryObject(Employee.class, criteria);
 	}
-	public Funcionario readByCodigoInterno(int idInternal) throws ExcepcaoPersistencia {
-			// TODO Auto-generated method stub
-			Criteria criteria = new Criteria ();
-			criteria.addEqualTo("codigoInterno", new Integer(String.valueOf(idInternal)));
-			return (Funcionario) queryObject(Funcionario.class, criteria);
-		}
-	
+
+	public Employee readByIdInternal(int idInternal) throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("idInternal", new Integer(String.valueOf(idInternal)));
+		return (Employee) queryObject(Employee.class, criteria);
+	}
+
+	public Employee readByPerson(int keyPerson) throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("keyPerson", new Integer(String.valueOf(keyPerson)));
+		return (Employee) queryObject(Employee.class, criteria);
+	}
+
+	public List readHistoricByKeyEmployee(int keyEmployee) throws ExcepcaoPersistencia {
+		/*SELECT * FROM ass_FUNCIONARIO_HISTORICO "
+						+ "WHERE chaveFuncionario = ? AND "
+						+ "((dataInicio <= ? AND dataFim IS NULL) OR (dataInicio <= ? AND dataFim IS NOT NULL AND dataFim >= ?))");*/
+
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("keyEmployee", new Integer(keyEmployee));
+
+		Criteria criteria2 = new Criteria();
+		criteria2.addLessOrEqualThan("beginDate", Calendar.getInstance().getTime());
+		criteria2.addIsNull("endDate");
+
+		Criteria criteria3 = new Criteria();
+		criteria3.addLessOrEqualThan("beginDate", Calendar.getInstance().getTime());
+		criteria3.addNotNull("endDate");
+		criteria3.addGreaterOrEqualThan("endDate", Calendar.getInstance().getTime());
+
+		criteria.addAndCriteria(criteria2);
+		criteria2.addOrCriteria(criteria3);
+
+		return queryList(EmployeeHistoric.class, criteria); //emploee's historic list
+	}
+
+	//ATENÇÃO: só para testar o funionario em ojb
+	//	System.out.println("-------->Funcionario: a ler o funcionário");
+	//	IPersistentEmployee employeeDAO = SuportePersistenteOJB.getInstance().getIPersistentEmployee();
+	//	Employee employee = employeeDAO.readByNumber(new Integer(2997));
+	//	System.out.println(
+	//		"-------->Funcionario: "
+	//			+ employee.getIdInternal()
+	//			+ "; "
+	//			+ employee.getEmployeeNumber()
+	//			+ "; "
+	//			+ employee.getKeyPerson()
+	//			+ "; "
+	//			+ employee.getAntiquity()
+	//			+ "; "
+	//			+ employee.getWorkingHours());
+	//			
+	//	employee.setHistoricList(employeeDAO.readHistoricByKeyEmployee(employee.getIdInternal().intValue()));
+	//	employee.fillEmployeeHistoric();
+	//	System.out.println("-------->Funcionario Historico: " + employee.getEmployeeHistoric());
 
 }

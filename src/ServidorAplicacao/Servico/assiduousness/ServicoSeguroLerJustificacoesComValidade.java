@@ -39,7 +39,7 @@ public class ServicoSeguroLerJustificacoesComValidade extends ServicoSeguro {
 			SuportePersistente.getInstance().iFuncionarioPersistente();
 		
 		if ((_funcionario =
-			iFuncionarioPersistente.lerFuncionarioPorNumMecanografico(_numMecanografico))
+			iFuncionarioPersistente.lerFuncionarioSemHistoricoPorNumMecanografico(_numMecanografico))
 			== null) {
 			throw new NotExecuteException("error.funcionario.naoExiste");
 		}

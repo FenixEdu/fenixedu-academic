@@ -1,5 +1,4 @@
 package ServidorPersistenteJDBC;
-
 import java.util.ArrayList;
 
 import Dominio.Modalidade;

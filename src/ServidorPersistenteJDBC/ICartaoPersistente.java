@@ -28,6 +28,7 @@ public interface ICartaoPersistente {
   public Cartao lerCartaoSubstitutoFuncionario(int chaveFuncionario);
 	public Cartao lerCartaoSubstitutoFuncionario(int chaveFuncionario, Timestamp data);	
 	public Cartao lerCartaoSubstitutoFuncionario(int chaveFuncionario, Timestamp dataInicio, Timestamp dataFim);
+	public ArrayList lerCartoesSubstitutosFuncionario(int chaveFuncionario, Timestamp dataInicio, Timestamp dataFim);
   public ArrayList lerCartoesFuncionario(int chaveFuncionario);
   public ArrayList lerCartoesFuncionarioComValidade(int chaveFuncionario, Timestamp dataInicio, Timestamp dataFim);
   public ArrayList lerHistorialCartao(int numCartao);

@@ -19,7 +19,7 @@ import org.apache.ojb.broker.query.QueryByCriteria;
 import Dominio.Branch;
 import Dominio.Curso;
 import Dominio.DegreeCurricularPlan;
-import Dominio.Funcionario;
+import Dominio.Employee;
 import Dominio.IBranch;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IPersonRole;
@@ -267,8 +267,8 @@ public class MigrateStudents2Fenix {
 				
 				criteria = new Criteria();
 				
-				criteria.addEqualTo("chavePessoa", person.getIdInternal());
-				query = new QueryByCriteria(Funcionario.class,criteria);
+				criteria.addEqualTo("keyPerson", person.getIdInternal());
+				query = new QueryByCriteria(Employee.class,criteria);
 				result = (List) broker.getCollectionByQuery(query);
 
 				if (result.size() == 0){

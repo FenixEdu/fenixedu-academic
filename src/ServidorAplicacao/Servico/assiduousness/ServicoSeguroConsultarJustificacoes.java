@@ -52,7 +52,7 @@ public class ServicoSeguroConsultarJustificacoes extends ServicoSeguro {
 		IFuncionarioPersistente iFuncionarioPersistente =
 			SuportePersistente.getInstance().iFuncionarioPersistente();
 		if ((_funcionario =
-			iFuncionarioPersistente.lerFuncionarioPorNumMecanografico(_numMecanografico))
+			iFuncionarioPersistente.lerFuncionarioSemHistoricoPorNumMecanografico(_numMecanografico))
 			== null) {
 			throw new NotExecuteException("error.funcionario.naoExiste");
 		}
@@ -77,18 +77,6 @@ public class ServicoSeguroConsultarJustificacoes extends ServicoSeguro {
 		if(servicoSeguroLerFimAssiduidade.getDataAssiduidade() != null){
 		_dataFimEscolha = servicoSeguroLerFimAssiduidade.getDataAssiduidade();
 		}
-		
-		/*IFuncionarioPersistente iFuncionarioPersistente =
-			SuportePersistente.getInstance().iFuncionarioPersistente();
-
-		Date dataAssiduidade = null;	
-		if ((dataAssiduidade = iFuncionarioPersistente.lerFimAssiduidade(_numMecanografico)) != null) {
-			if (dataAssiduidade.after(_dataInicioEscolha) && dataAssiduidade.before(_dataFimEscolha)) {
-				_dataFimEscolha = Timestamp.valueOf(dataAssiduidade.toString() + " 00:00:00.0");
-			} else if (dataAssiduidade.before(_dataInicioEscolha)) {
-				throw new NotExecuteException("error.assiduidade.semAssiduidade");
-			}
-		}*/
 	} /* lerFimAssiduidade */
 
 	private void lerInicioAssiduidade() throws NotExecuteException {
@@ -102,20 +90,6 @@ public class ServicoSeguroConsultarJustificacoes extends ServicoSeguro {
 		if(servicoSeguroLerInicioAssiduidade.getDataAssiduidade() != null){
 		_dataInicioEscolha = servicoSeguroLerInicioAssiduidade.getDataAssiduidade();
 		}
-		
-		/*IFuncionarioPersistente iFuncionarioPersistente =
-			SuportePersistente.getInstance().iFuncionarioPersistente();
-
-		Date dataAssiduidade = null;
-		if ((dataAssiduidade = iFuncionarioPersistente.lerInicioAssiduidade(_numMecanografico)) == null) {
-			throw new NotExecuteException("error.assiduidade.naoExiste");
-		}
-
-		if (dataAssiduidade.after(_dataInicioEscolha) && dataAssiduidade.before(_dataFimEscolha)) {
-			_dataInicioEscolha = Timestamp.valueOf(dataAssiduidade.toString() + " 00:00:00.0");
-		} else if (dataAssiduidade.after(_dataFimEscolha)) {
-			throw new NotExecuteException("error.assiduidade.naoExiste");
-		}*/
 	} /* lerInicioAssiduidade */
 
 	public ArrayList getListaJustificacoes() {

@@ -363,7 +363,7 @@ public class CartaoRelacional implements ICartaoPersistente {
 	} /* escreverCartao */
 
 	public boolean escreverCartoes(ArrayList listaCartoes) {
-		boolean resultado = false;
+		boolean resultadoTotal = false;
 
 		ListIterator iterador = listaCartoes.listIterator();
 		Cartao cartao = null;
@@ -372,37 +372,44 @@ public class CartaoRelacional implements ICartaoPersistente {
 			while (iterador.hasNext()) {
 				cartao = (Cartao) iterador.next();
 
-				PreparedStatement sql = UtilRelacional.prepararComando("INSERT INTO ass_CARTAO " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-
-				sql.setInt(1, cartao.getCodigoInterno());
-				sql.setInt(2, cartao.getNumCartao());
-				sql.setInt(3, cartao.getChaveFuncionario());
+				//verifica se o cartão já existe
+				PreparedStatement sql =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_CARTAO "
+							+ "WHERE numCartao = ? "
+							+ "AND chaveFuncionario = ? "
+							+ "AND dataInicio = ? "
+							+ "AND dataFim = ?");
+				sql.setInt(1, cartao.getNumCartao());
+				sql.setInt(2, cartao.getChaveFuncionario());
 				if (cartao.getDataInicio() != null) {
-					sql.setTimestamp(4, new Timestamp((cartao.getDataInicio()).getTime()));
+					sql.setTimestamp(3, new Timestamp((cartao.getDataInicio()).getTime()));
+				} else {
+					sql.setTimestamp(3, null);
+				}
+				if (cartao.getDataFim() != null) {
+					sql.setTimestamp(4, new Timestamp((cartao.getDataFim()).getTime()));
 				} else {
 					sql.setTimestamp(4, null);
 				}
-				if (cartao.getDataFim() != null) {
-					sql.setTimestamp(5, new Timestamp((cartao.getDataFim()).getTime()));
-				} else {
-					sql.setTimestamp(5, null);
-				}
-				sql.setInt(6, cartao.getQuem());
-				if (cartao.getQuando() != null) {
-					sql.setTimestamp(7, new Timestamp((cartao.getQuando()).getTime()));
-				} else {
-					sql.setTimestamp(7, null);
-				}
-				sql.setString(8, cartao.getEstado());
 
-				sql.executeUpdate();
+				ResultSet resultadoQuery = sql.executeQuery();
+				boolean resultado = false;
+				if (resultadoQuery.next()) {
+					cartao.setCodigoInterno(resultadoQuery.getInt("codigoInterno"));
+					resultado = alterarCartao(cartao);
+					resultadoTotal = resultadoTotal || resultado;
+				} else {
+					resultado = escreverCartao(cartao);
+					resultadoTotal = resultadoTotal || resultado;
+				}
 				sql.close();
-				resultado = true;
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("CartaoRelacional.escreverCartoes: " + e.toString());
 		} finally {
-			return resultado;
+			return resultadoTotal;
 		}
 	} /* escreverCartoes */
 
@@ -510,7 +517,7 @@ public class CartaoRelacional implements ICartaoPersistente {
 			ResultSet resultado = sql.executeQuery();
 
 			listaCartoes = new ArrayList();
-			String query = new String("SELECT * FROM cartao WHERE numCartao NOT IN (");
+			String query = new String("SELECT * FROM ass_CARTAO WHERE numCartao NOT IN (");
 			while (resultado.next()) {
 				if (!resultado.isLast()) {
 					query = query.concat("?,");
@@ -747,6 +754,57 @@ public class CartaoRelacional implements ICartaoPersistente {
 			return cartao;
 		}
 	}
+
+	public ArrayList lerCartoesSubstitutosFuncionario(int chaveFuncionario, Timestamp dataInicio, Timestamp dataFim) {
+		ArrayList listaCartoes = null;
+
+		try {
+			PreparedStatement sql =
+				UtilRelacional.prepararComando(
+					"SELECT * FROM ass_CARTAO "
+						+ "WHERE chaveFuncionario = ? AND ((dataInicio BETWEEN ? AND ?) "
+						+ "OR (dataFim BETWEEN ? AND ?) OR (dataInicio <= ? AND dataFim >= ?)) AND numCartao >= 900000");
+
+			Timestamp dataInicioQuery = new Timestamp(dataInicio.getTime());
+			Timestamp dataFimQuery = new Timestamp(dataFim.getTime());
+
+			sql.setInt(1, chaveFuncionario);
+			sql.setTimestamp(2, dataInicioQuery);
+			sql.setTimestamp(3, dataFimQuery);
+			sql.setTimestamp(4, dataInicioQuery);
+			sql.setTimestamp(5, dataFimQuery);
+			sql.setTimestamp(6, dataInicioQuery);
+			sql.setTimestamp(7, dataFimQuery);
+
+			ResultSet resultado = sql.executeQuery();
+
+			listaCartoes = new ArrayList();
+			Timestamp dataFimCartao = null;
+			while (resultado.next()) {
+				if (resultado.getString("dataFim") != null) {
+					dataFimCartao = Timestamp.valueOf(resultado.getString("dataFim"));
+				}
+
+				listaCartoes.add(
+					new Cartao(
+						resultado.getInt("codigoInterno"),
+						resultado.getInt("numCartao"),
+						resultado.getInt("chaveFuncionario"),
+						Timestamp.valueOf(resultado.getString("dataInicio")),
+						dataFimCartao,
+						resultado.getInt("quem"),
+						Timestamp.valueOf(resultado.getString("quando")),
+						resultado.getString("estado")));
+			}
+			sql.close();
+		} catch (Exception e) {
+			System.out.println("CartaoRelacional.lerCartoesSubstitutosFuncionario: " + e.toString());
+			return null;
+		} finally {
+			return listaCartoes;
+		}
+	} /* lerCartoesSubstitutosFuncionario */
+
 	public ArrayList lerCartoesFuncionario(int chaveFuncionario) {
 		ArrayList listaCartoes = null;
 

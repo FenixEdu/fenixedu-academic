@@ -14,16 +14,17 @@ import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 
+import constants.assiduousness.Constants;
 import ServidorApresentacao.formbeans.assiduousness.AssociarHorarioForm;
 import ServidorApresentacao.formbeans.assiduousness.AssociarHorarioTipoConfirmarForm;
 import ServidorApresentacao.formbeans.assiduousness.AssociarHorarioTipoForm;
-import constants.assiduousness.Constants;
 
 /**
  *
  * @author  Fernanda Quitério e Tania Pousão
  */
 public class IsencaoHorario implements IStrategyHorarios {
+
 	public IsencaoHorario() {
 	}
 
@@ -79,6 +80,17 @@ public class IsencaoHorario implements IStrategyHorarios {
 		int mesFim = 0;
 		int anoFim = 0;
 
+		int intervaloMinimoRefeicaoHoras = 0;
+		int intervaloMinimoRefeicaoMinutos = 0;
+
+		int descontoObrigatorioHoras = 0;
+		int descontoObrigatorioMinutos = 0;
+		long timeDescontoRefeicao = 0;
+
+		int trabalhoConsecutivoHoras = 0;
+		int trabalhoConsecutivoMinutos = 0;
+		long timeTrabalhoConsecutivo = 0;
+
 		// Duracao semanal 
 		if (formHorario.getDuracaoSemanal().length() < 1) {
 			errors.add("DuracaoSemanal-IsencaoH", new ActionError("error.duracaoSemanal.obrigatoria"));
@@ -128,7 +140,8 @@ public class IsencaoHorario implements IStrategyHorarios {
 
 				if (!(timeInicioExpediente < timeFimExpediente)) {
 					errors.add("Expediente", new ActionError("error.Expediente"));
-				} else if ((timeInicioExpediente < Constants.EXPEDIENTE_MINIMO) || (timeFimExpediente > Constants.EXPEDIENTE_MAXIMO)) {
+				} else if (
+					(timeInicioExpediente < Constants.EXPEDIENTE_MINIMO) || (timeFimExpediente > Constants.EXPEDIENTE_MAXIMO)) {
 					errors.add("Expediente", new ActionError("error.Expediente"));
 				}
 			}
@@ -169,6 +182,21 @@ public class IsencaoHorario implements IStrategyHorarios {
 				if (!(timeInicioRefeicao < timeFimRefeicao)) {
 					errors.add("Refeicao", new ActionError("error.refeicao"));
 				}
+			}
+			if ((formHorario.getTrabalhoConsecutivoHoras().length() < 1)
+				|| (formHorario.getTrabalhoConsecutivoMinutos().length() < 1)) {
+				errors.add("Trabalho Consecutivo", new ActionError("error.trabalhoConsecutivo.obrigatorio"));
+			} else {
+				try {
+					trabalhoConsecutivoHoras = new Integer(formHorario.getTrabalhoConsecutivoHoras()).intValue();
+					trabalhoConsecutivoMinutos = new Integer(formHorario.getTrabalhoConsecutivoMinutos()).intValue();
+				} catch (java.lang.NumberFormatException e) {
+					errors.add("numero", new ActionError("error.numero.naoInteiro"));
+				}
+				calendar.clear();
+				calendar.set(1970, 0, 1, trabalhoConsecutivoHoras, trabalhoConsecutivoMinutos, 00);
+				calendar.add(Calendar.HOUR_OF_DAY, 1);
+				timeTrabalhoConsecutivo = calendar.getTimeInMillis();
 			}
 
 			if ((formHorario.getInicioHN1Horas().length() < 1)
@@ -258,28 +286,27 @@ public class IsencaoHorario implements IStrategyHorarios {
 						errors.add("HNPeriodo", new ActionError("error.HorarioNormal.duracao"));
 					}
 
-					if (((timeFimHN1 - timeInicioHN1) > Constants.MAX_TRABALHO_ISENCAO)
-						|| ((timeFimHN2 - timeInicioHN2) > Constants.MAX_TRABALHO_ISENCAO)) {
+					if (((timeFimHN1 - timeInicioHN1) > timeTrabalhoConsecutivo)
+						|| ((timeFimHN2 - timeInicioHN2) > timeTrabalhoConsecutivo)) {
 						errors.add("HNMax", new ActionError("error.HorarioNormal.trabalhoMax"));
 					}
 				}
 			}
-			/*
+
 			try {
-			
-			intervaloMinimoRefeicaoHoras = new Integer(formHorario.getIntervaloMinimoHoras()).intValue();
-			intervaloMinimoRefeicaoMinutos = new Integer(formHorario.getIntervaloMinimoMinutos()).intValue();
-			descontoObrigatorioHoras = new Integer(formHorario.getDescontoObrigatorioHoras()).intValue();
+				intervaloMinimoRefeicaoHoras = new Integer(formHorario.getIntervaloMinimoHoras()).intValue();
+				intervaloMinimoRefeicaoMinutos = new Integer(formHorario.getIntervaloMinimoMinutos()).intValue();
+				descontoObrigatorioHoras = new Integer(formHorario.getDescontoObrigatorioHoras()).intValue();
 				descontoObrigatorioMinutos = new Integer(formHorario.getDescontoObrigatorioMinutos()).intValue();
 			} catch (java.lang.NumberFormatException e) {
 				errors.add("numero", new ActionError("error.numero.naoInteiro"));
 			}
-			
+
 			calendar.clear();
 			calendar.set(1970, 0, 1, descontoObrigatorioHoras, descontoObrigatorioMinutos, 00);
 			calendar.add(Calendar.HOUR_OF_DAY, +1);
 			timeDescontoRefeicao = calendar.getTimeInMillis();
-			
+
 			timeHNPeriodo =
 				((new Float(duracaoSemanal / Constants.SEMANA_TRABALHO_ISENCAO).intValue() * 3600 * 1000)
 					+ new Float(
@@ -288,7 +315,7 @@ public class IsencaoHorario implements IStrategyHorarios {
 							* 3600
 							* 1000)
 						.longValue())
-					+ timeDescontoRefeicao;*/
+					+ timeDescontoRefeicao;
 
 			// Periodos fixos 
 			if ((formHorario.getInicioPF1Horas().length() > 0)
@@ -314,7 +341,9 @@ public class IsencaoHorario implements IStrategyHorarios {
 
 			// data de validade 
 			if (!formHorario.isExcepcaoHorario()) {
-				if ((formHorario.getDiaInicio() != null) && (formHorario.getMesInicio() != null) && (formHorario.getAnoInicio() != null)) {
+				if ((formHorario.getDiaInicio() != null)
+					&& (formHorario.getMesInicio() != null)
+					&& (formHorario.getAnoInicio() != null)) {
 					if ((formHorario.getDiaInicio().length() < 1)
 						|| (formHorario.getMesInicio().length() < 1)
 						|| (formHorario.getAnoInicio().length() < 1)) {
@@ -331,7 +360,9 @@ public class IsencaoHorario implements IStrategyHorarios {
 						calendar.set(anoInicio, mesInicio - 1, diaInicio, 00, 00, 00);
 						java.util.Date dataInicio = calendar.getTime();
 
-						if ((formHorario.getDiaFim() != null) && (formHorario.getMesFim() != null) && (formHorario.getAnoFim() != null)) {
+						if ((formHorario.getDiaFim() != null)
+							&& (formHorario.getMesFim() != null)
+							&& (formHorario.getAnoFim() != null)) {
 							if ((formHorario.getDiaFim().length() > 0)
 								&& (formHorario.getMesFim().length() > 0)
 								&& (formHorario.getAnoFim().length() > 0)) {
@@ -419,7 +450,9 @@ public class IsencaoHorario implements IStrategyHorarios {
 		try {
 			// data de validade
 			if (!formHorario.isExcepcaoHorario()) {
-				if ((formHorario.getDiaInicio() != null) && (formHorario.getMesInicio() != null) && (formHorario.getAnoInicio() != null)) {
+				if ((formHorario.getDiaInicio() != null)
+					&& (formHorario.getMesInicio() != null)
+					&& (formHorario.getAnoInicio() != null)) {
 					if ((formHorario.getDiaInicio().length() < 1)
 						|| (formHorario.getMesInicio().length() < 1)
 						|| (formHorario.getAnoInicio().length() < 1)) {
@@ -436,7 +469,9 @@ public class IsencaoHorario implements IStrategyHorarios {
 						calendar.set(anoInicio, mesInicio - 1, diaInicio, 00, 00, 00);
 						java.util.Date dataInicio = calendar.getTime();
 
-						if ((formHorario.getDiaFim() != null) && (formHorario.getMesFim() != null) && (formHorario.getAnoFim() != null)) {
+						if ((formHorario.getDiaFim() != null)
+							&& (formHorario.getMesFim() != null)
+							&& (formHorario.getAnoFim() != null)) {
 							if ((formHorario.getDiaFim().length() > 0)
 								&& (formHorario.getMesFim().length() > 0)
 								&& (formHorario.getAnoFim().length() > 0)) {
@@ -571,7 +606,8 @@ public class IsencaoHorario implements IStrategyHorarios {
 			horario.setFimExpediente(new Timestamp(calendar.getTimeInMillis()));
 		}
 
-		if ((formHorario.getIntervaloMinimoHoras() != null) && (formHorario.getDescontoObrigatorioHoras() != null)) {
+		if (formHorario.getIntervaloMinimoHoras() != null && formHorario.getIntervaloMinimoHoras().length() >0 && 
+		formHorario.getIntervaloMinimoMinutos() != null && formHorario.getIntervaloMinimoMinutos().length()>0) {
 
 			calendar.clear();
 			calendar.set(
@@ -582,6 +618,9 @@ public class IsencaoHorario implements IStrategyHorarios {
 				new Integer(formHorario.getIntervaloMinimoMinutos()).intValue(),
 				00);
 			horario.setIntervaloMinimoRefeicao(new Time(calendar.getTimeInMillis()));
+		}
+
+		if (formHorario.getDescontoObrigatorioHoras() != null) {
 
 			calendar.clear();
 			calendar.set(
@@ -592,6 +631,19 @@ public class IsencaoHorario implements IStrategyHorarios {
 				new Integer(formHorario.getDescontoObrigatorioMinutos()).intValue(),
 				00);
 			horario.setDescontoObrigatorioRefeicao(new Time(calendar.getTimeInMillis()));
+		}
+
+		// trabalho consecutivo
+		if (formHorario.getTrabalhoConsecutivoHoras() != null && formHorario.getTrabalhoConsecutivoMinutos() != null) {
+			calendar.clear();
+			calendar.set(
+				1970,
+				0,
+				1,
+				new Integer(formHorario.getTrabalhoConsecutivoHoras()).intValue(),
+				new Integer(formHorario.getTrabalhoConsecutivoMinutos()).intValue(),
+				00);
+			horario.setTrabalhoConsecutivo(new Time(calendar.getTimeInMillis()));
 		}
 
 		if (!((formHorario.getInicioRefeicaoHoras().length() < 1)
@@ -798,7 +850,9 @@ public class IsencaoHorario implements IStrategyHorarios {
 			00);
 		horario.setDataInicio(calendar.getTime());
 
-		if ((formHorario.getDiaFim().length() > 0) && (formHorario.getMesFim().length() > 0) && (formHorario.getAnoFim().length() > 0)) {
+		if ((formHorario.getDiaFim().length() > 0)
+			&& (formHorario.getMesFim().length() > 0)
+			&& (formHorario.getAnoFim().length() > 0)) {
 			calendar.clear();
 			calendar.set(
 				(new Integer(formHorario.getAnoFim())).intValue(),
@@ -818,16 +872,25 @@ public class IsencaoHorario implements IStrategyHorarios {
 		Funcionario funcionario,
 		Horario horario,
 		ArrayList listaRegime,
-		boolean isExcepcaoHorario) {
+		boolean isExcepcaoHorario,
+		String alterar) {
 		AssociarHorarioForm formHorario = (AssociarHorarioForm) form;
-
 		Calendar calendar = Calendar.getInstance();
 		calendar.setLenient(false);
 
+		String preenchimento = "--";
+		if (alterar != null) {
+			preenchimento = "";
+		}
+
 		formHorario.setExcepcaoHorario(isExcepcaoHorario);
 
-		formHorario.setNome(pessoa.getNome());
-		formHorario.setNumMecanografico((new Integer(funcionario.getNumeroMecanografico())).toString());
+		if (pessoa != null) {
+			formHorario.setNome(pessoa.getNome());
+		}
+		if (funcionario != null) {
+			formHorario.setNumMecanografico((new Integer(funcionario.getNumeroMecanografico())).toString());
+		}
 
 		formHorario.setDuracaoSemanal((new Integer((new Float(horario.getDuracaoSemanal())).intValue())).toString());
 		formHorario.setModalidade(horario.getModalidade());
@@ -860,7 +923,7 @@ public class IsencaoHorario implements IStrategyHorarios {
 			formHorario.setDiaSeguinteExpediente(Constants.DIA_SEGUINTE);
 		}
 
-		if ((horario.getIntervaloMinimoRefeicao() != null) && (horario.getDescontoObrigatorioRefeicao() != null)) {
+		if (horario.getIntervaloMinimoRefeicao() != null) {
 			calendar.clear();
 			calendar.setTimeInMillis((horario.getIntervaloMinimoRefeicao()).getTime());
 			formHorario.setIntervaloMinimoHoras((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
@@ -869,6 +932,12 @@ public class IsencaoHorario implements IStrategyHorarios {
 			} else {
 				formHorario.setIntervaloMinimoMinutos((new Integer(calendar.get(Calendar.MINUTE))).toString());
 			}
+		} else {
+			formHorario.setIntervaloMinimoHoras(preenchimento);
+			formHorario.setIntervaloMinimoMinutos(preenchimento);
+		}
+
+		if (horario.getDescontoObrigatorioRefeicao() != null) {
 			calendar.clear();
 			calendar.setTimeInMillis((horario.getDescontoObrigatorioRefeicao()).getTime());
 			formHorario.setDescontoObrigatorioHoras((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
@@ -878,10 +947,22 @@ public class IsencaoHorario implements IStrategyHorarios {
 				formHorario.setDescontoObrigatorioMinutos((new Integer(calendar.get(Calendar.MINUTE))).toString());
 			}
 		} else {
-			formHorario.setDescontoObrigatorioHoras("--");
-			formHorario.setDescontoObrigatorioMinutos("--");
-			formHorario.setIntervaloMinimoHoras("--");
-			formHorario.setIntervaloMinimoMinutos("--");
+			formHorario.setDescontoObrigatorioHoras(preenchimento);
+			formHorario.setDescontoObrigatorioMinutos(preenchimento);
+		}
+
+		if (horario.getTrabalhoConsecutivo() != null) {
+			calendar.clear();
+			calendar.setTimeInMillis(horario.getTrabalhoConsecutivo().getTime());
+			formHorario.setTrabalhoConsecutivoHoras((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
+			if (calendar.get(Calendar.MINUTE) < 10) {
+				formHorario.setTrabalhoConsecutivoMinutos("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
+			} else {
+				formHorario.setTrabalhoConsecutivoMinutos((new Integer(calendar.get(Calendar.MINUTE))).toString());
+			}
+		} else {
+			formHorario.setTrabalhoConsecutivoHoras(preenchimento);
+			formHorario.setTrabalhoConsecutivoMinutos(preenchimento);
 		}
 
 		if ((horario.getInicioRefeicao() != null) && (horario.getFimRefeicao() != null)) {
@@ -912,10 +993,10 @@ public class IsencaoHorario implements IStrategyHorarios {
 				formHorario.setDiaSeguinteRefeicao(Constants.DIA_SEGUINTE);
 			}
 		} else {
-			formHorario.setInicioRefeicaoHoras("--");
-			formHorario.setInicioRefeicaoMinutos("--");
-			formHorario.setFimRefeicaoHoras("--");
-			formHorario.setFimRefeicaoMinutos("--");
+			formHorario.setInicioRefeicaoHoras(preenchimento);
+			formHorario.setInicioRefeicaoMinutos(preenchimento);
+			formHorario.setFimRefeicaoHoras(preenchimento);
+			formHorario.setFimRefeicaoMinutos(preenchimento);
 		}
 
 		// periodo normal 
@@ -946,11 +1027,11 @@ public class IsencaoHorario implements IStrategyHorarios {
 		}
 
 		if ((horario.getInicioHN2() == null) && (horario.getFimHN2() == null)) {
-			formHorario.setInicioHN2Horas("--");
-			formHorario.setInicioHN2Minutos("--");
+			formHorario.setInicioHN2Horas(preenchimento);
+			formHorario.setInicioHN2Minutos(preenchimento);
 
-			formHorario.setFimHN2Horas("--");
-			formHorario.setFimHN2Minutos("--");
+			formHorario.setFimHN2Horas(preenchimento);
+			formHorario.setFimHN2Minutos(preenchimento);
 		} else {
 			calendar.clear();
 			calendar.setTimeInMillis((horario.getInicioHN2()).getTime());
@@ -980,17 +1061,17 @@ public class IsencaoHorario implements IStrategyHorarios {
 		}
 
 		// periodo fixo 
-		formHorario.setInicioPF1Horas("--");
-		formHorario.setInicioPF1Minutos("--");
+		formHorario.setInicioPF1Horas(preenchimento);
+		formHorario.setInicioPF1Minutos(preenchimento);
 
-		formHorario.setFimPF1Horas("--");
-		formHorario.setFimPF1Minutos("--");
+		formHorario.setFimPF1Horas(preenchimento);
+		formHorario.setFimPF1Minutos(preenchimento);
 
-		formHorario.setInicioPF2Horas("--");
-		formHorario.setInicioPF2Minutos("--");
+		formHorario.setInicioPF2Horas(preenchimento);
+		formHorario.setInicioPF2Minutos(preenchimento);
 
-		formHorario.setFimPF2Horas("--");
-		formHorario.setFimPF2Minutos("--");
+		formHorario.setFimPF2Horas(preenchimento);
+		formHorario.setFimPF2Minutos(preenchimento);
 
 		// data de validade 
 		calendar.clear();
@@ -1006,9 +1087,9 @@ public class IsencaoHorario implements IStrategyHorarios {
 			formHorario.setMesFim((new Integer(calendar.get(Calendar.MONTH) + 1)).toString());
 			formHorario.setAnoFim((new Integer(calendar.get(Calendar.YEAR))).toString());
 		} else {
-			formHorario.setDiaFim("--");
-			formHorario.setMesFim("--");
-			formHorario.setAnoFim("----");
+			formHorario.setDiaFim(preenchimento);
+			formHorario.setMesFim(preenchimento);
+			formHorario.setAnoFim(preenchimento + preenchimento);
 		}
 	} /* setFormAssociarHorarioConfirmar */
 
@@ -1063,17 +1144,25 @@ public class IsencaoHorario implements IStrategyHorarios {
 			formHorario.setDiaSeguinteExpediente(Constants.DIA_SEGUINTE);
 		}
 
-		if ((horarioTipo.getIntervaloMinimoRefeicao() != null) && (horarioTipo.getDescontoObrigatorioRefeicao() != null)) {
+		if (horarioTipo.getIntervaloMinimoRefeicao() != null) {
 			calendar.clear();
 			calendar.setTimeInMillis((horarioTipo.getIntervaloMinimoRefeicao()).getTime());
+			calendar.add(Calendar.HOUR_OF_DAY, -1);
 			formHorario.setIntervaloMinimoHoras((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
 			if (calendar.get(Calendar.MINUTE) < 10) {
 				formHorario.setIntervaloMinimoMinutos("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
 			} else {
 				formHorario.setIntervaloMinimoMinutos((new Integer(calendar.get(Calendar.MINUTE))).toString());
 			}
+		} else {
+			formHorario.setIntervaloMinimoHoras("--");
+			formHorario.setIntervaloMinimoMinutos("--");
+		}
+
+		if (horarioTipo.getDescontoObrigatorioRefeicao() != null) {
 			calendar.clear();
 			calendar.setTimeInMillis((horarioTipo.getDescontoObrigatorioRefeicao()).getTime());
+			calendar.add(Calendar.HOUR_OF_DAY, -1);
 			formHorario.setDescontoObrigatorioHoras((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
 			if (calendar.get(Calendar.MINUTE) < 10) {
 				formHorario.setDescontoObrigatorioMinutos("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
@@ -1083,8 +1172,21 @@ public class IsencaoHorario implements IStrategyHorarios {
 		} else {
 			formHorario.setDescontoObrigatorioHoras("--");
 			formHorario.setDescontoObrigatorioMinutos("--");
-			formHorario.setIntervaloMinimoHoras("--");
-			formHorario.setIntervaloMinimoMinutos("--");
+		}
+
+		if (horarioTipo.getTrabalhoConsecutivo() != null) {
+			calendar.clear();
+			calendar.setTimeInMillis(horarioTipo.getTrabalhoConsecutivo().getTime());
+			calendar.add(Calendar.HOUR_OF_DAY, -1);
+			formHorario.setTrabalhoConsecutivoHoras((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
+			if (calendar.get(Calendar.MINUTE) < 10) {
+				formHorario.setTrabalhoConsecutivoMinutos("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
+			} else {
+				formHorario.setTrabalhoConsecutivoMinutos((new Integer(calendar.get(Calendar.MINUTE))).toString());
+			}
+		} else {
+			formHorario.setTrabalhoConsecutivoHoras("--");
+			formHorario.setTrabalhoConsecutivoMinutos("--");
 		}
 
 		//	Intervalo de Refeição
@@ -1274,7 +1376,7 @@ public class IsencaoHorario implements IStrategyHorarios {
 	} /* descricaoHorario */
 
 	public String descricaoHorarioTipo(Locale locale, HorarioTipo horarioTipo, ArrayList listaRegimes) {
-		
+		;
 		String descricao = null;
 
 		descricao = new String((new Float(horarioTipo.getDuracaoSemanal())).intValue() + " horas ");
@@ -1392,7 +1494,8 @@ public class IsencaoHorario implements IStrategyHorarios {
 			// o intervalo para refeicao deve ser feito no meio de dois periodos de trabalho.
 			// por isso conta o primeiro intervalo que estiver contido no intervalo para refeicao 
 			// estipulado para este horario. 
-			entrada = (MarcacaoPonto) iterador.next(); // primeira entrada
+
+			entrada = (MarcacaoPonto) iterador.next();
 			// se a primeira entrada do dia está contida no intervalo de refeicao é como se
 			// a pessoa tivesse feito a refeicao antes de entrar ao servico 
 			if (entrada.getData().getTime() > horario.getInicioRefeicao().getTime()
@@ -1402,7 +1505,7 @@ public class IsencaoHorario implements IStrategyHorarios {
 			} else if (entrada.getData().getTime() == horario.getFimRefeicao().getTime()) {
 				intervaloRefeicao = entrada.getData().getTime() - horario.getInicioRefeicao().getTime();
 			} else {
-				if (listaMarcacoesPonto.size() > 3) { //com mais de três marcações
+				if (listaMarcacoesPonto.size() > 3) {
 					// se no intervalo de uma saida do dia com uma entrada está contida no intervalo de refeicao é como se
 					// a pessoa tivesse feito a refeicao nesse intervalo
 					while (iterador.hasNext()) {
@@ -1421,10 +1524,12 @@ public class IsencaoHorario implements IStrategyHorarios {
 							// testar a entrada
 							if (entrada.getData().getTime() > horario.getInicioRefeicao().getTime()
 								&& entrada.getData().getTime() <= horario.getFimRefeicao().getTime()) {
-								intervaloRefeicao = intervaloRefeicao + (entrada.getData().getTime() - horario.getFimRefeicao().getTime());
+								intervaloRefeicao =
+									intervaloRefeicao + (entrada.getData().getTime() - horario.getFimRefeicao().getTime());
 								horario.setFimRefeicao(new Timestamp(entrada.getData().getTime()));
 							} else if (entrada.getData().getTime() <= horario.getInicioRefeicao().getTime()) {
-								intervaloRefeicao = intervaloRefeicao - (horario.getFimRefeicao().getTime() - horario.getInicioRefeicao().getTime());
+								intervaloRefeicao =
+									intervaloRefeicao - (horario.getFimRefeicao().getTime() - horario.getInicioRefeicao().getTime());
 							}
 						} else {
 							if (saida.getData().getTime() > horario.getInicioRefeicao().getTime()
@@ -1455,7 +1560,8 @@ public class IsencaoHorario implements IStrategyHorarios {
 				}
 			}
 
-			if (intervaloRefeicao < horario.getDescontoObrigatorioRefeicao().getTime() && saldo >= Constants.MAX_TRABALHO_ISENCAO) {
+			if (intervaloRefeicao < horario.getDescontoObrigatorioRefeicao().getTime()
+				&& saldo >= horario.getTrabalhoConsecutivo().getTime()) {
 				saldo = saldo - (horario.getDescontoObrigatorioRefeicao().getTime() - intervaloRefeicao);
 			}
 		}

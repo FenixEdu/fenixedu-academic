@@ -3,6 +3,7 @@ package ServidorPersistenteJDBC.Relacional;
 import java.math.BigInteger;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -51,6 +52,7 @@ public class HorarioRelacional implements IHorarioPersistente {
 						+ "dataFim = ? , "
 						+ "numDias = ? , "
 						+ "posicao = ? , "
+						+ "trabalhoConsecutivo = ? , "
 						+ "quem = ? , "
 						+ "quando = ? "
 						+ "WHERE codigoInterno = ? ");
@@ -83,9 +85,14 @@ public class HorarioRelacional implements IHorarioPersistente {
 			}
 			sql.setInt(23, horario.getNumDias());
 			sql.setInt(24, horario.getPosicao());
-			sql.setInt(25, horario.getQuem());
-			sql.setTimestamp(26, new Timestamp((horario.getQuando()).getTime()));
-			sql.setInt(27, horario.getCodigoInterno());
+			sql.setTime(25, horario.getTrabalhoConsecutivo());
+			sql.setInt(26, horario.getQuem());
+			if (horario.getQuando() != null) {
+				sql.setTimestamp(27, new Timestamp((horario.getQuando()).getTime()));
+			} else {
+				sql.setTimestamp(27, null);
+			}
+			sql.setInt(28, horario.getCodigoInterno());
 
 			sql.executeUpdate();
 			sql.close();
@@ -98,11 +105,96 @@ public class HorarioRelacional implements IHorarioPersistente {
 		}
 	} /* alterarHorario */
 
+	public boolean alterarExcepcaoHorario(Horario horario) {
+		boolean resultado = false;
+
+		try {
+			PreparedStatement sql =
+				UtilRelacional.prepararComando(
+					"UPDATE ass_HORARIO_EXCEPCAO SET "
+						+ "codigoInterno = ? , "
+						+ "chaveHorarioTipo = ? , "
+						+ "chaveFuncionario = ? , "
+						+ "sigla = ? , "
+						+ "modalidade = ? , "
+						+ "duracaoSemanal = ? , "
+						+ "inicioPF1 = ? , "
+						+ "fimPF1 = ? , "
+						+ "inicioPF2 = ? , "
+						+ "fimPF2 = ? , "
+						+ "inicioHN1 = ? , "
+						+ "fimHN1 = ? , "
+						+ "inicioHN2 = ? , "
+						+ "fimHN2 = ? , "
+						+ "inicioRefeicao = ? , "
+						+ "fimRefeicao = ? , "
+						+ "descontoObrigatorio = ? , "
+						+ "descontoMinimo = ? , "
+						+ "inicioExpediente = ? , "
+						+ "fimExpediente = ? , "
+						+ "dataInicio = ? , "
+						+ "dataFim = ? , "
+						+ "numDias = ? , "
+						+ "posicao = ? , "
+						+ "trabalhoConsecutivo = ? , "
+						+ "quem = ? , "
+						+ "quando = ? "
+						+ "WHERE codigoInterno = ? ");
+
+			sql.setInt(1, horario.getCodigoInterno());
+			sql.setInt(2, horario.getChaveHorarioTipo());
+			sql.setInt(3, horario.getChaveFuncionario());
+			sql.setString(4, horario.getSigla());
+			sql.setString(5, horario.getModalidade());
+			sql.setFloat(6, horario.getDuracaoSemanal());
+			sql.setTimestamp(7, horario.getInicioPF1());
+			sql.setTimestamp(8, horario.getFimPF1());
+			sql.setTimestamp(9, horario.getInicioPF2());
+			sql.setTimestamp(10, horario.getFimPF2());
+			sql.setTimestamp(11, horario.getInicioHN1());
+			sql.setTimestamp(12, horario.getFimHN1());
+			sql.setTimestamp(13, horario.getInicioHN2());
+			sql.setTimestamp(14, horario.getFimHN2());
+			sql.setTimestamp(15, horario.getInicioRefeicao());
+			sql.setTimestamp(16, horario.getFimRefeicao());
+			sql.setTime(17, horario.getDescontoObrigatorioRefeicao());
+			sql.setTime(18, horario.getIntervaloMinimoRefeicao());
+			sql.setTimestamp(19, horario.getInicioExpediente());
+			sql.setTimestamp(20, horario.getFimExpediente());
+			sql.setDate(21, new java.sql.Date((horario.getDataInicio()).getTime()));
+			if (horario.getDataFim() != null) {
+				sql.setDate(22, new java.sql.Date((horario.getDataFim()).getTime()));
+			} else {
+				sql.setDate(22, null);
+			}
+			sql.setInt(23, horario.getNumDias());
+			sql.setInt(24, horario.getPosicao());
+			sql.setTime(25, horario.getTrabalhoConsecutivo());
+			sql.setInt(26, horario.getQuem());
+			if (horario.getQuando() != null) {
+				sql.setTimestamp(27, new Timestamp((horario.getQuando()).getTime()));
+			} else {
+				sql.setTimestamp(27, null);
+			}
+			sql.setInt(28, horario.getCodigoInterno());
+
+			sql.executeUpdate();
+			sql.close();
+			resultado = true;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("HorarioRelacional.alterarExcepcaoHorario: " + e.toString());
+		} finally {
+			return resultado;
+		}
+	} /* alterarExcepcaoHorario */
+
 	public boolean alterarDataFimHorario(Date dataFim, int numeroMecanografico) {
 		boolean resultado = false;
 
 		try {
-			PreparedStatement sql = 
+			PreparedStatement sql =
 				UtilRelacional.prepararComando("SELECT chaveHorarioActual FROM ass_FUNCIONARIO " + "WHERE numeroMecanografico = ?");
 			sql.setInt(1, numeroMecanografico);
 			ResultSet resultadoQuery = sql.executeQuery();
@@ -110,7 +202,6 @@ public class HorarioRelacional implements IHorarioPersistente {
 			if (resultadoQuery.next()) {
 				chaveHorarioActual = resultadoQuery.getInt("chaveHorarioActual");
 			} else {
-				System.out.println("HorarioRelacional.alterarDataFimHorario: não foi encontrado o funcionário!!");
 				sql.close();
 				return resultado;
 			}
@@ -149,6 +240,24 @@ public class HorarioRelacional implements IHorarioPersistente {
 		}
 	} /* apagarHorario */
 
+	public boolean apagarHorarioExcepcao(int codigoInterno) {
+		boolean resultado = false;
+
+		try {
+			PreparedStatement sql = UtilRelacional.prepararComando("DELETE FROM ass_HORARIO_EXCEPCAO " + "WHERE codigoInterno = ?");
+
+			sql.setInt(1, codigoInterno);
+
+			sql.executeUpdate();
+			sql.close();
+			resultado = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("HorarioRelacional.apagarHorarioExcepcao: " + e.toString());
+		} finally {
+			return resultado;
+		}
+	}
 	public boolean apagarTodosHorarios() {
 		boolean resultado = false;
 
@@ -257,7 +366,8 @@ public class HorarioRelacional implements IHorarioPersistente {
 
 			} else if (inicioHorario.get(Calendar.YEAR) == diaConsulta.get(Calendar.YEAR)) {
 				numDias =
-					new BigInteger(String.valueOf((diaConsulta.get(Calendar.DAY_OF_YEAR) - inicioHorario.get(Calendar.DAY_OF_YEAR)) + 1))
+					new BigInteger(
+						String.valueOf((diaConsulta.get(Calendar.DAY_OF_YEAR) - inicioHorario.get(Calendar.DAY_OF_YEAR)) + 1))
 						.abs()
 						.intValue();
 
@@ -286,7 +396,9 @@ public class HorarioRelacional implements IHorarioPersistente {
 			}
 
 			indiceRotacao =
-				new BigInteger(String.valueOf(numDias + indiceInicioHorario)).mod(new BigInteger(String.valueOf(numDiasRotacao))).intValue();
+				new BigInteger(String.valueOf(numDias + indiceInicioHorario))
+					.mod(new BigInteger(String.valueOf(numDiasRotacao)))
+					.intValue();
 			/*
 			int indiceDescanso =
 				new BigInteger(String.valueOf(indiceRotacao))
@@ -320,7 +432,9 @@ public class HorarioRelacional implements IHorarioPersistente {
 
 		try {
 			indiceDescanso =
-				new BigInteger(String.valueOf(indiceRotacao)).mod(new BigInteger(String.valueOf(Constants.NUM_DIAS_SEMANA))).intValue();
+				new BigInteger(String.valueOf(indiceRotacao))
+					.mod(new BigInteger(String.valueOf(Constants.NUM_DIAS_SEMANA)))
+					.intValue();
 			// se é 0 entao é sábado
 			// se é 1 entao é domingo
 		} catch (ArithmeticException ea) {
@@ -330,6 +444,44 @@ public class HorarioRelacional implements IHorarioPersistente {
 		}
 	} /* calcularIndiceDescanso */
 
+	public boolean desassociarHorarioExcepcaoRegime(int codigoInternoHorario, int codigoInternoRegime) {
+		boolean resultado = false;
+		try {
+			PreparedStatement sql =
+				UtilRelacional.prepararComando("DELETE FROM ass_HORARIOEXCEPCAO_REGIME " + "WHERE chaveHorario=? AND chaveRegime=?");
+			sql.setInt(1, codigoInternoHorario);
+			sql.setInt(2, codigoInternoRegime);
+
+			sql.executeUpdate();
+			sql.close();
+			resultado = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("HorarioRelacional.desassociarHorarioExcepcaoRegime: " + e.toString());
+		} finally {
+			return resultado;
+		}
+	} /* desassociarHorarioExcepcaoRegime */
+
+	public boolean desassociarHorarioRegime(int codigoInternoHorario, int codigoInternoRegime) {
+		boolean resultado = false;
+		try {
+			PreparedStatement sql =
+				UtilRelacional.prepararComando("DELETE FROM ass_HORARIO_REGIME " + "WHERE chaveHorario=? AND chaveRegime=?");
+			sql.setInt(1, codigoInternoHorario);
+			sql.setInt(2, codigoInternoRegime);
+
+			sql.executeUpdate();
+			sql.close();
+			resultado = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("HorarioRelacional.desassociarHorarioRegime: " + e.toString());
+		} finally {
+			return resultado;
+		}
+	} /* desassociarHorarioRegime */
+
 	public boolean escreverExcepcaoHorario(Horario horario) {
 		boolean resultado = false;
 
@@ -337,7 +489,7 @@ public class HorarioRelacional implements IHorarioPersistente {
 			PreparedStatement sql =
 				UtilRelacional.prepararComando(
 					"INSERT INTO ass_HORARIO_EXCEPCAO "
-						+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+						+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 			sql.setInt(1, horario.getCodigoInterno());
 			sql.setInt(2, horario.getChaveHorarioTipo());
@@ -371,12 +523,13 @@ public class HorarioRelacional implements IHorarioPersistente {
 			}
 			sql.setInt(23, horario.getNumDias());
 			sql.setInt(24, horario.getPosicao());
-			sql.setInt(25, horario.getQuem());
+			sql.setTime(25, horario.getTrabalhoConsecutivo());
+			sql.setInt(26, horario.getQuem());
 			if (horario.getQuando() != null) {
-				sql.setTimestamp(26, new Timestamp((horario.getQuando()).getTime()));
+				sql.setTimestamp(27, new Timestamp((horario.getQuando()).getTime()));
 			} else {
 				Calendar agora = Calendar.getInstance();
-				sql.setTimestamp(26, new Timestamp(agora.getTimeInMillis()));
+				sql.setTimestamp(27, new Timestamp(agora.getTimeInMillis()));
 			}
 
 			sql.executeUpdate();
@@ -396,7 +549,8 @@ public class HorarioRelacional implements IHorarioPersistente {
 		try {
 			PreparedStatement sql =
 				UtilRelacional.prepararComando(
-					"INSERT INTO ass_HORARIO " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+					"INSERT INTO ass_HORARIO "
+						+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 			sql.setInt(1, horario.getCodigoInterno());
 			sql.setInt(2, horario.getChaveHorarioTipo());
@@ -430,12 +584,13 @@ public class HorarioRelacional implements IHorarioPersistente {
 			}
 			sql.setInt(23, horario.getNumDias());
 			sql.setInt(24, horario.getPosicao());
-			sql.setInt(25, horario.getQuem());
+			sql.setTime(25, horario.getTrabalhoConsecutivo());
+			sql.setInt(26, horario.getQuem());
 			if (horario.getQuando() != null) {
-				sql.setTimestamp(26, new Timestamp((horario.getQuando()).getTime()));
+				sql.setTimestamp(27, new Timestamp((horario.getQuando()).getTime()));
 			} else {
 				Calendar agora = Calendar.getInstance();
-				sql.setTimestamp(26, new Timestamp(agora.getTimeInMillis()));
+				sql.setTimestamp(27, new Timestamp(agora.getTimeInMillis()));
 			}
 
 			sql.executeUpdate();
@@ -472,7 +627,8 @@ public class HorarioRelacional implements IHorarioPersistente {
 
 				sql =
 					UtilRelacional.prepararComando(
-						"INSERT INTO ass_HORARIO " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+						"INSERT INTO ass_HORARIO "
+							+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 				sql.setInt(1, horario.getCodigoInterno());
 				sql.setInt(2, horario.getChaveHorarioTipo());
@@ -506,8 +662,14 @@ public class HorarioRelacional implements IHorarioPersistente {
 				}
 				sql.setInt(23, horario.getNumDias());
 				sql.setInt(24, horario.getPosicao());
-				sql.setInt(25, horario.getQuem());
-				sql.setTimestamp(26, new Timestamp((horario.getQuando()).getTime()));
+				sql.setTime(25, horario.getTrabalhoConsecutivo());
+				sql.setInt(26, horario.getQuem());
+				if (horario.getQuando() != null) {
+					sql.setTimestamp(27, new Timestamp((horario.getQuando()).getTime()));
+				} else {
+					Calendar agora = Calendar.getInstance();
+					sql.setTimestamp(27, new Timestamp(agora.getTimeInMillis()));
+				}
 
 				sql.executeUpdate();
 				sql.close();
@@ -521,10 +683,72 @@ public class HorarioRelacional implements IHorarioPersistente {
 		}
 	} /* escreverRotacoes */
 
-	public ArrayList lerExcepcoesHorarioPorNumMecanografico(int numMecanografico) {
-		return null;
-	} /* lerExcepcoesHorarioPorNumMecanografico */
+	public Horario lerExcepcaoHorario(int codigoInterno) {
+		//		este metodo é identico ao lerHorario
+		Horario horario = null;
 
+		try {
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_HORARIO_EXCEPCAO " + "WHERE codigoInterno = ?");
+
+			sql.setInt(1, codigoInterno);
+
+			ResultSet resultado = sql.executeQuery();
+			if (resultado.next()) {
+				Time descontoObrigatorio = null;
+				Time descontoMinimo = null;
+				Time trabalhoConsecutivo = null;
+				if (resultado.getTime("descontoObrigatorio") != null && resultado.getTime("descontoMinimo") != null) {
+					//duracao, logo adiciona-se uma hora
+					descontoObrigatorio = new Time(resultado.getTime("descontoObrigatorio").getTime() + 3600 * 1000);
+					descontoMinimo = new Time(resultado.getTime("descontoMinimo").getTime() + 3600 * 1000);
+				}
+				if (resultado.getTime("trabalhoConsecutivo") != null) {
+					trabalhoConsecutivo = new Time(resultado.getTime("trabalhoConsecutivo").getTime() + 3600 * 1000);
+				}
+
+				java.util.Date dataFim = null;
+				if (resultado.getString("dataFim") != null) {
+					dataFim = java.sql.Date.valueOf(resultado.getString("dataFim"));
+				}
+				horario =
+					new Horario(
+						resultado.getInt("codigoInterno"),
+						resultado.getInt("chaveHorarioTipo"),
+						resultado.getInt("chaveFuncionario"),
+						resultado.getString("sigla"),
+						resultado.getString("modalidade"),
+						resultado.getFloat("duracaoSemanal"),
+						resultado.getTimestamp("inicioPF1"),
+						resultado.getTimestamp("fimPF1"),
+						resultado.getTimestamp("inicioPF2"),
+						resultado.getTimestamp("fimPF2"),
+						resultado.getTimestamp("inicioHN1"),
+						resultado.getTimestamp("fimHN1"),
+						resultado.getTimestamp("inicioHN2"),
+						resultado.getTimestamp("fimHN2"),
+						resultado.getTimestamp("inicioRefeicao"),
+						resultado.getTimestamp("fimRefeicao"),
+						descontoObrigatorio,
+						descontoMinimo,
+						resultado.getTimestamp("inicioExpediente"),
+						resultado.getTimestamp("fimExpediente"),
+						null,
+						java.sql.Date.valueOf(resultado.getString("dataInicio")),
+						dataFim,
+						resultado.getInt("numDias"),
+						resultado.getInt("posicao"),
+						trabalhoConsecutivo,
+						resultado.getInt("quem"),
+						resultado.getTimestamp("quando"));
+			}
+			sql.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("HorarioRelacional.lerExcepcaoHorario: " + e.toString());
+		} finally {
+			return horario;
+		}
+	}
 	public Horario lerExcepcaoHorarioPorNumMecanografico(int numMecanografico, Timestamp dataConsulta) {
 		//ATENCAO: esta função é idêntica à função lerHorarioPorNumMecanografico		
 		Horario horario = null;
@@ -598,6 +822,18 @@ public class HorarioRelacional implements IHorarioPersistente {
 
 			java.util.Date dataFim = null;
 			if (resultado.next()) {
+				Time descontoObrigatorio = null;
+				Time descontoMinimo = null;
+				Time trabalhoConsecutivo = null;
+				if (resultado.getTime("descontoObrigatorio") != null && resultado.getTime("descontoMinimo") != null) {
+					//duracao, logo adiciona-se uma hora
+					descontoObrigatorio = new Time(resultado.getTime("descontoObrigatorio").getTime() + 3600 * 1000);
+					descontoMinimo = new Time(resultado.getTime("descontoMinimo").getTime() + 3600 * 1000);
+				}
+				if (resultado.getTime("trabalhoConsecutivo") != null) {
+					trabalhoConsecutivo = new Time(resultado.getTime("trabalhoConsecutivo").getTime() + 3600 * 1000);
+				}
+
 				if (resultado.getString("dataFim") != null) {
 					dataFim = java.sql.Date.valueOf(resultado.getString("dataFim"));
 				} else {
@@ -622,8 +858,8 @@ public class HorarioRelacional implements IHorarioPersistente {
 						resultado.getTimestamp("fimHN2"),
 						resultado.getTimestamp("inicioRefeicao"),
 						resultado.getTimestamp("fimRefeicao"),
-						resultado.getTime("descontoObrigatorio"),
-						resultado.getTime("descontoMinimo"),
+						descontoObrigatorio,
+						descontoMinimo,
 						resultado.getTimestamp("inicioExpediente"),
 						resultado.getTimestamp("fimExpediente"),
 						null,
@@ -631,6 +867,7 @@ public class HorarioRelacional implements IHorarioPersistente {
 						dataFim,
 						resultado.getInt("numDias"),
 						resultado.getInt("posicao"),
+						trabalhoConsecutivo,
 						resultado.getInt("quem"),
 						resultado.getTimestamp("quando"));
 			} else {
@@ -655,6 +892,10 @@ public class HorarioRelacional implements IHorarioPersistente {
 			return horario;
 		}
 	} /* lerExcepcaoHorarioPorNumMecanografico */
+
+	public ArrayList lerExcepcoesHorarioPorNumMecanografico(int numMecanografico) {
+		return null;
+	} /* lerExcepcoesHorarioPorNumMecanografico */
 
 	public ArrayList lerExcepcoesHorarioPorNumMecanografico(int numMecanografico, Date dataInicio, Date dataFim) {
 		ArrayList listaHorarios = null;
@@ -692,6 +933,19 @@ public class HorarioRelacional implements IHorarioPersistente {
 
 			listaHorarios = new ArrayList();
 			while (resultado.next()) {
+
+				Time descontoObrigatorio = null;
+				Time descontoMinimo = null;
+				Time trabalhoConsecutivo = null;
+				if (resultado.getTime("descontoObrigatorio") != null && resultado.getTime("descontoMinimo") != null) {
+					//duracao, logo adiciona-se uma hora
+					descontoObrigatorio = new Time(resultado.getTime("descontoObrigatorio").getTime() + 3600 * 1000);
+					descontoMinimo = new Time(resultado.getTime("descontoMinimo").getTime() + 3600 * 1000);
+				}
+				if (resultado.getTime("trabalhoConsecutivo") != null) {
+					trabalhoConsecutivo = new Time(resultado.getTime("trabalhoConsecutivo").getTime() + 3600 * 1000);
+				}
+
 				listaHorarios.add(
 					new Horario(
 						resultado.getInt("codigoInterno"),
@@ -710,8 +964,8 @@ public class HorarioRelacional implements IHorarioPersistente {
 						resultado.getTimestamp("fimHN2"),
 						resultado.getTimestamp("inicioRefeicao"),
 						resultado.getTimestamp("fimRefeicao"),
-						resultado.getTime("descontoObrigatorio"),
-						resultado.getTime("descontoMinimo"),
+						descontoObrigatorio,
+						descontoMinimo,
 						resultado.getTimestamp("inicioExpediente"),
 						resultado.getTimestamp("fimExpediente"),
 						null,
@@ -719,6 +973,7 @@ public class HorarioRelacional implements IHorarioPersistente {
 						null,
 						resultado.getInt("numDias"),
 						resultado.getInt("posicao"),
+						trabalhoConsecutivo,
 						resultado.getInt("quem"),
 						resultado.getTimestamp("quando")));
 			}
@@ -756,6 +1011,18 @@ public class HorarioRelacional implements IHorarioPersistente {
 			historicoHorario = new ArrayList();
 			java.util.Date dataFim = null;
 			while (resultado.next()) {
+				Time descontoObrigatorio = null;
+				Time descontoMinimo = null;
+				Time trabalhoConsecutivo = null;
+				if (resultado.getTime("descontoObrigatorio") != null && resultado.getTime("descontoMinimo") != null) {
+					//duracao, logo adiciona-se uma hora
+					descontoObrigatorio = new Time(resultado.getTime("descontoObrigatorio").getTime() + 3600 * 1000);
+					descontoMinimo = new Time(resultado.getTime("descontoMinimo").getTime() + 3600 * 1000);
+				}
+				if (resultado.getTime("trabalhoConsecutivo") != null) {
+					trabalhoConsecutivo = new Time(resultado.getTime("trabalhoConsecutivo").getTime() + 3600 * 1000);
+				}
+
 				if (resultado.getString("dataFim") != null) {
 					dataFim = java.sql.Date.valueOf(resultado.getString("dataFim"));
 				} else {
@@ -780,8 +1047,8 @@ public class HorarioRelacional implements IHorarioPersistente {
 						resultado.getTimestamp("fimHN2"),
 						resultado.getTimestamp("inicioRefeicao"),
 						resultado.getTimestamp("fimRefeicao"),
-						resultado.getTime("descontoObrigatorio"),
-						resultado.getTime("descontoMinimo"),
+						descontoObrigatorio,
+						descontoMinimo,
 						resultado.getTimestamp("inicioExpediente"),
 						resultado.getTimestamp("fimExpediente"),
 						null,
@@ -789,6 +1056,7 @@ public class HorarioRelacional implements IHorarioPersistente {
 						dataFim,
 						resultado.getInt("numDias"),
 						resultado.getInt("posicao"),
+						trabalhoConsecutivo,
 						resultado.getInt("quem"),
 						resultado.getTimestamp("quando")));
 
@@ -813,6 +1081,18 @@ public class HorarioRelacional implements IHorarioPersistente {
 
 			ResultSet resultado = sql.executeQuery();
 			if (resultado.next()) {
+				Time descontoObrigatorio = null;
+				Time descontoMinimo = null;
+				Time trabalhoConsecutivo = null;
+				if (resultado.getTime("descontoObrigatorio") != null && resultado.getTime("descontoMinimo") != null) {
+					//duracao, logo adiciona-se uma hora
+					descontoObrigatorio = new Time(resultado.getTime("descontoObrigatorio").getTime() + 3600 * 1000);
+					descontoMinimo = new Time(resultado.getTime("descontoMinimo").getTime() + 3600 * 1000);
+				}
+				if (resultado.getTime("trabalhoConsecutivo") != null) {
+					trabalhoConsecutivo = new Time(resultado.getTime("trabalhoConsecutivo").getTime() + 3600 * 1000);
+				}
+
 				java.util.Date dataFim = null;
 				if (resultado.getString("dataFim") != null) {
 					dataFim = java.sql.Date.valueOf(resultado.getString("dataFim"));
@@ -835,8 +1115,8 @@ public class HorarioRelacional implements IHorarioPersistente {
 						resultado.getTimestamp("fimHN2"),
 						resultado.getTimestamp("inicioRefeicao"),
 						resultado.getTimestamp("fimRefeicao"),
-						resultado.getTime("descontoObrigatorio"),
-						resultado.getTime("descontoMinimo"),
+						descontoObrigatorio,
+						descontoMinimo,
 						resultado.getTimestamp("inicioExpediente"),
 						resultado.getTimestamp("fimExpediente"),
 						null,
@@ -844,6 +1124,7 @@ public class HorarioRelacional implements IHorarioPersistente {
 						dataFim,
 						resultado.getInt("numDias"),
 						resultado.getInt("posicao"),
+						trabalhoConsecutivo,
 						resultado.getInt("quem"),
 						resultado.getTimestamp("quando"));
 			}
@@ -860,9 +1141,11 @@ public class HorarioRelacional implements IHorarioPersistente {
 		Horario horario = null;
 
 		try {
-			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_HORARIO " 
-			+ "WHERE codigoInterno = ? AND " 
-			+ "((dataFim IS NOT NULL AND ? BETWEEN dataInicio AND dataFim) OR (dataFim IS NULL AND ? >= dataInicio))");
+			PreparedStatement sql =
+				UtilRelacional.prepararComando(
+					"SELECT * FROM ass_HORARIO "
+						+ "WHERE codigoInterno = ? AND "
+						+ "((dataFim IS NOT NULL AND ? BETWEEN dataInicio AND dataFim) OR (dataFim IS NULL AND ? >= dataInicio))");
 
 			sql.setInt(1, codigoInterno);
 			sql.setDate(2, new java.sql.Date(dataConsulta.getTime()));
@@ -870,6 +1153,18 @@ public class HorarioRelacional implements IHorarioPersistente {
 
 			ResultSet resultado = sql.executeQuery();
 			if (resultado.next()) {
+				Time descontoObrigatorio = null;
+				Time descontoMinimo = null;
+				Time trabalhoConsecutivo = null;
+				if (resultado.getTime("descontoObrigatorio") != null && resultado.getTime("descontoMinimo") != null) {
+					//duracao, logo adiciona-se uma hora
+					descontoObrigatorio = new Time(resultado.getTime("descontoObrigatorio").getTime() + 3600 * 1000);
+					descontoMinimo = new Time(resultado.getTime("descontoMinimo").getTime() + 3600 * 1000);
+				}
+				if (resultado.getTime("trabalhoConsecutivo") != null) {
+					trabalhoConsecutivo = new Time(resultado.getTime("trabalhoConsecutivo").getTime() + 3600 * 1000);
+				}
+
 				java.util.Date dataFim = null;
 				if (resultado.getString("dataFim") != null) {
 					dataFim = java.sql.Date.valueOf(resultado.getString("dataFim"));
@@ -892,8 +1187,8 @@ public class HorarioRelacional implements IHorarioPersistente {
 						resultado.getTimestamp("fimHN2"),
 						resultado.getTimestamp("inicioRefeicao"),
 						resultado.getTimestamp("fimRefeicao"),
-						resultado.getTime("descontoObrigatorio"),
-						resultado.getTime("descontoMinimo"),
+						descontoObrigatorio,
+						descontoMinimo,
 						resultado.getTimestamp("inicioExpediente"),
 						resultado.getTimestamp("fimExpediente"),
 						null,
@@ -901,6 +1196,7 @@ public class HorarioRelacional implements IHorarioPersistente {
 						dataFim,
 						resultado.getInt("numDias"),
 						resultado.getInt("posicao"),
+						trabalhoConsecutivo,
 						resultado.getInt("quem"),
 						resultado.getTimestamp("quando"));
 			}
@@ -923,6 +1219,18 @@ public class HorarioRelacional implements IHorarioPersistente {
 
 			ResultSet resultado = sql.executeQuery();
 			if (resultado.next()) {
+				Time descontoObrigatorio = null;
+				Time descontoMinimo = null;
+				Time trabalhoConsecutivo = null;
+				if (resultado.getTime("descontoObrigatorio") != null && resultado.getTime("descontoMinimo") != null) {
+					//duracao, logo adiciona-se uma hora
+					descontoObrigatorio = new Time(resultado.getTime("descontoObrigatorio").getTime() + 3600 * 1000);
+					descontoMinimo = new Time(resultado.getTime("descontoMinimo").getTime() + 3600 * 1000);
+				}
+				if (resultado.getTime("trabalhoConsecutivo") != null) {
+					trabalhoConsecutivo = new Time(resultado.getTime("trabalhoConsecutivo").getTime() + 3600 * 1000);
+				}
+
 				java.util.Date dataFim = null;
 				if (resultado.getString("dataFim") != null) {
 					dataFim = java.sql.Date.valueOf(resultado.getString("dataFim"));
@@ -945,8 +1253,8 @@ public class HorarioRelacional implements IHorarioPersistente {
 						resultado.getTimestamp("fimHN2"),
 						resultado.getTimestamp("inicioRefeicao"),
 						resultado.getTimestamp("fimRefeicao"),
-						resultado.getTime("descontoObrigatorio"),
-						resultado.getTime("descontoMinimo"),
+						descontoObrigatorio,
+						descontoMinimo,
 						resultado.getTimestamp("inicioExpediente"),
 						resultado.getTimestamp("fimExpediente"),
 						null,
@@ -954,6 +1262,7 @@ public class HorarioRelacional implements IHorarioPersistente {
 						dataFim,
 						resultado.getInt("numDias"),
 						resultado.getInt("posicao"),
+						trabalhoConsecutivo,
 						resultado.getInt("quem"),
 						resultado.getTimestamp("quando"));
 			}
@@ -1035,17 +1344,33 @@ public class HorarioRelacional implements IHorarioPersistente {
 			java.util.Date dataFim = null;
 			listaHorarios = new ArrayList();
 			while (resultado.next()) {
+				Time descontoObrigatorio = null;
+				Time descontoMinimo = null;
+				Time trabalhoConsecutivo = null;
+				if (resultado.getTime("descontoObrigatorio") != null && resultado.getTime("descontoMinimo") != null) {
+					//				duracao, logo adiciona-se uma hora
+					descontoObrigatorio = new Time(resultado.getTime("descontoObrigatorio").getTime() + 3600 * 1000);
+					descontoMinimo = new Time(resultado.getTime("descontoMinimo").getTime() + 3600 * 1000);
+				}
+				if (resultado.getTime("trabalhoConsecutivo") != null) {
+					trabalhoConsecutivo = new Time(resultado.getTime("trabalhoConsecutivo").getTime() + 3600 * 1000);
+				}
+
 				// Primeiro dia da proxima rotacao deste horario
 				dataHorario = Calendar.getInstance();
 				if (resultado.getInt("codigoInterno") == chaveHorarioAgora) {
-					dataHorario.set(Calendar.DAY_OF_MONTH, agora.get(Calendar.DAY_OF_MONTH) - (indiceRotacao - resultado.getInt("posicao")));
+					dataHorario.set(
+						Calendar.DAY_OF_MONTH,
+						agora.get(Calendar.DAY_OF_MONTH) - (indiceRotacao - resultado.getInt("posicao")));
 				} else {
 					if (indiceRotacao > resultado.getInt("posicao")) {
 						dataHorario.set(
 							Calendar.DAY_OF_MONTH,
 							agora.get(Calendar.DAY_OF_MONTH) + ((numDiasRotacao - indiceRotacao) + resultado.getInt("posicao")));
 					} else if (indiceRotacao < resultado.getInt("posicao")) {
-						dataHorario.set(Calendar.DAY_OF_MONTH, agora.get(Calendar.DAY_OF_MONTH) + (resultado.getInt("posicao") - indiceRotacao));
+						dataHorario.set(
+							Calendar.DAY_OF_MONTH,
+							agora.get(Calendar.DAY_OF_MONTH) + (resultado.getInt("posicao") - indiceRotacao));
 					}
 				}
 				dataCumprir = dataHorario.getTime();
@@ -1074,8 +1399,8 @@ public class HorarioRelacional implements IHorarioPersistente {
 						resultado.getTimestamp("fimHN2"),
 						resultado.getTimestamp("inicioRefeicao"),
 						resultado.getTimestamp("fimRefeicao"),
-						resultado.getTime("descontoObrigatorio"),
-						resultado.getTime("descontoMinimo"),
+						descontoObrigatorio,
+						descontoMinimo,
 						resultado.getTimestamp("inicioExpediente"),
 						resultado.getTimestamp("fimExpediente"),
 						dataCumprir,
@@ -1083,13 +1408,14 @@ public class HorarioRelacional implements IHorarioPersistente {
 						dataFim,
 						resultado.getInt("numDias"),
 						resultado.getInt("posicao"),
+						trabalhoConsecutivo,
 						resultado.getInt("quem"),
 						resultado.getTimestamp("quando")));
 			}
 			sql.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("HorarioRelacional.lerRotacoesPorNumMecanografico: " + e.toString());
+			System.out.println("HorarioRelacional.lerHorarioActualPorNumMecanografico: " + e.toString());
 		} finally {
 			return listaHorarios;
 		}
@@ -1169,6 +1495,18 @@ public class HorarioRelacional implements IHorarioPersistente {
 
 			java.util.Date dataFim = null;
 			if (resultado.next()) {
+				Time descontoObrigatorio = null;
+				Time descontoMinimo = null;
+				Time trabalhoConsecutivo = null;
+				if (resultado.getTime("descontoObrigatorio") != null && resultado.getTime("descontoMinimo") != null) {
+					//duracao, logo adiciona-se uma hora
+					descontoObrigatorio = new Time(resultado.getTime("descontoObrigatorio").getTime() + 3600 * 1000);
+					descontoMinimo = new Time(resultado.getTime("descontoMinimo").getTime() + 3600 * 1000);
+				}
+				if (resultado.getTime("trabalhoConsecutivo") != null) {
+					trabalhoConsecutivo = new Time(resultado.getTime("trabalhoConsecutivo").getTime() + 3600 * 1000);
+				}
+
 				if (resultado.getString("dataFim") != null) {
 					dataFim = java.sql.Date.valueOf(resultado.getString("dataFim"));
 				} else {
@@ -1193,8 +1531,8 @@ public class HorarioRelacional implements IHorarioPersistente {
 						resultado.getTimestamp("fimHN2"),
 						resultado.getTimestamp("inicioRefeicao"),
 						resultado.getTimestamp("fimRefeicao"),
-						resultado.getTime("descontoObrigatorio"),
-						resultado.getTime("descontoMinimo"),
+						descontoObrigatorio,
+						descontoMinimo,
 						resultado.getTimestamp("inicioExpediente"),
 						resultado.getTimestamp("fimExpediente"),
 						null,
@@ -1202,6 +1540,7 @@ public class HorarioRelacional implements IHorarioPersistente {
 						dataFim,
 						resultado.getInt("numDias"),
 						resultado.getInt("posicao"),
+						trabalhoConsecutivo,
 						resultado.getInt("quem"),
 						resultado.getTimestamp("quando"));
 
@@ -1278,6 +1617,18 @@ public class HorarioRelacional implements IHorarioPersistente {
 
 			listaHorarios = new ArrayList();
 			while (resultado.next()) {
+				Time descontoObrigatorio = null;
+				Time descontoMinimo = null;
+				Time trabalhoConsecutivo = null;
+				if (resultado.getTime("descontoObrigatorio") != null && resultado.getTime("descontoMinimo") != null) {
+					//duracao, logo adiciona-se uma hora
+					descontoObrigatorio = new Time(resultado.getTime("descontoObrigatorio").getTime() + 3600 * 1000);
+					descontoMinimo = new Time(resultado.getTime("descontoMinimo").getTime() + 3600 * 1000);
+				}
+				if (resultado.getTime("trabalhoConsecutivo") != null) {
+					trabalhoConsecutivo = new Time(resultado.getTime("trabalhoConsecutivo").getTime() + 3600 * 1000);
+				}
+
 				listaHorarios.add(
 					new Horario(
 						resultado.getInt("codigoInterno"),
@@ -1296,8 +1647,8 @@ public class HorarioRelacional implements IHorarioPersistente {
 						resultado.getTimestamp("fimHN2"),
 						resultado.getTimestamp("inicioRefeicao"),
 						resultado.getTimestamp("fimRefeicao"),
-						resultado.getTime("descontoObrigatorio"),
-						resultado.getTime("descontoMinimo"),
+						descontoObrigatorio,
+						descontoMinimo,
 						resultado.getTimestamp("inicioExpediente"),
 						resultado.getTimestamp("fimExpediente"),
 						null,
@@ -1305,6 +1656,7 @@ public class HorarioRelacional implements IHorarioPersistente {
 						null,
 						resultado.getInt("numDias"),
 						resultado.getInt("posicao"),
+						trabalhoConsecutivo,
 						resultado.getInt("quem"),
 						resultado.getTimestamp("quando")));
 			}
@@ -1334,12 +1686,24 @@ public class HorarioRelacional implements IHorarioPersistente {
 			}
 			sql.close();
 
-			sql = UtilRelacional.prepararComando("SELECT * FROM ass_HORARIO " + "WHERE chaveFuncionario = ? AND horario.dataFim IS NULL");
+			sql = UtilRelacional.prepararComando("SELECT * FROM ass_HORARIO " + "WHERE chaveFuncionario = ? AND dataFim IS NULL");
 			sql.setInt(1, chaveFuncionario);
 
 			resultado = sql.executeQuery();
 			listaHorarios = new ArrayList();
 			while (resultado.next()) {
+				Time descontoObrigatorio = null;
+				Time descontoMinimo = null;
+				Time trabalhoConsecutivo = null;
+				if (resultado.getTime("descontoObrigatorio") != null && resultado.getTime("descontoMinimo") != null) {
+					//duracao, logo adiciona-se uma hora
+					descontoObrigatorio = new Time(resultado.getTime("descontoObrigatorio").getTime() + 3600 * 1000);
+					descontoMinimo = new Time(resultado.getTime("descontoMinimo").getTime() + 3600 * 1000);
+				}
+				if (resultado.getTime("trabalhoConsecutivo") != null) {
+					trabalhoConsecutivo = new Time(resultado.getTime("trabalhoConsecutivo").getTime() + 3600 * 1000);
+				}
+
 				listaHorarios.add(
 					new Horario(
 						resultado.getInt("codigoInterno"),
@@ -1358,8 +1722,8 @@ public class HorarioRelacional implements IHorarioPersistente {
 						resultado.getTimestamp("fimHN2"),
 						resultado.getTimestamp("inicioRefeicao"),
 						resultado.getTimestamp("fimRefeicao"),
-						resultado.getTime("descontoObrigatorio"),
-						resultado.getTime("descontoMinimo"),
+						descontoObrigatorio,
+						descontoMinimo,
 						resultado.getTimestamp("inicioExpediente"),
 						resultado.getTimestamp("fimExpediente"),
 						null,
@@ -1367,6 +1731,7 @@ public class HorarioRelacional implements IHorarioPersistente {
 						null,
 						resultado.getInt("numDias"),
 						resultado.getInt("posicao"),
+						trabalhoConsecutivo,
 						resultado.getInt("quem"),
 						resultado.getTimestamp("quando")));
 			}
@@ -1400,6 +1765,29 @@ public class HorarioRelacional implements IHorarioPersistente {
 			return listaRegimes;
 		}
 	} /* lerRegimes */
+
+	public ArrayList lerRegimesHorarioExcepcao(int chaveHorario) {
+		ArrayList listaRegimes = null;
+
+		try {
+			PreparedStatement sql =
+				UtilRelacional.prepararComando("SELECT * FROM ass_HORARIOEXCEPCAO_REGIME " + "WHERE chaveHorario = ?");
+
+			sql.setInt(1, chaveHorario);
+
+			ResultSet resultado = sql.executeQuery();
+			listaRegimes = new ArrayList();
+			while (resultado.next()) {
+				listaRegimes.add(new Integer(resultado.getInt("chaveRegime")));
+			}
+			sql.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("HorarioRelacional.lerRegimesHorarioExcepcao: " + e.toString());
+		} finally {
+			return listaRegimes;
+		}
+	} /* lerRegimesHorarioExcepcao */
 
 	public HashMap lerRegimesRotacoes(ArrayList rotacaoHorario) {
 		HashMap regimesRotacaoHorario = null;
@@ -1510,17 +1898,33 @@ public class HorarioRelacional implements IHorarioPersistente {
 			java.util.Date dataFim = null;
 			listaHorarios = new ArrayList();
 			while (resultado.next()) {
+				Time descontoObrigatorio = null;
+				Time descontoMinimo = null;
+				Time trabalhoConsecutivo = null;
+				if (resultado.getTime("descontoObrigatorio") != null && resultado.getTime("descontoMinimo") != null) {
+					//duracao, logo adiciona-se uma hora
+					descontoObrigatorio = new Time(resultado.getTime("descontoObrigatorio").getTime() + 3600 * 1000);
+					descontoMinimo = new Time(resultado.getTime("descontoMinimo").getTime() + 3600 * 1000);
+				}
+				if (resultado.getTime("trabalhoConsecutivo") != null) {
+					trabalhoConsecutivo = new Time(resultado.getTime("trabalhoConsecutivo").getTime() + 3600 * 1000);
+				}
+
 				// Primeiro dia da proxima rotacao deste horario
 				dataHorario = Calendar.getInstance();
 				if (resultado.getInt("codigoInterno") == chaveHorarioAgora) {
-					dataHorario.set(Calendar.DAY_OF_MONTH, agora.get(Calendar.DAY_OF_MONTH) - (indiceRotacao - resultado.getInt("posicao")));
+					dataHorario.set(
+						Calendar.DAY_OF_MONTH,
+						agora.get(Calendar.DAY_OF_MONTH) - (indiceRotacao - resultado.getInt("posicao")));
 				} else {
 					if (indiceRotacao > resultado.getInt("posicao")) {
 						dataHorario.set(
 							Calendar.DAY_OF_MONTH,
 							agora.get(Calendar.DAY_OF_MONTH) + ((numDiasRotacao - indiceRotacao) + resultado.getInt("posicao")));
 					} else if (indiceRotacao < resultado.getInt("posicao")) {
-						dataHorario.set(Calendar.DAY_OF_MONTH, agora.get(Calendar.DAY_OF_MONTH) + (resultado.getInt("posicao") - indiceRotacao));
+						dataHorario.set(
+							Calendar.DAY_OF_MONTH,
+							agora.get(Calendar.DAY_OF_MONTH) + (resultado.getInt("posicao") - indiceRotacao));
 					}
 				}
 				dataCumprir = dataHorario.getTime();
@@ -1549,8 +1953,8 @@ public class HorarioRelacional implements IHorarioPersistente {
 						resultado.getTimestamp("fimHN2"),
 						resultado.getTimestamp("inicioRefeicao"),
 						resultado.getTimestamp("fimRefeicao"),
-						resultado.getTime("descontoObrigatorio"),
-						resultado.getTime("descontoMinimo"),
+						descontoObrigatorio,
+						descontoMinimo,
 						resultado.getTimestamp("inicioExpediente"),
 						resultado.getTimestamp("fimExpediente"),
 						dataCumprir,
@@ -1558,6 +1962,7 @@ public class HorarioRelacional implements IHorarioPersistente {
 						dataFim,
 						resultado.getInt("numDias"),
 						resultado.getInt("posicao"),
+						trabalhoConsecutivo,
 						resultado.getInt("quem"),
 						resultado.getTimestamp("quando")));
 			}
@@ -1600,6 +2005,18 @@ public class HorarioRelacional implements IHorarioPersistente {
 
 			listaHorarios = new ArrayList();
 			while (resultado.next()) {
+				Time descontoObrigatorio = null;
+				Time descontoMinimo = null;
+				Time trabalhoConsecutivo = null;
+				if (resultado.getTime("descontoObrigatorio") != null && resultado.getTime("descontoMinimo") != null) {
+					//duracao, logo adiciona-se uma hora
+					descontoObrigatorio = new Time(resultado.getTime("descontoObrigatorio").getTime() + 3600 * 1000);
+					descontoMinimo = new Time(resultado.getTime("descontoMinimo").getTime() + 3600 * 1000);
+				}
+				if (resultado.getTime("trabalhoConsecutivo") != null) {
+					trabalhoConsecutivo = new Time(resultado.getTime("trabalhoConsecutivo").getTime() + 3600 * 1000);
+				}
+
 				listaHorarios.add(
 					new Horario(
 						resultado.getInt("codigoInterno"),
@@ -1618,8 +2035,8 @@ public class HorarioRelacional implements IHorarioPersistente {
 						resultado.getTimestamp("fimHN2"),
 						resultado.getTimestamp("inicioRefeicao"),
 						resultado.getTimestamp("fimRefeicao"),
-						resultado.getTime("descontoObrigatorio"),
-						resultado.getTime("descontoMinimo"),
+						descontoObrigatorio,
+						descontoMinimo,
 						resultado.getTimestamp("inicioExpediente"),
 						resultado.getTimestamp("fimExpediente"),
 						null,
@@ -1627,6 +2044,7 @@ public class HorarioRelacional implements IHorarioPersistente {
 						null,
 						resultado.getInt("numDias"),
 						resultado.getInt("posicao"),
+						trabalhoConsecutivo,
 						resultado.getInt("quem"),
 						resultado.getTimestamp("quando")));
 			}
@@ -1669,6 +2087,18 @@ public class HorarioRelacional implements IHorarioPersistente {
 
 			listaHorarios = new ArrayList();
 			while (resultado.next()) {
+				Time descontoObrigatorio = null;
+				Time descontoMinimo = null;
+				Time trabalhoConsecutivo = null;
+				if (resultado.getTime("descontoObrigatorio") != null && resultado.getTime("descontoMinimo") != null) {
+					//duracao, logo adiciona-se uma hora
+					descontoObrigatorio = new Time(resultado.getTime("descontoObrigatorio").getTime() + 3600 * 1000);
+					descontoMinimo = new Time(resultado.getTime("descontoMinimo").getTime() + 3600 * 1000);
+				}
+				if (resultado.getTime("trabalhoConsecutivo") != null) {
+					trabalhoConsecutivo = new Time(resultado.getTime("trabalhoConsecutivo").getTime() + 3600 * 1000);
+				}
+
 				listaHorarios.add(
 					new Horario(
 						resultado.getInt("codigoInterno"),
@@ -1687,8 +2117,8 @@ public class HorarioRelacional implements IHorarioPersistente {
 						resultado.getTimestamp("fimHN2"),
 						resultado.getTimestamp("inicioRefeicao"),
 						resultado.getTimestamp("fimRefeicao"),
-						resultado.getTime("descontoObrigatorio"),
-						resultado.getTime("descontoMinimo"),
+						descontoObrigatorio,
+						descontoMinimo,
 						resultado.getTimestamp("inicioExpediente"),
 						resultado.getTimestamp("fimExpediente"),
 						null,
@@ -1696,6 +2126,7 @@ public class HorarioRelacional implements IHorarioPersistente {
 						null,
 						resultado.getInt("numDias"),
 						resultado.getInt("posicao"),
+						trabalhoConsecutivo,
 						resultado.getInt("quem"),
 						resultado.getTimestamp("quando")));
 			}
@@ -1767,6 +2198,18 @@ public class HorarioRelacional implements IHorarioPersistente {
 
 			listaHorarios = new ArrayList();
 			while (resultado.next()) {
+				Time descontoObrigatorio = null;
+				Time descontoMinimo = null;
+				Time trabalhoConsecutivo = null;
+				if (resultado.getTime("descontoObrigatorio") != null && resultado.getTime("descontoMinimo") != null) {
+					//duracao, logo adiciona-se uma hora
+					descontoObrigatorio = new Time(resultado.getTime("descontoObrigatorio").getTime() + 3600 * 1000);
+					descontoMinimo = new Time(resultado.getTime("descontoMinimo").getTime() + 3600 * 1000);
+				}
+				if (resultado.getTime("trabalhoConsecutivo") != null) {
+					trabalhoConsecutivo = new Time(resultado.getTime("trabalhoConsecutivo").getTime() + 3600 * 1000);
+				}
+
 				if (resultado.getString("dataFim") != null) {
 					dataFim = java.sql.Date.valueOf(resultado.getString("dataFim"));
 				} else {
@@ -1791,8 +2234,8 @@ public class HorarioRelacional implements IHorarioPersistente {
 						resultado.getTimestamp("fimHN2"),
 						resultado.getTimestamp("inicioRefeicao"),
 						resultado.getTimestamp("fimRefeicao"),
-						resultado.getTime("descontoObrigatorio"),
-						resultado.getTime("descontoMinimo"),
+						descontoObrigatorio,
+						descontoMinimo,
 						resultado.getTimestamp("inicioExpediente"),
 						resultado.getTimestamp("fimExpediente"),
 						null,
@@ -1800,6 +2243,7 @@ public class HorarioRelacional implements IHorarioPersistente {
 						dataFim,
 						resultado.getInt("numDias"),
 						resultado.getInt("posicao"),
+						trabalhoConsecutivo,
 						resultado.getInt("quem"),
 						resultado.getTimestamp("quando")));
 			}
@@ -1867,6 +2311,18 @@ public class HorarioRelacional implements IHorarioPersistente {
 
 			listaHorarios = new ArrayList();
 			while (resultado.next()) {
+				Time descontoObrigatorio = null;
+				Time descontoMinimo = null;
+				Time trabalhoConsecutivo = null;
+				if (resultado.getTime("descontoObrigatorio") != null && resultado.getTime("descontoMinimo") != null) {
+					//duracao, logo adiciona-se uma hora
+					descontoObrigatorio = new Time(resultado.getTime("descontoObrigatorio").getTime() + 3600 * 1000);
+					descontoMinimo = new Time(resultado.getTime("descontoMinimo").getTime() + 3600 * 1000);
+				}
+				if (resultado.getTime("trabalhoConsecutivo") != null) {
+					trabalhoConsecutivo = new Time(resultado.getTime("trabalhoConsecutivo").getTime() + 3600 * 1000);
+				}
+
 				if (resultado.getString("dataFim") != null) {
 					dataFim = java.sql.Date.valueOf(resultado.getString("dataFim"));
 				} else {
@@ -1891,8 +2347,8 @@ public class HorarioRelacional implements IHorarioPersistente {
 						resultado.getTimestamp("fimHN2"),
 						resultado.getTimestamp("inicioRefeicao"),
 						resultado.getTimestamp("fimRefeicao"),
-						resultado.getTime("descontoObrigatorio"),
-						resultado.getTime("descontoMinimo"),
+						descontoObrigatorio,
+						descontoMinimo,
 						resultado.getTimestamp("inicioExpediente"),
 						resultado.getTimestamp("fimExpediente"),
 						null,
@@ -1900,6 +2356,7 @@ public class HorarioRelacional implements IHorarioPersistente {
 						dataFim,
 						resultado.getInt("numDias"),
 						resultado.getInt("posicao"),
+						trabalhoConsecutivo,
 						resultado.getInt("quem"),
 						resultado.getTimestamp("quando")));
 			}
@@ -1949,4 +2406,151 @@ public class HorarioRelacional implements IHorarioPersistente {
 			return ultimo;
 		}
 	} /* ultimoCodigoInternoExcepcaoHorario */
+
+	public Horario existeExcepcaoHorario(Horario horario) {
+		Horario horarioBD = null;
+		try {
+			PreparedStatement sql =
+				UtilRelacional.prepararComando(
+					"SELECT * FROM ass_HORARIO_EXCEPCAO " + "WHERE chaveFuncionario = ? " + "AND dataInicio = ?");
+			sql.setInt(1, horario.getChaveFuncionario());
+			if (horario.getDataInicio() != null) {
+				sql.setTimestamp(2, new Timestamp((horario.getDataInicio()).getTime()));
+			} else {
+				sql.setTimestamp(2, null);
+			}
+			ResultSet resultado = sql.executeQuery();
+
+			if (resultado.next()) {
+				Time descontoObrigatorio = null;
+				Time descontoMinimo = null;
+				Time trabalhoConsecutivo = null;
+				if (resultado.getTime("descontoObrigatorio") != null && resultado.getTime("descontoMinimo") != null) {
+					//duracao, logo adiciona-se uma hora
+					descontoObrigatorio = new Time(resultado.getTime("descontoObrigatorio").getTime() + 3600 * 1000);
+					descontoMinimo = new Time(resultado.getTime("descontoMinimo").getTime() + 3600 * 1000);
+				}
+				if (resultado.getTime("trabalhoConsecutivo") != null) {
+					trabalhoConsecutivo = new Time(resultado.getTime("trabalhoConsecutivo").getTime() + 3600 * 1000);
+				}
+
+				Date dataFim = null;
+				if (resultado.getString("dataFim") != null) {
+					dataFim = java.sql.Date.valueOf(resultado.getString("dataFim"));
+				} else {
+					dataFim = null;
+				}
+
+				horarioBD =
+					new Horario(
+						resultado.getInt("codigoInterno"),
+						resultado.getInt("chaveHorarioTipo"),
+						resultado.getInt("chaveFuncionario"),
+						resultado.getString("sigla"),
+						resultado.getString("modalidade"),
+						resultado.getFloat("duracaoSemanal"),
+						resultado.getTimestamp("inicioPF1"),
+						resultado.getTimestamp("fimPF1"),
+						resultado.getTimestamp("inicioPF2"),
+						resultado.getTimestamp("fimPF2"),
+						resultado.getTimestamp("inicioHN1"),
+						resultado.getTimestamp("fimHN1"),
+						resultado.getTimestamp("inicioHN2"),
+						resultado.getTimestamp("fimHN2"),
+						resultado.getTimestamp("inicioRefeicao"),
+						resultado.getTimestamp("fimRefeicao"),
+						descontoObrigatorio,
+						descontoMinimo,
+						resultado.getTimestamp("inicioExpediente"),
+						resultado.getTimestamp("fimExpediente"),
+						null,
+						java.sql.Date.valueOf(resultado.getString("dataInicio")),
+						dataFim,
+						resultado.getInt("numDias"),
+						resultado.getInt("posicao"),
+						trabalhoConsecutivo,
+						resultado.getInt("quem"),
+						resultado.getTimestamp("quando"));
+			}
+			sql.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("HorarioRelacional.existeExcepcaoHorario: " + e.toString());
+		} finally {
+			return horarioBD;
+		}
+	} //existeExcepcaoHorario
+
+	public Horario existeHorario(Horario horario) {
+		Horario horarioBD = null;
+		try {
+			PreparedStatement sql =
+				UtilRelacional.prepararComando("SELECT * FROM ass_HORARIO " + "WHERE chaveFuncionario = ? " + "AND dataInicio = ?");
+			sql.setInt(1, horario.getChaveFuncionario());
+			if (horario.getDataInicio() != null) {
+				sql.setTimestamp(2, new Timestamp((horario.getDataInicio()).getTime()));
+			} else {
+				sql.setTimestamp(2, null);
+			}
+			ResultSet resultado = sql.executeQuery();
+
+			if (resultado.next()) {
+				Time descontoObrigatorio = null;
+				Time descontoMinimo = null;
+				Time trabalhoConsecutivo = null;
+				if (resultado.getTime("descontoObrigatorio") != null && resultado.getTime("descontoMinimo") != null) {
+					//duracao, logo adiciona-se uma hora
+					descontoObrigatorio = new Time(resultado.getTime("descontoObrigatorio").getTime() + 3600 * 1000);
+					descontoMinimo = new Time(resultado.getTime("descontoMinimo").getTime() + 3600 * 1000);
+				}
+				if (resultado.getTime("trabalhoConsecutivo") != null) {
+					trabalhoConsecutivo = new Time(resultado.getTime("trabalhoConsecutivo").getTime() + 3600 * 1000);
+				}
+
+				Date dataFim = null;
+				if (resultado.getString("dataFim") != null) {
+					dataFim = java.sql.Date.valueOf(resultado.getString("dataFim"));
+				} else {
+					dataFim = null;
+				}
+
+				horarioBD =
+					new Horario(
+						resultado.getInt("codigoInterno"),
+						resultado.getInt("chaveHorarioTipo"),
+						resultado.getInt("chaveFuncionario"),
+						resultado.getString("sigla"),
+						resultado.getString("modalidade"),
+						resultado.getFloat("duracaoSemanal"),
+						resultado.getTimestamp("inicioPF1"),
+						resultado.getTimestamp("fimPF1"),
+						resultado.getTimestamp("inicioPF2"),
+						resultado.getTimestamp("fimPF2"),
+						resultado.getTimestamp("inicioHN1"),
+						resultado.getTimestamp("fimHN1"),
+						resultado.getTimestamp("inicioHN2"),
+						resultado.getTimestamp("fimHN2"),
+						resultado.getTimestamp("inicioRefeicao"),
+						resultado.getTimestamp("fimRefeicao"),
+						descontoObrigatorio,
+						descontoMinimo,
+						resultado.getTimestamp("inicioExpediente"),
+						resultado.getTimestamp("fimExpediente"),
+						null,
+						java.sql.Date.valueOf(resultado.getString("dataInicio")),
+						dataFim,
+						resultado.getInt("numDias"),
+						resultado.getInt("posicao"),
+						trabalhoConsecutivo,
+						resultado.getInt("quem"),
+						resultado.getTimestamp("quando"));
+			}
+			sql.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("HorarioRelacional.existeHorario: " + e.toString());
+		} finally {
+			return horarioBD;
+		}
+	} //existeHorario 
 }

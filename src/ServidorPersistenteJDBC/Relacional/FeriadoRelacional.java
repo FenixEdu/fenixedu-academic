@@ -52,13 +52,12 @@ public class FeriadoRelacional implements IFeriadoPersistente {
 		boolean resultado = false;
 
 		try {
-			PreparedStatement sql =
-				UtilRelacional.prepararComando("DELETE FROM ass_FERIADO WHERE codigoInterno = ?");
+			PreparedStatement sql = UtilRelacional.prepararComando("DELETE FROM ass_FERIADO WHERE codigoInterno = ?");
 
 			sql.setInt(1, codigoInterno);
 
 			sql.executeUpdate();
-			sql.close();
+			sql.close(); 
 			resultado = true;
 		} catch (Exception e) {
 			System.out.println("FeriadoRelacional.apagarFeriado: " + e.toString());
@@ -67,12 +66,37 @@ public class FeriadoRelacional implements IFeriadoPersistente {
 		}
 	} /* apagarFeriado */
 
+	public boolean calendarioFeriado(String calendario, Date dia) {
+		boolean isFeriado = false;
+		try {
+			PreparedStatement sql =
+				UtilRelacional.prepararComando(
+					"SELECT * FROM ass_FERIADO "
+						+ "WHERE (data = ? AND tipoFeriado = 'MOVEL') OR "
+						+ "(SUBSTRING(data, 6, 10) = SUBSTRING(?, 6, 10) AND tipoFeriado= ?) OR "
+						+ "(SUBSTRING(data, 6, 10) = SUBSTRING(?, 6, 10) AND tipoFeriado= 'FIXO')");
+			sql.setDate(1, new java.sql.Date(dia.getTime()));
+			sql.setString(2, dia.toString().substring(0, 10));
+			sql.setString(3, calendario);
+			sql.setString(4, dia.toString().substring(0, 10));
+
+			ResultSet resultadoQuery = sql.executeQuery();
+			if (resultadoQuery.next()) {
+				isFeriado = true;
+			}
+			sql.close();
+		} catch (Exception e) {
+			System.out.println("FeriadoRelacional.calendarioFeriado: " + e.toString());
+		} finally {
+			return isFeriado;
+		}
+	} /* calendarioFeriado */
+
 	public boolean diaFeriado(Date dia) {
 		boolean resultado = false;
 
 		try {
-			PreparedStatement sql =
-				UtilRelacional.prepararComando("SELECT * FROM ass_FERIADO WHERE data = ?");
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FERIADO WHERE data = ?");
 			sql.setDate(1, new java.sql.Date(dia.getTime()));
 
 			ResultSet resultadoQuery = sql.executeQuery();
@@ -84,8 +108,7 @@ public class FeriadoRelacional implements IFeriadoPersistente {
 
 				sql =
 					UtilRelacional.prepararComando(
-						"SELECT * FROM ass_FERIADO "
-							+ "WHERE SUBSTRING(data, 6, 10) = SUBSTRING(?, 6, 10) AND tipoFeriado <> 'MOVEL'");
+						"SELECT * FROM ass_FERIADO " + "WHERE SUBSTRING(data, 6, 10) = SUBSTRING(?, 6, 10) AND tipoFeriado <> 'MOVEL'");
 				sql.setString(1, dia.toString().substring(0, 10));
 
 				resultadoQuery = sql.executeQuery();
@@ -105,8 +128,7 @@ public class FeriadoRelacional implements IFeriadoPersistente {
 		boolean resultado = false;
 
 		try {
-			PreparedStatement sql =
-				UtilRelacional.prepararComando("INSERT INTO ass_FERIADO VALUES (?, ?, ?, ?)");
+			PreparedStatement sql = UtilRelacional.prepararComando("INSERT INTO ass_FERIADO VALUES (?, ?, ?, ?)");
 
 			sql.setInt(1, feriado.getCodigoInterno());
 			sql.setString(2, feriado.getTipoFeriado());
@@ -129,9 +151,8 @@ public class FeriadoRelacional implements IFeriadoPersistente {
 		try {
 			ListIterator iterador = listaFeriados.listIterator();
 			while (iterador.hasNext()) {
-				Feriado feriado = (Feriado)iterador.next();
-				PreparedStatement sql =
-					UtilRelacional.prepararComando("INSERT INTO ass_FERIADO VALUES (?, ?, ?, ?)");
+				Feriado feriado = (Feriado) iterador.next();
+				PreparedStatement sql = UtilRelacional.prepararComando("INSERT INTO ass_FERIADO VALUES (?, ?, ?, ?)");
 
 				sql.setInt(1, feriado.getCodigoInterno());
 				sql.setString(2, feriado.getTipoFeriado());
@@ -153,8 +174,7 @@ public class FeriadoRelacional implements IFeriadoPersistente {
 		Horario horario = null;
 
 		try {
-			PreparedStatement sql =
-				UtilRelacional.prepararComando("SELECT * FROM ass_FERIADO WHERE data = ?");
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FERIADO WHERE data = ?");
 			sql.setDate(1, new java.sql.Date(dia.getTime()));
 
 			ResultSet resultadoQuery = sql.executeQuery();
@@ -173,8 +193,7 @@ public class FeriadoRelacional implements IFeriadoPersistente {
 
 				sql =
 					UtilRelacional.prepararComando(
-						"SELECT * FROM ass_FERIADO "
-							+ "WHERE SUBSTRING(data, 6, 10) = SUBSTRING(?, 6, 10) AND tipoFeriado <> 'MOVEL'");
+						"SELECT * FROM ass_FERIADO " + "WHERE SUBSTRING(data, 6, 10) = SUBSTRING(?, 6, 10) AND tipoFeriado <> 'MOVEL'");
 				sql.setString(1, dia.toString().substring(0, 10));
 
 				resultadoQuery = sql.executeQuery();
@@ -199,38 +218,36 @@ public class FeriadoRelacional implements IFeriadoPersistente {
 
 	public Horario horarioFeriado(int numMecanografico, Date dia) {
 		Horario horario = null;
-		try {
-			/*
-			//Descobre qual o calendario do funcionario na BD Oracle
-			PreparedStatement sql =
-				UtilRelacionalOracle.prepararComando(
-					"SELECT ENTIDADE.CALCOD FROM EMPREGADO, ENTIDADE WHERE EMPREGADO.EMP_NUM=? " + "AND EMPREGADO.ENT_NUM = ENTIDADE.ENT_NUM");
-			sql.setInt(1, numMecanografico);
-			ResultSet resultadoQuery = sql.executeQuery();
-			String calendario = null;
-			if (resultadoQuery.next()) {
-				calendario = resultadoQuery.getString("CALCOD");
-			} else {
-				sql.close();
-				return horario;
-			}
-			sql.close();
-			*/
-			// descobre o tipo de calendario do funcionario
-			PreparedStatement sql =
-				UtilRelacional.prepararComando(
-					"SELECT calendario FROM ass_FUNCIONARIO WHERE numeroMecanografico = ?");
-			sql.setInt(1, numMecanografico);
-			ResultSet resultadoQuery = sql.executeQuery();
-			String calendario = null;
-			if (resultadoQuery.next()) {
-				calendario = resultadoQuery.getString("calendario");
-			} else {
-				sql.close();
-				return null;
-			}
-			sql.close();
+		String calendario = null;
 
+		try {
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO WHERE numeroMecanografico = ?");
+			sql.setInt(1, numMecanografico);
+
+			ResultSet resultado = sql.executeQuery();
+			if (resultado.next()) {
+
+				PreparedStatement sql2 =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_FUNCIONARIO_HISTORICO "
+							+ "WHERE chaveFuncionario = ? AND "
+							+ "((dataInicio <= ? AND dataFim IS NULL) OR (dataInicio <= ? AND dataFim IS NOT NULL AND dataFim >= ?))");
+
+				sql2.setInt(1, resultado.getInt("codigoInterno"));
+				sql2.setDate(2, new java.sql.Date(dia.getTime()));
+				sql2.setDate(3, new java.sql.Date(dia.getTime()));
+				sql2.setDate(4, new java.sql.Date(dia.getTime()));
+
+				ResultSet resultado2 = sql2.executeQuery();
+				if (resultado2.last()) {
+					calendario = resultado2.getString("calendario");
+				} else {
+					sql.close();
+					return null;
+				}
+			}
+			sql.close();
+			
 			sql =
 				UtilRelacional.prepararComando(
 					"SELECT * FROM ass_FERIADO "
@@ -242,8 +259,8 @@ public class FeriadoRelacional implements IFeriadoPersistente {
 			sql.setString(3, calendario);
 			sql.setString(4, dia.toString().substring(0, 10));
 
-			resultadoQuery = sql.executeQuery();
-			if (resultadoQuery.next()) {
+			resultado = sql.executeQuery();
+			if (resultado.next()) {
 				horario = new Horario(Constants.FERIADO);
 				//Expediente de dias de Descanso
 				horario.setInicioExpediente(new Timestamp(Constants.EXPEDIENTE_MINIMO));
@@ -261,8 +278,7 @@ public class FeriadoRelacional implements IFeriadoPersistente {
 		Feriado feriado = null;
 
 		try {
-			PreparedStatement sql =
-				UtilRelacional.prepararComando("SELECT * FROM ass_FERIADO WHERE codigoInterno = ?");
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FERIADO WHERE codigoInterno = ?");
 
 			sql.setInt(1, codigoInterno);
 
@@ -287,8 +303,7 @@ public class FeriadoRelacional implements IFeriadoPersistente {
 		Feriado feriado = null;
 
 		try {
-			PreparedStatement sql =
-				UtilRelacional.prepararComando("SELECT * FROM ass_FERIADO WHERE data = ?");
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FERIADO WHERE data = ?");
 			sql.setDate(1, new java.sql.Date(dia.getTime()));
 
 			ResultSet resultado = sql.executeQuery();
@@ -312,9 +327,8 @@ public class FeriadoRelacional implements IFeriadoPersistente {
 		Feriado feriado = null;
 
 		try {
-			PreparedStatement sql =
-				UtilRelacional.prepararComando("SELECT * FROM ass_FERIADO WHERE tipoFeriado = ?  AND data = ?");
-			sql.setString(1, tipoFeriado);	
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FERIADO WHERE tipoFeriado = ?  AND data = ?");
+			sql.setString(1, tipoFeriado);
 			sql.setDate(2, new java.sql.Date(dia.getTime()));
 
 			ResultSet resultado = sql.executeQuery();
@@ -339,9 +353,7 @@ public class FeriadoRelacional implements IFeriadoPersistente {
 
 		try {
 			PreparedStatement sql =
-				UtilRelacional.prepararComando(
-					"SELECT tipoFeriado FROM ass_FERIADO "
-						+ "WHERE tipoFeriado <>'MOVEL' and tipoFeriado<>'FIXO'");
+				UtilRelacional.prepararComando("SELECT tipoFeriado FROM ass_FERIADO " + "WHERE tipoFeriado <>'MOVEL' and tipoFeriado<>'FIXO'");
 			ResultSet resultadoQuery = sql.executeQuery();
 
 			listaCalendarios = new ArrayList();

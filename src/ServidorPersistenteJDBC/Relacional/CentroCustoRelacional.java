@@ -77,6 +77,7 @@ public class CentroCustoRelacional implements ICentroCustoPersistente {
 			sql.setString(1, sigla);
 
 			ResultSet resultado = sql.executeQuery();
+	
 			if (resultado.next()) {
 				centroCusto =
 					new CentroCusto(

@@ -1,6 +1,7 @@
 package ServidorAplicacao.Servico.assiduousness;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.ListIterator;
 
@@ -15,7 +16,6 @@ import ServidorAplicacao.ServicoAutorizacao;
 import ServidorAplicacao.ServicoSeguro;
 import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import ServidorPersistenteJDBC.ICentroCustoPersistente;
-import ServidorPersistenteJDBC.IFuncNaoDocentePersistente;
 import ServidorPersistenteJDBC.IFuncionarioPersistente;
 import ServidorPersistenteJDBC.IHorarioPersistente;
 import ServidorPersistenteJDBC.IHorarioTipoPersistente;
@@ -52,21 +52,22 @@ public class ServicoSeguroConsultarFuncionario extends ServicoSeguro {
 		IFuncionarioPersistente iFuncionarioPersistente =
 			SuportePersistente.getInstance().iFuncionarioPersistente();
 		if ((_funcionario =
-			iFuncionarioPersistente.lerFuncionarioPorNumMecanografico(_numMecanografico))
+			iFuncionarioPersistente.lerFuncionarioPorNumMecanografico(_numMecanografico, Calendar.getInstance().getTime()))
 			== null) {
 			throw new NotExecuteException("error.funcionario.naoExiste");
 		}
 
 		IStatusAssiduidadePersistente iStatusPersistente =
 			SuportePersistente.getInstance().iStatusAssiduidadePersistente();
-		if ((_status = iStatusPersistente.lerStatus(_funcionario.getChaveStatus())) == null) {
+		if ((_status = iStatusPersistente.lerStatus(_funcionario.getChaveStatus().intValue())) == null) {
 			throw new NotExecuteException("error.assiduidade.naoExiste");
 		}
-
+		
+		
 		ICentroCustoPersistente iCentroCustoPersistente =
 			SuportePersistente.getInstance().iCentroCustoPersistente();
 		if ((_centroCusto =
-			iCentroCustoPersistente.lerCentroCusto(_funcionario.getChaveCCCorrespondencia()))
+			iCentroCustoPersistente.lerCentroCusto(_funcionario.getChaveCCCorrespondencia().intValue()))
 			== null) {
 			throw new NotExecuteException("error.centroCusto.naoExiste");
 		}
@@ -75,13 +76,14 @@ public class ServicoSeguroConsultarFuncionario extends ServicoSeguro {
 		if ((_pessoa = iPessoaPersistente.lerPessoa(_funcionario.getChavePessoa())) == null) {
 			throw new NotExecuteException("error.pessoa.naoExiste");
 		}
-		IFuncNaoDocentePersistente iFuncNaoDocentePersistente =
-			SuportePersistente.getInstance().iFuncNaoDocentePersistente();
-		if ((_funcNaoDocente =
-			iFuncNaoDocentePersistente.lerFuncNaoDocentePorFuncionario(_funcionario.getCodigoInterno()))
-			== null) {
-			throw new NotExecuteException("error.funcionario.naoExiste");
-		}
+		
+//		IFuncNaoDocentePersistente iFuncNaoDocentePersistente =
+//			SuportePersistente.getInstance().iFuncNaoDocentePersistente();
+//		if ((_funcNaoDocente =
+//			iFuncNaoDocentePersistente.lerFuncNaoDocentePorFuncionario(_funcionario.getCodigoInterno()))
+//			== null) {
+//			throw new NotExecuteException("error.funcionario.naoExiste");
+//		}
 
 		IHorarioPersistente iHorarioPersistente =
 			SuportePersistente.getInstance().iHorarioPersistente();

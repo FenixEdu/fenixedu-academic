@@ -10,7 +10,7 @@ import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
-import Dominio.Funcionario;
+import Dominio.Employee;
 import Dominio.IPersonRole;
 import Dominio.IPessoa;
 import Dominio.Pessoa;
@@ -116,8 +116,8 @@ public class MigratePersons2Fenix {
 					
 					// A classe funcionario ainda usa os codigos internos por isso temos de procurar pelos codigos internos
 					Pessoa personTemp = (Pessoa) person2Write;
-					criteria.addEqualTo("chavePessoa", personTemp.getIdInternal());
-					query = new QueryByCriteria(Funcionario.class,criteria);
+					criteria.addEqualTo("keyPerson", personTemp.getIdInternal());
+					query = new QueryByCriteria(Employee.class,criteria);
 					result = (List) broker.getCollectionByQuery(query);
 					
 					if (result.size() == 0){

@@ -38,10 +38,11 @@ public class Horario {
 	private Date dataFim;
 	private int numDias;
 	private int posicao;
+	private Time trabalhoConsecutivo;
 
 	private int quem;
 	private Timestamp quando;
-	
+
 	private int codigoMapeamenento = 0;
 
 	/* Construtores */
@@ -72,6 +73,7 @@ public class Horario {
 		this.dataFim = null;
 		this.numDias = 0;
 		this.posicao = 0;
+		this.trabalhoConsecutivo = null;
 		this.quem = 0;
 		this.quando = null;
 	}
@@ -103,6 +105,7 @@ public class Horario {
 		this.dataFim = null;
 		this.numDias = 0;
 		this.posicao = 0;
+		this.trabalhoConsecutivo = null;
 		this.quem = 0;
 		this.quando = null;
 	}
@@ -157,6 +160,7 @@ public class Horario {
 		this.dataFim = dataFim;
 		this.numDias = numDias;
 		this.posicao = posicao;
+		this.trabalhoConsecutivo = null;
 
 		this.quem = quem;
 		this.quando = quando;
@@ -188,6 +192,7 @@ public class Horario {
 		Date dataFim,
 		int numDias,
 		int posicao,
+		Time trabalhoConsecutivo,
 		int quem,
 		Timestamp quando) {
 
@@ -216,6 +221,7 @@ public class Horario {
 		this.dataFim = dataFim;
 		this.numDias = numDias;
 		this.posicao = posicao;
+		this.trabalhoConsecutivo = trabalhoConsecutivo;
 
 		this.quem = quem;
 		this.quando = quando;
@@ -256,6 +262,7 @@ public class Horario {
 		this.dataFim = null;
 		this.numDias = numDias;
 		this.posicao = posicao;
+		this.trabalhoConsecutivo = null;
 		this.quem = 0;
 		this.quando = null;
 	}
@@ -288,8 +295,49 @@ public class Horario {
 		this.dataFim = dataFim;
 		this.numDias = numDias;
 		this.posicao = posicao;
+		this.trabalhoConsecutivo = null;
 		this.quem = 0;
 		this.quando = null;
+	}
+
+	public Horario(
+		int chaveHorarioTipo,
+		int chaveFuncionario,
+		Date dataInicio,
+		Date dataFim,
+		int numDias,
+		int posicao,
+		int quem,
+		Timestamp quando) {
+
+		this.codigoInterno = 0;
+		this.chaveHorarioTipo = chaveHorarioTipo;
+		this.chaveFuncionario = chaveFuncionario;
+		this.sigla = null;
+		this.modalidade = null;
+		this.duracaoSemanal = 0;
+		this.inicioPF1 = null;
+		this.fimPF1 = null;
+		this.inicioPF2 = null;
+		this.fimPF2 = null;
+		this.inicioHN1 = null;
+		this.fimHN1 = null;
+		this.inicioHN2 = null;
+		this.fimHN2 = null;
+		this.inicioRefeicao = null;
+		this.fimRefeicao = null;
+		this.descontoObrigatorioRefeicao = null;
+		this.intervaloMinimoRefeicao = null;
+		this.inicioExpediente = null;
+		this.fimExpediente = null;
+		this.dataCumprir = null;
+		this.dataInicio = dataInicio;
+		this.dataFim = dataFim;
+		this.numDias = numDias;
+		this.posicao = posicao;
+		this.trabalhoConsecutivo = null;
+		this.quem = quem;
+		this.quando = quando;
 	}
 
 	/**
@@ -511,7 +559,7 @@ public class Horario {
 	public int getCodigoMapeamenento() {
 		return codigoMapeamenento;
 	}
-	
+
 	/**
 	 * Sets the chaveFuncionario.
 	 * @param chaveFuncionario The chaveFuncionario to set
@@ -731,6 +779,15 @@ public class Horario {
 	public void setCodigoMapeamenento(int codigoMapeamenento) {
 		this.codigoMapeamenento = codigoMapeamenento;
 	}
+	public Time getTrabalhoConsecutivo() {
+		return trabalhoConsecutivo;
+	}
+
+	public void setTrabalhoConsecutivo(Time trabalhoConsecutivo) {
+		this.trabalhoConsecutivo = trabalhoConsecutivo;
+	}
+
+
 	/**
 	* equals
 	* @param obj 
@@ -766,20 +823,43 @@ public class Horario {
 					&& (this.getDataFim() == horario.getDataFim())
 					&& (this.getNumDias() == horario.getNumDias())
 					&& (this.getPosicao() == horario.getPosicao())
+			&& (this.getTrabalhoConsecutivo().equals(horario.getTrabalhoConsecutivo()))
 					&& (this.getQuem() == horario.getQuem())
 					&& (this.getQuando() == horario.getQuando()));
 		}
 		return resultado;
 	}
 
-	public Object clone() {		
-		return new Horario(this.codigoInterno, this.chaveHorarioTipo, this.chaveFuncionario, 
-		this.getSigla(), this.getModalidade(), this.getDuracaoSemanal(), 
-		this.getInicioPF1(), this.getFimPF1(), this.getInicioPF2(), this.getFimPF2(), 
-		this.getInicioHN1(), this.getFimHN1(), this.getInicioHN2(), this.getFimHN2(),
-		this.getInicioRefeicao(), this.getFimRefeicao(), this.getDescontoObrigatorioRefeicao(), this.getIntervaloMinimoRefeicao(),
-		this.getInicioExpediente(), this.getFimExpediente(), this.getDataCumprir(), this.getDataInicio(), this.getDataFim(),
-		this.getNumDias(), this.getPosicao(), this.getQuem(), this.getQuando());
+	public Object clone() {
+		return new Horario(
+			this.codigoInterno,
+			this.chaveHorarioTipo,
+			this.chaveFuncionario,
+			this.getSigla(),
+			this.getModalidade(),
+			this.getDuracaoSemanal(),
+			this.getInicioPF1(),
+			this.getFimPF1(),
+			this.getInicioPF2(),
+			this.getFimPF2(),
+			this.getInicioHN1(),
+			this.getFimHN1(),
+			this.getInicioHN2(),
+			this.getFimHN2(),
+			this.getInicioRefeicao(),
+			this.getFimRefeicao(),
+			this.getDescontoObrigatorioRefeicao(),
+			this.getIntervaloMinimoRefeicao(),
+			this.getInicioExpediente(),
+			this.getFimExpediente(),
+			this.getDataCumprir(),
+			this.getDataInicio(),
+			this.getDataFim(),
+			this.getNumDias(),
+			this.getPosicao(),
+			this.getTrabalhoConsecutivo(),
+			this.getQuem(),
+			this.getQuando());
 	}
 
 	public void transforma(HorarioTipo horarioTipo) {
@@ -800,14 +880,15 @@ public class Horario {
 		this.setIntervaloMinimoRefeicao(horarioTipo.getIntervaloMinimoRefeicao());
 		this.setInicioExpediente(horarioTipo.getInicioExpediente());
 		this.setFimExpediente(horarioTipo.getFimExpediente());
+		this.setTrabalhoConsecutivo(horarioTipo.getTrabalhoConsecutivo());
 	}
-	
+
 	public void transformaDescanso(HorarioTipo horarioTipo) {
 		this.setModalidade(horarioTipo.getModalidade());
 		this.setDuracaoSemanal(horarioTipo.getDuracaoSemanal());
 	}
-	
-	public void transformaFeriado(){
+
+	public void transformaFeriado() {
 		//é um feriado				
 		this.setSigla(Constants.FERIADO);
 		// Expediente de dias de Descanso

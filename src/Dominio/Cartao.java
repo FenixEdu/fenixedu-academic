@@ -7,6 +7,8 @@ import java.sql.Timestamp;
  * @author  Fernanda Quitério e Tania Pousão
  */
 public class Cartao {
+	//TODO: a data fim do cartão de funcionário deveria ser null
+		
   private int _codigoInterno;
   private int _numCartao;
   private int _chaveFuncionario;

@@ -18,12 +18,227 @@
   />
   <reference-descriptor
   	name="funcionario"
-  	class-ref="Dominio.Funcionario">
+  	class-ref="Dominio.Employee">
   	<foreignkey field-ref="chaveFuncionario"/>
   </reference-descriptor>  
 </class-descriptor>
 
+
 <class-descriptor 
+  class="Dominio.Employee"
+  table="ass_FUNCIONARIO"
+>
+  <field-descriptor id="0"
+    name="idInternal"
+    column="codigoInterno"
+    jdbc-type="INTEGER"
+    primarykey="true"
+    autoincrement="true"
+  />
+  <field-descriptor id="1"
+    name="keyPerson"
+    column="chavePessoa"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor id="2"
+    name="employeeNumber"
+    column="numeroMecanografico"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor id="3"
+    name="workingHours"
+    column="chaveHorarioActual"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor id="4"
+    name="antiquity"
+    column="antiguidade"
+    jdbc-type="DATE"
+  />
+  <reference-descriptor
+         name="person"
+         class-ref="Dominio.Pessoa">
+         <foreignkey field-ref="keyPerson"/>
+  </reference-descriptor>
+  
+  <collection-descriptor
+	name="historicList"
+	element-class-ref="Dominio.EmployeeHistoric"
+	auto_retrieve="true"
+	proxy="false">
+	<inverse-foreignkey field-ref="keyEmployee"/>
+  </collection-descriptor> 
+</class-descriptor>
+
+<class-descriptor 
+  class="Dominio.EmployeeHistoric"
+  table="ass_FUNCIONARIO_HISTORICO"
+>
+  <field-descriptor id="0"
+    name="idInternal"
+    column="codigoInterno"
+    jdbc-type="INTEGER"
+    primarykey="true"
+    autoincrement="true"
+  />
+  <field-descriptor id="1"
+    name="keyEmployee"
+    column="chaveFuncionario"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor id="2"
+    name="keyResponsableEmployee"
+    column="chaveFuncResponsavel"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor id="3"
+    name="keyWorkingPlaceCostCenter"
+    column="chaveCCLocalTrabalho"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor id="4"
+    name="keyMailingCostCenter"
+    column="chaveCCCorrespondencia"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor id="5"
+    name="keySalaryCostCenter"
+    column="chaveCCVencimento"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor id="6"
+    name="calendar"
+    column="calendario"
+    jdbc-type="VARCHAR"
+  />
+  <field-descriptor id="7"
+    name="keyStatus"
+    column="chaveStatus"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor id="8"
+    name="beginDate"
+    column="dataInicio"
+    jdbc-type="DATE"
+  />
+  <field-descriptor id="9"
+    name="endDate"
+    column="dataFim"
+    jdbc-type="DATE"
+  />
+  <field-descriptor id="10"
+    name="who"
+    column="quem"
+    jdbc-type="INTEGER"    
+  />
+  <field-descriptor id="11"
+    name="when"
+    column="quando"
+    jdbc-type="TIMESTAMP"
+  />
+
+  <reference-descriptor
+         name="employee"
+         class-ref="Dominio.Employee">
+         <foreignkey field-ref="keyEmployee"/>
+  </reference-descriptor>
+  
+  <reference-descriptor
+         name="responsableEmployee"
+         class-ref="Dominio.Employee">
+         <foreignkey field-ref="keyResponsableEmployee"/>
+  </reference-descriptor>
+  
+  <reference-descriptor
+         name="workingPlaceCostCenter"
+         class-ref="Dominio.CentroCusto"
+         proxy="true">
+         <foreignkey field-ref="keyWorkingPlaceCostCenter"/>
+  </reference-descriptor>
+
+  <reference-descriptor
+         name="mailingCostCenter"
+         class-ref="Dominio.CentroCusto"
+         proxy="true">
+         <foreignkey field-ref="keyMailingCostCenter"/>
+  </reference-descriptor>   
+
+  <reference-descriptor
+         name="salaryCostCenter"
+         class-ref="Dominio.CentroCusto">
+         <foreignkey field-ref="keySalaryCostCenter"/>
+  </reference-descriptor>
+  
+  <reference-descriptor
+         name="status"
+         class-ref="Dominio.StatusAssiduidade">
+         <foreignkey field-ref="keyStatus"/>
+  </reference-descriptor>  
+</class-descriptor>
+
+<class-descriptor 
+	class="Dominio.CentroCusto" 
+	table="ass_CENTRO_CUSTO">
+  <field-descriptor 
+  	name="codigoInterno" 
+  	column="codigoInterno" 
+  	jdbc-type="INTEGER"
+    primarykey="true" autoincrement="true"/>
+  <field-descriptor 
+  	name="sigla" 
+  	column="sigla" 
+  	jdbc-type="VARCHAR"/>
+  <field-descriptor 
+  	name="departamento" 
+  	column="departamento" 
+  	jdbc-type="VARCHAR"/>
+  <field-descriptor 
+  	name="seccao1" 
+  	column="seccao1" 
+  	jdbc-type="VARCHAR"/>
+  <field-descriptor 
+  	name="seccao2" 
+  	column="seccao2" 
+  	jdbc-type="VARCHAR"/>
+</class-descriptor>
+
+<class-descriptor 
+	class="Dominio.StatusAssiduidade" 
+	table="ass_STATUS">
+  <field-descriptor 
+  	name="codigoInterno" 
+  	column="codigoInterno" 
+  	jdbc-type="INTEGER"
+    primarykey="true" autoincrement="true"/>
+  <field-descriptor 
+  	name="sigla" 
+  	column="sigla" 
+  	jdbc-type="VARCHAR"/>
+  <field-descriptor 
+  	name="designacao" 
+  	column="designacao" 
+  	jdbc-type="VARCHAR"/>
+  <field-descriptor 
+  	name="estado" 
+  	column="estado" 
+  	jdbc-type="VARCHAR"/>
+  <field-descriptor 
+  	name="assiduidade" 
+  	column="assiduidade" 
+  	jdbc-type="VARCHAR"/>
+  <field-descriptor
+    name="quem"
+    column="quem"
+    jdbc-type="INTEGER"
+  />
+  <field-descriptor
+    name="quando"
+    column="quando"
+    jdbc-type="TIMESTAMP"
+  />  	
+</class-descriptor>
+
+<!--<class-descriptor 
   class="Dominio.Funcionario"
   table="ass_FUNCIONARIO"
 >
@@ -124,18 +339,9 @@
          <foreignkey field-ref="chaveCCCorrespondencia"/>
   </reference-descriptor>   
 
-<!--  <reference-descriptor
+  <reference-descriptor
          name="salaryCostCenter"
          class-ref="Dominio.CentroCusto">
          <foreignkey field-ref="chaveCCVencimento"/>
-  </reference-descriptor>    -->
-</class-descriptor>
-
-<class-descriptor class="Dominio.CentroCusto" table="ass_CENTRO_CUSTO">
-  <field-descriptor name="codigoInterno" column="codigoInterno" jdbc-type="INTEGER"
-				    primarykey="true" autoincrement="true"/>
-  <field-descriptor name="sigla" column="sigla" jdbc-type="VARCHAR"/>
-  <field-descriptor name="departamento" column="departamento" jdbc-type="VARCHAR"/>
-  <field-descriptor name="seccao1" column="seccao1" jdbc-type="VARCHAR"/>
-  <field-descriptor name="seccao2" column="seccao2" jdbc-type="VARCHAR"/>
-</class-descriptor>
+  </reference-descriptor>    
+</class-descriptor>-->

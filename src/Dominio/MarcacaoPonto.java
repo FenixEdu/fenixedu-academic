@@ -12,7 +12,7 @@ public class MarcacaoPonto {
 	private String _siglaUnidade;
 	private Timestamp _data;
 	private int _numCartao;
-	private int _numFuncionario;
+	private int _numFuncionario; //ATENÇÃO: Devia ser chave do funcionário e não número mecanográfico
 	private String _estado;
 
 	/*  public MarcacaoPonto() {
@@ -176,5 +176,24 @@ public class MarcacaoPonto {
 					&& (this.getEstado() == marcacaoPonto.getEstado()));
 		}
 		return resultado;
+	}
+
+	public String toString() {
+		return "\n[Marcacao Ponto - "
+			+ "\ncodigoInterno="
+			+ _codigoInterno
+			+ "\nunidade="
+			+ _unidade
+			+ "\nsiglaUnidade="
+			+ _siglaUnidade
+			+ "\ndata="
+			+ _data
+			+ "\ncartao="
+			+ _numCartao
+			+ "\nfuncionario="
+			+ _numFuncionario
+			+ "\nestado="
+			+ _estado
+			+ "]";
 	}
 }

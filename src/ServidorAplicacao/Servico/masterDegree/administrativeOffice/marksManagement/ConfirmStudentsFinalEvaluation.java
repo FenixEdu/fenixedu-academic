@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import Dominio.CurricularCourse;
-import Dominio.Funcionario;
+import Dominio.Employee;
 import Dominio.ICurricularCourse;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
@@ -17,13 +17,12 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
+import ServidorPersistente.IPersistentEmployee;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistenteJDBC.IFuncionarioPersistente;
-import ServidorPersistenteJDBC.SuportePersistente;
 import Util.EnrolmentEvaluationState;
 import Util.EnrolmentState;
 import Util.MarkType;
@@ -69,7 +68,7 @@ public class ConfirmStudentsFinalEvaluation implements IServico {
 
 			//			employee
 			IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
-			Funcionario employee = readEmployee(person);
+			Employee employee = readEmployee(person);
 
 			ICurricularCourse curricularCourse = new CurricularCourse();
 			curricularCourse.setIdInternal(curricularCourseCode);
@@ -108,7 +107,7 @@ public class ConfirmStudentsFinalEvaluation implements IServico {
 		return Boolean.TRUE;
 	}
 
-	private void updateEnrolmentEvaluation(IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation, IPersistentEnrolment persistentEnrolment, Funcionario employee, IEnrolmentEvaluation enrolmentEvaluationElem) throws ExcepcaoPersistencia {
+	private void updateEnrolmentEvaluation(IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation, IPersistentEnrolment persistentEnrolment, Employee employee, IEnrolmentEvaluation enrolmentEvaluationElem) throws ExcepcaoPersistencia {
 		persistentEnrolmentEvaluation.simpleLockWrite(enrolmentEvaluationElem);
 		
 		enrolmentEvaluationElem.setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ);
@@ -116,7 +115,7 @@ public class ConfirmStudentsFinalEvaluation implements IServico {
 		enrolmentEvaluationElem.setWhen(calendar.getTime());
 		enrolmentEvaluationElem.setEmployee(employee);
 		enrolmentEvaluationElem.setObservation("Lançamento de Notas na Secretaria");
-		//					TODO: checksum
+		//TODO: checksum
 		enrolmentEvaluationElem.setCheckSum("");
 		
 		// update state of enrolment: aproved, notAproved or notEvaluated
@@ -138,28 +137,15 @@ public class ConfirmStudentsFinalEvaluation implements IServico {
 		enrolmentToEdit.setEnrolmentState(newEnrolmentState);
 	}
 
-	private Funcionario readEmployee(IPessoa person) {
-		Funcionario employee = null;
-		SuportePersistente spJDBC = SuportePersistente.getInstance();
-		IFuncionarioPersistente persistentEmployee = spJDBC.iFuncionarioPersistente();
-
+	private Employee readEmployee(IPessoa person) {
+		Employee employee = null;
+		IPersistentEmployee persistentEmployee;
 		try {
-			spJDBC.iniciarTransaccao();
-
-			try {
-				employee = persistentEmployee.lerFuncionarioPorPessoa(person.getIdInternal().intValue());
-
-			} catch (Exception e) {
-				spJDBC.cancelarTransaccao();
-				e.printStackTrace();
-				return employee;
-			}
-
-			spJDBC.confirmarTransaccao();
-		} catch (Exception e) {
+			persistentEmployee = SuportePersistenteOJB.getInstance().getIPersistentEmployee();
+			employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
+		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();
-		} finally {
-			return employee;
 		}
+		return employee;
 	}
 }

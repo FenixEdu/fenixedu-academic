@@ -174,4 +174,8 @@ public class CartaoRelacionalOracle implements ICartaoPersistente {
 	public ArrayList consultarCartao(ArrayList listaFuncionarios, ArrayList listaCartoes, Timestamp dataInicio, Timestamp dataFim) {
 		return null;
 	}
+
+	public ArrayList lerCartoesSubstitutosFuncionario(int chaveFuncionario, Timestamp dataInicio, Timestamp dataFim) {
+		return null;
+	}
 }

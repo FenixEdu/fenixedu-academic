@@ -2,6 +2,7 @@ package ServidorApresentacao.formbeans.assiduousness;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.Locale;
 
@@ -13,7 +14,6 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 
-import Dominio.FuncNaoDocente;
 import Dominio.Funcionario;
 import Dominio.Horario;
 import Dominio.IStrategyHorarios;
@@ -100,10 +100,13 @@ public class AssociarHorarioForm extends ActionForm {
 	private String _numDias = null;
 	private String _posicao = null;
 
+	private String _trabalhoConsecutivoHoras = null;
+	private String _trabalhoConsecutivoMinutos = null;
+
 	private ArrayList _listaModalidades = new ArrayList();
 	private String[] _regime = null;
 	private ArrayList _listaRegimes = new ArrayList();
-	
+
 	private boolean _excepcaoHorario = false;
 
 	/* construtores */
@@ -111,8 +114,14 @@ public class AssociarHorarioForm extends ActionForm {
 	}
 
 	/* Constroi um Horário para ser mostrado */
-	public AssociarHorarioForm(Horario horario, ArrayList listaRegimes) {
+	//	public AssociarHorarioForm(Horario horario, ArrayList listaRegimes) {
+	public AssociarHorarioForm getFormHorarioPreenchido(Horario horario, ArrayList listaRegimes, String alterar) {
 		Calendar calendario = Calendar.getInstance();
+
+		String preenchimento = new String("--");
+		if (alterar != null) {
+			preenchimento = "";
+		}
 
 		setNumDias(String.valueOf(horario.getNumDias()));
 		setPosicao(String.valueOf(horario.getPosicao()));
@@ -143,8 +152,8 @@ public class AssociarHorarioForm extends ActionForm {
 				setDiaAnteriorHN1("A");
 			}
 		} else {
-			setInicioHN1Horas("--");
-			setInicioHN1Minutos("--");
+			setInicioHN1Horas(preenchimento);
+			setInicioHN1Minutos(preenchimento);
 		}
 
 		if (horario.getFimHN1() != null) {
@@ -161,8 +170,8 @@ public class AssociarHorarioForm extends ActionForm {
 				setDiaSeguinteHN1("S");
 			}
 		} else {
-			setFimHN1Horas("--");
-			setFimHN1Minutos("--");
+			setFimHN1Horas(preenchimento);
+			setFimHN1Minutos(preenchimento);
 		}
 		if (horario.getInicioHN2() != null) {
 			calendario.clear();
@@ -178,8 +187,8 @@ public class AssociarHorarioForm extends ActionForm {
 				setDiaAnteriorHN2("A");
 			}
 		} else {
-			setInicioHN2Horas("--");
-			setInicioHN2Minutos("--");
+			setInicioHN2Horas(preenchimento);
+			setInicioHN2Minutos(preenchimento);
 		}
 
 		if (horario.getFimHN2() != null) {
@@ -196,8 +205,8 @@ public class AssociarHorarioForm extends ActionForm {
 				setDiaSeguinteHN2("S");
 			}
 		} else {
-			setFimHN2Horas("--");
-			setFimHN2Minutos("--");
+			setFimHN2Horas(preenchimento);
+			setFimHN2Minutos(preenchimento);
 		}
 
 		if (horario.getInicioPF1() != null) {
@@ -214,8 +223,8 @@ public class AssociarHorarioForm extends ActionForm {
 				setDiaAnteriorPF1("A");
 			}
 		} else {
-			setInicioPF1Horas("--");
-			setInicioPF1Minutos("--");
+			setInicioPF1Horas(preenchimento);
+			setInicioPF1Minutos(preenchimento);
 		}
 
 		if (horario.getFimPF1() != null) {
@@ -232,8 +241,8 @@ public class AssociarHorarioForm extends ActionForm {
 				setDiaSeguintePF1("S");
 			}
 		} else {
-			setFimPF1Horas("--");
-			setFimPF1Minutos("--");
+			setFimPF1Horas(preenchimento);
+			setFimPF1Minutos(preenchimento);
 		}
 
 		if (horario.getInicioPF2() != null) {
@@ -250,8 +259,8 @@ public class AssociarHorarioForm extends ActionForm {
 				setDiaAnteriorPF2("A");
 			}
 		} else {
-			setInicioPF2Horas("--");
-			setInicioPF2Minutos("--");
+			setInicioPF2Horas(preenchimento);
+			setInicioPF2Minutos(preenchimento);
 		}
 
 		if (horario.getFimPF2() != null) {
@@ -268,8 +277,8 @@ public class AssociarHorarioForm extends ActionForm {
 				setDiaSeguintePF2("S");
 			}
 		} else {
-			setFimPF2Horas("--");
-			setFimPF2Minutos("--");
+			setFimPF2Horas(preenchimento);
+			setFimPF2Minutos(preenchimento);
 		}
 
 		if (horario.getInicioExpediente() != null) {
@@ -285,8 +294,8 @@ public class AssociarHorarioForm extends ActionForm {
 				setDiaAnteriorExpediente("A");
 			}
 		} else {
-			setInicioExpedienteHoras("--");
-			setInicioExpedienteMinutos("--");
+			setInicioExpedienteHoras(preenchimento);
+			setInicioExpedienteMinutos(preenchimento);
 		}
 
 		if (horario.getFimExpediente() != null) {
@@ -303,8 +312,8 @@ public class AssociarHorarioForm extends ActionForm {
 				setDiaSeguinteExpediente("S");
 			}
 		} else {
-			setFimExpedienteHoras("--");
-			setFimExpedienteMinutos("--");
+			setFimExpedienteHoras(preenchimento);
+			setFimExpedienteMinutos(preenchimento);
 		}
 
 		//intervalo e dados de refeicao
@@ -335,39 +344,59 @@ public class AssociarHorarioForm extends ActionForm {
 				setDiaSeguinteRefeicao("S");
 			}
 		} else {
-			setInicioRefeicaoHoras("--");
-			setInicioRefeicaoMinutos("--");
-			setFimRefeicaoHoras("--");
-			setFimRefeicaoMinutos("--");
+			setInicioRefeicaoHoras(preenchimento);
+			setInicioRefeicaoMinutos(preenchimento);
+			setFimRefeicaoHoras(preenchimento);
+			setFimRefeicaoMinutos(preenchimento);
 		}
 
-		if ((horario.getIntervaloMinimoRefeicao() != null)
-			&& (horario.getDescontoObrigatorioRefeicao() != null)) {
-			calendario.clear();
-			calendario.setTimeInMillis((horario.getIntervaloMinimoRefeicao()).getTime());
-			calendario.add(Calendar.HOUR_OF_DAY, -1);
-			setIntervaloMinimoHoras((new Integer(calendario.get(Calendar.HOUR_OF_DAY))).toString());
-			if (calendario.get(Calendar.MINUTE) < 10) {
-				setIntervaloMinimoMinutos("0" + (new Integer(calendario.get(Calendar.MINUTE))).toString());
-			} else {
-				setIntervaloMinimoMinutos((new Integer(calendario.get(Calendar.MINUTE))).toString());
-			}
-			calendario.clear();
-			calendario.setTimeInMillis((horario.getDescontoObrigatorioRefeicao()).getTime());
-			calendario.add(Calendar.HOUR_OF_DAY, -1);
-			setDescontoObrigatorioHoras((new Integer(calendario.get(Calendar.HOUR_OF_DAY))).toString());
-			if (calendario.get(Calendar.MINUTE) < 10) {
-				setDescontoObrigatorioMinutos(
-					"0" + (new Integer(calendario.get(Calendar.MINUTE))).toString());
-			} else {
-				setDescontoObrigatorioMinutos((new Integer(calendario.get(Calendar.MINUTE))).toString());
-			}
-		} else {
-			setDescontoObrigatorioHoras("--");
-			setDescontoObrigatorioMinutos("--");
-			setIntervaloMinimoHoras("--");
-			setIntervaloMinimoMinutos("--");
-		}
+		//		if (horario.getIntervaloMinimoRefeicao() != null) {
+		//			calendario.clear();
+		//			calendario.setTimeInMillis((horario.getIntervaloMinimoRefeicao()).getTime());
+		//
+		//			calendario.add(Calendar.HOUR_OF_DAY, -1);
+		//
+		//			setIntervaloMinimoHoras((new Integer(calendario.get(Calendar.HOUR_OF_DAY))).toString());
+		//			if (calendario.get(Calendar.MINUTE) < 10) {
+		//				setIntervaloMinimoMinutos("0" + (new Integer(calendario.get(Calendar.MINUTE))).toString());
+		//			} else {
+		//				setIntervaloMinimoMinutos((new Integer(calendario.get(Calendar.MINUTE))).toString());
+		//			}
+		//		} else {
+		//			setIntervaloMinimoHoras(preenchimento);
+		//			setIntervaloMinimoMinutos(preenchimento);
+		//		}
+		//		if (horario.getDescontoObrigatorioRefeicao() != null) {
+		//			calendario.clear();
+		//			calendario.setTimeInMillis((horario.getDescontoObrigatorioRefeicao()).getTime());
+		//
+		//			calendario.add(Calendar.HOUR_OF_DAY, -1);
+		//
+		//			setDescontoObrigatorioHoras((new Integer(calendario.get(Calendar.HOUR_OF_DAY))).toString());
+		//			if (calendario.get(Calendar.MINUTE) < 10) {
+		//				setDescontoObrigatorioMinutos("0" + (new Integer(calendario.get(Calendar.MINUTE))).toString());
+		//			} else {
+		//				setDescontoObrigatorioMinutos((new Integer(calendario.get(Calendar.MINUTE))).toString());
+		//			}
+		//		} else {
+		//			setDescontoObrigatorioHoras(preenchimento);
+		//			setDescontoObrigatorioMinutos(preenchimento);
+		//		}
+		//
+		//		if (horario.getTrabalhoConsecutivo() != null) {
+		//			calendario.clear();
+		//			calendario.setTimeInMillis(horario.getTrabalhoConsecutivo().getTime());
+		//			calendario.add(Calendar.HOUR_OF_DAY, -1);
+		//			setTrabalhoConsecutivoHoras((new Integer(calendario.get(Calendar.HOUR_OF_DAY))).toString());
+		//			if (calendario.get(Calendar.MINUTE) < 10) {
+		//				setTrabalhoConsecutivoMinutos("0" + (new Integer(calendario.get(Calendar.MINUTE))).toString());
+		//			} else {
+		//				setTrabalhoConsecutivoMinutos((new Integer(calendario.get(Calendar.MINUTE))).toString());
+		//			}
+		//		} else {
+		//			setTrabalhoConsecutivoHoras(preenchimento);
+		//			setTrabalhoConsecutivoMinutos(preenchimento);
+		//		}
 
 		if (horario.getDataCumprir() != null) {
 			calendario.clear();
@@ -385,9 +414,9 @@ public class AssociarHorarioForm extends ActionForm {
 				setDiaCumprir(String.valueOf(calendario.get(Calendar.DAY_OF_MONTH)));
 			}
 		} else {
-			setAnoCumprir("--");
-			setMesCumprir("--");
-			setDiaCumprir("--");
+			setAnoCumprir(preenchimento + preenchimento);
+			setMesCumprir(preenchimento);
+			setDiaCumprir(preenchimento);
 		}
 
 		if (horario.getDataInicio() != null) {
@@ -406,9 +435,9 @@ public class AssociarHorarioForm extends ActionForm {
 				setDiaInicio(String.valueOf(calendario.get(Calendar.DAY_OF_MONTH)));
 			}
 		} else {
-			setAnoInicio("--");
-			setMesInicio("--");
-			setDiaInicio("--");
+			setAnoInicio(preenchimento + preenchimento);
+			setMesInicio(preenchimento);
+			setDiaInicio(preenchimento);
 		}
 
 		if (horario.getDataFim() != null) {
@@ -427,12 +456,84 @@ public class AssociarHorarioForm extends ActionForm {
 				setDiaFim(String.valueOf(calendario.get(Calendar.DAY_OF_MONTH)));
 			}
 		} else {
-			setAnoFim("--");
-			setMesFim("--");
-			setDiaFim("--");
+			setAnoFim(preenchimento + preenchimento);
+			setMesFim(preenchimento);
+			setDiaFim(preenchimento);
 		}
+		return this;
 	}
 
+	public void setDuracoesHorario(Horario horario, boolean vemBaseDados) {
+		Calendar calendario = Calendar.getInstance();
+		String preenchimento = "--";
+
+		if (horario.getIntervaloMinimoRefeicao() != null) {
+			calendario.clear();
+			calendario.setTimeInMillis((horario.getIntervaloMinimoRefeicao()).getTime());
+			if (vemBaseDados) {
+				calendario.add(Calendar.HOUR_OF_DAY, -1);
+			}
+
+			setIntervaloMinimoHoras((new Integer(calendario.get(Calendar.HOUR_OF_DAY))).toString());
+			if (calendario.get(Calendar.MINUTE) < 10) {
+				setIntervaloMinimoMinutos("0" + (new Integer(calendario.get(Calendar.MINUTE))).toString());
+			} else {
+				setIntervaloMinimoMinutos((new Integer(calendario.get(Calendar.MINUTE))).toString());
+			}
+		} else {
+			setIntervaloMinimoHoras(preenchimento);
+			setIntervaloMinimoMinutos(preenchimento);
+		}
+		if (horario.getDescontoObrigatorioRefeicao() != null) {
+			calendario.clear();
+			calendario.setTimeInMillis((horario.getDescontoObrigatorioRefeicao()).getTime());
+			if (vemBaseDados) {
+				calendario.add(Calendar.HOUR_OF_DAY, -1);
+			}
+			setDescontoObrigatorioHoras((new Integer(calendario.get(Calendar.HOUR_OF_DAY))).toString());
+			if (calendario.get(Calendar.MINUTE) < 10) {
+				setDescontoObrigatorioMinutos("0" + (new Integer(calendario.get(Calendar.MINUTE))).toString());
+			} else {
+				setDescontoObrigatorioMinutos((new Integer(calendario.get(Calendar.MINUTE))).toString());
+			}
+		} else {
+			setDescontoObrigatorioHoras(preenchimento);
+			setDescontoObrigatorioMinutos(preenchimento);
+		}
+
+		if (horario.getTrabalhoConsecutivo() != null) {
+			calendario.clear();
+			calendario.setTimeInMillis(horario.getTrabalhoConsecutivo().getTime());
+			if (vemBaseDados) {
+				calendario.add(Calendar.HOUR_OF_DAY, -1);
+			}
+			setTrabalhoConsecutivoHoras((new Integer(calendario.get(Calendar.HOUR_OF_DAY))).toString());
+			if (calendario.get(Calendar.MINUTE) < 10) {
+				setTrabalhoConsecutivoMinutos("0" + (new Integer(calendario.get(Calendar.MINUTE))).toString());
+			} else {
+				setTrabalhoConsecutivoMinutos((new Integer(calendario.get(Calendar.MINUTE))).toString());
+			}
+		} else {
+			setTrabalhoConsecutivoHoras(preenchimento);
+			setTrabalhoConsecutivoMinutos(preenchimento);
+		}
+	} /* setDuracoesHorario */
+
+	public String getTrabalhoConsecutivoHoras() {
+		return _trabalhoConsecutivoHoras;
+	}
+
+	public void setTrabalhoConsecutivoHoras(String consecutivo) {
+		_trabalhoConsecutivoHoras = consecutivo;
+	}
+
+	public String getTrabalhoConsecutivoMinutos() {
+		return _trabalhoConsecutivoMinutos;
+	}
+
+	public void setTrabalhoConsecutivoMinutos(String consecutivo) {
+		_trabalhoConsecutivoMinutos = consecutivo;
+	}
 	public String getNome() {
 		return (_nome);
 	}
@@ -633,8 +734,6 @@ public class AssociarHorarioForm extends ActionForm {
 		return _excepcaoHorario;
 	}
 
-	
-	
 	public void setNome(String nome) {
 		_nome = nome;
 	}
@@ -832,35 +931,49 @@ public class AssociarHorarioForm extends ActionForm {
 	public void setExcepcaoHorario(boolean excepcaoHorario) {
 		_excepcaoHorario = excepcaoHorario;
 	}
-	
-	public void setForm(ArrayList modalidades, ArrayList regimes) {
+
+	public void setForm(ArrayList modalidades, ArrayList regimes, ArrayList listaRegimesHorarioAlterar) {
 		setListaModalidades(modalidades);
 		setListaRegimes(regimes);
 
-		Calendar agora = Calendar.getInstance();
-		setDiaInicio((new Integer(agora.get(Calendar.DAY_OF_MONTH))).toString());
-		setMesInicio((new Integer(agora.get(Calendar.MONTH) + 1)).toString());
-		setAnoInicio((new Integer(agora.get(Calendar.YEAR))).toString());
+		//		testes para o caso de alteraçao de horario que so pode ocorrer logo apos a associacao
+		if (getDiaInicio() == null) {
+			Calendar agora = Calendar.getInstance();
+			setDiaInicio((new Integer(agora.get(Calendar.DAY_OF_MONTH))).toString());
+			setMesInicio((new Integer(agora.get(Calendar.MONTH) + 1)).toString());
+			setAnoInicio((new Integer(agora.get(Calendar.YEAR))).toString());
+		}
+		if (listaRegimesHorarioAlterar != null) {
+
+			//			setRegime((String[])listaRegimesHorarioAlterar.toArray());
+			Iterator iterRegimes = listaRegimesHorarioAlterar.iterator();
+			int i = 0;
+			_regime = new String[listaRegimesHorarioAlterar.size()];
+			while (iterRegimes.hasNext()) {
+				String regime = (String) iterRegimes.next();
+				_regime[i++] = regime;
+			}
+		}
 	}
 
 	public void setForm(
 		Locale locale,
 		Pessoa pessoa,
 		Funcionario funcionario,
-		FuncNaoDocente funcNaoDocente,
 		Horario horario,
 		ArrayList listaRegime,
-		boolean isExcepcaoHorario) {
-		IStrategyHorarios horarioStrategy =
-			SuporteStrategyHorarios.getInstance().callStrategy(getModalidade());
+		boolean isExcepcaoHorario,
+		String alterar) {
+		IStrategyHorarios horarioStrategy = SuporteStrategyHorarios.getInstance().callStrategy(getModalidade());
 		horarioStrategy.setFormAssociarHorarioConfirmar(
 			locale,
 			this,
 			pessoa,
 			funcionario,
 			horario,
-			listaRegime, 
-			isExcepcaoHorario);
+			listaRegime,
+			isExcepcaoHorario,
+			alterar);
 	} /* setForm */
 
 	public void reset(ActionMapping mapping, HttpServletRequest request) {
@@ -902,7 +1015,7 @@ public class AssociarHorarioForm extends ActionForm {
 		_anoFim = "";
 
 		_duracaoSemanal = "";
-		
+
 		_excepcaoHorario = false;
 	}
 
@@ -913,7 +1026,7 @@ public class AssociarHorarioForm extends ActionForm {
 
 		if (mapping.getPath().equals(new String("/associarHorario"))) {
 			if (request.getParameter("numMecanografico") != null) {
-				
+
 				if ((request.getParameter("numMecanografico")).length() < 1) {
 					errors.add("numMecanografico", new ActionError("error.numero.obrigatorio"));
 					return errors;
@@ -928,8 +1041,7 @@ public class AssociarHorarioForm extends ActionForm {
 			}
 		} else if (mapping.getPath().equals(new String("/adicionarHorarioRotacao"))) {
 			if ((request.getParameter("numDias") != null) && (request.getParameter("posicao") != null)) {
-				if (((request.getParameter("numDias")).length() < 1)
-					|| ((request.getParameter("posicao")).length() < 1)) {
+				if (((request.getParameter("numDias")).length() < 1) || ((request.getParameter("posicao")).length() < 1)) {
 					errors.add("numero", new ActionError("error.numero.obrigatorio"));
 					return errors;
 				} else {
@@ -944,17 +1056,23 @@ public class AssociarHorarioForm extends ActionForm {
 					}
 
 					// testa a posição e a duração da nova rotação 
-					ArrayList rotacaoHorario = null;
-					if ((rotacaoHorario = (ArrayList)session.getAttribute("rotacaoHorario")) != null) {
-						ListIterator iterador = rotacaoHorario.listIterator();
+
+					ArrayList rotacaoHorario = new ArrayList();
+					if ((rotacaoHorario = (ArrayList) session.getAttribute("rotacaoHorario")) != null) {
+						ArrayList novaLista = (ArrayList) rotacaoHorario.clone();
 						Horario horario = null;
 						int posMaxPrimeiroHorario = 0;
 
-						if (iterador.hasNext()) {
-							horario = (Horario)iterador.next();
+						// se for uma alteracao de horario a validacao das posicoes nao pode contar com o horario anterior
+						if (request.getParameter("alterar") != null) {
+							novaLista.remove(Integer.valueOf((String) request.getParameter("indiceRotacao")).intValue());
+						}
+						ListIterator iterador = novaLista.listIterator();
 
-							if ((posicao >= horario.getPosicao())
-								&& (posicao <= (horario.getPosicao() + horario.getNumDias() - 1))) {
+						if (iterador.hasNext()) {
+							horario = (Horario) iterador.next();
+
+							if ((posicao >= horario.getPosicao()) && (posicao <= (horario.getPosicao() + horario.getNumDias() - 1))) {
 								errors.add("numero", new ActionError("error.rotacaoHorario"));
 								return errors;
 							}
@@ -965,11 +1083,8 @@ public class AssociarHorarioForm extends ActionForm {
 									return errors;
 								} else {
 									/* dia de descanso entre a rotacao dos horários */
-									if (((posicao - posMaxPrimeiroHorario) == 1)
-										|| (((horario.getPosicao()) - (posicao + numDias - 1)) == 1)) {
-										errors.add(
-											"dia de descanso",
-											new ActionError("error.rotacaoHorario.diaDescanso"));
+									if (((posicao - posMaxPrimeiroHorario) == 1) || (((horario.getPosicao()) - (posicao + numDias - 1)) == 1)) {
+										errors.add("dia de descanso", new ActionError("error.rotacaoHorario.diaDescanso"));
 										return errors;
 									}
 								}
@@ -979,10 +1094,9 @@ public class AssociarHorarioForm extends ActionForm {
 						}
 
 						while (iterador.hasNext()) {
-							horario = (Horario)iterador.next();
+							horario = (Horario) iterador.next();
 
-							if ((posicao >= horario.getPosicao())
-								&& (posicao <= (horario.getPosicao() + horario.getNumDias() - 1))) {
+							if ((posicao >= horario.getPosicao()) && (posicao <= (horario.getPosicao() + horario.getNumDias() - 1))) {
 								errors.add("rotacao", new ActionError("error.rotacaoHorario"));
 								return errors;
 							}
@@ -993,11 +1107,8 @@ public class AssociarHorarioForm extends ActionForm {
 									return errors;
 								} else {
 									/* dia de descanso entre a rotacao dos horários */
-									if (((posicao - posMaxPrimeiroHorario) == 1)
-										|| (((horario.getPosicao()) - (posicao + numDias - 1)) == 1)) {
-										errors.add(
-											"dia de descanso",
-											new ActionError("error.rotacaoHorario.diaDescanso"));
+									if (((posicao - posMaxPrimeiroHorario) == 1) || (((horario.getPosicao()) - (posicao + numDias - 1)) == 1)) {
+										errors.add("dia de descanso", new ActionError("error.rotacaoHorario.diaDescanso"));
 										return errors;
 									}
 								}

@@ -63,7 +63,7 @@ public final class ConsultarFuncionarioEscolhaAction extends Action {
 		ConsultarFuncionarioMostrarForm formEscolha = (ConsultarFuncionarioMostrarForm) form;
 		Integer numMecanografico = (Integer) session.getAttribute("numMecanografico");
 		System.out.println("CONSULTA DE ASSIDUIDADE: " + formEscolha.getEscolha() + " funcionario " + numMecanografico 
-				+ " mes " + formEscolha.getMesInicioEscolha());
+		+ " mes " + formEscolha.getMesInicioEscolha());
 
 		if (formEscolha.getEscolha().equals("consultar.marcacao")) {
 			//»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» Marcacoes de Ponto «««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««
@@ -253,7 +253,7 @@ public final class ConsultarFuncionarioEscolhaAction extends Action {
 			listaHeaders.add(messages.getMessage("prompt.diaFim"));
 			listaHeaders.add(messages.getMessage("prompt.horaInicio"));
 			listaHeaders.add(messages.getMessage("prompt.horaFim"));
-
+			
 			listagem.add(listaHeaders);
 			listagem.add(listaBody);
 

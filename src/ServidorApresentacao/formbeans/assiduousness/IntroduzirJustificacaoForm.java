@@ -1,5 +1,4 @@
 package ServidorApresentacao.formbeans.assiduousness;
-
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
@@ -169,7 +168,7 @@ public class IntroduzirJustificacaoForm extends ActionForm {
       
       // validacao dos outros campos
       IStrategyJustificacoes justificacaoStrategy  = SuporteStrategyJustificacoes.getInstance().callStrategy((String)((ParamJustificacao)listaJustificacoes.get(indiceLista)).getTipo());
-      errors = justificacaoStrategy.validateIntroduzirJustificacao(this);
+      errors = justificacaoStrategy.validateFormJustificacao(this);
       
       session.setAttribute("tipoJustificacao", (String)((ParamJustificacao)listaJustificacoes.get(indiceLista)).getTipo());
     }

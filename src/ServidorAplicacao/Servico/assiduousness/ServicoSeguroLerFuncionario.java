@@ -1,5 +1,7 @@
 package ServidorAplicacao.Servico.assiduousness;
 
+import java.util.Calendar;
+
 import Dominio.Funcionario;
 import ServidorAplicacao.ServicoAutorizacao;
 import ServidorAplicacao.ServicoSeguro;
@@ -24,7 +26,7 @@ public class ServicoSeguroLerFuncionario extends ServicoSeguro {
   
   public void execute() throws NotExecuteException {
     IFuncionarioPersistente iFuncionarioPersistente = SuportePersistente.getInstance().iFuncionarioPersistente();
-    if((_funcionario = iFuncionarioPersistente.lerFuncionarioPorPessoa(_chavePessoa)) == null){
+    if((_funcionario = iFuncionarioPersistente.lerFuncionarioPorPessoa(_chavePessoa, Calendar.getInstance().getTime())) == null){
       throw new NotExecuteException("error.funcionario.naoExiste");
     }
   }

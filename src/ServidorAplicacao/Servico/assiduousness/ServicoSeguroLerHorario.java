@@ -3,12 +3,14 @@ package ServidorAplicacao.Servico.assiduousness;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
+import Dominio.Funcionario;
 import Dominio.Horario;
 import Dominio.HorarioTipo;
 import ServidorAplicacao.ServicoAutorizacao;
 import ServidorAplicacao.ServicoSeguro;
 import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import ServidorPersistenteJDBC.IFeriadoPersistente;
+import ServidorPersistenteJDBC.IFuncionarioPersistente;
 import ServidorPersistenteJDBC.IHorarioPersistente;
 import ServidorPersistenteJDBC.IHorarioTipoPersistente;
 import ServidorPersistenteJDBC.IRegimePersistente;
@@ -38,22 +40,36 @@ public class ServicoSeguroLerHorario extends ServicoSeguro {
 		IHorarioPersistente iHorarioPersistente = SuportePersistente.getInstance().iHorarioPersistente();
 		IRegimePersistente iRegimePersistente = SuportePersistente.getInstance().iRegimePersistente();
 
+		boolean excepcao = true;
 		if ((_horario = iHorarioPersistente.lerExcepcaoHorarioPorNumMecanografico(_numMecanografico, _dataConsulta)) == null) {
+			excepcao = false;
 			if ((_horario = iHorarioPersistente.lerHorarioPorNumFuncionario(_numMecanografico, _dataConsulta)) == null) {
 				throw new NotExecuteException("error.funcionario.semHorario");
 			}
 		}
-		
+
+
+		IFuncionarioPersistente iFuncionarioPersistente = SuportePersistente.getInstance().iFuncionarioPersistente();
+		Funcionario funcionario = null;
+		if((funcionario = iFuncionarioPersistente.lerFuncionarioPorNumMecanografico(_numMecanografico, _dataConsulta)) == null){
+			throw new NotExecuteException("error.funcionario.impossivelLer");
+		} 
 
 		IFeriadoPersistente iFeriadoPersistente = SuportePersistente.getInstance().iFeriadoPersistente();
-		if(iFeriadoPersistente.diaFeriado(_dataConsulta)){
+		if (iFeriadoPersistente.calendarioFeriado(funcionario.getCalendario(), _dataConsulta)) {
 			_horario.transformaFeriado();
 		}
 
 		ArrayList listaIdRegimes = null;
 		if (_horario.getChaveHorarioTipo() == 0) {
-			if ((listaIdRegimes = iHorarioPersistente.lerRegimes(_horario.getCodigoInterno())) == null) {
-				throw new NotExecuteException("error.regime.impossivel");
+			if (excepcao) {
+				if ((listaIdRegimes = iHorarioPersistente.lerRegimesHorarioExcepcao(_horario.getCodigoInterno())) == null) {
+					throw new NotExecuteException("error.regime.impossivel");
+				}
+			} else {
+				if ((listaIdRegimes = iHorarioPersistente.lerRegimes(_horario.getCodigoInterno())) == null) {
+					throw new NotExecuteException("error.regime.impossivel");
+				}
 			}
 			if ((_listaRegimes = iRegimePersistente.lerDesignacaoRegimes(listaIdRegimes)) == null) {
 				throw new NotExecuteException("error.regime.impossivel");
@@ -73,8 +89,9 @@ public class ServicoSeguroLerHorario extends ServicoSeguro {
 			}
 
 			if ((_horario.getSigla() != null)
-				&& ((_horario.getSigla().equals(Constants.DS)) || (_horario.getSigla().equals(Constants.DSC))
-				|| (_horario.getSigla().equals(Constants.FERIADO)))) {
+				&& ((_horario.getSigla().equals(Constants.DS))
+					|| (_horario.getSigla().equals(Constants.DSC))
+					|| (_horario.getSigla().equals(Constants.FERIADO)))) {
 				//é um horário de descanso
 				_horario.transformaDescanso(_horarioTipo);
 			} else {

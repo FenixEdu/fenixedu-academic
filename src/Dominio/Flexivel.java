@@ -14,10 +14,11 @@ import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 
+import Util.FormataCalendar;
+import constants.assiduousness.Constants;
 import ServidorApresentacao.formbeans.assiduousness.AssociarHorarioForm;
 import ServidorApresentacao.formbeans.assiduousness.AssociarHorarioTipoConfirmarForm;
 import ServidorApresentacao.formbeans.assiduousness.AssociarHorarioTipoForm;
-import constants.assiduousness.Constants;
 
 /**
  *
@@ -92,6 +93,10 @@ public class Flexivel implements IStrategyHorarios {
 		int mesFim = 0;
 		int anoFim = 0;
 
+		int trabalhoConsecutivoHoras = 0;
+		int trabalhoConsecutivoMinutos = 0;
+		long timeTrabalhoConsecutivo = 0;
+
 		try {
 			if (formHorario.getDuracaoSemanal().length() < 1) {
 				errors.add("DuracaoSemanal-HFlexivel", new ActionError("error.duracaoSemanal.obrigatoria"));
@@ -143,7 +148,8 @@ public class Flexivel implements IStrategyHorarios {
 
 				if (!(timeInicioExpediente < timeFimExpediente)) {
 					errors.add("Expediente", new ActionError("error.Expediente"));
-				} else if ((timeInicioExpediente < Constants.EXPEDIENTE_MINIMO) || (timeFimExpediente > Constants.EXPEDIENTE_MAXIMO)) {
+				} else if (
+					(timeInicioExpediente < Constants.EXPEDIENTE_MINIMO) || (timeFimExpediente > Constants.EXPEDIENTE_MAXIMO)) {
 					errors.add("Expediente", new ActionError("error.Expediente"));
 				}
 			}
@@ -200,6 +206,22 @@ public class Flexivel implements IStrategyHorarios {
 				} catch (java.lang.NumberFormatException e) {
 					errors.add("numero", new ActionError("error.numero.naoInteiro"));
 				}
+			}
+
+			if ((formHorario.getTrabalhoConsecutivoHoras().length() < 1)
+				|| (formHorario.getTrabalhoConsecutivoMinutos().length() < 1)) {
+				errors.add("Trabalho Consecutivo", new ActionError("error.trabalhoConsecutivo.obrigatorio"));
+			} else {
+				try {
+					trabalhoConsecutivoHoras = new Integer(formHorario.getTrabalhoConsecutivoHoras()).intValue();
+					trabalhoConsecutivoMinutos = new Integer(formHorario.getTrabalhoConsecutivoMinutos()).intValue();
+				} catch (java.lang.NumberFormatException e) {
+					errors.add("numero", new ActionError("error.numero.naoInteiro"));
+				}
+				calendar.clear();
+				calendar.set(1970, 0, 1, trabalhoConsecutivoHoras, trabalhoConsecutivoMinutos, 00);
+				calendar.add(Calendar.HOUR_OF_DAY, 1);
+				timeTrabalhoConsecutivo = calendar.getTimeInMillis();
 			}
 
 			if ((formHorario.getInicioHN1Horas().length() < 1)
@@ -289,17 +311,16 @@ public class Flexivel implements IStrategyHorarios {
 						errors.add("HNPeriodo", new ActionError("error.HorarioNormal.duracao"));
 					}
 
-					if (((timeFimHN1 - timeInicioHN1) > Constants.MAX_TRABALHO_FLEXIVEL)
-						|| ((timeFimHN2 - timeInicioHN2) > Constants.MAX_TRABALHO_FLEXIVEL)) {
+					if (((timeFimHN1 - timeInicioHN1) > timeTrabalhoConsecutivo)
+						|| ((timeFimHN2 - timeInicioHN2) > timeTrabalhoConsecutivo)) {
 						errors.add("HNMax", new ActionError("error.HorarioNormal.trabalhoMax"));
 					}
-
 				}
 			}
 
 			if (formHorario.getRegime().length < 0) {
 				errors.add("regime", new ActionError("error.regime.obrigatorio"));
-			} else {
+			} else {				
 				listaRegime = Arrays.asList(formHorario.getRegime());
 
 				if (listaRegime.contains(Constants.REGIME_IPF)) { //Regime:new String("isencaoPeriodoFixo")
@@ -417,7 +438,9 @@ public class Flexivel implements IStrategyHorarios {
 			if (!formHorario.isExcepcaoHorario()) {
 
 				// data de validade 
-				if ((formHorario.getDiaInicio() != null) && (formHorario.getMesInicio() != null) && (formHorario.getAnoInicio() != null)) {
+				if ((formHorario.getDiaInicio() != null)
+					&& (formHorario.getMesInicio() != null)
+					&& (formHorario.getAnoInicio() != null)) {
 					if ((formHorario.getDiaInicio().length() < 1)
 						|| (formHorario.getMesInicio().length() < 1)
 						|| (formHorario.getAnoInicio().length() < 1)) {
@@ -434,7 +457,9 @@ public class Flexivel implements IStrategyHorarios {
 						calendar.set(anoInicio, mesInicio - 1, diaInicio, 00, 00, 00);
 						java.util.Date dataInicio = calendar.getTime();
 
-						if ((formHorario.getDiaFim() != null) && (formHorario.getMesFim() != null) && (formHorario.getAnoFim() != null)) {
+						if ((formHorario.getDiaFim() != null)
+							&& (formHorario.getMesFim() != null)
+							&& (formHorario.getAnoFim() != null)) {
 							if ((formHorario.getDiaFim().length() > 0)
 								&& (formHorario.getMesFim().length() > 0)
 								&& (formHorario.getAnoFim().length() > 0)) {
@@ -523,7 +548,9 @@ public class Flexivel implements IStrategyHorarios {
 		try {
 			// data de validade 
 			if (!formHorario.isExcepcaoHorario()) {
-				if ((formHorario.getDiaInicio() != null) && (formHorario.getMesInicio() != null) && (formHorario.getAnoInicio() != null)) {
+				if ((formHorario.getDiaInicio() != null)
+					&& (formHorario.getMesInicio() != null)
+					&& (formHorario.getAnoInicio() != null)) {
 					if ((formHorario.getDiaInicio().length() < 1)
 						|| (formHorario.getMesInicio().length() < 1)
 						|| (formHorario.getAnoInicio().length() < 1)) {
@@ -540,7 +567,9 @@ public class Flexivel implements IStrategyHorarios {
 						calendar.set(anoInicio, mesInicio - 1, diaInicio, 00, 00, 00);
 						java.util.Date dataInicio = calendar.getTime();
 
-						if ((formHorario.getDiaFim() != null) && (formHorario.getMesFim() != null) && (formHorario.getAnoFim() != null)) {
+						if ((formHorario.getDiaFim() != null)
+							&& (formHorario.getMesFim() != null)
+							&& (formHorario.getAnoFim() != null)) {
 							if ((formHorario.getDiaFim().length() > 0)
 								&& (formHorario.getMesFim().length() > 0)
 								&& (formHorario.getAnoFim().length() > 0)) {
@@ -676,6 +705,7 @@ public class Flexivel implements IStrategyHorarios {
 			horario.setFimExpediente(new Timestamp(calendar.getTimeInMillis()));
 		}
 
+		// descontos de refeicao
 		calendar.clear();
 		calendar.set(
 			1970,
@@ -695,6 +725,17 @@ public class Flexivel implements IStrategyHorarios {
 			new Integer(formHorario.getDescontoObrigatorioMinutos()).intValue(),
 			00);
 		horario.setDescontoObrigatorioRefeicao(new Time(calendar.getTimeInMillis()));
+
+		// trabalho consecutivo
+		calendar.clear();
+		calendar.set(
+			1970,
+			0,
+			1,
+			new Integer(formHorario.getTrabalhoConsecutivoHoras()).intValue(),
+			new Integer(formHorario.getTrabalhoConsecutivoMinutos()).intValue(),
+			00);
+		horario.setTrabalhoConsecutivo(new Time(calendar.getTimeInMillis()));
 
 		//	Intervalo de Refeicao
 		calendar.clear();
@@ -975,7 +1016,9 @@ public class Flexivel implements IStrategyHorarios {
 			00);
 		horario.setDataInicio(calendar.getTime());
 
-		if ((formHorario.getDiaFim().length() > 0) && (formHorario.getMesFim().length() > 0) && (formHorario.getAnoFim().length() > 0)) {
+		if ((formHorario.getDiaFim().length() > 0)
+			&& (formHorario.getMesFim().length() > 0)
+			&& (formHorario.getAnoFim().length() > 0)) {
 			calendar.clear();
 			calendar.set(
 				(new Integer(formHorario.getAnoFim())).intValue(),
@@ -995,16 +1038,25 @@ public class Flexivel implements IStrategyHorarios {
 		Funcionario funcionario,
 		Horario horario,
 		ArrayList listaRegime,
-		boolean isExcepcaoHorario) {
+		boolean isExcepcaoHorario,
+		String alterar) {
 		AssociarHorarioForm formHorario = (AssociarHorarioForm) form;
-
 		Calendar calendar = Calendar.getInstance();
 		calendar.setLenient(false);
 
+		String preenchimento = "--";
+		if (alterar != null) {
+			preenchimento = "";
+		}
+
 		formHorario.setExcepcaoHorario(isExcepcaoHorario);
 
-		formHorario.setNome(pessoa.getNome());
-		formHorario.setNumMecanografico((new Integer(funcionario.getNumeroMecanografico())).toString());
+		if (pessoa != null) {
+			formHorario.setNome(pessoa.getNome());
+		}
+		if (funcionario != null) {
+			formHorario.setNumMecanografico((new Integer(funcionario.getNumeroMecanografico())).toString());
+		}
 
 		formHorario.setDuracaoSemanal((new Integer((new Float(horario.getDuracaoSemanal())).intValue())).toString());
 		formHorario.setModalidade(horario.getModalidade());
@@ -1052,6 +1104,20 @@ public class Flexivel implements IStrategyHorarios {
 			formHorario.setDescontoObrigatorioMinutos("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
 		} else {
 			formHorario.setDescontoObrigatorioMinutos((new Integer(calendar.get(Calendar.MINUTE))).toString());
+		}
+
+		if (horario.getTrabalhoConsecutivo() != null) {
+			calendar.clear();
+			calendar.setTimeInMillis(horario.getTrabalhoConsecutivo().getTime());
+			formHorario.setTrabalhoConsecutivoHoras((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
+			if (calendar.get(Calendar.MINUTE) < 10) {
+				formHorario.setTrabalhoConsecutivoMinutos("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
+			} else {
+				formHorario.setTrabalhoConsecutivoMinutos((new Integer(calendar.get(Calendar.MINUTE))).toString());
+			}
+		} else {
+			formHorario.setTrabalhoConsecutivoHoras(preenchimento);
+			formHorario.setTrabalhoConsecutivoMinutos(preenchimento);
 		}
 
 		//	Intervalo de Refeição
@@ -1133,12 +1199,13 @@ public class Flexivel implements IStrategyHorarios {
 			formHorario.setDiaSeguinteHN2(Constants.DIA_SEGUINTE);
 		}
 
-		calendar.clear();
-		calendar.setTime(horario.getDataInicio());
-		formHorario.setDiaInicio((new Integer(calendar.get(Calendar.DAY_OF_MONTH))).toString());
-		formHorario.setMesInicio((new Integer(calendar.get(Calendar.MONTH) + 1)).toString());
-		formHorario.setAnoInicio((new Integer(calendar.get(Calendar.YEAR))).toString());
-
+		if (horario.getDataInicio() != null) {
+			calendar.clear();
+			calendar.setTime(horario.getDataInicio());
+			formHorario.setDiaInicio((new Integer(calendar.get(Calendar.DAY_OF_MONTH))).toString());
+			formHorario.setMesInicio((new Integer(calendar.get(Calendar.MONTH) + 1)).toString());
+			formHorario.setAnoInicio((new Integer(calendar.get(Calendar.YEAR))).toString());
+		}
 		if (horario.getDataFim() != null) {
 			calendar.clear();
 			calendar.setTime(horario.getDataFim());
@@ -1146,9 +1213,9 @@ public class Flexivel implements IStrategyHorarios {
 			formHorario.setMesFim((new Integer(calendar.get(Calendar.MONTH) + 1)).toString());
 			formHorario.setAnoFim((new Integer(calendar.get(Calendar.YEAR))).toString());
 		} else {
-			formHorario.setDiaFim("--");
-			formHorario.setMesFim("--");
-			formHorario.setAnoFim("----");
+			formHorario.setDiaFim(preenchimento);
+			formHorario.setMesFim(preenchimento);
+			formHorario.setAnoFim(preenchimento + preenchimento);
 		}
 
 		if (!listaRegime.contains(Constants.REGIME_IPF)) { //Regime: new String("isencaoPeriodoFixo")
@@ -1204,17 +1271,17 @@ public class Flexivel implements IStrategyHorarios {
 				formHorario.setDiaSeguintePF2(Constants.DIA_SEGUINTE);
 			}
 		} else {
-			formHorario.setInicioPF1Horas("--");
-			formHorario.setInicioPF1Minutos("--");
+			formHorario.setInicioPF1Horas(preenchimento);
+			formHorario.setInicioPF1Minutos(preenchimento);
 
-			formHorario.setFimPF1Horas("--");
-			formHorario.setFimPF1Minutos("--");
+			formHorario.setFimPF1Horas(preenchimento);
+			formHorario.setFimPF1Minutos(preenchimento);
 
-			formHorario.setInicioPF2Horas("--");
-			formHorario.setInicioPF2Minutos("--");
+			formHorario.setInicioPF2Horas(preenchimento);
+			formHorario.setInicioPF2Minutos(preenchimento);
 
-			formHorario.setFimPF2Horas("--");
-			formHorario.setFimPF2Minutos("--");
+			formHorario.setFimPF2Horas(preenchimento);
+			formHorario.setFimPF2Minutos(preenchimento);
 		}
 	} /* setFormAssociarHorarioConfirmar */
 
@@ -1271,6 +1338,7 @@ public class Flexivel implements IStrategyHorarios {
 
 		calendar.clear();
 		calendar.setTimeInMillis((horarioTipo.getIntervaloMinimoRefeicao()).getTime());
+		calendar.add(Calendar.HOUR_OF_DAY, -1);
 		formHorario.setIntervaloMinimoHoras((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
 		if (calendar.get(Calendar.MINUTE) < 10) {
 			formHorario.setIntervaloMinimoMinutos("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
@@ -1279,11 +1347,22 @@ public class Flexivel implements IStrategyHorarios {
 		}
 		calendar.clear();
 		calendar.setTimeInMillis((horarioTipo.getDescontoObrigatorioRefeicao()).getTime());
+		calendar.add(Calendar.HOUR_OF_DAY, -1);
 		formHorario.setDescontoObrigatorioHoras((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
 		if (calendar.get(Calendar.MINUTE) < 10) {
 			formHorario.setDescontoObrigatorioMinutos("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
 		} else {
 			formHorario.setDescontoObrigatorioMinutos((new Integer(calendar.get(Calendar.MINUTE))).toString());
+		}
+
+		calendar.clear();
+		calendar.setTimeInMillis(horarioTipo.getTrabalhoConsecutivo().getTime());
+		calendar.add(Calendar.HOUR_OF_DAY, -1);
+		formHorario.setTrabalhoConsecutivoHoras((new Integer(calendar.get(Calendar.HOUR_OF_DAY))).toString());
+		if (calendar.get(Calendar.MINUTE) < 10) {
+			formHorario.setTrabalhoConsecutivoMinutos("0" + (new Integer(calendar.get(Calendar.MINUTE))).toString());
+		} else {
+			formHorario.setTrabalhoConsecutivoMinutos((new Integer(calendar.get(Calendar.MINUTE))).toString());
 		}
 
 		//			Intervalo de Refeição
@@ -1728,10 +1807,14 @@ public class Flexivel implements IStrategyHorarios {
 
 		long saldo = ((Long) listaSaldos.get(0)).longValue();
 		long intervaloRefeicao = 0;
+		long intervaloRefeicaoJustificado = 0;
+		long saldoPenalizacaoMinimoRefeicao = 0;
+		long saldoPenalizacaoAusenciaRefeicao = 0;
+		boolean refeicaoAntesEntrada = false;
 
+		// saldo da refeicao
 		ListIterator iterador = listaMarcacoesPonto.listIterator();
 		if (iterador.hasNext()) {
-			// saldo da refeicao
 			// o intervalo para refeicao deve ser feito no meio de dois periodos de trabalho.
 			// por isso conta o primeiro intervalo que estiver contido no intervalo para refeicao 
 			// estipulado para este horario. 
@@ -1741,16 +1824,39 @@ public class Flexivel implements IStrategyHorarios {
 			// a pessoa tivesse feito a refeicao antes de entrar ao servico 
 			if (entrada.getData().getTime() > horario.getInicioRefeicao().getTime()
 				&& entrada.getData().getTime() < horario.getFimRefeicao().getTime()) {
+				refeicaoAntesEntrada = true;
 				intervaloRefeicao = entrada.getData().getTime() - horario.getInicioRefeicao().getTime();
 				horario.setFimRefeicao(new Timestamp(entrada.getData().getTime()));
 			} else if (entrada.getData().getTime() == horario.getFimRefeicao().getTime()) {
 				intervaloRefeicao = entrada.getData().getTime() - horario.getInicioRefeicao().getTime();
 			} else {
-				if (listaMarcacoesPonto.size() >= 3) { //com mais de três marcações
+				if (listaMarcacoesPonto.size() >= 3) {
 					// se no intervalo de uma saida do dia com uma entrada está contida no intervalo de refeicao é como se
 					// a pessoa tivesse feito a refeicao nesse intervalo
 					while (iterador.hasNext()) {
 						saida = (MarcacaoPonto) iterador.next();
+
+						long saldoEntreMarcacoes = saida.getData().getTime() - entrada.getData().getTime();
+
+						// saldo que pode ser utilizado caso nao tenha havido intervalo para refeicao no periodo estipulado
+						if (saida.getData().getTime() < horario.getFimRefeicao().getTime()) {
+							saldoPenalizacaoAusenciaRefeicao = saldoPenalizacaoAusenciaRefeicao + saldoEntreMarcacoes;
+						} else if (entrada.getData().getTime() < horario.getFimRefeicao().getTime()) {
+							saldoPenalizacaoAusenciaRefeicao =
+								saldoPenalizacaoAusenciaRefeicao
+									+ horario.getFimRefeicao().getTime()
+									- entrada.getData().getTime()
+									- horario.getDescontoObrigatorioRefeicao().getTime();
+						}
+
+						// saldo que pode ser utilizado caso tenha havido irregularidades no intervalo para refeicao
+						saldoPenalizacaoMinimoRefeicao = saldoPenalizacaoMinimoRefeicao + saldoEntreMarcacoes;
+
+						if (entrada.getNumFuncionario() == 0 && intervaloRefeicaoJustificado == 0) {
+							// se for uma justificacao
+							intervaloRefeicaoJustificado = encontrarIntervaloRefeicaoJustificado(horario, entrada, saida);
+						}
+
 						if (iterador.hasNext()) {
 							entrada = (MarcacaoPonto) iterador.next();
 
@@ -1765,10 +1871,12 @@ public class Flexivel implements IStrategyHorarios {
 							// testar a entrada
 							if (entrada.getData().getTime() > horario.getInicioRefeicao().getTime()
 								&& entrada.getData().getTime() <= horario.getFimRefeicao().getTime()) {
-								intervaloRefeicao = intervaloRefeicao + (entrada.getData().getTime() - horario.getFimRefeicao().getTime());
+								intervaloRefeicao =
+									intervaloRefeicao + (entrada.getData().getTime() - horario.getFimRefeicao().getTime());
 								horario.setFimRefeicao(new Timestamp(entrada.getData().getTime()));
 							} else if (entrada.getData().getTime() <= horario.getInicioRefeicao().getTime()) {
-								intervaloRefeicao = intervaloRefeicao - (horario.getFimRefeicao().getTime() - horario.getInicioRefeicao().getTime());
+								intervaloRefeicao =
+									intervaloRefeicao - (horario.getFimRefeicao().getTime() - horario.getInicioRefeicao().getTime());
 							}
 						} else {
 							if (saida.getData().getTime() > horario.getInicioRefeicao().getTime()
@@ -1793,15 +1901,59 @@ public class Flexivel implements IStrategyHorarios {
 							&& saida.getData().getTime() < horario.getFimRefeicao().getTime()) {
 							intervaloRefeicao = horario.getFimRefeicao().getTime() - saida.getData().getTime();
 							horario.setInicioRefeicao(new Timestamp(saida.getData().getTime()));
+
 						} else if (saida.getData().getTime() == horario.getInicioRefeicao().getTime()) {
 							intervaloRefeicao = horario.getFimRefeicao().getTime() - saida.getData().getTime();
+
+						} else {
+							// houve ausencia de refeicao neste dia logo deve haver penalizacao
+							saldoPenalizacaoAusenciaRefeicao =
+								horario.getFimRefeicao().getTime()
+									- entrada.getData().getTime()
+									- horario.getDescontoObrigatorioRefeicao().getTime();
+
+							if (entrada.getNumFuncionario() == 0) {
+								intervaloRefeicaoJustificado = encontrarIntervaloRefeicaoJustificado(horario, entrada, saida);
+							}
 						}
 					}
 				}
 			}
 
-			if (intervaloRefeicao < horario.getDescontoObrigatorioRefeicao().getTime() && intervaloRefeicao != 0) {
-				saldo = saldo - (horario.getDescontoObrigatorioRefeicao().getTime() - intervaloRefeicao);
+			// se a refeicao esta contida na justificacao tera que haver desconto obrigatorio de refeicao
+			if (intervaloRefeicaoJustificado > 0 && intervaloRefeicao == 0) {
+				saldo = saldo - horario.getDescontoObrigatorioRefeicao().getTime();
+
+			} else {
+				if (intervaloRefeicao == 0) {
+					// nao houve periodo de refeicao, logo tem que haver penalizacao
+					// que consiste em contar para saldo apenas o periodo de trabalho 
+					// até atingir o desconto obrigatorio de refeicao
+					if (saldo > saldoPenalizacaoAusenciaRefeicao) {
+						saldo = saldoPenalizacaoAusenciaRefeicao;
+					}
+				}
+
+				if (intervaloRefeicao < horario.getIntervaloMinimoRefeicao().getTime()
+					&& intervaloRefeicao != 0
+					&& !refeicaoAntesEntrada) {
+					// o periodo de refeicao é menor que o obrigatorio logo a penalizacao é contar o período 
+					// de trabalho efectuado até à saída para a refeicao
+					if (saldo > saldoPenalizacaoMinimoRefeicao) {
+						saldo = saldoPenalizacaoMinimoRefeicao;
+					}
+				}
+
+				if (intervaloRefeicao >= horario.getIntervaloMinimoRefeicao().getTime()
+					&& intervaloRefeicao < horario.getDescontoObrigatorioRefeicao().getTime()
+					&& intervaloRefeicao != 0
+					|| refeicaoAntesEntrada
+					&& intervaloRefeicao < horario.getDescontoObrigatorioRefeicao().getTime()
+					&& intervaloRefeicao != 0) {
+					// periodo de refeicao dentro dos limites do periodo de refeicao ou refeicao antes da entrada
+					// procedimento normal: descontar o resto ate fazer o desconto obrigatorio
+					saldo = saldo - (horario.getDescontoObrigatorioRefeicao().getTime() - intervaloRefeicao);
+				}
 			}
 		}
 
@@ -1812,6 +1964,8 @@ public class Flexivel implements IStrategyHorarios {
 				- (duracaoDiaria.intValue() * 3600 * 1000
 					+ new Float((duracaoDiaria.floatValue() - duracaoDiaria.intValue()) * 3600 * 1000).longValue());
 
+		calendario.clear();
+		calendario.setTimeInMillis(saldo);
 		listaSaldos.set(0, new Long(saldo));
 
 		// saldo das plataformas fixas
@@ -1865,6 +2019,28 @@ public class Flexivel implements IStrategyHorarios {
 			listaSaldos.set(1, new Long(saldoInjust));
 		}
 	} /* setSaldosHorarioVerbeteBody */
+
+	private long encontrarIntervaloRefeicaoJustificado(Horario horario, MarcacaoPonto entrada, MarcacaoPonto saida) {
+
+		long intervaloRefeicao = 0;
+		Timestamp inicioRefeicao = new Timestamp(horario.getInicioRefeicao().getTime());
+		Timestamp fimRefeicao = new Timestamp(horario.getFimRefeicao().getTime());
+		// testar a entrada
+		if (entrada.getData().getTime() >= inicioRefeicao.getTime() && entrada.getData().getTime() < fimRefeicao.getTime()) {
+			intervaloRefeicao = fimRefeicao.getTime() - entrada.getData().getTime();
+			inicioRefeicao = new Timestamp(entrada.getData().getTime());
+		} else if (entrada.getData().getTime() < inicioRefeicao.getTime()) {
+			intervaloRefeicao = fimRefeicao.getTime() - inicioRefeicao.getTime();
+		}
+		// testar a saida
+		if (saida.getData().getTime() > inicioRefeicao.getTime() && saida.getData().getTime() <= fimRefeicao.getTime()) {
+			intervaloRefeicao = intervaloRefeicao + (saida.getData().getTime() - fimRefeicao.getTime());
+			fimRefeicao = new Timestamp(saida.getData().getTime());
+		} else if (saida.getData().getTime() <= inicioRefeicao.getTime()) {
+			intervaloRefeicao = intervaloRefeicao - (fimRefeicao.getTime() - inicioRefeicao.getTime());
+		}
+		return intervaloRefeicao;
+	}
 
 	public long calcularTrabalhoNocturno(Horario horario, MarcacaoPonto entrada, MarcacaoPonto saida) {
 		long saldoNocturno = 0;
@@ -1981,8 +2157,8 @@ public class Flexivel implements IStrategyHorarios {
 				|| horario.getSigla().equals(Constants.DS)
 				|| horario.getSigla().equals(Constants.FERIADO)))) {
 			if (limita) {
-				if (saldo > Constants.MAX_TRABALHO_FLEXIVEL)
-					return Constants.MAX_TRABALHO_FLEXIVEL;
+				if (saldo > horario.getTrabalhoConsecutivo().getTime())
+					return horario.getTrabalhoConsecutivo().getTime();
 			}
 		}
 		return saldo;

@@ -1,7 +1,10 @@
 package ServidorAplicacao.Servico.assiduousness;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.Iterator;
 
@@ -53,7 +56,7 @@ public class ServicoSeguroInicializarCorreioFuncionarios {
 	/** Executa a actualizacao da tabela funcionario e o preenchimento da tabela centro_custo na Base de Dados */
 	public static void main(String[] args) throws NotExecuteException {
 		new ServicoSeguroInicializarCorreioFuncionarios(args);
-		
+
 		LeituraFicheiroFuncionarioCorreio servicoLeitura = new LeituraFicheiroFuncionarioCorreio();
 
 		lista = servicoLeitura.lerFicheiro(ficheiro, delimitador, estrutura, ordem);
@@ -86,19 +89,34 @@ public class ServicoSeguroInicializarCorreioFuncionarios {
 				if ((centroCusto = iCentroCustoPersistente.lerCentroCusto(sigla)) == null) {
 					centroCusto = new CentroCusto(sigla, departamento, seccao1, seccao2);
 					if (!iCentroCustoPersistente.escreverCentroCusto(centroCusto)) {
-						throw new NotExecuteException("error.centroCusto.impossivelEscrever");
+						continue;
 					}
 					centroCusto = iCentroCustoPersistente.lerCentroCusto(sigla);
 				}
+
 				Funcionario funcionario = null;
-				if ((funcionario = iFuncionarioPersistente.lerFuncionarioPorNumMecanografico(numeroMecanografico.intValue())) == null) {
-					//throw new NotExecuteException("error.funcionario.naoExiste");
+				if ((funcionario = iFuncionarioPersistente.lerFuncionarioSemHistoricoPorNumMecanografico(numeroMecanografico.intValue()))
+					== null) {
 					continue;
 				}
-				funcionario.setChaveCCCorrespondencia(centroCusto.getCodigoInterno());
-				// altera correio do funcionario 
-				if (!iFuncionarioPersistente.alterarFuncionario(funcionario)) {
-					throw new NotExecuteException("error.centroCusto.impossivelEscrever");
+
+				//data inicio da assiduidade
+				Timestamp dataInicioAssiduidade = new Timestamp(0);
+				funcionario.setDataInicio(dataInicioAssiduidade);
+				if ((dataInicioAssiduidade = iFuncionarioPersistente.lerInicioAssiduidade(numeroMecanografico.intValue())) != null) {
+					funcionario.setDataInicio(new Date(dataInicioAssiduidade.getTime()));
+				}
+
+				//agora
+				Calendar agora = Calendar.getInstance();
+				funcionario.setQuando(new Timestamp(agora.getTimeInMillis()));
+
+				//regista historico para correio do funcionario
+				funcionario.setChaveCCCorrespondencia(new Integer(centroCusto.getCodigoInterno()));
+				if (!iFuncionarioPersistente.existeHistoricoCCCorrespondencia(funcionario)) {
+					if (!iFuncionarioPersistente.escreverCCCorrespondencia(funcionario)) {
+						throw new NotExecuteException("error.centroCusto.impossivelEscrever");
+					}
 				}
 			}
 		}

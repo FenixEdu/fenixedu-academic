@@ -23,6 +23,10 @@ public class HorarioRelacionalOracle implements IHorarioPersistente {
 		return false;
 	}
 
+	public boolean alterarExcepcaoHorario(Horario horario) {
+		return false;
+	}
+
 	public boolean alterarDataFimHorario(Date dataFim, int numeroMecanografico) {
 		return false;
 	} /* alterarDataFimHorario */
@@ -77,7 +81,8 @@ public class HorarioRelacionalOracle implements IHorarioPersistente {
 			SuportePersistenteOracle.getInstance().iniciarTransaccao();
 			try {
 				// chave do funcionario
-				PreparedStatement sql = UtilRelacional.prepararComando("SELECT codigoInterno FROM ass_FUNCIONARIO WHERE numeroMecanografico = ?");
+				PreparedStatement sql =
+					UtilRelacional.prepararComando("SELECT codigoInterno FROM ass_FUNCIONARIO WHERE numeroMecanografico = ?");
 				sql.setInt(1, numMecanografico);
 				ResultSet resultadoQuery = sql.executeQuery();
 				int chaveFuncionario = 0;
@@ -119,13 +124,17 @@ public class HorarioRelacionalOracle implements IHorarioPersistente {
 										0,
 										resultadoQuery.getString("ASS_EXCHDIADTFIM").indexOf(" "))),
 								Constants.NUMDIAS_ROTACAO,
-								Constants.INICIO_ROTACAO));
+								Constants.INICIO_ROTACAO,
+								resultadoQuery.getInt("ASS_EXCHDIAWHO"),
+								resultadoQuery.getTimestamp("ASS_EXCHDIAWHEN")));
+
 					}
 				}
 				sqlChaveHorario.close();
 				sql.close();
 			} catch (Exception e) {
 				SuportePersistenteOracle.getInstance().cancelarTransaccao();
+				e.printStackTrace();
 				System.out.println("HorarioRelacionalOracle.lerExcepcoesHorarioPorNumMecanografico: " + e.toString());
 				return null;
 			}
@@ -150,7 +159,8 @@ public class HorarioRelacionalOracle implements IHorarioPersistente {
 			SuportePersistenteOracle.getInstance().iniciarTransaccao();
 			try {
 				// chave do funcionario
-				PreparedStatement sql = UtilRelacional.prepararComando("SELECT codigoInterno FROM ass_FUNCIONARIO WHERE numeroMecanografico = ?");
+				PreparedStatement sql =
+					UtilRelacional.prepararComando("SELECT codigoInterno FROM ass_FUNCIONARIO WHERE numeroMecanografico = ?");
 				sql.setInt(1, numMecanografico);
 				ResultSet resultadoQuery = sql.executeQuery();
 				int chaveFuncionario = 0;
@@ -213,7 +223,9 @@ public class HorarioRelacionalOracle implements IHorarioPersistente {
 										dataInicioHorario,
 										dataFimHorario,
 										resultadoDadosHorario.getInt("ASS_HTHDREPETICAO"),
-										resultadoDadosHorario.getInt("ASS_HTHDPOSICAO")));
+										resultadoDadosHorario.getInt("ASS_HTHDPOSICAO"),
+										resultadoQuery.getInt("ASS_HISEMP_WHO"),
+										resultadoQuery.getTimestamp("ASS_HISEMP_WHEN")));
 							}
 						}
 					}
@@ -223,6 +235,7 @@ public class HorarioRelacionalOracle implements IHorarioPersistente {
 				sql.close();
 			} catch (Exception e) {
 				SuportePersistenteOracle.getInstance().cancelarTransaccao();
+				e.printStackTrace();
 				System.out.println("HorarioRelacionalOracle.lerHistoricoHorarioPorNumMecanografico: " + e.toString());
 				return null;
 			}
@@ -412,7 +425,8 @@ public class HorarioRelacionalOracle implements IHorarioPersistente {
 			SuportePersistenteOracle.getInstance().iniciarTransaccao();
 			try {
 				// chave do funcionario 
-				PreparedStatement sql = UtilRelacional.prepararComando("SELECT codigoInterno FROM ass_FUNCIONARIO WHERE numeroMecanografico = ?");
+				PreparedStatement sql =
+					UtilRelacional.prepararComando("SELECT codigoInterno FROM ass_FUNCIONARIO WHERE numeroMecanografico = ?");
 				sql.setInt(1, numMecanografico);
 				ResultSet resultado = sql.executeQuery();
 				int chaveFuncionario = 0;
@@ -440,10 +454,7 @@ public class HorarioRelacionalOracle implements IHorarioPersistente {
 					status = Integer.valueOf(resultado.getString("ASS_EMPSTATUS")).intValue();
 					dataInicioHorario =
 						java.sql.Date.valueOf(resultado.getString("ASS_EMPDTINI").substring(0, resultado.getString("ASS_EMPDTINI").indexOf(" ")));
-					System.out.println("Horario Actual: horario em ASS_EMPREG: " + siglaHorario);
-					System.out.println("Horario Actual: dataInicio em ASS_EMPREG: " + dataInicioHorario);
-					System.out.println("Horario Actual: status em ASS_EMPREG: " + status);
-				} 
+				}
 				sql.close();
 
 				//data inicio do horário(é igual à data fim do último horário)
@@ -462,9 +473,8 @@ public class HorarioRelacionalOracle implements IHorarioPersistente {
 						calendario.add(Calendar.DAY_OF_MONTH, +1);
 
 						dataInicioHorario = new java.sql.Date(calendario.getTimeInMillis());
-						System.out.println("Horario Actual: dataInicio em ASS_HISEMPREG: " + dataInicioHorario);
 					}
-				} 
+				}
 				sql.close();
 
 				// data fim do horario uma vez que já não cumpre assiduidade
@@ -480,7 +490,6 @@ public class HorarioRelacionalOracle implements IHorarioPersistente {
 							dataFimHorario =
 								java.sql.Date.valueOf(
 									resultado.getString("ASS_HISEMP_DHFIM").substring(0, resultado.getString("ASS_HISEMP_DHFIM").indexOf(" ")));
-							System.out.println("Horario Actual: dataFim em ASS_HISEMPREG: " + dataFimHorario);
 						}
 					}
 					sql.close();
@@ -505,7 +514,6 @@ public class HorarioRelacionalOracle implements IHorarioPersistente {
 						resultadoChaveHorario = sqlChaveHorario.executeQuery();
 
 						if (resultadoChaveHorario.next()) {
-							System.out.println("Horario Actual: horario nos Horarios_tipo: " + resultadoChaveHorario.getInt("codigoInterno"));
 							listaHorariosActuais.add(
 								new Horario(
 									resultadoChaveHorario.getInt("codigoInterno"),
@@ -526,6 +534,7 @@ public class HorarioRelacionalOracle implements IHorarioPersistente {
 				sql.close();
 			} catch (Exception e) {
 				SuportePersistenteOracle.getInstance().cancelarTransaccao();
+				e.printStackTrace();
 				System.out.println("HorarioRelacionalOracle.lerHorarioActualPorNumMecanografico: " + e.toString());
 				return null;
 			}
@@ -754,7 +763,7 @@ public class HorarioRelacionalOracle implements IHorarioPersistente {
 	} */ /* lerHorarioActualPorNumMecanografico */
 
 	public Horario lerHorarioPorNumFuncionario(int numMecanografico, Timestamp dataConsulta) {
-			return null;
+		return null;
 	} /* lerHorarioPorNumFuncionario */
 
 	public ArrayList lerHorariosPorNumMecanografico(int numMecanografico, Date dataInicio, Date dataFim) {
@@ -793,7 +802,7 @@ public class HorarioRelacionalOracle implements IHorarioPersistente {
 		return 0;
 	}
 
-	public ArrayList lerTodosHorariosExcepcao(Date dataInicio, Date dataFim) {		
+	public ArrayList lerTodosHorariosExcepcao(Date dataInicio, Date dataFim) {
 		return null;
 	}
 
@@ -801,11 +810,58 @@ public class HorarioRelacionalOracle implements IHorarioPersistente {
 		return null;
 	}
 
-	public ArrayList lerTodosHorariosExcepcaoComRegime(int chaveRegime, ArrayList listaHorariosTipoComRegime, Date dataInicio, Date dataFim) {
+	public ArrayList lerTodosHorariosExcepcaoComRegime(
+		int chaveRegime,
+		ArrayList listaHorariosTipoComRegime,
+		Date dataInicio,
+		Date dataFim) {
 		return null;
 	}
 
 	public ArrayList lerTodosHorariosComRegime(int chaveRegime, ArrayList listaHorariosTipoComRegime, Date dataInicio, Date dataFim) {
+		return null;
+	}
+
+	public Horario existeExcepcaoHorario(Horario horario) {
+		return null;
+	}
+
+	public Horario existeHorario(Horario horario) {
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.IHorarioPersistente#lerExcepcaoHorario(int)
+	 */
+	public Horario lerExcepcaoHorario(int codigoInterno) {
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.IHorarioPersistente#apagarHorarioExcepcao(int)
+	 */
+	public boolean apagarHorarioExcepcao(int codigoInterno) {
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.IHorarioPersistente#desassociarHorarioRegime(int, int)
+	 */
+	public boolean desassociarHorarioRegime(int codigoInternoHorario, int codigoInternoRegime) {
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.IHorarioPersistente#desassociarHorarioExcepcaoRegime(int, int)
+	 */
+	public boolean desassociarHorarioExcepcaoRegime(int codigoInternoHorario, int codigoInternoRegime) {
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.IHorarioPersistente#lerRegimesHorarioExcepcao(int)
+	 */
+	public ArrayList lerRegimesHorarioExcepcao(int chaveHorario) {
 		return null;
 	}
 }

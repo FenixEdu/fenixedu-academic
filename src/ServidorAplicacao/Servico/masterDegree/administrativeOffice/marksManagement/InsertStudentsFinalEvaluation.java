@@ -181,30 +181,17 @@ public class InsertStudentsFinalEvaluation implements IServico {
 		return enrolmentEvaluation;
 	}
 
-	//	private Funcionario readEmployee(IPessoa person) {
-	//		Funcionario employee = null;
-	//		SuportePersistente spJDBC = SuportePersistente.getInstance();
-	//		IFuncionarioPersistente persistentEmployee = spJDBC.iFuncionarioPersistente();
-	//
-	//		try {
-	//			spJDBC.iniciarTransaccao();
-	//
-	//			try {
-	//				employee = persistentEmployee.lerFuncionarioPorPessoa(person.getIdInternal().intValue());
-	//
-	//			} catch (Exception e) {
-	//				spJDBC.cancelarTransaccao();
-	//				e.printStackTrace();
-	//				return employee;
-	//			}
-	//
-	//			spJDBC.confirmarTransaccao();
-	//		} catch (Exception e) {
-	//			e.printStackTrace();
-	//		} finally {
-	//			return employee;
-	//		}
-	//	}
+//	private Employee readEmployee(IPessoa person) {
+//		Employee employee = null;
+//		IPersistentEmployee persistentEmployee;
+//		try {
+//			persistentEmployee = SuportePersistenteOJB.getInstance().getIPersistentEmployee();
+//			employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
+//		} catch (ExcepcaoPersistencia e) {
+//			e.printStackTrace();
+//		}
+//		return employee;
+//	}
 
 	private InfoEnrolmentEvaluation completeEnrolmentEvaluation(InfoEnrolmentEvaluation infoEnrolmentEvaluation)
 		throws FenixServiceException {

@@ -8,11 +8,12 @@ import Dominio.Horario;
 
 /**
  *
- * @author  Fernanda Quitério e Tania Pousão
+ * @author  Fernanda Quitério e Tania Pousão 
  */
 public interface IFeriadoPersistente {
   public boolean alterarFeriado(Feriado feriado);
   public boolean apagarFeriado(int codigoInterno);  
+	public boolean calendarioFeriado(String calendario, Date dia);
   public boolean diaFeriado(Date dia);
   public boolean escreverFeriado(Feriado feriado);  
   public boolean escreverFeriados(ArrayList listaFeriados);

@@ -19,7 +19,7 @@ public interface IStrategyHorarios {
   public void setHorarioTipoRotativo(Horario horario, ActionForm form);
   public void setDatasHorario(Horario horario, ActionForm form);
 
-  public void setFormAssociarHorarioConfirmar(Locale locale, ActionForm form, Pessoa pessoa, Funcionario funcionario, Horario horario, ArrayList listaRegime, boolean isExcepcao);
+  public void setFormAssociarHorarioConfirmar(Locale locale, ActionForm form, Pessoa pessoa, Funcionario funcionario, Horario horario, ArrayList listaRegime, boolean isExcepcao, String alterar);
   public void setFormAssociarHorarioTipoConfirmar(Locale locale, ActionForm form, Pessoa pessoa, Funcionario funcionario, HorarioTipo horarioTipo, Horario horario, ArrayList listaRegime, boolean isExcepcao);
 
   public String descricaoHorario(Locale locale, Horario horario, ArrayList listaRegimes);

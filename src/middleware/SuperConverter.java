@@ -31,7 +31,7 @@ import Dominio.Country;
 import Dominio.CurricularCourse;
 import Dominio.Curso;
 import Dominio.DegreeCurricularPlan;
-import Dominio.Funcionario;
+import Dominio.Employee;
 import Dominio.IBranch;
 import Dominio.ICountry;
 import Dominio.ICurricularCourse;
@@ -275,7 +275,7 @@ public static void main(String args[]) throws Exception{
 
 
 	public void updateEmployesRoleAndUsername() throws Exception{
-		Funcionario funcionario = null;
+		Employee employee = null;
 		IPessoa person = null;
 		List result = null;
 		Query query = null;
@@ -290,7 +290,7 @@ public static void main(String args[]) throws Exception{
 
 			Iterator iterator = employees.iterator();
 			while(iterator.hasNext()){
-				funcionario = (Funcionario) iterator.next();
+				employee = (Employee) iterator.next();
 
 
 				criteria = new Criteria();
@@ -305,7 +305,7 @@ public static void main(String args[]) throws Exception{
 				else role = (Role) result.get(0);
 
 				criteria = new Criteria();
-				criteria.addEqualTo("codigoInterno", new Integer(funcionario.getChavePessoa()));
+				criteria.addEqualTo("codigoInterno", employee.getKeyPerson());
 				query = new QueryByCriteria(Pessoa.class,criteria);
 				List resultPerson = (List) broker.getCollectionByQuery(query);		
 			
@@ -317,7 +317,7 @@ public static void main(String args[]) throws Exception{
 				}
 			
 				person = (IPessoa) resultPerson.get(0);
-				person.setUsername("F" + String.valueOf(funcionario.getNumeroMecanografico()));
+				person.setUsername("F" + String.valueOf(employee.getEmployeeNumber().intValue()));
 
 				IPersonRole personRole = readPersonRole((Pessoa) person, RoleType.EMPLOYEE);
 				if (personRole == null){
@@ -327,7 +327,7 @@ public static void main(String args[]) throws Exception{
 			
 			}
 		} catch (Exception e){
-			throw new Exception("Error Employee " + funcionario.getNumeroMecanografico() , e);
+			throw new Exception("Error Employee " + employee.getEmployeeNumber().intValue() , e);
 		}
 	}
 
@@ -742,8 +742,8 @@ public static void main(String args[]) throws Exception{
 					
 					// A classe funcionario ainda usa os codigos internos por isso temos de procurar pelos codigos internos
 					Pessoa personTemp = (Pessoa) person2Write;
-					criteria.addEqualTo("chavePessoa", personTemp.getIdInternal());
-					query = new QueryByCriteria(Funcionario.class,criteria);
+					criteria.addEqualTo("keyPerson", personTemp.getIdInternal());
+					query = new QueryByCriteria(Employee.class,criteria);
 					result = (List) broker.getCollectionByQuery(query);
 					
 					if (result.size() == 0){
@@ -1093,7 +1093,7 @@ public static void main(String args[]) throws Exception{
 
 	public List getEmployes() throws Exception {
 		Criteria criteria = new Criteria();
-		Query query = new QueryByCriteria(Funcionario.class,criteria);
+		Query query = new QueryByCriteria(Employee.class,criteria);
 		return (List) broker.getCollectionByQuery(query);
 	}
 

@@ -7,10 +7,11 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import middleware.marks.CreateFile;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import middleware.marks.CreateFile;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoMark;
 import DataBeans.InfoSiteCommon;
@@ -18,11 +19,11 @@ import DataBeans.InfoSiteSubmitMarks;
 import DataBeans.TeacherAdministrationSiteView;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
+import Dominio.Employee;
 import Dominio.Enrolment;
 import Dominio.EnrolmentEvaluation;
 import Dominio.Evaluation;
 import Dominio.Frequenta;
-import Dominio.Funcionario;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
@@ -40,6 +41,7 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IFrequentaPersistente;
+import ServidorPersistente.IPersistentEmployee;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentEvaluation;
@@ -49,8 +51,6 @@ import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistenteJDBC.IFuncionarioPersistente;
-import ServidorPersistenteJDBC.SuportePersistente;
 import Util.EnrolmentEvaluationState;
 import Util.EnrolmentEvaluationType;
 
@@ -239,8 +239,7 @@ public class SubmitMarks implements IServico {
 					throw new FenixServiceException("errors.submitMarks.yetSubmited");
 				}
 			}
-			
-			
+
 			enrolmentEvaluation =
 				(EnrolmentEvaluation) persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(
 					enrolment,
@@ -266,8 +265,8 @@ public class SubmitMarks implements IServico {
 			//employee logged
 			IPessoaPersistente pessoaPersistente = sp.getIPessoaPersistente();
 			IPessoa pessoa = pessoaPersistente.lerPessoaPorUsername(userView.getUtilizador());
-			Funcionario funcionario = lerFuncionario(pessoa);
-			enrolmentEvaluation.setEmployee(funcionario);
+			Employee employee = readEmployee(pessoa);
+			enrolmentEvaluation.setEmployee(employee);
 			//enrolmentEvaluation.setEmployeeKey(new Integer(funcionario.getCodigoInterno()));
 
 			Calendar calendar = Calendar.getInstance();
@@ -290,29 +289,16 @@ public class SubmitMarks implements IServico {
 		}
 	}
 
-	private Funcionario lerFuncionario(IPessoa pessoa) {
-		Funcionario funcionario = null;
-		SuportePersistente spJDBC = SuportePersistente.getInstance();
-		IFuncionarioPersistente funcionarioPersistente = spJDBC.iFuncionarioPersistente();
-
+	private Employee readEmployee(IPessoa person) {
+		Employee employee = null;
+		IPersistentEmployee persistentEmployee;
 		try {
-			spJDBC.iniciarTransaccao();
-
-			try {
-				funcionario = funcionarioPersistente.lerFuncionarioPorPessoa(pessoa.getIdInternal().intValue());
-
-			} catch (Exception e) {
-				spJDBC.cancelarTransaccao();
-				e.printStackTrace();
-				return funcionario;
-			}
-
-			spJDBC.confirmarTransaccao();
-		} catch (Exception e) {
+			persistentEmployee = SuportePersistenteOJB.getInstance().getIPersistentEmployee();
+			employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
+		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();
-		} finally {
-			return funcionario;
 		}
+		return employee;
 	}
 
 	private Object createSiteView(

@@ -26,6 +26,7 @@ public class HorarioTipo {
 	private Time intervaloMinimoRefeicao;
 	private Timestamp inicioExpediente;
 	private Timestamp fimExpediente;
+	private Time trabalhoConsecutivo;
 
 	/* Construtores */
 	public HorarioTipo() {
@@ -42,6 +43,7 @@ public class HorarioTipo {
 		this.fimHN1 = null;
 		this.inicioHN2 = null;
 		this.fimHN2 = null;
+		this.trabalhoConsecutivo = null;
 	}
 
 	public HorarioTipo(
@@ -76,6 +78,7 @@ public class HorarioTipo {
 		this.intervaloMinimoRefeicao = null;
 		this.inicioExpediente = null;
 		this.fimExpediente = null;
+		this.trabalhoConsecutivo = null;
 	}
 
 	public HorarioTipo(
@@ -96,7 +99,8 @@ public class HorarioTipo {
 		Time descontoObrigatorioRefeicao,
 		Time intervaloMinimoRefeicao,
 		Timestamp inicioExpediente,
-		Timestamp fimExpediente) {
+		Timestamp fimExpediente, 
+		Time trabalhoConsecutivo) {
 
 		this.codigoInterno = codigoInterno;
 		this.sigla = sigla;
@@ -116,6 +120,21 @@ public class HorarioTipo {
 		this.intervaloMinimoRefeicao = intervaloMinimoRefeicao;
 		this.inicioExpediente = inicioExpediente;
 		this.fimExpediente = fimExpediente;
+		this.trabalhoConsecutivo = trabalhoConsecutivo;
+	}
+
+	/**
+	 * @return
+	 */
+	public Time getTrabalhoConsecutivo() {
+		return trabalhoConsecutivo;
+	}
+
+	/**
+	 * @param trabalhoConsecutivo
+	 */
+	public void setTrabalhoConsecutivo(Time trabalhoConsecutivo) {
+		this.trabalhoConsecutivo = trabalhoConsecutivo;
 	}
 
 	/**
@@ -433,7 +452,9 @@ public class HorarioTipo {
 					&& (this.getFimRefeicao() == horario.getFimRefeicao())
 					&& (this.getDescontoObrigatorioRefeicao() == horario.getDescontoObrigatorioRefeicao())
 					&& (this.getIntervaloMinimoRefeicao() == horario.getIntervaloMinimoRefeicao())
-					&& (this.getInicioExpediente() == horario.getInicioExpediente() && (this.getFimExpediente() == horario.getFimExpediente())));
+					&& (this.getInicioExpediente() == horario.getInicioExpediente()) 
+					&& (this.getFimExpediente() == horario.getFimExpediente())
+					&& (this.getTrabalhoConsecutivo() == horario.getTrabalhoConsecutivo()));
 		}
 		return resultado;
 	}

@@ -23,6 +23,7 @@ import Dominio.CurricularYear;
 import Dominio.Curso;
 import Dominio.DegreeCurricularPlan;
 import Dominio.DisciplinaExecucao;
+import Dominio.Employee;
 import Dominio.Enrolment;
 import Dominio.EnrolmentEquivalence;
 import Dominio.EnrolmentEquivalenceRestriction;
@@ -30,7 +31,6 @@ import Dominio.EnrolmentEvaluation;
 import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
 import Dominio.Frequenta;
-import Dominio.Funcionario;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseEquivalence;
@@ -468,11 +468,11 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 	public IPessoa readPersonByEmployeeNumber(Integer number) {
 
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("numeroMecanografico", number);
+		criteria.addEqualTo("numberEmployee", number);
 
-		List result = query(Funcionario.class, criteria);
+		List result = query(Employee.class, criteria);
 		if (result.size() == 1) {
-			int personKey = ((Funcionario) result.get(0)).getChavePessoa();
+			int personKey = ((Employee) result.get(0)).getKeyPerson().intValue();
 			Criteria criteria2 = new Criteria();
 			criteria2.addEqualTo("idInternal", new Integer(personKey));
 			List result2 = query(Pessoa.class, criteria2);

@@ -6,47 +6,46 @@ package Dominio;
  */
 
 public class CentroCusto implements ICostCenter {
-  private int codigoInterno;
-  private String sigla;
-  private String departamento;
-  private String seccao1;
-  private String seccao2;
-  
-  /**
-   * Ojb needs this ctor. 
-   */
-  public CentroCusto() {}
-  
-  public CentroCusto(int codigoInterno, String sigla, String departamento, String seccao1, String seccao2) {
-    this.codigoInterno = codigoInterno;
-    this.sigla = sigla;
-    this.departamento = departamento;
-    this.seccao1 = seccao1;
-    this.seccao2 = seccao2;
-  }
-  
-  public CentroCusto(String sigla, String departamento, String seccao1, String seccao2) {
+	private int codigoInterno;
+	private String sigla;
+	private String departamento;
+	private String seccao1;
+	private String seccao2;
+
+	public CentroCusto() {
+	}
+
+	public CentroCusto(int codigoInterno, String sigla, String departamento, String seccao1, String seccao2) {
+		this.codigoInterno = codigoInterno;
+		this.sigla = sigla;
+		this.departamento = departamento;
+		this.seccao1 = seccao1;
+		this.seccao2 = seccao2;
+	}
+
+	public CentroCusto(String sigla, String departamento, String seccao1, String seccao2) {
 		this.codigoInterno = 0;
 		this.sigla = sigla;
 		this.departamento = departamento;
 		this.seccao1 = seccao1;
 		this.seccao2 = seccao2;
-  }  
-    
-  public boolean equals(Object obj){
-    boolean resultado = false;
-    
-    if(obj instanceof Regime){
-      CentroCusto centroCusto = (CentroCusto) obj;
-      
-      resultado = (this.getCodigoInterno() == centroCusto.getCodigoInterno() &&
-      this.getSigla() == centroCusto.getSigla() &&
-      this.getDepartamento() == centroCusto.getDepartamento() &&
-      this.getSeccao1() == centroCusto.getSeccao1() &&
-      this.getSeccao2() == centroCusto.getSeccao2());
-    }
-    return resultado;
-  } 
+	}
+
+	public boolean equals(Object obj) {
+		boolean resultado = false;
+
+		if (obj instanceof Regime) {
+			CentroCusto centroCusto = (CentroCusto) obj;
+
+			resultado =
+				(this.getCodigoInterno() == centroCusto.getCodigoInterno()
+					&& this.getSigla() == centroCusto.getSigla()
+					&& this.getDepartamento() == centroCusto.getDepartamento()
+					&& this.getSeccao1() == centroCusto.getSeccao1()
+					&& this.getSeccao2() == centroCusto.getSeccao2());
+		}
+		return resultado;
+	}
 	/**
 	 * @return int
 	 */

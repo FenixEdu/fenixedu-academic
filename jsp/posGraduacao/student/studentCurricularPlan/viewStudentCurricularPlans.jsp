@@ -16,17 +16,17 @@
 		<th align="left"><bean:message key="label.masterDegree.administrativeOffice.studentCurricularPlanDegree"/></th>
 	</tr>
 	<logic:iterate id="infoStudentCurricularPlan" name="studentCurricularPlansList" indexId="index">
-		<bean:define id="qqCoisaLink">
-			/qqCoisa.do?studentCurricularPlanId=<bean:write name="infoStudentCurricularPlan" property="idInternal"/>
+		<bean:define id="showStudentCurricularCoursePlanLink">
+			/showStudentCurricularCoursePlan.do?studentCurricularPlanId=<bean:write name="infoStudentCurricularPlan" property="idInternal"/>
 		</bean:define>
 		<tr>
 			<td align="left">
-				<html:link page="<%= pageContext.findAttribute("qqCoisaLink").toString() %>">
+				<html:link page="<%= pageContext.findAttribute("showStudentCurricularCoursePlanLink").toString() %>">
 					<bean:write name="infoStudentCurricularPlan" property="currentState"/>
 				</html:link>
 			</td>
 			<td align="left">
-				<html:link page="<%= pageContext.findAttribute("qqCoisaLink").toString() %>">
+				<html:link page="<%= pageContext.findAttribute("showStudentCurricularCoursePlanLink").toString() %>">
 					<bean:write name="infoStudentCurricularPlan" property="startDate"/>
 				</html:link>
 			</td>
@@ -35,13 +35,13 @@
 					<bean:message key="label.masterDegree.administrativeOffice.noBranch"/>
 				</logic:equal>
 				<logic:notEqual name="infoStudentCurricularPlan" property="infoBranch.name" value="<%= new String("") %>">
-					<html:link page="<%= pageContext.findAttribute("qqCoisaLink").toString() %>">
+					<html:link page="<%= pageContext.findAttribute("showStudentCurricularCoursePlanLink").toString() %>">
 						<bean:write name="infoStudentCurricularPlan" property="infoBranch.name"/>
 					</html:link>
 				</logic:notEqual>
 			</td>
 			<td align="left">
-				<html:link page="<%= pageContext.findAttribute("qqCoisaLink").toString() %>">
+				<html:link page="<%= pageContext.findAttribute("showStudentCurricularCoursePlanLink").toString() %>">
 					<bean:write name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.nome"/>
 				</html:link>
 			</td>

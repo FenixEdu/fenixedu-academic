@@ -1024,7 +1024,7 @@
 	
 	<reference-descriptor
 			name="employee"
-			class-ref="Dominio.Funcionario"
+			class-ref="Dominio.Employee"
 			proxy="false">
 		<foreignkey field-ref="employeeKey"/>
 	</reference-descriptor>

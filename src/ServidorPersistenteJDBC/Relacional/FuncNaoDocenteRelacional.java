@@ -35,7 +35,7 @@ public class FuncNaoDocenteRelacional implements IFuncNaoDocentePersistente {
 		} finally {
 			return resultado;
 		}
-	} /* alterarFuncionario */
+	} /* alterarFuncNaoDocente */
 
 	public boolean apagarFuncNaoDocente(int chaveFuncionario) {
 		boolean resultado = false;

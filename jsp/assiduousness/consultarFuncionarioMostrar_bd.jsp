@@ -14,7 +14,7 @@
         			<bean:write name="ConsultarFuncionarioMostrarForm" property="numMecanografico" filter="true"/>
    				</h2>
 				<br />
-    			</td>
+    			</td> 
     		</tr>
     		<tr>
     			<td colspan="2">
@@ -184,6 +184,14 @@
             	</td>
           	</tr>   
             <tr>
+          		<td width='30%'>
+              		<bean:message key="prompt.trabalhoConsecutivo"/>:
+              	</td>
+            	<td class="greytxt">
+                	<bean:message key="prompt.de"/> <bean:write name="horario" property="trabalhoConsecutivoHoras" /><b>:</b><bean:write name="horario" property="trabalhoConsecutivoMinutos" />
+        		</td>
+          	</tr>             	
+            <tr>
                 <td width="30%">
                     <bean:message key="prompt.numHorasSemanais"/>
                 </td>
@@ -196,7 +204,8 @@
                     <bean:message key="prompt.horario"/>:
                 </td>
                 <td class="greytxt">
-                    <bean:message name="horario" property="modalidade" />
+	                <bean:define id="modalidade" name="horario" property="modalidade"/>
+                    <app:message key="modalidade"/>
                 </td>
               </tr>
               <tr>
@@ -205,7 +214,7 @@
                 </td>
                 <td class="greytxt">
                    <logic:iterate id="listaRegime" name="horario" property="listaRegimes">
-                      <bean:message name="listaRegime"/>&nbsp;
+                      <app:message key="listaRegime"/>&nbsp;
                    </logic:iterate>
                 </td>     
               </tr>

@@ -8,6 +8,7 @@ package DataBeans;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import Util.Specialization;
 import Util.StudentCurricularPlanState;
@@ -30,6 +31,8 @@ public class InfoStudentCurricularPlan
 	protected Double classification;
 	protected Integer enrolledCourses;
 	protected Integer completedCourses;
+	
+	protected List infoEnrolments;
 
 	/**
 	 * @return
@@ -231,6 +234,14 @@ public class InfoStudentCurricularPlan
 		completedCourses = integer;
 	}
 
+	public List getInfoEnrolments() {
+		return infoEnrolments;
+	}
+
+	public void setInfoEnrolments(List infoEnrolments) {
+		this.infoEnrolments = infoEnrolments;
+	}
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
@@ -250,5 +261,4 @@ public class InfoStudentCurricularPlan
 		}
 		return 0;
 	}
-
 }

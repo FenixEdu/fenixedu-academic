@@ -131,8 +131,13 @@ public class AssociarHorarioRotativoForm extends ActionForm {
       primeiroDiaHorario.set(Calendar.DAY_OF_MONTH, primeiroDiaHorario.get(Calendar.DAY_OF_MONTH) + (horario.getPosicao() - 1));
       
       horario.setDataCumprir(primeiroDiaHorario.getTime());/* guarda o dia de inicio do cumprimento do horario */
-
-      listaHorarios.add(new AssociarHorarioForm(horario, (ArrayList)listaRegimesRotacao.get(new Integer(horario.getPosicao()))));
+			AssociarHorarioForm novoHorario = new AssociarHorarioForm();
+			novoHorario = novoHorario.getFormHorarioPreenchido(horario, (ArrayList) listaRegimesRotacao.get(new Integer(horario.getPosicao())), null);
+			// o horario nao vem da base de dados logo nao necessita de subtrair uma hora
+			novoHorario.setDuracoesHorario(horario, false);
+      listaHorarios.add(novoHorario);
+//      new AssociarHorarioForm(horario, (ArrayList)listaRegimesRotacao.get(new Integer(horario.getPosicao()))));
+			
     }
     setListaListaHorarios(listaHorarios);
     

@@ -8,6 +8,9 @@ import java.util.Date;
 import java.util.ListIterator;
 import java.util.Locale;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
+
 import Dominio.Horario;
 import Dominio.IStrategyHorarios;
 import Dominio.IStrategyJustificacoes;
@@ -89,35 +92,11 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 	}
 
 	public void execute() throws NotExecuteException {
-		try {
-			lerStatusAssiduidade();
-		} catch (NotExecuteException nee) {
-			throw new NotExecuteException(nee.getMessage());
-		}
-
-		try {
-			lerFimAssiduidade();
-		} catch (NotExecuteException nee) {
-			throw new NotExecuteException(nee.getMessage());
-		}
-
-		try {
-			lerInicioAssiduidade();
-		} catch (NotExecuteException nee) {
-			throw new NotExecuteException(nee.getMessage());
-		}
-
-		try {
-			construirEscolhasMarcacoesPonto();
-		} catch (NotExecuteException nee) {
-			throw new NotExecuteException(nee.getMessage());
-		}
-
-		try {
-			verificarMesInjustificado();
-		} catch (NotExecuteException nee) {
-			throw new NotExecuteException(nee.getMessage());
-		}
+		lerStatusAssiduidade();
+		lerFimAssiduidade();
+		lerInicioAssiduidade();
+		construirEscolhasMarcacoesPonto();
+		verificarMesInjustificado();
 
 		if (!_mesInjustificado) {
 			Calendar agora = Calendar.getInstance();
@@ -137,34 +116,21 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 
 			//==================================== Inicio da construcao da lista a mostrar no jsp =======================================
 			while (_dataConsulta.before((Timestamp) _dataFimEscolha)) {
-
 				calendario.clear();
 				calendario.setTimeInMillis(_dataConsulta.getTime());
 
 				// consulta do horario do funcionario neste dia
-				try {
-					lerHorario();
-				} catch (NotExecuteException nee) {
-					throw new NotExecuteException(nee.getMessage());
-				}
+				lerHorario();
 
-				try {
-					verificarStatusAssiduidade();
-				} catch (NotExecuteException nee) {
-					throw new NotExecuteException(nee.getMessage());
-				}
 				//Se o status do funcionário é Pendente então não vale a pena continuar os cálculos
+				verificarStatusAssiduidade();
 				if (_statusPendente) {
 					_statusPendente = false;
 					continue;
 				}
 
-				try {
-					verificarDiasInjustificados(calendario);
-				} catch (NotExecuteException nee) {
-					throw new NotExecuteException(nee.getMessage());
-				}
 				//Se os dias do funcionário são injustificados então não vale a pena continuar os cálculos
+				verificarDiasInjustificados(calendario);
 				if (_diasInjustificados) {
 					_diasInjustificados = false;
 					continue;
@@ -172,23 +138,11 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 
 				//consulta das marcacoes do funcionario neste dia, tendo atencao ao expediente deste horario
 				calcularIntervaloConsulta();
-				try {
-					consultarMarcacoesPonto();
-				} catch (NotExecuteException nee) {
-					throw new NotExecuteException(nee.getMessage());
-				}
+				consultarMarcacoesPonto();
 
 				//consulta das justificacoes do funcionario neste dia
-				try {
-					consultarJustificacoesPorDia();
-				} catch (NotExecuteException nee) {
-					throw new NotExecuteException(nee.getMessage());
-				}
-				try {
-					buscarParamJustificacoes();
-				} catch (NotExecuteException nee) {
-					throw new NotExecuteException(nee.getMessage());
-				}
+				consultarJustificacoesPorDia();
+				buscarParamJustificacoes();
 
 				//formata o verbete
 				_listaVerbeteDiaria.add(0, FormataCalendar.data(calendario)); //data
@@ -219,9 +173,18 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 						if (((Long) _listaSaldos.get(0)).longValue() > horarioStrategy.duracaoDiaria(_horario)) {
 							_listaSaldos.set(0, new Long(horarioStrategy.duracaoDiaria(_horario)));
 						}
-						if (_horario.getSigla().equals(Constants.DSC) || _horario.getSigla().equals(Constants.FERIADO)) {
+
+						// para diferenciar entre feriados ao sabado e ao domingo
+						calendario.clear();
+						calendario.setTimeInMillis(_dataConsulta.getTime());
+
+						if (_horario.getSigla().equals(Constants.DSC)
+							|| (_horario.getSigla().equals(Constants.FERIADO)
+								&& calendario.get(Calendar.DAY_OF_MONTH) != Calendar.SUNDAY)) {
+							// saldo de sabado e feriado ao sabado ou dias de semana
 							_saldoDSC = _saldoDSC + ((Long) _listaSaldos.get(0)).longValue();
-						} else if (_horario.getSigla().equals(Constants.DS)) {
+						} else {
+							// saldo de domingo e saldo de feriado ao domingo
 							_saldoDS = _saldoDS + ((Long) _listaSaldos.get(0)).longValue();
 						}
 					}
@@ -233,6 +196,7 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 
 					// calculo do saldo diário
 					calcularSaldoDiario();
+
 					// nao efectua calculos de saldo para dias além do dia de hoje
 					if (!_dataConsulta.after(agoraTimestamp)) {
 						IStrategyHorarios horarioStrategy =
@@ -838,10 +802,22 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 	} /* completaListaMarcacoes */
 
 	private void calcularSaldoDiario() {
-		Calendar calendario = Calendar.getInstance();
 		long saldo = 0;
 		boolean limita5Horas = false;
 
+		// retirar os segundos que nao entram na contabilidade do saldo
+		CollectionUtils.transform(_listaMarcacoesPonto, new Transformer() {
+			public Object transform(Object arg0) {
+				MarcacaoPonto marcacao = (MarcacaoPonto) arg0;
+				
+				Calendar calendario = Calendar.getInstance();
+				calendario.setTimeInMillis(marcacao.getData().getTime() - _calendarioConsulta.getTimeInMillis());
+				calendario.set(Calendar.SECOND, 00);
+				marcacao.setData(new Timestamp(calendario.getTimeInMillis()));
+				return marcacao;
+			}
+		});
+		// ordenar as marcacoes de ponto que estao juntas com as justificacoes
 		Comparador comparadorMarcacoes = new Comparador(new String("MarcacaoPonto"), new String("crescente"));
 		Collections.sort(_listaMarcacoesPonto, comparadorMarcacoes);
 
@@ -854,18 +830,8 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 			while (iteradorMarcacoes.hasNext()) {
 				entrada = (MarcacaoPonto) iteradorMarcacoes.next();
 
-				// para o calculo do saldo
-				calendario.setTimeInMillis(entrada.getData().getTime() - _calendarioConsulta.getTimeInMillis());
-				calendario.set(Calendar.SECOND, 00);
-				entrada.setData(new Timestamp(calendario.getTimeInMillis()));
-
 				if (iteradorMarcacoes.hasNext()) {
 					saida = (MarcacaoPonto) iteradorMarcacoes.next();
-
-					// para o calculo do saldo
-					calendario.setTimeInMillis(saida.getData().getTime() - _calendarioConsulta.getTimeInMillis());
-					calendario.set(Calendar.SECOND, 00);
-					saida.setData(new Timestamp(calendario.getTimeInMillis()));
 
 					if (entrada.getData().getTime() < _horario.getInicioExpediente().getTime()) {
 						entrada.setData(new Timestamp(_horario.getInicioExpediente().getTime()));
@@ -888,6 +854,7 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 								saida.getData().getTime(),
 								limita5Horas);
 					limita5Horas = false;
+
 					if ((_horario.getSigla() != null)
 						&& !((_horario.getSigla().equals(Constants.DSC)
 							|| _horario.getSigla().equals(Constants.DS)

@@ -27,7 +27,7 @@ public class ServicoSeguroEscreverPapelPessoa extends ServicoSeguro {
 
 		// pessoa com papel de assiduidade, caso seja funcionario
 		IFuncionarioPersistente iFuncionarioPersistente = SuportePersistente.getInstance().iFuncionarioPersistente();
-		if (iFuncionarioPersistente.lerFuncionarioPorPessoa(pessoa.getIdInternal().intValue()) != null) {
+		if (iFuncionarioPersistente.lerFuncionarioSemHistoricoPorPessoa(pessoa.getIdInternal().intValue()) != null) {
 			if (!iPessoaPersistente.escreverPapelPessoa(pessoa, 9)) { // buscar estas chaves da base de dados
 				throw new NotExecuteException();
 			}

@@ -84,11 +84,42 @@ public class AssociarHorarioTipoConfirmarForm extends ActionForm {
 	private String _mesFim = null;
 	private String _anoFim = null;
 
+	private String _trabalhoConsecutivoHoras = null;
+	private String _trabalhoConsecutivoMinutos = null;
+
 	private String _duracaoSemanal = null;
 	private String _modalidade = null;
 	private ArrayList _listaRegime = new ArrayList();
 	
 	private boolean _excepcaoHorario = false;
+
+	/**
+	 * @return
+	 */
+	public String getTrabalhoConsecutivoHoras() {
+		return _trabalhoConsecutivoHoras;
+	}
+
+	/**
+	 * @param consecutivoHoras
+	 */
+	public void setTrabalhoConsecutivoHoras(String consecutivoHoras) {
+		_trabalhoConsecutivoHoras = consecutivoHoras;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getTrabalhoConsecutivoMinutos() {
+		return _trabalhoConsecutivoMinutos;
+	}
+
+	/**
+	 * @param consecutivoMinutos
+	 */
+	public void setTrabalhoConsecutivoMinutos(String consecutivoMinutos) {
+		_trabalhoConsecutivoMinutos = consecutivoMinutos;
+	}
 
 	public String getNome() {
 		return (_nome);

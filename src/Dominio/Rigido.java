@@ -39,7 +39,7 @@ public class Rigido implements IStrategyHorarios {
 		Funcionario funcionario,
 		Horario horario,
 		ArrayList listaRegime,
-		boolean isExcepcao) {
+		boolean isExcepcao, String alterar) {
 
 	} /* setFormAssociarHorarioConfirmar */
 

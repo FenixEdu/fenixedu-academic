@@ -25,7 +25,7 @@ public class ServicoSeguroLerPessoaPorNumeroMecanografico extends ServicoSeguro 
 	public void execute() throws NotExecuteException {
 		IFuncionarioPersistente iFuncionarioPersistente = SuportePersistente.getInstance().iFuncionarioPersistente();
 		Funcionario funcionario = null;
-		if ((funcionario = iFuncionarioPersistente.lerFuncionarioPorNumMecanografico(numeroMecanografico)) == null)
+		if ((funcionario = iFuncionarioPersistente.lerFuncionarioSemHistoricoPorNumMecanografico(numeroMecanografico)) == null)
 			throw new NotExecuteException();
 
 		IPessoaPersistente iPessoaPersistente = SuportePersistente.getInstance().iPessoaPersistente();

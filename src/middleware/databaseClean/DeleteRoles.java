@@ -12,7 +12,7 @@ import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
-import Dominio.Funcionario;
+import Dominio.Employee;
 import Dominio.IPersonRole;
 import Dominio.IPessoa;
 import Dominio.IRole;
@@ -66,8 +66,8 @@ public class DeleteRoles {
 				criteria = new Criteria();
 				query = null;
 				
-				criteria.addEqualTo("chavePessoa", person.getIdInternal());
-				query = new QueryByCriteria(Funcionario.class,criteria);
+				criteria.addEqualTo("keyPerson", person.getIdInternal());
+				query = new QueryByCriteria(Employee.class,criteria);
 				List result = (List) broker.getCollectionByQuery(query);
 				
 				if (result.size() == 0){

@@ -15,10 +15,10 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 
+import Dominio.CentroCusto;
 import Dominio.FuncNaoDocente;
 import Dominio.Funcionario;
 import Dominio.Horario;
-import Dominio.ICostCenter;
 import Dominio.Pessoa;
 import Dominio.StatusAssiduidade;
 import constants.assiduousness.Constants;
@@ -42,6 +42,67 @@ public class ConsultarFuncionarioMostrarForm extends ActionForm {
 	private String _siglaCentroCusto = null;
 	private String _descricaoCentroCusto = null;
 
+	/*private String _inicioExpedienteHoras = null;
+	private String _inicioExpedienteMinutos = null;
+	private String _fimExpedienteHoras = null;
+	private String _fimExpedienteMinutos = null;
+	
+	private String _diaAnteriorExpediente = null;
+	private String _diaSeguinteExpediente = null;
+	
+	private String _inicioRefeicaoHoras = null;
+	private String _inicioRefeicaoMinutos = null;
+	private String _fimRefeicaoHoras = null;
+	private String _fimRefeicaoMinutos = null;
+	
+	private String _diaAnteriorRefeicao = null;
+	private String _diaSeguinteRefeicao = null;
+	
+	private String _intervaloMinimoHoras = null;
+	private String _intervaloMinimoMinutos = null;
+	private String _descontoObrigatorioHoras = null;
+	private String _descontoObrigatorioMinutos = null;
+	
+	private String _inicioHN1Horas = null;
+	private String _inicioHN1Minutos = null;
+	private String _fimHN1Horas = null;
+	private String _fimHN1Minutos = null;
+	
+	private String _diaAnteriorHN1 = null;
+	private String _diaSeguinteHN1 = null;
+	
+	private String _inicioHN2Horas = null;
+	private String _inicioHN2Minutos = null;
+	private String _fimHN2Horas = null;
+	private String _fimHN2Minutos = null;
+	
+	private String _diaAnteriorHN2 = null;
+	private String _diaSeguinteHN2 = null;
+	
+	private String _inicioPF1Horas = null;
+	private String _inicioPF1Minutos = null;
+	private String _fimPF1Horas = null;
+	private String _fimPF1Minutos = null;
+	
+	private String _diaAnteriorPF1 = null;
+	private String _diaSeguintePF1 = null;
+	
+	private String _inicioPF2Horas = null;
+	private String _inicioPF2Minutos = null;
+	private String _fimPF2Horas = null;
+	private String _fimPF2Minutos = null;
+	
+	private String _diaAnteriorPF2 = null;
+	private String _diaSeguintePF2 = null;
+	
+	private String _diaInicio = null;
+	private String _mesInicio = null;
+	private String _anoInicio = null;
+	
+	private String _diaFim = null;
+	private String _mesFim = null;
+	private String _anoFim = null;*/
+
 	private String _diaInicioEscolha = null;
 	private String _mesInicioEscolha = null;
 	private String _anoInicioEscolha = null;
@@ -52,6 +113,10 @@ public class ConsultarFuncionarioMostrarForm extends ActionForm {
 	private String _anoFimEscolha = null;
 	private Timestamp _dataFimEscolha = null;
 
+	/*private String _duracaoSemanal = null;
+	private String _sigla = null;
+	private String _modalidade = null;
+	private ArrayList _listaRegime = new ArrayList();*/
 	private ArrayList _listaEscolhas = new ArrayList();
 	private String _escolha = null;
 
@@ -196,7 +261,7 @@ public class ConsultarFuncionarioMostrarForm extends ActionForm {
 		Pessoa pessoa,
 		Funcionario funcionario,
 		StatusAssiduidade statusAssiduidade,
-		ICostCenter centroCusto,
+		CentroCusto centroCusto,
 		FuncNaoDocente funcNaoDocente,
 		ArrayList rotacaoHorario,
 		HashMap listaRegimesRotacao) {
@@ -239,8 +304,13 @@ public class ConsultarFuncionarioMostrarForm extends ActionForm {
 		ArrayList listaHorariosDia = new ArrayList();
 		while (iterador.hasNext()) {
 			Horario horarioDia = (Horario) iterador.next();
-			listaHorariosDia.add(
-				new AssociarHorarioForm(horarioDia, (ArrayList) listaRegimesRotacao.get(new Integer(horarioDia.getPosicao()))));
+			AssociarHorarioForm novoHorario = new AssociarHorarioForm();
+			novoHorario = novoHorario.getFormHorarioPreenchido(horarioDia, (ArrayList) listaRegimesRotacao.get(new Integer(horarioDia.getPosicao())), null);
+			// o horario vem da base de dados logo tem que se somar uma hora
+			novoHorario.setDuracoesHorario(horarioDia, true);
+			listaHorariosDia.add(novoHorario);
+//				new AssociarHorarioForm(horarioDia, (ArrayList) listaRegimesRotacao.get(new Integer(horarioDia.getPosicao()))));
+//				novoHorario.getFormHorarioPreenchido(horarioDia, (ArrayList) listaRegimesRotacao.get(new Integer(horarioDia.getPosicao())), null));
 		}
 
 		setRotacaoHorario(listaHorariosDia);
@@ -298,7 +368,7 @@ public class ConsultarFuncionarioMostrarForm extends ActionForm {
 				calendarFim.set(anoFim, mesFim - 1, diaFim, 23, 59, 59);
 				Timestamp dataFim = new Timestamp(calendarFim.getTimeInMillis());
 				setDataFimEscolha(dataFim);
-
+				
 				Calendar calendarioInicioAplicacao = Calendar.getInstance();
 				calendarioInicioAplicacao.setLenient(false);
 				calendarioInicioAplicacao.clear();

@@ -13,9 +13,9 @@ import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 
+import constants.assiduousness.Constants;
 import ServidorApresentacao.formbeans.assiduousness.AssociarHorarioForm;
 import ServidorApresentacao.formbeans.assiduousness.AssociarHorarioTipoForm;
-import constants.assiduousness.Constants;
 
 /**
  *
@@ -126,6 +126,10 @@ public class Turnos implements IStrategyHorarios {
 				|| (formHorario.getDescontoObrigatorioHoras().length() > 0)
 				|| (formHorario.getDescontoObrigatorioMinutos().length() > 0)) {
 				errors.add("Intervalo de Refeicao", new ActionError("error.refeicao.naoObrigatorio"));
+			}
+			if ((formHorario.getTrabalhoConsecutivoHoras().length() > 0)
+				|| (formHorario.getTrabalhoConsecutivoMinutos().length() > 0)) {
+				errors.add("Trabalho Consecutivo", new ActionError("error.trabalhoConsecutivo.naoPermitido"));
 			}
 
 			// Horario normal	
@@ -580,7 +584,7 @@ public class Turnos implements IStrategyHorarios {
 		Funcionario funcionario,
 		Horario horario,
 		ArrayList listaRegime,
-		boolean isExcepcaoHorario) {
+		boolean isExcepcaoHorario, String alterar) {
 		/* não é necessario */
 	} /* setFormAssociarHorarioConfirmar */
 
@@ -736,7 +740,7 @@ public class Turnos implements IStrategyHorarios {
 			} else if (entrada.getData().getTime() < Constants.INICIO_TRABALHO_NOCTURNO) {
 				saldoNocturno = saldoNocturno + (Constants.FIM_TRABALHO_NOCTURNO - Constants.INICIO_TRABALHO_NOCTURNO);
 			}
-			
+
 			if (saida.getData().getTime() >= Constants.INICIO_TRABALHO_NOCTURNO
 				&& saida.getData().getTime() <= Constants.FIM_TRABALHO_NOCTURNO) {
 				saldoNocturno = saldoNocturno + (saida.getData().getTime() - Constants.FIM_TRABALHO_NOCTURNO);

@@ -37,8 +37,27 @@ public class AssociarHorarioTipoForm extends ActionForm {
 	private String _anoFim = null;
 
 	private String _sigla = null;
-	
+
 	private boolean _excepcaoHorario = false;
+	
+	private String alterar = null;
+	private String indiceRotacao = null;
+
+	public String getIndiceRotacao() {
+		return indiceRotacao;
+	}
+
+	public void setIndiceRotacao(String indiceRotacao) {
+		this.indiceRotacao = indiceRotacao;
+	}
+
+	public String getAlterar() {
+		return alterar;
+	}
+
+	public void setAlterar(String alterar) {
+		this.alterar = alterar;
+	}
 
 	public String getNumMecanografico() {
 		return (_numMecanografico);
@@ -116,7 +135,7 @@ public class AssociarHorarioTipoForm extends ActionForm {
 	}
 	public void setSigla(String sigla) {
 		_sigla = sigla;
-	}	
+	}
 	public void setExcepcaoHorario(boolean excepcaoHorario) {
 		_excepcaoHorario = excepcaoHorario;
 	}
@@ -127,16 +146,16 @@ public class AssociarHorarioTipoForm extends ActionForm {
 		_numDias = "";
 		_posicao = "";
 
-		setSigla((String) _listaSiglas.get(0));
+		//		setSigla((String) _listaSiglas.get(0));
 
 		_diaFim = "";
 		_mesFim = "";
 		_anoFim = "";
-		
+
 		_excepcaoHorario = false;
 	}
 
-	public void setForm(ArrayList listaSiglas, String sigla) {
+	public void setForm(ArrayList listaSiglas, String sigla, Horario horario, Boolean excepcao, String numeroMecanografico) {
 		setListaSiglas(listaSiglas);
 
 		if (sigla != null) {
@@ -145,10 +164,35 @@ public class AssociarHorarioTipoForm extends ActionForm {
 			setSigla((String) _listaSiglas.get(0));
 		}
 
-		Calendar agora = Calendar.getInstance();
-		setDiaInicio((new Integer(agora.get(Calendar.DAY_OF_MONTH))).toString());
-		setMesInicio((new Integer(agora.get(Calendar.MONTH) + 1)).toString());
-		setAnoInicio((new Integer(agora.get(Calendar.YEAR))).toString());
+		//		testes para o caso de alteraçao de horario tipo que so pode ocorrer logo apos a associacao do horario
+		Calendar data = Calendar.getInstance();
+		if (horario != null) {
+			setPosicao(String.valueOf(horario.getPosicao()));
+			setNumDias(String.valueOf(horario.getNumDias()));
+
+			if (horario.getDataFim() != null) {
+				data.setTime(horario.getDataFim());
+				setDiaFim((new Integer(data.get(Calendar.DAY_OF_MONTH))).toString());
+				setMesFim((new Integer(data.get(Calendar.MONTH) + 1)).toString());
+				setAnoFim((new Integer(data.get(Calendar.YEAR))).toString());
+			}
+			if (horario.getDataInicio() != null) {
+				data.clear();
+				data.setTime(horario.getDataInicio());
+			}
+			if (excepcao != null) {
+				setExcepcaoHorario(excepcao.booleanValue());
+			}
+			if (numeroMecanografico != null) {
+				setNumMecanografico(numeroMecanografico);
+			}
+			if (sigla == null) {
+				setSigla(horario.getSigla());
+			}
+		}
+		setDiaInicio((new Integer(data.get(Calendar.DAY_OF_MONTH))).toString());
+		setMesInicio((new Integer(data.get(Calendar.MONTH) + 1)).toString());
+		setAnoInicio((new Integer(data.get(Calendar.YEAR))).toString());
 	}
 
 	public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
@@ -187,11 +231,18 @@ public class AssociarHorarioTipoForm extends ActionForm {
 					}
 
 					// testa a posição e a duração da nova rotação 
-					ArrayList rotacaoHorario = null;
+					ArrayList rotacaoHorario = new ArrayList();
 					if ((rotacaoHorario = (ArrayList) session.getAttribute("rotacaoHorario")) != null) {
-						ListIterator iterador = rotacaoHorario.listIterator();
+						ArrayList novaLista=(ArrayList) rotacaoHorario.clone();
 						Horario horario = null;
 						int posMaxPrimeiroHorario = 0;
+						
+						
+						// se for uma alteracao de horario a validacao das posicoes nao pode contar com o horario anterior
+						if (request.getParameter("alterar") != null) {
+							novaLista.remove(Integer.valueOf((String) request.getParameter("indiceRotacao")).intValue());
+						}
+						ListIterator iterador = novaLista.listIterator();
 
 						if (iterador.hasNext()) {
 							horario = (Horario) iterador.next();
@@ -206,7 +257,8 @@ public class AssociarHorarioTipoForm extends ActionForm {
 									return errors;
 								} else {
 									/* dia de descanso entre a rotacao dos horários */
-									if (((posicao - posMaxPrimeiroHorario) == 1) || (((horario.getPosicao()) - (posicao + numDias - 1)) == 1)) {
+									if (((posicao - posMaxPrimeiroHorario) == 1)
+										|| (((horario.getPosicao()) - (posicao + numDias - 1)) == 1)) {
 										errors.add("dia de descanso", new ActionError("error.rotacaoHorario.diaDescanso"));
 										return errors;
 									}
@@ -229,7 +281,8 @@ public class AssociarHorarioTipoForm extends ActionForm {
 									return errors;
 								} else {
 									/* dia de descanso entre a rotacao dos horários */
-									if (((posicao - posMaxPrimeiroHorario) == 1) || (((horario.getPosicao()) - (posicao + numDias - 1)) == 1)) {
+									if (((posicao - posMaxPrimeiroHorario) == 1)
+										|| (((horario.getPosicao()) - (posicao + numDias - 1)) == 1)) {
 										errors.add("dia de descanso", new ActionError("error.rotacaoHorario.diaDescanso"));
 										return errors;
 									}
@@ -257,15 +310,15 @@ public class AssociarHorarioTipoForm extends ActionForm {
 		int indiceLista = 0;
 		if (listaSiglas != null) {
 			indiceLista = listaSiglas.indexOf(getSigla());
-		} 
-		
+		}
+
 		HorarioTipo horarioTipo = null;
 		if (listaHorarios != null) {
 			horarioTipo = (HorarioTipo) listaHorarios.get(indiceLista);
 			// validacao dos outros campos
 			IStrategyHorarios horario = SuporteStrategyHorarios.getInstance().callStrategy(horarioTipo.getModalidade());
 			errors = horario.validateAssociarHorarioTipo(this, horarioTipo, (ArrayList) listaRegimesHorarios.get(indiceLista));
-		} 
+		}
 		return errors;
 	} /* validate */
 }

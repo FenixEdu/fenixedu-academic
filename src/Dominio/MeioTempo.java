@@ -13,17 +13,17 @@ import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 
+import constants.assiduousness.Constants;
 import ServidorApresentacao.formbeans.assiduousness.AssociarHorarioForm;
 import ServidorApresentacao.formbeans.assiduousness.AssociarHorarioTipoConfirmarForm;
 import ServidorApresentacao.formbeans.assiduousness.AssociarHorarioTipoForm;
-import constants.assiduousness.Constants;
 
 /**
  *
  * @author  Fernanda Quitério e Tania Pousão
  */
 public class MeioTempo implements IStrategyHorarios {
-
+	//TODO: Implementar o horario meio tempo a cumprir 3 vezes por semana
 	/** Creates a new instance of MeioTempo */
 	public MeioTempo() {
 	}
@@ -129,6 +129,10 @@ public class MeioTempo implements IStrategyHorarios {
 				|| (formHorario.getDescontoObrigatorioHoras().length() > 0)
 				|| (formHorario.getDescontoObrigatorioMinutos().length() > 0)) {
 				errors.add("Intervalo de Refeicao", new ActionError("error.refeicao.naoObrigatorio"));
+			}
+			if ((formHorario.getTrabalhoConsecutivoHoras().length() > 0)
+				|| (formHorario.getTrabalhoConsecutivoMinutos().length() > 0)) {
+				errors.add("Trabalho Consecutivo", new ActionError("error.trabalhoConsecutivo.naoPermitido"));
 			}
 
 			// Horario normal	
@@ -554,16 +558,24 @@ public class MeioTempo implements IStrategyHorarios {
 		Funcionario funcionario,
 		Horario horario,
 		ArrayList listaRegime,
-		boolean isExcepcaoHorario) {
+		boolean isExcepcaoHorario, String alterar) {
 		AssociarHorarioForm formHorario = (AssociarHorarioForm) form;
-
 		Calendar calendar = Calendar.getInstance();
 		calendar.setLenient(false);
 
+		String preenchimento = "--";
+		if(alterar!= null){
+			preenchimento="";
+		}
+
 		formHorario.setExcepcaoHorario(isExcepcaoHorario);
 
-		formHorario.setNome(pessoa.getNome());
-		formHorario.setNumMecanografico((new Integer(funcionario.getNumeroMecanografico())).toString());
+		if (pessoa != null) {
+			formHorario.setNome(pessoa.getNome());
+		}
+		if (funcionario != null) {
+			formHorario.setNumMecanografico((new Integer(funcionario.getNumeroMecanografico())).toString());
+		}
 
 		formHorario.setDuracaoSemanal((new Float(horario.getDuracaoSemanal())).toString());
 		formHorario.setModalidade(horario.getModalidade());
@@ -622,10 +634,10 @@ public class MeioTempo implements IStrategyHorarios {
 			formHorario.setDiaSeguinteHN1(Constants.DIA_SEGUINTE);
 		}
 
-		formHorario.setInicioHN2Horas("--");
-		formHorario.setInicioHN2Minutos("--");
-		formHorario.setFimHN2Horas("--");
-		formHorario.setFimHN2Minutos("--");
+		formHorario.setInicioHN2Horas(preenchimento);
+		formHorario.setInicioHN2Minutos(preenchimento);
+		formHorario.setFimHN2Horas(preenchimento);
+		formHorario.setFimHN2Minutos(preenchimento);
 
 		calendar.clear();
 		calendar.setTime(horario.getDataInicio());
@@ -640,27 +652,30 @@ public class MeioTempo implements IStrategyHorarios {
 		formHorario.setAnoFim((new Integer(calendar.get(Calendar.YEAR))).toString());
 
 		// periodo fixo 
-		formHorario.setInicioPF1Horas("--");
-		formHorario.setInicioPF1Minutos("--");
+		formHorario.setInicioPF1Horas(preenchimento);
+		formHorario.setInicioPF1Minutos(preenchimento);
 
-		formHorario.setFimPF1Horas("--");
-		formHorario.setFimPF1Minutos("--");
+		formHorario.setFimPF1Horas(preenchimento);
+		formHorario.setFimPF1Minutos(preenchimento);
 
-		formHorario.setInicioPF2Horas("--");
-		formHorario.setInicioPF2Minutos("--");
+		formHorario.setInicioPF2Horas(preenchimento);
+		formHorario.setInicioPF2Minutos(preenchimento);
 
-		formHorario.setFimPF2Horas("--");
-		formHorario.setFimPF2Minutos("--");
+		formHorario.setFimPF2Horas(preenchimento);
+		formHorario.setFimPF2Minutos(preenchimento);
 
-		formHorario.setDescontoObrigatorioHoras("--");
-		formHorario.setDescontoObrigatorioMinutos("--");
-		formHorario.setIntervaloMinimoHoras("--");
-		formHorario.setIntervaloMinimoMinutos("--");
+		formHorario.setDescontoObrigatorioHoras(preenchimento);
+		formHorario.setDescontoObrigatorioMinutos(preenchimento);
+		formHorario.setIntervaloMinimoHoras(preenchimento);
+		formHorario.setIntervaloMinimoMinutos(preenchimento);
 
-		formHorario.setInicioRefeicaoHoras("--");
-		formHorario.setInicioRefeicaoMinutos("--");
-		formHorario.setFimRefeicaoHoras("--");
-		formHorario.setFimRefeicaoMinutos("--");
+		formHorario.setTrabalhoConsecutivoHoras(preenchimento);
+		formHorario.setTrabalhoConsecutivoMinutos(preenchimento);
+
+		formHorario.setInicioRefeicaoHoras(preenchimento);
+		formHorario.setInicioRefeicaoMinutos(preenchimento);
+		formHorario.setFimRefeicaoHoras(preenchimento);
+		formHorario.setFimRefeicaoMinutos(preenchimento);
 
 	} /* setFormAssociarHorarioConfirmar */
 
@@ -749,6 +764,9 @@ public class MeioTempo implements IStrategyHorarios {
 		formHorario.setDescontoObrigatorioMinutos("--");
 		formHorario.setIntervaloMinimoHoras("--");
 		formHorario.setIntervaloMinimoMinutos("--");
+
+		formHorario.setTrabalhoConsecutivoHoras("--");
+		formHorario.setTrabalhoConsecutivoMinutos("--");
 
 		formHorario.setInicioRefeicaoHoras("--");
 		formHorario.setInicioRefeicaoMinutos("--");

@@ -3,11 +3,12 @@ package middleware.marks;
 import java.util.Calendar;
 import java.util.Date;
 
-import Dominio.Funcionario;
+import Dominio.Employee;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IPessoa;
-import ServidorPersistenteJDBC.IFuncionarioPersistente;
-import ServidorPersistenteJDBC.SuportePersistente;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentEmployee;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Tânia Pousão
@@ -57,33 +58,20 @@ public class RowMarksFile {
 		setMark(enrolmentEvaluation.getGrade());
 		setEvaluationDate(enrolmentEvaluation.getExamDate());
 		setStudentNumber(enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getStudent().getNumber());			
-		setTeacherNumber(new Integer(lerFuncionario(enrolmentEvaluation.getPersonResponsibleForGrade()).getNumeroMecanografico()));
+		setTeacherNumber(readEmployee(enrolmentEvaluation.getPersonResponsibleForGrade()).getEmployeeNumber());
 		setSubmitDate(enrolmentEvaluation.getGradeAvailableDate());
 	}
 
-	private Funcionario lerFuncionario(IPessoa pessoa) {
-		Funcionario funcionario = null;
-		SuportePersistente spJDBC = SuportePersistente.getInstance();
-		IFuncionarioPersistente funcionarioPersistente = spJDBC.iFuncionarioPersistente();
-
+	private Employee readEmployee(IPessoa person) {
+		Employee employee = null;
+		IPersistentEmployee persistentEmployee;
 		try {
-			spJDBC.iniciarTransaccao();
-
-			try {
-				funcionario = funcionarioPersistente.lerFuncionarioPorPessoa(pessoa.getIdInternal().intValue());
-
-			} catch (Exception e) {
-				spJDBC.cancelarTransaccao();
-				e.printStackTrace();
-				return funcionario;
-			}
-
-			spJDBC.confirmarTransaccao();
-		} catch (Exception e) {
+			persistentEmployee = SuportePersistenteOJB.getInstance().getIPersistentEmployee();
+			employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
+		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();
-		} finally {
-			return funcionario;
 		}
+		return employee;
 	}
 	
 	public String toString() {

@@ -9,10 +9,15 @@ import Dominio.Pessoa;
  */
 public interface IPessoaPersistente { 
 	public boolean alterarPessoa(Pessoa pessoa);
+	
 	public boolean apagarPessoa(int codigoInterno);
-	public boolean escreverPapelPessoa(Pessoa pessoa, int chaveRole);
+	
 	public boolean escreverPessoa(Pessoa pessoa);
+	public boolean escreverPapelPessoa(Pessoa pessoa, int chaveRole);	
+	
 	public ArrayList lerCargos(int chavePessoa);
+	
+	public ArrayList lerPapelPessoa(int codigoInterno);
 	public Pessoa lerPessoa(int codigoInterno);
 	public Pessoa lerPessoa(String username);
 	public Pessoa lerPessoa(String numeroDocumentoIdentificacao, int tipoDocumentoIdentificacao);	

@@ -14,7 +14,8 @@ import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.Department;
-import Dominio.Funcionario;
+import Dominio.Employee;
+import Dominio.EmployeeHistoric;
 import Dominio.ICostCenter;
 import Dominio.IDepartment;
 import Dominio.ITeacher;
@@ -151,10 +152,10 @@ public class DepartmentOJB extends ObjectFenixOJB implements IPersistentDepartme
 	public IDepartment readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia {
 		
 		// TODO: Remove this call after refactoring teacher... teacher.getEmployee();
-		Funcionario employee = getEmployee(teacher);
+		EmployeeHistoric employeeHistoric = getEmployee(teacher);
 
-		ICostCenter workingCC = employee.getWorkingPlaceCostCenter();
-		ICostCenter mailingCC = employee.getMailingCostCenter();
+		ICostCenter workingCC = employeeHistoric.getWorkingPlaceCostCenter();
+		ICostCenter mailingCC = employeeHistoric.getMailingCostCenter();
 		Criteria workingCCCriteria = new Criteria();
 		
 		workingCCCriteria.addLike("code", workingCC.getSigla().substring(0, 2) + "%");
@@ -171,9 +172,14 @@ public class DepartmentOJB extends ObjectFenixOJB implements IPersistentDepartme
 	 * @param teacher
 	 * @return
 	 */
-	private Funcionario getEmployee(ITeacher teacher) throws ExcepcaoPersistencia {
+	private EmployeeHistoric getEmployee(ITeacher teacher) throws ExcepcaoPersistencia {
 		IPersistentEmployee employeeDAO = SuportePersistenteOJB.getInstance().getIPersistentEmployee();
-		return employeeDAO.readByNumber(teacher.getTeacherNumber());
+		
+		Employee employee = employeeDAO.readByNumber(teacher.getTeacherNumber());
+		employee.setHistoricList(employeeDAO.readHistoricByKeyEmployee(employee.getIdInternal().intValue()));
+		
+		employee.fillEmployeeHistoric();
+
+		return	employee.getEmployeeHistoric();				
 	}
-    
 }

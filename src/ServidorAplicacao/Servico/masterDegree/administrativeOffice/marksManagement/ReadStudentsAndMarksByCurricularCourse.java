@@ -304,7 +304,7 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 						if (enrolmentEvaluation != null) {
 							if(enrolmentEvaluation.getEmployee() != null){
 								IPessoa person = new Pessoa();
-								person.setIdInternal(new Integer(enrolmentEvaluation.getEmployee().getChavePessoa()));
+								person.setIdInternal(enrolmentEvaluation.getEmployee().getKeyPerson());
 								IPessoa person2 = (IPessoa) sp.getIPessoaPersistente().readByOId(person,false);
 								infoEnrolmentEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(person2));
 							}

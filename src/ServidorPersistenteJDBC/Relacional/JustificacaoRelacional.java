@@ -33,7 +33,7 @@ public class JustificacaoRelacional implements IJustificacaoPersistente {
 						+ "horaFim = ? , "
 						+ "observacao = ? , "
 						+ "quem = ? , "
-						+ "quando = ? , "
+						+ "quando = ? "
 						+ "WHERE codigoInterno = ? ");
 
 			sql.setInt(1, justificacao.getCodigoInterno());
@@ -70,6 +70,24 @@ public class JustificacaoRelacional implements IJustificacaoPersistente {
 		}
 	} /* alterarJustificacao */
 
+	public boolean apagarJustificacao(int codigoInterno) {
+		boolean resultado = false;
+
+		try {
+			PreparedStatement sql = UtilRelacional.prepararComando("DELETE FROM ass_JUSTIFICACAO " + "WHERE codigoInterno=?");
+
+			sql.setInt(1, codigoInterno);
+
+			sql.executeUpdate();
+			sql.close();
+			resultado = true;
+		} catch (Exception e) {
+			System.out.println("JustificacaoRelacional.apagarJustificacao: " + e.toString());
+		} finally {
+			return resultado;
+		}
+	} /* apagarJustificacao */
+
 	public boolean apagarJustificacao(
 		int chaveFuncionario,
 		java.util.Date diaInicio,
@@ -81,7 +99,8 @@ public class JustificacaoRelacional implements IJustificacaoPersistente {
 		try {
 			PreparedStatement sql =
 				UtilRelacional.prepararComando(
-					"DELETE FROM ass_JUSTIFICACAO " + "WHERE chaveFuncionario=? AND diaInicio=? AND horaInicio=? AND diaFim=? AND horaFim=?");
+					"DELETE FROM ass_JUSTIFICACAO "
+						+ "WHERE chaveFuncionario=? AND diaInicio=? AND horaInicio=? AND diaFim=? AND horaFim=?");
 
 			sql.setInt(1, chaveFuncionario);
 			sql.setDate(2, new java.sql.Date(diaInicio.getTime()));
@@ -373,6 +392,51 @@ public class JustificacaoRelacional implements IJustificacaoPersistente {
 		}
 	} /* existeJustificacao */
 
+	public Justificacao lerJustificacao(int codigoInterno) {
+		Justificacao justificacao = null;
+
+		try {
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_JUSTIFICACAO " + "WHERE codigoInterno=?");
+
+			sql.setInt(1, codigoInterno);
+
+			ResultSet resultado = sql.executeQuery();
+			if (resultado.next()) {
+				PreparedStatement sql2 =
+					UtilRelacional.prepararComando("SELECT tipo FROM ass_PARAM_JUSTIFICACAO WHERE codigoInterno=?");
+				sql2.setInt(1, resultado.getInt("chaveParamJustificacao"));
+				ResultSet resultado2 = sql2.executeQuery();
+				if (resultado2.next()) {
+					Time inicio = null;
+					if (resultado2.getString("tipo").equals(Constants.JUSTIFICACAO_SALDO)) {
+						inicio = new Time(resultado.getTime("horaInicio").getTime() + 3600 * 1000);
+						// duracao, logo adiciona-se uma hora
+					} else {
+						inicio = resultado.getTime("horaInicio");
+					}
+					justificacao =
+						new Justificacao(
+							resultado.getInt("codigoInterno"),
+							resultado.getInt("chaveParamJustificacao"),
+							resultado.getInt("chaveFuncionario"),
+							java.sql.Date.valueOf(resultado.getString("diaInicio")),
+							inicio,
+							java.sql.Date.valueOf(resultado.getString("diaFim")),
+							resultado.getTime("horaFim"),
+							resultado.getString("observacao"),
+							resultado.getInt("quem"),
+							Timestamp.valueOf(resultado.getString("quando")));
+				}
+				sql2.close();
+			}
+			sql.close();
+		} catch (Exception e) {
+			System.out.println("JustificacaoRelacional.lerJustificacao: " + e.toString());
+		} finally {
+			return justificacao;
+		}
+	}
+
 	public Justificacao lerJustificacao(
 		int chaveFuncionario,
 		java.util.Date diaInicio,
@@ -384,7 +448,8 @@ public class JustificacaoRelacional implements IJustificacaoPersistente {
 		try {
 			PreparedStatement sql =
 				UtilRelacional.prepararComando(
-					"SELECT * FROM ass_JUSTIFICACAO " + "WHERE chaveFuncionario=? AND diaInicio=? AND horaInicio=? AND diaFim=? AND horaFim=?");
+					"SELECT * FROM ass_JUSTIFICACAO "
+						+ "WHERE chaveFuncionario=? AND diaInicio=? AND horaInicio=? AND diaFim=? AND horaFim=?");
 
 			sql.setInt(1, chaveFuncionario);
 			sql.setDate(2, new java.sql.Date(diaInicio.getTime()));
@@ -394,7 +459,8 @@ public class JustificacaoRelacional implements IJustificacaoPersistente {
 
 			ResultSet resultado = sql.executeQuery();
 			if (resultado.next()) {
-				PreparedStatement sql2 = UtilRelacional.prepararComando("SELECT tipo FROM ass_PARAM_JUSTIFICACAO WHERE codigoInterno=?");
+				PreparedStatement sql2 =
+					UtilRelacional.prepararComando("SELECT tipo FROM ass_PARAM_JUSTIFICACAO WHERE codigoInterno=?");
 				sql2.setInt(1, resultado.getInt("chaveParamJustificacao"));
 				ResultSet resultado2 = sql2.executeQuery();
 				if (resultado2.next()) {

@@ -52,7 +52,7 @@ public class ServicoSeguroConstruirEscolhasMarcacoesPonto extends ServicoSeguro 
 			ListIterator iterListaFuncionarios = _listaFuncionarios.listIterator();
 			while (iterListaFuncionarios.hasNext()) {
 				numMecanografico = (Integer) iterListaFuncionarios.next();
-				if ((funcionario = iFuncionarioPersistente.lerFuncionarioPorNumMecanografico(numMecanografico.intValue())) == null) {
+				if ((funcionario = iFuncionarioPersistente.lerFuncionarioSemHistoricoPorNumMecanografico(numMecanografico.intValue())) == null) {
 					throw new NotExecuteException("error.funcionario.naoExiste");
 				}
 
@@ -75,7 +75,7 @@ public class ServicoSeguroConstruirEscolhasMarcacoesPonto extends ServicoSeguro 
 			ListIterator iterListaFuncionarios = _listaFuncionarios.listIterator();
 			while (iterListaFuncionarios.hasNext()) {
 				numMecanografico = (Integer) iterListaFuncionarios.next();
-				if ((funcionario = iFuncionarioPersistente.lerFuncionarioPorNumMecanografico(numMecanografico.intValue())) == null) {
+				if ((funcionario = iFuncionarioPersistente.lerFuncionarioSemHistoricoPorNumMecanografico(numMecanografico.intValue())) == null) {
 					throw new NotExecuteException("error.funcionario.naoExiste");
 				}
 				listaCartoesFuncionarios =

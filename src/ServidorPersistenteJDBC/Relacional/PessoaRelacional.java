@@ -274,6 +274,38 @@ public class PessoaRelacional implements IPessoaPersistente {
 		}
 	} /* lerCargos */
 
+	/** Le todos os roles associado à Pessoa */
+	public ArrayList lerPapelPessoa(int codigoInterno) {
+		ArrayList listaRoles = null;
+
+		try {
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM PERSON_ROLE WHERE KEY_PERSON = ?");
+			sql.setInt(1, codigoInterno);
+
+			ResultSet resultadoQuery = sql.executeQuery();
+
+			//query para buscar os roles
+			PreparedStatement sql2 = UtilRelacional.prepararComando("SELECT * FROM ROLE WHERE ID_INTERNAL = ?");
+			while (resultadoQuery.next()) {
+				sql2.setInt(1, resultadoQuery.getInt("KEY_ROLE"));
+
+				ResultSet resultadoQuery2 = sql2.executeQuery();
+
+				listaRoles = new ArrayList();
+				while (resultadoQuery2.next()) {
+					listaRoles.add(new Integer(resultadoQuery2.getInt("ID_INTERNAL")));
+				}
+			}
+			sql2.close();
+			sql.close();
+		} catch (Exception e) {
+			System.out.println("PessoaRelacional.lerPapelPessoa: " + e.toString());
+			return null;
+		} finally {
+			return listaRoles;
+		}
+	} /* lerPapelPessoa */
+
 	/** Le um registo de Pessoa com a chave primaria
 	 * @return Pessoa se sucedeu, null caso contrario
 	 */

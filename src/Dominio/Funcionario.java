@@ -8,32 +8,44 @@ package Dominio;
 import java.sql.Timestamp;
 import java.util.Date;
 
+import constants.assiduousness.Constants;
+
 /**
  *
  * @author  Ivo Brandão
  */
-public class Funcionario implements IFuncionario {
-	private Date antiguidade = null;
-	private String calendario = null;
-	private int chaveCCCorrespondencia = 0;
-	private int chaveCCLocalTrabalho = 0;
-	private int chaveCCVencimento = 0;
-	private int chaveFuncResponsavel = 0;
-	private int chaveHorarioActual = 0;
-	private int chavePessoa = 0;
-	private int chaveStatus = 0;
+public class Funcionario {
 
 	private int codigoInterno = 0;
-	private Date dataFim = null;
-	private Date dataInicio = null;
-	private int numeroMecanografico = 0;
 	
 	private IPessoa person = null;
-	private Timestamp quando = null;
+	private int chavePessoa = 0;
+	
+	private int numeroMecanografico = 0;
+	private int chaveHorarioActual = 0;
+	private Date antiguidade = null;
+	
+	//historico	
+	private Integer chaveFuncResponsavel = null;
+	private Integer chaveCCLocalTrabalho = null;
+	private Integer chaveCCCorrespondencia = null;
+	private Integer chaveCCVencimento = null;
+	private String calendario = null;
+	private Integer chaveStatus = null;
+	
+	private Date dataInicio = null;
+	private Date dataFim = null;
+	
 	private int quem = 0;
-//	private ICostCenter salaryCostCenter = null;
+	private Timestamp quando = null;
+
+	//private ICostCenter salaryCostCenter = null;
 	private ICostCenter workingPlaceCostCenter = null;
-	private ICostCenter mailingCostCenter = null;	
+	private ICostCenter mailingCostCenter = null;
+
+	private Date assiduidade = null; //atributo auxiliar
+	
+	private int chaveHistorico = 0; //identifica o histórico
 
 	/** Construtor por omissao */
 	public Funcionario() {
@@ -42,14 +54,14 @@ public class Funcionario implements IFuncionario {
 		this.numeroMecanografico = 0;
 		this.chaveHorarioActual = 0;
 		this.antiguidade = new Date(0);
-		this.chaveFuncResponsavel = 0;
-		this.chaveCCLocalTrabalho = 0;
-		this.chaveCCCorrespondencia = 0;
-		this.chaveCCVencimento = 0;
-		this.calendario = new String("LISBOA");
-		this.chaveStatus = 0;
-		this.dataInicio = new Date(0);
-		this.dataFim = new Date(0);
+		this.chaveFuncResponsavel = null;
+		this.chaveCCLocalTrabalho = null;
+		this.chaveCCCorrespondencia = null;
+		this.chaveCCVencimento = null;
+		this.calendario = new String(Constants.CALENDARIO_LISBOA);
+		this.chaveStatus = null;
+		this.dataInicio = null;
+		this.dataFim = null;
 		this.quem = 0;
 		this.quando = new Timestamp(0);
 	}
@@ -62,14 +74,35 @@ public class Funcionario implements IFuncionario {
 		this.numeroMecanografico = numeroMecanografico;
 		this.chaveHorarioActual = chaveHorarioActual;
 		this.antiguidade = new Date(0);
-		this.chaveFuncResponsavel = 0;
-		this.chaveCCLocalTrabalho = 0;
-		this.chaveCCCorrespondencia = 0;
-		this.chaveCCVencimento = 0;
-		this.calendario = new String("LISBOA");
-		this.chaveStatus = 0;
-		this.dataInicio = new Date(0);
-		this.dataFim = new Date(0);
+		this.chaveFuncResponsavel = null;
+		this.chaveCCLocalTrabalho = null;
+		this.chaveCCCorrespondencia = null;
+		this.chaveCCVencimento = null;
+		this.calendario = new String(Constants.CALENDARIO_LISBOA);
+		this.chaveStatus = null;
+		this.dataInicio = null;
+		this.dataFim = null;
+		this.quem = 0;
+		this.quando = new Timestamp(0);
+
+	}
+
+	/** Construtor */
+	public Funcionario(int codigoInterno, int chavePessoa, int numeroMecanografico, int chaveHorarioActual, Date antiguidade) {
+
+		this.codigoInterno = codigoInterno;
+		this.chavePessoa = chavePessoa;
+		this.numeroMecanografico = numeroMecanografico;
+		this.chaveHorarioActual = chaveHorarioActual;
+		this.antiguidade = antiguidade;
+		this.chaveFuncResponsavel = null;
+		this.chaveCCLocalTrabalho = null;
+		this.chaveCCCorrespondencia = null;
+		this.chaveCCVencimento = null;
+		this.calendario = new String(Constants.CALENDARIO_LISBOA);
+		this.chaveStatus = null;
+		this.dataInicio = null;
+		this.dataFim = null;
 		this.quem = 0;
 		this.quando = new Timestamp(0);
 
@@ -80,13 +113,39 @@ public class Funcionario implements IFuncionario {
 		int chavePessoa,
 		int numeroMecanografico,
 		int chaveHorarioActual,
+		Integer chaveCCLocalTrabalho,
+		Integer chaveCCCorrespondencia,
+		Integer chaveCCVencimento) {
+
+		this.codigoInterno = codigoInterno;
+		this.chavePessoa = chavePessoa;
+		this.numeroMecanografico = numeroMecanografico;
+		this.chaveHorarioActual = chaveHorarioActual;
+		this.antiguidade = new Date(0);
+		this.chaveFuncResponsavel = null;
+		this.chaveCCLocalTrabalho = chaveCCLocalTrabalho;
+		this.chaveCCCorrespondencia = chaveCCCorrespondencia;
+		this.chaveCCVencimento = chaveCCVencimento;
+		this.calendario = new String(Constants.CALENDARIO_LISBOA);
+		this.chaveStatus = null;
+		this.dataInicio = null;
+		this.dataFim = null;
+		this.quem = 0;
+		this.quando = new Timestamp(0);
+	}
+
+	public Funcionario(
+		int codigoInterno,
+		int chavePessoa,
+		int numeroMecanografico,
+		int chaveHorarioActual,
 		Date antiguidade,
-		int chaveFuncResponsavel,
-		int chaveCCLocalTrabalho,
-		int chaveCCCorrespondencia,
-		int chaveCCVencimento,
+		Integer chaveFuncResponsavel,
+		Integer chaveCCLocalTrabalho,
+		Integer chaveCCCorrespondencia,
+		Integer chaveCCVencimento,
 		String calendario,
-		int chaveStatus,
+		Integer chaveStatus,
 		Date dataInicio,
 		Date dataFim,
 		int quem,
@@ -107,6 +166,8 @@ public class Funcionario implements IFuncionario {
 		this.dataFim = dataFim;
 		this.quem = quem;
 		this.quando = quando;
+
+		this.chaveHistorico = 0;
 	}
 
 	public Funcionario(
@@ -114,25 +175,36 @@ public class Funcionario implements IFuncionario {
 		int chavePessoa,
 		int numeroMecanografico,
 		int chaveHorarioActual,
-		int chaveCCLocalTrabalho,
-		int chaveCCCorrespondencia,
-		int chaveCCVencimento) {
+		Date antiguidade,
+		int chaveHistorico,
+		Integer chaveFuncResponsavel,
+		Integer chaveCCLocalTrabalho,
+		Integer chaveCCCorrespondencia,
+		Integer chaveCCVencimento,
+		String calendario,
+		Integer chaveStatus,
+		Date dataInicio,
+		Date dataFim,
+		int quem,
+		Timestamp quando) {
 
 		this.codigoInterno = codigoInterno;
 		this.chavePessoa = chavePessoa;
 		this.numeroMecanografico = numeroMecanografico;
 		this.chaveHorarioActual = chaveHorarioActual;
-		this.antiguidade = new Date(0);
-		this.chaveFuncResponsavel = 0;
+		this.antiguidade = antiguidade;
+		this.chaveFuncResponsavel = chaveFuncResponsavel;
 		this.chaveCCLocalTrabalho = chaveCCLocalTrabalho;
 		this.chaveCCCorrespondencia = chaveCCCorrespondencia;
 		this.chaveCCVencimento = chaveCCVencimento;
-		this.calendario = new String("LISBOA");
-		this.chaveStatus = 0;
-		this.dataInicio = new Date(0);
-		this.dataFim = new Date(0);
-		this.quem = 0;
-		this.quando = new Timestamp(0);
+		this.calendario = calendario;
+		this.chaveStatus = chaveStatus;
+		this.dataInicio = dataInicio;
+		this.dataFim = dataFim;
+		this.quem = quem;
+		this.quando = quando;
+
+		this.chaveHistorico = chaveHistorico;
 	}
 
 	/** Verifica se outro objecto e identico a este */
@@ -145,302 +217,200 @@ public class Funcionario implements IFuncionario {
 				&& (numeroMecanografico == ((Funcionario) obj).getNumeroMecanografico())
 				&& (chaveHorarioActual == ((Funcionario) obj).getChaveHorarioActual())
 				&& (antiguidade == ((Funcionario) obj).getAntiguidade())
-				&& (chaveFuncResponsavel == ((Funcionario) obj).getChaveFuncResponsavel())
-				&& (chaveCCLocalTrabalho == ((Funcionario) obj).getChaveCCLocalTrabalho())
-				&& (chaveCCCorrespondencia == ((Funcionario) obj).getChaveCCCorrespondencia())
-				&& (chaveCCVencimento == ((Funcionario) obj).getChaveCCVencimento())
+				&& ((chaveFuncResponsavel == null && ((Funcionario) obj).getChaveFuncResponsavel() == null)
+					|| (chaveFuncResponsavel != null && chaveFuncResponsavel.equals(((Funcionario) obj).getChaveFuncResponsavel())))
+				&& ((chaveCCLocalTrabalho == null && ((Funcionario) obj).getChaveCCLocalTrabalho() == null)
+					|| (chaveCCLocalTrabalho != null && chaveCCLocalTrabalho.equals(((Funcionario) obj).getChaveCCLocalTrabalho())))
+				&& ((chaveCCCorrespondencia == null && ((Funcionario) obj).getChaveCCCorrespondencia() == null)
+					|| (chaveCCCorrespondencia != null && chaveCCCorrespondencia.equals(((Funcionario) obj).getChaveCCCorrespondencia())))
+				&& ((chaveCCVencimento == null && ((Funcionario) obj).getChaveCCVencimento() == null)
+					|| (chaveCCVencimento != null && chaveCCVencimento.equals(((Funcionario) obj).getChaveCCVencimento())))
 				&& (calendario == ((Funcionario) obj).getCalendario())
-		&& (chaveStatus == ((Funcionario) obj).getChaveStatus())
+				&& ((chaveStatus == null && ((Funcionario) obj).getChaveStatus() == null)
+					|| (chaveStatus != null && chaveStatus.equals(((Funcionario) obj).getChaveStatus())))
 				&& (dataInicio == ((Funcionario) obj).getDataInicio())
 				&& (dataFim == ((Funcionario) obj).getDataFim())
 				&& (quem == ((Funcionario) obj).getQuem())
 				&& (quando == ((Funcionario) obj).getQuando()));
 	}
 
-	/**
-	 * @return Date
-	 */
-	public Date getAntiguidade() {
-		return antiguidade;
-	}
 
-	/**
-	 * @return String
-	 */
-	public String getCalendario() {
-		return calendario;
-	}
-
-	/**
-	 * @return int
-	 */
-	public int getChaveCCCorrespondencia() {
-		return chaveCCCorrespondencia;
-	}
-
-	/**
-	 * @return int
-	 */
-	public int getChaveCCLocalTrabalho() {
-		return chaveCCLocalTrabalho;
-	}
-
-	/**
-	 * @return int
-	 */
-	public int getChaveCCVencimento() {
-		return chaveCCVencimento;
-	}
-
-	/**
-	 * @return int
-	 */
-	public int getChaveFuncResponsavel() {
-		return chaveFuncResponsavel;
-	}
-
-	/** Getter for property chaveHorarioActual.
-	 * @return Value of property chaveHorarioActual.
-	
-	 */
-	public int getChaveHorarioActual() {
-		return chaveHorarioActual;
-	}
-
-	/** Getter for property chavePessoa.
-	 * @return Value of property chavePessoa.
-	 *
-	 */
-	public int getChavePessoa() {
-		return chavePessoa;
-	}
-
-	/** Getter for property chaveStatus.
-	 * @return Value of property chaveStatus.
-	 *
-	 */
-	public int getChaveStatus() {
-		return chaveStatus;
-	}
-
-	/** Getter for property codigoInterno.
-	 * @return Value of property codigoInterno.
-	 *
-	 */
 	public int getCodigoInterno() {
 		return codigoInterno;
 	}
-
-	/**
-	 * @return Date
-	 */
-	public Date getDataFim() {
-		return dataFim;
-	}
-
-	/**
-	 * @return Date
-	 */
-	public Date getDataInicio() {
-		return dataInicio;
-	}
-	
-	/**
-	 * @return
-	 */
-	public ICostCenter getMailingCostCenter() {
-		return this.mailingCostCenter;
-	}
-
-	/** Getter for property numeroMecanografico.
-	 * @return Value of property numeroMecanografico.
-	 *
-	 */
-	public int getNumeroMecanografico() {
-		return numeroMecanografico;
-	}
-
-	/**
-	 * @return
-	 */
-	public IPessoa getPerson() {
-		return person;
-	}
-
-	/**
-	 * @return Timestamp
-	 */
-	public Timestamp getQuando() {
-		return quando;
-	}
-
-	/**
-	 * @return int
-	 */
-	public int getQuem() {
-		return quem;
-	}
-
-//	/**
-//	 * @return
-//	 */
-//	public ICostCenter getSalaryCostCenter() {
-//		return this.salaryCostCenter;
-//	}
-
-	/**
-	 * @return
-	 */
-	public ICostCenter getWorkingPlaceCostCenter() {
-		return this.workingPlaceCostCenter;
-	}
-
-	/**
-	 * Sets the antiguidade.
-	 * @param antiguidade The antiguidade to set
-	 */
-	public void setAntiguidade(Date antiguidade) {
-		this.antiguidade = antiguidade;
-	}
-
-	/**
-	 * Sets the calendario.
-	 * @param calendario The calendario to set
-	 */
-	public void setCalendario(String calendario) {
-		this.calendario = calendario;
-	}
-
-	/**
-	 * Sets the chaveCCCorrespondencia.
-	 * @param chaveCCCorrespondencia The chaveCCCorrespondencia to set
-	 */
-	public void setChaveCCCorrespondencia(int chaveCCCorrespondencia) {
-		this.chaveCCCorrespondencia = chaveCCCorrespondencia;
-	}
-
-	/**
-	 * Sets the chaveCCLocalTrabalho.
-	 * @param chaveCCLocalTrabalho The chaveCCLocalTrabalho to set
-	 */
-	public void setChaveCCLocalTrabalho(int chaveCCLocalTrabalho) {
-		this.chaveCCLocalTrabalho = chaveCCLocalTrabalho;
-	}
-
-	/**
-	 * Sets the chaveCCVencimento.
-	 * @param chaveCCVencimento The chaveCCVencimento to set
-	 */
-	public void setChaveCCVencimento(int chaveCCVencimento) {
-		this.chaveCCVencimento = chaveCCVencimento;
-	}
-
-	/**
-	 * Sets the chaveFuncResponsavel.
-	 * @param chaveFuncResponsavel The chaveFuncResponsavel to set
-	 */
-	public void setChaveFuncResponsavel(int chaveFuncResponsavel) {
-		this.chaveFuncResponsavel = chaveFuncResponsavel;
-	}
-
-	/** Setter for property chaveHorarioActual.
-	 * @param chaveHorarioActual New value of property chaveHorarioActual.
-	 *
-	 */
-	public void setChaveHorarioActual(int chaveHorarioActual) {
-		this.chaveHorarioActual = chaveHorarioActual;
-	}
-
-	/** Setter for property chavePessoa.
-	 * @param chavePessoa New value of property chavePessoa.
-	 *
-	 */
-	public void setChavePessoa(int chavePessoa) {
-		this.chavePessoa = chavePessoa;
-	}
-
-	/** Setter for property chaveStatus.
-	 * @param chaveStatus New value of property chaveStatus.
-	 *
-	 */
-	public void setChaveStatus(int chaveStatus) {
-		this.chaveStatus = chaveStatus;
-	}
-
-	/** Setter for property codigoInterno.
-	 * @param codigoInterno New value of property codigoInterno.
-	 *
-	 */
 	public void setCodigoInterno(int codigoInterno) {
 		this.codigoInterno = codigoInterno;
 	}
 
-	/**
-	 * Sets the dataFim.
-	 * @param dataFim The dataFim to set
-	 */
-	public void setDataFim(Date dataFim) {
-		this.dataFim = dataFim;
+	public int getChavePessoa() {
+		return chavePessoa;
 	}
-
-	/**
-	 * Sets the dataInicio.
-	 * @param dataInicio The dataInicio to set
-	 */
-	public void setDataInicio(Date dataInicio) {
-		this.dataInicio = dataInicio;
+	public IPessoa getPerson() {
+		return person;
 	}
-
-	/**
-	 * @param mailingCostCenter
-	 */
-	public void setMailingCostCenter(ICostCenter mailingCostCenter) {
-		this.mailingCostCenter = mailingCostCenter;
+	public void setChavePessoa(int chavePessoa) {
+		this.chavePessoa = chavePessoa;
 	}
-
-	/** Setter for property numeroMecanografico.
-	 * @param numeroMecanografico New value of property numeroMecanografico.
-	 *
-	 */
-	public void setNumeroMecanografico(int numeroMecanografico) {
-		this.numeroMecanografico = numeroMecanografico;
-	}
-
-	/**
-	 * @param pessoa
-	 */
 	public void setPerson(IPessoa person) {
 		this.person = person;
 	}
 
-	/**
-	 * Sets the quando.
-	 * @param quando The quando to set
-	 */
+	public int getNumeroMecanografico() {
+		return numeroMecanografico;
+	}
+	public void setNumeroMecanografico(int numeroMecanografico) {
+		this.numeroMecanografico = numeroMecanografico;
+	}
+
+	public int getChaveHorarioActual() {
+		return chaveHorarioActual;
+	}
+	public void setChaveHorarioActual(int chaveHorarioActual) {
+		this.chaveHorarioActual = chaveHorarioActual;
+	}
+
+	public Date getAntiguidade() {
+		return antiguidade;
+	}
+	public void setAntiguidade(Date antiguidade) {
+		this.antiguidade = antiguidade;
+	}
+
+	public Date getAssiduidade() {
+		return assiduidade;
+	}
+	public void setAssiduidade(Date date) {
+		assiduidade = date;
+	}
+	
+	public String getCalendario() {
+		return calendario;
+	}
+
+	public Integer getChaveCCCorrespondencia() {
+		return chaveCCCorrespondencia;
+	}
+	public Integer getChaveCCLocalTrabalho() {
+		return chaveCCLocalTrabalho;
+	}
+	public Integer getChaveCCVencimento() {
+		return chaveCCVencimento;
+	}
+
+	public Integer getChaveFuncResponsavel() {
+		return chaveFuncResponsavel;
+	}
+
+	public Integer getChaveStatus() {
+		return chaveStatus;
+	}
+	public void setChaveStatus(Integer chaveStatus) {
+		this.chaveStatus = chaveStatus;
+	}
+
+	public Date getDataFim() {
+		return dataFim;
+	}
+	public Date getDataInicio() {
+		return dataInicio;
+	}
+
+	public void setCalendario(String calendario) {
+		this.calendario = calendario;
+	}
+
+	public void setChaveCCCorrespondencia(Integer chaveCCCorrespondencia) {
+		this.chaveCCCorrespondencia = chaveCCCorrespondencia;
+	}
+	public void setChaveCCLocalTrabalho(Integer chaveCCLocalTrabalho) {
+		this.chaveCCLocalTrabalho = chaveCCLocalTrabalho;
+	}
+	public void setChaveCCVencimento(Integer chaveCCVencimento) {
+		this.chaveCCVencimento = chaveCCVencimento;
+	}
+
+	public void setChaveFuncResponsavel(Integer chaveFuncResponsavel) {
+		this.chaveFuncResponsavel = chaveFuncResponsavel;
+	}
+
+	public void setDataFim(Date dataFim) {
+		this.dataFim = dataFim;
+	}
+	public void setDataInicio(Date dataInicio) {
+		this.dataInicio = dataInicio;
+	}
+
+	public Timestamp getQuando() {
+		return quando;
+	}
+	public int getQuem() {
+		return quem;
+	}
+
 	public void setQuando(Timestamp quando) {
 		this.quando = quando;
 	}
-
-	/**
-	 * Sets the quem.
-	 * @param quem The quem to set
-	 */
 	public void setQuem(int quem) {
 		this.quem = quem;
 	}
-
-//	/**
-//	 * @param salaryCostCenter
-//	 */
-//	public void setSalaryCostCenter(ICostCenter salaryCostCenter) {
-//		this.salaryCostCenter = salaryCostCenter;
-//	}
-
-	/**
-	 * @param workingPlaceCostCenter
-	 */
+	
+	public ICostCenter getMailingCostCenter() {
+		return this.mailingCostCenter;
+	}
+	public void setMailingCostCenter(ICostCenter mailingCostCenter) {
+		this.mailingCostCenter = mailingCostCenter;
+	}
+	
+	public ICostCenter getWorkingPlaceCostCenter() {
+		return this.workingPlaceCostCenter;
+	}
 	public void setWorkingPlaceCostCenter(ICostCenter workingPlaceCostCenter) {
 		this.workingPlaceCostCenter = workingPlaceCostCenter;
 	}
 
+	public int getChaveHistorico() {
+		return chaveHistorico;
+	}
+
+	public void setChaveHistorico(int i) {
+		chaveHistorico = i;
+	}
+
+	public String toString() {
+		String string = null;
+
+		string =
+			"[FUNCIONARIO:"
+				+ " CodigoInterno: "
+				+ getCodigoInterno()
+				+ "\n ChavePessoa: "
+				+ getChavePessoa()
+				+ "\n NumeroMecanografico: "
+				+ getNumeroMecanografico()
+				+ "\n ChaveHorarioActual: "
+				+ getChaveHorarioActual()
+				+ "\n Antiguidade: "
+				+ getAntiguidade()
+				+ "\n ID HISTORICO: "
+				+ getChaveHistorico()
+				+ "\n ChaveFuncionarioResponsavel: "
+				+ getChaveFuncResponsavel()
+				+ "\n CCLocalTrabalho: "
+				+ getChaveCCLocalTrabalho()
+				+ "\n CCCorrespondencia: "
+				+ getChaveCCCorrespondencia()
+				+ "\n CCVencimento: "
+				+ getChaveCCVencimento()
+				+ "\n Calendario: "
+				+ getCalendario()
+				+ "\n StatusAssiduidade: "
+				+ getChaveStatus()
+				+ "\n DataInicioValidade: "
+				+ getDataInicio()
+				+ "\n DataFimValidade: "
+				+ getDataFim()
+				+ "]\n";
+
+		return string;
+	}
 }

@@ -1,7 +1,9 @@
 package ServidorPersistenteJDBC.Relacional;
 
+import java.util.List;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,17 +29,7 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 						+ "chavePessoa = ? , "
 						+ "numeroMecanografico = ? , "
 						+ "chaveHorarioActual = ?, "
-						+ "antiguidade = ? ,"
-						+ "chaveFuncResponsavel = ? ,"
-						+ "chaveCCLocalTrabalho = ? ,"
-						+ "chaveCCCorrespondencia = ? ,"
-						+ "chaveCCVencimento = ? ,"
-						+ "calendario = ? ,"
-						+ "chaveStatus = ? ,"
-						+ "dataInicio = ? ,"
-						+ "dataFim = ? ,"
-						+ "quem = ? ,"
-						+ "quando = ?"
+						+ "antiguidade = ? "
 						+ "WHERE numeroMecanografico = ? ");
 
 			sql.setInt(1, funcionario.getCodigoInterno());
@@ -45,44 +37,544 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 			sql.setInt(3, funcionario.getNumeroMecanografico());
 			sql.setInt(4, funcionario.getChaveHorarioActual());
 			sql.setDate(5, new java.sql.Date(funcionario.getAntiguidade().getTime()));
-			sql.setInt(6, funcionario.getChaveFuncResponsavel());
-			sql.setInt(7, funcionario.getChaveCCLocalTrabalho());
-			sql.setInt(8, funcionario.getChaveCCCorrespondencia());
-			sql.setInt(9, funcionario.getChaveCCVencimento());
-			sql.setString(10, funcionario.getCalendario());
-			sql.setInt(11, funcionario.getChaveStatus());
-			sql.setDate(12, new java.sql.Date(funcionario.getDataInicio().getTime()));
-			if (funcionario.getDataFim() == null) {
-				sql.setDate(13, null);
-			} else {
-				sql.setDate(13, new java.sql.Date(funcionario.getDataFim().getTime()));
-			}
-			sql.setInt(14, funcionario.getQuem());
-			sql.setTimestamp(15, new Timestamp(funcionario.getQuando().getTime()));
-			sql.setInt(16, funcionario.getNumeroMecanografico());
+			sql.setInt(6, funcionario.getNumeroMecanografico()); //devido à alteração por numero mecanografico
 
 			sql.executeUpdate();
 			sql.close();
 			resultado = true;
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("FuncionarioRelacional.alterarFuncionario: " + e.toString());
 		} finally {
 			return resultado;
 		}
 	} /* alterarFuncionario */
 
-	public boolean apagarFuncionario(int numero) {
+	public boolean alterarFuncionarioPorCodigoInterno(Funcionario funcionario) {
 		boolean resultado = false;
 
 		try {
-			PreparedStatement sql = UtilRelacional.prepararComando("DELETE FROM ass_FUNCIONARIO WHERE numeroMecanografico = ?");
+			PreparedStatement sql =
+				UtilRelacional.prepararComando(
+					"UPDATE ass_FUNCIONARIO SET "
+						+ "chavePessoa = ? , "
+						+ "numeroMecanografico = ? , "
+						+ "chaveHorarioActual = ?, "
+						+ "antiguidade = ? "
+						+ "WHERE codigoInterno = ? ");
 
-			sql.setInt(1, numero);
+			sql.setInt(1, funcionario.getChavePessoa());
+			sql.setInt(2, funcionario.getNumeroMecanografico());
+			sql.setInt(3, funcionario.getChaveHorarioActual());
+			sql.setDate(4, new java.sql.Date(funcionario.getAntiguidade().getTime()));
+			sql.setInt(5, funcionario.getCodigoInterno());
 
 			sql.executeUpdate();
 			sql.close();
 			resultado = true;
 		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.alterarFuncionario: " + e.toString());
+		} finally {
+			return resultado;
+		}
+	} /* alterarFuncionario */
+
+	public boolean alterarHistoricoFuncionario(Funcionario funcionario) {
+		boolean resultado = false;
+
+		try {
+			//chave do funcionário
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO WHERE numeroMecanografico = ?");
+			sql.setInt(1, funcionario.getNumeroMecanografico());
+			ResultSet resultadoQuery = sql.executeQuery();
+			int chaveFuncionario = 0;
+			if (resultadoQuery.next()) {
+				chaveFuncionario = resultadoQuery.getInt("codigoInterno");
+			} else {
+				sql.close();
+				return resultado;
+			}
+			sql.close();
+
+			//alteracao da ultima informação do histórico do funcionário
+			sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO_HISTORICO WHERE chaveFuncionario = ?");
+			sql.setInt(1, chaveFuncionario);
+			resultadoQuery = sql.executeQuery();
+
+			if (resultadoQuery.last()) { //ultimo record deste funcionário, porque contem a informação actual
+
+				PreparedStatement sql2 =
+					UtilRelacional.prepararComando(
+						"UPDATE ass_FUNCIONARIO_HISTORICO SET "
+							+ "chaveFuncResponsavel = ? ,"
+							+ "chaveCCLocalTrabalho = ? ,"
+							+ "chaveCCCorrespondencia = ? ,"
+							+ "chaveCCVencimento = ? ,"
+							+ "calendario = ? ,"
+							+ "chaveStatus = ? ,"
+							+ "dataInicio = ? ,"
+							+ "dataFim = ? ,"
+							+ "quem = ? ,"
+							+ "quando = ? "
+							+ "WHERE chaveFuncionario = ? ");
+
+				sql2.setObject(1, funcionario.getChaveFuncResponsavel());
+				sql2.setObject(2, funcionario.getChaveCCLocalTrabalho());
+				sql2.setObject(3, funcionario.getChaveCCCorrespondencia());
+				sql2.setObject(4, funcionario.getChaveCCVencimento());
+				sql2.setString(5, funcionario.getCalendario());
+				sql2.setObject(6, funcionario.getChaveStatus());
+				if (funcionario.getDataInicio() != null) {
+					sql2.setDate(7, new java.sql.Date(funcionario.getDataInicio().getTime()));
+				} else {
+					sql2.setDate(7, null);
+				}
+				if (funcionario.getDataFim() != null) {
+					sql2.setDate(8, new java.sql.Date(funcionario.getDataFim().getTime()));
+				} else {
+					sql2.setDate(8, null);
+				}
+				sql2.setInt(9, funcionario.getQuem());
+				sql2.setTimestamp(10, new Timestamp(funcionario.getQuando().getTime()));
+				sql2.setInt(11, chaveFuncionario);
+
+				sql2.executeUpdate();
+				sql2.close();
+			}
+			sql.close();
+			resultado = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.alterarHistoricoFuncionario: " + e.toString());
+		} finally {
+			return resultado;
+		}
+	} /* alterarHistoricoFuncionario */
+
+	public boolean alterarFuncResponsavel(Funcionario funcionario) {
+		boolean resultado = false;
+
+		try {
+			//alteracao em todos os historicos do funcionário
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO WHERE numeroMecanografico = ?");
+			sql.setInt(1, funcionario.getNumeroMecanografico());
+			ResultSet resultadoQuery = sql.executeQuery();
+			int chaveFuncionario = 0;
+			if (resultadoQuery.next()) {
+				chaveFuncionario = resultadoQuery.getInt("codigoInterno");
+			} else {
+				sql.close();
+				return resultado;
+			}
+			sql.close();
+
+			sql =
+				UtilRelacional.prepararComando(
+					"SELECT * FROM ass_FUNCIONARIO_HISTORICO WHERE chaveFuncionario = ? AND chaveFuncResponsavel IS NOT NULL");
+			sql.setInt(1, chaveFuncionario);
+			resultadoQuery = sql.executeQuery();
+
+			if (resultadoQuery.last()) { //ultimo record deste funcionário, porque contem a informação actual
+				PreparedStatement sql2 =
+					UtilRelacional.prepararComando(
+						"UPDATE ass_FUNCIONARIO_HISTORICO SET "
+							+ "chaveFuncResponsavel = ? ,"
+							+ "dataInicio = ? ,"
+							+ "dataFim = ? ,"
+							+ "quem = ? ,"
+							+ "quando = ? "
+							+ "WHERE codigoInterno = ? ");
+
+				sql2.setObject(1, funcionario.getChaveFuncResponsavel());
+				if (funcionario.getDataInicio() != null) {
+					sql2.setDate(2, new java.sql.Date(funcionario.getDataInicio().getTime()));
+				} else {
+					sql2.setDate(2, null);
+				}
+				if (funcionario.getDataFim() != null) {
+					sql2.setDate(3, new java.sql.Date(funcionario.getDataFim().getTime()));
+				} else {
+					sql2.setDate(3, null);
+				}
+				sql2.setInt(4, funcionario.getQuem());
+				sql2.setTimestamp(5, new Timestamp(funcionario.getQuando().getTime()));
+				sql2.setInt(6, resultadoQuery.getInt("codigoInterno"));
+
+				sql2.executeUpdate();
+				sql2.close();
+			}
+			sql.close();
+			resultado = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.alterarFuncResponsavel: " + e.toString());
+		} finally {
+			return resultado;
+		}
+	} /* alterarFuncResponsavel */
+
+	public boolean alterarCCCorrespondenciaFuncionario(Funcionario funcionario) {
+		boolean resultado = false;
+
+		try {
+			//alteracao em todos os historicos do funcionário
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO WHERE numeroMecanografico = ?");
+			sql.setInt(1, funcionario.getNumeroMecanografico());
+			ResultSet resultadoQuery = sql.executeQuery();
+			int chaveFuncionario = 0;
+			if (resultadoQuery.next()) {
+				chaveFuncionario = resultadoQuery.getInt("codigoInterno");
+			} else {
+				sql.close();
+				return resultado;
+			}
+			sql.close();
+
+			sql =
+				UtilRelacional.prepararComando(
+					"SELECT * FROM ass_FUNCIONARIO_HISTORICO WHERE chaveFuncionario = ?  AND chaveCCCorrespondencia IS NOT NULL");
+			sql.setInt(1, chaveFuncionario);
+			resultadoQuery = sql.executeQuery();
+
+			if (resultadoQuery.last()) { //ultimo record deste funcionário, porque contem a informação actual
+				PreparedStatement sql2 =
+					UtilRelacional.prepararComando(
+						"UPDATE ass_FUNCIONARIO_HISTORICO SET "
+							+ "chaveCCCorrespondencia = ? ,"
+							+ "dataInicio = ? ,"
+							+ "dataFim = ? ,"
+							+ "quem = ? ,"
+							+ "quando = ? "
+							+ "WHERE codigoInterno = ? ");
+
+				sql2.setObject(1, funcionario.getChaveCCCorrespondencia());
+				if (funcionario.getDataInicio() != null) {
+					sql2.setDate(2, new java.sql.Date(funcionario.getDataInicio().getTime()));
+				} else {
+					sql2.setDate(2, null);
+				}
+				if (funcionario.getDataFim() != null) {
+					sql2.setDate(3, new java.sql.Date(funcionario.getDataFim().getTime()));
+				} else {
+					sql2.setDate(3, null);
+				}
+				sql2.setInt(4, funcionario.getQuem());
+				sql2.setTimestamp(5, new Timestamp(funcionario.getQuando().getTime()));
+				sql2.setInt(6, resultadoQuery.getInt("codigoInterno"));
+
+				sql2.executeUpdate();
+				sql2.close();
+			}
+			sql.close();
+			resultado = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.alterarCCCorrespondenciaFuncionario: " + e.toString());
+		} finally {
+			return resultado;
+		}
+	} /* alterarCCCorrespondenciaFuncionario */
+
+	public boolean alterarCCLocalTrabalhoFuncionario(Funcionario funcionario) {
+		boolean resultado = false;
+
+		try {
+			//alteracao em todos os historicos do funcionário
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO WHERE numeroMecanografico = ?");
+			sql.setInt(1, funcionario.getNumeroMecanografico());
+			ResultSet resultadoQuery = sql.executeQuery();
+			int chaveFuncionario = 0;
+			if (resultadoQuery.next()) {
+				chaveFuncionario = resultadoQuery.getInt("codigoInterno");
+			} else {
+				sql.close();
+				return resultado;
+			}
+			sql.close();
+
+			sql =
+				UtilRelacional.prepararComando(
+					"SELECT * FROM ass_FUNCIONARIO_HISTORICO WHERE chaveFuncionario = ? AND chaveCCLocalTrabalho IS NOT NULL");
+			sql.setInt(1, chaveFuncionario);
+			resultadoQuery = sql.executeQuery();
+
+			if (resultadoQuery.last()) { //ultimo record deste funcionário, porque contem a informação actual
+				PreparedStatement sql2 =
+					UtilRelacional.prepararComando(
+						"UPDATE ass_FUNCIONARIO_HISTORICO SET "
+							+ "chaveCCLocalTrabalho = ? ,"
+							+ "dataInicio = ? ,"
+							+ "dataFim = ? ,"
+							+ "quem = ? ,"
+							+ "quando = ? "
+							+ "WHERE codigoInterno = ? ");
+
+				sql2.setObject(1, funcionario.getChaveCCLocalTrabalho());
+				if (funcionario.getDataInicio() != null) {
+					sql2.setDate(2, new java.sql.Date(funcionario.getDataInicio().getTime()));
+				} else {
+					sql2.setDate(2, null);
+				}
+				if (funcionario.getDataFim() != null) {
+					sql2.setDate(3, new java.sql.Date(funcionario.getDataFim().getTime()));
+				} else {
+					sql2.setDate(3, null);
+				}
+				sql2.setInt(4, funcionario.getQuem());
+				sql2.setTimestamp(5, new Timestamp(funcionario.getQuando().getTime()));
+				sql2.setInt(6, resultadoQuery.getInt("codigoInterno"));
+
+				sql2.executeUpdate();
+				sql2.close();
+			}
+			sql.close();
+			resultado = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.alterarCCLocalTrabalhoFuncionario: " + e.toString());
+		} finally {
+			return resultado;
+		}
+	} /* alterarCCLocalTrabalhoFuncionario */
+
+	public boolean alterarCCVencimento(Funcionario funcionario) {
+		boolean resultado = false;
+
+		try {
+			//alteracao em todos os historicos do funcionário
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO WHERE numeroMecanografico = ?");
+			sql.setInt(1, funcionario.getNumeroMecanografico());
+			ResultSet resultadoQuery = sql.executeQuery();
+			int chaveFuncionario = 0;
+			if (resultadoQuery.next()) {
+				chaveFuncionario = resultadoQuery.getInt("codigoInterno");
+			} else {
+				sql.close();
+				return resultado;
+			}
+			sql.close();
+
+			sql =
+				UtilRelacional.prepararComando(
+					"SELECT * FROM ass_FUNCIONARIO_HISTORICO WHERE chaveFuncionario = ? AND chaveCCVencimento IS NOT NULL");
+			sql.setInt(1, chaveFuncionario);
+			resultadoQuery = sql.executeQuery();
+
+			if (resultadoQuery.last()) { //ultimo record deste funcionário, porque contem a informação actual
+				PreparedStatement sql2 =
+					UtilRelacional.prepararComando(
+						"UPDATE ass_FUNCIONARIO_HISTORICO SET "
+							+ "chaveCCVencimento = ? ,"
+							+ "dataInicio = ? ,"
+							+ "dataFim = ? ,"
+							+ "quem = ? ,"
+							+ "quando = ? "
+							+ "WHERE codigoInterno = ? ");
+
+				sql2.setObject(1, funcionario.getChaveCCVencimento());
+				if (funcionario.getDataInicio() != null) {
+					sql2.setDate(2, new java.sql.Date(funcionario.getDataInicio().getTime()));
+				} else {
+					sql2.setDate(2, null);
+				}
+				if (funcionario.getDataFim() != null) {
+					sql2.setDate(3, new java.sql.Date(funcionario.getDataFim().getTime()));
+				} else {
+					sql2.setDate(3, null);
+				}
+				sql2.setInt(4, funcionario.getQuem());
+				sql2.setTimestamp(5, new Timestamp(funcionario.getQuando().getTime()));
+				sql2.setInt(6, resultadoQuery.getInt("codigoInterno"));
+
+				sql2.executeUpdate();
+				sql2.close();
+			}
+			sql.close();
+			resultado = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.alterarCCVencimento: " + e.toString());
+		} finally {
+			return resultado;
+		}
+	} /* alterarCCVencimento */
+
+	public boolean alterarCalendario(Funcionario funcionario) {
+		boolean resultado = false;
+
+		try {
+			//alteracao em todos os historicos do funcionário
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO WHERE numeroMecanografico = ?");
+			sql.setInt(1, funcionario.getNumeroMecanografico());
+			ResultSet resultadoQuery = sql.executeQuery();
+			int chaveFuncionario = 0;
+			if (resultadoQuery.next()) {
+				chaveFuncionario = resultadoQuery.getInt("codigoInterno");
+			} else {
+				sql.close();
+				return resultado;
+			}
+			sql.close();
+
+			sql =
+				UtilRelacional.prepararComando(
+					"SELECT * FROM ass_FUNCIONARIO_HISTORICO WHERE chaveFuncionario = ? AND calendario IS NOT NULL");
+			sql.setInt(1, chaveFuncionario);
+			resultadoQuery = sql.executeQuery();
+
+			if (resultadoQuery.last()) { //ultimo record deste funcionário, porque contem a informação actual
+				PreparedStatement sql2 =
+					UtilRelacional.prepararComando(
+						"UPDATE ass_FUNCIONARIO_HISTORICO SET "
+							+ "calendario = ? ,"
+							+ "dataInicio = ? ,"
+							+ "dataFim = ? ,"
+							+ "quem = ? ,"
+							+ "quando = ? "
+							+ "WHERE codigoInterno = ? ");
+
+				sql2.setString(1, funcionario.getCalendario());
+				if (funcionario.getDataInicio() != null) {
+					sql2.setDate(2, new java.sql.Date(funcionario.getDataInicio().getTime()));
+				} else {
+					sql2.setDate(2, null);
+				}
+				if (funcionario.getDataFim() != null) {
+					sql2.setDate(3, new java.sql.Date(funcionario.getDataFim().getTime()));
+				} else {
+					sql2.setDate(3, null);
+				}
+				sql2.setInt(4, funcionario.getQuem());
+				sql2.setTimestamp(5, new Timestamp(funcionario.getQuando().getTime()));
+				sql2.setInt(6, resultadoQuery.getInt("codigoInterno"));
+
+				sql2.executeUpdate();
+				sql2.close();
+			}
+			sql.close();
+			resultado = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.alterarCalendario: " + e.toString());
+		} finally {
+			return resultado;
+		}
+	} /* alterarCalendario */
+
+	public boolean alterarStatusAssiduidade(Funcionario funcionario) {
+		boolean resultado = false;
+
+		try {
+			//alteracao em todos os historicos do funcionário
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO WHERE numeroMecanografico = ?");
+			sql.setInt(1, funcionario.getNumeroMecanografico());
+			ResultSet resultadoQuery = sql.executeQuery();
+			int chaveFuncionario = 0;
+			if (resultadoQuery.next()) {
+				chaveFuncionario = resultadoQuery.getInt("codigoInterno");
+			} else {
+				sql.close();
+				return resultado;
+			}
+			sql.close();
+
+			sql =
+				UtilRelacional.prepararComando(
+					"SELECT * FROM ass_FUNCIONARIO_HISTORICO WHERE chaveFuncionario = ? AND chaveStatus IS NOT NULL");
+			sql.setInt(1, chaveFuncionario);
+			resultadoQuery = sql.executeQuery();
+
+			if (resultadoQuery.last()) { //ultimo record deste funcionário, porque contem a informação actual
+				PreparedStatement sql2 =
+					UtilRelacional.prepararComando(
+						"UPDATE ass_FUNCIONARIO_HISTORICO SET "
+							+ "chaveStatus = ? ,"
+							+ "dataInicio = ? ,"
+							+ "dataFim = ? ,"
+							+ "quem = ? ,"
+							+ "quando = ? "
+							+ "WHERE codigoInterno = ? ");
+
+				sql2.setObject(1, funcionario.getChaveStatus());
+				if (funcionario.getDataInicio() != null) {
+					sql2.setDate(2, new java.sql.Date(funcionario.getDataInicio().getTime()));
+				} else {
+					sql2.setDate(2, null);
+				}
+				if (funcionario.getDataFim() != null) {
+					sql2.setDate(3, new java.sql.Date(funcionario.getDataFim().getTime()));
+				} else {
+					sql2.setDate(3, null);
+				}
+				sql2.setInt(4, funcionario.getQuem());
+				sql2.setTimestamp(5, new Timestamp(funcionario.getQuando().getTime()));
+				sql2.setInt(6, resultadoQuery.getInt("codigoInterno"));
+
+				sql2.executeUpdate();
+				sql2.close();
+			}
+			sql.close();
+			resultado = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.alterarStatusAssiduidade: " + e.toString());
+		} finally {
+			return resultado;
+		}
+	} /* alterarStatusAssiduidade */
+
+	public boolean alterarFimValidade(int codigoInterno, Date dataFim) {
+		boolean fimValidade = false;
+
+		try {
+			PreparedStatement sql =
+				UtilRelacional.prepararComando(
+					"UPDATE ass_FUNCIONARIO_HISTORICO SET " + "dataFim = ? " + " WHERE chaveFuncionario = ? AND dataFim IS NULL");
+
+			sql.setDate(1, new java.sql.Date(dataFim.getTime()));
+			sql.setInt(2, codigoInterno);
+
+			sql.executeUpdate();
+			sql.close();
+			fimValidade = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.alterarFimValidade: " + e.toString());
+		} finally {
+			return fimValidade;
+		}
+	} /* alterarFimValidade */
+
+	public boolean apagarFuncionario(int numero) {
+		boolean resultado = false;
+
+		try {
+			PreparedStatement sql =
+				UtilRelacional.prepararComando("SELECT codigoInterno FROM ass_FUNCIONARIO WHERE numeroMecanografico = ?");
+
+			sql.setInt(1, numero);
+			ResultSet resultadoQuery = sql.executeQuery();
+			if (resultadoQuery.next()) {
+
+				PreparedStatement sql2 =
+					UtilRelacional.prepararComando("DELETE FROM ass_FUNCIONARIO_HISTORICO WHERE chaveFuncionario = ?");
+
+				sql2.setInt(1, resultadoQuery.getInt("codigoInterno"));
+				sql2.executeUpdate();
+				sql2.close();
+
+				sql2 = UtilRelacional.prepararComando("DELETE FROM ass_FUNCIONARIO WHERE numeroMecanografico = ?");
+
+				sql2.setInt(1, numero);
+				sql2.executeUpdate();
+				sql2.close();
+
+				resultado = true;
+			}
+			sql.close();
+		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("FuncionarioRelacional.apagarFuncionario: " + e.toString());
 		} finally {
 			return resultado;
@@ -93,40 +585,811 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 		boolean resultado = false;
 
 		try {
-			PreparedStatement sql =
-				UtilRelacional.prepararComando("INSERT INTO ass_FUNCIONARIO " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			PreparedStatement sql = UtilRelacional.prepararComando("INSERT INTO ass_FUNCIONARIO " + "VALUES (?, ?, ?, ?, ?)");
 
 			sql.setInt(1, funcionario.getCodigoInterno());
 			sql.setInt(2, funcionario.getChavePessoa());
 			sql.setInt(3, funcionario.getNumeroMecanografico());
 			sql.setInt(4, funcionario.getChaveHorarioActual());
-			sql.setDate(5, new java.sql.Date(funcionario.getAntiguidade().getTime()));
-			sql.setInt(6, funcionario.getChaveFuncResponsavel());
-			sql.setInt(7, funcionario.getChaveCCLocalTrabalho());
-			sql.setInt(8, funcionario.getChaveCCCorrespondencia());
-			sql.setInt(9, funcionario.getChaveCCVencimento());
-			sql.setString(10, funcionario.getCalendario());
-			sql.setInt(11, funcionario.getChaveStatus());
-			sql.setDate(12, new java.sql.Date(funcionario.getDataInicio().getTime()));
-			if (funcionario.getDataFim() == null) {
-				sql.setDate(13, null);
+			if (funcionario.getAntiguidade() != null) {
+				sql.setDate(5, new java.sql.Date(funcionario.getAntiguidade().getTime()));
 			} else {
-				sql.setDate(13, new java.sql.Date(funcionario.getDataFim().getTime()));
+				sql.setDate(5, null);
 			}
-			sql.setInt(14, funcionario.getQuem());
-			sql.setTimestamp(15, new Timestamp(funcionario.getQuando().getTime()));
 
 			sql.executeUpdate();
 			sql.close();
+
 			resultado = true;
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("FuncionarioRelacional.escreverFuncionario: " + e.toString());
 		} finally {
 			return resultado;
 		}
 	} /* escreverFuncionario */
 
-	public Funcionario lerFuncionario(int codigoInterno) {
+	public boolean escreverHistoricoFuncionario(Funcionario funcionario) {
+		boolean resultado = false;
+
+		try {
+			PreparedStatement sql =
+				UtilRelacional.prepararComando("INSERT INTO ass_FUNCIONARIO_HISTORICO " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+			sql.setInt(1, 0);
+			sql.setInt(2, funcionario.getCodigoInterno());
+			sql.setObject(3, funcionario.getChaveFuncResponsavel());
+			sql.setObject(4, funcionario.getChaveCCLocalTrabalho());
+			sql.setObject(5, funcionario.getChaveCCCorrespondencia());
+			sql.setObject(6, funcionario.getChaveCCVencimento());
+			sql.setString(7, funcionario.getCalendario());
+			sql.setObject(8, funcionario.getChaveStatus());
+			if (funcionario.getDataInicio() != null) {
+				sql.setDate(9, new java.sql.Date(funcionario.getDataInicio().getTime()));
+			} else {
+				sql.setDate(9, null);
+			}
+			if (funcionario.getDataFim() != null) {
+				sql.setDate(10, new java.sql.Date(funcionario.getDataFim().getTime()));
+			} else {
+				sql.setDate(10, null);
+			}
+			sql.setInt(11, funcionario.getQuem());
+			if (funcionario.getQuando() != null) {
+				sql.setTimestamp(12, new Timestamp(funcionario.getQuando().getTime()));
+			} else {
+				sql.setDate(12, null);
+			}
+
+			sql.executeUpdate();
+			sql.close();
+
+			resultado = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.escreverHistoricoFuncionario: " + e.toString());
+		} finally {
+			return resultado;
+		}
+	} /* escreverHistoricoFuncionario */
+
+	public boolean escreverFimFuncResponsavel(int numMecanografico, Date fim) {
+		boolean resultado = false;
+
+		try {
+			PreparedStatement sql =
+				UtilRelacional.prepararComando("SELECT codigoInterno FROM ass_FUNCIONARIO " + "WHERE numeroMecanografico = ?");
+			sql.setInt(1, numMecanografico);
+
+			ResultSet resultadoQuery = sql.executeQuery();
+
+			int chaveFuncionario = 0;
+			if (resultadoQuery.next()) {
+				chaveFuncionario = resultadoQuery.getInt("codigoInterno");
+			} else {
+				sql.close();
+				return resultado;
+			}
+			sql.close();
+
+			//escreve a data fim de assiduidade nos actuais registos do histórico
+			sql =
+				UtilRelacional.prepararComando(
+					"UPDATE ass_FUNCIONARIO_HISTORICO SET "
+						+ "dataFim = ? "
+						+ " WHERE chaveFuncionario = ? AND dataFim IS NULL AND chaveFuncResponsavel IS NOT NULL");
+			sql.setDate(1, new java.sql.Date(fim.getTime()));
+			sql.setInt(2, chaveFuncionario);
+
+			sql.executeUpdate();
+			sql.close();
+
+			resultado = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.escreverFimFuncResponsavel: " + e.toString());
+		} finally {
+			return resultado;
+		}
+	} /* escreverFimFuncResponsavel */
+
+	public boolean escreverFuncResponsavel(Funcionario funcionario) {
+		boolean resultado = false;
+
+		try {
+			PreparedStatement sql =
+				UtilRelacional.prepararComando(
+					"INSERT INTO ass_FUNCIONARIO_HISTORICO " + "VALUES (?, ?, ?, null, null, null, null, null, ?, ?, ?, ?)");
+
+			sql.setInt(1, 0);
+			sql.setInt(2, funcionario.getCodigoInterno());
+			sql.setObject(3, funcionario.getChaveFuncResponsavel());
+			if (funcionario.getDataInicio() != null) {
+				sql.setDate(4, new java.sql.Date(funcionario.getDataInicio().getTime()));
+			} else {
+				sql.setDate(4, null);
+			}
+			if (funcionario.getDataFim() != null) {
+				sql.setDate(5, new java.sql.Date(funcionario.getDataFim().getTime()));
+			} else {
+				sql.setDate(5, null);
+			}
+			sql.setInt(6, funcionario.getQuem());
+			if (funcionario.getQuando() != null) {
+				sql.setTimestamp(7, new Timestamp(funcionario.getQuando().getTime()));
+			} else {
+				sql.setDate(7, null);
+			}
+
+			sql.executeUpdate();
+			sql.close();
+
+			resultado = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.escreverFuncResponsavel: " + e.toString());
+		} finally {
+			return resultado;
+		}
+	} /* escreverFuncResponsavel */
+
+	public boolean escreverFimCCLocalTrabalho(int numMecanografico, Date fim) {
+		boolean resultado = false;
+
+		try {
+			PreparedStatement sql =
+				UtilRelacional.prepararComando("SELECT codigoInterno FROM ass_FUNCIONARIO " + "WHERE numeroMecanografico = ?");
+			sql.setInt(1, numMecanografico);
+
+			ResultSet resultadoQuery = sql.executeQuery();
+
+			int chaveFuncionario = 0;
+			if (resultadoQuery.next()) {
+				chaveFuncionario = resultadoQuery.getInt("codigoInterno");
+			} else {
+				sql.close();
+				return resultado;
+			}
+			sql.close();
+
+			//escreve a data fim de assiduidade nos actuais registos do histórico
+			sql =
+				UtilRelacional.prepararComando(
+					"UPDATE ass_FUNCIONARIO_HISTORICO SET "
+						+ "dataFim = ? "
+						+ " WHERE chaveFuncionario = ? AND dataFim IS NULL AND chaveCCLocalTrabalho IS NOT NULL");
+			sql.setDate(1, new java.sql.Date(fim.getTime()));
+			sql.setInt(2, chaveFuncionario);
+
+			sql.executeUpdate();
+			sql.close();
+
+			resultado = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.escreverFimCCLocalTrabalho: " + e.toString());
+		} finally {
+			return resultado;
+		}
+	} /* escreverFimCCLocalTrabalho */
+
+	public boolean escreverCCLocalTrabalho(Funcionario funcionario) {
+		boolean resultado = false;
+
+		try {
+			PreparedStatement sql =
+				UtilRelacional.prepararComando(
+					"INSERT INTO ass_FUNCIONARIO_HISTORICO " + "VALUES (?, ?, null, ?, null, null, null, null, ?, ?, ?, ?)");
+
+			sql.setInt(1, 0);
+			sql.setInt(2, funcionario.getCodigoInterno());
+			sql.setObject(3, funcionario.getChaveCCLocalTrabalho());
+			if (funcionario.getDataInicio() != null) {
+				sql.setDate(4, new java.sql.Date(funcionario.getDataInicio().getTime()));
+			} else {
+				sql.setDate(4, null);
+			}
+			if (funcionario.getDataFim() != null) {
+				sql.setDate(5, new java.sql.Date(funcionario.getDataFim().getTime()));
+			} else {
+				sql.setDate(5, null);
+			}
+			sql.setInt(6, funcionario.getQuem());
+			if (funcionario.getQuando() != null) {
+				sql.setTimestamp(7, new Timestamp(funcionario.getQuando().getTime()));
+			} else {
+				sql.setDate(7, null);
+			}
+
+			sql.executeUpdate();
+			sql.close();
+
+			resultado = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.escreverCCLocalTrabalho: " + e.toString());
+		} finally {
+			return resultado;
+		}
+	} /* escreverCCLocalTrabalho */
+
+	public boolean escreverFimCCCorrespondencia(int numMecanografico, Date fim) {
+		boolean resultado = false;
+
+		try {
+			PreparedStatement sql =
+				UtilRelacional.prepararComando("SELECT codigoInterno FROM ass_FUNCIONARIO " + "WHERE numeroMecanografico = ?");
+			sql.setInt(1, numMecanografico);
+
+			ResultSet resultadoQuery = sql.executeQuery();
+
+			int chaveFuncionario = 0;
+			if (resultadoQuery.next()) {
+				chaveFuncionario = resultadoQuery.getInt("codigoInterno");
+			} else {
+				sql.close();
+				return resultado;
+			}
+			sql.close();
+
+			//escreve a data fim de assiduidade nos actuais registos do histórico
+			sql =
+				UtilRelacional.prepararComando(
+					"UPDATE ass_FUNCIONARIO_HISTORICO SET "
+						+ "dataFim = ? "
+						+ " WHERE chaveFuncionario = ? AND dataFim IS NULL AND chaveCCCorrespondencia IS NOT NULL");
+			sql.setDate(1, new java.sql.Date(fim.getTime()));
+			sql.setInt(2, chaveFuncionario);
+
+			sql.executeUpdate();
+			sql.close();
+
+			resultado = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.escreverFimCCCorrespondencia: " + e.toString());
+		} finally {
+			return resultado;
+		}
+	} /* escreverFimCCCorrespondencia */
+
+	public boolean escreverCCCorrespondencia(Funcionario funcionario) {
+		boolean resultado = false;
+
+		try {
+			PreparedStatement sql =
+				UtilRelacional.prepararComando(
+					"INSERT INTO ass_FUNCIONARIO_HISTORICO " + "VALUES (?, ?, null, null, ?, null, null, null, ?, ?, ?, ?)");
+
+			sql.setInt(1, 0);
+			sql.setInt(2, funcionario.getCodigoInterno());
+			sql.setObject(3, funcionario.getChaveCCCorrespondencia());
+			if (funcionario.getDataInicio() != null) {
+				sql.setDate(4, new java.sql.Date(funcionario.getDataInicio().getTime()));
+			} else {
+				sql.setDate(4, null);
+			}
+			if (funcionario.getDataFim() != null) {
+				sql.setDate(5, new java.sql.Date(funcionario.getDataFim().getTime()));
+			} else {
+				sql.setDate(5, null);
+			}
+			sql.setInt(6, funcionario.getQuem());
+			if (funcionario.getQuando() != null) {
+				sql.setTimestamp(7, new Timestamp(funcionario.getQuando().getTime()));
+			} else {
+				sql.setDate(7, null);
+			}
+
+			sql.executeUpdate();
+			sql.close();
+
+			resultado = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.escreverCCCorrespondencia: " + e.toString());
+		} finally {
+			return resultado;
+		}
+	} /* escreverCCCorrespondencia */
+
+	public boolean escreverFimCCVencimento(int numMecanografico, Date fim) {
+		boolean resultado = false;
+
+		try {
+			PreparedStatement sql =
+				UtilRelacional.prepararComando("SELECT codigoInterno FROM ass_FUNCIONARIO " + "WHERE numeroMecanografico = ?");
+			sql.setInt(1, numMecanografico);
+
+			ResultSet resultadoQuery = sql.executeQuery();
+
+			int chaveFuncionario = 0;
+			if (resultadoQuery.next()) {
+				chaveFuncionario = resultadoQuery.getInt("codigoInterno");
+			} else {
+				sql.close();
+				return resultado;
+			}
+			sql.close();
+
+			//escreve a data fim de assiduidade nos actuais registos do histórico
+			sql =
+				UtilRelacional.prepararComando(
+					"UPDATE ass_FUNCIONARIO_HISTORICO SET "
+						+ "dataFim = ? "
+						+ " WHERE chaveFuncionario = ? AND dataFim IS NULL AND chaveCCVencimento IS NOT NULL");
+			sql.setDate(1, new java.sql.Date(fim.getTime()));
+			sql.setInt(2, chaveFuncionario);
+
+			sql.executeUpdate();
+			sql.close();
+
+			resultado = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.escreverFimCCVencimento: " + e.toString());
+		} finally {
+			return resultado;
+		}
+	} /* escreverFimCCVencimento */
+
+	public boolean escreverCCVencimento(Funcionario funcionario) {
+		boolean resultado = false;
+
+		try {
+			PreparedStatement sql =
+				UtilRelacional.prepararComando(
+					"INSERT INTO ass_FUNCIONARIO_HISTORICO " + "VALUES (?, ?, null, null, null, ?, null, null, ?, ?, ?, ?)");
+
+			sql.setInt(1, 0);
+			sql.setInt(2, funcionario.getCodigoInterno());
+			sql.setObject(3, funcionario.getChaveCCVencimento());
+			if (funcionario.getDataInicio() != null) {
+				sql.setDate(4, new java.sql.Date(funcionario.getDataInicio().getTime()));
+			} else {
+				sql.setDate(4, null);
+			}
+			if (funcionario.getDataFim() != null) {
+				sql.setDate(5, new java.sql.Date(funcionario.getDataFim().getTime()));
+			} else {
+				sql.setDate(5, null);
+			}
+			sql.setInt(6, funcionario.getQuem());
+			if (funcionario.getQuando() != null) {
+				sql.setTimestamp(7, new Timestamp(funcionario.getQuando().getTime()));
+			} else {
+				sql.setDate(7, null);
+			}
+
+			sql.executeUpdate();
+			sql.close();
+
+			resultado = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.escreverCCVencimento: " + e.toString());
+		} finally {
+			return resultado;
+		}
+	}
+
+	public boolean escreverFimCalendario(int numMecanografico, Date fim) {
+		boolean resultado = false;
+
+		try {
+			PreparedStatement sql =
+				UtilRelacional.prepararComando("SELECT codigoInterno FROM ass_FUNCIONARIO " + "WHERE numeroMecanografico = ?");
+			sql.setInt(1, numMecanografico);
+
+			ResultSet resultadoQuery = sql.executeQuery();
+
+			int chaveFuncionario = 0;
+			if (resultadoQuery.next()) {
+				chaveFuncionario = resultadoQuery.getInt("codigoInterno");
+			} else {
+				sql.close();
+				return resultado;
+			}
+			sql.close();
+
+			//escreve a data fim de assiduidade nos actuais registos do histórico
+			sql =
+				UtilRelacional.prepararComando(
+					"UPDATE ass_FUNCIONARIO_HISTORICO SET "
+						+ "dataFim = ? "
+						+ " WHERE chaveFuncionario = ? AND dataFim IS NULL AND calendario IS NOT NULL");
+			sql.setDate(1, new java.sql.Date(fim.getTime()));
+			sql.setInt(2, chaveFuncionario);
+
+			sql.executeUpdate();
+			sql.close();
+
+			resultado = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.escreverFimCalendario: " + e.toString());
+		} finally {
+			return resultado;
+		}
+	} /* escreverFimCalendario */
+
+	public boolean escreverCalendario(Funcionario funcionario) {
+		boolean resultado = false;
+
+		try {
+			PreparedStatement sql =
+				UtilRelacional.prepararComando(
+					"INSERT INTO ass_FUNCIONARIO_HISTORICO " + "VALUES (?, ?, null, null, null, null, ?, null, ?, ?, ?, ?)");
+
+			sql.setInt(1, 0);
+			sql.setInt(2, funcionario.getCodigoInterno());
+			sql.setString(3, funcionario.getCalendario());
+			if (funcionario.getDataInicio() != null) {
+				sql.setDate(4, new java.sql.Date(funcionario.getDataInicio().getTime()));
+			} else {
+				sql.setDate(4, null);
+			}
+			if (funcionario.getDataFim() != null) {
+				sql.setDate(5, new java.sql.Date(funcionario.getDataFim().getTime()));
+			} else {
+				sql.setDate(5, null);
+			}
+			sql.setInt(6, funcionario.getQuem());
+			if (funcionario.getQuando() != null) {
+				sql.setTimestamp(7, new Timestamp(funcionario.getQuando().getTime()));
+			} else {
+				sql.setDate(7, null);
+			}
+
+			sql.executeUpdate();
+			sql.close();
+
+			resultado = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.escreverCalendario: " + e.toString());
+		} finally {
+			return resultado;
+		}
+	} /* escreverCalendario */
+
+	public boolean escreverFimStatusAssiduidade(int numMecanografico, Date fim) {
+		boolean resultado = false;
+
+		try {
+			PreparedStatement sql =
+				UtilRelacional.prepararComando("SELECT codigoInterno FROM ass_FUNCIONARIO " + "WHERE numeroMecanografico = ?");
+			sql.setInt(1, numMecanografico);
+
+			ResultSet resultadoQuery = sql.executeQuery();
+
+			int chaveFuncionario = 0;
+			if (resultadoQuery.next()) {
+				chaveFuncionario = resultadoQuery.getInt("codigoInterno");
+			} else {
+				sql.close();
+				return resultado;
+			}
+			sql.close();
+
+			//escreve a data fim de assiduidade nos actuais registos do histórico
+			sql =
+				UtilRelacional.prepararComando(
+					"UPDATE ass_FUNCIONARIO_HISTORICO SET "
+						+ "dataFim = ? "
+						+ " WHERE chaveFuncionario = ? AND dataFim IS NULL AND chaveStatus IS NOT NULL");
+			sql.setDate(1, new java.sql.Date(fim.getTime()));
+			sql.setInt(2, chaveFuncionario);
+
+			sql.executeUpdate();
+			sql.close();
+
+			resultado = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.escreverFimStatusAssiduidade: " + e.toString());
+		} finally {
+			return resultado;
+		}
+	} /* escreverFimStatusAssiduidade */
+
+	public boolean escreverStatusAssiduidade(Funcionario funcionario) {
+		boolean resultado = false;
+
+		try {
+			PreparedStatement sql =
+				UtilRelacional.prepararComando(
+					"INSERT INTO ass_FUNCIONARIO_HISTORICO " + "VALUES (?, ?, null, null, null, null, null, ?, ?, ?, ?, ?)");
+
+			sql.setInt(1, 0);
+			sql.setInt(2, funcionario.getCodigoInterno());
+			sql.setObject(3, funcionario.getChaveStatus());
+			if (funcionario.getDataInicio() != null) {
+				sql.setDate(4, new java.sql.Date(funcionario.getDataInicio().getTime()));
+			} else {
+				sql.setDate(4, null);
+			}
+			if (funcionario.getDataFim() != null) {
+				sql.setDate(5, new java.sql.Date(funcionario.getDataFim().getTime()));
+			} else {
+				sql.setDate(5, null);
+			}
+			sql.setInt(6, funcionario.getQuem());
+			if (funcionario.getQuando() != null) {
+				sql.setTimestamp(7, new Timestamp(funcionario.getQuando().getTime()));
+			} else {
+				sql.setDate(7, null);
+			}
+
+			sql.executeUpdate();
+			sql.close();
+
+			resultado = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.escreverStatusAssiduidade: " + e.toString());
+		} finally {
+			return resultado;
+		}
+	}
+
+	public boolean existeHistoricoFuncResponsavel(Funcionario funcionario) {
+		boolean existeHistorico = false;
+		try {
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO WHERE numeroMecanografico = ?");
+			sql.setInt(1, funcionario.getNumeroMecanografico());
+
+			ResultSet resultado = sql.executeQuery();
+
+			if (resultado.next()) {
+				PreparedStatement sql2 =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_FUNCIONARIO_HISTORICO "
+							+ "WHERE chaveFuncionario = ? AND chaveFuncResponsavel = ? "
+							+ "AND dataInicio = ? AND dataFim = ?");
+				sql2.setInt(1, resultado.getInt("codigoInterno"));
+				sql2.setObject(2, funcionario.getChaveFuncResponsavel());
+				if (funcionario.getDataInicio() != null) {
+					sql2.setDate(3, new java.sql.Date(funcionario.getDataInicio().getTime()));
+				} else {
+					sql2.setDate(3, null);
+				}
+				if (funcionario.getDataFim() != null) {
+					sql2.setDate(4, new java.sql.Date(funcionario.getDataFim().getTime()));
+				} else {
+					sql2.setDate(4, null);
+				}
+
+				ResultSet resultado2 = sql2.executeQuery();
+
+				if (resultado2.next()) {
+					existeHistorico = true;
+				}
+				sql2.close();
+			}
+			sql.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.existeHistoricoFuncResponsavel: " + e.toString());
+		} finally {
+			return existeHistorico;
+		}
+	} /* existeHistoricoFuncResponsavel */
+
+	public boolean existeHistoricoCCLocalTrabalho(Funcionario funcionario) {
+		boolean existeHistorico = false;
+		try {
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO WHERE numeroMecanografico = ?");
+			sql.setInt(1, funcionario.getNumeroMecanografico());
+
+			ResultSet resultado = sql.executeQuery();
+
+			if (resultado.next()) {
+				PreparedStatement sql2 =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_FUNCIONARIO_HISTORICO "
+							+ "WHERE chaveFuncionario = ? AND chaveCCLocalTrabalho = ? "
+							+ "AND dataInicio = ? AND dataFim = ?");
+				sql2.setInt(1, resultado.getInt("codigoInterno"));
+				sql2.setObject(2, funcionario.getChaveCCLocalTrabalho());
+				if (funcionario.getDataInicio() != null) {
+					sql2.setDate(3, new java.sql.Date(funcionario.getDataInicio().getTime()));
+				} else {
+					sql2.setDate(3, null);
+				}
+				if (funcionario.getDataFim() != null) {
+					sql2.setDate(4, new java.sql.Date(funcionario.getDataFim().getTime()));
+				} else {
+					sql2.setDate(4, null);
+				}
+
+				ResultSet resultado2 = sql2.executeQuery();
+
+				if (resultado2.next()) {
+					existeHistorico = true;
+				}
+				sql2.close();
+			}
+			sql.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.existeHistoricoCCLocalTrabalho: " + e.toString());
+		} finally {
+			return existeHistorico;
+		}
+	} /* existeHistoricoCCLocalTrabalho */
+
+	public boolean existeHistoricoCCCorrespondencia(Funcionario funcionario) {
+		boolean existeHistorico = false;
+		try {
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO WHERE numeroMecanografico = ?");
+			sql.setInt(1, funcionario.getNumeroMecanografico());
+
+			ResultSet resultado = sql.executeQuery();
+
+			if (resultado.next()) {
+				PreparedStatement sql2 =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_FUNCIONARIO_HISTORICO "
+							+ "WHERE chaveFuncionario = ? AND chaveCCCorrespondencia = ? "
+							+ "AND dataInicio = ? AND dataFim = ?");
+				sql2.setInt(1, resultado.getInt("codigoInterno"));
+				sql2.setObject(2, funcionario.getChaveCCCorrespondencia());
+				if (funcionario.getDataInicio() != null) {
+					sql2.setDate(3, new java.sql.Date(funcionario.getDataInicio().getTime()));
+				} else {
+					sql2.setDate(3, null);
+				}
+				if (funcionario.getDataFim() != null) {
+					sql2.setDate(4, new java.sql.Date(funcionario.getDataFim().getTime()));
+				} else {
+					sql2.setDate(4, null);
+				}
+
+				ResultSet resultado2 = sql2.executeQuery();
+
+				if (resultado2.next()) {
+					existeHistorico = true;
+				}
+				sql2.close();
+			}
+			sql.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.existeHistoricoCCCorrespondencia: " + e.toString());
+		} finally {
+			return existeHistorico;
+		}
+	} /* existeHistoricoCCCorrespondencia */
+
+	public boolean existeHistoricoCCVencimento(Funcionario funcionario) {
+		boolean existeHistorico = false;
+		try {
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO WHERE numeroMecanografico = ?");
+			sql.setInt(1, funcionario.getNumeroMecanografico());
+
+			ResultSet resultado = sql.executeQuery();
+
+			if (resultado.next()) {
+				PreparedStatement sql2 =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_FUNCIONARIO_HISTORICO "
+							+ "WHERE chaveFuncionario = ? AND chaveCCVencimento = ? "
+							+ "AND dataInicio = ? AND dataFim = ?");
+				sql2.setInt(1, resultado.getInt("codigoInterno"));
+				sql2.setObject(2, funcionario.getChaveCCVencimento());
+				if (funcionario.getDataInicio() != null) {
+					sql2.setDate(3, new java.sql.Date(funcionario.getDataInicio().getTime()));
+				} else {
+					sql2.setDate(3, null);
+				}
+				if (funcionario.getDataFim() != null) {
+					sql2.setDate(4, new java.sql.Date(funcionario.getDataFim().getTime()));
+				} else {
+					sql2.setDate(4, null);
+				}
+
+				ResultSet resultado2 = sql2.executeQuery();
+
+				if (resultado2.next()) {
+					existeHistorico = true;
+				}
+				sql2.close();
+			}
+			sql.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.existeHistoricoCCVencimento: " + e.toString());
+		} finally {
+			return existeHistorico;
+		}
+	} /* existeHistoricoCCVencimento */
+
+	public boolean existeHistoricoCalendario(Funcionario funcionario) {
+		boolean existeHistorico = false;
+		try {
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO WHERE numeroMecanografico = ?");
+			sql.setInt(1, funcionario.getNumeroMecanografico());
+
+			ResultSet resultado = sql.executeQuery();
+
+			if (resultado.next()) {
+				PreparedStatement sql2 =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_FUNCIONARIO_HISTORICO "
+							+ "WHERE chaveFuncionario = ? AND calendario = ?"
+							+ " AND dataInicio = ? AND dataFim = ? ");
+				sql2.setInt(1, resultado.getInt("codigoInterno"));
+				sql2.setString(2, funcionario.getCalendario());
+				if (funcionario.getDataInicio() != null) {
+					sql2.setDate(3, new java.sql.Date(funcionario.getDataInicio().getTime()));
+				} else {
+					sql2.setDate(3, null);
+				}
+				if (funcionario.getDataFim() != null) {
+					sql2.setDate(4, new java.sql.Date(funcionario.getDataFim().getTime()));
+				} else {
+					sql2.setDate(4, null);
+				}
+
+				ResultSet resultado2 = sql2.executeQuery();
+				if (resultado2.next()) {
+					existeHistorico = true;
+				}
+				sql2.close();
+			}
+			sql.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.existeHistoricoCalendario: " + e.toString());
+		} finally {
+			return existeHistorico;
+		}
+	} /* existeHistoricoCalendario */
+
+	public boolean existeHistoricoStatusAssiduidade(Funcionario funcionario) {
+		boolean existeHistorico = false;
+		try {
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO WHERE numeroMecanografico = ?");
+			sql.setInt(1, funcionario.getNumeroMecanografico());
+
+			ResultSet resultado = sql.executeQuery();
+
+			if (resultado.next()) {
+				PreparedStatement sql2 =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_FUNCIONARIO_HISTORICO "
+							+ "WHERE chaveFuncionario = ? AND chaveStatus = ? "
+							+ "AND dataInicio = ? AND dataFim = ?");
+				sql2.setInt(1, resultado.getInt("codigoInterno"));
+				sql2.setObject(2, funcionario.getChaveStatus());
+				if (funcionario.getDataInicio() != null) {
+					sql2.setDate(3, new java.sql.Date(funcionario.getDataInicio().getTime()));
+				} else {
+					sql2.setDate(3, null);
+				}
+				if (funcionario.getDataFim() != null) {
+					sql2.setDate(4, new java.sql.Date(funcionario.getDataFim().getTime()));
+				} else {
+					sql2.setDate(4, null);
+				}
+
+				ResultSet resultado2 = sql2.executeQuery();
+				if (resultado2.next()) {
+					existeHistorico = true;
+				}
+				sql2.close();
+			}
+			sql.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.existeHistoricoStatusAssiduidade: " + e.toString());
+		} finally {
+			return existeHistorico;
+		}
+	} /* existeHistoricoStatusAssiduidade */
+
+	public Funcionario lerFuncionarioSemHistorico(int codigoInterno) {
 		Funcionario funcionario = null;
 
 		try {
@@ -140,17 +1403,37 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 				if (resultado.getString("antiguidade") != null) {
 					antiguidade = java.sql.Date.valueOf(resultado.getString("antiguidade"));
 				}
-				Date dataInicio = null;
-				if (resultado.getString("dataInicio") != null) {
-					dataInicio = java.sql.Date.valueOf(resultado.getString("dataInicio"));
-				}
-				Date dataFim = null;
-				if (resultado.getString("dataFim") != null) {
-					dataFim = java.sql.Date.valueOf(resultado.getString("dataFim"));
-				}
-				Timestamp dataQuando = null;
-				if (resultado.getString("quando") != null) {
-					dataQuando = Timestamp.valueOf(resultado.getString("quando"));
+
+				funcionario =
+					new Funcionario(
+						resultado.getInt("codigoInterno"),
+						resultado.getInt("chavePessoa"),
+						resultado.getInt("numeroMecanografico"),
+						resultado.getInt("chaveHorarioActual"),
+						antiguidade);
+			}
+			sql.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.lerFuncionarioSemHistoricoPorNumMecanografico: " + e.toString());
+		} finally {
+			return funcionario;
+		}
+	} /* lerFuncionarioSemHistoricoPorNumMecanografico */
+
+	public Funcionario lerFuncionarioSemHistoricoPorNumMecanografico(int numMecanografico) {
+		Funcionario funcionario = null;
+
+		try {
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO WHERE numeroMecanografico = ?");
+
+			sql.setInt(1, numMecanografico);
+
+			ResultSet resultado = sql.executeQuery();
+			if (resultado.next()) {
+				Date antiguidade = null;
+				if (resultado.getString("antiguidade") != null) {
+					antiguidade = java.sql.Date.valueOf(resultado.getString("antiguidade"));
 				}
 
 				funcionario =
@@ -159,29 +1442,195 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 						resultado.getInt("chavePessoa"),
 						resultado.getInt("numeroMecanografico"),
 						resultado.getInt("chaveHorarioActual"),
-						antiguidade,
-						resultado.getInt("chaveFuncResponsavel"),
-						resultado.getInt("chaveCCLocalTrabalho"),
-						resultado.getInt("chaveCCCorrespondencia"),
-						resultado.getInt("chaveCCVencimento"),
-						resultado.getString("calendario"),
-						resultado.getInt("chaveStatus"),
-						dataInicio,
-						dataFim,
-						resultado.getInt("quem"),
-						dataQuando);
+						antiguidade);
 			}
 			sql.close();
 		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.lerFuncionarioSemHistoricoPorNumMecanografico: " + e.toString());
+		} finally {
+			return funcionario;
+		}
+	} /* lerFuncionarioSemHistoricoPorNumMecanografico */
+
+	public Funcionario lerFuncionarioSemHistoricoPorPessoa(int chavePessoa) {
+		Funcionario funcionario = null;
+		try {
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO WHERE chavePessoa = ?");
+			sql.setInt(1, chavePessoa);
+			ResultSet resultado = sql.executeQuery();
+			if (resultado.next()) {
+				Date antiguidade = null;
+				if (resultado.getString("antiguidade") != null) {
+					antiguidade = java.sql.Date.valueOf(resultado.getString("antiguidade"));
+				}
+
+				//Funcionario
+				funcionario =
+					new Funcionario(
+						resultado.getInt("codigoInterno"),
+						resultado.getInt("chavePessoa"),
+						resultado.getInt("numeroMecanografico"),
+						resultado.getInt("chaveHorarioActual"),
+						antiguidade);
+			}
+			sql.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.lerFuncionarioPorPessoa: " + e.toString());
+		} finally {
+			return funcionario;
+		}
+	} /* lerFuncionarioPorPessoa */
+
+	private Funcionario constroirFuncionario(ResultSet resultado, Funcionario funcionario) {
+		try {
+			while (resultado.next()) {
+				resultado.getInt("chaveFuncResponsavel");
+				if (!resultado.wasNull()) {
+					funcionario.setChaveFuncResponsavel(new Integer(resultado.getInt("chaveFuncResponsavel")));
+				}
+
+				resultado.getInt("chaveCCLocalTrabalho");
+				if (!resultado.wasNull()) {
+					funcionario.setChaveCCLocalTrabalho(new Integer(resultado.getInt("chaveCCLocalTrabalho")));
+				}
+
+				resultado.getInt("chaveCCCorrespondencia");
+				if (!resultado.wasNull()) {
+					funcionario.setChaveCCCorrespondencia(new Integer(resultado.getInt("chaveCCCorrespondencia")));
+				}
+
+				resultado.getInt("chaveCCVencimento");
+				if (!resultado.wasNull()) {
+					funcionario.setChaveCCVencimento(new Integer(resultado.getInt("chaveCCVencimento")));
+				}
+
+				resultado.getString("calendario");
+				if (!resultado.wasNull()) {
+					funcionario.setCalendario(resultado.getString("calendario"));
+				}
+
+				resultado.getInt("chaveStatus");
+				if (!resultado.wasNull()) {
+					funcionario.setChaveStatus(new Integer(resultado.getInt("chaveStatus")));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			return funcionario;
+		}
+	} /* constroirFuncionario */
+
+	private ArrayList constroirListaFuncionarios(ResultSet resultado) {
+		ArrayList listaFuncionarios = new ArrayList();
+		Funcionario funcionario = null;
+
+		try {
+			while (resultado.next()) {
+				Date antiguidade = null;
+				if (resultado.getString("antiguidade") != null) {
+					antiguidade = java.sql.Date.valueOf(resultado.getString("antiguidade"));
+				}
+
+				//Funcionario
+				funcionario =
+					new Funcionario(
+						resultado.getInt("codigoInterno"),
+						resultado.getInt("chavePessoa"),
+						resultado.getInt("numeroMecanografico"),
+						resultado.getInt("chaveHorarioActual"),
+						antiguidade);
+
+				resultado.getInt("chaveFuncResponsavel");
+				if (!resultado.wasNull()) {
+					funcionario.setChaveFuncResponsavel(new Integer(resultado.getInt("chaveFuncResponsavel")));
+				}
+
+				resultado.getInt("chaveCCLocalTrabalho");
+				if (!resultado.wasNull()) {
+					funcionario.setChaveCCLocalTrabalho(new Integer(resultado.getInt("chaveCCLocalTrabalho")));
+				}
+
+				resultado.getInt("chaveCCCorrespondencia");
+				if (!resultado.wasNull()) {
+					funcionario.setChaveCCCorrespondencia(new Integer(resultado.getInt("chaveCCCorrespondencia")));
+				}
+
+				resultado.getInt("chaveCCVencimento");
+				if (!resultado.wasNull()) {
+					funcionario.setChaveCCVencimento(new Integer(resultado.getInt("chaveCCVencimento")));
+				}
+
+				resultado.getString("calendario");
+				if (!resultado.wasNull()) {
+					funcionario.setCalendario(resultado.getString("calendario"));
+				}
+
+				resultado.getInt("chaveStatus");
+				if (!resultado.wasNull()) {
+					funcionario.setChaveStatus(new Integer(resultado.getInt("chaveStatus")));
+				}
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			return listaFuncionarios;
+		}
+	} /* constroirFuncionario */
+
+	public Funcionario lerFuncionario(int codigoInterno, Date dataConsulta) {
+		Funcionario funcionario = null;
+		try {
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO WHERE codigoInterno = ?");
+			sql.setInt(1, codigoInterno);
+			ResultSet resultado = sql.executeQuery();
+			if (resultado.next()) {
+				Date antiguidade = null;
+				if (resultado.getString("antiguidade") != null) {
+					antiguidade = java.sql.Date.valueOf(resultado.getString("antiguidade"));
+				}
+
+				//Funcionario
+				funcionario =
+					new Funcionario(
+						resultado.getInt("codigoInterno"),
+						resultado.getInt("chavePessoa"),
+						resultado.getInt("numeroMecanografico"),
+						resultado.getInt("chaveHorarioActual"),
+						antiguidade);
+
+				//Histórico de funcionário
+				PreparedStatement sql2 =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_FUNCIONARIO_HISTORICO "
+							+ "WHERE chaveFuncionario = ? AND "
+							+ "((dataInicio <= ? AND dataFim IS NULL) OR (dataInicio <= ? AND dataFim IS NOT NULL AND dataFim >= ?)) "
+							+ "ORDER BY dataInicio");
+				sql2.setInt(1, resultado.getInt("codigoInterno"));
+				sql2.setDate(2, new java.sql.Date(dataConsulta.getTime()));
+				sql2.setDate(3, new java.sql.Date(dataConsulta.getTime()));
+				sql2.setDate(4, new java.sql.Date(dataConsulta.getTime()));
+
+				ResultSet resultado2 = sql2.executeQuery();
+
+				funcionario = constroirFuncionario(resultado2, funcionario);
+
+				sql2.close();
+			}
+			sql.close();
+		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("FuncionarioRelacional.lerFuncionario: " + e.toString());
 		} finally {
 			return funcionario;
 		}
 	} /* lerFuncionario */
 
-	public Funcionario lerFuncionarioPorFuncNaoDocente(int chaveFuncNaoDocente) {
+	public Funcionario lerFuncionarioPorFuncNaoDocente(int chaveFuncNaoDocente, Date dataConsulta) {
 		Funcionario funcionario = null;
-
 		try {
 			PreparedStatement sql =
 				UtilRelacional.prepararComando("SELECT chaveFuncionario FROM ass_FUNC_NAO_DOCENTE WHERE codigoInterno = ?");
@@ -198,57 +1647,51 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 
 			sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO WHERE codigoInterno = ?");
 			sql.setInt(1, chaveFuncionario);
-
 			resultado = sql.executeQuery();
 			if (resultado.next()) {
 				Date antiguidade = null;
 				if (resultado.getString("antiguidade") != null) {
 					antiguidade = java.sql.Date.valueOf(resultado.getString("antiguidade"));
 				}
-				Date dataInicio = null;
-				if (resultado.getString("dataInicio") != null) {
-					dataInicio = java.sql.Date.valueOf(resultado.getString("dataInicio"));
-				}
-				Date dataFim = null;
-				if (resultado.getString("dataFim") != null) {
-					dataFim = java.sql.Date.valueOf(resultado.getString("dataFim"));
-				}
-				Timestamp dataQuando = null;
-				if (resultado.getString("quando") != null) {
-					dataQuando = Timestamp.valueOf(resultado.getString("quando"));
-				}
 
+				//Funcionario
 				funcionario =
 					new Funcionario(
 						resultado.getInt("codigoInterno"),
 						resultado.getInt("chavePessoa"),
 						resultado.getInt("numeroMecanografico"),
 						resultado.getInt("chaveHorarioActual"),
-						antiguidade,
-						resultado.getInt("chaveFuncResponsavel"),
-						resultado.getInt("chaveCCLocalTrabalho"),
-						resultado.getInt("chaveCCCorrespondencia"),
-						resultado.getInt("chaveCCVencimento"),
-						resultado.getString("calendario"),
-						resultado.getInt("chaveStatus"),
-						dataInicio,
-						dataFim,
-						resultado.getInt("quem"),
-						dataQuando);
+						antiguidade);
+
+				//Histórico de funcionário
+				PreparedStatement sql2 =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_FUNCIONARIO_HISTORICO "
+							+ "WHERE chaveFuncionario = ? AND "
+							+ "((dataInicio <= ? AND dataFim IS NULL) OR (dataInicio <= ? AND dataFim IS NOT NULL AND dataFim >= ?))");
+				sql2.setInt(1, chaveFuncionario);
+				sql2.setDate(2, new java.sql.Date(dataConsulta.getTime()));
+				sql2.setDate(3, new java.sql.Date(dataConsulta.getTime()));
+				sql2.setDate(4, new java.sql.Date(dataConsulta.getTime()));
+				ResultSet resultado2 = sql2.executeQuery();
+
+				funcionario = constroirFuncionario(resultado2, funcionario);
+
+				sql2.close();
 			}
 			sql.close();
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("FuncionarioRelacional.lerFuncionarioPorFuncNaoDocente: " + e.toString());
 		} finally {
 			return funcionario;
 		}
 	} /* lerFuncionarioPorFuncNaoDocente */
 
-	public Funcionario lerFuncionarioPorNumMecanografico(int numero) {
+	public Funcionario lerFuncionarioPorNumMecanografico(int numero, Date dataConsulta) {
 		Funcionario funcionario = null;
 		try {
 			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO WHERE numeroMecanografico = ?");
-
 			sql.setInt(1, numero);
 			ResultSet resultado = sql.executeQuery();
 			if (resultado.next()) {
@@ -256,186 +1699,272 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 				if (resultado.getString("antiguidade") != null) {
 					antiguidade = java.sql.Date.valueOf(resultado.getString("antiguidade"));
 				}
-				Date dataInicio = null;
-				if (resultado.getString("dataInicio") != null) {
-					dataInicio = java.sql.Date.valueOf(resultado.getString("dataInicio"));
-				}
-				Date dataFim = null;
-				if (resultado.getString("dataFim") != null) {
-					dataFim = java.sql.Date.valueOf(resultado.getString("dataFim"));
-				}
-				Timestamp dataQuando = null;
-				if (resultado.getString("quando") != null) {
-					dataQuando = Timestamp.valueOf(resultado.getString("quando"));
-				}
 
+				//Funcionario
 				funcionario =
 					new Funcionario(
 						resultado.getInt("codigoInterno"),
 						resultado.getInt("chavePessoa"),
 						resultado.getInt("numeroMecanografico"),
 						resultado.getInt("chaveHorarioActual"),
-						antiguidade,
-						resultado.getInt("chaveFuncResponsavel"),
-						resultado.getInt("chaveCCLocalTrabalho"),
-						resultado.getInt("chaveCCCorrespondencia"),
-						resultado.getInt("chaveCCVencimento"),
-						resultado.getString("calendario"),
-						resultado.getInt("chaveStatus"),
-						dataInicio,
-						dataFim,
-						resultado.getInt("quem"),
-						dataQuando);
+						antiguidade);
+
+				//Histórico de funcionário
+				PreparedStatement sql2 =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_FUNCIONARIO_HISTORICO "
+							+ "WHERE chaveFuncionario = ? AND "
+							+ "((dataInicio <= ? AND dataFim IS NULL) OR (dataInicio <= ? AND dataFim IS NOT NULL AND dataFim >= ?))");
+
+				sql2.setInt(1, resultado.getInt("codigoInterno"));
+				sql2.setDate(2, new java.sql.Date(dataConsulta.getTime()));
+				sql2.setDate(3, new java.sql.Date(dataConsulta.getTime()));
+				sql2.setDate(4, new java.sql.Date(dataConsulta.getTime()));
+
+				ResultSet resultado2 = sql2.executeQuery();
+				funcionario = constroirFuncionario(resultado2, funcionario);
+
+				sql2.close();
+				sql.close();
 			} else {
 				sql.close();
 				return null;
 			}
-			sql.close();
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("FuncionarioRelacional.lerFuncionarioPorNumMecanografico: " + e.toString());
 		} finally {
 			return funcionario;
 		}
 	} /* lerFuncionarioPorNumMecanografico */
 
-	public Funcionario lerFuncionarioPorPessoa(int chavePessoa) {
+	public Funcionario lerFuncionarioPorPessoa(int chavePessoa, Date dataConsulta) {
 		Funcionario funcionario = null;
-
 		try {
 			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO WHERE chavePessoa = ?");
-
 			sql.setInt(1, chavePessoa);
-
 			ResultSet resultado = sql.executeQuery();
 			if (resultado.next()) {
 				Date antiguidade = null;
 				if (resultado.getString("antiguidade") != null) {
 					antiguidade = java.sql.Date.valueOf(resultado.getString("antiguidade"));
 				}
-				Date dataInicio = null;
-				if (resultado.getString("dataInicio") != null) {
-					dataInicio = java.sql.Date.valueOf(resultado.getString("dataInicio"));
-				}
-				Date dataFim = null;
-				if (resultado.getString("dataFim") != null) {
-					dataFim = java.sql.Date.valueOf(resultado.getString("dataFim"));
-				}
-				Timestamp dataQuando = null;
-				if (resultado.getString("quando") != null) {
-					dataQuando = Timestamp.valueOf(resultado.getString("quando"));
-				}
 
+				//Funcionario
 				funcionario =
 					new Funcionario(
 						resultado.getInt("codigoInterno"),
 						resultado.getInt("chavePessoa"),
 						resultado.getInt("numeroMecanografico"),
 						resultado.getInt("chaveHorarioActual"),
-						antiguidade,
-						resultado.getInt("chaveFuncResponsavel"),
-						resultado.getInt("chaveCCLocalTrabalho"),
-						resultado.getInt("chaveCCCorrespondencia"),
-						resultado.getInt("chaveCCVencimento"),
-						resultado.getString("calendario"),
-						resultado.getInt("chaveStatus"),
-						dataInicio,
-						dataFim,
-						resultado.getInt("quem"),
-						dataQuando);
+						antiguidade);
+
+				//Histórico de funcionário
+				PreparedStatement sql2 =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_FUNCIONARIO_HISTORICO "
+							+ "WHERE chaveFuncionario = ? AND "
+							+ "((dataInicio <= ? AND dataFim IS NULL) OR (dataInicio <= ? AND dataFim IS NOT NULL AND dataFim >= ?)) "
+							+ "ORDER BY dataInicio");
+				sql2.setInt(1, resultado.getInt("codigoInterno"));
+				sql2.setDate(2, new java.sql.Date(dataConsulta.getTime()));
+				sql2.setDate(3, new java.sql.Date(dataConsulta.getTime()));
+				sql2.setDate(4, new java.sql.Date(dataConsulta.getTime()));
+
+				ResultSet resultado2 = sql2.executeQuery();
+				funcionario = constroirFuncionario(resultado2, funcionario);
+
+				sql2.close();
 			}
 			sql.close();
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("FuncionarioRelacional.lerFuncionarioPorPessoa: " + e.toString());
 		} finally {
 			return funcionario;
 		}
 	} /* lerFuncionarioPorPessoa */
 
-	public ArrayList lerFuncionariosCCLocalTrabalho(int chaveCCLocalTrabalho, Date data) {
-		ArrayList listaFuncionarios = null;
-		
+	public Funcionario lerHistorico(int codigoInterno) {
+		Funcionario funcionario = null;
+
 		try {
-			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO " +
-				"WHERE chaveCCLocalTrabalho=? ORDER BY numeroMecanografico");
-				sql.setInt(1, chaveCCLocalTrabalho);
+			PreparedStatement sql =
+				UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO_HISTORICO " + "WHERE codigoInterno = ?");
+			sql.setInt(1, codigoInterno);
 
 			ResultSet resultado = sql.executeQuery();
-			listaFuncionarios = new ArrayList();
-			Date antiguidade = null;
-			Date dataInicio = null;
-			Date dataFim = null;
-			Timestamp dataQuando = null;
-			while (resultado.next()) {
-				if (resultado.getString("antiguidade") != null) {
-					antiguidade = java.sql.Date.valueOf(resultado.getString("antiguidade"));
-				}
-				if (resultado.getString("dataInicio") != null) {
-					dataInicio = java.sql.Date.valueOf(resultado.getString("dataInicio"));
-				}
-				if (resultado.getString("dataFim") != null) {
-					dataFim = java.sql.Date.valueOf(resultado.getString("dataFim"));
-				}
-				if (resultado.getString("quando") != null) {
-					dataQuando = Timestamp.valueOf(resultado.getString("quando"));
-				}
+			if (resultado.next()) {
+				PreparedStatement sql2 = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO WHERE codigoInterno = ?");
+				sql2.setInt(1, resultado.getInt("chaveFuncionario"));
 
-				listaFuncionarios.add(
-					new Funcionario(
-						resultado.getInt("codigoInterno"),
-						resultado.getInt("chavePessoa"),
-						resultado.getInt("numeroMecanografico"),
-						resultado.getInt("chaveHorarioActual"),
-						antiguidade,
-						resultado.getInt("chaveFuncResponsavel"),
-						resultado.getInt("chaveCCLocalTrabalho"),
-						resultado.getInt("chaveCCCorrespondencia"),
-						resultado.getInt("chaveCCVencimento"),
-						resultado.getString("calendario"),
-						resultado.getInt("chaveStatus"),
-						dataInicio,
-						dataFim,
-						resultado.getInt("quem"),
-						dataQuando));
+				ResultSet resultado2 = sql2.executeQuery();
+				if (resultado2.next()) {
+					Date dataInicio = null;
+					if (resultado.getString("dataInicio") != null) {
+						dataInicio = java.sql.Date.valueOf(resultado.getString("dataInicio"));
+					}
+					Date dataFim = null;
+					if (resultado.getString("dataFim") != null) {
+						dataFim = java.sql.Date.valueOf(resultado.getString("dataFim"));
+					}
+					Timestamp dataQuando = null;
+					if (resultado.getString("quando") != null) {
+						dataQuando = Timestamp.valueOf(resultado.getString("quando"));
+					}
+
+					Date antiguidade = null;
+					if (resultado2.getString("antiguidade") != null) {
+						antiguidade = java.sql.Date.valueOf(resultado2.getString("antiguidade"));
+					}
+
+					funcionario =
+						new Funcionario(
+							resultado2.getInt("codigoInterno"),
+							resultado2.getInt("chavePessoa"),
+							resultado2.getInt("numeroMecanografico"),
+							resultado2.getInt("chaveHorarioActual"),
+							antiguidade,
+							codigoInterno,
+							(Integer) resultado.getObject("chaveFuncResponsavel"),
+							(Integer) resultado.getObject("chaveCCLocalTrabalho"),
+							(Integer) resultado.getObject("chaveCCCorrespondencia"),
+							(Integer) resultado.getObject("chaveCCVencimento"),
+							resultado.getString("calendario"),
+							(Integer) resultado.getObject("chaveStatus"),
+							dataInicio,
+							dataFim,
+							resultado.getInt("quem"),
+							dataQuando);
+				}
+				sql2.close();
 			}
 			sql.close();
 		} catch (Exception e) {
-			System.out.println("FuncionarioRelacional.lerFuncionariosCCLocalTrabalho: " + e.toString());
-			return null;
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.lerHistoricoFuncionario: " + e.toString());
 		} finally {
-			return listaFuncionarios;
+			return funcionario;
 		}
-	} /* lerFuncionariosCCLocalTrabalho */
+	} /* lerHistoricoFuncionario */
+
+	public List lerHistoricoFuncionario(int codigoInterno, Date data) {
+		List listaHistoricosFuncionario = null;
+
+		try {
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO WHERE codigoInterno = ?");
+			sql.setInt(1, codigoInterno);
+
+			ResultSet resultado = sql.executeQuery();
+			if (resultado.next()) {
+				PreparedStatement sql2 =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_FUNCIONARIO_HISTORICO "
+							+ "WHERE chaveFuncionario = ? AND "
+							+ "((dataInicio <= ? AND dataFim IS NULL) OR (dataInicio <= ? AND dataFim IS NOT NULL AND dataFim >= ?)) "
+							+ "ORDER BY dataInicio");
+				sql2.setInt(1, resultado.getInt("codigoInterno"));
+				sql2.setDate(2, new java.sql.Date(data.getTime()));
+				sql2.setDate(3, new java.sql.Date(data.getTime()));
+				sql2.setDate(4, new java.sql.Date(data.getTime()));
+
+				ResultSet resultado2 = sql2.executeQuery();
+				listaHistoricosFuncionario = new ArrayList();
+				while (resultado2.next()) {
+					Date dataInicio = null;
+					if (resultado2.getString("dataInicio") != null) {
+						dataInicio = java.sql.Date.valueOf(resultado2.getString("dataInicio"));
+					}
+					Date dataFim = null;
+					if (resultado2.getString("dataFim") != null) {
+						dataFim = java.sql.Date.valueOf(resultado2.getString("dataFim"));
+					}
+					Timestamp dataQuando = null;
+					if (resultado2.getString("quando") != null) {
+						dataQuando = Timestamp.valueOf(resultado2.getString("quando"));
+					}
+
+					Date antiguidade = null;
+					if (resultado.getString("antiguidade") != null) {
+						antiguidade = java.sql.Date.valueOf(resultado.getString("antiguidade"));
+					}
+
+					listaHistoricosFuncionario.add(
+						new Funcionario(
+							resultado.getInt("codigoInterno"),
+							resultado.getInt("chavePessoa"),
+							resultado.getInt("numeroMecanografico"),
+							resultado.getInt("chaveHorarioActual"),
+							antiguidade,
+							resultado2.getInt("codigoInterno"),
+							(Integer) resultado2.getObject("chaveFuncResponsavel"),
+							(Integer) resultado2.getObject("chaveCCLocalTrabalho"),
+							(Integer) resultado2.getObject("chaveCCCorrespondencia"),
+							(Integer) resultado2.getObject("chaveCCVencimento"),
+							resultado2.getString("calendario"),
+							(Integer) resultado2.getObject("chaveStatus"),
+							dataInicio,
+							dataFim,
+							resultado2.getInt("quem"),
+							dataQuando));
+				}
+				sql2.close();
+			}
+			sql.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.lerHistoricoFuncionario: " + e.toString());
+		} finally {
+			return listaHistoricosFuncionario;
+		}
+	} /* lerHistoricoFuncionario */
 
 	public ArrayList lerStatusAssiduidade(int numMecanografico, Timestamp dataInicial, Timestamp dataFinal) {
 		ArrayList listaStatusAssiduidade = null;
-
 		try {
-			PreparedStatement sql = UtilRelacional.prepararComando("SELECT chaveStatus FROM ass_FUNCIONARIO where numeroMecanografico = ?");
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO where numeroMecanografico = ?");
 			sql.setInt(1, numMecanografico);
 			ResultSet resultado = sql.executeQuery();
+			if (resultado.next()) {
 
-			PreparedStatement sql2 = UtilRelacional.prepararComando("SELECT * FROM ass_STATUS where codigoInterno = ?");
-			ResultSet resultado2 = null;
-
-			listaStatusAssiduidade = new ArrayList();
-			while (resultado.next()) {
-				sql2.setInt(1, resultado.getInt("chaveStatus"));
-				resultado2 = sql2.executeQuery();
-
-				if (resultado2.next()) {
-					listaStatusAssiduidade.add(
-						new StatusAssiduidade(
-							resultado2.getInt("codigoInterno"),
-							resultado2.getString("sigla"),
-							resultado2.getString("designacao"),
-							resultado2.getString("estado"),
-							resultado2.getString("assiduidade")));
+				PreparedStatement sql2 =
+					UtilRelacional.prepararComando(
+						"SELECT DISTINCT chaveStatus FROM ass_FUNCIONARIO_HISTORICO "
+							+ "WHERE chaveFuncionario = ? AND ((dataInicio BETWEEN ? AND ?) "
+							+ "OR (dataFim IS NOT NULL AND dataFim BETWEEN ? AND ?) "
+							+ "OR (dataInicio <= ? AND dataFim IS NOT NULL AND dataFim >= ?) "
+							+ "OR (dataInicio <= ? AND dataFim IS NULL))");
+				sql2.setInt(1, resultado.getInt("codigoInterno"));
+				sql2.setDate(2, new java.sql.Date(dataInicial.getTime()));
+				sql2.setDate(3, new java.sql.Date(dataFinal.getTime()));
+				sql2.setDate(4, new java.sql.Date(dataInicial.getTime()));
+				sql2.setDate(5, new java.sql.Date(dataFinal.getTime()));
+				sql2.setDate(6, new java.sql.Date(dataInicial.getTime()));
+				sql2.setDate(7, new java.sql.Date(dataFinal.getTime()));
+				sql2.setDate(8, new java.sql.Date(dataInicial.getTime()));
+				ResultSet resultado2 = sql2.executeQuery();
+				PreparedStatement sql3 = UtilRelacional.prepararComando("SELECT * FROM ass_STATUS where codigoInterno = ?");
+				ResultSet resultado3 = null;
+				listaStatusAssiduidade = new ArrayList();
+				while (resultado2.next()) {
+					sql3.setInt(1, resultado2.getInt("chaveStatus"));
+					resultado3 = sql3.executeQuery();
+					if (resultado3.next()) {
+						listaStatusAssiduidade.add(
+							new StatusAssiduidade(
+								resultado3.getInt("codigoInterno"),
+								resultado3.getString("sigla"),
+								resultado3.getString("designacao"),
+								resultado3.getString("estado"),
+								resultado3.getString("assiduidade")));
+					}
 				}
+				sql3.close();
+				sql2.close();
 			}
-			sql2.close();
 			sql.close();
-
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("FuncionarioRelacional.lerStatusAssiduidade: " + e.toString());
 			return null;
 		} finally {
@@ -443,135 +1972,35 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 		}
 	} /* lerStatusAssiduidade */
 
-	public ArrayList lerTodosFuncionarios() {
+	public ArrayList lerFuncionariosCCLocalTrabalho(int chaveCCLocalTrabalho, Date data) {
+		//TODO: REVER
 		ArrayList listaFuncionarios = null;
-
-		try {
-			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO ORDER BY numeroMecanografico");
-
-			ResultSet resultado = sql.executeQuery();
-			listaFuncionarios = new ArrayList();
-			Date antiguidade = null;
-			Date dataInicio = null;
-			Date dataFim = null;
-			Timestamp dataQuando = null;
-			while (resultado.next()) {
-				if (resultado.getString("antiguidade") != null) {
-					antiguidade = java.sql.Date.valueOf(resultado.getString("antiguidade"));
-				}
-				if (resultado.getString("dataInicio") != null) {
-					dataInicio = java.sql.Date.valueOf(resultado.getString("dataInicio"));
-				}
-				if (resultado.getString("dataFim") != null) {
-					dataFim = java.sql.Date.valueOf(resultado.getString("dataFim"));
-				}
-				if (resultado.getString("quando") != null) {
-					dataQuando = Timestamp.valueOf(resultado.getString("quando"));
-				}
-
-				listaFuncionarios.add(
-					new Funcionario(
-						resultado.getInt("codigoInterno"),
-						resultado.getInt("chavePessoa"),
-						resultado.getInt("numeroMecanografico"),
-						resultado.getInt("chaveHorarioActual"),
-						antiguidade,
-						resultado.getInt("chaveFuncResponsavel"),
-						resultado.getInt("chaveCCLocalTrabalho"),
-						resultado.getInt("chaveCCCorrespondencia"),
-						resultado.getInt("chaveCCVencimento"),
-						resultado.getString("calendario"),
-						resultado.getInt("chaveStatus"),
-						dataInicio,
-						dataFim,
-						resultado.getInt("quem"),
-						dataQuando));
-			}
-			sql.close();
-		} catch (Exception e) {
-			System.out.println("FuncionarioRelacional.lerTodosFuncionarios: " + e.toString());
-			return null;
-		} finally {
-			return listaFuncionarios;
-		}
-	} /* lerTodosFuncionarios */
-
-	public ArrayList lerTodosFuncionariosAssiduidade() {
-		ArrayList listaFuncionarios = null;
-
 		try {
 			PreparedStatement sql =
-				UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO where chaveHorarioActual <> 0 ORDER BY numeroMecanografico");
+				UtilRelacional.prepararComando(
+					"SELECT * FROM ass_FUNCIONARIO_HISTORICO "
+						+ "WHERE chaveCCLocalTrabalho = ? "
+						+ "AND ((dataInicio <= ? AND dataFim IS NULL) OR (dataInicio <= ? AND dataFim IS NOT NULL AND dataFim >= ?)) "
+						+ "ORDER BY chaveFuncionario");
+			sql.setInt(1, chaveCCLocalTrabalho);
+			sql.setDate(2, new java.sql.Date(data.getTime()));
+			sql.setDate(3, new java.sql.Date(data.getTime()));
+			sql.setDate(4, new java.sql.Date(data.getTime()));
 			ResultSet resultado = sql.executeQuery();
 
-			listaFuncionarios = new ArrayList();
-			Date antiguidade = null;
-			Date dataInicio = null;
-			Date dataFim = null;
-			Timestamp dataQuando = null;
-			while (resultado.next()) {
-				if (resultado.getString("antiguidade") != null) {
-					antiguidade = java.sql.Date.valueOf(resultado.getString("antiguidade"));
-				}
-				if (resultado.getString("dataInicio") != null) {
-					dataInicio = java.sql.Date.valueOf(resultado.getString("dataInicio"));
-				}
-				if (resultado.getString("dataFim") != null) {
-					dataFim = java.sql.Date.valueOf(resultado.getString("dataFim"));
-				}
-				if (resultado.getString("quando") != null) {
-					dataQuando = Timestamp.valueOf(resultado.getString("quando"));
-				}
-
-				listaFuncionarios.add(
-					new Funcionario(
-						resultado.getInt("codigoInterno"),
-						resultado.getInt("chavePessoa"),
-						resultado.getInt("numeroMecanografico"),
-						resultado.getInt("chaveHorarioActual"),
-						antiguidade,
-						resultado.getInt("chaveFuncResponsavel"),
-						resultado.getInt("chaveCCLocalTrabalho"),
-						resultado.getInt("chaveCCCorrespondencia"),
-						resultado.getInt("chaveCCVencimento"),
-						resultado.getString("calendario"),
-						resultado.getInt("chaveStatus"),
-						dataInicio,
-						dataFim,
-						resultado.getInt("quem"),
-						dataQuando));
-			}
-			sql.close();
-		} catch (Exception e) {
-			System.out.println("FuncionarioRelacional.lerTodosFuncionariosAssiduidade: " + e.toString());
-			return null;
-		} finally {
-			return listaFuncionarios;
-		}
-	} /* lerTodosFuncionariosAssiduidade */
-
-	public ArrayList lerTodosFuncionariosNaoDocentes() {
-		ArrayList listaFuncionarios = null;
-
-		try {
-			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO ORDER BY numeroMecanografico");
-			ResultSet resultado = sql.executeQuery();
-
-			PreparedStatement sql2 = UtilRelacional.prepararComando("SELECT * FROM ass_FUNC_NAO_DOCENTE WHERE chaveFuncionario = ?");
+			PreparedStatement sql2 = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO " + "WHERE codigoInterno=? ");
 			ResultSet resultado2 = null;
-
 			listaFuncionarios = new ArrayList();
-			Date antiguidade = null;
 			Date dataInicio = null;
 			Date dataFim = null;
 			Timestamp dataQuando = null;
 			while (resultado.next()) {
-				sql2.setInt(1, resultado.getInt("codigoInterno"));
+				sql2.setInt(1, resultado.getInt("chaveFuncionario"));
 				resultado2 = sql2.executeQuery();
-
 				if (resultado2.next()) {
-					if (resultado.getString("antiguidade") != null) {
-						antiguidade = java.sql.Date.valueOf(resultado.getString("antiguidade"));
+					Date antiguidade = null;
+					if (resultado2.getString("antiguidade") != null) {
+						antiguidade = java.sql.Date.valueOf(resultado2.getString("antiguidade"));
 					}
 					if (resultado.getString("dataInicio") != null) {
 						dataInicio = java.sql.Date.valueOf(resultado.getString("dataInicio"));
@@ -582,20 +2011,20 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 					if (resultado.getString("quando") != null) {
 						dataQuando = Timestamp.valueOf(resultado.getString("quando"));
 					}
-					//funcionario a cumprir assiduidade
+
 					listaFuncionarios.add(
 						new Funcionario(
-							resultado.getInt("codigoInterno"),
-							resultado.getInt("chavePessoa"),
-							resultado.getInt("numeroMecanografico"),
-							resultado.getInt("chaveHorarioActual"),
+							resultado2.getInt("codigoInterno"),
+							resultado2.getInt("chavePessoa"),
+							resultado2.getInt("numeroMecanografico"),
+							resultado2.getInt("chaveHorarioActual"),
 							antiguidade,
-							resultado.getInt("chaveFuncResponsavel"),
-							resultado.getInt("chaveCCLocalTrabalho"),
-							resultado.getInt("chaveCCCorrespondencia"),
-							resultado.getInt("chaveCCVencimento"),
+							(Integer) resultado.getObject("chaveFuncResponsavel"),
+							(Integer) resultado.getObject("chaveCCLocalTrabalho"),
+							(Integer) resultado.getObject("chaveCCCorrespondencia"),
+							(Integer) resultado.getObject("chaveCCVencimento"),
 							resultado.getString("calendario"),
-							resultado.getInt("chaveStatus"),
+							(Integer) resultado.getObject("chaveStatus"),
 							dataInicio,
 							dataFim,
 							resultado.getInt("quem"),
@@ -605,27 +2034,256 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 			sql2.close();
 			sql.close();
 		} catch (Exception e) {
-			System.out.println("FuncionarioRelacional.lerTodosNumerosMecanograficos: " + e.toString());
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.lerFuncionariosCCLocalTrabalho: " + e.toString());
+			return null;
+		} finally {
+			return listaFuncionarios;
+		}
+	} /* lerFuncionariosCCLocalTrabalho */
+
+	public ArrayList lerTodosFuncionarios(Date dataConsulta) {
+		//	TODO: REVER
+		ArrayList listaFuncionarios = null;
+		try {
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO ORDER BY numeroMecanografico");
+			ResultSet resultado = sql.executeQuery();
+			PreparedStatement sql2 =
+				UtilRelacional.prepararComando(
+					"SELECT * FROM ass_FUNCIONARIO_HISTORICO "
+						+ "WHERE chaveFuncionario = ? AND "
+						+ "((dataInicio <= ? AND dataFim IS NULL) OR (dataInicio <= ? AND dataFim IS NOT NULL AND dataFim >= ?))");
+			sql2.setDate(2, new java.sql.Date(dataConsulta.getTime()));
+			sql2.setDate(3, new java.sql.Date(dataConsulta.getTime()));
+			sql2.setDate(4, new java.sql.Date(dataConsulta.getTime()));
+			ResultSet resultado2 = null;
+			listaFuncionarios = new ArrayList();
+			Date dataInicio = null;
+			Date dataFim = null;
+			Timestamp dataQuando = null;
+			while (resultado.next()) {
+
+				sql2.setInt(1, resultado.getInt("codigoInterno"));
+				resultado2 = sql2.executeQuery();
+				if (resultado2.last()) {
+					Date antiguidade = null;
+					if (resultado.getString("antiguidade") != null) {
+						antiguidade = java.sql.Date.valueOf(resultado.getString("antiguidade"));
+					}
+					if (resultado2.getString("dataInicio") != null) {
+						dataInicio = java.sql.Date.valueOf(resultado2.getString("dataInicio"));
+					}
+					if (resultado2.getString("dataFim") != null) {
+						dataFim = java.sql.Date.valueOf(resultado2.getString("dataFim"));
+					}
+					if (resultado2.getString("quando") != null) {
+						dataQuando = Timestamp.valueOf(resultado2.getString("quando"));
+					}
+
+					listaFuncionarios.add(
+						new Funcionario(
+							resultado.getInt("codigoInterno"),
+							resultado.getInt("chavePessoa"),
+							resultado.getInt("numeroMecanografico"),
+							resultado.getInt("chaveHorarioActual"),
+							antiguidade,
+							(Integer) resultado2.getObject("chaveFuncResponsavel"),
+							(Integer) resultado2.getObject("chaveCCLocalTrabalho"),
+							(Integer) resultado2.getObject("chaveCCCorrespondencia"),
+							(Integer) resultado2.getObject("chaveCCVencimento"),
+							resultado2.getString("calendario"),
+							(Integer) resultado2.getObject("chaveStatus"),
+							dataInicio,
+							dataFim,
+							resultado2.getInt("quem"),
+							dataQuando));
+				}
+			}
+			sql2.close();
+			sql.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.lerTodosFuncionarios: " + e.toString());
+			return null;
+		} finally {
+			return listaFuncionarios;
+		}
+	} /* lerTodosFuncionarios */
+
+	public ArrayList lerTodosFuncionariosAssiduidade(Date dataConsulta) {
+		//	TODO: REVER
+		ArrayList listaFuncionarios = null;
+		try {
+			PreparedStatement sql =
+				UtilRelacional.prepararComando(
+					"SELECT * FROM ass_FUNCIONARIO where chaveHorarioActual <> 0 ORDER BY numeroMecanografico");
+			ResultSet resultado = sql.executeQuery();
+			PreparedStatement sql2 =
+				UtilRelacional.prepararComando(
+					"SELECT * FROM ass_FUNCIONARIO_HISTORICO "
+						+ "WHERE chaveFuncionario = ? AND "
+						+ "((dataInicio <= ? AND dataFim IS NULL) OR (dataInicio <= ? AND dataFim IS NOT NULL AND dataFim >= ?))");
+			sql2.setDate(2, new java.sql.Date(dataConsulta.getTime()));
+			sql2.setDate(3, new java.sql.Date(dataConsulta.getTime()));
+			sql2.setDate(4, new java.sql.Date(dataConsulta.getTime()));
+			ResultSet resultado2 = null;
+			listaFuncionarios = new ArrayList();
+			Date dataInicio = null;
+			Date dataFim = null;
+			Timestamp dataQuando = null;
+			while (resultado.next()) {
+
+				sql2.setInt(1, resultado.getInt("codigoInterno"));
+				resultado2 = sql2.executeQuery();
+				if (resultado2.last()) {
+					Date antiguidade = null;
+					if (resultado.getString("antiguidade") != null) {
+						antiguidade = java.sql.Date.valueOf(resultado.getString("antiguidade"));
+					}
+					if (resultado2.getString("dataInicio") != null) {
+						dataInicio = java.sql.Date.valueOf(resultado2.getString("dataInicio"));
+					}
+					if (resultado2.getString("dataFim") != null) {
+						dataFim = java.sql.Date.valueOf(resultado2.getString("dataFim"));
+					}
+					if (resultado2.getString("quando") != null) {
+						dataQuando = Timestamp.valueOf(resultado2.getString("quando"));
+					}
+
+					listaFuncionarios.add(
+						new Funcionario(
+							resultado.getInt("codigoInterno"),
+							resultado.getInt("chavePessoa"),
+							resultado.getInt("numeroMecanografico"),
+							resultado.getInt("chaveHorarioActual"),
+							antiguidade,
+							(Integer) resultado2.getObject("chaveFuncResponsavel"),
+							(Integer) resultado2.getObject("chaveCCLocalTrabalho"),
+							(Integer) resultado2.getObject("chaveCCCorrespondencia"),
+							(Integer) resultado2.getObject("chaveCCVencimento"),
+							resultado2.getString("calendario"),
+							(Integer) resultado2.getObject("chaveStatus"),
+							dataInicio,
+							dataFim,
+							resultado2.getInt("quem"),
+							dataQuando));
+				}
+			}
+			sql2.close();
+			sql.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.lerTodosFuncionariosAssiduidade: " + e.toString());
+			return null;
+		} finally {
+			return listaFuncionarios;
+		}
+	} /* lerTodosFuncionariosAssiduidade */
+
+	public ArrayList lerTodosFuncionariosNaoDocentes(Date dataConsulta) {
+		//	TODO: REVER
+		ArrayList listaFuncionarios = null;
+		try {
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO ORDER BY numeroMecanografico");
+			ResultSet resultado = sql.executeQuery();
+			PreparedStatement sql2 = UtilRelacional.prepararComando("SELECT * FROM ass_FUNC_NAO_DOCENTE WHERE chaveFuncionario = ?");
+			ResultSet resultado2 = null;
+			PreparedStatement sql3 =
+				UtilRelacional.prepararComando(
+					"SELECT * FROM ass_FUNCIONARIO_HISTORICO "
+						+ "WHERE chaveFuncionario = ? AND "
+						+ "((dataInicio <= ? AND dataFim IS NULL) OR (dataInicio <= ? AND dataFim IS NOT NULL AND dataFim >= ?))");
+			sql3.setDate(2, new java.sql.Date(dataConsulta.getTime()));
+			sql3.setDate(3, new java.sql.Date(dataConsulta.getTime()));
+			sql3.setDate(4, new java.sql.Date(dataConsulta.getTime()));
+			ResultSet resultado3 = null;
+			listaFuncionarios = new ArrayList();
+			Date dataInicio = null;
+			Date dataFim = null;
+			Timestamp dataQuando = null;
+			while (resultado.next()) {
+				sql2.setInt(1, resultado.getInt("codigoInterno"));
+				resultado2 = sql2.executeQuery();
+				if (resultado2.next()) {
+					sql3.setInt(1, resultado.getInt("codigoInterno"));
+					resultado3 = sql3.executeQuery();
+					if (resultado3.last()) {
+						Date antiguidade = null;
+						if (resultado.getString("antiguidade") != null) {
+							antiguidade = java.sql.Date.valueOf(resultado.getString("antiguidade"));
+						}
+						if (resultado3.getString("dataInicio") != null) {
+							dataInicio = java.sql.Date.valueOf(resultado3.getString("dataInicio"));
+						}
+						if (resultado3.getString("dataFim") != null) {
+							dataFim = java.sql.Date.valueOf(resultado3.getString("dataFim"));
+						}
+						if (resultado3.getString("quando") != null) {
+							dataQuando = Timestamp.valueOf(resultado3.getString("quando"));
+						}
+
+						listaFuncionarios.add(
+							new Funcionario(
+								resultado.getInt("codigoInterno"),
+								resultado.getInt("chavePessoa"),
+								resultado.getInt("numeroMecanografico"),
+								resultado.getInt("chaveHorarioActual"),
+								antiguidade,
+								(Integer) resultado3.getObject("chaveFuncResponsavel"),
+								(Integer) resultado3.getObject("chaveCCLocalTrabalho"),
+								(Integer) resultado3.getObject("chaveCCCorrespondencia"),
+								(Integer) resultado3.getObject("chaveCCVencimento"),
+								resultado3.getString("calendario"),
+								(Integer) resultado3.getObject("chaveStatus"),
+								dataInicio,
+								dataFim,
+								resultado3.getInt("quem"),
+								dataQuando));
+					}
+				}
+			}
+			sql3.close();
+			sql2.close();
+			sql.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.lerTodosFuncionariosNaoDocentes: " + e.toString());
 			return null;
 		} finally {
 			return listaFuncionarios;
 		}
 	} /* lerTodosFuncionariosNaoDocentes */
 
+	public ArrayList lerTodosNumeros() {
+		ArrayList listaNumeros = null;
+		try {
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT numeroMecanografico FROM ass_FUNCIONARIO");
+			ResultSet resultado = sql.executeQuery();
+			listaNumeros = new ArrayList();
+			while (resultado.next()) {
+				listaNumeros.add(new Integer(resultado.getInt("numeroMecanografico")));
+			}
+			sql.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.lerTodosNumeros: " + e.toString());
+			e.printStackTrace();
+			return null;
+		} finally {
+			return listaNumeros;
+		}
+	} /* lerTodosNumeros */
+
 	public ArrayList lerTodosNumerosAssiduidade() {
 		ArrayList listaNumeros = null;
-
 		try {
 			PreparedStatement sql = UtilRelacional.prepararComando("SELECT DISTINCT chaveFuncionario FROM ass_HORARIO");
 			ResultSet resultado = sql.executeQuery();
-
 			PreparedStatement sqlChaveFuncionario =
 				UtilRelacional.prepararComando("SELECT numeroMecanografico FROM ass_FUNCIONARIO " + "WHERE codigoInterno = ?");
 			ResultSet resultadoChaveFuncionario = null;
-
 			listaNumeros = new ArrayList();
-			while (resultado.next()) {
-				//chave do Funcionario
+			while (resultado.next()) { //chave do Funcionario
 				sqlChaveFuncionario.setInt(1, resultado.getInt("chaveFuncionario"));
 				resultadoChaveFuncionario = sqlChaveFuncionario.executeQuery();
 				if (resultadoChaveFuncionario.next()) {
@@ -634,37 +2292,6 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 			}
 			sqlChaveFuncionario.close();
 			sql.close();
-			/*
-			PreparedStatement sql =
-				UtilRelacional.prepararComando("SELECT numeroMecanografico FROM funcionario ORDER BY numeroMecanografico");
-			ResultSet resultado = sql.executeQuery();
-			
-			PreparedStatement sqlChaveFuncionario =
-				UtilRelacional.prepararComando("SELECT codigoInterno FROM funcionario " + "WHERE numeroMecanografico = ?");
-			ResultSet resultadoChaveFuncionario = null;
-			
-			PreparedStatement sqlAssiduidade = UtilRelacional.prepararComando("SELECT * FROM horario " + "WHERE chaveFuncionario = ?");
-			ResultSet resultadoAssiduidade = null;
-			
-			listaNumeros = new ArrayList();
-			while (resultado.next()) {
-				//chave do Funcionario
-				sqlChaveFuncionario.setInt(1, resultado.getInt("numeroMecanografico"));
-				resultadoChaveFuncionario = sqlChaveFuncionario.executeQuery();
-				if (resultadoChaveFuncionario.next()) {
-					//Assiduidade Funcionário
-					sqlAssiduidade.setInt(1, resultadoChaveFuncionario.getInt("codigoInterno"));
-					resultadoAssiduidade = sqlAssiduidade.executeQuery();
-					if (resultadoAssiduidade.next()) {
-						//Funcionario cumpre/cumpriu assiduidade
-						listaNumeros.add(new Integer(resultado.getInt("numeroMecanografico")));
-					}
-				}
-			}
-			sqlChaveFuncionario.close();
-			sqlAssiduidade.close();
-			sql.close();
-			*/
 		} catch (Exception e) {
 			System.out.println("FuncionarioRelacional.lerTodosNumerosAssiduidade: " + e.toString());
 			e.printStackTrace();
@@ -676,16 +2303,13 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 
 	public ArrayList lerTodosNumerosAssiduidade(Timestamp dataInicioConsulta) {
 		ArrayList listaNumeros = null;
-
 		try {
 			PreparedStatement sql =
 				UtilRelacional.prepararComando("SELECT numeroMecanografico FROM ass_FUNCIONARIO ORDER BY numeroMecanografico");
 			ResultSet resultado = sql.executeQuery();
-
 			PreparedStatement sqlChaveFuncionario =
 				UtilRelacional.prepararComando("SELECT codigoInterno FROM ass_FUNCIONARIO " + "WHERE numeroMecanografico = ?");
 			ResultSet resultadoChaveFuncionario = null;
-
 			PreparedStatement sqlAssiduidade =
 				UtilRelacional.prepararComando(
 					"SELECT * FROM ass_HORARIO "
@@ -694,18 +2318,14 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 			sqlAssiduidade.setDate(2, new java.sql.Date(dataInicioConsulta.getTime()));
 			sqlAssiduidade.setDate(3, new java.sql.Date(dataInicioConsulta.getTime()));
 			ResultSet resultadoAssiduidade = null;
-
 			listaNumeros = new ArrayList();
-			while (resultado.next()) {
-				//chave do Funcionario
+			while (resultado.next()) { //chave do Funcionario
 				sqlChaveFuncionario.setInt(1, resultado.getInt("numeroMecanografico"));
 				resultadoChaveFuncionario = sqlChaveFuncionario.executeQuery();
-				if (resultadoChaveFuncionario.next()) {
-					//Assiduidade Funcionário
+				if (resultadoChaveFuncionario.next()) { //Assiduidade Funcionário
 					sqlAssiduidade.setInt(1, resultadoChaveFuncionario.getInt("codigoInterno"));
 					resultadoAssiduidade = sqlAssiduidade.executeQuery();
-					if (resultadoAssiduidade.next()) {
-						//Funcionario a cumprir assiduidade nesta data
+					if (resultadoAssiduidade.next()) { //Funcionario a cumprir assiduidade nesta data
 						listaNumeros.add(new Integer(resultado.getInt("numeroMecanografico")));
 					}
 				}
@@ -714,6 +2334,7 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 			sqlAssiduidade.close();
 			sql.close();
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("FuncionarioRelacional.lerTodosNumerosAssiduidade: " + e.toString());
 			return null;
 		} finally {
@@ -723,27 +2344,23 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 
 	public ArrayList lerTodosNumerosFuncNaoDocentes() {
 		ArrayList listaNumeros = null;
-
 		try {
 			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO ORDER BY numeroMecanografico");
 			ResultSet resultado = sql.executeQuery();
-
 			PreparedStatement sql2 = UtilRelacional.prepararComando("SELECT * FROM ass_FUNC_NAO_DOCENTE WHERE chaveFuncionario = ?");
 			ResultSet resultado2 = null;
-
 			listaNumeros = new ArrayList();
 			while (resultado.next()) {
 				sql2.setInt(1, resultado.getInt("codigoInterno"));
 				resultado2 = sql2.executeQuery();
-
-				if (resultado2.next()) {
-					//funcionario a cumprir assiduidade
+				if (resultado2.next()) { //funcionario a cumprir assiduidade
 					listaNumeros.add(new Integer(resultado.getInt("numeroMecanografico")));
 				}
 			}
 			sql2.close();
 			sql.close();
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("FuncionarioRelacional.lerTodosNumerosMecanograficos: " + e.toString());
 			return null;
 		} finally {
@@ -751,39 +2368,554 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 		}
 	} /* lerTodosNumerosMecanograficos */
 
-	/** Retorna o ultimo codigoInterno utilizado
-	 * @return codigoInterno se sucedeu, 0 caso contrario
-	 */
-	public int ultimoCodigoInterno() {
-		int ultimo = 0;
-
+	public boolean sobreposicaoHistoricos(int codigoInterno, Date dataInicio, Date dataFim) {
+		boolean existeSobreposicao = false;
 		try {
-			PreparedStatement sql = UtilRelacional.prepararComando("SELECT max(codigoInterno) FROM ass_FUNCIONARIO");
+			PreparedStatement sql = null;
+			if (dataFim == null) {
+				sql =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_FUNCIONARIO_HISTORICO "
+							+ "WHERE chaveFuncionario = ? AND "
+							+ "((dataInicio >= ? AND dataFim IS NULL) OR (dataInicio <= ? AND dataFim IS NOT NULL AND dataFim >= ?))");
+				sql.setInt(1, codigoInterno);
+				sql.setDate(2, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(3, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(4, new java.sql.Date(dataInicio.getTime()));
+			} else {
+				sql =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_FUNCIONARIO_HISTORICO "
+							+ "WHERE chaveFuncionario = ? AND ((dataInicio BETWEEN ? AND ?) "
+							+ "OR (dataFim IS NOT NULL AND dataFim BETWEEN ? AND ?) "
+							+ "OR (dataInicio <= ? AND dataFim IS NOT NULL AND dataFim >= ?) "
+							+ "OR (dataInicio >= ? AND dataFim IS NULL))");
+				sql.setInt(1, codigoInterno);
+				sql.setDate(2, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(3, new java.sql.Date(dataFim.getTime()));
+				sql.setDate(4, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(5, new java.sql.Date(dataFim.getTime()));
+				sql.setDate(6, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(7, new java.sql.Date(dataFim.getTime()));
+			}
 
 			ResultSet resultado = sql.executeQuery();
-
-			if (resultado.next())
-				ultimo = resultado.getInt(1);
+			if (resultado.next()) {
+				existeSobreposicao = true;
+			}
 
 			sql.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.sobreposicaoHistoricos: " + e.toString());
+		} finally {
+			return existeSobreposicao;
+		}
+	} /* sobreposicaoHistoricos */
+
+	public boolean sobreposicaoFuncResponsavel(int codigoInterno, Date dataInicio, Date dataFim) {
+		boolean existeSobreposicao = false;
+		try {
+			PreparedStatement sql = null;
+			if (dataFim == null) {
+				sql =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_FUNCIONARIO_HISTORICO "
+							+ "WHERE chaveFuncionario = ? AND "
+							+ "((dataInicio >= ? AND dataFim IS NULL) OR (dataInicio <= ? AND dataFim IS NOT NULL AND dataFim >= ?)) "
+							+ "AND chaveFuncResponsavel IS NOT NULL");
+				sql.setInt(1, codigoInterno);
+				sql.setDate(2, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(3, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(4, new java.sql.Date(dataInicio.getTime()));
+			} else {
+				sql =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_FUNCIONARIO_HISTORICO "
+							+ "WHERE chaveFuncionario = ? AND ((dataInicio BETWEEN ? AND ?) "
+							+ "OR (dataFim IS NOT NULL AND dataFim BETWEEN ? AND ?) "
+							+ "OR (dataInicio <= ? AND dataFim IS NOT NULL AND dataFim >= ?) "
+							+ "OR (dataInicio >= ? AND dataInicio <= ? AND dataFim IS NULL)) "
+							+ "AND chaveFuncResponsavel IS NOT NULL");
+				sql.setInt(1, codigoInterno);
+				sql.setDate(2, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(3, new java.sql.Date(dataFim.getTime()));
+				sql.setDate(4, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(5, new java.sql.Date(dataFim.getTime()));
+				sql.setDate(6, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(7, new java.sql.Date(dataFim.getTime()));
+				sql.setDate(8, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(9, new java.sql.Date(dataFim.getTime()));
+			}
+
+			ResultSet resultado = sql.executeQuery();
+			if (resultado.next()) {
+				existeSobreposicao = true;
+			}
+
+			sql.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.sobreposicaoFuncResponsavel: " + e.toString());
+		} finally {
+			return existeSobreposicao;
+		}
+	} /* sobreposicaoFuncResponsavel */
+
+	public boolean sobreposicaoCCLocalTrabalho(int codigoInterno, Date dataInicio, Date dataFim) {
+		boolean existeSobreposicao = false;
+		try {
+			PreparedStatement sql = null;
+			if (dataFim == null) {
+				sql =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_FUNCIONARIO_HISTORICO "
+							+ "WHERE chaveFuncionario = ? AND "
+							+ "((dataInicio >= ? AND dataFim IS NULL) OR (dataInicio <= ? AND dataFim IS NOT NULL AND dataFim >= ?)) "
+							+ "AND chaveCCLocalTrabalho IS NOT NULL");
+				sql.setInt(1, codigoInterno);
+				sql.setDate(2, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(3, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(4, new java.sql.Date(dataInicio.getTime()));
+			} else {
+				sql =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_FUNCIONARIO_HISTORICO "
+							+ "WHERE chaveFuncionario = ? AND ((dataInicio BETWEEN ? AND ?) "
+							+ "OR (dataFim IS NOT NULL AND dataFim BETWEEN ? AND ?) "
+							+ "OR (dataInicio <= ? AND dataFim IS NOT NULL AND dataFim >= ?) "
+							+ "OR (dataInicio >= ? AND dataInicio <= ? AND dataFim IS NULL)) "
+							+ "AND chaveCCLocalTrabalho IS NOT NULL");
+				sql.setInt(1, codigoInterno);
+				sql.setDate(2, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(3, new java.sql.Date(dataFim.getTime()));
+				sql.setDate(4, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(5, new java.sql.Date(dataFim.getTime()));
+				sql.setDate(6, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(7, new java.sql.Date(dataFim.getTime()));
+				sql.setDate(8, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(9, new java.sql.Date(dataFim.getTime()));
+			}
+
+			ResultSet resultado = sql.executeQuery();
+			if (resultado.next()) {
+				existeSobreposicao = true;
+			}
+
+			sql.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.sobreposicaoCCLocalTrabalho: " + e.toString());
+		} finally {
+			return existeSobreposicao;
+		}
+	} /* sobreposicaoCCLocalTrabalho */
+
+	public boolean sobreposicaoCCCorrespondencia(int codigoInterno, Date dataInicio, Date dataFim) {
+		boolean existeSobreposicao = false;
+		try {
+			PreparedStatement sql = null;
+			if (dataFim == null) {
+				sql =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_FUNCIONARIO_HISTORICO "
+							+ "WHERE chaveFuncionario = ? AND "
+							+ "((dataInicio >= ? AND dataFim IS NULL) OR (dataInicio <= ? AND dataFim IS NOT NULL AND dataFim >= ?)) "
+							+ "AND chaveCCCorrespondencia IS NOT NULL");
+				sql.setInt(1, codigoInterno);
+				sql.setDate(2, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(3, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(4, new java.sql.Date(dataInicio.getTime()));
+			} else {
+				sql =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_FUNCIONARIO_HISTORICO "
+							+ "WHERE chaveFuncionario = ? AND ((dataInicio BETWEEN ? AND ?) "
+							+ "OR (dataFim IS NOT NULL AND dataFim BETWEEN ? AND ?) "
+							+ "OR (dataInicio <= ? AND dataFim IS NOT NULL AND dataFim >= ?) "
+							+ "OR (dataInicio >= ? AND dataInicio <= ? AND dataFim IS NULL)) "
+							+ "AND chaveCCCorrespondencia IS NOT NULL");
+				sql.setInt(1, codigoInterno);
+				sql.setDate(2, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(3, new java.sql.Date(dataFim.getTime()));
+				sql.setDate(4, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(5, new java.sql.Date(dataFim.getTime()));
+				sql.setDate(6, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(7, new java.sql.Date(dataFim.getTime()));
+				sql.setDate(8, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(9, new java.sql.Date(dataFim.getTime()));
+			}
+
+			ResultSet resultado = sql.executeQuery();
+			if (resultado.next()) {
+				existeSobreposicao = true;
+			}
+
+			sql.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.sobreposicaoCCCorrespondencia: " + e.toString());
+		} finally {
+			return existeSobreposicao;
+		}
+	} /* sobreposicaoCCCorrespondencia */
+
+	public boolean sobreposicaoCCVencimento(int codigoInterno, Date dataInicio, Date dataFim) {
+		boolean existeSobreposicao = false;
+		try {
+			PreparedStatement sql = null;
+			if (dataFim == null) {
+				sql =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_FUNCIONARIO_HISTORICO "
+							+ "WHERE chaveFuncionario = ? AND "
+							+ "((dataInicio >= ? AND dataFim IS NULL) OR (dataInicio <= ? AND dataFim IS NOT NULL AND dataFim >= ?)) "
+							+ "AND chaveCCVencimento IS NOT NULL");
+				sql.setInt(1, codigoInterno);
+				sql.setDate(2, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(3, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(4, new java.sql.Date(dataInicio.getTime()));
+			} else {
+				sql =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_FUNCIONARIO_HISTORICO "
+							+ "WHERE chaveFuncionario = ? AND ((dataInicio BETWEEN ? AND ?) "
+							+ "OR (dataFim IS NOT NULL AND dataFim BETWEEN ? AND ?) "
+							+ "OR (dataInicio <= ? AND dataFim IS NOT NULL AND dataFim >= ?) "
+							+ "OR (dataInicio >= ? AND dataInicio <= ? AND dataFim IS NULL)) "
+							+ "AND chaveCCVencimento IS NOT NULL");
+				sql.setInt(1, codigoInterno);
+				sql.setDate(2, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(3, new java.sql.Date(dataFim.getTime()));
+				sql.setDate(4, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(5, new java.sql.Date(dataFim.getTime()));
+				sql.setDate(6, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(7, new java.sql.Date(dataFim.getTime()));
+				sql.setDate(8, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(9, new java.sql.Date(dataFim.getTime()));
+			}
+
+			ResultSet resultado = sql.executeQuery();
+			if (resultado.next()) {
+				existeSobreposicao = true;
+			}
+
+			sql.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.sobreposicaoCCVencimento: " + e.toString());
+		} finally {
+			return existeSobreposicao;
+		}
+	} /* sobreposicaoCCVencimento */
+
+	public boolean sobreposicaoCalendario(int codigoInterno, Date dataInicio, Date dataFim) {
+		boolean existeSobreposicao = false;
+		try {
+			PreparedStatement sql = null;
+			if (dataFim == null) {
+				sql =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_FUNCIONARIO_HISTORICO "
+							+ "WHERE chaveFuncionario = ? AND "
+							+ "((dataInicio >= ? AND dataFim IS NULL) OR (dataInicio <= ? AND dataFim IS NOT NULL AND dataFim >= ?)) "
+							+ "AND calendario IS NOT NULL");
+				sql.setInt(1, codigoInterno);
+				sql.setDate(2, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(3, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(4, new java.sql.Date(dataInicio.getTime()));
+			} else {
+				sql =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_FUNCIONARIO_HISTORICO "
+							+ "WHERE chaveFuncionario = ? AND ((dataInicio BETWEEN ? AND ?) "
+							+ "OR (dataFim IS NOT NULL AND dataFim BETWEEN ? AND ?) "
+							+ "OR (dataInicio <= ? AND dataFim IS NOT NULL AND dataFim >= ?) "
+							+ "OR (dataInicio >= ? AND dataInicio <= ? AND dataFim IS NULL)) "
+							+ "AND calendario IS NOT NULL");
+				sql.setInt(1, codigoInterno);
+				sql.setDate(2, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(3, new java.sql.Date(dataFim.getTime()));
+				sql.setDate(4, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(5, new java.sql.Date(dataFim.getTime()));
+				sql.setDate(6, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(7, new java.sql.Date(dataFim.getTime()));
+				sql.setDate(8, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(9, new java.sql.Date(dataFim.getTime()));
+			}
+
+			ResultSet resultado = sql.executeQuery();
+			if (resultado.next()) {
+				existeSobreposicao = true;
+			}
+
+			sql.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.sobreposicaoCalendario: " + e.toString());
+		} finally {
+			return existeSobreposicao;
+		}
+	} /* sobreposicaoCalendario */
+
+	public boolean sobreposicaoStatusAssiduidade(int codigoInterno, Date dataInicio, Date dataFim) {
+		boolean existeSobreposicao = false;
+		try {
+			PreparedStatement sql = null;
+			if (dataFim == null) {
+				sql =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_FUNCIONARIO_HISTORICO "
+							+ "WHERE chaveFuncionario = ? AND "
+							+ "((dataInicio >= ? AND dataFim IS NULL) OR (dataInicio <= ? AND dataFim IS NOT NULL AND dataFim >= ?)) "
+							+ "AND chaveStatus IS NOT NULL");
+				sql.setInt(1, codigoInterno);
+				sql.setDate(2, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(3, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(4, new java.sql.Date(dataInicio.getTime()));
+			} else {
+				sql =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_FUNCIONARIO_HISTORICO "
+							+ "WHERE chaveFuncionario = ? AND ((dataInicio BETWEEN ? AND ?) "
+							+ "OR (dataFim IS NOT NULL AND dataFim BETWEEN ? AND ?) "
+							+ "OR (dataInicio <= ? AND dataFim IS NOT NULL AND dataFim >= ?) "
+							+ "OR (dataInicio >= ? AND dataInicio <= ? AND dataFim IS NULL)) "
+							+ "AND chaveStatus IS NOT NULL");
+				sql.setInt(1, codigoInterno);
+				sql.setDate(2, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(3, new java.sql.Date(dataFim.getTime()));
+				sql.setDate(4, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(5, new java.sql.Date(dataFim.getTime()));
+				sql.setDate(6, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(7, new java.sql.Date(dataFim.getTime()));
+				sql.setDate(8, new java.sql.Date(dataInicio.getTime()));
+				sql.setDate(9, new java.sql.Date(dataFim.getTime()));
+			}
+
+			ResultSet resultado = sql.executeQuery();
+			if (resultado.next()) {
+				existeSobreposicao = true;
+			}
+
+			sql.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.sobreposicaoStatusAssiduidade: " + e.toString());
+		} finally {
+			return existeSobreposicao;
+		}
+	} /* sobreposicaoStatusAssiduidade */
+
+	public boolean temHistorico(int numeroMecanografico) {
+		boolean temHistorico = false;
+		try {
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO WHERE numeroMecanografico = ?");
+			sql.setInt(1, numeroMecanografico);
+			ResultSet resultado = sql.executeQuery();
+			if (resultado.next()) {
+				PreparedStatement sql2 =
+					UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO_HISTORICO " + "WHERE chaveFuncionario = ? ");
+				sql2.setInt(1, resultado.getInt("codigoInterno"));
+				ResultSet resultado2 = sql2.executeQuery();
+				if (resultado2.next()) {
+					temHistorico = true;
+				}
+				sql2.close();
+			}
+			sql.close();
 		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.temHistorico: " + e.toString());
+		} finally {
+			return temHistorico;
+		}
+	} /* temHistorico */
+
+	public boolean temHistoricoFuncResponsavel(int numeroMecanografico) {
+		boolean temHistorico = false;
+		try {
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO WHERE numeroMecanografico = ?");
+			sql.setInt(1, numeroMecanografico);
+			ResultSet resultado = sql.executeQuery();
+			if (resultado.next()) {
+				PreparedStatement sql2 =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_FUNCIONARIO_HISTORICO " + "WHERE chaveFuncionario = ? AND chaveFuncResponsavel IS NOT NULL");
+				sql2.setInt(1, resultado.getInt("codigoInterno"));
+				ResultSet resultado2 = sql2.executeQuery();
+				if (resultado2.next()) {
+					temHistorico = true;
+				}
+				sql2.close();
+			}
+			sql.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.temHistoricoFuncResponsavel: " + e.toString());
+		} finally {
+			return temHistorico;
+		}
+	} /* temHistoricoFuncResponsavel */
+
+	public boolean temHistoricoCCLocalTrabalho(int numeroMecanografico) {
+		boolean temHistorico = false;
+		try {
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO WHERE numeroMecanografico = ?");
+			sql.setInt(1, numeroMecanografico);
+			ResultSet resultado = sql.executeQuery();
+			if (resultado.next()) {
+				PreparedStatement sql2 =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_FUNCIONARIO_HISTORICO " + "WHERE chaveFuncionario = ? AND chaveCCLocalTrabalho IS NOT NULL");
+				sql2.setInt(1, resultado.getInt("codigoInterno"));
+				ResultSet resultado2 = sql2.executeQuery();
+				if (resultado2.next()) {
+					temHistorico = true;
+				}
+				sql2.close();
+			}
+			sql.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.temHistoricoCCLocalTrabalho: " + e.toString());
+		} finally {
+			return temHistorico;
+		}
+	} /* temHistoricoCCLocalTrabalho */
+
+	public boolean temHistoricoCCCorrespondencia(int numeroMecanografico) {
+		boolean temHistorico = false;
+		try {
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO WHERE numeroMecanografico = ?");
+			sql.setInt(1, numeroMecanografico);
+			ResultSet resultado = sql.executeQuery();
+			if (resultado.next()) {
+				PreparedStatement sql2 =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_FUNCIONARIO_HISTORICO " + "WHERE chaveFuncionario = ? AND chaveCCCorrespondencia IS NOT NULL");
+				sql2.setInt(1, resultado.getInt("codigoInterno"));
+				ResultSet resultado2 = sql2.executeQuery();
+				if (resultado2.next()) {
+					temHistorico = true;
+				}
+				sql2.close();
+			}
+			sql.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.temHistoricoCCCorrespondencia: " + e.toString());
+		} finally {
+			return temHistorico;
+		}
+	} /* temHistoricoCCCorrespondencia */
+
+	public boolean temHistoricoCCVencimento(int numeroMecanografico) {
+		boolean temHistorico = false;
+		try {
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO WHERE numeroMecanografico = ?");
+			sql.setInt(1, numeroMecanografico);
+			ResultSet resultado = sql.executeQuery();
+			if (resultado.next()) {
+				PreparedStatement sql2 =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_FUNCIONARIO_HISTORICO " + "WHERE chaveFuncionario = ? AND chaveCCVencimento IS NOT NULL");
+				sql2.setInt(1, resultado.getInt("codigoInterno"));
+				ResultSet resultado2 = sql2.executeQuery();
+				if (resultado2.next()) {
+					temHistorico = true;
+				}
+				sql2.close();
+			}
+			sql.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.temHistoricoCCVencimento: " + e.toString());
+		} finally {
+			return temHistorico;
+		}
+	} /* temHistoricoCCVencimento */
+
+	public boolean temHistoricoCalendario(int numeroMecanografico) {
+		boolean temHistorico = false;
+		try {
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO WHERE numeroMecanografico = ?");
+			sql.setInt(1, numeroMecanografico);
+			ResultSet resultado = sql.executeQuery();
+			if (resultado.next()) {
+				PreparedStatement sql2 =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_FUNCIONARIO_HISTORICO " + "WHERE chaveFuncionario = ? AND calendario IS NOT NULL");
+				sql2.setInt(1, resultado.getInt("codigoInterno"));
+				ResultSet resultado2 = sql2.executeQuery();
+				if (resultado2.next()) {
+					temHistorico = true;
+				}
+				sql2.close();
+			}
+			sql.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.temHistoricoCalendario: " + e.toString());
+		} finally {
+			return temHistorico;
+		}
+	} /* temHistoricoCalendario */
+
+	public boolean temHistoricoStatusAssiduidade(int numeroMecanografico) {
+		boolean temHistorico = false;
+		try {
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO WHERE numeroMecanografico = ?");
+			sql.setInt(1, numeroMecanografico);
+			ResultSet resultado = sql.executeQuery();
+			if (resultado.next()) {
+				PreparedStatement sql2 =
+					UtilRelacional.prepararComando(
+						"SELECT * FROM ass_FUNCIONARIO_HISTORICO " + "WHERE chaveFuncionario = ? AND chaveStatus IS NOT NULL");
+				sql2.setInt(1, resultado.getInt("codigoInterno"));
+				ResultSet resultado2 = sql2.executeQuery();
+				if (resultado2.next()) {
+					temHistorico = true;
+				}
+				sql2.close();
+			}
+			sql.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.temHistoricoStatusAssiduidade: " + e.toString());
+		} finally {
+			return temHistorico;
+		}
+	} /* temHistoricoStatusAssiduidade */
+
+	public int ultimoCodigoInterno() {
+		int ultimo = 0;
+		try {
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT max(codigoInterno) FROM ass_FUNCIONARIO");
+			ResultSet resultado = sql.executeQuery();
+			if (resultado.next())
+				ultimo = resultado.getInt(1);
+			sql.close();
+		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("FuncionarioRelacional.ultimoCodigoInterno: " + e.toString());
 		} finally {
 			return ultimo;
 		}
-	}
+	} /* ultimoCodigoInterno */
 
 	/******************************************************************************************
-	* Assiduidade do Funcionario 
-	*******************************************************************************************/
-	public boolean escreveFimAssiduidade(int numMecanografico, Date fimAssiduidade, int status) {
+	 * Assiduidade do Funcionario 
+	 *******************************************************************************************/
+	public boolean escreverFimAssiduidade(int numMecanografico, Date fimAssiduidade) {
 		boolean resultado = false;
-
 		try {
 			PreparedStatement sql =
 				UtilRelacional.prepararComando("SELECT codigoInterno FROM ass_FUNCIONARIO " + "WHERE numeroMecanografico = ?");
 			sql.setInt(1, numMecanografico);
+
 			ResultSet resultadoQuery = sql.executeQuery();
+
 			int chaveFuncionario = 0;
 			if (resultadoQuery.next()) {
 				chaveFuncionario = resultadoQuery.getInt("codigoInterno");
@@ -793,49 +2925,70 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 			}
 			sql.close();
 
-			//último registo de Assiduidade                       
+			//descobre último registo de assiduidade sobre horário                        
 			sql = UtilRelacional.prepararComando("SELECT MAX(dataInicio) FROM ass_HORARIO " + "WHERE chaveFuncionario = ?");
 			sql.setInt(1, chaveFuncionario);
+
 			resultadoQuery = sql.executeQuery();
 			Date dataAssiduidade = null;
 			if (resultadoQuery.next()) {
+				System.out.println("--> data inicio do horario");
 				dataAssiduidade = resultadoQuery.getDate("MAX(dataInicio)");
 			}
 			sql.close();
 
-			//escreve a data fim de assiduidade nos actuais registos
+			if (dataAssiduidade != null) {
+				//escreve a data fim de assiduidade nos actuais registos do horário
+				sql =
+					UtilRelacional.prepararComando(
+						"UPDATE ass_HORARIO SET " + "dataFim = ? " + "WHERE chaveFuncionario = ? " + "AND dataInicio = ?");
+				sql.setDate(1, new java.sql.Date(fimAssiduidade.getTime()));
+				sql.setInt(2, chaveFuncionario);
+				sql.setDate(3, new java.sql.Date(dataAssiduidade.getTime()));
+
+				sql.executeUpdate();
+				sql.close();
+			}
+
+			//escreve a data fim de assiduidade nos actuais registos do histórico
 			sql =
 				UtilRelacional.prepararComando(
-					"SELECT codigoInterno FROM ass_HORARIO " + "WHERE chaveFuncionario = ? " + "AND dataInicio = ?");
-			sql.setInt(1, chaveFuncionario);
-			sql.setDate(2, new java.sql.Date(dataAssiduidade.getTime()));
-			resultadoQuery = sql.executeQuery(); //registos actuais de assiduidade
+					"UPDATE ass_FUNCIONARIO_HISTORICO SET "
+						+ "dataFim = ? "
+						+ " WHERE chaveFuncionario = ? "
+						+ "AND ((dataFim IS NULL) OR (dataFim IS NOT NULL AND dataFim > ?))");
+			sql.setDate(1, new java.sql.Date(fimAssiduidade.getTime()));
+			sql.setInt(2, chaveFuncionario);
+			sql.setDate(3, new java.sql.Date(fimAssiduidade.getTime()));
 
-			PreparedStatement sqlEscrita =
-				UtilRelacional.prepararComando("UPDATE ass_HORARIO SET " + "dataFim = ? " + "WHERE codigoInterno = ? ");
+			sql.executeUpdate();
+			sql.close();
 
-			while (resultadoQuery.next()) {
-				sqlEscrita.setDate(1, new java.sql.Date(fimAssiduidade.getTime()));
-				sqlEscrita.setInt(2, resultadoQuery.getInt("codigoInterno"));
+			//escreve a data fim de assiduidade no registo de cartão de funcionário
+			sql =
+				UtilRelacional.prepararComando(
+					"UPDATE ass_CARTAO SET " + "dataFim = ? " + " WHERE chaveFuncionario = ? " 
+					+ " AND dataFim > ?");
+			sql.setDate(1, new java.sql.Date(fimAssiduidade.getTime()));
+			sql.setInt(2, chaveFuncionario);
+			sql.setDate(3, new java.sql.Date(fimAssiduidade.getTime()));
 
-				sqlEscrita.executeUpdate();
-			}
-			sqlEscrita.close();
+			sql.executeUpdate();
 			sql.close();
 
 			resultado = true;
 		} catch (Exception e) {
-			System.out.println("FuncionarioRelacional.escreveFimAssiduidade: " + e.toString());
+			e.printStackTrace();
+			System.out.println("FuncionarioRelacional.escreverFimAssiduidade: " + e.toString());
 		} finally {
 			return resultado;
 		}
-	} /* escreveFimAssiduidade */
+	} /* escreverFimAssiduidade */
 
 	//Se retornar null ocorreu um erro ou o funcionário não tem fim de Assiduidade
 	//Se retornar uma data pode não ser o fim de Assiduidade ou  o fim do horário
 	public Timestamp lerFimAssiduidade(int numMecanografico) {
 		Timestamp dataAssiduidade = null;
-
 		try {
 			PreparedStatement sql =
 				UtilRelacional.prepararComando("SELECT codigoInterno FROM ass_FUNCIONARIO " + "WHERE numeroMecanografico = ?");
@@ -849,7 +3002,6 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 				return null;
 			}
 			sql.close();
-
 			sql = UtilRelacional.prepararComando("SELECT MAX(dataInicio) FROM ass_HORARIO " + "WHERE chaveFuncionario = ?");
 			sql.setInt(1, chaveFuncionario);
 			resultadoQuery = sql.executeQuery();
@@ -858,7 +3010,6 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 				dataInicioAssiduidade = resultadoQuery.getDate("MAX(dataInicio)");
 			}
 			sql.close();
-
 			sql = UtilRelacional.prepararComando("SELECT dataFim FROM ass_HORARIO " + "WHERE chaveFuncionario = ? AND dataInicio = ?");
 			sql.setInt(1, chaveFuncionario);
 			sql.setDate(2, new java.sql.Date(dataInicioAssiduidade.getTime()));
@@ -870,6 +3021,7 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 			}
 			sql.close();
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("FuncionarioRelacional.lerFimAssiduidade: " + e.toString());
 		} finally {
 			return dataAssiduidade;
@@ -878,12 +3030,14 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 
 	public Timestamp lerInicioAssiduidade(int numMecanografico) {
 		Timestamp dataAssiduidade = null;
-
 		try {
+			//chave do funcionário
 			PreparedStatement sql =
 				UtilRelacional.prepararComando("SELECT codigoInterno FROM ass_FUNCIONARIO " + "WHERE numeroMecanografico = ?");
 			sql.setInt(1, numMecanografico);
+
 			ResultSet resultadoQuery = sql.executeQuery();
+
 			int chaveFuncionario = 0;
 			if (resultadoQuery.next()) {
 				chaveFuncionario = resultadoQuery.getInt("codigoInterno");
@@ -893,15 +3047,37 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 			}
 			sql.close();
 
+			//data de inicio de assiduidade pelo horário
 			sql = UtilRelacional.prepararComando("SELECT MIN(dataInicio) FROM ass_HORARIO " + "WHERE chaveFuncionario = ?");
 			sql.setInt(1, chaveFuncionario);
-			resultadoQuery = sql.executeQuery();
 
+			resultadoQuery = sql.executeQuery();
 			if (resultadoQuery.next()) {
-				dataAssiduidade = new Timestamp(resultadoQuery.getDate("MIN(dataInicio)").getTime());
+				resultadoQuery.getDate("MIN(dataInicio)");
+				if (!resultadoQuery.wasNull()) {
+					dataAssiduidade = new Timestamp(resultadoQuery.getDate("MIN(dataInicio)").getTime());
+				}
 			}
 			sql.close();
+
+			//data de inicio de assiduidade pelo histórico
+			if (dataAssiduidade == null) {
+				sql =
+					UtilRelacional.prepararComando(
+						"SELECT MIN(dataInicio) FROM ass_FUNCIONARIO_HISTORICO " + "WHERE chaveFuncionario = ? AND chaveStatus IS NOT NULL");
+				sql.setInt(1, chaveFuncionario);
+
+				resultadoQuery = sql.executeQuery();
+				if (resultadoQuery.next()) {
+					resultadoQuery.getDate("MIN(dataInicio)");
+					if (!resultadoQuery.wasNull()) {
+						dataAssiduidade = new Timestamp(resultadoQuery.getDate("MIN(dataInicio)").getTime());
+					}
+				}
+				sql.close();
+			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("FuncionarioRelacional.lerInicioAssiduidade: " + e.toString());
 		} finally {
 			return dataAssiduidade;
@@ -910,12 +3086,13 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 
 	public boolean verificaFimAssiduidade(int numMecanografico, Date dataFimAssiduidade) {
 		boolean resultado = false;
-
 		try {
 			PreparedStatement sql =
 				UtilRelacional.prepararComando("SELECT codigoInterno FROM ass_FUNCIONARIO " + "WHERE numeroMecanografico = ?");
 			sql.setInt(1, numMecanografico);
+
 			ResultSet resultadoQuery = sql.executeQuery();
+
 			int chaveFuncionario = 0;
 			if (resultadoQuery.next()) {
 				chaveFuncionario = resultadoQuery.getInt("codigoInterno");
@@ -927,19 +3104,35 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 
 			sql = UtilRelacional.prepararComando("SELECT MAX(dataInicio) FROM ass_HORARIO " + "WHERE chaveFuncionario = ?");
 			sql.setInt(1, chaveFuncionario);
+
 			resultadoQuery = sql.executeQuery();
+
 			Date dataAssiduidade = null;
 			if (resultadoQuery.next()) {
 				dataAssiduidade = resultadoQuery.getDate("MAX(dataInicio)");
 			}
 			sql.close();
 
+			if (dataAssiduidade == null) {
+				sql =
+					UtilRelacional.prepararComando("SELECT MAX(dataInicio) FROM ass_FUNCIONARIO_HISTORICO " + "WHERE chaveFuncionario = ?");
+				sql.setInt(1, chaveFuncionario);
+
+				resultadoQuery = sql.executeQuery();
+
+				if (resultadoQuery.next()) {
+					dataAssiduidade = resultadoQuery.getDate("MAX(dataInicio)");
+				}
+				sql.close();
+			}
+
 			//verifica se a data fim de assiduidade está contida nos registos do funcionario
-			//se nao então a data fim é válida
-			if (!dataFimAssiduidade.before(dataAssiduidade)) {
+			//se não então a data fim é válida
+			if (dataFimAssiduidade.after(dataAssiduidade)) {
 				resultado = true;
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("FuncionarioRelacional.verificaFimAssiduidade: " + e.toString());
 		} finally {
 			return resultado;

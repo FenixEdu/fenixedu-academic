@@ -25,7 +25,7 @@ public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvalu
 	
 	private IEnrolment enrolment;
 	private IPessoa personResponsibleForGrade;
-	private Funcionario employee; 
+	private Employee employee; 
 	
 	private Integer enrolmentKey;
 	private Integer personResponsibleForGradeKey;
@@ -132,7 +132,7 @@ public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvalu
 		personResponsibleForGradeKey = integer;
 	}
 
-	public Funcionario getEmployee() {
+	public Employee getEmployee() {
 		return employee;
 	}
 
@@ -140,8 +140,8 @@ public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvalu
 		return employeeKey;
 	}
 
-	public void setEmployee(Funcionario funcionario) {
-		employee = funcionario;
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 
 	public void setEmployeeKey(Integer integer) {

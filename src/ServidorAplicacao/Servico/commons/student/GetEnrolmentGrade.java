@@ -7,14 +7,13 @@ import org.apache.commons.beanutils.BeanComparator;
 
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.util.Cloner;
-import Dominio.Funcionario;
+import Dominio.Employee;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEvaluation;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEmployee;
-import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
@@ -71,10 +70,11 @@ public class GetEnrolmentGrade implements IServico {
 			if (enrolmentEvaluation.getEmployee() != null) {
 
 				try {
-					if (String.valueOf(enrolmentEvaluation.getEmployee().getCodigoInterno()) != null || String.valueOf(enrolmentEvaluation.getEmployee().getCodigoInterno()).length() > 0) {
-						Funcionario funcionario = readEmployee(enrolmentEvaluation.getEmployee().getCodigoInterno());
-						enrolmentEvaluation.setEmployee(funcionario);
-						infolatestEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(funcionario.getPerson()));
+					if (String.valueOf(enrolmentEvaluation.getEmployee().getIdInternal()) != null
+						|| String.valueOf(enrolmentEvaluation.getEmployee().getIdInternal()).length() > 0) {
+						Employee employee = readEmployee(enrolmentEvaluation.getEmployee().getIdInternal().intValue());
+						enrolmentEvaluation.setEmployee(employee);
+						infolatestEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(employee.getPerson()));
 					}
 				} catch (ExcepcaoPersistencia e1) {
 					throw new FenixServiceException(e1);
@@ -106,10 +106,11 @@ public class GetEnrolmentGrade implements IServico {
 			InfoEnrolmentEvaluation infolatestEvaluation = Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(latestEvaluation);
 			try {
 				if (latestEvaluation.getEmployee() != null) {
-					if (String.valueOf(latestEvaluation.getEmployee().getCodigoInterno()) != null || String.valueOf(latestEvaluation.getEmployee().getCodigoInterno()).length() > 0) {
-						Funcionario funcionario = readEmployee(latestEvaluation.getEmployee().getCodigoInterno());
-						latestEvaluation.setEmployee(funcionario);
-						infolatestEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(funcionario.getPerson()));
+					if (String.valueOf(latestEvaluation.getEmployee().getIdInternal()) != null
+						|| String.valueOf(latestEvaluation.getEmployee().getIdInternal()).length() > 0) {
+						Employee employee = readEmployee(latestEvaluation.getEmployee().getIdInternal().intValue());
+						latestEvaluation.setEmployee(employee);
+						infolatestEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(employee.getPerson()));
 					}
 				}
 			} catch (ExcepcaoPersistencia e1) {
@@ -136,10 +137,11 @@ public class GetEnrolmentGrade implements IServico {
 
 				try {
 					if (latestEvaluation.getEmployee() != null) {
-						if (String.valueOf(latestEvaluation.getEmployee().getCodigoInterno()) != null || String.valueOf(latestEvaluation.getEmployee().getCodigoInterno()).length() > 0) {
-							Funcionario funcionario = readEmployee(latestEvaluation.getEmployee().getCodigoInterno());
-							latestEvaluation.setEmployee(funcionario);
-							infolatestEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(funcionario.getPerson()));
+						if (String.valueOf(latestEvaluation.getEmployee().getIdInternal()) != null
+							|| String.valueOf(latestEvaluation.getEmployee().getIdInternal()).length() > 0) {
+							Employee employee = readEmployee(latestEvaluation.getEmployee().getIdInternal().intValue());
+							latestEvaluation.setEmployee(employee);
+							infolatestEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(employee.getPerson()));
 						}
 					}
 				} catch (ExcepcaoPersistencia e1) {
@@ -159,10 +161,11 @@ public class GetEnrolmentGrade implements IServico {
 				try {
 
 					if (latestEvaluation.getEmployee() != null) {
-						if (String.valueOf(latestEvaluation.getEmployee().getCodigoInterno()) != null || String.valueOf(latestEvaluation.getEmployee().getCodigoInterno()).length() > 0) {
-							Funcionario funcionario = readEmployee(latestEvaluation.getEmployee().getCodigoInterno());
-							latestEvaluation.setEmployee(funcionario);
-							infolatestEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(funcionario.getPerson()));
+						if (String.valueOf(latestEvaluation.getEmployee().getIdInternal()) != null
+							|| String.valueOf(latestEvaluation.getEmployee().getIdInternal()).length() > 0) {
+							Employee employee = readEmployee(latestEvaluation.getEmployee().getIdInternal().intValue());
+							latestEvaluation.setEmployee(employee);
+							infolatestEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(employee.getPerson()));
 						}
 					}
 					return infolatestEvaluation;
@@ -175,12 +178,14 @@ public class GetEnrolmentGrade implements IServico {
 			if (previousMark.intValue() >= latestMark.intValue()) {
 				try {
 					previousEvaluation.setGrade((new Integer(previousEvaluation.getGrade())).toString());
-					InfoEnrolmentEvaluation infolatestEvaluation = Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(previousEvaluation);
+					InfoEnrolmentEvaluation infolatestEvaluation =
+						Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(previousEvaluation);
 					if (previousEvaluation.getEmployee() != null) {
-						if (String.valueOf(previousEvaluation.getEmployee().getCodigoInterno()) != null || String.valueOf(previousEvaluation.getEmployee().getCodigoInterno()).length() > 0) {
-							Funcionario funcionario = readEmployee(previousEvaluation.getEmployee().getCodigoInterno());
-							latestEvaluation.setEmployee(funcionario);
-							infolatestEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(funcionario.getPerson()));
+						if (String.valueOf(previousEvaluation.getEmployee().getIdInternal()) != null
+							|| String.valueOf(previousEvaluation.getEmployee().getIdInternal()).length() > 0) {
+							Employee employee = readEmployee(previousEvaluation.getEmployee().getIdInternal().intValue());
+							latestEvaluation.setEmployee(employee);
+							infolatestEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(employee.getPerson()));
 						}
 					}
 					return infolatestEvaluation;
@@ -191,12 +196,14 @@ public class GetEnrolmentGrade implements IServico {
 			} else {
 				try {
 					latestEvaluation.setGrade((new Integer(latestEvaluation.getGrade())).toString());
-					InfoEnrolmentEvaluation infolatestEvaluation = Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(latestEvaluation);
+					InfoEnrolmentEvaluation infolatestEvaluation =
+						Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(latestEvaluation);
 					if (latestEvaluation.getEmployee() != null) {
-						if (String.valueOf(latestEvaluation.getEmployee().getCodigoInterno()) != null || String.valueOf(latestEvaluation.getEmployee().getCodigoInterno()).length() > 0) {
-							Funcionario funcionario = readEmployee(latestEvaluation.getEmployee().getCodigoInterno());
-							latestEvaluation.setEmployee(funcionario);
-							infolatestEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(funcionario.getPerson()));
+						if (String.valueOf(latestEvaluation.getEmployee().getIdInternal()) != null
+							|| String.valueOf(latestEvaluation.getEmployee().getIdInternal()).length() > 0) {
+							Employee employee = readEmployee(latestEvaluation.getEmployee().getIdInternal().intValue());
+							latestEvaluation.setEmployee(employee);
+							infolatestEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(employee.getPerson()));
 						}
 					}
 					return infolatestEvaluation;
@@ -211,11 +218,12 @@ public class GetEnrolmentGrade implements IServico {
 	private InfoEnrolmentEvaluation getInfoLatestEvaluation(IEnrolmentEvaluation latestEvaluation) throws FenixServiceException {
 		InfoEnrolmentEvaluation infolatestEvaluation = Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(latestEvaluation);
 		if (latestEvaluation.getEmployee() != null) {
-			if (String.valueOf(latestEvaluation.getEmployee().getCodigoInterno()) != null || String.valueOf(latestEvaluation.getEmployee().getCodigoInterno()).length() > 0) {
+			if (String.valueOf(latestEvaluation.getEmployee().getIdInternal()) != null
+				|| String.valueOf(latestEvaluation.getEmployee().getIdInternal()).length() > 0) {
 				try {
-					Funcionario funcionario = readEmployee(latestEvaluation.getEmployee().getCodigoInterno());
-					latestEvaluation.setEmployee(funcionario);
-					infolatestEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(funcionario.getPerson()));
+					Employee employee = readEmployee(latestEvaluation.getEmployee().getIdInternal().intValue());
+					latestEvaluation.setEmployee(employee);
+					infolatestEvaluation.setInfoEmployee(Cloner.copyIPerson2InfoPerson(employee.getPerson()));
 				} catch (ExcepcaoPersistencia e) {
 					throw new FenixServiceException(e);
 				}
@@ -224,13 +232,16 @@ public class GetEnrolmentGrade implements IServico {
 		return infolatestEvaluation;
 	}
 
-	private Funcionario readEmployee(int funcionarioID) throws ExcepcaoPersistencia {
-		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-		IPersistentEmployee funcionarioPersistente = sp.getIPersistentEmployee();
-		Funcionario _funcionario = (Funcionario) funcionarioPersistente.readByCodigoInterno(funcionarioID);
-
-		return _funcionario;
-
+	private Employee readEmployee(int id) throws ExcepcaoPersistencia {
+		Employee employee = null;
+		IPersistentEmployee persistentEmployee;
+		try {
+			persistentEmployee = SuportePersistenteOJB.getInstance().getIPersistentEmployee();
+			employee = persistentEmployee.readByIdInternal(id);
+		} catch (ExcepcaoPersistencia e) {
+			e.printStackTrace();
+		}
+		return employee;
 	}
 
 }

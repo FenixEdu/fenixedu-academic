@@ -456,10 +456,6 @@
    	        <form-property name="state" type="java.lang.String"/>
       </form-bean>
 
-
-
-
-
    </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -1572,7 +1568,11 @@
 			<forward name="viewStudentCurricularPlans" path="df.page.viewStudentCurricularPlans"/>
 		</action>
 		
-		
+	  <action	type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.studentCurricularPlan.ShowStudentCurricularCoursePlanAction"
+				path="/showStudentCurricularCoursePlan"
+				scope="request">
+			<forward name="ShowStudentCurricularCoursePlan" path="df.page.showStudentCurricularCoursePlan"/>
+	 </action>		
 
 	  <action	name="chooseGuideStateForm"
 				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.GuideListingByStateDispatchAction"
@@ -1584,10 +1584,6 @@
 			<forward name="PrepareSuccess" path="df.page.searchGuideByState"/>
 			<forward name="ShowList" path="df.page.showSearchGuideListResult"/>
 		</action>
-
-
-
-
 
     </action-mappings>
     

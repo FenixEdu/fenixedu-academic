@@ -11,7 +11,7 @@ import java.util.Date;
 import Dominio.Justificacao;
 import ServidorPersistenteJDBC.IJustificacaoPersistente;
 import ServidorPersistenteJDBC.SuportePersistenteOracle;
-
+ 
 /**
  *
  * @author  Fernanda Quitério e Tania Pousão
@@ -160,5 +160,19 @@ public class JustificacaoRelacionalOracle implements IJustificacaoPersistente {
 
 	public ArrayList consultarJustificacoes(ArrayList listaChaveFuncionarios, ArrayList listaChaveParamJustificacoes, Date dataInicio, Date dataFim) {
 		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.IJustificacaoPersistente#lerJustificacao(int)
+	 */
+	public Justificacao lerJustificacao(int codigoInterno) {
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.IJustificacaoPersistente#apagarJustificacao(int)
+	 */
+	public boolean apagarJustificacao(int codigoInterno) {
+		return false;
 	} /* consultarJustificacoes */
 }
