@@ -41,9 +41,7 @@ public class InsertCurricularCourseAtDegreeCurricularPlan implements IServico {
 	}
 	
 
-	public List run(String name, String code, String credits, String theoreticalHours,
-						String praticalHours, String theoPratHours, String labHours,
-						String type, String mandatory, String basic,
+	public List run(String name, String code, String type, String mandatory, String basic,
 						String departmentCourseCodeAndName, Integer degreeCurricularPlanId) throws FenixServiceException {
 
 		IPersistentCurricularCourse persistentCurricularCourse = null;
@@ -56,27 +54,27 @@ public class InsertCurricularCourseAtDegreeCurricularPlan implements IServico {
 				
 				persistentCurricularCourse = persistentSuport.getIPersistentCurricularCourse();
 
-				ICurricularCourse curricularCourse = persistentCurricularCourse.readCurricularCourseByDegreeCurricularPlanAndNameAndCode(degreeCurricularPlan, name, code);
+				ICurricularCourse curricularCourse = persistentCurricularCourse.readCurricularCourseByDegreeCurricularPlanAndNameAndCode(degreeCurricularPlanId, name, code);
 				if(curricularCourse == null) {
 					// if it doesn´t exist in the database yet
 					curricularCourse = new CurricularCourse();			
 					curricularCourse.setName(name);
 					curricularCourse.setCode(code);
-					if(credits.compareTo("") != 0) {
-						curricularCourse.setCredits(new Double(credits));
-					}
-					if(theoreticalHours.compareTo("") != 0) {
-						curricularCourse.setTheoreticalHours(new Double(theoreticalHours));
-					}
-					if(praticalHours.compareTo("") != 0) {
-						curricularCourse.setPraticalHours(new Double(praticalHours));
-					}
-					if(theoPratHours.compareTo("") != 0) {
-						curricularCourse.setTheoPratHours(new Double(theoPratHours));
-					}
-					if(labHours.compareTo("") != 0) {
-						curricularCourse.setLabHours(new Double(labHours));
-					}
+//					if(credits.compareTo("") != 0) {
+//						curricularCourse.setCredits(new Double(credits));
+//					}
+//					if(theoreticalHours.compareTo("") != 0) {
+//						curricularCourse.setTheoreticalHours(new Double(theoreticalHours));
+//					}
+//					if(praticalHours.compareTo("") != 0) {
+//						curricularCourse.setPraticalHours(new Double(praticalHours));
+//					}
+//					if(theoPratHours.compareTo("") != 0) {
+//						curricularCourse.setTheoPratHours(new Double(theoPratHours));
+//					}
+//					if(labHours.compareTo("") != 0) {
+//						curricularCourse.setLabHours(new Double(labHours));
+//					}
 					if(type.compareTo("") != 0) {
 						curricularCourse.setType(new CurricularCourseType(new Integer(type)));
 					}

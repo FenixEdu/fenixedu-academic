@@ -66,19 +66,17 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 		}
 	}
 	
-	public ICurricularCourse readCurricularCourseByDegreeCurricularPlanAndNameAndCode(IDegreeCurricularPlan degreeCurricularPlan, String name, String code) throws ExcepcaoPersistencia {
+	public ICurricularCourse readCurricularCourseByDegreeCurricularPlanAndNameAndCode(Integer degreeCurricularPlanId, String name, String code) throws ExcepcaoPersistencia {
 		try {
 				ICurricularCourse curricularCourse = null;
 				String oqlQuery = "select all from " + CurricularCourse.class.getName();
 				oqlQuery += " where name = $1";
 				oqlQuery += " and code = $2";
-				oqlQuery += " and degreeCurricularPlan.degree.sigla = $3";
-				oqlQuery += " and degreeCurricularPlan.name = $4";
+				oqlQuery += " and degreeCurricularPlanKey = $3";
 				query.create(oqlQuery);
 				query.bind(name);
 				query.bind(code);
-				query.bind(degreeCurricularPlan.getDegree().getSigla());
-				query.bind(degreeCurricularPlan.getName());
+				query.bind(degreeCurricularPlanId);
 
 				List result = (List) query.execute();
 				try {
@@ -87,6 +85,7 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 					throw ex;
 				}
 
+				if(result.size()!=1) return null;
 				if ((result != null) && (result.size() != 0)) {
 					curricularCourse = (ICurricularCourse) result.get(0);
 				}
@@ -463,4 +462,5 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
+	
 }

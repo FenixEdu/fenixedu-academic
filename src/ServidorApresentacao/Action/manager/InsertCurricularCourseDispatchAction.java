@@ -94,12 +94,16 @@ public class InsertCurricularCourseDispatchAction extends FenixDispatchAction {
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
 //		A universidade ainda não está bem pois não existe universityOJB. implica + tard alterar o jsp...
 		
-		Object args[] = { (String) dynaForm.get("name"), (String) dynaForm.get("code"),
-			            	(String) dynaForm.get("credits"), (String) dynaForm.get("theoreticalHours"),
-							(String) dynaForm.get("praticalHours"), (String) dynaForm.get("theoPratHours"),
-							(String) dynaForm.get("labHours"), (String) dynaForm.get("type"),
-							(String) dynaForm.get("mandatory"), (String) dynaForm.get("basic"),
-							(String) dynaForm.get("departmentCourse"), degreeCurricularPlanId };
+//		(String) dynaForm.get("credits"),(String) dynaForm.get("theoreticalHours"),
+//		(String) dynaForm.get("praticalHours"), (String) dynaForm.get("theoPratHours"),
+//			(String) dynaForm.get("labHours"),
+		
+		
+		Object args[] = {
+						(String) dynaForm.get("name"), (String) dynaForm.get("code"),
+			            (String) dynaForm.get("type"), (String) dynaForm.get("mandatory"),
+			            (String) dynaForm.get("basic"), (String) dynaForm.get("departmentCourse"),
+			            degreeCurricularPlanId };
 							
 		GestorServicos manager = GestorServicos.manager();
 		List serviceResult = null;

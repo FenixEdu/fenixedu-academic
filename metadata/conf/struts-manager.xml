@@ -47,11 +47,11 @@
                 <form-property name="internalIds" type="java.lang.Integer[]" />
 				<form-property name="name" type="java.lang.String" />
 				<form-property name="code" type="java.lang.String" />
-				<form-property name="credits" type="java.lang.String" />
+				<!--<form-property name="credits" type="java.lang.String" />
 				<form-property name="theoreticalHours" type="java.lang.String" />
 				<form-property name="praticalHours" type="java.lang.String" />
 				<form-property name="theoPratHours" type="java.lang.String" />
-				<form-property name="labHours" type="java.lang.String" />
+				<form-property name="labHours" type="java.lang.String" />-->
 				<form-property name="type" type="java.lang.String" />
 				<form-property name="mandatory" type="java.lang.String" />
 				<form-property name="universityId" type="java.lang.String" />

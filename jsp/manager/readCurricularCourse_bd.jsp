@@ -20,24 +20,24 @@
 	<li><html:link page="<%="/editCurricularCourse.do?method=prepareEdit&amp;degreeId="  + request.getAttribute("degreeId") + "&amp;degreeCurricularPlanId="  + request.getAttribute("degreeCurricularPlanId")%>"  paramId="curricularCourseId" paramName="curricularCourseId"><bean:message key="label.manager.edit.curricularCourse"/></html:link></li>
 </ul>
 
-<h3><bean:message key="label.manager.executionCourses"/></h3>
-
-
-<logic:empty name="executionCoursesList">
-<i><bean:message key="label.manager.executionCourses.nonExisting"/></i>
-</logic:empty>
-
 <bean:define id="degreeCurricularPlanId" name="degreeCurricularPlanId"/>
 <bean:define id="curricularCourseId" name="curricularCourseId"/>
 <bean:define id="degreeId" name="degreeId"/>
 
-<logic:present name="executionCoursesList" scope="request">
-<logic:notEmpty name="executionCoursesList">
 	
 <html:form action="/readCurricularCourse">
-		<html:hidden property="degreeCurricularPlanId" value="<%= degreeCurricularPlanId.toString() %>"/>
-		<html:hidden property="curricularCourseId" value="<%= curricularCourseId.toString() %>"/>
-		<html:hidden property="degreeId" value=" degreeId.toString() "/>
+	<h3><bean:message key="label.manager.executionCourses"/></h3>
+
+	<logic:empty name="executionCoursesList">
+		<i><bean:message key="label.manager.executionCourses.nonExisting"/></i>
+	</logic:empty>
+	
+	<logic:present name="executionCoursesList" scope="request">
+		<logic:notEmpty name="executionCoursesList">
+
+			<html:hidden property="degreeCurricularPlanId" value="<%= degreeCurricularPlanId.toString() %>"/>
+			<html:hidden property="curricularCourseId" value="<%= curricularCourseId.toString() %>"/>
+			<html:hidden property="degreeId" value=" degreeId.toString() "/>
 			
 			<table width="50%" cellpadding="0" border="0">
 				<tr>
@@ -50,41 +50,35 @@
 				</tr>
 				
 				<logic:iterate id="executionCourse" name="executionCoursesList">
-				<bean:define id="infoExecutionPeriod" name="executionCourse" property="infoExecutionPeriod"/>
-				<tr>	 			
-					<td class="listClasses"><bean:write name="executionCourse" property="nome"/>
-					</td>
-					<td class="listClasses"><bean:write name="executionCourse" property="sigla"/>
-					</td>
-					<td class="listClasses"><bean:write name="infoExecutionPeriod" property="name"/>
-					</td>
-	 			</tr>
-	 			</logic:iterate>			
-			
+					<bean:define id="infoExecutionPeriod" name="executionCourse" property="infoExecutionPeriod"/>
+					<tr>	 			
+						<td class="listClasses"><bean:write name="executionCourse" property="nome"/>
+						</td>
+						<td class="listClasses"><bean:write name="executionCourse" property="sigla"/>
+						</td>
+						<td class="listClasses"><bean:write name="infoExecutionPeriod" property="name"/>
+						</td>
+	 				</tr>
+	 			</logic:iterate>						
 			</table>
 			
-<br>
-</logic:notEmpty>	 	
-</logic:present>
+			<br>
+		</logic:notEmpty>	 	
+	</logic:present>
 
-	<span class="error"><html:errors/></span>
-
-
+	
+	
 	<h3><bean:message key="label.manager.studentCurricularPlans"/></h3>
 
-<logic:empty name="studentCurricularPlansList">
-	<i><bean:message key="label.manager.studentCurricularPlans.nonExisting"/></i>
-</logic:empty>
+	<logic:empty name="studentCurricularPlansList">
+		<i><bean:message key="label.manager.studentCurricularPlans.nonExisting"/></i>
+	</logic:empty>
 
-	<bean:define id="degreeCurricularPlanId" name="degreeCurricularPlanId"/>	
-	<bean:define id="curricularCourseId" name="curricularCourseId"/>
-
-<logic:present name="studentCurricularPlansList" scope="request">
-<logic:notEmpty name="studentCurricularPlansList">
+	<logic:present name="studentCurricularPlansList" scope="request">
+		<logic:notEmpty name="studentCurricularPlansList">
 	
-	
-		<html:hidden property="degreeCurricularPlanId" value="<%= degreeCurricularPlanId.toString() %>"/>
-		<html:hidden property="curricularCourseId" value="<%= curricularCourseId.toString() %>"/>
+			<html:hidden property="degreeCurricularPlanId" value="<%= degreeCurricularPlanId.toString() %>"/>
+			<html:hidden property="curricularCourseId" value="<%= curricularCourseId.toString() %>"/>
 			<table width="50%" cellpadding="0" border="0">
 				<tr>
 					<td class="listClasses-header"><bean:message key="label.manager.studentCurricularPlan.name" />
@@ -94,36 +88,33 @@
 				</tr>
 				
 				<logic:iterate id="studentCurricularPlan" name="studentCurricularPlansList">
-				<tr>	 
-					<td class="listClasses"><bean:write name="studentCurricularPlan" property="name"/>
-					</td>
-					<td class="listClasses"><bean:write name="studentCurricularPlans" property="code"/>
-					</td>
-	 			</tr>
+					<tr>	 
+						<td class="listClasses"><bean:write name="studentCurricularPlan" property="name"/>
+						</td>
+						<td class="listClasses"><bean:write name="studentCurricularPlans" property="code"/>
+						</td>
+	 				</tr>
 	 			</logic:iterate>			
 			
 			</table>
-			
-<br>
-</logic:notEmpty>	 	
-</logic:present>
+			<br>
+		</logic:notEmpty>	 	
+	</logic:present>
 
 
-<h3><bean:message key="label.manager.curricularCourseScopes"/></h3>
 
-<logic:empty name="curricularCourseScopesList">
-<i><bean:message key="label.manager.curricularCourseScopes.nonExisting"/></i>
-</logic:empty>
+	<h3><bean:message key="label.manager.curricularCourseScopes"/></h3>
 
-<logic:present name="curricularCourseScopesList" scope="request">
-<logic:notEmpty name="curricularCourseScopesList">
-<bean:define id="curricularCourseId" name="curricularCourseId"/>
-<bean:define id="degreeCurricularPlanId" name="degreeCurricularPlanId"/>
-<bean:define id="degreeId" name="degreeId"/>
+	<logic:empty name="curricularCourseScopesList">
+		<i><bean:message key="label.manager.curricularCourseScopes.nonExisting"/></i>
+	</logic:empty>
 
-		<html:hidden property="curricularCourseId" value="<%= curricularCourseId.toString() %>"/>
-		<html:hidden property="degreeCurricularPlanId" value="<%= degreeCurricularPlanId.toString() %>"/>
-		<html:hidden property="degreeId" value="<%= degreeId.toString() %>"/>
+	<logic:present name="curricularCourseScopesList" scope="request">
+		<logic:notEmpty name="curricularCourseScopesList">
+	
+			<html:hidden property="curricularCourseId" value="<%= curricularCourseId.toString() %>"/>
+			<html:hidden property="degreeCurricularPlanId" value="<%= degreeCurricularPlanId.toString() %>"/>
+			<html:hidden property="degreeId" value="<%= degreeId.toString() %>"/>
 			<table width="70%" cellpadding="0" border="0">
 				<tr>
 					<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.theoreticalHours" />
@@ -151,40 +142,39 @@
 				</tr>
 				<logic:iterate id="curricularCourseScope" name="curricularCourseScopesList">
 				
-				<bean:define id="infoBranch" name="curricularCourseScope" property="infoBranch"/>
-				<bean:define id="infoCurricularSemester" name="curricularCourseScope" property="infoCurricularSemester"/>
-				<bean:define id="infoCurricularYear" name="infoCurricularSemester" property="infoCurricularYear"/>
-				
-				<tr>	 			
-					<td class="listClasses"><bean:write name="curricularCourseScope" property="theoreticalHours"/>
-					</td>
-					<td class="listClasses"><bean:write name="curricularCourseScope" property="praticalHours"/>
-					</td>
-					<td class="listClasses"><bean:write name="curricularCourseScope" property="theoPratHours"/>
-					</td>
-					<td class="listClasses"><bean:write name="curricularCourseScope" property="labHours"/>
-					</td>
-					<td class="listClasses"><bean:write name="curricularCourseScope" property="maxIncrementNac"/>
-					</td>
-					<td class="listClasses"><bean:write name="curricularCourseScope" property="minIncrementNac"/>
-					</td>
-					<td class="listClasses"><bean:write name="curricularCourseScope" property="credits"/>
-					</td>
-					<td class="listClasses"><bean:write name="curricularCourseScope" property="weigth"/>
-					</td>
-					<td class="listClasses"><bean:write name="infoBranch" property="code"/>
-					</td>
-					<td class="listClasses"><bean:write name="infoCurricularSemester" property="semester"/>
-					</td>
-					<td class="listClasses"><bean:write name="infoCurricularYear" property="year"/>
-					</td>
-	 			</tr>
+					<bean:define id="infoBranch" name="curricularCourseScope" property="infoBranch"/>
+					<bean:define id="infoCurricularSemester" name="curricularCourseScope" property="infoCurricularSemester"/>
+					<bean:define id="infoCurricularYear" name="infoCurricularSemester" property="infoCurricularYear"/>
+					<tr>	 			
+						<td class="listClasses"><bean:write name="curricularCourseScope" property="theoreticalHours"/>
+						</td>
+						<td class="listClasses"><bean:write name="curricularCourseScope" property="praticalHours"/>
+						</td>
+						<td class="listClasses"><bean:write name="curricularCourseScope" property="theoPratHours"/>
+						</td>
+						<td class="listClasses"><bean:write name="curricularCourseScope" property="labHours"/>
+						</td>
+						<td class="listClasses"><bean:write name="curricularCourseScope" property="maxIncrementNac"/>
+						</td>
+						<td class="listClasses"><bean:write name="curricularCourseScope" property="minIncrementNac"/>
+						</td>
+						<td class="listClasses"><bean:write name="curricularCourseScope" property="credits"/>
+						</td>
+						<td class="listClasses"><bean:write name="curricularCourseScope" property="weigth"/>
+						</td>
+						<td class="listClasses"><bean:write name="infoBranch" property="code"/>
+						</td>
+						<td class="listClasses"><bean:write name="infoCurricularSemester" property="semester"/>
+						</td>
+						<td class="listClasses"><bean:write name="infoCurricularYear" property="year"/>
+						</td>
+	 				</tr>
 	 			</logic:iterate>			
 			</table>
 			
-<br>
-
-</logic:notEmpty>	 	
-</logic:present>
-
+			<br>
+		</logic:notEmpty>	 	
+	</logic:present>
+	
+	<span class="error"><html:errors/></span>
 </html:form> 

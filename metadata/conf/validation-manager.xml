@@ -83,21 +83,6 @@
       <field property="code" depends="required" page="1" >
         <arg0 key="label.manager.curricularCourse.code" resource="true"/>
       </field>
-      <field property="credits" depends="double" page="1" >
-        <arg0 key="message.manager.credits" resource="true"/>
-      </field>
-      <field property="theoreticalHours" depends="double" page="1" >
-        <arg0 key="message.manager.theoreticalHours" resource="true"/>
-      </field>
-      <field property="praticalHours" depends="double" page="1" >
-        <arg0 key="message.manager.praticalHours" resource="true"/>
-      </field>
-      <field property="theoPratHours" depends="double" page="1" >
-        <arg0 key="message.manager.theoPratHours" resource="true"/>
-      </field>
-      <field property="labHours" depends="double" page="1" >
-        <arg0 key="message.manager.labHours" resource="true"/>
-      </field>
     </form>
 
 

@@ -36,66 +36,6 @@
 				<span class="error"><html:errors property="code"/></span>
 			</td>
 		</tr>
-
-		<tr>
-			<td>
-				<bean:message key="message.manager.credits"/>
-			</td>
-			<td>
-				<html:text size="60" property="credits" />
-			</td>
-			<td>
-				<span class="error"><html:errors property="credits"/></span>
-			</td>
-		</tr>
-
-		<tr>
-			<td>
-				<bean:message key="message.manager.theoreticalHours"/>
-			</td>
-			<td>
-				<html:text size="60" property="theoreticalHours" />
-			</td>
-			<td>
-				<span class="error"><html:errors property="theoreticalHours"  /></span>
-			</td>
-		</tr>
-
-		<tr>
-			<td>
-				<bean:message key="message.manager.praticalHours"/>
-			</td>
-			<td>
-				<html:text size="60" property="praticalHours" />
-			</td>
-			<td>
-				<span class="error"><html:errors property="praticalHours"  /></span>
-			</td>
-		</tr>
-
-		<tr>
-			<td>
-				<bean:message key="message.manager.theoPratHours"/>
-			</td>
-			<td>
-				<html:text size="60" property="theoPratHours" />
-			</td>
-			<td>
-				<span class="error"><html:errors property="theoPratHours"  /></span>
-			</td>
-		</tr>
-
-		<tr>
-			<td>
-				<bean:message key="message.manager.labHours"/>
-			</td>
-			<td>
-				<html:text size="60" property="labHours" />
-			</td>
-			<td>
-				<span class="error"><html:errors property="labHours"  /></span>
-			</td>
-		</tr>
 		<tr>
 			<td>
 				<bean:message key="message.departmentCourse"/>
