@@ -82,6 +82,7 @@ public class MasterDegreeThesisDataVersionOJB
 			"masterDegreeThesis.studentCurricularPlan.idInternal",
 			studentCurricularPlan.getIdInternal());
 		criteria.addNotEqualTo("currentState", new Integer(State.ACTIVE));
+		criteria.addOrderBy("lastModification",false);
 		List result = (List) queryList(MasterDegreeThesisDataVersion.class, criteria);
 
 		return result;

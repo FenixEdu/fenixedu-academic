@@ -72,6 +72,7 @@ public class MasterDegreeProofVersionOJB
 			"masterDegreeThesis.studentCurricularPlan.idInternal",
 			studentCurricularPlan.getIdInternal());
 		criteria.addNotEqualTo("currentState", new Integer(State.ACTIVE));
+		criteria.addOrderBy("lastModification",false);
 		List result = queryList(MasterDegreeProofVersion.class, criteria);
 
 		return result;
