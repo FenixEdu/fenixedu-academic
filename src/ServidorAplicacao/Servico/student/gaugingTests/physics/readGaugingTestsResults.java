@@ -4,12 +4,12 @@
  */
 package ServidorAplicacao.Servico.student.gaugingTests.physics;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.gaugingTests.physics.InfoGaugingTestResult;
 import DataBeans.util.Cloner;
 import Dominio.IPessoa;
 import Dominio.IStudent;
 import Dominio.gaugingTests.physics.IGaugingTestResult;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -25,30 +25,14 @@ import Util.TipoCurso;
  *  
  */
 
-public class readGaugingTestsResults implements IServico
+public class readGaugingTestsResults implements IService
 {
 
-    private static readGaugingTestsResults service = new readGaugingTestsResults();
-
-    /**
-	 * The singleton access method of this class.
-	 */
-    public static readGaugingTestsResults getService()
-    {
-        return service;
-    }
     /**
 	 * The constructor of this class.
 	 */
-    private readGaugingTestsResults()
+    public readGaugingTestsResults()
     {
-    }
-    /**
-	 * The name of the service
-	 */
-    public final String getNome()
-    {
-        return "readGaugingTestsResults";
     }
 
     /**
@@ -69,6 +53,10 @@ public class readGaugingTestsResults implements IServico
 
             IStudent student =
                 persistentStudent.readByPersonAndDegreeType(person, TipoCurso.LICENCIATURA_OBJ);
+            if (student == null)
+            {
+                return null;
+            }
             IGaugingTestResult gaugingTestsResult = persistentGaugingTestResult.readByStudent(student);
             if (gaugingTestsResult != null)
             {

@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoEvaluation;
 import DataBeans.InfoFrequenta;
@@ -23,7 +24,6 @@ import Dominio.IFrequenta;
 import Dominio.IMark;
 import Dominio.ISite;
 import Dominio.Site;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Factory.TeacherAdministrationSiteComponentBuilder;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -40,35 +40,16 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Tânia Pousão
  *  
  */
-public class ReadStudentsAndMarksByEvaluation implements IServico
+public class ReadStudentsAndMarksByEvaluation implements IService
 {
-    private static ReadStudentsAndMarksByEvaluation _servico = new ReadStudentsAndMarksByEvaluation();
-
-    /**
-	 * The actor of this class.
-	 */
-    private ReadStudentsAndMarksByEvaluation()
+   
+    public ReadStudentsAndMarksByEvaluation()
     {
 
     }
 
-    /**
-	 * Returns Service Name
-	 */
-    public String getNome()
-    {
-        return "ReadStudentsAndMarksByEvaluation";
-    }
-
-    /**
-	 * Returns the _servico.
-	 * 
-	 * @return ReadExecutionCourse
-	 */
-    public static ReadStudentsAndMarksByEvaluation getService()
-    {
-        return _servico;
-    }
+   
+   
 
     public Object run(Integer executionCourseCode, Integer evaluationCode)
         throws ExcepcaoInexistente, FenixServiceException
