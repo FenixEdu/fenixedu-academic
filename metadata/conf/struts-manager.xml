@@ -1205,6 +1205,35 @@
 		<forward name="confirmation" path="confirmation"/>		
 	</action>
 
+
+
+
+	<!-- Actions for managing precedences -->
+	<action path="/managePrecedences" forward="df.page.manage.precedences"/>
+	<action path="/makeSimplePrecedence" forward="df.page.manage.precedences"/>
+	<action path="/makePrecedenceConjunction" forward="df.page.manage.precedences"/>
+	<action path="/makePrecedenceDijunction" forward="df.page.manage.precedences"/>
+
+	<!--
+	<action
+		path="/managePrecedences"
+		name="branchForm"
+		input="/manageBranches.do?method=showBranches&amp;page=0"
+		parameter="method"
+		scope="request"
+		type="ServidorApresentacao.Action.manager.ManageBranchesDA">  
+        <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+         	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+        <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+         	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+       <forward name="readDegree" path="/readDegree.do"/>
+       <forward name="manageBranches" path="df.page.manage-branches"/>
+       <forward name="insertBranch" path="df.page.insert-branch"/>
+       <forward name="editBranch" path="df.page.edit-branch"/>
+	</action>
+-->
 	<!-- ========== CURRICULAR COURSE GROUPS MANAGEMENT ========== -->	
 	<action path="/manageCurricularCourseGroups"
 		type="ServidorApresentacao.Action.manager.curricularCourseGroupManagement.CurricularCouseGroupManagementDispatchAction"
