@@ -39,7 +39,7 @@
 	
 	 <bean:define id="onclick">
 			return confirm('<bean:message key="message.confirm.delete.curricular.courses"/>')
-		  </bean:define>
+	 </bean:define>
 	
 		<html:hidden property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
 		<html:hidden property="degreeId" value="<%= request.getParameter("degreeId") %>"/>
