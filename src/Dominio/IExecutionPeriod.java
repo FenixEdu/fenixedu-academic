@@ -1,5 +1,7 @@
 package Dominio;
 
+import java.util.Date;
+
 import Util.PeriodState;
 import fileSuport.INode;
 
@@ -22,4 +24,10 @@ public interface IExecutionPeriod extends IDomainObject,INode {
 	
 	Integer getSemester();
 	void setSemester (Integer semester);
+	
+	Date getBeginDate();
+	void setBeginDate (Date beginDate);
+		
+	Date getEndDate();
+	void setEndDate (Date endDate);
 }

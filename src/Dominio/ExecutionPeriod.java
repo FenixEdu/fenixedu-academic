@@ -1,5 +1,7 @@
 package Dominio;
 
+import java.util.Date;
+
 import Util.PeriodState;
 import fileSuport.INode;
 
@@ -18,6 +20,9 @@ public class ExecutionPeriod extends DomainObject implements IExecutionPeriod {
 	protected IExecutionYear executionYear;
 	protected String name;
 	private Integer keyExecutionYear;
+	private Date beginDate ;
+	private Date endDate ;
+	
 	/**
 	 * Constructor for ExecutionPeriod.
 	 */
@@ -58,8 +63,6 @@ public class ExecutionPeriod extends DomainObject implements IExecutionPeriod {
 		this.name = name;
 	}
 
-	
-	
 
 	/**
 	 * Returns the keyExecutionYear.
@@ -90,6 +93,8 @@ public class ExecutionPeriod extends DomainObject implements IExecutionPeriod {
 		result += ", internalCode=" + getIdInternal();
 		result += ", name=" + name;
 		result += ", executionYear=" + getExecutionYear();
+		result += ", begin Date=" + getBeginDate();
+		result += ", end Date=" + getEndDate();
 		result += "]\n";
 		return result;
 	}
@@ -146,6 +151,34 @@ public class ExecutionPeriod extends DomainObject implements IExecutionPeriod {
 	public INode getParentNode() {	
 		IExecutionYear executionYear = getExecutionYear();	
 		return executionYear;
+	}
+
+	/**
+	 * @return
+	 */
+	public Date getBeginDate() {
+		return beginDate;
+	}
+
+	/**
+	 * @param begin_date
+	 */
+	public void setBeginDate(Date beginDate) {
+		this.beginDate = beginDate;
+	}
+
+	/**
+	 * @return
+	 */
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	/**
+	 * @param end_date
+	 */
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 
 }

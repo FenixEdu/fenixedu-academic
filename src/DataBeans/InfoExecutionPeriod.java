@@ -1,5 +1,7 @@
 package DataBeans;
 
+import java.util.Date;
+
 import Util.PeriodState;
 
 
@@ -12,6 +14,9 @@ public class InfoExecutionPeriod extends InfoObject {
 	private InfoExecutionYear infoExecutionYear;
 	private PeriodState state;
 	private Integer semester;
+	private Date beginDate;
+	private Date endDate;
+	
 
 	public InfoExecutionPeriod() {
 
@@ -71,6 +76,8 @@ public class InfoExecutionPeriod extends InfoObject {
 			String result = "[INFOEXECUTIONPERIOD";
 				result += ", name=" + name;
 				result += ", infoExecutionYear=" + infoExecutionYear;
+				result += ", begin Date=" + beginDate;
+				result += ", end Date=" + endDate;
 				result += "]\n";
 			return result;
 		}
@@ -107,6 +114,34 @@ public class InfoExecutionPeriod extends InfoObject {
 		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) arg0;
 		int yearCmp = this.getInfoExecutionYear().compareTo(infoExecutionPeriod.getInfoExecutionYear());
 		return yearCmp + this.getSemester().intValue() - infoExecutionPeriod.getSemester().intValue();
+	}
+
+	/**
+	 * @return
+	 */
+	public Date getBeginDate() {
+		return beginDate;
+	}
+
+	/**
+	 * @param beginDate
+	 */
+	public void setBeginDate(Date beginDate) {
+		this.beginDate = beginDate;
+	}
+
+	/**
+	 * @return
+	 */
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	/**
+	 * @param endDate
+	 */
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 
 }
