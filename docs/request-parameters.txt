@@ -6,3 +6,7 @@ eYName -> executionYear name
 ePName -> executionPeriod year
 exeCode -> executionCourse code
 evaluationElements -> evaluation evaluationElements
+siteMail -> site mail
+altSite -> site alternativeSite
+initStat -> site initialStatement
+intro -> site introduction
