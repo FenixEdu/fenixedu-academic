@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sms-commands [
+	<!ELEMENT sms-commands (sms-command+)>
+	<!ELEMENT sms-command EMPTY>
+	<!ATTLIST sms-command expression CDATA #REQUIRED 
+			  replyToSender NMTOKEN #REQUIRED 
+			  authenticationType NMTOKEN #REQUIRED 
+			  serviceArgs CDATA #REQUIRED 
+			  serviceName NMTOKEN #REQUIRED >
+]>
+
+<!--
+	Tutorial:
+	
+	Element sms-command fields:
+		.expression - SMS message format required for this command to execute
+		.replyToSender - Indicates if we should respond to sender
+		.serviceName - The name of the service to be called. 
+			NOTE: Service result object must implement ISmsDTO
+		.serviceArgs - The arguments to invoke service. Usually are made of variables declared in expression
+		.authenticationType - Indicates the authentication type. Possible values are:
+				.none - No authentication
+				.userpass - Authenticates using username and password. 
+						Two variables are required in expression "${USERNAME:word}" and "${PASSWORD:word}"
+				Notes: The username and password are the same as fénix login. E.g: Username = "Lxxxxx" and Password = "xxxxxxxx"
+		
+	Accepted types for variables:
+		.integer - Integer number
+		.decimal - Floating point number
+		.word - Single word (no spaces)
+		.string - String (can include spaces). 
+			NOTE: Be carefull using strings because it accepts any kind of character and 
+				may produce unexpected results to some developers
+	
+	Reserved keywords (appliable in field serviceArgs):
+		.FULLSMSTEXT - Full received SMS text. This should be used if we pretend to split
+			the arguments inside the service.
+		.SENDERMSISDN - Sender Msisdn
+	
+	Reserved variables for authentication
+		.USERNAME - Reserved variable containing the username. Must appear in expression if authentication type is "userpass"
+		.PASSWORD - Reserved variable containing the password. Must appear in expression if authentication type is "userpass"
+
+-->
+
+<sms-commands>
+	<sms-command expression = "FIND-TEACHER: ${teacherUsername:string} ${PASSWORD:word} ${USERNAME:word}"
+				 replyToSender = "true"
+				 serviceName = "ReadTeacherByUserName"
+				 serviceArgs ="teacherUsername,SENDERMSISDN" 
+ 				 authenticationType = "none"
+	/>
+	
+	<sms-command expression = "FIND-TEACHER2: ${teacherUsername:string} ${PASSWORD:word} ${USERNAME:word}"
+				 replyToSender = "true"
+				 serviceName = "ReadTeacherByUserName"
+				 serviceArgs ="teacherUsername" 
+ 				 authenticationType = "userpass"
+	/>
+	
+	
+</sms-commands>
+
+
