@@ -214,8 +214,7 @@
 		    token="@slide.config@" 
 		    property="slide.config"/>
 		</replace>
-		
-<!--		<antcall target="validate-xml"/>-->
+		<antcall target="validate-xml"/>
     </target>
     
     <target name="compile-tests"
@@ -522,6 +521,7 @@ classpath="${lib}/mysql-connector-java-3.0.7.jar"
 	        <fileset dir="${sql}">
 			 <include name="tables_*.sql" />
 			 <exclude name="tables_AssiduousnessASSMARCAS.sql" />
+			 <exclude name="tables_inscricoes_backup.sql" />
   			</fileset>
             <classpath>
                 <fileset dir="${lib}">
@@ -611,38 +611,6 @@ classpath="${lib}/mysql-connector-java-3.0.7.jar"
                 </fileset>
             </classpath>
         </sql>
-
-        <sql
-            driver="com.mysql.jdbc.Driver"
-            url="jdbc:mysql://localhost/${db.name}"
-            userid="${db.user}"
-            password="${db.pass}"
-            encoding="${encoding}"
-            src="${sql}/test-data_inscricoes.sql"
-        >
-            <classpath>
-                <fileset dir="${lib}">
-                    <include name="**/*.jar"/>
-                </fileset>
-            </classpath>
-        </sql>
-
-
-        <sql
-            driver="com.mysql.jdbc.Driver"
-            url="jdbc:mysql://localhost/${db.name}"
-            userid="${db.user}"
-            password="${db.pass}"
-            encoding="${encoding}"
-            src="${sql}/test-data_masterDegree.sql"
-        >
-            <classpath>
-                <fileset dir="${lib}">
-                    <include name="**/*.jar"/>
-                </fileset>
-            </classpath>
-        </sql>
-
 
         <sql
             driver="com.mysql.jdbc.Driver"
@@ -920,7 +888,6 @@ classpath="${lib}/mysql-connector-java-3.0.7.jar"
 	</target>
 
 	<target name="validate-xml">
-	
 		<xmlvalidate warn="false" failonerror="false">
 				<fileset dir="${webapp.metadata}" includes="**/*.xml">
 					<exclude name="**/repository*.xml"/>
@@ -929,7 +896,6 @@ classpath="${lib}/mysql-connector-java-3.0.7.jar"
 					<exclude name="**/Domain.xml"/>			
 				</fileset>
 		</xmlvalidate>
-
 	</target> 
 	
 	
