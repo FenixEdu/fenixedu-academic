@@ -1,19 +1,73 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project basedir="." default="deploy-tests" name="fenix">
 
-	<taskdef name="scp" 
-					classname="org.apache.tools.ant.taskdefs.optional.ssh.Scp" />
-
-    <taskdef name="sshexec"
-             classname="org.apache.tools.ant.taskdefs.optional.ssh.SSHExec" />
-
     <!-- ########## PROPERTIES ########## -->
-
     <property environment="env"/>
-	<property name="encoding" value="ISO-8859-15"/>
+	<property name="encoding" value="ISO-8859-1"/>
 
+	<property name="deploy.home" location="deploy"/>
+    <property name="deploy.jars" value="${deploy.home}/jars"/>
+    <property name="deploy.jar.app-server" value="fenix-application-server.jar"/>
+    <property name="deploy.sar.app-server" value="fenix-application-server.sar"/>
+    <property name="deploy.jar.web-client" value="fenix-web-client.jar"/>
+    <property name="deploy.war.web-client" value="fenix-web-client.war"/>
+    <property name="deploy.jar.standalone" value="fenix-standalone.jar"/>
+    <property name="deploy.war.standalone" value="fenix-standalone.war"/>
 
     <!-- ########## TARGETS ########## -->
+    <target name="deploy-production-servers"
+			description="Deploys application to all production servers">
+		<property name="server.hostname" value="fenix.ist.utl.pt"/>
+
+		<!-- Prompt for username & password -->
+		<input message="Enter username for ${server.hostname}:" addproperty="server.username" />
+		<input message="Enter password for ${server.hostname}:"  addproperty="server.password" />
+
+		<!-- Always do a clean build -->
+		<ant antfile="build_jboss.xml" target="clean-all" />
+
+		<!-- Obtain propper build.properties -->
+		<move file="build.properties"  tofile="build.properties_backup" />
+		<scp file="${server.username}:${server.password}@${server.hostname}:/root/configs/build_*.properties"
+			 todir="./"
+			 trust="yes"/>
+		<move file="build_fenix.properties"  tofile="build.properties" />
+
+		<!-- Compile aplication server and generate jar -->
+		<ant antfile="build_jboss.xml" target="jar-app-server" />
+		<move file="${deploy.jars}/${deploy.jar.app-server}" tofile="${deploy.jars}/as1.jar" />
+		
+		<!-- Compile fenix web client generate war -->
+		<ant antfile="build_jboss.xml" target="war-web-client" />
+		<move file="${deploy.jars}/${deploy.war.web-client}" tofile="${deploy.jars}/fenix.war" />
+		
+		<!-- Compile www.apl web client generate war -->
+		<delete file="build.properties"/>
+		<move file="build_wwwapl.properties" tofile="build.properties" />
+		<ant antfile="build_jboss.xml" target="clean-web-client" />
+		<ant antfile="build_jboss.xml" target="war-web-client" />
+		<move file="${deploy.jars}/${deploy.war.web-client}" tofile="${deploy.jars}/wwwapl.war" />
+
+		<!-- Restore original build.properties -->
+		<move file="build.properties_backup"  tofile="build.properties" overwrite="true" />
+
+		<!-- Upload generated packages -->
+        <scp todir="${server.username}:${server.password}@${server.hostname}:/tmp"
+        	 file="${deploy.jars}/*.*ar"
+        	 trust="yes"/>
+
+		<!-- Install uploaded files -->
+        <sshexec host="${server.hostname}"
+        		 username="${server.username}"
+        		 password="${server.password}"
+        		 trust="yes"
+        		 command="ant -f configs/build_deploy_servers.xml deploy-all"
+        		 />
+
+		<!-- Remove all generated files -->
+		<ant antfile="build_jboss.xml" target="clean-all" />
+    </target>
+
     <target name="deploy-tests" description="Deploys application to test server">
 		<property name="server.hostname"  value="fenix-tests.ist.utl.pt" />
 		<property name="server.deployDirectory" value="/var/tomcat4/webapps"/>
