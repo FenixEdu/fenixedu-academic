@@ -451,8 +451,9 @@
         <forward name="Sucess" path="/manipularSalas.jsp" />
       </action>
 
-      <action input="/manipularSalas.jsp"
-              name="posicaoFormBean"
+      <action attribute="indexForm"
+      		  input="/manipularSalas.jsp"
+              name="indexForm"
               path="/manipularSalas"
               scope="session"
               type="ServidorApresentacao.Action.sop.ManipularSalasAction">
@@ -498,7 +499,7 @@
               input="/manipularSalas.jsp"
               name="indexForm"
       		  path="/viewRoom"
-              scope="request"
+              scope="session"
               validate="true"
               type="ServidorApresentacao.Action.publico.ViewRoomFormAction">
           <forward name="Sucess" path="/sopViewRoom.jsp"/>
@@ -598,14 +599,21 @@
               name="editarAulasDeTurnoForm"
               path="/editarAulasDeTurnoForm"
               scope="session"
-              type="ServidorApresentacao.Action.sop.EditarAulasDeTurnoFormAction">
+              type="ServidorApresentacao.Action.sop.EditarAulasDeTurnoFormAction"
+              validate="false"
+              >
         <forward name="Adicionar Aulas" path="/prepararAdicionarAulasDeTurno.do"/>
         <forward name="Remover Aula" path="/removerAulaDeTurno.do"/>        
       </action>
 
-      <action path="/removerAulaDeTurno"
+      <action attribute="editarAulasDeTurnoForm"
+              name="editarAulasDeTurnoForm"
+      		  path="/removerAulaDeTurno"
+              scope="session"      		  
               input="/editarAulasDeTurno.jsp"
-              type="ServidorApresentacao.Action.sop.RemoverAulaDeTurnoFormAction">
+              type="ServidorApresentacao.Action.sop.RemoverAulaDeTurnoFormAction"
+              validate="true"
+              >
           <forward name="Sucesso" path="/editarAulasDeTurno.jsp"/>
       </action>
 
