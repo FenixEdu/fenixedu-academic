@@ -31,15 +31,15 @@ public class TurnoAulaOJB
 	extends ObjectFenixOJB
 	implements ITurnoAulaPersistente {
 
-	public ITurnoAula readByTurnoAndAula(ITurno turno, IAula aula)
+	public ITurnoAula readByShiftAndLesson(ITurno shift, IAula lesson)
 		throws ExcepcaoPersistencia {
 		try {
 			ITurnoAula turnoAula = null;
 			String oqlQuery =
 				"select turnoaula from " + TurnoAula.class.getName();
 			oqlQuery += " where turno.nome = $1"
-				+ " and turno.disciplinaExecucao.licenciaturaExecucao.anoLectivo = $2"
-				+ " and turno.disciplinaExecucao.licenciaturaExecucao.curso.sigla = $3"
+				+ " and turno.disciplinaExecucao.executionPeriod.name = $2"
+				+ " and turno.disciplinaExecucao.executionPeriod.executionYear.year = $3"
 				+ " and turno.disciplinaExecucao.sigla = $4"
 				+ " and aula.diaSemana = $5"
 				+ " and aula.inicio= $6"
@@ -49,27 +49,24 @@ public class TurnoAulaOJB
 
 			query.create(oqlQuery);
 
-			query.bind(turno.getNome());
+			query.bind(shift.getNome());
 
 			query.bind(
-				turno
+				shift
 					.getDisciplinaExecucao()
-					.getLicenciaturaExecucao()
-					.getAnoLectivo());
+					.getExecutionPeriod().getName());
 			query.bind(
-				turno
+				shift
 					.getDisciplinaExecucao()
-					.getLicenciaturaExecucao()
-					.getCurso()
-					.getSigla());
+					.getExecutionPeriod().getExecutionYear().getYear());
 
-			query.bind(turno.getDisciplinaExecucao().getSigla());
+			query.bind(shift.getDisciplinaExecucao().getSigla());
 
-			query.bind(aula.getDiaSemana());
-			query.bind(aula.getInicio());
-			query.bind(aula.getFim());
-			query.bind(aula.getTipo());
-			query.bind(aula.getSala().getNome());
+			query.bind(lesson.getDiaSemana());
+			query.bind(lesson.getInicio());
+			query.bind(lesson.getFim());
+			query.bind(lesson.getTipo());
+			query.bind(lesson.getSala().getNome());
 			List result = (List) query.execute();
 			lockRead(result);
 			if (result.size() != 0)
