@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import DataBeans.InfoExam;
+import DataBeans.InfoRoom;
 import DataBeans.InfoViewExam;
 import DataBeans.InfoViewExamByDayAndShift;
 import DataBeans.util.Cloner;
@@ -27,6 +28,7 @@ import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.TipoSala;
 
 public class ReadExamsByDayAndBeginning implements IServico {
 
@@ -108,11 +110,15 @@ public class ReadExamsByDayAndBeginning implements IServico {
 			infoViewExam.setInfoViewExamsByDayAndShift(infoViewExams);
 			
 			// Read all rooms to determine total exam capacity
-			// TODO : Review calculations... they seem to be wrong.
+			// TODO : This can be done more efficiently.
 			List rooms = sp.getISalaPersistente().readAll();
 			int totalExamCapacity = 0;
-			for (int i = 0; i < rooms.size(); i++) 
-				totalExamCapacity += ((ISala) rooms.get(i)).getCapacidadeExame().intValue();
+			for (int i = 0; i < rooms.size(); i++) {
+				ISala room = (ISala) rooms.get(i);
+				if (!room.getTipo().equals(new TipoSala(TipoSala.LABORATORIO))) {
+					totalExamCapacity += room.getCapacidadeExame().intValue();
+				}
+			}
 
 			infoViewExam.setAvailableRoomOccupation(new Integer(totalExamCapacity-totalNumberStudents));
 			

@@ -1,5 +1,7 @@
 <%@ page language="java" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<%@ page import="DataBeans.InfoRoom" %>
+<%@ page import="DataBeans.InfoViewExamByDayAndShift" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -50,6 +52,7 @@
 			</td>
 		</tr>
 		<logic:iterate id="infoViewExam" indexId="index" name="<%= SessionConstants.LIST_EXAMSANDINFO %>" scope="session">
+			<% int seatsReserved = 0; %>
 			<tr align="center">
 				<td>
 					<logic:iterate id="infoExecutionCourse" name="infoViewExam" property="infoExecutionCourses">
@@ -68,6 +71,7 @@
 					<logic:present name="infoViewExam" property="infoExam.associatedRooms">
 						<logic:iterate id="infoRoom" name="infoViewExam" property="infoExam.associatedRooms">
 							<bean:write name="infoRoom" property="nome"/>; 
+							<% seatsReserved += ((InfoRoom) infoRoom).getCapacidadeExame().intValue(); %>
 						</logic:iterate> 
 					</logic:present>
 
@@ -76,7 +80,7 @@
 					</logic:notPresent>					
 				</td>
 				<td>
-					0
+					<%= ((InfoViewExamByDayAndShift) infoViewExam).getNumberStudentesAttendingCourse().intValue() - seatsReserved %>
 				</td>
 				<td>
 					<html:link paramId="indexExam" paramName="index" href="viewExamsDayAndShiftForm.do?method=edit">
