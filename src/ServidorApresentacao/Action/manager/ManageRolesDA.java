@@ -46,6 +46,8 @@ public class ManageRolesDA extends FenixDispatchAction
 		throws Exception
 	{
 
+		System.out.println("Into Select user action...");
+		
 		IUserView userView = SessionUtils.getUserView(request);
 
 		DynaActionForm rolesForm = (DynaActionForm) form;

@@ -875,7 +875,7 @@
 	<!-- ========== ROLE MANIPULATION ========== -->
       <action path="/manageRoles"
       		  name="rolesForm"
-		      input="/manageRoles.do?method=prepare"
+		      input="/manageRoles.do?method=prepare&amp;page=0"
               type="ServidorApresentacao.Action.manager.ManageRolesDA"
               parameter="method"
               validate="true"
