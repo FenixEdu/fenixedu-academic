@@ -231,7 +231,7 @@
 		    token="@ftp.IST.server.address@" 
 		    property="ftp.IST.server.address"/>
 		</replace>
-		<antcall target="validate-xml"/>
+		<!-- <antcall target="validate-xml"/> -->
     </target>
     
     <target name="compile-tests"
@@ -758,22 +758,7 @@ classpath="${lib}/mysql-connector-java-3.0.7.jar"
                 </fileset>
             </classpath>
         </sql>
-        
-        <sql
-            driver="com.mysql.jdbc.Driver"
-            url="jdbc:mysql://localhost/${db.name}"
-            userid="${db.user}"
-            password="${db.pass}"
-            encoding="${encoding}"
-            src="${sql}/test-data_Assiduousness.sql"
-        >
-            <classpath>
-                <fileset dir="${lib}">
-                    <include name="**/*.jar"/>
-                </fileset>
-            </classpath>
-        </sql>
-        
+             
         <sql
             driver="com.mysql.jdbc.Driver"
             url="jdbc:mysql://localhost/${db.name}"
@@ -788,6 +773,21 @@ classpath="${lib}/mysql-connector-java-3.0.7.jar"
                 </fileset>
             </classpath>
         </sql>
+        
+        <sql
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost/${db.name}"
+            userid="${db.user}"
+            password="${db.pass}"
+            encoding="${encoding}"
+            src="${sql}/test-data_places.sql"
+        >
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </sql>        
     </target>
 
     <target name="dump-db"
@@ -992,6 +992,7 @@ classpath="${lib}/mysql-connector-java-3.0.7.jar"
 	<target name="validate-xml">
 	
 		<xmlvalidate warn="false" failonerror="false">
+<!--				<fileset dir="${sql}" includes="testDataSetEnrolmentContextManager.xml"/> -->
 				<fileset dir="${webapp.metadata}" includes="**/*.xml">
 					<exclude name="**/repository*.xml"/>
 					<exclude name="**/validator-rules.xml"/>
