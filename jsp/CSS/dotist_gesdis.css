@@ -143,19 +143,42 @@ a:hover {
 .navlateral {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
-	color: #333333;
+	color: #333;
 	border-right-width: 1px;
 	border-right-style: solid;
 	border-right-color: #CCCCCC;
 	padding: 20px;
 	}
-
+	
 .bodycontent {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	line-height: 16px;
 	color: #333333;
 	padding: 20px;
+	}
+
+
+/********************************************
+	navLateral links
+********************************************/
+
+.navlateral a:link {
+	color: #333;
+	text-decoration: none;
+	background-color:transparent;
+	}
+	
+.navlateral a:visited {
+	color: #333;
+	text-decoration: none;
+	background-color:transparent;
+	}
+	
+.navlateral a:hover {
+	color: #333;
+	text-decoration: underline;
+	background-color:transparent;
 	}
 
 /**********************************************
