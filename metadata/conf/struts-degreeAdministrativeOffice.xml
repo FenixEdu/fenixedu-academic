@@ -152,7 +152,7 @@
 		<!-- ****************** View Student Schedule **************************** -->
 		<action path="/viewStudentSchedule"
 		      	type="ServidorApresentacao.Action.degreeAdministrativeOffice.ViewStudentScheduleAction">
-			<forward name="sucess" path="/student/classTimeTable.jsp"/>        	
+			<forward name="sucess" path="/../student/classTimeTable.jsp"/>        	
       	</action>
       	
       	
