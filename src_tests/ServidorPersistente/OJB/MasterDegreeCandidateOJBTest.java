@@ -1202,4 +1202,46 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 		}
 	}
 
+	public void testReadByExecutionDegree() {
+		System.out.println("- Test 15 : Read By Execution Degree ");
+		ICursoExecucao executionDegree = null;
+		ICurso degree = null;
+		List candidates = null;
+		IExecutionYear executionYear = null;
+		IDegreeCurricularPlan degreeCurricularPlan = null;
+		try {
+			persistentSupport.iniciarTransaccao();
+
+			persistentSupport.iniciarTransaccao();
+			degree = persistentDegree.readBySigla("MEEC");
+			assertNotNull(degree);
+			executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
+			assertNotNull(executionYear);
+
+			degreeCurricularPlan =persistentDegreeCurricularPlan.readByNameAndDegree(
+					"plano2",
+					degree);
+			assertNotNull(degreeCurricularPlan);
+
+			executionDegree =
+				persistentExecutionDegree
+					.readByDegreeCurricularPlanAndExecutionYear(
+					degreeCurricularPlan,
+					executionYear);
+			assertNotNull(executionDegree);
+
+			// Read the Candidate			
+			candidates =
+				persistentMasterDegreeCandidate.readByExecutionDegree(
+					executionDegree);
+			assertNotNull(candidates);
+			assertEquals(candidates.size(), 2);
+			
+			persistentSupport.confirmarTransaccao();
+		} catch (ExcepcaoPersistencia ex) {
+			fail("    -> Error on test");
+		}
+	}
+
+
 } // End of test from Class MasterDegreeCandidateOJB

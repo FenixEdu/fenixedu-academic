@@ -255,9 +255,6 @@ public class CursoExecucaoOJB
 			String oqlQuery = "select all from " + CursoExecucao.class.getName()
 							+ " where coordinator.teacherNumber = $1";
 			
-//			ICursoExecucao cursoExecucao = null;
-//			cursoExecucao.getCoordinator().getTeacherNumber();
-			
 			query.create(oqlQuery);
 
 			query.bind(teacher.getTeacherNumber());

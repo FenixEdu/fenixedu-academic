@@ -340,6 +340,29 @@ public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersist
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
-					
+		
+	public List readByExecutionDegree(ICursoExecucao executionDegree) throws ExcepcaoPersistencia{
+		try {
+			String oqlQuery = "select all from " + MasterDegreeCandidate.class.getName()
+					+ " where executionDegree.executionYear.year = $1" 
+					+ " and executionDegree.curricularPlan.name = $2" 
+					+ " and executionDegree.curricularPlan.degree.nome = $3"; 
+	
+			query.create(oqlQuery);
+			query.bind(executionDegree.getExecutionYear().getYear());
+			query.bind(executionDegree.getCurricularPlan().getName());
+			query.bind(executionDegree.getCurricularPlan().getDegree().getNome());
+
+	
+			List result = (List) query.execute();
+	
+			lockRead(result);
+			if (result.size() == 0)
+				return null;
+			return result;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}			
     
 } // End of class definition

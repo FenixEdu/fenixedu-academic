@@ -43,11 +43,43 @@
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
       <!-- page fronting actions -->
-      <action path="/index" forward="/indexCoordinator.jsp"/>
       <action path="/home" forward="/switchAction.do?prefix=&amp;page=/mainPortalPage.jsp"/>
       <action path="/switchAction" type="org.apache.struts.actions.SwitchAction" />
       <action path="/candidateSection" forward="/candidate/indexCandidate.jsp"/>
       <action path="/studentSection" forward="/student/indexStudent.jsp"/>
+
+
+      <action path="/index"
+      	      type="ServidorApresentacao.Action.masterDegree.coordinator.ReadCoordinatedDegreesAction">
+      	  <forward name="ChooseDegree" path="/chooseDegreePage.jsp"/>      	      
+          <forward name="Success" path="/indexCoordinator.jsp"/>      	      
+      </action> 
+
+      <!-- Dispatch Action to Choose the Degree -->
+      <action path="/chooseDegree"
+		 parameter="method"
+      	      type="ServidorApresentacao.Action.masterDegree.coordinator.CoordinatedDegreeInfo">
+    <exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+            key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>	
+      	      
+      	  <forward name="Success" path="/indexCoordinator.jsp"/>
+      </action>
+
+
+      <!-- Dispatch Action to operate on the candidates -->
+      <action path="/candidateOperation"
+          input="/indexCoordinator.jsp"
+	      validate="true"
+		 parameter="method"
+      	      type="ServidorApresentacao.Action.masterDegree.coordinator.CandidateOperationDispatchAction">
+     		 <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>	
+      	  <forward name="ViewList" path="/candidate/selectCandidateFromList.jsp"/>
+      	  <forward name="ActionReady" path="/candidate/visualizeCandidate.jsp"/>
+      </action>
+
 
     </action-mappings>
     

@@ -1,0 +1,98 @@
+/*
+ * ReadMasterDegreeCandidateByUsername.java
+ *
+ * The Service ReadMasterDegreeCandidateByUsername reads the information of a
+ * Candidate and returns it
+ * 
+ * Created on 02 de Dezembro de 2002, 16:25
+ */
+
+/**
+ *
+ * Autores :
+ *   - Nuno Nunes (nmsn@rnl.ist.utl.pt)
+ *   - Joana Mota (jccm@rnl.ist.utl.pt)
+ *
+ */
+
+package ServidorAplicacao.Servico.masterDegree.coordinator;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import DataBeans.util.Cloner;
+import Dominio.ICursoExecucao;
+import Dominio.ITeacher;
+import ServidorAplicacao.FenixServiceException;
+import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.ExcepcaoInexistente;
+import ServidorAplicacao.Servico.UserView;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
+
+public class ReadCoordinatedDegrees implements IServico {
+    
+    private static ReadCoordinatedDegrees servico = new ReadCoordinatedDegrees();
+    
+    /**
+     * The singleton access method of this class.
+     **/
+    public static ReadCoordinatedDegrees getService() {
+        return servico;
+    }
+    
+    /**
+     * The actor of this class.
+     **/
+    private ReadCoordinatedDegrees() { 
+    }
+    
+    /**
+     * Returns The Service Name */
+    
+    public final String getNome() {
+        return "ReadCoordinatedDegrees";
+    }
+    
+    
+    public Object run(UserView userView)
+	    throws ExcepcaoInexistente, FenixServiceException {
+
+        ISuportePersistente sp = null;
+        
+        String username = new String(userView.getUtilizador());
+        List degrees = null;
+         
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+            
+            // Read the Teacher
+            
+            ITeacher teacher = sp.getIPersistentTeacher().readTeacherByUsername(userView.getUtilizador());
+			if (teacher == null)
+				throw new ExcepcaoInexistente("No Teachers Found !!");
+
+					
+            degrees = sp.getICursoExecucaoPersistente().readByTeacher(teacher);
+          
+        } catch (ExcepcaoPersistencia ex) {
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+            newEx.fillInStackTrace();
+            throw newEx;
+        } 
+
+		if (degrees == null)
+			throw new ExcepcaoInexistente("No Degrees Found !!");	
+		
+		
+		Iterator iterator = degrees.iterator();
+		List result = new ArrayList();
+		while(iterator.hasNext()){
+			ICursoExecucao executionDegree = (ICursoExecucao) iterator.next(); 
+			result.add(Cloner.copyIExecutionDegree2InfoExecutionDegree(executionDegree));
+		}
+		return result;
+    }
+}

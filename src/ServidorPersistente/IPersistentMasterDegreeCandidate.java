@@ -133,5 +133,13 @@ public interface IPersistentMasterDegreeCandidate {
 	 */
 	public IMasterDegreeCandidate readByExecutionDegreeAndPerson(ICursoExecucao executionDegree, IPessoa person) throws ExcepcaoPersistencia;		
 	
+	/**
+	 * 
+	 * @param executionDegree
+	 * @return List
+	 * @throws ExcepcaoPersistencia
+	 */
+	public List readByExecutionDegree(ICursoExecucao executionDegree) throws ExcepcaoPersistencia;
+	
 			
 } // End of class definition

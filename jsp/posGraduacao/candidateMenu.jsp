@@ -13,7 +13,4 @@
     <html:link page="/guideSection.do"><bean:message key="link.masterDegree.administrativeOffice.guide" />
     </html:link><br>
     
-    </html:link>
-	<html:link forward="logoff">
-	<bean:message key="link.logout"/>
-</html:link><br/>
+   

@@ -26,6 +26,14 @@ public class NonExistingActionException extends FenixActionException {
 	public NonExistingActionException(Object value, Throwable cause) {
 		super(key, value, cause);
 	}	
+
+	public NonExistingActionException(String key, Object value, Throwable cause) {
+		super(key, value, cause);
+	}	
+
+	public NonExistingActionException(String key, Throwable cause) {
+		super(key, cause);
+	}	
 	
 	public NonExistingActionException(Object[] values, Throwable cause) {
 		super(key, values, cause);
