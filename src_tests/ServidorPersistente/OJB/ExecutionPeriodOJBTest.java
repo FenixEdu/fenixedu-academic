@@ -221,7 +221,7 @@ public class ExecutionPeriodOJBTest extends TestCaseOJB {
 		IExecutionPeriod expectedExecutionPeriod = new ExecutionPeriod("2º Semestre",executionYear);
 		
 		assertEquals(expectedExecutionPeriod, executionPeriod);
-		assertEquals("Period State not equals to ACTUAL!",PeriodState.ACTUAL, executionPeriod.getState());
+		assertEquals("Period State not equals to ACTUAL!",PeriodState.CURRENT, executionPeriod.getState());
 	}
     
 }
