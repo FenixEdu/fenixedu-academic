@@ -59,7 +59,7 @@
 			  <td class="listClasses">
 			    <bean:write name="enrolment" property="infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.nome"/>
 			  </td>
-			  <td class="listClasses">
+			  <td class="listClasses" style="text-align:left">
 			    <bean:write name="enrolment" property="infoCurricularCourse.name"/>
 			  </td>
 			  <td class="listClasses">

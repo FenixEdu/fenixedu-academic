@@ -1295,7 +1295,7 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 			{
 				ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
 				
-				if (curricularCourse.getMandatory().booleanValue())
+				if (curricularCourse.getMandatory() != null && curricularCourse.getMandatory().booleanValue())
 				{
 					mandatoryCurricularCourses.add(curricularCourse);
 				}

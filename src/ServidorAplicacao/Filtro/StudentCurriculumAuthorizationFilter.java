@@ -88,17 +88,13 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter
 		roles.add(infoRole);
 
 		infoRole = new InfoRole();
-		infoRole.setRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
-		roles.add(infoRole);
-		
-		infoRole = new InfoRole();
 		infoRole.setRoleType(RoleType.COORDINATOR);
 		roles.add(infoRole);
 
 		infoRole = new InfoRole();
 		infoRole.setRoleType(RoleType.STUDENT);
 		roles.add(infoRole);
-
+		
 		return roles;
 	}
 
@@ -110,7 +106,7 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter
 		{
 			result.add(((InfoRole) iterator.next()).getRoleType());
 		}
-
+		
 		return result;
 	}
 
@@ -121,7 +117,6 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter
 	 */
 	private boolean hasProvilege(IUserView id, Object[] arguments)
 	{
-
 		List roles = getRoleList((List) id.getRoles());
 		CollectionUtils.intersection(roles, getNeededRoles());
 
@@ -234,28 +229,6 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter
 			}
 			return false;
 		}
-		roleTemp = new ArrayList();
-		roleTemp.add(RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
-		if (CollectionUtils.containsAny(roles, roleTemp))
-		{
-
-			try
-			{
-
-				if (studentCurricularPlan.getStudent().getDegreeType().equals(TipoCurso.LICENCIATURA_OBJ))
-				{
-					return true;
-				}
-				else
-				{
-					return false;
-				}
-			}
-			catch (Exception e)
-			{
-				return false;
-			}
-		}
 		
 		roleTemp = new ArrayList();
 		roleTemp.add(RoleType.STUDENT);
@@ -281,7 +254,6 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter
 				return false;
 			}
 		}
-
 		return false;
 	}
 }

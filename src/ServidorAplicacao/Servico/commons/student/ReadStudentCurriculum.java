@@ -46,7 +46,7 @@ public class ReadStudentCurriculum implements IService
         ISuportePersistente sp = null;
 
         IStudentCurricularPlan studentCurricularPlan = null;
-
+        
         try
         {
             sp = SuportePersistenteOJB.getInstance();
@@ -221,7 +221,7 @@ public class ReadStudentCurriculum implements IService
 
             result.add(infoEnrolment);
         }
-
+        
         return result;
     }
 }

@@ -22,6 +22,7 @@ import org.apache.struts.validator.DynaValidatorForm;
 import DataBeans.InfoObject;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.BothAreasAreTheSameServiceException;
+import ServidorAplicacao.Servico.exceptions.ChosenAreasAreIncompatibleServiceException;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
@@ -71,7 +72,6 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		IUserView userView = SessionUtils.getUserView(request);
 		ActionErrors errors = new ActionErrors();
 		DynaValidatorForm enrollmentForm = (DynaValidatorForm) form;
-
 		Integer studentNumber = new Integer((String) enrollmentForm.get("studentNumber"));
 
 		InfoStudentEnrolmentContext infoStudentEnrolmentContext = null;
@@ -83,7 +83,6 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 					userView,
 					"ShowAvailableCurricularCourses",
 					args);
-
 		}
 		catch (ExistingServiceException e)
 		{
@@ -97,31 +96,28 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 					"studentCurricularPlan",
 					new ActionError("error.student.curricularPlan.nonExistent"));
 			}
-			saveErrors(request, errors);
-			return mapping.getInputForward();
 		}
 		catch (OutOfCurricularCourseEnrolmentPeriod e)
 		{
 			errors.add("enrolment", new ActionError(e.getMessage()));
-			saveErrors(request, errors);
-			return mapping.getInputForward();
 		}
 		catch (FenixServiceException e)
 		{
 			if (e.getMessage().equals("degree"))
 			{
 				errors.add("degree", new ActionError("error.student.degreeCurricularPlan.LEEC"));
-				saveErrors(request, errors);
-				return mapping.getInputForward();
 			}
 			if (e.getMessage().equals("enrolmentPeriod"))
 			{
 				errors.add("enrolmentPeriod", new ActionError("error.student.enrolmentPeriod"));
-				saveErrors(request, errors);
-				return mapping.getInputForward();
 			}
 
 			throw new FenixActionException(e);
+		}
+		if (!errors.isEmpty())
+		{
+			saveErrors(request, errors);
+			return mapping.getInputForward();
 		}
 
 		Collections.sort(
@@ -190,7 +186,6 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 					userView,
 					"ReadSpecializationAndSecundaryAreasByStudent",
 					args);
-
 		}
 		catch (ExistingServiceException e)
 		{
@@ -205,7 +200,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 					new ActionError("error.student.curricularPlan.nonExistent"));
 			}
 			saveErrors(request, errors);
-			return mapping.getInputForward();
+			return mapping.findForward("beginTransaction");
 		}
 		catch (FenixServiceException e)
 		{
@@ -225,7 +220,6 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		request.setAttribute("infoBranches", infoBranches);
 		return mapping.findForward("prepareEnrollmentChooseAreas");
 	}
-
 
 	private void maintainEnrollmentState(HttpServletRequest request, Integer studentNumber)
 	{
@@ -263,34 +257,36 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		try
 		{
 			ServiceManagerServiceFactory.executeService(userView, "WriteStudentAreas", args);
-
 		}
 		catch (BothAreasAreTheSameServiceException e)
 		{
 			errors.add("bothAreas", new ActionError("error.student.enrollment.AreasNotEqual"));
-			maintainEnrollmentState(request, studentNumber);
-			saveErrors(request, errors);
-			return mapping.findForward("prepareChooseAreas");
+		}
+		catch (ChosenAreasAreIncompatibleServiceException e)
+		{
+			errors.add(
+				"incompatibleAreas",
+				new ActionError("error.student.enrollment.incompatibleAreas"));
 		}
 		catch (ExistingServiceException e)
 		{
 			errors.add(
 				"studentCurricularPlan",
 				new ActionError("error.student.curricularPlan.nonExistent"));
-			maintainEnrollmentState(request, studentNumber);
-			saveErrors(request, errors);
-			return mapping.findForward("prepareChooseAreas");
 		}
 		catch (InvalidArgumentsServiceException e)
 		{
 			errors.add("areas", new ActionError("error.areas.choose"));
-			maintainEnrollmentState(request, studentNumber);
-			saveErrors(request, errors);
-			return mapping.findForward("prepareChooseAreas");
 		}
 		catch (FenixServiceException e)
 		{
-			throw new FenixActionException();
+			throw new FenixActionException(e);
+		}
+		if (!errors.isEmpty())
+		{
+			maintainEnrollmentState(request, studentNumber);
+			saveErrors(request, errors);
+			return mapping.findForward("prepareChooseAreas");
 		}
 
 		return prepareEnrollmentChooseCurricularCourses(mapping, form, request, response);
@@ -313,7 +309,6 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 			Integer.valueOf(request.getParameter("studentCurricularPlanId"));
 
 		List toEnroll = Arrays.asList(curricularCoursesToEnroll);
-
 		if (toEnroll.size() == 1)
 		{
 			Object[] args = { studentCurricularPlanId, toEnroll.get(0), null };
@@ -337,7 +332,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		throws Exception
 	{
 		super.validateToken(request, form, mapping, "error.transaction.enrollment");
-		
+
 		IUserView userView = SessionUtils.getUserView(request);
 		DynaValidatorForm enrollmentForm = (DynaValidatorForm) form;
 		Integer[] enrolledCurricularCoursesBefore =
@@ -362,6 +357,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		}
 		return prepareEnrollmentChooseCurricularCourses(mapping, form, request, response);
 	}
+
 	public ActionForward enrollmentConfirmation(
 		ActionMapping mapping,
 		ActionForm form,
@@ -369,7 +365,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		HttpServletResponse response)
 		throws Exception
 	{
-//		super.validateToken(request, form, mapping, "error.transaction.enrollment");
+		//		super.validateToken(request, form, mapping, "error.transaction.enrollment");
 
 		IUserView userView = SessionUtils.getUserView(request);
 		ActionErrors errors = new ActionErrors();
@@ -388,7 +384,6 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 					userView,
 					"ShowAvailableCurricularCourses",
 					args);
-
 		}
 		catch (ExistingServiceException e)
 		{
@@ -402,33 +397,30 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 					"studentCurricularPlan",
 					new ActionError("error.student.curricularPlan.nonExistent"));
 			}
-			saveErrors(request, errors);
-			return prepareEnrollmentChooseCurricularCourses(mapping, form, request,response);
 		}
 		catch (OutOfCurricularCourseEnrolmentPeriod e)
 		{
 			errors.add("enrolment", new ActionError(e.getMessage()));
-			saveErrors(request, errors);
-			return prepareEnrollmentChooseCurricularCourses(mapping, form, request,response);
 		}
 		catch (FenixServiceException e)
 		{
 			if (e.getMessage().equals("degree"))
 			{
 				errors.add("degree", new ActionError("error.student.degreeCurricularPlan.LEEC"));
-				saveErrors(request, errors);
-				return prepareEnrollmentChooseCurricularCourses(mapping, form, request,response);
 			}
 			if (e.getMessage().equals("enrolmentPeriod"))
 			{
 				errors.add("enrolmentPeriod", new ActionError("error.student.enrolmentPeriod"));
-				saveErrors(request, errors);
-				return prepareEnrollmentChooseCurricularCourses(mapping, form, request,response);
 			}
 
 			throw new FenixActionException(e);
 		}
-
+		if (!errors.isEmpty())
+		{
+			saveErrors(request, errors);
+			return prepareEnrollmentChooseCurricularCourses(mapping, form, request, response);
+		}
+		
 		List curriculum = null;
 		Object args2[] = { userView, studentCurricularPlanId };
 		try
@@ -436,19 +428,29 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 			curriculum =
 				(ArrayList) ServiceManagerServiceFactory.executeService(
 					userView,
-					"ReadStudentCurriculum",
+					"ReadStudentCurriculumForEnrollmentConfirmation",
 					args2);
 		}
 		catch (NotAuthorizedException e)
 		{
 			errors.add("notAuthorized", new ActionError("error.enrollment.notAuthorized"));
 			saveErrors(request, errors);
-			return prepareEnrollmentChooseCurricularCourses(mapping, form, request,response);
+			return prepareEnrollmentChooseCurricularCourses(mapping, form, request, response);
 		}
 		Collections.sort(
 			infoStudentEnrolmentContext.getStudentCurrentSemesterInfoEnrollments(),
 			new BeanComparator("infoCurricularCourse.name"));
 
+		sortCurriculum(curriculum);
+
+		request.setAttribute("infoStudentEnrolmentContext", infoStudentEnrolmentContext);
+		request.setAttribute("curriculum", curriculum);
+
+		return mapping.findForward("enrollmentConfirmation");
+	}
+
+	private void sortCurriculum(List curriculum)
+	{
 		BeanComparator courseName = new BeanComparator("infoCurricularCourse.name");
 		BeanComparator executionYear = new BeanComparator("infoExecutionPeriod.infoExecutionYear.year");
 		ComparatorChain chainComparator = new ComparatorChain();
@@ -456,10 +458,5 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
 		chainComparator.addComparator(executionYear);
 
 		Collections.sort(curriculum, chainComparator);
-
-		request.setAttribute("infoStudentEnrolmentContext", infoStudentEnrolmentContext);
-		request.setAttribute("curriculum", curriculum);
-
-		return mapping.findForward("enrollmentConfirmation");
 	}
 }

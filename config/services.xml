@@ -5636,6 +5636,14 @@
         <filterChains/>
     </service> 
     <service>
+    	<name>ReadStudentCurriculumForEnrollmentConfirmation</name>
+    	<description>Reads student curriculum given student curricular plan id</description>
+        <implementationClass> 
+            ServidorAplicacao.Servico.commons.student.ReadStudentCurriculum</implementationClass>
+    	<isTransactional>True</isTransactional>
+        <filterChains/>
+    </service>
+    <service>
     	<name>InsertTutorShipWithOneStudent</name>
     	<description>Associate one student to the teacher</description>
     	<implementationClass>ServidorAplicacao.Servico.coordinator.InsertTutorShipWithOneStudent</implementationClass>
@@ -5668,5 +5676,5 @@
     	<implementationClass>ServidorAplicacao.Servico.coordinator.UserCoordinatorByExecutionDegree</implementationClass>
     	<isTransactional>True</isTransactional>
         <filterChains/>
-    </service>    
+    </service> 
 </serviceDefinitions>

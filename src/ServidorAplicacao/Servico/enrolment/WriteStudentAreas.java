@@ -115,6 +115,10 @@ public class WriteStudentAreas implements IService
 		List curricularCoursesFromNewSpecializationArea = new ArrayList();
 		List curricularCoursesFromNewSecundaryArea = new ArrayList();
 		
+		if(specializationArea == null && secundaryArea == null) {
+			return true;
+		}
+		
 		if (studentCurricularPlan.getBranch() != specializationArea)
 		{
 			List groups = curricularCourseGroupDAO.readByBranchAndAreaType(specializationArea, AreaType.BASE_OBJ);
