@@ -39,11 +39,11 @@ public class DeleteItem implements IServico {
 		try {
 			ISuportePersistente persistentSuport =
 				SuportePersistenteOJB.getInstance();
-System.out.println("entra no servico");
+
 			ISection section =
 				Cloner.copyInfoSection2ISection(infoItem.getInfoSection());
 
-				ISite site = Cloner.copyInfoSite2ISite(infoItem.getInfoSection().getInfoSite());
+			ISite site = Cloner.copyInfoSite2ISite(infoItem.getInfoSection().getInfoSite());
 			IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
 			site =
 				persistentSite.readByExecutionCourse(site.getExecutionCourse());
@@ -59,14 +59,15 @@ System.out.println("entra no servico");
 					infoItem.getName());
 
 			if (deletedItem == null)
-				throw new FenixServiceException("non existing item");
+				{
+					return new Boolean(true);
+				}
 				
 			Integer orderOfDeletedItem = deletedItem.getItemOrder();
 
 			persistentItem.delete(deletedItem);
 			persistentSuport.confirmarTransaccao();
 			persistentSuport.iniciarTransaccao();
-			
 			
 			List itemsList = null;
 

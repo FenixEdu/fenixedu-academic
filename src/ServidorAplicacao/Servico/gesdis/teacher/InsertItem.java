@@ -15,6 +15,7 @@ import DataBeans.gesdis.InfoItem;
 import DataBeans.util.Cloner;
 import Dominio.IItem;
 import Dominio.ISection;
+import Dominio.ISite;
 import Dominio.Item;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
@@ -104,38 +105,19 @@ public class InsertItem implements IServico {
 
 			section =
 				Cloner.copyInfoSection2ISection(infoItem.getInfoSection());
-			
+			ISite site = section.getSite();
+			site = persistentSuport.getIPersistentSite().readByExecutionCourse(site.getExecutionCourse());
+			section.setSite(site);
+	
 			IItem existingItem =
 				persistentItem.readBySectionAndName(
 					section,
 					infoItem.getName());
+					
 			if (existingItem != null)
 				throw new ExistingServiceException();
 
-
-
-//			fatherSection =
-//				persistentSection.readBySiteAndSectionAndName(
-//					site,
-//					null,
-//					fatherInfoSection.getName());
-//		}
-//		fatherSection.setSite(site);
-//
-//		section = new Section(infoSection.getName(), site, fatherSection);
-//		section.setSectionOrder(infoSection.getSectionOrder());
-//
-//		organizeExistingSectionsOrder(
-//			fatherSection,
-//			site,
-//			infoSection.getSectionOrder().intValue());
-//
-//		persistentSection.lockWrite(section);
-
 		    item = new Item(infoItem.getName(), section, infoItem.getItemOrder(), infoItem.getInformation(), infoItem.getUrgent()); 
-
-
-			//item.setSection(section);
 			
 			organizeExistingItemsOrder(
 				section,

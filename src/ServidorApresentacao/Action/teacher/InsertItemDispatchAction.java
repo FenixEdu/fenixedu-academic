@@ -52,29 +52,19 @@ public class InsertItemDispatchAction extends FenixDispatchAction {
 
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
 		String itemName = (String) dynaForm.get("itemName");
-		Integer itemOrder = (Integer) dynaForm.get("itemOrder");
+		String itemOrderString = (String) dynaForm.get("itemOrder");
     	String information = (String) dynaForm.get("information");
-		Boolean urgent = (Boolean) dynaForm.get("urgent");
+		String urgentString = (String) dynaForm.get("urgent");
 		
 		HttpSession session = request.getSession();
-		UserView userView =(UserView) session.getAttribute(SessionConstants.U_VIEW);
-		InfoSection infoSection =(InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
-	
-//		String indexString = (String) request.getParameter("index");
-//					Integer index = new Integer(indexString);
-//		
-//		List infoItemsList = (List) session.getAttribute(
-//						SessionConstants.INFO_SECTION_ITEMS_LIST);
-//		
-//		InfoItem infoItem = (InfoItem) infoItemsList.get(index.intValue());		
-//		
 		
-
+		UserView userView =(UserView) session.getAttribute(SessionConstants.U_VIEW);
+		InfoSection infoSection =(InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);	
+		
 			InfoItem infoItem =
-				new InfoItem(information,itemName, itemOrder, infoSection, urgent);
-			
+				new InfoItem(information, itemName, new Integer(itemOrderString), infoSection, new Boolean(urgentString));
 
-			Object args[] = { infoItem};
+			Object args[] = { infoItem };
 			GestorServicos manager = GestorServicos.manager();
 			try {
 				Boolean result = (Boolean) manager.executar(userView, "InsertItem", args);
@@ -82,6 +72,7 @@ public class InsertItemDispatchAction extends FenixDispatchAction {
 				throw new FenixActionException(
 					fenixServiceException.getMessage());
 			}
+			
 			Object args1[] = { infoSection };
 			ArrayList infoItems;
 			try {
@@ -90,6 +81,7 @@ public class InsertItemDispatchAction extends FenixDispatchAction {
 						null,
 						"ReadItems",
 						args1);
+			
 			} catch (FenixServiceException fenixServiceException) {
 				throw new FenixActionException(
 					fenixServiceException.getMessage());
