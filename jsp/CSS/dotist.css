@@ -264,7 +264,7 @@ a:hover {
 	background-color: #ccc;
 	font-weight: bold;
 	text-align: center;
-	height: 30px;
+	padding: 5px;
 	}
 
 .tall-td {
@@ -289,5 +289,3 @@ a:hover {
 	color: #333;
 	background-color: transparent;
 	}
-	
-.multibox {	width: 10px;}
