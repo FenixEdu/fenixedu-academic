@@ -24,6 +24,15 @@ public class InfoViewExam {
 		this.setInfoViewExamsByDayAndShift(infoViewExamsByDayAndShift);
 	}
 
+	public boolean equals(Object obj) {
+		if (obj instanceof InfoViewExam) {
+			InfoViewExam infoViewExam = (InfoViewExam) obj;
+			return this.getAvailableRoomOccupation().equals(infoViewExam.getAvailableRoomOccupation()) &&
+				   this.getInfoViewExamsByDayAndShift().size() == infoViewExam.getInfoViewExamsByDayAndShift().size();
+		}
+		return false;
+	}
+
 	/**
 	 * @return
 	 */
