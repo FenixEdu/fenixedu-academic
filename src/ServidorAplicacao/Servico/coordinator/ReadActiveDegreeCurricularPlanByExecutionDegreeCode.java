@@ -53,7 +53,7 @@ public class ReadActiveDegreeCurricularPlanByExecutionDegreeCode implements ISer
 			ICursoExecucaoPersistente persistentExecutionDegree = sp.getICursoExecucaoPersistente();
 
 			if (executionDegreeCode == null) {
-				throw new IllegalArgumentException();
+				throw new FenixServiceException("nullDegree");
 			}
 
 			ICursoExecucao executionDegree = new CursoExecucao();
@@ -86,7 +86,7 @@ public class ReadActiveDegreeCurricularPlanByExecutionDegreeCode implements ISer
 			}
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
-		}
+		} 
 		return infoDegreeCurricularPlan;
 	}
 

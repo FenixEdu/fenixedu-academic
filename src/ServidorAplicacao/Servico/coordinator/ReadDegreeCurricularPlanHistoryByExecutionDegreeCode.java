@@ -54,7 +54,7 @@ public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCode implements ISe
 			ICursoExecucaoPersistente persistentExecutionDegree = sp.getICursoExecucaoPersistente();
 
 			if (executionDegreeCode == null) {
-				throw new IllegalArgumentException();
+				throw new FenixServiceException("nullDegree");
 			}
 
 			ICursoExecucao executionDegree = new CursoExecucao();
@@ -84,8 +84,6 @@ public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCode implements ISe
 					}
 					infoDegreeCurricularPlan = createInfoDegreeCurricularPlan(executionDegree, allCurricularCourses);
 				}
-			} else {
-				System.out.println("o degree curricular plan esta a null no servico");
 			}
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
