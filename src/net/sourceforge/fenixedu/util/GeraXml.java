@@ -222,7 +222,7 @@ public class GeraXml extends FenixUtil {
                 enrolment.setCurricularCourse(curricularCourse);
                 enrolment.setStudentCurricularPlan(studentCurricularPlan);
                 enrolment.setExecutionPeriod(executionPeriod);
-                enrolment.setEnrollmentState(enrollmentState);
+                enrolment.setEnrollmentState(EnrollmentState.enrollmentStateEnumerationFromUtil(enrollmentState));
                 enrolment.setEnrolmentEvaluationType(enrolmentEvaluationType);
                 enrolment.setCondition(EnrollmentCondition.FINAL);
             } catch (RuntimeException e1) {

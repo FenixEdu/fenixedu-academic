@@ -222,7 +222,7 @@ public class InfoEnrolment extends InfoObject {
         if (enrollment != null) {
             setCreationDate(enrollment.getCreationDate());
             setEnrolmentEvaluationType(enrollment.getEnrolmentEvaluationType());
-            setEnrollmentState(enrollment.getEnrollmentState());
+            setEnrollmentState(EnrollmentState.enrollmentStateUtilFromEnumeration(enrollment.getEnrollmentState()));
             setAccumulatedWeight(enrollment.getAccumulatedWeight());
             setCondition(enrollment.getCondition());
 

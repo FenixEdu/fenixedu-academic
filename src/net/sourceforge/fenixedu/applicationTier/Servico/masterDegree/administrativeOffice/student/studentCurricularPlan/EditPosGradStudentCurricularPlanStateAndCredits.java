@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.IEnrollment;
 import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
@@ -24,7 +25,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.util.EnrollmentState;
 import net.sourceforge.fenixedu.util.Specialization;
 import net.sourceforge.fenixedu.util.StudentCurricularPlanState;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -87,8 +87,8 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
             if (newState.getState().intValue() == StudentCurricularPlanState.INACTIVE) {
                 while (iterator.hasNext()) {
                     IEnrollment enrolment = (IEnrollment) iterator.next();
-                    if (enrolment.getEnrollmentState().getValue() == EnrollmentState.ENROLLED_TYPE
-                            || enrolment.getEnrollmentState().getValue() == EnrollmentState.TEMPORARILY_ENROLLED_TYPE) {
+                    if (enrolment.getEnrollmentState() == EnrollmentState.ENROLLED
+                            || enrolment.getEnrollmentState() == EnrollmentState.TEMPORARILY_ENROLLED) {
                         persistentEnrolment.simpleLockWrite(enrolment);
                         enrolment.setEnrollmentState(EnrollmentState.ANNULED);
                     }
@@ -174,7 +174,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
             IPersistentEnrollment persistentEnrolment, IEnrollment enrolment)
             throws ExcepcaoPersistencia {
         if (newState.getState().intValue() == StudentCurricularPlanState.ACTIVE) {
-            if (enrolment.getEnrollmentState().getValue() == EnrollmentState.ANNULED_TYPE) {
+            if (enrolment.getEnrollmentState() == EnrollmentState.ANNULED) {
                 persistentEnrolment.simpleLockWrite(enrolment);
                 enrolment.setEnrollmentState(EnrollmentState.ENROLLED);
             }

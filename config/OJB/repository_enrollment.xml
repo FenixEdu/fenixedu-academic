@@ -27,7 +27,7 @@
 	<field-descriptor
 		name="enrollmentState"
 		column="STATE"
-		jdbc-type="INTEGER"
+		jdbc-type="VARCHAR"
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaEnrollmentState2SqlEnrollmentStateFieldConversion"
 	/>
 	<field-descriptor
@@ -121,7 +121,7 @@
 	<field-descriptor
 		name="enrollmentState"
 		column="STATE"
-		jdbc-type="INTEGER"
+		jdbc-type="VARCHAR"
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaEnrollmentState2SqlEnrollmentStateFieldConversion"
 	/>
 	<field-descriptor
@@ -211,7 +211,7 @@
 	<field-descriptor
 		name="enrollmentState"
 		column="STATE"
-		jdbc-type="INTEGER"
+		jdbc-type="VARCHAR"
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaEnrollmentState2SqlEnrollmentStateFieldConversion"
 	/>
 	<field-descriptor

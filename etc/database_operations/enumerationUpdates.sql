@@ -32,3 +32,11 @@ update ROLE set ROLE_TYPE = 'DIRECTIVE_COUNCIL' where ROLE_TYPE = 26;
 update ROLE set ROLE_TYPE = 'DELEGATE' where ROLE_TYPE = 27;
 update ROLE set ROLE_TYPE = 'FIRST_TIME_STUDENT' where ROLE_TYPE = 28;
 update ROLE set ROLE_TYPE = 'PROJECTS_MANAGER' where ROLE_TYPE = 29;
+
+alter table ENROLMENT modify STATE varchar(50) not null;
+update ENROLMENT set STATE = 'APROVED' where STATE = 1;
+update ENROLMENT set STATE = 'NOT_APROVED' where STATE = 2;
+update ENROLMENT set STATE = 'ENROLLED' where STATE = 3;
+update ENROLMENT set STATE = 'TEMPORARILY_ENROLLED' where STATE = 4;
+update ENROLMENT set STATE = 'ANNULED' where STATE = 5;
+update ENROLMENT set STATE = 'NOT_EVALUATED' where STATE = 6;

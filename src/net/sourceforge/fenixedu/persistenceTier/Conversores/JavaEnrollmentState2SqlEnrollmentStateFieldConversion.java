@@ -6,41 +6,26 @@
 
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
-import net.sourceforge.fenixedu.util.EnrollmentState;
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 
 import org.apache.commons.beanutils.ConversionException;
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
 public class JavaEnrollmentState2SqlEnrollmentStateFieldConversion implements FieldConversion {
 
-    /*
-     * @see FieldConversion#javaToSql(Object)
-     */
-
-    public Object javaToSql(Object obj) throws ConversionException {
+    public Object javaToSql(final Object obj) throws ConversionException {
         if (obj instanceof EnrollmentState) {
-            EnrollmentState enrollmentState = (EnrollmentState) obj;
-            return new Integer(enrollmentState.getValue());
+            final EnrollmentState enrollmentState = (EnrollmentState) obj;
+            return enrollmentState.toString();
         }
         return obj;
     }
 
-    /*
-     * @see FieldConversion#sqlToJava(Object)
-     */
-
-    public Object sqlToJava(Object obj) throws ConversionException {
+    public Object sqlToJava(final Object obj) throws ConversionException {
         EnrollmentState enrollmentState = null;
-        if (obj instanceof Integer) {
-            Integer enrollmentStateId = (Integer) obj;
-
-            enrollmentState = EnrollmentState.getEnum(enrollmentStateId.intValue());
-            if (enrollmentState == null) {
-                throw new IllegalArgumentException(this.getClass().getName()
-                        + ": Illegal EnrolmentState type!(" + obj + ")");
-            }
-        } else {
-            throw new IllegalArgumentException("Illegal EnrolmentState type!(" + obj + ")");
+        if (obj instanceof String) {
+            final String enrollmentStateString = (String) obj;
+			return EnrollmentState.valueOf(enrollmentStateString);
         }
         return enrollmentState;
 
