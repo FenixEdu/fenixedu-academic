@@ -66,9 +66,7 @@ public class CursoExecucao extends DomainObject implements ICursoExecucao {
 		boolean resultado = false;
 		if (obj instanceof ICursoExecucao) {
 			ICursoExecucao cursoExecucao = (ICursoExecucao) obj;
-			resultado = getExecutionYear().equals(cursoExecucao.getExecutionYear())
-				&& getCurricularPlan().equals(cursoExecucao.getCurricularPlan());
-					
+			resultado = getIdInternal().equals(cursoExecucao.getIdInternal());
 		}
 		return resultado;
 	}
