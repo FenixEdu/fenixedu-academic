@@ -88,7 +88,7 @@ public class CurricularCoursesEnrollmentDispatchAction extends DispatchAction
 				saveErrors(request, errors);
 				return mapping.getInputForward();
 			}
-			throw new FenixActionException();
+			throw new FenixActionException(e);
 		}
 
 		Integer[] enrolledInArray = buildArrayOfEnrolled(infoStudentEnrolmentContext);
