@@ -65,7 +65,7 @@ public class ChooseContextDispatchAction extends DispatchAction {
 
 				InfoExecutionPeriod infoExecutionPeriod =
 					setExecutionContext(request);
-
+				//TODO: this semester and  curricular year list needs to be refactored in order to incorporate masters
 				/* Criar o bean de semestres */
 				ArrayList semestres = new ArrayList();
 				semestres.add(new LabelValueBean("escolher", ""));
