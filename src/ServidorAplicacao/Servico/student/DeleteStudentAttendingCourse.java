@@ -26,16 +26,6 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class DeleteStudentAttendingCourse implements IService
 {
-	public class AlreadyEnroledInGroupServiceException extends FenixServiceException
-	{
-	}
-	public class AlreadyEnroledServiceException extends FenixServiceException
-	{
-	}
-	public class AlreadyEnroledInShiftServiceException extends FenixServiceException
-	{
-	}
-
 	public DeleteStudentAttendingCourse()
 	{
 	}
