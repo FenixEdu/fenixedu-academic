@@ -13,7 +13,7 @@
      	
   	<bean:define id="infoStudentCurricularPlan" name="<%= SessionConstants.INFO_STUDENT_CURRICULAR_PLAN %>" scope="session" />
    
-   <h2><bean:message key="label.certificate.declaration.create" /></h2>
+   <h2><bean:message key="label.certificate.create" /></h2>
    <span class="error"><html:errors/></span>
    
    <table>
@@ -34,10 +34,10 @@
        
         <tr>
  
- 	   <!-- Graduation Type -->
+ 	   <!-- Certidão Type -->
        <tr>
        
-         <td><bean:message key="label.certificate.list"/> </td>
+         <td><bean:message key="label.certificate"/> </td>
          <td><b><bean:write name="chooseCertificateInfoForm" property="certificateList"/> </b></td>
        
        </tr>
@@ -49,7 +49,7 @@
 
 
 	<br>
-    <html:link page="/printCertificatePage.do" target="_blank">
+    <html:link page="/printCertificate.do?method=prepare" target="_blank">
    		<bean:message key="link.masterDegree.administrativeOffice.print" />
    </html:link>
 

@@ -36,6 +36,8 @@
    		<jsp:include page="./declarationTemplate2.jsp" flush="true" />
 	</logic:equal >	
 
-	<jsp:include page="./declarationTemplate3.jsp" flush="true" />
+	<jsp:include page="./templateDocumentReason.jsp" flush="true" />
+	
+	<jsp:include page="./templateFinal.jsp" flush="true" />
 	  	
 	</table>

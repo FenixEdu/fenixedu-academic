@@ -113,6 +113,8 @@ public abstract class SessionConstants {
 	public static final String CERTIFICATE_TYPE = "certificateString";
 	public static final String MATRICULA = "matricula";
 	public static final String MATRICULA_ENROLMENT = "matriculaInscricao";
+	public static final String DURATION_DEGREE = "duracaoDoCurso";
+	public static final String ENROLMENT = "inscricao";
 	
 	
 	

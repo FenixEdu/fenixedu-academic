@@ -90,7 +90,7 @@ public class ChooseDeclarationInfoAction extends DispatchAction {
 			session.removeAttribute(SessionConstants.DOCUMENT_REASON_LIST);
 
 			
-			// Get the Information
+			// Get request Information
 			Integer requesterNumber = new Integer((String) chooseDeclaration.get("requesterNumber"));
      		String graduationType = (String) chooseDeclaration.get("graduationType");
 		    String[] destination =  (String[]) chooseDeclaration.get("destination");

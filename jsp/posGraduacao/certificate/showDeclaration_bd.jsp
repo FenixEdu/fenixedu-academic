@@ -32,7 +32,7 @@
 
 
 	<br>
-    <html:link page="/printDeclarationPage.do" target="_blank">
+    <html:link page="/printDeclaration.do?method=prepare" target="_blank">
    		<bean:message key="link.masterDegree.administrativeOffice.print" />
    </html:link>
 

@@ -11,8 +11,7 @@
    
    <table>
     <html:form action="/chooseCertificateInfoAction?method=choose">
-   	  <html:hidden property="page" value="1"/>
-   	  
+   	 
        <!-- Requester Number -->
        <tr>
          <td><bean:message key="label.masterDegree.administrativeOffice.requesterNumber"/> </td>
@@ -32,10 +31,12 @@
         </tr>
         
         <!-- Certificate List --> 
+          <html:hidden property="page" value="2"/>
        <tr>
          <td><bean:message key="label.certificate.list"/> </td>
          <td>
             <html:select property="certificateList">
+        	    <option value="" selected="selected"><bean:message key="label.certificate.default"/></option>
                 <html:options name="certificateList" />
              </html:select>          
          </td>
