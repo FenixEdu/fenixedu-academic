@@ -283,6 +283,7 @@
 		input="/editSection.jsp"
 		path="/editSection"
 		parameter="method"
+		scope="request"
 		type="ServidorApresentacao.Action.teacher.EditSectionDispatchAction"
         validate="false" >
        <forward name="editSection" path="/editSection.jsp"/>
