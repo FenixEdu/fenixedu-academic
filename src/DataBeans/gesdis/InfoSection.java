@@ -19,8 +19,7 @@ public class InfoSection implements Comparable {
     protected InfoSite infoSite;
     protected InfoSection infoSuperiorSection;
     protected Integer sectionDepth = new Integer(0);
-//    protected List inferiorInfoSections;
-//    protected List infoItems;
+
     
 	/** 
 	* Construtor
@@ -279,8 +278,19 @@ public class InfoSection implements Comparable {
 	/* (non-Javadoc)
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
-	public int compareTo(Object arg0) {		
-		return ((InfoSection)arg0).getSectionOrder().intValue();
+	public int compareTo(Object arg0) {	
+		
+		return naturalOrder()-((InfoSection)arg0).naturalOrder();
+	}
+
+	public int naturalOrder(){
+		if (getSuperiorInfoSection()==null) {
+			return getSectionOrder().intValue();
+		}
+		else {
+			return getSectionOrder().intValue() + getSuperiorInfoSection().naturalOrder();
+		}
+		
 	}
 
 }
