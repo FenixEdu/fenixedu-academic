@@ -24,7 +24,7 @@
     	</html:link>
     </li>
     <li>
-		<html:link page="">
+		<html:link page="<%="/marksConfirmation.do?method=prepareMarksConfirmation&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") + "&amp;scopeCode=" + pageContext.findAttribute("scopeCode") %>">
     		<bean:message key="link.masterDegree.administrativeOffice.marksConfirmation" />
 		</html:link>
 	</li>

@@ -199,7 +199,7 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
 		List evaluationsWithoutFinal = (List) CollectionUtils.select(executionCourse.getAssociatedEvaluations(), new Predicate() {
 			public boolean evaluate(Object input) {
 					//for now returns only exams
-	if (input instanceof IExam)
+			if (input instanceof IExam)
 					return true;
 				return false;
 			}

@@ -60,10 +60,10 @@ public class SubmitMarksAction extends DispatchAction {
 				(InfoSiteEnrolmentEvaluation) serviceManager.executar(userView, "ReadStudentsAndMarksByCurricularCourse", args);
 		} catch (NonExistingServiceException e) {
 			sendErrors(request, "nonExisting", "message.masterDegree.notfound.students");
-			return mapping.getInputForward();
+			return mapping.findForward("MarksSubmission");
 		} catch (ExistingServiceException e) {
 			sendErrors(request, "existing", "message.masterDegree.evaluation.alreadyConfirmed");
-			return mapping.getInputForward();
+			return mapping.findForward("ShowMarksManagementMenu");
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}

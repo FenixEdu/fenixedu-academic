@@ -111,7 +111,9 @@ INSERT INTO ENROLMENT_EVALUATION VALUES (3, '14', 1, '2003-02-12', '2003-03-20',
 INSERT INTO ENROLMENT_EVALUATION VALUES (4, '15', 1, '2003-02-12', '2003-03-20', 1, 5, 9, null, null, null, null);
 INSERT INTO ENROLMENT_EVALUATION VALUES (5, '18', 1, '2003-02-13', '2003-03-20', 1, 5, 20, null, null, null, null);
 INSERT INTO ENROLMENT_EVALUATION VALUES (6, '14', 1, '2003-02-12', '2003-03-20', 1, 5, 19, null, null, null, null);
-
+INSERT INTO ENROLMENT_EVALUATION VALUES (7, null, 1, null, null, 0, 2, 16, null, null, null, null);
+INSERT INTO ENROLMENT_EVALUATION VALUES (8, null, 1, null, null, 0, 2, 17, null, null, null, null);
+INSERT INTO ENROLMENT_EVALUATION VALUES (9, null, 1, null, null, 0, 2, 18, null, null, null, null);
 
 
 #-----------------------------

@@ -907,8 +907,19 @@
          	  	key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
                	handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                />       
-              
 	         <forward name="MarksSubmission" path="/marksManagement/marksSubmission.jsp"/> 
+	         <forward name="ShowMarksManagementMenu" path="/marksManagement/showMarksManagementMenu.jsp"/> 	         
+      </action>
+      <action path="/marksConfirmation"
+      		  input="/marksManagement/marksConfirmationMenu.jsp"
+      	      name="marksSubmissionForm"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.marksManagement.ConfirmMarksAction"
+              validate="false">
+              
+	         <forward name="MarksConfirmationMenu" path="/marksManagement/marksConfirmationMenu.jsp"/> 
+	         <forward name="MarksConfirmation" path="/marksManagement/marksConfirmation.jsp"/> 
 	         <forward name="ShowMarksManagementMenu" path="/marksManagement/showMarksManagementMenu.jsp"/> 	         
       </action>
     </action-mappings>
