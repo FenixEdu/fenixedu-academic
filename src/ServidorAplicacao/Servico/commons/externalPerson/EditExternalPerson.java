@@ -2,6 +2,7 @@ package ServidorAplicacao.Servico.commons.externalPerson;
 
 import Dominio.ExternalPerson;
 import Dominio.IExternalPerson;
+import Dominio.IPessoa;
 import Dominio.IWorkLocation;
 import Dominio.WorkLocation;
 import ServidorAplicacao.IServico;
@@ -53,13 +54,12 @@ public class EditExternalPerson implements IServico
 		Integer workLocationID,
 		String phone,
 		String mobile,
-		String fax,
 		String homepage,
 		String email)
 		throws FenixServiceException
 	{
 		IExternalPerson storedExternalPerson = null;
-		IExternalPerson storedExternalPerson2 = null;
+		IExternalPerson existingExternalPerson = null;
 
 		IWorkLocation storedWorkLocation = null;
 
@@ -75,33 +75,35 @@ public class EditExternalPerson implements IServico
 			if (storedExternalPerson == null)
 				throw new NonExistingServiceException("error.exception.externalPerson.nonExistingExternalPsrson");
 
-			storedExternalPerson2 =
+			existingExternalPerson =
 				sp.getIPersistentExternalPerson().readByNameAndAddressAndWorkLocationID(
 					name,
 					address,
 					workLocationID);
 
 			// checks if existes another exernal person with the same name, address and name location
-			if (storedExternalPerson2 != null)
+			if (existingExternalPerson != null)
 			{
-				if (!storedExternalPerson.getIdInternal().equals(storedExternalPerson2.getIdInternal()))
-					throw new ExistingServiceException("error.exception.externalPerson.existingExternalPsrson");
+				if (!storedExternalPerson.getIdInternal().equals(existingExternalPerson.getIdInternal()))
+					throw new ExistingServiceException("error.exception.externalPerson.existingExternalPerson");
 			}
-
-			storedWorkLocation = (IWorkLocation) sp.getIPersistentWorkLocation().readByOID(WorkLocation.class, workLocationID);
 			
-			storedExternalPerson.getPerson().setNome(name);
-			storedExternalPerson.getPerson().setMorada(address);
-			storedExternalPerson.getPerson().setTelefone(phone);
-			storedExternalPerson.getPerson().setTelemovel(mobile);
-			storedExternalPerson.getPerson().setEnderecoWeb(homepage);
-			storedExternalPerson.getPerson().setEmail(email);
-
-			
-			storedExternalPerson.setWorkLocation(storedWorkLocation);
-
 			sp.getIPersistentExternalPerson().simpleLockWrite(storedExternalPerson);
+			
+			storedWorkLocation = (IWorkLocation) sp.getIPersistentWorkLocation().readByOID(WorkLocation.class, workLocationID);
+			storedExternalPerson.setWorkLocation(storedWorkLocation);
+			
+			IPessoa person = storedExternalPerson.getPerson();
+			sp.getIPessoaPersistente().lockWrite(person);
 
+			person.setNome(name);
+			person.setMorada(address);
+			person.setTelefone(phone);
+			person.setTelemovel(mobile);
+			person.setEnderecoWeb(homepage);
+			person.setEmail(email);
+		
+	
 		}
 		catch (ExcepcaoPersistencia ex)
 		{
