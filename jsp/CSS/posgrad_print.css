@@ -25,6 +25,12 @@ table {
 	margin: 0 2em 0 1.5em;
 	}
 
+table#diploma {
+	width: 95%;
+	margin: 0;
+	padding: 0;
+	}
+
 h2	{
 	font: bold 13pt "Trebuchet MS", Georgia, sans-serif;
 	color: black;
@@ -35,21 +41,42 @@ h3 {
 	color: black;
 	}
 
+
 h2.diploma_posGrad	{
-	font: bold 28px "Trebuchet MS", Arial, Helvetica, sans-serif;
-	color: #223d4a;
+	font: 42px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color: #000;
 	/*color: #036;*/
+	padding: 0; 
+	margin: 0 0 2em 0;
 	}	
+
 	
 h3.diploma_posGrad {
-	font: bold 18px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font: 20px "Trebuchet MS", Arial, Helvetica, sans-serif;
 	color: #223d4a;
-	}	
-	
-h4.diploma_posGrad {
-	font: 18px "Trebuchet MS", Arial, Helvetica, sans-serif;
-	color: #223d4a;
+	padding: 0;
+	margin: 0 0 0.5em 0;
 	}
+
+h4.diploma_posGrad {
+	font: 16px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color: #223d4a;
+	padding: 0;
+	margin: 0 0 0.5em 0;
+	}
+	
+.diplomado {
+	font: 22px "Times New Roman", "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-style: italic;
+	text-align: center;
+	margin: 0 0 0.5em 0;
+	}
+	
+.dipl_signature {
+	text-align: center;
+	margin: 5em 0 0 0;
+	}
+	
 	
 /******************************************
 	Global Links Proprieties
@@ -181,7 +208,7 @@ a:visited {
 	}
 
 #vert-spacer {
-	margin-top: 15em;
+	margin-top: 6em;
 	}
 
 /*****************************************************************

@@ -90,6 +90,11 @@
 				<td bgcolor="#a2aebc" align="center" rowspan="2">
 					<bean:message key="label.teacher.finalWork.priority.info"/>
 				</td>
+				<td bgcolor="#a2aebc" align="center" rowspan="2">
+					<bean:message key="finalDegreeWorkProposal.attribution.byTeacher"/>
+				</td>
+				<td bgcolor="#a2aebc" align="center" rowspan="2">
+				</td>
 			</tr>
 			<tr>
 		        <td bgcolor="#a2aebc" align="center">
@@ -126,6 +131,44 @@
 								</logic:iterate>
 							</table>
 						</logic:present>
+					</td>
+					<td bgcolor="#eae7e4" align="center" rowspan="2">
+						<logic:present name="finalDegreeWorkProposalHeader" property="groupAttributedByTeacher">
+							<logic:iterate id="groupStudent" name="finalDegreeWorkProposalHeader" property="groupAttributedByTeacher.groupStudents">
+								<bean:write name="groupStudent" property="student.number"/><br/>
+							</logic:iterate>
+						</logic:present>
+					</td>
+					<td bgcolor="#eae7e4" align="center" rowspan="2">
+						<logic:present name="finalDegreeWorkProposalHeader" property="groupAttributed">
+							<logic:iterate id="groupStudent" name="finalDegreeWorkProposalHeader" property="groupAttributed.groupStudents">
+								<bean:write name="groupStudent" property="student.number"/><br/>
+							</logic:iterate>
+						</logic:present>
+
+						<logic:equal name="executionDegreeOID" value="67">
+							<logic:equal name="finalDegreeWorkProposalHeader" property="proposalNumber" value="81">
+								739-afa<br/>
+								741-afa
+							</logic:equal>
+							<logic:equal name="finalDegreeWorkProposalHeader" property="proposalNumber" value="117">
+								743-afa
+							</logic:equal>
+							<logic:equal name="finalDegreeWorkProposalHeader" property="proposalNumber" value="131">
+								974-am<br/>
+								984-am
+							</logic:equal>
+							<logic:equal name="finalDegreeWorkProposalHeader" property="proposalNumber" value="210">
+								742-afa
+							</logic:equal>
+							<logic:equal name="finalDegreeWorkProposalHeader" property="proposalNumber" value="136">
+								977-am
+							</logic:equal>
+							<logic:equal name="finalDegreeWorkProposalHeader" property="proposalNumber" value="228">
+								975-am<br/>
+								976-am
+							</logic:equal>
+						</logic:equal>
 					</td>
 				</tr>
 				<tr>

@@ -138,7 +138,7 @@ verify_serializable=true
 #
 #   log.profile.filename: name of file where profiling log will be stored
 #
-log.profile.filename=profileing.log
+log.profile.filename=/tmp/profileing.log
 #
 #
 #------------------------------------------------------------------------------

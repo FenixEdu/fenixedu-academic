@@ -8,9 +8,11 @@ package DataBeans;
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 
 import Dominio.IExam;
 import Util.EvaluationType;
@@ -18,13 +20,10 @@ import Util.Season;
 
 public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
 
-    protected Season season;
-
-    protected List associatedRooms;
-
+    protected Season season;    
     protected String publishmentMessage;
-
     protected Integer enrolledStudents;
+    private List infoExecutionCourses;
 
     /**
      * The following variable serves the purpose of indicating the execution
@@ -43,7 +42,7 @@ public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
         this.setBeginning(beginning);
         this.setEnd(end);
         this.setSeason(season);
-        this.setAssociatedRooms(new ArrayList());
+       
     }
 
     public String toString() {
@@ -81,17 +80,20 @@ public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
     }
 
     /**
-     * @return
-     */
-    public List getAssociatedRooms() {
-        return associatedRooms;
-    }
+    
+	 * @return
+	 */
+    public List getAssociatedRooms()
+    {
+        return (List) CollectionUtils.collect(super
+                .getAssociatedRoomOccupation(), new Transformer() {
 
-    /**
-     * @param rooms
-     */
-    public void setAssociatedRooms(List rooms) {
-        associatedRooms = rooms;
+    
+            public Object transform(Object arg0) {
+                InfoRoomOccupation roomOccupation = (InfoRoomOccupation) arg0;
+                return roomOccupation.getInfoRoom();
+            }
+        });
     }
 
     /**
@@ -243,7 +245,18 @@ public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
         }
         return result;
     }
-
+    /**
+     * @return Returns the infoExecutionCourses.
+     */
+    public List getInfoExecutionCourses() {
+        return infoExecutionCourses;
+    }
+    /**
+     * @param infoExecutionCourses The infoExecutionCourses to set.
+     */
+    public void setInfoExecutionCourses(List infoExecutionCourses) {
+        this.infoExecutionCourses = infoExecutionCourses;
+    }
     public void copyFromDomain(IExam exam) {
         super.copyFromDomain(exam);
         if (exam != null) {

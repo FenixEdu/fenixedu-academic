@@ -323,7 +323,7 @@ public class ReadSummaries implements IServico {
                                         .getDiaSemana().getDiaSemana()
                                         .intValue()
                                 && !beginLesson.after(dateAndHourSummary)
-                                && !endLesson.before(dateAndHourSummary)) {
+                                && endLesson.after(dateAndHourSummary)) {
                             removeSummary = false;
                         }
                     }

@@ -17,15 +17,11 @@ import java.util.List;
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.Exam;
-import Dominio.ExamStudentRoom;
 import Dominio.IExam;
-import Dominio.IExamExecutionCourse;
-import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.ISala;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExam;
-import ServidorPersistente.exceptions.notAuthorizedPersistentDeleteException;
 
 public class ExamOJB extends ObjectFenixOJB implements IPersistentExam
 {
@@ -49,7 +45,7 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam
     public void delete(IExam exam) throws ExcepcaoPersistencia
     {
 
-        Criteria criteria = new Criteria();
+/*        Criteria criteria = new Criteria();
         criteria.addEqualTo("keyExam", exam.getIdInternal());
         List examEnrollments = queryList(ExamStudentRoom.class, criteria);
         if (examEnrollments != null && !examEnrollments.isEmpty())
@@ -83,7 +79,8 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam
 
             super.delete(exam);
 
-        }
+        }*/
+        super.delete(exam);
     }
 
     /* (non-Javadoc)

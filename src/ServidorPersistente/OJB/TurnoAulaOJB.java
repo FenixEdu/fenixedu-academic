@@ -167,4 +167,15 @@ public class TurnoAulaOJB extends ObjectFenixOJB implements ITurnoAulaPersistent
         return shiftLessons;
 
     }
+
+    public List readByLesson(IAula lesson) throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("aula.diaSemana", lesson.getDiaSemana());
+        criteria.addEqualTo("aula.inicio", lesson.getInicio());
+        criteria.addEqualTo("aula.fim", lesson.getFim());
+        criteria.addEqualTo("aula.tipo", lesson.getTipo());
+        criteria.addEqualTo("aula.sala.nome", lesson.getSala().getNome());
+
+        return queryList(TurnoAula.class, criteria);
+    }
 }

@@ -81,6 +81,16 @@ public class StudentGroupOJB extends ObjectFenixOJB implements IPersistentStuden
         }
     }
 
+
+    public List readAllStudentGroupByShift(ITurno shift) throws ExcepcaoPersistencia {
+
+        Criteria criteria = new Criteria();
+
+        criteria.addEqualTo("keyShift", shift.getIdInternal());
+
+        return queryList(StudentGroup.class, criteria);
+    }
+
     
 
 }

@@ -21,4 +21,6 @@ public interface IPersistentStudentGroup extends IPersistentObject{
 	public IStudentGroup readStudentGroupByGroupPropertiesAndGroupNumber(IGroupProperties groupProperties,Integer studentGroupNumber) throws ExcepcaoPersistencia;
 	public List readAllStudentGroupByGroupProperties(IGroupProperties groupProperties) throws ExcepcaoPersistencia;
 	public List readAllStudentGroupByGroupPropertiesAndShift(IGroupProperties groupProperties,ITurno shift) throws ExcepcaoPersistencia;
+	public List readAllStudentGroupByShift(ITurno shift) throws ExcepcaoPersistencia;
+	
 }

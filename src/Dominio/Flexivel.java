@@ -2118,7 +2118,7 @@ public class Flexivel implements IStrategyHorarios
 					// que consiste em contar para saldo apenas o periodo de trabalho
 					// até atingir o desconto obrigatorio de refeicao
 					if (saldo > saldoPenalizacaoAusenciaRefeicao
-							&& saldoPenalizacaoAusenciaRefeicao != 0)
+					        && saldoPenalizacaoAusenciaRefeicao != 0)
 					{
 						saldo = saldoPenalizacaoAusenciaRefeicao;
 					}
@@ -2130,7 +2130,7 @@ public class Flexivel implements IStrategyHorarios
 					// o periodo de refeicao é menor que o obrigatorio logo a penalizacao é contar o
 					// período
 					// de trabalho efectuado até à saída para a refeicao
-					if (saldo > saldoPenalizacaoMinimoRefeicao)
+					if (saldo > saldoPenalizacaoMinimoRefeicao && saldoPenalizacaoMinimoRefeicao != 0)
 					{
 						saldo = saldoPenalizacaoMinimoRefeicao;
 					}

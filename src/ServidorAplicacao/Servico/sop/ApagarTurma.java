@@ -16,6 +16,7 @@ import DataBeans.util.Cloner;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.ITurma;
+import Dominio.ITurno;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -67,6 +68,12 @@ public class ApagarTurma implements IServico {
 					executionPeriod);
 			try {
 				if (turma != null) {
+					for (int i = 0; i < turma.getAssociatedShifts().size(); i++) {
+						ITurno shift = (ITurno) turma.getAssociatedShifts().get(i);
+						sp.getITurnoPersistente().simpleLockWrite(shift);
+						shift.getAssociatedClasses().remove(turma);
+					}
+				    
 					sp.getITurmaPersistente().delete(turma);
 					result = true;
 				}

@@ -2,8 +2,8 @@ package ServidorAplicacao.Servico.publico;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -98,44 +98,52 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
     {
         List result = new ArrayList();
         List temp = new ArrayList();
+        
         ComparatorChain comparatorChain = new ComparatorChain();
         comparatorChain.addComparator(
                 new BeanComparator("infoCurricularSemester.infoCurricularYear.year"));
         comparatorChain.addComparator(new BeanComparator("infoCurricularSemester.semester"));
         comparatorChain.addComparator(new BeanComparator("infoCurricularCourse.name"));
         Collections.sort(scopes, comparatorChain);
-        Iterator iter = scopes.iterator();
-        InfoCurricularYear year = null;
-        InfoCurricularCourse curricularCourse = null;
-        while (iter.hasNext())
-        {
-            InfoCurricularCourseScope scope = (InfoCurricularCourseScope) iter.next();
-            InfoCurricularYear scopeYear = scope.getInfoCurricularSemester().getInfoCurricularYear();
-            InfoCurricularCourse scopeCurricularCourse = scope.getInfoCurricularCourse();
-            if (year == null)
-            {
-                year = scopeYear;
-            }
-            if (curricularCourse == null)
-            {
-                curricularCourse = scopeCurricularCourse;
-            }
-            if (scopeYear.equals(year) && scopeCurricularCourse.equals(curricularCourse))
-            {
-                temp.add(scope);
-            }
-            else
-            {
-                result.add(temp);
-                temp = new ArrayList();
-                year = scopeYear;
-                curricularCourse = scopeCurricularCourse;
-                temp.add(scope);
-            }
-
+        
+        if(scopes != null && scopes.size() > 0)  {
+	        ListIterator iter = scopes.listIterator();
+	        InfoCurricularYear year = null;
+	        InfoCurricularCourse curricularCourse = null;
+	    
+	        while (iter.hasNext())
+	        {
+	            InfoCurricularCourseScope scope = (InfoCurricularCourseScope) iter.next();
+	            InfoCurricularYear scopeYear = scope.getInfoCurricularSemester().getInfoCurricularYear();
+	            InfoCurricularCourse scopeCurricularCourse = scope.getInfoCurricularCourse();           
+	            if (year == null)
+	            {
+	                year = scopeYear;
+	            }
+	            if (curricularCourse == null)
+	            {
+	                curricularCourse = scopeCurricularCourse;
+	            }
+	        
+	            if (scopeYear.equals(year) && scopeCurricularCourse.equals(curricularCourse))
+	            {
+	                temp.add(scope);
+	            }
+	            else
+	            {
+	                result.add(temp);
+	                temp = new ArrayList();
+	                year = scopeYear;
+	                curricularCourse = scopeCurricularCourse;
+	                temp.add(scope);
+	            }
+	            
+	            if(!iter.hasNext()) {	           
+	                result.add(temp);		           
+		       }
+	        }
         }
-
+        
         return result;
     }
-
 }

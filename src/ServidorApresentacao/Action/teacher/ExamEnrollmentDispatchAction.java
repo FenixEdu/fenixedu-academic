@@ -191,25 +191,12 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 		endTime.set(Calendar.HOUR_OF_DAY, new Integer(enrollmentEndHourArray[0]).intValue());
 		endTime.set(Calendar.MINUTE, new Integer(enrollmentEndHourArray[1]).intValue());
 
-		Calendar presentDay = Calendar.getInstance();
-		Calendar presentTime = Calendar.getInstance();
-
-		if (!verifyDates(presentDay, presentTime, beginDate, beginTime)) {
-					setErrorMessage(request, "error.beginDate.sooner.today");
-					return mapping.getInputForward();
-		}
-		
-		if (!verifyDates(beginDate, beginTime, endDate, endTime)) {
-			setErrorMessage(request, "error.endDate.sooner.beginDate");
-			return mapping.getInputForward();
-		}
-
 		Object args[] = { disciplinaExecucaoIdInternal, examIdInternal, beginDate, endDate, beginTime, endTime };
 
 		try {
 			ServiceUtils.executeService(userView, "EditExamEnrollment", args);
 		} catch (InvalidTimeIntervalServiceException e) {
-			setErrorMessage(request, "error.endDate.sooner.examDate");
+			setErrorMessage(request, e.getMessage());
 			return mapping.getInputForward();
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
@@ -219,24 +206,6 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 		request.setAttribute("objectCode", disciplinaExecucaoIdInternal);
 
 		return prepareEnrolmentManagement(mapping, form, request, response);
-	}
-
-	private boolean verifyDates(Calendar beginDay, Calendar beginTime, Calendar endDay, Calendar endTime) {
-		Calendar begin = Calendar.getInstance();
-		begin.set(Calendar.YEAR, beginDay.get(Calendar.YEAR));
-		begin.set(Calendar.MONTH, beginDay.get(Calendar.MONTH));
-		begin.set(Calendar.DAY_OF_MONTH, beginDay.get(Calendar.DAY_OF_MONTH));
-		begin.set(Calendar.HOUR_OF_DAY, beginTime.get(Calendar.HOUR_OF_DAY));
-		begin.set(Calendar.MINUTE, beginTime.get(Calendar.MINUTE));
-
-		Calendar end = Calendar.getInstance();
-		end.set(Calendar.YEAR, endDay.get(Calendar.YEAR));
-		end.set(Calendar.MONTH, endDay.get(Calendar.MONTH));
-		end.set(Calendar.DAY_OF_MONTH, endDay.get(Calendar.DAY_OF_MONTH));
-		end.set(Calendar.HOUR_OF_DAY, endTime.get(Calendar.HOUR_OF_DAY));
-		end.set(Calendar.MINUTE, endTime.get(Calendar.MINUTE));
-
-		return begin.getTimeInMillis() < end.getTimeInMillis();
 	}
 
 	private void setErrorMessage(HttpServletRequest request, String message) {

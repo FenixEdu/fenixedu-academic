@@ -2105,7 +2105,7 @@ public class Especifico implements IStrategyHorarios {
 						&& !refeicaoAntesEntrada) {
 						// o periodo de refeicao é menor que o obrigatorio logo a penalizacao é contar o período 
 						// de trabalho efectuado até à saída para a refeicao
-						if (saldo > saldoPenalizacaoMinimoRefeicao) {
+						if (saldo > saldoPenalizacaoMinimoRefeicao && saldoPenalizacaoMinimoRefeicao != 0) {
 							saldo = saldoPenalizacaoMinimoRefeicao;
 						}
 					}

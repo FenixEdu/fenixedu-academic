@@ -5,13 +5,13 @@
 <%@ page import="java.util.List" %>
 <%@ page import="DataBeans.InfoMasterDegreeCandidate" %>
 <%@ page import="Util.SituationName" %>
-
-<p>hello!</p>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <span class="error"><html:errors/></span>
 	<br />
 	<h2>Ordenação de Candidatos Suplentes</h2>
 	<br />
 	<bean:define id="listOfCandidates" name="candidateList" scope="request" />
+	
 
 	<logic:present name="candidatesID">
         <bean:message key="title.masterDegree.administrativeOffice.listSubstituteCandidates" />
@@ -38,6 +38,7 @@
 				<% } %>
 			</logic:iterate>       
         	</table>	
+        
 		   <html:submit value="Seguinte" styleClass="inputbutton" property="ok"/>
         </html:form>	
    </logic:present>     

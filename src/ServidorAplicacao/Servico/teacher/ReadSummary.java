@@ -249,9 +249,10 @@ public class ReadSummary implements IServico
                         if (dateAndHourSummary.get(Calendar.DAY_OF_WEEK) == lesson.getDiaSemana().getDiaSemana()
                                 .intValue()
                                 && !beginLesson.after(dateAndHourSummary)
-                                && !endLesson.before(dateAndHourSummary))
+                                && endLesson.after(dateAndHourSummary))
                         {
                             summary.setShift(shift);
+                            summary.setIsExtraLesson(Boolean.FALSE);
                             summary.setRoom(lesson.getSala());
                             return;
                         }
@@ -261,6 +262,7 @@ public class ReadSummary implements IServico
             
             //If the execution to arrive until here, 
             //then was impossible attribute a shift to the summary
+            summary.setIsExtraLesson(Boolean.TRUE);
             summary.setShift((ITurno) shifts.get(0));
         }
     }

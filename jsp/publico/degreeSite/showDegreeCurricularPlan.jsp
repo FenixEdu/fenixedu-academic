@@ -64,11 +64,21 @@
 		<tr>
 			<th colspan="4"><bean:write name="currentYear"/>º&nbsp;<bean:message key="label.manager.curricularCourseScope.curricularYear"/></th>
 		</tr>
-		<tr>			
-			<td class="subheader"><bean:message key="label.manager.curricularCourseScope.curricularSemester"/></td>
-			<td class="subheader"><bean:message key="label.curricularCourse"/></td>
-			<td class="subheader"><bean:message key="label.curricularCourseType"/></td>
-			<td class="subheader"><bean:message key="label.manager.curricularCourseScope.branch"/></td>
+		<tr>						
+			<td rowspan="2" class="subheader" style="text-align:center"><bean:message key="label.manager.curricularCourseScope.curricularSemester"/></td>
+			<td rowspan="2" class="subheader" style="text-align:center"><bean:message key="label.curricularCourse"/></td>
+			<td rowspan="2" class="subheader" style="text-align:center"><bean:message key="label.curricularCourseType"/></td>
+			<td rowspan="2" class="subheader" style="text-align:center"><bean:message key="label.manager.curricularCourseScope.branch"/></td>			
+			<td rowspan="2" class="subheader" style="text-align:center"><bean:message key="label.DCPsite.curricular.course.credits"/></td>
+			<td rowspan="2" class="subheader" style="text-align:center"><bean:message key="label.DCPsite.curricular.course.ectsCredits"/></td>
+			<td rowspan="2" class="subheader" style="text-align:center"><bean:message key="label.DCPsite.curricular.course.weight"/></td>
+			<td colspan="4" class="subheader" style="text-align:center"><bean:message key="label.DCPsite.hours" /></td>					
+		</tr>
+		<tr>
+			<td class="subheader" style="text-align:center"><bean:message key="label.DCPsite.theoreticalHours"/></td>
+			<td class="subheader" style="text-align:center"><bean:message key="label.DCPsite.praticalHours"/></td>
+			<td class="subheader" style="text-align:center"><bean:message key="label.DCPsite.theoPratHours"/></td>
+			<td class="subheader" style="text-align:center"><bean:message key="label.DCPsite.labHours"/></td>
 		</tr>
 		<logic:iterate id="curricularCourseScopeElemList" name="allActiveCurricularCourseScopes"  indexId="row">
 			<logic:iterate id="curricularCourseScopeElem" name="curricularCourseScopeElemList" type="DataBeans.InfoCurricularCourseScope" length="1" >
@@ -78,24 +88,29 @@
 						<th colspan="4"><bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/>º&nbsp;<bean:message key="label.manager.curricularCourseScope.curricularYear"/></th>
 					</tr>
 					<bean:define id="currentYear" name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/>
-					
 					<tr>						
-						<td class="subheader"><bean:message key="label.manager.curricularCourseScope.curricularSemester"/></td>
-						<td class="subheader"><bean:message key="label.curricularCourse"/></td>
-						<td class="subheader"><bean:message key="label.curricularCourseType"/></td>
-						<td class="subheader"><bean:message key="label.manager.curricularCourseScope.branch"/></td>
+						<td rowspan="2" class="subheader" style="text-align:center"><bean:message key="label.manager.curricularCourseScope.curricularSemester"/></td>
+						<td rowspan="2" class="subheader" style="text-align:center"><bean:message key="label.curricularCourse"/></td>
+						<td rowspan="2" class="subheader" style="text-align:center"><bean:message key="label.curricularCourseType"/></td>
+						<td rowspan="2" class="subheader" style="text-align:center"><bean:message key="label.manager.curricularCourseScope.branch"/></td>			
+						<td rowspan="2" class="subheader" style="text-align:center"><bean:message key="label.DCPsite.curricular.course.credits"/></td>
+						<td rowspan="2" class="subheader" style="text-align:center"><bean:message key="label.DCPsite.curricular.course.ectsCredits"/></td>
+						<td rowspan="2" class="subheader" style="text-align:center"><bean:message key="label.DCPsite.curricular.course.weight"/></td>
+						<td colspan="4" class="subheader" style="text-align:center"><bean:message key="label.DCPsite.hours" /></td>					
+					</tr>
+					<tr>
+						<td class="subheader" style="text-align:center"><bean:message key="label.DCPsite.theoreticalHours"/></td>
+						<td class="subheader" style="text-align:center"><bean:message key="label.DCPsite.praticalHours"/></td>
+						<td class="subheader" style="text-align:center"><bean:message key="label.DCPsite.theoPratHours"/></td>
+						<td class="subheader" style="text-align:center"><bean:message key="label.DCPsite.labHours"/></td>
 					</tr>
 				</logic:notEqual>
 			</logic:iterate>
-			<bean:define id="isEven">
-					<%= String.valueOf(row.intValue() % 2) %>
-			</bean:define>	
 			<bean:size id="numberOfScopes" name="curricularCourseScopeElemList"/>
 			<logic:iterate id="curricularCourseScopeElem" name="curricularCourseScopeElemList" type="DataBeans.InfoCurricularCourseScope" length="1">
 				
-				<logic:equal name="isEven" value="0"> <!-- Linhas pares com uma cor -->
 				<tr>
-					<td class="white"><bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.semester"/></td>
+					<td class="white" style="text-align:left"><bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.semester"/></td>
 					<td class="white" style="text-align:left">
 						<bean:define id="curricularCourseID" name="curricularCourseScopeElem" property="infoCurricularCourse.idInternal"/>
 						
@@ -105,44 +120,22 @@
 						
 						
 					</td>
-					<td class="white"><bean:message name="curricularCourseScopeElem" property="infoCurricularCourse.type.keyName"/></td>
-					<td class="white">
-					
+					<td class="white" style="text-align:center"><bean:message name="curricularCourseScopeElem" property="infoCurricularCourse.type.keyName"/></td>
+					<td class="white" style="text-align:center">					
 						<bean:write name="curricularCourseScopeElem" property="infoBranch.prettyCode"/>&nbsp;
-					
-				</logic:equal>
 				
-				<logic:equal name="isEven" value="1"> <!-- Linhas impares com uma cor -->
-				<tr>
-					<td><bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.semester"/></td>
-					<td style="text-align:left">
-						<bean:define id="curricularCourseID" name="curricularCourseScopeElem" property="infoCurricularCourse.idInternal"/>
-						
-						
-							<html:link page="<%= "/showCourseSite.do?method=showCurricularCourseSite&amp;curricularCourseID=" +  pageContext.findAttribute("curricularCourseID") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID") + "&amp;executionDegreeID="  +  request.getAttribute("executionDegreeID")%>" >
-							<bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.name" />
-							</html:link>
-						
-						
-						
+						<logic:iterate id="curricularCourseScopeElem" name="curricularCourseScopeElemList" type="DataBeans.InfoCurricularCourseScope" offset="1">
+							<bean:write name="curricularCourseScopeElem" property="infoBranch.prettyCode"/>&nbsp;				
+						</logic:iterate>
 					</td>
-					<td><bean:message name="curricularCourseScopeElem" property="infoCurricularCourse.type.keyName"/></td>
-					<td>
-						
-						<bean:write name="curricularCourseScopeElem" property="infoBranch.prettyCode"/>&nbsp;
-						
-				</logic:equal>	
-				</logic:iterate>		
-				
-				<logic:iterate id="curricularCourseScopeElem" name="curricularCourseScopeElemList" type="DataBeans.InfoCurricularCourseScope" offset="1">
-				
-						<bean:write name="curricularCourseScopeElem" property="infoBranch.prettyCode"/>&nbsp;
-					
-				</logic:iterate>
-				</td>
-			</tr>
-				
-					
+					<td class="white" style="text-align:center"><bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.credits"/></td>
+					<td class="white" style="text-align:center"><bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.ectsCredits"/></td>
+					<td class="white" style="text-align:center"><bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.weigth"/></td>
+					<td class="white" style="text-align:center"><bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.theoreticalHours"/></td>
+					<td class="white" style="text-align:center"><bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.praticalHours"/></td>
+					<td class="white" style="text-align:center"><bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.theoPratHours"/></td>
+					<td class="white" style="text-align:center"><bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.labHours"/></td>					
+				</tr>	
 			</logic:iterate>
 		</logic:iterate>
 	</table>

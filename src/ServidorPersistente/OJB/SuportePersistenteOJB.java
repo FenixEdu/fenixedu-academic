@@ -1267,7 +1267,13 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new ReimbursementGuideEntryOJB();
 
 	}
+	
+	
+	public IPersistentWrittenEvaluationCurricularCourseScope getIPersistentWrittenEvaluationCurricularCourseScope()
+	{
+		return new WrittenEvaluationCurricularCourseScopeOJB();
 
+	}
 	public IPersistentSentSms getIPersistentSentSms()
 	{
 		return new SentSmsOJB();

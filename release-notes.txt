@@ -73,7 +73,12 @@ BUG FIXES:
 - fixed bug [ #248 ] masterDegree portal: curricular courses with p type must not appear for declaration and certificate purposes
 - [on 03-06-2004 by Fernanda Quitério] master degree portal: fixed grammar in text for declarations and certificates
 - fixed bug [ #256 ] Students unable to confirm final degree work attribution
-
+- fixed bug [ #153 ] fixed problem of enrolment evaluations
+- fixed bug [ #259 ] assiduousness portal
+- fixed bug in summary use cases: modified InfoSummary.java, SummaryMAnagerAction.java and ReadSummaries.java files
+- fixed bug in execution course site about summaries: modified method findLesson in ExecutionCourseSiteComponentBuilder.java file
+- fixed bug [ #257 ] manager portal: added error message when inserting duplicated execution course
+- [on 09-06-2004 by Fernanda Quitério] assiduousness portal: fixed counting of time in case of irregular lunch periods
 KNOWN ISSUES:
 =============
 

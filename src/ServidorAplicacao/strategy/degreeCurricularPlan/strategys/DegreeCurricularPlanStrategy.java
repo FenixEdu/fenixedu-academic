@@ -249,18 +249,18 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 			Double simpleAverage = this.calculateStudentRegularAverage(studentCurricularPlan);
 			Double weightedAverage = this.calculateStudentWeightedAverage(studentCurricularPlan);
 
-			infoFinalResult.setAverageSimple(String.valueOf(simpleAverage));
-			infoFinalResult.setAverageWeighted(String.valueOf(weightedAverage));
+			infoFinalResult.setAverageSimple(String.valueOf(simpleAverage.intValue()));
+			infoFinalResult.setAverageWeighted(String.valueOf(weightedAverage.intValue()));
 
 			if (simpleAverage.floatValue() > weightedAverage.floatValue())
 			{
 				infoFinalResult.setFinalAverage(
-					String.valueOf(NumberUtils.formatNumber(simpleAverage, 0)));
+					String.valueOf(NumberUtils.formatNumber(simpleAverage, 0).intValue()));
 			}
 			else
 			{
 				infoFinalResult.setFinalAverage(
-					String.valueOf(NumberUtils.formatNumber(weightedAverage, 0)));
+					String.valueOf(NumberUtils.formatNumber(weightedAverage, 0).intValue()));
 			}
 			return;
 		}
@@ -284,18 +284,18 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 
 			Double weightedAverage = this.calculateStudentWeightedAverage(studentCurricularPlan);
 
-			infoFinalResult.setAverageWeighted(String.valueOf(weightedAverage));
+			infoFinalResult.setAverageWeighted(String.valueOf(weightedAverage.intValue()));
 			infoFinalResult.setFinalAverage(
-				String.valueOf(NumberUtils.formatNumber(weightedAverage, 0)));
+				String.valueOf(NumberUtils.formatNumber(weightedAverage, 0).intValue()));
 			return;
 		}
 
 		// Everything else uses the simple Average
 
 		Double simpleAverage = this.calculateStudentRegularAverage(studentCurricularPlan);
-		infoFinalResult.setAverageSimple(String.valueOf(simpleAverage));
+		infoFinalResult.setAverageSimple(String.valueOf(simpleAverage.intValue()));
 
-		infoFinalResult.setFinalAverage(String.valueOf(NumberUtils.formatNumber(simpleAverage, 0)));
+		infoFinalResult.setFinalAverage(String.valueOf(NumberUtils.formatNumber(simpleAverage, 0).intValue()));
 
 	}
 

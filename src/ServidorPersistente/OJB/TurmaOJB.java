@@ -9,7 +9,6 @@ package ServidorPersistente.OJB;
 /**
  * @author tfc130
  */
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
@@ -19,9 +18,7 @@ import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
 import Dominio.ITurma;
-import Dominio.ITurmaTurno;
 import Dominio.Turma;
-import Dominio.TurmaTurno;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ITurmaPersistente;
 import Util.TipoCurso;
@@ -33,7 +30,7 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente
 
     public void delete(ITurma turma) throws ExcepcaoPersistencia
     {
-        Criteria crit = new Criteria();
+        /*Criteria crit = new Criteria();
         crit.addEqualTo("turma.nome", turma.getNome());
         crit.addEqualTo("turma.executionPeriod.name", turma.getExecutionPeriod().getName());
         crit.addEqualTo(
@@ -58,7 +55,7 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente
         {
             turmaTurno = (ITurmaTurno) iterador.next();
             turmaTurnoOJB.delete(turmaTurno);
-        }
+        }*/
         super.delete(turma);
 
     }

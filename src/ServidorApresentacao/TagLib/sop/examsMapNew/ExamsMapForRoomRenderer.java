@@ -51,7 +51,6 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer
         strBuffer.append("</tr>");
         strBuffer.append("</table>");
 
-        System.out.println("-->" + getUser());
         if(getUser() != null && !getUser().equals("sop")) {
             renderExamsTableForRoom(strBuffer);
         }
@@ -124,7 +123,7 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer
             }
 
             strBuffer.append("<td ").append("class='").append(classCSS).append("'>");
-            strBuffer.append(examsMapSlotContentRenderer.renderDayLabel(examsMapSlot, examsMap));
+            strBuffer.append(examsMapSlotContentRenderer.renderDayLabel(examsMapSlot, examsMap, user));
             strBuffer.append("</td>");
         }
     }

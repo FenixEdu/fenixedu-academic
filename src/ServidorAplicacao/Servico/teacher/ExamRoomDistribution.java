@@ -19,16 +19,16 @@ import java.util.Random;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.Exam;
 import Dominio.ExamStudentRoom;
-import Dominio.IExecutionCourse;
 import Dominio.IExam;
 import Dominio.IExamStudentRoom;
+import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.ISala;
 import Dominio.IStudent;
 import Dominio.Sala;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -39,110 +39,85 @@ import ServidorPersistente.ISalaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class ExamRoomDistribution implements IServico
-{
+public class ExamRoomDistribution implements IService {
+
     public final static int OUT_OF_ENROLLMENT_PERIOD = 1;
 
-    private static ExamRoomDistribution _servico = new ExamRoomDistribution();
     /**
-	 * The singleton access method of this class.
-	 */
-    public static ExamRoomDistribution getService()
-    {
-        return _servico;
+     * The actor of this class.
+     */
+    public ExamRoomDistribution() {
     }
 
-    /**
-	 * The actor of this class.
-	 */
-    private ExamRoomDistribution()
-    {
-    }
-
-    /**
-	 * Devolve o nome do servico
-	 */
-    public final String getNome()
-    {
-        return "ExamRoomDistribution";
-    }
-    
-	public Boolean run(
-        Integer executionCourseCode,
-        Integer examCode,
-        List roomsIds,
-        Boolean sms,
-        Boolean enrolledStudents)
-        throws FenixServiceException
-    {
+    public Boolean run(Integer executionCourseCode, Integer examCode,
+            List roomsIds, Boolean sms, Boolean enrolledStudents)
+            throws FenixServiceException {
         Boolean result = new Boolean(false);
         List students = new ArrayList();
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentExam persistentExam = sp.getIPersistentExam();
             ISalaPersistente persistentRoom = sp.getISalaPersistente();
 
-            IFrequentaPersistente persistentAttends = sp.getIFrequentaPersistente();
-            IPersistentExamStudentRoom persistentExamStudentRoom = sp.getIPersistentExamStudentRoom();
-            IExam exam = (IExam)persistentExam.readByOId(new Exam(examCode), false);
-            if (exam == null)
-            {
-                throw new InvalidArgumentsServiceException("exam");
-            }
+            IFrequentaPersistente persistentAttends = sp
+                    .getIFrequentaPersistente();
+            IPersistentExamStudentRoom persistentExamStudentRoom = sp
+                    .getIPersistentExamStudentRoom();
+            IExam exam = (IExam) persistentExam.readByOId(new Exam(examCode),
+                    false);
+            if (exam == null) { throw new InvalidArgumentsServiceException(
+                    "exam"); }
 
-            if (!enrolledStudents.booleanValue() || exam.getEnrollmentEndDay() == null)
-            {
+            if (!enrolledStudents.booleanValue()
+                    || exam.getEnrollmentEndDay() == null) {
                 Calendar examDay = exam.getDay();
                 Calendar today = Calendar.getInstance();
-//                Calendar twoWeeksBeforeExam = (Calendar) examDay.clone();
-//                twoWeeksBeforeExam.add(Calendar.DATE, -14);
+                //                Calendar twoWeeksBeforeExam = (Calendar) examDay.clone();
+                //                twoWeeksBeforeExam.add(Calendar.DATE, -14);
 
-
-                if (today.after(examDay))
-                {
-                    throw new FenixServiceException(ExamRoomDistribution.OUT_OF_ENROLLMENT_PERIOD);
-                }
+                if (today.after(examDay)) { throw new FenixServiceException(
+                        ExamRoomDistribution.OUT_OF_ENROLLMENT_PERIOD); }
 
                 List executionCourses = exam.getAssociatedExecutionCourses();
                 Iterator iterCourse = executionCourses.iterator();
-                while (iterCourse.hasNext())
-                {
-                    List attends =
-                        persistentAttends.readByExecutionCourse((IExecutionCourse)iterCourse.next());
-                    students.addAll(CollectionUtils.collect(attends, new Transformer()
-                    {
-                        public Object transform(Object arg0)
-                        {
-                            IFrequenta frequenta = (IFrequenta)arg0;
-                            return frequenta.getAluno();
-                        }
-                    }));
+                while (iterCourse.hasNext()) {
+                    List attends = persistentAttends
+                            .readByExecutionCourse((IExecutionCourse) iterCourse
+                                    .next());
+                    students.addAll(CollectionUtils.collect(attends,
+                            new Transformer() {
+
+                                public Object transform(Object arg0) {
+                                    IFrequenta frequenta = (IFrequenta) arg0;
+                                    return frequenta.getAluno();
+                                }
+                            }));
                 }
 
-            } else
-            {
+            } else {
                 Calendar endEnrollmentDay = exam.getEnrollmentEndDay();
                 Calendar endHourDay = exam.getEnrollmentEndTime();
 
                 endEnrollmentDay.set(Calendar.HOUR_OF_DAY, 0);
                 endEnrollmentDay.set(Calendar.MINUTE, 0);
-                endEnrollmentDay.roll(Calendar.HOUR_OF_DAY, endHourDay.get(Calendar.HOUR_OF_DAY));
-                endEnrollmentDay.roll(Calendar.MINUTE, endHourDay.get(Calendar.MINUTE));
+                endEnrollmentDay.roll(Calendar.HOUR_OF_DAY, endHourDay
+                        .get(Calendar.HOUR_OF_DAY));
+                endEnrollmentDay.roll(Calendar.MINUTE, endHourDay
+                        .get(Calendar.MINUTE));
 
                 Calendar examDay = exam.getDay();
                 Calendar today = Calendar.getInstance();
 
-                if (today.after(examDay) || today.before(endEnrollmentDay))
-                {
-                    throw new FenixServiceException(ExamRoomDistribution.OUT_OF_ENROLLMENT_PERIOD);
-                }
+                if (today.after(examDay) || today.before(endEnrollmentDay)) { throw new FenixServiceException(
+                        ExamRoomDistribution.OUT_OF_ENROLLMENT_PERIOD); }
 
-                List examStudentRoomList = persistentExamStudentRoom.readBy(exam);
-                Iterator iterExamStudentRoomList = examStudentRoomList.iterator();
-                while (iterExamStudentRoomList.hasNext())
-                {
-                    students.add(((IExamStudentRoom)iterExamStudentRoomList.next()).getStudent());
+                List examStudentRoomList = persistentExamStudentRoom
+                        .readBy(exam);
+                Iterator iterExamStudentRoomList = examStudentRoomList
+                        .iterator();
+                while (iterExamStudentRoomList.hasNext()) {
+                    students.add(((IExamStudentRoom) iterExamStudentRoomList
+                            .next()).getStudent());
                 }
 
             }
@@ -150,63 +125,51 @@ public class ExamRoomDistribution implements IServico
             List uniqueRooms = removeRepeatedElements(roomsIds);
             Iterator iterRoom = uniqueRooms.iterator();
             List rooms = new ArrayList();
-            while (iterRoom.hasNext())
-            {
-                ISala room = (ISala)persistentRoom.readByOId(new Sala((Integer)iterRoom.next()), true);
-                if (room == null)
-                {
-                    throw new InvalidArgumentsServiceException("room");
-                }
+            while (iterRoom.hasNext()) {
+                ISala room = (ISala) persistentRoom.readByOId(new Sala(
+                        (Integer) iterRoom.next()), false);
+                if (room == null) { throw new InvalidArgumentsServiceException(
+                        "room"); }
                 rooms.add(room);
             }
-            if (!exam.getAssociatedRooms().containsAll(rooms))
-            {
-                throw new InvalidArgumentsServiceException("rooms");
-            }
+            if (!exam.getAssociatedRooms().containsAll(rooms)) { throw new InvalidArgumentsServiceException(
+                    "rooms"); }
 
             Iterator iter = rooms.iterator();
-            while (iter.hasNext())
-            {
-                ISala room = (ISala)iter.next();
+            while (iter.hasNext()) {
+                ISala room = (ISala) iter.next();
                 int i = 1;
-                while (i <= room.getCapacidadeExame().intValue())
-                {
-                    if (students.size() > 0)
-                    {
-                        IStudent student = (IStudent)getRandomObjectFromList(students);
-                        IExamStudentRoom examStudentRoom =
-                            persistentExamStudentRoom.readBy(exam, student);
-                        if (examStudentRoom == null)
-                        {
+                while (i <= room.getCapacidadeExame().intValue()) {
+                    if (students.size() > 0) {
+                        IStudent student = (IStudent) getRandomObjectFromList(students);
+                        IExamStudentRoom examStudentRoom = persistentExamStudentRoom
+                                .readBy(exam, student);
+                        if (examStudentRoom == null) {
                             examStudentRoom = new ExamStudentRoom();
-                            persistentExamStudentRoom.simpleLockWrite(examStudentRoom);
+                            persistentExamStudentRoom
+                                    .simpleLockWrite(examStudentRoom);
                             examStudentRoom.setExam(exam);
                             examStudentRoom.setRoom(room);
                             examStudentRoom.setStudent(student);
-                        } else
-                        {
-                            persistentExamStudentRoom.simpleLockWrite(examStudentRoom);
+                        } else {
+                            persistentExamStudentRoom
+                                    .simpleLockWrite(examStudentRoom);
                             examStudentRoom.setRoom(room);
                         }
 
-                        if (sms.booleanValue())
-                        {
+                        if (sms.booleanValue()) {
                             sendSMSToStudent(examStudentRoom);
                         }
-                    } else
-                    {
+                    } else {
                         break;
                     }
                     i++;
                 }
             }
-            if (students.size() > 0)
-            {
-                throw new InvalidArgumentsServiceException("students");
-            }
+            if (students.size() > 0) { throw new InvalidArgumentsServiceException(
+                    "students"); }
             result = new Boolean(true);
-        } catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
 
@@ -214,30 +177,25 @@ public class ExamRoomDistribution implements IServico
     }
 
     /**
-	 * @param examStudentRoom
-	 */
-    private void sendSMSToStudent(IExamStudentRoom examStudentRoom)
-    {
-        // TODO fill this method when we have sms
+     * @param examStudentRoom
+     */
+    private void sendSMSToStudent(IExamStudentRoom examStudentRoom) {
+        // TODO: Send SMS method: fill this method when we have sms
 
     }
 
-    private Object getRandomObjectFromList(List list)
-    {
+    private Object getRandomObjectFromList(List list) {
         Random randomizer = new Random();
         int pos = randomizer.nextInt(Math.abs(randomizer.nextInt()));
         return list.remove(pos % list.size());
     }
 
-    private List removeRepeatedElements(List initialList)
-    {
+    private List removeRepeatedElements(List initialList) {
         List finalList = new ArrayList();
         Iterator iter = initialList.iterator();
-        while (iter.hasNext())
-        {
+        while (iter.hasNext()) {
             Object object = iter.next();
-            if (!finalList.contains(object))
-                finalList.add(object);
+            if (!finalList.contains(object)) finalList.add(object);
         }
         return finalList;
     }

@@ -58,7 +58,7 @@ public class EditExamRoomsDA
         HttpServletResponse response)
         throws FenixActionException
     {
-
+        System.out.println("ainda sou usado");
         IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm editExamRoomsForm = (DynaActionForm) form;
 

@@ -75,6 +75,7 @@ public class ReadFilteredExamsMap implements IServico
         // Set List of Curricular Years
         infoExamsMap.setCurricularYears(curricularYears);
 
+        // TODO: change this code when exams season available from database 
         // Exam seasons hardcoded because this information
         // is not yet available from the database
         Calendar startSeason1 = Calendar.getInstance();

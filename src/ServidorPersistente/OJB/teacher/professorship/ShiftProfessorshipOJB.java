@@ -237,4 +237,13 @@ public class ShiftProfessorshipOJB extends ObjectFenixOJB implements IPersistent
         criteria.addEqualTo("professorship.executionCourse.executionPeriod.idInternal", period.getIdInternal());        
         return queryList(ShiftProfessorship.class, criteria);
     }
+
+    /* (non-Javadoc)
+     * @see ServidorPersistente.IPersistentShiftProfessorship#readByShift(Dominio.ITurno)
+     */
+    public List readByShift(ITurno shift) throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("keyShift", shift.getIdInternal());
+        return queryList(ShiftProfessorship.class, criteria);
+    }
 }

@@ -26,19 +26,28 @@
 	</tr>	
 		<logic:iterate id="exam" name="examsToEnroll">
 		<bean:define id="objectCode" name="exam" property="idInternal"/>	
-		<bean:define id="infoExecutionCourse" name="exam" property="infoExecutionCourse"/>	
+		<logic:present name="exam" property="infoExecutionCourses">
+		<bean:size id="numberOfExecutionCourses" name="exam" property="infoExecutionCourses"/>
+		<logic:iterate id="infoExecutionCourse" name="exam" property="infoExecutionCourses" length="1" >
 		<tr>
 			<td class="listClasses"><bean:write name="infoExecutionCourse" property="nome"/>-<bean:write name="infoExecutionCourse" property="sigla"/></td>		
-			<td class="listClasses"><bean:write name="exam" property="season"/></td>		
-			<td class="listClasses"><bean:write name="exam" property="date"/></td>
-			<td class="listClasses"><bean:write name="exam" property="beginningHour"/></td>
-			<td class="listClasses">
+			<td class="listClasses" rowspan="<%= numberOfExecutionCourses %>" ><bean:write name="exam" property="season"/></td>		
+			<td class="listClasses" rowspan="<%= numberOfExecutionCourses %>"><bean:write name="exam" property="date"/></td>
+			<td class="listClasses" rowspan="<%= numberOfExecutionCourses %>"><bean:write name="exam" property="beginningHour"/></td>
+			<td class="listClasses" rowspan="<%= numberOfExecutionCourses %>">
 				<html:link 
 					page="<%= "/examEnrollmentManager.do?method=enrollStudent&amp;objectCode="+ pageContext.findAttribute("objectCode") %>" >
 						<bean:message key="label.enroll" />
 				</html:link>
 			</td>
 		</tr>
+		</logic:iterate>
+		<logic:iterate id="infoExecutionCourse" name="exam" property="infoExecutionCourses" offset="1" >
+		<tr>
+			<td class="listClasses"><bean:write name="infoExecutionCourse" property="nome"/>-<bean:write name="infoExecutionCourse" property="sigla"/></td>		
+		</tr>
+		</logic:iterate>
+		</logic:present>
 	</logic:iterate>
 	</table>
 </logic:notEmpty>
@@ -59,13 +68,15 @@
 		<logic:iterate id="examStudentRoom" name="examsEnrolled" type="DataBeans.InfoExamStudentRoom">
 			<bean:define id="exam" name="examStudentRoom" property="infoExam"/>
 			<bean:define id="objectCode" name="exam" property="idInternal"/>	
-			<bean:define id="infoExecutionCourse" name="exam" property="infoExecutionCourse"/>
+			<logic:present name="exam" property="infoExecutionCourses">
+			<bean:size id="numberOfExecutionCourses" name="exam" property="infoExecutionCourses"/>
+			<logic:iterate id="infoExecutionCourse" name="exam" property="infoExecutionCourses" length="1" >
 			<tr>
 				<td class="listClasses"><bean:write name="infoExecutionCourse" property="nome"/>-<bean:write name="infoExecutionCourse" property="sigla"/></td>			
-				<td class="listClasses"><bean:write name="exam" property="season"/></td>		
-				<td class="listClasses"><bean:write name="exam" property="date"/></td>
-				<td class="listClasses"><bean:write name="exam" property="beginningHour"/></td>
-				<td class="listClasses">
+				<td class="listClasses" rowspan="<%= numberOfExecutionCourses %>"><bean:write name="exam" property="season"/></td>		
+				<td class="listClasses" rowspan="<%= numberOfExecutionCourses %>"><bean:write name="exam" property="date"/></td>
+				<td class="listClasses" rowspan="<%= numberOfExecutionCourses %>"><bean:write name="exam" property="beginningHour"/></td>
+				<td class="listClasses" rowspan="<%= numberOfExecutionCourses %>">
 					<logic:notPresent name="examStudentRoom" property="infoRoom">
 						<logic:match name="exam" property="enrollmentAuthorization" value="true">
 						<html:link 
@@ -82,6 +93,13 @@
 					</logic:present>		
 				</td>
 			</tr>
+			</logic:iterate>
+			<logic:iterate id="infoExecutionCourse" name="exam" property="infoExecutionCourses" offset="1" >
+			<tr>
+				<td class="listClasses"><bean:write name="infoExecutionCourse" property="nome"/>-<bean:write name="infoExecutionCourse" property="sigla"/></td>			
+			</tr>
+			</logic:iterate>
+			</logic:present>
 		</logic:iterate>
 	</table>
 </logic:notEmpty>

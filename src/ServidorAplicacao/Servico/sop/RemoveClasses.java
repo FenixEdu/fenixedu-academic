@@ -67,13 +67,16 @@ public class RemoveClasses implements IServico {
 					(ITurma) sp.getITurmaPersistente().readByOID(
 						Turma.class,
 						(Integer) classOIDs.get(i));
+				
 				ITurmaTurno classShift = sp.getITurmaTurnoPersistente().readByTurmaAndTurno(
 										schoolClass,
 										shift);
 				if (classShift != null) {
 					sp.getITurmaTurnoPersistente().delete(classShift);
 				}
+				
 				shift.getAssociatedClasses().remove(schoolClass);
+				
 				sp.getITurmaPersistente().simpleLockWrite(schoolClass);
 				schoolClass.getAssociatedShifts().remove(shift);
 			}

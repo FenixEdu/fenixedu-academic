@@ -15,6 +15,7 @@ import Dominio.ISite;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentExamExecutionCourse;
 import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentProfessorship;
@@ -26,7 +27,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author lmac1
- * @author Fernanda Quitério
+ * modified by Fernanda Quitério
  * 
  */
 
@@ -58,13 +59,18 @@ public class DeleteExecutionCourses implements IServico
 			IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             ITurnoPersistente persistentShift = sp.getITurnoPersistente();
             IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
+            IPersistentExamExecutionCourse persistentExamExecutionCourse = sp.getIPersistentExamExecutionCourse();
             IPersistentProfessorship persistentProfessorShip = sp.getIPersistentProfessorship();
             IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
             IPersistentSite persistentSite = sp.getIPersistentSite();
 
             Iterator iter = internalIds.iterator();
             Iterator iterator;
-            List shifts, attends, professorShips, responsibles;
+            List shifts = null;
+            List attends = null;
+            List exams = null;
+            List professorShips = null;
+            List responsibles = null;
             Integer internalId;
             IProfessorship professorShip;
             IResponsibleFor responsibleFor;
@@ -86,43 +92,45 @@ public class DeleteExecutionCourses implements IServico
                     else
                     {
                         attends = persistentAttend.readByExecutionCourse(executionCourse);
-						if (attends != null && attends.isEmpty())
-                        {
-                            persistentExecutionCourse.deleteExecutionCourse(executionCourse);
-                            professorShips =
-                                persistentProfessorShip.readByExecutionCourse(executionCourse);
-							if (professorShips != null)
-							{
-                            iterator = professorShips.iterator();
-                            while (iterator.hasNext())
-                            {
-                                professorShip = (IProfessorship) iterator.next();
-                                persistentProfessorShip.delete(professorShip);
-                            }
-							}
-                            responsibles =
-                                persistentResponsibleFor.readByExecutionCourse(executionCourse);
-							if (responsibles != null)
-							{
-                            iterator = responsibles.iterator();
-                            while (iterator.hasNext())
-                            {
-                                responsibleFor = (IResponsibleFor) iterator.next();
-                                persistentResponsibleFor.delete(responsibleFor);
-                            }
-							}
-                            site = persistentSite.readByExecutionCourse(executionCourse);
-							if (site != null)
-							{
-                            persistentSite.delete(site);
+						if (attends != null && !attends.isEmpty()){
+							undeletedExecutionCoursesCodes.add(executionCourse.getSigla());
+						} else {
+							exams = persistentExamExecutionCourse.readByExecutionCourse(executionCourse);
+							if(exams != null && !exams.isEmpty()) {
+								undeletedExecutionCoursesCodes.add(executionCourse.getSigla());
+							} else {
+	                            persistentExecutionCourse.deleteExecutionCourse(executionCourse);
+	                            professorShips =
+	                                persistentProfessorShip.readByExecutionCourse(executionCourse);
+								if (professorShips != null)
+								{
+	                            iterator = professorShips.iterator();
+	                            while (iterator.hasNext())
+	                            {
+	                                professorShip = (IProfessorship) iterator.next();
+	                                persistentProfessorShip.delete(professorShip);
+	                            }
+								}
+	                            responsibles =
+	                                persistentResponsibleFor.readByExecutionCourse(executionCourse);
+								if (responsibles != null)
+								{
+	                            iterator = responsibles.iterator();
+	                            while (iterator.hasNext())
+	                            {
+	                                responsibleFor = (IResponsibleFor) iterator.next();
+	                                persistentResponsibleFor.delete(responsibleFor);
+	                            }
+								}
+	                            site = persistentSite.readByExecutionCourse(executionCourse);
+								if (site != null)
+								{
+	                            persistentSite.delete(site);
+								}
 							}
 						}
-						else
-						{
-                            undeletedExecutionCoursesCodes.add(executionCourse.getSigla());
                     }
                 }
-            }
 			}
             return undeletedExecutionCoursesCodes;
 		}

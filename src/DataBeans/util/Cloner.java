@@ -1933,15 +1933,7 @@ public abstract class Cloner
         List infoRoomOccupation = new ArrayList();
         List infoExecutionCourse = new ArrayList();
 
-        if (exam != null && exam.getAssociatedRooms() != null && exam.getAssociatedRooms().size() > 0)
-        {
-
-            for (int i = 0; i < exam.getAssociatedRooms().size(); i++)
-            {
-                infoRooms.add(copyRoom2InfoRoom((ISala) exam.getAssociatedRooms().get(i)));
-            }
-        }
-        infoExam.setAssociatedRooms(infoRooms);
+       
         //associate curricularCourseScopes
         if (exam != null
             && exam.getAssociatedCurricularCourseScope() != null
@@ -1999,17 +1991,7 @@ public abstract class Cloner
 
         copyObjectProperties(exam, infoExam);
 
-        if (infoExam != null
-            && infoExam.getAssociatedRooms() != null
-            && infoExam.getAssociatedRooms().size() > 0)
-        {
-            List rooms = new ArrayList();
-            for (int i = 0; i < infoExam.getAssociatedRooms().size(); i++)
-            {
-                rooms.add(copyInfoRoom2Room((InfoRoom) infoExam.getAssociatedRooms().get(i)));
-            }
-            exam.setAssociatedRooms(rooms);
-        }
+        
 
         if (infoExam != null
             && infoExam.getAssociatedCurricularCourseScope() != null

@@ -12,7 +12,6 @@ package ServidorPersistente.OJB;
  */
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
 
 import org.odmg.QueryException;
@@ -22,8 +21,6 @@ import Dominio.IAula;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.ISala;
-import Dominio.ITurnoAula;
-import Dominio.TurnoAula;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
 import Util.DiaSemana;
@@ -82,7 +79,7 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 
     public void delete(IAula aula) throws ExcepcaoPersistencia {
         if (aula != null) {
-            try {
+/*            try {
                 ITurnoAula turnoAula = null;
                 TurnoAulaOJB turnoAulaOJB = new TurnoAulaOJB();
                 String oqlQuery =
@@ -105,7 +102,7 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
                 }
             } catch (QueryException ex) {
                 throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-            }
+            }*/
             super.delete(aula);
         }
     }

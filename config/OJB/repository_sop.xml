@@ -989,19 +989,6 @@
 		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE"/>
 	</collection-descriptor>
 	<collection-descriptor
-			name="associatedRooms"
-			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			element-class-ref="Dominio.Sala"
-			indirection-table="EXAM_ROOM"
-			proxy="true"
-			auto-retrieve="true"
-			auto-update="false"
-			auto-delete="false"
-			>
-		<fk-pointing-to-this-class column="KEY_EVALUATION"/>
-		<fk-pointing-to-element-class column="KEY_ROOM"/>
-	</collection-descriptor>
-	<collection-descriptor
 			name="associatedRoomOccupation"
 			collection-class="org.apache.ojb.broker.util.collections.RemovalAwareCollection"
 			element-class-ref="Dominio.RoomOccupation"
@@ -1143,4 +1130,51 @@
 		<fk-pointing-to-this-class column="KEY_WRITTEN_EVALUATION"/>
 		<fk-pointing-to-element-class column="KEY_ROOM_OCCUPATION"/>
 	</collection-descriptor>
+</class-descriptor>
+
+<!-- Definitions for Dominio.WrittenEvaluationCurricularCourseScope -->
+<class-descriptor class="Dominio.WrittenEvaluationCurricularCourseScope"
+                  table="WRITTEN_EVALUATION_CURRICULAR_COURSE_SCOPE">
+   <field-descriptor
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+       primarykey="true"
+        autoincrement="true"
+    />
+
+    <field-descriptor
+        name="keyWrittenEvaluation"
+        column="KEY_WRITTEN_EVALUATION"
+        nullable = "false"
+        jdbc-type="INTEGER"
+    />
+    <field-descriptor 
+        name="keyCurricularCourseScope"
+        column="KEY_CURRICULAR_COURSE_SCOPE"
+		nullable="false"
+        jdbc-type="INTEGER"
+    />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
+      <reference-descriptor
+         name="writtenEvaluation"
+         class-ref="Dominio.WrittenEvaluation"
+         proxy="false"
+	  >
+         <foreignkey field-ref="keyWrittenEvaluation"/>
+      </reference-descriptor>
+      
+     <reference-descriptor
+         name="curricularCourseScope"
+         class-ref="Dominio.CurricularCourseScope"
+         proxy="false"
+	  >
+         <foreignkey field-ref="keyCurricularCourseScope"/>
+      </reference-descriptor>
+
 </class-descriptor>

@@ -389,23 +389,6 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
 		return mapping.findForward("editSummary");
 	}
 
-	private void choosenLesson(HttpServletRequest request, InfoSiteSummary summary)
-	{
-		if (request.getParameter("forHidden") != null && request.getParameter("forHidden").length() > 0)
-		{
-			request.setAttribute("forHidden", request.getParameter("forHidden"));
-		} else
-		{
-			if (summary.getInfoSummary().getIsExtraLesson().equals(Boolean.TRUE))
-			{
-				request.setAttribute("forHidden", "false");
-			} else if (summary.getInfoSummary().getIsExtraLesson().equals(Boolean.FALSE))
-			{
-				request.setAttribute("forHidden", "true");
-			}
-		}
-	}
-
 	private void shiftChanged(HttpServletRequest request, SiteView siteView)
 	{
 		if (request.getParameter("shift") != null && request.getParameter("shift").length() > 0)
@@ -417,9 +400,37 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
 				InfoShift infoShift = (InfoShift) iterator.next();
 				if (infoShift.getIdInternal().equals(new Integer(request.getParameter("shift"))))
 				{
-					((InfoSiteSummary) siteView.getComponent()).getInfoSummary().setInfoShift(infoShift);
+					((InfoSiteSummary) siteView.getComponent()).getInfoSummary().setInfoShift(infoShift);						
 				}
 			}
+		}	 
+	}
+	
+	private void choosenLesson(HttpServletRequest request, InfoSiteSummary siteSummary)
+	{		
+		if (request.getParameter("lesson") != null && request.getParameter("lesson").length() > 0)
+		{
+			if (!request.getParameter("lesson").equals("0"))
+			{ 	
+			    //normal lesson
+				request.setAttribute("forHidden", "true");
+				siteSummary.getInfoSummary().setIsExtraLesson(Boolean.FALSE);
+				siteSummary.getInfoSummary().setLessonIdSelected(new Integer(request.getParameter("lesson")));
+			} else
+			{ 	
+			    //extra lesson
+				request.setAttribute("forHidden", "false");
+				siteSummary.getInfoSummary().setIsExtraLesson(Boolean.TRUE);
+				siteSummary.getInfoSummary().setLessonIdSelected(new Integer(0));
+			}
+		} else {
+			if (siteSummary.getInfoSummary().getIsExtraLesson().equals(Boolean.TRUE))
+			{
+				request.setAttribute("forHidden", "false");
+			} else if (siteSummary.getInfoSummary().getIsExtraLesson().equals(Boolean.FALSE))
+			{
+				request.setAttribute("forHidden", "true");
+			}			
 		}
 	}
 

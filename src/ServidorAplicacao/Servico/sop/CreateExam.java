@@ -5,12 +5,11 @@
 package ServidorAplicacao.Servico.sop;
 
 /**
- * Service CriarAula.
+ * 
  * 
  * @author Luis Cruz & Sara Ribeiro
  */
 
-import java.util.ArrayList;
 import java.util.Calendar;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -73,7 +72,7 @@ public class CreateExam implements IService
             {
                 IExam exam = new Exam(examDate, examTime, null, season);
                 sp.getIPersistentExam().simpleLockWrite(exam);
-                exam.setAssociatedRooms(new ArrayList());
+                
                 IExamExecutionCourse examExecutionCourse = new ExamExecutionCourse(exam, executionCourse);
                 sp.getIPersistentExamExecutionCourse().simpleLockWrite(examExecutionCourse);
             }

@@ -34,7 +34,7 @@
 	<tr>
 		<td width="20%"><bean:message key="label.shift" /></td>
 		<td width="40%">
-			<html:select property="byShift">
+			<html:select property="byShift" onchange="this.form.method.value='summaries';this.form.page.value=0;this.form.submit();">
 				<html:option  value="0" key="label.showBy.all" />
 				<html:options collection="shifts" property="idInternal" labelProperty="lessons"/>
 			</html:select>		
@@ -43,18 +43,18 @@
 	<tr>
 		<td width="20%"><bean:message key="label.teacher" /></td>
 		<td width="40%">
-			<html:select property="byTeacher">
+			<html:select property="byTeacher" onchange="this.form.method.value='summaries';this.form.page.value=0;this.form.submit();">
 				<html:option  value="0" key="label.showBy.all" />
 				<html:options collection="professorships" property="idInternal" labelProperty="infoTeacher.infoPerson.nome"/>
 				<html:option  value="-1" key="label.others" />
 			</html:select>			
 		</td>
 	</tr>
-	<tr>
+	<%--<tr>
 		<td colspan='2' align='center'>
 			<html:submit styleClass="inputbutton"><bean:message key="button.show"/></html:submit>		
 		</td>
-	</tr>
+	</tr>--%>
 </table>
 </html:form>
 

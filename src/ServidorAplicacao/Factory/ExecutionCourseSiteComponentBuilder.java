@@ -420,16 +420,15 @@ public class ExecutionCourseSiteComponentBuilder {
                                 Calendar.MINUTE));
                         endLesson.set(Calendar.SECOND, 00);
 
-                        if (summary.getSummaryType().equals(shift.getTipo())
-                                && dateAndHourSummary.get(Calendar.DAY_OF_WEEK) == lesson
-                                        .getDiaSemana().getDiaSemana()
-                                        .intValue()
-                                && !beginLesson.after(dateAndHourSummary)
-                                && !endLesson.before(dateAndHourSummary)) {
-                            removeSummary = false;
-                        }
-                    }
-                }
+                        
+						if (summary.getSummaryType().equals(shift.getTipo())
+							&& dateAndHourSummary.get(Calendar.DAY_OF_WEEK) == lesson.getDiaSemana().getDiaSemana().intValue()
+							&& !beginLesson.after(dateAndHourSummary) && endLesson.after(dateAndHourSummary))
+						{
+							removeSummary = false;
+						}
+					}
+				}
 
                 if (removeSummary) {
                     summariesByShift.remove(summary);

@@ -1,6 +1,7 @@
 package ServidorAplicacao.strategy.enrolment.strategys.student;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -1497,6 +1498,7 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 				enrolment.setEnrolmentState(EnrolmentState.ENROLED);
 				enrolment.setExecutionPeriod(executionPeriod);
 				enrolment.setStudentCurricularPlan(studentCurricularPlan);
+				enrolment.setCreationDate(new Date());
 				WriteEnrolment.createAttend(enrolment);
 				return enrolment;
 			}

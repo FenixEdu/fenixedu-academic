@@ -13,7 +13,6 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.util.Cloner;
 import Dominio.Enrolment;
-import Dominio.EnrolmentEvaluation;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrollment;
 import Dominio.IEnrolmentEvaluation;
@@ -164,14 +163,11 @@ public class InsertStudentsFinalEvaluation implements IService
             InfoEnrolmentEvaluation infoEnrolmentEvaluation) throws ExcepcaoPersistencia,
             FenixServiceException
     {
-        IEnrollment enrolmentForCriteria = new Enrolment();
-        enrolmentForCriteria.setIdInternal(infoEnrolmentEvaluation.getInfoEnrolment().getIdInternal());
-
-        IEnrolmentEvaluation enrolmentEvaluationForCriteria = new EnrolmentEvaluation();
-        enrolmentEvaluationForCriteria.setEnrolment(enrolmentForCriteria);
-        List enrolmentEvaluationsForEnrolment = persistentEnrolmentEvaluation
-                .readByCriteria(enrolmentEvaluationForCriteria);
-        if (enrolmentEvaluationsForEnrolment.size() == 0) {
+       
+        IEnrollment enrolmentToSearch = new Enrolment();
+        enrolmentToSearch.setIdInternal(infoEnrolmentEvaluation.getInfoEnrolment().getIdInternal());
+        List enrolmentEvaluationsForEnrolment = persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolment(enrolmentToSearch);
+        if (enrolmentEvaluationsForEnrolment == null || enrolmentEvaluationsForEnrolment.size() == 0) {
         //		it will never happen!!
         throw new FenixServiceException(); }
         Collections.sort(enrolmentEvaluationsForEnrolment, new BeanComparator("enrolment.idInternal"));
@@ -205,10 +201,9 @@ public class InsertStudentsFinalEvaluation implements IService
             IPersistentStudent persistentStudent = sp.getIPersistentStudent();
 
             //			Student
-            IStudent student = new Student();
-            student.setIdInternal(infoEnrolmentEvaluation.getInfoEnrolment()
+            IStudent student;
+            student = (IStudent) persistentStudent.readByOID(Student.class, infoEnrolmentEvaluation.getInfoEnrolment()
                     .getInfoStudentCurricularPlan().getInfoStudent().getIdInternal());
-            student = (IStudent) persistentStudent.readByOId(student, false);
 
             infoEnrolmentEvaluation.getInfoEnrolment().getInfoStudentCurricularPlan().setInfoStudent(
                     Cloner.copyIStudent2InfoStudent(student));

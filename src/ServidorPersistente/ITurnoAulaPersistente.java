@@ -22,20 +22,14 @@ import Util.DiaSemana;
 
 public interface ITurnoAulaPersistente extends IPersistentObject{
     public ITurnoAula readByShiftAndLesson(ITurno shift, IAula lesson)
-               throws ExcepcaoPersistencia;
-    
+               throws ExcepcaoPersistencia;    
     public void delete(ITurnoAula turnoAula) throws ExcepcaoPersistencia;
-   
-	
-	
-	public List readLessonsByStudent(String username) throws ExcepcaoPersistencia;
-	
-	
+	public List readLessonsByStudent(String username) throws ExcepcaoPersistencia;	
 	public List readByShift(ITurno shift) throws ExcepcaoPersistencia;
 	public void delete(ITurno shift, DiaSemana diaSemana, Calendar inicio, Calendar fim,
-					   ISala sala) throws ExcepcaoPersistencia;
-					   
+					   ISala sala) throws ExcepcaoPersistencia;					   
 	// FIXME: readByCriteria Legacy : readByShift does almost the same thing
-	public List readLessonsByShift(ITurno shift) throws ExcepcaoPersistencia;					   
-
+	public List readLessonsByShift(ITurno shift) throws ExcepcaoPersistencia;
+    public List readByLesson(IAula lesson) throws ExcepcaoPersistencia; 
+	
 }

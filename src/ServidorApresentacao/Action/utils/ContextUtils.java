@@ -655,7 +655,29 @@ public class ContextUtils
         }
 
         /* Generate a label list for the above list of degrees */
-        List labelListOfExecutionDegrees = getLabelListOfExecutionDegrees(executionDegreeList);
+        //List labelListOfExecutionDegrees = getLabelListOfExecutionDegrees(executionDegreeList);
+        Iterator iterator = executionDegreeList.iterator();
+        List labelListOfExecutionDegrees = new ArrayList();
+        while (iterator.hasNext())
+        {
+            InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
+            String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
+
+            name =
+                infoExecutionDegree
+                    .getInfoDegreeCurricularPlan()
+                    .getInfoDegree()
+                    .getTipoCurso()
+                    .toString()
+                    + " em "
+                    + name;
+
+            name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree)
+                ? "-" + infoExecutionDegree.getInfoDegreeCurricularPlan().getName()
+                : "";
+
+                labelListOfExecutionDegrees.add(new LabelValueBean(name, infoExecutionDegree.getIdInternal().toString()));
+        }
         request.setAttribute("licenciaturas", labelListOfExecutionDegrees);
 
         ///////////////////////////////////////////////////////////////////////

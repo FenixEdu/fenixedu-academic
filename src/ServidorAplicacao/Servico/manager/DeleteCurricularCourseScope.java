@@ -2,19 +2,21 @@
  * Created on 24/Set/2003
  */
 package ServidorAplicacao.Servico.manager;
+import java.util.List;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.CurricularCourseScope;
 import Dominio.ICurricularCourseScope;
+import ServidorAplicacao.Servico.exceptions.CantDeleteServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourseScope;
+import ServidorPersistente.IPersistentWrittenEvaluationCurricularCourseScope;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author lmac1
  */
 public class DeleteCurricularCourseScope implements IService {
-    
 	public DeleteCurricularCourseScope() {
 	}
 	// delete a scope
@@ -23,18 +25,23 @@ public class DeleteCurricularCourseScope implements IService {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentCurricularCourseScope persistentCurricularCourseScope = sp
 					.getIPersistentCurricularCourseScope();
-//			IStudentCurricularPlanPersistente persistentStudentCurricularPlan = sp
-//					.getIStudentCurricularPlanPersistente();
+			IPersistentWrittenEvaluationCurricularCourseScope persistentWrittenEvaluationCurricularCourseScope = sp
+					.getIPersistentWrittenEvaluationCurricularCourseScope();
 			ICurricularCourseScope helpCurricularCourseScope = new CurricularCourseScope();
 			helpCurricularCourseScope.setIdInternal(scopeId);
 			ICurricularCourseScope scope = (ICurricularCourseScope) persistentCurricularCourseScope
 					.readByOId(helpCurricularCourseScope, false);
 			if (scope != null) {
-				//if (scope.getCurricularCourse().getScopes().size() > 1) {
+				// added by Fernanda Quitério
+				List writtenEvaluations = persistentWrittenEvaluationCurricularCourseScope
+						.readByCurricularCourseScope(helpCurricularCourseScope);
+				if (writtenEvaluations == null
+						|| writtenEvaluations.size() == 0) {
+
 					persistentCurricularCourseScope.delete(scope);
-//				} else {
-//					throw new CantDeleteServiceException();
-//				}
+				} else {
+					throw new CantDeleteServiceException();
+				}
 			}
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);

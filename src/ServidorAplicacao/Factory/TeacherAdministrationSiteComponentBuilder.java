@@ -930,7 +930,7 @@ public class TeacherAdministrationSiteComponentBuilder
                 InfoExam infoExam = (InfoExam) infoEvaluation;
                 InfoExam examComponent = new InfoExam();
 
-                examComponent.setAssociatedRooms(infoExam.getAssociatedRooms());
+                //examComponent.setAssociatedRooms(infoExam.getAssociatedRooms());
                 examComponent.setEvaluationType(infoExam.getEvaluationType());
                 examComponent.setInfoExecutionCourse(infoExam.getInfoExecutionCourse());
                 examComponent.setSeason(infoExam.getSeason());

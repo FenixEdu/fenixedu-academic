@@ -164,7 +164,7 @@ public final class ConsultarFuncionarioEscolhaAction extends Action
             {
                 marcacaoPonto = (MarcacaoPonto) iterListaMarcacoesPonto.next();
 
-                if (marcacaoPonto.getSiglaUnidade().length() == 0)
+                if (marcacaoPonto.getSiglaUnidade() == null || marcacaoPonto.getSiglaUnidade().length() == 0)
                 {
                     listaMarcacoesPontoBody.add(0, "&nbsp;");
                 } else

@@ -23,7 +23,7 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer
 
     private ExamsMap examsMap;
 
-    public StringBuffer renderDayLabel(ExamsMapSlot examsMapSlot, ExamsMap examsMap)
+    public StringBuffer renderDayLabel(ExamsMapSlot examsMapSlot, ExamsMap examsMap, String typeUser)
     {
         this.examsMap = examsMap;
         StringBuffer strBuffer = new StringBuffer();
@@ -40,7 +40,7 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer
             (examsMapSlot.getDay().get(Calendar.DAY_OF_MONTH) == 2
                 && examsMapSlot.getDay().get(Calendar.DAY_OF_WEEK) == 2);
 		
-		if(examsMap.getInfoExecutionDegree() != null)
+		if(examsMap.getInfoExecutionDegree() != null && typeUser.equals("sop"))
         {  
         	strBuffer.append(
                 "<a href='showExamsManagement.do?method=createByDay"
@@ -80,7 +80,7 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer
             strBuffer.append(examsMapSlot.getDay().get(Calendar.YEAR));
         }
         
-		if(examsMap.getInfoExecutionDegree() != null)
+		if(examsMap.getInfoExecutionDegree() != null && typeUser.equals("sop"))
 		{  
         	strBuffer.append("</a>");
 		}

@@ -9,7 +9,6 @@ package ServidorPersistente.OJB;
 /**
  * @author tfc130
  */
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
@@ -21,14 +20,9 @@ import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
 import Dominio.ITurma;
-import Dominio.ITurmaTurno;
 import Dominio.ITurno;
-import Dominio.ITurnoAluno;
-import Dominio.ITurnoAula;
-import Dominio.ShiftStudent;
 import Dominio.TurmaTurno;
 import Dominio.Turno;
-import Dominio.TurnoAula;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ITurnoPersistente;
 import Util.TipoAula;
@@ -49,51 +43,51 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente
     public void delete(ITurno turno) throws ExcepcaoPersistencia
     {
 
-        Criteria crit = new Criteria();
-        crit.addEqualTo("chaveTurno", turno.getIdInternal());
-        ITurnoAula turnoAula = null;
-        TurnoAulaOJB turnoAulaOJB = new TurnoAulaOJB();
+//        Criteria crit = new Criteria();
+//        crit.addEqualTo("chaveTurno", turno.getIdInternal());
+//        ITurnoAula turnoAula = null;
+//        TurnoAulaOJB turnoAulaOJB = new TurnoAulaOJB();
+//
+//        List result = queryList(TurnoAula.class, crit);
+//        lockRead(result);
+//        Iterator iterador = result.iterator();
+//        while (iterador.hasNext())
+//        {
+//            turnoAula = (ITurnoAula) iterador.next();
+//            turnoAulaOJB.delete(turnoAula);
+//        }
 
-        List result = queryList(TurnoAula.class, crit);
-        lockRead(result);
-        Iterator iterador = result.iterator();
-        while (iterador.hasNext())
-        {
-            turnoAula = (ITurnoAula) iterador.next();
-            turnoAulaOJB.delete(turnoAula);
-        }
-
-        crit = new Criteria();
-        crit.addEqualTo("chaveTurno", turno.getIdInternal());
-        ITurmaTurno turmaTurno = null;
-        TurmaTurnoOJB turmaTurnoOJB = new TurmaTurnoOJB();
-        List result1 = queryList(TurmaTurno.class, crit);
-        Iterator iterador1 = result1.iterator();
-        while (iterador1.hasNext())
-        {
-            turmaTurno = (ITurmaTurno) iterador1.next();
-            turmaTurnoOJB.delete(turmaTurno);
-        }
-        ITurnoAluno turnoAluno = null;
-        TurnoAlunoOJB turnoAlunoOJB = new TurnoAlunoOJB();
-
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("shift.nome", turno.getNome());
-        criteria.addEqualTo("shift.disciplinaExecucao.sigla", turno.getDisciplinaExecucao().getSigla());
-        criteria.addEqualTo(
-            "shift.disciplinaExecucao.executionPeriod.name",
-            turno.getDisciplinaExecucao().getExecutionPeriod().getName());
-        criteria.addEqualTo(
-            "shift.disciplinaExecucao.executionPeriod.executionYear.year",
-            turno.getDisciplinaExecucao().getExecutionPeriod().getExecutionYear().getYear());
-        List result2 = queryList(ShiftStudent.class, criteria);
-
-        Iterator iterador2 = result2.iterator();
-        while (iterador2.hasNext())
-        {
-            turnoAluno = (ITurnoAluno) iterador2.next();
-            turnoAlunoOJB.delete(turnoAluno);
-        }
+//        Criteria crit = new Criteria();
+//        crit.addEqualTo("chaveTurno", turno.getIdInternal());
+//        ITurmaTurno turmaTurno = null;
+//        TurmaTurnoOJB turmaTurnoOJB = new TurmaTurnoOJB();
+//        List result1 = queryList(TurmaTurno.class, crit);
+//        Iterator iterador1 = result1.iterator();
+//        while (iterador1.hasNext())
+//        {
+//            turmaTurno = (ITurmaTurno) iterador1.next();
+//            turmaTurnoOJB.delete(turmaTurno);
+//        }
+//        ITurnoAluno turnoAluno = null;
+//        TurnoAlunoOJB turnoAlunoOJB = new TurnoAlunoOJB();
+//
+//        Criteria criteria = new Criteria();
+//        criteria.addEqualTo("shift.nome", turno.getNome());
+//        criteria.addEqualTo("shift.disciplinaExecucao.sigla", turno.getDisciplinaExecucao().getSigla());
+//        criteria.addEqualTo(
+//            "shift.disciplinaExecucao.executionPeriod.name",
+//            turno.getDisciplinaExecucao().getExecutionPeriod().getName());
+//        criteria.addEqualTo(
+//            "shift.disciplinaExecucao.executionPeriod.executionYear.year",
+//            turno.getDisciplinaExecucao().getExecutionPeriod().getExecutionYear().getYear());
+//        List result2 = queryList(ShiftStudent.class, criteria);
+//
+//        Iterator iterador2 = result2.iterator();
+//        while (iterador2.hasNext())
+//        {
+//            turnoAluno = (ITurnoAluno) iterador2.next();
+//            turnoAlunoOJB.delete(turnoAluno);
+//        }
 
         super.delete(turno);
 

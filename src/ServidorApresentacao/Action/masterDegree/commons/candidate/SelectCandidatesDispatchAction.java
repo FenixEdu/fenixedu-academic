@@ -206,6 +206,7 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         request.setAttribute("executionYear", executionYear);
         request.setAttribute("degree", degree);
         request.setAttribute(SessionConstants.EXECUTION_DEGREE, String.valueOf(executionDegree));
+		session.setAttribute(SessionConstants.EXECUTION_DEGREE, String.valueOf(executionDegree));
 
         // Get Numerus Clausus
         Integer numerusClausus = null;
@@ -310,11 +311,15 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         String[] ids = (String[]) substituteForm.get("candidatesID");
         String[] remarks = (String[]) substituteForm.get("remarks");
         String[] substitutes = (String[]) substituteForm.get("substitutes");
+		String executionDegree = (String) request.getAttribute("executionDegreeID");
+		if (executionDegree == null)
+		executionDegree = (String) session.getAttribute(SessionConstants.EXECUTION_DEGREE);
 
         request.setAttribute("substitutes", substitutes);
         request.setAttribute("candidatesID", ids);
         request.setAttribute("situations", candidateList);
         request.setAttribute("remarks", remarks);
+		request.setAttribute(SessionConstants.EXECUTION_DEGREE, executionDegree);
 
         List result = null;
         Object args[] = {ids};
@@ -328,7 +333,7 @@ public class SelectCandidatesDispatchAction extends DispatchAction
             throw new ExistingActionException(e);
         }
         request.setAttribute("candidateList", result);
-
+		session.setAttribute(SessionConstants.EXECUTION_DEGREE, executionDegree);
         return mapping.findForward("OrderCandidatesReady");
     }
 
@@ -346,7 +351,11 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         String[] ids = (String[]) resultForm.get("candidatesID");
         String[] remarks = (String[]) resultForm.get("remarks");
         String[] substitutes = (String[]) resultForm.get("substitutes");
+
         String executionDegree = (String) request.getAttribute(SessionConstants.EXECUTION_DEGREE);
+        if (executionDegree == null)
+			executionDegree = (String) session.getAttribute(SessionConstants.EXECUTION_DEGREE);
+System.out.println("*****************" + executionDegree);
         if (!isTokenValid(request)) { return mapping.findForward("BackError"); }
 
         request.setAttribute("situations", candidateList);

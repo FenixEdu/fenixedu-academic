@@ -490,6 +490,14 @@
 		parameter="method" >	
 	</action>
 
+	<!-- DEEC Department application  -->
+	<action path="/getEncryptedPassword"
+			type="ServidorApresentacao.Action.publico.GetEncryptedPassword"			
+			scope="request"
+			validate="false"
+			>		
+	</action>
+	<!-- end of DEEC Department application  -->
      </action-mappings>     
     
     <!-- ========== Controller Configuration ================================ -->

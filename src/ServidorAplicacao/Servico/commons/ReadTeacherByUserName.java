@@ -1,9 +1,9 @@
 package ServidorAplicacao.Servico.commons;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoTeacher;
 import DataBeans.util.Cloner;
 import Dominio.ITeacher;
-import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
@@ -14,21 +14,15 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author jpvl
  */
 
-public class ReadTeacherByUserName implements IServico {
-	private static ReadTeacherByUserName service = new ReadTeacherByUserName();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static ReadTeacherByUserName getService() {
-	  return service;
-	}
+public class ReadTeacherByUserName implements IService {
+	
 
-	/**
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-	public String getNome() {
-		return "ReadTeacherByUserName";
-	}
+    /**
+     * 
+     */
+    public ReadTeacherByUserName() {
+      
+    }
 	
 	public InfoTeacher run(String userName) {
                         
@@ -49,4 +43,5 @@ public class ReadTeacherByUserName implements IServico {
 	  return infoTeacher;
 	}
 
+   
 }

@@ -1,4 +1,5 @@
 /*
+ * ATENÇÃO: JÁ NÃO É USADO!!!
  * ApagarTurno.java
  *
  * Created on 27 de Outubro de 2002, 18:24

@@ -1,79 +1,83 @@
 /*
- *
+ * 
  * Created on 2003/08/15
  */
 
 package ServidorAplicacao.Servico.sop;
 
 /**
- *
  * @author Luis Cruz & Sara Ribeiro
- **/
+ */
 import java.util.List;
 
 import Dominio.Aula;
 import Dominio.IAula;
-import Dominio.ITurno;
+import Dominio.ITurnoAula;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.ITurnoAulaPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class DeleteLessons implements IServico {
 
-	private static DeleteLessons _servico = new DeleteLessons();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static DeleteLessons getService() {
-		return _servico;
-	}
+    private static DeleteLessons _servico = new DeleteLessons();
 
-	/**
-	 * The actor of this class.
-	 **/
-	private DeleteLessons() {
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static DeleteLessons getService() {
+        return _servico;
+    }
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "DeleteLessons";
-	}
+    /**
+     * The actor of this class.
+     */
+    private DeleteLessons() {
+    }
 
-	public Object run(List lessonOIDs) throws FenixServiceException {
+    /**
+     * Devolve o nome do servico
+     */
+    public final String getNome() {
+        return "DeleteLessons";
+    }
 
-		boolean result = false;
+    public Object run(List lessonOIDs) throws FenixServiceException {
 
-		try {
+        boolean result = false;
 
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        try {
 
-			for (int j = 0; j < lessonOIDs.size(); j++) {
-				IAula lesson =
-					(IAula) sp.getIAulaPersistente().readByOID(
-						Aula.class,
-						(Integer) lessonOIDs.get(j));
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-				List shifts = sp.getITurnoPersistente().readByLesson(lesson);
-				for (int i = 0; i < shifts.size(); i++)
-				{
-					ITurno turno = (ITurno) shifts.get(i);
-					sp.getITurnoPersistente().simpleLockWrite(turno);
-					turno.getAssociatedLessons().remove(lesson);
-				}
-				sp.getIAulaPersistente().delete(lesson);
-			}
+            for (int j = 0; j < lessonOIDs.size(); j++) {
+                IAula lesson = (IAula) sp.getIAulaPersistente().readByOID(
+                        Aula.class, (Integer) lessonOIDs.get(j));
 
-			result = true;
-		} catch (ExcepcaoPersistencia ex) {
-			throw new FenixServiceException("Error deleting lesson");
-		}
+                if (lesson != null) {
+                    ITurnoAulaPersistente persistentShiftLesson = sp
+                            .getITurnoAulaPersistente();
 
-	return new Boolean(result);
+                    List shiftLessonList = persistentShiftLesson
+                            .readByLesson(lesson);
+                    for (int i = 0; i < shiftLessonList.size(); i++) {
+                        persistentShiftLesson
+                                .delete((ITurnoAula) shiftLessonList.get(i));
+                    }
+                    
+                    sp.getIAulaPersistente().delete(lesson);
+                }
+            }
 
-}
+            result = true;
+        } catch (ExcepcaoPersistencia ex) {
+            throw new FenixServiceException("Error deleting lesson");
+        }
+
+        return new Boolean(result);
+
+    }
 
 }

@@ -47,8 +47,7 @@ public class RemoverAula implements IServico {
     try {
       ISuportePersistente sp = SuportePersistenteOJB.getInstance();
       ISala room = sp.getISalaPersistente().readByName(infoLesson.getInfoSala().getNome());
-      
-		      
+      		      
 	  ITurno shift = Cloner.copyInfoShift2Shift(infoShift);		      
   
       sp.getITurnoAulaPersistente().delete(shift, infoLesson.getDiaSemana(),

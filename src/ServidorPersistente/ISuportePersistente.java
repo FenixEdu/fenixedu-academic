@@ -108,6 +108,7 @@ public interface ISuportePersistente
 
 	public IPersistentExam getIPersistentExam();
 	public IPersistentWrittenTest getIPersistentWrittenTest();
+	public IPersistentWrittenEvaluationCurricularCourseScope getIPersistentWrittenEvaluationCurricularCourseScope();
 	public IPersistentExamExecutionCourse getIPersistentExamExecutionCourse();
 
 	public IPersistentBranch getIPersistentBranch();

@@ -19,7 +19,7 @@
 		utilizar diversos servi&ccedil;os e funcionalidades de forma a simplificar o quotidiano de todos
 		aqueles que estudam ou trabalham.
 	</p>
-
+<%--
 	<p>
 		Caso o utilizador não consiga aceder ao sistema por qualquer motivo, incluindo a perda de
 		password, ou necessite de qualquer esclarecimento adicional deve contactar a equipa de
@@ -30,6 +30,13 @@
 		O username dos alunos é constituído pelo seu número mecanográfico precedido da letra "L" (por
 		exemplo, L90123). Os pedidos de novas passwords devem ser efectuados na Recepção do CIIST.
 	</p>
+--%>
+	<p><font color='#FF0000'><strong>
+		Aviso:<br /><br />
+		Por razões de segurança, foram alteradas as passwords de acesso de todos os utilizadores 
+		que tinham como password o número de BI.<br /><br />
+		Os pedidos de novas passwords devem ser efectuados na Recepção do CIIST.
+	</strong></font></p>
 
 	<div id="alert">	
 		<p><span class="error"><html:errors property="invalidAuthentication"/></span></p>
