@@ -74,11 +74,7 @@ public class Autenticacao implements IServico
         {
             throw new FenixServiceException(ex.getMessage());
         }
-        if (pessoa != null && password != null && !password.equals("")
-        		&& !pessoa.getNumeroDocumentoIdentificacao().equalsIgnoreCase(password)
-        		&& !pessoa.getCodigoFiscal().equalsIgnoreCase(password)
-        		&& !pessoa.getNumContribuinte().equalsIgnoreCase(password)
-        		&& PasswordEncryptor.areEquals(pessoa.getPassword(), password))
+        if (pessoa != null && PasswordEncryptor.areEquals(pessoa.getPassword(), password))
         {
             Collection roles = new ArrayList();
             if (pessoa.getPersonRoles() != null)

@@ -74,7 +74,20 @@ public class ChangePasswordService implements IServico {
 		}
 
 		if (person == null)
+		{	
 			throw new ExcepcaoInexistente("Unknown Person!");
+		}
+		if (newPassword == null || newPassword.equals("")
+					|| person.getNumeroDocumentoIdentificacao() == null
+					|| person.getNumeroDocumentoIdentificacao().equalsIgnoreCase(newPassword)
+				    || person.getCodigoFiscal() == null
+					|| person.getCodigoFiscal().equals(newPassword)
+				    || person.getNumContribuinte() == null
+					|| person.getNumContribuinte().equals(newPassword)
+					|| PasswordEncryptor.areEquals(person.getPassword(), newPassword))
+		{
+			throw new InvalidPasswordServiceException("Invalid New Password!");
+		}
 		if (!PasswordEncryptor.areEquals(person.getPassword(), oldPassword)) {
 			throw new InvalidPasswordServiceException("Invalid Existing Password!");
 		} else {
