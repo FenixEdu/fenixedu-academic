@@ -1,65 +1,166 @@
-/*
- * ReadCourseByStudentTest.java JUnit based test
- *
- * Created on February 26th, 2003, 15:33
- */
-
 package ServidorAplicacao.Servicos.student;
 
+import ServidorAplicacao.Servico.Autenticacao;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
+import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
+
 /**
+ * @author  Luis Egidio, lmre@mega.ist.utl.pt
+ * 			Nuno Ochoa,  nmgo@mega.ist.utl.pt
  *
- * @author João Mota
  */
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import DataBeans.InfoPerson;
-import DataBeans.InfoShiftEnrolment;
-import DataBeans.InfoStudent;
-import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
+public class EnrollStudentInExamTest
+	extends ServiceNeedsAuthenticationTestCase {
 
-public class EnrollStudentInExamTest extends TestCaseDeleteAndEditServices {
+	/**
+	 * @param testName
+	 */
+	public EnrollStudentInExamTest(String name) {
+		super(name);
+	}
 
-	private InfoPerson infoPerson = null;
-	private InfoStudent infoStudent = null;
-	private InfoShiftEnrolment infoShiftEnrolment = null;
-	
-    public EnrollStudentInExamTest(java.lang.String testName) {
-    super(testName);
-  }
-    
-  public static void main(java.lang.String[] args) {
-    junit.textui.TestRunner.run(suite());
-  }
-    
-  public static Test suite() {
-    TestSuite suite = new TestSuite(EnrollStudentInExamTest.class);
-        
-    return suite;
-  }
-    
-  protected void setUp() {
-    super.setUp();
-  }
-    
-  protected void tearDown() {
-    super.tearDown();
-  }
+	protected String getNameOfServiceToBeTested() {
+		return "EnrollStudentInExam";
+	}
 
+	protected String getDataSetFilePath() {
+		return "etc/datasets/servicos/student/testEnrollStudentInExamDataSet.xml";
+	}
 
+	protected String[] getAuthenticatedAndAuthorizedUser() {
+		String[] args = { "13", "pass", getApplication()};
+		return args;
+	}
 
-  protected String getNameOfServiceToBeTested() {
-	  return "EnrollStudentInExam";
-  }
+	protected String[] getAuthenticatedAndUnauthorizedUser() {
+		String[] args = { "nmsn", "pass", getApplication()};
+		return args;
+	}
 
-  protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {	
-	return null;
-	 
-  }
+	protected String[] getNotAuthenticatedUser() {
+		String[] args = { "fiado", "pass", getApplication()};
+		return args;
+	}
 
-  protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-	  Object[] result = { "user",new Integer(2)};
-	  return result;
-  }
+	protected Object[] getAuthorizeArguments() {
+		Object[] args = { userView.getUtilizador(), new Integer(1) };
+		return args;
+	}
 
- 
+	protected String getApplication() {
+		return Autenticacao.EXTRANET;
+	}
+
+	public void testEnrollNonExistingStudentInExam() {
+		Object[] args = { "UsernameOfNonExistingStudent", new Integer(1)};
+
+		try {
+			gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			System.out.println(
+				"testEnrollNonExistingStudentInExam was UNSUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+			fail("testEnrollNonExistingStudentInExam");
+
+		} catch (InvalidArgumentsServiceException ex) {
+			compareDataSetUsingExceptedDataSetTableColumns(
+				"etc/datasets/servicos/student/"
+					+ "testExpectedEnrollNonExistingStudentInExamDataSet.xml");
+			ex.printStackTrace();
+			System.out.println(
+				"testEnrollNonExistingStudentInExam was SUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.println(
+				"testEnrollNonExistingStudentInExam was UNSUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+			fail("testEnrollNonExistingStudentInExam");
+		}
+	}
+
+	public void testEnrollStudentInNonExistingExam() {
+		Object[] args = { userView.getUtilizador(), new Integer(7)};
+
+		try {
+			gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			System.out.println(
+				"testEnrollStudentInNonExistingExam was UNSUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+			fail("testEnrollStudentInNonExistingExam");
+
+		} catch (InvalidArgumentsServiceException ex) {
+			compareDataSetUsingExceptedDataSetTableColumns(
+				"etc/datasets/servicos/student/"
+					+ "testExpectedEnrollStudentInNonExistingExamDataSet.xml");
+			ex.printStackTrace();
+			System.out.println(
+				"testEnrollStudentInNonExistingExam was SUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.println(
+				"testEnrollStudentInNonExistingExam was UNSUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+			fail("testEnrollStudentInNonExistingExam");
+		}
+	}
+
+	public void testReEnrollStudentInExam() {
+		Object[] args = { userView.getUtilizador(), new Integer(4)};
+
+		try {
+			gestor.executar(userView, getNameOfServiceToBeTested(), args);
+			System.out.println(
+				"testReEnrollStudentInExam was UNSUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+			fail("testReEnrollStudentInExam");
+
+		} catch (ExistingServiceException ex) {
+			compareDataSetUsingExceptedDataSetTableColumns(
+				"etc/datasets/servicos/student/"
+					+ "testExpectedReEnrollStudentInExamDataSet.xml");
+			ex.printStackTrace();
+			System.out.println(
+				"testReEnrollStudentInExam was SUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.println(
+				"testReEnrollStudentInExam was UNSUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+			fail("testReEnrollStudentInExam");
+		}
+	}
+
+	public void testEnrollStudentInExam() {
+		Object[] args = { userView.getUtilizador(), new Integer(1)};
+		Boolean result;
+
+		try {
+			result =
+				(Boolean) gestor.executar(
+					userView,
+					getNameOfServiceToBeTested(),
+					args);
+			assertTrue(result.booleanValue());
+			compareDataSetUsingExceptedDataSetTableColumns(
+				"etc/datasets/servicos/student/"
+					+ "testExpectedEnrollStudentInExamDataSet.xml");
+			System.out.println(
+				"testEnrollStudentInExam was SUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.println(
+				"testEnrollStudentInExam was UNSUCCESSFULY runned by class: "
+					+ this.getClass().getName());
+			fail("testEnrollStudentInExam");
+		}
+	}
+
 }
