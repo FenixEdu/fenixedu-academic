@@ -4,6 +4,8 @@ import DataBeans.InfoCurriculum;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Nuno Correia
@@ -151,7 +153,7 @@ public class EditObjectivesTest extends ObjectivesBelongsExecutionCourse {
 		return Autenticacao.EXTRANET;
 	}
 
-	public void testSuccessfull() {
+	public void testSuccessfullEditObjectives() {
 
 		try {
 			String[] args = getAuthorizedUser();
@@ -171,11 +173,10 @@ public class EditObjectivesTest extends ObjectivesBelongsExecutionCourse {
 	
 	public void testSuccessfullEditObjectivesWithNoCurriculum() {
 
-		System.out.println("Starting: testSuccessfullEditObjectivesWithNoCurriculum");
 		try {
 			String[] args = getAuthorizedUser();
 			IUserView userView = authenticateUser(args);
-
+			
 			gestor.executar(
 				userView,
 				getNameOfServiceToBeTested(),
@@ -184,7 +185,6 @@ public class EditObjectivesTest extends ObjectivesBelongsExecutionCourse {
 			// verificar as alteracoes da bd
 			compareDataSet(getExpectedNewCurriculumDataSetFilePath());
 
-			System.out.println("Finished: testSuccessfullEditObjectivesWithNoCurriculum");
 		} catch (FenixServiceException ex) {
 			fail("EditObjectivesTest" + ex);
 		} catch (Exception ex) {

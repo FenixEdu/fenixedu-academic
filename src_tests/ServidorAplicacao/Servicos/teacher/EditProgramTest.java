@@ -152,27 +152,27 @@ public class EditProgramTest extends ProgramBelongsExecutionCourse {
 		}
 	}
 	
-//	public void testSuccessfullEditProgramWithNoCurriculum() {
-//
-//		System.out.println("Starting: testSuccessfullEditProgramWithNoCurriculum");
-//		try {
-//			String[] args = getAuthorizedUser();
-//			IUserView userView = authenticateUser(args);
-//
-//			gestor.executar(
-//				userView,
-//				getNameOfServiceToBeTested(),
-//				getTestEvaluationMethodCurricularCourseWithNoCurriculumArguments());
-//
-//			// verificar as alteracoes da bd
-//			compareDataSet(getExpectedNewCurriculumDataSetFilePath());
-//
-//			System.out.println("Finished: testSuccessfullEditProgramWithNoCurriculum");
-//		} catch (FenixServiceException ex) {
-//			fail("EditProgramTest" + ex);
-//		} catch (Exception ex) {
-//			fail("EditProgramTest error on compareDataSet" + ex);
-//		}
-//	}
+	public void testSuccessfullEditProgramWithNoCurriculum() {
+
+		System.out.println("Starting: testSuccessfullEditProgramWithNoCurriculum");
+		try {
+			String[] args = getAuthorizedUser();
+			IUserView userView = authenticateUser(args);
+
+			gestor.executar(
+				userView,
+				getNameOfServiceToBeTested(),
+				getTestProgramCurricularCourseWithNoCurriculumArguments());
+
+			// verificar as alteracoes da bd
+			compareDataSet(getExpectedNewCurriculumDataSetFilePath());
+
+			System.out.println("Finished: testSuccessfullEditProgramWithNoCurriculum");
+		} catch (FenixServiceException ex) {
+			fail("EditProgramTest" + ex);
+		} catch (Exception ex) {
+			fail("EditProgramTest error on compareDataSet" + ex);
+		}
+	}
 
 }

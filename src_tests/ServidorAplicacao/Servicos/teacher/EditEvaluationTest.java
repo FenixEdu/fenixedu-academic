@@ -134,7 +134,7 @@ public class EditEvaluationTest extends EvaluationMethodBelongsExecutionCourse {
 		return Autenticacao.EXTRANET;
 	}
 
-	public void testSuccessfull() {
+	public void testSuccessfullEditEvaluationMethod() {
 
 		try {
 			String[] args = getAuthorizedUser();
@@ -152,26 +152,26 @@ public class EditEvaluationTest extends EvaluationMethodBelongsExecutionCourse {
 		}
 	}
 
-//	public void testSuccessfullEditEvaluationMethodWithNoCurriculum() {
-//
-//		System.out.println("Starting: testSuccessfullEditEvaluationMethodWithNoCurriculum");
-//		try {
-//			String[] args = getAuthorizedUser();
-//			IUserView userView = authenticateUser(args);
-//
-//			gestor.executar(
-//				userView,
-//				getNameOfServiceToBeTested(),
-//				getTestEvaluationMethodCurricularCourseWithNoCurriculumArguments());
-//
-//			// verificar as alteracoes da bd
-//			compareDataSet(getExpectedNewCurriculumDataSetFilePath());
-//
-//			System.out.println("Finished: testSuccessfullEditEvaluationMethodWithNoCurriculum");
-//		} catch (FenixServiceException ex) {
-//			fail("EditEvaluationTest" + ex);
-//		} catch (Exception ex) {
-//			fail("EditEvaluationTest error on compareDataSet" + ex);
-//		}
-//	}
+	public void testSuccessfullEditEvaluationMethodWithNoCurriculum() {
+
+		System.out.println("Starting: testSuccessfullEditEvaluationMethodWithNoCurriculum");
+		try {
+			String[] args = getAuthorizedUser();
+			IUserView userView = authenticateUser(args);
+
+			gestor.executar(
+				userView,
+				getNameOfServiceToBeTested(),
+				getTestEvaluationMethodCurricularCourseWithNoCurriculumArguments());
+
+			// verificar as alteracoes da bd
+			compareDataSet(getExpectedNewCurriculumDataSetFilePath());
+
+			System.out.println("Finished: testSuccessfullEditEvaluationMethodWithNoCurriculum");
+		} catch (FenixServiceException ex) {
+			fail("EditEvaluationTest" + ex);
+		} catch (Exception ex) {
+			fail("EditEvaluationTest error on compareDataSet" + ex);
+		}
+	}
 }
