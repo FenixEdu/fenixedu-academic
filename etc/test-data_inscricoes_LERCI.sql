@@ -19,9 +19,9 @@ insert into DEPARTMENT_COURSE values (1, 'Disciplina Departamento', 'DD', 1);
 -- (ID_INTERNAL, BRANCH_CODE, BRANCH_NAME)
 -- -----------------------------
 delete from BRANCH;
-insert into BRANCH values (1, '', '', 1);
-insert into BRANCH values (2, 'AAGR', 'ÁREA DE ARQUITECTURA E GESTÃO DE REDES', 1);
-insert into BRANCH values (3, 'AAS', 'ÁREA DE APLICAÇÕES E SERVIÇOS', 1);
+insert into BRANCH values (1, '', '', 1,'');
+insert into BRANCH values (2, 'AAGR', 'ÁREA DE ARQUITECTURA E GESTÃO DE REDES', 1,'');
+insert into BRANCH values (3, 'AAS', 'ÁREA DE APLICAÇÕES E SERVIÇOS', 1,'');
 
 -- -----------------------------
 -- Data for table 'DEGREE'

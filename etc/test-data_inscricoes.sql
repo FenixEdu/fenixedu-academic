@@ -7,9 +7,9 @@ DELETE FROM BRANCH;
 # 									NA TABELA 'CURRICULAR_COURSE_SCOPE'
 #-------------------------------
 ;
-INSERT INTO BRANCH values (1, 'C', 'Computação', 1);
-INSERT INTO BRANCH values (2, 'IA', 'Inteligencia Artificial', 1);
-INSERT INTO BRANCH values (3, 'II', 'Informatica Industrial', 1);
+INSERT INTO BRANCH values (1, 'C', 'Computação', 1,'');
+INSERT INTO BRANCH values (2, 'IA', 'Inteligencia Artificial', 1,'');
+INSERT INTO BRANCH values (3, 'II', 'Informatica Industrial', 1,'');
 
 #-----------------------------
 # Data for table 'CURRICULAR_YEAR'
