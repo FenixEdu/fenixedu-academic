@@ -14,6 +14,7 @@ import Dominio.Privilegio;
 import Dominio.Student;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.security.PasswordEncryptor;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPessoaPersistente;
@@ -63,7 +64,7 @@ public class AutenticacaoStudentFormActionTest extends MockStrutsTestCase {
     _person1.setTipoDocumentoIdentificacao(new TipoDocumentoIdentificacao(
     			   TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
     _person1.setUsername("12345");
-    _person1.setPassword("pass");
+    _person1.setPassword(PasswordEncryptor.encryptPassword("pass"));
 	privileges.add(new Privilegio(_person1, new String("ReadStudentByUsername")));
     _person1.setPrivilegios(privileges);
     //_persistentPerson.escreverPessoa(_person1);
@@ -83,7 +84,7 @@ public class AutenticacaoStudentFormActionTest extends MockStrutsTestCase {
     _person2.setTipoDocumentoIdentificacao(new TipoDocumentoIdentificacao(
     			 TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
     _person2.setUsername("nome2");
-    _person2.setPassword("pass2");
+    _person2.setPassword(PasswordEncryptor.encryptPassword("pass2"));
     _person2.setPrivilegios(privileges);
     _persistentPerson.escreverPessoa(_person2);
 
@@ -94,7 +95,7 @@ public class AutenticacaoStudentFormActionTest extends MockStrutsTestCase {
 	_person3.setTipoDocumentoIdentificacao(new TipoDocumentoIdentificacao(
 				   TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
 	_person3.setUsername("54321");
-	_person3.setPassword("pass");
+	_person3.setPassword(PasswordEncryptor.encryptPassword("pass"));
 	privileges.add(new Privilegio(_person3, new String("ReadStudentByUsername")));
 	_person3.setPrivilegios(privileges);
 	//_persistentPerson.escreverPessoa(_person3);

@@ -38,6 +38,7 @@ import Dominio.Student;
 import Dominio.Turno;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.security.PasswordEncryptor;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.student.ShiftEnrolmentAction;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -188,7 +189,7 @@ public class ShiftEnrolmentActionTest extends MockStrutsTestCase {
 				TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
 		_person1.setNome("person1");
 		_person1.setUsername("person1");
-		_person1.setPassword("pass1");
+		_person1.setPassword(PasswordEncryptor.encryptPassword("pass1"));
 
 		HashSet privileges = new HashSet(1);
 		privileges.add(new Privilegio(_person1, this.serviceName));
@@ -206,7 +207,7 @@ public class ShiftEnrolmentActionTest extends MockStrutsTestCase {
 				TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
 		_person2.setNome("person2");
 		_person2.setUsername("person2");
-		_person2.setPassword("pass2");
+		_person2.setPassword(PasswordEncryptor.encryptPassword("pass2"));
 		privileges.clear();
 		privileges.add(new Privilegio(_person2, this.serviceName));
 		_person2.setPrivilegios(privileges);
