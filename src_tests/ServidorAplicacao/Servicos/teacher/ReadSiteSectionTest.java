@@ -19,8 +19,8 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author Luis Egidio
- * @author Nuno Ochoa
+ * @author  Luis Egidio, lmre@mega.ist.utl.pt
+ * 			Nuno Ochoa,  nmgo@mega.ist.utl.pt
  *
  */
 public class ReadSiteSectionTest extends ServiceNeedsAuthenticationTestCase {
@@ -32,8 +32,27 @@ public class ReadSiteSectionTest extends ServiceNeedsAuthenticationTestCase {
 		super(name);
 	}
 
-	protected String getApplication() {
-		return Autenticacao.EXTRANET;
+	protected String getNameOfServiceToBeTested() {
+		return "TeacherAdministrationSiteComponentService";
+	}
+
+	protected String getDataSetFilePath() {
+		return "etc/datasets/servicos/teacher/testReadSiteSectionDataSet.xml";
+	}
+
+	protected String[] getAuthorizedUser() {
+		String[] args = { "user", "pass", getApplication()};
+		return args;
+	}
+
+	protected String[] getNonTeacherUser() {
+		String[] args = { "13", "pass", getApplication()};
+		return args;
+	}
+
+	protected String[] getUnauthorizedUser() {
+		String[] args = { "3", "pass", getApplication()};
+		return args;
 	}
 
 	protected Object[] getAuthorizeArguments() {
@@ -55,29 +74,8 @@ public class ReadSiteSectionTest extends ServiceNeedsAuthenticationTestCase {
 		return args;
 	}
 
-	protected String[] getAuthorizedUser() {
-		String[] args = { "user", "pass", getApplication()};
-		return args;
-
-	}
-
-	protected String getDataSetFilePath() {
-		return "etc/datasets/servicos/teacher/testReadSiteSectionDataSet.xml";
-	}
-
-	protected String getNameOfServiceToBeTested() {
-		return "TeacherAdministrationSiteComponentService";
-	}
-
-	protected String[] getNonTeacherUser() {
-		String[] args = { "13", "pass", getApplication()};
-		return args;
-
-	}
-
-	protected String[] getUnauthorizedUser() {
-		String[] args = { "3", "pass", getApplication()};
-		return args;
+	protected String getApplication() {
+		return Autenticacao.EXTRANET;
 	}
 
 	public void testReadSiteSection() {
@@ -91,7 +89,7 @@ public class ReadSiteSectionTest extends ServiceNeedsAuthenticationTestCase {
 			IPersistentSection persistentSection = sp.getIPersistentSection();
 			section = (ISection) persistentSection.readByOId(section, false);
 			sp.confirmarTransaccao();
-			
+
 			result =
 				(TeacherAdministrationSiteView) gestor.executar(
 					userView,
@@ -102,16 +100,15 @@ public class ReadSiteSectionTest extends ServiceNeedsAuthenticationTestCase {
 				(InfoSiteSection) result.getComponent();
 			InfoSection infoSection = bodyComponent.getSection();
 			ISection iSection = Cloner.copyInfoSection2ISection(infoSection);
-			
+
 			assertTrue(section.equals(iSection));
-			
+
 			compareDataSet("etc/datasets/servicos/teacher/testExpectedReadSiteSectionDataSet.xml");
 
 			System.out.println(
 				"testReadSiteSection was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			ex.printStackTrace();
 			System.out.println(
 				"testReadSiteSection was UNSUCCESSFULY runned by class: "
@@ -119,7 +116,7 @@ public class ReadSiteSectionTest extends ServiceNeedsAuthenticationTestCase {
 			fail("testReadSiteSection");
 		}
 	}
-	
+
 	public void testReadNonSiteSection() {
 		TeacherAdministrationSiteView result = null;
 
@@ -178,10 +175,7 @@ public class ReadSiteSectionTest extends ServiceNeedsAuthenticationTestCase {
 
 		try {
 
-			gestor.executar(
-				userView,
-				getNameOfServiceToBeTested(),
-				args);
+			gestor.executar(userView, getNameOfServiceToBeTested(), args);
 
 			System.out.println(
 				"testReadNonExistingSection was UNSUCCESSFULY runned by class: "

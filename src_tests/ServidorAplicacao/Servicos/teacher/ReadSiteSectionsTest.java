@@ -13,21 +13,40 @@ import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 
 /**
- * @author Luis Egidio
- * @author Nuno Ochoa
+ * @author  Luis Egidio, lmre@mega.ist.utl.pt
+ * 			Nuno Ochoa,  nmgo@mega.ist.utl.pt
  *
  */
 public class ReadSiteSectionsTest extends ServiceNeedsAuthenticationTestCase {
 
 	/**
-	 * 
+	 * @param testName
 	 */
 	public ReadSiteSectionsTest(String name) {
 		super(name);
 	}
 
-	protected String getApplication() {
-		return Autenticacao.EXTRANET;
+	protected String getNameOfServiceToBeTested() {
+		return "TeacherAdministrationSiteComponentService";
+	}
+
+	protected String getDataSetFilePath() {
+		return "etc/datasets/servicos/teacher/testReadSiteSectionsDataSet.xml";
+	}
+
+	protected String[] getAuthorizedUser() {
+		String[] args = { "user", "pass", getApplication()};
+		return args;
+	}
+
+	protected String[] getNonTeacherUser() {
+		String[] args = { "13", "pass", getApplication()};
+		return args;
+	}
+
+	protected String[] getUnauthorizedUser() {
+		String[] args = { "3", "pass", getApplication()};
+		return args;
 	}
 
 	protected Object[] getAuthorizeArguments() {
@@ -49,29 +68,8 @@ public class ReadSiteSectionsTest extends ServiceNeedsAuthenticationTestCase {
 		return args;
 	}
 
-	protected String[] getAuthorizedUser() {
-		String[] args = { "user", "pass", getApplication()};
-		return args;
-
-	}
-
-	protected String getDataSetFilePath() {
-		return "etc/datasets/servicos/teacher/testReadSiteSectionsDataSet.xml";
-	}
-
-	protected String getNameOfServiceToBeTested() {
-		return "TeacherAdministrationSiteComponentService";
-	}
-
-	protected String[] getNonTeacherUser() {
-		String[] args = { "13", "pass", getApplication()};
-		return args;
-
-	}
-
-	protected String[] getUnauthorizedUser() {
-		String[] args = { "3", "pass", getApplication()};
-		return args;
+	protected String getApplication() {
+		return Autenticacao.EXTRANET;
 	}
 
 	public void testReadSiteSections() {
@@ -91,15 +89,15 @@ public class ReadSiteSectionsTest extends ServiceNeedsAuthenticationTestCase {
 			compareDataSet("etc/datasets/servicos/teacher/testExpectedReadSiteSectionsDataSet.xml");
 
 			System.out.println(
-				"testDeleteExistingItem was SUCCESSFULY runned by class: "
+				"testReadSiteSections was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
 			System.out.println(
-				"testDeleteExistingItem was UNSUCCESSFULY runned by class: "
+				"testReadSiteSections was UNSUCCESSFULY runned by class: "
 					+ this.getClass().getName());
-			fail("testDeleteExistingItem");
+			fail("testReadSiteSections");
 		}
 	}
 
