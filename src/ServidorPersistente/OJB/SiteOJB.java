@@ -16,7 +16,6 @@ import java.util.List;
 
 import org.odmg.QueryException;
 
-import Dominio.Announcement;
 import Dominio.IDisciplinaExecucao;
 import Dominio.ISite;
 import Dominio.Site;
@@ -29,26 +28,29 @@ public class SiteOJB extends ObjectFenixOJB implements IPersistentSite {
     public SiteOJB() {
     }
     
-    public List readAnnouncementsByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia{
-        try {
-            String oqlQuery = "select announcement from " + Announcement.class.getName();
-			oqlQuery += " where site.executionCourse.sigla = $1";
-			oqlQuery += " and site.executionCourse.executionPeriod.name = $2";
-			oqlQuery += " and site.executionCourse.executionPeriod.executionYear.year = $3";
-			
-			query.create(oqlQuery);
-			query.bind(executionCourse.getSigla());
-			query.bind(executionCourse.getExecutionPeriod().getName());
-			query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
-			
-            List result = (List) query.execute();
-            lockRead(result);
-            
-            return result;
-        } catch (QueryException ex) {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
-    }
+    //To delete
+    
+//    
+//    public List readAnnouncementsByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia{
+//        try {
+//            String oqlQuery = "select announcement from " + Announcement.class.getName();
+//			oqlQuery += " where site.executionCourse.sigla = $1";
+//			oqlQuery += " and site.executionCourse.executionPeriod.name = $2";
+//			oqlQuery += " and site.executionCourse.executionPeriod.executionYear.year = $3";
+//			
+//			query.create(oqlQuery);
+//			query.bind(executionCourse.getSigla());
+//			query.bind(executionCourse.getExecutionPeriod().getName());
+//			query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
+//			
+//            List result = (List) query.execute();
+//            lockRead(result);
+//            
+//            return result;
+//        } catch (QueryException ex) {
+//            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+//        }
+//    }
     
     
 

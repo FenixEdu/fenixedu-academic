@@ -18,7 +18,7 @@ import Dominio.ISite;
 
 public interface IPersistentSite {
     
-	List readAnnouncementsByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia;
+//	List readAnnouncementsByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia;
 	ISite readByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia;
     List readAll() throws ExcepcaoPersistencia;
     void lockWrite(ISite site) throws ExcepcaoPersistencia;
