@@ -317,6 +317,7 @@
         </form-bean>
         <form-bean name="selectCandidaciesForm" type="org.apache.struts.validator.DynaValidatorForm" 
             dynamic="true">
+            <form-property name="seminaryID" type="java.lang.Integer" />
             <form-property name="selectedStudents" type="java.lang.Integer[]" />
             <form-property name="previousSelected" type="java.lang.Integer[]" />
             <form-property name="previousUnselected" type="java.lang.Integer[]" />
@@ -970,6 +971,11 @@
         <action path="/showCandidacies" name="showCandidacies" 
             type="ServidorApresentacao.Action.Seminaries.ShowCandidacies">
             <forward name="allCandidaciesGrid" path="candidaciesGrid"/>
+        </action>
+        <!--- by gedl, 1-2-2004 -->
+        <action path="/viewCandidateCurriculum"
+            type="ServidorApresentacao.Action.Seminaries.ViewCandidateCurriculum">
+            <forward name="viewCurriculum" path="definition.viewCandidateCurriculum"/>
         </action>
         <!--- by gedl, 8-9-2003 -->
         <action type="ServidorApresentacao.Action.Seminaries.ShowCandidacyDetails" path="/candidacyDetails" 
