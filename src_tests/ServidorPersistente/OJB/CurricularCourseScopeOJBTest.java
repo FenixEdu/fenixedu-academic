@@ -11,12 +11,16 @@ import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICurricularSemester;
 import Dominio.ICurricularYear;
+import Dominio.ICurso;
+import Dominio.IDegreeCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IPersistentBranch;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentCurricularCourseScope;
 import ServidorPersistente.IPersistentCurricularSemester;
 import ServidorPersistente.IPersistentCurricularYear;
+import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
@@ -33,6 +37,8 @@ public class CurricularCourseScopeOJBTest extends TestCaseOJB {
 	private IPersistentCurricularCourse persistentCurricularCourse = null;
 	private IPersistentCurricularYear persistentCurricularYear = null;
 	private IPersistentBranch persistentBranch = null;
+	private IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = null;
+	private ICursoPersistente persistentDegree = null;
 
 	private ICurricularCourse curricularCourse = null;
 	private ICurricularSemester curricularSemester = null;
@@ -66,6 +72,8 @@ public class CurricularCourseScopeOJBTest extends TestCaseOJB {
 		persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
 		persistentCurricularYear = persistentSupport.getIPersistentCurricularYear();
 		persistentBranch = persistentSupport.getIPersistentBranch();
+		persistentDegree = persistentSupport.getICursoPersistente();
+		persistentDegreeCurricularPlan = persistentSupport.getIPersistentDegreeCurricularPlan();
 	}
 
 	protected void tearDown() {
@@ -268,7 +276,9 @@ public class CurricularCourseScopeOJBTest extends TestCaseOJB {
 			assertNotNull(curricularYear);
 			curricularSemester = persistentCurricularSemester.readCurricularSemesterBySemesterAndCurricularYear(new Integer(1), curricularYear);
 			curricularCourse = persistentCurricularCourse.readCurricularCourseByNameAndCode("Trabalho Final de Curso I", "TFCI");
-			branch = persistentBranch.readBranchByNameAndCode("Inteligencia Artificial", "IA");
+			ICurso degree = persistentDegree.readByIdInternal(new Integer(8));
+			IDegreeCurricularPlan degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
+			branch = persistentBranch.readBranchByDegreeCurricularPlanAndCode(degreeCurricularPlan, "IA");
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("Reading Data from DB");

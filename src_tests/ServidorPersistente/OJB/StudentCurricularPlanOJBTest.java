@@ -150,7 +150,7 @@ public class StudentCurricularPlanOJBTest extends TestCaseOJB {
 			degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
 			assertNotNull(degreeCurricularPlan);
 			
-			branch = persistentBranch.readBranchByNameAndCode("Inteligencia Artificial","IA");
+			branch = persistentBranch.readBranchByDegreeCurricularPlanAndCode(degreeCurricularPlan, "IA");
 			assertNotNull(branch);
 			
 			persistentSupport.confirmarTransaccao();
@@ -200,7 +200,7 @@ public class StudentCurricularPlanOJBTest extends TestCaseOJB {
 			assertNotNull(degree);
 			degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano2", degree);
 			assertNotNull(degreeCurricularPlan);
-			branch = persistentBranch.readBranchByNameAndCode("Informatica Industrial","II");
+			branch = persistentBranch.readBranchByDegreeCurricularPlanAndCode(degreeCurricularPlan, "II");
 			assertNotNull(branch);
 			persistentSupport.confirmarTransaccao();
 
@@ -266,7 +266,7 @@ public class StudentCurricularPlanOJBTest extends TestCaseOJB {
 			assertNotNull(degree);
 			degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano2", degree);
 			assertNotNull(degreeCurricularPlan);
-			branch = persistentBranch.readBranchByNameAndCode("Informatica Industrial","II");
+			branch = persistentBranch.readBranchByDegreeCurricularPlanAndCode(degreeCurricularPlan, "II");
 			assertNotNull(branch);
 			persistentSupport.confirmarTransaccao();
 

@@ -350,7 +350,9 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 
 		try {
 			persistentSupport.iniciarTransaccao();
-			branch = persistentBranch.readBranchByNameAndCode("", "");
+			ICurso degree = persistentDegree.readByIdInternal(new Integer(8));
+			IDegreeCurricularPlan degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
+			branch = persistentBranch.readBranchByDegreeCurricularPlanAndCode(degreeCurricularPlan, "");
 			assertNotNull(branch);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex2) {
@@ -407,7 +409,9 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 
 		try {
 			persistentSupport.iniciarTransaccao();
-			branch = persistentBranch.readBranchByNameAndCode("Inteligencia Artificial", "IA");
+			ICurso degree = persistentDegree.readByIdInternal(new Integer(8));
+			IDegreeCurricularPlan degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
+			branch = persistentBranch.readBranchByDegreeCurricularPlanAndCode(degreeCurricularPlan, "IA");
 			assertNotNull(branch);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex2) {
@@ -433,7 +437,9 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 
 		try {
 			persistentSupport.iniciarTransaccao();
-			branch = persistentBranch.readBranchByNameAndCode("Inteligencia Artificial", "IA");
+			ICurso degree = persistentDegree.readByIdInternal(new Integer(8));
+			IDegreeCurricularPlan degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
+			branch = persistentBranch.readBranchByDegreeCurricularPlanAndCode(degreeCurricularPlan, "IA");
 			assertNotNull(branch);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex2) {

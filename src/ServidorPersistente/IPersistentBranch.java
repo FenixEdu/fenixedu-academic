@@ -3,6 +3,7 @@ package ServidorPersistente;
 import java.util.ArrayList;
 
 import Dominio.IBranch;
+import Dominio.IDegreeCurricularPlan;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
@@ -14,6 +15,7 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 public interface IPersistentBranch extends IPersistentObject {
 
 //    public IBranch readBranchByNameAndCode(String name, String code) throws ExcepcaoPersistencia;
+	public IBranch readBranchByDegreeCurricularPlanAndCode(IDegreeCurricularPlan degreeCurricularPlan, String code) throws ExcepcaoPersistencia;
     public ArrayList readAll() throws ExcepcaoPersistencia;
     public void lockWrite(IBranch branch) throws ExcepcaoPersistencia, ExistingPersistentException;
     public void delete(IBranch branch) throws ExcepcaoPersistencia;

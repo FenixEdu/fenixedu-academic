@@ -1,7 +1,5 @@
 package ServidorAplicacao.Servicos.enrolment.degree;
 
-import java.util.List;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoCurricularCourse;
@@ -109,7 +107,6 @@ public class SelectOptionalCurricularCourseTest extends TestCaseReadServices {
 		}
 		
 		InfoEnrolmentInOptionalCurricularCourse optionalEnrolment = (InfoEnrolmentInOptionalCurricularCourse) result.getInfoOptionalCurricularCoursesEnrolments().get(0);
-		List actualEnrolment = result.getActualEnrolment();
 		
 		ICurricularCourse curricularCourse = getCurricularCourse("INTERFACES PESSOA-MÁQUINA", "");
 		InfoCurricularCourse infoCurricularCourse = Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
@@ -117,7 +114,7 @@ public class SelectOptionalCurricularCourseTest extends TestCaseReadServices {
 
 		curricularCourse = getCurricularCourse("OPÇÃO I", "");
 		infoCurricularCourse = Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
-		assertEquals("Optional Scope Selected: ", optionalEnrolment.getInfoCurricularCourse(),infoCurricularCourse);			
+		assertEquals("Optional Scope Selected: ", optionalEnrolment.getInfoCurricularCourseScope().getInfoCurricularCourse(),infoCurricularCourse);
 	}
 	
 	public ICurricularCourse getCurricularCourse (String name, String code){

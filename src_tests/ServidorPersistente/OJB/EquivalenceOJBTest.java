@@ -1,18 +1,27 @@
-package ServidorPersistente.OJB; 
+package ServidorPersistente.OJB;
 
 import java.util.ArrayList;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import Dominio.CurricularCourse;
 import Dominio.Enrolment;
 import Dominio.Equivalence;
+import Dominio.IBranch;
 import Dominio.ICurricularCourse;
+import Dominio.ICurricularCourseScope;
+import Dominio.ICurricularSemester;
+import Dominio.ICurricularYear;
+import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrolment;
 import Dominio.IEquivalence;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
+import ServidorPersistente.IPersistentCurricularCourseScope;
+import ServidorPersistente.IPersistentCurricularSemester;
+import ServidorPersistente.IPersistentCurricularYear;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEquivalence;
 import ServidorPersistente.IPersistentExecutionPeriod;
@@ -36,6 +45,9 @@ public class EquivalenceOJBTest extends TestCaseOJB {
 	IStudentCurricularPlanPersistente persistentStudentCurricularPlan = null;
 	IPersistentCurricularCourse persistentCurricularCourse = null;
 	IPersistentEquivalence persistentEquivalence = null;
+	IPersistentCurricularCourseScope persistentCurricularCourseScope = null;
+	IPersistentCurricularYear persistentCurricularYear = null;
+	IPersistentCurricularSemester persistentCurricularSemester = null;
 	
 	IEnrolment enrolment = null;
 	IEnrolment equivalentEnrolment = null;
@@ -67,6 +79,9 @@ public class EquivalenceOJBTest extends TestCaseOJB {
 		persistentEquivalence = persistentSupport.getIPersistentEquivalence();
 		persistentStudentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente();
 		persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
+		persistentCurricularCourseScope = persistentSupport.getIPersistentCurricularCourseScope();
+		persistentCurricularYear = persistentSupport.getIPersistentCurricularYear();
+		persistentCurricularSemester = persistentSupport.getIPersistentCurricularSemester();
 	}
 
 	protected void tearDown() {
@@ -279,22 +294,51 @@ public class EquivalenceOJBTest extends TestCaseOJB {
 
 		ICurricularCourse curricularCourse = null;
 		IStudentCurricularPlan studentCurricularPlan = null;
+		IDegreeCurricularPlan degreeCurricularPlan = null;
+		ICurricularYear curricularYear = null;
+		ICurricularSemester curricularSemester = null;
+		ICurricularCourseScope curricularCourseScope = null;
+		IBranch branch = null;
 
 		if(exists) {// Enrolment ja existente
 			try {
 				persistentSupport.iniciarTransaccao();
-				curricularCourse = persistentCurricularCourse.readCurricularCourseByNameAndCode("Trabalho Final de Curso I", "TFCI");
+
 				studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(new Integer(45498), new TipoCurso(TipoCurso.LICENCIATURA));
+				degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
+				branch = studentCurricularPlan.getBranch();
+				ICurricularCourse curricularCourseCriteria = new CurricularCourse();
+				curricularCourseCriteria.setName("Cadeira a Equivaler");
+				curricularCourseCriteria.setCode("CAE");
+//				curricularCourseCriteria.setDegreeCurricularPlan(degreeCurricularPlan);
+				curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(curricularCourseCriteria);
+				curricularYear = persistentCurricularYear.readCurricularYearByYear(new Integer(1));
+				curricularSemester = persistentCurricularSemester.readCurricularSemesterBySemesterAndCurricularYear(new Integer(1), curricularYear);
+				curricularCourseScope = persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(curricularCourse, curricularSemester, branch);
 
+				assertNotNull(studentCurricularPlan);
+				assertNotNull(degreeCurricularPlan);
+				assertNotNull(branch);
 				assertNotNull(curricularCourse);
-				assertNotNull(studentCurricularPlan);
+				assertNotNull(curricularYear);
+				assertNotNull(curricularSemester);
+				assertNotNull(curricularCourseScope);
 								
-				this.enrolment = persistentEnrolment.readEnrolmentByStudentCurricularPlanAndCurricularCourse(studentCurricularPlan, curricularCourse);
+				this.enrolment = persistentEnrolment.readEnrolmentByStudentCurricularPlanAndCurricularCourseScope(studentCurricularPlan, curricularCourseScope);
+				assertNotNull(enrolment);
 
-				studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA));
+				ICurricularCourse curricularCourseCriteria2 = new CurricularCourse();
+				curricularCourseCriteria.setName("Cadeira Equivalente");
+				curricularCourseCriteria.setCode("CE");
+//				curricularCourseCriteria.setDegreeCurricularPlan(degreeCurricularPlan);
+				curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(curricularCourseCriteria2);
+				curricularCourseScope = persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(curricularCourse, curricularSemester, branch);
+
 				assertNotNull(studentCurricularPlan);
+				assertNotNull(curricularCourse);
+				assertNotNull(curricularCourseScope);
 
-				this.equivalentEnrolment = persistentEnrolment.readEnrolmentByStudentCurricularPlanAndCurricularCourse(studentCurricularPlan, curricularCourse);
+				this.equivalentEnrolment = persistentEnrolment.readEnrolmentByStudentCurricularPlanAndCurricularCourseScope(studentCurricularPlan, curricularCourseScope);
 				assertNotNull(equivalentEnrolment);
 
 				persistentSupport.confirmarTransaccao();
@@ -306,24 +350,46 @@ public class EquivalenceOJBTest extends TestCaseOJB {
 				persistentSupport.iniciarTransaccao();
 				
 				IPersistentExecutionPeriod executionPeriodDAO = persistentSupport.getIPersistentExecutionPeriod();
-				
 				IExecutionPeriod executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
 				
-				
-				curricularCourse = persistentCurricularCourse.readCurricularCourseByNameAndCode("Trabalho Final de Curso II", "TFCII");
 				studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(new Integer(45498), new TipoCurso(TipoCurso.LICENCIATURA));
+				degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
+				branch = studentCurricularPlan.getBranch();
+				ICurricularCourse curricularCourseCriteria = new CurricularCourse();
+				curricularCourseCriteria.setName("Cadeira Que Não Tem Enrolment 1");
+				curricularCourseCriteria.setCode("CNE1");
+				curricularCourseCriteria.setDegreeCurricularPlan(degreeCurricularPlan);
+//				curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(curricularCourseCriteria);
+				curricularYear = persistentCurricularYear.readCurricularYearByYear(new Integer(1));
+				curricularSemester = persistentCurricularSemester.readCurricularSemesterBySemesterAndCurricularYear(new Integer(1), curricularYear);
+				curricularCourseScope = persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(curricularCourse, curricularSemester, branch);
+
+				assertNotNull(studentCurricularPlan);
+				assertNotNull(degreeCurricularPlan);
+				assertNotNull(branch);
 				assertNotNull(curricularCourse);
-				assertNotNull(studentCurricularPlan);
-				this.enrolment = new Enrolment(studentCurricularPlan, curricularCourse, EnrolmentState.APROVED_OBJ);
+				assertNotNull(curricularYear);
+				assertNotNull(curricularSemester);
+				assertNotNull(curricularCourseScope);
+
+				this.enrolment = new Enrolment(studentCurricularPlan, curricularCourseScope, EnrolmentState.APROVED_OBJ);
 				this.enrolment.setExecutionPeriod(executionPeriod);
-				enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
+				this.enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
 
+				ICurricularCourse curricularCourseCriteria2 = new CurricularCourse();
+				curricularCourseCriteria.setName("Cadeira Equivalente");
+				curricularCourseCriteria.setCode("CE");
+//				curricularCourseCriteria.setDegreeCurricularPlan(degreeCurricularPlan);
+				curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(curricularCourseCriteria2);
+				curricularCourseScope = persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(curricularCourse, curricularSemester, branch);
 
-				studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA));
 				assertNotNull(studentCurricularPlan);
-				this.equivalentEnrolment = new Enrolment(studentCurricularPlan, curricularCourse, EnrolmentState.APROVED_OBJ);
+				assertNotNull(curricularCourse);
+				assertNotNull(curricularCourseScope);
+
+				this.equivalentEnrolment = new Enrolment(studentCurricularPlan, curricularCourseScope, EnrolmentState.APROVED_OBJ);
 				this.equivalentEnrolment.setExecutionPeriod(executionPeriod);
-				enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
+				this.enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
 
 				persistentSupport.confirmarTransaccao();
 			} catch (ExcepcaoPersistencia ex) {

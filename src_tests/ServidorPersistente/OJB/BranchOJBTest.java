@@ -6,8 +6,12 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import Dominio.Branch;
 import Dominio.IBranch;
+import Dominio.ICurso;
+import Dominio.IDegreeCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IPersistentBranch;
+import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
@@ -20,6 +24,8 @@ public class BranchOJBTest extends TestCaseOJB {
 
 	SuportePersistenteOJB persistentSupport = null;
 	IPersistentBranch persistentBranch = null;
+	IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = null;
+	ICursoPersistente persistentDegree = null;
 
 	public BranchOJBTest(java.lang.String testName) {
 		super(testName);
@@ -45,6 +51,8 @@ public class BranchOJBTest extends TestCaseOJB {
 			fail("Error in SetUp.");
 		}
 		persistentBranch = persistentSupport.getIPersistentBranch();
+		persistentDegree = persistentSupport.getICursoPersistente();
+		persistentDegreeCurricularPlan = persistentSupport.getIPersistentDegreeCurricularPlan();
 	}
 
 	protected void tearDown() {
@@ -92,7 +100,9 @@ public class BranchOJBTest extends TestCaseOJB {
 
 		try {
 			persistentSupport.iniciarTransaccao();
-			b2 = persistentBranch.readBranchByNameAndCode(branch.getName(), branch.getCode());
+			ICurso degree = persistentDegree.readByIdInternal(new Integer(8));
+			IDegreeCurricularPlan degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
+			b2 = persistentBranch.readBranchByDegreeCurricularPlanAndCode(degreeCurricularPlan, branch.getCode());
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("Reading Non Existing Branch Just Writen Before");
@@ -142,7 +152,9 @@ public class BranchOJBTest extends TestCaseOJB {
 		System.out.println("- Test 3.1 : Read Existing Branch");
 		try {
 			persistentSupport.iniciarTransaccao();
-			branch = persistentBranch.readBranchByNameAndCode("Inteligencia Artificial", "IA");
+			ICurso degree = persistentDegree.readByIdInternal(new Integer(8));
+			IDegreeCurricularPlan degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
+			branch = persistentBranch.readBranchByDegreeCurricularPlanAndCode(degreeCurricularPlan, "IA");
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex2) {
 			fail("Read Existing Branch");
@@ -157,7 +169,9 @@ public class BranchOJBTest extends TestCaseOJB {
 		System.out.println("- Test 3.2 : Read Non Existing Branch");
 		try {
 			persistentSupport.iniciarTransaccao();
-			branch = persistentBranch.readBranchByNameAndCode("Unknown", "unk");
+			ICurso degree = persistentDegree.readByIdInternal(new Integer(8));
+			IDegreeCurricularPlan degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
+			branch = persistentBranch.readBranchByDegreeCurricularPlanAndCode(degreeCurricularPlan, "unk");
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex2) {
 			fail("Read Non Existing Branch");
@@ -174,7 +188,9 @@ public class BranchOJBTest extends TestCaseOJB {
 		System.out.println("- Test 4.1 : Delete Existing Branch");
 		try {
 			persistentSupport.iniciarTransaccao();
-			branch = persistentBranch.readBranchByNameAndCode("Inteligencia Artificial", "IA");
+			ICurso degree = persistentDegree.readByIdInternal(new Integer(8));
+			IDegreeCurricularPlan degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
+			branch = persistentBranch.readBranchByDegreeCurricularPlanAndCode(degreeCurricularPlan, "IA");
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("Reading Existing Branch To Delete");
@@ -192,7 +208,9 @@ public class BranchOJBTest extends TestCaseOJB {
 		IBranch b = null;
 		try {
 			persistentSupport.iniciarTransaccao();
-			b = persistentBranch.readBranchByNameAndCode("Inteligencia Artificial", "IA");
+			ICurso degree = persistentDegree.readByIdInternal(new Integer(8));
+			IDegreeCurricularPlan degreeCurricularPlan = persistentDegreeCurricularPlan.readByNameAndDegree("plano1", degree);
+			b = persistentBranch.readBranchByDegreeCurricularPlanAndCode(degreeCurricularPlan, "IA");
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("Reading Just Deleted Branch");

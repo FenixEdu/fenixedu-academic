@@ -4,22 +4,27 @@ import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import Dominio.CurricularCourse;
 import Dominio.Enrolment;
-import Dominio.ExecutionYear;
+import Dominio.IBranch;
 import Dominio.ICurricularCourse;
+import Dominio.ICurricularCourseScope;
+import Dominio.ICurricularSemester;
+import Dominio.ICurricularYear;
+import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrolment;
-import Dominio.IExecutionPeriod;
 import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
+import ServidorPersistente.IPersistentCurricularCourseScope;
+import ServidorPersistente.IPersistentCurricularSemester;
+import ServidorPersistente.IPersistentCurricularYear;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
-import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
 import Util.TipoCurso;
-import Util.UniversityCode;
 
 /**
  * @author dcs-rjao
@@ -29,11 +34,17 @@ import Util.UniversityCode;
 
 public class EnrolmentOJBTest extends TestCaseOJB {
 
-	private IPersistentExecutionPeriod executionPeriodDAO;
-	SuportePersistenteOJB persistentSupport = null;
-	IPersistentEnrolment persistentEnrolment = null;
-	IStudentCurricularPlanPersistente persistentStudentCurricularPlan = null;
-	IPersistentCurricularCourse persistentCurricularCourse = null;
+	private SuportePersistenteOJB persistentSupport = null;
+
+	private IPersistentExecutionPeriod executionPeriodDAO = null;
+	private IStudentCurricularPlanPersistente persistentStudentCurricularPlan = null;
+	private IPersistentCurricularCourseScope persistentCurricularCourseScope = null;
+
+	private IPersistentCurricularCourse persistentCurricularCourse = null;
+	private IPersistentCurricularYear persistentCurricularYear = null;
+	private IPersistentCurricularSemester persistentCurricularSemester = null;
+
+	private IPersistentEnrolment persistentEnrolment = null;
 
 	public EnrolmentOJBTest(java.lang.String testName) {
 		super(testName);
@@ -58,13 +69,15 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 			e.printStackTrace();
 			fail("Error in SetUp.");
 		}
-		persistentEnrolment = persistentSupport.getIPersistentEnrolment();
-		persistentStudentCurricularPlan =
-			persistentSupport.getIStudentCurricularPlanPersistente();
-		persistentCurricularCourse =
-			persistentSupport.getIPersistentCurricularCourse();
 		executionPeriodDAO = persistentSupport.getIPersistentExecutionPeriod();
+		persistentStudentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente();
+		persistentCurricularCourseScope = persistentSupport.getIPersistentCurricularCourseScope();
 
+		persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
+		persistentCurricularYear = persistentSupport.getIPersistentCurricularYear();
+		persistentCurricularSemester = persistentSupport.getIPersistentCurricularSemester();
+
+		persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 	}
 
 	protected void tearDown() {
@@ -75,44 +88,35 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 
 	public void testWriteEnrolment() {
 
-		ICurricularCourse curricularCourse = null;
-		IStudentCurricularPlan studentCurricularPlan = null;
-		IExecutionPeriod executionPeriod = null;
+//		ICurricularCourse curricularCourse = null;
+//		IStudentCurricularPlan studentCurricularPlan = null;
+//		IExecutionPeriod executionPeriod = null;
 
 		System.out.println("\n- Test 1.1 : Write Existing Enrolment\n");
 
-		try {
-			persistentSupport.iniciarTransaccao();
-			curricularCourse =
-				persistentCurricularCourse.readCurricularCourseByNameAndCode(
-					"Trabalho Final de Curso I",
-					"TFCI");
-			studentCurricularPlan =
-				persistentStudentCurricularPlan
-					.readActiveStudentCurricularPlan(
-					new Integer(45498),
-					new TipoCurso(TipoCurso.LICENCIATURA));
-			executionPeriod =
-				executionPeriodDAO.readByNameAndExecutionYear(
-					"2º Semestre",
-					new ExecutionYear("2002/2003"));
-			persistentSupport.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia ex) {
-			fail("Reading CurricularCourse & StudentCurricularPlan");
-		}
+//		try {
+//			persistentSupport.iniciarTransaccao();
+//			curricularCourse = persistentCurricularCourse.readCurricularCourseByNameAndCode("Trabalho Final de Curso I", "TFCI");
+//			studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(new Integer(45498), new TipoCurso(TipoCurso.LICENCIATURA));
+//			executionPeriod = executionPeriodDAO.readByNameAndExecutionYear("2º Semestre", new ExecutionYear("2002/2003"));
+//			persistentSupport.confirmarTransaccao();
+//		} catch (ExcepcaoPersistencia ex) {
+//			fail("Reading CurricularCourse & StudentCurricularPlan");
+//		}
+//
+//		assertNotNull(curricularCourse);
+//		assertNotNull(studentCurricularPlan);
+//		assertNotNull(executionPeriod);
+//
+//		// Enrolment ja existente
+//		IEnrolment enrolment = new Enrolment();
+//		enrolment.setStudentCurricularPlan(studentCurricularPlan);
+//		enrolment.setCurricularCourse(curricularCourse);
+//		enrolment.setEnrolmentState(EnrolmentState.APROVED_OBJ);
+//		enrolment.setExecutionPeriod(executionPeriod);
+//		enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
 
-		assertNotNull(curricularCourse);
-		assertNotNull(studentCurricularPlan);
-		assertNotNull(executionPeriod);
-
-		// Enrolment ja existente
-		IEnrolment enrolment = new Enrolment();
-		enrolment.setStudentCurricularPlan(studentCurricularPlan);
-		enrolment.setCurricularCourse(curricularCourse);
-		enrolment.setEnrolmentState(EnrolmentState.APROVED_OBJ);
-		enrolment.setExecutionPeriod(executionPeriod);
-		enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
-
+		IEnrolment enrolment = getExistingEnrolment();
 		try {
 			persistentSupport.iniciarTransaccao();
 			persistentEnrolment.lockWrite(enrolment);
@@ -131,32 +135,26 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 		}
 
 		// Enrolment inexistente
-		try {
-			persistentSupport.iniciarTransaccao();
-			curricularCourse =
-				persistentCurricularCourse.readCurricularCourseByNameAndCode(
-					"Trabalho Final de Curso II",
-					"TFCII");
-			studentCurricularPlan =
-				persistentStudentCurricularPlan
-					.readActiveStudentCurricularPlan(
-					new Integer(600),
-					new TipoCurso(TipoCurso.LICENCIATURA));
-			persistentSupport.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia ex) {
-			fail("Reading CurricularCourse & StudentCurricularPlan");
-		}
+//		try {
+//			persistentSupport.iniciarTransaccao();
+//			curricularCourse = persistentCurricularCourse.readCurricularCourseByNameAndCode("Trabalho Final de Curso II", "TFCII");
+//			studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA));
+//			persistentSupport.confirmarTransaccao();
+//		} catch (ExcepcaoPersistencia ex) {
+//			fail("Reading CurricularCourse & StudentCurricularPlan");
+//		}
+//
+//		assertNotNull(curricularCourse);
+//		assertNotNull(studentCurricularPlan);
+//		assertNotNull(executionPeriod);
+//		enrolment = new Enrolment();
+//		enrolment.setStudentCurricularPlan(studentCurricularPlan);
+//		enrolment.setCurricularCourse(curricularCourse);
+//		enrolment.setEnrolmentState(EnrolmentState.APROVED_OBJ);
+//		enrolment.setExecutionPeriod(executionPeriod);
+//		enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
 
-		assertNotNull(curricularCourse);
-		assertNotNull(studentCurricularPlan);
-		assertNotNull(executionPeriod);
-		enrolment = new Enrolment();
-		enrolment.setStudentCurricularPlan(studentCurricularPlan);
-		enrolment.setCurricularCourse(curricularCourse);
-		enrolment.setEnrolmentState(EnrolmentState.APROVED_OBJ);
-		enrolment.setExecutionPeriod(executionPeriod);
-		enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
-
+		enrolment = getNonExistingEnrolment();
 
 		System.out.println("\n- Test 1.2 : Write Non Existing Enrolment\n");
 		try {
@@ -171,11 +169,7 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 
 		try {
 			persistentSupport.iniciarTransaccao();
-			enrolment2 =
-				persistentEnrolment
-					.readEnrolmentByStudentCurricularPlanAndCurricularCourse(
-					studentCurricularPlan,
-					curricularCourse);
+			enrolment2 = persistentEnrolment.readEnrolmentByStudentCurricularPlanAndCurricularCourseScope(enrolment.getStudentCurricularPlan(), enrolment.getCurricularCourseScope());
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("Reading Non Existing Enrolment Just Writen Before");
@@ -218,78 +212,56 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 
 	public void testReadEnrolment() {
 
-		IEnrolment enrolment = null;
-
-		ICurricularCourse curricularCourse = null;
-		IStudentCurricularPlan studentCurricularPlan = null;
+//		ICurricularCourse curricularCourse = null;
+//		IStudentCurricularPlan studentCurricularPlan = null;
 
 		System.out.println("\n- Test 3.1 : Read Existing Enrolment\n");
 
-		try {
-			persistentSupport.iniciarTransaccao();
-			curricularCourse =
-				persistentCurricularCourse.readCurricularCourseByNameAndCode(
-					"Trabalho Final de Curso I",
-					"TFCI");
-			studentCurricularPlan =
-				persistentStudentCurricularPlan
-					.readActiveStudentCurricularPlan(
-					new Integer(45498),
-					new TipoCurso(TipoCurso.LICENCIATURA));
-			persistentSupport.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia ex) {
-			fail("Reading CurricularCourse & StudentCurricularPlan");
-		}
-
-		assertNotNull(curricularCourse);
-		assertNotNull(studentCurricularPlan);
+//		try {
+//			persistentSupport.iniciarTransaccao();
+//			curricularCourse = persistentCurricularCourse.readCurricularCourseByNameAndCode("Trabalho Final de Curso I", "TFCI");
+//			studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(new Integer(45498), new TipoCurso(TipoCurso.LICENCIATURA));
+//			persistentSupport.confirmarTransaccao();
+//		} catch (ExcepcaoPersistencia ex) {
+//			fail("Reading CurricularCourse & StudentCurricularPlan");
+//		}
+//
+//		assertNotNull(curricularCourse);
+//		assertNotNull(studentCurricularPlan);
 
 		// Enrolment ja existente
+		IEnrolment enrolment = null;
+		IEnrolment enrolment2 = getExistingEnrolment();
 		try {
 			persistentSupport.iniciarTransaccao();
-			enrolment =
-				persistentEnrolment
-					.readEnrolmentByStudentCurricularPlanAndCurricularCourse(
-					studentCurricularPlan,
-					curricularCourse);
+			enrolment = persistentEnrolment.readEnrolmentByStudentCurricularPlanAndCurricularCourseScope(enrolment2.getStudentCurricularPlan(), enrolment2.getCurricularCourseScope());
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex2) {
 			fail("Read Existing Enrolment");
 		}
 		assertNotNull(enrolment);
-		assertTrue(enrolment.getCurricularCourse().equals(curricularCourse));
-		assertTrue(
-			enrolment.getStudentCurricularPlan().equals(studentCurricularPlan));
+		assertTrue(enrolment.getCurricularCourseScope().equals(enrolment2.getCurricularCourseScope()));
+		assertTrue(enrolment.getStudentCurricularPlan().equals(enrolment2.getStudentCurricularPlan()));
 
 		// Enrolment inexistente
-		try {
-			persistentSupport.iniciarTransaccao();
-			curricularCourse =
-				persistentCurricularCourse.readCurricularCourseByNameAndCode(
-					"Trabalho Final de Curso II",
-					"TFCII");
-			studentCurricularPlan =
-				persistentStudentCurricularPlan
-					.readActiveStudentCurricularPlan(
-					new Integer(600),
-					new TipoCurso(TipoCurso.LICENCIATURA));
-			persistentSupport.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia ex) {
-			fail("Reading CurricularCourse & StudentCurricularPlan");
-		}
-
-		assertNotNull(curricularCourse);
-		assertNotNull(studentCurricularPlan);
+//		try {
+//			persistentSupport.iniciarTransaccao();
+//			curricularCourse = persistentCurricularCourse.readCurricularCourseByNameAndCode("Trabalho Final de Curso II", "TFCII");
+//			studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA));
+//			persistentSupport.confirmarTransaccao();
+//		} catch (ExcepcaoPersistencia ex) {
+//			fail("Reading CurricularCourse & StudentCurricularPlan");
+//		}
+//
+//		assertNotNull(curricularCourse);
+//		assertNotNull(studentCurricularPlan);
 
 		enrolment = null;
+		enrolment2 = getNonExistingEnrolment();
 		System.out.println("\n- Test 3.2 : Read Non Existing Enrolment");
 		try {
 			persistentSupport.iniciarTransaccao();
-			enrolment =
-				persistentEnrolment
-					.readEnrolmentByStudentCurricularPlanAndCurricularCourse(
-					studentCurricularPlan,
-					curricularCourse);
+			enrolment = persistentEnrolment.readEnrolmentByStudentCurricularPlanAndCurricularCourseScope(enrolment2.getStudentCurricularPlan(), enrolment2.getCurricularCourseScope());
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex2) {
 			fail("Read Non Existing Enrolment");
@@ -301,38 +273,28 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 
 	public void testDeleteEnrolment() {
 
-		IEnrolment enrolment = null;
-		ICurricularCourse curricularCourse = null;
-		IStudentCurricularPlan studentCurricularPlan = null;
-
-		try {
-			persistentSupport.iniciarTransaccao();
-			curricularCourse =
-				persistentCurricularCourse.readCurricularCourseByNameAndCode(
-					"Trabalho Final de Curso I",
-					"TFCI");
-			studentCurricularPlan =
-				persistentStudentCurricularPlan
-					.readActiveStudentCurricularPlan(
-					new Integer(45498),
-					new TipoCurso(TipoCurso.LICENCIATURA));
-			persistentSupport.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia ex) {
-			fail("Reading CurricularCourse & StudentCurricularPlan");
-		}
-
-		assertNotNull(curricularCourse);
-		assertNotNull(studentCurricularPlan);
+//		ICurricularCourse curricularCourse = null;
+//		IStudentCurricularPlan studentCurricularPlan = null;
+//
+//		try {
+//			persistentSupport.iniciarTransaccao();
+//			curricularCourse = persistentCurricularCourse.readCurricularCourseByNameAndCode("Trabalho Final de Curso I", "TFCI");
+//			studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(new Integer(45498), new TipoCurso(TipoCurso.LICENCIATURA));
+//			persistentSupport.confirmarTransaccao();
+//		} catch (ExcepcaoPersistencia ex) {
+//			fail("Reading CurricularCourse & StudentCurricularPlan");
+//		}
+//
+//		assertNotNull(curricularCourse);
+//		assertNotNull(studentCurricularPlan);
 
 		// Enrolment ja existente
 		System.out.println("\n- Test 4.1 : Delete Existing Enrolment\n");
+		IEnrolment enrolment = null;
+		IEnrolment enrolment2 = getExistingEnrolment();
 		try {
 			persistentSupport.iniciarTransaccao();
-			enrolment =
-				persistentEnrolment
-					.readEnrolmentByStudentCurricularPlanAndCurricularCourse(
-					studentCurricularPlan,
-					curricularCourse);
+			enrolment = persistentEnrolment.readEnrolmentByStudentCurricularPlanAndCurricularCourseScope(enrolment2.getStudentCurricularPlan(), enrolment2.getCurricularCourseScope());
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("Reading Existing Enrolment To Delete");
@@ -350,11 +312,7 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 		IEnrolment enr2 = null;
 		try {
 			persistentSupport.iniciarTransaccao();
-			enr2 =
-				persistentEnrolment
-					.readEnrolmentByStudentCurricularPlanAndCurricularCourse(
-					studentCurricularPlan,
-					curricularCourse);
+			enr2 = persistentEnrolment.readEnrolmentByStudentCurricularPlanAndCurricularCourseScope(enrolment2.getStudentCurricularPlan(), enrolment2.getCurricularCourseScope());
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("Reading Just Deleted Enrolment");
@@ -398,16 +356,11 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 
 		IStudentCurricularPlan studentCurricularPlan = null;
 
-		System.out.println(
-			"\n- Test 6 : Read Existing Enrolment By StudentCurricularPlan And EnrolmentState\n");
+		System.out.println("\n- Test 6 : Read Existing Enrolment By StudentCurricularPlan And EnrolmentState\n");
 
 		try {
 			persistentSupport.iniciarTransaccao();
-			studentCurricularPlan =
-				persistentStudentCurricularPlan
-					.readActiveStudentCurricularPlan(
-					new Integer(45498),
-					new TipoCurso(TipoCurso.LICENCIATURA));
+			studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(new Integer(45498), new TipoCurso(TipoCurso.LICENCIATURA));
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("Reading StudentCurricularPlan");
@@ -418,48 +371,107 @@ public class EnrolmentOJBTest extends TestCaseOJB {
 		// Enrolment ja existente
 		try {
 			persistentSupport.iniciarTransaccao();
-			list =
-				persistentEnrolment
-					.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(
-					studentCurricularPlan,
-					EnrolmentState.APROVED_OBJ);
+			list = persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(studentCurricularPlan, EnrolmentState.APROVED_OBJ);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex2) {
 			fail("Read Existing Enrolment");
 		}
 		assertNotNull(list);
-		assertEquals(1,list.size());
+		assertEquals(1, list.size());
 	}
 
 	public void testReadAllByStudentCurricularPlan() {
 		IStudentCurricularPlan studentCurricularPlan = null;
 		try {
 			persistentSupport.iniciarTransaccao();
-			studentCurricularPlan =
-				persistentStudentCurricularPlan
-					.readActiveStudentCurricularPlan(
-					new Integer(600),
-					new TipoCurso(TipoCurso.LICENCIATURA));
+			studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(new Integer(600), new TipoCurso(TipoCurso.LICENCIATURA));
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("Reading CurricularCourse & StudentCurricularPlan");
 		}
-		assertNotNull(
-			"Can't find 4598 student curricular plan!",
-			studentCurricularPlan);
+		assertNotNull("Can't find 4598 student curricular plan!", studentCurricularPlan);
 		List enrolments = null;
 		try {
 			persistentSupport.iniciarTransaccao();
-			enrolments =
-				persistentEnrolment.readAllByStudentCurricularPlan(
-					studentCurricularPlan);
-			persistentEnrolment.readAllByStudentCurricularPlan(
-				studentCurricularPlan);
+			enrolments = persistentEnrolment.readAllByStudentCurricularPlan(studentCurricularPlan);
+			persistentEnrolment.readAllByStudentCurricularPlan(studentCurricularPlan);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia e) {
 			fail("Reading all enrolments by student!");
 		}
-		assertNotNull("Enrolments must be not null!",enrolments);
+		assertNotNull("Enrolments must be not null!", enrolments);
 		assertEquals(1, enrolments.size());
+	}
+
+	private IEnrolment getExistingEnrolment() {
+		try {
+			persistentSupport.iniciarTransaccao();
+
+			IStudentCurricularPlan studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(new Integer(45498), new TipoCurso(TipoCurso.LICENCIATURA));
+			IDegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
+			IBranch branch = studentCurricularPlan.getBranch();
+			ICurricularCourse curricularCourseCriteria = new CurricularCourse();
+			curricularCourseCriteria.setName("Cadeira a Equivaler");
+			curricularCourseCriteria.setCode("CAE");
+//			curricularCourseCriteria.setDegreeCurricularPlan(degreeCurricularPlan);
+			ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(curricularCourseCriteria);
+			ICurricularYear curricularYear = persistentCurricularYear.readCurricularYearByYear(new Integer(1));
+			ICurricularSemester curricularSemester = persistentCurricularSemester.readCurricularSemesterBySemesterAndCurricularYear(new Integer(1), curricularYear);
+			ICurricularCourseScope curricularCourseScope = persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(curricularCourse, curricularSemester, branch);
+
+			assertNotNull(studentCurricularPlan);
+			assertNotNull(degreeCurricularPlan);
+			assertNotNull(branch);
+			assertNotNull(curricularCourse);
+			assertNotNull(curricularYear);
+			assertNotNull(curricularSemester);
+			assertNotNull(curricularCourseScope);
+								
+			IEnrolment enrolment = persistentEnrolment.readEnrolmentByStudentCurricularPlanAndCurricularCourseScope(studentCurricularPlan, curricularCourseScope);
+			assertNotNull(enrolment);
+
+			persistentSupport.confirmarTransaccao();
+			
+			return enrolment;
+		} catch (ExcepcaoPersistencia ex) {
+			fail("Loading Enrolments from DB.");
+		}
+		return null;
+	}
+
+	private IEnrolment getNonExistingEnrolment() {
+		try {
+			persistentSupport.iniciarTransaccao();
+
+			IStudentCurricularPlan studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(new Integer(45498), new TipoCurso(TipoCurso.LICENCIATURA));
+			IDegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
+			IBranch branch = studentCurricularPlan.getBranch();
+			ICurricularCourse curricularCourseCriteria = new CurricularCourse();
+			curricularCourseCriteria.setName("Cadeira Que Não Tem Enrolment 1");
+			curricularCourseCriteria.setCode("CNE1");
+//			curricularCourseCriteria.setDegreeCurricularPlan(degreeCurricularPlan);
+			ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(curricularCourseCriteria);
+			ICurricularYear curricularYear = persistentCurricularYear.readCurricularYearByYear(new Integer(1));
+			ICurricularSemester curricularSemester = persistentCurricularSemester.readCurricularSemesterBySemesterAndCurricularYear(new Integer(1), curricularYear);
+			ICurricularCourseScope curricularCourseScope = persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(curricularCourse, curricularSemester, branch);
+
+			assertNotNull(studentCurricularPlan);
+			assertNotNull(degreeCurricularPlan);
+			assertNotNull(branch);
+			assertNotNull(curricularCourse);
+			assertNotNull(curricularYear);
+			assertNotNull(curricularSemester);
+			assertNotNull(curricularCourseScope);
+								
+			IEnrolment enrolment = persistentEnrolment.readEnrolmentByStudentCurricularPlanAndCurricularCourseScope(studentCurricularPlan, curricularCourseScope);
+			assertNotNull(enrolment);
+
+			persistentSupport.confirmarTransaccao();
+			
+			return enrolment;
+		} catch (ExcepcaoPersistencia ex) {
+			fail("Loading Enrolments from DB.");
+		}
+		return null;
 	}
 }
