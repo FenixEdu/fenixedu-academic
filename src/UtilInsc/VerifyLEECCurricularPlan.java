@@ -60,7 +60,9 @@ public class VerifyLEECCurricularPlan
 				IBranch branch = (IBranch) iterator.next();
 				if (branch.getBranchType().equals(BranchType.COMMON_BRANCH))
 				{
-					printItForCommonArea(branch);
+					System.out.println("TRONCO COMUM ESPECIAL: [" + branch.getName() + "]");					
+					printItForThisArea(branch, AreaType.BASE_OBJ);
+					//printItForCommonArea(branch);
 				} else
 				{
 					System.out.println("ÁREA DE ESPECIALIZAÇÃO: [" + branch.getName() + "]");
@@ -91,25 +93,37 @@ public class VerifyLEECCurricularPlan
 		System.out.println("TRONCO COMUM:");
 		List curricularCourseScopes = curricularCourseScopeDAO.readByBranch(branch);
 		sortCurricularCourseScopes(curricularCourseScopes);
-		Iterator iterator = curricularCourseScopes.iterator();
+		
+		ArrayList curricularCourses = new ArrayList(); 
+		Iterator iterScopes = curricularCourseScopes.iterator();
+		
+		while(iterScopes.hasNext())
+		{
+			ICurricularCourseScope ccs = (ICurricularCourseScope)iterScopes.next();
+			if(!curricularCourses.contains(ccs.getCurricularCourse()))			
+				curricularCourses.add(ccs.getCurricularCourse());			
+		}
+		
+		Iterator iterator = curricularCourses.iterator();
 		while (iterator.hasNext())
 		{
-			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
-			String name = curricularCourseScope.getCurricularCourse().getName();
-			String year = curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().toString();
-			String semester = curricularCourseScope.getCurricularSemester().getSemester().toString();
+			ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
+			String name = curricularCourse.getName();
+			//String year = curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().toString();
+			//String semester = curricularCourseScope.getCurricularSemester().getSemester().toString();
 			String scientificAreaName = "";
-			if (curricularCourseScope.getCurricularCourse().getScientificArea() != null)
+			if (curricularCourse.getScientificArea() != null)
 			{
-				scientificAreaName = curricularCourseScope.getCurricularCourse().getScientificArea().getName();
+				scientificAreaName = curricularCourse.getScientificArea().getName();
 			}
 			System.out.print("\t");
 			System.out.println(
-				"ANO: ["
-					+ year
-					+ "] SEMESTRE: ["
-					+ semester
-					+ "] NOME: ["
+				//"ANO: ["
+				//	+ year
+				//	+ "] SEMESTRE: ["
+				//	+ semester
+				//	+ "] 
+				"NOME: ["
 					+ name
 					+ "] ÁREA CIENTÍFICA: ["
 					+ scientificAreaName
@@ -151,18 +165,18 @@ public class VerifyLEECCurricularPlan
 						+ curricularCourseGroup.getMaximumCredits().toString() + "]");
 				
 				List curricularCourseScopes =
-					getCurricularCourseScopesByScientificAreaInGroup(curricularCourseGroup, scientificArea);
-				sortCurricularCourseScopes(curricularCourseScopes);
+					getCurricularCoursesByScientificAreaInGroup(curricularCourseGroup, scientificArea);
+				//sortCurricularCourseScopes(curricularCourseScopes);
 				
 				Iterator iterator3 = curricularCourseScopes.iterator();
 				while (iterator3.hasNext())
 				{
-					ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator3.next();
-					String name = curricularCourseScope.getCurricularCourse().getName();
-					String year = curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().toString();
-					String semester = curricularCourseScope.getCurricularSemester().getSemester().toString();
+					ICurricularCourse curricularCourse = (ICurricularCourse) iterator3.next();
+					String name = curricularCourse.getName();
+					//String year = curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().toString();
+					//String semester = curricularCourseScope.getCurricularSemester().getSemester().toString();
 					System.out.print("\t\t");
-					System.out.println("ANO: [" + year + "] SEMESTRE: [" + semester + "] NOME: [" + name + "]");
+					System.out.println("NOME: [" + name + "]");
 				}
 			}
 		}
@@ -175,7 +189,7 @@ public class VerifyLEECCurricularPlan
 	 * @param scientificArea
 	 * @return curricular course scopes list from the group and belonging to that scientific area.
 	 */
-	private static List getCurricularCourseScopesByScientificAreaInGroup(
+	private static List getCurricularCoursesByScientificAreaInGroup(
 		ICurricularCourseGroup curricularCourseGroup,
 		IScientificArea scientificArea)
 	{
@@ -187,12 +201,14 @@ public class VerifyLEECCurricularPlan
 			ICurricularCourse curricularCourse = (ICurricularCourse) iterator1.next();
 			if (curricularCourse.getScientificArea().equals(scientificArea))
 			{
-				Iterator iterator2 = curricularCourse.getScopes().iterator();
+				/*Iterator iterator2 = curricularCourse.getScopes().iterator();
 				while (iterator2.hasNext())
 				{
 					ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator2.next();
 					result.add(curricularCourseScope);
-				}
+				}*/
+				
+				result.add(curricularCourse);
 			}
 		}
 		return result;
