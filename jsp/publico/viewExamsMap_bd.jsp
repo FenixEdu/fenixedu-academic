@@ -14,7 +14,7 @@
 </table>
 <br />
 <center>
-<font color="red" size="3">Atenção às notas em baixo!<font>
+<font color="red" size="3">Atenção aos comentários em baixo!<font>
 <center/>
 <br />
 <bean:define id="infoExecutionDegree" name="component" property="infoExecutionDegree" />
