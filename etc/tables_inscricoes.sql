@@ -148,11 +148,11 @@ create table ENROLMENT_EVALUATION (
    EVALUATION_TYPE int(11) not null,
    EXAM_DATE date,
    GRADE_AVAILABLE_DATE date,
-   RESPONSIBLE_PERSON int(11) not null,
+   RESPONSIBLE_PERSON int(11),
    STATE int(11) not null,
    KEY_ENROLMENT int(11) not null,
    primary key (ID_INTERNAL),
-   unique U1 (KEY_ENROLMENT, EVALUATION_TYPE)
+   unique U1 (KEY_ENROLMENT, EVALUATION_TYPE, GRADE)
 )type=InnoDB;
 
 -- ==================================================================================
@@ -189,10 +189,10 @@ drop table if exists BRANCH;
 create table BRANCH (
    ID_INTERNAL int(11) not null auto_increment,
    BRANCH_CODE varchar(50) not null,
-   BRANCH_NAME varchar(255),
-   KEY_DEGREE_CURRICULAR_PLAN integer(11),
+   BRANCH_NAME varchar(255) not null,
+   KEY_DEGREE_CURRICULAR_PLAN integer(11) not null,
    primary key (ID_INTERNAL),
-   unique U1 (BRANCH_NAME, BRANCH_CODE, KEY_DEGREE_CURRICULAR_PLAN)
+   unique U1 (BRANCH_CODE, KEY_DEGREE_CURRICULAR_PLAN)
 )type=InnoDB;
 
 -- ==================================================================================

@@ -62,7 +62,7 @@ public class LoadAlmeidaLEQCurricularCourses extends LoadDataFile {
 
 	private void processCurricularCourse(Almeida_curricular_course almeida_curricular_course) {
 
-		//		Delete blank space in the beggining of code
+//		Delete blank space in the beggining of code
 		if (almeida_curricular_course.getCode().charAt(0) == ' ') {
 			almeida_curricular_course.setCode(almeida_curricular_course.getCode().substring(1));
 		}
@@ -85,10 +85,10 @@ public class LoadAlmeidaLEQCurricularCourses extends LoadDataFile {
 	}
 
 	private IDegreeCurricularPlan processOldDegreeCurricularPlan() {
-		IDegreeCurricularPlan degreeCurricularPlan = persistentObjectOJB.readDegreeCurricularPlanByName("LEQ-OLD");
+		IDegreeCurricularPlan degreeCurricularPlan = persistentObjectOJB.readDegreeCurricularPlanByName("LEQ");
 		if (degreeCurricularPlan == null) {
 			degreeCurricularPlan = new DegreeCurricularPlan();
-			degreeCurricularPlan.setName("LEQ-OLD");
+			degreeCurricularPlan.setName("LEQ");
 			degreeCurricularPlan.setDegree(persistentObjectOJB.readDegreeByCode("LEQ"));
 			degreeCurricularPlan.setState(DegreeCurricularPlanState.CONCLUDED_OBJ);
 			degreeCurricularPlan.setDegreeDuration(new Integer(5));

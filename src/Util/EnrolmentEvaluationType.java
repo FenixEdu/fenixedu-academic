@@ -7,15 +7,17 @@ package Util;
  */
 public class EnrolmentEvaluationType {
 
-	public static final int NORMAL = 1;
+	public static final int NORMAL = 1; // This one is used to represent "epoca" (time) 0 and 2.
 	public static final int IMPROVEMENT = 2;
 	public static final int SPECIAL = 3;
 	public static final int EXTERNAL = 4;
+	public static final int FIRST_TIME = 5; // This one is used to represent "epoca" (time) 1.
 
 	public static final EnrolmentEvaluationType NORMAL_OBJ = new EnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
 	public static final EnrolmentEvaluationType IMPROVEMENT_OBJ = new EnrolmentEvaluationType(EnrolmentEvaluationType.IMPROVEMENT);
 	public static final EnrolmentEvaluationType SPECIAL_OBJ = new EnrolmentEvaluationType(EnrolmentEvaluationType.SPECIAL);
 	public static final EnrolmentEvaluationType EXTERNAL_OBJ = new EnrolmentEvaluationType(EnrolmentEvaluationType.EXTERNAL);
+	public static final EnrolmentEvaluationType FIRST_TIME_OBJ = new EnrolmentEvaluationType(EnrolmentEvaluationType.FIRST_TIME);
 
 	private Integer type;
 

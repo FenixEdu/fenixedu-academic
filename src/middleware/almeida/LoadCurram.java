@@ -1,22 +1,25 @@
-/*
- * Created on May 15, 2003
- *
- * To change the template for this generated file go to
- * Window>Preferences>Java>Code Generation>Code and Comments
- */
 package middleware.almeida;
 
+import java.util.Calendar;
+import java.util.Iterator;
+import java.util.List;
 import java.util.StringTokenizer;
+
+import Dominio.Branch;
+import Dominio.IBranch;
+import Dominio.IDegreeCurricularPlan;
 
 /**
  *
  * @author  Luis Cruz & Sara Ribeiro
  */
+
 public class LoadCurram extends LoadDataFile {
 
 	private static LoadCurram loader = null;
+	private static String logString = "";
 
-	private LoadCurram() {
+	public LoadCurram() {
 	}
 
 	public static void main(String[] args) {
@@ -24,11 +27,18 @@ public class LoadCurram extends LoadDataFile {
 		loader.load();
 	}
 
-	protected void processLine(String line) {
-		StringTokenizer stringTokenizer =
-			new StringTokenizer(line, getFieldSeparator());
+	public void run() {
+		if (loader == null) {
+			loader = new LoadCurram();
+		}
+//		loader.load();
+		loader.copyAlmeidaCurramToFenixBranch();
+	}
 
-		int numberTokens = stringTokenizer.countTokens(); 
+	protected void processLine(String line) {
+		StringTokenizer stringTokenizer = new StringTokenizer(line, getFieldSeparator());
+
+		int numberTokens = stringTokenizer.countTokens();
 
 		String curso = stringTokenizer.nextToken();
 		String ramo = null;
@@ -53,23 +63,69 @@ public class LoadCurram extends LoadDataFile {
 		almeida_curram.setDescri(descricao);
 
 		writeElement(almeida_curram);
-		
+
+	}
+
+	private void copyAlmeidaCurramToFenixBranch() {
+		loader.setupDAO();
+		System.out.println("Migrating Almeida_curram to Fenix Branch.\n");
+		super.startTime = Calendar.getInstance();
+
+		List almeidaCurramsList = persistentObjectOJB.readAllAlmeidaCurrams();
+		Iterator iterator = almeidaCurramsList.iterator();
+		while(iterator.hasNext()) {
+			Almeida_curram almeida_curram = (Almeida_curram) iterator.next();
+			IDegreeCurricularPlan degreeCurricularPlan = persistentObjectOJB.readDegreeCurricularPlan(new Integer("" + almeida_curram.getCodcur()));
+
+//			if(almeida_curram.getCodorien() == 0) {
+			IBranch branch = new Branch();
+			if(almeida_curram.getCodram() == 0) {
+				branch.setCode("");
+				branch.setDegreeCurricularPlan(degreeCurricularPlan);
+				branch.setName("");
+			} else {
+//				branch.setCode(getBranchCode(almeida_curram.getDescri()));
+				branch.setCode(getBranchCode(almeida_curram));
+				branch.setDegreeCurricularPlan(degreeCurricularPlan);
+				branch.setName(almeida_curram.getDescri());
+			}
+			branch.setScopes(null);
+			writeElement(branch);
+//			} else {
+//				LoadCurram.logString += "ERRO: Existem varios perfis dentro do mesmo ramo [" + almeida_curram.getDescri() + "]\n";
+//			}
+		}
+		loader.shutdownDAO();
+		super.endTime = Calendar.getInstance();
+		System.out.println("Done.");
+		super.report();
+		loader.writeToFile(logString);
+	}
+
+	private String getBranchCode(String almeidaBranchName) {
+		StringTokenizer stringTokenizer = new StringTokenizer(almeidaBranchName, " ");
+		int numberTokens = stringTokenizer.countTokens();
+		String code = "";
+		for(int i = 0; i < numberTokens; i++) {
+			String word = stringTokenizer.nextToken();
+			code += word.charAt(0);
+		}
+		return code;
+	}
+
+	private String getBranchCode(Almeida_curram almeida_curram) {
+		return "" + almeida_curram.getCodcur() + almeida_curram.getCodram() + almeida_curram.getCodorien();
 	}
 
 	protected String getFilename() {
-		return "etc/migration/CURRAM.TXT";
+		return "etc/migration/dcs-rjao/almeidaCommonData/CURRAM.TXT";
 	}
 
 	protected String getFieldSeparator() {
 		return "\t";
 	}
 
-	/* (non-Javadoc)
-	 * @see middleware.almeida.LoadDataFile#getFilenameOutput()
-	 */
 	protected String getFilenameOutput() {
-		
-		return null;
+		return "etc/migration/dcs-rjao/logs/branchMigrationLog.txt";
 	}
-
 }

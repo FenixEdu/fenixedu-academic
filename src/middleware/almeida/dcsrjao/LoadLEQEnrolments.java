@@ -37,18 +37,59 @@ import Util.UniversityCode;
  * 21/Mai/2003
  */
 
+// TODO DAVID-RICARDO: Ainda falta ter em conta os casos de inscrições em disciplinas de outros cursos e erasmos.
+//01			CURSO DE ENGENHARIA CIVIL                               
+//01	1	1	PERFIL ESTRUTURAS E CONSTRUÇÃO/ESTRUTURA                
+//01	1	2	PERFIL ESTRUTURAS E CONSTRUÇÃO/CONSTRUÇÃO               
+//01	2      	PERFIL HIDRÁULICA E  RECURSOS HÍDRICOS                  
+//01	3     	PERFIL PLANEAMENTO TRANSPORTES E GESTÃO                 
+//
+//02	       	CURSO DE ENGENHARIA DE MINAS E GEORRECURSOS             
+//02	1      	RAMO DE GEOENGENHARIA                                   
+//02	2      	RAMO DE EXPLORAÇÃO E GEOMECÂNICA                        
+//02	3      	RAMO DE PROCESSAMENTO E PLANEAMENTO DE GEORRECURSOS     
+//
+//07	       	CURSO DE ENGENHARIA FÍSICA TECNOLÓGICA                  
+//
+//09			CURSO DE MATEMÁTICA APLICADA E COMPUTAÇÃO               
+//
+//12	       	CURSO DE ENGENHARIA DO TERRITÓRIO                       
+//
+//13	       	CURSO DE ENGENHARIA AEROESPACIAL                        
+//13	1      	RAMO DE AERONAVES                                       
+//13	2      	RAMO DE AVIÓNICA                                        
+//
+//14	       	CURSO DE ENGENHARIA ELECTROTÉCNICA E DE COMPUTADORES    
+//14	1      	RAMO DE ENERGIA E SISTEMAS                              
+//14	2      	RAMO DE TELECOMUNICAÇÕES E ELECTRÓNICA                  
+//14	3      	RAMO DE CONTROLO E ROBÓTICA                             
+//14	4      	RAMO DE SISTEMAS ELECTRÓNICOS E COMPUTADORES            
+//
+//16	       	CURSO DE QUÍMICA                                        
+//16	1      	PERFIL DE QUÍMICA                                       
+//16	2      	PERFIL DE BIOQUÍMICA
+                                    
 public class LoadLEQEnrolments extends LoadDataFile {
+	
+	private static final String ONE_SPACE = " ";
+	private static final String TWO_SPACES = "  ";
+	private static final String FOUR_SPACES = "    ";
+	private static final String TEN_SPACES = "          ";
 
 	private static LoadLEQEnrolments loader = null;
-	protected static String logString = "";
-	protected static IDegreeCurricularPlan oldDegreeCurricularPlan = null;
-	protected static IBranch branch = null;
-	protected static ICurricularCourse curricularCourse = null;
-	protected static ICurricularSemester curricularSemester = null;
+	private static String logString = "";
+
+	private IDegreeCurricularPlan oldDegreeCurricularPlan = null;
+	private IBranch branch = null;
+	private ICurricularCourse curricularCourse = null;
+	private ICurricularSemester curricularSemester = null;
+	private IStudentCurricularPlan studentCurricularPlan = null;
+	private IExecutionPeriod executionPeriod = null;
+	private ICurricularCourseScope curricularCourseScope = null;
 
 	public LoadLEQEnrolments() {
 		super.setupDAO();
-		oldDegreeCurricularPlan = this.processOldDegreeCurricularPlan();
+		this.oldDegreeCurricularPlan = this.processOldDegreeCurricularPlan();
 		super.shutdownDAO();
 	}
 
@@ -69,7 +110,7 @@ public class LoadLEQEnrolments extends LoadDataFile {
 
 	protected void processLine(String line) {
 
-		System.out.println(loader.numberLinesProcessed);
+//		System.out.println(loader.numberLinesProcessed + 1);
 
 		StringTokenizer stringTokenizer = new StringTokenizer(line, getFieldSeparator());
 
@@ -91,11 +132,11 @@ public class LoadLEQEnrolments extends LoadDataFile {
 		almeida_enrolment.setId_internal(loader.numberElementsWritten + 1);
 		almeida_enrolment.setNumalu(studentNumber);
 
-		if (epoca.equals(" ")) {
+		if (epoca.equals(LoadLEQEnrolments.ONE_SPACE)) {
 			epoca = "5"; // corresponde ao valor de uma inscrição noutra universidade	
 		}
 
-		if ((branchCode.equals(" ")) || (branchCode.equals("4"))) {
+		if ((branchCode.equals(LoadLEQEnrolments.ONE_SPACE)) || (branchCode.equals("4"))) {
 			branchCode = "0";
 		}
 
@@ -117,45 +158,53 @@ public class LoadLEQEnrolments extends LoadDataFile {
 		almeida_enrolment.setCoduniv(universityCode);
 		almeida_enrolment.setObserv(observation);
 
-		processEnrolment(almeida_enrolment);
+		if(almeida_enrolment.getCurso().equals("05")) {
+			processEnrolment(almeida_enrolment);
+		} else {
+			logString += "INFO: Na linha [" + (loader.numberLinesProcessed + 1) + "] existe uma inscrição no curso [" + almeida_enrolment.getCurso() + "]!\n";
+		}
 	}
 
 	private void processEnrolment(Almeida_enrolment almeida_enrolment) {
 
-		branch = processBranch(almeida_enrolment.getRamo());
-		curricularCourse = processCurricularCourse(almeida_enrolment);
-		curricularSemester = processCurricularSemester(almeida_enrolment);
+		// Estes dados têm que existir na BD ou algo de muito errado aconteceu como por exemplo:
+		//   . Não foram corridos os scripts que devem ser corridos antes.
+		//   . Não foi carregada a BD com o devido código SQL.
+		this.branch = processBranch(almeida_enrolment.getRamo());
+		this.curricularCourse = processCurricularCourse(almeida_enrolment);
+		this.curricularSemester = processCurricularSemester(almeida_enrolment);
 
-		IStudentCurricularPlan studentCurricularPlan = processStudentCurricularPlan(almeida_enrolment);
+		this.studentCurricularPlan = processStudentCurricularPlan(almeida_enrolment);
 
-		if (studentCurricularPlan != null) {
-			IExecutionPeriod executionPeriod = processExecutionPeriod(almeida_enrolment.getAnoins(), almeida_enrolment.getSemdis());
-			ICurricularCourseScope curricularCourseScope = processCurricularCourseScope();
+		if (this.studentCurricularPlan != null) { // Caso em que o aluno não se encontra na BD, ou seja, não está inscrito no semestre actual.
+			this.executionPeriod = processExecutionPeriod(almeida_enrolment.getAnoins(), almeida_enrolment.getSemdis());
+			this.curricularCourseScope = processCurricularCourseScope();
 
-			IEnrolment enrolment = persistentObjectOJB.readEnrolment(studentCurricularPlan, curricularCourse, executionPeriod);
+			IEnrolment enrolment = persistentObjectOJB.readEnrolment(this.studentCurricularPlan, this.curricularCourse, this.executionPeriod);
 			if (enrolment == null) {
 				enrolment = new Enrolment();
-				enrolment.setCurricularCourse(curricularCourse);
-				enrolment.setExecutionPeriod(executionPeriod);
-				enrolment.setStudentCurricularPlan(studentCurricularPlan);
+				enrolment.setCurricularCourse(this.curricularCourse);
+				enrolment.setExecutionPeriod(this.executionPeriod);
+				enrolment.setStudentCurricularPlan(this.studentCurricularPlan);
 				enrolment.setEnrolmentEvaluationType(processEvaluationType(almeida_enrolment.getEpoca()));
 				enrolment.setEnrolmentState(processGrade(almeida_enrolment));
-
 				// FIXME DAVID-RICARDO: Por os university codes numa tabela
+				// enrolment.setUniversityCode(processUniversityCode(almeida_enrolment.getCoduniv()));
 				enrolment.setUniversityCode(UniversityCode.IST);
-				//enrolment.setUniversityCode(processUniversityCode(almeida_enrolment.getCoduniv()));
 				writeElement(enrolment);
 			}
 
-			IEnrolmentEvaluation enrolmentEvaluation = processEvaluation(enrolment, almeida_enrolment);
-			writeElement(enrolmentEvaluation);
-			//				logString 	+= "ERRO: O enrolment para o aluno: " + almeida_enrolment.getNumalu() 
-			//							+ " na cadeira " + curricularCourse.getName()
-			//							+ " no periodo " + executionPeriod.getName() + " " + executionPeriod.getExecutionYear().getYear()
-			//							+ " no plano curricular " + studentCurricularPlan.getDegreeCurricularPlan().getName()
-			//							+ " já existe! ";
-			//				logString += "Linha: " + loader.numberLinesProcessed + "\n"; 
-			//				numberUntreatableElements++;
+			if(almeida_enrolment.getEpoca() != 0) { // Caso em que não foi lançada uma nota e por isso não se cria uma avaliação.
+				IEnrolmentEvaluation enrolmentEvaluation = processEvaluation(enrolment, almeida_enrolment);
+				writeElement(enrolmentEvaluation);
+			} else {
+				logString 	+= "INFO: O enrolment para o aluno: " + almeida_enrolment.getNumalu() 
+							+ " na cadeira " + curricularCourse.getName()
+							+ " no periodo " + executionPeriod.getName() + " " + executionPeriod.getExecutionYear().getYear()
+							+ " no plano curricular " + studentCurricularPlan.getDegreeCurricularPlan().getName()
+							+ " não tem nota e por isso não foi adicionada uma avaliação! "
+							+ "Linha: [" + (loader.numberLinesProcessed + 1) + "]\n";
+			}
 		}
 	}
 
@@ -164,7 +213,7 @@ public class LoadLEQEnrolments extends LoadDataFile {
 		EnrolmentState enrolmentState = null;
 		if (grade.equals("RE")) {
 			enrolmentState = EnrolmentState.NOT_APROVED_OBJ;
-		} else if (grade.equals("  ")) {
+		} else if (grade.equals(LoadLEQEnrolments.TWO_SPACES)) {
 			enrolmentState = EnrolmentState.WITHOUT_GRADE_OBJ;
 		} else if (almeida_enrolment.getObserv().equals("ANULADO")) {
 			enrolmentState = EnrolmentState.ANNULED_OBJ;
@@ -190,7 +239,7 @@ public class LoadLEQEnrolments extends LoadDataFile {
 
 		enrolmentEvaluation.setEnrolmentEvaluationType(processEvaluationType(almeida_enrolment.getEpoca()));
 
-		if (!almeida_enrolment.getDatexa().equals("          ")) {
+		if (!almeida_enrolment.getDatexa().equals(LoadLEQEnrolments.TEN_SPACES)) {
 			Calendar newCalendar = Calendar.getInstance();
 			int year = new Integer(almeida_enrolment.getDatexa().substring(0, 3)).intValue();
 			int month = new Integer(almeida_enrolment.getDatexa().substring(5, 6)).intValue();
@@ -198,17 +247,22 @@ public class LoadLEQEnrolments extends LoadDataFile {
 			newCalendar.set(year, month, day);
 			Date examDate = newCalendar.getTime();
 			enrolmentEvaluation.setExamDate(examDate);
+		} else {
+			enrolmentEvaluation.setExamDate(null);
 		}
 
-		if (!almeida_enrolment.getResult().equals("  ")) {
+		if (!almeida_enrolment.getResult().equals(LoadLEQEnrolments.TWO_SPACES)) {
 			enrolmentEvaluation.setGrade(almeida_enrolment.getResult());
+		} else {
+			enrolmentEvaluation.setGrade(null);
 		}
 
 		enrolmentEvaluation.setGradeAvailableDate(null);
 
-		if (!almeida_enrolment.getNumdoc().equals("    ")) {
-			almeida_enrolment.setNumdoc(almeida_enrolment.getNumdoc().substring(1));
+		if (!almeida_enrolment.getNumdoc().equals(LoadLEQEnrolments.FOUR_SPACES)) {
 			enrolmentEvaluation.setPersonResponsibleForGrade(persistentObjectOJB.readPersonByEmployeeNumber(new Integer(almeida_enrolment.getNumdoc())));
+		} else {
+			enrolmentEvaluation.setPersonResponsibleForGrade(null);
 		}
 
 		return enrolmentEvaluation;
@@ -222,7 +276,6 @@ public class LoadLEQEnrolments extends LoadDataFile {
 		if (curricularYear == null) {
 			logString += "ERRO: O curricularYear: " + year + " não existe!\n";
 		}
-
 		ICurricularSemester curricularSemester = persistentObjectOJB.readCurricularSemester(semester, curricularYear);
 		if (curricularSemester == null) {
 			logString += "ERRO: O curricularSemester: " + semester + " não existe!\n";
@@ -231,12 +284,12 @@ public class LoadLEQEnrolments extends LoadDataFile {
 	}
 
 	private ICurricularCourseScope processCurricularCourseScope() {
-		ICurricularCourseScope curricularCourseScope = persistentObjectOJB.readCurricularCourseScopeByUnique(curricularCourse, branch, curricularSemester);
+		ICurricularCourseScope curricularCourseScope = persistentObjectOJB.readCurricularCourseScopeByUnique(this.curricularCourse, this.branch, this.curricularSemester);
 		if (curricularCourseScope == null) {
 			curricularCourseScope = new CurricularCourseScope();
-			curricularCourseScope.setBranch(branch);
-			curricularCourseScope.setCurricularCourse(curricularCourse);
-			curricularCourseScope.setCurricularSemester(curricularSemester);
+			curricularCourseScope.setBranch(this.branch);
+			curricularCourseScope.setCurricularCourse(this.curricularCourse);
+			curricularCourseScope.setCurricularSemester(this.curricularSemester);
 			curricularCourseScope.setMaxIncrementNac(new Integer(2));
 			curricularCourseScope.setMinIncrementNac(new Integer(1));
 			curricularCourseScope.setWeigth(new Integer(1));
@@ -247,16 +300,14 @@ public class LoadLEQEnrolments extends LoadDataFile {
 
 	private ICurricularCourse processCurricularCourse(Almeida_enrolment almeida_enrolment) {
 		String code = almeida_enrolment.getCoddis();
-		//		Delete blank space in the beggining of code
-		if (code.charAt(0) == ' ') {
+//		Delete blank space in the beggining of code
+		if (code.startsWith(LoadLEQEnrolments.ONE_SPACE)) {
 			code = code.substring(1);
 		}
-
-		ICurricularCourse curricularCourse = persistentObjectOJB.readCurricularCourseByCodeAndDegreeCurricularPlan(code, oldDegreeCurricularPlan);
+		ICurricularCourse curricularCourse = persistentObjectOJB.readCurricularCourseByCodeAndDegreeCurricularPlan(code, this.oldDegreeCurricularPlan);
 		if (curricularCourse == null) {
-			logString += "ERRO: A curricularCourse com o code: " + code + " não existe!\n";
+			logString += "ERRO: A CurricularCourse com o code: " + code + " não existe!\n";
 		}
-
 		return curricularCourse;
 	}
 
@@ -290,7 +341,7 @@ public class LoadLEQEnrolments extends LoadDataFile {
 				enrolmentEvaluationType = EnrolmentEvaluationType.NORMAL_OBJ;
 				break;
 			case 1 :
-				enrolmentEvaluationType = EnrolmentEvaluationType.NORMAL_OBJ;
+				enrolmentEvaluationType = EnrolmentEvaluationType.FIRST_TIME_OBJ;
 				break;
 			case 2 :
 				enrolmentEvaluationType = EnrolmentEvaluationType.NORMAL_OBJ;
@@ -360,12 +411,12 @@ public class LoadLEQEnrolments extends LoadDataFile {
 			newCalendar.set(newYear, Calendar.JANUARY, 1);
 			Date newDate = newCalendar.getTime();
 
-			studentCurricularPlan = persistentObjectOJB.readStudentCurricularPlanByUnique(student, oldDegreeCurricularPlan, branch, studentCurricularPlanState);
+			studentCurricularPlan = persistentObjectOJB.readStudentCurricularPlanByUnique(student, this.oldDegreeCurricularPlan, this.branch, studentCurricularPlanState);
 			if (studentCurricularPlan == null) {
 				studentCurricularPlan = new StudentCurricularPlan();
-				studentCurricularPlan.setBranch(branch);
+				studentCurricularPlan.setBranch(this.branch);
 				studentCurricularPlan.setCurrentState(studentCurricularPlanState);
-				studentCurricularPlan.setDegreeCurricularPlan(oldDegreeCurricularPlan);
+				studentCurricularPlan.setDegreeCurricularPlan(this.oldDegreeCurricularPlan);
 				studentCurricularPlan.setStudent(student);
 				studentCurricularPlan.setStartDate(newDate);
 				writeElement(studentCurricularPlan);
@@ -388,7 +439,7 @@ public class LoadLEQEnrolments extends LoadDataFile {
 	}
 
 	private IDegreeCurricularPlan processOldDegreeCurricularPlan() {
-		IDegreeCurricularPlan degreeCurricularPlan = persistentObjectOJB.readDegreeCurricularPlanByName("LEQ-OLD");
+		IDegreeCurricularPlan degreeCurricularPlan = persistentObjectOJB.readDegreeCurricularPlanByName("LEQ");
 		if (degreeCurricularPlan == null) {
 			logString += "ERRO: O plano curricular: " + degreeCurricularPlan.getName() + " não existe!\n";
 		}

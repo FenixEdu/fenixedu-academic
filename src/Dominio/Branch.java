@@ -37,10 +37,8 @@ public class Branch implements IBranch {
 		boolean resultado = false;
 		if (obj instanceof Branch) {
 			Branch branch = (Branch) obj;
-			resultado = this.getName().equals(branch.getName()) && this.getCode().equals(branch.getCode()) 
-			&&
-						this.getDegreeCurricularPlan().equals(branch.getDegreeCurricularPlan())
-						;
+			resultado = this.getCode().equals(branch.getCode()) &&
+						this.getDegreeCurricularPlan().equals(branch.getDegreeCurricularPlan());
 		}
 		return resultado;
 	}

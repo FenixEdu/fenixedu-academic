@@ -80,11 +80,12 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 
 	public IDegreeCurricularPlan readDegreeCurricularPlan(Integer degreeID) {
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("degree.codigoInterno", degreeID);
+		criteria.addEqualTo("degree.idInternal", degreeID);
 		List result = query(DegreeCurricularPlan.class, criteria);
 		if (result.size() == 1) {
 			return (IDegreeCurricularPlan) result.get(0);
 		} else {
+			System.out.println("CurricularCourseScope: " + result.size());
 			return null;
 		}
 	}
@@ -359,7 +360,7 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 
 	public IStudentCurricularPlan readStudentCurricularPlanByUnique(IStudent student, IDegreeCurricularPlan degreeCurricularPlan, IBranch branch, StudentCurricularPlanState studentCurricularPlanState) {
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("student.internalCode", student.getIdInternal());
+		criteria.addEqualTo("student.internalCode", student.getInternalCode());
 		criteria.addEqualTo("degreeCurricularPlan.idInternal", degreeCurricularPlan.getIdInternal());
 		criteria.addEqualTo("branch.internalID", branch.getInternalID());
 		criteria.addEqualTo("currentState", studentCurricularPlanState);
@@ -423,6 +424,22 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 			System.out.println("Funcionario: " + result.size());
 		}
 		return null;
+	}
+
+	public List readAllStudentCurricularPlansFromDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("degreeCurricularPlan.idInternal", degreeCurricularPlan.getIdInternal());
+		return query(StudentCurricularPlan.class, criteria);
+	}
+
+	public List readAllEnrolmentsFromStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan) {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("studentCurricularPlan.internalCode", ((StudentCurricularPlan) studentCurricularPlan).getInternalCode());
+		return query(Enrolment.class, criteria);
+	}
+
+	public List readAllAlmeidaCurrams() {
+		return query(Almeida_curram.class, null);
 	}
 
 }
