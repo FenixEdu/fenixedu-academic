@@ -28,7 +28,7 @@ public class JavaPeriodState2SqlPeriodState implements FieldConversion{
         if (source instanceof PeriodState)
         {
             PeriodState periodState = (PeriodState) source;
-            return periodState.getCode();
+            return periodState.getStateCode();
         }
         else {
             return source;
