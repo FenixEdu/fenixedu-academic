@@ -73,6 +73,9 @@ public class CurrentDegreeCoordinatorAuthorizationFilter extends AuthorizationBy
 		if (argumentos == null) {
 			return result;
 		}
+		if (argumentos[0] == null) {
+			return result;
+		}
 		try {
 
 			sp = SuportePersistenteOJB.getInstance();
