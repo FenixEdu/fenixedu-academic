@@ -33,19 +33,40 @@ public abstract class DeleteDomainObjectService implements IServico
             {
                 throw new NonExistingServiceException("The object does not exist");
             }
+            doBeforeDelete(domainObject, sp);
             persistentObject.deleteByOID(getDomainObjectClass(), objectId);
+            doAfterDelete(domainObject, sp);
         } catch (ExcepcaoPersistencia e)
         {
-            throw new FenixServiceException(e);
+            e.printStackTrace(System.out);
+            throw new FenixServiceException("Problems on database!", e);
         }
     }
 
     /**
-	 * By default returns true
-	 * 
-	 * @param newDomainObject
-	 * @return
-	 */
+     * @param domainObject
+     * @param sp
+     */
+    protected void doBeforeDelete(IDomainObject domainObject, ISuportePersistente sp)
+        throws FenixServiceException, ExcepcaoPersistencia
+    {
+    }
+
+    /**
+     * @param domainObject
+     */
+    protected void doAfterDelete(IDomainObject domainObject, ISuportePersistente sp)
+        throws FenixServiceException, ExcepcaoPersistencia
+    {
+
+    }
+
+    /**
+     * By default returns true
+     * 
+     * @param newDomainObject
+     * @return
+     */
     protected boolean canDelete(IDomainObject newDomainObject, ISuportePersistente sp)
         throws ExcepcaoPersistencia
     {
@@ -53,16 +74,17 @@ public abstract class DeleteDomainObjectService implements IServico
     }
 
     /**
-	 * This is the class in witch the broker will read and delete the DomainObject
-	 * 
-	 * @return
-	 */
+     * This is the class in witch the broker will read and delete the
+     * DomainObject
+     * 
+     * @return
+     */
     protected abstract Class getDomainObjectClass();
 
     /**
-	 * @param sp
-	 * @return
-	 */
+     * @param sp
+     * @return
+     */
     protected abstract IPersistentObject getIPersistentObject(ISuportePersistente sp)
         throws ExcepcaoPersistencia;
 }

@@ -25,7 +25,7 @@
 	<html:hidden property="idInternal"/>
 	<html:hidden property="studentId"/>	
 	<html:hidden property="teacherId"/>	
-	<html:hidden property="executionYearId"/>		
+	<html:hidden property="executionPeriodId"/>		
 	<html:errors />
 	<table>
 		<tr>

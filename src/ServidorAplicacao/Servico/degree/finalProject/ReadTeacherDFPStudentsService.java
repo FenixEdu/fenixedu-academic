@@ -9,19 +9,20 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import DataBeans.InfoExecutionYear;
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoTeacher;
 import DataBeans.degree.finalProject.InfoTeacherDegreeFinalProjectStudent;
 import DataBeans.degree.finalProject.TeacherDegreeFinalProjectStudentsDTO;
 import DataBeans.util.Cloner;
-import Dominio.IExecutionYear;
+import Dominio.ExecutionPeriod;
+import Dominio.IExecutionPeriod;
 import Dominio.ITeacher;
 import Dominio.Teacher;
 import Dominio.degree.finalProject.ITeacherDegreeFinalProjectStudent;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentExecutionYear;
+import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -32,28 +33,24 @@ import ServidorPersistente.degree.finalProject.IPersistentTeacherDegreeFinalProj
  */
 public class ReadTeacherDFPStudentsService implements IServico
 {
-    private static ReadTeacherDFPStudentsService service = new ReadTeacherDFPStudentsService();
 
-    /**
-	 * The singleton access method of this class.
-	 */
-    public static ReadTeacherDFPStudentsService getService()
+    public ReadTeacherDFPStudentsService()
     {
-        return service;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
     public String getNome()
     {
-        // TODO Auto-generated method stub
         return "ReadTeacherDFPStudents";
     }
 
-    public TeacherDegreeFinalProjectStudentsDTO run(InfoTeacher infoTeacher)
+    public TeacherDegreeFinalProjectStudentsDTO run(
+        InfoTeacher infoTeacher,
+        InfoExecutionPeriod infoExecutionPeriodParam)
         throws FenixServiceException
     {
         TeacherDegreeFinalProjectStudentsDTO teacherDfpStudentsDTO =
@@ -63,11 +60,11 @@ public class ReadTeacherDFPStudentsService implements IServico
         {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
-            IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
-
-            IExecutionYear executionYear = executionYearDAO.readCurrentExecutionYear();
-            InfoExecutionYear infoExecutionYear =
-                (InfoExecutionYear) Cloner.get(executionYear);
+            IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
+            
+            IExecutionPeriod executionPeriod = getExecutionPeriod(infoExecutionPeriodParam, executionPeriodDAO);
+            
+            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(executionPeriod);
 
             ITeacher teacher =
                 (ITeacher) teacherDAO.readByOId(new Teacher(infoTeacher.getIdInternal()), false);
@@ -77,7 +74,7 @@ public class ReadTeacherDFPStudentsService implements IServico
                 sp.getIPersistentTeacherDegreeFinalProjectStudent();
 
             List teacherDFPStudentList =
-                teacherDfpStudentDAO.readByTeacherAndExecutionYear(teacher, executionYear);
+                teacherDfpStudentDAO.readByTeacherAndExecutionPeriod(teacher, executionPeriod);
 
             List infoteacherDFPStudentList =
                 (List) CollectionUtils.collect(teacherDFPStudentList, new Transformer()
@@ -96,10 +93,9 @@ public class ReadTeacherDFPStudentsService implements IServico
             });
 
             teacherDfpStudentsDTO.setInfoTeacher(infoTeacher2);
-            teacherDfpStudentsDTO.setInfoExecutionYear(infoExecutionYear);
+            teacherDfpStudentsDTO.setInfoExecutionPeriod(infoExecutionPeriod);
             teacherDfpStudentsDTO.setInfoTeacherDegreeFinalProjectStudentList(infoteacherDFPStudentList);
-        }
-        catch (ExcepcaoPersistencia e)
+        } catch (ExcepcaoPersistencia e)
         {
             e.printStackTrace(System.out);
             throw new FenixServiceException("Problems on database!");
@@ -107,5 +103,28 @@ public class ReadTeacherDFPStudentsService implements IServico
 
         return teacherDfpStudentsDTO;
 
+    }
+
+    /**
+     * @param infoExecutionPeriodParam
+     * @param executionPeriodDAO
+     * @return
+     * @throws ExcepcaoPersistencia
+     */
+    private IExecutionPeriod getExecutionPeriod(InfoExecutionPeriod infoExecutionPeriodParam, IPersistentExecutionPeriod executionPeriodDAO) throws ExcepcaoPersistencia
+    {
+        IExecutionPeriod executionPeriod;
+        if (infoExecutionPeriodParam == null)
+        {
+            executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
+
+        } else
+        {
+            executionPeriod =
+                (IExecutionPeriod) executionPeriodDAO.readByOId(
+                    new ExecutionPeriod(infoExecutionPeriodParam.getIdInternal()),
+                    false);
+        }
+        return executionPeriod;
     }
 }

@@ -95,4 +95,14 @@ public class TeacherInstitutionWorkingTimeOJB extends ObjectFenixOJB
 
     }
 
+    /* (non-Javadoc)
+     * @see ServidorPersistente.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime#readByExecutionPeriod(Dominio.IExecutionPeriod)
+     */
+    public List readByExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("executionPeriod.idInternal", executionPeriod.getIdInternal());
+        return queryList(TeacherInstitutionWorkTime.class, criteria);
+    }
+
 }

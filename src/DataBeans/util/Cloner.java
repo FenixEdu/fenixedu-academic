@@ -4208,8 +4208,8 @@ public abstract class Cloner
 	{
 		InfoTeacher infoTeacher =
 			Cloner.copyITeacher2InfoTeacher(teacherDegreeFinalProjectStudent.getTeacher());
-		InfoExecutionYear infoExecutionYear =
-			(InfoExecutionYear) Cloner.get(teacherDegreeFinalProjectStudent.getExecutionYear());
+		InfoExecutionPeriod infoExecutionPeriod =
+			(InfoExecutionPeriod) Cloner.get(teacherDegreeFinalProjectStudent.getExecutionPeriod());
 		InfoStudent infoStudent =
 			Cloner.copyIStudent2InfoStudent(teacherDegreeFinalProjectStudent.getStudent());
 
@@ -4218,7 +4218,7 @@ public abstract class Cloner
 
 		copyObjectProperties(infoTeacherDegreeFinalProjectStudent, teacherDegreeFinalProjectStudent);
 
-		infoTeacherDegreeFinalProjectStudent.setInfoExecutionYear(infoExecutionYear);
+		infoTeacherDegreeFinalProjectStudent.setInfoExecutionPeriod(infoExecutionPeriod);
 		infoTeacherDegreeFinalProjectStudent.setInfoStudent(infoStudent);
 		infoTeacherDegreeFinalProjectStudent.setInfoTeacher(infoTeacher);
 
@@ -4233,9 +4233,9 @@ public abstract class Cloner
 	{
 		ITeacher teacher =
 			Cloner.copyInfoTeacher2Teacher(infoTeacherDegreeFinalProjectStudent.getInfoTeacher());
-		IExecutionYear executionYear =
-			Cloner.copyInfoExecutionYear2IExecutionYear(
-				infoTeacherDegreeFinalProjectStudent.getInfoExecutionYear());
+		IExecutionPeriod executionPeriod =
+			Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
+				infoTeacherDegreeFinalProjectStudent.getInfoExecutionPeriod());
 		IStudent student =
 			Cloner.copyInfoStudent2IStudent(infoTeacherDegreeFinalProjectStudent.getInfoStudent());
 
@@ -4244,7 +4244,7 @@ public abstract class Cloner
 
 		copyObjectProperties(teacherDegreeFinalProjectStudent, infoTeacherDegreeFinalProjectStudent);
 
-		teacherDegreeFinalProjectStudent.setExecutionYear(executionYear);
+		teacherDegreeFinalProjectStudent.setExecutionPeriod(executionPeriod);
 		teacherDegreeFinalProjectStudent.setStudent(student);
 		teacherDegreeFinalProjectStudent.setTeacher(teacher);
 

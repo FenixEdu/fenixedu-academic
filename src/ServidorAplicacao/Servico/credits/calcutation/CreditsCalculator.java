@@ -4,15 +4,21 @@
  */
 package ServidorAplicacao.Servico.credits.calcutation;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import Dominio.IAula;
 import Dominio.IExecutionPeriod;
+import Dominio.IProfessorship;
+import Dominio.IShiftProfessorship;
 import Dominio.ISupportLesson;
 import Dominio.ITeacher;
+import Dominio.ITurno;
 import Dominio.degree.finalProject.ITeacherDegreeFinalProjectStudent;
 import Dominio.teacher.workTime.ITeacherInstitutionWorkTime;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentShiftProfessorship;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
 import ServidorPersistente.teacher.professorship.IPersistentSupportLesson;
@@ -24,9 +30,9 @@ import Util.date.TimePeriod;
  */
 public class CreditsCalculator
 {
-    private CreditsCalculator calculator = new CreditsCalculator();
+    private static CreditsCalculator calculator = new CreditsCalculator();
 
-    public CreditsCalculator getInstance()
+    public static CreditsCalculator getInstance()
     {
         return calculator;
     }
@@ -40,40 +46,44 @@ public class CreditsCalculator
     }
 
     /**
-     * @param teacher
-     * @param executionPeriod
-     * @param supportLesson
+     * @param professorship
+     * @param shiftProfessorshipAdded
+     * @param shiftProfessorshipDeleted
      * @param sp
-     * @return @throws
-     *              ExcepcaoPersistencia
+     * @return
      */
-    public Double calculateSupportLessonsAfterInsert( ITeacher teacher,
-                    IExecutionPeriod executionPeriod, ISupportLesson supportLesson,
-                    ISuportePersistente sp ) throws ExcepcaoPersistencia
+    public Double calculateLessons(
+        IProfessorship professorship,
+        List shiftProfessorshipAdded,
+        List shiftProfessorshipDeleted,
+        ISuportePersistente sp)
+        throws ExcepcaoPersistencia
     {
-        IPersistentSupportLesson supportLessonDAO = sp.getIPersistentSupportLesson();
+        IPersistentShiftProfessorship shiftProfessorshipDAO = sp.getIPersistentShiftProfessorship();
 
-        List supportLessonList = supportLessonDAO.readByTeacherAndExecutionPeriod(teacher,
-                        executionPeriod);
+        List shiftProfessorshipList = shiftProfessorshipDAO.readByProfessorship(professorship);
 
-        supportLessonList.remove(supportLesson);
+        List shiftProfessorshipToAnalyse = new ArrayList();
+        shiftProfessorshipToAnalyse.addAll(shiftProfessorshipList);
+        shiftProfessorshipToAnalyse.removeAll(shiftProfessorshipAdded);
+        shiftProfessorshipToAnalyse.addAll(shiftProfessorshipAdded);
 
-        Iterator iterator = supportLessonList.iterator();
+        Iterator iterator = shiftProfessorshipToAnalyse.iterator();
 
-        TimePeriod timePeriod = new TimePeriod(supportLesson.getStartTime(), supportLesson.getEndTime());
-        double hours = timePeriod.hours().doubleValue();
+        double hours = 0;
 
         while (iterator.hasNext())
         {
-            ISupportLesson sl = (ISupportLesson) iterator.next();
-            if (!sl.getIdInternal().equals(supportLesson.getIdInternal()))
+            IShiftProfessorship shiftProfessorship = (IShiftProfessorship) iterator.next();
+
+            if (!shiftProfessorshipDeleted.contains(shiftProfessorship))
             {
-                TimePeriod timePeriod2 = new TimePeriod(sl.getStartTime(), sl.getEndTime());
-                hours += timePeriod2.hours().doubleValue();
+                double shiftHours = calcuteShiftHours(shiftProfessorship.getShift());
+                hours += shiftHours * shiftProfessorship.getPercentage().doubleValue() / 100;
             }
         }
 
-        return new Double(hours + timePeriod.hours().doubleValue());
+        return new Double(hours);
     }
 
     /**
@@ -82,20 +92,22 @@ public class CreditsCalculator
      * @param supportLesson
      * @param sp
      * @return @throws
-     *              ExcepcaoPersistencia
+     *         ExcepcaoPersistencia
      */
-    public Double calculateSupportLessonsAfterDelete( ITeacher teacher,
-                    IExecutionPeriod executionPeriod, ISupportLesson supportLesson,
-                    ISuportePersistente sp ) throws ExcepcaoPersistencia
+    public Double calculateSupportLessonsAfterDelete(
+        ITeacher teacher,
+        IExecutionPeriod executionPeriod,
+        ISupportLesson supportLesson,
+        ISuportePersistente sp)
+        throws ExcepcaoPersistencia
     {
         IPersistentSupportLesson supportLessonDAO = sp.getIPersistentSupportLesson();
 
-        List supportLessonList = supportLessonDAO.readByTeacherAndExecutionPeriod(teacher,
-                        executionPeriod);
-
-        supportLessonList.remove(supportLesson);
+        List supportLessonList =
+            supportLessonDAO.readByTeacherAndExecutionPeriod(teacher, executionPeriod);
 
         Iterator iterator = supportLessonList.iterator();
+
         double hours = 0;
         while (iterator.hasNext())
         {
@@ -112,89 +124,34 @@ public class CreditsCalculator
     /**
      * @param teacher
      * @param executionPeriod
-     * @param degreeFinalProjectStudent
+     * @param supportLesson
      * @param sp
      * @return @throws
-     *              ExcepcaoPersistencia
+     *         ExcepcaoPersistencia
      */
-    public Double calcuteDegreeFinalProjectStudentAfterInsert( ITeacher teacher,
-                    IExecutionPeriod executionPeriod,
-                    ITeacherDegreeFinalProjectStudent degreeFinalProjectStudent, ISuportePersistente sp )
-                    throws ExcepcaoPersistencia
+    public Double calculateSupportLessonsAfterInsert(
+        ITeacher teacher,
+        IExecutionPeriod executionPeriod,
+        ISupportLesson supportLesson,
+        ISuportePersistente sp)
+        throws ExcepcaoPersistencia
     {
+        IPersistentSupportLesson supportLessonDAO = sp.getIPersistentSupportLesson();
 
-        IPersistentTeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudentDAO = sp
-                        .getIPersistentTeacherDegreeFinalProjectStudent();
-        List teacherDegreeFinalProjectStudents = teacherDegreeFinalProjectStudentDAO
-                        .readByTeacherAndExecutionYear(teacher, executionPeriod.getExecutionYear());
+        List supportLessonList =
+            supportLessonDAO.readByTeacherAndExecutionPeriod(teacher, executionPeriod);
 
-        double numberOfStudents = teacherDegreeFinalProjectStudents.size();
-        if (!teacherDegreeFinalProjectStudents.contains(degreeFinalProjectStudent))
-        {
-            numberOfStudents++;
-        }
+        Iterator iterator = supportLessonList.iterator();
 
-        return new Double(numberOfStudents);
-    }
-
-    /**
-     * @param teacher
-     * @param executionPeriod
-     * @param degreeFinalProjectStudent
-     * @param sp
-     * @return @throws
-     *              ExcepcaoPersistencia
-     */
-    public Double calcuteDegreeFinalProjectStudentAfterDelete( ITeacher teacher,
-                    IExecutionPeriod executionPeriod,
-                    ITeacherDegreeFinalProjectStudent degreeFinalProjectStudent, ISuportePersistente sp )
-                    throws ExcepcaoPersistencia
-    {
-        IPersistentTeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudentDAO = sp
-                        .getIPersistentTeacherDegreeFinalProjectStudent();
-        List teacherDegreeFinalProjectStudents = teacherDegreeFinalProjectStudentDAO
-                        .readByTeacherAndExecutionYear(teacher, executionPeriod.getExecutionYear());
-
-        double numberOfStudents = teacherDegreeFinalProjectStudents.size();
-        if (teacherDegreeFinalProjectStudents.contains(degreeFinalProjectStudent))
-        {
-            numberOfStudents--;
-        }
-
-        return new Double(numberOfStudents);
-    }
-
-    /**
-     * @param teacher
-     * @param executionPeriod
-     * @param teacherInstitutionWorkTime
-     * @param sp
-     * @return @throws
-     *              ExcepcaoPersistencia
-     */
-    public Double calcuteTeacherInstitutionWorkingTimeAfterInsert( ITeacher teacher,
-                    IExecutionPeriod executionPeriod,
-                    ITeacherInstitutionWorkTime teacherInstitutionWorkTime, ISuportePersistente sp )
-                    throws ExcepcaoPersistencia
-    {
-        IPersistentTeacherInstitutionWorkingTime teacherInstitutionWorkTimeDAO = sp
-                        .getIPersistentTeacherInstitutionWorkingTime();
-
-        List teacherInstitutionWorkTimes = teacherInstitutionWorkTimeDAO
-                        .readByTeacherAndExecutionPeriod(teacher, executionPeriod);
-
-        teacherInstitutionWorkTimes.remove(teacherInstitutionWorkTime);
-
-        Iterator iterator = teacherInstitutionWorkTimes.iterator();
-        TimePeriod timePeriod = new TimePeriod(teacherInstitutionWorkTime.getStartTime(),
-                        teacherInstitutionWorkTime.getEndTime());
+        TimePeriod timePeriod = new TimePeriod(supportLesson.getStartTime(), supportLesson.getEndTime());
         double hours = timePeriod.hours().doubleValue();
+
         while (iterator.hasNext())
         {
-            ITeacherInstitutionWorkTime tiwt = (ITeacherInstitutionWorkTime) iterator.next();
-            if (!tiwt.getIdInternal().equals(teacherInstitutionWorkTime.getIdInternal()))
+            ISupportLesson sl = (ISupportLesson) iterator.next();
+            if (!sl.getIdInternal().equals(supportLesson.getIdInternal()))
             {
-                TimePeriod timePeriod2 = new TimePeriod(tiwt.getStartTime(), tiwt.getEndTime());
+                TimePeriod timePeriod2 = new TimePeriod(sl.getStartTime(), sl.getEndTime());
                 hours += timePeriod2.hours().doubleValue();
             }
         }
@@ -203,23 +160,128 @@ public class CreditsCalculator
     }
 
     /**
+     * @param degreeFinalProjectStudent
+     * @param iterator
+     * @param numberOfStudents
+     * @return
+     */
+    private double calculeDFPSCredits(ITeacherDegreeFinalProjectStudent degreeFinalProjectStudent, Iterator iterator, double numberOfStudents)
+    {
+        while (iterator.hasNext())
+        {
+            ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent =
+                (ITeacherDegreeFinalProjectStudent) iterator.next();
+
+            if (!teacherDegreeFinalProjectStudent
+                .getIdInternal()
+                .equals(degreeFinalProjectStudent.getIdInternal()))
+            {
+                numberOfStudents += teacherDegreeFinalProjectStudent.getPercentage().doubleValue() / 100;
+            }
+        }
+        return numberOfStudents;
+    }
+
+    /**
+     * @param teacher
+     * @param executionPeriod
+     * @param degreeFinalProjectStudent
+     * @param sp
+     * @return @throws
+     *         ExcepcaoPersistencia
+     */
+    public Double calcuteDegreeFinalProjectStudentAfterDelete(
+        ITeacher teacher,
+        IExecutionPeriod executionPeriod,
+        ITeacherDegreeFinalProjectStudent degreeFinalProjectStudent,
+        ISuportePersistente sp)
+        throws ExcepcaoPersistencia
+    {
+        IPersistentTeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudentDAO =
+            sp.getIPersistentTeacherDegreeFinalProjectStudent();
+        List teacherDegreeFinalProjectStudents =
+            teacherDegreeFinalProjectStudentDAO.readByTeacherAndExecutionPeriod(
+                teacher,
+                executionPeriod);
+
+        Iterator iterator = teacherDegreeFinalProjectStudents.iterator();
+
+        double numberOfStudents = 0;
+        
+        numberOfStudents = calculeDFPSCredits(degreeFinalProjectStudent, iterator, numberOfStudents);
+        
+        return new Double(numberOfStudents);
+    }
+
+    /**
+     * @param teacher
+     * @param executionPeriod
+     * @param degreeFinalProjectStudent
+     * @param sp
+     * @return @throws
+     *         ExcepcaoPersistencia
+     */
+    public Double calcuteDegreeFinalProjectStudentAfterInsert(
+        ITeacher teacher,
+        IExecutionPeriod executionPeriod,
+        ITeacherDegreeFinalProjectStudent degreeFinalProjectStudent,
+        ISuportePersistente sp)
+        throws ExcepcaoPersistencia
+    {
+
+        IPersistentTeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudentDAO =
+            sp.getIPersistentTeacherDegreeFinalProjectStudent();
+        List teacherDegreeFinalProjectStudents =
+            teacherDegreeFinalProjectStudentDAO.readByTeacherAndExecutionPeriod(
+                teacher,
+                executionPeriod);
+
+        Iterator iterator = teacherDegreeFinalProjectStudents.iterator();
+
+        double numberOfStudents = degreeFinalProjectStudent.getPercentage().doubleValue() / 100;
+        
+        numberOfStudents = calculeDFPSCredits(degreeFinalProjectStudent, iterator, numberOfStudents);
+
+        return new Double(numberOfStudents);
+    }
+
+    /**
+     * @param turno
+     * @return
+     */
+    private double calcuteShiftHours(ITurno shift)
+    {
+        Iterator lessonsIterator = shift.getAssociatedLessons().iterator();
+        double hours = 0;
+        while (lessonsIterator.hasNext())
+        {
+            IAula lesson = (IAula) lessonsIterator.next();
+            TimePeriod timePeriod = new TimePeriod(lesson.getInicio(), lesson.getFim());
+            hours += timePeriod.hours().doubleValue();
+        }
+        return hours;
+    }
+
+    /**
      * @param teacher
      * @param executionPeriod
      * @param teacherInstitutionWorkTime
      * @param sp
      * @return @throws
-     *              ExcepcaoPersistencia
+     *         ExcepcaoPersistencia
      */
-    public Double calcuteTeacherInstitutionWorkingTimeAfterDelete( ITeacher teacher,
-                    IExecutionPeriod executionPeriod,
-                    ITeacherInstitutionWorkTime teacherInstitutionWorkTime, ISuportePersistente sp )
-                    throws ExcepcaoPersistencia
+    public Double calcuteTeacherInstitutionWorkingTimeAfterDelete(
+        ITeacher teacher,
+        IExecutionPeriod executionPeriod,
+        ITeacherInstitutionWorkTime teacherInstitutionWorkTime,
+        ISuportePersistente sp)
+        throws ExcepcaoPersistencia
     {
-        IPersistentTeacherInstitutionWorkingTime teacherInstitutionWorkingTimeDAO = sp
-                        .getIPersistentTeacherInstitutionWorkingTime();
+        IPersistentTeacherInstitutionWorkingTime teacherInstitutionWorkingTimeDAO =
+            sp.getIPersistentTeacherInstitutionWorkingTime();
 
-        List teacherInstitutionWorkTimes = teacherInstitutionWorkingTimeDAO
-                        .readByTeacherAndExecutionPeriod(teacher, executionPeriod);
+        List teacherInstitutionWorkTimes =
+            teacherInstitutionWorkingTimeDAO.readByTeacherAndExecutionPeriod(teacher, executionPeriod);
 
         teacherInstitutionWorkTimes.remove(teacherInstitutionWorkTime);
 
@@ -232,6 +294,46 @@ public class CreditsCalculator
             {
                 TimePeriod timePeriod = new TimePeriod(tiwt.getStartTime(), tiwt.getEndTime());
                 hours += timePeriod.hours().doubleValue();
+            }
+        }
+
+        return new Double(hours);
+    }
+
+    /**
+     * @param teacher
+     * @param executionPeriod
+     * @param teacherInstitutionWorkTime
+     * @param sp
+     * @return @throws
+     *         ExcepcaoPersistencia
+     */
+    public Double calcuteTeacherInstitutionWorkingTimeAfterInsert(
+        ITeacher teacher,
+        IExecutionPeriod executionPeriod,
+        ITeacherInstitutionWorkTime teacherInstitutionWorkTime,
+        ISuportePersistente sp)
+        throws ExcepcaoPersistencia
+    {
+        IPersistentTeacherInstitutionWorkingTime teacherInstitutionWorkTimeDAO =
+            sp.getIPersistentTeacherInstitutionWorkingTime();
+
+        List teacherInstitutionWorkTimes =
+            teacherInstitutionWorkTimeDAO.readByTeacherAndExecutionPeriod(teacher, executionPeriod);
+
+        Iterator iterator = teacherInstitutionWorkTimes.iterator();
+        TimePeriod timePeriod =
+            new TimePeriod(
+                teacherInstitutionWorkTime.getStartTime(),
+                teacherInstitutionWorkTime.getEndTime());
+        double hours = timePeriod.hours().doubleValue();
+        while (iterator.hasNext())
+        {
+            ITeacherInstitutionWorkTime tiwt = (ITeacherInstitutionWorkTime) iterator.next();
+            if (!tiwt.getIdInternal().equals(teacherInstitutionWorkTime.getIdInternal()))
+            {
+                TimePeriod timePeriod2 = new TimePeriod(tiwt.getStartTime(), tiwt.getEndTime());
+                hours += timePeriod2.hours().doubleValue();
             }
         }
 

@@ -67,7 +67,7 @@ public class ShiftProfessorshipOJB extends ObjectFenixOJB implements IPersistent
                 .getExecutionPeriod().getName());
         criteria.addEqualTo("professorShip.executionCourse.executionPeriod.executionYear.year",
                 executionCourse.getExecutionPeriod().getExecutionYear().getYear());
-
+        
         Query queryPB = new QueryByCriteria(ShiftProfessorship.class, criteria);
         teacherShiftPercentageFromBD = (IShiftProfessorship) broker.getObjectByQuery(queryPB);
         return teacherShiftPercentageFromBD;
@@ -193,6 +193,16 @@ public class ShiftProfessorshipOJB extends ObjectFenixOJB implements IPersistent
     {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("professorship.idInternal", professorship.getIdInternal());		
+        return queryList(ShiftProfessorship.class, criteria);
+    }
+
+    /* (non-Javadoc)
+     * @see ServidorPersistente.IPersistentShiftProfessorship#readByExecutionPeriod(Dominio.IExecutionPeriod)
+     */
+    public List readByExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("professorship.executionCourse.executionPeriod.idInternal", executionPeriod.getIdInternal());		
         return queryList(ShiftProfessorship.class, criteria);
     }
 }

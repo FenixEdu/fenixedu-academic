@@ -267,9 +267,9 @@ public class ReadTeacherCreditsSheet implements IServico
             sp.getIPersistentTeacherDegreeFinalProjectStudent();
 
         List teacherDegreeFinalProjectStudentList =
-            teacherDegreeFinalProjectStudentDAO.readByTeacherAndExecutionYear(
+            teacherDegreeFinalProjectStudentDAO.readByTeacherAndExecutionPeriod(
                 teacher,
-                executionPeriod.getExecutionYear());
+                executionPeriod);
         List infoTeacherDegreeFinalProjectStudentList =
             (List) CollectionUtils.collect(teacherDegreeFinalProjectStudentList, new Transformer()
         {

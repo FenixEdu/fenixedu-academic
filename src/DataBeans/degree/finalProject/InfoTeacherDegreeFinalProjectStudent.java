@@ -4,7 +4,7 @@
  */
 package DataBeans.degree.finalProject;
 
-import DataBeans.InfoExecutionYear;
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoObject;
 import DataBeans.InfoStudent;
 import DataBeans.InfoTeacher;
@@ -14,16 +14,16 @@ import DataBeans.InfoTeacher;
  */
 public class InfoTeacherDegreeFinalProjectStudent extends InfoObject
 {
-    private InfoExecutionYear infoExecutionYear;
+    private InfoExecutionPeriod infoExecutionPeriod;
     private InfoStudent infoStudent;
     private InfoTeacher infoTeacher;
     private Double percentage;
     /**
 	 * @return Returns the infoExecutionYear.
 	 */
-    public InfoExecutionYear getInfoExecutionYear()
+    public InfoExecutionPeriod getInfoExecutionPeriod()
     {
-        return this.infoExecutionYear;
+        return this.infoExecutionPeriod;
     }
 
     /**
@@ -54,9 +54,9 @@ public class InfoTeacherDegreeFinalProjectStudent extends InfoObject
 	 * @param infoExecutionYear
 	 *                   The infoExecutionYear to set.
 	 */
-    public void setInfoExecutionYear(InfoExecutionYear infoExecutionYear)
+    public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod)
     {
-        this.infoExecutionYear = infoExecutionYear;
+        this.infoExecutionPeriod = infoExecutionPeriod;
     }
 
     /**

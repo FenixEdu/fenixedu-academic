@@ -54,4 +54,10 @@ public interface IPersistentSupportLesson extends IPersistentObject
         throws ExcepcaoPersistencia;
 
     public void delete(ISupportLesson supportLesson) throws ExcepcaoPersistencia;
+
+    /**
+     * @param executionPeriod
+     * @return
+     */
+    public List readByExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
 }
