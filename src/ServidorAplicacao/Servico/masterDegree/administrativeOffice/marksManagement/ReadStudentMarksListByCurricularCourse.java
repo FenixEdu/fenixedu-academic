@@ -14,8 +14,6 @@ import java.util.List;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.util.Cloner;
@@ -30,6 +28,7 @@ import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import framework.factory.ServiceManagerServiceFactory;
 
 public class ReadStudentMarksListByCurricularCourse implements IServico
 {

@@ -5,6 +5,7 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <h2><bean:message key="label.students.listMarks"/></h2>
+
 <logic:present name="infoSiteEnrolmentEvaluation">
 	<bean:define id="studentmMarksListComponent" name="infoSiteEnrolmentEvaluation"  />
 	<table width="100%">
@@ -45,10 +46,16 @@
 			<td class="listClasses-header"><bean:message key="label.observation"  /></td>
 		</tr>
 		<logic:iterate id="enrolment" name="studentmMarksListComponent" >	
-			<logic:iterate id="enrolmentEvaluation" name="enrolment" property="enrolmentEvaluations" type="DataBeans.InfoEnrolmentEvaluation" indexId="evaluationId" >	
-    			<bean:define id="enrolmentEvaluationCode" name="enrolmentEvaluation" property="idInternal"/>
-    			<bean:define id="teacherName" name="enrolmentEvaluation" property="infoPersonResponsibleForGrade" />
-       			<bean:define id="studentCode" name="enrolmentEvaluation" property="infoEnrolment.infoStudentCurricularPlan.infoStudent.idInternal" />
+			<logic:iterate id="enrolmentEvaluation" name="enrolment" property="enrolmentEvaluations" type="DataBeans.InfoEnrolmentEvaluation" indexId="evaluationId" >		
+    				 <bean:define id="enrolmentEvaluationCode" name="enrolmentEvaluation" property="idInternal"/>   		
+    	  	   <logic:notEmpty name="enrolmentEvaluation" property="infoPersonResponsibleForGrade" >
+    				 <bean:define id="teacherName" name="enrolmentEvaluation" property="infoPersonResponsibleForGrade" /> 
+       		   </logic:notEmpty> 
+       		   <logic:empty name="enrolmentEvaluation" property="infoPersonResponsibleForGrade" >
+    				 <bean:define id="teacherCode" value="&nbsp;"/> 
+       		   </logic:empty> 
+    
+       		<bean:define id="studentCode" name="enrolmentEvaluation" property="infoEnrolment.infoStudentCurricularPlan.infoStudent.idInternal" /> 
     			<tr>
 	    			<td class="listClasses" >	
 		    			<bean:write name="enrolmentEvaluation" property="grade"/>
@@ -58,9 +65,6 @@
 		    				<dt:format pattern="dd-MM-yyyy">
 								<bean:write name="enrolmentEvaluation" property="examDate.time"/>
 							</dt:format>
-		    			<%--
-		   	         		<bean:define id="date" name="enrolmentEvaluation" property="examDate" />
-							<%= Data.format2DayMonthYear((Date) date) %>--%>
 						</logic:present>
 					</td>
 					<td  class="listClasses" >
@@ -68,17 +72,21 @@
 							<dt:format pattern="dd-MM-yyyy">
 								<bean:write name="enrolmentEvaluation" property="gradeAvailableDate.time"/>
 							</dt:format>
-						<%--
-		   	         		<bean:define id="date" name="enrolmentEvaluation" property="gradeAvailableDate" />
-							<%= Data.format2DayMonthYear((Date) date) %>--%>
 						</logic:present>
 					</td>
 					<td  class="listClasses" >
 						<bean:write name="enrolmentEvaluation" property="enrolmentEvaluationType" />
 					</td>
-					<td  class="listClasses" >
-						<bean:write name="teacherName" property="nome" />
-					</td>
+					<logic:notEmpty name="enrolmentEvaluation" property="infoPersonResponsibleForGrade" >
+						<td  class="listClasses" >
+							<bean:write name="teacherName" property="nome" />
+						</td>
+					</logic:notEmpty>
+					<logic:empty name="enrolmentEvaluation" property="infoPersonResponsibleForGrade" >
+						<td  class="listClasses" >
+						&nbsp;
+						</td>
+					</logic:empty>
 					<logic:present name="showMarks" >
 						<logic:empty name="enrolmentEvaluation" property="infoEmployee" >	
 							<td  class="listClasses" >&nbsp;</td> 
@@ -92,9 +100,6 @@
 								<dt:format pattern="dd-MM-yyyy">
 									<bean:write name="enrolmentEvaluation" property="when.time"/>
 								</dt:format>
-<%--							
-								<bean:define id="date" name="enrolmentEvaluation" property="when" />
-								<%= Data.format2DayMonthYear((Date) date) %>	--%>
 							</td> 
 						</logic:notEmpty>
 					</logic:present >
@@ -108,7 +113,7 @@
 					</logic:empty>
 				</tr>	
 			</logic:iterate>	
-		</logic:iterate>
+		</logic:iterate> 
    	</table>    
 	<logic:notPresent name="showMarks" >
 		<html:form action="/changeMarkDispatchAction?method=studentMarkChanged" >

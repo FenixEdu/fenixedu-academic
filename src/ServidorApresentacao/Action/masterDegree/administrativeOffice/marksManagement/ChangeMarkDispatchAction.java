@@ -30,7 +30,6 @@ import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
-import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.Data;
@@ -206,45 +205,93 @@ public class ChangeMarkDispatchAction extends DispatchAction
 		}
 
 		Locale locale = new Locale("pt", "PT");
-
-		String examDay =
+		String examDay=null;
+		String examMonth=null;
+		String examYear=null;
+		String gradeAvailableDay =null;
+		String gradeAvailableMonth =null;
+		String gradeAvailableYear =null;
+        if (newEnrolmentEvaluation.getExamDate()!=null){
+		 examDay =
 			FormataData.getDay(
 				DateFormat.getDateInstance(DateFormat.SHORT, locale).format(
 					newEnrolmentEvaluation.getExamDate()));
-		String examMonth =
+        }else{
+			 examDay = "";
+       
+        }
+        if(newEnrolmentEvaluation.getExamDate()!=null){
+		 examMonth =
 			FormataData.getMonth(
 				DateFormat.getDateInstance(DateFormat.SHORT, locale).format(
 					newEnrolmentEvaluation.getExamDate()));
-		String examYear =
+        }else{
+			 examMonth ="";
+        }
+        if (newEnrolmentEvaluation.getExamDate()!=null){
+		 examYear =
 			FormataData.getYear(
 				DateFormat.getDateInstance(DateFormat.SHORT, locale).format(
 					newEnrolmentEvaluation.getExamDate()));
-		String gradeAvailableDay =
+        }else{
+			 examYear ="";
+        }
+        if (newEnrolmentEvaluation.getGradeAvailableDate()!=null){
+		 gradeAvailableDay =
 			FormataData.getDay(
 				DateFormat.getDateInstance(DateFormat.SHORT, locale).format(
 					newEnrolmentEvaluation.getGradeAvailableDate()));
-		String gradeAvailableMonth =
+        }else{
+			 gradeAvailableDay ="";
+        }
+        if (newEnrolmentEvaluation.getGradeAvailableDate()!=null){
+		 gradeAvailableMonth =
 			FormataData.getMonth(
 				DateFormat.getDateInstance(DateFormat.SHORT, locale).format(
 					newEnrolmentEvaluation.getGradeAvailableDate()));
-		String gradeAvailableYear =
+        }else{
+			 gradeAvailableMonth ="";
+        }
+        if (newEnrolmentEvaluation.getGradeAvailableDate()!=null){
+		 gradeAvailableYear =
 			FormataData.getYear(
 				DateFormat.getDateInstance(DateFormat.SHORT, locale).format(
 					newEnrolmentEvaluation.getGradeAvailableDate()));
+        }else{
+			 gradeAvailableYear ="";
+        }
 
 		DynaActionForm studentNumberForm = (DynaActionForm) form;
 
 		studentNumberForm.set("examDateYear", examYear);
-		int month = Integer.valueOf(examMonth).intValue() - 1;
-		studentNumberForm.set("examDateMonth", String.valueOf(month));
+		
+		if (examMonth != ""){
+			int month = Integer.valueOf(examMonth).intValue() - 1;
+			studentNumberForm.set("examDateMonth", String.valueOf(month));
+		}else{
+			studentNumberForm.set("examDateMonth", "");
+		}
+		if (examDay!=""){
 		studentNumberForm.set("examDateDay", new Integer(Integer.parseInt(examDay)).toString());
+		}else{
+			studentNumberForm.set("examDateDay","");
+		}
 
 		studentNumberForm.set("gradeAvailableDateYear", gradeAvailableYear);
-		month = Integer.valueOf(gradeAvailableMonth).intValue() - 1;
-		studentNumberForm.set("gradeAvailableDateMonth", String.valueOf(month));
+		if (gradeAvailableMonth != ""){
+			int month = Integer.valueOf(gradeAvailableMonth).intValue() - 1;
+			studentNumberForm.set("gradeAvailableDateMonth", String.valueOf(month));
+		}else{
+			studentNumberForm.set("gradeAvailableDateMonth", "");
+		}
+		if(gradeAvailableDay !=""){
 		studentNumberForm.set(
 			"gradeAvailableDateDay",
 			new Integer(Integer.parseInt(gradeAvailableDay)).toString());
+		}else{
+			studentNumberForm.set(
+						"gradeAvailableDateDay","");
+		}
 		studentNumberForm.set("grade", newEnrolmentEvaluation.getGrade());
 		studentNumberForm.set("observation", newEnrolmentEvaluation.getObservation());
 		studentNumberForm.set(
@@ -254,6 +301,7 @@ public class ChangeMarkDispatchAction extends DispatchAction
 		//		responsible teacher
 		InfoTeacher infoTeacher = null;
 
+        if (newEnrolmentEvaluation.getInfoPersonResponsibleForGrade()!= null){
 		try
 		{
 			Object args[] = { newEnrolmentEvaluation.getInfoPersonResponsibleForGrade().getUsername()};
@@ -268,12 +316,16 @@ public class ChangeMarkDispatchAction extends DispatchAction
 			throw new ExistingActionException(e);
 		}
 		studentNumberForm.set("teacherNumber", String.valueOf(infoTeacher.getTeacherNumber()));
+        }else{
+			studentNumberForm.set("teacherNumber","");
+        }
 		request.setAttribute(
 			SessionConstants.ENROLMENT_EVALUATION_TYPE_LIST,
 			new EnrolmentEvaluationType().toArrayList());
 		request.setAttribute(SessionConstants.MONTH_DAYS_KEY, Data.getMonthDays());
 		request.setAttribute(SessionConstants.MONTH_LIST_KEY, Data.getMonths());
 		request.setAttribute(SessionConstants.YEARS_KEY, Data.getYears());
+
 
 		request.setAttribute("lastEnrolmentEavluation", newEnrolmentEvaluation);
 		request.setAttribute("infoSiteEnrolmentEvaluation", infoSiteEnrolmentEvaluations);
@@ -305,6 +357,10 @@ public class ChangeMarkDispatchAction extends DispatchAction
 		EnrolmentEvaluationType enrolmentEvaluationType = new EnrolmentEvaluationType(evaluation);
 
 		Integer teacherNumber = null;
+			
+
+		
+		
 
 		try
 		{
@@ -349,8 +405,12 @@ public class ChangeMarkDispatchAction extends DispatchAction
 			|| (examMonth.length() == 0)
 			|| (examYear.length() == 0))
 		{
+			ActionErrors actionErrors = new ActionErrors();
+			actionErrors.add("TeacharNumberRequired", new ActionError("error.data.exame.inválida"));
+			saveErrors(request, actionErrors);
+			return chooseStudentMarks(mapping, form, request, response);
 			//				infoEnrolmentEvaluation.setExamDate(null);
-			throw new FenixActionException("error.data.exame.inválida");
+			//throw new FenixActionException("error.data.exame.inválida");
 		}
 		else
 		{
@@ -374,8 +434,13 @@ public class ChangeMarkDispatchAction extends DispatchAction
 			|| (gradeAvailableDateMonth.length() == 0)
 			|| (gradeAvailableDateYear.length() == 0))
 		{
+			
+			ActionErrors actionErrors = new ActionErrors();
+			actionErrors.add("TeacharNumberRequired", new ActionError("error.data.lançamento.inválida"));
+			saveErrors(request, actionErrors);
+			return chooseStudentMarks(mapping, form, request, response);
 			//				infoEnrolmentEvaluation.setGradeAvailableDate(null);
-			throw new FenixActionException("error.data.lançamento.inválida");
+			//throw new FenixActionException("error.data.lançamento.inválida");
 		}
 		else
 		{
@@ -404,26 +469,35 @@ public class ChangeMarkDispatchAction extends DispatchAction
 		infoEnrolmentEvaluation.setInfoEnrolment(infoEnrolment);
 
 		List evaluationsWithError = null;
-		try
-		{
-			IUserView userView = SessionUtils.getUserView(request);
-			Object args[] =
-				{
-					Integer.valueOf(curricularCourseId),
-					enrolmentEvaluationCode,
-					infoEnrolmentEvaluation,
-					infoTeacher.getTeacherNumber(),
-					userView };
-			evaluationsWithError =
-				(List) ServiceManagerServiceFactory.executeService(
-					userView,
-					"AlterStudentEnrolmentEvaluation",
-					args);
-		}
-		catch (NonExistingServiceException e)
-		{
-			throw new NonExistingActionException(teacherNumber.toString(), e);
-		}
+
+			try
+			{
+				IUserView userView = SessionUtils.getUserView(request);
+				Object args[] =
+					{
+						Integer.valueOf(curricularCourseId),
+						enrolmentEvaluationCode,
+						infoEnrolmentEvaluation,
+						infoTeacher.getTeacherNumber(),
+						userView };
+				evaluationsWithError =
+					(List) ServiceManagerServiceFactory.executeService(
+						userView,
+						"AlterStudentEnrolmentEvaluation",
+						args);
+			}
+			catch (NonExistingServiceException e)
+			{
+				ActionErrors actionErrors = new ActionErrors();
+				actionErrors.add("TeacharNumberRequired", new ActionError("message.non.existing.teacher"));
+				//error.teacherNumber.required
+				
+				saveErrors(request, actionErrors);
+				return chooseStudentMarks(mapping, form, request, response);
+				
+				//throw new NonExistingActionException(teacherNumber.toString(), e);
+			}
+		
 
 		//			check for invalid marks
 		ActionErrors actionErrors = null;

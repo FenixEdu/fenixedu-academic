@@ -39,7 +39,7 @@ public class ShowMarkDispatchAction extends DispatchAction
 		String curricularCourseId = MarksManagementDispatchAction.getFromRequest("courseId", request);
 		MarksManagementDispatchAction.getFromRequest("objectCode", request);
 		MarksManagementDispatchAction.getFromRequest("degreeId", request);
-		
+System.out.println("markManagement" + curricularCourseId);	
 		// Get students List
 		IUserView userView = SessionUtils.getUserView(request);
 		Object args[] = { userView, Integer.valueOf(curricularCourseId), null };
