@@ -5,6 +5,8 @@
 
     <property environment="env"/>
 
+	<property name="encoding" value="ISO-8859-15"/>
+
     <!--Directorios com codigo fonte-->
     <property location="src" name="src"/> 
     <property location="src_tests" name="src.tests"/> 
@@ -48,7 +50,8 @@
         <javac destdir="${classes}"
                extdirs="${libs};${libs.web}"
                srcdir="${src}"
-               debug="on"/>
+               debug="on"
+               encoding="${encoding}"/>
     </target>
     
     <target name="compile-tests"
@@ -57,7 +60,8 @@
         <mkdir dir="${classes.tests}"/>
         <javac classpath="${classes}"
                destdir="${classes.tests}"
-               extdirs="${libs};${libs.web}" srcdir="${src.tests}"/>
+               extdirs="${libs};${libs.web}" srcdir="${src.tests}"
+               encoding="${encoding}"/>
     </target>
     
     <target name="clean-proj"
@@ -323,6 +327,7 @@
             url="jdbc:mysql://localhost/"
             userid="root"
             password=""
+            encoding="${encoding}"
         >
         DROP DATABASE IF EXISTS ciapl;
         CREATE DATABASE ciapl;
@@ -332,6 +337,7 @@
             url="jdbc:mysql://localhost/ciapl"
             userid="root"
             password=""
+            encoding="${encoding}"            
         >
 	        <fileset dir="${sql}">
     			<include name="ciapl*.sql"/>
@@ -353,6 +359,7 @@
             url="jdbc:mysql://localhost/ciapl"
             userid="root"
             password=""
+            encoding="${encoding}"
             src="${sql}/tests-data_tfc130.sql"
         >
             <classpath>
