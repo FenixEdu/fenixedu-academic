@@ -19,6 +19,7 @@ import Dominio.CentroCusto;
 import Dominio.FuncNaoDocente;
 import Dominio.Funcionario;
 import Dominio.Horario;
+import Dominio.ICostCenter;
 import Dominio.Pessoa;
 import Dominio.StatusAssiduidade;
 import constants.assiduousness.Constants;
@@ -196,7 +197,7 @@ public class ConsultarFuncionarioMostrarForm extends ActionForm {
 		Pessoa pessoa,
 		Funcionario funcionario,
 		StatusAssiduidade statusAssiduidade,
-		CentroCusto centroCusto,
+		ICostCenter centroCusto,
 		FuncNaoDocente funcNaoDocente,
 		ArrayList rotacaoHorario,
 		HashMap listaRegimesRotacao) {
