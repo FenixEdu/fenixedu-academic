@@ -22,7 +22,7 @@ public interface IPersistentStudentGroup extends IPersistentObject{
 	public void deleteAll() throws ExcepcaoPersistencia;
 	public List readAll() throws ExcepcaoPersistencia;
 	public void lockWrite(IStudentGroup studentGroup) throws ExcepcaoPersistencia;
-	public IStudentGroup readStudentGroupByGroupPropertiesAndGroupNumberAndShift(IGroupProperties groupProperties,Integer studentGroupNumber,ITurno shift) throws ExcepcaoPersistencia;
+	public IStudentGroup readStudentGroupByGroupPropertiesAndGroupNumber(IGroupProperties groupProperties,Integer studentGroupNumber) throws ExcepcaoPersistencia;
 	public List readAllStudentGroupByGroupProperties(IGroupProperties groupProperties) throws ExcepcaoPersistencia;
 	public List readAllStudentGroupByGroupPropertiesAndShift(IGroupProperties groupProperties,ITurno shift) throws ExcepcaoPersistencia;
 }

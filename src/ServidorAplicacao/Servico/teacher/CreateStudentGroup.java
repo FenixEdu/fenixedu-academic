@@ -66,8 +66,7 @@ public class CreateStudentGroup implements IServico {
 
 	private void checkIfStudentGroupExists(
 		Integer groupNumber,
-		IGroupProperties groupProperties,
-		ITurno shift)
+		IGroupProperties groupProperties)
 		throws FenixServiceException {
 
 		IStudentGroup studentGroup = null;
@@ -79,10 +78,9 @@ public class CreateStudentGroup implements IServico {
 			
 			studentGroup =
 				persistentStudentGroup
-					.readStudentGroupByGroupPropertiesAndGroupNumberAndShift(
+					.readStudentGroupByGroupPropertiesAndGroupNumber(
 					groupProperties,
-					groupNumber,
-					shift);
+					groupNumber);
 		
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia.getMessage());
@@ -115,10 +113,14 @@ public class CreateStudentGroup implements IServico {
 			persistentGroupProperites = persistentSupport.getIPersistentGroupProperties();
 			IGroupProperties groupProperties = (IGroupProperties) persistentGroupProperites.readByOId(new GroupProperties(groupPropertiesCode),false);		
 			
-			persistentShift = persistentSupport.getITurnoPersistente();
-			ITurno shift = (ITurno) persistentShift.readByOId(new Turno(shiftCode),false);
+			ITurno shift = null;
+			if(shiftCode!=null)
+			{
+				persistentShift = persistentSupport.getITurnoPersistente();
+				shift = (ITurno) persistentShift.readByOId(new Turno(shiftCode),false);
+			}
 						
-			checkIfStudentGroupExists(groupNumber, groupProperties, shift);
+			checkIfStudentGroupExists(groupNumber, groupProperties);
 			
 			
 			persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();

@@ -7,9 +7,6 @@ package ServidorAplicacao.Servico.teacher;
 
 
 
-import java.util.Iterator;
-import java.util.List;
-
 import Dominio.IStudentGroup;
 import Dominio.ITurno;
 import Dominio.StudentGroup;
@@ -59,7 +56,7 @@ public class EditStudentGroupShift implements IServico {
 	public Boolean run(Integer studentGroupCode,Integer newShiftCode)
 		throws FenixServiceException {
 
-		System.out.println("ENTRA NO SERVICO EDIT STUDENT GROUP SHIFT");
+		
 		ITurnoPersistente persistentShift = null;
 		IPersistentStudentGroup persistentStudentGroup = null;
 		
@@ -73,19 +70,19 @@ public class EditStudentGroupShift implements IServico {
 			persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
 			IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOId(new StudentGroup(studentGroupCode),false);
 			
-			List studentGroupList = persistentStudentGroup.readAllStudentGroupByGroupPropertiesAndShift(studentGroup.getGroupProperties(),shift);
-			
-			IStudentGroup existingStudentGroup = new StudentGroup();
-			Iterator iter = studentGroupList.iterator();
-			while(iter.hasNext())
-			{
-				existingStudentGroup = (IStudentGroup)iter.next();
-				if(existingStudentGroup.getGroupNumber().equals(studentGroup.getGroupNumber()))
-				{
-					return new Boolean(false);
-				}			
-			}
-			
+//			List studentGroupList = persistentStudentGroup.readAllStudentGroupByGroupPropertiesAndShift(studentGroup.getGroupProperties(),studentGroup.getShift());
+//			
+//			IStudentGroup existingStudentGroup = new StudentGroup();
+//			Iterator iter = studentGroupList.iterator();
+//			while(iter.hasNext())
+//			{
+//				existingStudentGroup = (IStudentGroup)iter.next();
+//				if(existingStudentGroup.getGroupNumber().equals(studentGroup.getGroupNumber()))
+//				{
+//					return new Boolean(false);
+//				}			
+//			}
+//			
 						
 			studentGroup.setShift(shift);
 			persistentStudentGroup.lockWrite(studentGroup);

@@ -30,21 +30,20 @@ public class StudentGroup extends DomainObject implements IStudentGroup {
 	/** 
 	 * Construtor
 	 */
-	public StudentGroup(Integer groupNumber,IGroupProperties groupProperties, ITurno shift) {
-			
-		this.groupNumber = groupNumber;
-		this.groupProperties = groupProperties;
-		this.shift = shift;
-	}
-	
-	/** 
-	* Construtor when student group doesn't belong to a shift
-	*/
 	public StudentGroup(Integer groupNumber,IGroupProperties groupProperties) {
 			
 		this.groupNumber = groupNumber;
 		this.groupProperties = groupProperties;
-		this.shift = null;
+	}
+	
+	/** 
+	 * Construtor
+	 */
+	public StudentGroup(Integer groupNumber,IGroupProperties groupProperties,ITurno shift) {
+			
+		this.groupNumber = groupNumber;
+		this.groupProperties = groupProperties;
+		this.shift = shift;
 	}
 	
 	/**
@@ -55,15 +54,7 @@ public class StudentGroup extends DomainObject implements IStudentGroup {
 		if (arg0 instanceof IStudentGroup) {
 			result = (getGroupProperties().equals(((IStudentGroup) arg0).getGroupProperties()))&&
 					 (getGroupNumber().equals(((IStudentGroup) arg0).getGroupNumber()));
-			if(getShift()!=null)
-			{
-				result= result &&(getShift().equals(((IStudentGroup) arg0).getShift()));
-			}
-			else
-			if(((IStudentGroup) arg0).getShift()!=null)
-			{
-				result = false;
-			}
+			
 		} 
 		return result;		
 	}

@@ -167,7 +167,7 @@ create table STUDENT_GROUP (
    KEY_SHIFT int(11),
    KEY_GROUP_PROPERTIES int(11) unsigned not null,
    primary key (ID_INTERNAL),
-   unique ID_INTERNAL (GROUP_NUMBER, KEY_GROUP_PROPERTIES, KEY_SHIFT))
+   unique ID_INTERNAL (GROUP_NUMBER, KEY_GROUP_PROPERTIES))
    type=InnoDB comment="InnoDB free: 372736 kB";
    
 #----------------------------

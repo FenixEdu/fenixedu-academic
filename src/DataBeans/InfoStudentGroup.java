@@ -24,6 +24,15 @@ public class InfoStudentGroup extends InfoObject{
 	/** 
 	 * Construtor
 	 */
+	public InfoStudentGroup(Integer groupNumber,InfoGroupProperties infoGroupProperties) {
+			
+		this.groupNumber = groupNumber;
+		this.infoGroupProperties = infoGroupProperties;
+	}
+	
+	/** 
+	 * Construtor
+	 */
 	public InfoStudentGroup(Integer groupNumber,InfoGroupProperties infoGroupProperties,InfoShift infoShift) {
 			
 		this.groupNumber = groupNumber;

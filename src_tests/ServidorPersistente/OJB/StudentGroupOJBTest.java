@@ -93,13 +93,13 @@ public class StudentGroupOJBTest extends TestCaseOJB {
   
     
   /** Test of readBy method, of class ServidorPersistente.OJB.StudentGroupOJB. */
-  public void testReadStudentGroupByGroupPropertiesAndGroupNumberAndShift() {
+  public void testReadStudentGroupByGroupPropertiesAndGroupNumber() {
 		
 	  	
 		  //read existing StudentGroup  
 		  try {
 				  persistentSupport.iniciarTransaccao();	
-				  IStudentGroup existingStudentGroup = persistentStudentGroup.readStudentGroupByGroupPropertiesAndGroupNumberAndShift(groupProperties1,new Integer(1),shift);
+				  IStudentGroup existingStudentGroup = persistentStudentGroup.readStudentGroupByGroupPropertiesAndGroupNumber(groupProperties1,new Integer(1));
 				  assertNotNull(existingStudentGroup);			
 				  persistentSupport.confirmarTransaccao();
 
@@ -110,7 +110,7 @@ public class StudentGroupOJBTest extends TestCaseOJB {
 			// read unexisting StudentGroup
 			try {
 				  persistentSupport.iniciarTransaccao();	
-				  IStudentGroup unexistingStudentGroup = persistentStudentGroup.readStudentGroupByGroupPropertiesAndGroupNumberAndShift(groupProperties1,new Integer(99),null);
+				  IStudentGroup unexistingStudentGroup = persistentStudentGroup.readStudentGroupByGroupPropertiesAndGroupNumber(groupProperties1,new Integer(99));
 				  assertNull(unexistingStudentGroup);			
 				  persistentSupport.confirmarTransaccao();
 
@@ -163,14 +163,14 @@ public class StudentGroupOJBTest extends TestCaseOJB {
 				try {
 				//	read existing StudentGroup
 					persistentSupport.iniciarTransaccao();	
-			  		IStudentGroup existingStudentGroup = persistentStudentGroup.readStudentGroupByGroupPropertiesAndGroupNumberAndShift(groupProperties1,new Integer(1),shift);
+			  		IStudentGroup existingStudentGroup = persistentStudentGroup.readStudentGroupByGroupPropertiesAndGroupNumber(groupProperties1,new Integer(1));
 			  		assertNotNull(existingStudentGroup);			
 			  		persistentStudentGroup.delete(existingStudentGroup);
 					persistentSupport.confirmarTransaccao();
 			
 				//	trying to read deleted StudentGroup
 					persistentSupport.iniciarTransaccao();	
-					IStudentGroup studentGroupDeleted = persistentStudentGroup.readStudentGroupByGroupPropertiesAndGroupNumberAndShift(groupProperties1,new Integer(1),shift);
+					IStudentGroup studentGroupDeleted = persistentStudentGroup.readStudentGroupByGroupPropertiesAndGroupNumber(groupProperties1,new Integer(1));
 			  		assertNull(studentGroupDeleted);	
 					persistentSupport.confirmarTransaccao();
 				} catch (ExcepcaoPersistencia ex) {
@@ -182,7 +182,7 @@ public class StudentGroupOJBTest extends TestCaseOJB {
 				try{
 					//write existing StudentGroup
 					persistentSupport.iniciarTransaccao();
-					IStudentGroup existingStudentGroup = persistentStudentGroup.readStudentGroupByGroupPropertiesAndGroupNumberAndShift(groupProperties1,new Integer(1),shift);
+					IStudentGroup existingStudentGroup = persistentStudentGroup.readStudentGroupByGroupPropertiesAndGroupNumber(groupProperties1,new Integer(1));
 					persistentStudentGroup.lockWrite(existingStudentGroup);
 					persistentSupport.confirmarTransaccao();
 				}catch(ExcepcaoPersistencia excepcaoPersistencia) 
@@ -194,7 +194,7 @@ public class StudentGroupOJBTest extends TestCaseOJB {
 				//	write existing StudentGroup changed
 				try{
 					persistentSupport.iniciarTransaccao();
-					IStudentGroup existingStudentGroupToChange = persistentStudentGroup.readStudentGroupByGroupPropertiesAndGroupNumberAndShift(groupProperties1,new Integer(1),shift);
+					IStudentGroup existingStudentGroupToChange = persistentStudentGroup.readStudentGroupByGroupPropertiesAndGroupNumber(groupProperties1,new Integer(1));
 					Integer idAntigo = existingStudentGroupToChange.getIdInternal();
 					existingStudentGroupToChange.setIdInternal(new Integer(idAntigo.intValue()+1));
 					persistentStudentGroup.lockWrite(existingStudentGroupToChange);
@@ -218,7 +218,7 @@ public class StudentGroupOJBTest extends TestCaseOJB {
 				// read StudentGroup written
 				try {
 					persistentSupport.iniciarTransaccao();
-					IStudentGroup newStudentGroupRead = persistentStudentGroup.readStudentGroupByGroupPropertiesAndGroupNumberAndShift(groupProperties1,new Integer(10),null);
+					IStudentGroup newStudentGroupRead = persistentStudentGroup.readStudentGroupByGroupPropertiesAndGroupNumber(groupProperties1,new Integer(10));
 					assertNotNull(newStudentGroupRead);
 					persistentSupport.confirmarTransaccao();
 				} catch (ExcepcaoPersistencia excepcaoPersistencia) {
