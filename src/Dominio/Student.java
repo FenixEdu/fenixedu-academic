@@ -27,17 +27,15 @@ public class Student extends DomainObject implements IStudent {
     protected TipoCurso degreeType;
 
     private IStudentKind studentKind;
+    private Integer studentKindKey;
 
     private AgreementType agreementType;
 
+    private IPessoa person;
     private Integer personKey;
 
-    private Integer studentKindKey;
-
-    private IPessoa person;
 
     private IExecutionYear registrationYear;
-
     private Integer keyRegistrationYear;
 
     private EntryPhase entryPhase;

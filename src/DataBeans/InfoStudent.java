@@ -25,6 +25,8 @@ public class InfoStudent extends InfoObject {
     protected TipoCurso degreeType;
 
     private InfoStudentKind infoStudentKind;
+    
+    private Boolean payedTuition;
 
     public InfoStudent() {
     }
@@ -68,6 +70,24 @@ public class InfoStudent extends InfoObject {
     public void setDegreeType(TipoCurso degreeType) {
         this.degreeType = degreeType;
     }
+    public InfoStudentKind getInfoStudentKind() {
+        return infoStudentKind;
+    }
+    public void setInfoStudentKind(InfoStudentKind info) {
+        infoStudentKind = info;
+    }
+    /**
+     * @return Returns the payedTuition.
+     */
+    public Boolean getPayedTuition() {
+        return payedTuition;
+    }
+    /**
+     * @param payedTuition The payedTuition to set.
+     */
+    public void setPayedTuition(Boolean payedTuition) {
+        this.payedTuition = payedTuition;
+    }
 
     // FIXME: The type of degree should be tested also
     public boolean equals(Object obj) {
@@ -89,14 +109,6 @@ public class InfoStudent extends InfoObject {
         return result;
     }
 
-    public InfoStudentKind getInfoStudentKind() {
-        return infoStudentKind;
-    }
-
-    public void setInfoStudentKind(InfoStudentKind info) {
-        infoStudentKind = info;
-    }
-
     public void copyFromDomain(IStudent student) {
         super.copyFromDomain(student);
 
@@ -104,6 +116,7 @@ public class InfoStudent extends InfoObject {
             setNumber(student.getNumber());
             setDegreeType(student.getDegreeType());
             setState(student.getState());
+            setPayedTuition(student.getPayedTuition());
         }
     }
     
