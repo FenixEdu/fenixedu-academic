@@ -58,14 +58,6 @@ public class JdbcAccessRollbackImpl extends JdbcAccessImpl {
             ValueContainer[] valueContainers1, ValueContainer[] valueContainers2)
             throws PersistenceBrokerException {
 
-        System.out.println("arg0 = " + sqlStatement);
-        for (int i = 0; i < valueContainers1.length; i++) {
-            System.out.println("valueContainers1[i] = " + valueContainers1[i]);
-        }
-        for (int i = 0; i < valueContainers1.length; i++) {
-            System.out.println("valueContainers2[i] = " + valueContainers2[i]);
-        }
-
         concatInverseSQLInstruction(sqlStatement, classDescriptor, valueContainers1, valueContainers2);
 
         return super.executeUpdateSQL(sqlStatement, classDescriptor, valueContainers1, valueContainers2);
