@@ -18,48 +18,64 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  *   - Nadir Tarmahomed (naat@mega.ist.utl.pt)
  *
  */
-public class ReadMasterDegreeThesisDataVersionByID implements IServico {
+public class ReadMasterDegreeThesisDataVersionByID implements IServico
+{
 
-	private static ReadMasterDegreeThesisDataVersionByID servico = new ReadMasterDegreeThesisDataVersionByID();
+    private static ReadMasterDegreeThesisDataVersionByID servico =
+        new ReadMasterDegreeThesisDataVersionByID();
 
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static ReadMasterDegreeThesisDataVersionByID getService() {
-		return servico;
-	}
+    /**
+     * The singleton access method of this class.
+     **/
+    public static ReadMasterDegreeThesisDataVersionByID getService()
+    {
+        return servico;
+    }
 
-	/**
-	 * The actor of this class.
-	 **/
-	private ReadMasterDegreeThesisDataVersionByID() {
-	}
+    /**
+     * The actor of this class.
+     **/
+    private ReadMasterDegreeThesisDataVersionByID()
+    {
+    }
 
-	/**
-	 * Returns The Service Name */
-	public final String getNome() {
-		return "ReadMasterDegreeThesisDataVersionByID";
-	}
+    /**
+     * Returns The Service Name */
+    public final String getNome()
+    {
+        return "ReadMasterDegreeThesisDataVersionByID";
+    }
 
-	public Object run(Integer masterDegreeThesisDataVersionID) throws FenixServiceException {
-		InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = null;
-		IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion = null;
+    public Object run(Integer masterDegreeThesisDataVersionID) throws FenixServiceException
+    {
+        InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = null;
+        IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion = null;
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			masterDegreeThesisDataVersion = (IMasterDegreeThesisDataVersion) sp.getIPersistentMasterDegreeThesisDataVersion().readByOID(MasterDegreeThesisDataVersion.class, masterDegreeThesisDataVersionID);
+        try
+        {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            masterDegreeThesisDataVersion =
+                (IMasterDegreeThesisDataVersion) sp
+                    .getIPersistentMasterDegreeThesisDataVersion()
+                    .readByOID(
+                    MasterDegreeThesisDataVersion.class,
+                    masterDegreeThesisDataVersionID);
 
-			if (masterDegreeThesisDataVersion == null)
-				throw new NonExistingServiceException("error.exception.masterDegree.nonExistingMasterDegreeThesisDataVersion"); 
-					
-			infoMasterDegreeThesisDataVersion = Cloner.copyIMasterDegreeThesisDataVersion2InfoMasterDegreeThesisDataVersion(masterDegreeThesisDataVersion);
+            if (masterDegreeThesisDataVersion == null)
+                throw new NonExistingServiceException("error.exception.masterDegree.nonExistingMasterDegreeThesisDataVersion");
 
-		} catch (ExcepcaoPersistencia ex) {
-			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-			newEx.fillInStackTrace();
-			throw newEx;
-		}
+            infoMasterDegreeThesisDataVersion =
+                Cloner.copyIMasterDegreeThesisDataVersion2InfoMasterDegreeThesisDataVersion(
+                    masterDegreeThesisDataVersion);
 
-		return infoMasterDegreeThesisDataVersion;
-	}
+        }
+        catch (ExcepcaoPersistencia ex)
+        {
+            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+            newEx.fillInStackTrace();
+            throw newEx;
+        }
+
+        return infoMasterDegreeThesisDataVersion;
+    }
 }
