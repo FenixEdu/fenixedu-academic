@@ -468,12 +468,46 @@
    	        <form-property name="observations" type="java.lang.String"/>
       </form-bean>
      
-		<form-bean name="getStudentByNumberForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+	  <form-bean name="getStudentByNumberForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer"/>
 			<form-property name="degreeType" type="java.lang.String"/>
 			<form-property name="studentNumber" type="java.lang.String"/>
-		</form-bean>
+	  </form-bean>
+
+      <form-bean name="createMasterDegreeThesisForm" 
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+            <form-property name="studentNumber" type="java.lang.Integer" />
+   	        <form-property name="degreeType" type="java.lang.Integer"/>
+   	        <form-property name="method" type="java.lang.String"/>
+   	        <form-property name="dissertationTitle" type="java.lang.String"/>
+   	        <form-property name="guidersNumbers" type="java.lang.Integer[]"/>
+   	        <form-property name="assistentGuidersNumbers" type="java.lang.Integer[]"/>
+   	        <form-property name="externalAssistentGuidersIDs" type="java.lang.Integer[]"/>
+   	        <form-property name="externalAssistentGuiderName" type="java.lang.String"/>
+   	        <form-property name="removedGuidersNumbers" type="java.lang.Integer[]"/>
+   	        <form-property name="removedAssistentGuidersNumbers" type="java.lang.Integer[]"/>
+   	        <form-property name="removedExternalAssistentGuidersIDs" type="java.lang.Integer[]"/>   	        
+      </form-bean>
+      
+	  <form-bean name="changeMasterDegreeThesisForm" 
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+            <form-property name="studentNumber" type="java.lang.Integer" />
+   	        <form-property name="degreeType" type="java.lang.Integer"/>
+   	        <form-property name="method" type="java.lang.String"/>
+   	        <form-property name="dissertationTitle" type="java.lang.String"/>
+   	        <form-property name="guidersNumbers" type="java.lang.Integer[]"/>
+   	        <form-property name="assistentGuidersNumbers" type="java.lang.Integer[]"/>
+   	        <form-property name="externalAssistentGuidersIDs" type="java.lang.Integer[]"/>
+   	        <form-property name="externalAssistentGuiderName" type="java.lang.String"/>
+   	        <form-property name="removedGuidersNumbers" type="java.lang.Integer[]"/>
+   	        <form-property name="removedAssistentGuidersNumbers" type="java.lang.Integer[]"/>
+   	        <form-property name="removedExternalAssistentGuidersIDs" type="java.lang.Integer[]"/>   	        
+      </form-bean>
+     
+
 
    </form-beans>
     
@@ -544,6 +578,21 @@
 			<forward name="startCurricularCourseEnrolmentWithoutRules" path="/enrollment/chooseDegreeAndCurricularSemesterAndCurricularYear.jsp"/>
 			<forward name="error" path="/enrollment/chooseStudentForEnrollment.jsp"/>
 		</action>
+		
+		<action	name="getStudentByNumberAndDegreeTypeForm"
+				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.thesis.PrepareStudentDataForThesisOperationsDispatchAction"
+				path="/prepareStudentForMasterDegreeThesisAndProof"
+				input="/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp"
+				parameter="method"
+				scope="request"
+				validate="true">
+			<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<forward name="success" path="/thesis/indexThesis.jsp"/>
+			<forward name="createThesis" path="/thesis/indexCreateThesis.jsp"/>
+			<forward name="error" path="/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp"/>
+		</action>
 
 		<action name="getDegreeAndCurricularSemesterAndCurricularYearForm"
 				type="ServidorApresentacao.Action.degreeAdministrativeOffice.PrepareEnrolmentContextDispatchAction"
@@ -611,6 +660,13 @@
               type="ServidorApresentacao.Action.commons.VoidAction"
 			  >
 	         <forward name="Success" path="/guide/indexGuide.jsp"/> 
+      </action>
+      
+      <action path="/thesisSection"
+		      parameter="method"
+              type="ServidorApresentacao.Action.commons.VoidAction"
+			  >
+	         <forward name="Success" path="/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp"/> 
       </action>
       
       <action path="/studentSection"
@@ -1655,6 +1711,98 @@
 	 		<forward name="editStudentCurricularCoursePlan" path="df.page.editStudentCurricularCoursePlan"/>
 	 		<forward name="ShowStudentCurricularCoursePlan" path="/showStudentCurricularCoursePlan.do"/>
 	 </action>
+
+	<!-- create master degree thesis -->
+	<action		type="ServidorApresentacao.Action.masterDegree.administrativeOffice.thesis.CreateMasterDegreeThesisDispatchAction"
+				path="/createMasterDegreeThesis"
+				parameter="method"
+				scope="request"
+				validate="true">
+			<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<forward name="start" path="/thesis/createMasterDegreeThesis.jsp"/>
+			<forward name="error" path="/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp"/>
+	</action>
+
+	<action		name="createMasterDegreeThesisForm"
+				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.thesis.CreateMasterDegreeThesisLookupDispatchAction"
+				path="/createMasterDegreeThesisLookup"
+				parameter="method"
+				scope="request"
+				input="/createMasterDegreeThesisLookup.do"
+				validate="true">
+			<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<exception	type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+						key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<exception	type="ServidorApresentacao.Action.exceptions.RequiredGuidersActionException"
+						key="ServidorApresentacao.Action.exceptions.RequiredGuidersActionException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>	
+			<exception	type="ServidorApresentacao.Action.exceptions.GuiderAlreadyChosenActionException"
+						key="ServidorApresentacao.Action.exceptions.GuiderAlreadyChosenActionException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>											
+			<forward name="start" path="/thesis/createMasterDegreeThesis.jsp"/>
+			<forward name="success" path="/thesis/createSuccessScreen.jsp"/>
+			<forward name="cancel" path="/thesis/indexThesis.jsp"/>
+			<forward name="createThesisCancel" path="/thesis/indexCreateThesis.jsp"/>			
+			<forward name="error" path="/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp"/>
+	</action>
+
+	<!-- change master degree thesis -->
+	<action		name="changeMasterDegreeThesisForm"
+				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.thesis.ChangeMasterDegreeThesisDispatchAction"
+				path="/changeMasterDegreeThesis"
+				parameter="method"
+				scope="request"
+				validate="true">
+			<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<forward name="start" path="/thesis/changeMasterDegreeThesis.jsp"/>
+			<forward name="error" path="/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp"/>
+	</action>
+
+	<action		name="changeMasterDegreeThesisForm"
+				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.thesis.ChangeMasterDegreeThesisLookupDispatchAction"
+				path="/changeMasterDegreeThesisLookup"
+				parameter="method"
+				scope="request"
+				input="/changeMasterDegreeThesisLookup.do"
+				validate="true">
+			<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<exception	type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+						key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<exception	type="ServidorApresentacao.Action.exceptions.RequiredGuidersActionException"
+						key="ServidorApresentacao.Action.exceptions.RequiredGuidersActionException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>	
+			<exception	type="ServidorApresentacao.Action.exceptions.GuiderAlreadyChosenActionException"
+						key="ServidorApresentacao.Action.exceptions.GuiderAlreadyChosenActionException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>											
+			<forward name="start" path="/thesis/changeMasterDegreeThesis.jsp"/>
+			<forward name="success" path="/thesis/changeSuccessScreen.jsp"/>
+			<forward name="cancel" path="/thesis/indexThesis.jsp"/>
+			<forward name="changeThesisCancel" path="/thesis/indexChangeThesis.jsp"/>			
+			<forward name="error" path="/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp"/>
+	</action>
+	
+	<!-- visualize master degree thesis -->
+	<action		type="ServidorApresentacao.Action.masterDegree.administrativeOffice.thesis.VisualizeMasterDegreeThesisDispatchAction"
+				path="/visualizeMasterDegreeThesis"
+				parameter="method"
+				scope="request"
+				validate="true">
+			<exception	type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+						key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+			<forward name="start" path="/thesis/visualizeMasterDegreeThesis.jsp"/>
+			<forward name="error" path="/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp"/>
+	</action>
 
     </action-mappings>
     
