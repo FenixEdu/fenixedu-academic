@@ -99,7 +99,6 @@ public class ReadDistributedTestMarks implements IServico {
 			Collections.sort(studentList, new BeanComparator("number"));
 
 			Iterator studentIt = studentList.iterator();
-			DecimalFormat df = new DecimalFormat("#0.##");
 			while (studentIt.hasNext()) {
 				IStudent student = (Student) studentIt.next();
 				List studentTestQuestionList =
@@ -155,8 +154,7 @@ public class ReadDistributedTestMarks implements IServico {
 					infoStudentTestQuestionList);
 				if (finalMark.doubleValue() < 0)
 					finalMark = new Double(0);
-				infoDistributedTestMarks.setStudentTestMark(
-					new Double(df.format(finalMark)));
+				infoDistributedTestMarks.setStudentTestMark(finalMark);
 				infoDistributedTestMarksList.add(infoDistributedTestMarks);
 			}
 
@@ -165,7 +163,7 @@ public class ReadDistributedTestMarks implements IServico {
 			List correctAnswersList = new ArrayList(),
 				wrongAnswersList = new ArrayList(),
 				notAnsweredList = new ArrayList();
-			df = new DecimalFormat("0%");
+			DecimalFormat df = new DecimalFormat("0%");
 			for (int i = 0; i < correctAnswers.length; i++) {
 				correctAnswersList.add(
 					df.format(
