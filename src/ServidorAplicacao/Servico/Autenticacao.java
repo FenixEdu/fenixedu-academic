@@ -61,7 +61,6 @@ public class Autenticacao implements IServico {
 		IPessoa pessoa = null;
 
 		try {
-			//pessoa = SuportePersistenteOJB.getInstance().getIPessoaPersistente().readByUtilizador(utilizador);
 			pessoa =
 				SuportePersistenteOJB
 					.getInstance()
@@ -166,7 +165,6 @@ public class Autenticacao implements IServico {
 		InfoRole manager = new InfoRole();
 		manager.setRoleType(RoleType.MANAGER);
 		rolesIntranet.add(manager);
-
 
 //InfoRole person = new InfoRole();
 //person.setRoleType(RoleType.PERSON);
