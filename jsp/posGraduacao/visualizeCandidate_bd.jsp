@@ -104,9 +104,17 @@
 			</logic:present>
      </tr>
      <!-- Nacionalidade -->
+    
+    
      <tr>
      	<td width="30%"><bean:message key="label.person.country" /></td>
-        <td class="greytxt"><bean:write name="personalInfo" property="infoPais.nationality"/></td>
+     	 <logic:present name="personalInfo"  property="infoPais">
+	     	<td class="greytxt"><bean:write name="personalInfo" property="infoPais.nationality"/></td>
+         </logic:present>
+     	 <logic:notPresent name="personalInfo"  property="infoPais">
+	     	<td class="greytxt"></td>
+         </logic:notPresent>
+
      </tr>        
      <!-- Freguesia de Naturalidade -->
      <tr>
