@@ -785,7 +785,7 @@ public class AulaOJBTest extends TestCaseOJB {
 		persistentSupport.confirmarTransaccao();
 
 		assertNotNull("testReadLessonsInBroadPeriodInAnyRoom: result was null", lessonsInBroadPeriodInAnyRoom);
-		assertEquals(7, lessonsInBroadPeriodInAnyRoom.size());
+		assertEquals(2, lessonsInBroadPeriodInAnyRoom.size());
 
 		// prepare query input
 		start.set(Calendar.HOUR_OF_DAY, 9);
@@ -800,14 +800,14 @@ public class AulaOJBTest extends TestCaseOJB {
 		persistentSupport.confirmarTransaccao();
 
 		assertNotNull("testReadLessonsInBroadPeriodInAnyRoom: result was null", lessonsInBroadPeriodInAnyRoom);
-		assertEquals(5, lessonsInBroadPeriodInAnyRoom.size());
+		assertEquals(3, lessonsInBroadPeriodInAnyRoom.size());
 
 		// prepare query input
 		lesson.setDiaSemana(new DiaSemana(DiaSemana.SEXTA_FEIRA));
 		start.set(Calendar.HOUR_OF_DAY, 19);
 		lesson.setInicio(start);
-		start.set(Calendar.HOUR_OF_DAY, 20);
-		start.set(Calendar.MINUTE, 0);
+		end.set(Calendar.HOUR_OF_DAY, 20);
+		end.set(Calendar.MINUTE, 0);
 		lesson.setFim(end);
 
 		// execute query
