@@ -11,8 +11,8 @@ import Util.enrollment.CurricularCourseEnrollmentType;
 
 /**
  * @author João Mota
- *
  */
+
 public class CurricularCourse2Enroll implements Serializable {
     
     private ICurricularCourse curricularCourse;
@@ -20,14 +20,12 @@ public class CurricularCourse2Enroll implements Serializable {
     private Integer accumulatedWeight;
     
     
-    
-
     /**
      * 
      */
     public CurricularCourse2Enroll() {
-     
     }
+
     /**
      * @param curricularCourse
      * @param enrollmentRuleType
@@ -37,24 +35,28 @@ public class CurricularCourse2Enroll implements Serializable {
         this.curricularCourse = curricularCourse;
         this.enrollmentType = enrollmentRuleType;
     }
+    
     /**
      * @return Returns the curricularCourse.
      */
     public ICurricularCourse getCurricularCourse() {
         return curricularCourse;
     }
+    
     /**
      * @param curricularCourse The curricularCourse to set.
      */
     public void setCurricularCourse(ICurricularCourse curricularCourse) {
         this.curricularCourse = curricularCourse;
     }
+    
     /**
      * @return Returns the enrollmentRuleType.
      */
     public CurricularCourseEnrollmentType getEnrollmentType() {
         return enrollmentType;
     }
+    
     /**
      * @param enrollmentRuleType The enrollmentRuleType to set.
      */
@@ -62,12 +64,14 @@ public class CurricularCourse2Enroll implements Serializable {
             CurricularCourseEnrollmentType enrollmentRuleType) {
         this.enrollmentType = enrollmentRuleType;
     }
+    
     /**
      * @return Returns the accumulatedWeight.
      */
     public Integer getAccumulatedWeight() {
         return accumulatedWeight;
     }
+    
     /**
      * @param accumulatedWeight The accumulatedWeight to set.
      */
@@ -81,4 +85,5 @@ public class CurricularCourse2Enroll implements Serializable {
         	getEnrollmentType().getName() + " - " +
         	getAccumulatedWeight().toString();
     }
+
 }
