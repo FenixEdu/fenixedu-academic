@@ -1,11 +1,14 @@
 package ServidorAplicacao.Servico.enrolment;
 
+import java.util.Iterator;
 import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.Enrolment;
+import Dominio.EnrolmentEvaluation;
 import Dominio.Frequenta;
 import Dominio.IEnrolment;
+import Dominio.IEnrolmentEvaluation;
 import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.IStudentGroupAttend;
@@ -13,6 +16,7 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentMark;
 import ServidorPersistente.IPersistentStudentGroupAttend;
@@ -35,11 +39,20 @@ public class DeleteEnrolment implements IService
 		{
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 			IPersistentEnrolment enrolmentDAO = persistentSuport.getIPersistentEnrolment();
+			IPersistentEnrolmentEvaluation enrolmentEvaluationDAO = persistentSuport.getIPersistentEnrolmentEvaluation();
 
 			IEnrolment enrolment = (IEnrolment) enrolmentDAO.readByOID(Enrolment.class, enrolmentID);
 
 			if (enrolment != null)
 			{
+				Iterator iterator = enrolment.getEvaluations().iterator();
+				while (iterator.hasNext())
+				{
+					IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator.next();
+					enrolmentEvaluationDAO.simpleLockWrite(enrolment);
+					enrolmentEvaluationDAO.deleteByOID(EnrolmentEvaluation.class, enrolmentEvaluation.getIdInternal());
+				}
+				
 				deleteAttend(enrolment);
 
 				enrolmentDAO.simpleLockWrite(enrolment);

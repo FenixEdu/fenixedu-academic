@@ -1236,6 +1236,11 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 	 */
 	private void automaticalyEnrollInMandatoryCurricularCourses() throws ExcepcaoPersistencia
 	{
+		// FIXME [DAVID]: There is a bug here!
+		// Try this: Enroll in all mandatory curricular courses and some others more untill you get a total of maxCourses
+		// enrolled. Now try to unenroll a mandatory curricular course.
+		// It was allowed because totalSize >= maxCourses so it will not automaticaly enroll in mandatory curricular courses
+		// that were unenrolled before.
 		List curricularCourses =
 			getMandatoryCurricularCourses(this.studentEnrolmentContext.getFinalCurricularCoursesWhereStudentCanBeEnrolled());
 
