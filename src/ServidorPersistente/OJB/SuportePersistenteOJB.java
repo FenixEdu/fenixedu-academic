@@ -1220,4 +1220,9 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
     {
         return new ManagementPositionCreditLineOJB();
     }
+
+	public IPersistentFinalDegreeWork getIPersistentFinalDegreeWork()
+	{
+		return new FinalDegreeWorkOJB();
+	}
 }

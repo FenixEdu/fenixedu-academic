@@ -6139,4 +6139,75 @@
             <chain name="StudentAuthorization"/>
         </filterChains>
     </service>
+    <service>
+        <name>ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan</name>
+        <implementationClass>ServidorAplicacao.Servico.coordinator.ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        	<chain name="ReadCoursesInformationAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadFinalDegreeWorkProposal</name>
+        <implementationClass>ServidorAplicacao.Servico.coordinator.ReadFinalDegreeWorkProposal</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>
+    <service>
+        <name>DefineFinalDegreeWorkProposalSubmisionPeriod</name>
+        <implementationClass>ServidorAplicacao.Servico.coordinator.DefineFinalDegreeWorkProposalSubmisionPeriod</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        	<chain name="ReadCoursesInformationAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadFinalDegreeWorkProposalSubmisionPeriod</name>
+        <implementationClass>ServidorAplicacao.Servico.coordinator.ReadFinalDegreeWorkProposalSubmisionPeriod</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+	        <chain name="TeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+    	<name>ReadExecutionDegreesOfTypeDegree</name>
+    	<implementationClass>ServidorAplicacao.Servico.teacher.finalDegreeWork.ReadExecutionDegreesOfTypeDegree</implementationClass>
+    	<description/>
+    	<isTransactional>true</isTransactional>    	
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>    	
+    </service>
+    <service>
+    	<name>SubmitFinalWorkProposal</name>
+    	<implementationClass>ServidorAplicacao.Servico.teacher.finalDegreeWork.SubmitFinalWorkProposal</implementationClass>
+    	<description/>
+    	<isTransactional>true</isTransactional>    	
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>    	
+    </service>
+    <service>
+    	<name>ReadFinalDegreeWorkProposalHeadersByTeacher</name>
+    	<implementationClass>ServidorAplicacao.Servico.teacher.finalDegreeWork.ReadFinalDegreeWorkProposalHeadersByTeacher</implementationClass>
+    	<description/>
+    	<isTransactional>true</isTransactional>    	
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>    	
+    </service>
+    <service>
+    	<name>DeleteFinalDegreeWorkProposal</name>
+    	<implementationClass>ServidorAplicacao.Servico.teacher.finalDegreeWork.DeleteFinalDegreeWorkProposal</implementationClass>
+    	<description/>
+    	<isTransactional>true</isTransactional>    	
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>    	
+    </service>
 </serviceDefinitions>

@@ -138,4 +138,10 @@
 		 <put name="body" value="/coordinator/student/chooseCurricularCourse_bd.jsp" />
 		 <put name="body-context" value="/coordinator/simpleContext.jsp" />
 	</definition>
+	<definition name="df.page.showFinalDegreeWorkList" extends="definition.coordinator.two-column">
+		 <put name="body" value="/coordinator/finalDegreeWork/showFinalDegreeWorkList_bd.jsp" />
+	</definition>
+	<definition name="df.page.showFinalDegreeWorkProposal" extends="definition.coordinator.two-column">
+		 <put name="body" value="/coordinator/finalDegreeWork/showFinalDegreeWorkProposal_bd.jsp" />
+	</definition>
 </tiles-definitions>

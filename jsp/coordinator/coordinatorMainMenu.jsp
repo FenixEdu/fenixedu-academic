@@ -130,5 +130,11 @@
 			<br/>
 			<br/>
 		</li>
+
+       	<li>
+        	<html:link page="<%= "/manageFinalDegreeWork.do?method=prepare&amp;executionDegreeOID=" + infoExecutionDegreeId.toString()%>">
+	        	<bean:message key="link.coordinator.managefinalDegreeWorks" />
+	        </html:link>
+        </li>
 	</ul>
 </logic:present>

@@ -84,7 +84,12 @@ a:visited {
 	color: red;
 	background: yellow;
 	}	
-	
+
+.sucessfulOperarion {
+	font: bold 11pt Arial, Helvetica, sans-serif;
+	color: blue;
+	}
+
 .inputlist {
 	font: 11pt Arial, Helvetica, sans-serif;
 	color: black;

@@ -181,4 +181,16 @@
 		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
 		<put name="body" value="/teacher/submitTFC_bd.jsp"></put>		
 	</definition>
+	<definition name="df.page.chooseDegreeForFinalWorkProposal" extends="definition.teacher.two-column">
+		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+		<put name="body" value="/teacher/chooseDegreeForFinalWorkProposal_bd.jsp"/>
+	</definition>
+	<definition name="df.page.finalWorkSubmit" extends="definition.teacher.two-column">
+		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+		<put name="body" value="/teacher/submitFinalWorkProposal_bd.jsp"></put>
+	</definition>
+	<definition name="df.page.viewfinalDegreeWorkProposal" extends="definition.teacher.two-column">
+		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+		<put name="body" value="/teacher/viewFinalDegreeWorkProposal_bd.jsp"></put>
+	</definition>	
 </tiles-definitions>

@@ -4,9 +4,11 @@
  */
 package Dominio.finalDegreeWork;
 
-import Dominio.DegreeCurricularPlan;
+import java.util.List;
+
+import Dominio.ICursoExecucao;
 import Dominio.IDomainObject;
-import Dominio.Teacher;
+import Dominio.ITeacher;
 import Util.TipoCurso;
 
 /**
@@ -15,29 +17,26 @@ import Util.TipoCurso;
  */
 public interface IProposal extends IDomainObject
 {
-	public String getCompanyContact();
-
-	public void setCompanyContact(String companyContact);
-
-	public String getCompanyLink();
-
-	public void setCompanyLink(String companyLink);
 
 	public String getCompanyName();
 
 	public void setCompanyName(String companyName);
+	
+	public String getCompanyAdress();
+	
+	public void setCompanyAdress(String adress);
 
-	public Teacher getCoorientator();
+	public ITeacher getCoorientator();
 
-	public void setCoorientator(Teacher coorientator);
+	public void setCoorientator(ITeacher coorientator);
 
 	public Integer getCoorientatorsCreditsPercentage();
 
 	public void setCoorientatorsCreditsPercentage(Integer coorientatorsCreditsPercentage);
 
-	public DegreeCurricularPlan getDegreeCurricularPlan();
+	public ICursoExecucao getExecutionDegree();
 
-	public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan);
+	public void setExecutionDegree(ICursoExecucao executionDegree);
 
 	public TipoCurso getDegreeType();
 
@@ -47,10 +46,6 @@ public interface IProposal extends IDomainObject
 
 	public void setDescription(String description);
 
-	public Integer getNumberOfGroupElements();
-
-	public void setNumberOfGroupElements(Integer numberOfGroupElements);
-
 	public String getObjectives();
 
 	public void setObjectives(String objectives);
@@ -59,21 +54,25 @@ public interface IProposal extends IDomainObject
 
 	public void setObservations(String observations);
 
-	public Teacher getOrientator();
+	public ITeacher getOrientator();
 
-	public void setOrientator(Teacher orientator);
+	public void setOrientator(ITeacher orientator);
 
 	public Integer getOrientatorsCreditsPercentage();
+	
+	public void setCompanionName(String name);
+	
+	public String getCompanionName();
 
+	public void setCompanionMail(String mail);
+	
+	public String getCompanionMail();
+	
+	public void setCompanionPhone(Integer phone);
+	
+	public Integer getCompanionPhone();
+	
 	public void setOrientatorsCreditsPercentage(Integer orientatorsCreditsPercentage);
-
-	public String getPartA();
-
-	public void setPartA(String partA);
-
-	public String getPartB();
-
-	public void setPartB(String partB);
 
 	public String getRequirements();
 
@@ -86,5 +85,33 @@ public interface IProposal extends IDomainObject
 	public String getUrl();
 
 	public void setUrl(String url);
+
+	public String getDeliverable();
+
+	public void setDeliverable(String deliverable);
+
+	public String getFraming();
+
+	public void setFraming(String framing);
+
+	public String getLocation();
+
+	public void setLocation(String location);
+
+	public Integer getMaximumNumberOfGroupElements();
+
+	public void setMaximumNumberOfGroupElements(Integer maximumNumberOfGroupElements);
+
+	public Integer getMinimumNumberOfGroupElements();
+
+	public void setMinimumNumberOfGroupElements(Integer minimumNumberOfGroupElements);
+
+	public List getBranches();
+
+	public void setBranches(List branches);
+	
+	public Integer getProposalNumber();
+
+	public void setProposalNumber(Integer proposalNumber);
 
 }

@@ -28,6 +28,7 @@ import Dominio.ITeacher;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.PeriodState;
 import Util.TipoCurso;
 
 public class CursoExecucaoOJB extends ObjectFenixOJB implements ICursoExecucaoPersistente
@@ -316,4 +317,12 @@ public class CursoExecucaoOJB extends ObjectFenixOJB implements ICursoExecucaoPe
         criteria.addEqualTo("coordinatorsList.teacher.idInternal", teacher.getIdInternal());
         return queryList(CursoExecucao.class, criteria, true);
     }
+
+	public List readExecutionDegreesOfTypeDegree() throws ExcepcaoPersistencia
+	{
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("curricularPlan.degree.tipoCurso", new TipoCurso(TipoCurso.LICENCIATURA));
+		criteria.addEqualTo("executionYear.state", new PeriodState(PeriodState.CURRENT));
+		return queryList(CursoExecucao.class, criteria);
+	}
 }

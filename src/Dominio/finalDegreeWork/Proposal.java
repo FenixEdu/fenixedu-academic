@@ -1,41 +1,49 @@
 /*
  * Created on Mar 7, 2004
- *
+ *  
  */
 package Dominio.finalDegreeWork;
 
-import Dominio.DegreeCurricularPlan;
+import java.util.List;
+
 import Dominio.DomainObject;
-import Dominio.Teacher;
+import Dominio.ICursoExecucao;
+import Dominio.ITeacher;
 import Util.TipoCurso;
 
 /**
  * @author Luis Cruz
- *
+ *  
  */
 public class Proposal extends DomainObject implements IProposal {
 
-	private Integer keyDegreeCurricularPlan;
-	private DegreeCurricularPlan degreeCurricularPlan;
+	private Integer proposalNumber;
+	private Integer keyExecutionDegree;
+	private ICursoExecucao executionDegree;
 	private String title;
 	private Integer keyOrientator;
-	private Teacher orientator;
+	private ITeacher orientator;
 	private Integer keyCoorientator;
-	private Teacher coorientator;
+	private ITeacher coorientator;
+	private String companionName;
+	private String companionMail;
+	private Integer companionPhone;
 	private Integer orientatorsCreditsPercentage;
 	private Integer coorientatorsCreditsPercentage;
+	private String framing;
 	private String objectives;
 	private String description;
 	private String requirements;
+	private String deliverable;
 	private String url;
-	private Integer numberOfGroupElements;
+	private Integer minimumNumberOfGroupElements;
+	private Integer maximumNumberOfGroupElements;
+	private String location;
 	private TipoCurso degreeType;
-	private String partA;
-	private String partB;
 	private String observations;
 	private String companyName;
-	private String companyLink;
-	private String companyContact;
+	private String companyAdress;
+	private List branches;
 
 	/* Construtores */
 	public Proposal() {
@@ -47,8 +55,9 @@ public class Proposal extends DomainObject implements IProposal {
 		if (obj instanceof IProposal) {
 			IProposal proposal = (IProposal) obj;
 
-			result = getTitle().equals(proposal.getTitle())
-			&& getDegreeCurricularPlan().equals(proposal.getDegreeCurricularPlan());
+			result =
+				getTitle().equals(proposal.getTitle())
+					&& getExecutionDegree().equals(proposal.getExecutionDegree());
 		}
 		return result;
 	}
@@ -57,345 +66,408 @@ public class Proposal extends DomainObject implements IProposal {
 		String result = "[Proposal";
 		result += ", idInternal=" + getIdInternal();
 		result += ", title=" + getTitle();
-		result += ", degreeCurricularPlan=" + getDegreeCurricularPlan();
+		result += ", degreeCurricularPlan=" + getExecutionDegree();
 		result += "]";
 		return result;
 	}
 
 	/**
-	 * @return Returns the companyContact.
-	 */
-	public String getCompanyContact()
-	{
-		return companyContact;
-	}
-
-	/**
-	 * @param companyContact The companyContact to set.
-	 */
-	public void setCompanyContact(String companyContact)
-	{
-		this.companyContact = companyContact;
-	}
-
-	/**
-	 * @return Returns the companyLink.
-	 */
-	public String getCompanyLink()
-	{
-		return companyLink;
-	}
-
-	/**
-	 * @param companyLink The companyLink to set.
-	 */
-	public void setCompanyLink(String companyLink)
-	{
-		this.companyLink = companyLink;
-	}
-
-	/**
 	 * @return Returns the companyName.
 	 */
-	public String getCompanyName()
-	{
+	public String getCompanyName() {
 		return companyName;
 	}
 
 	/**
-	 * @param companyName The companyName to set.
+	 * @param companyName
+	 *            The companyName to set.
 	 */
-	public void setCompanyName(String companyName)
-	{
+	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
 	}
 
 	/**
 	 * @return Returns the coorientator.
 	 */
-	public Teacher getCoorientator()
-	{
+	public ITeacher getCoorientator() {
 		return coorientator;
 	}
 
 	/**
-	 * @param coorientator The coorientator to set.
+	 * @param coorientator
+	 *            The coorientator to set.
 	 */
-	public void setCoorientator(Teacher coorientator)
-	{
+	public void setCoorientator(ITeacher coorientator) {
 		this.coorientator = coorientator;
 	}
 
 	/**
 	 * @return Returns the coorientatorsCreditsPercentage.
 	 */
-	public Integer getCoorientatorsCreditsPercentage()
-	{
+	public Integer getCoorientatorsCreditsPercentage() {
 		return coorientatorsCreditsPercentage;
 	}
 
 	/**
-	 * @param coorientatorsCreditsPercentage The coorientatorsCreditsPercentage to set.
+	 * @param coorientatorsCreditsPercentage
+	 *            The coorientatorsCreditsPercentage to set.
 	 */
-	public void setCoorientatorsCreditsPercentage(Integer coorientatorsCreditsPercentage)
-	{
+	public void setCoorientatorsCreditsPercentage(Integer coorientatorsCreditsPercentage) {
 		this.coorientatorsCreditsPercentage = coorientatorsCreditsPercentage;
 	}
 
 	/**
 	 * @return Returns the degreeCurricularPlan.
 	 */
-	public DegreeCurricularPlan getDegreeCurricularPlan()
-	{
-		return degreeCurricularPlan;
+	public ICursoExecucao getExecutionDegree() {
+		return executionDegree;
 	}
 
 	/**
-	 * @param degreeCurricularPlan The degreeCurricularPlan to set.
+	 * @param degreeCurricularPlan
+	 *            The degreeCurricularPlan to set.
 	 */
-	public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan)
-	{
-		this.degreeCurricularPlan = degreeCurricularPlan;
+	public void setExecutionDegree(ICursoExecucao executionDegree) {
+		this.executionDegree = executionDegree;
 	}
 
 	/**
 	 * @return Returns the degreeType.
 	 */
-	public TipoCurso getDegreeType()
-	{
+	public TipoCurso getDegreeType() {
 		return degreeType;
 	}
 
 	/**
-	 * @param degreeType The degreeType to set.
+	 * @param degreeType
+	 *            The degreeType to set.
 	 */
-	public void setDegreeType(TipoCurso degreeType)
-	{
+	public void setDegreeType(TipoCurso degreeType) {
 		this.degreeType = degreeType;
 	}
 
 	/**
 	 * @return Returns the description.
 	 */
-	public String getDescription()
-	{
+	public String getDescription() {
 		return description;
 	}
 
 	/**
-	 * @param description The description to set.
+	 * @param description
+	 *            The description to set.
 	 */
-	public void setDescription(String description)
-	{
+	public void setDescription(String description) {
 		this.description = description;
 	}
 
 	/**
 	 * @return Returns the keyCoorientator.
 	 */
-	public Integer getKeyCoorientator()
-	{
+	public Integer getKeyCoorientator() {
 		return keyCoorientator;
 	}
 
 	/**
-	 * @param keyCoorientator The keyCoorientator to set.
+	 * @param keyCoorientator
+	 *            The keyCoorientator to set.
 	 */
-	public void setKeyCoorientator(Integer keyCoorientator)
-	{
+	public void setKeyCoorientator(Integer keyCoorientator) {
 		this.keyCoorientator = keyCoorientator;
 	}
 
 	/**
 	 * @return Returns the keyDegreeCurricularPlan.
 	 */
-	public Integer getKeyDegreeCurricularPlan()
-	{
-		return keyDegreeCurricularPlan;
+	public Integer getKeyExecutionDegree() {
+		return keyExecutionDegree;
 	}
 
 	/**
-	 * @param keyDegreeCurricularPlan The keyDegreeCurricularPlan to set.
+	 * @param keyDegreeCurricularPlan
+	 *            The keyDegreeCurricularPlan to set.
 	 */
-	public void setKeyDegreeCurricularPlan(Integer keyDegreeCurricularPlan)
-	{
-		this.keyDegreeCurricularPlan = keyDegreeCurricularPlan;
+	public void setKeyExecutionDegree(Integer keyExecutionDegree) {
+		this.keyExecutionDegree = keyExecutionDegree;
 	}
 
 	/**
 	 * @return Returns the keyOrientator.
 	 */
-	public Integer getKeyOrientator()
-	{
+	public Integer getKeyOrientator() {
 		return keyOrientator;
 	}
 
 	/**
-	 * @param keyOrientator The keyOrientator to set.
+	 * @param keyOrientator
+	 *            The keyOrientator to set.
 	 */
-	public void setKeyOrientator(Integer keyOrientator)
-	{
+	public void setKeyOrientator(Integer keyOrientator) {
 		this.keyOrientator = keyOrientator;
-	}
-
-	/**
-	 * @return Returns the numberOfGroupElements.
-	 */
-	public Integer getNumberOfGroupElements()
-	{
-		return numberOfGroupElements;
-	}
-
-	/**
-	 * @param numberOfGroupElements The numberOfGroupElements to set.
-	 */
-	public void setNumberOfGroupElements(Integer numberOfGroupElements)
-	{
-		this.numberOfGroupElements = numberOfGroupElements;
 	}
 
 	/**
 	 * @return Returns the objectives.
 	 */
-	public String getObjectives()
-	{
+	public String getObjectives() {
 		return objectives;
 	}
 
 	/**
-	 * @param objectives The objectives to set.
+	 * @param objectives
+	 *            The objectives to set.
 	 */
-	public void setObjectives(String objectives)
-	{
+	public void setObjectives(String objectives) {
 		this.objectives = objectives;
 	}
 
 	/**
 	 * @return Returns the observations.
 	 */
-	public String getObservations()
-	{
+	public String getObservations() {
 		return observations;
 	}
 
 	/**
-	 * @param observations The observations to set.
+	 * @param observations
+	 *            The observations to set.
 	 */
-	public void setObservations(String observations)
-	{
+	public void setObservations(String observations) {
 		this.observations = observations;
 	}
 
 	/**
 	 * @return Returns the orientator.
 	 */
-	public Teacher getOrientator()
-	{
+	public ITeacher getOrientator() {
 		return orientator;
 	}
 
 	/**
-	 * @param orientator The orientator to set.
+	 * @param orientator
+	 *            The orientator to set.
 	 */
-	public void setOrientator(Teacher orientator)
-	{
+	public void setOrientator(ITeacher orientator) {
 		this.orientator = orientator;
 	}
 
 	/**
 	 * @return Returns the orientatorsCreditsPercentage.
 	 */
-	public Integer getOrientatorsCreditsPercentage()
-	{
+	public Integer getOrientatorsCreditsPercentage() {
 		return orientatorsCreditsPercentage;
 	}
 
 	/**
-	 * @param orientatorsCreditsPercentage The orientatorsCreditsPercentage to set.
+	 * @param orientatorsCreditsPercentage
+	 *            The orientatorsCreditsPercentage to set.
 	 */
-	public void setOrientatorsCreditsPercentage(Integer orientatorsCreditsPercentage)
-	{
+	public void setOrientatorsCreditsPercentage(Integer orientatorsCreditsPercentage) {
 		this.orientatorsCreditsPercentage = orientatorsCreditsPercentage;
-	}
-
-	/**
-	 * @return Returns the partA.
-	 */
-	public String getPartA()
-	{
-		return partA;
-	}
-
-	/**
-	 * @param partA The partA to set.
-	 */
-	public void setPartA(String partA)
-	{
-		this.partA = partA;
-	}
-
-	/**
-	 * @return Returns the partB.
-	 */
-	public String getPartB()
-	{
-		return partB;
-	}
-
-	/**
-	 * @param partB The partB to set.
-	 */
-	public void setPartB(String partB)
-	{
-		this.partB = partB;
 	}
 
 	/**
 	 * @return Returns the requirements.
 	 */
-	public String getRequirements()
-	{
+	public String getRequirements() {
 		return requirements;
 	}
 
 	/**
-	 * @param requirements The requirements to set.
+	 * @param requirements
+	 *            The requirements to set.
 	 */
-	public void setRequirements(String requirements)
-	{
+	public void setRequirements(String requirements) {
 		this.requirements = requirements;
 	}
 
 	/**
 	 * @return Returns the title.
 	 */
-	public String getTitle()
-	{
+	public String getTitle() {
 		return title;
 	}
 
 	/**
-	 * @param title The title to set.
+	 * @param title
+	 *            The title to set.
 	 */
-	public void setTitle(String title)
-	{
+	public void setTitle(String title) {
 		this.title = title;
 	}
 
 	/**
 	 * @return Returns the url.
 	 */
-	public String getUrl()
-	{
+	public String getUrl() {
 		return url;
 	}
 
 	/**
-	 * @param url The url to set.
+	 * @param url
+	 *            The url to set.
 	 */
-	public void setUrl(String url)
-	{
+	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	/**
+	 * @return Returns the deliverable.
+	 */
+	public String getDeliverable() {
+		return deliverable;
+	}
+
+	/**
+	 * @param deliverable
+	 *            The deliverable to set.
+	 */
+	public void setDeliverable(String deliverable) {
+		this.deliverable = deliverable;
+	}
+
+	/**
+	 * @return Returns the framing.
+	 */
+	public String getFraming() {
+		return framing;
+	}
+
+	/**
+	 * @param framing
+	 *            The framing to set.
+	 */
+	public void setFraming(String framing) {
+		this.framing = framing;
+	}
+
+	/**
+	 * @return Returns the location.
+	 */
+	public String getLocation() {
+		return location;
+	}
+
+	/**
+	 * @param location
+	 *            The location to set.
+	 */
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	/**
+	 * @return Returns the maximumNumberOfGroupElements.
+	 */
+	public Integer getMaximumNumberOfGroupElements() {
+		return maximumNumberOfGroupElements;
+	}
+
+	/**
+	 * @param maximumNumberOfGroupElements
+	 *            The maximumNumberOfGroupElements to set.
+	 */
+	public void setMaximumNumberOfGroupElements(Integer maximumNumberOfGroupElements) {
+		this.maximumNumberOfGroupElements = maximumNumberOfGroupElements;
+	}
+
+	/**
+	 * @return Returns the minimumNumberOfGroupElements.
+	 */
+	public Integer getMinimumNumberOfGroupElements() {
+		return minimumNumberOfGroupElements;
+	}
+
+	/**
+	 * @param minimumNumberOfGroupElements
+	 *            The minimumNumberOfGroupElements to set.
+	 */
+	public void setMinimumNumberOfGroupElements(Integer minimumNumberOfGroupElements) {
+		this.minimumNumberOfGroupElements = minimumNumberOfGroupElements;
+	}
+
+	/**
+	 * @return Returns the companionMail.
+	 */
+	public String getCompanionMail() {
+		return companionMail;
+	}
+	/**
+	 * @param companionMail
+	 *            The companionMail to set.
+	 */
+	public void setCompanionMail(String companionMail) {
+		this.companionMail = companionMail;
+	}
+	/**
+	 * @return Returns the companionName.
+	 */
+	public String getCompanionName() {
+		return companionName;
+	}
+	/**
+	 * @param companionName
+	 *            The companionName to set.
+	 */
+	public void setCompanionName(String companionName) {
+		this.companionName = companionName;
+	}
+	/**
+	 * @return Returns the companionPhone.
+	 */
+	public Integer getCompanionPhone() {
+		return companionPhone;
+	}
+	/**
+	 * @param companionPhone
+	 *            The companionPhone to set.
+	 */
+	public void setCompanionPhone(Integer companionPhone) {
+		this.companionPhone = companionPhone;
+	}
+	/**
+	 * @return Returns the companyAdress.
+	 */
+	public String getCompanyAdress() {
+		return companyAdress;
+	}
+	/**
+	 * @param companyAdress
+	 *            The companyAdress to set.
+	 */
+	public void setCompanyAdress(String companyAdress) {
+		this.companyAdress = companyAdress;
+	}
+	/**
+	 * @return Returns the branches.
+	 */
+	public List getBranches() {
+		return branches;
+	}
+
+	/**
+	 * @param branches
+	 *            The branches to set.
+	 */
+	public void setBranches(List branches) {
+		this.branches = branches;
+	}
+
+	/**
+	 * @return Returns the proposalNumber.
+	 */
+	public Integer getProposalNumber()
+	{
+		return proposalNumber;
+	}
+
+	/**
+	 * @param proposalNumber
+	 *            The proposalNumber to set.
+	 */
+	public void setProposalNumber(Integer proposalNumber)
+	{
+		this.proposalNumber = proposalNumber;
 	}
 
 }

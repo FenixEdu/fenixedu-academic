@@ -163,7 +163,18 @@
 			   type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="executionCourseId" type="java.lang.Integer" />
 	</form-bean>
-			      
+
+		<!-- FINAL DEGREE WORK  -->
+		<form-bean name="finalDegreeWorkScheduleing" 
+				   type="org.apache.struts.validator.DynaValidatorForm" 
+				   dynamic="true">
+			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="startOfProposalPeriodDate" type="java.lang.String"/>
+			<form-property name="startOfProposalPeriodHour" type="java.lang.String"/>
+			<form-property name="endOfProposalPeriodDate" type="java.lang.String"/>
+			<form-property name="endOfProposalPeriodHour" type="java.lang.String"/>
+		</form-bean>			      
+	
     </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -583,8 +594,21 @@
 	 <action type="ServidorApresentacao.Action.teacher.DownloadStudentList" 
             path="/getTabSeparatedStudentList" scope="request">
         </action>
-        
-        	
+
+	<!-- Final Degree Work Manipulation -->
+	<action path="/manageFinalDegreeWork"
+			type="ServidorApresentacao.Action.coordinator.ManageFinalDegreeWorkDispatchAction"
+			input="/manageFinalDegreeWork.do?method=prepare&amp;page=0"
+			name="finalDegreeWorkScheduleing"
+			attribute="finalDegreeWorkScheduleing"
+			parameter="method"
+			scope="request"
+			validate="true"
+			>
+		<forward name="show-final-degree-work-list" path="df.page.showFinalDegreeWorkList"/>
+		<forward name="show-final-degree-work-proposal" path="df.page.showFinalDegreeWorkProposal"/>
+	</action>
+
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->

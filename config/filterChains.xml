@@ -662,4 +662,11 @@
         <invocationTiming>1</invocationTiming>
         <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
     </filterChain>
+    <filterChain>
+        <name>AccessFinalDegreeWorkProposalAuthorization</name>
+        <expression>AccessFinalDegreeWorkProposalAuthorizationFilter</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
 </filterChainsDefinitions>

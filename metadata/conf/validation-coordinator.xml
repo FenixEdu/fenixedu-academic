@@ -138,5 +138,36 @@
 			<arg0 key="label.student.number" resource="true"/>
 		</field>
 	</form>	
+
+	<form name="finalDegreeWorkScheduleing">
+		<field property="startOfProposalPeriodDate" depends="required,date" page="1">
+	        <arg0 key="finalDegreeWorkProposal.setProposalPeriod.validator.start" resource="true"/>
+    	    <var>
+    	    	<var-name>datePattern</var-name>
+    	    	<var-value>dd/MM/yyyy</var-value>
+    	    </var>
+		</field>
+		<field property="startOfProposalPeriodHour" depends="required,date" page="1">
+	        <arg0 key="finalDegreeWorkProposal.setProposalPeriod.validator.start" resource="true"/>
+    	    <var>
+    	    	<var-name>datePattern</var-name>
+    	    	<var-value>HH:mm</var-value>
+    	    </var>
+		</field>
+		<field property="endOfProposalPeriodDate" depends="required,date" page="1">
+	        <arg0 key="finalDegreeWorkProposal.setProposalPeriod.validator.end" resource="true"/>
+    	    <var>
+    	    	<var-name>datePattern</var-name>
+    	    	<var-value>dd/MM/yyyy</var-value>
+    	    </var>
+		</field>
+		<field property="endOfProposalPeriodHour" depends="required,date" page="1">
+	        <arg0 key="finalDegreeWorkProposal.setProposalPeriod.validator.end" resource="true"/>
+    	    <var>
+    	    	<var-name>datePattern</var-name>
+    	    	<var-value>HH:mm</var-value>
+    	    </var>
+		</field>
+	</form>	
   </formset>
 </form-validation>

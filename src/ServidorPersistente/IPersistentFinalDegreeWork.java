@@ -1,0 +1,27 @@
+/*
+ * Created on 2004/03/08
+ *  
+ */
+
+package ServidorPersistente;
+
+import java.util.List;
+
+import Dominio.finalDegreeWork.IScheduleing;
+
+/**
+ * @author Luis Cruz
+ */
+
+public interface IPersistentFinalDegreeWork extends IPersistentObject {
+
+	public List readFinalDegreeWorkProposalsByExecutionDegree(Integer executionDegreeOID)
+		throws ExcepcaoPersistencia;
+
+	public IScheduleing readFinalDegreeWorkScheduleing(Integer executionDegreeOID)
+		throws ExcepcaoPersistencia;
+
+	public List readFinalDegreeWorkProposalsByTeacher(Integer teacherOID)
+			throws ExcepcaoPersistencia;
+
+}

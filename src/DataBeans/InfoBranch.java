@@ -2,6 +2,8 @@ package DataBeans;
 
 import java.util.StringTokenizer;
 
+import Util.BranchType;
+
 /**
  * @author dcs-rjao
  * @author Fernanda Quitério
@@ -20,6 +22,7 @@ public class InfoBranch extends InfoObject
     //	private List associatedStudentCurricularPlans;
     //	private List infoScopes;
     private InfoDegreeCurricularPlan infoDegreeCurricularPlan;
+	private BranchType branchType;
     
     private String acronym;
 
@@ -218,4 +221,18 @@ public class InfoBranch extends InfoObject
 		this.specializationCredits = specializationCredits;
 	}
 
+	/**
+	 * @return Returns the branchType.
+	 */
+	public BranchType getBranchType()
+	{
+		return branchType;
+	}
+	/**
+	 * @param branchType The branchType to set.
+	 */
+	public void setBranchType(BranchType branchType)
+	{
+		this.branchType = branchType;
+	}
 }

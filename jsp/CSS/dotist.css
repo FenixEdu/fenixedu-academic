@@ -241,6 +241,11 @@ a:hover {
 	color: #c00;
 	background: #ffc;
 	}
+
+.sucessfulOperarion {
+	font: bold 11px Verdana, Arial, Helvetica, sans-serif;
+	color: darkblue;
+	}
 	
 .inputlist {
 	font: 11px Verdana, Arial, Helvetica, sans-serif;
@@ -337,6 +342,14 @@ select.degrees {
 	background:#999; 
 	padding:5px;
 	font-weight:bold;
+}
+
+.listClasses-supheader{
+	color:#FFF;
+	background:#4F82B5; 
+	padding:5px;
+	font-weight:bold;
+	text-align: center;
 }
 
 .listClasses-subheader a:link, .listClasses-subheader a:visited{

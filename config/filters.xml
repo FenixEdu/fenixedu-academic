@@ -640,4 +640,12 @@
     	<description/>
     	<isTransactional>false</isTransactional>
     </filter>           
+    <filter>
+        <name>AccessFinalDegreeWorkProposalAuthorizationFilter</name>
+        <implementationClass>
+	        ServidorAplicacao.Filtro.coordinator.AccessFinalDegreeWorkProposalAuthorizationFilter
+        </implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>
 </filterDefinitions>

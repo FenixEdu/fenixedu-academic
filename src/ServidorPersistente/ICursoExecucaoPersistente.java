@@ -186,4 +186,6 @@ public interface ICursoExecucaoPersistente extends IPersistentObject
         
 	public List readByDegreeAndExecutionYearList(String degreeCode, IExecutionYear executionYear)
 			   throws ExcepcaoPersistencia;
+	
+	public List readExecutionDegreesOfTypeDegree() throws ExcepcaoPersistencia;
 }

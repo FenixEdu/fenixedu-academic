@@ -16,8 +16,13 @@
       	locking="true"
       />
       <field-descriptor
-         name="keyDegreeCurricularPlan"
-         column="KEY_DEGREE_CURRICULAR_PLAN"
+      	name="proposalNumber"
+      	column="PROPOSAL_NUMBER"
+      	jdbc-type="INTEGER"
+      />
+      <field-descriptor
+         name="keyExecutionDegree"
+         column="KEY_EXECUTION_DEGREE"
          jdbc-type="INTEGER"
       />
       <field-descriptor
@@ -31,7 +36,7 @@
          jdbc-type="INTEGER"
       />
       <field-descriptor
-         name="keyCoOrientator"
+         name="keyCoorientator"
          column="KEY_COORIENTATOR"
          jdbc-type="INTEGER"
       />
@@ -44,6 +49,26 @@
          name="coorientatorsCreditsPercentage"
          column="COORIENTATORS_CREDITS_PERCENTAGE"
          jdbc-type="INTEGER"
+      />
+      <field-descriptor
+         name="companionName"
+         column="COMPANION_NAME"
+         jdbc-type="VARCHAR"
+      />
+      <field-descriptor
+         name="companionMail"
+         column="COMPANION_MAIL"
+         jdbc-type="VARCHAR"
+      />
+      <field-descriptor
+         name="companionPhone"
+         column="COMPANION_PHONE"
+         jdbc-type="INTEGER"
+      />
+      <field-descriptor
+         name="framing"
+         column="FRAMING"
+         jdbc-type="LONGVARCHAR"
       />
       <field-descriptor
          name="objectives"
@@ -61,14 +86,29 @@
          jdbc-type="LONGVARCHAR"
       />
       <field-descriptor
+         name="deliverable"
+         column="DELIVERAVLE"
+         jdbc-type="LONGVARCHAR"
+      />
+      <field-descriptor
          name="url"
          column="URL"
          jdbc-type="VARCHAR"
       />
       <field-descriptor
-         name="numberOfGroupElements"
-         column="NUMBER_OF_GROUP_ELEMENTS"
+         name="minimumNumberOfGroupElements"
+         column="MINIMUM_NUMBER_OF_GROUP_ELEMENTS"
          jdbc-type="INTEGER"
+      />
+      <field-descriptor
+         name="maximumNumberOfGroupElements"
+         column="MAXIMUM_NUMBER_OF_GROUP_ELEMENTS"
+         jdbc-type="INTEGER"
+      />
+      <field-descriptor
+         name="location"
+         column="LOCATION"
+         jdbc-type="VARCHAR"
       />
       <field-descriptor
          name="degreeType"
@@ -77,33 +117,88 @@
          conversion="ServidorPersistente.Conversores.JavaTipoCurso2SqlTipoCursoFieldConversion"
       />
       <field-descriptor
-         name="partA"
-         column="PART_A"
-         jdbc-type="LONGVARCHAR"
-      />
-      <field-descriptor
-         name="partB"
-         column="PART_B"
-         jdbc-type="LONGVARCHAR"
-      />
-      <field-descriptor
          name="observations"
          column="OBSERVATIONS"
          jdbc-type="LONGVARCHAR"
       />
       <field-descriptor
-         name="company_name"
+         name="companyName"
          column="COMPANY_NAME"
          jdbc-type="VARCHAR"
       />
       <field-descriptor
-         name="company_link_responsable"
-         column="COMPANY_LINK_RESPONSABLE"
+         name="companyAdress"
+         column="COMPANY_ADRESS"
          jdbc-type="VARCHAR"
+      />
+      <reference-descriptor
+         name="executionDegree"
+         class-ref="Dominio.CursoExecucao">
+         <foreignkey field-ref="keyExecutionDegree"/>
+      </reference-descriptor>
+      <reference-descriptor
+         name="orientator"
+         class-ref="Dominio.Teacher">
+         <foreignkey field-ref="keyOrientator"/>
+      </reference-descriptor>
+      <reference-descriptor
+         name="coorientator"
+         class-ref="Dominio.Teacher">
+         <foreignkey field-ref="keyCoorientator"/>
+      </reference-descriptor>
+	<collection-descriptor
+			name="branches"
+			element-class-ref="Dominio.Branch"
+			indirection-table="FINAL_DEGREE_WORK_PROPOSAL_BRANCH"
+			auto-retrieve="true"
+			proxy="true">
+		<fk-pointing-to-this-class column="KEY_FINAL_DEGREE_WORK_PROPOSAL"/>
+		<fk-pointing-to-element-class column="KEY_BRANCH"/>
+	</collection-descriptor>
+</class-descriptor>
+
+<class-descriptor
+   	  class="Dominio.finalDegreeWork.Scheduleing"
+   	  table="FINAL_DEGREE_WORK_SCHEDULEING"
+   >
+      <field-descriptor
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
       />
       <field-descriptor
-         name="company_contact"
-         column="COMPANY_CONTACT"
-         jdbc-type="VARCHAR"
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
       />
+      <field-descriptor
+      	name="currentProposalNumber"
+      	column="CURRENT_PROPOSAL_NUMBER"
+      	jdbc-type="INTEGER"
+      />
+      <field-descriptor
+         name="keyExecutionDegree"
+         column="KEY_EXECUTION_DEGREE"
+         jdbc-type="INTEGER"
+      />
+      <field-descriptor
+         name="startOfProposalPeriod"
+         column="START_OF_PROPOSAL_PERIOD"
+         jdbc-type="TIMESTAMP"
+         conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+      />      
+      <field-descriptor
+         name="endOfProposalPeriod"
+         column="END_OF_PROPOSAL_PERIOD"
+         jdbc-type="TIMESTAMP"
+         conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+      />
+      <reference-descriptor
+         name="executionDegree"
+         class-ref="Dominio.CursoExecucao">
+         <foreignkey field-ref="keyExecutionDegree"/>
+      </reference-descriptor>
 </class-descriptor>

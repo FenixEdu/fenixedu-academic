@@ -268,5 +268,5 @@ public interface ISuportePersistente
     
     public IPersistentServiceExemptionCreditLine getIPersistentServiceExemptionCreditLine();
     public IPersistentManagementPositionCreditLine getIPersistentManagementPositionCreditLine();
-    
+	public IPersistentFinalDegreeWork getIPersistentFinalDegreeWork();
 }

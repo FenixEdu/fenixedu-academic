@@ -738,40 +738,47 @@
 		</field>
 	</form>	
 	
-<!--	<form name="tfcInformationForm">
-		<field property="responsibleCreditsPercentage" depends="required,integer,intRange">
-			<arg0 key="NAO ESKECER" resource="true"/>
-			<arg1 name="intRange" key="${var:min}" resource="false"/>
-			<arg2 name="intRange" key="${var:max}" resource="false"/>
-			<var>
-				<var-name>min</var-name>
-				<var-value>0</var-value>
-			</var>
-			<var>
-				<var-name>max</var-name>
-				<var-value>100</var-value>
-			</var>
+	<form name="finalWorkInformationForm">
+		<field property="degree" depends="required,integer" page="1">
+			<arg0 key="finalWorkInformationForm.degree" resource="true"/>
 		</field>
-		Falta o validwhen aqui
-		<field property="coResponsibleCreditsPercentage" depends="integer,intRange">
-			<arg0 key="NAO ESKECER" resource="true"/>
-			<arg1 name="intRange" key="${var:min}" resource="false"/>
-			<arg2 name="intRange" key="${var:max}" resource="false"/>
-			<var>
-				<var-name>min</var-name>
-				<var-value>0</var-value>
-			</var>
-			<var>
-				<var-name>max</var-name>
-				<var-value>100</var-value>
-			</var>			
+		<field property="role" depends="required" page="1">
+			<arg0 key="finalWorkInformationForm.role" resource="true"/>
 		</field>
-		<field property="objectives" depends="required">
-			<arg0 key="NAO ESKECER"/>
-		</field> 
-		<field property="description" depends="required">
-			<arg0 key="label.student.number" resource="true"/>
+		<field property="title" depends="required" page="2">
+			<arg0 key="finalWorkInformationForm.title" resource="true"/>
 		</field>
-	</form> -->
+		<field property="orientatorOID" depends="required,integer" page="2">
+			<arg0 key="finalWorkInformationForm.orientatorOID" resource="true"/>
+		</field>
+		<field property="coorientatorOID" depends="integer" page="2">
+			<arg0 key="finalWorkInformationForm.coorientatorOID" resource="true"/>
+		</field>
+		<field property="responsibleCreditsPercentage" depends="required,integer" page="2">
+			<arg0 key="finalWorkInformationForm.CreditsPercentage" resource="true"/>
+		</field>
+		<field property="coResponsibleCreditsPercentage" depends="required,integer" page="2">
+			<arg0 key="finalWorkInformationForm.CreditsPercentage" resource="true"/>
+		</field>
+		<field property="minimumNumberOfGroupElements" depends="required,integer" page="2">
+			<arg0 key="finalWorkInformationForm.numberOfGroupElements" resource="true"/>
+		</field>
+		<field property="maximumNumberOfGroupElements" depends="required,integer" page="2">
+			<arg0 key="finalWorkInformationForm.numberOfGroupElements" resource="true"/>
+		</field>
+		<field property="degreeType" depends="required,integer" page="2">
+			<arg0 key="finalWorkInformationForm.degreeType" resource="true"/>
+		</field>
+		<field property="companionPhone" depends="integer" page="2">
+			<arg0 key="finalWorkInformationForm.companionPhone" resource="true"/>
+		</field>
+		<field property="responsableTeacherNumber" depends="integer" page="1">
+			<arg0 key="finalWorkInformationForm.responsableNumber" resource="true"/>
+		</field>
+		<field property="coResponsableTeacherNumber" depends="integer" page="1">
+			<arg0 key="finalWorkInformationForm.responsableNumber" resource="true"/>
+		</field>
+	</form>
+
   </formset>
 </form-validation>

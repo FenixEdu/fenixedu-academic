@@ -13,7 +13,7 @@
 <!-- Header -->
 <table width="100%%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td class="header" width="25%"><img alt="IST" height="60" src="<%= request.getContextPath() %>/images/dotist_pub.gif" width="192" /></td>
+    <td class="header" width="25%"><img alt="IST" height="60" src="<%= request.getContextPath() %>/images/logo-fenix.gif" width="192" /></td>
     <td class="header"><div align="right"><h1><tiles:getAsString name="serviceName" /></h1></div></td>
   </tr>
 </table>

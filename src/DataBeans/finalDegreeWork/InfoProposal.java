@@ -4,7 +4,10 @@
  */
 package DataBeans.finalDegreeWork;
 
-import DataBeans.InfoDegreeCurricularPlan;
+import java.util.List;
+
+import DataBeans.InfoDepartment;
+import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoObject;
 import DataBeans.InfoTeacher;
 import Util.TipoCurso;
@@ -15,24 +18,32 @@ import Util.TipoCurso;
  */
 public class InfoProposal extends InfoObject {
 
-	private InfoDegreeCurricularPlan degreeCurricularPlan;
+	private Integer proposalNumber;
+	private InfoExecutionDegree executionDegree;
 	private String title;
 	private InfoTeacher orientator;
+	private InfoDepartment orientatorsDepartment;
 	private InfoTeacher coorientator;
+	private InfoDepartment coorientatorsDepartment;
+	private String companionName;
+	private String companionMail;
+	private Integer companionPhone;	
 	private Integer orientatorsCreditsPercentage;
 	private Integer coorientatorsCreditsPercentage;
+	private String framing;
 	private String objectives;
 	private String description;
 	private String requirements;
+	private String deliverable;
 	private String url;
-	private Integer numberOfGroupElements;
+	private Integer minimumNumberOfGroupElements;
+	private Integer maximumNumberOfGroupElements;
+	private String location;
 	private TipoCurso degreeType;
-	private String partA;
-	private String partB;
 	private String observations;
 	private String companyName;
-	private String companyLink;
-	private String companyContact;
+	private String companyAdress;
+	private List branches;
 
 	/* Construtores */
 	public InfoProposal() {
@@ -45,7 +56,7 @@ public class InfoProposal extends InfoObject {
 			InfoProposal proposal = (InfoProposal) obj;
 
 			result = getTitle().equals(proposal.getTitle())
-			&& getInfoDegreeCurricularPlan().equals(proposal.getInfoDegreeCurricularPlan());
+			&& getExecutionDegree().equals(proposal.getExecutionDegree());
 		}
 		return result;
 	}
@@ -54,42 +65,11 @@ public class InfoProposal extends InfoObject {
 		String result = "[Proposal";
 		result += ", idInternal=" + getIdInternal();
 		result += ", title=" + getTitle();
-		result += ", InfoDegreeCurricularPlan=" + getInfoDegreeCurricularPlan();
+		result += ", InfoDegreeCurricularPlan=" + getExecutionDegree();
 		result += "]";
 		return result;
 	}
 
-	/**
-	 * @return Returns the companyContact.
-	 */
-	public String getCompanyContact()
-	{
-		return companyContact;
-	}
-
-	/**
-	 * @param companyContact The companyContact to set.
-	 */
-	public void setCompanyContact(String companyContact)
-	{
-		this.companyContact = companyContact;
-	}
-
-	/**
-	 * @return Returns the companyLink.
-	 */
-	public String getCompanyLink()
-	{
-		return companyLink;
-	}
-
-	/**
-	 * @param companyLink The companyLink to set.
-	 */
-	public void setCompanyLink(String companyLink)
-	{
-		this.companyLink = companyLink;
-	}
 
 	/**
 	 * @return Returns the companyName.
@@ -140,22 +120,6 @@ public class InfoProposal extends InfoObject {
 	}
 
 	/**
-	 * @return Returns the degreeCurricularPlan.
-	 */
-	public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan()
-	{
-		return degreeCurricularPlan;
-	}
-
-	/**
-	 * @param degreeCurricularPlan The degreeCurricularPlan to set.
-	 */
-	public void setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan degreeCurricularPlan)
-	{
-		this.degreeCurricularPlan = degreeCurricularPlan;
-	}
-
-	/**
 	 * @return Returns the degreeType.
 	 */
 	public TipoCurso getDegreeType()
@@ -185,22 +149,6 @@ public class InfoProposal extends InfoObject {
 	public void setDescription(String description)
 	{
 		this.description = description;
-	}
-
-	/**
-	 * @return Returns the numberOfGroupElements.
-	 */
-	public Integer getNumberOfGroupElements()
-	{
-		return numberOfGroupElements;
-	}
-
-	/**
-	 * @param numberOfGroupElements The numberOfGroupElements to set.
-	 */
-	public void setNumberOfGroupElements(Integer numberOfGroupElements)
-	{
-		this.numberOfGroupElements = numberOfGroupElements;
 	}
 
 	/**
@@ -268,38 +216,6 @@ public class InfoProposal extends InfoObject {
 	}
 
 	/**
-	 * @return Returns the partA.
-	 */
-	public String getPartA()
-	{
-		return partA;
-	}
-
-	/**
-	 * @param partA The partA to set.
-	 */
-	public void setPartA(String partA)
-	{
-		this.partA = partA;
-	}
-
-	/**
-	 * @return Returns the partB.
-	 */
-	public String getPartB()
-	{
-		return partB;
-	}
-
-	/**
-	 * @param partB The partB to set.
-	 */
-	public void setPartB(String partB)
-	{
-		this.partB = partB;
-	}
-
-	/**
 	 * @return Returns the requirements.
 	 */
 	public String getRequirements()
@@ -345,6 +261,204 @@ public class InfoProposal extends InfoObject {
 	public void setUrl(String url)
 	{
 		this.url = url;
+	}
+
+	/**
+	 * @return Returns the executionDegree.
+	 */
+	public InfoExecutionDegree getExecutionDegree() {
+		return executionDegree;
+	}
+
+	/**
+	 * @param executionDegree The executionDegree to set.
+	 */
+	public void setExecutionDegree(InfoExecutionDegree executionDegree) {
+		this.executionDegree = executionDegree;
+	}
+
+	/**
+	 * @return Returns the framing.
+	 */
+	public String getFraming() {
+		return framing;
+	}
+
+	/**
+	 * @param framing The framing to set.
+	 */
+	public void setFraming(String framing) {
+		this.framing = framing;
+	}
+
+	/**
+	 * @return Returns the deliverable.
+	 */
+	public String getDeliverable() {
+		return deliverable;
+	}
+
+	/**
+	 * @param deliverable The deliverable to set.
+	 */
+	public void setDeliverable(String deliverable) {
+		this.deliverable = deliverable;
+	}
+
+	/**
+	 * @return Returns the location.
+	 */
+	public String getLocation() {
+		return location;
+	}
+
+	/**
+	 * @param location The location to set.
+	 */
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	/**
+	 * @return Returns the maximumNumberOfGroupElements.
+	 */
+	public Integer getMaximumNumberOfGroupElements() {
+		return maximumNumberOfGroupElements;
+	}
+
+	/**
+	 * @param maximumNumberOfGroupElements The maximumNumberOfGroupElements to set.
+	 */
+	public void setMaximumNumberOfGroupElements(Integer maximumNumberOfGroupElements) {
+		this.maximumNumberOfGroupElements = maximumNumberOfGroupElements;
+	}
+
+	/**
+	 * @return Returns the minimumNumberOfGroupElements.
+	 */
+	public Integer getMinimumNumberOfGroupElements() {
+		return minimumNumberOfGroupElements;
+	}
+
+	/**
+	 * @param minimumNumberOfGroupElements The minimumNumberOfGroupElements to set.
+	 */
+	public void setMinimumNumberOfGroupElements(Integer minimumNumberOfGroupElements) {
+		this.minimumNumberOfGroupElements = minimumNumberOfGroupElements;
+	}
+
+	/**
+	 * @return Returns the companionMail.
+	 */
+	public String getCompanionMail()
+	{
+		return companionMail;
+	}
+	/**
+	 * @param companionMail The companionMail to set.
+	 */
+	public void setCompanionMail(String companionMail)
+	{
+		this.companionMail = companionMail;
+	}
+	/**
+	 * @return Returns the companionName.
+	 */
+	public String getCompanionName()
+	{
+		return companionName;
+	}
+	/**
+	 * @param companionName The companionName to set.
+	 */
+	public void setCompanionName(String companionName)
+	{
+		this.companionName = companionName;
+	}
+	/**
+	 * @return Returns the companionPhone.
+	 */
+	public Integer getCompanionPhone()
+	{
+		return companionPhone;
+	}
+	/**
+	 * @param companionPhone The companionPhone to set.
+	 */
+	public void setCompanionPhone(Integer companionPhone)
+	{
+		this.companionPhone = companionPhone;
+	}
+	/**
+	 * @return Returns the companyAdress.
+	 */
+	public String getCompanyAdress()
+	{
+		return companyAdress;
+	}
+	/**
+	 * @param companyAdress The companyAdress to set.
+	 */
+	public void setCompanyAdress(String companyAdress)
+	{
+		this.companyAdress = companyAdress;
+	}
+	/**
+	 * @return Returns the branches.
+	 */
+	public List getBranches()
+	{
+		return branches;
+	}
+
+	/**
+	 * @param branches The branches to set.
+	 */
+	public void setBranches(List branches)
+	{
+		this.branches = branches;
+	}
+
+	/**
+	 * @return Returns the proposalNumber.
+	 */
+	public Integer getProposalNumber() {
+		return proposalNumber;
+	}
+
+	/**
+	 * @param proposalNumber The proposalNumber to set.
+	 */
+	public void setProposalNumber(Integer proposalNumber) {
+		this.proposalNumber = proposalNumber;
+	}
+
+	/**
+	 * @return Returns the coorientatorsDepartment.
+	 */
+	public InfoDepartment getCoorientatorsDepartment() {
+		return coorientatorsDepartment;
+	}
+
+	/**
+	 * @param coorientatorsDepartment The coorientatorsDepartment to set.
+	 */
+	public void setCoorientatorsDepartment(InfoDepartment coorientatorsDepartment) {
+		this.coorientatorsDepartment = coorientatorsDepartment;
+	}
+
+	/**
+	 * @return Returns the orientatorsDepartment.
+	 */
+	public InfoDepartment getOrientatorsDepartment() {
+		return orientatorsDepartment;
+	}
+
+	/**
+	 * @param orientatorsDepartment The orientatorsDepartment to set.
+	 */
+	public void setOrientatorsDepartment(InfoDepartment orientatorsDepartment) {
+		this.orientatorsDepartment = orientatorsDepartment;
 	}
 
 }
