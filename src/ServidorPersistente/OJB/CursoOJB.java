@@ -72,13 +72,19 @@ public class CursoOJB extends ObjectFenixOJB implements ICursoPersistente {
 		throws ExcepcaoPersistencia, ExistingPersistentException {
 
 		ICurso degreeFromDB = null;
-
 		// If there is nothing to write, simply return.
 		if (degreeToWrite == null)
 			return;
 
 		// Read degree from database.
-		degreeFromDB = this.readBySigla(degreeToWrite.getSigla());
+		ICurso degreeFromDB1 = this.readBySigla(degreeToWrite.getSigla());
+		ICurso degreeFromDB2 = this.readByNameAndDegreeType(degreeToWrite.getNome(),degreeToWrite.getTipoCurso());
+		if(degreeFromDB1 == null )
+			degreeFromDB = degreeFromDB2;
+		else
+			degreeFromDB = degreeFromDB1;
+		
+		
 
 		// If degree is not in database, then write it.
 		if (degreeFromDB == null)
@@ -86,7 +92,7 @@ public class CursoOJB extends ObjectFenixOJB implements ICursoPersistente {
 		// else If the degree is mapped to the database, then write any existing changes.
 		else if (
 			degreeFromDB.getIdInternal().equals(
-				degreeToWrite.getIdInternal())) {
+				degreeToWrite.getIdInternal()) && (degreeFromDB2 == null || degreeFromDB1.getIdInternal().equals(degreeFromDB2.getIdInternal()))) {
 			super.lockWrite(degreeToWrite);
 			// else Throw an already existing exception
 		} else
@@ -159,5 +165,28 @@ public class CursoOJB extends ObjectFenixOJB implements ICursoPersistente {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
-
+	
+	
+	public ICurso readByNameAndDegreeType(String name, TipoCurso degreeType) throws ExcepcaoPersistencia {
+			try {
+				ICurso degree = null;
+				String oqlQuery = "select curso from " + Curso.class.getName();
+				oqlQuery += " where nome = $1 ";
+				oqlQuery += " and tipoCurso = $2 ";		
+				query.create(oqlQuery);
+				query.bind(name);
+				query.bind(degreeType);
+				List result = (List) query.execute();				
+				lockRead(result);
+				
+				if (result.size() != 0) {
+					degree = (ICurso) result.get(0);
+				}
+				
+				return degree;
+			} catch (QueryException ex) {
+				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+			}
+		}
+	
 }

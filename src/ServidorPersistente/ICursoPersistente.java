@@ -25,4 +25,5 @@ public interface ICursoPersistente extends IPersistentObject {
     void deleteAll() throws ExcepcaoPersistencia;
     public List readAll() throws ExcepcaoPersistencia;
 	public List readAllByDegreeType(TipoCurso degreeType) throws ExcepcaoPersistencia;
+	public ICurso readByNameAndDegreeType(String name, TipoCurso degreeType) throws ExcepcaoPersistencia;
 }
