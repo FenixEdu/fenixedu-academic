@@ -16,7 +16,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td><html:textarea rows="10" cols="60" property="generalObjectives" ></html:textarea>
+				<td><html:textarea rows="10" cols="60" property="generalObjectives" />
 				</td>
 				<td><span class="error" ><html:errors property="generalObjectives"/></span>	
 				</td>
@@ -26,7 +26,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td><html:textarea rows="10" cols="60" property="generalObjectivesEn" ></html:textarea>
+				<td><html:textarea rows="10" cols="60" property="generalObjectivesEn" />
 				</td>
 				<td><span class="error" ><html:errors property="generalObjectivesEn"/></span>	
 				</td>
@@ -39,7 +39,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td><html:textarea rows="10" cols="60" property="operacionalObjectives" ></html:textarea>
+				<td><html:textarea rows="10" cols="60" property="operacionalObjectives" />
 				</td>
 				<td><span class="error" ><html:errors property="operacionalObjectives"/></span>	
 				</td>
@@ -49,7 +49,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td><html:textarea rows="10" cols="60" property="operacionalObjectivesEn" ></html:textarea>
+				<td><html:textarea rows="10" cols="60" property="operacionalObjectivesEn" />
 				</td>
 				<td><span class="error" ><html:errors property="operacionalObjectivesEn"/></span>	
 				</td>

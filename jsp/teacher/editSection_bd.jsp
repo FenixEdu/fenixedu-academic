@@ -33,12 +33,24 @@
 		<bean:message key="message.sectionOrder"/>		
 	</td>
 	<td>
-		<bean:define id="sectionsList" name="sections" property="sections"/>
-		<html:select name="sectionForm" property="sectionOrder">
-			<html:options collection="sectionsList" property="sectionOrder" labelProperty="name"/>
-			<html:option value="-1"><bean:message key="label.end"/></html:option>
+		<bean:define id="sectionOrder" name="section" property="sectionOrder" type="java.lang.Integer"/>
+		<html:select name="section" property="sectionOrder" size="1">
+			<logic:iterate id="otherSection" name="sections" property="sections" type="DataBeans.InfoSection">
+				<bean:define id="otherSectionOrder" type="java.lang.String"><%= String.valueOf(otherSection.getSectionOrder().intValue()) %></bean:define>
+				<bean:define id="selected" value=""></bean:define>
+				<logic:equal name="otherSectionOrder" value="<%= String.valueOf(sectionOrder.intValue() + 1) %>">
+					<bean:define id="selected">selected="selected"</bean:define>
+					<bean:define id="isSelected">yes</bean:define>
+				</logic:equal>
+				<option value="<bean:write name='otherSection' property='sectionOrder'/>" <bean:write name="selected"/>><bean:write name="otherSection" property="name"/></option>
+			</logic:iterate>
+			<bean:define id="selected" value=""></bean:define>
+			<logic:notPresent name="isSelected">
+					<bean:define id="selected">selected="selected"</bean:define>
+			</logic:notPresent>
+				<option value="-1" <bean:write name="selected"/>><bean:message key="label.end" /></option>
 		</html:select>
-			<span class="error"><html:errors property="sectionOrder"/></span>
+		<span class="error"><html:errors property="sectionOrder"/></span>
 	</td>
 	</logic:present>
 	<logic:notPresent name="sections">

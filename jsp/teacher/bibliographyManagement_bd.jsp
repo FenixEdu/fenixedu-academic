@@ -20,7 +20,7 @@
 <p>
 <div class="gen-button">
 	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" /> 
-	<html:link page="<%= "/bibliographicReferenceManager.do?method=prepareCreateBibliographicReference&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
+	<html:link page="<%= "/createBibliographicReference.do?method=prepareCreateBibliographicReference&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
 		<bean:message key="label.insertBibliographicReference"/>                   		     
 	</html:link>
 </div>

@@ -27,10 +27,22 @@
 		<bean:message key="message.sectionOrder"/>		
 	</td>
 	<td>
-		<html:select property="itemOrder" size="1">
-			<bean:define id="items" name="items" />
-			<html:option value="-1"><bean:message key="label.end"/></html:option>	
-			<html:options collection="items" labelProperty="name" property="itemOrder" />
+		<bean:define id="itemOrder" name="item" property="itemOrder" type="java.lang.Integer"/>
+		<html:select name="item" property="itemOrder" size="1">
+			<logic:iterate id="otherItem" name="items" type="DataBeans.InfoItem">
+				<bean:define id="otherItemOrder" type="java.lang.String"><%= String.valueOf(otherItem.getItemOrder().intValue()) %></bean:define>
+				<bean:define id="selected" value=""></bean:define>
+				<logic:equal name="otherItemOrder" value="<%= String.valueOf(itemOrder.intValue() + 1) %>">
+					<bean:define id="selected">selected="selected"</bean:define>
+					<bean:define id="isSelected">yes</bean:define>
+				</logic:equal>
+				<option value="<bean:write name='otherItem' property='itemOrder'/>" <bean:write name="selected"/>><bean:write name="otherItem" property="name"/></option>
+			</logic:iterate>
+			<bean:define id="selected" value=""></bean:define>
+			<logic:notPresent name="isSelected">
+					<bean:define id="selected">selected="selected"</bean:define>
+			</logic:notPresent>
+				<option value="-1" <bean:write name="selected"/>><bean:message key="label.end" /></option>
 		</html:select>
 		<span class="error"><html:errors property="itemOrder"/></span>
 	</td>
@@ -41,9 +53,9 @@
 		<bean:message key="message.itemUrgent"/>
 	</td>
 	<td>
-		<html:select property="urgent" size="1" >				
-				<html:option value="false"><bean:message key="label.no"/></html:option>
-				<html:option value="true"><bean:message key="label.yes"/></html:option>
+		<html:select name="item" property="urgent" size="1" >				
+				<html:option key="label.no" value="false"></html:option>
+				<html:option key="label.yes" value="true"></html:option>
 		</html:select>
 		<span class="error"><html:errors property="urgent"/></span>
 	</td>

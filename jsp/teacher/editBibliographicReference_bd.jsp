@@ -30,9 +30,10 @@
     
 <strong><bean:message key="message.bibliographicReferenceOptional"/></strong>            
     <p><html:select name="bibliographicReference" property="optional">
-    		<html:option value="opcional"/>
-    		<html:option value="recomendada"/>
+    		<html:option key="option.bibliographicReference.optional" value="true"/>
+    		<html:option key="option.bibliographicReference.recommended" value="false"/>
     	</html:select>
+    </p>
 <br />
 <br />
 <br />

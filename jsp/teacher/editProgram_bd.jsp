@@ -12,25 +12,18 @@
 <html:hidden property="page" value="1"/>	
 <table>		
 	<tr>
-		<td><strong><bean:message key="label.program" /></strong>
-		</td>
+		<td colspan="2"><strong><bean:message key="label.program" /></strong></td>
 	</tr>
 	<tr>
-		<td><html:textarea rows="10'" cols="80" property="program" ></html:textarea>
-		</td>
-		<td> <span class="error" ><html:errors property="program"/></span>	
-		</td>
+		<td><html:textarea rows="10'" cols="80" property="program" /></td>
+		<td> <span class="error" ><html:errors property="program"/></span></td>
 	</tr>
 	<tr>
-		<td><strong><bean:message key="label.program.eng" /></strong>
-		</td>
+		<td colspan="2"><strong><bean:message key="label.program.eng" /></strong></td>
 	</tr>
-
 	<tr>
-		<td><html:textarea rows="10'" cols="80" property="programEn" ></html:textarea>
-		</td>
-		<td> <span class="error" ><html:errors property="programEn"/></span>	
-		</td>
+		<td><html:textarea rows="10'" cols="80" property="programEn"/></td>
+		<td> <span class="error" ><html:errors property="programEn"/></span></td>
 	</tr>
 </table>
 <br />

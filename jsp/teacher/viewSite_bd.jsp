@@ -9,12 +9,14 @@
 <ul style="list-style: square;">
 <li>As <strong>Opções de personalização</strong> permitem introduzir alguns textos para a página inicial da disciplina, assim como,  indicar a URL da página alternativa da disciplina - caso esta exista - e o seu contacto.</li>
 <br />
-<li>Poderá gerir os anúncios (acrescentar, editar ou apagar) escolhando a opção correspondente.</li>
+<li>Poderá gerir os <strong>Anúncios</strong> (acrescentar, editar ou apagar) escolhando a opção correspondente.</li>
 <br />
-<li>As opções <strong>Objectivos</strong>, <strong>Programa</strong> e <strong>Bibliografia</strong> devem ser preenchidas, pois para além de serem disponibilizadas nas páginas da disciplina, também servem para os relatórios e avaliações das licenciaturas.</li>
+<li>As opções <strong>Objectivos</strong>, <strong>Programa</strong>, <strong>Métodos de Avaliação</strong> e <strong>Bibliografia</strong> devem ser preenchidas, pois para além de serem disponibilizadas nas páginas da disciplina, também servem para os relatórios e avaliações das licenciaturas.</li>
 <br />
-<li>Se existirem outros docentes a leccionar a disciplina podem ser indicados através da opção <strong>docentes</strong>.</li>
+<li>Se existirem outros docentes a leccionar a disciplina podem ser indicados através da opção <strong>Docentes</strong>.</li>
 <br />
-<li>A opção <strong>Gestão de secções opcionais</strong> permite criar secções e sub-secções nas páginas da disciplina para conterem informação como listas de problemas, material de apoio, etc.</li>
+<li>Através da opcão <strong>Exames</strong> pode-se gerir as inscrições para exame e ver alunos inscritos.</li>
+<br />
+<li>A opção <strong>Gestão de Secções</strong> permite criar secções e sub-secções opcionais nas páginas da disciplina para conterem informação como listas de problemas, material de apoio, etc.</li>
 <br />
 </ul>

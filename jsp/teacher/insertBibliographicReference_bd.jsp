@@ -4,7 +4,7 @@
 
 <h2><bean:message key="title.editBibligraphicReference"/></h2>
 
-<html:form action="/bibliographicReferenceManager">
+<html:form action="/createBibliographicReference">
 <html:hidden property="page" value="1"/>
 <bean:message key="message.insertBibliographyData"/>
 <br />
@@ -26,10 +26,12 @@
     <p><html:text property="year"/></p>
     
 <strong><bean:message key="message.bibliographicReferenceOptional"/></strong>            
-    <p><html:select property="optional">
-    		<html:option value="opcional"/>
-    		<html:option value="recomendada"/>
-	   </html:select>
+		<p>
+			<html:select name="bibliographicReference" property="optional">
+	    		<html:option key="option.bibliographicReference.optional" value="true"/>
+	    		<html:option key="option.bibliographicReference.recommended" value="false"/>
+	    	</html:select>
+		</p>    	
 <br />
 <br />
 <br />

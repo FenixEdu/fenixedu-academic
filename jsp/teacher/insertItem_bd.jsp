@@ -50,8 +50,8 @@
 		</td>
 		<td>
 			<html:select property="urgent" size="1" >	
-				<html:option value="false"><bean:message key="label.no"/></html:option>
-				<html:option value="true"><bean:message key="label.yes"/></html:option>
+				<html:option key="label.no" value="false"></html:option>
+				<html:option key="label.yes" value="true"></html:option>
 			</html:select>
 			<span class="error"><html:errors property="urgent"/></span>
 		</td>
