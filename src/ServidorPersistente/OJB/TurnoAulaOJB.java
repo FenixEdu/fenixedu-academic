@@ -154,11 +154,6 @@ public class TurnoAulaOJB
  */
 	public List readByShift(ITurno shift) throws ExcepcaoPersistencia {
 		try {
-			
-			System.out.println("##################################");
-			System.out.println("shift.id=" + shift.getIdInternal());
-			System.out.println("executionCourse.id=" + shift.getDisciplinaExecucao().getIdInternal());
-
 			String oqlQuery =
 				"select all from "
 					+ TurnoAula.class.getName()

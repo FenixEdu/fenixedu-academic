@@ -210,8 +210,6 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 			argsReadRoomByOID[0] =
 				new Integer(request.getParameter(SessionConstants.ROOM_OID));
 		} else {
-			System.out.println(
-				"###### ExecutionPeriodDA-chooseViewRoom: missing ROOM_OID in request");
 		}
 
 		try {
