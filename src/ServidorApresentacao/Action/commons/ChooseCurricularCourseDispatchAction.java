@@ -17,7 +17,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.InfoCurricularCourse;
-import DataBeans.InfoSiteEnrolmentEvaluation;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
@@ -85,7 +84,6 @@ public class ChooseCurricularCourseDispatchAction extends DispatchAction {
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		Object args[] = { userView, courseID, executionYear };
 		GestorServicos serviceManager = GestorServicos.manager();
-		InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
 		List listEnrolmentEvaluation = null;
 		try {
 			listEnrolmentEvaluation = (List) serviceManager.executar(userView, "ReadStudentMarksListByCurricularCourse", args);

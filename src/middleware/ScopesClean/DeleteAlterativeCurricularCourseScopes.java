@@ -3,7 +3,6 @@
  */
 package middleware.ScopesClean;
 
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -37,14 +36,8 @@ public class DeleteAlterativeCurricularCourseScopes {
 		// from all the curricular courses
 
 		Criteria criteria = new Criteria();
-		long inicio = System.currentTimeMillis();
 		Query query = new QueryByCriteria(CurricularCourseScope.class, criteria);
 		List curricularCourseScopeList = (List) broker.getCollectionByQuery(query);
-
-		long fim = System.currentTimeMillis();
-
-		long tempo = fim - inicio;
-		Date data = new Date(tempo);
 
 		broker.clearCache();
 		broker.beginTransaction();

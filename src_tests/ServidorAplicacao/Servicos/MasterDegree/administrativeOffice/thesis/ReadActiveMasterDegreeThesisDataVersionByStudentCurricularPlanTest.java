@@ -99,8 +99,7 @@ public class ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlanTest 
 					argsReadStudentCurricularPlan);
 
 			Object[] argsReadMasterDegreeThesisDataVersion = { infoStudentCurricularPlan };
-			InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion =
-				(InfoMasterDegreeThesisDataVersion) serviceManager.executar(
+			serviceManager.executar(
 					userView,
 					getNameOfServiceToBeTested(),
 					argsReadMasterDegreeThesisDataVersion);

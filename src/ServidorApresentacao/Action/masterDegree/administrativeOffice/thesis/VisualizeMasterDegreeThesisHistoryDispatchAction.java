@@ -43,10 +43,6 @@ public class VisualizeMasterDegreeThesisHistoryDispatchAction extends DispatchAc
 
 		IUserView userView = SessionUtils.getUserView(request);
 
-		//Integer degreeType = (Integer) request.getAttribute("degreeType");
-		//Integer studentNumber = (Integer) request.getAttribute("studentNumber");
-		Integer degreeType = Integer.valueOf(request.getParameter("degreeType"));
-		Integer studentNumber = Integer.valueOf(request.getParameter("studentNumber"));
 		Integer masterDegreeThesisDataVersionID =
 			Integer.valueOf(request.getParameter("masterDegreeThesisDataVersionID"));
 
@@ -54,7 +50,7 @@ public class VisualizeMasterDegreeThesisHistoryDispatchAction extends DispatchAc
 		ActionErrors actionErrors = new ActionErrors();
 		boolean isSuccess = operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 
-		if (isSuccess == false)
+		if (!isSuccess)
 		{
 			throw new NonExistingActionException(
 				"error.exception.masterDegree.nonExistentStudent",

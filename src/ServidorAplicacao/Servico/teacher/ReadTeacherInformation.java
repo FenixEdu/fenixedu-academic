@@ -4,8 +4,6 @@
  */
 package ServidorAplicacao.Servico.teacher;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -15,7 +13,6 @@ import org.apache.commons.collections.Transformer;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoTeacher;
 import DataBeans.SiteView;
-import DataBeans.teacher.InfoCareer;
 import DataBeans.teacher.InfoOrientation;
 import DataBeans.teacher.InfoPublicationsNumber;
 import DataBeans.teacher.InfoServiceProviderRegime;

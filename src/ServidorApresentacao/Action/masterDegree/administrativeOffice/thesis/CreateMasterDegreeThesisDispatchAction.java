@@ -31,10 +31,6 @@ public class CreateMasterDegreeThesisDispatchAction extends DispatchAction
 		HttpServletResponse response)
 		throws Exception
 	{
-
-		Integer degreeType = (Integer) request.getAttribute("degreeType");
-		Integer studentNumber = (Integer) request.getAttribute("studentNumber");
-
 		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
 		ActionErrors actionErrors = new ActionErrors();
 		boolean isSuccess = operations.getStudentByNumberAndDegreeType(form, request, actionErrors);

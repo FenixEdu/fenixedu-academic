@@ -325,7 +325,6 @@ public class ChangeRelationBetweenCCScopeAndCCOfMathAnalysisA
         ccACodesList = new LinkedList();
         ccCodesList = new LinkedList();
         List listExecutionPeriods = null;
-        PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
         IExecutionPeriod currentExecutionPeriod;
 
         try
