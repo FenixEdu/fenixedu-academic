@@ -1,10 +1,12 @@
-package ServidorAplicacao.Filtro;
+package ServidorAplicacao.Filtro.student;
 
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.AuthorizationUtils;
+import ServidorAplicacao.Filtro.Filtro;
 import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
@@ -16,10 +18,10 @@ import Util.RoleType;
  * @author Fernanda Quitério 10/Fev/2004
  *  
  */
-public class StudentCurriculumOwnerAuthorizationFilter extends Filtro
+public class StudentInformationOwnerAuthorizationFilter extends Filtro
 {
 
-	public StudentCurriculumOwnerAuthorizationFilter()
+	public StudentInformationOwnerAuthorizationFilter()
 	{
 	}
 

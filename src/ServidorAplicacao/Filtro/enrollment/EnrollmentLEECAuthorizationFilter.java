@@ -2,7 +2,7 @@
  * Created on 6/Fev/2004
  *  
  */
-package ServidorAplicacao.Filtro;
+package ServidorAplicacao.Filtro.enrollment;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,6 +16,7 @@ import Dominio.ITeacher;
 import Dominio.ITutor;
 import Dominio.StudentCurricularPlan;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Filtro.AuthorizationByManyRolesFilter;
 import ServidorAplicacao.Servico.enrolment.ShowAvailableCurricularCoursesWithoutEnrollmentPeriod;
 import ServidorAplicacao.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
 import ServidorPersistente.ExcepcaoPersistencia;

@@ -566,22 +566,29 @@
     <filter>
         <name>EnrollmentLEECAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.EnrollmentLEECAuthorizationFilter</implementationClass>
+            ServidorAplicacao.Filtro.enrollment.EnrollmentLEECAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
     </filter>         
     <filter>
-        <name>StudentCurriculumOwnerAuthorization</name>
+        <name>StudentInformationOwnerAuthorization</name>
         <implementationClass> 
-            ServidorAplicacao.Filtro.StudentCurriculumOwnerAuthorizationFilter</implementationClass>
+            ServidorAplicacao.Filtro.student.StudentInformationOwnerAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
     </filter>         
+    <filter>
+        <name>StudentShiftEnrollmentAuthorization</name>
+        <implementationClass> 
+            ServidorAplicacao.Filtro.enrollment.shift.StudentShiftEnrollmentAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+    </filter>   
     <filter>
         <name>StudentIsUserFilter</name>
         <implementationClass> 
             ServidorAplicacao.Filtro.student.StudentIsUserFilter</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
-    </filter>         
+    </filter>      
 </filterDefinitions>

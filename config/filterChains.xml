@@ -600,8 +600,15 @@
         <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
     </filterChain>    
     <filterChain>
-        <name>StudentCurriculumOwnerAuthorization</name>
-        <expression>StudentCurriculumOwnerAuthorization</expression>
+        <name>StudentInformationOwnerAuthorization</name>
+        <expression>StudentInformationOwnerAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
+    </filterChain>    
+    <filterChain>
+        <name>StudentShiftEnrollmentAuthorization</name>
+        <expression>StudentShiftEnrollmentAuthorization</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
@@ -612,5 +619,5 @@
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
-    </filterChain>    
+    </filterChain>
 </filterChainsDefinitions>
