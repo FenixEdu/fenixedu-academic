@@ -8,6 +8,12 @@
 	
 		<!-- ========== Form Bean Definitions ================================== -->
 		<form-beans type="org.apache.struts.action.ActionFormBean">  
+		
+			<!-- Form vazio -->
+			<form-bean name="voidForm" 
+				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			</form-bean>
+		
 			<form-bean name="teacherSearchForm" 
 				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 				<form-property name="teacherNumber" type="java.lang.String"/>
@@ -19,6 +25,7 @@
 				<form-property name="name" type="java.lang.String"/>
 				<form-property name="idNumber" type="java.lang.String"/>
 				<form-property name="idType" type="java.lang.Integer"/>
+				<form-property name="idGrantOwner" type="java.lang.String"/>
 			</form-bean>
 
 			<form-bean name="editGrantOwnerForm" 
@@ -56,7 +63,7 @@
 				<form-property name="profession" type="java.lang.String"/>				
 				<form-property name="fiscalCode" type="java.lang.String"/>								
 				<form-property name="sex" type="java.lang.Integer"/>				
-				<form-property name="maritalStatus" type="java.lang.Integer"/>								
+				<form-property name="maritalStatus" type="java.lang.Integer"/>												
 			</form-bean>
 			
     </form-beans>
@@ -87,7 +94,7 @@
 
 	<!-- ========== Action Mapping Definitions =============================== -->
 	<action-mappings type="org.apache.struts.action.ActionMapping">
-    	<action path="/index" type="ServidorApresentacao.Action.commons.VoidAction">
+    	<action path="/index" type="ServidorApresentacao.Action.commons.VoidAction" name="voidForm">
     		<forward name="Success" path="index"/>
     	</action>
 	   	<action path="/teacherSearch" input="search-teacher-form" name="teacherSearchForm" scope="request"
@@ -129,8 +136,20 @@
    			type="ServidorApresentacao.Action.grant.owner.EditGrantOwnerAction">
    			<forward name="edit-grant-owner-form" path="editGrantOwnerForm"/>
    			<forward name="grant-owner-main" path="searchGrantOwnerForm"/>
-  			<forward name="manage-grant-owner-form" path="manageGrantOwnerForm"/> 
+  			<forward name="manage-grant-owner" path="manageGrantOwner"/> 
     </action>
+
+    <!-- ================================================================================= -->
+    <!-- ===================== USE CASE: MANAGE GRANT OWNER ============================== -->
+	<action path="/manageGrantOwner" 
+			input="/editGrantOwner.do?page=0&amp;method=prepareManageGrantOwner" 
+			name="voidForm" 
+			scope="request"
+   			parameter="method"
+   			type="ServidorApresentacao.Action.grant.owner.ManageGrantOwnerAction">
+  			<forward name="manage-grant-owner" path="manageGrantOwner"/> 
+    </action>
+
 
     <!-- ================================================================================= -->
 	</action-mappings>

@@ -8,11 +8,22 @@
 	<ul>
 		<li>
 			<html:link page="/searchGrantOwner.do?method=searchForm">
-		    	<bean:message key="link.create.grant.owner"/>
+		    	<bean:message key="link.manage.grant.owner"/>
 		    </html:link>
 		</li>
 	</ul>
+	<ul>
+		<li>
+			<html:link page="/editGrantOwner.do?method=prepareEditGrantOwnerForm">
+		    	<bean:message key="link.create.person.grant.owner"/>
+		    </html:link>
+		</li>
+	</ul>
+	
 	<br/>
+	<strong>&raquo; <bean:message key="ling.group.grantPropertiesManagement.title"/></strong>
+	<br/>
+	
 </logic:present>
 <logic:present role="creditsManager">
 	<%-- TEACHER CREDITS MANAGEMENT APPLICATIONS --%>

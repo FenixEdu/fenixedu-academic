@@ -48,7 +48,8 @@ public class GrantOwnerOJB
         Criteria criteria = new Criteria();
         criteria.addOrderBy("number", false);
         grantOwner = (IGrantOwner) queryObject(GrantOwner.class, criteria);
-        maxGrantOwnerNumber = grantOwner.getNumber();
+        if(grantOwner != null)
+            maxGrantOwnerNumber = grantOwner.getNumber();
         return maxGrantOwnerNumber;
     }
 }

@@ -20,9 +20,7 @@
 	<definition name="editGrantOwnerForm" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/facultyAdmOffice/grant/owner/editGrantOwnerForm.jsp"></put>
 	</definition>
-	<definition name="manageGrantOwnerForm" extends="facultyAdmOffice.masterPage">
-		<put name="body" value="/facultyAdmOffice/grant/owner/manageGrantOwnerForm.jsp"></put>
+	<definition name="manageGrantOwner" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/owner/manageGrantOwner.jsp"></put>
 	</definition>
-
-
 </tiles-definitions>
