@@ -31,7 +31,7 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
 	private CurricularCourseExecutionScope curricularCourseExecutionScope;
 	private Boolean mandatory;
 	private IUniversity university;
-    private Boolean basic;
+  private Boolean basic;
 	private List associatedExecutionCourses;
 	private List scopes;
 

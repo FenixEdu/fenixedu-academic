@@ -15,6 +15,9 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Tânia Pousão Created on 24/Out/2003
  */
+/********************************************************************************************/
+//this file is not used anymore
+/********************************************************************************************/
 public class migrationEvaluationElements {
 	//This class migrates all evaluation elements in curriculum table
 	//for a evalaution method table.
@@ -63,8 +66,8 @@ public class migrationEvaluationElements {
 							//curriculum.getEvaluationElementsEn() != null && curriculum.getEvaluationElementsEn().length() > 0) {
 								//put Evaluation Elements of the curriculum in Evaluation Method Objects
 								IEvaluationMethod evaluationMethod = new EvaluationMethod();
-								evaluationMethod.setEvaluationElements(curriculum.getEvaluationElements());
-								evaluationMethod.setEvaluationElementsEn(curriculum.getEvaluationElementsEn());
+//								evaluationMethod.setEvaluationElements(curriculum.getEvaluationElements());
+//								evaluationMethod.setEvaluationElementsEn(curriculum.getEvaluationElementsEn());
 
 								evaluationMethod.setExecutionCourse(executionCourse);
 								evaluationMethod.setKeyExecutionCourse(executionCourse.getIdInternal());

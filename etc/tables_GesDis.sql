@@ -34,11 +34,8 @@ create table CURRICULUM (
    GENERAL_OBJECTIVES_EN text,
    OPERACIONAL_OBJECTIVES_EN text,
    PROGRAM_EN text,
-   EVALUATION_ELEMENTS text,
-   EVALUATION_ELEMENTS_EN text,
-     LAST_MODIFICATION_DATE timestamp(14) not null,
-   primary key (ID_INTERNAL),
-   UNIQUE KEY U1(KEY_CURRICULAR_COURSE))
+   LAST_MODIFICATION_DATE timestamp(14) not null,
+   primary key (ID_INTERNAL))
    type=InnoDB ;
 
 #----------------------------

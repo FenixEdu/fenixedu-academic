@@ -19,8 +19,6 @@ public class Curriculum extends DomainObject implements ICurriculum {
 	protected String generalObjectivesEn;
 	protected String operacionalObjectivesEn;
 	protected String programEn;
-	protected String evaluationElements;//TODO: to delete
-	protected String evaluationElementsEn;//TODO: to delete
 	
 	protected Date lastModificationDate;
 	
@@ -73,27 +71,6 @@ public class Curriculum extends DomainObject implements ICurriculum {
 		setCurricularCourse(curricularCourse);
 	}
 
-	public String getEvaluationElements() {
-		return evaluationElements;
-	}
-	/**
-	 * @param evaluationElements
-	 */
-	public void setEvaluationElements(String evaluationElements) {
-		this.evaluationElements = evaluationElements;
-	}
-	/**
-	 * @return
-	 */
-	public String getEvaluationElementsEn() {
-		return evaluationElementsEn;
-	}
-	/**
-	 * @param evaluationElementsEn
-	 */
-	public void setEvaluationElementsEn(String evaluationElementsEn) {
-		this.evaluationElementsEn = evaluationElementsEn;
-	}
 
 	public Integer getKeyCurricularCourse() {
 		return keyCurricularCourse;

@@ -68,13 +68,11 @@ public class EditCurriculum implements IServico {
 					curriculum.setGeneralObjectives(infoCurriculum.getGeneralObjectives());
 					curriculum.setOperacionalObjectives(infoCurriculum.getOperacionalObjectives());
 					curriculum.setProgram(infoCurriculum.getProgram());
-					curriculum.setEvaluationElements(infoCurriculum.getEvaluationElements());
 				}
 				else {
 					curriculum.setGeneralObjectivesEn(infoCurriculum.getGeneralObjectivesEn());
 					curriculum.setOperacionalObjectivesEn(infoCurriculum.getOperacionalObjectivesEn());
 					curriculum.setProgramEn(infoCurriculum.getProgramEn());
-					curriculum.setEvaluationElementsEn(infoCurriculum.getEvaluationElementsEn());
 				}
 				curriculum.setCurricularCourse(curricularCourse);
 				

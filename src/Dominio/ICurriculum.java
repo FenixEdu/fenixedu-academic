@@ -18,13 +18,9 @@ public interface ICurriculum extends IDomainObject {
 	public String getGeneralObjectivesEn();
 	public String getOperacionalObjectivesEn();
 	public String getProgramEn();
-	public String getEvaluationElementsEn();
-	public String getEvaluationElements();
 	public ICurricularCourse getCurricularCourse();
 
 
-	public void setEvaluationElementsEn(String evaluationElementsEn);
-	public void setEvaluationElements(String evaluationElements);
 	public void setGeneralObjectives(String generalObjectives);
 	public void setOperacionalObjectives(String operacionalObjectives);
 	public void setProgram(String program);

@@ -89,5 +89,7 @@ public interface IDisciplinaExecucaoPersistente extends IPersistentObject {
 	 * @throws ExcepcaoPersistencia
 	 */
 	public IDisciplinaExecucao readbyCurricularCourseAndExecutionPeriod(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
+
+	public List readListbyCurricularCourseAndExecutionPeriod(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
 	
 }

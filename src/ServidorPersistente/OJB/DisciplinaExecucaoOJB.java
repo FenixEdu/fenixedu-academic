@@ -291,7 +291,6 @@ public class DisciplinaExecucaoOJB extends ObjectFenixOJB implements IDisciplina
         criteria.addEqualTo("keyExecutionCourse", executionCourseId);
 
         return queryList(Professorship.class, criteria);
-
     }
 
     public void lockWrite(IDisciplinaExecucao executionCourseToWrite)

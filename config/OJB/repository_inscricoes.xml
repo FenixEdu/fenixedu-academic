@@ -272,7 +272,7 @@
 			class-ref="Dominio.DegreeCurricularPlan"
 			proxy="false">
 		<foreignkey field-ref="degreeCurricularPlanKey"/>
-	</reference-descriptor> -->
+	</reference-descriptor>
 	<collection-descriptor
 			name="associatedExecutionCourses"
 			element-class-ref="Dominio.DisciplinaExecucao"

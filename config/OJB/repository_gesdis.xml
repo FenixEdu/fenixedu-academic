@@ -348,61 +348,49 @@
 <!-- ******************************************************************************************************************************* -->
 <class-descriptor class="Dominio.Curriculum"
                   table="CURRICULUM">
-    <field-descriptor id="1"
+    <field-descriptor
         name="idInternal"
         column="ID_INTERNAL"
         jdbc-type="INTEGER"
         primarykey="true"
         autoincrement="true"
     />
-    <field-descriptor id="2"
+    <field-descriptor
         name="keyCurricularCourse"
         column="KEY_CURRICULAR_COURSE"
         jdbc-type="INTEGER"
 	/>
-	<field-descriptor id="3"
+	<field-descriptor
         name="generalObjectives"
         column="GENERAL_OBJECTIVES"
         jdbc-type="LONGVARCHAR"
 	/>
-	<field-descriptor id="4"
+	<field-descriptor
         name="operacionalObjectives"
         column="OPERACIONAL_OBJECTIVES"
         jdbc-type="LONGVARCHAR"
 	/>
-	<field-descriptor id="5"
+	<field-descriptor
         name="program"
         column="PROGRAM"
         jdbc-type="LONGVARCHAR"
 	/>
-	<field-descriptor id="6"
+	<field-descriptor
         name="generalObjectivesEn"
         column="GENERAL_OBJECTIVES_EN"
         jdbc-type="LONGVARCHAR"
 	/>
-	<field-descriptor id="7"
+	<field-descriptor
         name="operacionalObjectivesEn"
         column="OPERACIONAL_OBJECTIVES_EN"
         jdbc-type="LONGVARCHAR"
 	/>
-	<field-descriptor id="8"
+	<field-descriptor
         name="programEn"
         column="PROGRAM_EN"
         jdbc-type="LONGVARCHAR"
 	/>
-	 <field-descriptor id="9"
-         name="evaluationElements"
-         column="EVALUATION_ELEMENTS"
-    	  jdbc-type="LONGVARCHAR"
-        />
-    	 
-    <field-descriptor id="10"
-         name="evaluationElementsEn"
-         column="EVALUATION_ELEMENTS_EN"
-    	  jdbc-type="LONGVARCHAR"      
-        />
-        
-    <field-descriptor id="11"
+    <field-descriptor
     	name="lastModificationDate"	
     	column="LAST_MODIFICATION_DATE"
     	jdbc-type="DATE"    	

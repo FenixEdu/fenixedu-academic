@@ -387,6 +387,10 @@
 		        >
 			<forward name="showActiveCurricularCourses" path="activeDegreeCurricularPlan" />
 			<forward name="showCurricularCoursesHistory" path="degreeCurricularPlanHistory" />
+			<forward name="degreeCurricularPlanManagement" path="/degreeCurricularPlanManagement.do?method=showActiveCurricularCourses" />
+			<forward name="viewCurricularCourseInformation" path="viewCurricularCourseInformation" />
+			<forward name="prepareViewCurricularCourseInformationHistory" path="prepareViewCurricularCourseInformationHistory" />
+			<forward name="degreeCurricularPlanManagementExecutionYears" path="/degreeCurricularPlanManagement.do?method=prepareViewCurricularCourseInformationHistory" />
 		</action>		
 
     </action-mappings>

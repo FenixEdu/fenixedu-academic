@@ -27,6 +27,8 @@ public interface ICurricularCourseScope extends IDomainObject {
 	public Calendar getEndDate();
 //	public Integer getExecutionYear();
 
+	public Boolean isActive();
+
 	public void setMaxIncrementNac(Integer integer);
 	public void setMinIncrementNac(Integer integer);
 	public void setWeigth(Integer integer);

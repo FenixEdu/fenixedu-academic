@@ -28,6 +28,7 @@ public class InfoCurricularCourse  extends InfoObject implements Comparable,ISit
 	private InfoDegreeCurricularPlan infoDegreeCurricularPlan;
 	//	private List associatedInfoCurricularSemesters;
 	private List infoScopes;
+	private List infoAssociatedExecutionCourses;
 	private CurricularCourseType type;
 	private CurricularCourseExecutionScope curricularCourseExecutionScope;
 	private Boolean mandatory;
@@ -69,6 +70,7 @@ public class InfoCurricularCourse  extends InfoObject implements Comparable,ISit
 			InfoCurricularCourse infoCurricularCourse = (InfoCurricularCourse) obj;
 			resultado = (getName().equals(infoCurricularCourse.getName()) && getCode().equals(infoCurricularCourse.getCode()));
 		}
+
 		return resultado;
 	}
 
@@ -357,5 +359,13 @@ public class InfoCurricularCourse  extends InfoObject implements Comparable,ISit
 		
 		
 		return minScope;
+	}
+
+	public List getInfoAssociatedExecutionCourses() {
+		return infoAssociatedExecutionCourses;
+	}
+
+	public void setInfoAssociatedExecutionCourses(List infoAssociatedExecutionCourses) {
+		this.infoAssociatedExecutionCourses = infoAssociatedExecutionCourses;
 	}
 }

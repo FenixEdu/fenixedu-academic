@@ -61,12 +61,26 @@ public class CurricularCourseScope extends DomainObject implements ICurricularCo
 			ICurricularCourseScope ccs = (ICurricularCourseScope) obj;
 
 			resultado =
-				getCurricularCourse().equals(ccs.getCurricularCourse())
-					&& getCurricularSemester().equals(ccs.getCurricularSemester())
-					&& getBranch().equals(ccs.getBranch())
+				(((getBranch() == null && ccs.getBranch() == null)
+					|| (getBranch() != null
+						&& ccs.getBranch() != null
+						&& getBranch().equals(ccs.getBranch())))
+					&& ((getCurricularCourse() == null
+						&& ccs.getCurricularCourse() == null)
+						|| (getCurricularCourse() != null
+							&& ccs.getCurricularCourse() != null
+							&& getCurricularCourse().equals(
+			ccs.getCurricularCourse())))
+					&& ((getCurricularSemester() == null
+						&& ccs.getCurricularSemester() == null)
+						|| (getCurricularSemester() != null
+							&& ccs.getCurricularSemester() != null
+							&& getCurricularSemester().equals(
+			ccs.getCurricularSemester())))
 					&& ((getEndDate() == null && ccs.getEndDate() == null)
-						|| (getEndDate() != null && ccs.getEndDate() != null && getEndDate().equals(ccs.getEndDate())));
-			//									getExecutionYear().equals(ccs.getExecutionYear());
+						|| (getEndDate() != null
+							&& ccs.getEndDate() != null
+							&& getEndDate().equals(ccs.getEndDate()))));
 		}
 
 		return resultado;

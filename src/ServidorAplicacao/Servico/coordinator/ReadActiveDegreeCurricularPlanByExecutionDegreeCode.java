@@ -23,8 +23,8 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author Fernanda Quitério 5/Nov/2003
- *  
+ * @author Fernanda Quitério
+ * 5/Nov/2003
  */
 public class ReadActiveDegreeCurricularPlanByExecutionDegreeCode implements IServico
 {
@@ -118,27 +118,26 @@ public class ReadActiveDegreeCurricularPlanByExecutionDegreeCode implements ISer
             Cloner.copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(
                 executionDegree.getCurricularPlan());
 
-        CollectionUtils.transform(allCurricularCourses, new Transformer()
-        {
-            public Object transform(Object arg0)
-            {
-                ICurricularCourse curricularCourse = (ICurricularCourse) arg0;
-                CollectionUtils.transform(curricularCourse.getScopes(), new Transformer()
-                {
-                    public Object transform(Object arg0)
-                    {
-                        ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
-                        return Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(
-                            curricularCourseScope);
-                    }
-                });
+		CollectionUtils.transform(allCurricularCourses, new Transformer() 
+		{
+			public Object transform(Object arg0) 
+			{
+				ICurricularCourse curricularCourse = (ICurricularCourse) arg0;
+				List curricularCourseScopes  = curricularCourse.getScopes();
+				CollectionUtils.transform(curricularCourseScopes, new Transformer() 
+				{
+					public Object transform(Object arg0) 
+					{
+						ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
+						return Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
+					}
+				});
 
-                InfoCurricularCourse infoCurricularCourse =
-                    Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
-                infoCurricularCourse.setInfoScopes(curricularCourse.getScopes());
-                return infoCurricularCourse;
-            }
-        });
+				InfoCurricularCourse infoCurricularCourse = Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+				infoCurricularCourse.setInfoScopes(curricularCourseScopes);
+				return infoCurricularCourse;
+			}
+		});
 
         infoDegreeCurricularPlan.setCurricularCourses(allCurricularCourses);
         return infoDegreeCurricularPlan;
