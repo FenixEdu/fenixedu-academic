@@ -37,6 +37,11 @@ public class EditDescriptionDegreeCurricularPlan implements IServico
 
     public void run(Integer infoExecutionDegreeId, InfoDegreeCurricularPlan newInfoDegreeCP) throws FenixServiceException
     {
+		if (infoExecutionDegreeId == null || newInfoDegreeCP == null)
+		{
+			throw new FenixServiceException("error.impossibleEditDegreeInfo");
+		}
+        
         IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = null;
         IDegreeCurricularPlan oldDegreeCP = null;
         try
@@ -54,8 +59,6 @@ public class EditDescriptionDegreeCurricularPlan implements IServico
                 throw new NonExistingServiceException("message.nonExistingDegreeCurricularPlan", null);
             }
 
-			//persistentDegreeCurricularPlan.simpleLockWrite(oldDegreeCP);
-			
             oldDegreeCP.setDescription(newInfoDegreeCP.getDescription());
             oldDegreeCP.setDescriptionEn(newInfoDegreeCP.getDescriptionEn());
 

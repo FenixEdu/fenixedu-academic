@@ -51,6 +51,12 @@ public class EditDegreeInfoByExecutionDegreeTest extends ServiceTestCase
         String[] args = { "userC2", "pass", getApplication()};
         return args;
     }
+    
+	protected String[] getThridAuthenticatedAndAuthorizedUser()
+	{
+		String[] args = { "userC3", "pass", getApplication()};
+		return args;
+	}
 
     protected String[] getAuthenticatedAndAlreadyAuthorizedUser()
     {
@@ -194,7 +200,7 @@ public class EditDegreeInfoByExecutionDegreeTest extends ServiceTestCase
             Object[] args = { infoExecutionDegreeCode, infoDegreeInfoCode, infoDegreeInfo };
 
             //Valid user
-            String[] argsUser = getAuthenticatedAndAuthorizedUser();
+            String[] argsUser = getThridAuthenticatedAndAuthorizedUser();
             IUserView id = (IUserView) gestor.executar(null, "Autenticacao", argsUser);
 
             //Service
@@ -284,7 +290,7 @@ public class EditDegreeInfoByExecutionDegreeTest extends ServiceTestCase
 			Object[] args = { infoExecutionDegreeCode, infoDegreeInfoCode, infoDegreeInfo };
 
 			//Valid user
-			String[] argsUser = getAuthenticatedAndAuthorizedUser();
+			String[] argsUser = getSecondAuthenticatedAndAuthorizedUser();
 			IUserView id = (IUserView) gestor.executar(null, "Autenticacao", argsUser);
 
 			//Service
@@ -313,9 +319,8 @@ public class EditDegreeInfoByExecutionDegreeTest extends ServiceTestCase
 			assertNotNull(executionDegree);
 			assertNotNull(executionDegree.getCurricularPlan());
 			assertNotNull(executionDegree.getCurricularPlan().getDegree());
-			assertEquals(
-				executionDegree.getCurricularPlan().getDegree().getIdInternal(),
-				new Integer(1000));
+			assertEquals(new Integer(2002),
+				executionDegree.getCurricularPlan().getDegree().getIdInternal());
 
 			//read degree info by degree
 			IPersistentDegreeInfo persistentDegreeInfo = sp.getIPersistentDegreeInfo();
@@ -326,7 +331,7 @@ public class EditDegreeInfoByExecutionDegreeTest extends ServiceTestCase
 					executionDegree.getCurricularPlan().getDegree());
 			sp.confirmarTransaccao();
 
-			assertEquals(new Integer(degreeInfoList.size()), new Integer(2));
+			assertEquals(new Integer(2), new Integer(degreeInfoList.size()));
 
 			//verify change maded	
 			IDegreeInfo degreeInfoAck = (IDegreeInfo) degreeInfoList.get(degreeInfoList.size() - 1);
@@ -346,7 +351,7 @@ public class EditDegreeInfoByExecutionDegreeTest extends ServiceTestCase
 			assertEquals(infoDegreeInfo.getMarkMax(), degreeInfoAck.getMarkMax());
 			assertEquals(infoDegreeInfo.getMarkAverage(), degreeInfoAck.getMarkAverage());
 			assertNotNull(degreeInfoAck.getDegree());
-			assertEquals(degreeInfoAck.getDegree().getIdInternal(), new Integer(1000));
+			assertEquals(new Integer(2002), degreeInfoAck.getDegree().getIdInternal());
 
 			System.out.println(
 				"EditDegreeInfoByExecutionDegreeTest was SUCCESSFULY runned by service: testNewDegreeInfo");
