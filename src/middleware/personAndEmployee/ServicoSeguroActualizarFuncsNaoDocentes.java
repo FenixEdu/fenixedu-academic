@@ -1,4 +1,4 @@
-package middleware.assiduousness;
+package middleware.personAndEmployee;
 
 import java.util.ArrayList;
 import java.util.Collection;
