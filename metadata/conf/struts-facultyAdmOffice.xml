@@ -39,7 +39,7 @@
 			<form-bean name="editGrantOwnerForm" 
 				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 				<!-- Grant Owner values -->
-				<form-property name="idInternal" type="java.lang.String"/>
+				<form-property name="idGrantOwner" type="java.lang.String"/>
 				<form-property name="grantOwnerNumber" type="java.lang.String"/>
 				<form-property name="cardCopyNumber" type="java.lang.String"/>
 				<form-property name="dateSendCGD" type="java.lang.String"/>
@@ -77,6 +77,7 @@
 				<form-property name="sex" type="java.lang.Integer"/>								
 				<form-property name="maritalStatus" type="java.lang.Integer"/>	
 				<form-property name="country" type="java.lang.Integer"/>
+				<!-- Method property-->
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 			</form-bean>
 			
@@ -140,9 +141,12 @@
   			<forward name="list-one" path="view-teacher-credits-sheet"/> 
     		<forward name="list-many" path="view-teachers-for-credits-sheet"/>
     	</action>
+
+
+
     <!-- ===================== USE CASE: SEARCH GRANT OWNER ============================== -->
 	<action path="/searchGrantOwner" 
-			input="/searchGrantOwner.do?page=0&amp;method=searchForm" 
+			input="/searchGrantOwner.do?page=0&amp;method=searchForm"
 			name="searchGrantOwnerForm" 
 			scope="request"
    			parameter="method"
@@ -160,7 +164,7 @@
     
     <!-- ===================== USE CASE: SEARCH GRANT OWNER BY NUMBER ============================== -->
 	<action path="/searchGrantOwnerByNumber" 
-			input="/searchGrantOwnerByNumber.do?page=0&amp;method=searchGrantOwner" 
+			input="/searchGrantOwner.do?page=0&amp;method=searchForm"
 			name="searchGrantOwnerByNumberForm" 
 			scope="request"
    			parameter="method"

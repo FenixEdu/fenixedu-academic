@@ -64,15 +64,19 @@
 			<td class="listClasses">
 				<%-- Person is a Grant Owner already --%>
 				<logic:present name="infoGrantOwner" property="grantOwnerNumber">
-					<bean:define id="idInternal" name="infoGrantOwner" property="idInternal"/>
-					<html:link page='<%= "/manageGrantOwner.do?method=prepareManageGrantOwnerForm&amp;idInternal=" + idInternal %>' > 
+					<html:link page="/manageGrantOwner.do?method=prepareManageGrantOwnerForm"
+						       paramId="idInternal"
+						       paramName="infoGrantOwner"
+						       paramProperty="idInternal"> 
 						<bean:message key="label.grant.owner.edit" />
 					</html:link>
 				</logic:present>
 				<%-- Person is not a Grant Owner --%>
 				<logic:notPresent name="infoGrantOwner" property="grantOwnerNumber">
-					<bean:define id="personUsername" name="infoGrantOwner" property="personInfo.username"/>
-					<html:link page='<%= "/editGrantOwner.do?method=prepareEditGrantOwnerForm&personUsername=" + personUsername %>' >
+					<html:link page='<%= "/editGrantOwner.do?method=prepareEditGrantOwnerForm&amp;loaddb=" + 1 %>'
+							   paramId="personId"
+							   paramName="infoGrantOwner"
+							   paramProperty="personInfo.idInternal">
 						<bean:message key="label.grant.owner.create" />
 					</html:link>
 				</logic:notPresent>

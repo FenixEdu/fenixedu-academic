@@ -34,7 +34,7 @@
 				<bean:message key="label.grant.contract.beginDate"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="dateBeginContract"/>* (dd-mm-aaaa)
+				<html:text property="dateBeginContract"/>* &nbsp;(dd/mm/aaaa)
 			</td>
 		</tr>
 		<tr>
@@ -42,7 +42,7 @@
 				<bean:message key="label.grant.contract.endDate"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="dateEndContract"/>* (dd-mm-aaaa)
+				<html:text property="dateEndContract"/>* &nbsp;(dd/mm/aaaa)
 			</td>
 		</tr>
 		<tr>

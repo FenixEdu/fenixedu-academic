@@ -7,9 +7,18 @@
         <form name="searchGrantOwnerForm">
             <field property="idNumber" depends="integer" page="1">
                 <msg name="integer" key="errors.integer" resource="true"/>
-                <arg0 key="label.error"/>
+                <arg0 key="label.grant.owner.idNumber"/>
             </field>
         </form>
+
+		<!-- Initial form to search a Grant Owner By Number-->
+        <form name="searchGrantOwnerByNumberForm">
+            <field property="idGrantOwner" depends="required, integer" page="1">
+                <msg name="integer" key="errors.integer" resource="true"/>
+                <arg0 key="label.grant.owner.idInternal"/>
+            </field>
+        </form>
+
 
 		<!-- Edit Grant Contract Form -->
         <form name="editGrantContractForm">
@@ -64,14 +73,20 @@
 					<var-value>^((.||..)/(.||..)/2...)$</var-value>
 					</var>
 			</field>	    
-			<field property="cardCopyNumber" depends="integer" page="1">
+			<field property="cardCopyNumber" depends="required,integer" page="1">
 				<msg name="number" key="errors.integer"/>
 				<arg0 key="label.grant.owner.cardCopyNumber" resource="true"/>
 			</field>
-			<field property="idDate" depends="required, mask, date" page="1">
+			
+			<field property="idNumber" depends="required,integer" page="1">
+				<msg name="number" key="errors.integer"/>
+				<arg0 key="label.grant.owner.idNumber" resource="true"/>
+			</field>
+			
+			<field property="idDate" depends="mask, date" page="1">
 				<msg name="date" key="errors.invalid.date"/>
 				<msg name="mask" key="errors.invalid.date"/>
-				<arg0 key="label.grant.owner.idDate" resource="true"/>
+				<arg0 key="label.grant.owner.infoperson.idDate" resource="true"/>
 				<var>
 					<var-name>datePattern</var-name>
 					<var-value>dd/MM/yyyy</var-value>
@@ -81,10 +96,10 @@
 					<var-value>^((.||..)/(.||..)/....)$</var-value>
 				</var>
 			</field>
-			<field property="idValidDate" depends="required, mask, date" page="1">
+			<field property="idValidDate" depends="mask, date" page="1">
 				<msg name="date" key="errors.invalid.date"/>
 				<msg name="mask" key="errors.invalid.date"/>
-				<arg0 key="label.grant.owner.idValidDate" resource="true"/>
+				<arg0 key="label.grant.owner.infoperson.idValidDate" resource="true"/>
 				<var>
 					<var-name>datePattern</var-name>
 					<var-value>dd/MM/yyyy</var-value>
@@ -94,10 +109,10 @@
 					<var-value>^((.||..)/(.||..)/2...)$</var-value>
 				</var>
 			</field>
-			<field property="birthdate" depends="required, mask, date" page="1">
+			<field property="birthdate" depends="mask, date" page="1">
 				<msg name="date" key="errors.invalid.date"/>
 				<msg name="mask" key="errors.invalid.date"/>
-				<arg0 key="label.grant.owner.birthdate" resource="true"/>
+				<arg0 key="label.grant.owner.infoperson.birthdate" resource="true"/>
 				<var>
 					<var-name>datePattern</var-name>
 					<var-value>dd/MM/yyyy</var-value>
@@ -116,15 +131,22 @@
             </field>
             <field property="socialSecurityNumber" depends="integer" page="1">
 				<msg name="number" key="errors.integer"/>
-				<arg0 key="label.grant.contract.socialSecurityNumber" resource="true"/>
+				<arg0 key="label.grant.owner.infoperson.socialSecurityNumber" resource="true"/>
 			</field>
 			<field property="fiscalCode" depends="integer" page="1">
 				<msg name="number" key="errors.integer"/>
-				<arg0 key="label.grant.contract.fiscalCode" resource="true"/>
+				<arg0 key="label.grant.owner.infoperson.fiscalCode" resource="true"/>
 			</field>  
+			<field property="phone" depends="integer" page="1">
+				<msg name="phone" key="errors.integer"/>
+				<arg0 key="label.grant.owner.infoperson.phone" resource="true"/>
+			</field>
+			<field property="cellphone" depends="integer" page="1">
+				<msg name="cellphone" key="errors.integer"/>
+				<arg0 key="label.grant.owner.infoperson.cellPhone" resource="true"/>
+			</field>
+			
 	    <!--Sera que estes valores tb tem que ser checados????
-	    	<form-property name="phone" type="java.lang.String"/>									
-		<form-property name="cellphone" type="java.lang.String"/>		
 		<form-property name="email" type="java.lang.String"/>	
 		<form-property name="homepage" type="java.lang.String"/>-->
     	</form>

@@ -13,6 +13,14 @@
 	<tr>
 		<td colspan="2"><b><bean:message key="label.grant.owner.information"/></b></td>
 	</tr>
+	<tr>
+		<td >
+			<bean:message key="label.grant.owner.idInternal"/>:&nbsp;
+		</td>
+		<td>
+			<bean:write name="infoGrantOwner" property="grantOwnerNumber"/>
+		</td>
+	</tr>
   	<tr>
 		<td >
 			<bean:message key="label.grant.owner.dateSendCGD"/>:&nbsp;
@@ -380,12 +388,10 @@
 <br/>
 
 <html:form action="/editGrantOwner">
-	<bean:define id="personUsername" name="infoGrantOwner" property="personInfo.username"/>
-	<bean:define id="idInternal" name="infoGrantOwner" property="idInternal"/>
-
 	<html:hidden property="method" value="prepareEditGrantOwnerForm"/>				
-	<html:hidden property="personUsername" value="<%= personUsername.toString() %>"/>
-	<html:hidden property="idInternal" value="<%= idInternal.toString() %>"/>		
+	<bean:define id="idGrantOwner" name="infoGrantOwner" property="idInternal"/>
+	<html:hidden property="idGrantOwner" value="<%= idGrantOwner.toString() %>"/>
+	<html:hidden property="loaddb" value="1"/>
 	<html:submit styleClass="inputbutton">
 		<bean:message key="button.edit"/>
 	</html:submit> 
@@ -474,8 +480,9 @@
 <br/>
 
 <html:form action="/editGrantContract">
-	<bean:define id="idInternal" name="infoGrantOwner" property="idInternal"/>
 	<html:hidden property="method" value="prepareEditGrantContractForm"/>
+	
+	<bean:define id="idInternal" name="infoGrantOwner" property="idInternal"/>
 	<html:hidden property="idInternal" value='<%= idInternal.toString() %>'/>		
 	<html:submit styleClass="inputbutton">
 		<bean:message key="button.createNewContract"/>

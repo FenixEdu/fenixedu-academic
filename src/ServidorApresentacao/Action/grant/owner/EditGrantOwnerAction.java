@@ -40,28 +40,6 @@ import Util.TipoDocumentoIdentificacao;
 public class EditGrantOwnerAction extends DispatchAction
 {
 	/*
-	 * Sets an error to be displayed in the page and sets the mapping forward
-	 */
-	private ActionForward setError(
-		HttpServletRequest request,
-		ActionMapping mapping,
-		String errorMessage,
-		String forwardPage,
-		Object actionArg)
-	{
-		ActionErrors errors = new ActionErrors();
-		String notMessageKey = errorMessage;
-		ActionError error = new ActionError(notMessageKey, actionArg);
-		errors.add(notMessageKey, error);
-		saveErrors(request, errors);
-
-		if (forwardPage != null)
-			return mapping.findForward(forwardPage);
-		else
-			return mapping.getInputForward();
-	}
-
-	/*
 	 * Fills the form with the correspondent data
 	 */
 	public ActionForward prepareEditGrantOwnerForm(
@@ -72,40 +50,64 @@ public class EditGrantOwnerAction extends DispatchAction
 		throws Exception
 	{
 		//Get the information to search
-		String personUsername = null;
+		Integer loaddb = null;
+		Integer personId = null;
 		Integer idInternal = null;
-		if (request.getParameter("personUsername") != null)
-			personUsername = request.getParameter("personUsername");
-		if (request.getParameter("idInternal") != null)
-			idInternal = new Integer(request.getParameter("idInternal"));
+
+		if (request.getParameter("loaddb") != null && !request.getParameter("loaddb").equals(""))
+			loaddb = new Integer(request.getParameter("loaddb"));
+
+		if (request.getParameter("personId") != null && !request.getParameter("personId").equals(""))
+			personId = new Integer(request.getParameter("personId"));
+
+		if (request.getParameter("idGrantOwner") != null
+			&& !request.getParameter("idGrantOwner").equals(""))
+			idInternal = new Integer(request.getParameter("idGrantOwner"));
 
 		/*
-		 * 3 cases: personId and idInternal not null = grant owner exists personId not null and
-		 * idInternal null = person exists, but grant owner doesn't personId and idInternal null =
-		 * person doesn't exists
+		 * loaddb=1 --> first time on page, load contents from db personId not null --> create grant
+		 * owner from searchGrantOwnerResult idGrantOwner not null --> edit grant owner from
+		 * manageGrantOwner
 		 */
 		InfoGrantOwner infoGrantOwner = new InfoGrantOwner();
-		if (idInternal != null && personUsername != null)
+		if (loaddb != null && loaddb.equals(new Integer(1))) //Load contents from database
 		{
-			//Read the grant owner
-			Object[] args = { idInternal };
-			infoGrantOwner =
-				(InfoGrantOwner) ServiceUtils.executeService(
-					SessionUtils.getUserView(request),
-					"ReadGrantOwner",
-					args);
-		}
-		else if (personUsername != null)
-		{
-			//Read the person (grant owner doesn't exist)
-			Object[] args = { personUsername };
-			InfoPerson infoPerson = null;
-			infoPerson =
-				(InfoPerson) ServiceUtils.executeService(
-					SessionUtils.getUserView(request),
-					"ReadPersonByUsername",
-					args);
-			infoGrantOwner.setPersonInfo(infoPerson);
+			if (idInternal != null) //Comes from manageGrantOwner
+			{
+				try
+				{
+					//Read the grant owner
+					Object[] args = { idInternal };
+					infoGrantOwner =
+						(InfoGrantOwner) ServiceUtils.executeService(
+							SessionUtils.getUserView(request),
+							"ReadGrantOwner",
+							args);
+				}
+				catch (Exception e)
+				{
+					return setError(request, mapping, "errors.grant.unrecoverable", null, null);
+				}
+			}
+			else if (personId != null)
+			{
+				try
+				{
+					//Read the person (grant owner doesn't exist)
+					Object[] args = { personId };
+					InfoPerson infoPerson = null;
+					infoPerson =
+						(InfoPerson) ServiceUtils.executeService(
+							SessionUtils.getUserView(request),
+							"ReadPerson",
+							args);
+					infoGrantOwner.setPersonInfo(infoPerson);
+				}
+				catch (Exception e)
+				{
+					return setError(request, mapping, "errors.grant.unrecoverable", null, null);
+				}
+			}
 		}
 
 		/*
@@ -114,14 +116,12 @@ public class EditGrantOwnerAction extends DispatchAction
 		DynaValidatorForm grantOwnerInformationForm = (DynaValidatorForm) form;
 		if (infoGrantOwner.getIdInternal() != null)
 		{
-			//If Grant Owner exists
 			setFormGrantOwnerInformation(grantOwnerInformationForm, infoGrantOwner);
 		}
 		if (infoGrantOwner.getPersonInfo() != null
 			&& infoGrantOwner.getPersonInfo().getIdInternal() != null
 			&& !infoGrantOwner.getPersonInfo().getIdInternal().equals(new Integer(0)))
 		{
-			//If the person exists
 			setFormPersonalInformation(grantOwnerInformationForm, infoGrantOwner);
 		}
 
@@ -131,21 +131,31 @@ public class EditGrantOwnerAction extends DispatchAction
 		List maritalStatusList = EstadoCivil.toIntegerArrayList();
 		request.setAttribute("maritalStatusList", maritalStatusList);
 
-		List countryList =
-			(List) ServiceUtils.executeService(
-				SessionUtils.getUserView(request),
-				"ReadAllCountries",
-				null);
+		List countryList = null;
+		try
+		{
+			countryList =
+				(List) ServiceUtils.executeService(
+					SessionUtils.getUserView(request),
+					"ReadAllCountries",
+					null);
+		}
+		catch (Exception e)
+		{
+			return setError(request, mapping, "errors.grant.unrecoverable", null, null);
+		}
+
 		//Adding a select country line to the list (presentation reasons)
 		Country selectCountry = new Country();
-		selectCountry.setIdInternal(new Integer(0));
+		selectCountry.setIdInternal(null);
 		selectCountry.setName("[Escolha um país]");
 		countryList.add(0, selectCountry);
-
 		request.setAttribute("countryList", countryList);
 
 		if (infoGrantOwner.getIdInternal() != null)
-			request.setAttribute("idInternalGrantOwner", infoGrantOwner.getIdInternal().toString());
+		{
+			request.setAttribute("idInternal", infoGrantOwner.getIdInternal().toString());
+		}
 
 		return mapping.findForward("edit-grant-owner-form");
 	}
@@ -160,43 +170,48 @@ public class EditGrantOwnerAction extends DispatchAction
 		DynaValidatorForm editGrantOwnerForm = (DynaValidatorForm) form;
 		InfoGrantOwner infoGrantOwner = populateInfoFromForm(editGrantOwnerForm);
 
+		if (infoGrantOwner.getPersonInfo().getTipoDocumentoIdentificacao() == null)
+			return setError(request, mapping, "errors.grant.owner.idtype", null, null);
+
+		Integer grantOwnerId = null;
 		try
 		{
 			//Edit Grant Owner
 			Object[] args = { infoGrantOwner };
 			IUserView userView = SessionUtils.getUserView(request);
-			ServiceUtils.executeService(userView, "EditGrantOwner", args);
+			grantOwnerId = (Integer) ServiceUtils.executeService(userView, "EditGrantOwner", args);
 		}
 		catch (ExistingServiceException e)
 		{
-			return setError(request, mapping, "errors.grant.owner.personexists",null,null);
+			return setError(request, mapping, "errors.grant.owner.personexists", null, null);
 		}
 		catch (FenixServiceException e)
 		{
-			return setError(request, mapping, "errors.grant.owner.exists",null,null);
+			return setError(request, mapping, "errors.grant.owner.exists", null, null);
 		}
 
 		try
 		{
 			//Read the grant owner by person
-			Object[] args2 = { infoGrantOwner.getPersonInfo().getIdInternal()};
+			Object[] args2 = { grantOwnerId};
 			infoGrantOwner =
 				(InfoGrantOwner) ServiceUtils.executeService(
 					SessionUtils.getUserView(request),
-					"ReadGrantOwnerByPerson",
+					"ReadGrantOwner",
 					args2);
 		}
 		catch (FenixServiceException e)
 		{
-			return setError(request, mapping, "errors.grant.owner.bd.read",null,null);
+			return setError(request, mapping, "errors.grant.owner.bd.read", null, null);
 		}
 
 		if (infoGrantOwner != null)
 			request.setAttribute("idInternal", infoGrantOwner.getIdInternal());
 		else
 		{
-			return setError(request, mapping, "errors.grant.owner.readafterwrite",null,null);
+			return setError(request, mapping, "errors.grant.owner.readafterwrite", null, null);
 		}
+
 		return mapping.findForward("manage-grant-owner");
 	}
 
@@ -279,7 +294,7 @@ public class EditGrantOwnerAction extends DispatchAction
 	private void setFormGrantOwnerInformation(DynaValidatorForm form, InfoGrantOwner infoGrantOwner)
 		throws Exception
 	{
-		form.set("idInternal", infoGrantOwner.getIdInternal().toString());
+		form.set("idGrantOwner", infoGrantOwner.getIdInternal().toString());
 		form.set("grantOwnerNumber", infoGrantOwner.getGrantOwnerNumber().toString());
 		if (infoGrantOwner.getCardCopyNumber() != null)
 			form.set("cardCopyNumber", infoGrantOwner.getCardCopyNumber().toString());
@@ -325,13 +340,19 @@ public class EditGrantOwnerAction extends DispatchAction
 		}
 
 		//GrantOwner
-		infoGrantOwner.setIdInternal(new Integer((String) editGrantOwnerForm.get("idInternal")));
-		infoGrantOwner.setGrantOwnerNumber(
-			new Integer((String) editGrantOwnerForm.get("grantOwnerNumber")));
-		infoGrantOwner.setCardCopyNumber(new Integer((String) editGrantOwnerForm.get("cardCopyNumber")));
+		if (!((String) editGrantOwnerForm.get("idGrantOwner")).equals(""))
+			infoGrantOwner.setIdInternal(new Integer((String) editGrantOwnerForm.get("idGrantOwner")));
+
+		if (!((String) editGrantOwnerForm.get("grantOwnerNumber")).equals(""))
+			infoGrantOwner.setGrantOwnerNumber(
+				new Integer((String) editGrantOwnerForm.get("grantOwnerNumber")));
+		if (!((String) editGrantOwnerForm.get("cardCopyNumber")).equals(""))
+			infoGrantOwner.setCardCopyNumber(
+				new Integer((String) editGrantOwnerForm.get("cardCopyNumber")));
 
 		//Person
-		infoPerson.setIdInternal(new Integer((String) editGrantOwnerForm.get("idInternalPerson")));
+		if (!((String) editGrantOwnerForm.get("idInternalPerson")).equals(""))
+			infoPerson.setIdInternal(new Integer((String) editGrantOwnerForm.get("idInternalPerson")));
 		infoPerson.setNumeroDocumentoIdentificacao((String) editGrantOwnerForm.get("idNumber"));
 		infoPerson.setLocalEmissaoDocumentoIdentificacao((String) editGrantOwnerForm.get("idLocation"));
 		infoPerson.setNome((String) editGrantOwnerForm.get("name"));
@@ -358,23 +379,57 @@ public class EditGrantOwnerAction extends DispatchAction
 		infoPerson.setPassword((String) editGrantOwnerForm.get("password"));
 		infoPerson.setCodigoFiscal((String) editGrantOwnerForm.get("fiscalCode"));
 
-		TipoDocumentoIdentificacao tipoDocumentoIdentificacao = new TipoDocumentoIdentificacao();
-		tipoDocumentoIdentificacao.setTipo((Integer) editGrantOwnerForm.get("idType"));
-		infoPerson.setTipoDocumentoIdentificacao(tipoDocumentoIdentificacao);
-
+		if (((Integer) editGrantOwnerForm.get("idType")).equals(new Integer(0)))
+		{
+			infoPerson.setTipoDocumentoIdentificacao(null);
+		}
+		else
+		{
+			TipoDocumentoIdentificacao tipoDocumentoIdentificacao = new TipoDocumentoIdentificacao();
+			tipoDocumentoIdentificacao.setTipo((Integer) editGrantOwnerForm.get("idType"));
+			infoPerson.setTipoDocumentoIdentificacao(tipoDocumentoIdentificacao);
+		}
 		Sexo sexo = new Sexo();
 		sexo.setSexo((Integer) editGrantOwnerForm.get("sex"));
 		infoPerson.setSexo(sexo);
 
 		EstadoCivil estadoCivil = new EstadoCivil();
-		estadoCivil.setEstadoCivil((Integer) editGrantOwnerForm.get("maritalStatus"));
+		if (((Integer) editGrantOwnerForm.get("maritalStatus")).equals(new Integer(0)))
+			estadoCivil.setEstadoCivil(null);
+		else
+			estadoCivil.setEstadoCivil((Integer) editGrantOwnerForm.get("maritalStatus"));
 		infoPerson.setEstadoCivil(estadoCivil);
 
 		InfoCountry infoCountry = new InfoCountry();
-		infoCountry.setIdInternal((Integer) editGrantOwnerForm.get("country"));
+		if (((Integer) editGrantOwnerForm.get("country")).equals(new Integer(0)))
+			infoCountry.setIdInternal(null);
+		else
+			infoCountry.setIdInternal((Integer) editGrantOwnerForm.get("country"));
 		infoPerson.setInfoPais(infoCountry);
-
 		infoGrantOwner.setPersonInfo(infoPerson);
 		return infoGrantOwner;
 	}
+
+	/*
+	 * Sets an error to be displayed in the page and sets the mapping forward
+	 */
+	private ActionForward setError(
+		HttpServletRequest request,
+		ActionMapping mapping,
+		String errorMessage,
+		String forwardPage,
+		Object actionArg)
+	{
+		ActionErrors errors = new ActionErrors();
+		String notMessageKey = errorMessage;
+		ActionError error = new ActionError(notMessageKey, actionArg);
+		errors.add(notMessageKey, error);
+		saveErrors(request, errors);
+
+		if (forwardPage != null)
+			return mapping.findForward(forwardPage);
+		else
+			return mapping.getInputForward();
+	}
+
 }

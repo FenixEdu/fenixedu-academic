@@ -34,31 +34,54 @@ public class SearchGrantOwnerByNumberAction extends DispatchAction
 		HttpServletResponse response)
 		throws Exception
 	{
-		//Read attributes from FormBean
-		DynaValidatorForm searchGrantOwnerForm = (DynaValidatorForm) form;
-		String idGrantOwner = (String) searchGrantOwnerForm.get("idGrantOwner");
+		List infoGrantOwnerList = null;
 
-        //Run the service
-		Integer arg = new Integer(idGrantOwner);
-		Object[] args = { null, null, null, arg };
-		IUserView userView = SessionUtils.getUserView(request);
-		List infoGrantOwnerList = (List) ServiceUtils.executeService(userView, "SearchGrantOwner", args);
+		try
+		{
+			//Read attributes from FormBean
+			DynaValidatorForm searchGrantOwnerForm = (DynaValidatorForm) form;
+			String idGrantOwner = (String) searchGrantOwnerForm.get("idGrantOwner");
+			//Run the service			
+			Integer arg = new Integer(idGrantOwner);
+			Object[] args = { null, null, null, arg };
+			IUserView userView = SessionUtils.getUserView(request);
+			infoGrantOwnerList = (List) ServiceUtils.executeService(userView, "SearchGrantOwner", args);
+		}
+		catch (Exception e)
+		{
+			return setError(request, mapping, "errors.grant.unrecoverable","search-unSuccesfull",null);
+		}
 
 		if (!infoGrantOwnerList.isEmpty())
 		{
 			request.setAttribute("infoGrantOwnerList", infoGrantOwnerList);
 			return mapping.findForward("search-succesfull");
-		} 
-        else
-		{
-        	//Set the errors
-			ActionErrors errors = new ActionErrors();
-			String notMessageKey = "errors.grant.owner.not.found";
-			ActionError error = new ActionError(notMessageKey, idGrantOwner);
-			errors.add(notMessageKey, error);
-			saveErrors(request, errors);
-			
-			return mapping.findForward("search-unSuccesfull");
 		}
+		else
+		{
+			return setError(request, mapping, "errors.grant.owner.not.found","search-unSuccesfull",null);
+		}
+	}
+	
+	/*
+	 * Sets an error to be displayed in the page and sets the mapping forward
+	 */
+	private ActionForward setError(
+			HttpServletRequest request,
+			ActionMapping mapping,
+			String errorMessage,
+			String forwardPage,
+			Object actionArg)
+	{
+		ActionErrors errors = new ActionErrors();
+		String notMessageKey = errorMessage;
+		ActionError error = new ActionError(notMessageKey, actionArg);
+		errors.add(notMessageKey, error);
+		saveErrors(request, errors);
+
+		if (forwardPage != null)
+			return mapping.findForward(forwardPage);
+		else
+			return mapping.getInputForward();
 	}
 }

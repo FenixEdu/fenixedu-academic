@@ -19,11 +19,11 @@
 <html:hidden property="method" value="doEdit"/>
 <html:hidden property="page" value="1"/>
 
-<%-- person --%>
-<html:hidden property="idInternal"/>
+<%-- grant owner --%>
+<html:hidden property="idGrantOwner"/>
 <html:hidden property="grantOwnerNumber"/>
 
-<%-- grant owner --%>
+<%-- person --%>
 <html:hidden property="personUsername"/>
 <html:hidden property="password"/>
 <html:hidden property="idInternalPerson"/>
@@ -34,11 +34,11 @@
 	</tr>
 	<tr>
 		<td align="left"><bean:message key="label.grant.owner.dateSendCGD"/>:&nbsp;</td>
-		<td><html:text property="dateSendCGD"/></td>
+		<td><html:text property="dateSendCGD"/>*&nbsp;(dd/mm/aaaa)</td>
 	</tr>
 	<tr>
 		<td align="left"><bean:message key="label.grant.owner.cardCopyNumber"/>:&nbsp;</td>
-		<td><html:text property="cardCopyNumber"/></td>
+		<td><html:text property="cardCopyNumber"/>*</td>
 	</tr>
 </table>
 
@@ -79,7 +79,7 @@
 			<bean:message key="label.grant.owner.infoperson.idDate"/>:&nbsp;
 		</td>
 		<td>
-			<html:text property="idDate"/><dd-mm-aaaa>
+			<html:text property="idDate"/>&nbsp;(dd/mm/aaaa)
 		</td>
 	</tr>
 	<tr>
@@ -87,7 +87,7 @@
 			<bean:message key="label.grant.owner.infoperson.idValidDate"/>:&nbsp;
 		</td>
 		<td>
-				<html:text property="idValidDate"/><dd-mm-aaaa>
+				<html:text property="idValidDate"/>&nbsp;(dd/mm/aaaa)
 		</td>
 	</tr>
 </table>
@@ -123,7 +123,7 @@
 			<bean:message key="label.grant.owner.infoperson.birthdate"/>:&nbsp;
 		</td>
 		<td>
-			<html:text property="birthdate"/><dd-mm-aaaa>
+			<html:text property="birthdate"/>&nbsp;(dd/mm/aaaa)
 		</td>
 	</tr>
 	<tr>
@@ -205,7 +205,7 @@
 			<bean:message key="label.grant.owner.infoperson.areaCode"/>:&nbsp;
 		</td>
 		<td>
-			<html:text property="areaCode"/>
+			<html:text property="areaCode"/>&nbsp;(1234-567)
 		</td>
 	</tr>
 	<tr>
@@ -309,9 +309,11 @@
 		</html:form>		
 		</td>
 		<td>
-			<logic:present name="idInternalGrantOwner">
-				<html:form action="/manageGrantOwner.do?method=prepareManageGrantOwnerForm" style="display:inline">
-					<html:hidden property="idInternal" value='<%= request.getAttribute("idInternalGrantOwner").toString() %>'/>
+			<logic:present name="idInternal">
+				<html:form action="/manageGrantOwner" style="display:inline">
+					<html:hidden property="method" value="prepareManageGrantOwnerForm"/>
+					<html:hidden property="page" value="1"/>
+					<html:hidden property="idInternal" value='<%= request.getAttribute("idInternal").toString() %>'/>
 					<html:submit styleClass="inputbutton" style="display:inline">
 						<bean:message key="button.cancel"/>
 					</html:submit>

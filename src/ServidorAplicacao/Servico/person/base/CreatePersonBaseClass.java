@@ -24,121 +24,121 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.RoleType;
 
 /**
- * @author  Barbosa
- * @author  Pica
+ * @author Barbosa
+ * @author Pica
  */
 
 /*
- * This class is the base class to create a new person. 
- * Each class that needs to create a new object of class Pessoa (person) 
- *  should extend THIS class.
- * 
+ * This class is the base class to create a new person. Each class that needs to create a new object of
+ * class Pessoa (person) should extend THIS class.
+ *  
  */
 
 public class CreatePersonBaseClass
 {
-    public static IPessoa setPersonAttributes(
-        IPessoa personToLock,
-        InfoPerson newPerson,
-        IPersistentCountry pCountry)
-        throws ExcepcaoPersistencia
-    {
-        personToLock.setNome(newPerson.getNome());
-        if (newPerson.getNumeroDocumentoIdentificacao() != null)
-            personToLock.setNumeroDocumentoIdentificacao(newPerson.getNumeroDocumentoIdentificacao());
-        if (newPerson.getTipoDocumentoIdentificacao() != null)
-            personToLock.setTipoDocumentoIdentificacao(newPerson.getTipoDocumentoIdentificacao());
+	public static IPessoa setPersonAttributes(
+		IPessoa personToLock,
+		InfoPerson newPerson,
+		IPersistentCountry pCountry)
+		throws ExcepcaoPersistencia
+	{
+		personToLock.setNome(newPerson.getNome());
+		if (newPerson.getNumeroDocumentoIdentificacao() != null)
+			personToLock.setNumeroDocumentoIdentificacao(newPerson.getNumeroDocumentoIdentificacao());
+		if (newPerson.getTipoDocumentoIdentificacao() != null)
+			personToLock.setTipoDocumentoIdentificacao(newPerson.getTipoDocumentoIdentificacao());
 
-        personToLock.setCodigoFiscal(newPerson.getCodigoFiscal());
-        personToLock.setCodigoPostal(newPerson.getCodigoPostal());
-        personToLock.setConcelhoMorada(newPerson.getConcelhoMorada());
-        personToLock.setConcelhoNaturalidade(newPerson.getConcelhoNaturalidade());
-        personToLock.setDataEmissaoDocumentoIdentificacao(
-            newPerson.getDataEmissaoDocumentoIdentificacao());
-        personToLock.setDataValidadeDocumentoIdentificacao(
-            newPerson.getDataValidadeDocumentoIdentificacao());
-        personToLock.setDistritoMorada(newPerson.getDistritoMorada());
-        personToLock.setDistritoNaturalidade(newPerson.getDistritoNaturalidade());
-        personToLock.setEmail(newPerson.getEmail());
-        personToLock.setEnderecoWeb(newPerson.getEnderecoWeb());
-        personToLock.setEstadoCivil(newPerson.getEstadoCivil());
-        personToLock.setFreguesiaMorada(newPerson.getFreguesiaMorada());
-        personToLock.setFreguesiaNaturalidade(newPerson.getFreguesiaNaturalidade());
-        personToLock.setLocalEmissaoDocumentoIdentificacao(
-            newPerson.getLocalEmissaoDocumentoIdentificacao());
-        personToLock.setLocalidade(newPerson.getLocalidade());
-        personToLock.setLocalidadeCodigoPostal(newPerson.getLocalidadeCodigoPostal());
-        personToLock.setMorada(newPerson.getMorada());
-        personToLock.setNacionalidade(newPerson.getNacionalidade());
-        personToLock.setNascimento(newPerson.getNascimento());
-        personToLock.setNomeMae(newPerson.getNomeMae());
-        personToLock.setNomePai(newPerson.getNomePai());
-        personToLock.setNumContribuinte(newPerson.getNumContribuinte());
+		personToLock.setCodigoFiscal(newPerson.getCodigoFiscal());
+		personToLock.setCodigoPostal(newPerson.getCodigoPostal());
+		personToLock.setConcelhoMorada(newPerson.getConcelhoMorada());
+		personToLock.setConcelhoNaturalidade(newPerson.getConcelhoNaturalidade());
+		personToLock.setDataEmissaoDocumentoIdentificacao(
+			newPerson.getDataEmissaoDocumentoIdentificacao());
+		personToLock.setDataValidadeDocumentoIdentificacao(
+			newPerson.getDataValidadeDocumentoIdentificacao());
+		personToLock.setDistritoMorada(newPerson.getDistritoMorada());
+		personToLock.setDistritoNaturalidade(newPerson.getDistritoNaturalidade());
+		personToLock.setEmail(newPerson.getEmail());
+		personToLock.setEnderecoWeb(newPerson.getEnderecoWeb());
+		personToLock.setEstadoCivil(newPerson.getEstadoCivil());
+		personToLock.setFreguesiaMorada(newPerson.getFreguesiaMorada());
+		personToLock.setFreguesiaNaturalidade(newPerson.getFreguesiaNaturalidade());
+		personToLock.setLocalEmissaoDocumentoIdentificacao(
+			newPerson.getLocalEmissaoDocumentoIdentificacao());
+		personToLock.setLocalidade(newPerson.getLocalidade());
+		personToLock.setLocalidadeCodigoPostal(newPerson.getLocalidadeCodigoPostal());
+		personToLock.setMorada(newPerson.getMorada());
+		personToLock.setNacionalidade(newPerson.getNacionalidade());
+		personToLock.setNascimento(newPerson.getNascimento());
+		personToLock.setNomeMae(newPerson.getNomeMae());
+		personToLock.setNomePai(newPerson.getNomePai());
+		personToLock.setNumContribuinte(newPerson.getNumContribuinte());
 
-        personToLock.setProfissao(newPerson.getProfissao());
-        personToLock.setSexo(newPerson.getSexo());
-        personToLock.setTelefone(newPerson.getTelefone());
-        personToLock.setTelemovel(newPerson.getTelemovel());
+		personToLock.setProfissao(newPerson.getProfissao());
+		personToLock.setSexo(newPerson.getSexo());
+		personToLock.setTelefone(newPerson.getTelefone());
+		personToLock.setTelemovel(newPerson.getTelemovel());
 
-        if (newPerson.getInfoPais() != null)
-        {
-            ICountry country = (ICountry) pCountry.readByOID(Country.class,newPerson.getInfoPais().getIdInternal());
-            personToLock.setPais(country);
-        }
+		if (newPerson.getInfoPais() != null)
+		{
+			ICountry country =
+				(ICountry) pCountry.readByOID(Country.class, newPerson.getInfoPais().getIdInternal());
+			personToLock.setPais(country);
+		}
 
-        //Generate person's Password
-        if (personToLock.getPassword() == null)
-            personToLock.setPassword(
-                PasswordEncryptor.encryptPassword(GeneratePassword.generatePassword()));
+		//Generate person's Password
+		if (personToLock.getPassword() == null)
+			personToLock.setPassword(
+				PasswordEncryptor.encryptPassword(GeneratePassword.generatePassword()));
 
-        return personToLock;
-    }
+		return personToLock;
+	}
 
-    public static IPessoa createPersonBase(
-        IPessoa personToLock,
-        InfoPerson newPerson,
-        ISuportePersistente sp,
-        IPessoaPersistente pPerson,
-        IPersistentPersonRole pPersonRole)
-        throws FenixServiceException
-    {
-        IPersistentCountry pCountry = null;
+	public static IPessoa createPersonBase(
+		IPessoa personToLock,
+		InfoPerson newPerson,
+		ISuportePersistente sp,
+		IPessoaPersistente pPerson,
+		IPersistentPersonRole pPersonRole)
+		throws FenixServiceException
+	{
+		IPersistentCountry pCountry = null;
 
-        //IPessoa person = null;
-        try
-        {
-            pCountry = sp.getIPersistentCountry();
+		//IPessoa person = null;
+		try
+		{
+			pCountry = sp.getIPersistentCountry();
 
-            //Check if the person Exists
-            personToLock =
-                pPerson.lerPessoaPorNumDocIdETipoDocId(
-                    newPerson.getNumeroDocumentoIdentificacao(),
-                    newPerson.getTipoDocumentoIdentificacao());
+			//Check if the person Exists
+			if(newPerson.getIdInternal() != null && !newPerson.getIdInternal().equals(new Integer(0)))
+				personToLock = (IPessoa) pPerson.readByOID(Pessoa.class, newPerson.getIdInternal());
 
-            // Create the new Person if it does not exist
-            if (personToLock == null)
-            {
-                personToLock = new Pessoa();
+			//Create the new Person if it does not exist
+			if (personToLock == null)
+			{
+				personToLock = new Pessoa();
 
-                IPersonRole personRole = new PersonRole();
-                pPersonRole.simpleLockWrite(personRole);
-                personRole.setPerson(personToLock);
-                personRole.setRole(sp.getIPersistentRole().readByRoleType(RoleType.PERSON));
-            }
-            //lock person for WRITE
-            pPerson.simpleLockWrite(personToLock);
-            
-            personToLock = setPersonAttributes(personToLock,newPerson,pCountry);
+				IPersonRole personRole = new PersonRole();
+				pPersonRole.simpleLockWrite(personRole);
+				personRole.setPerson(personToLock);
+				personRole.setRole(sp.getIPersistentRole().readByRoleType(RoleType.PERSON));
+			}
+			//lock person for WRITE
+			pPerson.simpleLockWrite(personToLock);
 
-        } catch (ExistingPersistentException ex)
-        {
-            throw new ExistingServiceException(ex);
-        } catch (ExcepcaoPersistencia ex)
-        {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
-            throw newEx;
-        }
-        return personToLock;
-    }
+			personToLock = setPersonAttributes(personToLock, newPerson, pCountry);
+
+		}
+		catch (ExistingPersistentException ex)
+		{
+			throw new ExistingServiceException(ex);
+		}
+		catch (ExcepcaoPersistencia ex)
+		{
+			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+			newEx.fillInStackTrace();
+			throw newEx;
+		}
+		return personToLock;
+	}
 }

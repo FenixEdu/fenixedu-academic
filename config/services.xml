@@ -5453,4 +5453,11 @@
         <isTransactional>True</isTransactional>
         <filterChains/>
     </service>
+    <service>
+        <name>ReadPerson</name>
+        <description>Reads a Person by OID</description>
+        <implementationClass>ServidorAplicacao.Servico.person.ReadPerson</implementationClass>
+        <isTransactional>True</isTransactional>
+        <filterChains/>
+    </service>
 </serviceDefinitions>

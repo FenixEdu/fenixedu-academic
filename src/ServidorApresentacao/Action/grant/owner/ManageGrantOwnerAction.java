@@ -38,11 +38,14 @@ public class ManageGrantOwnerAction extends DispatchAction
     {
         Integer idInternal = null;
 
+        //TODO.. verificar so que null.. ou tb verificar se são strings vazias!!!
         if (request.getParameter("idInternal") != null)
             idInternal = new Integer(request.getParameter("idInternal"));
-        else
-        {
-            //TODO... excepcao
+        else if ((Integer)request.getAttribute("idInternal") != null)
+        	idInternal = (Integer)request.getAttribute("idInternal");
+        {	
+            //TODO... erro.. o id do grant owner é null
+        	System.out.println("erro 100!!!");
         }
 
         //Run the service
@@ -54,6 +57,7 @@ public class ManageGrantOwnerAction extends DispatchAction
         if (infoGrantOwner == null)
         {
             //TODO... excepcao.. o grant owner nao existe
+        	System.out.println("erro 200!!!");
         }
         request.setAttribute("infoGrantOwner", infoGrantOwner);
 

@@ -109,7 +109,7 @@ public class EditGrantOwner extends CreatePersonBaseClass implements IServico
     /**
 	 * Executes the service.
 	 */
-    public boolean run(InfoGrantOwner infoGrantOwner) throws FenixServiceException
+    public Integer run(InfoGrantOwner infoGrantOwner) throws FenixServiceException
     {
         ISuportePersistente sp = null;
         IPessoaPersistente pPerson = null;
@@ -142,7 +142,8 @@ public class EditGrantOwner extends CreatePersonBaseClass implements IServico
                     pPerson,
                     pPersonRole);
 
-            if (!isNew(person))
+            //verify if person is new
+            if (person.getUsername() != null)
                 grantOwner = checkIfGrantOwnerExists(person.getIdInternal(), pPerson, pGrantOwner);
 
             //create or edit grantOwner information
@@ -162,11 +163,11 @@ public class EditGrantOwner extends CreatePersonBaseClass implements IServico
             //Generate the GrantOwner's Person Username
             if (person.getUsername() == null)
                 person.setUsername(generateGrantOwnerPersonUsername(grantOwner.getNumber()));
-//TODO enviar excepcao para o caso do bolseiro existir?
+            
+            return grantOwner.getIdInternal();
         } catch (ExcepcaoPersistencia excepcaoPersistencia)
         {
             throw new FenixServiceException(excepcaoPersistencia.getMessage());
         }
-        return true;
     }
 }
