@@ -40,11 +40,16 @@ public class InfoSection {
 	
 	public InfoSection(String name,Integer sectionOrder,InfoSite infoSite){
 		
-		this.setName(name);
+		this.name =name;
+		this.sectionOrder= sectionOrder;
+		this.infoSite = infoSite;
 		
 	}
 	
 	
+	/** 
+	* Construtor
+	*/
 	
     public InfoSection(String name, Integer sectionOrder, InfoSite infoSite, InfoSection infoSuperiorSection, List inferiorInfoSections, List infoItems) {
         this.name = name;
@@ -248,7 +253,24 @@ public class InfoSection {
 		this.infoItems = infoItems;
 	}
 
-    
+
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	public String toString() {
+		String result = "[INFOSECTION";
+		result += ", name=" + name;
+		result += ", sectionOrder=" + sectionOrder;
+		result += ", infoSite=" + getInfoSite();
+		result += ", superiorInfoSection=" + getSuperiorInfoSection();
+		result += ", inferiorInfoSections=" + getInferiorInfoSections();
+		result += ", infoItems=" +getInfoItems();		
+		result += "]";
+		return result;
+	}
+	
+	
+	
     public boolean equals(Object obj) {
         boolean resultado = false;
         if (obj instanceof InfoSection) {
