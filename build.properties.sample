@@ -200,12 +200,14 @@ enrollment.faq.url=http://fenix-ashes.ist.utl.pt:8080/confluence/display/FAQ/FAQ
 # Logging Configuratio
 #------------------------------------------------------------------------------
 #
+#   log.profile.dir: name of dir where profiling log will be stored
 #   log.profile.filename: name of file where profiling log will be stored
 #   log.image.directory: directory to where dynamic images for log reports
 #                        are generated. It must end with the applications
 #                        context followed by images/logs
 #
-log.profile.filename=/tmp/profileing.log
+log.profile.dir=/tmp
+log.profile.filename=profileing.log
 log.image.directory=/home/marvin/workspace/fenix_head/build/standalone/ciapl/images/logs
 #
 #
