@@ -3,6 +3,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
+<span class="error"><html:errors/></span>
+
 <html:form action="/degreeSiteManagement">
 	<logic:notPresent name="inEnglish">
 		<h2><bean:message key="title.coordinator.degreeSite.edit"/></h2>
@@ -24,6 +26,13 @@
 
 	<table>	
 		<logic:notPresent name="inEnglish">	
+				<tr>
+					<td><strong><bean:message key="label.coordinator.degreeSite.description"/></strong></td>
+				</tr>
+				<tr>
+					<td><html:textarea property="description" cols="80" rows="8"/></td>
+				</tr>
+						
 				<tr>
 					<td><strong><bean:message key="label.coordinator.degreeSite.objectives"/></strong></td>
 				</tr>
@@ -127,6 +136,7 @@
 				  </td>
 				</tr>		
 				
+				<html:hidden property="descriptionEn" />	
 				<html:hidden property="objectivesEn" />	
 				<html:hidden property="historyEn" />
 				<html:hidden property="professionalExitsEn" />
@@ -136,6 +146,7 @@
 				<html:hidden property="classificationsEn" />
 		</logic:notPresent>																																																
 		<logic:present name="inEnglish">	
+				<html:hidden property="description" />			
 				<html:hidden property="objectives" />	
 				<html:hidden property="history" />
 				<html:hidden property="professionalExits" />
@@ -149,7 +160,14 @@
 				<html:hidden property="markMin" />	
 				<html:hidden property="markMax" />	
 				<html:hidden property="markAverage" />	
-						
+
+				<tr>
+					<td><strong><bean:message key="label.coordinator.degreeSite.description"/></strong></td>
+				</tr>
+				<tr>
+					<td><html:textarea property="descriptionEn" cols="80" rows="8"/></td>
+				</tr>
+										
 				<tr>
 					<td><strong><bean:message key="label.coordinator.degreeSite.objectives"/></strong></td>
 				</tr>

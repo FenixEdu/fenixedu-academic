@@ -1,6 +1,6 @@
 /*
  * InfoDegree.java
- *
+ * 
  * Created on 25 de Novembro de 2002, 1:07
  */
 
@@ -11,8 +11,7 @@ import java.util.List;
 import Util.TipoCurso;
 
 /**
- *
- * @author  tfc130
+ * @author tfc130
  */
 public class InfoDegree extends InfoObject implements Comparable {
 	protected String sigla;
@@ -21,10 +20,11 @@ public class InfoDegree extends InfoObject implements Comparable {
 
 	//FIXME : Esta variavel e para sair
 	protected String degreeTypeString;
-	
+
 	private List infoDegreeCurricularPlans;
 	private List infoDegreeInfos; //added by Tânia Pousão
-		
+	private InfoCampus infoCampus; //added by Tânia Pousão
+
 	public InfoDegree() {
 	}
 
@@ -91,7 +91,9 @@ public class InfoDegree extends InfoObject implements Comparable {
 
 	/**
 	 * Sets the tipoCurso.
-	 * @param degreeType The degreeType to set
+	 * 
+	 * @param degreeType
+	 *          The degreeType to set
 	 */
 	public void setTipoCurso(TipoCurso tipoCurso) {
 		this.tipoCurso = tipoCurso;
@@ -106,7 +108,9 @@ public class InfoDegree extends InfoObject implements Comparable {
 
 	/**
 	 * Sets the infoDegreeCurricularPlans.
-	 * @param infoDegreeCurricularPlans The infoDegreeCurricularPlans to set
+	 * 
+	 * @param infoDegreeCurricularPlans
+	 *          The infoDegreeCurricularPlans to set
 	 */
 	public void setInfoDegreeCurricularPlans(List infoDegreeCurricularPlans) {
 		this.infoDegreeCurricularPlans = infoDegreeCurricularPlans;
@@ -122,31 +126,36 @@ public class InfoDegree extends InfoObject implements Comparable {
 
 	/**
 	 * Sets the degreeTypeString.
-	 * @param degreeTypeString The degreeTypeString to set
+	 * 
+	 * @param degreeTypeString
+	 *          The degreeTypeString to set
 	 * @deprecated
 	 */
 	public void setDegreeTypeString(String degreeTypeString) {
 		this.degreeTypeString = degreeTypeString;
 	}
-//alphabetic order
-	public int compareTo(Object arg0) {	
 
-			InfoDegree degree =(InfoDegree) arg0;
-			return this.getNome().compareTo(degree.getNome());
-					}
+	//alphabetic order
+	public int compareTo(Object arg0) {
 
-	/**
-	 * @return Returns the infoDegreeInfos.
-	 */
+		InfoDegree degree = (InfoDegree) arg0;
+		return this.getNome().compareTo(degree.getNome());
+	}
+
 	public List getInfoDegreeInfos() {
 		return infoDegreeInfos;
 	}
 
-	/**
-	 * @param infoDegreeInfos The infoDegreeInfos to set.
-	 */
 	public void setInfoDegreeInfos(List infoDegreeInfos) {
 		this.infoDegreeInfos = infoDegreeInfos;
+	}
+
+	public InfoCampus getInfoCampus() {
+		return infoCampus;
+	}
+
+	public void setInfoCampus(InfoCampus campus) {
+		this.infoCampus = campus;
 	}
 
 }

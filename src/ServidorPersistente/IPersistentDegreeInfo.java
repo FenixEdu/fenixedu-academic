@@ -3,6 +3,7 @@ package ServidorPersistente;
 import java.util.List;
 
 import Dominio.ICurso;
+import Dominio.IExecutionYear;
 
 /**
  * @author Tânia Pousão
@@ -10,4 +11,5 @@ import Dominio.ICurso;
  */
 public interface IPersistentDegreeInfo extends IPersistentObject {
 	public List readDegreeInfoByDegree(ICurso degree) throws ExcepcaoPersistencia;
+	public List readDegreeInfoByDegreeAndExecutionYear(ICurso degree, IExecutionYear executionYear) throws ExcepcaoPersistencia;
 }

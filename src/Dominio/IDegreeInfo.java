@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 public interface IDegreeInfo extends IDomainObject {
 
 	public ICurso getDegree();
+	public String getDescription();
 	public String getObjectives();
 	public String getHistory();
 	public String getProfessionalExits();
@@ -23,6 +24,7 @@ public interface IDegreeInfo extends IDomainObject {
 	public Double getMarkMax();
 	public Double getMarkAverage();
 	public Timestamp getLastModificationDate();
+	public String getDescriptionEn();
 	public String getObjectivesEn();
 	public String getHistoryEn();
 	public String getProfessionalExitsEn();
@@ -32,6 +34,7 @@ public interface IDegreeInfo extends IDomainObject {
 	public String getClassificationsEn();
 
 	public void setDegree(ICurso degree);
+	public void setDescription(String description);
 	public void setObjectives(String objectives);
 	public void setHistory(String history);
 	public void setProfessionalExits(String professionalExits);
@@ -46,6 +49,7 @@ public interface IDegreeInfo extends IDomainObject {
 	public void setMarkMax(Double markMax);
 	public void setMarkAverage(Double markAverage);
 	public void setLastModificationDate(Timestamp lastModificationDate);	
+	public void setDescriptionEn(String descriptionEn);
 	public void setObjectivesEn(String objectivesEn);
 	public void setHistoryEn(String historyEn);
 	public void setProfessionalExitsEn(String professionalExitsEn);

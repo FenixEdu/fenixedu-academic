@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 public class InfoDegreeInfo extends InfoObject implements ISiteComponent{	
 	private InfoDegree infoDegree;
 
+	private String description;
 	private String objectives;
 	private String history;
 	private String professionalExits;
@@ -25,6 +26,7 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent{
 	private Timestamp lastModificationDate;
 
 	//Data in english
+	private String descriptionEn;
 	private String objectivesEn;
 	private String historyEn;
 	private String professionalExitsEn;
@@ -205,6 +207,22 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent{
 		this.classificationsEn = classificationsEn;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getDescriptionEn() {
+		return descriptionEn;
+	}
+
+	public void setDescriptionEn(String descriptionEn) {
+		this.descriptionEn = descriptionEn;
+	}
+	
 	public String getHistoryEn() {
 		return historyEn;
 	}
@@ -259,6 +277,7 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent{
 		String result = "[INFODEGREE_INFO:";
 		result += " codigo interno= " + getIdInternal();
 		result += " degree= " + getInfoDegree();
+		result += " descrição= " + getDescription();
 		result += " objectivos= " + getObjectives();
 		result += " historial= " + getHistory();
 		result += " saidas profissionais=" + getProfessionalExits();
@@ -266,6 +285,7 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent{
 		result += " links= " + getLinks();
 		result += " provas de ingresso= " + getTestIngression();
 		result += " classificações= " + getClassifications();		
+		result += " descrição(En)= " + getDescriptionEn();
 		result += " objectivos(En)= " + getObjectivesEn();
 		result += " historial(En)= " + getHistoryEn();
 		result += " saidas profissionais(En)=" + getProfessionalExitsEn();

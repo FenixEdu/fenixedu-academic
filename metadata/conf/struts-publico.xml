@@ -409,17 +409,26 @@
 	     <forward  name="showDegrees" path="showDegrees"/>  		  
      </action>	 
    
-    <action path="/showDegreeCurricularPlan" 
+    <action path="/showDegreeSite" 
+     		type="ServidorApresentacao.Action.publico.ShowDegreeSiteAction" 
+     		parameter="method"
+     		>
+	     <forward  name="showDescription" path="showDescription"/>  	
+	     <forward  name="showAccessRequirements" path="showAccessRequirements"/>  
+	     <forward  name="showCurricularPlan" path="showCurricularPlan"/>  	  
+     </action>
+        
+    <!--<action path="/showDegreeCurricularPlan" 
      		type="ServidorApresentacao.Action.publico.ShowDegreeCurricularPlanAction" 
      		parameter="method"
      		>
 	     <forward  name="showDegreeCurricularPlan" path="showDegreeCurricularPlan"/>  		  
-     </action>	   
+     </action>-->   
          
      </action-mappings>     
     
     <!-- ========== Controller Configuration ================================ -->
-	<!--<controller processorClass="ServidorApresentacao.processor.FenixRequestProcessor" />-->
+	  <!--<controller processorClass="ServidorApresentacao.processor.FenixRequestProcessor" />-->
     
     <!-- ========== Message Resources Definitions ============================ -->
     <message-resources parameter="ServidorApresentacao.ApplicationResources" null="false"/>

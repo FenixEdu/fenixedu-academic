@@ -10,6 +10,7 @@ public class DegreeInfo extends DomainObject implements IDegreeInfo {
 	private Integer degreeKey;
 	private ICurso degree;
 
+	private String description;
 	private String objectives;
 	private String history;
 	private String professionalExits;
@@ -26,6 +27,7 @@ public class DegreeInfo extends DomainObject implements IDegreeInfo {
 	private Timestamp lastModificationDate;
 
 	//Data in english
+	private String descriptionEn;
 	private String objectivesEn;
 	private String historyEn;
 	private String professionalExitsEn;
@@ -254,6 +256,22 @@ public class DegreeInfo extends DomainObject implements IDegreeInfo {
 		this.classificationsEn = classificationsEn;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getDescriptionEn() {
+		return descriptionEn;
+	}
+
+	public void setDescriptionEn(String descriptionEn) {
+		this.descriptionEn = descriptionEn;
+	}
+
 	public String getHistoryEn() {
 		return historyEn;
 	}
@@ -309,6 +327,7 @@ public class DegreeInfo extends DomainObject implements IDegreeInfo {
 		String result = "[DEGREE_INFO:";
 		result += " codigo interno= " + getIdInternal();
 		result += " degree= " + getDegreeKey();
+		result += " descrição= " + getDescription();
 		result += " objectivos= " + getObjectives();
 		result += " historial= " + getHistory();
 		result += " saidas profissionais=" + getProfessionalExits();
@@ -316,6 +335,7 @@ public class DegreeInfo extends DomainObject implements IDegreeInfo {
 		result += " links= " + getLinks();
 		result += " provas de ingresso= " + getTestIngression();
 		result += " classificações= " + getClassifications();		
+		result += " descrição(En)= " + getDescriptionEn();
 		result += " objectivos(En)= " + getObjectivesEn();
 		result += " historial(En)= " + getHistoryEn();
 		result += " saidas profissionais(En)=" + getProfessionalExitsEn();

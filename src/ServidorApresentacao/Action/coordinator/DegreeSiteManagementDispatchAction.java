@@ -114,6 +114,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
 	}
 
 	private void fillForm(InfoDegreeInfo infoDegreeInfo, DynaActionForm degreeInfoForm) {
+		degreeInfoForm.set("description", infoDegreeInfo.getDescription());
 		degreeInfoForm.set("objectives", infoDegreeInfo.getObjectives());
 		degreeInfoForm.set("history", infoDegreeInfo.getHistory());
 		degreeInfoForm.set("professionalExits", infoDegreeInfo.getProfessionalExits());
@@ -129,6 +130,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
 		degreeInfoForm.set("markAverage", infoDegreeInfo.getMarkAverage());
 		degreeInfoForm.set("lastModificationDate", infoDegreeInfo.getLastModificationDate().toString());
 
+		degreeInfoForm.set("descriptionEn", infoDegreeInfo.getDescriptionEn());
 		degreeInfoForm.set("objectivesEn", infoDegreeInfo.getObjectivesEn());
 		degreeInfoForm.set("historyEn", infoDegreeInfo.getHistoryEn());
 		degreeInfoForm.set("professionalExitsEn", infoDegreeInfo.getProfessionalExitsEn());
@@ -139,6 +141,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
 	}
 
 	private void fillInfoDegreeInfo(DynaActionForm degreeInfoForm, InfoDegreeInfo infoDegreeInfo) {
+		infoDegreeInfo.setDescription((String) degreeInfoForm.get("description"));
 		infoDegreeInfo.setObjectives((String) degreeInfoForm.get("objectives"));
 		infoDegreeInfo.setHistory((String) degreeInfoForm.get("history"));
 		infoDegreeInfo.setProfessionalExits((String) degreeInfoForm.get("professionalExits"));
@@ -154,6 +157,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction {
 		infoDegreeInfo.setMarkAverage((Double) degreeInfoForm.get("markAverage"));
 
 		//information in english
+		infoDegreeInfo.setDescriptionEn((String) degreeInfoForm.get("descriptionEn"));
 		infoDegreeInfo.setObjectivesEn((String) degreeInfoForm.get("objectivesEn"));
 		infoDegreeInfo.setHistoryEn((String) degreeInfoForm.get("historyEn"));
 		infoDegreeInfo.setProfessionalExitsEn((String) degreeInfoForm.get("professionalExitsEn"));

@@ -1,7 +1,9 @@
 package ServidorApresentacao.Action.publico;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.ListIterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +14,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import ServidorAplicacao.GestorServicos;
@@ -21,18 +24,13 @@ import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
- * @author Tânia Pousão
- * Created on 9/Out/2003
+ * @author Tânia Pousão Created on 9/Out/2003
  */
 public class ShowDegreesAction extends FenixContextDispatchAction {
 
-	public ActionForward nonMaster(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
+	public ActionForward nonMaster(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
-		
+
 		HttpSession session = request.getSession(true);
 
 		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
@@ -43,16 +41,16 @@ public class ShowDegreesAction extends FenixContextDispatchAction {
 
 		GestorServicos gestor = GestorServicos.manager();
 		Object[] args = { infoExecutionYear };
-		List degreesList = null;
+		List executionDegreesList = null;
 		try {
 			//ReadExecutionDegreesByExecutionYear
-			degreesList = (List) gestor.executar(null, "ReadNonMasterExecutionDegreesByExecutionYear", args);
+			executionDegreesList = (List) gestor.executar(null, "ReadNonMasterExecutionDegreesByExecutionYear", args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-		
-		//order both list by alphabetic order of the code 
-		Collections.sort(degreesList, new BeanComparator("infoDegreeCurricularPlan.infoDegree.sigla"));
+
+		//buil a list of degrees by execution degrees list
+		List degreesList = buildDegreesList(executionDegreesList);
 
 		//put both list in request
 		request.setAttribute("degreesList", degreesList);
@@ -65,7 +63,7 @@ public class ShowDegreesAction extends FenixContextDispatchAction {
 
 	public ActionForward master(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
-		
+
 		HttpSession session = request.getSession(true);
 
 		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
@@ -79,16 +77,16 @@ public class ShowDegreesAction extends FenixContextDispatchAction {
 		GestorServicos gestor = GestorServicos.manager();
 		Object[] args = { ano };
 
-		List degreesList = null;
+		List executionDegreesList = null;
 		try {
 			//ReadExecutionDegreesByExecutionYear
-			degreesList = (List) gestor.executar(null, "ReadMasterDegrees", args);
+			executionDegreesList = (List) gestor.executar(null, "ReadMasterDegrees", args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
 
-		//order both list by alphabetic order of the code 
-		Collections.sort(degreesList, new BeanComparator("infoDegreeCurricularPlan.infoDegree.sigla"));
+		//buil a list of degrees by execution degrees list
+		List degreesList = buildDegreesList(executionDegreesList);
 
 		//put both list in request
 		request.setAttribute("degreesList", degreesList);
@@ -99,4 +97,25 @@ public class ShowDegreesAction extends FenixContextDispatchAction {
 		return mapping.findForward("showDegrees");
 	}
 
+	private List buildDegreesList(List executionDegreesList) {
+		if (executionDegreesList == null) {
+			return null;
+		}
+		
+		List degreesList = new ArrayList();
+		
+		ListIterator listIterator = executionDegreesList.listIterator();
+		while (listIterator.hasNext()) {
+			InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) listIterator.next();
+
+			if (!degreesList.contains(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree())) {
+				degreesList.add(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree());
+			}
+		}
+		
+		//order list by alphabetic order of the code
+		Collections.sort(degreesList, new BeanComparator("nome"));
+		
+		return degreesList;
+	}
 }

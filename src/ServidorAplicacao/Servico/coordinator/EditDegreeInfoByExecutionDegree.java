@@ -73,6 +73,7 @@ public class EditDegreeInfoByExecutionDegree implements IServico {
 			}
 
 			//update information that it will be displayed in degree site.
+			degreeInfo.setDescription(infoDegreeInfo.getDescription());
 			degreeInfo.setObjectives(infoDegreeInfo.getObjectives());
 			degreeInfo.setHistory(infoDegreeInfo.getHistory());
 			degreeInfo.setProfessionalExits(infoDegreeInfo.getProfessionalExits());
@@ -88,6 +89,7 @@ public class EditDegreeInfoByExecutionDegree implements IServico {
 			degreeInfo.setMarkAverage(infoDegreeInfo.getMarkAverage());
 			
 			//update information in english that it will be displayed in degree site.
+			degreeInfo.setDescriptionEn(infoDegreeInfo.getDescriptionEn());
 			degreeInfo.setObjectivesEn(infoDegreeInfo.getObjectivesEn());
 			degreeInfo.setHistoryEn(infoDegreeInfo.getHistoryEn());
 			degreeInfo.setProfessionalExitsEn(infoDegreeInfo.getProfessionalExitsEn());
