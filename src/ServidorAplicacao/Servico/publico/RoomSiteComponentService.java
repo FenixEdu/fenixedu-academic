@@ -24,59 +24,63 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author João Mota
  * @author Fernanda Quitério
- *
  * 
+ *  
  */
 public class RoomSiteComponentService implements IServico {
 
-	private static RoomSiteComponentService _servico = new RoomSiteComponentService();
+    private static RoomSiteComponentService _servico = new RoomSiteComponentService();
 
-	/**
-	  * The actor of this class.
-	  **/
+    /**
+     * The actor of this class.
+     */
 
-	private RoomSiteComponentService() {
+    private RoomSiteComponentService() {
 
-	}
+    }
 
-	/**
-	 * Returns Service Name
-	 */
-	public String getNome() {
-		return "RoomSiteComponentService";
-	}
+    /**
+     * Returns Service Name
+     */
+    public String getNome() {
+        return "RoomSiteComponentService";
+    }
 
-	/**
-	 * Returns the _servico.
-	 * @return ReadRoom
-	 */
-	public static RoomSiteComponentService getService() {
-		return _servico;
-	}
+    /**
+     * Returns the _servico.
+     * 
+     * @return ReadRoom
+     */
+    public static RoomSiteComponentService getService() {
+        return _servico;
+    }
 
-	public Object run(ISiteComponent bodyComponent, RoomKey roomKey, Integer infoExecutionPeriodCode)
-		throws FenixServiceException {
-		SiteView siteView = null;
+    public Object run(ISiteComponent bodyComponent, RoomKey roomKey,
+            Integer infoExecutionPeriodCode) throws FenixServiceException {
+        SiteView siteView = null;
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			ISalaPersistente persistentRoom = sp.getISalaPersistente();
-			IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ISalaPersistente persistentRoom = sp.getISalaPersistente();
+            IPersistentExecutionPeriod persistentExecutionPeriod = sp
+                    .getIPersistentExecutionPeriod();
 
-			ISala room = persistentRoom.readByName(roomKey.getNomeSala());
-			IExecutionPeriod executionPeriod =
-				(IExecutionPeriod) persistentExecutionPeriod.readByOId(new ExecutionPeriod(infoExecutionPeriodCode), false);
-			if (executionPeriod==null) {
-				throw new NonExistingServiceException();
-			}
-			RoomSiteComponentBuilder componentBuilder = RoomSiteComponentBuilder.getInstance();
-			bodyComponent = componentBuilder.getComponent(bodyComponent, executionPeriod, room);
-			
-			siteView = new SiteView(bodyComponent);
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
+            ISala room = persistentRoom.readByName(roomKey.getNomeSala());
+            IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod
+                    .readByOID(ExecutionPeriod.class, infoExecutionPeriodCode);
+            if (executionPeriod == null) {
+                throw new NonExistingServiceException();
+            }
+            RoomSiteComponentBuilder componentBuilder = RoomSiteComponentBuilder
+                    .getInstance();
+            bodyComponent = componentBuilder.getComponent(bodyComponent,
+                    executionPeriod, room);
 
-		return siteView;
-	}
+            siteView = new SiteView(bodyComponent);
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+
+        return siteView;
+    }
 }

@@ -16,76 +16,67 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author João Mota
- *
- * 23/Jul/2003
- * fenix-head
- * ServidorAplicacao.Servico.scientificCouncil
  * 
+ * 23/Jul/2003 fenix-head ServidorAplicacao.Servico.scientificCouncil
+ *  
  */
 public class EditCurriculum implements IServico {
 
-	private static EditCurriculum _servico = new EditCurriculum();
+    private static EditCurriculum _servico = new EditCurriculum();
 
-	/**
-	  * The actor of this class.
-	  **/
+    /**
+     * The actor of this class.
+     */
 
-	private EditCurriculum() {
+    private EditCurriculum() {
 
-	}
+    }
 
-	/**
-	 * Returns Service Name
-	 */
-	public String getNome() {
-		return "EditCurriculum";
-	}
+    /**
+     * Returns Service Name
+     */
+    public String getNome() {
+        return "EditCurriculum";
+    }
 
-	/**
-	 * Returns the _servico.
-	 * @return ReadExecutionCourse
-	 */
-	public static EditCurriculum getService() {
-		return _servico;
-	}
+    /**
+     * Returns the _servico.
+     * 
+     * @return ReadExecutionCourse
+     */
+    public static EditCurriculum getService() {
+        return _servico;
+    }
 
-	public Boolean run(
-		Integer curriculumId,
-		String program,
-		String programEn,
-		String operacionalObjectives,
-		String operacionalObjectivesEn,
-		String generalObjectives,
-		String generalObjectivesEn,
-		Boolean basic)
-		throws FenixServiceException {
+    public Boolean run(Integer curriculumId, String program, String programEn,
+            String operacionalObjectives, String operacionalObjectivesEn,
+            String generalObjectives, String generalObjectivesEn, Boolean basic)
+            throws FenixServiceException {
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentCurriculum persistentCurriculum =
-				sp.getIPersistentCurriculum();
-			ICurriculum curriculum = new Curriculum();
-			curriculum.setIdInternal(curriculumId);
-			curriculum =
-				(ICurriculum) persistentCurriculum.readByOId(curriculum, true);
-			if (curriculum.getCurricularCourse().getBasic().equals(basic)){
-				curriculum.setProgram(program);
-				curriculum.setProgramEn(programEn);
-				curriculum.setOperacionalObjectives(operacionalObjectives);
-				curriculum.setOperacionalObjectivesEn(operacionalObjectivesEn);
-				curriculum.setGeneralObjectives(generalObjectives);
-				curriculum.setGeneralObjectivesEn(generalObjectivesEn);		
-				return new Boolean(true);
-			} else {
-				return new Boolean(false);
-			}
-			
-//TODO: KEEP STORY OF CURRICULAR INFORMATION
-			
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentCurriculum persistentCurriculum = sp
+                    .getIPersistentCurriculum();
+            ICurriculum curriculum = (ICurriculum) persistentCurriculum
+                    .readByOID(Curriculum.class, curriculumId, true);
+            if (curriculum.getCurricularCourse().getBasic().equals(basic)) {
+                curriculum.setProgram(program);
+                curriculum.setProgramEn(programEn);
+                curriculum.setOperacionalObjectives(operacionalObjectives);
+                curriculum.setOperacionalObjectivesEn(operacionalObjectivesEn);
+                curriculum.setGeneralObjectives(generalObjectives);
+                curriculum.setGeneralObjectivesEn(generalObjectivesEn);
+                return new Boolean(true);
+            } else {
+                return new Boolean(false);
+            }
 
-	}
+            //TODO: KEEP STORY OF CURRICULAR INFORMATION
+
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+
+    }
 
 }

@@ -246,7 +246,7 @@ public class ReadStudentShiftEnrolment implements IServico
                     sp.getITurnoAulaPersistente().readByShift(
                         (ITurno) (sp
                             .getITurnoPersistente()
-                            .readByOId(Cloner.copyInfoShift2IShift(thisInfoShift), false))));
+                            .readByOID(Turno.class,thisInfoShift.getIdInternal()))));
                 //Copy the Shifts associated with the course in which the
 				// student is enrolled
                 composedShift.setInfoLessons(
@@ -289,8 +289,7 @@ public class ReadStudentShiftEnrolment implements IServico
             while (iter.hasNext())
             {
                 InfoShift infoShift = (InfoShift) iter.next();
-                ITurno shift = Cloner.copyInfoShift2IShift(infoShift);
-                shift = (ITurno) persistentShift.readByOId(shift, false);
+                ITurno shift = (ITurno) persistentShift.readByOID(Turno.class, infoShift.getIdInternal());
                 List lessons = persistentShiftLesson.readByShift(shift);
                 Iterator iter1 = lessons.iterator();
                 List infoLessons = new ArrayList();
@@ -324,8 +323,7 @@ public class ReadStudentShiftEnrolment implements IServico
         while (iter.hasNext())
         {
             InfoShift infoShift = (InfoShift) iter.next();
-            ITurno shift = Cloner.copyInfoShift2IShift(infoShift);
-            shift = (ITurno) persistentShift.readByOId(shift, false);
+            ITurno shift = (ITurno) persistentShift.readByOID(Turno.class, infoShift.getIdInternal());
             List shiftLessons = persistentShiftLesson.readByShift(shift);
             List infoLessons = new ArrayList();
             Iterator iter1 = shiftLessons.iterator();

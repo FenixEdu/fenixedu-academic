@@ -26,74 +26,87 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author asnr and scpo
- *
+ *  
  */
 //by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Set/2003
-//WARNING: this service only reads the projects with open enrollemnts ! this is not documented anywhere
+//WARNING: this service only reads the projects with open enrollemnts ! this is
+// not documented anywhere
 //pay attention to the if clause (its designated by me)
 public class ReadExecutionCourseProjects implements IServico {
 
-	private static ReadExecutionCourseProjects _servico = new ReadExecutionCourseProjects();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static ReadExecutionCourseProjects getService() {
-		return _servico;
-	}
+    private static ReadExecutionCourseProjects _servico = new ReadExecutionCourseProjects();
 
-	/**
-	 * The actor of this class.
-	 **/
-	private ReadExecutionCourseProjects() {
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static ReadExecutionCourseProjects getService() {
+        return _servico;
+    }
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "ReadExecutionCourseProjects";
-	}
+    /**
+     * The actor of this class.
+     */
+    private ReadExecutionCourseProjects() {
+    }
 
-	public ISiteComponent run(Integer executionCourseCode) throws FenixServiceException {
+    /**
+     * Devolve o nome do servico
+     */
+    public final String getNome() {
+        return "ReadExecutionCourseProjects";
+    }
 
-		InfoSiteProjects infoSiteProjects = null;
+    public ISiteComponent run(Integer executionCourseCode)
+            throws FenixServiceException {
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IExecutionCourse executionCourse =
-				(IExecutionCourse) sp.getIPersistentExecutionCourse().readByOId(
-					new ExecutionCourse(executionCourseCode),
-					false);
+        InfoSiteProjects infoSiteProjects = null;
 
-			List executionCourseProjects = sp.getIPersistentGroupProperties().readAllGroupPropertiesByExecutionCourse(executionCourse);
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IExecutionCourse executionCourse = (IExecutionCourse) sp
+                    .getIPersistentExecutionCourse().readByOID(
+                            ExecutionCourse.class, executionCourseCode);
 
-			if (executionCourseProjects.size() != 0) 
-			{
-				infoSiteProjects = new InfoSiteProjects();
-				IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
-				IGroupEnrolmentStrategy strategy = null;
+            List executionCourseProjects = sp.getIPersistentGroupProperties()
+                    .readAllGroupPropertiesByExecutionCourse(executionCourse);
 
-				List infoGroupPropertiesList = new ArrayList();
-				Iterator iterator = executionCourseProjects.iterator();
+            if (executionCourseProjects.size() != 0) {
+                infoSiteProjects = new InfoSiteProjects();
+                IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
+                        .getInstance();
+                IGroupEnrolmentStrategy strategy = null;
 
-				while (iterator.hasNext()) {
-					IGroupProperties groupProperties = (IGroupProperties) iterator.next();
-					strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
-                    //by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on 29/Set/2003
-                    //there...this if only lets us return the projects with opened enrollments
-                    //to get ALL projects use the service with same name on teacher package 
+                List infoGroupPropertiesList = new ArrayList();
+                Iterator iterator = executionCourseProjects.iterator();
+
+                while (iterator.hasNext()) {
+                    IGroupProperties groupProperties = (IGroupProperties) iterator
+                            .next();
+                    strategy = enrolmentGroupPolicyStrategyFactory
+                            .getGroupEnrolmentStrategyInstance(groupProperties);
+                    //by gedl |AT| rnl |DOT| ist |DOT| utl |DOT| pt on
+                    // 29/Set/2003
+                    //there...this if only lets us return the projects with
+                    // opened enrollments
+                    //to get ALL projects use the service with same name on
+                    // teacher package
                     // ( teacher.ReadExecutionCourseProjects)
-					if (strategy.checkEnrolmentDate(groupProperties, Calendar.getInstance()))
-						infoGroupPropertiesList.add(Cloner.copyIGroupProperties2InfoGroupProperties(groupProperties));
+                    if (strategy.checkEnrolmentDate(groupProperties, Calendar
+                            .getInstance()))
+                        infoGroupPropertiesList
+                                .add(Cloner
+                                        .copyIGroupProperties2InfoGroupProperties(groupProperties));
 
-				}
-				
-				infoSiteProjects.setInfoGroupPropertiesList(infoGroupPropertiesList);
-			}
-		} catch (ExcepcaoPersistencia e) {
-			e.printStackTrace();
-			throw new FenixServiceException("error.impossibleReadExecutionCourseProjects");
-		}
-		return infoSiteProjects;
-	}
+                }
+
+                infoSiteProjects
+                        .setInfoGroupPropertiesList(infoGroupPropertiesList);
+            }
+        } catch (ExcepcaoPersistencia e) {
+            e.printStackTrace();
+            throw new FenixServiceException(
+                    "error.impossibleReadExecutionCourseProjects");
+        }
+        return infoSiteProjects;
+    }
 }

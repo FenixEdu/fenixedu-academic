@@ -21,35 +21,31 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  *  
  */
 
-public class EnrollStudentInExam implements IService
-{
+public class EnrollStudentInExam implements IService {
 
-    public EnrollStudentInExam()
-    {
+    public EnrollStudentInExam() {
     }
 
-    public Boolean run(String username, Integer examId) throws FenixServiceException
-    {
-       
-        try
-        {
+    public Boolean run(String username, Integer examId)
+            throws FenixServiceException {
+
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentStudent persistentStudent = sp.getIPersistentStudent();
             IStudent student = persistentStudent.readByUsername(username);
             IPersistentExam persistentExam = sp.getIPersistentExam();
-            IPersistentExamStudentRoom persistentExamStudentRoom = sp.getIPersistentExamStudentRoom();
-            IExam exam = new Exam();
-            exam.setIdInternal(examId);
-            exam = (IExam) persistentExam.readByOId(exam, true);
-            if (exam == null || student == null)
-            {
+            IPersistentExamStudentRoom persistentExamStudentRoom = sp
+                    .getIPersistentExamStudentRoom();
+            IExam exam = (IExam) persistentExam.readByOID(Exam.class, examId,
+                    true);
+            if (exam == null || student == null) {
 
                 throw new InvalidArgumentsServiceException();
             }
 
-            IExamStudentRoom examStudentRoom = persistentExamStudentRoom.readBy(exam, student);
-            if (examStudentRoom != null)
-            {
+            IExamStudentRoom examStudentRoom = persistentExamStudentRoom
+                    .readBy(exam, student);
+            if (examStudentRoom != null) {
                 throw new ExistingServiceException();
             }
             examStudentRoom = new ExamStudentRoom();
@@ -57,9 +53,7 @@ public class EnrollStudentInExam implements IService
             examStudentRoom.setExam(exam);
             examStudentRoom.setStudent(student);
 
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
 

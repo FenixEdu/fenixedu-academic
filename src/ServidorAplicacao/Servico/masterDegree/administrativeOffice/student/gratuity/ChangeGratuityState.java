@@ -20,76 +20,65 @@ import Util.State;
  * @author Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class ChangeGratuityState implements IService
-{
-
-   
+public class ChangeGratuityState implements IService {
 
     /**
      * The actor of this class.
      */
-    public ChangeGratuityState()
-    {
+    public ChangeGratuityState() {
     }
 
-   
-    public void run(Integer studentCurricularPlanID, GratuityState gratuityState, String othersRemarks)
-            throws FenixServiceException
-    {
+    public void run(Integer studentCurricularPlanID,
+            GratuityState gratuityState, String othersRemarks)
+            throws FenixServiceException {
 
         IGratuity gratuity = null;
         ISuportePersistente sp = null;
         IStudentCurricularPlan studentCurricularPlan = null;
 
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
 
-            gratuity = sp.getIPersistentGratuity().readByStudentCurricularPlanIDAndState(
-                    studentCurricularPlanID, new State(State.ACTIVE));
+            gratuity = sp.getIPersistentGratuity()
+                    .readByStudentCurricularPlanIDAndState(
+                            studentCurricularPlanID, new State(State.ACTIVE));
 
-            IStudentCurricularPlan studentCurricularPlanTemp = new StudentCurricularPlan();
-            studentCurricularPlanTemp.setIdInternal(studentCurricularPlanID);
-            studentCurricularPlan = (IStudentCurricularPlan) sp.getIStudentCurricularPlanPersistente()
-                    .readByOId(studentCurricularPlanTemp, false);
+            
+            studentCurricularPlan = (IStudentCurricularPlan) sp
+                    .getIStudentCurricularPlanPersistente().readByOID(
+                            StudentCurricularPlan.class, studentCurricularPlanID);
 
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
+        } catch (ExcepcaoPersistencia ex) {
+            FenixServiceException newEx = new FenixServiceException(
+                    "Persistence layer error",ex);
+           
             throw newEx;
         }
 
-        if (gratuity != null)
-        {
+        if (gratuity != null) {
 
-            if (gratuity.getGratuityState().equals(gratuityState)) { throw new InvalidChangeServiceException(); }
+            if (gratuity.getGratuityState().equals(gratuityState)) {
+                throw new InvalidChangeServiceException();
+            }
 
-            try
-            {
+            try {
                 sp.getIPersistentGratuity().simpleLockWrite(gratuity);
                 gratuity.setState(new State(State.INACTIVE));
 
-            }
-            catch (ExcepcaoPersistencia e)
-            {
+            } catch (ExcepcaoPersistencia e) {
                 throw new FenixServiceException(e);
             }
         }
 
         IGratuity newGratuity = new Gratuity();
-        try
-        {
+        try {
             sp.getIPersistentGratuity().simpleLockWrite(newGratuity);
             newGratuity.setDate(Calendar.getInstance().getTime());
             newGratuity.setState(new State(State.ACTIVE));
             newGratuity.setRemarks(othersRemarks);
             newGratuity.setStudentCurricularPlan(studentCurricularPlan);
             newGratuity.setGratuityState(gratuityState);
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             throw new FenixServiceException(e);
         }
     }

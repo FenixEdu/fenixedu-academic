@@ -1,4 +1,3 @@
-
 package ServidorAplicacao.Servico.masterDegree.commons.candidate;
 
 import java.util.ArrayList;
@@ -14,55 +13,58 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 public class ReadCandidates implements IServico {
 
-	private static ReadCandidates servico = new ReadCandidates();
-    
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static ReadCandidates getService() {
-		return servico;
-	}
+    private static ReadCandidates servico = new ReadCandidates();
 
-	/**
-	 * The actor of this class.
-	 **/
-	private ReadCandidates() { 
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static ReadCandidates getService() {
+        return servico;
+    }
 
-	/**
-	 * Returns The Service Name */
+    /**
+     * The actor of this class.
+     */
+    private ReadCandidates() {
+    }
 
-	public final String getNome() {
-		return "ReadCandidates";
-	}
+    /**
+     * Returns The Service Name
+     */
 
-	
-	public List run(String[] candidateList) throws FenixServiceException {
-		
-		ISuportePersistente sp = null;
-		List result = new ArrayList();
-		
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-			
-			// Read the admited candidates
-			int size = candidateList.length;
-			int i = 0;
-			for (i=0; i<size; i++){ 
-				IMasterDegreeCandidate mdcTemp = new MasterDegreeCandidate();
-				mdcTemp.setIdInternal(new Integer(candidateList[i]));
-				result.add(Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate((IMasterDegreeCandidate) sp.getIPersistentMasterDegreeCandidate().readByOId(mdcTemp, false)));
-			}
-		} catch (ExcepcaoPersistencia ex) {
-			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-			newEx.fillInStackTrace();
-			throw newEx;
-		} 
-		return result;
-	}
+    public final String getNome() {
+        return "ReadCandidates";
+    }
+
+    public List run(String[] candidateList) throws FenixServiceException {
+
+        ISuportePersistente sp = null;
+        List result = new ArrayList();
+
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+
+            // Read the admited candidates
+            int size = candidateList.length;
+            int i = 0;
+            for (i = 0; i < size; i++) {
+               
+                result
+                        .add(Cloner
+                                .copyIMasterDegreeCandidate2InfoMasterDegreCandidate((IMasterDegreeCandidate) sp
+                                        .getIPersistentMasterDegreeCandidate()
+                                        .readByOID(MasterDegreeCandidate.class, new Integer(candidateList[i]))));
+            }
+        } catch (ExcepcaoPersistencia ex) {
+            FenixServiceException newEx = new FenixServiceException(
+                    "Persistence layer error",ex);
+           
+            throw newEx;
+        }
+        return result;
+    }
 }

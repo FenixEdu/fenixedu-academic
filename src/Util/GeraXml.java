@@ -58,8 +58,7 @@ import Tools.SmartDataSetGeneratorForLEECTestBattery;
  * @author Nuno Correia
  * @author Ricardo Rodrigues
  */
-public class GeraXml extends FenixUtil
-{
+public class GeraXml extends FenixUtil {
 
     private static final String CC_FILE_PATH = "CurricularCoursesFilePath";
 
@@ -79,8 +78,7 @@ public class GeraXml extends FenixUtil
 
     private static IEnrolmentPeriod enrolmentPeriodToSave = null;
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         Hashtable dadosConfiguracao = leFicheiroPropriedades();
         String number = args[0];
         String file = args[1];
@@ -95,21 +93,16 @@ public class GeraXml extends FenixUtil
         String testFileFullPath = filePath + "/" + number + "/"
                 + TEST_FILE_PATH;
         Integer studentNumber = null;
-        try
-        {
+        try {
             ResourceBundle testProperties = new PropertyResourceBundle(
                     new FileInputStream(testFileFullPath));
             studentNumber = new Integer(testProperties
                     .getString(STUDENT_NUMBER_PROPERTY));
             dadosConfiguracao.put(STUDENT_NUMBER_PROPERTY, studentNumber);
 
-        }
-        catch (FileNotFoundException e1)
-        {
+        } catch (FileNotFoundException e1) {
 
-        }
-        catch (IOException e1)
-        {
+        } catch (IOException e1) {
 
         }
 
@@ -125,8 +118,7 @@ public class GeraXml extends FenixUtil
         System.out.println(filePath);
         List curricularCourses = leFicheiro(filePath);
         Iterator iter = curricularCourses.iterator();
-        while (iter.hasNext())
-        {
+        while (iter.hasNext()) {
             String curricularCourseData[] = (String[]) iter.next();
             System.out.println("A Lista tem: " + curricularCourseData[0]);
 
@@ -135,32 +127,21 @@ public class GeraXml extends FenixUtil
             enrolments.add(enrolment);
         }
         writeEnrollmentPeriod();
-        try
-        {
+        try {
             String newFilePath = filePath.replaceFirst(".txt", ".xml");
             SmartDataSetGeneratorForLEECTestBattery dataSetGen = new SmartDataSetGeneratorForLEECTestBattery(
                     DATASET_CONFIG, newFilePath, studentNumber.toString());
             dataSetGen.writeDataSet();
-        }
-        catch (NullPointerException e)
-        {
+        } catch (NullPointerException e) {
             e.printStackTrace();
-        }
-        catch (FileNotFoundException e)
-        {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
 
             e.printStackTrace();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
 
             e.printStackTrace();
         }
@@ -181,10 +162,8 @@ public class GeraXml extends FenixUtil
     /**
      * @param enrolments
      */
-    private static void apagaEnrolments(ArrayList enrolments)
-    {
-        try
-        {
+    private static void apagaEnrolments(ArrayList enrolments) {
+        try {
             ISuportePersistente suportePersistente = SuportePersistenteOJB
                     .getInstance();
             IPersistentEnrolment persistentEnrolment = suportePersistente
@@ -197,9 +176,7 @@ public class GeraXml extends FenixUtil
                 persistentEnrolment.delete((IEnrollment) iter.next());
 
             suportePersistente.confirmarTransaccao();
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             e.printStackTrace();
         }
     }
@@ -208,18 +185,15 @@ public class GeraXml extends FenixUtil
      * @param object
      */
     private static IEnrollment criaEnrolment(String[] curricularCourseData,
-            Integer studentNumber, Integer degreeCurricularPlanID)
-    {
+            Integer studentNumber, Integer degreeCurricularPlanID) {
         String curricularCourseName = curricularCourseData[0].toUpperCase();
-        IDegreeCurricularPlan degreeCurricularPlan2Read = new DegreeCurricularPlan();
-        degreeCurricularPlan2Read.setIdInternal(degreeCurricularPlanID);
+
         EnrolmentState enrolmentState = EnrolmentState.getEnum("msg."
                 + curricularCourseData[1]);
         EnrolmentEvaluationType enrolmentEvaluationType = EnrolmentEvaluationType.NORMAL_OBJ;
 
         IEnrollment enrolment = null;
-        try
-        {
+        try {
             ISuportePersistente suportePersistente = SuportePersistenteOJB
                     .getInstance();
 
@@ -237,15 +211,15 @@ public class GeraXml extends FenixUtil
             suportePersistente.iniciarTransaccao();
 
             IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
-                    .readByOId(degreeCurricularPlan2Read, false);
+                    .readByOID(DegreeCurricularPlan.class,
+                            degreeCurricularPlanID);
 
             List curricularCourses = persistentCurricularCourse
                     .readbyCourseNameAndDegreeCurricularPlan(
                             curricularCourseName, degreeCurricularPlan);
 
             ICurricularCourse curricularCourse = null;
-            try
-            {
+            try {
                 curricularCourse = (ICurricularCourse) curricularCourses.get(0);
 
                 IStudentCurricularPlan studentCurricularPlan = studentCurricularPlanPersistente
@@ -262,27 +236,21 @@ public class GeraXml extends FenixUtil
                 enrolment.setExecutionPeriod(executionPeriod);
                 enrolment.setEnrolmentState(enrolmentState);
                 enrolment.setEnrolmentEvaluationType(enrolmentEvaluationType);
-            }
-            catch (RuntimeException e1)
-            {
+            } catch (RuntimeException e1) {
                 System.out
                         .println("Disciplina não encontrada no planos curricular: "
                                 + curricularCourseName);
             }
             suportePersistente.confirmarTransaccao();
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             e.printStackTrace();
         }
 
         return enrolment;
     }
 
-    private static void writeEnrollmentPeriod()
-    {
-        try
-        {
+    private static void writeEnrollmentPeriod() {
+        try {
             ISuportePersistente suportePersistente = SuportePersistenteOJB
                     .getInstance();
 
@@ -303,8 +271,7 @@ public class GeraXml extends FenixUtil
             enrolmentPeriodToSave = enrolmentPeriod;
 
             boolean isnull = false;
-            if (enrolmentPeriod == null)
-            {
+            if (enrolmentPeriod == null) {
                 enrolmentPeriod = new EnrolmentPeriod();
                 isnull = true;
             }
@@ -316,24 +283,19 @@ public class GeraXml extends FenixUtil
             end.roll(Calendar.MONTH, true);
             enrolmentPeriod.setStartDate(start.getTime());
             enrolmentPeriod.setEndDate(end.getTime());
-            if (isnull)
-            {
+            if (isnull) {
                 enrolmentPeriod.setDegreeCurricularPlan(degreeCurricularPlan);
                 enrolmentPeriod.setExecutionPeriod(executionPeriod);
             }
 
             suportePersistente.confirmarTransaccao();
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             e.printStackTrace();
         }
     }
 
-    private static void deleteEnrollmentPeriod()
-    {
-        try
-        {
+    private static void deleteEnrollmentPeriod() {
+        try {
             ISuportePersistente suportePersistente = SuportePersistenteOJB
                     .getInstance();
 
@@ -350,14 +312,11 @@ public class GeraXml extends FenixUtil
             IEnrolmentPeriod enrolmentPeriod = persistentEnrolmentPeriod
                     .readActualEnrolmentPeriodForDegreeCurricularPlan(degreeCurricularPlan);
 
-            if (enrolmentPeriodToSave == null)
-            {
+            if (enrolmentPeriodToSave == null) {
                 persistentEnrolmentPeriod.deleteByOID(EnrolmentPeriod.class,
                         enrolmentPeriod.getIdInternal());
 
-            }
-            else
-            {
+            } else {
                 persistentEnrolmentPeriod.simpleLockWrite(enrolmentPeriod);
 
                 enrolmentPeriod.setStartDate(enrolmentPeriodToSave
@@ -366,18 +325,14 @@ public class GeraXml extends FenixUtil
             }
 
             suportePersistente.confirmarTransaccao();
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             e.printStackTrace();
         }
     }
 
     private static void apagaStudentCurricularPlanEnrolments(
-            Integer studentNumber)
-    {
-        try
-        {
+            Integer studentNumber) {
+        try {
             ISuportePersistente suportePersistente = SuportePersistenteOJB
                     .getInstance();
             IPersistentEnrolment persistentEnrolment = suportePersistente
@@ -399,48 +354,36 @@ public class GeraXml extends FenixUtil
                 persistentEnrolment.delete((IEnrollment) iterador.next());
 
             suportePersistente.confirmarTransaccao();
-        }
-        catch (ExcepcaoPersistencia e)
-        {
+        } catch (ExcepcaoPersistencia e) {
             e.printStackTrace();
         }
     }
 
-    private static List leFicheiro(String filePath)
-    {
+    private static List leFicheiro(String filePath) {
         ArrayList lista = new ArrayList();
         BufferedReader leitura = null;
         String linhaFicheiro = null;
 
-        try
-        {
+        try {
             File file = new File(filePath);
             InputStream ficheiro = new FileInputStream(file);
             leitura = new BufferedReader(new InputStreamReader(ficheiro,
                     "8859_1"), new Long(file.length()).intValue());
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        do
-        {
-            try
-            {
+        do {
+            try {
                 linhaFicheiro = leitura.readLine();
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            if (linhaFicheiro != null)
-            {
+            if (linhaFicheiro != null) {
                 String[] linha = decomporLinha(linhaFicheiro);
                 lista.add(linha);
             }
-        }
-        while ((linhaFicheiro != null));
+        } while ((linhaFicheiro != null));
 
         return lista;
     }
@@ -449,22 +392,19 @@ public class GeraXml extends FenixUtil
      * @param linhaFicheiro
      * @return
      */
-    private static String[] decomporLinha(String linhaFicheiro)
-    {
+    private static String[] decomporLinha(String linhaFicheiro) {
         StringTokenizer st = new StringTokenizer(linhaFicheiro, DELIMITADOR);
-        String linha[] = {st.nextToken(), st.nextToken()};
+        String linha[] = { st.nextToken(), st.nextToken() };
         return linha;
     }
 
     /**
      * @return
      */
-    private static Hashtable leFicheiroPropriedades()
-    {
+    private static Hashtable leFicheiroPropriedades() {
         Hashtable dadosConfiguracao = new Hashtable();
 
-        try
-        {
+        try {
             ResourceBundle bundle = new PropertyResourceBundle(
                     new FileInputStream(PROPERTIES_FILE_PATH));
 
@@ -473,18 +413,12 @@ public class GeraXml extends FenixUtil
                     .getString(BACKUP_DATASET_PROPERTY));
             dadosConfiguracao.put(DCP_ID_PROPERTY, bundle
                     .getString(DCP_ID_PROPERTY));
-        }
-        catch (MissingResourceException ex)
-        {
+        } catch (MissingResourceException ex) {
             ex.printStackTrace();
-        }
-        catch (FileNotFoundException ex)
-        {
+        } catch (FileNotFoundException ex) {
             System.out.println("File " + PROPERTIES_FILE_PATH + " not found.");
             ex.printStackTrace();
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             System.out.println("IOException reading file "
                     + PROPERTIES_FILE_PATH + ex);
             ex.printStackTrace();
@@ -493,8 +427,7 @@ public class GeraXml extends FenixUtil
         return dadosConfiguracao;
     }
 
-    private static IDatabaseConnection getConnection() throws Exception
-    {
+    private static IDatabaseConnection getConnection() throws Exception {
         Class.forName("com.mysql.jdbc.Driver");
         Connection jdbcConnection = DriverManager.getConnection(
                 "jdbc:mysql://localhost/ciapl", "root", "");
@@ -502,10 +435,8 @@ public class GeraXml extends FenixUtil
     }
 
     private static void backUpEnrolmentContents(
-            Integer studentCurricularPlanID, String backupDataSetFilePath)
-    {
-        try
-        {
+            Integer studentCurricularPlanID, String backupDataSetFilePath) {
+        try {
             QueryDataSet partialDataSet = new QueryDataSet(getConnection());
             partialDataSet.addTable("ENROLMENT",
                     "SELECT * FROM ENROLMENT WHERE KEY_STUDENT_CURRICULAR_PLAN="
@@ -515,67 +446,46 @@ public class GeraXml extends FenixUtil
                     backupDataSetFilePath));
             FlatXmlDataSet.write(partialDataSet, fileWriter, "ISO-8859-1");
             fileWriter.close();
-        }
-        catch (SQLException sqle)
-        {
+        } catch (SQLException sqle) {
             System.out.println("ERRO: No acesso à Base de Dados");
             sqle.printStackTrace();
-        }
-        catch (IOException ioe)
-        {
+        } catch (IOException ioe) {
             System.out.println("ERRO: A Escrever o ficheiro: "
                     + backupDataSetFilePath);
             ioe.printStackTrace();
-        }
-        catch (DataSetException dte)
-        {
+        } catch (DataSetException dte) {
             System.out.println("ERRO: A criar o DataSet");
             dte.printStackTrace();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private static void loadEnrolments(String backupDataSetFilePath)
-    {
-        try
-        {
+    private static void loadEnrolments(String backupDataSetFilePath) {
+        try {
             FileReader fileReader = new FileReader(new File(
                     backupDataSetFilePath));
             IDataSet dataSet = new FlatXmlDataSet(fileReader);
             DatabaseOperation.DELETE.execute(getConnection(), dataSet);
             DatabaseOperation.INSERT.execute(getConnection(), dataSet);
             fileReader.close();
-        }
-        catch (FileNotFoundException fnfe)
-        {
+        } catch (FileNotFoundException fnfe) {
             System.out.println("ERRO: O ficheiro: " + backupDataSetFilePath
                     + " nao foi encontrado");
             fnfe.printStackTrace();
         }
 
-        catch (DataSetException dte)
-        {
+        catch (DataSetException dte) {
             System.out.println("ERRO: A criar o DataSet");
             dte.printStackTrace();
-        }
-        catch (IOException ioe)
-        {
+        } catch (IOException ioe) {
             ioe.printStackTrace();
-        }
-        catch (DatabaseUnitException due)
-        {
+        } catch (DatabaseUnitException due) {
             due.printStackTrace();
-        }
-        catch (SQLException sqle)
-        {
+        } catch (SQLException sqle) {
             System.out.println("ERRO: No acesso à Base de Dados");
             sqle.printStackTrace();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

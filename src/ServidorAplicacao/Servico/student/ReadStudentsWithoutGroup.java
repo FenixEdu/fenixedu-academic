@@ -76,7 +76,7 @@ public class ReadStudentsWithoutGroup implements IServico {
 			IPersistentStudentGroupAttend persistentStudentGroupAttend = ps.getIPersistentStudentGroupAttend();
 
 			IGroupProperties groupProperties =
-				(IGroupProperties) ps.getIPersistentGroupProperties().readByOId(new GroupProperties(groupPropertiesCode), false);
+				(IGroupProperties) ps.getIPersistentGroupProperties().readByOID(GroupProperties.class,groupPropertiesCode);
 			
 			List allStudentGroup = new ArrayList();
 			allStudentGroup = persistentStudentGroup.readAllStudentGroupByGroupProperties(groupProperties);

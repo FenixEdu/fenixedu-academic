@@ -17,56 +17,59 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author Tânia Pousão
- * 6/Out/2003
+ * @author Tânia Pousão 6/Out/2003
  */
 
 public class ReadPosGradStudentCurricularPlanById implements IServico {
 
-	private static ReadPosGradStudentCurricularPlanById servico = new ReadPosGradStudentCurricularPlanById();
+    private static ReadPosGradStudentCurricularPlanById servico = new ReadPosGradStudentCurricularPlanById();
 
-	public static ReadPosGradStudentCurricularPlanById getService() {
-		return servico;
-	}
+    public static ReadPosGradStudentCurricularPlanById getService() {
+        return servico;
+    }
 
-	private ReadPosGradStudentCurricularPlanById() {
-	}
+    private ReadPosGradStudentCurricularPlanById() {
+    }
 
-	public final String getNome() {
-		return "ReadPosGradStudentCurricularPlanById";
-	}
+    public final String getNome() {
+        return "ReadPosGradStudentCurricularPlanById";
+    }
 
-	public Object run(Integer studentCurricularPlanId) throws FenixServiceException {
-		InfoStudentCurricularPlan infoStudentCurricularPlan = null;
+    public Object run(Integer studentCurricularPlanId)
+            throws FenixServiceException {
+        InfoStudentCurricularPlan infoStudentCurricularPlan = null;
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IStudentCurricularPlanPersistente persistentStudentCurricularPlan = sp.getIStudentCurricularPlanPersistente();
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IStudentCurricularPlanPersistente persistentStudentCurricularPlan = sp
+                    .getIStudentCurricularPlanPersistente();
 
-			StudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
-			studentCurricularPlan.setIdInternal(studentCurricularPlanId);
-			studentCurricularPlan = (StudentCurricularPlan) persistentStudentCurricularPlan.readByOId(studentCurricularPlan, false);
+            StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentStudentCurricularPlan
+                    .readByOID(StudentCurricularPlan.class, studentCurricularPlanId);
 
-			if (studentCurricularPlan != null) {
-				infoStudentCurricularPlan = Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan);
-			}
+            if (studentCurricularPlan != null) {
+                infoStudentCurricularPlan = Cloner
+                        .copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan);
+            }
 
-			if (studentCurricularPlan.getEnrolments() != null) {
-				List infoEnrolments = new ArrayList();
-				
-				ListIterator iterator = studentCurricularPlan.getEnrolments().listIterator();
-				while (iterator.hasNext()) {
-					Enrolment enrolment = (Enrolment) iterator.next();
-					InfoEnrolment infoEnrolment = Cloner.copyIEnrolment2InfoEnrolment(enrolment);
-					infoEnrolments.add(infoEnrolment);		
-				}
-				
-				infoStudentCurricularPlan.setInfoEnrolments(infoEnrolments);
-			}
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
+            if (studentCurricularPlan.getEnrolments() != null) {
+                List infoEnrolments = new ArrayList();
 
-		return infoStudentCurricularPlan;
-	}
+                ListIterator iterator = studentCurricularPlan.getEnrolments()
+                        .listIterator();
+                while (iterator.hasNext()) {
+                    Enrolment enrolment = (Enrolment) iterator.next();
+                    InfoEnrolment infoEnrolment = Cloner
+                            .copyIEnrolment2InfoEnrolment(enrolment);
+                    infoEnrolments.add(infoEnrolment);
+                }
+
+                infoStudentCurricularPlan.setInfoEnrolments(infoEnrolments);
+            }
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+
+        return infoStudentCurricularPlan;
+    }
 }

@@ -23,56 +23,52 @@ import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class ReadExecutionDegreesByExecutionYearId implements IService
-{
+public class ReadExecutionDegreesByExecutionYearId implements IService {
 
-	/**
-	 * The actor of this class.
-	 */
-	public ReadExecutionDegreesByExecutionYearId()
-	{
+    /**
+     * The actor of this class.
+     */
+    public ReadExecutionDegreesByExecutionYearId() {
 
-	}
+    }
 
-	public List run(Integer executionYearId) throws FenixServiceException
-	{
+    public List run(Integer executionYearId) throws FenixServiceException {
 
-		ArrayList infoExecutionDegreeList = null;
+        ArrayList infoExecutionDegreeList = null;
 
-		try
-		{
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-			ICursoExecucaoPersistente executionDegreeDAO = sp.getICursoExecucaoPersistente();
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentExecutionYear persistentExecutionYear = sp
+                    .getIPersistentExecutionYear();
+            ICursoExecucaoPersistente executionDegreeDAO = sp
+                    .getICursoExecucaoPersistente();
 
-			IExecutionYear executionYear = null;
-			if (executionYearId == null)
-			{
-				executionYear = persistentExecutionYear.readCurrentExecutionYear();
-			} else
-			{
-				executionYear = (IExecutionYear) persistentExecutionYear.readByOId(new ExecutionYear(
-						executionYearId), false);
-			}
+            IExecutionYear executionYear = null;
+            if (executionYearId == null) {
+                executionYear = persistentExecutionYear
+                        .readCurrentExecutionYear();
+            } else {
+                executionYear = (IExecutionYear) persistentExecutionYear
+                        .readByOID(ExecutionYear.class, executionYearId);
+            }
 
-			List executionDegrees = executionDegreeDAO.readByExecutionYear(executionYear);
+            List executionDegrees = executionDegreeDAO
+                    .readByExecutionYear(executionYear);
 
-			if (executionDegrees != null && executionDegrees.size() > 0)
-			{
-				Iterator iterator = executionDegrees.iterator();
-				infoExecutionDegreeList = new ArrayList();
+            if (executionDegrees != null && executionDegrees.size() > 0) {
+                Iterator iterator = executionDegrees.iterator();
+                infoExecutionDegreeList = new ArrayList();
 
-				while (iterator.hasNext())
-				{
-					ICursoExecucao executionDegree = (ICursoExecucao) iterator.next();
-					infoExecutionDegreeList.add(Cloner.get(executionDegree));
-				}
-			}
-		} catch (ExcepcaoPersistencia ex)
-		{
-			throw new FenixServiceException(ex);
-		}
-		return infoExecutionDegreeList;
-	}
+                while (iterator.hasNext()) {
+                    ICursoExecucao executionDegree = (ICursoExecucao) iterator
+                            .next();
+                    infoExecutionDegreeList.add(Cloner.get(executionDegree));
+                }
+            }
+        } catch (ExcepcaoPersistencia ex) {
+            throw new FenixServiceException(ex);
+        }
+        return infoExecutionDegreeList;
+    }
 
 }

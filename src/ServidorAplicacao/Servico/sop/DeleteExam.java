@@ -8,11 +8,11 @@ package ServidorAplicacao.Servico.sop;
 
 /**
  * Service DeleteExam.
- *
+ * 
  * @author tfc130
- **/
+ */
 import DataBeans.InfoViewExamByDayAndShift;
-import DataBeans.util.Cloner;
+import Dominio.Exam;
 import Dominio.IExam;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -24,51 +24,50 @@ import ServidorPersistente.exceptions.notAuthorizedPersistentDeleteException;
 
 public class DeleteExam implements IServico {
 
-	private static DeleteExam _servico = new DeleteExam();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static DeleteExam getService() {
-		return _servico;
-	}
+    private static DeleteExam _servico = new DeleteExam();
 
-	/**
-	 * The actor of this class.
-	 **/
-	private DeleteExam() {
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static DeleteExam getService() {
+        return _servico;
+    }
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "DeleteExam";
-	}
+    /**
+     * The actor of this class.
+     */
+    private DeleteExam() {
+    }
 
-	public Object run(InfoViewExamByDayAndShift infoViewExam)
-		throws FenixServiceException {
+    /**
+     * Devolve o nome do servico
+     */
+    public final String getNome() {
+        return "DeleteExam";
+    }
 
-		boolean result = false;
+    public Object run(InfoViewExamByDayAndShift infoViewExam)
+            throws FenixServiceException {
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        boolean result = false;
 
-			IExam examToDelete =
-				(IExam) sp.getIPersistentExam().readByOId(
-					Cloner.copyInfoExam2IExam(infoViewExam.getInfoExam()),
-					false);
-			sp.getIPersistentExam().simpleLockWrite(examToDelete);
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			sp.getIPersistentExam().delete(examToDelete);
-			result = true;
-		} catch (notAuthorizedPersistentDeleteException ex) {
-			throw new notAuthorizedServiceDeleteException(ex);
-		} catch (ExcepcaoPersistencia ex) {
-			throw new FenixServiceException("Error deleting exam");
-		}
+            IExam examToDelete = (IExam) sp.getIPersistentExam().readByOID(
+                    Exam.class, infoViewExam.getInfoExam().getIdInternal());
+            sp.getIPersistentExam().simpleLockWrite(examToDelete);
 
-		return new Boolean(result);
+            sp.getIPersistentExam().delete(examToDelete);
+            result = true;
+        } catch (notAuthorizedPersistentDeleteException ex) {
+            throw new notAuthorizedServiceDeleteException(ex);
+        } catch (ExcepcaoPersistencia ex) {
+            throw new FenixServiceException("Error deleting exam");
+        }
 
-	}
+        return new Boolean(result);
+
+    }
 
 }

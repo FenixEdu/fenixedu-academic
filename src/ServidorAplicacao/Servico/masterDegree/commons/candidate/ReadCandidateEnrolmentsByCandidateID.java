@@ -17,67 +17,74 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * 
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
 public class ReadCandidateEnrolmentsByCandidateID implements IServico {
 
-	private static ReadCandidateEnrolmentsByCandidateID servico = new ReadCandidateEnrolmentsByCandidateID();
+    private static ReadCandidateEnrolmentsByCandidateID servico = new ReadCandidateEnrolmentsByCandidateID();
 
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static ReadCandidateEnrolmentsByCandidateID getService() {
-		return servico;
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static ReadCandidateEnrolmentsByCandidateID getService() {
+        return servico;
+    }
 
-	/**
-	 * The actor of this class.
-	 **/
-	private ReadCandidateEnrolmentsByCandidateID() {
-	}
+    /**
+     * The actor of this class.
+     */
+    private ReadCandidateEnrolmentsByCandidateID() {
+    }
 
-	/**
-	 * Returns The Service Name */
+    /**
+     * Returns The Service Name
+     */
 
-	public final String getNome() {
-		return "ReadCandidateEnrolmentsByCandidateID";
-	}
+    public final String getNome() {
+        return "ReadCandidateEnrolmentsByCandidateID";
+    }
 
-	public List run(Integer candidateID) throws FenixServiceException {
-		List result = new ArrayList();
+    public List run(Integer candidateID) throws FenixServiceException {
+        List result = new ArrayList();
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			IMasterDegreeCandidate mdcTemp = new MasterDegreeCandidate();
-			mdcTemp.setIdInternal(candidateID);
-			IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp.getIPersistentMasterDegreeCandidate().readByOId(mdcTemp, false);
+           
+            IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp
+                    .getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
+                            candidateID);
 
-			if (masterDegreeCandidate == null){
-				throw new NonExistingServiceException();
-			}
+            if (masterDegreeCandidate == null) {
+                throw new NonExistingServiceException();
+            }
 
-			List candidateEnrolments = sp.getIPersistentCandidateEnrolment().readByMDCandidate(masterDegreeCandidate);
+            List candidateEnrolments = sp.getIPersistentCandidateEnrolment()
+                    .readByMDCandidate(masterDegreeCandidate);
 
-			if (candidateEnrolments == null){
-				throw new NonExistingServiceException();
-			}
+            if (candidateEnrolments == null) {
+                throw new NonExistingServiceException();
+            }
 
-			Iterator candidateEnrolmentIterator = candidateEnrolments.iterator();
-			
-			while (candidateEnrolmentIterator.hasNext()){ 
-				ICandidateEnrolment candidateEnrolmentTemp = (ICandidateEnrolment) candidateEnrolmentIterator.next();
-				result.add(Cloner.copyICandidateEnrolment2InfoCandidateEnrolment(candidateEnrolmentTemp));
-			}			
-			
-		} catch (ExcepcaoPersistencia ex) {
-			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-			newEx.fillInStackTrace();
-			throw newEx;
-		}
-		
-		return result;
-	}
+            Iterator candidateEnrolmentIterator = candidateEnrolments
+                    .iterator();
+
+            while (candidateEnrolmentIterator.hasNext()) {
+                ICandidateEnrolment candidateEnrolmentTemp = (ICandidateEnrolment) candidateEnrolmentIterator
+                        .next();
+                result
+                        .add(Cloner
+                                .copyICandidateEnrolment2InfoCandidateEnrolment(candidateEnrolmentTemp));
+            }
+
+        } catch (ExcepcaoPersistencia ex) {
+            FenixServiceException newEx = new FenixServiceException(
+                    "Persistence layer error");
+            newEx.fillInStackTrace();
+            throw newEx;
+        }
+
+        return result;
+    }
 }

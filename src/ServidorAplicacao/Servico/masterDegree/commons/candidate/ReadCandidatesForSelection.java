@@ -1,4 +1,3 @@
-
 package ServidorAplicacao.Servico.masterDegree.commons.candidate;
 
 import java.util.ArrayList;
@@ -18,108 +17,111 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 public class ReadCandidatesForSelection implements IServico {
 
-	private static ReadCandidatesForSelection servico = new ReadCandidatesForSelection();
-    
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static ReadCandidatesForSelection getService() {
-		return servico;
-	}
+    private static ReadCandidatesForSelection servico = new ReadCandidatesForSelection();
 
-	/**
-	 * The actor of this class.
-	 **/
-	private ReadCandidatesForSelection() { 
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static ReadCandidatesForSelection getService() {
+        return servico;
+    }
 
-	/**
-	 * Returns The Service Name */
+    /**
+     * The actor of this class.
+     */
+    private ReadCandidatesForSelection() {
+    }
 
-	public final String getNome() {
-		return "ReadCandidatesForSelection";
-	}
+    /**
+     * Returns The Service Name
+     */
 
-	
-	/*public List run(String executionYearString, String degree, List situations) throws FenixServiceException {
-		
-		ISuportePersistente sp = null;
-		List resultTemp = null;
-		
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-			
-			// Read the candidates
-			IExecutionYear executionYear = new ExecutionYear();
+    public final String getNome() {
+        return "ReadCandidatesForSelection";
+    }
 
-			executionYear.setYear(executionYearString);
+    /*
+     * public List run(String executionYearString, String degree, List
+     * situations) throws FenixServiceException {
+     * 
+     * ISuportePersistente sp = null; List resultTemp = null;
+     * 
+     * try { sp = SuportePersistenteOJB.getInstance();
+     *  // Read the candidates IExecutionYear executionYear = new
+     * ExecutionYear();
+     * 
+     * executionYear.setYear(executionYearString);
+     * 
+     * ICursoExecucao executionDegree =
+     * sp.getICursoExecucaoPersistente().readByDegreeCodeAndExecutionYear(degree,
+     * executionYear);
+     * 
+     * resultTemp =
+     * sp.getIPersistentCandidateSituation().readActiveSituationsBySituationList(executionDegree,
+     * situations);
+     *  } catch (ExcepcaoPersistencia ex) { FenixServiceException newEx = new
+     * FenixServiceException("Persistence layer error");
+     * newEx.fillInStackTrace(); throw newEx; }
+     * 
+     * if ((resultTemp == null) || (resultTemp.size() == 0 )) { throw new
+     * NonExistingServiceException(); }
+     * 
+     * Iterator candidateIterator = resultTemp.iterator(); List result = new
+     * ArrayList(); while (candidateIterator.hasNext()){ ICandidateSituation
+     * candidateSituation = (ICandidateSituation) candidateIterator.next();
+     * result.add(Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(candidateSituation.getMasterDegreeCandidate())); }
+     * 
+     * return result;
+     *  }
+     */
 
-			ICursoExecucao executionDegree = sp.getICursoExecucaoPersistente().readByDegreeCodeAndExecutionYear(degree, executionYear);
+    public List run(Integer executionDegreeID, List situations)
+            throws FenixServiceException {
 
-			resultTemp = sp.getIPersistentCandidateSituation().readActiveSituationsBySituationList(executionDegree, situations);
+        ISuportePersistente sp = null;
+        List resultTemp = null;
 
-		} catch (ExcepcaoPersistencia ex) {
-			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-			newEx.fillInStackTrace();
-			throw newEx;
-		} 
-		
-		if ((resultTemp == null) || (resultTemp.size() == 0 )) {
-			throw new NonExistingServiceException(); 
-		}
-		
-		Iterator candidateIterator = resultTemp.iterator();
-		List result = new ArrayList();
-		while (candidateIterator.hasNext()){ 
-			ICandidateSituation candidateSituation = (ICandidateSituation) candidateIterator.next();
-			result.add(Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(candidateSituation.getMasterDegreeCandidate()));
-		}			
-			
-		return result;
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+            // Read the candidates
 
-	}*/
-	
-	public List run(Integer executionDegreeID, List situations) throws FenixServiceException {
-		
-			ISuportePersistente sp = null;
-			List resultTemp = null;
-		
-			try {
-				sp = SuportePersistenteOJB.getInstance();
-				// Read the candidates
-			   ICursoExecucao executionDegreeDomain = new CursoExecucao();
-			   executionDegreeDomain.setIdInternal(executionDegreeID);
+            ICursoExecucaoPersistente executionDegreeDAO = sp
+                    .getICursoExecucaoPersistente();
+            ICursoExecucao executionDegree = (CursoExecucao) executionDegreeDAO
+                    .readByOID(CursoExecucao.class, executionDegreeID);
 
-			  ICursoExecucaoPersistente executionDegreeDAO = sp.getICursoExecucaoPersistente();
-			  ICursoExecucao executionDegree =
-				  (CursoExecucao) executionDegreeDAO.readByOId(executionDegreeDomain,false);
+            resultTemp = sp.getIPersistentCandidateSituation()
+                    .readActiveSituationsBySituationList(executionDegree,
+                            situations);
 
-				resultTemp = sp.getIPersistentCandidateSituation().readActiveSituationsBySituationList(executionDegree, situations);
+        } catch (ExcepcaoPersistencia ex) {
+            FenixServiceException newEx = new FenixServiceException(
+                    "Persistence layer error", ex);
 
-			} catch (ExcepcaoPersistencia ex) {
-				FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-				//newEx.fillInStackTrace();
-				throw newEx;
-			} 
-		
-			if ((resultTemp == null) || (resultTemp.size() == 0 )) {
-				throw new NonExistingServiceException(); 
-			}
-		
-			Iterator candidateIterator = resultTemp.iterator();
-			List result = new ArrayList();
-			while (candidateIterator.hasNext()){ 
-				ICandidateSituation candidateSituation = (ICandidateSituation) candidateIterator.next();
-				result.add(Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(candidateSituation.getMasterDegreeCandidate()));
-			}			
-			
-			return result;
+            throw newEx;
+        }
 
-		}
-	
+        if ((resultTemp == null) || (resultTemp.size() == 0)) {
+            throw new NonExistingServiceException();
+        }
+
+        Iterator candidateIterator = resultTemp.iterator();
+        List result = new ArrayList();
+        while (candidateIterator.hasNext()) {
+            ICandidateSituation candidateSituation = (ICandidateSituation) candidateIterator
+                    .next();
+            result
+                    .add(Cloner
+                            .copyIMasterDegreeCandidate2InfoMasterDegreCandidate(candidateSituation
+                                    .getMasterDegreeCandidate()));
+        }
+
+        return result;
+
+    }
+
 }

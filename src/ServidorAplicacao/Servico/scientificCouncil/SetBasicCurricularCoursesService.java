@@ -22,103 +22,83 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author João Mota
- *
- * 23/Jul/2003
- * fenix-head
- * ServidorAplicacao.Servico.scientificCouncil
  * 
+ * 23/Jul/2003 fenix-head ServidorAplicacao.Servico.scientificCouncil
+ *  
  */
 public class SetBasicCurricularCoursesService implements IServico {
 
-	private static SetBasicCurricularCoursesService _servico =
-		new SetBasicCurricularCoursesService();
+    private static SetBasicCurricularCoursesService _servico = new SetBasicCurricularCoursesService();
 
-	/**
-	  * The actor of this class.
-	  **/
+    /**
+     * The actor of this class.
+     */
 
-	private SetBasicCurricularCoursesService() {
+    private SetBasicCurricularCoursesService() {
 
-	}
+    }
 
-	/**
-	 * Returns Service Name
-	 */
-	public String getNome() {
-		return "setBasicCurricularCourses";
-	}
+    /**
+     * Returns Service Name
+     */
+    public String getNome() {
+        return "setBasicCurricularCourses";
+    }
 
-	/**
-	 * Returns the _servico.
-	 * @return ReadExecutionCourse
-	 */
-	public static SetBasicCurricularCoursesService getService() {
-		return _servico;
-	}
+    /**
+     * Returns the _servico.
+     * 
+     * @return ReadExecutionCourse
+     */
+    public static SetBasicCurricularCoursesService getService() {
+        return _servico;
+    }
 
-	public boolean run(
-		List curricularCoursesIds,
-		Integer degreeCurricularPlanId)
-		throws FenixServiceException {
+    public boolean run(List curricularCoursesIds, Integer degreeCurricularPlanId)
+            throws FenixServiceException {
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			IPersistentCurricularCourse persistentCurricularCourse =
-				sp.getIPersistentCurricularCourse();
-			IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan =
-				sp.getIPersistentDegreeCurricularPlan();
+            IPersistentCurricularCourse persistentCurricularCourse = sp
+                    .getIPersistentCurricularCourse();
+            IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp
+                    .getIPersistentDegreeCurricularPlan();
 
-			IDegreeCurricularPlan degreeCurricularPlan =
-				new DegreeCurricularPlan();
+            IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
+                    .readByOID(DegreeCurricularPlan.class,
+                            degreeCurricularPlanId);
 
-			degreeCurricularPlan.setIdInternal(degreeCurricularPlanId);
+            List basicCurricularCourses = persistentCurricularCourse
+                    .readCurricularCoursesByDegreeCurricularPlanAndBasicAttribute(
+                            degreeCurricularPlan, new Boolean(true));
 
-			degreeCurricularPlan =
-				(
-					IDegreeCurricularPlan) persistentDegreeCurricularPlan
-						.readByOId(
-					degreeCurricularPlan,
-					false);
+            Iterator itBCCourses = basicCurricularCourses.iterator();
+            ICurricularCourse basicCourse;
 
-			List basicCurricularCourses =
-				persistentCurricularCourse
-					.readCurricularCoursesByDegreeCurricularPlanAndBasicAttribute(
-					degreeCurricularPlan,
-					new Boolean(true));
+            while (itBCCourses.hasNext()) {
 
-			Iterator itBCCourses = basicCurricularCourses.iterator();
-			ICurricularCourse basicCourse;
+                basicCourse = (ICurricularCourse) itBCCourses.next();
+                persistentCurricularCourse.simpleLockWrite(basicCourse);
+                basicCourse.setBasic(new Boolean(false));
+            }
 
-			while (itBCCourses.hasNext()) {
+            Iterator itId = curricularCoursesIds.iterator();
 
-				basicCourse = (ICurricularCourse) itBCCourses.next();
-				persistentCurricularCourse.simpleLockWrite(basicCourse);
-				basicCourse.setBasic(new Boolean(false));
-			}
+            while (itId.hasNext()) {
 
-			Iterator itId = curricularCoursesIds.iterator();
+                ICurricularCourse curricularCourseBasic = (ICurricularCourse) persistentCurricularCourse
+                        .readByOID(CurricularCourse.class, (Integer) itId
+                                .next(), true);
+                curricularCourseBasic.setBasic(new Boolean(true));
 
-			while (itId.hasNext()) {
+            }
 
-				ICurricularCourse curricularCourseBasic =
-					new CurricularCourse();
-				curricularCourseBasic.setIdInternal((Integer) itId.next());
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
 
-				curricularCourseBasic =
-					(ICurricularCourse) persistentCurricularCourse.readByOId(
-						curricularCourseBasic,
-						true);
-				curricularCourseBasic.setBasic(new Boolean(true));
-
-			}
-
-			
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-
-		return true;
-	}
+        return true;
+    }
 
 }

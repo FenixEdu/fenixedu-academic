@@ -29,67 +29,77 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author asnr and scpo
- *
+ *  
  */
 
 public class EditGroupShift implements IService {
 
-	/**
-	 * The constructor of this class.
-	 */
-	public EditGroupShift() {
-	}
-	
+    /**
+     * The constructor of this class.
+     */
+    public EditGroupShift() {
+    }
 
-	/**
-	 * Executes the service.
-	 */
+    /**
+     * Executes the service.
+     */
 
-	public boolean run(Integer studentGroupCode, Integer newShiftCode, String username) throws FenixServiceException {
+    public boolean run(Integer studentGroupCode, Integer newShiftCode,
+            String username) throws FenixServiceException {
 
-		ITurnoPersistente persistentShift = null;
-		IPersistentStudentGroup persistentStudentGroup = null;
-			
+        ITurnoPersistente persistentShift = null;
+        IPersistentStudentGroup persistentStudentGroup = null;
 
-		try {
-			ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
-			IPersistentStudentGroupAttend persistentStudentGroupAttend = persistentSupport.getIPersistentStudentGroupAttend();
-		
-			persistentShift = persistentSupport.getITurnoPersistente();
-			ITurno shift = (ITurno) persistentShift.readByOId(new Turno(newShiftCode), false);
+        try {
+            ISuportePersistente persistentSupport = SuportePersistenteOJB
+                    .getInstance();
+            IPersistentStudentGroupAttend persistentStudentGroupAttend = persistentSupport
+                    .getIPersistentStudentGroupAttend();
 
-			persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
-			IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOId(new StudentGroup(studentGroupCode), false);
-			IStudent student = persistentSupport.getIPersistentStudent().readByUsername(username);
-			
-			if (studentGroup == null)
-				throw new InvalidArgumentsServiceException();
+            persistentShift = persistentSupport.getITurnoPersistente();
+            ITurno shift = (ITurno) persistentShift.readByOID(Turno.class,
+                    newShiftCode);
 
-			IFrequenta attend =persistentSupport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(
-                    		student,
-                    		studentGroup.getGroupProperties().getExecutionCourse());
-			IStudentGroupAttend studentGroupAttend = persistentStudentGroupAttend.readBy(studentGroup, attend);
-			
-			
-			if (studentGroupAttend == null) 
-            {
-				throw new InvalidSituationServiceException();
+            persistentStudentGroup = persistentSupport
+                    .getIPersistentStudentGroup();
+            IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup
+                    .readByOID(StudentGroup.class, studentGroupCode);
+            IStudent student = persistentSupport.getIPersistentStudent()
+                    .readByUsername(username);
+
+            if (studentGroup == null)
+                throw new InvalidArgumentsServiceException();
+
+            IFrequenta attend = persistentSupport.getIFrequentaPersistente()
+                    .readByAlunoAndDisciplinaExecucao(
+                            student,
+                            studentGroup.getGroupProperties()
+                                    .getExecutionCourse());
+            IStudentGroupAttend studentGroupAttend = persistentStudentGroupAttend
+                    .readBy(studentGroup, attend);
+
+            if (studentGroupAttend == null) {
+                throw new InvalidSituationServiceException();
             }
-			IGroupProperties groupProperties = studentGroup.getGroupProperties();
-			IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
-			IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(groupProperties);
-			
-			boolean result = strategy.checkNumberOfGroups(groupProperties, shift);
-			if(!result) {
-				throw new InvalidChangeServiceException();
+            IGroupProperties groupProperties = studentGroup
+                    .getGroupProperties();
+            IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
+                    .getInstance();
+            IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
+                    .getGroupEnrolmentStrategyInstance(groupProperties);
+
+            boolean result = strategy.checkNumberOfGroups(groupProperties,
+                    shift);
+            if (!result) {
+                throw new InvalidChangeServiceException();
             }
-			persistentStudentGroup.simpleLockWrite(studentGroup);
-			studentGroup.setShift(shift);
+            persistentStudentGroup.simpleLockWrite(studentGroup);
+            studentGroup.setShift(shift);
 
-		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-			throw new FenixServiceException(excepcaoPersistencia.getMessage());
-		}
+        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
+            throw new FenixServiceException(excepcaoPersistencia.getMessage());
+        }
 
-		return true;
-	}
+        return true;
+    }
 }

@@ -37,126 +37,100 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.SituationName;
 import Util.State;
 
-public class ChangeApplicationInfo implements IService
-{
+public class ChangeApplicationInfo implements IService {
 
     /**
      * The actor of this class.
      */
-    public ChangeApplicationInfo()
-    {
+    public ChangeApplicationInfo() {
     }
 
-    public InfoMasterDegreeCandidate run(InfoMasterDegreeCandidate newMasterDegreeCandidate,
-            InfoPerson infoPerson, UserView userView) throws FenixServiceException,
-            ExcepcaoPersistencia
-    {
+    public InfoMasterDegreeCandidate run(
+            InfoMasterDegreeCandidate newMasterDegreeCandidate,
+            InfoPerson infoPerson, UserView userView)
+            throws FenixServiceException, ExcepcaoPersistencia {
 
         ISuportePersistente sp = null;
         IMasterDegreeCandidate existingMasterDegreeCandidate = null;
 
-        try
-        {
+        try {
             sp = SuportePersistenteOJB.getInstance();
             ICursoExecucao executionDegree = Cloner
                     .copyInfoExecutionDegree2ExecutionDegree(newMasterDegreeCandidate
                             .getInfoExecutionDegree());
-            existingMasterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()
+            existingMasterDegreeCandidate = sp
+                    .getIPersistentMasterDegreeCandidate()
                     .readByIdentificationDocNumberAndTypeAndExecutionDegreeAndSpecialization(
-                            newMasterDegreeCandidate.getInfoPerson().getNumeroDocumentoIdentificacao(),
-                            newMasterDegreeCandidate.getInfoPerson().getTipoDocumentoIdentificacao()
-                                    .getTipo(), executionDegree,
+                            newMasterDegreeCandidate.getInfoPerson()
+                                    .getNumeroDocumentoIdentificacao(),
+                            newMasterDegreeCandidate.getInfoPerson()
+                                    .getTipoDocumentoIdentificacao().getTipo(),
+                            executionDegree,
                             newMasterDegreeCandidate.getSpecialization());
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+        } catch (ExcepcaoPersistencia ex) {
+            FenixServiceException newEx = new FenixServiceException(
+                    "Persistence layer error");
             newEx.fillInStackTrace();
             throw newEx;
         }
 
-        if (existingMasterDegreeCandidate == null) { throw new ExcepcaoInexistente(
-                "Unknown Candidate !!"); }
+        if (existingMasterDegreeCandidate == null) {
+            throw new ExcepcaoInexistente("Unknown Candidate !!");
+        }
 
-        try
-        {
+        try {
             IService service = new ChangePersonalInfo();
             //XXX: WARNING: call of another service inside a service.
             ((ChangePersonalInfo) service).run(infoPerson, userView);
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+        } catch (ExcepcaoPersistencia ex) {
+            FenixServiceException newEx = new FenixServiceException(
+                    "Persistence layer error");
             newEx.fillInStackTrace();
             throw newEx;
         }
 
         // Change the Information
 
-        sp.getIPersistentMasterDegreeCandidate().simpleLockWrite(existingMasterDegreeCandidate);
+        sp.getIPersistentMasterDegreeCandidate().simpleLockWrite(
+                existingMasterDegreeCandidate);
 
-        existingMasterDegreeCandidate.setAverage(newMasterDegreeCandidate.getAverage());
-        existingMasterDegreeCandidate.setMajorDegree(newMasterDegreeCandidate.getMajorDegree());
-        existingMasterDegreeCandidate.setMajorDegreeSchool(newMasterDegreeCandidate
-                .getMajorDegreeSchool());
-        existingMasterDegreeCandidate.setMajorDegreeYear(newMasterDegreeCandidate.getMajorDegreeYear());
-        existingMasterDegreeCandidate.setSpecializationArea(newMasterDegreeCandidate
-                .getSpecializationArea());
+        existingMasterDegreeCandidate.setAverage(newMasterDegreeCandidate
+                .getAverage());
+        existingMasterDegreeCandidate.setMajorDegree(newMasterDegreeCandidate
+                .getMajorDegree());
+        existingMasterDegreeCandidate
+                .setMajorDegreeSchool(newMasterDegreeCandidate
+                        .getMajorDegreeSchool());
+        existingMasterDegreeCandidate
+                .setMajorDegreeYear(newMasterDegreeCandidate
+                        .getMajorDegreeYear());
+        existingMasterDegreeCandidate
+                .setSpecializationArea(newMasterDegreeCandidate
+                        .getSpecializationArea());
 
         // Change the Candidate Situation
         InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
 
-        try
-        {
-            IPersistentCandidateSituation candidateSituationDAO = sp.getIPersistentCandidateSituation();
+        try {
+            IPersistentCandidateSituation candidateSituationDAO = sp
+                    .getIPersistentCandidateSituation();
 
             infoMasterDegreeCandidate = Cloner
                     .copyIMasterDegreeCandidate2InfoMasterDegreCandidate(existingMasterDegreeCandidate);
 
-            //            List situationsFromBD =
-            // existingMasterDegreeCandidate.getSituations();
-
-            //			Iterator situationIterator = situationsFromBD.iterator();
+          
             List situations = new ArrayList();
             ICandidateView candidateView = null;
 
-            //			while (situationIterator.hasNext()) {
-            //				ICandidateSituation candidateSituation = (ICandidateSituation)
-            // situationIterator.next();
-            //
-            //				// Check if this is the Active Situation
-            //				if (candidateSituation.getValidation().equals(new
-            // Util.State(Util.State.ACTIVE))) {
-            //
-            //					candidateSituationDAO.writeCandidateSituation(candidateSituation);
-            //
-            //					candidateSituation.setValidation(new
-            // Util.State(Util.State.INACTIVE));
-            //
-            //					// FIXME: the two lines aboce should be removed. below we should
-            // commit and then read the
-            // candidate
-            //					ICandidateSituation candidateSituationTemp = new
-            // CandidateSituation();
-            //					candidateSituationTemp.setIdInternal(candidateSituation.getIdInternal());
-            //					ICandidateSituation candidateSituationFromBD =
-            // (ICandidateSituation)
-            // sp.getIPersistentCandidateSituation().readByOId(candidateSituationTemp,
-            // true);
-            //					candidateSituationFromBD.setValidation(new
-            // Util.State(Util.State.INACTIVE));
-            //
-            //					break;
-            //				}
-            //			}
-
-            ICandidateSituation candidateSituationTemp = new CandidateSituation();
-            candidateSituationTemp.setIdInternal(existingMasterDegreeCandidate
-                    .getActiveCandidateSituation().getIdInternal());
+       
 
             ICandidateSituation candidateSituationFromBD = new CandidateSituation();
-            candidateSituationFromBD = (ICandidateSituation) sp.getIPersistentCandidateSituation()
-                    .readByOId(candidateSituationTemp, true);
+            candidateSituationFromBD = (ICandidateSituation) sp
+                    .getIPersistentCandidateSituation().readByOID(
+                            CandidateSituation.class,
+                            existingMasterDegreeCandidate
+                                    .getActiveCandidateSituation()
+                                    .getIdInternal(), true);
             candidateSituationFromBD.setValidation(new State(State.INACTIVE));
 
             //Create the New Candidate Situation
@@ -166,19 +140,20 @@ public class ChangeApplicationInfo implements IService
             sp.confirmarTransaccao();
             sp.iniciarTransaccao();
 
-            situations.add(Cloner
-                    .copyICandidateSituation2InfoCandidateSituation(activeCandidateSituation));
+            situations
+                    .add(Cloner
+                            .copyICandidateSituation2InfoCandidateSituation(activeCandidateSituation));
             candidateView = new CandidateView(situations);
             userView.setCandidateView(candidateView);
 
-            infoMasterDegreeCandidate.setInfoCandidateSituation(Cloner
-                    .copyICandidateSituation2InfoCandidateSituation(activeCandidateSituation));
+            infoMasterDegreeCandidate
+                    .setInfoCandidateSituation(Cloner
+                            .copyICandidateSituation2InfoCandidateSituation(activeCandidateSituation));
             infoMasterDegreeCandidate.setInfoPerson(infoPerson);
 
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
-            FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+        } catch (ExcepcaoPersistencia ex) {
+            FenixServiceException newEx = new FenixServiceException(
+                    "Persistence layer error");
             newEx.fillInStackTrace();
             throw newEx;
         }
@@ -188,17 +163,20 @@ public class ChangeApplicationInfo implements IService
 
     private ICandidateSituation createActiveSituation(
             IMasterDegreeCandidate existingMasterDegreeCandidate,
-            IPersistentCandidateSituation candidateSituationDAO) throws ExcepcaoPersistencia
-    {
+            IPersistentCandidateSituation candidateSituationDAO)
+            throws ExcepcaoPersistencia {
         ICandidateSituation activeCandidateSituation = new CandidateSituation();
         candidateSituationDAO.simpleLockWrite(activeCandidateSituation);
 
         Calendar calendar = Calendar.getInstance();
         activeCandidateSituation.setDate(calendar.getTime());
-        activeCandidateSituation.setSituation(new SituationName(SituationName.PENDENT_COM_DADOS));
-        activeCandidateSituation.setValidation(new Util.State(Util.State.ACTIVE));
+        activeCandidateSituation.setSituation(new SituationName(
+                SituationName.PENDENT_COM_DADOS));
+        activeCandidateSituation
+                .setValidation(new Util.State(Util.State.ACTIVE));
 
-        activeCandidateSituation.setMasterDegreeCandidate(existingMasterDegreeCandidate);
+        activeCandidateSituation
+                .setMasterDegreeCandidate(existingMasterDegreeCandidate);
         return activeCandidateSituation;
     }
 }

@@ -63,11 +63,9 @@ public class ReadAllClasses implements IServico {
 				sp.getIPersistentExecutionPeriod();
 
 			IExecutionPeriod executionPeriod =
-				new ExecutionPeriod(keyExecutionPeriod);
-			executionPeriod =
-				(IExecutionPeriod) persistentExecutionPeriod.readByOId(
-					executionPeriod,
-					false);
+				(IExecutionPeriod) persistentExecutionPeriod.readByOID(
+				        ExecutionPeriod.class,
+				        keyExecutionPeriod);
 
 			ITurmaPersistente persistentClass = sp.getITurmaPersistente();
 			List classes =

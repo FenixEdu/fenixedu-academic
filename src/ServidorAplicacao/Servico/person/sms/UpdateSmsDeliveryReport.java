@@ -17,44 +17,40 @@ import ServidorPersistente.sms.IPersistentSentSms;
 import Util.SmsDeliveryType;
 
 /**
- * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali</a>
- * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed</a>
+ * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
+ * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  *  
  */
-public class UpdateSmsDeliveryReport implements IService
-{
+public class UpdateSmsDeliveryReport implements IService {
 
-	/**
-	 *  
-	 */
-	public UpdateSmsDeliveryReport()
-	{
-	}
+    /**
+     *  
+     */
+    public UpdateSmsDeliveryReport() {
+    }
 
-	public void run(Integer smsId, SmsDeliveryType smsDeliveryType) throws FenixServiceException
-	{
+    public void run(Integer smsId, SmsDeliveryType smsDeliveryType)
+            throws FenixServiceException {
 
-		try
-		{
-			ISuportePersistente ps = SuportePersistenteOJB.getInstance();
-			IPersistentSentSms persistentSentSms = ps.getIPersistentSentSms();
+        try {
+            ISuportePersistente ps = SuportePersistenteOJB.getInstance();
+            IPersistentSentSms persistentSentSms = ps.getIPersistentSentSms();
 
-			//read sentSms Object
-			ISentSms sentSms = (ISentSms) persistentSentSms.readByOId(new SentSms(smsId), true);
+            //read sentSms Object
+            ISentSms sentSms = (ISentSms) persistentSentSms.readByOID(
+                    SentSms.class, smsId, true);
 
-			if (sentSms == null)
-				throw new FenixServiceException();
+            if (sentSms == null) {
+                throw new FenixServiceException();
+            }
+            //update sentSms Object
+            sentSms.setDeliveryDate(Calendar.getInstance().getTime());
+            sentSms.setDeliveryType(smsDeliveryType);
 
-			//update sentSms Object
-			sentSms.setDeliveryDate(Calendar.getInstance().getTime());
-			sentSms.setDeliveryType(smsDeliveryType);
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
 
-		}
-		catch (ExcepcaoPersistencia e)
-		{
-			throw new FenixServiceException(e);
-		}
-
-	}
+    }
 
 }

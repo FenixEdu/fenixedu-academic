@@ -19,60 +19,55 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author João Mota
- *
- * 23/Jul/2003
- * fenix-head
- * ServidorAplicacao.Servico.scientificCouncil
  * 
+ * 23/Jul/2003 fenix-head ServidorAplicacao.Servico.scientificCouncil
+ *  
  */
-public class ReadCurriculumByOIdService implements IServico{
+public class ReadCurriculumByOIdService implements IServico {
 
-	private static ReadCurriculumByOIdService _servico =
-		new ReadCurriculumByOIdService();
+    private static ReadCurriculumByOIdService _servico = new ReadCurriculumByOIdService();
 
-	/**
-	  * The actor of this class.
-	  **/
+    /**
+     * The actor of this class.
+     */
 
-	private ReadCurriculumByOIdService() {
+    private ReadCurriculumByOIdService() {
 
-	}
+    }
 
-	/**
-	 * Returns Service Name
-	 */
-	public String getNome() {
-		return "ReadCurriculumByOIdService";
-	}
+    /**
+     * Returns Service Name
+     */
+    public String getNome() {
+        return "ReadCurriculumByOIdService";
+    }
 
-	/**
-	 * Returns the _servico.
-	 * @return ReadExecutionCourse
-	 */
-	public static ReadCurriculumByOIdService getService() {
-		return _servico;
-	}
+    /**
+     * Returns the _servico.
+     * 
+     * @return ReadExecutionCourse
+     */
+    public static ReadCurriculumByOIdService getService() {
+        return _servico;
+    }
 
-	public SiteView run(Integer curriculumId) throws FenixServiceException {
-			
-			try {
-				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-				IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
-				ICurriculum curriculum = new Curriculum();
-				curriculum.setIdInternal(curriculumId);
-				curriculum= (ICurriculum) persistentCurriculum.readByOId(curriculum,false);
-				InfoCurriculum infoCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
-				SiteView siteView = new SiteView(infoCurriculum);
-				
-				return siteView;
-			} catch (ExcepcaoPersistencia e) {
-				throw new FenixServiceException(e);
-			}
-			
-			
+    public SiteView run(Integer curriculumId) throws FenixServiceException {
 
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentCurriculum persistentCurriculum = sp
+                    .getIPersistentCurriculum();
+            ICurriculum curriculum = (ICurriculum) persistentCurriculum
+                    .readByOID(Curriculum.class, curriculumId);
+            InfoCurriculum infoCurriculum = Cloner
+                    .copyICurriculum2InfoCurriculum(curriculum);
+            SiteView siteView = new SiteView(infoCurriculum);
 
-		
-	}
+            return siteView;
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
+
+    }
 
 }

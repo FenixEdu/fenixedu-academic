@@ -28,33 +28,25 @@ import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class LerAulasDeSalaEmSemestre implements IService
-{
+public class LerAulasDeSalaEmSemestre implements IService {
 
-    public LerAulasDeSalaEmSemestre()
-    {
+    public LerAulasDeSalaEmSemestre() {
     }
 
     public List run(InfoExecutionPeriod infoExecutionPeriod, InfoRoom infoRoom,
-            Integer executionPeriodId)
-    {
+            Integer executionPeriodId) {
         List infoAulas = null;
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentExecutionPeriod persistentExecutionPeriod = sp
                     .getIPersistentExecutionPeriod();
             IAulaPersistente lessonDAO = sp.getIAulaPersistente();
             IExecutionPeriod executionPeriod = null;
-            if (executionPeriodId != null)
-            {
+            if (executionPeriodId != null) {
                 executionPeriod = (IExecutionPeriod) persistentExecutionPeriod
-                        .readByOId(new ExecutionPeriod(executionPeriodId),
-                                false);
-            }
-            else
-            {
+                        .readByOID(ExecutionPeriod.class, executionPeriodId);
+            } else {
                 executionPeriod = Cloner
                         .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
             }
@@ -66,15 +58,12 @@ public class LerAulasDeSalaEmSemestre implements IService
 
             Iterator iterator = lessonList.iterator();
             infoAulas = new ArrayList();
-            while (iterator.hasNext())
-            {
+            while (iterator.hasNext()) {
                 IAula elem = (IAula) iterator.next();
                 InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem);
                 infoAulas.add(infoLesson);
             }
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             ex.printStackTrace();
         }
         return infoAulas;

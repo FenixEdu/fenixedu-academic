@@ -20,72 +20,65 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author João Mota
- *
- * 1/Jul/2003
- * fenix-branch
- * ServidorAplicacao.Servico.sop
  * 
+ * 1/Jul/2003 fenix-branch ServidorAplicacao.Servico.sop
+ *  
  */
 public class AddShiftToClasses implements IServico {
 
-	/**
-	 * 
-	 */
-	public AddShiftToClasses() {
-	}
+    /**
+     *  
+     */
+    public AddShiftToClasses() {
+    }
 
-	/* (non-Javadoc)
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-	public String getNome() {
-		return "AddShiftToClasses";
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
+    public String getNome() {
+        return "AddShiftToClasses";
+    }
 
-	private static AddShiftToClasses service = new AddShiftToClasses();
+    private static AddShiftToClasses service = new AddShiftToClasses();
 
-	public static AddShiftToClasses getService() {
-		return service;
-	}
+    public static AddShiftToClasses getService() {
+        return service;
+    }
 
-	public void run(Integer keyShift, String[] classesList)
-		throws FenixServiceException {
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			ITurnoPersistente persistentShift = sp.getITurnoPersistente();
-			ITurmaPersistente persistentClass = sp.getITurmaPersistente();
-//			ITurmaTurnoPersistente persistentClassShift =
-//				sp.getITurmaTurnoPersistente();
-			ITurno shift = new Turno(keyShift);
-			shift = (ITurno) persistentShift.readByOId(shift, false);
-			if (shift == null || classesList == null) {
-				throw new InvalidArgumentsServiceException();
-			}
-			persistentShift.simpleLockWrite(shift);
-			int iter = 0;
-			int length = classesList.length;
-			while (iter < length) {
-				Integer keyClass = new Integer(classesList[iter]);
-				ITurma dClass = new Turma(keyClass);
-				dClass = (ITurma) persistentClass.readByOId(dClass, false);
-				if (dClass == null) {
-					throw new InvalidArgumentsServiceException();
-				}
-				shift.getAssociatedClasses().add(dClass);
-				persistentClass.simpleLockWrite(dClass);
-				dClass.getAssociatedShifts().add(shift);
-//				if (persistentClassShift.readByTurmaAndTurno(dClass, shift)
-//					== null) {
-//					ITurmaTurno classShift = new TurmaTurno();
-//					classShift.setTurma(dClass);
-//					classShift.setTurno(shift);
-//					persistentClassShift.lockWrite(classShift);
-//				}
-				iter++;
-			}
+    public void run(Integer keyShift, String[] classesList)
+            throws FenixServiceException {
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            ITurnoPersistente persistentShift = sp.getITurnoPersistente();
+            ITurmaPersistente persistentClass = sp.getITurmaPersistente();
 
-		} catch (ExcepcaoPersistencia e) {
-		}
+            ITurno shift = new Turno(keyShift);
+            shift = (ITurno) persistentShift.readByOID(Turno.class, keyShift);
+            if (shift == null || classesList == null) {
+                throw new InvalidArgumentsServiceException();
+            }
+            persistentShift.simpleLockWrite(shift);
+            int iter = 0;
+            int length = classesList.length;
+            while (iter < length) {
+                Integer keyClass = new Integer(classesList[iter]);
+                ITurma dClass = (ITurma) persistentClass.readByOID(Turma.class,
+                        keyClass);
+                if (dClass == null) {
+                    throw new InvalidArgumentsServiceException();
+                }
+                shift.getAssociatedClasses().add(dClass);
+                persistentClass.simpleLockWrite(dClass);
+                dClass.getAssociatedShifts().add(shift);
 
-	}
+                iter++;
+            }
+
+        } catch (ExcepcaoPersistencia e) {
+        }
+
+    }
 
 }

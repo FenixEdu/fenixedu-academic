@@ -8,9 +8,9 @@ package ServidorAplicacao.Servico.sop;
 
 /**
  * Servi�o EditarAula.
- *
+ * 
  * @author tfc130
- **/
+ */
 import java.util.List;
 
 import DataBeans.InfoLesson;
@@ -33,163 +33,143 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class EditarAula implements IServico {
 
-	private static EditarAula _servico = new EditarAula();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static EditarAula getService() {
-		return _servico;
-	}
+    private static EditarAula _servico = new EditarAula();
 
-	/**
-	 * The actor of this class.
-	 **/
-	private EditarAula() {
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static EditarAula getService() {
+        return _servico;
+    }
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "EditarAula";
-	}
+    /**
+     * The actor of this class.
+     */
+    private EditarAula() {
+    }
 
-	public Object run(KeyLesson aulaAntiga, InfoLesson aulaNova)
-		throws FenixServiceException {
+    /**
+     * Devolve o nome do servico
+     */
+    public final String getNome() {
+        return "EditarAula";
+    }
 
-		IAula aula = null;
-		InfoLessonServiceResult result = null;
+    public Object run(KeyLesson aulaAntiga, InfoLesson aulaNova)
+            throws FenixServiceException {
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        IAula aula = null;
+        InfoLessonServiceResult result = null;
 
-			IAulaPersistente aulaPersistente = sp.getIAulaPersistente();
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			ISala salaAntiga =
-				sp.getISalaPersistente().readByName(
-					aulaAntiga.getKeySala().getNomeSala());
-			ISala salaNova =
-				sp.getISalaPersistente().readByName(
-					aulaNova.getInfoSala().getNome());
+            IAulaPersistente aulaPersistente = sp.getIAulaPersistente();
 
-			IExecutionPeriod executionPeriod =
-				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
-					aulaNova
-						.getInfoDisciplinaExecucao()
-						.getInfoExecutionPeriod());
+            ISala salaAntiga = sp.getISalaPersistente().readByName(
+                    aulaAntiga.getKeySala().getNomeSala());
+            ISala salaNova = sp.getISalaPersistente().readByName(
+                    aulaNova.getInfoSala().getNome());
 
-			aula =
-				aulaPersistente.readByDiaSemanaAndInicioAndFimAndSala(
-					aulaAntiga.getDiaSemana(),
-					aulaAntiga.getInicio(),
-					aulaAntiga.getFim(),
-					salaAntiga,
-					executionPeriod);
+            IExecutionPeriod executionPeriod = Cloner
+                    .copyInfoExecutionPeriod2IExecutionPeriod(aulaNova
+                            .getInfoDisciplinaExecucao()
+                            .getInfoExecutionPeriod());
 
-			IAula newLesson =
-				new Aula(
-					aulaNova.getDiaSemana(),
-					aulaNova.getInicio(),
-					aulaNova.getFim(),
-					aulaNova.getTipo(),
-					salaNova,
-					null);
+            aula = aulaPersistente.readByDiaSemanaAndInicioAndFimAndSala(
+                    aulaAntiga.getDiaSemana(), aulaAntiga.getInicio(),
+                    aulaAntiga.getFim(), salaAntiga, executionPeriod);
 
-			if (aula != null) {
-				result = valid(newLesson);
-				if (result.getMessageType() == 1) {
-					throw new InvalidTimeIntervalServiceException();
-				}
-				boolean resultB =
-					validNoInterceptingLesson(newLesson, aula, executionPeriod);
+            IAula newLesson = new Aula(aulaNova.getDiaSemana(), aulaNova
+                    .getInicio(), aulaNova.getFim(), aulaNova.getTipo(),
+                    salaNova, null);
 
-				if (result.isSUCESS() && resultB) {
-					// TODO: Temporary solution to lock object for write. In the future we'll use readByUnique()
-					aula = (IAula) aulaPersistente.readByOId(aula, true);
-					aula.setDiaSemana(aulaNova.getDiaSemana());
-					aula.setInicio(aulaNova.getInicio());
-					aula.setFim(aulaNova.getFim());
-					aula.setTipo(aulaNova.getTipo());
-					aula.setSala(salaNova);
-				}
-			}
+            if (aula != null) {
+                result = valid(newLesson);
+                if (result.getMessageType() == 1) {
+                    throw new InvalidTimeIntervalServiceException();
+                }
+                boolean resultB = validNoInterceptingLesson(newLesson, aula,
+                        executionPeriod);
 
-		} catch (ExcepcaoPersistencia ex) {
-			throw new FenixServiceException(ex.getMessage());
-		}
-		return result;
-	}
+                if (result.isSUCESS() && resultB) {
+                    // TODO: Temporary solution to lock object for write. In the
+                    // future we'll use readByUnique()
+                    aula = (IAula) aulaPersistente.readByOID(Aula.class, aula
+                            .getIdInternal(), true);
+                    aula.setDiaSemana(aulaNova.getDiaSemana());
+                    aula.setInicio(aulaNova.getInicio());
+                    aula.setFim(aulaNova.getFim());
+                    aula.setTipo(aulaNova.getTipo());
+                    aula.setSala(salaNova);
+                }
+            }
 
-	private InfoLessonServiceResult valid(IAula lesson) {
-		InfoLessonServiceResult result = new InfoLessonServiceResult();
+        } catch (ExcepcaoPersistencia ex) {
+            throw new FenixServiceException(ex.getMessage());
+        }
+        return result;
+    }
 
-		if (lesson.getInicio().getTime().getTime()
-			>= lesson.getFim().getTime().getTime()) {
-			result.setMessageType(
-				InfoLessonServiceResult.INVALID_TIME_INTERVAL);
-		}
+    private InfoLessonServiceResult valid(IAula lesson) {
+        InfoLessonServiceResult result = new InfoLessonServiceResult();
 
-		return result;
-	}
+        if (lesson.getInicio().getTime().getTime() >= lesson.getFim().getTime()
+                .getTime()) {
+            result
+                    .setMessageType(InfoLessonServiceResult.INVALID_TIME_INTERVAL);
+        }
 
-	/**
-		   * @param aula
-		   * @return InfoLessonServiceResult
-		   */
-	/*	private boolean validNoInterceptingLesson(IAula lesson) {
-	
-			try {
-				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-	
-				IAulaPersistente persistentLesson = sp.getIAulaPersistente();
-	
-				List lessonMatchList =
-					persistentLesson.readLessonsInBroadPeriod(lesson);
-	
-				System.out.println("Tenho aulas:" + lessonMatchList.size());
-				
-				if ((lessonMatchList.size() >0 && !lessonMatchList.contains(lesson)) || (lessonMatchList.size() >1 && lessonMatchList.contains(lesson))) {
-					
-					return false;
-				} else {
-					return true;
-				}
-			} catch (ExcepcaoPersistencia e) {
-				return false;
-	
-			}
-		}
-	*/
+        return result;
+    }
 
-	private boolean validNoInterceptingLesson(
-		IAula newLesson,
-		IAula oldLesson,
-		IExecutionPeriod executionPeriod)
-		throws ExistingServiceException, InterceptingServiceException {
+    /**
+     * @param aula
+     * @return InfoLessonServiceResult
+     */
+    /*
+     * private boolean validNoInterceptingLesson(IAula lesson) {
+     * 
+     * try { ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+     * 
+     * IAulaPersistente persistentLesson = sp.getIAulaPersistente();
+     * 
+     * List lessonMatchList = persistentLesson.readLessonsInBroadPeriod(lesson);
+     * 
+     * System.out.println("Tenho aulas:" + lessonMatchList.size());
+     * 
+     * if ((lessonMatchList.size() >0 && !lessonMatchList.contains(lesson)) ||
+     * (lessonMatchList.size() >1 && lessonMatchList.contains(lesson))) {
+     * 
+     * return false; } else { return true; } } catch (ExcepcaoPersistencia e) {
+     * return false;
+     *  } }
+     */
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+    private boolean validNoInterceptingLesson(IAula newLesson, IAula oldLesson,
+            IExecutionPeriod executionPeriod) throws ExistingServiceException,
+            InterceptingServiceException {
 
-			IAulaPersistente persistentLesson = sp.getIAulaPersistente();
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			List lessonMatchList =
-				persistentLesson.readLessonsInBroadPeriod(
-					newLesson,
-					oldLesson,
-					executionPeriod);
+            IAulaPersistente persistentLesson = sp.getIAulaPersistente();
 
-			if (lessonMatchList.size() > 0) {
-				if (lessonMatchList.contains(newLesson)) {
-					throw new ExistingServiceException();
-				} else {
-					throw new InterceptingServiceException();
-				}
-			} else {
-				return true;
-			}
-		} catch (ExcepcaoPersistencia e) {
-			return false;
-		}
-	}
+            List lessonMatchList = persistentLesson.readLessonsInBroadPeriod(
+                    newLesson, oldLesson, executionPeriod);
+
+            if (lessonMatchList.size() > 0) {
+                if (lessonMatchList.contains(newLesson)) {
+                    throw new ExistingServiceException();
+                } else {
+                    throw new InterceptingServiceException();
+                }
+            } else {
+                return true;
+            }
+        } catch (ExcepcaoPersistencia e) {
+            return false;
+        }
+    }
 
 }

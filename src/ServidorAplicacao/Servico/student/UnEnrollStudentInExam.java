@@ -18,105 +18,98 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author João Mota
- *
+ *  
  */
 
 public class UnEnrollStudentInExam implements IServico {
 
-	private static UnEnrollStudentInExam _servico = new UnEnrollStudentInExam();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static UnEnrollStudentInExam getService() {
-		return _servico;
-	}
+    private static UnEnrollStudentInExam _servico = new UnEnrollStudentInExam();
 
-	/**
-	 * The actor of this class.
-	 **/
-	private UnEnrollStudentInExam() {
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static UnEnrollStudentInExam getService() {
+        return _servico;
+    }
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "UnEnrollStudentInExam";
-	}
+    /**
+     * The actor of this class.
+     */
+    private UnEnrollStudentInExam() {
+    }
 
-	public Boolean run(String username, Integer examId)
-		throws FenixServiceException {
+    /**
+     * Devolve o nome do servico
+     */
+    public final String getNome() {
+        return "UnEnrollStudentInExam";
+    }
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+    public Boolean run(String username, Integer examId)
+            throws FenixServiceException {
 
-			IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-			IStudent student = persistentStudent.readByUsername(username);
-			IPersistentExam persistentExam = sp.getIPersistentExam();
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			IExam exam = new Exam();
-			exam.setIdInternal(examId);
-			exam = (IExam) persistentExam.readByOId(exam, true);
+            IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+            IStudent student = persistentStudent.readByUsername(username);
+            IPersistentExam persistentExam = sp.getIPersistentExam();
 
-			if (student != null && exam != null) {
-				if (!validUnEnrollment(exam)) {
-					throw new notAuthorizedServiceDeleteException();
-				}
+            IExam exam = (IExam) persistentExam.readByOID(Exam.class, examId,
+                    true);
 
-				IPersistentExamStudentRoom persistentExamStudentRoom =
-					sp.getIPersistentExamStudentRoom();
-				ExamStudentRoom examStudentRoom =
-					(ExamStudentRoom) persistentExamStudentRoom.readBy(
-						exam,
-						student);
-				if (examStudentRoom != null) {
-					if (examStudentRoom.getRoom() != null) {
-						throw new notAuthorizedServiceDeleteException();
-					}
-					persistentExamStudentRoom.delete(examStudentRoom);
-				}
-			}
+            if (student != null && exam != null) {
+                if (!validUnEnrollment(exam)) {
+                    throw new notAuthorizedServiceDeleteException();
+                }
 
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
+                IPersistentExamStudentRoom persistentExamStudentRoom = sp
+                        .getIPersistentExamStudentRoom();
+                ExamStudentRoom examStudentRoom = (ExamStudentRoom) persistentExamStudentRoom
+                        .readBy(exam, student);
+                if (examStudentRoom != null) {
+                    if (examStudentRoom.getRoom() != null) {
+                        throw new notAuthorizedServiceDeleteException();
+                    }
+                    persistentExamStudentRoom.delete(examStudentRoom);
+                }
+            }
 
-		return new Boolean(true);
+        } catch (ExcepcaoPersistencia e) {
+            throw new FenixServiceException(e);
+        }
 
-	}
+        return new Boolean(true);
 
-	/**
-	 * @param exam
-	 * @return
-	 */
-	private boolean validUnEnrollment(IExam exam) {
-		if (exam.getEnrollmentEndDay() != null
-			&& exam.getEnrollmentEndTime() != null) {
-			Calendar enrollmentEnd = Calendar.getInstance();
-			enrollmentEnd.set(
-				Calendar.DAY_OF_MONTH,
-				exam.getEnrollmentEndDay().get(Calendar.DAY_OF_MONTH));
-			enrollmentEnd.set(
-				Calendar.MONTH,
-				exam.getEnrollmentEndDay().get(Calendar.MONTH));
-			enrollmentEnd.set(
-				Calendar.YEAR,
-				exam.getEnrollmentEndDay().get(Calendar.YEAR));
-			enrollmentEnd.set(
-				Calendar.HOUR_OF_DAY,
-				exam.getEnrollmentEndTime().get(Calendar.HOUR_OF_DAY));
-			enrollmentEnd.set(
-				Calendar.MINUTE,
-				exam.getEnrollmentEndTime().get(Calendar.MINUTE));
-			Calendar now = Calendar.getInstance();
-			if (enrollmentEnd.getTimeInMillis() > now.getTimeInMillis()) {
-				return true;
-			} else {
-				return false;
-			}
-		} else {
-			return false;
-		}
-	}
+    }
+
+    /**
+     * @param exam
+     * @return
+     */
+    private boolean validUnEnrollment(IExam exam) {
+        if (exam.getEnrollmentEndDay() != null
+                && exam.getEnrollmentEndTime() != null) {
+            Calendar enrollmentEnd = Calendar.getInstance();
+            enrollmentEnd.set(Calendar.DAY_OF_MONTH, exam.getEnrollmentEndDay()
+                    .get(Calendar.DAY_OF_MONTH));
+            enrollmentEnd.set(Calendar.MONTH, exam.getEnrollmentEndDay().get(
+                    Calendar.MONTH));
+            enrollmentEnd.set(Calendar.YEAR, exam.getEnrollmentEndDay().get(
+                    Calendar.YEAR));
+            enrollmentEnd.set(Calendar.HOUR_OF_DAY, exam.getEnrollmentEndTime()
+                    .get(Calendar.HOUR_OF_DAY));
+            enrollmentEnd.set(Calendar.MINUTE, exam.getEnrollmentEndTime().get(
+                    Calendar.MINUTE));
+            Calendar now = Calendar.getInstance();
+            if (enrollmentEnd.getTimeInMillis() > now.getTimeInMillis()) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
 
 }

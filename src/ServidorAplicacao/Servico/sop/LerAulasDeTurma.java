@@ -29,34 +29,27 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurmaPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class LerAulasDeTurma implements IService
-{
+public class LerAulasDeTurma implements IService {
 
     /**
-	 * The actor of this class.
-	 */
-    public LerAulasDeTurma()
-    {
+     * The actor of this class.
+     */
+    public LerAulasDeTurma() {
     }
 
-    public List run(InfoClass infoClass)
-    {
+    public List run(InfoClass infoClass) {
         ArrayList infoLessonList = null;
 
-        try
-        {
+        try {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-            //ITurnoAulaPersistente shiftLessonDAO = sp.getITurnoAulaPersistente();
             ITurmaPersistente persistentDomainClass = sp.getITurmaPersistente();
             ITurma group = null;
-            if (infoClass.getIdInternal() != null)
-            {
-                group = new Turma(infoClass.getIdInternal());
-                group = (ITurma) persistentDomainClass.readByOId(group, false);
-            }
-            else
-            {
+            if (infoClass.getIdInternal() != null) {
+
+                group = (ITurma) persistentDomainClass.readByOID(Turma.class,
+                        infoClass.getIdInternal());
+            } else {
                 group = Cloner.copyInfoClass2Class(infoClass);
             }
 
@@ -66,27 +59,26 @@ public class LerAulasDeTurma implements IService
 
             infoLessonList = new ArrayList();
 
-            while (iterator.hasNext())
-            {
+            while (iterator.hasNext()) {
                 ITurno shift = (ITurno) iterator.next();
                 List lessonList = shift.getAssociatedLessons();
                 Iterator lessonIterator = lessonList.iterator();
-                while (lessonIterator.hasNext())
-                {
+                while (lessonIterator.hasNext()) {
                     IAula elem = (IAula) lessonIterator.next();
-                    IAula lesson = (IAula) sp.getIAulaPersistente().readByOID(Aula.class, elem.getIdInternal());
-                    //InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem);
-					InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(lesson);
+                    IAula lesson = (IAula) sp.getIAulaPersistente().readByOID(
+                            Aula.class, elem.getIdInternal());
+                    //InfoLesson infoLesson =
+                    // Cloner.copyILesson2InfoLesson(elem);
+                    InfoLesson infoLesson = Cloner
+                            .copyILesson2InfoLesson(lesson);
 
                     if (infoLesson != null) {
-                    	infoLessonList.add(infoLesson);
+                        infoLessonList.add(infoLesson);
                     }
 
                 }
             }
-        }
-        catch (ExcepcaoPersistencia ex)
-        {
+        } catch (ExcepcaoPersistencia ex) {
             ex.printStackTrace(System.out);
         }
 

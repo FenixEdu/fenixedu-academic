@@ -1,4 +1,3 @@
-
 package ServidorAplicacao.Servico.masterDegree.commons.candidate;
 
 import java.util.ArrayList;
@@ -15,67 +14,74 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.SituationName;
 
 /**
- * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- *         Joana Mota (jccm@rnl.ist.utl.pt)
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 public class ReadSubstituteCandidates implements IServico {
 
-	private static ReadSubstituteCandidates servico = new ReadSubstituteCandidates();
-    
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static ReadSubstituteCandidates getService() {
-		return servico;
-	}
+    private static ReadSubstituteCandidates servico = new ReadSubstituteCandidates();
 
-	/**
-	 * The actor of this class.
-	 **/
-	private ReadSubstituteCandidates() { 
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static ReadSubstituteCandidates getService() {
+        return servico;
+    }
 
-	/**
-	 * Returns The Service Name */
+    /**
+     * The actor of this class.
+     */
+    private ReadSubstituteCandidates() {
+    }
 
-	public final String getNome() {
-		return "ReadSubstituteCandidates";
-	}
+    /**
+     * Returns The Service Name
+     */
 
-	
-	public List run(String[] candidateList, String[] ids) throws FenixServiceException {
-		
-		ISuportePersistente sp = null;
-		List result = new ArrayList();
-		
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-			
-			// Read the substitute candidates
-			int size = candidateList.length;
-			
-			for (int i = 0; i<size; i++){ 
-				if(candidateList[i].equals(SituationName.SUPLENTE_STRING)
-					|| candidateList[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING)
-					|| candidateList[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING)
-					|| candidateList[i].equals(SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING)) {
+    public final String getNome() {
+        return "ReadSubstituteCandidates";
+    }
 
-					Integer idInternal = new Integer (ids[i]);
-					IMasterDegreeCandidate masterDegreeCandidateTemp = new MasterDegreeCandidate();
-					masterDegreeCandidateTemp.setIdInternal(idInternal);
-					IMasterDegreeCandidate masterDegreeCandidateToWrite = (IMasterDegreeCandidate) sp.getIPersistentMasterDegreeCandidate().readByOId(masterDegreeCandidateTemp, false);
-					result.add(Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidateToWrite));
-				}
-			}
-			
-		} catch (ExcepcaoPersistencia ex) {
-			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-			newEx.fillInStackTrace();
-			throw newEx;
-		} 
-				
-		return result;
+    public List run(String[] candidateList, String[] ids)
+            throws FenixServiceException {
 
-	}
-	
+        ISuportePersistente sp = null;
+        List result = new ArrayList();
+
+        try {
+            sp = SuportePersistenteOJB.getInstance();
+
+            // Read the substitute candidates
+            int size = candidateList.length;
+
+            for (int i = 0; i < size; i++) {
+                if (candidateList[i].equals(SituationName.SUPLENTE_STRING)
+                        || candidateList[i]
+                                .equals(SituationName.SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING)
+                        || candidateList[i]
+                                .equals(SituationName.SUBSTITUTE_CONDICIONAL_FINALIST_STRING)
+                        || candidateList[i]
+                                .equals(SituationName.SUBSTITUTE_CONDICIONAL_OTHER_STRING)) {
+
+                    Integer idInternal = new Integer(ids[i]);
+
+                    IMasterDegreeCandidate masterDegreeCandidateToWrite = (IMasterDegreeCandidate) sp
+                            .getIPersistentMasterDegreeCandidate().readByOID(
+                                    MasterDegreeCandidate.class, idInternal);
+                    result
+                            .add(Cloner
+                                    .copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidateToWrite));
+                }
+            }
+
+        } catch (ExcepcaoPersistencia ex) {
+            FenixServiceException newEx = new FenixServiceException(
+                    "Persistence layer error",ex);
+            
+            throw newEx;
+        }
+
+        return result;
+
+    }
+
 }

@@ -8,12 +8,13 @@ package ServidorAplicacao.Servico.sop;
 
 /**
  * Servi�o CriarAula.
- *
+ * 
  * @author Luis Cruz & Sara Ribeiro
- **/
+ */
 
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import ServidorAplicacao.IServico;
@@ -25,62 +26,61 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class DefineExamComment implements IServico {
 
-	private static DefineExamComment _servico = new DefineExamComment();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static DefineExamComment getService() {
-		return _servico;
-	}
+    private static DefineExamComment _servico = new DefineExamComment();
 
-	/**
-	 * The actor of this class.
-	 **/
-	private DefineExamComment() {
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static DefineExamComment getService() {
+        return _servico;
+    }
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "DefineExamComment";
-	}
+    /**
+     * The actor of this class.
+     */
+    private DefineExamComment() {
+    }
 
-	public Boolean run(InfoExecutionCourse infoExecutionCourse, String comment)
-		throws FenixServiceException {
+    /**
+     * Devolve o nome do servico
+     */
+    public final String getNome() {
+        return "DefineExamComment";
+    }
 
-		Boolean result = new Boolean(false);
+    public Boolean run(InfoExecutionCourse infoExecutionCourse, String comment)
+            throws FenixServiceException {
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionCourse executionCourseDAO =
-				sp.getIPersistentExecutionCourse();
+        Boolean result = new Boolean(false);
 
-			IExecutionPeriod executionPeriod =
-				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
-					infoExecutionCourse.getInfoExecutionPeriod());
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentExecutionCourse executionCourseDAO = sp
+                    .getIPersistentExecutionCourse();
 
-			IExecutionCourse executionCourse =
-				executionCourseDAO
-					.readByExecutionCourseInitialsAndExecutionPeriod(
-					infoExecutionCourse.getSigla(),
-					executionPeriod);
+            IExecutionPeriod executionPeriod = Cloner
+                    .copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionCourse
+                            .getInfoExecutionPeriod());
 
-			// TODO: Temporary solution to lock object for write. In the future we'll use readByUnique()
-			executionCourse =
-				(IExecutionCourse) executionCourseDAO.readByOId(
-					executionCourse,
-					true);
-			executionCourse.setComment(comment);
+            IExecutionCourse executionCourse = executionCourseDAO
+                    .readByExecutionCourseInitialsAndExecutionPeriod(
+                            infoExecutionCourse.getSigla(), executionPeriod);
 
-			result = new Boolean(true);
+            // TODO: Temporary solution to lock object for write. In the future
+            // we'll use readByUnique()
+            executionCourse = (IExecutionCourse) executionCourseDAO.readByOID(
+                    ExecutionCourse.class, executionCourse.getIdInternal(),
+                    true);
+            executionCourse.setComment(comment);
 
-		} catch (ExcepcaoPersistencia ex) {
+            result = new Boolean(true);
 
-			throw new FenixServiceException(ex.getMessage());
-		}
+        } catch (ExcepcaoPersistencia ex) {
 
-		return result;
-	}
+            throw new FenixServiceException(ex.getMessage());
+        }
+
+        return result;
+    }
 
 }

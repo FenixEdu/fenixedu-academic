@@ -25,78 +25,89 @@ import Util.SituationOfGuide;
  * @author Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class ReadGratuityInformationByStudentCurricularPlanID implements IServico {
+public class ReadGratuityInformationByStudentCurricularPlanID implements
+        IServico {
 
-	private static ReadGratuityInformationByStudentCurricularPlanID servico = new ReadGratuityInformationByStudentCurricularPlanID();
+    private static ReadGratuityInformationByStudentCurricularPlanID servico = new ReadGratuityInformationByStudentCurricularPlanID();
 
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static ReadGratuityInformationByStudentCurricularPlanID getService() {
-		return servico;
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static ReadGratuityInformationByStudentCurricularPlanID getService() {
+        return servico;
+    }
 
-	/**
-	 * The actor of this class.
-	 **/
-	private ReadGratuityInformationByStudentCurricularPlanID() {
-	}
+    /**
+     * The actor of this class.
+     */
+    private ReadGratuityInformationByStudentCurricularPlanID() {
+    }
 
-	/**
-	 * Returns The Service Name */
+    /**
+     * Returns The Service Name
+     */
 
-	public final String getNome() {
-		return "ReadGratuityInformationByStudentCurricularPlanID";
-	}
+    public final String getNome() {
+        return "ReadGratuityInformationByStudentCurricularPlanID";
+    }
 
-	public List run(Integer studentCurricularPlanID) throws FenixServiceException {
-		
-		
-		List guides = null;
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+    public List run(Integer studentCurricularPlanID)
+            throws FenixServiceException {
 
-			IStudentCurricularPlan studentCurricularPlanTemp = new StudentCurricularPlan();
-			studentCurricularPlanTemp.setIdInternal(studentCurricularPlanID);
-			IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) sp.getIStudentCurricularPlanPersistente().readByOId(studentCurricularPlanTemp, false);
-			
-			guides = sp.getIPersistentGuide().readByPerson(studentCurricularPlan.getStudent().getPerson().getNumeroDocumentoIdentificacao(), 
-										studentCurricularPlan.getStudent().getPerson().getTipoDocumentoIdentificacao());
+        List guides = null;
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
+            
+            IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) sp
+                    .getIStudentCurricularPlanPersistente().readByOID(
+                            StudentCurricularPlan.class, studentCurricularPlanID);
 
+            guides = sp.getIPersistentGuide().readByPerson(
+                    studentCurricularPlan.getStudent().getPerson()
+                            .getNumeroDocumentoIdentificacao(),
+                    studentCurricularPlan.getStudent().getPerson()
+                            .getTipoDocumentoIdentificacao());
 
-		} catch (ExcepcaoPersistencia ex) {
-			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-			newEx.fillInStackTrace();
-			throw newEx;
-		}
+        } catch (ExcepcaoPersistencia ex) {
+            FenixServiceException newEx = new FenixServiceException(
+                    "Persistence layer error");
+            newEx.fillInStackTrace();
+            throw newEx;
+        }
 
-		if (guides == null){
-			throw new NonExistingServiceException();
-		}
+        if (guides == null) {
+            throw new NonExistingServiceException();
+        }
 
-		List result = new ArrayList();
-		Iterator guidesIterator = guides.iterator();
-		while(guidesIterator.hasNext()){
-			IGuide guide = (IGuide) guidesIterator.next();
-			if (guide.getActiveSituation().getSituation().equals(SituationOfGuide.PAYED_TYPE)){
-				Iterator guideEntryIterator = guide.getGuideEntries().iterator();
-				while(guideEntryIterator.hasNext()) {
-					IGuideEntry guideEntry = (IGuideEntry) guideEntryIterator.next();
-					if (guideEntry.getDocumentType().equals(DocumentType.GRATUITY_TYPE)){
-						InfoGuideEntry infoGuideEntry = Cloner.copyIGuideEntry2InfoGuideEntry(guideEntry);
-						infoGuideEntry.setInfoGuide(Cloner.copyIGuide2InfoGuide(guide));  
-						result.add(infoGuideEntry);
-						
-					}
-				}
-			}
-		}
-		
-		if (result.size() == 0){
-			throw new NonExistingServiceException();
-		}
+        List result = new ArrayList();
+        Iterator guidesIterator = guides.iterator();
+        while (guidesIterator.hasNext()) {
+            IGuide guide = (IGuide) guidesIterator.next();
+            if (guide.getActiveSituation().getSituation().equals(
+                    SituationOfGuide.PAYED_TYPE)) {
+                Iterator guideEntryIterator = guide.getGuideEntries()
+                        .iterator();
+                while (guideEntryIterator.hasNext()) {
+                    IGuideEntry guideEntry = (IGuideEntry) guideEntryIterator
+                            .next();
+                    if (guideEntry.getDocumentType().equals(
+                            DocumentType.GRATUITY_TYPE)) {
+                        InfoGuideEntry infoGuideEntry = Cloner
+                                .copyIGuideEntry2InfoGuideEntry(guideEntry);
+                        infoGuideEntry.setInfoGuide(Cloner
+                                .copyIGuide2InfoGuide(guide));
+                        result.add(infoGuideEntry);
 
-		return result;
-	}
+                    }
+                }
+            }
+        }
+
+        if (result.size() == 0) {
+            throw new NonExistingServiceException();
+        }
+
+        return result;
+    }
 }

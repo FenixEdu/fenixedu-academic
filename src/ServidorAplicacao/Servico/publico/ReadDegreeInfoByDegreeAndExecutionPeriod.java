@@ -23,96 +23,84 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Tânia Pousão Create on 11/Nov/2003
  */
-public class ReadDegreeInfoByDegreeAndExecutionPeriod implements IServico
-{
-    private static ReadDegreeInfoByDegreeAndExecutionPeriod service =
-        new ReadDegreeInfoByDegreeAndExecutionPeriod();
+public class ReadDegreeInfoByDegreeAndExecutionPeriod implements IServico {
+    private static ReadDegreeInfoByDegreeAndExecutionPeriod service = new ReadDegreeInfoByDegreeAndExecutionPeriod();
 
-    public ReadDegreeInfoByDegreeAndExecutionPeriod()
-    {
+    public ReadDegreeInfoByDegreeAndExecutionPeriod() {
     }
 
-    public String getNome()
-    {
+    public String getNome() {
         return "ReadDegreeInfoByDegreeAndExecutionPeriod";
     }
 
-    public static ReadDegreeInfoByDegreeAndExecutionPeriod getService()
-    {
+    public static ReadDegreeInfoByDegreeAndExecutionPeriod getService() {
         return service;
     }
 
-    public InfoDegreeInfo run(Integer executionPeriodId, Integer degreeId) throws FenixServiceException
-    {
+    public InfoDegreeInfo run(Integer executionPeriodId, Integer degreeId)
+            throws FenixServiceException {
         InfoDegreeInfo infoDegreeInfo = null;
 
-        try
-        {
-            if (degreeId == null)
-            {
+        try {
+            if (degreeId == null) {
                 throw new FenixServiceException("error.impossibleDegreeSite");
             }
 
             SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+            IPersistentExecutionPeriod persistentExecutionPeriod = sp
+                    .getIPersistentExecutionPeriod();
 
             //Execution Period
-            IExecutionPeriod executionPeriod = new ExecutionPeriod();
+            IExecutionPeriod executionPeriod;
 
-            if (executionPeriodId == null)
-            {
-               executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
-            } else
-            {
-                executionPeriod.setIdInternal(executionPeriodId);
+            if (executionPeriodId == null) {
+                executionPeriod = persistentExecutionPeriod
+                        .readActualExecutionPeriod();
+            } else {
 
-                executionPeriod =
-                    (IExecutionPeriod) persistentExecutionPeriod.readByOId(executionPeriod, false);
+                executionPeriod = (IExecutionPeriod) persistentExecutionPeriod
+                        .readByOID(ExecutionPeriod.class, executionPeriodId);
             }
-            
-			if (executionPeriod == null)
-			{
-				throw new FenixServiceException("error.impossibleDegreeSite");
-			}
-            
+
+            if (executionPeriod == null) {
+                throw new FenixServiceException("error.impossibleDegreeSite");
+            }
+
             IExecutionYear executionYear = executionPeriod.getExecutionYear();
-            if (executionYear == null)
-            {
+            if (executionYear == null) {
                 throw new FenixServiceException("error.impossibleDegreeSite");
             }
 
             //Degree
             ICursoPersistente persistentDegree = sp.getICursoPersistente();
-            ICurso degree = new Curso();
-            degree.setIdInternal(degreeId);
-
-            degree = (ICurso) persistentDegree.readByOId(degree, false);
-            if (degree == null)
-            {
+            ICurso degree = (ICurso) persistentDegree.readByOID(Curso.class,
+                    degreeId);
+            if (degree == null) {
                 throw new FenixServiceException("error.impossibleDegreeSite");
             }
 
             //Degree Info
-            IPersistentDegreeInfo persistentDegreeInfo = sp.getIPersistentDegreeInfo();
-            List degreeInfoList =
-                persistentDegreeInfo.readDegreeInfoByDegreeAndExecutionYear(degree, executionYear);
-            if (degreeInfoList == null || degreeInfoList.size() <= 0)
-            {
+            IPersistentDegreeInfo persistentDegreeInfo = sp
+                    .getIPersistentDegreeInfo();
+            List degreeInfoList = persistentDegreeInfo
+                    .readDegreeInfoByDegreeAndExecutionYear(degree,
+                            executionYear);
+            if (degreeInfoList == null || degreeInfoList.size() <= 0) {
                 throw new FenixServiceException("error.impossibleDegreeSite");
             }
 
             //Find the degree info most recent
-            Collections.sort(degreeInfoList, new BeanComparator("lastModificationDate"));
-            IDegreeInfo degreeInfo = (IDegreeInfo) degreeInfoList.get(degreeInfoList.size() - 1);
+            Collections.sort(degreeInfoList, new BeanComparator(
+                    "lastModificationDate"));
+            IDegreeInfo degreeInfo = (IDegreeInfo) degreeInfoList
+                    .get(degreeInfoList.size() - 1);
             infoDegreeInfo = Cloner.copyIDegreeInfo2InfoDegree(degreeInfo);
             infoDegreeInfo.recaptureNULLs(degreeInfo);
 
-            if (infoDegreeInfo == null)
-            {
+            if (infoDegreeInfo == null) {
                 throw new FenixServiceException("error.impossibleDegreeSite");
             }
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             throw new FenixServiceException(e);
         }

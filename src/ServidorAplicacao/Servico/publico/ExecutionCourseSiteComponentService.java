@@ -24,57 +24,65 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author João Mota
- *
  * 
+ *  
  */
 public class ExecutionCourseSiteComponentService implements IService {
 
-	
+    public ExecutionCourseSiteComponentService() {
 
-	public ExecutionCourseSiteComponentService() {
+    }
 
-	}
+    public Object run(ISiteComponent commonComponent,
+            ISiteComponent bodyComponent, Integer infoSiteCode,
+            Integer infoExecutionCourseCode, Integer sectionIndex,
+            Integer curricularCourseId) throws FenixServiceException,
+            NonExistingAssociatedCurricularCoursesServiceException {
+        ExecutionCourseSiteView siteView = null;
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentExecutionCourse persistentExecutionCourse = sp
+                    .getIPersistentExecutionCourse();
+            IPersistentSite persistentSite = sp.getIPersistentSite();
 
-	
+            ISite site = null;
 
-	public Object run(ISiteComponent commonComponent, ISiteComponent bodyComponent, Integer infoSiteCode, Integer infoExecutionCourseCode, Integer sectionIndex, Integer curricularCourseId)
-		throws FenixServiceException, NonExistingAssociatedCurricularCoursesServiceException {
-		ExecutionCourseSiteView siteView = null;
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-			IPersistentSite persistentSite = sp.getIPersistentSite();
-			
-			ISite site = null;
-		
-			if (infoSiteCode != null) {
+            if (infoSiteCode != null) {
 
-				site = (ISite) persistentSite.readByOId(new Site(infoSiteCode), false);
-				if (site == null) {
-					throw new NonExistingServiceException();
-				}
-			} else {
-				IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(new ExecutionCourse(infoExecutionCourseCode), false);
-				if (executionCourse == null) {
-					throw new FenixServiceException();
-				}
-				site = persistentSite.readByExecutionCourse(executionCourse);
-			}
-			
-			if (site != null) {
-				ExecutionCourseSiteComponentBuilder componentBuilder = ExecutionCourseSiteComponentBuilder.getInstance();
-				commonComponent = componentBuilder.getComponent(commonComponent, site, null, null, null);
-				bodyComponent = componentBuilder.getComponent(bodyComponent, site, commonComponent, sectionIndex, curricularCourseId);
-				siteView = new ExecutionCourseSiteView(commonComponent, bodyComponent);
-			}
-		} catch (ExcepcaoPersistencia e) {
-		   
-			throw new FenixServiceException(e);
-		} catch (Exception e) {
-		    
-		    throw new FenixServiceException(e);
-		}
+                site = (ISite) persistentSite.readByOID(Site.class,
+                        infoSiteCode);
+                if (site == null) {
+                    throw new NonExistingServiceException();
+                }
+            } else {
+                IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
+                        .readByOID(ExecutionCourse.class,
+                                infoExecutionCourseCode);
+                if (executionCourse == null) {
+                    throw new FenixServiceException();
+                }
+                site = persistentSite.readByExecutionCourse(executionCourse);
+            }
 
-		return siteView;
-	}
+            if (site != null) {
+                ExecutionCourseSiteComponentBuilder componentBuilder = ExecutionCourseSiteComponentBuilder
+                        .getInstance();
+                commonComponent = componentBuilder.getComponent(
+                        commonComponent, site, null, null, null);
+                bodyComponent = componentBuilder
+                        .getComponent(bodyComponent, site, commonComponent,
+                                sectionIndex, curricularCourseId);
+                siteView = new ExecutionCourseSiteView(commonComponent,
+                        bodyComponent);
+            }
+        } catch (ExcepcaoPersistencia e) {
+
+            throw new FenixServiceException(e);
+        } catch (Exception e) {
+
+            throw new FenixServiceException(e);
+        }
+
+        return siteView;
+    }
 }
