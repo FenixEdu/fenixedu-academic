@@ -47,10 +47,10 @@
 	        	<bean:message key="property.shift.type"/>
 	        </td>
 			<td class="listClasses-header">
-				<bean:message key="property.lessons"/>
+				<bean:message key="property.shift.capacity"/>
 			</td>
 			<td class="listClasses-header">
-	        	<bean:message key="property.shift.capacity"/>
+	        	<bean:message key="property.lessons"/>
 	        </td>
 			<td class="listClasses-header">
 	        </td>
@@ -98,7 +98,10 @@
               		<bean:write name="infoShift" property="tipo"/>
               	</td>
               	<td class="listClasses">
-					<logic:iterate id="infoLesson" name="infoShift" property="infoLessons">
+					<bean:write name="infoShift" property="lotacao"/>
+              	</td> 
+              	<td class="listClasses">
+              		<logic:iterate id="infoLesson" name="infoShift" property="infoLessons">
 						<bean:write name="infoLesson" property="diaSemana"/> 
 						<dt:format pattern="HH:mm">
 							<bean:write name="infoLesson" property="inicio.timeInMillis"/>
@@ -107,10 +110,7 @@
 							<bean:write name="infoLesson" property="fim.timeInMillis"/>
 						</dt:format>
 						<bean:write name="infoLesson" property="infoSala.nome"/>;
-			        </logic:iterate>      		
-              	</td> 
-              	<td class="listClasses">
-              		<bean:write name="infoShift" property="lotacao"/>
+			        </logic:iterate>
               	</td>
 				<td class="listClasses">
                		<html:link page="<%= "/manageShifts.do?method=deleteShift&amp;page=0&amp;"

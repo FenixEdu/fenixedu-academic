@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-Turmas a que turno pertence:
+Turmas associadas ao turno:
 <br />
 <logic:present name="shift" property="infoClasses">
   <html:form action="/manageShiftMultipleItems">
@@ -31,7 +31,7 @@ Turmas a que turno pertence:
 				<bean:message key="label.name"/>
 			</td>
 			<td class="listClasses-header">
-				<bean:message key="link.remove"/>
+				<bean:message key="link.schedules.remove"/>
 			</td>				
 		</tr>		
 	
@@ -95,7 +95,7 @@ Turmas a que turno pertence:
 							  	+ "="
 								+ pageContext.findAttribute("executionDegreeOID") %>"
 									onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
-							<bean:message key="link.remove"/>
+							<bean:message key="link.schedules.remove"/>
 						</html:link>
 					</div>
 				</td>
@@ -103,7 +103,7 @@ Turmas a que turno pertence:
 	</logic:iterate>
 	</table>
 	<html:submit styleClass="inputbutton" onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
-		<bean:message key="link.remove"/>
+		<bean:message key="link.schedules.remove"/>
 	</html:submit>
   </html:form>
 </logic:present>

@@ -6,87 +6,106 @@
 
 package Util;
 
+
 /**
  *
  * @author  tfc130
  */
 public class TipoAula implements Comparable {
-    public static final int TEORICA = 1;
-    public static final int PRATICA = 2;
-    public static final int TEORICO_PRATICA = 3;
-    public static final int LABORATORIAL = 4;
-    public static final int DUVIDAS = 5;
-    public static final int RESERVA = 6;
+	public static final int TEORICA = 1;
+	public static final int PRATICA = 2;
+	public static final int TEORICO_PRATICA = 3;
+	public static final int LABORATORIAL = 4;
+	public static final int DUVIDAS = 5;
+	public static final int RESERVA = 6;
 
-    private Integer tipo;    
-    
-    public TipoAula() {
-    }
-    
-    public TipoAula(int tipo_aula) {
-        this.tipo = new Integer(tipo_aula);
-    }
+	private Integer tipo;
 
-    public TipoAula(Integer tipo_aula) {
-        this.tipo = tipo_aula;
-    }
-    
-    public Integer getTipo() {
-        return this.tipo;
-    }    
+	public TipoAula() {
+	}
 
-    public void setTipo(int tipo) {
-        this.tipo = new Integer(tipo);
-    }
-    
-    public void setTipo(Integer tipo) {
-        this.tipo = tipo;
-    }
+	public TipoAula(int tipo_aula) {
+		this.tipo = new Integer(tipo_aula);
+	}
 
-    public boolean equals(Object obj) {
-        boolean resultado = false;
-        if (obj instanceof TipoAula) {
-            TipoAula tipo = (TipoAula)obj;
-            resultado = (this.getTipo().intValue() == tipo.getTipo().intValue() );
-        }
-        return resultado;
-    }
-    
-    public String toString() {
-    	int value = this.tipo.intValue();
-    	switch (value) {
-    		case TEORICA : return "T";
-    		case PRATICA : return "P";
-    		case TEORICO_PRATICA : return "TP";
-    		case LABORATORIAL : return "L";
-    		case DUVIDAS : return "D";
-    		case RESERVA : return "R";
-    	}
-        return "Error: Invalid lesson type";
-    }
-    
-    public String getSiglaTipoAula() {
-    	int value = this.tipo.intValue();
-    	switch (value) {
-    		case TEORICA : return "T";
-    		case PRATICA : return "P";
-    		case TEORICO_PRATICA : return "TP";
-    		case LABORATORIAL : return "L";
-    		case DUVIDAS : return "D";
-    		case RESERVA : return "R";
-    	}
-        return "Error: Invalid lesson type";
-    }
+	public TipoAula(Integer tipo_aula) {
+		this.tipo = tipo_aula;
+	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Comparable#compareTo(java.lang.Object)
-	 */
+	public Integer getTipo() {
+		return this.tipo;
+	}
+
+	public void setTipo(int tipo) {
+		this.tipo = new Integer(tipo);
+	}
+
+	public void setTipo(Integer tipo) {
+		this.tipo = tipo;
+	}
+
+	public boolean equals(Object obj) {
+		boolean resultado = false;
+		if (obj instanceof TipoAula) {
+			TipoAula tipo = (TipoAula) obj;
+			resultado =
+				(this.getTipo().intValue() == tipo.getTipo().intValue());
+		}
+		return resultado;
+	}
+
+	public String toString() {
+		int value = this.tipo.intValue();
+		switch (value) {
+			case TEORICA :
+				return "T";
+			case PRATICA :
+				return "P";
+			case TEORICO_PRATICA :
+				return "TP";
+			case LABORATORIAL :
+				return "L";
+			case DUVIDAS :
+				return "D";
+			case RESERVA :
+				return "R";
+		}
+		return "Error: Invalid lesson type";
+	}
+
+	public String getSiglaTipoAula() {
+		int value = this.tipo.intValue();
+		switch (value) {
+			case TEORICA :
+				return "T";
+			case PRATICA :
+				return "P";
+			case TEORICO_PRATICA :
+				return "TP";
+			case LABORATORIAL :
+				return "L";
+			case DUVIDAS :
+				return "D";
+			case RESERVA :
+				return "R";
+		}
+		return "Error: Invalid lesson type";
+	}
+
 	public int compareTo(Object arg0) {
-		if (getTipo().intValue() > ((TipoAula) arg0).getTipo().intValue()) {
-			return 1;
-		} else if (getTipo().intValue() < ((TipoAula) arg0).getTipo().intValue()) {
+		// T(1) < TP(3) < P(2) < L(4) < D(5) < R(6)
+		if ((getTipo().intValue() < ((TipoAula) arg0).getTipo().intValue())
+			|| (getTipo().intValue() == 3
+				&& ((TipoAula) arg0).getTipo().intValue() == 2)) {
+			//System.out.println("%%%%%%%% " + getTipo().intValue() + " < " + ((TipoAula) arg0).getTipo().intValue());
 			return -1;
+		} else if (
+			getTipo().intValue() > ((TipoAula) arg0).getTipo().intValue()) {
+			//System.out.println("%%%%%%%% " + getTipo().intValue() + " > " + ((TipoAula) arg0).getTipo().intValue());
+			return 1;
 		} else {
-		return 0;
-	}}
+			return 0;
+		}
+	}
+
 }
