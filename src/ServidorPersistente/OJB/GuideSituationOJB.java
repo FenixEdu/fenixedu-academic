@@ -40,8 +40,8 @@ public class GuideSituationOJB extends ObjectFenixOJB implements IPersistentGuid
 		}
 		// else if (guide situation is mapped to the database then write any existing changes)
 		else if ((guideSituationToWrite != null) &&
-				 ((GuideSituation) guideSituationBD).getInternalCode().equals(
-		          ((GuideSituation) guideSituationToWrite).getInternalCode())) {
+				 ((GuideSituation) guideSituationBD).getIdInternal().equals(
+		          ((GuideSituation) guideSituationToWrite).getIdInternal())) {
 		          	super.lockWrite(guideSituationBD);
  
 	
