@@ -6,8 +6,6 @@ package ServidorPersistente;
 
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrolmentPeriod;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentObject;
 
 /**
  * @author jpvl

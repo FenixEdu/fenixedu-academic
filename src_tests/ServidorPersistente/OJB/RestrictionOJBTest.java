@@ -13,12 +13,12 @@ import junit.framework.TestSuite;
 
 import org.apache.commons.collections.CollectionUtils;
 
-import Dominio.RestrictionCurricularCourseDone;
 import Dominio.ICurricularCourse;
 import Dominio.IPrecedence;
 import Dominio.IRestriction;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
+import Dominio.RestrictionCurricularCourseDone;
 import Dominio.RestrictionNumberOfCurricularCourseDone;
 import ServidorAplicacao.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;

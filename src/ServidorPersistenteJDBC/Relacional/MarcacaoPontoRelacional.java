@@ -6,10 +6,10 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
-import ServidorPersistenteJDBC.IMarcacaoPontoPersistente;
-import ServidorPersistenteJDBC.SuportePersistenteOracle;
 import Dominio.MarcacaoPonto;
 import Dominio.RegularizacaoMarcacaoPonto;
+import ServidorPersistenteJDBC.IMarcacaoPontoPersistente;
+import ServidorPersistenteJDBC.SuportePersistenteOracle;
 
 /**
  *

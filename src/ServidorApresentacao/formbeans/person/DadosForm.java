@@ -10,9 +10,8 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 
-import Util.TipoDocumentoIdentificacao;
-
 import Dominio.Pessoa;
+import Util.TipoDocumentoIdentificacao;
 
 public final class DadosForm extends ActionForm {
     

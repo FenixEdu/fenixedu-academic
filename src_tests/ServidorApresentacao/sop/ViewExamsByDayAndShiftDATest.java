@@ -13,10 +13,11 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.validator.DynaValidatorForm;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
+import org.apache.struts.validator.DynaValidatorForm;
+
 import DataBeans.InfoRole;
 import DataBeans.InfoViewExam;
 import DataBeans.InfoViewExamByDayAndShift;

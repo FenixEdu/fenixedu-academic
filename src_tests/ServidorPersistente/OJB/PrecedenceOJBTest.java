@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Dominio.CurricularCourse;
-import Dominio.RestrictionCurricularCourseDone;
 import Dominio.ICurricularCourse;
-import Dominio.IRestrictionCurricularCourseDone;
 import Dominio.IPrecedence;
+import Dominio.IRestrictionCurricularCourseDone;
 import Dominio.IStudentCurricularPlan;
 import Dominio.Precedence;
+import Dominio.RestrictionCurricularCourseDone;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentPrecedence;

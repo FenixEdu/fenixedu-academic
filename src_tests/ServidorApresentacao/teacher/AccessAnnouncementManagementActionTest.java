@@ -66,7 +66,6 @@ public class AccessAnnouncementManagementActionTest extends TestCasePresentation
 	//	infoSite = new InfoSite(null, new ArrayList(), infoExecutionCourse, new ArrayList());
 		infoSite = new InfoSite(infoExecutionCourse);
 		infoSection.setInfoSite(infoSite);
-		infoSite.setInitialInfoSection(infoSection);
 
 		items.put(SessionConstants.INFO_SITE, infoSite);
 

@@ -16,8 +16,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.MessageResources;
 
-import constants.assiduousness.Constants;
-
 import Dominio.Pessoa;
 import ServidorAplicacao.Executor;
 import ServidorAplicacao.PersistenceException;
@@ -28,6 +26,7 @@ import ServidorAplicacao.Servico.person.ServicoAutorizacaoLerPessoa;
 import ServidorAplicacao.Servico.person.ServicoSeguroAlterarPessoa;
 import ServidorAplicacao.Servico.person.ServicoSeguroLerPessoa;
 import ServidorApresentacao.formbeans.person.AlterarPasswordForm;
+import constants.assiduousness.Constants;
 
 /**
  *

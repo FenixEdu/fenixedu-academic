@@ -86,7 +86,6 @@ public class AlternativeSiteManagementActionTest extends TestCasePresentationTea
 				infoExecutionPeriod);
 		infoSite = new InfoSite(infoExecutionCourse);
 		infoSection.setInfoSite(infoSite);
-		infoSite.setInitialInfoSection(infoSection);
 
 		getSession().setAttribute(SessionConstants.INFO_SITE, infoSite);
 		
@@ -135,7 +134,6 @@ public class AlternativeSiteManagementActionTest extends TestCasePresentationTea
 				infoExecutionPeriod);
 		infoSite = new InfoSite(infoExecutionCourse);
 		infoSection.setInfoSite(infoSite);
-		infoSite.setInitialInfoSection(infoSection);
 
 		getSession().setAttribute(SessionConstants.INFO_SITE, infoSite);
 		

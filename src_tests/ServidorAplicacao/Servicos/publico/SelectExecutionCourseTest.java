@@ -2,11 +2,12 @@ package ServidorAplicacao.Servicos.publico;
 
 import java.util.List;
 
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.util.Cloner;

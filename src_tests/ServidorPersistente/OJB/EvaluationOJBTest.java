@@ -15,8 +15,6 @@ import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentEvaluation;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistente.OJB.TestCaseOJB;
 
 /*
  * Created on 23/Abr/2003

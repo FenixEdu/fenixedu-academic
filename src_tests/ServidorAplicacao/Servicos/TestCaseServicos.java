@@ -1,9 +1,10 @@
 package ServidorAplicacao.Servicos;
 
+import junit.framework.TestCase;
+
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
 
-import junit.framework.TestCase;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;

@@ -9,9 +9,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.InfoSection;
+import ServidorApresentacao.TagLib.publico.sectionMenu.renderers.ISectionMenuSlotContentRenderer;
 import ServidorApresentacao.TagLib.publico.sectionMenu.renderers.SectionChooserRenderer;
 import ServidorApresentacao.TagLib.publico.sectionMenu.renderers.SectionMenuContentRenderer;
-import ServidorApresentacao.TagLib.publico.sectionMenu.renderers.ISectionMenuSlotContentRenderer;
 import ServidorApresentacao.TagLib.publico.sectionMenu.renderers.SectionMenuTeacherContentRenderer;
 
 /**

@@ -10,8 +10,8 @@ import org.odmg.QueryException;
 
 import Dominio.ICurricularCourse;
 import Dominio.Restriction;
-import ServidorPersistente.*;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentRestriction;
 
 /**
  * @author jpvl

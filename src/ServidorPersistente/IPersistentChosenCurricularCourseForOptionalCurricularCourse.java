@@ -6,7 +6,6 @@
  */
 package ServidorPersistente;
 
-import ServidorPersistente.IPersistentObject;
 
 /**
  * @author dcs-rjao

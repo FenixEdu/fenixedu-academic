@@ -15,12 +15,12 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 
-import Dominio.StatusAssiduidade;
 import Dominio.CentroCusto;
 import Dominio.FuncNaoDocente;
 import Dominio.Funcionario;
 import Dominio.Horario;
 import Dominio.Pessoa;
+import Dominio.StatusAssiduidade;
 import constants.assiduousness.Constants;
 
 /**

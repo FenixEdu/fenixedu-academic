@@ -6,10 +6,9 @@ package ServidorPersistente;
 
 import java.util.List;
 
-import Util.PrecedenceScopeToApply;
-
 import Dominio.ICurricularCourse;
 import Dominio.IDegreeCurricularPlan;
+import Util.PrecedenceScopeToApply;
 
 /**
  * @author jpvl

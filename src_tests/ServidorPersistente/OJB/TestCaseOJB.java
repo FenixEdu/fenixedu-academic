@@ -1,9 +1,10 @@
 package ServidorPersistente.OJB;
 
+import junit.framework.TestCase;
+
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
 
-import junit.framework.TestCase;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import Tools.dbaccess;

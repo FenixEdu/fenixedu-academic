@@ -108,7 +108,6 @@ public class AnnouncementManagementDispatchActionTest extends TestCasePresentati
 				infoExecutionPeriod);
 		InfoSite infoSite = new InfoSite(infoExecutionCourse);
 		infoSection.setInfoSite(infoSite);
-		infoSite.setInitialInfoSection(infoSection);
 		
 		getSession().setAttribute(SessionConstants.INFO_SITE, infoSite);
 		
@@ -149,7 +148,6 @@ public class AnnouncementManagementDispatchActionTest extends TestCasePresentati
 				infoExecutionPeriod);
 		InfoSite infoSite = new InfoSite(infoExecutionCourse);
 		infoSection.setInfoSite(infoSite);
-		infoSite.setInitialInfoSection(infoSection);
 
 		try {
 			Object args[] = new Object[1];
@@ -209,7 +207,6 @@ public class AnnouncementManagementDispatchActionTest extends TestCasePresentati
 				infoExecutionPeriod);
 		InfoSite infoSite = new InfoSite(infoExecutionCourse);
 		infoSection.setInfoSite(infoSite);
-		infoSite.setInitialInfoSection(infoSection);
 
 		InfoAnnouncement infoAnnouncement = null;
 
@@ -263,7 +260,6 @@ public class AnnouncementManagementDispatchActionTest extends TestCasePresentati
 				infoExecutionPeriod);
 		InfoSite infoSite = new InfoSite(infoExecutionCourse);
 		infoSection.setInfoSite(infoSite);
-		infoSite.setInitialInfoSection(infoSection);
 
 		InfoAnnouncement infoAnnouncement = null;
 

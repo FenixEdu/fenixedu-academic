@@ -33,10 +33,7 @@ import ServidorAplicacao.Servico.exceptions.InterceptingServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidTimeIntervalServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.InterceptingActionException;
-import ServidorApresentacao
-	.Action
-	.exceptions
-	.InvalidTimeIntervalActionException;
+import ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;

@@ -8,12 +8,7 @@ package ServidorApresentacao.TagLib.sop.examsMap;
 import java.util.Calendar;
 
 import DataBeans.InfoExecutionCourse;
-import ServidorApresentacao
-	.TagLib
-	.sop
-	.examsMap
-	.renderers
-	.ExamsMapSlotContentRenderer;
+import ServidorApresentacao.TagLib.sop.examsMap.renderers.ExamsMapSlotContentRenderer;
 
 /*
  * @author Luis Cruz & Sara Ribeiro
