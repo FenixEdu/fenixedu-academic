@@ -1,0 +1,101 @@
+#######################
+# Destination Dataset #
+#######################
+destination.dataset = <YOUR_PROJECT_PATH_HERE>/etc/datasets_templates/testSomeDataSet.xml
+
+#######################
+# Database Settings   #
+#######################
+db.driver = com.mysql.jdbc.Driver
+db.url = jdbc:mysql://localhost/ciapl
+db.user = root
+db.pass =
+
+################
+# Table Format #
+################
+# table<number> = YOUR_TABLE_NAME 
+# table<number>.columns = COLUMNS_TO_INCLUDE - comma "," separated, use * for all columns
+# table<number>.whereCondition = WHERE_CLAUSE - where clause for your table, for example: ID_INTERNAL = 1
+# table<number>.position = POSITION_IN_DATASET - not implemented for now, but could be needed in future
+
+
+
+################################
+# Tables to include in dataset #
+################################
+table1 = STUDENT_CURRICULAR_PLAN
+table1.columns = *
+table1.whereCondition = ID_INTERNAL IN (8560)
+
+table2 = STUDENT
+table2.columns = *
+table2.whereCondition = ID_INTERNAL = 8560
+
+table3 = DEGREE_CURRICULAR_PLAN
+table3.columns = *
+table3.whereCondition = ID_INTERNAL = 29
+
+table4 = BRANCH
+table4.columns = *
+table4.whereCondition = ID_INTERNAL = 6
+
+table5 = PERSON
+table5.columns = *
+table5.whereCondition = ID_INTERNAL IN (11343)
+
+table6 = STUDENT_KIND
+table6.columns = *
+table6.whereCondition = ID_INTERNAL = 1
+
+table7 = DEGREE
+table7.columns = *
+table7.whereCondition = ID_INTERNAL = 29
+
+table8 = COUNTRY
+table8.columns = *
+table8.whereCondition = ID_INTERNAL = 1
+
+table9 = MASTER_DEGREE_THESIS
+table9.columns = *
+table9.whereCondition = ID_INTERNAL IN (8)
+
+table10 = MASTER_DEGREE_THESIS_DATA_VERSION
+table10.columns = *
+table10.whereCondition = ID_INTERNAL IN (8)
+
+table11 = MASTER_DEGREE_THESIS_DATA_VERSION_GUIDER
+table11.columns = *
+table11.whereCondition = ID_INTERNAL IN (1)
+
+table12 = MASTER_DEGREE_THESIS_DATA_VERSION_ASSISTENT_GUIDER
+table12.columns = *
+table12.whereCondition = ID_INTERNAL IN (1)
+
+table13 = MASTER_DEGREE_THESIS_DATA_VERSION_EXTERNAL_ASSISTENT_GUIDER
+table13.columns = *
+table13.whereCondition = ID_INTERNAL IN (1)
+
+#table14 = ass_FUNCIONARIO
+#table14.columns = *
+#table14.whereCondition = CodigoInterno IN (1194)
+
+#table15 = EXTERNAL_PERSON
+#table15.columns = *
+#table15.whereCondition = ID_INTERNAL = 1
+
+#table16 = ROLE
+#table16.columns = *
+#table16.whereCondition = ID_INTERNAL <> 0
+
+#table17 = PERSON_ROLE
+#table17.columns = *
+#table17.whereCondition = KEY_PERSON = 2692
+
+#table18 = TEACHER
+#table18.columns = *
+#table18.whereCondition = ID_INTERNAL IN (956,957)
+
+#table19 = MASTER_DEGREE_PROOF_VERSION
+#table19.columns = *
+#table19.whereCondition = ID_INTERNAL IN (10)
