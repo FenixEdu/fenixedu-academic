@@ -29,131 +29,177 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author lmac1
  */
 
-public class SaveTeachersBody implements IServico {
+public class SaveTeachersBody implements IServico
+{
 
-	private static SaveTeachersBody service = new SaveTeachersBody();
+    private static SaveTeachersBody service = new SaveTeachersBody();
 
-	/**
+    /**
 	 * The singleton access method of this class.
 	 */
-	public static SaveTeachersBody getService() {
-		return service;
-	}
+    public static SaveTeachersBody getService()
+    {
+        return service;
+    }
 
-	/**
+    /**
 	 * The constructor of this class.
 	 */
-	private SaveTeachersBody() {
-	}
+    private SaveTeachersBody()
+    {
+    }
 
-	/**
+    /**
 	 * Service name
 	 */
-	public final String getNome() {
-		return "SaveTeachersBody";
-	}
+    public final String getNome()
+    {
+        return "SaveTeachersBody";
+    }
 
-	/**
+    /**
 	 * Executes the service.
 	 */
 
-	public Boolean run(List responsibleTeachersIds, List professorShipTeachersIds, Integer executionCourseId) throws FenixServiceException {
+    public Boolean run(
+        List responsibleTeachersIds,
+        List professorShipTeachersIds,
+        Integer executionCourseId)
+        throws FenixServiceException
+    {
 
-		try {
-				boolean result = true;
-				Integer id;
-			
-				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-				IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-				IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(new ExecutionCourse(executionCourseId), false);
-				if(executionCourse == null)
-					throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
+        try
+        {
+            boolean result = true;
+            Integer id;
 
-				// RESPONSIBLES MODIFICATIONS
-				
-				// get the ids of the teachers that used to be responsible
-				IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
-				List oldResponsibles = persistentResponsibleFor.readByExecutionCourse(executionCourse);
-				Iterator iterator = oldResponsibles.iterator();
-				IResponsibleFor responsibleFor;
-				List oldResponsibleTeachersIds = new ArrayList();
-				while(iterator.hasNext()) {
-					responsibleFor = (IResponsibleFor) iterator.next();
-					id = responsibleFor.getTeacher().getIdInternal();
-					oldResponsibleTeachersIds.add(id);
-				}
-				
-				// remove old responsibles
-				Iterator oldRespIterator = oldResponsibleTeachersIds.iterator();
-				while(oldRespIterator.hasNext()) {
-					id = (Integer) oldRespIterator.next();
-					if(!responsibleTeachersIds.contains(id))
-						persistentResponsibleFor.deleteByOID(ResponsibleFor.class, ((IResponsibleFor) oldResponsibles.get(oldResponsibleTeachersIds.indexOf(id))).getIdInternal());
-				}
-				
-				// add new responsibles
-				Iterator newRespIterator = responsibleTeachersIds.iterator();
-				IResponsibleFor responsibleForToWrite;
-				ITeacher teacher;
-				while(newRespIterator.hasNext()) {
-					id = (Integer) newRespIterator.next();
-					if(!oldResponsibleTeachersIds.contains(id)) {
-						responsibleForToWrite = new ResponsibleFor();
-						responsibleForToWrite.setExecutionCourse(executionCourse);
-						teacher = (ITeacher) sp.getIPersistentTeacher().readByOId(new Teacher(id), false);
-						if(teacher == null)
-							result = false;
-						else {
-							responsibleForToWrite.setTeacher(teacher);
-							persistentResponsibleFor.lockWrite(responsibleForToWrite);
-						}
-					}
-				}
-				
-				// PROFESSORSHIPS MODIFICATIONS
-				
-				// get the ids of the teachers that used to teach the course
-				IPersistentProfessorship persistentProfessorShip = sp.getIPersistentProfessorship();
-				List oldProfessorShips = persistentProfessorShip.readByExecutionCourse(executionCourse);
-				Iterator profsIterator = oldProfessorShips.iterator();
-				IProfessorship professorShip;
-				List oldProfessorShipTeachersIds = new ArrayList();
-				while(profsIterator.hasNext()) {
-					professorShip = (IProfessorship) profsIterator.next();
-					id = professorShip.getTeacher().getIdInternal();
-					oldProfessorShipTeachersIds.add(id);
-				}
-				
-				// remove old professorShips
-				Iterator oldProfIterator = oldProfessorShipTeachersIds.iterator();
-				while(oldProfIterator.hasNext()) {
-					id = (Integer) oldProfIterator.next();
-					if(!professorShipTeachersIds.contains(id) && !responsibleTeachersIds.contains(id))
-						persistentProfessorShip.deleteByOID(Professorship.class, ((IProfessorship) oldProfessorShips.get(oldProfessorShipTeachersIds.indexOf(id))).getIdInternal());
-				}
-				
-				// add new professorShips
-				Iterator newProfIterator = professorShipTeachersIds.iterator();
-				IProfessorship professorShipToWrite;
-				while(newProfIterator.hasNext()) {
-					id = (Integer) newProfIterator.next();
-					if(!oldProfessorShipTeachersIds.contains(id)) {
-						professorShipToWrite = new Professorship();
-						professorShipToWrite.setExecutionCourse(executionCourse);
-						teacher = (ITeacher) sp.getIPersistentTeacher().readByOId(new Teacher(id), false);
-						if(teacher == null)
-							result = false;
-						else {
-							professorShipToWrite.setTeacher(teacher);
-							persistentProfessorShip.lockWrite(professorShipToWrite);
-						}
-					}
-				}
-				
-				return new Boolean(result);
-						
-		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-			throw new FenixServiceException(excepcaoPersistencia);
-		}
-	}
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+            IExecutionCourse executionCourse =
+                (IExecutionCourse) persistentExecutionCourse.readByOId(
+                    new ExecutionCourse(executionCourseId),
+                    false);
+            if (executionCourse == null)
+            {
+
+                throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
+            }
+
+            // RESPONSIBLES MODIFICATIONS
+
+            // get the ids of the teachers that used to be responsible
+            IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
+            List oldResponsibles = persistentResponsibleFor.readByExecutionCourse(executionCourse);
+            List oldResponsibleTeachersIds = new ArrayList();
+            if (oldResponsibles != null)
+            {
+
+                Iterator iterator = oldResponsibles.iterator();
+                IResponsibleFor responsibleFor;
+                while (iterator.hasNext())
+                {
+                    responsibleFor = (IResponsibleFor) iterator.next();
+                    id = responsibleFor.getTeacher().getIdInternal();
+                    oldResponsibleTeachersIds.add(id);
+                }
+
+                // remove old responsibles
+                Iterator oldRespIterator = oldResponsibleTeachersIds.iterator();
+                while (oldRespIterator.hasNext())
+                {
+                    id = (Integer) oldRespIterator.next();
+                    if (!responsibleTeachersIds.contains(id))
+                        persistentResponsibleFor.deleteByOID(
+                            ResponsibleFor.class,
+                            ((IResponsibleFor) oldResponsibles
+                                .get(oldResponsibleTeachersIds.indexOf(id)))
+                                .getIdInternal());
+                }
+            }
+
+            // add new responsibles
+            Iterator newRespIterator = responsibleTeachersIds.iterator();
+            IResponsibleFor responsibleForToWrite;
+            ITeacher teacher;
+            while (newRespIterator.hasNext())
+            {
+                id = (Integer) newRespIterator.next();
+                if (!oldResponsibleTeachersIds.contains(id))
+                {
+                    responsibleForToWrite = new ResponsibleFor();
+                    responsibleForToWrite.setExecutionCourse(executionCourse);
+                    teacher = (ITeacher) sp.getIPersistentTeacher().readByOId(new Teacher(id), false);
+                    if (teacher == null)
+                        result = false;
+                    else
+                    {
+                        persistentResponsibleFor.simpleLockWrite(responsibleForToWrite);
+                        responsibleForToWrite.setTeacher(teacher);
+
+                    }
+                }
+            }
+
+            // PROFESSORSHIPS MODIFICATIONS
+
+            // get the ids of the teachers that used to teach the course
+            IPersistentProfessorship persistentProfessorShip = sp.getIPersistentProfessorship();
+            List oldProfessorShips = persistentProfessorShip.readByExecutionCourse(executionCourse);
+            List oldProfessorShipTeachersIds = new ArrayList();
+            if (oldProfessorShips != null && !oldProfessorShips.isEmpty())
+            {
+
+                Iterator profsIterator = oldProfessorShips.iterator();
+                IProfessorship professorShip;
+
+                while (profsIterator.hasNext())
+                {
+                    professorShip = (IProfessorship) profsIterator.next();
+                    id = professorShip.getTeacher().getIdInternal();
+                    oldProfessorShipTeachersIds.add(id);
+                }
+
+                // remove old professorShips
+                Iterator oldProfIterator = oldProfessorShipTeachersIds.iterator();
+                while (oldProfIterator.hasNext())
+                {
+                    id = (Integer) oldProfIterator.next();
+                    if (!professorShipTeachersIds.contains(id) && !responsibleTeachersIds.contains(id))
+                        persistentProfessorShip.deleteByOID(
+                            Professorship.class,
+                            ((IProfessorship) oldProfessorShips
+                                .get(oldProfessorShipTeachersIds.indexOf(id)))
+                                .getIdInternal());
+                }
+            }
+            // add new professorShips
+            Iterator newProfIterator = professorShipTeachersIds.iterator();
+            IProfessorship professorShipToWrite;
+            while (newProfIterator.hasNext())
+            {
+                id = (Integer) newProfIterator.next();
+                if (!oldProfessorShipTeachersIds.contains(id))
+                {
+                    professorShipToWrite = new Professorship();
+                    professorShipToWrite.setExecutionCourse(executionCourse);
+                    teacher = (ITeacher) sp.getIPersistentTeacher().readByOId(new Teacher(id), false);
+                    if (teacher == null)
+                        result = false;
+                    else
+                    {
+                        persistentProfessorShip.simpleLockWrite(professorShipToWrite);
+                        professorShipToWrite.setTeacher(teacher);
+
+                    }
+                }
+            }
+
+            return new Boolean(result);
+
+        }
+        catch (ExcepcaoPersistencia excepcaoPersistencia)
+        {
+            throw new FenixServiceException(excepcaoPersistencia);
+        }
+    }
 }
