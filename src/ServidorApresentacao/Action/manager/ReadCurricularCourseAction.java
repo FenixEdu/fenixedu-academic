@@ -33,7 +33,7 @@ public class ReadCurricularCourseAction extends FenixAction {
 
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
-		IUserView userView = SessionUtils.getUserView(request);	
+		IUserView userView = SessionUtils.getUserView(request);
 		Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
 
 		Object args[] = { curricularCourseId };

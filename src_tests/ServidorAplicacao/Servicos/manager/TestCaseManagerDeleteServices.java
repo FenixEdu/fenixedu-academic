@@ -30,6 +30,7 @@ public abstract class TestCaseManagerDeleteServices extends TestCaseNeedAuthoriz
 							_userView,
 							getNameOfServiceToBeTested(),
 							args);
+														
 				List comparatorArgument = new ArrayList(expectedActionErrorsArguments().size());
 				Iterator iter = expectedActionErrorsArguments().iterator();
 				while(iter.hasNext()) {

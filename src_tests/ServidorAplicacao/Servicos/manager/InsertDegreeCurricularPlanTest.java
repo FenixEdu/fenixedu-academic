@@ -6,6 +6,7 @@ package ServidorAplicacao.Servicos.manager;
 import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
 import Util.DegreeCurricularPlanState;
+import Util.MarkType;
 
 /**
  * @author lmac1
@@ -29,12 +30,16 @@ public class InsertDegreeCurricularPlanTest extends TestCaseManagerInsertAndEdit
 		DegreeCurricularPlanState state = new DegreeCurricularPlanState();
 		state.setDegreeState(new Integer(1));
 		
+		MarkType markType = new MarkType();
+		markType.setType(new Integer(2));
+		
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
 		infoDegreeCurricularPlan.setInfoDegree(infoDegree);
 		infoDegreeCurricularPlan.setName("plano3");
 		infoDegreeCurricularPlan.setState(state);
 		infoDegreeCurricularPlan.setDegreeDuration(new Integer(1));
 		infoDegreeCurricularPlan.setMinimalYearForOptionalCourses(new Integer(5));
+		infoDegreeCurricularPlan.setMarkType(markType);
 		
 		Object[] args = { infoDegreeCurricularPlan };
 		return args;
@@ -49,12 +54,16 @@ public class InsertDegreeCurricularPlanTest extends TestCaseManagerInsertAndEdit
 		DegreeCurricularPlanState state = new DegreeCurricularPlanState();
 		state.setDegreeState(new Integer(1));
 		
+		MarkType markType = new MarkType();
+		markType.setType(new Integer(2));
+		
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
 		infoDegreeCurricularPlan.setInfoDegree(infoDegree);
 		infoDegreeCurricularPlan.setName("plano3");
 		infoDegreeCurricularPlan.setState(state);
 		infoDegreeCurricularPlan.setDegreeDuration(new Integer(1));
 		infoDegreeCurricularPlan.setMinimalYearForOptionalCourses(new Integer(5));
+		infoDegreeCurricularPlan.setMarkType(markType);
 		
 		Object[] args = { infoDegreeCurricularPlan };
 		return args;	}

@@ -407,7 +407,8 @@
              	   key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
        <forward name="insertCurricularCourseScope" path="df.page.insert-curricular-course-scope"/>
-       <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>      	      
+       <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>    
+       <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>  	      
 	</action>
 	
 	<!-- Action for inserting a curricular course scope from another -->
@@ -481,8 +482,12 @@
     	
     <!-- Action for reading execution periods to associate execution courses to a curricular course -->
           <action path="/readExecutionPeriodToAssociateExecutionCoursesAction"
+          input="/readDegreeCurricularPlan.do"
               type="ServidorApresentacao.Action.manager.ReadExecutionPeriodToAssociateExecutionCoursesAction"
               scope="request">
+               <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+         	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
           <forward name="viewExecutionPeriods" path="df.page.read-execution-periods"/>
       </action>
      
@@ -512,6 +517,7 @@
 	<action
 	    path="/dissociateExecutionCourse"
 	    name="curricularCourseForm"
+	    input="/readCurricularCourse.do"
 		scope="request"
 		type="ServidorApresentacao.Action.manager.DissociateExecutionCourseAction"
         validate="true"> 

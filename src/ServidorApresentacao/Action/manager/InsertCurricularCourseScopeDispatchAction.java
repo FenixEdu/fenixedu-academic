@@ -54,7 +54,6 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
 		
 			Object[] args = { degreeCurricularPlanId };
 			
-			
 			List result = null;
 			try {
 					result = (List) ServiceUtils.executeService(userView, "ReadBranchesByDegreeCurricularPlan", args);
@@ -94,8 +93,9 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
 			HttpServletRequest request,
 			HttpServletResponse response)
 			throws FenixActionException {
-
+				
 				IUserView userView = SessionUtils.getUserView(request);
+    	
 			DynaActionForm dynaForm = (DynaValidatorForm) form;
 			
 			InfoCurricularCourseScope infoCurricularCourseScope = new InfoCurricularCourseScope();

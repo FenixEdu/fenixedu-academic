@@ -38,11 +38,8 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 
 	public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
-		
 		IUserView userView = SessionUtils.getUserView(request);
 		DynaActionForm dynaForm = (DynaActionForm) form;
-
-		
 
 		Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
 		Integer curricularCourseScopeId = new Integer(request.getParameter("curricularCourseScopeId"));
@@ -115,8 +112,8 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 
 	public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
-		
 		IUserView userView = SessionUtils.getUserView(request);
+
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
 
 		Integer oldCurricularCourseScopeId = new Integer(request.getParameter("curricularCourseScopeId"));

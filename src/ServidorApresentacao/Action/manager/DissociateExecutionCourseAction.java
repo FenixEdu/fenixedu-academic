@@ -27,8 +27,6 @@ public class DissociateExecutionCourseAction extends FenixAction {
 		
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
-		
-
 		IUserView userView = SessionUtils.getUserView(request);
 		Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
 		Integer curricularCourseId = new Integer(request.getParameter("curricularCourseId"));
@@ -40,7 +38,7 @@ public class DissociateExecutionCourseAction extends FenixAction {
 			ServiceUtils.executeService(userView, "DissociateExecutionCourse", args);
 			
 		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException(e.getMessage(), mapping.findForward("readCurricularCourse"));
+			throw new NonExistingActionException(e.getMessage(),"");
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}

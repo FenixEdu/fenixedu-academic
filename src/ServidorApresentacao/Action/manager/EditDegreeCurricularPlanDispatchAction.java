@@ -41,10 +41,8 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 	public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
 		IUserView userView = SessionUtils.getUserView(request);
-		
 		DynaActionForm dynaForm = (DynaActionForm) form;
 
-		
 		Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
 
 		InfoDegreeCurricularPlan oldInfoDegreeCP = null;
@@ -111,8 +109,8 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 
 	public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
+		
 		IUserView userView = SessionUtils.getUserView(request);
-
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
 
 		Integer oldDegreeCPId = new Integer(request.getParameter("degreeCurricularPlanId"));
@@ -181,6 +179,7 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 
 		Object args[] = { newInfoDegreeCP };
 		
+
 		try {
 			ServiceUtils.executeService(userView, "EditDegreeCurricularPlan", args);
 

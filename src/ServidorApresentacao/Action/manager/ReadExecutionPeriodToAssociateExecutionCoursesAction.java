@@ -35,7 +35,6 @@ public class ReadExecutionPeriodToAssociateExecutionCoursesAction extends FenixA
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
 		IUserView userView = SessionUtils.getUserView(request);
-		
 		Integer curricularCourseId =  new Integer(request.getParameter("curricularCourseId"));
 		
 		Object args1[] = { curricularCourseId };
@@ -46,7 +45,7 @@ public class ReadExecutionPeriodToAssociateExecutionCoursesAction extends FenixA
 				executionCoursesList = (List) ServiceUtils.executeService(userView, "ReadExecutionCoursesByCurricularCourse", args1);
 		
 		} catch (NonExistingServiceException e) {
-					throw new NonExistingActionException("message.nonExistingCurricularCourse", "", e);
+					throw new NonExistingActionException(e.getMessage(), "");
 				} catch (FenixServiceException fenixServiceException) {
 					throw new FenixActionException(fenixServiceException.getMessage());
 				}

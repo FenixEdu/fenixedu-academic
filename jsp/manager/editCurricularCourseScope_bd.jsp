@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>			
 
 				
-<h2><bean:message key="label.manager.edit.curricularCourse" /></h2>
+<h2><bean:message key="label.manager.edit.curricular.course.scope" /></h2>
 <br>
 
 <span class="error"><html:errors/></span>

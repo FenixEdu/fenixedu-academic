@@ -13,6 +13,7 @@ import Dominio.ICurricularCourse;
 import Dominio.IDisciplinaExecucao;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -54,8 +55,13 @@ public class ReadExecutionCoursesByCurricularCourse implements IServico {
 		ICurricularCourse curricularCourseToRead= new CurricularCourse();
 					curricularCourseToRead.setIdInternal(curricularCourseId);
 			ICurricularCourse curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse().readByOId(curricularCourseToRead, false);	
-		    allExecutionCourses = curricularCourse.getAssociatedExecutionCourses();
-//		 
+		
+		if(curricularCourse == null)
+		throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
+		
+		    allExecutionCourses = curricularCourse.getAssociatedExecutionCourses(); 
+		
+
 	} catch (ExcepcaoPersistencia excepcaoPersistencia){
 		throw new FenixServiceException(excepcaoPersistencia);
 	}

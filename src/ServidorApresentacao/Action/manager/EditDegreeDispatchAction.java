@@ -36,7 +36,6 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 		
 		DynaActionForm readDegreeForm = (DynaActionForm) form;
 
-		
 
 		Integer degreeId = new Integer(request.getParameter("degreeId"));
 
@@ -44,7 +43,6 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 
 		Object args[] = { degreeId };
 		
-
 		try {
 				oldInfoDegree = (InfoDegree) ServiceUtils.executeService(userView, "ReadDegree", args);
 		

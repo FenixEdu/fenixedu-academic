@@ -3,8 +3,6 @@
  */
 package ServidorAplicacao.Servicos.manager;
 
-import java.util.HashMap;
-
 import DataBeans.InfoBranch;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScope;

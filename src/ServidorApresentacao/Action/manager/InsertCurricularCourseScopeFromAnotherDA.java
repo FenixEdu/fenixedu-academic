@@ -40,7 +40,6 @@ public class InsertCurricularCourseScopeFromAnotherDA extends FenixDispatchActio
 	public ActionForward prepareInsert(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 
 		IUserView userView = SessionUtils.getUserView(request);
-		
 		DynaActionForm dynaForm = (DynaActionForm) form;
 
 		Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
@@ -117,7 +116,6 @@ public class InsertCurricularCourseScopeFromAnotherDA extends FenixDispatchActio
 		IUserView userView = SessionUtils.getUserView(request);
 
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
-
 
 		InfoCurricularCourseScope newInfoCurricularCourseScope = new InfoCurricularCourseScope();
 

@@ -46,7 +46,7 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
 			HttpServletResponse response)
 			throws FenixActionException {
 
-				IUserView userView = SessionUtils.getUserView(request);						
+				IUserView userView = SessionUtils.getUserView(request);
 				
 				String label, value;
 				List result = null;
@@ -125,7 +125,7 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
 		
 		Object args[] = { infoExecutionDegree };
 		
-				
+		
 		try {
 			ServiceUtils.executeService(userView, "InsertExecutionDegreeAtDegreeCurricularPlan", args);
 				 

@@ -22,21 +22,21 @@ public class DeleteCurricularCoursesOfDegreeCurricularPlanServiceTest extends Te
 		
 	protected List getArgumentsOfServiceToBeTestedSuccessfuly() {
 		List entry = new ArrayList(2);
-		entry.add(new Integer(28));
+		entry.add(new Integer(1));
 		entry.add(new Integer(100));
 		return entry;
 	}
 	
 	protected List expectedActionErrorsArguments() {
 		List result = new ArrayList();
-		result.add("Analise Matematica I");
-		result.add("AMI");
+		result.add("Aprendizagem");
+		result.add("APR");
 		return result;
 	}
 	
 	protected List getArgumentsOfServiceToBeTestedUnSuccessfuly() {
 		List list = new ArrayList(1);
-		list.add(new Integer(1));
+		list.add(new Integer(23));
 		return list;
 	}
 }

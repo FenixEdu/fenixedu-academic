@@ -31,7 +31,8 @@ public class EditExecutionDegreeTest extends TestCaseManagerInsertAndEditService
 		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
 		infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
 		infoExecutionDegree.setInfoCoordinator(infoTeacher);
-		infoExecutionDegree.setIdInternal(new Integer(15));
+		infoExecutionDegree.setTemporaryExamMap(new Boolean(true));
+		infoExecutionDegree.setIdInternal(new Integer(12));
 		
 		Object[] args = { infoExecutionDegree };
 		return args;
@@ -48,7 +49,8 @@ public class EditExecutionDegreeTest extends TestCaseManagerInsertAndEditService
 		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
 		infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
 		infoExecutionDegree.setInfoCoordinator(infoTeacher);
-		infoExecutionDegree.setIdInternal(new Integer(15));
+		infoExecutionDegree.setTemporaryExamMap(new Boolean(true));
+		infoExecutionDegree.setIdInternal(new Integer(14));
 		
 		Object[] args = { infoExecutionDegree };
 		return args;

@@ -39,9 +39,8 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 
 	public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
-
 		IUserView userView = SessionUtils.getUserView(request);
-		
+				
 		DynaActionForm dynaForm = (DynaActionForm) form;
 
 		Integer executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
@@ -110,7 +109,6 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 	}
 
 	public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
-
 		IUserView userView = SessionUtils.getUserView(request);
 
 		Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
@@ -140,7 +138,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 
 		Object args[] = { infoExecutionDegree };
 
-		
+
 		try {
 			ServiceUtils.executeService(userView, "EditExecutionDegree", args);
 				

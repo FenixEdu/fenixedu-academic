@@ -47,6 +47,7 @@ public class InsertDegreeDispatchAction extends FenixDispatchAction {
 		throws FenixActionException {
 	
 			IUserView userView = SessionUtils.getUserView(request);
+    	
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
 		String code = (String) dynaForm.get("code");
 		String name = (String) dynaForm.get("name");

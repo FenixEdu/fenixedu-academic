@@ -38,7 +38,6 @@ public class ReadDegreeCurricularPlanAction extends FenixAction {
 
 		Object args[] = { degreeCurricularPlanId };
 
-		
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
 
 		try {

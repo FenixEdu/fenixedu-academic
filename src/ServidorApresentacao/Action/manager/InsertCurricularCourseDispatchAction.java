@@ -62,8 +62,6 @@ public class InsertCurricularCourseDispatchAction extends FenixDispatchAction {
 
 		Object args[] = { infoCurricularCourse };
 
-		
-
 		try {
 			ServiceUtils.executeService(userView, "InsertCurricularCourseAtDegreeCurricularPlan", args);
 

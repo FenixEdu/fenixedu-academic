@@ -37,15 +37,14 @@ public class DeleteExecutionDegreesAction extends FenixAction {
 								 HttpServletResponse response)
 		throws FenixActionException {
 
-		
 			IUserView userView = SessionUtils.getUserView(request);
 		DynaActionForm deleteForm = (DynaActionForm) form;
 
 		
 		List executionDegreesIds = Arrays.asList((Integer[]) deleteForm.get("internalIds"));
-		Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
-		Object args[] = { executionDegreesIds };
 	
+		Object args[] = { executionDegreesIds };
+		
 		List errorsList = new ArrayList();
 
 		try {

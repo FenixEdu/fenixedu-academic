@@ -108,7 +108,8 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
 		infoDegreeCurricularPlan.setInfoDegree(infoDegree);
 
 		Object args[] = { infoDegreeCurricularPlan };
-	
+		
+
 		try {
 			ServiceUtils.executeService(userView, "InsertDegreeCurricularPlan", args);
 

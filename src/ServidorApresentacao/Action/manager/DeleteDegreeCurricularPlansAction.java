@@ -37,9 +37,7 @@ public class DeleteDegreeCurricularPlansAction extends FenixAction {
 								 HttpServletResponse response)
 		throws FenixActionException {
 
-
 			IUserView userView = SessionUtils.getUserView(request);
-		
 		DynaActionForm deleteForm = (DynaActionForm) form;
 
 		

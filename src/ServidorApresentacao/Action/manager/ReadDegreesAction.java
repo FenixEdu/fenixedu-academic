@@ -30,7 +30,6 @@ public class ReadDegreesAction extends FenixAction {
 			HttpServletRequest request,
 			HttpServletResponse response)
 			throws FenixActionException {
-		
 				IUserView userView = SessionUtils.getUserView(request);
 		
 			try {		

@@ -35,7 +35,6 @@ public class DeleteDegreesAction extends FenixAction {
 		throws FenixActionException {
 
 			IUserView userView = SessionUtils.getUserView(request);
-		
 		DynaActionForm deleteDegreesForm = (DynaActionForm) form;
 
 		
