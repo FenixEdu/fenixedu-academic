@@ -136,7 +136,9 @@
 		<form-bean name="creditsTeacherForm"
 			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
 			dynamic="true">
-			<form-property name="tfcStudentsNumber"  type="java.lang.Integer"/>
+			<form-property name="tfcStudentsNumber"  type="java.lang.String"/>
+			<form-property name="additionalCredits"  type="java.lang.String"/>
+			<form-property name="additionalCreditsJustification"  type="java.lang.String"/>						
 			<form-property name="teacherOID"  type="java.lang.String"/>			
 			<form-property name="method" type="java.lang.String"></form-property>       
 			<form-property name="page" type="java.lang.Integer"></form-property>               
@@ -548,7 +550,7 @@
 			input="/creditsManagement.do?page=0&amp;method=prepare"
 			type="ServidorApresentacao.Action.teacher.credits.TeacherCreditsDispatchAction"
 			parameter="method"
-			validate="false"
+			validate="true"
 			scope="request">
 		<forward name="showForm" path="df.page.management.credits" />
 	</action>
