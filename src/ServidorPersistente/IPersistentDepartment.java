@@ -9,6 +9,7 @@ package ServidorPersistente;
 import java.util.List;
 
 import Dominio.IDepartment;
+import Dominio.IEmployee;
 import Dominio.ITeacher;
 
 public interface IPersistentDepartment extends IPersistentObject {
@@ -20,4 +21,6 @@ public interface IPersistentDepartment extends IPersistentObject {
     public List readAllDepartments() throws ExcepcaoPersistencia;
 
     public IDepartment readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia;
+    
+    public IDepartment readByEmployee(IEmployee employee) throws ExcepcaoPersistencia;
 }

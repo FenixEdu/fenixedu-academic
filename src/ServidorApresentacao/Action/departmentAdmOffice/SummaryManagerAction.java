@@ -472,7 +472,7 @@ public class SummaryManagerAction extends FenixDispatchAction {
 				DynaActionForm summaryForm = (DynaActionForm) form;
 				if ((((InfoSiteSummary) siteView.getComponent())).getInfoSummary().getInfoTeacher() != null) {
 					summaryForm.set("teacherNumber", (((InfoSiteSummary) siteView.getComponent()))
-							.getInfoSummary().getInfoTeacher().getTeacherNumber().toString());
+							.getInfoSummary().getInfoTeacher().getTeacherNumber());
 					summaryForm.set("teacher", "0");
 				} else if ((((InfoSiteSummary) siteView.getComponent())).getInfoSummary()
 						.getInfoProfessorship() != null) {

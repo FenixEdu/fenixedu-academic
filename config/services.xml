@@ -7662,13 +7662,15 @@
 		<description/>
 		<isTransactional>true</isTransactional>
 	</service>		
-    <service>
+ 	<service>
         <name>FindTeachersServiceForDepartmentOffice</name>
         <implementationClass> 
             ServidorAplicacao.Servico.commons.searchers.FindTeachersService</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
-        <filterChains>EmployeeBelongsToTeacherDepartment</filterChains>
+        <filterChains>
+            <chain name="EmployeeBelongsToTeacherDepartment"/>
+        </filterChains>
     </service>
     <service>
         <name>ReadLastSummary</name>
