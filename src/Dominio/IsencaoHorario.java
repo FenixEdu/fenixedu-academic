@@ -52,14 +52,9 @@ public class IsencaoHorario implements IStrategyHorarios {
 		int inicioRefeicaoMinutos = 0;
 		int fimRefeicaoHoras = 0;
 		int fimRefeicaoMinutos = 0;
-		int intervaloMinimoRefeicaoHoras = 0;
-		int intervaloMinimoRefeicaoMinutos = 0;
-		int descontoObrigatorioMinutos = 0;
-		int descontoObrigatorioHoras = 0;
 
 		long timeInicioRefeicao = 0;
 		long timeFimRefeicao = 0;
-		long timeDescontoRefeicao = 0;
 
 		int inicioHN1Horas = 0;
 		int inicioHN1Minutos = 0;
@@ -1380,69 +1375,160 @@ public class IsencaoHorario implements IStrategyHorarios {
 		ArrayList listaParamJustificacoes,
 		ArrayList listaMarcacoesPonto,
 		ArrayList listaSaldos) {
+
 		long saldo = ((Long) listaSaldos.get(0)).longValue();
+		long intervaloRefeicao = 0;
 
-		if (listaMarcacoesPonto.size() == 2 || listaMarcacoesPonto.size() == 3) {
-			if (saldo >= Constants.MAX_TRABALHO_ISENCAO) {
-				// retira a hora de almoco automaticamente
-				saldo = saldo - horario.getDescontoObrigatorioRefeicao().getTime();
-			}
-		} else if (listaMarcacoesPonto.size() > 3) {
-			//		trata como nos outros tipos de horarios, calculando o periodo de almoco
-			MarcacaoPonto entrada = null;
-			MarcacaoPonto saida = null;
+		Calendar calendario = Calendar.getInstance();
+		calendario.setLenient(false);
+		calendario.clear();
 
-			long intervaloRefeicao = 0;
-			ListIterator iterador = listaMarcacoesPonto.listIterator();
-			//		a primeira entrada nao interessa para o intervalo de refeicao
-			iterador.next();
-			while (iterador.hasNext()) {
-				saida = (MarcacaoPonto) iterador.next();
-				// se existe uma saida e uma entrada
-				if (iterador.hasNext()) {
+		MarcacaoPonto entrada = null;
+		MarcacaoPonto saida = null;
 
-					entrada = (MarcacaoPonto) iterador.next();
-					// testar a saida
-					if (saida.getData().getTime() >= horario.getInicioRefeicao().getTime()
-						&& saida.getData().getTime() < horario.getFimRefeicao().getTime()) {
-						intervaloRefeicao = horario.getFimRefeicao().getTime() - saida.getData().getTime();
-						horario.setInicioRefeicao(new Timestamp(saida.getData().getTime()));
-					} else if (saida.getData().getTime() < horario.getInicioRefeicao().getTime()) {
-						intervaloRefeicao = horario.getFimRefeicao().getTime() - horario.getInicioRefeicao().getTime();
-					}
-					// testar a entrada
-					if (entrada.getData().getTime() > horario.getInicioRefeicao().getTime()
-						&& entrada.getData().getTime() <= horario.getFimRefeicao().getTime()) {
-						intervaloRefeicao = intervaloRefeicao + (entrada.getData().getTime() - horario.getFimRefeicao().getTime());
-						horario.setFimRefeicao(new Timestamp(entrada.getData().getTime()));
-					} else if (entrada.getData().getTime() <= horario.getInicioRefeicao().getTime()) {
-						intervaloRefeicao = intervaloRefeicao - (horario.getFimRefeicao().getTime() - horario.getInicioRefeicao().getTime());
+		ListIterator iterador = listaMarcacoesPonto.listIterator();
+		if (iterador.hasNext()) {
+			// saldo da refeicao
+			// o intervalo para refeicao deve ser feito no meio de dois periodos de trabalho.
+			// por isso conta o primeiro intervalo que estiver contido no intervalo para refeicao 
+			// estipulado para este horario. 
+			entrada = (MarcacaoPonto) iterador.next(); // primeira entrada
+
+			// se a primeira entrada do dia está contida no intervalo de refeicao é como se
+			// a pessoa tivesse feito a refeicao antes de entrar ao servico 
+			if (entrada.getData().getTime() > horario.getInicioRefeicao().getTime()
+				&& entrada.getData().getTime() < horario.getFimRefeicao().getTime()) {
+				intervaloRefeicao = entrada.getData().getTime() - horario.getInicioRefeicao().getTime();
+				horario.setFimRefeicao(new Timestamp(entrada.getData().getTime()));
+			} else if (entrada.getData().getTime() == horario.getFimRefeicao().getTime()) {
+				intervaloRefeicao = entrada.getData().getTime() - horario.getInicioRefeicao().getTime();
+			} else {
+				if (listaMarcacoesPonto.size() > 3) { //com mais de três marcações
+					// se no intervalo de uma saida do dia com uma entrada está contida no intervalo de refeicao é como se
+					// a pessoa tivesse feito a refeicao nesse intervalo
+					while (iterador.hasNext()) {
+						saida = (MarcacaoPonto) iterador.next();
+						if (iterador.hasNext()) {
+							entrada = (MarcacaoPonto) iterador.next();
+
+							// testar a saida
+							if (saida.getData().getTime() >= horario.getInicioRefeicao().getTime()
+								&& saida.getData().getTime() < horario.getFimRefeicao().getTime()) {
+								intervaloRefeicao = horario.getFimRefeicao().getTime() - saida.getData().getTime();
+								horario.setInicioRefeicao(new Timestamp(saida.getData().getTime()));
+							} else if (saida.getData().getTime() < horario.getInicioRefeicao().getTime()) {
+								intervaloRefeicao = horario.getFimRefeicao().getTime() - horario.getInicioRefeicao().getTime();
+							}
+							// testar a entrada
+							if (entrada.getData().getTime() > horario.getInicioRefeicao().getTime()
+								&& entrada.getData().getTime() <= horario.getFimRefeicao().getTime()) {
+								intervaloRefeicao = intervaloRefeicao + (entrada.getData().getTime() - horario.getFimRefeicao().getTime());
+								horario.setFimRefeicao(new Timestamp(entrada.getData().getTime()));
+							} else if (entrada.getData().getTime() <= horario.getInicioRefeicao().getTime()) {
+								intervaloRefeicao = intervaloRefeicao - (horario.getFimRefeicao().getTime() - horario.getInicioRefeicao().getTime());
+							}
+						} else {
+							if (saida.getData().getTime() > horario.getInicioRefeicao().getTime()
+								&& saida.getData().getTime() < horario.getFimRefeicao().getTime()) {
+								intervaloRefeicao = horario.getFimRefeicao().getTime() - saida.getData().getTime();
+							} else if (saida.getData().getTime() == horario.getInicioRefeicao().getTime()) {
+								intervaloRefeicao = horario.getFimRefeicao().getTime() - saida.getData().getTime();
+							}
+						}
+						if (intervaloRefeicao > 0) {
+							// encontrou o intervalo de refeicao entao sai do ciclo
+							break;
+						}
 					}
 				} else {
-					if (saida.getData().getTime() > horario.getInicioRefeicao().getTime()
-						&& saida.getData().getTime() < horario.getFimRefeicao().getTime()) {
-						intervaloRefeicao = horario.getFimRefeicao().getTime() - saida.getData().getTime();
-					} else if (saida.getData().getTime() == horario.getInicioRefeicao().getTime()) {
-						intervaloRefeicao = horario.getFimRefeicao().getTime() - saida.getData().getTime();
+					// valor que seja diferente de zero para o caso de duas marcacoes que nao estao contidas no intervalo de refeicao.
+					// neste caso nao desconta a hora de refeicao
+					if ((listaMarcacoesPonto.size() == 2)) { //apenas com duas marcaçoes
+						saida = (MarcacaoPonto) iterador.next();
+
+						if (saida.getData().getTime() > horario.getInicioRefeicao().getTime()
+							&& saida.getData().getTime() < horario.getFimRefeicao().getTime()) {
+							intervaloRefeicao = horario.getFimRefeicao().getTime() - saida.getData().getTime();
+							horario.setInicioRefeicao(new Timestamp(saida.getData().getTime()));
+						} else if (saida.getData().getTime() == horario.getInicioRefeicao().getTime()) {
+							intervaloRefeicao = horario.getFimRefeicao().getTime() - saida.getData().getTime();
+						}
 					}
 				}
-				if (intervaloRefeicao > 0) {
-					// encontrou o intervalo de refeicao entao sai do ciclo
-					break;
-				}
-			}
-
+			}			
 			if (intervaloRefeicao >= horario.getIntervaloMinimoRefeicao().getTime()
 				&& intervaloRefeicao < horario.getDescontoObrigatorioRefeicao().getTime()
 				&& intervaloRefeicao != 0) {
 				saldo = saldo - (horario.getDescontoObrigatorioRefeicao().getTime() - intervaloRefeicao);
-			} else if (intervaloRefeicao < horario.getIntervaloMinimoRefeicao().getTime()) {
-				saldo = 0;
-			} else if (intervaloRefeicao == 0) {
+			} else if ((intervaloRefeicao == 0) && (saldo >= Constants.MAX_TRABALHO_ISENCAO)) {
 				saldo = saldo - horario.getDescontoObrigatorioRefeicao().getTime();
 			}
+			/*if ((intervaloRefeicao == 0) || (saldo >= Constants.MAX_TRABALHO_ISENCAO)) {
+				// retira a hora de almoco automaticamente
+				saldo = saldo - horario.getDescontoObrigatorioRefeicao().getTime() - intervaloRefeicao;
+			}*/
+			
+			/*if (listaMarcacoesPonto.size() == 2 || listaMarcacoesPonto.size() == 3) {
+				if (saldo >= Constants.MAX_TRABALHO_ISENCAO) {
+					// retira a hora de almoco automaticamente
+					saldo = saldo - horario.getDescontoObrigatorioRefeicao().getTime();
+				}
+			} else if (listaMarcacoesPonto.size() > 3) {
+				// trata como nos outros tipos de horarios, calculando o periodo de almoco
+				MarcacaoPonto entrada = null;
+				MarcacaoPonto saida = null;
+			
+				long intervaloRefeicao = 0;
+				ListIterator iterador = listaMarcacoesPonto.listIterator();
+				//a primeira entrada nao interessa para o intervalo de refeicao
+				iterador.next();
+				while (iterador.hasNext()) {
+					saida = (MarcacaoPonto) iterador.next();
+					// se existe uma saida e uma entrada
+					if (iterador.hasNext()) {
+			
+						entrada = (MarcacaoPonto) iterador.next();
+						// testar a saida
+						if (saida.getData().getTime() >= horario.getInicioRefeicao().getTime()
+							&& saida.getData().getTime() < horario.getFimRefeicao().getTime()) {
+							intervaloRefeicao = horario.getFimRefeicao().getTime() - saida.getData().getTime();
+							horario.setInicioRefeicao(new Timestamp(saida.getData().getTime()));
+						} else if (saida.getData().getTime() < horario.getInicioRefeicao().getTime()) {
+							intervaloRefeicao = horario.getFimRefeicao().getTime() - horario.getInicioRefeicao().getTime();
+						}
+						// testar a entrada
+						if (entrada.getData().getTime() > horario.getInicioRefeicao().getTime()
+							&& entrada.getData().getTime() <= horario.getFimRefeicao().getTime()) {
+							intervaloRefeicao = intervaloRefeicao + (entrada.getData().getTime() - horario.getFimRefeicao().getTime());
+							horario.setFimRefeicao(new Timestamp(entrada.getData().getTime()));
+						} else if (entrada.getData().getTime() <= horario.getInicioRefeicao().getTime()) {
+							intervaloRefeicao = intervaloRefeicao - (horario.getFimRefeicao().getTime() - horario.getInicioRefeicao().getTime());
+						}
+					} else {
+						if (saida.getData().getTime() > horario.getInicioRefeicao().getTime()
+							&& saida.getData().getTime() < horario.getFimRefeicao().getTime()) {
+							intervaloRefeicao = horario.getFimRefeicao().getTime() - saida.getData().getTime();
+						} else if (saida.getData().getTime() == horario.getInicioRefeicao().getTime()) {
+							intervaloRefeicao = horario.getFimRefeicao().getTime() - saida.getData().getTime();
+						}
+					}
+					if (intervaloRefeicao > 0) {
+						// encontrou o intervalo de refeicao entao sai do ciclo
+						break;
+					}
+				}
+			
+				if (intervaloRefeicao >= horario.getIntervaloMinimoRefeicao().getTime()
+					&& intervaloRefeicao < horario.getDescontoObrigatorioRefeicao().getTime()
+					&& intervaloRefeicao != 0) {
+					saldo = saldo - (horario.getDescontoObrigatorioRefeicao().getTime() - intervaloRefeicao);
+				} else if (intervaloRefeicao < horario.getIntervaloMinimoRefeicao().getTime()) {
+					saldo = 0;
+				} else if (intervaloRefeicao == 0) {
+					saldo = saldo - horario.getDescontoObrigatorioRefeicao().getTime();
+				}
+			}*/
 		}
-
 		// saldo do horario normal 
 		Float duracaoDiaria = new Float(horario.getDuracaoSemanal() / Constants.SEMANA_TRABALHO_ISENCAO);
 		saldo =
@@ -1480,7 +1566,7 @@ public class IsencaoHorario implements IStrategyHorarios {
 
 	public long limitaTrabalhoSeguido(Horario horario, long entrada, long saida) {
 		long saldo = saida - entrada;
-		
+
 		return saldo;
 	} /* limitaTrabalhoSeguido */
 

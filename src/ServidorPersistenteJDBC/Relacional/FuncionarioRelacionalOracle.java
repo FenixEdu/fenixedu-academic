@@ -43,7 +43,7 @@ public class FuncionarioRelacionalOracle implements IFuncionarioPersistente {
 	}
 
 	public Funcionario lerFuncionarioPorPessoa(int chavePessoa) {
-		//	ORACLE: acede à BD do teleponto para carregar os dados dos funcionarios
+//	ORACLE: acede à BD do teleponto para carregar os dados dos funcionarios
 		Funcionario funcionario = null;
 
 		try {
@@ -97,14 +97,20 @@ public class FuncionarioRelacionalOracle implements IFuncionarioPersistente {
 				}
 				sql.close();
 
-				//status de assiduidade
-				sql = UtilRelacionalOracle.prepararComando("SELECT ASS_EMPSTATUS FROM ASS_EMPREG WHERE ASS_EMPPESSOA=?");
+				//data inicio de assiduidade e status de assiduidade
+				sql = UtilRelacionalOracle.prepararComando("SELECT ASS_EMPDTINI, ASS_EMPSTATUS FROM ASS_EMPREG WHERE ASS_EMPPESSOA=?");
 				sql.setInt(1, numMecanografico);
 				resultado = sql.executeQuery();
 				int status = 0;
+				Date dataInicio = null;
 				if (resultado.next()) {
 					status = resultado.getInt("ASS_EMPSTATUS") + 1;
-					funcionario.setChaveStatus(status);
+					dataInicio = java.sql.Date.valueOf(
+														resultado.getString("ASS_EMPDTINI").substring(
+															0,
+															resultado.getString("ASS_EMPDTINI").indexOf(" ")));
+					funcionario.setChaveStatus(status);					
+					funcionario.setDataInicio(dataInicio);
 				}
 				sql.close();
 
@@ -112,18 +118,18 @@ public class FuncionarioRelacionalOracle implements IFuncionarioPersistente {
 				sql = UtilRelacional.prepararComando("SELECT * FROM ass_STATUS WHERE codigoInterno = ?");
 				sql.setInt(1, status);
 				resultado = sql.executeQuery();
-				boolean isStatusInactivo = false;
-				if (resultado.next()) {
-					if (!resultado.getString("estado").equals(Constants.ASSIDUIDADE_ACTIVO)) {
+				boolean isStatusInactivo = false;	
+				if(resultado.next()){
+					if(!resultado.getString("estado").equals(Constants.ASSIDUIDADE_ACTIVO)){
 						//status actual é activo ou pendente
 						isStatusInactivo = true;
 					}
 				}
 				sql.close();
-
+				
 				//data fim do status activo de assiduidade
 				Date dataFimHorario = null;
-				if (isStatusInactivo) {
+				if(isStatusInactivo){
 					sql =
 						UtilRelacionalOracle.prepararComando(
 							"SELECT ASS_HISEMP_DHFIM FROM ASS_HISEMPREG " + "WHERE EMP_NUM = ? AND ASS_HISEMP_TIPO = 11");
@@ -133,8 +139,12 @@ public class FuncionarioRelacionalOracle implements IFuncionarioPersistente {
 						if (resultado.getString("ASS_HISEMP_DHFIM") != null) {
 							dataFimHorario =
 								java.sql.Date.valueOf(
-									resultado.getString("ASS_HISEMP_DHFIM").substring(0, resultado.getString("ASS_HISEMP_DHFIM").indexOf(" ")));
-
+									resultado.getString("ASS_HISEMP_DHFIM").substring(
+										0,
+										resultado.getString("ASS_HISEMP_DHFIM").indexOf(" ")));
+										
+					
+							//System.out.println("ler Funcionario: dataFim em ASS_HISEMPREG: " + dataFimHorario);
 							funcionario.setDataFim(dataFimHorario);
 						}
 					}
@@ -142,11 +152,13 @@ public class FuncionarioRelacionalOracle implements IFuncionarioPersistente {
 				}
 			} catch (Exception e) {
 				SuportePersistenteOracle.getInstance().cancelarTransaccao();
+				e.printStackTrace();
 				System.out.println("FuncionarioRelacionalOrcale.lerFuncionarioPorPessoa: " + e.toString());
 				return null;
 			}
 			SuportePersistenteOracle.getInstance().confirmarTransaccao();
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("FuncionarioRelacionalOracle.lerFuncionarioPorPessoa: " + e.toString());
 			return null;
 		} finally {
@@ -210,11 +222,7 @@ public class FuncionarioRelacionalOracle implements IFuncionarioPersistente {
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorPersistente.IFuncionarioPersistente#lerFuncionariosCCLocalTrabalho(int, java.util.Date)
-	 */
 	public ArrayList lerFuncionariosCCLocalTrabalho(int chaveCCLocalTrabalho, Date data) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

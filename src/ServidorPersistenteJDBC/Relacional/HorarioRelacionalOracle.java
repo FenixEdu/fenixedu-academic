@@ -440,6 +440,9 @@ public class HorarioRelacionalOracle implements IHorarioPersistente {
 					status = Integer.valueOf(resultado.getString("ASS_EMPSTATUS")).intValue();
 					dataInicioHorario =
 						java.sql.Date.valueOf(resultado.getString("ASS_EMPDTINI").substring(0, resultado.getString("ASS_EMPDTINI").indexOf(" ")));
+					System.out.println("Horario Actual: horario em ASS_EMPREG: " + siglaHorario);
+					System.out.println("Horario Actual: dataInicio em ASS_EMPREG: " + dataInicioHorario);
+					System.out.println("Horario Actual: status em ASS_EMPREG: " + status);
 				} 
 				sql.close();
 
@@ -477,6 +480,7 @@ public class HorarioRelacionalOracle implements IHorarioPersistente {
 							dataFimHorario =
 								java.sql.Date.valueOf(
 									resultado.getString("ASS_HISEMP_DHFIM").substring(0, resultado.getString("ASS_HISEMP_DHFIM").indexOf(" ")));
+							System.out.println("Horario Actual: dataFim em ASS_HISEMPREG: " + dataFimHorario);
 						}
 					}
 					sql.close();
@@ -501,6 +505,7 @@ public class HorarioRelacionalOracle implements IHorarioPersistente {
 						resultadoChaveHorario = sqlChaveHorario.executeQuery();
 
 						if (resultadoChaveHorario.next()) {
+							System.out.println("Horario Actual: horario nos Horarios_tipo: " + resultadoChaveHorario.getInt("codigoInterno"));
 							listaHorariosActuais.add(
 								new Horario(
 									resultadoChaveHorario.getInt("codigoInterno"),
@@ -788,30 +793,18 @@ public class HorarioRelacionalOracle implements IHorarioPersistente {
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorPersistente.IHorarioPersistente#lerTodosHorariosExcepcao(java.util.Date, java.util.Date)
-	 */
-	public ArrayList lerTodosHorariosExcepcao(Date dataInicio, Date dataFim) {
+	public ArrayList lerTodosHorariosExcepcao(Date dataInicio, Date dataFim) {		
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorPersistente.IHorarioPersistente#lerTodosHorarios(java.util.Date, java.util.Date)
-	 */
 	public ArrayList lerTodosHorarios(Date dataInicio, Date dataFim) {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorPersistente.IHorarioPersistente#lerTodosHorariosExcepcaoComRegime(int, java.util.ArrayList, java.util.Date, java.util.Date)
-	 */
 	public ArrayList lerTodosHorariosExcepcaoComRegime(int chaveRegime, ArrayList listaHorariosTipoComRegime, Date dataInicio, Date dataFim) {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorPersistente.IHorarioPersistente#lerTodosHorariosComRegime(int, java.util.ArrayList, java.util.Date, java.util.Date)
-	 */
 	public ArrayList lerTodosHorariosComRegime(int chaveRegime, ArrayList listaHorariosTipoComRegime, Date dataInicio, Date dataFim) {
 		return null;
 	}

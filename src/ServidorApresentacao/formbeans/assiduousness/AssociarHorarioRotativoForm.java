@@ -188,7 +188,7 @@ public class AssociarHorarioRotativoForm extends ActionForm {
         errors.add("numMecanografico", new ActionError("error.numero.obrigatorio"));
       }else{
         try{
-          int numMecanografico = (new Integer(getNumMecanografico())).intValue();
+          (new Integer(getNumMecanografico())).intValue();
         } catch (java.lang.NumberFormatException e) {
           errors.add("numero",   new ActionError("error.numero.naoInteiro"));
         }

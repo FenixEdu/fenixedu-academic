@@ -12,6 +12,7 @@ import Dominio.HorarioTipo;
 import Dominio.IStrategyHorarios;
 import Dominio.Pessoa;
 import Dominio.SuporteStrategyHorarios;
+
 /**
  *
  * @author  Fernanda Quitério & Tania Pousão

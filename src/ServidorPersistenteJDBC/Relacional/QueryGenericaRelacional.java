@@ -148,6 +148,7 @@ public class QueryGenericaRelacional {
         query = query.concat(" ");
         query = query.concat(clausulasWhere(chave));        
         
+        System.out.println("QueryGenericaRelacional.queryAlteracao:QUERY - " + query);
         
         querySQL = UtilRelacional.prepararComando(query);
 

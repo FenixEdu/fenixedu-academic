@@ -919,7 +919,7 @@ public class AssociarHorarioForm extends ActionForm {
 					return errors;
 				} else {
 					try {
-						int numMecanografico = (new Integer(getNumMecanografico())).intValue();
+						(new Integer(getNumMecanografico())).intValue();
 					} catch (java.lang.NumberFormatException e) {
 						errors.add("numero", new ActionError("error.numero.naoInteiro"));
 						return errors;
@@ -931,6 +931,7 @@ public class AssociarHorarioForm extends ActionForm {
 				if (((request.getParameter("numDias")).length() < 1)
 					|| ((request.getParameter("posicao")).length() < 1)) {
 					errors.add("numero", new ActionError("error.numero.obrigatorio"));
+					return errors;
 				} else {
 					int numDias = 0;
 					int posicao = 0;

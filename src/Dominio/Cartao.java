@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 public class Cartao {
   private int _codigoInterno;
   private int _numCartao;
-  private int _chaveFuncNaoDocente;
+  private int _chaveFuncionario;
   private Timestamp _dataInicio;
   private Timestamp _dataFim;
   private int _quem;
@@ -21,7 +21,7 @@ public class Cartao {
     
     _codigoInterno = 0;
     _numCartao = 0;
-    _chaveFuncNaoDocente = 0;
+    _chaveFuncionario = 0;
     _dataInicio = null;
     _dataFim = null;
     _quem = 0;
@@ -29,12 +29,12 @@ public class Cartao {
     _estado = null;
   }
   
-  public Cartao(int codigoInterno, int numCartao, int chaveFuncNaoDocente,
+  public Cartao(int codigoInterno, int numCartao, int chaveFuncionario,
   Timestamp dataInicio, Timestamp dataFim, int quem, Timestamp quando, String estado) {
     
     _codigoInterno = codigoInterno;
     _numCartao = numCartao;
-    _chaveFuncNaoDocente = chaveFuncNaoDocente;
+    _chaveFuncionario = chaveFuncionario;
     _dataInicio = dataInicio;
     _dataFim = dataFim;
     _quem = quem;
@@ -44,12 +44,12 @@ public class Cartao {
   
   /* construtor usado para a transferência entre o cartão da BD Oracle do Teleponto
    e a BD do projecto Assiduidade */
-  public Cartao(int numCartao, int chaveFuncNaoDocente,
+  public Cartao(int numCartao, int chaveFuncionario,
   Timestamp dataInicio, Timestamp dataFim, int quem, Timestamp quando) {
     
     _codigoInterno = 0;
     _numCartao = numCartao;
-    _chaveFuncNaoDocente = chaveFuncNaoDocente;
+    _chaveFuncionario = chaveFuncionario;
     _dataInicio = dataInicio;
     _dataFim = dataFim;
     _quem = quem;
@@ -71,8 +71,8 @@ public class Cartao {
   public int getNumCartao() {
     return _numCartao;
   }
-  public int getChaveFuncNaoDocente() {
-    return _chaveFuncNaoDocente;
+  public int getChaveFuncionario() {
+    return _chaveFuncionario;
   }
   public Timestamp getDataInicio() {
     return _dataInicio;
@@ -97,8 +97,8 @@ public class Cartao {
   public void setNumCartao(int numCartao) {
     _numCartao = numCartao;
   }
-  public void setChaveFuncNaoDocente(int chaveFuncNaoDocente) {
-    _chaveFuncNaoDocente = chaveFuncNaoDocente;
+  public void setChaveFuncionario(int chaveFuncionario) {
+    _chaveFuncionario = chaveFuncionario;
   }
   public void setDataInicio(Timestamp dataInicio) {
     _dataInicio = dataInicio;
@@ -125,7 +125,7 @@ public class Cartao {
       
       resultado = ((this.getCodigoInterno() == cartao.getCodigoInterno()) &&
       (this.getNumCartao() == cartao.getNumCartao()) &&
-      (this.getChaveFuncNaoDocente() == cartao.getChaveFuncNaoDocente()) &&
+      (this.getChaveFuncionario() == cartao.getChaveFuncionario()) &&
       (this.getDataInicio() == cartao.getDataInicio()) &&
       (this.getDataFim() == cartao.getDataFim()) &&
       (this.getQuem() == cartao.getQuem()) &&

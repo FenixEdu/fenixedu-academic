@@ -1,7 +1,6 @@
 package ServidorAplicacao.Servico.assiduousness;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 import ServidorAplicacao.ServicoAutorizacao;
 import ServidorAplicacao.ServicoSeguro;
@@ -34,14 +33,13 @@ public class ServicoSeguroLerInicioAssiduidade extends ServicoSeguro {
 	public void execute() throws NotExecuteException {
 		IFuncionarioPersistente iFuncionarioPersistente = SuportePersistente.getInstance().iFuncionarioPersistente();
 		
-		Date dataAssiduidade = null;
-		if ((dataAssiduidade = iFuncionarioPersistente.lerInicioAssiduidade(_numMecanografico)) == null) {
+		if ((_dataAssiduidade = iFuncionarioPersistente.lerInicioAssiduidade(_numMecanografico)) == null) {
 			throw new NotExecuteException("error.assiduidade.naoExiste");
 		}
 
-		if (dataAssiduidade.after(_dataInicioConsulta) && dataAssiduidade.before(_dataFimConsulta)) {
-			_dataAssiduidade = new Timestamp(Timestamp.valueOf(dataAssiduidade.toString() + " 00:00:00.0").getTime());
-		} else if (dataAssiduidade.after(_dataFimConsulta)) {
+		if (_dataAssiduidade.before(_dataInicioConsulta)) {
+			_dataAssiduidade = null;
+		} else if (_dataAssiduidade.after(_dataFimConsulta)) {
 			throw new NotExecuteException("error.assiduidade.naoExiste");
 		}
 	}

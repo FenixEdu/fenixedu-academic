@@ -81,19 +81,8 @@ public class ServicoSeguroConsultarMarcacaoPonto extends ServicoSeguro {
 		
 		
 		if(servicoSeguroLerFimAssiduidade.getDataAssiduidade() != null){
-		_dataFim = servicoSeguroLerFimAssiduidade.getDataAssiduidade();	
+			_dataFim = servicoSeguroLerFimAssiduidade.getDataAssiduidade();	
 		}
-		/*IFuncionarioPersistente iFuncionarioPersistente =
-			SuportePersistente.getInstance().iFuncionarioPersistente();
-
-		Date dataAssiduidade = null;
-		if ((dataAssiduidade = iFuncionarioPersistente.lerFimAssiduidade(numMecanografico)) != null) {
-			if (dataAssiduidade.after(_dataInicio) && dataAssiduidade.before(_dataFim)) {
-				_dataFim = Timestamp.valueOf(dataAssiduidade.toString() + " 00:00:00.0");
-			} else if (dataAssiduidade.before(_dataInicio)) {
-				throw new NotExecuteException("error.assiduidade.semAssiduidade");
-			}
-		}*/
 	} /* lerFimAssiduidade */
 
 	private void lerInicioAssiduidade(int numMecanografico) throws NotExecuteException {
@@ -107,20 +96,6 @@ public class ServicoSeguroConsultarMarcacaoPonto extends ServicoSeguro {
 		if(servicoSeguroLerInicioAssiduidade.getDataAssiduidade() != null){
 		_dataInicio = servicoSeguroLerInicioAssiduidade.getDataAssiduidade();		
 		}
-		/*IFuncionarioPersistente iFuncionarioPersistente =
-			SuportePersistente.getInstance().iFuncionarioPersistente();
-
-		Date dataAssiduidade = null;
-		if ((dataAssiduidade = iFuncionarioPersistente.lerInicioAssiduidade(numMecanografico))
-			== null) {
-			throw new NotExecuteException("error.assiduidade.naoExiste");
-		}
-
-		if (dataAssiduidade.after(_dataInicio) && dataAssiduidade.before(_dataFim)) {
-			_dataInicio = Timestamp.valueOf(dataAssiduidade.toString() + " 00:00:00.0");
-		} else if (dataAssiduidade.after(_dataFim)) {
-			throw new NotExecuteException("error.assiduidade.naoExiste");
-		}*/
 	} /* lerInicioAssiduidade */
 
 	public ArrayList getListaMarcacoesPonto() {

@@ -14,8 +14,36 @@ import ServidorPersistenteJDBC.IStatusAssiduidadePersistente;
 public class StatusAssiduidadeRelacional implements IStatusAssiduidadePersistente {
 
 	public boolean alterarStatus(StatusAssiduidade status) {
-		// TODO metodo alterarStatus
-		return false;
+		boolean resultado = false;
+    
+		try {
+			PreparedStatement sql =
+			UtilRelacional.prepararComando("UPDATE ass_UNIDADE_MARCACAO SET " +
+			"codigoInterno = ? , " +
+			"sigla = ? , " +
+			"designacao = ? , " +
+			"estado = ? , " +
+			"assiduidade = ? " +
+			"WHERE sigla = ?");
+      
+			sql.setInt(1, status.getCodigoInterno());
+			sql.setString(2, status.getSigla());
+			sql.setString(3, status.getDesignacao());
+			sql.setString(4, status.getEstado());
+			sql.setString(5, status.getAssiduidade());
+			sql.setString(5, status.getSigla());
+			
+      
+			sql.executeUpdate();
+			sql.close();
+			resultado = true;
+		}
+		catch(Exception e) {
+			System.out.println("UnidadeMarcacaoRelacional.alterarUnidadeMarcacao: " + e.toString());
+		}
+		finally {
+			return resultado;
+		}
 	} /* alterarStatus */
 
 	public boolean escreverStatus(StatusAssiduidade status) {

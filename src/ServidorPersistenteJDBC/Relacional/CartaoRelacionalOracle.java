@@ -64,7 +64,7 @@ public class CartaoRelacionalOracle implements ICartaoPersistente {
 		return cartao;
 	} /* lerCartao */
 
-	public Cartao lerCartaoActualFuncionario(int chaveFuncNaoDocente) {
+	public Cartao lerCartaoActualFuncionario(int chaveFuncionario) {
 		Cartao cartao = null;
 		return cartao;
 	} /* lerCartaoActualFuncionario */
@@ -84,22 +84,22 @@ public class CartaoRelacionalOracle implements ICartaoPersistente {
 		return cartao;
 	} /* lerCartaoPorNumero */
 
-	public Cartao lerCartaoSubstitutoFuncionario(int chaveFuncNaoDocente) {
+	public Cartao lerCartaoSubstitutoFuncionario(int chaveFuncionario) {
 		Cartao cartao = null;
 		return cartao;
 	} /*lerCartaoSubstitutoFuncionario*/
 
-	public Cartao lerCartaoSubstitutoFuncionario(int chaveFuncNaoDocente, Timestamp data) {
+	public Cartao lerCartaoSubstitutoFuncionario(int chaveFuncionario, Timestamp data) {
 		Cartao cartao = null;
 		return cartao;
 	} /*lerCartaoSubstitutoFuncionario*/
 
-	public ArrayList lerCartoesFuncionario(int chaveFuncNaoDocente) {
+	public ArrayList lerCartoesFuncionario(int chaveFuncionario) {
 		ArrayList lista = null;
 		return lista;
 	} /* lerCartoesFuncionario */
 
-	public ArrayList lerCartoesFuncionarioComValidade(int chaveFuncNaoDocente, Timestamp dataInicio, Timestamp dataFim) {
+	public ArrayList lerCartoesFuncionarioComValidade(int chaveFuncionario, Timestamp dataInicio, Timestamp dataFim) {
 		ArrayList lista = null;
 		return lista;
 	} /* lerCartoesFuncionarioComValidade */
@@ -167,7 +167,11 @@ public class CartaoRelacionalOracle implements ICartaoPersistente {
 		return 0;
 	} /* ultimoCodigoInterno */
 
-	public Cartao lerCartaoSubstitutoFuncionario(int chaveFuncNaoDocente, Timestamp dataInicio, Timestamp dataFim) {
+	public Cartao lerCartaoSubstitutoFuncionario(int chaveFuncionario, Timestamp dataInicio, Timestamp dataFim) {
+		return null;
+	}
+
+	public ArrayList consultarCartao(ArrayList listaFuncionarios, ArrayList listaCartoes, Timestamp dataInicio, Timestamp dataFim) {
 		return null;
 	}
 }

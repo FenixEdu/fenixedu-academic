@@ -162,12 +162,6 @@ public class ConsultarMarcacaoPontoForm extends ActionForm {
 	public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
 		ActionErrors errors = new ActionErrors();
 
-		int diaInicio = 0;
-		int mesInicio = 0;
-		int anoInicio = 0;
-		int diaFim = 0;
-		int mesFim = 0;
-		int anoFim = 0;
 
 		Calendar calendar = Calendar.getInstance();
 		calendar.setLenient(false);
@@ -179,12 +173,12 @@ public class ConsultarMarcacaoPontoForm extends ActionForm {
 			&& (getMesFim().length() > 0)
 			&& (getDiaFim().length() > 0)) {
 			try {
-				diaInicio = (new Integer(getDiaInicio())).intValue();
-				mesInicio = (new Integer(getMesInicio())).intValue();
-				anoInicio = (new Integer(getAnoInicio())).intValue();
-				diaFim = (new Integer(getDiaFim())).intValue();
-				mesFim = (new Integer(getMesFim())).intValue();
-				anoFim = (new Integer(getAnoFim())).intValue();
+				(new Integer(getDiaInicio())).intValue();
+				(new Integer(getMesInicio())).intValue();
+				(new Integer(getAnoInicio())).intValue();
+				(new Integer(getDiaFim())).intValue();
+				(new Integer(getMesFim())).intValue();
+				(new Integer(getAnoFim())).intValue();
 			} catch (java.lang.NumberFormatException e) {
 				errors.add("numero", new ActionError("error.numero.naoInteiro"));
 			}

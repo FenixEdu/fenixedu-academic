@@ -62,9 +62,8 @@ public final class ConsultarFuncionarioEscolhaAction extends Action {
 
 		ConsultarFuncionarioMostrarForm formEscolha = (ConsultarFuncionarioMostrarForm) form;
 		Integer numMecanografico = (Integer) session.getAttribute("numMecanografico");
-
 		System.out.println("CONSULTA DE ASSIDUIDADE: " + formEscolha.getEscolha() + " funcionario " + numMecanografico);
-		
+
 		if (formEscolha.getEscolha().equals("consultar.marcacao")) {
 			//»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» Marcacoes de Ponto «««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««
 
@@ -397,5 +396,4 @@ public final class ConsultarFuncionarioEscolhaAction extends Action {
 		}
 		return (mapping.findForward("PortalGestaoAssiduidadeAction"));
 	}
-
 }

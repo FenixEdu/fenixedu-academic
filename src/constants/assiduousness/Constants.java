@@ -26,8 +26,9 @@ public final class Constants {
 
 	public static final String APPLICATION_RESOURCES = "ApplicationResources";
 	public static final String CONFIG_FTP = "/ServidorFTPConfig.properties";
-	public static final String CONFIG_SERVIDORPERSISTENTE = "/ServidorPersistenteConfig.properties";
+	public static final String CONFIG_EMAIL = "/ServidorEMailConfig.properties";
 	public static final String CONFIG_SERVIDORPERSISTENTE_ORACLE = "/ServidorPersistenteOracleConfig.properties";
+	public static final String CONFIG_SERVIDORPERSISTENTE = "/ServidorPersistenteConfig.properties";
 
 	public static final int MAX_DIGITOS_MECANOGRAFICO = 8;
 	public static final int MAX_SIGLA = 8;
@@ -161,7 +162,6 @@ public final class Constants {
 	public static final int DURACAO_SEMANAL_ISENCAO = 35;
 	public static final int SEMANA_TRABALHO_ISENCAO = 5;
 	public static final long MAX_TRABALHO_ISENCAO = 5 * 3600 * 1000; //5 horas(milisegundos) de trabalho consecutivo no máximo
-
 
 	/* Horario Jornada Continua */
 	public static final int DURACAO_SEMANAL_JORNADA = 30;

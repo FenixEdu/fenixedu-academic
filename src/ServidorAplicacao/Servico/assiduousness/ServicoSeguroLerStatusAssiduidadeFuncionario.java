@@ -34,7 +34,7 @@ public class ServicoSeguroLerStatusAssiduidadeFuncionario extends ServicoSeguro 
 		IFuncionarioPersistente iFuncionarioPersistente = SuportePersistente.getInstance().iFuncionarioPersistente();
 		if((this.listaStatusAssiduidade = iFuncionarioPersistente.lerStatusAssiduidade(this.numMecanografico, this.dataInicio, this.dataFim)) == null){
 			throw new NotExecuteException("error.funcionario.naoExiste");
-		}
+		}		
 	}
   
 	public ArrayList getListaStatusAssiduidade() {

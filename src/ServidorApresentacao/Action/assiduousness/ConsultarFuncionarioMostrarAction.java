@@ -89,15 +89,6 @@ public final class ConsultarFuncionarioMostrarAction extends Action {
 		session.setAttribute("pessoa", servicoSeguroConsultarFuncionario.getPessoa());
 		session.setAttribute("centroCusto", servicoSeguroConsultarFuncionario.getCentroCusto());
 
-		/*    
-		if (mapping.getAttribute() != null) {
-		  if ("request".equals(mapping.getScope()))
-		    request.removeAttribute(mapping.getAttribute());
-		  else
-		    session.removeAttribute(mapping.getAttribute());
-		}
-		*/
-
 		ConsultarFuncionarioMostrarForm funcNaoDocenteForm = (ConsultarFuncionarioMostrarForm) form;
 		funcNaoDocenteForm.setForm(
 			(Date) session.getAttribute(Constants.INICIO_CONSULTA),
@@ -109,7 +100,7 @@ public final class ConsultarFuncionarioMostrarAction extends Action {
 			servicoSeguroConsultarFuncionario.getFuncNaoDocente(),
 			servicoSeguroConsultarFuncionario.getRotacaoHorario(),
 			servicoSeguroConsultarFuncionario.getListaRegimesRotacao());
-			
+
 		return (mapping.findForward("ConsultarFuncionarioMostrar"));
 	}
 }

@@ -158,7 +158,7 @@ public class IntroduzirJustificacaoForm extends ActionForm {
       errors.add("numeros", new ActionError("error.campos.obrigatorio"));
     }else{
       try{
-        int numMecanografico = (new Integer(getNumMecanografico())).intValue();
+        (new Integer(getNumMecanografico())).intValue();
       } catch (java.lang.NumberFormatException e) {
         errors.add("numero",   new ActionError("error.numero.naoInteiro"));
       }

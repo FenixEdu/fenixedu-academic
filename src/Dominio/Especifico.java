@@ -49,10 +49,6 @@ public class Especifico implements IStrategyHorarios {
 		int inicioRefeicaoMinutos = 0;
 		int fimRefeicaoHoras = 0;
 		int fimRefeicaoMinutos = 0;
-		int intervaloMinimoRefeicaoHoras = 0;
-		int intervaloMinimoRefeicaoMinutos = 0;
-		int descontoObrigatorioMinutos = 0;
-		int descontoObrigatorioHoras = 0;
 
 		long timeInicioRefeicao = 0;
 		long timeFimRefeicao = 0;
@@ -337,10 +333,10 @@ public class Especifico implements IStrategyHorarios {
 						errors.add("Intervalo de Refeicao", new ActionError("error.refeicao.intervaloEDesconto.obrigatorios"));
 					} else {
 						try {
-							intervaloMinimoRefeicaoHoras = new Integer(formHorario.getIntervaloMinimoHoras()).intValue();
-							intervaloMinimoRefeicaoMinutos = new Integer(formHorario.getIntervaloMinimoMinutos()).intValue();
-							descontoObrigatorioHoras = new Integer(formHorario.getDescontoObrigatorioHoras()).intValue();
-							descontoObrigatorioMinutos = new Integer(formHorario.getDescontoObrigatorioMinutos()).intValue();
+							new Integer(formHorario.getIntervaloMinimoHoras()).intValue();
+							new Integer(formHorario.getIntervaloMinimoMinutos()).intValue();
+							new Integer(formHorario.getDescontoObrigatorioHoras()).intValue();
+							new Integer(formHorario.getDescontoObrigatorioMinutos()).intValue();
 						} catch (java.lang.NumberFormatException e) {
 							errors.add("numero", new ActionError("error.numero.naoInteiro"));
 						}

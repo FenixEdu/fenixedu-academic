@@ -52,7 +52,7 @@ public class ServicoSeguroInicializarCorreioFuncionarios {
 
 	/** Executa a actualizacao da tabela funcionario e o preenchimento da tabela centro_custo na Base de Dados */
 	public static void main(String[] args) throws NotExecuteException {
-		ServicoSeguroInicializarCorreioFuncionarios servico = new ServicoSeguroInicializarCorreioFuncionarios(args);
+		new ServicoSeguroInicializarCorreioFuncionarios(args);
 		
 		LeituraFicheiroFuncionarioCorreio servicoLeitura = new LeituraFicheiroFuncionarioCorreio();
 

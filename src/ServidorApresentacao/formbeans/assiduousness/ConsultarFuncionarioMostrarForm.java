@@ -306,18 +306,9 @@ public class ConsultarFuncionarioMostrarForm extends ActionForm {
 				Timestamp dataFim = new Timestamp(calendarFim.getTimeInMillis());
 				setDataFimEscolha(dataFim);
 
-				Calendar calendarioInicioAplicacao = Calendar.getInstance();
-				calendarioInicioAplicacao.setLenient(false);
-				calendarioInicioAplicacao.clear();
-				calendarioInicioAplicacao.set(2003, Calendar.MAY, 1, 00, 00, 00);
-				
-				if(calendarInicio.before(calendarioInicioAplicacao)){
-					errors.add("datas", new ActionError("error.dataValidade.antes1Maio"));
-				}	
-				
 				if (!(dataInicio.getTime() <= dataFim.getTime())) {
 					errors.add("datas", new ActionError("error.dataValidade.incorrecta"));
-				} else{
+				} else {
 					HttpSession session = request.getSession();
 					session.setAttribute(
 						Constants.INICIO_CONSULTA,

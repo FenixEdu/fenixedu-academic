@@ -354,7 +354,6 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 	public ArrayList lerFuncionariosCCLocalTrabalho(int chaveCCLocalTrabalho, Date data) {
 		ArrayList listaFuncionarios = null;
 		
-		//TODO: rever quando se passar a ter historico de funcionario
 		try {
 			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_FUNCIONARIO " +
 				"WHERE chaveCCLocalTrabalho=? ORDER BY numeroMecanografico");
@@ -824,7 +823,6 @@ public class FuncionarioRelacional implements IFuncionarioPersistente {
 			sqlEscrita.close();
 			sql.close();
 
-			//TODO: completar o fim de assiduidade introduzindo um novo record de funcionario com o novo status
 			resultado = true;
 		} catch (Exception e) {
 			System.out.println("FuncionarioRelacional.escreveFimAssiduidade: " + e.toString());

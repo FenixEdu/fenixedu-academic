@@ -26,7 +26,7 @@ public class CartaoRelacional implements ICartaoPersistente {
 					"UPDATE ass_CARTAO SET "
 						+ "codigoInterno = ? , "
 						+ "numCartao = ? , "
-						+ "chaveFuncNaoDocente = ? , "
+						+ "chaveFuncionario = ? , "
 						+ "dataInicio = ? , "
 						+ "dataFim = ? , "
 						+ "quem = ? , "
@@ -36,7 +36,7 @@ public class CartaoRelacional implements ICartaoPersistente {
 
 			sql.setInt(1, cartao.getCodigoInterno());
 			sql.setInt(2, cartao.getNumCartao());
-			sql.setInt(3, cartao.getChaveFuncNaoDocente());
+			sql.setInt(3, cartao.getChaveFuncionario());
 			if (cartao.getDataInicio() != null) {
 				sql.setTimestamp(4, new Timestamp((cartao.getDataInicio()).getTime()));
 			} else {
@@ -142,7 +142,7 @@ public class CartaoRelacional implements ICartaoPersistente {
 					new Cartao(
 						resultado.getInt("codigoInterno"),
 						resultado.getInt("numCartao"),
-						resultado.getInt("chaveFuncNaoDocente"),
+						resultado.getInt("chaveFuncionario"),
 						Timestamp.valueOf(resultado.getString("dataInicio")),
 						dataFim,
 						resultado.getInt("quem"),
@@ -191,7 +191,7 @@ public class CartaoRelacional implements ICartaoPersistente {
 					new Cartao(
 						resultado.getInt("codigoInterno"),
 						resultado.getInt("numCartao"),
-						resultado.getInt("chaveFuncNaoDocente"),
+						resultado.getInt("chaveFuncionario"),
 						Timestamp.valueOf(resultado.getString("dataInicio")),
 						dataFimCartao,
 						resultado.getInt("quem"),
@@ -207,6 +207,122 @@ public class CartaoRelacional implements ICartaoPersistente {
 		}
 	} /* cartaoUtilizado */
 
+	public ArrayList consultarCartao(ArrayList listaFuncionarios, ArrayList listaCartoes, Timestamp dataInicio, Timestamp dataFim) {
+		ArrayList cartoes = null;
+
+		try {
+			PreparedStatement sql = null;
+			ResultSet resultado = null;
+
+			// obtem os cartoes no intervalo de datas
+			String query = new String("SELECT * FROM ass_CARTAO WHERE");
+
+			if (listaFuncionarios != null) {
+				if (listaFuncionarios.size() > 0) {
+					query = query.concat(" (");
+
+					ListIterator iterListaFuncionarios = listaFuncionarios.listIterator();
+					while (iterListaFuncionarios.hasNext()) {
+						iterListaFuncionarios.next();
+						if (iterListaFuncionarios.hasNext()) {
+							query = query.concat("chaveFuncionario = ? OR ");
+						} else {
+							query = query.concat("chaveFuncionario = ?) AND");
+						}
+					}
+				}
+			}
+
+			if (listaCartoes != null) {
+				if (listaCartoes.size() > 0) {
+					query = query.concat(" (");
+
+					ListIterator iterListaCartoes = listaCartoes.listIterator();
+					while (iterListaCartoes.hasNext()) {
+						iterListaCartoes.next();
+						if (iterListaCartoes.hasNext()) {
+							query = query.concat("numCartao = ? OR ");
+						} else {
+							query = query.concat("numCartao = ?) AND");
+						}
+					}
+				}
+			}
+
+			query = query.concat(" ((dataInicio BETWEEN ? AND ?) " + "OR (dataFim BETWEEN ? AND ?) OR (dataInicio <= ? AND dataFim >= ?))");
+
+			sql = UtilRelacional.prepararComando(query);
+
+			// indice do comando sql
+			int indice = 1;
+
+			if (listaFuncionarios != null) {
+				ListIterator iterListaFuncionarios = listaFuncionarios.listIterator();
+				Integer numFuncionario = null;
+
+				PreparedStatement sqlFuncionario =
+					UtilRelacional.prepararComando("select * from ass_FUNCIONARIO where numeroMecanografico = ?");
+				ResultSet resultadoFuncionario = null;
+				while (iterListaFuncionarios.hasNext()) {
+					numFuncionario = (Integer) iterListaFuncionarios.next();
+
+					sqlFuncionario.setInt(1, numFuncionario.intValue());
+					resultadoFuncionario = sqlFuncionario.executeQuery();
+					if (resultadoFuncionario.next()) {
+						sql.setInt(indice, resultadoFuncionario.getInt("codigoInterno"));
+					}
+					indice++;
+				}
+				sqlFuncionario.close();
+			}
+
+			if (listaCartoes != null) {
+				ListIterator iterListaCartoes = listaCartoes.listIterator();
+				Integer numCartao = null;
+
+				while (iterListaCartoes.hasNext()) {
+					numCartao = (Integer) iterListaCartoes.next();
+					sql.setInt(indice, numCartao.intValue());
+					indice++;
+				}
+			}
+
+			sql.setTimestamp(indice++, dataInicio);
+			sql.setTimestamp(indice++, dataFim);
+			sql.setTimestamp(indice++, dataInicio);
+			sql.setTimestamp(indice++, dataFim);
+			sql.setTimestamp(indice++, dataInicio);
+			sql.setTimestamp(indice++, dataFim);
+
+			resultado = sql.executeQuery();
+			cartoes = new ArrayList();
+			Timestamp dataFimCartao = null;
+			while (resultado.next()) {
+				if (resultado.getString("dataFim") != null) {
+					dataFimCartao = Timestamp.valueOf(resultado.getString("dataFim"));
+				}
+
+				cartoes.add(
+					new Cartao(
+						resultado.getInt("codigoInterno"),
+						resultado.getInt("numCartao"),
+						resultado.getInt("chaveFuncionario"),
+						Timestamp.valueOf(resultado.getString("dataInicio")),
+						dataFimCartao,
+						resultado.getInt("quem"),
+						Timestamp.valueOf(resultado.getString("quando")),
+						resultado.getString("estado")));
+			}
+			sql.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("CartaoRelacional.consultarCartao: " + e.toString());
+			return null;
+		} finally {
+			return cartoes;
+		}
+	} /* consultarCartao */
+
 	public boolean escreverCartao(Cartao cartao) {
 		//	ORACLE: metodo escreverCartao acedia à BD oracle
 		boolean resultado = false;
@@ -216,7 +332,7 @@ public class CartaoRelacional implements ICartaoPersistente {
 
 			sql.setInt(1, cartao.getCodigoInterno());
 			sql.setInt(2, cartao.getNumCartao());
-			sql.setInt(3, cartao.getChaveFuncNaoDocente());
+			sql.setInt(3, cartao.getChaveFuncionario());
 			if (cartao.getDataInicio() != null) {
 				sql.setTimestamp(4, new Timestamp((cartao.getDataInicio()).getTime()));
 			} else {
@@ -260,7 +376,7 @@ public class CartaoRelacional implements ICartaoPersistente {
 
 				sql.setInt(1, cartao.getCodigoInterno());
 				sql.setInt(2, cartao.getNumCartao());
-				sql.setInt(3, cartao.getChaveFuncNaoDocente());
+				sql.setInt(3, cartao.getChaveFuncionario());
 				if (cartao.getDataInicio() != null) {
 					sql.setTimestamp(4, new Timestamp((cartao.getDataInicio()).getTime()));
 				} else {
@@ -329,7 +445,7 @@ public class CartaoRelacional implements ICartaoPersistente {
 					new Cartao(
 						resultado.getInt("codigoInterno"),
 						resultado.getInt("numCartao"),
-						resultado.getInt("chaveFuncNaoDocente"),
+						resultado.getInt("chaveFuncionario"),
 						Timestamp.valueOf(resultado.getString("dataInicio")),
 						dataFim,
 						resultado.getInt("quem"),
@@ -344,7 +460,7 @@ public class CartaoRelacional implements ICartaoPersistente {
 		}
 	} /* lerCartao */
 
-	public Cartao lerCartaoActualFuncionario(int chaveFuncNaoDocente) {
+	public Cartao lerCartaoActualFuncionario(int chaveFuncionario) {
 		Cartao cartao = null;
 
 		try {
@@ -352,9 +468,9 @@ public class CartaoRelacional implements ICartaoPersistente {
 			Timestamp dataAgora = new Timestamp(agora.getTimeInMillis());
 
 			PreparedStatement sql =
-				UtilRelacional.prepararComando("SELECT * FROM ass_CARTAO " + "WHERE chaveFuncNaoDocente = ? AND dataFim >= ?");
+				UtilRelacional.prepararComando("SELECT * FROM ass_CARTAO " + "WHERE chaveFuncionario = ? AND dataFim >= ?");
 
-			sql.setInt(1, chaveFuncNaoDocente);
+			sql.setInt(1, chaveFuncionario);
 			sql.setTimestamp(2, dataAgora);
 
 			ResultSet resultado = sql.executeQuery();
@@ -368,7 +484,7 @@ public class CartaoRelacional implements ICartaoPersistente {
 					new Cartao(
 						resultado.getInt("codigoInterno"),
 						resultado.getInt("numCartao"),
-						resultado.getInt("chaveFuncNaoDocente"),
+						resultado.getInt("chaveFuncionario"),
 						Timestamp.valueOf(resultado.getString("dataInicio")),
 						dataFim,
 						resultado.getInt("quem"),
@@ -390,8 +506,7 @@ public class CartaoRelacional implements ICartaoPersistente {
 		try {
 
 			PreparedStatement sql =
-				UtilRelacional.prepararComando(
-					"SELECT numCartao FROM ass_CARTAO " + "WHERE estado = \"atribuido\" OR estado = \"invalido\"");
+				UtilRelacional.prepararComando("SELECT numCartao FROM ass_CARTAO " + "WHERE estado = \"atribuido\" OR estado = \"invalido\"");
 			ResultSet resultado = sql.executeQuery();
 
 			listaCartoes = new ArrayList();
@@ -430,7 +545,7 @@ public class CartaoRelacional implements ICartaoPersistente {
 					new Cartao(
 						resultado.getInt("codigoInterno"),
 						resultado.getInt("numCartao"),
-						resultado.getInt("chaveFuncNaoDocente"),
+						resultado.getInt("chaveFuncionario"),
 						Timestamp.valueOf(resultado.getString("dataInicio")),
 						dataFim,
 						resultado.getInt("quem"),
@@ -464,7 +579,7 @@ public class CartaoRelacional implements ICartaoPersistente {
 					new Cartao(
 						resultado.getInt("codigoInterno"),
 						resultado.getInt("numCartao"),
-						resultado.getInt("chaveFuncNaoDocente"),
+						resultado.getInt("chaveFuncionario"),
 						Timestamp.valueOf(resultado.getString("dataInicio")),
 						dataFim,
 						resultado.getInt("quem"),
@@ -502,7 +617,7 @@ public class CartaoRelacional implements ICartaoPersistente {
 					new Cartao(
 						resultado.getInt("codigoInterno"),
 						resultado.getInt("numCartao"),
-						resultado.getInt("chaveFuncNaoDocente"),
+						resultado.getInt("chaveFuncionario"),
 						Timestamp.valueOf(resultado.getString("dataInicio")),
 						dataFim,
 						resultado.getInt("quem"),
@@ -517,7 +632,7 @@ public class CartaoRelacional implements ICartaoPersistente {
 		}
 	} /* lerCartaoPorNumero */
 
-	public Cartao lerCartaoSubstitutoFuncionario(int chaveFuncNaoDocente) {
+	public Cartao lerCartaoSubstitutoFuncionario(int chaveFuncionario) {
 		Cartao cartao = null;
 
 		try {
@@ -526,9 +641,9 @@ public class CartaoRelacional implements ICartaoPersistente {
 
 			PreparedStatement sql =
 				UtilRelacional.prepararComando(
-					"SELECT * FROM ass_CARTAO " + "WHERE chaveFuncNaoDocente = ? AND dataFim >= ? AND numCartao >= 900000");
+					"SELECT * FROM ass_CARTAO " + "WHERE chaveFuncionario = ? AND dataFim >= ? AND numCartao >= 900000");
 
-			sql.setInt(1, chaveFuncNaoDocente);
+			sql.setInt(1, chaveFuncionario);
 			sql.setTimestamp(2, dataAgora);
 
 			ResultSet resultado = sql.executeQuery();
@@ -537,7 +652,7 @@ public class CartaoRelacional implements ICartaoPersistente {
 					new Cartao(
 						resultado.getInt("codigoInterno"),
 						resultado.getInt("numCartao"),
-						resultado.getInt("chaveFuncNaoDocente"),
+						resultado.getInt("chaveFuncionario"),
 						Timestamp.valueOf(resultado.getString("dataInicio")),
 						Timestamp.valueOf(resultado.getString("dataFim")),
 						resultado.getInt("quem"),
@@ -552,15 +667,15 @@ public class CartaoRelacional implements ICartaoPersistente {
 		}
 	} /* lerCartaoSubstitutoFuncionario */
 
-	public Cartao lerCartaoSubstitutoFuncionario(int chaveFuncNaoDocente, Timestamp data) {
+	public Cartao lerCartaoSubstitutoFuncionario(int chaveFuncionario, Timestamp data) {
 		Cartao cartao = null;
 
 		try {
 			PreparedStatement sql =
 				UtilRelacional.prepararComando(
-					"SELECT * FROM ass_CARTAO WHERE chaveFuncNaoDocente = ? AND ? BETWEEN dataInicio AND dataFim AND numCartao >= 900000");
+					"SELECT * FROM ass_CARTAO WHERE chaveFuncionario = ? AND ? BETWEEN dataInicio AND dataFim AND numCartao >= 900000");
 
-			sql.setInt(1, chaveFuncNaoDocente);
+			sql.setInt(1, chaveFuncionario);
 			sql.setTimestamp(2, data);
 
 			ResultSet resultado = sql.executeQuery();
@@ -569,7 +684,7 @@ public class CartaoRelacional implements ICartaoPersistente {
 					new Cartao(
 						resultado.getInt("codigoInterno"),
 						resultado.getInt("numCartao"),
-						resultado.getInt("chaveFuncNaoDocente"),
+						resultado.getInt("chaveFuncionario"),
 						Timestamp.valueOf(resultado.getString("dataInicio")),
 						Timestamp.valueOf(resultado.getString("dataFim")),
 						resultado.getInt("quem"),
@@ -583,21 +698,21 @@ public class CartaoRelacional implements ICartaoPersistente {
 			return cartao;
 		}
 	} /* lerCartaoSubstitutoFuncionario */
-	
-	public Cartao lerCartaoSubstitutoFuncionario(int chaveFuncNaoDocente, Timestamp dataInicio, Timestamp dataFim){
+
+	public Cartao lerCartaoSubstitutoFuncionario(int chaveFuncionario, Timestamp dataInicio, Timestamp dataFim) {
 		Cartao cartao = null;
 
 		try {
 			PreparedStatement sql =
 				UtilRelacional.prepararComando(
 					"SELECT * FROM ass_CARTAO "
-						+ "WHERE chaveFuncNaoDocente = ? AND ((dataInicio BETWEEN ? AND ?) "
+						+ "WHERE chaveFuncionario = ? AND ((dataInicio BETWEEN ? AND ?) "
 						+ "OR (dataFim BETWEEN ? AND ?) OR (dataInicio <= ? AND dataFim >= ?)) AND numCartao >= 900000");
 
 			Timestamp dataInicioQuery = new Timestamp(dataInicio.getTime());
 			Timestamp dataFimQuery = new Timestamp(dataFim.getTime());
 
-			sql.setInt(1, chaveFuncNaoDocente);
+			sql.setInt(1, chaveFuncionario);
 			sql.setTimestamp(2, dataInicioQuery);
 			sql.setTimestamp(3, dataFimQuery);
 			sql.setTimestamp(4, dataInicioQuery);
@@ -613,11 +728,11 @@ public class CartaoRelacional implements ICartaoPersistente {
 					dataFimCartao = Timestamp.valueOf(resultado.getString("dataFim"));
 				}
 
-				cartao = 
+				cartao =
 					new Cartao(
 						resultado.getInt("codigoInterno"),
 						resultado.getInt("numCartao"),
-						resultado.getInt("chaveFuncNaoDocente"),
+						resultado.getInt("chaveFuncionario"),
 						Timestamp.valueOf(resultado.getString("dataInicio")),
 						dataFimCartao,
 						resultado.getInt("quem"),
@@ -631,14 +746,14 @@ public class CartaoRelacional implements ICartaoPersistente {
 		} finally {
 			return cartao;
 		}
-}
-	public ArrayList lerCartoesFuncionario(int chaveFuncNaoDocente) {
+	}
+	public ArrayList lerCartoesFuncionario(int chaveFuncionario) {
 		ArrayList listaCartoes = null;
 
 		try {
-			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_CARTAO " + "WHERE chaveFuncNaoDocente = ?");
+			PreparedStatement sql = UtilRelacional.prepararComando("SELECT * FROM ass_CARTAO " + "WHERE chaveFuncionario = ?");
 
-			sql.setInt(1, chaveFuncNaoDocente);
+			sql.setInt(1, chaveFuncionario);
 
 			ResultSet resultado = sql.executeQuery();
 			listaCartoes = new ArrayList();
@@ -654,17 +769,17 @@ public class CartaoRelacional implements ICartaoPersistente {
 		}
 	} /* lerCartoesFuncionario */
 
-	public ArrayList lerCartoesFuncionarioComValidade(int chaveFuncNaoDocente, Timestamp dataInicio, Timestamp dataFim) {
+	public ArrayList lerCartoesFuncionarioComValidade(int chaveFuncionario, Timestamp dataInicio, Timestamp dataFim) {
 		ArrayList listaCartoes = null;
 
 		try {
 			PreparedStatement sql =
 				UtilRelacional.prepararComando(
 					"SELECT * FROM ass_CARTAO "
-						+ "WHERE chaveFuncNaoDocente = ? AND ((dataInicio BETWEEN ? AND ?) OR (dataFim BETWEEN ? AND ?) "
+						+ "WHERE chaveFuncionario = ? AND ((dataInicio BETWEEN ? AND ?) OR (dataFim BETWEEN ? AND ?) "
 						+ " OR (dataInicio <= ? AND dataFim >= ?))");
 
-			sql.setInt(1, chaveFuncNaoDocente);
+			sql.setInt(1, chaveFuncionario);
 			sql.setTimestamp(2, new Timestamp(dataInicio.getTime()));
 			sql.setTimestamp(3, new Timestamp(dataFim.getTime()));
 			sql.setTimestamp(4, new Timestamp(dataInicio.getTime()));
@@ -706,7 +821,7 @@ public class CartaoRelacional implements ICartaoPersistente {
 					new Cartao(
 						resultado.getInt("codigoInterno"),
 						resultado.getInt("numCartao"),
-						resultado.getInt("chaveFuncNaoDocente"),
+						resultado.getInt("chaveFuncionario"),
 						Timestamp.valueOf(resultado.getString("dataInicio")),
 						dataFim,
 						resultado.getInt("quem"),
@@ -822,7 +937,7 @@ public class CartaoRelacional implements ICartaoPersistente {
 						new Cartao(
 							resultado.getInt("codigoInterno"),
 							resultado.getInt("numCartao"),
-							resultado.getInt("chaveFuncNaoDocente"),
+							resultado.getInt("chaveFuncionario"),
 							Timestamp.valueOf(resultado.getString("dataInicio")),
 							dataFim,
 							resultado.getInt("quem"),

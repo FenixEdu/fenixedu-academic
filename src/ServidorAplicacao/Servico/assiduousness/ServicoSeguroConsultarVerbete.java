@@ -412,6 +412,7 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 				_dataFimEscolha);
 		servicoSeguro.execute();
 		_listaCartoes = servicoSeguro.getListaCartoes();
+		
 	} /* construirEscolhasMarcacoesPonto */
 
 	private void verificarMesInjustificado() throws NotExecuteException {
@@ -471,6 +472,7 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 				new Timestamp(calendarioFim.getTimeInMillis()));
 		servicoSeguroLerMarcacoesPonto.execute();
 		ArrayList lista = servicoSeguroLerMarcacoesPonto.getListaMarcacoesPonto();
+		
 
 		if ((lista == null) || (lista.size() <= 0)) {
 			ServicoSeguroLerJustificacoesComValidade servicoSeguroLerJustificacoes =
@@ -639,7 +641,7 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 	} /* construirListaDiasPendente */
 
 	private void verificarDiasInjustificados(Calendar calendario) throws NotExecuteException {
-		
+	
 		IFeriadoPersistente iFeriadoPersistente = SuportePersistente.getInstance().iFeriadoPersistente();
 
 		Calendar agora = Calendar.getInstance();

@@ -4,12 +4,12 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
-import Dominio.FuncNaoDocente;
+import Dominio.Funcionario;
 import ServidorAplicacao.ServicoAutorizacao;
 import ServidorAplicacao.ServicoSeguro;
 import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import ServidorPersistenteJDBC.ICartaoPersistente;
-import ServidorPersistenteJDBC.IFuncNaoDocentePersistente;
+import ServidorPersistenteJDBC.IFuncionarioPersistente;
 import ServidorPersistenteJDBC.SuportePersistente;
 
 /**
@@ -38,10 +38,10 @@ public class ServicoSeguroConstruirEscolhasMarcacoesPonto extends ServicoSeguro 
 
 	public void execute() throws NotExecuteException {		
 
-		IFuncNaoDocentePersistente iFuncNaoDocentePersistente = SuportePersistente.getInstance().iFuncNaoDocentePersistente();
+		IFuncionarioPersistente iFuncionarioPersistente = SuportePersistente.getInstance().iFuncionarioPersistente();
 		ICartaoPersistente iCartaoPersistente = SuportePersistente.getInstance().iCartaoPersistente();
 
-		FuncNaoDocente funcNaoDocente = null;
+		Funcionario funcionario = null;
 		Integer numMecanografico = null;
 		ArrayList listaCartoesFuncionarios = null;
 
@@ -52,12 +52,12 @@ public class ServicoSeguroConstruirEscolhasMarcacoesPonto extends ServicoSeguro 
 			ListIterator iterListaFuncionarios = _listaFuncionarios.listIterator();
 			while (iterListaFuncionarios.hasNext()) {
 				numMecanografico = (Integer) iterListaFuncionarios.next();
-				if ((funcNaoDocente = iFuncNaoDocentePersistente.lerFuncNaoDocentePorNumMecanografico(numMecanografico.intValue())) == null) {
+				if ((funcionario = iFuncionarioPersistente.lerFuncionarioPorNumMecanografico(numMecanografico.intValue())) == null) {
 					throw new NotExecuteException("error.funcionario.naoExiste");
 				}
 
 				listaCartoesFuncionarios =
-					iCartaoPersistente.lerCartoesFuncionarioComValidade(funcNaoDocente.getCodigoInterno(), _dataInicio, _dataFim);
+					iCartaoPersistente.lerCartoesFuncionarioComValidade(funcionario.getCodigoInterno(), _dataInicio, _dataFim);
 				if (listaCartoesFuncionarios != null) {
 					ListIterator iterListaCartoesFuncionarios = listaCartoesFuncionarios.listIterator();
 					Integer numCartao = null;
@@ -75,11 +75,11 @@ public class ServicoSeguroConstruirEscolhasMarcacoesPonto extends ServicoSeguro 
 			ListIterator iterListaFuncionarios = _listaFuncionarios.listIterator();
 			while (iterListaFuncionarios.hasNext()) {
 				numMecanografico = (Integer) iterListaFuncionarios.next();
-				if ((funcNaoDocente = iFuncNaoDocentePersistente.lerFuncNaoDocentePorNumMecanografico(numMecanografico.intValue())) == null) {
+				if ((funcionario = iFuncionarioPersistente.lerFuncionarioPorNumMecanografico(numMecanografico.intValue())) == null) {
 					throw new NotExecuteException("error.funcionario.naoExiste");
 				}
 				listaCartoesFuncionarios =
-					iCartaoPersistente.lerCartoesFuncionarioComValidade(funcNaoDocente.getCodigoInterno(), _dataInicio, _dataFim);
+					iCartaoPersistente.lerCartoesFuncionarioComValidade(funcionario.getCodigoInterno(), _dataInicio, _dataFim);
 				if (listaCartoesFuncionarios != null) {
 					ListIterator iterListaCartoesFuncionarios = listaCartoesFuncionarios.listIterator();
 					Integer numCartao = null;

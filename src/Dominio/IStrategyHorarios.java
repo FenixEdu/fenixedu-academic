@@ -30,7 +30,7 @@ public interface IStrategyHorarios {
 	public long calcularTrabalhoNocturno(Horario horario, MarcacaoPonto entrada, MarcacaoPonto saida);
 	public void calcularHorasExtraordinarias(Horario horario, ArrayList listaMarcacoesPonto, ArrayList listaSaldos);
 	
-	public long limitaTrabalhoSeguido(Horario _horario, long entrada, long saida); 
+	public long limitaTrabalhoSeguido(Horario _horario, long entrada, long saida);
 	public long duracaoPF(Horario horario, ArrayList listaRegimes);
 	public long duracaoDiaria(Horario horario);
 	

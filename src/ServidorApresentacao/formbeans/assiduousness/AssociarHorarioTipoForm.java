@@ -127,7 +127,7 @@ public class AssociarHorarioTipoForm extends ActionForm {
 		_numDias = "";
 		_posicao = "";
 
-		//TODO: sigla por omissao
+		setSigla((String) _listaSiglas.get(0));
 
 		_diaFim = "";
 		_mesFim = "";
@@ -160,9 +160,10 @@ public class AssociarHorarioTipoForm extends ActionForm {
 			if (request.getParameter("numMecanografico") != null) {
 				if ((request.getParameter("numMecanografico")).length() < 1) {
 					errors.add("numMecanografico", new ActionError("error.numero.obrigatorio"));
+					return errors;
 				} else {
 					try {
-						int numMecanografico = (new Integer(request.getParameter("numMecanografico"))).intValue();
+						(new Integer(request.getParameter("numMecanografico"))).intValue();
 					} catch (java.lang.NumberFormatException e) {
 						errors.add("numMecanografico", new ActionError("error.numero.naoInteiro"));
 						return errors;
@@ -173,6 +174,7 @@ public class AssociarHorarioTipoForm extends ActionForm {
 			if ((request.getParameter("numDias") != null) && (request.getParameter("posicao") != null)) {
 				if (((request.getParameter("numDias")).length() < 1) || ((request.getParameter("posicao")).length() < 1)) {
 					errors.add("numero", new ActionError("error.numero.obrigatorio"));
+					return errors;
 				} else {
 					int numDias = 0;
 					int posicao = 0;

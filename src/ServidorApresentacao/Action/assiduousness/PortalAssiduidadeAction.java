@@ -1,7 +1,6 @@
 package ServidorApresentacao.Action.assiduousness;
 
 import java.io.IOException;
-import java.util.Locale;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +13,6 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.util.MessageResources;
 
 import Dominio.Pessoa;
 import ServidorAplicacao.Executor;
@@ -36,10 +34,7 @@ public final class PortalAssiduidadeAction extends Action {
   HttpServletRequest request,
   HttpServletResponse response)
   throws IOException, ServletException {
-    Locale locale = getLocale(request);
-    
     HttpSession session = request.getSession();
-    MessageResources messages = getResources(request);
     ActionErrors errors = new ActionErrors();
      
     Pessoa pessoa = (Pessoa)session.getAttribute(Constants.USER_KEY);

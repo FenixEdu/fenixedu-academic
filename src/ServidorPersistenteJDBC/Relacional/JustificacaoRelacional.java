@@ -343,9 +343,7 @@ public class JustificacaoRelacional implements IJustificacaoPersistente {
 						+ "AND diaInicio = ? "
 						+ "AND (horaInicio is null OR (horaInicio is not null AND horaInicio = ?)) "
 						+ "AND diaFim = ? "
-						+ "AND (horaFim is null OR (horaFim is not null AND horaFim = ?)) "
-						+ "AND quem = ? "
-						+ "AND quando = ?");
+						+ "AND (horaFim is null OR (horaFim is not null AND horaFim = ?))");
 
 			sql.setInt(1, justificacao.getChaveParamJustificacao());
 			sql.setInt(2, justificacao.getChaveFuncionario());
@@ -361,12 +359,6 @@ public class JustificacaoRelacional implements IJustificacaoPersistente {
 				sql.setDate(5, null);
 			}
 			sql.setTime(6, justificacao.getHoraFim());
-			sql.setInt(7, justificacao.getQuem());
-			if (justificacao.getQuando() != null) {
-				sql.setTimestamp(8, new Timestamp((justificacao.getQuando()).getTime()));
-			} else {
-				sql.setTimestamp(8, null);
-			}
 
 			ResultSet resultadoQuery = sql.executeQuery();
 			if (resultadoQuery.next()) {

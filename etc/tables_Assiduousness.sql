@@ -37,7 +37,7 @@ DROP TABLE IF EXISTS ass_CARTAO;
 CREATE TABLE ass_CARTAO (
   codigoInterno int(11) NOT NULL auto_increment,
   numCartao int(11) NOT NULL default '0',
-  chaveFuncNaoDocente int(11) NOT NULL default '0',
+  chaveFuncionario int(11) NOT NULL default '0',
   dataInicio datetime NOT NULL default '0000-00-00 00:00:00',
   dataFim datetime default NULL,
   quem int(11) NOT NULL default '0',
