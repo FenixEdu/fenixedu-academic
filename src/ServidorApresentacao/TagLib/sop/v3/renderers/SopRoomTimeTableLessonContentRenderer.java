@@ -19,23 +19,22 @@ public class SopRoomTimeTableLessonContentRenderer
 		InfoLesson lesson = lessonSlot.getInfoLessonWrapper().getInfoLesson();
 
 		strBuffer
-			.append("<a href='manageExecutionCourse.do?method=prepare&amp;page=0")
-			.append("&amp;" + SessionConstants.EXECUTION_PERIOD_OID)
-			.append(lesson.getInfoDisciplinaExecucao().getInfoExecutionPeriod().getIdInternal())
-			.append("&amp;execution_course_oid=")
-			.append(lesson.getInfoDisciplinaExecucao().getIdInternal())
-			.append("'>")
-			.append(lesson.getInfoDisciplinaExecucao().getSigla())
-			.append("</a>");
+				.append("<a href='manageExecutionCourse.do?method=prepare&amp;page=0")
+				.append("&amp;" + SessionConstants.EXECUTION_PERIOD_OID)
+				.append(lesson.getInfoDisciplinaExecucao().getInfoExecutionPeriod().getIdInternal())
+				.append("&amp;execution_course_oid=")
+				.append(lesson.getInfoDisciplinaExecucao().getIdInternal())
+				.append("'>")
+				.append(lesson.getInfoDisciplinaExecucao().getSigla())
+				.append("</a>");
 
 		// Note : A link to shift cannot be used because within the SOP
 		//        interface, shifts are viewed in a curricular year and
 		//        an execution degree context. View room occupation does
 		//        NOT contain this context, and therefor the jump cannot
 		//        be made.
-		strBuffer.append("&nbsp;(").append(lesson.getTipo()).append(")");		
+		strBuffer.append("&nbsp;(").append(lesson.getTipo()).append(")");
 
 		return strBuffer;
 	}
-
 }
