@@ -25,7 +25,6 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolment;
-import ServidorPersistente.IPersistentEnrolmentEquivalence;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -183,15 +182,15 @@ public class GetListsOfCurricularCoursesForEquivalence implements IServico {
 
 	public static List getEnrolmentsWithNoEquivalences(List enrolments, ISuportePersistente persistentSupport) throws ExcepcaoPersistencia {
 		List enrolmentsWithNoEquivalences = new ArrayList();
-		Iterator iterator = enrolments.iterator();
-		while(iterator.hasNext()) {
-			IEnrolment enrolment = (IEnrolment) iterator.next();
-			IPersistentEnrolmentEquivalence persistentEnrolmentEquivalence = persistentSupport.getIPersistentEquivalence();
-			List result = persistentEnrolmentEquivalence.readEnrolmentEquivalencesByEnrolment(enrolment);
-			if(result.isEmpty()) {
-				enrolmentsWithNoEquivalences.add(enrolment);
-			}
-		}
+//		Iterator iterator = enrolments.iterator();
+//		while(iterator.hasNext()) {
+//			IEnrolment enrolment = (IEnrolment) iterator.next();
+//			IPersistentEnrolmentEquivalence persistentEnrolmentEquivalence = persistentSupport.getIPersistentEquivalence();
+//			List result = persistentEnrolmentEquivalence.readEnrolmentEquivalencesByEnrolment(enrolment);
+//			if(result.isEmpty()) {
+//				enrolmentsWithNoEquivalences.add(enrolment);
+//			}
+//		}
 		return enrolmentsWithNoEquivalences;
 	}
 }

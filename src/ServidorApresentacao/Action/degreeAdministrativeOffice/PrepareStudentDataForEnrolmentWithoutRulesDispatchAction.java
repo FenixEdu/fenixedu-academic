@@ -34,7 +34,7 @@ public class PrepareStudentDataForEnrolmentWithoutRulesDispatchAction extends Pr
 
 	public ActionForward getStudentAndDegreeTypeForEnrolmentWithoutRules(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		boolean isSuccess = super.getUserViewFromStudentNumberAndDegreeType(form, request);
+		boolean isSuccess = super.getStudentByNumberAndDegreeType(form, request);
 
 		if(isSuccess) {
 			DynaActionForm getStudentByNumberAndDegreeTypeForm = (DynaActionForm) form;

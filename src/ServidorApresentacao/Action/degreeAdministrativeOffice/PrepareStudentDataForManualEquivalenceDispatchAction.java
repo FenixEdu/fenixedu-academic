@@ -44,7 +44,6 @@ public class PrepareStudentDataForManualEquivalenceDispatchAction extends Prepar
 		}
 
 		if(infoStudent != null) {
-			request.getSession().removeAttribute(SessionConstants.DEGREE_TYPE);
 			request.setAttribute(SessionConstants.STUDENT, infoStudent);
 			return mapping.findForward(forwards[0]);
 		} else {

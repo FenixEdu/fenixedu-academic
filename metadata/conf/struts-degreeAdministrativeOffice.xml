@@ -29,6 +29,7 @@
 
 		<form-bean name="curricularCourseEnrolmentWithRulesForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String"/>
+			<form-property name="studentOID" type="java.lang.Integer"/>
 			<form-property name="curricularCourses" type="java.lang.Integer[]"/>
 			<form-property name="optionalCourseIndex" type="java.lang.Integer"/>
 			<form-property name="optionalCurricularCourse" type="java.lang.Integer"/>
@@ -177,16 +178,13 @@
 			<exception	type="ServidorApresentacao.Action.exceptions.OutOfCurricularEnrolmentPeriodActionException"
 						key="ServidorApresentacao.Action.exceptions.OutOfCurricularEnrolmentPeriodActionException"
 						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-
 			<forward name="beginTransaction" path="/curricularCourseEnrolmentWithRulesManager.do?method=start"/>
-
 			<forward name="showAvailableCurricularCourses" path="df.page.showAvailableCurricularCoursesWithRules"/>
 			<forward name="verifyEnrolment" path="df.page.verifyEnrolmentWithRules"/>
 			<forward name="acceptEnrolment" path="df.page.acceptEnrolment"/>
 			<forward name="concreteOptionalList" path="df.page.concreteOptionalList"/>
 			<forward name="searchOptionalCurricularCourses" path="df.page.searchOptionalCurricularCourses"/>
-			
-			<forward name="cancel" path="/setStartMode.do?method=withRules"/>
+			<forward name="cancel" path="/functionRedirect.do?method=chooseStudentAndDegreeTypeForEnrolmentWithRules"/>
 		</action>
 
 		<action	name="curricularCourseEnrolmentWithoutRulesForm"

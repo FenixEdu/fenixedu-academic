@@ -9,6 +9,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
+import DataBeans.InfoStudent;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -21,7 +22,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 public class PrepareStudentDataAction extends DispatchAction {
 
-	protected boolean getUserViewFromStudentNumberAndDegreeType(ActionForm form, HttpServletRequest request) throws Exception {
+	protected boolean getStudentByNumberAndDegreeType(ActionForm form, HttpServletRequest request) throws Exception {
 
 		boolean result = false;
 
@@ -33,20 +34,20 @@ public class PrepareStudentDataAction extends DispatchAction {
 		Integer degreeType = new Integer((String) getStudentByNumberAndDegreeTypeForm.get("degreeType"));
 		Integer studentNumber = new Integer((String) getStudentByNumberAndDegreeTypeForm.get("studentNumber"));
 
-		IUserView actor = null;
+		InfoStudent infoStudent = null;
 
 		Object args[] = { degreeType, studentNumber };
 		try {
-			actor = (IUserView) ServiceUtils.executeService(userView, "GetUserViewFromStudentNumberAndDegreeType", args);
+			infoStudent = (InfoStudent) ServiceUtils.executeService(userView, "GetStudentByNumberAndDegreeType", args);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
 
-		if(actor == null) {
+		if(infoStudent == null) {
 			this.setNoStudentError(studentNumber, request);
 			result = false;
 		} else {
-			session.setAttribute(SessionConstants.ENROLMENT_ACTOR_KEY, actor);
+			request.setAttribute(SessionConstants.STUDENT, infoStudent);
 			result = true;
 		}
 		

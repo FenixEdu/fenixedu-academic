@@ -1,7 +1,9 @@
 package ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withRules;
 
+import DataBeans.InfoStudent;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.enrolment.degree.ShowAvailableCurricularCourses;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
@@ -25,7 +27,8 @@ public class ShowAvailableCurricularCoursesWithRules implements IServico {
 		return "ShowAvailableCurricularCoursesWithRules";
 	}
 
-	public InfoEnrolmentContext run(IUserView userView) throws FenixServiceException {
+	public InfoEnrolmentContext run(InfoStudent infoStudent) throws FenixServiceException {
+		IUserView userView = new UserView(infoStudent.getInfoPerson().getUsername(), null);
 		ShowAvailableCurricularCourses service = ShowAvailableCurricularCourses.getService();
 		return service.run(userView);
 	}

@@ -3,17 +3,16 @@ package ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withRules
 import java.util.Date;
 
 import DataBeans.InfoExecutionPeriod;
+import DataBeans.InfoStudent;
 import DataBeans.util.Cloner;
 import Dominio.EnrolmentPeriod;
 import Dominio.IEnrolmentPeriod;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolmentPeriod;
-import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -39,16 +38,14 @@ public class CreateTemporarilyEnrolmentPeriod implements IServico {
 		return "CreateTemporarilyEnrolmentPeriod";
 	}
 
-	public void run(InfoExecutionPeriod infoExecutionPeriod, IUserView actor) throws FenixServiceException {
+	public void run(InfoExecutionPeriod infoExecutionPeriod, InfoStudent infoStudent) throws FenixServiceException {
 		try {
 			ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
 			IPersistentEnrolmentPeriod enrolmentPeriodDAO = persistentSupport.getIPersistentEnrolmentPeriod();
 			IStudentCurricularPlanPersistente persistentStudentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente();
-			IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 
-			IStudent student = persistentStudent.readByUsername(actor.getUtilizador());
+			IStudent student = Cloner.copyInfoStudent2IStudent(infoStudent);
 			IStudentCurricularPlan studentActiveCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(student.getNumber(), student.getDegreeType());
-
 
 			IEnrolmentPeriod enrolmentPeriod = enrolmentPeriodDAO.readActualEnrolmentPeriodForDegreeCurricularPlan(studentActiveCurricularPlan.getDegreeCurricularPlan());
 			if(enrolmentPeriod == null) {

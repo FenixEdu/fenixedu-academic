@@ -15,7 +15,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoCurricularCourse;
@@ -23,11 +22,14 @@ import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoDegree;
 import DataBeans.InfoEnrolmentInOptionalCurricularCourse;
 import DataBeans.InfoExecutionPeriod;
+import DataBeans.InfoStudent;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentValidationResult;
 import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
-import ServidorApresentacao.Action.exceptions.FenixTransactionException;
+import ServidorApresentacao.Action.commons.TransactionalDispatchAction;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.OutOfCurricularEnrolmentPeriodActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -38,19 +40,20 @@ import Util.CurricularCourseType;
  *
  */
 
-public class CurricularCourseEnrolmentWithRulesManagerDispatchAction extends DispatchAction {
+public class CurricularCourseEnrolmentWithRulesManagerDispatchAction extends TransactionalDispatchAction {
 
 	private final String[] forwards = { "showAvailableCurricularCourses", "verifyEnrolment", "acceptEnrolment", "cancel" };
 
 	public ActionForward start(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		createToken(request);
+		super.createToken(request);
 
 		HttpSession session = request.getSession();
 
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		IUserView actor = (IUserView) session.getAttribute(SessionConstants.ENROLMENT_ACTOR_KEY);
-		Object args[] = { actor };
+
+		InfoStudent infoStudent = this.getInfoStudent(request, form, userView);
+		Object args[] = { infoStudent };
 
 		InfoEnrolmentContext infoEnrolmentContext = null;
 		try {
@@ -59,9 +62,8 @@ public class CurricularCourseEnrolmentWithRulesManagerDispatchAction extends Dis
 			throw new OutOfCurricularEnrolmentPeriodActionException(e.getMessageKey(), e.getStartDate(), e.getEndDate(), mapping.findForward("globalOutOfPeriod"));
 		}
 
-//		session.removeAttribute(SessionConstants.ENROLMENT_ACTOR_KEY);
 		session.setAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY, infoEnrolmentContext);
-		initializeForm(infoEnrolmentContext, (DynaActionForm) form);
+		this.initializeForm(infoEnrolmentContext, (DynaActionForm) form);
 		return mapping.findForward(forwards[0]);
 	}
 
@@ -70,32 +72,32 @@ public class CurricularCourseEnrolmentWithRulesManagerDispatchAction extends Dis
 		if (isCancelled(request)) {
 			return mapping.findForward(forwards[3]);
 		}
-		validateToken(request, form, mapping);
+
+		super.validateToken(request, form, mapping, "error.transaction.enrolment");
 
 		HttpSession session = request.getSession();
 
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		IUserView actor = (IUserView) session.getAttribute(SessionConstants.ENROLMENT_ACTOR_KEY);
+		InfoStudent infoStudent = this.getInfoStudent(request, form, userView);
 
 		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getServletContext().getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 
-		Object args1[] = { infoExecutionPeriod, actor };
+		Object args1[] = { infoExecutionPeriod, infoStudent };
 		ServiceUtils.executeService(userView, "CreateTemporarilyEnrolmentPeriod", args1);
 
-		Object args2[] = { actor };
+		Object args2[] = { infoStudent };
 		InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ShowAvailableCurricularCoursesWithRules", args2);
 
-		Object args3[] = { infoExecutionPeriod, infoEnrolmentContext };
-		ServiceUtils.executeService(userView, "DeleteTemporarilyEnrolmentPeriod", args3);
+//		Object args3[] = { infoExecutionPeriod, infoEnrolmentContext };
+//		ServiceUtils.executeService(userView, "DeleteTemporarilyEnrolmentPeriod", args3);
 
-//		session.removeAttribute(SessionConstants.ENROLMENT_ACTOR_KEY);
 		session.setAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY, infoEnrolmentContext);
-		initializeForm(infoEnrolmentContext, (DynaActionForm) form);
+		this.initializeForm(infoEnrolmentContext, (DynaActionForm) form);
 		return mapping.findForward(forwards[0]);
 	}
 
 	public ActionForward verifyEnrolment(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		validateToken(request, form, mapping);
+		super.validateToken(request, form, mapping, "error.transaction.enrolment");
 
 		DynaActionForm enrolmentForm = (DynaActionForm) form;
 		HttpSession session = request.getSession();
@@ -122,7 +124,7 @@ public class CurricularCourseEnrolmentWithRulesManagerDispatchAction extends Dis
 		if (isCancelled(request)) {
 			return getBeforeForward(request, mapping);
 		}
-		validateToken(request, form, mapping);
+		super.validateToken(request, form, mapping, "error.transaction.enrolment");
 
 		HttpSession session = request.getSession();
 
@@ -148,7 +150,7 @@ public class CurricularCourseEnrolmentWithRulesManagerDispatchAction extends Dis
 		if (isCancelled(request)) {
 			return mapping.findForward("showAvailableCourses");
 		}
-		validateToken(request, form, mapping);
+		super.validateToken(request, form, mapping, "error.transaction.enrolment");
 
 		DynaValidatorForm enrolmentForm = (DynaValidatorForm) form;
 		HttpSession session = request.getSession();
@@ -191,7 +193,7 @@ public class CurricularCourseEnrolmentWithRulesManagerDispatchAction extends Dis
 		if (isCancelled(request)) {
 			return mapping.findForward("showAvailableCourses");
 		}
-		validateToken(request, form, mapping);
+		super.validateToken(request, form, mapping, "error.transaction.enrolment");
 
 		DynaValidatorForm enrolmentForm = (DynaValidatorForm) form;
 		HttpSession session = request.getSession();
@@ -220,26 +222,26 @@ public class CurricularCourseEnrolmentWithRulesManagerDispatchAction extends Dis
 		return mapping.findForward(forwards[0]);
 	}
 
-	/**
-	 * @param request	
-	 */
-	private void validateToken(HttpServletRequest request, ActionForm form, ActionMapping mapping) throws FenixTransactionException {
-
-		if (!isTokenValid(request)) {
-			form.reset(mapping, request);
-			throw new FenixTransactionException("error.transaction.enrolment");
-		} else {
-			createToken(request);
-		}
-	}
-
-	/**
-	 * @param request
-	 */
-	private void createToken(HttpServletRequest request) {
-		generateToken(request);
-		saveToken(request);
-	}
+//	/**
+//	 * @param request	
+//	 */
+//	private void validateToken(HttpServletRequest request, ActionForm form, ActionMapping mapping) throws FenixTransactionException {
+//
+//		if (!isTokenValid(request)) {
+//			form.reset(mapping, request);
+//			throw new FenixTransactionException("error.transaction.enrolment");
+//		} else {
+//			createToken(request);
+//		}
+//	}
+//
+//	/**
+//	 * @param request
+//	 */
+//	private void createToken(HttpServletRequest request) {
+//		generateToken(request);
+//		saveToken(request);
+//	}
 
 	private void initializeForm(InfoEnrolmentContext infoEnrolmentContext, DynaActionForm enrolmentForm) {
 		List actualEnrolment = infoEnrolmentContext.getActualEnrolment();
@@ -380,4 +382,20 @@ public class CurricularCourseEnrolmentWithRulesManagerDispatchAction extends Dis
 		saveErrors(request, actionErrors);
 	}
 
+	private InfoStudent getInfoStudent(HttpServletRequest request, ActionForm form, IUserView userView) throws FenixActionException {
+		DynaActionForm enrolmentForm = (DynaActionForm) form;
+		InfoStudent infoStudent = (InfoStudent) request.getAttribute(SessionConstants.STUDENT);
+		if(infoStudent == null) {
+			Integer infoStudentOID = (Integer) enrolmentForm.get("studentOID");
+			try {
+				Object args[] = { infoStudentOID };
+				infoStudent = (InfoStudent) ServiceUtils.executeService(userView, "GetStudentByOID", args);
+			} catch(FenixServiceException e) {
+				throw new FenixActionException(e);
+			}
+		} else {
+			enrolmentForm.set("studentOID", infoStudent.getIdInternal());
+		}
+		return infoStudent;
+	}
 }

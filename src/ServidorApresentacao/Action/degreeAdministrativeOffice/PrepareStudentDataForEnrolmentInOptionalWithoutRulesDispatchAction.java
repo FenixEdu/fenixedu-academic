@@ -19,7 +19,7 @@ public class PrepareStudentDataForEnrolmentInOptionalWithoutRulesDispatchAction 
 
 	public ActionForward getStudentAndDegreeTypeForEnrolmentInOptionalWithoutRules(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		boolean isSuccess = super.getUserViewFromStudentNumberAndDegreeType(form, request);
+		boolean isSuccess = super.getStudentByNumberAndDegreeType(form, request);
 
 		if(isSuccess) {
 			request.getSession().removeAttribute(SessionConstants.DEGREE_TYPE);
