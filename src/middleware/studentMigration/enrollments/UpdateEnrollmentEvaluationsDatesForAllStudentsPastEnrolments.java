@@ -56,7 +56,7 @@ import Util.TipoCurso;
 
 public class UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments
 {
-	private static int NUMBER_OF_ELEMENTS_IN_SPAN = 500;
+	private static int NUMBER_OF_ELEMENTS_IN_SPAN = 100;
 	private static int alteredDates = 0;
 
 	public static void main(String args[])
