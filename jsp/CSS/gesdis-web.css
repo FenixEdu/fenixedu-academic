@@ -370,8 +370,7 @@ p.contacto {
 .listClasses-header	{
 	background-color: #CCC;
 	font-weight: bold;
-	padding: 0 0 0 20px;
-	text-align: left;
+	text-align: center;
 	height: 30px;
 }
 .tall-td {
