@@ -1,5 +1,6 @@
 package ServidorApresentacao.Action.publico;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -20,6 +21,7 @@ import DataBeans.InfoRoom;
 import DataBeans.RoomKey;
 import DataBeans.comparators.ComparatorByLessonTypeForInfoShiftWithAssociatedInfoClassesAndInfoLessons;
 import DataBeans.gesdis.InfoAnnouncement;
+import DataBeans.gesdis.InfoSection;
 import DataBeans.gesdis.InfoSite;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
@@ -216,7 +218,40 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 			site = (InfoSite) manager.executar(userView,"ReadSite",args2);
 			session.setAttribute(SessionConstants.INFO_SITE,site);
 //read Sections			
-
+		//this is just a test:
+		List sections=new ArrayList();
+		InfoSection section1 = new InfoSection(
+		"Seccao1deTFCI",
+		new Integer(0),
+		site,
+		null);
+		InfoSection section2 = new InfoSection(
+		"Seccao1deTFCI",
+		new Integer(0),
+		site,
+		null);
+		InfoSection section3 = new InfoSection(
+		"Seccao1deTFCI",
+		new Integer(0),
+		site,
+		null);
+		InfoSection section4 = new InfoSection(
+		"Seccao1deTFCI",
+		new Integer(0),
+		site,
+		null);
+		sections.add(section1);
+		sections.add(section2);
+		sections.add(section3);
+		sections.add(section4);
+		List sections1=new ArrayList();
+				sections1.add(section1);
+				sections1.add(section2);
+				sections1.add(section3);
+				sections1.add(section4);
+		sections.add(sections1);		
+		session.setAttribute(SessionConstants.SECTIONS,sections);
+		
 //read responsible
 
 		Object[] args3 = {infoExecCourse};
