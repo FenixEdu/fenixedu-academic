@@ -127,8 +127,9 @@ public class ExecutionPeriod extends DomainObject implements IExecutionPeriod {
     public boolean equals(Object obj) {
         if (obj instanceof IExecutionPeriod) {
             IExecutionPeriod executionPeriod = (IExecutionPeriod) obj;
-            return getName().equals(executionPeriod.getName())
-                    && getExecutionYear().equals(executionPeriod.getExecutionYear());
+            return getIdInternal().equals(executionPeriod.getIdInternal());
+//            return getName().equals(executionPeriod.getName())
+//                    && getExecutionYear().equals(executionPeriod.getExecutionYear());
         }
         return super.equals(obj);
     }
