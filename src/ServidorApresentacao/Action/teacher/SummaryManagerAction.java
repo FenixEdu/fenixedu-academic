@@ -329,7 +329,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
                 InfoSummary summaryBefore;
                 IUserView userView = SessionUtils.getUserView(request);
                 Object args[] = { getObjectCode(request),
-                        infoSummary.getInfoShift().getIdInternal() };
+                        infoSummary.getInfoShift().getIdInternal(), lessonSelected};
                 summaryBefore = (InfoSummary) ServiceManagerServiceFactory.executeService(
                         userView, "ReadLastSummary", args);
                 List dates = new ArrayList();
@@ -367,7 +367,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
     }
     
     public ActionForward insertSummary(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
         try {
             HttpSession session = request.getSession(false);
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -397,12 +397,12 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
         else if(saveValue.equals(new Integer(1))){
             resetActionForm(actionForm, true);
             request.setAttribute("teste", "true");
-            return mapping.findForward("doPrepareInsertSummary");
+            return prepareInsertSummary(mapping, actionForm, request, response);
         }
         else{
             resetActionForm(actionForm, false);
             request.setAttribute("teste", "true");
-            return mapping.findForward("doPrepareInsertSummary");
+            return prepareInsertSummary(mapping, actionForm, request, response);
         }
     }
     

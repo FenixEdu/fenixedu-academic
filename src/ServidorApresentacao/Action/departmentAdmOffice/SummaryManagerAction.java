@@ -310,7 +310,7 @@ public class SummaryManagerAction extends FenixDispatchAction {
         		GregorianCalendar calendar = new GregorianCalendar();
         		InfoSummary summaryBefore;
         		IUserView userView = SessionUtils.getUserView(request);	
-        		Object args[] = { getObjectCode(request), infoSummary.getInfoShift().getIdInternal() };							
+        		Object args[] = { getObjectCode(request), infoSummary.getInfoShift().getIdInternal(), lessonSelected};							
         		summaryBefore = (InfoSummary)ServiceManagerServiceFactory.executeService(userView, "ReadLastSummary", args);
         		List dates = new ArrayList();
         		if(summaryBefore != null){
