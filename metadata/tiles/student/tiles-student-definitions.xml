@@ -52,4 +52,10 @@
 	<definition name="definition.gaugingTestResults" extends="definition.student.masterPage">
 		<put name="body" value="/student/gaugingTests/physics/viewGaugingTestResults.jsp"/>
 	</definition>
+
+	<definition name="definition.schoolRegistration" extends="definition.student.one-column">
+		<put name="navGeral" value="" />
+		<put name="body" value="/student/schoolRegistration/inquiry_bd.jsp" />
+	</definition>
+
 </tiles-definitions>
