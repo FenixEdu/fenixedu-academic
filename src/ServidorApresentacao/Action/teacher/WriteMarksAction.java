@@ -44,7 +44,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  *
  */
 public class WriteMarksAction extends DispatchAction {
-
+	List invalidRecords = null;
 	public ActionForward loadFile(
 		ActionMapping mapping,
 		ActionForm form,
@@ -73,31 +73,39 @@ public class WriteMarksAction extends DispatchAction {
 			return mapping.findForward("loadMarks");
         }
         
-    	InputStreamReader input =
-			new InputStreamReader(formFile.getInputStream());
-
+    	InputStreamReader input = new InputStreamReader(formFile.getInputStream());
 		BufferedReader reader = new BufferedReader(input);
 	    
 	    
 		int n = 0;
+		try {
+			lineReader = reader.readLine();
+		} catch (IOException e) {
+			throw new NotExecuteException("error.ficheiro.impossivelLer");
+		}
 		do {
-			try {
-				lineReader = reader.readLine();
-				
-				System.out.println("readline------>"+lineReader);
-				
-			} catch (IOException e) {
-				throw new NotExecuteException("error.ficheiro.impossivelLer");
-			}
 			if ((lineReader != null) && (lineReader.length() != 0)) {
 				n++;
 			}
+			try {
+				lineReader = reader.readLine();	
+			} catch (IOException e) {
+				throw new NotExecuteException("error.ficheiro.impossivelLer");
+			}
+			
+		}while ((lineReader != null) && (lineReader.length() != 0));
+		if (n == 0){
+			prepareInputForward(request, session, objectCode, examCode);
+			actionErrors.add(
+					"BadFormatFile",
+					new ActionError(
+						"error.file.badFormat"));
 
+			saveErrors(request, actionErrors);
+			return mapping.findForward("loadMarks");
+		
 		}
-		
-		 while ((lineReader != null) && (lineReader.length() != 0));
-		
-		 reader.close();
+		reader.close();
 		input = new InputStreamReader(formFile.getInputStream());
 		reader = new BufferedReader(input);
 
@@ -114,24 +122,23 @@ public class WriteMarksAction extends DispatchAction {
 		do {
 
 			/* leitura do ficheiro de notas linha a linha */
-			if ((lineReader != null)) {
-
+			if ((lineReader != null) && (lineReader.length() != 0)) {
 				stringTokenizer = new StringTokenizer(lineReader);				
 				studentsNumbers[j] = stringTokenizer.nextToken().trim();
 				try {
 					marks[j] = stringTokenizer.nextToken().trim();
 				} catch (NoSuchElementException e1) {
 					prepareInputForward(request, session, objectCode, examCode);
-								actionErrors.add(
-										"BadFormatFile",
-										new ActionError(
-											"error.file.badFormat"));
-			
-								saveErrors(request, actionErrors);
-								return mapping.findForward("loadMarks");
+					actionErrors.add(
+							"BadFormatFile",
+							new ActionError(
+								"error.file.badFormat"));
+
+					saveErrors(request, actionErrors);
+					return mapping.findForward("loadMarks");
 					
 				}
-
+				j++;
 			}
 			try {
 				lineReader = reader.readLine();
@@ -139,13 +146,12 @@ public class WriteMarksAction extends DispatchAction {
 				throw new NotExecuteException("error.ficheiro.impossivelLer");
 			}
 
-			j++;
-
 		} while ((lineReader != null) && (lineReader.length() != 0));
 		reader.close();
 		IUserView userView = (IUserView) session.getAttribute("UserView");
 
 		List marksList = new ArrayList();
+		invalidRecords = new ArrayList();
 		for (int i = 0; i < marks.length; i++) {
 
 			InfoMark infoMark = new InfoMark();
@@ -177,11 +183,14 @@ public class WriteMarksAction extends DispatchAction {
 			&& infoSiteMarks.getStudentsListErrors().size() > 0) {
 			ListIterator iterator =
 				infoSiteMarks.getStudentsListErrors().listIterator();
+			int i = 0;
 			while (iterator.hasNext()) {
+				
 				InfoMark infoMark = (InfoMark) iterator.next();
-				actionErrors.add(
-					"studentNonExistence",
-					new ActionError(
+				if (infoMark != null){	
+					actionErrors.add(
+						"studentNonExistence",
+						new ActionError(
 						"errors.student.nonExisting",
 						String.valueOf(
 							(infoMark
@@ -189,6 +198,14 @@ public class WriteMarksAction extends DispatchAction {
 								.getAluno()
 								.getNumber())
 								.intValue())));
+				}else{
+
+					actionErrors.add(
+					"studentInvalid",
+					new ActionError(
+						"errors.registo.invalid",invalidRecords.get(i)));
+				    i++;
+				}
 			}
 			saveErrors(request, actionErrors);
 
@@ -204,7 +221,7 @@ public class WriteMarksAction extends DispatchAction {
 					new ActionError(
 						"errors.invalidMark",
 						infoMark.getMark(),
-						infoMark.getInfoFrequenta().getAluno().getNumber()));
+				String.valueOf((infoMark.getInfoFrequenta().getAluno().getNumber()).intValue())));
 
 			}
 			saveErrors(request, actionErrors);
@@ -399,28 +416,32 @@ public class WriteMarksAction extends DispatchAction {
 	}
 
 	private InfoMark getMarkStudent(
+		
 		String[] student,
 		String[] mark,
 		int index,
 		IUserView userView)
 		throws FenixActionException {
-		String markString = mark[index];
-		Integer studentInt = new Integer(student[index]);
 		ActionErrors actionErrors = new ActionErrors();
-
+		String markString = mark[index];
+		Integer studentInt = null;
+		
+		GestorServicos manager = GestorServicos.manager();
+		InfoStudent infoStudentCode = new InfoStudent();
+		InfoStudent infoStudent = new InfoStudent();
+		InfoFrequenta infoFrequenta = new InfoFrequenta();
+		try{
+			studentInt = new Integer(student[index]);
+		}catch (NumberFormatException e){
+			invalidRecords.add(student[index]);
+		}
 		if (markString != null && studentInt != null) {
-
-			GestorServicos manager = GestorServicos.manager();
-			InfoStudent infoStudentCode = new InfoStudent();
-			InfoStudent infoStudent = new InfoStudent();
-
 			System.out.println(
 				"-->WriteMarksAction-writeMarks:  mark"
 					+ markString
 					+ " de "
 					+ studentInt);
 			//infoMark with only student code and mark
-			InfoFrequenta infoFrequenta = new InfoFrequenta();
 			infoStudent.setNumber(studentInt);
 			infoFrequenta.setAluno(infoStudent);
 

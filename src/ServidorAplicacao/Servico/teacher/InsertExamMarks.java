@@ -121,6 +121,10 @@ public class InsertExamMarks implements IServico {
 			ListIterator iterMarks = examMarks.listIterator();
 			while (iterMarks.hasNext()) {
 				InfoMark infoMark = (InfoMark) iterMarks.next();
+				if (infoMark == null)
+					marksErrorsStudentExistence.add(infoMark);
+				else{
+			
 				//verify if the student existe
 				infoMark = verifyStudentExistance(infoMark, attendList);
 				if (infoMark.getInfoFrequenta().getAluno().getIdInternal()
@@ -180,6 +184,7 @@ public class InsertExamMarks implements IServico {
 
 					infoMarksList.add(infoMark);
 				}
+				}	
 			}
 		} catch (ExcepcaoPersistencia ex) {
 			ex.printStackTrace();
