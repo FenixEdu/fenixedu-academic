@@ -119,7 +119,9 @@
         <servlet-name>action</servlet-name>
         <url-pattern>*.do</url-pattern>
     </servlet-mapping>
-    
+	<session-config>
+			<session-timeout>120</session-timeout>
+	</session-config>    
     <taglib>
         <taglib-uri>/WEB-INF/struts-html.tld</taglib-uri>
         <taglib-location>/WEB-INF/struts-html.tld</taglib-location>
