@@ -72,6 +72,9 @@ public class TurnoAlunoOJB
 		super.deleteAll(oqlQuery);
 	}
 
+	/**
+	 * FIXME: wrong link from executionCourse to ExecutionDegree
+	 */
 	public ITurno readByStudentIdAndShiftType(
 		Integer id,
 		TipoAula shiftType,
