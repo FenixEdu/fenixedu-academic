@@ -313,7 +313,8 @@
        <forward name="editSection" path="/editSection.jsp"/>
        <forward name="prepareEditSection" path="/editSection.do?method=prepareEdit"/>
        <forward name="viewSite" path="/viewSite.do"/>
-       <forward name="changeParent" path="/changeParent.jsp"/>       
+       <forward name="changeParent" path="/changeParent.jsp"/>
+       <forward name="viewSection" path="/viewSection.jsp"/>       
 	</action>
 	
 	<action name="sectionForm"

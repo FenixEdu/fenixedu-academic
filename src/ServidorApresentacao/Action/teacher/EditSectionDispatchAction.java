@@ -20,7 +20,9 @@ import DataBeans.gesdis.InfoSite;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
+import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
@@ -233,13 +235,27 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 		
 		try {
 			manager.executar(userView, "EditSection", editionArgs);
-		} catch (FenixServiceException fenixServiceException) {
+		}
+		catch (ExistingServiceException fenixServiceException) {
+		throw new ExistingActionException("Uma Subsecção com este nome e essa seccção pai ",fenixServiceException);
+	} 
+		
+		catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
 		
 		session.removeAttribute(SessionConstants.INFO_SECTION);
 		session.setAttribute(SessionConstants.INFO_SECTION, newSection);
-
-		return mapping.findForward("prepareEditSection");
+		List sections= null;
+		Object readArgs[] = { newSection.getInfoSite()	};
+		try {
+			sections=(List) manager.executar(userView, "ReadSections", readArgs);
+			} catch (FenixServiceException fenixServiceException) {
+					throw new FenixActionException(fenixServiceException.getMessage());
+				}
+			session.removeAttribute(SessionConstants.SECTIONS);
+			session.setAttribute(SessionConstants.SECTIONS, sections);
+			
+		return mapping.findForward("viewSection");
 	}
 }
