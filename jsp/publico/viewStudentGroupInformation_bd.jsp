@@ -1,3 +1,5 @@
+
+
 <%@ page language="java" %>
 
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
@@ -15,8 +17,6 @@
 
 	
 	<tr>
-		<td class="listClasses-header">
-		</td>
 		<td class="listClasses-header"><bean:message key="label.numberWord" />
 		</td>
 		<td class="listClasses-header"><bean:message key="label.nameWord" />
@@ -27,10 +27,7 @@
 	
 	<bean:define id="mailingList" value=""/>	
 	<logic:iterate id="infoSiteStudentInformation" name="component" property="infoSiteStudentInformationList">			
-		<tr>	
-			<td class="listClasses">
-			
-			</td>	
+		<tr>		
 			<td class="listClasses"><bean:write name="infoSiteStudentInformation" property="number"/>
 			</td>	
 			</td>	
@@ -41,7 +38,7 @@
 					<bean:define id="mail" name="infoSiteStudentInformation" property="email"/>
 					<html:link href="<%= "mailto:"+ mail %>"><bean:write name="infoSiteStudentInformation" property="email"/></html:link>
 				</td>
-			</tr>
+		</tr>
 			<bean:define id="aux" name="mailingList"/>
 			<logic:lessThan name="aux" value="1">
 				<bean:define id="mailingList" value="<%= mail.toString() %>"/>	
@@ -50,7 +47,7 @@
 				<bean:define id="mailingList" value="<%= aux + ";"+ mail  %>"/>	
 			</logic:greaterThan>
 			
-	 	</tr>	
+	 		
 	 </logic:iterate>
 	 
 
