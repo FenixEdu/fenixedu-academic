@@ -7,11 +7,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.action.DynaActionFormClass;
+import org.apache.struts.config.FormBeanConfig;
+import org.apache.struts.config.ModuleConfig;
 
 import DataBeans.InfoRoom;
 import DataBeans.RoomKey;
@@ -58,7 +61,7 @@ public class ManipularSalasAction extends FenixAction {
 		HttpServletResponse response)
 		throws Exception {
 			SessionUtils.validSessionVerification(request, mapping);
-		HttpSession sessao = getSession(request);
+		
 		String parameter = request.getParameter("operation");
 
 		if (parameter.equals("Ver Sala")) {
@@ -123,7 +126,10 @@ public class ManipularSalasAction extends FenixAction {
 		// create the bean that holds the information about the sala to edit
 		DynaActionFormClass cl;
 
-		cl = DynaActionFormClass.getDynaActionFormClass("roomForm");
+		ModuleConfig moduleConfig =(ModuleConfig) this.getServlet().getServletContext().getAttribute(Globals.MODULE_KEY); 
+		FormBeanConfig formBeanConfig = moduleConfig.findFormBeanConfig("roomForm");
+		cl = DynaActionFormClass.createDynaActionFormClass(formBeanConfig);
+		
 		DynaActionForm criarSalaForm = (DynaActionForm) cl.newInstance();
 
 		criarSalaForm.set("name", salaBean.getNome());
