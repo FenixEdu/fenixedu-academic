@@ -31,10 +31,10 @@ public class Item implements IItem {
 	/** 
 	 * Construtor 
 	 */
-	public Item(String name, ISection section, Integer order, String information, Boolean urgent) {
+	public Item(String name, ISection section, Integer itemOrder, String information, Boolean urgent) {
 		setName(name);
 		setSection(section);
-		setItemOrder(order);
+		setItemOrder(itemOrder);
 		setInformation(information);
 		setUrgent(urgent);
 	}

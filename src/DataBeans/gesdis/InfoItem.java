@@ -13,7 +13,7 @@ public class InfoItem implements Serializable {
 
 	private String information;
 	private String name;
-	private Integer order;
+	private Integer itemOrder;
 	private InfoSection infoSection;
 	private Boolean urgent;
 
@@ -26,12 +26,12 @@ public class InfoItem implements Serializable {
 	/**
 	 * Constructor
 	 */
-	public InfoItem(String information, String name, Integer order, 
+	public InfoItem(String information, String name, Integer itemOrder, 
 		InfoSection infoSection, Boolean urgent) {
 
 		this.information = information;
 		this.name = name;
-		this.order = order;
+		this.itemOrder = itemOrder;
 		this.infoSection = infoSection;
 		this.urgent = urgent;
 	}
@@ -45,7 +45,7 @@ public class InfoItem implements Serializable {
 			InfoItem infoItem = (InfoItem) obj;
 			resultado =  getInformation().equals(infoItem.getInformation())
 				&& getName().equals(infoItem.getName())
-				&& getOrder().equals(infoItem.getOrder())
+				&& getItemOrder().equals(infoItem.getItemOrder())
 				&& getInfoSection().equals(infoItem.getInfoSection())
 				&& getUrgent().equals(infoItem.getUrgent());
 		}
@@ -58,7 +58,7 @@ public class InfoItem implements Serializable {
 	public String toString() {
 		String result = "[INFOITEM";
 		result += ", name=" + name;
-		result += ", order=" + order;
+		result += ", itemOrder=" + itemOrder;
 		result += ", infoSection=" + infoSection;
 		result += ", urgent=" + urgent;		
 		result += "]";
@@ -82,11 +82,16 @@ public class InfoItem implements Serializable {
 	/**
 	 * @return Integer
 	 */
-	public Integer getOrder() {
-		return order;
+	public Integer getItemOrder() {
+		return itemOrder;
 	}
 
-
+	/**
+	 * @return InfoSection
+	 */
+	public InfoSection getInfoSection() {
+		return infoSection;
+	}
 
 	/**
 	 * @return Boolean
@@ -112,11 +117,11 @@ public class InfoItem implements Serializable {
 	}
 
 	/**
-	 * Sets the order.
-	 * @param order The order to set
+	 * Sets the itemOrder.
+	 * @param itemOrder The itemOrder to set
 	 */
-	public void setOrder(Integer order) {
-		this.order = order;
+	public void setItemOrder(Integer itemOrder) {
+		this.itemOrder = itemOrder;
 	}
 
 
@@ -129,12 +134,7 @@ public class InfoItem implements Serializable {
 		this.urgent = urgent;
 	}
 
-	/**
-	 * @return InfoSection
-	 */
-	public InfoSection getInfoSection() {
-		return infoSection;
-	}
+
 
 	/**
 	 * Sets the infoSection.
