@@ -107,3 +107,14 @@ create table ENROLMENT (
    type=InnoDB;
 
 
+#----------------------------
+# Table structure for BRANCH
+#----------------------------
+drop table if exists BRANCH;
+create table BRANCH (
+   ID_INTERNAL int(11) not null auto_increment,
+   BRANCH_CODE varchar(50) not null,
+   BRANCH_NAME varchar(255),
+   primary key (ID_INTERNAL),
+   unique U1 (BRANCH_NAME, BRANCH_CODE)
+)type=InnoDB;
