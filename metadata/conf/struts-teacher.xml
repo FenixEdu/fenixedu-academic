@@ -256,7 +256,7 @@
      <forward name="editProgram" path="/editProgram.jsp"/>
      
 	</action>
-	
+	<action path="/jm" forward="/navbar.jsp"/>
 	<!--
 	<action path="/index" forward="/obterSitios.do"/>
 	<action path="/autenticacao" forward="/autenticacao.jsp"/>
