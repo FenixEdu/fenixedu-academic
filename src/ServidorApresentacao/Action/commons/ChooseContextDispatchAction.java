@@ -98,7 +98,7 @@ public class ChooseContextDispatchAction extends FenixContextDispatchAction {
 				InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
 				String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
 
-				name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString() + " de " + name;
+				name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString() + " em " + name;
 
 				name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree)
 					? "-" + infoExecutionDegree.getInfoDegreeCurricularPlan().getName()
@@ -164,7 +164,7 @@ public class ChooseContextDispatchAction extends FenixContextDispatchAction {
 			InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
 			String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
 
-			name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString() + " de " + name;
+			name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString() + " em " + name;
 
 			name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree)
 				? "-" + infoExecutionDegree.getInfoDegreeCurricularPlan().getName()
