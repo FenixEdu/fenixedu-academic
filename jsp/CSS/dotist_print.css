@@ -50,7 +50,7 @@ a:visited {
 	text-align: center;
 	}
 	
-#header, #footer, #navbargeral, #navopgeral, #navlateral {
+#header *, #footer *, #navbargeral *, #navopgeral *, #navlateral * {
     display: none;
 	}
 
@@ -172,7 +172,7 @@ a:visited {
 	text-align: center;
 	background: #ccc;
 	border-right: 1pt solid #333;
-	border-bottom: 1px solid #333;
+	border-bottom: 1pt solid #333;
 	}
 
 .verb-hrd-last {
@@ -184,11 +184,11 @@ a:visited {
 	
 .verb-td {
 	border-right: 1pt solid #333;   
-	border-bottom: 1pt solid #ccc;                               
+	border-bottom: 1pt dotted #333;                               
 	}
 	
 .verb-td-last { 
-	border-bottom: 1pt solid #ccc;                               
+	border-bottom: 1pt dotted #333;                               
 	}
 
 .verb-finalrow {

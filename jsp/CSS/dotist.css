@@ -274,6 +274,7 @@ a:hover {
 	}
 
 .verb-hdr {
+	padding: 5px;
 	font-weight: bold;
 	text-align: center;
 	background: #ccc;
@@ -282,6 +283,7 @@ a:hover {
 	}
 
 .verb-hrd-last {
+	padding: 5px;
 	font-weight: bold;
 	text-align: center;
 	background: #ccc;
@@ -289,22 +291,26 @@ a:hover {
 	}
 	
 .verb-td {
+	padding: 5px;
 	background: #ebeced;
 	border-right: 1px solid #333;   
 	border-bottom: 1px solid #ccc;                               
 	}
 	
 .verb-td-last {
+	padding: 5px;
 	background: #ebeced;  
 	border-bottom: 1px solid #ccc;                               
 	}
 
 .verb-finalrow {
+	padding: 5px;
 	background: #ebeced;
 	border-right: 1px solid #333;
 	}
 
 .verb-finalrow-last {
+	padding: 5px;
 	background: #ebeced;
 	}                   
 
