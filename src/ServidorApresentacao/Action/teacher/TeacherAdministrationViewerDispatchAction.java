@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -358,8 +360,8 @@ public class TeacherAdministrationViewerDispatchAction
 
 		ISiteComponent objectivesComponent = new InfoSiteObjectives();
 		readSiteView(request, objectivesComponent, null, null, null);
-		return mapping.findForward("viewObjectives");
 
+		return mapping.findForward("viewObjectives");
 	}
 
 	public ActionForward prepareEditObjectives(
@@ -543,7 +545,6 @@ public class TeacherAdministrationViewerDispatchAction
 		throws FenixActionException {
 
 		ISiteComponent evaluationComponent = new InfoSiteEvaluationMethods();
-
 		readSiteView(request, evaluationComponent, null, null, null);
 
 		return mapping.findForward("viewEvaluationMethod");
@@ -1727,50 +1728,85 @@ public class TeacherAdministrationViewerDispatchAction
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		Integer sectionCode = getSectionCode(request);
-
 		ISiteComponent viewProjectsComponent = new InfoSiteProjects();
 			
 		readSiteView(request, viewProjectsComponent, null, null, null);
+
 		return mapping.findForward("viewProjectsAndLink");
 		
 			
 	}
 	
-	
 	public ActionForward viewProjectStudentGroups(
-				ActionMapping mapping,
-				ActionForm form,
-				HttpServletRequest request,
-				HttpServletResponse response)
-				throws FenixActionException {
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
 
-				String objectCodeString =(String)request.getParameter("groupProperties");
-				
-				Integer  groupPropertiesCode = new Integer(objectCodeString);
-			
-				ISiteComponent viewAllGroups = new InfoSiteAllGroups();
-				readSiteView(request, viewAllGroups, null,groupPropertiesCode,null);
-				return mapping.findForward("groupsManagement");	
-			}
+		String objectCodeString =(String)request.getParameter("groupProperties");
+		Integer  groupPropertiesCode = new Integer(objectCodeString);
+		ISiteComponent viewAllGroups = new InfoSiteAllGroups();
+
+		readSiteView(request, viewAllGroups, null,groupPropertiesCode,null);
+
+		return mapping.findForward("groupsManagement");	
+	}
+	
 	
 	public ActionForward viewStudentGroupInformation(
-				ActionMapping mapping,
-				ActionForm form,
-				HttpServletRequest request,
-				HttpServletResponse response)
-				throws FenixActionException {
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
 
-				String studentGroupCodeString =(String)request.getParameter("studentGroup");
-			
-				Integer studentGroupCode = new Integer(studentGroupCodeString);
-				ISiteComponent viewStudentGroup = new InfoSiteStudentGroup();
-				readSiteView(request, viewStudentGroup,null,studentGroupCode,null);
+		String studentGroupCodeString =(String)request.getParameter("studentGroup");
+		Integer studentGroupCode = new Integer(studentGroupCodeString);
+		ISiteComponent viewStudentGroup = new InfoSiteStudentGroup();
+
+		readSiteView(request, viewStudentGroup,null,studentGroupCode,null);
 				
-				return mapping.findForward("viewStudentGroupInformation");	
-	
-	
-			}
+		return mapping.findForward("viewStudentGroupInformation");	
+	}
 
-	
+	public ActionForward deleteStudentGroup(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException {
+
+		Boolean result;
+		HttpSession session = request.getSession(false);
+		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+		
+		String studentGroupCodeString =(String)request.getParameter("studentGroup");
+		Integer studentGroupCode = new Integer(studentGroupCodeString);
+		
+		Object[] args = { studentGroupCode };
+		
+		GestorServicos gestorServicos = GestorServicos.manager();
+		
+		try {
+				result = (Boolean) gestorServicos.executar(userView, "DeleteStudentGroup", args);
+												
+			 } catch (FenixServiceException e) {
+					e.printStackTrace();
+				throw new FenixActionException(e.getMessage());
+		      }
+		      
+			if(result.booleanValue() == false)
+			{	ActionErrors actionErrors = new ActionErrors();
+				ActionError error = null;
+			
+				// Create an ACTION_ERROR for each DEGREE_CURRICULAR_PLAN
+				error = new ActionError("errors.invalid.delete.not.empty.studentGroup");
+				actionErrors.add("errors.invalid.delete.not.empty.studentGroup", error);
+				saveErrors(request, actionErrors);
+			}
+			return viewProjectStudentGroups(mapping,form,request,response);
+		}
+		
+		
 }

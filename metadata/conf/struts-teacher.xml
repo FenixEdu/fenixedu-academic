@@ -792,7 +792,15 @@
 		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">				
        <forward name="viewStudentGroupInformation" path="/viewStudentGroupInformation.jsp"/>
 	</action>
-	
+
+	<action path="/deleteStudentGroup"
+ 			input="/viewSection.jsp"
+ 			parameter="method"
+            type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
+	       <forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>             
+      </action>
+
+
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
