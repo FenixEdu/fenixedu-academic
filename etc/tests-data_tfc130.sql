@@ -129,6 +129,8 @@ INSERT INTO PRIVILEGIO VALUES (1, 'StudentShiftEnrolment',55);
 INSERT INTO PRIVILEGIO VALUES (1, 'ReadClassesWithShiftService', 56);
 INSERT INTO PRIVILEGIO VALUES (1, 'RemoveTeacher', 57);
 INSERT INTO PRIVILEGIO VALUES (1, 'AssociateTeacher', 58);
+INSERT INTO PRIVILEGIO VALUES (1, 'ReadAnnouncements', 59);
+
 #
 # Data for table 'DEGREE'
 #
@@ -470,8 +472,8 @@ INSERT INTO EXECUTION_YEAR values (2, '2003/2004');
 #
 
 DELETE FROM MASTER_DEGREE_CANDIDATE;
-INSERT INTO MASTER_DEGREE_CANDIDATE VALUES (1, 112233, 1, 'Lisboa', '2002-11-17', '2004-11-17', 'Nuno Nunes', 1, 1, '2000-12-10', 'Manuel', 'Maria', 63, 'Oeiras', 'Oeiras', 'Lisboa', 'Rua Nuno', 'Localidade Nuno', '2795-833', 'Queijas', 'Oeiras', 'Lisboa', 11111, 33333, 'nmsn@rnl.ist.utl.pt', 'www.nuno.com', 11111, 'Estudante', 'LEIC', 'Cand1', 'Pass1', 1, 2, 1, 'IST', 2000, 11.0, 10, 63 );
-INSERT INTO MASTER_DEGREE_CANDIDATE VALUES (2, 445566, 2, 'Porto', '2002-11-12', '2005-11-17', 'Joana Mota', 2, 2, '2000-12-17', 'João', 'Silvia', 64, 'Almada', 'Almada', 'Almada', 'Rua Joana', 'Localidade Joana', '2779-558', 'Almada', 'Almada', 'Almada', 22222, 44444, 'jccm@rnl.ist.utl.pt', 'www.joana.com', 22222, 'Modelo', 'LEEC', 'Cand2', 'Pass2', 2, 2, 2, 'IST2', 2001, 2.0, 10, 64 );
+#INSERT INTO MASTER_DEGREE_CANDIDATE VALUES (1, 112233, 1, 'Lisboa', '2002-11-17', '2004-11-17', 'Nuno Nunes', 1, 1, '2000-12-10', 'Manuel', 'Maria', 63, 'Oeiras', 'Oeiras', 'Lisboa', 'Rua Nuno', 'Localidade Nuno', '2795-833', 'Queijas', 'Oeiras', 'Lisboa', 11111, 33333, 'nmsn@rnl.ist.utl.pt', 'www.nuno.com', 11111, 'Estudante', 'LEIC', 'Cand1', 'Pass1', 1, 2, 1, 'IST', 2000, 11.0, 10, 63 );
+#INSERT INTO MASTER_DEGREE_CANDIDATE VALUES (2, 445566, 2, 'Porto', '2002-11-12', '2005-11-17', 'Joana Mota', 2, 2, '2000-12-17', 'João', 'Silvia', 64, 'Almada', 'Almada', 'Almada', 'Rua Joana', 'Localidade Joana', '2779-558', 'Almada', 'Almada', 'Almada', 22222, 44444, 'jccm@rnl.ist.utl.pt', 'www.joana.com', 22222, 'Modelo', 'LEEC', 'Cand2', 'Pass2', 2, 2, 2, 'IST2', 2001, 2.0, 10, 64 );
 
 
 #
