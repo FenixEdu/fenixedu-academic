@@ -33,7 +33,7 @@ public class ViewRoomFormAction extends FenixAction {
 		
 		DynaActionForm indexForm = (DynaActionForm) form;
 
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession();
 		session.removeAttribute(SessionConstants.INFO_SECTION);
 		if (session != null) {
 			List infoRooms = (List) session.getAttribute("publico.infoRooms");

@@ -19,7 +19,6 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author tfc130
@@ -37,9 +36,9 @@ public class ViewClassTimeTableWithClassNameAndDegreeInitialsAction extends Acti
 		HttpServletResponse response)
 		throws Exception {
 		
-		SessionUtils.validSessionVerification(request, mapping);
+		
 			
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession();
 		session.removeAttribute(SessionConstants.INFO_SECTION);
 		String degreeInitials = request.getParameter("degreeInitials");
 		String nameDegreeCurricularPlan = request.getParameter("nameDegreeCurricularPlan");

@@ -29,7 +29,7 @@ public class PrepareConsultRoomsFormAction extends Action {
       	
 	
     
-    HttpSession sessao = request.getSession(false);
+    HttpSession sessao = request.getSession();
 	sessao.removeAttribute(SessionConstants.INFO_SECTION);
     if (sessao != null) {
     	//TODO: No futuro, os edificios devem ser lidos da BD 

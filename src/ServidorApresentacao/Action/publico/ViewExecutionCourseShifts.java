@@ -42,7 +42,7 @@ public class ViewExecutionCourseShifts extends FenixAction {
 			(InfoExecutionCourse) RequestUtils.getExecutionCourseFromRequest(
 				request);
 
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession();
 		GestorServicos gestor = GestorServicos.manager();
 		// Read shifts of execution course.
 		// Just the shifts aren't enough... we also need to read the classes

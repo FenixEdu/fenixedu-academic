@@ -16,7 +16,6 @@ import DataBeans.InfoRoom;
 import ServidorAplicacao.GestorServicos;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.TipoSala;
 
 /**
@@ -31,11 +30,11 @@ public class SelectRoomsFormAction extends FenixAction {
 		HttpServletResponse response)
 		throws Exception {
 		
-		SessionUtils.validSessionVerification(request, mapping);			
+					
 
 		DynaActionForm roomForm = (DynaActionForm) form;
 
-		HttpSession sessao = request.getSession(false);
+		HttpSession sessao = request.getSession();
 		sessao.removeAttribute(SessionConstants.INFO_SECTION);
 		if (sessao != null) {
 			GestorServicos gestor = GestorServicos.manager();

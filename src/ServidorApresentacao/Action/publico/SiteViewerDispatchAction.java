@@ -27,7 +27,6 @@ import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 public class SiteViewerDispatchAction extends FenixDispatchAction {
 
@@ -40,7 +39,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 
 		
 
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession();
 		session.removeAttribute(SessionConstants.INFO_SECTION);
 		String roomName = (String) request.getParameter("roomName");
 		ActionErrors errors = new ActionErrors();
@@ -48,7 +47,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		InfoRoom infoRoom = null;
 		List lessons = null;
 
-		if ((session != null) && (roomName != null)) {
+		if (roomName != null) {
 			roomKey = new RoomKey(roomName);
 
 			
@@ -105,9 +104,9 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 
 		
 
-		HttpSession sessao = request.getSession(false);
+		HttpSession sessao = request.getSession();
 		sessao.removeAttribute(SessionConstants.INFO_SECTION);
-		if (sessao != null) {
+		
 			DynaActionForm courseForm = (DynaActionForm) form;
 
 			return executionCourseViewerSelectedByInitials(
@@ -116,9 +115,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 				request,
 				response,
 				(String) courseForm.get("courseInitials"));
-		} else
-			throw new Exception();
-		// nao ocorre... pedido passa pelo filtro Autorizacao
+		
 	}
 
 	public ActionForward executionCourseViewer(
@@ -128,14 +125,16 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 
-		SessionUtils.validSessionVerification(request, mapping);
+		
 
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession();
 		session.removeAttribute(SessionConstants.INFO_SECTION);
 		String exeCourseCode = null;
 
-		if (session != null) {
-			exeCourseCode = (String) request.getParameter("exeCourseCode");
+		
+		exeCourseCode = (String) request.getParameter("exeCourseCode");
+		if (exeCourseCode== null){
+			exeCourseCode = (String) request.getParameter("exeCode");
 		}
 
 		return executionCourseViewerSelectedByInitials(
@@ -156,7 +155,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 
 		
 
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession();
 		session.removeAttribute(SessionConstants.INFO_SECTION);
 		ActionErrors errors = new ActionErrors();
 		InfoExecutionPeriod infoExecPeriod = null;
@@ -215,7 +214,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 					"publico.infoCurricularCourses",
 					infoCurricularCourses);
 			}
-//TODO move lessons to a diferent action		
+		
 	
 
 			//start reading Gesdis related info

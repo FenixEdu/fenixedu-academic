@@ -28,7 +28,7 @@ public class SectionRemoverAction extends FenixAction {
 	public ActionForward execute(ActionMapping mapping, ActionForm form,  
 		HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-			HttpSession session = getSession(request);
+			HttpSession session = request.getSession();
 			session.removeAttribute(SessionConstants.INFO_SECTION);
 			return mapping.findForward("sucess");
 		}

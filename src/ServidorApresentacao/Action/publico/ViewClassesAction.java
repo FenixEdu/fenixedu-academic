@@ -34,7 +34,7 @@ public class ViewClassesAction extends FenixAction {
 
 		
 			
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession();
 		session.removeAttribute(SessionConstants.INFO_SECTION);
 		if (session != null) {
 			GestorServicos gestor = GestorServicos.manager();

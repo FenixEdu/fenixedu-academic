@@ -12,7 +12,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.LabelValueBean;
 
 import ServidorApresentacao.Action.base.FenixAction;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author tfc130
@@ -26,9 +25,9 @@ public class SelectSemesterAction extends FenixAction {
 		HttpServletResponse response)
 		throws Exception {
 			
-		SessionUtils.validSessionVerification(request, mapping);			
+					
 
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession();
 //	TODO: No futuro os periodos (semestres) devem ser lidos da base de dados.
 		if (session != null) {
 // TODO:			 No futuro, os tipos de salas devem ser lidos da BD 
