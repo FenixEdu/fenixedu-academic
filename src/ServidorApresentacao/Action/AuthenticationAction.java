@@ -108,7 +108,9 @@ public class AuthenticationAction extends FenixAction {
 		InfoRole firstTimeStudentInfoRole = new InfoRole();
 		firstTimeStudentInfoRole.setRoleType(RoleType.FIRST_TIME_STUDENT);
 		if(userRoles.contains(firstTimeStudentInfoRole)) {
-			forwardToReturn =  buildRoleForward(firstInfoRole);
+			
+			InfoRole infoRole = getRole(RoleType.FIRST_TIME_STUDENT, userRoles);
+			forwardToReturn =  buildRoleForward(infoRole);
 		}
 		else {
 			InfoRole personInfoRole = new InfoRole();
@@ -154,5 +156,21 @@ public class AuthenticationAction extends FenixAction {
 				+ "&page="
 				+ infoRole.getPage());
 		return actionForward;
+	}
+	
+	private InfoRole getRole(RoleType roleType, Collection rolesList) {
+		
+		InfoRole infoRole = new InfoRole();
+		infoRole.setRoleType(roleType);
+		
+		Iterator iterator = rolesList.iterator();
+		while(iterator.hasNext()) {
+			
+			InfoRole role = (InfoRole) iterator.next();
+			if(role.equals(infoRole))
+				return role;
+			
+		}
+		return null;
 	}
 }
