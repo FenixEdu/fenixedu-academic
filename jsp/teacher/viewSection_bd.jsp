@@ -12,7 +12,7 @@
 	<bean:message key="button.insert"/>
 </html:link>
 
-<html:link page="/editSection.do">
+<html:link page="/editSection.do?method=prepareEdit">
 	<bean:message key="button.edit"/>
 </html:link>
 <br>   

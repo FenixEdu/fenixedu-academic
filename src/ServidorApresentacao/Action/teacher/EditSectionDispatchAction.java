@@ -18,19 +18,20 @@ import DataBeans.gesdis.InfoSite;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
-import ServidorApresentacao.Action.base.FenixAction;
+import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author Ivo Brandão
  */
-public class EditSectionDispatchAction extends FenixAction {
+public class EditSectionDispatchAction extends FenixDispatchAction {
 
 	public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws FenixActionException {
-	
-			return mapping.findForward("viewSite");
+
+			System.out.println("prepareEdit");	
+			return mapping.findForward("editSection");
 		} 
 
 	public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
