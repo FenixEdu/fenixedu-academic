@@ -72,6 +72,7 @@
 			<forward name="showCurricularCoursesForEquivalence" path="df.page.showCurricularCoursesForDegreeAdministrativeOfficeEquivalence"/>
 			<forward name="verifyCurricularCoursesForEquivalence" path="df.page.verifyCurricularCoursesForDegreeAdministrativeOfficeEquivalence"/>
 			<forward name="acceptCurricularCoursesForEquivalence" path="df.page.acceptCurricularCoursesForDegreeAdministrativeOfficeEquivalence"/>
+			<forward name="begin" path="/degreeAdministrativeOffice/functionRedirect.do?method=chooseStudentAndDegreeTypeForManualEquivalence" contextRelative="true"/>
 		</action>
 
 		<action	name="manualEquivalenceFrom"
@@ -87,6 +88,7 @@
 			<forward name="showCurricularCoursesForEquivalence" path="df.page.showCurricularCoursesForCoordinatorEquivalence"/>
 			<forward name="verifyCurricularCoursesForEquivalence" path="df.page.verifyCurricularCoursesForCoordinatorEquivalence"/>
 			<forward name="acceptCurricularCoursesForEquivalence" path="df.page.acceptCurricularCoursesForCoordinatorEquivalence"/>
+			<forward name="begin" path="/degreeAdministrativeOffice/functionRedirect.do?method=chooseStudentAndDegreeTypeForManualEquivalence" contextRelative="true"/>
 		</action>
 	</action-mappings>
 

@@ -116,9 +116,13 @@ public class ManualEquivalenceManagerDispatchAction extends DispatchAction {
 
 		infoEquivalenceContext = (InfoEquivalenceContext) ServiceUtils.executeService(userView, "ConfirmEquivalence", args);
 
-		session.setAttribute(SessionConstants.EQUIVALENCE_CONTEXT_KEY, infoEquivalenceContext);
+		session.removeAttribute(SessionConstants.EQUIVALENCE_CONTEXT_KEY);
 
 		return mapping.findForward(forwards[2]);
+	}
+
+	public ActionForward begin(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		return mapping.findForward(forwards[3]);
 	}
 
 	private void initializeForm(InfoEquivalenceContext infoEquivalenceContext, DynaActionForm equivalenceForm) {

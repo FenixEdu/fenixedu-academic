@@ -25,12 +25,6 @@ public class PrepareStudentDataForManualEquivalenceDispatchAction extends Prepar
 	private final String[] forwards = { "startManualEquivalence", "error" };
 
 	public ActionForward getStudentAndDegreeTypeForManualEquivalence(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-//		boolean isSuccess = this.getUserViewFromStudentNumberAndDegreeType(form, request);
-//		if(isSuccess) {
-//			return mapping.findForward(forwards[3]);
-//		} else {
-//			return mapping.getInputForward();
-//		}
 
 		DynaActionForm getStudentByNumberAndDegreeTypeForm = (DynaActionForm) form;
 		HttpSession session = request.getSession();

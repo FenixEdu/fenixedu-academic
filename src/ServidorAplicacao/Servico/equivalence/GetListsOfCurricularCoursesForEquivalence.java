@@ -99,8 +99,7 @@ public class GetListsOfCurricularCoursesForEquivalence implements IServico {
 			List otherIrelevanteCurricularCourses = (List) CollectionUtils.select(curricularCoursesFromCurrentDegreeCurricularPlanForStudent, new Predicate() {
 				public boolean evaluate(Object obj) {
 					ICurricularCourse curricularCourse = (ICurricularCourse) obj;
-					return	curricularCourse.getType().equals(CurricularCourseType.OPTIONAL_COURSE_OBJ) ||
-							curricularCourse.getType().equals(CurricularCourseType.TFC_COURSE_OBJ) ||
+					return	curricularCourse.getType().equals(CurricularCourseType.TFC_COURSE_OBJ) ||
 							curricularCourse.getType().equals(CurricularCourseType.TRAINING_COURSE_OBJ);
 				}
 			});
@@ -123,7 +122,7 @@ public class GetListsOfCurricularCoursesForEquivalence implements IServico {
 						// TODO DAVID-RICARDO: Perguntar se são estas mesmo as disciplinas a remover (opções, TFC, estágios, etc...)
 						// In this manner, for this list, we are excluding curricular courses from other branches that not the student's;
 						// curricular courses already aproved, enroled and temporarily enroled;
-						// optional curricular courses; TFC and training curricular courses.
+						// TFC and training curricular courses.
 						curricularCourseScopesFromCurrentDegreeCurricularPlanForStudent.add(curricularCourseScope);
 					}
 				}
