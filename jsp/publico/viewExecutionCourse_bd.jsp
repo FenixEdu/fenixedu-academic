@@ -21,7 +21,7 @@
 
 <logic:present name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" scope="session">
 <logic:present name="publico.infoCurricularCourses" scope="session">
-			<table align="center" cellspacing="0" cellpadding="0" width="90%">
+			<table align="center" cellspacing="0" cellpadding="0" width="90%" >
 						
 				<logic:iterate id="curricularCourse" name="publico.infoCurricularCourses" scope="session">
 					<tr class="timeTable_line" align="center">
