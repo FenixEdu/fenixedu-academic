@@ -10,6 +10,9 @@ NEW FEATURES:
 - Create stat of Grant Owner by criteria (facultyAdmOffice Portal).
 - The results of the search of persons is no presented by pages (avoiding Out Of Memory in search by name *)(facultyAdmOffice Portal).
 - Added teacher master degree execution course lecturing hours management for CreditsManager
+- [ #267 ] GEP - "Ficha de Docente" and "Ficha de Disciplina" - Extra column with number of filled fields
+- Department office portal - added possibility do add professorships in execution years other than the current
+- Department office portal - added the possibility to view professorships other than in current execution year
 
 NOTES:
 ======
@@ -23,9 +26,15 @@ CHANGES:
 - Column MASTER_DEGREE_CREDITS added to crd_CREDITS table
 - Column CREDITS renamed to HOURS on table PROFESSORSHIPS.
 - Added a method in Turno and Shift classes called hours to give the duration in hours.
+- Seminaries Portal - services used in this portal stopped calling CLONER methods to new philosophy
+- Coordinator Portal - coordinators for degrees - services used in this portal stopped calling CLONER methods to new philosophy
 	
 BUG FIXES:
 ==========
+- Coordinator Portal - degree site management - fixed listing of repeated execution degrees. it was not showing
+  information by degree curricular plan but by degree
+- Coordinator Portal - degree curricular plan management - fixed editing of curriculum
+- Website manager Portal - fixed links for other portals in events and news pages
 
 KNOWN ISSUES:
 =============

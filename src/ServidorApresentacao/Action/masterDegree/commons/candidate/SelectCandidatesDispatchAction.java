@@ -185,7 +185,10 @@ public class SelectCandidatesDispatchAction extends DispatchAction
         String executionYear = (String) approvalForm.get("executionYear");
         String degree = (String) approvalForm.get("degree");
         Integer executionDegree = null;
-        executionDegree = Integer.valueOf(request.getParameter("executionDegreeID"));
+        String executionDegreeFromRequest = request.getParameter("executionDegreeID");
+        if(executionDegreeFromRequest != null && executionDegreeFromRequest.length() > 0) {
+            executionDegree = Integer.valueOf(executionDegreeFromRequest);
+        }
         List candidatesAdmited = new ArrayList();
 
         try

@@ -118,6 +118,11 @@
 			<td class="listClasses-header">
 				<bean:message key="label.gep.executionPeriod" bundle="GEP_RESOURCES"/>
 			</td>
+	        <logic:notPresent name="infoExecutionDegree">
+				<td class="listClasses-header">
+					<bean:message key="label.gep.degree" bundle="GEP_RESOURCES"/>
+				</td>
+			</logic:notPresent>
 			<td class="listClasses-header">
 				<bean:message key="label.gep.courseInformation.basic" bundle="GEP_RESOURCES"/>
 			</td>
@@ -273,6 +278,10 @@
 			         	<td class="listClasses" >&nbsp;
    				        	<bean:write name="infoSiteCourseInformation" 
    				        				property="infoExecutionCourse.infoExecutionPeriod.name"/>
+		         		</td>
+			         	<td class="listClasses" >&nbsp;
+   				        	<bean:write name="infoCurricularCourse" 
+   				        				property="infoDegreeCurricularPlan.name"/>
 		         		</td>
 		         		<td class="listClasses" >
 				       		<logic:equal name="infoCurricularCourse" property="basic" value="true">

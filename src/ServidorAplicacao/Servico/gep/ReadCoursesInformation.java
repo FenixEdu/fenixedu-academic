@@ -57,6 +57,7 @@ import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.gesdis.IPersistentCourseReport;
 import Util.TipoAula;
+import Util.TipoCurso;
 
 /**
  * @author Leonor Almeida
@@ -85,17 +86,35 @@ public class ReadCoursesInformation implements IService {
                         .getIPersistentExecutionYear();
                 IExecutionYear executionYear = persistentExecutionYear
                         .readCurrentExecutionYear();
-                List executionDegrees = persistentExecutionDegree
-                        .readByExecutionYear(executionYear.getYear());
-
+                
+                //FIXME
+                // this piece of code is getting only degrees in case the choice made for search was
+                // null execution degree and null basic. when search starts to be made for master degrees also
+                // this code should be replaced bythe code bellow
+                List executionDegrees = null;
                 if (basic == null) {
+                    executionDegrees = persistentExecutionDegree.readByExecutionYearAndDegreeType(
+                            executionYear, TipoCurso.LICENCIATURA_OBJ);
                     professorships = persistentProfessorship
                             .readByExecutionDegrees(executionDegrees);
                 } else {
+                    executionDegrees = persistentExecutionDegree
+                    .readByExecutionYear(executionYear.getYear());
                     professorships = persistentProfessorship
                             .readByExecutionDegreesAndBasic(executionDegrees,
                                     basic);
                 }
+//                List executionDegrees = persistentExecutionDegree
+//                .readByExecutionYear(executionYear.getYear());
+//
+//                if (basic == null) {
+//                    professorships = persistentProfessorship
+//                            .readByExecutionDegrees(executionDegrees);
+//                } else {
+//                    professorships = persistentProfessorship
+//                            .readByExecutionDegreesAndBasic(executionDegrees,
+//                                    basic);
+//                }
             } else {
                 ICursoExecucao executionDegree = (ICursoExecucao) persistentExecutionDegree
                         .readByOID(CursoExecucao.class, executionDegreeId);
@@ -453,15 +472,19 @@ public class ReadCoursesInformation implements IService {
         while (iter.hasNext()) {
             ICurricularCourse curricularCourse = (ICurricularCourse) iter
                     .next();
-            List curricularCourseScopes = curricularCourse.getScopes();
-            List infoScopes = getInfoScopes(curricularCourseScopes, sp);
-            //CLONER
-            //InfoCurricularCourse infoCurricularCourse = Cloner
-            //.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
-            InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
-                    .newInfoFromDomain(curricularCourse);
-            infoCurricularCourse.setInfoScopes(infoScopes);
-            infoCurricularCourses.add(infoCurricularCourse);
+            //FIXME
+            //this test is to be taken off when search of courses starts to be made also for master degrees
+            if(curricularCourse.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(TipoCurso.LICENCIATURA_OBJ)) {
+	            List curricularCourseScopes = curricularCourse.getScopes();
+	            List infoScopes = getInfoScopes(curricularCourseScopes, sp);
+	            //CLONER
+	            //InfoCurricularCourse infoCurricularCourse = Cloner
+	            //.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+	            InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
+	                    .newInfoFromDomain(curricularCourse);
+	            infoCurricularCourse.setInfoScopes(infoScopes);
+	            infoCurricularCourses.add(infoCurricularCourse);
+            }
         }
         return infoCurricularCourses;
     }
