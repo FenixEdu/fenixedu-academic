@@ -122,9 +122,10 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		}
 	}
 
-	public Almeida_disc readAlmeidaCurricularCourse(String code) {
+	public Almeida_disc readAlmeidaCurricularCourse(String code, long curso) {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("coddis", code);
+		criteria.addEqualTo("codcur", (new Integer("" + curso)));
 		List result = query(Almeida_disc.class, criteria);
 		//System.out.println("result.size" + result.size());
 		if (result.size() > 0) {

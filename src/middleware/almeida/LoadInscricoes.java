@@ -83,11 +83,11 @@ public class LoadInscricoes extends LoadDataFile {
 		if (curricularCourse != null) {
 			executionPeriod = readActiveExecutionPeriod();
 
-			IEnrolment enrolment = null;
-//				persistentObjectOJB.readEnrolment(
-//					studentCurricularPlan,
-//					curricularCourse,
-//					executionPeriod);
+			IEnrolment enrolment =
+				persistentObjectOJB.readEnrolment(
+					studentCurricularPlan,
+					curricularCourse,
+					executionPeriod);
 			if (enrolment == null) {
 				enrolment = new Enrolment(
 					studentCurricularPlan,
@@ -95,6 +95,12 @@ public class LoadInscricoes extends LoadDataFile {
 					new EnrolmentState(EnrolmentState.ENROLED),
 					executionPeriod);
 					writeElement(enrolment);
+			} else {
+				enrolment.setCurricularCourse(curricularCourse);
+				enrolment.setExecutionPeriod(executionPeriod);
+				enrolment.setState(new EnrolmentState(EnrolmentState.ENROLED));
+				enrolment.setStudentCurricularPlan(studentCurricularPlan);
+				writeElement(enrolment);
 			}
 
 			disciplinaExecucao =
@@ -111,14 +117,18 @@ public class LoadInscricoes extends LoadDataFile {
 				//writeElement(almeida_inscricoes);
 				numberUntreatableElements++;
 			} else {
-				IFrequenta frequenta = null;
-//					persistentObjectOJB.readFrequenta(
-//						studentCurricularPlan.getStudent(),
-//						disciplinaExecucao);
+				IFrequenta frequenta =
+					persistentObjectOJB.readFrequenta(
+						studentCurricularPlan.getStudent(),
+						disciplinaExecucao);
 				if (frequenta == null) {
 					frequenta = new Frequenta(
 						studentCurricularPlan.getStudent(),
 						disciplinaExecucao);
+					writeElement(frequenta);
+				} else {
+					frequenta.setAluno(studentCurricularPlan.getStudent());
+					frequenta.setDisciplinaExecucao(disciplinaExecucao);
 					writeElement(frequenta);
 				}
 			}
@@ -156,7 +166,7 @@ public class LoadInscricoes extends LoadDataFile {
 		// First read Almeidas curricular course
 		Almeida_disc almeida_disc =
 			persistentObjectOJB.readAlmeidaCurricularCourse(
-				almeida_inscricoes.getCoddis());
+				almeida_inscricoes.getCoddis(), almeida_inscricoes.getCurso());
 
 		// Log the ones that don't exist in his database!
 		if (almeida_disc == null) {
