@@ -9,6 +9,7 @@ junit*
 web
 bin
 build.properties
+build.properties.localhost
 build
 build_autoprocesses.xml
 cvspass
@@ -57,3 +58,4 @@ outputGuides.txt
 ${log.image.directory}
 .settings
 .djunitplugin
+*.war
