@@ -16,12 +16,17 @@
         </var>
         <var>
            <var-name>mask</var-name>
-           <var-value>^((.||..)/(.||..)/2...)</var-value>
+           <var-value>^((.||..)/(.||..)/2...)$</var-value>
         </var>
    	</field>
-   	<field property="summaryHour" depends="required,date" page="1" >
+   	<field property="summaryHour" depends="required,mask,date" page="1" >
    		<msg name="date" key="error.invalid.hour"/>
+   		<msg name="mask" key="error.invalid.hour"/>   		
    		<arg0 key="message.summaryHour" resource="true"/>
+   		<var>
+           <var-name>mask</var-name>
+           <var-value>^((.||..):(.||..))$</var-value>
+        </var>
    		<var>
            <var-name>datePattern</var-name>
            <var-value>HH:mm</var-value>
