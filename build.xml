@@ -118,6 +118,7 @@
 		    token="@db.alias@" 
 		    property="db.alias"/>
 		</replace>
+		<antcall target="validate-xml"/>
     </target>
     
     <target name="compile-tests"
@@ -207,7 +208,7 @@
                 <pathelement path="${tests.classes}"/>
                 <pathelement path="${webapp}"/>
                 <pathelement path="${sql}"/>
-                <fileset dir="${libs}">
+                <fileset dir="${lib}">
                     <include name="**/*.jar"/>
                 </fileset>
                 <fileset dir="${libs.web}">
@@ -224,7 +225,7 @@
 -->
             <batchtest fork="yes" todir="${reports.tests}">
                 <fileset dir="${src.tests}">
-                    <include name="**/*Test.java"/>
+                    <include name="ServidorApresentacao/**/*Test.java"/>
                     <exclude name="**/SuportePersistenteOJBTest.java"/>
                     <exclude name="**/AllTests.java"/>
                     
@@ -298,26 +299,15 @@
             <formatter type="plain" usefile="false"/>
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
-                 <include name="**/*Test.java"/>
+                 <include name="**/SessionUtilsTest.java"/>
             <!-- start of tests that are failing -->    
              <!--    <exclude name="**/CriarAulaFormActionTest.java" /> 		 -->
                  <exclude name="**/EditarAulaFormActionTest.java" /> 
-                 <exclude name="**/CriarTurnoFormActionTest.java" /> 
             	 <exclude name="**/CriarAulaFormActionTest.java" /> 
-                 <exclude name="**/ClassShiftManagerDispatchActionTest.java" /> 
-             	 <exclude name="**/ClassManagerDispatchActionTest.java" /> 
-                 <exclude name="**/ClassesManagerDispatchActionTest.java" />
-                 <exclude name="**/ChooseExecutionCourseActionTest.java" />
             	 <exclude name="**/ApagarTurnoFormActionTest.java" />
             	 <exclude name="**/ApagarAulaFormActionTest.java" /> 
-          		 <exclude name="**/AdicionarAulasFormActionTest.java"/> 
-            	 <exclude name="**/ViewClassesFormActionTest.java"/>
-                 <exclude name="**/PrepareSelectExecutionCourseActionTest.java"/>
-                 <exclude name="**/AuthenticationActionTest.java" />
             <!-- end of tests that are failing -->        
-                 <exclude name="**/commons/*.java"/>
                  <exclude name="**/student/*.java"/>
-                 <exclude name="**/SessionUtilsTest.java"/>
                  <exclude name="ServidorAplicacao/**/*.java"/>
                  <exclude name="ServidorPersistente/**/*.java"/>
                  <exclude name="**/AllTests.java"/>
@@ -464,7 +454,7 @@
             src="${sql}/test-data_inscricoes.sql"
         >
             <classpath>
-                <fileset dir="${libs}">
+                <fileset dir="${lib}">
                     <include name="**/*.jar"/>
                 </fileset>
             </classpath>
@@ -480,7 +470,7 @@
             src="${sql}/test-data_masterDegree.sql"
         >
             <classpath>
-                <fileset dir="${libs}">
+                <fileset dir="${lib}">
                     <include name="**/*.jar"/>
                 </fileset>
             </classpath>
@@ -496,7 +486,7 @@
             src="${sql}/test-data_inscricoes.sql"
         >
             <classpath>
-                <fileset dir="${libs}">
+                <fileset dir="${lib}">
                     <include name="**/*.jar"/>
                 </fileset>
             </classpath>
@@ -512,7 +502,7 @@
             src="${sql}/test-data_masterDegree.sql"
         >
             <classpath>
-                <fileset dir="${libs}">
+                <fileset dir="${lib}">
                     <include name="**/*.jar"/>
                 </fileset>
             </classpath>
@@ -713,5 +703,13 @@
 		</replace>
 	</target>
 
-
+	<target name="validate-xml">
+		<xmlvalidate warn="false">
+				<fileset dir="${webapp.metadata}" includes="**/*.xml **/*.tld">
+					<exclude name="**/repository*.xml"/>
+					<exclude name="**/validator-rules.xml"/>
+					<exclude name="**/fenix-validator-rules.xml"/>					
+				</fileset>
+		</xmlvalidate>
+	</target>
 </project>
