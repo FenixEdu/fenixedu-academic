@@ -23,6 +23,21 @@ public class InfoExternalEnrollmentInfo
 {
     private Collection evaluations;
     private InfoExternalCurricularCourseInfo course;
+    private String finalGrade;
+    /**
+     * @return Returns the finalGrade.
+     */
+    public String getFinalGrade()
+    {
+        return this.finalGrade;
+    }
+    /**
+     * @param finalGrade The finalGrade to set.
+     */
+    public void setFinalGrade(String finalGrade)
+    {
+        this.finalGrade = finalGrade;
+    }
     /**
      * @return Returns the grade.
      */
@@ -46,7 +61,7 @@ public class InfoExternalEnrollmentInfo
     {
         InfoExternalEnrollmentInfo info = new InfoExternalEnrollmentInfo();
         info.setCourse(InfoExternalCurricularCourseInfo.newFromDomain(enrollment.getCurricularCourse()));
-        info.setEvaluations(InfoExternalEnrollmentInfo.buildExternalEvaluationsInfo(enrollment.getEvaluations()));
+        info.setEvaluations(InfoExternalEnrollmentInfo.buildExternalEvaluationsInfo(enrollment.getEvaluations()));        
         return info;
     }
     /**

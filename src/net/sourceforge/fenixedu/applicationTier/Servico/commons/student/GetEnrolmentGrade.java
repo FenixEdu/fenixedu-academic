@@ -35,6 +35,8 @@ public class GetEnrolmentGrade {
         // This sorts the list ascendingly so we need to reverse it to get
         // the first object.
         Collections.sort(enrolmentEvaluations);
+        //erm...not really....what if you get the LAST object ?
+        //ass:gedl
         Collections.reverse(enrolmentEvaluations);
         try {
             return getInfoLatestEvaluation((IEnrolmentEvaluation) enrolmentEvaluations.get(0));

@@ -10,7 +10,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-import pt.utl.ist.berserk.logic.serviceManager.IService;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.GetEnrolmentGrade;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
+import net.sourceforge.fenixedu.dataTransferObject.equivalence.InfoEnrollmentGrade;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternalAdressInfo;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternalCitizenshipInfo;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternalDegreeBranchInfo;
@@ -27,6 +30,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz </a>
@@ -35,7 +39,7 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
  */
 public class ReadStudentExternalInformation implements IService
 {
-    public Collection run(String username) throws ExcepcaoPersistencia
+    public Collection run(String username) throws ExcepcaoPersistencia, FenixServiceException
     {
         Collection result = new ArrayList();
         IPessoaPersistente persistentPerson = SuportePersistenteOJB.getInstance()
@@ -62,8 +66,9 @@ public class ReadStudentExternalInformation implements IService
     /**
      * @param student
      * @return
+     * @throws FenixServiceException 
      */
-    private Collection buildExternalEnrollmentsInfo(IStudent student)
+    private Collection buildExternalEnrollmentsInfo(IStudent student) throws FenixServiceException
     {
         Collection enrollments = new ArrayList();
         for (Iterator iter = student.getActiveStudentCurricularPlan().getEnrolments().iterator(); iter
@@ -71,7 +76,10 @@ public class ReadStudentExternalInformation implements IService
         {
             IEnrollment enrollment = (IEnrollment) iter.next();
             InfoExternalEnrollmentInfo info = InfoExternalEnrollmentInfo.newFromEnrollment(enrollment);
-
+            
+            GetEnrolmentGrade getEnrollmentGrade = new GetEnrolmentGrade();
+            InfoEnrolmentEvaluation infoEnrollmentEvaluation =  getEnrollmentGrade.run(enrollment);
+            info.setFinalGrade(infoEnrollmentEvaluation.getGrade());
             enrollments.add(info);
         }
 
