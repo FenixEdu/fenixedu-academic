@@ -16,20 +16,13 @@
 <!ENTITY treasury SYSTEM "repository_coordinator.xml">
 <!ENTITY sopload SYSTEM "repository_sopload.xml">
 <!ENTITY gesdis SYSTEM "repository_gesdis.xml">
-<!ENTITY almeida SYSTEM "repository_almeida.xml">
-<!ENTITY posgrad SYSTEM "repository_posgrad.xml">
 <!ENTITY authentication-roles SYSTEM "repository_authentication_roles.xml">
 <!ENTITY teacher-credits SYSTEM "repository_creditsTeacher.xml">
 <!ENTITY assiduousness SYSTEM "repository_assiduousness.xml">
-<!ENTITY leq-migration SYSTEM "repository_enrolment_migration.xml">
-<!ENTITY sigla SYSTEM "repository_sigla.xml">
-<!ENTITY thor SYSTEM "repository_thor.xml">
-<!ENTITY almeida_coddis SYSTEM "repository_almeida_coddis.xml">
 <!ENTITY tests SYSTEM "repository_tests.xml">
 <!ENTITY scientific_council SYSTEM "repository_scientificCouncil.xml">
 <!ENTITY seminary SYSTEM "repository_seminary.xml">
 <!ENTITY advisory SYSTEM "repository_advisory.xml">
-<!ENTITY middleware SYSTEM "repository_middleware.xml">
 <!ENTITY website SYSTEM "repository_website.xml">
 <!ENTITY coordinator SYSTEM "repository_coordinator.xml">
 <!ENTITY places SYSTEM "repository_places.xml">
@@ -38,8 +31,6 @@
 <!ENTITY gaugingTests SYSTEM "repository_gaugingTests.xml">
 <!ENTITY student SYSTEM "repository_student.xml">
 <!ENTITY finalDegreeWork SYSTEM "repository_finalDegreeWork.xml">
-<!ENTITY erasmusMigration SYSTEM "repository_erasmus_migration.xml">
-<!ENTITY mathResponsiblesMigration SYSTEM "repository_math_responsibles.xml">
 ]>
 
 
@@ -63,18 +54,11 @@
     &gesdis;
     &authentication-roles;
     &teacher-credits;
-    &almeida;
-    &posgrad;
     &assiduousness;
-    &leq-migration;
-    &sigla;
-    &thor;
-    &almeida_coddis;
 	&tests;
     &scientific_council;
 	&seminary;
     &advisory;
-	&middleware;
     &website;
 	&coordinator;
 	&places;
@@ -83,6 +67,4 @@
     &gaugingTests;
     &student;
     &finalDegreeWork;    
-    &erasmusMigration;
-    &mathResponsiblesMigration;
 </descriptor-repository>
