@@ -1,9 +1,8 @@
 /*
  * Created on Nov 4, 2004
  */
-package ServidorPersistente.OJB.log;
+package ServidorPersistente;
 
-import ServidorPersistente.IPersistentObject;
 
 /**
  * @author nmgo

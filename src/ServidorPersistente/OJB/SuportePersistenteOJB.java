@@ -62,7 +62,6 @@ import ServidorPersistente.OJB.inquiries.OldInquiriesCoursesResOJB;
 import ServidorPersistente.OJB.inquiries.OldInquiriesSummaryOJB;
 import ServidorPersistente.OJB.inquiries.OldInquiriesTeachersResOJB;
 import ServidorPersistente.OJB.log.EnrolmentLogOJB;
-import ServidorPersistente.OJB.log.IPersistentEnrolmentLog;
 import ServidorPersistente.OJB.managementAssiduousness.CostCenterOJB;
 import ServidorPersistente.OJB.managementAssiduousness.ExtraWorkCompensationOJB;
 import ServidorPersistente.OJB.managementAssiduousness.ExtraWorkHistoricOJB;

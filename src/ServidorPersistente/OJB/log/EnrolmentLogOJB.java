@@ -3,6 +3,7 @@
  */
 package ServidorPersistente.OJB.log;
 
+import ServidorPersistente.IPersistentEnrolmentLog;
 import ServidorPersistente.OJB.PersistentObjectOJB;
 
 /**
