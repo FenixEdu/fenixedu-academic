@@ -209,17 +209,17 @@
       </action>
 
       <action attribute="roomForm"
-              input="/consultRooms.jsp"
+              input="/prepareConsultRooms.do"
               name="roomForm"
               path="/chooseRoomsForm"
               scope="request"
               validate="true"
               type="ServidorApresentacao.Action.publico.SelectRoomsFormAction">
-        <forward name="Sucess" path="/chooseRoom.jsp"/>
+        <forward name="list" path="/chooseRoom.jsp"/>
+        <forward name="one" path="/siteViewer.do?method=roomViewer"/>        
       </action>
 
-      <action 
-              input="/chooseRoomsForm.do"
+      <action input="/chooseRoomsForm.do"
               parameter="method"
               name="indexForm"
               path="/viewRoom"
