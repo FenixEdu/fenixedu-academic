@@ -133,15 +133,12 @@ public class InsertEvaluationMarks implements IServico {
 			infoMarksList = new ArrayList();
 			marksErrorsInvalidMark = new ArrayList();
 			marksErrorsStudentExistence = new ArrayList();
-			boolean foundStudent = false;
+		
 
 			ListIterator iterMarks = evaluationsMarks.listIterator();
 			while (iterMarks.hasNext()) {
 				InfoMark infoMark = (InfoMark) iterMarks.next();
-				if (infoMark == null)
-					//isto não faz sentido, pq não faz nada!!!!
-					marksErrorsStudentExistence.add(infoMark);
-				else {
+				
 
 					//verify if the student exists
 					infoMark = verifyStudentExistance(infoMark, attendList);
@@ -150,7 +147,7 @@ public class InsertEvaluationMarks implements IServico {
 						marksErrorsStudentExistence.add(infoMark);
 					} else {
 
-						foundStudent = false;
+					
 						infoMark =
 							completeMark(infoMark, evaluation, executionCourse);
 
@@ -170,7 +167,7 @@ public class InsertEvaluationMarks implements IServico {
 											.getInfoFrequenta()
 											.getAluno()
 											.getNumber())) {
-									foundStudent = true;
+								
 
 									mark =
 										persistentMark.readBy(
@@ -194,23 +191,15 @@ public class InsertEvaluationMarks implements IServico {
 									infoMark = Cloner.copyIMark2InfoMark(mark);
 								}
 
-								if (!foundStudent) {
-									marksErrorsStudentExistence.add(infoMark);
-								} else {
-									foundStudent = false;
-								}
+								
 							}
 						}
 
-						if (!foundStudent) {
-							marksErrorsStudentExistence.add(infoMark);
-						} else {
-							foundStudent = false;
-						}
+						
 					}
 
 					infoMarksList.add(infoMark);
-				}
+				
 			}
 		} catch (ExcepcaoPersistencia ex) {
 			ex.printStackTrace();
@@ -237,7 +226,7 @@ public class InsertEvaluationMarks implements IServico {
 		Iterator iter = attends.iterator();
 		while (iter.hasNext() && !result) {
 			IFrequenta attend = (IFrequenta) iter.next();
-			if (attend
+			if (infoMark.getInfoFrequenta().getAluno().getNumber()!= null && attend
 				.getAluno()
 				.getNumber()
 				.equals(infoMark.getInfoFrequenta().getAluno().getNumber())) {
