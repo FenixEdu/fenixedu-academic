@@ -14,8 +14,8 @@ CREATE TABLE GRANT_OWNER (
   ID_INTERNAL int(11) unsigned NOT NULL auto_increment,
   KEY_PERSON int(11) unsigned NOT NULL default '0',
   NUMBER int(11) unsigned NOT NULL default '0',
-  DATE_SEND_CGD timestamp(8) NOT NULL,
-  CARD_COPY_NUMBER int(11) unsigned default NULL,
+  DATE_SEND_CGD date,
+  CARD_COPY_NUMBER int(11) unsigned default '1',
   PRIMARY KEY  (ID_INTERNAL),
   UNIQUE KEY UNIQUE1 (NUMBER,KEY_PERSON)
 ) TYPE=InnoDB;

@@ -4,7 +4,7 @@
  */
 package Dominio.grant.owner;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 import Dominio.IDomainObject;
 import Dominio.IPessoa;
@@ -18,11 +18,11 @@ public interface IGrantOwner extends IDomainObject {
 
 	IPessoa getPerson();
 	Integer getNumber();
-	Timestamp getDateSendCGD();
+	Date getDateSendCGD();
 	Integer getCardCopyNumber();
 
 	void setPerson(IPessoa person);
 	void setNumber(Integer number);
-	void setDateSendCGD(Timestamp dateSendCGD);
+	void setDateSendCGD(Date dateSendCGD);
 	void setCardCopyNumber(Integer cardCopyNumber);
 }

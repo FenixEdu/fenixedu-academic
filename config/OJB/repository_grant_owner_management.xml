@@ -27,7 +27,7 @@
 	 <field-descriptor
 		name="dateSendCGD"
 		column="DATE_SEND_CGD"
-		jdbc-type="TIMESTAMP"
+		jdbc-type="DATE"
 	/>
 	 <field-descriptor
 		name="cardCopyNumber"

@@ -4,7 +4,7 @@
  */
 package DataBeans.grant.owner;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 import DataBeans.InfoObject;
 import DataBeans.InfoPerson;
@@ -20,7 +20,7 @@ public class InfoGrantOwner extends InfoObject {
 	private InfoPerson personInfo;
 	private Integer grantOwnerNumber;
 	private Integer cardCopyNumber;
-	private Timestamp dateSendCGD;
+	private Date dateSendCGD;
 
 
 	public InfoGrantOwner() {}
@@ -56,9 +56,9 @@ public class InfoGrantOwner extends InfoObject {
 	}
 	
 	/**
-	 * @return Timestamp
+	 * @return Date
 	 */
-	public Timestamp getDateSendCGD() {
+	public Date getDateSendCGD() {
 		return dateSendCGD;
 	}
 
@@ -90,7 +90,7 @@ public class InfoGrantOwner extends InfoObject {
 	 * Sets the dateSendCGD.
 	 * @param dateSend The dateSendCGD to set
 	 */
-	public void setDateSendCGD(Timestamp dateSend) {
+	public void setDateSendCGD(Date dateSend) {
 		this.dateSendCGD = dateSend;
 	}
 

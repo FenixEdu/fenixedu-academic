@@ -4,7 +4,7 @@
  */
 package Dominio.grant.owner;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 import Dominio.DomainObject;
 import Dominio.IPessoa;
@@ -17,7 +17,7 @@ import Dominio.IPessoa;
 public class GrantOwner extends DomainObject implements IGrantOwner {
 
 	private Integer number;
-	private Timestamp dateSendCGD;
+	private Date dateSendCGD;
 	private Integer cardCopyNumber;
 	private IPessoa person;
 	private Integer keyPerson;
@@ -65,9 +65,9 @@ public class GrantOwner extends DomainObject implements IGrantOwner {
 	}
 
 	/**
-	 * @return Timestamp
+	 * @return Date
 	 */
-	public Timestamp getDateSendCGD() {
+	public Date getDateSendCGD() {
 		return dateSendCGD;
 	}
 
@@ -103,7 +103,7 @@ public class GrantOwner extends DomainObject implements IGrantOwner {
 	 * Sets the dateSendCGD.
 	 * @param dateSendCGD The dateSendCGD to set
 	 */
-	public void setDateSendCGD(Timestamp dateSendCGD) {
+	public void setDateSendCGD(Date dateSendCGD) {
 		this.dateSendCGD = dateSendCGD;
 	}
 
