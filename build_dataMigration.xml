@@ -1079,6 +1079,20 @@
 		</java>
 	</target>
 
+	<target name="create-branch-codes-and-acronyms" depends="compile-proj">
+		<java classname="middleware.databaseClean.CreateBranchCodesAndAcronyms" fork="yes" failonerror="false" maxmemory="512m">
+			<classpath>
+				<pathelement path="${webapp.classes}"/>
+				<pathelement path="${config}"/>
+				<pathelement path="${sql}"/>
+				<pathelement path="${src}"/>
+				<fileset dir="${webapp.lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+	</target>
+
 	<!-- ********************************************************* -->
 
 	<!-- ***************** ADDED BY TANIA POUSAO ***************** -->

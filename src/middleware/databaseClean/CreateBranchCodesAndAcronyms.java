@@ -41,7 +41,6 @@ public class CreateBranchCodesAndAcronyms
     {
 
         IBranch branch = null;
-        IBranch alteredBranch = null;
         String branchCode = null;
 
         System.out.println("Running CreateBranchCodesAndAcronyms script");
@@ -96,8 +95,6 @@ public class CreateBranchCodesAndAcronyms
 
     private static IBranch createAndSetBranchAcronym(IBranch branch)
     {
-        String branchCode = branch.getCode();
-
         InfoBranch infoBranch = new InfoBranch(branch.getName(), branch.getCode());
         String branchAcronym = infoBranch.getPrettyCode();
         branch.setAcronym(branchAcronym);

@@ -208,25 +208,25 @@ public class ReportAllPastEnrollmentMigration
 	/**
 	 * @param courseCode
 	 */
-	private static String getCurricularCourseName(String courseCode)
-	{
-		String courseName = null;
-		try
-		{
-			courseName = CreateAndUpdateAllPastCurriculums.getCurricularCourseName(courseCode);
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		return courseName;
-	}
+//	private static String getCurricularCourseName(String courseCode)
+//	{
+//		String courseName = null;
+//		try
+//		{
+//			courseName = CreateAndUpdateAllPastCurriculums.getCurricularCourseName(courseCode);
+//		} catch (Exception e)
+//		{
+//			e.printStackTrace();
+//		}
+//		return courseName;
+//	}
 
 	/**
 	 * @param degreeCode
 	 */
-	private static String getDegreeName(String degreeCode)
-	{
-		String degreeName = ReportEnrolment.findDegreeName(degreeCode);
-		return degreeName;
-	}
+//	private static String getDegreeName(String degreeCode)
+//	{
+//		String degreeName = ReportEnrolment.findDegreeName(degreeCode);
+//		return degreeName;
+//	}
 }
