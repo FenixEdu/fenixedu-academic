@@ -16,6 +16,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -35,15 +36,18 @@ import org.dbunit.operation.DatabaseOperation;
 
 import Dominio.DegreeCurricularPlan;
 import Dominio.Enrolment;
+import Dominio.EnrolmentPeriod;
 import Dominio.ICurricularCourse;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrolment;
+import Dominio.IEnrolmentPeriod;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEnrolmentPeriod;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
@@ -72,6 +76,8 @@ public class GeraXml
     private static final String TEST_FILE_PATH = "test.properties";
 
     private static final String DELIMITADOR = "\t";
+
+    private static IEnrolmentPeriod enrolmentPeriodToSave = null;
 
     public static void main(String[] args)
     {
@@ -128,7 +134,7 @@ public class GeraXml
                     studentNumber, degreeCurricularPlanID);
             enrolments.add(enrolment);
         }
-
+        writeEnrollmentPeriod();
         try
         {
             String newFilePath = filePath.replaceFirst(".txt", ".xml");
@@ -162,6 +168,7 @@ public class GeraXml
         System.out.println("Ja gerei o DataSet");
 
         apagaEnrolments(enrolments);
+        deleteEnrollmentPeriod();
 
         System.out.println("Ja criei os enrolments");
 
@@ -270,6 +277,100 @@ public class GeraXml
         }
 
         return enrolment;
+    }
+
+    private static void writeEnrollmentPeriod()
+    {
+        try
+        {
+            ISuportePersistente suportePersistente = SuportePersistenteOJB
+                    .getInstance();
+
+            IPersistentEnrolmentPeriod persistentEnrolmentPeriod = suportePersistente
+                    .getIPersistentEnrolmentPeriod();
+            IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = suportePersistente
+                    .getIPersistentDegreeCurricularPlan();
+            IPersistentExecutionPeriod persistentExecutionPeriod = suportePersistente
+                    .getIPersistentExecutionPeriod();
+            suportePersistente.iniciarTransaccao();
+            IExecutionPeriod executionPeriod = persistentExecutionPeriod
+                    .readActualExecutionPeriod();
+            IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
+                    .readByOID(DegreeCurricularPlan.class, new Integer(48));
+
+            IEnrolmentPeriod enrolmentPeriod = persistentEnrolmentPeriod
+                    .readActualEnrolmentPeriodForDegreeCurricularPlan(degreeCurricularPlan);
+            enrolmentPeriodToSave = enrolmentPeriod;
+
+            boolean isnull = false;
+            if (enrolmentPeriod == null)
+            {
+                enrolmentPeriod = new EnrolmentPeriod();
+                isnull = true;
+            }
+
+            persistentEnrolmentPeriod.simpleLockWrite(enrolmentPeriod);
+            Calendar start = Calendar.getInstance();
+            start.roll(Calendar.DAY_OF_MONTH, false);
+            Calendar end = Calendar.getInstance();
+            end.roll(Calendar.DAY_OF_MONTH, true);
+            enrolmentPeriod.setStartDate(start.getTime());
+            enrolmentPeriod.setEndDate(end.getTime());
+            if (isnull)
+            {
+                enrolmentPeriod.setDegreeCurricularPlan(degreeCurricularPlan);
+                enrolmentPeriod.setExecutionPeriod(executionPeriod);
+            }
+
+            suportePersistente.confirmarTransaccao();
+        }
+        catch (ExcepcaoPersistencia e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    private static void deleteEnrollmentPeriod()
+    {
+        try
+        {
+            ISuportePersistente suportePersistente = SuportePersistenteOJB
+                    .getInstance();
+
+            IPersistentEnrolmentPeriod persistentEnrolmentPeriod = suportePersistente
+                    .getIPersistentEnrolmentPeriod();
+            IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = suportePersistente
+                    .getIPersistentDegreeCurricularPlan();
+
+            suportePersistente.iniciarTransaccao();
+
+            IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
+                    .readByOID(DegreeCurricularPlan.class, new Integer(48));
+
+            IEnrolmentPeriod enrolmentPeriod = persistentEnrolmentPeriod
+                    .readActualEnrolmentPeriodForDegreeCurricularPlan(degreeCurricularPlan);
+
+            if (enrolmentPeriodToSave == null)
+            {
+                persistentEnrolmentPeriod.deleteByOID(EnrolmentPeriod.class,
+                        enrolmentPeriod.getIdInternal());
+
+            }
+            else
+            {
+                persistentEnrolmentPeriod.simpleLockWrite(enrolmentPeriod);
+
+                enrolmentPeriod.setStartDate(enrolmentPeriodToSave
+                        .getStartDate());
+                enrolmentPeriod.setEndDate(enrolmentPeriodToSave.getEndDate());
+            }
+
+            suportePersistente.confirmarTransaccao();
+        }
+        catch (ExcepcaoPersistencia e)
+        {
+            e.printStackTrace();
+        }
     }
 
     private static void apagaStudentCurricularPlanEnrolments(

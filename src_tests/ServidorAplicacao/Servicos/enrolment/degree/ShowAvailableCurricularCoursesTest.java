@@ -63,7 +63,7 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
            
 //            dbAcessPoint.backUpDataBaseContents("etc/testBackup.xml");
            
-            System.out.println(getDataSetFilePath());
+           
             try
             {
                 dbAcessPoint.loadDataBase(getDataSetFilePath());
@@ -431,13 +431,7 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
         return lista;
     }
 
-    private static void sortCurricularCourses(List curricularCourseList)
-    {
-        ComparatorChain comparatorChain = new ComparatorChain();
-        comparatorChain.addComparator(new BeanComparator("name"));
-
-        Collections.sort(curricularCourseList, comparatorChain);
-    }
+   
 
     protected IUserView authenticateUser(String[] arguments)
     {
