@@ -31,6 +31,8 @@ public interface IMasterDegreeCandidate {
     void setExecutionDegree(ICursoExecucao executionDegree);    
     void setSituations(Set situations);
     void setPerson(IPessoa person);
+    void setSpecializationArea(String specializationArea);
+    
     
     // Get Methods
     String getMajorDegree();
@@ -42,6 +44,8 @@ public interface IMasterDegreeCandidate {
     ICursoExecucao getExecutionDegree();    
 	Set getSituations();
     IPessoa getPerson();
+    String getSpecializationArea();
+    
     
 }
 

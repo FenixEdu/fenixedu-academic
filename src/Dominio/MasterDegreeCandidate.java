@@ -29,6 +29,8 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
     private String majorDegreeSchool = null;
     private Integer majorDegreeYear = null;
     private Double average = null;
+    private String specializationArea;
+    
     
     // Instance from class Degree
     private ICursoExecucao executionDegree = null;
@@ -96,7 +98,8 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
         result += "\n  - Major Degree School : " + majorDegreeSchool;
         result += "\n  - Major Degree Year : " + majorDegreeYear;
         result += "\n  - Major Degree Average : " + average;
-        result += "\n  - Master Degree : " + executionDegree;
+		result += "\n  - Master Degree : " + executionDegree;
+		result += "\n  - Specialization Area : " + specializationArea;
 
         
         return result;
@@ -105,6 +108,20 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 
 	 
 	
+
+	/**
+	 * @return Specialization Area  
+	 */
+	public String getSpecializationArea() {
+		return specializationArea;
+	}
+
+	/**
+	 * @param specializationArea
+	 */
+	public void setSpecializationArea(String specializationArea) {
+		this.specializationArea = specializationArea;
+	}
 
 	/**
 	 * @return

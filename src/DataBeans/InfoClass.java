@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @author  tfc130
  */
 
-public class InfoClass implements Serializable {
+public class InfoClass extends InfoObject implements Serializable {
 	protected String _name;
 	
 	protected Integer _anoCurricular;

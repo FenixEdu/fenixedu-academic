@@ -29,6 +29,9 @@ public class Turno extends DomainObject implements ITurno {
 	/** Construtor sem argumentos p�blico requerido pela moldura de objectos OJB */
 	public Turno() {
 	}
+	public Turno(Integer idInternal) {
+		setIdInternal(idInternal);
+		}
 
 	public Turno(
 		String nome,

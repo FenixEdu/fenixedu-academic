@@ -26,6 +26,9 @@ public class Turma extends DomainObject implements ITurma {
 	public Turma() {
 	}
 
+	public Turma(Integer idInternal) {
+		setIdInternal(idInternal);
+		}
 /**
  * @deprecated
  * @param nome
