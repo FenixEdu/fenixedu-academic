@@ -14,19 +14,26 @@ package ServidorPersistente.OJB;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Vector;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.ojb.broker.ManageableCollection;
+import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.metadata.ClassDescriptor;
 import org.apache.ojb.broker.metadata.DescriptorRepository;
 import org.apache.ojb.broker.metadata.FieldDescriptor;
 import org.apache.ojb.broker.metadata.ObjectReferenceDescriptor;
 import org.apache.ojb.broker.metadata.PersistentField;
 import org.apache.ojb.broker.query.Criteria;
+import org.apache.ojb.broker.query.Query;
+import org.apache.ojb.broker.query.QueryFactory;
 import org.apache.ojb.broker.util.logging.LoggerFactory;
+import org.apache.ojb.odmg.HasBroker;
 import org.apache.ojb.odmg.OJB;
+import org.apache.ojb.odmg.OJBFactory;
 import org.apache.ojb.odmg.oql.EnhancedOQLQuery;
 import org.odmg.Database;
 import org.odmg.Implementation;
@@ -109,6 +116,65 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 
 	}
 
+	public Object executeQueryByCriteria(Class queryClass, Criteria crit)
+		throws org.odmg.QueryException {
+
+		Query query = QueryFactory.newQuery(queryClass, crit);
+		//setBindIterator(flatten(query.getCriteria(), new Vector()).listIterator());
+		//setQuery(query);
+
+		try {
+			//obtain current ODMG transaction
+			Transaction tx = OJBFactory.getInstance().currentTransaction();
+
+			// we allow queries even if no ODMG transaction is running.
+			// thus we have to provide a pseudo tx if necessary
+			boolean needsCommit = false;
+			if (tx == null) {
+				tx = OJBFactory.getInstance().newTransaction();
+			}
+
+			// we allow to work with unopened transactions.
+			// we assume that such a tx is to be closed after performing the query
+			if (!tx.isOpen()) {
+				tx.begin();
+				needsCommit = true;
+			}
+			// obtain a broker instance from the current transaction
+			PersistenceBroker broker = ((HasBroker) tx).getBroker();
+
+			//				  if(needsCommit) broker.beginTransaction();
+			// ask the broker to perfom the query.
+			// the concrete result type is configurable
+			ManageableCollection result =
+				(ManageableCollection) broker.getCollectionByQuery(
+					/*this.getCollectionClass(),*/
+					query);
+			//				  if(needsCommit) broker.commitTransaction();
+
+			// read-lock all resulting objects to the current transaction
+			Iterator iter = result.ojbIterator();
+			Object toBeLocked = null;
+			while (iter.hasNext()) {
+				toBeLocked = iter.next();
+				/**
+				 * we can only lock objects, not attributes
+				 */
+				if (broker.hasClassDescriptor(toBeLocked.getClass()))
+					tx.lock(toBeLocked, Transaction.READ);
+			}
+			// if query was executed with pseudo tx or with unopened tx, commit it
+			if (needsCommit) {
+				tx.commit();
+			}
+			return result;
+
+		} catch (Throwable t) {
+			throw new org.odmg.QueryException(t.getMessage());
+		}
+
+	}
+
 	public Object readDomainObjectByCriteria(Object obj) throws ExcepcaoPersistencia {
 		List result = readByCriteria(obj);
 		if (result != null && !result.isEmpty())
@@ -123,8 +189,9 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 			throw new IllegalArgumentException("Class to query cannot be null");
 
 		try {
-			((EnhancedOQLQuery) query).create(queryClass, criteria);
-			List result = (List) query.execute();
+			//((EnhancedOQLQuery) query).create(queryClass, criteria);
+			//List result = (List) query.execute();
+			List result = (List) executeQueryByCriteria(queryClass, criteria);
 			lockRead(result);
 			return result;
 		} catch (Exception e) {
