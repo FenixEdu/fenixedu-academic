@@ -1,6 +1,5 @@
 /*
  * Created on 3/Fev/2004
- *
  */
 package Util;
 
@@ -59,27 +58,41 @@ public class GeraXml
 {
 
     private static final String CC_FILE_PATH = "CurricularCoursesFilePath";
+
     private static final String BACKUP_DATASET_PROPERTY = "BackupDataSetFilePath";
+
     private static final String STUDENT_NUMBER_PROPERTY = "StudentNumber";
+
     private static final String DCP_ID_PROPERTY = "DegreeCurricularPlanID";
+
     private static final String DATASET_CONFIG = "config/DataSetGeneratorLEEC.properties";
+
     private static final String PROPERTIES_FILE_PATH = "config/gera.properties";
+
     private static final String DELIMITADOR = "\t";
 
     public static void main(String[] args)
     {
         Hashtable dadosConfiguracao = leFicheiroPropriedades();
-
+        String number = args[0];
+        String file = args[1];
+        System.out.println(number+"-"+file);
         String filePath = (String) dadosConfiguracao.get(CC_FILE_PATH);
-        String backupDataSetFilePath = (String) dadosConfiguracao.get(BACKUP_DATASET_PROPERTY);
-        Integer studentNumber = new Integer((String) dadosConfiguracao.get(STUDENT_NUMBER_PROPERTY));
-        Integer degreeCurricularPlanID = new Integer((String) dadosConfiguracao.get(DCP_ID_PROPERTY));
+        String backupDataSetFilePath = (String) dadosConfiguracao
+        .get(BACKUP_DATASET_PROPERTY);
+        backupDataSetFilePath = filePath + "/" + number + "/" +backupDataSetFilePath;
+        filePath = filePath + "/" + number + "/" + file + ".txt";
+       
+        Integer studentNumber = new Integer((String) dadosConfiguracao
+                .get(STUDENT_NUMBER_PROPERTY));
+        Integer degreeCurricularPlanID = new Integer((String) dadosConfiguracao
+                .get(DCP_ID_PROPERTY));
 
         ArrayList enrolments = new ArrayList();
 
         backUpEnrolmentContents(studentNumber, backupDataSetFilePath);
         apagaStudentCurricularPlanEnrolments(studentNumber);
-
+        System.out.println(filePath);
         List curricularCourses = leFicheiro(filePath);
         Iterator iter = curricularCourses.iterator();
         while (iter.hasNext())
@@ -87,14 +100,16 @@ public class GeraXml
             String curricularCourseData[] = (String[]) iter.next();
             System.out.println("A Lista tem: " + curricularCourseData[0]);
 
-            IEnrolment enrolment =
-                criaEnrolment(curricularCourseData, studentNumber, degreeCurricularPlanID);
+            IEnrolment enrolment = criaEnrolment(curricularCourseData,
+                    studentNumber, degreeCurricularPlanID);
             enrolments.add(enrolment);
         }
 
         try
         {
-            DataSetGenerator dataSetGen = new DataSetGenerator(DATASET_CONFIG);
+            String newFilePath = filePath.replaceFirst(".txt", ".xml");
+            DataSetGenerator dataSetGen = new DataSetGenerator(DATASET_CONFIG,
+                    newFilePath);
             dataSetGen.writeDataSet();
         }
         catch (NullPointerException e)
@@ -129,8 +144,10 @@ public class GeraXml
     {
         try
         {
-            ISuportePersistente suportePersistente = SuportePersistenteOJB.getInstance();
-            IPersistentEnrolment persistentEnrolment = suportePersistente.getIPersistentEnrolment();
+            ISuportePersistente suportePersistente = SuportePersistenteOJB
+                    .getInstance();
+            IPersistentEnrolment persistentEnrolment = suportePersistente
+                    .getIPersistentEnrolment();
 
             suportePersistente.iniciarTransaccao();
 
@@ -149,54 +166,51 @@ public class GeraXml
     /**
      * @param object
      */
-    private static IEnrolment criaEnrolment(
-        String[] curricularCourseData,
-        Integer studentNumber,
-        Integer degreeCurricularPlanID)
+    private static IEnrolment criaEnrolment(String[] curricularCourseData,
+            Integer studentNumber, Integer degreeCurricularPlanID)
     {
         String curricularCourseName = curricularCourseData[0].toUpperCase();
         IDegreeCurricularPlan degreeCurricularPlan2Read = new DegreeCurricularPlan();
         degreeCurricularPlan2Read.setIdInternal(degreeCurricularPlanID);
-        EnrolmentState enrolmentState = EnrolmentState.getEnum("msg." + curricularCourseData[1]);
+        EnrolmentState enrolmentState = EnrolmentState.getEnum("msg."
+                + curricularCourseData[1]);
         EnrolmentEvaluationType enrolmentEvaluationType = EnrolmentEvaluationType.NORMAL_OBJ;
 
         IEnrolment enrolment = null;
         try
         {
-            ISuportePersistente suportePersistente = SuportePersistenteOJB.getInstance();
+            ISuportePersistente suportePersistente = SuportePersistenteOJB
+                    .getInstance();
 
-            IPersistentCurricularCourse persistentCurricularCourse =
-                suportePersistente.getIPersistentCurricularCourse();
-            IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan =
-                suportePersistente.getIPersistentDegreeCurricularPlan();
-            IPersistentEnrolment persistentEnrolment = suportePersistente.getIPersistentEnrolment();
-            IStudentCurricularPlanPersistente studentCurricularPlanPersistente =
-                suportePersistente.getIStudentCurricularPlanPersistente();
-            IPersistentExecutionPeriod persistentExecutionPeriod =
-                suportePersistente.getIPersistentExecutionPeriod();
+            IPersistentCurricularCourse persistentCurricularCourse = suportePersistente
+                    .getIPersistentCurricularCourse();
+            IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = suportePersistente
+                    .getIPersistentDegreeCurricularPlan();
+            IPersistentEnrolment persistentEnrolment = suportePersistente
+                    .getIPersistentEnrolment();
+            IStudentCurricularPlanPersistente studentCurricularPlanPersistente = suportePersistente
+                    .getIStudentCurricularPlanPersistente();
+            IPersistentExecutionPeriod persistentExecutionPeriod = suportePersistente
+                    .getIPersistentExecutionPeriod();
 
             suportePersistente.iniciarTransaccao();
 
-            IDegreeCurricularPlan degreeCurricularPlan =
-                (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readByOId(
-                    degreeCurricularPlan2Read,
-                    false);
+            IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
+                    .readByOId(degreeCurricularPlan2Read, false);
 
-            List curricularCourses =
-                persistentCurricularCourse.readbyCourseNameAndDegreeCurricularPlan(
-                    curricularCourseName,
-                    degreeCurricularPlan);
+            List curricularCourses = persistentCurricularCourse
+                    .readbyCourseNameAndDegreeCurricularPlan(
+                            curricularCourseName, degreeCurricularPlan);
 
-            ICurricularCourse curricularCourse = (ICurricularCourse) curricularCourses.get(0);
+            ICurricularCourse curricularCourse = (ICurricularCourse) curricularCourses
+                    .get(0);
 
-            IStudentCurricularPlan studentCurricularPlan =
-                (
-                    IStudentCurricularPlan) studentCurricularPlanPersistente
-                        .readActiveByStudentNumberAndDegreeType(
-                    studentNumber,
-                    TipoCurso.LICENCIATURA_OBJ);
+            IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) studentCurricularPlanPersistente
+                    .readActiveByStudentNumberAndDegreeType(studentNumber,
+                            TipoCurso.LICENCIATURA_OBJ);
 
-            IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+            IExecutionPeriod executionPeriod = persistentExecutionPeriod
+                    .readActualExecutionPeriod();
 
             enrolment = new Enrolment();
             persistentEnrolment.lockWrite(enrolment);
@@ -216,25 +230,26 @@ public class GeraXml
         return enrolment;
     }
 
-    private static void apagaStudentCurricularPlanEnrolments(Integer studentNumber)
+    private static void apagaStudentCurricularPlanEnrolments(
+            Integer studentNumber)
     {
         try
         {
-            ISuportePersistente suportePersistente = SuportePersistenteOJB.getInstance();
-            IPersistentEnrolment persistentEnrolment = suportePersistente.getIPersistentEnrolment();
-            IStudentCurricularPlanPersistente studentCurricularPlanPersistente =
-                suportePersistente.getIStudentCurricularPlanPersistente();
+            ISuportePersistente suportePersistente = SuportePersistenteOJB
+                    .getInstance();
+            IPersistentEnrolment persistentEnrolment = suportePersistente
+                    .getIPersistentEnrolment();
+            IStudentCurricularPlanPersistente studentCurricularPlanPersistente = suportePersistente
+                    .getIStudentCurricularPlanPersistente();
 
             suportePersistente.iniciarTransaccao();
 
-            IStudentCurricularPlan studentCurricularPlan =
-                (
-                    IStudentCurricularPlan) studentCurricularPlanPersistente
-                        .readActiveByStudentNumberAndDegreeType(
-                    studentNumber,
-                    TipoCurso.LICENCIATURA_OBJ);
-                    
-            List enrolments = persistentEnrolment.readAllByStudentCurricularPlan(studentCurricularPlan);
+            IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) studentCurricularPlanPersistente
+                    .readActiveByStudentNumberAndDegreeType(studentNumber,
+                            TipoCurso.LICENCIATURA_OBJ);
+
+            List enrolments = persistentEnrolment
+                    .readAllByStudentCurricularPlan(studentCurricularPlan);
             Iterator iterador = enrolments.iterator();
 
             while (iterador.hasNext())
@@ -258,10 +273,8 @@ public class GeraXml
         {
             File file = new File(filePath);
             InputStream ficheiro = new FileInputStream(file);
-            leitura =
-                new BufferedReader(
-                    new InputStreamReader(ficheiro, "8859_1"),
-                    new Long(file.length()).intValue());
+            leitura = new BufferedReader(new InputStreamReader(ficheiro,
+                    "8859_1"), new Long(file.length()).intValue());
         }
         catch (IOException e)
         {
@@ -296,7 +309,7 @@ public class GeraXml
     private static String[] decomporLinha(String linhaFicheiro)
     {
         StringTokenizer st = new StringTokenizer(linhaFicheiro, DELIMITADOR);
-        String linha[] = { st.nextToken(), st.nextToken()};
+        String linha[] = {st.nextToken(), st.nextToken()};
         return linha;
     }
 
@@ -309,13 +322,16 @@ public class GeraXml
 
         try
         {
-            ResourceBundle bundle =
-                new PropertyResourceBundle(new FileInputStream(PROPERTIES_FILE_PATH));
+            ResourceBundle bundle = new PropertyResourceBundle(
+                    new FileInputStream(PROPERTIES_FILE_PATH));
 
             dadosConfiguracao.put(CC_FILE_PATH, bundle.getString(CC_FILE_PATH));
-            dadosConfiguracao.put(BACKUP_DATASET_PROPERTY, bundle.getString(BACKUP_DATASET_PROPERTY));
-            dadosConfiguracao.put(STUDENT_NUMBER_PROPERTY, bundle.getString(STUDENT_NUMBER_PROPERTY));
-            dadosConfiguracao.put(DCP_ID_PROPERTY, bundle.getString(DCP_ID_PROPERTY));
+            dadosConfiguracao.put(BACKUP_DATASET_PROPERTY, bundle
+                    .getString(BACKUP_DATASET_PROPERTY));
+            dadosConfiguracao.put(STUDENT_NUMBER_PROPERTY, bundle
+                    .getString(STUDENT_NUMBER_PROPERTY));
+            dadosConfiguracao.put(DCP_ID_PROPERTY, bundle
+                    .getString(DCP_ID_PROPERTY));
         }
         catch (MissingResourceException ex)
         {
@@ -328,7 +344,8 @@ public class GeraXml
         }
         catch (IOException ex)
         {
-            System.out.println("IOException reading file " + PROPERTIES_FILE_PATH + ex);
+            System.out.println("IOException reading file "
+                    + PROPERTIES_FILE_PATH + ex);
             ex.printStackTrace();
         }
 
@@ -338,24 +355,23 @@ public class GeraXml
     private static IDatabaseConnection getConnection() throws Exception
     {
         Class.forName("com.mysql.jdbc.Driver");
-        Connection jdbcConnection =
-            DriverManager.getConnection("jdbc:mysql://localhost/ciapl", "root", "");
+        Connection jdbcConnection = DriverManager.getConnection(
+                "jdbc:mysql://localhost/ciapl", "root", "");
         return new DatabaseConnection(jdbcConnection);
     }
 
     private static void backUpEnrolmentContents(
-        Integer studentCurricularPlanID,
-        String backupDataSetFilePath)
+            Integer studentCurricularPlanID, String backupDataSetFilePath)
     {
         try
         {
             QueryDataSet partialDataSet = new QueryDataSet(getConnection());
-            partialDataSet.addTable(
-                "ENROLMENT",
-                "SELECT * FROM ENROLMENT WHERE KEY_STUDENT_CURRICULAR_PLAN="
-                    + studentCurricularPlanID.intValue());
+            partialDataSet.addTable("ENROLMENT",
+                    "SELECT * FROM ENROLMENT WHERE KEY_STUDENT_CURRICULAR_PLAN="
+                            + studentCurricularPlanID.intValue());
 
-            FileWriter fileWriter = new FileWriter(new File(backupDataSetFilePath));
+            FileWriter fileWriter = new FileWriter(new File(
+                    backupDataSetFilePath));
             FlatXmlDataSet.write(partialDataSet, fileWriter, "ISO-8859-1");
             fileWriter.close();
         }
@@ -366,7 +382,8 @@ public class GeraXml
         }
         catch (IOException ioe)
         {
-            System.out.println("ERRO: A Escrever o ficheiro: " + backupDataSetFilePath);
+            System.out.println("ERRO: A Escrever o ficheiro: "
+                    + backupDataSetFilePath);
             ioe.printStackTrace();
         }
         catch (DataSetException dte)
@@ -384,7 +401,8 @@ public class GeraXml
     {
         try
         {
-            FileReader fileReader = new FileReader(new File(backupDataSetFilePath));
+            FileReader fileReader = new FileReader(new File(
+                    backupDataSetFilePath));
             IDataSet dataSet = new FlatXmlDataSet(fileReader);
             DatabaseOperation.DELETE.execute(getConnection(), dataSet);
             DatabaseOperation.INSERT.execute(getConnection(), dataSet);
@@ -392,7 +410,8 @@ public class GeraXml
         }
         catch (FileNotFoundException fnfe)
         {
-            System.out.println("ERRO: O ficheiro: " + backupDataSetFilePath + " nao foi encontrado");
+            System.out.println("ERRO: O ficheiro: " + backupDataSetFilePath
+                    + " nao foi encontrado");
             fnfe.printStackTrace();
         }
 
