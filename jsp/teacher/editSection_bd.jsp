@@ -8,6 +8,13 @@
 <html:form action="/editSection">
 <tr>
 	<td>
+		<html:link page="/editSection.do?method=changeParentSection">
+			<bean:message key="label.changeParentSection"/>
+		</html:link>
+	</td>
+</tr>
+<tr>
+	<td>
 		<bean:message key="message.sectionName"/>
 	</td>
 	<td>
