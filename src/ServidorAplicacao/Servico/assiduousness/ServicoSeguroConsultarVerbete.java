@@ -141,7 +141,7 @@ public class ServicoSeguroConsultarVerbete extends ServicoSeguro {
 
             //==================================== Inicio da construcao da
             // lista a mostrar no jsp =======================================
-            while (_dataConsulta.before(_dataFimEscolha)) {
+            while (!_dataConsulta.after(_dataFimEscolha)) {
                 calendario.clear();
                 calendario.setTimeInMillis(_dataConsulta.getTime());
 

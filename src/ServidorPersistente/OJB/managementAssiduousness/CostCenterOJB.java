@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.CostCenter;
+import Dominio.ICostCenter;
 import ServidorPersistente.OJB.PersistentObjectOJB;
 import ServidorPersistente.managementAssiduousness.IPersistentCostCenter;
 
@@ -31,5 +32,11 @@ public class CostCenterOJB extends PersistentObjectOJB implements IPersistentCos
         Criteria criteria = new Criteria();
         
         return queryList(CostCenter.class, criteria, "code", true);
+    }
+
+    public ICostCenter readCostCenterByCode(String code) throws Exception {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("code", code);
+        return (ICostCenter) queryObject(CostCenter.class, criteria);
     }
 }

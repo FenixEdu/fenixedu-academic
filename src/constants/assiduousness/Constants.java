@@ -321,4 +321,5 @@ public final class Constants {
     public static final long PRIMEIRO_ESCALAO = 3600 * 1000; // uma hora
 
     public static final long SEGUNDO_ESCALAO = 2 * 3600 * 1000; // duas horas
+    
 }

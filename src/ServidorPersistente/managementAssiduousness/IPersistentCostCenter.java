@@ -5,6 +5,7 @@ package ServidorPersistente.managementAssiduousness;
 
 import java.util.List;
 
+import Dominio.ICostCenter;
 import ServidorPersistente.IPersistentObject;
 
 /**
@@ -14,4 +15,5 @@ import ServidorPersistente.IPersistentObject;
 public interface IPersistentCostCenter  extends IPersistentObject {
     public Integer countAllCostCenter() throws Exception;
     public List readAll() throws Exception;
+    public ICostCenter readCostCenterByCode(String code) throws Exception;
 }

@@ -21,7 +21,6 @@ public class MostrarListaAction extends Action {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws IOException, ServletException {
-
         HttpSession session = request.getSession();
 
         if (session.getAttribute(Constants.USERNAME) == null) {

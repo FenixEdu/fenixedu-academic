@@ -8042,6 +8042,9 @@
 		</implementationClass>
 		<description/>
 		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagementAssiduousnessAuthorization"/>
+		</filterChains>
 	</service>
 	<service>
 		<name>UpdateAllMoneyCostCenterByYear</name>
@@ -8050,6 +8053,9 @@
 		</implementationClass>
 		<description/>
 		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagementAssiduousnessAuthorization"/>
+		</filterChains>
 	</service>
 	<service>
 		<name>ReadInfoRegistrationDeclaration</name>
@@ -8226,5 +8232,49 @@
         <filterChains>
             <chain name="TeacherAuthorization"/>
         </filterChains>
-	</service>		
+	</service>	
+	<service>
+		<name>WriteExtraWorkRequests</name>
+		<implementationClass> 
+            ServidorAplicacao.Servico.managementAssiduousness.WriteExtraWorkRequests
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagementAssiduousnessAuthorization"/>
+		</filterChains>
+	</service>
+	<service>
+		<name>ReadAndDeleteExtraWorkRequests</name>
+		<implementationClass> 
+            ServidorAplicacao.Servico.managementAssiduousness.ReadAndDeleteExtraWorkRequests
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagementAssiduousnessAuthorization"/>
+		</filterChains>
+	</service>
+	<service>
+		<name>ExtraWorkSheet</name>
+		<implementationClass> 
+            ServidorAplicacao.Servico.managementAssiduousness.ExtraWorkSheet
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagementAssiduousnessAuthorization"/>
+		</filterChains>
+	</service>
+	<service>
+		<name>WriteExtraWork</name>
+		<implementationClass> 
+            ServidorAplicacao.Servico.managementAssiduousness.WriteExtraWork
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ManagementAssiduousnessAuthorization"/>
+		</filterChains>
+	</service>
 </serviceDefinitions>

@@ -4,6 +4,8 @@
  */
 package DataBeans;
 
+import DataBeans.managementAssiduousness.InfoExtraWorkRequestsWithAll;
+import Dominio.ICostCenter;
 import Dominio.IEmployee;
 
 /**
@@ -13,6 +15,8 @@ import Dominio.IEmployee;
  */
 public class InfoEmployee extends InfoObject {
     private InfoPerson person = null;
+    private Integer employeeNumber  = null;
+    private InfoCostCenter workingPlaceInfoCostCenter = null;
 
     public void setPerson(InfoPerson person) {
         this.person = person;
@@ -22,9 +26,27 @@ public class InfoEmployee extends InfoObject {
         return person;
     }
 
+    public Integer getEmployeeNumber() {
+        return employeeNumber;
+    }
+
+    public void setEmployeeNumber(Integer employeeNumber) {
+        this.employeeNumber = employeeNumber;
+    }
+    
+    public InfoCostCenter getWorkingPlaceInfoCostCenter() {
+        return workingPlaceInfoCostCenter;
+    }
+    
+    public void setWorkingPlaceInfoCostCenter(
+            InfoCostCenter workingPlaceInfoCostCenter) {
+        this.workingPlaceInfoCostCenter = workingPlaceInfoCostCenter;
+    }
+    
     public String toString() {
         String result = "[" + this.getClass().getName() + ": \n";
         result += "idInternal = " + getIdInternal() + "; \n";
+        result += "number = " + this.employeeNumber + "; \n";
         result += "person = " + this.person.getIdInternal() + "; \n";
         result += "] \n";
 
@@ -41,6 +63,13 @@ public class InfoEmployee extends InfoObject {
         return result;
     }
 
+    public void copyFromDomain(IEmployee employee) {
+        super.copyFromDomain(employee);
+        if (employee != null) {
+            setEmployeeNumber(employee.getEmployeeNumber());
+        }
+    }
+    
     public static InfoEmployee newInfoFromDomain(IEmployee employee) {
         InfoEmployee infoEmployee = null;
         if (employee != null) {

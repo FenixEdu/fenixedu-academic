@@ -23,24 +23,22 @@ public class InfoExtraWork  extends InfoObject  {
     private Date endHour;
     private Integer mealSubsidy;
     private Date diurnalFirstHour;
-    private Date diurnalAfterSecondtHour;
+    private Date diurnalAfterSecondHour;
     private Date nocturnalFirstHour;
-    private Date nocturnalAfterSecondtHour;
+    private Date nocturnalAfterSecondHour;
     private Date restDay;
 
     private Boolean mealSubsidyAuthorized;
     private Boolean diurnalFirstHourAuthorized;
-    private Boolean diurnalAfterSecondtHourAuthorized;
+    private Boolean diurnalAfterSecondHourAuthorized;
     private Boolean nocturnalFirstHourAuthorized;
-    private Boolean nocturnalAfterSecondtHourAuthorized;
+    private Boolean nocturnalAfterSecondHourAuthorized;
     private Boolean restDayAuthorized;
-
-    private Boolean dayPerWeek;
-    private Boolean holiday;
-    private Boolean remuneration;
     
     private InfoEmployee infoWhoEmployee;
     private Date when;
+    
+    private Date totalExtraWork;
     
     /**
      * @return Returns the costCenter.
@@ -91,41 +89,29 @@ public class InfoExtraWork  extends InfoObject  {
         this.day = day;
     }
     /**
-     * @return Returns the dayPerWeek.
+     * @return Returns the diurnalAfterSecondHour.
      */
-    public Boolean getDayPerWeek() {
-        return dayPerWeek;
+    public Date getDiurnalAfterSecondHour() {
+        return diurnalAfterSecondHour;
     }
     /**
-     * @param dayPerWeek The dayPerWeek to set.
+     * @param diurnalAfterSecondHour The diurnalAfterSecondHour to set.
      */
-    public void setDayPerWeek(Boolean dayPerWeek) {
-        this.dayPerWeek = dayPerWeek;
+    public void setDiurnalAfterSecondHour(Date diurnalAfterSecondHour) {
+        this.diurnalAfterSecondHour = diurnalAfterSecondHour;
     }
     /**
-     * @return Returns the diurnalAfterSecondtHour.
+     * @return Returns the diurnalAfterSecondHourAuthorized.
      */
-    public Date getDiurnalAfterSecondtHour() {
-        return diurnalAfterSecondtHour;
+    public Boolean getDiurnalAfterSecondHourAuthorized() {
+        return diurnalAfterSecondHourAuthorized;
     }
     /**
-     * @param diurnalAfterSecondtHour The diurnalAfterSecondtHour to set.
+     * @param diurnalAfterSecondHourAuthorized The diurnalAfterSecondHourAuthorized to set.
      */
-    public void setDiurnalAfterSecondtHour(Date diurnalAfterSecondtHour) {
-        this.diurnalAfterSecondtHour = diurnalAfterSecondtHour;
-    }
-    /**
-     * @return Returns the diurnalAfterSecondtHourAuthorized.
-     */
-    public Boolean getDiurnalAfterSecondtHourAuthorized() {
-        return diurnalAfterSecondtHourAuthorized;
-    }
-    /**
-     * @param diurnalAfterSecondtHourAuthorized The diurnalAfterSecondtHourAuthorized to set.
-     */
-    public void setDiurnalAfterSecondtHourAuthorized(
-            Boolean diurnalAfterSecondtHourAuthorized) {
-        this.diurnalAfterSecondtHourAuthorized = diurnalAfterSecondtHourAuthorized;
+    public void setDiurnalAfterSecondHourAuthorized(
+            Boolean diurnalAfterSecondHourAuthorized) {
+        this.diurnalAfterSecondHourAuthorized = diurnalAfterSecondHourAuthorized;
     }
     /**
      * @return Returns the diurnnalFirstHour.
@@ -165,18 +151,6 @@ public class InfoExtraWork  extends InfoObject  {
         this.endHour = endHour;
     }
     /**
-     * @return Returns the holiday.
-     */
-    public Boolean getHoliday() {
-        return holiday;
-    }
-    /**
-     * @param holiday The holiday to set.
-     */
-    public void setHoliday(Boolean holiday) {
-        this.holiday = holiday;
-    }
-    /**
      * @return Returns the mealSubsidy.
      */
     public Integer getMealSubsidy() {
@@ -201,29 +175,29 @@ public class InfoExtraWork  extends InfoObject  {
         this.mealSubsidyAuthorized = mealSubsidyAuthorized;
     }
     /**
-     * @return Returns the nocturnalAfterSecondtHour.
+     * @return Returns the nocturnalAfterSecondHour.
      */
-    public Date getNocturnalAfterSecondtHour() {
-        return nocturnalAfterSecondtHour;
+    public Date getNocturnalAfterSecondHour() {
+        return nocturnalAfterSecondHour;
     }
     /**
-     * @param nocturnalAfterSecondtHour The nocturnalAfterSecondtHour to set.
+     * @param nocturnalAfterSecondHour The nocturnalAfterSecondHour to set.
      */
-    public void setNocturnalAfterSecondtHour(Date nocturnalAfterSecondtHour) {
-        this.nocturnalAfterSecondtHour = nocturnalAfterSecondtHour;
+    public void setNocturnalAfterSecondHour(Date nocturnalAfterSecondHour) {
+        this.nocturnalAfterSecondHour = nocturnalAfterSecondHour;
     }
     /**
-     * @return Returns the nocturnalAfterSecondtHourAuthorized.
+     * @return Returns the nocturnalAfterSecondHourAuthorized.
      */
-    public Boolean getNocturnalAfterSecondtHourAuthorized() {
-        return nocturnalAfterSecondtHourAuthorized;
+    public Boolean getNocturnalAfterSecondHourAuthorized() {
+        return nocturnalAfterSecondHourAuthorized;
     }
     /**
-     * @param nocturnalAfterSecondtHourAuthorized The nocturnalAfterSecondtHourAuthorized to set.
+     * @param nocturnalAfterSecondHourAuthorized The nocturnalAfterSecondHourAuthorized to set.
      */
-    public void setNocturnalAfterSecondtHourAuthorized(
-            Boolean nocturnalAfterSecondtHourAuthorized) {
-        this.nocturnalAfterSecondtHourAuthorized = nocturnalAfterSecondtHourAuthorized;
+    public void setNocturnalAfterSecondHourAuthorized(
+            Boolean nocturnalAfterSecondHourAuthorized) {
+        this.nocturnalAfterSecondHourAuthorized = nocturnalAfterSecondHourAuthorized;
     }
     /**
      * @return Returns the nocturnalFirstHour.
@@ -249,18 +223,6 @@ public class InfoExtraWork  extends InfoObject  {
     public void setNocturnalFirstHourAuthorized(
             Boolean nocturnalFirstHourAuthorized) {
         this.nocturnalFirstHourAuthorized = nocturnalFirstHourAuthorized;
-    }
-    /**
-     * @return Returns the remuneration.
-     */
-    public Boolean getRemuneration() {
-        return remuneration;
-    }
-    /**
-     * @param remuneration The remuneration to set.
-     */
-    public void setRemuneration(Boolean remuneration) {
-        this.remuneration = remuneration;
     }
     /**
      * @return Returns the restDay.
@@ -309,6 +271,18 @@ public class InfoExtraWork  extends InfoObject  {
      */
     public void setInfoWhoEmployee(InfoEmployee whoEmployee) {
         this.infoWhoEmployee = whoEmployee;
+    }    
+    /**
+     * @return Returns the totalExtraWork.
+     */
+    public Date getTotalExtraWork() {
+        return totalExtraWork;
+    }
+    /**
+     * @param totalExtraWork The totalExtraWork to set.
+     */
+    public void setTotalExtraWork(Date totalExtraWork) {
+        this.totalExtraWork = totalExtraWork;
     }
     
     public void copyFromDomain(IExtraWork extraWork) {
@@ -316,23 +290,21 @@ public class InfoExtraWork  extends InfoObject  {
         if(extraWork != null) {
             setBeginHour(extraWork.getBeginHour());
             setDay(extraWork.getDay());
-            setDayPerWeek(extraWork.getDayPerWeek());
-            setDiurnalAfterSecondtHour(extraWork.getDiurnalAfterSecondtHour());
-            setDiurnalAfterSecondtHourAuthorized(extraWork.getDiurnalAfterSecondtHourAuthorized());
+            setDiurnalAfterSecondHour(extraWork.getDiurnalAfterSecondHour());
+            setDiurnalAfterSecondHourAuthorized(extraWork.getDiurnalAfterSecondHourAuthorized());
             setDiurnalFirstHour(extraWork.getDiurnalFirstHour());
             setDiurnalFirstHourAuthorized(extraWork.getDiurnalFirstHourAuthorized());
             setEndHour(extraWork.getEndHour());
-            setHoliday(extraWork.getHoliday());
             setMealSubsidy(extraWork.getMealSubsidy());
             setMealSubsidyAuthorized(extraWork.getMealSubsidyAuthorized());
-            setNocturnalAfterSecondtHour(extraWork.getNocturnalAfterSecondtHour());
-            setNocturnalAfterSecondtHourAuthorized(extraWork.getNocturnalAfterSecondtHourAuthorized());
+            setNocturnalAfterSecondHour(extraWork.getNocturnalAfterSecondHour());
+            setNocturnalAfterSecondHourAuthorized(extraWork.getNocturnalAfterSecondHourAuthorized());
             setNocturnalFirstHour(extraWork.getNocturnalFirstHour());
             setNocturnalFirstHourAuthorized(extraWork.getNocturnalFirstHourAuthorized());       
-            setRemuneration(extraWork.getRemuneration());
             setRestDay(extraWork.getRestDay());
             setRestDayAuthorized(extraWork.getRestDayAuthorized());
             setWhen(extraWork.getWhen());
+            setTotalExtraWork(extraWork.getTotalExtraWork());
         }        
     }
     

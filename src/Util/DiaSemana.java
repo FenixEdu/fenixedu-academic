@@ -75,7 +75,7 @@ public class DiaSemana extends FenixUtil {
         case SEXTA_FEIRA:
             return "6a feira";
         case SABADO:
-            return "Sabado";
+            return "Sábado";
         }
         return "Erro: Invalid week day";
     }

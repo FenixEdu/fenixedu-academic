@@ -62,6 +62,7 @@ import ServidorPersistente.OJB.log.EnrolmentLogOJB;
 import ServidorPersistente.OJB.log.IPersistentEnrolmentLog;
 import ServidorPersistente.OJB.managementAssiduousness.CostCenterOJB;
 import ServidorPersistente.OJB.managementAssiduousness.ExtraWorkOJB;
+import ServidorPersistente.OJB.managementAssiduousness.ExtraWorkResquestsOJB;
 import ServidorPersistente.OJB.managementAssiduousness.MoneyCostCenterOJB;
 import ServidorPersistente.OJB.person.qualification.QualificationOJB;
 import ServidorPersistente.OJB.places.campus.CampusOJB;
@@ -125,6 +126,7 @@ import ServidorPersistente.guide.IPersistentReimbursementGuide;
 import ServidorPersistente.guide.IPersistentReimbursementGuideEntry;
 import ServidorPersistente.managementAssiduousness.IPersistentCostCenter;
 import ServidorPersistente.managementAssiduousness.IPersistentExtraWork;
+import ServidorPersistente.managementAssiduousness.IPersistentExtraWorkRequests;
 import ServidorPersistente.managementAssiduousness.IPersistentMoneyCostCenter;
 import ServidorPersistente.places.campus.IPersistentCampus;
 import ServidorPersistente.publication.IPersistentAuthor;
@@ -1271,8 +1273,11 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
     public IPersistentExtraWork getIPersistentExtraWork() {
         return new ExtraWorkOJB();
     }
-    
-    public IPersistentPaymentTransaction getIPersistentPaymentTransaction() {
+
+    public IPersistentExtraWorkRequests getIPersistentExtraWorkRequests() {
+        return new ExtraWorkResquestsOJB();
+    }    
+       public IPersistentPaymentTransaction getIPersistentPaymentTransaction() {
         return new PaymentTransactionOJB();
     }
 

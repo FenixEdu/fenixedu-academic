@@ -39,6 +39,7 @@ import ServidorPersistente.guide.IPersistentReimbursementGuide;
 import ServidorPersistente.guide.IPersistentReimbursementGuideEntry;
 import ServidorPersistente.managementAssiduousness.IPersistentCostCenter;
 import ServidorPersistente.managementAssiduousness.IPersistentExtraWork;
+import ServidorPersistente.managementAssiduousness.IPersistentExtraWorkRequests;
 import ServidorPersistente.managementAssiduousness.IPersistentMoneyCostCenter;
 import ServidorPersistente.places.campus.IPersistentCampus;
 import ServidorPersistente.publication.IPersistentAuthor;
@@ -456,6 +457,8 @@ public interface ISuportePersistente {
     public IPersistentMoneyCostCenter getIPersistentMoneyCostCenter();
     
     public IPersistentExtraWork getIPersistentExtraWork();
+        
+    public IPersistentExtraWorkRequests getIPersistentExtraWorkRequests();
     
     public IPersistentSecretaryEnrolmentStudent getIPersistentSecretaryEnrolmentStudent();
 }

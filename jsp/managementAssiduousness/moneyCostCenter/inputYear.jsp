@@ -33,7 +33,7 @@
 				<bean:message key="label.year" />:
 			</td>
 			<td  width="99%">
-				<html:text property="year" size="4"/>
+				<html:text property="year" size="4" maxlength="4"/>
 			</td>		
 		</tr>
 		<tr>

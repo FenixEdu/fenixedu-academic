@@ -824,4 +824,11 @@
         <invocationTiming>1</invocationTiming>
         <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
     </filterChain>
+    <filterChain>
+        <name>ManagementAssiduousnessAuthorization</name>
+        <expression>ManagementAssiduousnessAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
 </filterChainsDefinitions>

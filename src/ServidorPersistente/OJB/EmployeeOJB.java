@@ -62,7 +62,7 @@ public class EmployeeOJB extends PersistentObjectOJB implements IPersistentEmplo
         criteria.addAndCriteria(criteria2);
         criteria2.addOrCriteria(criteria3);
 
-        return queryList(EmployeeHistoric.class, criteria); //emploee's
+        return queryList(EmployeeHistoric.class, criteria); //employee's
         // historic list
     }
 

@@ -22,13 +22,11 @@ public interface IExtraWork extends IDomainObject {
     public void setCostCenterKey(Integer costCenterKey);
     public Date getDay();
     public void setDay(Date day);
-    public Boolean getDayPerWeek();
-    public void setDayPerWeek(Boolean dayPerWeek);
-    public Date getDiurnalAfterSecondtHour();
-    public void setDiurnalAfterSecondtHour(Date diurnalAfterSecondtHour);
-    public Boolean getDiurnalAfterSecondtHourAuthorized();
-    public void setDiurnalAfterSecondtHourAuthorized(
-            Boolean diurnalAfterSecondtHourAuthorized);
+    public Date getDiurnalAfterSecondHour();
+    public void setDiurnalAfterSecondHour(Date diurnalAfterSecondHour);
+    public Boolean getDiurnalAfterSecondHourAuthorized();
+    public void setDiurnalAfterSecondHourAuthorized(
+            Boolean diurnalAfterSecondHourAuthorized);
     public Date getDiurnalFirstHour();
     public void setDiurnalFirstHour(Date diurnnalFirstHour);
     public Boolean getDiurnalFirstHourAuthorized();
@@ -40,24 +38,20 @@ public interface IExtraWork extends IDomainObject {
     public void setEmployeeKey(Integer employeeKey);
     public Date getEndHour();
     public void setEndHour(Date endHour);
-    public Boolean getHoliday();
-    public void setHoliday(Boolean holiday);
     public Integer getMealSubsidy();
     public void setMealSubsidy(Integer mealSubsidy);
     public Boolean getMealSubsidyAuthorized();
     public void setMealSubsidyAuthorized(Boolean mealSubsidyAuthorized);
-    public Date getNocturnalAfterSecondtHour();
-    public void setNocturnalAfterSecondtHour(Date nocturnalAfterSecondtHour);
-    public Boolean getNocturnalAfterSecondtHourAuthorized();
-    public void setNocturnalAfterSecondtHourAuthorized(
-            Boolean nocturnalAfterSecondtHourAuthorized);
+    public Date getNocturnalAfterSecondHour();
+    public void setNocturnalAfterSecondHour(Date nocturnalAfterSecondHour);
+    public Boolean getNocturnalAfterSecondHourAuthorized();
+    public void setNocturnalAfterSecondHourAuthorized(
+            Boolean nocturnalAfterSecondHourAuthorized);
     public Date getNocturnalFirstHour();
     public void setNocturnalFirstHour(Date nocturnalFirstHour);
     public Boolean getNocturnalFirstHourAuthorized();
     public void setNocturnalFirstHourAuthorized(
             Boolean nocturnalFirstHourAuthorized);
-    public Boolean getRemuneration();
-    public void setRemuneration(Boolean remuneration);
     public Date getRestDay();
     public void setRestDay(Date restDay);
     public Boolean getRestDayAuthorized();
@@ -68,4 +62,6 @@ public interface IExtraWork extends IDomainObject {
     public void setWho(int who);
     public IEmployee getWhoEmployee();
     public void setWhoEmployee(IEmployee whoEmployee); 
+    public Date getTotalExtraWork();
+    public void setTotalExtraWork(Date totalExtraWork);
 }

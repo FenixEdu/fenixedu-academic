@@ -5,20 +5,42 @@
 	<definition name="managementAssiduousnessWelcome" extends="definition.managementAssiduousness.masterPage">
 		<put name="body" value="/managementAssiduousness/welcomeScreen.jsp"/>
 	</definition>
+
+	<definition name="managementAssiduousnessWelcome.work.employee.input" extends="definition.managementAssiduousness.masterPage">
+		<put name="navLocal" value="/managementAssiduousness/assiduousnessMenu.jsp"/>
+		<put name="body" value="/managementAssiduousness/work/inputDateAndEmployee.jsp"/>
+	</definition>
+	<definition name="managementAssiduousnessWelcome.work.employee.sheet" extends="definition.managementAssiduousness.masterPage">
+		<put name="navLocal" value="/managementAssiduousness/assiduousnessMenu.jsp"/>
+		<put name="body" value="/managementAssiduousness/work/workSheet.jsp"/>
+	</definition>
+
 	<definition name="managementAssiduousnessWelcome.extraWork" extends="definition.managementAssiduousness.masterPage">
-		<put name="navLocal" value="/managementAssiduousness/menuExtraWork.jsp"/>
+		<put name="navLocal" value="/managementAssiduousness/assiduousnessMenu.jsp"/>
 		<put name="body" value="/managementAssiduousness/welcomeScreenExtraWork.jsp"/>
 	</definition>
 	<definition name="managementAssiduousnessWelcome.extraWork.inputYear" extends="definition.managementAssiduousness.masterPage">
-		<put name="navLocal" value="/managementAssiduousness/menuExtraWork.jsp"/>
+		<put name="navLocal" value="/managementAssiduousness/assiduousnessMenu.jsp"/>
 		<put name="body" value="/managementAssiduousness/moneyCostCenter/inputYear.jsp"/>
 	</definition>
 	<definition name="managementAssiduousnessWelcome.extraWork.moneyCostCenterList" extends="definition.managementAssiduousness.masterPage">
-		<put name="navLocal" value="/managementAssiduousness/menuExtraWork.jsp"/>
+		<put name="navLocal" value="/managementAssiduousness/assiduousnessMenu.jsp"/>
 		<put name="body" value="/managementAssiduousness/moneyCostCenter/showMoneyCostCenterList.jsp"/>
 	</definition>
 	<definition name="managementAssiduousnessWelcome.extraWork.employee.input" extends="definition.managementAssiduousness.masterPage">
-		<put name="navLocal" value="/managementAssiduousness/menuExtraWork.jsp"/>
+		<put name="navLocal" value="/managementAssiduousness/assiduousnessMenu.jsp"/>
 		<put name="body" value="/managementAssiduousness/extraWork/inputDateAndEmployee.jsp"/>
+	</definition>
+	<definition name="managementAssiduousnessWelcome.extraWork.employee.sheet" extends="definition.managementAssiduousness.masterPage">
+		<put name="navLocal" value="/managementAssiduousness/assiduousnessMenu.jsp"/>
+		<put name="body" value="/managementAssiduousness/extraWork/extraWorkSheet.jsp"/>
+	</definition>
+	<definition name="managementAssiduousnessWelcome.extraWork.requests.input" extends="definition.managementAssiduousness.masterPage">
+		<put name="navLocal" value="/managementAssiduousness/assiduousnessMenu.jsp"/>
+		<put name="body" value="/managementAssiduousness/extraWork/requestsExtraWork.jsp"/>
+	</definition>
+	<definition name="managementAssiduousnessWelcome.extraWork.requests.confirmation" extends="definition.managementAssiduousness.masterPage">
+		<put name="navLocal" value="/managementAssiduousness/assiduousnessMenu.jsp"/>
+		<put name="body" value="/managementAssiduousness/extraWork/requestsExtraWorkConfirmation.jsp"/>
 	</definition>
 </tiles-definitions>

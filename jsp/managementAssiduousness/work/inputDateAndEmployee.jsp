@@ -1,14 +1,14 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<h2><bean:message key="titulo.extraWork.sheet" /></h2>
-<html:form action="/extraWorkByEmployee.do" focus="employeeNumber">
-	<html:hidden property="method" value="extraWorkSheetByEmployeeAndMoth"/>
+<h2><bean:message key="titulo.work.employee.sheet" /></h2>
+<html:form action="/workByEmployee.do" focus="employeeNumber">
+	<html:hidden property="method" value="workSheetByEmployeeAndMoth"/>
 	<html:hidden property="page" value="1"/>
 	<table>
 		<tr>
 			<td colspan="2" class="infoop">
-				<bean:message key="info.managementAssiduousness.extraWork.employee"/>
+				<bean:message key="info.managementAssiduousness.work.employee"/>
 			</td>		
 		</tr>
 		<logic:messagesPresent>	
@@ -38,10 +38,18 @@
 		</tr>
 		<tr>
 			<td width="1%" nowrap>
-				<bean:message key="label.moth.year" />:
+				<bean:message key="prompt.dataInicial" />:
 			</td>
-			<td width="99%">
-				<html:text property="moth" size="2" maxlength="2"/>&nbsp;/&nbsp;<html:text property="year" size="4" maxlength="4"/>&nbsp;(mm/aaaa)
+			<td>
+				<html:text property="beginDate" size="10" maxlength="10" onkeyup="if (this.value.length==2 && window.event.keyCode!=8) this.value = this.value + '/'; if (this.value.length==5 && window.event.keyCode!=8) this.value = this.value + '/';"/>&nbsp;(dd/mm/aaaa)
+			</td>		
+		</tr>
+		<tr>
+			<td width="1%" nowrap>
+				<bean:message key="prompt.dataFinal" />:
+			</td>
+			<td>
+				<html:text property="endDate" size="10" maxlength="10" onkeyup="if (this.value.length==2 && window.event.keyCode!=8) this.value = this.value + '/'; if (this.value.length==5 && window.event.keyCode!=8) this.value = this.value + '/';"/>&nbsp;(dd/mm/aaaa)
 			</td>		
 		</tr>	
 		<tr>

@@ -84,11 +84,6 @@
 	   	jdbc-type="INTEGER"
 	   	locking="true"
   	/>
-  	<field-descriptor
-    	name="employeeNumber"
-	    column="numeroMecanografico"
-	    jdbc-type="INTEGER"
-	/>
 	<field-descriptor
     	name="day"
 	    column="DAY"
@@ -118,7 +113,7 @@
     	conversion="ServidorPersistente.Conversores.Time2DateFieldConversion"
 	/>
   	<field-descriptor  
-		name="diurnalAfterSecondtHour" 
+		name="diurnalAfterSecondHour" 
 		column="DIURNAL_AFTER_SECOND_HOUR" 
 		jdbc-type="TIME"
     	conversion="ServidorPersistente.Conversores.Time2DateFieldConversion"
@@ -130,7 +125,7 @@
     	conversion="ServidorPersistente.Conversores.Time2DateFieldConversion"
 	/>
   	<field-descriptor  
-		name="nocturnalAfterSecondtHour" 
+		name="nocturnalAfterSecondHour" 
 		column="NOCTURNAL_AFTER_SECOND_HOUR" 
 		jdbc-type="TIME"
     	conversion="ServidorPersistente.Conversores.Time2DateFieldConversion"
@@ -150,7 +145,7 @@
   		column="DIURNAL_FIRST_HOUR_AUTHORIZED" 
   		jdbc-type="BIT"/>  
 	<field-descriptor
-  		name="diurnalAfterSecondtHourAuthorized" 
+  		name="diurnalAfterSecondHourAuthorized" 
   		column="DIURNAL_AFTER_SECOND_HOUR_AUTHORIZED" 
   		jdbc-type="BIT"/>  
 	<field-descriptor
@@ -158,35 +153,18 @@
   		column="NOCTURNAL_FIRST_HOUR_AUTHORIZED" 
   		jdbc-type="BIT"/>  
 	<field-descriptor
-  		name="nocturnalAfterSecondtHourAuthorized" 
+  		name="nocturnalAfterSecondHourAuthorized" 
   		column="NOCTURNAL_AFTER_SECOND_HOUR_AUTHORIZED" 
   		jdbc-type="BIT"/>  
 	<field-descriptor
   		name="restDayAuthorized" 
   		column="REST_DAY_AUTHORIZED" 
-  		jdbc-type="BIT"/>  
-	<field-descriptor
-  		name="dayPerWeek" 
-  		column="DAY_PER_WEEK" 
-  		jdbc-type="BIT"/>
-	<field-descriptor
-  		name="holiday" 
-  		column="HOLIDAY" 
-  		jdbc-type="BIT"/>
-	<field-descriptor
-  		name="remuneration" 
-  		column="REMUNERATION" 
-  		jdbc-type="BIT"/>
+  		jdbc-type="BIT"/> 
 	<field-descriptor
 	   	name="employeeKey"
 	   	column="KEY_EMPLOYEE"
 		jdbc-type="INTEGER"
 	/>  
-	<field-descriptor
-	   	name="costCenterKey"
-	   	column="KEY_COST_CENTER"
-		jdbc-type="INTEGER"
-	/>
 	<field-descriptor
 	   	name="who"
 	   	column="KEY_EMPLOYEE_DB"
@@ -205,12 +183,6 @@
 		refresh="true">
         <foreignkey field-ref="employeeKey"/>
     </reference-descriptor> 
-  	<reference-descriptor
-         name="costCenter"
-         class-ref="Dominio.CostCenter"
-         proxy="true">
-         <foreignkey field-ref="costCenterKey"/>
-  	</reference-descriptor>
     <reference-descriptor
       	name="whoEmployee"
        	class-ref="Dominio.Employee"
@@ -220,3 +192,237 @@
     </reference-descriptor> 
 </class-descriptor>
 
+<class-descriptor 
+  class="Dominio.managementAssiduousness.ExtraWorkRequests"
+  table="EXTRA_WORK_REQUESTS"
+>
+	<field-descriptor
+    	name="idInternal"
+	    column="ID_INTERNAL"
+	    jdbc-type="INTEGER"
+	    primarykey="true"
+	    autoincrement="true"
+	/>
+  	<field-descriptor
+   		name="ackOptLock"
+	  	column="ACK_OPT_LOCK"
+	   	jdbc-type="INTEGER"
+	   	locking="true"
+  	/>
+	<field-descriptor
+    	name="beginDate"
+	    column="BEGIN_DATE"
+    	jdbc-type="DATE"
+  	/>  
+  	<field-descriptor  
+		name="endDate" 
+		column="END_DATE" 
+		jdbc-type="DATE"
+	/>
+	<field-descriptor
+  		name="option1" 
+  		column="OPTION_1" 
+  		jdbc-type="BIT"
+	/>  
+	<field-descriptor
+  		name="option2" 
+  		column="OPTION_2" 
+  		jdbc-type="BIT"
+	/>  
+	<field-descriptor
+  		name="option3" 
+  		column="OPTION_3" 
+  		jdbc-type="BIT"
+	/>  
+	<field-descriptor
+  		name="option4" 
+  		column="OPTION_4" 
+  		jdbc-type="BIT"
+	/>  
+	<field-descriptor
+  		name="option5" 
+  		column="OPTION_5" 
+  		jdbc-type="BIT"
+	/>  
+	<field-descriptor
+  		name="option6" 
+  		column="OPTION_6" 
+  		jdbc-type="BIT"
+	/>  
+	<field-descriptor
+  		name="option7" 
+  		column="OPTION_7" 
+  		jdbc-type="BIT"
+	/>  
+	<field-descriptor
+  		name="option8" 
+  		column="OPTION_8" 
+  		jdbc-type="BIT"
+	/>  
+	<field-descriptor
+  		name="option9" 
+  		column="OPTION_9" 
+  		jdbc-type="BIT"
+	/>  
+	<field-descriptor
+  		name="option10" 
+  		column="OPTION_10" 
+  		jdbc-type="BIT"
+	/>  
+	<field-descriptor
+  		name="option11" 
+  		column="OPTION_11" 
+  		jdbc-type="BIT"
+	/>  
+	<field-descriptor
+  		name="option12" 
+  		column="OPTION_12" 
+  		jdbc-type="BIT"
+	/> 
+	<field-descriptor
+	   	name="employeeKey"
+	   	column="KEY_EMPLOYEE"
+		jdbc-type="INTEGER"
+	/> 
+	<field-descriptor
+	   	name="costCenterExtraWorkKey"
+	   	column="KEY_COST_CENTER_EXTRA_WORK"
+		jdbc-type="INTEGER"
+	/>  
+	<field-descriptor
+	   	name="costCenterMoneykKey"
+	   	column="KEY_COST_CENTER_MONEY"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+	   	name="who"
+	   	column="KEY_EMPLOYEE_DB"
+		jdbc-type="INTEGER"
+	/>   	   	
+	<field-descriptor
+		name="when"
+		column="WHEN_ALTER"
+		jdbc-type="TIMESTAMP"
+		conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+	/>   
+    <reference-descriptor
+      	name="employee"
+       	class-ref="Dominio.Employee"
+       	proxy="true">
+        <foreignkey field-ref="employeeKey"/>
+    </reference-descriptor> 
+  	<reference-descriptor
+         name="costCenter"
+         class-ref="Dominio.CostCenter"
+         proxy="true">
+         <foreignkey field-ref="costCenterKey"/>
+  	</reference-descriptor>
+  	<reference-descriptor
+         name="costCenterMoney"
+         class-ref="Dominio.CostCenter"
+         proxy="true">
+         <foreignkey field-ref="costCenterMoneyKey"/>
+  	</reference-descriptor>
+    <reference-descriptor
+      	name="whoEmployee"
+       	class-ref="Dominio.Employee"
+       	proxy="true">
+        <foreignkey field-ref="who"/>
+    </reference-descriptor> 
+</class-descriptor>
+
+<class-descriptor 
+  class="Dominio.managementAssiduousness.ExtraWorkCompensation"
+  table="EXTRA_WORK_COMPENSATION"
+>
+	<field-descriptor
+    	name="idInternal"
+	    column="ID_INTERNAL"
+	    jdbc-type="INTEGER"
+	    primarykey="true"
+	    autoincrement="true"
+	/>
+  	<field-descriptor
+   		name="ackOptLock"
+	  	column="ACK_OPT_LOCK"
+	   	jdbc-type="INTEGER"
+	   	locking="true"
+  	/>
+	<field-descriptor
+    	name="beginDate"
+	    column="BEGIN_DATE"
+    	jdbc-type="DATE"
+  	/>  
+  	<field-descriptor  
+		name="endDate" 
+		column="END_DATE" 
+		jdbc-type="DATE"
+	/>	
+	<field-descriptor
+  		name="dayPerWeek" 
+  		column="DAY_PER_WEEK" 
+  		jdbc-type="BIT"
+	/>
+	<field-descriptor
+  		name="holiday" 
+  		column="HOLIDAY" 
+  		jdbc-type="BIT"
+	/>
+	<field-descriptor
+  		name="remuneration" 
+  		column="REMUNERATION" 
+  		jdbc-type="BIT"
+	/> 		
+   	<field-descriptor
+   			name="serviceDismissalPerYear"
+   			column="SERVICE_DISMISSAL_PER_YEAR"
+   			jdbc-type="DOUBLE"
+   	/>  		
+   	<field-descriptor
+   			name="holidaysNumberPerYear"
+   			column="HOLIDAYS_NUMBER_PER_YEAR"
+   			jdbc-type="DOUBLE"
+   	/>
+  	<field-descriptor  
+		name="hoursExtraWorkPerYear" 
+		column="HOURS_EXTRAWORK_PER_YEAR" 
+		jdbc-type="TIME"
+    	conversion="ServidorPersistente.Conversores.Time2DateFieldConversion"
+	/>
+  	<field-descriptor  
+		name="hoursExtraWorkPerDay" 
+		column="HOURS_EXTRAWORK_PER_DAY" 
+		jdbc-type="TIME"
+    	conversion="ServidorPersistente.Conversores.Time2DateFieldConversion"
+	/> 
+	<field-descriptor
+	   	name="employeeKey"
+	   	column="KEY_EMPLOYEE"
+		jdbc-type="INTEGER"
+	/>  
+	<field-descriptor
+	   	name="who"
+	   	column="KEY_EMPLOYEE_DB"
+		jdbc-type="INTEGER"
+	/>   	   	
+	<field-descriptor
+		name="when"
+		column="WHEN_ALTER"
+		jdbc-type="TIMESTAMP"
+		conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+	/>   
+    <reference-descriptor
+      	name="employee"
+       	class-ref="Dominio.Employee"
+       	proxy="false"
+		refresh="true">
+        <foreignkey field-ref="employeeKey"/>
+    </reference-descriptor> 
+    <reference-descriptor
+      	name="whoEmployee"
+       	class-ref="Dominio.Employee"
+       	proxy="false"
+		refresh="true">
+        <foreignkey field-ref="who"/>
+    </reference-descriptor> 
+</class-descriptor>

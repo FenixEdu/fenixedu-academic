@@ -13,10 +13,15 @@
                 dynamic="true">
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 				<form-property name="year" type="java.lang.Integer" />    
-				<form-property name="size" type="java.lang.Integer" />    
-				<form-property name="id" type="java.lang.Integer" />  
-				<form-property name="initialValue" type="java.lang.Double" />    
-				<form-property name="totalValue" type="java.lang.Double" />    
+				<form-property name="size" type="java.lang.Integer" />        
+		</form-bean>
+		<form-bean name="workByEmployeeFormBean"
+				type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+				<form-property name="beginDate" type="java.lang.String" />
+				<form-property name="endDate" type="java.lang.String" />    
+				<form-property name="employeeNumber" type="java.lang.Integer" />  
 		</form-bean>
 		<form-bean name="extraWorkByEmployeeFormBean"
 				type="org.apache.struts.validator.DynaValidatorForm"
@@ -24,14 +29,24 @@
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 				<form-property name="moth" type="java.lang.Integer" />
 				<form-property name="year" type="java.lang.Integer" />    
-				<form-property name="employeeNumber" type="java.lang.Integer" />    
+				<form-property name="employeeNumber" type="java.lang.Integer" /> 
+				<form-property name="compensation" type="java.lang.String" />        
+		</form-bean>
+		<form-bean name="requestsExtraWorkFormBean"
+				type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+				<form-property name="beginDate" type="java.lang.String" />
+				<form-property name="endDate" type="java.lang.String" />    
+				<form-property name="cc" type="java.lang.String" />    
+				<form-property name="ccMoney" type="java.lang.String" />   
+				<form-property name="size" type="java.lang.Integer" />  
 				<form-property name="todo" type="java.lang.String" />  
 		</form-bean>
 	</form-beans>
 	
 	<!-- ========== Global Forward Definitions =============================== -->
-	<global-forwards type="org.apache.struts.action.ActionForward"/>
-
+	<global-forwards type="org.apache.struts.action.ActionForward"/>      
 	<!-- ========== Action Mapping Definitions =============================== -->      		  
 	<action-mappings type="org.apache.struts.action.ActionMapping">
 		<action path="/index" 
@@ -49,13 +64,42 @@
 			<forward name="inputYear" path="managementAssiduousnessWelcome.extraWork.inputYear"/>
 			<forward name="showMoneyCostCenterList" path="managementAssiduousnessWelcome.extraWork.moneyCostCenterList"/>
 		</action>	
+		<action path="/workByEmployee" 
+	      		type="ServidorApresentacao.Action.managementAssiduousness.WorkByEmployeeAction" 
+				name="workByEmployeeFormBean"
+				parameter="method"
+				scope="request"
+				validate="true">
+				<forward name="inputDateAndEmployee" path="managementAssiduousnessWelcome.work.employee.input"/>
+				<forward name="workSheet" path="managementAssiduousnessWelcome.work.employee.sheet"/>
+		</action>
 		<action path="/extraWorkByEmployee" 
 	      		type="ServidorApresentacao.Action.managementAssiduousness.ExtraWorkByEmployeeAction" 
 				name="extraWorkByEmployeeFormBean"
 				parameter="method"
 				scope="request"
 				validate="true">
-					<forward name="inputDateAndEmployee" path="managementAssiduousnessWelcome.extraWork.employee.input"/>
+				<forward name="inputDateAndEmployee" path="managementAssiduousnessWelcome.extraWork.employee.input"/>
+				<forward name="extraWorkSheet" path="managementAssiduousnessWelcome.extraWork.employee.sheet"/>
+		</action>	
+		<action path="/requestsExtraWork" 
+	      		type="ServidorApresentacao.Action.managementAssiduousness.RequestsExtraWorkAction" 
+				name="requestsExtraWorkFormBean"
+				parameter="method"
+				scope="request"
+				validate="true">
+				<forward name="inputResquets" path="managementAssiduousnessWelcome.extraWork.requests.input"/>
+				<forward name="requestsExtraWorkConfirmation" path="managementAssiduousnessWelcome.extraWork.requests.confirmation"/>
+		</action>
+		<action path="/requestsExtraWorkManagement" 
+	      		type="ServidorApresentacao.Action.managementAssiduousness.RequestsExtraWorkAction" 
+				name="requestsExtraWorkFormBean"
+				parameter="method"
+				scope="request"
+				validate="true"
+				input="/requestsExtraWork.do?method=prepareRequests&amp;page=0">
+				<forward name="inputResquets" path="managementAssiduousnessWelcome.extraWork.requests.input"/>
+				<forward name="requestsExtraWorkConfirmation" path="managementAssiduousnessWelcome.extraWork.requests.confirmation"/>
 		</action>
  	</action-mappings>
 
@@ -73,7 +117,7 @@
 
 	<plug-in className="org.apache.struts.tiles.TilesPlugin" >
 		<set-property property="definitions-config"
-					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/managementAssiduousness/tiles-managementAssiduousness-definitions.xml,/WEB-INF/tiles/managementAssiduousness/tiles-managementAssiduousness-pages-definitions.xml" />
+					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/managementAssiduousness/tiles-managementAssiduousness-definitions.xml,/WEB-INF/tiles/managementAssiduousness/tiles-managementAssiduousness-pages-definitions.xml,/WEB-INF/tiles-assiduousness-definitions.xml" />
 		<set-property property="moduleAware" value="true" />
 		<set-property property="definitions-parser-validate" value="true" />
 	</plug-in>    
