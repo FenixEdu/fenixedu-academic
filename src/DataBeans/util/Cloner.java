@@ -1171,7 +1171,7 @@ public abstract class Cloner {
 		ICurso degree = Cloner.copyInfoDegree2IDegree(infoDegreeCurricularPlan.getInfoDegree());
 
 		List degreeCurricularPlanEnrolmentInfoList = new ArrayList();
-		Iterator iterator = infoDegreeCurricularPlan.getEnrolmentInfo().iterator();
+		Iterator iterator = infoDegreeCurricularPlan.getInfoEnrolmentInfo().iterator();
 		while(iterator.hasNext()) {
 			InfoDegreeCurricularPlanEnrolmentInfo infoDegreeCurricularPlanEnrolmentInfo = (InfoDegreeCurricularPlanEnrolmentInfo) iterator.next();
 			degreeCurricularPlanEnrolmentInfoList.add(Cloner.copyInfoDegreeCurricularPlanEnrolmentInfo2IDegreeCurricularPlanEnrolmentInfo(infoDegreeCurricularPlanEnrolmentInfo));
@@ -1205,7 +1205,7 @@ public abstract class Cloner {
 		copyObjectProperties(infoDegreeCurricularPlan, degreeCurricularPlan);
 
 		infoDegreeCurricularPlan.setInfoDegree(infoDegree);
-		infoDegreeCurricularPlan.setEnrolmentInfo(infoDegreeCurricularPlanEnrolmentInfoList);
+		infoDegreeCurricularPlan.setInfoEnrolmentInfo(infoDegreeCurricularPlanEnrolmentInfoList);
 
 		return infoDegreeCurricularPlan;
 	}
