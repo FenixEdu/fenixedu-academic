@@ -13,17 +13,20 @@ import Dominio.IDomainObject;
  * @author Pica
  *  
  */
-public interface IGrantContractMovement extends IDomainObject 
-{
+public interface IGrantContractMovement extends IDomainObject {
     public Date getArrivalDate();
+
     public Date getDepartureDate();
+
     public IGrantContract getGrantContract();
-    public Integer getKeyGrantContract();
+
     public String getLocation();
-    
+
     public void setArrivalDate(Date arrivalDate);
+
     public void setDepartureDate(Date departureDate);
+
     public void setGrantContract(IGrantContract grantContract);
-    public void setKeyGrantContract(Integer keyGrantContract);
+
     public void setLocation(String location);
 }

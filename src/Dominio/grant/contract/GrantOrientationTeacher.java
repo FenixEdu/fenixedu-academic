@@ -14,8 +14,7 @@ import Dominio.ITeacher;
  * @author Pica
  *  
  */
-public class GrantOrientationTeacher extends DomainObject implements
-        IGrantOrientationTeacher {
+public class GrantOrientationTeacher extends DomainObject implements IGrantOrientationTeacher {
 
     private Date beginDate;
 
@@ -114,4 +113,3 @@ public class GrantOrientationTeacher extends DomainObject implements
     }
 
 }
-	

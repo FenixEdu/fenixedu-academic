@@ -12,7 +12,7 @@ import Dominio.DomainObject;
  * @author barbosa
  */
 public class GrantSubsidy extends DomainObject implements IGrantSubsidy {
-	
+
     private Integer state;
 
     private Date dateBeginSubsidy;

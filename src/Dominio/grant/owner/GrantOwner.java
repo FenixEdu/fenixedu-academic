@@ -26,9 +26,8 @@ public class GrantOwner extends DomainObject implements IGrantOwner {
     private IPessoa person;
 
     private Integer keyPerson;
-    
-    private List grantContracts;
-    
+
+    private List grantContracts; //Used for querys (See GrantOwnerOJB or GrantContractOJB class)
 
     /**
      * Constructor
@@ -51,8 +50,8 @@ public class GrantOwner extends DomainObject implements IGrantOwner {
         boolean result = false;
         if (obj instanceof IGrantOwner) {
             IGrantOwner grantOwner = (IGrantOwner) obj;
-            result = (((this.number.equals(grantOwner.getNumber())) && (this.person
-                    .equals(grantOwner.getPerson()))));
+            result = (((this.number.equals(grantOwner.getNumber())) && (this.person.equals(grantOwner
+                    .getPerson()))));
         }
         return result;
     }
@@ -141,19 +140,4 @@ public class GrantOwner extends DomainObject implements IGrantOwner {
     public void setKeyPerson(Integer personKey) {
         this.keyPerson = personKey;
     }
-
-	/**
-	 * @return Returns the grantContracts.
-	 */
-	public List getGrantContracts()
-	{
-		return grantContracts;
-	}
-	/**
-	 * @param grantContracts The grantContracts to set.
-	 */
-	public void setGrantContracts(List grantContracts)
-	{
-		this.grantContracts = grantContracts;
-	}
 }

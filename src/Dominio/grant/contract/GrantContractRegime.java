@@ -13,9 +13,8 @@ import Dominio.ITeacher;
  * @author Pica
  * @author Barbosa
  */
-public class GrantContractRegime extends DomainObject implements
-        IGrantContractRegime {
-	
+public class GrantContractRegime extends DomainObject implements IGrantContractRegime {
+
     private Integer state;
 
     private Date dateBeginContract;
@@ -208,11 +207,11 @@ public class GrantContractRegime extends DomainObject implements
     public void setTeacher(ITeacher teacher) {
         this.teacher = teacher;
     }
-    
+
     public boolean getContractRegimeActive() {
-    	if(this.dateEndContract.after(Calendar.getInstance().getTime())){
-    		return true;
-    	}
-  		return false;
-    }    
+        if (this.dateEndContract.after(Calendar.getInstance().getTime())) {
+            return true;
+        }
+        return false;
+    }
 }

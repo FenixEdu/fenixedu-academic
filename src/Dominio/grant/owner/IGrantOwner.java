@@ -5,7 +5,6 @@
 package Dominio.grant.owner;
 
 import java.util.Date;
-import java.util.List;
 
 import Dominio.IDomainObject;
 import Dominio.IPessoa;
@@ -24,8 +23,6 @@ public interface IGrantOwner extends IDomainObject {
     public Date getDateSendCGD();
 
     public Integer getCardCopyNumber();
-    
-    public List getGrantContracts();
 
     public void setPerson(IPessoa person);
 
@@ -34,6 +31,4 @@ public interface IGrantOwner extends IDomainObject {
     public void setDateSendCGD(Date dateSendCGD);
 
     public void setCardCopyNumber(Integer cardCopyNumber);
-    
-    public void setGrantContracts(List grantContracts);
 }
