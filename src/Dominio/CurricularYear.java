@@ -23,8 +23,8 @@ public class CurricularYear extends DomainObject implements ICurricularYear {
 
 	public boolean equals(Object obj) {
 		boolean resultado = false;
-		if (obj instanceof CurricularYear) {
-			CurricularYear curricularYear = (CurricularYear) obj;
+		if (obj instanceof ICurricularYear) {
+			ICurricularYear curricularYear = (ICurricularYear) obj;
 			resultado = (this.getYear().equals(curricularYear.getYear()));
 		}
 		return resultado;

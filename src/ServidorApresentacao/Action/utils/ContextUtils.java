@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ import framework.factory.ServiceManagerServiceFactory;
 
 import DataBeans.InfoClass;
 import DataBeans.InfoCurricularYear;
+import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
@@ -772,7 +774,7 @@ public class ContextUtils
             (List) CollectionUtils.collect(
                 executionDegreeList,
                 new EXECUTION_DEGREE_2_EXECUTION_DEGREE_LABEL());
-        labelListOfExecutionDegrees.add(0, new LabelValueBean("escolher", ""));
+		labelListOfExecutionDegrees.add(0, new LabelValueBean("escolher", ""));
         return labelListOfExecutionDegrees;
     }
 
@@ -803,4 +805,75 @@ public class ContextUtils
         }
     }
 
+	/* ************************************************************
+		Novos metodos para os exames 
+	************************************************************* */
+	
+	public static ArrayList createCurricularYearList()
+	{				
+		ArrayList anosCurriculares = new ArrayList();
+		
+		anosCurriculares.add(new LabelValueBean("1 º", "1"));
+		anosCurriculares.add(new LabelValueBean("2 º", "2"));
+		anosCurriculares.add(new LabelValueBean("3 º", "3"));
+		anosCurriculares.add(new LabelValueBean("4 º", "4"));
+		anosCurriculares.add(new LabelValueBean("5 º", "5"));
+	
+		return anosCurriculares;
+}	
+	public static ArrayList createExecutionDegreeList(HttpServletRequest request) throws FenixServiceException
+	{
+		IUserView userView = SessionUtils.getUserView(request);
+		
+		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
+
+		/* Cria o form bean com as licenciaturas em execucao.*/
+		Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear()};		
+			
+		List executionDegreeList = (List) ServiceUtils.executeService(userView, "ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
+
+		ArrayList licenciaturas = new ArrayList();
+
+		Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
+
+		Iterator iterator = executionDegreeList.iterator();
+
+		int index = 0;
+		while (iterator.hasNext()) {
+			InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
+			String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
+
+			name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString() + " em " + name;
+
+			name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree)
+				? "-" + infoExecutionDegree.getInfoDegreeCurricularPlan().getName()
+				: "";
+
+			licenciaturas.add(new LabelValueBean(name, infoExecutionDegree.getIdInternal().toString()));
+		}		
+
+		return licenciaturas;
+	}
+	
+	
+	/**
+	 * Method existencesOfInfoDegree.
+	 * @param executionDegreeList
+	 * @param infoExecutionDegree
+	 * @return int
+	 */
+	private static boolean duplicateInfoDegree(List executionDegreeList, InfoExecutionDegree infoExecutionDegree) {
+		InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
+		Iterator iterator = executionDegreeList.iterator();
+	
+		while (iterator.hasNext()) {
+			InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) iterator.next();
+			if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
+				&& !(infoExecutionDegree.equals(infoExecutionDegree2)))
+				return true;
+	
+		}
+		return false;
+	}
+	
 }

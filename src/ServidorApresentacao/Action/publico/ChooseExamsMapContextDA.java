@@ -135,13 +135,14 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 		HttpSession session = request.getSession(false);
-		DynaActionForm chooseExamContextoForm = (DynaActionForm) form;
+		DynaActionForm chooseExamContextoForm = (DynaActionForm) form;		
 
 		SessionUtils.removeAttributtes(
 			session,
 			SessionConstants.CONTEXT_PREFIX);
 
 		if (session != null) {
+			
 			InfoExecutionPeriod infoExecutionPeriod =
 				(InfoExecutionPeriod) request.getAttribute(
 					SessionConstants.EXECUTION_PERIOD);
@@ -187,6 +188,13 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
 				(InfoExecutionDegree) infoExecutionDegreeList.get(index);
 
 			if (infoExecutionDegree != null) {
+
+				//added by rspl
+					request.setAttribute(
+						SessionConstants.EXECUTION_DEGREE,
+						infoExecutionDegree);
+				//-----------------
+
 				RequestUtils.setExecutionDegreeToRequest(
 					request,
 					infoExecutionDegree);

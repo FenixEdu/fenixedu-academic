@@ -219,7 +219,7 @@ public class CurricularCourseScopeOJB extends ObjectFenixOJB implements IPersist
 		List result = queryList(CurricularCourseScope.class, crit);
 		return result;
 	}
-
+	
 	public ICurricularCourseScope readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndBeginDate(ICurricularCourse curricularCourse, ICurricularSemester curricularSemester, IBranch branch, Calendar beginDate) throws ExcepcaoPersistencia {
 
 		Criteria criteria = new Criteria();

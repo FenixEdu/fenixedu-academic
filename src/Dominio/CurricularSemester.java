@@ -36,8 +36,8 @@ public class CurricularSemester extends DomainObject implements ICurricularSemes
 
 	public boolean equals(Object obj) {
 		boolean resultado = false;
-		if (obj instanceof CurricularSemester) {
-			CurricularSemester curricularSemester = (CurricularSemester) obj;
+		if (obj instanceof ICurricularSemester) {
+			ICurricularSemester curricularSemester = (ICurricularSemester) obj;
 			resultado =
 				(this.getSemester().equals(curricularSemester.getSemester())
 					&& (this.getCurricularYear().equals(curricularSemester.getCurricularYear())));

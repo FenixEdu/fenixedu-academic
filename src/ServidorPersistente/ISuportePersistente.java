@@ -51,134 +51,135 @@ import ServidorPersistente.teacher.workingTime.IPersistentTeacherInstitutionWork
  */
 public interface ISuportePersistente
 {
-    public void iniciarTransaccao() throws ExcepcaoPersistencia;
-    public void confirmarTransaccao() throws ExcepcaoPersistencia;
-    public void cancelarTransaccao() throws ExcepcaoPersistencia;
-    public void clearCache();
-    public Integer getNumberCachedItems();
+	public void iniciarTransaccao() throws ExcepcaoPersistencia;
+	public void confirmarTransaccao() throws ExcepcaoPersistencia;
+	public void cancelarTransaccao() throws ExcepcaoPersistencia;
+	public void clearCache();
+	public Integer getNumberCachedItems();
 
-    //public IPessoaPersistente getIPessoaPersistente();
+	//public IPessoaPersistente getIPessoaPersistente();
 
-    public IAulaPersistente getIAulaPersistente();
-    public ISalaPersistente getISalaPersistente();
-    public ITurmaPersistente getITurmaPersistente();
-    public ITurnoPersistente getITurnoPersistente();
+	public IAulaPersistente getIAulaPersistente();
+	public ISalaPersistente getISalaPersistente();
+	public ITurmaPersistente getITurmaPersistente();
+	public ITurnoPersistente getITurnoPersistente();
 
-    public IFrequentaPersistente getIFrequentaPersistente();
-    public IPersistentEnrolment getIPersistentEnrolment();
-    public IPersistentEnrolmentEvaluation getIPersistentEnrolmentEvaluation();
-    public ITurmaTurnoPersistente getITurmaTurnoPersistente();
-    public ITurnoAlunoPersistente getITurnoAlunoPersistente();
-    public ITurnoAulaPersistente getITurnoAulaPersistente();
+	public IFrequentaPersistente getIFrequentaPersistente();
+	public IPersistentEnrolment getIPersistentEnrolment();
+	public IPersistentEnrolmentEvaluation getIPersistentEnrolmentEvaluation();
+	public ITurmaTurnoPersistente getITurmaTurnoPersistente();
+	public ITurnoAlunoPersistente getITurnoAlunoPersistente();
+	public ITurnoAulaPersistente getITurnoAulaPersistente();
 
-    public IPersistentCurricularCourse getIPersistentCurricularCourse();
-    public IPersistentExecutionCourse getIPersistentExecutionCourse();
-    public IPessoaPersistente getIPessoaPersistente();
-    public IPersistentCountry getIPersistentCountry();
+	public IPersistentCurricularCourse getIPersistentCurricularCourse();
+	public IPersistentExecutionCourse getIPersistentExecutionCourse();
+	public IPessoaPersistente getIPessoaPersistente();
+	public IPersistentCountry getIPersistentCountry();
 
-    public ICursoPersistente getICursoPersistente();
-    public ICursoExecucaoPersistente getICursoExecucaoPersistente();
+	public ICursoPersistente getICursoPersistente();
+	public ICursoExecucaoPersistente getICursoExecucaoPersistente();
 
-    public IPersistentStudent getIPersistentStudent();
-    public IPersistentBibliographicReference getIPersistentBibliographicReference();
+	public IPersistentStudent getIPersistentStudent();
+	public IPersistentBibliographicReference getIPersistentBibliographicReference();
 
-    public IPersistentDepartment getIDepartamentoPersistente();
-    public IDisciplinaDepartamentoPersistente getIDisciplinaDepartamentoPersistente();
-    public IPersistentDegreeCurricularPlan getIPersistentDegreeCurricularPlan();
-    public IStudentCurricularPlanPersistente getIStudentCurricularPlanPersistente();
+	public IPersistentDepartment getIDepartamentoPersistente();
+	public IDisciplinaDepartamentoPersistente getIDisciplinaDepartamentoPersistente();
+	public IPersistentDegreeCurricularPlan getIPersistentDegreeCurricularPlan();
+	public IStudentCurricularPlanPersistente getIStudentCurricularPlanPersistente();
 
-    public IPersistentMasterDegreeCandidate getIPersistentMasterDegreeCandidate();
-    public IPersistentCandidateSituation getIPersistentCandidateSituation();
+	public IPersistentMasterDegreeCandidate getIPersistentMasterDegreeCandidate();
+	public IPersistentCandidateSituation getIPersistentCandidateSituation();
 
-    public IPersistentExecutionPeriod getIPersistentExecutionPeriod();
-    public IPersistentExecutionYear getIPersistentExecutionYear();
+	public IPersistentExecutionPeriod getIPersistentExecutionPeriod();
+	public IPersistentExecutionYear getIPersistentExecutionYear();
 
-    public IPersistentSite getIPersistentSite();
-    public IPersistentSection getIPersistentSection();
-    public IPersistentItem getIPersistentItem();
-    public IPersistentAnnouncement getIPersistentAnnouncement();
-    public IPersistentCurriculum getIPersistentCurriculum();
-    public IPersistentEvaluationMethod getIPersistentEvaluationMethod();
+	public IPersistentSite getIPersistentSite();
+	public IPersistentSection getIPersistentSection();
+	public IPersistentItem getIPersistentItem();
+	public IPersistentAnnouncement getIPersistentAnnouncement();
+	public IPersistentCurriculum getIPersistentCurriculum();
+	public IPersistentEvaluationMethod getIPersistentEvaluationMethod();
 
-    public IPersistentTeacher getIPersistentTeacher();
+	public IPersistentTeacher getIPersistentTeacher();
 
-    public IPersistentExam getIPersistentExam();
-    public IPersistentExamExecutionCourse getIPersistentExamExecutionCourse();
+	public IPersistentExam getIPersistentExam();
+	public IPersistentWrittenTest getIPersistentWrittenTest();
+	public IPersistentExamExecutionCourse getIPersistentExamExecutionCourse();
 
-    public IPersistentBranch getIPersistentBranch();
+	public IPersistentBranch getIPersistentBranch();
 
-    public IPersistentCurricularYear getIPersistentCurricularYear();
-    public IPersistentContributor getIPersistentContributor();
+	public IPersistentCurricularYear getIPersistentCurricularYear();
+	public IPersistentContributor getIPersistentContributor();
 
-    public IPersistentCurricularSemester getIPersistentCurricularSemester();
+	public IPersistentCurricularSemester getIPersistentCurricularSemester();
 
-    public IPersistentEnrolmentEquivalence getIPersistentEnrolmentEquivalence();
+	public IPersistentEnrolmentEquivalence getIPersistentEnrolmentEquivalence();
 
-    public IPersistentProfessorship getIPersistentProfessorship();
-    public IPersistentResponsibleFor getIPersistentResponsibleFor();
-    public IPersistentPrice getIPersistentPrice();
-    public IPersistentGuideEntry getIPersistentGuideEntry();
-    public IPersistentGuide getIPersistentGuide();
-    public IPersistentGuideSituation getIPersistentGuideSituation();
+	public IPersistentProfessorship getIPersistentProfessorship();
+	public IPersistentResponsibleFor getIPersistentResponsibleFor();
+	public IPersistentPrice getIPersistentPrice();
+	public IPersistentGuideEntry getIPersistentGuideEntry();
+	public IPersistentGuide getIPersistentGuide();
+	public IPersistentGuideSituation getIPersistentGuideSituation();
 
-    public IPersistentCurricularCourseScope getIPersistentCurricularCourseScope();
-    public IPersistentRole getIPersistentRole();
-    public IPersistentPersonRole getIPersistentPersonRole();
+	public IPersistentCurricularCourseScope getIPersistentCurricularCourseScope();
+	public IPersistentRole getIPersistentRole();
+	public IPersistentPersonRole getIPersistentPersonRole();
 
-    public IPersistentPrecedence getIPersistentPrecedence();
-    public IPersistentRestriction getIPersistentRestriction();
+	public IPersistentPrecedence getIPersistentPrecedence();
+	public IPersistentRestriction getIPersistentRestriction();
 
-    public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod();
-    public IPersistentDegreeCurricularPlanEnrolmentInfo getIPersistentDegreeEnrolmentInfo();
-    public IPersistentPossibleCurricularCourseForOptionalCurricularCourse getIPersistentChosenCurricularCourseForOptionalCurricularCourse();
+	public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod();
+	public IPersistentDegreeCurricularPlanEnrolmentInfo getIPersistentDegreeEnrolmentInfo();
+	public IPersistentPossibleCurricularCourseForOptionalCurricularCourse getIPersistentChosenCurricularCourseForOptionalCurricularCourse();
 
-    public IPersistentStudentKind getIPersistentStudentKind();
+	public IPersistentStudentKind getIPersistentStudentKind();
 
     public IPersistentShiftProfessorship getIPersistentTeacherShiftPercentage();
 
-    public IPersistentExamStudentRoom getIPersistentExamStudentRoom();
+	public IPersistentExamStudentRoom getIPersistentExamStudentRoom();
 
-    public IPersistentMark getIPersistentMark();
-    public IPersistentEvaluation getIPersistentEvaluation();
-    public IPersistentEvaluationExecutionCourse getIPersistentEvaluationExecutionCourse();
+	public IPersistentMark getIPersistentMark();
+	public IPersistentEvaluation getIPersistentEvaluation();
+	public IPersistentEvaluationExecutionCourse getIPersistentEvaluationExecutionCourse();
 
-    public IPersistentEmployee getIPersistentEmployee();
+	public IPersistentEmployee getIPersistentEmployee();
 
-    public IPersistentEquivalentEnrolmentForEnrolmentEquivalence getIPersistentEquivalentEnrolmentForEnrolmentEquivalence();
-    public IPersistentSummary getIPersistentSummary();
+	public IPersistentEquivalentEnrolmentForEnrolmentEquivalence getIPersistentEquivalentEnrolmentForEnrolmentEquivalence();
+	public IPersistentSummary getIPersistentSummary();
 
-    public IPersistentQualification getIPersistentQualification();
-    public IPersistentCandidateEnrolment getIPersistentCandidateEnrolment();
-    public IPersistentGratuity getIPersistentGratuity();
+	public IPersistentQualification getIPersistentQualification();
+	public IPersistentCandidateEnrolment getIPersistentCandidateEnrolment();
+	public IPersistentGratuity getIPersistentGratuity();
 
-    public IPersistentStudentGroup getIPersistentStudentGroup();
-    public IPersistentStudentGroupAttend getIPersistentStudentGroupAttend();
-    public IPersistentGroupProperties getIPersistentGroupProperties();
+	public IPersistentStudentGroup getIPersistentStudentGroup();
+	public IPersistentStudentGroupAttend getIPersistentStudentGroupAttend();
+	public IPersistentGroupProperties getIPersistentGroupProperties();
 
-    public IPersistentCurricularCourseEquivalence getIPersistentCurricularCourseEquivalence();
+	public IPersistentCurricularCourseEquivalence getIPersistentCurricularCourseEquivalence();
 
-    public IPersistentCurricularCourseEquivalenceRestriction getIPersistentCurricularCourseEquivalenceRestriction();
+	public IPersistentCurricularCourseEquivalenceRestriction getIPersistentCurricularCourseEquivalenceRestriction();
 
-    //by gedl AT rnl DOT ist DOT utl DOT pt (July the 25th, 2003)
-    public IPersistentSeminaryModality getIPersistentSeminaryModality();
+	//by gedl AT rnl DOT ist DOT utl DOT pt (July the 25th, 2003)
+	public IPersistentSeminaryModality getIPersistentSeminaryModality();
 
-    //by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003)
-    public IPersistentSeminaryTheme getIPersistentSeminaryTheme();
+	//by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003)
+	public IPersistentSeminaryTheme getIPersistentSeminaryTheme();
 
-    //    by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003)
-    public IPersistentSeminary getIPersistentSeminary();
+	//    by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003)
+	public IPersistentSeminary getIPersistentSeminary();
 
-    //    by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003)
-    public IPersistentSeminaryCaseStudy getIPersistentSeminaryCaseStudy();
+	//    by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003)
+	public IPersistentSeminaryCaseStudy getIPersistentSeminaryCaseStudy();
 
-    //    by gedl AT rnl DOT ist DOT utl DOT pt (July the 29th, 2003)
-    public IPersistentSeminaryCandidacy getIPersistentSeminaryCandidacy();
+	//    by gedl AT rnl DOT ist DOT utl DOT pt (July the 29th, 2003)
+	public IPersistentSeminaryCandidacy getIPersistentSeminaryCandidacy();
 
-    //    by gedl AT rnl DOT ist DOT utl DOT pt (July the 29th, 2003)
-    public IPersistentSeminaryCaseStudyChoice getIPersistentSeminaryCaseStudyChoice();
+	//    by gedl AT rnl DOT ist DOT utl DOT pt (July the 29th, 2003)
+	public IPersistentSeminaryCaseStudyChoice getIPersistentSeminaryCaseStudyChoice();
 
-    //  by gedl AT rnl DOT ist DOT utl DOT pt (August the 4th, 2003)
-    public IPersistentSeminaryCurricularCourseEquivalency getIPersistentSeminaryCurricularCourseEquivalency();
+	//  by gedl AT rnl DOT ist DOT utl DOT pt (August the 4th, 2003)
+	public IPersistentSeminaryCurricularCourseEquivalency getIPersistentSeminaryCurricularCourseEquivalency();
 
     public IPersistentMetadata getIPersistentMetadata();
     public IPersistentQuestion getIPersistentQuestion();
@@ -189,7 +190,7 @@ public interface ISuportePersistente
     public IPersistentStudentTestLog getIPersistentStudentTestLog();
 	public IPersistentOnlineTest getIPersistentOnlineTest();
 	public IPersistentTestScope getIPersistentTestScope();
-public IPersistentDistributedTestAdvisory getIPersistentDistributedTestAdvisory();
+	public IPersistentDistributedTestAdvisory getIPersistentDistributedTestAdvisory();
     // by Barbosa (October 28th, 2003)
     public IPersistentGrantOwner getIPersistentGrantOwner();
     //by Barbosa (November 18th, 2003)
@@ -204,40 +205,40 @@ public IPersistentDistributedTestAdvisory getIPersistentDistributedTestAdvisory(
     public IPersistentGrantProject getIPersistentGrantProject();
     public IPersistentGrantSubsidy getIPersistentGrantSubsidy();
 
-    public IPersistentAdvisory getIPersistentAdvisory();
+	public IPersistentAdvisory getIPersistentAdvisory();
 
-    public IPersistentWebSite getIPersistentWebSite();
-    public IPersistentWebSiteSection getIPersistentWebSiteSection();
-    public IPersistentWebSiteItem getIPersistentWebSiteItem();
+	public IPersistentWebSite getIPersistentWebSite();
+	public IPersistentWebSiteSection getIPersistentWebSiteSection();
+	public IPersistentWebSiteItem getIPersistentWebSiteItem();
 
-    public IPersistentMasterDegreeThesis getIPersistentMasterDegreeThesis();
-    public IPersistentMasterDegreeThesisDataVersion getIPersistentMasterDegreeThesisDataVersion();
-    public IPersistentMasterDegreeProofVersion getIPersistentMasterDegreeProofVersion();
+	public IPersistentMasterDegreeThesis getIPersistentMasterDegreeThesis();
+	public IPersistentMasterDegreeThesisDataVersion getIPersistentMasterDegreeThesisDataVersion();
+	public IPersistentMasterDegreeProofVersion getIPersistentMasterDegreeProofVersion();
 
-    public IPersistentExternalPerson getIPersistentExternalPerson();
+	public IPersistentExternalPerson getIPersistentExternalPerson();
 
-    public IPersistentCoordinator getIPersistentCoordinator();
-    public IPersistentDegreeInfo getIPersistentDegreeInfo();
+	public IPersistentCoordinator getIPersistentCoordinator();
+	public IPersistentDegreeInfo getIPersistentDegreeInfo();
 
-    public IPersistentUniversity getIPersistentUniversity();
+	public IPersistentUniversity getIPersistentUniversity();
 
-    public IPersistentCourseReport getIPersistentCourseReport();
-    public IPersistentCategory getIPersistentCategory();
-    public IPersistentCareer getIPersistentCareer();
-    public IPersistentWeeklyOcupation getIPersistentWeeklyOcupation();
-    public IPersistentExternalActivity getIPersistentExternalActivity();
-    public IPersistentServiceProviderRegime getIPersistentServiceProviderRegime();
+	public IPersistentCourseReport getIPersistentCourseReport();
+	public IPersistentCategory getIPersistentCategory();
+	public IPersistentCareer getIPersistentCareer();
+	public IPersistentWeeklyOcupation getIPersistentWeeklyOcupation();
+	public IPersistentExternalActivity getIPersistentExternalActivity();
+	public IPersistentServiceProviderRegime getIPersistentServiceProviderRegime();
 
-    public IPersistentShiftProfessorship getIPersistentShiftProfessorship();
+	public IPersistentShiftProfessorship getIPersistentShiftProfessorship();
 
-    public IPersistentReimbursementGuide getIPersistentReimbursementGuide();
-    public IPersistentReimbursementGuideSituation getIPersistentReimbursementGuideSituation();
-    public IPersistentOrientation getIPersistentOrientation();
-    public IPersistentPublicationsNumber getIPersistentPublicationsNumber();
-    public IPersistentOldPublication getIPersistentOldPublication();
-    public IPersistentGaugingTestResult getIPersistentGaugingTestResult();
+	public IPersistentReimbursementGuide getIPersistentReimbursementGuide();
+	public IPersistentReimbursementGuideSituation getIPersistentReimbursementGuideSituation();
+	public IPersistentOrientation getIPersistentOrientation();
+	public IPersistentPublicationsNumber getIPersistentPublicationsNumber();
+	public IPersistentOldPublication getIPersistentOldPublication();
+	public IPersistentGaugingTestResult getIPersistentGaugingTestResult();
 
-    public IPersistentSupportLesson getIPersistentSupportLesson();
+	public IPersistentSupportLesson getIPersistentSupportLesson();
 
     public IPersistentTeacherDegreeFinalProjectStudent getIPersistentTeacherDegreeFinalProjectStudent();
     public IPersistentTeacherInstitutionWorkingTime getIPersistentTeacherInstitutionWorkingTime();
@@ -271,4 +272,8 @@ public IPersistentDistributedTestAdvisory getIPersistentDistributedTestAdvisory(
     public IPersistentServiceExemptionCreditLine getIPersistentServiceExemptionCreditLine();
     public IPersistentManagementPositionCreditLine getIPersistentManagementPositionCreditLine();
 	public IPersistentFinalDegreeWork getIPersistentFinalDegreeWork();
+
+	//	Ana e Ricardo
+	public IPersistentRoomOccupation getIPersistentRoomOccupation();
+	public IPersistentPeriod getIPersistentPeriod();
 }

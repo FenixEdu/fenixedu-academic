@@ -10,6 +10,8 @@ package Dominio;
  *
  * @author  tfc130
  */
+import java.util.List;
+
 import Util.TipoSala;
 
 public class Sala extends DomainObject implements ISala {
@@ -20,7 +22,7 @@ public class Sala extends DomainObject implements ISala {
 	protected Integer _capacidadeExame;
 	protected TipoSala _tipo;
 
-	
+	private List roomOccupations;
 	
 
 	/** Construtor sem argumentos público requerido pela moldura de objectos OJB */
@@ -122,6 +124,20 @@ public class Sala extends DomainObject implements ISala {
 		result += ", capacidadeExame=" + _capacidadeExame;
 		result += "]";
 		return result;
+	}
+
+	/**
+	 * @return Returns the roomOccupations.
+	 */
+	public List getRoomOccupations() {
+		return roomOccupations;
+	}
+
+	/**
+	 * @param roomOccupations The roomOccupations to set.
+	 */
+	public void setRoomOccupations(List roomOccupations) {
+		this.roomOccupations = roomOccupations;
 	}
 
 }

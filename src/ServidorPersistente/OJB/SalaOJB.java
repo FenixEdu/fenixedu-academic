@@ -11,20 +11,25 @@ package ServidorPersistente.OJB;
  */
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.ojb.broker.query.Criteria;
+import org.apache.ojb.broker.query.Query;
+import org.apache.ojb.broker.query.QueryByCriteria;
 import org.odmg.QueryException;
 
 import Dominio.Aula;
 import Dominio.Exam;
-import Dominio.IExecutionCourse;
 import Dominio.IExam;
+import Dominio.IExecutionCourse;
+import Dominio.IPeriod;
 import Dominio.ISala;
 import Dominio.ITurmaTurno;
 import Dominio.ITurno;
+import Dominio.Period;
+import Dominio.RoomOccupation;
 import Dominio.Sala;
 import Dominio.TurmaTurno;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -32,6 +37,8 @@ import ServidorPersistente.ISalaPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import ServidorPersistente.exceptions.notAuthorizedPersistentDeleteException;
 import Util.TipoSala;
+
+import commons.CollectionUtils;
 
 public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente
 {
@@ -277,4 +284,45 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente
 
     }
 
+	public List readAvailableRooms(IPeriod period, Calendar startTime, Calendar endTime)
+		throws ExcepcaoPersistencia
+	{
+		Criteria criteriaPeriod = new Criteria();
+		criteriaPeriod.addLessThan("endDate", period.getStartDate());
+		criteriaPeriod.addGreaterThan("startDate", period.getEndDate());
+		Query queryPeriod = new QueryByCriteria(Period.class, criteriaPeriod, true);
+
+		Criteria criteriaRoomOccupation = new Criteria();
+		criteriaRoomOccupation.addLessThan("endTime", startTime);
+		criteriaRoomOccupation.addLessThan("startTime", endTime);
+		criteriaRoomOccupation.addIn("period", queryPeriod);
+		Query queryRoomOccupation =
+			new QueryByCriteria(RoomOccupation.class, criteriaRoomOccupation, true);
+
+		Criteria criteriaRoomUnoccupied = new Criteria();
+		criteriaRoomUnoccupied.addIsNull("roomOccupations.idInternal");
+
+		Criteria criteriaRoom = new Criteria();
+		criteriaRoom.addIn("roomOccupations", queryRoomOccupation);
+		criteriaRoom.addOrCriteria(criteriaRoomUnoccupied);
+		//Query queryRoom = new QueryByCriteria(Sala.class, criteriaRoom, true);
+
+		return queryList(Sala.class, criteriaRoom, true);
+	}
+
+	public List readAllBuildings() throws ExcepcaoPersistencia
+	{
+		try
+		{
+			String oqlQuery = "select distinct building from " + Sala.class.getName();
+			query.create(oqlQuery);
+			List result = (List) query.execute();
+			lockRead(result);
+			return result;
+		}
+		catch (QueryException ex)
+		{
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
 }

@@ -27,90 +27,135 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExam;
 import ServidorPersistente.exceptions.notAuthorizedPersistentDeleteException;
 
-public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
+public class ExamOJB extends ObjectFenixOJB implements IPersistentExam
+{
 
-	public List readBy(Calendar day, Calendar beginning)
-		throws ExcepcaoPersistencia {
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("day", day);
-		criteria.addEqualTo("beginning", beginning);
-		return queryList(Exam.class, criteria);
-	}
+    public List readBy(Calendar day, Calendar beginning) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("day", day);
+        criteria.addEqualTo("beginning", beginning);
+        return queryList(Exam.class, criteria);
+    }
 
-	public List readAll() throws ExcepcaoPersistencia {
+    public List readAll() throws ExcepcaoPersistencia
+    {
         Criteria crit = new Criteria();
-        crit.addOrderBy("season",true);
-        return queryList(Exam.class,crit);
-		
-	}
+        crit.addOrderBy("season", true);
+        return queryList(Exam.class, crit);
 
-	public void delete(IExam exam) throws ExcepcaoPersistencia {
+    }
 
-		
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("keyExam", exam.getIdInternal());
-		List examEnrollments = queryList(ExamStudentRoom.class, criteria);
-		if (examEnrollments != null && !examEnrollments.isEmpty()) {
-			throw new notAuthorizedPersistentDeleteException();
-		}
-		else{
+    public void delete(IExam exam) throws ExcepcaoPersistencia
+    {
 
-			List associatedExecutionCourses =
-				exam.getAssociatedExecutionCourses();
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("keyExam", exam.getIdInternal());
+        List examEnrollments = queryList(ExamStudentRoom.class, criteria);
+        if (examEnrollments != null && !examEnrollments.isEmpty())
+        {
+            throw new notAuthorizedPersistentDeleteException();
+        }
+        else
+        {
 
-			if (associatedExecutionCourses != null) {
-				for (int i = 0; i < associatedExecutionCourses.size(); i++) {
-					IExecutionCourse executionCourse =
-						(IExecutionCourse) associatedExecutionCourses.get(i);
-					executionCourse.getAssociatedExams().remove(exam);
+            List associatedExecutionCourses = exam.getAssociatedExecutionCourses();
 
-					IExamExecutionCourse examExecutionCourseToDelete =
-						SuportePersistenteOJB
-							.getInstance()
-							.getIPersistentExamExecutionCourse()
-							.readBy(
-							exam,
-							executionCourse);
+            if (associatedExecutionCourses != null)
+            {
+                for (int i = 0; i < associatedExecutionCourses.size(); i++)
+                {
+                    IExecutionCourse executionCourse =
+                        (IExecutionCourse) associatedExecutionCourses.get(i);
+                    executionCourse.getAssociatedExams().remove(exam);
 
-					SuportePersistenteOJB
-						.getInstance()
-						.getIPersistentExamExecutionCourse()
-						.delete(
-						examExecutionCourseToDelete);
-				}
-			}
+                    IExamExecutionCourse examExecutionCourseToDelete =
+                        SuportePersistenteOJB.getInstance().getIPersistentExamExecutionCourse().readBy(
+                            exam,
+                            executionCourse);
 
-			exam.setAssociatedExecutionCourses(null);
+                    SuportePersistenteOJB.getInstance().getIPersistentExamExecutionCourse().delete(
+                        examExecutionCourseToDelete);
+                }
+            }
 
-			super.delete(exam);
+            exam.setAssociatedExecutionCourses(null);
 
-		}
-	}
+            super.delete(exam);
 
-	
+        }
+    }
 
-	/* (non-Javadoc)
-	 * @see ServidorPersistente.IPersistentExam#readBy(Dominio.ISala, Dominio.IExecutionPeriod)
-	 */
-	public List readBy(ISala room, IExecutionPeriod executionPeriod)
-		throws ExcepcaoPersistencia {
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("associatedRooms.nome", room.getNome());
-		criteria.addEqualTo(
-			"associatedExecutionCourses.executionPeriod.name",
-			executionPeriod.getName());
-		criteria.addEqualTo(
-			"associatedExecutionCourses.executionPeriod.executionYear.year",
-			executionPeriod.getExecutionYear().getYear());
-		List examsWithRepetition = queryList(Exam.class, criteria);
-		List examsWithoutRepetition = new ArrayList();
-		for (int i = 0; i < examsWithRepetition.size(); i++) {
-			IExam exam = (IExam) examsWithRepetition.get(i);
-			if (!examsWithoutRepetition.contains(exam)) {
-				examsWithoutRepetition.add(exam);
-			}
-		}
-		return examsWithoutRepetition;
-	}
+    /* (non-Javadoc)
+     * @see ServidorPersistente.IPersistentExam#readBy(Dominio.ISala, Dominio.IExecutionPeriod)
+     */
+    /**
+    	* 
+    	* @deprecated
+    	*/
+    public List readBy(ISala room, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("associatedRooms.nome", room.getNome());
+        criteria.addEqualTo(
+            "associatedExecutionCourses.executionPeriod.name",
+            executionPeriod.getName());
+        criteria.addEqualTo(
+            "associatedExecutionCourses.executionPeriod.executionYear.year",
+            executionPeriod.getExecutionYear().getYear());
+        List examsWithRepetition = queryList(Exam.class, criteria);
+        List examsWithoutRepetition = new ArrayList();
+        for (int i = 0; i < examsWithRepetition.size(); i++)
+        {
+            IExam exam = (IExam) examsWithRepetition.get(i);
+            if (!examsWithoutRepetition.contains(exam))
+            {
+                examsWithoutRepetition.add(exam);
+            }
+        }
+        return examsWithoutRepetition;
+    }
+
+    public List readByRoomAndExecutionPeriod(ISala room, IExecutionPeriod executionPeriod)
+        throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("associatedRoomOccupation.room.nome", room.getNome());
+        criteria.addEqualTo(
+            "associatedExecutionCourses.executionPeriod.name",
+            executionPeriod.getName());
+        criteria.addEqualTo(
+            "associatedExecutionCourses.executionPeriod.executionYear.year",
+            executionPeriod.getExecutionYear().getYear());
+        List examsWithRepetition = queryList(Exam.class, criteria);
+        List examsWithoutRepetition = new ArrayList();
+        for (int i = 0; i < examsWithRepetition.size(); i++)
+        {
+            IExam exam = (IExam) examsWithRepetition.get(i);
+            if (!examsWithoutRepetition.contains(exam))
+            {
+                examsWithoutRepetition.add(exam);
+            }
+        }
+        return examsWithoutRepetition;
+    }
+
+    /* (non-Javadoc)
+     * @see ServidorPersistente.IPersistentExam#readBy(java.util.Calendar, java.util.Calendar, java.util.Calendar)
+     */
+    public List readBy(Calendar day, Calendar beginning, Calendar end) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("day", day);
+        if (beginning != null)
+        {
+            criteria.addEqualTo("beginning", beginning);
+        }
+        if (end != null)
+        {
+            criteria.addEqualTo("end", end);
+        }
+        return queryList(Exam.class, criteria);
+    }
 
 }

@@ -1,7 +1,5 @@
 /*
- * IPersistentExam.java
- *
- * Created on 2003/03/19
+ * IPersistentExam.java Created on 2003/03/19
  */
 
 package ServidorPersistente;
@@ -14,13 +12,21 @@ import Dominio.IExecutionPeriod;
 import Dominio.ISala;
 
 /**
- *
- * @author  Luis Cruz & Sara Ribeiro
+ * @author Luis Cruz & Sara Ribeiro
  */
-public interface IPersistentExam extends IPersistentObject {
-	public List readBy(Calendar day, Calendar beginning) throws ExcepcaoPersistencia;
-	public List readAll() throws ExcepcaoPersistencia;
-	public void delete(IExam exam) throws ExcepcaoPersistencia;
-	
-	public List readBy(ISala room, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
+public interface IPersistentExam extends IPersistentObject
+{
+
+    public List readBy(Calendar day, Calendar beginning) throws ExcepcaoPersistencia;
+
+    public List readAll() throws ExcepcaoPersistencia;
+
+    public void delete(IExam exam) throws ExcepcaoPersistencia;
+
+    public List readBy(ISala room, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
+
+    public List readByRoomAndExecutionPeriod(ISala room, IExecutionPeriod executionPeriod)
+            throws ExcepcaoPersistencia;
+
+    public List readBy(Calendar day, Calendar beginning, Calendar end) throws ExcepcaoPersistencia;
 }

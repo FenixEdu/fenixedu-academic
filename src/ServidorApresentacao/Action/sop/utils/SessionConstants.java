@@ -210,7 +210,6 @@ public abstract class SessionConstants {
 	public static final String EXTERNAL_JURIES_SEARCH_RESULTS = "external_juries_search_results";
 	public static final String EXECUTION_DEGREE_LIST = "execution_degree_list";
 	
-	
 
 	// -------------------------------------------------------------------------------
 	//    Person Constants - For Person
@@ -270,8 +269,19 @@ public abstract class SessionConstants {
 	public static final String LIST_EXAMSANDINFO      		= "infoExams";
 	public static final String AVAILABLE_ROOM_OCCUPATION	= "availableRoomOccupation";
 	public static final String AVAILABLE_ROOMS              = "availableRooms";
+	public static final String AVAILABLE_ROOMS_ID			= "availableRoomsId";
 	public static final String ALL_INFO_EXAMS_KEY           = "ALL_INFO_EXAMS_KEY";
 	public static final String INFO_EMPTY_ROOMS_KEY         = "INFO_EMPTY_ROOMS_KEY";
+	public static final String EXECUTION_COURSES_LIST       = "executionCoursesList";
+	public static final String DAY       					= "day";
+	public static final String MONTH       					= "month";
+	public static final String YEAR       					= "year";
+	public static final String LIST_EXECUTION_COURSE_NAMES  = "executionCourseNamesList";
+	public static final String START_TIME  					= "start_time";
+	public static final String END_TIME  					= "end_time";
+	public static final String EXAM							= "exam";
+	public static final String EXAM_OID						= "exam_oid";
+	public static final String ROOMS_LIST					= "rooms_list";
 
 	// -------------------------------------------------------------------------------
 	//    SOP Constants - For Timetables Management

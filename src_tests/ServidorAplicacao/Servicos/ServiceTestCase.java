@@ -82,10 +82,12 @@ public abstract class ServiceTestCase extends TestCase
 
             IDataSet fullDataSet = connection.createDataSet();
             DatabaseOperation.DELETE_ALL.execute(connection, fullDataSet);
-
+			
             DatabaseOperation.INSERT.execute(connection, dataSet);
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			sp.iniciarTransaccao();
             sp.clearCache();
+			sp.confirmarTransaccao();
 
             connection.close();
         } catch (Exception ex)
@@ -97,13 +99,13 @@ public abstract class ServiceTestCase extends TestCase
 
     protected void tearDown() throws Exception
     {
-
-        //				try {
-        //					super.tearDown();
-        //					loadDataBase();
-        //				} catch (Exception ex) {
-        //					fail("Tear down failed: " + ex);
-        //				}
+//		try {
+//				super.tearDown();
+//				loadDataBase();
+//
+//		} catch (Exception ex) {
+//			fail("Tear down failed: " + ex);
+//		}
     }
 
     protected void compareDataSet(String expectedFileName)
@@ -173,7 +175,7 @@ public abstract class ServiceTestCase extends TestCase
         while (st.hasMoreElements())
             defaultListTableNamesToFilter.add(st.nextElement());
 
-        listTableNamesToFilter.addAll(defaultListTableNamesToFilter);
+        //listTableNamesToFilter.addAll(defaultListTableNamesToFilter);
 
         return listTableNamesToFilter;
     }
