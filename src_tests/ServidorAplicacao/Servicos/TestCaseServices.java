@@ -131,7 +131,7 @@ public abstract class TestCaseServices extends TestCase {
 	 * @param
 	 */
 	public void setUserViewNotAuthorized() {
-		String argsForAuthentication[] = { "4", "a" };
+		String argsForAuthentication[] = { "julia", "pass" };
 
 		try {
 			userViewNotAuthorized =
