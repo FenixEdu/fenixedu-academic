@@ -2,7 +2,7 @@
  * ChangeMasterDegreeCandidate.java
  *
  * O Servico ChangeMasterDegreeCandidate altera a informacao de um candidato de Mestrado
- * Nota : E suposto os campos (numeroCandidato, anoCandidatura, chaveCursoMestrado)
+ * Nota : E suposto os campos (numeroCandidato, anoCandidatura, chaveCursoMestrado, username)
  *        nao se puderem alterar
  *
  * Created on 02 de Dezembro de 2002, 16:25
