@@ -3,15 +3,15 @@ Mascon Dump
 Source Host:           localhost
 Source Server Version: 3.23.53-max
 Source Database:       ciapl
-Date:                  2003-03-11 13:57:44
+Date:                  2003-03-11 16:50:53
 */
 
 use ciapl ;
 #----------------------------
 # Table structure for announcement
 #----------------------------
-drop table if exists ANNOUNCEMENT;
-create table ANNOUNCEMENT (
+drop table if exists announcement;
+create table announcement (
    ID_INTERNAL int(11) unsigned not null auto_increment,
    TITLE varchar(100),
    CREATION_DATE date,
@@ -19,26 +19,26 @@ create table ANNOUNCEMENT (
    INFORMATION varchar(100),
    KEY_SITE int(11) unsigned not null default '0',
    primary key (ID_INTERNAL))
-   type=InnoDB comment="InnoDB free: 372736 kB";
+   type=InnoDB comment="InnoDB free: 372736 kB; InnoDB free: 372736 kB";
 
 #----------------------------
 # Table structure for curriculum
 #----------------------------
-drop table if exists CURRICULUM;
-create table CURRICULUM (
+drop table if exists curriculum;
+create table curriculum (
    ID_INTERNAL int(11) not null auto_increment,
    KEY_EXECUTION_COURSE int(11) not null default '0',
    GENERAL_OBJECTIVES varchar(50),
    OPERACIONAL_OBJECTIVES varchar(50),
    PROGRAM varchar(50),
    primary key (ID_INTERNAL))
-   type=InnoDB comment="InnoDB free: 372736 kB";
+   type=InnoDB comment="InnoDB free: 372736 kB; InnoDB free: 372736 kB";
 
 #----------------------------
 # Table structure for item
 #----------------------------
-drop table if exists ITEM;
-create table ITEM (
+drop table if exists item;
+create table item (
    ID_INTERNAL int(11) unsigned not null auto_increment,
    NAME varchar(100),
    `ORDER` int(11) unsigned,
@@ -47,12 +47,32 @@ create table ITEM (
    KEY_SECTION int(11) unsigned not null default '0',
    primary key (ID_INTERNAL),
    unique ID_INTERNAL (ID_INTERNAL))
+   type=InnoDB comment="InnoDB free: 372736 kB; InnoDB free: 372736 kB";
+
+#----------------------------
+# Table structure for owns
+#----------------------------
+drop table if exists owns;
+create table owns (
+   ID_TEACHER int(11) unsigned not null default '0',
+   ID_SITE int(11) unsigned not null default '0',
+   primary key (ID_TEACHER, ID_SITE))
+   type=InnoDB comment="InnoDB free: 372736 kB";
+
+#----------------------------
+# Table structure for professorships
+#----------------------------
+drop table if exists professorships;
+create table professorships (
+   ID_TEACHER int(11) unsigned not null default '0',
+   ID_SITE int(11) unsigned not null default '0',
+   primary key (ID_TEACHER, ID_SITE))
    type=InnoDB comment="InnoDB free: 372736 kB";
 
 #----------------------------
 # Table structure for section
 #----------------------------
-drop table if exists SECTION;
+drop table if exists section;
 create table section (
    ID_INTERNAL int(11) unsigned not null auto_increment,
    NAME varchar(100),
@@ -61,56 +81,30 @@ create table section (
    KEY_SUPERIOR_SECTION int(10) unsigned not null default '0',
    LAST_MODIFIED_DATE date,
    primary key (ID_INTERNAL))
-   type=InnoDB comment="InnoDB free: 372736 kB";
+   type=InnoDB comment="InnoDB free: 372736 kB; InnoDB free: 372736 kB";
 
 #----------------------------
 # Table structure for site
 #----------------------------
-drop table if exists SITE;
+drop table if exists site;
 create table site (
    ID_INTERNAL int(11) unsigned not null auto_increment,
    KEY_EXECUTION_COURSE int(11) unsigned not null default '0',
+   KEY_INITIAL_SECTION int(11) not null default '0',
    primary key (ID_INTERNAL),
    unique ID_INTERNAL (ID_INTERNAL, KEY_EXECUTION_COURSE))
-   type=MyISAM;
+   type=InnoDB comment="InnoDB free: 372736 kB";
 
+#----------------------------
+# Table structure for teacher
+#----------------------------
+drop table if exists teacher;
+create table teacher (
+   ID_INTERNAL int(11) unsigned not null auto_increment,
+   USERNAME varchar(20),
+   `PASSWORD` varchar(16),
+   TEACHER_NUMBER int(10) unsigned,
+   primary key (ID_INTERNAL))
+   type=InnoDB comment="InnoDB free: 372736 kB";
 
-#
-# Table structure for table 'OWNS'
-#
-
-drop table if exists OWNS;
-CREATE TABLE `OWNS` (
-  `ID_TEACHER` int(11) unsigned NOT NULL default '0',
-  `ID_SITE` int(11) unsigned NOT NULL default '0',
-  PRIMARY KEY  (`ID_TEACHER`,`ID_SITE`)
-) TYPE=InnoDB;
-
-
-
-#
-# Table structure for table 'PROFESSORSHIPS'
-#
-
-drop table if exists PROFESSORSHIPS;
-CREATE TABLE `PROFESSORSHIPS` (
-  `ID_TEACHER` int(11) unsigned NOT NULL default '0',
-  `ID_SITE` int(11) unsigned NOT NULL default '0',
-  PRIMARY KEY  (`ID_TEACHER`,`ID_SITE`)
-) TYPE=InnoDB;
-
-
-
-#
-# Table structure for table 'TEACHER'
-#
-
-drop table if exists TEACHER;
-CREATE TABLE `TEACHER` (
-  `ID_INTERNAL` int(11) unsigned NOT NULL auto_increment,
-  `USERNAME` varchar(20) default NULL,
-  `PASSWORD` varchar(16) default NULL,
-  `TEACHER_NUMBER` int(10) unsigned default NULL,
-  PRIMARY KEY  (`ID_INTERNAL`)
-) TYPE=InnoDB;
 
