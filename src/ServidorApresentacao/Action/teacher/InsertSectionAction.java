@@ -7,6 +7,7 @@
 package ServidorApresentacao.Action.teacher;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -83,8 +84,11 @@ public class InsertSectionAction extends FenixAction {
 					fenixServiceException.getMessage());
 			}
 
+			Collections.sort(sections);
 			session.setAttribute(SessionConstants.SECTIONS, sections);
-			return null; //mapping
+			
+			return mapping.findForward("viewSite"); 
+			
 		} else {
 
 			ArrayList infoSectionList =
@@ -114,8 +118,9 @@ public class InsertSectionAction extends FenixAction {
 					fenixServiceException.getMessage());
 			}
 
+			Collections.sort(sections);
 			session.setAttribute(SessionConstants.SECTIONS, sections);
-			return null; //mapping
+			return mapping.findForward("viewSite"); 
 		}
 	}
 }
