@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.IAdvisory;
+import Dominio.IPersonRole;
 import Dominio.IPessoa;
 import Dominio.Pessoa;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -55,14 +56,25 @@ public class AdvisoryOJB extends ObjectFenixOJB implements IPersistentAdvisory
 		}
 
 		int numberOfRecipients = count(Pessoa.class, criteria);
-		for (int i = 0; i < numberOfRecipients; i++)
+		int numberOfElementsInSpan = 500;
+		for (int i = 0;((i - 1) * numberOfElementsInSpan) < numberOfRecipients; i++)
 		{
-			IPessoa person =
-				(IPessoa) readSpan(Pessoa.class, criteria, new Integer(1), new Integer(i + 1)).get(0);
-			write(advisory, person);
-			if ((numberOfRecipients % 500) == 0) {
-				System.out.println("Processed 500... clearing the cache to make room for more. :o)");
-				SuportePersistenteOJB.getInstance().clearCache();
+			SuportePersistenteOJB.getInstance().confirmarTransaccao();
+			SuportePersistenteOJB.getInstance().iniciarTransaccao();
+			List people =
+				readSpan(
+					Pessoa.class,
+					criteria,
+					new Integer(numberOfElementsInSpan),
+					new Integer(i));
+
+			if (!people.isEmpty())
+			{
+				for (int j = 0; j < people.size(); j++)
+				{
+					IPessoa person = (IPessoa) people.get(j);
+					write(advisory, person);
+				}
 			}
 		}
 	}
