@@ -23,29 +23,18 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class ReadExecutionCourseByOID implements IService {
 
-    /**
-     *  
-     */
-    public ReadExecutionCourseByOID() {
+	public InfoExecutionCourse run(Integer oid) throws FenixServiceException,
+			ExcepcaoPersistencia {
 
-    }
+		InfoExecutionCourse result = null;
+		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+		IPersistentObject persistentObject = sp.getIPersistentObject();
+		IExecutionCourse executionCourse = (IExecutionCourse) persistentObject
+				.readByOID(ExecutionCourse.class, oid);
+		if (executionCourse != null) {
+			result = (InfoExecutionCourse) Cloner.get(executionCourse);
+		}
 
-    public InfoExecutionCourse run(Integer oid) throws FenixServiceException {
-
-        InfoExecutionCourse result = null;
-        try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentObject persistentObject = sp.getIPersistentObject();
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentObject.readByOID(
-                    ExecutionCourse.class, oid);
-            if (executionCourse != null) {
-                result = (InfoExecutionCourse) Cloner.get(executionCourse);
-            }
-
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException(ex);
-        }
-
-        return result;
-    }
+		return result;
+	}
 }
