@@ -11,11 +11,15 @@ package ServidorAplicacao.Servico.sop;
  *
  * @author tfc130
  **/
+import java.util.Calendar;
 import java.util.List;
 
+import DataBeans.InfoLesson;
+import DataBeans.InfoShift;
 import DataBeans.InfoShiftServiceResult;
-import DataBeans.ShiftAndLessonKeys;
+import DataBeans.util.Cloner;
 import Dominio.IAula;
+import Dominio.IDisciplinaExecucao;
 import Dominio.ISala;
 import Dominio.ITurno;
 import Dominio.ITurnoAula;
@@ -25,7 +29,6 @@ import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import java.util.Calendar;
 import Util.TipoAula;
 
 public class AdicionarAula implements IServico {
@@ -51,7 +54,7 @@ public class AdicionarAula implements IServico {
 		return "AdicionarAula";
 	}
 
-	public Object run(ShiftAndLessonKeys keysTurnoAndAula) {
+	public Object run(InfoShift infoShift, InfoLesson infoLesson) {
 
 		ITurnoAula turnoAula = null;
 		InfoShiftServiceResult result = null;
@@ -59,17 +62,22 @@ public class AdicionarAula implements IServico {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
+			IDisciplinaExecucao executionCourse =
+				Cloner.copyInfoExecutionCourse2ExecutionCourse(
+					infoShift.getInfoDisciplinaExecucao());
+
 			ITurno turno1 =
-				sp.getITurnoPersistente().readByNome(
-					keysTurnoAndAula.getNomeTurno());
+				sp.getITurnoPersistente().readByNameAndExecutionCourse(
+					infoShift.getNome(),
+					executionCourse);
 			ISala sala1 =
 				sp.getISalaPersistente().readByName(
-					keysTurnoAndAula.getKeySala().getNomeSala());
+					infoLesson.getInfoSala().getNome());
 			IAula aula1 =
 				sp.getIAulaPersistente().readByDiaSemanaAndInicioAndFimAndSala(
-					keysTurnoAndAula.getDiaSemana(),
-					keysTurnoAndAula.getInicio(),
-					keysTurnoAndAula.getFim(),
+					infoLesson.getDiaSemana(),
+					infoLesson.getInicio(),
+					infoLesson.getFim(),
 					sala1);
 
 			turnoAula = new TurnoAula(turno1, aula1);
@@ -192,7 +200,7 @@ public class AdicionarAula implements IServico {
 				+ "= "
 				+ lessonsOfShiftType.size());
 		for (int i = 0; i < lessonsOfShiftType.size(); i++) {
-			lesson = ((ITurnoAula)lessonsOfShiftType.get(i)).getAula();
+			lesson = ((ITurnoAula) lessonsOfShiftType.get(i)).getAula();
 			duration += (getLessonDurationInMinutes(lesson).doubleValue() / 60);
 			//			System.out.println("Total horas aulas do turno = " + duration);			
 		}

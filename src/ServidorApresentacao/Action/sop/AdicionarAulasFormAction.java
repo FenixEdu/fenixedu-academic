@@ -15,8 +15,6 @@ import org.apache.struts.action.DynaActionForm;
 import DataBeans.InfoLesson;
 import DataBeans.InfoShift;
 import DataBeans.InfoShiftServiceResult;
-import DataBeans.RoomKey;
-import DataBeans.ShiftAndLessonKeys;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.FenixAction;
@@ -58,11 +56,7 @@ public class AdicionarAulasFormAction extends FenixAction {
 		ArrayList infoAulas = (ArrayList) sessao.getAttribute("infoAulasDeDisciplinaExecucao");
 		InfoLesson infoAula = (InfoLesson) infoAulas.get(indexAula.intValue());
 
-	    Object argsAdicionarAula[] = { new ShiftAndLessonKeys(infoTurno.getNome(),
-      	                                                   infoAula.getDiaSemana(),
-      	                                                   infoAula.getInicio(),
-      	                                                   infoAula.getFim(),
-      	                                                   new RoomKey(infoAula.getInfoSala().getNome())) };
+	    Object argsAdicionarAula[] = {infoTurno, infoAula};
 
 		InfoShiftServiceResult result =
 			(InfoShiftServiceResult) ServiceUtils.executeService(
