@@ -48,15 +48,10 @@ public class EnrollStudentInShiftsAction extends FenixAction
         DynaValidatorForm enrollmentForm = (DynaValidatorForm) actionForm;
 
         Integer studentId = (Integer) enrollmentForm.get("studentId");
-        /* :AQUI: utilização do map em vez de utilizar o array shifts*/
         Map shiftsToEnroll = (Map) enrollmentForm.get("shiftMap");
 
         List shiftList =buildShiftList(shiftsToEnroll);
 
-        if(shiftList != null) {
-        	System.out.println("tamanho da lista de turnos que vem do jsp: " + shiftList.size());
-        }
-        
 
         Object[] args = { studentId, shiftList };
         try

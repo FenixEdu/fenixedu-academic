@@ -324,7 +324,6 @@ public class ExecutionCourseSiteComponentBuilder
             infoEvaluations.add(Cloner.copyIEvaluation2InfoEvaluation(evaluation));
         }
 
-        System.out.println("avaliacoes: " + infoEvaluations.size());
         component.setInfoEvaluations(infoEvaluations);
         return component;
     }

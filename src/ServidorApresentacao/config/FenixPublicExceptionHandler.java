@@ -54,7 +54,6 @@ public class FenixPublicExceptionHandler extends ExceptionHandler {
 		HttpServletResponse response)
 		throws ServletException {
 		ActionForward forward = null;
-		System.out.println("entrei");
 		ActionError error = null;
 
 		HttpSession session = request.getSession(true);

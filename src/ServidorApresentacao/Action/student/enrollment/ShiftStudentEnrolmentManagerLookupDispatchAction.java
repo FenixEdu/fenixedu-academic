@@ -211,8 +211,6 @@ public class ShiftStudentEnrolmentManagerLookupDispatchAction extends Transactio
 		HttpServletRequest request,
 		HttpServletResponse response)
 	{
-		System.out.println("-->proceedToShiftEnrolment");
-
 		checkParameter(request);
 
 		ActionErrors errors = new ActionErrors();
