@@ -286,5 +286,8 @@ public interface ISuportePersistente
 	//	Ana e Ricardo
 	public IPersistentRoomOccupation getIPersistentRoomOccupation();
 	public IPersistentPeriod getIPersistentPeriod();
+	
+	// Nuno Correia & Ricardo Rodrigues
+	public IPersistentSchoolRegistrationInquiryAnswer getIPersistentSchoolRegistrationInquiryAnswer();
 		
 }
