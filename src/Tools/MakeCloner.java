@@ -399,7 +399,7 @@ public class MakeCloner
             newline(out);
             out.println("if (source == null) { return null;");
             out.println(" }");
-            out.println("");
+            newline(out);
             // insert assertion
             out.print("assertClass(source, ");
             out.print(sourceConcreteType.getName());

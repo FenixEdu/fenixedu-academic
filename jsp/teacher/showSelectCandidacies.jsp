@@ -53,16 +53,26 @@
 								</html:link>
 							</td>
 							<td class="listClasses">
-								<bean:write name="candidacy" property="student.number"/>
+								<html:link page="/viewCandidateCurriculum.do" 
+										paramId="username" 
+										paramName="candidacy" 
+										paramProperty="student.infoPerson.username">
+									<bean:write name="candidacy" property="student.number"/>
+								</html:link>
 							</td>
 							<td  class="listClasses" title="<bean:write name="candidacy" property="student.infoPerson.nome"/>">
-								<%
-								String shortName = candidacy.getStudent().getInfoPerson().getNome();
-								String[] names = shortName.split(" ");
-								String firstName = names[0];
-								String lastName = names[names.length-1];
-								out.print(firstName + " " + lastName);
-								%>
+								<html:link page="/viewCandidateCurriculum.do" 
+										paramId="username" 
+										paramName="candidacy" 
+										paramProperty="student.infoPerson.username">
+									<%
+									String shortName = candidacy.getStudent().getInfoPerson().getNome();
+									String[] names = shortName.split(" ");
+									String firstName = names[0];
+									String lastName = names[names.length-1];
+									out.print(firstName + " " + lastName);
+									%>
+								</html:link>
 							</td>
 							<td class="listClasses">
 								<bean:write name="candidacy" property="infoClassification.aritmeticClassification"/>
