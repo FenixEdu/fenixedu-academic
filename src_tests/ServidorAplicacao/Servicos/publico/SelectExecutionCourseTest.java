@@ -2,6 +2,9 @@ package ServidorAplicacao.Servicos.publico;
 
 import java.util.List;
 
+import org.apache.ojb.broker.PersistenceBroker;
+import org.apache.ojb.broker.PersistenceBrokerFactory;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoExecutionDegree;
@@ -81,6 +84,8 @@ public class SelectExecutionCourseTest extends TestCaseServicos {
 		
 		// no executionCourses in database
 		prepareTestCase(false);
+		
+		
 		argsSelectExecutionCourses[0] = infoExecutionDegree;
 		argsSelectExecutionCourses[1] = infoExecutionPeriod;
 		argsSelectExecutionCourses[2] = curricularYear; 
@@ -145,16 +150,11 @@ public class SelectExecutionCourseTest extends TestCaseServicos {
 
 			if (!hasExecutionCourses) {
 				sp.getIDisciplinaExecucaoPersistente().apagarTodasAsDisciplinasExecucao();
+				PersistenceBroker pb = PersistenceBrokerFactory.defaultPersistenceBroker();
+				pb.clearCache(); 
 			}
 
 			sp.confirmarTransaccao();
-
-			if (!hasExecutionCourses) {
-				sp.iniciarTransaccao();
-				List listOfAllExecutionCourses = sp.getIDisciplinaExecucaoPersistente().readAll();
-				sp.confirmarTransaccao();
-			}
-
 		} catch (ExcepcaoPersistencia excepcao) {
 			try {
 				sp.cancelarTransaccao();
