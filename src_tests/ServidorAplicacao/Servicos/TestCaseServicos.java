@@ -475,13 +475,12 @@ public class TestCaseServicos extends TestCase {
 	}
 
 	protected void tearDown() {
-		try {
-			dbAcessPoint.openConnection();
-			dbAcessPoint.loadDataBase("etc/testBackup.xml");
-			
-			dbAcessPoint.closeConnection();
-		} catch (Exception ex) {
-			System.out.println("Tear down failed: " +ex);
-		}
+//		try {
+//			dbAcessPoint.openConnection();
+//			dbAcessPoint.loadDataBase("etc/testBackup.xml");
+//			dbAcessPoint.closeConnection();
+//		} catch (Exception ex) {
+//			System.out.println("Tear down failed: " +ex);
+//		}
 	}
 }
