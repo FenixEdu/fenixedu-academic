@@ -21,6 +21,7 @@ import ServidorApresentacao.TagLib.sop.v3.renderers.ClassTimeTableLessonContentR
 import ServidorApresentacao.TagLib.sop.v3.renderers.ExecutionCourseTimeTableLessonContentRenderer;
 import ServidorApresentacao.TagLib.sop.v3.renderers.RoomTimeTableLessonContentRenderer;
 import ServidorApresentacao.TagLib.sop.v3.renderers.ShiftTimeTableLessonContentRenderer;
+import ServidorApresentacao.TagLib.sop.v3.renderers.SopClassTimeTableLessonContentRenderer;
 
 public final class RenderTimeTableTag extends TagSupport {
 
@@ -201,6 +202,13 @@ public final class RenderTimeTableTag extends TagSupport {
 					new RoomTimeTableLessonContentRenderer();
 				this.colorPicker = new RoomTimeTableColorPicker();
 				break;
+
+			case TimeTableType.SOP_CLASS_TIMETABLE :
+				this.lessonSlotContentRenderer =
+					new SopClassTimeTableLessonContentRenderer();
+				this.colorPicker = new ClassTimeTableColorPicker();
+				break;
+
 			default :
 				this.lessonSlotContentRenderer =
 					new ClassTimeTableLessonContentRenderer();

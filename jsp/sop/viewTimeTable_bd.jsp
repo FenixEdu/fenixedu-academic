@@ -1,5 +1,6 @@
 <%@ page language="java" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<%@ page import="ServidorApresentacao.TagLib.sop.v3.TimeTableType" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -25,7 +26,7 @@
 		</table>
 		<br/>
 		<h2>Horário da Turma</h2>
-		<app:gerarHorario name="<%= SessionConstants.LESSON_LIST_ATT %>"/>		
+		<app:gerarHorario name="<%= SessionConstants.LESSON_LIST_ATT %>" type="<%= TimeTableType.SOP_CLASS_TIMETABLE %>"/>		
 		<br />
 	</logic:present>
 	<logic:notPresent name="<%= SessionConstants.CLASS_VIEW %>" scope="session">

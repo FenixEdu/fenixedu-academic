@@ -12,5 +12,7 @@ public abstract class TimeTableType {
 	public static final int ROOM_TIMETABLE = 3;
 	
 	public static final int EXECUTION_COURSE_TIMETABLE = 4;
+	
+	public static final int SOP_CLASS_TIMETABLE = 5;
 
 }
