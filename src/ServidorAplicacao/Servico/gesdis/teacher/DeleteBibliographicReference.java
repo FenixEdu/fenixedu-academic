@@ -64,11 +64,10 @@ public class DeleteBibliographicReference implements IServico {
 					reference,
 					year);
 			if (bibliographicReference != null)
-				persistentBibliographicReference.delete(bibliographicReference);
-				
-			return new Boolean(true);	
+				persistentBibliographicReference.delete(bibliographicReference);								
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}
+		return new Boolean(true);
 	}
 }

@@ -6,16 +6,22 @@
  */
 package ServidorAplicacao.Servico.gesdis.teacher;
 
+import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.gesdis.InfoBibliographicReference;
 import Dominio.IBibliographicReference;
 import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionPeriod;
+import Dominio.IExecutionYear;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentBibliographicReference;
+import ServidorPersistente.IPersistentExecutionPeriod;
+import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * @author PTRLV
@@ -32,61 +38,45 @@ public class EditBibliographicReference implements IServico {
     
 	private EditBibliographicReference() { }    
 	public final String getNome() {
-		return "Techer.EditBibliographicReference";
+		return "EditBibliographicReference";
 	}    
-
-	private IBibliographicReference validateData(IDisciplinaExecucao executionCourse,InfoBibliographicReference bibliographicReferenceOld, String title, String authors, String reference, String year)
-	throws ExistingPersistentException,ExcepcaoPersistencia {        
-		IBibliographicReference bibliographicReferenceRead = null;        
-		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-		IPersistentBibliographicReference persistentBibliographicReference = null;
-		persistentBibliographicReference = sp.getIPersistentBibliographicReference();        
-		if (!(bibliographicReferenceOld.getTitle().equals(title) &&
-			bibliographicReferenceOld.getAuthors().equals(authors) &&
-			bibliographicReferenceOld.getReference().equals(reference) &&
-			bibliographicReferenceOld.getYear() == year))
-		 {            
-			bibliographicReferenceRead = persistentBibliographicReference.readBibliographicReference(executionCourse,title,
-																			authors,
-																			reference,
-																			year);            
-			if (bibliographicReferenceRead != null){}
-				throw new ExistingPersistentException();
-		}        
-		bibliographicReferenceRead = persistentBibliographicReference.readBibliographicReference(executionCourse,
-																		bibliographicReferenceOld.getTitle(),
-																		bibliographicReferenceOld.getAuthors(),
-																		bibliographicReferenceOld.getReference(),
-																		bibliographicReferenceOld.getYear()
-																		);
-		if (bibliographicReferenceRead == null)
-			throw new ExcepcaoPersistencia();        
-		return bibliographicReferenceRead;        
-	}
-    
-	public void run(IDisciplinaExecucao executionCourse,
-					InfoBibliographicReference bibliographicReferenceOld,
-					String title,
-					String authors,
-					String reference,
-					String year,
-					Boolean optional)
+	    
+	public Boolean run(InfoExecutionCourse infoExecutionCourse,
+					InfoBibliographicReference infoBibliographicReferenceOld, 
+					InfoBibliographicReference infoBibliographicReferenceNew 
+					)
 	throws FenixServiceException {
 		try {       		
-		ISuportePersistente sp = SuportePersistenteOJB.getInstance();       
+		ISuportePersistente sp = SuportePersistenteOJB.getInstance();		 
 		IPersistentBibliographicReference persistentBibliographicReference= null;
-		persistentBibliographicReference = sp.getIPersistentBibliographicReference();        
-		IBibliographicReference bibliographicReference= null;        
-		bibliographicReference = validateData(executionCourse,bibliographicReferenceOld,title,authors,reference,year);        
-		bibliographicReference.setTitle(title);
-		bibliographicReference.setAuthors(authors);
-		bibliographicReference.setReference(reference);
-		bibliographicReference.setYear(year);
-		bibliographicReference.setOptional(optional);
-		persistentBibliographicReference.lockWrite(bibliographicReference);
+		IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
+		IPersistentExecutionPeriod persistentExecutionPeriod = null;
+		IPersistentExecutionYear persistentExecutionYear = null;		
+		IBibliographicReference bibliographicReference = null;		
+		IBibliographicReference bibliographicReferenceNew = null;
+		IDisciplinaExecucao executionCourse = null;
+						
+		persistentExecutionYear = sp.getIPersistentExecutionYear();
+		persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+		persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
+		persistentBibliographicReference = sp.getIPersistentBibliographicReference();
+							
+		IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName(infoExecutionCourse.getInfoExecutionPeriod().getInfoExecutionYear().getYear());					
+		InfoExecutionPeriod infoExecutionPeriod = infoExecutionCourse.getInfoExecutionPeriod();		
+		IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear(infoExecutionPeriod.getName(),executionYear);						
+		executionCourse = persistentExecutionCourse.readByExecutionCourseInitialsAndExecutionPeriod(infoExecutionCourse.getSigla(),executionPeriod);				 				
+		bibliographicReference = persistentBibliographicReference.readBibliographicReference(executionCourse,infoBibliographicReferenceOld.getTitle(),infoBibliographicReferenceOld.getAuthors(),infoBibliographicReferenceOld.getReference(),infoBibliographicReferenceOld.getYear());						
+								
+		bibliographicReference.setAuthors(infoBibliographicReferenceNew.getAuthors());
+		bibliographicReference.setTitle(infoBibliographicReferenceNew.getTitle());
+		bibliographicReference.setReference(infoBibliographicReferenceNew.getReference());
+		bibliographicReference.setYear(infoBibliographicReferenceNew.getYear());
+		bibliographicReference.setOptional(infoBibliographicReferenceNew.getOptional());
+		persistentBibliographicReference.lockWrite(bibliographicReference);	
 		}
 		catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}	
+		return new Boolean(true);
 	}	
 }
