@@ -403,7 +403,7 @@ public class ExecutionPeriodOJB
 			executionPeriodToExportDataFrom);
 
 		System.out.println("Finished creating sites.");
-
+/*
 		System.out.println("Confirming transaction.");
 		SuportePersistenteOJB.getInstance().confirmarTransaccao();
 		System.out.println("Starting transaction.");
@@ -437,7 +437,7 @@ public class ExecutionPeriodOJB
 			executionPeriodToExportDataFrom);
 
 		System.out.println("Finished creating responsiblefor.");
-
+*/
 		System.out.println("Confirming transaction.");
 		SuportePersistenteOJB.getInstance().confirmarTransaccao();
 		System.out.println("Starting transaction.");
