@@ -208,6 +208,10 @@
     	<fk-pointing-to-element-class column="KEY_DEPARTMENT" />
       </collection-descriptor>    
       
+	<attribute
+     	attribute-name="cacheable"
+     	attribute-value="false" />
+      
 </class-descriptor>
 <!-- ***********************************
      Definitions for Dominio.Role 
