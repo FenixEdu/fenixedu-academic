@@ -76,7 +76,7 @@
 		type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
         dynamic="true">
         <form-property name="name" type="java.lang.String" /> 
-        <form-property name="order" type="java.lang.Integer" />    
+        <form-property name="sectionOrder" type="java.lang.Integer" />    
         <form-property name="page" type="java.lang.Integer" initial="0" />           
 	</form-bean>    			
 

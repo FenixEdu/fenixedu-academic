@@ -37,9 +37,9 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 	public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws FenixActionException {
 
-		DynaActionForm dynaForm = (DynaValidatorForm) form;
-		String sectionName = (String) dynaForm.get("name");
-		Integer order = (Integer) dynaForm.get("order");
+		DynaActionForm sectionForm = (DynaValidatorForm) form;
+		String sectionName = (String) sectionForm.get("name");
+		Integer order = (Integer) sectionForm.get("sectionOrder");
 
 		HttpSession session = request.getSession();
 
