@@ -62,13 +62,11 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
     private Double average = null;
   
     // Instance from class Degree
-    private ICurso degree = null;
+    private ICursoExecucao executionDegree = null;
 
     // Instance from class Country
     private ICountry country = null;
 	private ICountry nationality = null;
-
-	private IExecutionYear executionYear = null;
 
 	// List of Situations
     private Set situations;
@@ -76,10 +74,9 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
     
     // Internal Codes from Database
     private Integer internalCode;            // Internal code for Master Degree Candidate
-    private Integer degreeKey;               // Foreign Key from table Degree
+    private Integer executionDegreeKey;               // Foreign Key from table Degree
 	private Integer countryKey;              // Foreign Key from table Country
 	private Integer nationalityCountryKey;   // Foreign Key from table Country
-    private Integer executionYearKey; // Foreign Key from table ExecutionYear
     
     public MasterDegreeCandidate() {
         identificationDocumentNumber = null;
@@ -112,9 +109,8 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
         majorDegree = null;
         username = null;
         password = null;
-        degree = null;
+        executionDegree = null;
         candidateNumber = null;
-        executionYear = null;
         specialization = null;
         majorDegreeSchool = null;
         majorDegreeYear = null;
@@ -132,9 +128,9 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
     String postCode, String addressParish, String addressMunicipality,
     String addressDistrict, String telephone, String mobilePhone, String email,
     String webSite, String contributorNumber, String occupation, String majorDegree,
-    String username, String password, Integer candidateNumber, IExecutionYear executionYear,
+    String username, String password, Integer candidateNumber,
     Specialization specialization, String majorDegreeSchool, Integer majorDegreeYear, 
-    Double average, ICurso masterDegree, ICountry country, Date identificationDocumentExpirationDate) {
+    Double average, ICursoExecucao executionDegree, ICountry country, Date identificationDocumentExpirationDate) {
         
         setIdentificationDocumentNumber(identificationDocumentNumber);
         setIdentificationDocumentType(identificationDocumentType);
@@ -166,12 +162,12 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
         setUsername(username);
         setPassword(password);
         setCandidateNumber(candidateNumber);
-        setExecutionYear(executionYear);
+
         setSpecialization(specialization);
         setMajorDegreeSchool(majorDegreeSchool);
         setMajorDegreeYear(majorDegreeYear);
         setAverage(average);
-        setDegree(masterDegree);
+        setExecutionDegree(executionDegree);
         setCountry(country);
         setIdentificationDocumentExpirationDate(identificationDocumentExpirationDate);
     } 
@@ -184,11 +180,9 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 		(this.username.equals(((MasterDegreeCandidate)o).getUsername())) ||
 		
 		((this.candidateNumber.equals(((MasterDegreeCandidate)o).getCandidateNumber())) &&
-		 (this.executionYear.equals(((MasterDegreeCandidate)o).getExecutionYear())) &&
-		 (this.degree.equals(((MasterDegreeCandidate)o).degree))) ||
+		 (this.executionDegree.equals(((MasterDegreeCandidate)o).executionDegree))) ||
 		 
-		((this.executionYear.equals(((MasterDegreeCandidate)o).getExecutionYear())) && 
-		 (this.degree.equals(((MasterDegreeCandidate)o).degree)) &&
+		((this.executionDegree.equals(((MasterDegreeCandidate)o).executionDegree)) &&
 		 (this.identificationDocumentNumber.equals(((MasterDegreeCandidate)o).getIdentificationDocumentNumber())) &&
 		 (this.identificationDocumentType.equals(((MasterDegreeCandidate)o).getIdentificationDocumentType()))));       
         
@@ -228,12 +222,11 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
         result += "\n  - Username : " + username;
         result += "\n  - Password : " + password;
         result += "\n  - Candidate Number : " + candidateNumber;
-        result += "\n  - Application Year : " + executionYear;
         result += "\n  - Specialization : " + specialization;
         result += "\n  - Major Degree School : " + majorDegreeSchool;
         result += "\n  - Major Degree Year : " + majorDegreeYear;
         result += "\n  - Major Degree Average : " + average;
-        result += "\n  - Master Degree : " + degree.getNome();
+        result += "\n  - Master Degree : " + executionDegree;
         result += "\n  - Country : " + country;
 //        result += "\n  - List of Situations : " + situations;
         
@@ -289,8 +282,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 		
 	}
  
-
-
 	/**
 	 * @return String
 	 */
@@ -383,20 +374,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * @return ICurso
-	 */
-	public ICurso getDegree() {
-		return degree;
-	}
-
-	/**
-	 * @return Integer
-	 */
-	public Integer getDegreeKey() {
-		return degreeKey;
-	}
-
-	/**
 	 * @return String
 	 */
 	public String getEmail() {
@@ -404,17 +381,17 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * @return IExecutionYear
+	 * @return ICursoExecucao
 	 */
-	public IExecutionYear getExecutionYear() {
-		return executionYear;
+	public ICursoExecucao getExecutionDegree() {
+		return executionDegree;
 	}
 
 	/**
 	 * @return Integer
 	 */
-	public Integer getExecutionYearKey() {
-		return executionYearKey;
+	public Integer getExecutionDegreeKey() {
+		return executionDegreeKey;
 	}
 
 	/**
@@ -422,6 +399,13 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	 */
 	public String getFatherName() {
 		return fatherName;
+	}
+
+	/**
+	 * @return Date
+	 */
+	public Date getIdentificationDocumentExpirationDate() {
+		return identificationDocumentExpirationDate;
 	}
 
 	/**
@@ -697,22 +681,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Sets the degree.
-	 * @param degree The degree to set
-	 */
-	public void setDegree(ICurso degree) {
-		this.degree = degree;
-	}
-
-	/**
-	 * Sets the degreeKey.
-	 * @param degreeKey The degreeKey to set
-	 */
-	public void setDegreeKey(Integer degreeKey) {
-		this.degreeKey = degreeKey;
-	}
-
-	/**
 	 * Sets the email.
 	 * @param email The email to set
 	 */
@@ -721,19 +689,19 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	}
 
 	/**
-	 * Sets the executionYear.
-	 * @param executionYear The executionYear to set
+	 * Sets the executionDegree.
+	 * @param executionDegree The executionDegree to set
 	 */
-	public void setExecutionYear(IExecutionYear executionYear) {
-		this.executionYear = executionYear;
+	public void setExecutionDegree(ICursoExecucao executionDegree) {
+		this.executionDegree = executionDegree;
 	}
 
 	/**
-	 * Sets the executionYearKey.
-	 * @param executionYearKey The executionYearKey to set
+	 * Sets the executionDegreeKey.
+	 * @param executionDegreeKey The executionDegreeKey to set
 	 */
-	public void setExecutionYearKey(Integer executionYearKey) {
-		this.executionYearKey = executionYearKey;
+	public void setExecutionDegreeKey(Integer executionDegreeKey) {
+		this.executionDegreeKey = executionDegreeKey;
 	}
 
 	/**
@@ -742,6 +710,15 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	 */
 	public void setFatherName(String fatherName) {
 		this.fatherName = fatherName;
+	}
+
+	/**
+	 * Sets the identificationDocumentExpirationDate.
+	 * @param identificationDocumentExpirationDate The identificationDocumentExpirationDate to set
+	 */
+	public void setIdentificationDocumentExpirationDate(Date identificationDocumentExpirationDate) {
+		this.identificationDocumentExpirationDate =
+			identificationDocumentExpirationDate;
 	}
 
 	/**
@@ -935,22 +912,6 @@ public class MasterDegreeCandidate implements IMasterDegreeCandidate {
 	 */
 	public void setWebSite(String webSite) {
 		this.webSite = webSite;
-	}
-
-	/**
-	 * @return Date
-	 */
-	public Date getIdentificationDocumentExpirationDate() {
-		return identificationDocumentExpirationDate;
-	}
-
-	/**
-	 * Sets the identificationDocumentExpirationDate.
-	 * @param identificationDocumentExpirationDate The identificationDocumentExpirationDate to set
-	 */
-	public void setIdentificationDocumentExpirationDate(Date identificationDocumentExpirationDate) {
-		this.identificationDocumentExpirationDate =
-			identificationDocumentExpirationDate;
 	}
 
 } // End of class definition

@@ -57,12 +57,11 @@ public interface IMasterDegreeCandidate {
     void setUsername(String username);
     void setPassword(String password);
     void setCandidateNumber(Integer candidateNumber);
-    void setExecutionYear(IExecutionYear executionYear);
     void setSpecialization(Specialization specialization);
     void setMajorDegreeSchool(String majorDegreeSchool);
     void setMajorDegreeYear(Integer majorDegreeYear);
     void setAverage(Double average);
-    void setDegree(ICurso degree);    
+    void setExecutionDegree(ICursoExecucao executionDegree);    
     void setCountry(ICountry country);
     void setSituations(Set situations);
     
@@ -98,12 +97,11 @@ public interface IMasterDegreeCandidate {
     String getUsername();
     String getPassword();
     Integer getCandidateNumber();
-    IExecutionYear getExecutionYear();
     Specialization getSpecialization();
     String getMajorDegreeSchool();
     Integer getMajorDegreeYear();
     Double getAverage();
-    ICurso getDegree();    
+    ICursoExecucao getExecutionDegree();    
 	ICountry getCountry();    
 	Set getSituations();
     
