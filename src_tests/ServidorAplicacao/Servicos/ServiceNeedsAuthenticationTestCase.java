@@ -107,7 +107,7 @@ public abstract class ServiceNeedsAuthenticationTestCase
 		} catch (NotAuthorizedException ex) {
 
 			System.out.println(
-				"testUnauthorizedUser was SUCCESSFULY runned by service: "
+				"testNonTeacherUser was SUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());
 
 		} catch (Exception ex) {
