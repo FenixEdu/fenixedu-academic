@@ -263,7 +263,7 @@ public class EquivalenceOJBTest extends TestCaseOJB {
 		if(exists) {// Enrolment ja existente
 			try {
 				persistentSupport.iniciarTransaccao();
-				curricularCourse = persistentCurricularCourse.readCurricularCourseByNameCode("Trabalho Final de Curso I", "TFCI");
+				curricularCourse = persistentCurricularCourse.readCurricularCourseByNameAndCode("Trabalho Final de Curso I", "TFCI");
 				studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(new Integer(45498), new TipoCurso(TipoCurso.LICENCIATURA));
 				assertNotNull(curricularCourse);
 				assertNotNull(studentCurricularPlan);
@@ -280,7 +280,7 @@ public class EquivalenceOJBTest extends TestCaseOJB {
 		} else {
 			try {
 				persistentSupport.iniciarTransaccao();
-				curricularCourse = persistentCurricularCourse.readCurricularCourseByNameCode("Trabalho Final de Curso II", "TFCII");
+				curricularCourse = persistentCurricularCourse.readCurricularCourseByNameAndCode("Trabalho Final de Curso II", "TFCII");
 				studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(new Integer(45498), new TipoCurso(TipoCurso.LICENCIATURA));
 				assertNotNull(curricularCourse);
 				assertNotNull(studentCurricularPlan);

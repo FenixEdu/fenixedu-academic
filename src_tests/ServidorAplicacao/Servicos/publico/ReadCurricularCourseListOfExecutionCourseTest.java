@@ -150,7 +150,7 @@ public class ReadCurricularCourseListOfExecutionCourseTest
 			assertNotNull(executionCourse);
 			
 			if (!hasCurricularCourses) {
-				sp.getIPersistentCurricularCourse().deleteAllCurricularCourse();
+				sp.getIPersistentCurricularCourse().deleteAll();
 				//executionCourse.setAssociatedCurricularCourses(null);
 			}
 

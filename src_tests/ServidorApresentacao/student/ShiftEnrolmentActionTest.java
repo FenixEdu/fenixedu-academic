@@ -340,7 +340,7 @@ public class ShiftEnrolmentActionTest extends MockStrutsTestCase {
 			_sp.iniciarTransaccao();
 
 			_executionCourseDAO.apagarTodasAsDisciplinasExecucao();
-			_degreeCourseDAO.deleteAllCurricularCourse();
+			_degreeCourseDAO.deleteAll();
 			_degreeDAO.deleteAll();
 			_executionDegreeDAO.deleteAll();
 			_personDAO.apagarTodasAsPessoas();

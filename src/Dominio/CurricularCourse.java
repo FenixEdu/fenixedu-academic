@@ -32,6 +32,7 @@ public class CurricularCourse implements ICurricularCourse {
 	private Integer semester;
 
 	public CurricularCourse() {
+
 		setInternalCode(null);
 
 		setCode(null);
@@ -83,16 +84,26 @@ public class CurricularCourse implements ICurricularCourse {
 
 	}
 
+//	public boolean equals(Object obj) {
+//		boolean resultado = false;
+//		if (obj instanceof ICurricularCourse) {
+//			ICurricularCourse dc = (ICurricularCourse) obj;
+//			resultado = getDegreeCurricularPlan().equals(dc.getDegreeCurricularPlan()) &&
+//									getName().equals(dc.getName()) &&
+//									getCode().equals(dc.getCode()) &&
+//									getCurricularYear().equals(dc.getCurricularYear()) &&
+//									getSemester().equals(dc.getSemester());
+//		}
+//		return resultado;
+//	}
+
 	public boolean equals(Object obj) {
 		boolean resultado = false;
 		if (obj instanceof ICurricularCourse) {
 			ICurricularCourse dc = (ICurricularCourse) obj;
-			resultado = (getDegreeCurricularPlan().equals(dc.getDegreeCurricularPlan()))
-					&& (getName().equals(dc.getName()))
-					&& (getCode().equals(dc.getCode()))
-
-					&& (getCurricularYear().equals(dc.getCurricularYear()))
-					&& (getSemester().equals(dc.getSemester()));
+			resultado = getDegreeCurricularPlan().equals(dc.getDegreeCurricularPlan()) &&
+									getName().equals(dc.getName()) &&
+									getCode().equals(dc.getCode());
 		}
 		return resultado;
 	}
@@ -107,14 +118,12 @@ public class CurricularCourse implements ICurricularCourse {
 		result += "praticalHours = " + praticalHours + "; ";
 		result += "theoPratHours = " + theoPratHours + "; ";
 		result += "labHours = " + labHours + "; ";
-		result += "labHours = " + labHours + "; ";
+		result += "labHours = " + labHours + "]";
 
 //		result += "associatedExecutionCourses = " + associatedExecutionCourses + "; ";
 //		result += "associatedBranches = " + associatedBranches + "; ";
 //		result += "associatedCurricularSemesters = " + associatedCurricularSemesters + "; ";
 
-		result += "curricularYear = " + curricularYear + "; ";
-		result += "semester = " + semester + "; ";
 		return result;
 	}
 
@@ -137,7 +146,6 @@ public class CurricularCourse implements ICurricularCourse {
 	/**
 	 * Returns the curricularYear.
 	 * @return int
-	 * @deprecated
 	 */
 	public Integer getCurricularYear() {
 		return curricularYear;
@@ -210,7 +218,6 @@ public class CurricularCourse implements ICurricularCourse {
 	/**
 	 * Returns the semester.
 	 * @return int
-	 * @deprecated
 	 */
 	public Integer getSemester() {
 		return semester;
@@ -243,7 +250,6 @@ public class CurricularCourse implements ICurricularCourse {
 	/**
 	 * Sets the curricularYear.
 	 * @param curricularYear The curricularYear to set
-	 * @deprecated
 	 */
 	public void setCurricularYear(Integer curricularYear) {
 		this.curricularYear = curricularYear;
@@ -300,7 +306,6 @@ public class CurricularCourse implements ICurricularCourse {
 	/**
 	 * Sets the semester.
 	 * @param semester The semester to set
-	 * @deprecated
 	 */
 	public void setSemester(Integer semester) {
 		this.semester = semester;

@@ -199,7 +199,7 @@ public class SessionUtilsTest extends TestCase {
 				.escreverDisciplinaDepartamento(
 				dd);
 
-			_curricularCourseDAO.writeCurricularCourse(_curricularCourse);
+			_curricularCourseDAO.lockWrite(_curricularCourse);
 			_executionCourseDAO.escreverDisciplinaExecucao(_executionCourse);
 
 			InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
@@ -268,7 +268,7 @@ public class SessionUtilsTest extends TestCase {
 			_executionDegreeDAO.deleteAll();
 			_degreeDAO.deleteAll();
 			_executionCourseDAO.apagarTodasAsDisciplinasExecucao();
-			_curricularCourseDAO.deleteAllCurricularCourse();
+			_curricularCourseDAO.deleteAll();
 			_degreeCurriculumDAO.deleteAll();
 			_personDAO.apagarTodasAsPessoas();
 			_sp.getIDepartamentoPersistente().apagarTodosOsDepartamentos();
