@@ -15,6 +15,8 @@ import java.util.List;
 
 import org.odmg.QueryException;
 
+import Dominio.ICursoExecucao;
+import Dominio.IExecutionPeriod;
 import Dominio.ITurma;
 import Dominio.ITurmaTurno;
 import Dominio.Turma;
@@ -51,7 +53,7 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 			TurmaTurnoOJB turmaTurnoOJB = new TurmaTurnoOJB();
 			String oqlQuery = "select all from " + TurmaTurno.class.getName();
 			oqlQuery += " where turma.nome = $1 ";
-				
+
 			query.create(oqlQuery);
 			query.bind(turma.getNome());
 			List result = (List) query.execute();
@@ -99,6 +101,52 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 			query.bind(semestre);
 			query.bind(anoCurricular);
 			query.bind(siglaLicenciatura);
+			List result = (List) query.execute();
+			lockRead(result);
+
+			return result;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
+	/**
+	 * @see ServidorPersistente.ITurmaPersistente#readByExecutionPeriodAndCurricularYearAndExecutionDegree(Dominio.IExecutionPeriod, java.lang.Integer, Dominio.ICursoExecucao)
+	 */
+	public List readByExecutionPeriodAndCurricularYearAndExecutionDegree(
+		IExecutionPeriod executionPeriod,
+		Integer curricularYear,
+		ICursoExecucao executionDegree)
+		throws ExcepcaoPersistencia {
+		try {
+			String oqlQuery = "select turmas from " + Turma.class.getName();
+			oqlQuery += " where executionPeriod.executionYear.year = $1"
+				+ " and executionPeriod.name = $2"
+				+ " and anoCurricular = $3"
+				+ " and executionDegree.executionYear.year = $4"
+				+ " and executionDegree.curricularPlan.name = $5"
+				+ " and executionDegree.curricularPlan.curso.sigla = $6";
+
+			System.out.println("1-"+executionPeriod.getExecutionYear().getYear());
+			System.out.println("2-"+executionPeriod.getName());
+
+			System.out.println("3-"+curricularYear);
+			System.out.println("4-"+executionDegree.getExecutionYear().getYear());
+			System.out.println("5-"+executionDegree.getCurricularPlan().getName());
+			System.out.println("6-"+
+			executionDegree.getCurricularPlan().getCurso().getSigla());			
+			
+			query.create(oqlQuery);
+
+			query.bind(executionPeriod.getExecutionYear().getYear());
+			query.bind(executionPeriod.getName());
+
+			query.bind(curricularYear);
+
+			query.bind(executionDegree.getExecutionYear().getYear());
+			query.bind(executionDegree.getCurricularPlan().getName());
+			query.bind(
+				executionDegree.getCurricularPlan().getCurso().getSigla());
+			
 			List result = (List) query.execute();
 			lockRead(result);
 

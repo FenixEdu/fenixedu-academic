@@ -80,6 +80,18 @@
          column="CURRICULAR_YEAR"
          jdbc-type="INTEGER"
       />
+      <field-descriptor id="6"
+         name="keyExecutionDegree"
+         column="KEY_EXECUTION_DEGREE"
+         jdbc-type="INTEGER"
+      />
+
+      <field-descriptor id="7"
+         name="keyExecutionPeriod"
+         column="KEY_EXECUTION_PERIOD"
+         jdbc-type="INTEGER"
+      />
+      
       <reference-descriptor
          name="licenciatura"
          class-ref="Dominio.Curso"
@@ -87,6 +99,21 @@
       >
          <foreignkey field-id-ref="3"/>
       </reference-descriptor>      
+
+      <reference-descriptor
+         name="executionDegree"
+         class-ref="Dominio.CursoExecucao"
+      >
+         <foreignkey field-id-ref="6"/>
+      </reference-descriptor>
+            
+      <reference-descriptor
+         name="executionPeriod"
+         class-ref="Dominio.ExecutionPeriod"
+      >
+         <foreignkey field-id-ref="7"/>
+      </reference-descriptor>      
+      
    </class-descriptor>
 
 <!-- Definitions for Dominio.Turno -->

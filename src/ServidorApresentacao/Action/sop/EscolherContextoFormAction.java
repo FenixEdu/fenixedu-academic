@@ -53,49 +53,22 @@ public class EscolherContextoFormAction extends FenixAction {
 			session.setAttribute("anoCurricular", anoCurricular);
 			session.setAttribute("semestre", semestre);
 
-//			GestorServicos gestor = GestorServicos.manager();
-//			Object argsLerLicenciaturaExecucao[] = { new DegreeKey(sigla)};
-/*			InfoExecutionDegree infoExecutionDegree =
-				(InfoExecutionDegree) gestor.executar(
-					userView,
-					"LerLicenciaturaExecucaoDeLicenciatura",
-						argsLerLicenciaturaExecucao);*/
 
 			List infoExecutionDegreeList = (List) session.getAttribute(SessionConstants.INFO_EXECUTION_DEGREE_LIST_KEY);
+			
 			InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegreeList.get(index);
+
 			if (infoExecutionDegree != null) {
-				session.setAttribute(SessionConstants.INFO_LIC_EXEC_KEY, infoExecutionDegree);
 				CurricularYearAndSemesterAndInfoExecutionDegree cYSiED =
 					new CurricularYearAndSemesterAndInfoExecutionDegree(
 						anoCurricular,
 						semestre,
 						infoExecutionDegree);
-				
 				session.setAttribute(SessionConstants.CONTEXT_KEY, cYSiED);
+				
+				session.setAttribute(SessionConstants.CURRICULAR_YEAR_KEY, anoCurricular);
+				session.setAttribute(SessionConstants.INFO_EXECUTION_DEGREE_KEY, infoExecutionDegree);
 
-//				Object argsLerLicenciatura[] = { new String(sigla)};
-//
-//				InfoDegree iL =
-//					(InfoDegree) gestor.executar(
-//						userView,
-//						"LerLicenciatura",
-//						argsLerLicenciatura);
-//
-//				session.setAttribute("infoLicenciatura", iL);
-//
-//				Object argsLerTurmas[] = { cYSiED };
-//				List listaInfoTurmas =
-//					(List) gestor.executar(
-//						userView,
-//						"LerTurmas",
-//						argsLerTurmas);
-//
-//				session.removeAttribute("listaTurmasBean");
-//				if (!listaInfoTurmas.isEmpty()) {
-//					//Collections.sort(listaInfoTurmas);
-//					session.setAttribute("listaInfoTurmas", listaInfoTurmas);
-//				}
-//				session.removeAttribute("licenciaturasExecucao");
 			} else {
 				return mapping.findForward("Licenciatura execucao inexistente");
 			}

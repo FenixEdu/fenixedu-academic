@@ -7,6 +7,7 @@ import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoLesson;
 import DataBeans.InfoRoom;
@@ -15,11 +16,13 @@ import Dominio.Aula;
 import Dominio.Curso;
 import Dominio.CursoExecucao;
 import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
 import Dominio.IAula;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.IPlanoCurricularCurso;
 import Dominio.ISala;
@@ -142,7 +145,7 @@ public abstract class Cloner {
 	 * Method copyInfoRoom2Room.
 	 * @param infoRoom
 	 */
-	private static ISala copyInfoRoom2Room(InfoRoom infoRoom) {
+	public static ISala copyInfoRoom2Room(InfoRoom infoRoom) {
 		ISala room = new Sala();
 
 		try {
@@ -247,17 +250,44 @@ public abstract class Cloner {
 	 */
 	public static InfoClass copyClass2InfoClass(ITurma classD) {
 		InfoClass infoClass = new InfoClass();
-		InfoDegree infoDegree = new InfoDegree();
+		InfoExecutionDegree infoExecutionDegree = Cloner.copyIExecutionDegree2InfoExecutionDegree(classD.getExecutionDegree());
+		InfoExecutionPeriod infoExecutionPeriod = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(classD.getExecutionPeriod());
 		try {
 			BeanUtils.copyProperties(infoClass, classD);
-			BeanUtils.copyProperties(infoDegree, classD.getLicenciatura());
 		} catch (Exception e) {
-			e.printStackTrace(System.out);
-			throw new RuntimeException(e.getMessage());
+			throw new RuntimeException(e);
 		}
-		infoClass.setInfoLicenciatura(infoDegree);
+		
+		infoClass.setInfoExecutionDegree(infoExecutionDegree);
+		infoClass.setInfoExecutionPeriod(infoExecutionPeriod);
 		return infoClass;
 	}
+	/**
+	 * Method copyIExecutionPeriod2InfoExecutionPeriod.
+	 * @param iExecutionPeriod
+	 * @return InfoExecutionPeriod
+	 */
+	public static InfoExecutionPeriod copyIExecutionPeriod2InfoExecutionPeriod(IExecutionPeriod executionPeriod) {
+		InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
+		InfoExecutionYear infoExecutionYear = Cloner.copyIExecutionYear2InfoExecutionYear(executionPeriod.getExecutionYear());
+		
+		copyObjectProperties(executionPeriod, infoExecutionPeriod);
+		
+		infoExecutionPeriod.setInfoExecutionYear(infoExecutionYear);
+		return infoExecutionPeriod;
+	}
+	
+	
+	private static void copyObjectProperties(
+		Object destination,
+		Object source) {
+		try {
+			BeanUtils.copyProperties(destination, source);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
 	/**
 	 * 
 	 * @param infoExecutionDegree
@@ -269,14 +299,9 @@ public abstract class Cloner {
 		IPlanoCurricularCurso degreeCurricularPlan = Cloner.copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(infoExecutionDegree.getInfoDegreeCurricularPlan());
 		
 		IExecutionYear executionYear = Cloner.copyInfoExecutionYear2IExecutionYear(infoExecutionDegree.getInfoExecutionYear());
-		try {
-
-			BeanUtils.copyProperties(executionDegree, infoExecutionDegree);
-		} catch (Exception e) {
-			e.printStackTrace(System.out);
-			throw new RuntimeException(e.getMessage());
-		}
-
+		
+		copyObjectProperties(executionDegree, infoExecutionDegree);
+		
 		executionDegree.setExecutionYear(executionYear);
 		executionDegree.setCurricularPlan(degreeCurricularPlan);
 
@@ -288,7 +313,7 @@ public abstract class Cloner {
 	 * @param infoDegreeCurricularPlan
 	 * @return IPlanoCurricularCurso
 	 */
-	private static IPlanoCurricularCurso copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
+	public static IPlanoCurricularCurso copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
 		IPlanoCurricularCurso degreeCurricularPlan =
 			new PlanoCurricularCurso();
 
@@ -388,7 +413,7 @@ public abstract class Cloner {
 	 * @param iCurso
 	 * @return InfoDegree
 	 */
-	private static InfoDegree copyIDegree2InfoDegree(ICurso degree) {
+	public static InfoDegree copyIDegree2InfoDegree(ICurso degree) {
 		InfoDegree infoDegree = new InfoDegree();
 		try {
 			BeanUtils.copyProperties(infoDegree, degree);
@@ -402,7 +427,7 @@ public abstract class Cloner {
 	 * @param infoDegree
 	 * @return ICurso
 	 */
-	private static ICurso copyInfoDegree2IDegree(InfoDegree infoDegree) {
+	public static ICurso copyInfoDegree2IDegree(InfoDegree infoDegree) {
 		ICurso degree = new Curso();
 		try {
 			BeanUtils.copyProperties(degree, infoDegree);
@@ -411,6 +436,23 @@ public abstract class Cloner {
 		}
 		return degree;
 		
+	}
+	/**
+	 * Method copyInfoExecutionPeriod2IExecutionPeriod.
+	 * @param infoExecutionPeriod
+	 * @return IExecutionPeriod
+	 */
+	public static IExecutionPeriod copyInfoExecutionPeriod2IExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
+		
+		IExecutionPeriod executionPeriod = new ExecutionPeriod();
+		
+		IExecutionYear executionYear = Cloner.copyInfoExecutionYear2IExecutionYear(infoExecutionPeriod.getInfoExecutionYear());
+		
+		copyObjectProperties(executionPeriod, infoExecutionPeriod);
+		
+		executionPeriod.setExecutionYear(executionYear);
+		
+		return executionPeriod;
 	}
 
 }

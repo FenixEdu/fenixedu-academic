@@ -67,12 +67,6 @@ public class EscolherContextoFormActionTest extends MockStrutsTestCase {
     cleanData();
     _suportePersistente.iniciarTransaccao();
     HashSet privilegios = new HashSet();
-    //privilegios.add("LerLicenciatura");
-    //privilegios.add("ReadExecutionDegreesByExecutionYear");
-    //privilegios.add("LerLicenciaturaExecucaoDeLicenciatura");
-    //privilegios.add("LerTurmas");
-    //_pessoa1 = new Pessoa("user", "pass", privilegios);
-    //_pessoaPersistente.lockWrite(_pessoa1);
     _pessoa1 = new Pessoa();
     _pessoa1.setNumeroDocumentoIdentificacao("0123456789");
     _pessoa1.setCodigoFiscal("9876543210");

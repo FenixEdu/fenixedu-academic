@@ -18,7 +18,7 @@ public abstract class SessionConstants {
 
 	public static final String CONTEXT_KEY =
 		CONTEXT_PREFIX + "anoCurricularAndSemestreAndInfoLicenciaturaExecucao";
-	public static final String INFO_LIC_EXEC_KEY =
+	public static final String INFO_EXECUTION_DEGREE_KEY =
 		CONTEXT_PREFIX + "infoLicenciaturaExecucao";
 	public static final String U_VIEW = "UserView";
 	public static final String CLASS_VIEW = "classView";
@@ -35,4 +35,5 @@ public abstract class SessionConstants {
 	public static final String INFO_SHIFTS_EXECUTION_COURSE_KEY = "infoTurnosDeDisciplinaExecucao";
 	public static final String INFO_EXECUTION_PERIOD_KEY = "info_execution_period_key"; 
 	public static final String INFO_EXECUTION_DEGREE_LIST_KEY = "info_execution_degree_list_key";
+	public static final String CURRICULAR_YEAR_KEY = "curricular_year_key";
 }

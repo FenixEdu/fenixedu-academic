@@ -297,7 +297,7 @@ public class CriarAulaFormActionTest extends MockStrutsTestCase {
 						new Integer(5),
 						new Integer(1),
 						iLE)};
-			getSession().setAttribute(SessionConstants.INFO_LIC_EXEC_KEY, iLE);
+			getSession().setAttribute(SessionConstants.INFO_EXECUTION_DEGREE_KEY, iLE);
 
 			CurricularYearAndSemesterAndInfoExecutionDegree aCSiLE =
 				new CurricularYearAndSemesterAndInfoExecutionDegree(
@@ -371,7 +371,7 @@ public class CriarAulaFormActionTest extends MockStrutsTestCase {
 						new Integer(5),
 						new Integer(1),
 						iLE)};
-			getSession().setAttribute(SessionConstants.INFO_LIC_EXEC_KEY, iLE);
+			getSession().setAttribute(SessionConstants.INFO_EXECUTION_DEGREE_KEY, iLE);
 
 			CurricularYearAndSemesterAndInfoExecutionDegree aCSiLE =
 				new CurricularYearAndSemesterAndInfoExecutionDegree(

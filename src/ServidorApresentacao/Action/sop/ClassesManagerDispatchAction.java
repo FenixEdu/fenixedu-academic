@@ -12,13 +12,17 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
-import ServidorAplicacao.GestorServicos;
+import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoExecutionPeriod;
+import ServidorApresentacao.Action.sop.utils.ServiceUtils;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
@@ -36,17 +40,20 @@ public class ClassesManagerDispatchAction extends DispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 
-		/**
-		 * obter o serviço e listar as turmas do contexto em sessão.
-		 * */
-		GestorServicos gestor = GestorServicos.manager();
-		Object argsLerTurmas[] = { SessionUtils.getContext(request)};
+		HttpSession session = request.getSession();
+		
+		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+		
+		Integer curricularYear = (Integer) session.getAttribute(SessionConstants.CURRICULAR_YEAR_KEY);
+		
+		InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) session.getAttribute(SessionConstants.INFO_EXECUTION_DEGREE_KEY);
+		
+		
+		Object argsLerTurmas[] = { infoExecutionDegree, infoExecutionPeriod, curricularYear};
 
-		List classesList =
-			(List) gestor.executar(
-				SessionUtils.getUserView(request),
-				"LerTurmas",
-				argsLerTurmas);
+		List classesList = (List) ServiceUtils.executeService(SessionUtils.getUserView(request),"LerTurmas", argsLerTurmas);
+		System.out.println((classesList == null)+"=====================");
+		System.out.println(classesList.isEmpty()+"=====================");
 		if (classesList != null && !classesList.isEmpty())
 			request.setAttribute(CLASS_LIST_KEY, classesList);
 

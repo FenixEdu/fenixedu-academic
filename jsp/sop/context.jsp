@@ -7,11 +7,15 @@
 
     	<bean:define id="licContext" name="<%= SessionConstants.CONTEXT_KEY %>" scope="session" type="CurricularYearAndSemesterAndInfoExecutionDegree"/>
     	<bean:define id="infoLic" name="<%= SessionConstants.CONTEXT_KEY %>" property="infoLicenciaturaExecucao.infoDegreeCurricularPlan.infoDegree" scope="session" />	
+    	
+    	<bean:define id="infoExecutionPeriod" name="<%= SessionConstants.INFO_EXECUTION_PERIOD_KEY %>" scope="session"/>
+    	<bean:define id="curricularYear" name="<%= SessionConstants.CURRICULAR_YEAR_KEY %>" scope="session"/>
 		<jsp:getProperty name="infoLic" property="nome" />
 		<br/>
-		<bean:message key="label.year" arg0="<%= licContext.getAnoCurricular().toString() %>" /> -
+		<bean:message key="label.year" arg0="<%= curricularYear.toString() %>" /> -
 		
-		<bean:message key="label.period" arg0="<%= licContext.getSemestre().toString() %>" />
+		<jsp:getProperty name="infoExecutionPeriod" property="name"/>
+		<!-- <bean:message key="label.period" arg0="<%= licContext.getSemestre().toString() %>" /> -->
 		
 		
 		<logic:present name="<%= SessionConstants.CLASS_VIEW %>"  >
