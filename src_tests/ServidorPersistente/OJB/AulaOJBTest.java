@@ -25,7 +25,6 @@ import org.odmg.QueryException;
 
 import Dominio.Aula;
 import Dominio.IAula;
-import Dominio.ICurricularCourse;
 import Dominio.IDisciplinaExecucao;
 import Dominio.ISala;
 import ServidorPersistente.ExcepcaoPersistencia;
