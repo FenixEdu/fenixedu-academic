@@ -247,6 +247,14 @@
         <form-property name="page" type="java.lang.Integer"/> 
       </form-bean>
       
+      <form-bean name="chooseViewAllClassesSchedulesContextForm"
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+        <form-property name="selectedDegrees" type="java.lang.String[]" size="0"/>
+        <form-property name="selectAllDegrees" type="java.lang.Boolean"/>
+        <form-property name="page" type="java.lang.Integer"/> 
+      </form-bean>      
+      
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -329,11 +337,11 @@
     		scope="request"
     		>
   		<forward name="showForm" path="/chooseExecutionPeriod.jsp"/>
-  		<forward name="choose" path="/test.do"/>
+  		<forward name="choose" path="/beforeSop.do"/>
   		<forward name="viewRoom" path="/sopViewRoom.jsp"/>
 	</action>
 
-      <action path="/test" forward="/commonNavLocalBeforeSop.jsp"/>
+      <action path="/beforeSop" forward="/commonNavLocalBeforeSop.jsp"/>
       
 	  <!-- Choose Context for Timetables Management-->
       <action path="/prepararEscolherContexto"
@@ -358,10 +366,16 @@
 
      <!-- Gestao de Horarios -->
      <!-- LISTAGENS -->
-	<action path="/viewAllClassesSchedules"
-    		type="ServidorApresentacao.Action.sop.ViewAllClassesSchedulesAction"
+	<action parameter="method"
+			path="/viewAllClassesSchedulesDA"
+    		type="ServidorApresentacao.Action.sop.ViewAllClassesSchedulesDA"			
+			name="chooseViewAllClassesSchedulesContextForm"
+			input="/viewAllClassesSchedulesDA.do?method=choose&amp;page=0" 
+    		validate="true"
+    		scope="request"
     		>
-    	<forward name="Sucess" path="/viewAllClassesSchedules.jsp"/>
+    	<forward name="choose" path="/chooseDegreesToViewClassesSchedules.jsp"/>
+    	<forward name="list" path="/viewAllClassesSchedules.jsp"/>
 	</action>     
      
 	<action path="/viewAllRoomsSchedules"
