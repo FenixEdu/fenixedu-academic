@@ -5576,7 +5576,7 @@
             ServidorAplicacao.Servico.enrollment.ShowAvailableCurricularCourses</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
-            <chain name="EnrollmentLEECAuthorization"/>
+            <chain name="EnrollmentAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -5585,7 +5585,7 @@
         <implementationClass>ServidorAplicacao.Servico.enrollment.DeleteEnrolment</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
-            <chain name="EnrollmentLEECAuthorization"/>
+            <chain name="EnrollmentAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -5594,7 +5594,7 @@
         <implementationClass>ServidorAplicacao.Servico.enrollment.WriteStudentAreas</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
-            <chain name="EnrollmentLEECAuthorization"/>
+            <chain name="EnrollmentAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -5603,7 +5603,7 @@
         <implementationClass>ServidorAplicacao.Servico.enrollment.WriteEnrollment</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
-            <chain name="EnrollmentLEECAuthorization"/>
+            <chain name="EnrollmentAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -5613,7 +5613,7 @@
             ServidorAplicacao.Servico.enrollment.ReadSpecializationAndSecundaryAreasByStudent</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
-            <chain name="EnrollmentLEECAuthorization"/>
+            <chain name="EnrollmentAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -5641,7 +5641,7 @@
             ServidorAplicacao.Servico.commons.student.ReadStudentCurriculum</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
-            <chain name="EnrollmentLEECAuthorization"/>
+            <chain name="EnrollmentAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -5725,7 +5725,7 @@
             ServidorAplicacao.Servico.enrollment.ShowAvailableCurricularCoursesWithoutEnrollmentPeriod</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
-            <chain name="EnrollmentLEECAuthorization"/>
+            <chain name="EnrollmentAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -6283,7 +6283,7 @@
         <implementationClass>ServidorAplicacao.Servico.enrollment.WriteEnrolmentInOptionalCourse</implementationClass>
         <isTransactional>True</isTransactional>
         <filterChains>
-            <chain name="EnrollmentLEECAuthorization"/>
+            <chain name="EnrollmentAuthorization"/>
         </filterChains>
     </service>
     <service>

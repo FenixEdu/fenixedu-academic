@@ -569,7 +569,14 @@
             ServidorAplicacao.Filtro.CoordinatorAndLEECAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
-    </filter>         
+    </filter> 
+    <filter>
+        <name>EnrollmentAuthorization</name>
+        <implementationClass> 
+            ServidorAplicacao.Filtro.enrollment.EnrollmentAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+    </filter>             
     <filter>
         <name>EnrollmentLEECAuthorization</name>
         <implementationClass> 

@@ -59,20 +59,22 @@
 			<td class="listClasses-header">&nbsp;</td>
 		</tr>
 		<logic:present name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoBranch">
-			<tr>
-				<td class="listClasses">
-					<bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoBranch.name" />
-				</td>
-				<td class="listClasses">
-					<bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoSecundaryBranch.name" />
-				</td>
-				<td class="listClasses">
-					<bean:define id="specialization" name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoBranch.idInternal"/>
-					<bean:define id="secondary" name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoSecundaryBranch.idInternal"/>
 					<bean:define id="name" name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoStudent.infoPerson.nome"/>
 					<bean:define id="number" name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoStudent.number"/>
 					<bean:define id="executionPeriod" name="infoStudentEnrolmentContext" property="infoExecutionPeriod.name"/>
 					<bean:define id="executionYear" name="infoStudentEnrolmentContext" property="infoExecutionPeriod.infoExecutionYear.year"/>
+					
+			<tr>
+				<td class="listClasses">
+					<bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoBranch.name" />
+				</td>
+					<bean:define id="specialization" name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoBranch.idInternal"/>
+				<logic:present name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoSecundaryBranch">
+				<td class="listClasses">
+					<bean:write name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoSecundaryBranch.name" />
+				</td>
+					<bean:define id="secondary" name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoSecundaryBranch.idInternal"/>
+					<td class="listClasses">
 					<logic:present name="executionDegreeId">
 						<html:link page="<%="/curricularCoursesEnrollment.do?method=prepareEnrollmentPrepareChooseAreas&amp;specializationArea=" + specialization +"&amp;secondaryArea=" + secondary + "&amp;studentNumber=" + number + "&amp;studentName=" + name + "&amp;studentCurricularPlanId="+ studentCurricularPlanId + "&amp;executionPeriod=" + executionPeriod + "&amp;executionYear=" + executionYear + "&amp;executionDegreeId=" + pageContext.findAttribute("executionDegreeId")%>">
 							<bean:message key="button.student.modify"/>
@@ -84,9 +86,14 @@
 						</html:link>
 					</logic:notPresent>
 				</td>
+				</logic:present>
+				<logic:notPresent name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoSecundaryBranch">
+					<td class="listClasses">&nbsp;</td>
+					<td class="listClasses">&nbsp;</td>
+				</logic:notPresent>
 			</tr>
 		</logic:present>
-		<logic:notPresent name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoSecundaryBranch">
+		<%--<logic:notPresent name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoSecundaryBranch">
 			<tr>
 				<td class="listClasses">
 					<bean:message key="label.student.enrollment.no.area" />
@@ -111,8 +118,9 @@
 					</logic:notPresent>
 				</td>
 			</tr>
-		</logic:notPresent>
+		</logic:notPresent>--%>
 	</table>
+	
 	<table>
 		<tr>
 			<td colspan="2">

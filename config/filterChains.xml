@@ -600,6 +600,13 @@
         <filterClass>ServidorAplicacao.Filtro.AuthorizationByRoleFilter</filterClass>
     </filterChain>
     <filterChain>
+        <name>EnrollmentAuthorization</name>
+        <expression>EnrollmentAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+    <filterChain>
         <name>EnrollmentLEECAuthorization</name>
         <expression>EnrollmentLEECAuthorization</expression>
         <description/>
