@@ -7,7 +7,7 @@ package Dominio.enrollment;
 import java.io.Serializable;
 
 import Dominio.ICurricularCourse;
-import Util.CurricularCourseEnrollmentType;
+import Util.enrollment.CurricularCourseEnrollmentType;
 
 /**
  * @author João Mota
@@ -16,7 +16,7 @@ import Util.CurricularCourseEnrollmentType;
 public class CurricularCourse2Enroll implements Serializable {
     
     private ICurricularCourse curricularCourse;
-    private CurricularCourseEnrollmentType enrollmentRuleType;
+    private CurricularCourseEnrollmentType enrollmentType;
     
     
 
@@ -33,7 +33,7 @@ public class CurricularCourse2Enroll implements Serializable {
     public CurricularCourse2Enroll(ICurricularCourse curricularCourse,
             CurricularCourseEnrollmentType enrollmentRuleType) {
         this.curricularCourse = curricularCourse;
-        this.enrollmentRuleType = enrollmentRuleType;
+        this.enrollmentType = enrollmentRuleType;
     }
     /**
      * @return Returns the curricularCourse.
@@ -50,14 +50,14 @@ public class CurricularCourse2Enroll implements Serializable {
     /**
      * @return Returns the enrollmentRuleType.
      */
-    public CurricularCourseEnrollmentType getEnrollmentRuleType() {
-        return enrollmentRuleType;
+    public CurricularCourseEnrollmentType getEnrollmentType() {
+        return enrollmentType;
     }
     /**
      * @param enrollmentRuleType The enrollmentRuleType to set.
      */
-    public void setEnrollmentRuleType(
+    public void setEnrollmentType(
             CurricularCourseEnrollmentType enrollmentRuleType) {
-        this.enrollmentRuleType = enrollmentRuleType;
+        this.enrollmentType = enrollmentRuleType;
     }
 }

@@ -7,7 +7,7 @@ package DataBeans.enrollment;
 import DataBeans.DataTranferObject;
 import DataBeans.InfoCurricularCourse;
 import Dominio.enrollment.CurricularCourse2Enroll;
-import Util.CurricularCourseEnrollmentType;
+import Util.enrollment.CurricularCourseEnrollmentType;
 
 /**
  * @author João Mota
@@ -54,7 +54,7 @@ public class InfoCurricularCourse2Enroll extends DataTranferObject {
     public void copyFromDomain(CurricularCourse2Enroll curricularCourse2Enroll) {
         if (curricularCourse2Enroll != null) {
             setEnrollmentRuleType(curricularCourse2Enroll
-                    .getEnrollmentRuleType());
+                    .getEnrollmentType());
         }
     }
 
