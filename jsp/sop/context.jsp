@@ -8,7 +8,7 @@
 <logic:present name="executionDegree">
 	<bean:write name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso"/> em 
 	<bean:write name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.nome"/>
-	<br/>
+	<br />
 	<bean:define id="curricularYearValue"
 				 name="curricularYear"
 				 property="year"
@@ -21,14 +21,18 @@
 		
 <logic:present name="<%= SessionConstants.CLASS_VIEW %>"  >
 	<bean:define id="infoTurma" name="<%= SessionConstants.CLASS_VIEW %>" scope="request"/>
-	<br/>
+	<br />
 	<bean:message key="label.class"/> <jsp:getProperty name="infoTurma" property="nome" />
-	<br/>
+	<br />
 </logic:present>
 
-<logic:present name="<%= SessionConstants.EXECUTION_COURSE_KEY %>"  >
-	<bean:define id="infoDisciplinaExecucao" name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" scope="request"/>
-	<br/>
-	<bean:message key="property.course"/>: <jsp:getProperty name="infoDisciplinaExecucao" property="nome" />
-	<br/>
+<logic:present name="executionCourse">
+	<br />
+	<bean:message key="property.course"/>: <bean:write name="executionCourse" property="nome"/>
+	<br />
+</logic:present>
+
+<logic:present name="shift">
+	<bean:message key="property.shift"/>: <bean:write name="shift" property="nome"/>
+	<br />
 </logic:present>

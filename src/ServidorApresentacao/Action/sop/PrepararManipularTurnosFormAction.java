@@ -46,7 +46,8 @@ public class PrepararManipularTurnosFormAction extends FenixExecutionCourseAndEx
 		request.removeAttribute(SessionConstants.INFO_SHIFTS_EXECUTION_COURSE_KEY);
 		if (infoTurnosDeDisciplinaExecucao.size() > 0)
 			request.setAttribute(SessionConstants.INFO_SHIFTS_EXECUTION_COURSE_KEY, infoTurnosDeDisciplinaExecucao);
-			
+		
+		request.removeAttribute(SessionConstants.SHIFT);	
 		request.removeAttribute(SessionConstants.CLASS_VIEW);
       return mapping.findForward("Sucesso");
     } else

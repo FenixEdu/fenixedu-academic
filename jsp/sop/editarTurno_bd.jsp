@@ -33,10 +33,6 @@
 <br />
 <br />
 <br />
-<bean:define id="old_shift_oid" name="infoTurno" property="idInternal"/>
-<html:hidden property="old_shift_oid"
-			 value="<%= pageContext.findAttribute("old_shift_oid").toString() %>"/>
-
 <html:hidden property="<%= SessionConstants.EXECUTION_PERIOD_OID %>"
 			 value="<%= pageContext.findAttribute("executionPeriodOID").toString() %>"/>
 <html:hidden property="<%= SessionConstants.EXECUTION_DEGREE_OID %>"
@@ -45,6 +41,8 @@
 			 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
 <html:hidden property="<%= SessionConstants.EXECUTION_COURSE_OID %>"
 			 value="<%= pageContext.findAttribute("executionCourseOID").toString() %>"/>
+<html:hidden property="<%= SessionConstants.SHIFT_OID %>"
+			 value="<%= pageContext.findAttribute("shiftOID").toString() %>"/>
 <html:submit styleClass="inputbutton"><bean:message key="label.save"/></html:submit>
 <html:reset styleClass="inputbutton"><bean:message key="label.clear"/></html:reset>
 </html:form>

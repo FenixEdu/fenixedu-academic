@@ -10,6 +10,7 @@ import DataBeans.InfoCurricularYear;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
+import DataBeans.InfoShift;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -189,6 +190,47 @@ public class ContextUtils {
 			request.setAttribute(
 				SessionConstants.EXECUTION_COURSE,
 				infoExecutionCourse);
+		}
+	}
+
+	/**
+	 * @param request
+	 */
+	public static void setShiftContext(HttpServletRequest request) {
+		String shiftOIDString =
+			(String) request.getAttribute(
+				SessionConstants.SHIFT_OID);
+		System.out.println("Shift from request: " + shiftOIDString);
+		if (shiftOIDString == null) {
+			shiftOIDString =
+				request.getParameter(SessionConstants.SHIFT_OID);
+			System.out.println("Shift from parameter: " + shiftOIDString);
+		}
+
+		Integer shiftOID = null;
+		if (shiftOIDString != null) {
+			shiftOID = new Integer(shiftOIDString);
+		}
+
+		InfoShift infoShift = null;
+
+		if (shiftOID != null) {
+			// Read from database
+			try {
+				Object[] args = { shiftOID };
+				infoShift =
+					(InfoShift) ServiceUtils.executeService(
+						null,
+						"ReadShiftByOID",
+						args);
+			} catch (FenixServiceException e) {
+				e.printStackTrace();
+			}
+
+			// Place it in request
+			request.setAttribute(
+				SessionConstants.SHIFT,
+				infoShift);
 		}
 	}
 

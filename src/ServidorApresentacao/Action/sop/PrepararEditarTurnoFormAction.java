@@ -20,7 +20,7 @@ import ServidorApresentacao
 	.Action
 	.sop
 	.base
-	.FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextAction;
+	.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
@@ -29,48 +29,65 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 */
 
 public class PrepararEditarTurnoFormAction
-	extends FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextAction {
+	extends FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextAction {
 	public ActionForward execute(
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
+
 		super.execute(mapping, form, request, response);
 
 		DynaActionForm editarTurnoForm = (DynaActionForm) form;
-		HttpSession sessao = request.getSession(false);
-		if (sessao != null) {
 
-			DynaActionForm manipularTurnosForm =
-				(DynaActionForm) request.getAttribute("manipularTurnosForm");
-			Integer indexTurno =
-				(Integer) manipularTurnosForm.get("indexTurno");
+		InfoShift infoShift =
+			(InfoShift) request.getAttribute(SessionConstants.SHIFT);
 
-			IUserView userView = (IUserView) sessao.getAttribute("UserView");
-			GestorServicos gestor = GestorServicos.manager();
+		if (infoShift == null) {
 
-			//ArrayList infoTurnos = (ArrayList) request.getAttribute("infoTurnosDeDisciplinaExecucao");
-			InfoExecutionCourse iDE =
-				(InfoExecutionCourse) request.getAttribute(
-					SessionConstants.EXECUTION_COURSE);
-			Object argsLerTurnosDeDisciplinaExecucao[] = { iDE };
-			List infoTurnos =
-				(List) gestor.executar(
-					userView,
-					"LerTurnosDeDisciplinaExecucao",
-					argsLerTurnosDeDisciplinaExecucao);
-			Collections.sort(infoTurnos, new InfoShiftComparatorByLessonType());
+			HttpSession sessao = request.getSession(false);
 
-			InfoShift infoTurno =
-				(InfoShift) infoTurnos.get(indexTurno.intValue());
-			request.setAttribute("infoTurno", infoTurno);
-			request.setAttribute(SessionConstants.SHIFT, infoTurno);
-			editarTurnoForm.set("nome", infoTurno.getNome());
-			editarTurnoForm.set("lotacao", infoTurno.getLotacao());
-			return mapping.findForward("Sucesso");
-		} else
-			throw new Exception();
-		// nao ocorre... pedido passa pelo filtro Autorizacao
+			if (sessao != null) {
+
+				DynaActionForm manipularTurnosForm =
+					(DynaActionForm) request.getAttribute(
+						"manipularTurnosForm");
+				Integer indexTurno =
+					(Integer) manipularTurnosForm.get("indexTurno");
+
+				IUserView userView =
+					(IUserView) sessao.getAttribute("UserView");
+				GestorServicos gestor = GestorServicos.manager();
+
+				//ArrayList infoTurnos = (ArrayList) request.getAttribute("infoTurnosDeDisciplinaExecucao");
+				InfoExecutionCourse iDE =
+					(InfoExecutionCourse) request.getAttribute(
+						SessionConstants.EXECUTION_COURSE);
+				Object argsLerTurnosDeDisciplinaExecucao[] = { iDE };
+				List infoTurnos =
+					(List) gestor.executar(
+						userView,
+						"LerTurnosDeDisciplinaExecucao",
+						argsLerTurnosDeDisciplinaExecucao);
+				Collections.sort(
+					infoTurnos,
+					new InfoShiftComparatorByLessonType());
+
+				//InfoShift infoTurno =
+				infoShift = 
+					(InfoShift) infoTurnos.get(indexTurno.intValue());
+				
+			} else
+				throw new Exception();
+			// nao ocorre... pedido passa pelo filtro Autorizacao
+		}
+
+		request.setAttribute("infoTurno", infoShift);
+		request.setAttribute(SessionConstants.SHIFT, infoShift);
+		editarTurnoForm.set("nome", infoShift.getNome());
+		editarTurnoForm.set("lotacao", infoShift.getLotacao());
+		
+		return mapping.findForward("Sucesso");
 	}
 }

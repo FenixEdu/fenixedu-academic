@@ -35,8 +35,8 @@ public class TurnoAlunoOJB
 		try {
 			ITurnoAluno turnoAluno = null;
 			String oqlQuery = "select turnoaluno from " + ShiftStudent.class.getName()
-							+ " where aluno.number = $1"
-							+ " and aluno.degreeType = $2"
+							+ " where student.number = $1"
+							+ " and student.degreeType = $2"
 							+ " and turno.nome = $3"
 							+ " and turno.disciplinaExecucao.sigla = $4"
 							+ " and turno.disciplinaExecucao.executionPeriod.name = $5"
@@ -113,11 +113,11 @@ public class TurnoAlunoOJB
 		String nameExecutionCourse)
 		throws ExcepcaoPersistencia {
 		try {
-			String oqlQuery = "select turno from " + ShiftStudent.class.getName();
-			oqlQuery += " where turno.tipo = $1";
+			String oqlQuery = "select shift from " + ShiftStudent.class.getName();
+			oqlQuery += " where shift.tipo = $1";
 			oqlQuery
-				+= " and turno.disciplinaExecucao.licenciaturaExecucao.nome = $2";
-			oqlQuery += " and aluno.number = $3";
+				+= " and shift.disciplinaExecucao.licenciaturaExecucao.nome = $2";
+			oqlQuery += " and student.number = $3";
 			query.create(oqlQuery);
 			query.bind(shiftType);
 			query.bind(nameExecutionCourse);
@@ -136,11 +136,11 @@ public class TurnoAlunoOJB
 	 */
 	public List readByShift(ITurno shift) throws ExcepcaoPersistencia {
 		try {
-			String oqlQuery = "select turno from " + ShiftStudent.class.getName()
-							+ " where turno.nome = $1"
-							+ " and turno.disciplinaExecucao.sigla = $2"
-							+ " and turno.disciplinaExecucao.executionPeriod.name = $3"
-							+ " and turno.disciplinaExecucao.executionPeriod.executionYear.year = $4";
+			String oqlQuery = "select shift from " + ShiftStudent.class.getName()
+							+ " where shift.nome = $1"
+							+ " and shift.disciplinaExecucao.sigla = $2"
+							+ " and shift.disciplinaExecucao.executionPeriod.name = $3"
+							+ " and shift.disciplinaExecucao.executionPeriod.executionYear.year = $4";
 			query.create(oqlQuery);
 			query.bind(shift.getNome());
 			

@@ -15,12 +15,12 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
-import ServidorApresentacao.Action.sop.base.FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextAction;
+import ServidorApresentacao.Action.sop.base.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 /**
  * @author tfc130
  */
-public class EditarTurnoFormAction extends FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextAction {
+public class EditarTurnoFormAction extends FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextAction {
 	public ActionForward execute(
 		ActionMapping mapping,
 		ActionForm form,
@@ -41,7 +41,7 @@ public class EditarTurnoFormAction extends FenixExecutionCourseAndExecutionDegre
 //				(ArrayList) session.getAttribute(
 //					"infoTurnosDeDisciplinaExecucao");
 
-			Integer shiftOID = new Integer(request.getParameter("old_shift_oid"));
+			Integer shiftOID = new Integer(request.getParameter(SessionConstants.SHIFT_OID));
 
 			//InfoShift infoTurnoAntigo =
 			//	(InfoShift) request.getAttribute("infoTurno");

@@ -11,6 +11,8 @@ package ServidorAplicacao.Servico.sop;
  *
  * @author tfc130
  **/
+import java.util.ArrayList;
+
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
@@ -79,6 +81,8 @@ public class CriarTurno implements IServico {
 			//        I'm not sure of the significance, nor do I know if it is to
 			//        be attributed by SOP users. So for now just set it to 0. 
 			turno.setAvailabilityFinal(new Integer(0));
+			turno.setAssociatedLessons(new ArrayList());
+			turno.setAssociatedTeacherProfessorShipPercentage(new ArrayList());
 			
 			try {
 				sp.getITurnoPersistente().lockWrite(turno);

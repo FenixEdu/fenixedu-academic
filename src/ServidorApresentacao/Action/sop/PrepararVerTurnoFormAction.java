@@ -19,13 +19,13 @@ import DataBeans.ShiftKey;
 import DataBeans.comparators.InfoShiftComparatorByLessonType;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
-import ServidorApresentacao.Action.sop.base.FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextAction;
+import ServidorApresentacao.Action.sop.base.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author tfc130
  */
-public class PrepararVerTurnoFormAction extends FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextAction {
+public class PrepararVerTurnoFormAction extends FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextAction {
 
   public ActionForward execute(ActionMapping mapping, ActionForm form,
                                 HttpServletRequest request,
@@ -51,6 +51,7 @@ public class PrepararVerTurnoFormAction extends FenixExecutionCourseAndExecution
         InfoShift infoTurno = (InfoShift) infoTurnos.get(indexTurno.intValue());
         request.removeAttribute("infoTurno");
         request.setAttribute("infoTurno", infoTurno);
+		request.setAttribute(SessionConstants.SHIFT, infoTurno);
 
 	    Object argsLerAulasDeTurno[] = { new ShiftKey(infoTurno.getNome(), infoTurno.getInfoDisciplinaExecucao())};
         ArrayList infoAulasDeTurno = (ArrayList) gestor.executar(userView, "LerAulasDeTurno", argsLerAulasDeTurno);
