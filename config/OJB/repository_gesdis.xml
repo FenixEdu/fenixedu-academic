@@ -152,28 +152,8 @@
       >   
          <foreignkey field-id-ref="5"/>
       </reference-descriptor>
-    
       
-      <collection-descriptor
-         name="inferiorSections"
-         element-class-ref="Dominio.Section"
-         orderby="sectionOrder"
-         sort="ASC"
-         auto-retrieve="true"
-      >
-         <inverse-foreignkey field-id-ref="5"/>
-      </collection-descriptor>
-      
-      <collection-descriptor
-         name="items"
-         element-class-ref="Dominio.Item"
-         orderby="itemOrder"
-         sort="ASC"
-         auto-retrieve="true"
-      >
-         <inverse-foreignkey field-id-ref="6"/>
-      </collection-descriptor>
-</class-descriptor>
+    </class-descriptor>
 
 
 
