@@ -28,12 +28,13 @@
 		</td>
 	</tr>
 	<tr><td>&nbsp;</td></tr>
+<!--
 	<tr>
 		<td class="infoop">
 			<bean:message key="message.enrollmentsWarning" />
 		</td>
 	</tr>
-	
+-->
 </table>
 <h2>
 	<bean:write name="commonComponent" property="executionCourse.nome" />
