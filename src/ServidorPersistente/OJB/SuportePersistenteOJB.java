@@ -46,6 +46,7 @@ import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentItem;
 import ServidorPersistente.IPersistentMasterDegreeCandidate;
+import ServidorPersistente.IPersistentPrice;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentResponsibleFor;
 import ServidorPersistente.IPersistentSection;
@@ -353,6 +354,10 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	 */
 	public IPersistentResponsibleFor getIPersistentResponsibleFor() {
 		return new ResponsibleForOJB();
+	}
+
+	public IPersistentPrice getIPersistentPrice() {
+		return new PriceOJB();
 	}
 
 }

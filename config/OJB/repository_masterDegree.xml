@@ -10,7 +10,7 @@
 	>
 	  <field-descriptor id="1"
 	     name="internalCode"    
-	     column="INTERNAL_CODE"  
+	     column="ID_INTERNAL"  
 	     jdbc-type="INTEGER"
 	     primarykey="true"
 	     autoincrement="true"
@@ -97,7 +97,7 @@
 	>
 	  <field-descriptor id="1"
 	     name="internalCode"    
-	     column="INTERNAL_CODE"  
+	     column="ID_INTERNAL"  
 	     jdbc-type="INTEGER"
 	     primarykey="true"
 	     autoincrement="true"
@@ -148,6 +148,226 @@
           
 <!-- End of Definitions for class CANDIDATE_SITUATION -->
 
+<!-- Definitions for class PRICE -->
+
+	<class-descriptor
+		class="Dominio.Price"
+		table="PRICE"
+	>
+	  <field-descriptor 
+	     name="internalCode"    
+	     column="ID_INTERNAL"  
+	     jdbc-type="INTEGER"
+	     primarykey="true"
+	     autoincrement="true"
+	  />
+	  <field-descriptor 
+	     name="graduationType"
+	     column="GRADUATION_TYPE"
+	     jdbc-type="INTEGER"
+	     conversion="ServidorPersistente.Conversores.JavaGraduationType2SqlGraduationTypeFieldConversion"
+	  />
+	  <field-descriptor id="2"
+	     name="documentType"
+	     column="DOCUMENT_TYPE"
+	     jdbc-type="INTEGER"
+	     conversion="ServidorPersistente.Conversores.JavaDocumentType2SqlDocumentTypeFieldConversion"
+	  />
+	  <field-descriptor 
+	     name="description"
+	     column="DESCRIPTION"
+	     jdbc-type="VARCHAR"
+	  />
+	  <field-descriptor 
+	     name="price"
+	     column="PRICE"
+	     jdbc-type="DOUBLE"
+	  />
+	  
+	 </class-descriptor>
+	 
+
+<!-- End of Definitions for class PRICE -->
+
+<!-- Definitions for class GUIDE -->
+
+	<class-descriptor
+		class="Dominio.Guide"
+		table="GUIDE"
+	>
+	  <field-descriptor 
+	     name="internalCode"    
+	     column="ID_INTERNAL"  
+	     jdbc-type="INTEGER"
+	     primarykey="true"
+	     autoincrement="true"
+	  />
+	  <field-descriptor 
+	     name="number"
+	     column="NUMBER"
+	     jdbc-type="INTEGER"
+	  />
+	  <field-descriptor 
+	     name="year"
+	     column="YEAR"
+	     jdbc-type="INTEGER"
+	  />
+	  <field-descriptor 
+	     name="keyContributor"
+	     column="KEY_CONTRIBUTOR"
+	     jdbc-type="INTEGER"
+	  />
+	  <field-descriptor 
+	     name="keyPerson"
+	     column="KEY_PERSON"
+	     jdbc-type="INTEGER"
+	  />
+	  <field-descriptor 
+	     name="total"
+	     column="TOTAL"
+	     jdbc-type="DOUBLE"
+	  />
+	  <field-descriptor 
+	     name="remarks"
+	     column="REMARKS"
+	     jdbc-type="VARCHAR"
+	  />
+	  
+ 	  <reference-descriptor
+         	name="contributor"
+         	class-ref="Dominio.Contributor"
+         	proxy="true"
+      	  >
+          <foreignkey field-ref="keyContributor"/>
+      </reference-descriptor>
+      
+      <reference-descriptor
+         	name="person"
+         	class-ref="Dominio.Pessoa"
+         	proxy="true"
+      	  >
+          <foreignkey field-ref="keyPerson"/>
+      </reference-descriptor>
+       
+	 </class-descriptor>
+	 
+
+<!-- End of Definitions for class GUIDE -->
+
+<!-- Definitions for class GUIDE_ENTRY -->
+
+	<class-descriptor
+		class="Dominio.GuideEntry"
+		table="GUIDE_ENTRY"
+	>
+	  <field-descriptor 
+	     name="internalCode"    
+	     column="ID_INTERNAL"  
+	     jdbc-type="INTEGER"
+	     primarykey="true"
+	     autoincrement="true"
+	  />
+	  <field-descriptor 
+	     name="keyGuide"
+	     column="KEY_GUIDE"
+	     jdbc-type="INTEGER"
+	  />
+	  <field-descriptor 
+	     name="graduationType"
+	     column="GRADUATION_TYPE"
+	     jdbc-type="INTEGER"
+	     conversion="ServidorPersistente.Conversores.JavaGraduationType2SqlGraduationTypeFieldConversion"
+	  />
+	  <field-descriptor 
+	     name="documentType"
+	     column="DOCUMENT_TYPE"
+	     jdbc-type="INTEGER"
+	     conversion="ServidorPersistente.Conversores.JavaDocumentType2SqlDocumentTypeFieldConversion"
+	  />
+	  <field-descriptor 
+	     name="description"
+	     column="DESCRIPTION"
+	     jdbc-type="VARCHAR"
+	  />
+	  <field-descriptor 
+	     name="price"
+	     column="PRICE"
+	     jdbc-type="DOUBLE"
+	  />
+	  <field-descriptor 
+	     name="quantity"
+	     column="QUANTITY"
+	     jdbc-type="INTEGER"
+	  />
+	  
+	   <reference-descriptor
+         	name="guide"
+         	class-ref="Dominio.Guide"
+         	proxy="true"
+      	  >
+          <foreignkey field-ref="keyGuide"/>
+      </reference-descriptor>
+	  
+	 </class-descriptor>
+	 
+
+<!-- End of Definitions for class GUIDE_ENTRY -->
+
+
+<!-- Definitions for class GUIDE_SITUATION -->
+
+	<class-descriptor
+		class="Dominio.GuideSituation"
+		table="GUIDE_SITUATION"
+	>
+	  <field-descriptor 
+	     name="internalCode"    
+	     column="ID_INTERNAL"  
+	     jdbc-type="INTEGER"
+	     primarykey="true"
+	     autoincrement="true"
+	  />
+	  <field-descriptor 
+	     name="keyGuide"
+	     column="KEY_GUIDE"
+	     jdbc-type="INTEGER"
+	  />
+	  <field-descriptor 
+	     name="situation"
+	     column="SITUATION"
+	     jdbc-type="INTEGER"
+	     conversion="ServidorPersistente.Conversores.JavaGuideSituation2SqlGuideSituationFieldConversion"
+	  />
+	  <field-descriptor 
+	     name="date"
+	     column="DATE"
+	     jdbc-type="DATE"
+	  />
+	    <field-descriptor 
+	     name="remarks"
+	     column="REMARKS"
+	     jdbc-type="VARCHAR"
+	  />
+
+	    <field-descriptor 
+	     name="state"
+	     column="STATE"
+	     jdbc-type="INTEGER"
+	     conversion="ServidorPersistente.Conversores.JavaState2SQLStateFieldConversion"
+	  />
+	  
+	   <reference-descriptor
+         	name="guide"
+         	class-ref="Dominio.Guide"
+         	proxy="true"
+      	  >
+          <foreignkey field-ref="keyGuide"/>
+      </reference-descriptor>
+
+	 </class-descriptor>
+	 
+
+<!-- End of Definitions for class GUIDE_SITUATION -->
 
    
 <!-- Mapping of User defined classes ends here -->

@@ -401,6 +401,38 @@
                 </fileset>
             </classpath>
         </sql>
+
+        <sql
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost/ciapl"
+            userid="${db.user}"
+            password="${db.pass}"
+            encoding="${encoding}"
+            src="${sql}/test-data_inscricoes.sql"
+        >
+            <classpath>
+                <fileset dir="${libs}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </sql>
+
+
+        <sql
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost/ciapl"
+            userid="${db.user}"
+            password="${db.pass}"
+            encoding="${encoding}"
+            src="${sql}/test-data_masterDegree.sql"
+        >
+            <classpath>
+                <fileset dir="${libs}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </sql>
+
        <sql
             driver="com.mysql.jdbc.Driver"
             url="jdbc:mysql://localhost/ciapl"

@@ -71,4 +71,6 @@ public interface ISuportePersistente {
 	
 	public IPersistentProfessorship getIPersistentProfessorship();
 	public IPersistentResponsibleFor getIPersistentResponsibleFor();
+	public IPersistentPrice getIPersistentPrice();
+	
 }
