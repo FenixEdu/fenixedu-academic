@@ -214,6 +214,9 @@
 	<!-- ========== Action Mapping Definitions =============================== -->
 	<action-mappings type="org.apache.struts.action.ActionMapping">
     <!-- page fronting actions  -->
+    	<action path="/index" type="ServidorApresentacao.Action.commons.VoidAction">
+    		<forward name="Success" path="index"/>
+    	</action>
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
@@ -230,7 +233,7 @@
 	</plug-in>
 	    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
 		<set-property property="definitions-config"
-					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/facultyAdmOffice/tiles-facultyAdmOffice-definitions.xml,/WEB-INF/tiles/manager/tiles-facultyAdmOffice-pages-definitions.xml" />
+					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/facultyAdmOffice/tiles-facultyAdmOffice-definitions.xml,/WEB-INF/tiles/facultyAdmOffice/tiles-facultyAdmOffice-pages-definitions.xml" />
 		<set-property property="moduleAware" value="true" />
 		<set-property property="definitions-parser-validate" value="true" />
 	</plug-in>    
