@@ -109,8 +109,8 @@ public class PublishMarks implements IService {
                                     SmsUtil
                                             .getInstance()
                                             .sendSmsWithoutDeliveryReports(
-                                                    Integer
-                                                            .valueOf(StringDestinationNumber),
+													Integer
+														.valueOf(StringDestinationNumber),
                                                     evaluation
                                                             .getPublishmentMessage()
                                                             + " "
