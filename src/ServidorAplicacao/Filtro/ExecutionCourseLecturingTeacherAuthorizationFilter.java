@@ -59,7 +59,8 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter
 				|| !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
 				|| !lecturesExecutionCourse(id, argumentos)) {
 				throw new NotAuthorizedException();
-			} catch (RuntimeException e) {
+			}
+		} catch (RuntimeException e) {
 			throw new NotAuthorizedException();
 		}
 	}
