@@ -115,6 +115,7 @@ INSERT INTO PRIVILEGIO VALUES (1, 'ReadClassesWithShiftService', 56);
 INSERT INTO PRIVILEGIO VALUES (1, 'RemoveTeacher', 57);
 INSERT INTO PRIVILEGIO VALUES (1, 'AssociateTeacher', 58);
 INSERT INTO PRIVILEGIO VALUES (1, 'InsertAnnouncement', 59);
+INSERT INTO PRIVILEGIO VALUES (1, 'InsertBibliographicReference', 60);
 
 #
 # Data for table 'DEGREE'
