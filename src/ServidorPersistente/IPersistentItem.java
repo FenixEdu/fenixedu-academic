@@ -15,7 +15,7 @@ import Dominio.ISection;
 
 public interface IPersistentItem {
     public IItem readBySectionAndName(ISection section, String name) throws ExcepcaoPersistencia;
-    public void lockWrite(ISection item) throws ExcepcaoPersistencia;
+    public void lockWrite(IItem item) throws ExcepcaoPersistencia;
     public void delete(IItem item) throws ExcepcaoPersistencia;
     public void deleteAll() throws ExcepcaoPersistencia;
 }

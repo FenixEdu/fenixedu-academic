@@ -41,7 +41,7 @@ public class ItemOJB extends ObjectFenixOJB implements IPersistentItem {
         }
     }
         
-    public void lockWrite(ISection item) throws ExcepcaoPersistencia {
+    public void lockWrite(IItem item) throws ExcepcaoPersistencia {
         super.lockWrite(item);
     }
     
