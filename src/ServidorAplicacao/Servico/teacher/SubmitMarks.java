@@ -10,8 +10,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import middleware.marks.CreateFile;
-
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MultiHashMap;
@@ -58,6 +56,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.EnrolmentEvaluationState;
 import Util.Ftp;
 import Util.TipoCurso;
+import Util.middleware.CreateFile;
 
 /**
  * @author Tânia Pousão

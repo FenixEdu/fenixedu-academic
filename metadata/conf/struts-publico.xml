@@ -453,13 +453,6 @@
         </action>
         
         <action path="/showServices" forward="showServices"/>
-        
-	<action	type="ServidorApresentacao.Action.manager.migration.StartMigrationProcessAction"
-			path="/startMigrationProcess"
-			scope="request"
-			validate="false">
-		<forward name="success" path="/migration/result.jsp"/>
-	</action>
 
 	<action path="/viewFinalDegreeWorkProposals" forward="/finalDegreeWorks.do?method=prepareSearch&amp;page=0"/>
 
