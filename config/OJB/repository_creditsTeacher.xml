@@ -14,8 +14,8 @@
          autoincrement="true"
       />
       <field-descriptor
-         name="keyTeacher"
-         column="KEY_TEACHER"
+         name="keyProfessorShip"
+         column="KEY_PROFESSOR_SHIP"
          jdbc-type="INTEGER"
       />
       <field-descriptor
@@ -30,10 +30,10 @@
       />
       
       <reference-descriptor
-         name="teacher"
-         class-ref="Dominio.Teacher"
+         name="professorShip"
+         class-ref="Dominio.Professorship"
       >
-         <foreignkey field-ref="keyTeacher"/>
+         <foreignkey field-ref="keyProfessorShip"/>
       </reference-descriptor>
             
       <reference-descriptor

@@ -5,8 +5,8 @@ package Dominio;
  *
  */
 public class CreditsTeacher extends DomainObject implements ICreditsTeacher {
-	private ITeacher teacher = null;
-	private Integer keyTeacher = null;
+	private IProfessorship professorShip = null;
+	private Integer keyProfessorShip = null;
 
 	private ITurno shift = null;
 	private Integer keyShift = null;
@@ -22,9 +22,8 @@ public class CreditsTeacher extends DomainObject implements ICreditsTeacher {
 		if (obj instanceof ICreditsTeacher) {
 			ICreditsTeacher creditsTeacher = (ICreditsTeacher) obj;
 
-			resultado = (getTeacher().equals(creditsTeacher.getTeacher())) 
-			&& (getShift().equals(creditsTeacher.getShift()))
-			&& (getPercentage().equals(creditsTeacher.getPercentage()));
+			resultado = (getProfessorShip().equals(creditsTeacher.getProfessorShip())) 
+			&& (getShift().equals(creditsTeacher.getShift()));
 		}
 		return resultado;
 	}
@@ -32,24 +31,24 @@ public class CreditsTeacher extends DomainObject implements ICreditsTeacher {
 	public String toString() {
 		String result = "[CREDITS_TEACHER";
 		result += ", codInt=" + getIdInternal();
-		result += ", teacher=" + getTeacher();
+		result += ", teacher=" + getProfessorShip();
 		result += ", shift=" + getShift();
 		result += "]";
 		return result;
 	}
 
-	public ITeacher getTeacher() {
-		return this.teacher;
+	public Integer getKeyProfessorShip() {
+		return keyProfessorShip;
 	}
-	public void setTeacher(ITeacher teacher) {
-		this.teacher = teacher;
+	public void setKeyProfessorShip(Integer integer) {
+		keyProfessorShip = integer;
 	}
 
-	public Integer getKeyTeacher() {
-		return keyTeacher;
+	public IProfessorship getProfessorShip() {
+		return professorShip;
 	}
-	public void setKeyTeacher(Integer integer) {
-		keyTeacher = integer;
+	public void setProfessorShip(IProfessorship professorship) {
+		professorShip = professorship;
 	}
 
 	public ITurno getShift() {
@@ -72,5 +71,4 @@ public class CreditsTeacher extends DomainObject implements ICreditsTeacher {
 	public void setPercentage(Double percentage) {
 		this.percentage = percentage;
 	}
-
 }

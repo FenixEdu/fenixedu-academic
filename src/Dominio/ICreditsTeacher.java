@@ -7,8 +7,8 @@ import java.io.Serializable;
  *
  */
 public interface ICreditsTeacher extends Serializable {
-	ITeacher getTeacher();
-	void setTeacher(ITeacher teacher);
+	IProfessorship getProfessorShip();
+	void setProfessorShip(IProfessorship professorShip);
 	 
 	ITurno getShift();
 	void setShift(ITurno shift);
