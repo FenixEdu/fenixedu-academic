@@ -35,9 +35,13 @@ public class CursoOJB extends ObjectFenixOJB implements ICursoPersistente {
             query.bind(sigla);
             List result = (List) query.execute();
             lockRead(result);
-            if (result.size() != 0) 
+            if (result.size() != 0){ 
                 curso = (ICurso) result.get(0);
-            return curso;
+				return curso;
+            }
+            else
+				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.NON_EXISTING);
+
         } catch (QueryException ex) {
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
         }
@@ -52,23 +56,40 @@ public class CursoOJB extends ObjectFenixOJB implements ICursoPersistente {
 			query.bind(licenciatura.getSigla());
 			List result = (List) query.execute();
 			lockRead(result);
+
 			if (result.size() != 0) 
-				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.EXISTING_KEY);
-			else super.lockWrite(licenciatura);				
+				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.EXISTING);
+			else 
+				super.lockWrite(licenciatura);				
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
     }
-
     
     public void delete(ICurso licenciatura) throws ExcepcaoPersistencia {
-        super.delete(licenciatura);
-    }
-    
-     public void deleteAll() throws ExcepcaoPersistencia {
-        String oqlQuery = "select all from " + Curso.class.getName();
+		try {
+			ICurso curso = null;
+			String oqlQuery = "select curso from " + Curso.class.getName();
+			oqlQuery += " where sigla = $1 ";
+			query.create(oqlQuery);
+			query.bind(licenciatura.getSigla());
+			List result = (List) query.execute();
+			lockRead(result);
+			if (result.size() != 0){ 
+				super.delete(licenciatura);
+			}
+			else
+				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.NON_EXISTING);
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
+   
+	public void deleteAll() throws ExcepcaoPersistencia {
+    	String oqlQuery = "select all from " + Curso.class.getName();
         super.deleteAll(oqlQuery);
-   }
+	}
+
 
     public List readAll() throws ExcepcaoPersistencia {
         try {

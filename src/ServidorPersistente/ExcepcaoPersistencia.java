@@ -19,10 +19,8 @@ public class ExcepcaoPersistencia extends java.lang.Exception {
     public static final int READ_LOCK = 6;
     public static final int QUERY = 7;
     public static final int CLOSE_DATABASE = 8;
-    
-    public static final int EXISTING = 9;
-    public static final String EXISTING_KEY = "exception.error.existing";
-	public static final String NON_EXISTING_KEY = "exception.error.nonExisting";
+	public static final int EXISTING = 9;
+	public static final int NON_EXISTING = 10;
 
     private int _erro;
     private String errorKey;
@@ -42,6 +40,9 @@ public class ExcepcaoPersistencia extends java.lang.Exception {
 	  this.errorKey = error;
 	}
 
+	public ExcepcaoPersistencia(int erro) {
+	  _erro = erro;
+	}
 
 
     /**
@@ -50,17 +51,32 @@ public class ExcepcaoPersistencia extends java.lang.Exception {
      */
     public ExcepcaoPersistencia(String msg) {
         super(msg);
-        this.errorKey = msg;
     }
 
     public int getErro() {
         return _erro;
     }
-    
+
 	public String getErrorKey() {
 		return this.errorKey;
 	}
     
+	
+	public void setErrorKey(int error) {
+		switch (error) {
+			case 1:  this.errorKey = "exception.error.openDatabase";
+			case 2:  this.errorKey = "exception.error.beginTransaction";
+			case 3:  this.errorKey = "exception.error.commitTransaction";
+			case 4:  this.errorKey = "exception.error.abortTransaction";
+			case 5:  this.errorKey = "exception.error.upgradeLock";
+			case 6:  this.errorKey = "exception.error.readLock";
+			case 7:  this.errorKey = "exception.error.query";
+			case 8:  this.errorKey = "exception.error.closeDatabase";
+			case 9:  this.errorKey = "exception.error.existing";
+			case 10: this.errorKey = "exception.error.nonExisting";
+			default: this.errorKey = "exception.error.unknown"; 
+		}
+	}
     
 }
 
