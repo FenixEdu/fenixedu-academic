@@ -15,6 +15,7 @@ import Dominio.IDomainObject;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
@@ -142,14 +143,12 @@ public abstract class EditDomainObjectService implements IServico
 	 * 
 	 * @param domainObject
 	 * @return By default returns null. When there is no unique in domainObject the object that we want
-	 *         to create never exists.
+	 *              to create never exists.
 	 */
     protected IDomainObject readObjectByUnique(IDomainObject domainObject, ISuportePersistente sp)
         throws ExcepcaoPersistencia, FenixServiceException
     {
-
-        IPersistentObject persistentObject = getIPersistentObject(sp);
-        return persistentObject.readByOId(domainObject, false);
+        return null;
     }
 
     /**
@@ -158,7 +157,7 @@ public abstract class EditDomainObjectService implements IServico
 	 * @param objectId
 	 * @param infoObject
 	 * @return @throws
-	 *         FenixServiceException
+	 *              FenixServiceException
 	 * 
 	 * TODO Remove objectId from method signature.
 	 */
@@ -169,28 +168,23 @@ public abstract class EditDomainObjectService implements IServico
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentObject persistentObject = getIPersistentObject(sp);
             IDomainObject objectToEdit = clone2DomainObject(infoObject);
-
-            IDomainObject objectFromDatabase = readObjectByUnique(objectToEdit, sp);
-
+            
+            IDomainObject objectFromDatabase = getObjectFromDatabase(objectToEdit, sp);
+            
             if (!canCreate(objectToEdit, objectFromDatabase))
             {
                 throw new ExistingServiceException("The object already exists");
             }
-            IDomainObject domainObject = null;
-
-            if (isNew(objectToEdit))
-            {
-                domainObject = (IDomainObject) objectToEdit.getClass().newInstance();
-            } else
-            {
-                domainObject = objectFromDatabase;
-            }
+            
+            IDomainObject domainObject = getObjectToLock(objectToEdit, objectFromDatabase);
+            
             doBeforeLock(domainObject, infoObject, sp);
 
             persistentObject.simpleLockWrite(domainObject);
+            
             PropertyUtils.copyProperties(domainObject, objectToEdit);
-
             fillAssociatedObjects(domainObject, persistentObject);
+
             doAfterLock(domainObject, infoObject, sp);
         } catch (ExcepcaoPersistencia e)
         {
@@ -203,5 +197,37 @@ public abstract class EditDomainObjectService implements IServico
             }
             throw new FenixServiceException(e);
         }
+    }
+
+    private IDomainObject getObjectToLock(IDomainObject objectToEdit, IDomainObject objectFromDatabase) throws InstantiationException, IllegalAccessException
+    {
+        IDomainObject domainObject = null;
+
+        if (isNew(objectToEdit))
+        {
+            domainObject = (IDomainObject) objectToEdit.getClass().newInstance();
+        } else
+        {
+            domainObject = objectFromDatabase;
+        }
+        return domainObject;
+    }
+
+    private IDomainObject getObjectFromDatabase(IDomainObject objectToEdit, ISuportePersistente sp) throws ExcepcaoPersistencia, FenixServiceException, NonExistingServiceException
+    {
+        IDomainObject objectFromDatabase = readObjectByUnique(objectToEdit, sp);
+
+        // if the editing means alter unique keys or the there is no unique
+        // then read by oid to get the object from database.
+        if (objectFromDatabase == null && !isNew(objectToEdit)) 
+        {
+            objectFromDatabase = getIPersistentObject(sp).readByOId(objectToEdit, false);
+            // if the object still null then the object doesn't exist.
+            if (objectFromDatabase == null) 
+            {
+                throw new NonExistingServiceException("Object doesn't exist!");
+            }
+        }
+        return objectFromDatabase;
     }
 }
