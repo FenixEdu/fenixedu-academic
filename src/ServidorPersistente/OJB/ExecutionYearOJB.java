@@ -14,6 +14,7 @@ import Dominio.IExecutionYear;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.PeriodState;
 
 /**
  * Created on 11/Fev/2003
@@ -122,7 +123,7 @@ public class ExecutionYearOJB
 
 	public boolean delete(IExecutionYear executionYear) {
 		try {
-			ExecutionPeriodOJB executionPeriodOJB = new ExecutionPeriodOJB();
+			
 			String oqlQuery =
 				"select all from " + ExecutionPeriod.class.getName();
 			oqlQuery += " where executionYear.year= $1 ";
@@ -130,7 +131,7 @@ public class ExecutionYearOJB
 			query.bind(executionYear.getYear());
 			List executionPeriods = (List) query.execute();
 			
-			CursoExecucaoOJB executionDegreeOJB = new CursoExecucaoOJB();
+			
 			String oqlQuery1 =
 				"select all from " + CursoExecucao.class.getName();
 			oqlQuery1 += " where executionYear.year= $1 ";
@@ -146,17 +147,14 @@ public class ExecutionYearOJB
 			return false;
 		}
 	}
-	
-	
-	
+
 	public IExecutionYear readActualExecutionYear() throws ExcepcaoPersistencia {
 		try {
 			IExecutionYear executionYear = null;
-			ExecutionYearOJB executionYearOJB = new ExecutionYearOJB();
 			String oqlQuery = "select all from " + ExecutionYear.class.getName()
-							+ " order by year desc";
+							+ " where state = $1";
 			query.create(oqlQuery);
-
+			query.bind(PeriodState.ACTUAL);
 			List result = (List) query.execute();
 
 			lockRead(result);
