@@ -14,9 +14,13 @@ import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.Department;
+import Dominio.Funcionario;
+import Dominio.ICostCenter;
 import Dominio.IDepartment;
+import Dominio.ITeacher;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentDepartment;
+import ServidorPersistente.IPersistentEmployee;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class DepartmentOJB extends ObjectFenixOJB implements IPersistentDepartment {
@@ -140,13 +144,36 @@ public class DepartmentOJB extends ObjectFenixOJB implements IPersistentDepartme
         super.delete(disciplina);
     }
 
+
 	/* (non-Javadoc)
-	 * @see ServidorPersistente.IPersistentDepartment#readTeacherList(Dominio.IDepartment)
+	 * @see ServidorPersistente.IPersistentDepartment#readByTeacher(Dominio.ITeacher)
 	 */
-	public List readTeacherList(IDepartment department) {
-		Criteria criteria = new Criteria();
+	public IDepartment readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia {
 		
-		return null;
+		// TODO: Remove this call after refactoring teacher... teacher.getEmployee();
+		Funcionario employee = getEmployee(teacher);
+
+		ICostCenter workingCC = employee.getWorkingPlaceCostCenter();
+		ICostCenter mailingCC = employee.getMailingCostCenter();
+		Criteria workingCCCriteria = new Criteria();
+		
+		workingCCCriteria.addLike("code", workingCC.getSigla().substring(0, 2) + "%");
+		Criteria mailingCCCriteria = new Criteria();
+		mailingCCCriteria.addLike("code", mailingCC.getSigla().substring(0, 2) + "%");
+			
+		Criteria criteria = new Criteria();
+		criteria.addOrCriteria(workingCCCriteria);
+		criteria.addOrCriteria(mailingCCCriteria);
+		return (IDepartment) queryObject(Department.class, criteria);
+	}
+
+	/**
+	 * @param teacher
+	 * @return
+	 */
+	private Funcionario getEmployee(ITeacher teacher) throws ExcepcaoPersistencia {
+		IPersistentEmployee employeeDAO = SuportePersistenteOJB.getInstance().getIPersistentEmployee();
+		return employeeDAO.readByNumber(teacher.getTeacherNumber());
 	}
     
 }

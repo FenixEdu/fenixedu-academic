@@ -7,13 +7,13 @@
 package ServidorPersistente;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import Dominio.IDepartment;
+import Dominio.ITeacher;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public interface IPersistentDepartment extends IPersistentObject {
-    
+
     public IDepartment lerDepartamentoPorNome(String nome) throws ExcepcaoPersistencia;
     public IDepartment lerDepartamentoPorSigla(String sigla) throws ExcepcaoPersistencia;
     public ArrayList lerTodosOsDepartamentos() throws ExcepcaoPersistencia;
@@ -22,6 +22,6 @@ public interface IPersistentDepartment extends IPersistentObject {
     public void apagarDepartamentoPorSigla(String sigla) throws ExcepcaoPersistencia;
     public void apagarDepartamento(IDepartment departamento) throws ExcepcaoPersistencia;
     public void apagarTodosOsDepartamentos() throws ExcepcaoPersistencia;
-
-	public List readTeacherList(IDepartment department);
+	
+	public IDepartment readByTeacher(ITeacher teacher) throws ExcepcaoPersistencia;
 }

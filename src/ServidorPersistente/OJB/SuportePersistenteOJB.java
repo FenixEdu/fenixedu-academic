@@ -45,6 +45,7 @@ import ServidorPersistente.IPersistentCurricularYear;
 import ServidorPersistente.IPersistentCurriculum;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentDegreeCurricularPlanEnrolmentInfo;
+import ServidorPersistente.IPersistentEmployee;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentEnrolmentPeriod;
@@ -469,5 +470,12 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 
 	public IPersistentEvaluationExecutionCourse getIPersistentEvaluationExecutionCourse() {
 		return new EvaluationExecutionCourseOJB();
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentEmployee()
+	 */
+	public IPersistentEmployee getIPersistentEmployee() {
+		return new EmployeeOJB();
 	}
 }

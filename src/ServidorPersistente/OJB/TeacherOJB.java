@@ -2,10 +2,16 @@
  * TeacherOJB.java
  */
 package ServidorPersistente.OJB;
+import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
+import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
+import Dominio.Funcionario;
+import Dominio.IDepartment;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IPessoa;
 import Dominio.ITeacher;
@@ -149,6 +155,47 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher {
 			} catch (Exception ex) {
 				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 			}
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.IPersistentTeacher#readByDepartment(Dominio.IDepartment)
+	 */
+	public List readByDepartment(IDepartment department) throws ExcepcaoPersistencia {
+		
+		// TODO remove this method by refactoring teacher. Teacher has an employee instead of a person.
+		List employees = getEmployees(department);		
+		
+		Collection teacherNumberList = CollectionUtils.collect(employees, new Transformer(){
+
+			public Object transform(Object input) {
+				Funcionario employee = (Funcionario) input;
+				return new Integer(employee.getNumeroMecanografico());
+			}}) ;
+		
+		Criteria criteria = new Criteria();
+		System.out.println("teacherNumberList size="+teacherNumberList.size());
+		criteria.addIn("teacherNumber", teacherNumberList);
+		return queryList(Teacher.class, criteria);
+	}
+
+	private List getEmployees(IDepartment department) throws ExcepcaoPersistencia {
+		String likeCode = department.getCode()+"%";
+		
+		Criteria workingCostCenter = new Criteria();
+		workingCostCenter.addLike("workingPlaceCostCenter.sigla", likeCode);
+		
+		Criteria mailingCostCenter = new Criteria();
+		mailingCostCenter.addLike("mailingCostCenter.sigla", likeCode);		
+//		Criteria salaryCostCenter = new Criteria();
+//		salaryCostCenter.addLike("salaryCostCenter.sigla", likeCode);
+		
+		Criteria criteria = new Criteria();
+//		criteria.addOrCriteria(salaryCostCenter);
+		criteria.addOrCriteria(workingCostCenter);
+		criteria.addOrCriteria(mailingCostCenter);
+		
+		List employees = queryList(Funcionario.class, criteria);
+		return employees;
 	}
 
 }
