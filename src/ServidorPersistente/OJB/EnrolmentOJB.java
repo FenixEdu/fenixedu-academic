@@ -221,4 +221,30 @@ public class EnrolmentOJB
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
+
+	public List readAllEnrolmentsByStudentCurricularPlanAndExecutionPeriod(IStudentCurricularPlan studentCurricularPlan, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
+		try {
+			String oqlQuery = "select all from " + Enrolment.class.getName();
+			oqlQuery += " where studentCurricularPlan.student.number = $1";
+			oqlQuery += " and studentCurricularPlan.student.degreeType = $2";
+			oqlQuery += " and studentCurricularPlan.currentState = $3";
+			oqlQuery += " and executionPeriod.name = $4";
+			oqlQuery += " and executionPeriod.executionYear.year = $5";
+
+			query.create(oqlQuery);
+
+			query.bind(studentCurricularPlan.getStudent().getNumber());
+			query.bind(studentCurricularPlan.getStudent().getDegreeType());
+			query.bind(studentCurricularPlan.getCurrentState());
+			query.bind(executionPeriod.getName());
+			query.bind(executionPeriod.getExecutionYear().getYear());
+
+			List result = (List) query.execute();
+			lockRead(result);
+
+			return result;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
 }

@@ -19,7 +19,7 @@ import Util.CurricularCourseType;
  * @author David Santos
  */
 
-public class InscTeste {
+public class MakeEnrolment {
 
 	private static GestorServicos gestor = GestorServicos.manager();
 	private static IUserView userView = null;
@@ -28,6 +28,7 @@ public class InscTeste {
 
 		InfoEnrolmentContext infoEnrolmentContext = null;
 		autentication();
+//		userView = MakeEnrolmentIO.interactiveAutentication();
 		while(true) {
 			generateEnrolmentProssess(infoEnrolmentContext, true, true);
 		}
@@ -56,10 +57,10 @@ public class InscTeste {
 	private static void generateEnrolmentProssess(InfoEnrolmentContext infoEnrolmentContext, boolean withValidation, boolean withConfirm) {
 		Object serviceArgs1[] = {userView};
 		infoEnrolmentContext = executeService("ShowAvailableCurricularCourses", serviceArgs1);
-		InscTesteIO.showFinalSpan(infoEnrolmentContext);
+		MakeEnrolmentIO.showFinalSpan(infoEnrolmentContext);
 		boolean remove = false;
 		
-		InscTesteIO.selectNormalCurricularCoursesToEnroll(infoEnrolmentContext);
+		MakeEnrolmentIO.selectNormalCurricularCoursesToEnroll(infoEnrolmentContext);
 
 		final List actualEnrolments = infoEnrolmentContext.getActualEnrolment();
 
@@ -79,16 +80,16 @@ public class InscTeste {
 
 				Object serviceArgs2[] = { infoEnrolmentContext };
 				infoEnrolmentContext = executeService("ShowAvailableDegreesForOption", serviceArgs2);
-				InscTesteIO.showAvailableDegreesForOption(infoEnrolmentContext);
+				MakeEnrolmentIO.showAvailableDegreesForOption(infoEnrolmentContext);
 
-				InscTesteIO.selectDegreeForOptionalCurricularCourseToEnroll(infoEnrolmentContext);
+				MakeEnrolmentIO.selectDegreeForOptionalCurricularCourseToEnroll(infoEnrolmentContext);
 				
 				if(infoEnrolmentContext.getChosenOptionalInfoDegree() != null) {
 					Object serviceArgs3[] = { infoEnrolmentContext };
 					infoEnrolmentContext = executeService("ShowAvailableCurricularCoursesForOption", serviceArgs3);
-					InscTesteIO.showAvailableCurricularCoursesForOption(infoEnrolmentContext);
+					MakeEnrolmentIO.showAvailableCurricularCoursesForOption(infoEnrolmentContext);
 
-					Object serviceArgs4[] = { infoEnrolmentContext, InscTesteIO.selectOptionalCurricularCourseToEnroll(infoEnrolmentContext) };
+					Object serviceArgs4[] = { infoEnrolmentContext, MakeEnrolmentIO.selectOptionalCurricularCourseToEnroll(infoEnrolmentContext) };
 					infoEnrolmentContext = executeService("SelectOptionalCurricularCourse", serviceArgs4);
 				} else {
 					remove = true;
@@ -111,8 +112,8 @@ public class InscTeste {
 			}
 			infoEnrolmentContext.getInfoOptionalCurricularCoursesEnrolments().removeAll(aux);
 		}
-		InscTesteIO.showActualEnrolments(infoEnrolmentContext);
-		InscTesteIO.showChosenCurricularCoursesForOptionalCurricularCourses(infoEnrolmentContext);
+		MakeEnrolmentIO.showActualEnrolments(infoEnrolmentContext);
+		MakeEnrolmentIO.showChosenCurricularCoursesForOptionalCurricularCourses(infoEnrolmentContext);
 
 		if(withValidation) {
 			Object serviceArgs5[] = {infoEnrolmentContext};
@@ -122,7 +123,7 @@ public class InscTeste {
 			Object serviceArgs6[] = {infoEnrolmentContext};
 			infoEnrolmentContext = executeService("ConfirmActualEnrolment", serviceArgs6);
 		}
-		InscTesteIO.showEnrolmentValidationResultMessages(infoEnrolmentContext);
+		MakeEnrolmentIO.showEnrolmentValidationResultMessages(infoEnrolmentContext);
 	}
 
 	private static void secureEnrolmentProssess() {

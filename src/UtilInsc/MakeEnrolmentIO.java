@@ -14,6 +14,10 @@ import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoDegree;
 import DataBeans.InfoEnrolmentInOptionalCurricularCourse;
+import ServidorAplicacao.FenixServiceException;
+import ServidorAplicacao.GestorServicos;
+import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.strategy.enrolment.degree.InfoEnrolmentContext;
 import Util.CurricularCourseType;
 
@@ -21,7 +25,7 @@ import Util.CurricularCourseType;
  * @author David Santos
  */
 
-public abstract class InscTesteIO {
+public abstract class MakeEnrolmentIO {
 
 	public static void showFinalSpan(InfoEnrolmentContext infoEnrolmentContext) {
 		System.out.println();
@@ -242,5 +246,34 @@ public abstract class InscTesteIO {
 			e.printStackTrace(System.out);
 		}
 		return strFinal;
+	}
+
+	public static IUserView interactiveAutentication() {
+		IUserView userView = null;
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+		String str = new String(" ");
+		String argsAutenticacao[] = new String[3];
+
+		try {
+			System.out.println("AUTENTICATING USER:");
+			System.out.print("LOGIN: ");
+			str = in.readLine();
+			argsAutenticacao[0] = new String(str);
+			System.out.print("PASSWORD: ");
+			str = in.readLine();
+			argsAutenticacao[1] = new String(str);
+			argsAutenticacao[2] = Autenticacao.EXTRANET;
+			System.out.println();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+
+		try {
+			GestorServicos gestor = GestorServicos.manager();
+			userView = (IUserView) gestor.executar(null, "Autenticacao", argsAutenticacao);
+		} catch (FenixServiceException e) {
+			e.printStackTrace(System.out);
+		}
+		return userView;
 	}
 }
