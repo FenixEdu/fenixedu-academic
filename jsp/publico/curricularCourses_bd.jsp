@@ -20,20 +20,20 @@
 
 	<logic:notEmpty name="component" property="associatedCurricularCourses" >
 		<table align="center" cellspacing="0" cellpadding="5" >
-			<tr class="timeTable_line" align="center">
-				<td class="degreetablestd">
+			<tr>
+				<td class="listClasses-header">
 					<bean:message key="property.curricularCourse.name"/>
 				</td>
-				<td class="degreetablestd">
+				<td class="listClasses-header">
 					<bean:message key="property.degree.initials"/>
 				</td>
-				<td class="degreetablestd">
+				<td class="listClasses-header">
 					<bean:message key="property.curricularCourse.branch"/>
 				</td>
-				<td class="degreetablestd">
+				<td class="listClasses-header">
 					<bean:message key="property.curricularCourse.curricularYear"/>
 				</td>
-				<td class="degreetablestd">
+				<td class="listClasses-header">
 					<bean:message key="property.curricularCourse.semester"/>
 				</td>
 			</tr>
@@ -44,20 +44,20 @@
 					<%-- FIXME: hardcoded semester 2 --%>
 					<logic:equal name="infoCurricularCourseScope" property="infoCurricularSemester.semester" value="2">
 						
-						<tr class="timeTable_line" align="center">
-							<td class="degreetablestd">
+						<tr>
+							<td class="listClasses">
 								<bean:write name="curricularCourse" property="name"/>
 							</td>
-							<td class="degreetablestd">
+							<td class="listClasses">
 								<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.sigla"/>
 							</td>
-							<td class="degreetablestd">
+							<td class="listClasses">
 								<bean:write name="infoCurricularCourseScope" property="infoBranch.name"/>&nbsp;
 							</td>
-							<td class="degreetablestd">
+							<td class="listClasses">
 								<bean:write name="infoCurricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year"/>&nbsp;
 							</td>
-							<td class="degreetablestd">
+							<td class="listClasses">
 								<bean:write name="infoCurricularCourseScope" property="infoCurricularSemester.semester"/>&nbsp;
 							</td>
 						</tr>
