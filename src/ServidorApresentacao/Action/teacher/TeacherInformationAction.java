@@ -332,23 +332,17 @@ public class TeacherInformationAction extends DispatchAction
                 {
                     dynaForm.set("degreeOrientationId", orientationId);
                     dynaForm.set("degreeDescription", description);
-                    dynaForm.set(
-                        "degreeStudentsNumber",
-                        parseInteger(numberOfStudents));
+                    dynaForm.set("degreeStudentsNumber", parseInteger(numberOfStudents));
                 } else if (infoOrientation.getOrientationType().equals(OrientationType.MASTER))
                 {
                     dynaForm.set("masterOrientationId", orientationId);
                     dynaForm.set("masterDescription", description);
-                    dynaForm.set(
-                        "masterStudentsNumber",
-                    parseInteger(numberOfStudents));
+                    dynaForm.set("masterStudentsNumber", parseInteger(numberOfStudents));
                 } else
                 {
                     dynaForm.set("phdOrientationId", orientationId);
                     dynaForm.set("phdDescription", description);
-                    dynaForm.set(
-                        "phdStudentsNumber",
-                    parseInteger(numberOfStudents));
+                    dynaForm.set("phdStudentsNumber", parseInteger(numberOfStudents));
                 }
             }
 
@@ -363,7 +357,9 @@ public class TeacherInformationAction extends DispatchAction
                 if (infoPublicationsNumber.getPublicationType().equals(PublicationType.COMUNICATION))
                 {
                     dynaForm.set("comunicationPublicationsNumberId", publicationsNumberId);
-                    dynaForm.set("comunicationNational", national.toString());
+                    dynaForm.set(
+                        "comunicationNational",
+                        national == null ? new String() : national.toString());
                     dynaForm.set(
                         "comunicationInternational",
                         international == null ? new String() : international.toString());
@@ -371,7 +367,9 @@ public class TeacherInformationAction extends DispatchAction
                     infoPublicationsNumber.getPublicationType().equals(PublicationType.MAG_ARTICLE))
                 {
                     dynaForm.set("magArticlePublicationsNumberId", publicationsNumberId);
-                    dynaForm.set("magArticleNational", national.toString());
+                    dynaForm.set(
+                        "magArticleNational",
+                        national == null ? new String() : national.toString());
                     dynaForm.set(
                         "magArticleInternational",
                         international == null ? new String() : international.toString());
@@ -379,7 +377,9 @@ public class TeacherInformationAction extends DispatchAction
                     infoPublicationsNumber.getPublicationType().equals(PublicationType.AUTHOR_BOOK))
                 {
                     dynaForm.set("authorBookPublicationsNumberId", publicationsNumberId);
-                    dynaForm.set("authorBookNational", national.toString());
+                    dynaForm.set(
+                        "authorBookNational",
+                        national == null ? new String() : national.toString());
                     dynaForm.set(
                         "authorBookInternational",
                         international == null ? new String() : international.toString());
@@ -387,14 +387,18 @@ public class TeacherInformationAction extends DispatchAction
                     infoPublicationsNumber.getPublicationType().equals(PublicationType.EDITOR_BOOK))
                 {
                     dynaForm.set("editorBookPublicationsNumberId", publicationsNumberId);
-                    dynaForm.set("editorBookNational", national.toString());
+                    dynaForm.set(
+                        "editorBookNational",
+                        national == null ? new String() : national.toString());
                     dynaForm.set(
                         "editorBookInternational",
                         international == null ? new String() : international.toString());
                 } else
                 {
                     dynaForm.set("articlesChaptersPublicationsNumberId", publicationsNumberId);
-                    dynaForm.set("articlesChaptersNational", national.toString());
+                    dynaForm.set(
+                        "articlesChaptersNational",
+                        national == null ? new String() : national.toString());
                     dynaForm.set(
                         "articlesChaptersInternational",
                         international == null ? new String() : international.toString());
@@ -408,7 +412,9 @@ public class TeacherInformationAction extends DispatchAction
 
     private String parseInteger(Integer numberOfStudents)
     {
-        return (numberOfStudents == null || numberOfStudents.equals(new Integer(0))) ? new String() : numberOfStudents.toString();
+        return (numberOfStudents == null || numberOfStudents.equals(new Integer(0)))
+            ? new String()
+            : numberOfStudents.toString();
     }
 
     /**
