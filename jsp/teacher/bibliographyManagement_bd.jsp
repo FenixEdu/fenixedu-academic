@@ -34,25 +34,25 @@
 			<tr>
 				<td>
 					<!--  <bean:message key="message.bibliographicReferenceTitle"/> -->
-					<bean:write name="bibliographicReference" property="title"/>
+					<bean:write name="bibliographicReference" property="title" filter="false"/>
 				</td>
 			</tr>
 			<tr>
 				<td>
 					<!--   <bean:message key="message.bibliographicReferenceAuthors"/> -->
-					<bean:write name="bibliographicReference" property="authors"/>
+					<bean:write name="bibliographicReference" property="authors" filter="false" />
 				</td>
 			</tr>
 			<tr>
 				   <td>
 					   <!--   <bean:message key="message.bibliographicReferenceReference"/> -->
-					   <bean:write name="bibliographicReference" property="reference"/>
+					   <bean:write name="bibliographicReference" property="reference"  filter="false" />
 				   </td>
 			</tr>
 			<tr>
 				<td>
 					<!--    <bean:message key="message.bibliographicReferenceYear"/> -->
-					<bean:write name="bibliographicReference" property="year"/>                            
+					<bean:write name="bibliographicReference" property="year" filter="false" />                            
 					  <br />
 					  <br />
 				</td>
@@ -86,25 +86,25 @@
           	<tr>
               	<td>
               		<!--   <bean:message key="message.bibliographicReferenceTitle"/> -->
-              		<bean:write name="bibliographicReference" property="title"/>
+              		<bean:write name="bibliographicReference" property="title" filter="false" />
                	</td>
           	</tr>
            	<tr>
                	<td>
                		<!--    <bean:message key="message.bibliographicReferenceAuthors"/> -->
-               		<bean:write name="bibliographicReference" property="authors"/>
+               		<bean:write name="bibliographicReference" property="authors" filter="false" />
                	</td>
          	</tr>
            	<tr>
              	<td>
              		<!--     <bean:message key="message.bibliographicReferenceReference"/> -->
-             		<bean:write name="bibliographicReference" property="reference"/>
+             		<bean:write name="bibliographicReference" property="reference" filter="false" />
                	</td>
           	</tr>
             <tr>
                	<td>
-               		<!--     <bean:message key="message.bibliographicReferenceYear"/> -->
-                    <bean:write name="bibliographicReference" property="year"/>                            
+               		<!--     <bean:message key="message.bibliographicReferenceYear" /> -->
+                    <bean:write name="bibliographicReference" property="year" filter="false" />                            
                	</td>
             </tr>
             <tr>

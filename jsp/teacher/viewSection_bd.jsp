@@ -83,14 +83,14 @@
 				</html:link>
 			</div>
 		</td>
-<%--		<td>
+		<td>
 			<div class="gen-button">
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" /> 
 				<html:link page="<%="/prepareFileUpload.do?method=prepareFileUpload&objectCode=" + pageContext.findAttribute("objectCode") + "&amp;itemCode=" + itemCode + "&amp;currentSectionCode=" + currentSectionCode%>">
 					Inserir Ficheiro
 				</html:link>
 			</div>
-		</td>--%>
+		</td>
 	</tr>
 </table>  
 <br />
