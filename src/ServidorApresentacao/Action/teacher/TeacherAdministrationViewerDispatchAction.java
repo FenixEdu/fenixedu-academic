@@ -974,10 +974,17 @@ public class TeacherAdministrationViewerDispatchAction
 		throws FenixActionException {
 
 		Integer sectionCode = getSectionCode(request);
-
+		return viewSection(mapping, form, request, response, sectionCode);
+	}
+	public ActionForward viewSection(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response,
+		Integer sectionCode)
+		throws FenixActionException {
 		ISiteComponent sectionComponent = new InfoSiteSection();
 		readSiteView(request, sectionComponent, null, sectionCode, null);
-
 		return mapping.findForward("viewSection");
 	}
 
@@ -1133,7 +1140,7 @@ public class TeacherAdministrationViewerDispatchAction
 			manager.executar(userView, "DeleteSection", deleteSectionArguments);
 			//			if this section has a parent section
 			if (superiorSectionCode != null) {
-				return viewSection(mapping, form, request, response);
+				return viewSection(mapping, form, request, response, superiorSectionCode);
 			} else {
 				return sectionsFirstPage(mapping, form, request, response);
 			}
