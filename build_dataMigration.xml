@@ -23,7 +23,7 @@
     <property name="webapp.metadata" value="${webapp}/WEB-INF"/>
     <property name="webapp.classes"  value="${webapp.metadata}/classes"/>
     <property name="webapp.lib"      value="${webapp.metadata}/lib"/>    
- 
+
     
 	<!-- Directorys for deploy -->
 	<property name="deploy.home" location="deploy"/>	
@@ -126,20 +126,7 @@
 		  <replacefilter 
 		    token="@db.alias@" 
 		    property="db.alias"/>
-		    
-		  <replacefilter 
-		    token="@dbMarcacoesPonto.user@" 
-		    property="dbMarcacoesPonto.user"/>
-		  <replacefilter 
-		    token="@dbMarcacoesPonto.pass@" 
-		    property="dbMarcacoesPonto.pass"/>
-		  <replacefilter 
-		    token="@dbMarcacoesPonto.name@" 
-		    property="dbMarcacoesPonto.name"/>
-		  <replacefilter 
-		    token="@dbMarcacoesPonto.alias@" 
-		    property="dbMarcacoesPonto.alias"/>
-		    
+		    		    
 		  <replacefilter 
 		    token="@application@" 
 		    property="application"/>
@@ -241,13 +228,44 @@
 	
    	</target>   	
 
-	<target name="MigrateDataCurricularCourse"
+	<target name="MigrateDataFromTablesToFenix"
 	        depends="compile-proj"
 	        description="Imports data from external data sources"
 	>
+<!--		<java classname="middleware.almeida.dcsrjao.LoadCurramToFenix"
+			fork="yes"
+			failonerror="false"
+			maxmemory="128m"
+		>
+	    	<classpath>
+	        	<pathelement path="${webapp.classes}"/>
+	            <pathelement path="${config}"/>
+	            <pathelement path="${sql}"/>
+	            <pathelement path="${src}"/>
+	            <fileset dir="${webapp.lib}">
+	                <include name="**/*.jar"/>
+	            </fileset>
+	        </classpath>
+		</java>
         <java classname="middleware.almeida.dcsrjao.LoadCurricularCoursesToFenix"
 			fork="yes"
-			failonerror="true"
+			failonerror="false"
+			maxmemory="128m"
+		>
+	    	<classpath>
+	        	<pathelement path="${webapp.classes}"/>
+	            <pathelement path="${config}"/>
+	            <pathelement path="${sql}"/>
+	            <pathelement path="${src}"/>
+	            <fileset dir="${webapp.lib}">
+	                <include name="**/*.jar"/>
+	            </fileset>
+	        </classpath>
+		</java>
+		-->
+        <java classname="middleware.almeida.dcsrjao.LoadLEQEnrolmentsToFenix"
+			fork="yes"
+			failonerror="false"
 			maxmemory="128m"
 		>
 	    	<classpath>
@@ -261,5 +279,196 @@
 	        </classpath>
 		</java>
    	</target>   	
-   	
+
+	<target name="MigrateAlmeidaDataToTables"
+	        depends="compile-proj"
+	        description="Imports data from external data sources"
+	>
+        <java classname="middleware.almeida.dcsrjao.LoadAlmeidaCurricularCoursesCodesFromFileToTable"
+			fork="yes"
+			failonerror="false"
+			maxmemory="128m"
+		>
+	    	<classpath>
+	        	<pathelement path="${webapp.classes}"/>
+	            <pathelement path="${config}"/>
+	            <pathelement path="${sql}"/>
+	            <pathelement path="${src}"/>
+	            <fileset dir="${webapp.lib}">
+	                <include name="**/*.jar"/>
+	            </fileset>
+	        </classpath>
+		</java>
+        <java classname="middleware.almeida.dcsrjao.LoadAlmeidaCurricularCoursesFromFileToTable"
+			fork="yes"
+			failonerror="false"
+			maxmemory="128m"
+		>
+	    	<classpath>
+	        	<pathelement path="${webapp.classes}"/>
+	            <pathelement path="${config}"/>
+	            <pathelement path="${sql}"/>
+	            <pathelement path="${src}"/>
+	            <fileset dir="${webapp.lib}">
+	                <include name="**/*.jar"/>
+	            </fileset>
+	        </classpath>
+		</java>
+        <java classname="middleware.almeida.dcsrjao.LoadAlmeidaCurramFromFileToTable"
+			fork="yes"
+			failonerror="false"
+			maxmemory="128m"
+		>
+	    	<classpath>
+	        	<pathelement path="${webapp.classes}"/>
+	            <pathelement path="${config}"/>
+	            <pathelement path="${sql}"/>
+	            <pathelement path="${src}"/>
+	            <fileset dir="${webapp.lib}">
+	                <include name="**/*.jar"/>
+	            </fileset>
+	        </classpath>
+		</java>
+        <java classname="middleware.almeida.dcsrjao.LoadAlmeidaLEQEnrolmentsFromFileToTable"
+			fork="yes"
+			failonerror="false"
+			maxmemory="128m"
+		>
+	    	<classpath>
+	        	<pathelement path="${webapp.classes}"/>
+	            <pathelement path="${config}"/>
+	            <pathelement path="${sql}"/>
+	            <pathelement path="${src}"/>
+	            <fileset dir="${webapp.lib}">
+	                <include name="**/*.jar"/>
+	            </fileset>
+	        </classpath>
+		</java>
+   	</target>   	
+	<target name="MigrateAllEnrolmentData"
+	        depends="compile-proj"
+	        description="Imports data from external data sources"
+	> 	
+<!--		<java classname="middleware.almeida.dcsrjao.LoadAlmeidaCurricularCoursesCodesFromFileToTable"
+			fork="yes"
+			failonerror="false"
+			maxmemory="128m"
+		>
+	    	<classpath>
+	        	<pathelement path="${webapp.classes}"/>
+	            <pathelement path="${config}"/>
+	            <pathelement path="${sql}"/>
+	            <pathelement path="${src}"/>
+	            <fileset dir="${webapp.lib}">
+	                <include name="**/*.jar"/>
+	            </fileset>
+	        </classpath>
+		</java>
+        <java classname="middleware.almeida.dcsrjao.LoadAlmeidaCurricularCoursesFromFileToTable"
+			fork="yes"
+			failonerror="false"
+			maxmemory="128m"
+		>
+	    	<classpath>
+	        	<pathelement path="${webapp.classes}"/>
+	            <pathelement path="${config}"/>
+	            <pathelement path="${sql}"/>
+	            <pathelement path="${src}"/>
+	            <fileset dir="${webapp.lib}">
+	                <include name="**/*.jar"/>
+	            </fileset>
+	        </classpath>
+		</java>
+        <java classname="middleware.almeida.dcsrjao.LoadAlmeidaCurramFromFileToTable"
+			fork="yes"
+			failonerror="false"
+			maxmemory="128m"
+		>
+	    	<classpath>
+	        	<pathelement path="${webapp.classes}"/>
+	            <pathelement path="${config}"/>
+	            <pathelement path="${sql}"/>
+	            <pathelement path="${src}"/>
+	            <fileset dir="${webapp.lib}">
+	                <include name="**/*.jar"/>
+	            </fileset>
+	        </classpath>
+		</java>
+        <java classname="middleware.almeida.dcsrjao.LoadAlmeidaLEQEnrolmentsFromFileToTable"
+			fork="yes"
+			failonerror="false"
+			maxmemory="128m"
+		>
+	    	<classpath>
+	        	<pathelement path="${webapp.classes}"/>
+	            <pathelement path="${config}"/>
+	            <pathelement path="${sql}"/>
+	            <pathelement path="${src}"/>
+	            <fileset dir="${webapp.lib}">
+	                <include name="**/*.jar"/>
+	            </fileset>
+	        </classpath>
+		</java>
+		<java classname="middleware.almeida.dcsrjao.LoadCurramToFenix"
+			fork="yes"
+			failonerror="false"
+			maxmemory="128m"
+		>
+	    	<classpath>
+	        	<pathelement path="${webapp.classes}"/>
+	            <pathelement path="${config}"/>
+	            <pathelement path="${sql}"/>
+	            <pathelement path="${src}"/>
+	            <fileset dir="${webapp.lib}">
+	                <include name="**/*.jar"/>
+	            </fileset>
+	        </classpath>
+		</java>
+        <java classname="middleware.almeida.dcsrjao.LoadCurricularCoursesToFenix"
+			fork="yes"
+			failonerror="false"
+			maxmemory="128m"
+		>
+	    	<classpath>
+	        	<pathelement path="${webapp.classes}"/>
+	            <pathelement path="${config}"/>
+	            <pathelement path="${sql}"/>
+	            <pathelement path="${src}"/>
+	            <fileset dir="${webapp.lib}">
+	                <include name="**/*.jar"/>
+	            </fileset>
+	        </classpath>
+		</java>		
+        <java classname="middleware.almeida.dcsrjao.LoadLEQEnrolmentsToFenix"
+			fork="yes"
+			failonerror="false"
+			maxmemory="128m"
+		>
+	    	<classpath>
+	        	<pathelement path="${webapp.classes}"/>
+	            <pathelement path="${config}"/>
+	            <pathelement path="${sql}"/>
+	            <pathelement path="${src}"/>
+	            <fileset dir="${webapp.lib}">
+	                <include name="**/*.jar"/>
+	            </fileset>
+	        </classpath>
+		</java>
+-->
+        <java classname="middleware.almeida.dcsrjao.CreateCurricularCoursesEquivalences"
+			fork="yes"
+			failonerror="false"
+			maxmemory="128m"
+		>
+	    	<classpath>
+	        	<pathelement path="${webapp.classes}"/>
+	            <pathelement path="${config}"/>
+	            <pathelement path="${sql}"/>
+	            <pathelement path="${src}"/>
+	            <fileset dir="${webapp.lib}">
+	                <include name="**/*.jar"/>
+	            </fileset>
+	        </classpath>
+		</java>
+    </target>   	
 </project>
