@@ -177,6 +177,7 @@
                 dynamic="true">
         <form-property name="index" type="java.lang.Integer"/>
         <form-property name="indexWeek" type="java.lang.Integer"/>
+		<form-property name="selectedExecutionPeriodOID" type="java.lang.String"/>
       </form-bean>
 
 	  <form-bean name="searchEmptyRoomsForm"
@@ -812,7 +813,6 @@
               name="indexForm"
       		  path="/viewRoom"
               scope="session"
-              
               type="ServidorApresentacao.Action.sop.ViewRoomFormAction">
           <forward name="Sucess" path="/sopViewRoom.jsp"/>
       </action>
