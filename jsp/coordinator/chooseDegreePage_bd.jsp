@@ -27,7 +27,8 @@
             	
                 <html:link page='<%= pageContext.findAttribute("degreeLink").toString() %>'>
                     <bean:write name="degree" property="infoDegreeCurricularPlan.infoDegree.nome" /> - 
-                    <bean:write name="degree" property="infoDegreeCurricularPlan.infoDegree.sigla" />
+                    <bean:write name="degree" property="infoDegreeCurricularPlan.infoDegree.sigla" /> 
+                    (<bean:write name="degree" property="infoExecutionYear.year" />)
                 </html:link>
 			   </td>
 			   <td>

@@ -11,6 +11,9 @@
 		<bean:message key="label.masterDegree.coordinator.selectedDegree"/> 
 		<bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.nome" />
 		<br>
+		<bean:message key="label.masterDegree.coordinator.executionYear"/> 
+		<bean:write name="infoExecutionDegree" property="infoExecutionYear.year" />
+		<br>
 		<bean:message key="label.masterDegree.coordinator.candidates"/> 
 		<bean:write name="candidates" />
 	</logic:present>
