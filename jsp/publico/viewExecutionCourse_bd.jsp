@@ -45,10 +45,10 @@
            </tr>
            <tr>		
            		<td class="ultAnuncio-date"><bean:message key="message.createdOn"/>
-           			<bean:write name="lastAnnouncement" property="creationDate"/>
+           			<bean:write name="lastAnnouncement" property="creationDateFormatted"/>
            			<br/>		
            			<bean:message key="message.modifiedOn"/>
-           			<bean:write name="lastAnnouncement" property="lastModifiedDate"/></td>
+           			<bean:write name="lastAnnouncement" property="lastModifiedDateFormatted"/></td>
            </tr>           
         </table>
 <br/>

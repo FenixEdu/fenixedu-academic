@@ -56,7 +56,7 @@
 <logic:present name="siteMail"  >
 <logic:notEmpty name="siteMail"  >	
 <div id="nav">
-   <h3 >bean:message key="label.contact"/></h3>	
+   <h3 ><bean:message key="label.contact"/></h3>	
  	
 	<html:link href="<%= "mailto:" + pageContext.findAttribute("siteMail") %>">
 		<p class="contacto"><bean:write name="siteMail" /></p></html:link>

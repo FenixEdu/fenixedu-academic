@@ -22,8 +22,8 @@
                 </tr>
                 <tr>
                 	<td>
-                		<bean:message key="label.creationDate" /><bean:write name="announcement" property="creationDate"/></BR>
-                		<bean:message key="label.lastModificationDate" /><bean:write name="announcement" property="lastModifiedDate"/>
+                		<bean:message key="label.creationDate" /><bean:write name="announcement" property="creationDateFormatted"/></BR>
+                		<bean:message key="label.lastModificationDate" /><bean:write name="announcement" property="lastModifiedDateFormatted"/>
                 	</td>
             	</tr>
             </logic:iterate>

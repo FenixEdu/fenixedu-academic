@@ -5,35 +5,37 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
-<html:link page="/viewSite.do">
-	<li><bean:message key="link.home"/></li>
-</html:link>
+<li><html:link page="/viewSite.do">
+	<bean:message key="link.home"/>
+</html:link></li>
 <br />
 <br />
+<li>
 <html:link page="/alternativeSite.do?method=management">
-	<li><bean:message key="link.personalizationOptions"/></li>
-</html:link>
-<html:link  page="/accessAnnouncementManagementAction.do">
-	<li><bean:message key="link.announcements"/></li>
-</html:link><html:link page="/objectivesManagerDA.do?method=acessObjectives">
-	<li><bean:message key="link.objectives"/></li>
-</html:link>
-<html:link page="/programManagerDA.do?method=acessProgram">
-	<li><bean:message key="link.program"/></li>
-</html:link>
-<html:link page="/viewEvaluation.do?method=viewEvaluation">
-	<li><bean:message key="link.evaluation"/></li>
-</html:link>
-<html:link page="/bibliographicReferenceManager.do?method=viewBibliographicReference&page=0">
-	<li><bean:message key="link.bibliography"/></li>
-</html:link>
-	<html:link page="/teachersManagerDA.do?method=viewTeachersByProfessorship">
-	<li><bean:message key="link.teachers"/></li>
-</html:link>
+	<bean:message key="link.personalizationOptions"/>
+</html:link></li>
+<li><html:link  page="/accessAnnouncementManagementAction.do">
+	<bean:message key="link.announcements"/>
+</html:link></li>
+<li><html:link page="/objectivesManagerDA.do?method=acessObjectives">
+	<bean:message key="link.objectives"/>
+</html:link></li>
+<li><html:link page="/programManagerDA.do?method=acessProgram">
+	<bean:message key="link.program"/>
+</html:link></li>
+<li><html:link page="/viewEvaluation.do?method=viewEvaluation">
+	<bean:message key="link.evaluation"/>
+</html:link></li>
+<li><html:link page="/bibliographicReferenceManager.do?method=viewBibliographicReference&page=0">
+	<bean:message key="link.bibliography"/>
+</html:link></li>
+	<li><html:link page="/teachersManagerDA.do?method=viewTeachersByProfessorship">
+	<bean:message key="link.teachers"/>
+</html:link></li>
 
-<html:link page="/prepareInsertSection.do?method=prepareInsertRootSection">
-	<li><bean:message key="link.createRootSection"/></li>
-</html:link>
+<li><html:link page="/prepareInsertSection.do?method=prepareInsertRootSection">
+	<bean:message key="link.createRootSection"/>
+</html:link></li>
 
 
 <logic:present name="<%= SessionConstants.SECTIONS %>" >
@@ -46,6 +48,6 @@
 </logic:present>
 <br />
 <br />
-	<html:link forward="logoff">
-	<li><bean:message key="link.logout"/></li>
-</html:link>
+	<li><html:link forward="logoff">
+	<bean:message key="link.logout"/>
+</html:link></li>

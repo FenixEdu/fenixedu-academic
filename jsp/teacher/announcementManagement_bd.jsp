@@ -32,7 +32,7 @@
                 </tr>
                	<tr>
                     <td>
-						<span class="px9"><bean:write name="announcement" property="creationDate"/> | <bean:message key="label.lastModificationDate" /><bean:write name="announcement" property="lastModifiedDate"/></span>
+						<span class="px9"><bean:write name="announcement" property="creationDateFormatted"/> | <bean:message key="label.lastModificationDate" /><bean:write name="announcement" property="lastModifiedDateFormatted"/></span>
                     </td>
                 </tr>
                 <tr>
