@@ -45,8 +45,8 @@ public class JdbcAccessRollbackImpl extends JdbcAccessImpl {
     }
 
     public void executeInsert(ClassDescriptor arg0, Object arg1) throws PersistenceBrokerException {
-        concatSQLInstructionDelete(arg0, arg1);
         super.executeInsert(arg0, arg1);
+        concatSQLInstructionDelete(arg0, arg1);
     }
 
     public void executeUpdate(ClassDescriptor arg0, Object arg1) throws PersistenceBrokerException {
@@ -64,7 +64,6 @@ public class JdbcAccessRollbackImpl extends JdbcAccessImpl {
     }
 
     public int executeUpdateSQL(String arg0, ClassDescriptor arg1) throws PersistenceBrokerException {
-        System.out.println("arg0 = " + arg0);
         throw new RuntimeException("Method not suported");
         // return super.executeUpdateSQL(arg0, arg1);
     }
@@ -165,7 +164,6 @@ public class JdbcAccessRollbackImpl extends JdbcAccessImpl {
         }
 
         selectInstructionSQL.append(" ;");
-        System.out.println("selectInstructionSQL= " + selectInstructionSQL);
         ResultSetAndStatement resultSetAndStatement = executeSQL(selectInstructionSQL.toString(),
                 classDescriptors, false);
 
@@ -202,6 +200,15 @@ public class JdbcAccessRollbackImpl extends JdbcAccessImpl {
 
         FieldDescriptor[] fieldDescriptors = arg0.getFieldDescriptions();
         addCriteria(arg0, fieldDescriptors, stringBuffer, arg1, " and ");
+
+        stringBuffer.append(";\n");
+
+        try {
+            FileUtils.writeFile(PropertiesManager.getProperty("storageFileName"), stringBuffer
+                    .toString(), true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -313,27 +320,28 @@ public class JdbcAccessRollbackImpl extends JdbcAccessImpl {
             } else if (sqlStatement.startsWith("DELETE") || sqlStatement.startsWith("delete")) {
                 ResultSetAndStatement resultSetAndStatement = getOriginalResultSet(sqlStatement,
                         classDescriptor, valueContainers1, valueContainers2);
-                resultSetAndStatement.m_rs.first();
-                ResultSetMetaData resultSetMetaData = resultSetAndStatement.m_rs.getMetaData();
+                if (resultSetAndStatement.m_rs.first()) {
+                    ResultSetMetaData resultSetMetaData = resultSetAndStatement.m_rs.getMetaData();
 
-                inverseSQLInstruction.append("insert into ");
-                inverseSQLInstruction.append(getTableNameFromInsertInstruction(sqlStatement));
-                inverseSQLInstruction.append(" (");
+                    inverseSQLInstruction.append("insert into ");
+                    inverseSQLInstruction.append(getTableNameFromInsertInstruction(sqlStatement));
+                    inverseSQLInstruction.append(" (");
 
-                StringBuffer values = new StringBuffer();
-                for (int i = 1; i <= resultSetMetaData.getColumnCount(); i++) {
-                    inverseSQLInstruction.append(resultSetMetaData.getColumnName(i));
-                    values.append("'");
-                    values.append(resultSetAndStatement.m_rs.getString(i));
-                    values.append("'");
-                    if (i != resultSetMetaData.getColumnCount()) {
-                        inverseSQLInstruction.append(", ");
-                        values.append(", ");
+                    StringBuffer values = new StringBuffer();
+                    for (int i = 1; i <= resultSetMetaData.getColumnCount(); i++) {
+                        inverseSQLInstruction.append(resultSetMetaData.getColumnName(i));
+                        values.append("'");
+                        values.append(resultSetAndStatement.m_rs.getString(i));
+                        values.append("'");
+                        if (i != resultSetMetaData.getColumnCount()) {
+                            inverseSQLInstruction.append(", ");
+                            values.append(", ");
+                        }
                     }
+                    inverseSQLInstruction.append(") values (");
+                    inverseSQLInstruction.append(values);
+                    inverseSQLInstruction.append(");\n");
                 }
-                inverseSQLInstruction.append(") values (");
-                inverseSQLInstruction.append(values);
-                inverseSQLInstruction.append(");\n");
             } else {
                 throw new RuntimeException("Method not suported");
             }
@@ -384,14 +392,26 @@ public class JdbcAccessRollbackImpl extends JdbcAccessImpl {
 
     private ValueContainer[] joinValueContainers(ValueContainer[] valueContainers1,
             ValueContainer[] valueContainers2) {
-        ValueContainer[] valueContainers = new ValueContainer[valueContainers1.length
-                + valueContainers2.length];
-        for (int i = 0; i < valueContainers1.length; i++) {
-            valueContainers[i] = valueContainers1[i];
+        int arraySize = 0;
+        if (valueContainers1 != null) {
+            arraySize = valueContainers1.length;
         }
-        for (int i = 0; i < valueContainers2.length; i++) {
-            valueContainers[i + valueContainers1.length] = valueContainers2[i];
+        if (valueContainers2 != null) {
+            arraySize += valueContainers2.length;
         }
+
+        final ValueContainer[] valueContainers = new ValueContainer[arraySize];
+        if (valueContainers1 != null) {
+            for (int i = 0; i < valueContainers1.length; i++) {
+                valueContainers[i] = valueContainers1[i];
+            }
+        }
+        if (valueContainers2 != null) {
+            for (int i = 0; i < valueContainers2.length; i++) {
+                valueContainers[i + valueContainers1.length] = valueContainers2[i];
+            }
+        }
+
         return valueContainers;
     }
 
