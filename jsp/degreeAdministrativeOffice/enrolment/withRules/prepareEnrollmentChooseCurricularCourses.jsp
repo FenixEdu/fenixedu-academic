@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="Util.CurricularCourseType, DataBeans.InfoEnrolmentInOptionalCurricularCourse, DataBeans.enrollment.InfoCurricularCourse2Enroll" %>
+<%@ page import="Util.CurricularCourseType, DataBeans.enrollment.InfoCurricularCourse2Enroll" %>
 
 <script type="text/javascript" language="JavaScript">
 <!--
@@ -156,11 +156,7 @@
 					<bean:write name="enrollmentElem" property="infoCurricularCourse.name"/>
 				</td>
 				<td  class="listClasses">
-					<% if (pageContext.findAttribute("enrollmentElem") instanceof InfoEnrolmentInOptionalCurricularCourse) {%>
-						<bean:message key="option.curricularCourse.optional" bundle="DEFAULT"/>
-					<% } else { %>
-						<bean:message name="enrollmentElem" property="infoCurricularCourse.type.keyName" bundle="DEFAULT"/>
-					<% } %>
+					<bean:message name="enrollmentElem" property="enrollmentTypeResourceKey" bundle="DEFAULT"/>
 				</td>				
 				<td class="listClasses">
 					<bean:write name="enrollmentElem" property="infoCurricularCourse.enrollmentWeigth"/>

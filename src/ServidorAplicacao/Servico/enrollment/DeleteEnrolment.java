@@ -25,7 +25,7 @@ import ServidorPersistente.IPersistentEnrollment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentMark;
-import ServidorPersistente.IPersistentRestrictionByCurricularCourse;
+import ServidorPersistente.IPersistentRestriction;
 import ServidorPersistente.IPersistentStudentGroupAttend;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoAlunoPersistente;
@@ -47,8 +47,8 @@ public class DeleteEnrolment implements IService {
             IPersistentEnrollment enrolmentDAO = persistentSuport.getIPersistentEnrolment();
             IPersistentEnrolmentEvaluation enrolmentEvaluationDAO = persistentSuport
                     .getIPersistentEnrolmentEvaluation();
-            IPersistentRestrictionByCurricularCourse persistentRestriction = persistentSuport
-                    .getIPersistentRestrictionByCurricularCourse();
+            IPersistentRestriction persistentRestriction = persistentSuport
+                    .getIPersistentRestriction();
             final IEnrollment enrollment1 = (IEnrollment) enrolmentDAO.readByOID(Enrolment.class,
                     enrolmentID);
 

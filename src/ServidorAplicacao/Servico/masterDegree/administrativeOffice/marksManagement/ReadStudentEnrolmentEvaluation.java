@@ -5,6 +5,7 @@ import java.util.List;
 
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
+import DataBeans.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import DataBeans.InfoSiteEnrolmentEvaluation;
 import DataBeans.InfoTeacher;
 import DataBeans.util.Cloner;
@@ -81,7 +82,7 @@ public class ReadStudentEnrolmentEvaluation implements IServico
 
             //			ICurricularCourseScope curricularCourseScopeForCriteria =
             //				Cloner.copyInfoCurricularCourseScope2ICurricularCourseScope(infoCurricularCourseScope);
-            infoEnrolment = Cloner.copyIEnrolment2InfoEnrolment(enrolmentEvaluation.getEnrolment());
+            infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod.newInfoFromDomain(enrolmentEvaluation.getEnrolment());
 
             IPessoa person = enrolmentEvaluation.getPersonResponsibleForGrade();
             ITeacher teacher = persistentTeacher.readTeacherByUsername(person.getUsername());

@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants, Util.CurricularCourseType" %>
-<%@ page import="Util.EnrollmentState, DataBeans.InfoEnrolmentInOptionalCurricularCourse" %>
+<%@ page import="Util.EnrollmentState" %>
 <%@ page import="DataBeans.InfoEnrolmentInExtraCurricularCourse" %>
 
   <span class="error"><html:errors/></span>
@@ -66,11 +66,7 @@
 			  </td>
 			  <td class="listClasses" style="text-align:left">
 			    <bean:write name="enrolment" property="infoCurricularCourse.name"/>
-				<% if (pageContext.findAttribute("curriculumElem") instanceof InfoEnrolmentInOptionalCurricularCourse) {%>
-					(<bean:message key="option.curricularCourse.optional" bundle="DEFAULT"/>)
-				<%} else if (pageContext.findAttribute("curriculumElem") instanceof InfoEnrolmentInExtraCurricularCourse) { %>
-					(<bean:message key="label.enrolment.type.extra" />)
-				<% } %>
+				<bean:message name="enrolment" property="enrollmentTypeResourceKey" bundle="DEFAULT"/>
 			  </td>
 			  <td class="listClasses">
 				<logic:notEqual name="enrolment" property="enrollmentState" value="<%= EnrollmentState.APROVED.toString() %>">

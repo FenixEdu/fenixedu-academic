@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import DataBeans.InfoEnrolment;
+import DataBeans.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.util.Cloner;
 import Dominio.IEnrollment;
@@ -74,7 +76,8 @@ public class GetEnrolmentList implements IServico {
 		while(iterator.hasNext()) {	
 		    IEnrollment enrolment = (IEnrollment) iterator.next();
 		    if(!enrolment.getCurricularCourse().getType().equals(CurricularCourseType.P_TYPE_COURSE_OBJ)){
-		        result.add(Cloner.copyIEnrolment2InfoEnrolment(enrolment));	
+                InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod.newInfoFromDomain(enrolment);
+		        result.add(infoEnrolment);	
 		    }
 		}
 		
@@ -107,7 +110,8 @@ public class GetEnrolmentList implements IServico {
 			while(iterator.hasNext()) {	
 			    IEnrollment enrolment = (IEnrollment) iterator.next();
 			    if(!enrolment.getCurricularCourse().getType().equals(CurricularCourseType.P_TYPE_COURSE_OBJ)){
-			        result.add(Cloner.copyIEnrolment2InfoEnrolment(enrolment));	
+	                InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod.newInfoFromDomain(enrolment);
+			        result.add(infoEnrolment);	
 			    }
 			}
 		

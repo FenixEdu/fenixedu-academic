@@ -103,7 +103,7 @@ public class WriteEnrollmentsList implements IService
 						curricularCourseID,
 						executionPeriodId,
 						CurricularCourseEnrollmentType.DEFINITIVE,
-						(String) optionalEnrollments.get(curricularCourseID)
+						(String) optionalEnrollments.get(curricularCourseID.toString())
 					);
 				}
 			}

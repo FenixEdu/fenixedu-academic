@@ -3,6 +3,8 @@ package DataBeans;
 import java.util.Date;
 import java.util.List;
 
+import Dominio.EnrolmentInExtraCurricularCourse;
+import Dominio.EnrolmentInOptionalCurricularCourse;
 import Dominio.IEnrollment;
 import Util.EnrollmentState;
 import Util.EnrolmentEvaluationType;
@@ -34,6 +36,21 @@ public class InfoEnrolment extends InfoObject {
     private Integer accumulatedWeight;
 
     private EnrollmentCondition condition;
+    
+    private String enrollmentTypeResourceKey;
+
+    public InfoEnrolment() {
+    }
+
+    public InfoEnrolment(InfoStudentCurricularPlan infoStudentCurricularPlan,
+            InfoCurricularCourse infoCurricularCourse, EnrollmentState state,
+            InfoExecutionPeriod infoExecutionPeriod) {
+        this();
+        setInfoCurricularCourse(infoCurricularCourse);
+        setInfoStudentCurricularPlan(infoStudentCurricularPlan);
+        setEnrollmentState(state);
+        setInfoExecutionPeriod(infoExecutionPeriod);
+    }
 
     /**
      * @return Returns the accumulatedWeight.
@@ -50,19 +67,14 @@ public class InfoEnrolment extends InfoObject {
         this.accumulatedWeight = accumulatedWeight;
     }
 
-    public InfoEnrolment() {
+    public String getEnrollmentTypeResourceKey() {
+        return enrollmentTypeResourceKey;
     }
 
-    public InfoEnrolment(InfoStudentCurricularPlan infoStudentCurricularPlan,
-            InfoCurricularCourse infoCurricularCourse, EnrollmentState state,
-            InfoExecutionPeriod infoExecutionPeriod) {
-        this();
-        setInfoCurricularCourse(infoCurricularCourse);
-        setInfoStudentCurricularPlan(infoStudentCurricularPlan);
-        setEnrollmentState(state);
-        setInfoExecutionPeriod(infoExecutionPeriod);
+    public void setEnrollmentTypeResourceKey(String enrolmentTypeResourceKey) {
+        this.enrollmentTypeResourceKey = enrolmentTypeResourceKey;
     }
-
+    
     public boolean equals(Object obj) {
         boolean resultado = false;
         if (obj instanceof InfoEnrolment) {
@@ -207,13 +219,21 @@ public class InfoEnrolment extends InfoObject {
             setEnrollmentState(enrollment.getEnrollmentState());
             setAccumulatedWeight(enrollment.getAccumulatedWeight());
             setCondition(enrollment.getCondition());
+
+            if (enrollment instanceof EnrolmentInExtraCurricularCourse) {
+                setEnrollmentTypeResourceKey("option.curricularCourse.extra");
+            } else if (enrollment instanceof EnrolmentInOptionalCurricularCourse) {
+                setEnrollmentTypeResourceKey("option.curricularCourse.optional");
+            } else {
+                setEnrollmentTypeResourceKey(enrollment.getCurricularCourse().getType().getKeyName());
+            }
+
         }
     }
 
     public static InfoEnrolment newInfoFromDomain(IEnrollment enrollment) {
         InfoEnrolment infoEnrolment = null;
         if (enrollment != null) {
-
             infoEnrolment = new InfoEnrolment();
             infoEnrolment.copyFromDomain(enrollment);
 

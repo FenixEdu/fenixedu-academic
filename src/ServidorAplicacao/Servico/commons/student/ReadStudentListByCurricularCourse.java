@@ -14,11 +14,9 @@ import java.util.List;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
-import DataBeans.util.Cloner;
+import DataBeans.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import Dominio.CurricularCourse;
 import Dominio.ICurricularCourse;
 import Dominio.IEnrollment;
@@ -30,6 +28,7 @@ import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import framework.factory.ServiceManagerServiceFactory;
 
 public class ReadStudentListByCurricularCourse implements IServico {
 
@@ -125,8 +124,7 @@ public class ReadStudentListByCurricularCourse implements IServico {
                 InfoEnrolmentEvaluation infoEnrolmentEvaluation = (InfoEnrolmentEvaluation) ServiceManagerServiceFactory
                         .executeService(userView, "GetEnrolmentGrade", args);
 
-                InfoEnrolment infoEnrolment = Cloner
-                        .copyIEnrolment2InfoEnrolment(enrolment);
+                InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod.newInfoFromDomain(enrolment);
                 infoEnrolment
                         .setInfoEnrolmentEvaluation(infoEnrolmentEvaluation);
 

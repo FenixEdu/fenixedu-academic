@@ -9,6 +9,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
+import DataBeans.InfoEnrolment;
+import DataBeans.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoStudent;
@@ -158,8 +160,8 @@ public class PrepareStudentEnrolmentContextForOptionalCoursesEnrolment
                     new Transformer() {
                         public Object transform(Object input) {
                             IEnrollment enrolment = (IEnrollment) input;
-                            return Cloner
-                                    .copyIEnrolment2InfoEnrolment(enrolment);
+                            InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod.newInfoFromDomain(enrolment);
+                            return infoEnrolment;
                         }
                     });
             Collections.sort(infoEnrollments, new BeanComparator(

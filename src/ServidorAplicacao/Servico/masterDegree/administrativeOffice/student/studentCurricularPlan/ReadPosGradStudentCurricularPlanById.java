@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import DataBeans.InfoEnrolment;
+import DataBeans.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.util.Cloner;
 import Dominio.Enrolment;
@@ -59,8 +60,7 @@ public class ReadPosGradStudentCurricularPlanById implements IServico {
                         .listIterator();
                 while (iterator.hasNext()) {
                     Enrolment enrolment = (Enrolment) iterator.next();
-                    InfoEnrolment infoEnrolment = Cloner
-                            .copyIEnrolment2InfoEnrolment(enrolment);
+                    InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod.newInfoFromDomain(enrolment);
                     infoEnrolments.add(infoEnrolment);
                 }
 

@@ -568,26 +568,30 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 
     protected List initAcumulatedEnrollments(List elements) {
 
-        List result = new ArrayList();
-        int size = elements.size();
+        if (getAcumulatedEnrollmentsMap() != null) {
+            List result = new ArrayList();
+            int size = elements.size();
 
-        for (int i = 0; i < size; i++) {
-            try {
-                IEnrollment enrollment = (IEnrollment) elements.get(i);
-                enrollment.setAccumulatedWeight(getCurricularCourseAcumulatedEnrollments(enrollment
-                        .getCurricularCourse()));
-                result.add(enrollment);
-            } catch (ClassCastException e) {
-                CurricularCourse2Enroll curricularCourse2Enroll = (CurricularCourse2Enroll) elements
-                        .get(i);
-                curricularCourse2Enroll
-                        .setAccumulatedWeight(getCurricularCourseAcumulatedEnrollments(curricularCourse2Enroll
-                                .getCurricularCourse()));
-                result.add(curricularCourse2Enroll);
+            for (int i = 0; i < size; i++) {
+                try {
+                    IEnrollment enrollment = (IEnrollment) elements.get(i);
+                    enrollment.setAccumulatedWeight(getCurricularCourseAcumulatedEnrollments(enrollment
+                            .getCurricularCourse()));
+                    result.add(enrollment);
+                } catch (ClassCastException e) {
+                    CurricularCourse2Enroll curricularCourse2Enroll = (CurricularCourse2Enroll) elements
+                            .get(i);
+                    curricularCourse2Enroll
+                            .setAccumulatedWeight(getCurricularCourseAcumulatedEnrollments(curricularCourse2Enroll
+                                    .getCurricularCourse()));
+                    result.add(curricularCourse2Enroll);
+                }
             }
-        }
 
-        return result;
+            return result;
+        } else {
+            return elements;
+        }
     }
 
     protected ICurricularCourse getCurricularCourseInCurricularCourseEquivalences(

@@ -5,7 +5,6 @@
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="DataBeans.InfoEnrolment" %>
 <%@ page import="DataBeans.InfoEnrolmentInExtraCurricularCourse" %>
-<%@ page import="DataBeans.InfoEnrolmentInOptionalCurricularCourse" %>
 <%@ page import="DataBeans.InfoEnrolmentInExtraCurricularCourse" %>
 
 <span class="error"><html:errors/></span>
@@ -106,13 +105,7 @@
 									<bean:write name="infoEnrolment" property="infoCurricularCourse.name" />
 								</td>
 								<td>
-									<%if (infoEnrolment instanceof InfoEnrolmentInOptionalCurricularCourse) { %>
-										<bean:message key="label.enrolment.type.optional" />
-									<%} else if (infoEnrolment instanceof InfoEnrolmentInExtraCurricularCourse) { %>
-										<bean:message key="label.enrolment.type.extra" />
-									<%} else { %> 										
-										<bean:message key="label.enrolment.type.normal" />
-									<%}	%>								
+									<bean:message name="infoEnrolment" property="enrollmentTypeResourceKey" bundle="DEFAULT"/>
 								</td>
 								<td>
 									<bean:define id="state" name="infoEnrolment" property="enrollmentState" />

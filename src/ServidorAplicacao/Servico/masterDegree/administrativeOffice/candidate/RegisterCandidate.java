@@ -10,6 +10,8 @@ import org.apache.commons.collections.Predicate;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoCandidateRegistration;
+import DataBeans.InfoEnrolment;
+import DataBeans.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import DataBeans.util.Cloner;
 import Dominio.Branch;
 import Dominio.CandidateSituation;
@@ -308,8 +310,8 @@ public class RegisterCandidate implements IService {
                 .iterator();
         while (iterator.hasNext()) {
             Enrolment enrolment = (Enrolment) iterator.next();
-            infoCandidateRegistration.getEnrolments().add(
-                    Cloner.copyIEnrolment2InfoEnrolment(enrolment));
+            InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod.newInfoFromDomain(enrolment);
+            infoCandidateRegistration.getEnrolments().add(infoEnrolment);
         }
 
         return infoCandidateRegistration;

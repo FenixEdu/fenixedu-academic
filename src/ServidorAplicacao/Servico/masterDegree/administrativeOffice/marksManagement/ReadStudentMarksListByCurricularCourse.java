@@ -16,7 +16,7 @@ import org.apache.commons.beanutils.BeanComparator;
 
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
-import DataBeans.util.Cloner;
+import DataBeans.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import Dominio.CurricularCourse;
 import Dominio.ICurricularCourse;
 import Dominio.IEnrollment;
@@ -121,8 +121,7 @@ public class ReadStudentMarksListByCurricularCourse implements IServico {
                         .executeService(userView, "GetEnrolmentGrade", args);
                 if (infoEnrolmentEvaluation != null) {
 					        
-                    InfoEnrolment infoEnrolment = Cloner
-                            .copyIEnrolment2InfoEnrolment(enrolment);
+                    InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod.newInfoFromDomain(enrolment);
                     infoEnrolment
                             .setInfoEnrolmentEvaluation(infoEnrolmentEvaluation);
                     result.add(infoEnrolment);

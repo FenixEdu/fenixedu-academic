@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import DataBeans.InfoCandidateRegistration;
+import DataBeans.InfoEnrolment;
+import DataBeans.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import DataBeans.util.Cloner;
 import Dominio.Enrolment;
 import Dominio.IMasterDegreeCandidate;
@@ -87,8 +89,8 @@ public class GetCandidateRegistrationInformation implements IServico {
                         .iterator();
                 while (iterator.hasNext()) {
                     Enrolment enrolment = (Enrolment) iterator.next();
-                    infoCandidateRegistration.getEnrolments().add(
-                            Cloner.copyIEnrolment2InfoEnrolment(enrolment));
+                    InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod.newInfoFromDomain(enrolment);
+                    infoCandidateRegistration.getEnrolments().add(infoEnrolment);
                 }
             }
         } catch (ExcepcaoPersistencia e) {

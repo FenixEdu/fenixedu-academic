@@ -13,7 +13,9 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
+import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
+import DataBeans.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import DataBeans.InfoSiteEnrolmentEvaluation;
 import DataBeans.InfoTeacher;
 import DataBeans.util.Cloner;
@@ -168,8 +170,8 @@ public class ReadStudentsAndMarksByCurricularCourse implements IServico {
                     InfoEnrolmentEvaluation infoEnrolmentEvaluation = Cloner
                             .copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(elem);
 
-                    infoEnrolmentEvaluation.setInfoEnrolment(Cloner
-                            .copyIEnrolment2InfoEnrolment(elem.getEnrolment()));
+                    InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod.newInfoFromDomain(elem.getEnrolment());
+                    infoEnrolmentEvaluation.setInfoEnrolment(infoEnrolment);
                     infoEnrolmentEvaluations.add(infoEnrolmentEvaluation);
                 }
             }

@@ -23,7 +23,7 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentPrecedence;
-import ServidorPersistente.IPersistentRestrictionByCurricularCourse;
+import ServidorPersistente.IPersistentRestriction;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.PeriodToApplyRestriction;
@@ -72,7 +72,6 @@ public void run(String className, Integer curricularCourseToAddPrecedenceID,
                 restrictionByNumberOfCurricularCourses.setPrecedence(precedence);
 
                 //TODO
-                //IPersistentRestriction persistentRestriction = persistentSuport.
                 
             } else if (className.equals(RestrictionPeriodToApply.class.getName().substring(
                     RestrictionPeriodToApply.class.getName().lastIndexOf(".") + 1))) {
@@ -88,7 +87,7 @@ public void run(String className, Integer curricularCourseToAddPrecedenceID,
                 restrictionByCurricularCourse.setPrecedence(precedence);
                 restrictionByCurricularCourse.setPrecedentCurricularCourse(precedentCurricularCourse);
                 
-                IPersistentRestrictionByCurricularCourse persistentRestrictionByCurricularCourse = persistentSuport.getIPersistentRestrictionByCurricularCourse();
+                IPersistentRestriction persistentRestrictionByCurricularCourse = persistentSuport.getIPersistentRestriction();
                 persistentRestrictionByCurricularCourse.lockWrite(restrictionByCurricularCourse);
                 
             } else if (className.equals(RestrictionNotDoneCurricularCourse.class.getName().substring(
@@ -97,7 +96,7 @@ public void run(String className, Integer curricularCourseToAddPrecedenceID,
                 restrictionByCurricularCourse.setPrecedence(precedence);
                 restrictionByCurricularCourse.setPrecedentCurricularCourse(precedentCurricularCourse);
                 
-                IPersistentRestrictionByCurricularCourse persistentRestrictionByCurricularCourse = persistentSuport.getIPersistentRestrictionByCurricularCourse();
+                IPersistentRestriction persistentRestrictionByCurricularCourse = persistentSuport.getIPersistentRestriction();
                 persistentRestrictionByCurricularCourse.lockWrite(restrictionByCurricularCourse);
                 
              } else if (className.equals(RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse.class
@@ -108,7 +107,7 @@ public void run(String className, Integer curricularCourseToAddPrecedenceID,
                 restrictionByCurricularCourse.setPrecedence(precedence);
                 restrictionByCurricularCourse.setPrecedentCurricularCourse(precedentCurricularCourse);
                 
-                IPersistentRestrictionByCurricularCourse persistentRestrictionByCurricularCourse = persistentSuport.getIPersistentRestrictionByCurricularCourse();
+                IPersistentRestriction persistentRestrictionByCurricularCourse = persistentSuport.getIPersistentRestriction();
                 persistentRestrictionByCurricularCourse.lockWrite(restrictionByCurricularCourse);
                 
            } else if (className
@@ -121,7 +120,7 @@ public void run(String className, Integer curricularCourseToAddPrecedenceID,
                restrictionByCurricularCourse.setPrecedence(precedence);
                restrictionByCurricularCourse.setPrecedentCurricularCourse(precedentCurricularCourse);
                
-               IPersistentRestrictionByCurricularCourse persistentRestrictionByCurricularCourse = persistentSuport.getIPersistentRestrictionByCurricularCourse();
+               IPersistentRestriction persistentRestrictionByCurricularCourse = persistentSuport.getIPersistentRestriction();
                persistentRestrictionByCurricularCourse.lockWrite(restrictionByCurricularCourse);
            } else if (className.equals(RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse.class.getName().substring(
                    RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse.class.getName().lastIndexOf(".") + 1))) {
@@ -129,7 +128,7 @@ public void run(String className, Integer curricularCourseToAddPrecedenceID,
                restrictionByCurricularCourse.setPrecedence(precedence);
                restrictionByCurricularCourse.setPrecedentCurricularCourse(precedentCurricularCourse);
                
-               IPersistentRestrictionByCurricularCourse persistentRestrictionByCurricularCourse = persistentSuport.getIPersistentRestrictionByCurricularCourse();
+               IPersistentRestriction persistentRestrictionByCurricularCourse = persistentSuport.getIPersistentRestriction();
                persistentRestrictionByCurricularCourse.lockWrite(restrictionByCurricularCourse);
                
             }

@@ -36,7 +36,7 @@ import DataBeans.InfoDistributedTest;
 import DataBeans.InfoEmployee;
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
-import DataBeans.InfoEnrolmentInExtraCurricularCourse;
+import DataBeans.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import DataBeans.InfoExam;
 import DataBeans.InfoExamStudentRoom;
 import DataBeans.InfoExecutionCourse;
@@ -1815,49 +1815,49 @@ public abstract class Cloner {
      * @param copyIEnrolment2InfoEnrolment
      * @return InfoEnrolment
      */
-    public static InfoEnrolment copyIEnrolment2InfoEnrolment(IEnrollment enrolment) {
-
-        InfoEnrolment infoEnrolment = null;
-        InfoCurricularCourse infoCurricularCourseOption = null;
-
-        InfoStudentCurricularPlan infoStudentCurricularPlan = Cloner
-                .copyIStudentCurricularPlan2InfoStudentCurricularPlan(enrolment
-                        .getStudentCurricularPlan());
-        InfoCurricularCourse infoCurricularCourse = Cloner
-                .copyCurricularCourse2InfoCurricularCourse(enrolment.getCurricularCourse());
-        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(enrolment
-                .getExecutionPeriod());
-
-        List infoEnrolmentEvaluationsList = new ArrayList();
-        List enrolmentEvaluationsList = enrolment.getEvaluations();
-
-        if (enrolmentEvaluationsList != null && !enrolmentEvaluationsList.isEmpty()) {
-            Iterator iterator = enrolmentEvaluationsList.iterator();
-            while (iterator.hasNext()) {
-                IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator.next();
-                InfoEnrolmentEvaluation infoEnrolmentEvaluation = Cloner
-                        .copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(enrolmentEvaluation);
-                infoEnrolmentEvaluationsList.add(infoEnrolmentEvaluation);
-            }
-        }
-
-        if (enrolment instanceof IEnrolmentInExtraCurricularCourse) {
-            infoEnrolment = new InfoEnrolmentInExtraCurricularCourse();
-        } else {
-            infoEnrolment = new InfoEnrolment();
-        }
-
-        copyObjectProperties(infoEnrolment, enrolment);
-
-        infoEnrolment.setInfoCurricularCourse(infoCurricularCourse);
-        //infoEnrolment.setInfoCurricularCourseScope(infoCurricularCourseScope);
-        infoEnrolment.setInfoExecutionPeriod(infoExecutionPeriod);
-        infoEnrolment.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
-        infoEnrolment.setInfoEvaluations(infoEnrolmentEvaluationsList);
-
-        return infoEnrolment;
-    }
-
+//    public static InfoEnrolment copyIEnrolment2InfoEnrolment(IEnrollment enrolment) {
+//
+//        InfoEnrolment infoEnrolment = null;
+//        InfoCurricularCourse infoCurricularCourseOption = null;
+//
+//        InfoStudentCurricularPlan infoStudentCurricularPlan = Cloner
+//                .copyIStudentCurricularPlan2InfoStudentCurricularPlan(enrolment
+//                        .getStudentCurricularPlan());
+//        InfoCurricularCourse infoCurricularCourse = Cloner
+//                .copyCurricularCourse2InfoCurricularCourse(enrolment.getCurricularCourse());
+//        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(enrolment
+//                .getExecutionPeriod());
+//
+//        List infoEnrolmentEvaluationsList = new ArrayList();
+//        List enrolmentEvaluationsList = enrolment.getEvaluations();
+//
+//        if (enrolmentEvaluationsList != null && !enrolmentEvaluationsList.isEmpty()) {
+//            Iterator iterator = enrolmentEvaluationsList.iterator();
+//            while (iterator.hasNext()) {
+//                IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator.next();
+//                InfoEnrolmentEvaluation infoEnrolmentEvaluation = Cloner
+//                        .copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(enrolmentEvaluation);
+//                infoEnrolmentEvaluationsList.add(infoEnrolmentEvaluation);
+//            }
+//        }
+//
+//        if (enrolment instanceof IEnrolmentInExtraCurricularCourse) {
+//            infoEnrolment = new InfoEnrolmentInExtraCurricularCourse();
+//        } else {
+//            infoEnrolment = new InfoEnrolment();
+//        }
+//
+//        copyObjectProperties(infoEnrolment, enrolment);
+//
+//        infoEnrolment.setInfoCurricularCourse(infoCurricularCourse);
+//        //infoEnrolment.setInfoCurricularCourseScope(infoCurricularCourseScope);
+//        infoEnrolment.setInfoExecutionPeriod(infoExecutionPeriod);
+//        infoEnrolment.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
+//        infoEnrolment.setInfoEvaluations(infoEnrolmentEvaluationsList);
+//
+//        return infoEnrolment;
+//    }
+//
     /**
      * @author dcs-rjao
      * @param copyInfoEnrolment2IEnrolment
@@ -2072,7 +2072,7 @@ public abstract class Cloner {
 
         InfoEnrolment infoEnrolment = null;
         if (frequenta.getEnrolment() != null) {
-            infoEnrolment = Cloner.copyIEnrolment2InfoEnrolment(frequenta.getEnrolment());
+            infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod.newInfoFromDomain(frequenta.getEnrolment());
         }
 
         infoFrequenta.setIdInternal(frequenta.getIdInternal());

@@ -8,7 +8,9 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
+import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
+import DataBeans.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import DataBeans.InfoSiteEnrolmentEvaluation;
 import DataBeans.InfoTeacher;
 import DataBeans.util.Cloner;
@@ -165,8 +167,8 @@ public class ReadStudentMarksByCurricularCourse implements IService
 						enrolmentEvaluation = (IEnrolmentEvaluation) iter.next();
 						InfoEnrolmentEvaluation infoEnrolmentEvaluation =
 							Cloner.copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(enrolmentEvaluation);
-						infoEnrolmentEvaluation.setInfoEnrolment(
-							Cloner.copyIEnrolment2InfoEnrolment(enrolmentEvaluation.getEnrolment()));
+		                InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod.newInfoFromDomain(enrolmentEvaluation.getEnrolment());
+						infoEnrolmentEvaluation.setInfoEnrolment(infoEnrolment);
 
 						if (enrolmentEvaluation != null)
 						{

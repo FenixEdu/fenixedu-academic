@@ -9,7 +9,9 @@ import java.util.ListIterator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
+import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
+import DataBeans.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoSiteEnrolmentEvaluation;
 import DataBeans.InfoTeacher;
@@ -142,8 +144,8 @@ public class ReadStudentsFinalEvaluationForConfirmation implements IServico {
                     InfoEnrolmentEvaluation infoEnrolmentEvaluation = Cloner
                             .copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(elem);
 
-                    infoEnrolmentEvaluation.setInfoEnrolment(Cloner
-                            .copyIEnrolment2InfoEnrolment(elem.getEnrolment()));
+                    InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod.newInfoFromDomain(elem.getEnrolment());
+                    infoEnrolmentEvaluation.setInfoEnrolment(infoEnrolment);
                     infoEnrolmentEvaluations.add(infoEnrolmentEvaluation);
                 }
             }
