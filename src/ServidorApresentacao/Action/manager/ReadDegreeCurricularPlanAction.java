@@ -1,11 +1,7 @@
 /*
- * Created on 15/Mai/2003
- *
+ * Created on 1/Ago/2003
  */
 package ServidorApresentacao.Action.manager;
-
-import java.util.Collections;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,8 +14,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import DataBeans.InfoDegree;
-
+import DataBeans.InfoDegreeCurricularPlan;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -31,7 +26,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  * @author lmac1
  */
 
-public class ReadDegreeAction extends FenixAction  {
+public class ReadDegreeCurricularPlanAction extends FenixAction  {
 	
 	public ActionForward execute(
 			ActionMapping mapping,
@@ -46,43 +41,30 @@ public class ReadDegreeAction extends FenixAction  {
 				UserView userView =
 					(UserView) session.getAttribute(SessionConstants.U_VIEW);
 					
-				Integer degreeId = (Integer) readDegreeForm.get("degreeId");				
+				Integer degreeCurricularPlanId = (Integer) readDegreeForm.get("degreeCurricularPlanId");				
 					
-				Object args[] = { degreeId };
+				Object args[] = { degreeCurricularPlanId };
 				
 				GestorServicos manager = GestorServicos.manager();
-				InfoDegree degree = null;
+				InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
 				
 				try {
-						degree = (InfoDegree) manager.executar(userView, "ReadDegreeService", args);
+						infoDegreeCurricularPlan = (InfoDegreeCurricularPlan) manager.executar(userView, "ReadDegreeCurricularPlanService", args);
 				} catch(FenixServiceException e) {
 					throw new FenixActionException(e);
-			    }
+				}
 			    
-			    // trying to read a degree that doesn´t exist in the database
-				if(degree == null) {
+				// trying to read a degreeCurricularPlan that doesn´t exist in the database
+				if(infoDegreeCurricularPlan == null) {
 						ActionErrors actionErrors = new ActionErrors();
-						ActionError error = new ActionError("message.nonExistingDegree");
-						actionErrors.add("message.nonExistingDegree", error);
+						ActionError error = new ActionError("message.nonExistingDegreeCurricularPlan");
+						actionErrors.add("message.nonExistingDegreeCurricularPlan", error);
 						saveErrors(request, actionErrors);
-						return mapping.findForward("readDegrees");
+						return mapping.findForward("readDegree");
 				}
 				
-				// in case the degree really exists
-				List degreeCurricularPlans = null;
-		
-				try {		
-						degreeCurricularPlans = (List) manager.executar(
-									userView,
-									"ReadDegreeCurricularPlansService",
-									args);	
-				} catch (FenixServiceException e) {
-					throw new FenixActionException(e);
-				}		
-				Collections.sort(degreeCurricularPlans);
-				request.setAttribute("degreeId", degreeId);
-				request.setAttribute("infoDegree", degree);					
-				request.setAttribute(SessionConstants.INFO_DEGREE_CURRICULAR_PLANS_LIST, degreeCurricularPlans);
-				return mapping.findForward("viewDegree");
+//				request.setAttribute("degreeId", degreeId);
+				request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);					
+				return mapping.findForward("viewDegreeCurricularPlan");
 	}
 }

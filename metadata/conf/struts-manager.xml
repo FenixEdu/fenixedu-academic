@@ -88,10 +88,6 @@
               input="/readDegreesInput.do"
               scope="request"
       	      type="ServidorApresentacao.Action.manager.ReadDegreeAction">
-      <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-         	   key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
-               /> 
       	  <forward name="viewDegree" path="df.page.read-degree"/>  
       	  <forward name="readDegrees" path="/readDegrees.do"/> 	      
       </action>
@@ -160,6 +156,16 @@
       		 scope="request"
       	     type="ServidorApresentacao.Action.manager.DeleteDegreeCurricularPlansAction">
       	  <forward name="readDegree" path="/readDegree.do"/>      	      
+      </action>
+      
+       <!-- Action for reading a degreeCurricularPlan -->
+      <action path="/readDegreeCurricularPlan"
+      	      name="degreeCurricularPlanForm"
+              input="/readDegreeInput.do"
+              scope="request"
+      	      type="ServidorApresentacao.Action.manager.ReadDegreeCurricularPlanAction">
+      	  <forward name="viewDegreeCurricularPlan" path="df.page.read-degreeCurricularPlan"/>  
+      	  <forward name="readDegree" path="/readDegree.do"/> 	      
       </action>
     
       <!--Input actions-->
