@@ -5326,4 +5326,15 @@
 			<chain id="483191"/>
 		</filterChains>
 	</service>
+	<service>
+		<idInternal>430952</idInternal>
+		<name>ReadExecutionCoursesByDegreeAndExecutionPeriodId</name>
+		<implementationClass>ServidorAplicacao.Servico.manager.ReadExecutionCoursesByDegreeAndExecutionPeriodId</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			  <chain id="13"/>
+		</filterChains>
+	</service>
+	
 </serviceDefinitions>
