@@ -6,6 +6,7 @@ package DataBeans.enrollment.shift;
 import java.util.ArrayList;
 import java.util.List;
 
+import DataBeans.DataTranferObject;
 import DataBeans.InfoExecutionCourse;
 
 /**
@@ -13,7 +14,7 @@ import DataBeans.InfoExecutionCourse;
  * 
  * @author jpvl
  */
-public class ExecutionCourseShiftEnrollmentDetails
+public class ExecutionCourseShiftEnrollmentDetails extends DataTranferObject
 {
 
 	private InfoExecutionCourse infoExecutionCourse;
