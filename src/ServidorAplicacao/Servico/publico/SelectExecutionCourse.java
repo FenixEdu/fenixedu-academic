@@ -65,8 +65,7 @@ public class SelectExecutionCourse implements IServico {
 			executionCourseList =
 					executionCourseDAO.readByCurricularYearAndExecutionPeriodAndExecutionDegree(curricularYear,executionPeriod,executionDegree);
 
-			//readByCriteria(
-			//	exeCourse);
+			
 
 			for (int i = 0; i < executionCourseList.size(); i++) {
 				IDisciplinaExecucao aux =
