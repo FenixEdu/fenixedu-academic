@@ -38,7 +38,12 @@ public class ManageGrantOwnerAction extends DispatchAction
         HttpServletResponse response)
         throws Exception
     {
-        Integer idInternal = new Integer(request.getParameter("idInternal"));
+    	Integer idInternal = null;
+    	if(request.getParameter("idInternal") != null)
+    		 idInternal = new Integer(request.getParameter("idInternal"));
+    	else
+    		idInternal = new Integer(0);
+    		
         InfoGrantOwner infoGrantOwner = null;
 
         if (idInternal.intValue() == 0)
@@ -52,12 +57,11 @@ public class ManageGrantOwnerAction extends DispatchAction
 
         if (infoGrantOwner != null)
             request.setAttribute("infoGrantOwner", infoGrantOwner);
-
         //Ler contractos
         List infoGrantContractList =
             (List) ServiceUtils.executeService(userView, "ReadAllContractsByGrantOwner", args);
 
-        if (infoGrantContractList != null || !infoGrantContractList.isEmpty())
+        if (infoGrantContractList != null && !infoGrantContractList.isEmpty())
             request.setAttribute("infoGrantContractList", infoGrantContractList);
 
         return mapping.findForward("manage-grant-owner");

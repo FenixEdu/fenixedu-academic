@@ -35,21 +35,8 @@ public class SearchGrantOwnerAction extends SearchAction
 		String name = (String) searchGrantOwnerForm.get("name");
         String idNumber = (String) searchGrantOwnerForm.get("idNumber");
         Integer idType = (Integer) searchGrantOwnerForm.get("idType");
-        
-        //Caso sejam null, vamos verificar se os atributos tb são, pode ser um voltar!
-        if(name.equals("") && (request.getParameter("sname") != null))
-            name = request.getParameter("sname");
-        if(idNumber.equals("")  && (request.getParameter("sidNumber") != null))
-            idNumber = request.getParameter("sidNumber");
-        if(idType!= null && idType.equals(new Integer(0))  && (request.getParameter("sidType") != null))
-            idType = new Integer(request.getParameter("sidType"));
-        if(idType == null)
-            idType = new Integer(0);
-        
-//        request.setAttribute("name",name);
-//		request.setAttribute("idNumber",idNumber);
-//		request.setAttribute("idType",idType);
-        Object[] args = { name,idNumber,idType };
+
+        Object[] args = { name,idNumber,idType, null };
         return args;
     }
 
