@@ -786,6 +786,9 @@
     	    element-class-ref="Dominio.Teacher"
         	auto-retrieve="true"
 	        proxy="true"
+	        refresh="true"
+         	auto-update="false"
+         	auto-delete="false"
     	    indirection-table="MASTER_DEGREE_THESIS_DATA_VERSION_ASSISTENT_GUIDER"
       	>
         	<fk-pointing-to-this-class column="KEY_MASTER_DEGREE_THESIS_DATA_VERSION"/>
@@ -797,6 +800,9 @@
         	element-class-ref="Dominio.ExternalPerson"
 	        auto-retrieve="true"
     	    proxy="true"
+    	    refresh="true"
+         	auto-update="false"
+         	auto-delete="false"
         	indirection-table="MASTER_DEGREE_THESIS_DATA_VERSION_EXTERNAL_ASSISTENT_GUIDER"
       	>
 	        <fk-pointing-to-this-class column="KEY_MASTER_DEGREE_THESIS_DATA_VERSION"/>
