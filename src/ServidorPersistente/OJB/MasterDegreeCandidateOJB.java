@@ -32,7 +32,9 @@ import Util.SituationName;
 import Util.Specialization;
 import Util.State;
 
-public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersistentMasterDegreeCandidate {
+public class MasterDegreeCandidateOJB
+	extends ObjectFenixOJB
+	implements IPersistentMasterDegreeCandidate {
 
 	/** Creates a new instance of MasterDegreeCandidateOJB */
 	public MasterDegreeCandidateOJB() {
@@ -89,23 +91,34 @@ public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersist
 	}
 
 	public void writeMasterDegreeCandidate(IMasterDegreeCandidate masterDegreeCandidateToWrite)
-		throws ExcepcaoPersistencia, IllegalAccessException, InvocationTargetException {
+		throws ExcepcaoPersistencia {
 		if (masterDegreeCandidateToWrite == null)
 			return;
 
 		// Write the Person first to see if there's no clash
 
 		try {
-			SuportePersistenteOJB.getInstance().getIPessoaPersistente().escreverPessoa(masterDegreeCandidateToWrite.getPerson());
-		} catch (ExistingPersistentException e) {
+			SuportePersistenteOJB.getInstance().getIPessoaPersistente().escreverPessoa(
+				masterDegreeCandidateToWrite.getPerson());
+		} catch (ExistingPersistentException e) {		
 			throw new ExistingPersistentException("Existing Person !");
+		} catch (ExcepcaoPersistencia e) {
+			throw e;
+		} catch (IllegalAccessException e) {
+			throw new ExcepcaoPersistencia();
+		} catch (InvocationTargetException e) {
+			throw new ExcepcaoPersistencia();
 		}
 
 		IMasterDegreeCandidate masterDegreeCandidateBD1 =
 			this.readCandidateByNumberAndApplicationYearAndDegreeCodeAndSpecialization(
 				masterDegreeCandidateToWrite.getCandidateNumber(),
 				masterDegreeCandidateToWrite.getExecutionDegree().getExecutionYear().getYear(),
-				masterDegreeCandidateToWrite.getExecutionDegree().getCurricularPlan().getDegree().getSigla(),
+				masterDegreeCandidateToWrite
+					.getExecutionDegree()
+					.getCurricularPlan()
+					.getDegree()
+					.getSigla(),
 				masterDegreeCandidateToWrite.getSpecialization());
 
 		IMasterDegreeCandidate masterDegreeCandidateBD2 =
@@ -137,7 +150,11 @@ public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersist
 		throw new ExistingPersistentException();
 	}
 
-	public Integer generateCandidateNumber(String executionYear, String degreeCode, Specialization specialization) throws ExcepcaoPersistencia {
+	public Integer generateCandidateNumber(
+		String executionYear,
+		String degreeCode,
+		Specialization specialization)
+		throws ExcepcaoPersistencia {
 		try {
 			int number = 0;
 			String oqlQuery =
@@ -261,7 +278,10 @@ public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersist
 		IExecutionYear executionYear)
 		throws ExcepcaoPersistencia {
 
-		if (degreeName == null && specialization == null && candidateSituation == null && candidateNumber == null)
+		if (degreeName == null
+			&& specialization == null
+			&& candidateSituation == null
+			&& candidateNumber == null)
 			return readByExecutionYear(executionYear);
 
 		Criteria criteria = new Criteria();
@@ -326,7 +346,10 @@ public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersist
 		}
 	}
 
-	public IMasterDegreeCandidate readByExecutionDegreeAndPerson(ICursoExecucao executionDegree, IPessoa person) throws ExcepcaoPersistencia {
+	public IMasterDegreeCandidate readByExecutionDegreeAndPerson(
+		ICursoExecucao executionDegree,
+		IPessoa person)
+		throws ExcepcaoPersistencia {
 		try {
 			IMasterDegreeCandidate candidate = null;
 			String oqlQuery =
@@ -355,7 +378,10 @@ public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersist
 		}
 	}
 
-	public IMasterDegreeCandidate readByExecutionDegreeAndPersonAndNumber(ICursoExecucao executionDegree, IPessoa person, Integer number)
+	public IMasterDegreeCandidate readByExecutionDegreeAndPersonAndNumber(
+		ICursoExecucao executionDegree,
+		IPessoa person,
+		Integer number)
 		throws ExcepcaoPersistencia {
 		try {
 			IMasterDegreeCandidate candidate = null;

@@ -27,5 +27,10 @@
 		</var>
 	  </field>		   
 	</form>
+	<form name="addCoordinator">
+       <field property="teacherNumber" depends="required, integer" page="1">
+        <arg0 key="message.teacherNumber" resource="true"/>
+      </field>	   
+	</form>
   </formset>
 </form-validation>

@@ -21,12 +21,9 @@ import ServidorPersistente.IPersistentCoordinator;
  *
  */
 
-public class CoordinatorOJB
-	extends ObjectFenixOJB
-	implements IPersistentCoordinator {
+public class CoordinatorOJB extends ObjectFenixOJB implements IPersistentCoordinator {
 
-	public List readExecutionDegreesByTeacher(ITeacher teacher)
-		throws ExcepcaoPersistencia {
+	public List readExecutionDegreesByTeacher(ITeacher teacher) throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("teacher.idInternal", teacher.getIdInternal());
 		List coordinators = queryList(Coordinator.class, criteria);
@@ -48,9 +45,7 @@ public class CoordinatorOJB
 	public List readCoordinatorsByExecutionDegree(ICursoExecucao executionDegree)
 		throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo(
-			"executionDegree.idInternal",
-			executionDegree.getIdInternal());
+		criteria.addEqualTo("executionDegree.idInternal", executionDegree.getIdInternal());
 		return queryList(Coordinator.class, criteria);
 
 	}
@@ -61,7 +56,20 @@ public class CoordinatorOJB
 		throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("executionDegree.idInternal", executionDegreeId);
-		criteria.addEqualTo("teacher.idInternal",teacher.getIdInternal());
-		return (ICoordinator) queryObject(Coordinator.class,criteria);
+		criteria.addEqualTo("teacher.idInternal", teacher.getIdInternal());
+		return (ICoordinator) queryObject(Coordinator.class, criteria);
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.IPersistentCoordinator#readCoordinatorByTeacherAndExecutionDegree(Dominio.ITeacher, Dominio.ICursoExecucao)
+	 */
+	public ICoordinator readCoordinatorByTeacherAndExecutionDegree(
+		ITeacher teacher,
+		ICursoExecucao executionDegree)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("executionDegree.idInternal", executionDegree.getIdInternal());
+		criteria.addEqualTo("teacher.idInternal", teacher.getIdInternal());
+		return (ICoordinator) queryObject(Coordinator.class, criteria);
 	}
 }

@@ -329,13 +329,16 @@
 	         <forward name="addCoordinator" path="addCoordinator" /> 	         
 		</action>		
 		<action path="/addCoordinator"
+			  input="/viewCoordinationTeam.do?method=prepareAddCoordinator"	
 		 	  name="addCoordinator"
   		      parameter="method"
 		      scope="request"
 		      type="ServidorApresentacao.Action.coordinator.CoordinationTeamDispatchAction"
+		      validate="true"
 			  >
 	         <forward name="coordinationTeam" path="coordinationTeam" /> 
-	         <forward name="addCoordinator" path="addCoordinator" /> 	         
+	         <forward name="addCoordinator" path="addCoordinator" /> 
+	         <forward name="sucess" path="/viewCoordinationTeam.do?method=viewTeam" /> 	 	         
 		</action>	
     </action-mappings>
     

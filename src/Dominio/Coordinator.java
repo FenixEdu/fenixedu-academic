@@ -5,14 +5,12 @@
 package Dominio;
 
 /**
- *fenix-head
  *Dominio
  * @author João Mota
  *27/Out/2003
  *
  */
-public class Coordinator extends DomainObject implements ICoordinator
-{
+public class Coordinator extends DomainObject implements ICoordinator {
 
 	private ITeacher teacher;
 	private ICursoExecucao executionDegree;
@@ -22,82 +20,82 @@ public class Coordinator extends DomainObject implements ICoordinator
 	private Integer keyExecutionDegree;
 
 	/**
+	 * @param integer
+	 */
+	public Coordinator(Integer integer) {
+		setIdInternal(integer);
+	}
+
+	public Coordinator() {
+	}
+
+	/**
 	 * @return
 	 */
-	public ICursoExecucao getExecutionDegree()
-	{
+	public ICursoExecucao getExecutionDegree() {
 		return executionDegree;
 	}
 
 	/**
 	 * @param executionDegree
 	 */
-	public void setExecutionDegree(ICursoExecucao executionDegree)
-	{
+	public void setExecutionDegree(ICursoExecucao executionDegree) {
 		this.executionDegree = executionDegree;
 	}
 
 	/**
 	 * @return
 	 */
-	public Integer getKeyExecutionDegree()
-	{
+	public Integer getKeyExecutionDegree() {
 		return keyExecutionDegree;
 	}
 
 	/**
 	 * @param keyExecutionCourse
 	 */
-	public void setKeyExecutionDegree(Integer keyExecutionCourse)
-	{
+	public void setKeyExecutionDegree(Integer keyExecutionCourse) {
 		this.keyExecutionDegree = keyExecutionCourse;
 	}
 
 	/**
 	 * @return
 	 */
-	public Integer getKeyTeacher()
-	{
+	public Integer getKeyTeacher() {
 		return keyTeacher;
 	}
 
 	/**
 	 * @param keyTeacher
 	 */
-	public void setKeyTeacher(Integer keyTeacher)
-	{
+	public void setKeyTeacher(Integer keyTeacher) {
 		this.keyTeacher = keyTeacher;
 	}
 
 	/**
 	 * @return
 	 */
-	public Boolean getResponsible()
-	{
+	public Boolean getResponsible() {
 		return responsible;
 	}
 
 	/**
 	 * @param responsible
 	 */
-	public void setResponsible(Boolean responsible)
-	{
+	public void setResponsible(Boolean responsible) {
 		this.responsible = responsible;
 	}
 
 	/**
 	 * @return
 	 */
-	public ITeacher getTeacher()
-	{
+	public ITeacher getTeacher() {
 		return teacher;
 	}
 
 	/**
 	 * @param teacher
 	 */
-	public void setTeacher(ITeacher teacher)
-	{
+	public void setTeacher(ITeacher teacher) {
 		this.teacher = teacher;
 	}
 

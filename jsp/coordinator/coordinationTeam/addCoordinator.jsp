@@ -6,12 +6,16 @@
 
 
 
-<h3>Adicionar Docente à Equipa de Coordenação</h3>
+<h3><bean:message key="title.addCoordinator"/></h3>
 <html:form action="/addCoordinator">
+<span class="error"><html:errors/></span><br/>
+<bean:define id="infoExecutionDegreeId" name="infoExecutionDegreeId"/>
+<html:hidden property="infoExecutionDegreeId" value="<%=  infoExecutionDegreeId.toString() %>"/>
 <html:hidden property="method" value="AddCoordinator" />
-<html:text property="teacherNumber" />
+<html:hidden property="page" value="1" />
+<strong><bean:message key="label.teacherNumber"/>&nbsp;</strong><html:text property="teacherNumber" />
 
-<html:submit/>
+<html:submit><bean:message key="label.submit"/></html:submit>
 <br/>
 <br/>
 

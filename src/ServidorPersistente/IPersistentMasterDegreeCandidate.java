@@ -13,7 +13,6 @@
  */
 package ServidorPersistente;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import Dominio.ICursoExecucao;
@@ -46,7 +45,7 @@ public interface IPersistentMasterDegreeCandidate extends IPersistentObject {
      * @param masterDegreeCandidate
      * @throws ExcepcaoPersistencia
      */
-    public void writeMasterDegreeCandidate(IMasterDegreeCandidate masterDegreeCandidate) throws ExcepcaoPersistencia, IllegalAccessException, InvocationTargetException;
+    public void writeMasterDegreeCandidate(IMasterDegreeCandidate masterDegreeCandidate) throws ExcepcaoPersistencia;
     /**
      * 
      * @param masterDegreeCandidate

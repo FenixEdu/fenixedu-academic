@@ -11,7 +11,7 @@ package Dominio;
  *27/Out/2003
  *
  */
-public interface ICoordinator {
+public interface ICoordinator extends IDomainObject{
 	/**
 	 * @return
 	 */

@@ -64,7 +64,7 @@ public class CreateGuide implements IServico {
 	}
 
 	public InfoGuide run(InfoGuide infoGuide, String othersRemarks, Double othersPrice, String remarks,
-		 SituationOfGuide situationOfGuide, String paymentType) throws Exception {
+		 SituationOfGuide situationOfGuide, String paymentType) throws FenixServiceException {
 
 		ISuportePersistente sp = null;
 		IContributor contributor = null;
@@ -126,7 +126,7 @@ public class CreateGuide implements IServico {
 		}
 		
 
-		//FIXME: Nuno Nunes
+		//FIXME: Remove the : guide.setGuideEntries(null); WHY????
 		guide.setGuideEntries(null);
 		try {
 			sp = SuportePersistenteOJB.getInstance();
@@ -168,8 +168,7 @@ public class CreateGuide implements IServico {
 
 			guide.getGuideSituations().add(guideSituation);
 		} catch (ExcepcaoPersistencia ex) {
-			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-			newEx.fillInStackTrace();
+			FenixServiceException newEx = new FenixServiceException("Persistence layer error",ex);
 			throw newEx;
 		}
 		

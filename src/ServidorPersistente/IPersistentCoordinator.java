@@ -24,4 +24,8 @@ public interface IPersistentCoordinator extends IPersistentObject {
 		ITeacher teacher,
 		Integer executionDegreeId)
 		throws ExcepcaoPersistencia;
+	public ICoordinator readCoordinatorByTeacherAndExecutionDegree(
+			ITeacher teacher,
+			ICursoExecucao executionDegree)
+			throws ExcepcaoPersistencia;	
 }

@@ -1,8 +1,6 @@
 /*
  * Created on 8/Abr/2003
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code Template
  */
 package ServidorApresentacao.Action.teacher;
 

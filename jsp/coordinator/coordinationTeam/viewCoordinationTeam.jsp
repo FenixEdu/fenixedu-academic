@@ -6,14 +6,16 @@
 
 
 <logic:present name="coordinators">
-<h3>Equipa de Coordenação</h3>
+<h3><bean:message key="title.coordinationTeam"/></h3>
 <html:form action="/viewCoordinationTeam">
 <html:hidden property="method" value="removeCoordinators" />
 <table>
 <tr><td class="listClasses-header">Nome</td>
+	<td class="listClasses-header">
    <logic:equal name="isResponsible" value="true">
-	<td class="listClasses-header">Remover</td>
+   <bean:message key="label.remove"/>
    </logic:equal>
+   &nbsp;</td>
 </tr>
 <logic:iterate name="coordinators" id="coordinator">
 <tr>
@@ -39,16 +41,20 @@
 </logic:iterate>
 </table>
 <br/>
+<br/><bean:define id="infoExecutionDegreeId" name="infoExecutionDegreeId"/>
+<html:hidden property="infoExecutionDegreeId" value="<%= infoExecutionDegreeId.toString() %>"/>
+<logic:equal name="isResponsible" value="true">	
+<html:submit><bean:message key="label.remove"/></html:submit>
+
 <br/>
-<html:submit/>
 <br/>
-<br/>
-<bean:define id="infoExecutionDegreeId" name="infoExecutionDegreeId"/>
+
 <html:link 
 	page="<%= "/viewCoordinationTeam.do?method=prepareAddCoordinator&infoExecutionDegreeId="+ 
 	infoExecutionDegreeId.toString()  %>" >
-	Adicionar Docente à Equipa de Coordenação
+	<bean:message key="title.addCoordinator"/>
 	</html:link>
+</logic:equal>	
 </html:form>
 </logic:present>
 
