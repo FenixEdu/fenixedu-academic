@@ -44,7 +44,7 @@
        </tr> --%>
 	   </table>
 	   <br />
-	   <p><html:submit value="Submeter" styleClass="inputbutton">
+	   <html:submit value="Submeter" styleClass="inputbutton">
              <bean:message key="label.next"/>
-       </html:submit></p>
+       </html:submit>
 </html:form>

@@ -32,8 +32,8 @@
                 </tr>
             </table>
             <br/>
-       <p><html:submit styleClass="inputbutton"><bean:message key="label.submit"/>
-           </html:submit>
-       </p>
+       	<html:submit styleClass="inputbutton">
+       		<bean:message key="label.submit"/>
+       	</html:submit>
         </html:form>
 
