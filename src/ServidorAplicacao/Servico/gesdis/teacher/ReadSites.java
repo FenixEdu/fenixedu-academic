@@ -20,27 +20,27 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class GetSites implements IServico {
+public class ReadSites implements IServico {
 
-  private static GetSites service = new GetSites();
+  private static ReadSites service = new ReadSites();
 
   /**
    * The singleton access method of this class.
    */
-  public static GetSites getService() {
+  public static ReadSites getService() {
     return service;
   }
 
   /**
    * The constructor of this class.
    */
-  private GetSites() { }
+  private ReadSites() { }
 
   /**
    * Service name
    */
   public final String getNome() {
-    return "GetSites";
+    return "ReadSites";
   }
 
   /**

@@ -118,7 +118,7 @@ INSERT INTO PRIVILEGIO VALUES (1, 'InsertAnnouncement', 59);
 INSERT INTO PRIVILEGIO VALUES (1, 'InsertBibliographicReference', 60);
 INSERT INTO PRIVILEGIO VALUES (1, 'EditAnnouncement', 61);
 INSERT INTO PRIVILEGIO VALUES (1, 'DeleteAnnouncement', 62);
-INSERT INTO PRIVILEGIO VALUES (1, 'GetSites', 63);
+INSERT INTO PRIVILEGIO VALUES (1, 'ReadSites', 63);
 
 #
 # Data for table 'DEGREE'

@@ -18,11 +18,11 @@ import ServidorAplicacao.Servicos.TestCaseReadServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 
-public class GetSitesTest extends TestCaseReadServices {
+public class ReadSitesTest extends TestCaseReadServices {
 
 	private ISuportePersistente persistentSupport;
 
-	public GetSitesTest(java.lang.String testName) {
+	public ReadSitesTest(java.lang.String testName) {
 		super(testName);
 	}
 
@@ -31,7 +31,7 @@ public class GetSitesTest extends TestCaseReadServices {
 	}
 
 	public static Test suite() {
-		TestSuite suite = new TestSuite(GetSitesTest.class);
+		TestSuite suite = new TestSuite(ReadSitesTest.class);
 
 		return suite;
 	}
@@ -45,7 +45,7 @@ public class GetSitesTest extends TestCaseReadServices {
 	}
 
 	protected String getNameOfServiceToBeTested() {
-		return "GetSites";
+		return "ReadSites";
 	}
 
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
