@@ -16,7 +16,6 @@ public class EnrolmentContext {
 	private ICurso degree;
 	private IStudent student;
 	private List curricularCoursesDoneByStudent;
-	private List curricularCoursesNotDoneByStudent;
 	private Integer semester;
 	
 	/**
@@ -87,25 +86,12 @@ public class EnrolmentContext {
 	public void setStudent(IStudent student) {
 		this.student = student;
 	}
-	/**
-	 * @return
-	 */
-	public List getCurricularCoursesNotDoneByStudent() {
-		return curricularCoursesNotDoneByStudent;
-	}
-
+	
 	/**
 	 * @return
 	 */
 	public List getFinalCurricularCoursesSpanToBeEnrolled() {
 		return finalCurricularCoursesSpanToBeEnrolled;
-	}
-
-	/**
-	 * @param list
-	 */
-	public void setCurricularCoursesNotDoneByStudent(List list) {
-		curricularCoursesNotDoneByStudent = list;
 	}
 
 	/**

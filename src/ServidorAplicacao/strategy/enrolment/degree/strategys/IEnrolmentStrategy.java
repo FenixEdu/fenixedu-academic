@@ -1,6 +1,7 @@
 package ServidorAplicacao.strategy.enrolment.degree.strategys;
 
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
+import ServidorPersistente.ExcepcaoPersistencia;
 
 /**
  * @author dcs-rjao
@@ -9,7 +10,7 @@ import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
  */
 public interface IEnrolmentStrategy {
 
-	public void getAvailableCurricularCourses();
+	public EnrolmentContext getAvailableCurricularCourses() throws ExcepcaoPersistencia;
 
 	public EnrolmentContext getEnrolmentContext();
 	public void setEnrolmentContext(EnrolmentContext enrolmentContext);

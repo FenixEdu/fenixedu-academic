@@ -7,11 +7,8 @@ import java.util.ListIterator;
 import org.odmg.QueryException;
 
 import Dominio.CurricularCourse;
-import Dominio.CurricularCourseScope;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
-import Dominio.ICurricularCourseScope;
-import Dominio.ICurricularSemester;
 import Dominio.IDegreeCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
@@ -98,7 +95,7 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 		}
 	}
 
-	public ArrayList readAll() throws ExcepcaoPersistencia {
+	public List readAll() throws ExcepcaoPersistencia {
 
 		try {
 			ArrayList list = new ArrayList();
@@ -123,7 +120,7 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 		}
 	}
 
-	public ArrayList readCurricularCoursesByCurricularYear(Integer year) throws ExcepcaoPersistencia {
+	public List readCurricularCoursesByCurricularYear(Integer year) throws ExcepcaoPersistencia {
 		try {
 			ArrayList list = new ArrayList();
 			String oqlQuery = "select all from " + CurricularCourse.class.getName();
@@ -150,7 +147,7 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 		}
 	}
 
-	public ArrayList readCurricularCoursesByCurricularSemester(Integer semester) throws ExcepcaoPersistencia {
+	public List readCurricularCoursesByCurricularSemester(Integer semester) throws ExcepcaoPersistencia {
 		try {
 			ArrayList list = new ArrayList();
 			String oqlQuery = "select all from " + CurricularCourse.class.getName();
@@ -206,7 +203,7 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 	//		}
 	//	}
 
-	public ArrayList readCurricularCoursesByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia {
+	public List readCurricularCoursesByDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) throws ExcepcaoPersistencia {
 
 		try {
 			ArrayList list = new ArrayList();
@@ -240,12 +237,12 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 		}
 	}
 
-	public ArrayList readAllCurricularCoursesByBranch(IBranch branch) throws ExcepcaoPersistencia {
+	public List readAllCurricularCoursesByBranch(IBranch branch) throws ExcepcaoPersistencia {
 		try {
 			ArrayList list = new ArrayList();
-			String oqlQuery = "select all from " + CurricularCourseScope.class.getName();
-			oqlQuery += " where branch.name = $1";
-			oqlQuery += " and branch.code = $2";
+			String oqlQuery = "select all from " + CurricularCourse.class.getName();
+			oqlQuery += " where scopes.branch.name = $1";
+			oqlQuery += " and scopes.branch.code = $2";
 
 			query.create(oqlQuery);
 
@@ -259,13 +256,13 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 				throw ex;
 			}
 
-			ICurricularCourseScope curricularCourseScope = null;
+			ICurricularCourse curricularCourse = null;
 
 			if ((result != null) && (result.size() != 0)) {
 				ListIterator iterator = result.listIterator();
 				while (iterator.hasNext()) {
-					curricularCourseScope = (ICurricularCourseScope) iterator.next();
-					list.add(curricularCourseScope.getCurricularCourse());
+					curricularCourse = (ICurricularCourse) iterator.next();
+					list.add(curricularCourse);
 				}
 			}
 			return list;
@@ -275,17 +272,17 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 		}
 	}
 
-	public ArrayList readAllCurricularCoursesBySemester(ICurricularSemester curricularSemester/*, IStudentCurricularPlan studentCurricularPlan*/) throws ExcepcaoPersistencia {
+	public List readAllCurricularCoursesBySemester(Integer semester/*, IStudentCurricularPlan studentCurricularPlan*/) throws ExcepcaoPersistencia {
 		try {
 			ArrayList list = new ArrayList();
-			String oqlQuery = "select all from " + CurricularCourseScope.class.getName();
-			oqlQuery += " where curricularSemester.semester = $1";
+			String oqlQuery = "select all from " + CurricularCourse.class.getName();
+			oqlQuery += " where scopes.curricularSemester.semester = $1";
 //			oqlQuery += " and curricularCourse.degreeCurricularPlan.name = $2";
 //			oqlQuery += " and curricularCourse.degreeCurricularPlan.degree.name = $3";
 
 			query.create(oqlQuery);
 
-			query.bind(curricularSemester.getSemester());
+			query.bind(semester);
 //			query.bind(studentCurricularPlan.getDegreeCurricularPlan().getName());
 //			query.bind(studentCurricularPlan.getDegreeCurricularPlan().getDegree().getNome());
 
@@ -296,16 +293,17 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
 				throw ex;
 			}
 
-			ICurricularCourseScope curricularCourseScope = null;
+			ICurricularCourse curricularCourse = null;
 
 			if ((result != null) && (result.size() != 0)) {
 				ListIterator iterator = result.listIterator();
 				while (iterator.hasNext()) {
-					curricularCourseScope = (ICurricularCourseScope) iterator.next();
-					list.add(curricularCourseScope.getCurricularCourse());
+					curricularCourse = (ICurricularCourse) iterator.next();
+					list.add(curricularCourse);
 				}
 			}
 			return list;
+	
 
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);

@@ -1,6 +1,10 @@
 package ServidorAplicacao.strategy.enrolment.degree.strategys;
 
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentRuleBranch;
+import ServidorAplicacao.strategy.enrolment.degree.rules.EnrolmentRuleSemester;
+import ServidorAplicacao.strategy.enrolment.degree.rules.IEnrolmentRule;
+import ServidorPersistente.ExcepcaoPersistencia;
 
 /**
  * @author dcs-rjao
@@ -10,11 +14,20 @@ import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 public class EnrolmentStrategyLERCI implements IEnrolmentStrategy {
 
 	private EnrolmentContext enrolmentContext = null;
-	
+
 	public EnrolmentStrategyLERCI() {
 	}
 
-	public void getAvailableCurricularCourses(){
+	public EnrolmentContext getAvailableCurricularCourses() throws ExcepcaoPersistencia {
+		IEnrolmentRule enrolmentRule = null;
+
+		enrolmentRule = new EnrolmentRuleBranch();
+		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
+
+		enrolmentRule = new EnrolmentRuleSemester();
+		this.enrolmentContext = enrolmentRule.apply(this.enrolmentContext);
+
+		return this.enrolmentContext;
 	}
 
 	/**

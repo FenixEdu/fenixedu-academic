@@ -29,23 +29,24 @@ public class EnrolmentStrategyFactory {
 	public static final int LERCI = 1;
 
 	private static IEnrolmentStrategy strategyInstance = null;
-	
-//	private EnrolmentContext enrolmentContext = null;
-	
+
+	//	private EnrolmentContext enrolmentContext = null;
+
 	private static SuportePersistenteOJB persistentSupport = null;
 	private static IStudentCurricularPlanPersistente persistentStudentCurricularPlan = null;
 	private static IPersistentCurricularCourse persistentCurricularCourse = null;
 	private static IPersistentEnrolment persistentEnrolment = null;
 
-	public static synchronized IEnrolmentStrategy getEnrolmentStrategyInstance(int degree, EnrolmentContext enrolmentContext) throws ExcepcaoPersistencia {
+	public static synchronized IEnrolmentStrategy getEnrolmentStrategyInstance(int degree, EnrolmentContext enrolmentContext)
+		throws ExcepcaoPersistencia {
 
 		if (strategyInstance == null) {
-			switch(degree) {
-				case LERCI:
+			switch (degree) {
+				case LERCI :
 					strategyInstance = new EnrolmentStrategyLERCI();
 					strategyInstance.setEnrolmentContext(prepareEnrolmentContext(enrolmentContext));
 					break;
-				default:
+				default :
 					break;
 			}
 		}
@@ -55,7 +56,7 @@ public class EnrolmentStrategyFactory {
 	public static synchronized void resetInstance() {
 		if (strategyInstance != null) {
 			strategyInstance = null;
-		} 
+		}
 	}
 
 	private static EnrolmentContext prepareEnrolmentContext(EnrolmentContext enrolmentContext) throws ExcepcaoPersistencia {
@@ -64,16 +65,20 @@ public class EnrolmentStrategyFactory {
 		persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
 		persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 
+		if ((enrolmentContext.getStudent() == null) || (enrolmentContext.getSemester() == null) || (enrolmentContext.getDegree() == null)) {
+			throw new ExcepcaoPersistencia();
+		}
+
 		List list1 = computeCurricularCoursesFromStudentDegreeCurricularPlan(enrolmentContext.getStudent());
 		List list2 = computeAprovedCurricularCoursesFromStudent(enrolmentContext.getStudent());
-		enrolmentContext.setCurricularCoursesNotDoneByStudent(computeCurricularCoursesNotYetDoneByStudent(list1, list2));
+		enrolmentContext.setFinalCurricularCoursesSpanToBeEnrolled(computeCurricularCoursesNotYetDoneByStudent(list1, list2));
 		enrolmentContext.setCurricularCoursesDoneByStudent(list2);
-//		enrolmentContext.setStudent(student);
-//		enrolmentContext.setSemester(semester);
-//		enrolmentContext.setDegree(degree);
+
+		//		enrolmentContext.setStudent(student);
+		//		enrolmentContext.setSemester(semester);
+		//		enrolmentContext.setDegree(degree);
 		return enrolmentContext;
 	}
-
 
 	private static List computeCurricularCoursesFromStudentDegreeCurricularPlan(IStudent student) throws ExcepcaoPersistencia {
 
@@ -95,7 +100,10 @@ public class EnrolmentStrategyFactory {
 		List curricularCoursesList = null;
 
 		studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(student.getNumber(), student.getDegreeType());
-		enrolmentsList = persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(studentCurricularPlan, new EnrolmentState(EnrolmentState.APROVED));
+		enrolmentsList =
+			persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(
+				studentCurricularPlan,
+				new EnrolmentState(EnrolmentState.APROVED));
 
 		Iterator iterator = enrolmentsList.iterator();
 		curricularCoursesList = new ArrayList();
@@ -111,15 +119,16 @@ public class EnrolmentStrategyFactory {
 		List curricularCoursesFromStudentDegreeCurricularPlan,
 		List aprovedCurricularCoursesFromStudent) {
 
-//		Iterator iteratorAproved = aprovedCurricularCoursesFromStudent.iterator();
 		return (List) CollectionUtils.subtract(curricularCoursesFromStudentDegreeCurricularPlan, aprovedCurricularCoursesFromStudent);
-//		while (iteratorAproved.hasNext()) {
-//			ICurricularCourse curricularCourse = (ICurricularCourse) iteratorAproved.next();
-//			if (curricularCoursesFromStudentDegreeCurricularPlan.contains(curricularCourse)) {
-//				curricularCoursesFromStudentDegreeCurricularPlan.remove(curricularCourse);
-//			}
-//		}
-//		return curricularCoursesFromStudentDegreeCurricularPlan;
+			
+		/*Iterator iteratorAproved = aprovedCurricularCoursesFromStudent.iterator();
+		while (iteratorAproved.hasNext()) {
+			ICurricularCourse curricularCourse = (ICurricularCourse) iteratorAproved.next();
+			if (curricularCoursesFromStudentDegreeCurricularPlan.contains(curricularCourse)) {
+				curricularCoursesFromStudentDegreeCurricularPlan.remove(curricularCourse);
+			}
+		}
+		return curricularCoursesFromStudentDegreeCurricularPlan;*/
 	}
 
 }

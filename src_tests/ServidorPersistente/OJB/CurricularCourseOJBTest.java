@@ -1,11 +1,10 @@
 package ServidorPersistente.OJB;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import Dominio.CurricularCourse;
-import Dominio.CurricularYear;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularSemester;
@@ -179,7 +178,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 			fail("Delete All CurricularCourses");
 		}
 
-		ArrayList result = null;
+		List result = null;
 
 		try {
 			persistentSupport.iniciarTransaccao();
@@ -270,7 +269,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 
 	//// -------------------------------------------------------------------------------------------------------------------------------------------
 	public void testReadAllCurricularCourses() {
-		ArrayList list = null;
+		List list = null;
 
 		System.out.println("- Test 5 : Read All Existing CurricularCourses\n");
 		try {
@@ -291,7 +290,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 		// CurricularCourses existentes
 		System.out.println("- Test 6 : Read Existing CurricularCourses\n");
 
-		ArrayList list = null;
+		List list = null;
 		try {
 			persistentSupport.iniciarTransaccao();
 			list = persistentCurricularCourse.readCurricularCoursesByCurricularYear(new Integer(1));
@@ -308,7 +307,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 		// CurricularCourses existentes
 		System.out.println("- Test 7 : Read Existing CurricularCourses\n");
 
-		ArrayList list = null;
+		List list = null;
 		try {
 			persistentSupport.iniciarTransaccao();
 			list = persistentCurricularCourse.readCurricularCoursesByCurricularSemester(new Integer(1));
@@ -354,7 +353,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 			fail("Read Existing CurricularCourse");
 		}
 
-		ArrayList list = null;
+		List list = null;
 		try {
 			persistentSupport.iniciarTransaccao();
 			list = persistentCurricularCourse.readCurricularCoursesByDegreeCurricularPlan(degreeCurricularPlan);
@@ -373,14 +372,14 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 		
 		try {
 			persistentSupport.iniciarTransaccao();
-			branch = persistentBranch.readBranchByNameAndCode("Inteligencia Artificial", "IA");
+			branch = persistentBranch.readBranchByNameAndCode("", "");
 			assertNotNull(branch);
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex2) {
 			fail("Reading Branch");
 		}
 
-		ArrayList list = null;
+		List list = null;
 		try {
 			persistentSupport.iniciarTransaccao();
 			list = persistentCurricularCourse.readAllCurricularCoursesByBranch(branch);
@@ -389,7 +388,7 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 			fail("Read All Curricular Courses Scope By Branch");
 		}
 		assertNotNull(list);
-		assertEquals(list.size(), 1);
+		assertEquals(list.size(), 9);
 	}
 
 	public void testReadAllCurricularCoursesBySemester() {
@@ -397,25 +396,16 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 		System.out.println("- Test 11 : Read All Curricular Courses Scope By Semester\n");
 		ICurricularSemester curricularSemester = null;
 		
+		List list = null;
 		try {
 			persistentSupport.iniciarTransaccao();
-			curricularSemester = persistentCurricularSemester.readCurricularSemesterBySemesterAndCurricularYear(new Integer(1),new CurricularYear(new Integer(2)));
-			assertNotNull(curricularSemester);
-			persistentSupport.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia ex2) {
-			fail("Reading Semester");
-		}
-
-		ArrayList list = null;
-		try {
-			persistentSupport.iniciarTransaccao();
-			list = persistentCurricularCourse.readAllCurricularCoursesBySemester(curricularSemester);
+			list = persistentCurricularCourse.readAllCurricularCoursesBySemester(new Integer(1));
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex2) {
 			fail("Read All Curricular Courses Scope By Semester");
 		}
 		assertNotNull(list);
-		assertEquals(list.size(), 3);
+		assertEquals(list.size(), 6);
 	}
 
 }
