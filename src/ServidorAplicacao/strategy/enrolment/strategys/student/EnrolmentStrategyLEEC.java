@@ -14,7 +14,6 @@ import Dominio.CurricularCourseGroup;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseGroup;
-import Dominio.ICurricularCourseScope;
 import Dominio.IEnrolment;
 import Dominio.IExecutionPeriod;
 import Dominio.IScientificArea;
@@ -216,7 +215,7 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 
 		selectDesiredCurricularCourses(enrollmentsWithAprovedState, baseAreasCurricularCourses);
 		selectDesiredCurricularCourses(enrollmentsWithEnrolledState, baseAreasCurricularCourses);
-//		selectDesiredCurricularCourses(commonAreasCurricularCourses, executionPeriod.getSemester());
+//		selectDesiredCurricularCourses(baseAreasCurricularCourses, executionPeriod.getSemester());
 
 		return baseAreasCurricularCourses;
 	}
@@ -376,7 +375,7 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 			finalListOfCurricularCourses.addAll(intersection);
 			selectDesiredCurricularCourses(enrollmentsWithAprovedState, finalListOfCurricularCourses);
 			selectDesiredCurricularCourses(enrollmentsWithEnrolledState, finalListOfCurricularCourses);
-			selectDesiredCurricularCourses(finalListOfCurricularCourses, semester);
+//			selectDesiredCurricularCourses(finalListOfCurricularCourses, semester);
 		}
 		return finalListOfCurricularCourses;
 	}
@@ -404,31 +403,31 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 	 * @param curricularCoursesToRemoveFrom
 	 * @param semester
 	 */
-	private void selectDesiredCurricularCourses(List curricularCoursesToRemoveFrom, Integer semester)
-	{
-		List curricularCoursesToRemove = new ArrayList();
-		Iterator iterator = curricularCoursesToRemoveFrom.iterator();
-		while(iterator.hasNext())
-		{
-			ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
-			List scopes = curricularCourse.getScopes();
-			boolean courseIsToMantain = false;
-			Iterator iteratorScopes = scopes.iterator();
-			while(iteratorScopes.hasNext())
-			{
-				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iteratorScopes.next();
-				if (curricularCourseScope.getCurricularSemester().getSemester().equals(semester))
-				{
-					courseIsToMantain = true;
-				}
-			}
-			if (!courseIsToMantain)
-			{
-				curricularCoursesToRemove.add(curricularCourse);
-			}
-		}
-		curricularCoursesToRemoveFrom.removeAll(curricularCoursesToRemove);
-	}
+//	private void selectDesiredCurricularCourses(List curricularCoursesToRemoveFrom, Integer semester)
+//	{
+//		List curricularCoursesToRemove = new ArrayList();
+//		Iterator iterator = curricularCoursesToRemoveFrom.iterator();
+//		while(iterator.hasNext())
+//		{
+//			ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
+//			List scopes = curricularCourse.getScopes();
+//			boolean courseIsToMantain = false;
+//			Iterator iteratorScopes = scopes.iterator();
+//			while(iteratorScopes.hasNext())
+//			{
+//				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iteratorScopes.next();
+//				if (curricularCourseScope.getCurricularSemester().getSemester().equals(semester))
+//				{
+//					courseIsToMantain = true;
+//				}
+//			}
+//			if (!courseIsToMantain)
+//			{
+//				curricularCoursesToRemove.add(curricularCourse);
+//			}
+//		}
+//		curricularCoursesToRemoveFrom.removeAll(curricularCoursesToRemove);
+//	}
 	
 	/**
 	 * @param studentCurricularPlan

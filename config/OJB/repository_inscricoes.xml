@@ -347,14 +347,14 @@
 			element-class-ref="Dominio.ExecutionCourse"
 			indirection-table="CURRICULAR_COURSE_EXECUTION_COURSE"
 			auto-retrieve="true"
-			proxy="false">
+			proxy="true">
 		<fk-pointing-to-this-class column="KEY_CURRICULAR_COURSE"/>
 		<fk-pointing-to-element-class column="KEY_EXECUTION_COURSE"/>
 	</collection-descriptor>
 	<collection-descriptor
 			name="scopes"
 			element-class-ref="Dominio.CurricularCourseScope"
-			proxy="false">
+			proxy="true">
 		<inverse-foreignkey field-ref="curricularCourseKey"/>
 	</collection-descriptor>    
 </class-descriptor>
