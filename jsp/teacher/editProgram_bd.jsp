@@ -27,6 +27,8 @@
 	</tr>
 </table>
 <br />
+<bean:define id="curricularCourseCode" name="curricularCourseCode"/>
+<html:hidden property="curricularCourseCode" value="<%= curricularCourseCode.toString() %>"/>
 <html:hidden property="method" value="editProgram"/>
 <html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
 <html:submit styleClass="inputbutton">

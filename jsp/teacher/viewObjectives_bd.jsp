@@ -14,11 +14,9 @@
 
 <logic:present name="siteView">
 <bean:define id="component" name="siteView" property="component"/>
-<bean:define id="infoCurriculums" name="component" property="infoCurriculums"/>
+<bean:define id="infoCurriculums" name="component" property="infoCurriculums" type="java.util.List"/>
+<logic:notEqual name="component" property="size" value="0">
 
-<logic:empty name="infoCurriculums">
-<h2><bean:message key="message.teacher.scientificCouncilControl.objectives"/></h2>
-</logic:empty>	
 <logic:iterate id="objectives" name="infoCurriculums">
 
 
@@ -75,11 +73,36 @@
 </table>
 <br />	
 <bean:define id="curriculumId" name="objectives" property="idInternal"/>
+<logic:equal name="objectives" property="infoCurricularCourse.basic" value="false">
+<bean:define id="curricularCourseCode" name="objectives" property="infoCurricularCourse.idInternal"/>
 <div class="gen-button">
-	<html:link page="<%= "/objectivesManagerDA.do?method=prepareEditObjectives&amp;objectCode=" + pageContext.findAttribute("objectCode")+"&amp;curriculumCode="+ pageContext.findAttribute("curriculumId")%>">
+	<html:link page="<%= "/objectivesManagerDA.do?method=prepareEditObjectives&amp;objectCode=" + pageContext.findAttribute("objectCode")+"&amp;curriculumCode="+ pageContext.findAttribute("curriculumId")+"&amp;curricularCourseCode="+ pageContext.findAttribute("curricularCourseCode")%>">
 		<bean:message key="button.edit"/>
 	</html:link>
 </div>
+</logic:equal>
 </logic:iterate>
+</logic:notEqual>
+<logic:equal name="component" property="size"  value="0">
+<bean:define id="infoCurricularCourses" name="component" property="infoCurricularCourses"/>
+<logic:iterate id="infoCurricularCourse" name="infoCurricularCourses">
+
+
+</logic:empty>
+<h2><bean:message key="title.objectives"/></h2>
+<h3><bean:write name="infoCurricularCourse" property="name"/></h3>
+<h3><bean:write name="infoCurricularCourse" property="infoDegreeCurricularPlan.infoDegree.nome"/></h3>
+
+<br />	
+<bean:define id="curricularCourseId" name="infoCurricularCourse" property="idInternal"/>
+<logic:equal name="infoCurricularCourse" property="basic" value="false">
+<div class="gen-button">
+	<html:link page="<%= "/objectivesManagerDA.do?method=prepareEditObjectives&amp;objectCode=" + pageContext.findAttribute("objectCode")+"&amp;curricularCourseCode="+ pageContext.findAttribute("curricularCourseId")%>">
+		<bean:message key="button.edit"/>
+	</html:link>
+</div>
+</logic:equal>
+</logic:iterate>
+</logic:equal>
 
 </logic:present>

@@ -13,9 +13,29 @@ import java.util.List;
  * 
  */
 public class InfoSiteProgram implements ISiteComponent {
+	private List infoCurricularCourses;
 	private List infoCurriculums;
 	private String program;
 	private String programEn;
+
+
+	public int getSize(){
+		return infoCurriculums.size();
+	}
+
+	/**
+	 * @return
+	 */
+	public List getInfoCurricularCourses() {
+		return infoCurricularCourses;
+	}
+
+	/**
+	 * @param infoCurricularCourses
+	 */
+	public void setInfoCurricularCourses(List infoCurricularCourses) {
+		this.infoCurricularCourses = infoCurricularCourses;
+	}
 
 	/**
 	 * @return

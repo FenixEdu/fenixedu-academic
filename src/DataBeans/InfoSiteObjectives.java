@@ -14,12 +14,30 @@ import java.util.List;
  */
 public class InfoSiteObjectives implements ISiteComponent {
 
-
+	private List infoCurricularCourses;
 	private List infoCurriculums;
 	private String generalObjectives;
 	private String operacionalObjectives;
 	private String generalObjectivesEn;
 	private String operacionalObjectivesEn;
+
+
+	public int getSize() {
+		return infoCurriculums.size();
+	}
+	/**
+	 * @return
+	 */
+	public List getInfoCurricularCourses() {
+		return infoCurricularCourses;
+	}
+
+	/**
+	 * @param infoCurricularCourses
+	 */
+	public void setInfoCurricularCourses(List infoCurricularCourses) {
+		this.infoCurricularCourses = infoCurricularCourses;
+	}
 
 	/**
 	 * @return
