@@ -198,7 +198,7 @@ public class Section implements ISection {
 			result = (getName().equals(((ISection) arg0).getName()))&&
 				(getSectionOrder().equals(((ISection) arg0).getSectionOrder()))&&
 				(getSite().equals(((ISection) arg0).getSite()))&&				
-				(getSuperiorSection().equals(((ISection) arg0).getSuperiorSection()));
+				((getSuperiorSection() == null && ((ISection)arg0).getSuperiorSection() == null ) || (getSuperiorSection().equals(((ISection) arg0).getSuperiorSection())));
 		} 
 		return result;		
 	}
