@@ -8,21 +8,21 @@
 <html:form action="/insertGratuityDataDA">  
 	<html:hidden property="method" value="prepareInsertGratuityData" />
 	<logic:present name="showNextSelects">
-		<html:hidden property="executionPeriod"/>
-		<html:hidden property="executionPeriodName"/>
+		<html:hidden property="executionYear"/>
+		<html:hidden property="executionYearName"/>
 		<html:hidden property="page" value="1"/>
 	</logic:present>
 	<table>
 		<tr>
 			<td>
-				<bean:message key="label.manager.executionCourseManagement.executionPeriod"/>
+				<bean:message key="label.masterDegree.gratuity.executionYear"/>
 			</td>
 			<td>
-				<html:select property="executionPeriod" onchange="document.insertGratuityDataForm.method.value='prepareInsertGratuityDataChooseDegree';document.insertGratuityDataForm.submit();">
+				<html:select property="executionYear" onchange="document.insertGratuityDataForm.method.value='prepareInsertGratuityDataChooseDegree';document.insertGratuityDataForm.submit();">
 					<html:option value="" key="label.manager.executionCourseManagement.select">
 						<bean:message key="label.manager.executionCourseManagement.select"/>
 					</html:option>
-					<html:optionsCollection name="<%= SessionConstants.LIST_EXECUTION_PERIODS %>"/>
+					<html:optionsCollection name="executionYears"/>
 				</html:select>
 			</td>
 		</tr>

@@ -24,6 +24,7 @@ import org.apache.struts.validator.DynaValidatorForm;
 import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
+import DataBeans.InfoExecutionYear;
 import DataBeans.InfoGratuityValues;
 import DataBeans.InfoPaymentPhase;
 import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
@@ -36,6 +37,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.Data;
 import Util.PeriodState;
 import Util.Specialization;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author Fernanda Quitério 7/Jan/2003
@@ -53,73 +55,51 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 	{
 		IUserView userView = SessionUtils.getUserView(request);
 
-		List infoExecutionPeriods = null;
+		//execution years
+		List executionYears = null;
+		Object[] args = {
+		};
 		try
 		{
-			infoExecutionPeriods =
-				(List) ServiceUtils.executeService(userView, "ReadExecutionPeriods", null);
+			executionYears =
+			(List) ServiceManagerServiceFactory.executeService(null, "ReadNotClosedExecutionYears", args);
 		}
-		catch (FenixServiceException ex)
+		catch (FenixServiceException e)
 		{
 			throw new FenixActionException();
 		}
-
-		if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty())
+		
+		if (executionYears != null && !executionYears.isEmpty())
 		{
-			infoExecutionPeriods = excludeClosedExecutionPeriods(infoExecutionPeriods);
 			ComparatorChain comparator = new ComparatorChain();
-			comparator.addComparator(new BeanComparator("infoExecutionYear.year"), true);
-			comparator.addComparator(new BeanComparator("name"), true);
-			Collections.sort(infoExecutionPeriods, comparator);
+			comparator.addComparator(new BeanComparator("year"), true);
+			Collections.sort(executionYears, comparator);
 
-			List executionPeriodLabels = buildLabelValueBeanForJsp(infoExecutionPeriods);
-			request.setAttribute(SessionConstants.LIST_EXECUTION_PERIODS, executionPeriodLabels);
+			List executionYearLabels = buildLabelValueBeanForJsp(executionYears);
+			request.setAttribute("executionYears", executionYearLabels);
 		}
 		return mapping.findForward("prepareInsertGratuityData");
 
 	}
 
-	private List excludeClosedExecutionPeriods(List infoExecutionPeriods)
+	private List buildLabelValueBeanForJsp(List infoExecutionYears)
 	{
-		// exclude closed execution periods
-		infoExecutionPeriods = (List) CollectionUtils.select(infoExecutionPeriods, new Predicate()
-		{
-			public boolean evaluate(Object input)
-			{
-				InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) input;
-				if (!infoExecutionPeriod.getState().equals(PeriodState.CLOSED))
-				{
-					return true;
-				}
-				return false;
-			}
-		});
-		return infoExecutionPeriods;
-	}
-
-	private List buildLabelValueBeanForJsp(List infoExecutionPeriods)
-	{
-		List executionPeriodLabels = new ArrayList();
-		CollectionUtils.collect(infoExecutionPeriods, new Transformer()
+		List executionYearLabels = new ArrayList();
+		CollectionUtils.collect(infoExecutionYears, new Transformer()
 		{
 			public Object transform(Object arg0)
 			{
-				InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) arg0;
+				InfoExecutionYear infoExecutionYear = (InfoExecutionYear) arg0;
 
-				LabelValueBean executionPeriod =
-					new LabelValueBean(
-						infoExecutionPeriod.getName()
-							+ " - "
-							+ infoExecutionPeriod.getInfoExecutionYear().getYear(),
-						infoExecutionPeriod.getName()
-							+ " - "
-							+ infoExecutionPeriod.getInfoExecutionYear().getYear()
+				LabelValueBean executionYear =
+					new LabelValueBean(infoExecutionYear.getYear(),
+							infoExecutionYear.getYear()
 							+ "#"
-							+ infoExecutionPeriod.getIdInternal().toString());
-				return executionPeriod;
+							+ infoExecutionYear.getIdInternal().toString());
+				return executionYear;
 			}
-		}, executionPeriodLabels);
-		return executionPeriodLabels;
+		}, executionYearLabels);
+		return executionYearLabels;
 	}
 
 	public ActionForward prepareInsertGratuityDataChooseDegree(
@@ -131,17 +111,17 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 	{
 		IUserView userView = SessionUtils.getUserView(request);
 
-		Integer executionPeriodId =
-			separateLabel(form, request, "executionPeriod", "executionPeriodName");
+		Integer executionYearId =
+			separateLabel(form, request, "executionYear", "executionYearName");
 
-		Object args[] = { executionPeriodId };
+		Object args[] = { executionYearId };
 		List executionDegreeList = null;
 		try
 		{
 			executionDegreeList =
-				(List) ServiceUtils.executeService(
+				(List) ServiceManagerServiceFactory.executeService(
 					userView,
-					"ReadExecutionDegreesByExecutionPeriodIdForGratuity",
+					"ReadExecutionDegreesByExecutionYear",
 					args);
 		}
 		catch (FenixServiceException e)
@@ -228,32 +208,35 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 		throws FenixActionException
 	{
 		IUserView userView = SessionUtils.getUserView(request);
-
-		//		InfoGratuity infoGratuity = null;
-		//		try
-		//		{
-		//			infoGratuity =
-		//			(InfoGratuity) ServiceUtils.executeService(userView, "ReadGratuityDataByExecutionDegreeId",
-		// null);
-		//		}
-		//		catch (FenixServiceException ex)
-		//		{
-		//			throw new FenixActionException();
-		//		}
+		DynaValidatorForm gratuityForm = (DynaValidatorForm) form;
+		
+		String degree = (String) gratuityForm.get("degree");
+		Integer degreeId =
+		separateLabel(form, request, "degree", "degreeName");
 
 		InfoGratuityValues infoGratuityValues = new InfoGratuityValues();
+		Object args[] = { degreeId };
+		try
+		{
+			infoGratuityValues =
+				(InfoGratuityValues) ServiceManagerServiceFactory.executeService(
+					userView,
+					"ReadGratuityValuesByExecutionDegree",
+					null);
+		}
+		catch (FenixServiceException ex)
+		{
+			throw new FenixActionException();
+		}
+		
+		fillForm(gratuityForm, infoGratuityValues);
 
-		fillForm(form, infoGratuityValues);
-
-		request.setAttribute("infoGratuityValues", infoGratuityValues);
+		request.setAttribute("infoPaymentPhases", infoGratuityValues.getInfoPaymentPhases());
 		return mapping.findForward("insertGratuityData");
-
 	}
 
-	private void fillForm(ActionForm form, InfoGratuityValues infoGratuityValues)
+	private void fillForm(DynaValidatorForm aForm, InfoGratuityValues infoGratuityValues)
 	{
-		DynaValidatorForm aForm = (DynaValidatorForm) form;
-
 		aForm.set("annualValue", infoGratuityValues.getAnualValue());
 		aForm.set("scholarPart", infoGratuityValues.getScholarShipValue());
 		aForm.set("thesisPart", infoGratuityValues.getFinalProofValue());
@@ -287,32 +270,13 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 			&& infoGratuityValues.getInfoPaymentPhases().size() > 0)
 		{
 			aForm.set("partialPayment", Boolean.TRUE);
-			InfoPaymentPhase infoPaymentPhase =
-				(
-					InfoPaymentPhase) CollectionUtils
-						.find(infoGratuityValues.getInfoPaymentPhases(), new Predicate()
-			{
-				public boolean evaluate(Object arg0)
-				{
-					InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) arg0;
 
-					if (infoPaymentPhase.getDescription() != null
-						&& infoPaymentPhase.getDescription().equals(
-							ServidorApresentacao
-								.Action
-								.masterDegree
-								.utils
-								.SessionConstants
-								.REGISTRATION_PAYMENT))
-					{
-						return true;
-					}
-					return false;
-				}
-			});
-			if (infoPaymentPhase != null)
+			if (infoGratuityValues.getRegistrationPayment().booleanValue())
 			{
-				aForm.set("registrationPayment", Boolean.TRUE);
+				aForm.set("registrationPayment", infoGratuityValues.getRegistrationPayment());
+
+				InfoPaymentPhase infoPaymentPhase = findRegistrationPayment(infoGratuityValues);
+
 				aForm.set(
 					"finalDateRegistrationPayment",
 					Data.format2DayMonthYear(infoPaymentPhase.getEndDate(), "/"));
@@ -323,30 +287,62 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 						"initialDateRegistrationPayment",
 						Data.format2DayMonthYear(infoPaymentPhase.getStartDate(), "/"));
 				}
+
+				removeRegistrationPaymentFromPhases(infoGratuityValues);
 			}
-
-			CollectionUtils.filter(infoGratuityValues.getInfoPaymentPhases(), new Predicate()
-			{
-				public boolean evaluate(Object arg0)
-				{
-					InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) arg0;
-
-					if (infoPaymentPhase.getDescription() != null
-						&& !infoPaymentPhase.getDescription().equals(
-							ServidorApresentacao
-								.Action
-								.masterDegree
-								.utils
-								.SessionConstants
-								.REGISTRATION_PAYMENT))
-					{
-						return true;
-					}
-					return false;
-				}
-			});
-
 			Collections.sort(infoGratuityValues.getInfoPaymentPhases(), new BeanComparator("endDate"));
 		}
+	}
+
+	private void removeRegistrationPaymentFromPhases(InfoGratuityValues infoGratuityValues)
+	{
+		CollectionUtils.filter(infoGratuityValues.getInfoPaymentPhases(), new Predicate()
+		{
+			public boolean evaluate(Object arg0)
+			{
+				InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) arg0;
+
+				if (infoPaymentPhase.getDescription() != null
+					&& !infoPaymentPhase.getDescription().equals(
+						ServidorApresentacao
+							.Action
+							.masterDegree
+							.utils
+							.SessionConstants
+							.REGISTRATION_PAYMENT))
+				{
+					return true;
+				}
+				return false;
+			}
+		});
+	}
+
+	private InfoPaymentPhase findRegistrationPayment(InfoGratuityValues infoGratuityValues)
+	{
+		InfoPaymentPhase infoPaymentPhase =
+			(
+				InfoPaymentPhase) CollectionUtils
+					.find(infoGratuityValues.getInfoPaymentPhases(), new Predicate()
+		{
+			public boolean evaluate(Object arg0)
+			{
+				InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) arg0;
+
+				if (infoPaymentPhase.getDescription() != null
+					&& infoPaymentPhase.getDescription().equals(
+						ServidorApresentacao
+							.Action
+							.masterDegree
+							.utils
+							.SessionConstants
+							.REGISTRATION_PAYMENT))
+				{
+					return true;
+				}
+				return false;
+			}
+		});
+		return infoPaymentPhase;
 	}
 }

@@ -5,12 +5,27 @@
 <%@ page import="Util.Data"%>
 <h2><bean:message key="link.masterDegree.gratuity.insert"/></h2>
 <span class="error"><html:errors/></span>
+<p />
 <html:form action="/insertGratuityDataLA.do"> 
 	<html:hidden property="page" value="2"/>
 	<html:hidden property="executionPeriod"/>
 	<html:hidden property="executionPeriodName"/>
 	<html:hidden property="degree"/>
+	<html:hidden property="degreeName"/>
 	<html:hidden property="specializationArea"/>	
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+		<tr>
+			<td align="center" class="infoselected">
+				<bean:define id="label" property="executionYearName"/>
+				<b><bean:message key="label.masterDegree.gratuity.executionYear" /></b>&nbsp;<bean:write name="label"/><br />
+				<bean:define id="labelExecutionDegree" property="degreName"/>
+				<b><bean:message key="label.qualification.degree"/></b>&nbsp;<bean:write name="labelExecutionDegree"/><br />
+				<bean:define id="labelSpecializationArea" property="specializationArea"/>
+				<b><bean:message key="label.masterDegree.gratuity.specializationArea"/></b>&nbsp;<bean:write name="labelSpecializationArea"/><br />
+
+			</td>
+		</tr>
+	</table>
 	<table>
 		<%-- Gratuity Values --%>
 		<tr>

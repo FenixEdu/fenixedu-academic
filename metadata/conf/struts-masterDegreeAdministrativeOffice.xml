@@ -612,8 +612,8 @@
                  dynamic="true">
 
             <form-property name="page" type="java.lang.Integer" />
-            <form-property name="executionPeriod" type="java.lang.String"/>
-            <form-property name="executionPeriodName" type="java.lang.String"/>
+            <form-property name="executionYear" type="java.lang.String"/>
+            <form-property name="executionYearName" type="java.lang.String"/>
             <form-property name="specializationArea" type="java.lang.String"/>
             <form-property name="degree" type="java.lang.String"/>
             <form-property name="degreeName" type="java.lang.String"/>

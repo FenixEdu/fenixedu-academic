@@ -139,4 +139,13 @@ public class ExecutionYearOJB
 		criteria.addEqualTo("state", PeriodState.CURRENT);
 		return (IExecutionYear) queryObject(ExecutionYear.class, criteria);
 	}
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.IPersistentExecutionYear#readNotClosedExecutionYears()
+	 */
+	public List readNotClosedExecutionYears() throws ExcepcaoPersistencia
+	{
+		Criteria criteria = new Criteria();
+		criteria.addNotEqualTo("state", PeriodState.CLOSED);
+		return queryList(ExecutionYear.class, criteria);
+	}
 }

@@ -1,6 +1,7 @@
 package ServidorPersistente;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import Dominio.IExecutionYear;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -23,6 +24,11 @@ public interface IPersistentExecutionYear extends IPersistentObject {
 	 * @return ArrayList
 	 */
 	public ArrayList readAllExecutionYear()throws ExcepcaoPersistencia;
+	/**
+	 * 
+	 * @return ArrayList
+	 */
+	public List readNotClosedExecutionYears()throws ExcepcaoPersistencia;	
 	/**
 	 * 
 	 * @param executionYear

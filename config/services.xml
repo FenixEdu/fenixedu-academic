@@ -5372,15 +5372,6 @@
     	<isTransactional>true</isTransactional>
         <filterChains/>                    	
     </service>
-   	<service>
-		<name>ReadExecutionDegreesByExecutionPeriodIdForGratuity</name>
-		<implementationClass>ServidorAplicacao.Servico.manager.executionCourseManagement.ReadExecutionDegreesByExecutionPeriodId</implementationClass>
-		<description/>
-		<isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
-        </filterChains>
-    </service>
     <service>
         <name>EditGrantContract</name>
         <implementationClass>ServidorAplicacao.Servico.grant.contract.EditGrantContract</implementationClass>
@@ -5478,6 +5469,15 @@
     	<name>InsertGratuityData</name>
     	<description>This service create a gratuity data about a execution degree, but if already exists only change it</description>
     	<implementation>ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.InsertGratuityData</implementation>
+    	<isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+    	<name>ReadNotClosedExecutionYears</name>
+    	<description>Retrieves only current and future execution years</description>
+    	<implementation>ServidorAplicacao.Servico.commons.ReadNotClosedExecutionYears</implementation>
     	<isTransactional>True</isTransactional>
         <filterChains>
             <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
