@@ -1,12 +1,11 @@
 package Dominio;
 
-import java.io.Serializable;
 
 /**
  * @author Fernanda & Tânia
  *
  */
-public interface ITeacherShiftPercentage extends Serializable {
+public interface ITeacherShiftPercentage extends IDomainObject {
 	IProfessorship getProfessorShip();
 	void setProfessorShip(IProfessorship professorShip);
 	 

@@ -14,7 +14,7 @@ import java.util.List;
 
 import Util.TipoAula;
 
-public interface ITurno {
+public interface ITurno extends IDomainObject {
   public String getNome();
   public TipoAula getTipo();
   public Integer getLotacao();
@@ -27,4 +27,7 @@ public interface ITurno {
   
   public List getAssociatedTeacherProfessorShipPercentage();
   public void setAssociatedTeacherProfessorShipPercentage(List list);
+  
+  List getAssociatedLessons();
+  void setAssociatedLessons(List lessons);
 }
