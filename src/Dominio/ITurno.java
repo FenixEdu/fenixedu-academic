@@ -10,6 +10,8 @@ package Dominio;
  *
  * @author  tfc130
  */
+import java.util.List;
+
 import Util.TipoAula;
 
 public interface ITurno {
@@ -22,4 +24,7 @@ public interface ITurno {
   public void setTipo(TipoAula tipo);
   public void setLotacao(Integer Lotacao);
   public void setDisciplinaExecucao(IDisciplinaExecucao disciplinaExecucao);
+  
+  public List getAssociatedTeacherProfessorShipPercentage();
+  public void setAssociatedTeacherProfessorShipPercentage(List list);
 }
