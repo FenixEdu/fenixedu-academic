@@ -51,7 +51,15 @@ public class FileUtils {
     public static void writeFile(final String filename, final String fileContents, final boolean append)
             throws IOException {
         synchronized (fileWriterSynch) {
-            final FileWriter fileWriter = new FileWriter(filename, append);
+            File file = new File(filename);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            final FileWriter fileWriter = new FileWriter(file, append);
+
+            System.out.println("Appending to file: " + filename + " - " + fileContents);
+
             fileWriter.write(fileContents);
             fileWriter.close();
         }
