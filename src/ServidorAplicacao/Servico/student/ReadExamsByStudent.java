@@ -11,9 +11,11 @@ import org.apache.commons.collections.Transformer;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExam;
 import DataBeans.InfoExamStudentRoom;
+import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoRoom;
+import DataBeans.InfoStudent;
 import DataBeans.InfoStudentSiteExams;
 import DataBeans.SiteView;
-import DataBeans.util.Cloner;
 import Dominio.Exam;
 import Dominio.IEvaluation;
 import Dominio.IExam;
@@ -33,14 +35,6 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 
 public class ReadExamsByStudent implements IService {
-
-    /**
-     * The actor of this class.
-     */
-    public ReadExamsByStudent() {
-    }
-
-    //TODO: filtrar os exames por período de inscrição
 
     public Object run(String username) {
 
@@ -64,28 +58,27 @@ public class ReadExamsByStudent implements IService {
 
                     InfoExamStudentRoom infoExamStudentRoom = new InfoExamStudentRoom();
                     infoExamStudentRoom.setIdInternal(examStudentRoom.getIdInternal());
-                    infoExamStudentRoom
-                            .setInfoExam(Cloner.copyIExam2InfoExam(examStudentRoom.getExam()));
+                    InfoExam infoExam = InfoExam.newInfoFromDomain(examStudentRoom.getExam());
+                    infoExamStudentRoom.setInfoExam(infoExam);
                     infoExamStudentRoom.getInfoExam().setInfoExecutionCourses(
                             (List) CollectionUtils.collect(examStudentRoom.getExam()
                                     .getAssociatedExecutionCourses(), new Transformer() {
 
                                 public Object transform(Object arg0) {
-
-                                    return Cloner.get((IExecutionCourse) arg0);
+                                    return InfoExecutionCourse.newInfoFromDomain((IExecutionCourse) arg0);
                                 }
                             }));
-                    infoExamStudentRoom.setInfoStudent(Cloner.copyIStudent2InfoStudent(examStudentRoom
-                            .getStudent()));
+                    InfoStudent infoStudent = InfoStudent.newInfoFromDomain(examStudentRoom.getStudent());
+                    infoExamStudentRoom.setInfoStudent(infoStudent);
                     if (examStudentRoom.getRoom() != null) {
-                        infoExamStudentRoom.setInfoRoom(Cloner.copyRoom2InfoRoom(examStudentRoom
-                                .getRoom()));
+                        InfoRoom infoRoom = InfoRoom.newInfoFromDomain(examStudentRoom.getRoom());
+                        infoExamStudentRoom.setInfoRoom(infoRoom);
                     }
                     infoExamStudentRoomList.add(infoExamStudentRoom);
                     examsEnrolled.add(examStudentRoom.getExam());
                 }
 
-                List attends = sp.getIFrequentaPersistente().readByStudentNumber(student.getNumber());
+                List attends = sp.getIFrequentaPersistente().readByStudentNumber(student.getNumber(), student.getDegreeType());
 
                 Iterator examsToEnrollIterator = attends.iterator();
                 while (examsToEnrollIterator.hasNext()) {
@@ -103,13 +96,12 @@ public class ReadExamsByStudent implements IService {
                         IExam exam = (IExam) evaluation;
 
                         if (isInDate(exam)) {
-                            InfoExam infoExam = Cloner.copyIExam2InfoExam(exam);
+                            InfoExam infoExam = InfoExam.newInfoFromDomain(exam);
                             infoExam.setInfoExecutionCourses((List) CollectionUtils.collect(exam
                                     .getAssociatedExecutionCourses(), new Transformer() {
 
                                 public Object transform(Object arg0) {
-
-                                    return Cloner.get((IExecutionCourse) arg0);
+                                    return InfoExecutionCourse.newInfoFromDomain((IExecutionCourse) arg0);
                                 }
                             }));
 

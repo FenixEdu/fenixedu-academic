@@ -27,13 +27,10 @@ import DataBeans.InfoGroupProperties;
 import DataBeans.InfoShift;
 import DataBeans.InfoShiftWithInfoExecutionCourseAndInfoLessons;
 import DataBeans.InfoSiteCommon;
-import DataBeans.InfoStudent;
 import DataBeans.InfoStudentGroup;
 import DataBeans.InfoStudentGroupWithInfoShift;
-import DataBeans.InfoStudentWithInfoPerson;
 import DataBeans.TeacherAdministrationSiteView;
 import Dominio.ExecutionCourse;
-import Dominio.ICurricularCourse;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrollment;
 import Dominio.IExecutionCourse;
@@ -51,7 +48,6 @@ import ServidorAplicacao.Factory.TeacherAdministrationSiteComponentBuilder;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentEnrollment;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.IPersistentStudentGroupAttend;
@@ -67,11 +63,6 @@ import Util.TipoAula;
  */
 public class ReadStudentsWithAttendsByExecutionCourse implements IService {
 
-    public ReadStudentsWithAttendsByExecutionCourse() {
-
-    }
-    
-    
     //doesnt allow an empty list 
     private IStudentCurricularPlan GetLastCurricularPlan(List cps){
         Iterator i = cps.iterator();
@@ -202,7 +193,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
 	                    IStudent student = attendance.getAluno();
 	                
 	                    try {
-	                        ITurnoAluno ta = (ITurnoAluno)sp.getITurnoAlunoPersistente().readByTurnoAndAluno(turno, student);
+	                        ITurnoAluno ta = sp.getITurnoAlunoPersistente().readByTurnoAndAluno(turno, student);
 	                        
 	                        if (ta != null)
 	                            collectedAttends.add(attendance);
@@ -309,49 +300,6 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
         }
     }
 
-    private List getCurricularCourseStudents(ICurricularCourse curricularCourse, ISuportePersistente sp)
-            throws ExcepcaoPersistencia {
-        List infoStudentList;
-        IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
-
-        List enrolments = persistentEnrolment.readByCurricularCourse(curricularCourse);
-
-        infoStudentList = (List) CollectionUtils.collect(enrolments, new Transformer() {
-            public Object transform(Object input) {
-                IEnrollment enrolment = (IEnrollment) input;
-                IStudent student = enrolment.getStudentCurricularPlan().getStudent();
-                //CLONER
-                //InfoStudent infoStudent =
-                // Cloner.copyIStudent2InfoStudent(student);
-                InfoStudent infoStudent = InfoStudentWithInfoPerson.newInfoFromDomain(student);
-                return infoStudent;
-            }
-        });
-        return infoStudentList;
-    }
-
-    private List getAllAttendingStudents(ISuportePersistente sp, IExecutionCourse executionCourse)
-            throws ExcepcaoPersistencia {
-        List infoStudentList;
-        //	all students that attend this execution course
-        IFrequentaPersistente frequentaPersistente = sp.getIFrequentaPersistente();
-        List attendList = frequentaPersistente.readByExecutionCourse(executionCourse);
-
-        infoStudentList = (List) CollectionUtils.collect(attendList, new Transformer() {
-
-            public Object transform(Object input) {
-                IFrequenta attend = (IFrequenta) input;
-                IStudent student = attend.getAluno();
-                //CLONER
-                //InfoStudent infoStudent =
-                // Cloner.copyIStudent2InfoStudent(student);
-                InfoStudent infoStudent = InfoStudentWithInfoPerson.newInfoFromDomain(student);
-                return infoStudent;
-            }
-        });
-        return infoStudentList;
-    }
-
     private TeacherAdministrationSiteView createSiteView(InfoForReadStudentsWithAttendsByExecutionCourse infoSiteStudents, ISite site)
     throws FenixServiceException {
         
@@ -397,7 +345,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
         while(it.hasNext()){
             ITurno sh = (ITurno)it.next();
             try {
-                ITurnoAluno ta = (ITurnoAluno)sp.getITurnoAlunoPersistente().readByTurnoAndAluno(sh, attend.getAluno());
+                ITurnoAluno ta = sp.getITurnoAlunoPersistente().readByTurnoAndAluno(sh, attend.getAluno());
                 
                 if (ta != null)
                     result.put(sh.getTipo().getSiglaTipoAula(),InfoShift.newInfoFromDomain(sh));//result.get(sh.getTipo())
@@ -516,13 +464,3 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
         return result;
     }
 }
-
-
-
-
-
-
-
-
-
-

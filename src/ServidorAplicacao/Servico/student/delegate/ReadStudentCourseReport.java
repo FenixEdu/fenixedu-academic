@@ -136,7 +136,7 @@ public class ReadStudentCourseReport implements IService {
         infoSiteEvaluationStatistics.setEnrolled(new Integer(enrolled.size()));
         infoSiteEvaluationStatistics.setEvaluated(getEvaluated(enrolled));
         infoSiteEvaluationStatistics.setApproved(getApproved(enrolled));
-        InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(executionPeriod);
+        InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
         infoSiteEvaluationStatistics.setInfoExecutionPeriod(infoExecutionPeriod);
 
         return infoSiteEvaluationStatistics;

@@ -4,6 +4,7 @@
  */
 package DataBeans;
 
+import Dominio.IRole;
 import Util.RoleType;
 
 /**
@@ -112,4 +113,25 @@ public class InfoRole extends InfoObject {
     public int hashCode() {
         return this.roleType.getValue();
     }
+
+    public void copyFromDomain(final IRole role) {
+        super.copyFromDomain(role);
+        if (role != null) {
+            setPage(role.getPage());
+            setPageNameProperty(role.getPageNameProperty());
+            setPortalSubApplication(role.getPortalSubApplication());
+            setRoleType(role.getRoleType());
+        }
+    }
+
+    public static InfoRole newInfoFromDomain(final IRole role) {
+        if (role != null) {
+            final InfoRole infoRole = new InfoRole();
+            infoRole.copyFromDomain(role);
+            return infoRole;
+        }
+
+        return null;
+    }
+
 }

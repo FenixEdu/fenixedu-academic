@@ -34,19 +34,14 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 public class ViewEnroledExecutionCoursesAction extends FenixContextAction {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
 
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
         Object[] args = { userView.getUtilizador() };
-        List allInfoExecutionCourses = null;
-        try {
-            allInfoExecutionCourses = (List) ServiceUtils.executeService(userView,
+        List allInfoExecutionCourses = (List) ServiceUtils.executeService(userView,
                     "ReadEnroledExecutionCourses", args);
-        } catch (FenixServiceException e) {
-            throw new FenixActionException(e);
-        }
 
         List infoExecutionCourses = new ArrayList();
         if (allInfoExecutionCourses.size() != 0) {

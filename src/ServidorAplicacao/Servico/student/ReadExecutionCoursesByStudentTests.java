@@ -8,52 +8,44 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import DataBeans.util.Cloner;
-import Dominio.Frequenta;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
+import DataBeans.InfoExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
-import ServidorAplicacao.IServico;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IFrequentaPersistente;
+import ServidorPersistente.IPersistentStudent;
+import ServidorPersistente.IPersistentStudentTestQuestion;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Susana Fernandes
  */
-public class ReadExecutionCoursesByStudentTests implements IServico {
+public class ReadExecutionCoursesByStudentTests implements IService {
 
-    private static ReadExecutionCoursesByStudentTests service = new ReadExecutionCoursesByStudentTests();
+    public Object run(String userName) throws ExcepcaoPersistencia {
+        final ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+        final IPersistentStudent persistentStudent = persistentSuport.getIPersistentStudent();
+        final IFrequentaPersistente persistentAttends = persistentSuport.getIFrequentaPersistente();
+        final IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport.getIPersistentStudentTestQuestion();
 
-    public static ReadExecutionCoursesByStudentTests getService() {
-        return service;
-    }
+        final IStudent student = persistentStudent.readByUsername(userName);
+        final List attends = persistentAttends.readByStudentNumber(student.getNumber(), student.getDegreeType());
 
-    public String getNome() {
-        return "ReadExecutionCoursesByStudentTests";
-    }
+        final List infoExecutionCourses = new ArrayList();
+        for (final Iterator iterator = attends.iterator(); iterator.hasNext(); ) {
+            final IFrequenta attend = (IFrequenta) iterator.next();
+            final IExecutionCourse executionCourse = attend.getDisciplinaExecucao();
 
-    public Object run(String userName) throws FenixServiceException {
-        List result = new ArrayList();
-        try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-            IStudent student = persistentSuport.getIPersistentStudent().readByUsername(userName);
+            final int count = persistentStudentTestQuestion.countStudentTestByStudentAndExecutionCourse(executionCourse, student);
 
-            List attendList = persistentSuport.getIFrequentaPersistente().readByStudentNumber(
-                    student.getNumber());
-
-            Iterator it = attendList.iterator();
-            while (it.hasNext()) {
-                IFrequenta attend = (Frequenta) it.next();
-                IExecutionCourse executionCourse = attend.getDisciplinaExecucao();
-                if (persistentSuport.getIPersistentStudentTestQuestion()
-                        .countStudentTestByStudentAndExecutionCourse(executionCourse, student) != 0)
-                    result.add(Cloner.get(executionCourse));
+            if (count != 0) {
+                final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
+                infoExecutionCourses.add(infoExecutionCourse);
             }
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
         }
-        return result;
+        return infoExecutionCourses;
     }
 }

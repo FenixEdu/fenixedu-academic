@@ -9,13 +9,12 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
-import DataBeans.util.Cloner;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
+import DataBeans.InfoExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.IGroupProperties;
 import Dominio.IStudent;
-import ServidorAplicacao.IServico;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
 import ServidorAplicacao.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import ServidorAplicacao.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
@@ -24,93 +23,73 @@ import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.PeriodState;
 
 /**
  * @author asnr and scpo
- *
+ * 
  */
-public class ReadEnroledExecutionCourses implements IServico {
+public class ReadEnroledExecutionCourses implements IService {
 
-	private static ReadEnroledExecutionCourses _servico = new ReadEnroledExecutionCourses();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static ReadEnroledExecutionCourses getService() {
-		return _servico;
-	}
+    private boolean checkPeriodEnrollment(List allGroupProperties) {
+        boolean result = false;
 
-	/**
-	 * The actor of this class.
-	 **/
-	private ReadEnroledExecutionCourses() {
-	}
+        Iterator iter = allGroupProperties.iterator();
+        while (iter.hasNext()) {
+            IGroupProperties groupProperties = (IGroupProperties) iter.next();
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "ReadEnroledExecutionCourses";
-	}
+            IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
+                    .getInstance();
+            IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
+                    .getGroupEnrolmentStrategyInstance(groupProperties);
+            result = result || strategy.checkEnrolmentDate(groupProperties, Calendar.getInstance());
+        }
 
-	private boolean checkPeriodEnrollment(List allGroupProperties) {
-		boolean result = false;
+        return result;
+    }
 
-		Iterator iter = allGroupProperties.iterator();
-		while (iter.hasNext()) {
-			IGroupProperties groupProperties = (IGroupProperties) iter.next();
+    private boolean checkStudentInAttendsSet(List allGroupProperties, IStudent student) {
+        boolean result = false;
 
-			IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
-			.getInstance();
-			IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
-			.getGroupEnrolmentStrategyInstance(groupProperties);
-			result = result || strategy.checkEnrolmentDate(groupProperties, Calendar.getInstance());
-		}
+        Iterator iter = allGroupProperties.iterator();
+        while (iter.hasNext()) {
+            IGroupProperties groupProperties = (IGroupProperties) iter.next();
+            if (groupProperties.getAttendsSet().getStudentAttend(student) != null)
+                return true;
+        }
 
-		return result;
-	}
-	
-	
-	private boolean checkStudentInAttendsSet(List allGroupProperties, IStudent student) {
-		boolean result = false;
+        return result;
+    }
 
-		Iterator iter = allGroupProperties.iterator();
-		while (iter.hasNext()) {
-			IGroupProperties groupProperties = (IGroupProperties) iter.next();
-			if(groupProperties.getAttendsSet().getStudentAttend(student)!=null)return true;
-		}
+    public List run(String username) throws ExcepcaoPersistencia {
+        List allInfoExecutionCourses = new ArrayList();
 
-		return result;
-	}
+        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
+        IPersistentStudent persistentStudent = sp.getIPersistentStudent();
 
-	public List run(String username) throws FenixServiceException {
-		List allInfoExecutionCourses = new ArrayList();
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
-			IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+        IStudent student = persistentStudent.readByUsername(username);
+        List allAttend = persistentAttend.readByStudentNumber(student.getNumber(), student
+                .getDegreeType());
 
-			IStudent student = persistentStudent.readByUsername(username);
-			List allAttend = persistentAttend.readByStudentNumber(student.getNumber());
+        Iterator iter = allAttend.iterator();
+        allInfoExecutionCourses = new ArrayList();
 
-			Iterator iter = allAttend.iterator();
-			allInfoExecutionCourses = new ArrayList();
+        while (iter.hasNext()) {
+            IExecutionCourse executionCourse = ((IFrequenta) iter.next()).getDisciplinaExecucao();
+            if (executionCourse.getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
+                List allGroupProperties = executionCourse.getGroupProperties();
+                boolean result = checkPeriodEnrollment(allGroupProperties);
+                if (result && checkStudentInAttendsSet(allGroupProperties, student)) {
+                    final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse
+                            .newInfoFromDomain(executionCourse);
+                    allInfoExecutionCourses.add(infoExecutionCourse);
+                }
+            }
+        }
 
-			while (iter.hasNext()) {
-				IExecutionCourse executionCourse = ((IFrequenta) iter.next()).getDisciplinaExecucao();
-				List allGroupProperties = executionCourse.getGroupProperties();
-				boolean result = checkPeriodEnrollment(allGroupProperties);
-				if (result && checkStudentInAttendsSet(allGroupProperties, student)) {
-					allInfoExecutionCourses.add(Cloner.get(executionCourse));
-				}
+        return allInfoExecutionCourses;
 
-			}
-
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-
-		return allInfoExecutionCourses;
-
-	}
+    }
 
 }

@@ -8,6 +8,7 @@ import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoObject;
 import DataBeans.InfoStudent;
+import Dominio.student.IDelegate;
 import Util.DelegateYearType;
 
 /**
@@ -113,6 +114,24 @@ public class InfoDelegate extends InfoObject {
      */
     public void setType(Boolean type) {
         this.type = type;
+    }
+
+    public void copyFromDomain(final IDelegate delegate) {
+        super.copyFromDomain(delegate);
+        if (delegate != null) {
+            setType(delegate.getType());
+            setYearType(delegate.getYearType());
+        }
+    }
+
+    public static InfoDelegate newInfoFromDomain(final IDelegate delegate) {
+        if (delegate != null) {
+            final InfoDelegate infoDelegate = new InfoDelegate();
+            infoDelegate.copyFromDomain(delegate);
+            return infoDelegate;
+        }
+
+        return null;
     }
 
 }

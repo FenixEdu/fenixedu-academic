@@ -154,7 +154,7 @@ public class AttendsSet extends DomainObject implements IAttendsSet{
 		Iterator iterAttends = getAttendInAttendsSet().iterator();
 		while(iterAttends.hasNext() && !found)
 		{
-			attend = (IFrequenta)((IAttendInAttendsSet)iterAttends.next()).getAttend();
+			attend = ((IAttendInAttendsSet)iterAttends.next()).getAttend();
 			if(attend.getAluno().getIdInternal().equals(student.getIdInternal())){
 				return attend;
 			}

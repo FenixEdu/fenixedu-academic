@@ -25,6 +25,7 @@ import Dominio.IStudent;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IFrequentaPersistente;
 import Util.PeriodState;
+import Util.TipoCurso;
 
 public class FrequentaOJB extends PersistentObjectOJB implements IFrequentaPersistente {
 
@@ -59,9 +60,10 @@ public class FrequentaOJB extends PersistentObjectOJB implements IFrequentaPersi
         super.delete(frequenta);
     }
 
-    public List readByStudentNumber(Integer id) throws ExcepcaoPersistencia {
+    public List readByStudentNumber(Integer id, TipoCurso tipoCurso) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("aluno.number", id);
+        criteria.addEqualTo("aluno.degreeType", tipoCurso);
         return queryList(Frequenta.class, criteria);
     }
 

@@ -5,18 +5,20 @@ import java.util.Iterator;
 import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
+import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoLesson;
+import DataBeans.InfoPeriod;
 import DataBeans.InfoRoom;
 import DataBeans.InfoRoomOccupation;
 import DataBeans.InfoShift;
-import DataBeans.util.Cloner;
 import Dominio.IAula;
 import Dominio.IExecutionPeriod;
+import Dominio.IPeriod;
+import Dominio.IRoomOccupation;
 import Dominio.ISala;
 import Dominio.IStudent;
 import Dominio.ITurno;
 import Dominio.ITurnoAluno;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentStudent;
@@ -26,53 +28,43 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author João Mota
- *  
+ * 
  */
 
 public class ReadStudentTimeTable implements IService {
 
-    /**
-     * The actor of this class.
-     */
-    public ReadStudentTimeTable() {
-    }
+    public List run(String username) throws ExcepcaoPersistencia {
+        ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+        IStudent student = persistentStudent.readByUsername(username);
+        ITurnoAlunoPersistente persistentShiftStudent = sp.getITurnoAlunoPersistente();
+        IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+        IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+        List studentShifts = persistentShiftStudent.readByStudentAndExecutionPeriod(student,
+                executionPeriod);
 
-    public List run(String username) throws FenixServiceException {
-
-        try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-            IStudent student = persistentStudent.readByUsername(username);
-            ITurnoAlunoPersistente persistentShiftStudent = sp.getITurnoAlunoPersistente();
-            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-            IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
-            List studentShifts = persistentShiftStudent.readByStudentAndExecutionPeriod(student,
-                    executionPeriod);
-
-            List lessons = new ArrayList();
-            Iterator shiftIter = studentShifts.iterator();
-            while (shiftIter.hasNext()) {
-                ITurnoAluno shiftStudent = (ITurnoAluno) shiftIter.next();
-                ITurno shift = shiftStudent.getShift();
-                lessons.addAll(shift.getAssociatedLessons());
-            }
-
-            Iterator iter = lessons.iterator();
-            List infoLessons = new ArrayList();
-            while (iter.hasNext()) {
-                IAula lesson = (IAula) iter.next();
-                InfoLesson infolesson = copyILesson2InfoLesson(lesson);
-                ITurno shift = lesson.getShift();
-                InfoShift infoShift = Cloner.copyShift2InfoShift(shift);
-                infolesson.setInfoShift(infoShift);
-                infoLessons.add(infolesson);
-            }
-
-            return infoLessons;
-        } catch (ExcepcaoPersistencia e) {
-            throw new FenixServiceException(e);
+        List lessons = new ArrayList();
+        Iterator shiftIter = studentShifts.iterator();
+        while (shiftIter.hasNext()) {
+            ITurnoAluno shiftStudent = (ITurnoAluno) shiftIter.next();
+            ITurno shift = shiftStudent.getShift();
+            lessons.addAll(shift.getAssociatedLessons());
         }
 
+        Iterator iter = lessons.iterator();
+        List infoLessons = new ArrayList();
+        while (iter.hasNext()) {
+            IAula lesson = (IAula) iter.next();
+            InfoLesson infolesson = copyILesson2InfoLesson(lesson);
+            ITurno shift = lesson.getShift();
+            InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
+            InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(shift.getDisciplinaExecucao());
+            infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
+            infolesson.setInfoShift(infoShift);
+            infoLessons.add(infolesson);
+        }
+
+        return infoLessons;
     }
 
     private InfoLesson copyILesson2InfoLesson(IAula lesson) {
@@ -86,9 +78,17 @@ public class ReadStudentTimeTable implements IService {
             infoLesson.setTipo(lesson.getTipo());
             infoLesson.setInfoSala(copyISala2InfoRoom(lesson.getSala()));
 
-            InfoRoomOccupation infoRoomOccupation = Cloner.copyIRoomOccupation2InfoRoomOccupation(lesson
-                    .getRoomOccupation());
+            IRoomOccupation roomOccupation = lesson.getRoomOccupation();
+            InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(roomOccupation);
             infoLesson.setInfoRoomOccupation(infoRoomOccupation);
+
+            ISala room = roomOccupation.getRoom();
+            InfoRoom infoRoom = InfoRoom.newInfoFromDomain(room);
+            infoRoomOccupation.setInfoRoom(infoRoom);
+
+            IPeriod period = roomOccupation.getPeriod();
+            InfoPeriod infoPeriod = InfoPeriod.newInfoFromDomain(period);
+            infoRoomOccupation.setInfoPeriod(infoPeriod);
         }
         return infoLesson;
     }

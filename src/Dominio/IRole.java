@@ -7,7 +7,7 @@ import Util.RoleType;
  * 
  * @author jpvl
  */
-public interface IRole {
+public interface IRole extends IDomainObject {
     String getPortalSubApplication();
 
     String getPageNameProperty();

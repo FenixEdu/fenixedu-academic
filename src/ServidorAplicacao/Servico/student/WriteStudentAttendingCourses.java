@@ -79,7 +79,7 @@ public class WriteStudentAttendingCourses implements IService {
                     .getNumber(), infoStudent.getDegreeType());
 
             //Read every course the student attends to:
-            List attends = persistentAttend.readByStudentNumber(student.getNumber());
+            List attends = persistentAttend.readByStudentNumber(student.getNumber(), student.getDegreeType());
 
             List attendingCourses = getExecutionCoursesFromAttends(attends);
 

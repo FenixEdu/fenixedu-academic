@@ -1,68 +1,42 @@
 package ServidorAplicacao.Servico.student;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
+
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShift;
-import DataBeans.util.Cloner;
+import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.ITurno;
-import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoAula;
 
 /**
  * @author João Mota
- *  
+ * 
  */
-public class ReadShiftsByTypeFromExecutionCourse implements IServico {
+public class ReadShiftsByTypeFromExecutionCourse implements IService {
 
-    private static ReadShiftsByTypeFromExecutionCourse _servico = new ReadShiftsByTypeFromExecutionCourse();
+    public List run(InfoExecutionCourse infoExecutionCourse, TipoAula tipoAula) throws ExcepcaoPersistencia {
+        final ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
+        final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
+        final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
 
-    /**
-     * The singleton access method of this class.
-     */
-    public static ReadShiftsByTypeFromExecutionCourse getService() {
-        return _servico;
-    }
+        final IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, infoExecutionCourse.getIdInternal());
+        final List shifts = persistentShift.readByExecutionCourseAndType(executionCourse, tipoAula.getTipo());
 
-    /**
-     * The actor of this class.
-     */
-    private ReadShiftsByTypeFromExecutionCourse() {
-    }
-
-    /**
-     * 
-     * Devolve o nome do servico
-     */
-    public final String getNome() {
-        return "ReadShiftsByTypeFromExecutionCourse";
-    }
-
-    public List run(InfoExecutionCourse iDE, TipoAula type) {
-        List shifts = new ArrayList();
-
-        try {
-            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IExecutionCourse executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(iDE);
-            List dshifts = sp.getITurnoPersistente().readByExecutionCourseAndType(executionCourse,
-                    type.getTipo());
-
-            if (dshifts != null)
-                for (int i = 0; i < dshifts.size(); i++) {
-                    ITurno dshift = (ITurno) dshifts.get(i);
-                    InfoShift shift = (InfoShift) Cloner.get(dshift);
-                    shifts.add(shift);
-                }
-        } catch (ExcepcaoPersistencia e) {
-            e.printStackTrace();
-        }
-        return shifts;
-
+        return (List) CollectionUtils.collect(shifts, new Transformer() {
+            public Object transform(Object arg0) {
+                final ITurno shift = (ITurno) arg0;
+                return InfoShift.newInfoFromDomain(shift);
+            }});
     }
 
 }

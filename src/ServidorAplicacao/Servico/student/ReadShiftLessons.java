@@ -11,43 +11,49 @@ package ServidorAplicacao.Servico.student;
  * 
  * @author tfc130
  */
-import java.util.ArrayList;
-import java.util.List;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoLesson;
+import DataBeans.InfoRoom;
+import DataBeans.InfoRoomOccupation;
 import DataBeans.InfoShift;
-import DataBeans.util.Cloner;
 import Dominio.IAula;
+import Dominio.IRoomOccupation;
+import Dominio.ISala;
 import Dominio.ITurno;
+import Dominio.Turno;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.ITurnoPersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class ReadShiftLessons implements IService {
 
-    public Object run(InfoShift infoShift) {
-        List infoLessons = new ArrayList();
+    public Object run(final InfoShift infoShift) throws ExcepcaoPersistencia {
+        final ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
+        final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
 
-        //		try {
-        //			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        final ITurno shift = (ITurno) persistentShift.readByOID(Turno.class, infoShift.getIdInternal());
+        return CollectionUtils.collect(shift.getAssociatedLessons(), new Transformer() {
 
-        ITurno shift = Cloner.copyInfoShift2Shift(infoShift);
+            public Object transform(Object arg0) {
+                final IAula lesson = (IAula) arg0;
+                final IRoomOccupation roomOccupation = lesson.getRoomOccupation();
+                final ISala room = roomOccupation.getRoom();
 
-        List lessons = shift.getAssociatedLessons();
-        //				sp.getITurnoAulaPersistente().readByShift(
-        //					shift);
+                final InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
+                infoLesson.setInfoShift(infoShift);
+                final InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(roomOccupation);
+                infoLesson.setInfoRoomOccupation(infoRoomOccupation);
+                final InfoRoom infoRoom = InfoRoom.newInfoFromDomain(room);
+                infoRoomOccupation.setInfoRoom(infoRoom);
 
-        for (int i = 0; i < lessons.size(); i++) {
-            IAula lesson = (IAula) lessons.get(i);
-
-            InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(lesson);
-            infoLesson.setInfoShift(infoShift);
-
-            infoLessons.add(infoLesson);
-        }
-        //		} catch (ExcepcaoPersistencia ex) {
-        //			ex.printStackTrace();
-        //		}
-
-        return infoLessons;
+                return infoLesson;
+            }
+            
+        });
     }
 
 }

@@ -86,7 +86,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
             infoShiftEnrollment.setInfoStudent(InfoStudent.newInfoFromDomain(student));
 
             //retrieve all courses that student is currently attended in
-            infoShiftEnrollment.setInfoAttendingCourses(readAttendingCourses(sp, student.getNumber()));
+            infoShiftEnrollment.setInfoAttendingCourses(readAttendingCourses(sp, student.getNumber(), student.getDegreeType()));
 
             //retrieve all shifts that student is currently enrollment
             //it will be shift associated with all or some attending courses
@@ -133,12 +133,12 @@ public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
         return infoShiftEnrollment;
     }
 
-    private List readAttendingCourses(ISuportePersistente sp, Integer studentNumber)
+    private List readAttendingCourses(ISuportePersistente sp, Integer studentNumber, TipoCurso tipoCurso)
             throws ExcepcaoPersistencia {
         List infoAttendingCourses = null;
 
         IFrequentaPersistente frequentaPersistente = sp.getIFrequentaPersistente();
-        List attendList = frequentaPersistente.readByStudentNumber(studentNumber);
+        List attendList = frequentaPersistente.readByStudentNumber(studentNumber, tipoCurso);
         if (attendList != null && attendList.size() > 0) {
             infoAttendingCourses = new ArrayList();
 

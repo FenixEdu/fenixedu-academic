@@ -15,8 +15,8 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
+import DataBeans.InfoCandidateSituation;
 import DataBeans.InfoRole;
-import DataBeans.util.Cloner;
 import Dominio.ICandidateSituation;
 import Dominio.IMasterDegreeCandidate;
 import Dominio.IPessoa;
@@ -75,7 +75,7 @@ public class Autenticacao implements IServico {
                 Iterator rolesIterator = pessoa.getPersonRoles().iterator();
                 while (rolesIterator.hasNext()) {
                     IRole role = (IRole) rolesIterator.next();
-                    InfoRole infoRole = Cloner.copyIRole2InfoRole(role);
+                    InfoRole infoRole = InfoRole.newInfoFromDomain(role);
                     roles.add(infoRole);
                 }
             }
@@ -107,9 +107,10 @@ public class Autenticacao implements IServico {
                     while (situationIter.hasNext()) {
                         ICandidateSituation candidateSituation = (ICandidateSituation) situationIter
                                 .next();
-                        if (candidateSituation.getValidation().equals(new State(State.ACTIVE)))
-                            situations.add(Cloner
-                                    .copyICandidateSituation2InfoCandidateSituation(candidateSituation));
+                        if (candidateSituation.getValidation().equals(new State(State.ACTIVE))) {
+                            InfoCandidateSituation infoCandidateSituation = InfoCandidateSituation.newInfoFromDomain(candidateSituation);
+                            situations.add(infoCandidateSituation);
+                        }
                     }
                 }
                 candidateView = new CandidateView(situations);
