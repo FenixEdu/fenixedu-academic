@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
 import org.apache.commons.collections.CollectionUtils;
 
 import Dominio.CurricularCourseDoneRestriction;
@@ -30,6 +33,16 @@ import Util.TipoCurso;
  * @author jpvl
  */
 public class RestrictionOJBTest extends BaseEnrolmentRestrictionOJBTest {
+
+	public static void main(java.lang.String[] args) {
+		junit.textui.TestRunner.run(suite());
+	}
+    
+	public static Test suite() {
+		TestSuite suite = new TestSuite(RestrictionOJBTest.class);
+        
+		return suite;
+	}
 
 	/**
 	 * @param testName
@@ -114,7 +127,7 @@ public class RestrictionOJBTest extends BaseEnrolmentRestrictionOJBTest {
 		
 		IRestriction restriction = (IRestriction) precedence.getRestrictions().get(0);
 		assertEquals(CurricularCourseDoneRestriction.class, restriction.getClass());
-		assertEquals(true,restriction.evaluate(getEnrolmentContext()));
+		assertEquals("Evaluating AMII precedence!",true,restriction.evaluate(getEnrolmentContext()));
 	}
 
 	public void testEvaluateNumberOfCurricularCourseDoneRestriction(){
