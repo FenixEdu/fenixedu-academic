@@ -30,8 +30,6 @@ import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IDisciplinaDepartamentoPersistente;
-import ServidorPersistente.IPersistentCurricularCourseGroup;
-import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentAdvisory;
 import ServidorPersistente.IPersistentAnnouncement;
@@ -46,6 +44,7 @@ import ServidorPersistente.IPersistentCreditsTeacher;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentCurricularCourseEquivalence;
 import ServidorPersistente.IPersistentCurricularCourseEquivalenceRestriction;
+import ServidorPersistente.IPersistentCurricularCourseGroup;
 import ServidorPersistente.IPersistentCurricularCourseScope;
 import ServidorPersistente.IPersistentCurricularSemester;
 import ServidorPersistente.IPersistentCurricularYear;
@@ -93,6 +92,7 @@ import ServidorPersistente.IPersistentQuestion;
 import ServidorPersistente.IPersistentResponsibleFor;
 import ServidorPersistente.IPersistentRestriction;
 import ServidorPersistente.IPersistentRole;
+import ServidorPersistente.IPersistentScientificArea;
 import ServidorPersistente.IPersistentSection;
 import ServidorPersistente.IPersistentShiftProfessorship;
 import ServidorPersistente.IPersistentSite;
@@ -949,10 +949,18 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         return new TeacherInstitutionWorkingTimeOJB();
     }
     
+	//Nuno Correia & Ricardo Rodrigues
     public IPersistentCurricularCourseGroup getIPersistentCurricularCourseGroup()
     {
     	return new CurricularCourseGroupOJB();
     }
+    
+	public IPersistentScientificArea getIPersistentScientificArea()
+	{
+		return new ScientificAreaOJB();
+	}
+	
+	
 	/* (non-Javadoc)
 		* @see ServidorPersistente.ISuportePersistente#getIPersistentCampus()
 		*/
