@@ -156,7 +156,8 @@ public class CursoExecucaoOJB extends ObjectFenixOJB implements ICursoExecucaoPe
     {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("executionYear.year ", executionYear.getYear());
-        criteria.addEqualTo("curricularPlan.name", degreeCode);
+        criteria.addEqualTo("curricularPlan.degree.sigla", degreeCode);
+		//criteria.addEqualTo("curricularPlan.name", degreeCode);
         return (ICursoExecucao) queryObject(CursoExecucao.class, criteria);
     }
 
