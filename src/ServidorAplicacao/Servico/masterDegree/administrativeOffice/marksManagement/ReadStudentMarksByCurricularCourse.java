@@ -123,10 +123,13 @@ public class ReadStudentMarksByCurricularCourse implements IService
 			}
 			else
 			{
-				enrolment =
+				// TODO: Não se sabe se este comportamento está correcto!
+				List enrollments =
 					sp.getIPersistentEnrolment().readByStudentCurricularPlanAndCurricularCourse(
 						studentCurricularPlan,
 						curricularCourse);
+				
+				enrolment = (IEnrolment) enrollments.get(0);
 			}
 
 			if (enrolment != null)

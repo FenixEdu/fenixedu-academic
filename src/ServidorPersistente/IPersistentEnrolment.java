@@ -68,7 +68,7 @@ public interface IPersistentEnrolment extends IPersistentObject
             ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod)
             throws ExcepcaoPersistencia;
 
-    public IEnrolment readByStudentCurricularPlanAndCurricularCourse(
+    public List readByStudentCurricularPlanAndCurricularCourse(
             IStudentCurricularPlan studentCurricularPlan,
             ICurricularCourse curricularCourse) throws ExcepcaoPersistencia;
 

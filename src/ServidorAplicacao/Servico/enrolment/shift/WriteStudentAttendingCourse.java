@@ -121,9 +121,10 @@ public class WriteStudentAttendingCourse implements IService
 			ICurricularCourse curricularCourseElem = (ICurricularCourse) iterCurricularCourses.next();
 
 			IEnrolment enrollment =
-				persistentEnrolment.readByStudentCurricularPlanAndCurricularCourse(
+				persistentEnrolment.readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
 					studentCurricularPlan,
-					curricularCourseElem);
+					curricularCourseElem,
+					executionCourse.getExecutionPeriod());
 			if (enrollment != null)
 			{
 				attendsEntry.setEnrolment(enrollment);

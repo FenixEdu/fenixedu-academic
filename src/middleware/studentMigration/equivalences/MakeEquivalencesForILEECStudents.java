@@ -184,7 +184,6 @@ public class MakeEquivalencesForILEECStudents
 			return null;
 		}
 
-	
 //		List studentsList = new ArrayList();
 //		IStudent student =
 //			fenixPersistentSuport.getIPersistentStudent().readStudentByNumberAndDegreeType(
@@ -342,9 +341,8 @@ if(enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
 
 				MakeEquivalencesForILEECStudents.writeEquivalences(enrolment, enrolmentWriten, fenixPersistentSuport);
 
-				MakeEquivalencesForILEECStudents.deleteEnrollment(
+				MakeEquivalencesForILEECStudents.deleteAllEnrollmentsInGivenCurricularCourse(
 					enrolment.getCurricularCourse(),
-					enrolment.getExecutionPeriod(),
 					currentStudentCurricularPlan,
 					fenixPersistentSuport);
 			}
@@ -765,9 +763,8 @@ if(enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
 			newListOfEnrollments.remove(enrolmentInSE);
 			newListOfEnrollments.remove(enrolmentInSH);
 
-			MakeEquivalencesForILEECStudents.deleteEnrollment(
+			MakeEquivalencesForILEECStudents.deleteAllEnrollmentsInGivenCurricularCourse(
 				enrolmentInSE.getCurricularCourse(),
-				enrolmentInSE.getExecutionPeriod(),
 				currentStudentCurricularPlan,
 				fenixPersistentSuport);
 		} else if (enrolmentInSE != null && enrolmentInSH == null)
@@ -795,9 +792,8 @@ if(enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
 			newListOfEnrollments.addAll(pastEnrolments);
 			newListOfEnrollments.remove(enrolmentInSE);
 
-			MakeEquivalencesForILEECStudents.deleteEnrollment(
+			MakeEquivalencesForILEECStudents.deleteAllEnrollmentsInGivenCurricularCourse(
 				enrolmentInSE.getCurricularCourse(),
-				enrolmentInSE.getExecutionPeriod(),
 				currentStudentCurricularPlan,
 				fenixPersistentSuport);
 		} else
@@ -925,7 +921,7 @@ if(enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
 				enrolmentEvaluationToWrite.setEmployee(enrolmentEvaluation.getEmployee());
 				enrolmentEvaluationToWrite.setAckOptLock(new Integer(1));
 				
-				enrolmentEvaluation.setCheckSum(null);
+				enrolmentEvaluationToWrite.setCheckSum(null);
 
 				MakeEquivalencesForILEECStudents.enrollmentEvaluationsCreated.put(key, enrolmentEvaluationToWrite);
 				MakeEquivalencesForILEECStudents.totalEnrollmentEvaluationsCreated++;
@@ -944,6 +940,9 @@ if(enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
 
 		if ((enrolment == null) || (enrolment.getEvaluations() == null) || (enrolment.getEvaluations().size() == 0))
 		{
+			System.out.print("[WARNING 401] ENROLLMENT IS NULL: ");
+			System.out.println(enrolment == null);
+			System.out.println("[WARNING 401] EVALUATIONS SIZE: " + enrolment.getEvaluations().size());
 			return null;
 		} else
 		{
@@ -952,68 +951,6 @@ if(enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
 			Collections.reverse(enrolmentEvaluations);
 			return (IEnrolmentEvaluation) enrolmentEvaluations.get(0);
 		}
-
-		//		BeanComparator dateComparator = new BeanComparator("when");
-		//		Collections.sort(enrolmentEvaluations, dateComparator);
-		//		Collections.reverse(enrolmentEvaluations);
-		//
-		//		IEnrolmentEvaluation latestEvaluation = (IEnrolmentEvaluation) enrolmentEvaluations.get(0);
-		//
-		//		if (enrolment.getEnrolmentState().equals(EnrolmentState.NOT_APROVED) ||
-		//				enrolment.getEnrolmentState().equals(EnrolmentState.NOT_EVALUATED) ||
-		//				enrolment.getEnrolmentState().equals(EnrolmentState.ANNULED))
-		//		{
-		//			return latestEvaluation;
-		//		}
-		//
-		//		if (latestEvaluation.getObservation() != null && latestEvaluation.getObservation().equals(GetEnrolmentGrade.RECTIFIED))
-		//		{
-		//			Iterator iterator = enrolmentEvaluations.iterator();
-		//			while(iterator.hasNext())
-		//			{
-		//				IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator.next();
-		//				if(enrolmentEvaluation.getObservation().equals(GetEnrolmentGrade.RECTIFICATION))
-		//				{
-		//					latestEvaluation = enrolmentEvaluation;
-		//					break;
-		//				}
-		//			}
-		//		}
-		//
-		//		if (!latestEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT_OBJ)) {
-		//			return latestEvaluation;
-		//		} else {
-		//			IEnrolmentEvaluation previousEvaluation = (IEnrolmentEvaluation) enrolmentEvaluations.get(1);
-		//
-		//			Integer latestMark = new Integer(0);
-		//			Integer previousMark = new Integer(0);
-		//
-		//			try {
-		//				latestMark = Integer.valueOf(latestEvaluation.getGrade());
-		//			} catch (NumberFormatException e) {
-		//				// Do nothing.
-		//			}
-		//
-		//			try {
-		//				previousMark = Integer.valueOf(previousEvaluation.getGrade());
-		//			} catch (NumberFormatException e1) {
-		//				for (int i = 2; i < enrolmentEvaluations.size(); i++)
-		//				{
-		//					previousEvaluation = (IEnrolmentEvaluation) enrolmentEvaluations.get(i);
-		//					try {
-		//						previousMark = Integer.valueOf(previousEvaluation.getGrade());
-		//					} catch (NumberFormatException e2) {
-		//						// Do nothing.
-		//					}
-		//				}
-		//			}
-		//
-		//			if (previousMark.intValue() > latestMark.intValue()) {
-		//				return previousEvaluation;
-		//			} else {
-		//				return latestEvaluation;
-		//			}
-		//		}
 	}
 
 	/**
@@ -1036,7 +973,8 @@ if(enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
 
 			IEnrolmentEvaluation enrolmentEvaluation = MakeEquivalencesForILEECStudents.getLatestEvaluation(enrolment);
 
-			if (enrolmentEvaluation.getEnrolmentEvaluationType() != null
+			if (enrolmentEvaluation != null
+				&& enrolmentEvaluation.getEnrolmentEvaluationType() != null
 				&& enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT_OBJ))
 			{
 				List enrolmentsInSameCourse =
@@ -1172,39 +1110,53 @@ if(enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
 
 	/**
 	 * @param curricularCourse
-	 * @param executionPeriod
 	 * @param studentCurricularPlan
 	 * @param fenixPersistentSuport
 	 * @throws Throwable
 	 */
-	protected static void deleteEnrollment(
+	protected static void deleteAllEnrollmentsInGivenCurricularCourse(
 		ICurricularCourse curricularCourse,
-		IExecutionPeriod executionPeriod,
 		IStudentCurricularPlan studentCurricularPlan,
 		ISuportePersistente fenixPersistentSuport)
 		throws Throwable
 	{
 		IPersistentEnrolment enrolmentDAO = fenixPersistentSuport.getIPersistentEnrolment();
+
+		List enrollments = enrolmentDAO.readByStudentCurricularPlanAndCurricularCourse(studentCurricularPlan, curricularCourse);
+
+		if (enrollments != null)
+		{
+			Iterator iterator = enrollments.iterator();
+			while (iterator.hasNext())
+			{
+				IEnrolment enrollment = (IEnrolment) iterator.next();
+				MakeEquivalencesForILEECStudents.deleteEnrollment(enrollment, fenixPersistentSuport);
+			}
+		}
+	}
+
+	/**
+	 * @param enrollment
+	 * @param fenixPersistentSuport
+	 * @throws Throwable
+	 */
+	protected static void deleteEnrollment(IEnrolment enrollment, ISuportePersistente fenixPersistentSuport) throws Throwable
+	{
+		IPersistentEnrolment enrolmentDAO = fenixPersistentSuport.getIPersistentEnrolment();
 		IPersistentEnrolmentEvaluation enrolmentEvaluationDAO = fenixPersistentSuport.getIPersistentEnrolmentEvaluation();
 
-		IEnrolment enrolment =
-			enrolmentDAO.readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
-				studentCurricularPlan,
-				curricularCourse,
-				executionPeriod);
-
-		if (enrolment != null)
+		if (enrollment != null)
 		{
-			Iterator iterator = enrolment.getEvaluations().iterator();
+			Iterator iterator = enrollment.getEvaluations().iterator();
 			while (iterator.hasNext())
 			{
 				IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator.next();
-//				enrolmentEvaluationDAO.simpleLockWrite(enrolment);
 				enrolmentEvaluationDAO.deleteByOID(EnrolmentEvaluation.class, enrolmentEvaluation.getIdInternal());
+				System.out.println("APAGUEI ENROLLMENT_EVALUATION\t" + enrolmentEvaluation.getEnrolment().getCurricularCourse().getCode() + "\t" + enrolmentEvaluation.getEnrolment().getCurricularCourse().getName() + "\t" + enrolmentEvaluation.getEnrolment().getExecutionPeriod().getIdInternal().toString() + "\t" + enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getStudent().getNumber().toString() + "\t" + enrolmentEvaluation.getEnrolment().getCurricularCourse().getDegreeCurricularPlan().getName() + "\t" + enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getDegreeCurricularPlan().getName() + "\t" + enrolmentEvaluation.getGrade());
 				MakeEquivalencesForILEECStudents.deletedEnrollmentEvaluations++;
 			}
-//			enrolmentDAO.simpleLockWrite(enrolment);
-			enrolmentDAO.deleteByOID(Enrolment.class, enrolment.getIdInternal());
+			enrolmentDAO.deleteByOID(Enrolment.class, enrollment.getIdInternal());
+			System.out.println("APAGUEI ENROLLMENT\t" + enrollment.getCurricularCourse().getCode() + "\t" + enrollment.getCurricularCourse().getName() + "\t" + enrollment.getExecutionPeriod().getIdInternal().toString() + "\t" + enrollment.getStudentCurricularPlan().getStudent().getNumber().toString() + "\t" + enrollment.getCurricularCourse().getDegreeCurricularPlan().getName() + "\t" + enrollment.getStudentCurricularPlan().getDegreeCurricularPlan().getName());
 			MakeEquivalencesForILEECStudents.deletedEnrollments++;
 		}
 	}

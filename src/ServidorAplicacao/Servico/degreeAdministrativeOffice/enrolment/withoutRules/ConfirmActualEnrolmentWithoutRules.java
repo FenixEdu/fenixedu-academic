@@ -128,9 +128,10 @@ public class ConfirmActualEnrolmentWithoutRules implements IService
                 ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
 
                 IEnrolment enrolment =
-                    persistentEnrolment.readByStudentCurricularPlanAndCurricularCourse(
+                    persistentEnrolment.readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
                         enrolmentContext.getStudentActiveCurricularPlan(),
-                        curricularCourse);
+                        curricularCourse,
+						enrolmentContext.getExecutionPeriod());
 
                 if (enrolment == null)
                 {

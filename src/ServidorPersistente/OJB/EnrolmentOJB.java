@@ -157,7 +157,7 @@ public class EnrolmentOJB extends ObjectFenixOJB implements
         return (IEnrolment) queryObject(Enrolment.class, criteria);
     }
 
-    public IEnrolment readByStudentCurricularPlanAndCurricularCourse(
+    public List readByStudentCurricularPlanAndCurricularCourse(
             IStudentCurricularPlan studentCurricularPlan,
             ICurricularCourse curricularCourse) throws ExcepcaoPersistencia
     {
@@ -167,7 +167,7 @@ public class EnrolmentOJB extends ObjectFenixOJB implements
                 studentCurricularPlan.getIdInternal());
         criteria.addEqualTo("curricularCourse.idInternal", curricularCourse
                 .getIdInternal());
-        return (IEnrolment) queryObject(Enrolment.class, criteria);
+        return queryList(Enrolment.class, criteria);
     }
 
     public List readAllByStudentCurricularPlanAndCurricularCourse(
