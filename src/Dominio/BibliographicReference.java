@@ -3,12 +3,8 @@ package Dominio;
 /**
  * @author PTRLV
  *
- * To change this generated comment edit the template variable "typecomment":
- * Window>Preferences>Java>Templates.
- * To enable and disable the creation of type comments go to
- * Window>Preferences>Java>Code Generation.
  */
-public class BibliographicReference implements IBibliographicReference {
+public class BibliographicReference extends DomainObject implements IBibliographicReference {
 
 	protected String title;
 	protected String authors;
@@ -16,11 +12,14 @@ public class BibliographicReference implements IBibliographicReference {
 	protected Boolean optional;
 	protected IDisciplinaExecucao executionCourse;
 	protected String year;
-	private Integer internalCode;
 	private Integer keyExecutionCourse;
 
 	/** Creates a new instance of ReferenciaBibliografica */
 	public BibliographicReference() {
+	}
+	
+	public BibliographicReference(Integer idInternal){
+		setIdInternal(idInternal);
 	}
 
 	public BibliographicReference(
@@ -38,14 +37,7 @@ public class BibliographicReference implements IBibliographicReference {
 		setExecutionCourse(executionCourse);
 	}
 
-	public Integer getInternalCode() {
-		return internalCode;
-	}
-
-	public void setInternalCode(Integer internalCode) {
-		this.internalCode = internalCode;
-	}
-
+	
 	public Integer getKeyExecutionCourse() {
 		return keyExecutionCourse;
 	}

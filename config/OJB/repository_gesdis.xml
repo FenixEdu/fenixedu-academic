@@ -271,7 +271,7 @@
 <class-descriptor class="Dominio.BibliographicReference"
                   table="BIBLIOGRAPHIC_REFERENCE">
     <field-descriptor id="1"
-        name="internalCode"
+        name="idInternal"
         column="ID_INTERNAL"
         jdbc-type="INTEGER"
         primarykey="true"
