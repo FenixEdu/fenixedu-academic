@@ -103,8 +103,7 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 		IUserView userView = (IUserView) session.getAttribute("UserView");
 		GestorServicos gestor = GestorServicos.manager();
 
-		Object argsReadExecutionPeriods[] = {
-		};
+		Object argsReadExecutionPeriods[] = { };
 		ArrayList infoExecutionPeriodList =
 			(ArrayList) gestor.executar(
 				userView,
@@ -115,27 +114,18 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 		chainComparator.addComparator(new BeanComparator("semester"));
 		Collections.sort(infoExecutionPeriodList, chainComparator);
 
-		//		ArrayList infoExecutionPeriodList =
-		//			(ArrayList) request.getAttribute(
-		//				SessionConstants.LIST_INFOEXECUTIONPERIOD);
 		Integer index = (Integer) indexForm.get("index");
 
 		if (infoExecutionPeriodList != null && index != null) {
 			InfoExecutionPeriod infoExecutionPeriod =
 				(InfoExecutionPeriod) infoExecutionPeriodList.get(
 					index.intValue());
-			//			request.setAttribute(
-			//				"executionYearName",
-			//				infoExecutionPeriod.getInfoExecutionYear().getYear());
-			//			request.setAttribute(
-			//				"executionPeriodName",
-			//				infoExecutionPeriod.getName());
 			request.setAttribute(
 				SessionConstants.EXECUTION_PERIOD,
 				infoExecutionPeriod);
-			//			request.setAttribute(
-			//				SessionConstants.INFO_EXECUTION_PERIOD_KEY,
-			//				infoExecutionPeriodList.get(index.intValue()));
+			request.setAttribute(
+				SessionConstants.EXECUTION_PERIOD_OID,
+				infoExecutionPeriod.getIdInternal().toString());
 		}
 		return mapping.findForward("choose");
 	}
