@@ -40,7 +40,13 @@
 				<bean:message key="property.number.students.attending.course"/>
 			</td>
 			<td>
-				manipular
+				<bean:message key="property.exam.reservedRooms"/>
+			</td>
+			<td>
+				<bean:message key="property.exam.number.vacancies"/>
+			</td>
+			<td>
+				<bean:message key="property.exam.manage"/>
 			</td>
 		</tr>
 		<logic:iterate id="infoViewExam" indexId="index" name="<%= SessionConstants.LIST_EXAMSANDINFO %>" scope="session">
@@ -57,6 +63,20 @@
 				</td>
 				<td>
 					<bean:write name="infoViewExam" property="numberStudentesAttendingCourse"/>
+				</td>
+				<td>
+					<logic:present name="infoViewExam" property="infoExam.associatedRooms">
+						<logic:iterate id="infoRoom" name="infoViewExam" property="infoExam.associatedRooms">
+							<bean:write name="infoRoom" property="nome"/>; 
+						</logic:iterate> 
+					</logic:present>
+
+					<logic:notPresent name="infoViewExam" property="infoExam.associatedRooms">
+						<bean:message key="message.exam.no.rooms"/>
+					</logic:notPresent>					
+				</td>
+				<td>
+					0
 				</td>
 				<td>
 					<html:link paramId="indexExam" paramName="index" href="viewExamsDayAndShiftForm.do?method=edit">

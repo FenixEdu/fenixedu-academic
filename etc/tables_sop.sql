@@ -160,3 +160,15 @@ create table EXAM_EXECUTION_COURSE (
    primary key (ID_INTERNAL),
    unique U1 (KEY_EXAM, KEY_EXECUTION_COURSE))
    type=InnoDB;
+
+#----------------------------
+# Table structure for exam_room
+#----------------------------
+drop table if exists EXAM_ROOM;
+create table EXAM_ROOM (
+   ID_INTERNAL int(11) not null auto_increment,
+   KEY_EXAM int(11) not null,
+   KEY_ROOM int(11) not null,
+   primary key (ID_INTERNAL),
+   unique U1 (KEY_EXAM, KEY_ROOM))
+   type=InnoDB;

@@ -69,7 +69,6 @@
             </td>
        	</tr>
 	</table>
-
 	<br/>
     <table align="lef">
     	<tr align="center">
@@ -88,3 +87,42 @@
 		</tr>
 	</table>
 </html:form>
+
+	<br/>
+	<br/>
+	<bean:message key="property.exam.rooms"/>
+	<logic:present name="<%= SessionConstants.INFO_EXAMS_KEY %>" property="infoExam.associatedRooms">
+	<table cellpadding="0" cellspacing="2">
+		<tr>
+       		<td nowrap class="formTD" align="right">
+           		Nome
+			</td>
+			<td nowrap class="formTD" align="right">
+           		Capacidade Exame
+			</td>
+	       	<td>
+            </td>
+		</tr>
+		<logic:iterate id="infoRoom" name="<%= SessionConstants.INFO_EXAMS_KEY %>" property="infoExam.associatedRooms">
+		<tr>
+			<td nowrap class="formTD" align="right">
+				<bean:write name="infoRoom" property="nome"/>
+			</td>
+			<td nowrap class="formTD" align="right">
+				<bean:write name="infoRoom" property="capacidadeExame"/>
+			</td>
+			<td nowrap class="formTD" align="right">
+				Link remove de <bean:write name="infoRoom" property="nome"/>
+			</td>
+		</tr>
+		</logic:iterate>
+	</table>
+	</logic:present>
+
+	<logic:notPresent name="<%= SessionConstants.INFO_EXAMS_KEY %>" property="infoExam.associatedRooms">
+		<bean:message key="message.exam.no.rooms"/> <br/>
+	</logic:notPresent>
+
+	<html:link page="/editExamRooms.do?method=prepare">
+   		<bean:message key="lable.changeRoom"/>
+   	</html:link>

@@ -18,7 +18,7 @@
         <form-property name="password" type="java.lang.String" />
       </form-bean>
 		
-	  <!-- CONTEXTO -->
+	  <!-- CONTEXTO -->choose
       <!-- Dynamic-FormBean para EscolherContexto -->
       <form-bean name="escolherContextoForm"
                  type="org.apache.struts.validator.DynaValidatorForm"
@@ -225,6 +225,13 @@
                 dynamic="true">
         <form-property name="index" type="java.lang.Integer"/>
         <form-property name="page" type="java.lang.Integer"/>
+      </form-bean>
+      
+      <form-bean name="editExamRoomsForm"
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+        <form-property name="selectedRooms" type="java.lang.String[]" size="0"/>
+        <form-property name="page" type="java.lang.Integer"/> 
       </form-bean>
       
      </form-beans>
@@ -893,6 +900,19 @@
   		<forward name="showForm" path="/mainExams.jsp"/>
   		<forward name="choose" path="/mainExams.do?method=prepare"/>
 	</action>
+
+    <action parameter="method"
+            path="/editExamRooms"
+            type="ServidorApresentacao.Action.sop.EditExamRoomsDA"
+			name="editExamRoomsForm"
+			input="/editExamRooms.do?method=prepare"
+			validate="false"
+			scope="request"
+            >
+        <forward name="ViewSelectRoomsForm" path="/selectRoomsForExam.jsp"/>
+        <forward name="ViewEditExamForm" path="/editExam.jsp"/>
+    </action>
+
       
       
       <!-- ========== ADICIONADO POR DAVID SANTOS ================================ -->

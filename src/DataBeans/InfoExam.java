@@ -11,6 +11,7 @@ package DataBeans;
  * @author  Luis Cruz & Sara Ribeiro
  */
 import java.util.Calendar;
+import java.util.List;
 
 import Util.Season;
 
@@ -19,6 +20,10 @@ public class InfoExam {
 	protected Calendar beginning;
 	protected Calendar end;
 	protected Season season;
+	
+	protected List associatedRooms;
+	
+	private Integer idInternal;
 
 	// The following variable serves the purpose of indicating the
 	// execution course associated with this exam through which
@@ -122,6 +127,35 @@ public class InfoExam {
 		infoExecutionCourse = course;
 	}
 
+	/**
+	 * @return
+	 */
+	public List getAssociatedRooms() {
+		return associatedRooms;
+	}
+
+	/**
+	 * @param rooms
+	 */
+	public void setAssociatedRooms(List rooms) {
+		associatedRooms = rooms;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getIdInternal() {
+		return idInternal;
+	}
+
+	/**
+	 * @param internal
+	 */
+	public void setIdInternal(Integer internal) {
+		idInternal = internal;
+	}
+
+
 	public String getDate() {
 		String result = String.valueOf(getDay().get(Calendar.DAY_OF_MONTH));
 		result += "/";
@@ -155,4 +189,5 @@ public class InfoExam {
 					result += format(String.valueOf(getEnd().get(Calendar.MINUTE)));
 			return result;
 		}
+
 }

@@ -12,6 +12,7 @@ package ServidorPersistente;
  */
 import java.util.List;
 
+import Dominio.IExam;
 import Dominio.ISala;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
@@ -29,4 +30,5 @@ public interface ISalaPersistente extends IPersistentObject {
 		Integer capacidadeNormal,
 		Integer capacidadeExame)
 		throws ExcepcaoPersistencia;
+	public List readAvailableRooms(IExam exam) throws ExcepcaoPersistencia;
 }

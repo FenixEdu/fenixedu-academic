@@ -27,4 +27,11 @@ abstract public class DomainObject implements IDomainObject {
 		this.idInternal = idInternal;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	public int hashCode() {
+		return this.idInternal.intValue();
+	}
+
 }

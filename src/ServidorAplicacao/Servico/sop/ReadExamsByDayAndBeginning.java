@@ -108,6 +108,7 @@ public class ReadExamsByDayAndBeginning implements IServico {
 			infoViewExam.setInfoViewExamsByDayAndShift(infoViewExams);
 			
 			// Read all rooms to determine total exam capacity
+			// TODO : Review calculations... they seem to be wrong.
 			List rooms = sp.getISalaPersistente().readAll();
 			int totalExamCapacity = 0;
 			for (int i = 0; i < rooms.size(); i++) 

@@ -21,6 +21,8 @@ public class InfoRoom implements Serializable, Comparable {
 	protected Integer _capacidadeNormal;
 	protected Integer _capacidadeExame;
 	protected TipoSala _tipo;
+	
+	private Integer idInternal;
 
 	public InfoRoom() { }
     
@@ -105,4 +107,18 @@ public class InfoRoom implements Serializable, Comparable {
 	public int compareTo(Object obj) {
 	  return getNome().compareTo(((InfoRoom)obj).getNome());
 	}
+	/**
+	 * @return
+	 */
+	public Integer getIdInternal() {
+		return idInternal;
+	}
+
+	/**
+	 * @param internal
+	 */
+	public void setIdInternal(Integer internal) {
+		idInternal = internal;
+	}
+
 }
