@@ -571,6 +571,9 @@
              type="ServidorApresentacao.Action.sop.ClassManagerDispatchAction"
              validate="true"
              scope="request">
+          <exception type="ServidorApresentacao.Action.sop.exceptions.ExistingActionException"
+                     handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+           />
              <forward name="viewTimeTable" path="/viewTimeTable.jsp"/>
 	         <forward name="listClasses" path="ClassesManagerDA.do?method=listClasses"/>             
       </action>

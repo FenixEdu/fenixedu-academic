@@ -152,8 +152,9 @@ public class ClassManagerDispatchAction extends DispatchAction {
 					userView,
 					"EditarTurma",
 					argsEditarTurma);
-			
-			} catch (NotAuthorizedException e){
+			} catch (ExistingServiceException ex) {
+				throw new ExistingActionException("A Turma", ex);
+			} catch (NotAuthorizedException e) {
 				throw e; 
 			} catch (FenixServiceException e) {
 				e.printStackTrace(System.out);

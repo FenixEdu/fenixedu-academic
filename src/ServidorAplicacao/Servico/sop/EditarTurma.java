@@ -16,10 +16,13 @@ import DataBeans.util.Cloner;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.ITurma;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.sop.exceptions.ExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class EditarTurma implements IServico {
 
@@ -44,7 +47,7 @@ public class EditarTurma implements IServico {
 		return "EditarTurma";
 	}
 
-	public Object run(InfoClass oldClassView, InfoClass newClassView) {
+	public Object run(InfoClass oldClassView, InfoClass newClassView) throws FenixServiceException {
 
 		ITurma turma = null;
 		boolean result = false;
@@ -69,11 +72,17 @@ public class EditarTurma implements IServico {
 			/* :FIXME: we have to change more things... to dump one year to another */			
 			if (turma != null) {
 				turma.setNome(newClassView.getNome());
-				sp.getITurmaPersistente().lockWrite(turma);
+				
+				try {
+					sp.getITurmaPersistente().lockWrite(turma);
+				} catch (ExistingPersistentException ex) {
+					throw new ExistingServiceException(ex);
+				}
+				
 				result = true;
 			}
 		} catch (ExcepcaoPersistencia ex) {
-			ex.printStackTrace();
+			throw new FenixServiceException(ex.getMessage());
 		}
 
 		return new Boolean(result);
