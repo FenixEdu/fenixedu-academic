@@ -5,7 +5,7 @@
 <web-app>
     <servlet>
         <servlet-name>action</servlet-name>
-        <servlet-class>ServidorApresentacao.servlets.FenixActionServlet</servlet-class>
+        <servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
         <init-param>
             <param-name>config</param-name>
             <param-value>/WEB-INF/conf/struts-person.xml</param-value>
