@@ -11,6 +11,8 @@ package ServidorAplicacao.Servico.sop;
  *
  * @author tfc130
  **/
+import java.util.List;
+
 import DataBeans.InfoLesson;
 import DataBeans.InfoLessonServiceResult;
 import DataBeans.KeyLesson;
@@ -19,6 +21,7 @@ import Dominio.IAula;
 import Dominio.ISala;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -68,14 +71,18 @@ public class EditarAula implements IServico {
       
       if (aula != null) {
 		result = valid(newLesson);
+		boolean resultB = validNoInterceptingLesson(aula);
 
-		if ( result.isSUCESS() ) {
+		if ( result.isSUCESS() && resultB ) {
           aula.setDiaSemana(aulaNova.getDiaSemana());
           aula.setInicio(aulaNova.getInicio());
           aula.setFim(aulaNova.getFim());
           aula.setTipo(aulaNova.getTipo());
           aula.setSala(salaNova);
           sp.getIAulaPersistente().lockWrite(aula);
+		}
+		else {
+			result.setMessageType(2);
 		}
       }
     } catch (ExcepcaoPersistencia ex) {
@@ -95,4 +102,30 @@ public class EditarAula implements IServico {
 	  return result;
   }
   
+  
+  /**
+	   * @param aula
+	   * @return InfoLessonServiceResult
+	   */
+	  private boolean validNoInterceptingLesson(IAula lesson) {
+
+		  try {
+			  ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			
+			  IAulaPersistente persistentLesson = sp.getIAulaPersistente();
+			
+			  List lessonMatchList =
+				  persistentLesson.readLessonsInBroadPeriod(lesson);
+			
+			  System.out.println("Tenho aulas:" + lessonMatchList.size());
+			  if (lessonMatchList.size() > 0) {
+				  return false;
+			  } else {
+				  return true;
+			  }
+		  } catch (ExcepcaoPersistencia e) {
+			  return false;
+			
+		  }
+	  }
 }
