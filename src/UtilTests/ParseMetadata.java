@@ -1,6 +1,6 @@
 /*
  * Created on 24/Jul/2003
- *
+ *  
  */
 
 package UtilTests;
@@ -14,6 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
@@ -54,10 +55,12 @@ public class ParseMetadata extends DefaultHandler
             Resolver resolver = new Resolver(path);
             reader.setEntityResolver(resolver);
             return reader;
-        } catch (SAXParseException e)
+        }
+        catch (SAXParseException e)
         {
             throw e;
-        } catch (SAXException e)
+        }
+        catch (SAXException e)
         {
             throw e;
         }
@@ -78,13 +81,16 @@ public class ParseMetadata extends DefaultHandler
             Resolver resolver = new Resolver(path);
             reader.setEntityResolver(resolver);
             reader.parse(input);
-        } catch (MalformedURLException e)
+        }
+        catch (MalformedURLException e)
         {
             throw e;
-        } catch (FileNotFoundException e)
+        }
+        catch (FileNotFoundException e)
         {
             throw e;
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             throw e;
         }
@@ -92,7 +98,7 @@ public class ParseMetadata extends DefaultHandler
     }
 
     public InfoMetadata parseMetadata(String file, InfoMetadata infoMetadata, String path)
-        throws Exception
+        throws IOException, ParserConfigurationException, SAXException
     {
         SAXParserFactory spf = SAXParserFactory.newInstance();
         spf.setValidating(true);
@@ -107,16 +113,20 @@ public class ParseMetadata extends DefaultHandler
             Resolver resolver = new Resolver(path);
             reader.setEntityResolver(resolver);
             reader.parse(input);
-        } catch (MalformedURLException e)
-        {
-            throw e;
-        } catch (FileNotFoundException e)
-        {
-            throw e;
-        } catch (IOException e)
+        }
+        catch (MalformedURLException e)
         {
             throw e;
         }
+        catch (FileNotFoundException e)
+        {
+            throw e;
+        }
+        catch (IOException e)
+        {
+           throw e;
+        }
+       
         return vector2Metadata(vector, infoMetadata);
     }
 
@@ -188,60 +198,72 @@ public class ParseMetadata extends DefaultHandler
                 mainsubject = false;
                 author = false;
                 members = false;
-            } else if ((tag.equals("mainsubject")))
+            }
+            else if ((tag.equals("mainsubject")))
             {
                 mainsubject = true;
                 secondarysubject = false;
                 author = false;
                 members = false;
-            } else if ((tag.equals("secondarysubject")))
+            }
+            else if ((tag.equals("secondarysubject")))
             {
                 secondarysubject = true;
                 author = false;
                 members = false;
-            } else if ((tag.equals("author")))
+            }
+            else if ((tag.equals("author")))
             {
                 author = true;
                 secondarysubject = false;
                 members = false;
-            } else if ((tag.equals("level")))
+            }
+            else if ((tag.equals("level")))
             {
                 level = true;
                 secondarysubject = false;
                 author = false;
                 members = false;
-            } else if ((tag.equals("members")))
+            }
+            else if ((tag.equals("members")))
             {
                 members = true;
                 author = false;
                 secondarysubject = false;
-            } else if (
+            }
+            else if (
                 (tag.equals("value"))
                     && (difficulty == true || mainsubject == true || secondarysubject == true))
             {
                 value = true;
-            } else if ((tag.equals("langstring")) && difficulty == true && value == true)
+            }
+            else if ((tag.equals("langstring")) && difficulty == true && value == true)
             {
                 infoMetadata.setDifficulty(element.getValue());
                 difficulty = false;
                 value = false;
-            } else if ((tag.equals("langstring")) && mainsubject == true && value == true)
+            }
+            else if ((tag.equals("langstring")) && mainsubject == true && value == true)
             {
                 infoMetadata.setMainSubject(element.getValue());
                 mainsubject = false;
                 value = false;
-            } else if ((tag.equals("langstring")) && secondarysubject == true && value == true)
+            }
+            else if ((tag.equals("langstring")) && secondarysubject == true && value == true)
             {
                 secondarySubjectList.add(element.getValue());
                 value = false;
-            } else if ((tag.equals("langstring")) && level == true)
+            }
+            else if ((tag.equals("langstring")) && level == true)
             {
                 infoMetadata.setLevel(element.getValue());
                 level = false;
-            } else if ((tag.equals("langstring")) && author == true)
+            }
+            else if ((tag.equals("langstring")) && author == true)
             {
                 authorList.add(element.getValue());
-            } else if ((tag.equals("location")) && members == true)
+            }
+            else if ((tag.equals("location")) && members == true)
             {
                 membersList.add(element.getValue());
             }
