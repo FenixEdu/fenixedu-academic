@@ -9,14 +9,20 @@ package ServidorApresentacao.Action.teacher;
  * @author lmac1
  *
  */
+import java.util.Collections;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import DataBeans.InfoSiteTeacherStudentsEnrolledList;
 import DataBeans.SiteView;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -39,7 +45,9 @@ public class ShowStudentsEnrolledInExamAction extends FenixAction{
 		HttpSession session = request.getSession(false);
 	
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+
 		String executionCourseCodeString=  request.getParameter("objectCode");
+
 		Integer executionCourseCode = new Integer(executionCourseCodeString);
 		String examCodeString = request.getParameter("examCode");
 		Integer examCode = new Integer(examCodeString);
@@ -50,6 +58,15 @@ public class ShowStudentsEnrolledInExamAction extends FenixAction{
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
+		
+		InfoSiteTeacherStudentsEnrolledList infoSiteTeacherStudentsEnrolledList = (InfoSiteTeacherStudentsEnrolledList) siteView.getComponent();
+		
+		ComparatorChain comparatorChain = new ComparatorChain();
+		comparatorChain.addComparator(new ReverseComparator(new BeanComparator("infoRoom.capacidadeExame")));
+		comparatorChain.addComparator(new BeanComparator("infoRoom.nome"));		
+		comparatorChain.addComparator(new BeanComparator("infoStudent.number"));
+		Collections.sort(infoSiteTeacherStudentsEnrolledList.getInfoExamStudentRoomList(), comparatorChain);
+		
 		request.setAttribute("siteView",siteView);
 		request.setAttribute("objectCode",executionCourseCode);
 		return mapping.findForward("showStudents");
