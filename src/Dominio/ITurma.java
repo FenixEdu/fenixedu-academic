@@ -6,12 +6,14 @@
 
 package Dominio;
 
+import java.io.Serializable;
+
 /**
  *
  * @author  tfc130
  */
 
-public interface ITurma {
+public interface ITurma extends Serializable,IDomainObject{
   public String getNome();
   
   public Integer getAnoCurricular();

@@ -15,7 +15,7 @@ import java.util.Calendar;
 import Util.DiaSemana;
 import Util.TipoAula;
 
-public class Aula implements IAula {
+public class Aula extends DomainObject implements IAula {
   protected DiaSemana _diaSemana;
   protected Calendar _inicio;
   protected Calendar _fim;
@@ -24,7 +24,6 @@ public class Aula implements IAula {
   protected IDisciplinaExecucao _disciplinaExecucao;
     
   // c�digos internos da base de dados
-  private Integer _codigoInterno;
   private Integer _chaveSala;
   private Integer _chaveDisciplinaExecucao;
     
@@ -41,14 +40,6 @@ public class Aula implements IAula {
     setDisciplinaExecucao(disciplinaExecucao);
   }
 
-  public Integer getCodigoInterno() {
-    return _codigoInterno;
-  }
-    
-  public void setCodigoInterno(Integer codigoInterno) {
-    _codigoInterno = codigoInterno;
-  }
-  
   public DiaSemana getDiaSemana() {
     return _diaSemana;
   }
@@ -131,7 +122,7 @@ public class Aula implements IAula {
   
   public String toString() {
     String result = "[AULA";
-    result += ", codInt=" + _codigoInterno;
+    result += ", codInt=" + getIdInternal();
     result += ", diaSemana=" + _diaSemana;
     if (_inicio!=null)
     result += ", inicio=" + _inicio.get(Calendar.HOUR_OF_DAY) +":"+_inicio.get(Calendar.MINUTE);

@@ -52,7 +52,7 @@
    	  table="CLASS"
    >
       <field-descriptor id="1"
-         name="codigoInterno"
+         name="idInternal"
          column="ID_INTERNAL"
          jdbc-type="INTEGER"
          primarykey="true"
@@ -165,7 +165,7 @@
    	  table="LESSON"
    >
       <field-descriptor id="1"
-         name="codigoInterno"
+         name="idInternal"
          column="ID_INTERNAL"
          jdbc-type="INTEGER"
          primarykey="true"

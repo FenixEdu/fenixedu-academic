@@ -54,9 +54,7 @@ public class EditarAula implements IServico {
 		return "EditarAula";
 	}
 
-	public Object run(
-		KeyLesson aulaAntiga,
-		InfoLesson aulaNova)
+	public Object run(KeyLesson aulaAntiga, InfoLesson aulaNova)
 		throws FenixServiceException {
 
 		IAula aula = null;
@@ -64,6 +62,8 @@ public class EditarAula implements IServico {
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+
+			IAulaPersistente aulaPersistente = sp.getIAulaPersistente();
 
 			ISala salaAntiga =
 				sp.getISalaPersistente().readByName(
@@ -79,7 +79,7 @@ public class EditarAula implements IServico {
 						.getInfoExecutionPeriod());
 
 			aula =
-				sp.getIAulaPersistente().readByDiaSemanaAndInicioAndFimAndSala(
+				aulaPersistente.readByDiaSemanaAndInicioAndFimAndSala(
 					aulaAntiga.getDiaSemana(),
 					aulaAntiga.getInicio(),
 					aulaAntiga.getFim(),
@@ -104,6 +104,8 @@ public class EditarAula implements IServico {
 					validNoInterceptingLesson(newLesson, aula, executionPeriod);
 
 				if (result.isSUCESS() && resultB) {
+					// TODO: Temporary solution to lock object for write. In the future we'll use readByUnique()
+					aula = (IAula) aulaPersistente.readByOId(aula, true);
 					aula.setDiaSemana(aulaNova.getDiaSemana());
 					aula.setInicio(aulaNova.getInicio());
 					aula.setFim(aulaNova.getFim());

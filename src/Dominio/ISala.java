@@ -10,9 +10,11 @@ package Dominio;
  *
  * @author  tfc130
  */
+import java.io.Serializable;
+
 import Util.TipoSala;
 
-public interface ISala {
+public interface ISala extends Serializable,IDomainObject{
   public String getNome();
   public String getEdificio();
   public Integer getPiso();

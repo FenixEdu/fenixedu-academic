@@ -66,6 +66,8 @@ public class EditarTurno implements IServico {
 					shiftToEdit.getNome(),
 					executionCourse);
 			if (turno != null) {
+				// TODO: Temporary solution to lock object for write. In the future we'll use readByUnique()
+				turno = (ITurno) sp.getITurnoPersistente().readByOId(turno,true);
 				turno.setNome(turnoNova.getNome());
 				turno.setTipo(turnoNova.getTipo());
 				turno.setLotacao(turnoNova.getLotacao());

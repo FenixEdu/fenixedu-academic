@@ -71,6 +71,8 @@ public class EditarTurma implements IServico {
 					executionDegree, executionPeriod);
 			/* :FIXME: we have to change more things... to dump one year to another */			
 			if (turma != null) {
+				// TODO: Temporary solution to lock object for write. In the future we'll use readByUnique()				
+				turma = (ITurma) sp.getITurmaPersistente().readByOId(turma,true);
 				turma.setNome(newClassView.getNome());
 				
 				try {

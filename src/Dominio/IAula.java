@@ -10,12 +10,13 @@ package Dominio;
  *
  * @author  tfc130
  */
+import java.io.Serializable;
 import java.util.Calendar;
 
 import Util.DiaSemana;
 import Util.TipoAula;
 
-public interface IAula {
+public interface IAula extends Serializable,IDomainObject{
   public DiaSemana getDiaSemana();
   public Calendar getInicio();
   public Calendar getFim();

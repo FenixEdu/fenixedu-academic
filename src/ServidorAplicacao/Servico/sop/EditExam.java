@@ -106,6 +106,8 @@ public class EditExam implements IServico {
 			}
 
 			if (hasValidRooms(examFromDBToBeEdited, examDate, examTime)) {
+				// TODO: Temporary solution to lock object for write. In the future we'll use readByUnique()				
+				examFromDBToBeEdited = (IExam) sp.getIPersistentExam().readByOId(examFromDBToBeEdited,true);
 				examFromDBToBeEdited.setBeginning(examTime);
 				examFromDBToBeEdited.setDay(examDate);
 				examFromDBToBeEdited.setEnd(null);

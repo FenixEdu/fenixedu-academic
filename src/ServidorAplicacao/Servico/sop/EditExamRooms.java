@@ -61,7 +61,7 @@ public class EditExamRooms implements IServico {
 		try {
 			Exam examQuery = new Exam();
 			examQuery.setIdInternal(infoExam.getIdInternal());
-			final Exam exam = (Exam) persistentRoom.readByOId(examQuery, false);
+			final Exam exam = (Exam) persistentRoom.readByOId(examQuery, true);
 			if (exam==null) {
 				throw new NonExistingServiceException();
 			}

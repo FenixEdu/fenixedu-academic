@@ -49,10 +49,10 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 		else if (
 			(classToWrite instanceof Turma)
 				&& ((Turma) classFromDB)
-					.getCodigoInterno()
+					.getIdInternal()
 					.equals(
 					((Turma) classToWrite)
-						.getCodigoInterno())) {
+						.getIdInternal())) {
 			super.lockWrite(classToWrite);
 			// else Throw an already existing exception
 		} else

@@ -46,9 +46,7 @@ public class DefineExamComment implements IServico {
 		return "DefineExamComment";
 	}
 
-	public Boolean run(
-		InfoExecutionCourse infoExecutionCourse,
-		String comment)
+	public Boolean run(InfoExecutionCourse infoExecutionCourse, String comment)
 		throws FenixServiceException {
 
 		Boolean result = new Boolean(false);
@@ -68,10 +66,15 @@ public class DefineExamComment implements IServico {
 					infoExecutionCourse.getSigla(),
 					executionPeriod);
 
+			// TODO: Temporary solution to lock object for write. In the future we'll use readByUnique()
+			executionCourse =
+				(IDisciplinaExecucao) executionCourseDAO.readByOId(
+					executionCourse,
+					true);
 			executionCourse.setComment(comment);
 
 			result = new Boolean(true);
-			
+
 		} catch (ExcepcaoPersistencia ex) {
 
 			throw new FenixServiceException(ex.getMessage());

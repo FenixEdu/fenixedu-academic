@@ -101,8 +101,8 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 			super.lockWrite(lessonToWrite);
 		// else if (lesson is mapped to the database then write any existing changes)
 		else if ((lessonToWrite instanceof Aula) &&
-				 ((Aula) lessonFromDB).getCodigoInterno().equals(
-		          ((Aula) lessonToWrite).getCodigoInterno())) {
+				 ((Aula) lessonFromDB).getIdInternal().equals(
+		          ((Aula) lessonToWrite).getIdInternal())) {
 
 			lessonFromDB.setDisciplinaExecucao(
 				lessonToWrite.getDisciplinaExecucao());
@@ -322,8 +322,8 @@ public class AulaOJB extends ObjectFenixOJB implements IAulaPersistente {
 			if (oldLesson != null && oldLesson instanceof Aula)
 				for (int ipto = 0; ipto < lessonList.size(); ipto++)
 					if (((Aula) lessonList.get(ipto))
-						.getCodigoInterno()
-						.equals(((Aula) oldLesson).getCodigoInterno()))
+						.getIdInternal()
+						.equals(((Aula) oldLesson).getIdInternal()))
 						lessonList.remove(ipto);
 			
 			return lessonList;

@@ -11,16 +11,11 @@ package Dominio;
  * @author  tfc130
  */
 
-public class Turma implements ITurma {
+public class Turma extends DomainObject implements ITurma {
 	protected String _nome;
 	
 	protected Integer _anoCurricular;
 	
-
-	// códigos internos da base de dados
-	private Integer _codigoInterno;
-	
-
 	private ICursoExecucao executionDegree;
 	private Integer keyExecutionDegree;
 	
@@ -74,7 +69,7 @@ public class Turma implements ITurma {
 
 	public String toString() {
 		String result = "[TURMA";
-		result += ", codigoInterno=" + _codigoInterno;
+		result += ", codigoInterno=" + getIdInternal();
 		result += ", nome=" + _nome;
 		result += ", executionPeriod=" + executionPeriod;
 		result += ", executionDegree=" + executionDegree;
@@ -153,15 +148,6 @@ public class Turma implements ITurma {
 	}
 
 	
-
-	/**
-	 * Returns the codigoInterno.
-	 * @return Integer
-	 */
-	public Integer getCodigoInterno() {
-		return _codigoInterno;
-	}
-
 	/**
 	 * Returns the executionPeriod.
 	 * @return IExecutionPeriod
@@ -176,16 +162,6 @@ public class Turma implements ITurma {
 	 */
 	public Integer getKeyExecutionPeriod() {
 		return keyExecutionPeriod;
-	}
-
-	
-
-	/**
-	 * Sets the codigoInterno.
-	 * @param codigoInterno The codigoInterno to set
-	 */
-	public void setCodigoInterno(Integer codigoInterno) {
-		_codigoInterno = codigoInterno;
 	}
 
 	/**
