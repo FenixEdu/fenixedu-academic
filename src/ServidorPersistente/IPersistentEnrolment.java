@@ -19,7 +19,7 @@ public interface IPersistentEnrolment extends IPersistentObject
 {
     public void delete(IEnrolment enrolment) throws ExcepcaoPersistencia;
 
-    public List readEnrollmentsByStudentAndCurricularCourseNameAndCode(
+    public List readEnrollmentsByStudentAndCurricularCourseNameAndCurricularCourseDegree(
             IStudent student, ICurricularCourse curricularCourse)
             throws ExcepcaoPersistencia;
 

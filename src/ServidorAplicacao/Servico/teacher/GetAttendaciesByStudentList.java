@@ -5,7 +5,6 @@
 package ServidorAplicacao.Servico.teacher;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -47,7 +46,7 @@ public class GetAttendaciesByStudentList implements IService
         List attendacies = new LinkedList();
         InfoAttendsSummary attendsSummary = new InfoAttendsSummary();
         List keys = new ArrayList();
-        Map enrollmentDsitribution = new HashMap();
+        Map enrollmentDistribution = new HashMap();
         try
         {
             ISuportePersistente persistenceSupport = SuportePersistenteOJB
@@ -86,7 +85,7 @@ public class GetAttendaciesByStudentList implements IService
                 if (attendacy.getEnrolment() != null)
                 {
                     List enrollmentList = persistentEnrolment
-                            .readEnrollmentsByStudentAndCurricularCourseNameAndCode(
+                            .readEnrollmentsByStudentAndCurricularCourseNameAndCurricularCourseDegree(
                                     attendacy.getEnrolment()
                                             .getStudentCurricularPlan()
                                             .getStudent(), attendacy
@@ -95,14 +94,14 @@ public class GetAttendaciesByStudentList implements IService
                     enrollments = new Integer(enrollmentList.size());
                     if (keys.contains(enrollments))
                     {
-                        enrollmentDsitribution.put(enrollments, new Integer(
-                                ((Integer) enrollmentDsitribution
+                        enrollmentDistribution.put(enrollments, new Integer(
+                                ((Integer) enrollmentDistribution
                                         .get(enrollments)).intValue() + 1));
                     }
                     else
                     {
                         keys.add(enrollments);
-                        enrollmentDsitribution.put(enrollments, new Integer(1));
+                        enrollmentDistribution.put(enrollments, new Integer(1));
                     }
 
                 }
@@ -122,7 +121,7 @@ public class GetAttendaciesByStudentList implements IService
 
             }
             attendsSummary.setAttends(attendacies);
-            attendsSummary.setEnrollmentDistribution(enrollmentDsitribution);
+            attendsSummary.setEnrollmentDistribution(enrollmentDistribution);
             Collections.sort(keys);
             attendsSummary.setNumberOfEnrollments(keys);
             
