@@ -34,5 +34,27 @@
 				<bean:message key="link.associatedCurricularCourses"/>
 				</html:link></dd>	
   </dl>
-		
+<logic:present name="<%= SessionConstants.SECTIONS %>" >
+	<ul>
+<logic:iterate id="section" name="<%= SessionConstants.SECTIONS %>" indexId="index">
+
+<%-- <logic:match name="section" property="class" value="List">
+	<dl id="seccao" style="display: none;">
+	 <logic:iterate id="subSection" name="section" indexId="subIndex"> 
+		 <dd><dd>item</dd></dd>
+	</logic:iterate>	
+	</dl>
+</logic:match>	
+<logic:notMatch name="section" property="class" value="List">
+<ul><li><html:link page="/viewSection.do" indexed="true" >
+	 <bean:write name="section" property="name"/> 
+	secção
+</html:link></li></ul>	
+</logic:notMatch> --%>
+
+
+<li><html:link page="/viewSection.do" indexed="true">section</html:link></li>
+</logic:iterate>
+</ul>	
+</logic:present>		
 </div>
