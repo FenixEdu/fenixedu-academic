@@ -72,7 +72,7 @@ public class UpdateStudentEnrolments {
 		System.out.println("Reading Students ....");
 		sp.iniciarTransaccao();
 		executionPeriod = sp.getIPersistentExecutionPeriod().readActualExecutionPeriod();
-
+		
 		List result = persistentAluno.readAll();
 		sp.confirmarTransaccao();
 		System.out.println("Updating " + result.size() + " student Curriculums ...");
@@ -94,16 +94,16 @@ public class UpdateStudentEnrolments {
 		}
 		
 		
-		System.out.println("Done !");
-		System.out.println("Curricular Courses Not Found : " + curricularCoursesNotFound);
-		System.out.println("Curricular Course Scopes Not Found : " + curricularCourseScopesNotFound);
-		System.out.println("Enrolments Not Written : " + enrolmentNotWritten);
-		System.out.println("Enrolments Written : " + enrolmentWritten);
-		System.out.println("Execution Courses Not Found : " + executionCoursesNotFound);
-		System.out.println("Attends Not Found : " + attendsNotFound);
-		System.out.println("Attends Updated : " + attendsUpdated);
+//		System.out.println("Done !");
+//		System.out.println("Curricular Courses Not Found : " + curricularCoursesNotFound);
+//		System.out.println("Curricular Course Scopes Not Found : " + curricularCourseScopesNotFound);
+//		System.out.println("Enrolments Not Written : " + enrolmentNotWritten);
+//		System.out.println("Enrolments Written : " + enrolmentWritten);
+//		System.out.println("Execution Courses Not Found : " + executionCoursesNotFound);
+//		System.out.println("Attends Not Found : " + attendsNotFound);
+//		System.out.println("Attends Updated : " + attendsUpdated);
 		
-		ReportEnrolment.report(new PrintWriter(System.out));
+		ReportEnrolment.report(new PrintWriter(System.out, true));
 	}
 
 	public static void updateStudentEnrolment(MWAluno oldStudent, SuportePersistenteOJB sp) throws Exception {

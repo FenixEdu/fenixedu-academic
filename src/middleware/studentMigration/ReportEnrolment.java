@@ -40,17 +40,18 @@ public class ReportEnrolment {
 	
 	public static void report(PrintWriter out){
 		out.println("Enrolment cases --------------------------------------------------------------------------");
-		
+		out.println("\tCaso 1 - Disciplinas não encontradas no curso do aluno mas encontradas em varios outros cursos");
 		Iterator iterator = notFoundCurricularCourses.entrySet().iterator();
 		while (iterator.hasNext()) {
 			Map.Entry mapEntry = (Map.Entry) iterator.next();
 			String key = (String) mapEntry.getKey();
 			
-			out.println("Codigo da Cadeira - Codigo do Curso = " + key);
-			out.println("Aconteceu " + notFoundCurricularCoursesCardinality.get(key) + " veze(s)...");
+			out.println("\t\tCadeira - Curso = " + key);
+			out.print("\tAconteceu " + notFoundCurricularCoursesCardinality.get(key) + " veze(s)...");
 			List foundHere = (List) mapEntry.getValue();
 			// TODO [DAVID] print list here
 			
 		}
+		out.close();
 	}
 }
