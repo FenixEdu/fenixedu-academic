@@ -74,7 +74,7 @@
           <tr>
             <td> <bean:message key="label.masterDegree.administrativeOffice.degree"/> </td>
             <td> <bean:write name="guide" property="infoExecutionDegree.infoDegreeCurricularPlan.infoDegree.nome"/> </td>
-          </tr>
+          </tr>         
           <tr>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
@@ -130,9 +130,13 @@
 	 </tr>
 	 
 	 <tr>
-	 <td>
+	 <td>&nbsp;&nbsp;&nbsp;<bean:write name="guide" property="infoGuideSituation.remarks"/>
 	 </td>
 	 </tr>
+	 <tr>
+	 <td>
+	 </td>
+	 <tr>
 	 
 	 <tr valign="bottom">
 	 <td>
