@@ -71,36 +71,36 @@ INSERT INTO TEACHER VALUES (4, 4,4);
 INSERT INTO TEACHER VALUES (5, 5,5);
 
 #
-# Data for table 'professorships'
+# Data for table 'PROFESSORSHIPS'
 #
 
-DELETE FROM professorships;
-INSERT INTO professorships VALUES (1, 24);
-INSERT INTO professorships VALUES (1, 25);
-INSERT INTO professorships VALUES (1, 26);
-INSERT INTO professorships VALUES (2, 24);
-INSERT INTO professorships VALUES (3, 24);
+DELETE FROM PROFESSORSHIPS;
+INSERT INTO PROFESSORSHIPS VALUES (1, 24);
+INSERT INTO PROFESSORSHIPS VALUES (1, 25);
+INSERT INTO PROFESSORSHIPS VALUES (1, 26);
+INSERT INTO PROFESSORSHIPS VALUES (2, 24);
+INSERT INTO PROFESSORSHIPS VALUES (3, 24);
 
 #
-# Data for table 'responsiblefor'
+# Data for table 'RESPONSIBLEFOR'
 #
 
-DELETE FROM responsiblefor;
-INSERT INTO responsiblefor VALUES (1, 24);
-INSERT INTO responsiblefor VALUES (1, 25);
-INSERT INTO responsiblefor VALUES (1, 26);
+DELETE FROM RESPONSIBLEFOR;
+INSERT INTO RESPONSIBLEFOR VALUES (1, 24);
+INSERT INTO RESPONSIBLEFOR VALUES (1, 25);
+INSERT INTO RESPONSIBLEFOR VALUES (1, 26);
 
 #
-# Data for table 'announcement'
+# Data for table 'ANNOUNCEMENT'
 #
 
-DELETE FROM announcement;
-INSERT INTO announcement VALUES (1, 'announcement1', '2003-01-21', '2003-01-21', 'information1', 1);
+DELETE FROM ANNOUNCEMENT;
+INSERT INTO ANNOUNCEMENT VALUES (1, 'announcement1', '2003-01-21', '2003-01-21', 'information1', 1);
 
 #----------------------------
-# Records for table bibliographic_reference
+# Records for table BIBLIOGRAPHIC_REFERENCE
 #----------------------------
 
-insert  into bibliographic_reference values (1, 'xpto', 'pedro', 'ref', '2002', 0, 24) ;
-insert  into bibliographic_reference values (2, 'so', 'am', 'ref2', '2004', 0, 25) ;
+insert  into BIBLIOGRAPHIC_REFERENCE values (1, 'xpto', 'pedro', 'ref', '2002', 0, 24) ;
+insert  into BIBLIOGRAPHIC_REFERENCE values (2, 'so', 'am', 'ref2', '2004', 0, 25) ;
 

@@ -10,8 +10,8 @@ use ciapl ;
 #----------------------------
 # Table structure for announcement
 #----------------------------
-drop table if exists announcement;
-create table announcement (
+drop table if exists ANNOUNCEMENT;
+create table ANNOUNCEMENT (
    ID_INTERNAL int(11) unsigned not null auto_increment,
    TITLE varchar(100),
    CREATION_DATE date,
@@ -24,8 +24,8 @@ create table announcement (
 #----------------------------
 # Table structure for curriculum
 #----------------------------
-drop table if exists curriculum;
-create table curriculum (
+drop table if exists CURRICULUM;
+create table CURRICULUM (
    ID_INTERNAL int(11) not null auto_increment,
    KEY_EXECUTION_COURSE int(11) not null default '0',
    GENERAL_OBJECTIVES varchar(50),
@@ -37,8 +37,8 @@ create table curriculum (
 #----------------------------
 # Table structure for item
 #----------------------------
-drop table if exists item;
-create table item (
+drop table if exists ITEM;
+create table ITEM (
    ID_INTERNAL int(11) unsigned not null auto_increment,
    NAME varchar(100),
    ITEM_ORDER int(11) unsigned,
@@ -52,8 +52,8 @@ create table item (
 #----------------------------
 # Table structure for responsiblefor
 #----------------------------
-drop table if exists responsiblefor;
-create table responsiblefor (
+drop table if exists RESPONSIBLEFOR;
+create table RESPONSIBLEFOR (
    ID_TEACHER int(11) unsigned not null default '0',
    ID_EXECUTIONCOURSE int(11) unsigned not null default '0',
    primary key (ID_TEACHER, ID_EXECUTIONCOURSE))
@@ -62,8 +62,8 @@ create table responsiblefor (
 #----------------------------
 # Table structure for professorships
 #----------------------------
-drop table if exists professorships;
-create table professorships (
+drop table if exists PROFESSORSHIPS;
+create table PROFESSORSHIPS (
    ID_TEACHER int(11) unsigned not null default '0',
    ID_EXECUTIONCOURSE int(11) unsigned not null default '0',
    primary key (ID_TEACHER, ID_EXECUTIONCOURSE))
@@ -72,8 +72,8 @@ create table professorships (
 #----------------------------
 # Table structure for section
 #----------------------------
-drop table if exists section;
-create table section (
+drop table if exists SECTION;
+create table SECTION (
    ID_INTERNAL int(11) unsigned not null auto_increment,
    NAME varchar(100),
    SECTION_ORDER int(11) unsigned,
@@ -87,8 +87,8 @@ create table section (
 #----------------------------
 # Table structure for site
 #----------------------------
-drop table if exists site;
-create table site (
+drop table if exists SITE;
+create table SITE (
    ID_INTERNAL int(11) unsigned not null auto_increment,
    KEY_EXECUTION_COURSE int(11) unsigned not null default '0',
    KEY_INITIAL_SECTION int(11),
@@ -99,7 +99,8 @@ create table site (
 #----------------------------
 # Table structure for bibliographic_reference
 #----------------------------
-create table bibliographic_reference (
+drop table if exists BIBLIOGRAPHIC_REFERENCE;
+create table BIBLIOGRAPHIC_REFERENCE (
    ID_INTERNAL int(50) not null auto_increment,
    TITLE varchar(50) not null,
    AUTHORS varchar(50) not null,
