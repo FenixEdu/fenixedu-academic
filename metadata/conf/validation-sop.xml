@@ -634,15 +634,14 @@
       </field>
     </form>
 
-    <form name="/manageLessonForm">
-      <field property="diaSemana" depends="required,mask" page="1">
+    <form name="manageLessonForm">
+      <field property="diaSemana" depends="required, mask" page="1">
         <arg0 key="property.aula.weekDay"/>
-        <var>
-          <var-name>mask</var-name>
-          <var-value>[23456sSdD]$</var-value>
-        </var>
+        	<var>
+        		<var-name>mask</var-name>
+          		<var-value>[23456sSdD]$</var-value>
+			</var>
       </field>
-
       <field property="horaInicio" depends="required,integer,range" page="1">
         <arg0 key="property.aula.time.begining"/>
         <arg1 key="${var:min}" resource="false"/>
@@ -656,15 +655,13 @@
           <var-value>23</var-value>
         </var>
       </field>
-
       <field property="minutosInicio" depends="required,mask" page="1">
-        <arg0 key="property.aula.time.begining"/>
+        <arg0 key="property.aula.time.minutes.begining"/>
         <var>
           <var-name>mask</var-name>
           <var-value>00|0|30$</var-value>
         </var>
       </field>
-      
       <field property="horaFim" depends="required,integer,range" page="1">
         <arg0 key="property.aula.time.end"/>
         <arg1 key="${var:min}" resource="false"/>
@@ -678,7 +675,6 @@
           <var-value>23</var-value>
         </var>
       </field>
-
       <field property="minutosFim" depends="required,mask" page="1">
         <arg0 key="property.aula.time.minutes.end"/>
         <var>
@@ -686,7 +682,6 @@
           <var-value>00|0|30$</var-value>
         </var>
       </field>
-
       <field property="nomeSala" depends="required" page="2">
         <arg0 key="property.aula.sala"/>
       </field>

@@ -15,8 +15,9 @@
 <br />
 <span class="error"><html:errors/></span>
 
+<br />
 <bean:message key="message.weekdays"/>
-<br/>
+<br />
 <html:form action="/manageLesson" focus="diaSemana">
 	<html:hidden property="method" value="chooseRoom"/>
 	<html:hidden property="page" value="1"/>
