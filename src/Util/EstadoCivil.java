@@ -63,13 +63,16 @@ public class EstadoCivil {
 
     public EstadoCivil(String estadoCivil) {
 		if (estadoCivil.equals(EstadoCivil.SOLTEIRO_STRING)) this.estadoCivil = new Integer(EstadoCivil.SOLTEIRO);
-		if (estadoCivil.equals(EstadoCivil.CASADO_STRING)) this.estadoCivil = new Integer(EstadoCivil.CASADO);
-		if (estadoCivil.equals(EstadoCivil.DIVORCIADO_STRING)) this.estadoCivil = new Integer(EstadoCivil.DIVORCIADO);
-		if (estadoCivil.equals(EstadoCivil.VIUVO_STRING)) this.estadoCivil = new Integer(EstadoCivil.VIUVO);
-		if (estadoCivil.equals(EstadoCivil.SEPARADO_STRING)) this.estadoCivil = new Integer(EstadoCivil.SEPARADO);
-		if (estadoCivil.equals(EstadoCivil.UNIAO_DE_FACTO_STRING)) this.estadoCivil = new Integer(EstadoCivil.UNIAO_DE_FACTO);
-		if (estadoCivil.equals(EstadoCivil.DESCONHECIDO_STRING)) this.estadoCivil = new Integer(EstadoCivil.DESCONHECIDO);
+		else if (estadoCivil.equals(EstadoCivil.CASADO_STRING)) this.estadoCivil = new Integer(EstadoCivil.CASADO);
+		else if (estadoCivil.equals(EstadoCivil.DIVORCIADO_STRING)) this.estadoCivil = new Integer(EstadoCivil.DIVORCIADO);
+		else if (estadoCivil.equals(EstadoCivil.VIUVO_STRING)) this.estadoCivil = new Integer(EstadoCivil.VIUVO);
+		else if (estadoCivil.equals(EstadoCivil.SEPARADO_STRING)) this.estadoCivil = new Integer(EstadoCivil.SEPARADO);
+		else if (estadoCivil.equals(EstadoCivil.UNIAO_DE_FACTO_STRING)) this.estadoCivil = new Integer(EstadoCivil.UNIAO_DE_FACTO);
+		else if (estadoCivil.equals(EstadoCivil.DESCONHECIDO_STRING)) this.estadoCivil = new Integer(EstadoCivil.DESCONHECIDO);
 		else this.estadoCivil = new Integer(EstadoCivil.SOLTEIRO);
+		
+		
+		System.out.println(this.estadoCivil);
     }
 
     public ArrayList toArrayList() {
