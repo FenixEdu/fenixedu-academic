@@ -18,13 +18,10 @@ import ServidorApresentacao.Action.masterDegree.utils.SessionConstants;
  * @author Tânia Pousão
  *  
  */
-public class GratuityFileLetters
+public class GratuityFileLetters extends GratuityFile
 {
 	public static final String SEPARATOR = ";";
-	public static final double INSURANCE = 2.50;
 	public static final String NOTHING = "-";
-	public static final String WITHOUT_ADDRESS = "Sem morada";
-	public static final String NOTHING_TO_PAY = "Nada a pagar";
 
 	public static File buildFile(List infoGratuitySituations) throws Exception
 	{
@@ -77,23 +74,25 @@ public class GratuityFileLetters
 			throw new Exception();
 		}
 	}
-	
+
 	private static String nameFile(InfoGratuitySituation infoGratuitySituation)
 	{
 		StringBuffer fileName = new StringBuffer();
 
-		String year = infoGratuitySituation
-		.getInfoGratuityValues()
-		.getInfoExecutionDegree()
-		.getInfoExecutionYear()
-		.getYear().replace('/','-');		
+		String year =
+			infoGratuitySituation
+				.getInfoGratuityValues()
+				.getInfoExecutionDegree()
+				.getInfoExecutionYear()
+				.getYear()
+				.replace('/', '-');
 		fileName.append("cartasPropinas");
 		fileName.append(year);
 		fileName.append(".txt");
 
 		return fileName.toString();
 	}
-	
+
 	/**
 	 * Creates a header that describes all column in file like <name column>;...; <name column>
 	 * 
@@ -112,7 +111,7 @@ public class GratuityFileLetters
 		header.append(SEPARATOR);
 		header.append("LOCALIDADE_CODIGO_POSTAL");
 		header.append(SEPARATOR);
-		header.append("NUMERO");
+		header.append("REFERÊNCIA_PAGAMENTO");
 		header.append(SEPARATOR);
 		header.append("MESTRADO");
 		header.append(SEPARATOR);
@@ -126,76 +125,6 @@ public class GratuityFileLetters
 		writer.newLine();
 	}
 
-	/**
-	 * Verify if the student hasn't address and nothing to pay if true the student doesn't receive the
-	 * letter
-	 * 
-	 * @param infoGratuitySituation
-	 * @return
-	 */
-	private static boolean valid(
-			InfoGratuitySituation infoGratuitySituation,
-			BufferedWriter writerErrors)
-	throws IOException
-	{
-		if (isNullOrEmpty(infoGratuitySituation
-				.getInfoStudentCurricularPlan()
-				.getInfoStudent()
-				.getInfoPerson()
-				.getMorada())
-				|| isNullOrEmpty(
-						infoGratuitySituation
-						.getInfoStudentCurricularPlan()
-						.getInfoStudent()
-						.getInfoPerson()
-						.getLocalidade())
-				|| isNullOrEmpty(
-						infoGratuitySituation
-						.getInfoStudentCurricularPlan()
-						.getInfoStudent()
-						.getInfoPerson()
-						.getCodigoPostal())
-				|| isNullOrEmpty(
-						infoGratuitySituation
-						.getInfoStudentCurricularPlan()
-						.getInfoStudent()
-						.getInfoPerson()
-						.getLocalidadeCodigoPostal()))
-		{
-			//write the error
-			writerErrors.write(
-					infoGratuitySituation.getInfoStudentCurricularPlan().getInfoStudent().getNumber()
-					+ " "
-					+ WITHOUT_ADDRESS);
-			writerErrors.newLine();
-			return false;
-		}
-		else if (
-				infoGratuitySituation.getRemainingValue().doubleValue() <= 0
-				&& infoGratuitySituation.getInsurancePayed().equals(SessionConstants.PAYED_INSURANCE))
-		{
-			writerErrors.write(
-					infoGratuitySituation.getInfoStudentCurricularPlan().getInfoStudent().getNumber()
-					+ " "
-					+ NOTHING_TO_PAY);
-			writerErrors.newLine();
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
-	 * Verify if the string is null pu empty
-	 * 
-	 * @param string
-	 * @return
-	 */
-	private static boolean isNullOrEmpty(String string)
-	{
-		return (string == null || string.length() <= 0);
-	}
-	
 	/**
 	 * Creates a line with student's data separate by tab
 	 * 
@@ -246,8 +175,8 @@ public class GratuityFileLetters
 				.getInfoPerson()
 				.getLocalidadeCodigoPostal());
 		line.append("\t");
-		//student´s number
-		line.append(infoGratuitySituation.getInfoStudentCurricularPlan().getInfoStudent().getNumber());
+		//payment's reference
+		line.append(buildPaymentReference(infoGratuitySituation));
 		line.append("\t");
 		//degree's name
 		line.append(
