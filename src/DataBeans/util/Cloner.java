@@ -2563,12 +2563,9 @@ public abstract class Cloner
 				enrolment.getStudentCurricularPlan());
 		InfoCurricularCourse infoCurricularCourse =
 			Cloner.copyCurricularCourse2InfoCurricularCourse(enrolment.getCurricularCourse());
-		InfoExecutionPeriod infoExecutionPeriod =
+		InfoExecutionPeriod infoExecutionPeriod = 
 			(InfoExecutionPeriod) Cloner.get(enrolment.getExecutionPeriod());
-		//        InfoCurricularCourseScope infoCurricularCourseScope =
-		//            Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(
-		//                enrolment.getCurricularCourseScope());
-
+	
 		List infoEnrolmentEvaluationsList = new ArrayList();
 		List enrolmentEvaluationsList = enrolment.getEvaluations();
 

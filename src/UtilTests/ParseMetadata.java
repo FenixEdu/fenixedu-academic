@@ -149,14 +149,13 @@ public class ParseMetadata extends DefaultHandler
 	}
 
 	public void startElement(String uri, String localName, String qName, Attributes attributes)
-		throws SAXException
 	{
 		current = new Element(uri, localName, qName, new AttributesImpl(attributes));
 		vector.addElement(current);
 		text = new String();
 	}
 
-	public void endElement(String uri, String localName, String qName) throws SAXException
+	public void endElement(String uri, String localName, String qName)
 	{
 		if (current != null && text != null)
 		{
@@ -165,7 +164,7 @@ public class ParseMetadata extends DefaultHandler
 		current = null;
 	}
 
-	public void characters(char[] ch, int start, int length) throws SAXException
+	public void characters(char[] ch, int start, int length)
 	{
 		if (current != null && text != null)
 		{
@@ -174,7 +173,7 @@ public class ParseMetadata extends DefaultHandler
 		}
 	}
 
-	private IMetadata vector2Metadata(Vector vector, IMetadata metadata) throws IOException
+	private IMetadata vector2Metadata(Vector vector, IMetadata metadata)
 	{
 
 		boolean difficulty = false,
