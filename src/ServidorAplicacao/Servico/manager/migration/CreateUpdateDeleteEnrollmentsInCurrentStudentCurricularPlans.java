@@ -67,8 +67,8 @@ public abstract class CreateUpdateDeleteEnrollmentsInCurrentStudentCurricularPla
 		{
 			if (!studentCurricularPlan.getDegreeCurricularPlan().equals(executionDegree.getCurricularPlan()))
 			{
-//				super.out.println(
-//					"[INFO] the student [" + studentCurricularPlan.getStudent().getNumber() + "] has changed his degree curricular plan!");
+				//super.out.println(
+				//	"[INFO] the student [" + studentCurricularPlan.getStudent().getNumber() + "] has changed his degree curricular plan!");
 				return studentCurricularPlan.getDegreeCurricularPlan();
 			} else
 			{
@@ -180,20 +180,20 @@ public abstract class CreateUpdateDeleteEnrollmentsInCurrentStudentCurricularPla
 	 * @throws Throwable
 	 */
 	private ICurricularCourse getCurricularCourseFromAnotherDegree(
-			final MWEnrolment mwEnrolment,
-			IDegreeCurricularPlan degreeCurricularPlan)
-	throws Throwable
+		final MWEnrolment mwEnrolment,
+		IDegreeCurricularPlan degreeCurricularPlan)
+		throws Throwable
 	{
 		ICurricularCourse curricularCourse = null;
 
 		IPersistentMWCurricularCourseOutsideStudentDegree persistentMWCurricularCourseOutsideStudentDegree =
-		super.persistentMiddlewareSuport.getIPersistentMWCurricularCourseOutsideStudentDegree();
+			super.persistentMiddlewareSuport.getIPersistentMWCurricularCourseOutsideStudentDegree();
 
 		// First of all we look in the MWCurricularCourseOutsideStudentDegree table to see if there is
 		// already a
 		// correspondence between this CurricularCourse and this Degree.
 		MWCurricularCourseOutsideStudentDegree mwCurricularCourseOutsideStudentDegree =
-		persistentMWCurricularCourseOutsideStudentDegree.readByCourseCodeAndDegreeCode(
+			persistentMWCurricularCourseOutsideStudentDegree.readByCourseCodeAndDegreeCode(
 				mwEnrolment.getCoursecode(),
 				mwEnrolment.getDegreecode());
 		if (mwCurricularCourseOutsideStudentDegree != null)
@@ -212,26 +212,31 @@ public abstract class CreateUpdateDeleteEnrollmentsInCurrentStudentCurricularPla
 			// to keep coherence of choice and to make the next similar choice quicker.
 			IPersistentCurricularCourse persistentCurricularCourse = super.persistentSuport.getIPersistentCurricularCourse();
 			List curricularCourses =
-			persistentCurricularCourse.readbyCourseCodeAndDegreeTypeAndDegreeCurricularPlanState(
+				persistentCurricularCourse.readbyCourseCodeAndDegreeTypeAndDegreeCurricularPlanState(
 					StringUtils.trim(mwEnrolment.getCoursecode()),
 					degreeCurricularPlan.getDegree().getTipoCurso(),
 					degreeCurricularPlan.getState());
 			curricularCourse = (ICurricularCourse) curricularCourses.get(0);
 
 			MWCurricularCourseOutsideStudentDegree mwCurricularCourseOutsideStudentDegreeToWrite =
-			new MWCurricularCourseOutsideStudentDegree();
-			persistentMWCurricularCourseOutsideStudentDegree.simpleLockWrite(mwCurricularCourseOutsideStudentDegreeToWrite);
-			mwCurricularCourseOutsideStudentDegreeToWrite.setCourseCode(mwEnrolment.getCoursecode());
-			mwCurricularCourseOutsideStudentDegreeToWrite.setDegreeCode(mwEnrolment.getDegreecode());
-			mwCurricularCourseOutsideStudentDegreeToWrite.setCurricularCourse(curricularCourse);
-
+				persistentMWCurricularCourseOutsideStudentDegree.readByCourseCodeAndDegreeCode(
+					mwEnrolment.getCoursecode(),
+					mwEnrolment.getDegreecode());
+			if (mwCurricularCourseOutsideStudentDegreeToWrite == null)
+			{
+				mwCurricularCourseOutsideStudentDegreeToWrite = new MWCurricularCourseOutsideStudentDegree();
+				persistentMWCurricularCourseOutsideStudentDegree.simpleLockWrite(mwCurricularCourseOutsideStudentDegreeToWrite);
+				mwCurricularCourseOutsideStudentDegreeToWrite.setCourseCode(mwEnrolment.getCoursecode());
+				mwCurricularCourseOutsideStudentDegreeToWrite.setDegreeCode(mwEnrolment.getDegreecode());
+				mwCurricularCourseOutsideStudentDegreeToWrite.setCurricularCourse(curricularCourse);
+			}
 		} else
 		{
 
 			IFrequentaPersistente attendDAO = super.persistentSuport.getIFrequentaPersistente();
 			List attendList = attendDAO.readByStudentNumberInCurrentExecutionPeriod(mwEnrolment.getNumber());
 			List attendsWithCurricularCourseCode = (List) CollectionUtils.select(attendList, new Predicate()
-					{
+			{
 				public boolean evaluate(Object input)
 				{
 					IFrequenta attend = (IFrequenta) input;
@@ -255,23 +260,28 @@ public abstract class CreateUpdateDeleteEnrollmentsInCurrentStudentCurricularPla
 			if (attendsWithCurricularCourseCode.size() > 0)
 			{
 				List associatedCurricularCourses =
-				((IFrequenta) attendsWithCurricularCourseCode.get(0)).getDisciplinaExecucao().getAssociatedCurricularCourses();
+					((IFrequenta) attendsWithCurricularCourseCode.get(0)).getDisciplinaExecucao().getAssociatedCurricularCourses();
 
 				curricularCourse = (ICurricularCourse) associatedCurricularCourses.get(0);
 
 				MWCurricularCourseOutsideStudentDegree mwCurricularCourseOutsideStudentDegreeToWrite =
-				new MWCurricularCourseOutsideStudentDegree();
-				persistentMWCurricularCourseOutsideStudentDegree.simpleLockWrite(mwCurricularCourseOutsideStudentDegreeToWrite);
-				mwCurricularCourseOutsideStudentDegreeToWrite.setCourseCode(mwEnrolment.getCoursecode());
-				mwCurricularCourseOutsideStudentDegreeToWrite.setDegreeCode(mwEnrolment.getDegreecode());
-				mwCurricularCourseOutsideStudentDegreeToWrite.setCurricularCourse(curricularCourse);
-
+					persistentMWCurricularCourseOutsideStudentDegree.readByCourseCodeAndDegreeCode(
+						mwEnrolment.getCoursecode(),
+						mwEnrolment.getDegreecode());
+				if (mwCurricularCourseOutsideStudentDegreeToWrite == null)
+				{
+					mwCurricularCourseOutsideStudentDegreeToWrite = new MWCurricularCourseOutsideStudentDegree();
+					persistentMWCurricularCourseOutsideStudentDegree.simpleLockWrite(mwCurricularCourseOutsideStudentDegreeToWrite);
+					mwCurricularCourseOutsideStudentDegreeToWrite.setCourseCode(mwEnrolment.getCoursecode());
+					mwCurricularCourseOutsideStudentDegreeToWrite.setDegreeCode(mwEnrolment.getDegreecode());
+					mwCurricularCourseOutsideStudentDegreeToWrite.setCurricularCourse(curricularCourse);
+				}
 			} else
 			{
 				ReportEnrolment.addFoundCurricularCourseInOtherDegrees(
-						mwEnrolment.getCoursecode(),
-						mwEnrolment.getDegreecode().toString(),
-						mwEnrolment.getNumber().toString());
+					mwEnrolment.getCoursecode(),
+					mwEnrolment.getDegreecode().toString(),
+					mwEnrolment.getNumber().toString());
 			}
 		}
 
@@ -286,15 +296,15 @@ public abstract class CreateUpdateDeleteEnrollmentsInCurrentStudentCurricularPla
 	 * @throws Throwable
 	 */
 	private boolean curricularCourseHasOnlyOneExecutionInGivenPeriod(
-			IExecutionPeriod executionPeriod,
-			MWEnrolment mwEnrolment,
-			IDegreeCurricularPlan degreeCurricularPlan)
-	throws Throwable
+		IExecutionPeriod executionPeriod,
+		MWEnrolment mwEnrolment,
+		IDegreeCurricularPlan degreeCurricularPlan)
+		throws Throwable
 	{
 		IPersistentCurricularCourse persistentCurricularCourse = super.persistentSuport.getIPersistentCurricularCourse();
 
 		List curricularCourses =
-		persistentCurricularCourse.readbyCourseCodeAndDegreeTypeAndDegreeCurricularPlanState(
+			persistentCurricularCourse.readbyCourseCodeAndDegreeTypeAndDegreeCurricularPlanState(
 				StringUtils.trim(mwEnrolment.getCoursecode()),
 				degreeCurricularPlan.getDegree().getTipoCurso(),
 				degreeCurricularPlan.getState());

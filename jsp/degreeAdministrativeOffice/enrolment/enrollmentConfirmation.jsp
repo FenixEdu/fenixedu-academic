@@ -24,6 +24,14 @@
 	</tr>
 </table>
 <br />
+<table>
+	<tr>
+		<td class="infoop">
+			<strong><bean:message key="label.credits.warning"/></strong>
+		</td>
+	</tr>
+</table>
+<br />
 <table>	
 	<logic:present name="infoStudentEnrolmentContext" property="infoStudentCurricularPlan.infoBranch">
 		<tr>

@@ -54,7 +54,7 @@ public class Student extends DomainObject implements IStudent {
 			
 			resultado = (student != null) &&
 						((this.getNumber().equals(student.getNumber()) && this.getDegreeType().equals(student.getDegreeType()) )
-						&&
+						||
 						(this.getDegreeType().equals(student.getDegreeType()) && this.getPerson().equals(student.getPerson())));
 		}
 		return resultado;

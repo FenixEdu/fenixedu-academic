@@ -20,6 +20,7 @@ public class FenixValuedEnum extends ValuedEnum implements Serializable
      */
     public FenixValuedEnum(String arg0, int arg1)
     {
+    	super(arg0, arg1);
     }
 
 }

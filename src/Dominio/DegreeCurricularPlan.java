@@ -63,8 +63,8 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
 
 	public boolean equals(Object obj) {
 		boolean resultado = false;
-		if (obj instanceof DegreeCurricularPlan) {
-			DegreeCurricularPlan dcp = (DegreeCurricularPlan) obj;
+		if (obj instanceof IDegreeCurricularPlan) {
+			IDegreeCurricularPlan dcp = (IDegreeCurricularPlan) obj;
 			resultado =
 				this.getName().equals(dcp.getName())
 					&& this.getDegree().equals(dcp.getDegree());
