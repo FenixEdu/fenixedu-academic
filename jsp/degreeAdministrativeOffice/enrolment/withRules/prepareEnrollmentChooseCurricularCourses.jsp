@@ -150,7 +150,7 @@
 					</logic:equal>
 				</td>
 				<td  class="listClasses">
-					<bean:write name="enrollmentElem" property="infoCurricularCourse.type.keyName"/>
+					<bean:message name="enrollmentElem" property="infoCurricularCourse.type.keyName" bundle="DEFAULT"/>
 				</td>				
 				<td class="listClasses">
 					<bean:write name="enrollmentElem" property="infoCurricularCourse.enrollmentWeigth"/>
@@ -159,7 +159,7 @@
 					<bean:write name="enrollmentElem" property="accumulatedWeight"/>
 				</td>
 				<td class="listClasses">
-					<bean:write name="enrollmentElem" property="condition"/>
+					<bean:message name="enrollmentElem" property="condition.name" bundle="ENUMERATION_RESOURCES"/>
 				</td>
 				<td class="listClasses">
 					<bean:define id="enrollmentIndex" name="enrollmentElem" property="idInternal"/>
@@ -193,7 +193,7 @@
 					<bean:write name="curricularCourse" property="infoCurricularCourse.name"/>
 				</td>
 				<td class="listClasses">
-					<bean:write name="curricularCourse" property="infoCurricularCourse.type.keyName"/>
+					<bean:message name="curricularCourse" property="infoCurricularCourse.type.keyName" bundle="DEFAULT"/>
 				</td>
 				<td class="listClasses">
 					<bean:write name="curricularCourse" property="infoCurricularCourse.enrollmentWeigth"/>
@@ -202,13 +202,14 @@
 					<bean:write name="curricularCourse" property="accumulatedWeight"/>
 				</td>
 				<td class="listClasses">
-					<bean:write name="curricularCourse" property="enrollmentType"/>
+					<bean:message name="curricularCourse" property="enrollmentType.name" bundle="ENUMERATION_RESOURCES"/>
 				</td>
 				
 				<td class="listClasses">
 					<html:multibox property="unenrolledCurricularCourses" onclick="<%=onclick.toString()%>" >
 						<bean:write name="curricularCourseIndex"/>
 					</html:multibox>
+					
 				</td>
 			</tr>
 		</logic:iterate>

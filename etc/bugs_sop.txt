@@ -1,8 +1,0 @@
-. Deverá definir: sigla. AnoCurricular não está entre 1 e 5. Semestre não está entre 1 e 2.
-. Adicionar Turnos -> vai para uma pagina que pede para adicionar novamente (talvez mudar para "Gerir Turnos")
-. Voltei tudo atras e fiz de novo mas a turma que tinha criado anteriormente continuava lá
-. Não dá para ver o horario do turno depois de o ter criado.
-. Mudar o nome da turma, turno para um que já existe dá bronca (Não Executado)
-. Criar um turno com um nome que já existe dá bronca (Não Executado)
-. Muita atenção no que diz respeito a editar aulas (tem muitos problemas)
-. Não dá para mudar o tipo do turno ?

@@ -79,7 +79,7 @@
     <!-- ========== Controller Configuration ================================ -->
     <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
     <!-- ========== Message Resources Definitions ============================ -->
-    <message-resources parameter="ServidorApresentacao.ApplicationResources" null="false"/>
+    <message-resources parameter="ServidorApresentacao.ApplicationResources" key="DEFAULT" null="false"/>
     <message-resources parameter="ServidorApresentacao.PortalResources" key="PORTAL_RESOURCES" 
         null="false"/>
     <message-resources parameter="ServidorApresentacao.EnumerationResources" key="ENUMERATION_RESOURCES" 

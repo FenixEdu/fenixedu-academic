@@ -630,10 +630,7 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
         query.setStartAtIndex(startIndex);
 
         int endIndex = startIndex + numberOfElementsInSpan.intValue() - 1;
-        //        if (startIndex == 1)
-        //        {
-        //        	endIndex = numberOfElementsInSpan.intValue() - 1;
-        //        }
+      
 
         query.setEndAtIndex(endIndex);
         List list = (List) pb.getCollectionByQuery(query);

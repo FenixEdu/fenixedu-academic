@@ -21,13 +21,13 @@ public class CurricularCourseEnrollmentType extends FenixValuedEnum implements S
     public static final int NOT_ALLOWED_TYPE = 3;
 
     public static final CurricularCourseEnrollmentType TEMPORARY = new CurricularCourseEnrollmentType(
-            "msg.temporary", CurricularCourseEnrollmentType.TEMPORARY_TYPE);
+            "curricularCourseEnrollmentType.temporary", CurricularCourseEnrollmentType.TEMPORARY_TYPE);
 
     public static final CurricularCourseEnrollmentType DEFINITIVE = new CurricularCourseEnrollmentType(
-            "msg.definitive", CurricularCourseEnrollmentType.DEFINITIVE_TYPE);
+            "curricularCourseEnrollmentType.definitive", CurricularCourseEnrollmentType.DEFINITIVE_TYPE);
 
     public static final CurricularCourseEnrollmentType NOT_ALLOWED = new CurricularCourseEnrollmentType(
-            "msg.notAllowed", CurricularCourseEnrollmentType.NOT_ALLOWED_TYPE);
+            "curricularCourseEnrollmentType.notAllowed", CurricularCourseEnrollmentType.NOT_ALLOWED_TYPE);
 
     private CurricularCourseEnrollmentType(String name, int value) {
         super(name, value);
@@ -55,8 +55,12 @@ public class CurricularCourseEnrollmentType extends FenixValuedEnum implements S
         return iterator(CurricularCourseEnrollmentType.class);
     }
 
-    public String toString() {
-        return this.getName();
+    public String toString()
+    {
+        String result = "Curricular Course Enrollment Type:\n";
+        result += "\n  - Curricular Course Enrollment Type : " + this.getName();
+
+        return result;
     }
 
 }
