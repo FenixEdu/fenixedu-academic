@@ -11,6 +11,7 @@ import org.apache.commons.collections.Transformer;
 
 import Dominio.degree.enrollment.CurricularCourse2Enroll;
 import Dominio.degree.enrollment.INotNeedToEnrollInCurricularCourse;
+import Dominio.degree.enrollment.rules.IEnrollmentRule;
 import ServidorAplicacao.Servico.exceptions.BothAreasAreTheSameServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -317,16 +318,16 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 
         setOfCurricularCoursesToEnroll = initAcumulatedEnrollments(setOfCurricularCoursesToEnroll);
 
-//        List enrollmentRules = getListOfEnrollmentRules(executionPeriod, enrollmentRuleType);
-//        int size = enrollmentRules.size();
-//
-//        for (int i = 0; i < size; i++) {
-//            IEnrollmentRule enrollmentRule = (IEnrollmentRule) enrollmentRules.get(i);
-//            setOfCurricularCoursesToEnroll = enrollmentRule.apply(setOfCurricularCoursesToEnroll);
-//            if (setOfCurricularCoursesToEnroll.isEmpty()) {
-//                break;
-//            }
-//        }
+        List enrollmentRules = getListOfEnrollmentRules(executionPeriod, enrollmentRuleType);
+        int size = enrollmentRules.size();
+
+        for (int i = 0; i < size; i++) {
+            IEnrollmentRule enrollmentRule = (IEnrollmentRule) enrollmentRules.get(i);
+            setOfCurricularCoursesToEnroll = enrollmentRule.apply(setOfCurricularCoursesToEnroll);
+            if (setOfCurricularCoursesToEnroll.isEmpty()) {
+                break;
+            }
+        }
 
         return setOfCurricularCoursesToEnroll;
     }

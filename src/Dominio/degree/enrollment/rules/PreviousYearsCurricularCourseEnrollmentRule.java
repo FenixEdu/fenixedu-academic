@@ -5,10 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import Util.enrollment.CurricularCourseEnrollmentType;
+
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudentCurricularPlan;
+import Dominio.degree.enrollment.CurricularCourse2Enroll;
 
 /**
  * @author David Santos in Jun 23, 2004
@@ -44,8 +47,8 @@ public class PreviousYearsCurricularCourseEnrollmentRule implements IEnrollmentR
 
 				for (int j = 0; j < size; j++)
 				{
-					ICurricularCourse curricularCourse = (ICurricularCourse) curricularCourses.get(j);
-					if (naoTemNotaLancada(curricularCourse))
+					CurricularCourse2Enroll curricularCourse2Enroll = (CurricularCourse2Enroll) curricularCourses.get(j);
+					if (curricularCourse2Enroll.getEnrollmentType().equals(CurricularCourseEnrollmentType.TEMPORARY))
 					{
 						counter++;
 					}
@@ -79,18 +82,12 @@ public class PreviousYearsCurricularCourseEnrollmentRule implements IEnrollmentR
 		return curricularCoursesToBeEnrolledIn;
 	}
 
-	private boolean naoTemNotaLancada(ICurricularCourse curricularCourse)
-	{
-		// TODO [DAVID] Auto-generated method stub
-		return false;
-	}
-
-	private Map buildHashMapForCurricularCoursesList(List curricularCourses)
+	private Map buildHashMapForCurricularCoursesList(List curricularCourses2Enroll)
 	{
 		Map map = new HashMap();
 		
 		List copy = new ArrayList();
-		copy.addAll(curricularCourses);
+		copy.addAll(curricularCourses2Enroll);
 		
 		for (int i = 1; i <= this.degreeDuration; i++)
 		{
@@ -100,12 +97,12 @@ public class PreviousYearsCurricularCourseEnrollmentRule implements IEnrollmentR
 			
 			for (int j = 0; j < size; j++)
 			{
-				ICurricularCourse curricularCourse = (ICurricularCourse) copy.get(j);
+				CurricularCourse2Enroll curricularCourse2Enroll = (CurricularCourse2Enroll) copy.get(j);
 				
-				if (isCurricularCourseFromYear(i, curricularCourse))
+				if (isCurricularCourseFromYear(i, curricularCourse2Enroll.getCurricularCourse()))
 				{
-					putCurricularCourseInHashMap(map, i, curricularCourse);
-					curricularCoursesToRemove.add(curricularCourse);
+					putCurricularCourseInHashMap(map, i, curricularCourse2Enroll);
+					curricularCoursesToRemove.add(curricularCourse2Enroll);
 				}
 			}
 			
@@ -121,7 +118,7 @@ public class PreviousYearsCurricularCourseEnrollmentRule implements IEnrollmentR
 			.getYear().intValue() == i);
 	}
 
-	private void putCurricularCourseInHashMap(Map map, int i, ICurricularCourse curricularCourse)
+	private void putCurricularCourseInHashMap(Map map, int i, CurricularCourse2Enroll curricularCourse2Enroll)
 	{
 		Integer key = new Integer(i);
 
@@ -129,11 +126,11 @@ public class PreviousYearsCurricularCourseEnrollmentRule implements IEnrollmentR
 		if (curricularCoursesList == null)
 		{
 			curricularCoursesList = new ArrayList();
-			curricularCoursesList.add(curricularCourse);
+			curricularCoursesList.add(curricularCourse2Enroll);
 		} else
 		{
-			if (!curricularCoursesList.contains(curricularCourse)) {
-				curricularCoursesList.add(curricularCourse);
+			if (!curricularCoursesList.contains(curricularCourse2Enroll)) {
+				curricularCoursesList.add(curricularCourse2Enroll);
 			}
 		}
 		
