@@ -15,13 +15,15 @@ import Util.TipoCurso;
  */
 
 public interface IStudent {
-	Integer getNumber();
-	StudentState getState();
-	IPessoa getPerson();
-	TipoCurso getDegreeType();
-
-	void setNumber(Integer number);
-	void setState(StudentState state);
-	void setPerson(IPessoa person);
-	void setDegreeType(TipoCurso degreeType);
+	public Integer getNumber();
+	public StudentState getState();
+	public IPessoa getPerson();
+	public IStudentGroupInfo getStudentGroupInfo();
+	public TipoCurso getDegreeType();
+	
+	public void setNumber(Integer number);
+	public void setState(StudentState state);
+	public void setPerson(IPessoa person);
+	public void setDegreeType(TipoCurso degreeType);	
+	public void setStudentGroupInfo(IStudentGroupInfo studentGroupInfo);
 }

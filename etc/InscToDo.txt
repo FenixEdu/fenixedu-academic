@@ -18,3 +18,8 @@ COISAS PARA FAZER EVENTUALMENTE:
 ================================
 
 1. A lista actualEnrolment do EnrolmentContext passar a ter Enrolments em vez de CurricularCourseScopes.
+
+O QUE ALTERAMOS DE IMPORTANTE:
+==============================
+
+1. Criamos uma tabela nova -> DEGREE_ENROLMENT_INFO e alteramos o repository_inscricoes no DegreeCurricularPlan

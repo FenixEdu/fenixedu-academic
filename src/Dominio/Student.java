@@ -14,9 +14,11 @@ public class Student implements IStudent {
 	protected Integer number;
 	protected StudentState state;
 	protected TipoCurso degreeType;
+	private IStudentGroupInfo studentGroupInfo;
 
 	private Integer internalCode;
 	private Integer personKey;
+	private Integer studentGroupInfoKey;
 	private IPessoa person;
 
 	public Student() {
@@ -26,9 +28,12 @@ public class Student implements IStudent {
 		setDegreeType(null);
 		setInternalCode(null);
 		setPersonKey(null);
+		setStudentGroupInfo(null);
+		setStudentGroupInfoKey(null);
 	}
 
 	public Student(Integer number, StudentState state, IPessoa person, TipoCurso degreeType) {
+		this();
 		setNumber(number);
 		setState(state);
 		setPerson(person);
@@ -53,6 +58,7 @@ public class Student implements IStudent {
 		result += "number = " + this.number + "; ";
 		result += "state = " + this.state + "; ";
 		result += "degreeType = " + this.degreeType + "; ";
+		result += "studentGroupInfo = " + this.studentGroupInfo + "; ";
 		result += "person = " + this.person + "]";
 		return result;
 	}
@@ -151,6 +157,33 @@ public class Student implements IStudent {
 	 */
 	public void setState(StudentState state) {
 		this.state = state;
+	}
+	/**
+	 * @return
+	 */
+	public IStudentGroupInfo getStudentGroupInfo() {
+		return studentGroupInfo;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getStudentGroupInfoKey() {
+		return studentGroupInfoKey;
+	}
+
+	/**
+	 * @param type
+	 */
+	public void setStudentGroupInfo(IStudentGroupInfo studentGroupInfo) {
+		this.studentGroupInfo = studentGroupInfo;
+	}
+
+	/**
+	 * @param integer
+	 */
+	public void setStudentGroupInfoKey(Integer studentGroupInfoKey) {
+		this.studentGroupInfoKey = studentGroupInfoKey;
 	}
 
 }

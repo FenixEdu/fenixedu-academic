@@ -218,11 +218,11 @@ create table CURRICULAR_COURSE_OPTION_CURRICULAR_COURSE (
    unique U1 (KEY_CURRICULAR_COURSE, KEY_CURRICULAR_COURSE_OPTION)
 )type=InnoDB;
 
-#----------------------------
+#--------------------------------------------
 # Table structure for DEGREE_ENROLMENT_INFO
-#----------------------------
-drop table if exists DEGREE_ENROLMENT_INFO;
-create table DEGREE_ENROLMENT_INFO (
+#--------------------------------------------
+drop table if exists DEGREE_CURRICULAR_PLAN_ENROLMENT_INFO;
+create table DEGREE_CURRICULAR_PLAN_ENROLMENT_INFO (
    ID_INTERNAL int(11) not null auto_increment,
    KEY_DEGREE_CURRICULAR_PLAN int(11) not null,
    DEGREE_DURATION int(11) not null,
@@ -231,7 +231,19 @@ create table DEGREE_ENROLMENT_INFO (
    unique U1 (KEY_DEGREE_CURRICULAR_PLAN)
 )type=InnoDB;
 
-
+#--------------------------------------------
+# Table structure for STUDENT_GROUP_INFO
+#--------------------------------------------
+drop table if exists STUDENT_GROUP_INFO;
+create table STUDENT_GROUP_INFO (
+   ID_INTERNAL int(11) not null auto_increment,
+   STUDENT_TYPE int(11) not null,
+   MIN_COURSES_TO_ENROL int(11) not null,
+   MAX_COURSES_TO_ENROL int(11) not null,
+   MAX_NAC_TO_ENROL int(11) not null,
+   primary key (ID_INTERNAL),
+   unique U1 (STUDENT_TYPE)
+)type=InnoDB;
 
 
 

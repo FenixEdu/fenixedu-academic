@@ -77,6 +77,7 @@ CREATE TABLE STUDENT (
   KEY_PERSON int(11) unsigned NOT NULL default '0',
   STATE int(11) unsigned NOT NULL default '1',
   DEGREE_TYPE integer(11) not null,
+  KEY_STUDENT_GROUP_INFO int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (ID_INTERNAL),
   UNIQUE KEY U1 (NUMBER, DEGREE_TYPE),
   UNIQUE KEY U2 (DEGREE_TYPE, KEY_PERSON)
