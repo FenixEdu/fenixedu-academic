@@ -22,12 +22,12 @@ public class Int2BooleanFieldConversion implements FieldConversion {
 		if (arg0 instanceof Boolean) {
 			if (arg0.equals(B_TRUE)) {
 				return I_TRUE;
-			} else {
+			} 
 				return I_FALSE;
-			}
-		} else {
+			
+		} 
 			return arg0;
-		}
+		
 
 	}
 
@@ -35,12 +35,12 @@ public class Int2BooleanFieldConversion implements FieldConversion {
 		if (arg0 instanceof Integer) {
 			if (arg0.equals(I_TRUE)) {
 				return B_TRUE;
-			} else {
+			} 
 				return B_FALSE;
-			}
-		} else {
+			
+		} 
 			return arg0;
-		}
+		
 
 	}
 }

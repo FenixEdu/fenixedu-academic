@@ -97,16 +97,16 @@ public final class CheckLogonTag extends TagSupport {
 			valid = true;
 
 		// Forward control based on the results
-		if (valid)
-			return (EVAL_PAGE);
-		else {
+		if (valid){
+			return (EVAL_PAGE);}
+		
 			try {
 				pageContext.forward(page);
 			} catch (Exception e) {
 				throw new JspException(e.toString());
 			}
 			return (SKIP_PAGE);
-		}
+		
 
 	}
 

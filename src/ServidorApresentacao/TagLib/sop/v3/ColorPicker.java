@@ -43,7 +43,7 @@ public abstract class ColorPicker {
 			|| (infoLessonWrapper.getInfoLesson() == null)) {
 			/* blank slot color*/
 			return "#CCCCCC";
-		} else {
+		} 
 			InfoLesson infoLesson = infoLessonWrapper.getInfoLesson();
 			String colorKeyInfoLesson = getColorKeyFromInfoLesson(infoLesson);
 			String color = (String) lessonColors.get(colorKeyInfoLesson);
@@ -54,7 +54,7 @@ public abstract class ColorPicker {
 				lessonColors.put(colorKeyInfoLesson, color);
 			}
 			return color;
-		}
+		
 
 	}
 

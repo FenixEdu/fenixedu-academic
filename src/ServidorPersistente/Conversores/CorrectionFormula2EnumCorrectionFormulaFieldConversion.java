@@ -22,10 +22,9 @@ public class CorrectionFormula2EnumCorrectionFormulaFieldConversion implements F
             CorrectionFormula cf = (CorrectionFormula) arg0;
             return cf.getFormula();
         }
-        else
-        {
+       
             return arg0;
-        }
+        
     }
 
     public Object sqlToJava(Object arg0) throws ConversionException
@@ -35,10 +34,9 @@ public class CorrectionFormula2EnumCorrectionFormulaFieldConversion implements F
             Integer formula = (Integer) arg0;
             return new CorrectionFormula(formula);
         }
-        else
-        {
+       
             return arg0;
-        }
+        
     }
 
 }

@@ -18,23 +18,28 @@ import Dominio.IStrategyHorarios;
 import Dominio.SuporteStrategyHorarios;
 
 /**
- *
- * @author  Fernanda Quitério & Tania Pousão
+ * 
+ * @author Fernanda Quitério & Tania Pousão
  */
-public class AssociarHorarioTipoForm extends ActionForm
-{
+public class AssociarHorarioTipoForm extends ActionForm {
     private String _numMecanografico = null;
 
     private String _numDias = null;
+
     private String _posicao = null;
 
     private ArrayList _listaSiglas = new ArrayList();
 
     private String _diaInicio = null;
+
     private String _mesInicio = null;
+
     private String _anoInicio = null;
+
     private String _diaFim = null;
+
     private String _mesFim = null;
+
     private String _anoFim = null;
 
     private String _sigla = null;
@@ -42,135 +47,122 @@ public class AssociarHorarioTipoForm extends ActionForm
     private boolean _excepcaoHorario = false;
 
     private String alterar = null;
+
     private String indiceRotacao = null;
 
-    public String getIndiceRotacao()
-    {
+    public String getIndiceRotacao() {
         return indiceRotacao;
     }
 
-    public void setIndiceRotacao(String indiceRotacao)
-    {
+    public void setIndiceRotacao(String indiceRotacao) {
         this.indiceRotacao = indiceRotacao;
     }
 
-    public String getAlterar()
-    {
+    public String getAlterar() {
         return alterar;
     }
 
-    public void setAlterar(String alterar)
-    {
+    public void setAlterar(String alterar) {
         this.alterar = alterar;
     }
 
-    public String getNumMecanografico()
-    {
+    public String getNumMecanografico() {
         return (_numMecanografico);
     }
 
-    public String getNumDias()
-    {
+    public String getNumDias() {
         return _numDias;
     }
-    public String getPosicao()
-    {
+
+    public String getPosicao() {
         return _posicao;
     }
 
-    public ArrayList getListaSiglas()
-    {
+    public ArrayList getListaSiglas() {
         return (_listaSiglas);
     }
 
-    public String getDiaInicio()
-    {
+    public String getDiaInicio() {
         return (_diaInicio);
     }
-    public String getMesInicio()
-    {
+
+    public String getMesInicio() {
         return (_mesInicio);
     }
-    public String getAnoInicio()
-    {
+
+    public String getAnoInicio() {
         return (_anoInicio);
     }
 
-    public String getDiaFim()
-    {
+    public String getDiaFim() {
         return (_diaFim);
     }
-    public String getMesFim()
-    {
+
+    public String getMesFim() {
         return (_mesFim);
     }
-    public String getAnoFim()
-    {
+
+    public String getAnoFim() {
         return (_anoFim);
     }
-    public String getSigla()
-    {
+
+    public String getSigla() {
         return (_sigla);
     }
-    public boolean isExcepcaoHorario()
-    {
+
+    public boolean isExcepcaoHorario() {
         return _excepcaoHorario;
     }
 
-    public void setNumMecanografico(String numMecanografico)
-    {
+    public void setNumMecanografico(String numMecanografico) {
         _numMecanografico = numMecanografico;
     }
 
-    public void setNumDias(String numDias)
-    {
+    public void setNumDias(String numDias) {
         _numDias = numDias;
     }
-    public void setPosicao(String posicao)
-    {
+
+    public void setPosicao(String posicao) {
         _posicao = posicao;
     }
 
-    public void setListaSiglas(ArrayList listaSiglas)
-    {
+    public void setListaSiglas(ArrayList listaSiglas) {
         _listaSiglas = listaSiglas;
     }
 
-    public void setDiaInicio(String diaInicio)
-    {
+    public void setDiaInicio(String diaInicio) {
         _diaInicio = diaInicio;
     }
-    public void setMesInicio(String mesInicio)
-    {
+
+    public void setMesInicio(String mesInicio) {
         _mesInicio = mesInicio;
     }
-    public void setAnoInicio(String anoInicio)
-    {
+
+    public void setAnoInicio(String anoInicio) {
         _anoInicio = anoInicio;
     }
-    public void setDiaFim(String diaFim)
-    {
+
+    public void setDiaFim(String diaFim) {
         _diaFim = diaFim;
     }
-    public void setMesFim(String mesFim)
-    {
+
+    public void setMesFim(String mesFim) {
         _mesFim = mesFim;
     }
-    public void setAnoFim(String anoFim)
-    {
+
+    public void setAnoFim(String anoFim) {
         _anoFim = anoFim;
     }
-    public void setSigla(String sigla)
-    {
+
+    public void setSigla(String sigla) {
         _sigla = sigla;
     }
-    public void setExcepcaoHorario(boolean excepcaoHorario)
-    {
+
+    public void setExcepcaoHorario(boolean excepcaoHorario) {
         _excepcaoHorario = excepcaoHorario;
     }
 
-    public void reset(ActionMapping mapping, HttpServletRequest request)
-    {
+    public void reset(ActionMapping mapping, HttpServletRequest request) {
         _numMecanografico = "";
 
         _numDias = "";
@@ -185,52 +177,42 @@ public class AssociarHorarioTipoForm extends ActionForm
         _excepcaoHorario = false;
     }
 
-    public void setForm(
-        ArrayList listaSiglas,
-        String sigla,
-        Horario horario,
-        Boolean excepcao,
-        String numeroMecanografico)
-    {
+    public void setForm(ArrayList listaSiglas, String sigla, Horario horario,
+            Boolean excepcao, String numeroMecanografico) {
         setListaSiglas(listaSiglas);
 
-        if (sigla != null)
-        {
+        if (sigla != null) {
             setSigla(sigla);
-        } else
-        {
+        } else {
             setSigla((String) _listaSiglas.get(0));
         }
 
-        //		testes para o caso de alteraçao de horario tipo que so pode ocorrer logo apos a associacao do horario
+        //		testes para o caso de alteraçao de horario tipo que so pode ocorrer
+        // logo apos a associacao do horario
         Calendar data = Calendar.getInstance();
-        if (horario != null)
-        {
+        if (horario != null) {
             setPosicao(String.valueOf(horario.getPosicao()));
             setNumDias(String.valueOf(horario.getNumDias()));
 
-            if (horario.getDataFim() != null)
-            {
+            if (horario.getDataFim() != null) {
                 data.setTime(horario.getDataFim());
-                setDiaFim((new Integer(data.get(Calendar.DAY_OF_MONTH))).toString());
-                setMesFim((new Integer(data.get(Calendar.MONTH) + 1)).toString());
+                setDiaFim((new Integer(data.get(Calendar.DAY_OF_MONTH)))
+                        .toString());
+                setMesFim((new Integer(data.get(Calendar.MONTH) + 1))
+                        .toString());
                 setAnoFim((new Integer(data.get(Calendar.YEAR))).toString());
             }
-            if (horario.getDataInicio() != null)
-            {
+            if (horario.getDataInicio() != null) {
                 data.clear();
                 data.setTime(horario.getDataInicio());
             }
-            if (excepcao != null)
-            {
+            if (excepcao != null) {
                 setExcepcaoHorario(excepcao.booleanValue());
             }
-            if (numeroMecanografico != null)
-            {
+            if (numeroMecanografico != null) {
                 setNumMecanografico(numeroMecanografico);
             }
-            if (sigla == null)
-            {
+            if (sigla == null) {
                 setSigla(horario.getSigla());
             }
         }
@@ -239,173 +221,161 @@ public class AssociarHorarioTipoForm extends ActionForm
         setAnoInicio((new Integer(data.get(Calendar.YEAR))).toString());
     }
 
-    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request)
-    {
+    public ActionErrors validate(ActionMapping mapping,
+            HttpServletRequest request) {
         ActionErrors errors = new ActionErrors();
 
         HttpSession session = request.getSession();
 
-        if (mapping.getPath().equals(new String("/associarHorarioTipo")))
-        {
-            if (request.getParameter("numMecanografico") != null)
-            {
-                if ((request.getParameter("numMecanografico")).length() < 1)
-                {
-                    errors.add("numMecanografico", new ActionError("error.numero.obrigatorio"));
+        if (mapping.getPath().equals(new String("/associarHorarioTipo"))) {
+            if (request.getParameter("numMecanografico") != null) {
+                if ((request.getParameter("numMecanografico")).length() < 1) {
+                    errors.add("numMecanografico", new ActionError(
+                            "error.numero.obrigatorio"));
                     return errors;
-                } else
-                {
-                    try
-                    {
-                        (new Integer(request.getParameter("numMecanografico"))).intValue();
-                    } catch (java.lang.NumberFormatException e)
-                    {
-                        errors.add("numMecanografico", new ActionError("error.numero.naoInteiro"));
-                        return errors;
-                    }
                 }
+                try {
+                    (new Integer(request.getParameter("numMecanografico")))
+                            .intValue();
+                } catch (java.lang.NumberFormatException e) {
+                    errors.add("numMecanografico", new ActionError(
+                            "error.numero.naoInteiro"));
+                    return errors;
+                }
+
             }
-        } else if (mapping.getPath().equals(new String("/adicionarHorarioTipoRotacao")))
-        {
-            if ((request.getParameter("numDias") != null) && (request.getParameter("posicao") != null))
-            {
+        } else if (mapping.getPath().equals(
+                new String("/adicionarHorarioTipoRotacao"))) {
+            if ((request.getParameter("numDias") != null)
+                    && (request.getParameter("posicao") != null)) {
                 if (((request.getParameter("numDias")).length() < 1)
-                    || ((request.getParameter("posicao")).length() < 1))
-                {
-                    errors.add("numero", new ActionError("error.numero.obrigatorio"));
+                        || ((request.getParameter("posicao")).length() < 1)) {
+                    errors.add("numero", new ActionError(
+                            "error.numero.obrigatorio"));
                     return errors;
-                } else
-                {
-                    int numDias = 0;
-                    int posicao = 0;
-                    try
-                    {
-                        numDias = (new Integer(getNumDias())).intValue();
-                        posicao = (new Integer(getPosicao())).intValue();
-                    } catch (java.lang.NumberFormatException e)
-                    {
-                        errors.add("numero", new ActionError("error.numero.naoInteiro"));
-                        return errors;
+                }
+                int numDias = 0;
+                int posicao = 0;
+                try {
+                    numDias = (new Integer(getNumDias())).intValue();
+                    posicao = (new Integer(getPosicao())).intValue();
+                } catch (java.lang.NumberFormatException e) {
+                    errors.add("numero", new ActionError(
+                            "error.numero.naoInteiro"));
+                    return errors;
+                }
+
+                // testa a posição e a duração da nova rotação
+                ArrayList rotacaoHorario = new ArrayList();
+                if ((rotacaoHorario = (ArrayList) session
+                        .getAttribute("rotacaoHorario")) != null) {
+                    ArrayList novaLista = (ArrayList) rotacaoHorario.clone();
+                    Horario horario = null;
+                    int posMaxPrimeiroHorario = 0;
+
+                    // se for uma alteracao de horario a validacao das posicoes
+                    // nao pode contar com o horario anterior
+                    if (request.getParameter("alterar") != null) {
+                        novaLista.remove(Integer.valueOf(
+                                request.getParameter("indiceRotacao"))
+                                .intValue());
+                    }
+                    ListIterator iterador = novaLista.listIterator();
+
+                    if (iterador.hasNext()) {
+                        horario = (Horario) iterador.next();
+                        if ((posicao >= horario.getPosicao())
+                                && (posicao <= (horario.getPosicao()
+                                        + horario.getNumDias() - 1))) {
+                            errors.add("numero", new ActionError(
+                                    "error.rotacaoHorario"));
+                            return errors;
+                        }
+
+                        if ((posicao >= posMaxPrimeiroHorario)
+                                && (posicao < horario.getPosicao())) {
+                            if (numDias >= (horario.getPosicao() - posMaxPrimeiroHorario)) {
+                                errors.add("rotacao", new ActionError(
+                                        "error.rotacaoHorario"));
+                                return errors;
+                            }
+                            /* dia de descanso entre a rotacao dos horários */
+                            if (((posicao - posMaxPrimeiroHorario) == 1)
+                                    || (((horario.getPosicao()) - (posicao
+                                            + numDias - 1)) == 1)) {
+                                errors.add("dia de descanso", new ActionError(
+                                        "error.rotacaoHorario.diaDescanso"));
+                                return errors;
+                            }
+
+                        }
+
+                        posMaxPrimeiroHorario = horario.getPosicao()
+                                + horario.getNumDias() - 1;
                     }
 
-                    // testa a posição e a duração da nova rotação 
-                    ArrayList rotacaoHorario = new ArrayList();
-                    if ((rotacaoHorario = (ArrayList) session.getAttribute("rotacaoHorario")) != null)
-                    {
-                        ArrayList novaLista = (ArrayList) rotacaoHorario.clone();
-                        Horario horario = null;
-                        int posMaxPrimeiroHorario = 0;
-
-                        // se for uma alteracao de horario a validacao das posicoes nao pode contar com o horario anterior
-                        if (request.getParameter("alterar") != null)
-                        {
-                            novaLista.remove(
-                                Integer.valueOf(request.getParameter("indiceRotacao")).intValue());
+                    while (iterador.hasNext()) {
+                        horario = (Horario) iterador.next();
+                        if ((posicao >= horario.getPosicao())
+                                && (posicao <= (horario.getPosicao()
+                                        + horario.getNumDias() - 1))) {
+                            errors.add("rotacao", new ActionError(
+                                    "error.rotacaoHorario"));
+                            return errors;
                         }
-                        ListIterator iterador = novaLista.listIterator();
 
-                        if (iterador.hasNext())
-                        {
-                            horario = (Horario) iterador.next();
-                            if ((posicao >= horario.getPosicao())
-                                && (posicao <= (horario.getPosicao() + horario.getNumDias() - 1)))
-                            {
-                                errors.add("numero", new ActionError("error.rotacaoHorario"));
+                        if ((posicao > posMaxPrimeiroHorario)
+                                && (posicao < horario.getPosicao())) {
+                            if (numDias >= (horario.getPosicao() - posMaxPrimeiroHorario)) {
+                                errors.add("rotacao", new ActionError(
+                                        "error.rotacaoHorario"));
+                                return errors;
+                            }
+                            /* dia de descanso entre a rotacao dos horários */
+                            if (((posicao - posMaxPrimeiroHorario) == 1)
+                                    || (((horario.getPosicao()) - (posicao
+                                            + numDias - 1)) == 1)) {
+                                errors.add("dia de descanso", new ActionError(
+                                        "error.rotacaoHorario.diaDescanso"));
                                 return errors;
                             }
 
-                            if ((posicao >= posMaxPrimeiroHorario) && (posicao < horario.getPosicao()))
-                            {
-                                if (numDias >= (horario.getPosicao() - posMaxPrimeiroHorario))
-                                {
-                                    errors.add("rotacao", new ActionError("error.rotacaoHorario"));
-                                    return errors;
-                                } else
-                                {
-                                    /* dia de descanso entre a rotacao dos horários */
-                                    if (((posicao - posMaxPrimeiroHorario) == 1)
-                                        || (((horario.getPosicao()) - (posicao + numDias - 1)) == 1))
-                                    {
-                                        errors.add(
-                                            "dia de descanso",
-                                            new ActionError("error.rotacaoHorario.diaDescanso"));
-                                        return errors;
-                                    }
-                                }
-                            }
-
-                            posMaxPrimeiroHorario = horario.getPosicao() + horario.getNumDias() - 1;
                         }
+                        posMaxPrimeiroHorario = horario.getPosicao()
+                                + horario.getNumDias() - 1;
+                    }
 
-                        while (iterador.hasNext())
-                        {
-                            horario = (Horario) iterador.next();
-                            if ((posicao >= horario.getPosicao())
-                                && (posicao <= (horario.getPosicao() + horario.getNumDias() - 1)))
-                            {
-                                errors.add("rotacao", new ActionError("error.rotacaoHorario"));
-                                return errors;
-                            }
-
-                            if ((posicao > posMaxPrimeiroHorario) && (posicao < horario.getPosicao()))
-                            {
-                                if (numDias >= (horario.getPosicao() - posMaxPrimeiroHorario))
-                                {
-                                    errors.add("rotacao", new ActionError("error.rotacaoHorario"));
-                                    return errors;
-                                } else
-                                {
-                                    /* dia de descanso entre a rotacao dos horários */
-                                    if (((posicao - posMaxPrimeiroHorario) == 1)
-                                        || (((horario.getPosicao()) - (posicao + numDias - 1)) == 1))
-                                    {
-                                        errors.add(
-                                            "dia de descanso",
-                                            new ActionError("error.rotacaoHorario.diaDescanso"));
-                                        return errors;
-                                    }
-                                }
-                            }
-                            posMaxPrimeiroHorario = horario.getPosicao() + horario.getNumDias() - 1;
-                        }
-
-                        if (posicao > posMaxPrimeiroHorario)
-                        {
-                            // dia de descanso entre a rotacao dos horários 
-                            if ((posicao - posMaxPrimeiroHorario) == 1)
-                            {
-                                errors.add(
-                                    "dia de descanso",
-                                    new ActionError("error.rotacaoHorario.diaDescanso"));
-                                return errors;
-                            }
+                    if (posicao > posMaxPrimeiroHorario) {
+                        // dia de descanso entre a rotacao dos horários
+                        if ((posicao - posMaxPrimeiroHorario) == 1) {
+                            errors.add("dia de descanso", new ActionError(
+                                    "error.rotacaoHorario.diaDescanso"));
+                            return errors;
                         }
                     }
                 }
+
             }
         }
 
         ArrayList listaSiglas = (ArrayList) session.getAttribute("listaSiglas");
-        ArrayList listaHorarios = (ArrayList) session.getAttribute("listaHorarios");
-        ArrayList listaRegimesHorarios = (ArrayList) session.getAttribute("listaRegimesHorarios");
+        ArrayList listaHorarios = (ArrayList) session
+                .getAttribute("listaHorarios");
+        ArrayList listaRegimesHorarios = (ArrayList) session
+                .getAttribute("listaRegimesHorarios");
 
         int indiceLista = 0;
-        if (listaSiglas != null)
-        {
+        if (listaSiglas != null) {
             indiceLista = listaSiglas.indexOf(getSigla());
         }
 
         HorarioTipo horarioTipo = null;
-        if (listaHorarios != null)
-        {
+        if (listaHorarios != null) {
             horarioTipo = (HorarioTipo) listaHorarios.get(indiceLista);
             // validacao dos outros campos
-            IStrategyHorarios horario =
-                SuporteStrategyHorarios.getInstance().callStrategy(horarioTipo.getModalidade());
-            errors =
-                horario.validateAssociarHorarioTipo(
-                    this,
-                    horarioTipo,
+            IStrategyHorarios horario = SuporteStrategyHorarios.getInstance()
+                    .callStrategy(horarioTipo.getModalidade());
+            errors = horario.validateAssociarHorarioTipo(this, horarioTipo,
                     (ArrayList) listaRegimesHorarios.get(indiceLista));
         }
         return errors;

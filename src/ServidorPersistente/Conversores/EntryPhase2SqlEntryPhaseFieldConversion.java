@@ -22,9 +22,9 @@ public class EntryPhase2SqlEntryPhaseFieldConversion implements FieldConversion 
             EntryPhase s = (EntryPhase) source;
             return s.getEntryPhase();
         }
-        else {
+        
             return source;
-        }
+        
     }    
 
    /*
@@ -37,9 +37,8 @@ public class EntryPhase2SqlEntryPhaseFieldConversion implements FieldConversion 
             Integer src = (Integer) source;
             return new EntryPhase(src);
         }
-        else
-        {
+       
             return source;
-        }
+        
     }    
 }

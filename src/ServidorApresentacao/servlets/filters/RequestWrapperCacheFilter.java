@@ -120,9 +120,9 @@ public class RequestWrapperCacheFilter implements Filter {
 
 		if (queryString.length() != 0) {
 			return queryString.toString();
-		} else {
+		} 
 			return null;
-		}
+		
 	}
 
 	public class FenixHttpServletRequestWrapper extends HttpServletRequestWrapper

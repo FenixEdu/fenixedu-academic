@@ -1,6 +1,6 @@
 /*
  * JavaTipoCurso2SqlTipoCursoFieldConversion.java
- *
+ * 
  * Created on 21 de Novembro de 2002, 15:57
  */
 
@@ -10,36 +10,32 @@ import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
 import Util.TipoCurso;
 
-public class JavaTipoCurso2SqlTipoCursoFieldConversion implements FieldConversion {
-    
+public class JavaTipoCurso2SqlTipoCursoFieldConversion implements
+        FieldConversion {
+
     /*
      * @see FieldConversion#javaToSql(Object)
      */
-    public Object javaToSql(Object source)
-    {
-        if (source instanceof TipoCurso)
-        {
+    public Object javaToSql(Object source) {
+        if (source instanceof TipoCurso) {
             TipoCurso s = (TipoCurso) source;
             return s.getTipoCurso();
         }
-        else {
-            return source;
-        }
-    }    
 
-   /*
+        return source;
+
+    }
+
+    /*
      * @see FieldConversion#sqlToJava(Object)
      */
-    public Object sqlToJava(Object source)
-    {
-        if (source instanceof Integer)
-        {
+    public Object sqlToJava(Object source) {
+        if (source instanceof Integer) {
             Integer src = (Integer) source;
             return new TipoCurso(src);
         }
-        else
-        {
-            return source;
-        }
-    }    
+
+        return source;
+
+    }
 }

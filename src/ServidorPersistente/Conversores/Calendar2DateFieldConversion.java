@@ -25,10 +25,9 @@ public class Calendar2DateFieldConversion implements FieldConversion
         {
             return new java.sql.Date( ((Calendar) source).getTime().getTime() );
         }
-        else 
-        {
+        
          	return source;   
-        }
+        
     }
 
     /*
@@ -42,10 +41,9 @@ public class Calendar2DateFieldConversion implements FieldConversion
             res.setTime( new java.util.Date( ((java.sql.Date) source).getTime()) );
             return res;
         }
-        else
-        {
+        
          	return source;   
-        }
+        
     }
 
 }

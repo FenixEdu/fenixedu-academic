@@ -26,10 +26,9 @@ public class Calendar2DateTimeFieldConversion implements FieldConversion
         {
             return new Timestamp(((Calendar) source).getTimeInMillis());
         }
-        else 
-        {
+       
          	return source;   
-        }
+        
     }
 
     /*
@@ -43,10 +42,9 @@ public class Calendar2DateTimeFieldConversion implements FieldConversion
             res.setTimeInMillis( ((Timestamp) source).getTime());
             return res;
         }
-        else
-        {
+        
          	return source;   
-        }
+        
     }
 
 }

@@ -11,39 +11,34 @@ import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 import Util.Sexo;
 
 /**
- *
- * @author  David Santos
+ * 
+ * @author David Santos
  */
 public class JavaSexo2SqlSexoFieldConversion implements FieldConversion {
-    
+
     /*
      * @see FieldConversion#javaToSql(Object)
      */
-    public Object javaToSql(Object source)
-    {
-        if (source instanceof Sexo)
-        {
+    public Object javaToSql(Object source) {
+        if (source instanceof Sexo) {
             Sexo s = (Sexo) source;
             return s.getSexo();
         }
-        else {
-            return source;
-        }
-    }    
 
-   /*
+        return source;
+
+    }
+
+    /*
      * @see FieldConversion#sqlToJava(Object)
      */
-    public Object sqlToJava(Object source)
-    {
-        if (source instanceof Integer)
-        {
+    public Object sqlToJava(Object source) {
+        if (source instanceof Integer) {
             Integer src = (Integer) source;
             return new Sexo(src);
         }
-        else
-        {
-            return source;
-        }
-    }    
+
+        return source;
+
+    }
 }

@@ -6,36 +6,29 @@ import Util.ReimbursementGuideState;
 
 /**
  * 
- * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota</a>
- *         
+ * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a>
+ *  
  */
 
 public class JavaReimbursementGuideState2SqlReimbursementGuideStateFieldConversion
-    implements FieldConversion
-{
+        implements FieldConversion {
 
-    public Object javaToSql(Object source)
-    {
-        if (source instanceof ReimbursementGuideState)
-        {
+    public Object javaToSql(Object source) {
+        if (source instanceof ReimbursementGuideState) {
             ReimbursementGuideState state = (ReimbursementGuideState) source;
             return new Integer(state.getValue());
-        } else
-        {
-            return source;
         }
+        return source;
+
     }
 
-    public Object sqlToJava(Object source)
-    {
-        if (source instanceof Integer)
-        {
+    public Object sqlToJava(Object source) {
+        if (source instanceof Integer) {
             Integer src = (Integer) source;
             return ReimbursementGuideState.getEnum(src.intValue());
-        } else
-        {
-            return source;
         }
+        return source;
+
     }
 
 }

@@ -14,41 +14,34 @@ import java.util.Date;
 
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
-public class Time2DateFieldConversion implements FieldConversion
-{
+public class Time2DateFieldConversion implements FieldConversion {
 
     /*
-	 * @see FieldConversion#javaToSql(Object)
-	 */
-    public Object javaToSql(Object source)
-    {
-        if (source instanceof Date)
-        {
+     * @see FieldConversion#javaToSql(Object)
+     */
+    public Object javaToSql(Object source) {
+        if (source instanceof Date) {
             Date date = (Date) source;
             Time time = new Time(date.getTime());
             return time;
         }
-        else
-        {
-            return source;
-        }
+
+        return source;
+
     }
 
     /*
-	 * @see FieldConversion#sqlToJava(Object)
-	 */
-    public Object sqlToJava(Object source)
-    {
-        if (source instanceof Time)
-        {
+     * @see FieldConversion#sqlToJava(Object)
+     */
+    public Object sqlToJava(Object source) {
+        if (source instanceof Time) {
             Time time = (Time) source;
             Date date = new Date(time.getTime());
             return date;
         }
-        else
-        {
-            return source;
-        }
+
+        return source;
+
     }
 
 }

@@ -39,14 +39,14 @@ public class ValidateMultiBoxWithSelectAllCheckBox {
 				|| (multiBox != null)
 				&& (multiBox.length > 0)) {
 				return true;
-			} else {
+			} 
 				errors.add(
 					field.getKey(),
 					new ActionError(
 						"errors.required.checkbox",
 						field.getArg0().getKey()));
 				return false;
-			}
+			
 		} catch (Exception e) {
 			errors.add(
 				field.getKey(),

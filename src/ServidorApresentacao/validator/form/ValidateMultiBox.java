@@ -39,7 +39,7 @@ public class ValidateMultiBox {
 			String feminin = field.getVarValue("femininProperty");
 			if ((multiBox != null) && (multiBox.length > 0)) {
 				return true;
-			} else {
+			} 
 				if (feminin != null && feminin.equalsIgnoreCase("true")) {
 					errors.add(
 						field.getKey(),
@@ -55,7 +55,7 @@ public class ValidateMultiBox {
 				}
 
 				return false;
-			}
+			
 		} catch (Exception e) {
 			errors.add(
 				field.getKey(),

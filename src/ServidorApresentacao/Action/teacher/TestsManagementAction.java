@@ -576,12 +576,12 @@ public class TestsManagementAction extends FenixDispatchAction {
             request.setAttribute("testCode", testCode);
             request.setAttribute("objectCode", objectCode);
             return mapping.findForward("distributeTest");
-        } else {
+        } 
             error(request, "InvalidDistribution",
                     "error.distributeTest.noExercise");
             request.setAttribute("objectCode", objectCode);
             return showTests(mapping, form, request, response);
-        }
+        
     }
 
     public ActionForward chooseDistributionFor(ActionMapping mapping,
@@ -1289,10 +1289,10 @@ public class TestsManagementAction extends FenixDispatchAction {
             request.setAttribute("studentsType", studentsType);
             request.setAttribute("changesType", changesType);
             return chooseAnotherExercise(mapping, form, request, response);
-        } else {
+        } 
             Collections.sort(result, new BeanComparator("label"));
             request.setAttribute("successfulChanged", result);
-        }
+        
         return mapping.findForward("showStudentTest");
     }
 

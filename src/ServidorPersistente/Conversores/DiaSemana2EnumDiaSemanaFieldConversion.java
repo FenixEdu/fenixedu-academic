@@ -28,9 +28,9 @@ public class DiaSemana2EnumDiaSemanaFieldConversion   implements FieldConversion
             DiaSemana dia = (DiaSemana) source;
             return dia.getDiaSemana();
         }
-        else {
+     
             return source;
-        }
+        
     }
 
     /*
@@ -43,10 +43,9 @@ public class DiaSemana2EnumDiaSemanaFieldConversion   implements FieldConversion
             Integer src = (Integer) source;
             return new DiaSemana(src);
         }
-        else
-        {
+      
             return source;
-        }
+        
     }
     
 }

@@ -27,10 +27,9 @@ public class TimeStamp2DateFieldConversion implements FieldConversion
         {
             return new Timestamp(((Date) source).getTime());
         }
-        else 
-        {
+        
          	return source;   
-        }
+        
     }
 
     /*
@@ -42,10 +41,9 @@ public class TimeStamp2DateFieldConversion implements FieldConversion
         {
             return new Date(((Timestamp) source).getTime());
         }
-        else
-        {
+        
          	return source;   
-        }
+        
     }
 
 }

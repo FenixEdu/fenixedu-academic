@@ -23,9 +23,9 @@ public class CorrectionAvailability2EnumCorrectionAvailabilityFieldConversion
 		if (arg0 instanceof CorrectionAvailability) {
 			CorrectionAvailability ca = (CorrectionAvailability) arg0;
 			return ca.getAvailability();
-		} else {
+		} 
 			return arg0;
-		}
+		
 	}
 
 	/**
@@ -36,9 +36,9 @@ public class CorrectionAvailability2EnumCorrectionAvailabilityFieldConversion
 		if (arg0 instanceof Integer) {
 			Integer availability = (Integer) arg0;
 			return new CorrectionAvailability(availability);
-		} else {
+		} 
 			return arg0;
-		}
+		
 	}
 
 }
