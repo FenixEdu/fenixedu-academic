@@ -14,11 +14,11 @@ package Dominio;
 public class Item implements IItem {
 
 	private Integer internalCode;
-	protected String information;
-	protected String name;
-	protected Integer order;
+	private String information;
+	private String name;
+	private Integer order;
 	private ISection section;
-	protected Boolean urgent;
+	private Boolean urgent;
 
 	private Integer keySection;
 
