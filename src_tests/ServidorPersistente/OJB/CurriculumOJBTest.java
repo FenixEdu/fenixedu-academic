@@ -77,7 +77,7 @@ public class CurriculumOJBTest extends TestCaseOJB {
 		 try{
 			 persistentSupport.iniciarTransaccao();
 			 executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI","2002/2003","LEIC");
-			 assertNotNull(executionCourse);
+			 assertNotNull("    -> Failed Reading Existing Execution Course",executionCourse);
 			 persistentSupport.confirmarTransaccao();
 		
 		 } catch (ExcepcaoPersistencia ex) {

@@ -10,3 +10,8 @@ web
 bin
 build.properties
 build
+build_autoprocesses.xml
+cvspass
+cvsImage
+.autoProcess
+unitTestReports
