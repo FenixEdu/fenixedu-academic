@@ -35,7 +35,7 @@
 				</html:link>
 			</div>
 			<div class="button">
-				<html:link page="/listCoursesInformationEnglish.do?method=doSearch&amp;basic=basic" target="_blank"
+				<html:link page="<%="/listCoursesInformationEnglish.do?method=doSearch&amp;basic=" + pageContext.findAttribute("basic")%>" target="_blank"
 						   paramId="executionDegreeId" 
 						   paramName="infoExecutionDegree" 
 						   paramProperty="idInternal">
@@ -43,7 +43,7 @@
 				</html:link>
 			</div>
 			<div class="button">
-				<html:link page="/listCoursesAcreditation.do?method=doSearch&amp;basic=basic" target="_blank"
+				<html:link page="<%="/listCoursesAcreditation.do?method=doSearch&amp;basic=" + pageContext.findAttribute("basic")%>" target="_blank"
 						   paramId="executionDegreeId" 
 						   paramName="infoExecutionDegree" 
 						   paramProperty="idInternal">
@@ -81,7 +81,7 @@
 	<logic:notPresent name="infoExecutionDegree">
 		<logic:present name="basic">
 			<div class="button">
-				<html:link page="/listCoursesAcreditation.do?method=doSearch&amp;basic=basic&amp;executionDegreeId=all" target="_blank">
+				<html:link page="<%="/listCoursesAcreditation.do?method=doSearch&amp;basic=" + pageContext.findAttribute("basic") + "&amp;executionDegreeId=all"%>" target="_blank">
 					<bean:message key="label.list.acred" bundle="GEP_RESOURCES" />
 				</html:link>
 			</div>
@@ -575,7 +575,7 @@
 	<logic:present name="infoExecutionDegree">
 		<logic:present name="basic">
 			<div class="button">
-				<html:link page="/listCoursesInformation.do?method=doSearch&amp;basic=basic" target="_blank"
+				<html:link page="<%="/listCoursesInformation.do?method=doSearch&amp;basic=" + pageContext.findAttribute("basic")%>" target="_blank"
 						   paramId="executionDegreeId" 
 						   paramName="infoExecutionDegree" 
 						   paramProperty="idInternal">
@@ -583,7 +583,7 @@
 				</html:link>
 			</div>
 			<div class="button">
-				<html:link page="/listCoursesInformationEnglish.do?method=doSearch&amp;basic=basic" target="_blank"
+				<html:link page="<%="/listCoursesInformationEnglish.do?method=doSearch&amp;basic=" + pageContext.findAttribute("basic")%>" target="_blank"
 						   paramId="executionDegreeId" 
 						   paramName="infoExecutionDegree" 
 						   paramProperty="idInternal">
@@ -591,7 +591,7 @@
 				</html:link>
 			</div>
 			<div class="button">
-				<html:link page="/listCoursesAcreditation.do?method=doSearch&amp;basic=basic" target="_blank"
+				<html:link page="<%="/listCoursesAcreditation.do?method=doSearch&amp;basic=" + pageContext.findAttribute("basic")%>" target="_blank"
 						   paramId="executionDegreeId" 
 						   paramName="infoExecutionDegree" 
 						   paramProperty="idInternal">
@@ -629,7 +629,7 @@
 	<logic:notPresent name="infoExecutionDegree">
 		<logic:present name="basic">
 			<div class="button">
-				<html:link page="/listCoursesAcreditation.do?method=doSearch&amp;basic=basic&amp;executionDegreeId=all" target="_blank">
+				<html:link page="<%="/listCoursesAcreditation.do?method=doSearch&amp;basic=" + pageContext.findAttribute("basic") + "&amp;executionDegreeId=all"%>" target="_blank">
 					<bean:message key="label.list.acred" bundle="GEP_RESOURCES" />
 				</html:link>
 			</div>
