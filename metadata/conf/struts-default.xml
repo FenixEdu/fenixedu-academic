@@ -10,30 +10,33 @@
     <!-- ========== Form Bean Definitions ================================== -->
     <form-beans type="org.apache.struts.action.ActionFormBean">
       <!-- Dynamic-FormBean para Autorizacao -->
-      <form-bean name="autenticacaoForm" 
+      <form-bean name="authenticationForm" 
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
-        <form-property name="utilizador" type="java.lang.String" />
+        <form-property name="username" type="java.lang.String" />
         <form-property name="password" type="java.lang.String" />
-      </form-bean>
-      <form-bean name="obterSitioForm" 
-                 type="org.apache.struts.validator.DynaValidatorForm"
-                 dynamic="true">
-        <form-property name="nomeSitio" type="java.lang.String" />
-        <form-property name="nomeSeccao" type="java.lang.String" />
       </form-bean>
     </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
-    <global-exceptions>
-	    <exception type="ServidorAplicacao.Servico.ExcepcaoInexistente"
-	           key="ServidorAplicacao.Servico.ExcepcaoInexistente"
-	           path="/naoExistente.do"/>
-    </global-exceptions>
+	<global-exceptions>
+		<exception type="java.lang.Exception"
+			       key="java.lang.Exception"
+			       path="/naoExecutado.do"
+			       handler="ServidorApresentacao.config.FenixExceptionHandler"/>
+		<exception type="ServidorAplicacao.NotAuthorizedException"
+			       key="ServidorAplicacao.NotAuthorizedException"
+			       path="/naoAutorizado.do"
+			       />
+		<exception type="ServidorAplicacao.FenixServiceException"
+		  	       key="ServidorAplicacao.FenixServiceException"
+		  	       path="/naoExecutado.do"
+		  	       handler="ServidorApresentacao.config.FenixExceptionHandler" />
+	</global-exceptions>
+
     
     <!-- ========== Global Forward Definitions =============================== -->
     <global-forwards type="org.apache.struts.action.ActionForward">
-	  <forward name="index" path="index.do" redirect="true"/>
       <forward name="student" path="/student"
                contextRelative="true" redirect="true" />
       <forward name="docente" path="/docente"
@@ -46,66 +49,30 @@
     
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
+
       <!-- page fronting actions -->
-      <action path="/index" forward="/autenticacao.jsp"/>
-      <action path="/autenticacao" forward="/autenticacao.jsp"/>
-      <action path="/naoExistente" forward="/naoExistente.jsp"/>
+      <action path="/autenticacao" forward="/autenticacao.jsp" />
+      <action path="/naoExistente" forward="/naoExistente.jsp" />
 
-      <!-- action definition -->
-      <action name="autenticacaoForm"
-              type="ServidorApresentacao.Action.AutenticacaoFormAction"
-              path="/autenticacaoForm"
-              input="/autenticacao.jsp"
-              scope="request"
-              attribute="autenticacaoForm">
-        <exception type="ServidorAplicacao.NotExecutedException"
-                   key="ServidorAplicacao.NotExecutedException"
-                   path="/autenticacao.do"/>
-        <exception type="ServidorAplicacao.Servico.ExcepcaoAutenticacao"
-                   key="ServidorAplicacao.Servico.ExcepcaoAutenticacao"
-                   path="/autenticacao.do"/>
-        <forward name="Docente" path="/docente"
-                 contextRelative="true" redirect="true"/>
-        <forward name="Aluno" path="/aluno"
-                 contextRelative="true" redirect="true"/>
-        <forward name="SOP" path="/sop"
-                 contextRelative="true" redirect="true"/>
-        <forward name="Publico" path="/publico"
-                 contextRelative="true" redirect="true"/>
-      </action>
+	  <action path="/login"
+			  type="ServidorApresentacao.Action.AuthenticationAction"
+			  name="authenticationForm" 	  		  
+			  input="/loginPage.jsp"
+	  		  scope="request">
+		<forward name="sucess" path="/mainPortalPage.jsp"/>
+	  </action>
 
-      <action type="ServidorApresentacao.Action.ObterSitiosAction"
-              path="/obterSitios">
-        <forward name="MostrarSitios" path="seleccionarSitio"/>
+	  <action path="/dotIstPortal"
+			  type="org.apache.struts.actions.SwitchAction">
 	  </action>
-	  
-      <action name="obterSitioForm"
-              type="ServidorApresentacao.Action.ObterSitioAction"
-              path="/obterSitio">
-        <exception type="ServidorAplicacao.Servico.ExcepcaoInexistente"
-                   key="ServidorAplicacao.Servico.ExcepcaoInexistente"
-                   path="/obterSitios.do"/>
-        <forward name="ObterSeccao" path="/obterSeccao.do"/>
-	  </action>
-	  
-      <action attribute="obterSeccaoForm"
-              name="obterSitioForm"
-              type="ServidorApresentacao.Action.ObterSeccaoAction"
-              path="/obterSeccao">
-        <exception type="ServidorApresentacao.Action.FenixAction.ExcepcaoSessaoInexistente"
-                   key="ServidorApresentacao.Action.FenixAction.ExcepcaoSessaoInexistente"
-                   path="/obterSitios.do"/>
-        <forward name="MostrarSeccao" path="mostrarSitio"/>
-	  </action>
-	  
-    </action-mappings>
+    </action-mappings> 
     
     <!-- ========== Controller Configuration ================================ -->
     <controller />
     
     <!-- ========== Message Resources Definitions ============================ -->
     <message-resources parameter="ServidorApresentacao.ApplicationResources" />
-    
+    <message-resources parameter="ServidorApresentacao.PortalResources" key="PORTAL_RESOURCES" null="false"/>    
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
       <set-property property="pathnames" 
