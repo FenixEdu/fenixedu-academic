@@ -23,7 +23,9 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.IPersistentCoordinator;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
+import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.RoleType;
 import Util.TipoCurso;
@@ -181,8 +183,9 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter
 			{
 				try
 				{
+					ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 					ICursoExecucaoPersistente persistentExecutionDegree =
-						SuportePersistenteOJB.getInstance().getICursoExecucaoPersistente();
+						sp.getICursoExecucaoPersistente();
 
 					ICursoExecucao executionDegree = new CursoExecucao();
 					executionDegree.setIdInternal((Integer) arguments[0]);
@@ -193,23 +196,9 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter
 					{
 						return "noAuthorization";
 					}
-					//				List executionDegrees =
-					//					persistentExecutionDegree.readByDegreeCurricularPlan(
-					//						studentCurricularPlan.getDegreeCurricularPlan());
-					//				if (executionDegrees == null)
-					//				{
-					//					System.out.println("sem autorizacao: degrees a null");
-					//					return "noAuthorization";
-					//				}
-					//System.out.println("vai ler os executiondegrees: " + executionDegrees.size());
-					// IMPORTANT: It's assumed that the coordinator for a Degree is ALWAYS the same
-					//modified by Tânia Pousão
+					IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
 					List coordinatorsList =
-						SuportePersistenteOJB
-							.getInstance()
-							.getIPersistentCoordinator()
-							.readCoordinatorsByExecutionDegree(
-							(executionDegree));
+						persistentCoordinator.readCoordinatorsByExecutionDegree(executionDegree);
 					if (coordinatorsList == null)
 					{
 						return "noAuthorization";
@@ -247,13 +236,12 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter
 					{
 						return "noAuthorization";
 					}
+					IStudentCurricularPlanPersistente persistentStudentCurricularPlan =
+						sp.getIStudentCurricularPlanPersistente();
 					IStudentCurricularPlan activeStudentCurricularPlan =
-						SuportePersistenteOJB
-							.getInstance()
-							.getIStudentCurricularPlanPersistente()
-							.readActiveStudentCurricularPlan(
-								studentCurricularPlan.getStudent().getNumber(),
-								TipoCurso.LICENCIATURA_OBJ);
+						persistentStudentCurricularPlan.readActiveStudentCurricularPlan(
+							studentCurricularPlan.getStudent().getNumber(),
+							TipoCurso.LICENCIATURA_OBJ);
 
 					if (!coordinator
 						.getExecutionDegree()
@@ -263,29 +251,6 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter
 					{
 						return "noAuthorization";
 					}
-
-					//                teacher = ((ICursoExecucao) executionDegrees.get(0)).getCoordinator();
-					//
-					//                if (teacher == null)
-					//                {
-					//                    return false;
-					//                }
-					//
-					//                if (id.getUtilizador().equals(teacher.getPerson().getUsername()))
-					//                {
-					//                    return true;
-					//                } else
-					//                {
-					//                    return false;
-					//                }
-
-					//				if (!executionDegrees.contains(executionDegree))
-					//				{
-					//					System.out.println("sem autorizacao: degrees nao sao a que ele consulta");
-					//					
-					//					return "noAuthorization";
-					//				}
-
 				}
 				catch (Exception e)
 				{
