@@ -28,7 +28,7 @@
 				<bean:message key="label.grant.contract.beginDate"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="dateBeginContract"/>
+				<html:text property="dateBeginContract"/>* <dd-mm-aaaa>
 			</td>
 		</tr>
 		<tr>
@@ -36,7 +36,7 @@
 				<bean:message key="label.grant.contract.endDate"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="dateEndContract"/>
+				<html:text property="dateEndContract"/>* <dd-mm-aaaa>
 			</td>
 		</tr>
 		<tr>
@@ -46,7 +46,7 @@
 			<td>
 				<html:select property="grantType">
 					<html:options collection="grantTypeList" property="sigla" labelProperty="name"/>
-				</html:select>
+				</html:select>*
 			</td>
 		</tr>
 		<tr>
@@ -62,7 +62,7 @@
 				<bean:message key="label.grant.contract.responsibleTeacher"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="grantResponsibleTeacher"/>
+				<html:text property="grantResponsibleTeacher"/>*
 			</td>
 		</tr>
 	
@@ -71,7 +71,7 @@
 				<bean:message key="label.grant.contract.orientationTeacher"/>:&nbsp;
 			</td>
 			<td>
-				<html:text property="grantOrientationTeacher"/>
+				<html:text property="grantOrientationTeacher"/>*
 			</td>
 		</tr>
 	</table>

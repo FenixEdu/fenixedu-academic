@@ -30,13 +30,11 @@ import Util.TipoDocumentoIdentificacao;
 
 /**
  * @author Barbosa
- * @author Pica
- *  
+ * @author Pica 
  */
 
 public class EditGrantOwnerAction extends DispatchAction
 {
-
 	/*
 	 * Fills the form with the correspondent data
 	 */
@@ -47,21 +45,20 @@ public class EditGrantOwnerAction extends DispatchAction
 		HttpServletResponse response)
 		throws Exception
 	{
+        //Get the information to search
 		String personUsername = null;
 		Integer idInternal = null;
-
-		//Get the information to search
 		if (request.getParameter("personUsername") != null)
 			personUsername = request.getParameter("personUsername");
 		if (request.getParameter("idInternal") != null)
 			idInternal = new Integer(request.getParameter("idInternal"));
 
-		InfoGrantOwner infoGrantOwner = new InfoGrantOwner();
 		/*
 		 * 3 cases: personId and idInternal not null = grant owner exists personId not null and
 		 * idInternal null = person exists, but grant owner doesn't personId and idInternal null =
 		 * person doesn't exists
 		 */
+        InfoGrantOwner infoGrantOwner = new InfoGrantOwner();
 		if (idInternal != null)
 		{
 			//Read the grant owner
@@ -102,19 +99,12 @@ public class EditGrantOwnerAction extends DispatchAction
 			setFormPersonalInformation(grantOwnerInformationForm, infoGrantOwner);
 		}
 
-		/*
-		 * Tipos de documento de identificação
-		 */
 		List documentTypeList = TipoDocumentoIdentificacao.toIntegerArrayList();
 		request.setAttribute("documentTypeList", documentTypeList);
-		/*
-		 * Tipos de estado civil
-		 */
-		List maritalStatusList = EstadoCivil.toIntegerArrayList();
+
+        List maritalStatusList = EstadoCivil.toIntegerArrayList();
 		request.setAttribute("maritalStatusList", maritalStatusList);
-		/*
-		 * Pais
-		 */
+		
 		List countryList =
 			(List) ServiceUtils.executeService(
 				SessionUtils.getUserView(request),
@@ -138,6 +128,7 @@ public class EditGrantOwnerAction extends DispatchAction
 		DynaValidatorForm editGrantOwnerForm = (DynaValidatorForm) form;
 		InfoGrantOwner infoGrantOwner = populateInfoFromForm(editGrantOwnerForm);
 
+        //Edit Grant Owner
 		Object[] args = { infoGrantOwner };
 		IUserView userView = SessionUtils.getUserView(request);
 		ServiceUtils.executeService(userView, "CreateGrantOwner", args);
@@ -152,6 +143,10 @@ public class EditGrantOwnerAction extends DispatchAction
 
 		if (infoGrantOwner != null)
 			request.setAttribute("idInternal", infoGrantOwner.getIdInternal());
+		else
+        {
+		    //TODO... excepcao
+        }         
 
 		return mapping.findForward("manage-grant-owner");
 	}

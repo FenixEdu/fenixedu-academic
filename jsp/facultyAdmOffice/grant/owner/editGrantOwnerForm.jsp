@@ -58,7 +58,7 @@
 			<bean:message key="label.grant.owner.infoperson.idNumber"/>:&nbsp;
 		</td>
 		<td>
-			<html:text property="idNumber"/>
+			<html:text property="idNumber"/>*
 		</td>
 	</tr>
 	<tr>
@@ -68,7 +68,7 @@
 		<td>
 			<html:select property="idType">
 				<html:options collection="documentTypeList" property="value" labelProperty="label"/>
-			</html:select>
+			</html:select>*
 		</td>
 	</tr>
 	<tr>
@@ -84,7 +84,7 @@
 			<bean:message key="label.grant.owner.infoperson.idDate"/>:&nbsp;
 		</td>
 		<td>
-			<html:text property="idDate"/>
+			<html:text property="idDate"/><dd-mm-aaaa>
 		</td>
 	</tr>
 	<tr>
@@ -92,7 +92,7 @@
 			<bean:message key="label.grant.owner.infoperson.idValidDate"/>:&nbsp;
 		</td>
 		<td>
-				<html:text property="idValidDate"/>
+				<html:text property="idValidDate"/><dd-mm-aaaa>
 		</td>
 	</tr>
 </table>
@@ -128,7 +128,7 @@
 			<bean:message key="label.grant.owner.infoperson.birthdate"/>:&nbsp;
 		</td>
 		<td>
-			<html:text property="birthdate"/>
+			<html:text property="birthdate"/><dd-mm-aaaa>
 		</td>
 	</tr>
 	<tr>
