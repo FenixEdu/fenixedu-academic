@@ -31,12 +31,6 @@ public class CandidaciesAccessFilter extends Filtro
 	//  the singleton of this class
 	public void preFiltragem(IUserView id, IServico servico, Object[] argumentos) throws Exception
 	{
-		Collection roles= id.getRoles();
-		Iterator iter= roles.iterator();
-		while (iter.hasNext())
-		{
-			InfoRole role= (InfoRole) iter.next();
-		}
 		if (((id != null
 			&& id.getRoles() != null
 			&& !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())))
