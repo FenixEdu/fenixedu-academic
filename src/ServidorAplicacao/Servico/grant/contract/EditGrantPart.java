@@ -36,9 +36,6 @@ import ServidorPersistente.grant.IPersistentGrantPaymentEntity;
  */
 public class EditGrantPart extends EditDomainObjectService {
 
-    public EditGrantPart() {
-    }
-
     protected IDomainObject clone2DomainObject(InfoObject infoObject) {
         return InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity
                 .newDomainFromInfo((InfoGrantPart) infoObject);

@@ -163,12 +163,12 @@ public abstract class EditDomainObjectService implements IService {
             doBeforeLock(domainObject, infoObject, sp);
 
             persistentObject.simpleLockWrite(domainObject);
-            Integer ackOptLock = domainObject.getAckOptLock();
-            Integer id = domainObject.getIdInternal();
+            //Integer ackOptLock = domainObject.getAckOptLock();
+            //Integer id = domainObject.getIdInternal();
             //PropertyUtils.copyProperties(domainObject, objectToEdit);
             FenixPropertyUtils.copyProperties(domainObject, objectToEdit);
-            domainObject.setIdInternal(id);
-            domainObject.setAckOptLock(ackOptLock);
+            //domainObject.setIdInternal(id);
+            //domainObject.setAckOptLock(ackOptLock);
             fillAssociatedObjects(domainObject, persistentObject, objectToEdit);
 
             doAfterLock(domainObject, infoObject, sp);
