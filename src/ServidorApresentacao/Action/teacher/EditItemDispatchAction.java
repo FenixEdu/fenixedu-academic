@@ -85,7 +85,7 @@ public class EditItemDispatchAction extends FenixDispatchAction {
 		newInfoItem.setInfoSection(infoSection);
 		newInfoItem.setInformation((String) itemForm.get("information"));
 		newInfoItem.setItemOrder(new Integer((String) itemForm.get("itemOrder")));
-		newInfoItem.setName((String) itemForm.get("itemName"));
+		newInfoItem.setName((String) itemForm.get("name"));
 		newInfoItem.setUrgent(new Boolean((String) itemForm.get("urgent")));
 
 		Object editItemArgs[] = { oldInfoItem, newInfoItem };
