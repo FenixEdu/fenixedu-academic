@@ -1,22 +1,24 @@
 /*
- * Created on 5/Dez/2003
+ * Created on 4/Dez/2003
  *
  */
 package middleware.persistentMiddlewareSupport;
 
-import middleware.middlewareDomain.MWAreasEspecializacaoIleec;
+import java.util.List;
+
 import middleware.persistentMiddlewareSupport.exceptions.PersistentMiddlewareSupportException;
+import Dominio.CurricularCourseGroup;
 import ServidorPersistente.ExcepcaoPersistencia;
 
 /**
  * @author Nuno Correia
  * @author Ricardo Rodrigues
  */
-public interface IPersistentMWAreasEspecializacaoIleec
+public interface IPersistentMWGrupoIleec
 {
-	public MWAreasEspecializacaoIleec readSpecializationAreaById(Integer areaId)
+	public List readAll() throws PersistentMiddlewareSupportException, ExcepcaoPersistencia;
+	public List readByFenixGroup(CurricularCourseGroup ccg)
 		throws PersistentMiddlewareSupportException, ExcepcaoPersistencia;
-
-	public MWAreasEspecializacaoIleec readByName(String name)
+	public List readByAreaName(String areaName)
 		throws PersistentMiddlewareSupportException, ExcepcaoPersistencia;
 }

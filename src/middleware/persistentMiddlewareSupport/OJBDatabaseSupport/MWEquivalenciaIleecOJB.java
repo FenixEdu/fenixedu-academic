@@ -3,7 +3,7 @@ package middleware.persistentMiddlewareSupport.OJBDatabaseSupport;
 import java.util.List;
 
 import middleware.middlewareDomain.MWEquivalenciaIleec;
-import middleware.persistentMiddlewareSupport.IPersistentMWEquivalenciasIleec;
+import middleware.persistentMiddlewareSupport.IPersistentMWEquivalenciaIleec;
 
 import org.apache.ojb.broker.query.Criteria;
 
@@ -15,7 +15,7 @@ import ServidorPersistente.OJB.ObjectFenixOJB;
  * 3/Dez/2003
  */
 
-public class MWEquivalenciaIleecOJB extends ObjectFenixOJB implements IPersistentMWEquivalenciasIleec {
+public class MWEquivalenciaIleecOJB extends ObjectFenixOJB implements IPersistentMWEquivalenciaIleec {
     
     public MWEquivalenciaIleecOJB() {
     }

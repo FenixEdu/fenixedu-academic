@@ -3,28 +3,28 @@ package middleware.middlewareDomain;
 
 public class MWAreaEspecializacaoIleec
 {
-	private Integer idAreaEspeciaplizacao;
+	private Integer idAreaEspecializacao;
 	private Integer maxCreditos;
 	private String nome;
 
 	public String toString()
 	{
 		return " [idAreaEspeciaplizacao] "
-			+ idAreaEspeciaplizacao
+			+ idAreaEspecializacao
 			+ " [maxCreditos] "
 			+ maxCreditos
 			+ " [nome] "
 			+ nome;
 	}
 
-	public Integer getIdAreaEspeciaplizacao()
+	public Integer getIdAreaEspecializacao()
 	{
-		return idAreaEspeciaplizacao;
+		return this.idAreaEspecializacao;
 	}
 
-	public void setIdAreaEspeciaplizacao(Integer idAreaEspeciaplizacao)
+	public void setIdAreaEspecializacao(Integer areaId)
 	{
-		this.idAreaEspeciaplizacao = idAreaEspeciaplizacao;
+		this.idAreaEspecializacao = areaId;
 	}
 
 	public Integer getMaxCreditos()

@@ -11,15 +11,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import middleware.middlewareDomain.MWAreaSecundariaIleec;
-import middleware.middlewareDomain.MWAreasEspecializacaoIleec;
 import middleware.middlewareDomain.MWDegreeTranslation;
-import middleware.middlewareDomain.MWDisciplinasIleec;
-import middleware.middlewareDomain.MWGruposIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMWAreaSecundariaIleec;
-import middleware.persistentMiddlewareSupport.IPersistentMWAreasEspecializacaoIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMWDegreeTranslation;
-import middleware.persistentMiddlewareSupport.IPersistentMWDisciplinasIleec;
-import middleware.persistentMiddlewareSupport.IPersistentMWGruposIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMiddlewareSupport;
 import middleware.persistentMiddlewareSupport.OJBDatabaseSupport.PersistentMiddlewareSupportOJB;
 import middleware.persistentMiddlewareSupport.exceptions.PersistentMiddlewareSupportException;

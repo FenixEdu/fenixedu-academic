@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import middleware.middlewareDomain.MWDisciplinaIleec;
-import middleware.middlewareDomain.MWGruposIleec;
+import middleware.middlewareDomain.MWGrupoIleec;
 import middleware.persistentMiddlewareSupport.exceptions.PersistentMiddlewareSupportException;
 import ServidorPersistente.ExcepcaoPersistencia;
 
@@ -13,11 +13,11 @@ import ServidorPersistente.ExcepcaoPersistencia;
  * 3/Dez/2003
  */
 
-public interface IPersistentMWDisciplinasIleec
+public interface IPersistentMWDisciplinaIleec
 {
 	public List readAll() throws ExcepcaoPersistencia;
 	public MWDisciplinaIleec readByCodigoDisciplina(String codigoDisciplina) throws ExcepcaoPersistencia;
 	public List readAllBySpan(Integer spanNumber, Integer numberOfElementsInSpan) throws ExcepcaoPersistencia;
 	public Integer countAll();
-	public ArrayList readByGroup(MWGruposIleec grupoILeec)throws PersistentMiddlewareSupportException, ExcepcaoPersistencia;
+	public ArrayList readByGroup(MWGrupoIleec grupoILeec)throws PersistentMiddlewareSupportException, ExcepcaoPersistencia;
 }

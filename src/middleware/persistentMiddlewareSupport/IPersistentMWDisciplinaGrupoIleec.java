@@ -6,7 +6,7 @@ package middleware.persistentMiddlewareSupport;
 
 import java.util.List;
 
-import middleware.middlewareDomain.MWGruposIleec;
+import middleware.middlewareDomain.MWGrupoIleec;
 import middleware.persistentMiddlewareSupport.exceptions.PersistentMiddlewareSupportException;
 import ServidorPersistente.ExcepcaoPersistencia;
 
@@ -16,7 +16,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
  */
 public interface IPersistentMWDisciplinaGrupoIleec
 {
-	public List readByGrupo(MWGruposIleec grupoILeec) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia;
+	public List readByGrupo(MWGrupoIleec grupoILeec) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia;
 	public List readAll() throws PersistentMiddlewareSupportException, ExcepcaoPersistencia;
 	
 

@@ -11,8 +11,8 @@ import middleware.middlewareDomain.MWDegreeTranslation;
 import middleware.middlewareDomain.MWDisciplinaIleec;
 import middleware.middlewareDomain.MWEquivalenciaIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMWDegreeTranslation;
-import middleware.persistentMiddlewareSupport.IPersistentMWDisciplinasIleec;
-import middleware.persistentMiddlewareSupport.IPersistentMWEquivalenciasIleec;
+import middleware.persistentMiddlewareSupport.IPersistentMWDisciplinaIleec;
+import middleware.persistentMiddlewareSupport.IPersistentMWEquivalenciaIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMiddlewareSupport;
 import middleware.persistentMiddlewareSupport.OJBDatabaseSupport.PersistentMiddlewareSupportOJB;
 import Dominio.CurricularCourse;
@@ -250,8 +250,8 @@ public class MakeEquivalencesForILEECStudents
 	{
 		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
 
-		IPersistentMWEquivalenciasIleec mwEquivalenciasIleecDAO = mws.getIPersistentMWEquivalenciasIleec();
-		IPersistentMWDisciplinasIleec mwDisciplinasIleecDAO = mws.getIPersistentMWDisciplinasIleec();
+		IPersistentMWEquivalenciaIleec mwEquivalenciasIleecDAO = mws.getIPersistentMWEquivalenciasIleec();
+		IPersistentMWDisciplinaIleec mwDisciplinasIleecDAO = mws.getIPersistentMWDisciplinasIleec();
 		IPersistentCurricularCourse curricularCourseDAO = fenixPersistentSuport.getIPersistentCurricularCourse();
 
 		IDegreeCurricularPlan currentDegreeCurricularPlan = MakeEquivalencesForILEECStudents.getDegreeCurricularPlan(new Integer(14), fenixPersistentSuport);
@@ -296,7 +296,7 @@ public class MakeEquivalencesForILEECStudents
 	{
 		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
 
-		IPersistentMWDisciplinasIleec mwDisciplinasIleecDAO = mws.getIPersistentMWDisciplinasIleec();
+		IPersistentMWDisciplinaIleec mwDisciplinasIleecDAO = mws.getIPersistentMWDisciplinasIleec();
 		IPersistentCurricularCourseScope persistentCurricularCourseScope = fenixPersistentSuport.getIPersistentCurricularCourseScope();
 		
 		Integer year = null;
@@ -420,7 +420,7 @@ public class MakeEquivalencesForILEECStudents
 	{
 		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
 
-		IPersistentMWEquivalenciasIleec mwEquivalenciasIleecDAO = mws.getIPersistentMWEquivalenciasIleec();
+		IPersistentMWEquivalenciaIleec mwEquivalenciasIleecDAO = mws.getIPersistentMWEquivalenciasIleec();
 
 		ICurricularCourse oldCurricularCourse = oldEnrolment.getCurricularCourseScope().getCurricularCourse();
 		IStudent student = oldEnrolment.getStudentCurricularPlan().getStudent();

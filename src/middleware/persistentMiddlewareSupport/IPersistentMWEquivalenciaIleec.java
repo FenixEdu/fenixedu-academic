@@ -10,7 +10,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
  * 3/Dez/2003
  */
 
-public interface IPersistentMWEquivalenciasIleec
+public interface IPersistentMWEquivalenciaIleec
 {
 	public List readAll() throws ExcepcaoPersistencia;
 	public MWEquivalenciaIleec readByTipoEquivalenciaAndCodigoDisciplinaCurriculoAntigo(Integer tipoEquivalencia, String codigoDisciplinaCurriculoAntigo) throws ExcepcaoPersistencia;

@@ -5,12 +5,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import middleware.middlewareDomain.MWDisciplinaIleec;
-import middleware.middlewareDomain.MWDisciplinasIleec;
-import middleware.persistentMiddlewareSupport.IPersistentMWDisciplinasIleec;
+import middleware.persistentMiddlewareSupport.IPersistentMWDisciplinaIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMiddlewareSupport;
 import middleware.persistentMiddlewareSupport.exceptions.PersistentMiddlewareSupportException;
 import middleware.middlewareDomain.MWDisciplinaGrupoIleec;
-import middleware.middlewareDomain.MWGruposIleec;
+import middleware.middlewareDomain.MWGrupoIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMWDisciplinaGrupoIleec;
 
 
@@ -24,7 +23,7 @@ import ServidorPersistente.OJB.ObjectFenixOJB;
  * 3/Dez/2003
  */
 
-public class MWDisciplinaIleecOJB extends ObjectFenixOJB implements IPersistentMWDisciplinasIleec
+public class MWDisciplinaIleecOJB extends ObjectFenixOJB implements IPersistentMWDisciplinaIleec
 {
 
 	public MWDisciplinaIleecOJB()
@@ -56,7 +55,7 @@ public class MWDisciplinaIleecOJB extends ObjectFenixOJB implements IPersistentM
 		return new Integer(count(MWDisciplinaIleec.class, new Criteria()));
 	}
 
-	public ArrayList readByGroup(MWGruposIleec grupoILeec)
+	public ArrayList readByGroup(MWGrupoIleec grupoILeec)
 		throws PersistentMiddlewareSupportException, ExcepcaoPersistencia
 	{
 
@@ -67,7 +66,7 @@ public class MWDisciplinaIleecOJB extends ObjectFenixOJB implements IPersistentM
 
 		Iterator iter = grupoIleec.iterator();
 		MWDisciplinaGrupoIleec mwDGIleec;
-		MWDisciplinasIleec mwDiscIleec;
+		MWDisciplinaIleec mwDiscIleec;
 
 		ArrayList courses = new ArrayList();
 		while (iter.hasNext())
@@ -75,7 +74,7 @@ public class MWDisciplinaIleecOJB extends ObjectFenixOJB implements IPersistentM
 			Criteria criteria = new Criteria();
 			mwDGIleec = (MWDisciplinaGrupoIleec) iter.next();
 			criteria.addEqualTo("idDisciplina", mwDGIleec.getIdDisciplina());
-			mwDiscIleec = (MWDisciplinasIleec) queryObject(MWDisciplinasIleec.class, criteria);
+			mwDiscIleec = (MWDisciplinaIleec) queryObject(MWDisciplinaIleec.class, criteria);
 			courses.add(mwDiscIleec);
 		}
 

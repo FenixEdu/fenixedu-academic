@@ -6,10 +6,10 @@ package middleware.persistentMiddlewareSupport.OJBDatabaseSupport;
 
 import java.util.List;
 
-import middleware.middlewareDomain.MWAreasEspecializacaoIleec;
+import middleware.middlewareDomain.MWAreaEspecializacaoIleec;
 import middleware.middlewareDomain.MWAreaSecundariaIleec;
-import middleware.middlewareDomain.MWGruposIleec;
-import middleware.persistentMiddlewareSupport.IPersistentMWGruposIleec;
+import middleware.middlewareDomain.MWGrupoIleec;
+import middleware.persistentMiddlewareSupport.IPersistentMWGrupoIleec;
 import middleware.persistentMiddlewareSupport.exceptions.PersistentMiddlewareSupportException;
 
 import org.apache.ojb.broker.query.Criteria;
@@ -23,17 +23,17 @@ import Util.AreaType;
  * @author Nuno Correia
  * @author Ricardo Rodrigues
  */
-public class MWGruposIleecOJB extends ObjectFenixOJB implements IPersistentMWGruposIleec
+public class MWGrupoIleecOJB extends ObjectFenixOJB implements IPersistentMWGrupoIleec
 {
 
-	public MWGruposIleecOJB()
+	public MWGrupoIleecOJB()
 	{
 	}
 
-	public List readAll() throws PersistentMiddlewareSupportException, ExcepcaoPersistencia
+	public List readAll() throws ExcepcaoPersistencia
 	{
 		Criteria criteria = new Criteria();
-		return queryList(MWGruposIleec.class, criteria);
+		return queryList(MWGrupoIleec.class, criteria);
 	}
 
 	public List readByFenixGroup(CurricularCourseGroup ccg)
@@ -44,8 +44,8 @@ public class MWGruposIleecOJB extends ObjectFenixOJB implements IPersistentMWGru
 
 		if (ccg.getAreaType().equals(AreaType.SPECIALIZATION_OBJ))
 		{
-			MWAreasEspecializacaoIleecOJB mwAreasEspecOJB = new MWAreasEspecializacaoIleecOJB();
-			MWAreasEspecializacaoIleec mwAreasEspec = mwAreasEspecOJB.readByName(areaName);
+			MWAreaEspecializacaoIleecOJB mwAreasEspecOJB = new MWAreaEspecializacaoIleecOJB();
+			MWAreaEspecializacaoIleec mwAreasEspec = mwAreasEspecOJB.readByName(areaName);
 
 			criteria.addEqualTo("id_area_especializacao", mwAreasEspec.getIdAreaEspecializacao());
 		}
@@ -57,7 +57,7 @@ public class MWGruposIleecOJB extends ObjectFenixOJB implements IPersistentMWGru
 			criteria.addEqualTo("id_area_secundaria", mwAreaSecun.getIdAreaSecundaria());
 		}
 
-		return queryList(MWGruposIleec.class, criteria);
+		return queryList(MWGrupoIleec.class, criteria);
 	}
 
 	public List readByAreaName(String areaName) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia
@@ -65,8 +65,8 @@ public class MWGruposIleecOJB extends ObjectFenixOJB implements IPersistentMWGru
 		Criteria criteria = new Criteria();
 		Criteria orCriteria = new Criteria();
 
-		MWAreasEspecializacaoIleecOJB mwAreasEspecOJB = new MWAreasEspecializacaoIleecOJB();
-		MWAreasEspecializacaoIleec mwAreasEspec = mwAreasEspecOJB.readByName(areaName);
+		MWAreaEspecializacaoIleecOJB mwAreasEspecOJB = new MWAreaEspecializacaoIleecOJB();
+		MWAreaEspecializacaoIleec mwAreasEspec = mwAreasEspecOJB.readByName(areaName);
 		
 		MWAreaSecundariaIleecOJB mwAreaSecunOJB = new MWAreaSecundariaIleecOJB();
 		MWAreaSecundariaIleec mwAreaSecun = mwAreaSecunOJB.readByName(areaName);
@@ -75,7 +75,7 @@ public class MWGruposIleecOJB extends ObjectFenixOJB implements IPersistentMWGru
 		orCriteria.addEqualTo("id_area_secundaria", mwAreaSecun.getIdAreaSecundaria());
 		
 		criteria.addOrCriteria(orCriteria);
-		return queryList(MWGruposIleec.class, criteria);
+		return queryList(MWGrupoIleec.class, criteria);
 
 	}
 	

@@ -5,7 +5,7 @@ public class MWEquivalenciaIleec
 	private String codigoDisciplinaCurriculoActual;
 	private String codigoDisciplinaCurriculoAntigo;
 	private Integer idAreaCientifica;
-	private Integer idAreaEspeciaplizacao;
+	private Integer idAreaEspecializacao;
 	private Integer idAreaSecundaria;
 	private Integer idEquivalencia;
 	private Integer tipoEquivalencia;
@@ -19,7 +19,7 @@ public class MWEquivalenciaIleec
 			+ " [idAreaCientifica] "
 			+ idAreaCientifica
 			+ " [idAreaEspeciaplizacao] "
-			+ idAreaEspeciaplizacao
+			+ idAreaEspecializacao
 			+ " [idAreaSecundaria] "
 			+ idAreaSecundaria
 			+ " [idEquivalencia] "
@@ -59,14 +59,14 @@ public class MWEquivalenciaIleec
 		this.idAreaCientifica = idAreaCientifica;
 	}
 
-	public Integer getIdAreaEspeciaplizacao()
+	public Integer getIdAreaEspecializacao()
 	{
-		return idAreaEspeciaplizacao;
+		return idAreaEspecializacao;
 	}
 
-	public void setIdAreaEspeciaplizacao(Integer idAreaEspeciaplizacao)
+	public void setIdAreaEspecializacao(Integer idAreaEspeciaplizacao)
 	{
-		this.idAreaEspeciaplizacao = idAreaEspeciaplizacao;
+		this.idAreaEspecializacao = idAreaEspeciaplizacao;
 	}
 
 	public Integer getIdAreaSecundaria()
@@ -106,7 +106,7 @@ public class MWEquivalenciaIleec
 			result = this.getCodigoDisciplinaCurriculoActual().equals(mwEquivalenciasIleec.getCodigoDisciplinaCurriculoActual()) &&
 					this.getCodigoDisciplinaCurriculoAntigo().equals(mwEquivalenciasIleec.getCodigoDisciplinaCurriculoAntigo()) &&
 					this.getIdAreaCientifica().equals(mwEquivalenciasIleec.getIdAreaCientifica()) &&
-					this.getIdAreaEspeciaplizacao().equals(mwEquivalenciasIleec.getIdAreaEspeciaplizacao()) &&
+					this.getIdAreaEspecializacao().equals(mwEquivalenciasIleec.getIdAreaEspecializacao()) &&
 					this.getIdAreaSecundaria().equals(mwEquivalenciasIleec.getIdAreaSecundaria()) &&
 					this.getTipoEquivalencia().equals(mwEquivalenciasIleec.getTipoEquivalencia());
 		}

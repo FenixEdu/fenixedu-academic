@@ -7,9 +7,8 @@ package middleware.persistentMiddlewareSupport.OJBDatabaseSupport;
 import java.util.List;
 
 import middleware.middlewareDomain.MWDisciplinaGrupoIleec;
-import middleware.middlewareDomain.MWGruposIleec;
+import middleware.middlewareDomain.MWGrupoIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMWDisciplinaGrupoIleec;
-import middleware.persistentMiddlewareSupport.exceptions.PersistentMiddlewareSupportException;
 
 import org.apache.ojb.broker.query.Criteria;
 
@@ -29,7 +28,7 @@ public class MWDisciplinaGrupoIleecOJB
     {
     }
 
-	public List readByGrupo(MWGruposIleec grupoILeec) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia
+	public List readByGrupo(MWGrupoIleec grupoILeec) throws ExcepcaoPersistencia
 	{
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("idGrupo",grupoILeec.getIdGrupo());
@@ -37,7 +36,7 @@ public class MWDisciplinaGrupoIleecOJB
 	}
 	
 
-    public List readAll() throws PersistentMiddlewareSupportException, ExcepcaoPersistencia
+    public List readAll() throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
         return queryList(MWDisciplinaGrupoIleec.class, criteria);
