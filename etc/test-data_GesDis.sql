@@ -44,8 +44,8 @@ INSERT INTO ITEM VALUES (3,'Item2deTFCI',1,'item2 da seccao1deTFCI',0,7);
 #
 #---------
 DELETE FROM CURRICULUM;
-INSERT INTO CURRICULUM VALUES (2, '25', 'bla','bla','bla');
-INSERT INTO CURRICULUM VALUES (1, '24','bla','bla','bla');
+INSERT INTO CURRICULUM VALUES (2, '25', 'bla','bla','bla',null,null,null);
+INSERT INTO CURRICULUM VALUES (1, '24','bla','bla','bla',null,null,null);
 
 #
 # Data for table 'TEACHER'
@@ -109,5 +109,5 @@ INSERT  INTO  BIBLIOGRAPHIC_REFERENCE VALUES  (4, 'ep', 'rs', 'ref5', '2040', 1,
 #
 #---------
 DELETE FROM EVALUATION;
-INSERT INTO EVALUATION VALUES (2, '25', 'bla');
-INSERT INTO EVALUATION VALUES (1, '24','bla');
+INSERT INTO EVALUATION VALUES (2, '25', 'bla',null);
+INSERT INTO EVALUATION VALUES (1, '24','bla',null);
