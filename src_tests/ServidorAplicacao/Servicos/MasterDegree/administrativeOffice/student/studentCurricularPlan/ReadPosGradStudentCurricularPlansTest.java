@@ -38,7 +38,7 @@ import Tools.dbaccess;
 public class ReadPosGradStudentCurricularPlansTest extends TestCase {
 
 	protected dbaccess dbAcessPoint = null;
-	protected IUserView userView = null;
+	//protected IUserView userView = null;
 	protected GestorServicos serviceManager = null;
 
 	public ReadPosGradStudentCurricularPlansTest(String testName) {
@@ -76,7 +76,6 @@ public class ReadPosGradStudentCurricularPlansTest extends TestCase {
 			fail("Loading Database With Test Data Set!");
 		}
 
-		
 	}
 
 	protected IUserView authenticateUser(
@@ -90,14 +89,14 @@ public class ReadPosGradStudentCurricularPlansTest extends TestCase {
 
 		try {
 			return (IUserView) this.serviceManager.executar(
-					null,
-					"Autenticacao",
-					args);
+				null,
+				"Autenticacao",
+				args);
 		} catch (Exception ex) {
 			System.out.println(ex.toString());
 			fail("Authenticating User!");
 			return null;
-			
+
 		}
 	}
 
@@ -171,7 +170,7 @@ public class ReadPosGradStudentCurricularPlansTest extends TestCase {
 		try {
 			result =
 				(List) this.serviceManager.executar(
-					userView,
+					authenticateUser("julia", "pass", this.getApplication()),
 					"ReadPosGradStudentCurricularPlans",
 					args1);
 		} catch (FenixServiceException ex) {
@@ -192,7 +191,7 @@ public class ReadPosGradStudentCurricularPlansTest extends TestCase {
 		try {
 			result =
 				(List) this.serviceManager.executar(
-					userView,
+					authenticateUser("julia", "pass", this.getApplication()),
 					"ReadPosGradStudentCurricularPlans",
 					args2);
 			fail("Reading the Curricular Plans of a PosGrad Student with non-existing-studentId");
@@ -212,7 +211,7 @@ public class ReadPosGradStudentCurricularPlansTest extends TestCase {
 		try {
 			result =
 				(List) this.serviceManager.executar(
-					userView,
+					authenticateUser("julia", "pass", this.getApplication()),
 					"ReadPosGradStudentCurricularPlans",
 					args3);
 			fail("test case 3- exception not thrown");
@@ -223,6 +222,26 @@ public class ReadPosGradStudentCurricularPlansTest extends TestCase {
 		} catch (Exception ex) {
 			System.out.println(ex.toString());
 			fail("test Case 3-wrong exception thrown");
+		}
+
+		System.out.println(
+			"test Case 4-ReadPosGradStudentCurricularPlans - user with no authorization");
+		Object args4[] = { new Integer(11)};
+
+		try {
+			result =
+				(List) this.serviceManager.executar(
+					authenticateUser("user", "pass", this.getApplication()),
+					"ReadPosGradStudentCurricularPlans",
+					args4);
+			fail("test case 4- exception not thrown");
+		} catch (NotAuthorizedException ex) {
+			System.out.println("test case 4 - proper exception thrown!");
+			compareDataSet(getDataSetFilePath());
+			System.out.println("test case 4 ok!");
+		} catch (Exception ex) {
+			System.out.println(ex.toString());
+			fail("test Case 4-wrong exception thrown");
 		}
 	}
 }
