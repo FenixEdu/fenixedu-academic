@@ -5,6 +5,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 <bean:define id="hoursPattern" value="HH : mm"/>
+<bean:define id="datePattern" value="dd-MM-yyyy"/>
+
 
 <bean:define id="infoTeacher" name="teacherCreditsSheet" property="infoTeacher"/>
 <bean:define id="infoExecutionPeriod" name="teacherCreditsSheet" property="infoExecutionPeriod"/>
@@ -378,7 +380,7 @@
 
 <table width="100%" cellspacing="1" cellpadding="3" style="margin-bottom:0;margin-top:0">
 	<tr>
-		<td colspan="2" class="listClasses-subheader">
+		<td colspan="3" class="listClasses-subheader">
 				<bean:message key="label.teacherCreditsSheet.managementPositionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 <%--				<logic:present role="role.credits.manager">
 					<bean:define id="teacherNumber" name="infoTeacher" property="teacherNumber"/>
@@ -401,12 +403,12 @@
 					<bean:write name="managementPosition" property="position"/>
 				</td>
 				<td class="listClasses">
-					<dt:format patternId="hoursPattern">
+					<dt:format patternId="datePattern">
 						<bean:write name="managementPosition" property="start.time"/>
 					</dt:format>
 				</td>
 				<td class="listClasses">
-					<dt:format patternId="hoursPattern">
+					<dt:format patternId="datePattern">
 						<bean:write name="managementPosition" property="end.time"/>
 					</dt:format>
 				</td>
@@ -431,7 +433,7 @@
 
 <table width="100%" cellspacing="1" cellpadding="3" style="margin-bottom:0;margin-top:0">
 	<tr>
-		<td colspan="2" class="listClasses-subheader">
+		<td colspan="3" class="listClasses-subheader">
 				<bean:message key="label.teacherCreditsSheet.serviceExemptionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 <%--				<logic:present role="role.credits.manager">
 					<bean:define id="teacherNumber" name="infoTeacher" property="teacherNumber"/>
@@ -451,15 +453,15 @@
 		<logic:iterate id="serviceExemption" name="serviceExemptions" >
 			<tr>
 				<td class="listClasses" style="text-align:left">
-					<bean:message name="serviceExemption" property="type.value" bundle="ENUMERATION_RESOURCES"/>
+					<bean:message name="serviceExemption" property="type.name" bundle="ENUMERATION_RESOURCES"/>
 				</td>
 				<td class="listClasses">
-					<dt:format patternId="hoursPattern">
+					<dt:format patternId="datePattern">
 						<bean:write name="serviceExemption" property="start.time"/>
 					</dt:format>
 				</td>
 				<td class="listClasses">
-					<dt:format patternId="hoursPattern">
+					<dt:format patternId="datePattern">
 						<bean:write name="serviceExemption" property="end.time"/>
 					</dt:format>
 				</td>
