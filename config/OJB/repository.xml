@@ -32,7 +32,7 @@
 ]>
 
 
-<descriptor-repository version="1.0" isolation-level="read-committed">
+<descriptor-repository version="1.0" isolation-level="serializable">
 
     <!-- include all used database connections -->
     &database;
