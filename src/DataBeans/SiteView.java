@@ -19,6 +19,15 @@ public class SiteView {
 	
 
 	/**
+	 * 
+	 */
+	public SiteView() {
+	}
+
+	public SiteView(ISiteComponent bodyComponent) {
+		setComponent(bodyComponent);
+		}
+	/**
 	 * @return
 	 */
 	public ISiteComponent getComponent() {
