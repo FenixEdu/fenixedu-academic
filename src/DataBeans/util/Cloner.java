@@ -1928,8 +1928,6 @@ public abstract class Cloner {
 		
 		creditsTeacher.setTeacher(teacher);
 		creditsTeacher.setExecutionPeriod(executionPeriod);	
-		creditsTeacher.setCredits(infoCreditsTeacher.getCredits());
-		creditsTeacher.setTfcStudentsNumber(infoCreditsTeacher.getTfcStudentsNumber());
 
 		return creditsTeacher;
 	}
@@ -1946,8 +1944,6 @@ public abstract class Cloner {
 		
 		infoCreditsTeacher.setInfoTeacher(infoTeacher);
 		infoCreditsTeacher.setInfoExecutionPeriod(infoExecutionPeriod);
-		infoCreditsTeacher.setCredits(creditsTeacher.getCredits());
-		infoCreditsTeacher.setTfcStudentsNumber(creditsTeacher.getTfcStudentsNumber());
 
 		return infoCreditsTeacher;
 	}
