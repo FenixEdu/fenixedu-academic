@@ -20,6 +20,7 @@ public class FileSuportObject {
 	private String contentType;
 	private byte[] content;
 	private String linkName;
+	private String rootUri; 
 
 	/**
 	 * 
@@ -104,6 +105,20 @@ public class FileSuportObject {
 	 */
 	public void setLinkName(String linkName) {
 		this.linkName = linkName;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getRootUri() {
+		return rootUri;
+	}
+
+	/**
+	 * @param rootUri
+	 */
+	public void setRootUri(String rootUri) {
+		this.rootUri = rootUri;
 	}
 
 }
