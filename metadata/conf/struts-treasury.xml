@@ -87,10 +87,7 @@
 
 
       <!-- Action For LogOff -->
-      <action path="/logoff"
-      	      type="ServidorApresentacao.Action.commons.LogOffAction">
-      	  <forward name="Success" path="/switchAction.do?prefix=&amp;page=/loginPage.jsp"/>     	      
-      </action>
+      <action path="/logoff" forward="/switchAction.do?prefix=&amp;page=/logoff.do"/>
       
       	<!-- ExceptionHandling -->   
       <action parameter="method"

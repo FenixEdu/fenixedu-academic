@@ -141,4 +141,37 @@ public class ListCandidatesDispatchAction extends DispatchAction {
 		  throw new Exception();   
 	  }
 	  
+	public ActionForward chooseCandidate(ActionMapping mapping, ActionForm form,
+										 HttpServletRequest request,
+										 HttpServletResponse response)
+		throws Exception {
+
+		SessionUtils.validSessionVerification(request, mapping);
+		HttpSession session = request.getSession(false);
+
+		if (session != null) {
+			
+			DynaActionForm createCandidateForm = (DynaActionForm) form;
+
+			GestorServicos serviceManager = GestorServicos.manager();
+			
+			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+			List candidateList = (List) session.getAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST);
+			
+
+			Integer choosenCandidatePosition = Integer.valueOf(request.getParameter("candidatePosition"));
+			
+			
+			// Put the selected Candidate in Session
+			InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) candidateList.get(choosenCandidatePosition.intValue());
+		
+			session.setAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE, infoMasterDegreeCandidate);
+			return mapping.findForward("ActionReady");
+			
+		} else
+	  		throw new Exception();  
+	}
+	  
+	  
+	  
 }

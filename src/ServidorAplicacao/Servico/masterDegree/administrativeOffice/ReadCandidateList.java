@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import DataBeans.InfoCandidateSituation;
 import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.util.Cloner;
 import Dominio.ICandidateSituation;
@@ -20,6 +21,7 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.SituationName;
 import Util.Specialization;
+import Util.State;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -77,11 +79,17 @@ public class ReadCandidateList implements IServico {
 			InfoMasterDegreeCandidate infoMasterDegreeCandidate = Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate);
 			Iterator situationIterator = masterDegreeCandidate.getSituations().iterator();
 			List situations = new ArrayList();
-			while (situationIterator.hasNext())
-				situations.add(Cloner.copyICandidateSituation2InfoCandidateSituation((ICandidateSituation) situationIterator.next()));	
-			
+			while (situationIterator.hasNext()){ 
+				InfoCandidateSituation infoCandidateSituation = Cloner.copyICandidateSituation2InfoCandidateSituation((ICandidateSituation) situationIterator.next()); 
+				situations.add(infoCandidateSituation);
+				
+				// Check if this is the Active Situation
+				if 	(infoCandidateSituation.getValidation().equals(new State(State.ACTIVE)))
+					infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
+			}			
 			infoMasterDegreeCandidate.setSituationList(situations);
 			candidateList.add(infoMasterDegreeCandidate);
+			
 		}
 		return candidateList;
 		
