@@ -156,6 +156,7 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher
         });
         Criteria criteria = new Criteria();
         criteria.addIn("teacherNumber", teacherNumberList);
+        
         return queryList(Teacher.class, criteria);
     }
     private List getEmployees(IDepartment department) throws ExcepcaoPersistencia
@@ -163,10 +164,7 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher
         String likeCode = department.getCode() + "%";
         Criteria workingCostCenter = new Criteria();
         workingCostCenter.addLike("workingPlaceCostCenter.sigla", likeCode);
-        
-//        Criteria mailingCostCenter = new Criteria();
-//        mailingCostCenter.addLike("mailingCostCenter.sigla", likeCode);
-        
+     
         Date now = Calendar.getInstance().getTime();
         Criteria criteriaDate = new Criteria();
         criteriaDate.addLessOrEqualThan("beginDate", now);
@@ -177,9 +175,13 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher
         criteriaDate2.addGreaterOrEqualThan("endDate", now);
         Criteria criteriaFinal = new Criteria();
         criteriaFinal.addOrCriteria(workingCostCenter);
-//        criteriaFinal.addOrCriteria(mailingCostCenter);
+        
+        Criteria inactivePersonCriteria = new Criteria();
+        inactivePersonCriteria.addNotLike("employee.person.username", "INA%");
+        
         criteriaFinal.addAndCriteria(criteriaDate);
         criteriaFinal.addOrCriteria(criteriaDate2);
+        criteriaFinal.addAndCriteria(inactivePersonCriteria);
         
         List employeesHistoric = queryList(EmployeeHistoric.class, criteriaFinal);
 
