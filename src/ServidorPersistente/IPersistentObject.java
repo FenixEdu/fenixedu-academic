@@ -32,6 +32,7 @@ public interface IPersistentObject
      *            tells if after reading the object it should be marked with a
      *            WRITE <code>true</code> or READ <code>false</code> lock.
      * @return Object that we want to read
+     * @deprecated
      */
     public IDomainObject readByOId(IDomainObject obj, boolean lockWrite);
 

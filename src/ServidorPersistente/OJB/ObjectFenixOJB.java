@@ -306,6 +306,7 @@ public abstract class ObjectFenixOJB implements IPersistentObject
 
 	/**
 	 * @see IPersistentObject#readByOId(IDomainObject, boolean)
+	 * @deprecated
 	 */
 	public IDomainObject readByOId(IDomainObject obj, boolean lockWrite)
 	{
