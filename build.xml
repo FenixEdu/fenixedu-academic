@@ -727,7 +727,7 @@
 	             windowtitle="Fenix Class OverView">
 	             
             <packageset dir="${src}" defaultexcludes="yes">
-              <include name="**" />
+              <include name="**/*" />
             </packageset>
 
 		    <classpath>
@@ -751,7 +751,7 @@
 	             windowtitle="Fenix Class OverView">
 	             
             <packageset dir="${src.tests}" defaultexcludes="yes">
-              <include name="**" />
+              <include name="**/*" />
             </packageset>
 
 		    <classpath>
