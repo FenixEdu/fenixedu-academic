@@ -13,10 +13,7 @@
 			<bean:message key="label.execution.year" arg0="<%= executionYear.toString() %>"/> - <bean:write name="infoEnrolmentContext" property="infoExecutionPeriod.name"/>
 			<br/><br/>
 			<b><bean:message key="label.info.about.chosen.student"/></b><br/>
-			<b><bean:message key="label.student.degree"/>&nbsp;</b>
-			<bean:write name="infoEnrolmentContext" property="infoStudentActiveCurricularPlan.infoDegreeCurricularPlan.infoDegree.nome"/>
-			-&nbsp;<b><bean:message key="label.student.number"/></b>&nbsp;
-			<bean:write name="infoEnrolmentContext" property="infoStudentActiveCurricularPlan.infoStudent.number"/>
+			<b><bean:message key="label.student.degree"/></b>&nbsp;<bean:write name="infoEnrolmentContext" property="infoStudentActiveCurricularPlan.infoDegreeCurricularPlan.infoDegree.nome"/>&nbsp;<b>-</b>&nbsp;<b><bean:message key="label.student.number"/></b>&nbsp;<bean:write name="infoEnrolmentContext" property="infoStudentActiveCurricularPlan.infoStudent.number"/>
 			<br/><br/>
 			<b><bean:message key="label.info.about.chosen.degree"/></b><br/>
 			<bean:write name="infoEnrolmentContext" property="chosenOptionalInfoDegree.nome"/>

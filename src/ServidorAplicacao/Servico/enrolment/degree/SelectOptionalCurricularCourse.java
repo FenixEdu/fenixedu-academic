@@ -59,7 +59,7 @@ public class SelectOptionalCurricularCourse implements IServico {
 			infoEnrolment.setInfoCurricularCourseScope(infoEnrolmentContext.getInfoChosenOptionalCurricularCourseScope());
 			infoEnrolment.setInfoExecutionPeriod(infoEnrolmentContext.getInfoExecutionPeriod());
 			infoEnrolment.setInfoStudentCurricularPlan(infoEnrolmentContext.getInfoStudentActiveCurricularPlan());
-			infoEnrolment.setState(EnrolmentState.TEMPORARILY_ENROLED_OBJ);
+			infoEnrolment.setEnrolmentState(EnrolmentState.TEMPORARILY_ENROLED_OBJ);
 			infoEnrolment.setInfoCurricularCourseForOption(infoCurricularCourseForOption);
 
 			// For one optional curricular course chosen there can be only one coresponding curricular course.

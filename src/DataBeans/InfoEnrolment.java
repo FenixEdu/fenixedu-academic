@@ -15,7 +15,7 @@ public class InfoEnrolment implements Serializable {
 	private InfoStudentCurricularPlan infoStudentCurricularPlan;
 //	private InfoCurricularCourse infoCurricularCourse;
 	private InfoExecutionPeriod infoExecutionPeriod;
-	private EnrolmentState state;
+	private EnrolmentState enrolmentState;
 	private EnrolmentEvaluationType evaluationType;
 	private InfoCurricularCourseScope infoCurricularCourseScope;
 
@@ -28,7 +28,7 @@ public class InfoEnrolment implements Serializable {
 		this();
 		setInfoCurricularCourseScope(infoCurricularCourseScope);
 		setInfoStudentCurricularPlan(infoStudentCurricularPlan);
-		setState(state);
+		setEnrolmentState(state);
 		setInfoExecutionPeriod(infoExecutionPeriod);
 	}
 
@@ -50,7 +50,7 @@ public class InfoEnrolment implements Serializable {
 		String result = "[" + this.getClass().getName() + "; ";
 		result += "infoStudentCurricularPlan = " + this.infoStudentCurricularPlan + "; ";
 		result += "infoExecutionPeriod = " + this.infoExecutionPeriod + "; ";
-		result += "state = " + this.state + "; ";
+		result += "state = " + this.enrolmentState + "; ";
 //		result += "infoCurricularCourse = " + this.infoCurricularCourse + "; ";
 		result += "infoCurricularCourseScope = " + this.infoCurricularCourseScope + "; ";
 		result += "enrolmentEvaluationType = " + this.evaluationType + "; ";
@@ -80,8 +80,8 @@ public class InfoEnrolment implements Serializable {
 	/**
 	 * @return EnrolmentState
 	 */
-	public EnrolmentState getState() {
-		return state;
+	public EnrolmentState getEnrolmentState() {
+		return enrolmentState;
 	}
 
 //	public void setInfoCurricularCourse(InfoCurricularCourse infoCurricularCourse) {
@@ -108,8 +108,8 @@ public class InfoEnrolment implements Serializable {
 	 * Sets the state.
 	 * @param state The state to set
 	 */
-	public void setState(EnrolmentState state) {
-		this.state = state;
+	public void setEnrolmentState(EnrolmentState state) {
+		this.enrolmentState = state;
 	}
 
 	public EnrolmentEvaluationType getEvaluationType() {

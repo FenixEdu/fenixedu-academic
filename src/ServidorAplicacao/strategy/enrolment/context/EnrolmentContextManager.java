@@ -527,7 +527,7 @@ public abstract class EnrolmentContextManager {
 		degreeCurricularPlanCriteria.setName(executionDegree.getCurricularPlan().getName());
 		degreeCurricularPlanCriteria.setState(executionDegree.getCurricularPlan().getState());
 
-		IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readDomainObjectByCriteria(degreeCurricularPlanCriteria);
+		final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan.readDomainObjectByCriteria(degreeCurricularPlanCriteria);
 
 		List curricularCoursesFromDegreeCurricularPlan = degreeCurricularPlan.getCurricularCourses();
 
@@ -590,7 +590,17 @@ public abstract class EnrolmentContextManager {
 		// In this case the enrolments can have the state ENROLED, TEMPORARILY_ENROLED and APROVED as,
 		// the purpose here is to now witch curricular courses from the selected degree curricular plan
 		// the student cannot do because he is already enrolled or as already done.
-		enrolmentContext.setEnrolmentsAprovedByStudent(invalidStudentEnrolments);
+		final Integer semester2 = semester;
+		final Integer year2 = year;
+		List invalidStudentEnrolmentsForSelectedDegree = (List) CollectionUtils.select(invalidStudentEnrolments, new Predicate() {
+			public boolean evaluate(Object obj) {
+				IEnrolment enrolment = (IEnrolment) obj;
+				return	enrolment.getCurricularCourseScope().getCurricularCourse().getDegreeCurricularPlan().equals(degreeCurricularPlan) &&
+				enrolment.getCurricularCourseScope().getCurricularSemester().getSemester().equals(semester2) &&
+				enrolment.getCurricularCourseScope().getCurricularSemester().getCurricularYear().getYear().equals(year2);
+			}
+		});
+		enrolmentContext.setEnrolmentsAprovedByStudent(invalidStudentEnrolmentsForSelectedDegree);
 
 		return enrolmentContext;
 	}
