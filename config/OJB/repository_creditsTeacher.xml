@@ -1,0 +1,45 @@
+<!-- Please keep user defined mappings in this file only
+     to avoid mixing user defined and system mappings. -->   
+<!-- Mapping of User defined classes starts here -->
+<!-- Definitions for Dominio.CreditsTeacher -->
+   <class-descriptor
+   	  class="Dominio.CreditsTeacher"
+   	  table="TEACHER_SHIFT_PERCENTAGE"
+   >
+      <field-descriptor
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+      <field-descriptor
+         name="keyTeacher"
+         column="KEY_TEACHER"
+         jdbc-type="INTEGER"
+      />
+      <field-descriptor
+         name="keyShift"
+         column="KEY_SHIFT"
+         jdbc-type="INTEGER"
+      />
+      <field-descriptor
+         name="percentage"
+         column="PERCENTAGE"
+         jdbc-type="DOUBLE"
+      />
+      
+      <reference-descriptor
+         name="teacher"
+         class-ref="Dominio.Teacher"
+      >
+         <foreignkey field-ref="keyTeacher"/>
+      </reference-descriptor>
+            
+      <reference-descriptor
+         name="shift"
+         class-ref="Dominio.Turno"
+      >
+         <foreignkey field-ref="keyShift"/>
+      </reference-descriptor>    
+   </class-descriptor>

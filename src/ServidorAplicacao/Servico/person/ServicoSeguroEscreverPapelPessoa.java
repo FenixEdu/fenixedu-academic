@@ -1,7 +1,5 @@
 package ServidorAplicacao.Servico.person;
 
-import java.util.ArrayList;
-
 import Dominio.Pessoa;
 import ServidorAplicacao.NotExecuteException;
 import ServidorAplicacao.ServicoAutorizacao;
@@ -9,7 +7,6 @@ import ServidorAplicacao.ServicoSeguro;
 import ServidorPersistenteJDBC.IFuncionarioPersistente;
 import ServidorPersistenteJDBC.IPessoaPersistente;
 import ServidorPersistenteJDBC.SuportePersistente;
-import constants.assiduousness.Constants;
 
 public class ServicoSeguroEscreverPapelPessoa extends ServicoSeguro {
 

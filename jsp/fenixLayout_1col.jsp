@@ -33,7 +33,7 @@
 <!-- Navbar Lateral e Body Content -->
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
    <tr>
-     <td align="left" valign="top" nowrap="nowrap" class="centerContent">
+     <td valign="top" nowrap="nowrap">
      <table width="100%" border="0" cellspacing="0" cellpadding="0">
        <tr>
          <td><tiles:insert attribute="body" /></td>
