@@ -192,25 +192,25 @@ public class EditGrantTypeTest extends ServiceNeedsAuthenticationTestCase {
      * Grant Type Edition Successfull
      */
     //TODO: could not prepare for commit.. object has been modified by someone else???????
-//    public void testEditGrantTypeSuccessfull() {
-//        try {
-//            String[] args = getAuthenticatedAndAuthorizedUser();
-//            IUserView id = authenticateUser(args);
-//            Object[] args2 = getAuthorizeArgumentsEdit();
-//
-//            ServiceManagerServiceFactory.executeService(id,
-//                    getNameOfServiceToBeTested(), args2);
-//
-//            compareDataSetUsingExceptedDataSetTableColumns(getExpectedEditDataSetFilePath());
-//            System.out
-//                    .println(getNameOfServiceToBeTested()
-//                            + " was SUCCESSFULY runned by test: testEditGrantTypeSuccessfull");
-//        } catch (FenixServiceException e) {
-//            fail("Editing a GrantType successfull " + e);
-//        } catch (Exception e) {
-//            fail("Editing a GrantType successfull " + e);
-//        }
-//    }
+    public void testEditGrantTypeSuccessfull() {
+        try {
+            String[] args = getAuthenticatedAndAuthorizedUser();
+            IUserView id = authenticateUser(args);
+            Object[] args2 = getAuthorizeArgumentsEdit();
+
+            ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
+
+            compareDataSetUsingExceptedDataSetTableColumns(getExpectedEditDataSetFilePath());
+            System.out
+                    .println(getNameOfServiceToBeTested()
+                            + " was SUCCESSFULY runned by test: testEditGrantTypeSuccessfull");
+        } catch (FenixServiceException e) {
+            fail("Editing a GrantType successfull " + e);
+        } catch (Exception e) {
+            fail("Editing a GrantType successfull " + e);
+        }
+    }
 
     /*
      * Grant Type Edition Unsuccessfull: existing grant type

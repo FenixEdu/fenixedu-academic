@@ -100,18 +100,18 @@ public class EditGrantPaymentEntityTest extends
         infoGrantPaymentEntity.setOjbConcreteClass("Dominio.grant.contract.GrantCostCenter");
         
         InfoTeacher infoTeacher = new InfoTeacher();
-        infoTeacher.setIdInternal(new Integer(1));
+        infoTeacher.setIdInternal(new Integer(2));
         infoGrantPaymentEntity.setInfoResponsibleTeacher(infoTeacher);
         
         Object[] args = { infoGrantPaymentEntity };
         return args;
     }
 
-    protected Object[] getAuthorizeArgumentsCreate() {
+    protected Object[] getAuthorizeArgumentsEdit() {
         InfoGrantCostCenter infoGrantCostCenter = new InfoGrantCostCenter();
 
-        infoGrantCostCenter.setDesignation("Cost Center 70");
         infoGrantCostCenter.setIdInternal(new Integer(1));
+        infoGrantCostCenter.setDesignation("Cost Center 70");
         infoGrantCostCenter.setNumber("70");
         infoGrantCostCenter.setOjbConcreteClass("Dominio.grant.contract.GrantCostCenter");
         
@@ -170,24 +170,24 @@ public class EditGrantPaymentEntityTest extends
     /*
      * Grant Type Creation Successfull
      */
-//    public void testCreateGrantPaymentEntitySuccessfull() {
-//        try {
-//            String[] args = getAuthenticatedAndAuthorizedUser();
-//            IUserView id = authenticateUser(args);
-//            Object[] args2 = getAuthorizeArgumentsCreate();
-//
-//            ServiceManagerServiceFactory.executeService(id,
-//                    getNameOfServiceToBeTested(), args2);
-//            compareDataSetUsingExceptedDataSetTableColumns(getExpectedCreateDataSetFilePath());
-//            System.out
-//                    .println(getNameOfServiceToBeTested()
-//                            + " was SUCCESSFULY runned by test: testCreateGrantPaymentEntitySuccessfull");
-//        } catch (FenixServiceException e) {
-//            fail("Creating a new GrantPaymentEntity successfull " + e);
-//        } catch (Exception e) {
-//            fail("Creating a new GrantPaymentEntity successfull " + e);
-//        }
-//    }
+    public void testCreateGrantPaymentEntitySuccessfull() {
+        try {
+            String[] args = getAuthenticatedAndAuthorizedUser();
+            IUserView id = authenticateUser(args);
+            Object[] args2 = getAuthorizeArguments();
+
+            ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
+            compareDataSetUsingExceptedDataSetTableColumns(getExpectedCreateDataSetFilePath());
+            System.out
+                    .println(getNameOfServiceToBeTested()
+                            + " was SUCCESSFULY runned by test: testCreateGrantPaymentEntitySuccessfull");
+        } catch (FenixServiceException e) {
+            fail("Creating a new GrantPaymentEntity successfull " + e);
+        } catch (Exception e) {
+            fail("Creating a new GrantPaymentEntity successfull " + e);
+        }
+    }
 
     /*
      * Grant Type Creation Unsuccessfull: existing grant type
@@ -217,26 +217,25 @@ public class EditGrantPaymentEntityTest extends
     /*
      * Grant Type Edition Successfull
      */
-    //TODO... problema de locks!!!
-//    public void testEditGrantPaymentEntitySuccessfull() {
-//        try {
-//            String[] args = getAuthenticatedAndAuthorizedUser();
-//            IUserView id = authenticateUser(args);
-//            Object[] args2 = getAuthorizeArguments();
-//
-//            ServiceManagerServiceFactory.executeService(id,
-//                    getNameOfServiceToBeTested(), args2);
-//
-//            compareDataSetUsingExceptedDataSetTableColumns(getExpectedEditDataSetFilePath());
-//            System.out
-//                    .println(getNameOfServiceToBeTested()
-//                            + " was SUCCESSFULY runned by test: testEditGrantPaymentEntitySuccessfull");
-//        } catch (FenixServiceException e) {
-//            fail("Editing a GrantPaymentEntity successfull " + e);
-//        } catch (Exception e) {
-//            fail("Editing a GrantPaymentEntity successfull " + e);
-//        }
-//    }
+    public void testEditGrantPaymentEntitySuccessfull() {
+        try {
+            String[] args = getAuthenticatedAndAuthorizedUser();
+            IUserView id = authenticateUser(args);
+            Object[] args2 = getAuthorizeArgumentsEdit();
+
+            ServiceManagerServiceFactory.executeService(id,
+                    getNameOfServiceToBeTested(), args2);
+
+            compareDataSetUsingExceptedDataSetTableColumns(getExpectedEditDataSetFilePath());
+            System.out
+                    .println(getNameOfServiceToBeTested()
+                            + " was SUCCESSFULY runned by test: testEditGrantPaymentEntitySuccessfull");
+        } catch (FenixServiceException e) {
+            fail("Editing a GrantPaymentEntity successfull " + e);
+        } catch (Exception e) {
+            fail("Editing a GrantPaymentEntity successfull " + e);
+        }
+    }
 
     /*
      * Grant Type Edition Unsuccessfull: existing grant type

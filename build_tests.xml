@@ -888,7 +888,7 @@
        
     </target>
 
-	<target name="compile-service-grant-owner-tests"
+	<target name="compile-service-grant-tests"
 			depends="compile-app-server"
             description="Compiles application server.">
 		<mkdir dir="${build.tests.services}"/>
@@ -908,21 +908,17 @@
 		</javac>		
 	</target>	
 	
-	<target name="run-service-grant-owner-tests"
-		   depends="compile-service-grant-owner-tests"
+	<target name="run-service-grant-tests"
+		   depends="compile-service-grant-tests"
 	 	   >	
 		<junit haltonfailure="false" printsummary="yes" dir="${basedir}">
             <formatter type="plain" usefile="false"/>
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
-                	
-                	
-                	
-                	
+
+	   				
                 	<!-- Test in doubt
-                	<include name="ServidorAplicacao/Servicos/grant/contract/EditGrantTypeTest.java"/>
-                	<include name="ServidorAplicacao/Servicos/grant/contract/EditGrantPaymentEntityTest.java"/>
-	   				<include name="ServidorAplicacao/Servicos/grant/owner/EditGrantOwnerTest.java"/>
+					<include name="ServidorAplicacao/Servicos/grant/owner/EditGrantOwnerTest.java"/>                	
                 	-->
 
                 	<!-- Tests Sucessfull 
@@ -930,6 +926,7 @@
                 	<include name="ServidorAplicacao/Servicos/grant/owner/ReadGrantOwnerByPersonTest.java"/>
                 	<include name="ServidorAplicacao/Servicos/grant/owner/ReadGrantOwnerTest.java"/>
 
+                	<include name="ServidorAplicacao/Servicos/grant/contract/EditGrantTypeTest.java"/>
 					<include name="ServidorAplicacao/Servicos/grant/contract/ReadGrantTypeTest.java"/>
                 	<include name="ServidorAplicacao/Servicos/grant/contract/ReadAllGrantTypesTest.java"/>
 	               	<include name="ServidorAplicacao/Servicos/grant/contract/ReadGrantPaymentEntityTest.java"/>
@@ -938,6 +935,7 @@
 	               	<include name="ServidorAplicacao/Servicos/grant/contract/ReadGrantPartTest.java"/>
                 	<include name="ServidorAplicacao/Servicos/grant/contract/DeleteGrantPartTest.java"/>
                 	<include name="ServidorAplicacao/Servicos/grant/contract/ReadAllGrantPartsByGrantSubsidyTest.java"/>
+                	<include name="ServidorAplicacao/Servicos/grant/contract/EditGrantPaymentEntityTest.java"/>                	
 					-->
                 	
                     </fileset>
