@@ -473,7 +473,7 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
             String orderByString, boolean reverseOrder) throws ExcepcaoPersistencia {
 
         QueryByCriteria queryCriteria = new QueryByCriteria(classToQuery, criteria, distinct);
-        if (orderByString != null) {
+        if (orderByString != null) {        	
             queryCriteria.addOrderBy(orderByString, reverseOrder);
         }
 
@@ -653,6 +653,25 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
         List list = (List) pb.getCollectionByQuery(query);
         lockRead(list);
         return list;
+    }
+    
+    public List readInterval(Class classToQuery, Criteria criteria, Integer numberOfElementsInSpan,
+    		Integer startIndex,	String orderByString, boolean reverseOrder) throws ExcepcaoPersistencia {
+    	if (numberOfElementsInSpan == null || numberOfElementsInSpan.intValue() == 0) {
+    		throw new IllegalArgumentException("Invalid numberOfElementsInSpan!");
+    	}
+    	
+    	QueryByCriteria queryCriteria = new QueryByCriteria(classToQuery, criteria);
+    	if (orderByString != null) {        	
+    		queryCriteria.addOrderBy(orderByString, reverseOrder);
+    	}
+    	
+    	queryCriteria.setStartAtIndex(startIndex.intValue());
+    	queryCriteria.setEndAtIndex(startIndex.intValue() + numberOfElementsInSpan.intValue());
+    	
+
+    	return queryList(queryCriteria);
+
     }
 
     public Iterator readSpanIterator(Class classToQuery, Criteria criteria,
