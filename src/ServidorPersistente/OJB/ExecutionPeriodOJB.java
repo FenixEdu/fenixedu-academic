@@ -22,10 +22,16 @@ import Dominio.IDisciplinaExecucao;
 import Dominio.IExam;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
+import Dominio.IProfessorship;
+import Dominio.IResponsibleFor;
+import Dominio.ISite;
 import Dominio.ITurma;
 import Dominio.ITurmaTurno;
 import Dominio.ITurno;
 import Dominio.ITurnoAula;
+import Dominio.Professorship;
+import Dominio.ResponsibleFor;
+import Dominio.Site;
 import Dominio.Turma;
 import Dominio.TurmaTurno;
 import Dominio.Turno;
@@ -301,6 +307,7 @@ public class ExecutionPeriodOJB
 		SuportePersistenteOJB.getInstance().clearCache();
 		System.out.println("Confirming transaction.");
 		SuportePersistenteOJB.getInstance().confirmarTransaccao();
+		System.gc();
 		System.out.println("Starting transaction.");
 		SuportePersistenteOJB.getInstance().iniciarTransaccao();
 		
@@ -310,10 +317,34 @@ public class ExecutionPeriodOJB
 
 		System.out.println("Finished creating classes.");
 
+		System.out.println("Confirming transaction.");
+		SuportePersistenteOJB.getInstance().confirmarTransaccao();
+		System.out.println("Starting transaction.");
+		SuportePersistenteOJB.getInstance().iniciarTransaccao();
+		System.out.println("Clearing cache.");
+		SuportePersistenteOJB.getInstance().clearCache();
+		System.out.println("Confirming transaction.");
+		SuportePersistenteOJB.getInstance().confirmarTransaccao();
+		System.gc();
+		System.out.println("Starting transaction.");
+		SuportePersistenteOJB.getInstance().iniciarTransaccao();
+
 		transferShifts(
 			executionPeriodToImportDataTo,
 			executionPeriodToExportDataFrom);
 		System.out.println("Finished creating shifts.");
+
+		System.out.println("Confirming transaction.");
+		SuportePersistenteOJB.getInstance().confirmarTransaccao();
+		System.out.println("Starting transaction.");
+		SuportePersistenteOJB.getInstance().iniciarTransaccao();
+		System.out.println("Clearing cache.");
+		SuportePersistenteOJB.getInstance().clearCache();
+		System.out.println("Confirming transaction.");
+		SuportePersistenteOJB.getInstance().confirmarTransaccao();
+		System.gc();
+		System.out.println("Starting transaction.");
+		SuportePersistenteOJB.getInstance().iniciarTransaccao();
 
 		transferLessons(
 			executionPeriodToImportDataTo,
@@ -324,6 +355,13 @@ public class ExecutionPeriodOJB
 		SuportePersistenteOJB.getInstance().confirmarTransaccao();
 		System.out.println("Starting transaction.");
 		SuportePersistenteOJB.getInstance().iniciarTransaccao();
+		System.out.println("Clearing cache.");
+		SuportePersistenteOJB.getInstance().clearCache();
+		System.out.println("Confirming transaction.");
+		SuportePersistenteOJB.getInstance().confirmarTransaccao();
+		System.gc();
+		System.out.println("Starting transaction.");
+		SuportePersistenteOJB.getInstance().iniciarTransaccao();
 
 		transferShiftLessonAssociations(
 			executionPeriodToImportDataTo,
@@ -331,11 +369,74 @@ public class ExecutionPeriodOJB
 
 		System.out.println("Finished creating shiftLessons.");
 
+		System.out.println("Confirming transaction.");
+		SuportePersistenteOJB.getInstance().confirmarTransaccao();
+		System.out.println("Starting transaction.");
+		SuportePersistenteOJB.getInstance().iniciarTransaccao();
+		System.out.println("Clearing cache.");
+		SuportePersistenteOJB.getInstance().clearCache();
+		System.out.println("Confirming transaction.");
+		SuportePersistenteOJB.getInstance().confirmarTransaccao();
+		System.gc();
+		System.out.println("Starting transaction.");
+		SuportePersistenteOJB.getInstance().iniciarTransaccao();
+
 		transferClassShiftAssociations(
 			executionPeriodToImportDataTo,
 			executionPeriodToExportDataFrom);
 
 		System.out.println("Finished creating classShifts.");
+
+		System.out.println("Confirming transaction.");
+		SuportePersistenteOJB.getInstance().confirmarTransaccao();
+		System.out.println("Starting transaction.");
+		SuportePersistenteOJB.getInstance().iniciarTransaccao();
+		System.out.println("Clearing cache.");
+		SuportePersistenteOJB.getInstance().clearCache();
+		System.out.println("Confirming transaction.");
+		SuportePersistenteOJB.getInstance().confirmarTransaccao();
+		System.out.println("Starting transaction.");
+		SuportePersistenteOJB.getInstance().iniciarTransaccao();
+
+		transferSites(
+			executionPeriodToImportDataTo,
+			executionPeriodToExportDataFrom);
+
+		System.out.println("Finished creating sites.");
+
+		System.out.println("Confirming transaction.");
+		SuportePersistenteOJB.getInstance().confirmarTransaccao();
+		System.out.println("Starting transaction.");
+		SuportePersistenteOJB.getInstance().iniciarTransaccao();
+		System.out.println("Clearing cache.");
+		SuportePersistenteOJB.getInstance().clearCache();
+		System.out.println("Confirming transaction.");
+		SuportePersistenteOJB.getInstance().confirmarTransaccao();
+		System.out.println("Starting transaction.");
+		SuportePersistenteOJB.getInstance().iniciarTransaccao();
+
+		transferProfessorships(
+			executionPeriodToImportDataTo,
+			executionPeriodToExportDataFrom);
+
+		System.out.println("Finished creating sites.");
+
+		System.out.println("Confirming transaction.");
+		SuportePersistenteOJB.getInstance().confirmarTransaccao();
+		System.out.println("Starting transaction.");
+		SuportePersistenteOJB.getInstance().iniciarTransaccao();
+		System.out.println("Clearing cache.");
+		SuportePersistenteOJB.getInstance().clearCache();
+		System.out.println("Confirming transaction.");
+		SuportePersistenteOJB.getInstance().confirmarTransaccao();
+		System.out.println("Starting transaction.");
+		SuportePersistenteOJB.getInstance().iniciarTransaccao();
+
+		transferResponsibleFors(
+			executionPeriodToImportDataTo,
+			executionPeriodToExportDataFrom);
+
+		System.out.println("Finished creating sites.");
 
 		System.out.println("Confirming transaction.");
 		SuportePersistenteOJB.getInstance().confirmarTransaccao();
@@ -1218,6 +1319,187 @@ public class ExecutionPeriodOJB
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("keyExecutionYear", executionYear.getIdInternal());
 		return queryList(ExecutionPeriod.class, criteria);
+	}
+
+	/**
+	 * @param executionPeriodToImportDataTo
+	 * @param executionPeriodToExportDataFrom
+	 */
+	private void transferResponsibleFors(
+		IExecutionPeriod executionPeriodToImportDataTo,
+		IExecutionPeriod executionPeriodToExportDataFrom)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo(
+			"executionCourse.executionPeriod.idInternal",
+			executionPeriodToExportDataFrom.getIdInternal());
+
+		int numberOfResponsibleFors = count(ResponsibleFor.class, criteria);
+
+		for (int i = 0; i < numberOfResponsibleFors; i++) {
+			IResponsibleFor responsibleForToTransfer =
+				(IResponsibleFor) readSpan(
+					ResponsibleFor.class,
+					criteria,
+					new Integer(1),
+					new Integer(i + 1)).get(
+					0);
+
+			createResponsibleFor(responsibleForToTransfer, executionPeriodToImportDataTo);
+		}
+	}
+
+	/**
+	 * @param responsibleForToTransfer
+	 * @param executionPeriodToImportDataTo
+	 */
+	private IResponsibleFor createResponsibleFor(
+		IResponsibleFor arg0,
+		IExecutionPeriod executionPeriodToImportDataTo)
+		throws ExcepcaoPersistencia {
+			IResponsibleFor responsibleForToTransfer = (IResponsibleFor) arg0;
+			IResponsibleFor responsibleForToCreate = new ResponsibleFor();
+
+			DisciplinaExecucao executionCourse =
+				findCorrespondingExecutionCourse(
+					executionPeriodToImportDataTo,
+					responsibleForToTransfer.getExecutionCourse());
+
+			if (executionCourse != null) {
+				responsibleForToCreate.setExecutionCourse(executionCourse);
+				responsibleForToCreate.setTeacher(responsibleForToTransfer.getTeacher());
+
+				try {
+					store(responsibleForToCreate);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+
+			return responsibleForToCreate;
+		}
+
+	/**
+	 * @param executionPeriodToImportDataTo
+	 * @param executionPeriodToExportDataFrom
+	 */
+	private void transferProfessorships(
+		IExecutionPeriod executionPeriodToImportDataTo,
+		IExecutionPeriod executionPeriodToExportDataFrom)
+		throws ExcepcaoPersistencia {
+			Criteria criteria = new Criteria();
+			criteria.addEqualTo(
+				"executionCourse.executionPeriod.idInternal",
+				executionPeriodToExportDataFrom.getIdInternal());
+
+			int numberOfProfessorships = count(Professorship.class, criteria);
+
+			for (int i = 0; i < numberOfProfessorships; i++) {
+				IProfessorship professorshipToTransfer =
+					(IProfessorship) readSpan(
+						Professorship.class,
+						criteria,
+						new Integer(1),
+						new Integer(i + 1)).get(
+						0);
+
+				createProfessorship(professorshipToTransfer, executionPeriodToImportDataTo);
+			}
+	}
+
+	/**
+	 * @param professorshipToTransfer
+	 * @param executionPeriodToImportDataTo
+	 */
+	private IProfessorship createProfessorship(
+		IProfessorship arg0,
+		IExecutionPeriod executionPeriodToImportDataTo)
+		throws ExcepcaoPersistencia {
+		IProfessorship professorshipForToTransfer = (IProfessorship) arg0;
+		IProfessorship professorshipForToCreate = new Professorship();
+
+		DisciplinaExecucao executionCourse =
+			findCorrespondingExecutionCourse(
+				executionPeriodToImportDataTo,
+				professorshipForToTransfer.getExecutionCourse());
+
+		if (executionCourse != null) {
+			professorshipForToCreate.setExecutionCourse(executionCourse);
+			professorshipForToCreate.setTeacher(
+			professorshipForToTransfer.getTeacher());
+
+			try {
+				store(professorshipForToCreate);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return professorshipForToCreate;
+	}
+
+	/**
+	 * @param executionPeriodToImportDataTo
+	 * @param executionPeriodToExportDataFrom
+	 */
+	private void transferSites(
+		IExecutionPeriod executionPeriodToImportDataTo,
+		IExecutionPeriod executionPeriodToExportDataFrom)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo(
+			"executionCourse.executionPeriod.idInternal",
+			executionPeriodToExportDataFrom.getIdInternal());
+
+		int numberOfSites = count(Site.class, criteria);
+
+		for (int i = 0; i < numberOfSites; i++) {
+			ISite siteToTransfer =
+				(ISite) readSpan(
+					Site.class,
+					criteria,
+					new Integer(1),
+					new Integer(i + 1)).get(
+					0);
+
+			createSite(siteToTransfer, executionPeriodToImportDataTo);
+		}
+	}
+
+	/**
+	 * @param siteToTransfer
+	 * @param executionPeriodToImportDataTo
+	 */
+	private ISite createSite(
+		ISite arg0,
+		IExecutionPeriod executionPeriodToImportDataTo)
+		throws ExcepcaoPersistencia {
+		ISite siteToTransfer = (ISite) arg0;
+		ISite siteToCreate = new Site();
+
+		DisciplinaExecucao executionCourse =
+			findCorrespondingExecutionCourse(
+				executionPeriodToImportDataTo,
+				siteToTransfer.getExecutionCourse());
+
+		if (executionCourse != null) {
+			siteToCreate.setAlternativeSite(
+				siteToTransfer.getAlternativeSite());
+			siteToCreate.setExecutionCourse(executionCourse);
+			siteToCreate.setInitialStatement(
+				siteToTransfer.getInitialStatement());
+			siteToCreate.setIntroduction(siteToTransfer.getIntroduction());
+			siteToCreate.setMail(siteToTransfer.getMail());
+			siteToCreate.setStyle(siteToTransfer.getStyle());
+
+			try {
+				store(siteToCreate);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return siteToCreate;
 	}
 
 }
