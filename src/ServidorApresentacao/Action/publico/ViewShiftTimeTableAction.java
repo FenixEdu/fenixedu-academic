@@ -22,7 +22,6 @@ import DataBeans.InfoShift;
 import DataBeans.ShiftKey;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author João Mota
@@ -41,7 +40,7 @@ public class ViewShiftTimeTableAction extends Action {
 		HttpServletResponse response)
 		throws Exception {
 			
-		SessionUtils.validSessionVerification(request, mapping);
+		
 						
 		String shiftName = request.getParameter("shiftName");
 

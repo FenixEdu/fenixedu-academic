@@ -31,7 +31,7 @@ public class SelectSemesterAction extends FenixAction {
 		HttpSession session = request.getSession(false);
 //	TODO: No futuro os periodos (semestres) devem ser lidos da base de dados.
 		if (session != null) {
-			/* No futuro, os tipos de salas devem ser lidos da BD */
+// TODO:			 No futuro, os tipos de salas devem ser lidos da BD 
 			ArrayList types = new ArrayList();
 			types.add(new LabelValueBean("Escolher", null));
 			types.add(new LabelValueBean("1º semestre", "1"));

@@ -14,7 +14,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.LabelValueBean;
 
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import ServidorApresentacao.Action.sop.utils.Util;
 import Util.TipoSala;
 
@@ -28,16 +27,16 @@ public class PrepareConsultRoomsFormAction extends Action {
                                 HttpServletResponse response)
       throws Exception {
       	
-	SessionUtils.validSessionVerification(request, mapping);      	
+	
     
     HttpSession sessao = request.getSession(false);
 	sessao.removeAttribute(SessionConstants.INFO_SECTION);
     if (sessao != null) {
-    	/* No futuro, os edificios devem ser lidos da BD */
+    	//TODO: No futuro, os edificios devem ser lidos da BD 
         List buildings = Util.readExistingBuldings("*",null);
         sessao.setAttribute("publico.buildings", buildings);
 
-        /* No futuro, os tipos de salas devem ser lidos da BD */
+        //TODO: No futuro, os tipos de salas devem ser lidos da BD 
         ArrayList types = new ArrayList();
         types.add(new LabelValueBean("*", null));
         types.add(new LabelValueBean("Anfiteatro", (new Integer(TipoSala.ANFITEATRO)).toString()));

@@ -39,7 +39,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 
-		SessionUtils.validSessionVerification(request, mapping);
+		
 
 		HttpSession session = request.getSession(false);
 		session.removeAttribute(SessionConstants.INFO_SECTION);
@@ -52,8 +52,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		if ((session != null) && (roomName != null)) {
 			roomKey = new RoomKey(roomName);
 
-			IUserView userView =
-				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+			
 			GestorServicos gestor = GestorServicos.manager();
 
 			Object args[] = new Object[1];
@@ -61,7 +60,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 
 			try {
 				infoRoom =
-					(InfoRoom) gestor.executar(userView, "LerSala", args);
+					(InfoRoom) gestor.executar(null, "LerSala", args);
 			} catch (FenixServiceException nee) {
 				errors.add(
 					ActionErrors.GLOBAL_ERROR,
@@ -105,7 +104,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 
-		SessionUtils.validSessionVerification(request, mapping);
+		
 
 		HttpSession sessao = request.getSession(false);
 		sessao.removeAttribute(SessionConstants.INFO_SECTION);
@@ -156,7 +155,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		String exeCourseCode)
 		throws Exception {
 
-		SessionUtils.validSessionVerification(request, mapping);
+		
 
 		HttpSession session = request.getSession(false);
 		session.removeAttribute(SessionConstants.INFO_SECTION);

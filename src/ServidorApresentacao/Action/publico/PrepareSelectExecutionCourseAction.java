@@ -16,7 +16,6 @@ import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.GestorServicos;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author João Mota
@@ -30,7 +29,7 @@ public class PrepareSelectExecutionCourseAction extends FenixAction {
 		HttpServletResponse response)
 		throws Exception {
 
-		SessionUtils.validSessionVerification(request, mapping);
+		
 
 		HttpSession sessao = request.getSession(false);
 		sessao.removeAttribute(SessionConstants.INFO_SECTION);
@@ -40,10 +39,6 @@ public class PrepareSelectExecutionCourseAction extends FenixAction {
 
 			InfoExecutionCourse executionCourse = new InfoExecutionCourse();
 			
-			
-			
-			
-				
 			InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) sessao.getAttribute(SessionConstants.INFO_EXECUTION_DEGREE_KEY);
 			InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) sessao.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);							
 			executionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
