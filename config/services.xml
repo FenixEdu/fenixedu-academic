@@ -2280,6 +2280,15 @@
         </filterChains>
     </service>
     <service>
+        <name>ReadGrantOwnerByPerson</name>
+        <implementationClass>ServidorAplicacao.Servico.grant.owner.ReadGrantOwnerByPerson</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="GrantOwnerManagerAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
         <name>CreateGrantContract</name>
         <implementationClass> 
             ServidorAplicacao.Servico.grant.contract.CreateGrantContract</implementationClass>
