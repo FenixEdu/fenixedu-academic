@@ -11,6 +11,7 @@ package ServidorPersistente.OJB;
  * @author  ars
  */
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -211,50 +212,63 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
 		List availableRooms = null;
 
 		try {
+
 			String oqlQuery = "select exam from " + Exam.class.getName();
 			oqlQuery += " where idInternal = $1";
+
 			query.create(oqlQuery);
 			query.bind(((Exam) exam).getIdInternal());
 			List examList = (List) query.execute();
+			lockRead(examList);
+			if (examList != null) {
+				IExam examFromDB = (IExam) examList.get(0);
 
-			IExam examFromDB = (IExam) examList.get(0);
+				oqlQuery = "select everyOtherExam from " + Exam.class.getName();
+				oqlQuery += " where idInternal != $1";
+				oqlQuery += " and day = $2";
+				oqlQuery += " and beginning = $3";
+				oqlQuery
+					+= " and associatedExecutionCourses.executionPeriod.name = $4";
+				oqlQuery
+					+= " and associatedExecutionCourses.executionPeriod.executionYear.year = $5";
 
-			oqlQuery = "select occupiedrooms from " + Sala.class.getName();
-			oqlQuery += " where associatedExams.day = $1";
-			oqlQuery += " and associatedExams.beginning = $2";
-			oqlQuery += " and associatedExams.idInternal != $3";
-			oqlQuery
-				+= " and associatedExams.associatedExecutionCourses.executionPeriod.name = $4";
-			oqlQuery
-				+= " and associatedExams.associatedExecutionCourses.executionPeriod.executionYear.year = $5";
-			query.create(oqlQuery);
-			query.bind(exam.getDay());
-			query.bind(exam.getBeginning());
-			query.bind(((Exam) examFromDB).getIdInternal());
-			query.bind(
-				((IDisciplinaExecucao) examFromDB
-					.getAssociatedExecutionCourses()
-					.get(0))
-					.getExecutionPeriod()
-					.getName());
-			query.bind(
-				((IDisciplinaExecucao) examFromDB
-					.getAssociatedExecutionCourses()
-					.get(0))
-					.getExecutionPeriod()
-					.getExecutionYear()
-					.getYear());
-			List occupiedRooms = (List) query.execute();
-			lockRead(occupiedRooms);
+				query.create(oqlQuery);
+				query.bind(((Exam) exam).getIdInternal());
+				query.bind(exam.getDay());
+				query.bind(exam.getBeginning());
+				query.bind(
+					((IDisciplinaExecucao) examFromDB
+						.getAssociatedExecutionCourses()
+						.get(0))
+						.getExecutionPeriod()
+						.getName());
+				query.bind(
+					((IDisciplinaExecucao) examFromDB
+						.getAssociatedExecutionCourses()
+						.get(0))
+						.getExecutionPeriod()
+						.getExecutionYear()
+						.getYear());
+				List otherExams = (List) query.execute();
+				lockRead(otherExams);
 
-			oqlQuery = "select allExamRooms from " + Sala.class.getName();
-			oqlQuery += " where tipo != $1";
-			query.create(oqlQuery);
-			query.bind(new TipoSala(TipoSala.LABORATORIO));
-			List allExamRooms = (List) query.execute();
-			lockRead(allExamRooms);
-			availableRooms =
-				(List) CollectionUtils.subtract(allExamRooms, occupiedRooms);
+				List occupiedRooms = new ArrayList();
+				for (int i = 0; i < otherExams.size(); i++) {
+					IExam someOtherExam = (IExam) otherExams.get(i);
+					occupiedRooms.addAll(someOtherExam.getAssociatedRooms());
+				}
+
+				oqlQuery = "select allExamRooms from " + Sala.class.getName();
+				oqlQuery += " where tipo != $1";
+				query.create(oqlQuery);
+				query.bind(new TipoSala(TipoSala.LABORATORIO));
+				List allExamRooms = (List) query.execute();
+				lockRead(allExamRooms);
+				availableRooms =
+					(List) CollectionUtils.subtract(
+						allExamRooms,
+						occupiedRooms);
+			}
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
@@ -264,10 +278,10 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
 
 	public List readForRoomReservation() throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
-		criteria.addNotEqualTo("tipo",new TipoSala(TipoSala.LABORATORIO));
-		criteria.addNotLike("edificio","Tagus%");
-		criteria.addNotLike("edificio","Local%");
-		return queryList(Sala.class,criteria);
+		criteria.addNotEqualTo("tipo", new TipoSala(TipoSala.LABORATORIO));
+		criteria.addNotLike("edificio", "Tagus%");
+		criteria.addNotLike("edificio", "Local%");
+		return queryList(Sala.class, criteria);
 	}
 
 }
