@@ -24,6 +24,8 @@ import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.exceptions.InvalidInformationInFormActionException;
 import ServidorApresentacao.Action.exceptions.NoChangeMadeActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import Util.DocumentType;
+import Util.GraduationType;
 
 /**
  * 
@@ -57,6 +59,10 @@ public class StudentGuideDispatchAction extends DispatchAction {
 
 			String[] quantityList = request.getParameterValues("quantityList");
 			
+			String specializationGratuityQuantityString = (String) studentGuideForm.get("specializationGratuityQuantity");
+			String specializationGratuityAmountString = (String) studentGuideForm.get("specializationGratuityAmount");
+			
+			
 			Iterator iterator = certificateList.iterator();
 			
 			int position = 0;
@@ -87,6 +93,19 @@ public class StudentGuideDispatchAction extends DispatchAction {
 				
 				position++;				
  
+			}
+			
+			if ((specializationGratuityAmountString != null) 
+				&& (specializationGratuityAmountString.length() != 0) 
+				&& (specializationGratuityQuantityString != null)
+				&& (specializationGratuityQuantityString.length() != 0)) {
+				InfoGuideEntry infoGuideEntry = new InfoGuideEntry();
+				infoGuideEntry.setDescription("Pagamento para Especialização");
+				infoGuideEntry.setGraduationType(GraduationType.MASTER_DEGREE_TYPE);
+				infoGuideEntry.setDocumentType(DocumentType.GRATUITY_TYPE);
+				infoGuideEntry.setPrice(new Double(specializationGratuityAmountString));
+				infoGuideEntry.setQuantity(new Integer(specializationGratuityQuantityString));
+				infoGuide.getInfoGuideEntries().add(infoGuideEntry);
 			}
 			
 			if (infoGuide.getInfoGuideEntries().size() == 0)			

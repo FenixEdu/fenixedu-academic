@@ -455,6 +455,35 @@
       </field>
 	</form>
 
+
+
+   <form name="chooseStudentGuideForm">
+      <field property="specializationGratuityQuantity" depends="integer, floatGreaterThen" page="1">
+        <arg0 key="error.exception.invalidInformationInForm" />
+        
+       	<var>
+			<var-name>value</var-name>
+			<var-value>0</var-value>
+		</var>
+      </field>
+
+      <field property="specializationGratuityAmount" depends="floatGreaterThen" page="1">
+        <arg0 key="label.specializationGratuityAmount" />
+        <arg1 key="${var:value}" resource="false"/>
+       	<var>
+			<var-name>value</var-name>
+			<var-value>0</var-value>
+		</var>
+      </field>
+
+	</form>
+
+
+
+
   </formset>
+
+
+
 
 </form-validation>

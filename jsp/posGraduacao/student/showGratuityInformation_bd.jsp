@@ -57,74 +57,72 @@
   <br />
   <logic:present name="gratuityInformation">
 	  <h2><bean:message key="label.masterDegree.administrativeOffice.gratuityActualSituation" /></h2>
-  	  <table>
-  		<tr>
-  			<td>
-  				<bean:message key="label.masterDegree.administrativeOffice.situation"/>
+	  <table>
+		<tr>
+			<td>
+				<bean:message key="label.masterDegree.administrativeOffice.situation"/>
 			</td>
-  			<td>
-  				<bean:message name="gratuityInformation" property="gratuityState.name" bundle="ENUMERATION_RESOURCES" />
+			<td>
+				<bean:message name="gratuityInformation" property="gratuityState.name" bundle="ENUMERATION_RESOURCES" />
 			</td>
 	  	</tr>
-  		<tr>
-  			<td>
-  				<bean:message key="label.masterDegree.administrativeOffice.date"/>
+		<tr>
+			<td>
+				<bean:message key="label.masterDegree.administrativeOffice.date"/>
 			</td>
-  			<td>
+			<td>
 	  			<logic:present name="gratuityInformation" property="date" >
 			        <bean:define id="date" name="gratuityInformation" property="date" />
 					<%= Data.format2DayMonthYear((Date) date) %>
 				</logic:present>
 			</td>
 	  	</tr>
-  		<tr>
-  			<td>
-  				<bean:message key="label.masterDegree.administrativeOffice.remarks"/>
+		<tr>
+			<td>
+				<bean:message key="label.masterDegree.administrativeOffice.remarks"/>
 			</td>
-  			<td>
-  				<bean:write name="gratuityInformation" property="remarks"/>
+			<td>
+				<bean:write name="gratuityInformation" property="remarks"/>
 			</td>
 	  	</tr>
-  	  </table>
+	  </table>
+  </logic:present>  
   
   
-  
-	  <logic:present name="gratuityInformationFromGuide">
-		<h2><bean:message key="label.masterDegree.administrativeOffice.gratuityInformation"/></h2>
-		<table>
+  <logic:present name="gratuityInformationFromGuide">
+	<h2><bean:message key="label.masterDegree.administrativeOffice.gratuityInformation"/></h2>
+	<table>
+		<tr>
+			<td>
+				<bean:message key="label.masterDegree.administrativeOffice.description"/>
+			</td>
+			<td>
+				<bean:message key="label.masterDegree.administrativeOffice.value"/>
+			</td>
+			<td>
+				<bean:message key="label.masterDegree.administrativeOffice.guideNumber"/>
+			</td>
+			<td>
+				<bean:message key="label.masterDegree.administrativeOffice.guideYear"/>
+			</td>
+	  	</tr>
+	  	<logic:iterate id="guideEntry" name ="gratuityInformationFromGuide" >
 	  		<tr>
 	  			<td>
-					<bean:message key="label.masterDegree.administrativeOffice.description"/>
-				</td>
+		  			<bean:write name="guideEntry" property="description" />
+	  			</td>
 	  			<td>
-					<bean:message key="label.masterDegree.administrativeOffice.value"/>
-				</td>
-	  			<td>
-					<bean:message key="label.masterDegree.administrativeOffice.guideNumber"/>
-				</td>
-	  			<td>
-					<bean:message key="label.masterDegree.administrativeOffice.guideYear"/>
-				</td>
-		  	</tr>
-		  	<logic:iterate id="guideEntry" name ="gratuityInformationFromGuide" >
-		  		<tr>
-		  			<td>
-			  			<bean:write name="guideEntry" property="description" />
-		  			</td>
-		  			<td>
-			  			<%= NumberUtils.formatNumber(new Double(((InfoGuideEntry) guideEntry).getPrice().floatValue() * ((InfoGuideEntry) guideEntry).getQuantity().intValue()), 2) %>
-		  			</td>
-		  			<td align="center">
-			  			<bean:write name="guideEntry" property="infoGuide.number" />
-		  			</td>
-		  			<td align="center">
-			  			<bean:write name="guideEntry" property="infoGuide.year" />
-		  			</td>
-		  		</tr>
-		  	</logic:iterate>
-		  	
-    	</table>
-	  </logic:present>
+		  			<%= NumberUtils.formatNumber(new Double(((InfoGuideEntry) guideEntry).getPrice().floatValue() * ((InfoGuideEntry) guideEntry).getQuantity().intValue()), 2) %>
+	  			</td>
+	  			<td align="center">
+		  			<bean:write name="guideEntry" property="infoGuide.number" />
+	  			</td>
+	  			<td align="center">
+		  			<bean:write name="guideEntry" property="infoGuide.year" />
+	  			</td>
+	  		</tr>
+	  	</logic:iterate>
+	</table>
   </logic:present>
 
 

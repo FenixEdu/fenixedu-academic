@@ -265,7 +265,11 @@
             <form-property name="page" type="java.lang.Integer" />
             <form-property name="quantityList" type="java.lang.String" />
 			<form-property name="studentGuideList" type="java.lang.String"/>
+			<form-property name="specializationGratuityQuantity" type="java.lang.String"/>
+			<form-property name="specializationGratuityAmount" type="java.lang.String"/>
+      
       </form-bean>
+      
 
 	  <!-- Bean for The Choosing of a Student -->
       <form-bean name="studentNumberForm" 
@@ -717,7 +721,6 @@
 		      path="/studentGuideDispatchAction"
 		      parameter="method"
 		      scope="request"
-              
               type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.StudentGuideDispatchAction"
               validate="true">
        		 <exception type="ServidorApresentacao.Action.exceptions.InvalidInformationInFormActionException"

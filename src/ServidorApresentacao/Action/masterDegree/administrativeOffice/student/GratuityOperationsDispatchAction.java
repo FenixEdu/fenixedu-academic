@@ -75,19 +75,21 @@ public class GratuityOperationsDispatchAction extends DispatchAction {
 			List gratuityInformationFromGuide = null;
 			if (result != null){
 				request.setAttribute("gratuityInformation", result);
-				
-				try {
-					Object args[] = { studentCPID };
-					gratuityInformationFromGuide = (List) serviceManager.executar(userView, "ReadGratuityInformationByStudentCurricularPlanID", args);
-				} catch (NonExistingServiceException e) {
-
-				} catch (FenixServiceException e) {
-					throw new FenixActionException(e);
-				}
-				if (gratuityInformationFromGuide != null){
-					request.setAttribute("gratuityInformationFromGuide", gratuityInformationFromGuide);
-				} 
 			}
+
+			try {
+				Object args[] = { studentCPID };
+				gratuityInformationFromGuide = (List) serviceManager.executar(userView, "ReadGratuityInformationByStudentCurricularPlanID", args);
+			} catch (NonExistingServiceException e) {
+
+			} catch (FenixServiceException e) {
+				throw new FenixActionException(e);
+			}
+			
+			if (gratuityInformationFromGuide != null){
+				request.setAttribute("gratuityInformationFromGuide", gratuityInformationFromGuide);
+			} 
+
 			
 			request.setAttribute("studentCPID", studentCPID);
 			return mapping.findForward("ShowGratuityInformation");
