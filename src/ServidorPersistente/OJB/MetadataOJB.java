@@ -1,0 +1,35 @@
+/*
+ * Created on 23/Jul/2003
+ *
+ */
+package ServidorPersistente.OJB;
+
+import java.util.List;
+
+import org.apache.ojb.broker.query.Criteria;
+
+import Dominio.IDisciplinaExecucao;
+import Dominio.Metadata;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentMetadata;
+
+/**
+ * @author Susana Fernandes
+ */
+
+public class MetadataOJB
+	extends ObjectFenixOJB
+	implements IPersistentMetadata {
+
+	public MetadataOJB() {
+	}
+
+	public List readByExecutionCourse(IDisciplinaExecucao executionCourse)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo(
+			"keyExecutionCourse",
+			executionCourse.getIdInternal());
+		return queryList(Metadata.class, criteria);
+	}
+}

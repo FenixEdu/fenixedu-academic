@@ -1,0 +1,175 @@
+<!-- ******************************** -->
+<!-- Definitions for Dominio.Metadata -->
+<!-- ******************************** -->
+<class-descriptor class="Dominio.Metadata"
+                  table="METADATA">
+    <field-descriptor id="1"
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />
+    <field-descriptor id="2"
+        name="keyExecutionCourse"
+        column="KEY_EXECUTION_COURSE"
+        jdbc-type="INTEGER"
+	/>
+    <field-descriptor id="3"
+         name="metadataFile"
+         column="METADATA_FILE"
+    	 jdbc-type="CLOB"
+         conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"/>
+    <reference-descriptor
+         name="executionCourse"
+         class-ref="Dominio.DisciplinaExecucao"
+         proxy="true"
+    >
+	<foreignkey field-id-ref="2"/>
+	</reference-descriptor>
+</class-descriptor>
+
+<!-- ******************************** -->
+<!-- Definitions for Dominio.Question -->
+<!-- ******************************** -->
+<class-descriptor class="Dominio.Question"
+                  table="XML_DOCUMENTS">
+    <field-descriptor id="1"
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />
+    <field-descriptor id="2"
+         name="xmlFile"
+         column="XML_FILE"
+    	 jdbc-type="CLOB"
+         conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"/>
+    <field-descriptor id="3"
+        name="xmlFileName"
+        column="XML_FILE_NAME"
+        jdbc-type="VARCHAR"
+    />
+    <field-descriptor id="4"
+        name="keyMetadata"
+        column="KEY_METADATA"
+        jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+         name="metadata"
+         class-ref="Dominio.Metadata"
+         proxy="true"
+    > 
+	<foreignkey field-id-ref="4"/>
+	</reference-descriptor>
+</class-descriptor>
+
+<!-- ***************************** -->
+<!-- Definitions for Dominio.Tests -->
+<!-- ***************************** -->
+<class-descriptor class="Dominio.Test"
+                  table="TESTS">
+    <field-descriptor id="1"
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />
+    <field-descriptor id="2"
+         name="title"
+         column="TITLE"
+    	 jdbc-type="CLOB"
+         conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+    />
+    <field-descriptor id="3"
+         name="information"
+         column="INFORMATION"
+    	 jdbc-type="CLOB"
+         conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+    />
+    <field-descriptor id="4"
+         name="numberOfQuestions"
+         column="NUMBER_OF_QUESTIONS"
+    	 jdbc-type="INTEGER"
+    />
+    <field-descriptor id="5"
+        name="creationDate"
+        column="CREATION_DATE"
+        jdbc-type="TIMESTAMP"
+        conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+	/>
+	<field-descriptor id="6"
+        name="lastModifiedDate"
+        column="LAST_MODIFICATION_DATE"
+        jdbc-type="TIMESTAMP"
+        conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+	/>
+    <field-descriptor id="7"
+        name="keyExecutionCourse"
+        column="KEY_EXECUTION_COURSE"
+        jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+         name="executionCourse"
+         class-ref="Dominio.DisciplinaExecucao"
+         proxy="true"
+    > 
+	<foreignkey field-id-ref="7"/>
+	</reference-descriptor>
+    <attribute
+		attribute-name="cacheable"
+     	attribute-value="false" />
+</class-descriptor>
+
+<!-- ************************************ -->
+<!-- Definitions for Dominio.TestQuestion -->
+<!-- ************************************ -->
+<class-descriptor class="Dominio.TestQuestion"
+                  table="TEST_QUESTION">
+    <field-descriptor id="1"
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />
+    <field-descriptor id="2"
+        name="testQuestionOrder"
+        column="TEST_QUESTION_ORDER"
+        jdbc-type="INTEGER"
+    />
+    <field-descriptor id="3"
+        name="testQuestionValue"
+        column="TEST_QUESTION_VALUE"
+        jdbc-type="INTEGER"
+    />
+    <field-descriptor id="4"
+         name="keyQuestion"
+         column="KEY_XML_DOCUMENT"
+    	 jdbc-type="INTEGER"
+    />
+    <field-descriptor id="5"
+        name="keyTest"
+        column="KEY_TEST"
+        jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+         name="question"
+         class-ref="Dominio.Question"
+         proxy="true"
+    > 
+	<foreignkey field-id-ref="4"/>
+	</reference-descriptor>
+	<reference-descriptor
+         name="test"
+         class-ref="Dominio.Test"
+         proxy="true"
+    > 
+	<foreignkey field-id-ref="5"/>
+	</reference-descriptor>
+	<attribute
+		attribute-name="cacheable"
+     	attribute-value="false" />
+</class-descriptor>
