@@ -93,7 +93,7 @@ public class ViewExamsByDayAndShiftDATest extends TestCasePresentation {
 		assertNotNull("LIST_EXAMSANDINFO not found in session", infoExams);
 		assertEquals(
 			"LIST_EXAMSANDINFO contains unexpected number of elements",
-			1,
+			2,
 			infoExams.size());
 	}
 
