@@ -7,12 +7,6 @@
 		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
 		<put name="body" value="/teacher/firstPage.jsp" />
 	</definition>
-	<definition name="df.gesdis.course-information-management" extends="df.gesdis.course-information">	
-	 	<put name="body" value="/gesdis/courseInformationManagement.jsp"></put>
-	</definition>
-	<definition name="df.gesdis.view-course-information" extends="df.gesdis.course-information">	
-		<put name="body" value="/gesdis/viewCourseInformation.jsp"></put>
-	</definition>	
 	<definition name="showEmailForm" extends="definition.teacher.two-column">
 		<put name="executionCourseName" value="/teacher/executionCourseName.jsp" />
 		<put name="navLocal" value="/teacher/navbar.jsp" type="page"/>

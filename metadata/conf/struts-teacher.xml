@@ -1346,9 +1346,9 @@
       		parameter="method"
       		scope="request"
       		input="/courseInformation.do?page=0&amp;method=prepareEdit">
-		<forward name="show-form" path="df.gesdis.course-information-management"/> 
-		<forward name="successfull-edit" path="df.gesdis.view-course-information"/> 
-		<forward name="successfull-read" path="df.gesdis.view-course-information"/>
+		<forward name="show-form" path="course-information-management"/> 
+		<!--<forward name="successfull-edit" path="view-course-information"/> -->
+		<forward name="successfull-read" path="view-course-information"/>
 	  </action>
       
       <!-- Professional Career -->

@@ -21,7 +21,6 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
-import ServidorApresentacao.framework.actions.mappings.CRUDMapping;
 
 /**
  * 
@@ -166,18 +165,18 @@ public class TeacherInformationAction extends DispatchAction
 	 *              successfull-read
 	 * @throws Exception
 	 */
-    public ActionForward read(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
-    {
-        CRUDMapping crudMapping = (CRUDMapping) mapping;
-        InfoObject infoObject = readInfoObject(crudMapping, form, request);
-        setInfoObjectToRequest(request, infoObject, crudMapping);
-        return crudMapping.findForward("sucessfull-read");
-    }
+//    public ActionForward read(
+//        ActionMapping mapping,
+//        ActionForm form,
+//        HttpServletRequest request,
+//        HttpServletResponse response)
+//        throws Exception
+//    {
+//        CRUDMapping crudMapping = (CRUDMapping) mapping;
+//        InfoObject infoObject = readInfoObject(crudMapping, form, request);
+//        setInfoObjectToRequest(request, infoObject, crudMapping);
+//        return crudMapping.findForward("sucessfull-read");
+//    }
 
     /**
 	 * Reads the infoObject using de read service associated to the action
@@ -187,14 +186,14 @@ public class TeacherInformationAction extends DispatchAction
 	 * @return
 	 */
     private InfoObject readInfoObject(
-        CRUDMapping crudMapping,
+        ActionMapping mapping,
         ActionForm form,
         HttpServletRequest request)
         throws FenixServiceException
     {
         IUserView userView = SessionUtils.getUserView(request);
         Object[] args = { /*getOIDProperty(crudMapping, form)*/};
-        return (InfoObject) ServiceUtils.executeService(userView, crudMapping.getReadService(), args);
+        return (InfoObject) ServiceUtils.executeService(userView, getReadService(), args);
     }
 
     /**
@@ -204,11 +203,11 @@ public class TeacherInformationAction extends DispatchAction
     private void setInfoObjectToRequest(
         HttpServletRequest request,
         InfoObject infoObject,
-        CRUDMapping crudMapping)
+		ActionMapping mapping)
     {
         if (infoObject != null)
         {
-            request.setAttribute(crudMapping.getRequestAttribute(), infoObject);
+            request.setAttribute("infoObject", infoObject);
         }
     }
 }

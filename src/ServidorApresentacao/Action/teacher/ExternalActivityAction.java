@@ -13,7 +13,7 @@ import org.apache.struts.action.DynaActionForm;
 import DataBeans.InfoObject;
 import DataBeans.InfoTeacher;
 import DataBeans.teacher.InfoExternalActivity;
-import ServidorApresentacao.framework.actions.CRUDActionByOID;
+import ServidorApresentacao.Action.framework.CRUDActionByOID;
 
 /**
  * @author Leonor Almeida

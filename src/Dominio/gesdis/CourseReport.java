@@ -6,6 +6,8 @@
  */
 package Dominio.gesdis;
 
+import java.util.Date;
+
 import Dominio.DomainObject;
 import Dominio.IDisciplinaExecucao;
 
@@ -19,6 +21,7 @@ public class CourseReport extends DomainObject implements ICourseReport {
 	private String report;
 	private Integer keyExecutionCourse;
 	private IDisciplinaExecucao executionCourse;
+    private Date lastModificationDate;
 
 	public CourseReport() {
 	}
@@ -69,5 +72,21 @@ public class CourseReport extends DomainObject implements ICourseReport {
 		result += "]";
 		return result;
 	}
+    /**
+     * @return Returns the lastModificationDate.
+     */
+    public Date getLastModificationDate()
+    {
+        return lastModificationDate;
+    }
+
+    /**
+     * @param lastModificationDate The lastModificationDate to set.
+     */
+    public void setLastModificationDate(Date lastModificationDate)
+    {
+        this.lastModificationDate = lastModificationDate;
+    }
+
 }
 

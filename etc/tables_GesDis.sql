@@ -228,6 +228,7 @@ create table COURSE_REPORT (
    ID_INTERNAL int(11) unsigned not null auto_increment,   
    KEY_EXECUTION_COURSE int(11) unsigned not null ,
    REPORT text,
+   LAST_MODIFICATION_DATE timestamp(14) not null,   
    primary key (ID_INTERNAL),
    unique U1 (KEY_EXECUTION_COURSE))
    type=InnoDB comment="InnoDB free: 372736 kB";

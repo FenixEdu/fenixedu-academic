@@ -4,6 +4,8 @@
  */
 package Dominio.teacher;
 
+import java.util.Date;
+
 import Dominio.DomainObject;
 import Dominio.ITeacher;
 
@@ -17,6 +19,7 @@ public class ExternalActivity extends DomainObject implements IExternalActivity
     private String activity;
     private ITeacher teacher;
     private Integer keyTeacher;
+    private Date lastModificationDate;
 
     /**
      * 
@@ -75,6 +78,22 @@ public class ExternalActivity extends DomainObject implements IExternalActivity
     public void setKeyTeacher(Integer keyTeacher)
     {
         this.keyTeacher = keyTeacher;
+    }
+
+    /**
+     * @return Returns the lastModificationDate.
+     */
+    public Date getLastModificationDate()
+    {
+        return lastModificationDate;
+    }
+
+    /**
+     * @param lastModificationDate The lastModificationDate to set.
+     */
+    public void setLastModificationDate(Date lastModificationDate)
+    {
+        this.lastModificationDate = lastModificationDate;
     }
 
 }

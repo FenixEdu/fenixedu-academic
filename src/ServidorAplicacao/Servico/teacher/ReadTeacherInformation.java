@@ -76,7 +76,6 @@ public class ReadTeacherInformation implements IServico
     /**
 	 * Executes the service.
 	 */
-    // TODO: faltam os cargos de gestão
     public SiteView run(String user) throws FenixServiceException
     {
         try

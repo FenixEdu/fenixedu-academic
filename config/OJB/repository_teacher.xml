@@ -13,6 +13,10 @@
     <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
     <field-descriptor name="beginYear" column="BEGIN_YEAR" jdbc-type="INTEGER" nullable="true"/>
     <field-descriptor name="endYear" column="END_YEAR" jdbc-type="INTEGER" nullable="true"/>
+    <field-descriptor name="lastModificationDate" 
+    				  column="LAST_MODIFICATION_DATE" 
+    				  jdbc-type="TIMESTAMP"
+    				  conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"/>
 	<field-descriptor name="entity" column="ENTITY" jdbc-type="VARCHAR" nullable="true"/>
 	<field-descriptor name="function" column="FUNCTION" jdbc-type="VARCHAR" nullable="true"/>
 	<field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
@@ -27,6 +31,10 @@
     <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR"/>      
     <field-descriptor name="beginYear" column="BEGIN_YEAR" jdbc-type="INTEGER" nullable="true"/>
     <field-descriptor name="endYear" column="END_YEAR" jdbc-type="INTEGER" nullable="true"/>
+    <field-descriptor name="lastModificationDate" 
+    				  column="LAST_MODIFICATION_DATE" 
+    				  jdbc-type="TIMESTAMP"
+    				  conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"/>
 	<field-descriptor name="courseOrPosition" column="COURSE_OR_POSITION" jdbc-type="VARCHAR" nullable="true"/>
     <field-descriptor name="keyCategory" column="KEY_CATEGORY" jdbc-type="INTEGER" nullable="true"/>
     <reference-descriptor name="category" class-ref="Dominio.teacher.Category" proxy="false">
@@ -44,6 +52,10 @@
     <field-descriptor name="research" column="RESEARCH" jdbc-type="INTEGER"/>
     <field-descriptor name="management" column="MANAGEMENT" jdbc-type="INTEGER"/>
     <field-descriptor name="other" column="OTHER" jdbc-type="INTEGER"/>
+    <field-descriptor name="lastModificationDate" 
+    				  column="LAST_MODIFICATION_DATE" 
+    				  jdbc-type="TIMESTAMP"
+    				  conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"/>
 	<field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
 	<reference-descriptor name="teacher" class-ref="Dominio.Teacher" proxy="false">
 		<foreignkey field-ref="keyTeacher"/>
@@ -54,6 +66,10 @@
 <class-descriptor class="Dominio.teacher.ExternalActivity" table="EXTERNAL_ACTIVITY">
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
     <field-descriptor name="activity" column="ACTIVITY" jdbc-type="LONGVARCHAR"/>
+    <field-descriptor name="lastModificationDate" 
+    				  column="LAST_MODIFICATION_DATE" 
+    				  jdbc-type="TIMESTAMP"
+    				  conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"/>
 	<field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
 	<reference-descriptor name="teacher" class-ref="Dominio.Teacher" proxy="false">
 		<foreignkey field-ref="keyTeacher"/>
@@ -67,6 +83,10 @@
     				  column="PROVIDER_REGIME_TYPE" 
     				  conversion="ServidorPersistente.Conversores.ProviderRegimeTypeFieldConversion" 
     				  jdbc-type="INTEGER"/>
+    <field-descriptor name="lastModificationDate" 
+    				  column="LAST_MODIFICATION_DATE" 
+    				  jdbc-type="TIMESTAMP"
+    				  conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"/> 				
     <field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
     <reference-descriptor name="teacher" class-ref="Dominio.Teacher" proxy="false">
 		<foreignkey field-ref="keyTeacher"/>

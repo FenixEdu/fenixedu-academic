@@ -43,4 +43,10 @@
 	<definition name="showSelectCandidacies" extends="definition.teacher.two-column">
 		<put name="body" value="/teacher/showSelectCandidacies.jsp"/>
 	</definition>
+	<definition name="course-information-management" extends="course-information">
+	 	<put name="body" value="/gesdis/courseInformationManagement.jsp"></put>
+	</definition>
+	<definition name="view-course-information" extends="course-information">
+		<put name="body" value="/gesdis/viewCourseInformation.jsp"></put>
+	</definition>
 </tiles-definitions>

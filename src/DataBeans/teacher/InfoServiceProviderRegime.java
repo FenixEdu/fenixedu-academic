@@ -4,6 +4,8 @@
  */
 package DataBeans.teacher;
 
+import java.util.Date;
+
 import DataBeans.InfoObject;
 import DataBeans.InfoTeacher;
 import Util.ProviderRegimeType;
@@ -17,6 +19,7 @@ public class InfoServiceProviderRegime extends InfoObject
 {
     private ProviderRegimeType providerRegimeType;
     private InfoTeacher infoTeacher;
+    private Date lastModificationDate;
     
     public InfoServiceProviderRegime() 
     {
@@ -52,6 +55,22 @@ public class InfoServiceProviderRegime extends InfoObject
     public void setProviderRegimeType(ProviderRegimeType providerRegimeType)
     {
         this.providerRegimeType = providerRegimeType;
+    }
+
+    /**
+     * @return Returns the lastModificationDate.
+     */
+    public Date getLastModificationDate()
+    {
+        return lastModificationDate;
+    }
+
+    /**
+     * @param lastModificationDate The lastModificationDate to set.
+     */
+    public void setLastModificationDate(Date lastModificationDate)
+    {
+        this.lastModificationDate = lastModificationDate;
     }
 
 }

@@ -4,6 +4,8 @@
  */
 package Dominio.teacher;
 
+import java.util.Date;
+
 import Dominio.DomainObject;
 import Dominio.ITeacher;
 
@@ -19,6 +21,7 @@ public class WeeklyOcupation extends DomainObject implements IWeeklyOcupation
     private Integer other;
     private ITeacher teacher;
     private Integer keyTeacher;
+    private Date lastModificationDate;
 
     /**
      * 
@@ -109,6 +112,22 @@ public class WeeklyOcupation extends DomainObject implements IWeeklyOcupation
     public void setManagement(Integer management)
     {
         this.management = management;
+    }
+
+    /**
+     * @return Returns the lastModificationDate.
+     */
+    public Date getLastModificationDate()
+    {
+        return lastModificationDate;
+    }
+
+    /**
+     * @param lastModificationDate The lastModificationDate to set.
+     */
+    public void setLastModificationDate(Date lastModificationDate)
+    {
+        this.lastModificationDate = lastModificationDate;
     }
 
 }

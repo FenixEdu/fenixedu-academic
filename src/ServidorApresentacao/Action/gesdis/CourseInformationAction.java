@@ -60,7 +60,8 @@ public class CourseInformationAction extends DispatchAction
         InfoCourseReport infoCourseReport = getInfoCourseReportFromForm(form);
         Object[] args = { infoCourseReport.getIdInternal(), infoCourseReport };
         ServiceUtils.executeService(SessionUtils.getUserView(request), getEditService(), args);
-        return mapping.findForward("successfull-edit");
+        //return mapping.findForward("successfull-edit");
+        return read(mapping, form, request, response);
     }
 
     /**
@@ -129,13 +130,11 @@ public class CourseInformationAction extends DispatchAction
             InfoExecutionCourse infoExecutionCourse = infoCourseReport.getInfoExecutionCourse();
             InfoExecutionPeriod infoExecutionPeriod = infoExecutionCourse.getInfoExecutionPeriod();
             InfoExecutionYear infoExecutionYear = infoExecutionPeriod.getInfoExecutionYear();
-            // TODO: este duas linhas sao necessarias
-            //            dynaForm.set("courseReportId", infoCourseReport.getIdInternal());
-            //            dynaForm.set("report", infoCourseReport.getReport());
+            dynaForm.set("courseReportId", infoCourseReport.getIdInternal());
+            dynaForm.set("report", infoCourseReport.getReport());
             dynaForm.set("executionCourseId", infoExecutionCourse.getIdInternal());
             dynaForm.set("executionPeriodId", infoExecutionPeriod.getIdInternal());
             dynaForm.set("executionYearId", infoExecutionYear.getIdInternal());
-
         } catch (Exception e)
         {
             e.printStackTrace();
@@ -160,8 +159,13 @@ public class CourseInformationAction extends DispatchAction
         SiteView siteView = readSiteView(mapping, form, request);
         if (!hasErrors(request) && siteView != null)
         {
-            InfoSiteCourseInformation infoSiteCourseInformation = (InfoSiteCourseInformation) siteView.getComponent();
-            populateFormFromInfoCourseReport(mapping, infoSiteCourseInformation.getInfoCourseReport(), form, request);
+            InfoSiteCourseInformation infoSiteCourseInformation =
+                (InfoSiteCourseInformation) siteView.getComponent();
+            populateFormFromInfoCourseReport(
+                mapping,
+                infoSiteCourseInformation.getInfoCourseReport(),
+                form,
+                request);
         }
         setSiteViewToRequest(request, siteView, mapping);
         return mapping.findForward("show-form");
@@ -169,7 +173,6 @@ public class CourseInformationAction extends DispatchAction
 
     /**
 	 * @param mapping
-	 *            should be an instance of @link CRUDMapping
 	 * @param form
 	 * @param request
 	 * @param response
@@ -185,7 +188,7 @@ public class CourseInformationAction extends DispatchAction
     {
         SiteView siteView = readSiteView(mapping, form, request);
         setSiteViewToRequest(request, siteView, mapping);
-        return mapping.findForward("sucessfull-read");
+        return mapping.findForward("successfull-read");
     }
 
     /**
@@ -195,10 +198,7 @@ public class CourseInformationAction extends DispatchAction
 	 * @param form
 	 * @return
 	 */
-    private SiteView readSiteView(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request)
+    private SiteView readSiteView(ActionMapping mapping, ActionForm form, HttpServletRequest request)
         throws FenixServiceException
     {
         IUserView userView = SessionUtils.getUserView(request);

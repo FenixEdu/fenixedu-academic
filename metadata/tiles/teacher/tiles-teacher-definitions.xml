@@ -28,4 +28,10 @@
 	    <put name="link" value=""/>
    	    <put name="professorshipList" />
 	</definition>
+ 	<definition name="course-information" extends="definition.teacher.two-column">
+		<put name="body-context" value=""></put>
+        <!--	/gesdis/courseInformationContext.jsp-->
+        <put name="navLocal" value="/teacher/navbar.jsp" type="page"/>
+		<put name="footer" value="/copyright.jsp" />
+	</definition>
 </tiles-definitions>

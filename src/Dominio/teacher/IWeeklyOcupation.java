@@ -4,6 +4,8 @@
  */
 package Dominio.teacher;
 
+import java.util.Date;
+
 import Dominio.IDomainObject;
 import Dominio.ITeacher;
 
@@ -18,8 +20,10 @@ public interface IWeeklyOcupation extends IDomainObject
     public Integer getManagement();
     public Integer getOther();
     public ITeacher getTeacher();
+    public Date getLastModificationDate();
     public void setResearch(Integer research);
     public void setManagement(Integer management);
     public void setOther(Integer other);
-    public void setTeacher(ITeacher teacher); 
+    public void setTeacher(ITeacher teacher);
+    public void setLastModificationDate(Date lastModificationDate);
 }

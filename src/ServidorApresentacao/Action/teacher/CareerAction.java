@@ -16,7 +16,7 @@ import DataBeans.teacher.InfoCareer;
 import DataBeans.teacher.InfoCategory;
 import DataBeans.teacher.InfoProfessionalCareer;
 import DataBeans.teacher.InfoTeachingCareer;
-import ServidorApresentacao.framework.actions.CRUDActionByOID;
+import ServidorApresentacao.Action.framework.CRUDActionByOID;
 import Util.CareerType;
 
 /**

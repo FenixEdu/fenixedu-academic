@@ -6,6 +6,8 @@
  */
 package DataBeans.gesdis;
 
+import java.util.Date;
+
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoObject;
 
@@ -20,6 +22,7 @@ import DataBeans.InfoObject;
 public class InfoCourseReport extends InfoObject {
 
 	private String report;
+    private Date lastModificationDate;
 	private InfoExecutionCourse  infoExecutionCourse;
 
 	public InfoCourseReport() {
@@ -40,5 +43,21 @@ public class InfoCourseReport extends InfoObject {
 	public void setInfoExecutionCourse(InfoExecutionCourse infoExecutionCourse){
 		this.infoExecutionCourse = infoExecutionCourse;
 	}
+
+    /**
+     * @return Returns the lastModificationDate.
+     */
+    public Date getLastModificationDate()
+    {
+        return lastModificationDate;
+    }
+
+    /**
+     * @param lastModificationDate The lastModificationDate to set.
+     */
+    public void setLastModificationDate(Date lastModificationDate)
+    {
+        this.lastModificationDate = lastModificationDate;
+    }
 
 }

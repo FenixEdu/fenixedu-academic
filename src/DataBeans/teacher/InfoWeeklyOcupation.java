@@ -6,6 +6,8 @@
  */
 package DataBeans.teacher;
 
+import java.util.Date;
+
 import DataBeans.ISiteComponent;
 import DataBeans.InfoObject;
 import DataBeans.InfoTeacher;
@@ -23,6 +25,7 @@ public class InfoWeeklyOcupation extends InfoObject implements ISiteComponent {
     private Integer research;
     private Integer management;
     private Integer other;
+    private Date lastModificationDate;
 
 	public InfoWeeklyOcupation() {
 	}
@@ -98,4 +101,20 @@ public class InfoWeeklyOcupation extends InfoObject implements ISiteComponent {
         }
         return resultado;
     }
+    /**
+     * @return Returns the lastModificationDate.
+     */
+    public Date getLastModificationDate()
+    {
+        return lastModificationDate;
+    }
+
+    /**
+     * @param lastModificationDate The lastModificationDate to set.
+     */
+    public void setLastModificationDate(Date lastModificationDate)
+    {
+        this.lastModificationDate = lastModificationDate;
+    }
+
 }

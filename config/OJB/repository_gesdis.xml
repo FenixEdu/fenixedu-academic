@@ -799,6 +799,10 @@
 	<field-descriptor name="report"
 					  column="REPORT"
 					  jdbc-type="LONGVARCHAR"/>
+    <field-descriptor name="lastModificationDate" 
+    				  column="LAST_MODIFICATION_DATE" 
+    				  jdbc-type="TIMESTAMP"
+    				  conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"/>  					  
 	<reference-descriptor
          name="executionCourse"
          class-ref="Dominio.DisciplinaExecucao"

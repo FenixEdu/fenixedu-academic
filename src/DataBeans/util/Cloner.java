@@ -185,8 +185,11 @@ public abstract class Cloner
             Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionCourse.getExecutionPeriod());
 
         copyObjectProperties(infoExecutionCourse, executionCourse);
-
-        infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
+         
+        if (infoExecutionPeriod!=null){
+            infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);      
+        }
+      
         infoExecutionCourse.setNumberOfAttendingStudents(
             new Integer(
                 executionCourse.getAttendingStudents() == null

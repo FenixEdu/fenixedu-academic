@@ -4,6 +4,8 @@
  */
 package Dominio.teacher;
 
+import java.util.Date;
+
 import Dominio.DomainObject;
 import Dominio.ITeacher;
 import Util.ProviderRegimeType;
@@ -18,6 +20,7 @@ public class ServiceProviderRegime extends DomainObject implements IServiceProvi
     private ProviderRegimeType providerRegimeType;
     private Integer keyTeacher;
     private ITeacher teacher;
+    private Date lastModificationDate;
     
     /**
      * 
@@ -72,5 +75,20 @@ public class ServiceProviderRegime extends DomainObject implements IServiceProvi
     public void setTeacher(ITeacher teacher)
     {
         this.teacher = teacher;
+    }
+    /**
+     * @return Returns the lastModificationDate.
+     */
+    public Date getLastModificationDate()
+    {
+        return lastModificationDate;
+    }
+
+    /**
+     * @param lastModificationDate The lastModificationDate to set.
+     */
+    public void setLastModificationDate(Date lastModificationDate)
+    {
+        this.lastModificationDate = lastModificationDate;
     }
 }

@@ -7,6 +7,7 @@ package DataBeans.gesdis;
 import java.util.List;
 
 import DataBeans.ISiteComponent;
+import DataBeans.InfoEvaluationMethod;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoObject;
 
@@ -20,10 +21,12 @@ public class InfoSiteCourseInformation
 	implements ISiteComponent {
 	
 	private InfoExecutionCourse infoExecutionCourse;
+    private InfoEvaluationMethod infoEvaluationMethod;
 	private List infoCurricularCourses;
 	private List infoResponsibleTeachers;
 	private List infoCurriculums;
-	private List infoLecturingTeacher;
+	private List infoLecturingTeachers;
+    private List infoLessons;
 	private List infoBibliographicReferences;
 	private InfoCourseReport infoCourseReport;
 	
@@ -103,15 +106,15 @@ public class InfoSiteCourseInformation
 	/**
 	 * @return Returns the infoLecturingTeacher.
 	 */
-	public List getInfoLecturingTeacher() {
-		return infoLecturingTeacher;
+	public List getInfoLecturingTeachers() {
+		return infoLecturingTeachers;
 	}
 
 	/**
 	 * @param infoLecturingTeacher The infoLecturingTeacher to set.
 	 */
-	public void setInfoLecturingTeacher(List infoLecturingTeacher) {
-		this.infoLecturingTeacher = infoLecturingTeacher;
+	public void setInfoLecturingTeachers(List infoLecturingTeachers) {
+		this.infoLecturingTeachers = infoLecturingTeachers;
 	}
 
 	/**
@@ -127,5 +130,37 @@ public class InfoSiteCourseInformation
 	public void setInfoResponsibleTeachers(List infoResponsibleTeachers) {
 		this.infoResponsibleTeachers = infoResponsibleTeachers;
 	}
+
+    /**
+     * @return Returns the infoLessons.
+     */
+    public List getInfoLessons()
+    {
+        return infoLessons;
+    }
+
+    /**
+     * @param infoLessons The infoLessons to set.
+     */
+    public void setInfoLessons(List infoLessons)
+    {
+        this.infoLessons = infoLessons;
+    }
+
+    /**
+     * @return Returns the infoEvaluationMethod.
+     */
+    public InfoEvaluationMethod getInfoEvaluationMethod()
+    {
+        return infoEvaluationMethod;
+    }
+
+    /**
+     * @param infoEvaluationMethod The infoEvaluationMethod to set.
+     */
+    public void setInfoEvaluationMethod(InfoEvaluationMethod infoEvaluationMethod)
+    {
+        this.infoEvaluationMethod = infoEvaluationMethod;
+    }
 
 }

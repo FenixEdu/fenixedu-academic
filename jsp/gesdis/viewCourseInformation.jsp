@@ -5,122 +5,101 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <h2><bean:message key="title.courseInformation"/></h2>
 <logic:present name="siteView"> 
-<html:form action="/courseInformation">
-<bean:define id="courseInformation" name="siteView" property="component"/>
-<br />
-<!-- acrescentar os cabeçalhos com a informação da disciplina -->
+<bean:define id="siteCourseInformation" name="siteView" property="component"/>
+<bean:define id="executionCourse" name="siteCourseInformation" property="infoExecutionCourse"/>
+<bean:define id="executionPeriod" name="executionCourse" property="infoExecutionPeriod"/>
+<bean:define id="executionYear" name="executionPeriod" property="infoExecutionYear"/>
+<br/>
 <table>
 <tr>
 	<td><bean:message key="message.courseInformation.courseName" /> 
-		&nbsp;<bean:write name="courseInformation" property="courseName" /></td>
+		&nbsp;<bean:write name="executionCourse" property="nome" /></td>
 	<td></td>
 	<td></td>
 	<td><bean:message key="message.courseInformation.executionYear" />
-		&nbsp;<bean:write name="courseInformation" property="executionYear" /></td>
+		&nbsp;<bean:write name="executionYear" property="year" /></td>
 </tr>
 <tr>
-	<td><bean:message key="message.courseInformation.curricularYear" />
-		&nbsp;<bean:write name="courseInformation" property="curricularYear" /></td>
-	<td><bean:message key="message.courseInformation.semester" />
-		&nbsp;<bean:write name="courseInformation" property="semester" /></td>
-	<td><bean:message key="message.courseInformation.courseType" />
-		&nbsp;<bean:write name="courseInformation" property="" /></td>
-	<td><bean:message key="message.courseInformation.courseSemesterOrAnual" />
-		&nbsp;<bean:write name="courseInformation" property="" /></td>
+	<td>
+	<logic:iterate id="curricularCourse" name="siteCourseInformation" property="infoCurricularCourses">
+	  <logic:iterate id="curricularCourseScope" name="curricularCourse" property="infoScopes">
+		<bean:message key="message.courseInformation.curricularYear" />
+		&nbsp;<bean:write name="curricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year" />,
+		<bean:message key="message.courseInformation.semester" />
+		&nbsp;<bean:write name="curricularCourseScope" property="infoCurricularSemester.semester" />
+	  </logic:iterate>
+	  <bean:message key="message.courseInformation.courseType" />
+	  	<logic:equal name="curricularCourse" property="mandatory" value="true">
+	  	,<bean:message key="message.courseInformation.mandatory" />
+	  	</logic:equal>
+	  	<logic:equal name="curricularCourse" property="mandatory" value="false">
+	  	,<bean:message key="message.courseInformation.optional" />
+	  	</logic:equal>
+	  	<!-- VER -->
+	 <%--<bean:message key="message.courseInformation.courseSemesterOrAnual" />
+		&nbsp;<bean:write name="courseInformation" property="" />--%>
+	</logic:iterate>
+	</td>
+	<td></td>
 </tr>
 <tr>
-	<td><bean:message key="message.courseInformation.responsibleForTheCourse" />
-		&nbsp;<bean:write name="courseInformation" property="responsibleForTheCourse" /></td>
-	<td></td>
-	<td><bean:message key="message.courseInformation.categoryOfTheResponsibleForCourse" />
-		&nbsp; <bean:write name="courseInformation" property="categoryOfTheResponsibleForCourse" /></td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
+	<td>
+		<logic:iterate id="infoTeacher" name="siteCourseInformation" property="infoResponsibleTeachers">
+		<bean:message key="message.courseInformation.responsibleForTheCourse" />
+		&nbsp;<bean:write name="infoTeacher" property="infoPerson.nome" />,
+		<bean:message key="message.courseInformation.categoryOfTheResponsibleForCourse" />
+		&nbsp; <bean:write name="infoTeacher" property="infoCategory.name" />
+		</logic:iterate>
+	</td>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 </table>
 <br />
-<table width="100%" cellpadding="0" cellspacing="0">
-	<tr>
-		<td class="infoop" width="50px"><span class="emphasis-box">1</span></td>
-		<td class="infoop"><bean:message key="message.courseInformation.timeTable" />
-		</td>
-	</tr>
-</table>
-<br />
-<table width="100%" border=1>
-	  <td width="200px"><bean:message key="message.courseInformation.classType"/>
-	</td>
-	    <td><bean:message key="message.courseInformation.numberOfClasses"/>
-	</td>
-	    <td><bean:message key="message.courseInformation.classDuration"/>
-	</td>
-	<td><bean:message key="message.courseInformation.totalDuration"/></td>
+	<p class="infoop"><span class="emphasis-box">1</span>
+	<bean:message key="message.courseInformation.timeTable" /></p>
+<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
+    <td class="listClasses-header" width="200px"><bean:message key="message.courseInformation.classType"/></td>
+    <td class="listClasses-header"><bean:message key="message.courseInformation.numberOfClasses"/></td>
+    <td class="listClasses-header"><bean:message key="message.courseInformation.classDuration"/></td>
+	<td class="listClasses-header"><bean:message key="message.courseInformation.totalDuration"/></td>
 </tr>
+<logic:iterate id="infoLesson" name="siteCourseInformation" property="infoLessons">
+<logic:equal name="infoLesson" property="tipo.siglaTipoAula" value="T">
 <tr>
-	<td width="200px">
-	  <bean:message key="message.courseInformation.typeClassTeoricas"/>
-	</td>
-	<td>
-	<!-- VER ESTES CAMPOS PORQUE NAO SAO PARA SER REESCRITOS, É PARA IR BUSCAR OS VALORES ALGURES-->
-	  <bean:write name="typeTeoricas" property="numberOfClassTeoricas" filter="false"/>
-	</td>
-	<td>
-	  <bean:write name="typeTeoricas" property="classDurationTeoricas" filter="false"/>
-    </td>
-	<td>
-	  <bean:write name="typeTeoricas" property="totalDurationTeoricas" filter="false"/>
-    </td>
+	<td class="listClasses"><bean:message key="message.courseInformation.typeClassTeoricas"/></td>
+	<td class="listClasses"><bean:write name="executionCourse" property="theoreticalHours"/></td>
+	<td class="listClasses"><bean:write name="infoLesson" property="lessonDurationString"/></td>
+    <!-- VER -->
+	<td class="listClasses"><%--<bean:write name="infoLesson" property="totalDurationTeoricas"/>--%></td>
 </tr>
+</logic:equal>
+<logic:equal name="infoLesson" property="tipo.siglaTipoAula" value="P">
 <tr>
-	<td width="200px">
-	  <bean:message key="message.courseInformation.typeClassPraticas"/>
-	</td>
-	<td>
-	<!-- VER ESTES CAMPOS PORQUE NAO SAO PARA SER REESCRITOS, É PARA IR BUSCAR OS VALORES ALGURES-->
-	  <bean:write name="typePraticas" property="numberOfClassPraticas" filter="false"/>
-	</td>
-	<td>
-	  <bean:write name="typePraticas" property="classDurationTeoricas" filter="false"/>
-    </td>
-	<td>
-	  <bean:write name="typePraticas" property="totalDurationPraticas" filter="false"/>
-    </td>
+	<td><bean:message key="message.courseInformation.typeClassPraticas"/></td>
+	<td><bean:write name="executionCourse" property="praticalHours"/></td>
+	<td><bean:write name="infoLesson" property="lessonDurationString"/></td>
+	<td><%--<bean:write name="typePraticas" property="totalDurationPraticas"/>--%></td>
 </tr>
+</logic:equal>
+<logic:equal name="infoLesson" property="tipo.siglaTipoAula" value="TP">
 <tr>
-	<td width="200px">
-	  <bean:message key="message.courseInformation.typeClassTeoPrat"/>
-	</td>
-	<td>
-	<!-- VER ESTES CAMPOS PORQUE NAO SAO PARA SER REESCRITOS, É PARA IR BUSCAR OS VALORES ALGURES-->
-	  <bean:write name="typeTeoPrat" property="numberOfClassTeoPrat" filter="false"/>
-	</td>
-	<td>
-	  <bean:write name="typeTeoPrat" property="classDurationTeoPrat" filter="false"/>
-    </td>
-	<td>
-	  <bean:write name="typeTeoPrat" property="totalDurationTeoPrat" filter="false"/>
-    </td>
+	<td><bean:message key="message.courseInformation.typeClassTeoPrat"/></td>
+	<td><bean:write name="executionCourse" property="theoPratHours"/></td>
+	<td><bean:write name="infoLesson" property="lessonDurationString"/></td>
+	<%--<td><bean:write name="typeTeoPrat" property="totalDurationTeoPrat"/></td>--%>
 </tr>
+</logic:equal>
+<logic:equal name="infoLesson" property="tipo.siglaTipoAula" value="L">
 <tr>
-	<td width="200px">
-	  <bean:message key="message.courseInformation.typeClassLab"/>
-	</td>
-	<td>
-	<!-- VER ESTES CAMPOS PORQUE NAO SAO PARA SER REESCRITOS, É PARA IR BUSCAR OS VALORES ALGURES-->
-	  <bean:write name="typeLab" property="numberOfClassLab" filter="false"/>
-	</td>
-	<td>
-	  <bean:write name="typeLab" property="classDurationLab" filter="false"/>
-    </td>
-	<td>
-	  <bean:write name="typeLab" property="totalDurationLab" filter="false"/>
-    </td>
+	<td><bean:message key="message.courseInformation.typeClassLab"/></td>
+	<td><bean:write name="executionCourse" property="labHours"/></td>
+	<td><bean:write name="infoLesson" property="lessonDurationString"/></td>
+	<td><%--<bean:write name="typeLab" property="totalDurationLab"/>--%></td>
 </tr>
+</logic:equal>
+</logic:iterate>
 </table>
 <br />
 <table width="100%" cellpadding="0" cellspacing="0">
@@ -134,7 +113,7 @@
 <table>
 <tr>
 	<td> <bean:message key="message.courseInformation.numberOfStudents"/></td>
-	<td> <bean:write name="courseInformation" property="numberOfStudents"/></td>
+	<td> <bean:write name="siteCourseInformation" property="infoExecutionCourse.numberOfAttendingStudents"/></td>
 </tr>
 </table>
 <table border=1>
@@ -143,17 +122,14 @@
 	<td> <bean:message key="message.courseInformation.categoryOfTeacher"/></td>
 	<td> <bean:message key="message.courseInformation.typeOfClassOfTeacher"/></td>
 </tr>
-<logic:iterate id="courseInformation" name="component" property="infoCourseInformation" type="DataBeans.InfoCourseInformation">
-<!--<logic:equal name="courseInformation" property="summaryType.siglaTipoAula" value="T"> QUEREMOS A LISTA TODA-->
-<!--<bean:define id="hasT" value="whatever"/>-->
 <tr>
-	<td> <bean:write name="courseInformation" property="nameOfTeacher"/></td>
-	<td> <bean:write name="courseInformation" property="categoryOfTeacher"/></td>
-	<td> <bean:write name="courseInformation" property="typeOfClassOfTeacher"/></td>
+	<logic:iterate id="infoTeacher" name="siteCourseInformation" property="infoLecturingTeachers">
+		<td> <bean:write name="infoTeacher" property="infoPerson.nome"/></td>
+		<td> <bean:write name="infoTeacher" property="infoCategory.name"/></td>
+		<!--VER O TIPO DE AULA QUE CADA PROF DA-->
+		<%--<td> <bean:write name="infoTeacher" property="typeOfClassOfTeacher"/></td>--%>
+	</logic:iterate>
 </tr>
-<!--</logic:equal>-->
-</logic:iterate>
-<!--<logic:notPresent name="hasT">-->
 </table>
 <br />
 <table width="100%" cellpadding="0" cellspacing="0">
@@ -171,28 +147,29 @@
 </tr>
 <tr>
 	<td><bean:message key="message.courseInformation.enrolledStudents" /></td>
-	<td><bean:write name="courseInformation" property="enrolledStudents"/></td>
+	<td><bean:write name="executionCourse" property="numberOfAttendingStudents"/></td>
 </tr>
+<!-- VER-->
 <tr>
 	<td><bean:message key="message.courseInformation.evaluatedStudents" /></td>
-	<td><bean:write name="courseInformation" property="evaluatedStudents"/></td>
+	<%--<td><bean:write name="siteCourseInformation" property="evaluatedStudents"/></td>--%>
 </tr>
 <tr>
 	<td><bean:message key="message.courseInformation.approvedStudents" /></td>
-	<td><bean:write name="courseInformation" property="approvedStudents"/></td>
+	<%--<td><bean:write name="siteCourseInformation" property="approvedStudents"/></td>--%>
 </tr>
 <tr>
 	<td><bean:message key="message.courseInformation.evaluatedPerEnrolled" /></td>
 	<!-- VER ONDE SE FAZEM AS CONTAS-->
-	<td><bean:write name="courseInformation" property="evaluatedPerEnrolled"/></td>
+	<%--<td><bean:write name="siteCourseInformation" property="evaluatedPerEnrolled"/></td>--%>
 </tr>
 <tr>
 	<td><bean:message key="message.courseInformation.approvedPerEvaluated" /></td>
-	<td><bean:write name="courseInformation" property="approvedPerEvaluated"/></td>
+	<%--<td><bean:write name="siteCourseInformation" property="approvedPerEvaluated"/></td>--%>
 </tr>
 <tr>
 	<td><bean:message key="message.courseInformation.approvedPerEnrolled" /></td>
-	<td><bean:write name="courseInformation" property="approvedPerEnrolled"/></td>
+	<%--<td><bean:write name="siteCourseInformation" property="approvedPerEnrolled"/></td>--%>
 </tr>
 </table>
 <br />
@@ -205,9 +182,14 @@
 </tr>
 </table>
 <table>
+<logic:iterate id="infoCurriculum" name="siteCourseInformation" property="infoCurriculums">
 <tr>
-	<td> <bean:write name="courseInformation" property="courseObjectives"/></td>
+	<td> <bean:write name="infoCurriculum" property="generalObjectives"/></td>
 </tr>
+<tr>
+	<td> <bean:write name="infoCurriculum" property="operacionalObjectives"/></td>
+</tr>
+</logic:iterate>
 </table>
 <br />
 <table width="100%" cellpadding="0" cellspacing="0">
@@ -219,9 +201,11 @@
 </tr>
 </table>
 <table>
+<logic:iterate id="infoCurriculum" name="siteCourseInformation" property="infoCurriculums">
 <tr>
-	<td> <bean:write name="courseInformation" property="courseProgram"/></td>
+	<td> <bean:write name="infoCurriculum" property="program"/></td>
 </tr>
+</logic:iterate>
 </table>
 <br />
 <table width="100%" cellpadding="0" cellspacing="0">
@@ -235,22 +219,35 @@
 <table>
 <tr>
 	<td><bean:message key="message.courseInformation.coursePrincipalBibliographicReference" /></td>
+	<td></td>
+	<td></td>
+	<td></td>
 </tr>
-<logic:iterate id="courseInformation" name="component" property="infoCourseInformation" type="DataBeans.InfoCourseInformation">
-<tr>
-	<td> <bean:write name="courseInformation" property="principalBibliographicReference"/></td>
-</tr>
-</logic:iterate>
+	<logic:iterate id="infoBibliographicReference" name="siteCourseInformation" property="infoBibliographicReferences">
+	<logic:equal name="infoBibliographicReference" property="optional" value="false">
+	<tr>
+		<td> <bean:write name="infoBibliographicReference" property="title"/></td>
+		<td> <bean:write name="infoBibliographicReference" property="authors"/></td>
+		<td> <bean:write name="infoBibliographicReference" property="reference"/></td>
+		<td> <bean:write name="infoBibliographicReference" property="year"/></td>
+	</tr>
+	</logic:equal>
+	</logic:iterate>
 </table>
 <table>
 <tr>
 	<td><bean:message key="message.courseInformation.courseSecondaryBibliographicReference" /></td>
 </tr>
-<logic:iterate id="courseInformation" name="component" property="infoCourseInformation" type="DataBeans.InfoCourseInformation">
-<tr>
-	<td> <bean:write name="courseInformation" property="secondaryBibliographicReference"/></td>
-</tr>
-</logic:iterate>
+	<logic:iterate id="infoBibliographicReference" name="siteCourseInformation" property="infoBibliographicReferences">
+	<logic:equal name="infoBibliographicReference" property="optional" value="true">
+	<tr>
+		<td> <bean:write name="infoBibliographicReference" property="title"/></td>
+		<td> <bean:write name="infoBibliographicReference" property="authors"/></td>
+		<td> <bean:write name="infoBibliographicReference" property="reference"/></td>
+		<td> <bean:write name="infoBibliographicReference" property="year"/></td>
+	</tr>
+	</logic:equal>
+	</logic:iterate>
 </table>
 <br />
 <table width="100%" cellpadding="0" cellspacing="0">
@@ -263,7 +260,7 @@
 </table>
 <table>
 <tr>
-	<td> <bean:write name="courseInformation" property="courseAvaliationMethods"/></td>
+	<td><bean:write name="siteCourseInformation" property="infoEvaluationMethod.evaluationElements"/></td>
 </tr>
 </table>
 <br />
@@ -277,10 +274,10 @@
 </table>
 <table>
 <tr>
-	<td> <bean:write name="courseInformation" property="courseSupportLessons"/></td>
+	<%--<td> <bean:write name="siteCourseInformation" property="courseSupportLessons"/></td>--%>
 </tr>
 </table>
-<br />
+<br/>
 <table width="100%" cellpadding="0" cellspacing="0">
 <tr>
 	<td class="infoop" width="50px"><span class="emphasis-box">9</span></td>
@@ -289,30 +286,17 @@
 	</td>
 </tr>
 </table>
-<table width="100%" cellpadding="0" cellspacing="0"  border=1>
+<table width="100%" cellpadding="0" cellspacing="0">
 <tr>
-	<td><html:textarea name="bodyComponent" property="courseReport"/></td> 
+	<td><bean:write name="siteCourseInformation" property="infoCourseReport.report"/></td> 
 </tr>
 </table>
 <h3>
 <table>
-<html:hidden property="method" value="editCourseInformation"/>
-<html:hidden property="page" value="1"/>
-<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
-
-<tr align="center">	
-	<td>
-	<html:submit styleClass="inputbutton" property="confirm">
-		<bean:message key="button.save"/>
-	</html:submit>
-	</td>
-	<td>
-		<html:reset styleClass="inputbutton">
-		<bean:message key="label.clear"/>
-	</html:reset>
-	</td>
-</tr>
+<html:hidden property="courseReportId" value="siteCourseInformation.infoCourseReport.idInternal"/> 
+<html:hidden property="executionCourseId" value="executionCourse.idInternal"/> 
+<html:hidden property="executionPeriodId" value="executionPeriod.idInternal"/> 
+<html:hidden property="executionYearId" value="executionYear.idInternal"/>
 </table>
 </h3>
-</html:form>
 </logic:present>

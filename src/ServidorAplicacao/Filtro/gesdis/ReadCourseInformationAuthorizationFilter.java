@@ -6,8 +6,6 @@ package ServidorAplicacao.Filtro.gesdis;
 
 import java.util.List;
 
-import DataBeans.InfoExecutionCourse;
-import DataBeans.gesdis.InfoCourseReport;
 import Dominio.DisciplinaExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IResponsibleFor;
@@ -32,11 +30,11 @@ import Util.RoleType;
  * @author Sergio Montelobo
  *  
  */
-public class EditCourseInformationAuthorizationFilter extends AuthorizationByRoleFilter
+public class ReadCourseInformationAuthorizationFilter extends AuthorizationByRoleFilter
 {
 
-    private static EditCourseInformationAuthorizationFilter instance =
-        new EditCourseInformationAuthorizationFilter();
+    private static ReadCourseInformationAuthorizationFilter instance =
+        new ReadCourseInformationAuthorizationFilter();
 
     /**
 	 * The singleton access method of this class.
@@ -48,7 +46,7 @@ public class EditCourseInformationAuthorizationFilter extends AuthorizationByRol
         return instance;
     }
 
-    private EditCourseInformationAuthorizationFilter()
+    private ReadCourseInformationAuthorizationFilter()
     {
     }
 
@@ -72,7 +70,7 @@ public class EditCourseInformationAuthorizationFilter extends AuthorizationByRol
                 && !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())))
                 || (id == null)
                 || (id.getRoles() == null)
-                || (!isResponsibleFor(id, (InfoCourseReport) arguments[1])))
+                || (!isResponsibleFor(id, (Integer) arguments[0])))
             {
                 throw new NotAuthorizedException();
             }
@@ -82,7 +80,7 @@ public class EditCourseInformationAuthorizationFilter extends AuthorizationByRol
         }
     }
 
-    private boolean isResponsibleFor(IUserView id, InfoCourseReport infoCourseReport)
+    private boolean isResponsibleFor(IUserView id, Integer executioncourseId)
     {
         try
         {
@@ -91,12 +89,11 @@ public class EditCourseInformationAuthorizationFilter extends AuthorizationByRol
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
             ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
 
-            InfoExecutionCourse infoExecutionCourse = infoCourseReport.getInfoExecutionCourse();
             IDisciplinaExecucaoPersistente persistentExecutionCourse =
                 sp.getIDisciplinaExecucaoPersistente();
             IDisciplinaExecucao executionCourse =
                 (IDisciplinaExecucao) persistentExecutionCourse.readByOId(
-                    new DisciplinaExecucao(infoExecutionCourse.getIdInternal()),
+                    new DisciplinaExecucao(executioncourseId),
                     false);
 
             IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
@@ -105,7 +102,6 @@ public class EditCourseInformationAuthorizationFilter extends AuthorizationByRol
 
             if (!responsiblesFor.contains(responsibleFor))
                 return false;
-            
             return true;
         } catch (ExcepcaoPersistencia e)
         {

@@ -4,6 +4,8 @@
  */
 package Dominio.teacher;
 
+import java.util.Date;
+
 import Dominio.DomainObject;
 import Dominio.ITeacher;
 
@@ -19,6 +21,7 @@ public abstract class Career extends DomainObject implements ICareer {
 	private Integer endYear;
 	private Integer keyTeacher;
 	private ITeacher teacher;
+    private Date lastModificationDate;
 
 	public Career() {
 		this.ojbConcreteClass = this.getClass().getName();
@@ -99,5 +102,21 @@ public abstract class Career extends DomainObject implements ICareer {
 	public void setTeacher(ITeacher teacher) {
 		this.teacher = teacher;
 	}
+
+    /**
+     * @return Returns the lastModificationDate.
+     */
+    public Date getLastModificationDate()
+    {
+        return lastModificationDate;
+    }
+
+    /**
+     * @param lastModificationDate The lastModificationDate to set.
+     */
+    public void setLastModificationDate(Date lastModificationDate)
+    {
+        this.lastModificationDate = lastModificationDate;
+    }
 
 }

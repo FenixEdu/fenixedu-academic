@@ -13,10 +13,6 @@
 	  <put name="institutionName" value="Instituto Superior Técnico" />
 	  <put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
 	</definition>
-	<definition name="df.gesdis.course-information" extends="definition.teacher.two-column">
-		<put name="body-context" value=""></put>
-<!--		/gesdis/courseInformationContext.jsp-->
-	</definition>
 	<definition name="df.teacher.site.administration" extends="definition.teacher.two-column">
 	    <put name="navLocal" value="/teacher/navbar.jsp"/>	
 	</definition>

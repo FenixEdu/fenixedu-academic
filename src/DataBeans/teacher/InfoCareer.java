@@ -4,6 +4,8 @@
  */
 package DataBeans.teacher;
 
+import java.util.Date;
+
 import DataBeans.ISiteComponent;
 import DataBeans.InfoObject;
 import DataBeans.InfoTeacher;
@@ -20,6 +22,7 @@ public abstract class InfoCareer extends InfoObject implements ISiteComponent
     private Integer endYear;
     private CareerType careerType;
     private InfoTeacher infoTeacher;
+    private Date lastModificationDate;
 
     /**
 	 *  
@@ -93,6 +96,22 @@ public abstract class InfoCareer extends InfoObject implements ISiteComponent
     public void setCareerType(CareerType careerType)
     {
         this.careerType = careerType;
+    }
+
+    /**
+     * @return Returns the lastModificationDate.
+     */
+    public Date getLastModificationDate()
+    {
+        return lastModificationDate;
+    }
+
+    /**
+     * @param lastModificationDate The lastModificationDate to set.
+     */
+    public void setLastModificationDate(Date lastModificationDate)
+    {
+        this.lastModificationDate = lastModificationDate;
     }
 
 }
