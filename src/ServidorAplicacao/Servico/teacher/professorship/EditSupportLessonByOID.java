@@ -61,7 +61,7 @@ public class EditSupportLessonByOID extends EditDomainObjectService
 	 * 
 	 * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
 	 */
-	protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia
+	protected IPersistentObject getIPersistentObject(ISuportePersistente sp)
 	{
 		return sp.getIPersistentSupportLesson();
 	}

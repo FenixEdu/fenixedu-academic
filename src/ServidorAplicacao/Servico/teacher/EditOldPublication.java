@@ -10,7 +10,6 @@ import DataBeans.util.Cloner;
 import Dominio.IDomainObject;
 import Dominio.teacher.IOldPublication;
 import ServidorAplicacao.Servico.framework.EditDomainObjectService;
-import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.teacher.IPersistentOldPublication;
@@ -47,7 +46,7 @@ public class EditOldPublication extends EditDomainObjectService
         return "EditOldPublication";
     }
 
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp)
     {
         IPersistentOldPublication persistentOldPublication = sp.getIPersistentOldPublication();
         return persistentOldPublication;

@@ -47,7 +47,7 @@ public class ViewCandidateCurriculum extends FenixAction
     {
         HttpSession session = request.getSession();
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-        String username = (String) request.getParameter("username");
+        String username = request.getParameter("username");
         IUserView studentUserView = new UserView(username, new LinkedList());
         List cps = null;
         List enrollments = null;

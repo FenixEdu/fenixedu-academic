@@ -19,7 +19,6 @@ import Dominio.IProfessorship;
 import Dominio.ITeacher;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentProfessorship;

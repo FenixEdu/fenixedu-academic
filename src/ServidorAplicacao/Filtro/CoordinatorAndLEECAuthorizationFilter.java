@@ -10,7 +10,6 @@ import Dominio.ICoordinator;
 import Dominio.ITeacher;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorPersistente.IPersistentCoordinator;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;

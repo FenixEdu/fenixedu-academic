@@ -5,13 +5,9 @@
  */
 package ServidorAplicacao.Filtro.Seminaries;
 
-import java.util.Collection;
-import java.util.Iterator;
-
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
-import DataBeans.InfoRole;
 import Dominio.IStudent;
 import Dominio.Seminaries.Candidacy;
 import Dominio.Seminaries.ICandidacy;
@@ -58,12 +54,12 @@ public class CandidacyAccessFilter extends Filtro
     boolean checkCoordinatorRole(IUserView id, Object[] arguments) throws Exception
     {
         boolean result = true;
-        Collection roles = id.getRoles();
-        Iterator iter = roles.iterator();
-        while (iter.hasNext())
-        {
-            InfoRole role = (InfoRole) iter.next();
-        }
+//        Collection roles = id.getRoles();
+//        Iterator iter = roles.iterator();
+//        while (iter.hasNext())
+//        {
+//            InfoRole role = (InfoRole) iter.next();
+//        }
         if (((id != null && id.getRoles() != null && !AuthorizationUtils.containsRole(
                         id.getRoles(), getRoleType())))
                         || (id == null) || (id.getRoles() == null))

@@ -16,7 +16,6 @@ import Dominio.ITeacher;
 import Dominio.MasterDegreeCandidate;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.RoleType;

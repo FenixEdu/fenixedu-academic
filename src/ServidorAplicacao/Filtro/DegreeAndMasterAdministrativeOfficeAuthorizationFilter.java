@@ -6,7 +6,6 @@ import DataBeans.InfoStudent;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
-import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
 import Util.RoleType;
 import Util.TipoCurso;

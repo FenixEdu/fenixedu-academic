@@ -54,7 +54,7 @@ public class CreditsInitializer
             sp.iniciarTransaccao();
 
             IExecutionPeriod executionPeriod =
-                (IExecutionPeriod) executionPeriodDAO.readActualExecutionPeriod();
+                executionPeriodDAO.readActualExecutionPeriod();
             System.out.println("Calculate support lessons...");
             calculateSupportLessonsCredits(executionPeriod, supportLessonDAO, creditsDAO);
 
