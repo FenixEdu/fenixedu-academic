@@ -46,17 +46,16 @@ public class CurriculumDispatchAction extends DispatchAction
         
         String username = null;
 
-        if (studentNumber == null)
-        {
-            username = userView.getUtilizador();
-        }
-        else
+        if (studentNumber != null) // para um aluno em particular
         {
             try
             {
                 Object args[] = { Integer.valueOf(studentNumber) };
                 InfoStudent infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService(
                         userView, "ReadStudentByNumberAndAllDegreeTypes", args);
+                
+                if (infoStudent == null)
+                    return mapping.findForward("NotAuthorized");
                 
                 infoPerson = infoStudent.getInfoPerson();
                 
@@ -67,8 +66,19 @@ public class CurriculumDispatchAction extends DispatchAction
                 throw new FenixActionException(e);
             }
         }
+        else if (studentNumber == null) // deixa de importar se o ID do plano curricular for especificado
+        {
+            username = userView.getUtilizador();
+        }
 
-        executeService(username,request);
+        try
+        {
+            executeService(username,request);
+        }
+        catch (Exception e)
+        {
+            return mapping.findForward("NotAuthorized");
+        }
 
         request.setAttribute("studentPerson", infoPerson);
 
@@ -83,10 +93,6 @@ public class CurriculumDispatchAction extends DispatchAction
 		HttpServletResponse response)
 		throws Exception
 	{
-/*	    IUserView userView = (IUserView)request.getSession().getAttribute(SessionConstants.U_VIEW);
-		executeService(userView.getUtilizador(),request);
-
-		return mapping.findForward("ShowStudentCurriculum");*/
 	    return getStudentCP(mapping,form,request,response);
 	}
 	
@@ -132,6 +138,10 @@ public class CurriculumDispatchAction extends DispatchAction
 		{
 		    throw new FenixActionException(e);
 		}
+		
+		// qualquer numero de aluno serve para identificar Person
+		String studentNumberTmp = String.valueOf(((InfoStudentCurricularPlan)allInfoSCPs.getInfoStudentCurricularPlans().get(0)).getInfoStudent().getNumber());
+		request.setAttribute("studentNumber",studentNumberTmp);
 
 		request.setAttribute("studentCPs", infoSCPs);
 		
@@ -181,8 +191,8 @@ public class CurriculumDispatchAction extends DispatchAction
 		Iterator it = sCPs.iterator();
 		
 		// adiciona "todos" e "o mais recente"
-		result.add(new LabelValueBean(StudentCurricularPlanIDDomainType.ALL_STRING, StudentCurricularPlanIDDomainType.ALL.toString()));
 		result.add(new LabelValueBean(StudentCurricularPlanIDDomainType.NEWEST_STRING, StudentCurricularPlanIDDomainType.NEWEST.toString()));
+		result.add(new LabelValueBean(StudentCurricularPlanIDDomainType.ALL_STRING, StudentCurricularPlanIDDomainType.ALL.toString()));
 		
 		while(it.hasNext())
 		{

@@ -152,6 +152,7 @@
         <description/>
         <isTransactional>true</isTransactional>
     </filter>
+	
     <filter>
         <name>StudentListByCurricularCourseAuthorization</name>
         <implementationClass> 
@@ -721,4 +722,26 @@
     	<description/>
     	<isTransactional>true</isTransactional>
     </filter>
+	
+	<filter>
+    	<name>StudentCurricularPlanOwnerAuthorization</name>
+    	<implementationClass>ServidorAplicacao.Filtro.student.StudentCurricularPlanOwnerAuthorizationFilter</implementationClass>
+    	<description/>
+    	<isTransactional>true</isTransactional>
+    </filter>
+	
+	<filter>
+    	<name>StudentTutorAuthorization</name>
+    	<implementationClass>ServidorAplicacao.Filtro.student.StudentTutorAuthorizationFilter</implementationClass>
+    	<description/>
+    	<isTransactional>true</isTransactional>
+    </filter>
+	
+	<filter>
+    	<name>StudentDegreeCoordinatorAuthorization</name>
+    	<implementationClass>ServidorAplicacao.Filtro.student.StudentDegreeCoordinatorAuthorizationFilter</implementationClass>
+    	<description/>
+    	<isTransactional>true</isTransactional>
+    </filter>
+
 </filterDefinitions>

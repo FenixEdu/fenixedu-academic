@@ -18,6 +18,7 @@ import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear;
 import DataBeans.InfoStudentCurricularPlanWithInfoStudentAndDegreeAndBranch;
+import DataBeans.InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree;
 import DataBeans.util.InfoStudentCurricularPlansWithSelectedEnrollments;
 import Dominio.IEnrollment;
 import Dominio.IPessoa;
@@ -161,7 +162,6 @@ public class ReadStudentCurricularPlansByPersonAndCriteria implements IService
             List infoSelectedEnrollments = new ArrayList();
             Iterator selectedEnrollmentsIterator = selectedEnrollments.iterator();
             
-            // outras classes foram mexidas para isto estar ok
             GetEnrolmentGrade getEnrolmentGrade = new GetEnrolmentGrade();
             
             while (selectedEnrollmentsIterator.hasNext())
@@ -175,7 +175,7 @@ public class ReadStudentCurricularPlansByPersonAndCriteria implements IService
                 infoSelectedEnrollments.add(infoEnrollment);
             }
 
-            currPlanEnrol.addInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudentAndDegreeAndBranch.newInfoFromDomain(studentCurricularPlan),
+            currPlanEnrol.addInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree.newInfoFromDomain(studentCurricularPlan),
                     										infoSelectedEnrollments);    
         }
         

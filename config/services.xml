@@ -7591,9 +7591,9 @@
         <implementationClass>ServidorAplicacao.Servico.commons.student.ReadStudentCurricularPlansByPersonAndCriteria</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
-		<filterChains/>
-<!--            <chain name="StudentCurriculumAccess"/>
-        </filterChains>-->
+		<filterChains>
+			<chain name="ReadStudentCurricularPlansAccess"/>
+        </filterChains>
     </service>
 
 </serviceDefinitions>

@@ -30,7 +30,9 @@ public class EnrollmentPredicates
 				if (object instanceof IEnrollment)
 				{
 					IEnrollment en = (IEnrollment)object;
-					if (en.getEnrollmentState().equals(EnrollmentState.APROVED))
+					if (en.getEnrollmentState().equals(EnrollmentState.APROVED) ||
+					    en.getEnrollmentState().equals(EnrollmentState.ENROLLED) ||
+					    en.getEnrollmentState().equals(EnrollmentState.TEMPORARILY_ENROLED))
 						return true;
 				}
 				

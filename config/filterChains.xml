@@ -414,7 +414,7 @@
         <invocationTiming>1</invocationTiming>
         <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
     </filterChain>
-    <filterChain>
+<filterChain>
         <name>PublicationAuthorAuthorization</name>
         <expression>PublicationAuthorAuthorizationFilter</expression>
         <description/>
@@ -743,6 +743,14 @@
 	<filterChain>
 		<name>ReadCurriculumHistoricAuthorization</name>
 		<expression>TeacherAuthorization || TimeTableManagerAuthorization || (DepartmentCreditsManagerAuthorization &amp;&amp; DepartmentMemberAuthorization &amp;&amp; EmployeeAuthorization)</expression>
+		<description />
+		<invocationTiming>1</invocationTiming>
+		<filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
+	</filterChain>
+
+	<filterChain>
+		<name>ReadStudentCurricularPlansAccess</name>
+		<expression>StudentCurricularPlanOwnerAuthorization || StudentTutorAuthorization || StudentDegreeCoordinatorAuthorization || DegreeAdministrativeOfficeAuthorization || DegreeAdministrativeOfficeSuperUserAuthorization</expression>
 		<description />
 		<invocationTiming>1</invocationTiming>
 		<filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>

@@ -23,8 +23,8 @@ public class EnrollmentStateSelectionType extends FenixUtil {
     public static final int APPROVED_TYPE = 2;
     public static final int NONE_TYPE = 3;
  
-    public static final String ALL_STRING = "Todas as disciplinas";
-    public static final String APPROVED_STRING = "Disciplinas com aprovação";
+    public static final String ALL_STRING = "Todas";
+    public static final String APPROVED_STRING = "Aprovado / Inscrito";
 	public static final String NONE_STRING = "Nenhuma disciplina";
 	
 	public static final EnrollmentStateSelectionType ALL =  new EnrollmentStateSelectionType(EnrollmentStateSelectionType.ALL_TYPE);

@@ -751,7 +751,7 @@
       </form-bean>
 	  
 	  <!-- VIEW STUDENT CURRICULUM FORMS -->
-		<form-bean name="studentCurricularPlanAndEnrollmentsSelectionForm"
+<!--		<form-bean name="studentCurricularPlanAndEnrollmentsSelectionForm"
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
         	<form-property name="studentCPID" type="java.lang.String" />
@@ -759,7 +759,7 @@
 			<form-property name="studentNumber" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>	
-	  
+	-->  
    </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -792,7 +792,6 @@
       <action path="/home" forward="/switchAction.do?prefix=&amp;page=/mainPortalPage.jsp"/>
       <action path="/switchAction" type="org.apache.struts.actions.SwitchAction" />
       <action path="/index" forward="/index.jsp"/>
-      <action path="/viewCurriculum" forward="/studentCurriculum.do" />
 
       	<!-- ****************** Enrollment Without Rules **************************** -->
 		<action path="/courseEnrolmentWithoutRulesManagerDA"
@@ -926,10 +925,9 @@
 	  
         <!-- List Student Curriculum -->
         <action path="/studentCurriculum"
-				name="studentCurricularPlanAndEnrollmentsSelectionForm"
 		      parameter="method"
 		      scope="request"
-              type="ServidorApresentacao.Action.commons.student.CurriculumDispatchAction">
+              type="ServidorApresentacao.Action.commons.student.CurriculumDispatchActionForMasterDegreeAdministrativeOffice">
 	         <forward name="ShowStudentCurriculum" path="/student/displayStudentCurriculum.jsp"/>
  			 <forward name="NotAuthorized" path="/student/notAuthorized.jsp" />
 	  </action>

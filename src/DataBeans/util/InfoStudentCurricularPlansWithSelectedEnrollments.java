@@ -13,14 +13,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
+
 import DataBeans.DataTranferObject;
-import DataBeans.InfoBranch;
-import DataBeans.InfoCurricularCourse;
-import DataBeans.InfoCurricularCourseScope;
-import DataBeans.InfoCurricularSemester;
-import DataBeans.InfoCurricularYear;
 import DataBeans.InfoEnrolment;
-import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoStudentCurricularPlan;
 
 /**
@@ -49,13 +46,34 @@ public class InfoStudentCurricularPlansWithSelectedEnrollments extends
     
     public List getInfoStudentCurricularPlans()
     {
-        // cuidado com as referencias... read-only!!!1111
-        return new ArrayList(infoStudentCurricularPlans.keySet());
+        
+        List studentCurricularPlans = new ArrayList(infoStudentCurricularPlans.keySet());
+        
+        
+        BeanComparator startDate = new BeanComparator("startDate");
+        ComparatorChain chainComparator = new ComparatorChain();
+        chainComparator.addComparator(startDate);
+        
+        Collections.sort(studentCurricularPlans, chainComparator);
+
+
+        return studentCurricularPlans;
     }
         
     public List getInfoEnrollmentsForStudentCP(InfoStudentCurricularPlan infoSCP)
     {
-        return (List)infoStudentCurricularPlans.get(infoSCP);        
+        List enrollments = (List)infoStudentCurricularPlans.get(infoSCP);
+        
+        BeanComparator executionYear = new BeanComparator("infoExecutionPeriod.infoExecutionYear.year");
+        BeanComparator semester = new BeanComparator("infoExecutionPeriod.semester");
+        BeanComparator courseName = new BeanComparator("infoCurricularCourse.name");
+        ComparatorChain chainComparator = new ComparatorChain();
+        chainComparator.addComparator(executionYear);
+        chainComparator.addComparator(semester);
+        chainComparator.addComparator(courseName);
+
+        Collections.sort(enrollments, chainComparator);
+        return enrollments;        
     }
     
     public InfoStudentCurricularPlan getInfoStudentCurricularPlanById(String cpId)
@@ -98,25 +116,30 @@ public class InfoStudentCurricularPlansWithSelectedEnrollments extends
         if (scp == null)
             return new ArrayList(); // seria melhor Exception?
         
+        
+        
+        
         return getInfoEnrollmentsForStudentCP(scp);
     }
     
     
-    public List getInfoEnrollmentsForStudentCPByIdAndCurricularYearAndSemester (String cpId, Integer cYear, Integer semester)
+    public List getInfoEnrollmentsForStudentCPByIdAndExecutionYearAndSemester (Object[] args)
     {
+        String cpId = (String)args[0];
+        String cYear = (String)args[1];
+        String semester = (String)args[2];
+                
         List enrollmentsResult = new ArrayList();
         List enrollments = getInfoEnrollmentsForStudentCPById(cpId);
-        InfoStudentCurricularPlan infoSCP = getInfoStudentCurricularPlanById(cpId);
         
         Iterator it = enrollments.iterator();
         while(it.hasNext())
         {
             InfoEnrolment enrol = (InfoEnrolment)it.next();
-            InfoBranch branch = infoSCP.getInfoBranch();
-            Integer actualSemester = enrol.getInfoExecutionPeriod().getSemester();
-            Integer actualCYear = enrol.getInfoCurricularCourse().getInfoCurricularCourseScope(branch, actualSemester).getInfoCurricularSemester().getInfoCurricularYear().getYear();
+            String actualSemester = enrol.getInfoExecutionPeriod().getSemester() +"";
+            String actualYear = enrol.getInfoExecutionPeriod().getInfoExecutionYear().getYear(); 
             
-            if (actualCYear.equals(cYear) && actualSemester.equals(semester))
+            if (actualYear.equals(cYear) && actualSemester.equals(semester))
             {
                 enrollmentsResult.add(enrol);
             }
@@ -127,35 +150,23 @@ public class InfoStudentCurricularPlansWithSelectedEnrollments extends
     }
     
     
-    public List getCurricularYearsByStudentCPId(String cpId)
+    public List getExecutionYearsByStudentCPId(String cpId)
     {
         
-        List curricularYears = new ArrayList();
+        List executionYears = new ArrayList();
         List enrollments = getInfoEnrollmentsForStudentCPById(cpId);
-        InfoStudentCurricularPlan infoSCP = getInfoStudentCurricularPlanById(cpId);
         
         Iterator it = enrollments.iterator();
         while(it.hasNext())
         {
             InfoEnrolment enrol = (InfoEnrolment)it.next();
-            InfoBranch branch = infoSCP.getInfoBranch(); // SARILHO
-            InfoExecutionPeriod infoExecutionPeriod = enrol.getInfoExecutionPeriod(); 
-            Integer actualSemester = infoExecutionPeriod.getSemester();
-            InfoCurricularCourse infoCurricularCourse = enrol.getInfoCurricularCourse();
-            InfoCurricularCourseScope infoCurricularCourseScope = infoCurricularCourse.getInfoCurricularCourseScope(branch, actualSemester);
-          /*  //InfoCurricularSemester infoCurricularSemester = infoCurricularCourseScope.getInfoCurricularSemester();
-            //InfoCurricularYear infoCurricularYear = infoCurricularSemester.getInfoCurricularYear();
-            //Integer actualCYear = infoCurricularYear.getYear();
-            
-            if (!curricularYears.contains(actualCYear))
-            {
-                curricularYears.add(actualCYear);
-            }*/
+            String actualYear = enrol.getInfoExecutionPeriod().getInfoExecutionYear().getYear();
+            executionYears.add(actualYear);
         }
         
-        Collections.sort(curricularYears);
+        Collections.sort(executionYears);
         
-        return curricularYears;        
+        return executionYears;        
     }
     
     

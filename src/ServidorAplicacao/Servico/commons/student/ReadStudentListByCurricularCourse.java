@@ -28,7 +28,6 @@ import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import framework.factory.ServiceManagerServiceFactory;
 
 public class ReadStudentListByCurricularCourse implements IService {
 
@@ -94,10 +93,6 @@ public class ReadStudentListByCurricularCourse implements IService {
                             .getNumber().intValue())) {
                 numberAux = enrolment.getStudentCurricularPlan().getStudent().getNumber();
 
-/*                Object args[] = { enrolment };
-                InfoEnrolmentEvaluation infoEnrolmentEvaluation = (InfoEnrolmentEvaluation) ServiceManagerServiceFactory
-                        .executeService(userView, "GetEnrolmentGrade", args);
-*/
                 InfoEnrolmentEvaluation infoEnrolmentEvaluation = (new GetEnrolmentGrade()).run(enrolment);
                 
                 InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
