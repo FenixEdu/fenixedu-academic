@@ -64,7 +64,7 @@ public class ReadMasterDegreesServiceTest extends TestCaseServicos {
         
         assertNotNull(masterDegrees);
         assertTrue(!masterDegrees.isEmpty());
-        assertEquals(masterDegrees.size(), 1);
+        assertEquals(3,masterDegrees.size());
 
    }
    

@@ -2,6 +2,9 @@ package ServidorAplicacao.Servicos.publico;
 
 import java.util.List;
 
+import org.apache.ojb.broker.PersistenceBroker;
+import org.apache.ojb.broker.PersistenceBrokerFactory;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoExecutionCourse;
@@ -69,6 +72,8 @@ public class ReadCurricularCourseListOfExecutionCourseTest
 		this.prepareTestCase(true);
 		argsReadCurricularCourseListOfExecutionCourse[0] =
 			this.infoExecutionCourse;
+			
+		System.out.println(infoExecutionCourse);
 		try {
 			result =
 				_gestor.executar(
@@ -86,7 +91,6 @@ public class ReadCurricularCourseListOfExecutionCourseTest
 		
 		// Empty database - no curricularCourses of selected executionCourse
 		this.prepareTestCase(false);
-
 		try {
 			result =
 				_gestor.executar(
@@ -111,6 +115,7 @@ public class ReadCurricularCourseListOfExecutionCourseTest
 			ICursoPersistente cursoPersistente = sp.getICursoPersistente();
 			ICurso degree = cursoPersistente.readBySigla("LEIC");
 			assertNotNull(degree);
+			
 			IPersistentDegreeCurricularPlan planoCurricularCursoPersistente =
 				sp.getIPersistentDegreeCurricularPlan();
 			IDegreeCurricularPlan degreeCurricularPlan =
@@ -150,10 +155,12 @@ public class ReadCurricularCourseListOfExecutionCourseTest
 			assertNotNull(executionCourse);
 			
 			if (!hasCurricularCourses) {
+				PersistenceBroker pb = PersistenceBrokerFactory.defaultPersistenceBroker();
 				sp.getIPersistentCurricularCourse().deleteAll();
+				pb.removeFromCache(executionCourse);
 				//executionCourse.setAssociatedCurricularCourses(null);
 			}
-
+			
 			this.infoExecutionCourse =
 				Cloner.copyIExecutionCourse2InfoExecutionCourse(
 					executionCourse);
