@@ -35,7 +35,7 @@ public class DeletePublicationInTeacherList implements IService {
 		CollectionUtils.filter(teacher.getTeacherPublications(), new Predicate() {
 				public boolean evaluate(Object arg0) {
 					IPublication publication = (IPublication) arg0;
-					return publication.getIdInternal().equals(publicationId);
+					return !publication.getIdInternal().equals(publicationId);
 				}});
 	}
 
