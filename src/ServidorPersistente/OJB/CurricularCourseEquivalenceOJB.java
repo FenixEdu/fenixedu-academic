@@ -52,7 +52,10 @@ public class CurricularCourseEquivalenceOJB extends ObjectFenixOJB implements
         Criteria crit = new Criteria();
         crit.addEqualTo("equivalentCurricularCourse.idInternal", equivalentCurricularCourse
                 .getIdInternal());
-        crit.addEqualTo("oldCurricularCourse.idInternal", oldCurricularCourse.getIdInternal());
+        crit.addEqualTo("oldCurricularCourse.idInternal", oldCurricularCourse
+                .getIdInternal());
+        crit.addEqualTo("degreeCurricularPlan.idInternal", 
+                equivalentCurricularCourse.getDegreeCurricularPlan().getIdInternal());
         return (ICurricularCourseEquivalence) queryObject(CurricularCourseEquivalence.class, crit);
     }
 }

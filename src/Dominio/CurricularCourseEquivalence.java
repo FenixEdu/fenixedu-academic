@@ -70,21 +70,8 @@ public class CurricularCourseEquivalence extends DomainObject implements ICurric
         this.oldCurricularCourseKey = oldCurricularCourseKey;
     }
     
-    public boolean equals(Object obj) {
-        boolean resultado = false;
+    
 
-        if (obj instanceof ICurricularCourseEquivalence) {
-            ICurricularCourseEquivalence cce = (ICurricularCourseEquivalence) obj;
-            resultado = (this.getOldCurricularCourse().equals(cce.getOldCurricularCourse()) && this
-                    .getEquivalentCurricularCourse().equals(
-                            cce.getEquivalentCurricularCourse())
-                                    && this.getDegreeCurricularPlan().equals(cce.getDegreeCurricularPlan()));
-        }
-        return resultado;
-    }
-
-    public String toString() {
-        return super.toString();
-    }
+   
 
 }
