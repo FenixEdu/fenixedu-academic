@@ -1,8 +1,11 @@
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.student.studentCurricularPlan;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import DataBeans.util.Cloner;
+import Dominio.IStudent;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -32,27 +35,20 @@ public class ReadStudentsByNameIDnumberIDtypeAndStudentNumber implements IServic
 	}
 
 	public List run(String studentName, String idNumber, TipoDocumentoIdentificacao idType, Integer studentNumber) throws FenixServiceException {
-		List result = null;
+		List result = new ArrayList();
 		
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentStudent persistentStudent = sp.getIPersistentStudent();
 			
-//			IPessoa personCriteria = new Pessoa();
-//			personCriteria.setNumeroDocumentoIdentificacao(idNumber);
-//			personCriteria.setTipoDocumentoIdentificacao(idType);
-//			personCriteria.setNome(studentName);
-//			
-//			IStudent studentCriteria = new Student();
-//			studentCriteria.setNumber(studentNumber);
-//			studentCriteria.setPerson(personCriteria);
-//
-//			result = persistentStudent.readByCriteria(studentCriteria);
-			
-			result = persistentStudent.readMasterDegreeStudentsByNameIDnumberIDtypeAndStudentNumber(studentName, idNumber, idType, studentNumber);
+			List tempResult = persistentStudent.readMasterDegreeStudentsByNameIDnumberIDtypeAndStudentNumber(studentName, idNumber, idType, studentNumber);
 
-			if(result == null) {
-				result = new ArrayList();
+			if(tempResult != null) {
+				Iterator iterator = tempResult.iterator();
+				while(iterator.hasNext()) {
+					IStudent student = (IStudent) iterator.next();
+					result.add(Cloner.copyIStudent2InfoStudent(student));
+				}
 			}
 		} catch (ExcepcaoPersistencia ex) {
 			FenixServiceException newEx = new FenixServiceException("Persistence layer error");

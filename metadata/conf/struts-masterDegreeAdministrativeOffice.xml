@@ -32,6 +32,15 @@
 			<form-property name="studentOID" type="java.lang.Integer"/>
 		</form-bean>
 
+		<form-bean name="seeStudentCurricularPlansForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String"/>
+			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="studentName" type="java.lang.String"/>
+			<form-property name="idNumber" type="java.lang.String"/>
+			<form-property name="idType" type="java.lang.String"/>
+			<form-property name="studentNumber" type="java.lang.String"/>
+		</form-bean>
+
       <!-- Dynamic-FormBean para Selecionar Documento -->
 <!--      <form-bean name="posicaoFormBean"
                  type="org.apache.struts.validator.DynaValidatorForm"
@@ -1449,18 +1458,17 @@
 	
 
 
-<!--
-		<action	name="curricularCourseEnrolmentWithoutRulesForm"
-				type="ServidorApresentacao.Action.degreeAdministrativeOffice.CurricularCourseEnrolmentWithoutRulesManagerDispatchAction"
+		<action	name="seeStudentCurricularPlansForm"
+				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.studentCurricularPlan.SeeStudentCurricularPlansDispatchAction"
 				path="/seeStudentCurricularPlans"
 				parameter="method"
 				scope="request"
 				validate="true">
-			<forward name="showAvailableCurricularCourses" path="df.page.showAvailableCurricularCoursesWithoutRules"/>
-			<forward name="verifyEnrolment" path="df.page.verifyEnrolmentWithoutRules"/>
-			<forward name="acceptEnrolment" path="df.page.acceptEnrolmentWithoutRules"/>
+			<forward name="start" path="df.page.searchStudents"/>
+			<forward name="viewStudents" path="df.page.viewStudents"/>
+
 		</action>
--->
+
     </action-mappings>
     
 	<!-- ========== Controller Configuration ================================ -->

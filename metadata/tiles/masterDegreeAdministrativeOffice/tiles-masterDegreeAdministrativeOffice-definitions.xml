@@ -15,7 +15,7 @@
 <!-- **************************************************************************************************************************** -->
 
 	<definition name="definition.masterDegreeAdministrativeOffice.studentOperations" extends="definition.masterDegreeAdministrativeOffice.masterPage">
-		<put name="navLocal" value="/posGraduacao/studentMenu.jsp"/>
+		<put name="navLocal" value="/posGraduacao/student/studentMenu.jsp"/>
 	</definition>
 
 	<definition name="definition.masterDegreeAdministrativeOffice.studentOperations.studentCurricularPlan" extends="definition.masterDegreeAdministrativeOffice.studentOperations">

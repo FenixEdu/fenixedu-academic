@@ -2,9 +2,13 @@
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
 <!-- Tiles definitions -->
 <tiles-definitions>
-<!--
-	<definition name="df.page.main" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/commons/welcomeScreen.jsp"/>
+
+	<definition name="df.page.searchStudents" extends="definition.masterDegreeAdministrativeOffice.studentOperations.studentCurricularPlan">
+		<put name="body" value="/posGraduacao/student/studentCurricularPlan/searchStudents.jsp"/>
 	</definition>
--->
+
+	<definition name="df.page.viewStudents" extends="definition.masterDegreeAdministrativeOffice.studentOperations.studentCurricularPlan">
+		<put name="body" value="/posGraduacao/student/studentCurricularPlan/viewStudents.jsp"/>
+	</definition>
+
 </tiles-definitions>

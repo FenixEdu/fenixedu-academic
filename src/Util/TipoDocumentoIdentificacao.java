@@ -73,6 +73,19 @@ public class TipoDocumentoIdentificacao {
 		return result;	
     }    
 
+	public static ArrayList toIntegerArrayList() {
+		ArrayList result = new ArrayList();
+		result.add(new LabelValueBean(TipoDocumentoIdentificacao.DEFAULT, null));
+		result.add(new LabelValueBean(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_STRING, String.valueOf(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE)));
+		result.add(new LabelValueBean(TipoDocumentoIdentificacao.PASSAPORTE_STRING, String.valueOf(TipoDocumentoIdentificacao.PASSAPORTE)));
+		result.add(new LabelValueBean(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DE_CIDADAO_ESTRANGEIRO_STRING, String.valueOf(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DE_CIDADAO_ESTRANGEIRO)));
+		result.add(new LabelValueBean(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DO_PAIS_DE_ORIGEM_STRING, String.valueOf(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DO_PAIS_DE_ORIGEM)));
+		result.add(new LabelValueBean(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_MARINHA_STRING, String.valueOf(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_MARINHA)));
+		result.add(new LabelValueBean(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_FORCA_AEREA_STRING, String.valueOf(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_FORCA_AEREA)));
+		result.add(new LabelValueBean(TipoDocumentoIdentificacao.OUTRO_STRING, String.valueOf(TipoDocumentoIdentificacao.OUTRO)));
+		return result;	
+	}    
+
     public boolean equals(Object o) {
         if(o instanceof TipoDocumentoIdentificacao) {
             TipoDocumentoIdentificacao aux = (TipoDocumentoIdentificacao) o;
