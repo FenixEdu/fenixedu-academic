@@ -123,19 +123,6 @@ public class GuideOJB extends PersistentObjectOJB implements IPersistentGuide {
         return queryList(Guide.class, criteria);
     }
 
-    //	public static void main(String args[]) throws ExcepcaoPersistencia{
-    //		
-    //		SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
-    //		sp.iniciarTransaccao();
-    //		System.out.println(((IGuide)
-    // sp.getIPersistentGuide().readLatestVersion(new Integer(2003), new
-    // Integer(199))).getVersion());
-    //		sp.getIPersistentGuide().readByYear(new Integer(2003));
-    //		
-    //		sp.confirmarTransaccao();
-    //		
-    //	}
-
     public List readByNumberAndYear(Integer number, Integer year) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
 

@@ -27,7 +27,7 @@ public class EncryptionTools extends FenixUtil {
         try {
             algorithm = MessageDigest.getInstance("SHA-1");
         } catch (NoSuchAlgorithmException e) {
-            System.out.println(e);
+            throw new RuntimeException(e);
         }
         algorithm.reset();
         algorithm.update(buf);
@@ -51,7 +51,7 @@ public class EncryptionTools extends FenixUtil {
         try {
             algorithm = MessageDigest.getInstance("SHA-1");
         } catch (NoSuchAlgorithmException e) {
-            System.out.println(e);
+            throw new RuntimeException(e);
         }
         algorithm.reset();
         algorithm.update(buf);

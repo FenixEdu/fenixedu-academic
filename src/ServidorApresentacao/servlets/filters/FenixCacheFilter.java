@@ -46,7 +46,6 @@ public class FenixCacheFilter implements Filter {
         try {
             time = Integer.parseInt(filterConfig.getInitParameter("time"));
         } catch (Exception e) {
-            System.out.println("Could not get init paramter 'time', defaulting to 5min.");
         }
 
         excludePattern = filterConfig.getInitParameter("exclude-url-pattern");

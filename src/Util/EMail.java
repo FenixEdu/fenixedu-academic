@@ -117,7 +117,6 @@ public class EMail extends FenixUtil {
             mensagem.setText(body);
             Transport.send(mensagem);
         } catch (SendFailedException e) {
-            System.out.println("EMail: Nao foi possivel enviar o email");
             if (e.getValidUnsentAddresses() != null) {
                 for (int i = 0; i < e.getValidUnsentAddresses().length; i++) {
                     unsentMails.add(e.getValidUnsentAddresses()[i]);
@@ -132,7 +131,6 @@ public class EMail extends FenixUtil {
             }
             e.printStackTrace(System.out);
         } catch (MessagingException e) {
-            System.out.println("EMail: Nao foi possivel enviar o email");
             e.printStackTrace(System.out);
         }
         return unsentMails;
@@ -156,11 +154,9 @@ public class EMail extends FenixUtil {
             message.setText(Texto);
             Transport.send(message);
         } catch (AddressException e) {
-            System.out.println("EMail: Nao foi possivel enviar o email");
             e.printStackTrace(System.out);
             return false;
         } catch (MessagingException e) {
-            System.out.println("EMail: Nao foi possivel enviar o email");
             e.printStackTrace(System.out);
             return false;
         }
@@ -205,11 +201,9 @@ public class EMail extends FenixUtil {
 
             Transport.send(mensagem);
         } catch (AddressException e) {
-            System.out.println("EMail: Nao foi possivel enviar o email");
             e.printStackTrace(System.out);
             return false;
         } catch (MessagingException e) {
-            System.out.println("EMail: Nao foi possivel enviar o email");
             e.printStackTrace(System.out);
             return false;
         }

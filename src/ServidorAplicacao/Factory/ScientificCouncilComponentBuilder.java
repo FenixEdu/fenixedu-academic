@@ -67,7 +67,6 @@ public class ScientificCouncilComponentBuilder {
             return getInfoSiteBasicCurricularCourses((InfoSiteBasicCurricularCourses) component,
                     degreeCurricularPlanId);
         } else {
-            System.out.println("dei bronca aqui");
             return null;
         }
 

@@ -77,9 +77,7 @@ public class GenerateUsername {
         int end = 5;
         char buf[] = new char[end - start];
 
-        System.out.println(buf);
         s.getChars(start, end, buf, 0);
-        System.out.println(String.valueOf(buf));
     }
 
 }

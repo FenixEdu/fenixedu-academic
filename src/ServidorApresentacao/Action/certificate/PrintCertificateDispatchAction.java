@@ -105,13 +105,6 @@ public class PrintCertificateDispatchAction extends DispatchAction {
                 } catch (NonExistingServiceException e) {
                     throw new NonExistingActionException("Inscrição", e);
                 }
-                /*
-                 * if (enrolmentList.size() == 0){ ActionErrors errors = new
-                 * ActionErrors(); errors.add("AlunoNãoExiste", new
-                 * ActionError("error.enrolment.notExist"));
-                 * System.out.println("entrei aqui"); saveErrors(request,
-                 * errors); return new ActionForward(mapping.getInput()); }
-                 */
                 if (enrolmentList.size() == 0)
                     anoLectivo = infoExecutionYear.getYear();
                 else

@@ -160,7 +160,6 @@ public class TimeTable {
                 dayIndex = 5;
                 break;
             default:
-                System.out.println("RenderTimeTableTag.converteDia(): dia de semana inválido.");
                 dayIndex = -1;
                 break;
             }

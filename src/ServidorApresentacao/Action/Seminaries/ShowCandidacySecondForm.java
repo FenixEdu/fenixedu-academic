@@ -116,7 +116,6 @@ public class ShowCandidacySecondForm extends FenixAction {
                 theme = (InfoTheme) ServiceManagerServiceFactory.executeService(userView,
                         "Seminaries.GetThemeById", argsReadTheme);
             } catch (Exception e) {
-                System.out.println("############# excepcao !! " + e);
                 throw new FenixActionException();
             }
             request.setAttribute("cases", new LinkedList());

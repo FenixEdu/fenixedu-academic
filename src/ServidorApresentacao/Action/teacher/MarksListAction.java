@@ -323,11 +323,9 @@ public class MarksListAction extends DispatchAction {
             administrationSiteView = (TeacherAdministrationSiteView) ServiceUtils.executeService(
                     userView, "SubmitMarks", args);
         } catch (FenixServiceException exception) {
-            System.out.println("exception no action");
             exception.printStackTrace();
 
             actionErrors.add("impossibleSubmit", new ActionError(exception.getMessage()));
-            System.out.println(exception.getMessage());
             saveErrors(request, actionErrors);
             //request.setAttribute("actionErrors", actionErrors);
             return mapping.findForward("impossibleSubmitMarks");

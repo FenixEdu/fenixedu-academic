@@ -4,7 +4,6 @@
  */
 package ServidorApresentacao.Action.teacher.credits;
 
-import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -138,8 +137,6 @@ public class ProfessorShipShiftPercentageDispatchAction extends DispatchAction {
 
         Integer[] shiftProfessorships = (Integer[]) form.get("shiftProfessorships");
 
-        DecimalFormatSymbols defaultDecimalFormats = new DecimalFormatSymbols();
-        System.out.println(defaultDecimalFormats.getDecimalSeparator());
         for (int i = 0; i < shiftProfessorships.length; i++) {
             Integer shiftInternalCode = shiftProfessorships[i];
             if (shiftInternalCode != null) {

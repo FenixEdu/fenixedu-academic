@@ -126,8 +126,6 @@ public class JdbcAccessRollbackImpl extends JdbcAccessImpl {
         ResultSetAndStatement resultSetAndStatement = executeSQL(selectInstructionSQL.toString(), arg0,
                 false);
 
-        System.out.println("selectInstructionSQL= " + selectInstructionSQL);
-
         return resultSetAndStatement;
     }
 
@@ -383,9 +381,6 @@ public class JdbcAccessRollbackImpl extends JdbcAccessImpl {
         final int startOfValues = endOfProperties + sqlStatement.substring(endOfProperties).indexOf('(')
                 + 1;
         final int endOfValues = startOfValues + sqlStatement.substring(startOfValues).indexOf(')');
-
-        System.out.println("properties = " + sqlStatement.substring(startOfProperties, endOfProperties));
-        System.out.println("values = " + sqlStatement.substring(startOfValues, endOfValues));
 
         final String[] propertyNames = sqlStatement.substring(startOfProperties, endOfProperties).split(
                 ",");

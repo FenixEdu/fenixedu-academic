@@ -66,8 +66,6 @@ public class InfoSiteCommon extends DataTranferObject implements ISiteComponent 
             InfoSection infoSection1 = (InfoSection) iter1.next();
             InfoSection infoSection2 = (InfoSection) iter2.next();
             if (!infoSection1.equals(infoSection2)) {
-                System.out.println(infoSection1.getName());
-                System.out.println(infoSection2.getName());
                 result = false;
                 break;
             }

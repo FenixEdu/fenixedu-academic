@@ -64,7 +64,6 @@ public class ExecutionCourseForwardFilter implements Filter {
             notFoundURI = filterConfig.getInitParameter("notFoundURI");
             app = filterConfig.getInitParameter("app");
         } catch (Exception e) {
-            System.out.println("Could not get init paramter 'forwardSiteList'.");
         }
     }
 

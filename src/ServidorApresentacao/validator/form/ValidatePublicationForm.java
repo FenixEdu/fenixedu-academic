@@ -28,29 +28,9 @@ public class ValidatePublicationForm implements Serializable {
      */
     public static boolean validate(Object bean, ValidatorAction va, Field field, ActionErrors errors,
             HttpServletRequest request, ServletContext application) {
-        //String valueString = ValidatorUtil.getValueAsString(bean,
-        // field.getProperty());
-
-        /*
-         * SiteView s = (SiteView)request.getAttribute("siteView");
-         * System.out.println(s.toString());
-         */
 
         Object object = request.getAttribute("publicationManagementForm");
-        System.out.println(object.toString());
 
-        /*
-         * System.out.println(s.toString()); InfoSiteAttributes att =
-         * (InfoSiteAttributes) s.getComponent();
-         * System.out.println(att.toString()); List l =
-         * att.getInfoRequiredAttributes(); System.out.println(l.toString());
-         */
-
-        /*
-         * System.out.println("Validate: " + valueString); if (valueString ==
-         * null || valueString.length() == 0) { errors.add("teste", new
-         * ActionError(field.getArg0().getKey())); }
-         */
         return (errors.isEmpty());
     }
 

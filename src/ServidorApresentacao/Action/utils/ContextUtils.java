@@ -513,8 +513,6 @@ public class ContextUtils {
         } else if (selectedRoomIndexString != null) {
             selectedRoomIndex = new Integer(selectedRoomIndexString);
             request.setAttribute(SessionConstants.SELECTED_ROOM_INDEX, selectedRoomIndex);
-        } else {
-            System.out.println("ERROR: Missing selectedRoomIndex in request");
         }
     }
 

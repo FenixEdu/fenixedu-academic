@@ -69,8 +69,6 @@ public class InitiateSessionDispatchAction extends FenixContextDispatchAction {
         if (selectedExecutionPeriod != null) {
             DynaActionForm indexForm = (DynaActionForm) form;
             indexForm.set("index", new Integer(executionPeriods.indexOf((selectedExecutionPeriod))));
-        } else {
-            System.out.println("ERROR - InitateSessionDA: No executionPeriod in request");
         }
         //----------------------------------------------------------
 

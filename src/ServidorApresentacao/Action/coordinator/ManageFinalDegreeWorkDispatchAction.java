@@ -672,7 +672,6 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
                 actionErrors.add("finalWorkInformationForm.unexistingTeacher", new ActionError(
                         "finalWorkInformationForm.unexistingTeacher"));
                 saveErrors(request, actionErrors);
-                System.out.println("Returning from show teacher to input.");
                 return mapping.getInputForward();
             }
         } catch (FenixServiceException e) {
@@ -697,7 +696,6 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             }
         }
 
-        System.out.println("Returning from show teacher.");
         return prepareFinalWorkInformation(mapping, form, request, response);
     }
 
@@ -715,43 +713,6 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         InfoExecutionDegree infoExecutionDegree = CommonServiceRequests.getInfoExecutionDegree(userView,
                 new Integer(degreeId));
 
-        //			InfoScheduleing infoScheduleing = null;
-        //			try {
-        //				Object[] args = { new Integer(degreeId)};
-        //				infoScheduleing =
-        //					(InfoScheduleing) ServiceUtils.executeService(
-        //						userView,
-        //						"ReadFinalDegreeWorkProposalSubmisionPeriod",
-        //						args);
-        //				if (infoScheduleing == null
-        //					|| infoScheduleing.getStartOfProposalPeriod().getTime()
-        //						> Calendar.getInstance().getTimeInMillis()
-        //					|| infoScheduleing.getEndOfProposalPeriod().getTime()
-        //						< Calendar.getInstance().getTimeInMillis()) {
-        //					ActionErrors actionErrors = new ActionErrors();
-        //
-        //					if (infoScheduleing != null) {
-        //						actionErrors.add(
-        //							"finalDegreeWorkProposal.ProposalPeriod.validator.OutOfPeriod",
-        //							new
-        // ActionError("finalDegreeWorkProposal.ProposalPeriod.validator.OutOfPeriod"));
-        //						request.setAttribute("infoScheduleing", infoScheduleing);
-        //					} else {
-        //						actionErrors.add(
-        //							"finalDegreeWorkProposal.ProposalPeriod.interval.undefined",
-        //							new
-        // ActionError("finalDegreeWorkProposal.ProposalPeriod.interval.undefined"));
-        //					}
-        //					saveErrors(request, actionErrors);
-        //
-        //					System.out.println("Returning from prepare, out of submission
-        // period");
-        //					return mapping.findForward("OutOfSubmisionPeriod");
-        //				}
-        //			} catch (FenixServiceException fse) {
-        //				throw new FenixActionException(fse);
-        //			}
-
         List branches = CommonServiceRequests.getBranchesByDegreeCurricularPlan(userView,
                 infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal());
         request.setAttribute("branches", branches);
@@ -759,7 +720,6 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
         request.setAttribute("finalDegreeWorkProposalStatusList", FinalDegreeWorkProposalStatus
                 .getLabelValueList());
 
-        System.out.println("Returning from prepare");
         return mapping.findForward("show-final-degree-work-proposal");
     }
 

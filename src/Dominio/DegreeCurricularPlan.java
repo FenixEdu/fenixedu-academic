@@ -79,11 +79,8 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
             Class classDefinition = Class.forName(getConcreteClassForStudentCurricularPlans());
             studentCurricularPlan = (IStudentCurricularPlan) classDefinition.newInstance();
         } catch (InstantiationException e) {
-            System.out.println(e);
         } catch (IllegalAccessException e) {
-            System.out.println(e);
         } catch (ClassNotFoundException e) {
-            System.out.println(e);
         }
 
         return studentCurricularPlan;

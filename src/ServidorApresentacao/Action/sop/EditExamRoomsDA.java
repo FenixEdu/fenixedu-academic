@@ -49,7 +49,6 @@ public class EditExamRoomsDA
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixFilterException {
-        System.out.println("ainda sou usado");
         IUserView userView = SessionUtils.getUserView(request);
         DynaActionForm editExamRoomsForm = (DynaActionForm) form;
 
@@ -60,8 +59,6 @@ public class EditExamRoomsDA
         ContextUtils.setExecutionCourseContext(request);
         InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request
                 .getAttribute(SessionConstants.EXECUTION_COURSE);
-
-        //System.out.println("infoExecutionCourse= " + infoExecutionCourse);
 
         Season oldExamsSeason = new Season(new Integer(request.getParameter("oldExamSeason")));
 
@@ -76,7 +73,6 @@ public class EditExamRoomsDA
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
-        //System.out.println("infoViewOldExam" + infoExam);
 
         List examRooms = infoExam.getAssociatedRooms();
 
@@ -140,8 +136,6 @@ public class EditExamRoomsDA
         InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) request
                 .getAttribute(SessionConstants.EXECUTION_COURSE);
 
-        //System.out.println("infoExecutionCourse= " + infoExecutionCourse);
-
         Season oldExamsSeason = new Season(new Integer(request.getParameter("oldExamSeason")));
 
         Object args1[] = { infoExecutionCourse.getSigla(), oldExamsSeason,
@@ -155,7 +149,6 @@ public class EditExamRoomsDA
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
-        //System.out.println("infoViewOldExam" + infoExam);
 
         String[] rooms = (String[]) editExamRoomsForm.get("selectedRooms");
         List roomsToSet = new ArrayList();

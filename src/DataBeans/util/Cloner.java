@@ -226,8 +226,6 @@ public abstract class Cloner {
         if (interfaces.length == 1) {
             return interfaces;
         } else if (interfaces.length == 0) {
-            System.out.println("Object " + domainObject.getClass().getName()
-                    + " does not implement any interfaces!");
             return null;
         } else {
 

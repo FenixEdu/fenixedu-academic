@@ -115,9 +115,6 @@ public class SearchExecutionCourses implements IServico {
                         getTeacherReportInformation(infoExecutionCourse, arg0);
 
                     } catch (ExcepcaoPersistencia e) {
-
-                        System.out.println("EXCEPCAO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
                     }
                     return infoExecutionCourse;
                 }

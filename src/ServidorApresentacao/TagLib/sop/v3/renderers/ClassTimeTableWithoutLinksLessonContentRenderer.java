@@ -34,13 +34,6 @@ public class ClassTimeTableWithoutLinksLessonContentRenderer implements LessonSl
                 strBuffer.append("&nbsp;(").append(lesson.getTipo()).append(")&nbsp;");
             }
 
-            if (lesson.getInfoRoomOccupation() == null)
-                System.out.println("InfoRO");
-            else if (lesson.getInfoRoomOccupation().getInfoRoom() == null)
-                System.out.println("InfoR");
-            else if (lesson.getInfoRoomOccupation().getInfoRoom().getNome() == null)
-                System.out.println("InfoR Name");
-
             strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());
 
             //TODO(rspl): Will it stay like this the interface for showing

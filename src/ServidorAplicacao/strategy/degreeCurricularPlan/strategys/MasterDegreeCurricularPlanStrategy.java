@@ -109,46 +109,4 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
         return date;
     }
 
-    //	public static void main(String[] args) throws ExcepcaoPersistencia{
-    //		
-    //		SuportePersistenteOJB.getInstance().iniciarTransaccao();
-    //		ICurso degree =
-    // SuportePersistenteOJB.getInstance().getICursoPersistente().readBySigla("MMA");
-    //		
-    //		IDegreeCurricularPlan degreeCurricularPlan =
-    // SuportePersistenteOJB.getInstance().getIPersistentDegreeCurricularPlan().readByNameAndDegree(
-    //			"MMA02/03", degree);
-    //			
-    //			
-    //			
-    //		IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory
-    // = DegreeCurricularPlanStrategyFactory.getInstance();
-    //		IMasterDegreeCurricularPlanStrategy degreeCurricularPlanStrategy =
-    // (IMasterDegreeCurricularPlanStrategy)
-    // degreeCurricularPlanStrategyFactory.getDegreeCurricularPlanStrategy(degreeCurricularPlan);
-    //		
-    //		
-    //		IStudentCurricularPlan studentCurricularPlan =
-    // SuportePersistenteOJB.getInstance().getIStudentCurricularPlanPersistente().readActiveStudentCurricularPlan(
-    //				new Integer(5145), TipoCurso.MESTRADO_OBJ);
-    //		
-    //		
-    //		System.out.println(Data.format2DayMonthYear(degreeCurricularPlanStrategy.dateOfEndOfScholarship(studentCurricularPlan)));
-    //		System.out.println(degreeCurricularPlanStrategy.checkEndOfScholarship(studentCurricularPlan));
-    //		System.out.println(degreeCurricularPlanStrategy.calculateStudentRegularAverage(studentCurricularPlan));
-    //		System.out.println(degreeCurricularPlanStrategy.calculateStudentWeightedAverage(studentCurricularPlan));
-    //		
-    //		InfoFinalResult infoFinalResult = new InfoFinalResult();
-    //		infoFinalResult.setAverageSimple("4.5");
-    //		
-    //		degreeCurricularPlanStrategy.calculateStudentAverage(studentCurricularPlan,
-    // infoFinalResult);
-    //		
-    //		System.out.println(infoFinalResult.getFinalAverage());
-    //		
-    //		
-    //		SuportePersistenteOJB.getInstance().confirmarTransaccao();
-    //		
-    //	}
-
 }

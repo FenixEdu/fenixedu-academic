@@ -42,7 +42,6 @@ public class ExamsForwardFilter implements Filter{
             notFoundURI = filterConfig.getInitParameter("notFoundURI");
             app = filterConfig.getInitParameter("app");
         } catch (Exception e) {
-            System.out.println("Could not get init parameter 'forwardURI'.");
         }
 	}
 	
@@ -76,11 +75,6 @@ public class ExamsForwardFilter implements Filter{
         
         StringBuffer forwardURI = new StringBuffer(context);
         
-        System.out.println("tokens.size= " + tokens.length);
-        for (int i = 0; i < tokens.length; i++) {
-            System.out.println("   tokens[" + i + "]: " + tokens[i]);
-        }
-
         if(tokens.length >= 2 && !(tokens[1].equalsIgnoreCase("exames"))){
         	forwardURI.append(notFoundURI);
         }

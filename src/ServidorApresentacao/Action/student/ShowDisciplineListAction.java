@@ -53,32 +53,20 @@ public class ShowDisciplineListAction extends Action {
             degree = (InfoDegree) ServiceUtils.executeService(userView, "ReadCourseByStudent",
                     argsReadCourseByStudent);
             if (degree != null) {
-                //				System.out.println(degree);
 
                 // TODO : This session attribute name should be infoDegree
                 session.setAttribute("infoCourse", degree);
-            } else {
-                //				System.out.println("course esta a chegar null a Action");
             }
-            //					System.out.println("acabeiServico");
         } catch (Exception e) {
-            //					System.out.println("entrei" + e);
             return mapping.getInputForward();
         }
 
-        /*
-         * Calendar calendar = Calendar.getInstance(); //date.DAY_OF_MONTH
-         * System.out.println(calendar.get(Calendar.DAY_OF_MONTH)); String dia=
-         * Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
-         * request.setAttribute("Dia", dia);
-         */
         Object argumentos[] = {};
 
         DataView data = (DataView) ServiceManagerServiceFactory.executeService(null, "ObterData",
                 argumentos);
         //request.setAttribute("Data", data);
         session.setAttribute("Data", data);
-        //			System.out.println("Acabei de fazer request da data");
 
         return mapping.findForward("viewDisciplinesList");
 

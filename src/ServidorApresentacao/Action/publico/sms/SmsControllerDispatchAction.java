@@ -68,9 +68,6 @@ public class SmsControllerDispatchAction extends FenixDispatchAction {
         String sender = getFromRequest("sender", request);
         String text = getFromRequest("text", request);
 
-        System.out.println("SENDER --->" + sender);
-        System.out.println("TEXT   --->" + text);
-
         try {
             int indexSeparator = text.indexOf(" ");
 

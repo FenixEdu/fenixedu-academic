@@ -73,8 +73,6 @@ public class MonitorRequestLogsDA extends FenixDispatchAction {
                     logFileName = serProps.getProperty("log.profile.filename");
                 }
             } else {
-                System.out.println("Failled to obtain properties for log analyser.");
-                System.out.println("Using default values.");
                 logDirName = "./";
                 logFileName = "profileing.log";
             }
@@ -132,7 +130,6 @@ public class MonitorRequestLogsDA extends FenixDispatchAction {
                     processLine(profileMap, line);
                 } else {
                     // nothing usefull... throw this away
-                    //System.out.println("Invalid line: " + line);
                 }
             }
 
@@ -216,10 +213,8 @@ public class MonitorRequestLogsDA extends FenixDispatchAction {
             }
             return fileContents.toString();
         } catch (FileNotFoundException e) {
-            System.out.println("File not found. Error processing file: " + file.getAbsolutePath());
             e.printStackTrace();
         } catch (IOException e) {
-            System.out.println("I/O Exception. Error processing file: " + file.getAbsolutePath());
             e.printStackTrace();
         }
         return null;

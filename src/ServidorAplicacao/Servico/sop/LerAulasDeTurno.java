@@ -34,12 +34,8 @@ public class LerAulasDeTurno implements IService {
         ITurno shift = Cloner.copyInfoShift2Shift(new InfoShift(shiftKey.getShiftName(), null, null,
                 shiftKey.getInfoExecutionCourse()));
 
-        System.out.println("shift= " + shift);
-
         //List aulas = sp.getITurnoAulaPersistente().readByShift(shift);
         List aulas = shift.getAssociatedLessons();
-
-        System.out.println("aulas.size= " + aulas.size());
 
         Iterator iterator = aulas.iterator();
         infoAulas = new ArrayList();

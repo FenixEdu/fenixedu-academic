@@ -390,7 +390,6 @@ public class SmsCommand {
                 while (responseIterator.hasNext()) {
 
                     smsMessage = (String) responseIterator.next();
-                    System.out.println(smsMessage);
                     try {
                         SmsUtil.getInstance().sendSmsWithoutDeliveryReports(new Integer(senderMsisdn),
                                 smsMessage);

@@ -53,7 +53,6 @@ public class DegreeForwardFilter implements Filter {
             invalidURI = filterConfig.getInitParameter("invalidURI");
             app = filterConfig.getInitParameter("app");
         } catch (Exception e) {
-            System.out.println("Could not get init paramter 'forwardDegreeDescription'.");
         }
     }
 

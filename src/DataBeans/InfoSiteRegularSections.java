@@ -30,15 +30,12 @@ public class InfoSiteRegularSections extends DataTranferObject implements ISiteC
 
         if (((InfoSiteRegularSections) obj).getRegularSections() == null
                 && this.getRegularSections() == null) {
-            System.out.println("-------> result true" + result);
-
             return true;
         }
         if (((InfoSiteRegularSections) obj).getRegularSections() == null
                 || this.getRegularSections() == null
                 || ((InfoSiteRegularSections) obj).getRegularSections().size() != this
                         .getRegularSections().size()) {
-            System.out.println("-------> result false " + result);
             return false;
         }
 
@@ -51,7 +48,6 @@ public class InfoSiteRegularSections extends DataTranferObject implements ISiteC
                 result = false;
             }
         }
-        System.out.println("-------> result " + result);
         return result;
     }
 

@@ -160,24 +160,6 @@ public class EditLesson implements IServico {
      * @param aula
      * @return InfoLessonServiceResult
      */
-    /*
-     * private boolean validNoInterceptingLesson(IAula lesson) {
-     * 
-     * try { ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-     * 
-     * IAulaPersistente persistentLesson = sp.getIAulaPersistente();
-     * 
-     * List lessonMatchList = persistentLesson.readLessonsInBroadPeriod(lesson);
-     * 
-     * System.out.println("Tenho aulas:" + lessonMatchList.size());
-     * 
-     * if ((lessonMatchList.size() >0 && !lessonMatchList.contains(lesson)) ||
-     * (lessonMatchList.size() >1 && lessonMatchList.contains(lesson))) {
-     * 
-     * return false; } else { return true; } } catch (ExcepcaoPersistencia e) {
-     * return false; } }
-     */
-
     private boolean validNoInterceptingLesson(IRoomOccupation roomOccupation,
             IRoomOccupation oldroomOccupation) throws FenixServiceException {
         try {

@@ -374,8 +374,6 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
     public boolean isCurricularCourseApproved(ICurricularCourse curricularCourse) {
 
         List studentApprovedEnrollments = getStudentEnrollmentsWithApprovedState();
-        // System.out.println("studentApprovedEnrollments.size()= " +
-        // studentApprovedEnrollments.size());
 
         List result = (List) CollectionUtils.collect(studentApprovedEnrollments, new Transformer() {
             public Object transform(Object obj) {

@@ -158,13 +158,6 @@ public class ChangeStudentTestQuestion implements IService {
                         else if (newQuestion == null)
                             throw new InvalidArgumentsServiceException();
 
-                        System.out.println("Troquei exercicio. AlunoNum: "
-                                + studentTestQuestion.getStudent().getNumber() + " ExercicioOld:"
-                                + oldQuestion.getIdInternal() + " ExercicioNew: "
-                                + newQuestion.getIdInternal() + " RespostaOld:"
-                                + studentTestQuestion.getOldResponse() + " Shuffle: "
-                                + studentTestQuestion.getOptionShuffle() + " OldMark: "
-                                + studentTestQuestion.getTestQuestionMark());
                         studentTestQuestion.setQuestion(newQuestion);
                         studentTestQuestion.setOldResponse(new Integer(0));
                         studentTestQuestion.setResponse(null);

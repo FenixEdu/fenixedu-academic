@@ -127,7 +127,6 @@ public class EditStudentCurricularCoursePlan extends DispatchAction {
         try {
             ServiceManagerServiceFactory.executeService(userView,
                     "EditPosGradStudentCurricularPlanStateAndCredits", args);
-//            System.out.println("aqui");
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }

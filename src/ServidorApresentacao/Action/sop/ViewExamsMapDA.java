@@ -185,7 +185,6 @@ public class ViewExamsMapDA extends FenixExecutionDegreeAndCurricularYearsContex
             HttpServletResponse response) throws Exception {
 
         InfoExamsMap infoExamsMap = (InfoExamsMap) request.getAttribute(SessionConstants.INFO_EXAMS_MAP);
-        //System.out.println("infoExamsMap= " + infoExamsMap);
 
         Integer indexExecutionCourse = new Integer(request.getParameter("indexExecutionCourse"));
 

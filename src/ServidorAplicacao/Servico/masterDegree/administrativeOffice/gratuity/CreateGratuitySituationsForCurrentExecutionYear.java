@@ -43,8 +43,6 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
     public void run(String year) throws FenixServiceException {
         try {
 
-            System.out.println("createGratuitySituation task running!!!");
-
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
             IExecutionYear executionYear = null;
@@ -74,9 +72,6 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
                         .readGratuityValuesByExecutionDegree(executionDegree);
 
                 if (gratuityValues == null) {
-                    System.out.println("GRATUITY VALUES NOT DEFINED FOR EXECUTION DEGREE "
-                            + executionDegree.getCurricularPlan() + " - "
-                            + executionDegree.getExecutionYear().getYear());
                     continue;
                 }
 
@@ -103,8 +98,6 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
                 }
 
             }
-
-            System.out.println("createGratuitySituation task finnished!!!");
 
         } catch (ExcepcaoPersistencia ex) {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");
@@ -250,7 +243,6 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
 
         if ((totalValue == null)) {
             // the student has nothing to pay
-            System.out.println("DATABASE IS INCONSISTENT. TOTAL VALUE SHOULD NEVER BE NULL!!!!");
             return;
         }
 

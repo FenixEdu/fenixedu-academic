@@ -190,7 +190,6 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
         }
 
         strBuffer.append("</table>");
-        System.out.println("Writing the page break!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11");
         strBuffer.append("<br style=\"page-break-after:always;\" />");
     }
 

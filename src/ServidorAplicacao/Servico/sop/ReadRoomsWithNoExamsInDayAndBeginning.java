@@ -67,13 +67,8 @@ public class ReadRoomsWithNoExamsInDayAndBeginning implements IServico {
                     }
                 }
             }
-            //System.out.println("## All Rooms = " + allRooms.size());
-            //System.out.println("## Occupied Rooms = " +
-            // occupiedRooms.size());
 
             availableRooms = (ArrayList) CollectionUtils.subtract(allRooms, occupiedRooms);
-            //System.out.println("## Available Rooms = " +
-            // availableRooms.size());
             for (int i = 0; i < availableRooms.size(); i++) {
                 ISala room = (ISala) availableRooms.get(i);
                 InfoRoom infoRoom = Cloner.copyRoom2InfoRoom(room);

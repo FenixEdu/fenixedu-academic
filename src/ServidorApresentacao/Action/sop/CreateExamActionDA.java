@@ -103,7 +103,6 @@ public class CreateExamActionDA extends
         // request.getAttribute(SessionConstants.NEXT_PAGE);
 
         if (nextPage != null) {
-            //System.out.println("returning to next page forward");
             return mapping.findForward(nextPage);
         }
         return mapping.findForward("Sucess");

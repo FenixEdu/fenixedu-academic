@@ -46,11 +46,6 @@ public class EditStudentInfoDispatchAction extends DispatchAction {
             DynaActionForm changeApplicationInfoForm = (DynaActionForm) form;
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-            /*
-             * if (!isTokenValid(request)){ System.out.println("form no edit 2
-             * "); return mapping.findForward("BackError"); } else {
-             * generateToken(request); saveToken(request); }
-             */
             Integer personCode = Integer.valueOf(getFromRequest("idInternal", request));
             Integer number = Integer.valueOf(getFromRequest("number", request));
             // Create Dates

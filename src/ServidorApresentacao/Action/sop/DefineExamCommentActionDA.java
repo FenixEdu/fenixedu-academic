@@ -38,13 +38,8 @@ public class DefineExamCommentActionDA extends
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        ////////////
-        //InfoExamsMap infoExamsMap =
-        //	(InfoExamsMap) request.getAttribute(
-        //		SessionConstants.INFO_EXAMS_MAP);
         InfoExamsMap infoExamsMap = getExamsMap(request);
         request.setAttribute(SessionConstants.INFO_EXAMS_MAP, infoExamsMap);
-        //System.out.println("infoExamsMap=" + infoExamsMap);
 
         Integer indexExecutionCourse = new Integer(request.getParameter("indexExecutionCourse"));
 
@@ -57,7 +52,6 @@ public class DefineExamCommentActionDA extends
 
         request.setAttribute(SessionConstants.EXECUTION_COURSE_KEY, infoExecutionCourse);
 
-        ///////////
         request.setAttribute(SessionConstants.INFO_EXAMS_KEY, infoExamsMap);
 
         InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
@@ -74,7 +68,6 @@ public class DefineExamCommentActionDA extends
 
         request.setAttribute(SessionConstants.CURRICULAR_YEAR_OID, curricularYear.toString());
         ContextUtils.setCurricularYearContext(request);
-        ///////////
 
         return mapping.findForward("defineExamComment");
     }
@@ -88,16 +81,6 @@ public class DefineExamCommentActionDA extends
 
         String comment = (String) defineExamCommentForm.get("comment");
         String executionCourseCode = request.getParameter("executionCourseCode");
-        //		String executionPeriodName =
-        //			((InfoExecutionPeriod) request.getAttribute(
-        //				SessionConstants.INFO_EXECUTION_PERIOD_KEY)).getName();
-        //			//request.getParameter("executionPeriodName");
-        //		String executionYear = request.getParameter("executionYear");
-        //
-        //		InfoExecutionYear infoExecutionYear =
-        //			new InfoExecutionYear(executionYear);
-        //		InfoExecutionPeriod infoExecutionPeriod =
-        //			new InfoExecutionPeriod(executionPeriodName, infoExecutionYear);
         InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                 .getAttribute(SessionConstants.EXECUTION_PERIOD);
         InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();

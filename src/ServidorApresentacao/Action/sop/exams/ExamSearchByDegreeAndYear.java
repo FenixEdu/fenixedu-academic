@@ -130,7 +130,6 @@ public class ExamSearchByDegreeAndYear extends FenixContextDispatchAction {
         }
 
         request.setAttribute(SessionConstants.CURRICULAR_YEARS_LIST, curricularYears);
-        System.out.println("CURRICULAR_YEARS_LIST= " + curricularYears);
 
         int index = -1;
         try {

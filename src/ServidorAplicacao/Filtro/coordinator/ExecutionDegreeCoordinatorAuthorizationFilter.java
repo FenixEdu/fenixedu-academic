@@ -59,11 +59,8 @@ public class ExecutionDegreeCoordinatorAuthorizationFilter extends DomainObjectA
 
             return executionDegrees.contains(executionDegree);
         } catch (ExcepcaoPersistencia e) {
-            System.out.println("Filter error(ExcepcaoPersistente): " + e.getMessage());
             return false;
         } catch (Exception e) {
-            System.out.println("Filter error(Unknown): " + e.getMessage());
-            e.printStackTrace();
             return false;
         }
     }

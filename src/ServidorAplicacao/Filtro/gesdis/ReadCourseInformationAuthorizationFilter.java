@@ -58,10 +58,8 @@ public class ReadCourseInformationAuthorizationFilter extends DomainObjectAuthor
 
             return responsiblesFor.contains(responsibleFor);
         } catch (ExcepcaoPersistencia e) {
-            System.out.println("Filter error(ExcepcaoPersistente): " + e.getMessage());
             return false;
         } catch (Exception e) {
-            System.out.println("Filter error(Unknown): " + e.getMessage());
             return false;
         }
     }

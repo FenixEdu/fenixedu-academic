@@ -32,10 +32,8 @@ public class ViewExamsByDegreeAndCurricularYearAction extends
 
             InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request
                     .getAttribute(SessionConstants.EXECUTION_PERIOD);
-            System.out.println("infoExecutionPeriod=" + infoExecutionPeriod);
             InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
                     .getAttribute(SessionConstants.EXECUTION_DEGREE);
-            System.out.println("infoExecutionDegree=" + infoExecutionDegree);
 
             Integer curricularYear = (Integer) request
                     .getAttribute(SessionConstants.CURRICULAR_YEAR_KEY);

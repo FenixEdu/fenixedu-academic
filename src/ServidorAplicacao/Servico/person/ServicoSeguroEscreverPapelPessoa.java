@@ -27,7 +27,6 @@ public class ServicoSeguroEscreverPapelPessoa extends ServicoSeguro {
             // dados
             throw new NotExecuteException();
         }
-        System.out.println("Escreveu role 1");
 
         // pessoa com papel de assiduidade, caso seja funcionario
         IFuncionarioPersistente iFuncionarioPersistente = SuportePersistente.getInstance()
@@ -42,18 +41,8 @@ public class ServicoSeguroEscreverPapelPessoa extends ServicoSeguro {
                 // dados
                 throw new NotExecuteException();
             }
-            System.out.println("Escreveu role 9");
         }
 
-        // pessoa com papel de gestao de assiduidade
-        /*
-         * List listaCargos = null; if ((listaCargos =
-         * iPessoaPersistente.lerCargos(pessoa.getCodigoInterno().intValue())) !=
-         * null) { if (listaCargos.contains(Constants.GESTAO_ASSIDUIDADE)) { if
-         * (!iPessoaPersistente.escreverPapelPessoa(pessoa, 10)) { // buscar
-         * estas chaves da base de dados throw new NotExecuteException(); }
-         * System.out.println("Escreveu role 10"); } }
-         */
     }
 
     public Pessoa getPessoa() {

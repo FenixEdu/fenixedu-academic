@@ -137,7 +137,6 @@ public class CaptureFilter implements Filter {
                 fileWriter.close();
             }
         } catch (IOException e) {
-            System.out.println("Unable to store request.");
             e.printStackTrace();
         }
     }

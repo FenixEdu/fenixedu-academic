@@ -27,8 +27,6 @@ public abstract class ClassUtils {
                         .length() - 2));
             } catch (java.lang.NumberFormatException ex) {
                 anoCurricular = 5;
-                System.out.println("NÃO FOI POSSÍVEL INFERIR O ANO CURRÍCULAR DA TURMA " + className
-                        + " PELO QUE FOI DADO O ANO 5");
             }
         }
         return anoCurricular;
@@ -43,8 +41,6 @@ public abstract class ClassUtils {
         int degreeNumber = Integer.parseInt(className.substring(0, 2));
         String degreeInitials = executionDegreeInitials[degreeNumber - 1];
         ICursoExecucao executionDegree = (ICursoExecucao) executionDegreeHashMap.get(degreeInitials);
-        if (executionDegree == null)
-            System.out.println("Error execution degree not found" + degreeInitials);
         return executionDegree;
     }
 

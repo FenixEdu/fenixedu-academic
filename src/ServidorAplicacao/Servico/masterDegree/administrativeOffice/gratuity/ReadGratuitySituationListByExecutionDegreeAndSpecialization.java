@@ -118,14 +118,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
                         .readGratuityValuesByExecutionDegree(executionDegree);
 
                 if (gratuityValues == null) {
-                    System.out.println("Gratuity Values Null do Curso: "
-                            + executionDegree.getCurricularPlan().getName() + " relativo ao ano "
-                            + executionDegree.getExecutionYear().getYear());
                     continue;
-                    //                    throw new FenixServiceException(
-                    //                            "error.impossible.noGratuityValues.degreeName>"
-                    //                                    + executionDegree.getCurricularPlan()
-                    //                                            .getName());
                 }
 
                 List studentCurricularPlanList = studentCurricularPlanDAO

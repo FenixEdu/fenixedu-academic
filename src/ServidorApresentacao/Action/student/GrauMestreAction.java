@@ -38,12 +38,6 @@ public class GrauMestreAction extends Action {
 
         // Tipo de certidao que o aluno quer obter
 
-        String strTipo = (String) session.getAttribute("Tipo");
-
-        int Tipo = Integer.parseInt(strTipo);
-        System.out.println(Tipo);
-        // Temporario
-
         Object[] argsReadCourseByStudent = { infoStudent.getNumber(), infoStudent.getDegreeType() };
 
         InfoDegree infoDegree = null;

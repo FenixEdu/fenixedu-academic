@@ -71,15 +71,9 @@ public class SubmitFinalWorkProposal implements IService {
                 proposal = new Proposal();
                 persistentFinalWork.simpleLockWrite(proposal);
                 int proposalNumber = scheduleing.getCurrentProposalNumber().intValue();
-                //System.out.println("Read proposal number= " +
-                // proposalNumber);
                 proposal.setProposalNumber(new Integer(proposalNumber));
                 persistentFinalWork.simpleLockWrite(scheduleing);
                 scheduleing.setCurrentProposalNumber(new Integer(proposalNumber + 1));
-                //System.out.println("Read next proposal number= " +
-                // scheduleing.getCurrentProposalNumber());
-                //System.out.println("Read proposal number= " +
-                // proposal.getProposalNumber());
             } else {
                 persistentFinalWork.simpleLockWrite(proposal);
             }

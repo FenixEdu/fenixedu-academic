@@ -161,7 +161,6 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlan implements 
     public boolean isCurricularCourseApproved(ICurricularCourse curricularCourse) {
 
         final List studentApprovedEnrollments = getStudentEnrollmentsWithApprovedState();
-        //System.out.println("studentApprovedEnrollments.size()= " + studentApprovedEnrollments.size());
 
         final List result = new ArrayList(studentApprovedEnrollments.size());
         for (int i = 0; i < studentApprovedEnrollments.size(); i++) {

@@ -389,28 +389,6 @@ public class SelectCandidatesDispatchAction extends DispatchAction {
             saveToken(request);
         }
 
-        //		
-        //		Iterator iterator = result.iterator();
-        //		while(iterator.hasNext()){
-        //			InfoCandidateApprovalGroup infoCandidateApprovalGroup =
-        // (InfoCandidateApprovalGroup) iterator.next();
-        //			Iterator iter =
-        // infoCandidateApprovalGroup.getCandidates().iterator();
-        //			System.out.println(infoCandidateApprovalGroup.getSituationName());
-        //			while(iter.hasNext()){
-        //				InfoCandidateApproval infoCandidateApproval = (InfoCandidateApproval)
-        // iter.next();
-        //				System.out.println("-----------");
-        //				System.out.println(" " + infoCandidateApproval.getIdInternal());
-        //				System.out.println(" " + infoCandidateApproval.getCandidateName());
-        //				System.out.println(" " + infoCandidateApproval.getRemarks());
-        //				System.out.println(" " + infoCandidateApproval.getSituationName());
-        //				System.out.println(" " + infoCandidateApproval.getOrderPosition());
-        //			}
-        //		}
-        //
-        //
-        //		
         return mapping.findForward("FinalPresentation");
     }
 
@@ -447,25 +425,6 @@ public class SelectCandidatesDispatchAction extends DispatchAction {
         List result = getLists(candidateList, ids, remarks, substitutes, candidates);
 
         sortLists(result);
-
-        //		Iterator iterator = result.iterator();
-        //		while(iterator.hasNext()){
-        //			InfoCandidateApprovalGroup infoCandidateApprovalGroup =
-        // (InfoCandidateApprovalGroup) iterator.next();
-        //			Iterator iter =
-        // infoCandidateApprovalGroup.getCandidates().iterator();
-        //			System.out.println(infoCandidateApprovalGroup.getSituationName());
-        //			while(iter.hasNext()){
-        //				InfoCandidateApproval infoCandidateApproval = (InfoCandidateApproval)
-        // iter.next();
-        //				System.out.println("-----------");
-        //				System.out.println(" " + infoCandidateApproval.getIdInternal());
-        //				System.out.println(" " + infoCandidateApproval.getCandidateName());
-        //				System.out.println(" " + infoCandidateApproval.getRemarks());
-        //				System.out.println(" " + infoCandidateApproval.getSituationName());
-        //				System.out.println(" " + infoCandidateApproval.getOrderPosition());
-        //			}
-        //		}
 
         request.setAttribute("infoGroup", result);
 

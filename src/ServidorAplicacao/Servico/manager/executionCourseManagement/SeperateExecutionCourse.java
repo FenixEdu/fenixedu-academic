@@ -55,10 +55,6 @@ public class SeperateExecutionCourse implements IService {
             final Integer[] shiftIdsToTransfer, final Integer[] curricularCourseIdsToTransfer)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        for (int i = 0; i < shiftIdsToTransfer.length; i++) {
-            System.out.println("shiftIdsToTransfer[i]= " + shiftIdsToTransfer[i]);
-        }
-
         final ISuportePersistente sp = SuportePersistenteOJB.getInstance();
         final IPersistentObject persistentObject = sp.getIPersistentObject();
 
@@ -163,7 +159,6 @@ public class SeperateExecutionCourse implements IService {
         for (Iterator iterator = shifts.iterator(); iterator.hasNext();) {
             ITurno shift = (ITurno) iterator.next();
             if (contains(shiftIdsToTransfer, shift.getIdInternal())) {
-                System.out.println("shift.getIdInternal()= " + shift.getIdInternal());
                 persistentObject.simpleLockWrite(shift);
                 shift.setDisciplinaExecucao(destinationExecutionCourse);
                 

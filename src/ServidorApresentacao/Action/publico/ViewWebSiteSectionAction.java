@@ -27,7 +27,6 @@ public class ViewWebSiteSectionAction extends FenixContextDispatchAction {
 
         String sectionName = request.getParameter("sectionName");
 
-        System.out.println("nome da seccao: " + sectionName);
         Object[] args = { sectionName };
         InfoWebSiteSection infoWebSiteSection = null;
         try {
@@ -51,7 +50,6 @@ public class ViewWebSiteSectionAction extends FenixContextDispatchAction {
         Integer sectionCode = Integer.valueOf(request.getParameter("objectCode2"));
         Integer itemCode = Integer.valueOf(request.getParameter("objectCode"));
 
-        System.out.println("section code: " + sectionCode);
         Object[] args = { sectionCode };
         InfoWebSiteSection infoWebSiteSection = null;
         try {

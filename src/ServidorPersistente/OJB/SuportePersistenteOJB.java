@@ -259,9 +259,8 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
             openDatabase();
             Transaction tx = _odmg.currentTransaction();
 
-            if (tx == null)
-                System.out.println("SuportePersistente.OJB - Nao ha transaccao activa");
-            else {
+            if (tx != null)
+            {
                 tx.commit();
                 //				Database db =_odmg.getDatabase(null);
                 //				if (db!= null) db.close();

@@ -55,16 +55,13 @@ public class PersistentSuportOracle implements IPersistentSuportOracle {
             String DBUserPass = properties.getProperty("db.projectManagement.pass");
             String DBUrl = properties.getProperty("db.projectManagement.alias");
             if (DBUserName == null || DBUserPass == null || DBUrl == null) {
-                System.out.println("ServidorPersistenteOracle: Erro ao ler propriedades.");
                 throw new ExcepcaoPersistencia();
             }
             databaseUrl = new String("jdbc:oracle:thin:" + DBUserName + "/" + DBUserPass + "@" + DBUrl);
-            System.out.println("databaseUrl: " + databaseUrl);
         }
         try {
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
         } catch (SQLException e) {
-            System.out.println("ServidorPersistenteOracle: Erro openConnection." + e);
             throw new ExcepcaoPersistencia();
         }
     }
@@ -75,7 +72,6 @@ public class PersistentSuportOracle implements IPersistentSuportOracle {
             thisconnection.close();
             connectionsMap.remove(Thread.currentThread());
         } catch (Exception e) {
-            System.out.println("ServidorPersistenteOracle: Erro closeConnection." + e);
             throw new ExcepcaoPersistencia();
         }
     }
@@ -87,7 +83,6 @@ public class PersistentSuportOracle implements IPersistentSuportOracle {
             connection.setAutoCommit(false);
             connectionsMap.put(Thread.currentThread(), connection);
         } catch (SQLException e) {
-            System.out.println("ServidorPersistenteOracle: Erro startTransaction." + e);
             throw new ExcepcaoPersistencia();
         }
     }
@@ -98,7 +93,6 @@ public class PersistentSuportOracle implements IPersistentSuportOracle {
             thisConnection.commit();
             closeConnection();
         } catch (SQLException e) {
-            System.out.println("ServidorPersistenteOracle: Erro commitTransaction." + e);
             throw new ExcepcaoPersistencia();
         }
     }
@@ -109,7 +103,6 @@ public class PersistentSuportOracle implements IPersistentSuportOracle {
             thisConnection.rollback();
             closeConnection();
         } catch (SQLException e) {
-            System.out.println("ServidorPersistenteOracle: Erro cancelTransaction." + e);
             throw new ExcepcaoPersistencia();
         }
     }
@@ -122,7 +115,6 @@ public class PersistentSuportOracle implements IPersistentSuportOracle {
                     openConnection();
                     connection = DriverManager.getConnection(databaseUrl);
                 } catch (java.sql.SQLException e) {
-                    System.out.println("ServidorPersistenteOracle: Erro prepareStatement1." + e);
                 }
             thisConnection = connection;
         }
@@ -130,7 +122,6 @@ public class PersistentSuportOracle implements IPersistentSuportOracle {
         try {
             sql = thisConnection.prepareStatement(statement);
         } catch (java.sql.SQLException e) {
-            System.out.println("ServidorPersistenteOracle: Erro prepareStatement2." + e);
         }
         return sql;
     }

@@ -49,11 +49,8 @@ public class EditCareerTeacherAuthorizationFilter extends EditDomainObjectAuthor
 
             return career.getTeacher().equals(teacher);
         } catch (ExcepcaoPersistencia e) {
-            System.out.println("Filter error(ExcepcaoPersistente): " + e.getMessage());
             return false;
         } catch (Exception e) {
-            System.out.println("Filter error(Unknown): " + e.getMessage());
-            e.printStackTrace();
             return false;
         }
     }

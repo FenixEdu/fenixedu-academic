@@ -70,9 +70,6 @@ public abstract class RequestUtils {
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
-        if (infoExecutionCourse == null) {
-            System.out.println("there is a link missing the exeCode parameter");
-        }
         return infoExecutionCourse;
     }
 
@@ -94,10 +91,6 @@ public abstract class RequestUtils {
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
-        if (infoExecutionYear == null) {
-            System.out.println("ERROR: There is a link missing the eYName parameter: from("
-                    + request.getHeader("Referer") + ") to(" + request.getRequestURI() + ")");
-        }
         return infoExecutionYear;
     }
 
@@ -118,10 +111,6 @@ public abstract class RequestUtils {
             }
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
-        }
-        if (infoExecutionPeriod == null) {
-            System.out.println("ERROR: There is a link missing the ePName parameter! from("
-                    + request.getHeader("Referer") + ") to(" + request.getRequestURI() + ")");
         }
         return infoExecutionPeriod;
     }

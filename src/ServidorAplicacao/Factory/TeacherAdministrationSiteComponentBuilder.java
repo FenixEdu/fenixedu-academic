@@ -857,7 +857,6 @@ public class TeacherAdministrationSiteComponentBuilder {
                 }
 
                 componentExam.setInfoExam(infoExam);
-                System.out.println(infoExam.getIdInternal());
                 componentExam.setInfoExecutionCourses(infoExecutionCourses);
                 component = componentExam;
             }
@@ -2181,14 +2180,7 @@ public class TeacherAdministrationSiteComponentBuilder {
             throw new FenixServiceException(e);
         }
         component.setShifts(infoShifts);
-        /*
-        component.setInfoExecutionPeriodName(executionCourse
-                .getExecutionPeriod().getName());
-        System.out.println("executionCourse.getExecutionPeriod().getName()" + executionCourse.getExecutionPeriod().getName());
-        component.setInfoExecutionYearName(executionCourse.getExecutionPeriod()
-                .getExecutionYear().getYear());
-        System.out.println("executionCourse.getExecutionPeriod().getExecutionYear().getYear()"+ executionCourse.getExecutionPeriod().getExecutionYear().getYear());
-        */
+
         return component;
     }
 

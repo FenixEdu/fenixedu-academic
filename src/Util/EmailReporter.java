@@ -45,7 +45,6 @@ public class EmailReporter extends FenixUtil implements TransportListener {
     }
 
     public void messageDelivered(TransportEvent arg0) {
-        System.out.println("Message delivered !!");
         this.fillLists(arg0);
     }
 
@@ -55,7 +54,6 @@ public class EmailReporter extends FenixUtil implements TransportListener {
      * @see javax.mail.event.TransportListener#messageNotDelivered(javax.mail.event.TransportEvent)
      */
     public void messageNotDelivered(TransportEvent arg0) {
-        System.out.println("Message not delivered !!");
         this.fillLists(arg0);
     }
 
@@ -65,7 +63,6 @@ public class EmailReporter extends FenixUtil implements TransportListener {
      * @see javax.mail.event.TransportListener#messagePartiallyDelivered(javax.mail.event.TransportEvent)
      */
     public void messagePartiallyDelivered(TransportEvent arg0) {
-        System.out.println("Messaged partially delivered !!");
         this.fillLists(arg0);
     }
 

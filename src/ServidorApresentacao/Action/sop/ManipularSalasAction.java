@@ -176,9 +176,8 @@ public class ManipularSalasAction extends FenixSelectedRoomsContextAction {
         if (listaSalasBean != null && !listaSalasBean.isEmpty()) {
             Collections.sort(listaSalasBean);
             sala = (InfoRoom) listaSalasBean.get(salaSelecionada.intValue());
-        } else {
-            System.out.println("ERROR: Missing lista de salas em request!!");
         }
+
         return sala;
     }
 

@@ -43,7 +43,6 @@ public abstract class PasswordEncryptor {
         try {
             algorithm = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException e) {
-            System.out.println(e);
         }
         algorithm.reset();
         return algorithm;

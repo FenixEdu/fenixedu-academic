@@ -40,11 +40,6 @@ public class RequestWrapperFilter implements Filter {
         HttpServletRequest httpRrequest = (HttpServletRequest) request;
         String uri = httpRrequest.getRequestURI();
         String queryString = constructQueryString(httpRrequest);
-        if (StringUtils.containsNone(uri, "login.do"))
-            ;
-        {
-            System.out.println(queryString);
-        }
 
         chain.doFilter(new FenixHttpServletRequestWrapper((HttpServletRequest) request), response);
         setSessionTimeout((HttpServletRequest) request);

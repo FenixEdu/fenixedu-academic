@@ -47,7 +47,6 @@ public class SchoolClassForwardFilter implements Filter {
             notFoundURI = filterConfig.getInitParameter("notFoundURI");
             app = filterConfig.getInitParameter("app");
         } catch (Exception e) {
-            System.out.println("Could not get init parameter 'forwardURI'.");
         }
     }
 

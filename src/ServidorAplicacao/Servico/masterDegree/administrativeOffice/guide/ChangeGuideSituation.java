@@ -163,10 +163,6 @@ public class ChangeGuideSituation implements IService {
                             gratuitySituation = persistentGratuitySituation
                                     .readGratuitySituationByExecutionDegreeAndStudent(executionDegree,
                                             student);
-                            System.out.println("executionDegree= " + executionDegree.getIdInternal());
-                            System.out.println("student= " + student.getIdInternal());
-                            System.out.println("gratuitySituation= " + gratuitySituation);
-
                             Double value = new Double(guideEntry.getPrice().doubleValue()
                                     * guideEntry.getQuantity().intValue());
 

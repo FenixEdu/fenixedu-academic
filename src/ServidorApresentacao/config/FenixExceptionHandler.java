@@ -88,7 +88,6 @@ public class FenixExceptionHandler extends ExceptionHandler {
             error = ((FenixActionException) ex).getError();
             property = ((FenixActionException) ex).getProperty();
         } else {
-            System.out.println("ExceptionConfig:" + ae);
             error = new ActionError(ae.getKey(), ex.getMessage());
             property = error.getKey();
         }
@@ -99,7 +98,6 @@ public class FenixExceptionHandler extends ExceptionHandler {
 
         // Print info to standard output
         ex.printStackTrace(System.out);
-        System.out.println("MAPPING: " + mapping);
         return super.execute(ex, ae, mapping, formInstance, request, response);
     }
 

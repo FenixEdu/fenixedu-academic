@@ -62,8 +62,6 @@ public final class ConsultarFuncionarioEscolhaAction extends Action {
 
         ConsultarFuncionarioMostrarForm formEscolha = (ConsultarFuncionarioMostrarForm) form;
         Integer numMecanografico = (Integer) session.getAttribute("numMecanografico");
-        System.out.println("CONSULTA DE ASSIDUIDADE: " + formEscolha.getEscolha() + " funcionario "
-                + numMecanografico + " mes " + formEscolha.getMesInicioEscolha());
 
         if (formEscolha.getEscolha().equals("consultar.marcacao")) {
             //»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»

@@ -49,10 +49,8 @@ public class EditOldPublicationTeacherAuthorizationFilter extends EditDomainObje
 
             return oldPublication.getTeacher().equals(teacher);
         } catch (ExcepcaoPersistencia e) {
-            System.out.println("Filter error(ExcepcaoPersistente): " + e.getMessage());
             return false;
         } catch (Exception e) {
-            System.out.println("Filter error(Unknown): " + e.getMessage());
             e.printStackTrace();
             return false;
         }

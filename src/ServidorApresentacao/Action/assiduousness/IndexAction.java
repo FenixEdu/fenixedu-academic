@@ -44,8 +44,6 @@ public final class IndexAction extends Action {
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
         String username = userView.getUtilizador();//((LogonForm)
-        // form).getUsername();
-        System.out.println("--->NA ASSIDUIDADE: " + username);
 
         ServicoAutorizacaoLerPessoa servicoAutorizacaoLerPessoa = new ServicoAutorizacaoLerPessoa();
         ServicoSeguroLerPessoa servicoSeguroLerPessoa = new ServicoSeguroLerPessoa(

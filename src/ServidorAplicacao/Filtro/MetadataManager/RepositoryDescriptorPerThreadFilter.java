@@ -33,7 +33,6 @@ public class RepositoryDescriptorPerThreadFilter implements IFilter {
         DescriptorRepository descriptorRepository = ((SuportePersistenteOJB) ps)
                 .getDescriptor("lightVersion");
         if (descriptorRepository == null) {
-            System.out.println("estava null");
             descriptorRepository = mm.readDescriptorRepository("OJB/lightVersion/repository.xml");
             ((SuportePersistenteOJB) ps).setDescriptor(descriptorRepository, "lightVersion");
         }

@@ -46,11 +46,8 @@ public class ReadCourseInformationCoordinatorAuthorizationFilter extends DomainO
 
             return !executionDegrees.isEmpty();
         } catch (ExcepcaoPersistencia e) {
-            System.out.println("Filter error(ExcepcaoPersistente): " + e.getMessage());
             return false;
         } catch (Exception e) {
-            System.out.println("Filter error(Unknown): " + e.getMessage());
-            e.printStackTrace();
             return false;
         }
     }

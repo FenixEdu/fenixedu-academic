@@ -73,7 +73,7 @@ public class FileSuport implements IFileSuport {
         try {
             Domain.init(getConfigLocation());
         } catch (Exception e) {
-            System.out.println("INIT FAILED");
+            throw new RuntimeException(e);
         }
         String namespace = Domain.getDefaultNamespace();
         this.token = Domain.accessNamespace(new SecurityToken(new String()), namespace);
@@ -94,7 +94,6 @@ public class FileSuport implements IFileSuport {
             properties.load(getClass().getResourceAsStream(FileSuport.CONFIG_SLIDE));
             maxFileSize = properties.getProperty("maxFileSize");
         } catch (IOException e) {
-            System.out.println("maxFileSize->NOT FOUND");
         }
         return maxFileSize;
     }
@@ -109,7 +108,6 @@ public class FileSuport implements IFileSuport {
             properties.load(getClass().getResourceAsStream(FileSuport.CONFIG_SLIDE));
             maxStorageSize = properties.getProperty("maxStorageSize");
         } catch (IOException e) {
-            System.out.println("maxStorageSize->NOT FOUND");
         }
         return maxStorageSize;
     }
@@ -153,7 +151,7 @@ public class FileSuport implements IFileSuport {
             properties.load(getClass().getResourceAsStream(FileSuport.CONFIG_SLIDE));
             location = properties.getProperty("location");
         } catch (IOException e) {
-            System.out.println("location->NOT FOUND");
+            throw new RuntimeException(e);
         }
         return location;
     }

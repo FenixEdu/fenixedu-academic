@@ -140,27 +140,6 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear impl
         } catch (ExcepcaoPersistencia ex) {
             throw new FenixServiceException(ex);
         }
-        //		serviceEndTime = Calendar.getInstance();
-
-        //		long totalServiceRuntime = serviceEndTime.getTimeInMillis() -
-        // serviceStartTime.getTimeInMillis();
-        //		long queryRuntime = queryEndTime.getTimeInMillis() -
-        // queryStartTime.getTimeInMillis();
-        //		long transformerRuntime =
-        //			transformerEndTime.getTimeInMillis() -
-        // transformerStartTime.getTimeInMillis();
-        //		long serviceRuntime = totalServiceRuntime - queryRuntime -
-        // transformerRuntime;
-        //
-        //		System.out.println("Query runtime = [" + (queryRuntime / 1000) +
-        // "]s");
-        //		System.out.println("Transformer runtime = [" + (transformerRuntime /
-        // 1000) + "]s");
-        //		System.out.println("Service runtime = [" + (serviceRuntime / 1000) +
-        // "]s");
-        //		System.out.println("------------------------------------");
-        //		System.out.println("Total runtime = [" + (totalServiceRuntime /
-        // 1000) + "]s");
 
         return infoShifts;
 

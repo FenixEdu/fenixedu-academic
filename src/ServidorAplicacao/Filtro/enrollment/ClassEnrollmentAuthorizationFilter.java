@@ -35,8 +35,6 @@ public class ClassEnrollmentAuthorizationFilter extends Filtro {
     public void execute(ServiceRequest request, ServiceResponse response) throws FilterException,
             Exception {
 
-        System.out.println("Inside filter.");
-
         IUserView id = getRemoteUser(request);
 
         ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
@@ -61,7 +59,6 @@ public class ClassEnrollmentAuthorizationFilter extends Filtro {
                             .getDegreeCurricularPlan());
             if (enrolmentPeriodInClasses == null || enrolmentPeriodInClasses.getStartDate() == null
                     || enrolmentPeriodInClasses.getEndDate() == null) {
-                System.out.println("CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan");
                 throw new CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan();
             }
 
@@ -82,13 +79,10 @@ public class ClassEnrollmentAuthorizationFilter extends Filtro {
                 buffer.append(startDateString);
                 buffer.append(" - ");
                 buffer.append(endDateString);
-                System.out.println("OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan");
                 throw new OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan(buffer
                         .toString());
             }
-            System.out.println("Exiting filter normally.");
         } else {
-            System.out.println("NoActiveStudentCurricularPlanOfCorrectTypeException");
             throw new NoActiveStudentCurricularPlanOfCorrectTypeException();
         }
     }

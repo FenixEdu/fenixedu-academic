@@ -119,8 +119,6 @@ public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDisp
 					 request.setAttribute(SessionConstants.EXECUTION_PERIOD, selectedExecutionPeriod);
 					 request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, selectedExecutionPeriod
 								.getIdInternal().toString());
-				 } else {
-					 System.out.println("ERROR - InitateSessionDA: No executionPeriod in request");
 				 }
 				 //----------------------------------------------------------
         	    Object arg[] = {degreeCurricularPlanId,(Integer)indexForm.get("indice")};

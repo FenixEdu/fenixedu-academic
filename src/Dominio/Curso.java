@@ -59,11 +59,8 @@ public class Curso extends DomainObject implements ICurso {
             Class classDefinition = Class.forName(getConcreteClassForDegreeCurricularPlans());
             degreeCurricularPlan = (IDegreeCurricularPlan) classDefinition.newInstance();
         } catch (InstantiationException e) {
-            System.out.println(e);
         } catch (IllegalAccessException e) {
-            System.out.println(e);
         } catch (ClassNotFoundException e) {
-            System.out.println(e);
         }
 
         return degreeCurricularPlan;

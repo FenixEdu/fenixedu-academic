@@ -92,7 +92,6 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
                 && !studentUsernameToAdd.equalsIgnoreCase(userView.getUtilizador())
                 && idInternal != null && !idInternal.equals("") && StringUtils.isNumeric(idInternal)) {
             Object[] args = { new Integer(idInternal), studentUsernameToAdd };
-            System.out.println("Adding student: " + studentUsernameToAdd);
             try {
                 ServiceUtils.executeService(userView, "AddStudentToFinalDegreeWorkStudentGroup", args);
             } catch (FenixServiceException ex) {
@@ -206,7 +205,6 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
                 && !idInternal.equals("") && StringUtils.isNumeric(idInternal)
                 && orderOfProposalPreference != null && !orderOfProposalPreference.equals("")
                 && StringUtils.isNumeric(orderOfProposalPreference)) {
-            System.out.println("Calling ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy.");
             Object[] args = { new Integer(idInternal), new Integer(selectedGroupProposal),
                     new Integer(orderOfProposalPreference) };
             ServiceUtils.executeService(userView,

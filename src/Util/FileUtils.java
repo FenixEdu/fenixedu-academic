@@ -58,8 +58,6 @@ public class FileUtils {
 
             final FileWriter fileWriter = new FileWriter(file, append);
 
-            System.out.println("Appending to file: " + filename + " - " + fileContents);
-
             fileWriter.write(fileContents);
             fileWriter.close();
         }

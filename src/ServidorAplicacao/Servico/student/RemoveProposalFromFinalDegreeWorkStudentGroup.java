@@ -59,8 +59,6 @@ public class RemoveProposalFromFinalDegreeWorkStudentGroup implements IService {
 
         public boolean evaluate(Object arg0) {
             IGroupProposal groupProposal = (IGroupProposal) arg0;
-            System.out.println("" + groupProposalID + " == " + groupProposal.getIdInternal() + "==>"
-                    + groupProposalID.equals(groupProposal.getIdInternal()));
             return groupProposalID.equals(groupProposal.getIdInternal());
         }
 

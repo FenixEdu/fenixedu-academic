@@ -49,10 +49,8 @@ public class EditExternalActivityTeacherAuthorizationFilter extends EditDomainOb
 
             return externalActivity.getTeacher().equals(teacher);
         } catch (ExcepcaoPersistencia e) {
-            System.out.println("Filter error(ExcepcaoPersistente): " + e.getMessage());
             return false;
         } catch (Exception e) {
-            System.out.println("Filter error(Unknown): " + e.getMessage());
             return false;
         }
     }

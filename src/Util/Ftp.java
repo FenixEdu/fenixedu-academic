@@ -36,9 +36,6 @@ public class Ftp extends FenixUtil {
         _urlFTP = _properties.getProperty("IST.FTP.server.urlFTP");
         _comandoSCP = _properties.getProperty("IST.FTP.scp.command");
         _argsSCP = _properties.getProperty("IST.FTP.scp.args");
-        if (_userName == null || _password == null) {
-            System.out.println("FtpFicheiro: propriedades indefinidas.");
-        }
         return;
     }
 
@@ -62,8 +59,6 @@ public class Ftp extends FenixUtil {
                 System.err.println("FTP server refused connection.");
                 throw new IOException("error.impossible.submit");
             }
-            System.out.println("Connected to " + _urlFTP);
-            System.out.print(ftp.getReplyString());
 
             ftp.login(_userName, _password);
             InputStream inputStream = new FileInputStream(System.getProperty("java.io.tmpdir")
@@ -71,7 +66,6 @@ public class Ftp extends FenixUtil {
 
             ftp.storeFile(caminho + nomeFicheiro, inputStream);
             inputStream.close();
-            System.out.println("Going to disconnect from " + _urlFTP);
             ftp.disconnect();
 
         } catch (IOException e) {
@@ -108,8 +102,6 @@ public class Ftp extends FenixUtil {
                 System.err.println("FTP server refused connection.");
                 throw new IOException("error.impossible.submit");
             }
-            System.out.println("Connected to " + _urlFTP);
-            System.out.print(ftp.getReplyString());
 
             ftp.login(_userName, _password);
             Iterator iter = files.iterator();
@@ -122,7 +114,6 @@ public class Ftp extends FenixUtil {
                 inputStream.close();
             }
 
-            System.out.println("Going to disconnect from " + _urlFTP);
             ftp.disconnect();
 
         } catch (IOException e) {
@@ -162,8 +153,6 @@ public class Ftp extends FenixUtil {
             Runtime runtime = Runtime.getRuntime();
             Process proc = runtime.exec(command);
 
-            //			System.out.println(command);
-
             // check for scp failure
             try {
                 if (proc.waitFor() != 0) {
@@ -175,48 +164,8 @@ public class Ftp extends FenixUtil {
 
         } catch (IOException e) {
             System.err.println("Could not connect to server.");
-            e.printStackTrace();
             throw new IOException("error.impossible.submit");
         }
     }
 
-    //    public static void enviarFicheiroSFTP(String nomeFicheiroConfig, String
-    // nomeFicheiro, String caminho) throws IOException {
-    //        carregaPropriedades(nomeFicheiroConfig);
-    //
-    //        try {
-    //            
-    //// String[] cmd = new String[3];
-    ////
-    //// cmd[0] = _comandoSFTP ;
-    //// cmd[1] = nomeFicheiro ;
-    //// cmd[2] = _userName + "@" + _urlFTP + ":" + caminho;
-    //
-    //            String cmd= _comandoSFTP + " " + System.getProperty("java.io.tmpdir")
-    //            + File.separator + nomeFicheiro + " " + _userName + "@" + _urlFTP + ":" +
-    // caminho;
-    //            
-    //            Process proc = Runtime.getRuntime().exec(cmd);
-    //            
-    //            //scp ficheiro news@ci.ist.utl.pt:/xpto/ola
-    //            
-    //// try
-    //// {
-    //// InputStreamReader isr = new InputStreamReader(proc.getInputStream());
-    //// BufferedReader br = new BufferedReader(isr);
-    //// String line=null;
-    //// while ( (line = br.readLine()) != null)
-    //// System.out.println(">" + line);
-    //// } catch (IOException ioe)
-    //// {
-    //// ioe.printStackTrace();
-    //// }
-    //
-    //            
-    //        } catch (IOException e) {
-    //            System.err.println("Could not connect to server.");
-    //            e.printStackTrace();
-    //            throw new IOException("error.impossible.submit");
-    //        }
-    //    }
 }

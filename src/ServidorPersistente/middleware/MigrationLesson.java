@@ -80,8 +80,6 @@ public class MigrationLesson {
 
     public void addHalfHour(SOPAulas halfHour) {
         if (!belongTo(halfHour) && !isNextTo(halfHour)) {
-            System.out.println(halfHour);
-            System.out.println(this);
             throw new IllegalStateException("Are you trying to add an inconsistent half hour! belongs="
                     + belongTo(halfHour) + ";isNext=" + isNextTo(halfHour));
         }
@@ -277,7 +275,6 @@ public class MigrationLesson {
      */
     public void setMigrationShift(MigrationShift migrationShift) {
         if (this.migrationShift != null) {
-            System.out.println(migrationShift.getMigrationExecutionCourse().toString());
             throw new IllegalArgumentException("Setting another shift!");
         }
         this.migrationShift = migrationShift;

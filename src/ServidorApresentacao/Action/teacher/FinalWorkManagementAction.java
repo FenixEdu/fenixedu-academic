@@ -592,7 +592,6 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
         DynaActionForm finalWorkAttributionForm = (DynaActionForm) form;
 
         String selectedGroupProposalOID = (String) finalWorkAttributionForm.get("selectedGroupProposal");
-        System.out.println("selectedGroupProposalOID= " + selectedGroupProposalOID);
 
         IUserView userView = SessionUtils.getUserView(request);
 

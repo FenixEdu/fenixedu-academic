@@ -355,7 +355,6 @@ public class ExecutionCourseOJB extends PersistentObjectOJB implements IPersiste
 			   List executionArrayName = new ArrayList();
 			   List executionArraySigla = new ArrayList();
 			   Iterator iterator = executionDegreeList.iterator();
-			   System.out.println("NO OJB" + executionDegreeList.size());		 
 			   while (iterator.hasNext()) {
 
 				ICursoExecucao cursoExecucao = (ICursoExecucao)iterator.next();

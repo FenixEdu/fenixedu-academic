@@ -267,45 +267,4 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
         return newEnrolmentList;
     }
 
-    //	public static void main(String[] args) throws ExcepcaoPersistencia{
-    //		
-    //		SuportePersistenteOJB.getInstance().iniciarTransaccao();
-    //		ICurso degree =
-    // SuportePersistenteOJB.getInstance().getICursoPersistente().readBySigla("MC");
-    //		
-    //		IDegreeCurricularPlan degreeCurricularPlan =
-    // SuportePersistenteOJB.getInstance().getIPersistentDegreeCurricularPlan().readByNameAndDegree(
-    //			"MC02/03", degree);
-    //			
-    //			
-    //			
-    //		System.out.println();
-    //			
-    //		IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory
-    // =
-    // DegreeCurricularPlanStrategyFactory.getInstance();
-    //		IMasterDegreeCurricularPlanStrategy degreeCurricularPlanStrategy =
-    // (IMasterDegreeCurricularPlanStrategy)
-    // degreeCurricularPlanStrategyFactory.getDegreeCurricularPlanStrategy(degreeCurricularPlan);
-    //		
-    //		
-    //		IStudentCurricularPlan studentCurricularPlan =
-    // SuportePersistenteOJB.getInstance().getIStudentCurricularPlanPersistente().readActiveStudentCurricularPlan(
-    //				new Integer(5325), TipoCurso.MESTRADO_OBJ);
-    //		
-    //		
-    //		System.out.println(degreeCurricularPlanStrategy.calculateStudentRegularAverage(studentCurricularPlan));
-    //				
-    //		SuportePersistenteOJB.getInstance().confirmarTransaccao();
-    //		
-    //		
-    //		IDegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
-    //		DegreeCurricularPlanStrategy degreeCurricularPlanStrategy = new
-    // DegreeCurricularPlanStrategy(degreeCurricularPlan);
-    //		degreeCurricularPlan.setMarkType(MarkType.TYPE20_OBJ);
-    //		
-    //		System.out.println(degreeCurricularPlanStrategy.checkMark("RE"));
-
-    //	}
-
 }

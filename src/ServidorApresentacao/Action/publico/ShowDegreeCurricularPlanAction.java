@@ -124,8 +124,6 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction {
             request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, selectedExecutionPeriod
                     .getIdInternal().toString());
 
-        } else {
-            System.out.println("ERROR - InitateSessionDA: No executionPeriod in request");
         }
 
         /** *************************************************** */

@@ -252,7 +252,6 @@ public class ReadFilteredExamsMapList implements IServico {
 				   }
 			   }
 			   infoExamsMap.setExecutionCourses(infoExecutionCourses);
-			System.out.println(infoExamsMap.getInfoExecutionDegree().getIdInternal());
 		   } catch (ExcepcaoPersistencia ex) {
 			   ex.printStackTrace();
 		   }

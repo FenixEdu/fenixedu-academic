@@ -110,7 +110,6 @@ public class ManageClassDA extends FenixClassAndExecutionDegreeAndCurricularYear
         InfoShift infoShift = null;
         try {
             infoShift = (InfoShift) ServiceUtils.executeService(userView, "ReadShiftByOID", args);
-            //System.out.println("shift= " + infoShift);
         } catch (FenixServiceException e) {
             throw new FenixActionException();
         }

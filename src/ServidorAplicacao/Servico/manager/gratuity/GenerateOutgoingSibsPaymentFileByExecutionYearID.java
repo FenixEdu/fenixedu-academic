@@ -158,8 +158,6 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID implements IServic
 
             }
 
-            //System.out.println(outgoingSibsPaymentFile.toString());
-
             // add file footer
             addFooter(outgoingSibsPaymentFile, totalLines);
 
