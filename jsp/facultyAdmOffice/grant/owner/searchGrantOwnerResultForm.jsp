@@ -81,18 +81,7 @@
 	</logic:iterate>
 </table>
 
-<br/>
+<br/><br/>
 
-<table class="listClasses" align="center">
-	<tr>
-		<td>
-			Caso queira criar uma nova pessoa bolseira clique neste botão: 
-			<!-- Button to create a new Person Grant Owner -->
-			<html:form action="/editGrantOwner.do?method=prepareEditGrantOwnerForm">
-				<html:submit styleClass="inputbutton">
-					<bean:message key="button.createPersonGrantOwner"/>
-				</html:submit>		
-			</html:form>	
-		</td>
-	</tr>
-</table>
+Caso queira criar uma nova pessoa bolseira clique
+<html:link page="/editGrantOwner.do?method=prepareEditGrantOwnerForm">aqui.</html:link>

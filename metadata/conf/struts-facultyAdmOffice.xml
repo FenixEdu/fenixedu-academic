@@ -11,7 +11,7 @@
 
 			<form-bean name="voidForm" 
 				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-				<!-- Form vazio -->
+				<!-- Empty Form -->
 			</form-bean>
 		
 			<form-bean name="teacherSearchForm" 
@@ -22,39 +22,28 @@
 			
 			<form-bean name="searchGrantOwnerForm" 
 				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-				<!-- Dados do fomulário de procura por nome ou documento de identificação -->
+				<!-- Values of search by name and/or identification document -->
 				<form-property name="name" type="java.lang.String"/>
 				<form-property name="idNumber" type="java.lang.String"/>
 				<form-property name="idType" type="java.lang.Integer"/>
+				<form-property name="page" type="java.lang.Integer"/>
 			</form-bean>
 			
 			<form-bean name="searchGrantOwnerByNumberForm" 
 				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-				<!-- Dados do fomulário de procura por número de GrantOwmer -->
+				<!-- Value of search by Grant Owner Number -->
 				<form-property name="idGrantOwner" type="java.lang.String"/>
+				<form-property name="page" type="java.lang.Integer"/>
 			</form-bean>
 			
-			<form-bean name="editGrantContractForm" 
-				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-				<form-property name="idInternal" type="java.lang.Integer"/>
-				<form-property name="contractNumber" type="java.lang.String"/>
-				<form-property name="dateBeginContract" type="java.lang.String"/>
-				<form-property name="dateEndContract" type="java.lang.String"/>
-				<form-property name="endContractMotive" type="java.lang.String"/>
-				<form-property name="grantType" type="java.lang.String"/>
-				<form-property name="grantResponsibleTeacher" type="java.lang.String"/>
-				<form-property name="grantOrientationTeacher" type="java.lang.String"/>
-				<form-property name="idGrantContract" type="java.lang.Integer"/>
-			</form-bean>
-
 			<form-bean name="editGrantOwnerForm" 
 				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-				<!-- Dados do bolseiro -->
+				<!-- Grant Owner values -->
 				<form-property name="idInternal" type="java.lang.String"/>
 				<form-property name="grantOwnerNumber" type="java.lang.String"/>
 				<form-property name="cardCopyNumber" type="java.lang.String"/>
 				<form-property name="dateSendCGD" type="java.lang.String"/>
-				<!-- Dados da pessoa associada a bolseiro -->
+				<!-- Person Grant Owner Values -->
 				<form-property name="idInternalPerson" type="java.lang.String"/>
 				<form-property name="idNumber" type="java.lang.String"/>				
 				<form-property name="idLocation" type="java.lang.String"/>				
@@ -88,7 +77,25 @@
 				<form-property name="sex" type="java.lang.Integer"/>								
 				<form-property name="maritalStatus" type="java.lang.Integer"/>	
 				<form-property name="country" type="java.lang.Integer"/>
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
 			</form-bean>
+			
+			<form-bean name="editGrantContractForm" 
+				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+				<form-property name="idInternal" type="java.lang.Integer"/>
+				<form-property name="contractNumber" type="java.lang.String"/>
+				<form-property name="dateBeginContract" type="java.lang.String"/>
+				<form-property name="dateEndContract" type="java.lang.String"/>
+				<form-property name="endContractMotive" type="java.lang.String"/>
+				<form-property name="grantType" type="java.lang.String"/>
+				<form-property name="grantResponsibleTeacher" type="java.lang.String"/>
+				<form-property name="grantResponsibleTeacherIdInternal" type="java.lang.Integer"/>
+				<form-property name="grantOrientationTeacher" type="java.lang.String"/>
+				<form-property name="grantOrientationTeacherIdInternal" type="java.lang.Integer"/>
+				<form-property name="idGrantContract" type="java.lang.Integer"/>
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+			</form-bean>
+			
 			
     </form-beans>
 
@@ -101,7 +108,7 @@
 		<exception type="ServidorAplicacao.NotExecutedException"
 		  	       key="ServidorAplicacao.NotExecutedException"
 		  	       path="/naoExecutado.do"
-		  	       handler="ServidorApresentacao.config.FenixExceptionHandler" />
+		  	       handler="ServidorApresentacao.config.FenixExceptionHandler" />		  	       
 		<exception type="ServidorAplicacao.Servico.ExcepcaoInexistente"
 			       key="ServidorAplicacao.Servico.ExcepcaoInexistente"
 			       path="/naoExistente.do"
@@ -140,6 +147,7 @@
 			scope="request"
    			parameter="method"
    			type="ServidorApresentacao.Action.grant.owner.SearchGrantOwnerAction"
+     		validate="true"
    			className="ServidorApresentacao.mapping.framework.SearchActionMapping">
 			<set-property property="serviceName" value="SearchGrantOwner"/>
   			<set-property property="objectAttribute" value="infoGrantOwner"/>
@@ -149,7 +157,6 @@
   			<forward name="list-one" path="searchGrantOwnerResult"/> 
     		<forward name="list-many" path="searchGrantOwnerResult"/>
     </action>
-    <!-- ================================================================================= -->
     
     <!-- ===================== USE CASE: SEARCH GRANT OWNER BY NUMBER ============================== -->
 	<action path="/searchGrantOwnerByNumber" 
@@ -157,13 +164,13 @@
 			name="searchGrantOwnerByNumberForm" 
 			scope="request"
    			parameter="method"
+		    validate="true"
    			type="ServidorApresentacao.Action.grant.owner.SearchGrantOwnerByNumberAction">
    			<forward name="search-succesfull" path="searchGrantOwnerResult"/>
    			<forward name="search-unSuccesfull" path="/searchGrantOwner.do?page=0&amp;method=searchForm"/>
     </action>
 	
-    <!-- ================================================================================= -->
-    <!-- ===================== USE CASE: CREATE GRANT OWNER ============================== -->
+    <!-- ===================== USE CASE: EDIT GRANT OWNER ============================== -->
 	<action path="/editGrantOwner" 
 			input="/editGrantOwner.do?page=0&amp;method=prepareEditGrantOwnerForm" 
 			name="editGrantOwnerForm" 
@@ -188,13 +195,14 @@
 
     <!-- ===================== USE CASE: EDIT GRANT CONTRACT ============================== -->
 	<action path="/editGrantContract" 
-			input="/editGrantContract.do?page=0&amp;method=prepareEditGrantContract" 
+			input="/editGrantContract.do?page=0&amp;method=prepareEditGrantContractForm" 
 			name="editGrantContractForm" 
 			scope="request"
    			parameter="method"
    			type="ServidorApresentacao.Action.grant.contract.EditGrantContractAction">
   			<forward name="edit-grant-contract" path="editGrantContractForm"/>
-  			<forward name="manage-grant-owner" path="/manageGrantOwner.do?method=prepareManageGrantOwnerForm"/> 
+  			<forward name="manage-grant-owner" path="/manageGrantOwner.do?method=prepareManageGrantOwnerForm"/>
+  			<forward name="search-main-page" path="/searchGrantOwner.do?page=0&amp;method=searchForm"/>
     </action>
     <!-- ================================================================================= -->
 

@@ -180,7 +180,9 @@ public abstract class EditDomainObjectService implements IServico
             
             persistentObject.simpleLockWrite(domainObject);
             Integer ackOptLock = domainObject.getAckOptLock();
+            Integer id = domainObject.getIdInternal();
             PropertyUtils.copyProperties(domainObject, objectToEdit);
+            domainObject.setIdInternal(id);
             domainObject.setAckOptLock(ackOptLock);
             fillAssociatedObjects(domainObject, persistentObject);
             

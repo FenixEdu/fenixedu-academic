@@ -3,6 +3,10 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
+<table class="listClasses" align="center">
+<tr><td>Preencha correctamente o formulário (não deixando campos obrigatórios em branco).</td></tr></table>
+<br/><strong><p align="center">Edição de Contracto</p></strong><br/>
+
 <html:form action="/editGrantContract" style="display:inline">
 
 	<%-- Presenting errors --%>
@@ -18,6 +22,8 @@
 	<%-- contract --%>
 	<html:hidden property="idGrantContract"/>
 	<html:hidden property="contractNumber"/>
+	<html:hidden property="grantResponsibleTeacherIdInternal"/>
+	<html:hidden property="grantOrientationTeacherIdInternal"/>
 
 	<%-- grant owner --%>
 	<html:hidden property="idInternal"/>

@@ -87,7 +87,7 @@ public class ReadAllContractsByGrantOwner implements IService
 
 		Iterator contractIter = contracts.iterator();
 		ArrayList contractList = new ArrayList();
-		//gather information related to the each contract
+		//gather information related to each contract
 		while (contractIter.hasNext())
 		{
 			try

@@ -162,7 +162,7 @@ public class EditGrantOwner extends CreatePersonBaseClass implements IServico
             //Generate the GrantOwner's Person Username
             if (person.getUsername() == null)
                 person.setUsername(generateGrantOwnerPersonUsername(grantOwner.getNumber()));
-
+//TODO enviar excepcao para o caso do bolseiro existir?
         } catch (ExcepcaoPersistencia excepcaoPersistencia)
         {
             throw new FenixServiceException(excepcaoPersistencia.getMessage());

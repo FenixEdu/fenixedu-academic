@@ -11,6 +11,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -25,6 +27,20 @@ import DataBeans.grant.contract.InfoGrantType;
 import DataBeans.grant.owner.InfoGrantOwner;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.grant.GrantContractEndDateBeforeBeginDateException;
+import ServidorAplicacao.Servico.exceptions.grant.GrantOrientationTeacherNotFoundException;
+import ServidorAplicacao
+	.Servico
+	.exceptions
+	.grant
+	.GrantOrientationTeacherPeriodNotWithinContractPeriodException;
+import ServidorAplicacao.Servico.exceptions.grant.GrantResponsibleTeacherNotFoundException;
+import ServidorAplicacao
+	.Servico
+	.exceptions
+	.grant
+	.GrantResponsibleTeacherPeriodNotWithinContractPeriodException;
+import ServidorAplicacao.Servico.exceptions.grant.GrantTypeNotFoundException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
@@ -36,6 +52,26 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 public class EditGrantContractAction extends DispatchAction
 {
+	/*
+	 * Sets an error to be displayed in the page and sets the mapping forward
+	 */
+	private ActionForward setError(
+		HttpServletRequest request,
+		ActionMapping mapping,
+		String errorMessage,
+		String forwardPage,
+		Object actionArg)
+	{
+		ActionErrors errors = new ActionErrors();
+		ActionError error = new ActionError(errorMessage,actionArg);
+		errors.add(errorMessage, error);
+		saveErrors(request, errors);
+
+		if (forwardPage != null)
+			return mapping.findForward(forwardPage);
+		else
+			return mapping.getInputForward();
+	}
 
 	/*
 	 * Fills the form with the correspondent data
@@ -56,32 +92,51 @@ public class EditGrantContractAction extends DispatchAction
 		DynaValidatorForm grantContractForm = (DynaValidatorForm) form;
 		if (idContract != null)
 		{
-			//Read the contract
-			Object[] args = { idContract };
-			InfoGrantContract infoGrantContract =
-				(InfoGrantContract) ServiceUtils.executeService(userView, "ReadGrantContract", args);
-			//Populate the form
-			setFormGrantContract(grantContractForm, infoGrantContract);
-			request.setAttribute("idInternal", infoGrantContract.getGrantOwnerInfo().getIdInternal());
-		} else
+			try
+			{
+				//Read the contract
+				Object[] args = { idContract };
+				InfoGrantContract infoGrantContract =
+					(InfoGrantContract) ServiceUtils.executeService(userView, "ReadGrantContract", args);
+
+				//Populate the form
+				setFormGrantContract(grantContractForm, infoGrantContract);
+				request.setAttribute(
+					"idInternal",
+					infoGrantContract.getGrantOwnerInfo().getIdInternal());
+			}
+			catch (FenixServiceException e)
+			{
+				return setError(request, mapping, "errors.grant.contract.read", null,null);
+			}
+		}
+		else
 		{
 			//New contract
 			if (request.getParameter("idInternal") != null)
 			{
 				grantContractForm.set("idInternal", new Integer(request.getParameter("idInternal")));
 				request.setAttribute("idInternal", new Integer(request.getParameter("idInternal")));
-			} else
+			}
+			else
 			{
-				//TODO!!! erro
+				return setError(request, mapping, "errors.grant.unrecoverable", "search-main-page",null);
 			}
 		}
 
-		//Read grant types for the contract
-		Object[] args2 = {
-		};
-		List grantTypeList = (List) ServiceUtils.executeService(userView, "ReadAllGrantTypes", args2);
-		request.setAttribute("grantTypeList", grantTypeList);
-
+		try
+		{
+			//Read grant types for the contract
+			Object[] args2 = {
+			};
+			List grantTypeList =
+				(List) ServiceUtils.executeService(userView, "ReadAllGrantTypes", args2);
+			request.setAttribute("grantTypeList", grantTypeList);
+		}
+		catch (FenixServiceException e)
+		{
+			return setError(request, mapping, "errors.grant.type.read", "manage-grant-owner",null);
+		}
 		return mapping.findForward("edit-grant-contract");
 	}
 
@@ -95,9 +150,52 @@ public class EditGrantContractAction extends DispatchAction
 		DynaValidatorForm editGrantContractForm = (DynaValidatorForm) form;
 		InfoGrantContract infoGrantContract = populateInfoFromForm(editGrantContractForm);
 
-		Object[] args = { infoGrantContract };
-		IUserView userView = SessionUtils.getUserView(request);
-		ServiceUtils.executeService(userView, "EditGrantContract", args);
+		Integer responsibleTeacherNumber =
+			infoGrantContract
+				.getGrantResponsibleTeacherInfo()
+				.getResponsibleTeacherInfo()
+				.getTeacherNumber();
+
+		Integer orientationTeacherNumber =
+			infoGrantContract
+				.getGrantOrientationTeacherInfo()
+				.getOrientationTeacherInfo()
+				.getTeacherNumber();
+
+		try
+		{
+			Object[] args = { infoGrantContract };
+			IUserView userView = SessionUtils.getUserView(request);
+			ServiceUtils.executeService(userView, "EditGrantContract", args);
+		}
+		catch (GrantResponsibleTeacherPeriodNotWithinContractPeriodException e)
+		{
+			return setError(request, mapping, "errors.grant.contract.responsible.teacher.periodconflict", null,null);
+		}
+		catch (GrantOrientationTeacherPeriodNotWithinContractPeriodException e)
+		{
+			return setError(request, mapping, "errors.grant.contract.orientation.teacher.periodconflict", null,null);
+		}
+		catch (GrantContractEndDateBeforeBeginDateException e)
+		{
+			return setError(request, mapping, "errors.grant.contract.conflictdates", null,null);
+		}
+		catch (GrantTypeNotFoundException e)
+		{
+			return setError(request, mapping, "errors.grant.type.not.found", null,null);
+		}
+		catch (GrantResponsibleTeacherNotFoundException e)
+		{
+			return setError(request, mapping, "errors.grant.contract.responsible.teacher.not.found", null,responsibleTeacherNumber);
+		}
+		catch (GrantOrientationTeacherNotFoundException e)
+		{
+			return setError(request, mapping, "errors.grant.contract.orientation.teacher.not.found", null,orientationTeacherNumber);
+		}
+		catch (FenixServiceException e)
+		{
+			return setError(request, mapping, "errors.grant.contract.bd.create", null,null);
+		}
 
 		request.setAttribute("idInternal", editGrantContractForm.get("idInternal"));
 
@@ -108,10 +206,9 @@ public class EditGrantContractAction extends DispatchAction
 	 * Populates form from InfoContract
 	 */
 	private void setFormGrantContract(DynaValidatorForm form, InfoGrantContract infoGrantContract)
-		throws Exception
 	{
 		//BeanUtils.copyProperties(form, infoGrantContract);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 		form.set("idGrantContract", infoGrantContract.getIdInternal());
 		if (infoGrantContract.getDateBeginContract() != null)
@@ -137,10 +234,15 @@ public class EditGrantContractAction extends DispatchAction
 				.getTeacherNumber()
 				.toString());
 		form.set("idInternal", infoGrantContract.getGrantOwnerInfo().getIdInternal());
+		form.set(
+			"grantResponsibleTeacherIdInternal",
+			infoGrantContract.getGrantResponsibleTeacherInfo().getIdInternal());
+		form.set(
+			"grantOrientationTeacherIdInternal",
+			infoGrantContract.getGrantOrientationTeacherInfo().getIdInternal());
 	}
 
 	private InfoGrantContract populateInfoFromForm(DynaValidatorForm editGrantContractForm)
-		throws FenixServiceException
 	{
 		InfoGrantContract infoGrantContract = new InfoGrantContract();
 		InfoGrantOrientationTeacher orientationTeacher = new InfoGrantOrientationTeacher();
@@ -151,7 +253,7 @@ public class EditGrantContractAction extends DispatchAction
 		InfoGrantType grantType = new InfoGrantType();
 
 		//Format of date in the form
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 		//set dateBeginContract and dateEndContract
 		try
@@ -176,16 +278,18 @@ public class EditGrantContractAction extends DispatchAction
 				orientationTeacher.setEndDate(
 					sdf.parse((String) editGrantContractForm.get("dateEndContract")));
 			}
-		} catch (ParseException e)
+		}
+		catch (ParseException e)
 		{
-			throw new FenixServiceException();
+			//return setError(request,mapping,"",null,null);
 		}
 
 		//set IdInternal
 		if (editGrantContractForm.get("idGrantContract") != null)
 			infoGrantContract.setIdInternal((Integer) editGrantContractForm.get("idGrantContract"));
 		//set grantContractNumber
-		if (editGrantContractForm.get("contractNumber") != null && !editGrantContractForm.get("contractNumber").equals(""))
+		if (editGrantContractForm.get("contractNumber") != null
+			&& !editGrantContractForm.get("contractNumber").equals(""))
 			infoGrantContract.setContractNumber(
 				new Integer((String) editGrantContractForm.get("contractNumber")));
 		infoGrantOwner.setIdInternal((Integer) editGrantContractForm.get("idInternal"));
@@ -201,12 +305,16 @@ public class EditGrantContractAction extends DispatchAction
 		orientationInfoTeacher.setTeacherNumber(
 			new Integer((String) editGrantContractForm.get("grantOrientationTeacher")));
 		orientationTeacher.setOrientationTeacherInfo(orientationInfoTeacher);
+		orientationTeacher.setIdInternal(
+			(Integer) editGrantContractForm.get("grantOrientationTeacherIdInternal"));
 		infoGrantContract.setGrantOrientationTeacherInfo(orientationTeacher);
 
 		//set grantResponsibleTeacher
 		responsibleInfoTeacher.setTeacherNumber(
 			new Integer((String) editGrantContractForm.get("grantResponsibleTeacher")));
 		responsibleTeacher.setResponsibleTeacherInfo(responsibleInfoTeacher);
+		responsibleTeacher.setIdInternal(
+			(Integer) editGrantContractForm.get("grantResponsibleTeacherIdInternal"));
 		infoGrantContract.setGrantResponsibleTeacherInfo(responsibleTeacher);
 
 		return infoGrantContract;

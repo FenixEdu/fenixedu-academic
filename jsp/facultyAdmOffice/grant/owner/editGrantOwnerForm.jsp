@@ -3,13 +3,17 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
+<br/><strong><p align="center">Edição de Bolseiro</p></strong>
+<table class="listClasses" align="center">
+<tr><td>Preencha correctamente o formulário (não deixando campos obrigatórios em branco).</td></tr></table>
+<br/><br/>
 <html:form action="/editGrantOwner" style="display:inline">
 
 	<%-- Presenting Errors--%>
 	<logic:messagesPresent>
 	<span class="error">
 		<html:errors/>
-	</span><br/>
+	</span><br/><br/>
 	</logic:messagesPresent>
 
 <html:hidden property="method" value="doEdit"/>
@@ -24,25 +28,16 @@
 <html:hidden property="password"/>
 <html:hidden property="idInternalPerson"/>
 
-
-<table class="listClasses" align="center">
-	<tr>
-		<td>Preencha correctamente o formulário (não deixando campos obrigatórios em branco).</td>
-	</tr>
-</table>
-
-<br/>
-
 <table>
 	<tr>
 		<td colspan="2" ><b><bean:message key="label.grant.owner.information"/></b></td>
 	</tr>
 	<tr>
-		<td align="left"><bean:message key="label.grant.owner.datesendcgd"/>:&nbsp;</td>
+		<td align="left"><bean:message key="label.grant.owner.dateSendCGD"/>:&nbsp;</td>
 		<td><html:text property="dateSendCGD"/></td>
 	</tr>
 	<tr>
-		<td align="left"><bean:message key="label.grant.owner.cardcopynumber"/>:&nbsp;</td>
+		<td align="left"><bean:message key="label.grant.owner.cardCopyNumber"/>:&nbsp;</td>
 		<td><html:text property="cardCopyNumber"/></td>
 	</tr>
 </table>

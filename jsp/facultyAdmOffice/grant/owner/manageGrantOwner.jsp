@@ -4,13 +4,18 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 
+<strong><p align="center">Gestão de Bolseiro</p></strong>
+<table class="listClasses" align="center">
+<tr><td>Esta é a página principal para gestão de informação do bolseiro.</td></tr></table>
+<br/><br/>
+
 <table>
 	<tr>
 		<td colspan="2"><b><bean:message key="label.grant.owner.information"/></b></td>
 	</tr>
   	<tr>
 		<td >
-			<bean:message key="label.grant.owner.datesendcgd"/>:&nbsp;
+			<bean:message key="label.grant.owner.dateSendCGD"/>:&nbsp;
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="dateSendCGD">
@@ -22,7 +27,7 @@
 	</tr>
 	<tr>
 		<td>
-			<bean:message key="label.grant.owner.cardcopynumber"/>:&nbsp;
+			<bean:message key="label.grant.owner.cardCopyNumber"/>:&nbsp;
 		</td>
 		<td>
 			<logic:present name="infoGrantOwner" property="cardCopyNumber">

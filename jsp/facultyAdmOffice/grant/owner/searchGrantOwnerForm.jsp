@@ -3,8 +3,10 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
-
 <html:form action="/searchGrantOwner">
+
+	<html:hidden property="method" value="doSearch"/>
+	<html:hidden property="page" value="1"/>
 
 	<%-- Presenting Errors--%>
 	<logic:messagesPresent>
@@ -12,10 +14,8 @@
 	<html:errors/>
 	</span></p><br/>
 	</logic:messagesPresent>    
-
-	<html:hidden property="method" value="doSearch"/>
-	<html:hidden property="page" value="1"/>
-
+	
+	<%-- Search Form --%>
 	<table>
 		<tr>
 			<td align="left"><bean:message key="label.grant.owner.name"/>:&nbsp;</td>
@@ -50,7 +50,7 @@
 	<table>
 		<tr>
 			<td align="left"><bean:message key="label.grant.owner.idInternal"/>:&nbsp;</td>
-			<td><html:text property="idGrantOwner"/>*</td>
+			<td><html:text property="idGrantOwner"/></td>
 		</tr>
 	</table>
 	

@@ -51,11 +51,13 @@ public class SearchGrantOwnerByNumberAction extends DispatchAction
 		} 
         else
 		{
+        	//Set the errors
 			ActionErrors errors = new ActionErrors();
 			String notMessageKey = "errors.grant.owner.not.found";
 			ActionError error = new ActionError(notMessageKey, idGrantOwner);
 			errors.add(notMessageKey, error);
 			saveErrors(request, errors);
+			
 			return mapping.findForward("search-unSuccesfull");
 		}
 	}

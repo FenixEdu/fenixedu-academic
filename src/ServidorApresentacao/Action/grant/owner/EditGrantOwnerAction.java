@@ -11,6 +11,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -20,7 +22,9 @@ import org.apache.struts.validator.DynaValidatorForm;
 import DataBeans.InfoCountry;
 import DataBeans.InfoPerson;
 import DataBeans.grant.owner.InfoGrantOwner;
+import Dominio.Country;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -30,11 +34,33 @@ import Util.TipoDocumentoIdentificacao;
 
 /**
  * @author Barbosa
- * @author Pica 
+ * @author Pica
  */
 
 public class EditGrantOwnerAction extends DispatchAction
 {
+	/*
+	 * Sets an error to be displayed in the page and sets the mapping forward
+	 */
+	private ActionForward setError(
+		HttpServletRequest request,
+		ActionMapping mapping,
+		String errorMessage,
+		String forwardPage,
+		Object actionArg)
+	{
+		ActionErrors errors = new ActionErrors();
+		String notMessageKey = errorMessage;
+		ActionError error = new ActionError(notMessageKey, actionArg);
+		errors.add(notMessageKey, error);
+		saveErrors(request, errors);
+
+		if (forwardPage != null)
+			return mapping.findForward(forwardPage);
+		else
+			return mapping.getInputForward();
+	}
+
 	/*
 	 * Fills the form with the correspondent data
 	 */
@@ -45,7 +71,7 @@ public class EditGrantOwnerAction extends DispatchAction
 		HttpServletResponse response)
 		throws Exception
 	{
-        //Get the information to search
+		//Get the information to search
 		String personUsername = null;
 		Integer idInternal = null;
 		if (request.getParameter("personUsername") != null)
@@ -58,8 +84,8 @@ public class EditGrantOwnerAction extends DispatchAction
 		 * idInternal null = person exists, but grant owner doesn't personId and idInternal null =
 		 * person doesn't exists
 		 */
-        InfoGrantOwner infoGrantOwner = new InfoGrantOwner();
-		if (idInternal != null)
+		InfoGrantOwner infoGrantOwner = new InfoGrantOwner();
+		if (idInternal != null && personUsername != null)
 		{
 			//Read the grant owner
 			Object[] args = { idInternal };
@@ -68,7 +94,8 @@ public class EditGrantOwnerAction extends DispatchAction
 					SessionUtils.getUserView(request),
 					"ReadGrantOwner",
 					args);
-		} else if (personUsername != null)
+		}
+		else if (personUsername != null)
 		{
 			//Read the person (grant owner doesn't exist)
 			Object[] args = { personUsername };
@@ -85,7 +112,6 @@ public class EditGrantOwnerAction extends DispatchAction
 		 * Fill the form (grant owner e person information)
 		 */
 		DynaValidatorForm grantOwnerInformationForm = (DynaValidatorForm) form;
-
 		if (infoGrantOwner.getIdInternal() != null)
 		{
 			//If Grant Owner exists
@@ -102,14 +128,20 @@ public class EditGrantOwnerAction extends DispatchAction
 		List documentTypeList = TipoDocumentoIdentificacao.toIntegerArrayList();
 		request.setAttribute("documentTypeList", documentTypeList);
 
-        List maritalStatusList = EstadoCivil.toIntegerArrayList();
+		List maritalStatusList = EstadoCivil.toIntegerArrayList();
 		request.setAttribute("maritalStatusList", maritalStatusList);
-		
+
 		List countryList =
 			(List) ServiceUtils.executeService(
 				SessionUtils.getUserView(request),
 				"ReadAllCountries",
 				null);
+		//Adding a select country line to the list (presentation reasons)
+		Country selectCountry = new Country();
+		selectCountry.setIdInternal(new Integer(0));
+		selectCountry.setName("[Escolha um país]");
+		countryList.add(0, selectCountry);
+
 		request.setAttribute("countryList", countryList);
 
 		if (infoGrantOwner.getIdInternal() != null)
@@ -128,26 +160,43 @@ public class EditGrantOwnerAction extends DispatchAction
 		DynaValidatorForm editGrantOwnerForm = (DynaValidatorForm) form;
 		InfoGrantOwner infoGrantOwner = populateInfoFromForm(editGrantOwnerForm);
 
-        //Edit Grant Owner
-		Object[] args = { infoGrantOwner };
-		IUserView userView = SessionUtils.getUserView(request);
-		ServiceUtils.executeService(userView, "EditGrantOwner", args);
+		try
+		{
+			//Edit Grant Owner
+			Object[] args = { infoGrantOwner };
+			IUserView userView = SessionUtils.getUserView(request);
+			ServiceUtils.executeService(userView, "EditGrantOwner", args);
+		}
+		catch (ExistingServiceException e)
+		{
+			return setError(request, mapping, "errors.grant.owner.personexists",null,null);
+		}
+		catch (FenixServiceException e)
+		{
+			return setError(request, mapping, "errors.grant.owner.exists",null,null);
+		}
 
-		//Read the grant owner by person
-		Object[] args2 = { infoGrantOwner.getPersonInfo().getIdInternal()};
-		infoGrantOwner =
-			(InfoGrantOwner) ServiceUtils.executeService(
-				SessionUtils.getUserView(request),
-				"ReadGrantOwnerByPerson",
-				args2);
+		try
+		{
+			//Read the grant owner by person
+			Object[] args2 = { infoGrantOwner.getPersonInfo().getIdInternal()};
+			infoGrantOwner =
+				(InfoGrantOwner) ServiceUtils.executeService(
+					SessionUtils.getUserView(request),
+					"ReadGrantOwnerByPerson",
+					args2);
+		}
+		catch (FenixServiceException e)
+		{
+			return setError(request, mapping, "errors.grant.owner.bd.read",null,null);
+		}
 
 		if (infoGrantOwner != null)
 			request.setAttribute("idInternal", infoGrantOwner.getIdInternal());
 		else
-        {
-		    //TODO... excepcao
-        }         
-
+		{
+			return setError(request, mapping, "errors.grant.owner.readafterwrite",null,null);
+		}
 		return mapping.findForward("manage-grant-owner");
 	}
 
@@ -158,15 +207,15 @@ public class EditGrantOwnerAction extends DispatchAction
 		throws Exception
 	{
 		InfoPerson infoPerson = infoGrantOwner.getPersonInfo();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 		form.set("idInternalPerson", infoPerson.getIdInternal().toString());
 		form.set("idNumber", infoPerson.getNumeroDocumentoIdentificacao());
 		if (infoPerson.getLocalEmissaoDocumentoIdentificacao() != null)
 			form.set("idLocation", infoPerson.getLocalEmissaoDocumentoIdentificacao());
 		if (infoPerson.getDataEmissaoDocumentoIdentificacao() != null)
-			form.set("idDate", infoPerson.getDataEmissaoDocumentoIdentificacao().toString());
-		if (infoPerson.getDataValidadeDocumentoIdentificacao() != null) 
+			form.set("idDate", sdf.format(infoPerson.getDataEmissaoDocumentoIdentificacao()));
+		if (infoPerson.getDataValidadeDocumentoIdentificacao() != null)
 			form.set("idValidDate", sdf.format(infoPerson.getDataValidadeDocumentoIdentificacao()));
 		if (infoPerson.getNome() != null)
 			form.set("name", infoPerson.getNome());
@@ -236,7 +285,7 @@ public class EditGrantOwnerAction extends DispatchAction
 			form.set("cardCopyNumber", infoGrantOwner.getCardCopyNumber().toString());
 		if (infoGrantOwner.getDateSendCGD() != null)
 		{
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			form.set("dateSendCGD", sdf.format(infoGrantOwner.getDateSendCGD()));
 		}
 	}
@@ -251,7 +300,7 @@ public class EditGrantOwnerAction extends DispatchAction
 		InfoPerson infoPerson = new InfoPerson();
 
 		//Format of date in the form
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 		try
 		{
@@ -269,7 +318,8 @@ public class EditGrantOwnerAction extends DispatchAction
 			if (editGrantOwnerForm.get("dateSendCGD") != null
 				&& !editGrantOwnerForm.get("dateSendCGD").equals(""))
 				infoGrantOwner.setDateSendCGD(sdf.parse((String) editGrantOwnerForm.get("dateSendCGD")));
-		} catch (ParseException e)
+		}
+		catch (ParseException e)
 		{
 			throw new FenixServiceException();
 		}
@@ -281,7 +331,7 @@ public class EditGrantOwnerAction extends DispatchAction
 		infoGrantOwner.setCardCopyNumber(new Integer((String) editGrantOwnerForm.get("cardCopyNumber")));
 
 		//Person
-		infoGrantOwner.setIdInternal(new Integer((String) editGrantOwnerForm.get("idInternalPerson")));
+		infoPerson.setIdInternal(new Integer((String) editGrantOwnerForm.get("idInternalPerson")));
 		infoPerson.setNumeroDocumentoIdentificacao((String) editGrantOwnerForm.get("idNumber"));
 		infoPerson.setLocalEmissaoDocumentoIdentificacao((String) editGrantOwnerForm.get("idLocation"));
 		infoPerson.setNome((String) editGrantOwnerForm.get("name"));

@@ -3408,7 +3408,7 @@
     </service>
     <service>
         <name>ReadDetailedTeacherProfessorshipsByExecutionYear</name>
-        <implementationClass> 
+        <implementationClass>
             ServidorAplicacao.Servico.teacher.professorship.ReadDetailedTeacherProfessorshipsByExecutionYear</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
@@ -3417,7 +3417,7 @@
     </service>
     <service>
         <name>UpdateTeacherExecutionYearResponsabilities</name>
-        <implementationClass> 
+        <implementationClass>
             ServidorAplicacao.Servico.teacher.professorship.UpdateTeacherExecutionYearResponsabilities</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
@@ -3571,7 +3571,7 @@
     </service>
     <service>
         <name>ReadDepartmentByTeacher</name>
-        <implementationClass> 
+        <implementationClass>
             ServidorAplicacao.Servico.department.ReadDepartmentByTeacher</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
@@ -5058,7 +5058,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains/>
-    </service>
+    </service>    
     <service>
         <name>ReadActiveDegreeCurricularPlanByID</name>
         <implementationClass> 
@@ -5247,7 +5247,7 @@
     </service>
     <service>
         <name>ReadAllContractsByGrantOwner</name>
-        <implementationClass> 
+        <implementationClass>
             ServidorAplicacao.Servico.grant.contract.ReadAllContractsByGrantOwner</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
@@ -5257,7 +5257,7 @@
     </service>
     <service>
         <name>ReadGrantContract</name>
-        <implementationClass> 
+        <implementationClass>
             ServidorAplicacao.Servico.grant.contract.ReadGrantContract</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
@@ -5265,56 +5265,57 @@
             <chain name="GrantOwnerManagerAuthorization"/>
         </filterChains>
     </service>
-    <service>
-        <name>ReadExecutionDegreesByExecutionPeriodId</name>
+   	<service>
+		<name>ReadExecutionDegreesByExecutionPeriodId</name>
         <implementationClass>
             ServidorAplicacao.Servico.manager.executionCourseManagement.ReadExecutionDegreesByExecutionPeriodId</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
+		<description/>
+		<isTransactional>true</isTransactional>
         <filterChains>
             <chain name="ManagerAuthorization"/>
         </filterChains>
     </service>
-    <service>
-        <name>ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear</name>
+   	<service>
+		<name>ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear</name>
         <implementationClass>
             ServidorAplicacao.Servico.manager.executionCourseManagement.ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
+		<description/>
+		<isTransactional>true</isTransactional>
         <filterChains>
             <chain name="ManagerAuthorization"/>
         </filterChains>
     </service>
-    <service>
-        <name>ReadInfoExecutionCourseByOID</name>
+   	<service>
+		<name>ReadInfoExecutionCourseByOID</name>
         <implementationClass>
             ServidorAplicacao.Servico.manager.executionCourseManagement.ReadInfoExecutionCourseByOID</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
+		<description/>
+		<isTransactional>true</isTransactional>
         <filterChains>
             <chain name="ManagerAuthorization"/>
         </filterChains>
     </service>
-    <service>
-        <name>DissociateCurricularCourseByExecutionCourseId</name>
+   	<service>
+		<name>DissociateCurricularCourseByExecutionCourseId</name>
         <implementationClass>
             ServidorAplicacao.Servico.manager.executionCourseManagement.DissociateCurricularCourseByExecutionCourseId</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
+		<description/>
+		<isTransactional>true</isTransactional>
         <filterChains>
             <chain name="ManagerAuthorization"/>
         </filterChains>
     </service>
-    <service>
-        <name>AssociateCurricularCoursesToExecutionCourse</name>
+   	<service>
+		<name>AssociateCurricularCoursesToExecutionCourse</name>
         <implementationClass>
             ServidorAplicacao.Servico.manager.executionCourseManagement.AssociateCurricularCoursesToExecutionCourse</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
+		<description/>
+		<isTransactional>true</isTransactional>
         <filterChains>
             <chain name="ManagerAuthorization"/>
         </filterChains>
     </service>
+    
     <service>
         <name>ReadProfessorshipsAndResponsibilitiesByExecutionDegree</name>
         <implementationClass> 
@@ -5324,28 +5325,28 @@
         <filterChains/>
     </service>
     <service>
-        <name>SearchPerson</name>
-        <implementationClass>ServidorAplicacao.Servico.person.SearchPerson</implementationClass>
-        <description>Service that find a person by number, name and/or email</description>
-        <isTransactional>true</isTransactional>
+    	<name>SearchPerson</name>
+    	<implementationClass>ServidorAplicacao.Servico.person.SearchPerson</implementationClass>
+    	<description>Service that find a person by number, name and/or email</description>
+    	<isTransactional>true</isTransactional>
         <filterChains>
             <chain name="ManagerAuthorization"/>
-        </filterChains>
+        </filterChains>            	
     </service>
     <service>
-        <name>ReadAllDepartments</name>
-        <description>Service that retrieves all departments from the database</description>
-        <implementationClass>ServidorAplicacao.Servico.department.ReadAllDepartments</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains/>
+    	<name>ReadAllDepartments</name>
+    	<description>Service that retrieves all departments from the database</description>
+    	<implementationClass>ServidorAplicacao.Servico.department.ReadAllDepartments</implementationClass>
+    	<isTransactional>true</isTransactional>
+        <filterChains/>                    	
     </service>
     <service>
-        <name>ReadProfessorshipsAndResponsibilitiesByDepartment</name>
-        <description>Service that retrieves all professorships by department from the database</description>
-        <implementationClass> 
+    	<name>ReadProfessorshipsAndResponsibilitiesByDepartment</name>
+    	<description>Service that retrieves all professorships by department from the database</description>
+        <implementationClass>
             ServidorAplicacao.Servico.publico.teachersBody.ReadProfessorshipsAndResponsibilitiesByDepartment</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains/>
+    	<isTransactional>true</isTransactional>
+        <filterChains/>                    	
     </service>
     <service>
         <name>EditGrantContract</name>
@@ -5386,41 +5387,41 @@
         </filterChains>
     </service>
     <service>
-        <name>ReadGratuitySituationByStudentCurricularPlan</name>
-        <description>Retrieves gratuity situation associated with this student</description>
+    	<name>ReadGratuitySituationByStudentCurricularPlan</name>
+    	<description>Retrieves gratuity situation associated with this student</description>
         <implementationClass>ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuitySituationByStudentCurricularPlan 
-            </implementationClass>
-        <isTransactional>True</isTransactional>
+    	</implementationClass>
+    	<isTransactional>True</isTransactional>
         <filterChains>
             <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
         </filterChains>
     </service>
     <service>
-        <name>EditGratuitySituationById</name>
-        <description>Servive that edit or create a gratuity situatuion</description>
+    	<name>EditGratuitySituationById</name>
+    	<description>Servive that edit or create a gratuity situatuion</description>
         <implementationClass>ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.EditGratuitySituationById 
-            </implementationClass>
-        <isTransactional>True</isTransactional>
+    	</implementationClass>
+    	<isTransactional>True</isTransactional>
         <filterChains>
             <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
         </filterChains>
     </service>
     <service>
-        <name>DeleteGratuitySituationById</name>
-        <description>Servive that delete a gratuity situatuion</description>
+    	<name>DeleteGratuitySituationById</name>
+    	<description>Servive that delete a gratuity situatuion</description>
         <implementationClass>ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.DeleteGratuitySituationById 
-            </implementationClass>
-        <isTransactional>True</isTransactional>
+    	</implementationClass>
+    	<isTransactional>True</isTransactional>
         <filterChains>
             <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
         </filterChains>
     </service>
     <service>
-        <name>ReadGratuityValuesByExecutionDegree</name>
-        <description>Retrieves gratuity values associated with this execution degree</description>
+    	<name>ReadGratuityValuesByExecutionDegree</name>
+    	<description>Retrieves gratuity values associated with this execution degree</description>
         <implementationClass>ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuityValuesByExecutionDegree 
-            </implementationClass>
-        <isTransactional>True</isTransactional>
+    	</implementationClass>
+    	<isTransactional>True</isTransactional>
         <filterChains>
             <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
         </filterChains>

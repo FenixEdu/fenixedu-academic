@@ -3,43 +3,133 @@
 <form-validation>
     <formset>
 
-        <!-- Initial form to serch a Grant Owner by Identification document 
+		<!-- Initial form to search a Grant Owner -->
         <form name="searchGrantOwnerForm">
             <field property="idNumber" depends="integer" page="1">
-                <msg name="number" key="errors.integer"/>
-                <arg0 key="idNumber"/>
+                <msg name="integer" key="errors.integer" resource="true"/>
+                <arg0 key="label.error"/>
             </field>
-        </form> -->
+        </form>
 
-        <!-- Initial form to search a Grant Owner by number 
-        <form name="searchGrantOwnerByNumberForm">
-            <field property="idGrantOwner" depends="required, integer" page="1">~
-                <msg name="number" key="errors.integer"/>
-                <arg0 key="idGrantOwner"/>
-            </field>
-        </form>     -->   
-
-        
-        <!-- Edit a Grant Owner information form -->
-    	<form name="createGrantOwnerForm">
-    		<field property="dateSendCGD" depends="required, mask, date" page="1">
+		<!-- Edit Grant Contract Form -->
+        <form name="editGrantContractForm">
+            <field property="dateBeginContract" depends="required, mask, date" page="1">
 				<msg name="date" key="errors.invalid.date"/>
-   				<msg name="mask" key="errors.invalid.date"/>
-				<arg0 key="message.dateSendCGD" resource="true"/>
+				<msg name="mask" key="errors.invalid.date"/>
+				<arg0 key="label.grant.contract.beginDate" resource="true"/>
 				<var>
-           		  <var-name>datePattern</var-name>
-           		  <var-value>dd/MM/yyyy</var-value>
-        		</var>
-        		<var>
-           		  <var-name>mask</var-name>
-           		  <var-value>^((.||..)/(.||..)/2...)$</var-value>
-        		</var>
-			</field>
+					<var-name>datePattern</var-name>
+				 	<var-value>dd/MM/yyyy</var-value>
+				</var>
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^((.||..)/(.||..)/2...)$</var-value>
+				</var>
+		    </field>
+            <field property="dateEndContract" depends="required, mask, date" page="1">
+				<msg name="date" key="errors.invalid.date"/>
+		   		<msg name="mask" key="errors.invalid.date"/>
+				<arg0 key="label.grant.contract.endDate" resource="true"/>
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>dd/MM/yyyy</var-value>
+	        	</var>
+		    	<var>
+					<var-name>mask</var-name>
+					<var-value>^((.||..)/(.||..)/2...)$</var-value>
+	        	</var>
+		    </field>	    
+            <field property="grantResponsibleTeacher" depends="required, integer" page="1">
+                <msg name="number" key="errors.integer"/>
+				<arg0 key="label.grant.contract.responsibleTeacher" resource="true"/>
+            </field>
+            <field property="grantOrientationTeacher" depends="required, integer" page="1">
+				<msg name="number" key="errors.integer"/>
+				<arg0 key="label.grant.contract.orientationTeacher" resource="true"/>
+		    </field>
+		</form>
+
+        <!-- Edit a Grant Owner form -->
+    	<form name="editGrantOwnerForm">
+			<field property="dateSendCGD" depends="required, mask, date" page="1">
+				<msg name="date" key="errors.invalid.date"/>
+				<msg name="mask" key="errors.invalid.date"/>
+				<arg0 key="label.grant.owner.dateSendCGD" resource="true"/>
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>dd/MM/yyyy</var-value>
+				</var>
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^((.||..)/(.||..)/2...)$</var-value>
+					</var>
+			</field>	    
 			<field property="cardCopyNumber" depends="integer" page="1">
 				<msg name="number" key="errors.integer"/>
-				<arg0 key="message.cardCopyNumber" resource="true"/>
+				<arg0 key="label.grant.owner.cardCopyNumber" resource="true"/>
 			</field>
+			<field property="idDate" depends="required, mask, date" page="1">
+				<msg name="date" key="errors.invalid.date"/>
+				<msg name="mask" key="errors.invalid.date"/>
+				<arg0 key="label.grant.owner.idDate" resource="true"/>
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>dd/MM/yyyy</var-value>
+				</var>
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^((.||..)/(.||..)/....)$</var-value>
+				</var>
+			</field>
+			<field property="idValidDate" depends="required, mask, date" page="1">
+				<msg name="date" key="errors.invalid.date"/>
+				<msg name="mask" key="errors.invalid.date"/>
+				<arg0 key="label.grant.owner.idValidDate" resource="true"/>
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>dd/MM/yyyy</var-value>
+				</var>
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^((.||..)/(.||..)/2...)$</var-value>
+				</var>
+			</field>
+			<field property="birthdate" depends="required, mask, date" page="1">
+				<msg name="date" key="errors.invalid.date"/>
+				<msg name="mask" key="errors.invalid.date"/>
+				<arg0 key="label.grant.owner.birthdate" resource="true"/>
+				<var>
+					<var-name>datePattern</var-name>
+					<var-value>dd/MM/yyyy</var-value>
+				</var>
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^((.||..)/(.||..)/....)$</var-value>
+				</var>
+			</field>
+			<field property="areaCode" depends="mask" page="2">
+				<msg name="mask" key="errors.invalid.zipCode"/>
+				<var>	
+					<var-name>mask</var-name>
+					<var-value>^\d{4}(-\d{3})$</var-value>
+				</var>
+            </field>
+            <field property="socialSecurityNumber" depends="integer" page="1">
+				<msg name="number" key="errors.integer"/>
+				<arg0 key="label.grant.contract.socialSecurityNumber" resource="true"/>
+			</field>
+			<field property="fiscalCode" depends="integer" page="1">
+				<msg name="number" key="errors.integer"/>
+				<arg0 key="label.grant.contract.fiscalCode" resource="true"/>
+			</field>  
+	    <!--Sera que estes valores tb tem que ser checados????
+	    	<form-property name="phone" type="java.lang.String"/>									
+		<form-property name="cellphone" type="java.lang.String"/>		
+		<form-property name="email" type="java.lang.String"/>	
+		<form-property name="homepage" type="java.lang.String"/>-->
     	</form>
+
     </formset>
 </form-validation>
+
 

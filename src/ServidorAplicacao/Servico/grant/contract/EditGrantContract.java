@@ -24,6 +24,7 @@ import Dominio.grant.contract.IGrantOrientationTeacher;
 import Dominio.grant.contract.IGrantResponsibleTeacher;
 import Dominio.grant.contract.IGrantType;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.grant.GrantContractEndDateBeforeBeginDateException;
 import ServidorAplicacao.Servico.exceptions.grant.GrantOrientationTeacherEndDateBeforeBeginDateException;
 import ServidorAplicacao.Servico.exceptions.grant.GrantOrientationTeacherNotFoundException;
 import ServidorAplicacao.Servico.exceptions.grant.GrantOrientationTeacherPeriodConflictException;
@@ -46,11 +47,9 @@ import ServidorPersistente.grant.IPersistentGrantType;
 /**
  * @author Barbosa
  * @author Pica
- *  
  */
 public class EditGrantContract extends ServidorAplicacao.Servico.framework.EditDomainObjectService
 {
-
 	private static EditGrantContract service = new EditGrantContract();
 	/**
 	 * The singleton access method of this class.
@@ -73,31 +72,16 @@ public class EditGrantContract extends ServidorAplicacao.Servico.framework.EditD
 		return "EditGrantContract";
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#clone2DomainObject(DataBeans.InfoObject)
-	 */
 	protected IDomainObject clone2DomainObject(InfoObject infoObject)
 	{
 		return Cloner.copyInfoGrantContract2IGrantContract((InfoGrantContract) infoObject);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
-	 */
 	protected IPersistentObject getIPersistentObject(ISuportePersistente sp)
 	{
 		return sp.getIPersistentGrantContract();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#readObjectByUnique(IDomainObject,ServidorPersistente.ISuportePersistente)
-	 */
 	protected IDomainObject readObjectByUnique(IDomainObject domainObject, ISuportePersistente sp)
 		throws ExcepcaoPersistencia
 	{
@@ -141,7 +125,8 @@ public class EditGrantContract extends ServidorAplicacao.Servico.framework.EditD
 				&& (beginOrientationDate.before(orientationTeacher.getEndDate())))
 				throw new GrantOrientationTeacherPeriodConflictException();
 
-		} catch (ExcepcaoPersistencia e)
+		}
+		catch (ExcepcaoPersistencia e)
 		{
 			throw new FenixServiceException();
 		}
@@ -176,9 +161,10 @@ public class EditGrantContract extends ServidorAplicacao.Servico.framework.EditD
 		ISuportePersistente sp)
 		throws FenixServiceException
 	{
-		IGrantContract grantContract = (IGrantContract) domainObjectToLock;
 		InfoGrantContract infoGrantContract = (InfoGrantContract) infoObject;
 
+		Date beginContractDate = infoGrantContract.getDateBeginContract();
+		Date endContractDate = infoGrantContract.getDateEndContract();
 		Date beginResponsibleDate = infoGrantContract.getGrantResponsibleTeacherInfo().getBeginDate();
 		Date endResponsibleDate = infoGrantContract.getGrantResponsibleTeacherInfo().getEndDate();
 		Date beginOrientationDate = infoGrantContract.getGrantOrientationTeacherInfo().getBeginDate();
@@ -186,6 +172,9 @@ public class EditGrantContract extends ServidorAplicacao.Servico.framework.EditD
 
 		try
 		{
+			//check that endDate is after beginDate (GrantContract)
+			if (endContractDate.before(beginContractDate))
+				throw new GrantContractEndDateBeforeBeginDateException();
 			//check that endDate is after beginDate (GrantResponsibleTeacher)
 			if (endResponsibleDate.before(beginResponsibleDate))
 				throw new GrantResponsibleTeacherEndDateBeforeBeginDateException();
@@ -193,13 +182,18 @@ public class EditGrantContract extends ServidorAplicacao.Servico.framework.EditD
 			if (endOrientationDate.before(beginOrientationDate))
 				throw new GrantOrientationTeacherEndDateBeforeBeginDateException();
 
-			if (!isNew(grantContract))
-				checkIfGrantTeacherPeriodConflict(grantContract, infoGrantContract, sp);
+			//TODO: DOES THIS VERIFICATION REALLY NEEDS TO BE DONE??
+			//TODO (pica): comentei isto já que a secretaria deve poder alterar para os valores que
+			// quiserem
+			//... perguntar depois na reuniao se isto é necessário ou nao
+			//if (!isNew(grantContract))
+			//	checkIfGrantTeacherPeriodConflict(grantContract, infoGrantContract, sp);
 
 			checkIfGrantTeacherPeriodWithinContractPeriod(infoGrantContract);
 			checkIfGrantTeacherRelationExists(domainObjectToLock, infoObject, sp);
 
-		} catch (Exception e)
+		}
+		catch (Exception e)
 		{
 			if (e instanceof FenixServiceException)
 				throw (FenixServiceException) e;
@@ -233,12 +227,16 @@ public class EditGrantContract extends ServidorAplicacao.Servico.framework.EditD
 						Cloner.copyInfoGrantResponsibleTeacher2IGrantResponsibleTeacher(
 							infoGrantContract.getGrantResponsibleTeacherInfo()),
 						true);
-			} else
+			}
+			else
 				rt.simpleLockWrite(newGrantResponsibleTeacher);
+
+			Integer ack_opt_lock = newGrantResponsibleTeacher.getAckOptLock();
 			oldGrantResponsibleTeacher =
 				Cloner.copyInfoGrantResponsibleTeacher2IGrantResponsibleTeacher(
 					infoGrantContract.getGrantResponsibleTeacherInfo());
 			PropertyUtils.copyProperties(newGrantResponsibleTeacher, oldGrantResponsibleTeacher);
+			newGrantResponsibleTeacher.setAckOptLock(ack_opt_lock);
 			newGrantResponsibleTeacher.setGrantContract((IGrantContract) newDomainObject);
 
 			//check if the GrantOrientation relation exists
@@ -251,17 +249,22 @@ public class EditGrantContract extends ServidorAplicacao.Servico.framework.EditD
 						Cloner.copyInfoGrantOrientationTeacher2IGrantOrientationTeacher(
 							infoGrantContract.getGrantOrientationTeacherInfo()),
 						true);
-			} else
+			}
+			else
 				ot.simpleLockWrite(newGrantOrientationTeacher);
 			oldGrantOrientationTeacher =
 				Cloner.copyInfoGrantOrientationTeacher2IGrantOrientationTeacher(
 					infoGrantContract.getGrantOrientationTeacherInfo());
+			ack_opt_lock = newGrantOrientationTeacher.getAckOptLock();
 			PropertyUtils.copyProperties(newGrantOrientationTeacher, oldGrantOrientationTeacher);
 			newGrantOrientationTeacher.setGrantContract((IGrantContract) newDomainObject);
-		} catch (ExcepcaoPersistencia e)
+			newGrantOrientationTeacher.setAckOptLock(ack_opt_lock);
+		}
+		catch (ExcepcaoPersistencia e)
 		{
 			throw new FenixServiceException(e);
-		} catch (Exception e)
+		}
+		catch (Exception e)
 		{
 			throw new FenixServiceException(e);
 		}
@@ -278,7 +281,8 @@ public class EditGrantContract extends ServidorAplicacao.Servico.framework.EditD
 			infoGrantType = Cloner.copyIGrantType2InfoGrantType(grantType);
 			if (infoGrantType == null)
 				throw new GrantTypeNotFoundException();
-		} catch (ExcepcaoPersistencia persistentException)
+		}
+		catch (ExcepcaoPersistencia persistentException)
 		{
 			throw new FenixServiceException(persistentException.getMessage());
 		}
@@ -298,7 +302,8 @@ public class EditGrantContract extends ServidorAplicacao.Servico.framework.EditD
 			if (teacher == null)
 				throw new GrantResponsibleTeacherNotFoundException();
 			infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
-		} catch (ExcepcaoPersistencia persistentException)
+		}
+		catch (ExcepcaoPersistencia persistentException)
 		{
 			throw new FenixServiceException(persistentException.getMessage());
 		}
@@ -318,7 +323,8 @@ public class EditGrantContract extends ServidorAplicacao.Servico.framework.EditD
 			if (teacher == null)
 				throw new GrantOrientationTeacherNotFoundException();
 			infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
-		} catch (ExcepcaoPersistencia persistentException)
+		}
+		catch (ExcepcaoPersistencia persistentException)
 		{
 			throw new FenixServiceException(persistentException.getMessage());
 		}
@@ -367,11 +373,14 @@ public class EditGrantContract extends ServidorAplicacao.Servico.framework.EditD
 				Integer newContractNumber = new Integer(aux);
 				infoGrantContract.setContractNumber(newContractNumber);
 			}
-			super.run(new Integer(0), infoGrantContract);
-		} catch (ExcepcaoPersistencia e)
+
+			super.run(infoGrantContract.getIdInternal(), infoGrantContract);
+		}
+		catch (ExcepcaoPersistencia e)
 		{
 			throw new FenixServiceException(e);
-		} catch (Exception e)
+		}
+		catch (Exception e)
 		{
 			if (e instanceof FenixServiceException)
 			{
