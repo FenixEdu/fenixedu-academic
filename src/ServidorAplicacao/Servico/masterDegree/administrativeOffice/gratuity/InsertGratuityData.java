@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoGratuityValues;
 import DataBeans.InfoPaymentPhase;
 import Dominio.CursoExecucao;
@@ -34,27 +35,10 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Tânia Pousão
  *  
  */
-public class InsertGratuityData implements IServico
+public class InsertGratuityData implements IService
 {
-	private static InsertGratuityData service = new InsertGratuityData();
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
-	public String getNome()
-	{
-		return "InsertGratuityData";
-	}
 
-	/**
-	 * @return Returns the service.
-	 */
-	public static InsertGratuityData getService()
-	{
-		return service;
-	}
 
 	/**
 	 * Constructor
@@ -109,12 +93,12 @@ public class InsertGratuityData implements IServico
 				ICursoExecucao executionDegree = new CursoExecucao();
 				executionDegree.setIdInternal(
 					infoGratuityValues.getInfoExecutionDegree().getIdInternal());
-
+				
 				executionDegree =
 					(ICursoExecucao) persistentExecutionDegree.readByOId(executionDegree, false);
 				gratuityValues.setExecutionDegree(executionDegree);
 			}
-
+			
 			//employee who made register
 			IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
 			IPessoa person =
@@ -122,11 +106,11 @@ public class InsertGratuityData implements IServico
 					infoGratuityValues.getInfoEmployee().getPerson().getUsername());
 			if (person != null)
 			{
-				IPersistentEmployee persistentEmployee = sp.getIPersistentEmployee();
+			IPersistentEmployee persistentEmployee = sp.getIPersistentEmployee();
 				IEmployee employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
 				gratuityValues.setEmployee(employee);
 			}
-
+			
 			Calendar now = Calendar.getInstance();
 			gratuityValues.setWhen(now.getTime());
 			
@@ -217,6 +201,6 @@ public class InsertGratuityData implements IServico
 			InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) iterator.next();
 			
 			//IPaymentPhase paymentPhase = new Pay
-		}		
+}
 	}	
 }
