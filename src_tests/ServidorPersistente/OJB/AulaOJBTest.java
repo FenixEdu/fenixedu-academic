@@ -451,7 +451,7 @@ public class AulaOJBTest extends TestCaseOJB {
   
   public void testReadLessonsInPeriod() {
 	
-	// FIXME: 
+	// FIXME: Test not done...
 	
   }
 	
