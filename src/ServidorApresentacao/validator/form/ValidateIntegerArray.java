@@ -30,15 +30,15 @@ public class ValidateIntegerArray {
             if ((integerArray == null) || (integerArray.length <= 0)) {
                 errors.add(field.getKey(), Resources.getActionError(request, va, field));
                 return true;
-            } else {
-                for (int i = 0; i < integerArray.length; i++) {
-                    if (integerArray[i].equals("") || !StringUtils.isNumeric(integerArray[i])) {
-                        errors.add(field.getKey(), Resources.getActionError(request, va, field));
-                        return true;
-                    }
-                }
-                return false;
             }
+            for (int i = 0; i < integerArray.length; i++) {
+                if (integerArray[i].equals("") || !StringUtils.isNumeric(integerArray[i])) {
+                    errors.add(field.getKey(), Resources.getActionError(request, va, field));
+                    return true;
+                }
+            }
+            return false;
+
         } catch (Exception e) {
             errors.add(field.getKey(), Resources.getActionError(request, va, field));
             return true;

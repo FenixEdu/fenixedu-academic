@@ -375,19 +375,9 @@ public class EditExamNew implements IServico
                 if (arg0 != null && arg0 instanceof ICurricularCourseScope)
                 {
                     ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
-                    if (curricularCourseScope.getIdInternal().equals(scopeID))
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    return curricularCourseScope.getIdInternal().equals(scopeID);
                 }
-                else
-                {
-                    return false;
-                }
+                return false;
             }
         });
     }
@@ -406,19 +396,9 @@ public class EditExamNew implements IServico
                 if (arg0 != null && arg0 instanceof IExecutionCourse)
                 {
                     IExecutionCourse executionCourse = (IExecutionCourse) arg0;
-                    if (executionCourse.getIdInternal().equals(executionCourseID))
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    return executionCourse.getIdInternal().equals(executionCourseID);
                 }
-                else
-                {
-                    return false;
-                }
+                return false;
             }
         });
     }

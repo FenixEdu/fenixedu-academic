@@ -180,15 +180,12 @@ public class LessonManagerDispatchAction
                 String parameter = request.getParameter(new String("operation"));
 				return mapping.findForward(parameter);
 			} 
-            else
-            {
-                saveErrors(request, actionErrors);
-                return mapping.getInputForward();
-            }
+            saveErrors(request, actionErrors);
+            return mapping.getInputForward();
+           
 
         }
-        else
-            throw new Exception();
+        throw new Exception();
     }
 
 	/**

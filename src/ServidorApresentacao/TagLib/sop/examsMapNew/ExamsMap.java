@@ -179,71 +179,31 @@ public class ExamsMap {
 	// ------------------------------------------------------------------------------------------
 	// --- Utils Para Manupulação de Datas ------------------------------------------------------ 
 
-	private Calendar getPreviousMonday(Calendar anyDay) {
-		if (anyDay.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
-			return anyDay;
-		if (anyDay.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY)
-			return anyDay;
+//	private Calendar getPreviousMonday(Calendar anyDay) {
+//		if (anyDay.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
+//			return anyDay;
+//		if (anyDay.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY)
+//			return anyDay;
+//
+//		int daysToGoBack = anyDay.get(Calendar.DAY_OF_WEEK) - Calendar.MONDAY;
+//		if (anyDay.get(Calendar.DAY_OF_YEAR) < 6) {
+//			// Monday is parte of Previous year
+//			Calendar dayOfPreviousYear = Calendar.getInstance();
+//			dayOfPreviousYear.set(Calendar.YEAR, anyDay.get(Calendar.YEAR) - 1);
+//			dayOfPreviousYear.set(Calendar.MONTH, Calendar.DECEMBER);
+//			dayOfPreviousYear.set(
+//				Calendar.DAY_OF_MONTH,
+//				31 - daysToGoBack + anyDay.get(Calendar.DAY_OF_YEAR));
+//			dayOfPreviousYear.set(Calendar.HOUR_OF_DAY, 0);
+//			dayOfPreviousYear.set(Calendar.MINUTE, 0);
+//			dayOfPreviousYear.set(Calendar.SECOND, 0);
+//			return dayOfPreviousYear;
+//		}
+//		// Monday is parte of this year
+//		return makeDay(anyDay, 0 - daysToGoBack);
+//		
+//	}
 
-		int daysToGoBack = anyDay.get(Calendar.DAY_OF_WEEK) - Calendar.MONDAY;
-		if (anyDay.get(Calendar.DAY_OF_YEAR) < 6) {
-			// Monday is parte of Previous year
-			Calendar dayOfPreviousYear = Calendar.getInstance();
-			dayOfPreviousYear.set(Calendar.YEAR, anyDay.get(Calendar.YEAR) - 1);
-			dayOfPreviousYear.set(Calendar.MONTH, Calendar.DECEMBER);
-			dayOfPreviousYear.set(
-				Calendar.DAY_OF_MONTH,
-				31 - daysToGoBack + anyDay.get(Calendar.DAY_OF_YEAR));
-			dayOfPreviousYear.set(Calendar.HOUR_OF_DAY, 0);
-			dayOfPreviousYear.set(Calendar.MINUTE, 0);
-			dayOfPreviousYear.set(Calendar.SECOND, 0);
-			return dayOfPreviousYear;
-		} else {
-			// Monday is parte of this year
-			return makeDay(anyDay, 0 - daysToGoBack);
-		}
-	}
-
-	private Calendar getNextSaturday(Calendar anyDay) {
-		int year = anyDay.get(Calendar.YEAR);
-		int daysInYear = 365;
-		// In the Gregorian calendar, the following rules decides which years are leap years:
-		//    1. Every year divisible by 4 is a leap year.
-		//    2. But every year divisible by 100 is NOT a leap year
-		//    3. Unless the year is also divisible by 400, then it is still a leap year. 
-		if ((year % 400) == 0) {
-			daysInYear = 366;
-		} else if ((year % 4) == 0 && (year % 100) != 0) {
-			daysInYear = 366;
-		}
-
-		if (anyDay.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
-			return anyDay;
-		if (anyDay.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY)
-			return anyDay;
-
-		int daysToGoForward =
-			Calendar.SATURDAY - anyDay.get(Calendar.DAY_OF_WEEK);
-		if (anyDay.get(Calendar.DAY_OF_YEAR) > daysInYear - 6) {
-			// Monday is parte of Previous year
-			Calendar dayOfPreviousYear = Calendar.getInstance();
-			dayOfPreviousYear.set(Calendar.YEAR, anyDay.get(Calendar.YEAR) + 1);
-			dayOfPreviousYear.set(Calendar.MONTH, Calendar.JANUARY);
-			dayOfPreviousYear.set(
-				Calendar.DAY_OF_MONTH,
-				daysToGoForward
-					- daysInYear
-					+ anyDay.get(Calendar.DAY_OF_YEAR));
-			dayOfPreviousYear.set(Calendar.HOUR_OF_DAY, 0);
-			dayOfPreviousYear.set(Calendar.MINUTE, 0);
-			dayOfPreviousYear.set(Calendar.SECOND, 0);
-			return dayOfPreviousYear;
-		} else {
-			// Monday is parte of this year
-			return makeDay(anyDay, daysToGoForward);
-		}
-	}
-	
 	private Calendar makeFirstDayOfYear(Calendar someDayOfSameYear) {
 		Calendar result = Calendar.getInstance();
 
@@ -284,21 +244,21 @@ public class ExamsMap {
 		return result;
 	}
 
-	private int getDaysInYear(int year) {
-		int daysInYear = 365;
-
-		// In the Gregorian calendar, the following rules decides which years are leap years:
-		//    1. Every year divisible by 4 is a leap year.
-		//    2. But every year divisible by 100 is NOT a leap year
-		//    3. Unless the year is also divisible by 400, then it is still a leap year. 
-		if ((year % 400) == 0) {
-			daysInYear = 366;
-		} else if ((year % 4) == 0 && (year % 100) != 0) {
-			daysInYear = 366;
-		}
-
-		return daysInYear;
-	}
+//	private int getDaysInYear(int year) {
+//		int daysInYear = 365;
+//
+//		// In the Gregorian calendar, the following rules decides which years are leap years:
+//		//    1. Every year divisible by 4 is a leap year.
+//		//    2. But every year divisible by 100 is NOT a leap year
+//		//    3. Unless the year is also divisible by 400, then it is still a leap year. 
+//		if ((year % 400) == 0) {
+//			daysInYear = 366;
+//		} else if ((year % 4) == 0 && (year % 100) != 0) {
+//			daysInYear = 366;
+//		}
+//
+//		return daysInYear;
+//	}
 
 	/**
 	 * @return
@@ -314,12 +274,12 @@ public class ExamsMap {
 		return curricularYears;
 	}
 
-	/**
-	 * @param list
-	 */
-	private void setCurricularYears(List list) {
-		curricularYears = list;
-	}
+//	/**
+//	 * @param list
+//	 */
+//	private void setCurricularYears(List list) {
+//		curricularYears = list;
+//	}
 	
 	/**
 	 * @return
@@ -328,12 +288,12 @@ public class ExamsMap {
 		return executionCourses;
 	}
 
-	/**
-	 * @param list
-	 */
-	private void setExecutionCourses(List list) {
-		executionCourses = list;
-	}
+//	/**
+//	 * @param list
+//	 */
+//	private void setExecutionCourses(List list) {
+//		executionCourses = list;
+//	}
 	
 	/**
 	 * @return Returns the infoExecutionDegree.

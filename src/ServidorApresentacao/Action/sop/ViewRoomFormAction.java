@@ -176,10 +176,8 @@ public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexCo
              *///--------------------
             return mapping.findForward("Sucess");
 
-        } else {
-            throw new FenixActionException();
         }
-
+        throw new FenixActionException();
     }
 
 }
