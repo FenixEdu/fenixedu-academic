@@ -110,11 +110,12 @@ public class CursoOJBTest extends TestCaseOJB {
     	ICurso degree = persistentDegree.readBySigla("LEIC");
     	persistentSupport.confirmarTransaccao();
 
-      persistentSupport.iniciarTransaccao();
-      persistentDegree.lockWrite(degree);
-      persistentSupport.confirmarTransaccao();
+        persistentSupport.iniciarTransaccao();
+        persistentDegree.lockWrite(degree);
+        persistentSupport.confirmarTransaccao();
+		fail("testWriteExistingUnchangedObject");
     } catch (ExcepcaoPersistencia ex) {
-      fail("testWriteExistingUnchangedObject");
+		assertEquals(ex.getErro(), ExcepcaoPersistencia.EXISTING);
     }
   }
 

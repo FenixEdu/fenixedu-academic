@@ -11,14 +11,18 @@ package ServidorPersistente.OJB;
  * @author  rpfi
  */
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.odmg.QueryException;
 
 import Dominio.Curso;
 import Dominio.ICurso;
+import Dominio.IPlanoCurricularCurso;
+import Dominio.PlanoCurricularCurso;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;
+import ServidorPersistente.IPlanoCurricularCursoPersistente;
 
 public class CursoOJB extends ObjectFenixOJB implements ICursoPersistente {
     
@@ -37,11 +41,8 @@ public class CursoOJB extends ObjectFenixOJB implements ICursoPersistente {
             lockRead(result);
             if (result.size() != 0){ 
                 curso = (ICurso) result.get(0);
-				return curso;
             }
-            else
-				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.NON_EXISTING);
-
+			return curso;
         } catch (QueryException ex) {
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
         }
@@ -68,18 +69,21 @@ public class CursoOJB extends ObjectFenixOJB implements ICursoPersistente {
     
     public void delete(ICurso licenciatura) throws ExcepcaoPersistencia {
 		try {
-			ICurso curso = null;
-			String oqlQuery = "select curso from " + Curso.class.getName();
-			oqlQuery += " where sigla = $1 ";
+			IPlanoCurricularCurso degreeCurricularPlan = null;
+			IPlanoCurricularCursoPersistente persistentDegreeCurricularPlan = null;
+			PlanoCurricularCursoOJB degreeCurricularPlanOJB = new PlanoCurricularCursoOJB();
+			String oqlQuery = "select all from " + PlanoCurricularCurso.class.getName();
+			oqlQuery += " where curso.nome = $1 ";
+
 			query.create(oqlQuery);
-			query.bind(licenciatura.getSigla());
+			query.bind(licenciatura.getNome());
 			List result = (List) query.execute();
-			lockRead(result);
-			if (result.size() != 0){ 
-				super.delete(licenciatura);
+			Iterator iterador = result.iterator();
+			while (iterador.hasNext()) {
+				degreeCurricularPlan = (IPlanoCurricularCurso) iterador.next();
+				degreeCurricularPlanOJB.delete(degreeCurricularPlan);
 			}
-			else
-				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.NON_EXISTING);
+			super.delete(licenciatura);
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
