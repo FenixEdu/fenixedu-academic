@@ -15,6 +15,7 @@ package ServidorPersistente;
 import java.util.ArrayList;
 
 import Dominio.ICurricularCourse;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public interface IPersistentCurricularCourse extends IPersistentObject {
     
@@ -26,7 +27,7 @@ public interface IPersistentCurricularCourse extends IPersistentObject {
 
     public ICurricularCourse readCurricularCourseByNameCode(String name, String code);
     public ArrayList readAllCurricularCourses();
-    public boolean writeCurricularCourse(ICurricularCourse curricularCourse);
+    public void writeCurricularCourse(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia, ExistingPersistentException;
 
     public boolean deleteCurricularCourse(ICurricularCourse curricularCourse);
     public boolean deleteAllCurricularCourse();

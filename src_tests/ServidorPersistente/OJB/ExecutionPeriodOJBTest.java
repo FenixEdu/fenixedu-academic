@@ -21,6 +21,7 @@ import Dominio.ExecutionPeriod;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class ExecutionPeriodOJBTest extends TestCaseOJB {
 	public ExecutionPeriodOJBTest(java.lang.String testName) {
@@ -141,7 +142,6 @@ public class ExecutionPeriodOJBTest extends TestCaseOJB {
 			assertEquals(executionPeriod.getName(), "new");
 			persistentSupport.confirmarTransaccao();
 			
-			
 			// Write new Object
 			
 			persistentSupport.iniciarTransaccao();
@@ -154,7 +154,15 @@ public class ExecutionPeriodOJBTest extends TestCaseOJB {
 			assertEquals(executionPeriods.size(), 3);
 			persistentSupport.confirmarTransaccao();
 
-
+			try {
+				persistentSupport.iniciarTransaccao();
+				executionPeriod = new ExecutionPeriod("2º Semestre", executionYear);
+				persistentExecutionPeriod.writeExecutionPeriod(executionPeriod);
+				persistentSupport.confirmarTransaccao();
+				fail("Write existing");
+			} catch (ExistingPersistentException ex) {
+				assertNotNull("ExistingPersistentException", ex);
+			}
 			
 	   } catch (ExcepcaoPersistencia ex) {
 			fail("testReadExecutionPeriodByNameAndExecutionYear:fail read existing item");

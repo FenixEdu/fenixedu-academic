@@ -17,6 +17,7 @@ import Dominio.ICurso;
 import Dominio.IDisciplinaDepartamento;
 import Dominio.IPlanoCurricularCurso;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 
 public class CurricularCourseOJBTest extends TestCaseOJB {
@@ -47,7 +48,6 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 		IDisciplinaDepartamento departmentCourse = null;
         IPlanoCurricularCurso degreeCurricularPlan = null;
 
-        
         try {
             persistentSupport.iniciarTransaccao();
             departmentCourse = persistentDepartmentCourse.lerDisciplinaDepartamentoPorNomeESigla("Engenharia da Programacao", "ep");
@@ -64,7 +64,6 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 		assertNotNull(departmentCourse);
 		assertNotNull(degreeCurricularPlan);
         
-        
         ICurricularCourse curricularCourse = new CurricularCourse(new Double(0.0),new Double(0.0), new Double(0.0),new Double(0.0), new Double(0.0), new Integer(2), new Integer(1), "Trabalho Final de Curso I", "TFCI", departmentCourse, degreeCurricularPlan);
 
         try {
@@ -72,9 +71,11 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
             persistantCurricularCourse.writeCurricularCourse(curricularCourse);
             persistentSupport.confirmarTransaccao();
             fail("testWriteCurricularCourse: confirmarTransaccao_1");
-        } catch(ExcepcaoPersistencia ex2) {
+        } catch(ExistingPersistentException ex) {
 			// All Is OK
-        }
+		} catch(ExcepcaoPersistencia ex) {
+			fail("testWriteCurricularCourse: unexpected exception");
+		}
 
         curricularCourse = new CurricularCourse(new Double(0.0),new Double(0.0), new Double(0.0), new Double(0.0),new Double(0.0), new Integer(2), new Integer(1), "Trabalho Final de Curso IX", "TFCIX", departmentCourse, degreeCurricularPlan);
 

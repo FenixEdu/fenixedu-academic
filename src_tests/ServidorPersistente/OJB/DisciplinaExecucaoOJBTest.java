@@ -30,6 +30,7 @@ import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.IPlanoCurricularCurso;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class DisciplinaExecucaoOJBTest extends TestCaseOJB {
     public DisciplinaExecucaoOJBTest(java.lang.String testName) {
@@ -224,8 +225,38 @@ public class DisciplinaExecucaoOJBTest extends TestCaseOJB {
  
  
   public void testEscreverDisciplinaExecucaoExisting () {
-  	// Not tested because of Unique in SQL : UNIQUE KEY U1 (ID_INTERNAL, CODE, KEY_EXECUTION_PERIOD)
-  	
+	try{
+		persistentSupport.iniciarTransaccao();
+		IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
+		assertNotNull(executionYear);
+		IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);		
+		assertNotNull(executionPeriod);
+
+		persistentSupport.confirmarTransaccao();
+
+		IDisciplinaExecucao executionCourseTemp = new DisciplinaExecucao("disc1", "d1", "p1", new Double(0), new Double(0), new Double(0), new Double(0), executionPeriod);
+		
+
+		// Write Non Existing	
+		persistentSupport.iniciarTransaccao();
+		persistentExecutionCourse.escreverDisciplinaExecucao(executionCourseTemp);
+		persistentSupport.confirmarTransaccao();
+
+		executionCourseTemp = new DisciplinaExecucao("disc1", "d1", "p1", new Double(0), new Double(0), new Double(0), new Double(0), executionPeriod);
+
+		// Write Existing
+		try {
+			persistentSupport.iniciarTransaccao();
+			persistentExecutionCourse.escreverDisciplinaExecucao(executionCourseTemp);
+			persistentSupport.confirmarTransaccao();
+			fail("Write Existing");
+		} catch (ExistingPersistentException ex) {
+			assertNotNull("Write Existing: expected exception", ex);
+		}
+
+	} catch (ExcepcaoPersistencia ex) {
+		fail("Write Existing: unexpected exception");
+	}
   }
   
   

@@ -11,6 +11,7 @@ import java.util.List;
 import org.odmg.QueryException;
 import org.odmg.OQLQuery;
 import ServidorPersistente.*;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 import Dominio.*;
 import org.odmg.Implementation;
 import org.apache.ojb.odmg.OJB;
@@ -103,19 +104,11 @@ public class CursoExecucaoOJBTest extends TestCaseOJB {
 		persistentExecutionDegree.lockWrite(executionDegree);
 		persistentSupport.confirmarTransaccao();
 		fail("testCreateNonExistingCursoExecucao");	
-	} catch (ExcepcaoPersistencia ex) {
+	} catch (ExistingPersistentException ex) {
 	   // All is OK
-	   
-		try {
-			//REMOVE
-			ex.printStackTrace(System.out);
-			System.out.println("AQUI");
-			persistentSupport.cancelarTransaccao();
-		} catch (Exception e) {
-			//ignored
-			e.printStackTrace(System.out);
-		}
-	}
+	} catch (ExcepcaoPersistencia ex) {
+		fail("testCreateNonExistingCursoExecucao: unexpected exception");
+  	}
   }
 
   /** Test of write method, of class ServidorPersistente.OJB.ItemOJB. */
@@ -140,7 +133,6 @@ public class CursoExecucaoOJBTest extends TestCaseOJB {
 		assertNotNull(executionYear2);
 		
 		executionDegree = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan1, executionYear1);
-		System.out.println("=========executionDegree"+executionDegree);
 		executionDegree.setExecutionYear(executionYear2);
 
 		persistentSupport.confirmarTransaccao();
@@ -148,8 +140,6 @@ public class CursoExecucaoOJBTest extends TestCaseOJB {
 		persistentSupport.iniciarTransaccao();
 		ICursoExecucao executionDegreeTemp = persistentExecutionDegree.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan1, executionYear2);		
 		persistentSupport.confirmarTransaccao();
-		System.out.println("=========executionDegreeTemp"+executionDegreeTemp);
-		System.out.println("=========executionDegree"+executionDegree);
 		assertEquals(executionDegreeTemp, executionDegree);
 
 	} catch (ExcepcaoPersistencia ex) {

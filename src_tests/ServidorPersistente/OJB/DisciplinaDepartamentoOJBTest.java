@@ -16,6 +16,7 @@ import Dominio.DisciplinaDepartamento;
 import Dominio.IDepartamento;
 import Dominio.IDisciplinaDepartamento;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class DisciplinaDepartamentoOJBTest extends TestCaseOJB {
     public DisciplinaDepartamentoOJBTest(java.lang.String testName) {
@@ -63,29 +64,19 @@ public class DisciplinaDepartamentoOJBTest extends TestCaseOJB {
             fail("testEscreverDisciplina: iniciarTransaccao_1");
         }
         
-        // A escrita na base de dados e' efectuada apenas no 'confirmarTransaccao'
-        // por isso o metodo 'escreverDisciplina' nao e' suposto dar erro.
-        // Assim o verdadeiro teste a' escrita e' controlado na chamada ao metodo
-        // 'confirmarTransaccao'.
         try {
             persistentDepartmentCourse.escreverDisciplinaDepartamento(disciplina);
-        } catch(ExcepcaoPersistencia ex1) {
-            fail("testEscreverDisciplina: escreverDisciplina_1");
-        }
+            fail("Write existing object");
+		} catch(ExistingPersistentException ex) {
+			assertNotNull(ex);
+		} catch(ExcepcaoPersistencia ex2) {
+			fail("testEscreverDisciplina: unexpected exception");
+		}
+
         try {
             persistentSupport.confirmarTransaccao();
-            // Neste teste especifico o 'confirmarTransaccao' tem que dar errado
-            // porque estamos a tentar escrever na BD um objecto que ja' existe.
-            // Por isso, se passar o 'confirmarTransaccao' sem problemas, algo de
-            // muito errado aconteceu.
-            try {
-                persistentSupport.cancelarTransaccao();
-            } catch(ExcepcaoPersistencia ex3) {
-                fail("testEscreverDisciplina: cancelarTransaccao_1");
-            }
-            fail("testEscreverDisciplina: confirmarTransaccao_1");
         } catch(ExcepcaoPersistencia ex2) {
-            assertTrue("testEscreverDisciplina: Objecto existente", true);
+        	fail("testEscreverDisciplina: unexpected exception");
         }
         
         // Tentativa de escrita na BD de um objecto inexistente.

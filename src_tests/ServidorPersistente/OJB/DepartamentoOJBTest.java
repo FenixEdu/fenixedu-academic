@@ -15,6 +15,7 @@ import junit.framework.TestSuite;
 import Dominio.Departamento;
 import Dominio.IDepartamento;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class DepartamentoOJBTest extends TestCaseOJB {
     public DepartamentoOJBTest(java.lang.String testName) {
@@ -50,10 +51,11 @@ public class DepartamentoOJBTest extends TestCaseOJB {
             persistentDepartment.escreverDepartamento(dep);
             persistentSupport.confirmarTransaccao();
             fail("testEscreverDepartamento: confirmarTransaccao_1");
-        } catch(ExcepcaoPersistencia ex2) {
+        } catch(ExistingPersistentException ex) {
 			// All is OK
-        }
-        
+		} catch(ExcepcaoPersistencia ex2) {
+			fail("testEscreverDepartamento: unexpected exception");
+		}        
         // Tentativa de escrita na BD de um objecto inexistente.
         dep = new Departamento("dep2", "d2");
         

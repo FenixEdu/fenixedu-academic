@@ -22,6 +22,7 @@ import junit.framework.TestSuite;
 import Dominio.Country;
 import Dominio.ICountry;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class CountryOJBTest extends TestCaseOJB {
     public CountryOJBTest(java.lang.String testName) {
@@ -56,8 +57,10 @@ public class CountryOJBTest extends TestCaseOJB {
             persistentCountry.writeCountry(country);
             persistentSupport.confirmarTransaccao();
             fail("testEscreverPais: confirmarTransaccao_1");
-        } catch(ExcepcaoPersistencia ex2) {
+		} catch(ExistingPersistentException ex) {
 			// All is OK
+        } catch(ExcepcaoPersistencia ex) {
+			fail("testEscreverPais: unexpected exception");
         }
         
         // write non existing

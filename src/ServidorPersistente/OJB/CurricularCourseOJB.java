@@ -16,6 +16,7 @@ import Dominio.CurricularCourse;
 import Dominio.ICurricularCourse;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCurricularCourse {
     
@@ -57,13 +58,32 @@ public class CurricularCourseOJB extends ObjectFenixOJB implements IPersistentCu
         }
     }
     
-    public boolean writeCurricularCourse(ICurricularCourse curricularCourse) {
-        try {
-            super.lockWrite(curricularCourse);
-            return true;
-        } catch(ExcepcaoPersistencia ex){
-            return false;
-        }
+    public void writeCurricularCourse(ICurricularCourse curricularCourseToWrite)
+		throws ExcepcaoPersistencia, ExistingPersistentException {
+    		
+			ICurricularCourse curricularCourseFromDB = null;
+    		
+			// If there is nothing to write, simply return.
+			if (curricularCourseToWrite == null)
+				return;
+    		
+			// Read curricularCourse from database.
+			curricularCourseFromDB =
+				this.readCurricularCourseByNameCode(
+					curricularCourseToWrite.getName(),
+					curricularCourseToWrite.getCode());
+    		
+			// If curricularCourse is not in database, then write it.
+			if (curricularCourseFromDB == null)
+				super.lockWrite(curricularCourseToWrite);
+			// else If the curricularCourse is mapped to the database, then write any existing changes.
+			else if ((curricularCourseToWrite instanceof CurricularCourse) &&
+					 ((CurricularCourse) curricularCourseFromDB).getInternalCode().equals(
+						((CurricularCourse) curricularCourseToWrite).getInternalCode())) {
+				super.lockWrite(curricularCourseToWrite);
+			// else Throw an already existing exception
+			} else
+				throw new ExistingPersistentException();
     }
 
     public boolean deleteCurricularCourse(ICurricularCourse curricularCourse) {

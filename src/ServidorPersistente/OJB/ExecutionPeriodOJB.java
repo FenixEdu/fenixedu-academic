@@ -11,6 +11,7 @@ import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionPeriod;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * Created on 11/Fev/2003
@@ -49,17 +50,39 @@ public class ExecutionPeriodOJB
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
+
 	/**
 	 * @see ServidorPersistente.IPersistentExecutionPeriod#writeExecutionPeriod(Dominio.IExecutionPeriod)
 	 */
-	public boolean writeExecutionPeriod(IExecutionPeriod executionPeriod) {
-		try {
-			super.lockWrite(executionPeriod);
-			return true;
-		} catch (ExcepcaoPersistencia e) {
-			return false;
-		}
+	public void writeExecutionPeriod(IExecutionPeriod executionPeriodToWrite)
+		throws ExcepcaoPersistencia, ExistingPersistentException {
+
+			IExecutionPeriod executionPeriodFromDB = null;
+
+		// If there is nothing to write, simply return.
+		if (executionPeriodToWrite == null)
+			return;
+
+		// Read execution period from database.
+		executionPeriodFromDB =
+			this.readByNameAndExecutionYear(
+				executionPeriodToWrite.getName(),
+				executionPeriodToWrite.getExecutionYear());
+
+		// If execution period is not in database, then write it.
+		if (executionPeriodFromDB == null)
+			super.lockWrite(executionPeriodToWrite);
+		// else If the execution period is mapped to the database, then write any existing changes.
+		else if (
+			(executionPeriodToWrite instanceof ExecutionPeriod)
+				&& ((ExecutionPeriod) executionPeriodFromDB).getInternalCode().equals(
+					((ExecutionPeriod) executionPeriodToWrite).getInternalCode())) {
+			super.lockWrite(executionPeriodToWrite);
+			// else Throw an already existing exception
+		} else
+			throw new ExistingPersistentException();
 	}
+
 	/**
 	 * @see ServidorPersistente.IPersistentExecutionPeriod#delete(Dominio.IExecutionPeriod)
 	 */

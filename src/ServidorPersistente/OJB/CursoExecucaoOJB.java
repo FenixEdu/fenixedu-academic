@@ -24,14 +24,42 @@ import Dominio.IPlanoCurricularCurso;
 import Dominio.ITurma;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class CursoExecucaoOJB
 	extends ObjectFenixOJB
 	implements ICursoExecucaoPersistente {
 
-	public void lockWrite(ICursoExecucao cursoExecucao)
-		throws ExcepcaoPersistencia {
-		super.lockWrite(cursoExecucao);
+	public void lockWrite(ICursoExecucao cursoExecucaoToWrite)
+		throws ExcepcaoPersistencia, ExistingPersistentException {
+
+			ICursoExecucao cursoExecucaoFromDB = null;
+
+			// If there is nothing to write, simply return.
+			if (cursoExecucaoToWrite == null)
+				return;
+
+			// Read cursoExecucao from database.
+			cursoExecucaoFromDB =
+				this.readByDegreeCurricularPlanAndExecutionYear(
+					cursoExecucaoToWrite.getCurricularPlan(),
+					cursoExecucaoToWrite.getExecutionYear());
+
+			// If cursoExecucao is not in database, then write it.
+			if (cursoExecucaoFromDB == null)
+				super.lockWrite(cursoExecucaoToWrite);
+			// else If the cursoExecucao is mapped to the database, then write any existing changes.
+			else if (
+				(cursoExecucaoToWrite instanceof CursoExecucao)
+					&& ((CursoExecucao) cursoExecucaoFromDB)
+						.getCodigoInterno()
+						.equals(
+						((CursoExecucao) cursoExecucaoToWrite)
+							.getCodigoInterno())) {
+				super.lockWrite(cursoExecucaoToWrite);
+				// else Throw an already existing exception
+			} else
+				throw new ExistingPersistentException();
 	}
 
 	public void delete(ICursoExecucao executionDegree) throws ExcepcaoPersistencia {

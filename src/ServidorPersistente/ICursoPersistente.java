@@ -14,10 +14,11 @@ package ServidorPersistente;
 import java.util.List;
 
 import Dominio.ICurso;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public interface ICursoPersistente extends IPersistentObject {
     ICurso readBySigla(String sigla) throws ExcepcaoPersistencia;
-    void lockWrite(ICurso lic) throws ExcepcaoPersistencia;
+    void lockWrite(ICurso lic) throws ExcepcaoPersistencia, ExistingPersistentException;
     void delete(ICurso lic) throws ExcepcaoPersistencia;
     void deleteAll() throws ExcepcaoPersistencia;
     public List readAll() throws ExcepcaoPersistencia;

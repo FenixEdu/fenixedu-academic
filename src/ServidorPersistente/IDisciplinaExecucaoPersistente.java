@@ -5,10 +5,11 @@ import java.util.List;
 import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public interface IDisciplinaExecucaoPersistente extends IPersistentObject {
 	public boolean apagarTodasAsDisciplinasExecucao();
-	public boolean escreverDisciplinaExecucao(IDisciplinaExecucao disciplinaExecucao);
+	public void escreverDisciplinaExecucao(IDisciplinaExecucao disciplinaExecucao) throws ExcepcaoPersistencia, ExistingPersistentException;
 
 	/**
 	 * 

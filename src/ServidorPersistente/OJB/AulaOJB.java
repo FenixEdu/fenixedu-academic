@@ -8,7 +8,7 @@ package ServidorPersistente.OJB;
 
 /**
  *
- * @author  tfc130
+ * @author  Luis Cruz & Sara Ribeiro
  */
 import java.util.ArrayList;
 import java.util.Calendar;

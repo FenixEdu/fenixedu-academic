@@ -23,6 +23,7 @@ import Dominio.PlanoCurricularCurso;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IPlanoCurricularCursoPersistente;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class CursoOJB extends ObjectFenixOJB implements ICursoPersistente {
     
@@ -48,24 +49,33 @@ public class CursoOJB extends ObjectFenixOJB implements ICursoPersistente {
         }
     }
     
-    public void lockWrite(ICurso licenciatura) throws ExcepcaoPersistencia {
-		try {
-			ICurso curso = null;
-			String oqlQuery = "select curso from " + Curso.class.getName();
-			oqlQuery += " where sigla = $1 ";
-			query.create(oqlQuery);
-			query.bind(licenciatura.getSigla());
-			List result = (List) query.execute();
-			lockRead(result);
+    public void lockWrite(ICurso degreeToWrite)
+		throws ExcepcaoPersistencia, ExistingPersistentException {
 
-			// FIXME: Check the exception
-			if (result.size() != 0) 
-				throw new ExcepcaoPersistencia();
-			else 
-				super.lockWrite(licenciatura);				
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
+			ICurso degreeFromDB = null;
+
+			// If there is nothing to write, simply return.
+			if (degreeToWrite == null)
+				return;
+
+			// Read degree from database.
+			degreeFromDB = this.readBySigla(degreeToWrite.getSigla());
+
+			// If degree is not in database, then write it.
+			if (degreeFromDB == null)
+				super.lockWrite(degreeToWrite);
+			// else If the degree is mapped to the database, then write any existing changes.
+			else if (
+				(degreeToWrite instanceof Curso)
+					&& ((Curso) degreeFromDB)
+						.getCodigoInterno()
+						.equals(
+						((Curso) degreeToWrite)
+							.getCodigoInterno())) {
+				super.lockWrite(degreeToWrite);
+				// else Throw an already existing exception
+			} else
+				throw new ExistingPersistentException();
     }
     
     public void delete(ICurso licenciatura) throws ExcepcaoPersistencia {

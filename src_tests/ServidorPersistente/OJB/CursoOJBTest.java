@@ -20,6 +20,7 @@ import org.odmg.QueryException;
 import Dominio.Curso;
 import Dominio.ICurso;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoCurso;
 
 
@@ -96,9 +97,11 @@ public class CursoOJBTest extends TestCaseOJB {
       persistentDegree.lockWrite(degree);
       persistentSupport.confirmarTransaccao();
       fail("testCreateExistingCurso");
-    } catch (ExcepcaoPersistencia ex) {
+    } catch (ExistingPersistentException ex) {
       //all is ok
-    }
+  	} catch (ExcepcaoPersistencia ex) {
+		fail("testCreateExistingCurso: unexpected exception");
+  	}
   }
 
 
@@ -113,11 +116,8 @@ public class CursoOJBTest extends TestCaseOJB {
         persistentSupport.iniciarTransaccao();
         persistentDegree.lockWrite(degree);
         persistentSupport.confirmarTransaccao();
-		fail("testWriteExistingUnchangedObject");
     } catch (ExcepcaoPersistencia ex) {
-    	// FIXME: Check the exception
-    	assertNotNull(ex);
-		//assertEquals(ex.getErro(), ExcepcaoPersistencia.EXISTING);
+		fail("testWriteExistingUnchangedObject");
     }
   }
 

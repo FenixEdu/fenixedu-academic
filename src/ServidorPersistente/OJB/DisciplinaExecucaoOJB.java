@@ -22,6 +22,7 @@ import Dominio.IFrequenta;
 import Dominio.ITurno;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class DisciplinaExecucaoOJB
 	extends ObjectFenixOJB
@@ -41,13 +42,36 @@ public class DisciplinaExecucaoOJB
 		}
 	}
 
-	public boolean escreverDisciplinaExecucao(IDisciplinaExecucao disciplinaExecucao) {
-		try {
-			super.lockWrite(disciplinaExecucao);
-			return true;
-		} catch (ExcepcaoPersistencia ex) {
-			return false;
-		}
+	public void escreverDisciplinaExecucao(IDisciplinaExecucao executionCourseToWrite)
+		throws ExcepcaoPersistencia, ExistingPersistentException {
+
+		IDisciplinaExecucao executionCourseFromDB = null;
+
+		// If there is nothing to write, simply return.
+		if (executionCourseToWrite == null)
+			return;
+
+		// Read execution course from database.
+		executionCourseFromDB =
+			this.readByExecutionCourseInitialsAndExecutionPeriod(
+				executionCourseToWrite.getSigla(),
+				executionCourseToWrite.getExecutionPeriod());
+
+		// If execution course is not in database, then write it.
+		if (executionCourseFromDB == null)
+			super.lockWrite(executionCourseToWrite);
+		// else If the execution course is mapped to the database, then write any existing changes.
+		else if (
+			(executionCourseToWrite instanceof DisciplinaExecucao)
+				&& ((DisciplinaExecucao) executionCourseFromDB)
+					.getCodigoInterno()
+					.equals(
+					((DisciplinaExecucao) executionCourseToWrite)
+						.getCodigoInterno())) {
+			super.lockWrite(executionCourseToWrite);
+			// else Throw an already existing exception
+		} else
+			throw new ExistingPersistentException();
 	}
 
 	public IDisciplinaExecucao readBySiglaAndAnoLectivoAndSiglaLicenciatura(
