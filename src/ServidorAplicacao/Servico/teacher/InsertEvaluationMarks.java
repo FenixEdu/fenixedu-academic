@@ -147,7 +147,7 @@ public class InsertEvaluationMarks implements IServico
                     } else
                     {
 						IMark mark = null;
-								mark = persistentMark.readBy(evaluation, attend);
+						mark = persistentMark.readBy(evaluation, attend);
                         if (mark == null)
                         {
 									mark = new Mark();
@@ -308,7 +308,7 @@ public class InsertEvaluationMarks implements IServico
 
         if (infoMark.getMark() == null || infoMark.getMark().length() == 0)
         {
-			return true;
+			return false;
         } else
         {
             return degreeCurricularPlanStrategy.checkMark(infoMark.getMark(),infoMark.getInfoEvaluation().getEvaluationType());
