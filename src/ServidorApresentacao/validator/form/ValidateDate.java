@@ -14,6 +14,8 @@ import org.apache.commons.validator.ValidatorAction;
 import org.apache.commons.validator.ValidatorUtil;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
+import org.apache.struts.validator.FieldChecks;
+import org.apache.struts.validator.Resources;
 
 import Util.Data;
 
@@ -32,7 +34,7 @@ public class ValidateDate {
 		ActionErrors errors,
 		HttpServletRequest request, 
 		ServletContext application) {
-
+			
 		Integer year = new Integer(ValidatorUtil.getValueAsString(bean,field.getProperty()));
 		String valueString = ValidatorUtil.getValueAsString(bean,field.getProperty());
 		String sProperty2 = field.getVarValue("month");
@@ -42,7 +44,8 @@ public class ValidateDate {
 
 
 		if ((day.intValue() == -1) || (month.intValue() == -1) || (year.intValue() == -1)){
-			errors.add(field.getKey(),new ActionError(va.getMsg(), field.getArg0().getKey()));
+			
+			errors.add(field.getKey(), Resources.getActionError(request, va, field));
 			return false;
 		}
 		
@@ -50,7 +53,7 @@ public class ValidateDate {
 			  if (!Data.validDate(day, month, year) || 
 			      year == null || month == null || day == null ||
 			      year.intValue() < 1 || month.intValue() < 0 || day.intValue() < 1) 
-				 errors.add(field.getKey(),new ActionError(va.getMsg(), field.getArg0().getKey()));
+				 errors.add(field.getKey(),Resources.getActionError(request, va, field));
 
 				 return false;
 		}
