@@ -17,7 +17,6 @@ import java.util.Calendar;
 import DataBeans.InfoExam;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.util.Cloner;
-import Dominio.Exam;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExam;
 import Dominio.IExecutionPeriod;
@@ -28,7 +27,6 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.Season;
 
 public class EditExam implements IServico {
@@ -79,15 +77,27 @@ public class EditExam implements IServico {
 					infoExecutionCourse.getSigla(),
 					executionPeriod);
 
-			IExam exam = sp.getIPersistentExam().readBy(executionCourse, oldExam.getSeason());
+			IExam examFromDBToBeEdited = null;
+			boolean newSeasonAlreadyScheduled = false;
+			for (int i = 0; i < executionCourse.getAssociatedExams().size(); i++) {
+				IExam exam = (IExam) executionCourse.getAssociatedExams().get(i);
+				if (exam.getSeason().equals(oldExam.getSeason())) {
+					System.out.println("Exontrámos o exam de época: " + season + ".");
+					examFromDBToBeEdited = exam;
+				} else if (exam.getSeason().equals(season)) {
+					System.out.println("Exam de época: " + season + " já existe...");
+					newSeasonAlreadyScheduled = true;
+				}
+			}
 
-			// TODO : Falta realizar verificações adicionais
-			//        antes de escrever.
-			//   Verificações a fazer
-			exam.setBeginning(examTime);
-			exam.setDay(examDate.getTime());
-			exam.setEnd(null);
-			exam.setSeason(season);
+			if (newSeasonAlreadyScheduled) {
+				throw new ExistingServiceException();
+			}
+
+			examFromDBToBeEdited.setBeginning(examTime);
+			examFromDBToBeEdited.setDay(examDate.getTime());
+			examFromDBToBeEdited.setEnd(null);
+			examFromDBToBeEdited.setSeason(season);
 
 			result = new Boolean(true);
 		} catch (ExcepcaoPersistencia ex) {
