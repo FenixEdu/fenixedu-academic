@@ -14,9 +14,12 @@ import java.util.StringTokenizer;
 import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 
 /**
- * @author Ivo Brandão
+ * 
+ * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
+ *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class LeituraFicheiroFuncNaoDocente {
+
+public class LeituraFicheiroFuncDocente {
 
 	/* sera' que posso ter aqui um Map? */
 	private Hashtable estrutura;
@@ -27,7 +30,7 @@ public class LeituraFicheiroFuncNaoDocente {
 	private FileWriter escrita;
 
 	/** construtor por defeito */
-	public LeituraFicheiroFuncNaoDocente() {
+	public LeituraFicheiroFuncDocente() {
 	}
 
 	/** retorna uma Collection (ArrayList) */
@@ -44,8 +47,6 @@ public class LeituraFicheiroFuncNaoDocente {
 
 		String linhaFicheiro = null;
 		Hashtable instancia = null;
-
-//		System.out.println("-->LeituraFicheiroFuncionario.lerFicheiro");
 
 		try {
 			/* ficheiro com dados de funcionario validos */
@@ -88,8 +89,6 @@ public class LeituraFicheiroFuncNaoDocente {
 		StringTokenizer stringTokenizer = new StringTokenizer(linha, delimitador);
 		Hashtable instancia = new Hashtable();
 
-//		System.out.println("-->LeituraFicheiroFuncionarios.recuperarInstancia");
-
 		/* codigo de parsing dos atributos */
 		Iterator iterador = ordem.iterator();
 
@@ -105,16 +104,10 @@ public class LeituraFicheiroFuncNaoDocente {
 			//instancia.put(iterador.next(), stringTokenizer.nextToken().trim());
 		}
 
-		//teste a instancia lida
-		System.out.println("Valores lidos para instancia");
-		System.out.println(instancia.toString());
-
 		return instancia;
 	}
 
-	/** retorna um Integer representando o tipo de documento identificacao,
-		 * null em caso de String invalida
-		 */
+
 	private static Integer formataTipoDocumentoIdentificacao(String naoFormatado) {
 		Integer resultado = null;
 

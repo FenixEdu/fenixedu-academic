@@ -157,7 +157,7 @@ UPDATE DEGREE SET NAME = 'Física' WHERE ID_INTERNAL=33;
 #----------------------------
 
 INSERT INTO DEGREE (ID_INTERNAL, CODE, NAME, TYPE_DEGREE) values (34, 'MEE', 'Engenharia de Estruturas', 2);
-INSERT INTO DEGREE (ID_INTERNAL, CODE, NAME, TYPE_DEGREE) values (35, 'MIOES', 'Investigação Operacional e Engenharia de Sistema', 2);
+INSERT INTO DEGREE (ID_INTERNAL, CODE, NAME, TYPE_DEGREE) values (35, 'MIOES', 'Investigação Operacional e Engenharia de Sistemas', 2);
 INSERT INTO DEGREE (ID_INTERNAL, CODE, NAME, TYPE_DEGREE) values (36, 'MEGMTRM', 'Ecologia, Gestão e Modelação dos Recursos Marinhos', 2);
 INSERT INTO DEGREE (ID_INTERNAL, CODE, NAME, TYPE_DEGREE) values (37, 'MHRH', 'Hidraúlica e Recursos Hídricos', 2);
 INSERT INTO DEGREE (ID_INTERNAL, CODE, NAME, TYPE_DEGREE) values (38, 'MB', 'Biotecnologia (Engenharia BioQuímica)', 2);

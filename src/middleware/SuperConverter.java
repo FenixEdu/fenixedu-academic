@@ -4,6 +4,7 @@ package middleware;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import middleware.almeida.Almeida_aluno;
 import middleware.posgrad.Posgrad_aluno_mestrado;
@@ -25,12 +26,17 @@ import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 import org.odmg.QueryException;
 
+import Dominio.Branch;
 import Dominio.Country;
+import Dominio.CurricularCourse;
+import Dominio.CurricularCourseEnrolmentInfo;
 import Dominio.Curso;
 import Dominio.DegreeCurricularPlan;
 import Dominio.Funcionario;
+import Dominio.IBranch;
 import Dominio.ICountry;
 import Dominio.ICurricularCourse;
+import Dominio.ICurricularCourseEnrolmentInfo;
 import Dominio.IPersonRole;
 import Dominio.IPessoa;
 import Dominio.IStudent;
@@ -43,6 +49,8 @@ import Dominio.StudentGroupInfo;
 import ServidorAplicacao.security.PasswordEncryptor;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.ObjectFenixOJB;
+import Util.CurricularCourseExecutionScope;
+import Util.CurricularCourseType;
 import Util.EstadoCivil;
 import Util.RoleType;
 import Util.Sexo;
@@ -78,18 +86,19 @@ public static void main(String args[]) throws Exception{
 		
 	
 	// Converter Pessoas de Pos Graduacao em Persons
-//	superConverter.migratePosgradPessoa2Fenix();
+	superConverter.migratePosgradPessoa2Fenix();
 	
 	
 	// Converter Alunos de Pos Graduacao em Students 
-//	superConverter.migratePosgradAluno2Fenix();
+	superConverter.migratePosgradAluno2Fenix();
 	
 	
 	// Converte Areas Cientificas
+//	superConverter.migratePosgradAreaCientifica2FenixBrach();
 	
 	
 	// Converte Disciplinas
-	superConverter.migratePosGradDisciplina2Fenix();
+//	superConverter.migratePosGradDisciplina2Fenix();
 	
 	// Inscricoes do Alunos em Disciplinas
 	
@@ -98,6 +107,54 @@ public static void main(String args[]) throws Exception{
 	
 	
 	
+	}
+
+	public void migratePosgradAreaCientifica2FenixBrach() throws Exception{
+		IBranch branch2Write = null;
+		Posgrad_area_cientifica areaCientifica = null;
+		List result = null;
+		Query query = null;
+		Criteria criteria = null;
+		QueryByCriteria queryByCriteria = null;
+		try {
+			System.out.print("Reading PosGrad Areas Cientificas ...");
+			List areasCientificasPG = getAreasCientificas();
+			System.out.println("  Done !");
+			
+			System.out.println("Migrating " + areasCientificasPG.size() + " PosGrad Areas Cientificas to Fenix Branch ...");
+			Iterator iterator = areasCientificasPG.iterator();
+			while(iterator.hasNext()){
+				areaCientifica = (Posgrad_area_cientifica) iterator.next();
+				
+				branch2Write = new Branch();
+				branch2Write.setName(areaCientifica.getNome());
+				
+				int numOfChars = 1;
+				
+				// Check if Branch Exists
+				
+				boolean writableBranch = false;
+				while(writableBranch == false){
+					criteria = new Criteria();
+					branch2Write.setCode(generateCode(areaCientifica.getNome(), ++numOfChars));
+					criteria.addEqualTo("name", branch2Write.getName());
+					criteria.addEqualTo("code", branch2Write.getCode());
+					query = new QueryByCriteria(Branch.class,criteria);
+					result = (List) broker.getCollectionByQuery(query);
+
+					if (result.size() == 0)
+						writableBranch = true;
+				}
+				broker.store(branch2Write);
+				
+			}
+			System.out.println("  Done !");
+
+		} catch (Exception e){
+			System.out.println();
+			throw new Exception("Error Migrating Area Cientifica " + areaCientifica.getNome() , e);
+			
+		}
 	}
 
 
@@ -120,6 +177,16 @@ public static void main(String args[]) throws Exception{
 			while(iterator.hasNext()){
 				curricularCourse2Convert = (Posgrad_disciplina) iterator.next();
 				
+
+				
+				// Delete unwanted courses
+				if ((curricularCourse2Convert.getNome().indexOf("CRÉDITOS") != -1) ||
+				    (curricularCourse2Convert.getNome().indexOf("CURRICULAR") != -1)){
+					continue;
+				}
+				
+				
+				
 				// Get the old degree corresponding to this Curricular Course
 				
 				criteria = new Criteria();
@@ -132,11 +199,18 @@ public static void main(String args[]) throws Exception{
 					throw new Exception("Cannot Read PosGrad Degree");
 				}
 
-				Posgrad_curso_mestrado oldDegre = (Posgrad_curso_mestrado) result.get(0); 
-
+				Posgrad_curso_mestrado oldDegre = (Posgrad_curso_mestrado) result.get(0);
+				
 				// Get the new Degree
 
 				criteria = new Criteria();
+				if (oldDegre.getNomemestrado().indexOf("Geotecnia") != -1){
+					oldDegre.setNomemestrado("Geotecnia");
+				} else if (oldDegre.getNomemestrado().indexOf("Ciência e Engenharia das Superfícies") != -1){
+					oldDegre.setNomemestrado("Ciência e Engenharia de Superfícies");
+				}
+
+				
 				criteria.addEqualTo("nome", oldDegre.getNomemestrado());
 				query = new QueryByCriteria(Curso.class,criteria);
 				result = (List) broker.getCollectionByQuery(query);
@@ -147,7 +221,8 @@ public static void main(String args[]) throws Exception{
 				}
 				
 				Curso degree = (Curso) result.get(0);
-								
+				
+
 				// Get the Degree Curricular Plan for the new Degree
 				
 				criteria = new Criteria();
@@ -158,16 +233,97 @@ public static void main(String args[]) throws Exception{
 				if (result.size() == 0){
 					System.out.println("Error Reading Degree Curricular Plan (" + degree.getNome() + ")");
 					throw new Exception("Cannot Read Fenix Degree Curricular Plan");
-				}				
+				}	
+				
+				DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) result.get(0);			
+				
+				
+				// Check to see if the Curricular Course Already Exists
+				
+				criteria = new Criteria();
+				
+				// Values By Default
+				criteria.addEqualTo("name", curricularCourse2Convert.getNome());
+				criteria.addEqualTo("degreeCurricularPlanKey", degreeCurricularPlan.getIdInternal());
+				query = new QueryByCriteria(CurricularCourse.class,criteria);
+				result = (List) broker.getCollectionByQuery(query);		
+				
+				if (result.size() != 0) {
+					continue;
+				}
+				
+				// Get the Curricular Course Enrolment Info
+				criteria = new Criteria();
+				
+				// Values By Default
+				criteria.addEqualTo("maxIncrementNac", new Integer(2));
+				criteria.addEqualTo("minIncrementNac", new Integer(1));
+				criteria.addEqualTo("weigth", new Integer(1));
+				query = new QueryByCriteria(CurricularCourseEnrolmentInfo.class,criteria);
+				result = (List) broker.getCollectionByQuery(query);		
+				
+				if (result.size() == 0) {
+					throw new Exception("Cannot Read Curricular Course Enrolment Info");
+				}
+				
+				ICurricularCourseEnrolmentInfo curricularCourseEnrolmentInfo = (ICurricularCourseEnrolmentInfo) result.get(0);
+				
+				curricularCourse2Write = new CurricularCourse();
+				
+				
+				// Read The Credits
+
+// TODO
+
+
+
+				curricularCourse2Write.setCredits(new Double(0.0));
+				
+				curricularCourse2Write.setCurricularCourseEnrolmentInfo(curricularCourseEnrolmentInfo);
+				curricularCourse2Write.setCurricularCourseExecutionScope(CurricularCourseExecutionScope.SEMESTRIAL_OBJ);
+				curricularCourse2Write.setDegreeCurricularPlan(degreeCurricularPlan);
+				curricularCourse2Write.setDepartmentCourse(null);
+				curricularCourse2Write.setLabHours(new Double(0.0));
+				curricularCourse2Write.setMandatory(Boolean.TRUE);
+				curricularCourse2Write.setName(curricularCourse2Convert.getNome());
+				curricularCourse2Write.setPraticalHours(new Double(0.0));
+				curricularCourse2Write.setTheoPratHours(new Double(0.0));
+				curricularCourse2Write.setTheoreticalHours(new Double(0.0));
 				
 				// Check the Curricular Course type
+				if (curricularCourse2Convert.getNome().indexOf("(M)") != -1){
+					curricularCourse2Write.setType(CurricularCourseType.M_TYPE_COURSE_OBJ);
+				} else if (curricularCourse2Convert.getNome().indexOf("(P)") != -1){
+					curricularCourse2Write.setType(CurricularCourseType.P_TYPE_COURSE_OBJ);
+				} else if (curricularCourse2Convert.getNome().indexOf("(D/M)") != -1){
+					curricularCourse2Write.setType(CurricularCourseType.DM_TYPE_COURSE_OBJ);
+				} else if (curricularCourse2Convert.getNome().indexOf("(A)") != -1){
+					curricularCourse2Write.setType(CurricularCourseType.A_TYPE_COURSE_OBJ);
+				} else if (curricularCourse2Convert.getNome().indexOf("(M/L)") != -1){
+					curricularCourse2Write.setType(CurricularCourseType.ML_TYPE_COURSE_OBJ);
+				} else curricularCourse2Write.setType(CurricularCourseType.NORMAL_COURSE_OBJ);
 				
 				
+
+				// Check if the Curricular Course Exists
 				
+				boolean writableCourse = false;
+				while(writableCourse == false){
+					curricularCourse2Write.setCode(generateCode(curricularCourse2Convert.getNome(), 1));
+					criteria = new Criteria();
+					criteria.addEqualTo("code", curricularCourse2Write.getCode());
+					criteria.addEqualTo("name", curricularCourse2Write.getName());
+					criteria.addEqualTo("degreeCurricularPlanKey", degreeCurricularPlan.getIdInternal());
+					query = new QueryByCriteria(CurricularCourse.class,criteria);
+					result = (List) broker.getCollectionByQuery(query);
+					
+					if (result.size() == 0){
+						writableCourse = true;
+					}
+				}
 				
-				
-				
-				
+				broker.store(curricularCourse2Write);
+	
 			}
 			System.out.println("  Done !");
 
@@ -177,6 +333,57 @@ public static void main(String args[]) throws Exception{
 			
 		}
 	}
+	
+	
+	private String removePontuation(String name){
+		String result = new String();
+		for (int i = 0; i< name.length(); i++){
+			if ((String.valueOf(name.charAt(i)).equalsIgnoreCase("Á")) || (String.valueOf(name.charAt(i)).equalsIgnoreCase("À")) ||
+				(String.valueOf(name.charAt(i)).equalsIgnoreCase("Ã"))){
+				result += "A";
+			} else if ((String.valueOf(name.charAt(i)).equalsIgnoreCase("Ó")) || (String.valueOf(name.charAt(i)).equalsIgnoreCase("Ò")) ||
+			    (String.valueOf(name.charAt(i)).equalsIgnoreCase("Õ"))){
+				result += "O";
+			} else if ((String.valueOf(name.charAt(i)).equalsIgnoreCase("É")) || (String.valueOf(name.charAt(i)).equalsIgnoreCase("È"))){
+				result += "E";
+			} else if ((String.valueOf(name.charAt(i)).equalsIgnoreCase("Í")) || (String.valueOf(name.charAt(i)).equalsIgnoreCase("Ì"))){
+				result += "I";
+			} else if ((String.valueOf(name.charAt(i)).equalsIgnoreCase("Ú")) || (String.valueOf(name.charAt(i)).equalsIgnoreCase("Ù"))){
+				result += "U";
+			} else {
+				result += name.charAt(i);
+			}
+		}
+		return result;
+		
+	}
+	
+	
+	
+	private String generateCode(String name, int numOfChars){
+		String result = new String();
+		
+		String aux = null;
+
+		// Fix the String
+		name = removePontuation(name);
+
+		StringTokenizer stringTokenizer = new StringTokenizer(name, " ");
+				
+		while(stringTokenizer.hasMoreTokens()){
+			aux = stringTokenizer.nextToken();
+			if ((aux.charAt(0) != '(') && (aux.charAt(0) != '-') && (aux.charAt(0) != '\'') && 
+			    (aux.charAt(0) != '´') && (aux.charAt(0) != '`')){
+			    	if (aux.length() <= numOfChars)
+			    		result += aux;
+			    	else
+						result += String.valueOf(aux.substring(0, numOfChars));
+			}
+		}
+		return result;
+	}
+	
+	
 
 	public void migratePosgradAluno2Fenix() throws Exception{
 		IStudent student2Write = null;
@@ -220,41 +427,44 @@ public static void main(String args[]) throws Exception{
 				criteria.addEqualTo("number", new Integer(String.valueOf(student2Convert.getNumero())));
 				criteria.addEqualTo("degreeType", new TipoCurso(TipoCurso.MESTRADO));
 				query = new QueryByCriteria(Student.class,criteria);
-				result = (List) broker.getCollectionByQuery(query);		
+				List resultStudent = (List) broker.getCollectionByQuery(query);		
 		
-				if (result.size() == 0){
 					
-					// Read the person old person
-					
-					criteria = new Criteria();
-					criteria.addEqualTo("codigointerno", new Integer(String.valueOf(student2Convert.getCodigopessoa())));
+				// Read the person old person
+				
+				criteria = new Criteria();
+				criteria.addEqualTo("codigointerno", new Integer(String.valueOf(student2Convert.getCodigopessoa())));
 
-					query = new QueryByCriteria(Posgrad_pessoa.class,criteria);
-					result = (List) broker.getCollectionByQuery(query);		
+				query = new QueryByCriteria(Posgrad_pessoa.class,criteria);
+				result = (List) broker.getCollectionByQuery(query);		
 
-					if (result.size() != 1)
-						throw new Exception("Erro a ler a Pessoa da Pos-Graduacao!");
-					
-					Posgrad_pessoa personOld = (Posgrad_pessoa) result.get(0);
-					
-					// Verificar o Tipo de Documento
-					TipoDocumentoIdentificacao identificationDocumentType = null;
-					if (personOld.getTipodocumentoidentificacao().equalsIgnoreCase("BILHETE DE IDENTIDADE")){
-						identificationDocumentType = new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE);
-					} else if (personOld.getTipodocumentoidentificacao().equalsIgnoreCase("PASSAPORTE")){
-						identificationDocumentType = new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.PASSAPORTE);
-					} else identificationDocumentType = new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.OUTRO);
+				if (result.size() != 1)
+					throw new Exception("Erro a ler a Pessoa da Pos-Graduacao!");
+				
+				Posgrad_pessoa personOld = (Posgrad_pessoa) result.get(0);
+				
+				// Verificar o Tipo de Documento
+				TipoDocumentoIdentificacao identificationDocumentType = null;
+				if (personOld.getTipodocumentoidentificacao().equalsIgnoreCase("BILHETE DE IDENTIDADE")){
+					identificationDocumentType = new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE);
+				} else if (personOld.getTipodocumentoidentificacao().equalsIgnoreCase("PASSAPORTE")){
+					identificationDocumentType = new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.PASSAPORTE);
+				} else identificationDocumentType = new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.OUTRO);
 
-					criteria = new Criteria();
-					criteria.addEqualTo("numeroDocumentoIdentificacao",personOld.getNumerodocumentoidentificacao());
-					criteria.addEqualTo("tipoDocumentoIdentificacao", identificationDocumentType);
-					query = new QueryByCriteria(Pessoa.class,criteria);
-					result = (List) broker.getCollectionByQuery(query);
+				criteria = new Criteria();
+				criteria.addEqualTo("numeroDocumentoIdentificacao",personOld.getNumerodocumentoidentificacao());
+				criteria.addEqualTo("tipoDocumentoIdentificacao", identificationDocumentType);
+				query = new QueryByCriteria(Pessoa.class,criteria);
+				result = (List) broker.getCollectionByQuery(query);
 
-					if (result.size() != 1)
-						throw new Exception("Erro a ler a Pessoa do Fenix ! BI: " + personOld.getNumerodocumentoidentificacao());
-					
-					IPessoa person = (IPessoa) result.get(0);
+				if (result.size() != 1)
+					throw new Exception("Erro a ler a Pessoa do Fenix ! BI: " + personOld.getNumerodocumentoidentificacao());
+				
+				IPessoa person = (IPessoa) result.get(0);
+
+
+				if (resultStudent.size() == 0){
+
 							
 					// Create a new Student
 					student2Write = new Student();
@@ -273,7 +483,12 @@ public static void main(String args[]) throws Exception{
 						giveStudentRole(student2Write);												
 					}
 					
-				} else System.out.println("O Aluno " + student2Convert.getNumero() + " ja existe. Nenhuma alteracao efectuada");
+				} else System.out.println("O Aluno " + student2Convert.getNumero() + " ja existe. ");
+
+				// Update The Username
+					
+				person.setUsername("M" + student2Convert.getNumero());
+				broker.store(person);
 		
 			}
 			System.out.println("  Done !");
@@ -649,7 +864,8 @@ public static void main(String args[]) throws Exception{
 
 	public List getAreasCientificas() throws Exception {
 		Criteria criteria = new Criteria();
-		Query query = new QueryByCriteria(Posgrad_area_cientifica.class,criteria);
+		QueryByCriteria query = new QueryByCriteria(Posgrad_area_cientifica.class, criteria);
+		query.addGroupBy("nome");
 		return (List) broker.getCollectionByQuery(query);
 	}
 

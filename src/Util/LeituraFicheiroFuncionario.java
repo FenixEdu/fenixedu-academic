@@ -44,7 +44,7 @@ public class LeituraFicheiroFuncionario {
 		String linhaFicheiro = null;
 		Hashtable instancia = null;
 		
-		System.out.println("-->LeituraFicheiroFuncionario.lerFicheiro");
+//		System.out.println("-->LeituraFicheiroFuncionario.lerFicheiro");
 
 		try {
 			/* ficheiro com dados de funcionario validos */
@@ -87,7 +87,7 @@ public class LeituraFicheiroFuncionario {
 		StringTokenizer stringTokenizer = new StringTokenizer(linha, delimitador);
 		Hashtable instancia = new Hashtable();
 
-		System.out.println("-->LeituraFicheiroFuncionarios.recuperarInstancia");
+//		System.out.println("-->LeituraFicheiroFuncionarios.recuperarInstancia");
 
 		/* codigo de parsing dos atributos */
 		Iterator iterador = ordem.iterator();
@@ -104,8 +104,8 @@ public class LeituraFicheiroFuncionario {
 		}
 
 		//teste a instancia lida
-		System.out.println("Valores lidos para instancia");
-		System.out.println(instancia.toString());
+//		System.out.println("Valores lidos para instancia");
+//		System.out.println(instancia.toString());
 
 		return instancia;
 	}
@@ -113,25 +113,28 @@ public class LeituraFicheiroFuncionario {
 	/** retorna um Integer representando o tipo de documento identificacao,
 		 * null em caso de String invalida
 		 */
-	private static String formataTipoDocumentoIdentificacao(String naoFormatado) {
+	private static Integer formataTipoDocumentoIdentificacao(String naoFormatado) {
 		Integer resultado = null;
 
 		//trocar estes valores por constantes
 		if (naoFormatado.equals("00"))
-			resultado = new Integer(7);
-		if (naoFormatado.equals("01"))
-			resultado = new Integer(1);
-		if (naoFormatado.equals("02"))
-			resultado = new Integer(2);
-		if (naoFormatado.equals("03"))
-			resultado = new Integer(5);
-		if (naoFormatado.equals("04"))
-			resultado = new Integer(3);
-		if (naoFormatado.equals("05"))
-			resultado = new Integer(4);
-		if (naoFormatado.equals("06"))
-			resultado = new Integer(6);
+			resultado = new Integer(TipoDocumentoIdentificacao.OUTRO);
+		else if (naoFormatado.equals("01"))
+			resultado = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE);
+		else if (naoFormatado.equals("02"))
+			resultado = new Integer(TipoDocumentoIdentificacao.PASSAPORTE);
+		else if (naoFormatado.equals("03"))
+			resultado = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_MARINHA);
+		else if (naoFormatado.equals("04"))
+			resultado = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DE_CIDADAO_ESTRANGEIRO);
+		else if (naoFormatado.equals("05"))
+			resultado = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DO_PAIS_DE_ORIGEM);
+		else if (naoFormatado.equals("06"))
+			resultado = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_FORCA_AEREA);
+		else resultado = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE);
 
-		return resultado.toString();
+//		System.out.println("tipo documento nao formatado: " + naoFormatado + " formatado: " + resultado);
+
+		return resultado;
 	}
 }

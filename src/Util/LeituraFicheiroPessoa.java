@@ -10,19 +10,27 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.StringTokenizer;
 
-import Dominio.Paises;
+import org.apache.ojb.broker.PersistenceBroker;
+import org.apache.ojb.broker.PersistenceBrokerFactory;
+import org.apache.ojb.broker.query.Criteria;
+import org.apache.ojb.broker.query.Query;
+import org.apache.ojb.broker.query.QueryByCriteria;
+
+import Dominio.Country;
+import Dominio.ICountry;
 import Dominio.Pessoa;
 import ServidorAplicacao.Servico.exceptions.NotExecuteException;
-import ServidorPersistenteJDBC.IPaisesPersistente;
-import ServidorPersistenteJDBC.SuportePersistente;
+import ServidorAplicacao.security.PasswordEncryptor;
+import ServidorPersistente.OJB.ObjectFenixOJB;
 
 /**
  * @author Ivo Brandão
  * 
  */
-public class LeituraFicheiroPessoa {
+public class LeituraFicheiroPessoa extends ObjectFenixOJB{
 
 	/** construtor por defeito */
 	public LeituraFicheiroPessoa() {
@@ -40,7 +48,7 @@ public class LeituraFicheiroPessoa {
 		File erros = null;
 		BufferedWriter escritor = null;
 
-		System.out.println("-->LeituraFicheiroPessoa.lerFicheiro");
+//		System.out.println("-->LeituraFicheiroPessoa.lerFicheiro");
 
 		//para escrita dos dados de pessoas invalidas num ficheiro
 		try {
@@ -104,13 +112,13 @@ public class LeituraFicheiroPessoa {
 			System.out.println("LeituraFicheiroPessoa.lerFicheiro:Erro ao fechar o ficheiro de erros.");
 		}
 
-		System.out.println("Número de registos inválidos: " + contadorErros);
+//		System.out.println("Número de registos inválidos: " + contadorErros);
 
 		return listaPessoas;
 	}
 
 	/** recuperar os atributos para construir a instancia de pessoa */
-	private static Pessoa recuperarPessoa(String linha, String delimitador) {
+	private static Pessoa recuperarPessoa(String linha, String delimitador) throws Exception {
 		StringTokenizer stringTokenizer = new StringTokenizer(linha, delimitador);
 		Pessoa pessoa = new Pessoa();
 
@@ -147,8 +155,9 @@ public class LeituraFicheiroPessoa {
 		String password = new String();
 		Integer nacionalidadeCompleta = new Integer(0);
 		String codigoFiscal = new String();
-
-		System.out.println("-->LeituraFicheiroPessoa.recuperarPessoa");
+		ICountry country = null;
+		
+//		System.out.println("-->LeituraFicheiroPessoa.recuperarPessoa");
 
 		//parsing do primeiro ;
 		//stringTokenizer.nextToken();
@@ -242,10 +251,13 @@ public class LeituraFicheiroPessoa {
 
 		password = new String(stringTokenizer.nextToken().trim());
 		//pessoa.setPassword(password);
-		pessoa.setPassword(numeroDocumentoIdentificacao);
+		pessoa.setPassword(PasswordEncryptor.encryptPassword(numeroDocumentoIdentificacao));
 
 		/* campo a formatar */
-		nacionalidadeCompleta = formataNacionalidadeCompleta(stringTokenizer.nextToken().trim());
+		
+		pessoa.setPais(formataNacionalidadeCompleta(stringTokenizer.nextToken().trim()));
+		
+		//nacionalidadeCompleta = formataNacionalidadeCompleta(stringTokenizer.nextToken().trim());
 		//pessoa.setNacionalidadeCompleta(nacionalidadeCompleta.intValue());
 
 		localidadeCodigoPostal = new String(stringTokenizer.nextToken().trim());
@@ -265,8 +277,8 @@ public class LeituraFicheiroPessoa {
 		stringTokenizer.nextToken();
 
 		//teste a pessoa lida
-		System.out.println("Valores lidos para instancia de pessoa");
-		System.out.println(pessoa.toString());
+//		System.out.println("Valores lidos para instancia de pessoa");
+//		System.out.println(pessoa.toString());
 
 		return pessoa;
 	}
@@ -276,7 +288,6 @@ public class LeituraFicheiroPessoa {
 	 * data invalida -> 1/1/1900
 	 */
 	private static Date formataData(String naoFormatada) {
-		System.out.println("Data a formatar: " + naoFormatada);
 		Date resultado = null;
 
 		Integer todaData = new Integer(naoFormatada);
@@ -284,7 +295,6 @@ public class LeituraFicheiroPessoa {
 		//teste para verificar se se retorna data invalida
 		if (todaData.intValue() == 0) {
 			resultado = null;
-			System.out.println("Data inválida: " + todaData);
 			return resultado;
 		}
 		
@@ -313,9 +323,9 @@ public class LeituraFicheiroPessoa {
 		Integer resultado = null;
 
 		//trocar estes valores 8 e 9 por constantes
-		if (naoFormatado.equals(Sexo.FEMININO_STRING.toLowerCase()))
+		if (naoFormatado.equalsIgnoreCase(Sexo.FEMININO_STRING))
 			resultado = new Integer(Sexo.FEMININO);
-		if (naoFormatado.equals(Sexo.MASCULINO_STRING.toLowerCase()))
+		else if (naoFormatado.equalsIgnoreCase(Sexo.MASCULINO_STRING))
 			resultado = new Integer(Sexo.MASCULINO);
 
 		return resultado;
@@ -328,22 +338,21 @@ public class LeituraFicheiroPessoa {
 		Integer resultado = null;
 
 		//trocar estes valores por constantes
-		if (naoFormatado.equals(EstadoCivil.SOLTEIRO_STRING.toLowerCase()))
+		if (naoFormatado.equalsIgnoreCase(EstadoCivil.SOLTEIRO_STRING))
 			resultado = new Integer(EstadoCivil.SOLTEIRO);
-		if (naoFormatado.equals(EstadoCivil.CASADO_STRING.toLowerCase()))
+		else if (naoFormatado.equalsIgnoreCase(EstadoCivil.CASADO_STRING))
 			resultado = new Integer(EstadoCivil.CASADO);
-		if (naoFormatado.equals(EstadoCivil.DIVORCIADO_STRING.toLowerCase()))
+		else if (naoFormatado.equalsIgnoreCase(EstadoCivil.DIVORCIADO_STRING))
 			resultado = new Integer(EstadoCivil.DIVORCIADO);
-		if (naoFormatado.equals(EstadoCivil.VIUVO_STRING.toLowerCase()))
+		else if ((naoFormatado.equalsIgnoreCase(EstadoCivil.VIUVO_STRING)) || (naoFormatado.equalsIgnoreCase("viuvo")))
 			resultado = new Integer(EstadoCivil.VIUVO);
-		if (naoFormatado.equals(EstadoCivil.SEPARADO_STRING.toLowerCase()))
+		else if (naoFormatado.equalsIgnoreCase(EstadoCivil.SEPARADO_STRING))
 			resultado = new Integer(EstadoCivil.SEPARADO);
-		if (naoFormatado.equals(EstadoCivil.UNIAO_DE_FACTO_STRING.toLowerCase()))
+		else if (naoFormatado.equalsIgnoreCase(EstadoCivil.UNIAO_DE_FACTO_STRING))
 			resultado = new Integer(EstadoCivil.UNIAO_DE_FACTO);
-		if (naoFormatado.equals("desconhecido"))
-			resultado = new Integer(0);
+		else resultado = new Integer(EstadoCivil.DESCONHECIDO);
 
-		System.out.println("Estado Civil nao formatado: " + naoFormatado + " formatado: " + resultado);
+//		System.out.println("Estado Civil nao formatado: " + naoFormatado + " formatado: " + resultado);
 		return resultado;
 
 	}
@@ -356,44 +365,49 @@ public class LeituraFicheiroPessoa {
 
 		//trocar estes valores por constantes
 		if (naoFormatado.equals("00"))
-			resultado = new Integer(7);
-		if (naoFormatado.equals("01"))
-			resultado = new Integer(1);
-		if (naoFormatado.equals("02"))
-			resultado = new Integer(2);
-		if (naoFormatado.equals("03"))
-			resultado = new Integer(5);
-		if (naoFormatado.equals("04"))
-			resultado = new Integer(3);
-		if (naoFormatado.equals("05"))
-			resultado = new Integer(4);
-		if (naoFormatado.equals("06"))
-			resultado = new Integer(6);
+			resultado = new Integer(TipoDocumentoIdentificacao.OUTRO);
+		else if (naoFormatado.equals("01"))
+			resultado = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE);
+		else if (naoFormatado.equals("02"))
+			resultado = new Integer(TipoDocumentoIdentificacao.PASSAPORTE);
+		else if (naoFormatado.equals("03"))
+			resultado = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_MARINHA);
+		else if (naoFormatado.equals("04"))
+			resultado = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DE_CIDADAO_ESTRANGEIRO);
+		else if (naoFormatado.equals("05"))
+			resultado = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DO_PAIS_DE_ORIGEM);
+		else if (naoFormatado.equals("06"))
+			resultado = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE_DA_FORCA_AEREA);
+		else resultado = new Integer(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE);
 
-		System.out.println("tipo documento nao formatado: " + naoFormatado + " formatado: " + resultado);
+//		System.out.println("tipo documento nao formatado: " + naoFormatado + " formatado: " + resultado);
 
 		return resultado;
 	}
 
 	/** retorna um Integer com o codigoInterno do pais */
-	private static Integer formataNacionalidadeCompleta(String naoFormatada) {
-		Integer resultado = null;
-		SuportePersistente suportePersistente = SuportePersistente.getInstance();
-		IPaisesPersistente paisesPersistente = suportePersistente.iPaisesPersistente();
-		Paises pais = null;
+	private static ICountry formataNacionalidadeCompleta(String naoFormatada) throws Exception {
+		PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
 		Integer chavePais = new Integer(naoFormatada);
 
-		//ler pais com este codigoPais
-		pais = paisesPersistente.lerPaisesCodigoPais(chavePais.intValue());
-
-		//tirar codigoInterno
-		if (pais != null) {
-			resultado = new Integer(pais.getCodigoInterno());
+		Criteria criteria = new Criteria();
+		Query query = null;
+		
+		if (chavePais.equals(new Integer(1))){
+			criteria.addEqualTo("name", "PORTUGAL");	
+		} else {
+			criteria.addEqualTo("name", "ESTRANGEIRO");
 		}
-
-		System.out.println("pais nao formatado: " + naoFormatada + " chavePais: " + chavePais + " codigoInterno " + resultado);
-
-		return resultado;
+		
+		query = new QueryByCriteria(Country.class,criteria);
+		List result = (List) broker.getCollectionByQuery(query);	
+		broker.close();
+		
+		if (result.size() == 0)
+			throw new Exception("Error Reading Country");
+		else return (ICountry) result.get(0);
+	
+		
 	}
 
 }
