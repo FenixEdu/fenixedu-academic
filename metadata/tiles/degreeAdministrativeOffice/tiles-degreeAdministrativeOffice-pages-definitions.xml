@@ -77,4 +77,5 @@
 	<definition name="df.page.acceptOptionalEnrolmentWithoutRules" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/acceptOptionalEnrolmentWithoutRules.jsp"/>
 	</definition>
+
 </tiles-definitions>

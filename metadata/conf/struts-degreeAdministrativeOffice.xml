@@ -85,12 +85,13 @@
 		<action path="/home" forward="/switchAction.do?prefix=&amp;page=/mainPortalPage.jsp"/>
 		<action path="/switchAction" type="org.apache.struts.actions.SwitchAction"/>
 		<action path="/outOfPeriod" forward="definition.out.of.period"/>
-		<action path="/globalEnrolment" forward="df.page.globalEnrolment"/>
+		<action path="/globalEnrolment" forward="df.page.globalEnrolment"/>	
+   		
 
 		<action path="/index" type="ServidorApresentacao.Action.commons.VoidAction">
 			<forward name="Success" path="df.page.main"/>
 		</action>
-
+	
 		<action	name="methodForm"
 				type="ServidorApresentacao.Action.degreeAdministrativeOffice.FunctionRedirectDispatchAction"
 				path="/functionRedirect"
