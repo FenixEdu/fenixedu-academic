@@ -469,7 +469,7 @@
       <form-bean name="studentCurricularPlanForm" 
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
-            <form-property name="page" type="java.lang.Integer" />
+            <form-property name="page" type="java.lang.Integer" initial="0" />
    	        <form-property name="currentState" type="java.lang.String"/>
    	        <form-property name="credits" type="java.lang.String"/>
    	        <form-property name="startDate" type="java.lang.String"/>
@@ -595,6 +595,38 @@
             <form-property name="studentNumber" type="java.lang.Integer"/>
             <form-property name="executionYear" type="java.lang.String" />
        </form-bean>
+       
+      <form-bean name="insertGratuityDataForm" 
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+
+            <form-property name="page" type="java.lang.Integer" />
+            <form-property name="executionPeriod" type="java.lang.String"/>
+            <form-property name="executionPeriodName" type="java.lang.String"/>
+            <form-property name="specializationArea" type="java.lang.String"/>
+            <form-property name="degree" type="java.lang.String"/>
+            <form-property name="degreeName" type="java.lang.String"/>
+            <form-property name="annualValue" type="java.lang.String"/>
+            <form-property name="scholarPart" type="java.lang.String"/>
+            <form-property name="thesisPart" type="java.lang.String"/>
+            <form-property name="unitaryValueCredit" type="java.lang.String"/>
+            <form-property name="unitaryValueCourse" type="java.lang.String"/>
+            <form-property name="paymentWhen" type="java.lang.Boolean"/>
+            <form-property name="totalPayment" type="java.lang.Boolean"/>
+            <form-property name="initialDateTotalPayment" type="java.lang.String"/>
+            <form-property name="finalDateTotalPayment" type="java.lang.String"/>
+            <form-property name="partialPayment" type="java.lang.Boolean"/>
+            <form-property name="initialDatePartialPayment" type="java.lang.String"/>
+            <form-property name="finalDatePartialPayment" type="java.lang.String"/>
+            <form-property name="phaseValue" type="java.lang.String"/>
+            <form-property name="registrationPayment" type="java.lang.Boolean"/>
+            <form-property name="initialDateRegistrationPayment" type="java.lang.String"/>
+            <form-property name="finalDateRegistrationPayment" type="java.lang.String"/>
+            <form-property name="registrationValue" type="java.lang.String"/>
+            <form-property name="removedPhases" type="java.lang.String[]"/>
+            <form-property name="paymentPhases" type="java.lang.String[]"/>
+       </form-bean>
+       
    </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -2060,30 +2092,39 @@
 		<forward name="chooseStudent" path="chooseStudent"/>
 	</action>
 	
-	<action path="/readStudent"
+	<action path="/prepareInsertExemption"
 	type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.ExemptionGratuityAction"
 	parameter="method"
 	name="chooseStudentGratuityForm"
 	input="/chooseStudent.do?method=chooseStudent"
 	>
-		<forward name="readExemptionGratuity" path="/readExemptionGratuity.do?method=readExemptionGratuity"/>
+		<forward name="insertExemptionGratuity" path="insertExemptionGratuity"/>
 		<forward name="chooseStudentCurricularPlan" path="chooseStudentCurricularPlan" />
 	</action>
-	
-	<action path="/readExemptionGratuity"
-	type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.ExemptionGratuityAction"
-	parameter="method"
+      
+	<action path="/insertGratuityDataDA"
+		type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.InsertGratuityDataDispatchAction"
+		name="insertGratuityDataForm"	 	
+		parameter="method"
+		scope="request"	
+		input="/insertGratuityDataDA.do?method=prepareInsertGratuityDataChooseDegree&amp;page=0"
 	>
-		<forward name="manageExemptionGratuity" path="manageExemptionGratuity"/>
-	</action>	
-
-	<action path="/insertExemptionGratuity"
-	type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.ExemptionGratuityAction"
-	parameter="method"
-	>
-		<forward name="manageExemptionGratuity" path="manageExemptionGratuity"/>
+	<forward name="prepareInsertGratuityData" path="df.page.prepareInsertGratuityData"/>
+	<forward name="insertGratuityData" path="df.page.insertGratuityData"/>  
 	</action>
-	      
+
+	<action path="/insertGratuityDataLA"
+	 	type="ServidorApresentacao.Action.masterDegree.administrativeOffice.gratuity.InsertGratuityDataLookupDispatchAction"
+		name="insertGratuityDataForm"		
+ 		parameter="method"
+		scope="request"	
+		input="/insertGratuityDataDA.do?method=prepareInsertGratuityData&amp;page=0"
+	>
+	<forward name="insertGratuityData" path="df.page.insertGratuityData"/>  
+	<forward name="cancel" path="/insertGratuityDataDA.do?method=prepareInsertChooseExecutionPeriod&amp;page=0"/>  
+	</action>
+	
+	
     </action-mappings>
     
     

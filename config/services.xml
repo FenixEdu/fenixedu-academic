@@ -5372,7 +5372,16 @@
     	<isTransactional>true</isTransactional>
         <filterChains/>                    	
     </service>
-    <service>
+   	<service>
+		<name>ReadExecutionDegreesByExecutionPeriodIdForGratuity</name>
+		<implementationClass>ServidorAplicacao.Servico.manager.executionCourseManagement.ReadExecutionDegreesByExecutionPeriodId</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
+        </filterChains>
+    </service>
+        <service>
         <name>EditGrantContract</name>
         <implementationClass>ServidorAplicacao.Servico.grant.contract.EditGrantContract</implementationClass>
         <description/>

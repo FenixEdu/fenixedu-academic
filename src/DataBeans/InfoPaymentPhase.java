@@ -21,15 +21,18 @@ public class InfoPaymentPhase extends InfoObject implements Serializable
 		StringBuffer object = new StringBuffer();
 		object =
 			object
-				.append("[InfoPaymentPhase: ")
-				.append("starDate= ")
-				.append(startDate.toString())
+				.append("\n[InfoPaymentPhase: ")
+				.append("idInternal= ")
+				.append(getIdInternal())
+				.append(" starDate= ")
+				.append(startDate)
 				.append("; endDate= ")
-				.append(endDate.toString())
+				.append(endDate)
 				.append("; value= ")
-				.append(value.toString())
+				.append(value)
 				.append("; description= ")
-				.append(description);
+				.append(description)
+				.append("\n");
 
 		return object.toString();
 	}

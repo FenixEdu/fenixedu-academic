@@ -726,6 +726,8 @@
 			<arg0 key="label.masterDegree.administrativeOffice.workLocationName" />
 		</field>
 	</form>
+	
+	<!-- Gratuity Operations -->
 	<form name="chooseStudentGratuityForm">
 		<field property="studentNumber" depends="integer, required" page="1">
 	        <arg0 key="label.student.number" />
@@ -734,8 +736,203 @@
         	<arg0 key="label.executionYear" />
       	</field>
     </form>
+    
+	<form name="insertGratuityDataForm">
+		<field property="specializationArea" depends="required" page="1">
+	        <arg0 key="label.masterDegree.gratuity.specializationArea" />
+		</field>
+		<field property="degree" depends="required" page="1">
+	        <arg0 key="label.qualification.degree" />
+		</field>
 	
+		<field property="annualValue" depends="requiredif, double" page="2">
+	        <arg0 key="label.masterDegree.gratuity.annual.value" />
+			<var>
+				<var-name>field[0]</var-name>
+				<var-value>scholarPart</var-value>
+			</var>
+			<var>
+				<var-name>fieldTest[0]</var-name>
+				<var-value>NULL</var-value>
+			</var>        			
+			<var>
+				<var-name>field[1]</var-name>
+				<var-value>thesisPart</var-value>
+			</var>
+			<var>
+				<var-name>fieldTest[1]</var-name>
+				<var-value>NULL</var-value>
+			</var>        			
+		</field>
+		<field property="scholarPart" depends="requiredif, double" page="2">
+	        <arg0 key="label.masterDegree.gratuity.scholarPart" />
+			<var>
+				<var-name>field[0]</var-name>
+				<var-value>annualValue</var-value>
+			</var>
+			<var>
+				<var-name>fieldTest[0]</var-name>
+				<var-value>NULL</var-value>
+			</var>        			
+			<var>
+				<var-name>field[1]</var-name>
+				<var-value>thesisPart</var-value>
+			</var>
+			<var>
+				<var-name>fieldTest[1]</var-name>
+				<var-value>NOTNULL</var-value>
+			</var>        			
+		</field>
+		<field property="thesisPart" depends="requiredif, double" page="2">
+	        <arg0 key="label.masterDegree.gratuity.thesisPart" />
+			<var>
+				<var-name>field[0]</var-name>
+				<var-value>annualValue</var-value>
+			</var>
+			<var>
+				<var-name>fieldTest[0]</var-name>
+				<var-value>NULL</var-value>
+			</var>        			
+			<var>
+				<var-name>field[1]</var-name>
+				<var-value>scholarPart</var-value>
+			</var>
+			<var>
+				<var-name>fieldTest[1]</var-name>
+				<var-value>NOTNULL</var-value>
+			</var>        			
+		</field>
+		<field property="unitaryValueCourse" depends="requiredif, double" page="2">
+	        <arg0 key="label.masterDegree.gratuity.valueByCourse" />
+			<var>
+				<var-name>field[0]</var-name>
+				<var-value>unitaryValueCredit</var-value>
+			</var>
+			<var>
+				<var-name>fieldTest[0]</var-name>
+				<var-value>NULL</var-value>
+			</var>	        
+		</field>
+		<field property="unitaryValueCredit" depends="requiredif, double" page="2">
+	        <arg0 key="label.masterDegree.gratuity.valueByCredit" />
+			<var>
+				<var-name>field[0]</var-name>
+				<var-value>unitaryValueCourse</var-value>
+			</var>
+			<var>
+				<var-name>fieldTest[0]</var-name>
+				<var-value>NULL</var-value>
+			</var>	        
+		</field>
+		<field property="initialDateTotalPayment" depends="mask, date" page="2">
+			<msg name="date" key="errors.invalid.date"/>
+		   	<msg name="mask" key="errors.invalid.date"/>
+	        <arg0 key="label.masterDegree.gratuity.initialDate" />
+		   	<var>
+		   		<var-name>datePattern</var-name>
+		   		<var-value>dd/MM/yyyy</var-value>
+			</var>
+			<var>
+		   		<var-name>mask</var-name>
+		   		<var-value>^((.||..)/(.||..)/2...)$</var-value>
+			</var>			        			
+		</field>
+		<field property="finalDateTotalPayment" depends="requiredif, mask, date" page="2">
+			<msg name="date" key="errors.invalid.date"/>
+		   	<msg name="mask" key="errors.invalid.date"/>
+	        <arg0 key="label.masterDegree.gratuity.finalDate" />
+			<var>
+				<var-name>field[0]</var-name>
+				<var-value>totalPayment</var-value>
+			</var>
+			<var>
+				<var-name>fieldTest[0]</var-name>
+				<var-value>NOTNULL</var-value>
+			</var>
+		   	<var>
+		   		<var-name>datePattern</var-name>
+		   		<var-value>dd/MM/yyyy</var-value>
+			</var>
+			<var>
+		   		<var-name>mask</var-name>
+		   		<var-value>^((.||..)/(.||..)/2...)$</var-value>
+			</var>			        			
+		</field>
+		<field property="initialDatePartialPayment" depends="mask, date" page="2">
+			<msg name="date" key="errors.invalid.date"/>
+		   	<msg name="mask" key="errors.invalid.date"/>
+	        <arg0 key="label.masterDegree.gratuity.initialDate" />
+		   	<var>
+		   		<var-name>datePattern</var-name>
+		   		<var-value>dd/MM/yyyy</var-value>
+			</var>
+			<var>
+		   		<var-name>mask</var-name>
+		   		<var-value>^((.||..)/(.||..)/2...)$</var-value>
+			</var>			        			
+		</field>
+		<field property="finalDatePartialPayment" depends="mask, date" page="2">
+			<msg name="date" key="errors.invalid.date"/>
+		   	<msg name="mask" key="errors.invalid.date"/>
+	        <arg0 key="label.masterDegree.gratuity.finalDate" />
+		   	<var>
+		   		<var-name>datePattern</var-name>
+		   		<var-value>dd/MM/yyyy</var-value>
+			</var>
+			<var>
+		   		<var-name>mask</var-name>
+		   		<var-value>^((.||..)/(.||..)/2...)$</var-value>
+			</var>			        			
+		</field>
+		<field property="phaseValue" depends="double" page="2">
+	        <arg0 key="label.masterDegree.gratuity.value" />
+		</field>
+		<field property="finalDateRegistrationPayment" depends="requiredif, mask, date" page="2">
+			<msg name="date" key="errors.invalid.date"/>
+		   	<msg name="mask" key="errors.invalid.date"/>		
+	        <arg0 key="label.masterDegree.gratuity.finalDate" />
+		   	<var>
+		   		<var-name>datePattern</var-name>
+		   		<var-value>dd/MM/yyyy</var-value>
+			</var>
+			<var>
+		   		<var-name>mask</var-name>
+		   		<var-value>^((.||..)/(.||..)/2...)$</var-value>
+			</var>			        			
+			<var>
+				<var-name>field[0]</var-name>
+				<var-value>registrationPayment</var-value>
+			</var>
+			<var>
+				<var-name>fieldTest[0]</var-name>
+				<var-value>NOTNULL</var-value>
+			</var>        			
+		</field>
+		<field property="initialDateRegistrationPayment" depends="mask, date" page="2">
+			<msg name="date" key="errors.invalid.date"/>
+		   	<msg name="mask" key="errors.invalid.date"/>		
+	        <arg0 key="label.masterDegree.gratuity.finalDate" />
+		   	<var>
+		   		<var-name>datePattern</var-name>
+		   		<var-value>dd/MM/yyyy</var-value>
+			</var>
+			<var>
+		   		<var-name>mask</var-name>
+		   		<var-value>^((.||..)/(.||..)/2...)$</var-value>
+			</var>			        			
+		</field>
+		<field property="registrationValue" depends="requiredif, double" page="2">
+	        <arg0 key="label.masterDegree.gratuity.value" />
+			<var>
+				<var-name>field[0]</var-name>
+				<var-value>registrationPayment</var-value>
+			</var>
+			<var>
+				<var-name>fieldTest[0]</var-name>
+				<var-value>NOTNULL</var-value>
+			</var>        			
+		</field>
+    </form>	
   </formset>
-
 
 </form-validation>
