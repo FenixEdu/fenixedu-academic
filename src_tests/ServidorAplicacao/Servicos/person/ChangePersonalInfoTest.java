@@ -5,7 +5,6 @@
 package ServidorAplicacao.Servicos.person;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 
 import junit.framework.Test;
@@ -65,8 +64,6 @@ public class ChangePersonalInfoTest extends TestCaseNeedAuthorizationServices {
 	public void testSuccessfullChangePersonalInfo() {
 		UserView userView = getUserViewToBeTested("user");
 		
-		Calendar calendar = Calendar.getInstance();
-				
 		InfoPerson infoPerson = new InfoPerson();
 //		infoPerson.setCodigoPostal("123");
 //		infoPerson.setConcelhoMorada("123");
@@ -153,9 +150,9 @@ public class ChangePersonalInfoTest extends TestCaseNeedAuthorizationServices {
 		UserView userView = getUserViewToBeTested("nonexisting");
 		
 		Object args[] = { userView };
-		InfoPerson infoPerson = null;
+		
 		try {
-			infoPerson = (InfoPerson) ServiceUtils.executeService(userView, getNameOfServiceToBeTested(), args);
+			ServiceUtils.executeService(userView, getNameOfServiceToBeTested(), args);
 			fail ("Must throw "+ InvalidPasswordServiceException.class.getName()+" exception.");
 		} catch(FenixServiceException e) {
 			// All is OK

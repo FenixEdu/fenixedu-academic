@@ -95,7 +95,7 @@ public class ChangeApplicationInfoTest extends TestCaseServicosCandidato {
 	   System.out.println("- Test 2 : Change Application Info without Role");
         
 	   UserView userView = this.getUserViewToBeTested("nmsn", false);
-	   Object args[] = new Object[1];
+	   
 		
 	   InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
 
