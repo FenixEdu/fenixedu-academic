@@ -170,7 +170,7 @@ public List readBySite(ISite site) throws ExcepcaoPersistencia {
 			super.lockWrite(section);
 			
 		}
-		// else If the professorship is mapped to the database, then write any existing changes.
+		// else If the section is mapped to the database, then write any existing changes.
 		else if (
 					(section instanceof Section)
 						&& ((Section) sectionFromDB).getInternalCode().equals(
@@ -201,7 +201,7 @@ public List readBySite(ISite site) throws ExcepcaoPersistencia {
 	  		     delete(inferiorSection);
 		        }
 		    
-	  		super.delete(inferiorSection);
+	  		//super.delete(inferiorSection);
 	
 
 
