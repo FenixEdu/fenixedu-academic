@@ -63,15 +63,7 @@ public class EquivalentEnrolmentForEnrolmentEquivalenceOJB
         {
             super.lockWrite(enrolmentEquivalenceRestrictionToWrite);
             // else If the EnrolmentEquivalence is mapped to the database, then write any existing changes.
-        } else if (
-            (enrolmentEquivalenceRestrictionToWrite
-                instanceof IEquivalentEnrolmentForEnrolmentEquivalence)
-                && ((IEquivalentEnrolmentForEnrolmentEquivalence) equivalenceFromDB)
-                    .getIdInternal()
-                    .equals(
-                    (
-                        (IEquivalentEnrolmentForEnrolmentEquivalence) enrolmentEquivalenceRestrictionToWrite)
-                        .getIdInternal()))
+        } else if (equivalenceFromDB.getIdInternal().equals(enrolmentEquivalenceRestrictionToWrite.getIdInternal()))
         {
             super.lockWrite(enrolmentEquivalenceRestrictionToWrite);
             // else Throw an already existing exception

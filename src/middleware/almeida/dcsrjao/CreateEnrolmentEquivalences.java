@@ -66,7 +66,7 @@ public class CreateEnrolmentEquivalences extends LoadDataToFenix {
 
 	private IDegreeCurricularPlan newDegreeCurricularPlan = null;
 	private IDegreeCurricularPlan oldDegreeCurricularPlan = null;
-	private boolean before1977 = true;
+//	private boolean before1977 = true;
 	private String outputFilename = "After1997.txt";
 	private IBranch newBranch = null;
 	List curricularCourseEquivalencesList = null;

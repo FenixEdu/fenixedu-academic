@@ -6,7 +6,6 @@ package middleware.persistentMiddlewareSupport.OJBDatabaseSupport;
 
 import middleware.middlewareDomain.MWDegreeTranslation;
 import middleware.persistentMiddlewareSupport.IPersistentMWDegreeTranslation;
-import middleware.persistentMiddlewareSupport.exceptions.PersistentMiddlewareSupportException;
 
 import org.apache.ojb.broker.query.Criteria;
 
@@ -24,7 +23,7 @@ public class MWDegreeTranslationOJB extends ObjectFenixOJB implements IPersisten
      * @see middleware.persistentMiddlewareSupport.IPersistentMWDegreeTranslation#readByDegreeCode()
      */
     public MWDegreeTranslation readByDegreeCode(Integer degreeCode)
-        throws PersistentMiddlewareSupportException, ExcepcaoPersistencia
+        throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("degreeCode", degreeCode);
@@ -37,7 +36,7 @@ public class MWDegreeTranslationOJB extends ObjectFenixOJB implements IPersisten
 	 */
 	
     public MWDegreeTranslation readByDegree(ICurso degree)
-        throws PersistentMiddlewareSupportException, ExcepcaoPersistencia
+        throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyDegree", degree.getIdInternal());

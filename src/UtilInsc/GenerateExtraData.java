@@ -256,10 +256,10 @@ public class GenerateExtraData {
 			curricularCourseToWrite.setScopes(null);
 			curricularCourseToWrite.setBasic(new Boolean(true));
 
-			curricularCourseToWrite.setLabHours(curricularCourse.getLabHours());
-			curricularCourseToWrite.setPraticalHours(curricularCourse.getPraticalHours());
-			curricularCourseToWrite.setTheoPratHours(curricularCourse.getTheoPratHours());
-			curricularCourseToWrite.setTheoreticalHours(curricularCourse.getTheoreticalHours());
+//			curricularCourseToWrite.setLabHours(curricularCourse.getLabHours());
+//			curricularCourseToWrite.setPraticalHours(curricularCourse.getPraticalHours());
+//			curricularCourseToWrite.setTheoPratHours(curricularCourse.getTheoPratHours());
+//			curricularCourseToWrite.setTheoreticalHours(curricularCourse.getTheoreticalHours());
 			curricularCourseToWrite.setCode(curricularCourse.getCode() + i);
 			curricularCourseToWrite.setCurricularCourseExecutionScope(curricularCourse.getCurricularCourseExecutionScope());
 			curricularCourseToWrite.setDegreeCurricularPlan(degreeCurricularPlan2);
@@ -351,12 +351,12 @@ public class GenerateExtraData {
 		executionCourse.setComment(null);
 		executionCourse.setIdInternal(null);
 
-		executionCourse.setTheoreticalHours(curricularCourseToAssociate.getTheoreticalHours());
-		executionCourse.setTheoPratHours(curricularCourseToAssociate.getTheoPratHours());
+//		executionCourse.setTheoreticalHours(curricularCourseToAssociate.getTheoreticalHours());
+//		executionCourse.setTheoPratHours(curricularCourseToAssociate.getTheoPratHours());
 		executionCourse.setSigla(curricularCourseToAssociate.getCode());
-		executionCourse.setPraticalHours(curricularCourseToAssociate.getPraticalHours());
+//		executionCourse.setPraticalHours(curricularCourseToAssociate.getPraticalHours());
 		executionCourse.setNome(curricularCourseToAssociate.getName());
-		executionCourse.setLabHours(curricularCourseToAssociate.getLabHours());
+//		executionCourse.setLabHours(curricularCourseToAssociate.getLabHours());
 		executionCourse.setExecutionPeriod(executionPeriod);
 		
 		List associatedCurricularCourses = new ArrayList();

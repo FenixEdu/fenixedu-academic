@@ -3,7 +3,6 @@ package middleware.persistentMiddlewareSupport.OJBDatabaseSupport;
 
 import middleware.middlewareDomain.MWCurricularCourseOutsideStudentDegree;
 import middleware.persistentMiddlewareSupport.IPersistentMWCurricularCourseOutsideStudentDegree;
-import middleware.persistentMiddlewareSupport.exceptions.PersistentMiddlewareSupportException;
 
 import org.apache.ojb.broker.query.Criteria;
 
@@ -21,7 +20,7 @@ public class MWCurricularCourseOutsideStudentDegreeOJB extends ObjectFenixOJB im
     public MWCurricularCourseOutsideStudentDegreeOJB() {
     }
 
-	public MWCurricularCourseOutsideStudentDegree readByCourseCodeAndDegreeCode(String courseCode, Integer degreeCode) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia {
+	public MWCurricularCourseOutsideStudentDegree readByCourseCodeAndDegreeCode(String courseCode, Integer degreeCode) throws ExcepcaoPersistencia {
 
 		Criteria criteria = new Criteria();
 		

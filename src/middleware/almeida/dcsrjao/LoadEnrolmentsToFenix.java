@@ -48,11 +48,11 @@ public class LoadEnrolmentsToFenix extends LoadDataToFenix {
 
 	private static LoadEnrolmentsToFenix loader = null;
 	private static String logString = "";
-	private static HashMap errorFilterScopeByUnique = new HashMap();
-	private static HashMap errorFilterScopeWithoutSemester = new HashMap();
+//	private static HashMap errorFilterScopeByUnique = new HashMap();
+//	private static HashMap errorFilterScopeWithoutSemester = new HashMap();
 	private static HashMap errorFilterScopeWithoutSemesterAndBranch = new HashMap();
-	private static HashMap errorNoCourseInRealDegreeCPlan = new HashMap();
-	private static HashMap errorNoCourseInISTDegreeCPlan = new HashMap();
+//	private static HashMap errorNoCourseInRealDegreeCPlan = new HashMap();
+//	private static HashMap errorNoCourseInISTDegreeCPlan = new HashMap();
 	private static HashMap errorNotExistingCourse = new HashMap();
 	private static HashMap error = new HashMap();
 	private static String errorMessage = "";
@@ -67,17 +67,17 @@ public class LoadEnrolmentsToFenix extends LoadDataToFenix {
 	private ICurricularCourse curricularCourse = null;
 	private ICurricularSemester curricularSemester = null;
 	private IStudentCurricularPlan oldStudentCurricularPlan = null;
-	private IStudentCurricularPlan newStudentCurricularPlan = null;
+//	private IStudentCurricularPlan newStudentCurricularPlan = null;
 	private IExecutionPeriod executionPeriod = null;
 	private ICurricularCourseScope curricularCourseScope = null;
 	private EnrolmentEvaluationType enrolmentEvaluationType = null;
 	private EnrolmentState enrolmentState = null;
 	private IUniversity university = null;
 		
-	private int filterScopeByUnique = 1;
-	private int filterScopeWithoutSemester = 2;
-	private int filterScopeWithoutSemesterAndBranch = 3;
-	private int filterEnd = 4;
+//	private int filterScopeByUnique = 1;
+//	private int filterScopeWithoutSemester = 2;
+//	private int filterScopeWithoutSemesterAndBranch = 3;
+//	private int filterEnd = 4;
 	
 	public LoadEnrolmentsToFenix() {
 	}

@@ -3,7 +3,6 @@ package middleware.persistentMiddlewareSupport.OJBDatabaseSupport;
 
 import middleware.middlewareDomain.MWCurricularCourse;
 import middleware.persistentMiddlewareSupport.IPersistentMWCurricularCourse;
-import middleware.persistentMiddlewareSupport.exceptions.PersistentMiddlewareSupportException;
 
 import org.apache.ojb.broker.query.Criteria;
 
@@ -22,7 +21,7 @@ public class MWCurricularCourseOJB extends ObjectFenixOJB implements IPersistent
     }
 
 
-	public MWCurricularCourse readByCode(String code) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia {
+	public MWCurricularCourse readByCode(String code) throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("coursecode", code);
 		return (MWCurricularCourse) queryObject(MWCurricularCourse.class, criteria);

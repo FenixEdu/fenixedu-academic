@@ -198,17 +198,17 @@ public class LoadCurricularCoursesToFenix extends LoadDataToFenix {
 		return branch;
 	}
 
-	private IDegreeCurricularPlan processNewDegreeCurricularPlan() {
-		IDegreeCurricularPlan degreeCurricularPlan = persistentObjectOJB.readDegreeCurricularPlanByName(InfoForMigration.NAME_OF_NEW_DEGREE_CURRICULAR_PLAN);
-		if (degreeCurricularPlan == null) {
-			errorMessage = "\n O plano curricular " + InfoForMigration.NAME_OF_NEW_DEGREE_CURRICULAR_PLAN + " não existe!";
-			errorDBID = "";
-			error = loader.setErrorMessage(errorMessage, errorDBID, error);
-			return null;
-		}
-
-		return degreeCurricularPlan;
-	}
+//	private IDegreeCurricularPlan processNewDegreeCurricularPlan() {
+//		IDegreeCurricularPlan degreeCurricularPlan = persistentObjectOJB.readDegreeCurricularPlanByName(InfoForMigration.NAME_OF_NEW_DEGREE_CURRICULAR_PLAN);
+//		if (degreeCurricularPlan == null) {
+//			errorMessage = "\n O plano curricular " + InfoForMigration.NAME_OF_NEW_DEGREE_CURRICULAR_PLAN + " não existe!";
+//			errorDBID = "";
+//			error = loader.setErrorMessage(errorMessage, errorDBID, error);
+//			return null;
+//		}
+//
+//		return degreeCurricularPlan;
+//	}
 
 	private IDegreeCurricularPlan processOldDegreeCurricularPlan(Almeida_disc almeida_disc) {
 		Integer keyDegree;

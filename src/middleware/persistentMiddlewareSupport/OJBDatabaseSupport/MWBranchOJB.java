@@ -3,7 +3,6 @@ package middleware.persistentMiddlewareSupport.OJBDatabaseSupport;
 
 import middleware.middlewareDomain.MWBranch;
 import middleware.persistentMiddlewareSupport.IPersistentMWBranch;
-import middleware.persistentMiddlewareSupport.exceptions.PersistentMiddlewareSupportException;
 
 import org.apache.ojb.broker.query.Criteria;
 
@@ -21,7 +20,7 @@ public class MWBranchOJB extends ObjectFenixOJB implements IPersistentMWBranch {
     public MWBranchOJB() {
     }
 
-	public MWBranch readByDegreeCodeAndBranchCode(Integer degreeCode, Integer branchCode) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia {
+	public MWBranch readByDegreeCodeAndBranchCode(Integer degreeCode, Integer branchCode) throws ExcepcaoPersistencia {
 
 		Criteria criteria = new Criteria();
 	
@@ -43,7 +42,7 @@ public class MWBranchOJB extends ObjectFenixOJB implements IPersistentMWBranch {
 	 * @throws ExcepcaoPersistencia
 	 */
 
-	public MWBranch readByDegreeCodeAndBranchName(Integer degreeCode, String branchName) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia {
+	public MWBranch readByDegreeCodeAndBranchName(Integer degreeCode, String branchName) throws ExcepcaoPersistencia {
 
 		Criteria criteria = new Criteria();
 	

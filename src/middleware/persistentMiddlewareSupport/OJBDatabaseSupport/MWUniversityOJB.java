@@ -5,7 +5,6 @@ import java.util.List;
 
 import middleware.middlewareDomain.MWUniversity;
 import middleware.persistentMiddlewareSupport.IPersistentMWUniversity;
-import middleware.persistentMiddlewareSupport.exceptions.PersistentMiddlewareSupportException;
 
 import org.apache.ojb.broker.query.Criteria;
 
@@ -23,13 +22,13 @@ public class MWUniversityOJB extends ObjectFenixOJB implements IPersistentMWUniv
     }
 
 
-	public MWUniversity readByCode(String code) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia {
+	public MWUniversity readByCode(String code) throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("universityCode", code);
 		return (MWUniversity) queryObject(MWUniversity.class, criteria);
 	}
     
-	public List readAll() throws PersistentMiddlewareSupportException, ExcepcaoPersistencia {
+	public List readAll() throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		return queryList(MWUniversity.class, criteria);
 	}

@@ -5,7 +5,6 @@ import java.util.List;
 
 import middleware.middlewareDomain.MWCurricularCourseScope;
 import middleware.persistentMiddlewareSupport.IPersistentMWCurricularCourseScope;
-import middleware.persistentMiddlewareSupport.exceptions.PersistentMiddlewareSupportException;
 
 import org.apache.ojb.broker.query.Criteria;
 
@@ -24,7 +23,7 @@ public class MWCurricularCourseScopeOJB extends ObjectFenixOJB implements IPersi
     }
 
 
-	public List readAll() throws PersistentMiddlewareSupportException, ExcepcaoPersistencia {
+	public List readAll() throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		return queryList(MWCurricularCourseScope.class, criteria);
 	}
@@ -32,7 +31,7 @@ public class MWCurricularCourseScopeOJB extends ObjectFenixOJB implements IPersi
 	/* (non-Javadoc)
 	 * @see middleware.persistentMiddlewareSupport.IPersistentMWAluno#readAllBySpan(java.lang.Integer, java.lang.Integer)
 	 */
-	public List readAllBySpan(Integer spanNumber, Integer numberOfElementsInSpan) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia
+	public List readAllBySpan(Integer spanNumber, Integer numberOfElementsInSpan) throws ExcepcaoPersistencia
 	{
 		Criteria criteria = new Criteria();
 		return readSpan(MWCurricularCourseScope.class, criteria, numberOfElementsInSpan, spanNumber);
@@ -41,7 +40,7 @@ public class MWCurricularCourseScopeOJB extends ObjectFenixOJB implements IPersi
 	/* (non-Javadoc)
 	 * @see middleware.persistentMiddlewareSupport.IPersistentMWAluno#countAll()
 	 */
-	public Integer countAll() throws PersistentMiddlewareSupportException, ExcepcaoPersistencia
+	public Integer countAll()
 	{
 		return new Integer(count(MWCurricularCourseScope.class, new Criteria()));
 	}

@@ -6,11 +6,11 @@ package middleware.persistentMiddlewareSupport.OJBDatabaseSupport;
 
 import java.util.List;
 
-import org.apache.ojb.broker.query.Criteria;
-
 import middleware.middlewareDomain.MWStudentClass;
 import middleware.persistentMiddlewareSupport.IPersistentMWStudentClass;
-import middleware.persistentMiddlewareSupport.exceptions.PersistentMiddlewareSupportException;
+
+import org.apache.ojb.broker.query.Criteria;
+
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.ObjectFenixOJB;
 
@@ -23,7 +23,7 @@ public class MWStudentClassOJB extends ObjectFenixOJB implements IPersistentMWSt
 	/* (non-Javadoc)
 	 * @see middleware.persistentMiddlewareSupport.IPersistentMWStudentClass#readAll()
 	 */
-	public List readAll() throws PersistentMiddlewareSupportException, ExcepcaoPersistencia
+	public List readAll() throws ExcepcaoPersistencia
 	{
 		return queryList(MWStudentClass.class, new Criteria());
 	}

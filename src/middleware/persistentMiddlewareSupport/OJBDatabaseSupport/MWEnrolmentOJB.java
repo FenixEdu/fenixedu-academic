@@ -5,7 +5,6 @@ import java.util.List;
 
 import middleware.middlewareDomain.MWEnrolment;
 import middleware.persistentMiddlewareSupport.IPersistentMWEnrolment;
-import middleware.persistentMiddlewareSupport.exceptions.PersistentMiddlewareSupportException;
 
 import org.apache.ojb.broker.query.Criteria;
 
@@ -24,7 +23,7 @@ public class MWEnrolmentOJB extends ObjectFenixOJB implements IPersistentMWEnrol
     }
 
 
-	public List readByStudentNumber(Integer number) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia {
+	public List readByStudentNumber(Integer number) throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("number", number);
 		return queryList(MWEnrolment.class, criteria);

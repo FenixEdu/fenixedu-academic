@@ -15,7 +15,7 @@ public class LoadAlmeidaEscolasFromFileToTable extends LoadAlmeidaDataToTable {
 	private static String logString = "";
 	private static final String ONE_SPACE = " ";
 	private static final String THREE_SPACES = "   ";
-	private static final String FIVE_SPACES = "      ";
+//	private static final String FIVE_SPACES = "      ";
 	private static final String FOUR_SPACES = "     ";
 
 	public LoadAlmeidaEscolasFromFileToTable() {
