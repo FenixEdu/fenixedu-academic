@@ -41,7 +41,7 @@
 		<br/>
 		<br/>
 
-	   	<app:gerarHorario name="<%= SessionConstants.LESSON_LIST_ATT %>" type="<%= TimeTableType.ROOM_TIMEBABLE %>"/> 
+	   	<app:gerarHorario name="<%= SessionConstants.LESSON_LIST_ATT %>" type="<%= TimeTableType.ROOM_TIMETABLE %>"/> 
 
 	</logic:present>
 

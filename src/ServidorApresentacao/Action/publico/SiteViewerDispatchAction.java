@@ -15,7 +15,6 @@ import org.apache.struts.action.ActionMapping;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoRoom;
-import DataBeans.InfoShift;
 import DataBeans.RoomKey;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
@@ -118,17 +117,45 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 			}
 
 			if(infoExecCourse != null) {
-				InfoShift infoShift = new InfoShift();
-				infoShift.setInfoDisciplinaExecucao(infoExecCourse);
-
-				Object argsSelectShifts[] = { infoShift	};
-				List infoShifts = (List) gestor.executar(null, "SelectShifts", argsSelectShifts);
+				// Read shifts of execution course.
+				// Just the shifts aren't enough... we also need to read the classes
+				// associated to the shift and the classes associated with the shift.
+				Object argsSelectShifts[] = { infoExecCourse };
+				List infoShifts = (List) gestor.executar(null, "SelectExecutionShiftsWithAssociatedLessonsAndClasses", argsSelectShifts);
 
 				if(infoShifts != null && !infoShifts.isEmpty()) {
-					request.setAttribute("publico.infoShifts", infoShifts);
-					session.setAttribute("publico.infoExecCourse", infoExecCourse);
+					System.out.println("publico.infoShifts não é vazio... :)");
+					session.setAttribute("publico.infoShifts", infoShifts);
+				} else {
+					System.out.println("publico.infoShifts é vazio... :(");
 				}
+				
+				session.setAttribute("publico.infoExecCourse", infoExecCourse);
 			}
+			
+			// Read associated curricular courses to dispçlay curricular course information.
+			Object argsReadCurricularCourseListOfExecutionCourse[] =
+				{ infoExecCourse };
+			List infoCurricularCourses =
+				(List) gestor.executar(
+					null,
+					"ReadCurricularCourseListOfExecutionCourse",
+					argsReadCurricularCourseListOfExecutionCourse);
+			
+			if(infoCurricularCourses != null && !infoCurricularCourses.isEmpty()) {
+				session.setAttribute("publico.infoCurricularCourses", infoCurricularCourses);
+			}
+
+			// Read list of Lessons to show execution course schedule.
+			Object argsReadLessonsOfExecutionCours[] = { infoExecCourse };
+			List infoLessons =
+				(List) gestor.executar(
+					null,
+					"LerAulasDeDisciplinaExecucao",
+					argsReadLessonsOfExecutionCours);
+			
+			if (infoLessons != null)
+				session.setAttribute(SessionConstants.LESSON_LIST_ATT, infoLessons);
 
 			return mapping.findForward("executionCourseViewer");
 		} else {

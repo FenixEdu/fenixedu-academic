@@ -13,8 +13,8 @@ import java.io.Serializable;
  * @author  tfc130
  */
 public class InfoDegree implements Serializable{
-  protected String _sigla;
-  protected String _nome;
+  protected String sigla;
+  protected String nome;
     
 
   public InfoDegree() { }
@@ -25,19 +25,19 @@ public class InfoDegree implements Serializable{
   }
 
   public String getSigla() {
-    return _sigla;
+    return this.sigla;
   }
 
   public void setSigla(String sigla) {
-    _sigla = sigla;
+    this.sigla = sigla;
   }
     
   public String getNome() {
-    return _nome;
+    return this.nome;
   }
     
   public void setNome(String nome) {
-    _nome = nome;
+    this.nome = nome;
   }
 
   public boolean equals(Object obj) {
@@ -51,8 +51,8 @@ public class InfoDegree implements Serializable{
   
   public String toString() {
     String result = "[INFOLICENCIATURA";
-    result += ", sigla=" + _sigla;
-    result += ", nome=" + _nome;
+    result += ", sigla=" + this.sigla;
+    result += ", nome=" + this.nome;
     result += "]";
     return result;
   }

@@ -9,5 +9,8 @@ public abstract class TimeTableType {
 
 	public static final int SHIFT_TIMETABLE = 2;
 
-	public static final int ROOM_TIMEBABLE = 3;
+	public static final int ROOM_TIMETABLE = 3;
+	
+	public static final int EXECUTION_COURSE_TIMETABLE = 4;
+
 }

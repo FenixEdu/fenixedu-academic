@@ -7,7 +7,7 @@ import ServidorApresentacao.TagLib.sop.v3.LessonSlotContentRenderer;
 /**
  * @author jpvl
  */
-public class ClassTimeTableLessonContentRenderer
+public class ExecutionCourseTimeTableLessonContentRenderer
 	implements LessonSlotContentRenderer {
 
 	/**
@@ -16,18 +16,15 @@ public class ClassTimeTableLessonContentRenderer
 	public StringBuffer render(LessonSlot lessonSlot) {
 		StringBuffer strBuffer = new StringBuffer();
 		InfoLesson lesson = lessonSlot.getInfoLessonWrapper().getInfoLesson();
-		
-		strBuffer.append("<a href='siteViewer.do?method=executionCourseViewer&amp;exeCourseCode=");
-		strBuffer.append(lesson.getInfoDisciplinaExecucao().getSigla());
-		strBuffer.append("'>").append(lesson.getInfoDisciplinaExecucao().getSigla()).append("</a>");
-		strBuffer.append("&nbsp;(").append(lesson.getTipo()).append(")<br/>");
+
+		strBuffer.append("(");
+		strBuffer.append(lesson.getTipo()).append(")");
 		strBuffer
-			.append(" <a href='siteViewer.do?method=roomViewer&amp;roomName=")
+			.append("<a href='siteViewer.do?method=roomViewer&amp;roomName=")
 			.append(lesson.getInfoSala().getNome())
 			.append("'>")
 			.append(lesson.getInfoSala().getNome())
 			.append("</a>");
-		
 		return strBuffer;
 	}
 

@@ -3,6 +3,7 @@ package DataBeans.util;
 import org.apache.commons.beanutils.BeanUtils;
 
 import DataBeans.InfoClass;
+import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionCourse;
@@ -15,12 +16,14 @@ import DataBeans.InfoRoom;
 import DataBeans.InfoShift;
 import DataBeans.InfoStudent;
 import Dominio.Aula;
+import Dominio.CurricularCourse;
 import Dominio.Curso;
 import Dominio.CursoExecucao;
 import Dominio.DisciplinaExecucao;
 import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
 import Dominio.IAula;
+import Dominio.ICurricularCourse;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
@@ -77,6 +80,34 @@ public abstract class Cloner {
 
 		infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
 		return infoExecutionCourse;
+	}
+
+	/**
+	 * Method copyInfoCurricularCourse2ICurricularCourse.
+	 * @param infoCurricularCourse
+	 * @return ICurricularCourse
+	 */
+	public static ICurricularCourse copyInfoCurricularCourse2ExecutionCourse(InfoCurricularCourse infoCurricularCourse) {
+		ICurricularCourse curricularCourse = new CurricularCourse();
+		IPlanoCurricularCurso planoCurricularCurso =
+			copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(
+				infoCurricularCourse.getInfoDegreeCurricularPlan());
+		
+		copyObjectProperties(curricularCourse, infoCurricularCourse);
+		
+		curricularCourse.setDegreeCurricularPlan(planoCurricularCurso);
+		return curricularCourse;
+	}
+
+	public static InfoCurricularCourse copyICurricularCourse2InfoCurricularCourse(ICurricularCourse curricularCourse) {
+		InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse();
+		InfoDegreeCurricularPlan infoDegreeCurricularPlan = 
+			copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(curricularCourse.getDegreeCurricularPlan());
+
+		copyObjectProperties(infoCurricularCourse, curricularCourse);
+
+		infoCurricularCourse.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+		return infoCurricularCourse;
 	}
 
 	/**

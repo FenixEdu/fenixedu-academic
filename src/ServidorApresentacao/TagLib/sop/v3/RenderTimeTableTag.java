@@ -20,6 +20,7 @@ import ServidorApresentacao
 	.v3
 	.renderers
 	.ClassTimeTableLessonContentRenderer;
+import ServidorApresentacao.TagLib.sop.v3.renderers.ExecutionCourseTimeTableLessonContentRenderer;
 import ServidorApresentacao
 	.TagLib
 	.sop
@@ -233,7 +234,11 @@ public final class RenderTimeTableTag extends TagSupport {
 				this.lessonSlotContentRenderer =
 					new ShiftTimeTableLessonContentRenderer();
 				break;
-			case TimeTableType.ROOM_TIMEBABLE :
+			case TimeTableType.EXECUTION_COURSE_TIMETABLE :
+				this.lessonSlotContentRenderer =
+					new ExecutionCourseTimeTableLessonContentRenderer();
+				break;
+			case TimeTableType.ROOM_TIMETABLE :
 				this.lessonSlotContentRenderer =
 					new RoomTimeTableLessonContentRenderer();
 				break;
