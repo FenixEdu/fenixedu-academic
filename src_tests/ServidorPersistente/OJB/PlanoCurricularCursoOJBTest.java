@@ -45,7 +45,7 @@ public class PlanoCurricularCursoOJBTest extends TestCaseOJB {
         System.out.println("testEscreverPlanoCurricular");
         
         // Tentativa de escrita na BD de um objecto existente.
-        IPlanoCurricularCurso planoCurricular = new PlanoCurricularCurso("plano1", "p1", curso1);
+        IPlanoCurricularCurso planoCurricular = new PlanoCurricularCurso("plano1", curso1);
         
         try {
             _suportePersistente.iniciarTransaccao();
@@ -67,7 +67,7 @@ public class PlanoCurricularCursoOJBTest extends TestCaseOJB {
             fail("testEscreverPlanoCurricular: confirmarTransaccao_2");
         }
 
-        planoCurricular = new PlanoCurricularCurso("plano inexistente", "p10", cursoTemp);
+        planoCurricular = new PlanoCurricularCurso("plano inexistente", cursoTemp);
         try {
             _suportePersistente.iniciarTransaccao();
             planoCurricularCursoPersistente.escreverPlanoCurricular(planoCurricular);
@@ -81,15 +81,15 @@ public class PlanoCurricularCursoOJBTest extends TestCaseOJB {
 
         try {
             _suportePersistente.iniciarTransaccao();
-            planoCurricularCurso2 = planoCurricularCursoPersistente.lerPlanoCurricularPorNomeESigla(planoCurricular.getNome(), planoCurricular.getSigla());
+            planoCurricularCurso2 = planoCurricularCursoPersistente.lerPlanoCurricularPorNomeESigla(planoCurricular.getName(), null);
             _suportePersistente.confirmarTransaccao();
         } catch(ExcepcaoPersistencia ex) {
             fail("testEscreverPlanoCurricular: confirmarTransaccao_3");
         }
         
         assertNotNull(planoCurricularCurso2);
-        assertEquals(planoCurricularCurso2.getNome(), planoCurricular.getNome());
-        assertEquals(planoCurricularCurso2.getSigla(), planoCurricular.getSigla());
+        assertEquals(planoCurricularCurso2, planoCurricular);
+        
     }
     
     
@@ -163,8 +163,9 @@ public class PlanoCurricularCursoOJBTest extends TestCaseOJB {
             fail("testLerPlanoCurricular: confirmarTransaccao_1");
         }
         assertNotNull(planoCurricularCurso);
-        assertTrue(planoCurricularCurso.getNome().equals("plano1"));
-        assertTrue(planoCurricularCurso.getSigla().equals("pc1"));
+        
+        assertTrue(planoCurricularCurso.getName().equals("plano1"));
+
         assertTrue(planoCurricularCurso.getCurso().getNome().equals("Licenciatura de Engenharia Informatica e de Computadores"));
         
         // Tentativa de leitura da BD de um objecto inexistente.

@@ -13,11 +13,10 @@ package Dominio;
  */
 
 public interface IPlanoCurricularCurso {
-    public java.lang.String getNome();
-    public java.lang.String getSigla();
+    
+    public String getName();
     public ICurso getCurso();
     
-    public void setNome(java.lang.String nome);
-    public void setSigla(java.lang.String sigla);
+    public void setName(String name);
     public void setCurso(ICurso curso);
 }

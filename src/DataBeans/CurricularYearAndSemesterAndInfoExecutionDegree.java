@@ -14,6 +14,7 @@ public class CurricularYearAndSemesterAndInfoExecutionDegree {
   protected Integer _anoCurricular;
   protected Integer _semestre;
   protected InfoExecutionDegree _infoLicenciaturaExecucao;
+  
 
   public CurricularYearAndSemesterAndInfoExecutionDegree() { }
     

@@ -88,7 +88,7 @@ public class LoadDegrees extends DataFileLoader{
 					nome,
 					new TipoCurso(TipoCurso.LICENCIATURA));
 
-			IPlanoCurricularCurso degreeCurricularPlan = new PlanoCurricularCurso(nome, degree.getSigla(), degree);
+			IPlanoCurricularCurso degreeCurricularPlan = new PlanoCurricularCurso(nome, degree);
 			sp.iniciarTransaccao();
 
 			//iLicenciaturaPersistente.lockWrite(degree);

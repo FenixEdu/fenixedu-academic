@@ -22,13 +22,13 @@ import DataBeans.InfoLesson;
 import DataBeans.InfoRoom;
 import DataBeans.InfoShift;
 import DataBeans.ShiftKey;
+import DataBeans.util.Cloner;
 import Dominio.IAula;
 import Dominio.ITurno;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistente.OJB.util.Cloner;
 
 public class LerAulasDeTurno implements IServico {
 

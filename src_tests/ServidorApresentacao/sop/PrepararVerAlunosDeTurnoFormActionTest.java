@@ -131,7 +131,7 @@ public class PrepararVerAlunosDeTurnoFormActionTest extends MockStrutsTestCase {
     		"ep",
     		departamento);
     IPlanoCurricularCurso degreeCurricularPlan =
-    	new PlanoCurricularCurso("plano1", "pc1", _curso1);
+    	new PlanoCurricularCurso("plano1", _curso1);
 
     _disciplinaCurricular1 =
     	new CurricularCourse(

@@ -253,8 +253,8 @@ public class ReadOtherCoursesWithShiftsTest extends TestCaseServicos {
 	someDate.set(2002, Calendar.NOVEMBER, 17);
 
 	IPlanoCurricularCurso pCC = new PlanoCurricularCurso();
-	pCC.setNome("nome");
-	pCC.setSigla("sigla");
+	pCC.setName("nome");
+	
 	pCC.setCurso(_cursoExecucao1.getCurso());
 
 	IStudentCurricularPlan sCP = new StudentCurricularPlan();

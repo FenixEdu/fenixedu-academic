@@ -18,4 +18,10 @@ public interface ICursoExecucao extends Serializable{
 
   public void setAnoLectivo(String anoLectivo);
   public void setCurso(ICurso curso);
+  
+  IExecutionYear getExecutionYear();
+  void setExecutionYear(IExecutionYear newExecutionYear);
+  
+  IPlanoCurricularCurso getCurricularPlan();
+  void setCurricularPlan (IPlanoCurricularCurso curricularPlan);
 }

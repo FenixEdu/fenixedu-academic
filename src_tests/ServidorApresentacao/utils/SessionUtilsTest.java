@@ -139,7 +139,7 @@ public class SessionUtilsTest extends TestCase {
 		_executionDegree = new CursoExecucao(_schoolYear, _degree);
 
 		IPlanoCurricularCurso degreeCurriculum =
-			new PlanoCurricularCurso("Plano 1", "P1", _degree);
+			new PlanoCurricularCurso("Plano 1", _degree);
 
 		IDisciplinaExecucao _executionCourse = null;
 		ICurricularCourse _curricularCourse = null;

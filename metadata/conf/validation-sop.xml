@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE form-validation SYSTEM "file:///validation_1_1.dtd"> 
+<!DOCTYPE form-validation SYSTEM "file:///validation_1_1.dtd">
 <form-validation>
   <formset>
   
@@ -16,7 +16,7 @@
 
     <!-- Validacao para o formulario de Escolher Contexto -->
     <form name="escolherContextoForm">
-      <field property="sigla" depends="required">
+      <field property="index" depends="required, integer">
         <arg0 key="property.context.degree" />
       </field>
 

@@ -18,6 +18,7 @@ import org.odmg.QueryException;
 import Dominio.CursoExecucao;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
+import Dominio.IExecutionYear;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 
@@ -70,5 +71,23 @@ public class CursoExecucaoOJB extends ObjectFenixOJB implements ICursoExecucaoPe
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
         }
     }
+	/**
+	 * @see ServidorPersistente.ICursoExecucaoPersistente#readByExecutionYear(Dominio.IExecutionYear)
+	 */
+	public List readByExecutionYear(IExecutionYear executionYear) throws ExcepcaoPersistencia {
+		try {
+			ICursoExecucao cursoExecucao = null;
+			String oqlQuery = "select all from " + CursoExecucao.class.getName();
+			oqlQuery += " where executionYear.year = $1";
+			query.create(oqlQuery);
+			query.bind(executionYear.getYear());
+			List result = (List) query.execute();
+			lockRead(result);
+			return result;
+		} catch (QueryException e) {
+			e.printStackTrace(System.out);
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, e);
+		}
+	}
 
 }

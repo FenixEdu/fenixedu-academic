@@ -68,7 +68,7 @@ public class EscolherContextoFormActionTest extends MockStrutsTestCase {
     _suportePersistente.iniciarTransaccao();
     HashSet privilegios = new HashSet();
     //privilegios.add("LerLicenciatura");
-    //privilegios.add("LerLicenciaturas");
+    //privilegios.add("ReadExecutionDegreesByExecutionYear");
     //privilegios.add("LerLicenciaturaExecucaoDeLicenciatura");
     //privilegios.add("LerTurmas");
     //_pessoa1 = new Pessoa("user", "pass", privilegios);
@@ -81,7 +81,7 @@ public class EscolherContextoFormActionTest extends MockStrutsTestCase {
     _pessoa1.setUsername("nome");
     _pessoa1.setPassword("pass");
     privilegios.add(new Privilegio(_pessoa1, new String("LerLicenciatura")));
-    privilegios.add(new Privilegio(_pessoa1, new String("LerLicenciaturas")));
+    privilegios.add(new Privilegio(_pessoa1, new String("ReadExecutionDegreesByExecutionYear")));
     privilegios.add(new Privilegio(_pessoa1, new String("LerLicenciaturaExecucaoDeLicenciatura")));
     privilegios.add(new Privilegio(_pessoa1, new String("LerTurmas")));
     _pessoa1.setPrivilegios(privilegios);
@@ -125,7 +125,7 @@ public class EscolherContextoFormActionTest extends MockStrutsTestCase {
     // coloca credenciais na sess�o
     HashSet privilegios = new HashSet();
     privilegios.add("LerLicenciatura");
-    privilegios.add("LerLicenciaturas");
+    privilegios.add("ReadExecutionDegreesByExecutionYear");
     privilegios.add("LerLicenciaturaExecucaoDeLicenciatura");
     privilegios.add("LerTurmas");
     IUserView userView = new UserView("user", privilegios);

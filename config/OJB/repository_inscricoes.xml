@@ -375,9 +375,16 @@
         column="LAB_HOURS"
         jdbc-type="DOUBLE"
     />    
+    <!-- :FIXME: to be removed -->
     <field-descriptor id="11"
         name="semester"
         column="SEMESTER"
+        jdbc-type="INTEGER"
+    />    
+
+    <field-descriptor id="12"
+        name="keyExecutionPeriod"
+        column="KEY_EXECUTION_PERIOD"
         jdbc-type="INTEGER"
     />    
     
@@ -387,6 +394,14 @@
          proxy="true"
       >
          <foreignkey field-id-ref="4"/>
+      </reference-descriptor> 
+
+    <reference-descriptor
+         name="executionPeriod"
+         class-ref="Dominio.ExecutionPeriod"
+         proxy="true"
+      >
+         <foreignkey field-id-ref="12"/>
       </reference-descriptor> 
       
    

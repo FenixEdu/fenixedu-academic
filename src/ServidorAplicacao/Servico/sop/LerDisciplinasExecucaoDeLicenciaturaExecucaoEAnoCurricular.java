@@ -15,68 +15,95 @@ import DataBeans.CurricularYearAndSemesterAndInfoExecutionDegree;
 import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
+import DataBeans.util.Cloner;
+import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionPeriod;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular implements IServico {
+public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular
+	implements IServico {
 
-  private static LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular _servico = new LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular();
-  /**
-   * The singleton access method of this class.
-   **/
-  public static LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular getService() {
-    return _servico;
-  }
+	private static LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular _servico =
+		new LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular();
+	/**
+	 * The singleton access method of this class.
+	 **/
+	public static LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular getService() {
+		return _servico;
+	}
 
-  /**
-   * The actor of this class.
-   **/
-  private LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular() { }
+	/**
+	 * The actor of this class.
+	 **/
+	private LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular() {
+	}
 
-  /**
-   * Devolve o nome do servico
-   **/
-  public final String getNome() {
-    return "LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular";
-  }
+	/**
+	 * Devolve o nome do servico
+	 **/
+	public final String getNome() {
+		return "LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular";
+	}
 
-  public Object run(CurricularYearAndSemesterAndInfoExecutionDegree aCSiLE) {
-                        
-    List listDCDE = null;
-    List listInfoDE = null;
+	public Object run(CurricularYearAndSemesterAndInfoExecutionDegree executionContextAndExecutionDegree) {
 
-    try {
-      ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-//      listDCDE = sp.getIDisciplinaCurricularDisciplinaExecucaoPersistente().readByAnoCurricularAndAnoLectivoAndSiglaLicenciatura(aCSiLE.getAnoCurricular(),
-//                                                                                                                                 aCSiLE.getInfoLicenciaturaExecucao().getAnoLectivo(),
-//                                                                                                                                 aCSiLE.getSemestre(),
-//                                                                                                                                 aCSiLE.getInfoLicenciaturaExecucao().getInfoLicenciatura().getSigla());
+		List listDCDE = null;
+		List listInfoDE = null;
 
-	  listDCDE = sp.getIDisciplinaExecucaoPersistente().readByAnoCurricularAndAnoLectivoAndSiglaLicenciatura(aCSiLE.getAnoCurricular(),
-                                                                                                                                 aCSiLE.getInfoLicenciaturaExecucao().getAnoLectivo(),
-                                                                                                                                 aCSiLE.getSemestre(),
-                                                                                                                                 aCSiLE.getInfoLicenciaturaExecucao().getInfoLicenciatura().getSigla());
+		try {
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			IDisciplinaExecucaoPersistente executionCourseDAO =
+				sp.getIDisciplinaExecucaoPersistente();
 
-      Iterator iterator = listDCDE.iterator();
-      listInfoDE = new ArrayList();
-      while(iterator.hasNext()) {
-      	IDisciplinaExecucao elem = (IDisciplinaExecucao)iterator.next();
-      	InfoDegree infoLicenciatura = new InfoDegree(elem.getLicenciaturaExecucao().getCurso().getSigla(),
-      	                                                         elem.getLicenciaturaExecucao().getCurso().getNome());
-      	InfoExecutionDegree infoLicenciaturaExecucao = new InfoExecutionDegree(elem.getLicenciaturaExecucao().getAnoLectivo(),
-      	                                                                                 infoLicenciatura);
-        listInfoDE.add(new InfoExecutionCourse(elem.getNome(), elem.getSigla(),elem.getPrograma(),
-        										infoLicenciaturaExecucao, elem.getTheoreticalHours(),
-        										elem.getPraticalHours(),elem.getTheoPratHours(),
-        										elem.getLabHours()));
-        }
-    } catch (ExcepcaoPersistencia ex) {
-      ex.printStackTrace();
-    }
-    return listInfoDE;
-  }
-  
+			IPersistentExecutionPeriod executionPeriodDAO =
+				sp.getIPersistentExecutionPeriod();
+
+			/* :FIXME: execution period must be in parameter */
+			IExecutionPeriod executionPeriod =
+				executionPeriodDAO.readActualExecutionPeriod();
+
+			ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(executionContextAndExecutionDegree.getInfoLicenciaturaExecucao());
+
+			listDCDE =
+				executionCourseDAO
+					.readByCurricularYearAndExecutionPeriodAndExecutionDegree(
+					executionContextAndExecutionDegree.getAnoCurricular(),
+					executionPeriod, executionDegree);
+
+			Iterator iterator = listDCDE.iterator();
+			listInfoDE = new ArrayList();
+			while (iterator.hasNext()) {
+				IDisciplinaExecucao elem =
+					(IDisciplinaExecucao) iterator.next();
+				InfoDegree infoLicenciatura =
+					new InfoDegree(
+						elem.getLicenciaturaExecucao().getCurso().getSigla(),
+						elem.getLicenciaturaExecucao().getCurso().getNome());
+				InfoExecutionDegree infoLicenciaturaExecucao =
+					new InfoExecutionDegree(
+						elem.getLicenciaturaExecucao().getAnoLectivo(),
+						infoLicenciatura);
+				listInfoDE.add(
+					new InfoExecutionCourse(
+						elem.getNome(),
+						elem.getSigla(),
+						elem.getPrograma(),
+						infoLicenciaturaExecucao,
+						elem.getTheoreticalHours(),
+						elem.getPraticalHours(),
+						elem.getTheoPratHours(),
+						elem.getLabHours()));
+			}
+		} catch (ExcepcaoPersistencia ex) {
+			ex.printStackTrace();
+		}
+		return listInfoDE;
+	}
+
 }

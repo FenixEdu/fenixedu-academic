@@ -17,14 +17,13 @@ public class PlanoCurricularCurso implements IPlanoCurricularCurso{
     private Integer codigoInterno;
     private Integer chaveCurso;
     private ICurso curso;
-    private String nome;
-    private String sigla;
+    private String name;
+
         
     public PlanoCurricularCurso() { }
     
-    public PlanoCurricularCurso(String nome, String sigla, ICurso licenciatura) {
-        setNome(nome);
-        setSigla(sigla);
+    public PlanoCurricularCurso(String nome, ICurso licenciatura) {
+        setName(nome);
         setCurso(licenciatura);
     }
 
@@ -32,7 +31,7 @@ public class PlanoCurricularCurso implements IPlanoCurricularCurso{
         boolean resultado = false;
         if (obj instanceof PlanoCurricularCurso ) {
             PlanoCurricularCurso p = (PlanoCurricularCurso)obj;
-            resultado = ( getNome().equals(p.getNome()) && getSigla().equals(p.getSigla()) );
+            resultado = ( getName().equals(p.getName()) && getCurso().equals(curso));
         }
         return resultado;
     }
@@ -40,8 +39,7 @@ public class PlanoCurricularCurso implements IPlanoCurricularCurso{
   public String toString() {
     String result = "[PLANO_CURRICULAR_CURSO";
     result += ", codInt=" + codigoInterno;
-    result += ", nome=" + nome;
-    result += ", sigla=" + sigla;
+    result += ", name=" + name;
     result += ", curso=" + curso;
     result += "]";
     return result;
@@ -74,20 +72,13 @@ public class PlanoCurricularCurso implements IPlanoCurricularCurso{
 	}
 
 	/**
-	 * Returns the nome.
+	 * Returns the name.
 	 * @return String
 	 */
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
 
-	/**
-	 * Returns the sigla.
-	 * @return String
-	 */
-	public String getSigla() {
-		return sigla;
-	}
 
 	/**
 	 * Sets the chaveCurso.
@@ -114,19 +105,12 @@ public class PlanoCurricularCurso implements IPlanoCurricularCurso{
 	}
 
 	/**
-	 * Sets the nome.
-	 * @param nome The nome to set
+	 * Sets the name.
+	 * @param name The name to set
 	 */
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setName(String nome) {
+		this.name = nome;
 	}
 
-	/**
-	 * Sets the sigla.
-	 * @param sigla The sigla to set
-	 */
-	public void setSigla(String sigla) {
-		this.sigla = sigla;
-	}
 
 }

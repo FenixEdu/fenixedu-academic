@@ -9,6 +9,7 @@ import org.apache.commons.collections.Predicate;
 
 import DataBeans.InfoLesson;
 import DataBeans.InfoRoom;
+import DataBeans.util.Cloner;
 import Dominio.IAula;
 import Dominio.ISala;
 import ServidorAplicacao.IServico;
@@ -17,7 +18,6 @@ import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.ISalaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistente.OJB.util.Cloner;
 
 /**
  * @author jpvl

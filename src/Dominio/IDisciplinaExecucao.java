@@ -14,11 +14,11 @@ import java.util.List;
  * @author Nuno Nunes & Joana Mota
  */
 public interface IDisciplinaExecucao extends Serializable{
-    public java.lang.String getNome();
+    public String getNome();
     public void setNome(java.lang.String nome);
-    public java.lang.String getSigla();
+    public String getSigla();
     public void setSigla(java.lang.String sigla);
-    public java.lang.String getPrograma();
+    public String getPrograma();
     public void setPrograma(java.lang.String programa);
     public Double getTheoreticalHours();    
     public void setTheoreticalHours(Double theoreticalHours);
@@ -36,5 +36,8 @@ public interface IDisciplinaExecucao extends Serializable{
     
     public void setAssociatedCurricularCourses(List associatedCurricularCourses);
     public List getAssociatedCurricularCourses();
+    
+    IExecutionPeriod getExecutionPeriod();
+    void setExecutionPeriod(IExecutionPeriod executionPeriod);
 	
 }

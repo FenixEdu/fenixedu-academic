@@ -5,13 +5,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.InfoShift;
+import DataBeans.util.Cloner;
 import Dominio.ITurmaTurno;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurmaTurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistente.OJB.util.Cloner;
 
 /**
  * @author jpvl

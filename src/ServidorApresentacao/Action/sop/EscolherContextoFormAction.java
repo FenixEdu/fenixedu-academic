@@ -12,10 +12,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.CurricularYearAndSemesterAndInfoExecutionDegree;
-import DataBeans.DegreeKey;
-import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionDegree;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.FenixAction;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -47,53 +44,58 @@ public class EscolherContextoFormAction extends FenixAction {
 			//(Integer) escolherContextoForm.get("semestre");
 			Integer anoCurricular =
 				(Integer) escolherContextoForm.get("anoCurricular");
-			String sigla = (String) escolherContextoForm.get("sigla");
+
+			int index = Integer.parseInt((String)escolherContextoForm.get("index"));
 
 			IUserView userView = (IUserView) session.getAttribute("UserView");
-			GestorServicos gestor = GestorServicos.manager();
+			
 
 			session.setAttribute("anoCurricular", anoCurricular);
 			session.setAttribute("semestre", semestre);
 
-			Object argsLerLicenciaturaExecucao[] = { new DegreeKey(sigla)};
-			InfoExecutionDegree iLE =
+//			GestorServicos gestor = GestorServicos.manager();
+//			Object argsLerLicenciaturaExecucao[] = { new DegreeKey(sigla)};
+/*			InfoExecutionDegree infoExecutionDegree =
 				(InfoExecutionDegree) gestor.executar(
 					userView,
 					"LerLicenciaturaExecucaoDeLicenciatura",
-					argsLerLicenciaturaExecucao);
+						argsLerLicenciaturaExecucao);*/
 
-			if (iLE != null) {
-				session.setAttribute(SessionConstants.INFO_LIC_EXEC_KEY, iLE);
+			List infoExecutionDegreeList = (List) session.getAttribute(SessionConstants.INFO_EXECUTION_DEGREE_LIST_KEY);
+			InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegreeList.get(index);
+			if (infoExecutionDegree != null) {
+				session.setAttribute(SessionConstants.INFO_LIC_EXEC_KEY, infoExecutionDegree);
 				CurricularYearAndSemesterAndInfoExecutionDegree cYSiED =
 					new CurricularYearAndSemesterAndInfoExecutionDegree(
 						anoCurricular,
 						semestre,
-						iLE);
+						infoExecutionDegree);
+				
 				session.setAttribute(SessionConstants.CONTEXT_KEY, cYSiED);
 
-				Object argsLerLicenciatura[] = { new String(sigla)};
-
-				InfoDegree iL =
-					(InfoDegree) gestor.executar(
-						userView,
-						"LerLicenciatura",
-						argsLerLicenciatura);
-
-				session.setAttribute("infoLicenciatura", iL);
-
-				Object argsLerTurmas[] = { cYSiED };
-				List listaInfoTurmas =
-					(List) gestor.executar(
-						userView,
-						"LerTurmas",
-						argsLerTurmas);
-
-				session.removeAttribute("listaTurmasBean");
-				if (!listaInfoTurmas.isEmpty()) {
-					//Collections.sort(listaInfoTurmas);
-					session.setAttribute("listaInfoTurmas", listaInfoTurmas);
-				}
-				session.removeAttribute("licenciaturasExecucao");
+//				Object argsLerLicenciatura[] = { new String(sigla)};
+//
+//				InfoDegree iL =
+//					(InfoDegree) gestor.executar(
+//						userView,
+//						"LerLicenciatura",
+//						argsLerLicenciatura);
+//
+//				session.setAttribute("infoLicenciatura", iL);
+//
+//				Object argsLerTurmas[] = { cYSiED };
+//				List listaInfoTurmas =
+//					(List) gestor.executar(
+//						userView,
+//						"LerTurmas",
+//						argsLerTurmas);
+//
+//				session.removeAttribute("listaTurmasBean");
+//				if (!listaInfoTurmas.isEmpty()) {
+//					//Collections.sort(listaInfoTurmas);
+//					session.setAttribute("listaInfoTurmas", listaInfoTurmas);
+//				}
+//				session.removeAttribute("licenciaturasExecucao");
 			} else {
 				return mapping.findForward("Licenciatura execucao inexistente");
 			}

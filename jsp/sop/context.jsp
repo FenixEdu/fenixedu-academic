@@ -5,13 +5,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
-<html:html>
-    <head>
-        
-    </head>
-    <body>
     	<bean:define id="licContext" name="<%= SessionConstants.CONTEXT_KEY %>" scope="session" type="CurricularYearAndSemesterAndInfoExecutionDegree"/>
-    	<bean:define id="infoLic" name="<%= SessionConstants.CONTEXT_KEY %>" property="infoLicenciaturaExecucao.infoLicenciatura" scope="session" />	
+    	<bean:define id="infoLic" name="<%= SessionConstants.CONTEXT_KEY %>" property="infoLicenciaturaExecucao.infoDegreeCurricularPlan.infoDegree" scope="session" />	
 		<jsp:getProperty name="infoLic" property="nome" />
 		<br/>
 		<bean:message key="label.year" arg0="<%= licContext.getAnoCurricular().toString() %>" /> -
@@ -32,9 +27,3 @@
     			<bean:message key="property.course"/>: <jsp:getProperty name="infoDisciplinaExecucao" property="nome" />
 				<br/>
 		</logic:present>
-
-		
-
-	</body>
-
-</html:html>

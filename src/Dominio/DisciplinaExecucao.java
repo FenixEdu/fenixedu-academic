@@ -19,6 +19,9 @@ public class DisciplinaExecucao implements IDisciplinaExecucao{
 
 	private List associatedCurricularCourses = null;
 	private Integer semester;
+	
+	private IExecutionPeriod executionPeriod;
+	private Integer keyExecutionPeriod;
 
     /* Construtores */
     
@@ -264,6 +267,34 @@ public class DisciplinaExecucao implements IDisciplinaExecucao{
 	public void setSemester(Integer semester) {
 		this.semester = semester;
 	}
+	/**
+	 * @see Dominio.IDisciplinaExecucao#getExecutionPeriod()
+	 */
+	public IExecutionPeriod getExecutionPeriod() {
+		return this.executionPeriod;
+	}
+	/**
+	 * @see Dominio.IDisciplinaExecucao#setExecutionPeriod(Dominio.IExecutionPeriod)
+	 */
+	public void setExecutionPeriod(IExecutionPeriod executionPeriod) {
+		this.executionPeriod = executionPeriod;
+	}
 
+
+	/**
+	 * Returns the keyExecutionPeriod.
+	 * @return Integer
+	 */
+	public Integer getKeyExecutionPeriod() {
+		return keyExecutionPeriod;
+	}
+
+	/**
+	 * Sets the keyExecutionPeriod.
+	 * @param keyExecutionPeriod The keyExecutionPeriod to set
+	 */
+	public void setKeyExecutionPeriod(Integer keyExecutionPeriod) {
+		this.keyExecutionPeriod = keyExecutionPeriod;
+	}
 
 }

@@ -46,7 +46,7 @@ public class LerLicenciaturasServicosTest extends TestCaseServicos {
     
     Object result = null;     
     try {
-      result = _gestor.executar(_userView2, "LerLicenciaturas", argsLerLicenciaturas);
+      result = _gestor.executar(_userView2, "ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
 	  assertNotNull("testUnauthorizedReadLicenciaturas", result);
       } catch (Exception ex) {
 		fail("testUnauthorizedReadLicenciaturas");
@@ -68,7 +68,7 @@ public class LerLicenciaturasServicosTest extends TestCaseServicos {
     }
 
     try {
-      result = _gestor.executar(_userView, "LerLicenciaturas", argsLerLicenciaturas);
+      result = _gestor.executar(_userView, "ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
       assertEquals("testReadAll: nao ha salas para ler", 0, ((List)result).size());
       } catch (Exception ex) {
       	fail("testReadAll: nao ha salas para ler");
@@ -90,7 +90,7 @@ public class LerLicenciaturasServicosTest extends TestCaseServicos {
                                                _curso2.getNome());
     
     try {
-      result = _gestor.executar(_userView, "LerLicenciaturas", argsLerLicenciaturas);
+      result = _gestor.executar(_userView, "ReadExecutionDegreesByExecutionYear", argsLerLicenciaturas);
       assertEquals("testReadLicenciaturas: ha 2 licenciaturas para ler", ((List)result).size(), 2);
       assertTrue("testReadLicenciaturas: curso lido e curso1", ((List)result).contains(iL1));
       assertTrue("testReadLicenciaturas: curso lido e curso2", ((List)result).contains(iL2));

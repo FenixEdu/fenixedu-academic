@@ -215,7 +215,7 @@ public class TestCaseServicos extends TestCase {
 					_pessoa1,
 					new String("LerLicenciaturaExecucaoDeLicenciatura")));
 			_privilegios.add(
-				new Privilegio(_pessoa1, new String("LerLicenciaturas")));
+				new Privilegio(_pessoa1, new String("ReadExecutionDegreesByExecutionYear")));
 			_privilegios.add(new Privilegio(_pessoa1, new String("LerTurmas")));
 			_privilegios.add(
 				new Privilegio(_pessoa1, new String("LerTurnosDeTurma")));
@@ -291,7 +291,7 @@ public class TestCaseServicos extends TestCase {
 			_persistentDepartmentCourse.escreverDisciplinaDepartamento(
 				departmentCourse);
 			degreeCurricularPlan =
-				new PlanoCurricularCurso("nome", "sigle", _curso1);
+				new PlanoCurricularCurso("nome",  _curso1);
 			_persistentDegreeCurricularPlan.escreverPlanoCurricular(
 				degreeCurricularPlan);
 			_suportePersistente.confirmarTransaccao();

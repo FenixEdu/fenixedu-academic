@@ -34,4 +34,5 @@ public abstract class SessionConstants {
 	public static final String SHIFT_VIEW = "shiftview";
 	public static final String INFO_SHIFTS_EXECUTION_COURSE_KEY = "infoTurnosDeDisciplinaExecucao";
 	public static final String INFO_EXECUTION_PERIOD_KEY = "info_execution_period_key"; 
+	public static final String INFO_EXECUTION_DEGREE_LIST_KEY = "info_execution_degree_list_key";
 }

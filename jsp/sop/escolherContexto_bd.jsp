@@ -12,7 +12,7 @@
         </table>
 	<br />
     <p><bean:message key="property.context.degree"/>:
-		<html:select property="sigla" size="1">
+		<html:select property="index" size="1">
        		<html:options collection="licenciaturas" property="value" labelProperty="label"/>
        </html:select>
 	 </p>

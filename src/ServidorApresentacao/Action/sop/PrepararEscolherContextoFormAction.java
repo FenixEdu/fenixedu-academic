@@ -15,6 +15,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.LabelValueBean;
 
 import DataBeans.InfoDegree;
+import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -37,7 +38,9 @@ public class PrepararEscolherContextoFormAction extends Action {
 		if (session != null) {
 			IUserView userView = SessionUtils.getUserView(request);
 
-			setExecutionContext(request);
+			InfoExecutionPeriod infoExecutionPeriod =
+				setExecutionContext(request);
+
 			/* Criar o bean de semestres */
 			ArrayList semestres = new ArrayList();
 			semestres.add(new LabelValueBean("escolher", ""));
@@ -56,23 +59,52 @@ public class PrepararEscolherContextoFormAction extends Action {
 			session.setAttribute("anosCurriculares", anosCurriculares);
 
 			/* Cria o form bean com as licenciaturas em execucao.*/
-			Object argsLerLicenciaturas[] = new Object[0];
-			List result =
+			Object argsLerLicenciaturas[] =
+				{ infoExecutionPeriod.getInfoExecutionYear()};
+
+			List executionDegreeList =
 				(List) ServiceUtils.executeService(
 					userView,
-					"LerLicenciaturas",
+					"ReadExecutionDegreesByExecutionYear",
 					argsLerLicenciaturas);
 
 			ArrayList licenciaturas = new ArrayList();
+
 			licenciaturas.add(new LabelValueBean("escolher", ""));
 
-			Iterator iterator = result.iterator();
+			Iterator iterator = executionDegreeList.iterator();
+
+			int index = 0;
 			while (iterator.hasNext()) {
-				InfoDegree elem = (InfoDegree) iterator.next();
+				InfoExecutionDegree infoExecutionDegree =
+					(InfoExecutionDegree) iterator.next();
+				String name =
+					infoExecutionDegree
+						.getInfoDegreeCurricularPlan()
+						.getInfoDegree()
+						.getNome();
+				String value =
+					infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla();
+
+				name
+					+= duplicateInfoDegree(
+						executionDegreeList,
+						infoExecutionDegree)
+					? "-"
+						+ infoExecutionDegree
+							.getInfoDegreeCurricularPlan()
+							.getName()
+					: "";
+
 				licenciaturas.add(
-					new LabelValueBean(elem.getNome(), elem.getSigla()));
+					new LabelValueBean(name, String.valueOf(index++)));
 			}
-			session.setAttribute("licenciaturas", licenciaturas);
+
+			session.setAttribute(
+				SessionConstants.INFO_EXECUTION_DEGREE_LIST_KEY,
+				executionDegreeList);
+
+			request.setAttribute("licenciaturas", licenciaturas);
 
 			return mapping.findForward("Sucesso");
 		} else
@@ -80,17 +112,48 @@ public class PrepararEscolherContextoFormAction extends Action {
 		// nao ocorre... pedido passa pelo filtro Autorizacao
 	}
 	/**
+	 * Method existencesOfInfoDegree.
+	 * @param executionDegreeList
+	 * @param infoExecutionDegree
+	 * @return int
+	 */
+	private boolean duplicateInfoDegree(
+		List executionDegreeList,
+		InfoExecutionDegree infoExecutionDegree) {
+		InfoDegree infoDegree =
+			infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
+		Iterator iterator = executionDegreeList.iterator();
+
+		while (iterator.hasNext()) {
+			InfoExecutionDegree infoExecutionDegree2 =
+				(InfoExecutionDegree) iterator.next();
+			if (infoDegree
+				.equals(
+					infoExecutionDegree2
+						.getInfoDegreeCurricularPlan()
+						.getInfoDegree())
+				&& !(infoExecutionDegree.equals(infoExecutionDegree2)))
+				return true;
+
+		}
+		return false;
+	}
+	/**
 	 * Method setExecutionContext.
 	 * @param request
 	 */
-	private InfoExecutionPeriod setExecutionContext(HttpServletRequest request) throws Exception {
+	private InfoExecutionPeriod setExecutionContext(HttpServletRequest request)
+		throws Exception {
 		IUserView userView = SessionUtils.getUserView(request);
-		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(
+		InfoExecutionPeriod infoExecutionPeriod =
+			(InfoExecutionPeriod) ServiceUtils.executeService(
 				userView,
 				"ReadActualExecutionPeriod",
 				new Object[0]);
 		HttpSession session = request.getSession();
-		session.setAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY, infoExecutionPeriod);
+		session.setAttribute(
+			SessionConstants.INFO_EXECUTION_PERIOD_KEY,
+			infoExecutionPeriod);
 		return infoExecutionPeriod;
 	}
 }

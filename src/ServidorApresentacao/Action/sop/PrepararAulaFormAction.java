@@ -58,7 +58,7 @@ public class PrepararAulaFormAction extends Action {
 					(new Integer(TipoAula.LABORATORIAL)).toString()));
 			tiposAula.add(
 				new LabelValueBean(
-					"Duvidas",
+					"Dúvidas",
 					(new Integer(TipoAula.DUVIDAS)).toString()));
 			tiposAula.add(
 				new LabelValueBean(

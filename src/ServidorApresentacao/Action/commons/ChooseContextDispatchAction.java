@@ -164,7 +164,7 @@ public class ChooseContextDispatchAction extends DispatchAction {
 		Object args[] = {
 		};
 		infoDegreeList =
-			(List) ServiceUtils.executeService(null, "LerLicenciaturas", args);
+			(List) ServiceUtils.executeService(null, "ReadExecutionDegreesByExecutionYear", args);
 
 		request.getSession().setAttribute(
 			SessionConstants.INFO_DEGREE_LIST_KEY,
