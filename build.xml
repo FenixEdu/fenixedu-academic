@@ -363,8 +363,8 @@
             encoding="${encoding}"            
         >
 	        <fileset dir="${sql}">
-			  <include name="tables_*.sql" />
-			  <exclude name="tables_inscRelatedDBTables.sql" />
+			 <include name="tables_*.sql" />
+	         <exclude name="tables_inscRelatedDBTables.sql" />
   			</fileset>
             <classpath>
                 <fileset dir="${libs}">
@@ -383,6 +383,7 @@
             userid="root"
             password=""
             encoding="${encoding}"
+            src="${sql}/test-data_GesDis.sql"
             src="${sql}/test-data_sop.sql"
         >
             <classpath>
@@ -391,7 +392,7 @@
                 </fileset>
             </classpath>
         </sql>
-        <sql
+       <sql
             driver="com.mysql.jdbc.Driver"
             url="jdbc:mysql://localhost/ciapl"
             userid="root"
@@ -405,6 +406,7 @@
                 </fileset>
             </classpath>
         </sql>
+        
     </target>
 
     <target name="dump-db"
