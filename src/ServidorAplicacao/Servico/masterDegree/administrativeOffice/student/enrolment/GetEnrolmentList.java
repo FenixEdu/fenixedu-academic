@@ -69,11 +69,45 @@ public class GetEnrolmentList implements IServico {
 		List result = new ArrayList();
 		Iterator iterator = enrolmentList.iterator();
 
-		while(iterator.hasNext()) {				
+		while(iterator.hasNext()) {	
+						
 			result.add(Cloner.copyIEnrolment2InfoEnrolment((IEnrolment) iterator.next()));	
 		}
 		
 		
 		return result;		
 	}
+	
+	public List run(InfoStudentCurricularPlan infoStudentCurricularPlan) throws FenixServiceException, Exception {
+
+			ISuportePersistente sp = null;
+			List enrolmentList = null;
+			try {
+				sp = SuportePersistenteOJB.getInstance();
+				IStudentCurricularPlan iStudentCurricularPlan = Cloner.copyInfoStudentCurricularPlan2IStudentCurricularPlan(infoStudentCurricularPlan);
+			
+				// Read the list 
+			
+				enrolmentList = sp.getIPersistentEnrolment().readAllByStudentCurricularPlan(iStudentCurricularPlan);
+	
+			} catch (ExcepcaoPersistencia ex) {
+				FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+				newEx.fillInStackTrace();
+				throw newEx;
+			} 
+
+			
+			List result = new ArrayList();
+			Iterator iterator = enrolmentList.iterator();
+
+			while(iterator.hasNext()) {	
+						
+				result.add(Cloner.copyIEnrolment2InfoEnrolment((IEnrolment) iterator.next()));	
+			}
+		
+		
+			return result;		
+		}
+	
+	
 }

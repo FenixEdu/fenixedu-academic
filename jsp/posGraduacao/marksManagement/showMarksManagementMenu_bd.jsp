@@ -15,7 +15,7 @@
 	to actions to maintain jsp state --%>
 <ul>
     <li>
-		<html:link page="<%= "/showMarkDispatchAction.do?method=prepareShowMark&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") + "&amp;jspTitle=" + pageContext.findAttribute("jspTitle") + "&amp;curricularCourseCode=" + pageContext.findAttribute("courseID") %>">
+		<html:link page="<%= "/showMarkDispatchAction.do?method=prepareShowMark&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;page=0" + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") + "&amp;jspTitle=" + pageContext.findAttribute("jspTitle") + "&amp;curricularCourseCode=" + pageContext.findAttribute("courseID") %>">
     		<bean:message key="link.masterDegree.administrativeOffice.marksView" />    		
 		</html:link>
 	</li>

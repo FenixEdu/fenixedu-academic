@@ -32,8 +32,7 @@
          <td>
        
             <html:select property="certificateList" >
-        	    <option value="" selected="selected"></option>
-                <html:options name="certificateList" />
+                <html:options collection="<%= SessionConstants.CERTIFICATE_LIST %>" property="value" labelProperty="label"  />
              </html:select>       
         
          </td>

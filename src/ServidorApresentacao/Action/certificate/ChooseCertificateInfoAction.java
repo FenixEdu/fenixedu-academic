@@ -27,6 +27,7 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import Util.CertificateList;
 import Util.DocumentReason;
 import Util.DocumentType;
 import Util.GraduationType;
@@ -66,16 +67,16 @@ public class ChooseCertificateInfoAction extends DispatchAction {
 			List types = new ArrayList();
 			types.add(DocumentType.CERTIFICATE_TYPE);
 			
-			// inputs	
+//			 inputs	
 			Object args[] = {GraduationType.MASTER_DEGREE_TYPE, types};
-	        
+			
 			// output
-			List certificateList = null;
-
-
-			//get informations
+			List getCertificateList = null;
+//			//get informations
+			ArrayList certificateList = new ArrayList();
+//			certificateList = CertificateList.toArrayList();
 			try {
-				certificateList = (List) serviceManager.executar(userView, "ReadCertificateList", args);
+				getCertificateList = (List) serviceManager.executar(userView, "ReadCertificateList", args);
 
 			} catch (NonExistingServiceException e) {
 				throw new NonExistingActionException("A lista de certidões", e);
@@ -83,14 +84,14 @@ public class ChooseCertificateInfoAction extends DispatchAction {
 
 
 			List result = new ArrayList();
-			Iterator iterator = certificateList.iterator();
+			Iterator iterator = getCertificateList.iterator();
 			while(iterator.hasNext()) {	
 				InfoPrice price = (InfoPrice) iterator.next(); 
 				result.add(price.getDescription());
 			}
 			session.setAttribute(SessionConstants.DOCUMENT_REASON,documentReason);
 			session.setAttribute(SessionConstants.SPECIALIZATIONS, specializations);
-			session.setAttribute(SessionConstants.CERTIFICATE_LIST, result);
+			session.setAttribute(SessionConstants.CERTIFICATE_LIST, new CertificateList().toArrayList());
 			
 			return mapping.findForward("PrepareReady");
 		  } else

@@ -251,7 +251,7 @@
                  type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                  dynamic="true">
 
-         <form-property name="page" type="java.lang.Integer" />
+         <form-property name="page" type="java.lang.Integer" initial="0"/>
          <form-property name="studentNumber" type="java.lang.Integer" />         
        	 <form-property name="grade" type="java.lang.String" />
          <form-property name="teacherNumber" type="java.lang.String" />
@@ -931,6 +931,8 @@
               type="ServidorApresentacao.Action.certificate.PrintCertificateDispatchAction"
 			  >
 	         <forward name="PrintReady" path="/certificate/printCertificatePage.jsp"/> 
+	         <forward name="insucesso" path="/chooseCertificateInfoAction.do?method=prepare"/> 
+	         
       </action>
       
       <!-- Action to prepare the chooseCertificateInfoForm -->
@@ -1037,6 +1039,8 @@
      		 <forward name="NotAuthorized" path="/student/notAuthorized.jsp"/>
      		 <forward name="showMarkNotAvailable" path="/showMarkDispatchAction.do?method=prepareShowMark"/>
      		 <forward name="NoStudents" path="/marksManagement/showMarksManagementMenu.jsp"/> 
+     		 <forward name="chooseStudentMarks" path="/changeMarkDispatchAction.do?method=chooseStudentMarks"/>
+     		 
      		 
       </action>
       

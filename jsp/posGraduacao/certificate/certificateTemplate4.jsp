@@ -14,12 +14,14 @@
 	<logic:present name="<%= SessionConstants.ENROLMENT_LIST%>">
 	nas seguintes disciplinas:<br />
 	<logic:iterate id="itr" name="infoEnrolmentStudentCurricularPlan">
+	<br />
 		<bean:write name="itr" property="infoCurricularCourseScope.infoCurricularCourse.name" />
 	</logic:iterate>
 	</logic:present>
 	<logic:present name="<%= SessionConstants.EXTRA_ENROLMENT_LIST%>">
 	nas seguintes disciplinas Extra-Curriculares:<br />
 	<logic:iterate id="itr" name="infoEnrolmentExtraCurricularPlan">
+	<br />
 	<bean:write name="itr" property="infoCurricularCourseScope.infoCurricularCourse.name" />
 	</logic:iterate>
 		</logic:present>
@@ -30,9 +32,8 @@
 		<bean:write name="itr" property="infoCurricularCourseScope.infoCurricularCourse.name" />
  		<bean:write name="itr" property="infoExecutionPeriod.infoExecutionYear.year" />
  		com 
- 		<logic:iterate id="itr1" name="itr" property="infoEvaluations">
- 		<bean:write name="itr1" property="grade" />
- 		</logic:iterate>(nota) valores
+  		<bean:write name="itr" property="infoEnrolmentEvaluation.grade" />
+ 		valores
 	</logic:iterate>
 		</logic:present>
 		<logic:present name="<%= SessionConstants.EXTRA_CURRICULAR_APROVMENT%>">
@@ -42,8 +43,7 @@
  		<bean:write name="itr" property="infoCurricularCourseScope.infoCurricularCourse.name" />
  		<bean:write name="itr" property="infoExecutionPeriod.infoExecutionYear.year" />
  		com 
- 		<logic:iterate id="itr1" name="itr" property="infoEvaluations">
-		<bean:write name="itr1" property="grade" />
- 		</logic:iterate>(nota) valores
+ 		<bean:write name="itr" property="infoEnrolmentEvaluation.grade" />
+		 valores
 	</logic:iterate>
 		</logic:present>

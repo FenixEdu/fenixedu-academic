@@ -348,7 +348,9 @@
 	
 	<collection-descriptor
 			name="enrolments"
-			element-class-ref="Dominio.Enrolment"
+			refresh="true"
+			auto-retrieve="true"	
+			element-class-ref="Dominio.Enrolment"			
 			proxy="true">
 		<inverse-foreignkey field-ref="studentCurricularPlanKey"/>
 	</collection-descriptor>    

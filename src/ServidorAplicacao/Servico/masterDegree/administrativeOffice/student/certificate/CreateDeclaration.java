@@ -59,10 +59,8 @@ public class CreateDeclaration implements IServico {
 
 		IRole role = null;
 		IPessoa person = null;
-
+		sp = SuportePersistenteOJB.getInstance();
 		try {
-			sp = SuportePersistenteOJB.getInstance();
-
 			studentCurricularPlan =
 				sp
 					.getIStudentCurricularPlanPersistente()

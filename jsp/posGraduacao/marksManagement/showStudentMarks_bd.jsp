@@ -128,6 +128,7 @@
 	 <html:form action="/changeMarkDispatchAction?method=studentMarkChanged" >
 	 <bean:define id="teacherCode" name="lastEnrolmentEavluation" property="idInternal"/>
 	 <html:hidden property="studentNumber"/>
+	
 	 <table>
 	 <tr>									
 				<td align="left">

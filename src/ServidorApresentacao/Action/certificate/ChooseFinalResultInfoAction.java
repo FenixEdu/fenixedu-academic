@@ -3,6 +3,7 @@ package ServidorApresentacao.Action.certificate;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -168,23 +170,27 @@ public class ChooseFinalResultInfoAction extends DispatchAction {
 						}			
 						List newEnrolmentList = new ArrayList();
 						InfoEnrolment infoEnrolment = new InfoEnrolment();
+						
 						//get the last enrolmentEvaluation
-//						Iterator iterator1 = enrolmentList.iterator();
-//						
-//						while(iterator1.hasNext()) {	
-//							result = iterator1.next();
-//							infoEnrolment = (InfoEnrolment) result;
-//							
-//							List enrolmentEvaluations = (List)((InfoEnrolment)result).getInfoEnrolmentEvaluation();	
-//							BeanComparator dateComparator = new BeanComparator("idInternal");
-//							Collections.sort(enrolmentEvaluations, dateComparator);
-//							Collections.reverse(enrolmentEvaluations);
-//							InfoEnrolmentEvaluation latestEvaluation = (InfoEnrolmentEvaluation) enrolmentEvaluations.get(0);
-//							infoEnrolment.setInfoEnrolmentEvaluation(latestEvaluation);
-//							newEnrolmentList.add(infoEnrolment);
-//						}
-//					
-//System.out.println(newEnrolmentList.get(0));						
+						Iterator iterator1 = enrolmentList.iterator();
+						
+						while(iterator1.hasNext()) {	
+							result = iterator1.next();
+							InfoEnrolment infoEnrolment2 = (InfoEnrolment) result;
+							List aux = (List) infoEnrolment2.getInfoEvaluations();
+
+							if (aux.size() > 1){
+								BeanComparator dateComparator = new BeanComparator("when");
+								Collections.sort(aux,dateComparator);
+								Collections.reverse(aux);
+							}
+							InfoEnrolmentEvaluation latestEvaluation = (InfoEnrolmentEvaluation) aux.get(0);
+							infoEnrolment2.setInfoEnrolmentEvaluation(latestEvaluation);
+							newEnrolmentList.add(infoEnrolment2);
+
+						}
+					
+					
 						session.setAttribute(SessionConstants.CONCLUSION_DATE, conclusionDate);	
 						try {
 							infoExecutionYear = (InfoExecutionYear) serviceManager.executar(userView, "ReadCurrentExecutionYear", null);
@@ -198,7 +204,7 @@ public class ChooseFinalResultInfoAction extends DispatchAction {
 						session.setAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN, infoStudentCurricularPlan);		
 						session.setAttribute(SessionConstants.DATE, formatedDate);			
 						session.setAttribute(SessionConstants.INFO_EXECUTION_YEAR, infoExecutionYear);	
-						session.setAttribute(SessionConstants.ENROLMENT_LIST, enrolmentList);	
+						session.setAttribute(SessionConstants.ENROLMENT_LIST, newEnrolmentList);	
 						session.setAttribute(SessionConstants.INFO_FINAL_RESULT, infoFinalResult);	
 
 						return mapping.findForward("ChooseSuccess"); 

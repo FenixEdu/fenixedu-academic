@@ -30,7 +30,7 @@
      	<logic:iterate id="itr" name="infoEnrolmentStudentCurricularPlan">
    	<tr>
       	<td class="cell-first"><bean:write name="itr" property="infoCurricularCourseScope.infoCurricularCourse.name" /></td>
-     	<td class="cell-middle"><logic:iterate id="itr1" name="itr" property="infoEvaluations"><bean:write name="itr1" property="grade" /></logic:iterate></td>
+     	<td class="cell-middle"><bean:write  name="itr" property="infoEnrolmentEvaluation.grade" /></td>
  		<td class="cell-last"><bean:write name="itr" property="infoCurricularCourseScope.infoCurricularCourse.credits" /></td>  	
      </tr>
 	</logic:iterate>

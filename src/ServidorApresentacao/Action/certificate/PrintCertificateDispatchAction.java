@@ -3,6 +3,7 @@ package ServidorApresentacao.Action.certificate;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -28,7 +30,6 @@ import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
-import ServidorApresentacao.Action.exceptions.FinalResulUnreachedActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.EnrolmentState;
@@ -125,15 +126,31 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 		
 					List normalEnrolment = new ArrayList();
 					List extraEnrolment = new ArrayList();
+					
+					InfoEnrolment infoEnrolment = new InfoEnrolment();
 					Object result = null;
 					Iterator iterator = enrolmentList.iterator();
 					while(iterator.hasNext()) {	
-						result = (InfoEnrolment) iterator.next();
-						if (result instanceof InfoEnrolmentInExtraCurricularCourse)	
-							extraEnrolment.add(result);		
-						else
-							normalEnrolment.add(result);							 
-					}
+							result = iterator.next();
+							InfoEnrolment infoEnrolment2 = (InfoEnrolment) result;
+							List aux = (List) infoEnrolment2.getInfoEvaluations();
+
+							if (aux.size() > 1){
+								BeanComparator dateComparator = new BeanComparator("when");
+								Collections.sort(aux,dateComparator);
+								Collections.reverse(aux);
+							}
+							InfoEnrolmentEvaluation latestEvaluation = (InfoEnrolmentEvaluation) aux.get(0);
+							infoEnrolment2.setInfoEnrolmentEvaluation(latestEvaluation);
+							if (result instanceof InfoEnrolmentInExtraCurricularCourse)	
+								extraEnrolment.add(infoEnrolment2);		
+							else
+								normalEnrolment.add(infoEnrolment2);							 
+												
+
+						}
+						
+						
 					if (normalEnrolment.size() != 0)
 							session.setAttribute(SessionConstants.ENROLMENT_LIST, normalEnrolment);
 					if (extraEnrolment.size() != 0)
@@ -158,15 +175,40 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 					}
 					List normalEnrolment = new ArrayList();
 					List extraEnrolment = new ArrayList();
+					
+					InfoEnrolment infoEnrolment = new InfoEnrolment();
 					Object result = null;
 					Iterator iterator = enrolmentList.iterator();
 					while(iterator.hasNext()) {	
-						result = (InfoEnrolment) iterator.next();
-						if (result instanceof InfoEnrolmentInExtraCurricularCourse)	
-							extraEnrolment.add(result);		
-						else
-							normalEnrolment.add(result);							 
-					}
+							result = iterator.next();
+							InfoEnrolment infoEnrolment2 = (InfoEnrolment) result;
+							List aux = (List) infoEnrolment2.getInfoEvaluations();
+
+							if (aux.size() > 1){
+								BeanComparator dateComparator = new BeanComparator("when");
+								Collections.sort(aux,dateComparator);
+								Collections.reverse(aux);
+							}
+							InfoEnrolmentEvaluation latestEvaluation = (InfoEnrolmentEvaluation) aux.get(0);
+							infoEnrolment2.setInfoEnrolmentEvaluation(latestEvaluation);
+							if (result instanceof InfoEnrolmentInExtraCurricularCourse)	
+								extraEnrolment.add(infoEnrolment2);		
+							else
+								normalEnrolment.add(infoEnrolment2);							 
+							
+
+						}
+						
+					
+//					Object result = null;
+//					Iterator iterator = enrolmentList.iterator();
+//					while(iterator.hasNext()) {	
+//						result = (InfoEnrolment) iterator.next();
+//						if (result instanceof InfoEnrolmentInExtraCurricularCourse)	
+//							extraEnrolment.add(result);		
+//						else
+//							normalEnrolment.add(result);							 
+//					}
 					
 					session.setAttribute(SessionConstants.ENROLMENT_LIST, normalEnrolment);
 					session.setAttribute(SessionConstants.EXTRA_ENROLMENT_LIST, extraEnrolment);	
@@ -209,7 +251,14 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 								throw new FenixServiceException ("");	
 							}
 							if (infoFinalResult == null){
-								throw new FinalResulUnreachedActionException("");
+								ActionErrors actionErrors = new ActionErrors();
+								actionErrors.add(
+										"FinalResultError",
+										new ActionError(
+											"error.exception.unreached"));
+								saveErrors(request, actionErrors);
+								return mapping.findForward("insucesso");
+//								throw new FinalResulUnreachedActionException("aqui");
 							}
 							Object args[] = {infoStudentCurricularPlan, EnrolmentState.APROVED };
 							try {
@@ -228,24 +277,48 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 							InfoEnrolmentEvaluation infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();
 							String conclusionDate = "00/00/00";
 							String dataAux = null;					
-							Object result = null;
+//							Object result = null;
 							List normalEnrolment = new ArrayList();
 							List extraEnrolment = new ArrayList();
+							
+							InfoEnrolment infoEnrolment = new InfoEnrolment();
+							Object result = null;
 							Iterator iterator = enrolmentList.iterator();
-							int i = 0;
 							while(iterator.hasNext()) {	
 								result = iterator.next();
-								infoEnrolmentEvaluation = (InfoEnrolmentEvaluation)(((InfoEnrolment) result).getInfoEvaluations().get(i));	
-//								dataAux = DateFormat.getDateInstance().format(infoEnrolmentEvaluation.getExamDate());	
-//								if (conclusionDate.compareTo(dataAux) == -1){
-//									conclusionDate = dataAux;
-//								}		
+								InfoEnrolment infoEnrolment2 = (InfoEnrolment) result;
+								List aux = (List) infoEnrolment2.getInfoEvaluations();
+	
+								if (aux.size() > 1){
+									BeanComparator dateComparator = new BeanComparator("when");
+									Collections.sort(aux,dateComparator);
+									Collections.reverse(aux);
+								}
+								InfoEnrolmentEvaluation latestEvaluation = (InfoEnrolmentEvaluation) aux.get(0);
+								infoEnrolment2.setInfoEnrolmentEvaluation(latestEvaluation);
 								if (result instanceof InfoEnrolmentInExtraCurricularCourse)	
-									extraEnrolment.add(result);		
+									extraEnrolment.add(infoEnrolment2);		
 								else
-									normalEnrolment.add(result);			 
-							}			
+									normalEnrolment.add(infoEnrolment2);							 
+	
+	
+							}
 							
+//							Iterator iterator = enrolmentList.iterator();
+//							int i = 0;
+//							while(iterator.hasNext()) {	
+//								result = iterator.next();
+//								infoEnrolmentEvaluation = (InfoEnrolmentEvaluation)(((InfoEnrolment) result).getInfoEvaluations().get(i));	
+////								dataAux = DateFormat.getDateInstance().format(infoEnrolmentEvaluation.getExamDate());	
+////								if (conclusionDate.compareTo(dataAux) == -1){
+////									conclusionDate = dataAux;
+////								}		
+//								if (result instanceof InfoEnrolmentInExtraCurricularCourse)	
+//									extraEnrolment.add(result);		
+//								else
+//									normalEnrolment.add(result);			 
+//							}			
+//							
 							Object argsAux[] = {infoStudentCurricularPlan};
 							Date date = null;
 							try {
@@ -262,7 +335,7 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 							session.setAttribute(SessionConstants.EXTRA_ENROLMENT_LIST, extraEnrolment);						
 							session.setAttribute(SessionConstants.CONCLUSION_DATE, conclusionDate);	
 							session.setAttribute(SessionConstants.INFO_FINAL_RESULT, infoFinalResult);
-							
+//  							
 							if (certificate.equals("Fim parte escolar simples"))	
 								session.setAttribute(SessionConstants.FINAL_RESULT_SIMPLE, certificate.toUpperCase());
 							if (certificate.equals("Fim parte escolar discriminada sem média"))	

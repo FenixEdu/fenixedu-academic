@@ -33,7 +33,7 @@ public class EnrolmentEvaluationType {
 
 	public static final String NORMAL_STRING = "Epoca Normal";
 	public static final String IMPROVEMENT_STRING = "Melhoria de Nota";
-	public static final String SPECIAL_STRING = "Epoca Especial";
+	public static final String SPECIAL_SEASON_STRING = "Epoca Especial";
 	public static final String EQUIVALENCE_STRING = "Por Equivalência";
 
 	private Integer type;
@@ -86,9 +86,13 @@ public class EnrolmentEvaluationType {
 			case NORMAL :
 				valueS = "Normal";
 				break;
+			case SPECIAL_SEASON :
+				valueS = "Epoca Especial";
+				break;
 			case EQUIVALENCE :
 				valueS = "Equivalência";
 				break;
+			
 			default :
 				break;
 		}
@@ -99,7 +103,7 @@ public class EnrolmentEvaluationType {
 	public EnrolmentEvaluationType(String type) {
 			if (type.equals(EnrolmentEvaluationType.NORMAL_STRING)) this.type = new Integer(EnrolmentEvaluationType.NORMAL);
 			if (type.equals(EnrolmentEvaluationType.IMPROVEMENT_STRING)) this.type = new Integer(EnrolmentEvaluationType.IMPROVEMENT);
-		if (type.equals(EnrolmentEvaluationType.SPECIAL_STRING)) this.type = new Integer(EnrolmentEvaluationType.SPECIAL_SEASON);
+		if (type.equals(EnrolmentEvaluationType.SPECIAL_SEASON_STRING)) this.type = new Integer(EnrolmentEvaluationType.SPECIAL_SEASON);
 		if (type.equals(EnrolmentEvaluationType.EQUIVALENCE_STRING)) this.type = new Integer(EnrolmentEvaluationType.EQUIVALENCE);
 		}
 
@@ -108,7 +112,7 @@ public class EnrolmentEvaluationType {
 		//		   result.add(new LabelValueBean(EnrolmentEvaluationType.DEFAULT, null));
 		result.add(new LabelValueBean(EnrolmentEvaluationType.IMPROVEMENT_STRING, String.valueOf(EnrolmentEvaluationType.IMPROVEMENT)));
 		result.add(new LabelValueBean(EnrolmentEvaluationType.NORMAL_STRING, String.valueOf(EnrolmentEvaluationType.NORMAL)));
-		result.add(new LabelValueBean(EnrolmentEvaluationType.SPECIAL_STRING, String.valueOf(EnrolmentEvaluationType.SPECIAL_SEASON)));
+		result.add(new LabelValueBean(EnrolmentEvaluationType.SPECIAL_SEASON_STRING, String.valueOf(EnrolmentEvaluationType.SPECIAL_SEASON)));
 		result.add(new LabelValueBean(EnrolmentEvaluationType.EQUIVALENCE_STRING, String.valueOf(EnrolmentEvaluationType.EQUIVALENCE)));
 		return result;
 	}

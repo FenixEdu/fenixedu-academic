@@ -48,6 +48,7 @@ import Util.FormataData;
 
 public class ChangeMarkDispatchAction extends DispatchAction {
 InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
+
 	public ActionForward prepareChangeMark(
 		ActionMapping mapping,
 		ActionForm form,
@@ -117,8 +118,25 @@ InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
 
 		String curricularCourse = getFromRequest("curricularCourse", request);
 		Integer curricularCourseCode = Integer.valueOf(getFromRequest("curricularCourseCode", request));
-		Integer studentNumber = Integer.valueOf(getFromRequest("studentNumber", request));
+		Integer studentNumber= null;
+		request.setAttribute("executionYear", executionYear);
+		request.setAttribute("degree", degree);
+		request.setAttribute("curricularCourse", curricularCourse);
+		request.setAttribute("curricularCourseCode", curricularCourseCode);
+		request.setAttribute("courseID", curricularCourseCode);
+		request.setAttribute("jspTitle", getFromRequest("jspTitle", request));
+		try{
+		studentNumber = Integer.valueOf(getFromRequest("studentNumber", request));
+		}catch (NumberFormatException e){
+			ActionErrors actionErrors = new ActionErrors();
+			actionErrors.add(
+					"StudentNumberRequired",
+					new ActionError(
+						"error.studentNumber.required"));
+			saveErrors(request, actionErrors);
+			return mapping.findForward("editStudentNumber");
 
+		}
 		// Get mark student List
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);			
 		
@@ -263,7 +281,16 @@ InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
 			String executionYear = getFromRequest("executionYear", request);
 			String degree = getFromRequest("degree", request);
 			String curricularCourse = getFromRequest("curricularCourse", request);
-			Integer curricularCourseCode = new Integer(getFromRequest("curricularCourseCode", request));	
+			Integer curricularCourseCode = new Integer(getFromRequest("curricularCourseCode", request));
+			
+			request.setAttribute("executionYear", executionYear);
+			request.setAttribute("degree", degree);
+			request.setAttribute("curricularCourse", curricularCourse);
+			request.setAttribute("curricularCourseCode", curricularCourseCode);
+			request.setAttribute("courseID", curricularCourseCode);
+			request.setAttribute("jspTitle", getFromRequest("jspTitle", request));
+			request.setAttribute("studentNumber",getFromRequest("studentNumber",request));		
+			
 			Integer enrolmentEvaluationCode = Integer.valueOf(getFromRequest("teacherCode",request));
 			String grade = getFromRequest("grade",request);	
 
@@ -271,7 +298,23 @@ InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
 			
 			EnrolmentEvaluationType enrolmentEvaluationType = new EnrolmentEvaluationType(evaluation);
 
-			Integer teacherNumber = Integer.valueOf(getFromRequest("teacherNumber",request));
+			
+			
+			Integer teacherNumber = null;
+			
+			try{
+				teacherNumber = Integer.valueOf(getFromRequest("teacherNumber",request));
+			}catch (NumberFormatException e){
+				ActionErrors actionErrors = new ActionErrors();
+				actionErrors.add(
+						"TeacharNumberRequired",
+						new ActionError(
+							"error.teacherNumber.required"));
+				saveErrors(request, actionErrors);
+				return mapping.findForward("chooseStudentMarks");
+
+			}
+			
 			
 			String observation = getFromRequest("observation",request);	
 			Integer studentNumber = Integer.valueOf(getFromRequest("studentNumber",request));	
