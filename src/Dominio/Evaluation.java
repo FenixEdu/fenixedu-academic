@@ -15,6 +15,7 @@ package Dominio;
 public class Evaluation extends DomainObject implements IEvaluation {
 
 private String evaluationElements;
+private String evaluationElementsEn;
 private Integer keyExecutionCourse;
 private IDisciplinaExecucao executionCourse;
 
@@ -89,5 +90,19 @@ public boolean equals(Object arg0) {
 		} 
 		return result;		
 	}
+
+/**
+ * @return
+ */
+public String getEvaluationElementsEn() {
+	return evaluationElementsEn;
+}
+
+/**
+ * @param string
+ */
+public void setEvaluationElementsEn(String string) {
+	evaluationElementsEn = string;
+}
 
 }

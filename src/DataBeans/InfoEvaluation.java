@@ -16,6 +16,7 @@ public class InfoEvaluation implements ISiteComponent{
 
 	private InfoExecutionCourse infoExecutionCourse;
 	private String evaluationElements;
+	private String evaluationElementsEn;
 
 	public InfoEvaluation() {
 	}
@@ -24,9 +25,11 @@ public class InfoEvaluation implements ISiteComponent{
 	}
 	public InfoEvaluation(
 		InfoExecutionCourse infoExecutionCourse,
-		String evaluationElements) {
+		String evaluationElements,
+		String evaluationElementsEn) {
 		setInfoExecutionCourse(infoExecutionCourse);
 		setEvaluationElements(evaluationElements);
+		setEvaluationElementsEn(evaluationElementsEn);
 	}
 
 	/**
@@ -74,6 +77,20 @@ public class InfoEvaluation implements ISiteComponent{
 					((InfoEvaluation) arg0).getInfoExecutionCourse());
 		}
 		return result;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getEvaluationElementsEn() {
+		return evaluationElementsEn;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setEvaluationElementsEn(String string) {
+		evaluationElementsEn = string;
 	}
 
 }
