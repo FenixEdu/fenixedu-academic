@@ -2021,6 +2021,7 @@
 		<forward name="error" path="df.page.editWorkLocation" />
 		<forward name="success" path="df.page.editWorkLocation_success" />
 		<forward name="start" path="df.page.editWorkLocation" />
+		<forward name="errorLocationAlreadyExists" path="/editWorkLocation.do?page=0&amp;method=prepare" />
     </action>	
 	
 	<action type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.reimbursementGuide.ReimbursementGuideDispatchAction"
