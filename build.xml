@@ -157,20 +157,7 @@
 		  <replacefilter 
 		    token="@db.assiduousness.validationQuery@" 
 		    property="db.assiduousness.validationQuery"/>
-
-		  <replacefilter 
-		    token="@dbMarcacoesPonto.user@" 
-		    property="dbMarcacoesPonto.user"/>
-		  <replacefilter 
-		    token="@dbMarcacoesPonto.pass@" 
-		    property="dbMarcacoesPonto.pass"/>
-		  <replacefilter 
-		    token="@dbMarcacoesPonto.name@" 
-		    property="dbMarcacoesPonto.name"/>
-		  <replacefilter 
-		    token="@dbMarcacoesPonto.alias@" 
-		    property="dbMarcacoesPonto.alias"/>
-		    
+		  		    
 		  <replacefilter 
 		    token="@application@" 
 		    property="application"/>
@@ -495,18 +482,18 @@
         <sql
             driver="com.mysql.jdbc.Driver"
             url="jdbc:mysql://localhost/"
-            userid="${db.user}"
-            password="${db.pass}"
+            userid="${db.assiduousness.user}"
+            password="${db.assiduousness.pass}"
             encoding="${encoding}"
         >
-        DROP DATABASE IF EXISTS ${dbMarcacoesPonto.name};
-        CREATE DATABASE ${dbMarcacoesPonto.name};
+        DROP DATABASE IF EXISTS ${db.assiduousness.name};
+        CREATE DATABASE ${db.assiduousness.name};
         </sql>
         <sql
             driver="com.mysql.jdbc.Driver"
-            url="jdbc:mysql://localhost/${dbMarcacoesPonto.name}"
-            userid="${dbMarcacoesPonto.user}"
-            password="${dbMarcacoesPonto.pass}"
+            url="jdbc:mysql://localhost/${db.assiduousness.name}"
+            userid="${db.assiduousness.user}"
+            password="${db.assiduousness.pass}"
             encoding="${encoding}">
 	        <fileset dir="${sql}">
 			 <include name="tables_AssiduousnessASSMARCAS.sql" />
@@ -849,9 +836,7 @@
         		 use="true"
         		 author="true"
 	             version="true"
-	             windowtitle="Fenix Class OverView"
-	             stylesheetfile="${src.jsp}/CSS/javaDoc.css"
-	             >
+	             windowtitle="Fenix Class OverView">
 	             
             <packageset dir="${src}" defaultexcludes="yes">
 
@@ -877,9 +862,7 @@
         		 use="true"
         		 author="true"
 	             version="true"
-	             windowtitle="Fenix Class OverView"
-	             stylesheetfile="${src.jsp}/CSS/javaDoc.css"
-	             >
+	             windowtitle="Fenix Class OverView">
 	             
             <packageset dir="${src.tests}" defaultexcludes="yes">
 
