@@ -20,7 +20,7 @@
 	<br />
     <p><bean:message key="property.context.degree"/>:
 		<html:select property="index" size="1">
-       		<html:options scope="request" collection="<%= SessionConstants.DEGREES %>" property="value" labelProperty="label"/>
+       		<html:options collection="<%= SessionConstants.DEGREES %>" property="value" labelProperty="label"/>
        </html:select>
 	 </p>
 	 <br />
