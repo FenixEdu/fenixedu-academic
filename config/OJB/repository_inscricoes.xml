@@ -1226,6 +1226,24 @@
 	
 </class-descriptor>
 
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for Dominio.AreaCientifica -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="Dominio.AreaCientifica" table="AREA_CIENTIFICA">
+  <field-descriptor 
+    name="idInternal"
+    column="id_internal"
+    jdbc-type="INTEGER"
+    primarykey="true"
+  />
+  <field-descriptor 
+    name="name"
+    column="name"
+    jdbc-type="VARCHAR"
+  />
+
+</class-descriptor>
+
 
 <!-- ************************************************************************************************************ -->
 <!-- Definitions for Dominio.University -->
