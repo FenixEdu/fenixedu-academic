@@ -13,6 +13,11 @@
 	<li>
 		<html:link page="/courseEnrolmentWithoutRulesManagerDA.do?method=prepareEnrollmentChooseStudentAndExecutionYear&amp;degreeType=1"><bean:message key="link.student.LEEC.enrollment.without.rules"/></html:link>
 	</li>
+<%--
+	<li>
+		<html:link page="/optionalCoursesEnrolmentManager.do?method=chooseStudentAndExecutionYear&amp;degreeType=1"><bean:message key="title.student.LEEC.optional.enrollment"/></html:link>
+	</li>
+--%>
 </ul>
 <%--
 <%	IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);

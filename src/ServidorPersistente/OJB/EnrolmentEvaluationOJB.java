@@ -84,8 +84,8 @@ public class EnrolmentEvaluationOJB extends ObjectFenixOJB implements IPersisten
 		throws ExcepcaoPersistencia
 	{
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("enrolmentKey", enrolment.getIdInternal());
-		criteria.addEqualTo("enrolmentEvaluationType", evaluationType.getType());
+		criteria.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
+		criteria.addEqualTo("enrolmentEvaluationType", evaluationType);
 		if (grade == null)
 		{
 			criteria.addIsNull("grade");
@@ -102,7 +102,7 @@ public class EnrolmentEvaluationOJB extends ObjectFenixOJB implements IPersisten
 	public List readEnrolmentEvaluationByEnrolment(IEnrolment enrolment) throws ExcepcaoPersistencia
 	{
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("enrolmentKey", enrolment.getIdInternal());
+		criteria.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
 		List result = queryList(EnrolmentEvaluation.class, criteria);
 		return result;
 	}
@@ -111,8 +111,8 @@ public class EnrolmentEvaluationOJB extends ObjectFenixOJB implements IPersisten
 		throws ExcepcaoPersistencia
 	{
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("enrolmentKey", enrolment.getIdInternal());
-		criteria.addEqualTo("enrolmentEvaluationState", evaluationState.getState());
+		criteria.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
+		criteria.addEqualTo("enrolmentEvaluationState", evaluationState);
 
 		List examsWithRepetition = queryList(EnrolmentEvaluation.class, criteria);
 		return examsWithRepetition;
@@ -123,7 +123,7 @@ public class EnrolmentEvaluationOJB extends ObjectFenixOJB implements IPersisten
 		try
 		{
 			Criteria criteria = new Criteria();
-			criteria.addEqualTo("enrolmentKey", enrolment.getIdInternal());
+			criteria.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
 			criteria.addEqualTo("when", whenAlter);
 			IEnrolmentEvaluation evaluationsWithRepetition = (IEnrolmentEvaluation) queryObject(EnrolmentEvaluation.class, criteria);
 
@@ -144,7 +144,8 @@ public class EnrolmentEvaluationOJB extends ObjectFenixOJB implements IPersisten
 
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
-		criteria.addEqualTo("enrolmentEvaluationType", evaluationType.getType());
+//		criteria.addEqualTo("enrolmentEvaluationType", evaluationType.getType());
+		criteria.addEqualTo("enrolmentEvaluationType", evaluationType);
 		criteria.addEqualTo("grade", grade);
 		criteria.addEqualTo("when", whenAltered);
 

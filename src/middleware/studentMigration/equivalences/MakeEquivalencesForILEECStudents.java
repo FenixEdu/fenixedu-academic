@@ -264,8 +264,8 @@ public class MakeEquivalencesForILEECStudents
 	 * @param student
 	 * @param studentCurricularPlanState
 	 * @param fenixPersistentSuport
-	 * @return @throws
-	 *         Throwable
+	 * @return
+	 * @throws Throwable
 	 */
 	private static IStudentCurricularPlan getStudentCurricularPlan(
 		IStudent student,
@@ -312,7 +312,7 @@ public class MakeEquivalencesForILEECStudents
 		{
 
 			IEnrolment enrolment = (IEnrolment) iterator.next();
-
+			
 if(enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
 {
 			if (!MakeEquivalencesForILEECStudents
@@ -1015,6 +1015,9 @@ if(enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
 						}
 					}
 				}
+			} else if (enrolmentEvaluation == null)
+			{
+				enrollmentsToRemove.add(enrolment);
 			}
 
 		}
@@ -1151,13 +1154,26 @@ if(enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
 			while (iterator.hasNext())
 			{
 				IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator.next();
-				enrolmentEvaluationDAO.deleteByOID(EnrolmentEvaluation.class, enrolmentEvaluation.getIdInternal());
-				System.out.println("APAGUEI ENROLLMENT_EVALUATION\t" + enrolmentEvaluation.getEnrolment().getCurricularCourse().getCode() + "\t" + enrolmentEvaluation.getEnrolment().getCurricularCourse().getName() + "\t" + enrolmentEvaluation.getEnrolment().getExecutionPeriod().getIdInternal().toString() + "\t" + enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getStudent().getNumber().toString() + "\t" + enrolmentEvaluation.getEnrolment().getCurricularCourse().getDegreeCurricularPlan().getName() + "\t" + enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getDegreeCurricularPlan().getName() + "\t" + enrolmentEvaluation.getGrade());
-				MakeEquivalencesForILEECStudents.deletedEnrollmentEvaluations++;
+
+				IEnrolmentEvaluation enrolmentEvaluationToBeDeleted =
+					(IEnrolmentEvaluation) enrolmentEvaluationDAO.readByOID(
+						EnrolmentEvaluation.class,
+						enrolmentEvaluation.getIdInternal());
+				if (enrolmentEvaluationToBeDeleted != null)
+				{
+					enrolmentEvaluationDAO.deleteByOID(EnrolmentEvaluation.class, enrolmentEvaluation.getIdInternal());
+					MakeEquivalencesForILEECStudents.deletedEnrollmentEvaluations++;
+//					System.out.println("APAGUEI ENROLLMENT_EVALUATION\t" + enrolmentEvaluation.getEnrolment().getCurricularCourse().getCode() + "\t" + enrolmentEvaluation.getEnrolment().getCurricularCourse().getName() + "\t" + enrolmentEvaluation.getEnrolment().getExecutionPeriod().getIdInternal().toString() + "\t" + enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getStudent().getNumber().toString() + "\t" + enrolmentEvaluation.getEnrolment().getCurricularCourse().getDegreeCurricularPlan().getName() + "\t" + enrolmentEvaluation.getEnrolment().getStudentCurricularPlan().getDegreeCurricularPlan().getName() + "\t" + enrolmentEvaluation.getGrade());
+				}
 			}
-			enrolmentDAO.deleteByOID(Enrolment.class, enrollment.getIdInternal());
-			System.out.println("APAGUEI ENROLLMENT\t" + enrollment.getCurricularCourse().getCode() + "\t" + enrollment.getCurricularCourse().getName() + "\t" + enrollment.getExecutionPeriod().getIdInternal().toString() + "\t" + enrollment.getStudentCurricularPlan().getStudent().getNumber().toString() + "\t" + enrollment.getCurricularCourse().getDegreeCurricularPlan().getName() + "\t" + enrollment.getStudentCurricularPlan().getDegreeCurricularPlan().getName());
-			MakeEquivalencesForILEECStudents.deletedEnrollments++;
+
+			IEnrolment enrolmentToBeDeleted = (IEnrolment) enrolmentDAO.readByOID(Enrolment.class, enrollment.getIdInternal());
+			if (enrolmentToBeDeleted != null)
+			{
+				enrolmentDAO.deleteByOID(Enrolment.class, enrollment.getIdInternal());
+				MakeEquivalencesForILEECStudents.deletedEnrollments++;
+//				System.out.println("APAGUEI ENROLLMENT\t" + enrollment.getCurricularCourse().getCode() + "\t" + enrollment.getCurricularCourse().getName() + "\t" + enrollment.getExecutionPeriod().getIdInternal().toString() + "\t" + enrollment.getStudentCurricularPlan().getStudent().getNumber().toString() + "\t" + enrollment.getCurricularCourse().getDegreeCurricularPlan().getName() + "\t" + enrollment.getStudentCurricularPlan().getDegreeCurricularPlan().getName());
+			}
 		}
 	}
 
