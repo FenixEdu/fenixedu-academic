@@ -1,66 +1,54 @@
-class Dominio.teacher.Category {
+class net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.teacher.Category extends net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.DomainObject {
 	String code;
 	String longName;
 	Boolean canBeExecutionCourseResponsible;
-	Integer ackOptLock;
 	String shortName;
-	Integer idInternal;
 }
 
 
-class Dominio.teacher.OldPublication {
+class net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.teacher.OldPublication extends net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyTeacher;
 	Date lastModificationDate;
 	String publication;
-	Integer ackOptLock;
-	Integer idInternal;
 }
 
 
-class Dominio.gesdis.CourseReport {
+class net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.gesdis.CourseReport extends net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.DomainObject {
 	String report;
 	Date lastModificationDate;
-	Integer ackOptLock;
 	Integer keyExecutionCourse;
-	Integer idInternal;
 }
 
 
-class Dominio.gesdis.StudentCourseReport {
+class net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport extends net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyCurricularCourse;
-	String strongPoints;
 	Date lastModificationDate;
-	Integer ackOptLock;
-	Integer idInternal;
-	String studentReport;
+	String strongPoints;
 	String weakPoints;
+	String studentReport;
 }
 
 
-class Dominio.gesdis.CourseHistoric {
+class net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.gesdis.CourseHistoric extends net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyCurricularCourse;
-	Integer enrolled;
-	Integer approved;
-	Integer ackOptLock;
-	Integer idInternal;
-	Integer evaluated;
 	String curricularYear;
+	Integer approved;
+	Integer enrolled;
 	Integer semester;
+	Integer evaluated;
 }
 
 
-class Dominio.student.Delegate {
+class net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.student.Delegate extends net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionYear;
-	Integer ackOptLock;
 	Integer keyDegree;
-	Integer idInternal;
 	Boolean type;
 	Integer keyStudent;
 }
 
 
 
-class Dominio.inquiries.OldInquiriesTeachersRes {
+class net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes extends net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.DomainObject {
 	String classTypeLong;
 	Double average3_9;
 	Double deviation3_4;
@@ -89,7 +77,6 @@ class Dominio.inquiries.OldInquiriesTeachersRes {
 	Double average3_8;
 	Integer inquiryId;
 	Double tolerance3_6;
-	Integer idInternal;
 	Integer gepCourseId;
 	Integer numAnswers3_11;
 	String average3_3;
@@ -121,9 +108,8 @@ class Dominio.inquiries.OldInquiriesTeachersRes {
 
 
 
-class Dominio.inquiries.OldInquiriesSummary {
+class net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary extends net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.DomainObject {
 	Double average3_9;
-	Integer idInternal;
 	Double average3_4_numerical;
 	Integer gepCourseId;
 	Double average2_8;
@@ -167,11 +153,10 @@ class Dominio.inquiries.OldInquiriesSummary {
 }
 
 
-class Dominio.inquiries.OldInquiriesCoursesRes {
+class net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes extends net.sourceforge.fenixedu.net.sourceforge.fenixedu.domain.DomainObject {
 	Double tolerance2_3;
 	Double deviation2_3;
 	Double tolerance2_2;
-	Integer idInternal;
 	Integer numAnswers2_4;
 	Integer gepCourseId;
 	Integer numAnswers2_5_number;
@@ -216,20 +201,116 @@ class Dominio.inquiries.OldInquiriesCoursesRes {
 
 
 
+
+
+
+class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer teacherNumber;
+	Integer keyPerson;
+	Integer keyCategory;
+}
+
+class net.sourceforge.fenixedu.domain.teacher.TeachingCareer extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyTeacher;
+	Integer endYear;
+	Date lastModificationDate;
+	String courseOrPosition;
+	String ojbConcreteClass;
+	Integer keyCategory;
+	Integer beginYear;
+}
+
+class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fenixedu.domain.DomainObject {
+	String nome;
+	Double theoreticalHours;
+	String sigla;
+	Double labHours;
+	Integer keyExecutionPeriod;
+	Double praticalHours;
+	String comment;
+	Double theoPratHours;
+}
+
+class net.sourceforge.fenixedu.domain.CurricularCourse extends net.sourceforge.fenixedu.domain.DomainObject {
+	Double ectsCredits;
+	Boolean basic;
+	Integer universityKey;
+	Boolean mandatoryEnrollment;
+	Integer maximumValueForAcumulatedEnrollments;
+	Double theoPratHours;
+	Double weigth;
+	Integer keyScientificArea;
+	Integer degreeCurricularPlanKey;
+	String code;
+	Boolean enrollmentAllowed;
+	Double theoreticalHours;
+	Integer departmentCourseKey;
+	Double labHours;
+	Double credits;
+	Integer enrollmentWeigth;
+	Double praticalHours;
+	Boolean mandatory;
+	String name;
+	String acronym;
+	Integer minimumValueForAcumulatedEnrollments;
+}
+
+
+class net.sourceforge.fenixedu.domain.Student extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer studentKindKey;
+	Double entryGrade;
+	String istUniversity;
+	Boolean enrollmentForbidden;
+	String ingression;
+	String contigent;
+	Integer personKey;
+	Boolean payedTuition;
+	Boolean specialSeason;
+	Integer keyRegistrationYear;
+	Integer number;
+}
+
+class net.sourceforge.fenixedu.domain.ExecutionYear extends net.sourceforge.fenixedu.domain.DomainObject {
+	Date beginDate;
+	Date endDate;
+	String year;
+}
+
+class net.sourceforge.fenixedu.domain.Degree extends net.sourceforge.fenixedu.domain.DomainObject {
+	String concreteClassForDegreeCurricularPlans;
+	String nome;
+	String sigla;
+}
+
+class net.sourceforge.fenixedu.domain.ExecutionPeriod extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer keyExecutionYear;
+	Date beginDate;
+	Integer keyPreviousExecutionPeriod;
+	Date endDate;
+	String name;
+	Integer semester;
+}
+
+
+
+
+
+
+
 relation TeacherCategory {
-	Dominio.Teacher playsRole teacher {
+	net.sourceforge.fenixedu.domain.Teacher playsRole teacher {
 		multiplicity *;
 	}
-	Dominio.teacher.Category playsRole category {
+	net.sourceforge.fenixedu.domain.teacher.Category playsRole category {
 		multiplicity 1;
 	}
 }
 
 relation TeachingCareerCategory {
-	Dominio.teacher.TeachingCareer playsRole teachingCareer {
+	net.sourceforge.fenixedu.domain.teacher.TeachingCareer playsRole teachingCareer {
 		multiplicity *;
 	}
-	Dominio.teacher.Category playsRole category {
+	net.sourceforge.fenixedu.domain.teacher.Category playsRole category {
 		multiplicity 1;
 	}
 }
@@ -237,10 +318,10 @@ relation TeachingCareerCategory {
 
 
 relation TeacherOldPublication {
-	Dominio.teacher.OldPublication playsRole oldPublication {
+	net.sourceforge.fenixedu.domain.teacher.OldPublication playsRole oldPublication {
 		multiplicity *;
 	}
-	Dominio.Teacher playsRole teacher {
+	net.sourceforge.fenixedu.domain.Teacher playsRole teacher {
 		multiplicity 1;
 	}
 }
@@ -248,10 +329,10 @@ relation TeacherOldPublication {
 
 
 relation ExecutionCourseReport {
-	Dominio.gesdis.CourseReport playsRole courseReport {
+	net.sourceforge.fenixedu.domain.gesdis.CourseReport playsRole courseReport {
 		multiplicity 1;
 	}
-	Dominio.ExecutionCourse playsRole executionCourse {
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse {
 		multiplicity 1;
 	}
 }
@@ -259,10 +340,10 @@ relation ExecutionCourseReport {
 
 
 relation CurricularCourseStudentReport {
-	Dominio.gesdis.StudentCourseReport playsRole studentCourseReport {
+	net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport playsRole studentCourseReport {
 		multiplicity 1;
 	}
-	Dominio.CurricularCourse playsRole curricularCourse {
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourse {
 		multiplicity 1;
 	}
 }
@@ -270,10 +351,10 @@ relation CurricularCourseStudentReport {
 
 
 relation CurricularCourseHistoric {
-	Dominio.gesdis.CourseHistoric playsRole courseHistoric {
+	net.sourceforge.fenixedu.domain.gesdis.CourseHistoric playsRole courseHistoric {
 		multiplicity 1;
 	}
-	Dominio.CurricularCourse playsRole curricularCourse {
+	net.sourceforge.fenixedu.domain.CurricularCourse playsRole curricularCourse {
 		multiplicity 1;
 	}
 }
@@ -281,28 +362,28 @@ relation CurricularCourseHistoric {
 
 
 relation DelegateStudent {
-	Dominio.student.Delegate playsRole delegate {
+	net.sourceforge.fenixedu.domain.student.Delegate playsRole delegate {
 		multiplicity *;
 	}
-	Dominio.Student playsRole student {
+	net.sourceforge.fenixedu.domain.Student playsRole student {
 		multiplicity 1;
 	}
 }
 
 relation DelegateExecutionYear {
-	Dominio.student.Delegate playsRole delegate {
+	net.sourceforge.fenixedu.domain.student.Delegate playsRole delegate {
 		multiplicity *;
 	}
-	Dominio.ExecutionYear playsRole executionYear {
+	net.sourceforge.fenixedu.domain.ExecutionYear playsRole executionYear {
 		multiplicity 1;
 	}
 }
 
 relation DelegateDegree {
-	Dominio.student.Delegate playsRole delegate {
+	net.sourceforge.fenixedu.domain.student.Delegate playsRole delegate {
 		multiplicity *;
 	}
-	Dominio.Degree playsRole degree {
+	net.sourceforge.fenixedu.domain.Degree playsRole degree {
 		multiplicity 1;
 	}
 }
@@ -310,28 +391,28 @@ relation DelegateDegree {
 
 
 relation OldInquiriesTeachersResTeacher {
-	Dominio.inquiries.OldInquiriesTeachersRes playsRole oldInquiriesTeacherRes {
+	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes playsRole oldInquiriesTeacherRes {
 		multiplicity *;
 	}
-	Dominio.Teacher playsRole teacher {
+	net.sourceforge.fenixedu.domain.Teacher playsRole teacher {
 		multiplicity 1;
 	}
 }
 
 relation OldInquiriesTeachersResExecutionPeriod {
-	Dominio.inquiries.OldInquiriesTeachersRes playsRole oldInquiriesTeachersRes {
+	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes playsRole oldInquiriesTeachersRes {
 		multiplicity *;
 	}
-	Dominio.ExecutionPeriod playsRole executionPeriod {
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod {
 		multiplicity 1;
 	}
 }
 
 relation OldInquiriesTeachersResDegree {
-	Dominio.inquiries.OldInquiriesTeachersRes playsRole oldInquiriesTeachersRes {
+	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes playsRole oldInquiriesTeachersRes {
 		multiplicity *;
 	}
-	Dominio.Degree playsRole degree {
+	net.sourceforge.fenixedu.domain.Degree playsRole degree {
 		multiplicity 1;
 	}
 }
@@ -339,19 +420,19 @@ relation OldInquiriesTeachersResDegree {
 
 
 relation OldInquiriesSummaryDegree {
-	Dominio.inquiries.OldInquiriesSummary playsRole oldInquiriesSummary {
+	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary playsRole oldInquiriesSummary {
 		multiplicity *;
 	}
-	Dominio.Degree playsRole degree {
+	net.sourceforge.fenixedu.domain.Degree playsRole degree {
 		multiplicity 1;
 	}
 }
 
 relation OldInquiriesSummaryExecutionPeriod {
-	Dominio.inquiries.OldInquiriesSummary playsRole oldInquiriesSummary {
+	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary playsRole oldInquiriesSummary {
 		multiplicity *;
 	}
-	Dominio.ExecutionPeriod playsRole executionPeriod {
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod {
 		multiplicity 1;
 	}
 }
@@ -359,19 +440,19 @@ relation OldInquiriesSummaryExecutionPeriod {
 
 
 relation OldInquiriesCoursesResExecutionPeriod {
-	Dominio.inquiries.OldInquiriesCoursesRes playsRole oldInquiriesCoursesRes {
+	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes playsRole oldInquiriesCoursesRes {
 		multiplicity *;
 	}
-	Dominio.ExecutionPeriod playsRole executionPeriod {
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod {
 		multiplicity 1;
 	}
 }
 
 relation OldInquiriesCoursesResDegree {
-	Dominio.inquiries.OldInquiriesCoursesRes playsRole oldInquiriesCoursesRes {
+	net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes playsRole oldInquiriesCoursesRes {
 		multiplicity *;
 	}
-	Dominio.Degree playsRole degree {
+	net.sourceforge.fenixedu.domain.Degree playsRole degree {
 		multiplicity 1;
 	}
 }
