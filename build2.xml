@@ -310,7 +310,6 @@
         password="${manager.password}"
             path="${app.path}"
              war="file://${build.home}"/>
-
   </target>
 
 <!-- ==================== Javadoc Target ================================== -->
@@ -427,5 +426,4 @@
            path="${app.path}"/>
 
   </target>
-
 </project>
