@@ -15,7 +15,7 @@ create table ANNOUNCEMENT (
    TITLE varchar(100),
    CREATION_DATE timestamp,
    LAST_MODIFICATION_DATE timestamp,
-   INFORMATION varchar(100),
+   INFORMATION text,
    KEY_SITE int(11) unsigned not null default '0',
    primary key (ID_INTERNAL),
    UNIQUE KEY U1( KEY_SITE, CREATION_DATE))
@@ -28,9 +28,9 @@ drop table if exists CURRICULUM;
 create table CURRICULUM (
    ID_INTERNAL int(11) not null auto_increment,
    KEY_EXECUTION_COURSE int(11) not null default '0',
-   GENERAL_OBJECTIVES varchar(50),
-   OPERACIONAL_OBJECTIVES varchar(50),
-   PROGRAM varchar(50),
+   GENERAL_OBJECTIVES text,
+   OPERACIONAL_OBJECTIVES text,
+   PROGRAM text,
    primary key (ID_INTERNAL),
    UNIQUE KEY U1(KEY_EXECUTION_COURSE))
    type=InnoDB comment="InnoDB free: 372736 kB; InnoDB free: 372736 kB";
@@ -99,8 +99,8 @@ create table SITE (
    KEY_INITIAL_SECTION int(11),
    ALTERNATIVE_SITE varchar(50),
    MAIL varchar(50),
-   INITIAL_STATEMENT varchar(255),
-   INTRODUCTION 	varchar(255),
+   INITIAL_STATEMENT text,
+   INTRODUCTION 	text,
    STYLE varchar(255) ,
    primary key (ID_INTERNAL),
    unique ID_INTERNAL (ID_INTERNAL, KEY_EXECUTION_COURSE))
