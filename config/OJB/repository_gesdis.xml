@@ -378,6 +378,19 @@
         jdbc-type="CLOB"
         conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
 	/>
+	 <field-descriptor id="9"
+         name="evaluationElements"
+         column="EVALUATION_ELEMENTS"
+    	  jdbc-type="CLOB"
+        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+        />
+    	 
+    <field-descriptor id="10"
+         name="evaluationElementsEn"
+         column="EVALUATION_ELEMENTS_EN"
+    	  jdbc-type="CLOB"
+        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+        />
     <reference-descriptor
          name="curricularCourse"
          class-ref="Dominio.CurricularCourse"
