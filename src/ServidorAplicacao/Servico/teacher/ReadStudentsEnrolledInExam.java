@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
+
 import DataBeans.ISiteComponent;
 import DataBeans.InfoExam;
 import DataBeans.InfoSiteCommon;
@@ -13,6 +16,7 @@ import DataBeans.TeacherAdministrationSiteView;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
 import Dominio.Exam;
+import Dominio.ExamStudentRoom;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExam;
 import Dominio.ISite;
@@ -23,6 +27,7 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentExam;
+import ServidorPersistente.IPersistentExamStudentRoom;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -58,6 +63,10 @@ public class ReadStudentsEnrolledInExam implements IServico {
 			IDisciplinaExecucaoPersistente persistentExecutionCourse =
 				sp.getIDisciplinaExecucaoPersistente();
 			IPersistentSite persistentSite = sp.getIPersistentSite();
+			
+			IPersistentExamStudentRoom examStudentRoomDAO = sp.getIPersistentExamStudentRoom();
+			
+			
 
 			IDisciplinaExecucao executionCourse =
 				(IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseCode), false);
@@ -66,6 +75,16 @@ public class ReadStudentsEnrolledInExam implements IServico {
 			IExam exam = new Exam();
 			exam.setIdInternal(examCode);
 			exam = (IExam) persistentExam.readByOId(exam, false);
+
+			List examStudentRoomList = examStudentRoomDAO.readBy(exam);
+
+			List infoExamStudentRoomList = (List) CollectionUtils.collect(examStudentRoomList, new Transformer(){
+				
+					public Object transform(Object input) {
+						ExamStudentRoom examStudentRoom = (ExamStudentRoom) input;
+						return Cloner.copyIExamStudentRoom2InfoExamStudentRoom(examStudentRoom);
+					}}) ; 
+
 			List students = exam.getStudentsEnrolled();
 			List infoStudents = new ArrayList();
 			Iterator iter = students.iterator();
@@ -77,7 +96,7 @@ public class ReadStudentsEnrolledInExam implements IServico {
 			}
 			InfoExam infoExam = Cloner.copyIExam2InfoExam(exam);
 			ISiteComponent component =
-				new InfoSiteTeacherStudentsEnrolledList(infoStudents, infoExam);
+				new InfoSiteTeacherStudentsEnrolledList(infoStudents, infoExam, infoExamStudentRoomList);
 
 			TeacherAdministrationSiteComponentBuilder componentBuilder =
 				TeacherAdministrationSiteComponentBuilder.getInstance();

@@ -14,15 +14,31 @@ import java.util.List;
 public class InfoSiteTeacherStudentsEnrolledList implements ISiteComponent {
 	private List infoStudents;
 	private InfoExam infoExam;
+	private List infoExamStudentRoomList;
 	/**
 	 * 
 	 */
 	public InfoSiteTeacherStudentsEnrolledList() {
 
 	}
-	public InfoSiteTeacherStudentsEnrolledList(List infoStudents,InfoExam infoExam) {
+	public InfoSiteTeacherStudentsEnrolledList(List infoStudents,InfoExam infoExam, List infoExamStudentRoomList) {
 		setInfoExam(infoExam);
 		setInfoStudents(infoStudents);
+		setInfoExamStudentRoomList(infoExamStudentRoomList);
+	}
+
+	/**
+	 * @return
+	 */
+	public List getInfoExamStudentRoomList() {
+		return this.infoExamStudentRoomList;
+	}
+
+	/**
+	 * @param infoExamStudentRoomList
+	 */
+	public void setInfoExamStudentRoomList(List infoExamStudentRoomList) {
+		this.infoExamStudentRoomList = infoExamStudentRoomList;
 	}
 
 	public int getSize() {
