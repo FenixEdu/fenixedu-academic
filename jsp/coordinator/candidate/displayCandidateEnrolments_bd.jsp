@@ -41,7 +41,7 @@
    		<br />
    		<br />
  	    
- 	    <html:link page="/displayCandidateListToMakeStudyPlan.do?method=print" target="_blank">
+ 	    <html:link page="/displayCourseListToStudyPlan.do?method=print" target="_blank">
 	   		<bean:message key="link.masterDegree.printCandidateStudyPlan" />
 	    </html:link>
 	

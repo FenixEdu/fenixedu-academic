@@ -169,6 +169,7 @@ public class CreateGuideDispatchAction extends DispatchAction {
 			types.add(DocumentType.CERTIFICATE_OF_DEGREE_TYPE);
 			types.add(DocumentType.ACADEMIC_PROOF_EMOLUMENT_TYPE);
 			types.add(DocumentType.RANK_RECOGNITION_AND_EQUIVALENCE_PROCESS_TYPE);
+			types.add(DocumentType.GRATUITY_TYPE);
 		
 			 
 			Object argsAux[] = {GraduationType.MASTER_DEGREE_TYPE, types};

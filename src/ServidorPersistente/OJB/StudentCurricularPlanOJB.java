@@ -214,4 +214,25 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements IStudent
 		}
 
 	}
+
+	public List readByStudentNumberAndDegreeType(Integer number, TipoCurso degreeType) throws ExcepcaoPersistencia {
+		try {
+			IStudentCurricularPlan studentCurricularPlan = null;
+			String oqlQuery = "select all from " + StudentCurricularPlan.class.getName();
+			oqlQuery += " where student.number = $1" ;
+			oqlQuery += " and student.degreeType = $2";
+
+			query.create(oqlQuery);
+			query.bind(number);
+			query.bind(degreeType);
+            
+			List result = (List) query.execute();
+			lockRead(result);
+			if (result.size() == 0) 
+				return null;
+			return result;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
 }

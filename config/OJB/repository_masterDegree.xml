@@ -74,6 +74,12 @@
 	     column="GIVEN_CREDITS"
 	     jdbc-type="DOUBLE"
 	  />
+	 <field-descriptor id="12"
+	     name="givenCreditsRemarks"
+	     column="GIVEN_CREDITS_REMARKS"
+     	 jdbc-type="CLOB"
+         conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"/>
+	  />
 
       	  <reference-descriptor
          	name="person"
@@ -553,6 +559,68 @@
  
  
  <!-- End of definitions for class QUALIFICATION -->
+
+
+<!-- Definitions for class GRATUITY -->
+
+      <class-descriptor
+              class="Dominio.Gratuity"
+              table="GRATUITY"
+      >
+        <field-descriptor 
+           name="idInternal"    
+           column="ID_INTERNAL"  
+           jdbc-type="INTEGER"
+           primarykey="true"
+           autoincrement="true"
+        />
+
+        <field-descriptor
+           name="keyStudentCurricularPlan"
+           column="KEY_STUDENT_CURRICULAR_PLAN"
+           jdbc-type="INTEGER"
+         />
+ 
+         <field-descriptor
+            name="state"
+            column="STATE"
+            jdbc-type="INTEGER"
+       	    conversion="ServidorPersistente.Conversores.JavaState2SQLStateFieldConversion"
+         />
+         <field-descriptor 
+            name="gratuityState"
+            column="GRATUITY_STATE"
+            jdbc-type="INTEGER"
+       	    conversion="ServidorPersistente.Conversores.JavaGratuityState2SQLGratuityStateFieldConversion"
+         />
+         <field-descriptor 
+            name="date"
+            column="DATE"
+            jdbc-type="DATE"
+         />
+         <field-descriptor 
+            name="remarks"
+		    jdbc-type="CLOB"
+		    conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+         />
+
+	   <reference-descriptor
+         	name="studentCurricularPlan"
+         	class-ref="Dominio.StudentCurricularPlan"
+         	proxy="true"
+			refresh="true"
+      	  >
+          <foreignkey field-ref="keyStudentCurricularPlan"/>
+      </reference-descriptor>
+
+ 
+  </class-descriptor>
+ 
+ 
+ <!-- End of definitions for class GRATUITY -->
+
+
+
 
 <!-- Definitions for class CANDIDATE_ENROLMENT -->
 

@@ -32,21 +32,26 @@ public class InfoMasterDegreeCandidate extends InfoObject{
 	private String specializationArea;
 	private Integer substituteOrder;
 	private Double givenCredits;
+	private String givenCreditsRemarks;
+	
 	
     	
+	/**
+	 * @return
+	 */
+	public String getGivenCreditsRemarks() {
+		return givenCreditsRemarks;
+	}
+
+	/**
+	 * @param givenCreditsRemarks
+	 */
+	public void setGivenCreditsRemarks(String givenCreditsRemarks) {
+		this.givenCreditsRemarks = givenCreditsRemarks;
+	}
+
     /** Construtor sem argumentos público requerido pela moldura de objectos OJB */
-    public InfoMasterDegreeCandidate() {
-        majorDegree = null;
-        candidateNumber = null;
-        specialization = null;
-        majorDegreeSchool = null;
-        majorDegreeYear = null;
-        average = null;
-		infoCandidateSituation = null;
-		infoExecutionDegree = null;
-		infoPerson = null;
-		situationList = null;
-    } // Fim do Construtor Sem Argumentos
+    public InfoMasterDegreeCandidate() {} 
     
 	public InfoMasterDegreeCandidate(InfoPerson person, InfoExecutionDegree executionDegree, Integer candidateNumber, String specialization, 
 			   String majorDegree, String majorDegreeSchool, Integer majorDegreeYear, Double average){
@@ -105,6 +110,8 @@ public class InfoMasterDegreeCandidate extends InfoObject{
 	   result += "\n  - Master Degree : " + infoExecutionDegree;
 	   result += "\n  - Specialization Area  : " + specializationArea;
 	   result += "\n  - Substitute Order  : " + substituteOrder;
+	   result += "\n  - Given Credits  : " + givenCredits;
+	   result += "\n  - Given Credits Remarks  : " + givenCreditsRemarks;
 
         
 		   return result;

@@ -46,7 +46,7 @@ public class WriteCandidateEnrolments implements IServico {
 		return "WriteCandidateEnrolments";
 	}
 
-	public void run(String[] selection, Integer candidateID, Double credits) throws FenixServiceException {
+	public void run(Integer[] selection, Integer candidateID, Double credits, String givenCreditsRemarks) throws FenixServiceException {
 		List curricularCourses = null;
 		List result = new ArrayList();
 		try {
@@ -56,21 +56,26 @@ public class WriteCandidateEnrolments implements IServico {
 			mdcTemp.setIdInternal(candidateID);
 			IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp.getIPersistentMasterDegreeCandidate().readByOId(mdcTemp, true);
 
+			if (masterDegreeCandidate == null){
+				throw new NonExistingServiceException();
+			}
+			
+			masterDegreeCandidate.setGivenCredits(credits);
+			
+			if (credits.floatValue() != 0){
+				masterDegreeCandidate.setGivenCreditsRemarks(givenCreditsRemarks);	
+			}
+			
+
 			// Clean the Enrolment Information
 			sp.getIPersistentCandidateEnrolment().deleteAllByCandidateID(masterDegreeCandidate);
 
 			sp.confirmarTransaccao();
 			sp.iniciarTransaccao();
 				
-			if (masterDegreeCandidate == null){
-				throw new NonExistingServiceException();
-			}
-			
-			masterDegreeCandidate.setGivenCredits(credits);
-				
 			for (int i=0; i < selection.length; i++){ 
 				ICurricularCourseScope curricularCourseScopeTemp = new CurricularCourseScope();
-				curricularCourseScopeTemp.setIdInternal(new Integer(selection[i]));
+				curricularCourseScopeTemp.setIdInternal(selection[i]);
 				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) sp.getIPersistentCurricularCourseScope().readByOId(curricularCourseScopeTemp, false);
 				
 				if (curricularCourseScope == null){

@@ -21,6 +21,7 @@ public class DocumentType {
 	public static final int INSURANCE = 7;
 	public static final int RANK_RECOGNITION_AND_EQUIVALENCE_PROCESS = 8;
 	public static final int OTHERS = 9;
+	public static final int GRATUITY = 10;
 
 	public static final DocumentType CERTIFICATE_TYPE = new DocumentType(CERTIFICATE);
 	public static final DocumentType CERTIFICATE_OF_DEGREE_TYPE = new DocumentType(CERTIFICATE_OF_DEGREE);
@@ -31,6 +32,7 @@ public class DocumentType {
 	public static final DocumentType INSURANCE_TYPE = new DocumentType(INSURANCE);
 	public static final DocumentType RANK_RECOGNITION_AND_EQUIVALENCE_PROCESS_TYPE = new DocumentType(RANK_RECOGNITION_AND_EQUIVALENCE_PROCESS);
 	public static final DocumentType OTHERS_TYPE = new DocumentType(OTHERS);
+	public static final DocumentType GRATUITY_TYPE = new DocumentType(GRATUITY);
 
 	public static final String CERTIFICATE_STRING = "Certidão";
 	public static final String CERTIFICATE_OF_DEGREE_STRING = "Diploma";
@@ -41,6 +43,7 @@ public class DocumentType {
 	public static final String INSURANCE_STRING = "Seguro";
 	public static final String RANK_RECOGNITION_AND_EQUIVALENCE_PROCESS_STRING = "Processo de Equivalência e Reconhecimento de Grau";
 	public static final String OTHERS_STRING = "Outros Documentos";
+	public static final String GRATUITY_STRING = "Propinas";
 	public static final String DEFAULT = "[Escolha um Tipo de Documento]";
 
 
@@ -77,6 +80,7 @@ public class DocumentType {
 		result.add(new LabelValueBean(DocumentType.FINE_STRING, DocumentType.FINE_STRING));
 		result.add(new LabelValueBean(DocumentType.INSURANCE_STRING, DocumentType.INSURANCE_STRING));
 		result.add(new LabelValueBean(DocumentType.RANK_RECOGNITION_AND_EQUIVALENCE_PROCESS_STRING, DocumentType.RANK_RECOGNITION_AND_EQUIVALENCE_PROCESS_STRING));
+		result.add(new LabelValueBean(DocumentType.GRATUITY_STRING, DocumentType.GRATUITY_STRING));
 		result.add(new LabelValueBean(DocumentType.OTHERS_STRING, DocumentType.OTHERS_STRING));
 		return result;	
 	}
@@ -91,6 +95,7 @@ public class DocumentType {
 		if (type.intValue()== DocumentType.INSURANCE) return DocumentType.INSURANCE_STRING;
 		if (type.intValue()== DocumentType.RANK_RECOGNITION_AND_EQUIVALENCE_PROCESS) return DocumentType.RANK_RECOGNITION_AND_EQUIVALENCE_PROCESS_STRING;		
 		if (type.intValue()== DocumentType.OTHERS) return DocumentType.OTHERS_STRING;		
+		if (type.intValue()== DocumentType.GRATUITY) return DocumentType.GRATUITY_STRING;		
 		
 		return "ERRO!"; // Nunca e atingido
 	}      

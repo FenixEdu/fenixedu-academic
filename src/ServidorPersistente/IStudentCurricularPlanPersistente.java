@@ -88,6 +88,17 @@ public interface IStudentCurricularPlanPersistente extends IPersistentObject {
 	 */
 	public List readByUsername(String username) throws ExcepcaoPersistencia;
 
+
+	/**
+	 * 
+	 * @param number
+	 * @param degreeType
+	 * @return
+	 * @throws ExcepcaoPersistencia
+	 */
+	public List readByStudentNumberAndDegreeType(Integer number, TipoCurso degreeType) throws ExcepcaoPersistencia;
+	
+
 	public List readAllByDegreeCurricularPlanAndState(IDegreeCurricularPlan degreeCurricularPlan, StudentCurricularPlanState state)
 		throws ExcepcaoPersistencia;
 }

@@ -90,4 +90,35 @@ public class ReadStudentCurricularPlans implements IServico {
 
 		return result;
     }
+    
+	public List run(Integer studentNumber, TipoCurso degreeType) throws ExcepcaoInexistente, FenixServiceException {
+		ISuportePersistente sp = null;
+        
+		List studentCurricularPlans = null;
+         
+		try {
+			sp = SuportePersistenteOJB.getInstance();
+            
+			studentCurricularPlans = (List) sp.getIStudentCurricularPlanPersistente().readByStudentNumberAndDegreeType(studentNumber, degreeType);
+          
+		} catch (ExcepcaoPersistencia ex) {
+			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+			newEx.fillInStackTrace();
+			throw newEx;
+		} 
+
+		if ((studentCurricularPlans == null) || (studentCurricularPlans.size() == 0)){
+			throw new NonExistingServiceException();
+		}
+		
+		Iterator iterator = studentCurricularPlans.iterator();
+		List result = new ArrayList();
+		
+		while(iterator.hasNext()){
+			IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator.next();
+			result.add(Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan));	
+		}
+
+		return result;
+	}
 }

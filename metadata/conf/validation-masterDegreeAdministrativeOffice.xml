@@ -175,7 +175,7 @@
                   </var>
         </field>
 
-      <field property="postCode" depends="mask" page="1">
+      <field property="       Code" depends="mask" page="1">
         <msg name="mask" key="errors.invalid.zipCode"/>
         <var>
         	<var-name>mask</var-name>
@@ -385,6 +385,34 @@
         <arg0 key="label.masterDegree.administrativeOffice.candidateSituation" />
       </field>
 	</form>
+  
+  
+   <form name="chooseCourseListForm">
+      <field property="attributedCredits" depends="floatGreaterThen" page="1">
+        <arg0 key="message.additionalCredits" />
+        <arg1 key="${var:value}" resource="false"/>
+		<var>
+			<var-name>value</var-name>
+			<var-value>0</var-value>
+		</var>
+
+      </field>
+
+  	  <field property="givenCreditsRemarks" depends="requiredif" page="1">
+		<arg0 key="message.additionalCreditsJustification" resource="true"/>
+		<var>
+			<var-name>field[0]</var-name>
+			<var-value>attributedCredits</var-value>
+		</var>
+		<var>
+			<var-name>field-test[0]</var-name>
+			<var-value>NOTNULL</var-value>
+		</var>
+	  </field>		   
+	</form>
+  
+  
+  
   
   </formset>
 

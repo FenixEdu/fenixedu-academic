@@ -111,9 +111,9 @@ public interface ISuportePersistente {
 	public IPersistentSummary getIPersistentSummary();
 
 	public IPersistentQualification getIPersistentQualification();
-
 	public IPersistentCandidateEnrolment getIPersistentCandidateEnrolment();
-
+	public IPersistentGratuity getIPersistentGratuity();
+	
 	public IPersistentStudentGroup getIPersistentStudentGroup();
 	public IPersistentStudentGroupAttend getIPersistentStudentGroupAttend();
 	public IPersistentGroupProperties getIPersistentGroupProperties();

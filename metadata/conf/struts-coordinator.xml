@@ -24,6 +24,28 @@
    	        <form-property name="substitutes" type="java.lang.String[]"/>
        </form-bean>
 
+  	  <!-- Bean to Choose the second Master Degree for Study Plan -->
+      <form-bean name="chooseSecondMasterDegreeForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+
+         <form-property name="page" type="java.lang.Integer" />
+         <form-property name="masterDegree" type="java.lang.String" />
+         <form-property name="candidateID" type="java.lang.Integer"/>
+      </form-bean>
+ 
+      <!-- Bean to Choose the Course List for Study Plan  -->
+      <form-bean name="chooseCourseListForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+
+            <form-property name="page" type="java.lang.Integer" />
+   	        <form-property name="candidateID" type="java.lang.Integer"/>
+   	        <form-property name="givenCreditsRemarks" type="java.lang.String"/>
+        	<form-property name="selection" type="java.lang.Integer[]"/>
+        	<form-property name="attributedCredits" type="java.lang.String"/>
+      </form-bean>     
+     
      
     </form-beans>
     
@@ -104,7 +126,7 @@
 		 parameter="method"
       	      type="ServidorApresentacao.Action.masterDegree.coordinator.CandidateOperationDispatchAction">
      		 <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+		                key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
                         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>	
       	  <forward name="ViewList" path="/candidate/selectCandidateFromList.jsp"/>
       	  <forward name="ActionReady" path="/candidate/visualizeCandidate.jsp"/>
@@ -119,7 +141,7 @@
 		 parameter="method"
       	      type="ServidorApresentacao.Action.masterDegree.coordinator.StudentListDispatchAction">
      		 <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
-		                key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+		                key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
                         handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>	
       	  <forward name="ViewList" path="/candidate/selectCandidateFromList.jsp"/>
       	  <forward name="ActionReady" path="/candidate/visualizeCandidate.jsp"/>
@@ -207,6 +229,40 @@
 			<forward name="begin" path="/equivalence/showAllAvailableCurricularCoursesForEquivalence.jsp"/>
 			<forward name="show" path="/equivalence/manualEquivalenceManagerForCoordinator.do?method=show" contextRelative="true"/>
 		</action>
+		
+      <!-- Display List To Make Candidate Study Plan -->
+      <action path="/displayCandidateListToMakeStudyPlan"
+       		  input="/candidate/displayCandidateListToMakeStudyPlan.jsp"
+       		  attribute="chooseSecondMasterDegreeForm"
+		      name="chooseSecondMasterDegreeForm"
+		      parameter="method"
+		      scope="session"
+		      type="ServidorApresentacao.Action.masterDegree.commons.candidate.MakeCandidateStudyPlanDispatchAction"
+			  >
+	         <forward name="PrepareSuccess" path="/candidate/displayCandidateListToMakeStudyPlan.jsp"/>  
+		</action>		
+
+      <action path="/displayCourseListToStudyPlan"
+      		  input="/candidate/displayListOfCoursesToChoose.jsp" 
+      		  attribute="chooseCourseListForm"
+		      name="chooseCourseListForm"
+		      parameter="method"
+		      scope="session"
+		      validate="true"
+		      type="ServidorApresentacao.Action.masterDegree.commons.candidate.MakeCandidateStudyPlanDispatchAction"
+			  >
+		   <exception type="ServidorApresentacao.Action.exceptions.NoChoiceMadeActionException"
+			          key="ServidorApresentacao.Action.exceptions.NoChoiceMadeActionException"
+			          handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+		   <exception type="ServidorApresentacao.Action.exceptions.NotAuthorizedActionException"
+			          key="ServidorApresentacao.Action.exceptions.NotAuthorizedActionException"
+			          handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+    
+	         <forward name="PrepareSuccess" path="/candidate/displayListOfCoursesToChoose.jsp"/>  
+	         <forward name="ChooseSuccess" path="/candidate/displayCandidateEnrolments.jsp"/>
+     		 <forward name="PrintReady" path="/candidate/studyPlanTemplate.jsp"/>     			 
+		</action>
+
 
     </action-mappings>
     

@@ -33,7 +33,9 @@ public class MasterDegreeCandidate extends DomainObject implements IMasterDegree
     private Double average = null;
     private String specializationArea;
     private Integer substituteOrder;
-    private Double givenCredits;
+	private Double givenCredits;
+	private String givenCreditsRemarks;
+    
     
     
     // Instance from class Degree
@@ -50,6 +52,20 @@ public class MasterDegreeCandidate extends DomainObject implements IMasterDegree
     private Integer executionDegreeKey;               // Foreign Key from table Degree
 	private Integer personKey;				// Foreign Key from table Person
     
+	/**
+	 * @return
+	 */
+	public String getGivenCreditsRemarks() {
+		return givenCreditsRemarks;
+	}
+
+	/**
+	 * @param givenCreditsRemarks
+	 */
+	public void setGivenCreditsRemarks(String givenCreditsRemarks) {
+		this.givenCreditsRemarks = givenCreditsRemarks;
+	}
+
     public MasterDegreeCandidate() {
         majorDegree = null;
         executionDegree = null;
@@ -120,6 +136,7 @@ result = getIdInternal().equals(((IMasterDegreeCandidate) o).getIdInternal());
 		result += "\n  - Specialization Area : " + specializationArea;
 		result += "\n  - Substitute Order : " + substituteOrder;
 		result += "\n  - Given Credits : " + givenCredits;
+		result += "\n  - Given Credits Remarks : " + givenCreditsRemarks;
 
         return result;
     }  

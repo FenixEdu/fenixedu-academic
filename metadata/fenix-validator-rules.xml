@@ -60,6 +60,17 @@
                        javax.servlet.http.HttpServletRequest,
                        javax.servlet.ServletContext"
                   msg="errors.invalid.date"/>
+
+     <validator name="floatGreaterThen"
+            classname="ServidorApresentacao.validator.form.GreaterThen"
+               method="validateFloat"
+         methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.struts.action.ActionErrors,
+                       javax.servlet.http.HttpServletRequest,
+                       javax.servlet.ServletContext"
+                  msg="errors.invalid.floatValue"/>
                   
      <validator name="threeArgsDate"
             classname="ServidorApresentacao.validator.form.ValidateDate"

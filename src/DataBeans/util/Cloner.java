@@ -36,6 +36,7 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoFinalEvaluation;
 import DataBeans.InfoFrequenta;
+import DataBeans.InfoGratuity;
 import DataBeans.InfoGroupProperties;
 import DataBeans.InfoGuide;
 import DataBeans.InfoGuideEntry;
@@ -1962,6 +1963,37 @@ public abstract class Cloner {
 			groupProperties.setExecutionCourse(executionCourse);
 			return groupProperties;
 		}
+
+
+	
+	/**
+	 * 
+	 * @param infoGratuity
+	 * @return IGratuity
+	 */
+	public static IGratuity copyInfoGratuity2IGratuity(InfoGratuity infoGratuity) {
+		IGratuity gratuity = new Gratuity();
+		copyObjectProperties(gratuity, infoGratuity);
+		
+		gratuity.setStudentCurricularPlan(Cloner.copyInfoStudentCurricularPlan2IStudentCurricularPlan(infoGratuity.getInfoStudentCurricularPlan()));
+		return gratuity;
+	}
+
+	
+	/**
+	 * 
+	 * @param gratuity
+	 * @return InfoGratuity
+	 */
+	public static InfoGratuity copyIGratuity2InfoGratuity(IGratuity gratuity) {
+
+		InfoGratuity infoGratuity = new InfoGratuity();
+		copyObjectProperties(infoGratuity, gratuity);
+		
+		infoGratuity.setInfoStudentCurricularPlan(Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(gratuity.getStudentCurricularPlan()));
+		return infoGratuity;
+	}
+
 
 	/**
 	 * 

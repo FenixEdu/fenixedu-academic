@@ -25,7 +25,6 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
-import ServidorPersistente.IPersistentDepartment;
 import ServidorPersistente.IDisciplinaDepartamentoPersistente;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IFrequentaPersistente;
@@ -54,7 +53,6 @@ import ServidorPersistente.IPersistentEnrolmentEquivalence;
 import ServidorPersistente.IPersistentEnrolmentEquivalenceRestriction;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentEnrolmentPeriod;
-import ServidorPersistente.IPersistentEnrolmentEquivalence;
 import ServidorPersistente.IPersistentEvaluation;
 import ServidorPersistente.IPersistentEvaluationExecutionCourse;
 import ServidorPersistente.IPersistentEvaluationMethod;
@@ -63,6 +61,7 @@ import ServidorPersistente.IPersistentExamExecutionCourse;
 import ServidorPersistente.IPersistentExamStudentRoom;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
+import ServidorPersistente.IPersistentGratuity;
 import ServidorPersistente.IPersistentGroupProperties;
 import ServidorPersistente.IPersistentGuide;
 import ServidorPersistente.IPersistentGuideEntry;
@@ -510,6 +509,10 @@ public IPersistentQualification getIPersistentQualification() {
 		
 	public IPersistentStudentGroup getIPersistentStudentGroup() {
 		return new StudentGroupOJB();
+	}
+
+	public IPersistentGratuity getIPersistentGratuity() {
+		return new GratuityOJB();
 	}
 
 	public IPersistentStudentGroupAttend getIPersistentStudentGroupAttend() {

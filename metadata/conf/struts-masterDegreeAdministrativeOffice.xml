@@ -296,6 +296,19 @@
             <form-property name="degree" type="java.lang.String" />
    	        <form-property name="substitutes" type="java.lang.String[]"/>
        </form-bean>
+
+	  <!-- Bean to Choose the Situation for the Candidate  -->
+      <form-bean name="chooseStudentForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+
+            <form-property name="page" type="java.lang.Integer" />
+            <form-property name="number" type="java.lang.Integer"/>
+            <form-property name="degreeType" type="java.lang.Integer"/>
+       </form-bean>
+
+
+
       
 <!--kkkkkkkkkk -->
 	  <!-- Bean to Choose the second Master Degree for Study Plan -->
@@ -315,8 +328,9 @@
 
             <form-property name="page" type="java.lang.Integer" />
    	        <form-property name="candidateID" type="java.lang.Integer"/>
-        	<form-property name="selection" type="java.lang.String[]"/>
-        	<form-property name="attributedCredits" type="java.lang.Double"/>
+   	        <form-property name="givenCreditsRemarks" type="java.lang.String"/>
+        	<form-property name="selection" type="java.lang.Integer[]"/>
+        	<form-property name="attributedCredits" type="java.lang.String"/>
       </form-bean>
       
    </form-beans>
@@ -910,7 +924,7 @@
 
 <!-- XXXXXXXXXXXXXXXXXXXX -->     
 
-<!-- Choose Execution Year to Make Candidate Study Plan -->
+	  <!-- Choose Execution Year to Make Candidate Study Plan -->
       <action path="/chooseExecutionYearToCandidateStudyPlan"
       		  input="chooseExecutionYear.jsp"
 		      attribute="chooseExecutionYearForm"
@@ -942,26 +956,31 @@
        		  attribute="chooseSecondMasterDegreeForm"
 		      name="chooseSecondMasterDegreeForm"
 		      parameter="method"
-		      scope="request"
+		      scope="session"
 		      type="ServidorApresentacao.Action.masterDegree.commons.candidate.MakeCandidateStudyPlanDispatchAction"
 			  >
 	         <forward name="PrepareSuccess" path="/candidate/displayCandidateListToMakeStudyPlan.jsp"/>  
 	         <forward name="PrepareSecondChooseMasterDegreeReady" path="/candidate/secondChooseMasterDegree.jsp"/>
 	         <forward name="ChooseReady" path="/displayCourseListToStudyPlan.do?method=chooseMasterDegree&amp;page=0"/>
      		 <forward name="ChooseSuccess" path="/displayCourseListToStudyPlan.do?method=prepareSelectCourseList&amp;page=0"/>
+     		 <forward name="PrintReady" path="/candidate/studyPlanTemplate.jsp"/>
 		</action>
 
      
       <!-- Display Course List To Candidate Study Plan -->
+      
       <action path="/displayCourseListToStudyPlan"
-       		  input="/candidate/displayListOfCoursesToChoose.jsp"
-       		  attribute="chooseCourseListForm"
+      		  input="/candidate/displayListOfCoursesToChoose.jsp" 
+      		  attribute="chooseCourseListForm"
 		      name="chooseCourseListForm"
 		      parameter="method"
 		      scope="request"
+		      validate="true"
 		      type="ServidorApresentacao.Action.masterDegree.commons.candidate.MakeCandidateStudyPlanDispatchAction"
 			  >
-	         
+		   <exception type="ServidorApresentacao.Action.exceptions.NoChoiceMadeActionException"
+			          key="ServidorApresentacao.Action.exceptions.NoChoiceMadeActionException"
+			          handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
     
 	         <forward name="PrepareSuccess" path="/candidate/displayListOfCoursesToChoose.jsp"/>  
 	         <forward name="ChooseSuccess" path="/candidate/displayCandidateEnrolments.jsp"/>
@@ -1179,6 +1198,58 @@
 	         <forward name="MarksPrint" path="/marksManagement/marksPrint.jsp"/> 
 	         <forward name="ShowMarksManagementMenu" path="/marksManagement/showMarksManagementMenu.jsp"/> 	         
       </action>
+      
+      
+	  <action path="/studentGratuity"
+		      parameter="method"
+              type="ServidorApresentacao.Action.commons.VoidAction"
+			  >
+	         <forward name="Success" path="/student/chooseStudent.jsp"/> 
+      </action>
+      
+       <action path="/chooseStudent"
+      		  input="/student/chooseStudent.jsp"
+      	      name="chooseStudentForm"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.masterDegree.commons.student.ChooseStudentDispatchAction"
+              validate="false">
+     		 <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+		                key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+              
+	         <forward name="ShowCurricularPlans" path="/student/showCurricularPlans.jsp"/> 
+	         <forward name="StudentCurricularPlanChosen" path="/gratuityOperations.do?method=getInformation&amp;page=0"/> 
+      </action>
+       
+      
+      
+      
+        <action path="/gratuityOperations"
+      		  input="/student/chooseStudent.jsp"
+      	      name="chooseStudentForm"
+		      parameter="method"
+		      scope="request"
+              type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.GratuityOperationsDispatchAction"
+              validate="false">
+     		 <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+		                key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+              
+	         <forward name="ShowCurricularPlans" path="/student/showCurricularPlans.jsp"/> 
+	         <forward name="StudentCurricularPlanChosen" path="/gratuityOperations.do?method=getInformation&amp;page=0"/> 
+      </action>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->

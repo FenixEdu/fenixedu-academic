@@ -10,7 +10,12 @@
 	<h2><bean:write name="jspTitle" /></h2>
 	<br />
 </logic:present>
+
+<br />
+<br />
 <span class="error"><html:errors/></span>
+<br />
+<br />
 
 <logic:present name="infoExecutionDegree" >
 	<bean:message key="label.masterDegree.administrativeOffice.executionYear"/>:<bean:write name="infoExecutionDegree" property="infoExecutionYear.year" /><br />

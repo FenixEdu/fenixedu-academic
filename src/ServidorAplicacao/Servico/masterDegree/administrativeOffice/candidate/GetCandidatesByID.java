@@ -55,7 +55,8 @@ public class GetCandidatesByID implements IServico {
 
 		ISuportePersistente sp = null;
 		IMasterDegreeCandidate result = null;
-		
+
+
 		if (candidateID == null) {
 			throw new NonExistingServiceException();
 		}		
