@@ -18,14 +18,13 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoRoom;
 import DataBeans.RoomKey;
-import DataBeans.comparators.ComparatorByLessonTypeForInfoShiftWithAssociatedInfoClassesAndInfoLessons;
 import DataBeans.gesdis.InfoAnnouncement;
 import DataBeans.gesdis.InfoSite;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
-import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -167,9 +166,12 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 			infoExecPeriod =
 				(InfoExecutionPeriod) session.getAttribute(
 					SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+					
+			if (infoExecPeriod == null) {
+				infoExecPeriod =RequestUtils.getExecutionPeriodFromRequest(request);		
+			}
 
-			IUserView userView =
-				(IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
 			GestorServicos gestor = GestorServicos.manager();
 
 			Object args[] = { infoExecPeriod, exeCourseCode };
@@ -177,7 +179,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 			try {
 				infoExecCourse =
 					(InfoExecutionCourse) gestor.executar(
-						userView,
+						null,
 						"ReadExecutionCourse",
 						args);
 			} catch (FenixServiceException nee) {
@@ -192,32 +194,13 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 			}
 
 			if (infoExecCourse != null) {
-				// Read shifts of execution course.
-				// Just the shifts aren't enough... we also need to read the classes
-				// associated to the shift and the classes associated with the shift.
-				Object argsSelectShifts[] = { infoExecCourse };
-				List infoShifts =
-					(List) gestor.executar(
-						null,
-						"SelectExecutionShiftsWithAssociatedLessonsAndClasses",
-						argsSelectShifts);
-
-				if (infoShifts != null && !infoShifts.isEmpty()) {
-					//					System.out.println("publico.infoShifts não é vazio... :)");
-					Collections.sort(
-						infoShifts,
-						new ComparatorByLessonTypeForInfoShiftWithAssociatedInfoClassesAndInfoLessons());
-					session.setAttribute("publico.infoShifts", infoShifts);
-				} else {
-					//					System.out.println("publico.infoShifts é vazio... :(");
-				}
-
+				
 				session.setAttribute(
 					SessionConstants.EXECUTION_COURSE_KEY,
 					infoExecCourse);
 			}
 
-			// Read associated curricular courses to dispçlay curricular course information.
+			// Read associated curricular courses to display curricular course information.
 			Object argsReadCurricularCourseListOfExecutionCourse[] =
 				{ infoExecCourse };
 			List infoCurricularCourses =
@@ -232,27 +215,15 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 					"publico.infoCurricularCourses",
 					infoCurricularCourses);
 			}
-		
-			// Read list of Lessons to show execution course schedule.
-			Object argsReadLessonsOfExecutionCours[] = { infoExecCourse };
-			List infoLessons =
-				(List) gestor.executar(
-					null,
-					"LerAulasDeDisciplinaExecucao",
-					argsReadLessonsOfExecutionCours);
-
-			if (infoLessons != null) {
-				session.setAttribute(
-					SessionConstants.LESSON_LIST_ATT,
-					infoLessons);
-			}
+//TODO move lessons to a diferent action		
+	
 
 			//start reading Gesdis related info
 			//read site
 			GestorServicos manager = GestorServicos.manager();
 			InfoSite site = null;
 			Object[] args2 = { infoExecCourse };
-			site = (InfoSite) manager.executar(userView, "ReadSite", args2);
+			site = (InfoSite) manager.executar(null, "ReadSite", args2);
 			session.setAttribute(SessionConstants.INFO_SITE, site);
 			//read Sections			
 			Object argsReadSections[] = { site };
@@ -274,7 +245,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 			List teacherList = null;
 			teacherList =
 				(List) manager.executar(
-					userView,
+					null,
 					"ReadTeachersByExecutionCourseResponsibility",
 					args3);
 			
@@ -289,7 +260,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 						List lecturingTeacherList = null;
 			lecturingTeacherList =
 							(List) manager.executar(
-								userView,
+								null,
 								"ReadTeachersByExecutionCourseProfessorship",
 								args4);
 			
@@ -308,7 +279,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 			try {
 				lastAnnouncement =
 					(InfoAnnouncement) manager.executar(
-						userView,
+						null,
 						"ReadLastAnnouncement",
 						args1);
 				session.setAttribute(

@@ -148,8 +148,8 @@
     	
     	
     	<action path="/viewExecutionCourseShifts" 
-    		type="ServidorApresentacao.Action.publico.SectionRemoverAction">
-    		<forward name="sucess" path="/viewExecutionCourseShifts.jsp"/>
+    		type="ServidorApresentacao.Action.publico.ViewExecutionCourseShifts">
+    		<forward name="Sucess" path="/viewExecutionCourseShifts.jsp"/>
  		</action>
  		
       <action parameter="method"
@@ -261,8 +261,8 @@
 	
 	
 		<action path="/viewTimeTable" 
-    		type="ServidorApresentacao.Action.publico.SectionRemoverAction">
-    		<forward name="sucess" path="/viewTimeTable.jsp"/>
+    		type="ServidorApresentacao.Action.publico.ViewExecutionCourseTimeTableAction">
+    		<forward name="Sucess" path="/viewTimeTable.jsp"/>
  		</action>
  		
 	<action     
