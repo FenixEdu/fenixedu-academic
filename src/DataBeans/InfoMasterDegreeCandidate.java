@@ -2,6 +2,7 @@ package DataBeans;
 
 import java.util.List;
 
+import Dominio.IMasterDegreeCandidate;
 import Util.Specialization;
 
 /*
@@ -287,4 +288,28 @@ public class InfoMasterDegreeCandidate extends InfoObject{
 		givenCredits = double1;
 	}
 
+	public void copyFromDomain(IMasterDegreeCandidate masterDegreeCandidate) {
+	    super.copyFromDomain(masterDegreeCandidate);
+	    if(masterDegreeCandidate != null) {
+	        setAverage(masterDegreeCandidate.getAverage());
+	        setCandidateNumber(masterDegreeCandidate.getCandidateNumber());
+	        setGivenCredits(masterDegreeCandidate.getGivenCredits());
+	        setGivenCreditsRemarks(masterDegreeCandidate.getGivenCreditsRemarks());
+	        setMajorDegree(masterDegreeCandidate.getMajorDegree());
+	        setMajorDegreeSchool(masterDegreeCandidate.getMajorDegreeSchool());
+	        setMajorDegreeYear(masterDegreeCandidate.getMajorDegreeYear());
+	        setSpecializationArea(masterDegreeCandidate.getSpecializationArea());
+	        setSpecialization(masterDegreeCandidate.getSpecialization());
+	        setSubstituteOrder(masterDegreeCandidate.getSubstituteOrder());
+	    }
+	}
+
+	public static InfoMasterDegreeCandidate newInfoFromDomain(IMasterDegreeCandidate masterDegreeCandidate) {
+	    InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
+	    if(masterDegreeCandidate != null) {
+	        infoMasterDegreeCandidate = new InfoMasterDegreeCandidate();
+	        infoMasterDegreeCandidate.copyFromDomain(masterDegreeCandidate);
+	    }
+	    return infoMasterDegreeCandidate;
+	}
 }

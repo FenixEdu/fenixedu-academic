@@ -115,5 +115,23 @@ public class InfoCandidateSituation extends InfoObject {
 	public void setValidation(State validation) {
 		this.validation = validation;
 	}
-
+	
+	public void copyFromDomain(ICandidateSituation candidateSituation) {
+	    super.copyFromDomain(candidateSituation);
+	    if(candidateSituation != null) {
+	        setDate(candidateSituation.getDate());
+	        setRemarks(candidateSituation.getRemarks());
+	        setSituation(candidateSituation.getSituation());
+	        setValidation(candidateSituation.getValidation());
+	    }
+	}
+	
+	public static InfoCandidateSituation newInfoFromDomain(ICandidateSituation candidateSituation) {
+	    InfoCandidateSituation infoCandidateSituation = null;
+	    if(candidateSituation != null) {
+	        infoCandidateSituation = new InfoCandidateSituation();
+	        infoCandidateSituation.copyFromDomain(candidateSituation);
+	    }
+	    return infoCandidateSituation;
+	}
 } 
