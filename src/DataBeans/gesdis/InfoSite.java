@@ -17,17 +17,20 @@ import DataBeans.util.ViewUtils;
 
 public class InfoSite {
   
-    private List initialSection;
+    private InfoSection initialSection;
     private List sections;
     private String initialSectionName;
     private InfoExecutionCourse infoExecutionCourse;
+    private List infoAnnouncements;
     
 	public InfoSite(){
 	}
 	
     public InfoSite(InfoSection initialSection, List sections, InfoExecutionCourse infoExecutionCourse) {
-		this.initialSection = ViewUtils.buildQualifiedName(initialSection);
-		
+//		this.initialSection = ViewUtils.buildQualifiedName(initialSection);
+
+		setInitialSection(initialSection);
+
 		if(initialSection != null){
 			this.initialSectionName=initialSection.getName();
 		}
@@ -46,7 +49,7 @@ public class InfoSite {
 		return sections;
     }
     
-    public List getInitialSection() {
+    public InfoSection getInitialSection() {
 		return initialSection;
     }
     
@@ -79,4 +82,43 @@ public class InfoSite {
 	public void setInfoExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
 		this.infoExecutionCourse = infoExecutionCourse;
 	}
+	/**
+	 * @return List
+	 */
+	public List getInfoAnnouncements() {
+		return infoAnnouncements;
+	}
+
+	/**
+	 * Sets the infoAnnouncements.
+	 * @param infoAnnouncements The infoAnnouncements to set
+	 */
+	public void setInfoAnnouncements(List infoAnnouncements) {
+		this.infoAnnouncements = infoAnnouncements;
+	}
+
+	/**
+	 * Sets the initialSection.
+	 * @param initialSection The initialSection to set
+	 */
+	public void setInitialSection(InfoSection initialSection) {
+		this.initialSection = initialSection;
+	}
+
+	/**
+	 * Sets the initialSectionName.
+	 * @param initialSectionName The initialSectionName to set
+	 */
+	public void setInitialSectionName(String initialSectionName) {
+		this.initialSectionName = initialSectionName;
+	}
+
+	/**
+	 * Sets the sections.
+	 * @param sections The sections to set
+	 */
+	public void setSections(List sections) {
+		this.sections = sections;
+	}
+
 }
