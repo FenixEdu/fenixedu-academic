@@ -77,9 +77,8 @@
   </logger>
 
   <root>
-    <priority value="error"/>    
+    <priority value="warn"/>    
     <appender-ref ref="ConsoleAppender"/>
-    <appender-ref ref="EMAIL" />
   </root>
 
 </log4j:configuration>
