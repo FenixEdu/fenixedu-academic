@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="Util.CurricularCourseType, DataBeans.InfoEnrolmentInOptionalCurricularCourse" %>
+<%@ page import="Util.CurricularCourseType, DataBeans.InfoEnrolment" %>
 
 <h2><bean:message key="title.student.enrolment.without.rules" /></h2>
 <span class="error"><html:errors/></span>
@@ -41,16 +41,7 @@
 						<td class="listClasses">
 							<bean:write name="infoEnrollment" property="infoCurricularCourse.name"/>
 							<logic:equal name="infoEnrollment" property="infoCurricularCourse.type" value="<%= CurricularCourseType.OPTIONAL_COURSE_OBJ.toString() %>">
-							<% if (pageContext.findAttribute("infoEnrollment") instanceof InfoEnrolmentInOptionalCurricularCourse)
-							   {%>
-								<logic:notEmpty name="infoEnrollment" property="infoCurricularCourseForOption">
-									-&nbsp;<bean:write name="infoEnrollment" property="infoCurricularCourseForOption.name"/>
-								</logic:notEmpty>
-								<logic:empty name="infoEnrollment" property="infoCurricularCourseForOption">
-									-&nbsp;<bean:message key="message.not.regular.optional.enrollment"/>
-								</logic:empty>
-							   <%}
-							%>
+							
 							</logic:equal>
 						</td>
 						<td class="listClasses">

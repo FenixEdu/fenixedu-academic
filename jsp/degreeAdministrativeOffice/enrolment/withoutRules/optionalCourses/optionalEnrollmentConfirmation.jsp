@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="Util.EnrollmentState, Util.CurricularCourseType, DataBeans.InfoEnrolmentInOptionalCurricularCourse" %>
+<%@ page import="Util.EnrollmentState, Util.CurricularCourseType, DataBeans.InfoEnrolment" %>
 
 <h2><bean:message key="title.student.LEEC.optional.enrollment"/></h2>
 
@@ -59,7 +59,7 @@
 			</td>
 		</tr>
 	
-		<logic:iterate id="enrollmentElem" name="infoStudentEnrolmentContext" property="studentInfoEnrollmentsWithStateEnrolled" type="DataBeans.InfoEnrolmentInOptionalCurricularCourse">
+		<logic:iterate id="enrollmentElem" name="infoStudentEnrolmentContext" property="studentInfoEnrollmentsWithStateEnrolled" type="DataBeans.InfoEnrolment">
 			<tr>
 				<td colspan='5'>
 					<bean:write name="enrollmentElem" property="infoCurricularCourse.name"/>&nbsp;-&nbsp;<bean:write name="enrollmentElem" property="infoCurricularCourseForOption.name"/>
@@ -99,16 +99,7 @@
 				<td class="listClasses" style="text-align:left">
 					<bean:write name="curriculumElem" property="infoCurricularCourse.name"/>
 					<logic:equal name="curriculumElem" property="infoCurricularCourse.type" value="<%= CurricularCourseType.OPTIONAL_COURSE_OBJ.toString() %>">
-						<% if (pageContext.findAttribute("curriculumElem") instanceof InfoEnrolmentInOptionalCurricularCourse)
-						   {%>
-							<logic:notEmpty name="curriculumElem" property="infoCurricularCourseForOption">
-								-&nbsp;<bean:write name="curriculumElem" property="infoCurricularCourseForOption.name"/>
-							</logic:notEmpty>
-							<logic:empty name="curriculumElem" property="infoCurricularCourseForOption">
-								-&nbsp;<bean:message key="message.not.regular.optional.enrollment"/>
-							</logic:empty>
-						   <%}
-						%>
+						
 					</logic:equal>
 				</td>
 			  <td class="listClasses">

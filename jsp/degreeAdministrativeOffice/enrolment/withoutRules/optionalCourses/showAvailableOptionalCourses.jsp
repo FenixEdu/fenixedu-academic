@@ -65,7 +65,7 @@
 					<b><bean:message key="message.student.enrolled.curricularCourses"/>:</b>
 				</td>
 			</tr>
-			<logic:iterate id="enrollmentElem" name="infoStudentEnrolmentContext" property="studentInfoEnrollmentsWithStateEnrolled" type="DataBeans.InfoEnrolmentInOptionalCurricularCourse">
+			<logic:iterate id="enrollmentElem" name="infoStudentEnrolmentContext" property="studentInfoEnrollmentsWithStateEnrolled" type="DataBeans.InfoEnrolment">
 				<bean:define id="onclick">
 					if (this.checked == false) {this.form.method.value='unenrollFromCurricularCourse'; disableAllElementsInUnenrollment(this.form,'unenrolledCurricularCourses','enrolledCurricularCoursesAfter');this.form.submit();}	
 				</bean:define>

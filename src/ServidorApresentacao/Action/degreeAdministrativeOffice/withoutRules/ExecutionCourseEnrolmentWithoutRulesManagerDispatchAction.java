@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +35,7 @@ import DataBeans.InfoExecutionYear;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
+import DataBeans.enrollment.InfoCurricularCourse2Enroll;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
@@ -491,11 +493,25 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends D
 			return mapping.getInputForward();
 		}
 		request.setAttribute("infoStudentEnrolmentContext", infoStudentEnrolmentContext);
-
+		enrollForm.set("optionalEnrollments",getInitializedMap(infoStudentEnrolmentContext.getFinalInfoCurricularCoursesWhereStudentCanBeEnrolled()));
 		return mapping.findForward("showCurricularCourseToEnroll");
 	}
 
-	public ActionForward enrollCourses(
+	/**
+     * @param curricularCourses2Enroll
+     * @return
+     */
+    private Object getInitializedMap(List curricularCourses2Enroll) {
+        Map map = new HashMap();
+        Iterator iter = curricularCourses2Enroll.iterator();
+        while (iter.hasNext()){
+            InfoCurricularCourse2Enroll infoCurricularCourse2Enroll = (InfoCurricularCourse2Enroll) iter.next();
+            map.put(infoCurricularCourse2Enroll.getInfoCurricularCourse().getIdInternal(),"false");
+        }
+        return map;
+    }
+
+    public ActionForward enrollCourses(
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,

@@ -17,7 +17,7 @@
 <logic:present name="infoStudentEnrolmentContext">
 	<bean:define id="infoCurricularCoursesToEnroll" name="infoStudentEnrolmentContext" property="finalInfoCurricularCoursesWhereStudentCanBeEnrolled" />	
 	<bean:size id="curricularCoursesSize" name="infoCurricularCoursesToEnroll" />
-	<strong><bean:message key="message.student.unenrolled.curricularCourses" /></strong>
+	
 	<br />
 	<logic:lessEqual  name="curricularCoursesSize" value="0">
 		<br />
@@ -32,6 +32,14 @@
 		<html:hidden property="degreeType" />
 		<logic:greaterThan name="curricularCoursesSize" value="0">
 			<table >
+			<tr>
+				<td class="listClasses-header">
+				<bean:message key="message.student.unenrolled.curricularCourses" />
+				</td>
+				<td class="listClasses-header">Inscrever</td>
+				<td class="listClasses-header">Inscrição Normal</td>
+				<td class="listClasses-header">Inscrição em Disciplina de Opção</td>
+			</tr>
 				<logic:iterate id="infoCurricularCourse" name="infoCurricularCoursesToEnroll">
 					<bean:define id="infoCurricularCourseId" name="infoCurricularCourse" property="infoCurricularCourse.idInternal" />
 					<tr>
