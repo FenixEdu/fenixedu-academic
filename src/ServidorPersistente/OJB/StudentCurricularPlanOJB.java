@@ -284,4 +284,12 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements IStudent
 		return queryList(StudentCurricularPlan.class, criteria);
 	}
 
+	public IStudentCurricularPlan readByStudentDegreeCurricularPlanAndState(IStudent student, IDegreeCurricularPlan degreeCurricularPlan, StudentCurricularPlanState state) throws ExcepcaoPersistencia
+	{
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("degreeCurricularPlanKey", degreeCurricularPlan.getIdInternal());
+		criteria.addEqualTo("studentKey", student.getIdInternal());
+		criteria.addEqualTo("currentState", state);
+		return (IStudentCurricularPlan) queryObject(StudentCurricularPlan.class, criteria);
+	}
 }

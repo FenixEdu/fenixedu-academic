@@ -14,8 +14,15 @@ import middleware.persistentMiddlewareSupport.IPersistentMWDegreeTranslation;
 import middleware.persistentMiddlewareSupport.IPersistentMiddlewareSupport;
 import middleware.persistentMiddlewareSupport.OJBDatabaseSupport.PersistentMiddlewareSupportOJB;
 import middleware.personMigration.PersonUtils;
-import middleware.studentMigration.enrollments.CreateAndUpdateAllPastCurriculums;
+
+import org.apache.ojb.broker.PersistenceBroker;
+import org.apache.ojb.broker.query.Criteria;
+import org.apache.ojb.broker.query.Query;
+import org.apache.ojb.broker.query.QueryByCriteria;
+
+import Dominio.Country;
 import Dominio.IBranch;
+import Dominio.ICountry;
 import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionPeriod;
@@ -24,7 +31,6 @@ import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.Pessoa;
 import Dominio.StudentCurricularPlan;
-import ServidorPersistente.IPersistentBranch;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -50,6 +56,7 @@ public class UpdateStudent
 		try {
 			sp.iniciarTransaccao();
 			Integer numberOfStudents = persistentAluno.countAll();
+			System.out.println("Students to update: [" + numberOfStudents.toString() + "]");
 			sp.confirmarTransaccao();
 			int numberOfElementsInSpan = UpdateStudent.NUMBER_OF_ELEMENTS_IN_SPAN;
 			
@@ -61,7 +68,7 @@ public class UpdateStudent
 				sp.iniciarTransaccao();
 				sp.clearCache();
 				sp.confirmarTransaccao();
-				System.gc();
+//				System.gc();
 
 				sp.iniciarTransaccao();
 				System.out.println("Reading Students...");
@@ -114,17 +121,20 @@ public class UpdateStudent
 			UpdateStudent.createNewStudentCurricularPlan(student, degreeCurricularPlan, branch, sp);
 		} else
 		{
-			sp.getIStudentCurricularPlanPersistente().simpleLockWrite(studentCurricularPlan);	
-	
 			if (!studentCurricularPlan.getDegreeCurricularPlan().equals(degreeCurricularPlan))
 			{
-				System.out.print("The Student [" + mwStudent.getNumber() + "] has changed his degree!");
-				System.out.println("[" + studentCurricularPlan.getDegreeCurricularPlan().getName() + " -> " + degreeCurricularPlan.getName() + "]");
-				studentCurricularPlan.setCurrentState(StudentCurricularPlanState.INCOMPLETE_OBJ);
-//				studentCurricularPlan.setBranch(branch);
-				UpdateStudent.createNewStudentCurricularPlan(student, degreeCurricularPlan, branch, sp);
-			} else
+				if(!studentCurricularPlan.getDegreeCurricularPlan().getName().equals("LEIC 2003") || !degreeCurricularPlan.getName().equals("LEIC - Currículo Antigo"))
+				{
+					System.out.print("The Student [" + mwStudent.getNumber() + "] has changed his degree!");
+					System.out.println(" [" + studentCurricularPlan.getDegreeCurricularPlan().getName() + " -> " + degreeCurricularPlan.getName() + "]");
+
+					sp.getIStudentCurricularPlanPersistente().simpleLockWrite(studentCurricularPlan);	
+					studentCurricularPlan.setCurrentState(StudentCurricularPlanState.INCOMPLETE_OBJ);
+					UpdateStudent.createNewStudentCurricularPlan(student, degreeCurricularPlan, branch, sp);
+				}
+			} else if (!studentCurricularPlan.getBranch().equals(branch))
 			{
+				sp.getIStudentCurricularPlanPersistente().simpleLockWrite(studentCurricularPlan);	
 				studentCurricularPlan.setBranch(branch);
 			}		
 		}
@@ -135,16 +145,16 @@ public class UpdateStudent
 		// his information
 
 		// All the students associated to this person
-		List studentList = persistentStudent.readbyPerson(student.getPerson());
-
-		if (UpdateStudent.hasMasterDegree(studentList, sp))
-		{
-			System.out.println("Master Degree Student Found [Person ID " + student.getPerson().getIdInternal() + "]");
-		} else
-		{
-			// Change all the information
-			UpdateStudent.updateStudentPerson(student.getPerson(), mwStudent.getMiddlewarePerson());
-		}
+//		List studentList = persistentStudent.readbyPerson(student.getPerson());
+//
+//		if (UpdateStudent.hasMasterDegree(studentList, sp))
+//		{
+//			System.out.println("Master Degree Student Found [Person ID " + student.getPerson().getIdInternal() + "]");
+//		} else
+//		{
+//			// Change all the information
+//			UpdateStudent.updateStudentPerson(student.getPerson(), mwStudent.getMiddlewarePerson());
+//		}
 	}
 	
 	/**
@@ -215,68 +225,78 @@ public class UpdateStudent
 		} else {
 			return null;
 		}
+
+//		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
+//		IPersistentMWBranch persistentBranch = mws.getIPersistentMWBranch();
+//
+//		MWBranch mwBranch = persistentBranch.readByDegreeCodeAndBranchCode(mwStudent.getDegreecode(), new Integer(0));
+//		
+//		String degreeName = StringUtils.substringAfter(mwBranch.getDescription(), "DE ");
+//		
+//		if (degreeName.indexOf("TAGUS") != -1) {
+//			degreeName = "Engenharia Informática e de Computadores - Taguspark";
+//		}
+//
+//		IExecutionPeriod executionPeriod = sp.getIPersistentExecutionPeriod().readActualExecutionPeriod();
+//		ICursoExecucao executionDegree = sp.getICursoExecucaoPersistente().readByDegreeNameAndExecutionYearAndDegreeType(degreeName, executionPeriod.getExecutionYear(), TipoCurso.LICENCIATURA_OBJ);
+//
+//		return executionDegree.getCurricularPlan();
 	}
 
 	private static IBranch getBranch(MWStudent mwStudent, IDegreeCurricularPlan degreeCurricularPlan, ISuportePersistente sp) throws Throwable
 	{
-		IBranch branch = null;
-		
-		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
-		IPersistentMWBranch persistentMWBranch = mws.getIPersistentMWBranch();
-		IPersistentBranch persistentBranch = sp.getIPersistentBranch();
-
-		MWBranch mwBranch = persistentMWBranch.readByDegreeCodeAndBranchCode(mwStudent.getDegreecode(), mwStudent.getBranchcode());
-
-		if (mwBranch != null) {
-			String realBranchCode = null;
-
-			if (mwBranch.getDescription().startsWith("CURSO DE ")) {
-				realBranchCode = new String("");
-			} else {
-				realBranchCode = new String(mwBranch.getDegreecode().toString() + mwBranch.getBranchcode().toString() + mwBranch.getOrientationcode().toString());
-			}
-
-			branch = persistentBranch.readByDegreeCurricularPlanAndCode(degreeCurricularPlan, realBranchCode);
-
-		} else {
-			branch = CreateAndUpdateAllPastCurriculums.solveBranchesProblemsForDegrees1And4And6And51And53And54And64(mwStudent.getDegreecode(), mwStudent.getBranchcode(), degreeCurricularPlan, persistentBranch);
-		}
-
-		return branch;
-
 //		IBranch branch = null;
 //		
 //		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
-//		IPersistentMWBranch persistentBranch = mws.getIPersistentMWBranch();
-//		
-//		
-//		// Get the old BRanch
-//		
-//		sp.clearCache();
-//		MWBranch mwbranch = persistentBranch.readByDegreeCodeAndBranchCode(oldStudent.getDegreecode(), oldStudent.getBranchcode());
-//		
-//		// Get the new one		
-//		
-//		
-//		if (mwbranch == null) {
-//			System.out.println("Aluno " + oldStudent.getNumber());
-//			System.out.println("Curso " + oldStudent.getDegreecode());
-//			System.out.println("Ramo " + oldStudent.getBranchcode());
-//		}
-//		
-//		branch = sp.getIPersistentBranch().readByDegreeCurricularPlanAndBranchName(degreeCurricularPlan, mwbranch.getDescription());
+//		IPersistentMWBranch persistentMWBranch = mws.getIPersistentMWBranch();
+//		IPersistentBranch persistentBranch = sp.getIPersistentBranch();
 //
+//		MWBranch mwBranch = persistentMWBranch.readByDegreeCodeAndBranchCode(mwStudent.getDegreecode(), mwStudent.getBranchcode());
 //
-//		if (branch == null) {
-//			branch = sp.getIPersistentBranch().readByDegreeCurricularPlanAndBranchName(degreeCurricularPlan, "");
+//		if (mwBranch != null) {
+//			String realBranchCode = null;
+//
+//			if (mwBranch.getDescription().startsWith("CURSO DE ")) {
+//				realBranchCode = new String("");
+//			} else {
+//				realBranchCode = new String(mwBranch.getDegreecode().toString() + mwBranch.getBranchcode().toString() + mwBranch.getOrientationcode().toString());
+//			}
+//
+//			branch = persistentBranch.readByDegreeCurricularPlanAndCode(degreeCurricularPlan, realBranchCode);
+//
+//		} else {
+//			branch = CreateAndUpdateAllPastCurriculums.solveBranchesProblemsForDegrees1And4And6And51And53And54And64(mwStudent.getDegreecode(), mwStudent.getBranchcode(), degreeCurricularPlan, persistentBranch);
 //		}
 //
-//		if (branch == null) {
-//			System.out.println("DCP " + degreeCurricularPlan.getName());
-//			System.out.println("Ramo Inexistente " + mwbranch);
-//		}
-//		
 //		return branch;
+
+		IBranch branch = null;
+		
+		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
+		IPersistentMWBranch persistentBranch = mws.getIPersistentMWBranch();
+		
+		sp.clearCache();
+		MWBranch mwbranch = persistentBranch.readByDegreeCodeAndBranchCode(mwStudent.getDegreecode(), mwStudent.getBranchcode());
+		
+		if (mwbranch == null) {
+			System.out.println("Aluno " + mwStudent.getNumber());
+			System.out.println("Curso " + mwStudent.getDegreecode());
+			System.out.println("Ramo " + mwStudent.getBranchcode());
+		} else
+		{
+			branch = sp.getIPersistentBranch().readByDegreeCurricularPlanAndBranchName(degreeCurricularPlan, mwbranch.getDescription());
+		}
+		
+		if (branch == null) {
+			branch = sp.getIPersistentBranch().readByDegreeCurricularPlanAndBranchName(degreeCurricularPlan, "");
+		}
+
+		if (branch == null) {
+			System.out.println("DCP " + degreeCurricularPlan.getName());
+			System.out.println("Ramo Inexistente " + mwbranch);
+		}
+		
+		return branch;
 	}
 
 	public static void updateStudentPerson(IPessoa fenixPersonTemp, MWPerson oldPerson) throws Throwable
@@ -314,9 +334,184 @@ public class UpdateStudent
 		fenixPerson.setNomePai(oldPerson.getFathername());
 		fenixPerson.setNumContribuinte(oldPerson.getFiscalcode());
 		fenixPerson.setNumeroDocumentoIdentificacao(oldPerson.getDocumentidnumber());
-		fenixPerson.setPais(PersonUtils.getCountry(oldPerson.getCountrycode()));
+		fenixPerson.setPais(UpdateStudent.getCountry(oldPerson.getCountrycode().toString()));
 		fenixPerson.setSexo(PersonUtils.getSex(oldPerson.getSex()));
 		fenixPerson.setTelefone(oldPerson.getPhone());
 		fenixPerson.setTipoDocumentoIdentificacao(PersonUtils.getDocumentIdType(oldPerson.getDocumentidtype()));
+	}
+
+	public static ICountry getCountry(String countryCode) throws Throwable
+	{
+		Criteria criteria = new Criteria();
+
+		if (countryCode.equals("01") ||
+				countryCode.equals("02") ||
+				countryCode.equals("03") ||
+				countryCode.equals("04") ||
+				countryCode.equals("05") ||
+				countryCode.equals("06") ||
+				countryCode.equals("1") ||
+				countryCode.equals("2") ||
+				countryCode.equals("3") ||
+				countryCode.equals("4") ||
+				countryCode.equals("5") ||
+				countryCode.equals("6") ||
+				countryCode.equals("0"))
+		{
+			criteria.addEqualTo("name", "PORTUGAL");
+		} else if (countryCode.equals("10"))
+		{
+			criteria.addEqualTo("name", "ANGOLA");
+		} else if (countryCode.equals("11"))
+		{
+			criteria.addEqualTo("name", "BRASIL");
+		} else if (countryCode.equals("12"))
+		{
+			criteria.addEqualTo("name", "CABO VERDE");
+		} else if (countryCode.equals("13"))
+		{
+			criteria.addEqualTo("name", "GUINE-BISSAO");
+		} else if (countryCode.equals("14"))
+		{
+			criteria.addEqualTo("name", "MOCAMBIQUE");
+		} else if (countryCode.equals("15"))
+		{
+			criteria.addEqualTo("name", "SAO TOME E PRINCIPE");
+		} else if (countryCode.equals("16"))
+		{
+			criteria.addEqualTo("name", "TIMOR LORO SAE");
+		} else if (countryCode.equals("20"))
+		{
+			criteria.addEqualTo("name", "BELGICA");
+		} else if (countryCode.equals("21"))
+		{
+			criteria.addEqualTo("name", "DINAMARCA");
+		} else if (countryCode.equals("22"))
+		{
+			criteria.addEqualTo("name", "ESPANHA");
+		} else if (countryCode.equals("23"))
+		{
+			criteria.addEqualTo("name", "FRANCA");
+		} else if (countryCode.equals("24"))
+		{
+			criteria.addEqualTo("name", "HOLANDA");
+		} else if (countryCode.equals("25"))
+		{	
+			criteria.addEqualTo("name", "IRLANDA");
+		} else if (countryCode.equals("26"))
+		{
+			criteria.addEqualTo("name", "ITALIA");
+		} else if (countryCode.equals("27"))
+		{
+			criteria.addEqualTo("name", "LUXEMBURGO");
+		} else if (countryCode.equals("28"))
+		{
+			criteria.addEqualTo("name", "ALEMANHA");
+		} else if (countryCode.equals("29"))
+		{
+			criteria.addEqualTo("name", "REINO UNIDO");
+		} else if (countryCode.equals("30"))
+		{
+			criteria.addEqualTo("name", "SUECIA");
+		} else if (countryCode.equals("31"))
+		{
+			criteria.addEqualTo("name", "NORUEGA");
+		} else if (countryCode.equals("32"))
+		{
+			criteria.addEqualTo("name", "POLONIA");
+		} else if (countryCode.equals("33"))
+		{
+			criteria.addEqualTo("name", "AFRICA DO SUL");
+		} else if (countryCode.equals("34"))
+		{
+			criteria.addEqualTo("name", "ARGENTINA");
+		} else if (countryCode.equals("35"))
+		{
+			criteria.addEqualTo("name", "CANADA");
+		} else if (countryCode.equals("36"))
+		{
+			criteria.addEqualTo("name", "CHILE");
+		} else if (countryCode.equals("37"))
+		{
+			criteria.addEqualTo("name", "EQUADOR");
+		} else if (countryCode.equals("38"))
+		{
+			criteria.addEqualTo("name", "ESTADOS UNIDOS DA AMERICA");
+		} else if (countryCode.equals("39"))
+		{
+			criteria.addEqualTo("name", "IRAO");
+		} else if (countryCode.equals("40"))
+		{
+			criteria.addEqualTo("name", "MARROCOS");
+		} else if (countryCode.equals("41"))
+		{
+			criteria.addEqualTo("name", "VENEZUELA");
+		} else if (countryCode.equals("42"))
+		{
+			criteria.addEqualTo("name", "AUSTRALIA");
+		} else if (countryCode.equals("43"))
+		{
+			criteria.addEqualTo("name", "PAQUISTAO");
+		} else if (countryCode.equals("44"))
+		{
+			criteria.addEqualTo("name", "REPUBLICA DO ZAIRE");
+		} else if (countryCode.equals("47"))
+		{
+			criteria.addEqualTo("name", "LIBIA");
+		} else if (countryCode.equals("48"))
+		{
+			criteria.addEqualTo("name", "PALESTINA");
+		} else if (countryCode.equals("49"))
+		{
+			criteria.addEqualTo("name", "ZIMBABUE");
+		} else if (countryCode.equals("50"))
+		{
+			criteria.addEqualTo("name", "MEXICO");
+		} else if (countryCode.equals("51"))
+		{
+			criteria.addEqualTo("name", "RUSSIA");
+		} else if (countryCode.equals("52"))
+		{
+			criteria.addEqualTo("name", "AUSTRIA");
+		} else if (countryCode.equals("53"))
+		{
+			criteria.addEqualTo("name", "IRAQUE");
+		} else if (countryCode.equals("54"))
+		{
+			criteria.addEqualTo("name", "PERU");
+		} else if (countryCode.equals("55"))
+		{
+			criteria.addEqualTo("name", "ESTADOS UNIDOS DA AMERICA");
+		} else if (countryCode.equals("60"))
+		{
+			criteria.addEqualTo("name", "ROMENIA");
+		} else if (countryCode.equals("61"))
+		{
+			criteria.addEqualTo("name", "REPUBLICA CHECA");
+		} else
+		{
+			System.out.println("COUNTRY > NULL");
+			return null;
+		}
+
+		Query query = new QueryByCriteria(Country.class, criteria);
+
+		PersistenceBroker broker = null;
+		try {
+			SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
+			broker = sp.currentBroker();
+		} catch (Exception e) {
+			System.out.println("Failled obtainning broker.");
+		}
+		
+		List result = (List) broker.getCollectionByQuery(query);
+		
+		if (result.size() == 0)
+		{	
+			return null;
+		} else
+		{	
+			return (ICountry) result.get(0);
+		}
 	}
 }

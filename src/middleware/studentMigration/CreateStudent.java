@@ -115,31 +115,30 @@ public class CreateStudent {
 
 	private static void createStudentCurricularPlan(ISuportePersistente sp, IStudent student, MWStudent oldStudent) throws Exception {
 		
+		IDegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(oldStudent, sp);
 		
-		IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
-		
-		sp.getIStudentCurricularPlanPersistente().simpleLockWrite(studentCurricularPlan);
+		IStudentCurricularPlan studentCurricularPlan = sp.getIStudentCurricularPlanPersistente().readByStudentDegreeCurricularPlanAndState(student, degreeCurricularPlan, StudentCurricularPlanState.ACTIVE_OBJ);
+		if(studentCurricularPlan == null)
+		{
+			studentCurricularPlan = new StudentCurricularPlan();
+			sp.getIStudentCurricularPlanPersistente().simpleLockWrite(studentCurricularPlan);
+			studentCurricularPlan.setDegreeCurricularPlan(degreeCurricularPlan);
 
-		// Get the Degree Curricular Plan
-		studentCurricularPlan.setDegreeCurricularPlan(getDegreeCurricularPlan(oldStudent, sp));
+			// Get the Branch
+			studentCurricularPlan.setBranch(getBranch(oldStudent, studentCurricularPlan.getDegreeCurricularPlan(), sp));
+			
+			if (studentCurricularPlan.getBranch() == null) {
+				System.out.println("Error : Branch [Degree:" + oldStudent.getDegreecode() + " Branch:" + oldStudent.getBranchcode() + "] not found !");
 
-
-
-		// Get the Branch
-		studentCurricularPlan.setBranch(getBranch(oldStudent, studentCurricularPlan.getDegreeCurricularPlan(), sp));
-		
-		if (studentCurricularPlan.getBranch() == null) {
-			System.out.println("Error : Branch [Degree:" + oldStudent.getDegreecode() + " Branch:" + oldStudent.getBranchcode() + "] not found !");
-
-			return;			
-		}		 
-		
-		
-		studentCurricularPlan.setCurrentState(StudentCurricularPlanState.ACTIVE_OBJ);
-		studentCurricularPlan.setGivenCredits(null);
-		studentCurricularPlan.setSpecialization(null);
-		studentCurricularPlan.setStartDate(Calendar.getInstance().getTime());
-		studentCurricularPlan.setStudent(student);
+				return;			
+			}		 
+			
+			studentCurricularPlan.setCurrentState(StudentCurricularPlanState.ACTIVE_OBJ);
+			studentCurricularPlan.setGivenCredits(null);
+			studentCurricularPlan.setSpecialization(null);
+			studentCurricularPlan.setStartDate(Calendar.getInstance().getTime());
+			studentCurricularPlan.setStudent(student);
+		}
 	}
 
 
@@ -220,17 +219,22 @@ public class CreateStudent {
 	}
 
 
-	private static IStudent createStudent(MWStudent oldStudent, ISuportePersistente sp, IPessoa person) throws ExcepcaoPersistencia {
-		IStudent student = new Student();
-		sp.getIPersistentStudent().simpleLockWrite(student);
+	private static IStudent createStudent(MWStudent oldStudent, ISuportePersistente sp, IPessoa person) throws ExcepcaoPersistencia
+	{
+		IStudent student = sp.getIPersistentStudent().readByPersonAndDegreeType(person, TipoCurso.LICENCIATURA_OBJ);
+		if (student == null)
+		{
+			student = new Student();
+			sp.getIPersistentStudent().simpleLockWrite(student);
 
-		student.setNumber(oldStudent.getNumber());
-		student.setPerson(person);
-		student.setState(new StudentState(StudentState.INSCRITO));
-		student.setDegreeType(TipoCurso.LICENCIATURA_OBJ);
+			student.setNumber(oldStudent.getNumber());
+			student.setPerson(person);
+			student.setState(new StudentState(StudentState.INSCRITO));
+			student.setDegreeType(TipoCurso.LICENCIATURA_OBJ);
 
-		IStudentKind studentKind = sp.getIPersistentStudentKind().readByStudentType(new StudentType(StudentType.NORMAL));
-		student.setStudentKind(studentKind);
+			IStudentKind studentKind = sp.getIPersistentStudentKind().readByStudentType(new StudentType(StudentType.NORMAL));
+			student.setStudentKind(studentKind);
+		}
 		return student;
 	}
 }

@@ -29,14 +29,15 @@ public class UpdateStudentIDNumbers {
 		
 		sp.iniciarTransaccao();
 		Integer numberOfStudents = persistentAluno.countAll();
+		System.out.println("Student document ID numbers to update: [" + numberOfStudents.toString() + "]");
 		sp.confirmarTransaccao();
-		int numberOfElementsInSpan = 100;
+		int numberOfElementsInSpan = 1000;
 		
 		int numberOfSpans = numberOfStudents.intValue() / numberOfElementsInSpan;
 		numberOfSpans =  numberOfStudents.intValue() % numberOfElementsInSpan > 0 ? numberOfSpans + 1 : numberOfSpans;
 		
 		for (int span = 0; span < numberOfSpans; span++) {
-			System.gc();
+			sp.clearCache();
 			sp.iniciarTransaccao();
 			System.out.println("Reading Students...");
 			List result = persistentAluno.readAllBySpan(new Integer(span), new Integer(numberOfElementsInSpan));
