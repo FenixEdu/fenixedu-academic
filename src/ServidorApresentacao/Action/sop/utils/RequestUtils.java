@@ -92,7 +92,7 @@ public abstract class RequestUtils {
 			throw new FenixActionException(e);
 		}
 		if (infoExecutionYear == null) {
-			System.out.println("there is a link missing the eYName parameter");
+			System.out.println("ERROR: There is a link missing the eYName parameter: from("+request.getHeader("Referer")+") to("+request.getRequestURI()+")");
 		}
 		return infoExecutionYear;
 	}
