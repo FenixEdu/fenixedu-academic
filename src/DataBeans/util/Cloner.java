@@ -85,6 +85,7 @@ import DataBeans.InfoTestQuestion;
 import DataBeans.InfoWebSite;
 import DataBeans.InfoWebSiteItem;
 import DataBeans.InfoWebSiteSection;
+import DataBeans.InfoWorkLocation;
 import DataBeans.Seminaries.InfoCandidacy;
 import DataBeans.Seminaries.InfoCaseStudy;
 import DataBeans.Seminaries.InfoCaseStudyChoice;
@@ -803,11 +804,11 @@ public abstract class Cloner
     }
 
     /**
-     * Method copyInfoGrantContract2IGrantContract.
-     * 
-     * @param infoGrantContract
-     * @return IGrantContract
-     */
+	 * Method copyInfoGrantContract2IGrantContract.
+	 * 
+	 * @param infoGrantContract
+	 * @return IGrantContract
+	 */
     public static IGrantContract copyInfoGrantContract2IGrantContract(InfoGrantContract infoGrantContract)
     {
         IGrantContract grantContract = null;
@@ -827,11 +828,11 @@ public abstract class Cloner
     }
 
     /**
-     * Method copyIGrantContract2InfoGrantContract.
-     * 
-     * @param grantContract
-     * @return InfoGrantContract
-     */
+	 * Method copyIGrantContract2InfoGrantContract.
+	 * 
+	 * @param grantContract
+	 * @return InfoGrantContract
+	 */
     public static InfoGrantContract copyIGrantContract2InfoGrantContract(IGrantContract grantContract)
     {
         InfoGrantContract infoGrantContract = null;
@@ -854,11 +855,11 @@ public abstract class Cloner
     }
 
     /**
-     * Method copyInfoGrantType2IGrantType.
-     * 
-     * @param infoGrantType
-     * @return IGrantType
-     */
+	 * Method copyInfoGrantType2IGrantType.
+	 * 
+	 * @param infoGrantType
+	 * @return IGrantType
+	 */
     public static IGrantType copyInfoGrantType2IGrantType(InfoGrantType infoGrantType)
     {
         IGrantType grantType = null;
@@ -872,11 +873,11 @@ public abstract class Cloner
     }
 
     /**
-     * Method copyIGrantType2InfoGrantType.
-     * 
-     * @param grantType
-     * @return InfoGrantType
-     */
+	 * Method copyIGrantType2InfoGrantType.
+	 * 
+	 * @param grantType
+	 * @return InfoGrantType
+	 */
     public static InfoGrantType copyIGrantType2InfoGrantType(IGrantType grantType)
     {
         InfoGrantType infoGrantType = null;
@@ -890,11 +891,11 @@ public abstract class Cloner
     }
 
     /**
-    	* Method copyInfoGrantResponsibleTeacher2IGrantResponsibleTeacher.
-    	* 
-    	* @param infoGrantResponsibleTeacher
-    	* @return IGrantResponsibleTeacher
-    	*/
+	 * Method copyInfoGrantResponsibleTeacher2IGrantResponsibleTeacher.
+	 * 
+	 * @param infoGrantResponsibleTeacher
+	 * @return IGrantResponsibleTeacher
+	 */
     public static IGrantResponsibleTeacher copyInfoGrantResponsibleTeacher2IGrantResponsibleTeacher(InfoGrantResponsibleTeacher infoGrantResponsibleTeacher)
     {
         IGrantResponsibleTeacher grantResponsibleTeacher = null;
@@ -920,11 +921,11 @@ public abstract class Cloner
     }
 
     /**
-    	* Method copyIGrantResponsibleTeacher2InfoGrantResponsibleTeacher.
-    	* 
-    	* @param grantResponsibleTeacher
-    	* @return InfoGrantResponsibleTeacher
-    	*/
+	 * Method copyIGrantResponsibleTeacher2InfoGrantResponsibleTeacher.
+	 * 
+	 * @param grantResponsibleTeacher
+	 * @return InfoGrantResponsibleTeacher
+	 */
     public static InfoGrantResponsibleTeacher copyIGrantResponsibleTeacher2InfoGrantResponsibleTeacher(IGrantResponsibleTeacher grantResponsibleTeacher)
     {
         InfoGrantResponsibleTeacher infoGrantResponsibleTeacher = null;
@@ -948,11 +949,11 @@ public abstract class Cloner
     }
 
     /**
-    	* Method copyInfoGrantOrientationTeacher2IGrantOrientationTeacher.
-    	* 
-    	* @param infoGrantOrientationTeacher
-    	* @return IGrantOrientationTeacher
-    	*/
+	 * Method copyInfoGrantOrientationTeacher2IGrantOrientationTeacher.
+	 * 
+	 * @param infoGrantOrientationTeacher
+	 * @return IGrantOrientationTeacher
+	 */
     public static IGrantOrientationTeacher copyInfoGrantOrientationTeacher2IGrantOrientationTeacher(InfoGrantOrientationTeacher infoGrantOrientationTeacher)
     {
         IGrantOrientationTeacher grantOrientationTeacher = null;
@@ -978,11 +979,11 @@ public abstract class Cloner
     }
 
     /**
-    	* Method copyIGrantOrientationTeacher2InfoGrantOrientationTeacher.
-    	* 
-    	* @param grantOrientationTeacher
-    	* @return InfoGrantOrientationTeacher
-    	*/
+	 * Method copyIGrantOrientationTeacher2InfoGrantOrientationTeacher.
+	 * 
+	 * @param grantOrientationTeacher
+	 * @return InfoGrantOrientationTeacher
+	 */
     public static InfoGrantOrientationTeacher copyIGrantOrientationTeacher2InfoGrantOrientationTeacher(IGrantOrientationTeacher grantOrientationTeacher)
     {
         InfoGrantOrientationTeacher infoGrantOrientationTeacher = null;
@@ -1522,7 +1523,7 @@ public abstract class Cloner
             Cloner.copyCurricularCourse2InfoCurricularCourse(curriculum.getCurricularCourse());
 
         InfoPerson infoPerson = Cloner.copyIPerson2InfoPerson(curriculum.getPersonWhoAltered());
-        
+
         copyObjectProperties(infoCurriculum, curriculum);
         infoCurriculum.setInfoCurricularCourse(infoCurricularCourse);
         infoCurriculum.setInfoPersonWhoAltered(infoPerson);
@@ -1542,7 +1543,7 @@ public abstract class Cloner
             Cloner.copyInfoCurricularCourse2CurricularCourse(infoCurriculum.getInfoCurricularCourse());
 
         IPessoa person = Cloner.copyInfoPerson2IPerson(infoCurriculum.getInfoPersonWhoAltered());
-        
+
         copyObjectProperties(curriculum, infoCurriculum);
         curriculum.setCurricularCourse(curricularCourse);
         curriculum.setPersonWhoAltered(person);
@@ -3598,6 +3599,8 @@ public abstract class Cloner
         copyObjectProperties(externalPerson, infoExternalPerson);
         IPessoa person = Cloner.copyInfoPerson2IPerson(infoExternalPerson.getInfoPerson());
         externalPerson.setPerson(person);
+        IWorkLocation workLocation = Cloner.copyInfoWorkLocation2IWorkLocation(infoExternalPerson.getInfoWorkLocation());
+        externalPerson.setWorkLocation(workLocation);
 
         return externalPerson;
     }
@@ -3608,7 +3611,9 @@ public abstract class Cloner
         copyObjectProperties(infoExternalPerson, externalPerson);
         InfoPerson infoPerson = Cloner.copyIPerson2InfoPerson(externalPerson.getPerson());
         infoExternalPerson.setInfoPerson(infoPerson);
-
+        InfoWorkLocation infoWorkLocation = Cloner.copyIWorkLocation2InfoWorkLocation(externalPerson.getWorkLocation());
+        infoExternalPerson.setInfoWorkLocation(infoWorkLocation);
+        
         return infoExternalPerson;
     }
 
@@ -4062,7 +4067,6 @@ public abstract class Cloner
         return oldPublication;
     }
 
-
     public static InfoGaugingTestResult copyIGaugingTestResult2IngoGaugingTestResult(IGaugingTestResult gaugingTestResult)
     {
         InfoStudent infoStudent = copyIStudent2InfoStudent(gaugingTestResult.getStudent());
@@ -4192,5 +4196,21 @@ public abstract class Cloner
         infoTeacherInstitutionWorkTime.setInfoExecutionPeriod(infoExecutionPeriod);
 
         return infoTeacherInstitutionWorkTime;
+    }
+
+    public static IWorkLocation copyInfoWorkLocation2IWorkLocation(InfoWorkLocation infoWorkLocation)
+    {
+        IWorkLocation workLocation = new WorkLocation();
+        copyObjectProperties(workLocation, infoWorkLocation);
+
+        return workLocation;
+    }
+
+    public static InfoWorkLocation copyIWorkLocation2InfoWorkLocation(IWorkLocation workLocation)
+    {
+        InfoWorkLocation infoWorkLocation = new InfoWorkLocation();
+        copyObjectProperties(infoWorkLocation, workLocation);
+
+        return infoWorkLocation;
     }
 }
