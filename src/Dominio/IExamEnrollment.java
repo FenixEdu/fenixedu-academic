@@ -10,7 +10,7 @@ import java.util.Calendar;
  * @author Tânia Nunes
  *
  */
-public interface IExamEnrollment {
+public interface IExamEnrollment extends IDomainObject {
 	/**
 	 * @return
 	 */
