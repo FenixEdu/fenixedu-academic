@@ -17,7 +17,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.gesdis.InfoSection;
 import ServidorAplicacao.FenixServiceException;
@@ -29,7 +28,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 
 
-public class DeleteSectionFormAction extends FenixAction{
+public class DeleteSectionAction extends FenixAction{
 	public ActionForward execute(
 				ActionMapping mapping,
 				ActionForm form,
@@ -38,13 +37,13 @@ public class DeleteSectionFormAction extends FenixAction{
 				throws FenixActionException {
 					
 		HttpSession session = request.getSession();
-		DynaActionForm deleteSectionForm = (DynaActionForm) form;				
-					
-		String option = (String) deleteSectionForm.get("option");
-
-		  if (option.equals("Yes") == false)
-			  return mapping.findForward("AccessSectionManagement");
-		
+//		DynaActionForm deleteSectionForm = (DynaActionForm) form;				
+//					
+//		String option = (String) deleteSectionForm.get("option");
+//
+//		  if (option.equals("Yes") == false)
+//			  return mapping.findForward("AccessSectionManagement");
+//		
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 		
 		InfoSection infoSection = (InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
