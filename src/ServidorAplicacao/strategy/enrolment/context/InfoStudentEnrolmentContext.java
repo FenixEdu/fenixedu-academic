@@ -4,13 +4,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import DataBeans.InfoBranch;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.util.Cloner;
-import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.IEnrolment;
 
@@ -25,7 +23,6 @@ public final class InfoStudentEnrolmentContext
 	private InfoStudentCurricularPlan infoStudentCurricularPlan;
 	private List studentCurrentSemesterInfoEnrollments;
 	private List finalInfoCurricularCoursesWhereStudentCanBeEnrolled;
-	private List infoAreas;
 
 	public InfoStudentEnrolmentContext() {}
 
@@ -94,22 +91,6 @@ public final class InfoStudentEnrolmentContext
 	}
 
 	/**
-	 * @return Returns the infoAreas.
-	 */
-	public List getInfoAreas()
-	{
-		return infoAreas;
-	}
-
-	/**
-	 * @param infoAreas The infoAreas to set.
-	 */
-	public void setInfoAreas(List infoAreas)
-	{
-		this.infoAreas = infoAreas;
-	}
-
-	/**
 	 * @param infoStudentEnrolmentContext
 	 * @return StudentEnrolmentContext
 	 */
@@ -134,15 +115,6 @@ public final class InfoStudentEnrolmentContext
 			studentCurrentSemesterInfoEnrollments.add(infoEnrolment);
 		}
 		
-		iterator = studentEnrolmentContext.getAreas().iterator();
-		List infoAreas = new ArrayList();
-		while (iterator.hasNext())
-		{
-			IBranch branch = (IBranch) iterator.next();
-			InfoBranch infoBranch = Cloner.copyIBranch2InfoBranch(branch);
-			infoAreas.add(infoBranch);
-		}
-		
 		InfoStudentCurricularPlan infoStudentCurricularPlan =
 			Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentEnrolmentContext.getStudentCurricularPlan());
 
@@ -154,7 +126,6 @@ public final class InfoStudentEnrolmentContext
 		infoStudentEnrolmentContext.setInfoExecutionPeriod(infoExecutionPeriod);
 		infoStudentEnrolmentContext.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
 		infoStudentEnrolmentContext.setStudentCurrentSemesterInfoEnrollments(studentCurrentSemesterInfoEnrollments);
-		infoStudentEnrolmentContext.setInfoAreas(infoAreas);
 		
 		return infoStudentEnrolmentContext;
 	}

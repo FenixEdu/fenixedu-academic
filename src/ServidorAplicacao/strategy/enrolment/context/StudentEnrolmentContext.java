@@ -28,7 +28,6 @@ public final class StudentEnrolmentContext
 	private List studentApprovedEnrollments;
 	private List studentCurrentSemesterEnrollments;
 	private List finalCurricularCoursesWhereStudentCanBeEnrolled;
-	private List areas;
 
 	public StudentEnrolmentContext() {}
 
@@ -178,21 +177,4 @@ public final class StudentEnrolmentContext
 		}
 		return false;
 	}
-
-	/**
-	 * @return Returns the areas.
-	 */
-	public List getAreas()
-	{
-		return areas;
-	}
-
-	/**
-	 * @param areas The areas to set.
-	 */
-	public void setAreas(List areas)
-	{
-		this.areas = areas;
-	}
-
 }

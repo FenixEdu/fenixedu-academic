@@ -124,9 +124,6 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 
 		List baseAreasCurricularCourses = getBaseAreasCurricularCourses(enrollmentsWithAprovedState, enrollmentsWithEnrolledState);
 
-		List areas = getSpecializationAndSecundaryAreas();
-		studentEnrolmentContext.setAreas(areas);
-
 		if (studentCurricularPlan.getBranch() != null)
 		{
 			this.studentHasSpecializationArea = true;
@@ -154,28 +151,6 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements IEnrolme
 		this.studentEnrolmentContext.setStudentCurrentSemesterEnrollments(enrollmentsWithEnrolledState);
 		this.studentEnrolmentContext.setStudentCurricularPlan(this.studentCurricularPlan);
 		this.studentEnrolmentContext.setFinalCurricularCoursesWhereStudentCanBeEnrolled(baseAreasCurricularCourses);
-	}
-
-	/**
-	 * @return SpecializationAndSecundaryAreas
-	 * @throws ExcepcaoPersistencia
-	 */
-	private List getSpecializationAndSecundaryAreas() throws ExcepcaoPersistencia
-	{
-		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-		IPersistentBranch branchDAO = persistentSuport.getIPersistentBranch();
-		List areas = branchDAO.readByDegreeCurricularPlan(studentCurricularPlan.getDegreeCurricularPlan());
-		List finalAreas = new ArrayList();
-		Iterator iterator = areas.iterator();
-		while (iterator.hasNext())
-		{
-			IBranch area = (IBranch) iterator.next();
-			if (!area.getBranchType().equals(BranchType.COMMON_BRANCH))
-			{
-				finalAreas.add(area);
-			}
-		}
-		return finalAreas;
 	}
 
 	/**
