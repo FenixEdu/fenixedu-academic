@@ -27,6 +27,7 @@ import org.odmg.Transaction;
 
 import pt.utl.ist.berserk.storage.ITransactionBroker;
 import pt.utl.ist.berserk.storage.exceptions.StorageException;
+import ServidorPersistente.*;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.ICursoExecucaoPersistente;
@@ -42,6 +43,7 @@ import ServidorPersistente.IPersistentCandidateSituation;
 import ServidorPersistente.IPersistentContributor;
 import ServidorPersistente.IPersistentCoordinator;
 import ServidorPersistente.IPersistentCountry;
+import ServidorPersistente.IPersistentCreditsInAnySecundaryArea;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentCurricularCourseEquivalence;
 import ServidorPersistente.IPersistentCurricularCourseEquivalenceRestriction;
@@ -1028,5 +1030,12 @@ public class SuportePersistenteOJB
 
 	public IPersistentPaymentPhase getIPersistentPaymentPhase() {
 		return new PaymentPhaseOJB();
+	}
+
+	public IPersistentCreditsInAnySecundaryArea getIPersistentCreditsInAnySecundaryArea() {
+		return new CreditsInAnySecundaryAreaOJB();
+	}
+	public IPersistentCreditsInSpecificScientificArea getIPersistentCreditsInSpecificScientificArea() {
+		return new CreditsInSpecificScientificAreaOJB();
 	}
 }

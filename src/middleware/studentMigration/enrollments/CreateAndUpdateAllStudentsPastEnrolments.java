@@ -106,13 +106,15 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 			numberOfSpans =  numberOfStudents.intValue() % numberOfElementsInSpan > 0 ? numberOfSpans + 1 : numberOfSpans;
 			
 			for (int span = 0; span < numberOfSpans; span++) {
-				fenixPersistentSuport.iniciarTransaccao();
 
-				System.gc();
-	
+				fenixPersistentSuport.iniciarTransaccao();
+				fenixPersistentSuport.clearCache();
+				fenixPersistentSuport.confirmarTransaccao();
+				
+				fenixPersistentSuport.iniciarTransaccao();
+//				System.gc();
 				System.out.println("[INFO] Reading MWStudents...");
 				List result = persistentMWAluno.readAllBySpan(new Integer(span), new Integer(numberOfElementsInSpan));
-	
 				fenixPersistentSuport.confirmarTransaccao();
 		
 				System.out.println("[INFO] Updating [" + result.size() + "] student curriculums...");

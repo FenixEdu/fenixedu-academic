@@ -13,9 +13,9 @@ public class CreditsInSpecificScientificArea extends DomainObject implements ICr
 	private Integer enrolmentKey;
 
 	private Integer givenCredits;
-	private StudentCurricularPlan studentCurricularPlan;
-	private ScientificArea scientificArea;
-	private Enrolment enrolment;
+	private IStudentCurricularPlan studentCurricularPlan;
+	private IScientificArea scientificArea;
+	private IEnrolment enrolment;
 
 	public CreditsInSpecificScientificArea()
 	{
@@ -43,7 +43,7 @@ public class CreditsInSpecificScientificArea extends DomainObject implements ICr
 	/**
 	 * @return Returns the enrolment.
 	 */
-	public Enrolment getEnrolment()
+	public IEnrolment getEnrolment()
 	{
 		return enrolment;
 	}
@@ -51,7 +51,7 @@ public class CreditsInSpecificScientificArea extends DomainObject implements ICr
 	/**
 	 * @param enrolment The enrolment to set.
 	 */
-	public void setEnrolment(Enrolment enrolment)
+	public void setEnrolment(IEnrolment enrolment)
 	{
 		this.enrolment = enrolment;
 	}
@@ -91,7 +91,7 @@ public class CreditsInSpecificScientificArea extends DomainObject implements ICr
 	/**
 	 * @return Returns the scientificArea.
 	 */
-	public ScientificArea getScientificArea()
+	public IScientificArea getScientificArea()
 	{
 		return scientificArea;
 	}
@@ -99,7 +99,7 @@ public class CreditsInSpecificScientificArea extends DomainObject implements ICr
 	/**
 	 * @param scientificArea The scientificArea to set.
 	 */
-	public void setScientificArea(ScientificArea scientificArea)
+	public void setScientificArea(IScientificArea scientificArea)
 	{
 		this.scientificArea = scientificArea;
 	}
@@ -123,7 +123,7 @@ public class CreditsInSpecificScientificArea extends DomainObject implements ICr
 	/**
 	 * @return Returns the studentCurricularPlan.
 	 */
-	public StudentCurricularPlan getStudentCurricularPlan()
+	public IStudentCurricularPlan getStudentCurricularPlan()
 	{
 		return studentCurricularPlan;
 	}
@@ -131,7 +131,7 @@ public class CreditsInSpecificScientificArea extends DomainObject implements ICr
 	/**
 	 * @param studentCurricularPlan The studentCurricularPlan to set.
 	 */
-	public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan)
+	public void setStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan)
 	{
 		this.studentCurricularPlan = studentCurricularPlan;
 	}

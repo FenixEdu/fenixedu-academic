@@ -20,6 +20,8 @@ import middleware.studentMigration.enrollments.CreateAndUpdateAllStudentsPastEnr
 
 import org.apache.commons.beanutils.BeanComparator;
 
+import Dominio.CreditsInAnySecundaryArea;
+import Dominio.CreditsInSpecificScientificArea;
 import Dominio.CurricularCourse;
 import Dominio.Enrolment;
 import Dominio.EnrolmentEquivalence;
@@ -75,6 +77,12 @@ public class MakeEquivalencesForILEECStudents
 	private static HashMap schools = new HashMap();
 	private static HashMap years = new HashMap();
 
+	private static int CREDITS_IN_SPECIFIC_SCIENTIFIC_AREA = 5;
+	private static int CREDITS_IN_ANY_SECUNDARY_AREA = 2;
+	private static int CREDITS_COURSE_TO_COURSE = 4;
+	private static int GIVEN_CREDITS = 4;
+	private static int DEGREE_CODE = 14;
+	
 	public static void main(String args[])
 	{
 		IStudent student = null;
@@ -128,7 +136,7 @@ public class MakeEquivalencesForILEECStudents
 		IStudentCurricularPlanPersistente persistentStudentCurricularPlan = fenixPersistentSuport.getIStudentCurricularPlanPersistente();
 		List studentsList = new ArrayList();
 		
-		IDegreeCurricularPlan degreeCurricularPlan = MakeEquivalencesForILEECStudents.getDegreeCurricularPlan(new Integer(14), fenixPersistentSuport);
+		IDegreeCurricularPlan degreeCurricularPlan = MakeEquivalencesForILEECStudents.getDegreeCurricularPlan(new Integer(MakeEquivalencesForILEECStudents.DEGREE_CODE), fenixPersistentSuport);
 		List studentCurricularPlansList = persistentStudentCurricularPlan.readAllByDegreeCurricularPlanAndState(degreeCurricularPlan, StudentCurricularPlanState.ACTIVE_OBJ);
 		
 		Iterator iterator = studentCurricularPlansList.iterator();
@@ -239,6 +247,7 @@ public class MakeEquivalencesForILEECStudents
 					ICurricularCourse newCurricularCourse = MakeEquivalencesForILEECStudents.getCurricularCourse(enrolment, fenixPersistentSuport);
 					if(newCurricularCourse == null)
 					{
+						// Antes de fazer continue, verificar se se pode tratar de outro tipo de equivalencia.
 						continue;
 					}
 					
@@ -274,11 +283,11 @@ public class MakeEquivalencesForILEECStudents
 		IPersistentMWDisciplinaIleec mwDisciplinasIleecDAO = mws.getIPersistentMWDisciplinasIleec();
 		IPersistentCurricularCourse curricularCourseDAO = fenixPersistentSuport.getIPersistentCurricularCourse();
 
-		IDegreeCurricularPlan currentDegreeCurricularPlan = MakeEquivalencesForILEECStudents.getDegreeCurricularPlan(new Integer(14), fenixPersistentSuport);
+		IDegreeCurricularPlan currentDegreeCurricularPlan = MakeEquivalencesForILEECStudents.getDegreeCurricularPlan(new Integer(MakeEquivalencesForILEECStudents.DEGREE_CODE), fenixPersistentSuport);
 		ICurricularCourse oldCurricularCourse = oldEnrolment.getCurricularCourseScope().getCurricularCourse();
 		ICurricularCourse newCurricularCourse = null;
 
-		MWEquivalenciaIleec mwEquivalenciaIleec = mwEquivalenciasIleecDAO.readByTipoEquivalenciaAndCodigoDisciplinaCurriculoAntigo(new Integer(4), oldCurricularCourse.getCode());
+		MWEquivalenciaIleec mwEquivalenciaIleec = mwEquivalenciasIleecDAO.readByTipoEquivalenciaAndCodigoDisciplinaCurriculoAntigo(new Integer(MakeEquivalencesForILEECStudents.CREDITS_COURSE_TO_COURSE), oldCurricularCourse.getCode());
 		if(mwEquivalenciaIleec == null)
 		{
 			MakeEquivalencesForILEECStudents.reportIt(oldEnrolment, fenixPersistentSuport);
@@ -444,12 +453,12 @@ public class MakeEquivalencesForILEECStudents
 
 		ICurricularCourse oldCurricularCourse = oldEnrolment.getCurricularCourseScope().getCurricularCourse();
 		IStudent student = oldEnrolment.getStudentCurricularPlan().getStudent();
-		Integer equivalenceType = new Integer(2);
+		Integer equivalenceType = new Integer(MakeEquivalencesForILEECStudents.CREDITS_IN_ANY_SECUNDARY_AREA);
 
 		MWEquivalenciaIleec mwEquivalenciaIleec = mwEquivalenciasIleecDAO.readByTipoEquivalenciaAndCodigoDisciplinaCurriculoAntigo(equivalenceType, oldCurricularCourse.getCode());
 		if(mwEquivalenciaIleec == null)
 		{
-			equivalenceType = new Integer(5);
+			equivalenceType = new Integer(MakeEquivalencesForILEECStudents.CREDITS_IN_SPECIFIC_SCIENTIFIC_AREA);
 			mwEquivalenciaIleec = mwEquivalenciasIleecDAO.readByTipoEquivalenciaAndCodigoDisciplinaCurriculoAntigo(equivalenceType, oldCurricularCourse.getCode());
 		}
 
@@ -953,5 +962,46 @@ public class MakeEquivalencesForILEECStudents
 		enrollmentsToReturn.addAll(enrollmentsList);
 		enrollmentsToReturn.removeAll(enrollmentsToRemove);
 		return enrollmentsToReturn;
+	}
+
+	/**
+	 * @param oldEnrolment
+	 * @param currentStudentCurricularPlan
+	 * @param fenixPersistentSuport
+	 * @return
+	 * @throws Throwable
+	 */
+	private static Boolean checkForOtherEquivalences(IEnrolment oldEnrolment, IStudentCurricularPlan currentStudentCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
+	{
+		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
+
+		IPersistentMWEquivalenciaIleec mwEquivalenciasIleecDAO = mws.getIPersistentMWEquivalenciasIleec();
+
+		ICurricularCourse oldCurricularCourse = oldEnrolment.getCurricularCourseScope().getCurricularCourse();
+
+		MWEquivalenciaIleec mwEquivalenciaIleec1 = mwEquivalenciasIleecDAO.readByTipoEquivalenciaAndCodigoDisciplinaCurriculoAntigo(new Integer(MakeEquivalencesForILEECStudents.CREDITS_IN_ANY_SECUNDARY_AREA), oldCurricularCourse.getCode());
+		if(mwEquivalenciaIleec1 == null)
+		{
+			MWEquivalenciaIleec mwEquivalenciaIleec2 = mwEquivalenciasIleecDAO.readByTipoEquivalenciaAndCodigoDisciplinaCurriculoAntigo(new Integer(MakeEquivalencesForILEECStudents.CREDITS_IN_SPECIFIC_SCIENTIFIC_AREA), oldCurricularCourse.getCode());
+			if(mwEquivalenciaIleec2 == null)
+			{
+				return null;
+			} else
+			{
+				CreditsInSpecificScientificArea creditsInSpecificScientificArea = new CreditsInSpecificScientificArea();
+				creditsInSpecificScientificArea.setEnrolment(oldEnrolment);
+				creditsInSpecificScientificArea.setGivenCredits(new Integer(MakeEquivalencesForILEECStudents.GIVEN_CREDITS));
+				creditsInSpecificScientificArea.setScientificArea(null);
+				creditsInSpecificScientificArea.setStudentCurricularPlan(currentStudentCurricularPlan);
+			}
+		} else
+		{
+			CreditsInAnySecundaryArea creditsInAnySecundaryArea = new CreditsInAnySecundaryArea();
+			creditsInAnySecundaryArea.setEnrolment(oldEnrolment);
+			creditsInAnySecundaryArea.setGivenCredits(new Integer(MakeEquivalencesForILEECStudents.GIVEN_CREDITS));
+			creditsInAnySecundaryArea.setStudentCurricularPlan(currentStudentCurricularPlan);
+		}
+
+		return null;
 	}
 }

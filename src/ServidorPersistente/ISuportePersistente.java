@@ -243,5 +243,7 @@ public interface ISuportePersistente
 	public IPersistentGratuitySituation getIPersistentGratuitySituation();
 	public IPersistentPaymentPhase getIPersistentPaymentPhase();
 	
-  
+	public IPersistentCreditsInAnySecundaryArea getIPersistentCreditsInAnySecundaryArea();
+	public IPersistentCreditsInSpecificScientificArea getIPersistentCreditsInSpecificScientificArea();
+
 }

@@ -15,7 +15,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 	protected Double givenCredits;
 	protected Date when;
 	protected Integer secundaryBranchKey;
-	protected Branch secundaryBranch;
+	protected IBranch secundaryBranch;
 	
 	protected IStudent student;
 	protected IBranch branch;
@@ -362,7 +362,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 	/**
 	 * @return Returns the secundaryBranch.
 	 */
-	public Branch getSecundaryBranch()
+	public IBranch getSecundaryBranch()
 	{
 		return secundaryBranch;
 	}
@@ -370,7 +370,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 	/**
 	 * @param secundaryBranch The secundaryBranch to set.
 	 */
-	public void setSecundaryBranch(Branch secundaryBranch)
+	public void setSecundaryBranch(IBranch secundaryBranch)
 	{
 		this.secundaryBranch = secundaryBranch;
 	}

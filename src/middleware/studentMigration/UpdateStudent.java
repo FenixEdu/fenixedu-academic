@@ -6,6 +6,7 @@ import java.util.List;
 
 import middleware.middlewareDomain.MWBranch;
 import middleware.middlewareDomain.MWDegreeTranslation;
+import middleware.middlewareDomain.MWPerson;
 import middleware.middlewareDomain.MWStudent;
 import middleware.persistentMiddlewareSupport.IPersistentMWAluno;
 import middleware.persistentMiddlewareSupport.IPersistentMWBranch;
@@ -18,8 +19,10 @@ import Dominio.IBranch;
 import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionPeriod;
+import Dominio.IPessoa;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
+import Dominio.Pessoa;
 import Dominio.StudentCurricularPlan;
 import ServidorPersistente.IPersistentBranch;
 import ServidorPersistente.IPersistentStudent;
@@ -34,7 +37,7 @@ import Util.TipoCurso;
 
 public class UpdateStudent
 {
-	private static int NUMBER_OF_ELEMENTS_IN_SPAN = 1;
+	private static int NUMBER_OF_ELEMENTS_IN_SPAN = 500;
 	
 	public static void main(String args[]) throws Exception {
 
@@ -57,6 +60,10 @@ public class UpdateStudent
 			{
 				sp.iniciarTransaccao();
 				sp.clearCache();
+				sp.confirmarTransaccao();
+				System.gc();
+
+				sp.iniciarTransaccao();
 				System.out.println("Reading Students...");
 				List result = persistentAluno.readAllBySpan(new Integer(span), new Integer(numberOfElementsInSpan));
 				System.out.println("Updating [" + result.size() + "] students...");
@@ -64,7 +71,6 @@ public class UpdateStudent
 				
 				Iterator iterator = result.iterator();
 				while(iterator.hasNext()) {
-//					System.gc();
 					mwStudent = (MWStudent) iterator.next();
 					sp.iniciarTransaccao();
 					UpdateStudent.updateCorrectStudents(mwStudent, sp);
@@ -90,8 +96,16 @@ public class UpdateStudent
 		}
 
 		IDegreeCurricularPlan degreeCurricularPlan = UpdateStudent.getDegreeCurricularPlan(mwStudent, sp);
+		if (degreeCurricularPlan == null) {
+			System.out.println("Error Reading Fenix degreeCurricularPlan for degree [" + mwStudent.getDegreecode() + "] and student [" + mwStudent.getNumber() + "]!");
+			return;
+		}
 		IBranch branch = UpdateStudent.getBranch(mwStudent, degreeCurricularPlan, sp);
-
+		if (branch == null) {
+			System.out.println("Error Reading Fenix branch with code [" + mwStudent.getBranchcode() + "] for student [" + mwStudent.getNumber() + "]!");
+			return;
+		}
+		
 		IStudentCurricularPlan studentCurricularPlan = sp.getIStudentCurricularPlanPersistente().readActiveStudentCurricularPlan(student.getNumber(), TipoCurso.LICENCIATURA_OBJ);
 
 		if (studentCurricularPlan == null)
@@ -129,7 +143,7 @@ public class UpdateStudent
 		} else
 		{
 			// Change all the information
-			PersonUtils.updateStudentPerson(student.getPerson(), mwStudent.getMiddlewarePerson());
+			UpdateStudent.updateStudentPerson(student.getPerson(), mwStudent.getMiddlewarePerson());
 		}
 	}
 	
@@ -229,5 +243,80 @@ public class UpdateStudent
 		}
 
 		return branch;
+
+//		IBranch branch = null;
+//		
+//		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
+//		IPersistentMWBranch persistentBranch = mws.getIPersistentMWBranch();
+//		
+//		
+//		// Get the old BRanch
+//		
+//		sp.clearCache();
+//		MWBranch mwbranch = persistentBranch.readByDegreeCodeAndBranchCode(oldStudent.getDegreecode(), oldStudent.getBranchcode());
+//		
+//		// Get the new one		
+//		
+//		
+//		if (mwbranch == null) {
+//			System.out.println("Aluno " + oldStudent.getNumber());
+//			System.out.println("Curso " + oldStudent.getDegreecode());
+//			System.out.println("Ramo " + oldStudent.getBranchcode());
+//		}
+//		
+//		branch = sp.getIPersistentBranch().readByDegreeCurricularPlanAndBranchName(degreeCurricularPlan, mwbranch.getDescription());
+//
+//
+//		if (branch == null) {
+//			branch = sp.getIPersistentBranch().readByDegreeCurricularPlanAndBranchName(degreeCurricularPlan, "");
+//		}
+//
+//		if (branch == null) {
+//			System.out.println("DCP " + degreeCurricularPlan.getName());
+//			System.out.println("Ramo Inexistente " + mwbranch);
+//		}
+//		
+//		return branch;
+	}
+
+	public static void updateStudentPerson(IPessoa fenixPersonTemp, MWPerson oldPerson) throws Throwable
+	{
+		SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
+
+		IPessoa personTemp = new Pessoa();
+		personTemp.setIdInternal(fenixPersonTemp.getIdInternal());
+
+		IPessoa fenixPerson = (IPessoa) sp.getIPessoaPersistente().readByOId(personTemp, true);
+
+		if (fenixPerson == null) {
+			System.out.println("Person not Found !");
+			return;
+		}
+
+		sp.getIPessoaPersistente().simpleLockWrite(fenixPerson);
+		fenixPerson.setCodigoFiscal(oldPerson.getFinancialrepcode());
+		fenixPerson.setCodigoPostal(oldPerson.getZipcode());
+		fenixPerson.setConcelhoMorada(oldPerson.getMunicipalityofaddress());
+		fenixPerson.setConcelhoNaturalidade(oldPerson.getMunicipalityofbirth());
+		fenixPerson.setDataEmissaoDocumentoIdentificacao(oldPerson.getDocumentiddate());
+		fenixPerson.setDataValidadeDocumentoIdentificacao(oldPerson.getDocumentidvalidation());
+		fenixPerson.setDistritoMorada(oldPerson.getDistrictofaddress());
+		fenixPerson.setDistritoNaturalidade(oldPerson.getDistrictofbirth());
+		fenixPerson.setEstadoCivil(PersonUtils.getMaritalStatus(oldPerson.getMaritalstatus()));
+		fenixPerson.setFreguesiaMorada(oldPerson.getParishofaddress());
+		fenixPerson.setFreguesiaNaturalidade(oldPerson.getParishofbirth());
+		fenixPerson.setLocalEmissaoDocumentoIdentificacao(oldPerson.getDocumentidplace());
+		fenixPerson.setLocalidadeCodigoPostal(oldPerson.getAddressAreaCode());
+		fenixPerson.setMorada(oldPerson.getAddress());
+		fenixPerson.setNascimento(oldPerson.getDateofbirth());
+		fenixPerson.setNome(oldPerson.getName());
+		fenixPerson.setNomeMae(oldPerson.getMothername());
+		fenixPerson.setNomePai(oldPerson.getFathername());
+		fenixPerson.setNumContribuinte(oldPerson.getFiscalcode());
+		fenixPerson.setNumeroDocumentoIdentificacao(oldPerson.getDocumentidnumber());
+		fenixPerson.setPais(PersonUtils.getCountry(oldPerson.getCountrycode()));
+		fenixPerson.setSexo(PersonUtils.getSex(oldPerson.getSex()));
+		fenixPerson.setTelefone(oldPerson.getPhone());
+		fenixPerson.setTipoDocumentoIdentificacao(PersonUtils.getDocumentIdType(oldPerson.getDocumentidtype()));
 	}
 }

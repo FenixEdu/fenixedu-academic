@@ -28,9 +28,9 @@ public interface IStudentCurricularPlan extends IDomainObject
 	public IEmployee getEmployee();
 	public Date getWhen();
     public String getObservations();
-    public Branch getSecundaryBranch();
+    public IBranch getSecundaryBranch();
 
-    public void setSecundaryBranch(Branch secundaryBranch);
+    public void setSecundaryBranch(IBranch secundaryBranch);
     public void setObservations(String observations);
 	public void setStudent(IStudent student);
 	public void setBranch(IBranch branch);
