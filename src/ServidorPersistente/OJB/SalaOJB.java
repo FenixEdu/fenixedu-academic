@@ -40,6 +40,7 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
 			query.create(oqlQuery);
 			query.bind(nome);
 			List result = (List) query.execute();
+		
 			lockRead(result);
 			if (result.size() != 0)
 				sala = (ISala) result.get(0);

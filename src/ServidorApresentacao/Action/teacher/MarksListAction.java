@@ -29,7 +29,41 @@ public class MarksListAction extends DispatchAction {
 
 	public ActionForward loadFile(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
-		return null;
+			
+			HttpSession session = request.getSession();
+
+			UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+			Integer executionCourseCode = null;
+			String executionCourseCodeString = request.getParameter("objectCode");
+			if (executionCourseCodeString == null) {
+				executionCourseCodeString = (String) request.getAttribute("objectCode");
+			}
+			executionCourseCode = new Integer(executionCourseCodeString);
+
+			Integer examCode = null;
+			String examCodeString = request.getParameter("examCode");
+			if (examCodeString == null) {
+				examCodeString = (String) request.getAttribute("examCode");
+			}
+			examCode = new Integer(examCodeString);	
+			
+			ISiteComponent commonComponent = new InfoSiteCommon();
+			Object[] args = { executionCourseCode, commonComponent, null, null, null, null };
+
+			try {
+				TeacherAdministrationSiteView siteView =
+					(TeacherAdministrationSiteView) ServiceUtils.executeService(userView, "TeacherAdministrationSiteComponentService", args);
+
+				request.setAttribute("siteView", siteView);
+				request.setAttribute("objectCode", ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getIdInternal());
+			} catch (FenixServiceException e) {
+				throw new FenixActionException(e);
+			}
+
+			request.setAttribute("examCode", examCode);
+
+			return mapping.findForward("loadMarks");
+		
 	}
 
 	/** 

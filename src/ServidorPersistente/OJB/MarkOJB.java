@@ -38,7 +38,6 @@ public class MarkOJB extends ObjectFenixOJB implements IPersistentMark {
 	public void lockWrite(IMark markToWrite) throws ExcepcaoPersistencia, ExistingPersistentException {
 
 		IMark markFromDB = null;
-
 		// If there is nothing to write, simply return.
 		if (markToWrite == null) {
 			return;

@@ -113,6 +113,7 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	}
 
 	private void init() throws ExcepcaoPersistencia {
+		
 		_odmg = OJB.getInstance();
 		try {
 			openDatabase();

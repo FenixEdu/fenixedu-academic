@@ -27,6 +27,7 @@ public class TestCaseOJB extends TestCase {
 			dbAcessPoint.backUpDataBaseContents("etc/testBackup.xml");
 			dbAcessPoint.loadDataBase(getDataSetFilePath());
 			dbAcessPoint.closeConnection();
+
 		} catch (Exception ex) {
 			System.out.println("Setup failed: " + ex);
 		}
@@ -36,7 +37,9 @@ public class TestCaseOJB extends TestCase {
 			sp = SuportePersistenteOJB.getInstance();
 			PersistenceBroker pb = PersistenceBrokerFactory.defaultPersistenceBroker();
 			pb.clearCache();
+
 		} catch (ExcepcaoPersistencia e) {
+
 			e.printStackTrace();
 			fail ("Setup: getting persistent factory!");
 		}
@@ -51,10 +54,12 @@ public class TestCaseOJB extends TestCase {
 
 	protected void tearDown() {
 		try {
+
 			dbAcessPoint.openConnection();
 			dbAcessPoint.loadDataBase("etc/testBackup.xml");
 			//dbAcessPoint.loadDataBase("etc/testDataSet.xml");
 			dbAcessPoint.closeConnection();
+
 		} catch (Exception ex) {
 			System.out.println("Tear down failed: " + ex);
 		}
