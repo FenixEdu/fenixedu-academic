@@ -36,4 +36,12 @@ abstract public class AccessControlFilter implements IFilter {
         return false;
        
     }
+
+    abstract public void execute (ServiceRequest request, ServiceResponse response) throws Exception;
+    
+    public void execute(ServiceRequest request, ServiceResponse response, FilterParameters filterParameters) throws Exception
+    {
+        this.execute(request, response);
+    }
+
 }
