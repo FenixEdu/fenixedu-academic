@@ -451,8 +451,8 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 	
 	protected List queryList(Class classToQuery, Criteria criteria) throws ExcepcaoPersistencia {
 		PersistenceBroker pb = ((HasBroker)odmg.currentTransaction()).getBroker();		
-		Query query = new QueryByCriteria(classToQuery, criteria);
-		List list = (List) pb.getCollectionByQuery(query);
+		Query queryCriteria = new QueryByCriteria(classToQuery, criteria);
+		List list = (List) pb.getCollectionByQuery(queryCriteria);
 		lockRead(list);
 		return list;
 	}	
