@@ -214,38 +214,36 @@ public class FileSuport implements IFileSuport {
 		} catch (SlideException e) {
 			try {
 				abortTransaction();
-			} catch (IllegalStateException e1) {
-			
-			} catch (SecurityException e1) {
-			
-			} catch (SystemException e1) {
-				
-			}
+			} catch (Exception e1) {
+				//instance = new FileSuport();
+			} 
 			throw e;
 		} catch (Exception e) {
 			try {
 				abortTransaction();
-			} catch (IllegalStateException e1) {
-				
-			} catch (SecurityException e1) {
-				
-			} catch (SystemException e1) {
-				
+			} catch (Exception e1) {
+				//instance = new FileSuport();
 			}
 			throw new SlideException("runtime exception");
 		}
 	}
 	
 	private void beginTransaction()throws SlideException, NotSupportedException, SystemException{
+		        System.out.println("beforeBegin->"+token.getStatus());
 				token.begin();	
+				System.out.println("afterBegin->"+token.getStatus());
 	}
 
 	private void commitTransaction() throws SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException, SystemException {
-			token.commit();				
+			System.out.println("beforeCommit->"+token.getStatus());
+			token.commit();		
+		System.out.println("afterCommit->"+token.getStatus());		
 		}
 	
 	private void abortTransaction() throws IllegalStateException, SecurityException, SystemException{
+				System.out.println("beforerRollBack->"+token.getStatus());
 				token.rollback();
+				System.out.println("afterRollBack->"+token.getStatus());
 			}
 	
 	/**
@@ -266,10 +264,15 @@ public class FileSuport implements IFileSuport {
 		throws SlideException {
 		try {
 
-			token.begin();
+			beginTransaction();
 			structure.create(slideToken, new SubjectNode(), folder);
-			token.commit();
+			commitTransaction();
 		} catch (Exception e) {
+			try {
+				abortTransaction();
+			} catch (Exception e1) {
+//				instance = new FileSuport();
+			} 	
 			throw new SlideException("");
 		}
 	}
@@ -496,7 +499,8 @@ public class FileSuport implements IFileSuport {
 			filePath="/files"+filePath;
 		}
 		try {
-			token.begin();
+			
+			beginTransaction();
 			ObjectNode objectNode =
 				structure.retrieve(getSlideToken(), filePath);
 			NodeRevisionDescriptors nodeRevisionDescriptors =
@@ -506,12 +510,27 @@ public class FileSuport implements IFileSuport {
 			content.remove(getSlideToken(), filePath, nodeRevisionDescriptor);
 			content.remove(getSlideToken(), nodeRevisionDescriptors);
 			structure.remove(getSlideToken(), objectNode);
-			token.commit();
+			commitTransaction();
 		} catch (SlideException e) {
+			try {
+				abortTransaction();
+			} catch (Exception e1) {
+//				instance=new FileSuport();
+			} 
 			throw e;
 		} catch (RuntimeException e) {
+			try {
+				abortTransaction();
+			} catch (Exception e1) {
+//				instance=new FileSuport();
+			} 
 			throw new SlideException("runtime exception");
 		} catch (Exception e) {
+			try {
+				abortTransaction();
+			} catch (Exception e1) {
+//				instance=new FileSuport();
+			} 
 			throw new SlideException("runtime exception");
 		}
 
