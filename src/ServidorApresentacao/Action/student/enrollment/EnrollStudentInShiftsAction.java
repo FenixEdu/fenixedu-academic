@@ -3,9 +3,12 @@
  */
 package ServidorApresentacao.Action.student.enrollment;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Vector;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,55 +31,108 @@ import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
- * @author jmota
- * Modified by Fernanda Quitério
+ * @author jmota Modified by Fernanda Quitério
  */
 public class EnrollStudentInShiftsAction extends FenixAction
 {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException
+    public ActionForward execute(
+        ActionMapping mapping,
+        ActionForm actionForm,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws FenixActionException
     {
 
         IUserView userView = SessionUtils.getUserView(request);
         ActionErrors actionErrors = new ActionErrors();
         DynaValidatorForm enrollmentForm = (DynaValidatorForm) actionForm;
-        
+
         Integer studentId = (Integer) enrollmentForm.get("studentId");
-        Integer[] shiftsToEnroll = (Integer[]) enrollmentForm.get("shifts");
-        List shiftsList = Arrays.asList(shiftsToEnroll);
+        /* :AQUI: utilização do map em vez de utilizar o array shifts*/
+        Map shiftsToEnroll = (Map) enrollmentForm.get("shiftMap");
+
+        List shiftList =buildShiftList(shiftsToEnroll);
+
         
-        Object[] args = {studentId, shiftsList};
+
+        Object[] args = { studentId, shiftList };
         try
         {
-            ShiftEnrollmentErrorReport errorReport = (ShiftEnrollmentErrorReport) ServiceUtils
-                    .executeService(userView, "EnrollStudentInShifts", args);
+            ShiftEnrollmentErrorReport errorReport =
+                (ShiftEnrollmentErrorReport) ServiceUtils.executeService(
+                    userView,
+                    "EnrollStudentInShifts",
+                    args);
             Iterator iter = errorReport.getUnAvailableShifts().iterator();
-           
+
             while (iter.hasNext())
             {
                 InfoShift infoShift = (InfoShift) iter.next();
-                ActionError actionError = new ActionError("error.shift.enrollment.capacityExceded", infoShift.getNome());               
-                actionErrors.add("capacityExceded",actionError);
+                ActionError actionError =
+                    new ActionError("error.shift.enrollment.capacityExceded", infoShift.getNome());
+                actionErrors.add("capacityExceded", actionError);
             }
-            if(errorReport.getUnExistingShifts() != null && errorReport.getUnExistingShifts().size() > 0) {
-            	ActionError actionError = new ActionError("error.shift.enrollment.nonExistingShift");               
-            	actionErrors.add("nonExisting",actionError);
+            if (errorReport.getUnExistingShifts() != null
+                && errorReport.getUnExistingShifts().size() > 0)
+            {
+                ActionError actionError = new ActionError("error.shift.enrollment.nonExistingShift");
+                actionErrors.add("nonExisting", actionError);
             }
-        }catch (StudentNotFoundServiceException e)
+        } catch (StudentNotFoundServiceException e)
         {
-        	ActionError actionError = new ActionError("error.shift.enrollment.nonExistingStudent");               
-        	actionErrors.add("nonExisting",actionError);
-        }
-        catch (FenixServiceException e)
+            ActionError actionError = new ActionError("error.shift.enrollment.nonExistingStudent");
+            actionErrors.add("nonExisting", actionError);
+        } catch (FenixServiceException e)
         {
             throw new FenixActionException(e);
         }
-        if(!actionErrors.isEmpty()) {
-        	saveErrors(request, actionErrors);
-        	return mapping.getInputForward();
+        if (!actionErrors.isEmpty())
+        {
+            saveErrors(request, actionErrors);
+            return mapping.getInputForward();
         }
         return mapping.findForward("enrollmentConfirmation");
+    }
+
+    /**
+     * @param shiftsToEnroll
+     * @return
+     */
+    private List buildShiftList(Map shiftsToEnroll)
+    {
+        List list = new ArrayList();
+        Iterator iterator = shiftsToEnroll.entrySet().iterator();
+
+        while (iterator.hasNext())
+        {
+            Map.Entry entry = (Map.Entry) iterator.next();
+            Integer shiftId = Integer.valueOf((String) entry.getValue());
+            if (shiftId != null)
+            {
+                list.add(shiftId);
+            }
+        }
+        return list;
+    }
+
+    /**
+     * @param shiftsToEnroll
+     */
+    private Vector buildShiftVector(Map shiftsToEnroll)
+    {
+        Vector vector = new Vector();
+        Iterator iterator = shiftsToEnroll.entrySet().iterator();
+
+        while (iterator.hasNext())
+        {
+            Map.Entry entry = (Map.Entry) iterator.next();
+            Integer shiftId = Integer.valueOf((String) entry.getValue());
+            if (shiftId != null)
+            {
+                vector.add(shiftId);
+            }
+        }
+        return vector;
     }
 }

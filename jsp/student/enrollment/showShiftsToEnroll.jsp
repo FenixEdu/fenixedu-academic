@@ -6,7 +6,10 @@
 <h2><bean:message key="link.shift.enrolment" /></h2>
 <bean:define id="hoursPattern">HH : mm</bean:define>
 
-<html:form action="/studentShiftEnrolmentManagerLoockup" >
+
+<%-- :AQUI: mudei a action e acrescentei o studentId --%>
+<html:form action="/enrollStudentInShifts" >
+<html:hidden property="studentId"/>
 <logic:iterate id="infoClass" name="infoClassEnrollmentDetails" property="infoClassList">
 	<!-- CLASS -->
 	<bean:define id="classId" name="infoClass" property="idInternal"/>
@@ -30,8 +33,9 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<bean:message key="label.enroll" />?
 								<!-- Radio button -->
+								<%-- :AQUI: a key estava executionId-shiftId --%>
 								<bean:define id="shiftKey">
-									shiftMap(<bean:write name="executionCourseDetails" property="infoExecutionCourse.idInternal"/>-<bean:write name="shiftEnrollmentDetails" property="infoShift.idInternal"/>)							
+									shiftMap(<bean:write name="executionCourseDetails" property="infoExecutionCourse.idInternal"/>-<bean:write name="shiftEnrollmentDetails" property="infoShift.tipo"/>)							
 								</bean:define>
 								<bean:define id="shiftValue" name="shiftEnrollmentDetails" property="infoShift.idInternal" />
 								<html:radio property="<%= shiftKey %>" value="<%= shiftValue.toString() %>"/>	

@@ -11,12 +11,15 @@ import Dominio.ICurricularCourse;
 import Dominio.IEnrolment;
 import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
+import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
+import Dominio.Student;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentExecutionCourse;
+import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -48,6 +51,13 @@ public class WriteStudentAttendingCourse implements IService
 			IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
 			IStudentCurricularPlanPersistente persistentStudentCurricularPlan =
 				sp.getIStudentCurricularPlanPersistente();
+
+			
+			/* :AQUI: acrescentei a leitura. o que chega aqui da action é o idInternal */
+			IPersistentStudent studentDAO=sp.getIPersistentStudent();
+			IStudent student =(IStudent) studentDAO.readByOId(new Student(infoStudent.getIdInternal()), false);
+			infoStudent.setNumber(student.getNumber());
+			
 			
 			if (infoStudent == null)
 			{

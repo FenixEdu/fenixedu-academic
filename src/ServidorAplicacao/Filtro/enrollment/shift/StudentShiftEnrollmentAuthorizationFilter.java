@@ -15,7 +15,9 @@ import Dominio.ExecutionCourse;
 import Dominio.ICurricularCourse;
 import Dominio.IEnrolment;
 import Dominio.IExecutionCourse;
+import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
+import Dominio.Student;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.AccessControlFilter;
 import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
@@ -119,13 +121,16 @@ public class StudentShiftEnrollmentAuthorizationFilter extends AccessControlFilt
 		InfoStudent infoStudent = (InfoStudent) arguments[0];
 		Integer executionCourseIdToAttend = (Integer) arguments[1];
 
-		Integer studentNumber = infoStudent.getNumber();
-
 		IStudentCurricularPlan studentCurricularPlan = null;
 
 		try
 		{
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			
+			/* :AQUI: o que chega é o id do student */
+		IStudent student =  (IStudent) sp.getIPersistentStudent().readByOId(new Student(infoStudent.getIdInternal()),false);
+		
+		Integer studentNumber = student.getNumber();
 			IStudentCurricularPlanPersistente persistentStudentCurricularPlan =
 				sp.getIStudentCurricularPlanPersistente();
 
