@@ -77,7 +77,7 @@
         	<td>
         		<html:hidden property="method" value="create"/>
             	<html:submit styleClass="inputbutton">
-              		<bean:message key="label.create"/>
+              		<bean:message key="label.edit"/>
              	</html:submit>
             </td>
             <td width="20"> </td>
