@@ -45,12 +45,8 @@ public class EnrolmentEvaluationOJB extends ObjectFenixOJB implements IPersisten
 		// Read Enrolment from database.
 		
 		enrolmentEvaluationFromDB =
-					(IEnrolmentEvaluation) this.readByUnique(enrolmentEvaluationToWrite.getExamDate(),
-						enrolmentEvaluationToWrite.getGradeAvailableDate(),
-						enrolmentEvaluationToWrite.getPersonResponsibleForGrade(),
-						enrolmentEvaluationToWrite.getWhen(),
-						enrolmentEvaluationToWrite.getEmployee(),
-						enrolmentEvaluationToWrite.getObservation());
+					(IEnrolmentEvaluation) this.readByUnique(enrolmentEvaluationToWrite.getWhen(),
+							enrolmentEvaluationToWrite.getEnrolment());
 						
 					
 		
@@ -205,22 +201,13 @@ public class EnrolmentEvaluationOJB extends ObjectFenixOJB implements IPersisten
 		}
 		
 	public IEnrolmentEvaluation readByUnique(
-				Date examDate,
-				Date gradeAvailableDate,
-				IPessoa person,
 				Date whenAlter,
-				Funcionario employee,
-				String observation)throws ExcepcaoPersistencia {
-				Integer employeeInt = Integer.valueOf(Integer.toString(employee.getCodigoInterno()));
+				IEnrolment enrolment)throws ExcepcaoPersistencia {
 				Criteria criteria = new Criteria();
-				criteria.addEqualTo("examDate", examDate);
-				criteria.addEqualTo("gradeAvailableDate", gradeAvailableDate);
-				criteria.addEqualTo("personResponsibleForGradeKey",person.getIdInternal());			
+				criteria.addEqualTo("enrolmentKey", enrolment.getIdInternal());			
 				criteria.addEqualTo("when", whenAlter);
-				criteria.addEqualTo("employeeKey", employeeInt);
-				criteria.addEqualTo("observation", observation);
-	
 				IEnrolmentEvaluation evaluationsWithRepetition = (IEnrolmentEvaluation) queryObject(EnrolmentEvaluation.class, criteria);
+		
 		return (IEnrolmentEvaluation) evaluationsWithRepetition;
 			}
 }

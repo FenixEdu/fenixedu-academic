@@ -891,8 +891,8 @@
 	<field-descriptor
 		name="when"
 		column="WHEN_ALTER"
-		jdbc-type="DATE"
-		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
+		jdbc-type="TIMESTAMP"
+		
 	/>
 	<field-descriptor
 		name="checkSum"
