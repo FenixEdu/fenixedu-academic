@@ -20,7 +20,7 @@ import org.apache.struts.util.RequestUtils;
 /**
  * @author jpvl
  */
-public class FenixRequestProcessorForStudentPortal extends TilesRequestProcessor {
+public class FenixRequestProcessorWithTiles extends TilesRequestProcessor {
 
 	/* (non-Javadoc)
 	 * @see org.apache.struts.action.RequestProcessor#processPreprocess(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
