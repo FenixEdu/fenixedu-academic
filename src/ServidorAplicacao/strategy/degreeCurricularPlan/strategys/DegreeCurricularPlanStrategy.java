@@ -1,7 +1,13 @@
 package ServidorAplicacao.strategy.degreeCurricularPlan.strategys;
 
+import java.util.Iterator;
+import java.util.List;
+
 import Dominio.IDegreeCurricularPlan;
+import Dominio.IEnrolment;
 import Dominio.IStudentCurricularPlan;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.MarkType;
 
 /**
@@ -30,9 +36,18 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 		return MarkType.getMarks(degreeCurricularPlan.getMarkType()).contains(mark);
 	}
 
-	public Double calculateStudentAverage(IStudentCurricularPlan studentCurricularPlan){
-		return null;
-		
+	public Double calculateStudentAverage(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia{
+		float average = 0;
+		List enrolments = SuportePersistenteOJB.getInstance().getIPersistentEnrolment().readAllByStudentCurricularPlan(studentCurricularPlan);
+	
+		Iterator iterator = enrolments.iterator();
+		int courses = 0;
+		while(iterator.hasNext()){
+			IEnrolment enrolment = (IEnrolment) iterator.next();
+//			enrolment.getEnrolmentState()
+			
+		}
+		return new Double(average);
 	}
 
 

@@ -2,6 +2,7 @@ package ServidorAplicacao.strategy.degreeCurricularPlan.strategys;
 
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IStudentCurricularPlan;
+import ServidorPersistente.ExcepcaoPersistencia;
 
 /**
  * 
@@ -37,6 +38,6 @@ public interface IDegreeCurricularPlanStrategy {
 	 * @param The list of the students enrolment
 	 * @return The Student's Average
 	 */
-	public Double calculateStudentAverage(IStudentCurricularPlan studentCurricularPlan);
+	public Double calculateStudentAverage(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia;
 
 }
