@@ -5,12 +5,14 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
 import ServidorAplicacao.Servico.exceptions.BothAreasAreTheSameServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import Util.AreaType;
+import Util.EnrollmentState;
 
 /**
  * @author David Santos in Jun 24, 2004
@@ -158,26 +160,35 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlan implements 
     
     public boolean isCurricularCourseApproved(ICurricularCourse curricularCourse) {
 
-        List studentApprovedEnrollments = getStudentEnrollmentsWithApprovedState();
+        final List studentApprovedEnrollments = getStudentEnrollmentsWithApprovedState();
+        //System.out.println("studentApprovedEnrollments.size()= " + studentApprovedEnrollments.size());
 
-        List result = (List) CollectionUtils.collect(studentApprovedEnrollments, new Transformer() {
-            public Object transform(Object obj) {
-                IEnrollment enrollment = (IEnrollment) obj;
-
-                return enrollment.getCurricularCourse();
-
+        final List result = new ArrayList(studentApprovedEnrollments.size());
+        for (int i = 0; i < studentApprovedEnrollments.size(); i++) {
+            final IEnrollment enrollment = (IEnrollment) studentApprovedEnrollments.get(i);
+            final ICurricularCourse curricularCourseFromEnrollment = enrollment.getCurricularCourse();
+            if (curricularCourse.getCurricularCourseUniqueKeyForEnrollment().equals(
+                    curricularCourseFromEnrollment.getCurricularCourseUniqueKeyForEnrollment())) {
+                return true;
             }
-        });
-
-        if (isThisCurricularCoursesInTheList(curricularCourse, result)) {
-            return true;
+            result.add(curricularCourseFromEnrollment);
         }
+//        List result = (List) CollectionUtils.collect(studentApprovedEnrollments, new Transformer() {
+//            public Object transform(Object obj) {
+//                IEnrollment enrollment = (IEnrollment) obj;
+//                return enrollment.getCurricularCourse();
+//            }
+//        });
+//
+//        if (isThisCurricularCoursesInTheList(curricularCourse, result)) {
+//            return true;
+//        }
 
         int size = result.size();
         for (int i = 0; i < size; i++) {
             ICurricularCourse curricularCourseDoneByStudent = (ICurricularCourse) result.get(i);
             List curricularCourseEquivalences = getCurricularCoursesInCurricularCourseEquivalences(curricularCourseDoneByStudent);
-            if (curricularCourseEquivalences.contains(curricularCourse)) {
+            if (isThisCurricularCoursesInTheList(curricularCourse, curricularCourseEquivalences)) {
                 return true;
             }
         }
@@ -223,4 +234,15 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlan implements 
     public void setCreditsInSpecializationArea(Integer creditsInSpecializationArea) {
         this.creditsInSpecializationArea = creditsInSpecializationArea;
     }
+
+    protected List getStudentEnrollmentsWithApprovedState() {
+        return (List) CollectionUtils.select(getAllEnrollments(), new Predicate() {
+            public boolean evaluate(Object obj) {
+                IEnrollment enrollment = (IEnrollment) obj;
+                return enrollment.getEnrollmentState().equals(EnrollmentState.APROVED)
+                && !enrollment.getStudentCurricularPlan().getDegreeCurricularPlan().getName().startsWith("PAST");
+            }
+        });
+    }
+
 }

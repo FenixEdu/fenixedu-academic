@@ -46,15 +46,19 @@ import Util.enrollment.EnrollmentCondition;
 public class WriteEnrollment implements IService {
     private static Map createdAttends = null;
 
+    public static int runCount = 0;
+
     public WriteEnrollment() {
         createdAttends = new HashMap();
     }
 
     // some of these arguments may be null. they are only needed for filter
-    public void run(Integer executionDegreeId, Integer studentCurricularPlanID,
+    public Integer run(Integer executionDegreeId, Integer studentCurricularPlanID,
             Integer curricularCourseID, Integer executionPeriodID,
             CurricularCourseEnrollmentType enrollmentType, Integer enrollmentClass, IUserView userView)
             throws ExcepcaoPersistencia {
+
+        runCount++;
 
         ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
         IPersistentEnrollment enrollmentDAO = persistentSuport.getIPersistentEnrolment();
@@ -72,24 +76,24 @@ public class WriteEnrollment implements IService {
         IExecutionPeriod executionPeriod = null;
         if (executionPeriodID == null) {
             executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
-            System.out.println("Obtained execution period for current");
+            //System.out.println("Obtained execution period for current");
         } else {
             executionPeriod = (IExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class,
                     executionPeriodID);
-            System.out.println("Obtained execution period for specified id: " + executionDegreeId);
+            //System.out.println("Obtained execution period for specified id: " + executionDegreeId);
         }
 
         IEnrollment enrollment = enrollmentDAO
                 .readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(studentCurricularPlan,
                         curricularCourse, executionPeriod);
 
-        System.out.println("Obtained enrollment for studentCurricularPlan: " + studentCurricularPlan.getIdInternal() 
-                + " curricularCourse " + curricularCourse.getIdInternal()
-                + " executionPeriod " + executionPeriod.getIdInternal());
+        //System.out.println("Obtained enrollment for studentCurricularPlan: " + studentCurricularPlan.getIdInternal() 
+        //        + " curricularCourse " + curricularCourse.getIdInternal()
+        //        + " executionPeriod " + executionPeriod.getIdInternal());
 
         if (enrollment == null) {
 
-            System.out.println("Enrollment is null");
+            //System.out.println("Enrollment is null");
 
             IEnrollment enrollmentToWrite;
             if (enrollmentClass == null || enrollmentClass.equals(new Integer(1))
@@ -116,21 +120,26 @@ public class WriteEnrollment implements IService {
             createAttend(studentCurricularPlan.getStudent(), curricularCourse, executionPeriod,
                     enrollmentToWrite);
         } else {
-            System.out.println("Enrollment is not null");
+            //System.out.println("Enrollment is not null");
             if (enrollment.getCondition().equals(EnrollmentCondition.INVISIBLE)) {
-                System.out.println("Enrollment is invisible");
+                //System.out.println("Enrollment is invisible");
                 enrollmentDAO.simpleLockWrite(enrollment);
                 enrollment.setCondition(getEnrollmentCondition(enrollmentType));
             }
             if (enrollment.getEnrollmentState().equals(EnrollmentState.ANNULED)) {
-                System.out.println("Enrollment is annulled");
+                //System.out.println("Enrollment is annulled");
                 enrollmentDAO.simpleLockWrite(enrollment);
                 enrollment.setEnrollmentState(EnrollmentState.ENROLLED);
             }
         }
 
-        System.out.println("Reseting attends.");
+        //System.out.println("Reseting attends.");
         resetAttends();
+
+        if (enrollment != null) {
+            return enrollment.getIdInternal();
+        }
+        return null;
     }
 
     /**

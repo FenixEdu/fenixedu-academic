@@ -46,7 +46,7 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements IS
 
     // some of these arguments may be null. they are only needed for filter
     public InfoStudentEnrollmentContext run(Integer executionDegreeId, Integer studentCurricularPlanId,
-            Integer studentNumber) throws FenixServiceException {
+            Integer studentNumber) throws FenixServiceException, ExcepcaoPersistencia {
         try {
             IStudent student = getStudent(studentNumber);
 
@@ -88,8 +88,7 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements IS
 
         List curricularCourses2Enroll;
         try {
-            curricularCourses2Enroll = studentCurricularPlan
-                    .getCurricularCoursesToEnroll(executionPeriod);
+            curricularCourses2Enroll = studentCurricularPlan.getCurricularCoursesToEnroll(executionPeriod);
         } catch (FenixDomainException e) {
             throw new EnrolmentRuleServiceException(e.getErrorType());
         }

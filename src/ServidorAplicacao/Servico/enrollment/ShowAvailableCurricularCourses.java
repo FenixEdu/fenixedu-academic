@@ -17,15 +17,12 @@ import ServidorPersistente.ExcepcaoPersistencia;
  */
 public class ShowAvailableCurricularCourses extends
         ShowAvailableCurricularCoursesWithoutEnrollmentPeriod {
-    public ShowAvailableCurricularCourses() {
-    }
 
     // some of these arguments may be null. they are only needed for filter
     public InfoStudentEnrollmentContext run(Integer executionDegreeId, Integer studentCurricularPlanId,
-            Integer studentNumber) throws FenixServiceException {
-        try {
+            Integer studentNumber) throws FenixServiceException, ExcepcaoPersistencia {
 
-            IStudent student = getStudent(studentNumber);
+        IStudent student = getStudent(studentNumber);
 
             if (student != null) {
                 IStudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(student);
@@ -49,10 +46,6 @@ public class ShowAvailableCurricularCourses extends
             }
             throw new ExistingServiceException("student");
 
-        } catch (ExcepcaoPersistencia e) {
-
-            throw new FenixServiceException(e);
-        }
     }
 
 }
