@@ -62,7 +62,7 @@ public class ChangeMasterDegreeThesisData implements IServico {
 			IMasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion = sp.getIPersistentMasterDegreeThesisDataVersion()
 					.readActiveByStudentCurricularPlan(studentCurricularPlan);
 			if (storedMasterDegreeThesisDataVersion == null)
-				throw new NonExistingServiceException("message.masterDegree.nonExistentMasterDegreeThesis");
+				throw new NonExistingServiceException("error.exception.masterDegree.nonExistentMasterDegreeThesis");
 
 			storedMasterDegreeThesisDataVersion.setCurrentState(new State(State.INACTIVE));
 			sp.getIPersistentMasterDegreeThesisDataVersion().simpleLockWrite(storedMasterDegreeThesisDataVersion);
@@ -72,7 +72,7 @@ public class ChangeMasterDegreeThesisData implements IServico {
 			if (masterDegreeThesisDataVersionWithChosenDissertationTitle != null)
 				if (!masterDegreeThesisDataVersionWithChosenDissertationTitle.getMasterDegreeThesis().getStudentCurricularPlan()
 						.equals(studentCurricularPlan))
-					throw new ExistingServiceException("message.masterDegree.dissertationTitleAlreadyChosen");
+					throw new ExistingServiceException("error.exception.masterDegree.dissertationTitleAlreadyChosen");
 
 			IPessoa person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
 			IEmployee employee = sp.getIPersistentEmployee().readByPerson(person.getIdInternal().intValue());

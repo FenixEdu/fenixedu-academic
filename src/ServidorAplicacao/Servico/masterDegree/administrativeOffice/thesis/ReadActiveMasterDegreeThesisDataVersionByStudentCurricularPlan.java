@@ -6,8 +6,8 @@ import DataBeans.util.Cloner;
 import Dominio.IMasterDegreeThesisDataVersion;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -52,7 +52,7 @@ public class ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan impl
 					.readActiveByStudentCurricularPlan(studentCurricularPlan);
 
 			if (masterDegreeThesisDataVersion == null)
-				throw new ExcepcaoInexistente("Master Degree Thesis not found.");
+				throw new NonExistingServiceException("error.exception.masterDegree.nonExistingMasterDegreeThesis");
 
 			infoMasterDegreeThesisDataVersion = Cloner.copyIMasterDegreeThesisDataVersion2InfoMasterDegreeThesisDataVersion(
 					masterDegreeThesisDataVersion);

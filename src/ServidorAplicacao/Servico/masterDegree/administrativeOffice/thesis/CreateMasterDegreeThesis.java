@@ -68,12 +68,12 @@ public class CreateMasterDegreeThesis implements IServico {
 			
 			IMasterDegreeThesis storedMasterDegreeThesis = sp.getIPersistentMasterDegreeThesis().readByStudentCurricularPlan(studentCurricularPlan);
 			if (storedMasterDegreeThesis != null)
-				throw new ExistingServiceException("message.masterDegree.existingMasterDegreeThesis");
+				throw new ExistingServiceException("error.exception.masterDegree.existingMasterDegreeThesis");
 			
 			IMasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion = sp.getIPersistentMasterDegreeThesisDataVersion().readActiveByDissertationTitle(dissertationTitle);
 			if (storedMasterDegreeThesisDataVersion != null)
 				if (!storedMasterDegreeThesisDataVersion.getMasterDegreeThesis().getStudentCurricularPlan().equals(studentCurricularPlan))
-					throw new ExistingServiceException("message.masterDegree.dissertationTitleAlreadyChosen");
+					throw new ExistingServiceException("error.exception.masterDegree.dissertationTitleAlreadyChosen");
 
 			IPessoa person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
 			IEmployee employee = sp.getIPersistentEmployee().readByPerson(person.getIdInternal().intValue());
