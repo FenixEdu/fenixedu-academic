@@ -12,13 +12,13 @@ import DataBeans.equivalence.InfoEquivalenceContext;
 import DataBeans.util.Cloner;
 import Dominio.Enrolment;
 import Dominio.EnrolmentEquivalence;
-import Dominio.EnrolmentEquivalenceRestriction;
+import Dominio.EquivalentEnrolmentForEnrolmentEquivalence;
 import Dominio.EnrolmentEvaluation;
 import Dominio.ICurricularCourseScope;
 import Dominio.IEmployee;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEquivalence;
-import Dominio.IEnrolmentEquivalenceRestriction;
+import Dominio.IEquivalentEnrolmentForEnrolmentEquivalence;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IExecutionPeriod;
 import Dominio.IPessoa;
@@ -30,7 +30,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEmployee;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEnrolmentEquivalence;
-import ServidorPersistente.IPersistentEnrolmentEquivalenceRestriction;
+import ServidorPersistente.IPersistentEquivalentEnrolmentForEnrolmentEquivalence;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.ISuportePersistente;
@@ -66,8 +66,8 @@ public class ConfirmEquivalence implements IServico {
 			ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
 			IPersistentEnrolment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 			IPersistentEnrolmentEquivalence persistentEnrolmentEquivalence = persistentSupport.getIPersistentEnrolmentEquivalence();
-			IPersistentEnrolmentEquivalenceRestriction persistentEnrolmentEquivalenceRestriction =
-				persistentSupport.getIPersistentEnrolmentEquivalenceRestriction();
+			IPersistentEquivalentEnrolmentForEnrolmentEquivalence persistentEnrolmentEquivalenceRestriction =
+				persistentSupport.getIPersistentEquivalentEnrolmentForEnrolmentEquivalence();
 			IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = persistentSupport.getIPersistentEnrolmentEvaluation();
 			IPessoaPersistente pessoaPersistente = persistentSupport.getIPessoaPersistente();
 			SuportePersistente sp = SuportePersistente.getInstance();
@@ -109,13 +109,13 @@ public class ConfirmEquivalence implements IServico {
 		return infoEquivalenceContext;
 	}
 
-	private IEnrolmentEquivalenceRestriction createNewEnrolmentEquivalenceRestriction(
+	private IEquivalentEnrolmentForEnrolmentEquivalence createNewEnrolmentEquivalenceRestriction(
 		IEnrolmentEquivalence enrolmentEquivalence,
 		InfoEnrolment infoEnrolmentToGiveEquivalence,
-		IPersistentEnrolmentEquivalenceRestriction persistentEnrolmentEquivalenceRestriction)
+		IPersistentEquivalentEnrolmentForEnrolmentEquivalence persistentEnrolmentEquivalenceRestriction)
 		throws ExistingPersistentException, ExcepcaoPersistencia {
 		try {
-			IEnrolmentEquivalenceRestriction enrolmentEquivalenceRestriction = new EnrolmentEquivalenceRestriction();
+			IEquivalentEnrolmentForEnrolmentEquivalence enrolmentEquivalenceRestriction = new EquivalentEnrolmentForEnrolmentEquivalence();
 			enrolmentEquivalenceRestriction.setEnrolmentEquivalence(enrolmentEquivalence);
 			enrolmentEquivalenceRestriction.setEquivalentEnrolment(Cloner.copyInfoEnrolment2IEnrolment(infoEnrolmentToGiveEquivalence));
 			persistentEnrolmentEquivalenceRestriction.lockWrite(enrolmentEquivalenceRestriction);

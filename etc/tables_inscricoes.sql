@@ -204,10 +204,10 @@ create table ENROLMENT_EQUIVALENCE (
 )type=InnoDB;
 
 -- ----------------------------
---  Table structure for ENROLMENT_EQUIVALENCE_RESTRICTION
+--  Table structure for EQUIVALENT_ENROLMENT_FOR_ENROLMENT_EQUIVALENCE
 -- ----------------------------
-drop table if exists ENROLMENT_EQUIVALENCE_RESTRICTION;
-create table ENROLMENT_EQUIVALENCE_RESTRICTION (
+drop table if exists EQUIVALENT_ENROLMENT_FOR_ENROLMENT_EQUIVALENCE;
+create table EQUIVALENT_ENROLMENT_FOR_ENROLMENT_EQUIVALENCE (
    ID_INTERNAL int(11) not null auto_increment,
    KEY_ENROLMENT_EQUIVALENCE int(11) not null,
    KEY_EQUIVALENT_ENROLMENT int(11) not null,

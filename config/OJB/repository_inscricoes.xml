@@ -767,16 +767,16 @@
 	</reference-descriptor>
     <collection-descriptor 
     	name="equivalenceRestrictions" 
-    	element-class-ref="Dominio.EnrolmentEquivalenceRestriction" 
+    	element-class-ref="Dominio.EquivalentEnrolmentForEnrolmentEquivalence" 
     	proxy="true">
 	    <inverse-foreignkey field-ref="enrolmentEquivalenceKey"/>
     </collection-descriptor> 
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.EnrolmentEquivalenceRestriction -->
+<!-- Definitions for Dominio.EquivalentEnrolmentForEnrolmentEquivalence -->
 <!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.EnrolmentEquivalenceRestriction" table="ENROLMENT_EQUIVALENCE_RESTRICTION">
+<class-descriptor class="Dominio.EquivalentEnrolmentForEnrolmentEquivalence" table="EQUIVALENT_ENROLMENT_FOR_ENROLMENT_EQUIVALENCE">
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"

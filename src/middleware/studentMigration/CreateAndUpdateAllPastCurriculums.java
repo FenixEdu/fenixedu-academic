@@ -475,13 +475,17 @@ public class CreateAndUpdateAllPastCurriculums
 			(degreeCode.intValue() == 1) ||
 			(degreeCode.intValue() == 4)) {
 
-			IBranch branch = new Branch();
-			persistentBranch.simpleLockWrite(branch);
-			branch.setName(new String("BRANCH THAT NO LONGER EXISTS"));
-			branch.setCode(new String("" + degreeCode + branchCode + 0));
-			branch.setDegreeCurricularPlan(degreeCurricularPlan);
-			branch.setScopes(null);
-			CreateAndUpdateAllPastCurriculums.branchesCreated.put(branchCode.toString(), branch);
+			IBranch branch = (IBranch) CreateAndUpdateAllPastCurriculums.branchesCreated.get(branchCode.toString());
+				
+			if (branch == null) {
+				branch = new Branch();
+				persistentBranch.simpleLockWrite(branch);
+				branch.setName(new String("BRANCH THAT NO LONGER EXISTS"));
+				branch.setCode(new String(degreeCode.toString() + branchCode.toString() + 0));
+				branch.setDegreeCurricularPlan(degreeCurricularPlan);
+				branch.setScopes(null);
+				CreateAndUpdateAllPastCurriculums.branchesCreated.put(branchCode.toString(), branch);
+			}
 			return branch;
 		} else {
 			return null;

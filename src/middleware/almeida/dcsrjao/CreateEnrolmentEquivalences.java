@@ -12,7 +12,7 @@ import org.apache.commons.collections.Predicate;
 
 import Dominio.Enrolment;
 import Dominio.EnrolmentEquivalence;
-import Dominio.EnrolmentEquivalenceRestriction;
+import Dominio.EquivalentEnrolmentForEnrolmentEquivalence;
 import Dominio.EnrolmentEvaluation;
 import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
@@ -24,7 +24,7 @@ import Dominio.ICurricularCourseScope;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEquivalence;
-import Dominio.IEnrolmentEquivalenceRestriction;
+import Dominio.IEquivalentEnrolmentForEnrolmentEquivalence;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
@@ -408,10 +408,10 @@ public class CreateEnrolmentEquivalences extends LoadDataToFenix {
 			Iterator iterator = aprovedEnrolmentsInRestrictions.iterator();
 			while (iterator.hasNext()) {
 				IEnrolment oldEnrolment = (IEnrolment) iterator.next();
-				IEnrolmentEquivalenceRestriction enrolmentEquivalenceRestriction =
+				IEquivalentEnrolmentForEnrolmentEquivalence enrolmentEquivalenceRestriction =
 					persistentObjectOJB.readEnrolmentEquivalenceRestrictionByUnique(oldEnrolment);
 				if (enrolmentEquivalenceRestriction == null) {
-					enrolmentEquivalenceRestriction = new EnrolmentEquivalenceRestriction();
+					enrolmentEquivalenceRestriction = new EquivalentEnrolmentForEnrolmentEquivalence();
 					enrolmentEquivalenceRestriction.setEnrolmentEquivalence(enrolmentEquivalence);
 					enrolmentEquivalenceRestriction.setEquivalentEnrolment(oldEnrolment);
 					writeElement(enrolmentEquivalenceRestriction);

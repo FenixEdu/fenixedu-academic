@@ -11,7 +11,7 @@ import java.util.List;
 
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEquivalence;
-import Dominio.IEnrolmentEquivalenceRestriction;
+import Dominio.IEquivalentEnrolmentForEnrolmentEquivalence;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
@@ -19,12 +19,12 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
  *
  * 17/Jul/2003
  */
-public interface IPersistentEnrolmentEquivalenceRestriction extends IPersistentObject {
+public interface IPersistentEquivalentEnrolmentForEnrolmentEquivalence extends IPersistentObject {
 	public void deleteAll() throws ExcepcaoPersistencia;
-	public void lockWrite(IEnrolmentEquivalenceRestriction enrolmentEquivalenceRestrictionToWrite)
+	public void lockWrite(IEquivalentEnrolmentForEnrolmentEquivalence enrolmentEquivalenceRestrictionToWrite)
 		throws ExcepcaoPersistencia, ExistingPersistentException;
-	public void delete(IEnrolmentEquivalenceRestriction enrolmentEquivalenceRestriction) throws ExcepcaoPersistencia;
-	public IEnrolmentEquivalenceRestriction readByEnrolmentEquivalenceAndEquivalentEnrolment(IEnrolmentEquivalence enrolmentEquivalence, IEnrolment equivalentEnrolment) throws ExcepcaoPersistencia;
+	public void delete(IEquivalentEnrolmentForEnrolmentEquivalence enrolmentEquivalenceRestriction) throws ExcepcaoPersistencia;
+	public IEquivalentEnrolmentForEnrolmentEquivalence readByEnrolmentEquivalenceAndEquivalentEnrolment(IEnrolmentEquivalence enrolmentEquivalence, IEnrolment equivalentEnrolment) throws ExcepcaoPersistencia;
 	public ArrayList readAll() throws ExcepcaoPersistencia;
 	public List readByEquivalentEnrolment(IEnrolment equivalentEnrolment) throws ExcepcaoPersistencia;
 }

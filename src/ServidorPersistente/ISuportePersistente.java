@@ -118,7 +118,7 @@ public interface ISuportePersistente {
 	
 	public IPersistentEmployee getIPersistentEmployee();
 	
-	public IPersistentEnrolmentEquivalenceRestriction getIPersistentEnrolmentEquivalenceRestriction();	
+	public IPersistentEquivalentEnrolmentForEnrolmentEquivalence getIPersistentEquivalentEnrolmentForEnrolmentEquivalence();	
 	public IPersistentSummary getIPersistentSummary();
 
 	public IPersistentQualification getIPersistentQualification();

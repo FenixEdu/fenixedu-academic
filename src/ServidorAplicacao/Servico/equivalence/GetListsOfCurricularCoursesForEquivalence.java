@@ -25,7 +25,7 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolment;
-import ServidorPersistente.IPersistentEnrolmentEquivalenceRestriction;
+import ServidorPersistente.IPersistentEquivalentEnrolmentForEnrolmentEquivalence;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -224,7 +224,7 @@ public class GetListsOfCurricularCoursesForEquivalence implements IServico {
 		Iterator iterator = enrolments.iterator();
 		while(iterator.hasNext()) {
 			IEnrolment enrolment = (IEnrolment) iterator.next();
-			IPersistentEnrolmentEquivalenceRestriction persistentEnrolmentEquivalenceRestriction = persistentSupport.getIPersistentEnrolmentEquivalenceRestriction();
+			IPersistentEquivalentEnrolmentForEnrolmentEquivalence persistentEnrolmentEquivalenceRestriction = persistentSupport.getIPersistentEquivalentEnrolmentForEnrolmentEquivalence();
 			List result = persistentEnrolmentEquivalenceRestriction.readByEquivalentEnrolment(enrolment);
 			if(result.isEmpty()) {
 				enrolmentsWithNoEquivalences.add(enrolment);

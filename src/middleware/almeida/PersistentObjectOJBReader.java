@@ -26,7 +26,7 @@ import Dominio.DisciplinaExecucao;
 import Dominio.Employee;
 import Dominio.Enrolment;
 import Dominio.EnrolmentEquivalence;
-import Dominio.EnrolmentEquivalenceRestriction;
+import Dominio.EquivalentEnrolmentForEnrolmentEquivalence;
 import Dominio.EnrolmentEvaluation;
 import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
@@ -43,7 +43,7 @@ import Dominio.IDegreeCurricularPlan;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentEquivalence;
-import Dominio.IEnrolmentEquivalenceRestriction;
+import Dominio.IEquivalentEnrolmentForEnrolmentEquivalence;
 import Dominio.IEnrolmentEvaluation;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
@@ -730,14 +730,14 @@ public class PersistentObjectOJBReader extends PersistentObjectOJB {
 		return result;
 	}
 
-	public IEnrolmentEquivalenceRestriction readEnrolmentEquivalenceRestrictionByUnique(IEnrolment enrolment) {
+	public IEquivalentEnrolmentForEnrolmentEquivalence readEnrolmentEquivalenceRestrictionByUnique(IEnrolment enrolment) {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("equivalentEnrolment.idInternal", enrolment.getIdInternal());
-		List result = query(EnrolmentEquivalenceRestriction.class, criteria);
+		List result = query(EquivalentEnrolmentForEnrolmentEquivalence.class, criteria);
 		if (result.size() == 1) {
-			return (IEnrolmentEquivalenceRestriction) result.get(0);
+			return (IEquivalentEnrolmentForEnrolmentEquivalence) result.get(0);
 		} else if (result.size() > 1) {
-			System.out.println("IEnrolmentEquivalenceRestriction mais que um\n");
+			System.out.println("IEquivalentEnrolmentForEnrolmentEquivalence mais que um\n");
 		}
 		return null;
 	}

@@ -7,7 +7,7 @@ package Dominio;
 /**
  * @author jpvl
  */
-public class EnrolmentEquivalenceRestriction extends DomainObject implements IEnrolmentEquivalenceRestriction {
+public class EquivalentEnrolmentForEnrolmentEquivalence extends DomainObject implements IEquivalentEnrolmentForEnrolmentEquivalence {
 	private IEnrolmentEquivalence enrolmentEquivalence;
 	private IEnrolment equivalentEnrolment;
 
@@ -17,14 +17,14 @@ public class EnrolmentEquivalenceRestriction extends DomainObject implements IEn
 	/**
 	 * 
 	 */
-	public EnrolmentEquivalenceRestriction() {
+	public EquivalentEnrolmentForEnrolmentEquivalence() {
 	}
 
 	public boolean equals(Object obj) {
 		boolean resultado = false;
 
-		if (obj instanceof IEnrolmentEquivalenceRestriction) {
-			IEnrolmentEquivalenceRestriction equivalence = (IEnrolmentEquivalenceRestriction) obj;
+		if (obj instanceof IEquivalentEnrolmentForEnrolmentEquivalence) {
+			IEquivalentEnrolmentForEnrolmentEquivalence equivalence = (IEquivalentEnrolmentForEnrolmentEquivalence) obj;
 
 			resultado = (this.getEnrolmentEquivalence().equals(equivalence.getEnrolmentEquivalence())) && (this.getEquivalentEnrolment().equals(equivalence.getEquivalentEnrolment()));
 		}

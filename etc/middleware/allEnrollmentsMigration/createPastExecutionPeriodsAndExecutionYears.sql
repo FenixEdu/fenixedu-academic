@@ -5,6 +5,11 @@ SELECT DISTINCT enrolmentYear, curricularCourseSemester FROM mw_ENROLMENT ORDER 
 SELECT CONCAT('INSERT INTO EXECUTION_YEAR VALUES (0,"', DEYS.enrolmentYear, '/', DEYS.enrolmentYear + 1,'","CL");') AS ""
 FROM mw_DISTINCT_ENROLLMENT_YEAR_AND_SEMESTER DEYS WHERE curricularcoursesemester = "1";
 
+-- SELECT CONCAT('INSERT INTO EXECUTION_YEAR VALUES (0,"', DEYS.enrolmentYear, '/', DEYS.enrolmentYear + 1,'","CL","',
+-- CONCAT_WS('-', DEYS.enrolmentYear, '08', '01'), '","',
+-- CONCAT_WS('-', DEYS.enrolmentYear + 1, '07', '31'), '");') AS "QQ"
+-- FROM mw_DISTINCT_ENROLLMENT_YEAR_AND_SEMESTER DEYS WHERE curricularcoursesemester = "1";
+
 SELECT CONCAT('INSERT INTO EXECUTION_PERIOD VALUES (0,"', DEYS.curricularCourseSemester, ' Semestre",',
 EY.ID_INTERNAL, ',"CL",', DEYS.curricularCourseSemester, ',"',
 CASE DEYS.curricularCourseSemester WHEN 1 THEN CONCAT_WS('-', DEYS.enrolmentYear, '09', '01') ELSE

@@ -54,7 +54,7 @@ import ServidorPersistente.IPersistentDistributedTest;
 import ServidorPersistente.IPersistentEmployee;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEnrolmentEquivalence;
-import ServidorPersistente.IPersistentEnrolmentEquivalenceRestriction;
+import ServidorPersistente.IPersistentEquivalentEnrolmentForEnrolmentEquivalence;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentEnrolmentPeriod;
 import ServidorPersistente.IPersistentEvaluation;
@@ -559,8 +559,8 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 		return new EmployeeOJB();
 	}
 	
-	public IPersistentEnrolmentEquivalenceRestriction getIPersistentEnrolmentEquivalenceRestriction() {
-		return new EnrolmentEquivalenceRestrictionOJB();
+	public IPersistentEquivalentEnrolmentForEnrolmentEquivalence getIPersistentEquivalentEnrolmentForEnrolmentEquivalence() {
+		return new EquivalentEnrolmentForEnrolmentEquivalenceOJB();
 	}
 
 	/* (non-Javadoc)

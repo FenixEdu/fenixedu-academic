@@ -11,7 +11,7 @@ package Dominio;
  *
  * 7/Jul/2003
  */
-public interface IEnrolmentEquivalenceRestriction extends IDomainObject {
+public interface IEquivalentEnrolmentForEnrolmentEquivalence extends IDomainObject {
 	//	public boolean equals(Object obj) {
 	public abstract IEnrolmentEquivalence getEnrolmentEquivalence();
 	public abstract IEnrolment getEquivalentEnrolment();
