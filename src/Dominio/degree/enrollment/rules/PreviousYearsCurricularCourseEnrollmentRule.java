@@ -54,7 +54,6 @@ public class PreviousYearsCurricularCourseEnrollmentRule implements IEnrollmentR
 				if (counter == size)
 				{
 					canPassToNextYear = true;
-					curricularCoursesToBeEnrolledIn.removeAll(curricularCourses);
 				} else
 				{
 					canPassToNextYear = false;

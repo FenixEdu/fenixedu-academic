@@ -41,11 +41,11 @@ public class EnrolmentStrategyFactory implements IEnrolmentStrategyFactory
 			throw new IllegalArgumentException("Must initialize StudentCurricularPlan!");
 		}
 
-		String enrollmentStrategyClassName =
-			studentCurricularPlan.getDegreeCurricularPlan().getEnrollmentStrategyClassName();
+		String degreeCurricularPlanName =
+			studentCurricularPlan.getDegreeCurricularPlan().getName();
 
-		if (enrollmentStrategyClassName != null
-			&& enrollmentStrategyClassName.equals(EnrolmentStrategyLEEC.class.toString()))
+		if (degreeCurricularPlanName != null
+			&& degreeCurricularPlanName.equals("LEEC2003/2004"))
 		{
 			strategyInstance = new EnrolmentStrategyLEEC(studentCurricularPlan);
 		}

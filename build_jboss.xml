@@ -222,7 +222,7 @@
 		    			   property="verify_serializable"/>
 
 			<replacefilter token="@log.profile.filename@"
-			   			   value="${env.CATALINA_HOME}/logs/${log.profile.filename}"/>
+			   			   value="${log.profile.filename}"/>
 		</replace>
 	</target>
 
