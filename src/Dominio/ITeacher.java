@@ -19,3 +19,7 @@ public interface ITeacher extends IPessoa{
     public void setSitesOwned(List sites);
     public void setProfessorShipsSites(List sites);
 }
+
+
+//
+//TODO:FIXME teacher does not own sites neither lectures sites. The teacher is responsible for or lectures  execution courses  

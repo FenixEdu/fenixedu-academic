@@ -13,6 +13,7 @@ import DataBeans.util.ViewUtils;
  * domain object.
  *
  * @author Joao Pereira
+ * 
  **/
 
 public class SectionView {
@@ -114,4 +115,11 @@ public class SectionView {
         }
         return resultado;
     }
+	/**
+	 * @return List
+	 */
+	public List getSuperiorSectionsNames() {
+		return superiorSectionsNames;
+	}
+
 }

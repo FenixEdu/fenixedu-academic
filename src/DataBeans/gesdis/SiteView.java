@@ -4,6 +4,7 @@ package DataBeans.gesdis;
 import java.util.ArrayList;
 import java.util.List;
 
+import DataBeans.InfoExecutionCourse;
 import DataBeans.util.ViewUtils;
 
 /**
@@ -19,6 +20,7 @@ public class SiteView {
     private List initialSection;
     private List sections;
     private String initialSectionName;
+    private InfoExecutionCourse infoExecutionCourse;
     
 	
     
@@ -80,4 +82,19 @@ public class SiteView {
 		}
 		return resultado;
     }
+	/**
+	 * @return InfoExecutionCourse
+	 */
+	public InfoExecutionCourse getInfoExecutionCourse() {
+		return infoExecutionCourse;
+	}
+
+	/**
+	 * Sets the infoExecutionCourse.
+	 * @param infoExecutionCourse The infoExecutionCourse to set
+	 */
+	public void setInfoExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
+		this.infoExecutionCourse = infoExecutionCourse;
+	}
+
 }

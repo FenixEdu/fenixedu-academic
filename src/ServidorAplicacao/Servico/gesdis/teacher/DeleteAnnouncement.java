@@ -41,7 +41,7 @@ public class DeleteAnnouncement implements IServico {
 
 	public final String getNome() {
 
-		return "gesdis.teacher.ApagarAnuncio";
+		return "gesdis.teacher.DeleteAnnouncement";
 
 	}
 

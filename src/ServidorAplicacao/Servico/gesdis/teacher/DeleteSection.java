@@ -29,7 +29,7 @@ public class DeleteSection implements IServico {
 	private DeleteSection() {
 	}
 	public final String getNome() {
-		return "gesdis.teacher.ApagarSeccao";
+		return "gesdis.teacher.DeleteSection";
 	}
 	public String run(SiteView siteView, SectionView sectionView)
 		throws FenixServiceException {

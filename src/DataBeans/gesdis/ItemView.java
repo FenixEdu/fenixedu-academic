@@ -3,6 +3,7 @@ package DataBeans.gesdis;
 
 /**
  * @author jorge
+ * @author jmota
  */
 public class ItemView {
   protected String name;
