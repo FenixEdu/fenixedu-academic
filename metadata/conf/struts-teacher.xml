@@ -1105,6 +1105,7 @@
  		parameter="method"
         type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
 	    <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.jsp"/>
+	    <forward name="viewStudentGroupInformation" path="/viewStudentGroupInformation.jsp"/>
     </action>
 
 

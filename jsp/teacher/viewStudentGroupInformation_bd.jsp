@@ -16,7 +16,7 @@
 
 
 
-<span class="error"><html:errors/></span>
+
 <logic:present name="siteView" property="component">
 	<bean:define id="component" name="siteView" property="component" />
 
@@ -153,6 +153,11 @@
 <tr>
 <td>
 	<br/>
+
+<span class="error"><html:errors/></span>
+<br/>
+<br/>
+
 <logic:empty name="component" property="infoSiteStudentInformationList">
 		
 <html:link page="<%="/viewShiftsAndGroups.do?method=viewShiftsAndGroups&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()%>">
