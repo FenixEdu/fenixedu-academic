@@ -8,6 +8,8 @@ import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.InfoTeacher;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.GuiderAlreadyChosenServiceException;
+import ServidorAplicacao.Servico.exceptions.RequiredGuidersServiceException;
 import ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.AdministrativeOfficeBaseTest;
 import Util.TipoCurso;
 
@@ -203,6 +205,84 @@ public class CreateMasterDegreeThesisTest extends AdministrativeOfficeBaseTest {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			fail("testCreateMasterDegreeThesisWithExistingDissertationTitle" + ex.getMessage());
+		}
+	}
+
+	public void testCreateMasterDegreeThesisWithoutGuiders() {
+		try {
+			Object[] argsReadStudentCurricularPlan = { new Integer(209), new TipoCurso(TipoCurso.MESTRADO)};
+			InfoStudentCurricularPlan infoStudentCurricularPlan =
+				(InfoStudentCurricularPlan) serviceManager.executar(
+					userView,
+					"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
+					argsReadStudentCurricularPlan);
+
+			InfoTeacher infoTeacherAssistent = new InfoTeacher();
+			infoTeacherAssistent.setIdInternal(new Integer(955));
+			InfoExternalPerson infoExternalPerson = new InfoExternalPerson();
+			infoExternalPerson.setIdInternal(new Integer(1));
+
+			List guiders = new ArrayList();
+			List assistentGuiders = new ArrayList();
+			List externalAssistentGuiders = new ArrayList();
+
+			assistentGuiders.add(infoTeacherAssistent);
+			externalAssistentGuiders.add(infoExternalPerson);
+
+			Object[] argsCreateMasterDegreeThesis =
+				{ userView, infoStudentCurricularPlan, "some title", guiders, assistentGuiders, externalAssistentGuiders };
+
+			serviceManager.executar(this.userView, getNameOfServiceToBeTested(), argsCreateMasterDegreeThesis);
+
+			fail("testCreateMasterDegreeThesisWithoutGuiders did not throw RequiredGuidersServiceException");
+
+		} catch (RequiredGuidersServiceException e) {
+			//ok
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			fail("testCreateMasterDegreeThesisWithoutGuiders" + ex.getMessage());
+		}
+	}
+
+	public void testCreateMasterDegreeThesisWithTeacherBeingGuiderAndAssistentGuider() {
+		try {
+			Object[] argsReadStudentCurricularPlan = { new Integer(209), new TipoCurso(TipoCurso.MESTRADO)};
+			InfoStudentCurricularPlan infoStudentCurricularPlan =
+				(InfoStudentCurricularPlan) serviceManager.executar(
+					userView,
+					"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
+					argsReadStudentCurricularPlan);
+
+			InfoTeacher infoTeacherGuider = new InfoTeacher();
+			infoTeacherGuider.setIdInternal(new Integer(954));
+			InfoTeacher infoTeacherAssistent = new InfoTeacher();
+			infoTeacherAssistent.setIdInternal(new Integer(955));
+			InfoExternalPerson infoExternalPerson = new InfoExternalPerson();
+			infoExternalPerson.setIdInternal(new Integer(1));
+
+			List guiders = new ArrayList();
+			List assistentGuiders = new ArrayList();
+			List externalAssistentGuiders = new ArrayList();
+
+			guiders.add(infoTeacherGuider);
+			assistentGuiders.add(infoTeacherAssistent);
+			assistentGuiders.add(infoTeacherGuider);
+			externalAssistentGuiders.add(infoExternalPerson);
+
+			Object[] argsCreateMasterDegreeThesis =
+				{ userView, infoStudentCurricularPlan, "some title", guiders, assistentGuiders, externalAssistentGuiders };
+
+			serviceManager.executar(this.userView, getNameOfServiceToBeTested(), argsCreateMasterDegreeThesis);
+
+			fail("testCreateMasterDegreeThesisWithTeacherBeingGuiderAndAssistentGuider did not throw GuiderAlreadyChosenServiceException");
+
+		} catch (GuiderAlreadyChosenServiceException e) {
+			//ok
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			fail("testCreateMasterDegreeThesisWithTeacherBeingGuiderAndAssistentGuider" + ex.getMessage());
 		}
 	}
 
