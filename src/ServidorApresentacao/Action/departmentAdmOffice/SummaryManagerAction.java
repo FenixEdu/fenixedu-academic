@@ -344,8 +344,7 @@ public class SummaryManagerAction extends FenixDispatchAction {
 		} catch (Exception e) {
 			e.printStackTrace();
 			ActionErrors actionErrors = new ActionErrors();
-			actionErrors.add("error.insertSummary", new ActionError((e.getMessage())));
-			actionErrors.add("error.insertSummary", new ActionError(("error.summary.impossible.insert")));
+			actionErrors.add("error.insertSummary", new ActionError((e.getMessage())));			
 			saveErrors(request, actionErrors);
 			return prepareInsertSummary(mapping, form, request, response);
 		}

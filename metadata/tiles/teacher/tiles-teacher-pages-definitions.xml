@@ -329,6 +329,8 @@
 	</definition>
 	
 	
+	
+	
 	<!-- TJBF & PFON -->
 	<definition name="df.page.teacher-index" 
 		extends="definition.teacher.two-column">
@@ -417,5 +419,22 @@
 		extends="definition.curriculum.historic">
 		<put name="body" value="/commons/curriculumHistoric/showCurriculumHistoricReport.jsp"></put>
 	</definition>
+	
+	<!-- ==================== Copy Site Execution Course ================== -->
+	
+	<definition name="choose-execution-period" 
+		extends="copy.site.execution.course.page">
+		<put name="body" value="/gesdis/chooseExecutionPeriod.jsp"></put>
+	</definition>
+	
+	<definition name="choose-exec-degree-and-cur-year" 
+		extends="copy.site.execution.course.page">
+		<put name="body" value="/gesdis/chooseExecDegreeAndCurYear.jsp"></put>
+	</definition>
+
+	<definition name="view-execution-courses" 
+		extends="copy.site.execution.course.page">
+		<put name="body" value="/gesdis/viewExecutionCourses.jsp"></put>
+	</definition>	
 	
 </tiles-definitions>

@@ -42,6 +42,9 @@
 	<definition name="df.teacher.site.administration" extends="definition.teacher.two-column">
 	    <put name="navLocal" value="/teacher/navbar.jsp"/>	
 	</definition>
+	<definition name="copy.site.execution.course.page" extends="definition.teacher.two-column">
+	 	<put name="navLocal" value="/teacher/navbar.jsp"/>	
+	</definition>
 	<definition name="teacher-professor-ships" page="/teacher/myProfessorships.jsp" controllerClass="ServidorApresentacao.tiles.controller.MyProfessorships">
 		<put name="title" value=""/>
 	    <put name="link" value=""/>

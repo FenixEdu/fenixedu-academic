@@ -379,7 +379,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             actionErrors
             .add("error.insertSummary", new ActionError(("error.summary.impossible.insert")));
             saveErrors(request, actionErrors);
-            return prepareInsertSummary(mapping, form, request, response);
+            return mapping.findForward("doPrepareInsertSummary");
         }
         
         DynaActionForm actionForm = (DynaActionForm) form;
@@ -390,12 +390,12 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
         else if(saveValue.equals(new Integer(1))){
             resetActionForm(actionForm, true);
             request.setAttribute("teste", "true");
-            return prepareInsertSummary(mapping, actionForm , request, response);
+            return mapping.findForward("doPrepareInsertSummary");
         }
         else{
             resetActionForm(actionForm, false);
             request.setAttribute("teste", "true");
-            return prepareInsertSummary(mapping, form , request, response);
+            return mapping.findForward("doPrepareInsertSummary");
         }
     }
     

@@ -206,7 +206,127 @@
 				<arg0 key="message.error.curriculumHistoric.degreeCurricularPlan" bundle="CURRICULUM_HISTORIC_RESOURCES" resource="true"/>
 			</field>
 		</form>
-	
+	<!-- ==================== Summaries Validation ================== -->
+	<form name="summaryForm">
+   	<field property="shift" depends="required" page="1">
+	   	<arg0 key="property.shift" resource="true"/>		  	
+   	</field>   
+   	<field property="lesson" depends="required" page="1">
+	   	<arg0 key="property.aula" resource="true"/>		  	
+   	</field>    	
+	<field property="summaryDateInput" depends="required,mask,date" page="1" >
+   		<msg name="date" key="errors.invalid.date"/>
+   		<msg name="mask" key="errors.invalid.date"/>
+   		<arg0 key="message.summaryDate" resource="true"/>
+   		<var>
+           <var-name>datePattern</var-name>
+           <var-value>dd/MM/yyyy</var-value>
+        </var>
+        <var>
+           <var-name>mask</var-name>
+           <var-value>^((.||..)/(.||..)/2...)$</var-value>
+        </var>
+   	</field>
+   	<field property="summaryHourInput" depends="requiredif,mask,date" page="1" >
+   		<msg name="date" key="error.invalid.hour"/>
+   		<msg name="mask" key="error.invalid.hour"/>   		
+   		<arg0 key="message.summaryHour" resource="true"/>
+   		<var>
+           <var-name>mask</var-name>
+           <var-value>^((.||..):(.||..))$</var-value>
+        </var>
+   		<var>
+           <var-name>datePattern</var-name>
+           <var-value>HH:mm</var-value>
+        </var>
+        <var>
+			<var-name>field[0]</var-name>
+			<var-value>lesson</var-value>
+		</var>	
+		<var>
+			<var-name>fieldTest[0]</var-name>
+			<var-value>EQUAL</var-value>
+		</var>	 		
+		<var>
+			<var-name>fieldValue[0]</var-name>
+			<var-value>0</var-value>
+		</var>
+   	</field>
+   	<field property="room" depends="requiredif" page="1">
+	   	<arg0 key="label.room" resource="true"/>
+        <var>
+			<var-name>field[0]</var-name>
+			<var-value>lesson</var-value>
+		</var>	
+		<var>
+			<var-name>fieldTest[0]</var-name>
+			<var-value>EQUAL</var-value>
+		</var>	 		
+		<var>
+			<var-name>fieldValue[0]</var-name>
+			<var-value>0</var-value>
+		</var>		  	
+   	</field>
+   	
+   	<field property="teacher" depends="requiredif" page="1">
+	   	<arg0 key="label.teacher" resource="true"/>
+		<var>
+			<var-name>field[0]</var-name>
+			<var-value>teacherName</var-value>
+		</var>	
+		<var>
+			<var-name>fieldTest[0]</var-name>
+			<var-value>NULL</var-value>
+		</var>	 
+		<var>
+			<var-name>field[1]</var-name>
+			<var-value>teacherNumber</var-value>
+		</var>	
+		<var>
+			<var-name>fieldTest[1]</var-name>
+			<var-value>NULL</var-value>
+		</var>	  	
+		<var>
+			<var-name>fieldJoin</var-name>
+			<var-value>AND</var-value>
+		</var>		
+   	</field>
+   	<field property="teacherNumber" depends="requiredif" page="1">
+	   	<arg0 key="label.teacherNumber" resource="true"/>
+		<var>
+			<var-name>field[0]</var-name>
+			<var-value>teacher</var-value>
+		</var>	
+		<var>
+			<var-name>fieldTest[0]</var-name>
+			<var-value>EQUAL</var-value>
+		</var>	 
+		<var>
+			<var-name>fieldValue[0]</var-name>
+			<var-value>0</var-value>
+		</var>		
+   	</field>    
+   	<field property="teacherName" depends="requiredif" page="1">
+	   	<arg0 key="label.manager.teacher.name" resource="true"/>
+		<var>
+			<var-name>field[0]</var-name>
+			<var-value>teacher</var-value>
+		</var>	
+		<var>
+			<var-name>fieldTest[0]</var-name>
+			<var-value>EQUAL</var-value>
+		</var>	 
+		<var>
+			<var-name>fieldValue[0]</var-name>
+			<var-value>-1</var-value>
+		</var>			
+   	</field>  	
+   	
+   	<field property="summaryText" depends="required" page="1">
+		<arg0 key="message.summaryText" resource="true"/>
+   	</field>
+	     	
+   </form>
     </formset>
 </form-validation>
 

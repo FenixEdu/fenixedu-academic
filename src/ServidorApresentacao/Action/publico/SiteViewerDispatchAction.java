@@ -3,6 +3,8 @@ package ServidorApresentacao.Action.publico;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +21,7 @@ import DataBeans.ExecutionCourseSiteView;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoEvaluationMethod;
 import DataBeans.InfoExecutionPeriod;
+import DataBeans.InfoShift;
 import DataBeans.InfoSiteAnnouncement;
 import DataBeans.InfoSiteAssociatedCurricularCourses;
 import DataBeans.InfoSiteBibliography;
@@ -220,6 +223,13 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
                 .getInfoSummaries(), Collections.reverseOrder());
         request.setAttribute("siteView", siteView);
 
+        List lista = ((InfoSiteSummaries) siteView.getComponent()).getInfoShifts();
+        
+//        for (Iterator iter = lista.iterator(); iter.hasNext();) {
+//            InfoShift element = (InfoShift) iter.next();
+//            System.out.println(element.getLessons());
+//        }
+        
         return mapping.findForward("sucess");
 
     }

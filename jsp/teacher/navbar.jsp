@@ -12,6 +12,7 @@
 	<bean:define id="userView" name="<%= SessionConstants.U_VIEW %>" scope="session"/>
 	<ul>
 		<li><html:link page="/teacherAdministrationViewer.do?method=instructions" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.home"/></html:link></li>
+		<li><html:link page="/copySiteExecutionCourse.do?method=prepareChooseExecutionPeriod" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.copySiteExecutionCourse"/></html:link></li>
 	</ul>
 	<p>
 	<ul>
