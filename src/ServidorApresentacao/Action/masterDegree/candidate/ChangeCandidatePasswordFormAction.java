@@ -32,10 +32,10 @@ public class ChangeCandidatePasswordFormAction extends ServidorApresentacao.Acti
 		  throws Exception {
 
 	    SessionUtils.validSessionVerification(request, mapping);
-		DynaActionForm changePasswordForm = (DynaActionForm) form;
-
 		HttpSession session = request.getSession(false);
+
 		if (session != null) {
+			DynaActionForm changePasswordForm = (DynaActionForm) form;
 			IUserView userView = (IUserView) session.getAttribute("UserView");
 			String oldPassword = (String) changePasswordForm.get("oldPassword");
 			String newPassword = (String) changePasswordForm.get("newPassword");

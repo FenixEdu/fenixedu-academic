@@ -42,12 +42,10 @@ public class ChangeCandidateApplicationFormAction extends ServidorApresentacao.A
       throws Exception {
 
 	SessionUtils.validSessionVerification(request, mapping);
-
-    DynaActionForm changePersonalInformationForm = (DynaActionForm) form;
-
 	HttpSession sessao = request.getSession(false);
 	
 	if (sessao != null) {
+	  DynaActionForm changePersonalInformationForm = (DynaActionForm) form;
       IUserView userView = (IUserView) sessao.getAttribute("UserView");
       GestorServicos gestor = GestorServicos.manager();
  

@@ -48,12 +48,11 @@ public class PrepareApplicationInfoChangeFormAction extends ServidorApresentacao
 
 		// FIXME: Verificar o que acontece com campos nao preenchidos na BD
 		SessionUtils.validSessionVerification(request, mapping);
-		
-	    DynaActionForm changePersonalInfoForm = (DynaActionForm) form;
-
 	  	HttpSession session = request.getSession(false);
 	  	
 	  	if (session != null) {
+		  DynaActionForm changePersonalInfoForm = (DynaActionForm) form;
+
 	      IUserView userView = (IUserView) session.getAttribute("UserView");
 	      GestorServicos gestor = GestorServicos.manager();
 	

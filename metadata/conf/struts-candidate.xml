@@ -107,8 +107,8 @@
     <!-- ========== Global Forward Definitions =============================== -->
     <global-forwards type="org.apache.struts.action.ActionForward">
 	  <forward name="index" path="index.do" redirect="true"/>
-          <forward name="Candidate" path="/indexCand.jsp"
-                   contextRelative="true" redirect="true" />
+      <forward name="Candidate" path="/indexCand.jsp" contextRelative="true" redirect="true" />
+      <forward name="firstPage" path="/index.do"/>
     </global-forwards>
     
     <!-- ========== Action Mapping Definitions =============================== -->
@@ -202,7 +202,7 @@
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
       <set-property property="pathnames" 
-                    value="/WEB-INF/validator-rules.xml,/WEB-INF/conf/validation-candidate.xml"/>
+                    value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-candidate.xml"/>
     </plug-in>
     
 </struts-config>
