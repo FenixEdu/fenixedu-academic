@@ -6,14 +6,17 @@ package Util;
  * 2/Abr/2003
  */
 public class EnrolmentEvaluationState {
-
 	public static final int NORMAL = 1;
 	public static final int RECTIFIED = 2;
 	public static final int RECTIFICATION = 3;
+	public static final int TEMPORARY = 4;
 
 	public static final EnrolmentEvaluationState NORMAL_OBJ = new EnrolmentEvaluationState(EnrolmentEvaluationState.NORMAL);
 	public static final EnrolmentEvaluationState RECTIFIED_OBJ = new EnrolmentEvaluationState(EnrolmentEvaluationState.RECTIFIED);
-	public static final EnrolmentEvaluationState RECTIFICATION_OBJ = new EnrolmentEvaluationState(EnrolmentEvaluationState.RECTIFICATION);
+	public static final EnrolmentEvaluationState RECTIFICATION_OBJ =
+		new EnrolmentEvaluationState(EnrolmentEvaluationState.RECTIFICATION);
+	public static final EnrolmentEvaluationState TEMPORARY_OBJ = new EnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY);
+
 
 	private Integer state;
 
@@ -59,6 +62,9 @@ public class EnrolmentEvaluationState {
 		String valueS = null;
 
 		switch (value) {
+			case TEMPORARY :
+				valueS = "TEMPORARY";
+				break;
 			case NORMAL :
 				valueS = "NORMAL";
 				break;
@@ -68,7 +74,7 @@ public class EnrolmentEvaluationState {
 			case RECTIFICATION :
 				valueS = "RECTIFICATION";
 				break;
-			default:
+			default :
 				break;
 		}
 
