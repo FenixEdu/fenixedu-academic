@@ -304,6 +304,7 @@
 			<form-property name="othersPrice" type="java.lang.String" />
 			<form-property name="othersQuantity" type="java.lang.String" />
 			
+			
       </form-bean>
 
       <!-- Bean for The Choosing of a Year -->
@@ -1481,6 +1482,9 @@
    		 <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
             key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
             handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+         <exception	type="ServidorApresentacao.Action.exceptions.ScholarshipNotFinishedActionException"
+			key="ServidorApresentacao.Action.exceptions.ScholarshipNotFinishedActionException"
+			handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
       	  <forward name="PrepareReady" path="/certificate/chooseCertificate.jsp"/>
       	  <forward name="ChooseSuccess" path="/printCertificate.do?method=prepare"/>     	  
       </action>
@@ -2080,8 +2084,8 @@
 		<forward name="error" path="df.page.editWorkLocation" />
 		<forward name="success" path="df.page.editWorkLocation_success" />
 		<forward name="start" path="df.page.editWorkLocation" />
-		<forward name="errorLocationAlreadyExists" path="/editWorkLocation.do?page=0&amp;method=prepare" />
-    </action>	
+		<forward name="errorLocationAlreadyExists" path="/editWorkLocation.do?page=0&amp;method=prepare" />  
+	</action>	
 	
 	<action type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.reimbursementGuide.ReimbursementGuideDispatchAction"
 			name="createReimbursementGuide"

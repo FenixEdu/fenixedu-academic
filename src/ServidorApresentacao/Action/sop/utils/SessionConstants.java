@@ -169,8 +169,10 @@ public abstract class SessionConstants {
 	public static final String INFO_FINAL_RESULT = "infoFinalResult";
 	public static final String CONCLUSION_DATE = "ConclusionDate";
 	public static final String FINAL_RESULT_SIMPLE = "fimParteEscolarSimples";
+	public static final String FINAL_RESULT_DEGREE_SIMPLE = "fimCursoSimples";
 	public static final String DISCRIMINATED_WITHOUT_AVERAGE = "fimParteEscolarDiscriminadaSemMedia";
 	public static final String DISCRIMINATED_WITH_AVERAGE = "fimParteEscolarDiscriminadaComMedia";
+	public static final String FINAL_DEGREE_DISCRIMINATED_WITH_AVERAGE = "fimCursoDiscriminadaComMedia";
 	public static final String DIPLOMA = "Diploma";
 	public static final String STUDENT_LIST = "student_list";
 	public static final String STUDENT_CURRICULAR_PLAN = "student_curricular_plan";
