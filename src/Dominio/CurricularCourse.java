@@ -72,7 +72,15 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
     public CurricularCourse() {
     }
 
-    
+//    public boolean equals(Object obj) {
+//        if (getIdInternal() != null && obj != null && obj instanceof ICurricularCourse) {
+//            ICurricularCourse curricularCourse = (ICurricularCourse) obj;
+//            return getIdInternal().equals(curricularCourse.getIdInternal());
+//        } else {
+//            return false;
+//        }
+//    }
+
     public String toString() {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("[").append(this.getClass()).append(":").append("idInternal = ").append(

@@ -59,8 +59,8 @@ abstract public class DomainObject implements IDomainObject {
 					&& getIdInternal().equals(domainObject.getIdInternal())) {
 				List thisInterfaces = Arrays.asList(getClass().getInterfaces());
 				List objInterfaces = Arrays.asList(domainObject.getClass().getInterfaces());
-				CollectionUtils.filter(thisInterfaces, new IS_NOT_IDOMAIN_PREDICATE());
-				CollectionUtils.filter(objInterfaces, new IS_NOT_IDOMAIN_PREDICATE());
+				thisInterfaces = (List) CollectionUtils.select(thisInterfaces, new IS_NOT_IDOMAIN_PREDICATE());
+				objInterfaces = (List) CollectionUtils.select(objInterfaces, new IS_NOT_IDOMAIN_PREDICATE());
 				if (!CollectionUtils.intersection(thisInterfaces, objInterfaces).isEmpty()) {
 					return true;
 				}
@@ -78,9 +78,10 @@ abstract public class DomainObject implements IDomainObject {
 	}
 
 	private class IS_NOT_IDOMAIN_PREDICATE implements Predicate {
+	    
 		public boolean evaluate(Object arg0) {
 			Class class1 = (Class) arg0;
-			if (class1.getName().equals(this.getClass().getName())) {
+			if (class1.getName().equals("Dominio.IDomainObject")) {
 				return false; 
 			} else {
 				return true;

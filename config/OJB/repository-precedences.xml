@@ -13,11 +13,19 @@
 
 <class-descriptor class="Dominio.precedences.Restriction">
     <extent-class class-ref="Dominio.precedences.RestrictionPeriodToApply"/>
-    <extent-class class-ref="Dominio.precedences.RestrictionByNumberOfDoneCurricularCourses"/>
+    <extent-class class-ref="Dominio.precedences.RestrictionByNumberOfCurricularCourses"/>
+    <extent-class class-ref="Dominio.precedences.RestrictionByCurricularCourse"/>
+</class-descriptor>
+
+<class-descriptor class="Dominio.precedences.RestrictionByCurricularCourse">
     <extent-class class-ref="Dominio.precedences.RestrictionNotDoneCurricularCourse"/>
     <extent-class class-ref="Dominio.precedences.RestrictionDoneCurricularCourse"/>
 </class-descriptor>
 
+<class-descriptor class="Dominio.precedences.RestrictionByNumberOfCurricularCourses">
+    <extent-class class-ref="Dominio.precedences.RestrictionByNumberOfDoneCurricularCourses"/>
+</class-descriptor>
+	
 <class-descriptor class="Dominio.precedences.RestrictionPeriodToApply" table="RESTRICTION">
     <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
     <field-descriptor name="keyPrecedence" column="KEY_PRECEDENCE" jdbc-type="INTEGER" nullable="false"/>

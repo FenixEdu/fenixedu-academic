@@ -82,40 +82,29 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
             final IStudentCurricularPlan studentCurricularPlan)
             throws ExcepcaoPersistencia {
 
+        final IExecutionPeriod executionPeriod = getExecutionPeriod(null);
+
         InfoStudentEnrollmentContext infoStudentEnrolmentContext = new InfoStudentEnrollmentContext();
+        
         List curricularCourses2Enroll = studentCurricularPlan
-                .getCurricularCoursesToEnroll(getExecutionPeriod(null));
+                .getCurricularCoursesToEnroll(executionPeriod);
 
-        infoStudentEnrolmentContext
-                .setCurricularCourses2Enroll((List) CollectionUtils.collect(
-                        curricularCourses2Enroll, new Transformer() {
+        infoStudentEnrolmentContext.setCurricularCourses2Enroll((List) CollectionUtils.collect(
+                curricularCourses2Enroll, new Transformer() {
 
-                            public Object transform(Object arg0) {
-                                InfoCurricularCourse2Enroll infoCurricularCourse = InfoCurricularCourse2EnrollWithInfoCurricularCourse
-                                        .newInfoFromDomain((CurricularCourse2Enroll) arg0);
-                                try {
-                                    infoCurricularCourse
-                                            .setCurricularYear(InfoCurricularYear
-                                                    .newInfoFromDomain(((CurricularCourse2Enroll) arg0)
-                                                            .getCurricularCourse()
-                                                            .getCurricularYearByBranchAndSemester(
-                                                                    studentCurricularPlan
-                                                                            .getBranch(),
-                                                                            getExecutionPeriod(null)
-                                                                            .getSemester())));
-                                } catch (ExcepcaoPersistencia e) {
-                                    infoCurricularCourse
-                                            .setCurricularYear(InfoCurricularYear
-                                                    .newInfoFromDomain(((CurricularCourse2Enroll) arg0)
-                                                            .getCurricularCourse()
-                                                            .getCurricularYearByBranchAndSemester(
-                                                                    studentCurricularPlan
-                                                                            .getBranch(),
-                                                                    null)));
-                                }
-                                return infoCurricularCourse;
-                            }
-                        }));
+                    public Object transform(Object arg0) {
+                        InfoCurricularCourse2Enroll infoCurricularCourse = InfoCurricularCourse2EnrollWithInfoCurricularCourse
+                                .newInfoFromDomain((CurricularCourse2Enroll) arg0);
+
+                        infoCurricularCourse.setCurricularYear(InfoCurricularYear
+                                .newInfoFromDomain(((CurricularCourse2Enroll) arg0)
+                                        .getCurricularCourse().getCurricularYearByBranchAndSemester(
+                                                studentCurricularPlan.getBranch(),
+                                                executionPeriod.getSemester())));
+                        return infoCurricularCourse;
+                    }
+                }));
+
         Collections.sort(infoStudentEnrolmentContext
                 .getCurricularCourses2Enroll(), new Comparator() {
 
@@ -130,7 +119,7 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
                 .setStudentCurrentSemesterInfoEnrollments((List) CollectionUtils
                         .collect(
                                 studentCurricularPlan
-                                        .getAllStudentEnrolledEnrollmentsInExecutionPeriod(null),
+                                        .getAllStudentEnrolledEnrollmentsInExecutionPeriod(executionPeriod),
                                 new Transformer() {
 
                                     public Object transform(Object arg0) {
@@ -144,7 +133,7 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
                         .newInfoFromDomain(studentCurricularPlan));
         infoStudentEnrolmentContext
                 .setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear
-                        .newInfoFromDomain(getExecutionPeriod(null)));
+                        .newInfoFromDomain(executionPeriod));
         infoStudentEnrolmentContext
                 .setCreditsInSpecializationArea(studentCurricularPlan
                         .getCreditsInSpecializationArea());

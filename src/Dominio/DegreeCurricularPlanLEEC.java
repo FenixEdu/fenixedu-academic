@@ -60,4 +60,5 @@ public class DegreeCurricularPlanLEEC extends DegreeCurricularPlan implements ID
     public List getSecundaryAreas() {
         return getSpecializationAreas();
     }
+
 }

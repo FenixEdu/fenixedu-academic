@@ -719,6 +719,8 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
                     AreaType.SECONDARY_OBJ));
         }
 
+        curricularCourses.addAll(degreeCurricularPlan.getTFCs());
+
         List result = new ArrayList();
         int curricularCoursesSize = curricularCourses.size();
 

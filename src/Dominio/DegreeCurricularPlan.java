@@ -14,6 +14,7 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.AreaType;
 import Util.BranchType;
+import Util.CurricularCourseType;
 import Util.DegreeCurricularPlanState;
 import Util.MarkType;
 
@@ -309,6 +310,17 @@ public class DegreeCurricularPlan extends DomainObject implements
         });
     }
 
+    public List getTFCs() {
+
+        List curricularCourses = (List) CollectionUtils.select(getCurricularCourses(), new Predicate() {
+            public boolean evaluate(Object obj) {
+                ICurricularCourse cc = (ICurricularCourse) obj;
+                return cc.getType().equals(CurricularCourseType.TFC_COURSE_OBJ);
+            }
+        });
+
+        return curricularCourses;
+    }
     /*
      * (non-Javadoc)
      * 

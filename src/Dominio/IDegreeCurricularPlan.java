@@ -57,6 +57,7 @@ public interface IDegreeCurricularPlan extends IDomainObject
 	public List getCommonAreas();
     public List getSpecializationAreas();
     public List getSecundaryAreas();
+    public List getTFCs();
 	
 	// -------------------------------------------------------------
 	// END: Only for enrollment purposes
