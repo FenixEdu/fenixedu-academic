@@ -31,6 +31,10 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * @author Tânia Pousão
  *  
  */
+/**
+ * @author Tânia Pousão
+ *  
+ */
 public class ReadGratuitySituationListByExecutionDegreeAndSpecialization implements IService
 {
 	/**
@@ -40,6 +44,11 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 	{
 	}
 
+	/*
+	 * Return an hash map with three objects: 1. at first position a list of infoGratuitySituation 2. in
+	 * second, a double with the total of list's payed values 3. in third, a double with the total of
+	 * list's remaning values
+	 */
 	public Object run(
 		Integer executionDegreeId,
 		String executionYearName,
@@ -57,7 +66,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 		{
 			throw new FenixServiceException("error.masterDegree.gatuyiuty.impossible.studentsGratuityList");
 		}
-		
+
 		if (gratuitySituationTypeName == null)
 		{
 			throw new FenixServiceException("error.masterDegree.gatuyiuty.impossible.studentsGratuityList");
@@ -89,14 +98,16 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 			Specialization specialization = new Specialization(specializationName);
 
 			//GRATUITY SITUATION
-			GratuitySituationType gratuitySituationType = GratuitySituationType.getEnum(gratuitySituationTypeName);
-			
+			GratuitySituationType gratuitySituationType =
+				GratuitySituationType.getEnum(gratuitySituationTypeName);
+
 			//Read all gratuity situation desired
 			IPersistentGratuitySituation persistentGratuitySituation =
 				sp.getIPersistentGratuitySituation();
 			List gratuitySituationList = null;
 			gratuitySituationList =
-				persistentGratuitySituation.readGratuitySituationListByExecutionDegreeAndSpecializationAndSituation(
+				persistentGratuitySituation
+					.readGratuitySituationListByExecutionDegreeAndSpecializationAndSituation(
 					executionDegree,
 					specialization,
 					gratuitySituationType);
@@ -107,8 +118,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 				List infoGratuitySituationList = new ArrayList();
 				double totalPayedValue = 0;
 				double totalRemaingValue = 0;
-				
-				
+
 				//while it is cloner each element of the list
 				//it is calculate the total values of payed and remaning values.
 				while (listIterator.hasNext())
@@ -118,20 +128,23 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 					InfoGratuitySituation infoGratuitySituation =
 						Cloner.copyIGratuitySituation2InfoGratuitySituation(gratuitySituation);
 
+					fillSituationType(infoGratuitySituation);
+					
 					infoGratuitySituationList.add(infoGratuitySituation);
-					
-					
-					
-					totalPayedValue =totalPayedValue +infoGratuitySituation.getPayedValue().doubleValue();
-					totalRemaingValue =totalRemaingValue + infoGratuitySituation.getRemainingValue().doubleValue();
+
+					//add all value for find the total
+					totalPayedValue =
+						totalPayedValue + infoGratuitySituation.getPayedValue().doubleValue();
+					totalRemaingValue =
+						totalRemaingValue + infoGratuitySituation.getRemainingValue().doubleValue();
 				}
-				
+
 				//build the result that is a hash map with a list, total payed and remaining value
 				result = new HashMap();
 				result.put(new Integer(0), infoGratuitySituationList);
 				result.put(new Integer(1), new Double(totalPayedValue));
 				result.put(new Integer(2), new Double(totalRemaingValue));
-			}			
+			}
 		}
 		catch (ExcepcaoPersistencia e)
 		{
@@ -141,5 +154,21 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 		}
 
 		return result;
+	}
+
+	private void fillSituationType(InfoGratuitySituation infoGratuitySituation)
+	{
+		if (infoGratuitySituation.getRemainingValue().doubleValue() > 0)
+		{
+			infoGratuitySituation.setSituationType(GratuitySituationType.DEBTOR);
+		}
+		else if (infoGratuitySituation.getRemainingValue().doubleValue() == 0)
+		{
+			infoGratuitySituation.setSituationType(GratuitySituationType.REGULARIZED);
+		}
+		else if(infoGratuitySituation.getRemainingValue().doubleValue() < 0)
+		{
+			infoGratuitySituation.setSituationType(GratuitySituationType.CREDITOR);
+		}
 	}
 }

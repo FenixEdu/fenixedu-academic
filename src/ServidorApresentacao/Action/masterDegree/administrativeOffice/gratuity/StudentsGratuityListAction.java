@@ -332,7 +332,7 @@ public class StudentsGratuityListAction extends DispatchAction
 		else if (orderingType.equals(new String("gratuitySituation")))
 		{
 			//order list by gratuity's state
-			//Collections.sort(infoGratuitySituationList, new BeanComparator("")); //???
+			Collections.sort(infoGratuitySituationList, new BeanComparator("situationType")); 
 		}
 		else if (orderingType.equals(new String("payedValue")))
 		{

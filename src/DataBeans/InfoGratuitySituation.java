@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import Util.ExemptionGratuityType;
+import Util.GratuitySituationType;
 
 /**
  * @author Tânia Pousão
@@ -31,7 +32,24 @@ public class InfoGratuitySituation extends InfoObject implements Serializable
 	
 	private List transactionList;
 	
-	
+	private GratuitySituationType situationType; //attributes auxiliaries for calculations 
+		
+	/**
+	 * @return Returns the situationType.
+	 */
+	public GratuitySituationType getSituationType()
+	{
+		return situationType;
+	}
+
+	/**
+	 * @param situationType The situationType to set.
+	 */
+	public void setSituationType(GratuitySituationType situationType)
+	{
+		this.situationType = situationType;
+	}
+
 	/**
 	 * @return Returns the infoEmployee.
 	 */
