@@ -1,3 +1,6 @@
+ALTER TABLE QUALIFICATION ADD DEGREE varchar(200) not null;
+ALTER TABLE QUALIFICATION DROP INDEX U1, ADD unique U1 (YEAR,SCHOOL,DEGREE,KEY_PERSON);
+
 insert into QUALIFICATION (year,school,title,degree,key_person) values (1967,'IST','Licenciatura','Eng™. QuÌmica Industrail',200);
 insert into QUALIFICATION (year,school,title,degree,key_person) values (1970,'Instituto Superior TÈcnico','Licenciatura','Eng™ QuÌmica Industrial',201);
 insert into QUALIFICATION (year,school,title,degree,key_person) values (1970,'Univ. Lancaster (R.U.)','Licenciatura','Civil',204);
@@ -793,7 +796,7 @@ insert into QUALIFICATION (year,school,title,degree,key_person) values (1983,'In
 insert into QUALIFICATION (year,school,title,degree,key_person) values (2000,'  Instituto Superior TÈcnico','  Doutoramento','  Eng™ Quimica',1503);
 insert into QUALIFICATION (year,school,title,degree,key_person) values (1996,'Instituto Superior TÈcnico','Doutoramento','Eng™ Quimica',1504);
 insert into QUALIFICATION (year,school,title,degree,key_person) values (1990,'Instituto Superior TÈcnico','Provas Apt. Ped. Cap. Cient.','Q. Org‚nica',1787);
-insert into QUALIFICATION (year,school,title,degree,key_person) values (1973,'Faculdade de Letras - Univ. Lisboa','Agregaç„o','Geografia Humana',14120);
+insert into QUALIFICATION (year,school,title,degree,key_person) values (1973,'Faculdade de Letras - Univ. Lisboa','Agrega?„o','Geografia Humana',14120);
 insert into QUALIFICATION (year,school,title,degree,key_person) values (1994,'Imperial College, Londres, UK','Dilploma','Engenharia QuÌmica',2687);
 insert into QUALIFICATION (year,school,title,degree,key_person) values (1984,'Instituto Superior TÈcnico','Doutoramento','Eng™ QuÌ./Biotecn.(Microb.)',466);
 insert into QUALIFICATION (year,school,title,degree,key_person) values (1991,'Instituto Superior TÈcnico','AgregaÁ„o','Eng. Electrot.',12939);
@@ -905,7 +908,7 @@ insert into QUALIFICATION (year,school,title,degree,key_person) values (1983,'UM
 insert into QUALIFICATION (year,school,title,degree,key_person) values (1992,'IST - Liboa','AgregaÁ„o','Eng™ Mec‚nica',1425);
 insert into QUALIFICATION (year,school,title,degree,key_person) values (1993,'Courant Institute, NYU','PhD em Matem·tica','Matem·tica',1431);
 insert into QUALIFICATION (year,school,title,degree,key_person) values (1995,'IST','Doutoramento','Eng™ Civil',1443);
-insert into QUALIFICATION (year,school,title,degree,key_person) values (1993,'UniversitÈ Bordeaux - I','Doutoramento','Chimie des Polymères',1446);
+insert into QUALIFICATION (year,school,title,degree,key_person) values (1993,'UniversitÈ Bordeaux - I','Doutoramento','Chimie des Polym?res',1446);
 insert into QUALIFICATION (year,school,title,degree,key_person) values (1996,'UniversitÈ PARIS XI','Doctorat','Dinamique des Fluides et Transferts',1466);
 insert into QUALIFICATION (year,school,title,degree,key_person) values (1985,'IST','Licenciado','Engenharia Civil',1473);
 insert into QUALIFICATION (year,school,title,degree,key_person) values (1999,'Instituto Superior TÈcnico','Doutoramento','Eng™ Quimica',1487);
