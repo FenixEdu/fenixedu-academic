@@ -120,6 +120,12 @@
       	      type="ServidorApresentacao.Action.masterDegree.candidate.ChooseCandidateAction">
       	  <forward name="Success" path="/indexCand.jsp"/>      	      
       </action>     
+      
+     <action path="/backErrorPage"
+          type="ServidorApresentacao.Action.commons.VoidAction"
+    	  >
+         <forward name="Success" path="/backErrorPage.jsp"/> 
+      </action>
 	
       <!-- Action for Visualization Of the Candidate's Application Information -->
       <action path="/visualizeApplicationInfo" forward="/visualizeApplicationInfo.jsp"/>      
@@ -135,6 +141,7 @@
       	  <forward name="Success" path="/changeSuccess.jsp"/>
       	  <forward name="Unchangeable" path="/changeUnsuccess.jsp"/>
       	  <forward name="prepareReady" path="/changeApplicationInfo.jsp"/>
+      	  <forward name="BackError" path="/backErrorPage.do"/>
       </action>
 
 
