@@ -15,6 +15,7 @@ import DataBeans.InfoLesson;
  */
 public abstract class ColorPicker {
 	private HashMap lessonColors;
+	private int colorIndex = 0;
 	private String[] colorPallete =
 		{
 			"#33CCFF",
@@ -49,20 +50,9 @@ public abstract class ColorPicker {
 			String color = (String) lessonColors.get(colorKeyInfoLesson);
 
 			if (color == null) {
-
-				for (int colorIndex = 0;
-					colorIndex < colorPallete.length && color == null;
-					colorIndex++) {
-					String colorFromPallete = colorPallete[colorIndex];
-					if (!lessonColors.containsValue(colorFromPallete)) {
-						color = colorFromPallete;
-						lessonColors.put(colorKeyInfoLesson, color);
-					}
-				}
-				if (color == null) {
-					color = colorPallete[0];
-				}
-
+				color = colorPallete [colorIndex % colorPallete.length];
+				colorIndex++;
+				lessonColors.put(colorKeyInfoLesson, color);
 			}
 			return color;
 		}
