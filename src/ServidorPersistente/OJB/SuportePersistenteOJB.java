@@ -89,6 +89,7 @@ import ServidorPersistente.IPersistentResponsibleFor;
 import ServidorPersistente.IPersistentRestriction;
 import ServidorPersistente.IPersistentRole;
 import ServidorPersistente.IPersistentSection;
+import ServidorPersistente.IPersistentShiftProfessorship;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPersistentStudentGroup;
@@ -120,11 +121,13 @@ import ServidorPersistente.OJB.Seminaries.CaseStudyOJB;
 import ServidorPersistente.OJB.Seminaries.EquivalencyOJB;
 import ServidorPersistente.OJB.Seminaries.ModalityOJB;
 import ServidorPersistente.OJB.Seminaries.ThemeOJB;
+import ServidorPersistente.OJB.degree.finalProject.PersistentDegreeFinalProjectOJB;
 import ServidorPersistente.OJB.gesdis.CourseReportOJB;
 import ServidorPersistente.OJB.grant.owner.GrantOwnerOJB;
 import ServidorPersistente.OJB.person.qualification.QualificationOJB;
 import ServidorPersistente.OJB.teacher.CareerOJB;
 import ServidorPersistente.OJB.teacher.CategoryOJB;
+import ServidorPersistente.OJB.teacher.professorship.PersistentShiftProfessorship;
 import ServidorPersistente.Seminaries.IPersistentSeminary;
 import ServidorPersistente.Seminaries.IPersistentSeminaryCandidacy;
 import ServidorPersistente.Seminaries.IPersistentSeminaryCaseStudy;
@@ -132,10 +135,12 @@ import ServidorPersistente.Seminaries.IPersistentSeminaryCaseStudyChoice;
 import ServidorPersistente.Seminaries.IPersistentSeminaryCurricularCourseEquivalency;
 import ServidorPersistente.Seminaries.IPersistentSeminaryModality;
 import ServidorPersistente.Seminaries.IPersistentSeminaryTheme;
+import ServidorPersistente.degree.finalProject.IPersistentDegreeFinalProjectOrientation;
 import ServidorPersistente.gesdis.IPersistentCourseReport;
 import ServidorPersistente.grant.IPersistentGrantOwner;
 import ServidorPersistente.teacher.IPersistentCareer;
 import ServidorPersistente.teacher.IPersistentCategory;
+
 
 public class SuportePersistenteOJB implements ISuportePersistente {
 	Implementation _odmg = null;
@@ -741,4 +746,22 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	public IPersistentCareer getIPersistentCareer() {
 		return new CareerOJB();
 	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentDegreeFinalProjectOrientation()
+	 */
+	public IPersistentDegreeFinalProjectOrientation getIPersistentDegreeFinalProjectOrientation()
+	{
+		return new PersistentDegreeFinalProjectOJB();
+	}
+
+    /* (non-Javadoc)
+     * @see ServidorPersistente.ISuportePersistente#getIPersistentShiftProfessorship()
+     */
+    public IPersistentShiftProfessorship getIPersistentShiftProfessorship()
+    {
+ 
+        return new PersistentShiftProfessorship();
+    }
+
 }

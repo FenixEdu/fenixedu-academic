@@ -13,6 +13,7 @@ import ServidorPersistente.Seminaries.IPersistentSeminaryCaseStudyChoice;
 import ServidorPersistente.Seminaries.IPersistentSeminaryCurricularCourseEquivalency;
 import ServidorPersistente.Seminaries.IPersistentSeminaryModality;
 import ServidorPersistente.Seminaries.IPersistentSeminaryTheme;
+import ServidorPersistente.degree.finalProject.IPersistentDegreeFinalProjectOrientation;
 import ServidorPersistente.gesdis.IPersistentCourseReport;
 import ServidorPersistente.grant.IPersistentGrantOwner;
 import ServidorPersistente.teacher.IPersistentCareer;
@@ -187,8 +188,17 @@ public interface ISuportePersistente {
 	
 
 	public IPersistentUniversity getIPersistentUniversity();
+	/**
+	 * @return
+	 */
+	public IPersistentDegreeFinalProjectOrientation getIPersistentDegreeFinalProjectOrientation();
 	
 	public IPersistentCourseReport getIPersistentCourseReport();
 	public IPersistentCategory getIPersistentCategory();
 	public IPersistentCareer getIPersistentCareer();
+    /**
+     * @return
+     */
+    public IPersistentShiftProfessorship getIPersistentShiftProfessorship();
+
 }
