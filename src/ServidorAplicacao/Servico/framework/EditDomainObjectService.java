@@ -95,7 +95,7 @@ public abstract class EditDomainObjectService implements IServico
 	 * @param domainObject
 	 * @return
 	 */
-    protected boolean canCreate(IDomainObject domainObject, ISuportePersistente sp)
+    protected boolean canCreate(IDomainObject newDomainObject, ISuportePersistente sp)
         throws ExcepcaoPersistencia
     {
         IDomainObject existingDomainObject = readObjectByUnique(newDomainObject, sp);
