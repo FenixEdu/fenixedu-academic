@@ -249,7 +249,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 			
 			ISiteComponent viewProjectsComponent = new InfoSiteProjects();
 			
-			ExecutionCourseSiteView siteView = (ExecutionCourseSiteView)readGroupView(request, viewProjectsComponent,null,null, null, null, null,null);
+			ExecutionCourseSiteView siteView = (ExecutionCourseSiteView)readGroupView(request, viewProjectsComponent,null, null, null, null,null);
 			InfoSiteProjects infoSiteProjectsName = (InfoSiteProjects) siteView.getComponent();
 			List infoGroupPropertiesList = infoSiteProjectsName.getInfoGroupPropertiesList();
 					
@@ -281,7 +281,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 			
 			ISiteComponent viewAllGroups = new InfoSiteAllGroups();
 			System.out.println("objectCodeString"+objectCodeString);
-			ExecutionCourseSiteView siteView = (ExecutionCourseSiteView)readGroupView(request, viewAllGroups,null,null, null, null, null,groupPropertiesCode);
+			ExecutionCourseSiteView siteView = (ExecutionCourseSiteView)readGroupView(request, viewAllGroups,null,null, null, null,groupPropertiesCode);
 			request.setAttribute("groupProperties",groupPropertiesCode);
 			
 //			InfoSiteAllGroups allGroups= (InfoSiteAllGroups) siteView.getComponent();
@@ -306,17 +306,13 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 			HttpServletResponse response)
 			throws FenixActionException {
 
-			String groupPropertiesCodeString =(String)request.getParameter("groupPropertiesCode");
-			String shiftCodeString =(String)request.getParameter("shiftCode");
-			String groupNumberString =(String)request.getParameter("groupNumber");
+			String studentGroupCodeString =(String)request.getParameter("studentGroupCode");
 			
-			Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
-			Integer shiftCode = new Integer(shiftCodeString);
-			Integer groupNumber = new Integer(groupNumberString);
+			Integer studentGroupCode = new Integer(studentGroupCodeString);
 			
 			ISiteComponent viewStudentGroup = new InfoSiteStudentGroup();
 			
-			ExecutionCourseSiteView siteView = (ExecutionCourseSiteView)readGroupView(request, viewStudentGroup,null,null, null, groupNumber, shiftCode,groupPropertiesCode);
+			ExecutionCourseSiteView siteView = (ExecutionCourseSiteView)readGroupView(request, viewStudentGroup,null,null, null, studentGroupCode,null);
 				
 			return mapping.findForward("sucess");	
 	
@@ -447,8 +443,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 		Integer infoExecutionCourseCode,
 		Integer sectionIndex,
 		Integer curricularCourseId,
-		Integer groupNumber,
-		Integer shiftCode,
+		Integer studentGroupCode,
 		Integer groupPropertiesCode
 		)
 		throws FenixActionException {
@@ -471,8 +466,7 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 				infoExecutionCourseCode,
 				sectionIndex,
 				curricularCourseId,
-				groupNumber,
-				shiftCode,
+				studentGroupCode,
 				groupPropertiesCode};
 		System.out.println("NO READ_SITE_GROUP_VIEWER-OBJECT_CODE"+objectCode);
 		ExecutionCourseSiteView siteView = null;

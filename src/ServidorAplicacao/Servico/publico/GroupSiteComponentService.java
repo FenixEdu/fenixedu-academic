@@ -56,8 +56,7 @@ public class GroupSiteComponentService implements IServico {
 	Integer executionCourseCode,
 	Integer sectionIndex,
 	Integer curricularCourseId,
-	Integer groupNumber, 
-	Integer shiftCode,
+	Integer studentGroupCode,
 	Integer groupPropertiesCode)
 		throws FenixServiceException {
 	
@@ -75,7 +74,7 @@ public class GroupSiteComponentService implements IServico {
 			}
 		}
 		GroupSiteComponentBuilder componentBuilder = GroupSiteComponentBuilder.getInstance();
-		bodyComponent = componentBuilder.getComponent(bodyComponent,site.getExecutionCourse().getIdInternal(),groupNumber,shiftCode,groupPropertiesCode);
+		bodyComponent = componentBuilder.getComponent(bodyComponent,site.getExecutionCourse().getIdInternal(),studentGroupCode,groupPropertiesCode);
 		ExecutionCourseSiteComponentBuilder componentBuilder2=ExecutionCourseSiteComponentBuilder.getInstance();
 		
 		commonComponent = componentBuilder2.getComponent(commonComponent,site,null,null,null);	

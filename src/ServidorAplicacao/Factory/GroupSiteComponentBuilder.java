@@ -23,7 +23,7 @@ import Dominio.IGroupProperties;
 import Dominio.IStudentGroup;
 import Dominio.IStudentGroupAttend;
 import Dominio.ITurno;
-import Dominio.Turno;
+import Dominio.StudentGroup;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -50,8 +50,7 @@ public class GroupSiteComponentBuilder {
 	public ISiteComponent getComponent(
 		ISiteComponent component,
 		Integer executionCourseCode,
-		Integer groupNumber,
-		Integer shiftCode,
+		Integer studentGroupCode,
 		Integer groupPropertiesCode)
 		throws FenixServiceException {
 
@@ -66,7 +65,7 @@ public class GroupSiteComponentBuilder {
 			}
 			else 
 				if (component instanceof InfoSiteStudentGroup) {
-					return getInfoSiteStudentGroup((InfoSiteStudentGroup) component,groupPropertiesCode,shiftCode,groupNumber);
+					return getInfoSiteStudentGroup((InfoSiteStudentGroup) component,studentGroupCode);
 				}
 		return null;
 	}
@@ -208,30 +207,28 @@ public class GroupSiteComponentBuilder {
 		
 	private ISiteComponent getInfoSiteStudentGroup(
 		InfoSiteStudentGroup component,
-		Integer groupPropertiesCode,
-		Integer shiftCode,
-		Integer groupNumber)
+		Integer studentGroupCode)
 		throws FenixServiceException {
 			
 			
-		List infoSiteStudents = readStudentGroupInformation(groupNumber,shiftCode,groupPropertiesCode);
+		List infoSiteStudents = readStudentGroupInformation(studentGroupCode);
 		component.setInfoSiteStudentInformationList(infoSiteStudents);
 		return component;
 		}
 			
 	
 		
-		public List readStudentGroupInformation(Integer groupNumber,Integer shiftCode, Integer groupPropertiesCode) {
+		public List readStudentGroupInformation(Integer studentGroupCode) {
 		
 			List studentGroupAttendInformationList = null;
 			try 
 			{
 				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 				
-				IGroupProperties groupProperties =(IGroupProperties) sp.getIPersistentGroupProperties().readByOId(new GroupProperties(groupPropertiesCode), false);
-				ITurno shift = (ITurno)sp.getITurnoPersistente().readByOId(new Turno(shiftCode),false);
+				//IGroupProperties groupProperties =(IGroupProperties) sp.getIPersistentGroupProperties().readByOId(new GroupProperties(groupPropertiesCode), false);
+				
+				IStudentGroup studentGroup= (IStudentGroup) sp.getIPersistentStudentGroup().readByOId(new StudentGroup(studentGroupCode), false);
 				 
-				IStudentGroup studentGroup = sp.getIPersistentStudentGroup().readStudentGroupByGroupPropertiesAndGroupNumberAndShift(groupProperties,groupNumber,shift);
 				List studentGroupAttendList = sp.getIPersistentStudentGroupAttend().readAllByStudentGroup(studentGroup);
 				
 				studentGroupAttendInformationList = new ArrayList(studentGroupAttendList.size());
