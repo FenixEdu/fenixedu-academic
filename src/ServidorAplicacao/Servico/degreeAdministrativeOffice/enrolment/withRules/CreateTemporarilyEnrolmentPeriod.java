@@ -49,13 +49,22 @@ public class CreateTemporarilyEnrolmentPeriod implements IServico {
 			IStudent student = persistentStudent.readByUsername(actor.getUtilizador());
 			IStudentCurricularPlan studentActiveCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(student.getNumber(), student.getDegreeType());
 
-			IEnrolmentPeriod enrolmentPeriod = new EnrolmentPeriod();
-			enrolmentPeriod.setDegreeCurricularPlan(studentActiveCurricularPlan.getDegreeCurricularPlan());
-			enrolmentPeriod.setEndDate(new Date());
-			enrolmentPeriod.setExecutionPeriod(Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod));
-			enrolmentPeriod.setStartDate(new Date());
 
-			enrolmentPeriodDAO.lockWrite(enrolmentPeriod);
+			IEnrolmentPeriod enrolmentPeriod = enrolmentPeriodDAO.readActualEnrolmentPeriodForDegreeCurricularPlan(studentActiveCurricularPlan.getDegreeCurricularPlan());
+			if(enrolmentPeriod == null) {
+				enrolmentPeriod = enrolmentPeriodDAO.readNextEnrolmentPeriodForDegreeCurricularPlan(studentActiveCurricularPlan.getDegreeCurricularPlan());
+				if(enrolmentPeriod != null) {
+					enrolmentPeriodDAO.lockWrite(enrolmentPeriod);
+					enrolmentPeriod.setStartDate(new Date());
+				} else {
+					enrolmentPeriod = new EnrolmentPeriod();
+					enrolmentPeriod.setDegreeCurricularPlan(studentActiveCurricularPlan.getDegreeCurricularPlan());
+					enrolmentPeriod.setExecutionPeriod(Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod));
+					enrolmentPeriod.setStartDate(new Date());
+					enrolmentPeriod.setEndDate(new Date());
+					enrolmentPeriodDAO.lockWrite(enrolmentPeriod);
+				}
+			}
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}

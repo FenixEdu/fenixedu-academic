@@ -17,29 +17,29 @@ import Util.TipoCurso;
  * @author David Santos
  */
 
-public class SetStartModeDispatchAction extends DispatchAction {
+public class FunctionRedirectDispatchAction extends DispatchAction {
 	
-	private final String[] forwards = { "chooseStudentAndDegreeTypeWithRules", "chooseStudentAndDegreeTypeWithoutRules", "chooseStudentAndDegreeTypeOptionalWithoutRules", "chooseStudentAndDegreeTypeForManualEquivalence" };
+	private final String[] forwards = { "chooseStudentAndDegreeTypeForEnrolmentWithRules", "chooseStudentAndDegreeTypeForEnrolmentWithoutRules", "chooseStudentAndDegreeTypeForEnrolmentInOptionalWithoutRules", "chooseStudentAndDegreeTypeForManualEquivalence" };
 
-	public ActionForward withRules(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward chooseStudentAndDegreeTypeForEnrolmentWithRules(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List degreeTypeList = TipoCurso.toLabelValueBeanList();
 		request.setAttribute(SessionConstants.DEGREE_TYPE, degreeTypeList);
 		return mapping.findForward(forwards[0]);
 	}
 
-	public ActionForward withoutRules(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward chooseStudentAndDegreeTypeForEnrolmentWithoutRules(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List degreeTypeList = TipoCurso.toLabelValueBeanList();
 		request.setAttribute(SessionConstants.DEGREE_TYPE, degreeTypeList);
 		return mapping.findForward(forwards[1]);
 	}
 
-	public ActionForward optionalWithoutRules(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward chooseStudentAndDegreeTypeForEnrolmentInOptionalWithoutRules(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List degreeTypeList = TipoCurso.toLabelValueBeanList();
 		request.setAttribute(SessionConstants.DEGREE_TYPE, degreeTypeList);
 		return mapping.findForward(forwards[2]);
 	}
 
-	public ActionForward manualEquivalence(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward chooseStudentAndDegreeTypeForManualEquivalence(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List degreeTypeList = TipoCurso.toLabelValueBeanList();
 		request.setAttribute(SessionConstants.DEGREE_TYPE, degreeTypeList);
 		return mapping.findForward(forwards[3]);

@@ -6,7 +6,7 @@
 <bean:define id="degreeTypeList" name="<%= SessionConstants.DEGREE_TYPE %>"/>
 
 <center>
-<h2><bean:message key="title.student.enrolment.without.rules"/></h2>
+<h2><bean:message key="title.student.enrolment.with.rules"/></h2>
 <html:errors/>
 <br/>
 </center>
@@ -14,8 +14,8 @@
 <center>
 <br/>
 <br/>
-<html:form action="/prepareStudentEnrolment.do">
-	<html:hidden property="method" value="withoutRules"/>
+<html:form action="/prepareStudentData.do">
+	<html:hidden property="method" value="getStudentAndDegreeTypeForEnrolmentWithRules"/>
 	<table border="0">
 		<tr>
 			<td align="left"><bean:message key="label.choose.degree.type"/>&nbsp;</td>

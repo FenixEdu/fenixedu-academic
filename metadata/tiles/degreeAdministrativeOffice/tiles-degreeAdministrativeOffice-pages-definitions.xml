@@ -6,20 +6,25 @@
 		<put name="body" value="/degreeAdministrativeOffice/commons/welcomeScreen.jsp"/>
 	</definition>
 
-	<definition name="df.page.chooseStudentAndDegreeTypeWithRules" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/enrolment/chooseStudentAndDegreeTypeWithRules.jsp"/>
+
+	<definition name="df.page.globalEnrolment" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/enrolment/globalEenrolment.jsp"/>
 	</definition>
-	<definition name="df.page.chooseStudentAndDegreeTypeWithoutRules" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/enrolment/chooseStudentAndDegreeTypeWithoutRules.jsp"/>
+
+	<definition name="df.page.chooseStudentAndDegreeTypeForEnrolmentWithRules" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/enrolment/chooseStudentAndDegreeTypeForEnrolmentWithRules.jsp"/>
 	</definition>
-	<definition name="df.page.chooseStudentAndDegreeTypeOptionalWithoutRules" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/enrolment/chooseStudentAndDegreeTypeOptionalWithoutRules.jsp"/>
+	<definition name="df.page.chooseStudentAndDegreeTypeForEnrolmentWithoutRules" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/enrolment/chooseStudentAndDegreeTypeForEnrolmentWithoutRules.jsp"/>
 	</definition>
-	<definition name="df.page.chooseDegreeAndCurricularSemesterAndCurricularYear" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/enrolment/chooseDegreeAndCurricularSemesterAndCurricularYear.jsp"/>
+	<definition name="df.page.chooseStudentAndDegreeTypeForEnrolmentInOptionalWithoutRules" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/enrolment/chooseStudentAndDegreeTypeForEnrolmentInOptionalWithoutRules.jsp"/>
 	</definition>
 	<definition name="df.page.chooseStudentAndDegreeTypeForManualEquivalence" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/equivalence/chooseStudentAndDegreeTypeForManualEquivalence.jsp"/>
+	</definition>
+	<definition name="df.page.chooseDegreeAndCurricularSemesterAndCurricularYear" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/enrolment/chooseDegreeAndCurricularSemesterAndCurricularYear.jsp"/>
 	</definition>
 
 

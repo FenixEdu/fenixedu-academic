@@ -48,9 +48,9 @@
 					<table border="1" cellpadding="0" cellspacing="0"width="100%">
 						<tr>
 							<th>&nbsp;</th>
-							<th align="center"><bean:message key="label.curricular.course.name"/></th>
+							<th align="center"><bean:message key="label.curricular.course.name" bundle="STUDENT_RESOURCES"/></th>
 							<th align="center"><bean:message key="label.curricular.course.semester"/></th>
-							<th align="center"><bean:message key="label.curricular.course.year"/></th>
+							<th align="center"><bean:message key="label.curricular.course.year" bundle="STUDENT_RESOURCES"/></th>
 						</tr>
 						<logic:iterate id="infoCurricularCourseScope" name="infoCurricularCourseScopesToGiveEquivalence" indexId="index">
 							<tr>
@@ -74,9 +74,9 @@
 					<table border="1" cellpadding="0" cellspacing="0" width="100%">
 						<tr>
 							<th>&nbsp;</th>
-							<th align="center"><bean:message key="label.curricular.course.name"/></th>
+							<th align="center"><bean:message key="label.curricular.course.name" bundle="STUDENT_RESOURCES"/></th>
 							<th align="center"><bean:message key="label.curricular.course.semester"/></th>
-							<th align="center"><bean:message key="label.curricular.course.year"/></th>
+							<th align="center"><bean:message key="label.curricular.course.year" bundle="STUDENT_RESOURCES"/></th>
 						</tr>
 						<logic:iterate id="infoCurricularCourseScope" name="infoCurricularCourseScopesToGetEquivalence" indexId="index">
 							<tr>
@@ -100,7 +100,7 @@
 		</table>
 		<br/><br/>
 		<center>
-			<html:submit styleClass="inputbutton"><bean:message key="button.continue.enrolment"/></html:submit>
+			<html:submit styleClass="inputbutton"><bean:message key="button.continue.enrolment" bundle="STUDENT_RESOURCES"/></html:submit>
 			<html:cancel styleClass="inputbutton"><bean:message key="button.cancel"/></html:cancel>
 		</center>
 	</html:form>

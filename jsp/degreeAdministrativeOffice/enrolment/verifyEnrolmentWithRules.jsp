@@ -7,7 +7,7 @@
 <bean:define id="infoEnrolmentContext" name="<%= SessionConstants.INFO_ENROLMENT_CONTEXT_KEY %>"/>
 
 <br/>
-<b><bean:message key="label.curricular.courses.choosen"/></b>
+<b><bean:message key="label.curricular.courses.choosen" bundle="STUDENT_RESOURCES"/></b>
 <html:form action="/curricularCourseEnrolmentWithRulesManager.do">
 	<html:hidden property="method" value="accept"/>
 	<html:hidden property="step" value="1"/>	
@@ -22,9 +22,9 @@
 		</logic:iterate>
 	</ul>	
 	<html:submit styleClass="inputbutton">	
-		<bean:message key="button.finalize.enrolment"/>
+		<bean:message key="button.finalize.enrolment" bundle="STUDENT_RESOURCES"/>
 	</html:submit>
 	<html:cancel styleClass="inputbutton">
-		<bean:message key="button.change.enrolment"/>	
+		<bean:message key="button.change.enrolment" bundle="STUDENT_RESOURCES"/>	
 	</html:cancel>		
 </html:form>

@@ -4,8 +4,8 @@
 <%-- Verificar se isto funciona quando está empty --%>
 <center>
 <h4><bean:message key="message.successful.enrolment"/></h4>
-<html:form action="/setStartMode.do">
-	<html:hidden property="method" value="withoutRules"/>
+<html:form action="/functionRedirect.do">
+	<html:hidden property="method" value="chooseStudentAndDegreeTypeForEnrolmentWithoutRules"/>
 	<html:submit styleClass="inputbutton"><bean:message key="button.back.to.begining"/></html:submit>
 </html:form>
 </center>

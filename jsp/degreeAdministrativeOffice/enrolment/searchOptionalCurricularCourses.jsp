@@ -14,6 +14,6 @@
 		<html:options collection="infoDegree" property="nome" labelProperty="sigla"/>
 	</html:select>
 	<html:submit styleClass="inputbutton">
-		<bean:message key="button.continue.enrolment"/>
+		<bean:message key="button.continue.enrolment" bundle="STUDENT_RESOURCES"/>
 	</html:submit>
 </html:form>

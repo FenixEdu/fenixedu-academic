@@ -46,9 +46,9 @@ public class DeleteTemporarilyEnrolmentPeriod implements IServico {
 
 			IEnrolmentPeriod enrolmentPeriod = new EnrolmentPeriod();
 			enrolmentPeriod.setDegreeCurricularPlan(enrolmentContext.getStudentActiveCurricularPlan().getDegreeCurricularPlan());
-			enrolmentPeriod.setEndDate(new Date());
 			enrolmentPeriod.setExecutionPeriod(Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod));
 			enrolmentPeriod.setStartDate(new Date());
+			enrolmentPeriod.setEndDate(new Date());
 
 			enrolmentPeriodDAO.deleteByCriteria(enrolmentPeriod);
 		} catch (ExcepcaoPersistencia e) {

@@ -7,7 +7,7 @@
   <tr>
     <td bgcolor="#FFFFFF" class="infoselected">
 	    <bean:define id="executionYear" name="infoEnrolmentContext" property="infoExecutionPeriod.infoExecutionYear.year" />
-		<bean:message key="label.execution.year" arg0="<%= executionYear.toString() %>"/> - <bean:write name="infoEnrolmentContext" property="infoExecutionPeriod.name" />	
+		<bean:message key="label.execution.year" arg0="<%= executionYear.toString() %>" bundle="STUDENT_RESOURCES"/> - <bean:write name="infoEnrolmentContext" property="infoExecutionPeriod.name" />	
 		<br /><br />
 		<b><bean:write name="infoEnrolmentContext"	property="infoStudentActiveCurricularPlan.infoDegreeCurricularPlan.infoDegree.nome"/></b>
     </td>

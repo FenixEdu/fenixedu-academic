@@ -23,7 +23,7 @@
 <bean:size id="sizeToBeEnroled" name="infoEnrolmentContext" property="infoFinalCurricularCoursesScopesSpanToBeEnrolled"/>
 
 <logic:notEqual name="sizeAutomaticalyEnroled" value="0">
-	<b><bean:message key="label.mandatory.enrolment.curricular.courses"/></b><br/>
+	<b><bean:message key="label.mandatory.enrolment.curricular.courses" bundle="STUDENT_RESOURCES"/></b><br/>
 	<logic:iterate id="curricularCourseScope" name="infoEnrolmentContext" property="infoCurricularCoursesScopesAutomaticalyEnroled">
 		<bean:write name="curricularCourseScope" property="infoCurricularCourse.name"/><br/>
 	</logic:iterate>
@@ -34,14 +34,14 @@
 		<html:hidden property="step" value="0"/>
 		<html:hidden property="method" value="verifyEnrolment"/>
 		<html:hidden property="optionalCourseIndex" value=""/>
-		<b><bean:message key="label.enrolment.curricular.courses"/></b>
+		<b><bean:message key="label.enrolment.curricular.courses" bundle="STUDENT_RESOURCES"/></b>
 		<br/>
 		<br/>
 		<table border="0" cellpadding="2" cellspacing="0">
 			<tr>
 				<td>&nbsp;</td>
-				<td><u><bean:message key="label.curricular.course.name"/></u></td>
-				<td align="center"><u><bean:message key="label.curricular.course.year"/></u></td>
+				<td><u><bean:message key="label.curricular.course.name" bundle="STUDENT_RESOURCES"/></u></td>
+				<td align="center"><u><bean:message key="label.curricular.course.year" bundle="STUDENT_RESOURCES"/></u></td>
 			</tr>
 			<logic:iterate id="curricularScope" name="infoEnrolmentContext" property="infoFinalCurricularCoursesScopesSpanToBeEnrolled" indexId="index">
 				<logic:equal name="curricularScope" property="infoCurricularCourse.type" value="<%= CurricularCourseType.OPTIONAL_COURSE_OBJ.toString() %>">
@@ -50,6 +50,7 @@
 					</bean:define>
 					<bean:define id="optionalCourse" name="curricularScope" property="infoCurricularCourse"/>
 					<logic:iterate id="optionalEnrolment" name="infoEnrolmentContext" property="infoOptionalCurricularCoursesEnrolments">
+						<bean:define id="optionalEnrolmentString" value=""></bean:define>
 						<logic:equal name="optionalEnrolment" property="infoCurricularCourseScope.infoCurricularCourse" value="<%= pageContext.findAttribute("optionalCourse").toString() %>">
 							<bean:define id="optionalEnrolmentString">
 								-&nbsp;<bean:write name="optionalEnrolment" property="infoCurricularCourseForOption.name"/>
@@ -80,6 +81,6 @@
 		</table>
 		<br/>
 		<br/>
-		<html:submit styleClass="inputbutton"><bean:message key="button.continue.enrolment"/></html:submit>
+		<html:submit styleClass="inputbutton"><bean:message key="button.continue.enrolment" bundle="STUDENT_RESOURCES"/></html:submit>
 	</html:form>
 </logic:notEqual>

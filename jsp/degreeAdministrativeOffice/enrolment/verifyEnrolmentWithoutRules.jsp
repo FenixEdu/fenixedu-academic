@@ -15,7 +15,7 @@
 <html:form action="/curricularCourseEnrolmentWithoutRulesManager.do">
 	<html:hidden property="method" value="accept"/>
 	<logic:notEqual name="sizeToEnroll" value="0">
-		<b><bean:message key="label.curricular.courses.choosen"/></b>
+		<b><bean:message key="label.curricular.courses.choosen" bundle="STUDENT_RESOURCES"/></b>
 		<ul>
 			<logic:iterate id="curricularScope" name="infoEnrolmentContext" property="actualEnrolment" indexId="index">
 				<li><bean:write name="curricularScope" property="infoCurricularCourse.name"/></li>
@@ -34,9 +34,9 @@
 		</logic:notEqual>
 	</logic:present>
 	<html:submit styleClass="inputbutton">	
-		<bean:message key="button.finalize.enrolment"/>
+		<bean:message key="button.finalize.enrolment" bundle="STUDENT_RESOURCES"/>
 	</html:submit>
 	<html:cancel styleClass="inputbutton">
-		<bean:message key="button.change.enrolment"/>	
+		<bean:message key="button.change.enrolment" bundle="STUDENT_RESOURCES"/>	
 	</html:cancel>		
 </html:form>

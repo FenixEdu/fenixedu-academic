@@ -28,10 +28,7 @@
 			<td align="left"><bean:message key="label.choose.semester"/>&nbsp;</td>
 			<td align="left">
 				<html:select property="semester" size="1">
-<%--
-					<html:option bundle="DEGREE_ADMIN_OFFICE_RESOURCES" key="label.first.semester" value="1"/>
-					<html:option bundle="DEGREE_ADMIN_OFFICE_RESOURCES" key="label.second.semester" value="2"/>
---%>
+					<html:option value=""></html:option>
 					<html:option value="1"><bean:message key="label.first.semester"/></html:option>
 					<html:option value="2"><bean:message key="label.second.semester"/></html:option>
 				</html:select>
@@ -41,18 +38,12 @@
 			<td align="left"><bean:message key="label.choose.year"/>&nbsp;</td>
 			<td align="left">
 				<html:select property="year" size="1">
+					<html:option value=""></html:option>
 					<html:option value="1"><bean:message key="label.first.year"/></html:option>
 					<html:option value="2"><bean:message key="label.second.year"/></html:option>
 					<html:option value="3"><bean:message key="label.third.year"/></html:option>
 					<html:option value="4"><bean:message key="label.fourth.year"/></html:option>
 					<html:option value="5"><bean:message key="label.fiveth.year"/></html:option>
-<%--
-					<html:option bundle="DEGREE_ADMIN_OFFICE_RESOURCES" key="label.first.year" value="1"/>
-					<html:option bundle="DEGREE_ADMIN_OFFICE_RESOURCES" key="label.second.year" value="2"/>
-					<html:option bundle="DEGREE_ADMIN_OFFICE_RESOURCES" key="label.third.year" value="3"/>
-					<html:option bundle="DEGREE_ADMIN_OFFICE_RESOURCES" key="label.fourth.year" value="4"/>
-					<html:option bundle="DEGREE_ADMIN_OFFICE_RESOURCES" key="label.fiveth.year" value="5"/>
---%>
 				</html:select>
 			</td>
 		</tr>

@@ -5,10 +5,10 @@
 	<formset>
 		<form name="getStudentByNumberAndDegreeTypeForm">
 			<field property="degreeType" depends="required,integer">
-				<arg0 key="label.choose.degree.type" resource="true"/>
+				<arg0 key="error.no.degree.type.selected" resource="true"/>
 			</field>
 			<field property="studentNumber" depends="required,integer">
-				<arg0 key="label.choose.student" resource="true"/>
+				<arg0 key="error.no.student.selected" resource="true"/>
 			</field>
 		</form>
 	</formset>
@@ -16,13 +16,13 @@
 	<formset>
 		<form name="getDegreeAndCurricularSemesterAndCurricularYearForm">
 			<field property="infoExecutionDegreeName" depends="required,integer">
-				<arg0 key="label.choose.degree" resource="true"/>
+				<arg0 key="error.no.degree.selected" resource="true"/>
 			</field>
 			<field property="semester" depends="required,integer">
-				<arg0 key="label.choose.semester" resource="true"/>
+				<arg0 key="error.no.semester.selected" resource="true"/>
 			</field>
 			<field property="year" depends="required,integer">
-				<arg0 key="label.choose.year" resource="true"/>
+				<arg0 key="error.no.year.selected" resource="true"/>
 			</field>
 		</form>
 	</formset>

@@ -7,7 +7,7 @@
 
 	<!-- ========== Form Bean Definitions =================================== -->
 	<form-beans type="org.apache.struts.action.ActionFormBean">
-		<form-bean name="setStartModeForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+		<form-bean name="methodForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String"/>
 		</form-bean>
 
@@ -90,44 +90,54 @@
 		<action path="/home" forward="/switchAction.do?prefix=&amp;page=/mainPortalPage.jsp"/>
 		<action path="/switchAction" type="org.apache.struts.actions.SwitchAction"/>
 		<action path="/outOfPeriod" forward="definition.out.of.period"/>
+		<action path="/globalEnrolment" forward="df.page.globalEnrolment"/>
 
 		<action path="/index" type="ServidorApresentacao.Action.commons.VoidAction">
 			<forward name="Success" path="df.page.main"/>
 		</action>
 
-		<action	name="setStartModeForm"
-				type="ServidorApresentacao.Action.degreeAdministrativeOffice.SetStartModeDispatchAction"
-				path="/setStartMode"
+		<action	name="methodForm"
+				type="ServidorApresentacao.Action.degreeAdministrativeOffice.ErrorRedirectDispatchAction"
+				path="/errorRedirect"
 				parameter="method"
 				scope="session"
 				validate="false">
-			<forward name="chooseStudentAndDegreeTypeWithRules" path="df.page.chooseStudentAndDegreeTypeWithRules"/>
-			<forward name="chooseStudentAndDegreeTypeWithoutRules" path="df.page.chooseStudentAndDegreeTypeWithoutRules"/>
-			<forward name="chooseStudentAndDegreeTypeOptionalWithoutRules" path="df.page.chooseStudentAndDegreeTypeOptionalWithoutRules"/>
+			<forward name="chooseStudentAndDegreeTypeForEnrolmentWithRules" path="df.page.chooseStudentAndDegreeTypeForEnrolmentWithRules"/>
+			<forward name="chooseStudentAndDegreeTypeForEnrolmentWithoutRules" path="df.page.chooseStudentAndDegreeTypeForEnrolmentWithoutRules"/>
+			<forward name="chooseStudentAndDegreeTypeForEnrolmentInOptionalWithoutRules" path="df.page.chooseStudentAndDegreeTypeForEnrolmentInOptionalWithoutRules"/>
+			<forward name="chooseStudentAndDegreeTypeForManualEquivalence" path="df.page.chooseStudentAndDegreeTypeForManualEquivalence"/>
+			<forward name="chooseDegreeAndCurricularSemesterAndCurricularYear" path="/prepareStudentData.do?method=getStudentAndDegreeTypeForEnrolmentWithoutRules"/>
+		</action>
+
+		<action	name="methodForm"
+				type="ServidorApresentacao.Action.degreeAdministrativeOffice.FunctionRedirectDispatchAction"
+				path="/functionRedirect"
+				parameter="method"
+				scope="session"
+				validate="false">
+			<forward name="chooseStudentAndDegreeTypeForEnrolmentWithRules" path="df.page.chooseStudentAndDegreeTypeForEnrolmentWithRules"/>
+			<forward name="chooseStudentAndDegreeTypeForEnrolmentWithoutRules" path="df.page.chooseStudentAndDegreeTypeForEnrolmentWithoutRules"/>
+			<forward name="chooseStudentAndDegreeTypeForEnrolmentInOptionalWithoutRules" path="df.page.chooseStudentAndDegreeTypeForEnrolmentInOptionalWithoutRules"/>
 			<forward name="chooseStudentAndDegreeTypeForManualEquivalence" path="df.page.chooseStudentAndDegreeTypeForManualEquivalence"/>
 		</action>
 
 		<action	name="getStudentByNumberAndDegreeTypeForm"
-				type="ServidorApresentacao.Action.degreeAdministrativeOffice.PrepareStudentEnrolmentDispatchAction"
-				path="/prepareStudentEnrolment"
-				input="/prepareStudentEnrolment.do"
+				type="ServidorApresentacao.Action.degreeAdministrativeOffice.PrepareStudentDataDispatchAction"
+				path="/prepareStudentData"
+				input="/errorRedirect.do"
 				parameter="method"
 				scope="session"
 				validate="true">
 			<forward name="startCurricularCourseEnrolmentWithRules" path="/curricularCourseEnrolmentWithRulesManager.do?method=start"/>
 			<forward name="startCurricularCourseEnrolmentWithoutRules" path="df.page.chooseDegreeAndCurricularSemesterAndCurricularYear"/>
-			<forward name="startCurricularCourseEnrolmentOptionalWithoutRules" path="/optionalCurricularCourseEnrolmentWithoutRulesManager.do?method=start"/>
+			<forward name="startOptionalCurricularCourseEnrolmentWithoutRules" path="/optionalCurricularCourseEnrolmentWithoutRulesManager.do?method=start"/>
 			<forward name="startManualEquivalence" path="/manualEquivalenceManager.do?method=show"/>
-			<forward name="errorWithRules" path="/setStartMode.do?method=withRules"/>
-			<forward name="errorWithoutRules" path="/setStartMode.do?method=withoutRules"/>
-			<forward name="errorOptionalWithoutRules" path="/setStartMode.do?method=optionalWithoutRules"/>
-			<forward name="errorManualEquivalence" path="/setStartMode.do?method=manualEquivalence"/>
 		</action>
 
 		<action name="getDegreeAndCurricularSemesterAndCurricularYearForm"
 				type="ServidorApresentacao.Action.degreeAdministrativeOffice.PrepareEnrolmentContextAction"
 				path="/prepareEnrolmentContext"
-				input="/prepareStudentEnrolment.do"
+				input="/errorRedirect.do"
 				scope="session"
 				validate="true">
 			<forward name="showAvailableCurricularCourses" path="/curricularCourseEnrolmentWithoutRulesManager.do?method=start"/>
@@ -213,12 +223,7 @@
 
 	<!-- ========== Message Resources Definitions =========================== -->
 	<message-resources parameter="ServidorApresentacao.DegreeAdministrativeOfficeResources"/>
-<!--
-	<message-resources parameter="ServidorApresentacao.DegreeAdministrativeOfficeResources" key="DEGREE_ADMIN_OFFICE_RESOURCES" null="false"/>
-	<message-resources parameter="ServidorApresentacao.StudentResources"/>
-	<message-resources parameter="ServidorApresentacao.ApplicationResources"/>
-	<message-resources parameter="ServidorApresentacao.PortalResources" key="PORTAL_RESOURCES" null="false"/>
--->
+
 	<!-- ========== Plug Ins Configuration ================================== -->
 	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
 		<set-property property="pathnames" value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-degreeAdministrativeOffice.xml"/>

@@ -25,9 +25,9 @@
 	</ul>	
 
 	<html:submit styleClass="inputbutton">	
-		<bean:message key="button.finalize.enrolment"/>
+		<bean:message key="button.finalize.enrolment" bundle="STUDENT_RESOURCES"/>
 	</html:submit>
 	<html:cancel styleClass="inputbutton">
-		<bean:message key="button.change.enrolment"/>	
+		<bean:message key="button.change.enrolment" bundle="STUDENT_RESOURCES"/>	
 	</html:cancel>		
 </html:form>
