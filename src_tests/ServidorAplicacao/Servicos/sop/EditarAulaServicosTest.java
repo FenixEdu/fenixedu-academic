@@ -135,68 +135,68 @@ public class EditarAulaServicosTest extends TestCaseServicosWithAuthorization {
 	}
 
 	// edit new non-existing aula
-	//	public void testEditarNonExistingAula() {
-	//		InfoRoom infoSala =
-	//			new InfoRoom(
-	//				"Ga1",
-	//				"Pavilhao Central",
-	//				new Integer(0),
-	//				new TipoSala(1),
-	//				new Integer(100),
-	//				new Integer(50));
-	//		InfoDegree infoLicenciatura =
-	//			new InfoDegree(
-	//				"LEIC",
-	//				"Licenciatura de Engenharia Informatica e de Computadores");
-	//		InfoExecutionYear infoExecutionYear =
-	//			new InfoExecutionYear("2002/2003");
-	//		InfoExecutionPeriod infoExecutionPeriod =
-	//			new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
-	//		InfoDegreeCurricularPlan curricularPlan =
-	//			new InfoDegreeCurricularPlan("plano1", infoLicenciatura);
-	//
-	//		InfoExecutionDegree infoLicenciaturaExecucao =
-	//			new InfoExecutionDegree(curricularPlan, infoExecutionYear);
-	//		InfoExecutionCourse iDE =
-	//			new InfoExecutionCourse(
-	//				"Trabalho Final de Curso I",
-	//				"TFCI",
-	//				"programa1",
-	//				new Double(0),
-	//				new Double(0),
-	//				new Double(0),
-	//				new Double(0),
-	//				infoExecutionPeriod);
-	//		RoomKey keySala = new RoomKey("GA1");
-	//		Calendar inicio = Calendar.getInstance();
-	//		Calendar fim = Calendar.getInstance();
-	//		inicio.set(Calendar.HOUR_OF_DAY, 18);
-	//		inicio.set(Calendar.MINUTE, 0);
-	//		inicio.set(Calendar.SECOND, 0);
-	//		fim.set(Calendar.HOUR_OF_DAY, 19);
-	//		fim.set(Calendar.MINUTE, 30);
-	//		fim.set(Calendar.SECOND, 0);
-	//		Object argsEditarAula[] = new Object[2];
-	//		argsEditarAula[0] =
-	//			new KeyLesson(new DiaSemana(2), inicio, fim, keySala);
-	//		argsEditarAula[1] =
-	//			new InfoLesson(
-	//				new DiaSemana(2),
-	//				inicio,
-	//				fim,
-	//				new TipoAula(TipoAula.PRATICA),
-	//				infoSala,
-	//				iDE);
-	//
-	//		Object result = null;
-	//		
-	//		try {
-	//			result = _gestor.executar(_userView, "EditarAula", argsEditarAula);
-	//			assertNull("testEditNonExistingAula", result);
-	//		} catch (Exception ex) {
-	//			fail("testEditNonExistingAula");
-	//		}
-	//	}
+		public void testEditarNonExistingAula() {
+			InfoRoom infoSala =
+				new InfoRoom(
+					"Ga1",
+					"Pavilhao Central",
+					new Integer(0),
+					new TipoSala(1),
+					new Integer(100),
+					new Integer(50));
+			InfoDegree infoLicenciatura =
+				new InfoDegree(
+					"LEIC",
+					"Licenciatura de Engenharia Informatica e de Computadores");
+			InfoExecutionYear infoExecutionYear =
+				new InfoExecutionYear("2002/2003");
+			InfoExecutionPeriod infoExecutionPeriod =
+				new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
+			InfoDegreeCurricularPlan curricularPlan =
+				new InfoDegreeCurricularPlan("plano1", infoLicenciatura);
+	
+			InfoExecutionDegree infoLicenciaturaExecucao =
+				new InfoExecutionDegree(curricularPlan, infoExecutionYear);
+			InfoExecutionCourse iDE =
+				new InfoExecutionCourse(
+					"Trabalho Final de Curso I",
+					"TFCI",
+					"programa1",
+					new Double(0),
+					new Double(0),
+					new Double(0),
+					new Double(0),
+					infoExecutionPeriod);
+			RoomKey keySala = new RoomKey("GA1");
+			Calendar inicio = Calendar.getInstance();
+			Calendar fim = Calendar.getInstance();
+			inicio.set(Calendar.HOUR_OF_DAY, 18);
+			inicio.set(Calendar.MINUTE, 0);
+			inicio.set(Calendar.SECOND, 0);
+			fim.set(Calendar.HOUR_OF_DAY, 19);
+			fim.set(Calendar.MINUTE, 30);
+			fim.set(Calendar.SECOND, 0);
+			Object argsEditarAula[] = new Object[2];
+			argsEditarAula[0] =
+				new KeyLesson(new DiaSemana(2), inicio, fim, keySala);
+			argsEditarAula[1] =
+				new InfoLesson(
+					new DiaSemana(2),
+					inicio,
+					fim,
+					new TipoAula(TipoAula.PRATICA),
+					infoSala,
+					iDE);
+	
+			Object result = null;
+			
+			try {
+				result = _gestor.executar(_userView, "EditarAula", argsEditarAula);
+				assertNull("testEditNonExistingAula", result);
+			} catch (Exception ex) {
+				fail("testEditNonExistingAula");
+			}
+		}
 
 	/* (non-Javadoc)
 	 * @see ServidorAplicacao.Servicos.TestCaseServicosWithAuthorization#getNameOfServiceToBeTested()
