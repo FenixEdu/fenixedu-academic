@@ -203,13 +203,6 @@ public class StudentsGratuityListAction extends DispatchAction
 		return false;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping,
-	 *      org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest,
-	 *      javax.servlet.http.HttpServletResponse)
-	 */
 	public ActionForward studentsGratuityList(
 		ActionMapping mapping,
 		ActionForm actionForm,
@@ -228,10 +221,15 @@ public class StudentsGratuityListAction extends DispatchAction
 		String situation = (String) studentGratuityListForm.get("situation");
 		String degree = (String) studentGratuityListForm.get("degree");
 		Integer executionDegreeId = null;
-		try {
+		try
+		{
 			executionDegreeId = findExecutionDegreeId(degree);
-		} catch(NumberFormatException exception){
-			errors.add("noList", new ActionError("error.masterDegree.gatuyiuty.impossible.studentsGratuityList"));
+		}
+		catch (NumberFormatException exception)
+		{
+			errors.add(
+				"noList",
+				new ActionError("error.masterDegree.gatuyiuty.impossible.studentsGratuityList"));
 			if (!errors.isEmpty())
 			{
 				saveErrors(request, errors);
@@ -250,7 +248,6 @@ public class StudentsGratuityListAction extends DispatchAction
 		System.out.println("studentGratuityListForm.degree = " + degree);
 		System.out.println("studentGratuityListForm.situation = " + situation);
 		System.out.println("====================================================");
-
 
 		Object[] args = { executionDegreeId, executionYear, specialization, situation };
 		List infoGratuitySituationList = null;
@@ -271,6 +268,12 @@ public class StudentsGratuityListAction extends DispatchAction
 			}
 			return mapping.getInputForward();
 		}
+		if (infoGratuitySituationList != null)
+		{
+			System.out.println("-->Listagem: " + infoGratuitySituationList.size());
+		} else {
+			System.out.println("-->Listagem: " + null);
+		}
 		request.setAttribute("infoGratuitySituationList", infoGratuitySituationList);
 
 		return mapping.findForward("studentsGratuityList");
@@ -285,7 +288,6 @@ public class StudentsGratuityListAction extends DispatchAction
 	private Integer findExecutionDegreeId(String degree)
 	{
 		String idInString = degree.substring(degree.indexOf("#") + 1, degree.length());
-		System.out.println("idInString= " + idInString);
 		Integer idInternal = null;
 		try
 		{

@@ -54,8 +54,8 @@
 						<html:option value="" key="label.manager.executionCourseManagement.select">
 							<bean:message key="label.manager.executionCourseManagement.select"/>
 						</html:option>
-						<html:option value="Todos" key="label.masterDegree.gratuity.all">
-							<bean:message key="label.masterDegree.gratuity.all"/>
+						<html:option value="all" key="label.masterDegree.gratuity.all">
+							<bean:message key="label.gratuitySituationType.all"/>
 						</html:option>
 						<html:optionsCollection name="specializations"/>
 					</html:select>
@@ -70,8 +70,8 @@
 						<html:option value="">
 							<bean:message key="label.manager.executionCourseManagement.select"/>
 						</html:option>						
-						<html:option value="Todos">
-							<bean:message key="label.masterDegree.gratuity.all"/>
+						<html:option value="all">
+							<bean:message key="label.gratuitySituationType.all"/>
 						</html:option>
 						<logic:iterate id="gratuitySituation" name="situations">
 							<bean:define id="gratuitySituationName" name="gratuitySituation" property="name"/>

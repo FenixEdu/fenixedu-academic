@@ -4,6 +4,7 @@
  */
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -102,7 +103,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 			if (gratuitySituationList != null && gratuitySituationList.size() > 0)
 			{
 				ListIterator listIterator = gratuitySituationList.listIterator();
-
+				infoGratuitySituationList = new ArrayList();
 				while (listIterator.hasNext())
 				{
 					IGratuitySituation gratuitySituation = (IGratuitySituation) listIterator.next();

@@ -96,13 +96,13 @@ public class GratuitySituationOJB extends ObjectFenixOJB implements IPersistentG
 			}
 		}
 
-		if (specialization != null)
+		if (specialization != null && specialization.getSpecialization() != null)
 		{
 			criteria.addEqualTo(
 				"studentCurricularPlan.Specialization.specialization",
 				specialization.getSpecialization());
 		}
-		else
+		else //all specialization required, but not records with  specialization null
 		{
 			criteria.addNotNull("studentCurricularPlan.Specialization.specialization");
 		}
@@ -112,13 +112,16 @@ public class GratuitySituationOJB extends ObjectFenixOJB implements IPersistentG
 			switch (situation.getValue())
 			{
 				case GratuitySituationType.CREDITOR_TYPE :
-					//CREDITOR situation: remainingValue < 0 || payedValue > gratuityValue
+					//CREDITOR situation: remainingValue < 0
+					criteria.addLessThan("remainingValue", new Double(0));					
 					break;
 				case GratuitySituationType.DEBTOR_TYPE :
-					//DEBTOR situation: remainingValue > 0 || payedValue < gratuityValue
+					//DEBTOR situation: remainingValue > 0
+					criteria.addGreaterThan("remainingValue", new Double(0));
 					break;
 				case GratuitySituationType.REGULARIZED_TYPE :
-					//REGULARIZED situation: remainingValue == 0|| payedValue == gratuityValue 					
+					//REGULARIZED situation: remainingValue == 0 			
+					criteria.addEqualTo("remainingValue", new Double(0));
 					break;
 				default :
 					break;
