@@ -186,7 +186,10 @@ public class CurricularCourseManagerDA extends FenixDispatchAction {
 			for (int i = 0; i < coursesIdsString.length; i++) {
 				coursesIds.add(new Integer(coursesIdsString[i]));
 			}
-			Object[] args = { coursesIds };
+			
+			String curricularPlanId = (String) request.getParameter("curricularIndex");
+ 			
+			Object[] args = { coursesIds , new Integer(curricularPlanId)};
 			
 			try {
 				 ServiceUtils.executeService(

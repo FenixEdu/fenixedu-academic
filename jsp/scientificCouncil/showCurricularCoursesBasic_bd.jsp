@@ -6,11 +6,15 @@
 <bean:define id="component" name="siteView" property="component"/>
 <bean:define id="basicCurricularCourses" name="component" property="basicCurricularCourses"/>
 <bean:define id="nonBasicCurricularCourses" name="component" property="nonBasicCurricularCourses"/>
+<bean:define id="curricularPlan" name="component" property="infoDegreeCurricularPlan"/>
 
 <span class="error"><html:errors/></span>
 
 <html:form action="/basicCurricularCourseManager">
 <html:hidden property="method" value="setBasicCurricularCourses"/>
+<bean:define id="curricularPlanId" name="curricularPlan" property="idInternal"/>
+
+<html:hidden property="curricularIndex" value="<%= curricularPlanId.toString() %>"/>
 <table>
 <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
 <logic:iterate id="infoCurricularCourse" name="basicCurricularCourses">

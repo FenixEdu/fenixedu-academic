@@ -144,6 +144,7 @@ public class ScientificCouncilComponentBuilder {
 			
 			component.setBasicCurricularCourses(infoBasicCurricularCourses);
 			component.setNonBasicCurricularCourses(infoNonBasicCurricularCourses);
+			component.setInfoDegreeCurricularPlan(Cloner.copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(degreeCurricularPlan));
 
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
@@ -194,6 +195,7 @@ public class ScientificCouncilComponentBuilder {
 				infoCurricularCourses.add(infoCurricularCourse);
 			}
 			component.setCurricularCourses(infoCurricularCourses);
+			
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}

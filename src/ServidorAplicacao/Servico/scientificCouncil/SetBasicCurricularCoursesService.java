@@ -5,11 +5,20 @@
  */
 package ServidorAplicacao.Servico.scientificCouncil;
 
-import DataBeans.ISiteComponent;
-import DataBeans.SiteView;
+import java.util.Iterator;
+import java.util.List;
+
+import Dominio.CurricularCourse;
+import Dominio.DegreeCurricularPlan;
+import Dominio.ICurricularCourse;
+import Dominio.IDegreeCurricularPlan;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.Factory.ScientificCouncilComponentBuilder;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentCurricularCourse;
+import ServidorPersistente.IPersistentDegreeCurricularPlan;
+import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author João Mota
@@ -19,7 +28,7 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
  * ServidorAplicacao.Servico.scientificCouncil
  * 
  */
-public class SetBasicCurricularCoursesService implements IServico{
+public class SetBasicCurricularCoursesService implements IServico {
 
 	private static SetBasicCurricularCoursesService _servico =
 		new SetBasicCurricularCoursesService();
@@ -47,16 +56,69 @@ public class SetBasicCurricularCoursesService implements IServico{
 		return _servico;
 	}
 
-	public SiteView run(ISiteComponent bodyComponent,Integer degreeId, Integer curricularYear,Integer degreeCurricularPlanId) throws FenixServiceException {
-			
-			
-			ScientificCouncilComponentBuilder componentBuilder = ScientificCouncilComponentBuilder.getInstance();
-			bodyComponent = componentBuilder.getComponent(bodyComponent, degreeId,  curricularYear,degreeCurricularPlanId);
-			SiteView siteView = new SiteView();
-			siteView.setComponent(bodyComponent);	
+	public boolean run(
+		List curricularCoursesIds,
+		Integer degreeCurricularPlanId)
+		throws FenixServiceException {
 
+		try {
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-		return siteView;
+			IPersistentCurricularCourse persistentCurricularCourse =
+				sp.getIPersistentCurricularCourse();
+			IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan =
+				sp.getIPersistentDegreeCurricularPlan();
+
+			IDegreeCurricularPlan degreeCurricularPlan =
+				new DegreeCurricularPlan();
+
+			degreeCurricularPlan.setIdInternal(degreeCurricularPlanId);
+
+			degreeCurricularPlan =
+				(
+					IDegreeCurricularPlan) persistentDegreeCurricularPlan
+						.readByOId(
+					degreeCurricularPlan,
+					false);
+
+			List basicCurricularCourses =
+				persistentCurricularCourse
+					.readCurricularCoursesByDegreeCurricularPlanAndBasicAttribute(
+					degreeCurricularPlan,
+					new Boolean(true));
+
+			Iterator itBCCourses = basicCurricularCourses.iterator();
+			ICurricularCourse basicCourse;
+
+			while (itBCCourses.hasNext()) {
+
+				basicCourse = (ICurricularCourse) itBCCourses.next();
+				persistentCurricularCourse.simpleLockWrite(basicCourse);
+				basicCourse.setBasic(new Boolean(false));
+			}
+
+			Iterator itId = curricularCoursesIds.iterator();
+
+			while (itId.hasNext()) {
+
+				ICurricularCourse curricularCourseBasic =
+					new CurricularCourse();
+				curricularCourseBasic.setIdInternal((Integer) itId.next());
+
+				curricularCourseBasic =
+					(ICurricularCourse) persistentCurricularCourse.readByOId(
+						curricularCourseBasic,
+						true);
+				curricularCourseBasic.setBasic(new Boolean(true));
+
+			}
+
+			
+		} catch (ExcepcaoPersistencia e) {
+			throw new FenixServiceException(e);
+		}
+
+		return true;
 	}
 
 }

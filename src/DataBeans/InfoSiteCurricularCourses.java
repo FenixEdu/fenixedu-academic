@@ -18,6 +18,7 @@ import java.util.List;
 public class InfoSiteCurricularCourses implements ISiteComponent {
 
 	private List curricularCourses;
+	
 	/**
 	 * @return
 	 */
@@ -39,5 +40,7 @@ public class InfoSiteCurricularCourses implements ISiteComponent {
 	 */
 	public InfoSiteCurricularCourses() {		
 	}
+
+	
 
 }

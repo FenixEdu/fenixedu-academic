@@ -21,6 +21,7 @@ public class InfoSiteBasicCurricularCourses implements ISiteComponent {
 
 	private List basicCurricularCourses;
 	private List nonBasicCurricularCourses;
+	private InfoDegreeCurricularPlan infoDegreeCurricularPlan;
 	/**
 	 * @return
 	 */
@@ -65,6 +66,24 @@ public class InfoSiteBasicCurricularCourses implements ISiteComponent {
 	 * 
 	 */
 	public InfoSiteBasicCurricularCourses() {		
+	}
+
+
+
+	
+
+	/**
+	 * @return
+	 */
+	public InfoDegreeCurricularPlan getInfoDegreeCurricularPlan() {
+		return infoDegreeCurricularPlan;
+	}
+
+	/**
+	 * @param plan
+	 */
+	public void setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan plan) {
+		infoDegreeCurricularPlan = plan;
 	}
 
 }
