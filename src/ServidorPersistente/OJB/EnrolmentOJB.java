@@ -127,7 +127,6 @@ public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment
 			query.bind(studentCurricularPlan.getStudent().getNumber());
 			query.bind(studentCurricularPlan.getStudent().getDegreeType());
 			query.bind(studentCurricularPlan.getCurrentState());
-
 			query.bind(curricularCourseScope.getCurricularCourse().getName());
 			query.bind(curricularCourseScope.getCurricularCourse().getCode());
 			query.bind(curricularCourseScope.getCurricularCourse().getDegreeCurricularPlan().getName());

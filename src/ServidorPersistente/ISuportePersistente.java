@@ -25,6 +25,7 @@ public interface ISuportePersistente {
 
 	public IFrequentaPersistente getIFrequentaPersistente();
 	public IPersistentEnrolment getIPersistentEnrolment();
+	public IPersistentEnrolmentEvaluation getIPersistentEnrolmentEvaluation();
 	public ITurmaTurnoPersistente getITurmaTurnoPersistente();
 	public ITurnoAlunoPersistente getITurnoAlunoPersistente();
 	public ITurnoAulaPersistente getITurnoAulaPersistente();

@@ -25,6 +25,10 @@ public interface IEnrolmentEvaluation {
 	public abstract Date getGradeAvailableDate();
 	public abstract EnrolmentEvaluationState getEnrolmentEvaluationState();
 	public abstract IPessoa getPersonResponsibleForGrade();
+	public abstract Funcionario getEmployee();
+	public abstract Date getWhen();
+	public abstract String getCheckSum();
+	public abstract String getObservation();
 
 	public abstract void setPersonResponsibleForGrade(IPessoa teacher);
 	public abstract void setEnrolment(IEnrolment enrolment);
@@ -33,4 +37,8 @@ public interface IEnrolmentEvaluation {
 	public abstract void setGrade(String string);
 	public abstract void setGradeAvailableDate(Date date);
 	public abstract void setEnrolmentEvaluationState(EnrolmentEvaluationState state);
+	public abstract void setEmployee(Funcionario funcionario);
+	public abstract void setWhen(Date date);
+	public abstract void setCheckSum(String checkSum);
+	public abstract void setObservation(String observation);
 }

@@ -44,6 +44,7 @@ import ServidorPersistente.IPersistentCurriculum;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.IPersistentDegreeCurricularPlanEnrolmentInfo;
 import ServidorPersistente.IPersistentEnrolment;
+import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentEnrolmentPeriod;
 import ServidorPersistente.IPersistentEquivalence;
 import ServidorPersistente.IPersistentEvaluation;
@@ -214,6 +215,9 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	public IPersistentEnrolment getIPersistentEnrolment() {
 		return new EnrolmentOJB();
 	}
+	public IPersistentEnrolmentEvaluation getIPersistentEnrolmentEvaluation() {
+			return new EnrolmentEvaluationOJB();
+		}
 	public ITurmaTurnoPersistente getITurmaTurnoPersistente() {
 		return new TurmaTurnoOJB();
 	}

@@ -154,6 +154,10 @@ create table ENROLMENT_EVALUATION (
    RESPONSIBLE_PERSON int(11),
    STATE int(11) not null,
    KEY_ENROLMENT int(11) not null,
+   WHEN_ALTER date,
+   CHECKSUM varchar(50),
+   KEY_EMPLOYEE int(11),
+   OBSERVATION varchar(255),
    primary key (ID_INTERNAL),
    unique U1 (KEY_ENROLMENT, EVALUATION_TYPE, GRADE)
 )type=InnoDB;

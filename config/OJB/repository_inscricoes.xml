@@ -968,6 +968,28 @@
 		conversion="ServidorPersistente.Conversores.JavaEnrolmentEvaluationState2SqlEnrolmentEvaluationStateFieldConversion"
 	/>
 	<field-descriptor
+		name="employeeKey"
+		column="KEY_EMPLOYEE"
+		jdbc-type="INTEGER"	
+	/>
+	<field-descriptor
+		name="when"
+		column="WHEN_ALTER"
+		jdbc-type="DATE"
+		conversion="org.apache.ojb.broker.accesslayer.conversions.JavaDate2SqlDateFieldConversion"
+	/>
+	<field-descriptor
+		name="checkSum"
+		column="CHECKSUM"
+		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+		name="observation"
+		column="OBSERVATION"
+		jdbc-type="VARCHAR"
+	/>
+	
+	<field-descriptor
 		name="enrolmentKey"
 		column="KEY_ENROLMENT"
 		jdbc-type="INTEGER"
@@ -978,6 +1000,14 @@
 			proxy="false">
 		<foreignkey field-ref="personResponsibleForGradeKey"/>
 	</reference-descriptor>
+	
+	<reference-descriptor
+			name="funcionario"
+			class-ref="Dominio.Funcionario"
+			proxy="false">
+		<foreignkey field-ref="employeeKey"/>
+	</reference-descriptor>
+	
 	<reference-descriptor
 			name="enrolment"
 			class-ref="Dominio.Enrolment"

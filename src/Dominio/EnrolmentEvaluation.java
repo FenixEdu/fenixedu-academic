@@ -19,11 +19,17 @@ public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvalu
 	private Date examDate;
 	private Date gradeAvailableDate;
 	private EnrolmentEvaluationState enrolmentEvaluationState;
+	private Date when;
+	private String checkSum;
+	private String observation;
+	
 	private IEnrolment enrolment;
 	private IPessoa personResponsibleForGrade;
+	private Funcionario employee; 
 	
 	private Integer enrolmentKey;
 	private Integer personResponsibleForGradeKey;
+	private Integer employeeKey;
 		
 	public EnrolmentEvaluation() {
 	}
@@ -47,8 +53,11 @@ public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvalu
 		result += "examDate = " + this.examDate + "; ";
 		result += "personResponsibleForGrade = " + this.personResponsibleForGrade + "; ";
 		result += "enrolmentEvaluationState = " + this.enrolmentEvaluationState + "; ";
+		result += "when = " + this.when + "; ";
+		result += "checkSum = " + this.checkSum + "; ";
 		result += "enrolment = " + this.enrolment + "; ";
 		result += "gradeAvailableDate = " + this.gradeAvailableDate + "]\n";
+		result += "employee = " + this.employee + "; ";
 		return result;
 	}
 	public IEnrolment getEnrolment() {
@@ -121,6 +130,76 @@ public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvalu
 
 	public void setPersonResponsibleForGradeKey(Integer integer) {
 		personResponsibleForGradeKey = integer;
+	}
+
+	/**
+	 * @return
+	 */
+	public Funcionario getEmployee() {
+		return employee;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getEmployeeKey() {
+		return employeeKey;
+	}
+
+	/**
+	 * @param funcionario
+	 */
+	public void setEmployee(Funcionario funcionario) {
+		employee = funcionario;
+	}
+
+	/**
+	 * @param integer
+	 */
+	public void setEmployeeKey(Integer integer) {
+		employeeKey = integer;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getCheckSum() {
+		return checkSum;
+	}
+
+	/**
+	 * @return
+	 */
+	public Date getWhen() {
+		return when;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setCheckSum(String string) {
+		checkSum = string;
+	}
+
+	/**
+	 * @param date
+	 */
+	public void setWhen(Date date) {
+		when = date;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getObservation() {
+		return observation;
+	}
+
+	/**
+	 * @param string
+	 */
+	public void setObservation(String string) {
+		observation = string;
 	}
 
 }

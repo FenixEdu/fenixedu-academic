@@ -3,8 +3,12 @@ package ServidorAplicacao.Servico.masterDegree.administrativeOffice.student.enro
 
 import DataBeans.InfoFinalResult;
 import DataBeans.InfoStudentCurricularPlan;
+import DataBeans.util.Cloner;
+import Dominio.IStudentCurricularPlan;
+import Dominio.StudentCurricularPlan;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.strategy.degreeCurricularPlan.strategys.IMasterDegreeCurricularPlanStrategy;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -37,10 +41,11 @@ public class FinalResult implements IServico {
 	public InfoFinalResult run(InfoStudentCurricularPlan infoStudentCurricularPlan) throws FenixServiceException, Exception {
 
 
-		boolean result;
+		boolean result = false;
 
 		// verify if the school part is concluded 
 		// if concluded result is true
+
 		result = true;
 		if (result){
 			InfoFinalResult infoFinalResult = new InfoFinalResult();
