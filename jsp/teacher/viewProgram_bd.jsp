@@ -22,8 +22,20 @@
 			<bean:write name="program" filter="false"/>
 		</td>
 	</tr>
-</table>
-<br />	
+	</table>
+<br/>	
+<logic:notEmpty name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="programEn">
+<h2><bean:message key="title.program.eng"/></h2>
+<table>
+		<tr>
+			<td><bean:define id="programEn" name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="programEn"></bean:define>
+				<bean:write name="programEn" filter="false"/>
+			</td>
+		</tr>
+		</table>
+<br/>	
+</logic:notEmpty>
+
 <html:hidden property="method" value="prepareEditProgram"/>
 <div class="gen-button"><html:link page="/programManagerDA.do?method=prepareEditProgram"><bean:message key="button.edit"/>
 </html:link>

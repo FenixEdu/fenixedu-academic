@@ -19,11 +19,27 @@
 		</td>
 	</tr>
 	<tr>
+		<td><h2><bean:message key="label.generalObjectives.eng" />	</h2>
+		</td>
+		<td><html:textarea rows="4" cols="56" property="generalObjectivesEn" />
+		</td>
+		<td> <span class="error" ><html:errors property="generalObjectivesEn"/></span>	
+		</td>
+	</tr>
+	<tr>
 		<td><h2><bean:message key="label.operacionalObjectives" /></h2>
 		</td>
 		<td><html:textarea rows="4" cols="56" property="operacionalObjectives" />
 		</td>
 		<td> <span class="error" ><html:errors property="operacionalObjectives"/></span>	
+		</td>
+	</tr>
+	<tr>
+		<td><h2><bean:message key="label.operacionalObjectives.eng" /></h2>
+		</td>
+		<td><html:textarea rows="4" cols="56" property="operacionalObjectivesEn" />
+		</td>
+		<td> <span class="error" ><html:errors property="operacionalObjectivesEn"/></span>	
 		</td>
 	</tr>
 </table>
@@ -35,6 +51,14 @@
 		<td><html:textarea rows="4" cols="56" property="program" />
 		</td>
 		<td> <span class="error" ><html:errors property="program"/></span>	
+		</td>
+	</tr>
+	<tr>
+		<td><h2><bean:message key="label.program.eng" />	</h2>
+		</td>
+		<td><html:textarea rows="4" cols="56" property="programEn" />
+		</td>
+		<td> <span class="error" ><html:errors property="programEn"/></span>	
 		</td>
 	</tr>
 </table>	

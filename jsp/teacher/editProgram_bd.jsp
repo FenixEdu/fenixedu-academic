@@ -17,6 +17,29 @@
 		<td> <span class="error" ><html:errors property="program"/></span>	
 		</td>
 	</tr>
+	<tr>
+		<td><strong><bean:message key="label.program.eng" /></strong>
+		</td>
+	</tr>
+
+	<logic:notPresent name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="programEn">
+	<tr>
+		<td><html:textarea rows="10'" cols="80"  property="programEn" ></html:textarea>
+		</td>
+		<td> <span class="error" ><html:errors property="programEn"/></span>	
+		</td>
+	</tr>
+	</logic:notPresent>
+	
+	<logic:present name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="programEn">
+	<tr>
+		<td><html:textarea rows="10'" cols="80" name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="programEn" ></html:textarea>
+		</td>
+		<td> <span class="error" ><html:errors property="programEn"/></span>	
+		</td>
+	</tr>
+	</logic:present>
+
 </table>
 <br />
 <html:hidden property="method" value="editProgram"/>

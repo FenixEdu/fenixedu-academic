@@ -13,7 +13,8 @@
 	 	</td>
 	</tr>
 </table>
-<br />	
+<br />
+<logic:notEmpty name="<%= SessionConstants.INFO_EVALUATION %>" property="evaluationElementsEn">	
 <h2><bean:message key="title.evaluation.eng"/></h2>
 <table>	
 	<tr>
@@ -22,7 +23,8 @@
 	 	</td>
 	</tr>
 </table>
-<br />	
+<br/>	
+</logic:notEmpty>
 <div class="gen-button"><html:link page="/viewEvaluation.do?method=prepareEditEvaluation">
 <bean:message key="button.edit"/>
 </html:link></div>
