@@ -273,37 +273,29 @@ class Dominio.reimbursementGuide.ReimbursementGuide {
 	Integer number;
 }
 
-
 relation ??? {
-	Dominio.GratuitySituation playsRole ??? {
+	Dominio.GratuitySituation playsRole gratuitySituations {
 		multiplicity *;
 	}
 	Dominio.StudentCurricularPlan playsRole studentCurricularPlan;
 }
 
 relation ??? {
-	Dominio.transactions.SmsTransaction playsRole ??? {
+	Dominio.transactions.PaymentTransaction playsRole paymentTransactions {
 		multiplicity *;
 	}
 	Dominio.GuideEntry playsRole guideEntry;
 }
 
 relation ??? {
-	Dominio.transactions.GratuityTransaction playsRole transactionList {
-		multiplicity *;
-	}
-	Dominio.GratuitySituation playsRole gratuitySituation;
-}
-
-relation ??? {
-	Dominio.reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideSituations {
+	Dominio.reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntries {
 		multiplicity *;
 	}
 	Dominio.reimbursementGuide.ReimbursementGuide playsRole reimbursementGuide;
 }
 
 relation ??? {
-	Dominio.GratuitySituation playsRole ??? {
+	Dominio.GratuitySituation playsRole gratuitySituations {
 		multiplicity *;
 	}
 	Dominio.Employee playsRole employee;
@@ -315,56 +307,43 @@ relation ??? {
 	}
 	Dominio.MasterDegreeThesis playsRole masterDegreeThesis;
 }
-relation ??? {
-	Dominio.transactions.GratuityTransaction playsRole ??? {
-		multiplicity *;
-	}
-	Dominio.GuideEntry playsRole guideEntry;
-}
 
 relation ??? {
-	Dominio.MasterDegreeCandidate playsRole ??? {
+	Dominio.MasterDegreeCandidate playsRole masterDegreeCandidates {
 		multiplicity *;
 	}
 	Dominio.CursoExecucao playsRole executionDegree;
 }
 
 relation ??? {
-	Dominio.reimbursementGuide.ReimbursementGuideSituation playsRole ??? {
+	Dominio.reimbursementGuide.ReimbursementGuideSituation playsRole reimbursementGuideSituations {
 		multiplicity *;
 	}
 	Dominio.Employee playsRole employee;
 }
 
 relation ??? {
-	Dominio.transactions.InsuranceTransaction playsRole transactions {
-		multiplicity *;
-	}
-	Dominio.PersonAccount playsRole personAccount;
-}
-
-relation ??? {
-	Dominio.MasterDegreeProofVersion playsRole ??? {
+	Dominio.MasterDegreeProofVersion playsRole masterDegreeProofVersions {
 		multiplicity *;
 	}
 	Dominio.Employee playsRole responsibleEmployee;
 }
 relation ??? {
-	Dominio.transactions.InsuranceTransaction playsRole ??? {
+	Dominio.transactions.InsuranceTransaction playsRole insuranceTransactions {
 		multiplicity *;
 	}
 	Dominio.Student playsRole student;
 }
 
 relation ??? {
-	Dominio.CandidateEnrolment playsRole ??? {
+	Dominio.CandidateEnrolment playsRole candidateEnrolments {
 		multiplicity *;
 	}
 	Dominio.CurricularCourse playsRole curricularCourse;
 }
 
 relation ??? {
-	Dominio.InsuranceValue playsRole ??? {
+	Dominio.InsuranceValue playsRole insuranceValues {
 		multiplicity *;
 	}
 	Dominio.ExecutionYear playsRole executionYear;
@@ -378,14 +357,14 @@ relation ??? {
 }
 
 relation ??? {
-	Dominio.Gratuity playsRole ??? {
+	Dominio.Gratuity playsRole gratuities {
 		multiplicity *;
 	}
 	Dominio.StudentCurricularPlan playsRole studentCurricularPlan;
 }
 
 relation ??? {
-	Dominio.transactions.GratuityTransaction playsRole transactions {
+	Dominio.transactions.PaymentTransaction playsRole paymentTransactions {
 		multiplicity *;
 	}
 	Dominio.PersonAccount playsRole personAccount;
@@ -406,41 +385,42 @@ relation ??? {
 }
 
 relation ??? {
-	Dominio.Guide playsRole ??? {
+	Dominio.Guide playsRole guides {
 		multiplicity *;
 	}
 	Dominio.CursoExecucao playsRole executionDegree;
 }
 
 relation ??? {
-	Dominio.GratuityValues playsRole ??? {
+	Dominio.GratuityValues playsRole gratuityValues {
 		multiplicity *;
 	}
 	Dominio.Employee playsRole employee;
 }
 
 relation ??? {
-	Dominio.transactions.ReimbursementTransaction playsRole transactions {
+	Dominio.transactions.ReimbursementTransaction playsRole reimbursementTransactions {
 		multiplicity *;
 	}
 	Dominio.PersonAccount playsRole personAccount;
 }
+
 relation ??? {
-	Dominio.GratuityValues playsRole coordinatorsList {
+	Dominio.GratuityValues playsRole gratuityValues {
 		multiplicity *;
 	}
 	Dominio.CursoExecucao playsRole executionDegree;
 }
 
 relation ??? {
-	Dominio.CandidateEnrolment playsRole situations {
+	Dominio.CandidateEnrolment playsRole candidateEnrolments {
 		multiplicity *;
 	}
 	Dominio.MasterDegreeCandidate playsRole masterDegreeCandidate;
 }
 
 relation ??? {
-	Dominio.reimbursementGuide.ReimbursementGuide playsRole guideEntries {
+	Dominio.reimbursementGuide.ReimbursementGuide playsRole reimbursementGuides {
 		multiplicity *;
 	}
 	Dominio.Guide playsRole guide;
@@ -454,49 +434,49 @@ relation ??? {
 }
 
 relation ??? {
-	Dominio.GuideSituation playsRole guideEntries {
+	Dominio.GuideSituation playsRole guideSituations {
 		multiplicity *;
 	}
 	Dominio.Guide playsRole guide;
 }
 
 relation ??? {
-	Dominio.GratuitySituation playsRole paymentPhaseList {
+	Dominio.GratuitySituation playsRole gratuitySituations {
 		multiplicity *;
 	}
 	Dominio.GratuityValues playsRole gratuityValues;
 }
 
 relation ??? {
-	Dominio.Coordinator playsRole professorships {
+	Dominio.Coordinator playsRole coordinators {
 		multiplicity *;
 	}
 	Dominio.Teacher playsRole teacher;
 }
 
 relation ??? {
-	Dominio.transactions.InsuranceTransaction playsRole executionPeriods {
+	Dominio.transactions.InsuranceTransaction playsRole insuranceTransactions {
 		multiplicity *;
 	}
 	Dominio.ExecutionYear playsRole executionYear;
 }
 
 relation ??? {
-	Dominio.transactions.SmsTransaction playsRole transactions {
+	Dominio.transactions.SmsTransaction playsRole smsTransactions {
 		multiplicity *;
 	}
 	Dominio.PersonAccount playsRole personAccount;
 }
 
 relation ??? {
-	Dominio.MasterDegreeThesis playsRole enrolments {
+	Dominio.MasterDegreeThesis playsRole masterDegreeThesis {
 		multiplicity *;
 	}
 	Dominio.StudentCurricularPlan playsRole studentCurricularPlan;
 }
 
 relation ??? {
-	Dominio.MasterDegreeThesisDataVersion playsRole historicList {
+	Dominio.MasterDegreeThesisDataVersion playsRole masterDegreeThesisDataVersions {
 		multiplicity *;
 	}
 	Dominio.Employee playsRole responsibleEmployee;
@@ -510,9 +490,7 @@ relation ??? {
 }
 
 relation ??? {
-	Dominio.transactions.InsuranceTransaction playsRole reimbursementGuideEntries {
-		multiplicity *;
-	}
+	Dominio.transactions.InsuranceTransaction playsRole insuranceTransaction;
 	Dominio.GuideEntry playsRole guideEntry;
 }
 
@@ -538,70 +516,43 @@ relation ??? {
 }
 
 relation ??? {
-	Dominio.Guide playsRole ??? {
-		multiplicity ???;
+	Dominio.Guide playsRole guides {
+		multiplicity *;
 	}
 	Dominio.Pessoa playsRole person;
 }
 
 relation ??? {
-	Dominio.transactions.InsuranceTransaction playsRole ??? {
-		multiplicity ???;
+	Dominio.transactions.Transaction playsRole responsabilityTransactions {
+		multiplicity *;
 	}
 	Dominio.Pessoa playsRole responsiblePerson;
 }
 
 relation ??? {
-	Dominio.GratuitySituation playsRole ??? {
-		multiplicity ???;
-	}
 	Dominio.transactions.GratuityTransaction playsRole transactionList {
 		multiplicity *;
 	}
+	Dominio.GratuitySituation playsRole gratuitySituation;
 }
 
 relation ??? {
-	Dominio.transactions.GratuityTransaction playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Pessoa playsRole responsiblePerson;
-}
-
-relation ??? {
-	Dominio.PersonAccount playsRole ??? {
-		multiplicity ???;
-	}
 	Dominio.transactions.Transaction playsRole transactions {
 		multiplicity *;
 	}
+	Dominio.PersonAccount playsRole personAccount;
 }
 
 relation ??? {
-	Dominio.transactions.ReimbursementTransaction playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Pessoa playsRole responsiblePerson;
-}
-
-relation ??? {
-	Dominio.transactions.SmsTransaction playsRole ??? {
-		multiplicity ???;
-	}
-	Dominio.Pessoa playsRole responsiblePerson;
-}
-
-relation ??? {
-	Dominio.MasterDegreeThesis playsRole ??? {
-		multiplicity ???;
-	}
+	Dominio.MasterDegreeThesis playsRole masterDegreeThesis;
 	Dominio.MasterDegreeProofVersion playsRole masterDegreeProofVersions {
 		multiplicity *;
 	}
 }
 
 relation ??? {
-	Dominio.MasterDegreeCandidate playsRole ??? {
-		multiplicity ???;
+	Dominio.MasterDegreeCandidate playsRole masterDegreeCandidates {
+		multiplicity *;
 	}
 	Dominio.CandidateSituation playsRole situations {
 		multiplicity *;
@@ -609,9 +560,7 @@ relation ??? {
 }
 
 relation ??? {
-	Dominio.ExternalPerson playsRole ??? {
-		multiplicity 0..1;
-	}
+	Dominio.ExternalPerson playsRole externalPerson;
 	Dominio.Pessoa playsRole person;
 }
 
@@ -631,8 +580,8 @@ relation ??? {
 
 
 relation ??? {
-	Dominio.MasterDegreeCandidate playsRole ??? {
-		multiplicity ???;
+	Dominio.MasterDegreeCandidate playsRole masterDegreeCandidates {
+		multiplicity *;
 	}
 	Dominio.Pessoa playsRole person;
 }
@@ -654,8 +603,8 @@ relation ??? {
 
 
 relation ??? {
-	Dominio.MasterDegreeThesisDataVersion playsRole ??? {
-		multiplicity ???;
+	Dominio.MasterDegreeThesisDataVersion playsRole masterDegreeThesisGuider {
+		multiplicity *;
 	}
 	Dominio.Teacher playsRole guiders {
 		multiplicity *;
@@ -678,8 +627,8 @@ relation ??? {
 
 
 relation ??? {
-	Dominio.MasterDegreeProofVersion playsRole ??? {
-		multiplicity ???;
+	Dominio.MasterDegreeProofVersion playsRole masterDegreeProofsJury {
+		multiplicity *;
 	}
 	Dominio.Teacher playsRole juries {
 		multiplicity *;
@@ -687,16 +636,16 @@ relation ??? {
 }
 
 relation ??? {
-	Dominio.ExternalPerson playsRole ??? {
-		multiplicity ???;
+	Dominio.ExternalPerson playsRole externalPersons {
+		multiplicity *;
 	}
 	Dominio.WorkLocation playsRole workLocation;
 }
 
 
 relation ??? {
-	Dominio.MasterDegreeThesisDataVersion playsRole ??? {
-		multiplicity ???;
+	Dominio.MasterDegreeThesisDataVersion playsRole masterDegreeThesisExternalGuider {
+		multiplicity *;
 	}
 	Dominio.ExternalPerson playsRole externalGuiders {
 		multiplicity *;
@@ -704,16 +653,13 @@ relation ??? {
 }
 
 relation ??? {
-	Dominio.transactions.ReimbursementTransaction playsRole ??? {
-		multiplicity ???;
-	}
+	Dominio.transactions.ReimbursementTransaction playsRole reimbursementTransaction;
 	Dominio.reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntry;
 }
 
-
 relation ??? {
-	Dominio.Guide playsRole ??? {
-		multiplicity ???;
+	Dominio.Guide playsRole guide {
+		multiplicity *;
 	}
 	Dominio.GuideEntry playsRole guideEntries {
 		multiplicity *;
@@ -721,8 +667,8 @@ relation ??? {
 }
 
 relation ??? {
-	Dominio.MasterDegreeThesisDataVersion playsRole ??? {
-		multiplicity ???;
+	Dominio.MasterDegreeThesisDataVersion playsRole masterDegreeThesisExternalAssistentGuider {
+		multiplicity *;
 	}
 	Dominio.ExternalPerson playsRole externalAssistentGuiders {
 		multiplicity *;
@@ -744,8 +690,8 @@ relation ??? {
 }
 
 relation ??? {
-	Dominio.MasterDegreeThesisDataVersion playsRole ??? {
-		multiplicity ???;
+	Dominio.MasterDegreeThesisDataVersion playsRole masterDegreeThesisAssistentGuider {
+		multiplicity *;
 	}
 	Dominio.Teacher playsRole assistentGuiders {
 		multiplicity *;
@@ -753,15 +699,15 @@ relation ??? {
 }
 
 relation ??? {
-	Dominio.Guide playsRole ??? {
-		multiplicity ???;
+	Dominio.Guide playsRole guides {
+		multiplicity *;
 	}
 	Dominio.Contributor playsRole contributor;
 }
 
 relation ??? {
-	Dominio.MasterDegreeProofVersion playsRole ??? {
-		multiplicity ???;
+	Dominio.MasterDegreeProofVersion playsRole masterDegreeProofsExternalJury {
+		multiplicity *;
 	}
 	Dominio.ExternalPerson playsRole externalJuries {
 		multiplicity *;
@@ -769,8 +715,8 @@ relation ??? {
 }
 
 relation ??? {
-	Dominio.sms.SentSms playsRole ??? {
-		multiplicity ???;
+	Dominio.sms.SentSms playsRole sentSms {
+		multiplicity *;
 	}
 	Dominio.Pessoa playsRole person;
 }
