@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<br />
 <h2><bean:message key="title.insertAnnouncement"/></h2>
 <html:form action="/announcementManagementAction" focus="title" >
 <html:hidden property="page" value="1"/>
