@@ -115,7 +115,8 @@
 	  <field-descriptor id="3"
 	     name="remarks"
 	     column="REMARKS"
-	     jdbc-type="VARCHAR"
+	     jdbc-type="CLOB"
+	      conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
 	  />
 	  
 	  <field-descriptor id="4"
@@ -234,7 +235,8 @@
 	  <field-descriptor 
 	     name="remarks"
 	     column="REMARKS"
-	     jdbc-type="VARCHAR"
+	     jdbc-type="CLOB"
+	      conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
 	  />
 	  <field-descriptor 
 	     name="guideRequester"
