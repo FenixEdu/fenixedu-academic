@@ -437,6 +437,8 @@
             <include name="**/**/IstFtpServerConfig.properties"/>
 			<include name="**/**/logAnalyser.properties"/>
 			<include name="index.html"/>
+			<include name="**/index.html"/>
+			<include name="**/**/index.html"/>
 			<include name="**/degreeAdministrativeOffice/enrolment/withRules/*.jsp"/>
             <include name="**/student/enrollment/warning.jsp"/>
 			<include name="**/**/*.jsp"/>
