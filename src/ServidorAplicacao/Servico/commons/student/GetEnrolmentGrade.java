@@ -3,8 +3,6 @@ package ServidorAplicacao.Servico.commons.student;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanComparator;
-
 import DataBeans.InfoEnrolmentEvaluation;
 import DataBeans.util.Cloner;
 import Dominio.IEmployee;
@@ -53,9 +51,8 @@ public class GetEnrolmentGrade implements IServico {
 		} else
 		{
 			// This sorts the list ascendingly so we need to reverse it to get the first object.
-			Collections.sort(enrolmentEvaluations,new BeanComparator("when"));
+			Collections.sort(enrolmentEvaluations);
 			Collections.reverse(enrolmentEvaluations);
-			
 			try
 			{
 				return getInfoLatestEvaluation((IEnrolmentEvaluation) enrolmentEvaluations.get(0));
