@@ -89,6 +89,7 @@ public abstract class ServiceTestCase extends TestCase {
 
 			connection.close();
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			fail("Setup failed loading database with test data set: " + ex);
 		}
 	}
