@@ -30,19 +30,9 @@
   </tr>
 </table>
 <!-- End NavGeral -->
-<!-- Body Content -->
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-   <tr>
-     <td valign="top" nowrap="nowrap">
-     <table width="100%" border="0" cellspacing="0" cellpadding="0">
-       <tr>
-         <td><tiles:insert attribute="body" /></td>
-       </tr>
-     </table>       
-	</td>
-  </tr>
-</table>
-<!--End Body Content -->
+<!-- Navbar Lateral e Body Content -->
+<td><tiles:insert attribute="body" /></td>
+<!--End Navbar Lateral e Body Content -->
 <!-- Footer -->
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
