@@ -42,8 +42,8 @@ NOTES:
 - It is necessary to run the 2 script in the project middleware:
 			In directory /etc/middleware/grantMigration2/
 - It is also necessary to run the 2 java scripts in middleware project (after the 2 scripts mentioned before)
-	ant -f build_run.xml migrate-bolseiros
 	ant -f build_run.xml migrate-grant-contract
+	ant -f build_run.xml migrate-bolseiros
 - Need to load docs/prepareTestsTable.sql
 - Need to run update-response-field task in migration project:
 	ant -f build_run.xml update-response-field
