@@ -119,7 +119,7 @@ public class GratuityFileSIBS extends GratuityFile
 		//it is necessary fill later
 		header.append("00000000");
 		header.append(1); //last file's sequence number that it was sended, usually it is 1
-		header.append(20801); //entity's code
+		header.append(20821); //entity's code
 		header.append(978); //currency(coin) code, in this case it is euro's code
 		header.append(addCharToStringUntilMax(SPACE, "", WHITE_SPACES_HEADER)); // three white spaces
 
