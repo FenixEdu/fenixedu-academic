@@ -64,7 +64,6 @@ public class MigrateDisciplina2Fenix {
 		List result = null;
 		Query query = null;
 		Criteria criteria = null;
-		QueryByCriteria queryByCriteria = null;
 		int coursesWritten = 0;
 		int coursesNotWritten = 0;
 		try {
@@ -169,11 +168,11 @@ public class MigrateDisciplina2Fenix {
 				curricularCourse2Write.setCurricularCourseExecutionScope(CurricularCourseExecutionScope.SEMESTRIAL_OBJ);
 				curricularCourse2Write.setDegreeCurricularPlan(degreeCurricularPlan);
 				curricularCourse2Write.setDepartmentCourse(null);
-				curricularCourse2Write.setLabHours(new Double(0.0));
+		//		curricularCourse2Write.setLabHours(new Double(0.0));
 				curricularCourse2Write.setName(curricularCourse2Convert.getNome());
-				curricularCourse2Write.setPraticalHours(new Double(0.0));
-				curricularCourse2Write.setTheoPratHours(new Double(0.0));
-				curricularCourse2Write.setTheoreticalHours(new Double(0.0));
+		//		curricularCourse2Write.setPraticalHours(new Double(0.0));
+		//		curricularCourse2Write.setTheoPratHours(new Double(0.0));
+		//		curricularCourse2Write.setTheoreticalHours(new Double(0.0));
 				
 				curricularCourse2Write.setType(getType(curricularCourse2Convert));
 
@@ -209,10 +208,10 @@ public class MigrateDisciplina2Fenix {
 				
 				// Execution Course for the public site
 				IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
-				executionCourse.setLabHours(curricularCourse2Write.getLabHours());
-				executionCourse.setTheoPratHours(curricularCourse2Write.getTheoPratHours());
-				executionCourse.setTheoreticalHours(curricularCourse2Write.getTheoreticalHours());
-				executionCourse.setPraticalHours(curricularCourse2Write.getPraticalHours());
+//				executionCourse.setLabHours(curricularCourse2Write.getLabHours());
+//				executionCourse.setTheoPratHours(curricularCourse2Write.getTheoPratHours());
+//				executionCourse.setTheoreticalHours(curricularCourse2Write.getTheoreticalHours());
+//				executionCourse.setPraticalHours(curricularCourse2Write.getPraticalHours());
 				executionCourse.setNome(curricularCourse2Write.getName());
 				executionCourse.setSigla(curricularCourse2Write.getCode());
 				executionCourse.setComment("Vazio");
