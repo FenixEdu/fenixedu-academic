@@ -13,7 +13,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
-import org.odmg.QueryException;
 
 import Dominio.ICurricularYear;
 import Dominio.ICursoExecucao;
@@ -132,66 +131,35 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente
     public Integer countAllShiftsOfAllClassesAssociatedWithShift(ITurno shift)
         throws ExcepcaoPersistencia
     {
-        try
-        {
-            String oqlQuery =
-                "select all from "
-                    + TurmaTurno.class.getName()
-                    + " where turno.nome = $1 "
-                    + " and turno.disciplinaExecucao.sigla = $2 "
-                    + " and turno.disciplinaExecucao.executionPeriod.name = $3 "
-                    + " and turno.disciplinaExecucao.executionPeriod.executionYear.year = $4"
-                    + " and turno.tipo = $5";
-            query.create(oqlQuery);
+			Criteria criteria = new Criteria();
+			criteria.addEqualTo("turno.nome", shift.getNome());
+			criteria.addEqualTo("turno.disciplinaExecucao.sigla", shift.getDisciplinaExecucao().getSigla());
+			criteria.addEqualTo("turno.disciplinaExecucao.executionPeriod.name", shift.getDisciplinaExecucao().getExecutionPeriod().getName());
+			criteria.addEqualTo("turno.disciplinaExecucao.executionPeriod.executionYear.year", shift.getDisciplinaExecucao().getExecutionPeriod().getExecutionYear().getYear());
+			criteria.addEqualTo("turno.tipo", shift.getTipo().getTipo());
 
-            query.bind(shift.getNome());
-            query.bind(shift.getDisciplinaExecucao().getSigla());
-            query.bind(shift.getDisciplinaExecucao().getExecutionPeriod().getName());
-            query.bind(shift.getDisciplinaExecucao().getExecutionPeriod().getExecutionYear().getYear());
-            query.bind(shift.getTipo().getTipo());
-
-            List result = (List) query.execute();
-            lockRead(result);
+            List result = queryList(TurmaTurno.class, criteria);
 
             //return new Integer(result.size());
             List result2 = null;
             for (int i = 0; i != result.size(); i++)
             {
-                try
-                {
-                    oqlQuery = "select all from " + TurmaTurno.class.getName();
-                    //oqlQuery += ", " + Turma.class.getName() + ", " +
-                    // TurmaTurno.class.getName() + ")";
-                    oqlQuery += " where turno.tipo = $1 and turma.nome = $2";
-                    query.create(oqlQuery);
-                    query.bind(new Integer(TipoAula.PRATICA));
-                    query.bind(((TurmaTurno) (result.get(i))).getTurma().getNome());
+                	criteria = new Criteria();
+                	criteria.addEqualTo("turno.tipo", new Integer(TipoAula.PRATICA));
+					criteria.addEqualTo("turma.nome", ((TurmaTurno) (result.get(i))).getTurma().getNome());
                     if (i == 0)
                     {
-                        result2 = (List) query.execute();
-                        lockRead(result2);
+                        result2 = queryList(TurmaTurno.class, criteria);
                     }
                     else
                     {
-                        List result_tmp = (List) query.execute();
-                        lockRead(result_tmp);
+                        List result_tmp = queryList(TurmaTurno.class, criteria);
                         for (int j = 0; j != result_tmp.size(); j++)
                             if (!result2.contains(result_tmp.get(j)))
                                 result2.add(result_tmp.get(j));
                     }
-                }
-                catch (QueryException ex)
-                {
-                    throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-                }
             }
             return new Integer(result2.size());
-
-        }
-        catch (QueryException ex)
-        {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
     }
 
     public List readByDisciplinaExecucao(String sigla, String anoLectivo, String siglaLicenciatura)
