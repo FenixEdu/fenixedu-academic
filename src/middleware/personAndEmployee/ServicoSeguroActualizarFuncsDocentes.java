@@ -15,8 +15,9 @@ import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
 import Dominio.Employee;
-import Dominio.FuncNaoDocente;
+import Dominio.EmployeeNotTeacher;
 import Dominio.IEmployee;
+import Dominio.IEmployeeNotTeacher;
 import Dominio.IPersonRole;
 import Dominio.IPessoa;
 import Dominio.ITeacher;
@@ -214,15 +215,15 @@ public class ServicoSeguroActualizarFuncsDocentes
 			Criteria criteria = new Criteria();
 			Query query = null;
 
-			criteria.addEqualTo("funcionario.person.idInternal", pessoa.getIdInternal());
-			query = new QueryByCriteria(FuncNaoDocente.class, criteria);
-			List resultfuncionario = (List) broker.getCollectionByQuery(query);
+			criteria.addEqualTo("employee.person.idInternal", pessoa.getIdInternal());
+			query = new QueryByCriteria(EmployeeNotTeacher.class, criteria);
+			List resultEmployeeNotTeacher = (List) broker.getCollectionByQuery(query);
 
-			Iterator iterator2 = resultfuncionario.listIterator();
+			Iterator iterator2 = resultEmployeeNotTeacher.listIterator();
 			while (iterator2.hasNext())
 			{
-				FuncNaoDocente funcNaoDocente = (FuncNaoDocente) iterator2.next();
-				broker.delete(funcNaoDocente);
+				IEmployeeNotTeacher employeeNotTeacher = (IEmployeeNotTeacher) iterator2.next();
+				broker.delete(employeeNotTeacher);
 			}
 		}
 		broker.commitTransaction();

@@ -14,8 +14,9 @@ import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
-import Dominio.FuncNaoDocente;
-import Dominio.Funcionario;
+import Dominio.Employee;
+import Dominio.EmployeeNotTeacher;
+import Dominio.IEmployee;
 import Dominio.IPersonRole;
 import Dominio.IPessoa;
 import Dominio.ITeacher;
@@ -37,7 +38,7 @@ public class ServicoSeguroActualizarFuncsNaoDocentes
     /** Construtor */
     public ServicoSeguroActualizarFuncsNaoDocentes(String[] args)
     {
-        ficheiro = args[0];
+    	ficheiro = "E:/Projectos/_carregamentos/naodocente.dat"; //args[0];
         delimitador = new String(";");
 
         /* Inicializar Hashtable com atributos a recuperar do ficheiro de texto requeridos */
@@ -70,13 +71,10 @@ public class ServicoSeguroActualizarFuncsNaoDocentes
         int newRoles = 0;
 
         List persons = new ArrayList();
-        FuncNaoDocente funcNaoDocente = null;
+        EmployeeNotTeacher employeeNotTeacher = null;
         Integer numeroMecanografico = null;
 
-        /* ciclo para percorrer a Collection de Funcionarios */
-        /* algoritmo */
-
-        /* Procurar chaveFuncionario correspondente e criar funcNaoDocente */
+         /* Find the correspond employee and create the employee not teacher */
         Iterator iteradorNovo = lista.iterator();
 
         broker.beginTransaction();
@@ -96,49 +94,50 @@ public class ServicoSeguroActualizarFuncsNaoDocentes
                 criteria = new Criteria();
                 query = null;
 
-                criteria.addEqualTo("numeroMecanografico", numeroMecanografico);
-                query = new QueryByCriteria(Funcionario.class, criteria);
-                List resultFuncionario = (List) broker.getCollectionByQuery(query);
-
-                if (resultFuncionario.size() == 0)
+                criteria.addEqualTo("employeeNumber", numeroMecanografico);
+                query = new QueryByCriteria(Employee.class, criteria);
+                List resultEmployee = (List) broker.getCollectionByQuery(query);
+                if (resultEmployee.size() == 0)
                 {
                     throw new Exception("Error Reading Existing Employee");
                 }
 
-                Funcionario funcionario = (Funcionario) resultFuncionario.get(0);
+                //Employee
+                IEmployee employee = (IEmployee) resultEmployee.get(0);
 
                 criteria = new Criteria();
                 query = null;
+                criteria.addEqualTo("keyEmployee", employee.getIdInternal());
+                query = new QueryByCriteria(EmployeeNotTeacher.class, criteria);
+                List resultEmployeeNotTeacher = (List) broker.getCollectionByQuery(query);
 
-                criteria.addEqualTo("chaveFuncionario", new Integer(funcionario.getCodigoInterno()));
-                query = new QueryByCriteria(FuncNaoDocente.class, criteria);
-                List resultFuncNaoDocente = (List) broker.getCollectionByQuery(query);
-
-                if (resultFuncNaoDocente.size() == 0)
+                if (resultEmployeeNotTeacher.size() == 0)
                 {
-                    funcNaoDocente = new FuncNaoDocente();
-                    funcNaoDocente.setFuncionario(funcionario);
-                    broker.store(funcNaoDocente);
+                	//Employee not Teacher doesn't exists
+                	employeeNotTeacher = new EmployeeNotTeacher();
+                	employeeNotTeacher.setEmployee(employee);
+                    broker.store(employeeNotTeacher);
                     newEmployees++;
 
                     IPersonRole personRole =
-                        RoleFunctions.readPersonRole(funcionario.getPerson(), RoleType.EMPLOYEE, broker);
+                        RoleFunctions.readPersonRole(employee.getPerson(), RoleType.EMPLOYEE, broker);
                     if (personRole == null)
                     {
-                        RoleFunctions.giveRole(funcionario.getPerson(), RoleType.EMPLOYEE, broker);
+                        RoleFunctions.giveRole(employee.getPerson(), RoleType.EMPLOYEE, broker);
                         newRoles++;
                     }
-                } else if (resultFuncNaoDocente.size() > 0)
+                } else if (resultEmployeeNotTeacher.size() > 0)
                 {
-                    funcNaoDocente = (FuncNaoDocente) resultFuncNaoDocente.get(0);
-                    if (!funcNaoDocente.getFuncionario().equals(funcionario))
+                	//Employee not Teacher exists, then verify the correspond employee
+                	employeeNotTeacher = (EmployeeNotTeacher) resultEmployeeNotTeacher.get(0);
+                    if (!employeeNotTeacher.getEmployee().equals(employee))
                     {
-                        funcNaoDocente.setFuncionario(funcionario);
+                    	employeeNotTeacher.setEmployee(employee);
                     }
-                    broker.store(funcNaoDocente);
+                    broker.store(employeeNotTeacher);
                 }
 
-                persons.add(funcNaoDocente.getFuncionario().getPerson());
+                persons.add(employeeNotTeacher.getEmployee().getPerson());
             } catch (Exception e)
             {
                 e.printStackTrace();
