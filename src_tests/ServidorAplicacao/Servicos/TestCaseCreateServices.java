@@ -42,6 +42,7 @@ public abstract class TestCaseCreateServices extends TestCaseNeedAuthorizationSe
 			assertEquals("testSuccessfulExecutionOfCreateService", Boolean.TRUE.booleanValue(), ((Boolean) result).booleanValue());
 			System.out.println("testSuccessfulExecutionOfCreateService was SUCCESSFULY runned by class: " + this.getClass().getName());
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			System.out.println("testSuccessfulExecutionOfCreateService was UNSUCCESSFULY runned by class: " + this.getClass().getName());
 			fail("testSuccessfulExecutionOfCreateService");
 		}

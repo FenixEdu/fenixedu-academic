@@ -56,7 +56,7 @@ public abstract class TestCaseReadServices extends TestCaseNeedAuthorizationServ
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			System.out.println("testUnsuccessfulExecutionOfReadService was UNSUCCESSFULY runned by class: " + this.getClass().getName());
+			System.out.println("testSuccessfulExecutionOfReadService was UNSUCCESSFULY runned by class: " + this.getClass().getName());
 			fail("testSuccessfulExecutionOfReadService");
 		}
 	}

@@ -29,6 +29,7 @@ public abstract class TestCaseDeleteAndEditServices extends TestCaseNeedAuthoriz
 			assertEquals("testUnsuccessfulExecutionOfDeleteService", Boolean.FALSE.booleanValue(), ((Boolean) result).booleanValue());
 			System.out.println("testUnsuccessfulExecutionOfDeleteService was SUCCESSFULY runned by class: " + this.getClass().getName());
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			System.out.println("testUnsuccessfulExecutionOfDeleteService was UNSUCCESSFULY runned by class: " + this.getClass().getName());
 			fail("testUnsuccessfulExecutionOfDeleteService");
 		}
@@ -43,6 +44,7 @@ public abstract class TestCaseDeleteAndEditServices extends TestCaseNeedAuthoriz
 			assertEquals("testSuccessfulExecutionOfDeleteService", Boolean.TRUE.booleanValue(), ((Boolean) result).booleanValue());
 			System.out.println("testSuccessfulExecutionOfDeleteService was SUCCESSFULY runned by class: " + this.getClass().getName());
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			System.out.println("testSuccessfulExecutionOfDeleteService was UNSUCCESSFULY runned by class: " + this.getClass().getName());
 			fail("testSuccessfulExecutionOfDeleteService");
 		}

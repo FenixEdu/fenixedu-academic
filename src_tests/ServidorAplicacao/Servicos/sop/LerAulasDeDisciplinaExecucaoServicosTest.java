@@ -11,8 +11,6 @@ package ServidorAplicacao.Servicos.sop;
  *
  * @author tfc130
  */
-import java.util.List;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoExecutionCourse;
@@ -21,7 +19,7 @@ import Dominio.DisciplinaExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
-import ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices;
+import ServidorAplicacao.Servicos.TestCaseReadServices;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentExecutionPeriod;
@@ -29,7 +27,7 @@ import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class LerAulasDeDisciplinaExecucaoServicosTest extends TestCaseNeedAuthorizationServices {
+public class LerAulasDeDisciplinaExecucaoServicosTest extends TestCaseReadServices {
 		
 	private InfoExecutionCourse infoExecutionCourse = null;
 
@@ -64,6 +62,51 @@ public class LerAulasDeDisciplinaExecucaoServicosTest extends TestCaseNeedAuthor
 		return "LerAulasDeDisciplinaExecucao";
 	}
 
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedSuccessfuly()
+	 */
+	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
+
+		ligarSuportePersistente(true);
+
+		Object argsLerAulas[] = { this.infoExecutionCourse };
+
+		return argsLerAulas;
+	}
+
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
+	 */
+	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
+
+		ligarSuportePersistente(false);
+
+		Object argsLerAulas[] = { this.infoExecutionCourse };
+
+		return argsLerAulas;
+	}
+
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
+	 */
+	protected int getNumberOfItemsToRetrieve() {
+		return 6;
+	}
+
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getObjectToCompare()
+	 */
+	protected Object getObjectToCompare() {
+		return null;
+	}
+
+	/**
+	 * @see ServidorAplicacao.Servicos.TestCaseNeedAuthorizationServices#needsAuthorization()
+	 */
+	protected boolean needsAuthorization() {
+		return true;
+	}
+/*
 	// read existing aulas
 	public void testReadExistingAulas() {
 
@@ -95,7 +138,7 @@ public class LerAulasDeDisciplinaExecucaoServicosTest extends TestCaseNeedAuthor
 			fail("testLerNonExistingAulas");
 		}
 	}
-
+*/
 	private void ligarSuportePersistente(boolean existing) {
 
 		ISuportePersistente sp = null;
