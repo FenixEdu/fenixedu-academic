@@ -78,12 +78,15 @@ DELETE FROM professorships;
 INSERT INTO professorships VALUES (1, 24);
 INSERT INTO professorships VALUES (1, 25);
 INSERT INTO professorships VALUES (1, 26);
+INSERT INTO professorships VALUES (2, 24);
+INSERT INTO professorships VALUES (3, 24);
 
 #
 # Data for table 'responsiblefor'
 #
 
 DELETE FROM responsiblefor;
+INSERT INTO responsiblefor VALUES (1, 24);
 INSERT INTO responsiblefor VALUES (1, 25);
 INSERT INTO responsiblefor VALUES (1, 26);
 
