@@ -112,7 +112,6 @@ public class ViewExamsByDayAndShiftDispatchAction extends DispatchAction {
 		throws Exception {
 
 		HttpSession session = request.getSession(false);
-		IUserView userView = SessionUtils.getUserView(request);
 		
 		DynaValidatorForm editExamForm = (DynaValidatorForm) form;
 	
@@ -160,7 +159,6 @@ public class ViewExamsByDayAndShiftDispatchAction extends DispatchAction {
 		throws Exception {
 
 		HttpSession session = request.getSession(false);
-		IUserView userView = SessionUtils.getUserView(request);
 	
 		List infoViewExams = (List) session.getAttribute(SessionConstants.LIST_EXAMSANDINFO);
 
