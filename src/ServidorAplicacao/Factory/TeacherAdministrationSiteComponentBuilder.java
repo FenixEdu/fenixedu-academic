@@ -776,23 +776,23 @@ public class TeacherAdministrationSiteComponentBuilder {
 		while (iter.hasNext()) {
 			IItem item = (IItem) iter.next();
 			InfoItem infoItem = Cloner.copyIItem2InfoItem(item);
-//			try {
-//				List files = fileSuport.getDirectoryFiles(item.getSlideName());
-//				if (files != null && !files.isEmpty()) {
-//					List links = new ArrayList();
-//					Iterator iterFiles = files.iterator();
-//					while (iterFiles.hasNext()) {
-//						FileSuportObject file = (FileSuportObject) iterFiles.next();
-//						InfoLink infoLink = new InfoLink();
-//						infoLink.setLink(file.getFileName());
-//						infoLink.setLinkName(file.getLinkName());
-//						links.add(infoLink);
-//					}
-//					infoItem.setLinks(links);
-//				}
-//			} catch (SlideException e1) {
-//				//the item does not have a folder associated
-//			}
+			//			try {
+			//				List files = fileSuport.getDirectoryFiles(item.getSlideName());
+			//				if (files != null && !files.isEmpty()) {
+			//					List links = new ArrayList();
+			//					Iterator iterFiles = files.iterator();
+			//					while (iterFiles.hasNext()) {
+			//						FileSuportObject file = (FileSuportObject) iterFiles.next();
+			//						InfoLink infoLink = new InfoLink();
+			//						infoLink.setLink(file.getFileName());
+			//						infoLink.setLinkName(file.getLinkName());
+			//						links.add(infoLink);
+			//					}
+			//					infoItem.setLinks(links);
+			//				}
+			//			} catch (SlideException e1) {
+			//				//the item does not have a folder associated
+			//			}
 			infoItemsList.add(infoItem);
 		}
 		component.setSection(Cloner.copyISection2InfoSection(iSection));
@@ -1062,10 +1062,8 @@ public class TeacherAdministrationSiteComponentBuilder {
 					if (groupProperties.getGroupMaximumNumber() != null) {
 
 						int vagas = groupProperties.getGroupMaximumNumber().intValue() - allStudentGroups.size();
-						if (vagas >= 0)
-							infoSiteShift.setNrOfGroups(new Integer(vagas));
-						else
-							infoSiteShift.setNrOfGroups(new Integer(0));
+						infoSiteShift.setNrOfGroups(new Integer(vagas));
+
 					} else
 						infoSiteShift.setNrOfGroups("Sem limite");
 
@@ -1109,8 +1107,6 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 		return infoSiteShiftsAndGroups;
 	}
-
-	
 
 	/**
 		* @param component
@@ -1170,10 +1166,10 @@ public class TeacherAdministrationSiteComponentBuilder {
 		if (groupProperties.getMaximumCapacity() != null) {
 
 			int vagas = groupProperties.getMaximumCapacity().intValue() - studentGroupAttendList.size();
-			if (vagas >= 0)
-				component.setNrOfElements(new Integer(vagas));
-			else
-				component.setNrOfElements(new Integer(0));
+			//if (vagas >= 0)
+			component.setNrOfElements(new Integer(vagas));
+			//else
+			//component.setNrOfElements(new Integer(0));
 		} else
 			component.setNrOfElements("Sem limite");
 

@@ -110,10 +110,10 @@ public class ReadShiftsAndGroups implements IServico {
 					if (groupProperties.getGroupMaximumNumber() != null) {
 
 						int vagas = groupProperties.getGroupMaximumNumber().intValue() - allStudentGroups.size();
-						if (vagas >= 0)
-							infoSiteShift.setNrOfGroups(new Integer(vagas));
-						else
-							infoSiteShift.setNrOfGroups(new Integer(0));
+						//if (vagas >= 0)
+						infoSiteShift.setNrOfGroups(new Integer(vagas));
+						//else
+						//	infoSiteShift.setNrOfGroups(new Integer(0));
 					} else
 						infoSiteShift.setNrOfGroups("Sem limite");
 
@@ -155,8 +155,7 @@ public class ReadShiftsAndGroups implements IServico {
 			throw new FenixServiceException("error.impossibleReadProjectShifts");
 		}
 		infoSiteShiftsAndGroups.setInfoSiteGroupsByShiftList(infoSiteShiftsAndGroupsList);
-		
+
 		return infoSiteShiftsAndGroups;
 	}
 }
-

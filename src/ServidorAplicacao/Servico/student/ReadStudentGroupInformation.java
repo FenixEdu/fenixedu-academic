@@ -74,7 +74,7 @@ public class ReadStudentGroupInformation implements IServico {
 		} catch (ExcepcaoPersistencia ex) {
 			ex.printStackTrace();
 
-			//throw new FenixServiceException("error.impossibleReadStudentGroupInformation");
+			
 		}
 
 		studentGroupAttendInformationList = new ArrayList(studentGroupAttendList.size());
@@ -106,10 +106,10 @@ public class ReadStudentGroupInformation implements IServico {
 		if (groupProperties.getMaximumCapacity() != null) {
 
 			int vagas = groupProperties.getMaximumCapacity().intValue() - studentGroupAttendList.size();
-			if (vagas >= 0)
-				infoSiteStudentGroup.setNrOfElements(new Integer(vagas));
-			else
-				infoSiteStudentGroup.setNrOfElements(new Integer(0));
+			//if (vagas >= 0)
+			infoSiteStudentGroup.setNrOfElements(new Integer(vagas));
+			//else
+			//	infoSiteStudentGroup.setNrOfElements(new Integer(0));
 		} else
 			infoSiteStudentGroup.setNrOfElements("Sem limite");
 
