@@ -61,7 +61,7 @@ public class PrepareCreateStudentGroup implements IServico {
 
 	public List run(Integer executionCourseCode,Integer groupPropertiesCode)
 		throws FenixServiceException {
-
+		
 		IFrequentaPersistente persistentAttend = null;
 		IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
 		IPersistentGroupProperties persistentGroupProperties = null;
@@ -70,6 +70,7 @@ public class PrepareCreateStudentGroup implements IServico {
 		List frequentas = new ArrayList();
 				
 		try {
+		
 			ISuportePersistente ps = SuportePersistenteOJB.getInstance();
 			persistentExecutionCourse = ps.getIDisciplinaExecucaoPersistente();
 			persistentAttend = ps.getIFrequentaPersistente();
@@ -102,7 +103,7 @@ public class PrepareCreateStudentGroup implements IServico {
 					i++;
 				}
 			}
-				
+		
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia.getMessage());
 		  }
@@ -117,6 +118,7 @@ public class PrepareCreateStudentGroup implements IServico {
 			infoStudentList.add(Cloner.copyIStudent2InfoStudent(student));		
 		}
 
+		
 		return infoStudentList;
 	}
 }

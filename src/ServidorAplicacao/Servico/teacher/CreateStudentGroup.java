@@ -89,14 +89,14 @@ public class CreateStudentGroup implements IServico {
 		}
 
 		if (studentGroup != null)
-			throw new ExistingServiceException();
+			throw new ExistingServiceException();		
 	}
 
 	/**
 	 * Executes the service.
 	 */
 
-	public Boolean run(Integer groupNumber, Integer groupPropertiesCode, Integer shiftCode,List studentCodes,Integer executionCourseCode)
+	public void run(Integer groupNumber, Integer groupPropertiesCode, Integer shiftCode,List studentCodes,Integer executionCourseCode)
 		throws FenixServiceException {
 
 		IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
@@ -106,6 +106,7 @@ public class CreateStudentGroup implements IServico {
 		ITurnoPersistente persistentShift = null;
 		IFrequentaPersistente persistentAttend = null;
 		IPersistentStudentGroup persistentStudentGroup = null;
+		
 		
 		try {
 		
@@ -118,6 +119,7 @@ public class CreateStudentGroup implements IServico {
 			ITurno shift = (ITurno) persistentShift.readByOId(new Turno(shiftCode),false);
 						
 			checkIfStudentGroupExists(groupNumber, groupProperties, shift);
+			
 			
 			persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
 			IStudentGroup newStudentGroup = new StudentGroup(groupNumber, groupProperties, shift);
@@ -142,15 +144,10 @@ public class CreateStudentGroup implements IServico {
 											
 				persistentStudentGroupAttend.lockWrite(newStudentGroupAttend);	
 		
-			}
-				
+				}
+			
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia.getMessage());			
 		  }
-		  catch (ExistingServiceException excepcao) {
-			 //throw new FenixServiceException(excepcao.getMessage());
-			 return new Boolean(false);			
-          }
-		return new Boolean(true);
-	}
+		 }
 }

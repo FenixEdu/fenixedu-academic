@@ -27,16 +27,15 @@ public class StudentGroupAttendOJB extends ObjectFenixOJB implements IPersistent
 
 
 	public IStudentGroupAttend readBy(IStudentGroup studentGroup,IFrequenta attend) throws ExcepcaoPersistencia {
-
-			StudentGroupAttend studentGroupAttend = new StudentGroupAttend(studentGroup, attend);
-			Criteria criteria1 = new Criteria();
-			Criteria criteria2 = new Criteria();
+			
+			
+			Criteria criteria = new Criteria();
+			
+			criteria.addEqualTo("keyStudentGroup",studentGroup.getIdInternal());
+			criteria.addEqualTo("keyAttend",attend.getIdInternal());
 		
-			criteria1.addEqualTo("keyStudentGroup",studentGroup.getIdInternal());
-			criteria2.addEqualTo("keyAttend",attend.getIdInternal());
-		
-			criteria1.addAndCriteria(criteria2);
-			return (IStudentGroupAttend) queryObject(StudentGroupAttend.class, criteria1);
+			return (IStudentGroupAttend) queryObject(StudentGroupAttend.class, criteria);
+			
 		}
 		
 	public List readAllByStudentGroup(IStudentGroup studentGroup) throws ExcepcaoPersistencia {
@@ -82,14 +81,16 @@ public class StudentGroupAttendOJB extends ObjectFenixOJB implements IPersistent
 			return;
 
 		// read studentGroupAttend from DB	
-		studentGroupAttendFromDB = readBy(studentGroupAttendToWrite.getStudentGroup(),studentGroupAttendToWrite.getAttend());
+		studentGroupAttendFromDB = this.readBy(studentGroupAttendToWrite.getStudentGroup(),studentGroupAttendToWrite.getAttend());
 		
 
 		// if (studentGroupAttend not in database) then write it
-		if (studentGroupAttendFromDB == null)
+		if (studentGroupAttendFromDB == null){
+			
+		
 			super.lockWrite(studentGroupAttendToWrite);
 		// else if (item is mapped to the database then write any existing changes)
-			 else if ((studentGroupAttendToWrite instanceof IStudentGroupAttend) &&
+		} else if ((studentGroupAttendToWrite instanceof IStudentGroupAttend) &&
 					   ((IStudentGroupAttend) studentGroupAttendFromDB).getIdInternal().equals(
 						((IStudentGroupAttend) studentGroupAttendToWrite).getIdInternal())) {
 
@@ -100,7 +101,7 @@ public class StudentGroupAttendOJB extends ObjectFenixOJB implements IPersistent
 		  }
 		  
 	
-		  
+ 
     
 	public void delete(IStudentGroupAttend studentGroupAttend) throws ExcepcaoPersistencia {
 			try {

@@ -246,7 +246,9 @@ public class GroupSiteComponentBuilder {
 				infoSiteStudentInformation.setName(infoStudentGroupAttend.getInfoAttend().getAluno().getInfoPerson().getNome());
 
 				infoSiteStudentInformation.setEmail(infoStudentGroupAttend.getInfoAttend().getAluno().getInfoPerson().getEmail());
-
+				
+				infoSiteStudentInformation.setUsername(infoStudentGroupAttend.getInfoAttend().getAluno().getInfoPerson().getUsername());
+				
 				studentGroupAttendInformationList.add(infoSiteStudentInformation);
 
 			}

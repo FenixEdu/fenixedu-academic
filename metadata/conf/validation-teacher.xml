@@ -433,7 +433,7 @@
 	</field>
    	
    
-   	<field property="maximumCapacity" depends="integer" page="1">
+  <!-- 	<field property="maximumCapacity" depends="integer" page="1">
 		<arg0 key="message.groupPropertiesMaximumCapacity" resource="true"/>
 	</field>
 		   
@@ -448,7 +448,7 @@
 	<field property="groupMaximumNumber" depends="integer" page="1">
 		<arg0 key="message.groupPropertiesGroupMaximumNumber" resource="true"/>
 	</field>
-	
+	-->
 	<field property="enrolmentBeginDayFormatted" depends="mask,date" page="1" >
    		<msg name="date" key="errors.invalid.date"/>
    		<msg name="mask" key="errors.invalid.date"/>

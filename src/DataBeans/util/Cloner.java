@@ -2279,10 +2279,19 @@ public abstract class Cloner {
 	public static InfoGroupProperties copyIGroupProperties2InfoGroupProperties(IGroupProperties groupProperties) {
 		InfoGroupProperties infoGroupProperties = new InfoGroupProperties();
 		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
-		copyObjectProperties(infoGroupProperties, groupProperties);
-		infoExecutionCourse =
-			copyIExecutionCourse2InfoExecutionCourse(
-				groupProperties.getExecutionCourse());
+		
+		infoGroupProperties.setEnrolmentBeginDay(groupProperties.getEnrolmentBeginDay());
+		infoGroupProperties.setEnrolmentEndDay(groupProperties.getEnrolmentEndDay());
+		infoGroupProperties.setMaximumCapacity(groupProperties.getMaximumCapacity());
+		infoGroupProperties.setMinimumCapacity(groupProperties.getMinimumCapacity());
+		infoGroupProperties.setIdealCapacity(groupProperties.getIdealCapacity());
+		infoGroupProperties.setGroupMaximumNumber(groupProperties.getGroupMaximumNumber());
+		infoGroupProperties.setEnrolmentPolicy(groupProperties.getEnrolmentPolicy());
+		infoGroupProperties.setIdInternal(groupProperties.getIdInternal());
+		infoGroupProperties.setName(groupProperties.getName());
+		infoGroupProperties.setShiftType(groupProperties.getShiftType());
+		
+		infoExecutionCourse =copyIExecutionCourse2InfoExecutionCourse(groupProperties.getExecutionCourse());
 		infoGroupProperties.setInfoExecutionCourse(infoExecutionCourse);
 		return infoGroupProperties;
 	}
@@ -2295,11 +2304,20 @@ public abstract class Cloner {
 
 	public static IGroupProperties copyInfoGroupProperties2IGroupProperties(InfoGroupProperties infoGroupProperties) {
 		IGroupProperties groupProperties = new GroupProperties();
+	
 		IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
-		copyObjectProperties(groupProperties, infoGroupProperties);
-		executionCourse =
-			copyInfoExecutionCourse2ExecutionCourse(
-				infoGroupProperties.getInfoExecutionCourse());
+		groupProperties.setEnrolmentBeginDay(infoGroupProperties.getEnrolmentBeginDay());
+		groupProperties.setEnrolmentEndDay(infoGroupProperties.getEnrolmentEndDay());
+		groupProperties.setMaximumCapacity(infoGroupProperties.getMaximumCapacity());
+		groupProperties.setMinimumCapacity(infoGroupProperties.getMinimumCapacity());
+		groupProperties.setIdealCapacity(infoGroupProperties.getIdealCapacity());
+		groupProperties.setGroupMaximumNumber(infoGroupProperties.getGroupMaximumNumber());
+		groupProperties.setEnrolmentPolicy(infoGroupProperties.getEnrolmentPolicy());
+		groupProperties.setIdInternal(infoGroupProperties.getIdInternal());
+		groupProperties.setName(infoGroupProperties.getName());
+		groupProperties.setShiftType(infoGroupProperties.getShiftType());
+		
+		executionCourse =copyInfoExecutionCourse2ExecutionCourse(infoGroupProperties.getInfoExecutionCourse());
 		groupProperties.setExecutionCourse(executionCourse);
 		return groupProperties;
 	}
@@ -2313,16 +2331,15 @@ public abstract class Cloner {
 		InfoStudentGroup infoStudentGroup = new InfoStudentGroup();
 		InfoGroupProperties infoGroupProperties = new InfoGroupProperties();
 
-		copyObjectProperties(infoStudentGroup, studentGroup);
-		infoGroupProperties =
-			copyIGroupProperties2InfoGroupProperties(
-				studentGroup.getGroupProperties());
+		infoGroupProperties = copyIGroupProperties2InfoGroupProperties(studentGroup.getGroupProperties());
 		if (studentGroup.getShift() != null) {
 			InfoShift infoShift = new InfoShift();
 			infoShift = copyIShift2InfoShift(studentGroup.getShift());
 			infoStudentGroup.setInfoShift(infoShift);
 
 		}
+		infoStudentGroup.setGroupNumber(studentGroup.getGroupNumber());		
+		infoStudentGroup.setIdInternal(studentGroup.getIdInternal());
 		infoStudentGroup.setInfoGroupProperties(infoGroupProperties);
 		return infoStudentGroup;
 	}
@@ -2336,18 +2353,20 @@ public abstract class Cloner {
 	public static IStudentGroup copyInfoStudentGroup2IStudentGroup(InfoStudentGroup infoStudentGroup) {
 		IStudentGroup studentGroup = new StudentGroup();
 		IGroupProperties groupProperties = new GroupProperties();
-
-		copyObjectProperties(studentGroup, infoStudentGroup);
-		if (infoStudentGroup.getInfoShift() != null) {
+		
+		if (infoStudentGroup.getInfoShift() != null) 
+		{
 			ITurno shift = new Turno();
 			shift = copyInfoShift2IShift(infoStudentGroup.getInfoShift());
 			studentGroup.setShift(shift);
 
 		}
-
+		
 		groupProperties =
 			copyInfoGroupProperties2IGroupProperties(
 				infoStudentGroup.getInfoGroupProperties());
+		studentGroup.setGroupNumber(infoStudentGroup.getGroupNumber());
+		studentGroup.setIdInternal(infoStudentGroup.getIdInternal());
 		studentGroup.setGroupProperties(groupProperties);
 
 		return studentGroup;
@@ -2359,18 +2378,14 @@ public abstract class Cloner {
 	*/
 
 	public static InfoStudentGroupAttend copyIStudentGroupAttend2InfoStudentGroupAttend(IStudentGroupAttend studentGroupAttend) {
-		InfoStudentGroupAttend infoStudentGroupAttend =
-			new InfoStudentGroupAttend();
+		InfoStudentGroupAttend infoStudentGroupAttend = new InfoStudentGroupAttend();
 		InfoFrequenta infoAttend = new InfoFrequenta();
 		InfoStudentGroup infoStudentGroup = new InfoStudentGroup();
-
-		copyObjectProperties(infoStudentGroupAttend, studentGroupAttend);
-		infoAttend =
-			copyIFrequenta2InfoFrequenta(studentGroupAttend.getAttend());
-		infoStudentGroup =
-			copyIStudentGroup2InfoStudentGroup(
-				studentGroupAttend.getStudentGroup());
-
+		
+		infoAttend =copyIFrequenta2InfoFrequenta(studentGroupAttend.getAttend());
+		infoStudentGroup =copyIStudentGroup2InfoStudentGroup(studentGroupAttend.getStudentGroup());
+		
+		studentGroupAttend.setIdInternal(studentGroupAttend.getIdInternal());
 		infoStudentGroupAttend.setInfoAttend(infoAttend);
 		infoStudentGroupAttend.setInfoStudentGroup(infoStudentGroup);
 		return infoStudentGroupAttend;
@@ -2388,15 +2403,12 @@ public abstract class Cloner {
 		IStudentGroup studentGroup = new StudentGroup();
 		IFrequenta attend = new Frequenta();
 
-		copyObjectProperties(studentGroupAttend, infoStudentGroupAttend);
-		studentGroup =
-			copyInfoStudentGroup2IStudentGroup(
-				infoStudentGroupAttend.getInfoStudentGroup());
-		attend =
-			copyInfoFrequenta2IFrequenta(
-				infoStudentGroupAttend.getInfoAttend());
+		studentGroup =copyInfoStudentGroup2IStudentGroup(infoStudentGroupAttend.getInfoStudentGroup());
+		attend =copyInfoFrequenta2IFrequenta(infoStudentGroupAttend.getInfoAttend());
+		
 		studentGroupAttend.setStudentGroup(studentGroup);
 		studentGroupAttend.setAttend(attend);
+		studentGroupAttend.setIdInternal(infoStudentGroupAttend.getIdInternal());
 		return studentGroupAttend;
 	}
 

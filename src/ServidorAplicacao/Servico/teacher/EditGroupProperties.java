@@ -17,6 +17,7 @@ import Dominio.IStudentGroup;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonValidChangeServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentGroupProperties;
@@ -24,7 +25,6 @@ import ServidorPersistente.IPersistentStudentGroup;
 import ServidorPersistente.IPersistentStudentGroupAttend;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * @author asnr and scpo
@@ -32,7 +32,8 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 public class EditGroupProperties implements IServico{
 	
 	private static EditGroupProperties service = new EditGroupProperties();
-
+	
+	
 	/**
 	* The singleton access method of this class.
 	**/
@@ -52,49 +53,102 @@ public class EditGroupProperties implements IServico{
 		return "EditGroupProperties";
 	}
 
-
-
-	private boolean checkIfIsPossibleToEdit(InfoGroupProperties infoGroupProperties, IGroupProperties groupProperties)
+	private ArrayList checkIfAlreadyExists(InfoGroupProperties infoGroupProperties, IGroupProperties groupProperties,ArrayList errors)
 		throws FenixServiceException {
 
 		IPersistentStudentGroup persistentStudentGroup = null;
 		IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
+		IGroupProperties existingGroupProperties =null;
 		try {
-			ISuportePersistente ps = SuportePersistenteOJB.getInstance();
+			ISuportePersistente ps = SuportePersistenteOJB.getInstance();		
+			IPersistentGroupProperties persistentGroupProperties = ps.getIPersistentGroupProperties();
+			if(!infoGroupProperties.getName().equals(groupProperties.getName()))
+			{
+				persistentGroupProperties = ps.getIPersistentGroupProperties();
+				existingGroupProperties =persistentGroupProperties.readGroupPropertiesByExecutionCourseAndName(groupProperties.getExecutionCourse(),infoGroupProperties.getName());
+				if(existingGroupProperties!=null)
+					errors.add(new ExistingServiceException());				
+			}	
+			
+			} catch (ExcepcaoPersistencia excepcaoPersistencia) {
+
+			throw new FenixServiceException(excepcaoPersistencia);
+		}
+		return errors;
+	}
+
+	private ArrayList checkIfIsPossibleToEdit(InfoGroupProperties infoGroupProperties, IGroupProperties groupProperties,ArrayList errors)
+		throws FenixServiceException {
+		
+		
+		IPersistentStudentGroup persistentStudentGroup = null;
+		IPersistentStudentGroupAttend persistentStudentGroupAttend = null;
+		IGroupProperties existingGroupProperties =null;
+		try {
+			ISuportePersistente ps = SuportePersistenteOJB.getInstance();		
+			IPersistentGroupProperties persistentGroupProperties = ps.getIPersistentGroupProperties();
+				
 			persistentStudentGroup = ps.getIPersistentStudentGroup();
 			persistentStudentGroupAttend = ps.getIPersistentStudentGroupAttend();
 			List allStudentsGroup = persistentStudentGroup.readAllStudentGroupByGroupProperties(groupProperties);
-
-			if(allStudentsGroup.size()>infoGroupProperties.getGroupMaximumNumber().intValue())
+			
+			Integer groupMaximumNumber = infoGroupProperties.getGroupMaximumNumber();
+			Integer maximumCapacity = infoGroupProperties.getMaximumCapacity();
+			Integer minimumCapacity = infoGroupProperties.getMinimumCapacity();
+			
+			if(groupMaximumNumber!=null)
 			{
-				System.out.println("<---ENTRA NO IF");
-				return false;
-			}				
+				if(allStudentsGroup.size()>groupMaximumNumber.intValue())
+				{
+					errors.add(new NonValidChangeServiceException());
+					return errors;
+				}
+			}	
+			
+			if(maximumCapacity==null && minimumCapacity==null)
+			{	
+				return errors;
+			} 				
+			
 			Iterator iterGroups = allStudentsGroup.iterator();
 			List allStudents = null;
+			int size;
 			while (iterGroups.hasNext()) 
 			{
 				allStudents = new ArrayList();
 				
 				IStudentGroup studentGroup = (IStudentGroup) iterGroups.next();
 				allStudents = persistentStudentGroupAttend.readAllByStudentGroup(studentGroup);
-				System.out.println("allStudents_size"+allStudents.size());
-				System.out.println("studentGroup"+studentGroup.getIdInternal());
-				if(allStudents.size()>infoGroupProperties.getMaximumCapacity().intValue()||allStudents.size()<infoGroupProperties.getMinimumCapacity().intValue())
+				size = allStudents.size();
+				
+				if(maximumCapacity==null && minimumCapacity!=null)
+				{	
+					if(size<minimumCapacity.intValue())
+					{
+						errors.add(new NonValidChangeServiceException());
+						return errors;
+					}
+				}
+				if(minimumCapacity==null && maximumCapacity!=null)		
+				{	
+					if(size>maximumCapacity.intValue())
+					{
+						errors.add(new NonValidChangeServiceException()); 
+						return errors;
+					}
+				}
+				if(size>maximumCapacity.intValue()||size<minimumCapacity.intValue())
 				{
-					System.out.println("<---ENTRA NO 2º IF");
-					return false;
+					errors.add(new NonValidChangeServiceException());
+					return errors;
 				}
 			}
-			
-		}
-		catch (ExistingPersistentException excepcaoPersistencia) {
-			throw new ExistingServiceException(excepcaoPersistencia);
+
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 
 			throw new FenixServiceException(excepcaoPersistencia);
 		}
-		return true;
+		return errors;
 	}
 
 	
@@ -102,11 +156,10 @@ public class EditGroupProperties implements IServico{
 	 * Executes the service.
 	 */
 
-	public Boolean run (Integer objectCode,InfoGroupProperties infoGroupProperties)
+	public ArrayList run (Integer objectCode,InfoGroupProperties infoGroupProperties)
 	throws FenixServiceException {
 		
-
-		System.out.println("<-----------------ENTRA NO SERVICO");
+		ArrayList errors = new ArrayList();
 		boolean result =false;
 		try {
 			ISuportePersistente ps =
@@ -119,12 +172,10 @@ public class EditGroupProperties implements IServico{
 			IGroupProperties groupProperties= new GroupProperties(infoGroupProperties.getIdInternal());	
 			groupProperties=(IGroupProperties) persistentGroupProperties.readByOId(groupProperties,false);
 			
-
-			System.out.println("<-----------------ANTES DO CHECK");
-			result = checkIfIsPossibleToEdit(infoGroupProperties,groupProperties);
-
-			System.out.println("<-----------------DP DO CHECK");	
-			if(result)
+			checkIfAlreadyExists(infoGroupProperties,groupProperties,errors);
+			checkIfIsPossibleToEdit(infoGroupProperties,groupProperties,errors);
+						
+			if(errors.size()==0)
 			{
 				IDisciplinaExecucao executionCourse = (IDisciplinaExecucao)persistentExecutionCourse.readByOId(new DisciplinaExecucao(objectCode),false);
 			
@@ -138,16 +189,16 @@ public class EditGroupProperties implements IServico{
 				groupProperties.setIdInternal(infoGroupProperties.getIdInternal());
 				groupProperties.setMaximumCapacity(infoGroupProperties.getMaximumCapacity());
 				groupProperties.setMinimumCapacity(infoGroupProperties.getMinimumCapacity());
+				
 				groupProperties.setName(infoGroupProperties.getName());
 				groupProperties.setShiftType(infoGroupProperties.getShiftType());
 				persistentGroupProperties.lockWrite(groupProperties);
 			}
-			
+				
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}
-
-		System.out.println("<-----------------SAI DO SERVICO-resultado"+result);
-	return new Boolean(result);
+		return errors;
+	
 	}
 }

@@ -267,7 +267,7 @@
 		<form-bean name="studentGroupForm"
 			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
 			dynamic="true">        
-			<form-property name="groupNumber" type="java.lang.Integer" />
+			<form-property name="groupNumber" type="java.lang.String" />
 			<form-property name="studentCodes" type="java.lang.Integer[]" />
 			<form-property name="studentsToRemove" type="java.lang.Integer[]" />
 			<form-property name="shift" type="java.lang.String" />
@@ -277,9 +277,10 @@
 		
 		<form-bean name="editStudentGroupForm"
 			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
-			dynamic="true">        
+			dynamic="true">  
+			<form-property name="groupNumber" type="java.lang.String" />      
 			<form-property name="studentCodes" type="java.lang.Integer[]" />
-			<form-property name="studentsToRemove" type="java.lang.Integer[]" />
+			<form-property name="studentsToRemove" type="java.lang.String[]" />
 			<form-property name="shift" type="java.lang.String" />
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 			
@@ -924,8 +925,11 @@
 		input="/createGroupProperties.do?method=prepareCreateGroupProperties&amp;page=0"
 		scope="request"
         type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"
-       	validate="true"
-       	>  
+       	validate="true">  
+       	<exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+         	   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+               /> 
        	<forward name="insertGroupProperties" path="/insertGroupProperties.jsp"/>
        	<forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
 	</action>    
@@ -937,8 +941,8 @@
 		input="/editGroupProperties.do?method=prepareEditGroupProperties&amp;page=0"      			
 		scope="request"
      	type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"    
-       	validate="true"
-       		>
+       	validate="true">       
+               
        	<forward name="editGroupProperties" path="/editGroupProperties.jsp"/>
 		<forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
 	</action>
@@ -955,10 +959,27 @@
 		name="studentGroupForm"
 		parameter="method"      			
 		scope="request"
-		input="/insertStudentGroup.do?method=prepareInsertStudentGroup&amp;page=0"
+		input="/insertStudentGroup.do?method=prepareCreateStudentGroup&amp;page=0"
 		validate="true"
      	type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">            
+       	<exception type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+         	   key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+               /> 
        	<forward name="insertStudentGroup" path="/insertStudentGroup.jsp"/>
+		<forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
+	</action>
+	
+
+
+	<action     
+		path="/editStudentGroupShift"
+		name="editStudentGroupForm"
+		parameter="method"      			
+		scope="request"
+		input="/editStudentGroupShift.do?method=prepareEditStudentGroupShift&amp;page=0" 
+     	type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">            
+       	<forward name="editStudentGroupShift" path="/editStudentGroupShift.jsp"/>
 		<forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
 	</action>
 	
@@ -972,21 +993,26 @@
      	type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">            
        	<forward name="editStudentGroupMembers" path="/editStudentGroupMembers.jsp"/>
 		<forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
+       	
 	</action>
-
+	
 	<action     
-		path="/editStudentGroupShift"
+		path="/insertStudentGroupMembers"
 		name="editStudentGroupForm"
-		parameter="method"      			
+		parameter="method"
 		scope="request"
-		input="/editStudentGroupShift.do?method=prepareEditStudentGroupShift&amp;page=0" 
-     	type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">            
-       	<forward name="editStudentGroupShift" path="/editStudentGroupShift.jsp"/>
-		<forward name="groupsManagement" path="/viewGroupsAndManagement.jsp"/>
+		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">            
+       	<forward name="editStudentGroupMembers" path="/editStudentGroupMembers.jsp"/>
 	</action>
 	
-
-	
+	<action     
+		path="/deleteStudentGroupMembers"
+		name="editStudentGroupForm"
+		parameter="method"
+		scope="request"
+		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">            
+       	<forward name="editStudentGroupMembers" path="/editStudentGroupMembers.jsp"/>
+	</action>
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

@@ -1017,16 +1017,23 @@ public class TeacherAdministrationSiteComponentBuilder {
 		return component;
 	}
 
-	public List readStudentGroupInformation(Integer studentGroupCode) {
+	public List readStudentGroupInformation(Integer studentGroupCode) throws FenixServiceException {
 
 		List studentGroupAttendInformationList = null;
+		List studentGroupAttendList =null;
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 			IStudentGroup studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOId(new StudentGroup(studentGroupCode), false);
 
-			List studentGroupAttendList = sp.getIPersistentStudentGroupAttend().readAllByStudentGroup(studentGroup);
-
+			studentGroupAttendList = sp.getIPersistentStudentGroupAttend().readAllByStudentGroup(studentGroup);
+			
+			} catch (ExcepcaoPersistencia ex) {
+					ex.printStackTrace();
+			
+			throw new FenixServiceException("error.impossibleReadAllShiftsByProject");
+			}
+		
 			studentGroupAttendInformationList = new ArrayList(studentGroupAttendList.size());
 			Iterator iter = studentGroupAttendList.iterator();
 			InfoSiteStudentInformation infoSiteStudentInformation = null;
@@ -1042,23 +1049,18 @@ public class TeacherAdministrationSiteComponentBuilder {
 				infoSiteStudentInformation.setName(infoStudentGroupAttend.getInfoAttend().getAluno().getInfoPerson().getNome());
 
 				infoSiteStudentInformation.setEmail(infoStudentGroupAttend.getInfoAttend().getAluno().getInfoPerson().getEmail());
-
+				
+				infoSiteStudentInformation.setUsername(infoStudentGroupAttend.getInfoAttend().getAluno().getInfoPerson().getUsername());
+				
+				
 				studentGroupAttendInformationList.add(infoSiteStudentInformation);
-
-				//				studentGroupAttendInformationList =
-				//					insertWithOrder(
-				//						studentGroupAttendInformationList,
-				//						infoSiteStudentInformation);
 
 			}
 
 			Collections.sort(studentGroupAttendInformationList, new BeanComparator("number"));
 
-			System.out.println("STUDENT INFORMATION LIST SIZE" + studentGroupAttendInformationList.size());
-
-		} catch (ExcepcaoPersistencia ex) {
-			ex.printStackTrace();
-		}
+			
+		
 		return studentGroupAttendInformationList;
 	}
 

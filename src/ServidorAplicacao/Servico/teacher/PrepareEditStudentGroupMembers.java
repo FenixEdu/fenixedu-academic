@@ -70,8 +70,10 @@ public class PrepareEditStudentGroupMembers  implements IServico {
 		IPersistentStudentGroup persistentStudentGroup = null;
 		IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
 		List frequentas = new ArrayList();
+		List infoStudentList = new ArrayList();
 				
 		try {
+			
 			ISuportePersistente ps = SuportePersistenteOJB.getInstance();
 			persistentExecutionCourse = ps.getIDisciplinaExecucaoPersistente();
 			persistentAttend = ps.getIFrequentaPersistente();
@@ -82,44 +84,45 @@ public class PrepareEditStudentGroupMembers  implements IServico {
 			IStudentGroup studentGroup = (IStudentGroup)ps.getIPersistentStudentGroup().readByOId(new StudentGroup(studentGroupCode),false);
 			
 			frequentas = persistentAttend.readByExecutionCourse(executionCourse);
+			
 			List allStudentsGroups =persistentStudentGroup.readAllStudentGroupByGroupProperties(studentGroup.getGroupProperties());
 			
-			List allStudentAttend = new ArrayList();
+			List allStudentGroupAttend=null;
+			
 			Iterator iterator = allStudentsGroups.iterator();
-			List allStudentGroupAttend;
-			int i;
-			IFrequenta frequenta = null;
 			while (iterator.hasNext()) 
 			{
-				i=0;
+				
 				allStudentGroupAttend = persistentStudentGroupAttend.readAllByStudentGroup((IStudentGroup) iterator.next()); 
 				
-				while(i<allStudentGroupAttend.size())
+				Iterator iterator2 = allStudentGroupAttend.iterator();
+				IFrequenta frequenta = null;
+				while(iterator2.hasNext())
 				{
-					frequenta =((IStudentGroupAttend)allStudentGroupAttend.get(i)).getAttend();
+				
+					frequenta =((IStudentGroupAttend)iterator2.next()).getAttend();
 					if(frequentas.contains(frequenta))
 					{
 						frequentas.remove(frequenta);
 					}
-					i++;
 				}
 			}
 				
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia.getMessage());
 		  }
-
+		
 		IStudent student = null;
-		List infoStudentList = new ArrayList();
-		Iterator iterator = frequentas.iterator();
+		Iterator iterator3 = frequentas.iterator();
 
-		while (iterator.hasNext()) 
+		while (iterator3.hasNext()) 
 		{
-			student = ((IFrequenta) iterator.next()).getAluno();
+			
+			student = ((IFrequenta) iterator3.next()).getAluno();
 			infoStudentList.add(Cloner.copyIStudent2InfoStudent(student));		
 		}
-
 		return infoStudentList;
+		
 	}
 }
 

@@ -3,6 +3,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
+<span class="error"><br><html:errors/></span>
+
 <h2><bean:message key="title.editGroupProperties"/></h2>
 
 <logic:present name="siteView"> 
@@ -11,29 +13,41 @@
 
 <html:form action="/editGroupProperties">
 <html:hidden property="page" value="1"/>
-<span class="error"><html:errors/></span>
 <br />
-
 <table>
 		<tr>
 			<td><bean:message key="message.groupPropertiesName"/></td>
 			<td><html:text size="40" name="groupProperties" property="name" /></td>
-			<td><span class="error"><html:errors property="name"/></span></td>
+			
 		</tr>
-	    
-	    
-    	<tr>
-			<td><bean:message key="message.groupPropertiesEnrolmentBeginDay"/><bean:message key="message.dateFormat"/></td>
-			<td><html:text size="10" name="groupProperties" property="enrolmentBeginDayFormatted" /></td>
+	    	<tr>
+			<td><bean:message key="message.groupPropertiesEnrolmentBeginDay"/></td>
+			<td>
+			<logic:empty name="groupProperties" property="enrolmentBeginDayFormatted">
+			<html:text size="16" property="enrolmentBeginDayFormatted"/>
+			</logic:empty>
+			<logic:notEmpty name="groupProperties" property="enrolmentBeginDayFormatted">
+			<html:text size="16" name="groupProperties" property="enrolmentBeginDayFormatted" />
+			</logic:notEmpty>
+			</td>
+			
 			<td><span class="error"><html:errors property="enrolmentBeginDay"/></span></td>
 		</tr>
-		<tr>
-			<td><bean:message key="message.groupPropertiesEnrolmentEndDay"/><bean:message key="message.dateFormat"/></td>
-			<td><html:text size="10" name="groupProperties" property="enrolmentEndDayFormatted" /></td>
+	    
+ 		 </tr>
+	    	<tr>
+			<td><bean:message key="message.groupPropertiesEnrolmentEndDay"/></td>
+			<td>
+			<logic:empty name="groupProperties" property="enrolmentEndDayFormatted">
+			<html:text size="16" property="enrolmentEndDayFormatted"/>
+			</logic:empty>
+			<logic:notEmpty name="groupProperties" property="enrolmentEndDayFormatted">
+			<html:text size="16" name="groupProperties" property="enrolmentEndDayFormatted" />
+			</logic:notEmpty>
+			</td>
+			
 			<td><span class="error"><html:errors property="enrolmentEndDay"/></span></td>
-		</tr>
-		
-				
+		</tr>	
 		<bean:define id="enrolmentPolicyValue" name="enrolmentPolicyValue"/>
 		<tr>
 			<td><bean:message key="message.groupPropertiesEnrolmentPolicy"/></td>
@@ -59,26 +73,57 @@
 
 		<tr>
 			<td><bean:message key="message.groupPropertiesMaximumCapacity"/></td>
-			<td><html:text size="5" name="groupProperties" property="maximumCapacity" /></td>
+			<td>
+			<logic:empty name="groupProperties" property="maximumCapacity">
+			<html:text size="5" property="maximumCapacity"/>
+			</logic:empty>
+			<logic:notEmpty name="groupProperties" property="maximumCapacity">
+			<html:text size="5" name="groupProperties" property="maximumCapacity" />
+			</logic:notEmpty>
+			</td>
+			
 			<td><span class="error"><html:errors property="maximumCapacity"/></span></td>
 		</tr>	
     	<tr>
 			<td><bean:message key="message.groupPropertiesMinimumCapacity"/></td>
-			<td><html:text size="5" name="groupProperties" property="minimumCapacity" /></td>
+			<td>
+			<logic:empty name="groupProperties" property="minimumCapacity">
+			<html:text size="5" property="minimumCapacity"/>
+			</logic:empty>
+			<logic:notEmpty name="groupProperties" property="minimumCapacity">
+			<html:text size="5" name="groupProperties" property="minimumCapacity" />
+			</logic:notEmpty>
+			</td>
+			
 			<td><span class="error"><html:errors property="minimumCapacity"/></span></td>
 		</tr>
 		<tr>
 			<td><bean:message key="message.groupPropertiesIdealCapacity"/></td>
-			<td><html:text size="5" name="groupProperties" property="idealCapacity" /></td>
+			<td>
+			<logic:empty name="groupProperties" property="idealCapacity">
+			<html:text size="5" property="idealCapacity"/>
+			</logic:empty>
+			<logic:notEmpty name="groupProperties" property="idealCapacity">
+			<html:text size="5" name="groupProperties" property="idealCapacity" />
+			</logic:notEmpty>
+			</td>
+			
 			<td><span class="error"><html:errors property="idealCapacity"/></span></td>
 		</tr>
-
 		<tr>
 			<td><bean:message key="message.groupPropertiesGroupMaximumNumber"/></td>
-			<td><html:text size="5" name="groupProperties" property="groupMaximumNumber" /></td>
+			<td>
+			<logic:empty name="groupProperties" property="groupMaximumNumber">
+			<html:text size="5" property="groupMaximumNumber"/>
+			</logic:empty>
+			<logic:notEmpty name="groupProperties" property="groupMaximumNumber">
+			<html:text size="5" name="groupProperties" property="groupMaximumNumber" />
+			</logic:notEmpty>
+			</td>
+			
 			<td><span class="error"><html:errors property="groupMaximumNumber"/></span></td>
-		</tr>	
-
+		</tr>
+		
 </table>
 <br />
 <br />

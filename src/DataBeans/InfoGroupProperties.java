@@ -34,7 +34,8 @@ public class InfoGroupProperties extends InfoObject{
 		/** 
 		 * Construtor
 		 */
-		public InfoGroupProperties() {}
+		public InfoGroupProperties() {
+			}
 	
 		/** 
 		 * Construtor
@@ -266,6 +267,8 @@ public class InfoGroupProperties extends InfoObject{
 	public String getEnrolmentBeginDayFormatted() {
 		String result = "";
 		Calendar date = getEnrolmentBeginDay();
+		if(date==null)
+			return result;
 		result += date.get(Calendar.DAY_OF_MONTH);
 		result += "/";
 		result += date.get(Calendar.MONTH) + 1;
@@ -277,6 +280,8 @@ public class InfoGroupProperties extends InfoObject{
 	public String getEnrolmentEndDayFormatted() {
 			String result = "";
 			Calendar date = getEnrolmentEndDay();
+			if(date==null)
+					return result;
 			result += date.get(Calendar.DAY_OF_MONTH);
 			result += "/";
 			result += date.get(Calendar.MONTH) + 1;

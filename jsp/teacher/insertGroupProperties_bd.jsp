@@ -2,7 +2,12 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
+
+
+
 <h2><bean:message key="title.insertGroupProperties"/></h2>
+
+<span class="error"><html:errors/></span>
 
 <logic:present name="siteView"> 
 
@@ -10,27 +15,26 @@
 <html:form action="/createGroupProperties">
 <html:hidden property="page" value="1"/>
 <u><bean:message key="message.insertGroupPropertiesData"/></u>
-<br />
-<br />
+<br>
+<br>
 
 
 <table>
 		<tr>
 			<td><bean:message key="message.groupPropertiesName"/></td>
 			<td><html:text size="40" property="name" /></td>
-			<td><span class="error"><html:errors property="name"/></span></td>
 		</tr>
 	    
 
     	<tr>
 			<td><bean:message key="message.groupPropertiesEnrolmentBeginDay"/></td>
 			<td><html:text size="10" property="enrolmentBeginDay" /></td>
-			<td><span class="error"><html:errors property="enrolmentBeginDay"/></span></td>
+			<%--<td><span class="error"><html:errors property="enrolmentBeginDay"/></span></td>--%>
 		</tr>
 		<tr>
 			<td><bean:message key="message.groupPropertiesEnrolmentEndDay"/></td>
 			<td><html:text size="10" property="enrolmentEndDay" /></td>
-			<td><span class="error"><html:errors property="enrolmentEndDay"/></span></td>
+			<%--<td><span class="error"><html:errors property="enrolmentEndDay"/></span></td>--%>
 		</tr>
     
     	<tr>

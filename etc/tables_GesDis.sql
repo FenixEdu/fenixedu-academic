@@ -189,11 +189,11 @@ create table STUDENT_GROUP_ATTEND (
 drop table if exists GROUP_PROPERTIES;
 create table GROUP_PROPERTIES (
    ID_INTERNAL int(11) unsigned not null auto_increment,   
-   MAXIMUM_CAPACITY int(11) unsigned not null default '0',
-   MINIMUM_CAPACITY int(11) unsigned not null default '0',
-   IDEAL_CAPACITY int(11) unsigned not null default '0',
+   MAXIMUM_CAPACITY int(11),
+   MINIMUM_CAPACITY int(11),
+   IDEAL_CAPACITY int(11),
    ENROLMENT_POLICY int(11),
-   GROUP_MAXIMUM_NUMBER int(11) unsigned not null default'0',
+   GROUP_MAXIMUM_NUMBER int(11),
    NAME varchar(50) not null,
    SHIFT_TYPE int(11),
    ENROLMENT_BEGIN_DAY date,

@@ -5,24 +5,46 @@
 <h2><bean:message key="title.insertStudentGroup"/></h2>
 
 <logic:present name="siteView"> 
+	
 
 <html:form action="/insertStudentGroup" method="get">
 <html:hidden property="page" value="1"/>
-<bean:message key="message.insertStudentGroupData"/>
-
+<b><bean:message key="message.insertStudentGroupData"/></b>
 <br>
+
+<h2><span class="error"><html:errors/></span></h2>
 <br>		 
 <table width="50%" cellpadding="0" border="0">
+	
+	
 	<tr>
 		<td>
-		<bean:message key="label.GroupNumber"/><h2></h2><span class="error"><html:errors/></span></h2>
+		<bean:message key="label.GroupNumber"/>
+		<%--<h2><span class="error"><html:errors/></span></h2>--%>
 		</td>
-	
 		<td>
-		<html:text size="10" property="groupNumber" />
+		<html:text size="21" property="groupNumber" />
 		</td>
+		<%--<td><span class="error"><html:errors property="groupNumber"/></span></td>--%>
 	</tr>
 	
+	<tr>
+	
+		<td><bean:message key="message.insertStudentGroupShift"/></td>
+		
+		<td>
+		<html:select property="shift" size="1">
+    	<html:options collection="shiftsList" property="value" labelProperty="label"/>
+    	</html:select>
+    	</td>
+			
+	</tr>	
+	
+	
+</table>
+<br>
+
+<table width="50%" cellpadding="0" border="0">	
 	<tr>
 		<td class="listClasses-header">
 		</td>
@@ -58,7 +80,7 @@
 <html:hidden property="method" value="createStudentGroup"/>
 <html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
 <html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
-<html:hidden  property="shiftCode" value="<%= request.getParameter("shiftCode") %>" />
+
 
 <html:submit styleClass="inputbutton"><bean:message key="button.insert"/>                    		         	
 </html:submit>       

@@ -13,6 +13,7 @@ public class InfoSiteStudentInformation implements ISiteComponent{
 	private String name;
 	private Integer number;
 	private String email;
+	private String username;
 
 
 
@@ -30,6 +31,20 @@ public class InfoSiteStudentInformation implements ISiteComponent{
 		this.name = name;
 	}
 
+	/**
+	* @return
+	*/
+	public String getUsername() {
+		return username;
+	}
+
+	/**
+	* @param name
+	*/
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
 	/**
 	* @return
 	*/
@@ -67,7 +82,8 @@ public class InfoSiteStudentInformation implements ISiteComponent{
 			if (arg0 instanceof InfoSiteStudentInformation) {
 				result = (getName().equals(((InfoSiteStudentInformation) arg0).getName()))&&
 				(getNumber().equals(((InfoSiteStudentInformation) arg0).getNumber()))&&
-				(getEmail().equals(((InfoSiteStudentInformation) arg0).getEmail()));
+				(getEmail().equals(((InfoSiteStudentInformation) arg0).getEmail()))&&
+				(getUsername().equals(((InfoSiteStudentInformation) arg0).getUsername()));
 			} 
 			return result;		
 		}

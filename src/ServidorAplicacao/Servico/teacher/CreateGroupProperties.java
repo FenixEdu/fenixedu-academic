@@ -17,6 +17,7 @@ import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentGroupProperties;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * @author asnr and scpo
@@ -46,53 +47,36 @@ public class CreateGroupProperties implements IServico {
 		return "CreateGroupProperties";
 	}
 
-	private void checkIfGroupPropertiestExists(String name, IDisciplinaExecucao executionCourse)
-		throws FenixServiceException {
-			
-		IGroupProperties groupProperties =null;	
-		try {
-			ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
-			IPersistentGroupProperties persistentGroupProperties = persistentSupport.getIPersistentGroupProperties();
-			persistentGroupProperties = persistentSupport.getIPersistentGroupProperties();
 
-			groupProperties =persistentGroupProperties.readGroupPropertiesByExecutionCourseAndName(executionCourse, name);
-
-		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
-			throw new FenixServiceException(excepcaoPersistencia.getMessage());
-		}
-
-		if (groupProperties != null)
-			throw new ExistingServiceException();
-	}
 	/**
 	 * Executes the service.
 	 */
-	public boolean run(Integer executionCourseCode, InfoGroupProperties infoGroupProperties)
+	public void run(Integer executionCourseCode, InfoGroupProperties infoGroupProperties)
 		throws FenixServiceException {
 		
-		System.out.println("<-------ENTRA NO SERVICO ");
-				
 		IDisciplinaExecucao executionCourse = null;
+		IGroupProperties groupProperties = null;
 		try {
 				
 			ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
 			IDisciplinaExecucaoPersistente persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
+			IPersistentGroupProperties persistentGroupProperties = persistentSupport.getIPersistentGroupProperties();
+			
 			executionCourse =(IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(executionCourseCode), false);
 			
-			checkIfGroupPropertiestExists(infoGroupProperties.getName(),executionCourse);
-			
-			IPersistentGroupProperties persistentGroupProperties = persistentSupport.getIPersistentGroupProperties();
+		
 			infoGroupProperties.setInfoExecutionCourse(Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
 			
 			IGroupProperties newGroupProperties = Cloner.copyInfoGroupProperties2IGroupProperties(infoGroupProperties);	
-			newGroupProperties.setExecutionCourse(executionCourse);
 			
 			persistentGroupProperties.lockWrite(newGroupProperties);
+			
+		} catch (ExistingPersistentException excepcaoPersistencia) {
+					throw new ExistingServiceException(excepcaoPersistencia);
 			
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia.getMessage());
 		}
-		System.out.println("<-------SAI DO SERVICO ");
-		return true;
+		
 	}
 }
