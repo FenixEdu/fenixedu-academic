@@ -103,7 +103,7 @@
 	
 	
         <table>
-            <tr></tr>
+            
         <logic:notEmpty name="component" property="responsibleTeachers">	
 	
            
@@ -125,7 +125,7 @@
              
             <logic:empty name="component" property="responsibleTeachers">	
 	            
-                <table>
+               
                 <tr>
                 <td>
                 <h2><bean:message key="label.lecturingTeachers"/></h2>	
