@@ -33,8 +33,6 @@ public class UtilsTestCase {
 
 		if ((objects.size() == 0) || (objects.size() != values.length))
 			return false;
-		if (values.length == 0)
-			return true;
 		try {
 			Object object = objects.get(0);
 			List propertiesValues = new ArrayList();
