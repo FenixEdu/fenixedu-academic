@@ -34,15 +34,13 @@ public class SearchGrantOwnerAction extends SearchAction {
         Integer startIndex = (Integer) searchGrantOwnerForm.get("startIndex");
 
         Boolean onlyGrantOwner = new Boolean(false);
-        if (searchGrantOwnerForm.get("justGrantOwner") != null ||
-                (request.getAttribute("justGrantOwner") != null &&
-                        request.getAttribute("justGrantOwner").equals("yes"))
-            ) {
+        if (searchGrantOwnerForm.get("justGrantOwner") != null &&
+                !searchGrantOwnerForm.get("justGrantOwner").equals("null")) {
             request.setAttribute("justGrantOwner", "yes");
             onlyGrantOwner = new Boolean(true);
         }
         request.setAttribute("name", name);
-        
+
         Object[] args = { name, idNumber, idType, null, onlyGrantOwner, startIndex };
         return args;
     }
