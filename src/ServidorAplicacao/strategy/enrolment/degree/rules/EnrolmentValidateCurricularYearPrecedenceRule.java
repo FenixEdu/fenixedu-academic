@@ -47,7 +47,7 @@ public class EnrolmentValidateCurricularYearPrecedenceRule implements IEnrolment
 			year2 = 0;
 			iterator = enrolmentContext.getOptionalCurricularCoursesEnrolments().iterator();
 			while (iterator.hasNext()) {
-				IEnrolmentInOptionalCurricularCourse enrolmentInOptionalCurricularCourse = (IEnrolmentInOptionalCurricularCourse) iterator.next();
+//				IEnrolmentInOptionalCurricularCourse enrolmentInOptionalCurricularCourse = (IEnrolmentInOptionalCurricularCourse) iterator.next();
 				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(((IEnrolmentInOptionalCurricularCourse) enrolmentContext.getOptionalCurricularCoursesEnrolments().get(0)).getCurricularCourse());
 				year2 =  ((ICurricularCourseScope) curricularCourse.getScopes().get(0)).getCurricularSemester().getCurricularYear().getYear().intValue();
 				if (year2 > year) {
@@ -81,7 +81,7 @@ public class EnrolmentValidateCurricularYearPrecedenceRule implements IEnrolment
 			iterator = precedentCurricularCourses.iterator();
 			while (iterator.hasNext()) {
 				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
-				ICurricularCourse curricularCourse = curricularCourseScope.getCurricularCourse();
+//				ICurricularCourse curricularCourse = curricularCourseScope.getCurricularCourse();
 				if( (!enrolmentContext.getActualEnrolment().contains(curricularCourseScope)) && (!curricularCoursesOfOption.contains(curricularCourseScope)) ){
 					enrolmentContext.getEnrolmentValidationResult().setErrorMessage(EnrolmentValidationResult.MUST_ENROLL_IN_EARLIER_CURRICULAR_COURSES);
 					return enrolmentContext;
