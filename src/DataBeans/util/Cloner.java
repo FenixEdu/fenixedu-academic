@@ -637,7 +637,7 @@ public abstract class Cloner {
 	public static IAnnouncement copyInfoAnnouncement2IAnnouncement(InfoAnnouncement infoAnnouncement) {
 		IAnnouncement announcement = new Announcement();
 
-		ISite site = Cloner.copyInfoSite2ISite(infoAnnouncement.getSite());
+		ISite site = Cloner.copyInfoSite2ISite(infoAnnouncement.getInfoSite());
 
 		copyObjectProperties(announcement, infoAnnouncement);
 		announcement.setSite(site);
@@ -656,7 +656,7 @@ public abstract class Cloner {
 		InfoSite infoSite = Cloner.copyISite2InfoSite(announcement.getSite());
 
 		copyObjectProperties(infoAnnouncement, announcement);
-		infoAnnouncement.setSite(infoSite);
+		infoAnnouncement.setInfoSite(infoSite);
 
 		return infoAnnouncement;
 	}

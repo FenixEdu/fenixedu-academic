@@ -14,17 +14,18 @@ public class InfoAnnouncement {
 	private Date creationDate;
 	private Date lastModificationDate;
 	private String information;
-	private InfoSite site;	
+//	private InfoSite site;	
+	private InfoSite infoSite;
 
 	public InfoAnnouncement() {
 	}
 
-	public InfoAnnouncement(String title, Date creationDate, Date lastModifiedDate, String information, InfoSite site) {
+	public InfoAnnouncement(String title, Date creationDate, Date lastModifiedDate, String information, InfoSite infoSite) {
 		this.title = title;
 		this.creationDate = creationDate;
 		this.lastModificationDate = lastModifiedDate;
 		this.information = information;
-		this.site = site;
+		this.infoSite = infoSite;
 	}
 
 	public boolean equals(Object obj) {
@@ -36,7 +37,7 @@ public class InfoAnnouncement {
 					&& getCreationDate().equals(((InfoAnnouncement) obj).getCreationDate())
 					&& getLastModificationDate().equals(((InfoAnnouncement) obj).getLastModificationDate())
 					&& getInformation().equals(((InfoAnnouncement) obj).getInformation())
-					&& getSite().equals(((InfoAnnouncement) obj).getSite());
+					&& getInfoSite().equals(((InfoAnnouncement) obj).getInfoSite());
 		}
 		return resultado;
 	}
@@ -48,7 +49,7 @@ public class InfoAnnouncement {
 	    result += ", information=" + getInformation();
 		result += ", creationDate=" + getCreationDate();
 		result += ", lastModificationDate=" + getLastModificationDate();
-		result += ", site=" + getSite();
+		result += ", infoSite=" + getInfoSite();
 	    result += "]";
 	    return result;
 	}
@@ -77,8 +78,8 @@ public class InfoAnnouncement {
 	/**
 	 * @return InfoSite
 	 */
-	public InfoSite getSite() {
-		return site;
+	public InfoSite getInfoSite() {
+		return infoSite;
 	}
 
 	/**
@@ -113,11 +114,11 @@ public class InfoAnnouncement {
 	}
 
 	/**
-	 * Sets the site.
-	 * @param site The site to set
+	 * Sets the infoSite.
+	 * @param infoSite The infoSite to set
 	 */
-	public void setSite(InfoSite site) {
-		this.site = site;
+	public void setInfoSite(InfoSite infoSite) {
+		this.infoSite = infoSite;
 	}
 
 	/**

@@ -55,7 +55,7 @@ public class InsertAnnouncement implements IServico {
      * The name of the service
      */
     public final String getNome() {
-        return "Teacher.InsertAnnouncement";
+        return "InsertAnnouncement";
     }
 
     private void checkIfAnnouncementExists(String announcementTitle, ISite announcementSite, Date currentDate) throws FenixServiceException {

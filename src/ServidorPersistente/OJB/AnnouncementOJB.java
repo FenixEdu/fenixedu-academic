@@ -40,7 +40,7 @@ public class AnnouncementOJB extends ObjectFenixOJB implements IPersistentAnnoun
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, queryEx);
         }
     }
-    public void lockWrite(ISection announcement) throws ExcepcaoPersistencia {
+    public void lockWrite(IAnnouncement announcement) throws ExcepcaoPersistencia {
         super.lockWrite(announcement);
     }
     public void delete(IAnnouncement announcement) throws ExcepcaoPersistencia {
