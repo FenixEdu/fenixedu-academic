@@ -545,3 +545,79 @@
 	<field-descriptor name="universityName" column="universityName" jdbc-type="VARCHAR"/>
 </class-descriptor>
 
+<!-- ********************************************************************************************************************************************** -->
+
+<class-descriptor class="middleware.middlewareDomain.MWAreasCientificasIleec" table="mw_AREAS_CIENTIFICAS_ILEEC">
+  <field-descriptor name="idAreaCientifica" column="id_area_cientifica" jdbc-type="INTEGER" primarykey="true"/>
+  <field-descriptor name="nome" column="nome" jdbc-type="VARCHAR"/>
+</class-descriptor>
+
+<class-descriptor class="middleware.middlewareDomain.MWAreasEspecializacaoIleec" table="mw_AREAS_ESPECIALIZACAO_ILEEC">
+  <field-descriptor name="idAreaEspeciaplizacao" column="id_area_especiaplizacao" jdbc-type="INTEGER" primarykey="true"/>
+  <field-descriptor name="nome" column="nome" jdbc-type="VARCHAR"/>
+  <field-descriptor name="maxCreditos" column="max_creditos" jdbc-type="INTEGER"/>
+</class-descriptor>
+
+<class-descriptor class="middleware.middlewareDomain.MWAreasSecundariasIleec" table="mw_AREAS_SECUNDARIAS_ILEEC">
+  <field-descriptor name="idAreaSecundaria" column="id_area_secundaria" jdbc-type="INTEGER" primarykey="true"/>
+  <field-descriptor name="idAreaEspeciaplizacao" column="id_area_especiaplizacao" jdbc-type="INTEGER"/>
+  <field-descriptor name="nome" column="nome" jdbc-type="VARCHAR"/>
+  <field-descriptor name="maxCreditos" column="max_creditos" jdbc-type="INTEGER"/>
+</class-descriptor>
+
+<class-descriptor class="middleware.middlewareDomain.MWDisciplinasIleec" table="mw_DISCIPLINAS_ILEEC">
+  <field-descriptor name="idDisciplina" column="id_disciplina" jdbc-type="INTEGER" primarykey="true"/>
+  <field-descriptor name="codigoDisciplina" column="codigo_disciplina" jdbc-type="VARCHAR"/>
+  <field-descriptor name="anoCurricular" column="ano_curricular" jdbc-type="INTEGER"/>
+  <field-descriptor name="nome" column="nome" jdbc-type="VARCHAR"/>
+  <field-descriptor name="numeroCreditos" column="numero_creditos" jdbc-type="INTEGER"/>
+  <field-descriptor name="idAreaCientifica" column="id_area_cientifica" jdbc-type="INTEGER"/>
+  <field-descriptor name="obrigatoria" column="obrigatoria" jdbc-type="INTEGER"/>
+  <field-descriptor name="semestre" column="semestre" jdbc-type="INTEGER"/>
+  <field-descriptor name="tipoPrecedencia" column="tipo_precedencia" jdbc-type="INTEGER"/>
+  <field-descriptor name="inscObrigatoria" column="insc_obrigatoria" jdbc-type="INTEGER"/>
+  <field-descriptor name="funciona" column="funciona" jdbc-type="INTEGER"/>
+</class-descriptor>
+
+<class-descriptor class="middleware.middlewareDomain.MWDisciplinaGrupoIleec" table="mw_DISCIPLINA_GRUPO_ILEEC">
+  <field-descriptor name="idDisciplina" column="id_disciplina" jdbc-type="INTEGER" primarykey="true"/>
+  <field-descriptor name="idGrupo" column="id_grupo" jdbc-type="INTEGER" primarykey="true"/>
+</class-descriptor>
+
+<class-descriptor class="middleware.middlewareDomain.MWEquivalenciasIleec" table="mw_EQUIVALENCIAS_ILEEC">
+  <field-descriptor name="idEquivalencia" column="id_equivalencia" jdbc-type="INTEGER" primarykey="true"/>
+  <field-descriptor name="codigoDisciplinaCurriculoAntigo" column="codigo_disciplina_curriculo_antigo" jdbc-type="VARCHAR"/>
+  <field-descriptor name="codigoDisciplinaCurriculoActual" column="codigo_disciplina_curriculo_actual" jdbc-type="VARCHAR"/>
+  <field-descriptor name="tipoEquivalencia" column="tipo_equivalencia" jdbc-type="INTEGER"/>
+  <field-descriptor name="idAreaCientifica" column="id_area_cientifica" jdbc-type="INTEGER"/>
+  <field-descriptor name="idAreaSecundaria" column="id_area_secundaria" jdbc-type="INTEGER"/>
+  <field-descriptor name="idAreaEspeciaplizacao" column="id_area_especiaplizacao" jdbc-type="INTEGER"/>
+</class-descriptor>
+
+<class-descriptor class="middleware.middlewareDomain.MWGruposIleec" table="mw_GRUPOS_ILEEC">
+  <field-descriptor name="idGrupo" column="id_grupo" jdbc-type="INTEGER" primarykey="true"/>
+  <field-descriptor name="idAreaEspecializacao" column="id_area_especializacao" jdbc-type="INTEGER"/>
+  <field-descriptor name="idAreaSecundaria" column="id_area_secundaria" jdbc-type="INTEGER"/>
+  <field-descriptor name="maxCreditos" column="max_creditos" jdbc-type="INTEGER"/>
+  <field-descriptor name="minCreditos" column="min_creditos" jdbc-type="INTEGER"/>
+</class-descriptor>
+
+<class-descriptor class="middleware.middlewareDomain.MWPrecedenciasDisciplinaDisciplinaIleec" table="mw_PRECEDENCIAS_DISCIPLINA_DISCIPLINA_ILEEC">
+  <field-descriptor name="idDisciplina" column="id_disciplina" jdbc-type="INTEGER" primarykey="true"/>
+  <field-descriptor name="idPrecedente" column="id_precedente" jdbc-type="INTEGER" primarykey="true"/>
+</class-descriptor>
+
+<class-descriptor class="middleware.middlewareDomain.MWPrecedenciasNumeroDisciplinasIleec" table="mw_PRECEDENCIAS_NUMERO_DISCIPLINAS_ILEEC">
+  <field-descriptor name="idDisciplina" column="id_disciplina" jdbc-type="INTEGER" primarykey="true"/>
+  <field-descriptor name="numeroDisciplinas" column="numero_disciplinas" jdbc-type="INTEGER" primarykey="true"/>
+</class-descriptor>
+
+<class-descriptor class="middleware.middlewareDomain.MWTiposEquivalenciaIleec" table="mw_TIPOS_EQUIVALENCIA_ILEEC">
+  <field-descriptor name="tipoEquivalencia" column="tipo_equivalencia" jdbc-type="INTEGER" primarykey="true"/>
+  <field-descriptor name="descricao" column="descricao" jdbc-type="VARCHAR"/>
+</class-descriptor>
+
+<class-descriptor class="middleware.middlewareDomain.MWTiposPrecendenciaIleec" table="mw_TIPOS_PRECENDENCIA_ILEEC">
+  <field-descriptor name="tipoPrecedencia" column="tipo_precedencia" jdbc-type="INTEGER" primarykey="true"/>
+  <field-descriptor name="descricao" column="descricao" jdbc-type="VARCHAR"/>
+</class-descriptor>
