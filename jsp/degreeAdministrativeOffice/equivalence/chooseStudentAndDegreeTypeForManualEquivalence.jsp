@@ -5,11 +5,9 @@
 
 <bean:define id="degreeTypeList" name="<%= SessionConstants.DEGREE_TYPE %>"/>
 
-<center>
-<h2><bean:message key="tilte.manual.equivalence"/></h2>
+<h2 align="center"><bean:message key="tilte.manual.equivalence"/></h2>
 <html:errors/>
 <br/>
-</center>
 <b><bean:message key="label.first.step.equivalence"/></b>
 <center>
 <br/>

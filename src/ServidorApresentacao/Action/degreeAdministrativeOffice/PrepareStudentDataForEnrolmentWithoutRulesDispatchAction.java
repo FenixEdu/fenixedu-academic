@@ -85,7 +85,7 @@ public class PrepareStudentDataForEnrolmentWithoutRulesDispatchAction extends Pr
 		ArrayList result = null;
 		if ( (infoExecutionDegreesList != null) && (!infoExecutionDegreesList.isEmpty()) ) {
 			result = new ArrayList();
-			result.add(new LabelValueBean("", ""));
+			result.add(new LabelValueBean("Escolha", ""));
 			Iterator iterator = infoExecutionDegreesList.iterator();
 			while(iterator.hasNext()) {
 				InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();

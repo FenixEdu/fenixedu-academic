@@ -21,7 +21,6 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoStudent;
 import DataBeans.degreeAdministrativeOffice.InfoEquivalenceContext;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.FenixTransactionException;
@@ -57,10 +56,9 @@ public class ManualEquivalenceManagerDispatchAction extends DispatchAction {
 		} else {
 			equivalenceForm.set("studentOID", infoStudent.getIdInternal());
 		}
-		IUserView actor = new UserView(infoStudent.getInfoPerson().getUsername(), null);
 
 		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getServletContext().getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
-		Object args[] = { actor, infoExecutionPeriod };
+		Object args[] = { infoStudent, infoExecutionPeriod };
 
 		InfoEquivalenceContext infoEquivalenceContext = (InfoEquivalenceContext) ServiceUtils.executeService(userView, "GetListsOfCurricularCoursesForEquivalence", args);
 

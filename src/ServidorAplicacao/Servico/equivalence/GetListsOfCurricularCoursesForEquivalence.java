@@ -10,6 +10,7 @@ import org.apache.commons.collections.Transformer;
 
 import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoExecutionPeriod;
+import DataBeans.InfoStudent;
 import DataBeans.degreeAdministrativeOffice.InfoEquivalenceContext;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
@@ -19,12 +20,9 @@ import Dominio.IEnrolment;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolment;
-import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -51,7 +49,7 @@ public class GetListsOfCurricularCoursesForEquivalence implements IServico {
 		return "GetListsOfCurricularCoursesForEquivalence";
 	}
 
-	public InfoEquivalenceContext run(IUserView userView, InfoExecutionPeriod infoExecutionPeriod) throws FenixServiceException {
+	public InfoEquivalenceContext run(InfoStudent infoStudent, InfoExecutionPeriod infoExecutionPeriod) throws FenixServiceException {
 
 		InfoEquivalenceContext infoEquivalenceContext = new InfoEquivalenceContext();
 
@@ -59,9 +57,8 @@ public class GetListsOfCurricularCoursesForEquivalence implements IServico {
 			ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
 			IStudentCurricularPlanPersistente persistentStudentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente();
 			IPersistentEnrolment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
-			IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 
-			IStudent student = persistentStudent.readByUsername(((UserView) userView).getUtilizador());
+			IStudent student = Cloner.copyInfoStudent2IStudent(infoStudent);
 			IStudentCurricularPlan studentActiveCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(student.getNumber(), student.getDegreeType());
 			final IDegreeCurricularPlan currentDegreeCurricularPlanForStudent = studentActiveCurricularPlan.getDegreeCurricularPlan();
 			List curricularCoursesFromCurrentDegreeCurricularPlanForStudent = currentDegreeCurricularPlanForStudent.getCurricularCourses();
