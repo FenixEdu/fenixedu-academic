@@ -272,6 +272,7 @@
      <forward name="viewSite" path="/viewSite.jsp"/>         
 	</action>
 	
+	<!-- Insert Section -->
 	<action name="sectionForm"
 		input="/viewSection.jsp"
 		path="/createSection"
@@ -335,6 +336,21 @@
        <forward name="editItem" path="/editItem.jsp"/>
        <forward name="viewSection" path="/viewSection.jsp"/>
 	</action>
+	
+	<!-- Insert Item -->
+
+	<action name="itemForm"
+		input="/insertItem.jsp"
+		path="/insertItem"
+		parameter="method"
+		scope="request"
+		type="ServidorApresentacao.Action.teacher.InsertItemDispatchAction"
+        validate="false" >
+       <forward name="insertItem" path="/insertItem.jsp"/>
+       <forward name="viewSection" path="/viewSection.do"/>
+	</action>
+		
+	
 	
 	</action-mappings>
 

@@ -26,9 +26,9 @@
 			</html:link>
 		</td>
 
-		<td class="listClasses"><html:link page="/createItem.jsp">
-							<bean:message key="button.insertItem"/>
-							</html:link>
+		<td class="listClasses"><html:link page="/insertItem.do?method=prepareInsert">
+						<bean:message key="button.insertItem"/>
+						</html:link>
 		</td>
 </tr>
 </table>
