@@ -71,12 +71,9 @@ public abstract class ServiceTestCase extends TestCase {
 
 		try {
 			super.setUp();
-			backUpDataBaseContents();
-
 			IDatabaseConnection connection = getConnection();
 			IDataSet dataSet = getDataSet();
 
-			//String[] tableNames = { "OJB_HL_SEQ" };
 			IDataSet fullDataSet = connection.createDataSet();
 			DatabaseOperation.DELETE_ALL.execute(connection, fullDataSet);
 
@@ -180,7 +177,7 @@ public abstract class ServiceTestCase extends TestCase {
 
 	protected void compareDataSetUsingExceptedDataSetTableColumns(String expectedFileName) {
 		compareDataSetUsingExceptedDataSetTablesAndColumns(expectedFileName);
-		
+
 		/*try {
 
 			FileReader fileReader = new FileReader(new File(expectedFileName));
@@ -212,7 +209,7 @@ public abstract class ServiceTestCase extends TestCase {
 		} catch (Exception ex) {
 			fail("compareDataSet failed to read data set files" + ex);
 		} */
-	}
+		}
 
 	/**
 	 * @return list of tables to filter (only for the service beeing tested)
@@ -241,7 +238,7 @@ public abstract class ServiceTestCase extends TestCase {
 
 		return listTableNamesToFilter;
 	}
-	
+
 	/**
 	 * Compares two datasets using expected dataset tables and columns
 	 * @param expectedFileName
