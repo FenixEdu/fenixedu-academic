@@ -15,13 +15,32 @@ import java.util.Calendar;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import DataBeans.InfoLesson;
+import DataBeans.InfoShift;
 import DataBeans.InfoShiftServiceResult;
-import DataBeans.RoomKey;
-import DataBeans.ShiftAndLessonKeys;
+import DataBeans.util.Cloner;
+import Dominio.IAula;
+import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionPeriod;
+import Dominio.IExecutionYear;
+import Dominio.ISala;
+import Dominio.ITurno;
 import ServidorAplicacao.Servicos.TestCaseServicos;
+import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IAulaPersistente;
+import ServidorPersistente.IDisciplinaExecucaoPersistente;
+import ServidorPersistente.IPersistentExecutionPeriod;
+import ServidorPersistente.IPersistentExecutionYear;
+import ServidorPersistente.ISalaPersistente;
+import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.ITurnoPersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.DiaSemana;
 
 public class AdicionarAulaServicosTest extends TestCaseServicos {
+
+	private InfoLesson infoLesson = null;
+	private InfoShift infoShift = null;
 
 	public AdicionarAulaServicosTest(java.lang.String testName) {
 		super(testName);
@@ -58,13 +77,18 @@ public class AdicionarAulaServicosTest extends TestCaseServicos {
 		inicio.set(Calendar.SECOND, 0);
 		fim = Calendar.getInstance();
 		fim.set(Calendar.HOUR_OF_DAY, 9);
-		fim.set(Calendar.MINUTE, 0);
+		fim.set(Calendar.MINUTE, 30);
 		fim.set(Calendar.SECOND, 0);
+		
+		this.ligarSuportePersistente("turno1", diaSemana, inicio, fim);
+		Object argsCriarTurnoAula[] = {this.infoShift, this.infoLesson};
 
-		RoomKey keySala = new RoomKey("Ga1");
-		Object argsCriarTurnoAula[] = new Object[1];
-		argsCriarTurnoAula[0] = new ShiftAndLessonKeys("turno1", diaSemana, inicio, fim, keySala);
+//		RoomKey keySala = new RoomKey("Ga1");
+//		Object argsCriarTurnoAula[] = new Object[1];
+//		argsCriarTurnoAula[0] = new ShiftAndLessonKeys("turno1", diaSemana, inicio, fim, keySala);
+
 		Object result = null;
+
 		try {
 			result = _gestor.executar(_userView2, "AdicionarAula", argsCriarTurnoAula);
 			fail("testUnauthorizedCreateTurnoAula");
@@ -81,17 +105,20 @@ public class AdicionarAulaServicosTest extends TestCaseServicos {
 		Calendar fim = null;
 		diaSemana = new DiaSemana(DiaSemana.SEGUNDA_FEIRA);
 		inicio = Calendar.getInstance();
-		inicio.set(Calendar.HOUR_OF_DAY, 8);
-		inicio.set(Calendar.MINUTE, 0);
+		inicio.set(Calendar.HOUR_OF_DAY, 12);
+		inicio.set(Calendar.MINUTE, 30);
 		inicio.set(Calendar.SECOND, 0);
 		fim = Calendar.getInstance();
-		fim.set(Calendar.HOUR_OF_DAY, 9);
+		fim.set(Calendar.HOUR_OF_DAY, 13);
 		fim.set(Calendar.MINUTE, 0);
 		fim.set(Calendar.SECOND, 0);
 
-		RoomKey keySala = new RoomKey("Ga1");
-		Object argsCriarTurnoAula[] = new Object[1];
-		argsCriarTurnoAula[0] = new ShiftAndLessonKeys("turno1", diaSemana, inicio, fim, keySala);
+		this.ligarSuportePersistente("turno1", diaSemana, inicio, fim);
+		Object argsCriarTurnoAula[] = {this.infoShift, this.infoLesson};
+
+//		RoomKey keySala = new RoomKey("Ga1");
+//		Object argsCriarTurnoAula[] = new Object[1];
+//		argsCriarTurnoAula[0] = new ShiftAndLessonKeys("turno1", diaSemana, inicio, fim, keySala);
 
 		Object result = null;
 		try {
@@ -118,9 +145,12 @@ public class AdicionarAulaServicosTest extends TestCaseServicos {
 		fim.set(Calendar.MINUTE, 30);
 		fim.set(Calendar.SECOND, 0);
 
-		RoomKey keySala = new RoomKey("Ga1");
-		Object argsCriarTurnoAula[] = new Object[1];
-		argsCriarTurnoAula[0] = new ShiftAndLessonKeys("turno2", diaSemana, inicio, fim, keySala);
+		this.ligarSuportePersistente("turno2", diaSemana, inicio, fim);
+		Object argsCriarTurnoAula[] = {this.infoShift, this.infoLesson};
+
+//		RoomKey keySala = new RoomKey("Ga1");
+//		Object argsCriarTurnoAula[] = new Object[1];
+//		argsCriarTurnoAula[0] = new ShiftAndLessonKeys("turno2", diaSemana, inicio, fim, keySala);
 
 		Object result = null;
 		try {
@@ -155,12 +185,18 @@ public class AdicionarAulaServicosTest extends TestCaseServicos {
 		fim2.set(Calendar.MINUTE, 30);
 		fim2.set(Calendar.SECOND, 0);
 
-		RoomKey keySala = new RoomKey("Ga1");
+		this.ligarSuportePersistente("turno3", diaSemana1, inicio, fim1);
+		Object argsCriarTurnoAula1[] = {this.infoShift, this.infoLesson};
 
-		Object argsCriarTurnoAula1[] = new Object[1];
-		Object argsCriarTurnoAula2[] = new Object[1];
-		argsCriarTurnoAula1[0] = new ShiftAndLessonKeys("turno3", diaSemana1, inicio,  fim1, keySala);
-		argsCriarTurnoAula2[0] = new ShiftAndLessonKeys("turno3", diaSemana2, inicio,  fim2, keySala);
+		this.ligarSuportePersistente("turno3", diaSemana2, inicio, fim2);
+		Object argsCriarTurnoAula2[] = {this.infoShift, this.infoLesson};
+
+//		RoomKey keySala = new RoomKey("Ga1");
+//
+//		Object argsCriarTurnoAula1[] = new Object[1];
+//		Object argsCriarTurnoAula2[] = new Object[1];
+//		argsCriarTurnoAula1[0] = new ShiftAndLessonKeys("turno3", diaSemana1, inicio,  fim1, keySala);
+//		argsCriarTurnoAula2[0] = new ShiftAndLessonKeys("turno3", diaSemana2, inicio,  fim2, keySala);
 
 		Object result = null;
 		try {
@@ -201,14 +237,20 @@ public class AdicionarAulaServicosTest extends TestCaseServicos {
 		fim2.set(Calendar.MINUTE, 30);
 		fim2.set(Calendar.SECOND, 0);
 
-		RoomKey keySala = new RoomKey("Ga1");
+		this.ligarSuportePersistente("turno3", diaSemana1, inicio1, fim1);
+		Object argsCriarTurnoAula1[] = {this.infoShift, this.infoLesson};
 
-		Object argsCriarTurnoAula1[] = new Object[1];
-		Object argsCriarTurnoAula2[] = new Object[1];
+		this.ligarSuportePersistente("turno3", diaSemana2, inicio2, fim2);
+		Object argsCriarTurnoAula2[] = {this.infoShift, this.infoLesson};
 
-		argsCriarTurnoAula1[0] = new ShiftAndLessonKeys("turno3", diaSemana1, inicio1, fim1, keySala);
-		argsCriarTurnoAula2[0] = new ShiftAndLessonKeys("turno3", diaSemana2, inicio2, fim2, keySala);
-	    
+//		RoomKey keySala = new RoomKey("Ga1");
+//
+//		Object argsCriarTurnoAula1[] = new Object[1];
+//		Object argsCriarTurnoAula2[] = new Object[1];
+//
+//		argsCriarTurnoAula1[0] = new ShiftAndLessonKeys("turno3", diaSemana1, inicio1, fim1, keySala);
+//		argsCriarTurnoAula2[0] = new ShiftAndLessonKeys("turno3", diaSemana2, inicio2, fim2, keySala);
+//	    
 	    Object result = null; 
 	      try {
 			result = _gestor.executar(_userView, "AdicionarAula", argsCriarTurnoAula1);
@@ -219,4 +261,60 @@ public class AdicionarAulaServicosTest extends TestCaseServicos {
 	      	fail("testCreateNonExistingTurnoAula_HourLimitExceeded:" + ex);
 	      }
 	  }
+
+	private void ligarSuportePersistente(String nomeTurno, DiaSemana diaSemana, Calendar inicio, Calendar fim) {
+
+		ISuportePersistente sp = null;
+
+		try {
+			sp = SuportePersistenteOJB.getInstance();
+			sp.iniciarTransaccao();
+
+			IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
+			IExecutionYear iey = ieyp.readExecutionYearByName("2002/2003");
+
+			IPersistentExecutionPeriod iepp = sp.getIPersistentExecutionPeriod();
+			IExecutionPeriod iep = iepp.readByNameAndExecutionYear("2º Semestre", iey);
+
+			ISalaPersistente isp = sp.getISalaPersistente();
+			ISala is = isp.readByName("Ga1");
+
+			IAulaPersistente iap = sp.getIAulaPersistente();
+			IAula ia = iap.readByDiaSemanaAndInicioAndFimAndSala(diaSemana, inicio, fim, is);
+			
+//			System.out.println(ia.toString());
+			
+			String nomeDisciplinaExecucao = null;
+			if(nomeTurno.equals("turno1") || nomeTurno.equals("turno2")) {
+				nomeDisciplinaExecucao = "TFCI";
+			} else if(nomeTurno.equals("turno3")) {
+				nomeDisciplinaExecucao = "TFCII";
+			}
+
+			IDisciplinaExecucaoPersistente idep = sp.getIDisciplinaExecucaoPersistente();
+			IDisciplinaExecucao ide = idep.readByExecutionCourseInitialsAndExecutionPeriod(nomeDisciplinaExecucao, iep);
+			
+			ITurnoPersistente itp = sp.getITurnoPersistente();
+			ITurno it = itp.readByNameAndExecutionCourse(nomeTurno, ide);
+			
+//			System.out.println(it.toString());
+			
+			this.infoLesson = Cloner.copyILesson2InfoLesson(ia);
+			this.infoShift = Cloner.copyIShift2InfoShift(it);
+
+//			System.out.println(this.infoLesson.toString());
+//			System.out.println(this.infoShift.toString());
+
+			sp.confirmarTransaccao();
+
+		} catch (ExcepcaoPersistencia excepcao) {
+			try {
+				sp.cancelarTransaccao();
+			} catch (ExcepcaoPersistencia ex) {
+				fail("ligarSuportePersistente: cancelarTransaccao");
+			}
+			fail("ligarSuportePersistente: confirmarTransaccao");
+		}
+	}
+
 }

@@ -53,11 +53,7 @@ public class ApagarSala implements IServico {
           result = true;
       }
     } catch (ExcepcaoPersistencia ex) {
-    	if (ex.getMessage().equals("Não é possível apagar salas com aulas associadas")){
-    	throw new Exception(ex.getMessage());}
-    		
-      ex.printStackTrace();
-      
+		ex.printStackTrace();
     }
     
     return new Boolean (result);

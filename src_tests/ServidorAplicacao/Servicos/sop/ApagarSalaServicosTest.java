@@ -11,11 +11,13 @@ package ServidorAplicacao.Servicos.sop;
  *
  * @author tfc130
  */
-import junit.framework.*;
-import DataBeans.*;
-import ServidorAplicacao.Servicos.*;
+import junit.framework.Test;
+import junit.framework.TestSuite;
+import DataBeans.RoomKey;
+import ServidorAplicacao.Servicos.TestCaseServicos;
 
 public class ApagarSalaServicosTest extends TestCaseServicos {
+
 	public ApagarSalaServicosTest(java.lang.String testName) {
 		super(testName);
 	}
@@ -40,6 +42,7 @@ public class ApagarSalaServicosTest extends TestCaseServicos {
 
 	// unauthorized delete sala
 	public void testUnauthorizedDeleteSala() {
+
 		Object argsDeleteSala[] = new Object[1];
 		argsDeleteSala[0] = new RoomKey(new String("Ga1"));
 
@@ -54,37 +57,46 @@ public class ApagarSalaServicosTest extends TestCaseServicos {
 
 	// delete existing sala
 	public void testDeleteExistingSala() {
+
+		Object argsDeleteSala[] = new Object[1];
+		argsDeleteSala[0] = new RoomKey(new String("Ga3"));
+
+		Object result = null;
+		try {
+			result = _gestor.executar(_userView, "ApagarSala", argsDeleteSala);
+			assertEquals("testDeleteExistingSala", Boolean.TRUE.booleanValue(), ((Boolean) result).booleanValue());
+		} catch (Exception ex) {
+			fail("testDeleteExistingSala");
+		}
+	}
+
+	// delete non-existing sala
+	public void testDeleteNonExistingSala() {
+
+		Object argsDeleteSala[] = new Object[1];
+		argsDeleteSala[0] = new RoomKey(new String("Ga4"));
+
+		Object result = null;
+		try {
+			result = _gestor.executar(_userView, "ApagarSala", argsDeleteSala);
+			assertEquals("testDeleteNonExistingSala", Boolean.FALSE.booleanValue(), ((Boolean) result).booleanValue());
+		} catch (Exception ex) {
+			fail("testDeleteNonExistingSala");
+		}
+	}
+
+	// delete existing sala with associations
+	public void testDeleteExistingSalaWithAssociations() {
+
 		Object argsDeleteSala[] = new Object[1];
 		argsDeleteSala[0] = new RoomKey(new String("Ga1"));
 
 		Object result = null;
 		try {
 			result = _gestor.executar(_userView, "ApagarSala", argsDeleteSala);
-			assertEquals(
-				"testDeleteExistingSala",
-				Boolean.TRUE.booleanValue(),
-				((Boolean) result).booleanValue());
+			assertEquals("testDeleteExistingSala", Boolean.FALSE.booleanValue(), ((Boolean) result).booleanValue());
 		} catch (Exception ex) {
 			fail("testDeleteExistingSala");
-			System.out.println("Serviço não executado: " + ex);
-		}
-	}
-
-	// delete non-existing sala
-	public void testDeleteNonExistingSala() {
-		Object argsDeleteSala[] = new Object[1];
-		argsDeleteSala[0] = new RoomKey(new String("Ga2"));
-
-		Object result = null;
-		try {
-			result = _gestor.executar(_userView, "ApagarSala", argsDeleteSala);
-			assertEquals(
-				"testDeleteNonExistingSala",
-				Boolean.FALSE.booleanValue(),
-				((Boolean) result).booleanValue());
-		} catch (Exception ex) {
-			fail("testDeleteNonExistingSala");
-			System.out.println("Serviço não executado: " + ex);
 		}
 	}
 
