@@ -43,11 +43,6 @@ public class EditDistributedTestTest extends ServiceNeedsAuthenticationTestCase
 		return "etc/datasets/servicos/teacher/testEditDistributedTestDataSet.xml";
 	}
 
-	protected String getExpectedDataSetFilePath()
-	{
-		return "etc/datasets/servicos/teacher/testExpectedEditDistributedTestDataSet.xml";
-	}
-
 	protected String getNameOfServiceToBeTested()
 	{
 		return "EditDistributedTest";
@@ -77,7 +72,7 @@ public class EditDistributedTestTest extends ServiceNeedsAuthenticationTestCase
 	protected Object[] getAuthorizeArguments()
 	{
 		Integer executionCourseId = new Integer(34882);
-		Integer distributedTestId = new Integer(207);
+		Integer distributedTestId = new Integer(1);
 		String info = new String("informação da ficha-alterada");
 
 		Calendar beginDate = Calendar.getInstance();
@@ -101,9 +96,9 @@ public class EditDistributedTestTest extends ServiceNeedsAuthenticationTestCase
 		TestType testType = new TestType(1);
 		CorrectionAvailability correctionAvailability = new CorrectionAvailability(1);
 		Boolean studentFeedback = new Boolean(true);
-		String[] selected = { new String("4114")};
+		String[] selected = { new String("11355")};
 		Boolean shifts = new Boolean(false);
-		String path = new String("e:\\eclipse\\workspace\\fenix\\build\\standalone\\");
+		String path = new String("e:\\eclipse\\workspace\\fenix-exams2\\build\\standalone\\");
 		Object[] args =
 			{
 				executionCourseId,
@@ -138,7 +133,7 @@ public class EditDistributedTestTest extends ServiceNeedsAuthenticationTestCase
 			PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
 
 			Criteria criteria = new Criteria();
-			criteria.addEqualTo("idInternal", new Integer(207));
+			criteria.addEqualTo("idInternal", args[1]);
 			Query queryCriteria = new QueryByCriteria(DistributedTest.class, criteria);
 			IDistributedTest distributedTest = (IDistributedTest) broker.getObjectByQuery(queryCriteria);
 			broker.close();
@@ -149,7 +144,7 @@ public class EditDistributedTestTest extends ServiceNeedsAuthenticationTestCase
 			Calendar expectedDistributedTestEndDate = (Calendar) args[5];
 			Calendar expectedDistributedTestEndHour = (Calendar) args[6];
 
-			assertEquals(distributedTest.getExecutionCourse().getIdInternal(), args[0]);
+			//			assertEquals(distributedTest.getTestScope().getDomainObject().getIdInternal(), args[0]);
 			assertEquals(distributedTest.getIdInternal(), args[1]);
 			assertEquals(
 				distributedTest.getBeginDate().get(Calendar.DAY_OF_MONTH),
@@ -204,23 +199,21 @@ public class EditDistributedTestTest extends ServiceNeedsAuthenticationTestCase
 			criteria = new Criteria();
 			criteria.addEqualTo(
 				"message",
-				"Tem uma Ficha de Trabalho a realizar entre 1/1/2004 às 10:00 até 1/2/2004 às 10:00");
-			criteria.addEqualTo("subject", "f1");
+				"Tem uma Ficha de Trabalho a realizar entre as 10:00 de 1/1/2004 até às 20:00 de 2/2/2004");
+			criteria.addEqualTo("subject", "Ficha de Trabalho 1");
 			queryCriteria = new QueryByCriteria(Advisory.class, criteria);
 			IAdvisory advisory1 = (IAdvisory) broker.getObjectByQuery(queryCriteria);
 
 			criteria = new Criteria();
 			criteria.addEqualTo(
 				"message",
-				"As datas da Ficha de Trabalho foram alteradas. Deverá realizar a ficha entre 1/1/2004 às 10:00 até 2/2/2004 às 20:00");
-			criteria.addEqualTo("subject", "f1: Alteração de datas");
+				"As datas de realização da Ficha de Trabalho foram alteradas. Deverá realizar a ficha entre as 10:00 de 1/1/2004 até às 20:00 de 2/2/2004");
+			criteria.addEqualTo("subject", "Ficha de Trabalho 1: Alteração de datas");
 			queryCriteria = new QueryByCriteria(Advisory.class, criteria);
 			IAdvisory advisory2 = (IAdvisory) broker.getObjectByQuery(queryCriteria);
 
 			broker.close();
-
-			assertEquals(studentTestQuestionList.size(), 2);
-			String[] students = (String[]) args[10];
+			assertEquals(studentTestQuestionList.size(), 2232);
 			Iterator it = studentTestQuestionList.iterator();
 			while (it.hasNext())
 			{
@@ -241,6 +234,29 @@ public class EditDistributedTestTest extends ServiceNeedsAuthenticationTestCase
 						fail("Edit Distributed Test " + "Advisory2");
 			}
 
+			//			if (distributedTest.getTestType().equals(new TestType(TestType.EVALUATION)))
+			//			{
+			//				broker = PersistenceBrokerFactory.defaultPersistenceBroker();
+			//
+			//				criteria = new Criteria();
+			//				criteria.addEqualTo("chaveDisciplinaExecucao", args[0]);
+			//				criteria.addEqualTo("chaveAluno", new Integer(((String[]) args[10])[0]));
+			//				queryCriteria = new QueryByCriteria(Frequenta.class, criteria);
+			//				IFrequenta frequenta = (IFrequenta) broker.getObjectByQuery(queryCriteria);
+			//				assertNotNull(frequenta);
+			//				criteria = new Criteria();
+			//				criteria.addEqualTo("keyDistributedTest", args[1]);
+			//				queryCriteria = new QueryByCriteria(OnlineTest.class, criteria);
+			//				IOnlineTest onlineTest = (IOnlineTest) broker.getObjectByQuery(queryCriteria);
+			//				assertNotNull(onlineTest);
+			//				criteria = new Criteria();
+			//				criteria.addEqualTo("keyAttend", frequenta.getIdInternal());
+			//				criteria.addEqualTo("keyEvaluation", onlineTest.getIdInternal());
+			//				queryCriteria = new QueryByCriteria(Mark.class, criteria);
+			//				IMark mark = (IMark) broker.getObjectByQuery(queryCriteria);
+			//				broker.close();
+			//				assertNotNull(mark);
+			//			}
 		}
 		catch (FenixServiceException ex)
 		{

@@ -288,17 +288,19 @@
 </table>
 <br/>
 <br/>
- <strong>Resumo:</strong>
 <table>
-	<tr>
-		<td class="listClasses-header">Número de inscrições</td>
-		<td class="listClasses-header">Número de Alunos</td>
-	</tr>
-	<logic:iterate id="enrollmentNumber" name="attendsSummary" property="numberOfEnrollments">
-	<tr>
-		<td class="listClasses"><bean:write name="enrollmentNumber"/></td>
-		<td class="listClasses"><%= ((DataBeans.InfoAttendsSummary)pageContext.findAttribute("attendsSummary")).getEnrollmentDistribution().get(enrollmentNumber).toString() %></td>
-	</tr>
+	<logic:iterate id="enrollmentNumber" name="attendsSummary" property="numberOfEnrollments" indexId="index">
+		<logic:equal name="index" value="0">
+			<tr><td><strong>Resumo:</strong></td></tr>
+			<tr>
+				<td class="listClasses-header">Número de inscrições</td>
+				<td class="listClasses-header">Número de Alunos</td>
+			</tr>
+		</logic:equal>
+		<tr>
+			<td class="listClasses"><bean:write name="enrollmentNumber"/></td>
+			<td class="listClasses"><%= ((DataBeans.InfoAttendsSummary)pageContext.findAttribute("attendsSummary")).getEnrollmentDistribution().get(enrollmentNumber).toString() %></td>
+		</tr>
 	</logic:iterate> 
 </table>
 </html:form>

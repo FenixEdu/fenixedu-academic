@@ -15,8 +15,8 @@ public class Test extends DomainObject implements ITest {
 	private Integer numberOfQuestions;
 	private Date creationDate;
 	private Date lastModifiedDate;
-	private IExecutionCourse executionCourse;
-	private Integer keyExecutionCourse;
+	private ITestScope testScope;
+	private Integer keyTestScope;
 
 	public Test() {
 	}
@@ -25,12 +25,12 @@ public class Test extends DomainObject implements ITest {
 		setIdInternal(testId);
 	}
 
-	public IExecutionCourse getExecutionCourse() {
-		return executionCourse;
+	public ITestScope getTestScope() {
+		return testScope;
 	}
 
-	public Integer getKeyExecutionCourse() {
-		return keyExecutionCourse;
+	public Integer getKeyTestScope() {
+		return keyTestScope;
 	}
 
 	public Integer getNumberOfQuestions() {
@@ -41,12 +41,12 @@ public class Test extends DomainObject implements ITest {
 		return title;
 	}
 
-	public void setExecutionCourse(IExecutionCourse execucao) {
-		executionCourse = execucao;
+	public void setTestScope(ITestScope testScope) {
+		this.testScope = testScope;
 	}
 
-	public void setKeyExecutionCourse(Integer integer) {
-		keyExecutionCourse = integer;
+	public void setKeyTestScope(Integer integer) {
+		keyTestScope = integer;
 	}
 
 	public void setNumberOfQuestions(Integer integer) {

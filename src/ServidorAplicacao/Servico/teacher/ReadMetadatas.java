@@ -6,6 +6,7 @@
 package ServidorAplicacao.Servico.teacher;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -13,6 +14,8 @@ import DataBeans.ExecutionCourseSiteView;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSiteMetadatas;
 import DataBeans.SiteView;
+import DataBeans.comparators.QuestionDifficultyTypeComparatorByAscendingOrder;
+import DataBeans.comparators.QuestionDifficultyTypeComparatorByDescendingOrder;
 import DataBeans.util.Cloner;
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
@@ -63,22 +66,31 @@ public class ReadMetadatas implements IServico
 
 			IPersistentMetadata persistentMetadata = persistentSuport.getIPersistentMetadata();
 			List metadatas = new ArrayList();
-			if (order != null
-				&& (order.equals("description")
+			if (order == null
+				|| !(order.equals("description")
 					|| order.equals("mainSubject")
 					|| order.equals("difficulty")
 					|| order.equals("numberOfMembers")))
-				metadatas =
-					persistentMetadata.readByExecutionCourseAndVisibilityAndOrder(
-						executionCourse,
-						order,
-						asc);
-			else
-				metadatas = persistentMetadata.readByExecutionCourseAndVisibility(executionCourse);
+				order = new String("description");
+			metadatas =
+				persistentMetadata.readByExecutionCourseAndVisibilityAndOrder(
+					executionCourse,
+					order,
+					asc);
+
 			List result = new ArrayList();
 			Iterator iter = metadatas.iterator();
 			while (iter.hasNext())
 				result.add(Cloner.copyIMetadata2InfoMetadata((IMetadata) iter.next()));
+
+			if (order.equals("difficulty"))
+			{
+				if (asc != null && asc.equals("false"))
+					Collections.sort(result, new QuestionDifficultyTypeComparatorByDescendingOrder());
+				else
+					Collections.sort(result, new QuestionDifficultyTypeComparatorByAscendingOrder());
+			}
+
 			InfoSiteMetadatas bodyComponent = new InfoSiteMetadatas();
 			bodyComponent.setInfoMetadatas(result);
 			bodyComponent.setExecutionCourse((InfoExecutionCourse) Cloner.get(executionCourse));

@@ -468,6 +468,7 @@
 <class-descriptor class="Dominio.Evaluation" table="EVALUATION">
     <extent-class class-ref="Dominio.Exam" />
     <extent-class class-ref="Dominio.FinalEvaluation" />
+    <extent-class class-ref="Dominio.OnlineTest" />
       <field-descriptor
          name="idInternal"
          column="ID_INTERNAL"

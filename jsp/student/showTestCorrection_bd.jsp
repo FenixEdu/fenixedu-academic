@@ -10,13 +10,13 @@
 	
 	<logic:notEmpty name="infoStudentTestQuestionList" >
 	<html:form action="/studentTests">
-	<html:hidden property="method" value="viewDoneTests"/>
+	<html:hidden property="method" value="testsFirstPage"/>
 
 	<logic:iterate id="testQuestion" name="infoStudentTestQuestionList" type="DataBeans.InfoStudentTestQuestion"/>
 	<bean:define id="distributedTest" name="testQuestion" property="distributedTest" type="DataBeans.InfoDistributedTest"/>
 	<bean:define id="testCode" name="distributedTest" property="idInternal"/>
 		
-	<bean:define id="objectCode" name="distributedTest" property="infoExecutionCourse.idInternal"/>
+	<bean:define id="objectCode" name="distributedTest" property="infoTestScope.infoObject.idInternal"/>
 	<html:hidden property="objectCode" value="<%= objectCode.toString() %>"/>
 	<html:hidden property="testCode" value="<%= testCode.toString() %>"/>
 	
@@ -25,7 +25,10 @@
 	</center>
 	<br/>
 	<br/>
+	<bean:define id="testType" name="distributedTest" property="testType.type"/>
+	<%if(((Integer)testType).intValue()!=3){%>
 	<b><bean:message key="label.test.totalClassification"/>:</b>&nbsp;<bean:write name="classification"/>
+	<%}%>
 	<br/>
 	<br/>
 	<table width="100%" border="0" cellpadding="0" cellspacing="10">
@@ -38,17 +41,16 @@
 			<tr>
 				<td><b><bean:message key="label.test.questionOrder" />:</b>&nbsp;<bean:write name="questionOrder"/></td>
 			</tr>
+			<%if(((Integer)testType).intValue()!=3){%>
 			<tr>
 				<td><b><bean:message key="label.test.questionValue" />:</b>&nbsp;<bean:write name="testQuestionValue"/></td>
 			</tr>
-			
-			
 			<bean:define id="mark" name="testQuestion" property="testQuestionMark"/>
-
 			<tr>
 				<bean:define id="value" value="<%= (new java.text.DecimalFormat("#0.##").format(Double.parseDouble(mark.toString())).toString()) %>"/>
 				<td><b><bean:message key="label.test.classification" />:</b>&nbsp;<bean:write name="value"/></td>	
 			</tr>
+			<%}%>
 			<tr>
 				<td>
 					<bean:define id="index" value="0"/>
@@ -58,7 +60,7 @@
 				
 				<% if (((String)questionLabel).startsWith("image/")){%>
 					<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
-					<html:img align="middle" src="<%= request.getContextPath() + "/student/studentTests.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciceCode=" + questionCode+"&amp;imgCode="+index.toString() +"&amp;imgType="+questionLabel.toString()%>"/>
+					<html:img align="middle" src="<%= request.getContextPath() + "/student/studentTests.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciseCode=" + questionCode+"&amp;imgCode="+index.toString() +"&amp;imgType="+questionLabel.toString()%>"/>
 					
 					<logic:equal name="imageLabel" value="true">
 						</td><td>
@@ -99,7 +101,7 @@
 					<bean:define id="optionLabel" name="optionBody" property="label"/>
 					<% if (((String)optionLabel).startsWith("image/")){ %>
 						<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
-						<html:img align="middle" src="<%= request.getContextPath() + "/student/studentTests.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciceCode="+ questionCode +"&amp;imgCode="+index.toString() +"&amp;imgType="+optionLabel.toString()%>"/>
+						<html:img align="middle" src="<%= request.getContextPath() + "/student/studentTests.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciseCode="+ questionCode +"&amp;imgCode="+index.toString() +"&amp;imgType="+optionLabel.toString()%>"/>
 					<% } else if (((String)optionLabel).equals("image_label")){%>
 						<bean:write name="optionBody" property="value"/>
 						<br/>
@@ -114,25 +116,26 @@
 							<bean:define id="button" value="true"/>
 							<logic:notEqual name="correction" property="availability" value="1">
 								<logic:notEqual name="indexOption" value="1">
-									<logic:iterate id="correctResponse" name="question" property="correctResponse">
-										<logic:equal name="correctResponse" value="<%= (new Integer(Integer.parseInt(indexOption)-1)).toString() %>">
+									<bean:size id="correctResponseSize" name="question" property="correctResponse"/>
+									<logic:notEqual name="correctResponseSize" value="0">
+										<logic:iterate id="correctResponse" name="question" property="correctResponse">
+											<logic:equal name="correctResponse" value="<%= (new Integer(Integer.parseInt(indexOption)-1)).toString() %>">
 												<logic:equal name="responsed" value="<%= (new Integer(Integer.parseInt(indexOption)-1)).toString() %>">
 													<td><img src="<%= request.getContextPath() %>/images/correct.gif" alt="" /></td>
 													<bean:define id="correct" value="true"/>
 												</logic:equal>
+											</logic:equal>
+										</logic:iterate>
+										<logic:equal name="responsed" value="<%= (new Integer(Integer.parseInt(indexOption)-1)).toString() %>">
+											<logic:equal name="correct" value="false">
+												<td><img src="<%= request.getContextPath() %>/images/incorrect.gif" alt="" /></td>
+												<bean:define id="correct" value="true"/>
+											</logic:equal>
 										</logic:equal>
-									</logic:iterate>
-									<logic:equal name="responsed" value="<%= (new Integer(Integer.parseInt(indexOption)-1)).toString() %>">
-										<logic:equal name="correct" value="false">
-											<td><img src="<%= request.getContextPath() %>/images/incorrect.gif" alt="" /></td>
-											<bean:define id="correct" value="true"/>
-										</logic:equal>
-									</logic:equal>
+									</logic:notEqual>
 								</logic:notEqual>
 							
-							
 							</tr><tr><td>
-								
 								<logic:iterate id="correctResponse" name="question" property="correctResponse">
 										<logic:equal name="correctResponse" value="<%= (new Integer(Integer.parseInt(indexOption))).toString() %>">
 											<logic:equal name="responsed" value="<%= (new Integer(Integer.parseInt(indexOption))).toString() %>">
@@ -164,6 +167,7 @@
 					<% } %>
 						
 				</logic:iterate>
+				<logic:notEqual name="correction" property="availability" value="1">
 				<logic:iterate id="correctResponse" name="question" property="correctResponse">
 					<logic:equal name="correctResponse" value="<%= (new Integer(Integer.parseInt(indexOption))).toString() %>">
 						<logic:equal name="responsed" value="<%= (new Integer(Integer.parseInt(indexOption))).toString() %>">
@@ -178,6 +182,7 @@
 						</logic:equal>
 					</logic:equal>
 				</logic:iterate>
+				</logic:notEqual>
 				</td></tr></table></td>	
 			</tr>
 		</logic:iterate>

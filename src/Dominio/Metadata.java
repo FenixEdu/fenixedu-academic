@@ -1,5 +1,6 @@
 package Dominio;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ public class Metadata extends DomainObject implements IMetadata
 
 	private String description;
 	private String difficulty;
-	private String learningTime;
+	private Calendar learningTime;
 	private String level;
 	private String mainSubject;
 	private String secondarySubject;
@@ -62,7 +63,7 @@ public class Metadata extends DomainObject implements IMetadata
 		return difficulty;
 	}
 
-	public String getLearningTime()
+	public Calendar getLearningTime()
 	{
 		return learningTime;
 	}
@@ -127,9 +128,9 @@ public class Metadata extends DomainObject implements IMetadata
 		difficulty = string;
 	}
 
-	public void setLearningTime(String string)
+	public void setLearningTime(Calendar calendar)
 	{
-		learningTime = string;
+		learningTime = calendar;
 	}
 
 	public void setLevel(String string)

@@ -965,6 +965,16 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         return new StudentTestLogOJB();
     }
 
+	public IPersistentOnlineTest getIPersistentOnlineTest()
+	{
+		return new OnlineTestOJB();
+	}
+
+	public IPersistentTestScope getIPersistentTestScope()
+	{
+		return new TestScopeOJB();
+	}
+
     public IPersistentAdvisory getIPersistentAdvisory()
     {
         return new AdvisoryOJB();

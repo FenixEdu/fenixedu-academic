@@ -6,18 +6,23 @@
 		<put name="body" value="/student/main_bd.jsp" />
 	</definition>
 
-	<!-- STUDENT EXECUTION COURSES DEFINITIONS -->
-	
-	<definition name="view-Student-ExecutionCourses" extends="definition.student.masterPage">
-		<put name="body" value="/student/viewStudentExecutionCourses_bd.jsp" />		
-	</definition>
-
-	<!-- END OF STUDENT EXECUTION COURSES DEFINITIONS -->
 	
 	<!-- STUDENT TESTS DEFINITIONS -->
 	
+	<definition name="view-Student-ExecutionCourses-With-Tests" extends="definition.student.masterPage">
+		<put name="body" value="/student/viewStudentExecutionCoursesWithTests_bd.jsp" />		
+	</definition>
+	
+	<definition name="tests-First-Page" extends="definition.student.masterPage">
+		<put name="body" value="/student/testsFirstPage_bd.jsp" />		
+	</definition>
+	
 	<definition name="do-Test" extends="definition.student.one-column">
 		<put name="body" value="/student/doTest_bd.jsp" />		
+	</definition>
+
+	<definition name="show-Student-Test-Feedback" extends="definition.student.one-column">
+		<put name="body" value="/student/showStudentTestFeedback_bd.jsp" />		
 	</definition>
 	
 	<definition name="show-Test-Correction" extends="definition.student.one-column">

@@ -23,14 +23,22 @@
 </tr>	
 <logic:iterate id="evaluation" name="evaluations">
 	<tr>
-		<td class="listClasses"><bean:write name="evaluation" property="evaluationType"/></td>
-		<logic:notEqual name="evaluation" property="evaluationType" value="<%= EvaluationType.FINAL_STRING %>">					
-			<td class="listClasses"><bean:write name="evaluation" property="season"/></td>		
+		
+		<logic:equal name="evaluation" property="evaluationType" value="<%= EvaluationType.EXAM_STRING %>">
+			<td class="listClasses"><bean:write name="evaluation" property="evaluationType"/></td>
+			<td class="listClasses"><bean:write name="evaluation" property="season"/></td>	
 			<td class="listClasses"><bean:write name="evaluation" property="date"/></td>
 			<td class="listClasses"><bean:write name="evaluation" property="beginningHour"/></td>
-		</logic:notEqual>
-		<logic:equal name="evaluation" property="evaluationType" value="<%= EvaluationType.FINAL_STRING %>">					
+		</logic:equal>
+		<logic:equal name="evaluation" property="evaluationType" value="<%= EvaluationType.ONLINE_TEST_STRING %>">
+			<td class="listClasses"><bean:write name="evaluation" property="infoDistributedTest.title"/></td>
 			<td class="listClasses">&nbsp;</td>		
+			<td class="listClasses">&nbsp;</td>
+			<td class="listClasses">&nbsp;</td>
+		</logic:equal>
+		<logic:equal name="evaluation" property="evaluationType" value="<%= EvaluationType.FINAL_STRING %>">
+			<td class="listClasses"><bean:write name="evaluation" property="evaluationType"/></td>				
+			<td class="listClasses">&nbsp;</td>
 			<td class="listClasses">&nbsp;</td>
 			<td class="listClasses">&nbsp;</td>
 		</logic:equal>

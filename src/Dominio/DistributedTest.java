@@ -12,7 +12,8 @@ import Util.TestType;
 /**
  * @author Susana Fernandes
  */
-public class DistributedTest extends DomainObject implements IDistributedTest {
+public class DistributedTest extends DomainObject implements IDistributedTest
+{
 	private String title;
 	private String testInformation;
 	private Calendar beginDate;
@@ -23,110 +24,136 @@ public class DistributedTest extends DomainObject implements IDistributedTest {
 	private CorrectionAvailability correctionAvailability;
 	private Boolean studentFeedback;
 	private Integer numberOfQuestions;
-	private IExecutionCourse executionCourse;
-	private Integer keyExecutionCourse;
+	private ITestScope testScope;
+	private Integer keyTestScope;
 
-	public DistributedTest() {
+	public DistributedTest()
+	{
 	}
 
-	public DistributedTest(Integer distributedTestId) {
+	public DistributedTest(Integer distributedTestId)
+	{
 		setIdInternal(distributedTestId);
 	}
 
-	public Calendar getBeginDate() {
+	public Calendar getBeginDate()
+	{
 		return beginDate;
 	}
 
-	public Calendar getBeginHour() {
+	public Calendar getBeginHour()
+	{
 		return beginHour;
 	}
 
-	public CorrectionAvailability getCorrectionAvailability() {
+	public CorrectionAvailability getCorrectionAvailability()
+	{
 		return correctionAvailability;
 	}
 
-	public Calendar getEndDate() {
+	public Calendar getEndDate()
+	{
 		return endDate;
 	}
 
-	public Calendar getEndHour() {
+	public Calendar getEndHour()
+	{
 		return endHour;
 	}
 
-	public Boolean getStudentFeedback() {
+	public Boolean getStudentFeedback()
+	{
 		return studentFeedback;
 	}
 
-	public TestType getTestType() {
+	public TestType getTestType()
+	{
 		return testType;
 	}
 
-	public void setBeginDate(Calendar calendar) {
+	public void setBeginDate(Calendar calendar)
+	{
 		beginDate = calendar;
 	}
 
-	public void setBeginHour(Calendar calendar) {
+	public void setBeginHour(Calendar calendar)
+	{
 		beginHour = calendar;
 	}
 
-	public void setCorrectionAvailability(CorrectionAvailability availability) {
+	public void setCorrectionAvailability(CorrectionAvailability availability)
+	{
 		correctionAvailability = availability;
 	}
 
-	public void setEndDate(Calendar calendar) {
+	public void setEndDate(Calendar calendar)
+	{
 		endDate = calendar;
 	}
 
-	public void setEndHour(Calendar calendar) {
+	public void setEndHour(Calendar calendar)
+	{
 		endHour = calendar;
 	}
 
-	public void setStudentFeedback(Boolean studentFeedback) {
+	public void setStudentFeedback(Boolean studentFeedback)
+	{
 		this.studentFeedback = studentFeedback;
 	}
 
-	public void setTestType(TestType type) {
+	public void setTestType(TestType type)
+	{
 		testType = type;
 	}
 
-	public String getTestInformation() {
+	public String getTestInformation()
+	{
 		return testInformation;
 	}
 
-	public void setTestInformation(String string) {
+	public void setTestInformation(String string)
+	{
 		testInformation = string;
 	}
 
-	public String getTitle() {
+	public String getTitle()
+	{
 		return title;
 	}
 
-	public void setTitle(String string) {
+	public void setTitle(String string)
+	{
 		title = string;
 	}
 
-	public IExecutionCourse getExecutionCourse() {
-		return executionCourse;
-	}
-
-	public Integer getKeyExecutionCourse() {
-		return keyExecutionCourse;
-	}
-
-	public void setExecutionCourse(IExecutionCourse execucao) {
-		executionCourse = execucao;
-	}
-
-	public void setKeyExecutionCourse(Integer integer) {
-		keyExecutionCourse = integer;
-	}
-
-	public Integer getNumberOfQuestions() {
+	public Integer getNumberOfQuestions()
+	{
 		return numberOfQuestions;
 	}
 
-	public void setNumberOfQuestions(Integer integer) {
+	public void setNumberOfQuestions(Integer integer)
+	{
 		numberOfQuestions = integer;
+	}
+
+	public ITestScope getTestScope()
+	{
+		return testScope;
+	}
+
+	public Integer getKeyTestScope()
+	{
+		return keyTestScope;
+	}
+
+	public void setTestScope(ITestScope scope)
+	{
+		testScope = scope;
+	}
+
+	public void setKeyTestScope(Integer integer)
+	{
+		keyTestScope = integer;
 	}
 
 }

@@ -12,14 +12,13 @@
 
 <logic:present name="successfulChanged">
 	<logic:equal name="successfulChanged" value="false">
-		<span class="error"><bean:message key="message.exercice.no.variation"/></span>
+		<span class="error"><bean:message key="message.exercise.no.variation"/></span>
 	</logic:equal>
 </logic:present> 
 
-
 <bean:size id="metadatasSize" name="component" property="infoMetadatas"/>
 <logic:equal name="metadatasSize" value="0">
-	<span class="error"><bean:message key="message.tests.no.exercices"/></span>
+	<span class="error"><bean:message key="message.tests.no.exercises"/></span>
 </logic:equal>
 <logic:notEqual name="metadatasSize" value="0">
 	<table>
@@ -41,7 +40,6 @@
 	</logic:present> 
 	<html:hidden property="studentsType" value="<%=(pageContext.findAttribute("studentsType")).toString()%>"/>
 	<html:hidden property="changesType" value="<%=(pageContext.findAttribute("changesType")).toString()%>"/>
-	
 	<table>
 	<tr>
 		<td class="listClasses-header"><bean:message key="label.description"/></td>

@@ -187,6 +187,8 @@ public interface ISuportePersistente
     public IPersistentDistributedTest getIPersistentDistributedTest();
     public IPersistentStudentTestQuestion getIPersistentStudentTestQuestion();
     public IPersistentStudentTestLog getIPersistentStudentTestLog();
+	public IPersistentOnlineTest getIPersistentOnlineTest();
+	public IPersistentTestScope getIPersistentTestScope();
 
     // by Barbosa (October 28th, 2003)
     public IPersistentGrantOwner getIPersistentGrantOwner();

@@ -3,112 +3,82 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
+
 <logic:present name="siteView">
 	
 	<bean:define id="component" name="siteView" property="component"/>
-	<bean:define id="infoDistributedTestMarks" name="component" property="infoDistributedTestMarks"/>
-	<bean:define id="correctAnswersPercentage" name="component" property="correctAnswersPercentage"/>
-	<bean:define id="wrongAnswersPercentage" name="component" property="wrongAnswersPercentage"/>
-	<bean:define id="notAnsweredPercentage" name="component" property="notAnsweredPercentage"/>
-
+	<bean:define id="distributedTest" name="component" property="infoDistributedTest" type="DataBeans.InfoDistributedTest"/>
+	<bean:define id="infoStudentTestQuestionList" name="component" property="infoStudentTestQuestionList"/>
+	
 	<center>
-	<logic:empty name="infoDistributedTestMarks">
+	<logic:empty name="infoStudentTestQuestionList">
 		<h2><bean:message key="message.testMark.no.Available"/></h2>
 	</logic:empty>
 	</center>
 		
-	<logic:notEmpty name="infoDistributedTestMarks" >
+	<logic:notEmpty name="infoStudentTestQuestionList">
 	<html:form action="/testDistribution">
 	<html:hidden property="method" value="showDistributedTests"/>
+	<bean:define id="studentCode" value="0" type="java.lang.Object"/>
+	<bean:define id="studentIndex" value="0"/>
+	<bean:define id="finalMark" value="0"/>
+	<bean:define id="questionNumber" name="distributedTest" property="numberOfQuestions"/>
 	<html:hidden property="objectCode" value="<%= (pageContext.findAttribute("objectCode")).toString() %>"/>
-	
-
-		<bean:define id="studentCode" value="0" type="java.lang.Object"/>
-		<bean:define id="distributedTestCode" value="0" type="java.lang.Object"/>
-		<logic:iterate id="studentTestQuestionList" name="infoDistributedTestMarks" type="DataBeans.InfoDistributedTestMarks" indexId="studentTestQuestionListIndex">
-			<logic:iterate id="studentTestQuestion" name="studentTestQuestionList" property="infoStudentTestQuestionList" type="DataBeans.InfoStudentTestQuestion" indexId="studentTestQuestionIndex">
-				<logic:equal name="studentTestQuestionListIndex" value="0"><logic:equal name="studentTestQuestionIndex" value="0">
-					<h2><bean:write name="studentTestQuestion" property="distributedTest.title"/></h2>
-					<br/>
-					<table>
+		<logic:iterate id="studentTestQuestion" name="infoStudentTestQuestionList" type="DataBeans.InfoStudentTestQuestionMark" indexId="index">
+			<logic:equal name="index" value="0">
+				<h2><bean:write name="distributedTest" property="title"/></h2>
+				<br/>
+				<table>
 					<tr><td class="infoop"><bean:message key="message.showTestMarks.information" /></td></tr>
-					</table>
-					<br/>
-					<br/>
-					<b>
-					<bean:size id="infoDistributedTestMarksSize" name="infoDistributedTestMarks"/>
+				</table>
+				<br/>
+				<br/>
+				<b>
+					<bean:size id="numberOfStudentTestQuestion" name="infoStudentTestQuestionList"/>
+					<bean:define id="numberOfStudents" value="<%=new Integer(numberOfStudentTestQuestion.intValue()/((Integer)questionNumber).intValue()).toString()%>"/>
 					<bean:message key="message.exist"/>&nbsp;
-					<bean:write name="infoDistributedTestMarksSize"/>&nbsp;
+					<bean:write name="numberOfStudents"/>&nbsp;
 					<bean:message key="message.studentsWithDistributedTest"/>
-					</b>
-					<br/>
-					<br/>
-					<bean:define id="distributedTestCode" name="studentTestQuestion" property="distributedTest.idInternal"/>
-					<html:link page="<%= "/testsManagement.do?method=downloadTestMarks&amp;distributedTestCode=" +pageContext.findAttribute("distributedTestCode")+ "&amp;objectCode=" +pageContext.findAttribute("objectCode")%>"><bean:message key="link.exportToExel"/></html:link>
-					<br/>
-					<br/>
-					<table>
+				</b>
+				<br/>
+				<br/>
+				<bean:define id="distributedTestCode" name="distributedTest" property="idInternal"/>
+				<html:link page="<%= "/testsManagement.do?method=downloadTestMarks&amp;distributedTestCode=" +pageContext.findAttribute("distributedTestCode")+ "&amp;objectCode=" +pageContext.findAttribute("objectCode")%>"><bean:message key="link.exportToExcel"/></html:link>
+				<br/>
+				<br/>
+				<table>
 					<tr>
 						<td class="listClasses-header"><bean:message key="label.number"/></td>
 						<td class="listClasses-header"><bean:message key="label.name"/></td>
-						<bean:define id="questionNumber" name="studentTestQuestion" property="distributedTest.numberOfQuestions"/>
 						<% for(int i=1; i<=new Integer(questionNumber.toString()).intValue();i++ ){
 							out.write(new String("<td class='listClasses-header'><b>P"+i+"</b></td>"));
 						} %>
 						<td class="listClasses-header"><bean:message key="label.mark"/></td>
 					</tr>
-				</logic:equal></logic:equal>
-				<logic:equal name="studentTestQuestionIndex" value="0">
-					<bean:define id="student" name="studentTestQuestion" property="student" type="DataBeans.InfoStudent"/>
-					<bean:define id="studentCode" name="student" property="idInternal"/>
-					<tr><td class="listClasses"><bean:write name="student" property="number"/></td>
-					<td class="listClasses"><bean:write name="student" property="infoPerson.nome"/></td>
-				</logic:equal>
+			</logic:equal>
+			<% if (new Integer(studentIndex).equals(new Integer(0))) {%>
+				<bean:define id="studentCode" name="studentTestQuestion" property="studentIdInternal"/>
+				<tr>
+				<td class="listClasses"><bean:write name="studentTestQuestion" property="studentNumber"/></td>
+				<td class="listClasses"><bean:write name="studentTestQuestion" property="studentName"/></td>
+			<% } %>
 				<bean:define id="mark" name="studentTestQuestion" property="testQuestionMark"/>
 				<bean:define id="markValue" value="<%= (new java.text.DecimalFormat("#0.##").format(Double.parseDouble(mark.toString())).toString()) %>"/>
+				<bean:define id="finalMark" value="<%=new Double((new Double(finalMark)).doubleValue()+(new Double(mark.toString())).doubleValue()).toString()%>"/>
 				<td class="listClasses"><bean:write name="markValue"/></td>
-			</logic:iterate>
-			<bean:define id="finalMark" name="studentTestQuestionList" property="studentTestMark"/>
-			<td class="listClasses"><bean:write name="finalMark"/></td>
-			<td><html:link page="<%= "/testsManagement.do?method=showStudentTest&amp;studentCode=" +studentCode+ "&amp;distributedTestCode=" +pageContext.findAttribute("distributedTestCode")+ "&amp;objectCode=" +pageContext.findAttribute("objectCode")%>"><bean:message key="link.showStudentTest"/></html:link></td>
-			<td><html:link page="<%= "/testsManagement.do?method=showStudentTestLog&amp;studentCode=" +studentCode+ "&amp;distributedTestCode=" +pageContext.findAttribute("distributedTestCode")+ "&amp;objectCode=" +pageContext.findAttribute("objectCode")%>"><bean:message key="link.showLog"/></html:link></td>
-			</tr>
+				<bean:define id="studentIndex" value="<%=new Integer(new Integer(studentIndex).intValue()+1).toString()%>"/>
+			<%if (new Integer(studentIndex).equals(questionNumber)) {%>
+				<bean:define id="finalMarkValue" value="<%= (new java.text.DecimalFormat("#0.##").format(Double.parseDouble(finalMark.toString())).toString()) %>"/>
+				<td class="listClasses"><bean:write name="finalMarkValue"/></td>
+				<td><html:link page="<%= "/testsManagement.do?method=showStudentTest&amp;studentCode=" +studentCode+ "&amp;distributedTestCode=" +pageContext.findAttribute("distributedTestCode")+ "&amp;objectCode=" +pageContext.findAttribute("objectCode")%>"><bean:message key="link.showStudentTest"/></html:link></td>
+				<td><html:link page="<%= "/testsManagement.do?method=showStudentTestLog&amp;studentCode=" +studentCode+ "&amp;distributedTestCode=" +pageContext.findAttribute("distributedTestCode")+ "&amp;objectCode=" +pageContext.findAttribute("objectCode")%>"><bean:message key="link.showLog"/></html:link></td>
+				<bean:define id="markIndex" value="0"/>
+				</tr>
+				<bean:define id="studentIndex" value="0"/>
+				<bean:define id="finalMark" value="0"/>
+			<% } %>
 		</logic:iterate>
-		</table><br/><br/>
-		<table>
-		<tr>
-		<td class="listClasses-header"></td>
-		<bean:define id="questionNumber" name="studentTestQuestion" property="distributedTest.numberOfQuestions"/>
-		<% for(int i=1; i<=new Integer(questionNumber.toString()).intValue();i++ ){
-			out.write(new String("<td class='listClasses-header'><b>P"+i+"</b></td>"));
-		} %>
-		</tr>
-		<tr>
-		<logic:iterate id="correctAnswers" name="correctAnswersPercentage" indexId="correctAnswersIndex">
-			<logic:equal name="correctAnswersIndex" value="0">
-				<td class="listClasses"><bean:message key="label.correct"/></td>
-			</logic:equal>
-			<td class="listClasses"><bean:write name="correctAnswers"/></td>
-		</logic:iterate>
-		</tr>
-		<tr>
-		<logic:iterate id="wrongAnswers" name="wrongAnswersPercentage" indexId="wrongAnswersIndex">
-			<logic:equal name="wrongAnswersIndex" value="0">
-				<td class="listClasses"><bean:message key="label.incorrect"/></td>
-			</logic:equal>
-			<td class="listClasses"><bean:write name="wrongAnswers"/></td>
-		</logic:iterate>
-		</tr>
-		<tr>
-		<logic:iterate id="notAnswered" name="notAnsweredPercentage" indexId="notAnsweredIndex">
-			<logic:equal name="notAnsweredIndex" value="0">
-				<td class="listClasses"><bean:message key="label.notAswered"/></td>
-			</logic:equal>
-			<td class="listClasses"><bean:write name="notAnswered"/></td>
-		</logic:iterate>
-		</tr>
-	</table>
-
+		</table>
 	<br/>
 	<br/>
 	<table align="center">

@@ -5,7 +5,7 @@
 
 <table>
 	<tr>
-		<td class="infoop"><bean:message key="message.showExercice.information" /></td>
+		<td class="infoop"><bean:message key="message.showExercise.information" /></td>
 	</tr>
 </table>
 <br/>
@@ -17,7 +17,7 @@
 <bean:define id="objectCode" name="executionCourse" property="idInternal"/>
 <bean:define id="iquestion" name="component" property="infoQuestion"/>
 <bean:define id="metadata" name="iquestion" property="infoMetadata"/>
-<bean:define id="exerciceCode" name="iquestion" property="idInternal"/>
+<bean:define id="exerciseCode" name="iquestion" property="idInternal"/>
 <bean:define id="metadataCode" name="metadata" property="idInternal"/>
 
 <span class="error"><html:errors/></span>
@@ -28,6 +28,8 @@
 <html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
 <html:hidden property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>"/>
 <html:hidden property="metadataCode" value="<%= metadataCode.toString() %>"/>
+<html:hidden property="order" value="<%=(pageContext.findAttribute("order")).toString()%>"/>
+<html:hidden property="asc" value="<%=(pageContext.findAttribute("asc")).toString()%>"/>
 <table>
 	<logic:notEqual name="metadata" property="description" value="">
 		<tr>
@@ -44,12 +46,12 @@
 	<logic:notEqual name="metadata" property="learningTime" value="">
 		<tr>
 			<td><b><bean:message key="label.test.learningTime"/>:</b></td>
-			<td><bean:write name="metadata" property="learningTime"/></td>
+			<td><bean:write name="metadata" property="learningTimeFormatted"/></td>
 		</tr>
 	</logic:notEqual>
 	<logic:notEqual name="metadata" property="level" value="">
 		<tr>
-			<td><b><bean:message key="label.test.ano"/>:</b></td>
+			<td><b><bean:message key="label.exam.enrollment.year"/>:</b></td>
 			<td><bean:write name="metadata" property="level"/></td>
 		</tr>
 	</logic:notEqual>
@@ -111,6 +113,8 @@
 		<html:hidden property="method" value="showAvailableQuestions"/>
 		<html:hidden property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
 		<html:hidden property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>"/>
+		<html:hidden property="order" value="<%=(pageContext.findAttribute("order")).toString()%>"/>
+		<html:hidden property="asc" value="<%=(pageContext.findAttribute("asc")).toString()%>"/>
 		<td>
 			<html:submit styleClass="inputbutton"><bean:message key="link.goBack"/></html:submit>
 		</td>
@@ -130,7 +134,7 @@
 				
 				<% if (((String)questionLabel).startsWith("image/")){%>
 					<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
-					<html:img align="absmiddle" src="<%= request.getContextPath() + "/teacher/testsManagement.do?method=showImage&amp;exerciceCode=" + questionCode+"&amp;imgCode="+index.toString() +"&amp;imgType="+questionLabel.toString()%>"/>
+					<html:img align="absmiddle" src="<%= request.getContextPath() + "/teacher/testsManagement.do?method=showImage&amp;exerciseCode=" + questionCode+"&amp;imgCode="+index.toString() +"&amp;imgType="+questionLabel.toString()%>"/>
 					
 					<logic:equal name="imageLabel" value="true">
 						</td><td>
@@ -169,7 +173,7 @@
 					<bean:define id="optionLabel" name="optionBody" property="label"/>
 					<% if (((String)optionLabel).startsWith("image/")){ %>
 						<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
-						<html:img align="absmiddle" src="<%= request.getContextPath() + "/teacher/testsManagement.do?method=showImage&amp;exerciceCode="+ questionCode +"&amp;imgCode="+index.toString() +"&amp;imgType="+optionLabel.toString()%>"/>
+						<html:img align="absmiddle" src="<%= request.getContextPath() + "/teacher/testsManagement.do?method=showImage&amp;exerciseCode="+ questionCode +"&amp;imgCode="+index.toString() +"&amp;imgType="+optionLabel.toString()%>"/>
 					<% } else if (((String)optionLabel).equals("image_label")){%>
 						<bean:write name="optionBody" property="value"/>
 						<br/>

@@ -68,6 +68,7 @@ import DataBeans.InfoMasterDegreeThesis;
 import DataBeans.InfoMasterDegreeThesisDataVersion;
 import DataBeans.InfoMetadata;
 import DataBeans.InfoObject;
+import DataBeans.InfoOnlineTest;
 import DataBeans.InfoPaymentPhase;
 import DataBeans.InfoPerson;
 import DataBeans.InfoPrice;
@@ -88,10 +89,12 @@ import DataBeans.InfoStudentGroupAttend;
 import DataBeans.InfoStudentKind;
 import DataBeans.InfoStudentTestLog;
 import DataBeans.InfoStudentTestQuestion;
+import DataBeans.InfoStudentTestQuestionMark;
 import DataBeans.InfoSummary;
 import DataBeans.InfoTeacher;
 import DataBeans.InfoTest;
 import DataBeans.InfoTestQuestion;
+import DataBeans.InfoTestScope;
 import DataBeans.InfoTutor;
 import DataBeans.InfoUniversity;
 import DataBeans.InfoWebSite;
@@ -2782,6 +2785,10 @@ public abstract class Cloner
 		{
 			evaluation = new FinalEvaluation();
 		}
+		else if (infoEvaluation instanceof InfoOnlineTest)
+		{
+			evaluation = new OnlineTest();
+		}
 
 		copyObjectProperties(evaluation, infoEvaluation);
 
@@ -2802,7 +2809,11 @@ public abstract class Cloner
 			infoEvaluation = new InfoFinalEvaluation();
 			infoEvaluation.setEvaluationType(EvaluationType.FINAL_TYPE);
 		}
-
+		else if (evaluation instanceof IOnlineTest)
+		{
+			infoEvaluation = copyIOnlineTest2InfoOnlineTest((IOnlineTest) evaluation);
+			infoEvaluation.setEvaluationType(EvaluationType.ONLINE_TEST_TYPE);
+		}
 		copyObjectProperties(infoEvaluation, evaluation);
 
 		return infoEvaluation;
@@ -3520,8 +3531,21 @@ public abstract class Cloner
 
 	public static InfoMetadata copyIMetadata2InfoMetadata(IMetadata metadata)
 	{
+
 		InfoMetadata infoMetadata = new InfoMetadata();
-		copyObjectProperties(infoMetadata, metadata);
+		//		copyObjectProperties(infoMetadata, metadata);
+		infoMetadata.setMetadataFile(metadata.getMetadataFile());
+		infoMetadata.setDescription(metadata.getDescription());
+		infoMetadata.setAuthor(metadata.getAuthor());
+		infoMetadata.setDifficulty(metadata.getDifficulty());
+		infoMetadata.setIdInternal(metadata.getIdInternal());
+		infoMetadata.setLearningTime(metadata.getLearningTime());
+		infoMetadata.setLevel(metadata.getLevel());
+		infoMetadata.setMainSubject(metadata.getMainSubject());
+		infoMetadata.setNumberOfMembers(metadata.getNumberOfMembers());
+		infoMetadata.setSecondarySubject(metadata.getSecondarySubject());
+		infoMetadata.setVisibility(metadata.getVisibility());
+
 		InfoExecutionCourse infoExecutionCourse =
 			(InfoExecutionCourse) get(metadata.getExecutionCourse());
 		infoMetadata.setInfoExecutionCourse(infoExecutionCourse);
@@ -3540,8 +3564,7 @@ public abstract class Cloner
 	{
 		InfoTest infoTest = new InfoTest();
 		copyObjectProperties(infoTest, test);
-		InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) get(test.getExecutionCourse());
-		infoTest.setInfoExecutionCourse(infoExecutionCourse);
+		infoTest.setInfoTestScope(copyITestScope2InfoTestScope(test.getTestScope()));
 		return infoTest;
 	}
 
@@ -3563,10 +3586,17 @@ public abstract class Cloner
 	{
 		InfoDistributedTest infoDistributedTest = new InfoDistributedTest();
 		copyObjectProperties(infoDistributedTest, distributedTest);
-		InfoExecutionCourse infoExecutionCourse =
-			(InfoExecutionCourse) get(distributedTest.getExecutionCourse());
-		infoDistributedTest.setInfoExecutionCourse(infoExecutionCourse);
+		infoDistributedTest.setInfoTestScope(
+			copyITestScope2InfoTestScope(distributedTest.getTestScope()));
 		return infoDistributedTest;
+	}
+
+	public static InfoTestScope copyITestScope2InfoTestScope(ITestScope testScope)
+	{
+		InfoTestScope infoTestScope = new InfoTestScope();
+		if (testScope.getDomainObject() instanceof IExecutionCourse)
+			infoTestScope.setInfoObject((InfoExecutionCourse) get(testScope.getDomainObject()));
+		return infoTestScope;
 	}
 
 	public static InfoStudentTestQuestion copyIStudentTestQuestion2InfoStudentTestQuestion(IStudentTestQuestion studentTestQuestion)
@@ -3590,6 +3620,24 @@ public abstract class Cloner
 		return infoStudentTestQuestion;
 	}
 
+	public static InfoStudentTestQuestionMark copyIStudentTestQuestion2InfoStudentTestQuestionMark(IStudentTestQuestion studentTestQuestion)
+	{
+		InfoStudentTestQuestionMark infoStudentTestQuestionMark = new InfoStudentTestQuestionMark();
+		infoStudentTestQuestionMark.setTestQuestionMark(studentTestQuestion.getTestQuestionMark());
+
+		if (studentTestQuestion.getStudent() != null)
+		{
+			infoStudentTestQuestionMark.setStudentIdInternal(
+				studentTestQuestion.getStudent().getIdInternal());
+			infoStudentTestQuestionMark.setStudentNumber(studentTestQuestion.getStudent().getNumber());
+			if (studentTestQuestion.getStudent().getPerson() != null)
+				infoStudentTestQuestionMark.setStudentName(
+					studentTestQuestion.getStudent().getPerson().getNome());
+
+		}
+		return infoStudentTestQuestionMark;
+	}
+
 	public static InfoStudentTestLog copyIStudentTestLog2InfoStudentTestLog(IStudentTestLog studentTestLog)
 	{
 		InfoStudentTestLog infoStudentTestLog = new InfoStudentTestLog();
@@ -3598,6 +3646,15 @@ public abstract class Cloner
 			copyIDistributedTest2InfoDistributedTest(studentTestLog.getDistributedTest()));
 		infoStudentTestLog.setInfoStudent(copyIStudent2InfoStudent(studentTestLog.getStudent()));
 		return infoStudentTestLog;
+	}
+
+	public static InfoOnlineTest copyIOnlineTest2InfoOnlineTest(IOnlineTest onlineTest)
+	{
+		InfoOnlineTest infoOnlineTest = new InfoOnlineTest();
+		copyObjectProperties(infoOnlineTest, onlineTest);
+		infoOnlineTest.setInfoDistributedTest(
+			copyIDistributedTest2InfoDistributedTest(onlineTest.getDistributedTest()));
+		return infoOnlineTest;
 	}
 
 	public static IWebSite copyInfoWebSite2IWebSite(InfoWebSite infoWebSite)

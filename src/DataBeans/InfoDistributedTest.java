@@ -12,7 +12,8 @@ import Util.TestType;
 /**
  * @author Susana Fernandes
  */
-public class InfoDistributedTest extends InfoObject {
+public class InfoDistributedTest extends InfoObject
+{
 	private String Title;
 	private String TestInformation;
 	private Calendar beginDate;
@@ -23,98 +24,113 @@ public class InfoDistributedTest extends InfoObject {
 	private CorrectionAvailability correctionAvailability;
 	private Boolean studentFeedback;
 	private Integer numberOfQuestions;
-	private InfoExecutionCourse infoExecutionCourse;
+	private InfoTestScope infoTestScope;
 
-	public InfoDistributedTest() {
+	public InfoDistributedTest()
+	{
 	}
 
-	public String getTitle() {
+	public String getTitle()
+	{
 		return Title;
 	}
 
-	public String getTestInformation() {
+	public String getTestInformation()
+	{
 		return TestInformation;
 	}
 
-	public Calendar getBeginDate() {
+	public Calendar getBeginDate()
+	{
 		return beginDate;
 	}
 
-	public Calendar getBeginHour() {
+	public Calendar getBeginHour()
+	{
 		return beginHour;
 	}
-	public CorrectionAvailability getCorrectionAvailability() {
+	public CorrectionAvailability getCorrectionAvailability()
+	{
 		return correctionAvailability;
 	}
 
-	public Calendar getEndDate() {
+	public Calendar getEndDate()
+	{
 		return endDate;
 	}
 
-	public Calendar getEndHour() {
+	public Calendar getEndHour()
+	{
 		return endHour;
 	}
 
-	public Boolean getStudentFeedback() {
+	public Boolean getStudentFeedback()
+	{
 		return studentFeedback;
 	}
 
-	public TestType getTestType() {
+	public TestType getTestType()
+	{
 		return testType;
 	}
 
-	public Integer getNumberOfQuestions() {
+	public Integer getNumberOfQuestions()
+	{
 		return numberOfQuestions;
 	}
 
-	public InfoExecutionCourse getInfoExecutionCourse() {
-		return infoExecutionCourse;
-	}
-
-	public void setTitle(String string) {
+	public void setTitle(String string)
+	{
 		Title = string;
 	}
-	public void setTestInformation(String string) {
+	
+	public void setTestInformation(String string)
+	{
 		TestInformation = string;
 	}
 
-	public void setBeginDate(Calendar calendar) {
+	public void setBeginDate(Calendar calendar)
+	{
 		beginDate = calendar;
 	}
 
-	public void setBeginHour(Calendar calendar) {
+	public void setBeginHour(Calendar calendar)
+	{
 		beginHour = calendar;
 	}
 
-	public void setCorrectionAvailability(CorrectionAvailability availability) {
+	public void setCorrectionAvailability(CorrectionAvailability availability)
+	{
 		correctionAvailability = availability;
 	}
 
-	public void setEndDate(Calendar calendar) {
+	public void setEndDate(Calendar calendar)
+	{
 		endDate = calendar;
 	}
 
-	public void setEndHour(Calendar calendar) {
+	public void setEndHour(Calendar calendar)
+	{
 		endHour = calendar;
 	}
 
-	public void setStudentFeedback(Boolean boolean1) {
+	public void setStudentFeedback(Boolean boolean1)
+	{
 		studentFeedback = boolean1;
 	}
 
-	public void setTestType(TestType type) {
+	public void setTestType(TestType type)
+	{
 		testType = type;
 	}
 
-	public void setNumberOfQuestions(Integer integer) {
+	public void setNumberOfQuestions(Integer integer)
+	{
 		numberOfQuestions = integer;
 	}
 
-	public void setInfoExecutionCourse(InfoExecutionCourse course) {
-		infoExecutionCourse = course;
-	}
-
-	public String getBeginDateFormatted() {
+	public String getBeginDateFormatted()
+	{
 		String result = new String();
 		Calendar date = getBeginDate();
 		result += date.get(Calendar.DAY_OF_MONTH);
@@ -125,7 +141,8 @@ public class InfoDistributedTest extends InfoObject {
 		return result;
 	}
 
-	public String getBeginHourFormatted() {
+	public String getBeginHourFormatted()
+	{
 		String result = "";
 		Calendar date = getBeginHour();
 		result += date.get(Calendar.HOUR_OF_DAY);
@@ -136,7 +153,8 @@ public class InfoDistributedTest extends InfoObject {
 		return result;
 	}
 
-	public String getEndDateFormatted() {
+	public String getEndDateFormatted()
+	{
 		String result = new String();
 		Calendar date = getEndDate();
 		result += date.get(Calendar.DAY_OF_MONTH);
@@ -147,7 +165,8 @@ public class InfoDistributedTest extends InfoObject {
 		return result;
 	}
 
-	public String getEndHourFormatted() {
+	public String getEndHourFormatted()
+	{
 		String result = "";
 		Calendar date = getEndHour();
 		result += date.get(Calendar.HOUR_OF_DAY);
@@ -158,7 +177,8 @@ public class InfoDistributedTest extends InfoObject {
 		return result;
 	}
 
-	public String getBeginDateTimeFormatted() {
+	public String getBeginDateTimeFormatted()
+	{
 		String result = new String();
 		Calendar date = getBeginDate();
 		result += date.get(Calendar.DAY_OF_MONTH);
@@ -176,7 +196,8 @@ public class InfoDistributedTest extends InfoObject {
 		return result;
 	}
 
-	public String getEndDateTimeFormatted() {
+	public String getEndDateTimeFormatted()
+	{
 		String result = new String();
 		Calendar date = getEndDate();
 		result += date.get(Calendar.DAY_OF_MONTH);
@@ -194,9 +215,11 @@ public class InfoDistributedTest extends InfoObject {
 		return result;
 	}
 
-	public boolean equals(Object obj) {
+	public boolean equals(Object obj)
+	{
 		boolean result = false;
-		if (obj instanceof InfoDistributedTest) {
+		if (obj instanceof InfoDistributedTest)
+		{
 			InfoDistributedTest infoDistributedTest = (InfoDistributedTest) obj;
 			result =
 				(getIdInternal().equals(infoDistributedTest.getIdInternal()))
@@ -207,16 +230,21 @@ public class InfoDistributedTest extends InfoObject {
 					&& (getEndHour().equals(infoDistributedTest.getEndHour()))
 					&& (getTestType().equals(infoDistributedTest.getTestType()))
 					&& (getCorrectionAvailability()
-						.equals(
-							infoDistributedTest.getCorrectionAvailability()))
-					&& (getStudentFeedback()
-						.equals(infoDistributedTest.getStudentFeedback()))
-					&& (getNumberOfQuestions()
-						.equals(infoDistributedTest.getNumberOfQuestions()))
-					&& (getInfoExecutionCourse()
-						.equals(infoDistributedTest.getInfoExecutionCourse()));
+						.equals(infoDistributedTest.getCorrectionAvailability()))
+					&& (getStudentFeedback().equals(infoDistributedTest.getStudentFeedback()))
+					&& (getNumberOfQuestions().equals(infoDistributedTest.getNumberOfQuestions()));
 		}
 		return result;
+	}
+
+	public InfoTestScope getInfoTestScope()
+	{
+		return infoTestScope;
+	}
+
+	public void setInfoTestScope(InfoTestScope scope)
+	{
+		infoTestScope = scope;
 	}
 
 }

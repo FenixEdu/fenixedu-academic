@@ -90,9 +90,10 @@ public class DeleteExercice implements IServico
 				{
 					persistentQuestion.delete(question);
 					persistentMetadata.simpleLockWrite(metadata);
-					metadata.setMetadataFile(
-						removeLocation(metadata.getMetadataFile(), question.getXmlFileName()));
-					
+					if (metadata.getMetadataFile() != null)
+						metadata.setMetadataFile(
+							removeLocation(metadata.getMetadataFile(), question.getXmlFileName()));
+
 				}
 				else
 				{

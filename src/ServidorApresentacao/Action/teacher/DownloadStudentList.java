@@ -42,6 +42,7 @@ import framework.factory.ServiceManagerServiceFactory;
 public class DownloadStudentList extends FenixAction
 {
 	static final String COLUMNS_HEADERS = "Nº\tNúmero de Inscrições\tCurso\tNome\tE-mail";
+	static final String RESUME_COLUMNS_HEADERS = "Número de inscrições\tNúmero de Alunos";
 	public ActionForward execute(
 		ActionMapping mapping,
 		ActionForm form,
@@ -85,6 +86,8 @@ public class DownloadStudentList extends FenixAction
 		List infosGroups = null;
 		List attendacies = null;
 		List shiftStudents = null;
+		InfoAttendsSummary infoAttendsSummary = null;
+
 		try
 		{
 			siteView =
@@ -119,10 +122,10 @@ public class DownloadStudentList extends FenixAction
 				infoSiteStudents.setStudents(shiftStudents);
 			}
 			Object[] argsAttendacies = { objectCode, infoSiteStudents.getStudents()};
-			attendacies =
+			infoAttendsSummary =
 				((InfoAttendsSummary) ServiceManagerServiceFactory
-					.executeService(userView, "teacher.GetAttendaciesByStudentList", argsAttendacies))
-					.getAttends();
+					.executeService(userView, "teacher.GetAttendaciesByStudentList", argsAttendacies));
+			attendacies = infoAttendsSummary.getAttends();
 		}
 		catch (FenixServiceException e)
 		{
@@ -145,7 +148,7 @@ public class DownloadStudentList extends FenixAction
 				(InfoAttendWithEnrollment) attendaciesIterator.next();
 			result += infoFrequenta.getAluno().getNumber();
 			result += "\t";
-			
+
 			result += infoFrequenta.getEnrollments();
 			//			if (infoFrequenta.getInfoEnrolment() == null)
 			//				result += "Não";
@@ -213,6 +216,20 @@ public class DownloadStudentList extends FenixAction
 			}
 			result += "\n";
 		}
+		Iterator numberOfEnrollmentsIt = infoAttendsSummary.getNumberOfEnrollments().iterator();
+		if (infoAttendsSummary.getNumberOfEnrollments() != null
+			&& infoAttendsSummary.getNumberOfEnrollments().size() != 0)
+		{
+			result += "\n\n" + RESUME_COLUMNS_HEADERS + "\n";
+			while (numberOfEnrollmentsIt.hasNext())
+			{
+				Integer enrollmentNumber = (Integer) numberOfEnrollmentsIt.next();
+				result += enrollmentNumber;
+				result += "\t" + infoAttendsSummary.getEnrollmentDistribution().get(enrollmentNumber);
+				result += "\n";
+			}
+		}
+
 		try
 		{
 			ServletOutputStream writer = response.getOutputStream();
