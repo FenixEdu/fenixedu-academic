@@ -62,46 +62,45 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClasses
 					disciplinaExecucao);
 
 			if (shifts == null || shifts.isEmpty()) {
-				System.out.println("shift list is null or empty");
+				//System.out.println("shift list is null or empty");
 			} else {
-				System.out.println("shift list is not null and is not empty");
-			}
+				//System.out.println("shift list is not null and is not empty");
 
-			for (int i = 0; i < shifts.size(); i++) {
-				ITurno shift = (ITurno) shifts.get(i);
-				InfoShiftWithAssociatedInfoClassesAndInfoLessons shiftWithAssociatedClassesAndLessons =
-					new InfoShiftWithAssociatedInfoClassesAndInfoLessons(
-						Cloner.copyShift2InfoShift(shift),
-						null,
-						null);
-
-				List lessons = sp.getITurnoAulaPersistente().readByShift(shift);
-				List infoLessons = new ArrayList();
-				List classesShifts =
-					sp.getITurmaTurnoPersistente().readClassesWithShift(shift);
-				List infoClasses = new ArrayList();
-
-				for (int j = 0; j < lessons.size(); j++)
-					infoLessons.add(
-						Cloner.copyILesson2InfoLesson((IAula) lessons.get(j)));
-
-				shiftWithAssociatedClassesAndLessons.setInfoLessons(
-					infoLessons);
-
-				for (int j = 0; j < classesShifts.size(); j++)
-					infoClasses.add(
-						Cloner.copyClass2InfoClass(
-							((ITurmaTurno) classesShifts.get(j)).getTurma()));
-
-				shiftWithAssociatedClassesAndLessons.setInfoClasses(
-					infoClasses);
-				
-				shiftsWithAssociatedClassesAndLessons.add(shiftWithAssociatedClassesAndLessons);
+				for (int i = 0; i < shifts.size(); i++) {
+					ITurno shift = (ITurno) shifts.get(i);
+					InfoShiftWithAssociatedInfoClassesAndInfoLessons shiftWithAssociatedClassesAndLessons =
+						new InfoShiftWithAssociatedInfoClassesAndInfoLessons(
+							Cloner.copyShift2InfoShift(shift),
+							null,
+							null);
+	
+					List lessons = sp.getITurnoAulaPersistente().readByShift(shift);
+					List infoLessons = new ArrayList();
+					List classesShifts =
+						sp.getITurmaTurnoPersistente().readClassesWithShift(shift);
+					List infoClasses = new ArrayList();
+	
+					for (int j = 0; j < lessons.size(); j++)
+						infoLessons.add(
+							Cloner.copyILesson2InfoLesson((IAula) lessons.get(j)));
+	
+					shiftWithAssociatedClassesAndLessons.setInfoLessons(
+						infoLessons);
+	
+					for (int j = 0; j < classesShifts.size(); j++)
+						infoClasses.add(
+							Cloner.copyClass2InfoClass(
+								((ITurmaTurno) classesShifts.get(j)).getTurma()));
+	
+					shiftWithAssociatedClassesAndLessons.setInfoClasses(
+						infoClasses);
+					
+					shiftsWithAssociatedClassesAndLessons.add(shiftWithAssociatedClassesAndLessons);
+				}
 			}
 
 		} catch (ExcepcaoPersistencia e) {
 		}
-
 		return shiftsWithAssociatedClassesAndLessons;
 	}
 

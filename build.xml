@@ -340,9 +340,10 @@
             encoding="${encoding}"            
         >
 	        <fileset dir="${sql}">
-    			<include name="ciapl*.sql"/>
-    			<exclude name="test*"/>
-			</fileset>
+			  <include name="*.sql" /> 
+			  <exclude name="ciapl*.sql" /> 
+			  <exclude name="test*.sql" /> 
+  			</fileset>
             <classpath>
                 <fileset dir="${libs}">
                     <include name="**/*.jar"/>
