@@ -35,6 +35,7 @@ create table CURRICULUM (
    OPERACIONAL_OBJECTIVES_EN text,
    PROGRAM_EN text,
    LAST_MODIFICATION_DATE timestamp(14) not null,
+   KEY_PERSON_WHO_ALTERED int(11) not null,
    primary key (ID_INTERNAL))
    type=InnoDB ;
 

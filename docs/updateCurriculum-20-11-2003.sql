@@ -1,0 +1,1 @@
+alter table CURRICULUM ADD KEY_PERSON_WHO_ALTERED int(11) not null;
