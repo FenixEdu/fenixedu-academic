@@ -48,6 +48,11 @@
 
 <logic:present name="infoStatResultGrantOwner"></logic:present>
 <table>
+<tr>
+	<td colspan="2">
+		&nbsp;
+	</td>
+</tr>
 <tr>    
 	<td>
 		<bean:message key="label.stat.grantowner.totalValue"/>:&nbsp;
@@ -65,6 +70,20 @@
 	</td>
 </tr>
 <tr>
+<td>
+	<bean:message key="label.stat.grantowner.resultpercentage"/>:&nbsp;
+</td>
+<td>
+	<bean:write name="infoStatResultGrantOwner" property="percentageGrantOwnerResult"/><bean:message key="label.percentage"/>
+</td>
+</tr>
+
+<tr>
+<td colspan="2">
+	&nbsp;
+</td>
+</tr>
+<tr>
 	<td>
 		<bean:message key="label.stat.grantcontract.totalValue"/>:&nbsp;
 	</td>
@@ -79,6 +98,14 @@
 	<td>
 		<bean:write name="infoStatResultGrantOwner" property="numberOfGrantContractsByCriteria"/>
 	</td>
+</tr>
+<tr>
+<td>
+	<bean:message key="label.stat.grantcontract.resultpercentage"/>:&nbsp;
+</td>
+<td>
+	<bean:write name="infoStatResultGrantOwner" property="percentageGrantContractResult"/><bean:message key="label.percentage"/>
+</td>
 </tr>
 
 
