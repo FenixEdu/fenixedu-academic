@@ -2,6 +2,7 @@ package ServidorAplicacao.Servicos.teacher;
 
 import java.util.List;
 
+import DataBeans.InfoAnnouncement;
 import DataBeans.InfoSiteAnnouncement;
 import DataBeans.InfoSiteCommon;
 import DataBeans.SiteView;
@@ -9,6 +10,7 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
+import ServidorAplicacao.Servicos.UtilsTestCase;
 
 /**
  * @author Barbosa
@@ -32,10 +34,6 @@ public class ReadSiteAnnouncementTest
 
 	protected String getDataSetFilePath() {
 		return "etc/datasets/servicos/teacher/testReadSiteAnnouncementDataSet.xml";
-	}
-
-	protected String getExpectedDataSetFilePath() {
-		return "etc/datasets/servicos/teacher/testReadSiteAnnouncementExpectedDataSet.xml";
 	}
 
 	protected String getNameOfServiceToBeTested() {
@@ -95,9 +93,16 @@ public class ReadSiteAnnouncementTest
 				(InfoSiteAnnouncement) result.getComponent();
 			List infoAnnouncements = infoSiteAnnouncement.getAnnouncements();
 			assertEquals(infoAnnouncements.size(), 4);
+			
+			Object[] values = { new Integer(1),new Integer(2),new Integer(3),new Integer(4) };
+			UtilsTestCase.readTestList(
+								infoAnnouncements,
+								values,
+								"idInternal",
+								InfoAnnouncement.class);
 
 			//check if database hasn't changed
-			compareDataSetUsingExceptedDataSetTableColumns(getExpectedDataSetFilePath());
+			compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
 		} catch (FenixServiceException ex) {
 			fail("Reading the Announcements of a Site with announcements" + ex);
 		} catch (Exception ex) {
@@ -139,7 +144,7 @@ public class ReadSiteAnnouncementTest
 			List infoAnnouncements = infoSiteAnnouncement.getAnnouncements();
 			assertEquals(infoAnnouncements.size(), 0);
 			//check if database hasn't changed
-			compareDataSetUsingExceptedDataSetTableColumns(getExpectedDataSetFilePath());
+			compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
 		} catch (FenixServiceException ex) {
 			fail("Reading the Announcements of a Site without announcements" + ex);
 		} catch (Exception ex) {
