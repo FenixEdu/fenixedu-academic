@@ -71,7 +71,7 @@ public class ReadExams implements IServico {
 				IExecutionCourse executionCourse = new ExecutionCourse(executionCourseCode);
 				
 				sp = SuportePersistenteOJB.getInstance();
-				IPersistentExecutionCourse persistentExecutionCourse=sp.getIDisciplinaExecucaoPersistente();
+				IPersistentExecutionCourse persistentExecutionCourse=sp.getIPersistentExecutionCourse();
 
 				
 				executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);

@@ -128,7 +128,7 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
             executionCourses =
                 SuportePersistenteOJB
                     .getInstance()
-                    .getIDisciplinaExecucaoPersistente()
+                    .getIPersistentExecutionCourse()
                     .readByExecutionPeriod(
                     executionPeriod);
             classes =
@@ -751,7 +751,7 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
             IExecutionCourse executionCourse = (IExecutionCourse) executionCourses.get(i);
             SuportePersistenteOJB
                 .getInstance()
-                .getIDisciplinaExecucaoPersistente()
+                .getIPersistentExecutionCourse()
                 .deleteExecutionCourse(
                 executionCourse);
         }

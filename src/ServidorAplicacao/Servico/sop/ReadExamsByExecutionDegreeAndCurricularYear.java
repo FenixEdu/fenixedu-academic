@@ -64,7 +64,7 @@ public class ReadExamsByExecutionDegreeAndCurricularYear implements IServico {
 			IExecutionPeriod executionPeriod =
 				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
 
-			List executionCourses = sp.getIDisciplinaExecucaoPersistente()
+			List executionCourses = sp.getIPersistentExecutionCourse()
 					.readByCurricularYearAndExecutionPeriodAndExecutionDegree(
 					curricularYear,
 					executionPeriod, executionDegree);

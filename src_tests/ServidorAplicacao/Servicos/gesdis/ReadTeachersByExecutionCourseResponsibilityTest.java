@@ -60,7 +60,7 @@ public class ReadTeachersByExecutionCourseResponsibilityTest
 	try{
 		persistentSupport = SuportePersistenteOJB.getInstance();
 	IPersistentExecutionCourse persistentExecutionCourse =
-			persistentSupport.getIDisciplinaExecucaoPersistente();
+			persistentSupport.getIPersistentExecutionCourse();
 		IPersistentExecutionYear persistentExecutionYear =
 			persistentSupport.getIPersistentExecutionYear();
 		IPersistentExecutionPeriod persistentExecutionPeriod =

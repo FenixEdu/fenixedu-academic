@@ -116,7 +116,7 @@ public class CreateAndUpdateAttendsForAllMasterDegreeStudents
 	 */
 	private static IFrequenta createOrUpdateAttend(IStudent student, IEnrolment enrolment, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
-		IPersistentExecutionCourse persistentExecutionCourse = fenixPersistentSuport.getIDisciplinaExecucaoPersistente();
+		IPersistentExecutionCourse persistentExecutionCourse = fenixPersistentSuport.getIPersistentExecutionCourse();
 		IFrequentaPersistente persistentAttend = fenixPersistentSuport.getIFrequentaPersistente();
 
 		ICurricularCourse curricularCourse = enrolment.getCurricularCourseScope().getCurricularCourse();

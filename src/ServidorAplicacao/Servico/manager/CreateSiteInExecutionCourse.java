@@ -40,7 +40,7 @@ public class CreateSiteInExecutionCourse  implements IServico {
 		try {
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 								
-			IPersistentExecutionCourse persistentExecutionCourse = persistentSuport.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse persistentExecutionCourse = persistentSuport.getIPersistentExecutionCourse();
 			IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
 			IExecutionCourse executionCourseToRead = new ExecutionCourse();
 			executionCourseToRead.setIdInternal(executionCourseId);

@@ -63,7 +63,7 @@ public class ReadBibliographicReference implements IServico {
 				persistentBibliographicReference =
 					sp.getIPersistentBibliographicReference();
 			IPersistentExecutionCourse persistentExecutionCourse =
-				sp.getIDisciplinaExecucaoPersistente();
+				sp.getIPersistentExecutionCourse();
 
 			IExecutionYear executionYear =
 				persistentExecutionYear.readExecutionYearByName(

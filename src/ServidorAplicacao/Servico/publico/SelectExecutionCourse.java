@@ -57,7 +57,7 @@ public class SelectExecutionCourse implements IServico {
 			List executionCourseList = null;
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			
-			IPersistentExecutionCourse executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 
  			ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
  			IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);

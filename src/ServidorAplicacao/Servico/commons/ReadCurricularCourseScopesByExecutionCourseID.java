@@ -48,7 +48,7 @@ public class ReadCurricularCourseScopesByExecutionCourseID implements IServico {
 			// Read The ExecutionCourse
 			IExecutionCourse executionCourseTemp = new ExecutionCourse();
 			executionCourseTemp.setIdInternal(executionCourseID);
-			IExecutionCourse executionCourse = (IExecutionCourse) sp.getIDisciplinaExecucaoPersistente().readByOId(executionCourseTemp, false); 
+			IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse().readByOId(executionCourseTemp, false); 
 
 			// For all associated Curricular Courses read the Scopes
 			

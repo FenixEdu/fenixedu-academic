@@ -77,7 +77,7 @@ public class PrepareCreateStudentGroup implements IServico {
 		try {
 
 			ISuportePersistente ps = SuportePersistenteOJB.getInstance();
-			persistentExecutionCourse = ps.getIDisciplinaExecucaoPersistente();
+			persistentExecutionCourse = ps.getIPersistentExecutionCourse();
 			persistentAttend = ps.getIFrequentaPersistente();
 			persistentStudentGroup = ps.getIPersistentStudentGroup();
 			persistentStudentGroupAttend = ps.getIPersistentStudentGroupAttend();

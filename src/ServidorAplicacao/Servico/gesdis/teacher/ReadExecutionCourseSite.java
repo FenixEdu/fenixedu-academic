@@ -65,7 +65,7 @@ public class ReadExecutionCourseSite implements IServico {
 			ISuportePersistente sp;
 			
 			sp = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionCourse executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 			IExecutionCourse executionCourse = new ExecutionCourse();
 			executionCourse.setIdInternal(infoExecutionCourse.getIdInternal());
 			executionCourse =  (IExecutionCourse) executionCourseDAO.readByOId(executionCourse, false);

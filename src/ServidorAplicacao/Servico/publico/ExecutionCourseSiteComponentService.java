@@ -59,7 +59,7 @@ public class ExecutionCourseSiteComponentService implements IServico {
 		ExecutionCourseSiteView siteView = null;
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionCourse persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
 			IPersistentSite persistentSite = sp.getIPersistentSite();
 			
 			ISite site = null;

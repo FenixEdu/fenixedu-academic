@@ -149,7 +149,7 @@ public class SelectExecutionCourseTest extends TestCaseServicos {
 			this.curricularYear = new Integer(1);
 
 			if (!hasExecutionCourses) {
-				sp.getIDisciplinaExecucaoPersistente().apagarTodasAsDisciplinasExecucao();
+				sp.getIPersistentExecutionCourse().apagarTodasAsDisciplinasExecucao();
 				PersistenceBroker pb = PersistenceBrokerFactory.defaultPersistenceBroker();
 				pb.clearCache(); 
 			}

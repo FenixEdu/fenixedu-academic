@@ -109,7 +109,7 @@ public class LerTurnoServicosTest extends TestCaseReadServices {
 			assertNotNull(executionPeriod);
 
 
-			IPersistentExecutionCourse persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
 			IExecutionCourse executionCourse = null;
 
 			if(existing) {

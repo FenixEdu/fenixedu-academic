@@ -46,7 +46,7 @@ public class InsertProfessorShip implements IServico {
 				ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 				
 				Integer executionCourseId = infoProfessorShip.getInfoExecutionCourse().getIdInternal();
-				IPersistentExecutionCourse persistentExecutionCourse = persistentSuport.getIDisciplinaExecucaoPersistente();
+				IPersistentExecutionCourse persistentExecutionCourse = persistentSuport.getIPersistentExecutionCourse();
 				IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(new ExecutionCourse(executionCourseId), false);
 				
 				if(executionCourse == null)

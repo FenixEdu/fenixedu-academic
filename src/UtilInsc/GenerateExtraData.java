@@ -61,7 +61,7 @@ public class GenerateExtraData {
 
 // APAGO TODAS AS EXECUTION_COURSE PORQUE VOU ESCREVELAS DE RAIZ:
 		turnOnPersistentSuport();
-		IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
+		IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
 		persistentExecutionCourse.apagarTodasAsDisciplinasExecucao();
 		turnOffPersistentSuport();
 
@@ -336,7 +336,7 @@ public class GenerateExtraData {
 		turnOnPersistentSuport();
 
 		IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
-		IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
+		IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
 		IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
 		
 		ICurricularCourse curricularCourseToAssociate = null;

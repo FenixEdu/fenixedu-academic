@@ -58,7 +58,7 @@ public class CreateGroupPropertiesTest extends TestCaseCreateServices {
 			persistentSupport.iniciarTransaccao();
 			persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
 			persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
-			persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
+			persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
 
 			IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
 			IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
@@ -86,7 +86,7 @@ public class CreateGroupPropertiesTest extends TestCaseCreateServices {
 			persistentSupport.iniciarTransaccao();
 			persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
 			persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
-			persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
+			persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
 
 			IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
 			IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);

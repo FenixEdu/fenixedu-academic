@@ -143,7 +143,7 @@ public class ReadExamsMap implements IServico {
 				// Obtain list os execution courses
 				List executionCourses =
 					sp
-						.getIDisciplinaExecucaoPersistente()
+						.getIPersistentExecutionCourse()
 						.readByCurricularYearAndExecutionPeriodAndExecutionDegree(
 							(Integer) curricularYears.get(i),
 							executionPeriod,

@@ -125,7 +125,7 @@ public class EditSection implements IServico {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentExecutionCourse persistentExecutionCourse =
-				sp.getIDisciplinaExecucaoPersistente();
+				sp.getIPersistentExecutionCourse();
 			IPersistentSection persistentSection = sp.getIPersistentSection();
 
 			ISection iSection =

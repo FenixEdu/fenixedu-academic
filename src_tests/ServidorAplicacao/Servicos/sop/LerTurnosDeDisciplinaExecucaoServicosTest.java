@@ -102,7 +102,7 @@ public class LerTurnosDeDisciplinaExecucaoServicosTest extends TestCaseReadServi
 		  assertNotNull(executionPeriod);
 		  
 		  
-		  IPersistentExecutionCourse persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
+		  IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
 		  IExecutionCourse executionCourse = null;
 			
 

@@ -61,7 +61,7 @@ public class GetProjectGroupAttendantsByExecutionCourseIDANDStudentUsername impl
 				persistenceSupport.getIPersistentStudentGroupAttend();
 			//
 			IPersistentExecutionCourse persistentExecutionCourse=
-				persistenceSupport.getIDisciplinaExecucaoPersistente();
+				persistenceSupport.getIPersistentExecutionCourse();
 			//
 			IExecutionCourse executionCourse=
 				(IExecutionCourse) persistentExecutionCourse.readByOID(

@@ -84,7 +84,7 @@ public class SearchExecutionCourses implements IServico {
 				curricularYear = (ICurricularYear) sp.getIPersistentCurricularYear().readByOID(CurricularYear.class, infoCurricularYear.getIdInternal());
 			}
 
-			List executionCourses = sp.getIDisciplinaExecucaoPersistente().readByExecutionPeriodAndExecutionDegreeAndCurricularYearAndName(executionPeriod, executionDegree, curricularYear, executionCourseName);
+			List executionCourses = sp.getIPersistentExecutionCourse().readByExecutionPeriodAndExecutionDegreeAndCurricularYearAndName(executionPeriod, executionDegree, curricularYear, executionCourseName);
 
 
 			result = (List) CollectionUtils.collect(executionCourses, new Transformer() {

@@ -59,13 +59,13 @@ public class ReadExecutionCoursesByStudentTest extends TestCaseReadServices {
 
 			disciplinaExecucao25 =
 				(IExecutionCourse) sp
-					.getIDisciplinaExecucaoPersistente()
+					.getIPersistentExecutionCourse()
 					.readByOId(
 					disciplinaExecucao25,
 					false);
 			disciplinaExecucao26 =
 				(IExecutionCourse) sp
-					.getIDisciplinaExecucaoPersistente()
+					.getIPersistentExecutionCourse()
 					.readByOId(
 					disciplinaExecucao26,
 					false);

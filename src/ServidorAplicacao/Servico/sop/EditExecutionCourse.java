@@ -51,7 +51,7 @@ public class EditExecutionCourse implements IServico {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentExecutionCourse executionCourseDAO =
-				sp.getIDisciplinaExecucaoPersistente();
+				sp.getIPersistentExecutionCourse();
 
 			
 			IExecutionCourse executionCourseAux = new ExecutionCourse(infoExecutionCourse.getIdInternal());

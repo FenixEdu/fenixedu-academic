@@ -93,7 +93,7 @@ public class ExamSiteComponentServiceTest extends ServiceTestCase
             IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
             ICursoExecucaoPersistente executionDegreeDAO = sp.getICursoExecucaoPersistente();
             IPersistentExecutionCourse disciplinaExecucaoPersistente =
-                sp.getIDisciplinaExecucaoPersistente();
+                sp.getIPersistentExecutionCourse();
             IPersistentExam examePersistente = sp.getIPersistentExam();
             sp.iniciarTransaccao();
 

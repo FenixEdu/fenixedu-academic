@@ -60,7 +60,7 @@ public interface ISuportePersistente
     public ITurnoAulaPersistente getITurnoAulaPersistente();
 
     public IPersistentCurricularCourse getIPersistentCurricularCourse();
-    public IPersistentExecutionCourse getIDisciplinaExecucaoPersistente();
+    public IPersistentExecutionCourse getIPersistentExecutionCourse();
     public IPessoaPersistente getIPessoaPersistente();
     public IPersistentCountry getIPersistentCountry();
 

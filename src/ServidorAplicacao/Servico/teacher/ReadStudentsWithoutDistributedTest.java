@@ -50,7 +50,7 @@ public class ReadStudentsWithoutDistributedTest implements IServico
 
             IExecutionCourse executionCourse = new ExecutionCourse(executionCourseId);
             executionCourse =
-                (IExecutionCourse) persistentSuport.getIDisciplinaExecucaoPersistente().readByOId(
+                (IExecutionCourse) persistentSuport.getIPersistentExecutionCourse().readByOId(
                     executionCourse,
                     false);
             if (executionCourse == null)

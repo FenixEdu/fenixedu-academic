@@ -169,7 +169,7 @@ public class ConversorSOP {
 	ITurmaPersistente classDAO = sp.getITurmaPersistente();
 	ITurmaTurnoPersistente classShiftDAO = sp.getITurmaTurnoPersistente();
 	IPersistentExecutionCourse executionCourseDAO =
-		sp.getIDisciplinaExecucaoPersistente();
+		sp.getIPersistentExecutionCourse();
 
 	ICursoExecucaoPersistente executionDegreeDAO =
 		sp.getICursoExecucaoPersistente();

@@ -58,7 +58,7 @@ public class ReadCurricularCourseListOfExecutionCourse implements IServico {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentExecutionCourse executionCourseDAO =
-				sp.getIDisciplinaExecucaoPersistente();
+				sp.getIPersistentExecutionCourse();
 			IExecutionCourse executionCourse =
 				Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecCourse);
 			executionCourse =

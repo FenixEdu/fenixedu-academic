@@ -188,7 +188,7 @@ public class ShowAvailableCurricularCoursesForOptionWithoutRules implements ISer
 	private List filterByExecutionCourses(List curricularCoursesList, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
 
 		ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
-		IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
+		IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
 		
 		List curricularCoursesToRemove = new ArrayList();
 		

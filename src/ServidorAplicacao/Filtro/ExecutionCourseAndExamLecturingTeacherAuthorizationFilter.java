@@ -92,7 +92,7 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
 
             sp = SuportePersistenteOJB.getInstance();
             IPersistentExecutionCourse persistentExecutionCourse =
-                sp.getIDisciplinaExecucaoPersistente();
+                sp.getIPersistentExecutionCourse();
             if (argumentos[0] instanceof InfoExecutionCourse)
             {
                 infoExecutionCourse = (InfoExecutionCourse)argumentos[0];
@@ -137,7 +137,7 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
         {
             sp = SuportePersistenteOJB.getInstance();
             IPersistentExecutionCourse persistentExecutionCourse =
-                sp.getIDisciplinaExecucaoPersistente();
+                sp.getIPersistentExecutionCourse();
             IPersistentExam persistentExam = sp.getIPersistentExam();
 
             if (argumentos[0] instanceof InfoExecutionCourse)

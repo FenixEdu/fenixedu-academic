@@ -169,7 +169,7 @@ public class EditGroupProperties implements IServico {
 			ISuportePersistente ps = SuportePersistenteOJB.getInstance();
 
 			IPersistentGroupProperties persistentGroupProperties = ps.getIPersistentGroupProperties();
-			IPersistentExecutionCourse persistentExecutionCourse = ps.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse persistentExecutionCourse = ps.getIPersistentExecutionCourse();
 
 			IGroupProperties groupProperties = new GroupProperties(infoGroupProperties.getIdInternal());
 			groupProperties = (IGroupProperties) persistentGroupProperties.readByOId(groupProperties, false);

@@ -101,7 +101,7 @@ public class EditarTurno implements IServico {
 
 			IExecutionCourse executionCourse =
 				(IExecutionCourse) sp
-					.getIDisciplinaExecucaoPersistente()
+					.getIPersistentExecutionCourse()
 					.readByOID(
 					ExecutionCourse.class,
 					infoShiftNew.getInfoDisciplinaExecucao().getIdInternal());

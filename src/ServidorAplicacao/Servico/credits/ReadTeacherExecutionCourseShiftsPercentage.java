@@ -154,7 +154,7 @@ public class ReadTeacherExecutionCourseShiftsPercentage implements IServico
         InfoExecutionCourse infoExecutionCourse,
         ISuportePersistente sp)
     {
-        IPersistentExecutionCourse executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
+        IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 
         IExecutionCourse executionCourse =
             (IExecutionCourse) executionCourseDAO.readByOId(

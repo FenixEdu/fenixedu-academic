@@ -50,7 +50,7 @@ public class ReadExecutionCourse implements IServico {
 		
 		try {
 				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-				executionCourse = (IExecutionCourse) sp.getIDisciplinaExecucaoPersistente().readByOId(new ExecutionCourse(idInternal), false);
+				executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse().readByOId(new ExecutionCourse(idInternal), false);
 		} catch (ExcepcaoPersistencia excepcaoPersistencia){
 			throw new FenixServiceException(excepcaoPersistencia);
 		}

@@ -60,7 +60,7 @@ public class ReadDistributedTestsTest extends TestCaseReadServices {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			sp.iniciarTransaccao();
 			IPersistentExecutionCourse persistentExecutionCourse =
-				sp.getIDisciplinaExecucaoPersistente();
+				sp.getIPersistentExecutionCourse();
 			IExecutionCourse executionCourse =
 				new ExecutionCourse(new Integer(26));
 			executionCourse =

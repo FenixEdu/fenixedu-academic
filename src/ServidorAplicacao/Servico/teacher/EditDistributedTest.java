@@ -84,7 +84,7 @@ public class EditDistributedTest implements IServico
 
             IExecutionCourse executionCourse = new ExecutionCourse(executionCourseId);
             executionCourse =
-                (IExecutionCourse) persistentSuport.getIDisciplinaExecucaoPersistente().readByOId(
+                (IExecutionCourse) persistentSuport.getIPersistentExecutionCourse().readByOId(
                     executionCourse,
                     false);
             if (executionCourse == null)
@@ -270,7 +270,7 @@ public class EditDistributedTest implements IServico
                     IExecutionCourse executionCourse = new ExecutionCourse(executionCourseId);
                     executionCourse =
                         (IExecutionCourse) persistentSuport
-                            .getIDisciplinaExecucaoPersistente()
+                            .getIPersistentExecutionCourse()
                             .readByOId(
                             executionCourse,
                             false);

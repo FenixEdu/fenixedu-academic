@@ -93,7 +93,7 @@ public class ReadOtherCoursesWithShifts implements IServico {
 		//	cE.setCurso(c);
 		IExecutionCourse dE = new ExecutionCourse();
 	//	dE.setLicenciaturaExecucao(cE);
-		List ldE = sp.getIDisciplinaExecucaoPersistente().readByCriteria(dE);
+		List ldE = sp.getIPersistentExecutionCourse().readByCriteria(dE);
 		
 		IFrequenta freq = new Frequenta();
 		freq.setAluno(student); 

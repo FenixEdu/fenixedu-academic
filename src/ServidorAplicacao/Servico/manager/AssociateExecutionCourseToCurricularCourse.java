@@ -46,7 +46,7 @@ public class AssociateExecutionCourseToCurricularCourse implements IServico {
 			
 				ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 				
-				IPersistentExecutionCourse persistentExecutionCourse = persistentSuport.getIDisciplinaExecucaoPersistente();
+				IPersistentExecutionCourse persistentExecutionCourse = persistentSuport.getIPersistentExecutionCourse();
 				IExecutionCourse executionCourse;
 				
 				IPersistentCurricularCourse persistentCurricularCourse = persistentSuport.getIPersistentCurricularCourse();

@@ -45,7 +45,7 @@ public class ReadExecutionCourseByOID implements IServico {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentExecutionCourse executionDegreeDAO =
-				sp.getIDisciplinaExecucaoPersistente();
+				sp.getIPersistentExecutionCourse();
 			IExecutionCourse executionCourse =
 				(IExecutionCourse) executionDegreeDAO.readByOID(
 					ExecutionCourse.class,

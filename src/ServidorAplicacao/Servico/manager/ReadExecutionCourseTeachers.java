@@ -59,7 +59,7 @@ public class ReadExecutionCourseTeachers implements IServico
         {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             professorShips =
-                sp.getIDisciplinaExecucaoPersistente().readExecutionCourseTeachers(executionCourseId);
+                sp.getIPersistentExecutionCourse().readExecutionCourseTeachers(executionCourseId);
         } catch (ExcepcaoPersistencia excepcaoPersistencia)
         {
             throw new FenixServiceException(excepcaoPersistencia);

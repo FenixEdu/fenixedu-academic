@@ -85,7 +85,7 @@ public class TeacherAdministrationSiteComponentServiceItemsTest extends TestCase
             sp.iniciarTransaccao();
 
             IPersistentExecutionCourse persistentExecutionCourse =
-                sp.getIDisciplinaExecucaoPersistente();
+                sp.getIPersistentExecutionCourse();
             IPersistentSite persistentSite = sp.getIPersistentSite();
             IPersistentSection persistentSection = sp.getIPersistentSection();
             IPersistentItem persistentItem = sp.getIPersistentItem();

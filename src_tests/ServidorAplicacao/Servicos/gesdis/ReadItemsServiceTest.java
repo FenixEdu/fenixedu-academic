@@ -105,7 +105,7 @@ public class ReadItemsServiceTest extends TestCaseReadServices {
 			persistentExecutionPeriod =
 				persistentSupport.getIPersistentExecutionPeriod();
 			persistentExecutionCourse =
-				persistentSupport.getIDisciplinaExecucaoPersistente();
+				persistentSupport.getIPersistentExecutionCourse();
 			persistentSite = persistentSupport.getIPersistentSite();
 			persistentSection = persistentSupport.getIPersistentSection();
 			

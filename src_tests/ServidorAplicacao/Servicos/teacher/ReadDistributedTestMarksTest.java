@@ -70,7 +70,7 @@ public class ReadDistributedTestMarksTest extends TestCaseReadServices {
 					false);
 			assertNotNull("studentTestQuestion null", studentTestQuestion);
 			IPersistentExecutionCourse persistentExecutionCourse =
-				sp.getIDisciplinaExecucaoPersistente();
+				sp.getIPersistentExecutionCourse();
 			IExecutionCourse executionCourse =
 				new ExecutionCourse(new Integer(26));
 

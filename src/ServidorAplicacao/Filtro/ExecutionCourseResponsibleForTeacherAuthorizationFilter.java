@@ -85,7 +85,7 @@ public class ExecutionCourseResponsibleForTeacherAuthorizationFilter
 
 			sp = SuportePersistenteOJB.getInstance();
 			IPersistentExecutionCourse persistentExecutionCourse =
-				sp.getIDisciplinaExecucaoPersistente();
+				sp.getIPersistentExecutionCourse();
 			if (argumentos[0] instanceof InfoExecutionCourse) {
 				infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
 				executionCourse =

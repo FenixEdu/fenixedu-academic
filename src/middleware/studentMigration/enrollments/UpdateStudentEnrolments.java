@@ -260,7 +260,7 @@ public class UpdateStudentEnrolments
 	 */
 	private static IFrequenta updateAttend(ICurricularCourse curricularCourse, IEnrolment enrolment, MWEnrolment mwEnrolment, ISuportePersistente sp) throws ExcepcaoPersistencia
 	{
-		IExecutionCourse executionCourse = sp.getIDisciplinaExecucaoPersistente().readbyCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
+		IExecutionCourse executionCourse = sp.getIPersistentExecutionCourse().readbyCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
 		IFrequenta attend = null;
 		if (executionCourse == null)
 		{
@@ -653,7 +653,7 @@ public class UpdateStudentEnrolments
 
 			// Find the Attend.
 			IExecutionCourse executionCourse =
-				sp.getIDisciplinaExecucaoPersistente().readbyCurricularCourseAndExecutionPeriod(enrolment.getCurricularCourseScope().getCurricularCourse(), executionPeriod);
+				sp.getIPersistentExecutionCourse().readbyCurricularCourseAndExecutionPeriod(enrolment.getCurricularCourseScope().getCurricularCourse(), executionPeriod);
 			if (executionCourse == null)
 			{
 				continue;
@@ -820,7 +820,7 @@ public class UpdateStudentEnrolments
 	 */
 	private static void createAttend(ICurricularCourse curricularCourse, IEnrolment enrolment, MWEnrolment mwEnrolment, ISuportePersistente sp) throws ExcepcaoPersistencia
 	{
-		IExecutionCourse executionCourse = sp.getIDisciplinaExecucaoPersistente().readbyCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
+		IExecutionCourse executionCourse = sp.getIPersistentExecutionCourse().readbyCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
 
 		if (executionCourse == null)
 		{
@@ -852,7 +852,7 @@ public class UpdateStudentEnrolments
 	 */
 	private static boolean hasExecutionInGivenPeriod(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod, MWEnrolment mwEnrolment, ISuportePersistente sp) throws ExcepcaoPersistencia
 	{
-		IExecutionCourse executionCourse = sp.getIDisciplinaExecucaoPersistente().readbyCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
+		IExecutionCourse executionCourse = sp.getIPersistentExecutionCourse().readbyCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
 		if (executionCourse == null)
 		{
 			return false;

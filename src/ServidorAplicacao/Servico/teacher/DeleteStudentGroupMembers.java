@@ -73,7 +73,7 @@ public class DeleteStudentGroupMembers implements IServico {
 			
 			ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
 			
-			persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
+			persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
 			persistentAttend = persistentSupport.getIFrequentaPersistente();
 			persistentStudent = persistentSupport.getIPersistentStudent();
 			persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();

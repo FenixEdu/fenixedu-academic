@@ -50,7 +50,7 @@ public class DissociateExecutionCourse implements IServico {
 				if(curricularCourse == null)
 					throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
 				
-				IPersistentExecutionCourse persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
+				IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
 				IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(new ExecutionCourse(executionCourseId), false);
 				
 				if(executionCourse == null)

@@ -61,7 +61,7 @@ public class ReadExecutionCoursesByDegreeAndExecutionPeriod
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 			IPersistentExecutionCourse executionCourseDAO =
-				sp.getIDisciplinaExecucaoPersistente();
+				sp.getIPersistentExecutionCourse();
 
 			ICursoExecucao executionDegree =
 				Cloner.copyInfoExecutionDegree2ExecutionDegree(

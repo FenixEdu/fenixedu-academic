@@ -51,7 +51,7 @@ public class EditEvaluation implements IServico {
 				
 				evaluationMethod.setKeyExecutionCourse(infoExecutionCourseCode);
 								
-				IPersistentExecutionCourse persistenteExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
+				IPersistentExecutionCourse persistenteExecutionCourse = sp.getIPersistentExecutionCourse();
 				evaluationMethod.setExecutionCourse((IExecutionCourse) persistenteExecutionCourse.readByOId(executionCourse, false));				
 			} 
 			

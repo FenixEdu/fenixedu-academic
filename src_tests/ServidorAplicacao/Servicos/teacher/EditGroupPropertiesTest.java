@@ -58,7 +58,7 @@ public class EditGroupPropertiesTest extends TestCaseReadServices {
 			persistentSupport = SuportePersistenteOJB.getInstance();
 			persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
 			persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
-			persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
+			persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
 			persistentGroupProperties = persistentSupport.getIPersistentGroupProperties();
 			persistentSupport.iniciarTransaccao();
 
@@ -94,7 +94,7 @@ public class EditGroupPropertiesTest extends TestCaseReadServices {
 			persistentSupport = SuportePersistenteOJB.getInstance();
 			persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
 			persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
-			persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
+			persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
 			persistentGroupProperties = persistentSupport.getIPersistentGroupProperties();
 			persistentSupport.iniciarTransaccao();
 

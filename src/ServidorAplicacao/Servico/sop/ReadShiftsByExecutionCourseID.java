@@ -59,7 +59,7 @@ public class ReadShiftsByExecutionCourseID implements IServico {
 			
 			
 			IExecutionCourse executionCourse = new ExecutionCourse();
-			executionCourse = (IExecutionCourse) sp.getIDisciplinaExecucaoPersistente().readByOId(executionCourseTemp, false);
+			executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse().readByOId(executionCourseTemp, false);
 	
 	
 			List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse);

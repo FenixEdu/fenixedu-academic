@@ -60,7 +60,7 @@ public class ReadStudentsEnrolledInExam implements IServico {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentExam persistentExam = sp.getIPersistentExam();
 			IPersistentExecutionCourse persistentExecutionCourse =
-				sp.getIDisciplinaExecucaoPersistente();
+				sp.getIPersistentExecutionCourse();
 			IPersistentSite persistentSite = sp.getIPersistentSite();
 
 			IPersistentExamStudentRoom examStudentRoomDAO = sp.getIPersistentExamStudentRoom();

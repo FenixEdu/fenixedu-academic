@@ -54,7 +54,7 @@ public class ReadBibliographicReferenceTest extends TestCaseReadServices {
 				iepp.readByNameAndExecutionYear("2º Semestre", executionYear);
 
 			IPersistentExecutionCourse idep =
-				sp.getIDisciplinaExecucaoPersistente();
+				sp.getIPersistentExecutionCourse();
 			executionCourse =
 				idep.readByExecutionCourseInitialsAndExecutionPeriod(
 					"TFCI",

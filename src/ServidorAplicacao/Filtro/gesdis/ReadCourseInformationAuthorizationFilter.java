@@ -90,7 +90,7 @@ public class ReadCourseInformationAuthorizationFilter extends AuthorizationByRol
             ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
 
             IPersistentExecutionCourse persistentExecutionCourse =
-                sp.getIDisciplinaExecucaoPersistente();
+                sp.getIPersistentExecutionCourse();
             IExecutionCourse executionCourse =
                 (IExecutionCourse) persistentExecutionCourse.readByOId(
                     new ExecutionCourse(executioncourseId),

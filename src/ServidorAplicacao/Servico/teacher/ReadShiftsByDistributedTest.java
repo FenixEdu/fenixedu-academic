@@ -58,7 +58,7 @@ public class ReadShiftsByDistributedTest implements IServico {
 				new ExecutionCourse(executionCourseId);
 			executionCourse =
 				(IExecutionCourse) persistentSuport
-					.getIDisciplinaExecucaoPersistente()
+					.getIPersistentExecutionCourse()
 					.readByOId(executionCourse, false);
 			if (executionCourse == null) {
 				throw new InvalidArgumentsServiceException();

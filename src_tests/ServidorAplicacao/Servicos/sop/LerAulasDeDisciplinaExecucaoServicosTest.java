@@ -103,7 +103,7 @@ public class LerAulasDeDisciplinaExecucaoServicosTest extends TestCaseReadServic
 			IPersistentExecutionPeriod iepp = sp.getIPersistentExecutionPeriod();
 			IExecutionPeriod iep = iepp.readByNameAndExecutionYear("2º Semestre", iey);
 			
-			IPersistentExecutionCourse idep = sp.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse idep = sp.getIPersistentExecutionCourse();
 			IExecutionCourse ide = null;
 			
 			if(existing) {

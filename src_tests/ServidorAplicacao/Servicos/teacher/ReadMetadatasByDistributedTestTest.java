@@ -62,7 +62,7 @@ public class ReadMetadatasByDistributedTestTest extends TestCaseReadServices {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			sp.iniciarTransaccao();
 			IPersistentExecutionCourse persistentExecutionCourse =
-				sp.getIDisciplinaExecucaoPersistente();
+				sp.getIPersistentExecutionCourse();
 			IPersistentMetadata persistentMetadata =
 				sp.getIPersistentMetadata();
 			IExecutionCourse executionCourse =

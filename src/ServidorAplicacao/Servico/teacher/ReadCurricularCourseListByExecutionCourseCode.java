@@ -68,7 +68,7 @@ public class ReadCurricularCourseListByExecutionCourseCode implements IServico {
 			executionCourse.setIdInternal(executionCourseCode);
 
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionCourse executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 			executionCourse = (IExecutionCourse) executionCourseDAO.readByOId(executionCourse, false);
 
 			if (executionCourse != null && executionCourse.getAssociatedCurricularCourses() != null) {

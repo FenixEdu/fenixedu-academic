@@ -60,7 +60,7 @@ public class ReadExecutionCourseResponsiblesIds implements IServico
         {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IExecutionCourse executionCourse =
-                (IExecutionCourse) sp.getIDisciplinaExecucaoPersistente().readByOId(
+                (IExecutionCourse) sp.getIPersistentExecutionCourse().readByOId(
                     new ExecutionCourse(executionCourseId),
                     false);
             responsibles = sp.getIPersistentResponsibleFor().readByExecutionCourse(executionCourse);

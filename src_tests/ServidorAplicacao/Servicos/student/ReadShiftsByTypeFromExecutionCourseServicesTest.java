@@ -44,7 +44,7 @@ public class ReadShiftsByTypeFromExecutionCourseServicesTest extends TestCaseRea
 		IExecutionCourse executionCourse = null; 
 		try {
 			SuportePersistenteOJB.getInstance().iniciarTransaccao();
-			executionCourse = SuportePersistenteOJB.getInstance().getIDisciplinaExecucaoPersistente().readBySiglaAndAnoLectivoAndSiglaLicenciatura("APR", "2002/2003", "LEIC");
+			executionCourse = SuportePersistenteOJB.getInstance().getIPersistentExecutionCourse().readBySiglaAndAnoLectivoAndSiglaLicenciatura("APR", "2002/2003", "LEIC");
 			assertNotNull(executionCourse);
 			SuportePersistenteOJB.getInstance().confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
@@ -59,7 +59,7 @@ public class ReadShiftsByTypeFromExecutionCourseServicesTest extends TestCaseRea
 	  IExecutionCourse executionCourse = null; 
 	  try {
 		  SuportePersistenteOJB.getInstance().iniciarTransaccao();
-		  executionCourse = SuportePersistenteOJB.getInstance().getIDisciplinaExecucaoPersistente().readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+		  executionCourse = SuportePersistenteOJB.getInstance().getIPersistentExecutionCourse().readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
 		  assertNotNull(executionCourse);
 		  SuportePersistenteOJB.getInstance().confirmarTransaccao();
 	  } catch (ExcepcaoPersistencia ex) {

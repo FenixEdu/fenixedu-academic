@@ -403,7 +403,7 @@ public class SuportePersistenteOJB implements ISuportePersistente
     {
         return new CurricularCourseOJB();
     }
-    public IPersistentExecutionCourse getIDisciplinaExecucaoPersistente()
+    public IPersistentExecutionCourse getIPersistentExecutionCourse()
     {
         return new ExecutionCourseOJB();
     }

@@ -103,7 +103,7 @@ public class StudentShiftEnrolmentTest extends TestCaseReadServices {
 		  infoStudent = Cloner.copyIStudent2InfoStudent(student);
 		  
 		  IExecutionCourse executionCourse = null;
-		  executionCourse = SuportePersistenteOJB.getInstance().getIDisciplinaExecucaoPersistente().readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
+		  executionCourse = SuportePersistenteOJB.getInstance().getIPersistentExecutionCourse().readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
 		  assertNotNull(executionCourse);
 		  
 		  ITurno shift = new Turno();

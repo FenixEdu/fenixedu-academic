@@ -67,7 +67,7 @@ public class PublishMarks implements IServico {
 
 			//Execution Course
 			IExecutionCourse executionCourse = new ExecutionCourse(executionCourseCode);
-			IPersistentExecutionCourse executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 			executionCourse = (IExecutionCourse) executionCourseDAO.readByOId(executionCourse, false);
 
 			//Site

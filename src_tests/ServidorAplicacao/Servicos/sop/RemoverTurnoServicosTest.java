@@ -117,7 +117,7 @@ public class RemoverTurnoServicosTest extends TestCaseDeleteAndEditServices {
 			ITurmaPersistente turmaPersistente = sp.getITurmaPersistente();
 			ITurma turma = null;
 			
-			IPersistentExecutionCourse persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
 			IExecutionCourse executionCourse = persistentExecutionCourse.readBySiglaAndAnoLectivoAndSiglaLicenciatura("TFCI", "2002/2003", "LEIC");
 			assertNotNull(executionCourse);
 			

@@ -72,7 +72,7 @@ public class CriarAula implements IServico {
 			System.out.println("sala= " + sala);
 
 			IPersistentExecutionCourse executionCourseDAO =
-				sp.getIDisciplinaExecucaoPersistente();
+				sp.getIPersistentExecutionCourse();
 
 			IExecutionPeriod executionPeriod =
 				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(

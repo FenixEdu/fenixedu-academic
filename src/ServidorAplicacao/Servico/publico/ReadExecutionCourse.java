@@ -50,7 +50,7 @@ public class ReadExecutionCourse implements IServico {
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionCourse executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
  			IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
 			iExecCourse = executionCourseDAO.readByExecutionCourseInitialsAndExecutionPeriod(code, executionPeriod);
 			if (iExecCourse != null)

@@ -52,7 +52,7 @@ public class InsertExecutionCourseAtExecutionPeriod implements IServico {
 			if(executionPeriod == null)
 				throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
 			
-			IPersistentExecutionCourse persistentExecutionCourse = persistentSuport.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse persistentExecutionCourse = persistentSuport.getIPersistentExecutionCourse();
 			IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
 				
 			executionCourse.setNome(infoExecutionCourse.getNome());

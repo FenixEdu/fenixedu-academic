@@ -55,7 +55,7 @@ public class CreateGroupProperties implements IServico {
 		try {
 
 			ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
 			IPersistentGroupProperties persistentGroupProperties = persistentSupport.getIPersistentGroupProperties();
 
 			executionCourse =

@@ -68,7 +68,7 @@ public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod
 
 			IExecutionCourse executionCourse =
 				sp
-					.getIDisciplinaExecucaoPersistente()
+					.getIPersistentExecutionCourse()
 					.readByExecutionCourseInitialsAndExecutionPeriod(
 						executionCourseInitials,
 						executionPeriod);

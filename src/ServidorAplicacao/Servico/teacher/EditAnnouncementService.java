@@ -83,7 +83,7 @@ public class EditAnnouncementService implements IServico {
 		IAnnouncement iAnnouncement = null;
 		try {
 			persistentSupport = SuportePersistenteOJB.getInstance();
-			persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
+			persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
 			persistentSite = persistentSupport.getIPersistentSite();
 			persistentAnnouncement = persistentSupport.getIPersistentAnnouncement();
 

@@ -116,7 +116,7 @@ public class AdicionarTurnoServicosTest extends TestCaseCreateServices {
 			ITurmaPersistente turmaPersistente = sp.getITurmaPersistente();
 			ITurma turma = turmaPersistente.readByNameAndExecutionDegreeAndExecutionPeriod("turma413", ice, iep);
 			
-			IPersistentExecutionCourse idep = sp.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse idep = sp.getIPersistentExecutionCourse();
 			IExecutionCourse ide = idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI", iep);
 			
 			ITurnoPersistente itp = sp.getITurnoPersistente();

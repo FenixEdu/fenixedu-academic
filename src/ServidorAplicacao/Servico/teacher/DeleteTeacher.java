@@ -48,7 +48,7 @@ public class DeleteTeacher implements IServico {
 			IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 			IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
 			IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
-			IPersistentExecutionCourse persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
 
 			Teacher teacher = new Teacher(teacherCode);
 			ITeacher iTeacher = (ITeacher) persistentTeacher.readByOId(teacher, false);

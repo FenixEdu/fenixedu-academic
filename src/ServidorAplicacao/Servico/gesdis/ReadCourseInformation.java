@@ -97,7 +97,7 @@ public class ReadCourseInformation implements IServico
 
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentExecutionCourse persistentExecutionCourse =
-                sp.getIDisciplinaExecucaoPersistente();
+                sp.getIPersistentExecutionCourse();
 
             IExecutionCourse executionCourse =
                 (IExecutionCourse) persistentExecutionCourse.readByOId(

@@ -83,7 +83,7 @@ public class ReadStudentsAndMarksByEvaluation implements IServico {
 			executionCourse = new ExecutionCourse();
 			executionCourse.setIdInternal(executionCourseCode);
 
-			IPersistentExecutionCourse disciplinaExecucaoDAO = sp.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse disciplinaExecucaoDAO = sp.getIPersistentExecutionCourse();
 			executionCourse = (IExecutionCourse) disciplinaExecucaoDAO.readByOId(executionCourse, false);
 
 			//Site

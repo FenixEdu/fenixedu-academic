@@ -95,7 +95,7 @@ public class TeacherAdministrationSiteComponentServiceTeachersTest extends TestC
         {
             sp = SuportePersistenteOJB.getInstance();
             IPersistentExecutionCourse persistentExecutionCourse =
-                sp.getIDisciplinaExecucaoPersistente();
+                sp.getIPersistentExecutionCourse();
             IPersistentSite persistentSite = sp.getIPersistentSite();
             IPersistentSection persistentSection = sp.getIPersistentSection();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();

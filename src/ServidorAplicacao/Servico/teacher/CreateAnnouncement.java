@@ -89,7 +89,7 @@ public class CreateAnnouncement implements IServico {
 		try {
 			persistentSupport = SuportePersistenteOJB.getInstance();
 			IPersistentExecutionCourse persistentExecutionCourse =
-				persistentSupport.getIDisciplinaExecucaoPersistente();
+				persistentSupport.getIPersistentExecutionCourse();
 			IPersistentSite persistentSite =
 				persistentSupport.getIPersistentSite();
 

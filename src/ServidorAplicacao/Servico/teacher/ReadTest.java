@@ -52,7 +52,7 @@ public class ReadTest implements IServico {
 		try {
 			persistentSuport = SuportePersistenteOJB.getInstance();
 			IPersistentExecutionCourse persistentExecutionCourse =
-				persistentSuport.getIDisciplinaExecucaoPersistente();
+				persistentSuport.getIPersistentExecutionCourse();
 			IExecutionCourse executionCourse =
 				new ExecutionCourse(executionCourseId);
 			executionCourse =

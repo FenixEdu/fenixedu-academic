@@ -78,7 +78,7 @@ public class ReadLastAnnouncementServiceTest extends TestCaseReadServices {
 			IPersistentExecutionPeriod ipep = persistentSupport.getIPersistentExecutionPeriod();
 			executionPeriod = ipep.readByNameAndExecutionYear("2º Semestre", executionYear);
 
-			IPersistentExecutionCourse idep = persistentSupport.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse idep = persistentSupport.getIPersistentExecutionCourse();
 			executionCourse = idep.readByExecutionCourseInitialsAndExecutionPeriod(
 				"TFCI", executionPeriod);
 
@@ -124,7 +124,7 @@ public class ReadLastAnnouncementServiceTest extends TestCaseReadServices {
 			IPersistentExecutionPeriod ipep = persistentSupport.getIPersistentExecutionPeriod();
 			executionPeriod = ipep.readByNameAndExecutionYear("2º Semestre", executionYear);
 
-			IPersistentExecutionCourse idep = persistentSupport.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse idep = persistentSupport.getIPersistentExecutionCourse();
 			executionCourse = idep.readByExecutionCourseInitialsAndExecutionPeriod(
 				"TFCI", executionPeriod);
 

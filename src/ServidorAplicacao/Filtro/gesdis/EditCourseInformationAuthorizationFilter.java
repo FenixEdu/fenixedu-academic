@@ -93,7 +93,7 @@ public class EditCourseInformationAuthorizationFilter extends AuthorizationByRol
 
             InfoExecutionCourse infoExecutionCourse = infoCourseReport.getInfoExecutionCourse();
             IPersistentExecutionCourse persistentExecutionCourse =
-                sp.getIDisciplinaExecucaoPersistente();
+                sp.getIPersistentExecutionCourse();
             IExecutionCourse executionCourse =
                 (IExecutionCourse) persistentExecutionCourse.readByOId(
                     new ExecutionCourse(infoExecutionCourse.getIdInternal()),

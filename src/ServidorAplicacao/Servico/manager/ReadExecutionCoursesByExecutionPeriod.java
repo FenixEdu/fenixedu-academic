@@ -74,7 +74,7 @@ public class ReadExecutionCoursesByExecutionPeriod implements IServico
                 throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
 
             allExecutionCoursesFromExecutionPeriod =
-                sp.getIDisciplinaExecucaoPersistente().readByExecutionPeriod(executionPeriod);
+                sp.getIPersistentExecutionCourse().readByExecutionPeriod(executionPeriod);
 
             if (allExecutionCoursesFromExecutionPeriod == null
                 || allExecutionCoursesFromExecutionPeriod.isEmpty())
@@ -87,7 +87,7 @@ public class ReadExecutionCoursesByExecutionPeriod implements IServico
             {
                 IExecutionCourse executionCourse = (IExecutionCourse) iter.next();
                 Integer executionCourseId = executionCourse.getIdInternal();
-                Boolean hasSite = sp.getIDisciplinaExecucaoPersistente().readSite(executionCourseId);
+                Boolean hasSite = sp.getIPersistentExecutionCourse().readSite(executionCourseId);
                 infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
                 infoExecutionCourse.setHasSite(hasSite);
                 allExecutionCourses.add(infoExecutionCourse);

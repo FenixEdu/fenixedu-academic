@@ -60,7 +60,7 @@ public class AssociateExecutionCourseToExam implements IServico {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentExecutionCourse executionCourseDAO =
-				sp.getIDisciplinaExecucaoPersistente();
+				sp.getIPersistentExecutionCourse();
 
 			IExecutionPeriod executionPeriod =
 				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(

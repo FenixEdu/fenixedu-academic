@@ -80,7 +80,7 @@ public class CreateLesson implements IServico {
 					infoLesson.getInfoSala().getNome());
 
 			IPersistentExecutionCourse executionCourseDAO =
-				sp.getIDisciplinaExecucaoPersistente();
+				sp.getIPersistentExecutionCourse();
 
 			IExecutionPeriod executionPeriod =
 				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(

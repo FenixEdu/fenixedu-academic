@@ -74,7 +74,7 @@ public class ValidateSubmitMarks implements IServico {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 			//execution course and execution course's site
-			IPersistentExecutionCourse persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
 
 			IExecutionCourse executionCourse = new ExecutionCourse();
 			executionCourse.setIdInternal(executionCourseCode);

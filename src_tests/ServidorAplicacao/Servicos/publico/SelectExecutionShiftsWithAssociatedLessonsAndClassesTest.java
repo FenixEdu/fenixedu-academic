@@ -212,7 +212,7 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClassesTest
 			assertNotNull(executionPeriod);
 
 			IPersistentExecutionCourse disciplinaExecucaoPersistente =
-				sp.getIDisciplinaExecucaoPersistente();
+				sp.getIPersistentExecutionCourse();
 			IExecutionCourse executionCourse =
 				disciplinaExecucaoPersistente
 					.readByExecutionCourseInitialsAndExecutionPeriod(

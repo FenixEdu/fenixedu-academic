@@ -81,7 +81,7 @@ public class TeacherAdministrationSiteComponentServiceRootSectionsTest extends T
             sp.iniciarTransaccao();
 
             IPersistentExecutionCourse persistentExecutionCourse =
-                sp.getIDisciplinaExecucaoPersistente();
+                sp.getIPersistentExecutionCourse();
             IPersistentSite persistentSite = sp.getIPersistentSite();
             IPersistentSection persistentSection = sp.getIPersistentSection();
 

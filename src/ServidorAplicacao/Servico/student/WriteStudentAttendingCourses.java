@@ -94,7 +94,7 @@ public class WriteStudentAttendingCourses implements IServico {
 
 			List attendingCourses = getExecutionCoursesFromAttends(attends);
 
-			IPersistentExecutionCourse executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 
 			//Gets the database objects for the wanted courses
 			List wantedAttendingCourses = new ArrayList();

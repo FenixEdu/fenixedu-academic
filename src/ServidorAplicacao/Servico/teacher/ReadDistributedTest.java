@@ -44,7 +44,7 @@ public class ReadDistributedTest implements IServico {
 			persistentSuport = SuportePersistenteOJB.getInstance();
 
 			IPersistentExecutionCourse persistentExecutionCourse =
-				persistentSuport.getIDisciplinaExecucaoPersistente();
+				persistentSuport.getIPersistentExecutionCourse();
 			IExecutionCourse executionCourse =
 				new ExecutionCourse(executionCourseId);
 			executionCourse =

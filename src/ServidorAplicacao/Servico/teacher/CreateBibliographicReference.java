@@ -51,7 +51,7 @@ public class CreateBibliographicReference implements IServico {
 		try {
 
 			ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
 			IPersistentBibliographicReference persistentBibliographicReference =
 				persistentSupport.getIPersistentBibliographicReference();
 

@@ -71,7 +71,7 @@ public class ReadCurriculumByCurricularCourseCode implements IServico
             IPersistentCurricularCourseScope persistentCurricularCourseScope =
                 sp.getIPersistentCurricularCourseScope();
             IPersistentExecutionCourse persistentExecutionCourse =
-                sp.getIDisciplinaExecucaoPersistente();
+                sp.getIPersistentExecutionCourse();
             IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
             if (curricularCourseCode == null)

@@ -87,7 +87,7 @@ public class AcceptTeacherExecutionCourseShiftPercentage implements IServico
 
             ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
             IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
-            IPersistentExecutionCourse executionCourseDAO = sp.getIDisciplinaExecucaoPersistente();
+            IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 
             IPersistentShiftProfessorship shiftProfessorshipDAO =
                 sp.getIPersistentTeacherShiftPercentage();

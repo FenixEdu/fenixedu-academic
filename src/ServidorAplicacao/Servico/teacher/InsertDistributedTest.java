@@ -90,7 +90,7 @@ public class InsertDistributedTest implements IServico
             ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
             IExecutionCourse executionCourse = new ExecutionCourse(executionCourseId);
             executionCourse =
-                (IExecutionCourse) persistentSuport.getIDisciplinaExecucaoPersistente().readByOId(
+                (IExecutionCourse) persistentSuport.getIPersistentExecutionCourse().readByOId(
                     executionCourse,
                     false);
             if (executionCourse == null)
@@ -272,7 +272,7 @@ public class InsertDistributedTest implements IServico
                     IExecutionCourse executionCourse = new ExecutionCourse(executionCourseId);
                     executionCourse =
                         (IExecutionCourse) persistentSuport
-                            .getIDisciplinaExecucaoPersistente()
+                            .getIPersistentExecutionCourse()
                             .readByOId(
                             executionCourse,
                             false);

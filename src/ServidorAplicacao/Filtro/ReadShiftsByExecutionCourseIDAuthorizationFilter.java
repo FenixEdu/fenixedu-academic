@@ -130,7 +130,7 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
 				IExecutionCourse executionCourseTemp = new ExecutionCourse();
 				executionCourseTemp.setIdInternal(executionCourseID);
 				
-				IExecutionCourse executionCourse = (IExecutionCourse) sp.getIDisciplinaExecucaoPersistente().readByOId(executionCourseTemp, false);
+				IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse().readByOId(executionCourseTemp, false);
 				
 				// For all Associated Curricular Courses
 				Iterator curricularCourseIterator = executionCourse.getAssociatedCurricularCourses().iterator();
@@ -186,7 +186,7 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
 
                 sp = SuportePersistenteOJB.getInstance();
                 IPersistentExecutionCourse persistentExecutionCourse =
-                    sp.getIDisciplinaExecucaoPersistente();
+                    sp.getIPersistentExecutionCourse();
                 if (argumentos[0] instanceof InfoExecutionCourse) {
                     infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
                     executionCourse =

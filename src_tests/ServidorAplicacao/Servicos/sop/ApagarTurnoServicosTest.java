@@ -94,7 +94,7 @@ public class ApagarTurnoServicosTest extends TestCaseDeleteAndEditServices {
 			IPersistentExecutionPeriod iepp = sp.getIPersistentExecutionPeriod();
 			IExecutionPeriod iep = iepp.readByNameAndExecutionYear("2º Semestre", iey);
 			
-			IPersistentExecutionCourse idep = sp.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse idep = sp.getIPersistentExecutionCourse();
 			IExecutionCourse ide = idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI", iep);
 			
 			ITurnoPersistente itp = sp.getITurnoPersistente();

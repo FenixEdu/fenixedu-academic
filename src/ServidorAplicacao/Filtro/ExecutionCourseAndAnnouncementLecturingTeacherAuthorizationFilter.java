@@ -91,7 +91,7 @@ public class ExecutionCourseAndAnnouncementLecturingTeacherAuthorizationFilter
 
 			sp = SuportePersistenteOJB.getInstance();
 			IPersistentExecutionCourse persistentExecutionCourse =
-				sp.getIDisciplinaExecucaoPersistente();
+				sp.getIPersistentExecutionCourse();
 			if (argumentos[0] instanceof InfoExecutionCourse) {
 				infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
 				executionCourse =
@@ -146,7 +146,7 @@ public class ExecutionCourseAndAnnouncementLecturingTeacherAuthorizationFilter
 
 			sp = SuportePersistenteOJB.getInstance();
 			IPersistentExecutionCourse persistentExecutionCourse =
-				sp.getIDisciplinaExecucaoPersistente();
+				sp.getIPersistentExecutionCourse();
 			if (argumentos[0] instanceof InfoExecutionCourse) {
 				infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
 				executionCourse =

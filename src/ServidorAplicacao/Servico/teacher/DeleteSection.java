@@ -37,7 +37,7 @@ public class DeleteSection implements IServico {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentExecutionCourse persistentExecutionCourse =
-				sp.getIDisciplinaExecucaoPersistente();
+				sp.getIPersistentExecutionCourse();
 			IPersistentSite persistentSite = sp.getIPersistentSite();
 			IPersistentSection persistentSection = sp.getIPersistentSection();
 			ISite site = null;

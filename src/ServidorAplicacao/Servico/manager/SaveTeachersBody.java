@@ -64,7 +64,7 @@ public class SaveTeachersBody implements IServico {
 				Integer id;
 			
 				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-				IPersistentExecutionCourse persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
+				IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
 				IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(new ExecutionCourse(executionCourseId), false);
 				if(executionCourse == null)
 					throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);

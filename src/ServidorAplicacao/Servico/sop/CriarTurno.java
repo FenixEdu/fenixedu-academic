@@ -61,7 +61,7 @@ public class CriarTurno implements IServico {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
 			IPersistentExecutionCourse executionCourseDAO =
-				sp.getIDisciplinaExecucaoPersistente();
+				sp.getIPersistentExecutionCourse();
 			
 			IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoTurno.getInfoDisciplinaExecucao().getInfoExecutionPeriod());
 

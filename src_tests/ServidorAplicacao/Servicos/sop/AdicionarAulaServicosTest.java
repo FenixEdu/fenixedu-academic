@@ -243,7 +243,7 @@ public class AdicionarAulaServicosTest extends TestCaseNeedAuthorizationServices
 				nomeDisciplinaExecucao = "TFCII";
 			}
 
-			IPersistentExecutionCourse idep = sp.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse idep = sp.getIPersistentExecutionCourse();
 			IExecutionCourse ide = idep.readByExecutionCourseInitialsAndExecutionPeriod(nomeDisciplinaExecucao, iep);
 			
 			ITurnoPersistente itp = sp.getITurnoPersistente();

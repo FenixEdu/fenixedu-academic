@@ -46,7 +46,7 @@ public class AssociateTeacher implements IServico {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 			IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
-			IPersistentExecutionCourse persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
 			
 			ITeacher iTeacher = persistentTeacher.readByNumber(teacherNumber);
 			if (iTeacher == null) {

@@ -86,7 +86,7 @@ public class ExecutionCourseAndCurricularCourseLecturingTeacherAuthorizationFilt
 
 			sp = SuportePersistenteOJB.getInstance();
 			IPersistentExecutionCourse persistentExecutionCourse =
-				sp.getIDisciplinaExecucaoPersistente();
+				sp.getIPersistentExecutionCourse();
 			IPersistentCurricularCourse persistentCurricularCourse =
 				sp.getIPersistentCurricularCourse();
 			if (argumentos[0] instanceof InfoExecutionCourse) {
@@ -140,7 +140,7 @@ public class ExecutionCourseAndCurricularCourseLecturingTeacherAuthorizationFilt
 
 			sp = SuportePersistenteOJB.getInstance();
 			IPersistentExecutionCourse persistentExecutionCourse =
-				sp.getIDisciplinaExecucaoPersistente();
+				sp.getIPersistentExecutionCourse();
 			if (argumentos[0] instanceof InfoExecutionCourse) {
 				infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
 				executionCourse =

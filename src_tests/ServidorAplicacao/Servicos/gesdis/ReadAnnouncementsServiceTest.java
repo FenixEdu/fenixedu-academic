@@ -76,7 +76,7 @@ public class ReadAnnouncementsServiceTest extends TestCaseReadServices {
 				IPersistentExecutionPeriod ipep = sp.getIPersistentExecutionPeriod();
                 executionPeriod = ipep.readByNameAndExecutionYear("2º Semestre", executionYear);
 
-				IPersistentExecutionCourse idep = sp.getIDisciplinaExecucaoPersistente();
+				IPersistentExecutionCourse idep = sp.getIPersistentExecutionCourse();
 				executionCourse = idep.readByExecutionCourseInitialsAndExecutionPeriod("TFCI",executionPeriod);
 
                 IPersistentSite ips = sp.getIPersistentSite();

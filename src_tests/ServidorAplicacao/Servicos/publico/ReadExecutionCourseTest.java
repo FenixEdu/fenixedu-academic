@@ -148,7 +148,7 @@ public class ReadExecutionCourseTest
 			assertNotNull(executionPeriod);
 
 			IPersistentExecutionCourse disciplinaExecucaoPersistente =
-				sp.getIDisciplinaExecucaoPersistente();
+				sp.getIPersistentExecutionCourse();
 			IExecutionCourse executionCourse =
 				disciplinaExecucaoPersistente
 					.readByExecutionCourseInitialsAndExecutionPeriod(

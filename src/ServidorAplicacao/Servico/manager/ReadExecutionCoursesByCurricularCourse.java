@@ -93,7 +93,7 @@ public class ReadExecutionCoursesByCurricularCourse implements IServico
             try
             {
                 hasSite =
-                    sp.getIDisciplinaExecucaoPersistente().readSite(infoExecutionCourse.getIdInternal());
+                    sp.getIPersistentExecutionCourse().readSite(infoExecutionCourse.getIdInternal());
             } catch (ExcepcaoPersistencia ex)
             {
                 throw new FenixServiceException(ex);

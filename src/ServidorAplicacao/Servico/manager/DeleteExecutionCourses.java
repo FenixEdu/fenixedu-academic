@@ -56,7 +56,7 @@ public class DeleteExecutionCourses implements IServico
 
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             IPersistentExecutionCourse persistentExecutionCourse =
-                sp.getIDisciplinaExecucaoPersistente();
+                sp.getIPersistentExecutionCourse();
             ITurnoPersistente persistentShift = sp.getITurnoPersistente();
             IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
             IPersistentProfessorship persistentProfessorShip = sp.getIPersistentProfessorship();

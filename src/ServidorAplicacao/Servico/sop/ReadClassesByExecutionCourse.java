@@ -51,7 +51,7 @@ public class ReadClassesByExecutionCourse implements IServico {
 
 			IExecutionCourse executionCourse =
 				(IExecutionCourse) sp
-					.getIDisciplinaExecucaoPersistente()
+					.getIPersistentExecutionCourse()
 					.readByOID(
 					ExecutionCourse.class,
 					infoExecutionCourse.getIdInternal());

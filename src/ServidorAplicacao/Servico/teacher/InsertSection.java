@@ -89,7 +89,7 @@ public class InsertSection implements IServico {
 		try {
 
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionCourse persistentExecutionCourse = persistentSuport.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse persistentExecutionCourse = persistentSuport.getIPersistentExecutionCourse();
 			IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
 			IPersistentSection persistentSection = persistentSuport.getIPersistentSection();
 

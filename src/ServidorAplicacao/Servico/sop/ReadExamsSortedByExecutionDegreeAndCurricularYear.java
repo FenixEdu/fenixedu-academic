@@ -98,7 +98,7 @@ public class ReadExamsSortedByExecutionDegreeAndCurricularYear
 
 					List executionCourses =
 						sp
-							.getIDisciplinaExecucaoPersistente()
+							.getIPersistentExecutionCourse()
 							.readByCurricularYearAndExecutionPeriodAndExecutionDegree(
 								new Integer(curricularYear),
 								executionPeriod,

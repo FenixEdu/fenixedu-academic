@@ -37,7 +37,7 @@ public class EditCustomizationOptions implements IServico {
 			
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentExecutionCourse persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
+			IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
 			IPersistentSite persistentSite = sp.getIPersistentSite();
 
 			ISite siteOld = null;

@@ -94,7 +94,7 @@ public class GroupSiteComponentBuilder {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IExecutionCourse executionCourse =
-				(IExecutionCourse) sp.getIDisciplinaExecucaoPersistente().readByOId(
+				(IExecutionCourse) sp.getIPersistentExecutionCourse().readByOId(
 					new ExecutionCourse(executionCourseCode),
 					false);
 

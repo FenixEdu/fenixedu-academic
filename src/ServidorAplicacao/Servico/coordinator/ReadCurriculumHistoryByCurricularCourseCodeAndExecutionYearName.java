@@ -74,7 +74,7 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName imp
 			IPersistentCurricularCourseScope persistentCurricularCourseScope =
 				sp.getIPersistentCurricularCourseScope();
 			IPersistentExecutionCourse persistentExecutionCourse =
-				sp.getIDisciplinaExecucaoPersistente();
+				sp.getIPersistentExecutionCourse();
 
 			if (curricularCourseCode == null)
 			{

@@ -151,7 +151,7 @@ public class RemoverAulaServicosTest
 			IAulaPersistente persistentLesson = sp.getIAulaPersistente();
 
 			IPersistentExecutionCourse persistentExecutionCourse =
-				sp.getIDisciplinaExecucaoPersistente();
+				sp.getIPersistentExecutionCourse();
 			IExecutionCourse executionCourse =
 				persistentExecutionCourse
 					.readBySiglaAndAnoLectivoAndSiglaLicenciatura(
