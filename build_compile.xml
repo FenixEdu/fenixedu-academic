@@ -67,41 +67,17 @@
 				</fileset>
 			</copy>
 
-			<antcall target="copy-libs"/>
+			<copy todir="${build.home.webinf.libs}">
+				<fileset dir="${lib}" >
+					<include name="*.jar"/>
+					<exclude name="servlet.jar"/>
+					<exclude name="jta.jar"/>
+				</fileset>
+			</copy>
 		</parallel>
 
 		<!-- Replace tokens in configuration files with local config -->
 		<antcall target="replace-property-values"/>
-	</target>
-
-	<target name="copy-libs"
-			description="Creates symbolix links to libraries or copy if links not available on OS.">
-		<apply executable="ln" parallel="false" os="Linux,Unix"
-			dest="${build.home.webinf.libs}"
-			relative="false"
-			output="/dev/null">
-			<arg value="-s"/>
-			<srcfile/>
-			<targetfile/>
-			<fileset dir="${lib}" >
-				<include name="*.jar"/>
-				<exclude name="servlet.jar"/>
-				<exclude name="jta.jar"/>
-			</fileset>
-			<mapper type="glob" from="*.jar" to="*.jar"/>
-		</apply>
-		<apply executable="copy" parallel="false" os="Windows"
-			dest="${build.home.webinf.libs}"
-			relative="false">
-			<srcfile/>
-			<targetfile/>
-			<fileset dir="${lib}" >
-				<include name="*.jar"/>
-				<exclude name="servlet.jar"/>
-				<exclude name="jta.jar"/>
-			</fileset>
-			<mapper type="glob" from="*.jar" to="*.jar"/>
-		</apply>
 	</target>
 
 	<target name="replace-property-values">
