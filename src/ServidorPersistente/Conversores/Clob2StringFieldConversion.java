@@ -32,14 +32,18 @@ public class Clob2StringFieldConversion implements FieldConversion {
 	}
 
 	public Object sqlToJava(Object source) {
-		if (source instanceof Clob) {
+		if (source instanceof Clob && source != null) {
 			Clob c = (Clob) source;
 
 			Long l;
 			String str = null;
 			try {
 				l = new Long(c.length());
-				str = c.getSubString(1, l.intValue());
+				if (l.intValue() >= 1) {
+					str = c.getSubString(1, l.intValue());
+				} else {
+					str = new String();
+				}
 			} catch (SQLException e) {
 				e.printStackTrace(System.out);
 			}
