@@ -68,7 +68,7 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 	private static int totalStudentCurricularPlansCreated = 0;
 	private static int totalEnrollmentsCreated = 0;
 	private static int totalEnrollmentEvaluationsCreated = 0;
-
+	
 	public static void main(String args[])
 	{
 		MWAluno mwStudent = null;
@@ -108,7 +108,7 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 	
 					mwStudent.setEnrolments(persistentMWEnrolment.readByStudentNumber(mwStudent.getNumber()));
 	
-					CreateAndUpdateAllStudentsPastEnrolments.createAndUpdateAllStudentPastEnrolments(mwStudent, fenixPersistentSuport/*, currentExecutionPeriod*/);
+					CreateAndUpdateAllStudentsPastEnrolments.createAndUpdateAllStudentPastEnrolments(mwStudent, fenixPersistentSuport);
 	
 					fenixPersistentSuport.confirmarTransaccao();
 
@@ -140,10 +140,9 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 	/**
 	 * @param mwStudent
 	 * @param fenixPersistentSuport
-	 * @param currentExecutionPeriod
 	 * @throws Exception
 	 */
-	private static void createAndUpdateAllStudentPastEnrolments(MWAluno mwStudent, ISuportePersistente fenixPersistentSuport/*, IExecutionPeriod currentExecutionPeriod*/) throws Throwable
+	private static void createAndUpdateAllStudentPastEnrolments(MWAluno mwStudent, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
 		IPersistentStudent persistentStudent = fenixPersistentSuport.getIPersistentStudent();
 
@@ -156,11 +155,11 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 			return;
 		}
 
-		IDegreeCurricularPlan degreeCurricularPlan = CreateAndUpdateAllStudentsPastEnrolments.getDegreeCurricularPlan(mwStudent, fenixPersistentSuport);
+		IDegreeCurricularPlan degreeCurricularPlan = CreateAndUpdateAllStudentsPastEnrolments.getDegreeCurricularPlan(mwStudent.getDegreecode(), fenixPersistentSuport);
 		
 		if (degreeCurricularPlan == null) {
 			// This can only happen if the CreateAndUpdateAllPastCurriculums migration was not runed before this one!
-			System.out.println("[ERROR 02] No record of Degree with code: [" + mwStudent.getDegreecode() + "]!");
+			System.out.println("[ERROR 02.1] No record of Degree with code: [" + mwStudent.getDegreecode() + "]!");
 			return;
 		}
 
@@ -171,22 +170,22 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 			return;
 		}
 		
-		CreateAndUpdateAllStudentsPastEnrolments.writeAndUpdateEnrolments(mwStudent, degreeCurricularPlan, studentCurricularPlan, fenixPersistentSuport/*, currentExecutionPeriod*/);
+		CreateAndUpdateAllStudentsPastEnrolments.writeAndUpdateEnrolments(mwStudent, studentCurricularPlan, fenixPersistentSuport);
 	}
 
 	/**
-	 * @param mwStudent
+	 * @param degreeCode
 	 * @param fenixPersistentSuport
 	 * @return
-	 * @throws Exception
+	 * @throws Throwable
 	 */
-	private static IDegreeCurricularPlan getDegreeCurricularPlan(MWAluno mwStudent, ISuportePersistente fenixPersistentSuport) throws Throwable
+	private static IDegreeCurricularPlan getDegreeCurricularPlan(Integer degreeCode, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
 		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
 		IPersistentMWDegreeTranslation persistentMWDegreeTranslation = mws.getIPersistentMWDegreeTranslation();
 		IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = fenixPersistentSuport.getIPersistentDegreeCurricularPlan();
 
-		MWDegreeTranslation mwDegreeTranslation = persistentMWDegreeTranslation.readByDegreeCode(mwStudent.getDegreecode());
+		MWDegreeTranslation mwDegreeTranslation = persistentMWDegreeTranslation.readByDegreeCode(degreeCode);
 
 		if (mwDegreeTranslation != null) {
 			String degreeCurricularPlanName = "PAST-" + mwDegreeTranslation.getDegree().getSigla();
@@ -273,7 +272,7 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 		IPersistentBranch persistentBranch = fenixPersistentSuport.getIPersistentBranch();
 
 		MWBranch mwBranch = persistentMWBranch.readByDegreeCodeAndBranchCode(degreeCode, branchCode);
-		
+
 		if (mwBranch != null) {
 			String realBranchCode = null;
 
@@ -294,18 +293,24 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 
 	/**
 	 * @param mwStudent
-	 * @param degreeCurricularPlan
 	 * @param studentCurricularPlan
 	 * @param fenixPersistentSuport
 	 * @throws Exception
 	 */
-	private static void writeAndUpdateEnrolments(MWAluno mwStudent, IDegreeCurricularPlan degreeCurricularPlan, IStudentCurricularPlan studentCurricularPlan, ISuportePersistente fenixPersistentSuport/*, IExecutionPeriod currentExecutionPeriod*/) throws Throwable
+	private static void writeAndUpdateEnrolments(MWAluno mwStudent, IStudentCurricularPlan studentCurricularPlan, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
 		List mwEnrolments = mwStudent.getEnrolments();
 		Iterator iterator = mwEnrolments.iterator();
 		while (iterator.hasNext()) {
 			final MWEnrolment mwEnrolment = (MWEnrolment) iterator.next();
 			
+			IDegreeCurricularPlan degreeCurricularPlan = CreateAndUpdateAllStudentsPastEnrolments.getDegreeCurricularPlan(mwEnrolment.getDegreecode(), fenixPersistentSuport);
+			if (degreeCurricularPlan == null) {
+				// This can only happen if the CreateAndUpdateAllPastCurriculums migration was not runed before this one!
+				System.out.println("[ERROR 02.2] No record of Degree with code: [" + mwEnrolment.getDegreecode() + "]!");
+				return;
+			}
+
 			ICurricularCourse curricularCourse = CreateAndUpdateAllStudentsPastEnrolments.getCurricularCourse(mwEnrolment, degreeCurricularPlan, fenixPersistentSuport);
 			
 			if (curricularCourse == null) {
@@ -324,7 +329,7 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 				continue;
 			}
 
-			IEnrolment enrolment = CreateAndUpdateAllStudentsPastEnrolments.createAndUpdateEnrolment(mwEnrolment, studentCurricularPlan, curricularCourseScope, /*currentExecutionPeriod, */fenixPersistentSuport);
+			IEnrolment enrolment = CreateAndUpdateAllStudentsPastEnrolments.createAndUpdateEnrolment(mwEnrolment, studentCurricularPlan, curricularCourseScope, fenixPersistentSuport);
 
 			if (enrolment == null) {
 				// This should NEVER happen!
@@ -408,11 +413,10 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 	 * @param mwEnrolment
 	 * @param studentCurricularPlan
 	 * @param curricularCourseScope
-	 * @param currentExecutionPeriod
 	 * @param fenixPersistentSuport
 	 * @return
 	 */
-	private static IEnrolment createAndUpdateEnrolment(MWEnrolment mwEnrolment, IStudentCurricularPlan studentCurricularPlan, ICurricularCourseScope curricularCourseScope/*, IExecutionPeriod currentExecutionPeriod*/, ISuportePersistente fenixPersistentSuport) throws Throwable
+	private static IEnrolment createAndUpdateEnrolment(MWEnrolment mwEnrolment, IStudentCurricularPlan studentCurricularPlan, ICurricularCourseScope curricularCourseScope, ISuportePersistente fenixPersistentSuport) throws Throwable
 	{
 		EnrolmentEvaluationType enrolmentEvaluationType = CreateAndUpdateAllStudentsPastEnrolments.getEvaluationType(mwEnrolment);
 
@@ -430,7 +434,8 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 
 		if (enrolment == null) {
 
-			String key = mwEnrolment.getNumber() + mwEnrolment.getEnrolmentyear().toString() + mwEnrolment.getCurricularcourseyear().toString() + mwEnrolment.getCurricularcoursesemester().toString() + mwEnrolment.getCoursecode() + mwEnrolment.getDegreecode();
+//			String key = mwEnrolment.getNumber() + mwEnrolment.getEnrolmentyear().toString() + mwEnrolment.getCurricularcourseyear().toString() + mwEnrolment.getCurricularcoursesemester().toString() + mwEnrolment.getCoursecode() + mwEnrolment.getDegreecode();
+			String key = mwEnrolment.getNumber() + mwEnrolment.getEnrolmentyear().toString() + mwEnrolment.getCurricularcoursesemester().toString() + mwEnrolment.getCoursecode() + mwEnrolment.getDegreecode();
 			enrolment = (IEnrolment) CreateAndUpdateAllStudentsPastEnrolments.enrollmentsCreated.get(key);
 
 			if (enrolment == null) {
@@ -452,12 +457,15 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 		}
 
 		// Create the EnrolmentEvaluation.
-		IEnrolmentEvaluation enrolmentEvaluation = persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(enrolment, enrolmentEvaluationType, mwEnrolment.getGrade());
+		IEnrolmentEvaluation enrolmentEvaluation = persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGradeAndWhenAlteredDate(enrolment, enrolmentEvaluationType, mwEnrolment.getGrade(), mwEnrolment.getExamdate());
 
 		if (enrolmentEvaluation == null) {
 
-//			String key = executionYearName + executionPeriodName + curricularCourseScope.getCurricularCourse().getCode() + studentCurricularPlan.getStudent().getNumber() + mwEnrolment.getGrade() + mwEnrolment.getSeason() + enrolmentEvaluationType.getType().toString();
-			String key = mwEnrolment.getNumber() + mwEnrolment.getEnrolmentyear().toString() + mwEnrolment.getCurricularcourseyear().toString() + mwEnrolment.getCurricularcoursesemester().toString() + mwEnrolment.getCoursecode() + mwEnrolment.getDegreecode() + mwEnrolment.getGrade() + mwEnrolment.getSeason() + enrolmentEvaluationType.getType().toString();
+//			String key = mwEnrolment.getNumber() + mwEnrolment.getEnrolmentyear().toString() + mwEnrolment.getCurricularcourseyear().toString() + mwEnrolment.getCurricularcoursesemester().toString() + mwEnrolment.getCoursecode() + mwEnrolment.getDegreecode() + mwEnrolment.getGrade() + mwEnrolment.getSeason() + enrolmentEvaluationType.getType().toString();
+
+			String enrollmentKey = mwEnrolment.getNumber() + mwEnrolment.getEnrolmentyear().toString() + mwEnrolment.getCurricularcoursesemester().toString() + mwEnrolment.getCoursecode() + mwEnrolment.getDegreecode();
+			String key = enrollmentKey + mwEnrolment.getGrade() + enrolmentEvaluationType.getType().toString() + mwEnrolment.getExamdate().toString();
+
 			enrolmentEvaluation = (IEnrolmentEvaluation) CreateAndUpdateAllStudentsPastEnrolments.enrollmentEvaluationsCreated.get(key);
 
 			if (enrolmentEvaluation == null) {
@@ -473,13 +481,18 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 				enrolmentEvaluation.setObservation(mwEnrolment.getRemarks());
 				enrolmentEvaluation.setPersonResponsibleForGrade(CreateAndUpdateAllStudentsPastEnrolments.getPersonResponsibleForGrade(mwEnrolment, fenixPersistentSuport));
 
+				enrolmentEvaluation.setGradeAvailableDate(mwEnrolment.getExamdate());
+				enrolmentEvaluation.setWhen(mwEnrolment.getExamdate());
+
 				enrolmentEvaluation.setEmployee(null);
-				enrolmentEvaluation.setGradeAvailableDate(null);
-				enrolmentEvaluation.setWhen(null);
 				enrolmentEvaluation.setCheckSum(null);
 
 				CreateAndUpdateAllStudentsPastEnrolments.enrollmentEvaluationsCreated.put(key, enrolmentEvaluation);
+			} else {
+				System.out.println("[WARNING 02.1] No EnrolmentEvaluation was created!");
 			}
+		} else {
+			System.out.println("[WARNING 02.2] No EnrolmentEvaluation was created!");
 		}
 
 		return enrolment;
@@ -585,7 +598,9 @@ public class CreateAndUpdateAllStudentsPastEnrolments
 		ITeacher teacher = persistentTeacher.readTeacherByNumber(mwEnrolment.getTeachernumber());
 		
 		if (teacher == null) {
-			System.out.println("[WARNING 01] No Teacher with number: [" + mwEnrolment.getTeachernumber() + "] was found in the Fenix DB!");
+			if (mwEnrolment.getTeachernumber().intValue() != 0) {
+				System.out.println("[WARNING 01] No Teacher with number: [" + mwEnrolment.getTeachernumber() + "] was found in the Fenix DB!");
+			}
 			return null;
 		}
 		

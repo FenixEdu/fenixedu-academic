@@ -102,7 +102,7 @@ public class EnrolmentEvaluationOJB extends ObjectFenixOJB implements IPersisten
         }
     }
 
-    public IEnrolmentEvaluation readEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(
+    public IEnrolmentEvaluation readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGrade(
         IEnrolment enrolment,
         EnrolmentEvaluationType evaluationType,
         String grade)
@@ -263,4 +263,50 @@ public class EnrolmentEvaluationOJB extends ObjectFenixOJB implements IPersisten
             throw e;
         }
     }
+
+	public IEnrolmentEvaluation readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGradeAndWhenAlteredDate(
+		IEnrolment enrolment,
+		EnrolmentEvaluationType evaluationType,
+		String grade,
+		Date whenAltered)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+
+		criteria.addEqualTo("enrolment.studentCurricularPlan.student.number", enrolment.getStudentCurricularPlan().getStudent().getNumber());
+		criteria.addEqualTo("enrolment.studentCurricularPlan.student.degreeType", enrolment.getStudentCurricularPlan().getStudent().getDegreeType());
+		criteria.addEqualTo("enrolment.studentCurricularPlan.currentState", enrolment.getStudentCurricularPlan().getCurrentState());
+		criteria.addEqualTo("enrolment.curricularCourseScope.curricularCourse.name", enrolment.getCurricularCourseScope().getCurricularCourse().getName());
+		criteria.addEqualTo("enrolment.curricularCourseScope.curricularCourse.code", enrolment.getCurricularCourseScope().getCurricularCourse().getCode());
+		criteria.addEqualTo(
+			"enrolment.curricularCourseScope.curricularCourse.degreeCurricularPlan.name",
+			enrolment.getCurricularCourseScope().getCurricularCourse().getDegreeCurricularPlan().getName());
+		criteria.addEqualTo(
+			"enrolment.curricularCourseScope.curricularCourse.degreeCurricularPlan.degree.nome",
+			enrolment.getCurricularCourseScope().getCurricularCourse().getDegreeCurricularPlan().getDegree().getNome());
+		criteria.addEqualTo(
+			"enrolment.curricularCourseScope.curricularCourse.degreeCurricularPlan.degree.sigla",
+			enrolment.getCurricularCourseScope().getCurricularCourse().getDegreeCurricularPlan().getDegree().getSigla());
+		criteria.addEqualTo(
+			"enrolment.curricularCourseScope.curricularSemester.semester",
+			enrolment.getCurricularCourseScope().getCurricularSemester().getSemester());
+		criteria.addEqualTo(
+			"enrolment.curricularCourseScope.curricularSemester.curricularYear.year",
+			enrolment.getCurricularCourseScope().getCurricularSemester().getCurricularYear().getYear());
+		criteria.addEqualTo(
+			"enrolment.curricularCourseScope.branch.degreeCurricularPlan.name",
+			enrolment.getCurricularCourseScope().getBranch().getDegreeCurricularPlan().getName());
+		criteria.addEqualTo(
+			"enrolment.curricularCourseScope.branch.degreeCurricularPlan.degree.nome",
+			enrolment.getCurricularCourseScope().getBranch().getDegreeCurricularPlan().getDegree().getNome());
+		criteria.addEqualTo(
+			"enrolment.curricularCourseScope.branch.degreeCurricularPlan.degree.sigla",
+			enrolment.getCurricularCourseScope().getBranch().getDegreeCurricularPlan().getDegree().getSigla());
+		criteria.addEqualTo("enrolment.curricularCourseScope.branch.code", enrolment.getCurricularCourseScope().getBranch().getCode());
+		criteria.addEqualTo("enrolmentEvaluationType", evaluationType.getType());
+		criteria.addEqualTo("grade", grade);
+		criteria.addEqualTo("when", whenAltered);
+
+		IEnrolmentEvaluation evaluationsWithRepetition = (IEnrolmentEvaluation) queryObject(EnrolmentEvaluation.class, criteria);
+		return (IEnrolmentEvaluation) evaluationsWithRepetition;
+	}
 }

@@ -155,7 +155,7 @@ public class ChangeEnrolmentStateFromTemporarilyToEnroled implements IServico {
 		persistentSupport = SuportePersistenteOJB.getInstance();
 		persistentEnrolmentEvaluation = persistentSupport.getIPersistentEnrolmentEvaluation();
 		try {
-			IEnrolmentEvaluation enrolmentEvaluation = persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(enrolment, enrolment.getEnrolmentEvaluationType(), null);
+			IEnrolmentEvaluation enrolmentEvaluation = persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGrade(enrolment, enrolment.getEnrolmentEvaluationType(), null);
 			if (enrolmentEvaluation == null) {
 				enrolmentEvaluation = new EnrolmentEvaluation();
 				persistentEnrolmentEvaluation.simpleLockWrite(enrolmentEvaluation);

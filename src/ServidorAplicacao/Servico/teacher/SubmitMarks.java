@@ -241,7 +241,7 @@ public class SubmitMarks implements IServico {
 			}
 
 			enrolmentEvaluation =
-				(EnrolmentEvaluation) persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(
+				(EnrolmentEvaluation) persistentEnrolmentEvaluation.readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGrade(
 					enrolment,
 					EnrolmentEvaluationType.NORMAL_OBJ,
 					publishedMark);
