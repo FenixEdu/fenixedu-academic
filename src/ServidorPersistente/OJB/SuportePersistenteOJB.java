@@ -102,6 +102,19 @@ import ServidorPersistente.ITurmaTurnoPersistente;
 import ServidorPersistente.ITurnoAlunoPersistente;
 import ServidorPersistente.ITurnoAulaPersistente;
 import ServidorPersistente.ITurnoPersistente;
+import ServidorPersistente.OJB.Seminaries.CandidacyOJB;
+import ServidorPersistente.OJB.Seminaries.CaseStudyChoiceOJB;
+import ServidorPersistente.OJB.Seminaries.CaseStudyOJB;
+import ServidorPersistente.OJB.Seminaries.EquivalencyOJB;
+import ServidorPersistente.OJB.Seminaries.ModalityOJB;
+import ServidorPersistente.OJB.Seminaries.ThemeOJB;
+import ServidorPersistente.Seminaries.IPersistentSeminary;
+import ServidorPersistente.Seminaries.IPersistentSeminaryCandidacy;
+import ServidorPersistente.Seminaries.IPersistentSeminaryCaseStudy;
+import ServidorPersistente.Seminaries.IPersistentSeminaryCaseStudyChoice;
+import ServidorPersistente.Seminaries.IPersistentSeminaryCurricularCourseEquivalency;
+import ServidorPersistente.Seminaries.IPersistentSeminaryModality;
+import ServidorPersistente.Seminaries.IPersistentSeminaryTheme;
 
 public class SuportePersistenteOJB implements ISuportePersistente {
 	Implementation _odmg = null;
@@ -188,7 +201,7 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	}
 
 	private void init() throws ExcepcaoPersistencia {
-
+		
 		_odmg = OJB.getInstance();
 		try {
 			openDatabase();
@@ -538,7 +551,7 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	public IPersistentEmployee getIPersistentEmployee() {
 		return new EmployeeOJB();
 	}
-
+	
 	public IPersistentEnrolmentEquivalenceRestriction getIPersistentEnrolmentEquivalenceRestriction() {
 		return new EnrolmentEquivalenceRestrictionOJB();
 	}
@@ -553,7 +566,7 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	public IPersistentQualification getIPersistentQualification() {
 		return new QualificationOJB();
 	}
-
+	
 	public IPersistentCandidateEnrolment getIPersistentCandidateEnrolment() {
 		return new CandidateEnrolmentOJB();
 	}
@@ -581,6 +594,49 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	public IPersistentCurricularCourseEquivalenceRestriction getIPersistentCurricularCourseEquivalenceRestriction() {
 		return new CurricularCourseEquivalenceRestrictionOJB();
 	}
+
+	   //by gedl AT rnl DOT ist DOT utl DOT pt (July the 25th, 2003) 
+    public IPersistentSeminaryModality getIPersistentSeminaryModality()
+    {
+        return new ModalityOJB();
+    }
+    
+    //by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003) 
+     public IPersistentSeminaryTheme getIPersistentSeminaryTheme()
+     {
+         return new ThemeOJB();
+     }
+     
+//  by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003) 
+     public IPersistentSeminary getIPersistentSeminary()
+     {
+         return new ServidorPersistente.OJB.Seminaries.SeminaryOJB();
+     }
+     
+//  by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003) 
+     public IPersistentSeminaryCaseStudy getIPersistentSeminaryCaseStudy()
+     {
+         return new CaseStudyOJB();
+     }
+     
+//  by gedl AT rnl DOT ist DOT utl DOT pt (July the 29th, 2003) 
+     public IPersistentSeminaryCandidacy getIPersistentSeminaryCandidacy()
+     {
+         return new CandidacyOJB();
+     }
+     
+//  by gedl AT rnl DOT ist DOT utl DOT pt (July the 29th, 2003) 
+     public IPersistentSeminaryCaseStudyChoice getIPersistentSeminaryCaseStudyChoice()
+     {
+         return new CaseStudyChoiceOJB();
+     }
+     
+//  by gedl AT rnl DOT ist DOT utl DOT pt (August the 4th, 2003) 
+     public IPersistentSeminaryCurricularCourseEquivalency getIPersistentSeminaryCurricularCourseEquivalency()
+     {
+         return new EquivalencyOJB();
+     }
+
 
 	public IPersistentMetadata getIPersistentMetadata() {
 		return new MetadataOJB();

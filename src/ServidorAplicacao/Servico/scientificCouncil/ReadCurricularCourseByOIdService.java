@@ -54,12 +54,11 @@ public class ReadCurricularCourseByOIdService implements IServico{
 	}
 
 	public SiteView run(Integer curricularCourseId) throws FenixServiceException {
-			
 			try {
 				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-				IPersistentCurricularCourse persistentCurricularCourse= sp.getIPersistentCurricularCourse();
+				IPersistentCurricularCourse persistentCurricularCourse= sp.getIPersistentCurricularCourse();                
 				ICurricularCourse curricularCourse = new CurricularCourse(curricularCourseId);
-				curricularCourse= (ICurricularCourse) persistentCurricularCourse.readByOId(curricularCourse,false);
+				curricularCourse= (ICurricularCourse) persistentCurricularCourse.readByOId(curricularCourse,false);                
 				InfoCurricularCourse infoCurricularCourse = Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse);
 				SiteView siteView = new SiteView(infoCurricularCourse);
 				

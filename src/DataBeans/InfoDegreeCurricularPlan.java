@@ -2,6 +2,7 @@ package DataBeans;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import Util.DegreeCurricularPlanState;
 import Util.MarkType;
@@ -24,6 +25,9 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Serializable
 	private Double neededCredits;
 	private MarkType markType;
 	private Integer numerusClausus;
+    
+    //by gedl AT rnl dot IST dot UTL dot PT (August the 3rd, 2003)
+    private List curricularCourses;
 
 	public InfoDegreeCurricularPlan() {}
 
@@ -57,8 +61,9 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Serializable
 		result += "endDate = " + this.endDate + "; ";
 		result += "state = " + this.state + "; ";
 		result += "NeededCredits = " + this.neededCredits + "; ";
-		result += "degree = " + this.infoDegree + "]";
-		result += "Numerus Clausus = " + this.numerusClausus + "]";
+		result += "degree = " + this.infoDegree + ";";
+		result += "Numerus Clausus = " + this.numerusClausus + ";";
+        result += "Curricular Courses=" + this.curricularCourses +"]";
 		return result;
 	}
 
@@ -195,6 +200,22 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Serializable
     public int compareTo(Object arg0) {	
 		InfoDegreeCurricularPlan degreeCurricularPlan = (InfoDegreeCurricularPlan) arg0;
 		return this.getName().compareTo(degreeCurricularPlan.getName());
+	}
+
+	/**
+	 * @return
+	 */
+	public List getCurricularCourses()
+	{
+		return curricularCourses;
+	}
+
+	/**
+	 * @param list
+	 */
+	public void setCurricularCourses(List list)
+	{
+		curricularCourses= list;
 	}
 
 }

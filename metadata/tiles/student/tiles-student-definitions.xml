@@ -38,4 +38,26 @@
 		<put name="body" value="/degreeAdministrativeOffice/commons/cantEnroll.jsp"/>
 	</definition>
 
+	<definition name="definition.viewSeminaries" extends="definition.student.masterPage">
+		<put name="body" value="/student/viewSeminaries_bd.jsp"/>
+	</definition>
+	<definition name="definition.viewCandidacyOptions" extends="definition.student.masterPage">
+		<put name="body" value="/student/viewCandidacyOptions_bd.jsp"/>
+	</definition>
+		<definition name="definition.viewCandidacyForm" extends="definition.student.masterPage">
+		<put name="body" value="/student/viewCandidacyForm_bd.jsp"/>
+	</definition>
+	<definition name="definition.viewCandidacySecondForm" extends="definition.student.masterPage">
+		<put name="body" value="/student/viewCandidacySecondForm_bd.jsp"/>
+	</definition>
+	<definition name="definition.showCandidacy" extends="definition.student.masterPage">
+		<put name="body" value="/student/showCandidacy_bd.jsp"/>
+	</definition>
+	<definition name="definition.candidacyLimitReached" extends="definition.student.masterPage">
+		<put name="body" value="/student/candidacyLimitReached_bd.jsp"/>
+	</definition>.
+	<definition name="definition.showCandidacyDetails" extends="definition.student.masterPage">
+		<put name="body" value="/student/showCandidacyDetails_bd.jsp"/>
+	</definition>
+
 </tiles-definitions>

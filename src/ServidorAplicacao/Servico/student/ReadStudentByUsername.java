@@ -59,13 +59,16 @@ public class ReadStudentByUsername implements IServico {
       	infoPerson.setNacionalidade(student.getPerson().getNacionalidade());
       	infoPerson.setNomePai(student.getPerson().getNomePai());
       	infoPerson.setNomeMae(student.getPerson().getNomeMae());
-
+        
 		infoStudent =
 			new InfoStudent(
 				student.getNumber(),
 				student.getState(),
 				infoPerson,
 				student.getDegreeType());
+          
+          //by gedl at august 5th, 2003
+          infoStudent.setIdInternal(student.getIdInternal());                
       }
     } catch (ExcepcaoPersistencia ex) {
       ex.printStackTrace();

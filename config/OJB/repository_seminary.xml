@@ -1,0 +1,306 @@
+<class-descriptor class="Dominio.Seminaries.Seminary"
+                  table="SEMINARY">
+
+    <field-descriptor id="1"
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />
+
+    <field-descriptor id="2"
+        name="description"
+        column="DESCRIPTION"
+        jdbc-type="VARCHAR"
+	/>
+         
+    <field-descriptor id="3"
+         name="name"
+         column="NAME"
+    	  jdbc-type="VARCHAR"
+    />
+
+    <field-descriptor id="4"
+         name="allowedCandidaciesPerStudent"
+         column="ALLOWED_CANDIDACIES_PER_STUDENT"
+    	  jdbc-type="INTEGER"
+    />
+
+	<collection-descriptor
+         name="equivalencies"
+         element-class-ref="Dominio.Seminaries.CourseEquivalency"
+      >
+        <inverse-foreignkey field-id-ref="2"/>
+     </collection-descriptor>
+	  
+</class-descriptor>
+
+<class-descriptor class="Dominio.Seminaries.CourseEquivalency"
+                  table="SEMINARY_CURRICULARCOURSE">
+
+    <field-descriptor id="1"
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />
+
+    <field-descriptor id="2"
+        name="seminaryIdInternal"
+        column="SEMINARY_ID_INTERNAL"
+        jdbc-type="INTEGER"
+    />
+
+    <field-descriptor id="3"
+        name="curricularCourseIdInternal"
+        column="CURRICULAR_COURSE_ID_INTERNAL"
+        jdbc-type="INTEGER"
+    />
+
+	 <field-descriptor id="4"
+        name="modalityIdInternal"
+        column="MODALITY_ID_INTERNAL"
+        jdbc-type="INTEGER"
+    />
+
+     <reference-descriptor
+         name="seminary"
+         class-ref="Dominio.Seminaries.Seminary"
+         proxy="true"
+      >
+	      <foreignkey field-id-ref="2"/>
+     </reference-descriptor>
+
+	 <reference-descriptor
+         name="curricularCourse"
+         class-ref="Dominio.CurricularCourse"
+         proxy="true"
+      >
+	    <foreignkey field-id-ref="3"/>
+	 </reference-descriptor>
+
+      <reference-descriptor
+         name="modality"
+         class-ref="Dominio.Seminaries.Modality"
+         proxy="true"
+      >
+	      <foreignkey field-id-ref="4"/>
+     </reference-descriptor>
+    
+     <collection-descriptor
+        name="themes"
+        element-class-ref="Dominio.Seminaries.Theme"
+	    indirection-table="EQUIVALENCY_THEME"
+        orderby="name"
+        sort="ASC"
+     >
+         <fk-pointing-to-this-class column="EQUIVALENCY_ID"/>
+         <fk-pointing-to-element-class column="THEME_ID"/>
+      </collection-descriptor>
+    	  
+</class-descriptor>
+
+<class-descriptor class="Dominio.Seminaries.Modality"
+                  table="SEMINARY_MODALITY">
+
+    <field-descriptor id="1"
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />
+
+    <field-descriptor id="2"
+        name="description"
+        column="DESCRIPTION"
+        jdbc-type="VARCHAR"
+	/>
+         
+    <field-descriptor id="3"
+         name="name"
+         column="NAME"
+    	  jdbc-type="VARCHAR"
+    />
+    	 
+</class-descriptor>
+
+<class-descriptor class="Dominio.Seminaries.Theme"
+                  table="SEMINARY_THEME">
+
+    <field-descriptor id="1"
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />
+
+    <field-descriptor id="2"
+        name="description"
+        column="DESCRIPTION"
+        jdbc-type="VARCHAR"
+	/>
+         
+    <field-descriptor id="3"
+         name="name"
+         column="NAME"
+    	  jdbc-type="VARCHAR"
+    />
+
+	 <field-descriptor id="4"
+         name="shortName"
+         column="SHORT_NAME"
+    	  jdbc-type="VARCHAR"
+    />
+
+	  <collection-descriptor
+        name="caseStudies"
+        element-class-ref="Dominio.Seminaries.CaseStudy"
+        orderby="code"
+        sort="ASC"
+     >
+        <inverse-foreignkey field-id-ref="5"/>
+     </collection-descriptor>
+    	 
+</class-descriptor>
+
+<class-descriptor class="Dominio.Seminaries.CaseStudy"
+                  table="SEMINARY_CASESTUDY">
+
+    <field-descriptor id="1"
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />
+
+    <field-descriptor id="2"
+        name="description"
+        column="DESCRIPTION"
+        jdbc-type="VARCHAR"
+	/>
+         
+    <field-descriptor id="3"
+         name="name"
+         column="NAME"
+    	  jdbc-type="VARCHAR"
+    />
+
+	 <field-descriptor id="4"
+         name="code"
+         column="CODE"
+    	  jdbc-type="VARCHAR"
+    />
+
+	<field-descriptor id="5"
+         name="seminaryThemeIdInternal"
+         column="seminary_theme_id_internal"
+    	  jdbc-type="INTEGER"
+    />
+
+     <reference-descriptor
+         name="seminaryTheme"
+         class-ref="Dominio.Seminaries.Theme"
+         proxy="true"
+      >
+	      <foreignkey field-id-ref="5"/>
+     </reference-descriptor>
+
+	 	<!-- Choices made to this case study -->
+      <collection-descriptor
+         name="seminaryCandidacies"
+         element-class-ref="Dominio.Seminaries.CaseStudyChoice"
+		 orderby="order"
+         sort="ASC"
+      >
+       <inverse-foreignkey field-id-ref="2"/>
+      </collection-descriptor> 
+    	 
+</class-descriptor>
+
+
+<class-descriptor class="Dominio.Seminaries.Candidacy"
+                  table="SEMINARY_CANDIDACY">
+
+    <field-descriptor id="1"
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />
+
+	<field-descriptor id="2"
+         name="themeIdInternal"
+         column="seminary_theme_id_internal"
+    	  jdbc-type="INTEGER"
+    />
+
+	<field-descriptor id="3"
+         name="modalityIdInternal"
+         column="seminary_modality_id_internal"
+    	  jdbc-type="INTEGER"
+    />
+
+	<field-descriptor id="4"
+         name="seminaryIdInternal"
+         column="seminary_id_internal"
+    	  jdbc-type="INTEGER"
+    />
+
+	<field-descriptor id="5"
+         name="studentIdInternal"
+         column="student_id_internal"
+    	  jdbc-type="INTEGER"
+    />
+
+	<field-descriptor id="5"
+         name="curricularCourseIdInternal"
+         column="curricular_course_id_internal"
+    	  jdbc-type="INTEGER"
+    />
+
+	<field-descriptor id="6"
+        name="motivation"
+        column="MOTIVATION"
+        jdbc-type="VARCHAR"
+    />
+
+	<!-- Choosen case studies -->
+      <collection-descriptor
+         name="caseStudyChoices"
+         element-class-ref="Dominio.Seminaries.CaseStudyChoice"
+		 orderby="order"
+         sort="ASC"
+      >
+       <inverse-foreignkey field-id-ref="1"/>
+      </collection-descriptor>    	 
+</class-descriptor>
+
+<class-descriptor class="Dominio.Seminaries.CaseStudyChoice"
+                  table="SEMINARYCANDIDACY_SEMINARYCASESTUDY">
+  
+   <field-descriptor id="1"
+         name="candidacyIdInternal"
+         column="CANDIDACY_ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+      />
+
+      <field-descriptor id="2"
+         name="caseStudyIdInternal"
+         column="CASESTUDY_ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+      />
+	   
+	   <field-descriptor id="3"
+         name="order"
+         column="PREFERENCE_ORDER"
+         jdbc-type="INTEGER"
+      />
+</class-descriptor>

@@ -2,6 +2,7 @@ package DataBeans.util;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -67,11 +68,27 @@ import DataBeans.InfoStudentGroupAttend;
 import DataBeans.InfoStudentKind;
 import DataBeans.InfoSummary;
 import DataBeans.InfoTeacher;
+import DataBeans.Seminaries.InfoCandidacy;
+import DataBeans.Seminaries.InfoCaseStudy;
+import DataBeans.Seminaries.InfoCaseStudyChoice;
+import DataBeans.Seminaries.InfoEquivalency;
+import DataBeans.Seminaries.InfoModality;
+import DataBeans.Seminaries.InfoSeminary;
+import DataBeans.Seminaries.InfoTheme;
 import DataBeans.InfoTest;
 import DataBeans.InfoTestQuestion;
 import DataBeans.teacher.credits.InfoCredits;
 import DataBeans.teacher.credits.InfoTeacherShiftPercentage;
 import Dominio.*;
+import Dominio.Seminaries.Candidacy;
+import Dominio.Seminaries.CaseStudyChoice;
+import Dominio.Seminaries.ICandidacy;
+import Dominio.Seminaries.ICaseStudy;
+import Dominio.Seminaries.ICaseStudyChoice;
+import Dominio.Seminaries.ICourseEquivalency;
+import Dominio.Seminaries.IModality;
+import Dominio.Seminaries.ISeminary;
+import Dominio.Seminaries.ITheme;
 import Util.EvaluationType;
 import Util.State;
 
@@ -525,6 +542,9 @@ public abstract class Cloner {
 		copyObjectProperties(student, infoStudent);
 		student.setPerson(person);
 		student.setStudentKind(studentGroupInfo);
+        
+        //by gedl at august the 5th, 2003
+        student.setIdInternal(infoStudent.getIdInternal());
 		return student;
 	}
 
@@ -540,6 +560,9 @@ public abstract class Cloner {
 			Cloner.copyIPerson2InfoPerson(student.getPerson()));
 		infoStudent.setInfoStudentKind(
 			Cloner.copyIStudentKind2InfoStudentKind(student.getStudentKind()));
+            
+        //by gedl at august the 5th, 2003
+        infoStudent.setIdInternal(student.getIdInternal());
 		return infoStudent;
 	}
 
@@ -2470,6 +2493,146 @@ public abstract class Cloner {
 		copyObjectProperties(infoCurricularYear, curricularYear);
 		return infoCurricularYear;
 	}
+
+	//by gedl AT rnl DOT ist DOT utl DOT pt (August the 3rd, 2003)
+    public static InfoModality copyIModality2InfoModality(IModality modality)
+    {
+        InfoModality infoModality = new InfoModality();
+        copyObjectProperties(infoModality,modality);     
+        
+        return infoModality;
+    }
+    
+    //by gedl AT rnl DOT ist DOT utl DOT pt (August the 4rd, 2003)
+    public static InfoTheme copyITheme2InfoTheme(ITheme theme)
+    {
+        InfoTheme infoTheme = new InfoTheme();
+        copyObjectProperties(infoTheme,theme);     
+        
+        return infoTheme;
+    }
+    
+    //by gedl AT rnl DOT ist DOT utl DOT pt (August the 4rd, 2003)
+     public static InfoCaseStudy copyICaseStudy2InfoCaseStudy(ICaseStudy caseStudy)
+     {
+         InfoCaseStudy infoCaseStudy = new InfoCaseStudy();
+         infoCaseStudy.setCode(caseStudy.getCode());
+         infoCaseStudy.setDescription(caseStudy.getDescription());
+         infoCaseStudy.setIdInternal(caseStudy.getIdInternal());
+         infoCaseStudy.setName(caseStudy.getName());
+         infoCaseStudy.setSeminaryCandidacies(caseStudy.getSeminaryCandidacies());
+         infoCaseStudy.setThemeName(caseStudy.getSeminaryTheme().getName());
+        
+         return infoCaseStudy;
+     }
+    
+    //by gedl AT rnl DOT ist DOT utl DOT pt (August the 4th, 2003)
+    public static InfoEquivalency copyIEquivalency2InfoEquivalency(ICourseEquivalency equivalency)
+    {
+        InfoEquivalency infoEquivalency = new InfoEquivalency();
+            
+        infoEquivalency.setIdInternal(equivalency.getIdInternal());
+        infoEquivalency.setModalityIdInternal(equivalency.getModalityIdInternal());
+        infoEquivalency.setSeminaryIdInternal(equivalency.getSeminaryIdInternal());
+        infoEquivalency.setSeminaryName(equivalency.getSeminary().getName());        
+        infoEquivalency.setCurricularCourseIdInternal(equivalency.getCurricularCourseIdInternal());
+                
+        infoEquivalency.setCurricularCourse(Cloner.copyCurricularCourse2InfoCurricularCourse(equivalency.getCurricularCourse()));
+        infoEquivalency.setModality(Cloner.copyIModality2InfoModality(equivalency.getModality()));
+        List themes = new LinkedList();
+        for (Iterator iterator= equivalency.getThemes().iterator(); iterator.hasNext();)
+        {
+            ITheme theme = (ITheme)iterator.next();            
+            InfoTheme infoTheme = copyITheme2InfoTheme(theme);
+            themes.add(infoTheme);
+        }
+        infoEquivalency.setThemes(themes);
+        
+        return infoEquivalency;
+    }
+    
+    
+    //  by gedl AT rnl DOT ist DOT utl DOT pt (July the 31th, 2003)
+	    public static InfoSeminary copyISeminary2InfoSeminary(ISeminary seminary)
+    {
+        InfoSeminary infoSeminary = null;
+        if (seminary!=null)
+        {
+            infoSeminary = new InfoSeminary();
+            infoSeminary.setDescription(seminary.getDescription());
+            infoSeminary.setIdInternal(seminary.getIdInternal());
+            infoSeminary.setName(seminary.getName());
+            infoSeminary.setAllowedCandidaciesPerStudent(seminary.getAllowedCandidaciesPerStudent());
+            List equivalencies = new LinkedList();
+            for (Iterator iterator= seminary.getEquivalencies().iterator(); iterator.hasNext();)
+            {
+                ICourseEquivalency courseEquivalency = (ICourseEquivalency) iterator.next();
+                InfoEquivalency infoEquivalency = copyIEquivalency2InfoEquivalency(courseEquivalency);
+				equivalencies.add(infoEquivalency);
+            }
+            infoSeminary.setEquivalencies(equivalencies);
+        }
+
+        return infoSeminary;
+    }
+    
+    //  by gedl AT rnl DOT ist DOT utl DOT pt (August the 5th, 2003)
+        public static ICandidacy copyInfoCandicacy2ICandidacy(InfoCandidacy infoCandidacy)
+    {
+        ICandidacy candidacy = null;
+        if (infoCandidacy!=null)
+        {
+            candidacy = new Candidacy();
+            List caseStudyChoices = new LinkedList();
+            candidacy.setMotivation(infoCandidacy.getMotivation());
+            for (Iterator iter= infoCandidacy.getCaseStudyChoices().iterator(); iter.hasNext();)
+			{
+				InfoCaseStudyChoice element= (InfoCaseStudyChoice) iter.next();
+                ICaseStudyChoice caseStudy = new CaseStudyChoice();
+                caseStudy.setOrder(element.getOrder());
+                caseStudy.setCaseStudyIdInternal(element.getCaseStudyIdInternal());
+                caseStudyChoices.add(caseStudy);
+			}
+            
+            candidacy.setCaseStudyChoices(caseStudyChoices);
+            candidacy.setCurricularCourseIdInternal(infoCandidacy.getCurricularCourseIdInternal());
+            candidacy.setStudentIdInternal(infoCandidacy.getStudentIdInternal());
+            candidacy.setThemeIdInternal(infoCandidacy.getThemeIdInternal());
+            candidacy.setModalityIdInternal(infoCandidacy.getModalityIdInternal());
+            candidacy.setSeminaryIdInternal(infoCandidacy.getSeminaryIdInternal());
+            candidacy.setIdInternal(infoCandidacy.getIdInternal());
+        }
+        return candidacy;
+    }
+    
+    //  by gedl AT rnl DOT ist DOT utl DOT pt (August the 5th, 2003)
+        public static InfoCandidacy copyICandicacy2InfoCandidacy(ICandidacy candidacy)
+    {
+        InfoCandidacy infoCandidacy = null;
+        if (candidacy!=null)
+        {
+            infoCandidacy = new InfoCandidacy();
+            List caseStudyChoices = new LinkedList();
+            infoCandidacy.setMotivation(candidacy.getMotivation());
+            for (Iterator iter= candidacy.getCaseStudyChoices().iterator(); iter.hasNext();)
+            {
+                CaseStudyChoice element= (CaseStudyChoice) iter.next();
+                InfoCaseStudyChoice infoCaseStudy = new InfoCaseStudyChoice();
+                infoCaseStudy.setOrder(element.getOrder());
+                infoCaseStudy.setCaseStudyIdInternal(element.getCaseStudyIdInternal());
+                caseStudyChoices.add(infoCaseStudy);
+            }
+            
+            infoCandidacy.setCaseStudyChoices(caseStudyChoices);
+            infoCandidacy.setCurricularCourseIdInternal(candidacy.getCurricularCourseIdInternal());
+            infoCandidacy.setStudentIdInternal(candidacy.getStudentIdInternal());
+            infoCandidacy.setThemeIdInternal(candidacy.getThemeIdInternal());
+            infoCandidacy.setModalityIdInternal(candidacy.getModalityIdInternal());
+            infoCandidacy.setSeminaryIdInternal(candidacy.getSeminaryIdInternal());
+            infoCandidacy.setIdInternal(candidacy.getIdInternal());
+        }
+        return infoCandidacy;
+    }    
 
 	/**
 	 * Method copyIDepartmentCourse2InfoDepartmentCourse.

@@ -52,6 +52,27 @@
         <form-property name="index" type="java.lang.String" />
       </form-bean>
 
+	  <form-bean name="seminaryCandidacyFormNonComplete"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="motivation" type="java.lang.String" />
+        <form-property name="themeID" type="java.lang.String" />
+        <form-property name="idInternal" type="java.lang.String" />
+        <form-property name="submition" type="java.lang.String" />
+      </form-bean>
+
+	  <form-bean name="seminaryCandidacySecondFormNonComplete"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="motivation" type="java.lang.String" />
+        <form-property name="themeID" type="java.lang.String" />
+        <form-property name="idInternal" type="java.lang.String" />
+        <form-property name="submition" type="java.lang.String" />
+		<form-property name="selectedCases" type="java.lang.String[]" />
+        <form-property name="unselectedCases" type="java.lang.String[]" />
+        <form-property name="hiddenSelectedCases" type="java.lang.String[]" />
+      </form-bean>
+
 	 <form-bean name="enroledExecutionCoursesForm"
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
@@ -129,9 +150,7 @@
         
       </action>
 
-
-
-      <action name="curricularCourseEnrolmentForm"
+	  <action name="curricularCourseEnrolmentForm"
               type="ServidorApresentacao.Action.student.CurricularCourseEnrolmentManagerDispatchAction"
               path="/curricularCourseEnrolmentManager"
               input="/curricularCourseEnrolmentManager.do?method=start"
@@ -208,6 +227,61 @@
               path="/examEnrollmentManager"
               parameter="method">
         <forward name="sucess" path="/viewExams.jsp"/>
+      </action>
+
+      <action type="ServidorApresentacao.Action.Seminaries.ListAllSeminaries"
+              path="/listAllSeminaries"
+              validate="true">
+        <forward name="listSeminaries" path="/viewSeminaries.jsp"/>
+      </action>
+
+      <action type="ServidorApresentacao.Action.Seminaries.ShowCandidacyOptions"
+              path="/candidacyOptions"
+              validate="true">
+        <forward name="candidaciesLimitReached" path="/candidacyLimitReached.jsp"/>
+        <forward name="showCandidacyOptions" path="/viewCandidacyOptions.jsp"/>
+		showCandidacyOptions
+        <forward name="invalidQueryString" path="naoAutorizado.do"/>
+      </action>
+
+	  <action type="ServidorApresentacao.Action.Seminaries.ShowCandidacyForm"
+              path="/fillCandidacy"
+              validate="true">
+        <forward name="showCandidacyFormNonCompleteModality" path="/viewCandidacyForm.jsp"/>
+        <forward name="invalidQueryString" path="naoAutorizado.do"/>
+      </action>
+
+	  	  <action type="ServidorApresentacao.Action.Seminaries.ShowCandidacySecondForm"
+              path="/submitCandidacyFirstInfo"
+              input="/viewCandidacyForm.jsp"
+              scope="request"
+			  name="seminaryCandidacyFormNonComplete"
+              validate="true">
+        <forward name="showCandidacyFormNonCompleteModalitySecondInfo" path="/viewCandidacySecondForm.jsp"/>
+        <forward name="invalidQueryString" path="naoAutorizado.do"/>
+      </action>
+
+  	  <action type="ServidorApresentacao.Action.Seminaries.ManageCaseStudyChoices"
+              path="/manageCaseStudyChoices"
+              scope="request"
+			  name="seminaryCandidacySecondFormNonComplete">
+        <forward name="candidacySubmited" path="/showCandidacy.jsp"/>
+        <forward name="selectionChanged" path="/viewCandidacySecondForm.jsp"/>
+        <forward name="invalidQueryString" path="naoAutorizado.do"/>
+      </action>
+
+  	  <action type="ServidorApresentacao.Action.Seminaries.CancelCandidacy"
+              path="/cancelCandidacy"
+              scope="request">
+        <forward name="candidacyCanceled" path="/listAllSeminaries.do"/>
+        <forward name="invalidQueryString" path="naoAutorizado.do"/>
+      </action>
+
+  	  <action type="ServidorApresentacao.Action.Seminaries.ShowCandidacyDetails"
+              path="/candidacyDetails"
+              scope="request">
+        <forward name="showCandidacyDetails" path="/showCandidacyDetails.jsp"/>
+        <forward name="invalidQueryString" path="naoAutorizado.do"/>
       </action>
 
       <!-- VIEW SCHEDULE -->

@@ -6,6 +6,14 @@
 
 package ServidorPersistente;
 
+import ServidorPersistente.Seminaries.IPersistentSeminary;
+import ServidorPersistente.Seminaries.IPersistentSeminaryCandidacy;
+import ServidorPersistente.Seminaries.IPersistentSeminaryCaseStudy;
+import ServidorPersistente.Seminaries.IPersistentSeminaryCaseStudyChoice;
+import ServidorPersistente.Seminaries.IPersistentSeminaryCurricularCourseEquivalency;
+import ServidorPersistente.Seminaries.IPersistentSeminaryModality;
+import ServidorPersistente.Seminaries.IPersistentSeminaryTheme;
+
 
 /**
  *
@@ -123,6 +131,28 @@ public interface ISuportePersistente {
 	public IPersistentCurricularCourseEquivalence getIPersistentCurricularCourseEquivalence();
 	
 	public IPersistentCurricularCourseEquivalenceRestriction getIPersistentCurricularCourseEquivalenceRestriction();
+
+   //by gedl AT rnl DOT ist DOT utl DOT pt (July the 25th, 2003) 
+      public IPersistentSeminaryModality getIPersistentSeminaryModality();
+    
+      //by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003) 
+       public IPersistentSeminaryTheme getIPersistentSeminaryTheme();
+     
+//    by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003) 
+       public IPersistentSeminary getIPersistentSeminary();
+     
+//    by gedl AT rnl DOT ist DOT utl DOT pt (July the 28th, 2003) 
+       public IPersistentSeminaryCaseStudy getIPersistentSeminaryCaseStudy();
+     
+//    by gedl AT rnl DOT ist DOT utl DOT pt (July the 29th, 2003) 
+       public IPersistentSeminaryCandidacy getIPersistentSeminaryCandidacy();
+     
+//    by gedl AT rnl DOT ist DOT utl DOT pt (July the 29th, 2003) 
+       public IPersistentSeminaryCaseStudyChoice getIPersistentSeminaryCaseStudyChoice();
+       
+//  by gedl AT rnl DOT ist DOT utl DOT pt (August the 4th, 2003) 
+     public IPersistentSeminaryCurricularCourseEquivalency getIPersistentSeminaryCurricularCourseEquivalency();
+
 	
 	public IPersistentMetadata getIPersistentMetadata();
 	public IPersistentQuestion getIPersistentQuestion();
