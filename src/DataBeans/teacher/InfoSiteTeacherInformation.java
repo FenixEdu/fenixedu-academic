@@ -40,6 +40,33 @@ public class InfoSiteTeacherInformation extends DataTranferObject implements ISi
     private List infoOldCientificPublications;
     private List infoOldDidacticPublications;
     private InfoExecutionPeriod infoExecutionPeriod;
+    private List infoCientificPublications;
+    private List infoDidaticPublications;
+    
+	/**
+	 * @return Returns the infoCientificPublications.
+	 */
+	public List getInfoCientificPublications() {
+		return infoCientificPublications;
+	}
+	/**
+	 * @return Returns the infoDidaticPublications.
+	 */
+	public List getInfoDidaticPublications() {
+		return infoDidaticPublications;
+	}
+	/**
+	 * @param infoCientificPublications The infoCientificPublications to set.
+	 */
+	public void setInfoCientificPublications(List infoCientificPublications) {
+		this.infoCientificPublications = infoCientificPublications;
+	}
+	/**
+	 * @param infoDidaticPublications The infoDidaticPublications to set.
+	 */
+	public void setInfoDidaticPublications(List infoDidaticPublications) {
+		this.infoDidaticPublications = infoDidaticPublications;
+	}
     /**
      *  
      */

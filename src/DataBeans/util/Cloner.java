@@ -127,6 +127,13 @@ import DataBeans.guide.reimbursementGuide.InfoReimbursementGuide;
 import DataBeans.guide.reimbursementGuide.InfoReimbursementGuideEntry;
 import DataBeans.guide.reimbursementGuide.InfoReimbursementGuideSituation;
 import DataBeans.person.InfoQualification;
+import DataBeans.publication.InfoAttribute;
+import DataBeans.publication.InfoAuthor;
+import DataBeans.publication.InfoAuthorPerson;
+import DataBeans.publication.InfoPublication;
+import DataBeans.publication.InfoPublicationFormat;
+import DataBeans.publication.InfoPublicationSubtype;
+import DataBeans.publication.InfoPublicationType;
 import DataBeans.student.InfoDelegate;
 import DataBeans.student.InfoStudentCourseReport;
 import DataBeans.teacher.InfoCareer;
@@ -170,6 +177,18 @@ import Dominio.gesdis.StudentCourseReport;
 import Dominio.grant.contract.IGrantCostCenter;
 import Dominio.grant.contract.IGrantPaymentEntity;
 import Dominio.grant.contract.IGrantProject;
+import Dominio.publication.Attribute;
+import Dominio.publication.Author;
+import Dominio.publication.IAttribute;
+import Dominio.publication.IAuthor;
+import Dominio.publication.IPublication;
+import Dominio.publication.IPublicationFormat;
+import Dominio.publication.IPublicationSubtype;
+import Dominio.publication.IPublicationType;
+import Dominio.publication.Publication;
+import Dominio.publication.PublicationFormat;
+import Dominio.publication.PublicationSubtype;
+import Dominio.publication.PublicationType;
 import Dominio.reimbursementGuide.IReimbursementGuide;
 import Dominio.reimbursementGuide.IReimbursementGuideEntry;
 import Dominio.reimbursementGuide.IReimbursementGuideSituation;
@@ -200,6 +219,7 @@ import Dominio.teacher.workTime.TeacherInstitutionWorkTime;
 import Util.EvaluationType;
 import Util.State;
 import Util.tests.Response;
+import constants.publication.PublicationConstants;
 
 /**
  * @author jpvl
@@ -5377,5 +5397,209 @@ public abstract class Cloner
 
 		return infoReimbursementGuideEntry;
 	}
+	
+//	 TJBF& PFON
+
+    public static InfoPublication copyIPublication2InfoPublication(IPublication publication) {
+    	InfoPublication infoPublication = new InfoPublication();
+    	InfoPublicationType infoPublicationType =
+    		Cloner.copyIPublicationType2InfoPublicationType(
+    				publication.getType());
+    	List publicationAuthors = publication.getPublicationAuthors();
+    	List publicationTeachers = publication.getPublicationTeachers();
+
+    	copyObjectProperties(infoPublication, publication);
+
+    	List infoPublicationAuthors = new ArrayList();
+    	List infoPublicationTeachers = new ArrayList();
+
+    	if ((publicationAuthors != null) || (publicationAuthors.size() != PublicationConstants.ZERO_VALUE)) {
+    		infoPublicationAuthors =
+    			(
+    					List) CollectionUtils
+						.collect(publicationAuthors, new Transformer() {
+							public Object transform(Object o) {
+								IAuthor author = (IAuthor) o;
+								return Cloner.copyIAuthor2InfoAuthor(author);
+							}
+						});
+
+    	}
+
+    	if ((publicationTeachers != null)
+		|| (publicationTeachers.size() != PublicationConstants.ZERO_VALUE)) {
+    		infoPublicationTeachers =
+    			(
+    					List) CollectionUtils
+						.collect(publicationTeachers, new Transformer() {
+							public Object transform(Object o) {
+								ITeacher teacher = (ITeacher) o;
+								return Cloner.copyITeacher2InfoTeacher(teacher);
+							}
+						});
+
+    	}
+    	infoPublication.setInfoPublicationTeachers(infoPublicationTeachers);
+    	infoPublication.setInfoPublicationAuthors(infoPublicationAuthors);
+    	infoPublication.setInfoPublicationType(infoPublicationType);
+    	return infoPublication;
+    }
+
+    public static IPublication copyInfoPublication2IPublication(InfoPublication infoPublication) {
+    	IPublication publication = new Publication();
+    	List infoPublicationAuthors =
+    		infoPublication.getInfoPublicationAuthors();
+    	List infoPublicationTeachers =
+    		infoPublication.getInfoPublicationTeachers();
+
+    	copyObjectProperties(publication, infoPublication);
+    	IPublicationType publicationType =
+    		Cloner.copyInfoPublicationType2IPublicationType(
+    				infoPublication.getInfoPublicationType());
+
+    	List publicationAuthors = new ArrayList();
+    	List publicationTeachers = new ArrayList();
+
+    	if ((infoPublicationAuthors != null)
+		|| (infoPublicationAuthors.size() != PublicationConstants.ZERO_VALUE)) {
+    		publicationAuthors =
+    			(
+    					List) CollectionUtils
+						.collect(infoPublicationAuthors, new Transformer() {
+							public Object transform(Object o) {
+								InfoAuthor infoAuthor = (InfoAuthor) o;
+								return Cloner.copyInfoAuthor2IAuthor(infoAuthor);
+							}
+						});
+    	}
+
+    	publication.setPublicationAuthors(publicationAuthors);
+    	publication.setType(publicationType);
+
+    	if (infoPublicationTeachers == null) {
+    		return publication;
+    	} else {
+    		publicationTeachers =
+    			(
+    					List) CollectionUtils
+						.collect(infoPublicationTeachers, new Transformer() {
+							public Object transform(Object o) {
+								InfoTeacher infoTeacher = (InfoTeacher) o;
+								return Cloner.copyInfoTeacher2Teacher(infoTeacher);
+							}
+						});
+
+    		publication.setPublicationTeachers(publicationTeachers);
+    		return publication;
+    	}
+    	
+    }
+
+    public static InfoPublicationType copyIPublicationType2InfoPublicationType(IPublicationType publicationType) {
+    	InfoPublicationType infoPublicationType = new InfoPublicationType();
+    	copyObjectProperties(infoPublicationType, publicationType);
+    	return infoPublicationType;
+    }
+
+    public static IPublicationType copyInfoPublicationType2IPublicationType(InfoPublicationType infoPublicationType) {
+    	IPublicationType publicationType = new PublicationType();
+    	copyObjectProperties(publicationType, infoPublicationType);
+    	return publicationType;
+    }
+
+    public static InfoAttribute copyIAttribute2InfoAttribute(IAttribute attribute) {
+    	InfoAttribute infoAttribute = new InfoAttribute();
+    	copyObjectProperties(infoAttribute, attribute);
+    	return infoAttribute;
+    }
+
+    public static IAttribute copyInfoAttribute2IAttribute(InfoAttribute infoAttribute) {
+    	IAttribute attribute = new Attribute();
+    	copyObjectProperties(attribute, infoAttribute);
+    	return attribute;
+    }
+
+    public static InfoPublicationSubtype copyIPublicationSubtype2InfoPublicationSubtype(IPublicationSubtype PublicationSubtype) {
+    	InfoPublicationSubtype infoPublicationSubtype =
+    		new InfoPublicationSubtype();
+    	copyObjectProperties(infoPublicationSubtype, PublicationSubtype);
+    	return infoPublicationSubtype;
+    }
+
+    public static IPublicationSubtype copyInfoPublicationSubtype2IPublicationSubtype(InfoPublicationSubtype infoPublicationSubtype) {
+    	IPublicationSubtype PublicationSubtype = new PublicationSubtype();
+    	copyObjectProperties(PublicationSubtype, infoPublicationSubtype);
+    	return PublicationSubtype;
+    }
+
+    public static InfoPublicationFormat copyIPublicationFormat2InfoPublicationFormat(IPublicationFormat PublicationFormat) {
+    	InfoPublicationFormat infoPublicationFormat =
+    		new InfoPublicationFormat();
+    	copyObjectProperties(infoPublicationFormat, PublicationFormat);
+    	return infoPublicationFormat;
+    }
+
+    public static IPublicationFormat copyInfoPublicationFormat2IPublicationFormat(InfoPublicationFormat infoPublicationFormat) {
+    	IPublicationFormat PublicationFormat = new PublicationFormat();
+    	copyObjectProperties(PublicationFormat, infoPublicationFormat);
+    	return PublicationFormat;
+    }
+
+    public static IAuthor copyInfoAuthor2IAuthor(InfoAuthor infoAuthor) {
+    	IAuthor author = new Author();
+    	IPessoa person = new Pessoa();
+    	if (infoAuthor.getKeyPerson() != null) {
+    		person = copyInfoPerson2IPerson(infoAuthor.getInfoPessoa());
+    	}
+    	copyObjectProperties(author, infoAuthor);
+    	if (infoAuthor.getKeyPerson() != null) {
+    		author.setPerson(person);
+    	}
+    	return author;
+    }
+
+    public static InfoAuthor copyIAuthor2InfoAuthor(IAuthor author) {
+    	InfoAuthor infoAuthor = new InfoAuthor();
+    	InfoPerson infoPerson = new InfoPerson();
+    	if (author.getKeyPerson() != null) {
+    		infoPerson = copyIPerson2InfoPerson(author.getPerson());
+    	}
+    	copyObjectProperties(infoAuthor, author);
+    	if (author.getKeyPerson() != null) {
+    		infoAuthor.setInfoPessoa(infoPerson);
+    	}
+    	if (author.getOrganisation() == null
+    			|| author.getOrganisation().length() == PublicationConstants.ZERO_VALUE) {
+    		infoAuthor.setOrganisation(PublicationConstants.DEFAULT_ORGANIZATION);
+    	}
+    	return infoAuthor;
+    }
+
+    public static InfoAuthorPerson copyIAuthor2InfoAuthorperson(IAuthor author) {
+
+    	InfoAuthorPerson infoAuthorPerson = new InfoAuthorPerson();
+    	String keyIdString = author.getIdInternal().toString() + PublicationConstants.INIT_AUTHOR;
+
+    	infoAuthorPerson.setIdInternal(author.getIdInternal());
+    	infoAuthorPerson.setKeyFinal(keyIdString);
+    	infoAuthorPerson.setName(author.getAuthor());
+    	infoAuthorPerson.setOrganisation(author.getOrganisation());
+
+    	return infoAuthorPerson;
+    }
+
+    public static InfoAuthorPerson copyIPerson2InfoAuthorPerson(IPessoa person) {
+
+    	InfoAuthorPerson infoAuthorPerson = new InfoAuthorPerson();
+
+    	String keyIdString = person.getIdInternal().toString() + PublicationConstants.INIT_PERSON;
+
+    	infoAuthorPerson.setIdInternal(person.getIdInternal());
+    	infoAuthorPerson.setKeyFinal(keyIdString);
+    	infoAuthorPerson.setName(person.getNome());
+    	infoAuthorPerson.setOrganisation(PublicationConstants.DEFAULT_ORGANIZATION);
+    	return infoAuthorPerson;
+    }
+// TJBF& PFON
 
 }

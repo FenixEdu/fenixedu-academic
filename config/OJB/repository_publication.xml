@@ -1,0 +1,168 @@
+<!-- TJBF & PFON -->
+
+<!-- Definitions for Dominio.publication.PublicationType -->
+<class-descriptor class="Dominio.publication.PublicationType" table="PUBLICATION_TYPE">
+    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
+	<field-descriptor name="publicationType" column="PUBLICATION_TYPE" jdbc-type="VARCHAR"/>
+	<collection-descriptor
+			name="requiredAttributes"
+			element-class-ref="Dominio.publication.Attribute"
+			indirection-table="PUBLICATION_ATTRIBUTE"
+			proxy="true">
+		<fk-pointing-to-this-class column="KEY_PUBLICATION_TYPE"/>
+		<fk-pointing-to-element-class column="KEY_ATTRIBUTE"/>
+		<query-customizer class="ServidorPersistente.customQueries.RequiredAttributeFilter">
+	    </query-customizer>
+	</collection-descriptor>
+	<collection-descriptor
+			name="nonRequiredAttributes"
+			element-class-ref="Dominio.publication.Attribute"
+			indirection-table="PUBLICATION_ATTRIBUTE"
+			proxy="true">
+		<fk-pointing-to-this-class column="KEY_PUBLICATION_TYPE"/>
+		<fk-pointing-to-element-class column="KEY_ATTRIBUTE"/>
+		<query-customizer class="ServidorPersistente.customQueries.NonRequiredAttributeFilter">
+	    </query-customizer>
+	</collection-descriptor>
+	<collection-descriptor
+         	name="subtypes"
+         	element-class-ref="Dominio.publication.PublicationSubtype">
+         <inverse-foreignkey field-ref="keyPublicationType"/>
+    </collection-descriptor>
+
+</class-descriptor>
+
+<!-- Definitions for Dominio.publication.Attribute -->
+<class-descriptor class="Dominio.publication.Attribute" table="ATTRIBUTE">
+    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
+	<field-descriptor name="attributeType" column="ATTRIBUTE_TYPE" jdbc-type="VARCHAR"/>
+	<collection-descriptor
+			name="publications"
+			element-class-ref="Dominio.publication.PublicationType"
+			indirection-table="PUBLICATION_ATTRIBUTE"
+			proxy="true">
+		<fk-pointing-to-this-class column="KEY_ATTRIBUTE"/>
+		<fk-pointing-to-element-class column="KEY_PUBLICATION_TYPE"/>
+	</collection-descriptor>
+</class-descriptor>
+
+<class-descriptor class="Dominio.publication.Publication" table="PUBLICATION_DATA">
+    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
+    <field-descriptor name="keyPublicationType" column="KEY_PUBLICATION_TYPE" jdbc-type="INTEGER" nullable="false"/>
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
+	<field-descriptor name="subType" column="SUB_TYPE" jdbc-type="VARCHAR"/>
+	<field-descriptor name="journalName" column="JOURNAL_NAME" jdbc-type="VARCHAR"/>
+	<field-descriptor name="title" column="TITLE" jdbc-type="VARCHAR"/>
+	<field-descriptor name="volume" column="VOLUME" jdbc-type="VARCHAR"/>
+	<field-descriptor name="editor" column="EDITOR" jdbc-type="VARCHAR"/>
+	<field-descriptor name="month" column="MONTH" jdbc-type="VARCHAR"/>
+	<field-descriptor name="year" column="YEAR" jdbc-type="INTEGER"/>
+	<field-descriptor name="month_end" column="MONTH_END" jdbc-type="VARCHAR"/>
+	<field-descriptor name="year_end" column="YEAR_END" jdbc-type="INTEGER"/>
+	<field-descriptor name="conference" column="CONFERENCE" jdbc-type="VARCHAR"/>
+	<field-descriptor name="instituition" column="INSTITUITION" jdbc-type="VARCHAR"/>
+	<field-descriptor name="firstPage" column="FIRST_PAGE" jdbc-type="INTEGER"/>
+	<field-descriptor name="language" column="LANGUAGE" jdbc-type="VARCHAR"/>
+	<field-descriptor name="country" column="COUNTRY" jdbc-type="VARCHAR"/>
+	<field-descriptor name="issn" column="ISSN" jdbc-type="INTEGER"/>
+	<field-descriptor name="isbn" column="ISBN" jdbc-type="INTEGER"/>
+	<field-descriptor name="format" column="FORMAT" jdbc-type="VARCHAR"/>
+	<field-descriptor name="scope" column="SCOPE" jdbc-type="VARCHAR"/>
+	<field-descriptor name="observation" column="OBSERVATION" jdbc-type="VARCHAR"/>
+	<field-descriptor name="edition" column="EDITION" jdbc-type="INTEGER"/>
+	<field-descriptor name="editorCity" column="EDITOR_CITY" jdbc-type="VARCHAR"/>
+	<field-descriptor name="numberPages" column="NUMBER_PAGES" jdbc-type="INTEGER"/>
+	<field-descriptor name="fascicle" column="FASCICLE" jdbc-type="INTEGER"/>
+	<field-descriptor name="serie" column="SERIE" jdbc-type="INTEGER"/>
+	<field-descriptor name="url" column="URL" jdbc-type="VARCHAR"/>
+	<field-descriptor name="university" column="UNIVERSITY" jdbc-type="VARCHAR"/>
+	<field-descriptor name="local" column="LOCAL" jdbc-type="VARCHAR"/>
+	<field-descriptor name="originalLanguage" column="ORIGINAL_LANGUAGE" jdbc-type="VARCHAR"/>
+	<field-descriptor name="translatedAuthor" column="TRANSLATED_AUTHOR" jdbc-type="VARCHAR"/>
+	<field-descriptor name="criticizedAuthor" column="CRITICIZED_AUTHOR" jdbc-type="VARCHAR"/>
+	<field-descriptor name="publicationType" column="PUBLICATION_TYPE" jdbc-type="VARCHAR"/>
+	<field-descriptor name="number" column="NUMBER" jdbc-type="INTEGER"/>
+	<field-descriptor name="didatic" column="DIDATIC" jdbc-type="INTEGER"/>	
+	
+	<reference-descriptor name="type" class-ref="Dominio.publication.PublicationType" proxy="true">
+	    <foreignkey field-ref="keyPublicationType"/>
+    </reference-descriptor>
+    
+    <collection-descriptor
+			name="publicationTeachers"
+			element-class-ref="Dominio.Teacher"
+			collection-class="org.apache.ojb.broker.util.collections.ManageableArrayList"
+			indirection-table="PUBLICATION_TEACHER"
+			proxy="true"
+	        refresh="true"
+	        auto-update="false"
+		    auto-delete="false">
+		<fk-pointing-to-this-class column="KEY_PUBLICATION"/>
+		<fk-pointing-to-element-class column="KEY_TEACHER"/>
+	</collection-descriptor>
+	
+	<collection-descriptor
+			name="publicationAuthors"
+			element-class-ref="Dominio.publication.Author"
+			indirection-table="PUBLICATION_AUTHOR"
+			proxy="true">
+		<fk-pointing-to-this-class column="KEY_PUBLICATION"/>
+		<fk-pointing-to-element-class column="KEY_AUTHOR"/>
+	</collection-descriptor>
+    
+    <attribute
+     	attribute-name="cacheable"
+     	attribute-value="false" />
+    
+</class-descriptor>
+
+
+<!-- Definitions for Dominio.publication.PublicationSubtype -->
+<class-descriptor class="Dominio.publication.PublicationSubtype" table="PUBLICATION_SUBTYPE">
+    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
+    <field-descriptor name="keyPublicationType" column="KEY_PUBLICATION_TYPE" jdbc-type="INTEGER" nullable="false"/>
+    <field-descriptor name="subtype" column="SUBTYPE" jdbc-type="VARCHAR"/>
+
+	<reference-descriptor name="publicationType" class-ref="Dominio.publication.PublicationType" proxy="true">
+	    <foreignkey field-ref="keyPublicationType"/>
+    </reference-descriptor>
+
+</class-descriptor>
+
+<!-- Definitions for Dominio.publication.PublicationFormat -->
+<class-descriptor class="Dominio.publication.PublicationFormat" table="PUBLICATION_FORMAT">
+    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
+    <field-descriptor name="format" column="FORMAT" jdbc-type="VARCHAR"/>
+</class-descriptor>
+
+<!-- Definitions for Dominio.publication.Author -->
+<class-descriptor class="Dominio.publication.Author" table="AUTHOR">
+    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
+    <field-descriptor name="keyPerson" column="KEY_PERSON" jdbc-type="INTEGER"/>
+    <field-descriptor name="author" column="AUTHOR" jdbc-type="VARCHAR"/>
+	<field-descriptor name="organisation" column="ORGANISATION" jdbc-type="VARCHAR"/>
+	
+	<collection-descriptor
+			name="authorPublications"
+			element-class-ref="Dominio.publication.Publication"
+			indirection-table="PUBLICATION_AUTHOR"
+			proxy="true">
+		<fk-pointing-to-this-class column="KEY_AUTHOR"/>
+		<fk-pointing-to-element-class column="KEY_PUBLICATION"/>
+	</collection-descriptor>
+	
+	<reference-descriptor name="person" class-ref="Dominio.Pessoa" proxy="true">
+	    <foreignkey field-ref="keyPerson"/>
+    </reference-descriptor>
+    
+    <attribute
+     	attribute-name="cacheable"
+     	attribute-value="false" />
+
+</class-descriptor>				  		
+<!-- Mapping of User defined classses ends here -->

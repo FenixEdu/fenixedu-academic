@@ -312,4 +312,73 @@
 	<definition name="editSummary" extends="definition.teacher.summaryPage">
 		<put name="body" value="/teacher/editSummary.jsp"></put>		
 	</definition>
+	
+	
+	<!-- TJBF & PFON -->
+	<definition name="df.page.teacher-index" 
+		extends="definition.teacher.two-column">
+		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
+		<put name="body" value="/teacher/firstPage.jsp" />
+	</definition>
+
+	<definition name="view-cientific-teacher-publications" 
+		extends="teacher-information">
+		<put name="body" 
+			value="/publication/publicationCientificManagement.jsp"></put>
+	</definition>
+	<definition name="view-didatic-teacher-publications" 
+		extends="teacher-information">
+		<put name="body" 
+			value="/publication/publicationDidaticManagement.jsp"></put>
+	</definition>
+	<definition name="view-cientific-author-publications" 
+		extends="teacher-information">
+		<put name="body" 
+			value="/publication/publicationCientificAuthor.jsp"></put>
+	</definition>
+	<definition name="view-didatic-author-publications" 
+		extends="teacher-information">
+		<put name="body" 
+			value="/publication/publicationDidaticAuthor.jsp"></put>
+	</definition>
+	<definition name="edit-Cientific-publication" 
+		extends="teacher-information">
+		<put name="body" 
+			value="/publication/readPublicationCientificAttributes.jsp"></put>
+	</definition>
+	<definition name="edit-Didatic-publication" 
+		extends="teacher-information">
+		<put name="body" 
+			value="/publication/readPublicationDidaticAttributes.jsp"></put>
+	</definition>
+	<definition name="view-publication-types" 
+		extends="teacher-information">
+		<put name="body" 
+			value="/publication/readPublicationTypes.jsp"></put>
+	</definition>
+	<definition name="view-publicationDidatic-attributes" 
+		extends="teacher-information">
+		<put name="body" 
+			value="/publication/readPublicationDidaticAttributes.jsp"></put>
+	</definition>
+	<definition name="view-publicationCientific-attributes" 
+		extends="teacher-information">
+		<put name="body" 
+			value="/publication/readPublicationCientificAttributes.jsp"></put>
+	</definition>
+	
+	<definition name="publications-management" 
+		extends="teacher-information">
+		<put name="body" 
+			value="/publication/PublicationsManagement.jsp"></put>
+	</definition>
+	
+	<definition name="view-authors-form" 
+		extends="teacher-information">
+		<put name="body" 
+			value="/publication/searchAuthor.jsp"></put>
+	</definition>
+	
+<!-- TJBF & PFON -->
+	
 </tiles-definitions>

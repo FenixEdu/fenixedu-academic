@@ -413,7 +413,19 @@
          class-ref="Dominio.teacher.Category"
          proxy="false">
          <foreignkey field-ref="keyCategory"/>
-      </reference-descriptor>       
-     
+      </reference-descriptor>
+      
+     <collection-descriptor
+			name="teacherPublications"
+			collection-class="org.apache.ojb.broker.util.collections.ManageableArrayList"
+			element-class-ref="Dominio.publication.Publication"
+			indirection-table="PUBLICATION_TEACHER"
+			proxy="true"
+			refresh="true"
+	        auto-update="false"
+		    auto-delete="false">
+		<fk-pointing-to-this-class column="KEY_TEACHER"/>
+		<fk-pointing-to-element-class column="KEY_PUBLICATION"/>
+	</collection-descriptor>
     	
    </class-descriptor>

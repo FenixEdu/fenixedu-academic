@@ -3,6 +3,8 @@
  */
 package Dominio;
 
+import java.util.List;
+
 import Dominio.teacher.ICategory;
 
 
@@ -21,5 +23,11 @@ public interface ITeacher extends IDomainObject {
     public void setTeacherNumber(Integer number);
 	public void setPerson(IPessoa person);
 	public void setCategory(ICategory category);
+
+	/**
+	 * @return
+	 */
+	public List getTeacherPublications();
+	public void setTeacherPublications(List teacherPublications);
 	
 }

@@ -38,6 +38,11 @@ import ServidorPersistente.guide.IPersistentReimbursementGuide;
 import ServidorPersistente.guide.IPersistentReimbursementGuideEntry;
 import ServidorPersistente.guide.IPersistentReimbursementGuideSituation;
 import ServidorPersistente.places.campus.IPersistentCampus;
+import ServidorPersistente.publication.IPersistentAuthor;
+import ServidorPersistente.publication.IPersistentPublication;
+import ServidorPersistente.publication.IPersistentPublicationAttribute;
+import ServidorPersistente.publication.IPersistentPublicationFormat;
+import ServidorPersistente.publication.IPersistentPublicationType;
 import ServidorPersistente.sms.IPersistentSentSms;
 import ServidorPersistente.student.IPersistentDelegate;
 import ServidorPersistente.teacher.IPersistentCareer;
@@ -289,5 +294,11 @@ public interface ISuportePersistente
 	
 	// Nuno Correia & Ricardo Rodrigues
 	public IPersistentSchoolRegistrationInquiryAnswer getIPersistentSchoolRegistrationInquiryAnswer();
+	//	TJBF & PFON
+	public IPersistentPublication getIPersistentPublication();
+	public IPersistentPublicationType getIPersistentPublicationType();
+	public IPersistentPublicationAttribute getIPersistentPublicationAttribute();
+	public IPersistentPublicationFormat getIPersistentPublicationFormat();
+	public IPersistentAuthor getIPersistentAuthor();
 		
 }

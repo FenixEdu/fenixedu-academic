@@ -4,6 +4,8 @@
  */
 package Dominio;
 
+import java.util.List;
+
 import Dominio.teacher.ICategory;
 
 /**
@@ -16,6 +18,7 @@ public class Teacher extends DomainObject implements ITeacher {
 	private Integer keyPerson;
 	private Integer keyCategory;
 	private ICategory category;
+	private List teacherPublications;
 	/** Creates a new instance of Teacher */
 	public Teacher() {
 	}
@@ -118,5 +121,17 @@ public class Teacher extends DomainObject implements ITeacher {
 		result += ", category= " + getCategory();
 		result += "]";
 		return result;
+	}
+	/* (non-Javadoc)
+	 * @see Dominio.ITeacher#getTeacherPublications()
+	 */
+	public List getTeacherPublications() {
+		return this.teacherPublications;
+	}
+	/**
+	 * @param teacherPublications The teacherPublications to set.
+	 */
+	public void setTeacherPublications(List teacherPublications) {
+		this.teacherPublications = teacherPublications;
 	}
 }

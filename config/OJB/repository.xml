@@ -28,6 +28,7 @@
 <!ENTITY places SYSTEM "repository_places.xml">
 <!ENTITY grant_owner_management SYSTEM "repository_grant_owner_management.xml">
 <!ENTITY teacher SYSTEM "repository_teacher.xml">
+<!ENTITY publication SYSTEM "repository_publication.xml">
 <!ENTITY gaugingTests SYSTEM "repository_gaugingTests.xml">
 <!ENTITY delegate SYSTEM "repository_delegate.xml">
 <!ENTITY finalDegreeWork SYSTEM "repository_finalDegreeWork.xml">
@@ -73,6 +74,7 @@
 	&places;
     &grant_owner_management;
     &teacher;
+    &publication;
     &gaugingTests;
     &delegate;
     &finalDegreeWork;

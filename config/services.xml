@@ -3266,6 +3266,221 @@
             <chain name="TeacherAuthorization"/>
         </filterChains>
     </service>
+    
+    
+    <!--TJBF & PFON-->
+
+    <service>
+        <name>ReadPublications</name>
+        <implementationClass>ServidorAplicacao.Servico.publication.ReadPublications</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>
+    </service>
+	<!--<service>
+		<name>DeletePublication</name>
+        <implementationClass>ServidorAplicacao.Servico.teacher.DeletePublication</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>
+    </service>-->
+    <service>
+        <name>ReadPublication</name>
+        <implementationClass>ServidorAplicacao.Servico.publication.ReadPublication</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>EditPublication</name>
+        <implementationClass>ServidorAplicacao.Servico.publication.EditPublication</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>
+    </service>
+	<service>
+        <name>ReadPublicationTypes</name>
+        <implementationClass>ServidorAplicacao.Servico.publication.ReadPublicationTypes</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadPublicationType</name>
+        <implementationClass>ServidorAplicacao.Servico.publication.ReadPublicationType</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>
+    </service>
+	<service>
+        <name>ReadRequiredAttributes</name>
+        <implementationClass>ServidorAplicacao.Servico.publication.ReadRequiredAttributes</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadNonRequiredAttributes</name>
+        <implementationClass>ServidorAplicacao.Servico.publication.ReadNonRequiredAttributes</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>
+    </service>
+	<service>
+        <name>ReadPublicationSubtypes</name>
+        <implementationClass>ServidorAplicacao.Servico.publication.ReadPublicationSubtypes</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadPublicationFormats</name>
+        <implementationClass>ServidorAplicacao.Servico.publication.ReadPublicationFormats</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadPublicationMonths</name>
+        <implementationClass>ServidorAplicacao.Servico.publication.ReadPublicationMonths</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadPublicationScopes</name>
+        <implementationClass>ServidorAplicacao.Servico.publication.ReadPublicationScopes</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadAuthorPublications</name>
+        <implementationClass>ServidorAplicacao.Servico.publication.ReadAuthorPublications</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadPersonsNotAuthors</name>
+        <implementationClass>ServidorAplicacao.Servico.publication.ReadPersonsNotAuthors</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadAuthors</name>
+        <implementationClass>ServidorAplicacao.Servico.publication.ReadAuthors</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>InsertNewAuthorsAsPersons</name>
+        <implementationClass>ServidorAplicacao.Servico.publication.InsertNewAuthorsAsPersons</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadAuthorsToInsert</name>
+        <implementationClass>ServidorAplicacao.Servico.publication.ReadAuthorsToInsert</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>InsertAuthor</name>
+        <implementationClass>ServidorAplicacao.Servico.publication.InsertAuthor</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadAuthorByKeyPerson</name>
+        <implementationClass>ServidorAplicacao.Servico.publication.ReadAuthorByKeyPerson</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadAuthorsByPublicationId</name>
+        <implementationClass>ServidorAplicacao.Servico.publication.ReadAuthorsByPublicationId</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>
+    </service>
+        <service>
+        <name>InsertPublicationInTeacherList</name>
+        <implementationClass>ServidorAplicacao.Servico.publication.InsertPublicationInTeacherList</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadAuthorPublicationsToInsert</name>
+        <implementationClass>ServidorAplicacao.Servico.publication.ReadAuthorPublicationsToInsert</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>DeletePublicationInTeacherList</name>
+        <implementationClass>ServidorAplicacao.Servico.publication.DeletePublicationInTeacherList</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>
+    </service>
+    
+	<!--TJBF & PFON-->
+    
+    
     <service>
         <name>ReadCategories</name>
         <implementationClass>ServidorAplicacao.Servico.teacher.ReadCategories</implementationClass>

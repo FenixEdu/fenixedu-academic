@@ -60,6 +60,11 @@ import ServidorPersistente.OJB.guide.ReimbursementGuideOJB;
 import ServidorPersistente.OJB.guide.ReimbursementGuideSituationOJB;
 import ServidorPersistente.OJB.person.qualification.QualificationOJB;
 import ServidorPersistente.OJB.places.campus.CampusOJB;
+import ServidorPersistente.OJB.publication.AuthorOJB;
+import ServidorPersistente.OJB.publication.PublicationAttributeOJB;
+import ServidorPersistente.OJB.publication.PublicationFormatOJB;
+import ServidorPersistente.OJB.publication.PublicationOJB;
+import ServidorPersistente.OJB.publication.PublicationTypeOJB;
 import ServidorPersistente.OJB.sms.SentSmsOJB;
 import ServidorPersistente.OJB.student.DelegateOJB;
 import ServidorPersistente.OJB.teacher.CareerOJB;
@@ -105,6 +110,11 @@ import ServidorPersistente.guide.IPersistentReimbursementGuide;
 import ServidorPersistente.guide.IPersistentReimbursementGuideEntry;
 import ServidorPersistente.guide.IPersistentReimbursementGuideSituation;
 import ServidorPersistente.places.campus.IPersistentCampus;
+import ServidorPersistente.publication.IPersistentAuthor;
+import ServidorPersistente.publication.IPersistentPublication;
+import ServidorPersistente.publication.IPersistentPublicationAttribute;
+import ServidorPersistente.publication.IPersistentPublicationFormat;
+import ServidorPersistente.publication.IPersistentPublicationType;
 import ServidorPersistente.sms.IPersistentSentSms;
 import ServidorPersistente.student.IPersistentDelegate;
 import ServidorPersistente.teacher.IPersistentCareer;
@@ -1279,13 +1289,47 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentSentSms getIPersistentSentSms()
 	{
 		return new SentSmsOJB();
-
 	}
 	
+	//TJBF & PFON
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentPublication()
+	 */
+	public IPersistentPublication getIPersistentPublication() {
+		return new PublicationOJB();
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentPublicationType()
+	 */
+	public IPersistentPublicationType getIPersistentPublicationType() {
+		return new PublicationTypeOJB();
+	}
+
 	// Nuno Correia & Ricardo Rodrigues
 	public IPersistentSchoolRegistrationInquiryAnswer getIPersistentSchoolRegistrationInquiryAnswer()
 	{
 	    return new SchoolRegistrationInquiryAnswerOJB();
 	}
 	
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentPublicationAttribute()
+	 */
+	public IPersistentPublicationAttribute getIPersistentPublicationAttribute() {
+		return new PublicationAttributeOJB();
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentPublicationFormat()
+	 */
+	public IPersistentPublicationFormat getIPersistentPublicationFormat() {
+		return new PublicationFormatOJB();
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentAuthor()
+	 */
+	public IPersistentAuthor getIPersistentAuthor() {
+		return new AuthorOJB();
+	}
 }

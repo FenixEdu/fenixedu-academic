@@ -147,43 +147,48 @@
 			</logic:iterate>
 			</table>
 		<br />
+		<!-- TJBF & PFON -->
 		<p class="infoop"><span class="emphasis-box">5</span>
 		<bean:message key="message.teacherInformation.ownPublications" />
 		</p>
 			<div class="gen-button">
-				<html:link page="/readOldPublications.do?oldPublicationType=Didactic&amp;page=0">
+				<html:link page="/readPublications.do?typePublication=Didatic&amp;page=0">
 					<bean:message key="label.teacherInformation.manage" />
 				</html:link>
 			</div>
 		</logic:lessThan>
 		<br />
 		<table style="text-align:left" width="100%">	
-			<logic:iterate id="infoOldPublication" name="infoSiteTeacherInformation" property="infoOldDidacticPublications">
+			<logic:iterate id="infoPublicationDidatic" name="infoSiteTeacherInformation" property="infoDidaticPublications">
 				<tr>
 					<td class="listClasses" style="text-align:left">
-						<bean:write name="infoOldPublication" property="publication" />
+						<bean:write name="infoPublicationDidatic" property="publicationString" />
 					</td>
 				</tr>
 			</logic:iterate>
 		</table>
 		<br />
+					
+					
 		<p class="infoop"><span class="emphasis-box">6</span>
 		<bean:message key="message.teacherInformation.cientificPublications" /></p>
 		<div class="gen-button">
-			<html:link page="/readOldPublications.do?oldPublicationType=Cientific&amp;page=0">
+			<html:link page="/readPublications.do?typePublication=Cientific&amp;page=0">
 				<bean:message key="label.teacherInformation.manage" />
 			</html:link>
 		</div>
 		<br />	
 		<table style="text-align:left" width="100%">
-			<logic:iterate id="infoOldPublication" name="infoSiteTeacherInformation" property="infoOldCientificPublications">
+			<logic:iterate id="infoPublicationCientific" name="infoSiteTeacherInformation" property="infoCientificPublications">
 				<tr>
 					<td class="listClasses" style="text-align:left">
-						<bean:write name="infoOldPublication" property="publication" />
+						<bean:write name="infoPublicationCientific" property="publicationString" />
 					</td>
 				</tr>
 			</logic:iterate>
 		</table>
+
+		<!-- TJBF & PFON -->
 		<br />
 		<p class="infoop"><span class="emphasis-box">7</span>
 			<bean:message key="message.teacherInformation.numberOfPublications" /></p>
@@ -329,7 +334,7 @@
 			<bean:message key="label.doublePoint" />
 		</p>
 		<br />
-		Informação ainda não disponível
+		Informaï¿½ï¿½o ainda nï¿½o disponï¿½vel
 		<%--<table width="100%" border="0" cellspacing="1" style="margin-top:10px">
 			<tr>
 				<td><bean:write name="" property=""/></td>

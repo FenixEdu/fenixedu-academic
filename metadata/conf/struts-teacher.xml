@@ -467,6 +467,88 @@
             <form-property name="infoTeacher#idInternal" type="java.lang.Integer"/>
             <form-property name="oldPublicationTypeString" type="java.lang.String"/>
         </form-bean>
+        
+        
+        <!-- TJBF & PFON -->
+        <!-- READ PUBLICATIONS FORM -->
+        <form-bean name="readPublicationsForm" type="org.apache.struts.validator.DynaValidatorForm" 
+            dynamic="true">
+            <!--<form-property name="oldPublicationType" type="java.lang.String" />-->
+        </form-bean>
+        <!-- PUBLICATION FORM -->
+        <form-bean name="publicationManagementForm" type="org.apache.struts.validator.DynaValidatorForm" 
+            dynamic="true">
+            <form-property name="subtype" type="java.lang.String" />
+			<form-property name="journalName" type="java.lang.String" />
+			<form-property name="title" type="java.lang.String" />
+			<form-property name="volume" type="java.lang.String" />
+			<form-property name="editor" type="java.lang.String" />
+			<form-property name="month" type="java.lang.String" />
+			<form-property name="year" type="java.lang.String" />
+			<form-property name="month_end" type="java.lang.String" />
+			<form-property name="year_end" type="java.lang.String" />
+			<form-property name="number" type="java.lang.Integer" />
+			<form-property name="conference" type="java.lang.String" />
+			<form-property name="instituition" type="java.lang.String" />
+			<form-property name="firstPage" type="java.lang.Integer" />
+			<form-property name="lastPage" type="java.lang.Integer" />
+			<form-property name="language" type="java.lang.String" />
+			<form-property name="country" type="java.lang.String" />
+			<form-property name="issn" type="java.lang.Integer" />
+			<form-property name="isbn" type="java.lang.Integer" />
+			<form-property name="format" type="java.lang.String" />
+			<form-property name="scope" type="java.lang.String" />
+			<form-property name="observation" type="java.lang.String" />
+			<form-property name="edition" type="java.lang.String" />
+			<form-property name="editorCity" type="java.lang.String" />
+			<form-property name="numberPages" type="java.lang.Integer" />
+			<form-property name="fascicle" type="java.lang.String" />
+			<form-property name="serie" type="java.lang.String" />
+			<form-property name="url" type="java.lang.String" />
+			<form-property name="university" type="java.lang.String" />
+			<form-property name="local" type="java.lang.String" />
+			<form-property name="originalLanguage" type="java.lang.String" />
+			<form-property name="translatedAuthor" type="java.lang.String" />
+			<form-property name="criticizedAuthor" type="java.lang.String" />
+			<form-property name="publicationType" type="java.lang.String" />
+            <form-property name="page" type="java.lang.Integer" />
+            <form-property name="idInternal" type="java.lang.Integer" initial="0"/>
+            <form-property name="publicationString" type="java.lang.String" />
+            <!--<form-property name="infoTeacher#idInternal" type="java.lang.Integer"/>-->
+            <form-property name="infoPublicationTypeId" type="java.lang.Integer" />
+            <form-property name="teacherId" type="java.lang.Integer" />
+            <form-property name="typePublication" type="java.lang.String" />
+            <form-property name="searchAuthorString" type="java.lang.String" />
+            <form-property name="authorName" type="java.lang.String" />
+            <form-property name="authorOrganisation" type="java.lang.String" />
+            <form-property name="authorsPersonsCodes" type="java.lang.String[]" />
+            <form-property name="authorsIds" type="java.lang.String[]" /> 
+            <form-property name="authorsIdstoDelete" type="java.lang.String[]" />           
+        </form-bean>
+		<!-- READ PUBLICATION TYPES FORM -->
+        <form-bean name="readPublicationTypesForm" type="org.apache.struts.validator.DynaValidatorForm" 
+            dynamic="true">
+			<form-property name="infoPublicationType#idInternal" type="java.lang.Integer" />
+            <form-property name="page" type="java.lang.Integer" />
+            <form-property name="idInternal" type="java.lang.Integer" initial="0"/>
+            <form-property name="title" type="java.lang.String" />
+            <form-property name="infoTeacher#idInternal" type="java.lang.Integer"/>
+            <form-property name="teacherId" type="java.lang.Integer" />
+        </form-bean>
+		<!-- READ PUBLICATION ATTRIBUTES FORM -->
+        <form-bean name="readPublicationAttributesForm" type="org.apache.struts.validator.DynaValidatorForm" 
+            dynamic="true">
+			<form-property name="infoPublicationType#idInternal" type="java.lang.Integer" />
+            <form-property name="page" type="java.lang.Integer" />
+            <form-property name="idInternal" type="java.lang.Integer" initial="0"/>
+            <form-property name="title" type="java.lang.String" />
+            <form-property name="infoTeacher#idInternal" type="java.lang.Integer"/>
+            <form-property name="teacherId" type="java.lang.Integer" />
+        </form-bean>
+        <!-- TJBF & PFON -->
+        
+        
+        
         <!-- EXTERNAL ACTIVITY FORM -->
         <form-bean name="externalActivityForm" type="org.apache.struts.validator.DynaValidatorForm" 
             dynamic="true">
@@ -1340,6 +1422,151 @@
             <forward name="successfull-read" 
                 path="/readOldPublications.do?oldPublicationType=Didactic&amp;page=0"/>
         </action>
+        
+        
+        <!-- TJBF & PFON -->
+        <!-- publication Management-->
+        <action 
+			type="ServidorApresentacao.Action.publication.PublicationManagementAction" 
+			path="/publicationManagement" name="publicationManagementForm" 
+			parameter="method" scope="request" validate="true" 
+			input="/publicationManagement.do">
+			<forward name="show-publications" path="publications-management"/>
+		</action>
+		
+		<!-- PrepareSearchPerson-->
+		<action type="ServidorApresentacao.Action.publication.SearchAuthorPublicationAction" 
+            path="/prepareSearchPerson" name="publicationManagementForm" scope="request"
+            parameter="method" input="prepareSearchPerson" >
+            <forward name="show-search-author-form" path="view-authors-form"/>
+        </action>
+        
+        <!-- InsertAuthorsInPublication-->
+        <action type="ServidorApresentacao.Action.publication.SearchAuthorPublicationAction" 
+            path="/insertAuthorsInPublication" name="publicationManagementForm" scope="request"
+            parameter="method" input="insertsAuthorInPublication" >
+            <forward name="show-search-author-form" path="view-authors-form"/>
+        </action>
+        
+        <!-- InsertAuthorInPublication-->
+        <action type="ServidorApresentacao.Action.publication.SearchAuthorPublicationAction" 
+            path="/insertAuthorInPublication" name="publicationManagementForm" scope="request"
+            parameter="method" input="insertAuthorInPublication" >
+            <forward name="show-search-author-form" path="view-authors-form"/>
+        </action>
+        
+        <!-- SearchAuthor-->
+        <action type="ServidorApresentacao.Action.publication.SearchAuthorPublicationAction" 
+            path="/searchAuthor" name="publicationManagementForm" scope="request"
+            parameter="method" input="searchAuthor" >
+            <forward name="show-search-author-form" path="view-authors-form"/>
+        </action>
+        
+        <!-- DeleteAuthorInPublication-->
+        <action type="ServidorApresentacao.Action.publication.SearchAuthorPublicationAction" 
+            path="/deleteAuthorInPublication" name="publicationManagementForm" scope="request"
+            parameter="method" input="deleteAuthorInPublication" >
+            <forward name="show-search-author-form" path="view-authors-form"/>
+        </action>
+        
+		
+        <!-- Read Publications -->
+        <action type="ServidorApresentacao.Action.publication.ReadPublicationsAction" 
+            path="/readPublications" name="readPublicationsForm" scope="request">
+            <forward name="show-cientific-Teacher-form" path="view-cientific-teacher-publications"/>
+            <forward name="show-didatic-Teacher-form" path="view-didatic-teacher-publications"/>
+        </action>
+        
+        <!-- Read Publications  by Teacher -->
+        <action type="ServidorApresentacao.Action.publication.ReadPublicationsByTeacherAsAuthorAction" 
+            path="/readPublicationsAuthor" name="readPublicationsForm" scope="request" parameter="method"
+            input="readPublicationsAuthor">
+            <forward name="show-cientific-author-form" path="view-cientific-author-publications"/>
+            <forward name="show-didatic-author-form" path="view-didatic-author-publications"/>
+        </action>
+        
+        <!-- Insert a publication in teacher's list of Publications-->
+        <action type="ServidorApresentacao.Action.publication.ReadPublicationsByTeacherAsAuthorAction" 
+            path="/insertPublicationTeacher" name="readPublicationsForm" scope="request" parameter="method"
+            input="insertPublicationTeacher">
+            <forward name="show-didatic-Teacher-form" 
+            	path="/readPublications.do?typePublication=Didatic&amp;page=0"/>
+            <forward name="show-cientific-Teacher-form" 
+            	path="/readPublications.do?typePublication=Cientific&amp;page=0"/>
+        </action>
+        
+        <!-- Delete a publication in teacher's list of Publications-->
+        <action type="ServidorApresentacao.Action.publication.ReadPublicationsByTeacherAsAuthorAction" 
+            path="/deletePublicationTeacher" name="readPublicationsForm" scope="request" parameter="method"
+            input="deletePublicationTeacher">
+            <forward name="show-didatic-Teacher-form" 
+            	path="/readPublications.do?typePublication=Didatic&amp;page=0"/>
+            <forward name="show-cientific-Teacher-form" 
+            	path="/readPublications.do?typePublication=Cientific&amp;page=0"/>
+        </action>
+        
+        
+        <!-- Publication cientific -->
+        <action type="ServidorApresentacao.Action.publication.InsertPublicationAction" 
+            path="/publicationCientific" name="publicationManagementForm" parameter="method" scope="request" 
+            validate="true" input="/publicationCientific.do?page=0&amp;method=prepareEdit" 
+            className="ServidorApresentacao.mapping.framework.CRUDMapping">
+            <set-property property="editService" value="EditPublication"/>
+            <set-property property="deleteService" value="DeletePublication"/>
+            <set-property property="readService" value="ReadPublication"/>
+            <set-property property="oidProperty" value="idInternal"/>
+            <set-property property="requestAttribute" value="infoPublication"/>
+            <set-property property="infoObjectClassName" value="DataBeans.publication.InfoPublication" />
+            <forward name="show-form" path="edit-Cientific-publication"/>
+            <forward name="successfull-edit" 
+                path="/publicationManagement.do"/>
+            <forward name="successfull-delete" 
+                path="/publicationManagement.do"/>
+            <forward name="successfull-read" 
+                path="/publicationManagement.do"/>
+            <forward name="Unsuccessfull-edit"
+            	path="/publicationManagement.do"/>
+        </action>
+        
+        <!-- Publication didatic -->
+        <action type="ServidorApresentacao.Action.publication.InsertPublicationAction" 
+            path="/publicationDidatic" name="publicationManagementForm" parameter="method" scope="request" 
+            validate="true" input="/publicationDidatic.do?page=0&amp;method=prepareEdit" 
+            className="ServidorApresentacao.mapping.framework.CRUDMapping">
+            <set-property property="editService" value="EditPublication"/>
+            <set-property property="deleteService" value="DeletePublication"/>
+            <set-property property="readService" value="ReadPublication"/>
+            <set-property property="oidProperty" value="idInternal"/>
+            <set-property property="requestAttribute" value="infoPublication"/>
+            <set-property property="infoObjectClassName" value="DataBeans.publication.InfoPublication" />
+            <forward name="show-form" path="edit-Didatic-publication"/>
+            <forward name="successfull-edit" 
+                path="/publicationManagement.do"/>
+            <forward name="successfull-delete" 
+                path="/publicationManagement.do"/>
+            <forward name="successfull-read" 
+                path="/publicationManagement.do"/>
+            <forward name="Unsuccessfull-edit"
+            	path="/publicationManagement.do"/>
+            <!--<forward name="successfull-read" 
+                path="/readPublications.do?publicationType=Didatic&amp;page=0"/>-->
+        </action>
+        
+        <!-- Read Publication Types -->
+       <action type="ServidorApresentacao.Action.publication.ReadPublicationTypesAction" 
+            path="/readPublicationTypes" name="publicationManagementForm" scope="request">
+            <forward name="show-publication-types-form" path="view-publication-types"/>
+        </action>
+
+		<!-- Read Attributes -->
+       <action type="ServidorApresentacao.Action.publication.ReadPublicationAttributesAction" 
+            path="/readPublicationAttributes" name="publicationManagementForm" scope="request">
+            <forward name="show-publicationDidatic-attributes-form" path="view-publicationDidatic-attributes"/>
+            <forward name="show-publicationCientific-attributes-form" path="view-publicationCientific-attributes"/>
+        </action>
+        <!-- TJBF & PFON -->
+        
+        
         <!-- External Activity -->
         <action type="ServidorApresentacao.Action.framework.CRUDActionByOID" path="/externalActivity" 
             name="externalActivityForm" parameter="method" scope="request" validate="true" 
