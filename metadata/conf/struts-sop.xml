@@ -51,6 +51,17 @@
         <form-property name="page" type="java.lang.Integer"/> 
       </form-bean>
 
+      <!-- Dynamic-FormBean for searchExecutionCourse -->
+      <form-bean name="searchExecutionCourse"
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
+                 dynamic="true">
+        <form-property name="page" type="java.lang.Integer"/>
+        <form-property name="executionPeriodOID" type="java.lang.String"/>
+        <form-property name="executionDegreeOID" type="java.lang.String"/>
+        <form-property name="curricularYearOID" type="java.lang.String"/>
+        <form-property name="executionCourseName" type="java.lang.String"/>
+      </form-bean>
+
 	  <!-- Dynamic-FormBean for Create Shift -->
       <form-bean name="createShiftForm"
                  type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
@@ -1289,6 +1300,18 @@
             validate="true"
             >
     	<forward name="EditClass" path="/manageClass.do?method=prepare&amp;page=0"/>
+	</action>
+
+	<action path="/manageExecutionCourses"
+			input="/manageExecutionCourses.do?method=prepareSearch&amp;page=0"
+            type="ServidorApresentacao.Action.sop.ManageExecutionCoursesDA"
+            name="searchExecutionCourse"
+            parameter="method"
+            scope="request"
+            validate="true"
+            >
+    	<forward name="ShowSearchForm" path="/searchExecutionCourse.jsp"/>
+    	<forward name="ShowExecutionCourseList" path="/manageExecutionCourses.jsp"/>
 	</action>
 
       <!-- ========== ADICIONADO POR DAVID SANTOS ================================ -->

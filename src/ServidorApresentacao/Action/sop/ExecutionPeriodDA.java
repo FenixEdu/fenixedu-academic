@@ -53,8 +53,6 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 				userView,
 				"ReadExecutionPeriods",
 				argsReadExecutionPeriods);
-			selectedExecutionPeriod.getInfoExecutionYear().getYear();
-			selectedExecutionPeriod.getSemester();
 		ComparatorChain chainComparator = new ComparatorChain();
 		chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
 		chainComparator.addComparator(new BeanComparator("semester"));

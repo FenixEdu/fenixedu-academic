@@ -13,6 +13,7 @@ import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.DisciplinaExecucao;
+import Dominio.ICurricularYear;
 import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
@@ -266,6 +267,35 @@ public class DisciplinaExecucaoOJB
 		criteria.addEqualTo(
 			"associatedCurricularCourses.degreeCurricularPlan.degree.tipoCurso",
 			curso);
+		return queryList(DisciplinaExecucao.class, criteria);
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.IDisciplinaExecucaoPersistente#readByExecutionPeriodAndExecutionDegreeAndCurricularYearAndName(Dominio.IExecutionPeriod, Dominio.ICursoExecucao, Dominio.ICurricularYear, java.lang.String)
+	 */
+	public List readByExecutionPeriodAndExecutionDegreeAndCurricularYearAndName(
+		IExecutionPeriod executionPeriod,
+		ICursoExecucao executionDegree,
+		ICurricularYear curricularYear,
+		String executionCourseName)
+		throws ExcepcaoPersistencia {
+
+		Criteria criteria = new Criteria();
+		if (executionCourseName != null && !executionCourseName.equals("")) {
+			criteria.addLike("nome", executionCourseName);
+		}
+		if (curricularYear != null) {
+			criteria.addEqualTo(
+				"associatedCurricularCourses.scopes.curricularSemester.curricularYear.idInternal",
+				curricularYear.getIdInternal());
+		}
+		criteria.addEqualTo(
+			"associatedCurricularCourses.scopes.curricularCourse.degreeCurricularPlan.idInternal",
+			executionDegree.getCurricularPlan().getIdInternal());
+		criteria.addEqualTo(
+			"executionPeriod.idInternal",
+			executionPeriod.getIdInternal());
+
 		return queryList(DisciplinaExecucao.class, criteria);
 	}
 

@@ -641,7 +641,7 @@ public class ContextUtils {
 			return null;
 	}
 
-	private static List getLabelListOfCurricularYears() {
+	public static List getLabelListOfCurricularYears() {
 		ArrayList labelListOfCurricularYears = new ArrayList();
 		labelListOfCurricularYears.add(new LabelValueBean("escolher", ""));
 		labelListOfCurricularYears.add(new LabelValueBean("1 º", "1"));
@@ -652,7 +652,7 @@ public class ContextUtils {
 		return labelListOfCurricularYears;
 	}
 
-	private static List getLabelListOfExecutionDegrees(List executionDegreeList) {
+	public static List getLabelListOfExecutionDegrees(List executionDegreeList) {
 		List labelListOfExecutionDegrees =
 			(List) CollectionUtils.collect(
 				executionDegreeList,

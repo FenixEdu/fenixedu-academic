@@ -62,7 +62,8 @@ public abstract class SessionConstants {
 	public static final String CLASSES = "classes";
 	public static final String DEGREES = "licenciaturas";
 	public static final String LIST_INFOEXECUTIONPERIOD = "infoExecutionPeriodList";	
-	public static final String LABELLIST_EXECUTIONPERIOD = "executionPeriodLabelList";	
+	public static final String LABELLIST_EXECUTIONPERIOD = "executionPeriodLabelList";
+	public static final String LIST_INFOEXECUTIONDEGREE = "licenciaturas";
 
 	public static final String ROOM = "room";
 	public static final String ROOM_OID = "roomOID";

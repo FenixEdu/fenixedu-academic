@@ -2,6 +2,7 @@ package ServidorPersistente;
 
 import java.util.List;
 
+import Dominio.ICurricularYear;
 import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
@@ -11,7 +12,8 @@ import Util.TipoCurso;
 public interface IDisciplinaExecucaoPersistente extends IPersistentObject {
 	public List readAll() throws ExcepcaoPersistencia;
 	public boolean apagarTodasAsDisciplinasExecucao();
-	public void escreverDisciplinaExecucao(IDisciplinaExecucao disciplinaExecucao) throws ExcepcaoPersistencia, ExistingPersistentException;
+	public void escreverDisciplinaExecucao(IDisciplinaExecucao disciplinaExecucao)
+		throws ExcepcaoPersistencia, ExistingPersistentException;
 
 	/**
 	 * 
@@ -26,8 +28,6 @@ public interface IDisciplinaExecucaoPersistente extends IPersistentObject {
 		String anoLectivo,
 		String siglaLicenciatura)
 		throws ExcepcaoPersistencia;
-
-
 
 	public List readByCurricularYearAndExecutionPeriodAndExecutionDegree(
 		Integer anoCurricular,
@@ -45,16 +45,31 @@ public interface IDisciplinaExecucaoPersistente extends IPersistentObject {
 		String courseInitials,
 		IExecutionPeriod executionPeriod)
 		throws ExcepcaoPersistencia;
-		
-		
-	public void deleteExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia;
-	public List readByExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
+
+	public void deleteExecutionCourse(IDisciplinaExecucao executionCourse)
+		throws ExcepcaoPersistencia;
+	public List readByExecutionPeriod(IExecutionPeriod executionPeriod)
+		throws ExcepcaoPersistencia;
 	/**
 	 * @param executionPeriod
 	 * @param curso
 	 * @return
 	 */
-	public List readByExecutionPeriod(IExecutionPeriod executionPeriod, TipoCurso curso) throws ExcepcaoPersistencia;
-	
-
+	public List readByExecutionPeriod(
+		IExecutionPeriod executionPeriod,
+		TipoCurso curso)
+		throws ExcepcaoPersistencia;
+	/**
+	 * @param executionPeriod
+	 * @param executionDegree
+	 * @param curricularYear
+	 * @param executionCourseName
+	 * @return
+	 */
+	public List readByExecutionPeriodAndExecutionDegreeAndCurricularYearAndName(
+		IExecutionPeriod executionPeriod,
+		ICursoExecucao executionDegree,
+		ICurricularYear curricularYear,
+		String executionCourseName)
+		throws ExcepcaoPersistencia;
 }
