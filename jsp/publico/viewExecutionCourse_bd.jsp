@@ -33,7 +33,7 @@
 		
  <logic:notEmpty name="component" property="lastAnnouncement" >		
  	<bean:define id="announcement" name="component" property="lastAnnouncement"/>
-        <table id="anuncios" align="center" cellspacing="0" width="90%">
+        <table id="anuncios" cellspacing="0" width="90%">
           	<tr>
             	<td  class="ultAnuncioAviso"> 
             		<img alt="" border="0"  src="<%= request.getContextPath() %>/images/icon_warning.gif"  />
@@ -47,7 +47,7 @@
             		<bean:write name="announcement" property="title"/>:
             		</html:link>	
             		<br>
-            		<center><bean:write name="announcement" property="information" filter="false"/></center>
+            		<bean:write name="announcement" property="information" filter="false"/>
            		</td>
            </tr>
            <tr>		
