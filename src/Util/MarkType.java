@@ -20,6 +20,8 @@ public class MarkType {
 	public static final MarkType TYPE20_OBJ = new MarkType(20);
 	public static final MarkType TYPE5_OBJ = new MarkType(5);
 	
+	private static final Object[] REP_MARKS = {"RE" ,"R.E." ,"REP"};
+	private static final Object[] NA_MARKS = {"NA","N.A."};
 	private static final Object[] OTHER_MARKS = {"RE" ,"R.E." ,"REP" , "NA","N.A.", "AP"};
 	private static final Object[] TYPE20_MARKS = {"10","11","12","13","14","15","16","17","18","19","20"}; 
 	private static final Object[] TYPE5_MARKS = {"3" , "4", "5"};
@@ -68,8 +70,19 @@ public class MarkType {
 		if (markType.equals(MarkType.TYPE5_OBJ)) return MarkType.getType5Marks();
 		return null;		
 	}
+
+	public static Collection getRepMarks(){
+		ArrayList repMarks = new ArrayList();
+		repMarks.addAll(Arrays.asList(REP_MARKS));
+		return repMarks;
+	}	
 	
-	
+	public static Collection getNaMarks(){
+		ArrayList naMarks = new ArrayList();
+		naMarks.addAll(Arrays.asList(NA_MARKS));
+		return naMarks;
+	}	
+
 	private static Collection getType20Marks(){
 		Collection result = new ArrayList();
 		
