@@ -4,13 +4,13 @@
     <reference-descriptor name="curricularCourse" class-ref="Dominio.CurricularCourse">
 	    <foreignkey field-ref="keyCurricularCourse"/>
     </reference-descriptor>
-    <collection-descriptor name="restrictions" element-class-ref="Restriction" proxy="true">
+    <collection-descriptor name="restrictions" element-class-ref="Dominio.Restriction" proxy="true">
        <inverse-foreignkey field-ref="keyPrecedence"/>
     </collection-descriptor> 
 </class-descriptor>
 
 <class-descriptor class="Dominio.Restriction">
-    <extent-class class-ref="Dominio.CurricularCourseRestriction" />
+    <extent-class class-ref="Dominio.CurricularCourseDoneRestriction" />
     <extent-class class-ref="Dominio.NumberOfCurricularCourseDoneRestriction" />
 </class-descriptor>
 
