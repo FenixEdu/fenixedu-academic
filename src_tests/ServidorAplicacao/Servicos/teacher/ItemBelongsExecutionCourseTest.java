@@ -22,7 +22,7 @@ public abstract class ItemBelongsExecutionCourseTest
 		super(name);
 	}
 
-	protected void testItemBelongsExecutionCourse() {
+	public void testItemBelongsExecutionCourse() {
 
 		Object serviceArguments[] = getTestItemSuccessfullArguments();
 
@@ -50,16 +50,16 @@ public abstract class ItemBelongsExecutionCourseTest
 
 	}
 
-	protected void testItemNotBelongsExecutionCourse() {
+	public void testItemNotBelongsExecutionCourse() {
 
-		Object serviceArguments[] = getAuthorizeArguments();
+		Object serviceArguments[] = getTestItemUnsuccessfullArguments();
 
 		Object result = null;
 
 		try {
 			result =
 				gestor.executar(
-					userView3,
+					userView,
 					getNameOfServiceToBeTested(),
 					serviceArguments);
 			fail(getNameOfServiceToBeTested() + "fail testItemNotBelongsExecutionCourse");
@@ -87,5 +87,6 @@ public abstract class ItemBelongsExecutionCourseTest
 	protected abstract String[] getUnauthorizedUser();
 	protected abstract Object[] getTestItemSuccessfullArguments();
 	protected abstract Object[] getTestItemUnsuccessfullArguments();
+	protected abstract String getApplication();
 
 }

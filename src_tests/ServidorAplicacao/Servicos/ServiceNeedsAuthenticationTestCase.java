@@ -35,7 +35,7 @@ public abstract class ServiceNeedsAuthenticationTestCase
 
 	}
 
-	protected void testAuthorizedUser() {
+	public void testAuthorizedUser() {
 
 		Object serviceArguments[] = getAuthorizeArguments();
 
@@ -63,7 +63,7 @@ public abstract class ServiceNeedsAuthenticationTestCase
 
 	}
 
-	protected void testUnauthorizedUser() {
+	public void testUnauthorizedUser() {
 		Object serviceArguments[] = getAuthorizeArguments();
 
 		Object result = null;
@@ -90,7 +90,7 @@ public abstract class ServiceNeedsAuthenticationTestCase
 		}
 	}
 
-	protected void testNonTeacherUser() {
+	public void testNonTeacherUser() {
 
 		Object serviceArguments[] = getAuthorizeArguments();
 
@@ -140,5 +140,7 @@ public abstract class ServiceNeedsAuthenticationTestCase
 	protected abstract String getNameOfServiceToBeTested();
 	protected abstract Object[] getAuthorizeArguments();
 	protected abstract String getDataSetFilePath();
+	protected abstract String getApplication();
+			
 
 }
