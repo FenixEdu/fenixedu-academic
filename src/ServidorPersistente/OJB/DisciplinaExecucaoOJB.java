@@ -296,7 +296,7 @@ public class DisciplinaExecucaoOJB
 			"executionPeriod.idInternal",
 			executionPeriod.getIdInternal());
 
-		return queryList(DisciplinaExecucao.class, criteria);
+		return queryList(DisciplinaExecucao.class, criteria, true);
 	}
 
 }

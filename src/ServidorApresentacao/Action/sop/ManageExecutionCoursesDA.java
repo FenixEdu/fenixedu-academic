@@ -199,13 +199,48 @@ public class ManageExecutionCoursesDA
 		if (infoExecutionCourses == null
 			|| infoExecutionCourses.isEmpty()
 			|| infoExecutionCourses.size() > 1) {
-			request.setAttribute(SessionConstants.LIST_INFOEXECUTIONDEGREE, infoExecutionCourses);
-			return mapping.findForward("ShowExecutionCourseList");
+			if (infoExecutionCourses != null) {
+				Collections.sort(
+					infoExecutionCourses,
+					new BeanComparator("sigla"));
+				request.setAttribute(
+					SessionConstants.LIST_INFOEXECUTIONCOURSE,
+					infoExecutionCourses);
+			}
+			return prepareSearch(mapping, form, request, response);
 			// if query result is a sigle item then go directly to the execution course page
 		} else {
+			request.setAttribute(
+				SessionConstants.EXECUTION_COURSE,
+				infoExecutionCourses.get(0));
 			return mapping.findForward("ManageExecutionCourse");
 		}
 
+	}
+
+	public ActionForward changeExecutionPeriod(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception {
+
+		IUserView userView =
+			(IUserView) request.getSession(false).getAttribute("UserView");
+		GestorServicos gestor = GestorServicos.manager();
+
+		DynaActionForm searchExecutionCourse = (DynaActionForm) form;
+		Integer executionPeriodOID =
+			new Integer(
+				(String) searchExecutionCourse.get("executionPeriodOID"));
+
+		request.setAttribute(
+			SessionConstants.EXECUTION_PERIOD_OID,
+			executionPeriodOID.toString());
+
+		ContextUtils.setExecutionPeriodContext(request);
+
+		return prepareSearch(mapping, form, request, response);
 	}
 
 }

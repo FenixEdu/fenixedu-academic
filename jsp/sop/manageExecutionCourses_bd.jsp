@@ -4,41 +4,69 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
-	<tr>
-    	<td class="infoselected">
-    		<p>Critérios:</p>
-    		<strong><jsp:include page="contextExecutionCourse.jsp"/></strong>
-		</td>
-	</tr>
-</table>
-
-<br />
+<%@ page import="java.util.List"%>
 <h2>Gestão de Disciplinas</h2>
-
-<logic:present name="<%= SessionConstants.LIST_INFOEXECUTIONDEGREE %>" scope="request">
-	<table>
-		<tr>
-			<td class="listClasses-header">
-				<bean:message key="label.code"/>
-			</td>
-			<td class="listClasses-header">
-				<bean:message key="label.name"/>
-			</td>
-		</tr>
-		<logic:iterate id="executionCourse" name="<%= SessionConstants.LIST_INFOEXECUTIONDEGREE %>">
-			<tr>
-				<td class="listClasses">
-					<bean:write name="executionCourse" property="sigla"/>
-				</td>
-				<td class="listClasses">
-					<bean:write name="executionCourse" property="nome"/>
-				</td>
-			</tr>
-		</logic:iterate>
-	</table>
-</logic:present>
-
-<logic:notPresent name="<%= SessionConstants.LIST_INFOEXECUTIONDEGREE %>" scope="request">
-	<span class="error"><bean:message key="message.sop.search.execution.course.none"/></span>
-</logic:notPresent>
+<br />
+<span class="error"><html:errors /></span>
+Nota: Na indicação do nome pode ser fornecido apenas parte do nome da disciplina.<br />
+O caracter <strong>%</strong> é o wildcard.
+<br />
+<br />
+<html:form action="/manageExecutionCourses" focus="executionDegreeOID">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td nowrap="nowrap">
+    	<bean:message key="property.executionPeriod"/>:
+    </td>
+    <td nowrap="nowrap">
+		<html:select property="executionPeriodOID"
+					 size="1"
+					 onchange="document.searchExecutionCourse.method.value='changeExecutionPeriod';document.searchExecutionCourse.page.value='0';document.searchExecutionCourse.submit();">
+			<html:options	property="value" 
+     						labelProperty="label" 
+							collection="<%= SessionConstants.LABELLIST_EXECUTIONPERIOD %>" />
+		</html:select>
+    </td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap">
+    	<bean:message key="property.executionDegree"/>:
+    </td>
+    <td nowrap="nowrap">
+		<html:select property="executionDegreeOID" size="1">
+			<html:options	property="value" 
+     						labelProperty="label" 
+							collection="<%= SessionConstants.LIST_INFOEXECUTIONDEGREE %>" />
+		</html:select>
+    </td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap">
+    	<bean:message key="property.curricularYear"/>:
+    </td>
+    <td nowrap="nowrap">
+		<html:select property="curricularYearOID" size="1">
+			<html:options	property="value" 
+     						labelProperty="label" 
+							collection="<%= SessionConstants.LABELLIST_CURRICULAR_YEARS %>" />
+		</html:select>
+    </td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap">
+    	<bean:message key="property.executionCourse.name"/>:
+    </td>
+    <td nowrap="nowrap">
+		<html:text property="executionCourseName" size="30"/>
+    </td>
+  </tr>
+</table>
+<br />
+<html:hidden property="method" value="search"/>
+<html:hidden property="page" value="1"/>
+<html:submit styleClass="inputbutton">
+<bean:message key="label.choose"/>
+</html:submit>
+</html:form>    
+<br />
+<jsp:include page="listExecutionCourses.jsp"/>

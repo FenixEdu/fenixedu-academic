@@ -732,5 +732,22 @@
 		<arg0 key="property.executionCourse.name" resource="true"/>
       </field>
     </form>
+
+  <!-- Validation for editExecutionCourseForm Form -->
+    <form name="editExecutionCourseForm">
+        <field property="theoreticalHours" depends="required, double" page="1">
+	        <arg0 key="label.hours.load.theoretical" resource="true"/>
+        </field>
+        <field property="theoPratHours" depends="required, double" page="1">
+	        <arg0 key="label.hours.load.theoretical_practical" resource="true"/>
+        </field>
+        <field property="praticalHours" depends="required, double" page="1">
+	        <arg0 key="label.hours.load.practical" resource="true"/>
+        </field>
+        <field property="labHours" depends="required, double" page="1">
+	        <arg0 key="label.hours.load.laboratorial" resource="true"/>
+        </field>
+    </form>
+
   </formset>
 </form-validation>

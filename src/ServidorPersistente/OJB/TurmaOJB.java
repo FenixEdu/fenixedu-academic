@@ -14,11 +14,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
-import org.apache.ojb.broker.query.Query;
-import org.apache.ojb.broker.query.QueryByCriteria;
 import org.odmg.QueryException;
 
 import Dominio.ICursoExecucao;
+import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.ITurma;
 import Dominio.ITurmaTurno;
@@ -41,7 +40,8 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 			return;
 
 		// Read class from database.
-		classFromDB = this.readByNameAndExecutionDegreeAndExecutionPeriod(
+		classFromDB =
+			this.readByNameAndExecutionDegreeAndExecutionPeriod(
 				classToWrite.getNome(),
 				classToWrite.getExecutionDegree(),
 				classToWrite.getExecutionPeriod());
@@ -52,11 +52,8 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 		// else If the class is mapped to the database, then write any existing changes.
 		else if (
 			(classToWrite instanceof Turma)
-				&& ((Turma) classFromDB)
-					.getIdInternal()
-					.equals(
-					((Turma) classToWrite)
-						.getIdInternal())) {
+				&& ((Turma) classFromDB).getIdInternal().equals(
+					((Turma) classToWrite).getIdInternal())) {
 			super.lockWrite(classToWrite);
 			// else Throw an already existing exception
 		} else
@@ -138,15 +135,17 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 		ICursoExecucao executionDegree)
 		throws ExcepcaoPersistencia {
 		try {
-			
-			System.out.println("###########################################################");
+
+			System.out.println(
+				"###########################################################");
 			System.out.println("### read class list");
-			System.out.println("###   executionPeriod" + executionPeriod.getIdInternal());
+			System.out.println(
+				"###   executionPeriod" + executionPeriod.getIdInternal());
 			System.out.println("###   curricularYear" + curricularYear);
-			System.out.println("###   executionDegree" + executionDegree.getIdInternal());
+			System.out.println(
+				"###   executionDegree" + executionDegree.getIdInternal());
 			System.out.println("###");
-			
-			
+
 			String oqlQuery = "select turmas from " + Turma.class.getName();
 			oqlQuery += " where executionPeriod.executionYear.year = $1"
 				+ " and executionPeriod.name = $2"
@@ -197,12 +196,13 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 			oqlQuery += " and executionPeriod.executionYear.year = $3 ";
 			oqlQuery += " and executionDegree.executionYear.year = $4 ";
 			oqlQuery += " and executionDegree.curricularPlan.name = $5 ";
-			oqlQuery += " and executionDegree.curricularPlan.degree.sigla = $6 ";
+			oqlQuery
+				+= " and executionDegree.curricularPlan.degree.sigla = $6 ";
 			query.create(oqlQuery);
 			query.bind(className);
 			query.bind(executionPeriod.getName());
-			query.bind(executionPeriod.getExecutionYear().getYear());	
-		
+			query.bind(executionPeriod.getExecutionYear().getYear());
+
 			query.bind(executionDegree.getExecutionYear().getYear());
 			query.bind(executionDegree.getCurricularPlan().getName());
 			query.bind(
@@ -223,7 +223,8 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 		throws ExcepcaoPersistencia {
 		try {
 			String oqlQuery = "select turmas from " + Turma.class.getName();
-			oqlQuery += " where executionDegree.curricularPlan.degree.nome = $1"
+			oqlQuery
+				+= " where executionDegree.curricularPlan.degree.nome = $1"
 				+ " and executionDegree.curricularPlan.degree.sigla = $2";
 
 			query.create(oqlQuery);
@@ -287,26 +288,54 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 		}
 	}
 
-	public List readByExecutionPeriodAndDegreeType(IExecutionPeriod executionPeriod, TipoCurso tipoCurso)
+	public List readByExecutionPeriodAndDegreeType(
+		IExecutionPeriod executionPeriod,
+		TipoCurso tipoCurso)
 		throws ExcepcaoPersistencia {
 
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("executionPeriod.executionYear.year", executionPeriod.getExecutionYear().getYear());
-		criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());		
-		criteria.addEqualTo("executionDegree.curricularPlan.degree.tipoCurso", tipoCurso);
+		criteria.addEqualTo(
+			"executionPeriod.executionYear.year",
+			executionPeriod.getExecutionYear().getYear());
+		criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());
+		criteria.addEqualTo(
+			"executionDegree.curricularPlan.degree.tipoCurso",
+			tipoCurso);
 		//Query queryPB = new QueryByCriteria(Turma.class, criteria);
 		return queryList(Turma.class, criteria);
 	}
 
-
-	public List readByExecutionDegreeAndExecutionPeriod(ICursoExecucao execucao, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
+	public List readByExecutionDegreeAndExecutionPeriod(
+		ICursoExecucao execucao,
+		IExecutionPeriod executionPeriod)
+		throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
-		criteria.addEqualTo("executionPeriod.executionYear.year", executionPeriod.getExecutionYear().getYear());
+		criteria.addEqualTo(
+			"executionPeriod.executionYear.year",
+			executionPeriod.getExecutionYear().getYear());
 		criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());
-		criteria.addEqualTo("executionDegree.executionYear.year", execucao.getExecutionYear().getYear());
-		criteria.addEqualTo("executionDegree.curricularPlan.name", execucao.getCurricularPlan().getName());
-		criteria.addEqualTo("executionDegree.curricularPlan.degree.sigla", execucao.getCurricularPlan().getDegree().getSigla());		
+		criteria.addEqualTo(
+			"executionDegree.executionYear.year",
+			execucao.getExecutionYear().getYear());
+		criteria.addEqualTo(
+			"executionDegree.curricularPlan.name",
+			execucao.getCurricularPlan().getName());
+		criteria.addEqualTo(
+			"executionDegree.curricularPlan.degree.sigla",
+			execucao.getCurricularPlan().getDegree().getSigla());
 		//Query queryPB = new QueryByCriteria(Turma.class, criteria);
 		return queryList(Turma.class, criteria);
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.ITurmaPersistente#readByExecutionCourse(Dominio.IDisciplinaExecucao)
+	 */
+	public List readByExecutionCourse(IDisciplinaExecucao executionCourse)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo(
+			"associatedShifts.disciplinaExecucao.idInternal",
+			executionCourse.getIdInternal());
+		return queryList(Turma.class, criteria, true);
 	}
 }

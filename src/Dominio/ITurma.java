@@ -7,27 +7,23 @@
 package Dominio;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
- * @author  tfc130
+ * @author  Luis Cruz & Sara Ribeiro
  */
 
 public interface ITurma extends Serializable,IDomainObject{
   public String getNome();
-  
   public Integer getAnoCurricular();
-    
+  public ICursoExecucao getExecutionDegree();
+  public IExecutionPeriod getExecutionPeriod();
+  public List getAssociatedShifts();  
 
   public void setNome(String nome);
-  
   public void setAnoCurricular(Integer anoCurricular);
-  
-  
-  
-  public ICursoExecucao getExecutionDegree();
   void setExecutionDegree(ICursoExecucao executionDegree);
-  
-  public IExecutionPeriod getExecutionPeriod();
-  void setExecutionPeriod(IExecutionPeriod executionPeriod);    
+  void setExecutionPeriod(IExecutionPeriod executionPeriod);
+  public void setAssociatedShifts(List list);     
 }

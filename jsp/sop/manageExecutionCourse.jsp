@@ -5,6 +5,7 @@
   <tiles:put name="navGeral" value="/sop/commonNavGeralSopExecutionCourse.jsp" />
   <tiles:put name="photos" value="/sop/commonEntrPhotosSop.jsp" />
   <tiles:put name="body-context" value="" />  
-  <tiles:put name="body" value="/sop/searchExecutionCourse_bd.jsp" />
+  <tiles:put name="body" value="/sop/manageExecutionCourse_bd.jsp" />
   <tiles:put name="footer" value="/sop/commonFooterSop.jsp" />
+  <tiles:put name="context" value="/commons/contextExecutionCourse.jsp" />
 </tiles:insert>

@@ -6,14 +6,15 @@
 
 package Dominio;
 
+import java.util.List;
+
 /**
  *
- * @author  tfc130
+ * @author  Luis Cruz & Sara Ribeiro
  */
 
 public class Turma extends DomainObject implements ITurma {
 	protected String _nome;
-	
 	protected Integer _anoCurricular;
 	
 	private ICursoExecucao executionDegree;
@@ -21,6 +22,8 @@ public class Turma extends DomainObject implements ITurma {
 	
 	private IExecutionPeriod executionPeriod;
 	private Integer keyExecutionPeriod;
+
+	private List associatedShifts;
 
 	/** Construtor sem argumentos p�blico requerido pela moldura de objectos OJB */
 	public Turma() {
@@ -181,6 +184,20 @@ public class Turma extends DomainObject implements ITurma {
 	 */
 	public void setKeyExecutionPeriod(Integer keyExecutionPeriod) {
 		this.keyExecutionPeriod = keyExecutionPeriod;
+	}
+
+	/**
+	 * @return
+	 */
+	public List getAssociatedShifts() {
+		return associatedShifts;
+	}
+
+	/**
+	 * @param list
+	 */
+	public void setAssociatedShifts(List list) {
+		associatedShifts = list;
 	}
 
 }

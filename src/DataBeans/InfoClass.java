@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author  tfc130
+ * @author  Luis Cruz & Sara Ribeiro
  */
 
 public class InfoClass extends InfoObject implements Serializable {

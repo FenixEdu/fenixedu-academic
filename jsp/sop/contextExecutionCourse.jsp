@@ -9,11 +9,7 @@
 	<bean:write name="executionPeriod" property="infoExecutionYear.year"/>
 </logic:present>
 <br />
-<logic:present name="executionDegree">
-	<bean:write name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso"/> de 
-	<bean:write name="executionDegree" property="infoDegreeCurricularPlan.infoDegree.nome"/>
-</logic:present>
-<br />
-<logic:present name="curricularYear">
-	<bean:write name="curricularYear" property="year"/>º Ano
+<logic:present name="executionCourse">
+	<bean:write name="executionCourse" property="sigla"/> - 
+	<bean:write name="executionCourse" property="nome"/>
 </logic:present>
