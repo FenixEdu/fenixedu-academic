@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
-import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 
 /**
  * @author Luis Cruz
@@ -20,7 +19,7 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
  */
 public class ExecutionDataIsForNotYetOpenedPeriodFilter extends Filtro {
 
-    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception {
+    public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         Object[] serviceArgs = getServiceCallArguments(request);
         Integer executionCourseDestinationId = (Integer) serviceArgs[0];
         Integer executionCourseSourceId = (Integer) serviceArgs[1];

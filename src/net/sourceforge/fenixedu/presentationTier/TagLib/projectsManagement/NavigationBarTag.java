@@ -15,7 +15,6 @@ import java.util.Iterator;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProjectReport;
@@ -60,7 +59,7 @@ public class NavigationBarTag extends TagSupport {
         this.spanId = spanId;
     }
 
-    public int doStartTag() throws JspException {
+    public int doStartTag() {
         InfoProjectReport infoProjectReport = (InfoProjectReport) pageContext.findAttribute(this.getLinesId());
         int span = (new Integer((String) pageContext.findAttribute(this.getSpanId()))).intValue();
         int numberOfElements = (new Integer((String) pageContext.findAttribute(this.getNumberOfSpanElements()))).intValue();

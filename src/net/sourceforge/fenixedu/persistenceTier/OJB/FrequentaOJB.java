@@ -81,8 +81,7 @@ public class FrequentaOJB extends PersistentObjectOJB implements IFrequentaPersi
         return queryList(Attends.class, crit);
     }
 
-    public Integer countStudentsAttendingExecutionCourse(IExecutionCourse executionCourse)
-            throws ExcepcaoPersistencia {
+    public Integer countStudentsAttendingExecutionCourse(IExecutionCourse executionCourse) {
         PersistenceBroker pb = ((HasBroker) odmg.currentTransaction()).getBroker();
         Criteria criteria = new Criteria();
         criteria.addEqualTo("disciplinaExecucao.idInternal", executionCourse.getIdInternal());

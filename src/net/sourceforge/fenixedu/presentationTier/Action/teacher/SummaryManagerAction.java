@@ -360,7 +360,6 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             InfoSummary infoSummaryToInsert = buildSummaryToInsert(request);
             
             HtmlValidator htmlValidator = new HtmlValidator();     
-            String resultado = htmlValidator.validateHTMLString(infoSummaryToInsert.getSummaryText());
             String errors = htmlValidator.getErrors();           
             
             if(!errors.equals("")){
@@ -632,7 +631,6 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
             infoSummaryToEdit.setIdInternal(summaryId);
             
             HtmlValidator htmlValidator = new HtmlValidator();     
-            String resultado = htmlValidator.validateHTMLString(infoSummaryToEdit.getSummaryText());
             String errors = htmlValidator.getErrors();           
             
             if(!errors.equals("")){
@@ -664,7 +662,7 @@ public class SummaryManagerAction extends TeacherAdministrationViewerDispatchAct
     }
     
     public ActionForward deleteSummary(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) {
         try {
             HttpSession session = request.getSession(false);
             IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);

@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.credits.IManagementPositionCreditLine;
 import net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
@@ -32,7 +31,7 @@ public class ReadManagementPositionCreditLineByOidService extends ReadDomainObje
      * 
      * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
      */
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia {
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentManagementPositionCreditLine();
     }
 

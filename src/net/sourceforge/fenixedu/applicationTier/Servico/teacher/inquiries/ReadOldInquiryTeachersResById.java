@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesTea
 import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesTeachersRes;
 
 /**

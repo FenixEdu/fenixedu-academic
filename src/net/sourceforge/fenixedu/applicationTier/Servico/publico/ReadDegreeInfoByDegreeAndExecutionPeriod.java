@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeInfo;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 import org.apache.commons.beanutils.BeanComparator;
 

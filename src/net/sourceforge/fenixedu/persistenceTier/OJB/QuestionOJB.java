@@ -50,7 +50,7 @@ public class QuestionOJB extends PersistentObjectOJB implements IPersistentQuest
         return queryList(Question.class, criteria);
     }
 
-    public int countByMetadata(IMetadata metadata) throws ExcepcaoPersistencia {
+    public int countByMetadata(IMetadata metadata) {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyMetadata", metadata.getIdInternal());
         PersistenceBroker pb = ((HasBroker) odmg.currentTransaction()).getBroker();
@@ -58,7 +58,7 @@ public class QuestionOJB extends PersistentObjectOJB implements IPersistentQuest
         return pb.getCount(queryCriteria);
     }
 
-    public String correctFileName(String fileName, Integer metadataId) throws ExcepcaoPersistencia {
+    public String correctFileName(String fileName, Integer metadataId) {
         String original = fileName.replaceAll(".xml", "");
         String newName = fileName;
 

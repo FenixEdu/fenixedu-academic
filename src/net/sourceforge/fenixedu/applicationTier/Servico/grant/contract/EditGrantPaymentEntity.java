@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantCostC
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantPaymentEntity;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantProject;
 import net.sourceforge.fenixedu.domain.IDomainObject;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -48,7 +47,7 @@ public class EditGrantPaymentEntity extends EditDomainObjectService implements I
      * 
      * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
      */
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia {
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentGrantPaymentEntity();
     }
 }

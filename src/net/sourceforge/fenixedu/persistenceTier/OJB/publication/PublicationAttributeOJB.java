@@ -42,7 +42,7 @@ public class PublicationAttributeOJB extends PersistentObjectOJB implements
      * 
      * @see ServidorPersistente.teacher.IPersistentPublicationAttribute#readAllByPublicationType(Dominio.teacher.PublicationType)
      */
-    public List readAllByPublicationType(PublicationType publicationType) throws ExcepcaoPersistencia {
+    public List readAllByPublicationType(PublicationType publicationType) {
         //Criteria criteria = new Criteria();
         //criteria.addEqualTo()
         return null;

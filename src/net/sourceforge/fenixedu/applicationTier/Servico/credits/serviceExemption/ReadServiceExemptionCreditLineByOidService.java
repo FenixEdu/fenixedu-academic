@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.credits.IServiceExemptionCreditLine;
 import net.sourceforge.fenixedu.domain.credits.ServiceExemptionCreditLine;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
@@ -32,7 +31,7 @@ public class ReadServiceExemptionCreditLineByOidService extends ReadDomainObject
      * 
      * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
      */
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia {
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentServiceExemptionCreditLine();
     }
 

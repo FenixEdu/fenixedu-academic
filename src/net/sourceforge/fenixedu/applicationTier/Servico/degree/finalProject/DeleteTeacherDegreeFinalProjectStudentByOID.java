@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.degree.finalProject;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.DeleteDomainObjectService;
 import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
@@ -28,7 +27,7 @@ public class DeleteTeacherDegreeFinalProjectStudentByOID extends DeleteDomainObj
      * 
      * @see ServidorAplicacao.Servico.framework.DeleteDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
      */
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia {
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentTeacherDegreeFinalProjectStudent();
     }
 }

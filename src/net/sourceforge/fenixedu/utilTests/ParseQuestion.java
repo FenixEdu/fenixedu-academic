@@ -134,8 +134,7 @@ public class ParseQuestion extends DefaultHandler {
         throw e;
     }
 
-    public void startElement(String uri, String localName, String qName, Attributes attributes)
-            throws SAXException {
+    public void startElement(String uri, String localName, String qName, Attributes attributes) {
         current = new Element(uri, localName, qName, new AttributesImpl(attributes));
         if (qName.equals("presentation")) {
             question = true;
@@ -166,7 +165,7 @@ public class ParseQuestion extends DefaultHandler {
         text = new String();
     }
 
-    public void endElement(String uri, String localName, String qName) throws SAXException {
+    public void endElement(String uri, String localName, String qName) {
         if (current != null && text != null) {
             current.setValue(text.trim());
         }
@@ -181,7 +180,7 @@ public class ParseQuestion extends DefaultHandler {
             listFeedback.add(new Element(uri, localName, "/" + qName, null));
     }
 
-    public void characters(char[] ch, int start, int length) throws SAXException {
+    public void characters(char[] ch, int start, int length) {
         if (current != null && text != null) {
             String value = new String(ch, start, length);
             text += value;

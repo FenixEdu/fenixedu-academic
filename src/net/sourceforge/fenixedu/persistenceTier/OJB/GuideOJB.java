@@ -22,7 +22,7 @@ public class GuideOJB extends PersistentObjectOJB implements IPersistentGuide {
     public GuideOJB() {
     }
 
-    public Integer generateGuideNumber(Integer year) throws ExcepcaoPersistencia {
+    public Integer generateGuideNumber(Integer year) {
 
         Integer guideNumber = new Integer(0);
 

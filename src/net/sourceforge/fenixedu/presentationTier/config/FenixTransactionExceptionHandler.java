@@ -5,7 +5,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.config;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -28,8 +27,7 @@ import org.apache.struts.config.ExceptionConfig;
 public class FenixTransactionExceptionHandler extends ExceptionHandler {
 
     public ActionForward execute(Exception ex, ExceptionConfig ae, ActionMapping mapping,
-            ActionForm formInstance, HttpServletRequest request, HttpServletResponse response)
-            throws ServletException {
+            ActionForm formInstance, HttpServletRequest request, HttpServletResponse response) {
 
         ActionForward forward = null;
         ActionError error = null;

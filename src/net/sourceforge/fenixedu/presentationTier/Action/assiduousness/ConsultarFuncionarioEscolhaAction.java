@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.assiduousness;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -9,24 +8,10 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.Action;
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-import org.apache.struts.util.MessageResources;
-
-import net.sourceforge.fenixedu.domain.IStrategyJustificacoes;
-import net.sourceforge.fenixedu.domain.Justificacao;
-import net.sourceforge.fenixedu.domain.MarcacaoPonto;
-import net.sourceforge.fenixedu.domain.ParamJustificacao;
-import net.sourceforge.fenixedu.domain.SuporteStrategyJustificacoes;
 import net.sourceforge.fenixedu.applicationTier.Executor;
 import net.sourceforge.fenixedu.applicationTier.PersistenceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ServicoAutorizacaoLer;
@@ -36,9 +21,22 @@ import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ServicoSeg
 import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ServicoSeguroConsultarMarcacaoPonto;
 import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ServicoSeguroConsultarVerbete;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExecuteException;
+import net.sourceforge.fenixedu.domain.IStrategyJustificacoes;
+import net.sourceforge.fenixedu.domain.Justificacao;
+import net.sourceforge.fenixedu.domain.MarcacaoPonto;
+import net.sourceforge.fenixedu.domain.ParamJustificacao;
+import net.sourceforge.fenixedu.domain.SuporteStrategyJustificacoes;
 import net.sourceforge.fenixedu.presentationTier.formbeans.assiduousness.ConsultarFuncionarioMostrarForm;
 import net.sourceforge.fenixedu.util.Comparador;
 import net.sourceforge.fenixedu.util.FormataCalendar;
+
+import org.apache.struts.action.Action;
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.util.MessageResources;
 
 /**
  * 
@@ -47,7 +45,7 @@ import net.sourceforge.fenixedu.util.FormataCalendar;
 public final class ConsultarFuncionarioEscolhaAction extends Action {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws IOException, ServletException {
+            HttpServletResponse response) {
 
         Locale locale = getLocale(request);
         MessageResources messages = getResources(request);

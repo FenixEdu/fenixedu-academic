@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strateg
 import net.sourceforge.fenixedu.domain.IGroupProperties;
 import net.sourceforge.fenixedu.domain.IShift;
 import net.sourceforge.fenixedu.domain.IStudentGroup;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author asnr and scpo
@@ -33,7 +32,7 @@ public class IndividualGroupEnrolmentStrategy extends GroupEnrolmentStrategy imp
     }
 
     public boolean checkNumberOfGroupElements(IGroupProperties groupProperties,
-            IStudentGroup studentGroup) throws ExcepcaoPersistencia {
+            IStudentGroup studentGroup) {
         return true;
     }
 }

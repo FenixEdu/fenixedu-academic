@@ -9,7 +9,6 @@ package net.sourceforge.fenixedu.presentationTier.TagLib.projectsManagement;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.IReportLine;
@@ -30,7 +29,7 @@ public class SumColumnTag extends TagSupport {
      * 
      * @see javax.servlet.jsp.tagext.Tag#doStartTag()
      */
-    public int doStartTag() throws JspException {
+    public int doStartTag() {
         List lines = (List) pageContext.findAttribute(id);
 
         double sum = 0;

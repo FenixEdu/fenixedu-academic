@@ -59,7 +59,7 @@ public class EnrolmentImprovmentAuthorization extends AuthorizationByManyRolesFi
             ISuportePersistente sp = null;
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            List roles = getRoleList((List) id.getRoles());
+            List roles = getRoleList(id.getRoles());
 
             if (roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
                     || roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {

@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
@@ -34,7 +33,7 @@ import org.apache.struts.util.LabelValueBean;
 public class ViewEnroledExecutionCoursesAction extends FenixContextAction {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixServiceException, FenixFilterException {
+            HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 
         HttpSession session = request.getSession(false);
         IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);

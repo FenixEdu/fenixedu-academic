@@ -56,8 +56,8 @@ public class ServiceDiscriptorProperty2XML extends FileUtil {
             try {
                 Class service = Class
                         .forName(implementationClassPackage + "." + implementationClassName);
-                Method method = service.getDeclaredMethod("getService", null);
-                IServico serviceInstance = (IServico) method.invoke(service, null);
+                Method method = service.getDeclaredMethod("getService", (Class[]) null);
+                IServico serviceInstance = (IServico) method.invoke(service, (Object[]) null);
                 serviceAlias = serviceInstance.getNome();
             } catch (Exception e) {
 

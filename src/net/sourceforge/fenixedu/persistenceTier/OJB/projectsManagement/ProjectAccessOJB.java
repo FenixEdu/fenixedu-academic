@@ -87,7 +87,7 @@ public class ProjectAccessOJB extends PersistentObjectOJB implements IPersistent
         return result;
     }
 
-    public boolean hasPersonProjectAccess(String personUsername, Integer projectCode) throws ExcepcaoPersistencia {
+    public boolean hasPersonProjectAccess(String personUsername, Integer projectCode) {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("person.username", personUsername);
         criteria.addEqualTo("keyProject", projectCode);
@@ -99,7 +99,7 @@ public class ProjectAccessOJB extends PersistentObjectOJB implements IPersistent
 
     }
 
-    public int countByPersonAndProject(IPerson person, Integer keyProject) throws ExcepcaoPersistencia {
+    public int countByPersonAndProject(IPerson person, Integer keyProject) {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyPerson", person.getIdInternal());
         criteria.addEqualTo("keyProject", keyProject);
@@ -108,7 +108,7 @@ public class ProjectAccessOJB extends PersistentObjectOJB implements IPersistent
         return count(ProjectAccess.class, criteria);
     }
 
-    public int countByPerson(IPerson person) throws ExcepcaoPersistencia {
+    public int countByPerson(IPerson person) {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyPerson", person.getIdInternal());
         criteria.addLessOrEqualThan("beginDate", Calendar.getInstance().getTime());

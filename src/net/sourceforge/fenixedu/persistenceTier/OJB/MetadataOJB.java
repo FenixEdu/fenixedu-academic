@@ -52,7 +52,7 @@ public class MetadataOJB extends PersistentObjectOJB implements IPersistentMetad
     }
 
     public List readByExecutionCourseAndVisibilityAndOrder(IExecutionCourse executionCourse,
-            String order, String asc) throws ExcepcaoPersistencia {
+            String order, String asc) {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyExecutionCourse", executionCourse.getIdInternal());
         criteria.addEqualTo("visibility", new Boolean("true"));
@@ -120,7 +120,7 @@ public class MetadataOJB extends PersistentObjectOJB implements IPersistentMetad
         return result;
     }
 
-    public int getNumberOfQuestions(IMetadata metadata) throws ExcepcaoPersistencia {
+    public int getNumberOfQuestions(IMetadata metadata) {
         PersistenceBroker pb = ((HasBroker) odmg.currentTransaction()).getBroker();
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyMetadata", metadata.getIdInternal());
@@ -128,7 +128,7 @@ public class MetadataOJB extends PersistentObjectOJB implements IPersistentMetad
         return pb.getCount(queryCriteria);
     }
 
-    public int countByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
+    public int countByExecutionCourse(IExecutionCourse executionCourse) {
         PersistenceBroker pb = ((HasBroker) odmg.currentTransaction()).getBroker();
         Criteria criteria = new Criteria();
         criteria.addEqualTo("visibility", new Boolean(true));

@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.equivalence;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.DegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
@@ -26,8 +25,7 @@ public class ValidateCurricularCourseGradesForEnrollmentEquivalence extends
     }
 
     public String run(Integer studentNumber, TipoCurso degreeType,
-            InfoStudentCurricularPlan infoStudentCurricularPlan, List infoCurricularCourseGrades)
-            throws FenixServiceException {
+            InfoStudentCurricularPlan infoStudentCurricularPlan, List infoCurricularCourseGrades) {
         List args = new ArrayList();
         args.add(0, infoStudentCurricularPlan);
         args.add(1, infoCurricularCourseGrades);
@@ -79,11 +77,10 @@ public class ValidateCurricularCourseGradesForEnrollmentEquivalence extends
     /**
      * @param List
      * @return List
-     * @throws FenixServiceException
      * @see ServidorAplicacao.Servico.Service#convertDataInput(java.lang.Object)
      *      This method implements the buisiness logic of this service.
      */
-    protected Object execute(Object object) throws FenixServiceException {
+    protected Object execute(Object object) {
         List input = (List) object;
 
         IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) input.get(0);

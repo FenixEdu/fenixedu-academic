@@ -77,7 +77,7 @@ public class RenderExamsMapTag extends TagSupport {
         return (SKIP_BODY);
     }
 
-    public int doEndTag() throws JspException {
+    public int doEndTag() {
         return (EVAL_PAGE);
     }
 

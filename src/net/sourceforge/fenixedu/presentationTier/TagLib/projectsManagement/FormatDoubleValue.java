@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.presentationTier.TagLib.projectsManagement;
 
 import java.io.IOException;
 
-import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import net.sourceforge.fenixedu.util.projectsManagement.FormatDouble;
@@ -55,7 +54,7 @@ public class FormatDoubleValue extends TagSupport {
         this.property = property;
     }
 
-    public int doStartTag() throws JspException {
+    public int doStartTag() {
 
         double doubleValue = getPropertyValue().doubleValue();
 

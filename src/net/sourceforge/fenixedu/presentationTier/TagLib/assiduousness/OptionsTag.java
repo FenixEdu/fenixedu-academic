@@ -241,12 +241,9 @@ public class OptionsTag extends TagSupport {
 
     /**
      * Process the start of this tag.
-     * 
-     * @exception JspException
-     *                if a JSP exception has occurred
      */
 
-    public int doStartTag() throws JspException {
+    public int doStartTag() {
         return SKIP_BODY;
     }
 

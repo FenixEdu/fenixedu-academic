@@ -34,7 +34,7 @@ public class ExamsForwardFilter implements Filter{
     String notFoundURI;
     String app;
 
-	public void init(FilterConfig filterConfig) throws ServletException {
+	public void init(FilterConfig filterConfig) {
 		this.filterConfig = filterConfig;
         this.servletContext = filterConfig.getServletContext();
         try {

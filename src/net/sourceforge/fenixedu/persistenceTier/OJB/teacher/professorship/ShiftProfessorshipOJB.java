@@ -37,8 +37,7 @@ public class ShiftProfessorshipOJB extends PersistentObjectOJB implements IPersi
      * 
      * @see ServidorPersistente.IPersistentTeacherShiftPercentage#readByUnique(Dominio.IShiftProfessorship)
      */
-    public IShiftProfessorship readByUnique(IShiftProfessorship teacherShiftPercentage)
-            throws ExcepcaoPersistencia {
+    public IShiftProfessorship readByUnique(IShiftProfessorship teacherShiftPercentage) {
         IShiftProfessorship teacherShiftPercentageFromBD = null;
 
         PersistenceBroker broker = ((HasBroker) odmg.currentTransaction()).getBroker();

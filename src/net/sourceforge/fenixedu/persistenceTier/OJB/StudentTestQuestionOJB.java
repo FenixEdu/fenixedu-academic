@@ -43,7 +43,7 @@ public class StudentTestQuestionOJB extends PersistentObjectOJB implements
         return queryList(StudentTestQuestion.class, criteria);
     }
 
-    public List readByDistributedTest(IDistributedTest distributedTest) throws ExcepcaoPersistencia {
+    public List readByDistributedTest(IDistributedTest distributedTest) {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyDistributedTest", distributedTest.getIdInternal());
 
@@ -128,8 +128,7 @@ public class StudentTestQuestionOJB extends PersistentObjectOJB implements
         return studentList;
     }
 
-    public List readStudentTestQuestionsByDistributedTest(IDistributedTest distributedTest)
-            throws ExcepcaoPersistencia {
+    public List readStudentTestQuestionsByDistributedTest(IDistributedTest distributedTest) {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyDistributedTest", distributedTest.getIdInternal());
 
@@ -143,8 +142,7 @@ public class StudentTestQuestionOJB extends PersistentObjectOJB implements
         return (List) pb.getCollectionByQuery(queryCriteria);
     }
 
-    public Double getMaximumDistributedTestMark(IDistributedTest distributedTest)
-            throws ExcepcaoPersistencia {
+    public Double getMaximumDistributedTestMark(IDistributedTest distributedTest) {
         double result = 0;
         List studentTestQuestionList = readStudentTestQuestionsByDistributedTest(distributedTest);
         for (int i = 0; i < studentTestQuestionList.size(); i++)
@@ -193,8 +191,7 @@ public class StudentTestQuestionOJB extends PersistentObjectOJB implements
         return result;
     }
 
-    public int countResponses(Integer order, String response, IDistributedTest distributedTest)
-            throws ExcepcaoPersistencia {
+    public int countResponses(Integer order, String response, IDistributedTest distributedTest) {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("testQuestionOrder", order);
         criteria.addLike("response", response);
@@ -205,8 +202,7 @@ public class StudentTestQuestionOJB extends PersistentObjectOJB implements
         return result;
     }
 
-    public List getResponses(Integer order, IDistributedTest distributedTest)
-            throws ExcepcaoPersistencia {
+    public List getResponses(Integer order, IDistributedTest distributedTest) {
         PersistenceBroker pb = ((HasBroker) odmg.currentTransaction()).getBroker();
         Criteria criteria = new Criteria();
         criteria.addEqualTo("testQuestionOrder", order);
@@ -224,8 +220,7 @@ public class StudentTestQuestionOJB extends PersistentObjectOJB implements
         return resultList;
     }
 
-    public int countByResponse(String response, Integer order, IDistributedTest distributedTest)
-            throws ExcepcaoPersistencia {
+    public int countByResponse(String response, Integer order, IDistributedTest distributedTest) {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("testQuestionOrder", order);
         criteria.addEqualTo("response", response);
@@ -237,7 +232,7 @@ public class StudentTestQuestionOJB extends PersistentObjectOJB implements
     }
 
     public int countResponsedOrNotResponsed(Integer order, boolean responsed,
-            IDistributedTest distributedTest) throws ExcepcaoPersistencia {
+            IDistributedTest distributedTest) {
         Criteria criteria = new Criteria();
         if (order != null)
             criteria.addEqualTo("testQuestionOrder", order);
@@ -252,7 +247,7 @@ public class StudentTestQuestionOJB extends PersistentObjectOJB implements
     }
 
     public int countCorrectOrIncorrectAnswers(Integer order, Double mark, boolean correct,
-            IDistributedTest distributedTest) throws ExcepcaoPersistencia {
+            IDistributedTest distributedTest) {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("testQuestionOrder", order);
         //criteria.addNotEqualTo("response", null);
@@ -268,8 +263,7 @@ public class StudentTestQuestionOJB extends PersistentObjectOJB implements
         return pb.getCount(queryCriteria);
     }
 
-    public int countPartiallyCorrectAnswers(Integer order, Double mark, IDistributedTest distributedTest)
-            throws ExcepcaoPersistencia {
+    public int countPartiallyCorrectAnswers(Integer order, Double mark, IDistributedTest distributedTest) {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("testQuestionOrder", order);
         criteria.addNotNull("response");
@@ -281,7 +275,7 @@ public class StudentTestQuestionOJB extends PersistentObjectOJB implements
         return pb.getCount(queryCriteria);
     }
 
-    public int countNumberOfStudents(IDistributedTest distributedTest) throws ExcepcaoPersistencia {
+    public int countNumberOfStudents(IDistributedTest distributedTest) {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyDistributedTest", distributedTest.getIdInternal());
         PersistenceBroker pb = ((HasBroker) odmg.currentTransaction()).getBroker();
@@ -290,7 +284,7 @@ public class StudentTestQuestionOJB extends PersistentObjectOJB implements
     }
 
     public int countStudentTestByStudentAndExecutionCourse(IExecutionCourse executionCourse,
-            IStudent student) throws ExcepcaoPersistencia {
+            IStudent student) {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyStudent", student.getIdInternal());
         criteria.addEqualTo("distributedTest.testScope.className", ExecutionCourse.class.getName());
@@ -301,7 +295,7 @@ public class StudentTestQuestionOJB extends PersistentObjectOJB implements
         return pb.getCount(queryCriteria);
     }
 
-    public int countByQuestion(IQuestion question) throws ExcepcaoPersistencia {
+    public int countByQuestion(IQuestion question) {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyQuestion", question.getIdInternal());
         PersistenceBroker pb = ((HasBroker) odmg.currentTransaction()).getBroker();

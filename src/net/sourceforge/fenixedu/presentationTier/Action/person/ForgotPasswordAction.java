@@ -1,10 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.person;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.ListIterator;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -34,7 +32,7 @@ import org.apache.struts.action.ActionMapping;
 public final class ForgotPasswordAction extends Action {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws IOException, ServletException {
+            HttpServletResponse response) {
 
         HttpSession session = request.getSession();
         ActionErrors errors = new ActionErrors();

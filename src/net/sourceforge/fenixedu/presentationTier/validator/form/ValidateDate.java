@@ -7,14 +7,14 @@ package net.sourceforge.fenixedu.presentationTier.validator.form;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import net.sourceforge.fenixedu.util.Data;
+
 import org.apache.commons.validator.Field;
 import org.apache.commons.validator.GenericValidator;
 import org.apache.commons.validator.ValidatorAction;
 import org.apache.commons.validator.ValidatorUtil;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.validator.Resources;
-
-import net.sourceforge.fenixedu.util.Data;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)

@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.teacher.Career;
 import net.sourceforge.fenixedu.domain.teacher.ICareer;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCareer;
@@ -54,7 +53,7 @@ public class ReadCareer extends ReadDomainObjectService {
      * 
      * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
      */
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia {
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         IPersistentCareer persistentCareer = sp.getIPersistentCareer();
         return persistentCareer;
     }

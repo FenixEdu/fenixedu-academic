@@ -4,11 +4,8 @@
  */
 package net.sourceforge.fenixedu.utilTests;
 
-import java.io.IOException;
-
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 /**
  * @author Susana Fernandes
@@ -23,7 +20,7 @@ public class MetadataResolver implements EntityResolver {
         this.path = dtdPath;
     }
 
-    public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
+    public InputSource resolveEntity(String publicId, String systemId) {
         return new InputSource(new String("file:///" + path.concat(metadataDtd)));
     }
 

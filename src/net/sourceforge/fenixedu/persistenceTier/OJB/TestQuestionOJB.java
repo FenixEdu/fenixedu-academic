@@ -27,7 +27,7 @@ public class TestQuestionOJB extends PersistentObjectOJB implements IPersistentT
     public TestQuestionOJB() {
     }
 
-    public List readByTest(ITest test) throws ExcepcaoPersistencia {
+    public List readByTest(ITest test) {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyTest", test.getIdInternal());
 

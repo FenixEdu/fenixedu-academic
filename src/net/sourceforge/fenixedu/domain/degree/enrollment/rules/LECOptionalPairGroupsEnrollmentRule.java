@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.ICurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
-import net.sourceforge.fenixedu.domain.exceptions.EnrolmentRuleDomainException;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -29,7 +28,7 @@ public class LECOptionalPairGroupsEnrollmentRule implements IEnrollmentRule {
         this.studentCurricularPlan = studentCurricularPlan;
     }
 
-    public List apply(List curricularCoursesToBeEnrolledIn) throws EnrolmentRuleDomainException {
+    public List apply(List curricularCoursesToBeEnrolledIn) {
         List allOptionalCurricularCourseGroups = studentCurricularPlan.getDegreeCurricularPlan()
                 .getAllOptionalCurricularCourseGroups();
 

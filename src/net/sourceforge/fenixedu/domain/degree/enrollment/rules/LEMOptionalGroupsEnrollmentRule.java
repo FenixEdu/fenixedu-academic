@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.ICurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
-import net.sourceforge.fenixedu.domain.exceptions.EnrolmentRuleDomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -41,7 +40,7 @@ public class LEMOptionalGroupsEnrollmentRule implements IEnrollmentRule {
      * 
      * @see Dominio.degree.enrollment.rules.IEnrollmentRule#apply(java.util.List)
      */
-    public List apply(List curricularCoursesToBeEnrolledIn) throws EnrolmentRuleDomainException {
+    public List apply(List curricularCoursesToBeEnrolledIn) {
 
         ISuportePersistente suportePersistente;
         IPersistentCurricularCourseGroup persistentCurricularCourseGroup;

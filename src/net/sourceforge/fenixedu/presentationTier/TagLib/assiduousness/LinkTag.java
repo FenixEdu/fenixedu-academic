@@ -382,11 +382,8 @@ public class LinkTag extends BaseHandlerTag {
 
     /**
      * Save the associated label from the body content.
-     * 
-     * @exception JspException
-     *                if a JSP exception has occurred
      */
-    public int doAfterBody() throws JspException {
+    public int doAfterBody() {
 
         if (bodyContent != null) {
             String value = bodyContent.getString().trim();

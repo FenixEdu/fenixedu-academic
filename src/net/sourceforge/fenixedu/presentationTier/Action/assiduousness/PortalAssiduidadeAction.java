@@ -1,8 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.assiduousness;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -29,7 +26,7 @@ import org.apache.struts.action.ActionMapping;
 public final class PortalAssiduidadeAction extends Action {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws IOException, ServletException {
+            HttpServletResponse response) {
         HttpSession session = request.getSession();
         ActionErrors errors = new ActionErrors();
 

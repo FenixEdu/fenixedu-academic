@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro.credits;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -18,7 +17,7 @@ public class CreditsServiceWithInfoProfessorshipArgumentAuthorization extends
         AbstractTeacherDepartmentAuthorization {
 
     protected Integer getTeacherId(Object[] arguments, ISuportePersistente sp)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws ExcepcaoPersistencia {
         InfoProfessorship infoProfessorship = (InfoProfessorship) arguments[0];
 
         IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();

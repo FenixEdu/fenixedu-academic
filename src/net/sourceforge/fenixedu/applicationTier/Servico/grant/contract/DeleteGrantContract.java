@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.DeleteDomainObjectService;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
@@ -54,7 +53,7 @@ public class DeleteGrantContract extends DeleteDomainObjectService {
      * 
      * @see ServidorAplicacao.Servico.framework.DeleteDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
      */
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia {
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentGrantContract();
     }
 
@@ -65,7 +64,7 @@ public class DeleteGrantContract extends DeleteDomainObjectService {
      *      ServidorPersistente.ISuportePersistente)
      */
     protected void doBeforeDelete(IDomainObject domainObject, ISuportePersistente sp)
-            throws FenixServiceException, ExcepcaoPersistencia {
+            throws ExcepcaoPersistencia {
         IGrantContract grantContract = (IGrantContract) domainObject;
 
         /*

@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
-import net.sourceforge.fenixedu.domain.exceptions.EnrolmentRuleDomainException;
 import net.sourceforge.fenixedu.util.AreaType;
 import net.sourceforge.fenixedu.util.enrollment.CurricularCourseEnrollmentType;
 
@@ -43,7 +42,7 @@ public class LEMIgnorePrecedenceForBranchTAEnrollmentRule implements IEnrollment
      * 
      * @see Dominio.degree.enrollment.rules.IEnrollmentRule#apply(java.util.List)
      */
-    public List apply(List curricularCoursesToBeEnrolledIn) throws EnrolmentRuleDomainException {
+    public List apply(List curricularCoursesToBeEnrolledIn) {
 
         if (studentCurricularPlan.getBranch() != null
                 && studentCurricularPlan.getBranch().getCode()

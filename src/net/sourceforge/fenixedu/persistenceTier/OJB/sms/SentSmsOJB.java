@@ -39,8 +39,7 @@ public class SentSmsOJB extends PersistentObjectOJB implements IPersistentSentSm
         return readInterval(SentSms.class, crit, interval, new Integer(0), "sendDate", false);
     }
 
-    public Integer countByPersonAndDatePeriod(Integer personId, Date startDate, Date endDate)
-            throws ExcepcaoPersistencia {
+    public Integer countByPersonAndDatePeriod(Integer personId, Date startDate, Date endDate) {
         Criteria crit = new Criteria();
         crit.addEqualTo("person.idInternal", personId);
         crit.addGreaterOrEqualThan("sendDate", startDate);

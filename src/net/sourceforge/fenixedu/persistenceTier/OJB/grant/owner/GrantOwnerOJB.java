@@ -126,14 +126,13 @@ public class GrantOwnerOJB extends PersistentObjectOJB implements IPersistentGra
     }
 
     public List readAllGrantOwnersBySpan(Integer spanNumber, Integer numberOfElementsInSpan,
-            String orderBy) throws ExcepcaoPersistencia {
+            String orderBy) {
         Criteria criteria = new Criteria();
         return readBySpanAndCriteria(spanNumber, numberOfElementsInSpan, criteria, orderBy, true);
     }
 
     public Integer countAllByCriteria(Boolean justActiveContracts, Boolean justDesactiveContracts,
-            Date dateBeginContract, Date dateEndContract, Integer grantTypeId)
-            throws ExcepcaoPersistencia {
+            Date dateBeginContract, Date dateEndContract, Integer grantTypeId) {
 
         Criteria criteria = new Criteria();
 

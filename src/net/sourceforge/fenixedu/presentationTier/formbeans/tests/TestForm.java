@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.formbeans.tests;
 
-import org.apache.struts.action.ActionForm;
-
 import net.sourceforge.fenixedu.util.tests.Response;
+
+import org.apache.struts.action.ActionForm;
 
 public final class TestForm extends ActionForm {
 

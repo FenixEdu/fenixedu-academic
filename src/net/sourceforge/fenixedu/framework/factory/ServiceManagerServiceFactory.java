@@ -67,8 +67,8 @@ public class ServiceManagerServiceFactory {
                 try {
                     Class serviceMagagerBeanClass = Class
                             .forName("net.sourceforge.fenixedu.applicationTier.ServiceManagerBean");
-                    service = (IServiceManagerWrapper) serviceMagagerBeanClass.getConstructor(null)
-                            .newInstance(null);
+                    service = (IServiceManagerWrapper) serviceMagagerBeanClass.getConstructor((Class[]) null)
+                            .newInstance((Object[]) null);
                     logger.info("Using direct service manager calls.");
                 } catch (Exception e1) {
                     service = null;

@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InfoTeacherInstitutionWorkTime;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.TeacherInstitutionWorkingTimeDTO;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.framework.CRUDActionByOID;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -87,7 +86,7 @@ public class CRUDTeacherInstitutionWorkingTimeAction extends CRUDActionByOID {
      *      javax.servlet.http.HttpServletRequest)
      */
     protected void populateFormFromInfoObject(ActionMapping mapping, InfoObject infoObject,
-            ActionForm form, HttpServletRequest request) throws FenixActionException {
+            ActionForm form, HttpServletRequest request) {
         InfoTeacherInstitutionWorkTime infoTeacherInstitutionWorkTime = (InfoTeacherInstitutionWorkTime) infoObject;
         DynaActionForm teacherInstitutionWorkTimeForm = (DynaActionForm) form;
 
@@ -133,8 +132,7 @@ public class CRUDTeacherInstitutionWorkingTimeAction extends CRUDActionByOID {
      * @see ServidorApresentacao.Action.framework.CRUDActionByOID#populateInfoObjectFromForm(org.apache.struts.action.ActionForm,
      *      ServidorApresentacao.mapping.framework.CRUDMapping)
      */
-    protected InfoObject populateInfoObjectFromForm(ActionForm form, CRUDMapping mapping)
-            throws FenixActionException {
+    protected InfoObject populateInfoObjectFromForm(ActionForm form, CRUDMapping mapping) {
         DynaActionForm teacherInstitutionWorkTimeForm = (DynaActionForm) form;
         InfoTeacherInstitutionWorkTime infoTeacherInstitutionWorkTime = new InfoTeacherInstitutionWorkTime();
 

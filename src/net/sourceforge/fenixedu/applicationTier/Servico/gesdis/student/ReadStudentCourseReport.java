@@ -4,13 +4,12 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.gesdis.student;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.framework.ReadDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
 import net.sourceforge.fenixedu.domain.IDomainObject;
 import net.sourceforge.fenixedu.domain.gesdis.IStudentCourseReport;
 import net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport;
-import net.sourceforge.fenixedu.applicationTier.Servico.framework.ReadDomainObjectService;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
@@ -38,7 +37,7 @@ public class ReadStudentCourseReport extends ReadDomainObjectService {
      * 
      * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
      */
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia {
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentStudentCourseReport();
     }
 

@@ -71,8 +71,7 @@ public class GrantContractOJB extends PersistentObjectOJB implements IPersistent
 
     public List readAllContractsByCriteria(String orderBy, Boolean justActiveContracts,
             Boolean justDesactiveContracts, Date dateBeginContract, Date dateEndContract,
-            Integer spanNumber, Integer numberOfElementsInSpan, Integer grantTypeId)
-            throws ExcepcaoPersistencia {
+            Integer spanNumber, Integer numberOfElementsInSpan, Integer grantTypeId) {
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("contractRegimes.state", new Integer(1));
@@ -130,8 +129,7 @@ public class GrantContractOJB extends PersistentObjectOJB implements IPersistent
     }
 
     public Integer countAllByCriteria(Boolean justActiveContracts, Boolean justDesactiveContracts,
-            Date dateBeginContract, Date dateEndContract, Integer grantTypeId)
-            throws ExcepcaoPersistencia {
+            Date dateBeginContract, Date dateEndContract, Integer grantTypeId) {
 
         Criteria criteria = new Criteria();
 

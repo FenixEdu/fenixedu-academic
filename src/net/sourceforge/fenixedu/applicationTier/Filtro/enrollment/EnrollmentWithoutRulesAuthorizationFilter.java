@@ -53,7 +53,7 @@ public class EnrollmentWithoutRulesAuthorizationFilter extends AuthorizationByMa
             ISuportePersistente sp = null;
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            List roles = getRoleList((List) id.getRoles());
+            List roles = getRoleList(id.getRoles());
 
             if (roles.contains(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
 

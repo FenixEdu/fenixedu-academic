@@ -554,7 +554,7 @@ public abstract class Cloner {
      */
 
     // DO NOT DELETE - this is used locally through introspection!!!
-    private static InfoExecutionDegree copy(IExecutionDegree executionDegree) {
+    protected static InfoExecutionDegree copy(IExecutionDegree executionDegree) {
 
         InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
 
@@ -605,7 +605,7 @@ public abstract class Cloner {
      */
 
     // DO NOT DELETE - this is used locally through introspection!!!
-    private static InfoExecutionYear copy(IExecutionYear executionYear) {
+    protected static InfoExecutionYear copy(IExecutionYear executionYear) {
         InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
         copyObjectProperties(infoExecutionYear, executionYear);
         return infoExecutionYear;

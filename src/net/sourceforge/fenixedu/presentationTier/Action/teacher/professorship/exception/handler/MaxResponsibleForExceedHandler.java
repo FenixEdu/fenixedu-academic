@@ -6,12 +6,11 @@ package net.sourceforge.fenixedu.presentationTier.Action.teacher.professorship.e
 
 import java.util.Iterator;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoResponsibleFor;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
+import net.sourceforge.fenixedu.dataTransferObject.InfoResponsibleFor;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionForm;
@@ -36,8 +35,7 @@ public class MaxResponsibleForExceedHandler extends ExceptionHandler {
      *      javax.servlet.http.HttpServletResponse)
      */
     public ActionForward execute(Exception ex, ExceptionConfig ae, ActionMapping mapping,
-            ActionForm formInstance, HttpServletRequest request, HttpServletResponse response)
-            throws ServletException {
+            ActionForm formInstance, HttpServletRequest request, HttpServletResponse response) {
         MaxResponsibleForExceed maxResponsibleForExceedException = (MaxResponsibleForExceed) ex;
 
         Object args[] = new Object[2];

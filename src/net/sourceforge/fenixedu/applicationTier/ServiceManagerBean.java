@@ -108,7 +108,7 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
      * @throws FenixServiceException
      * @throws NotAuthorizedException
      */
-    public Object execute(IUserView id, String service, Object args[]) throws FenixServiceException {
+    public Object execute(IUserView id, String service, Object args[]) {
         return execute(id, service, "run", args);
     }
 
@@ -119,7 +119,7 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
      *      java.lang.String, java.lang.String, java.lang.Object[])
      */
     public Object execute(IUserView id, String service, String method, Object[] args)
-            throws FenixServiceException, EJBException {
+            throws EJBException {
         try {
             Calendar serviceStartTime = null;
             Calendar serviceEndTime = null;

@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesSum
 import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesSummary;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesSummary;
 
 import org.apache.commons.collections.CollectionUtils;

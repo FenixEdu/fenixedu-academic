@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTierJDBC;
 
+import net.sourceforge.fenixedu.constants.assiduousness.Constants;
 import net.sourceforge.fenixedu.persistenceTierJDBC.Relacional.CartaoRelacionalOracle;
 import net.sourceforge.fenixedu.persistenceTierJDBC.Relacional.FuncionarioRelacionalOracle;
 import net.sourceforge.fenixedu.persistenceTierJDBC.Relacional.HorarioRelacionalOracle;
@@ -7,7 +8,6 @@ import net.sourceforge.fenixedu.persistenceTierJDBC.Relacional.JustificacaoRelac
 import net.sourceforge.fenixedu.persistenceTierJDBC.Relacional.MarcacaoPontoRelacionalOracle;
 import net.sourceforge.fenixedu.persistenceTierJDBC.Relacional.RegularizacaoMarcacaoPontoRelacionalOracle;
 import net.sourceforge.fenixedu.persistenceTierJDBC.Relacional.UtilRelacionalOracle;
-import net.sourceforge.fenixedu.constants.assiduousness.Constants;
 
 /**
  * 

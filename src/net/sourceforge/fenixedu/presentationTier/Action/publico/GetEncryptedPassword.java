@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 
 import org.apache.struts.action.Action;
@@ -35,7 +34,7 @@ public class GetEncryptedPassword extends Action {
      * user
      */
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletResponse response) throws FenixFilterException {
         String username = request.getParameter("login");
         String timestamp = request.getParameter("timestamp");
         String url = request.getParameter("url");

@@ -222,7 +222,7 @@ public class EnrollmentOJB extends PersistentObjectOJB implements IPersistentEnr
     }
 
     public int countEnrolmentsByCurricularCourseAndExecutionPeriod(Integer curricularCourseID,
-            Integer executionPeriodID) throws ExcepcaoPersistencia {
+            Integer executionPeriodID) {
         Criteria crit = new Criteria();
         crit.addEqualTo("curricularCourse.idInternal", curricularCourseID);
         crit.addEqualTo("executionPeriod.idInternal", executionPeriodID);

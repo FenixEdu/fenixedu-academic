@@ -6,7 +6,6 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Enumeration;
 import java.util.Properties;
-import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
 import org.w3c.tidy.Node;
@@ -33,7 +32,7 @@ public class HtmlValidator {
     private void init() {
         tidy = new Tidy();
         Properties properties = new Properties();
-        ResourceBundle resourceBundle = PropertyResourceBundle.getBundle("jtidy");
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("jtidy");
         
         convertPropertyResourceBundleToProperties(resourceBundle, properties);
         tidy.setConfigurationFromProps(properties);
@@ -68,10 +67,10 @@ public class HtmlValidator {
         pprintNode(body, outputStreamData);        
         String teste = outputStreamData.toString();
         
-        if(teste.length() >= 6)        
+        if(teste.length() >= 6) {
             return teste.substring(6, teste.indexOf("</body>"));
-        else
-            return "";
+        }
+        return "";
     }
     
     /**

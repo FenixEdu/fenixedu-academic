@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.ICurricularCourse;
 import net.sourceforge.fenixedu.domain.IExecutionPeriod;
 import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -33,8 +32,7 @@ public class SpecificLEICEnrollmentRule extends SpecificEnrolmentRule implements
     }
 
 
-    protected List specificAlgorithm(IStudentCurricularPlan studentCurricularPlan)
-            throws ExcepcaoPersistencia {
+    protected List specificAlgorithm(IStudentCurricularPlan studentCurricularPlan) {
 
         HashMap creditsInScientificAreas = new HashMap();
         HashMap creditsInSpecializationAreaGroups = new HashMap();

@@ -28,7 +28,7 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 public class EmployeeBelongsToTeacherDepartment extends Filtro{
 
 	public void execute(ServiceRequest request, ServiceResponse response)
-			throws FilterException, Exception, FenixServiceException {
+			throws FilterException, Exception {
 	    
 	    ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         

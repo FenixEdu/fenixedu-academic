@@ -129,7 +129,6 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy
     }
 
     public boolean checkAlreadyEnroled(IGroupProperties groupProperties, String username)
-        throws ExcepcaoPersistencia
     {
         try
         {
@@ -186,7 +185,6 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy
         IGroupProperties groupProperties,
         IStudentGroup studentGroup,
         String username)
-        throws ExcepcaoPersistencia
     {
         try
         {
@@ -234,7 +232,6 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy
         IGroupProperties groupProperties,
         IStudentGroup studentGroup,
         IShift shift)
-        throws ExcepcaoPersistencia
     {
         boolean result = false;
 
@@ -289,7 +286,6 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy
     
     
     public boolean checkStudentInAttendsSet (IGroupProperties groupProperties, String username)
-    throws ExcepcaoPersistencia
 	{
     	boolean found = false;
     	try
@@ -318,7 +314,6 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy
 
 
     public boolean checkStudentsInAttendsSet (List studentCodes, IGroupProperties groupProperties)
-    throws ExcepcaoPersistencia
 	{
     	boolean found = true;
     	try {
@@ -348,7 +343,6 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy
 
     
     public boolean checkStudentsUserNamesInAttendsSet (List studentUsernames, IGroupProperties groupProperties)
-    throws ExcepcaoPersistencia
 	{
     	boolean found = true;
     	try {

@@ -188,7 +188,7 @@ public abstract class EditDomainObjectService implements IService {
         IDomainObject domainObject = null;
 
         if (isNew(objectToEdit)) {
-            domainObject = (IDomainObject) objectToEdit.getClass().newInstance();
+            domainObject = objectToEdit.getClass().newInstance();
         } else {
             domainObject = objectFromDatabase;
         }

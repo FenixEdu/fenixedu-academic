@@ -78,7 +78,7 @@ public final class CheckLogonTag extends TagSupport {
      * @exception JspException
      *                if a JSP exception has occurred
      */
-    public int doStartTag() throws JspException {
+    public int doStartTag() {
 
         return (SKIP_BODY);
 

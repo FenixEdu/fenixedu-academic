@@ -16,9 +16,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.dto.SchoolClassDTO;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.dto.SchoolClassDTO;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 
 import org.apache.commons.lang.StringUtils;

@@ -1,26 +1,24 @@
 package net.sourceforge.fenixedu.presentationTier.Action.assiduousness;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import net.sourceforge.fenixedu.constants.assiduousness.Constants;
+import net.sourceforge.fenixedu.presentationTier.formbeans.assiduousness.MostrarListaForm;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import net.sourceforge.fenixedu.presentationTier.formbeans.assiduousness.MostrarListaForm;
-import net.sourceforge.fenixedu.constants.assiduousness.Constants;
-
 public class MostrarListaAction extends Action {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws IOException, ServletException {
+            HttpServletResponse response) {
         HttpSession session = request.getSession();
 
         if (session.getAttribute(Constants.USERNAME) == null) {

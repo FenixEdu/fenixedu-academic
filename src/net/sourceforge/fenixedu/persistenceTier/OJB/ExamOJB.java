@@ -147,8 +147,7 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
         return list;
     }
 
-    public boolean isExamOfExecutionCourseTheStudentAttends(Integer examOID, String studentsUsername)
-            throws ExcepcaoPersistencia {
+    public boolean isExamOfExecutionCourseTheStudentAttends(Integer examOID, String studentsUsername) {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("idInternal", examOID);
         criteria.addEqualTo("associatedExecutionCourses.attendingStudents.person.username",

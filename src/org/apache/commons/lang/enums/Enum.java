@@ -543,8 +543,8 @@ public abstract class Enum implements Comparable, Serializable {
         } else {
             // This and other are in different class loaders, we must use reflection.
             try {
-                Method mth = other.getClass().getMethod("getName", null);
-                String name = (String) mth.invoke(other, null);
+                Method mth = other.getClass().getMethod("getName", (Class[]) null);
+                String name = (String) mth.invoke(other, (Object[]) null);
                 return iName.equals(name);
             } catch (NoSuchMethodException e) {
                 // ignore - should never happen

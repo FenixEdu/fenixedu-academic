@@ -16,7 +16,6 @@ import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.FilterParameters;
 import pt.utl.ist.berserk.logic.filterManager.IFilter;
-import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 
 public class RepositoryDescriptorPerThreadFilter implements IFilter {
 
@@ -26,7 +25,7 @@ public class RepositoryDescriptorPerThreadFilter implements IFilter {
      * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
      *      pt.utl.ist.berserk.ServiceResponse)
      */
-    public void execute(ServiceRequest arg0, ServiceResponse arg1, FilterParameters filterParameters) throws FilterException, Exception {
+    public void execute(ServiceRequest arg0, ServiceResponse arg1, FilterParameters filterParameters) throws Exception {
 
         MetadataManager mm = MetadataManager.getInstance();
         // tell the manager to use per thread mode

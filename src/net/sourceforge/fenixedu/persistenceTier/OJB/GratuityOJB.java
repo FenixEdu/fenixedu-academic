@@ -5,13 +5,13 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 
 import java.util.List;
 
-import org.apache.ojb.broker.query.Criteria;
-
 import net.sourceforge.fenixedu.domain.Gratuity;
 import net.sourceforge.fenixedu.domain.IGratuity;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuity;
 import net.sourceforge.fenixedu.util.State;
+
+import org.apache.ojb.broker.query.Criteria;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)

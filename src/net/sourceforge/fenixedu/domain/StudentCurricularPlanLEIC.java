@@ -10,7 +10,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreTheSameServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.AreaType;
 import net.sourceforge.fenixedu.util.enrollment.CurricularCourseEnrollmentType;
 
@@ -53,7 +52,7 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlan implements 
     }
 
     public boolean areNewAreasCompatible(IBranch specializationArea, IBranch secundaryArea)
-            throws ExcepcaoPersistencia, BothAreasAreTheSameServiceException,
+            throws BothAreasAreTheSameServiceException,
             InvalidArgumentsServiceException {
         if (specializationArea == null && secundaryArea == null) {
             return true;

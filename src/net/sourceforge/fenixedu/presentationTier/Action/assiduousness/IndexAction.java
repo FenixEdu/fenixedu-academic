@@ -1,14 +1,22 @@
 package net.sourceforge.fenixedu.presentationTier.Action.assiduousness;
 
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import net.sourceforge.fenixedu.applicationTier.Executor;
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.PersistenceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExecuteException;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.ServicoAutorizacaoLerPessoa;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.ServicoSeguroLerPessoa;
+import net.sourceforge.fenixedu.constants.assiduousness.Constants;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
 import org.apache.struts.Globals;
 import org.apache.struts.action.Action;
@@ -18,23 +26,13 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.applicationTier.Executor;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.PersistenceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExecuteException;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.ServicoAutorizacaoLerPessoa;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.ServicoSeguroLerPessoa;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
-import net.sourceforge.fenixedu.constants.assiduousness.Constants;
-
 /*
  * @author Fernanda Quitério & Tânia Pousão (ANTES: era o nosso LogonAction)
  */
 public final class IndexAction extends Action {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws IOException, ServletException {
+            HttpServletResponse response) {
 
         Locale locale = request.getLocale();
 

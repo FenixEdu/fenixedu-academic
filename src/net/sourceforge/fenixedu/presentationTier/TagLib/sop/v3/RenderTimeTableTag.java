@@ -148,7 +148,7 @@ public final class RenderTimeTableTag extends TagSupport {
         return timeTable;
     }
 
-    public int doEndTag() throws JspException {
+    public int doEndTag() {
         return (EVAL_PAGE);
     }
 

@@ -9,13 +9,12 @@ import java.text.SimpleDateFormat;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.dataTransferObject.credits.InfoServiceExemptionCreditLine;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
+import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.dataTransferObject.credits.InfoServiceExemptionCreditLine;
 import net.sourceforge.fenixedu.presentationTier.Action.framework.CRUDActionByOID;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -39,7 +38,7 @@ public class CRUDServiceExemptionAction extends CRUDActionByOID {
      *      javax.servlet.http.HttpServletRequest)
      */
     protected void populateFormFromInfoObject(ActionMapping mapping, InfoObject infoObject,
-            ActionForm form, HttpServletRequest request) throws FenixActionException {
+            ActionForm form, HttpServletRequest request) {
         DynaActionForm serviceExemptionForm = (DynaActionForm) form;
         InfoServiceExemptionCreditLine infoServiceExemptionCreditLine = (InfoServiceExemptionCreditLine) infoObject;
 
@@ -63,8 +62,7 @@ public class CRUDServiceExemptionAction extends CRUDActionByOID {
      * @see ServidorApresentacao.Action.framework.CRUDActionByOID#populateInfoObjectFromForm(org.apache.struts.action.ActionForm,
      *      ServidorApresentacao.mapping.framework.CRUDMapping)
      */
-    protected InfoObject populateInfoObjectFromForm(ActionForm form, CRUDMapping mapping)
-            throws FenixActionException {
+    protected InfoObject populateInfoObjectFromForm(ActionForm form, CRUDMapping mapping) {
         DynaActionForm serviceExemptionForm = (DynaActionForm) form;
         InfoServiceExemptionCreditLine infoServiceExemptionCreditLine = new InfoServiceExemptionCreditLine();
 
