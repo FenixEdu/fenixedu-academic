@@ -3,27 +3,26 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-	
-<h3><bean:message key="title.associateTeacher" /></h3>			
+<h2><bean:message key="title.associateTeacher" /></h2>			
 <html:form action="/teacherManagerDA">
 <html:hidden property="page" value="1"/>
-<table>		
-	
+<table>			
 	<tr>
-		<td><h2><bean:message key="label.teacherNumber" /></h2>	
+		<td class="formTD"><bean:message key="label.teacherNumber" />
 		</td>
 		<td><html:text  property="teacherNumber"  />
 		</td>
-		<td>
-			 <html:hidden property="method" value="associateTeacher"/>
-    <html:submit styleClass="inputbutton">
-	<bean:message key="button.save"/>
-	</html:submit >
+		<td><span class="error"><html:errors /></span >
 		</td>
-		<td><span class="error"><html:errors /></span >	</td>
-		
 	</tr>
-	
-
-</table>	
+</table>
+<br />
+<html:hidden property="method" value="associateTeacher"/>
+<html:hidden property="method" value="edit"/>
+<html:submit styleClass="inputbutton">
+<bean:message key="button.save"/>
+</html:submit >
+<html:reset styleClass="inputbutton">
+<bean:message key="label.clear"/>
+</html:reset>
 </html:form>
