@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
+import Dominio.ITurma;
 import Dominio.ITurmaTurno;
+import Dominio.Turma;
+import Dominio.TurmaTurno;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
@@ -37,13 +41,23 @@ public class ReadClassesWithShiftService implements IServico {
 	  return "ReadClassesWithShiftService";
 	}
 
-	public Object run(InfoShift infoShift) {
+	public Object run(InfoShift infoShift, InfoExecutionDegree infoExecutionDegree) {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			
 			ITurmaTurnoPersistente classShiftDAO = sp.getITurmaTurnoPersistente();
 			
-			List shiftClasses = classShiftDAO.readClassesWithShift(Cloner.copyInfoShift2Shift(infoShift));
+			ITurma turma =
+				new Turma(
+					null,
+					null,
+					Cloner.copyInfoExecutionDegree2ExecutionDegree(
+						infoExecutionDegree),
+					null);
+			ITurmaTurno turmaTurno =
+				new TurmaTurno(turma, Cloner.copyInfoShift2Shift(infoShift));
+			
+			List shiftClasses =  classShiftDAO.readByCriteria(turmaTurno);
 			
 			Iterator iterator = shiftClasses.iterator();
 			
