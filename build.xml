@@ -6,7 +6,7 @@
 
 	<taskdef name="dbunit" classname="org.dbunit.ant.DbUnitTask"/>
 
-<!--    <taskdef name="strutsdoc" classname="strutsdoc.Main"/>-->
+    <taskdef name="strutsdoc" classname="strutsdoc.Main"/>
 
     <property environment="env"/>
 
