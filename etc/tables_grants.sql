@@ -9,8 +9,8 @@
 # Table structure for table 'grant_owner'
 #
 
-DROP TABLE IF EXISTS grant_owner;
-CREATE TABLE grant_owner (
+DROP TABLE IF EXISTS GRANT_OWNER;
+CREATE TABLE GRANT_OWNER (
   ID_INTERNAL int(11) unsigned NOT NULL auto_increment,
   KEY_PERSON int(11) unsigned NOT NULL default '0',
   NUMBER int(11) unsigned NOT NULL default '0',
