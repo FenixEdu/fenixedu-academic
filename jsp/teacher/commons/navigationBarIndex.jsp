@@ -11,6 +11,12 @@
   		<bean:message key="link.manage.teacherInformation"/>
   	</html:link>
   </li>
+  <li>
+  	<html:link page="/prepareTeacherCreditsSheet.do">
+  		<bean:message key="link.view.teacher.credits.sheet"/>
+  	</html:link>
+  
+  </li>
 <%--  <li>
   	<html:link forward="creditsManagement" paramId="teacherOID" paramName="infoTeacher" paramProperty="idInternal">
   		<bean:message key="link.manage.credits"/>
