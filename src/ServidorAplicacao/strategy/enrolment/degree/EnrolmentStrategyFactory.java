@@ -16,8 +16,6 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class EnrolmentStrategyFactory {
 
-	public static final int LERCI = 1;
-
 	private static IEnrolmentStrategy strategyInstance = null;
 
 	private static SuportePersistenteOJB persistentSupport = null;

@@ -15,7 +15,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
  * 3/Abr/2003
  */
 
-// NOTE: David-Ricardo: Esta regra para ser geral para todos os cursos TEM que ser chamada DEPOIS da regra dos BRANCH
+// NOTE: David-Ricardo: Esta regra para ser geral para todos os cursos TEM que ser chamada DEPOIS das regras do BRANCH e do SEMESTER
 public class EnrolmentRuleNACandND implements IEnrolmentRule {
 
 	public EnrolmentContext apply(EnrolmentContext enrolmentContext) throws ExcepcaoPersistencia {
@@ -28,7 +28,13 @@ public class EnrolmentRuleNACandND implements IEnrolmentRule {
 		HashMap acumulatedEnrolments = (HashMap) enrolmentContext.getAcumulatedEnrolments();
 
 		// FIXME: David-Ricardo: Parametrizar possibleND, possibleNAC e year
-		while ( (possibleND < 7) && (possibleNAC < 10) && (year < 6)) {
+		while ((possibleND < 7) && (possibleNAC < 10) && (year < 6)) {
+
+//			if(!checkOutPastEnrolments(year,enrolmentContext)){
+//				possibleScopes = new ArrayList();
+//				enrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(possibleScopes);
+//				return enrolmentContext; 
+//			}
 			
 			Iterator iterator = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().iterator();
 			while (iterator.hasNext()) {
@@ -36,13 +42,12 @@ public class EnrolmentRuleNACandND implements IEnrolmentRule {
 				if (curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().equals(new Integer(year))) {
 					possibleScopes.add(curricularCourseScope);
 					possibleND = possibleND + 1;
-										
+
 					if (acumulatedEnrolments.containsKey(curricularCourseScope.getCurricularCourse())) {
-						if (((Integer) acumulatedEnrolments.get(curricularCourseScope.getCurricularCourse())).intValue() > 0){
+						if (((Integer) acumulatedEnrolments.get(curricularCourseScope.getCurricularCourse())).intValue() > 0) {
 							possibleNAC = possibleNAC + 2;
 						}
-					}
-					else{
+					} else {
 						possibleNAC = possibleNAC + 1;
 					}
 				}
@@ -53,4 +58,38 @@ public class EnrolmentRuleNACandND implements IEnrolmentRule {
 		enrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(possibleScopes);
 		return enrolmentContext;
 	}
+
+//	public boolean checkOutPastEnrolments(int year, EnrolmentContext enrolmentContext) {
+//
+//		List curricularCourseScopes = new ArrayList();
+//
+//		if (year == 1) {
+//			return true;
+//		} else {
+//
+//			HashMap acumulatedEnrolments = (HashMap) enrolmentContext.getAcumulatedEnrolments();
+//			
+//			Iterator iterator = enrolmentContext.getCurricularCoursesFromStudentCurricularPlan().iterator();
+//			while (iterator.hasNext()) {
+//				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
+//				if
+//				(
+//					(!curricularCourseScope.getCurricularSemester().getSemester().equals(enrolmentContext.getSemester())) &&
+//					(curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().intValue() == (year - 1)) &&
+//					(
+//						(curricularCourseScope.getBranch().equals(enrolmentContext.getStudentActiveCurricularPlan().getBranch())) ||
+//						(curricularCourseScope.getBranch().getName().equals(""))
+//					) &&
+//					(
+//						(!acumulatedEnrolments.containsKey(curricularCourseScope.getCurricularCourse())) &&
+//						(!enrolmentContext.getCurricularCoursesDoneByStudent().contains(curricularCourseScope.getCurricularCourse()))
+//					)
+//				) {
+//					return false;
+//				}
+//			}
+//
+//			return true;
+//		}
+//	}
 }

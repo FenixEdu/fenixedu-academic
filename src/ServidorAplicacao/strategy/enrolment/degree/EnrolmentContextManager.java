@@ -32,95 +32,64 @@ import Util.EnrolmentState;
  * @author jpvl
  */
 public abstract class EnrolmentContextManager {
-	
-	public static EnrolmentContext initialEnrolmentContext(
-		IStudent student,
-		Integer semester) throws ExcepcaoPersistencia {
+
+	public static EnrolmentContext initialEnrolmentContext(IStudent student, Integer semester) throws ExcepcaoPersistencia {
 		EnrolmentContext enrolmentContext = new EnrolmentContext();
 
-		ISuportePersistente persistentSupport =
-			SuportePersistenteOJB.getInstance();
+		ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
 
-		IStudentCurricularPlanPersistente persistentStudentCurricularPlan =
-			persistentSupport.getIStudentCurricularPlanPersistente();
+		IStudentCurricularPlanPersistente persistentStudentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente();
 
-		IPersistentEnrolment persistentEnrolment =
-			persistentSupport.getIPersistentEnrolment();
+		IPersistentEnrolment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 
 		IStudentCurricularPlan studentActiveCurricularPlan =
-			persistentStudentCurricularPlan.readActiveStudentCurricularPlan(
-				student.getNumber(),
-				student.getDegreeType());
+			persistentStudentCurricularPlan.readActiveStudentCurricularPlan(student.getNumber(), student.getDegreeType());
 
-		List studentCurricularPlanCurricularCourses =
-			studentActiveCurricularPlan
-				.getDegreeCurricularPlan()
-				.getCurricularCourses();
+		List studentCurricularPlanCurricularCourses = studentActiveCurricularPlan.getDegreeCurricularPlan().getCurricularCourses();
 
-		final List studentEnrolments =
-			persistentEnrolment.readAllByStudentCurricularPlan(
-				studentActiveCurricularPlan);
+		final List studentEnrolments = persistentEnrolment.readAllByStudentCurricularPlan(studentActiveCurricularPlan);
 
-		final List studentEnrolmentsWithStateApproved =
-			(List) CollectionUtils.select(studentEnrolments, new Predicate() {
+		final List studentEnrolmentsWithStateApproved = (List) CollectionUtils.select(studentEnrolments, new Predicate() {
 
 			public boolean evaluate(Object obj) {
 				IEnrolment enrolment = (IEnrolment) obj;
-				return enrolment.getState().equals(
-					new EnrolmentState(EnrolmentState.APROVED));
+				return enrolment.getState().equals(new EnrolmentState(EnrolmentState.APROVED));
 			}
 		});
 
-		final List studentDoneCurricularCourses =
-			(
-				List) CollectionUtils
-					.collect(
-						studentEnrolmentsWithStateApproved,
-						new Transformer() {
+		final List studentDoneCurricularCourses = (List) CollectionUtils.collect(studentEnrolmentsWithStateApproved, new Transformer() {
 			public Object transform(Object obj) {
 				IEnrolment enrolment = (IEnrolment) obj;
 				return enrolment.getCurricularCourse();
 			}
 		});
 
-		List enrolmentsWithStateNotApproved =
-			(List) CollectionUtils.select(studentEnrolments, new Predicate() {
+		List enrolmentsWithStateNotApproved = (List) CollectionUtils.select(studentEnrolments, new Predicate() {
 
 			public boolean evaluate(Object obj) {
 				IEnrolment enrolment = (IEnrolment) obj;
-				ICurricularCourse curricularCourse =
-					enrolment.getCurricularCourse();
+				ICurricularCourse curricularCourse = enrolment.getCurricularCourse();
 				return !studentDoneCurricularCourses.contains(curricularCourse)
-					&& enrolment.getState().equals(
-						new EnrolmentState(EnrolmentState.NOT_APROVED));
+					&& enrolment.getState().equals(new EnrolmentState(EnrolmentState.NOT_APROVED));
 			}
 
 		});
 
-		List curricularCoursesEnrolled =
-			(
-				List) CollectionUtils
-					.collect(enrolmentsWithStateNotApproved, new Transformer() {
+		List curricularCoursesEnrolled = (List) CollectionUtils.collect(enrolmentsWithStateNotApproved, new Transformer() {
 			public Object transform(Object obj) {
 				IEnrolment enrolment = (IEnrolment) obj;
 				return enrolment.getCurricularCourse();
 			}
 		});
 
+//		enrolmentContext.setCurricularCoursesFromStudentCurricularPlan(computeScopesOfCurricularCourses(studentCurricularPlanCurricularCourses));
 		enrolmentContext.setStudent(student);
-
-		
 		enrolmentContext.setSemester(semester);
 		enrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(
-			computeCurricularCoursesScopesNotYetDoneByStudent(
-				studentCurricularPlanCurricularCourses,
-				studentDoneCurricularCourses));
-		enrolmentContext.setCurricularCoursesDoneByStudent(
-			studentDoneCurricularCourses);
-		enrolmentContext.setAcumulatedEnrolments(
-			CollectionUtils.getCardinalityMap(curricularCoursesEnrolled));
-		enrolmentContext.setStudentActiveCurricularPlan(
-			studentActiveCurricularPlan);
+			computeCurricularCoursesScopesNotYetDoneByStudent(studentCurricularPlanCurricularCourses, studentDoneCurricularCourses));
+		enrolmentContext.setCurricularCoursesDoneByStudent(studentDoneCurricularCourses);
+		enrolmentContext.setAcumulatedEnrolments(CollectionUtils.getCardinalityMap(curricularCoursesEnrolled));
+		enrolmentContext.setStudentActiveCurricularPlan(studentActiveCurricularPlan);
 
 		return enrolmentContext;
 	}
@@ -132,25 +101,22 @@ public abstract class EnrolmentContextManager {
 
 		List scopesNotDone = new ArrayList();
 
-		List coursesNotDone =
-			(List) CollectionUtils.subtract(
-				curricularCoursesFromStudentDegreeCurricularPlan,
-				aprovedCurricularCoursesFromStudent);
+		List coursesNotDone = (List) CollectionUtils.subtract(curricularCoursesFromStudentDegreeCurricularPlan, aprovedCurricularCoursesFromStudent);
 
-		Iterator iteratorCourses = coursesNotDone.iterator();
-		while (iteratorCourses.hasNext()) {
-			ICurricularCourse curricularCourse =
-				(ICurricularCourse) iteratorCourses.next();
-			List scopes = curricularCourse.getScopes();
-			Iterator iteratorScopes = scopes.iterator();
-			while (iteratorScopes.hasNext()) {
-				ICurricularCourseScope curricularCourseScope =
-					(ICurricularCourseScope) iteratorScopes.next();
-				scopesNotDone.add(curricularCourseScope);
-			}
-		}
+//		Iterator iteratorCourses = coursesNotDone.iterator();
+//		while (iteratorCourses.hasNext()) {
+//			ICurricularCourse curricularCourse = (ICurricularCourse) iteratorCourses.next();
+//			List scopes = curricularCourse.getScopes();
+//			Iterator iteratorScopes = scopes.iterator();
+//			while (iteratorScopes.hasNext()) {
+//				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iteratorScopes.next();
+//				scopesNotDone.add(curricularCourseScope);
+//			}
+//		}
 
-		return scopesNotDone;
+//		return scopesNotDone;
+
+		return computeScopesOfCurricularCourses(coursesNotDone);
 	}
 
 	public static InfoEnrolmentContext getInfoEnrolmentContext(EnrolmentContext enrolmentContext) {
@@ -168,7 +134,8 @@ public abstract class EnrolmentContextManager {
 			Iterator iterator = curricularCourseScopeList.iterator();
 			while (iterator.hasNext()) {
 				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
-				InfoCurricularCourseScope infoCurricularCourseScope = Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
+				InfoCurricularCourseScope infoCurricularCourseScope =
+					Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
 				infoCurricularCourseScopeList.add(infoCurricularCourseScope);
 			}
 		}
@@ -181,8 +148,30 @@ public abstract class EnrolmentContextManager {
 
 		infoEnrolmentContext.setInfoStudentActiveCurricularPlan(infoStudentActiveCurricularPlan);
 		infoEnrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(infoCurricularCourseScopeList);
-		
+
 		return infoEnrolmentContext;
+	}
+
+	/**
+	 * @param studentCurricularPlanCurricularCourses
+	 * @return List
+	 */
+	private static List computeScopesOfCurricularCourses(List curricularCourses) {
+
+		List scopes = new ArrayList();
+
+		Iterator iteratorCourses = curricularCourses.iterator();
+		while (iteratorCourses.hasNext()) {
+			ICurricularCourse curricularCourse = (ICurricularCourse) iteratorCourses.next();
+			List scopesTemp = curricularCourse.getScopes();
+			Iterator iteratorScopes = scopesTemp.iterator();
+			while (iteratorScopes.hasNext()) {
+				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iteratorScopes.next();
+				scopes.add(curricularCourseScope);
+			}
+		}
+
+		return scopes;
 	}
 
 }

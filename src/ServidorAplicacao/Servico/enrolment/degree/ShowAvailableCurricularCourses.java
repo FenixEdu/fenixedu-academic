@@ -1,4 +1,4 @@
-package ServidorAplicacao.Servico.enrolment;
+package ServidorAplicacao.Servico.enrolment.degree;
 
 import Dominio.IStudent;
 import ServidorAplicacao.FenixServiceException;
@@ -48,7 +48,7 @@ public class ShowAvailableCurricularCourses implements IServico {
 	 * @return EnrolmentContext
 	 * @throws FenixServiceException
 	 */
-	public InfoEnrolmentContext run(IUserView userView) throws FenixServiceException {
+	public InfoEnrolmentContext run(IUserView userView, Integer semester) throws FenixServiceException {
 
 		try {
 
@@ -58,7 +58,7 @@ public class ShowAvailableCurricularCourses implements IServico {
 
 			//			FIXME: David-Ricardo: ler o semestre do execution Period quando este tiver esta informacao
 			IEnrolmentStrategy strategy =
-				EnrolmentStrategyFactory.getEnrolmentStrategyInstance(EnrolmentContextManager.initialEnrolmentContext(student, new Integer(1)));
+				EnrolmentStrategyFactory.getEnrolmentStrategyInstance(EnrolmentContextManager.initialEnrolmentContext(student, semester));
 
 			return EnrolmentContextManager.getInfoEnrolmentContext(strategy.getAvailableCurricularCourses());
 

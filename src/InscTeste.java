@@ -1,11 +1,11 @@
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
-import ServidorAplicacao.Servico.enrolment.ShowAvailableCurricularCourses;
+import ServidorAplicacao.Servico.enrolment.degree.ShowAvailableCurricularCourses;
+import ServidorAplicacao.strategy.enrolment.degree.InfoEnrolmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorAplicacao.strategy.enrolment.degree.InfoEnrolmentContext;
 
 /**
  * @author dcs-rjao
@@ -24,7 +24,7 @@ public class InscTeste {
 
 			try {
 				IUserView userview = new UserView("user", null);
-				InfoEnrolmentContext infoEnrolmentContext = servico.run(userview);
+				InfoEnrolmentContext infoEnrolmentContext = servico.run(userview, new Integer(1));
 				sp.confirmarTransaccao();
 				System.out.println(infoEnrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled());
 			} catch (FenixServiceException e) {
