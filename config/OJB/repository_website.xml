@@ -7,29 +7,29 @@
 <!-- ******************************************************************************************************************************* -->
 <class-descriptor class="Dominio.WebSite" table="WEBSITE">
 	<extent-class class-ref="Dominio.SiteIST" />
-    <field-descriptor id="1"
+    <field-descriptor
         name="idInternal"
         column="ID_INTERNAL"
         jdbc-type="INTEGER"
         primarykey="true"
         autoincrement="true"
     />
-    <field-descriptor id="2"
+    <field-descriptor
          name="name"
          column="NAME"
     	 jdbc-type="VARCHAR"
     />
-    <field-descriptor id="3"
+    <field-descriptor
          name="mail"
          column="MAIL"
     	 jdbc-type="VARCHAR"
     />         
-    <field-descriptor id="4"
+    <field-descriptor
          name="style"
          column="STYLE"
     	 jdbc-type="VARCHAR"
    	/>	    
-	<field-descriptor id="5"
+	<field-descriptor
          name="ojbConcreteClass"
          column="CLASS_NAME"
          jdbc-type="VARCHAR"
@@ -40,29 +40,29 @@
 <!-- Definitions for Dominio.SiteIST -->
 <!-- ******************************************************************************************************************************* -->
 <class-descriptor class="Dominio.SiteIST" table="WEBSITE">
-    <field-descriptor id="1"
+    <field-descriptor
         name="idInternal"
         column="ID_INTERNAL"
         jdbc-type="INTEGER"
         primarykey="true"
         autoincrement="true"
     />
-    <field-descriptor id="2"
+    <field-descriptor
          name="name"
          column="NAME"
     	 jdbc-type="VARCHAR"
     />
-    <field-descriptor id="3"
+    <field-descriptor
          name="mail"
          column="MAIL"
     	 jdbc-type="VARCHAR"
     />         
-    <field-descriptor id="4"
+    <field-descriptor
          name="style"
          column="STYLE"
     	 jdbc-type="VARCHAR"
    	/>	    
-	<field-descriptor id="5"
+	<field-descriptor
          name="ojbConcreteClass"
          column="CLASS_NAME"
          jdbc-type="VARCHAR"
@@ -76,39 +76,39 @@
    
 <!-- Definitions for Dominio.WebSiteSection -->
    <class-descriptor class="Dominio.WebSiteSection" table="WEBSITE_SECTION">
-    <field-descriptor id="1"
+    <field-descriptor
         name="idInternal"
         column="ID_INTERNAL"
         jdbc-type="INTEGER"
         primarykey="true"
         autoincrement="true"
     />
-    <field-descriptor id="2"
+    <field-descriptor
          name="name"
          column="NAME"
          jdbc-type="VARCHAR"
     />
-    <field-descriptor id="3"
+    <field-descriptor
         name="size"
          column="SIZE"
          jdbc-type="INTEGER"
       />
-    <field-descriptor id="4"
+    <field-descriptor
         name="sortingOrder"
          column="SORTING_ORDER"
          jdbc-type="CHAR"
       />
-    <field-descriptor id="5"
+    <field-descriptor
         name="whatToSort"
          column="WHAT_TO_SORT"
          jdbc-type="CHAR"
       />
-    <field-descriptor id="6"
+    <field-descriptor
         name="excerptSize"
          column="EXCERPT_SIZE"
          jdbc-type="INTEGER"
       />
-      <field-descriptor id="7"
+      <field-descriptor
          name="keyWebSite"
          column="KEY_WEBSITE"
          jdbc-type="INTEGER"
@@ -118,7 +118,7 @@
          class-ref="Dominio.WebSite"
          proxy="false"
       >
-         <foreignkey field-id-ref="7"/>
+         <foreignkey field-ref="keyWebSite"/>
       </reference-descriptor>
     </class-descriptor>
 
@@ -129,73 +129,73 @@
 
 <!-- Definitions for Dominio.WebSite_Item -->
    <class-descriptor class="Dominio.WebSiteItem" table="WEBSITE_ITEM">
-      <field-descriptor id="1"
+      <field-descriptor
          name="idInternal"
          column="ID_INTERNAL"
          jdbc-type="INTEGER"
          primarykey="true"
          autoincrement="true"
       />
-      <field-descriptor id="2"
+      <field-descriptor
          name="title"
          column="TITLE"
          jdbc-type="VARCHAR"
       />
-      <field-descriptor id="3"
+      <field-descriptor
          name="mainEntryText"
          column="MAIN_ENTRY_TEXT"
          jdbc-type="CLOB"
          conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
       />
-      <field-descriptor id="4"
+      <field-descriptor
          name="excerpt"
          column="EXCERPT"
          jdbc-type="CLOB"
         conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
       />
-      <field-descriptor id="5"
+      <field-descriptor
          name="published"
          column="PUBLISHED"
          jdbc-type="INTEGER"
          conversion="org.apache.ojb.broker.accesslayer.conversions.Boolean2IntFieldConversion"
       />
-	  <field-descriptor id="6"
+	  <field-descriptor
 		 name="creationDate"
 		 column="CREATION_DATE"
 		 jdbc-type="TIMESTAMP"
 	   />
-      <field-descriptor id="7"
+      <field-descriptor
          name="keyEditor"
          column="KEY_EDITOR"
          jdbc-type="INTEGER"
       />
-      <field-descriptor id="8"
+      <field-descriptor
          name="keywords"
          column="KEYWORDS"
          jdbc-type="CLOB"
          conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
       />	   
-      <field-descriptor id="9"
+      <field-descriptor
          name="onlineBeginDay"
          column="ONLINE_BEGIN_DAY"
         jdbc-type="DATE"
       />
-      <field-descriptor id="10"
+      <field-descriptor
          name="onlineEndDay"
          column="ONLINE_END_DAY"
         jdbc-type="DATE"
       />
-      <field-descriptor id="11"
+      <field-descriptor
          name="itemBeginDay"
          column="ITEM_BEGIN_DAY"
         jdbc-type="DATE"
       />
-      <field-descriptor id="12"
+      <field-descriptor
          name="itemEndDay"
          column="ITEM_END_DAY"
         jdbc-type="DATE"
       />
-      <field-descriptor id="13"
+      <field-descriptor
          name="keyWebSiteSection"
          column="KEY_WEBSITE_SECTION"
          jdbc-type="INTEGER"
@@ -206,7 +206,7 @@
          class-ref="Dominio.Pessoa"
          proxy="false"
       >
-         <foreignkey field-id-ref="7"/>
+         <foreignkey field-ref="keyEditor"/>
       </reference-descriptor>
 
       <reference-descriptor
@@ -214,7 +214,7 @@
          class-ref="Dominio.WebSiteSection"
          proxy="false"
       >
-         <foreignkey field-id-ref="13"/>
+         <foreignkey field-ref="keyWebSiteSection"/>
       </reference-descriptor>
    </class-descriptor>
 <!-- Mapping of User defined classes ends here -->
