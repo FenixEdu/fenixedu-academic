@@ -148,9 +148,9 @@ public class SchoolRegistration implements IService {
         IPessoaPersistente pessoaPersistente = sp.getIPessoaPersistente();
         IPessoa pessoa = (IPessoa) pessoaPersistente.readByOID(Pessoa.class, infoPerson.getIdInternal());
         IPersistentRole pRole = sp.getIPersistentRole();
-        IRole newRole = (IRole) pRole.readByRoleType(RoleType.STUDENT);
+        IRole newRole = pRole.readByRoleType(RoleType.STUDENT);
         IPersistentCountry pCountry = sp.getIPersistentCountry();
-        ICountry country = (ICountry) pCountry.readCountryByNationality(infoPerson.getNacionalidade());
+        ICountry country = pCountry.readCountryByNationality(infoPerson.getNacionalidade());
 
         pessoaPersistente.simpleLockWrite(pessoa);
 

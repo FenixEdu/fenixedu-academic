@@ -6,8 +6,6 @@
  */
 package ServidorApresentacao.validator.form;
 
-import java.util.Enumeration;
-import java.util.List;
 import java.io.Serializable;
 
 import javax.servlet.ServletContext;
@@ -15,11 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.validator.Field;
 import org.apache.commons.validator.ValidatorAction;
-import org.apache.commons.validator.ValidatorUtil;
 import org.apache.struts.action.ActionErrors;
-
-import DataBeans.SiteView;
-import DataBeans.publication.InfoSiteAttributes;
 
 /**
  * @author TJBF & PFON
@@ -34,7 +28,7 @@ public class ValidatePublicationForm implements Serializable{
 	 */
 	public static boolean validate(Object bean, ValidatorAction va, Field field, ActionErrors errors,
 			HttpServletRequest request, ServletContext application) {
-		String valueString = ValidatorUtil.getValueAsString(bean, field.getProperty());
+		//String valueString = ValidatorUtil.getValueAsString(bean, field.getProperty());
 		
 		/*SiteView s = (SiteView)request.getAttribute("siteView");
 		System.out.println(s.toString());*/

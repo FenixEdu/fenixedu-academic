@@ -32,7 +32,6 @@ import Dominio.publication.IAuthor;
 import Dominio.publication.IPublication;
 import Dominio.publication.IPublicationType;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.exceptions.EmptyRequiredFieldServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.framework.CRUDActionByOID;
