@@ -126,15 +126,17 @@ public class TurnoAulaOJB
 			List studentShifts = (List) query.execute();
 			lockRead(studentShifts);
 
-			List lessons = null;
+			List lessons = new ArrayList();
 			for (int i = 0; i < studentShifts.size(); i++) {
 				oqlQuery = "select all from " + TurnoAula.class.getName();
 				oqlQuery += " where turno.nome = $1";
 				query.create(oqlQuery);
 				query.bind(
 					((TurnoAluno) studentShifts.get(i)).getTurno().getNome());
-				lessons = (List) query.execute();
+				List auxLessons = (List) query.execute();
+				
 				lockRead(lessons);
+				lessons.addAll(auxLessons);
 				//				for (int j = 0; j < studentShiftLessons.size(); j++)
 				//					lessons.add(
 				//						((TurnoAula) studentShiftLessons.get(j)).getAula());
