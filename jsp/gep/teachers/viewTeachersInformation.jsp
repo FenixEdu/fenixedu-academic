@@ -55,7 +55,7 @@
     	 <% if (
     	 ((DataBeans.teacher.InfoSiteTeacherInformation)infoSiteTeacherInformation).getInfoResponsibleExecutionCourses().contains(infoExecutionCourse)
     	 ){%>
-    	 (responsável) <% }  %> 
+    	 (<bean:message key="label.gep.responsible" bundle="GEP_RESOURCES"/>) <% }  %> 
     	 </td>
      <td  class="listClasses" >
     	 <logic:iterate id="curricularCourse" name="infoExecutionCourse" property="associatedInfoCurricularCourses">
@@ -83,7 +83,7 @@
     	 <% if (
     	 ((DataBeans.teacher.InfoSiteTeacherInformation)infoSiteTeacherInformation).getInfoResponsibleExecutionCourses().contains(infoExecutionCourse)
     	 ){%>
-    	 (responsável) <% }  %> 
+    	 (<bean:message key="label.gep.responsible" bundle="GEP_RESOURCES"/>) <% }  %> 
     	 </td> 
     	<td  class="listClasses" >
     	 <logic:iterate id="curricularCourse" name="infoExecutionCourse" property="associatedInfoCurricularCourses">
@@ -96,8 +96,18 @@
 	</table>
 	<br/>
 	<h2><bean:message key="label.gep.statistics" bundle="GEP_RESOURCES"/>:</h2>
-	<br/>
 	<bean:size id="length" name="infoSiteTeachersInformation"/>
 	<bean:message key="label.gep.numberOfTeachers" bundle="GEP_RESOURCES"/>:
 	<bean:write name="length"/>
+	<% int filled = 0; %>
+	<logic:iterate id="infoSiteTeacherInformation" name="infoSiteTeachersInformation">
+		<logic:present name="infoSiteTeacherInformation" property="lastModificationDate">
+			<% filled++; %>
+		</logic:present>
+	</logic:iterate>
+	<% double stats = ((double) filled / length.doubleValue()) * 100; %>
+	<br />
+	<bean:message key="label.gep.filled" bundle="GEP_RESOURCES"/>: <%= filled %>
+	<br/>
+	<bean:message key="label.gep.stats" bundle="GEP_RESOURCES"/>: <%= stats %>%
 </logic:present>

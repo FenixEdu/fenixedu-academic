@@ -25,47 +25,63 @@ import Util.TipoCurso;
  * @author Sergio Montelobo
  *  
  */
-public class SearchInformationAction extends SearchAction
+public class SearchCoursesInformationAction extends SearchAction
 {
-
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorApresentacao.Action.framework.SearchAction#materializeSearchCriteria(ServidorApresentacao.mapping.framework.SearchActionMapping,
-	 *      javax.servlet.http.HttpServletRequest, org.apache.struts.action.ActionForm)
-	 */
+     * (non-Javadoc)
+     * 
+     * @see ServidorApresentacao.Action.framework.SearchAction#materializeSearchCriteria(ServidorApresentacao.mapping.framework.SearchActionMapping,
+     *      javax.servlet.http.HttpServletRequest, org.apache.struts.action.ActionForm)
+     */
     protected void materializeSearchCriteria(
         SearchActionMapping mapping,
         HttpServletRequest request,
-        ActionForm form) throws Exception
+        ActionForm form)
+        throws Exception
     {
         IUserView userView = SessionUtils.getUserView(request);
+
+        if (request.getParameter("executionDegreeId").equals("all"))
+            return;
+
         Integer executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
 
         Object[] args = { executionDegreeId };
-        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(userView, "ReadExecutionDegreeByOID", args);
+        InfoExecutionDegree infoExecutionDegree =
+            (InfoExecutionDegree) ServiceUtils.executeService(
+                userView,
+                "ReadExecutionDegreeByOID",
+                args);
         request.setAttribute("infoExecutionDegree", infoExecutionDegree);
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorApresentacao.Action.framework.SearchAction#getSearchServiceArgs(javax.servlet.http.HttpServletRequest,
-	 *      org.apache.struts.action.ActionForm)
-	 */
+     * (non-Javadoc)
+     * 
+     * @see ServidorApresentacao.Action.framework.SearchAction#getSearchServiceArgs(javax.servlet.http.HttpServletRequest,
+     *      org.apache.struts.action.ActionForm)
+     */
     protected Object[] getSearchServiceArgs(HttpServletRequest request, ActionForm form)
         throws Exception
     {
-        Integer executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
-        return new Object[] { executionDegreeId };
+        Integer executionDegreeId = null;
+
+        if (!request.getParameter("executionDegreeId").equals("all"))
+            executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
+
+        Boolean basic = Boolean.FALSE;
+        if (request.getParameter("basic") != null)
+            basic = Boolean.TRUE;
+
+        return new Object[] { executionDegreeId, basic };
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorApresentacao.Action.framework.SearchAction#prepareFormConstants(org.apache.struts.action.ActionMapping,
-	 *      javax.servlet.http.HttpServletRequest, org.apache.struts.action.ActionForm)
-	 */
+     * (non-Javadoc)
+     * 
+     * @see ServidorApresentacao.Action.framework.SearchAction#prepareFormConstants(org.apache.struts.action.ActionMapping,
+     *      javax.servlet.http.HttpServletRequest, org.apache.struts.action.ActionForm)
+     */
     protected void prepareFormConstants(
         ActionMapping mapping,
         HttpServletRequest request,

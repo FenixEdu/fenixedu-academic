@@ -7,8 +7,8 @@
 	<bean:define id="executionCourse" name="infoSiteCourseInformation" property="infoExecutionCourse"/>
 	<bean:define id="executionPeriod" name="executionCourse" property="infoExecutionPeriod"/>
 	<bean:define id="executionYear" name="executionPeriod" property="infoExecutionYear"/>
-	<bean:define id="degreeCurricularPlanId" name="infoExecutionDegree" property="infoDegreeCurricularPlan.idInternal"/>
 	<br/>
+	<logic:present name="infoExecutionDegree">
 	<table width="100%" border="0" cellpadding="0" cellspacing="0">
 		<tr>
 			<td align="center" class="infoselected">
@@ -24,6 +24,7 @@
 			</td>
 		</tr>
 	</table>
+	</logic:present>
 	<br />
 	<table class="infoselected" width="100%">
 		<tr>
@@ -42,9 +43,37 @@
 		<b><bean:message key="message.courseInformation.executionYear" /></b>
 		&nbsp;<bean:write name="executionYear" property="year" />
 		<logic:iterate id="curricularCourse" name="infoSiteCourseInformation" property="infoCurricularCourses">
-  		<logic:equal name="curricularCourse" 
-  						 property="infoDegreeCurricularPlan.idInternal" 
-  						 value="<%= degreeCurricularPlanId.toString() %>">
+			<logic:present name="infoExecutionDegree">
+				<bean:define id="degreeCurricularPlanId" name="infoExecutionDegree" property="infoDegreeCurricularPlan.idInternal"/>
+		  		<logic:equal name="curricularCourse" 
+		  						 property="infoDegreeCurricularPlan.idInternal" 
+		  						 value="<%= degreeCurricularPlanId.toString() %>">
+					<blockquote style="margin-top:1px">
+						<br />
+						<b><bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.nome"/></b>
+			  			<logic:iterate id="curricularCourseScope" name="curricularCourse" property="infoScopes">
+				  				<br />
+				  				<b><bean:message key="message.courseInformation.curricularYear" /></b>
+								&nbsp;<bean:write name="curricularCourseScope" property="infoCurricularSemester.infoCurricularYear.year" />
+								&nbsp;&nbsp;&nbsp;
+								<b><bean:message key="message.courseInformation.semester" /></b>
+								&nbsp;<bean:write name="curricularCourseScope" property="infoCurricularSemester.semester" />
+								<br />
+					 	</logic:iterate>	
+						<b><bean:message key="message.courseInformation.courseType" /></b>
+					  	<logic:equal name="curricularCourse" property="mandatory" value="true">
+					  		<bean:message key="message.courseInformation.mandatory" />
+					  	</logic:equal>
+					  	<logic:equal name="curricularCourse" property="mandatory" value="false">
+					  		<bean:message key="message.courseInformation.optional" />
+					  	</logic:equal>
+					</blockquote>			 	
+					  	<%-- VER --%>
+					 	<%--<bean:message key="message.courseInformation.courseSemesterOrAnual" />&nbsp;
+					 	<bean:write name="curricularCourse" property="curricularCourseExecutionScope.type" />--%>
+				</logic:equal>
+			</logic:present>
+			<logic:notPresent name="infoExecutionDegree">
 				<blockquote style="margin-top:1px">
 					<br />
 					<b><bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.nome"/></b>
@@ -68,7 +97,7 @@
 				  	<%-- VER --%>
 				 	<%--<bean:message key="message.courseInformation.courseSemesterOrAnual" />&nbsp;
 				 	<bean:write name="curricularCourse" property="curricularCourseExecutionScope.type" />--%>
-			</logic:equal>
+			</logic:notPresent>
 		</logic:iterate>
 		<logic:iterate id="infoTeacher" name="infoSiteCourseInformation" property="infoResponsibleTeachers">
 			<b><bean:message key="message.courseInformation.responsibleForTheCourse" /></b>
@@ -175,9 +204,36 @@
 	<bean:message key="message.courseInformation.courseObjectives" /></p>
 	<table border="0" cellspacing="1" style="margin-top:10px">
 		<logic:iterate id="infoCurriculum" name="infoSiteCourseInformation" property="infoCurriculums">
-		<logic:equal name="infoCurriculum" 
-  						 property="infoCurricularCourse.infoDegreeCurricularPlan.idInternal" 
-  						 value="<%= degreeCurricularPlanId.toString() %>">
+			<logic:present name="infoExecutionDegree">
+				<bean:define id="degreeCurricularPlanId" name="infoExecutionDegree" property="infoDegreeCurricularPlan.idInternal"/>
+				<logic:equal name="infoCurriculum" 
+	  						 property="infoCurricularCourse.infoDegreeCurricularPlan.idInternal" 
+	  						 value="<%= degreeCurricularPlanId.toString() %>">
+					<tr>
+						<td>
+							<b><bean:write name="infoCurriculum" property="infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.nome"/></b>
+							<br />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							 <u><bean:message key="label.generalObjectives"/></u>
+							 <br />
+							 <bean:write name="infoCurriculum" property="generalObjectives" filter="false"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							 <u><bean:message key="label.operacionalObjectives"/></u>
+							 <br />
+							 <bean:write name="infoCurriculum" property="operacionalObjectives" filter="false"/>
+							 <br />
+		 					 <br />
+						 </td>
+					</tr>
+				</logic:equal>
+			</logic:present>
+			<logic:notPresent name="infoExecutionDegree">
 				<tr>
 					<td>
 						<b><bean:write name="infoCurriculum" property="infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.nome"/></b>
@@ -200,7 +256,7 @@
 	 					 <br />
 					 </td>
 				</tr>
-			</logic:equal>
+			</logic:notPresent>
 		</logic:iterate>
 	</table>
 	<br />
@@ -208,9 +264,23 @@
 	<bean:message key="message.courseInformation.courseProgram" /></p>
 		<table border="0" cellspacing="1" style="margin-top:10px">
 			<logic:iterate id="infoCurriculum" name="infoSiteCourseInformation" property="infoCurriculums">
-				<logic:equal name="infoCurriculum" 
-  						 	property="infoCurricularCourse.infoDegreeCurricularPlan.idInternal" 
-  						 	value="<%= degreeCurricularPlanId.toString() %>">
+				<logic:present name="infoExecutionDegree">
+					<bean:define id="degreeCurricularPlanId" name="infoExecutionDegree" property="infoDegreeCurricularPlan.idInternal"/>
+					<logic:equal name="infoCurriculum" 
+	  						 	property="infoCurricularCourse.infoDegreeCurricularPlan.idInternal" 
+	  						 	value="<%= degreeCurricularPlanId.toString() %>">
+						<tr>
+							<td>
+								<b><bean:write name="infoCurriculum" property="infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.nome"/></b>
+								<br />
+								<bean:write name="infoCurriculum" property="program" filter="false"/>
+								<br />
+								<br />
+							</td>
+						</tr>
+					</logic:equal>
+				</logic:present>
+				<logic:notPresent name="infoExecutionDegree">
 					<tr>
 						<td>
 							<b><bean:write name="infoCurriculum" property="infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.nome"/></b>
@@ -220,7 +290,7 @@
 							<br />
 						</td>
 					</tr>
-				</logic:equal>
+				</logic:notPresent>
 			</logic:iterate>
 		</table>
 	<br />

@@ -40,18 +40,28 @@ public class ReadCourseInformationAction extends FenixAction
         throws Exception
     {
         IUserView userView = SessionUtils.getUserView(request);
-        
+
         Object[] args1 = { new Integer(request.getParameter("executionCourseId"))};
         TeacherAdministrationSiteView teacherAdministrationSiteView =
-            (TeacherAdministrationSiteView) ServiceUtils.executeService(userView, "ReadCourseInformation", args1);
+            (TeacherAdministrationSiteView) ServiceUtils.executeService(
+                userView,
+                "ReadCourseInformation",
+                args1);
         InfoSiteCourseInformation infoSiteCourseInformation =
             (InfoSiteCourseInformation) teacherAdministrationSiteView.getComponent();
         request.setAttribute("infoSiteCourseInformation", infoSiteCourseInformation);
-        
-        Object[] args2 = { new Integer(request.getParameter("executionDegreeId")) };
-        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) ServiceUtils.executeService(userView, "ReadExecutionDegreeByOID", args2);
-        request.setAttribute("infoExecutionDegree", infoExecutionDegree);
-        
+
+        if (request.getParameter("executionDegreeId") != null)
+        {
+            Object[] args2 = { new Integer(request.getParameter("executionDegreeId"))};
+            InfoExecutionDegree infoExecutionDegree =
+                (InfoExecutionDegree) ServiceUtils.executeService(
+                    userView,
+                    "ReadExecutionDegreeByOID",
+                    args2);
+            request.setAttribute("infoExecutionDegree", infoExecutionDegree);
+        }
+
         return mapping.findForward("show");
     }
 }

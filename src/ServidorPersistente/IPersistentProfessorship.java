@@ -73,7 +73,7 @@ public interface IPersistentProfessorship extends IPersistentObject
 	 * @param executionDegrees
 	 * @return
 	 */
-    public List readByExecutionDegrees(List executionDegrees) throws ExcepcaoPersistencia;
+    public List readByExecutionDegreesAndBasic(List executionDegrees, Boolean basic) throws ExcepcaoPersistencia;
 
     /**
 	 * @param executionDegree
@@ -81,4 +81,17 @@ public interface IPersistentProfessorship extends IPersistentObject
 	 *         ExcepcaoPersistencia
 	 */
     public List readByExecutionDegree(ICursoExecucao executionDegree) throws ExcepcaoPersistencia;
+    
+    /**
+     * @param executionDegree
+     * @param basic
+     * @return
+     * @throws ExcepcaoPersistencia
+     */
+    public List readByExecutionDegreeAndBasic(ICursoExecucao executionDegree, Boolean basic) throws ExcepcaoPersistencia;
+    /**
+     * @param executionsDegrees
+     * @return
+     */
+    public List readByExecutionDegrees(List executionDegrees) throws ExcepcaoPersistencia;  
 }

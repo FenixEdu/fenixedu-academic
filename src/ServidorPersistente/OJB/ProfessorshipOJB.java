@@ -193,7 +193,8 @@ public class ProfessorshipOJB extends ObjectFenixOJB implements IPersistentProfe
 	 * 
 	 * @see ServidorPersistente.IPersistentTeacher#readByExecutionDegree(Dominio.ICursoExecucao)
 	 */
-    public List readByExecutionDegrees(List executionDegrees) throws ExcepcaoPersistencia
+    public List readByExecutionDegreesAndBasic(List executionDegrees, Boolean basic)
+        throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
         List executionDegreesIds = (List) CollectionUtils.collect(executionDegrees, new Transformer()
@@ -206,6 +207,7 @@ public class ProfessorshipOJB extends ObjectFenixOJB implements IPersistentProfe
         criteria.addIn(
             "executionCourse.associatedCurricularCourses.degreeCurricularPlan.idInternal",
             executionDegreesIds);
+        criteria.addEqualTo("executionCourse.associatedCurricularCourses.basic", basic);
         return queryList(Professorship.class, criteria, true);
     }
 
@@ -229,6 +231,26 @@ public class ProfessorshipOJB extends ObjectFenixOJB implements IPersistentProfe
     /*
 	 * (non-Javadoc)
 	 * 
+	 * @see ServidorPersistente.IPersistentProfessorship#readByExecutionDegreeAndBasic(Dominio.ICursoExecucao,
+	 *      java.lang.Boolean)
+	 */
+    public List readByExecutionDegreeAndBasic(ICursoExecucao executionDegree, Boolean basic)
+        throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo(
+            "executionCourse.associatedCurricularCourses.degreeCurricularPlan.idInternal",
+            executionDegree.getCurricularPlan().getIdInternal());
+        criteria.addEqualTo(
+            "executionCourse.executionPeriod.executionYear.idInternal",
+            executionDegree.getExecutionYear().getIdInternal());
+        criteria.addEqualTo("executionCourse.associatedCurricularCourses.basic", basic);
+        return queryList(Professorship.class, criteria, true);
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * 
 	 * @see ServidorPersistente.IPersistentProfessorship#readByTeacherAndExecutionYear(Dominio.ITeacher,
 	 *      Dominio.IExecutionYear)
 	 */
@@ -241,5 +263,26 @@ public class ProfessorshipOJB extends ObjectFenixOJB implements IPersistentProfe
             "executionCourse.executionPeriod.executionYear.idInternal",
             executionYear.getIdInternal());
         return queryList(Professorship.class, criteria);
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.IPersistentProfessorship#readByExecutionDegrees(java.util.List)
+	 */
+    public List readByExecutionDegrees(List executionDegrees) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        List executionDegreesIds = (List) CollectionUtils.collect(executionDegrees, new Transformer()
+        {
+            public Object transform(Object o)
+            {
+                return ((ICursoExecucao) o).getCurricularPlan().getIdInternal();
+            }
+        });
+        criteria.addIn(
+            "executionCourse.associatedCurricularCourses.degreeCurricularPlan.idInternal",
+            executionDegreesIds);
+        return queryList(Professorship.class, criteria, true);
     }
 }

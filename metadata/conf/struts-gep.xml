@@ -7,9 +7,14 @@
     <!-- ========== Form Bean Definitions ================================== -->
     <form-beans type="org.apache.struts.action.ActionFormBean">
         <!-- Form vazio -->
-        <form-bean name="searchExecutionDegreeInformationForm" 
+        <form-bean name="searchTeachersInformationForm" 
             type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
             <form-property name="executionDegreeId" type="java.lang.Integer"/>
+        </form-bean>
+        <form-bean name="searchCoursesInformationForm" 
+            type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+            <form-property name="executionDegreeId" type="java.lang.Integer"/>
+            <form-property name="basic" type="java.lang.Boolean"/>
         </form-bean>
     </form-beans>
     <!-- ========== Global Exception Definitions ============================== -->
@@ -34,8 +39,8 @@
     <action-mappings type="org.apache.struts.action.ActionMapping">
         <action path="/index" forward="index" />
         <action path="/searchTeachersInformation" 
-            type="ServidorApresentacao.Action.gep.SearchInformationAction" 
-            name="searchExecutionDegreeInformationForm" 
+            type="ServidorApresentacao.Action.gep.SearchTeachersInformationAction" 
+            name="searchTeachersInformationForm" 
             input="/searchTeachersInformation?method=searchForm" scope="request" parameter="method" 
             className="ServidorApresentacao.mapping.framework.SearchActionMapping">
             <set-property property="serviceName" value="ReadTeachersInformation"/>
@@ -47,9 +52,9 @@
             <forward name="list-many" path="view-teachers-information"/>
         </action>
         <action path="/searchCoursesInformation" 
-            type="ServidorApresentacao.Action.gep.SearchInformationAction" 
-            name="searchExecutionDegreeInformationForm" 
-            input="/searchCoursesInformation?method=searchForm" scope="request" parameter="method" 
+            type="ServidorApresentacao.Action.gep.SearchCoursesInformationAction" 
+            name="searchCoursesInformationForm" 
+            input="/searchCoursesInformation.do?method=searchForm" scope="request" parameter="method" 
             className="ServidorApresentacao.mapping.framework.SearchActionMapping">
             <set-property property="serviceName" value="ReadCoursesInformation"/>
             <set-property property="objectAttribute" value="infoSiteCourseInformation"/>

@@ -56,6 +56,8 @@ import ServidorApresentacao.mapping.framework.SearchActionMapping;
  * 
  * 
  * 
+ * 
+ * 
  * The properties are:
  * <ul>
  * <li><b>serviceName</b> is the service that do the search @link
@@ -144,6 +146,7 @@ public class SearchAction extends DispatchAction
         IUserView userView = SessionUtils.getUserView(request);
         Object[] args = getSearchServiceArgs(request, form);
         Collection result = (Collection) ServiceUtils.executeService(userView, serviceName, args);
+        doAfterSearch(mapping, request, result);
         ActionForward actionForward = null;
         if (result.isEmpty())
         {
@@ -179,9 +182,23 @@ public class SearchAction extends DispatchAction
     }
 
     /**
-	 * If we search an object(s) using some criteria (for instance the idInternal) we may wan't to use
-	 * it after the search. This method transforms the search criteria (the idInternal) into an object
-	 * set in the request.
+	 * After the execution of the service we may want to use the result for something.
+	 * 
+	 * @param mapping
+	 * @param request
+	 * @param result
+	 */
+    protected void doAfterSearch(
+        SearchActionMapping mapping,
+        HttpServletRequest request,
+        Collection result)
+        throws Exception
+    {}
+
+    /**
+	 * If we search an object(s) using some criteria (for instance the idInternal) we may want to use it
+	 * after the search. This method transforms the search criteria (the idInternal) into an object set
+	 * in the request.
 	 * 
 	 * @param mapping
 	 * @param request
