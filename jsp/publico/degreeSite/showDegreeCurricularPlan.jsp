@@ -45,22 +45,22 @@
 	<logic:iterate id="curricularCourseScopeElem" name="allActiveCurricularCourseScopes" type="DataBeans.InfoCurricularCourseScope" length="1">
 			<bean:define id="currentSemester" name="curricularCourseScopeElem" property="infoCurricularSemester.semester"/>
 	</logic:iterate>
-	<table>
+	<table class="tab_altrow" cellspacing="0">
 		<!-- cabeçalho -->
 		<tr>
-			<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularYear"/></td>
-			<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularSemester"/></td>
-			<td class="listClasses-header"><bean:message key="label.curricularCourse"/></td>
-			<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.branch"/></td>
+			<th><bean:message key="label.manager.curricularCourseScope.curricularYear"/></th>
+			<th><bean:message key="label.manager.curricularCourseScope.curricularSemester"/></th>
+			<th><bean:message key="label.curricularCourse"/></th>
+			<th><bean:message key="label.manager.curricularCourseScope.branch"/></th>
 		</tr>
 			<logic:iterate id="curricularCourseScopeElem" name="allActiveCurricularCourseScopes" type="DataBeans.InfoCurricularCourseScope" indexId="row">
 				<logic:notEqual name="curricularCourseScopeElem" property="infoCurricularSemester.semester" value="<%= pageContext.findAttribute("currentSemester").toString()%>">
 					<!-- cabeçalho -->
 					<tr>
-						<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularYear"/></td>
-						<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularSemester"/></td>
-						<td class="listClasses-header"><bean:message key="label.curricularCourse"/></td>
-						<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.branch"/></td>
+						<th><bean:message key="label.manager.curricularCourseScope.curricularYear"/></th>
+						<th><bean:message key="label.manager.curricularCourseScope.curricularSemester"/></th>
+						<th><bean:message key="label.curricularCourse"/></th>
+						<th><bean:message key="label.manager.curricularCourseScope.branch"/></th>
 					</tr>
 					<bean:define id="currentSemester" name="curricularCourseScopeElem" property="infoCurricularSemester.semester"/>
 				</logic:notEqual>
@@ -70,15 +70,15 @@
 				</bean:define>
 				<logic:equal name="isEven" value="0"> <!-- Linhas pares com uma cor -->
 				<tr>
-					<td class="listClasses"><bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/></td>
-					<td class="listClasses"><bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.semester"/></td>
-					<td class="listClasses" style="text-align:left">
+					<td class="white"><bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/></td>
+					<td class="white"><bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.semester"/></td>
+					<td class="white" style="text-align:left">
 						<bean:define id="curricularCourseID" name="curricularCourseScopeElem" property="infoCurricularCourse.idInternal"/>
 						<html:link page="<%= "/showCourseSite.do?method=showCurricularCourseSite&amp;curricularCourseID=" +  pageContext.findAttribute("curricularCourseID") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID")%>" >
 							<bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.name" />
 						</html:link>
 					</td>
-					<td class="listClasses">
+					<td class="white">
 						<bean:write name="curricularCourseScopeElem" property="infoBranch.prettyCode"/>
 					</td>
 				</tr>
@@ -86,15 +86,15 @@
 				
 				<logic:equal name="isEven" value="1"> <!-- Linhas impares com uma cor -->
 				<tr>
-					<td class="listClasses"><bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/></td>
-					<td class="listClasses"><bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.semester"/></td>
-					<td class="listClasses" style="text-align:left">
+					<td><bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.infoCurricularYear.year"/></td>
+					<td><bean:write name="curricularCourseScopeElem" property="infoCurricularSemester.semester"/></td>
+					<td style="text-align:left">
 						<bean:define id="curricularCourseID" name="curricularCourseScopeElem" property="infoCurricularCourse.idInternal"/>
 						<html:link page="<%= "/showCourseSite.do?method=showCurricularCourseSite&amp;curricularCourseID=" +  pageContext.findAttribute("curricularCourseID") + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) + "&amp;degreeID=" +  request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + request.getAttribute("degreeCurricularPlanID")%>" >
 							<bean:write name="curricularCourseScopeElem" property="infoCurricularCourse.name" />
 						</html:link>
 					</td>
-					<td class="listClasses">
+					<td>
 						<bean:write name="curricularCourseScopeElem" property="infoBranch.prettyCode"/>
 					</td>
 				</tr>
