@@ -5378,6 +5378,26 @@
             <chain name="GrantOwnerManagerAuthorization"/>
         </filterChains>
     </service>
+    <service>
+        <name>ReadGrantSubsidy</name>
+        <implementationClass>
+            ServidorAplicacao.Servico.grant.contract.ReadGrantSubsidy</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="GrantOwnerManagerAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadActualGrantSubsidyByGrantContract</name>
+        <implementationClass>
+            ServidorAplicacao.Servico.grant.contract.ReadActualGrantSubsidyByGrantContract</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="GrantOwnerManagerAuthorization"/>
+        </filterChains>
+    </service>
      <service>
         <name>EditGrantPart</name>
         <implementationClass>
