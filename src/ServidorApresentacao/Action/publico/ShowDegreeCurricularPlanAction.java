@@ -88,7 +88,6 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction
             request.setAttribute("allActiveCurricularCourseScopes", allActiveCurricularCourseScopes);
         }
 
-
         return mapping.findForward("showDegreeCurricularPlan");
     }
 

@@ -2,12 +2,13 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
 <p><span class="error"><html:errors/></span></p>
 
 <logic:present name="infoDegreeInfo">
 
-				<div class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml">IST</a> > <a href="http://www.ist.utl.pt/html/ensino/ensino.shtml">Ensino</a> &gt;&nbsp;
+				<div class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml">IST</a> > <html:link page="<%= "/showDegrees.do?method=nonMaster&executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" >Ensino</html:link> &gt;&nbsp;
 					<bean:write name="infoDegreeInfo" property="infoDegree.tipoCurso" />&nbsp<bean:write name="infoDegreeInfo" property="infoDegree.nome" />
 				</div>
 				

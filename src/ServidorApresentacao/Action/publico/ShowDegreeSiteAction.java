@@ -15,6 +15,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoDegreeInfo;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
@@ -147,7 +148,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
         {
             errors.add("impossibleDegreeSite", new ActionError("error.public.DegreeInfoNotPresent"));
             saveErrors(request, errors);
-//            return (new ActionForward(mapping.getInput()));
+            //            return (new ActionForward(mapping.getInput()));
         }
 
         //execution degrees of this degree
@@ -204,7 +205,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
         {
             errors.add("impossibleDegreeSite", new ActionError("error.public.DegreeInfoNotPresent"));
             saveErrors(request, errors);
-//            return (new ActionForward(mapping.getInput()));
+            //            return (new ActionForward(mapping.getInput()));
 
         }
 
@@ -224,11 +225,14 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
         HttpSession session = request.getSession(true);
 
         Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
-		//request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, executionPeriodOId);
-		
+        //request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, executionPeriodOId);
+
         Integer degreeId = getFromRequest("degreeID", request);
-		request.setAttribute("degreeID", degreeId);
-		
+        request.setAttribute("degreeID", degreeId);
+
+        Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanId);
+
         GestorServicos gestorServicos = GestorServicos.manager();
 
         //degree information
@@ -255,6 +259,31 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
 
         request.setAttribute("infoDegreeCurricularPlanList", infoDegreeCurricularPlanList);
 
+        InfoDegreeCurricularPlan infoDegreeCurricularPlan =
+            (InfoDegreeCurricularPlan) infoDegreeCurricularPlanList.get(0);
+        request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
+							  
+        if (degreeCurricularPlanId != null)
+        {
+            Object[] args2 = { degreeCurricularPlanId };
+            try
+            {
+                infoDegreeCurricularPlan =
+                    (InfoDegreeCurricularPlan) gestorServicos.executar(
+                        null,
+                        "ReadActiveDegreeCurricularPlanByID",
+                        args2);
+            } catch (FenixServiceException e)
+            {
+                errors.add(
+                    "impossibleCurricularPlan",
+                    new ActionError("error.impossibleCurricularPlan"));
+                saveErrors(request, errors);
+                return (new ActionForward(mapping.getInput()));
+            }
+
+            request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
+        }
         return mapping.findForward("showCurricularPlans");
     }
 
