@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <serviceDefinitions>
     <service>
+        <name>CheckIsAliveService</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.CheckIsAliveService</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains/>
+    </service>
+    <service>
         <name>Autenticacao</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.Autenticacao</implementationClass>
         <description/>

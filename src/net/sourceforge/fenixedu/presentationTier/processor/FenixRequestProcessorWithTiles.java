@@ -30,7 +30,8 @@ public class FenixRequestProcessorWithTiles extends TilesRequestProcessor {
     protected boolean processPreprocess(HttpServletRequest request, HttpServletResponse response) {
         String uri = request.getRequestURI();
         if (((uri.indexOf("login.do") == -1) && (uri.indexOf("showErrorPage.do") == -1) && (uri
-                .indexOf("/publico/index.do") == -1)) && (uri.indexOf("/manager/manageCache.do") == -1)) {
+                .indexOf("/publico/index.do") == -1)) && (uri.indexOf("/manager/manageCache.do") == -1)
+                && (uri.indexOf("/isAlive.do") == -1)) {
             if (request.getRemoteUser() == null) {
                 ActionErrors errors = new ActionErrors();
 

@@ -79,6 +79,10 @@
 				scope="request" 
             	type="net.sourceforge.fenixedu.presentationTier.Action.ExceptionHandlingAction" >
         </action>
+        <action path="/isAlive"
+				type="net.sourceforge.fenixedu.presentationTier.Action.CheckIsAliveAction">
+            <forward name="Success" path="/ok.jsp"/>
+        </action>
     </action-mappings>
 
     <!-- ========== Controller Configuration ================================ -->
