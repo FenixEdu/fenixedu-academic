@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import Dominio.ICurricularCourse;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 
@@ -17,6 +18,9 @@ import Dominio.IStudentCurricularPlan;
 public final class EnrolmentContext {
 	private IStudent student;
 	private List curricularCoursesDoneByStudent;
+	/**
+	 * Map like this: key = curricularCourseCode + curricularCourseName
+	 */
 	private Map acumulatedEnrolments;
 	private Integer semester;
 	private EnrolmentValidationResult enrolmentValidationResult;
@@ -96,10 +100,20 @@ public final class EnrolmentContext {
 	}
 
 	/**
+	 * 
 	 * @return
+	 * @deprecated
 	 */
 	public Map getAcumulatedEnrolments() {
 		return acumulatedEnrolments;
+	}
+	
+	public Integer getCurricularCourseAcumulatedEnrolments(ICurricularCourse curricularCourse){
+		Integer curricularCourseAcumulatedEnrolments = (Integer) this.acumulatedEnrolments.get(curricularCourse.getCode()+curricularCourse.getName()); 
+		if (curricularCourseAcumulatedEnrolments == null){
+			curricularCourseAcumulatedEnrolments = new Integer (0);
+		}
+		return curricularCourseAcumulatedEnrolments;
 	}
 
 	/**
