@@ -4,6 +4,7 @@
  */
 package ServidorApresentacao.Action.student;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -24,12 +25,14 @@ import org.apache.struts.validator.DynaValidatorForm;
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoDegree;
+import DataBeans.InfoEnrolmentInOptionalCurricularCourse;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentValidationResult;
 import ServidorAplicacao.strategy.enrolment.degree.InfoEnrolmentContext;
 import ServidorApresentacao.Action.exceptions.FenixTransactionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import Util.CurricularCourseType;
 
 /**
  * @author jpvl
@@ -241,14 +244,15 @@ public class CurricularCourseEnrolmentManagerDispatchAction
 			(InfoCurricularCourse) infoEnrolmentContext
 				.getOptionalInfoCurricularCoursesToChooseFromDegree()
 				.get(optionalCourseChoosenIndex.intValue());
-		
+
 		infoEnrolmentContext.setInfoChosenOptionalCurricularCourseScope(
 			infoCurricularCourseScope);
 
 		Object args[] = { infoEnrolmentContext, infoCurricularCourseOptional };
-		
-		System.out.println("Escolhida:"+infoCurricularCourseOptional.toString());
-		
+
+		System.out.println(
+			"Escolhida:" + infoCurricularCourseOptional.toString());
+
 		infoEnrolmentContext =
 			(InfoEnrolmentContext) ServiceUtils.executeService(
 				userView,
@@ -257,7 +261,7 @@ public class CurricularCourseEnrolmentManagerDispatchAction
 		session.setAttribute(
 			SessionConstants.INFO_ENROLMENT_CONTEXT_KEY,
 			infoEnrolmentContext);
-		
+
 		return mapping.findForward(forwards[0]);
 	}
 
@@ -298,10 +302,34 @@ public class CurricularCourseEnrolmentManagerDispatchAction
 		for (int i = 0; i < infoFinalSpan.size(); i++) {
 			InfoCurricularCourseScope infoCurricularCourseScope =
 				(InfoCurricularCourseScope) infoFinalSpan.get(i);
-			if (actualEnrolment.contains(infoCurricularCourseScope)) {
-				curricularCoursesIndexes[i] = new Integer(i);
+			InfoCurricularCourse infoCurricularCourse =
+				infoCurricularCourseScope.getInfoCurricularCourse();
+
+			if (infoCurricularCourse
+				.getType()
+				.equals(CurricularCourseType.OPTIONAL_COURSE_OBJ)) {
+				List optionalEnrolments =
+					infoEnrolmentContext
+						.getInfoOptionalCurricularCoursesEnrolments();
+				Iterator optionalEnrolmentsIterator =
+					optionalEnrolments.iterator();
+				while (optionalEnrolmentsIterator.hasNext()) {
+					InfoEnrolmentInOptionalCurricularCourse optionalEnrolment =
+						(InfoEnrolmentInOptionalCurricularCourse) optionalEnrolmentsIterator
+							.next();
+					if (optionalEnrolment
+						.getInfoCurricularCourse()
+						.equals(infoCurricularCourse)) {
+						curricularCoursesIndexes[i] = new Integer(i);
+						break;
+					}
+				}
 			} else {
-				curricularCoursesIndexes[i] = null;
+				if (actualEnrolment.contains(infoCurricularCourseScope)) {
+					curricularCoursesIndexes[i] = new Integer(i);
+				} else {
+					curricularCoursesIndexes[i] = null;
+				}
 			}
 		}
 		enrolmentForm.set("curricularCourses", curricularCoursesIndexes);
@@ -334,11 +362,14 @@ public class CurricularCourseEnrolmentManagerDispatchAction
 		List actualEnrolment = infoEnrolmentContext.getActualEnrolment();
 
 		actualEnrolment.clear();
-		actualEnrolment.addAll(infoEnrolmentContext.getInfoCurricularCoursesScopesAutomaticalyEnroled());
-		
+		actualEnrolment.addAll(
+			infoEnrolmentContext
+				.getInfoCurricularCoursesScopesAutomaticalyEnroled());
+
 		List curricularCourseScopesToBeEnrolled =
 			infoEnrolmentContext
 				.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled();
+		List optionalCurricularCoursesChoosen = new ArrayList();
 		if (curricularCourses != null) {
 			for (int i = 0; i < curricularCourses.length; i++) {
 				Integer curricularCourseIndex = curricularCourses[i];
@@ -348,8 +379,36 @@ public class CurricularCourseEnrolmentManagerDispatchAction
 							InfoCurricularCourseScope) curricularCourseScopesToBeEnrolled
 								.get(
 							curricularCourseIndex.intValue());
-					System.out.println("Disciplina\n");
-					actualEnrolment.add(curricularCourseScope);
+					if (!curricularCourseScope
+						.getInfoCurricularCourse()
+						.getType()
+						.equals(CurricularCourseType.OPTIONAL_COURSE_OBJ)) {
+						actualEnrolment.add(curricularCourseScope);
+					} else {
+						optionalCurricularCoursesChoosen.add(
+							curricularCourseScope.getInfoCurricularCourse());
+					}
+				}
+			}
+		}
+
+		List enrolmentsInOptionalCourses =
+			infoEnrolmentContext.getInfoOptionalCurricularCoursesEnrolments();
+
+		if (enrolmentsInOptionalCourses.size()
+			!= optionalCurricularCoursesChoosen.size()) {
+			Iterator optionalEnrolmentsIterator =
+				enrolmentsInOptionalCourses.iterator();
+			while (optionalEnrolmentsIterator.hasNext()) {
+				InfoEnrolmentInOptionalCurricularCourse infoEnrolmentInOptionalCurricularCourse =
+					(InfoEnrolmentInOptionalCurricularCourse) optionalEnrolmentsIterator
+						.next();
+				InfoCurricularCourse optionalCurricularCourse =
+					infoEnrolmentInOptionalCurricularCourse
+						.getInfoCurricularCourse();
+				if (!optionalCurricularCoursesChoosen
+					.contains(optionalCurricularCourse)) {
+					optionalEnrolmentsIterator.remove();
 				}
 			}
 		}
