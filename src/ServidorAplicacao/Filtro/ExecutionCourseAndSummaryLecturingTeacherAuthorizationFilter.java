@@ -75,9 +75,7 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
                     throw new NotAuthorizedFilterException();                  
                 }                
             }
-            else if(summary.getTeacher().equals(teacherLogged)){ 
-                System.out.println("********************************");
-            }    
+            else if(summary.getTeacher().equals(teacherLogged)){}    
             else if ((id == null) || (id.getRoles() == null)
                     || !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
                     || !lecturesExecutionCourse(id, arguments)
@@ -127,14 +125,12 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
         IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class,  ((Integer)arguments[0]));
         IProfessorship professorshipLogged = persistentProfessorship.readByTeacherAndExecutionCourse(teacherLogged, executionCourse);       
         
-        if(summary.getProfessorship() != null && !summary.getProfessorship().equals(professorshipLogged)){
-            System.out.println("************************111111111111111111111");
+        if(summary.getProfessorship() != null && !summary.getProfessorship().equals(professorshipLogged)){            
             return true;
         }
         if(summary.getTeacher() != null){
             IProfessorship professorship = persistentProfessorship.readByTeacherAndExecutionCourse(summary.getTeacher(), executionCourse);
-            if(teachers.contains(professorship) && !summary.getTeacher().equals(teacherLogged)){
-                System.out.println("************************222222222222222222222");
+            if(teachers.contains(professorship) && !summary.getTeacher().equals(teacherLogged)){                
                 return true;
             }
         }
