@@ -37,7 +37,6 @@ public class ReadCurricularCourseAction extends FenixAction  {
 			throws FenixActionException {
 				
 				HttpSession session = request.getSession(false);
-//				DynaActionForm dynaForm = (DynaActionForm) form;
 						
 				UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 				
@@ -49,16 +48,14 @@ public class ReadCurricularCourseAction extends FenixAction  {
 				
 				GestorServicos manager = GestorServicos.manager();
 				InfoCurricularCourse infoCurricularCourse = null;
-				
-				
-				
+								
 				try {
 					infoCurricularCourse = (InfoCurricularCourse) manager.executar(userView, "ReadCurricularCourse", args);
 				} catch(FenixServiceException e) {
 					throw new FenixActionException(e);
 				}
 			    
-				// trying to read a CurricularCourse that doesn´t exist in the database
+				// trying to read a curricular course that doesn´t exist in the database
 				if(infoCurricularCourse == null) {
 						ActionErrors actionErrors = new ActionErrors();
 						ActionError error = new ActionError("message.nonExistingCurricularCourse");
@@ -68,9 +65,7 @@ public class ReadCurricularCourseAction extends FenixAction  {
 						return mapping.findForward("readDegreeCurricularPlan");
 				}
 				
-				
-				
-				// in case the CurricularCourse really exists
+				// in case the curricular course really exists
 				
 				List executionCourses = null;
 				try {		
@@ -92,7 +87,7 @@ public class ReadCurricularCourseAction extends FenixAction  {
 				} catch (FenixServiceException e) {
 						throw new FenixActionException(e);
 				}
-				
+//				Collections.sort(studentCurricularPlans, new BeanComparator("name"));
 				
 				List curricularCourseScopes = new ArrayList();
 				
@@ -100,14 +95,14 @@ public class ReadCurricularCourseAction extends FenixAction  {
 					curricularCourseScopes = (List) manager.executar(
 														userView,
 														"ReadCurricularCourseScopes",
-														args);	
+														args                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          );	
 				} catch (FenixServiceException e) {
 						throw new FenixActionException(e);
 				}						
 			
-				
+//				Collections.sort(curricularCourseScopes, new BeanComparator("name"));
 					
-//				Collections.sort(studentCurricularPlans, new BeanComparator("name"));
+
 				request.setAttribute("executionCoursesList", executionCourses);
 				request.setAttribute("studentCurricularPlansList", studentCurricularPlans);
 				request.setAttribute("degreeId", degreeId);
