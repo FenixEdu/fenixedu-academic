@@ -13,5 +13,5 @@
     	obteve aproveitamento nas disciplinas abaixo discriminadas, com as quais concluiu o curso especializado conducente à obtenção do grau de mestre 
     	em <bean:write name="conclusiondate" /> 
     		<logic:present name="<%= SessionConstants.DISCRIMINATED_WITH_AVERAGE%>">
-     			com a média de <bean:write name="infoFinalResult" property="finalAverage"/> ( NOTA) valores
+     			com a média de <bean:write name="infoFinalResult" property="finalAverage"/> valores
     		</logic:present>.<br />
