@@ -17,7 +17,7 @@ import Dominio.StudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEnrolment;
 import Util.CurricularCourseType;
-import Util.EnrolmentState;
+import Util.EnrollmentState;
 import Util.StudentCurricularPlanState;
 import Util.TipoCurso;
 
@@ -42,7 +42,7 @@ public class EnrolmentOJB extends ObjectFenixOJB implements
 
     public List readEnrolmentsByStudentCurricularPlanAndEnrolmentState(
             IStudentCurricularPlan studentCurricularPlan,
-            EnrolmentState enrolmentState) throws ExcepcaoPersistencia {
+            EnrollmentState enrolmentState) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("studentCurricularPlan.idInternal",
                 studentCurricularPlan.getIdInternal());
@@ -107,7 +107,7 @@ public class EnrolmentOJB extends ObjectFenixOJB implements
     }
 
     public List readEnrolmentsByStudentCurricularPlanStateAndEnrolmentStateAndDegreeCurricularPlans(
-            StudentCurricularPlanState state, EnrolmentState state2,
+            StudentCurricularPlanState state, EnrollmentState state2,
             IDegreeCurricularPlan degreeCurricularPlan)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
@@ -130,7 +130,7 @@ public class EnrolmentOJB extends ObjectFenixOJB implements
                 .getIdInternal());
         criteria.addNotEqualTo("executionPeriod.idInternal", executionPeriod
                 .getIdInternal());
-        criteria.addEqualTo("enrolmentState", EnrolmentState.APROVED);
+        criteria.addEqualTo("enrolmentState", EnrollmentState.APROVED);
         return queryList(Enrolment.class, criteria);
     }
 
@@ -182,7 +182,7 @@ public class EnrolmentOJB extends ObjectFenixOJB implements
 
     public List readAllByStudentCurricularPlanAndEnrolmentStateAndExecutionPeriod(
             IStudentCurricularPlan studentCurricularPlan,
-            EnrolmentState enrolmentState, IExecutionPeriod executionPeriod)
+            EnrollmentState enrolmentState, IExecutionPeriod executionPeriod)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("studentCurricularPlan.idInternal",
@@ -201,7 +201,7 @@ public class EnrolmentOJB extends ObjectFenixOJB implements
      */
     public List readByCurricularCourseAndExecutionPeriodAndEnrolmentState(
             ICurricularCourse curricularCourse,
-            IExecutionPeriod executionPeriod, EnrolmentState state)
+            IExecutionPeriod executionPeriod, EnrollmentState state)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("curricularCourse.idInternal", curricularCourse
@@ -231,7 +231,7 @@ public class EnrolmentOJB extends ObjectFenixOJB implements
 
     public List readEnrolmentsByStudentCurricularPlanAndEnrolmentStateAndCurricularCourseType(
             IStudentCurricularPlan studentCurricularPlan,
-            EnrolmentState enrolmentState,
+            EnrollmentState enrolmentState,
             CurricularCourseType curricularCourseType)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
@@ -260,7 +260,7 @@ public class EnrolmentOJB extends ObjectFenixOJB implements
                 StudentCurricularPlanState.ACTIVE_OBJ);
         criteria.addEqualTo("studentCurricularPlan.degreeCurricularPlan.degree.tipoCurso",
                 TipoCurso.LICENCIATURA_OBJ);
-        criteria.addEqualTo("enrolmentState", EnrolmentState.APROVED);
+        criteria.addEqualTo("enrolmentState", EnrollmentState.APROVED);
 
         int numberCompletedCourses = count(Enrolment.class, criteria);
 
@@ -276,7 +276,7 @@ public class EnrolmentOJB extends ObjectFenixOJB implements
                     StudentCurricularPlanState.ACTIVE_OBJ);
             criteria.addEqualTo("studentCurricularPlan.degreeCurricularPlan.degree.tipoCurso",
                     TipoCurso.LICENCIATURA_OBJ);
-            criteria.addEqualTo("enrolmentState", EnrolmentState.APROVED);
+            criteria.addEqualTo("enrolmentState", EnrollmentState.APROVED);
 
             List enrolmentsInOtherStudentCurricularPlans = queryList(Enrolment.class, criteria);
             for (int i = 0; i < enrolmentsInOtherStudentCurricularPlans.size(); i++) {

@@ -23,7 +23,7 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.EnrolmentEvaluationState;
 import Util.EnrolmentEvaluationType;
-import Util.EnrolmentState;
+import Util.EnrollmentState;
 import Util.TipoCurso;
 
 /**
@@ -71,7 +71,7 @@ public class WriteEnrolmentInOptionalCourse implements IService
 				enrolmentDAO.simpleLockWrite(enrolmentToWrite);
 				enrolmentToWrite.setCurricularCourse(optionalCurricularCourse);
 				enrolmentToWrite.setCurricularCourseForOption(chosenCurricularCourse);
-				enrolmentToWrite.setEnrolmentState(EnrolmentState.ENROLLED);
+				enrolmentToWrite.setEnrolmentState(EnrollmentState.ENROLLED);
 				enrolmentToWrite.setExecutionPeriod(executionPeriod);
 				enrolmentToWrite.setStudentCurricularPlan(studentCurricularPlan);
 				enrolmentToWrite.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);

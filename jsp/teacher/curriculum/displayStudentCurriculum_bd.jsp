@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants, Util.CurricularCourseType" %>
-<%@ page import="Util.EnrolmentState, DataBeans.InfoEnrolmentInOptionalCurricularCourse" %>
+<%@ page import="Util.EnrollmentState, DataBeans.InfoEnrolmentInOptionalCurricularCourse" %>
 
   <span class="error"><html:errors/></span>
 
@@ -75,11 +75,11 @@
 				</logic:equal>
 			  </td>
 			  <td class="listClasses">
-				<logic:notEqual name="enrolment" property="enrolmentState" value="<%= EnrolmentState.APROVED.toString() %>">
-					<bean:message name="enrolment" property="enrolmentState.name" bundle="ENUMERATION_RESOURCES" />
+				<logic:notEqual name="enrolment" property="enrollmentState" value="<%= EnrollmentState.APROVED.toString() %>">
+					<bean:message name="enrolment" property="enrollmentState.name" bundle="ENUMERATION_RESOURCES" />
 				</logic:notEqual>
 				
-				<logic:equal name="enrolment" property="enrolmentState" value="<%= EnrolmentState.APROVED.toString() %>">
+				<logic:equal name="enrolment" property="enrollmentState" value="<%= EnrollmentState.APROVED.toString() %>">
 					<bean:write name="enrolment" property="infoEnrolmentEvaluation.grade"/>
 				</logic:equal>
 			  </td>

@@ -5,7 +5,7 @@
 <%@ page import="org.apache.struts.action.Action" %>
 <%@ page import="java.util.List" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<%@ page import="Util.EnrolmentState" %>
+<%@ page import="Util.EnrollmentState" %>
 
   <span class="error"><html:errors/></span>
 
@@ -72,11 +72,11 @@
 			    <bean:write name="enrolment" property="infoCurricularCourse.name"/>
 			  </td>
 			  <td class="listClasses">
-				<logic:notEqual name="enrolment" property="enrolmentState" value="<%= EnrolmentState.APROVED.toString() %>">
-					<bean:message name="enrolment" property="enrolmentState.name" bundle="ENUMERATION_RESOURCES" />
+				<logic:notEqual name="enrolment" property="enrollmentState" value="<%= EnrollmentState.APROVED.toString() %>">
+					<bean:message name="enrolment" property="enrollmentState.name" bundle="ENUMERATION_RESOURCES" />
 				</logic:notEqual>
 				
-				<logic:equal name="enrolment" property="enrolmentState" value="<%= EnrolmentState.APROVED.toString() %>">
+				<logic:equal name="enrolment" property="enrollmentState" value="<%= EnrollmentState.APROVED.toString() %>">
 					<bean:write name="enrolment" property="infoEnrolmentEvaluation.grade"/>
 				</logic:equal>
 			  </td>

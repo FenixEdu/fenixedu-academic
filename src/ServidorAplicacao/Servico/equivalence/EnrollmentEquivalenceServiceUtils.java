@@ -21,7 +21,7 @@ import ServidorPersistente.IPersistentEquivalentEnrolmentForEnrolmentEquivalence
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.EnrolmentState;
+import Util.EnrollmentState;
 import Util.TipoCurso;
 
 /**
@@ -36,7 +36,7 @@ public abstract class EnrollmentEquivalenceServiceUtils extends Service
 	 */
 	protected boolean isAnAprovedEnrollment(IEnrollment enrollment)
 	{
-		return enrollment.getEnrolmentState().equals(EnrolmentState.APROVED);
+		return enrollment.getEnrolmentState().equals(EnrollmentState.APROVED);
 	}
 
 	/**
@@ -45,8 +45,8 @@ public abstract class EnrollmentEquivalenceServiceUtils extends Service
 	 */
 	protected boolean isAnEnroledEnrollment(IEnrollment enrollment)
 	{
-		return (enrollment.getEnrolmentState().equals(EnrolmentState.ENROLLED) || enrollment.getEnrolmentState().equals(
-			EnrolmentState.TEMPORARILY_ENROLED));
+		return (enrollment.getEnrolmentState().equals(EnrollmentState.ENROLLED) || enrollment.getEnrolmentState().equals(
+			EnrollmentState.TEMPORARILY_ENROLED));
 	}
 
 	/**

@@ -32,7 +32,7 @@ import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.Data;
-import Util.EnrolmentState;
+import Util.EnrollmentState;
 import Util.MasterDegreeClassification;
 import Util.Specialization;
 /**
@@ -270,7 +270,7 @@ public class PrintCertificateDispatchAction extends DispatchAction
 						Object args[] =
 							{
 								infoStudentCurricularPlan,
-								EnrolmentState.APROVED };
+								EnrollmentState.APROVED };
 						try
 						{
 							enrolmentList =
@@ -434,7 +434,7 @@ public class PrintCertificateDispatchAction extends DispatchAction
 								Object args[] =
 									{
 										infoStudentCurricularPlan,
-										EnrolmentState.APROVED };
+										EnrollmentState.APROVED };
 								try
 								{
 									enrolmentList =

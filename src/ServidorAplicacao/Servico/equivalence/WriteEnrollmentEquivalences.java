@@ -42,7 +42,7 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.EnrolmentEvaluationState;
 import Util.EnrolmentEvaluationType;
-import Util.EnrolmentState;
+import Util.EnrollmentState;
 import Util.TipoCurso;
 import Util.enrollment.EnrollmentCondition;
 
@@ -272,26 +272,26 @@ public class WriteEnrollmentEquivalences extends EnrollmentEquivalenceServiceUti
 		}
 	}
 
-	private EnrolmentState getEnrollmentStateByGrade(String grade)
+	private EnrollmentState getEnrollmentStateByGrade(String grade)
 	{
 		if (grade == null)
 		{
-			return EnrolmentState.NOT_EVALUATED;
+			return EnrollmentState.NOT_EVALUATED;
 		}
 
 		if (grade.equals("NA"))
 		{
-			return EnrolmentState.NOT_EVALUATED;
+			return EnrollmentState.NOT_EVALUATED;
 		}
 
 		if (grade.equals("RE"))
 		{
-			return EnrolmentState.NOT_APROVED;
+			return EnrollmentState.NOT_APROVED;
 		}
 
 		if (grade.equals("AP"))
 		{
-			return EnrolmentState.APROVED;
+			return EnrollmentState.APROVED;
 		}
 
 		int intGrade;
@@ -300,10 +300,10 @@ public class WriteEnrollmentEquivalences extends EnrollmentEquivalenceServiceUti
 
 		if (intGrade < 10)
 		{
-			return EnrolmentState.NOT_APROVED;
+			return EnrollmentState.NOT_APROVED;
 		}
 
-		return EnrolmentState.APROVED;
+		return EnrollmentState.APROVED;
 	}
 
 	/**

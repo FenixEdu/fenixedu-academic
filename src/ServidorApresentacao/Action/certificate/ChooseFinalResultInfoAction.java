@@ -35,7 +35,7 @@ import ServidorApresentacao.Action.exceptions.FinalResulUnreachedActionException
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.Data;
-import Util.EnrolmentState;
+import Util.EnrollmentState;
 import Util.Specialization;
 import Util.TipoCurso;
 import framework.factory.ServiceManagerServiceFactory;
@@ -156,7 +156,7 @@ public class ChooseFinalResultInfoAction extends DispatchAction
                
                     try
                     {
-                        Object args[] = { infoStudentCurricularPlan, EnrolmentState.APROVED };
+                        Object args[] = { infoStudentCurricularPlan, EnrollmentState.APROVED };
                         enrolmentList =
                             (List) ServiceManagerServiceFactory.executeService(
                                 userView,

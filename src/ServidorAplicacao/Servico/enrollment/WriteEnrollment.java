@@ -34,7 +34,7 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.EnrolmentEvaluationState;
 import Util.EnrolmentEvaluationType;
-import Util.EnrolmentState;
+import Util.EnrollmentState;
 import Util.enrollment.CurricularCourseEnrollmentType;
 import Util.enrollment.EnrollmentCondition;
 
@@ -103,7 +103,7 @@ public class WriteEnrollment implements IService
 				IEnrollment enrolmentToWrite = new Enrolment();
 				enrolmentDAO.simpleLockWrite(enrolmentToWrite);
 				enrolmentToWrite.setCurricularCourse(curricularCourse);
-				enrolmentToWrite.setEnrolmentState(EnrolmentState.ENROLLED);
+				enrolmentToWrite.setEnrolmentState(EnrollmentState.ENROLLED);
 				enrolmentToWrite.setExecutionPeriod(executionPeriod);
 				enrolmentToWrite.setStudentCurricularPlan(studentCurricularPlan);
 				enrolmentToWrite.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);

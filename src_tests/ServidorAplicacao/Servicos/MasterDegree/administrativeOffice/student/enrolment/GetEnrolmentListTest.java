@@ -14,7 +14,7 @@ import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.Servicos.TestCaseReadServicesIntranet;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.EnrolmentState;
+import Util.EnrollmentState;
 import Util.Specialization;
 import Util.TipoCurso;
 
@@ -72,7 +72,7 @@ public class GetEnrolmentListTest extends TestCaseReadServicesIntranet {
 		fail("Error !");  		
 	}
 
-	Object[] args = { infoStudentCurricularPlan, EnrolmentState.ENROLLED };
+	Object[] args = { infoStudentCurricularPlan, EnrollmentState.ENROLLED };
 
 	return args;
  

@@ -22,7 +22,7 @@ import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.EnrolmentState;
+import Util.EnrollmentState;
 import Util.StudentCurricularPlanState;
 
 /**
@@ -99,10 +99,10 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IServico
 			if (newState.getState().intValue() == StudentCurricularPlanState.INACTIVE) {
 				while (iterator.hasNext()) {
 					IEnrollment enrolment = (IEnrollment) iterator.next();
-					if (enrolment.getEnrolmentState().getValue() ==  EnrolmentState.ENROLLED_TYPE
-							|| enrolment.getEnrolmentState().getValue() ==  EnrolmentState.TEMPORARILY_ENROLLED_TYPE) {
+					if (enrolment.getEnrolmentState().getValue() ==  EnrollmentState.ENROLLED_TYPE
+							|| enrolment.getEnrolmentState().getValue() ==  EnrollmentState.TEMPORARILY_ENROLLED_TYPE) {
 						persistentEnrolment.simpleLockWrite(enrolment);
-						enrolment.setEnrolmentState(EnrolmentState.ANNULED);
+						enrolment.setEnrolmentState(EnrollmentState.ANNULED);
 					}
 				}
 			} else {
@@ -177,9 +177,9 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IServico
     private void changeAnnulled2ActiveIfActivePlan(StudentCurricularPlanState newState, IPersistentEnrolment persistentEnrolment, IEnrollment enrolment) throws ExcepcaoPersistencia
     {
         if (newState.getState().intValue() == StudentCurricularPlanState.ACTIVE) {
-            if (enrolment.getEnrolmentState().getValue() ==  EnrolmentState.ANNULED_TYPE) {
+            if (enrolment.getEnrolmentState().getValue() ==  EnrollmentState.ANNULED_TYPE) {
         		persistentEnrolment.simpleLockWrite(enrolment);		
-        		enrolment.setEnrolmentState(EnrolmentState.ENROLLED);
+        		enrolment.setEnrolmentState(EnrollmentState.ENROLLED);
         	}					    
         }
     }

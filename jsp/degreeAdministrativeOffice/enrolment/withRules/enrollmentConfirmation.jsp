@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="Util.EnrolmentState, Util.CurricularCourseType, DataBeans.InfoEnrolmentInOptionalCurricularCourse" %>
+<%@ page import="Util.EnrollmentState, Util.CurricularCourseType, DataBeans.InfoEnrolmentInOptionalCurricularCourse" %>
 <h2><bean:message key="title.student.enrollment" bundle="STUDENT_RESOURCES"/></h2>
 <span class="error"><html:errors/></span>
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -160,11 +160,11 @@
 					</logic:equal>
 				</td>
 			  <td class="listClasses">
-				<logic:notEqual name="curriculumElem" property="enrolmentState" value="<%= EnrolmentState.APROVED.toString() %>">
-					<bean:message name="curriculumElem" property="enrolmentState.name" bundle="ENUMERATION_RESOURCES" />
+				<logic:notEqual name="curriculumElem" property="enrollmentState" value="<%= EnrollmentState.APROVED.toString() %>">
+					<bean:message name="curriculumElem" property="enrollmentState.name" bundle="ENUMERATION_RESOURCES" />
 				</logic:notEqual>
 				
-				<logic:equal name="curriculumElem" property="enrolmentState" value="<%= EnrolmentState.APROVED.toString() %>">
+				<logic:equal name="curriculumElem" property="enrollmentState" value="<%= EnrollmentState.APROVED.toString() %>">
 					<bean:write name="curriculumElem" property="infoEnrolmentEvaluation.grade"/>
 				</logic:equal>
 			  </td>

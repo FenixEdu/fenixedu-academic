@@ -12,7 +12,7 @@ import Dominio.IEnrolmentInExtraCurricularCourse;
 import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.EnrolmentState;
+import Util.EnrollmentState;
 
 
 /**
@@ -50,7 +50,7 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
 		while(iterator.hasNext()){
 			IEnrollment enrolment = (IEnrollment) iterator.next();
 	
-			if ((enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))&&
+			if ((enrolment.getEnrolmentState().equals(EnrollmentState.APROVED))&&
 				(!(enrolment instanceof IEnrolmentInExtraCurricularCourse))){
 				studentCredits += enrolment.getCurricularCourse().getCredits().doubleValue(); 
 			}
@@ -74,7 +74,7 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
 		
 		while(iterator.hasNext()){
 			IEnrollment enrolment = (IEnrollment) iterator.next();
-			if (enrolment.getEnrolmentState().equals(EnrolmentState.APROVED)){
+			if (enrolment.getEnrolmentState().equals(EnrollmentState.APROVED)){
 				Iterator evaluations = enrolment.getEvaluations().iterator();
 				while(evaluations.hasNext()){
 					IEnrolmentEvaluation evaluation = (IEnrolmentEvaluation) evaluations.next(); 

@@ -36,7 +36,7 @@ import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.gesdis.IPersistentStudentCourseReport;
-import Util.EnrolmentState;
+import Util.EnrollmentState;
 
 /**
  * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida </a>
@@ -219,8 +219,8 @@ public class ReadStudentCourseReport implements IService {
         Iterator iter = enrolments.iterator();
         while (iter.hasNext()) {
             IEnrollment enrolment = (IEnrollment) iter.next();
-            EnrolmentState enrolmentState = enrolment.getEnrolmentState();
-            if (enrolmentState.equals(EnrolmentState.APROVED)) {
+            EnrollmentState enrolmentState = enrolment.getEnrolmentState();
+            if (enrolmentState.equals(EnrollmentState.APROVED)) {
                 approved++;
             }
         }
@@ -237,9 +237,9 @@ public class ReadStudentCourseReport implements IService {
         Iterator iter = enrolments.iterator();
         while (iter.hasNext()) {
             IEnrollment enrolment = (IEnrollment) iter.next();
-            EnrolmentState enrolmentState = enrolment.getEnrolmentState();
-            if (enrolmentState.equals(EnrolmentState.APROVED)
-                    || enrolmentState.equals(EnrolmentState.NOT_APROVED)) {
+            EnrollmentState enrolmentState = enrolment.getEnrolmentState();
+            if (enrolmentState.equals(EnrollmentState.APROVED)
+                    || enrolmentState.equals(EnrollmentState.NOT_APROVED)) {
                 evaluated++;
             }
         }

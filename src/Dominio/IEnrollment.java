@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import Util.EnrolmentEvaluationType;
-import Util.EnrolmentState;
+import Util.EnrollmentState;
 import Util.enrollment.EnrollmentCondition;
 
 /**
@@ -18,7 +18,7 @@ public interface IEnrollment extends IDomainObject {
 
     public IStudentCurricularPlan getStudentCurricularPlan();
 
-    public EnrolmentState getEnrolmentState();
+    public EnrollmentState getEnrolmentState();
 
     public IExecutionPeriod getExecutionPeriod();
 
@@ -32,7 +32,7 @@ public interface IEnrollment extends IDomainObject {
 
     public Integer getAccumulatedWeight();
 
-    public void setEnrolmentState(EnrolmentState state);
+    public void setEnrolmentState(EnrollmentState state);
 
     public void setCurricularCourse(ICurricularCourse curricularCourse);
 

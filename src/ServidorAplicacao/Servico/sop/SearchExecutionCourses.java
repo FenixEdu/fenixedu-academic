@@ -39,7 +39,7 @@ import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.gesdis.IPersistentCourseReport;
-import Util.EnrolmentState;
+import Util.EnrollmentState;
 import Util.NumberUtils;
 import Util.TipoAula;
 
@@ -195,10 +195,10 @@ public class SearchExecutionCourses implements IServico {
                             Iterator iter = enrolments.iterator();
                             while (iter.hasNext()) {
                                 IEnrollment enrolment = (IEnrollment) iter.next();
-                                EnrolmentState enrolmentState = enrolment
+                                EnrollmentState enrolmentState = enrolment
                                         .getEnrolmentState();
                                 if (enrolmentState
-                                        .equals(EnrolmentState.APROVED)) {
+                                        .equals(EnrollmentState.APROVED)) {
                                     approved++;
                                 }
                             }
@@ -211,12 +211,12 @@ public class SearchExecutionCourses implements IServico {
                             Iterator iter = enrolments.iterator();
                             while (iter.hasNext()) {
                                 IEnrollment enrolment = (IEnrollment) iter.next();
-                                EnrolmentState enrolmentState = enrolment
+                                EnrollmentState enrolmentState = enrolment
                                         .getEnrolmentState();
                                 if (enrolmentState
-                                        .equals(EnrolmentState.APROVED)
+                                        .equals(EnrollmentState.APROVED)
                                         || enrolmentState
-                                                .equals(EnrolmentState.NOT_APROVED)) {
+                                                .equals(EnrollmentState.NOT_APROVED)) {
                                     evaluated++;
                                 }
                             }

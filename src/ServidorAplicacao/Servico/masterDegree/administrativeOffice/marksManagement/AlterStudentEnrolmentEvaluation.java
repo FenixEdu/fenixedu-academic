@@ -34,7 +34,7 @@ import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.EnrolmentEvaluationState;
-import Util.EnrolmentState;
+import Util.EnrollmentState;
 import Util.TipoCurso;
 
 /**
@@ -96,7 +96,7 @@ public class AlterStudentEnrolmentEvaluation implements IServico {
 
                 persistentEnrolment.simpleLockWrite(enrolment);
 
-                enrolment.setEnrolmentState(EnrolmentState.ENROLLED);
+                enrolment.setEnrolmentState(EnrollmentState.ENROLLED);
                 enrolment.setCurricularCourse(enrolmentEvaluationCopy
                         .getEnrolment().getCurricularCourse());
                 enrolment.setEnrolmentEvaluationType(enrolmentEvaluationCopy
@@ -172,17 +172,17 @@ public class AlterStudentEnrolmentEvaluation implements IServico {
                         persistentEnrolment.simpleLockWrite(enrolment);
                         try {
                             new Integer(enrolmentEvaluation.getGrade());
-                            enrolment.setEnrolmentState(EnrolmentState.APROVED);
+                            enrolment.setEnrolmentState(EnrollmentState.APROVED);
                         } catch (NumberFormatException e) {
                             String grade = null;
                             grade = enrolmentEvaluation.getGrade()
                                     .toUpperCase();
                             if (grade.equals("RE"))
                                 enrolment
-                                        .setEnrolmentState(EnrolmentState.NOT_APROVED);
+                                        .setEnrolmentState(EnrollmentState.NOT_APROVED);
                             if (grade.equals("NA"))
                                 enrolment
-                                        .setEnrolmentState(EnrolmentState.NOT_EVALUATED);
+                                        .setEnrolmentState(EnrollmentState.NOT_EVALUATED);
                         }
 
                         iEnrolmentEvaluation.setEnrolment(enrolment);

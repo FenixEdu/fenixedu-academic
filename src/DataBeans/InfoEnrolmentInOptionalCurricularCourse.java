@@ -2,7 +2,7 @@ package DataBeans;
 
 import Dominio.IEnrollment;
 import Dominio.IEnrolmentInOptionalCurricularCourse;
-import Util.EnrolmentState;
+import Util.EnrollmentState;
 
 /**
  * @author dcs-rjao
@@ -21,7 +21,7 @@ public class InfoEnrolmentInOptionalCurricularCourse extends InfoEnrolment {
 	public InfoEnrolmentInOptionalCurricularCourse(
 		InfoStudentCurricularPlan infoStudentCurricularPlan,
 		InfoCurricularCourse infoCurricularCourse,
-		EnrolmentState state,
+		EnrollmentState state,
 		InfoExecutionPeriod infoExecutionPeriod,
 		InfoCurricularCourse infoCurricularCourseForOption) {
 		super(infoStudentCurricularPlan, infoCurricularCourse, state, infoExecutionPeriod);

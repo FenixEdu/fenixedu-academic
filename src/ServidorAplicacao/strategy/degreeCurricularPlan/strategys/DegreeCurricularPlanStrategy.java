@@ -18,7 +18,7 @@ import Dominio.IStudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.CurricularCourseType;
-import Util.EnrolmentState;
+import Util.EnrollmentState;
 import Util.EvaluationType;
 import Util.MarkType;
 import Util.NumberUtils;
@@ -105,7 +105,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 		while (iterator.hasNext())
 		{
 			IEnrollment enrolment = (IEnrollment) iterator.next();
-			if ((enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
+			if ((enrolment.getEnrolmentState().equals(EnrollmentState.APROVED))
 				&& (!enrolment
 					.getCurricularCourse()
 					.getType()
@@ -168,7 +168,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 		while (iterator.hasNext())
 		{
 			IEnrollment enrolment = (IEnrollment) iterator.next();
-			if ((enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
+			if ((enrolment.getEnrolmentState().equals(EnrollmentState.APROVED))
 				&& (!enrolment
 					.getCurricularCourse()
 					.getType()

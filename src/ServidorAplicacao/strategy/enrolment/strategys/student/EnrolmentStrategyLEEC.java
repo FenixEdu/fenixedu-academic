@@ -44,7 +44,7 @@ import Util.AreaType;
 import Util.BranchType;
 import Util.CurricularCourseType;
 import Util.EnrolmentEvaluationType;
-import Util.EnrolmentState;
+import Util.EnrollmentState;
 
 /**
  * @author David Santos Jan 16, 2004
@@ -123,11 +123,11 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements
 
         List enrollmentsWithAprovedState = enrolmentDAO
                 .readEnrolmentsByStudentCurricularPlanAndEnrolmentState(
-                        studentCurricularPlan, EnrolmentState.APROVED);
+                        studentCurricularPlan, EnrollmentState.APROVED);
 
         List enrollmentsWithEnrolledState = enrolmentDAO
                 .readAllByStudentCurricularPlanAndEnrolmentStateAndExecutionPeriod(
-                        studentCurricularPlan, EnrolmentState.ENROLLED,
+                        studentCurricularPlan, EnrollmentState.ENROLLED,
                         executionPeriod);
 
         List baseAreasCurricularCourses = getBaseAreasCurricularCourses(
@@ -1375,7 +1375,7 @@ public class EnrolmentStrategyLEEC extends EnrolmentStrategy implements
                 enrolment.setCurricularCourse(curricularCourse);
                 enrolment
                         .setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
-                enrolment.setEnrolmentState(EnrolmentState.ENROLLED);
+                enrolment.setEnrolmentState(EnrollmentState.ENROLLED);
                 enrolment.setExecutionPeriod(executionPeriod);
                 enrolment.setStudentCurricularPlan(studentCurricularPlan);
                 enrolment.setCreationDate(new Date());

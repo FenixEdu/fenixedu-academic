@@ -188,7 +188,7 @@ public class GeraXml extends FenixUtil {
             Integer studentNumber, Integer degreeCurricularPlanID) {
         String curricularCourseName = curricularCourseData[0].toUpperCase();
 
-        EnrolmentState enrolmentState = EnrolmentState.getEnum("msg."
+        EnrollmentState enrolmentState = EnrollmentState.getEnum("msg."
                 + curricularCourseData[1]);
         EnrolmentEvaluationType enrolmentEvaluationType = EnrolmentEvaluationType.NORMAL_OBJ;
 

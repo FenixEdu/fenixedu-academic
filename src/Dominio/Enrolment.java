@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import Util.EnrolmentEvaluationType;
-import Util.EnrolmentState;
+import Util.EnrollmentState;
 import Util.enrollment.EnrollmentCondition;
 
 /**
@@ -18,7 +18,7 @@ public class Enrolment extends DomainObject implements IEnrollment
 	private IStudentCurricularPlan studentCurricularPlan;
 	private ICurricularCourse curricularCourse;
 	private IExecutionPeriod executionPeriod;
-	private EnrolmentState enrolmentState;
+	private EnrollmentState enrolmentState;
 	private EnrolmentEvaluationType enrolmentEvaluationType;
 	
 
@@ -88,7 +88,7 @@ public class Enrolment extends DomainObject implements IEnrollment
 	/**
 	 * @return Returns the enrolmentState.
 	 */
-	public EnrolmentState getEnrolmentState()
+	public EnrollmentState getEnrolmentState()
 	{
 		return enrolmentState;
 	}
@@ -96,7 +96,7 @@ public class Enrolment extends DomainObject implements IEnrollment
 	/**
 	 * @param enrolmentState The enrolmentState to set.
 	 */
-	public void setEnrolmentState(EnrolmentState enrolmentState)
+	public void setEnrolmentState(EnrollmentState enrolmentState)
 	{
 		this.enrolmentState = enrolmentState;
 	}

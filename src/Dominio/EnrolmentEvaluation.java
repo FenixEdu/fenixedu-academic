@@ -4,7 +4,7 @@ import java.util.Date;
 
 import Util.EnrolmentEvaluationState;
 import Util.EnrolmentEvaluationType;
-import Util.EnrolmentState;
+import Util.EnrollmentState;
 import Util.TipoCurso;
 
 /**
@@ -194,9 +194,9 @@ public class EnrolmentEvaluation extends DomainObject implements
      */
     public int compareTo(Object o) {
         IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) o;
-        EnrolmentState myEnrolmentState = getEnrollmentStateByGrade(this
+        EnrollmentState myEnrolmentState = getEnrollmentStateByGrade(this
                 .getGrade());
-        EnrolmentState otherEnrolmentState = getEnrollmentStateByGrade(enrolmentEvaluation
+        EnrollmentState otherEnrolmentState = getEnrollmentStateByGrade(enrolmentEvaluation
                 .getGrade());
         String otherGrade = enrolmentEvaluation.getGrade();
         Date otherWhenAltered = enrolmentEvaluation.getWhen();
@@ -266,10 +266,10 @@ public class EnrolmentEvaluation extends DomainObject implements
 
     }
 
-    private int compareForEqualStates(EnrolmentState myEnrolmentState,
-            EnrolmentState otherEnrolmentState, String otherGrade,
+    private int compareForEqualStates(EnrollmentState myEnrolmentState,
+            EnrollmentState otherEnrolmentState, String otherGrade,
             Date otherWhenAltered) {
-        if (myEnrolmentState.equals(EnrolmentState.APROVED)) {
+        if (myEnrolmentState.equals(EnrollmentState.APROVED)) {
             return compareMyGradeToAnotherGrade(otherGrade);
         }
 
@@ -277,48 +277,48 @@ public class EnrolmentEvaluation extends DomainObject implements
 
     }
 
-    private int compareForNotEqualStates(EnrolmentState myEnrolmentState,
-            EnrolmentState otherEnrolmentState) {
-        if (myEnrolmentState.equals(EnrolmentState.APROVED)) {
+    private int compareForNotEqualStates(EnrollmentState myEnrolmentState,
+            EnrollmentState otherEnrolmentState) {
+        if (myEnrolmentState.equals(EnrollmentState.APROVED)) {
             return 1;
-        } else if (myEnrolmentState.equals(EnrolmentState.NOT_APROVED)
-                && otherEnrolmentState.equals(EnrolmentState.APROVED)) {
+        } else if (myEnrolmentState.equals(EnrollmentState.NOT_APROVED)
+                && otherEnrolmentState.equals(EnrollmentState.APROVED)) {
             return -1;
-        } else if (myEnrolmentState.equals(EnrolmentState.NOT_APROVED)) {
+        } else if (myEnrolmentState.equals(EnrollmentState.NOT_APROVED)) {
             return 1;
-        } else if (myEnrolmentState.equals(EnrolmentState.NOT_EVALUATED)) {
+        } else if (myEnrolmentState.equals(EnrollmentState.NOT_EVALUATED)) {
             return -1;
         } else {
             return 0;
         }
     }
 
-    private EnrolmentState getEnrollmentStateByGrade(String grade) {
+    private EnrollmentState getEnrollmentStateByGrade(String grade) {
         if (grade == null) {
-            return EnrolmentState.NOT_EVALUATED;
+            return EnrollmentState.NOT_EVALUATED;
         }
 
         if (grade.equals("")) {
-            return EnrolmentState.NOT_EVALUATED;
+            return EnrollmentState.NOT_EVALUATED;
         }
 
         if (grade.equals("0")) {
-            return EnrolmentState.NOT_EVALUATED;
+            return EnrollmentState.NOT_EVALUATED;
         }
 
         if (grade.equals("NA")) {
-            return EnrolmentState.NOT_EVALUATED;
+            return EnrollmentState.NOT_EVALUATED;
         }
 
         if (grade.equals("RE")) {
-            return EnrolmentState.NOT_APROVED;
+            return EnrollmentState.NOT_APROVED;
         }
 
         if (grade.equals("AP")) {
-            return EnrolmentState.APROVED;
+            return EnrollmentState.APROVED;
         }
 
-        return EnrolmentState.APROVED;
+        return EnrollmentState.APROVED;
     }
 
 }

@@ -30,7 +30,7 @@ import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.CurricularCourseType;
-import Util.EnrolmentState;
+import Util.EnrollmentState;
 import Util.TipoCurso;
 
 /**
@@ -78,7 +78,7 @@ public class PrepareStudentEnrolmentContextForOptionalCoursesEnrolment
 
                 List enrollmentsEnrolled = enrolmentDAO
                         .readEnrolmentsByStudentCurricularPlanAndEnrolmentStateAndCurricularCourseType(
-                                studentCurricularPlan, EnrolmentState.ENROLLED,
+                                studentCurricularPlan, EnrollmentState.ENROLLED,
                                 CurricularCourseType.OPTIONAL_COURSE_OBJ);
 
                 List enrollments = studentCurricularPlan.getEnrolments();

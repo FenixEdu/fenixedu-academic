@@ -5,7 +5,7 @@ import java.util.List;
 import Dominio.IEnrollment;
 import Dominio.IEnrolmentInOptionalCurricularCourse;
 import Util.EnrolmentEvaluationType;
-import Util.EnrolmentState;
+import Util.EnrollmentState;
 import Util.enrollment.EnrollmentCondition;
 
 /**
@@ -20,7 +20,7 @@ public class InfoEnrolment extends InfoObject {
 
     private InfoExecutionPeriod infoExecutionPeriod;
 
-    private EnrolmentState enrolmentState;
+    private EnrollmentState enrolmentState;
 
     private EnrolmentEvaluationType enrolmentEvaluationType;
 
@@ -54,7 +54,7 @@ public class InfoEnrolment extends InfoObject {
     }
 
     public InfoEnrolment(InfoStudentCurricularPlan infoStudentCurricularPlan,
-            InfoCurricularCourse infoCurricularCourse, EnrolmentState state,
+            InfoCurricularCourse infoCurricularCourse, EnrollmentState state,
             InfoExecutionPeriod infoExecutionPeriod) {
         this();
         setInfoCurricularCourse(infoCurricularCourse);
@@ -116,7 +116,7 @@ public class InfoEnrolment extends InfoObject {
     /**
      * @return EnrolmentState
      */
-    public EnrolmentState getEnrolmentState() {
+    public EnrollmentState getEnrolmentState() {
         return enrolmentState;
     }
 
@@ -150,7 +150,7 @@ public class InfoEnrolment extends InfoObject {
      * @param state
      *            The state to set
      */
-    public void setEnrolmentState(EnrolmentState state) {
+    public void setEnrolmentState(EnrollmentState state) {
         this.enrolmentState = state;
     }
 

@@ -73,7 +73,7 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.gesdis.IPersistentCourseReport;
-import Util.EnrolmentState;
+import Util.EnrollmentState;
 import Util.TipoAula;
 
 /**
@@ -349,8 +349,8 @@ public class ReadCourseInformation implements IService {
         Iterator iter = enrolments.iterator();
         while (iter.hasNext()) {
             IEnrollment enrolment = (IEnrollment) iter.next();
-            EnrolmentState enrolmentState = enrolment.getEnrolmentState();
-            if (enrolmentState.equals(EnrolmentState.APROVED)) {
+            EnrollmentState enrolmentState = enrolment.getEnrolmentState();
+            if (enrolmentState.equals(EnrollmentState.APROVED)) {
                 approved++;
             }
         }
@@ -367,9 +367,9 @@ public class ReadCourseInformation implements IService {
         Iterator iter = enrolments.iterator();
         while (iter.hasNext()) {
             IEnrollment enrolment = (IEnrollment) iter.next();
-            EnrolmentState enrolmentState = enrolment.getEnrolmentState();
-            if (enrolmentState.equals(EnrolmentState.APROVED)
-                    || enrolmentState.equals(EnrolmentState.NOT_APROVED)) {
+            EnrollmentState enrolmentState = enrolment.getEnrolmentState();
+            if (enrolmentState.equals(EnrollmentState.APROVED)
+                    || enrolmentState.equals(EnrollmentState.NOT_APROVED)) {
                 evaluated++;
             }
         }

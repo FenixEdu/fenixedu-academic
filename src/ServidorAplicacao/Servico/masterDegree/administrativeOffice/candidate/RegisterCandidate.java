@@ -45,7 +45,7 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.EnrolmentEvaluationState;
 import Util.EnrolmentEvaluationType;
-import Util.EnrolmentState;
+import Util.EnrollmentState;
 import Util.GratuityState;
 import Util.RoleType;
 import Util.SituationName;
@@ -216,7 +216,7 @@ public class RegisterCandidate implements IService {
                 enrolment
                         .setEnrolmentEvaluationType(new EnrolmentEvaluationType(
                                 EnrolmentEvaluationType.NORMAL));
-                enrolment.setEnrolmentState(EnrolmentState.ENROLLED);
+                enrolment.setEnrolmentState(EnrollmentState.ENROLLED);
                 enrolment.setExecutionPeriod(sp.getIPersistentExecutionPeriod()
                         .readActualExecutionPeriod());
                 enrolment.setStudentCurricularPlan(studentCurricularPlan);

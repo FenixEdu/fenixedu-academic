@@ -10,7 +10,7 @@ import Dominio.IExecutionPeriod;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Util.CurricularCourseType;
-import Util.EnrolmentState;
+import Util.EnrollmentState;
 import Util.StudentCurricularPlanState;
 
 /**
@@ -27,7 +27,7 @@ public interface IPersistentEnrolment extends IPersistentObject
 
     public List readEnrolmentsByStudentCurricularPlanAndEnrolmentState(
         IStudentCurricularPlan studentCurricularPlan,
-        EnrolmentState enrolmentState)
+        EnrollmentState enrolmentState)
         throws ExcepcaoPersistencia;
 
     public List readAll() throws ExcepcaoPersistencia;
@@ -56,7 +56,7 @@ public interface IPersistentEnrolment extends IPersistentObject
 
     public List readEnrolmentsByStudentCurricularPlanStateAndEnrolmentStateAndDegreeCurricularPlans(
         StudentCurricularPlanState state,
-        EnrolmentState state2,
+        EnrollmentState state2,
         IDegreeCurricularPlan degreeCurricularPlan)
         throws ExcepcaoPersistencia;
 
@@ -86,7 +86,7 @@ public interface IPersistentEnrolment extends IPersistentObject
 
     public List readAllByStudentCurricularPlanAndEnrolmentStateAndExecutionPeriod(
         IStudentCurricularPlan studentCurricularPlan,
-        EnrolmentState enrolmentState,
+        EnrollmentState enrolmentState,
         IExecutionPeriod executionPeriod)
         throws ExcepcaoPersistencia;
 
@@ -99,12 +99,12 @@ public interface IPersistentEnrolment extends IPersistentObject
     public List readByCurricularCourseAndExecutionPeriodAndEnrolmentState(
         ICurricularCourse curricularCourse,
         IExecutionPeriod executionPeriod,
-        EnrolmentState state)
+        EnrollmentState state)
         throws ExcepcaoPersistencia;
 
     public List readEnrolmentsByStudentCurricularPlanAndEnrolmentStateAndCurricularCourseType(
         IStudentCurricularPlan studentCurricularPlan,
-        EnrolmentState enrolmentState,
+        EnrollmentState enrolmentState,
         CurricularCourseType curricularCourseType)
         throws ExcepcaoPersistencia;
 

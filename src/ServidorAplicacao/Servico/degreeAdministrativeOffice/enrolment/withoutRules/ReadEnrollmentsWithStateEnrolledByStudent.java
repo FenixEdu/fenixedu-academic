@@ -30,7 +30,7 @@ import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import Util.EnrolmentState;
+import Util.EnrollmentState;
 import Util.TipoCurso;
 
 /**
@@ -67,7 +67,7 @@ public class ReadEnrollmentsWithStateEnrolledByStudent implements IService {
                         .getIPersistentEnrolment();
                 List enrollments = persistentEnrolment
                         .readEnrolmentsByStudentCurricularPlanAndEnrolmentState(
-                                studentCurricularPlan, EnrolmentState.ENROLLED);
+                                studentCurricularPlan, EnrollmentState.ENROLLED);
 
                 infoStudentEnrolmentContext = buildResult(
                         studentCurricularPlan, enrollments);

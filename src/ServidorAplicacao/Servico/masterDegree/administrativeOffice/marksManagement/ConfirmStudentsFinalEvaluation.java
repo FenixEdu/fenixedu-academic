@@ -24,7 +24,7 @@ import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.EnrolmentEvaluationState;
-import Util.EnrolmentState;
+import Util.EnrollmentState;
 import Util.MarkType;
 
 /**
@@ -164,14 +164,14 @@ public class ConfirmStudentsFinalEvaluation implements IServico
         IEnrollment enrolmentToEdit = enrolmentEvaluationElem.getEnrolment();
         persistentEnrolment.simpleLockWrite(enrolmentToEdit);
 
-        EnrolmentState newEnrolmentState = EnrolmentState.APROVED;
+        EnrollmentState newEnrolmentState = EnrollmentState.APROVED;
 
         if (MarkType.getRepMarks().contains(enrolmentEvaluationElem.getGrade()))
         {
-            newEnrolmentState = EnrolmentState.NOT_APROVED;
+            newEnrolmentState = EnrollmentState.NOT_APROVED;
         } else if (MarkType.getNaMarks().contains(enrolmentEvaluationElem.getGrade()))
         {
-            newEnrolmentState = EnrolmentState.NOT_EVALUATED;
+            newEnrolmentState = EnrollmentState.NOT_EVALUATED;
         }
         enrolmentToEdit.setEnrolmentState(newEnrolmentState);
     }

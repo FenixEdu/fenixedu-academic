@@ -134,7 +134,7 @@
 									<%}	%>								
 								</td>
 								<td>
-									<bean:define id="state" name="infoEnrolment" property="enrolmentState" />
+									<bean:define id="state" name="infoEnrolment" property="enrollmentState" />
 									<bean:message key="<%= pageContext.findAttribute("state").toString() %>"/>
 								</td>
 								<td>

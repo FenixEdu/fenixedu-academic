@@ -9,7 +9,7 @@ package ServidorPersistente.Conversores;
 import org.apache.commons.beanutils.ConversionException;
 import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 
-import Util.EnrolmentState;
+import Util.EnrollmentState;
 
 public class JavaEnrolmentState2SqlEnrolmentStateFieldConversion implements FieldConversion {
     
@@ -18,8 +18,8 @@ public class JavaEnrolmentState2SqlEnrolmentStateFieldConversion implements Fiel
      */
     
 	public Object javaToSql(Object obj) throws ConversionException {
-		if (obj instanceof EnrolmentState) {
-			EnrolmentState enrolmentState = (EnrolmentState) obj;
+		if (obj instanceof EnrollmentState) {
+			EnrollmentState enrolmentState = (EnrollmentState) obj;
 			return new Integer(enrolmentState.getValue());
 		}
 		return obj;
@@ -31,11 +31,11 @@ public class JavaEnrolmentState2SqlEnrolmentStateFieldConversion implements Fiel
      */
 
 	public Object sqlToJava(Object obj) throws ConversionException {
-		EnrolmentState enrolmentState = null;
+		EnrollmentState enrolmentState = null;
 		if (obj instanceof Integer) {
 			Integer enrolmentStateId = (Integer) obj;
 			
-			enrolmentState = EnrolmentState.getEnum(enrolmentStateId.intValue());
+			enrolmentState = EnrollmentState.getEnum(enrolmentStateId.intValue());
 			if (enrolmentState == null) {
 				throw new IllegalArgumentException(this.getClass().getName() + ": Illegal EnrolmentState type!(" + obj + ")");
 			}

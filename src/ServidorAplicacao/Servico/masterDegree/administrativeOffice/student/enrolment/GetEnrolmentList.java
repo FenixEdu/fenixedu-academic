@@ -19,7 +19,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.CurricularCourseType;
-import Util.EnrolmentState;
+import Util.EnrollmentState;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -49,7 +49,7 @@ public class GetEnrolmentList implements IServico {
 		return "GetEnrolmentList";
 	}
 
-	public List run(InfoStudentCurricularPlan infoStudentCurricularPlan, EnrolmentState enrolmentState) throws FenixServiceException, Exception {
+	public List run(InfoStudentCurricularPlan infoStudentCurricularPlan, EnrollmentState enrolmentState) throws FenixServiceException, Exception {
 
 		ISuportePersistente sp = null;
 		List enrolmentList = null;
