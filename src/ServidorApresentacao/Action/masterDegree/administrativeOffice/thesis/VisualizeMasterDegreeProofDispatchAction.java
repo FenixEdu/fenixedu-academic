@@ -1,7 +1,7 @@
 package ServidorApresentacao.Action.masterDegree.administrativeOffice.thesis;
 
 import java.text.SimpleDateFormat;
-import java.util.Locale;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,103 +36,144 @@ import Util.TipoCurso;
  *
  */
 
-public class VisualizeMasterDegreeProofDispatchAction extends DispatchAction {
+public class VisualizeMasterDegreeProofDispatchAction extends DispatchAction
+{
 
-	public ActionForward getStudentAndMasterDegreeProofVersion(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
+    public ActionForward getStudentAndMasterDegreeProofVersion(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws Exception
+    {
 
-		IUserView userView = SessionUtils.getUserView(request);
+        IUserView userView = SessionUtils.getUserView(request);
 
-		Integer degreeType = Integer.valueOf(request.getParameter("degreeType"));
-		Integer studentNumber = Integer.valueOf(request.getParameter("studentNumber"));
+        Integer degreeType = Integer.valueOf(request.getParameter("degreeType"));
+        Integer studentNumber = Integer.valueOf(request.getParameter("studentNumber"));
 
-		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
-		ActionErrors actionErrors = new ActionErrors();
-		boolean isSuccess = operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+        MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+        ActionErrors actionErrors = new ActionErrors();
+        boolean isSuccess = operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 
-		if (isSuccess == false) {
-			throw new NonExistingActionException("error.exception.masterDegree.nonExistentStudent", mapping.findForward("error"));
+        if (isSuccess == false)
+        {
+            throw new NonExistingActionException(
+                "error.exception.masterDegree.nonExistentStudent",
+                mapping.findForward("error"));
 
-		}
+        }
 
-		InfoStudentCurricularPlan infoStudentCurricularPlan = null;
-		InfoMasterDegreeProofVersion infoMasterDegreeProofVersion = null;
-		InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = null;
+        InfoStudentCurricularPlan infoStudentCurricularPlan = null;
+        InfoMasterDegreeProofVersion infoMasterDegreeProofVersion = null;
+        InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = null;
 
-		/* * * get student curricular plan * * */
-		Object argsStudentCurricularPlan[] = { studentNumber, new TipoCurso(degreeType)};
-		try {
-			infoStudentCurricularPlan =
-				(InfoStudentCurricularPlan) ServiceUtils.executeService(
-					userView,
-					"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
-					argsStudentCurricularPlan);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+        /* * * get student curricular plan * * */
+        Object argsStudentCurricularPlan[] = { studentNumber, new TipoCurso(degreeType)};
+        try
+        {
+            infoStudentCurricularPlan =
+                (InfoStudentCurricularPlan) ServiceUtils.executeService(
+                    userView,
+                    "student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
+                    argsStudentCurricularPlan);
+        }
+        catch (FenixServiceException e)
+        {
+            throw new FenixActionException(e);
+        }
 
-		if (infoStudentCurricularPlan == null) {
-			throw new NonExistingActionException("error.exception.masterDegree.nonExistentActiveStudentCurricularPlan", mapping.findForward("error"));
-		}
+        if (infoStudentCurricularPlan == null)
+        {
+            throw new NonExistingActionException(
+                "error.exception.masterDegree.nonExistentActiveStudentCurricularPlan",
+                mapping.findForward("error"));
+        }
 
-		/* * * get master degree thesis data * * */
-		Object argsMasterDegreeThesisDataVersion[] = { infoStudentCurricularPlan };
-		try {
-			infoMasterDegreeThesisDataVersion =
-				(InfoMasterDegreeThesisDataVersion) ServiceUtils.executeService(
-					userView,
-					"ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan",
-					argsMasterDegreeThesisDataVersion);
-		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException("error.exception.masterDegree.nonExistingMasterDegreeThesis", mapping.findForward("error"));
+        /* * * get master degree thesis data * * */
+        Object argsMasterDegreeThesisDataVersion[] = { infoStudentCurricularPlan };
+        try
+        {
+            infoMasterDegreeThesisDataVersion =
+                (InfoMasterDegreeThesisDataVersion) ServiceUtils.executeService(
+                    userView,
+                    "ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan",
+                    argsMasterDegreeThesisDataVersion);
+        }
+        catch (NonExistingServiceException e)
+        {
+            throw new NonExistingActionException(
+                "error.exception.masterDegree.nonExistingMasterDegreeThesis",
+                mapping.findForward("error"));
 
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+        }
+        catch (FenixServiceException e)
+        {
+            throw new FenixActionException(e);
+        }
 
-		/* * * get master degree proof * * */
-		Object argsMasterDegreeProofVersion[] = { infoStudentCurricularPlan };
-		try {
-			infoMasterDegreeProofVersion =
-				(InfoMasterDegreeProofVersion) ServiceUtils.executeService(
-					userView,
-					"ReadActiveMasterDegreeProofVersionByStudentCurricularPlan",
-					argsMasterDegreeProofVersion);
-		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException(
-				"error.exception.masterDegree.nonExistingMasterDegreeProofDataToDisplay",
-				mapping.findForward("errorNonExistingProofVersion"));
+        /* * * get master degree proof * * */
+        Object argsMasterDegreeProofVersion[] = { infoStudentCurricularPlan };
+        try
+        {
+            infoMasterDegreeProofVersion =
+                (InfoMasterDegreeProofVersion) ServiceUtils.executeService(
+                    userView,
+                    "ReadActiveMasterDegreeProofVersionByStudentCurricularPlan",
+                    argsMasterDegreeProofVersion);
+        }
+        catch (NonExistingServiceException e)
+        {
+            throw new NonExistingActionException(
+                "error.exception.masterDegree.nonExistingMasterDegreeProofDataToDisplay",
+                mapping.findForward("errorNonExistingProofVersion"));
 
-		} catch (ScholarshipNotFinishedServiceException e) {
-			throw new ScholarshipNotFinishedActionException(e.getMessage(), mapping.findForward("errorScholarshipNotFinished"));
+        }
+        catch (ScholarshipNotFinishedServiceException e)
+        {
+            throw new ScholarshipNotFinishedActionException(
+                e.getMessage(),
+                mapping.findForward("errorScholarshipNotFinished"));
 
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
+        }
+        catch (FenixServiceException e)
+        {
+            throw new FenixActionException(e);
+        }
 
-		if (infoMasterDegreeProofVersion.getInfoJuries().isEmpty() == false)
-			request.setAttribute(SessionConstants.JURIES_LIST, infoMasterDegreeProofVersion.getInfoJuries());
+        if (infoMasterDegreeProofVersion.getInfoJuries().isEmpty() == false)
+            request.setAttribute(
+                SessionConstants.JURIES_LIST,
+                infoMasterDegreeProofVersion.getInfoJuries());
 
-		int classification = infoMasterDegreeProofVersion.getFinalResult().getValue();
+        int classification = infoMasterDegreeProofVersion.getFinalResult().getValue();
 
-		SimpleDateFormat sdtf = new SimpleDateFormat("EEE, d MMMM yyyy", Locale.getDefault());
-		String proofDate = sdtf.format(infoMasterDegreeProofVersion.getProofDate());
-		String thesisDeliveryDate = sdtf.format(infoMasterDegreeProofVersion.getThesisDeliveryDate());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        String proofDate = simpleDateFormat.format(infoMasterDegreeProofVersion.getProofDate());
+        String thesisDeliveryDate =
+            simpleDateFormat.format(infoMasterDegreeProofVersion.getThesisDeliveryDate());
+        Date lastModification = new Date(infoMasterDegreeProofVersion.getLastModification().getTime());
+        simpleDateFormat.applyPattern("dd-MM-yyyy k:mm:ss");
+        String formattedLastModification = simpleDateFormat.format(lastModification);
 
-		request.setAttribute(SessionConstants.DISSERTATION_TITLE, infoMasterDegreeThesisDataVersion.getDissertationTitle());
-		request.setAttribute(SessionConstants.FINAL_RESULT, MasterDegreeClassification.getClassificationString(classification));
-		request.setAttribute(SessionConstants.ATTACHED_COPIES_NUMBER, infoMasterDegreeProofVersion.getAttachedCopiesNumber());
-		request.setAttribute(SessionConstants.PROOF_DATE, proofDate);
-		request.setAttribute(SessionConstants.THESIS_DELIVERY_DATE, thesisDeliveryDate);
-		request.setAttribute(SessionConstants.RESPONSIBLE_EMPLOYEE, infoMasterDegreeProofVersion.getInfoResponsibleEmployee());
-		request.setAttribute(SessionConstants.LAST_MODIFICATION, infoMasterDegreeProofVersion.getLastModification());
+        request.setAttribute(
+            SessionConstants.DISSERTATION_TITLE,
+            infoMasterDegreeThesisDataVersion.getDissertationTitle());
+        request.setAttribute(
+            SessionConstants.FINAL_RESULT,
+            MasterDegreeClassification.getClassificationString(classification));
+        request.setAttribute(
+            SessionConstants.ATTACHED_COPIES_NUMBER,
+            infoMasterDegreeProofVersion.getAttachedCopiesNumber());
+        request.setAttribute(SessionConstants.PROOF_DATE, proofDate);
+        request.setAttribute(SessionConstants.THESIS_DELIVERY_DATE, thesisDeliveryDate);
+        request.setAttribute(
+            SessionConstants.RESPONSIBLE_EMPLOYEE,
+            infoMasterDegreeProofVersion.getInfoResponsibleEmployee());
+        request.setAttribute(SessionConstants.LAST_MODIFICATION, formattedLastModification);
 
-		return mapping.findForward("start");
+        return mapping.findForward("start");
 
-	}
+    }
 
 }
