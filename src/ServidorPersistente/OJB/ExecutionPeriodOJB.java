@@ -310,17 +310,20 @@ public class ExecutionPeriodOJB
 
 		System.out.println("Finished creating classes.");
 
-		transferLessons(
-			executionPeriodToImportDataTo,
-			executionPeriodToExportDataFrom);
-
-		System.out.println("Finished creating lessons.");
-
 		transferShifts(
 			executionPeriodToImportDataTo,
 			executionPeriodToExportDataFrom);
-
 		System.out.println("Finished creating shifts.");
+
+		transferLessons(
+			executionPeriodToImportDataTo,
+			executionPeriodToExportDataFrom);
+		System.out.println("Finished creating lessons.");
+
+		System.out.println("Confirming transaction.");
+		SuportePersistenteOJB.getInstance().confirmarTransaccao();
+		System.out.println("Starting transaction.");
+		SuportePersistenteOJB.getInstance().iniciarTransaccao();
 
 		transferShiftLessonAssociations(
 			executionPeriodToImportDataTo,
@@ -1052,9 +1055,12 @@ public class ExecutionPeriodOJB
 			"disciplinaExecucao.executionPeriod.idInternal",
 			executionPeriodToImportDataTo.getIdInternal());
 		criteria.addEqualTo(
+			"disciplinaExecucao.idInternal",
+			shift.getDisciplinaExecucao().getIdInternal());
+		criteria.addEqualTo(
 			"disciplinaExecucao.sigla",
 			shift.getDisciplinaExecucao().getSigla());
-		criteria.addEqualTo("disciplinaExecucao.sigla", shift.getNome());
+		criteria.addEqualTo("nome", shift.getNome());
 		return (ITurno) queryObject(Turno.class, criteria);
 	}
 
