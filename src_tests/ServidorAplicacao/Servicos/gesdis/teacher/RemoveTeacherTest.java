@@ -78,7 +78,7 @@ public class RemoveTeacherTest extends TestCaseCreateServices {
 		}
 
 		InfoExecutionCourse infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
-			
+		
 		Integer teacherNumber = new Integer(1);
 		Object[] testArgs ={infoExecutionCourse,teacherNumber};
 		 
