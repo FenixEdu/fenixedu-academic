@@ -63,7 +63,7 @@ public class EditAnnouncement implements IServico {
 		IAnnouncement announcement = null;
         if (oldAnnouncementTitle.equals(announcementTitle) == false) {
         	try {
-            	announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite(announcementTitle, date, announcementSite);
+            	announcement = persistentAnnouncement.readAnnouncementByTitleAndCreationDateAndSite(announcementTitle,(Timestamp) date, announcementSite);
 			} catch (ExcepcaoPersistencia excepcaoPersistencia){
 				throw new FenixServiceException(excepcaoPersistencia.getMessage());
 			}
