@@ -1,6 +1,7 @@
 package ServidorAplicacao.Servico.commons.student;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -25,7 +26,9 @@ import Util.EnrolmentState;
 public class GetEnrolmentGrade implements IServico {
 
 	private static GetEnrolmentGrade servico = new GetEnrolmentGrade();
-
+	private static String RECTIFIED = "RECTIFICADO";
+	private static String RECTIFICATION = "RECTIFICAÇÃO";
+	
 	/**
 	 * The singleton access method of this class.
 	 **/
@@ -92,6 +95,20 @@ public class GetEnrolmentGrade implements IServico {
 
 		if (enrolment.getEnrolmentState().equals(EnrolmentState.NOT_APROVED)) {
 			return getInfoLatestEvaluation(latestEvaluation);
+		}
+
+		if (latestEvaluation.getObservation().equals(GetEnrolmentGrade.RECTIFIED))
+		{
+			Iterator iterator = enrolmentEvaluations.iterator();
+			while(iterator.hasNext())
+			{
+				IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator.next();
+				if(enrolmentEvaluation.getObservation().equals(GetEnrolmentGrade.RECTIFICATION))
+				{
+					latestEvaluation = enrolmentEvaluation;
+					break;
+				}
+			}
 		}
 
 		// if the last evaluation is Not of "IMPROVEMENT" type

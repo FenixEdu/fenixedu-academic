@@ -41,7 +41,8 @@ public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvalu
 		{
 			IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) obj;
 			result = this.getEnrolment().equals(enrolmentEvaluation.getEnrolment()) &&
-					this.getEnrolmentEvaluationType().equals(enrolmentEvaluation.getEnrolmentEvaluationType())/* &&
+					this.getIdInternal().equals(enrolmentEvaluation.getIdInternal())/* &&
+//			 		this.getEnrolmentEvaluationType().equals(enrolmentEvaluation.getEnrolmentEvaluationType()) &&
 					this.getGrade().equals(enrolmentEvaluation.getGrade()) &&
 					this.getWhen().equals(enrolmentEvaluation.getWhen())*/;
 		}
