@@ -2,6 +2,7 @@ package ServidorPersistente;
 
 import java.util.List;
 
+import Dominio.ICurricularCourse;
 import Dominio.ICurricularYear;
 import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
@@ -79,4 +80,14 @@ public interface IDisciplinaExecucaoPersistente extends IPersistentObject {
 	public List readExecutionCourseTeachers(Integer executionCourseId) throws ExcepcaoPersistencia ;
 	public void lockWrite(IDisciplinaExecucao executionCourseToWrite) throws ExcepcaoPersistencia, ExistingPersistentException;
 	public Boolean readSite(Integer executionCourseId) throws ExcepcaoPersistencia;
+	
+	/**
+	 * 
+	 * @param curricularCourse
+	 * @param executionPeriod
+	 * @return
+	 * @throws ExcepcaoPersistencia
+	 */
+	public IDisciplinaExecucao readbyCurricularCourseAndExecutionPeriod(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
+	
 }

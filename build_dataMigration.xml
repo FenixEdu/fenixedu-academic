@@ -900,6 +900,51 @@
 		</java>
 	</target>
 
+
+
+
+    <target name="load-2003-curricular-course-scopes"
+    		depends="load-data"
+            description="Carrega os Scopes de 2003 para a Tabela MW_CURRICULAR_COURSE_SCOPE">
+        <sql driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost/${db.name}"
+            userid="${db.user}"
+            password="${db.pass}"
+            encoding="${encoding}">
+	        <fileset dir="${sql}">
+			 <include name="middleware/Load2003CurricularCourseScopes.sql" />
+  			</fileset>
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </sql>
+    </target>
+
+
+	<target name="create-and-update-scopes"
+	        depends="compile-proj, load-2003-curricular-course-scopes">
+		<java classname="middleware.curricularCourseMigration.CreateAndUpdateScopes"
+			fork="yes"
+			failonerror="false"
+			maxmemory="128m"
+		>
+	    	<classpath>
+	        	<pathelement path="${webapp.classes}"/>
+	            <pathelement path="${config}"/>
+	            <pathelement path="${sql}"/>
+	            <pathelement path="${src}"/>
+	            <fileset dir="${webapp.lib}">
+	                <include name="**/*.jar"/>
+	            </fileset>
+	        </classpath>
+		</java>
+	</target>
+
+
+
+
 	<target name="distribute-student-by-class"
 	        depends="compile-proj, load-data">
 		<java classname="middleware.studentMigration.DistributeStudentsByClass"

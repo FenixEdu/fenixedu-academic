@@ -4,158 +4,229 @@
 
 package middleware.middlewareDomain;
 
+public class MwCurricularCourseScope {
 
-public class MwCurricularCourseScope  
-{
+	private Integer branchcode;
+	private String coursecode;
+	private Integer coursetype;
+	private Double credits;
+	private Integer curricularsemester;
+	private Integer curricularyear;
+	private Integer degreecode;
+	private Integer executionyear;
+	private Double labhours;
+	private String orientation;
+	private Double praticahours;
+	private Double theoprathours;
+	private Double theoreticalhours;
+	private Integer idInternal;
 
-  private Integer branchcode;
-  private String coursecode;
-  private Integer coursetype;
-  private Float credits;
-  private Integer curricularsemester;
-  private Integer curricularyear;
-  private Integer degreecode;
-  private Integer executionyear;
-  private Float labhours;
-  private String orientation;
-  private Float praticahours;
-  private Float theoprathours;
-  private Float theoreticalhours;
-
-
-
-  public Integer getBranchcode()
-  {
-     return this.branchcode;
-  }
-  public void setBranchcode(Integer param)
-  {
-    this.branchcode = param;
-  }
+	public MwCurricularCourseScope() {
+	}
 
 
-  public String getCoursecode()
-  {
-     return this.coursecode;
-  }
-  public void setCoursecode(String param)
-  {
-    this.coursecode = param;
-  }
+	public String toString(){
+		return  " [courseCode] " + coursecode + " [degreeCode] " + degreecode+ " [branchCode] " + branchcode;
+
+	  }
 
 
-  public Integer getCoursetype()
-  {
-     return this.coursetype;
-  }
-  public void setCoursetype(Integer param)
-  {
-    this.coursetype = param;
-  }
 
 
-  public Float getCredits()
-  {
-     return this.credits;
-  }
-  public void setCredits(Float param)
-  {
-    this.credits = param;
-  }
+	/**
+	 * @return
+	 */
+	public Integer getBranchcode() {
+		return branchcode;
+	}
 
+	/**
+	 * @param branchcode
+	 */
+	public void setBranchcode(Integer branchcode) {
+		this.branchcode = branchcode;
+	}
 
-  public Integer getCurricularsemester()
-  {
-     return this.curricularsemester;
-  }
-  public void setCurricularsemester(Integer param)
-  {
-    this.curricularsemester = param;
-  }
+	/**
+	 * @return
+	 */
+	public String getCoursecode() {
+		return coursecode;
+	}
 
+	/**
+	 * @param coursecode
+	 */
+	public void setCoursecode(String coursecode) {
+		this.coursecode = coursecode;
+	}
 
-  public Integer getCurricularyear()
-  {
-     return this.curricularyear;
-  }
-  public void setCurricularyear(Integer param)
-  {
-    this.curricularyear = param;
-  }
+	/**
+	 * @return
+	 */
+	public Integer getCoursetype() {
+		return coursetype;
+	}
 
+	/**
+	 * @param coursetype
+	 */
+	public void setCoursetype(Integer coursetype) {
+		this.coursetype = coursetype;
+	}
 
-  public Integer getDegreecode()
-  {
-     return this.degreecode;
-  }
-  public void setDegreecode(Integer param)
-  {
-    this.degreecode = param;
-  }
+	/**
+	 * @return
+	 */
+	public Double getCredits() {
+		return credits;
+	}
 
+	/**
+	 * @param credits
+	 */
+	public void setCredits(Double credits) {
+		this.credits = credits;
+	}
 
-  public Integer getExecutionyear()
-  {
-     return this.executionyear;
-  }
-  public void setExecutionyear(Integer param)
-  {
-    this.executionyear = param;
-  }
+	/**
+	 * @return
+	 */
+	public Integer getCurricularsemester() {
+		return curricularsemester;
+	}
 
+	/**
+	 * @param curricularsemester
+	 */
+	public void setCurricularsemester(Integer curricularsemester) {
+		this.curricularsemester = curricularsemester;
+	}
 
-  public Float getLabhours()
-  {
-     return this.labhours;
-  }
-  public void setLabhours(Float param)
-  {
-    this.labhours = param;
-  }
+	/**
+	 * @return
+	 */
+	public Integer getCurricularyear() {
+		return curricularyear;
+	}
 
+	/**
+	 * @param curricularyear
+	 */
+	public void setCurricularyear(Integer curricularyear) {
+		this.curricularyear = curricularyear;
+	}
 
-  public String getOrientation()
-  {
-     return this.orientation;
-  }
-  public void setOrientation(String param)
-  {
-    this.orientation = param;
-  }
+	/**
+	 * @return
+	 */
+	public Integer getDegreecode() {
+		return degreecode;
+	}
 
+	/**
+	 * @param degreecode
+	 */
+	public void setDegreecode(Integer degreecode) {
+		this.degreecode = degreecode;
+	}
 
-  public Float getPraticahours()
-  {
-     return this.praticahours;
-  }
-  public void setPraticahours(Float param)
-  {
-    this.praticahours = param;
-  }
+	/**
+	 * @return
+	 */
+	public Integer getExecutionyear() {
+		return executionyear;
+	}
 
+	/**
+	 * @param executionyear
+	 */
+	public void setExecutionyear(Integer executionyear) {
+		this.executionyear = executionyear;
+	}
 
-  public Float getTheoprathours()
-  {
-     return this.theoprathours;
-  }
-  public void setTheoprathours(Float param)
-  {
-    this.theoprathours = param;
-  }
+	/**
+	 * @return
+	 */
+	public Integer getIdInternal() {
+		return idInternal;
+	}
 
+	/**
+	 * @param idInternal
+	 */
+	public void setIdInternal(Integer idInternal) {
+		this.idInternal = idInternal;
+	}
 
-  public Float getTheoreticalhours()
-  {
-     return this.theoreticalhours;
-  }
-  public void setTheoreticalhours(Float param)
-  {
-    this.theoreticalhours = param;
-  }
+	/**
+	 * @return
+	 */
+	public Double getLabhours() {
+		return labhours;
+	}
 
+	/**
+	 * @param labhours
+	 */
+	public void setLabhours(Double labhours) {
+		this.labhours = labhours;
+	}
 
-  public String toString(){
-    return  " [branchCode] " + branchcode + " [courseCode] " + coursecode + " [courseType] " + coursetype + " [credits] " + credits + " [curricularSemester] " + curricularsemester + " [curricularYear] " + curricularyear + " [degreeCode] " + degreecode + " [executionYear] " + executionyear + " [labHours] " + labhours + " [orientation] " + orientation + " [praticaHours] " + praticahours + " [theoPratHours] " + theoprathours + " [theoreticalHours] " + theoreticalhours;
+	/**
+	 * @return
+	 */
+	public String getOrientation() {
+		return orientation;
+	}
 
-  }
+	/**
+	 * @param orientation
+	 */
+	public void setOrientation(String orientation) {
+		this.orientation = orientation;
+	}
+
+	/**
+	 * @return
+	 */
+	public Double getPraticahours() {
+		return praticahours;
+	}
+
+	/**
+	 * @param praticahours
+	 */
+	public void setPraticahours(Double praticahours) {
+		this.praticahours = praticahours;
+	}
+
+	/**
+	 * @return
+	 */
+	public Double getTheoprathours() {
+		return theoprathours;
+	}
+
+	/**
+	 * @param theoprathours
+	 */
+	public void setTheoprathours(Double theoprathours) {
+		this.theoprathours = theoprathours;
+	}
+
+	/**
+	 * @return
+	 */
+	public Double getTheoreticalhours() {
+		return theoreticalhours;
+	}
+
+	/**
+	 * @param theoreticalhours
+	 */
+	public void setTheoreticalhours(Double theoreticalhours) {
+		this.theoreticalhours = theoreticalhours;
+	}
+
 }

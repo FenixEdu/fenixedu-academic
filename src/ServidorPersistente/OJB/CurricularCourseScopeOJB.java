@@ -124,13 +124,20 @@ public class CurricularCourseScopeOJB extends ObjectFenixOJB implements IPersist
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorPersistente.IPersistentCurricularCourseScope#readCurricularCourseScopeByCurricularCourse(Dominio.ICurricularCourse)
-	 */
 	public List readCurricularCourseScopesByCurricularCourse(ICurricularCourse curricularCourse) throws ExcepcaoPersistencia {
 		Criteria crit = new Criteria();
 		crit.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
 		List result = queryList(CurricularCourseScope.class, crit);
 		return result;
+	}
+
+	public List readByCurricularCourseAndSemesterAndBranch(ICurricularCourse curricularCourse, Integer semester, IBranch branch) throws ExcepcaoPersistencia {
+		Criteria crit = new Criteria();
+		crit.addEqualTo("curricularCourseKey", curricularCourse.getIdInternal());
+		crit.addEqualTo("curricularSemester.semester", semester);
+		crit.addEqualTo("branchKey", branch.getIdInternal());
+		
+		return queryList(CurricularCourseScope.class, crit);
+		
 	}
 }

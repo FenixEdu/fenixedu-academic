@@ -13,6 +13,7 @@ import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.DisciplinaExecucao;
+import Dominio.ICurricularCourse;
 import Dominio.ICurricularYear;
 import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
@@ -348,5 +349,15 @@ public class DisciplinaExecucaoOJB
 			  result = new Boolean(true);
 			  return result;
 		  }
+
+	public IDisciplinaExecucao readbyCurricularCourseAndExecutionPeriod(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
+
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("keyExecutionPeriod", executionPeriod.getIdInternal());
+		criteria.addEqualTo("associatedCurricularCourses.idInternal", curricularCourse.getIdInternal());
+		
+		return (IDisciplinaExecucao) queryObject(DisciplinaExecucao.class, criteria);
+
+	}
 
 }

@@ -105,13 +105,13 @@ create table mw_CURRICULAR_COURSE(
 	courseCode varchar(10) not null, 
 	courseName varchar(255) not null, 
 	universityCode varchar(10),
-	primary key (courseCode, courseName)	
+	primary key (courseCode)	
 )type= InnoDB;
 
 
 
-drop table if exists mw_CURRICULAR_COURSE_SCOPE;
-create table mw_CURRICULAR_COURSE_SCOPE(
+drop table if exists mw_CURRICULAR_COURSE_SCOPE_temp;
+create table mw_CURRICULAR_COURSE_SCOPE_temp(
 	executionYear integer(11) not null,
 	courseCode varchar(10) not null, 
 	degreeCode integer(11) not null,
@@ -125,7 +125,8 @@ create table mw_CURRICULAR_COURSE_SCOPE(
 	theoPratHours float(10),
 	credits float(10),		
 	orientation varchar(255),
-	primary key(executionYear, courseCode, degreeCode, branchCode)
+	idInternal integer(11) not null auto_increment,
+	primary key(idinternal)
 )type= InnoDB;
 
 drop table if exists mw_DEGREE_TRANSLATION;

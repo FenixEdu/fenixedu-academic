@@ -19,4 +19,7 @@ public interface IPersistentCurricularSemester extends IPersistentObject {
     public void lockWrite(ICurricularSemester semester) throws ExcepcaoPersistencia, ExistingPersistentException;
     public void delete(ICurricularSemester semester) throws ExcepcaoPersistencia;
     public void deleteAll() throws ExcepcaoPersistencia;
+
+
 }
+

@@ -315,7 +315,6 @@
     name="coursename"
     column="courseName"
     jdbc-type="VARCHAR"
-    primarykey="true"
   />
   <field-descriptor id="2"
     name="universitycode"
@@ -333,25 +332,21 @@
     name="executionyear"
     column="executionYear"
     jdbc-type="INTEGER"
-    primarykey="true"
   />
   <field-descriptor id="1"
     name="coursecode"
     column="courseCode"
     jdbc-type="VARCHAR"
-    primarykey="true"
   />
   <field-descriptor id="2"
     name="degreecode"
     column="degreeCode"
     jdbc-type="INTEGER"
-    primarykey="true"
   />
   <field-descriptor id="3"
     name="branchcode"
     column="branchCode"
     jdbc-type="INTEGER"
-    primarykey="true"
   />
   <field-descriptor id="4"
     name="curricularyear"
@@ -398,6 +393,12 @@
     column="orientation"
     jdbc-type="VARCHAR"
   />
+    <field-descriptor id="13"
+    name="idInternal"
+    column="idInternal"
+    jdbc-type="INTEGER"
+	primarykey="true"    
+  />
 
 </class-descriptor>
 
@@ -409,7 +410,7 @@
     name="number"
     column="number"
     jdbc-type="INTEGER"
-    primarykey="true"
+
   />
   <field-descriptor id="1"
     name="enrolmentyear"
@@ -475,6 +476,8 @@
     name="idinternal"
     column="idinternal"
     jdbc-type="INTEGER"
+    autoincrement="true"
+    primarykey="true"
   />
 
 </class-descriptor>
