@@ -38,6 +38,17 @@
 		</field>
 	</form>
 
+  <!-- Validation for chooseContextForm Form -->
+    <form name="chooseExamsMapContextForm">
+      <field property="index" depends="required, integer" page="1">
+        <arg0 key="property.context.degree" />
+      </field>
+      <field property="selectedCurricularYears" depends="required, integer" page="1" indexedListProperty="true">
+        <arg0 key="property.context.degree" />
+        <msg name="required" key="errors.choose.one.year"/>
+      </field>
+    </form>
+
 
   <!-- Validation for chooseContextForm Form -->
     <form name="chooseContextForm">

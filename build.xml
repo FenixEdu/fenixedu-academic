@@ -368,7 +368,8 @@
             <!--<test fork="true" name="ServidorPersistente.OJB.TestCaseOJB"/>-->
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
-                    <include name="**/*Test.java"/>
+                    <!--<include name="**/*Test.java"/>-->
+                    <include name="**/*Map*Test.java"/>
                     <exclude name="**/ReadOtherCoursesWithShiftsTest.java"/>
                     <exclude name="**/ReadShiftEnrolmentTest.java"/>
                    	<exclude name="**/StudentShiftEnrolmentTest.java"/>

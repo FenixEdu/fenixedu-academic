@@ -7,6 +7,7 @@
 package DataBeans;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -21,6 +22,8 @@ public class InfoExecutionCourse implements Serializable {
 	private Double _theoPratHours;
 	private Double _labHours;
 
+	protected List associatedInfoCurricularCourses;
+	protected List associatedInfoExams;
 	
 	// A chave do responsavel falta ainda porque ainda nao existe a respeciva ligacao
 	// na base de dados.
@@ -216,6 +219,34 @@ public class InfoExecutionCourse implements Serializable {
 	 */
 	public void setInfoExecutionPeriod(InfoExecutionPeriod infoExecutionPeriod) {
 		this.infoExecutionPeriod = infoExecutionPeriod;
+	}
+
+	/**
+	 * @return
+	 */
+	public List getAssociatedInfoCurricularCourses() {
+		return associatedInfoCurricularCourses;
+	}
+
+	/**
+	 * @return
+	 */
+	public List getAssociatedInfoExams() {
+		return associatedInfoExams;
+	}
+
+	/**
+	 * @param list
+	 */
+	public void setAssociatedInfoCurricularCourses(List list) {
+		associatedInfoCurricularCourses = list;
+	}
+
+	/**
+	 * @param list
+	 */
+	public void setAssociatedInfoExams(List list) {
+		associatedInfoExams = list;
 	}
 
 }
