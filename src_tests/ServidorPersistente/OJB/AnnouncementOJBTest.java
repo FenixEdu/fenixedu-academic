@@ -118,6 +118,11 @@ public class AnnouncementOJBTest extends TestCaseOJB {
 		calendar.set(Calendar.YEAR, 2003);
 		calendar.set(Calendar.MONTH, Calendar.JANUARY);
 		calendar.set(Calendar.DATE, 21);
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		
 		Date date = calendar.getTime();
 
 		announcement = new Announcement("newTitle", date, date, "newInformation", this.site);
@@ -156,6 +161,11 @@ public class AnnouncementOJBTest extends TestCaseOJB {
 		calendar.set(Calendar.YEAR, 2003);
 		calendar.set(Calendar.MONTH, Calendar.JANUARY);
 		calendar.set(Calendar.DATE, 21);
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		
 		Date date = calendar.getTime();
 		
 		try {
@@ -196,6 +206,11 @@ public class AnnouncementOJBTest extends TestCaseOJB {
 		calendar.set(Calendar.YEAR, 2003);
 		calendar.set(Calendar.MONTH, Calendar.JANUARY);
 		calendar.set(Calendar.DATE, 21);
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		
 		Date date = calendar.getTime();
         try {
             persistentSupport.iniciarTransaccao();
@@ -231,6 +246,11 @@ public class AnnouncementOJBTest extends TestCaseOJB {
 		calendar.set(Calendar.YEAR, 2003);
 		calendar.set(Calendar.MONTH, Calendar.JANUARY);
 		calendar.set(Calendar.DATE, 21);
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		
 		Date date = calendar.getTime();		
         try {
             persistentSupport.iniciarTransaccao();
