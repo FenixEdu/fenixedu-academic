@@ -118,3 +118,27 @@ create table BRANCH (
    primary key (ID_INTERNAL),
    unique U1 (BRANCH_NAME, BRANCH_CODE)
 )type=InnoDB;
+
+#----------------------------
+# Table structure for CURRICULAR_COURSE_BRANCH
+#----------------------------
+drop table if exists CURRICULAR_COURSE_BRANCH;
+create table CURRICULAR_COURSE_BRANCH (
+   ID_INTERNAL int(11) not null auto_increment,
+   KEY_BRANCH int(11) not null,
+   KEY_CURRICULAR_COURSE int(11) not null,
+   primary key (ID_INTERNAL),
+   unique U1 (KEY_BRANCH, KEY_CURRICULAR_COURSE)
+)type=InnoDB;
+
+#----------------------------
+# Table structure for STUDENT_CURRICULAR_PLAN_BRANCH
+#----------------------------
+drop table if exists STUDENT_CURRICULAR_PLAN_BRANCH;
+create table STUDENT_CURRICULAR_PLAN_BRANCH (
+   ID_INTERNAL int(11) not null auto_increment,
+   KEY_BRANCH int(11) not null,
+   KEY_STUDENT_CURRICULAR_PLAN int(11) not null,
+   primary key (ID_INTERNAL),
+   unique U1 (KEY_BRANCH, KEY_STUDENT_CURRICULAR_PLAN)
+)type=InnoDB;
