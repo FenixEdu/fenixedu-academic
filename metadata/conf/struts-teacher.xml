@@ -1009,30 +1009,22 @@
 	</action>
 	
 	<action 
-		path="/viewProjectShifts"
+		path="/viewShiftsAndGroups"
 		parameter="method"
 		scope="request"
 		name="studentGroupForm"
 		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">				
-       <forward name="viewProjectShifts" path="/viewProjectShifts.jsp"/>
+       <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.jsp"/>
 	</action>
-	
-	<action 
-		path="/viewStudentGroups"
-		parameter="method"
-		scope="request"
-		name="studentGroupForm"
-		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">				
-       <forward name="viewStudentGroups" path="/viewStudentGroups.jsp"/>
-	</action>
-	
+
 	<action 
 		path="/viewStudentGroupInformation"
 		parameter="method"
 		scope="request"
+		name="studentGroupForm"
 		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">				
        <forward name="viewStudentGroupInformation" path="/viewStudentGroupInformation.jsp"/>
-       <forward name="viewStudentGroups" path="/viewStudentGroups.jsp"/>
+       <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.jsp"/>
 	</action>
 	   
 	   
@@ -1061,14 +1053,14 @@
      	type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"    
        	validate="true">                      
        	<forward name="editGroupProperties" path="/editGroupProperties.jsp"/>
-		<forward name="viewProjectShifts" path="/viewProjectShifts.jsp"/>
+		<forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.jsp"/>
 	</action>
 	
 	<action 
 		path="/deleteStudentGroup"
  		parameter="method"
         type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
-	    <forward name="viewStudentGroups" path="/viewStudentGroups.jsp"/>
+	    <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.jsp"/>
     </action>
 
 
@@ -1085,7 +1077,7 @@
                handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                /> 
        	<forward name="insertStudentGroup" path="/insertStudentGroup.jsp"/>
-		<forward name="viewProjectShifts" path="/viewProjectShifts.jsp"/>
+		<forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.jsp"/>
 	</action>
 	
 	<action     
@@ -1096,7 +1088,7 @@
 		input="/editStudentGroupShift.do?method=prepareEditStudentGroupShift&amp;page=0" 
      	type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">            
        	<forward name="editStudentGroupShift" path="/editStudentGroupShift.jsp"/>
-		<forward name="viewProjectShifts" path="/viewProjectShifts.jsp"/>
+		<forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.jsp"/>
 	</action>
 	
 	<action     
@@ -1112,7 +1104,7 @@
                handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
         />          
        	<forward name="editStudentGroupMembers" path="/editStudentGroupMembers.jsp"/>
-		<forward name="viewStudentGroups" path="/viewStudentGroups.jsp"/>
+		<forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.jsp"/>
        	
 	</action>
 	
@@ -1127,7 +1119,8 @@
                handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
         />             
        	<forward name="editStudentGroupMembers" path="/editStudentGroupMembers.jsp"/>
-       	<forward name="viewStudentGroups" path="/viewStudentGroups.jsp"/>
+       	<forward name="viewStudentGroupInformation" path="/viewStudentGroupInformation.jsp"/>
+       	<forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.jsp"/>
 	</action>
 	
 	<action     
@@ -1141,7 +1134,8 @@
                handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
         />              
        	<forward name="editStudentGroupMembers" path="/editStudentGroupMembers.jsp"/>
-       	<forward name="viewStudentGroups" path="/viewStudentGroups.jsp"/>
+       	<forward name="viewStudentGroupInformation" path="/viewStudentGroupInformation.jsp"/>
+       	<forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.jsp"/>
 	</action>
 	
 	<!-- FILE UPLOAD 	-->

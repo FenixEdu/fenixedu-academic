@@ -43,7 +43,7 @@
             <logic:iterate id="infoGroupProperties" name="component" property="infoGroupPropertiesList" >
                 <tr>
                     <td class="listClasses" align="left">
-                        <b><html:link page="<%= "/viewProjectShifts.do?method=viewProjectShifts&amp;objectCode=" + pageContext.findAttribute("objectCode")%>" paramId="groupPropertiesCode" paramName="infoGroupProperties" paramProperty="idInternal">
+                        <b><html:link page="<%= "/viewShiftsAndGroups.do?method=viewShiftsAndGroups&amp;objectCode=" + pageContext.findAttribute("objectCode")%>" paramId="groupPropertiesCode" paramName="infoGroupProperties" paramProperty="idInternal">
 							<bean:write name="infoGroupProperties" property="name"/></html:link></b>
                     		
                     </td>

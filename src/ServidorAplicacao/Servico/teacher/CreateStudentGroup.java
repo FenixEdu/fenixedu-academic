@@ -75,7 +75,6 @@ public class CreateStudentGroup implements IServico {
 			persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
 
 			studentGroup = persistentStudentGroup.readStudentGroupByGroupPropertiesAndGroupNumber(groupProperties, groupNumber);
-
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia.getMessage());
 		}

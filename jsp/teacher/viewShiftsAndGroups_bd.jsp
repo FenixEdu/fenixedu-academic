@@ -21,19 +21,20 @@
 <table width="100%" cellpadding="0" cellspacing="0">
 	<tr>
 		<td class="infoop">
-			<bean:message key="label.teacher.viewProjectShifts.description" />
+			<bean:message key="label.teacher.viewShiftsAndGroups.description" />
 		</td>
 	</tr>
 </table>
-<br>
+<br/>
 
      <span class="error"><html:errors/></span> 	
-<br>		
+<br/>		
+<br/>
 
 <table width="95%" border="0" style="text-align: left;">
 	<tbody>
-	<b><html:link page="<%= "/editGroupProperties.do?method=prepareEditGroupProperties&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="objectCode" paramName="objectCode" >
-		<bean:message key="link.editGroupProperties"/></html:link></b>
+	<html:link page="<%= "/editGroupProperties.do?method=prepareEditGroupProperties&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="objectCode" paramName="objectCode" >
+		<bean:message key="link.editGroupProperties"/></html:link>
 </table>
 <br>
 
@@ -47,7 +48,7 @@
 <table width="95%" border="0" style="text-align: left;">	
 	
 	<html:link page="<%= "/insertStudentGroup.do?method=prepareCreateStudentGroup&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
-					<b><bean:message key="link.insertGroup"/></b></html:link>
+					<bean:message key="link.insertGroup"/></html:link>
     
 </table>
 <br>
@@ -59,10 +60,10 @@
 			<td class="listClasses-header" width="20%" rowspan="2">
 				<bean:message key="property.shift"/>
 			</td>
-			<td class="listClasses-header" colspan="4" width="55%"> 
+			<td class="listClasses-header" colspan="4" width="50%"> 
 				<bean:message key="property.lessons"/>
 			</td>
-			<td class="listClasses-header" width="25%" rowspan="2" colspan="2">
+			<td class="listClasses-header" width="30%" rowspan="2" colspan="2">
 				<bean:message key="property.groups"/>
 			</td>
 		</tr>
@@ -76,14 +77,17 @@
 			<td class="listClasses-header" width="10%">
 				<bean:message key="property.lesson.end"/>
 			</td>
-			<td class="listClasses-header" width="15%">
+			<td class="listClasses-header" width="10%">
 				<bean:message key="property.lesson.room"/>
 			</td>
-		</tr>	
-	  <logic:iterate id="infoSiteShift" name="component" property="infoSiteShifts" >
-  											
-				<bean:define id="infoShift" name="infoSiteShift" property="infoShift"/>
-				<logic:iterate id="infoLesson" name="infoShift" property="infoLessons" length="1" indexId="infoLessonIndex">
+		</tr>
+		
+	 <logic:iterate id="infoSiteGroupsByShift" name="component" property="infoSiteGroupsByShiftList" >
+		<bean:define id="infoSiteShift" name="infoSiteGroupsByShift" property="infoSiteShift"/>	
+		<bean:define id="infoShift" name="infoSiteShift" property="infoShift"/>	
+		<bean:define id="shiftCode" name="infoShift" property="idInternal"/>	
+						
+	 		<logic:iterate id="infoLesson" name="infoShift" property="infoLessons" length="1" indexId="infoLessonIndex">
             		<% Integer iH = new Integer(((InfoLesson) infoLesson).getInicio().get(Calendar.HOUR_OF_DAY)); %>
                 	<% Integer iM = new Integer(((InfoLesson) infoLesson).getInicio().get(Calendar.MINUTE)); %>
                 	<% Integer fH = new Integer(((InfoLesson) infoLesson).getFim().get(Calendar.HOUR_OF_DAY)); %>
@@ -91,39 +95,47 @@
 					<tr>
 						
 						<td  class="listClasses" rowspan="<%=((InfoShift) infoShift).getInfoLessons().size() %>">
-							<b><bean:write name="infoShift" property="nome"/></b>
+							<bean:write name="infoShift" property="nome"/>
 						</td>
 						<td class="listClasses">
-							<b><bean:write name="infoLesson" property="diaSemana"/></b> &nbsp;
+							<bean:write name="infoLesson" property="diaSemana"/> &nbsp;
 						</td>
 						<td class="listClasses">
-							<b><%= iH.toString()%> : <%= iM.toString()%><% if (iM.intValue() == 0) { %>0<% } %></b>
+							<%= iH.toString()%> : <%= iM.toString()%><% if (iM.intValue() == 0) { %>0<% } %>
 						</td>
 						<td class="listClasses">
-							<b><%= fH.toString()%> : <%= fM.toString()%><% if (fM.intValue() == 0) { %>0<% } %></b>								
+							<%= fH.toString()%> : <%= fM.toString()%><% if (fM.intValue() == 0) { %>0<% } %>								
 						</td>
 							
 		               	<td class="listClasses">
-							<b><bean:write name="infoLesson" property="infoSala.nome"/></b>
+							<bean:write name="infoLesson" property="infoSala.nome"/>
 				 		</td>
 				 		
 				 		<bean:define id="nrOfGroups" name="infoSiteShift" property="nrOfGroups"/>
-				 		<td  class="listClasses" rowspan="<%=((InfoShift) infoShift).getInfoLessons().size() %>">
+				 		<td class="listClasses" width="10%" rowspan="<%=((InfoShift) infoShift).getInfoLessons().size() %>">
 				 			 		
 				 			<b><bean:message key="label.nrOfGroups"/> </b><bean:write name="nrOfGroups"/>
 				 			
 				 			
 						</td>
 				 		
-						<td  class="listClasses" rowspan="<%=((InfoShift) infoShift).getInfoLessons().size() %>">
-					 			
-							<html:link page="<%="/viewStudentGroups.do?method=viewStudentGroups&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode") %>" paramId="shiftCode" paramName="infoShift" paramProperty="idInternal">
-               				<b><bean:message key="link.groupsList"/></b>
-               				</html:link>
-               			
-						</td>
 						
+						 <td class="listClasses" width="20%" rowspan="<%=((InfoShift) infoShift).getInfoLessons().size()%>">
+                        <logic:notEmpty name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList">
+                        [<logic:iterate id="infoSiteStudentGroup" name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList" >
+							<bean:define id="infoStudentGroup" name="infoSiteStudentGroup" property="infoStudentGroup"/>	
+                        	<html:link page="<%="/viewStudentGroupInformation.do?method=viewStudentGroupInformation&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;shiftCode=" + shiftCode.toString()+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode") %>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
+               					<bean:write name="infoStudentGroup" property="groupNumber"/>
+							</html:link>
+						</logic:iterate>]
+						</logic:notEmpty>
 						
+						<logic:empty name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList">
+							<bean:message key="message.shift.without.groups"/>
+						</logic:empty>
+						
+						 </td>
+					
 				 						
 				 	</tr>
 				</logic:iterate>
@@ -135,16 +147,16 @@
                        <% Integer fM = new Integer(((InfoLesson) infoLesson).getFim().get(Calendar.MINUTE)); %>
 						<tr >
 							<td class="listClasses">
-								<b><bean:write name="infoLesson" property="diaSemana"/></b> &nbsp;
+								<bean:write name="infoLesson" property="diaSemana"/> &nbsp;
 							</td>
 							<td class="listClasses">
-								<b><%= iH.toString()%> : <%= iM.toString()%><% if (iM.intValue() == 0) { %>0<% } %></b>
+								<%= iH.toString()%> : <%= iM.toString()%><% if (iM.intValue() == 0) { %>0<% } %>
 							</td>
 							<td class="listClasses">
-								<b><%= fH.toString()%> : <%= fM.toString()%><% if (fM.intValue() == 0) { %>0<% } %></b>
+								<%= fH.toString()%> : <%= fM.toString()%><% if (fM.intValue() == 0) { %>0<% } %>
 							</td>
 							<td class="listClasses">
-								<b><bean:write name="infoLesson" property="infoSala.nome"/></b>
+								<bean:write name="infoLesson" property="infoSala.nome"/>
 							</td>
 						</tr>
 					</logic:iterate>

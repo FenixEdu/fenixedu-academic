@@ -175,12 +175,12 @@
 
 	
 	
-		<html:form action="/viewProjectShifts" method="get">
+		<html:form action="/viewShiftsAndGroups" method="get">
 	<td>
 		<html:cancel styleClass="inputbutton"><bean:message key="button.cancel"/>                    		         	
 		</html:cancel>
 	</td>
-		<html:hidden property="method" value="viewProjectShifts"/>
+		<html:hidden property="method" value="viewShiftsAndGroups"/>
 		<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
 		<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
 	</html:form>

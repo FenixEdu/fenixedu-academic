@@ -19,7 +19,6 @@ import DataBeans.InfoSiteCurricularCourse;
 import DataBeans.InfoSiteEvaluation;
 import DataBeans.InfoSiteEvaluationMethods;
 import DataBeans.InfoSiteFirstPage;
-import DataBeans.InfoSiteGroupsByShift;
 import DataBeans.InfoSiteObjectives;
 import DataBeans.InfoSiteProgram;
 import DataBeans.InfoSiteProjects;

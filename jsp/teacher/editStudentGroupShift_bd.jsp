@@ -70,14 +70,15 @@
 </html:form>
 
 
-	<html:form action="/viewStudentGroups" method="get">
+	<html:form action="/viewStudentGroupInformation" method="get">
 	<td>
 		<html:cancel styleClass="inputbutton"><bean:message key="button.cancel"/>                    		         	
 		</html:cancel>
 	</td>
-		<html:hidden property="method" value="viewStudentGroups"/>
+		<html:hidden property="method" value="viewStudentGroupInformation"/>
 		<html:hidden  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
 		<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
+		<html:hidden  property="studentGroupCode" value="<%= request.getParameter("studentGroupCode") %>" />
 		<html:hidden  property="shiftCode" value="<%= request.getParameter("shiftCode") %>" />
 	</html:form>
 
