@@ -85,7 +85,9 @@ public class DownloadStudentList extends FenixAction
 		{
 			siteView=
 				(TeacherAdministrationSiteView) gestor.executar(userView, "ReadStudentsByCurricularCourse", args);
-			projects= (InfoSiteProjects) gestor.executar(userView, "ReadExecutionCourseProjects", argsProjects);
+
+			projects= (InfoSiteProjects) gestor.executar(userView,"teacher.ReadExecutionCourseProjects", argsProjects);
+			
 			infosGroups=
 				(List) gestor.executar(userView, "teacher.GetProjectsGroupsByExecutionCourseID", argsInfos);
 			InfoSiteStudents infoSiteStudents= (InfoSiteStudents) siteView.getComponent();
