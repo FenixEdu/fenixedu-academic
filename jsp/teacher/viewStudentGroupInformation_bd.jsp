@@ -33,7 +33,7 @@
 	
 	
 	<logic:empty name="component" property="infoSiteStudentInformationList">
-		<logic:equal name="component" property="hasShift" value="true">
+		<logic:present name="shiftCode"> 
 	<table width="100%" cellpadding="0" cellspacing="0">
 			<tr>
 				<td class="infoop">
@@ -42,9 +42,9 @@
 			</tr>
 	</table>
 	<br />
-		</logic:equal>
+		</logic:present>
 	
-	<logic:equal name="component" property="hasShift" value="false">
+	<logic:notPresent name="shiftCode"> 
 	<table width="100%" cellpadding="0" cellspacing="0">
 			<tr>
 				<td class="infoop">
@@ -53,13 +53,13 @@
 			</tr>
 	</table>
 	<br />
-	</logic:equal>
+	</logic:notPresent> 
 	
 	</logic:empty>	
 	
 	<logic:notEmpty name="component" property="infoSiteStudentInformationList">
 	
-	<logic:equal name="component" property="hasShift" value="true">
+	<logic:present name="shiftCode"> 
 	<table width="100%" cellpadding="0" cellspacing="0">
 	
 			<tr>
@@ -69,9 +69,9 @@
 			</tr>
 	</table>
 	<br />
-	</logic:equal>
+	</logic:present>
 
-<logic:equal name="component" property="hasShift" value="false">
+<logic:notPresent name="shiftCode"> 
 	<table width="100%" cellpadding="0" cellspacing="0">
 	
 			<tr>
@@ -81,11 +81,11 @@
 			</tr>
 	</table>
 	<br />
-</logic:equal>
+</logic:notPresent> 
 	
 	</logic:notEmpty>	
 	
-		<logic:equal name="component" property="hasShift" value="true">
+		<logic:present name="shiftCode"> 
 		<bean:define id="infoShift" name="infoStudentGroup" property="infoShift"/>	
 		<bean:define id="shiftCode" name="infoShift" property="idInternal"/>
 	<table align="left" width="75%" cellpadding="0" border="0">	
@@ -170,7 +170,7 @@
     
 	</table>
 
-</logic:equal>
+</logic:present>
 
 </td>
 </tr>
@@ -195,27 +195,27 @@
 	<br/>
 	<h2><bean:message key="message.infoSiteStudentGroupList.not.available" /></h2>
 	<b><bean:message key="label.groupManagement"/></b>&nbsp
-		<logic:equal name="component" property="hasShift" value="true">
+		<logic:present name="shiftCode">
 	<bean:define id="infoShift" name="infoStudentGroup" property="infoShift"/>	
 	<bean:define id="shiftCode" name="infoShift" property="idInternal"/>
 	<html:link page="<%="/editStudentGroupMembers.do?method=prepareEditStudentGroupMembers&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString() + "&amp;shiftCode=" + shiftCode.toString()%>">
     	<bean:message key="link.editGroupMembers"/>
     </html:link>&nbsp|&nbsp
- 	</logic:equal>
-	 <logic:equal name="component" property="hasShift" value="false">
+ 	</logic:present>
+	 <logic:notPresent name="shiftCode"> 
 	<html:link page="<%="/editStudentGroupMembers.do?method=prepareEditStudentGroupMembers&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
     	<bean:message key="link.editGroupMembers"/>
     </html:link>&nbsp|&nbsp
- 	</logic:equal> 
+ 	</logic:notPresent> 
  
  
-   <logic:equal name="component" property="hasShift" value="true">
+   <logic:present name="shiftCode">
     <bean:define id="infoShift" name="infoStudentGroup" property="infoShift"/>	
 	<bean:define id="shiftCode" name="infoShift" property="idInternal"/>
     
     <html:link page="<%="/editStudentGroupShift.do?method=prepareEditStudentGroupShift&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;shiftCode=" + shiftCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
     	<bean:message key="link.editGroupShift"/></html:link>&nbsp|&nbsp
-	</logic:equal>
+	</logic:present>
 	
 	<logic:present name="StudentGroupWithoutShift">
     <html:link page="<%="/editStudentGroupShift.do?method=prepareEditStudentGroupShift&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
@@ -223,16 +223,16 @@
 	</logic:present>
 	
 	
-	<logic:equal name="component" property="hasShift" value="true">
+	<logic:present name="shiftCode">
 	<bean:define id="infoShift" name="infoStudentGroup" property="infoShift"/>	
 	<bean:define id="shiftCode" name="infoShift" property="idInternal"/>
 	<html:link page="<%= "/deleteStudentGroup.do?method=deleteStudentGroup&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;shiftCode=" + shiftCode.toString() +"&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
     	<bean:message key="link.deleteGroup"/></html:link>
-	</logic:equal>
-	<logic:equal name="component" property="hasShift" value="false">
+	</logic:present>
+	<logic:notPresent name="shiftCode"> 
 	<html:link page="<%= "/deleteStudentGroup.do?method=deleteStudentGroup&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
     	<bean:message key="link.deleteGroup"/></html:link>
-	</logic:equal>
+	</logic:notPresent> 
 	
 	
 	
@@ -304,25 +304,25 @@
 <tbody>
 	<b><bean:message key="label.groupManagement"/></b>&nbsp
 	
-	<logic:equal name="component" property="hasShift" value="true">
+	<logic:present name="shiftCode">
 	<bean:define id="infoShift" name="infoStudentGroup" property="infoShift"/>	
 	<bean:define id="shiftCode" name="infoShift" property="idInternal"/>
 	<html:link page="<%="/editStudentGroupMembers.do?method=prepareEditStudentGroupMembers&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString() + "&amp;shiftCode=" + shiftCode.toString()%>">
     	<bean:message key="link.editGroupMembers"/>
     </html:link>&nbsp|&nbsp
- 	</logic:equal>
- 	<logic:equal name="component" property="hasShift" value="false">
+ 	</logic:present>
+ 	<logic:notPresent name="shiftCode"> 
 	<html:link page="<%="/editStudentGroupMembers.do?method=prepareEditStudentGroupMembers&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
     	<bean:message key="link.editGroupMembers"/>
     </html:link>&nbsp|&nbsp
- 	</logic:equal>
+ 	</logic:notPresent> 
  	
-    <logic:equal name="component" property="hasShift" value="true">
+     <logic:present name="shiftCode">
      <bean:define id="infoShift" name="infoStudentGroup" property="infoShift"/>	
 	 <bean:define id="shiftCode" name="infoShift" property="idInternal"/>
     <html:link page="<%="/editStudentGroupShift.do?method=prepareEditStudentGroupShift&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;shiftCode=" + shiftCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
     	<bean:message key="link.editGroupShift"/></html:link><br/>
-    	</logic:equal>
+    	</logic:present>
     <logic:present name="StudentGroupWithoutShift">
     <html:link page="<%="/editStudentGroupShift.do?method=prepareEditStudentGroupShift&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
     	<bean:message key="link.enrollStudentGroupInShift"/></html:link>&nbsp|&nbsp
