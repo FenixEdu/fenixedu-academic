@@ -14,7 +14,7 @@
     <table>        
 		<tr>
 			<td>
-				<bean:write name="commonComponent" property="executionCourse.nome" />
+				<h2><bean:write name="commonComponent" property="executionCourse.nome" /></h2>
 		   </td>
 			<logic:present name="studentsComponent" property="infoCurricularCourseScope">  		
 			<td>

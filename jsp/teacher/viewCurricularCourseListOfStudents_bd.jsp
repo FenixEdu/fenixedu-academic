@@ -14,7 +14,7 @@
     <table>        
     	<logic:iterate id="curricularCourse" name="curricularCourses" property="associatedCurricularCourses" indexId="index" > 
     		<logic:equal name="index" value="0">
-    			<bean:write name="curricularCourse" property="name" /><p></p>    		    			
+    			<h2><bean:write name="curricularCourse" property="name" /><p></p></h2>
 				<tr>
 		    		<td>
 						<html:link page="<%= "/studentsByCurricularCourse.do?method=readStudents&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">   				
