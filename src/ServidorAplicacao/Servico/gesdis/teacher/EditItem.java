@@ -15,25 +15,25 @@ import Dominio.IItem;
 import Dominio.ISection;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentItem;
 import ServidorPersistente.IPersistentSection;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * @author lmac2
  */
 public class EditItem implements IServico {
 
-
 	private static EditItem service = new EditItem();
-    
 
 	/**
-
+	
 	 * The singleton access method of this class.
-
+	
 	 **/
 
 	public static EditItem getService() {
@@ -42,14 +42,13 @@ public class EditItem implements IServico {
 
 	}
 
-    
 	public String getNome() {
 
 		return "EditItem";
 
 	}
 
-// this method reorders some items but not the item that we are editing 
+	// this method reorders some items but not the item that we are editing 
 	private void organizeItemsOrder(
 		int newOrder,
 		int oldOrder,
@@ -76,7 +75,8 @@ public class EditItem implements IServico {
 
 					int iterItemOrder = iterItem.getItemOrder().intValue();
 
-					if (iterItemOrder > oldOrder && iterItemOrder <= newOrder) {
+					if (iterItemOrder > oldOrder
+						&& iterItemOrder <= newOrder) {
 
 						iterItem.setItemOrder(new Integer(iterItemOrder - 1));
 
@@ -89,7 +89,8 @@ public class EditItem implements IServico {
 
 					int iterItemOrder = iterItem.getItemOrder().intValue();
 
-					if (iterItemOrder >= newOrder && iterItemOrder < oldOrder) {
+					if (iterItemOrder >= newOrder
+						&& iterItemOrder < oldOrder) {
 
 						iterItem.setItemOrder(new Integer(iterItemOrder + 1));
 
@@ -102,44 +103,47 @@ public class EditItem implements IServico {
 			throw new FenixServiceException(excepcaoPersistencia);
 		}
 	}
-		
-		  
 
 	/**
 	 * Executes the service.
 	 *
 	 **/
-public Boolean run(InfoItem oldInfoItem, InfoItem newInfoItem)
-	throws FenixServiceException {
+	public Boolean run(InfoItem oldInfoItem, InfoItem newInfoItem)
+		throws FenixServiceException {
 
-	ISection fatherSection = null;
-	IItem item = null;
-	try {
-		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-		IPersistentSection persistentSection = sp.getIPersistentSection();
-		IPersistentItem persistentItem = sp.getIPersistentItem();
+		ISection fatherSection = null;
+		IItem item = null;
+		try {
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			IPersistentSection persistentSection = sp.getIPersistentSection();
+			IPersistentItem persistentItem = sp.getIPersistentItem();
 
-		ISection section =
-			Cloner.copyInfoSection2ISection(oldInfoItem.getInfoSection());
+			ISection section =
+				Cloner.copyInfoSection2ISection(oldInfoItem.getInfoSection());
 
-		item =
-			persistentItem.readBySectionAndName(section, oldInfoItem.getName());
+			item =
+				persistentItem.readBySectionAndName(
+					section,
+					oldInfoItem.getName());
 
-		item.setInformation(newInfoItem.getInformation());
-		int newOrder = newInfoItem.getItemOrder().intValue();
-		int oldOrder = oldInfoItem.getItemOrder().intValue();
+			item.setInformation(newInfoItem.getInformation());
+			int newOrder = newInfoItem.getItemOrder().intValue();
+			int oldOrder = oldInfoItem.getItemOrder().intValue();
 
-		if (newOrder != oldOrder) {
-			organizeItemsOrder(newOrder, oldOrder, section);
-			item.setItemOrder(newInfoItem.getItemOrder());
+			if (newOrder != oldOrder) {
+				organizeItemsOrder(newOrder, oldOrder, section);
+				item.setItemOrder(newInfoItem.getItemOrder());
+			}
+			item.setName(newInfoItem.getName());
+			item.setUrgent(newInfoItem.getUrgent());
+			persistentItem.lockWrite(item);
+		} catch (ExistingPersistentException e) {
+
+			throw new ExistingServiceException(e);
+		} catch (ExcepcaoPersistencia e) {
+			throw new FenixServiceException(e);
 		}
-		item.setName(newInfoItem.getName());
-		item.setUrgent(newInfoItem.getUrgent());
-		persistentItem.lockWrite(item);
-	} catch (ExcepcaoPersistencia e) {
-		throw new FenixServiceException(e);
+		return new Boolean(true);
 	}
-	return new Boolean(true);
-}
 
 }

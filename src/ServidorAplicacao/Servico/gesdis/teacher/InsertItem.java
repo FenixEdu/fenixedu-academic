@@ -4,8 +4,7 @@
  * To change this generated comment go to 
  * Window>Preferences>Java>Code Generation>Code Template
  */
- 
- 
+
 package ServidorAplicacao.Servico.gesdis.teacher;
 
 import java.util.Iterator;
@@ -24,7 +23,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentItem;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * @author asnr e scpo
@@ -32,40 +31,38 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class InsertItem implements IServico {
 
-	
 	private static InsertItem service = new InsertItem();
 
-	
 	public static InsertItem getService() {
 
-		return service;	
+		return service;
 	}
 
-	
 	private InsertItem() {
-	
-	}
 
+	}
 
 	public final String getNome() {
 
 		return "InsertItem";
 	}
-	
-	
-	private void organizeExistingItemsOrder(ISection section, int insertItemOrder)
-	throws FenixServiceException {
-	
-		IPersistentItem persistentItem=null;
-		try{
-		
-			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();	
+
+	private void organizeExistingItemsOrder(
+		ISection section,
+		int insertItemOrder)
+		throws FenixServiceException {
+
+		IPersistentItem persistentItem = null;
+		try {
+
+			ISuportePersistente persistentSuport =
+				SuportePersistenteOJB.getInstance();
 			persistentItem = persistentSuport.getIPersistentItem();
-		
+
 			List itemsList = persistentItem.readAllItemsBySection(section);
-	
-			if (itemsList!= null) {
-			
+
+			if (itemsList != null) {
+
 				Iterator iterItems = itemsList.iterator();
 				while (iterItems.hasNext()) {
 
@@ -73,23 +70,21 @@ public class InsertItem implements IServico {
 					int itemOrder = item.getItemOrder().intValue();
 
 					if (itemOrder >= insertItemOrder) {
-						item.setItemOrder(new Integer(itemOrder+1));
+						item.setItemOrder(new Integer(itemOrder + 1));
 						persistentItem.lockWrite(item);
 					}
-		   			
-		   		}
+
+				}
 
 			}
-		}
-		catch (ExcepcaoPersistencia excepcaoPersistencia){
-	
+		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
+
 			throw new FenixServiceException(excepcaoPersistencia);
-			}
+		}
 	}
-	
-	
+
 	//infoItem with an infoSection
-	
+
 	public Boolean run(InfoItem infoItem) throws FenixServiceException {
 
 		IItem item = null;
@@ -106,24 +101,28 @@ public class InsertItem implements IServico {
 			section =
 				Cloner.copyInfoSection2ISection(infoItem.getInfoSection());
 			ISite site = section.getSite();
-			site = persistentSuport.getIPersistentSite().readByExecutionCourse(site.getExecutionCourse());
+			site =
+				persistentSuport.getIPersistentSite().readByExecutionCourse(
+					site.getExecutionCourse());
 			section.setSite(site);
-	
-			IItem existingItem =
-				persistentItem.readBySectionAndName(
-					section,
-					infoItem.getName());
-					
-			if (existingItem != null)
-				throw new ExistingServiceException();
 
-		    item = new Item(infoItem.getName(), section, infoItem.getItemOrder(), infoItem.getInformation(), infoItem.getUrgent()); 
-			
+		
+			item =
+				new Item(
+					infoItem.getName(),
+					section,
+					infoItem.getItemOrder(),
+					infoItem.getInformation(),
+					infoItem.getUrgent());
+
 			organizeExistingItemsOrder(
 				section,
 				infoItem.getItemOrder().intValue());
 
 			persistentItem.lockWrite(item);
+		} catch (ExistingPersistentException e) {
+
+			throw new ExistingServiceException(e);
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 
 			throw new FenixServiceException(excepcaoPersistencia);
