@@ -2,6 +2,7 @@ package DataBeans;
 
 import java.util.Date;
 
+import Dominio.ExecutionYear;
 import Dominio.IExecutionYear;
 import Util.PeriodState;
 
@@ -140,4 +141,17 @@ public class InfoExecutionYear extends InfoObject {
         }
         return infoExecutionYear;
     }
+    
+    public static IExecutionYear newDomainFromInfo(InfoExecutionYear year) {
+        IExecutionYear executionYear = null;
+        if (year != null) {
+            executionYear = new ExecutionYear();
+            executionYear.setBeginDate(year.getBeginDate());
+            executionYear.setEndDate(year.getEndDate());
+            executionYear.setState(year.getState());
+            executionYear.setYear(year.getYear());
+        }
+        return executionYear;
+    }
+    
 }

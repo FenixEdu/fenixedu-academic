@@ -32,5 +32,12 @@ public interface ISalaPersistente extends IPersistentObject
     public List readAvailableRooms(IExam exam) throws ExcepcaoPersistencia;
     public List readForRoomReservation() throws ExcepcaoPersistencia;
     public List readByPavillion(String string) throws ExcepcaoPersistencia;
+    /**
+     * Reads all rooms in pavillions passed as argument.
+     * @param pavillionsName Collection of java.lang.String representing the names of pavillions
+     * @return
+     * @throws ExcepcaoPersistencia
+     */
+    public List readByPavillions(List pavillionsName) throws ExcepcaoPersistencia;
 	public List readAllBuildings() throws ExcepcaoPersistencia;
 }

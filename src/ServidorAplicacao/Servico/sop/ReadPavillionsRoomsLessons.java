@@ -7,100 +7,94 @@
 package ServidorAplicacao.Servico.sop;
 
 /**
-  * @author Luis Cruz & Sara Ribeiro
-  * 
- **/
+ * @author Luis Cruz & Sara Ribeiro
+ */
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionPeriod;
+import DataBeans.InfoExecutionPeriodWithInfoExecutionYear;
 import DataBeans.InfoLesson;
+import DataBeans.InfoLessonWithInfoRoomAndInfoExecutionCourse;
+import DataBeans.InfoRoom;
 import DataBeans.InfoViewRoomSchedule;
-import DataBeans.util.Cloner;
 import Dominio.IAula;
 import Dominio.IExecutionPeriod;
 import Dominio.ISala;
-import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.ISalaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class ReadPavillionsRoomsLessons implements IServico {
+import commons.CollectionUtils;
 
-	private static ReadPavillionsRoomsLessons _servico = new ReadPavillionsRoomsLessons();
-	/**
-	 * The singleton access method of this class.
-	 **/
-	public static ReadPavillionsRoomsLessons getService() {
-		return _servico;
-	}
+public class ReadPavillionsRoomsLessons implements IService {
 
-	/**
-	 * The actor of this class.
-	 **/
-	private ReadPavillionsRoomsLessons() {
-	}
+    private static ReadPavillionsRoomsLessons _servico = new ReadPavillionsRoomsLessons();
 
-	/**
-	 * Devolve o nome do servico
-	 **/
-	public final String getNome() {
-		return "ReadPavillionsRoomsLessons";
-	}
+    /**
+     * The singleton access method of this class.
+     */
+    public static ReadPavillionsRoomsLessons getService() {
+        return _servico;
+    }
 
-	public List run(List pavillions, InfoExecutionPeriod infoExecutionPeriod) {
+    /**
+     * The actor of this class.
+     */
+    private ReadPavillionsRoomsLessons() {
+    }
+    public List run(List pavillions, InfoExecutionPeriod infoExecutionPeriod) {
 
-		List infoViewRoomScheduleList = new ArrayList();
+        final List infoViewRoomScheduleList = new ArrayList();
+        final Map roomViews = new HashMap();
 
-		try {
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+        try {
+            ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			IExecutionPeriod executionPeriod =
-				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
-					infoExecutionPeriod);
+            IExecutionPeriod executionPeriod = InfoExecutionPeriodWithInfoExecutionYear
+                    .newDomainFromInfo(infoExecutionPeriod);
 
-			ISalaPersistente roomDAO = sp.getISalaPersistente();
-			IAulaPersistente lessonDAO = sp.getIAulaPersistente();
-			// Read pavillions rooms
-			List rooms = new ArrayList();
-			for (int i = 0; i < pavillions.size(); i++ ){
-				List pavillionRooms = roomDAO.readByPavillion((String)pavillions.get(i));
-				Iterator iterator = pavillionRooms.iterator();
-				CollectionUtils.addAll(rooms,iterator);
-			}
+            ISalaPersistente roomDAO = sp.getISalaPersistente();
+            IAulaPersistente lessonDAO = sp.getIAulaPersistente();
+            // Read pavillions rooms
+            List rooms = roomDAO.readByPavillions(pavillions);
 
-	
-			// Read rooms classes
-			for (int i = 0; i < rooms.size(); i++) {
-				InfoViewRoomSchedule infoViewRoomSchedule =
-					new InfoViewRoomSchedule();
-				ISala room = (ISala) rooms.get(i);
-				List lessonList =
-					lessonDAO.readByRoomAndExecutionPeriod(
-						room,
-						executionPeriod);
-				Iterator iterator = lessonList.iterator();
-				List infoLessonsList = new ArrayList();
-				while (iterator.hasNext()) {
-					IAula elem = (IAula) iterator.next();
-					InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(elem);
-					infoLessonsList.add(infoLesson);
-				}
+            // Read rooms classes
+            List roomNames = (List) CollectionUtils.collect(rooms, new Transformer() {
+                public Object transform(Object input) {
+                    ISala room = (ISala) input;
+                    InfoViewRoomSchedule roomSchedule = new InfoViewRoomSchedule();
+                    roomSchedule.setRoomLessons(new ArrayList());
+                    roomSchedule.setInfoRoom(InfoRoom.newInfoFromDomain(room));
+                    roomViews.put(room.getNome(), roomSchedule);
+                    // keep the reference on the return list
+                    infoViewRoomScheduleList.add(roomSchedule);
+                    return room.getNome();
+                }
+            });
 
-				infoViewRoomSchedule.setInfoRoom(
-					Cloner.copyRoom2InfoRoom(room));
-				infoViewRoomSchedule.setRoomLessons(infoLessonsList);				
-				infoViewRoomScheduleList.add(infoViewRoomSchedule);
-			}
+            List lessonList = lessonDAO.readByRoomNamesAndExecutionPeriod(roomNames, executionPeriod);
 
-		} catch (ExcepcaoPersistencia ex) {
-			ex.printStackTrace();
-		}
-		return infoViewRoomScheduleList;
-	}
+            for (int i = 0; i < lessonList.size(); i++) {
+                IAula lesson = (IAula) lessonList.get(i);
+                String roomName = lesson.getSala().getNome();
+                InfoViewRoomSchedule roomSchedule = (InfoViewRoomSchedule) roomViews.get(roomName);
+
+                InfoLesson infoLesson = InfoLessonWithInfoRoomAndInfoExecutionCourse
+                        .newInfoFromDomain(lesson);
+                
+                roomSchedule.getRoomLessons().add(infoLesson);
+            }
+        } catch (ExcepcaoPersistencia ex) {
+            ex.printStackTrace();
+        }
+        return infoViewRoomScheduleList;
+    }
 }
