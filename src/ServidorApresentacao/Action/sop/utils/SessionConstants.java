@@ -176,11 +176,13 @@ public abstract class SessionConstants {
 	public static final String ASSISTENT_GUIDERS_LIST = "assistent_guiders_list";
 	public static final String EXTERNAL_ASSISTENT_GUIDERS_LIST = "external_assistent_guiders_list";
 	public static final String SEARCH_EXTERNAL_ASSISTENT_GUIDERS = "search_external_assistent_guiders";
+	public static final String SEARCH_EXTERNAL_GUIDERS = "search_external_guiders";
 	public static final String EXTERNAL_ASSISTENT_GUIDERS_SEARCH_RESULTS_FLAG = "external_assistent_guiders_search_results_flag";
 	public static final String EXTERNAL_ASSISTENT_GUIDERS_SEARCH_RESULTS = "external_assistent_guiders_search_results";
 	public static final String MASTER_DEGREE_THESIS_DATA_VERSION = "master_degree_thesis_data_version";
 	public static final String RESPONSIBLE_EMPLOYEE = "responsible_employee";
 	public static final String DISSERTATION_TITLE = "dissertation_title";
+	public static final String EXTERNAL_GUIDERS_SEARCH_RESULTS = "external_guiders_search_results";
 	public static final String LAST_MODIFICATION = "last_modification";
 	public static final String JURIES_LIST = "juries_list";
 	public static final String EXTERNAL_JURIES_LIST = "external_juries_list";
