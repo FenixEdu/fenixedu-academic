@@ -69,11 +69,10 @@
 		</ul>
 	</logic:notEqual> 
 	
-	<%-- Start of Common Options --%>
+	<%-- Start of Common Options 
 	<ul>
 		<li>
 			<html:link page="/executionCoursesInformation.do?method=prepareChoice">
-				<%-- <bean:message key="link.coordinator.executionCoursesInformation"/>--%>
 				Gestão de Planos Curriculares
 			</html:link> 
 			<br/>
@@ -96,5 +95,5 @@
 			<br/>
 			<br/>
 		</li>
-	</ul>
+	</ul>--%>
 </logic:present>
