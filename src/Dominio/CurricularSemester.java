@@ -40,7 +40,7 @@ public class CurricularSemester implements ICurricularSemester {
 		if (obj instanceof CurricularSemester) {
 			CurricularSemester curricularSemester = (CurricularSemester) obj;
 			resultado = (this.getSemester().equals(curricularSemester.getSemester()) &&
-									(this.getCurricularYearKey().equals(curricularSemester.getCurricularYearKey())));
+									(this.getCurricularYear().equals(curricularSemester.getCurricularYear())));
 		}
 		return resultado;
 	}

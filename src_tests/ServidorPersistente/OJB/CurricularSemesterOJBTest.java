@@ -65,7 +65,7 @@ public class CurricularSemesterOJBTest extends TestCaseOJB {
 
 		try {
 			persistentSupport.iniciarTransaccao();
-			curricularYear = persistentCurricularYear.readCurricularYearByYear(new Integer(2003));
+			curricularYear = persistentCurricularYear.readCurricularYearByYear(new Integer(1));
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("Reading Non Existing CurricularYear Just Writen Before");
@@ -164,7 +164,7 @@ public class CurricularSemesterOJBTest extends TestCaseOJB {
 
 		try {
 			persistentSupport.iniciarTransaccao();
-			curricularYear = persistentCurricularYear.readCurricularYearByYear(new Integer(2003));
+			curricularYear = persistentCurricularYear.readCurricularYearByYear(new Integer(1));
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("Reading Non Existing CurricularYear Just Writen Before");
@@ -209,7 +209,7 @@ public class CurricularSemesterOJBTest extends TestCaseOJB {
 		System.out.println("\n- Test 4.1 : Delete Existing CurricularSemester\n");
 		try {
 			persistentSupport.iniciarTransaccao();
-			curricularYear = persistentCurricularYear.readCurricularYearByYear(new Integer(2003));
+			curricularYear = persistentCurricularYear.readCurricularYearByYear(new Integer(1));
 			persistentSupport.confirmarTransaccao();
 		} catch (ExcepcaoPersistencia ex) {
 			fail("Reading Non Existing CurricularYear Just Writen Before");

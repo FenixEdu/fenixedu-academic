@@ -40,18 +40,18 @@ public interface ICurricularCourse {
 	/**
 	 * @deprecated
 	 */
-	public void setSemester(Integer semester);
+//	public void setSemester(Integer semester);
 	/**
 	 * @deprecated
 	 */
-	public void setCurricularYear(Integer newCurricularYear);
+//	public void setCurricularYear(Integer newCurricularYear);
 	/**
 	 * @deprecated
 	 */
-	public Integer getCurricularYear();
+//	public Integer getCurricularYear();
 	/**
 	 * @deprecated
 	 */
-	public Integer getSemester();
+//	public Integer getSemester();
 
 }

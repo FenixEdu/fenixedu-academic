@@ -1,4 +1,6 @@
-package Dominio;
+package DataBeans;
+
+import java.io.Serializable;
 
 /**
  * @author dcs-rjao
@@ -6,25 +8,22 @@ package Dominio;
  * 21/Mar/2003
  */
 
-public class CurricularYear implements ICurricularYear {
+public class InfoCurricularYear implements Serializable {
 
-	private Integer internalID;
 	private Integer year;
-
-	public CurricularYear() {
+	
+	public InfoCurricularYear() {
 		setYear(null);
-		setInternalID(null);
 	}
 
-	public CurricularYear(Integer year) {
+	public InfoCurricularYear(Integer year) {
 		setYear(year);
-		setInternalID(null);
 	}
 
 	public boolean equals(Object obj) {
 		boolean resultado = false;
-		if (obj instanceof CurricularYear) {
-			CurricularYear curricularYear = (CurricularYear) obj;
+		if (obj instanceof InfoCurricularYear) {
+			InfoCurricularYear curricularYear = (InfoCurricularYear) obj;
 			resultado = (this.getYear().equals(curricularYear.getYear()));
 		}
 		return resultado;
@@ -32,7 +31,6 @@ public class CurricularYear implements ICurricularYear {
 
 	public String toString() {
 		String result = "[" + this.getClass().getName() + ": ";
-		result += "idInternal = " + this.internalID + "; ";
 		result += "year = " + this.year + "]";
 		return result;
 	}
@@ -41,23 +39,8 @@ public class CurricularYear implements ICurricularYear {
 	/**
 	 * @return Integer
 	 */
-	public Integer getInternalID() {
-		return internalID;
-	}
-
-	/**
-	 * @return Integer
-	 */
 	public Integer getYear() {
 		return year;
-	}
-
-	/**
-	 * Sets the internalID.
-	 * @param internalID The internalID to set
-	 */
-	public void setInternalID(Integer internalID) {
-		this.internalID = internalID;
 	}
 
 	/**

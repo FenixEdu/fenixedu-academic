@@ -79,8 +79,8 @@ public class CurricularCourse implements ICurricularCourse {
 		setTheoPratHours(theoPratHours);
 		setTheoreticalHours(theoreticalHours);
 
-		setCurricularYear(curricularYear);
-		setSemester(semester);
+//		setCurricularYear(curricularYear);
+//		setSemester(semester);
 
 	}
 
@@ -170,12 +170,12 @@ public class CurricularCourse implements ICurricularCourse {
 	 * Returns the curricularYear.
 	 * @return int
 	 */
-	public Integer getCurricularYear() {
-		if( (this.associatedCurricularSemesters != null) && (!this.associatedCurricularSemesters.isEmpty()) ) {
-			return ((ICurricularSemester) this.associatedCurricularSemesters.get(0)).getCurricularYear().getYear();
-		}
-		return null;
-	}
+//	public Integer getCurricularYear() {
+//		if( (this.associatedCurricularSemesters != null) && (!this.associatedCurricularSemesters.isEmpty()) ) {
+//			return ((ICurricularSemester) this.associatedCurricularSemesters.get(0)).getCurricularYear().getYear();
+//		}
+//		return null;
+//	}
 
 	/**
 	 * Returns the degreeCurricularPlan.
@@ -245,12 +245,12 @@ public class CurricularCourse implements ICurricularCourse {
 	 * Returns the semester.
 	 * @return int
 	 */
-	public Integer getSemester() {
-		if( (this.associatedCurricularSemesters != null) && (!this.associatedCurricularSemesters.isEmpty()) ) {
-			return ((ICurricularSemester) this.associatedCurricularSemesters.get(0)).getSemester();
-		}
-		return null;
-	}
+//	public Integer getSemester() {
+//		if( (this.associatedCurricularSemesters != null) && (!this.associatedCurricularSemesters.isEmpty()) ) {
+//			return ((ICurricularSemester) this.associatedCurricularSemesters.get(0)).getSemester();
+//		}
+//		return null;
+//	}
 
 	/**
 	 * Returns the theoPratHours.
@@ -280,11 +280,11 @@ public class CurricularCourse implements ICurricularCourse {
 	 * Sets the curricularYear.
 	 * @param curricularYear The curricularYear to set
 	 */
-	public void setCurricularYear(Integer curricularYear) {
-		if( (this.associatedCurricularSemesters != null) && (!this.associatedCurricularSemesters.isEmpty()) ) {
-			((ICurricularSemester) this.associatedCurricularSemesters.get(0)).getCurricularYear().setYear(curricularYear);
-		}
-	}
+//	public void setCurricularYear(Integer curricularYear) {
+//		if( (this.associatedCurricularSemesters != null) && (!this.associatedCurricularSemesters.isEmpty()) ) {
+//			((ICurricularSemester) this.associatedCurricularSemesters.get(0)).getCurricularYear().setYear(curricularYear);
+//		}
+//	}
 
 	/**
 	 * Sets the degreeCurricularPlan.
@@ -338,11 +338,11 @@ public class CurricularCourse implements ICurricularCourse {
 	 * Sets the semester.
 	 * @param semester The semester to set
 	 */
-	public void setSemester(Integer semester) {
-		if( (this.associatedCurricularSemesters != null) && (!this.associatedCurricularSemesters.isEmpty()) ) {
-			((ICurricularSemester) this.associatedCurricularSemesters.get(0)).setSemester(semester);
-		}
-	}
+//	public void setSemester(Integer semester) {
+//		if( (this.associatedCurricularSemesters != null) && (!this.associatedCurricularSemesters.isEmpty()) ) {
+//			((ICurricularSemester) this.associatedCurricularSemesters.get(0)).setSemester(semester);
+//		}
+//	}
 
 	/**
 	 * Returns the associatedExecutionCourses.

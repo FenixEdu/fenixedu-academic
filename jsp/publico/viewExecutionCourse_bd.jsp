@@ -54,11 +54,23 @@
 						<td>
 							<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.sigla"/>
 						</td>
+<%--
 						<td>
 							<bean:write name="curricularCourse" property="curricularYear"/>
 						</td>
 						<td>
 							<bean:write name="curricularCourse" property="semester"/>
+						</td>
+--%>
+						<td>
+							<logic:iterate id="infoCurricularSemester" name="curricularCourse" property="associatedInfoCurricularSemesters">
+								<bean:write name="infoCurricularSemester" property="infoCurricularYear.year"/>&nbsp;
+							</logic:iterate>
+						</td>
+						<td>
+							<logic:iterate id="infoCurricularSemester" name="curricularCourse" property="associatedInfoCurricularSemesters">
+								<bean:write name="infoCurricularSemester" property="semester"/>&nbsp;
+							</logic:iterate>
 						</td>
 					</tr>
 				</logic:iterate>

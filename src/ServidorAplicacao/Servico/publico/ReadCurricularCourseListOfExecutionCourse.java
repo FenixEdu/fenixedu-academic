@@ -72,7 +72,7 @@ public class ReadCurricularCourseListOfExecutionCourse implements IServico {
 								.get(
 								i);
 						InfoCurricularCourse infoCurricularCourse =
-							Cloner.copyICurricularCourse2InfoCurricularCourse(
+							Cloner.copyCurricularCourse2InfoCurricularCourse(
 								curricularCourse);
 						infoCurricularCourseList.add(infoCurricularCourse);
 				}

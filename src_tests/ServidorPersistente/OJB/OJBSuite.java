@@ -16,59 +16,55 @@ import junit.framework.TestSuite;
  * @author ars
  */
 public class OJBSuite extends TestCase {
-    
-    public OJBSuite(java.lang.String testName) {
-        super(testName);
-    }
-    
-    public static void main(java.lang.String[] args) {
-        junit.textui.TestRunner.run(suite());
-    }
-    
-    public static Test suite() {
-        //--JUNIT:
-        //This block was automatically generated and can be regenerated again.
-        //Do NOT change lines enclosed by the --JUNIT: and :JUNIT-- tags.
-        
-        TestSuite suite = new TestSuite("OJBSuite");
-        //suite.addTest(ServidorPersistente.OJB.ItemOJBTest.suite());
 
-		suite.addTest(ServidorPersistente.OJB.AulaOJBTest.suite());
-		suite.addTest(ServidorPersistente.OJB.CandidateSituationOJBTest.suite());
-		suite.addTest(ServidorPersistente.OJB.CountryOJBTest.suite());
-		suite.addTest(ServidorPersistente.OJB.CurricularCourseOJBTest.suite());
-		suite.addTest(ServidorPersistente.OJB.CursoExecucaoOJBTest.suite());
-		suite.addTest(ServidorPersistente.OJB.CursoOJBTest.suite());
-		suite.addTest(ServidorPersistente.OJB.DepartamentoOJBTest.suite());
-		suite.addTest(ServidorPersistente.OJB.DisciplinaDepartamentoOJBTest.suite());
-		suite.addTest(ServidorPersistente.OJB.DisciplinaExecucaoOJBTest.suite());
-		suite.addTest(ServidorPersistente.OJB.EnrolmentOJBTest.suite());
-		suite.addTest(ServidorPersistente.OJB.ExecutionPeriodOJBTest.suite());
-		suite.addTest(ServidorPersistente.OJB.ExecutionYearOJBTest.suite());
-		suite.addTest(ServidorPersistente.OJB.FrequentaOJBTest.suite());
-		suite.addTest(ServidorPersistente.OJB.ItemOJBTest.suite());
-		suite.addTest(ServidorPersistente.OJB.MasterDegreeCandidateOJBTest.suite());
+	public OJBSuite(java.lang.String testName) {
+		super(testName);
+	}
 
-		suite.addTest(ServidorPersistente.OJB.PessoaOJBTest.suite());
-		suite.addTest(ServidorPersistente.OJB.DegreeCurricularPlanOJBTest.suite());
-		
-		suite.addTest(ServidorPersistente.OJB.SalaOJBTest.suite());
-		suite.addTest(ServidorPersistente.OJB.StudentCurricularPlanOJBTest.suite());
-		suite.addTest(ServidorPersistente.OJB.StudentOJBTest.suite());
-		suite.addTest(ServidorPersistente.OJB.TurmaOJBTest.suite());
-		suite.addTest(ServidorPersistente.OJB.TurmaTurnoOJBTest.suite());
-		suite.addTest(ServidorPersistente.OJB.TurnoAlunoOJBTest.suite());
-		suite.addTest(ServidorPersistente.OJB.TurnoAulaOJBTest.suite());
-		suite.addTest(ServidorPersistente.OJB.TurnoOJBTest.suite());
+	public static void main(java.lang.String[] args) {
+		junit.textui.TestRunner.run(suite());
+	}
 
-        //:JUNIT--
-        //This value MUST ALWAYS be returned from this function.
-        return suite;
-    }
-    
-    // Add test methods here, they have to start with 'test' name.
-    // for example:
-    // public void testHello() {}
-    
-    
+	public static Test suite() {
+		TestSuite suite = new TestSuite("OJBSuite");
+
+		suite.addTest(AulaOJBTest.suite());
+		suite.addTest(AnnouncementOJBTest.suite());
+		suite.addTest(BranchOJBTest.suite());
+		suite.addTest(CandidateSituationOJBTest.suite());
+		suite.addTest(CountryOJBTest.suite());
+		suite.addTest(CurricularCourseOJBTest.suite());
+		suite.addTest(CursoExecucaoOJBTest.suite());
+		suite.addTest(CursoOJBTest.suite());
+		suite.addTest(DepartamentoOJBTest.suite());
+		suite.addTest(DegreeCurricularPlanOJBTest.suite());
+		suite.addTest(DisciplinaDepartamentoOJBTest.suite());
+		suite.addTest(DisciplinaExecucaoOJBTest.suite());
+		suite.addTest(EnrolmentOJBTest.suite());
+		suite.addTest(ExecutionPeriodOJBTest.suite());
+		suite.addTest(ExecutionYearOJBTest.suite());
+		suite.addTest(FrequentaOJBTest.suite());
+		suite.addTest(ItemOJBTest.suite());
+		suite.addTest(MasterDegreeCandidateOJBTest.suite());
+		suite.addTest(PessoaOJBTest.suite());
+		suite.addTest(SalaOJBTest.suite());
+		suite.addTest(StudentCurricularPlanOJBTest.suite());
+		suite.addTest(StudentOJBTest.suite());
+		suite.addTest(TurmaOJBTest.suite());
+		suite.addTest(TurmaTurnoOJBTest.suite());
+		suite.addTest(TurnoAlunoOJBTest.suite());
+		suite.addTest(TurnoAulaOJBTest.suite());
+		suite.addTest(TurnoOJBTest.suite());
+		suite.addTest(ContributorOJBTest.suite());
+		suite.addTest(CurricularSemesterOJBTest.suite());
+		suite.addTest(CurricularYearOJBTest.suite());
+		suite.addTest(EquivalenceOJBTest.suite());
+
+		return suite;
+	}
+
+	// Add test methods here, they have to start with 'test' name.
+	// for example:
+	// public void testHello() {}
+
 }

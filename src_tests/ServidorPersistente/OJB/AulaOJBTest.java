@@ -369,7 +369,7 @@ public class AulaOJBTest extends TestCaseOJB {
       List result = null;
       try {
         Implementation odmg = OJB.getInstance();
-        OQLQuery query = odmg.newOQLQuery();;
+        OQLQuery query = odmg.newOQLQuery();
         String oqlQuery = "select aula from " + Aula.class.getName();
         query.create(oqlQuery);
         result = (List) query.execute();
@@ -788,7 +788,7 @@ public class AulaOJBTest extends TestCaseOJB {
 		persistentSupport.confirmarTransaccao();
 
 		assertNotNull("testReadLessonsInBroadPeriodInAnyRoom: result was null", lessonsInBroadPeriodInAnyRoom);
-		assertEquals(7, lessonsInBroadPeriodInAnyRoom.size());
+		assertEquals(4, lessonsInBroadPeriodInAnyRoom.size());
 
 		// prepare query input
 		start.set(Calendar.HOUR_OF_DAY, 9);
@@ -803,7 +803,7 @@ public class AulaOJBTest extends TestCaseOJB {
 		persistentSupport.confirmarTransaccao();
 
 		assertNotNull("testReadLessonsInBroadPeriodInAnyRoom: result was null", lessonsInBroadPeriodInAnyRoom);
-		assertEquals(5, lessonsInBroadPeriodInAnyRoom.size());
+		assertEquals(2, lessonsInBroadPeriodInAnyRoom.size());
 
 		// prepare query input
 		lesson.setDiaSemana(new DiaSemana(DiaSemana.SEXTA_FEIRA));

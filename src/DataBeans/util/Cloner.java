@@ -1,7 +1,9 @@
 package DataBeans.util;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import org.apache.commons.beanutils.BeanUtils;
 
@@ -11,6 +13,8 @@ import DataBeans.InfoClass;
 import DataBeans.InfoContributor;
 import DataBeans.InfoCountry;
 import DataBeans.InfoCurricularCourse;
+import DataBeans.InfoCurricularSemester;
+import DataBeans.InfoCurricularYear;
 import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExam;
@@ -40,6 +44,8 @@ import Dominio.CandidateSituation;
 import Dominio.Contributor;
 import Dominio.Country;
 import Dominio.CurricularCourse;
+import Dominio.CurricularSemester;
+import Dominio.CurricularYear;
 import Dominio.Curriculum;
 import Dominio.Curso;
 import Dominio.CursoExecucao;
@@ -56,6 +62,8 @@ import Dominio.ICandidateSituation;
 import Dominio.IContributor;
 import Dominio.ICountry;
 import Dominio.ICurricularCourse;
+import Dominio.ICurricularSemester;
+import Dominio.ICurricularYear;
 import Dominio.ICurriculum;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
@@ -95,9 +103,7 @@ public abstract class Cloner {
 
 	public static ITurno copyInfoShift2Shift(InfoShift infoShift) {
 		ITurno shift = new Turno();
-		IDisciplinaExecucao executionCourse =
-			Cloner.copyInfoExecutionCourse2ExecutionCourse(
-				infoShift.getInfoDisciplinaExecucao());
+		IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoShift.getInfoDisciplinaExecucao());
 
 		copyObjectProperties(shift, infoShift);
 
@@ -111,9 +117,7 @@ public abstract class Cloner {
 	 */
 	public static IDisciplinaExecucao copyInfoExecutionCourse2ExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
 		IDisciplinaExecucao executionCourse = new DisciplinaExecucao();
-		IExecutionPeriod executionPeriod =
-			Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
-				infoExecutionCourse.getInfoExecutionPeriod());
+		IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionCourse.getInfoExecutionPeriod());
 
 		copyObjectProperties(executionCourse, infoExecutionCourse);
 
@@ -123,9 +127,7 @@ public abstract class Cloner {
 
 	public static InfoExecutionCourse copyIExecutionCourse2InfoExecutionCourse(IDisciplinaExecucao executionCourse) {
 		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
-		InfoExecutionPeriod infoExecutionPeriod =
-			Cloner.copyIExecutionPeriod2InfoExecutionPeriod(
-				executionCourse.getExecutionPeriod());
+		InfoExecutionPeriod infoExecutionPeriod = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(executionCourse.getExecutionPeriod());
 
 		copyObjectProperties(infoExecutionCourse, executionCourse);
 
@@ -183,9 +185,7 @@ public abstract class Cloner {
 	 */
 	public static InfoLesson copyILesson2InfoLesson(IAula lesson) {
 		InfoLesson infoLesson = new InfoLesson();
-		InfoExecutionCourse infoExecutionCourse =
-			Cloner.copyIExecutionCourse2InfoExecutionCourse(
-				lesson.getDisciplinaExecucao());
+		InfoExecutionCourse infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(lesson.getDisciplinaExecucao());
 
 		InfoRoom infoRoom = Cloner.copyRoom2InfoRoom(lesson.getSala());
 
@@ -203,9 +203,7 @@ public abstract class Cloner {
 	 */
 	public static ITurno copyInfoShift2IShift(InfoShift infoShift) {
 		ITurno shift = new Turno();
-		IDisciplinaExecucao executionCourse =
-			Cloner.copyInfoExecutionCourse2ExecutionCourse(
-				infoShift.getInfoDisciplinaExecucao());
+		IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoShift.getInfoDisciplinaExecucao());
 
 		copyObjectProperties(shift, infoShift);
 
@@ -221,9 +219,7 @@ public abstract class Cloner {
 	public static InfoShift copyShift2InfoShift(ITurno shift) {
 		InfoShift infoShift = new InfoShift();
 
-		InfoExecutionCourse infoExecutionCourse =
-			Cloner.copyIExecutionCourse2InfoExecutionCourse(
-				shift.getDisciplinaExecucao());
+		InfoExecutionCourse infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(shift.getDisciplinaExecucao());
 
 		copyObjectProperties(infoShift, shift);
 
@@ -239,12 +235,8 @@ public abstract class Cloner {
 	 */
 	public static InfoClass copyClass2InfoClass(ITurma classD) {
 		InfoClass infoClass = new InfoClass();
-		InfoExecutionDegree infoExecutionDegree =
-			Cloner.copyIExecutionDegree2InfoExecutionDegree(
-				classD.getExecutionDegree());
-		InfoExecutionPeriod infoExecutionPeriod =
-			Cloner.copyIExecutionPeriod2InfoExecutionPeriod(
-				classD.getExecutionPeriod());
+		InfoExecutionDegree infoExecutionDegree = Cloner.copyIExecutionDegree2InfoExecutionDegree(classD.getExecutionDegree());
+		InfoExecutionPeriod infoExecutionPeriod = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(classD.getExecutionPeriod());
 
 		copyObjectProperties(infoClass, classD);
 
@@ -259,9 +251,7 @@ public abstract class Cloner {
 	 */
 	public static InfoExecutionPeriod copyIExecutionPeriod2InfoExecutionPeriod(IExecutionPeriod executionPeriod) {
 		InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
-		InfoExecutionYear infoExecutionYear =
-			Cloner.copyIExecutionYear2InfoExecutionYear(
-				executionPeriod.getExecutionYear());
+		InfoExecutionYear infoExecutionYear = Cloner.copyIExecutionYear2InfoExecutionYear(executionPeriod.getExecutionYear());
 
 		copyObjectProperties(infoExecutionPeriod, executionPeriod);
 
@@ -269,9 +259,7 @@ public abstract class Cloner {
 		return infoExecutionPeriod;
 	}
 
-	private static void copyObjectProperties(
-		Object destination,
-		Object source) {
+	private static void copyObjectProperties(Object destination, Object source) {
 		if (source != null)
 			try {
 				BeanUtils.copyProperties(destination, source);
@@ -289,12 +277,9 @@ public abstract class Cloner {
 
 		ICursoExecucao executionDegree = new CursoExecucao();
 		IDegreeCurricularPlan degreeCurricularPlan =
-			Cloner.copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(
-				infoExecutionDegree.getInfoDegreeCurricularPlan());
+			Cloner.copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(infoExecutionDegree.getInfoDegreeCurricularPlan());
 
-		IExecutionYear executionYear =
-			Cloner.copyInfoExecutionYear2IExecutionYear(
-				infoExecutionDegree.getInfoExecutionYear());
+		IExecutionYear executionYear = Cloner.copyInfoExecutionYear2IExecutionYear(infoExecutionDegree.getInfoExecutionYear());
 
 		copyObjectProperties(executionDegree, infoExecutionDegree);
 
@@ -310,12 +295,9 @@ public abstract class Cloner {
 		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
 
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
-			Cloner.copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(
-				executionDegree.getCurricularPlan());
+			Cloner.copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(executionDegree.getCurricularPlan());
 
-		InfoExecutionYear infoExecutionYear =
-			Cloner.copyIExecutionYear2InfoExecutionYear(
-				executionDegree.getExecutionYear());
+		InfoExecutionYear infoExecutionYear = Cloner.copyIExecutionYear2InfoExecutionYear(executionDegree.getExecutionYear());
 		try {
 			BeanUtils.copyProperties(infoExecutionDegree, executionDegree);
 		} catch (Exception e) {
@@ -324,8 +306,7 @@ public abstract class Cloner {
 		}
 
 		infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
-		infoExecutionDegree.setInfoDegreeCurricularPlan(
-			infoDegreeCurricularPlan);
+		infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 
 		return infoExecutionDegree;
 
@@ -396,9 +377,7 @@ public abstract class Cloner {
 
 		IExecutionPeriod executionPeriod = new ExecutionPeriod();
 
-		IExecutionYear executionYear =
-			Cloner.copyInfoExecutionYear2IExecutionYear(
-				infoExecutionPeriod.getInfoExecutionYear());
+		IExecutionYear executionYear = Cloner.copyInfoExecutionYear2IExecutionYear(infoExecutionPeriod.getInfoExecutionYear());
 
 		copyObjectProperties(executionPeriod, infoExecutionPeriod);
 
@@ -414,12 +393,8 @@ public abstract class Cloner {
 	public static ITurma copyInfoClass2Class(InfoClass infoClass) {
 		ITurma domainClass = new Turma();
 
-		IExecutionPeriod executionPeriod =
-			Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
-				infoClass.getInfoExecutionPeriod());
-		ICursoExecucao executionDegree =
-			Cloner.copyInfoExecutionDegree2ExecutionDegree(
-				infoClass.getInfoExecutionDegree());
+		IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoClass.getInfoExecutionPeriod());
+		ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoClass.getInfoExecutionDegree());
 
 		copyObjectProperties(domainClass, infoClass);
 
@@ -434,9 +409,7 @@ public abstract class Cloner {
 	 */
 	public static InfoShift copyIShift2InfoShift(ITurno shift) {
 		InfoShift infoShift = new InfoShift();
-		InfoExecutionCourse infoExecutionCourse =
-			Cloner.copyIExecutionCourse2InfoExecutionCourse(
-				shift.getDisciplinaExecucao());
+		InfoExecutionCourse infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(shift.getDisciplinaExecucao());
 		copyObjectProperties(infoShift, shift);
 		infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
 		return infoShift;
@@ -448,8 +421,7 @@ public abstract class Cloner {
 	 */
 	public static IStudent copyInfoStudent2IStudent(InfoStudent infoStudent) {
 		IStudent student = new Student();
-		IPessoa person =
-			Cloner.copyInfoPerson2IPerson(infoStudent.getInfoPerson());
+		IPessoa person = Cloner.copyInfoPerson2IPerson(infoStudent.getInfoPerson());
 		copyObjectProperties(student, infoStudent);
 		student.setPerson(person);
 
@@ -464,8 +436,7 @@ public abstract class Cloner {
 	public static InfoStudent copyIStudent2InfoStudent(IStudent student) {
 		InfoStudent infoStudent = new InfoStudent();
 		copyObjectProperties(infoStudent, student);
-		infoStudent.setInfoPerson(
-			Cloner.copyIPerson2InfoPerson(student.getPerson()));
+		infoStudent.setInfoPerson(Cloner.copyIPerson2InfoPerson(student.getPerson()));
 		return infoStudent;
 	}
 
@@ -490,7 +461,7 @@ public abstract class Cloner {
 	public static InfoPerson copyIPerson2InfoPerson(IPessoa person) {
 		InfoPerson infoPerson = new InfoPerson();
 		InfoCountry infoCountry = Cloner.copyICountry2InfoCountry(person.getPais());
-		
+
 		copyObjectProperties(infoPerson, person);
 		infoPerson.setInfoPais(infoCountry);
 		return infoPerson;
@@ -506,13 +477,12 @@ public abstract class Cloner {
 		copyObjectProperties(candidateSituation, infoCandidateSituation);
 		return candidateSituation;
 	}
-	
+
 	public static InfoCandidateSituation copyICandidateSituation2InfoCandidateSituation(ICandidateSituation candidateSituation) {
-			InfoCandidateSituation infoCandidateSituation = new InfoCandidateSituation();
-			copyObjectProperties(infoCandidateSituation, candidateSituation);
-			return infoCandidateSituation;
-		}
-	
+		InfoCandidateSituation infoCandidateSituation = new InfoCandidateSituation();
+		copyObjectProperties(infoCandidateSituation, candidateSituation);
+		return infoCandidateSituation;
+	}
 
 	/**
 	 * Method copyInfoMasterDegreeCandidate2IMasterDegreCandidate
@@ -520,8 +490,7 @@ public abstract class Cloner {
 	 * @return IMasterDegreeCandidate
 	 */
 	public static IMasterDegreeCandidate copyInfoMasterDegreeCandidate2IMasterDegreCandidate(InfoMasterDegreeCandidate infoMasterDegreeCandidate) {
-		IMasterDegreeCandidate masterDegreeCandidate =
-			new MasterDegreeCandidate();
+		IMasterDegreeCandidate masterDegreeCandidate = new MasterDegreeCandidate();
 		IPessoa person = Cloner.copyInfoPerson2IPerson(infoMasterDegreeCandidate.getInfoPerson());
 		ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoMasterDegreeCandidate.getInfoExecutionDegree());
 		copyObjectProperties(masterDegreeCandidate, infoMasterDegreeCandidate);
@@ -579,27 +548,17 @@ public abstract class Cloner {
 	}
 
 	public static IBibliographicReference copyInfoBibliographicReference2IBibliographicReference(InfoBibliographicReference infoBibliographicReference) {
-		IBibliographicReference bibliographicReference =
-			new BibliographicReference();
-		IDisciplinaExecucao executionCourse =
-			Cloner.copyInfoExecutionCourse2ExecutionCourse(
-				infoBibliographicReference.getInfoExecutionCourse());
-		copyObjectProperties(
-			bibliographicReference,
-			infoBibliographicReference);
+		IBibliographicReference bibliographicReference = new BibliographicReference();
+		IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoBibliographicReference.getInfoExecutionCourse());
+		copyObjectProperties(bibliographicReference, infoBibliographicReference);
 		bibliographicReference.setExecutionCourse(executionCourse);
 		return bibliographicReference;
 	}
 
 	public static InfoBibliographicReference copyIBibliographicReference2InfoBibliographicReference(IBibliographicReference bibliographicReference) {
-		InfoBibliographicReference infoBibliographicReference =
-			new InfoBibliographicReference();
-		InfoExecutionCourse infoExecutionCourse =
-			Cloner.copyIExecutionCourse2InfoExecutionCourse(
-				bibliographicReference.getExecutionCourse());
-		copyObjectProperties(
-			infoBibliographicReference,
-			bibliographicReference);
+		InfoBibliographicReference infoBibliographicReference = new InfoBibliographicReference();
+		InfoExecutionCourse infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(bibliographicReference.getExecutionCourse());
+		copyObjectProperties(infoBibliographicReference, bibliographicReference);
 		infoBibliographicReference.setInfoExecutionCourse(infoExecutionCourse);
 		return infoBibliographicReference;
 	}
@@ -608,56 +567,50 @@ public abstract class Cloner {
 	* @param infoSite
 	* @return ISite
 	*/
-	
+
 	public static ISite copyInfoSite2ISite(InfoSite infoSite) {
 		ISite site = new Site();
-		IDisciplinaExecucao executionCourse =
-			Cloner.copyInfoExecutionCourse2ExecutionCourse(
-				infoSite.getInfoExecutionCourse());
-		
-//		ISection initialSection = Cloner.copyInfoSection2ISection(
-//			infoSite.getInitialInfoSection());
-		
-//		List sections = Cloner.copyListInfoSections2ListISections(infoSite.getInfoSections());
-//		List announcements = Cloner.copyListInfoAnnouncements2ListIAnnouncements(infoSite.getInfoAnnouncements());
-		
+		IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoSite.getInfoExecutionCourse());
+
+		//		ISection initialSection = Cloner.copyInfoSection2ISection(
+		//			infoSite.getInitialInfoSection());
+
+		//		List sections = Cloner.copyListInfoSections2ListISections(infoSite.getInfoSections());
+		//		List announcements = Cloner.copyListInfoAnnouncements2ListIAnnouncements(infoSite.getInfoAnnouncements());
+
 		copyObjectProperties(site, infoSite);
 		site.setExecutionCourse(executionCourse);
-//		site.setInitialSection(initialSection);
-//		site.setSections(sections);
-//		site.setAnnouncements(announcements);
-		
+		//		site.setInitialSection(initialSection);
+		//		site.setSections(sections);
+		//		site.setAnnouncements(announcements);
+
 		return site;
 	}
-	
+
 	/**
 	 * Method copyISite2InfoSite.
 	 * @param site
 	 * @return InfoSite
 	 */
-	
+
 	public static InfoSite copyISite2InfoSite(ISite site) {
 		InfoSite infoSite = new InfoSite();
 
-		InfoExecutionCourse infoExecutionCourse =
-			Cloner.copyIExecutionCourse2InfoExecutionCourse(
-				site.getExecutionCourse());
-				
-//		InfoSection initialInfoSection = Cloner.copyISection2InfoSection(
-//					site.getInitialSection());
-		
-		
-		
-//		List infoSections = Cloner.copyListISections2ListInfoSections(site.getSections());
-//		List infoAnnouncements = Cloner.copyListIAnnouncements2ListInfoAnnouncements(site.getAnnouncements());
-//		
-				
+		InfoExecutionCourse infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(site.getExecutionCourse());
+
+		//		InfoSection initialInfoSection = Cloner.copyISection2InfoSection(
+		//					site.getInitialSection());
+
+		//		List infoSections = Cloner.copyListISections2ListInfoSections(site.getSections());
+		//		List infoAnnouncements = Cloner.copyListIAnnouncements2ListInfoAnnouncements(site.getAnnouncements());
+		//		
+
 		copyObjectProperties(infoSite, site);
 		infoSite.setInfoExecutionCourse(infoExecutionCourse);
-//		infoSite.setInitialInfoSection(initialInfoSection);
-//		infoSite.setInfoSections(infoSections);
-//		infoSite.setInfoAnnouncements(infoAnnouncements);
-	
+		//		infoSite.setInitialInfoSection(initialInfoSection);
+		//		infoSite.setInfoSections(infoSections);
+		//		infoSite.setInfoAnnouncements(infoAnnouncements);
+
 		return infoSite;
 	}
 
@@ -675,117 +628,103 @@ public abstract class Cloner {
 
 		ISite site = Cloner.copyInfoSite2ISite(infoSection.getInfoSite());
 
-		InfoSection infoSuperiorSection =
-			(InfoSection) infoSection.getSuperiorInfoSection();
+		InfoSection infoSuperiorSection = (InfoSection) infoSection.getSuperiorInfoSection();
 
-		if(infoSuperiorSection != null) {
-			fatherSection =
-				Cloner.copyInfoSection2ISection(infoSuperiorSection);
+		if (infoSuperiorSection != null) {
+			fatherSection = Cloner.copyInfoSection2ISection(infoSuperiorSection);
 		}
 
-//		List inferiorSections = Cloner.copyListInfoSections2ListISections(infoSection.getInferiorInfoSections());
-//
-//		List items=Cloner.copyListInfoItems2ListIItems(infoSection.getInfoItems());
+		//		List inferiorSections = Cloner.copyListInfoSections2ListISections(infoSection.getInferiorInfoSections());
+		//
+		//		List items=Cloner.copyListInfoItems2ListIItems(infoSection.getInfoItems());
 
 		copyObjectProperties(section, infoSection);
 
 		section.setSuperiorSection(fatherSection);
 		section.setSite(site);
-//		section.setInferiorSections(inferiorSections);
-//		section.setItems(items);
-		
+		//		section.setInferiorSections(inferiorSections);
+		//		section.setItems(items);
+
 		return section;
 
 	}
-
 
 	/**
 	 * Method copyISection2InfoSection.
 	 * @param section
 	 * @return InfoSection
 	 **/
-	
 
 	public static InfoSection copyISection2InfoSection(ISection section) {
 
-   		InfoSection infoSection = new InfoSection();
+		InfoSection infoSection = new InfoSection();
 
 		InfoSection fatherInfoSection = null;
 
 		InfoSite infoSite = Cloner.copyISite2InfoSite(section.getSite());
 
-		ISection superiorSection =(ISection) section.getSuperiorSection();
-			
+		ISection superiorSection = (ISection) section.getSuperiorSection();
+
 		if (superiorSection != null) {
-			fatherInfoSection =
-				Cloner.copyISection2InfoSection(superiorSection);
+			fatherInfoSection = Cloner.copyISection2InfoSection(superiorSection);
 		}
 
-//		List inferiorInfoSections = Cloner.copyListISections2ListInfoSections(section.getInferiorSections());
-//
-//		List infoItems=Cloner.copyListIItems2ListInfoItems(section.getItems());
+		//		List inferiorInfoSections = Cloner.copyListISections2ListInfoSections(section.getInferiorSections());
+		//
+		//		List infoItems=Cloner.copyListIItems2ListInfoItems(section.getItems());
 
 		copyObjectProperties(infoSection, section);
 
 		infoSection.setSuperiorInfoSection(fatherInfoSection);
 		infoSection.setInfoSite(infoSite);
-//		infoSection.setInferiorInfoSections(inferiorInfoSections);
-//		infoSection.setInfoItems(infoItems);
-		
+		//		infoSection.setInferiorInfoSections(inferiorInfoSections);
+		//		infoSection.setInfoItems(infoItems);
+
 		return infoSection;
 
-	
 	}
-	
-	
+
 	/**
 	* 
 	* @param listInfoSections
 	* @return listISections
 	*/
-	
-	private static List copyListInfoSections2ListISections(List listInfoSections){
-			
-		List listSections=null;
-		
-		Iterator iterListInfoSections=listInfoSections.iterator();
-		
-		while(iterListInfoSections.hasNext())
-		{
+
+	private static List copyListInfoSections2ListISections(List listInfoSections) {
+
+		List listSections = null;
+
+		Iterator iterListInfoSections = listInfoSections.iterator();
+
+		while (iterListInfoSections.hasNext()) {
 			InfoSection infoSection = (InfoSection) iterListInfoSections.next();
-			ISection section=Cloner.copyInfoSection2ISection(infoSection);
+			ISection section = Cloner.copyInfoSection2ISection(infoSection);
 			listSections.add(section);
 		}
-		
+
 		return listSections;
 	}
-		
 
 	/**
 	* 
 	* @param listISections
 	* @return listInfoSections
 	*/
-	
-	private static List copyListISections2ListInfoSections(List listISections)
-	{			
-		List listInfoSections=null;
-		
-		Iterator iterListISections=listISections.iterator();
-		
-		while(iterListISections.hasNext())
-		{
+
+	private static List copyListISections2ListInfoSections(List listISections) {
+		List listInfoSections = null;
+
+		Iterator iterListISections = listISections.iterator();
+
+		while (iterListISections.hasNext()) {
 			ISection section = (ISection) iterListISections.next();
-			InfoSection infoSection=Cloner.copyISection2InfoSection(section);
+			InfoSection infoSection = Cloner.copyISection2InfoSection(section);
 			listInfoSections.add(infoSection);
 		}
-		
+
 		return listInfoSections;
 	}
 
-	
-	
-	
 	/**
 	 * Method copyInfoItem2IItem.
 	 * @param infoItem
@@ -796,8 +735,7 @@ public abstract class Cloner {
 
 		IItem item = new Item();
 
-		ISection section =
-			Cloner.copyInfoSection2ISection(infoItem.getInfoSection());
+		ISection section = Cloner.copyInfoSection2ISection(infoItem.getInfoSection());
 
 		copyObjectProperties(item, infoItem);
 
@@ -812,76 +750,65 @@ public abstract class Cloner {
 	* @param item
 	* @return InfoItem
 	**/
-	
 
 	public static InfoItem copyIItem2InfoItem(IItem item) {
 
-		InfoItem infoItem =new InfoItem();
-		InfoSection infoSection =
-						Cloner.copyISection2InfoSection(item.getSection());
+		InfoItem infoItem = new InfoItem();
+		InfoSection infoSection = Cloner.copyISection2InfoSection(item.getSection());
 
 		copyObjectProperties(infoItem, item);
 
 		infoItem.setInfoSection(infoSection);
 
-			
-			return infoItem;
-	
-		}
+		return infoItem;
 
-
+	}
 
 	/**
 	* 
 	* @param listInfoItems
 	* @return listIItems
 	*/
-	
-	private static List copyListInfoItems2ListIItems(List listInfoItems)
-	{
-		List listItems=null;
-		
-		Iterator iterListInfoItems=listInfoItems.iterator();
-		
-		while(iterListInfoItems.hasNext())
-		{
+
+	private static List copyListInfoItems2ListIItems(List listInfoItems) {
+		List listItems = null;
+
+		Iterator iterListInfoItems = listInfoItems.iterator();
+
+		while (iterListInfoItems.hasNext()) {
 			InfoItem infoItem = (InfoItem) iterListInfoItems.next();
-			IItem item=Cloner.copyInfoItem2IItem(infoItem);
+			IItem item = Cloner.copyInfoItem2IItem(infoItem);
 			listItems.add(item);
 		}
-		
+
 		return listItems;
 	}
-	
+
 	/**
 	* 
 	* @param listIItems
 	* @return listInfoItems
 	*/
-	
-		private static List copyListIItems2ListInfoItems(List listIItems)
-		{			
-			List listInfoItems=null;
-		
-			Iterator iterListIItems=listIItems.iterator();
-		
-			while(iterListIItems.hasNext())
-			{
-				IItem item = (IItem) iterListIItems.next();
-				InfoItem infoItem=Cloner.copyIItem2InfoItem(item);
-				listInfoItems.add(infoItem);
-			}
-		
-			return listInfoItems;
+
+	private static List copyListIItems2ListInfoItems(List listIItems) {
+		List listInfoItems = null;
+
+		Iterator iterListIItems = listIItems.iterator();
+
+		while (iterListIItems.hasNext()) {
+			IItem item = (IItem) iterListIItems.next();
+			InfoItem infoItem = Cloner.copyIItem2InfoItem(item);
+			listInfoItems.add(infoItem);
 		}
 
+		return listInfoItems;
+	}
 
-
-/**
-	 * Method copyInfoAnnouncement2IAnnouncement.
-	 * @param infoAnnouncement
-	 * @return IAnnouncement
-	 */
+	/**
+		 * Method copyInfoAnnouncement2IAnnouncement.
+		 * @param infoAnnouncement
+		 * @return IAnnouncement
+		 */
 	public static IAnnouncement copyInfoAnnouncement2IAnnouncement(InfoAnnouncement infoAnnouncement) {
 		IAnnouncement announcement = new Announcement();
 
@@ -914,19 +841,18 @@ public abstract class Cloner {
 	* @param listInfoAnnouncements
 	* @return listIAnnouncements
 	*/
-		
-	private static List copyListInfoAnnouncements2ListIAnnouncements(List listInfoAnnouncements){
-		List listAnnouncements=null;
-		
-		Iterator iterListInfoAnnouncements=listInfoAnnouncements.iterator();
-		
-		while(iterListInfoAnnouncements.hasNext())
-		{
+
+	private static List copyListInfoAnnouncements2ListIAnnouncements(List listInfoAnnouncements) {
+		List listAnnouncements = null;
+
+		Iterator iterListInfoAnnouncements = listInfoAnnouncements.iterator();
+
+		while (iterListInfoAnnouncements.hasNext()) {
 			InfoAnnouncement infoAnnouncement = (InfoAnnouncement) iterListInfoAnnouncements.next();
-			IAnnouncement announcement=Cloner.copyInfoAnnouncement2IAnnouncement(infoAnnouncement);				
+			IAnnouncement announcement = Cloner.copyInfoAnnouncement2IAnnouncement(infoAnnouncement);
 			listAnnouncements.add(announcement);
 		}
-		
+
 		return listAnnouncements;
 	}
 
@@ -935,24 +861,20 @@ public abstract class Cloner {
 	* @param listIAnnouncements
 	* @return listInfoAnnouncements
 	*/
-	
-	private static List copyListIAnnouncements2ListInfoAnnouncements(List listIAnnouncements)
-	{			
-		List listInfoAnnouncements=null;
-		
-		Iterator iterListIAnnouncements=listIAnnouncements.iterator();
-		
-		while(iterListIAnnouncements.hasNext())
-		{
+
+	private static List copyListIAnnouncements2ListInfoAnnouncements(List listIAnnouncements) {
+		List listInfoAnnouncements = null;
+
+		Iterator iterListIAnnouncements = listIAnnouncements.iterator();
+
+		while (iterListIAnnouncements.hasNext()) {
 			IAnnouncement announcement = (IAnnouncement) iterListIAnnouncements.next();
-			InfoAnnouncement infoAnnouncement=Cloner.copyIAnnouncement2InfoAnnouncement(announcement);
+			InfoAnnouncement infoAnnouncement = Cloner.copyIAnnouncement2InfoAnnouncement(announcement);
 			listInfoAnnouncements.add(infoAnnouncement);
 		}
-		
+
 		return listInfoAnnouncements;
 	}
-	
-	
 
 	/**
 	 * 
@@ -962,9 +884,7 @@ public abstract class Cloner {
 	public static InfoCurriculum copyICurriculum2InfoCurriculum(ICurriculum curriculum) {
 		InfoCurriculum infoCurriculum = new InfoCurriculum();
 
-		InfoExecutionCourse infoExecutionCourse =
-			Cloner.copyIExecutionCourse2InfoExecutionCourse(
-				curriculum.getExecutionCourse());
+		InfoExecutionCourse infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(curriculum.getExecutionCourse());
 
 		copyObjectProperties(infoCurriculum, curriculum);
 		infoCurriculum.setInfoExecutionCourse(infoExecutionCourse);
@@ -980,16 +900,13 @@ public abstract class Cloner {
 	public static ICurriculum copyInfoCurriculum2ICurriculum(InfoCurriculum infoCurriculum) {
 		ICurriculum curriculum = new Curriculum();
 
-		IDisciplinaExecucao executionCourse =
-			Cloner.copyInfoExecutionCourse2ExecutionCourse(
-				infoCurriculum.getInfoExecutionCourse());
+		IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoCurriculum.getInfoExecutionCourse());
 
 		copyObjectProperties(curriculum, infoCurriculum);
 		curriculum.setExecutionCourse(executionCourse);
 
 		return curriculum;
 	}
-
 
 	/**
 	 * 
@@ -999,9 +916,7 @@ public abstract class Cloner {
 	public static InfoExam copyIExam2InfoExam(IExam exam) {
 		InfoExam infoExam = new InfoExam();
 
-		InfoExecutionCourse infoExecutionCourse =
-			Cloner.copyIExecutionCourse2InfoExecutionCourse(
-				exam.getExecutionCourse());
+		InfoExecutionCourse infoExecutionCourse = Cloner.copyIExecutionCourse2InfoExecutionCourse(exam.getExecutionCourse());
 
 		copyObjectProperties(infoExam, exam);
 		infoExam.setInfoExecutionCourse(infoExecutionCourse);
@@ -1017,165 +932,275 @@ public abstract class Cloner {
 	public static IExam copyInfoExam2IExam(InfoExam infoExam) {
 		IExam exam = new Exam();
 
-		IDisciplinaExecucao executionCourse =
-			Cloner.copyInfoExecutionCourse2ExecutionCourse(
-				infoExam.getInfoExecutionCourse());
+		IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExam.getInfoExecutionCourse());
 
 		copyObjectProperties(exam, infoExam);
 		exam.setExecutionCourse(executionCourse);
 
 		return exam;
 	}
-/**
- * 
- * @param teacher
- * @return
- */
-		public static InfoTeacher copyITeacher2InfoTeacher(ITeacher teacher) {
-			InfoTeacher infoTeacher = new InfoTeacher();
-			InfoPerson infoPerson = new InfoPerson();
-			infoPerson=copyIPerson2InfoPerson(teacher.getPerson());		
-			copyObjectProperties(infoTeacher, teacher);
-			infoTeacher.setInfoPerson(infoPerson);
+	/**
+	 * 
+	 * @param teacher
+	 * @return
+	 */
+	public static InfoTeacher copyITeacher2InfoTeacher(ITeacher teacher) {
+		InfoTeacher infoTeacher = new InfoTeacher();
+		InfoPerson infoPerson = new InfoPerson();
+		infoPerson = copyIPerson2InfoPerson(teacher.getPerson());
+		copyObjectProperties(infoTeacher, teacher);
+		infoTeacher.setInfoPerson(infoPerson);
 
-			return infoTeacher;
-		}
+		return infoTeacher;
+	}
 	/**
 	 * 
 	 * @param infoTeacher
 	 * @return
 	 */
 	public static ITeacher copyInfoTeacher2Teacher(InfoTeacher infoTeacher) {
-				ITeacher teacher = new Teacher();		
-				IPessoa person = new Pessoa();
-				person=copyInfoPerson2IPerson(infoTeacher.getInfoPerson());
-				copyObjectProperties(teacher,infoTeacher);
-			    teacher.setPerson(person);
+		ITeacher teacher = new Teacher();
+		IPessoa person = new Pessoa();
+		person = copyInfoPerson2IPerson(infoTeacher.getInfoPerson());
+		copyObjectProperties(teacher, infoTeacher);
+		teacher.setPerson(person);
 
-				return teacher;
-			}		
+		return teacher;
+	}
 
-//	---------------------------------------------- DCS-RJAO -----------------------------------------------
+	//	---------------------------------------------- DCS-RJAO -----------------------------------------------
 
-	 /**
-	  * @author dcs-rjao
-	  * @param InfoDegreeCurricularPlan
-	  * @return IDegreeCurricularPlan
-	  */
-	 public static IDegreeCurricularPlan copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
+	/**
+	 * @author dcs-rjao
+	 * @param InfoDegreeCurricularPlan
+	 * @return IDegreeCurricularPlan
+	 */
+	public static IDegreeCurricularPlan copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
 
-		 IDegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
+		IDegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
 
-		 ICurso degree = Cloner.copyInfoDegree2IDegree(infoDegreeCurricularPlan.getInfoDegree());
+		ICurso degree = Cloner.copyInfoDegree2IDegree(infoDegreeCurricularPlan.getInfoDegree());
 
-		 try {
-			 BeanUtils.copyProperties(degreeCurricularPlan, infoDegreeCurricularPlan);
-		 } catch (Exception e) {
-			 throw new RuntimeException(e);
-		 }
+		try {
+			BeanUtils.copyProperties(degreeCurricularPlan, infoDegreeCurricularPlan);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 
-		 degreeCurricularPlan.setDegree(degree);
+		degreeCurricularPlan.setDegree(degree);
 
-		 return degreeCurricularPlan;
-	 }
+		return degreeCurricularPlan;
+	}
 
-	 /**
-	  * @author dcs-rjao
-	  * @param IDegreeCurricularPlan
-	  * @return InfoDegreeCurricularPlan
-	  */
-	 public static InfoDegreeCurricularPlan copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) {
+	/**
+	 * @author dcs-rjao
+	 * @param IDegreeCurricularPlan
+	 * @return InfoDegreeCurricularPlan
+	 */
+	public static InfoDegreeCurricularPlan copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) {
 
-		 InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
+		InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
 
-		 InfoDegree infoDegree = Cloner.copyIDegree2InfoDegree(degreeCurricularPlan.getDegree());
+		InfoDegree infoDegree = Cloner.copyIDegree2InfoDegree(degreeCurricularPlan.getDegree());
 
-		 try {
-			 BeanUtils.copyProperties(infoDegreeCurricularPlan, degreeCurricularPlan);
-		 } catch (Exception e) {
-			 throw new RuntimeException(e);
-		 }
+		try {
+			BeanUtils.copyProperties(infoDegreeCurricularPlan, degreeCurricularPlan);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 
-		 infoDegreeCurricularPlan.setInfoDegree(infoDegree);
+		infoDegreeCurricularPlan.setInfoDegree(infoDegree);
 
-		 return infoDegreeCurricularPlan;
-	 }
+		return infoDegreeCurricularPlan;
+	}
 
-	 /**
-	  * @author dcs-rjao
-	  * @param InfoBranch
-	  * @return IBranch
-	  */
-	 public static IBranch copyInfoBranch2IBranch(InfoBranch infoBranch) {
+	/**
+	 * @author dcs-rjao
+	 * @param InfoBranch
+	 * @return IBranch
+	 */
+	public static IBranch copyInfoBranch2IBranch(InfoBranch infoBranch) {
 
-		 IBranch branch = new Branch();
-		 copyObjectProperties(branch, infoBranch);
-		 return branch;
-	 }
+		IBranch branch = new Branch();
+		copyObjectProperties(branch, infoBranch);
+		return branch;
+	}
 
-	 /**
-	  * @author dcs-rjao
-	  * @param IBranch
-	  * @return InfoBranch
-	  */
-	 public static InfoBranch copyIBranch2InfoBranch(IBranch branch) {
+	/**
+	 * @author dcs-rjao
+	 * @param IBranch
+	 * @return InfoBranch
+	 */
+	public static InfoBranch copyIBranch2InfoBranch(IBranch branch) {
 
-		 InfoBranch infoBranch = new InfoBranch();
-		 copyObjectProperties(infoBranch, branch);
-		 return infoBranch;
-	 }
+		InfoBranch infoBranch = new InfoBranch();
+		copyObjectProperties(infoBranch, branch);
+		return infoBranch;
+	}
 
-	 /**
-	  * @author dcs-rjao
-	  * @param InfoCurricularCourse
-	  * @return ICurricularCourse
-	  */
-	 public static ICurricularCourse copyInfoCurricularCourse2ExecutionCourse(InfoCurricularCourse infoCurricularCourse) {
+	/**
+	 * @author dcs-rjao
+	 * @param InfoCurricularCourse
+	 * @return ICurricularCourse
+	 */
+	public static ICurricularCourse copyInfoCurricularCourse2CurricularCourse(InfoCurricularCourse infoCurricularCourse) {
 
-		 ICurricularCourse curricularCourse = new CurricularCourse();
+		ICurricularCourse curricularCourse = new CurricularCourse();
+		List infoCurricularSemestersList = null;
+		List curricularSemestersList = new ArrayList();
 
-		 IDegreeCurricularPlan planoCurricularCurso = copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(infoCurricularCourse.getInfoDegreeCurricularPlan());
+		IDegreeCurricularPlan planoCurricularCurso =
+			copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(infoCurricularCourse.getInfoDegreeCurricularPlan());
 
-		 copyObjectProperties(curricularCourse, infoCurricularCourse);
+		infoCurricularSemestersList = infoCurricularCourse.getAssociatedInfoCurricularSemesters();
+		if (infoCurricularSemestersList != null && !infoCurricularSemestersList.isEmpty()) {
+			ListIterator iterator = infoCurricularSemestersList.listIterator();
+			while (iterator.hasNext()) {
+				InfoCurricularSemester infoCurricularSemester = (InfoCurricularSemester) iterator.next();
+				ICurricularSemester curricularSemester = copyInfoCurricularSemester2CurricularSemester(infoCurricularSemester);
+				curricularSemestersList.add(curricularSemester);
+			}
+		}
 
-		 curricularCourse.setDegreeCurricularPlan(planoCurricularCurso);
+		copyObjectProperties(curricularCourse, infoCurricularCourse);
 
-		 return curricularCourse;
-	 }
+		curricularCourse.setDegreeCurricularPlan(planoCurricularCurso);
+		curricularCourse.setAssociatedCurricularSemesters(curricularSemestersList);
 
-	 /**
-	  * @author dcs-rjao
-	  * @param ICurricularCourse
-	  * @return InfoCurricularCourse
-	  */
-	 
-	 public static InfoCurricularCourse copyICurricularCourse2InfoCurricularCourse(ICurricularCourse curricularCourse) {
+		return curricularCourse;
+	}
 
-		 InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse();
+	/**
+	 * @author dcs-rjao
+	 * @param ICurricularCourse
+	 * @return InfoCurricularCourse
+	 */
 
-		 InfoDegreeCurricularPlan infoDegreeCurricularPlan = copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(curricularCourse.getDegreeCurricularPlan());
+	public static InfoCurricularCourse copyCurricularCourse2InfoCurricularCourse(ICurricularCourse curricularCourse) {
 
-		 copyObjectProperties(infoCurricularCourse, curricularCourse);
+		InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse();
+		List infoCurricularSemestersList = new ArrayList();
+		List curricularSemestersList = null;
 
-		 infoCurricularCourse.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
+			copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(curricularCourse.getDegreeCurricularPlan());
 
-		 return infoCurricularCourse;
-	 }
-//	---------------------------------------------- DCS-RJAO -----------------------------------------------
+		curricularSemestersList = curricularCourse.getAssociatedCurricularSemesters();
+		if (curricularSemestersList != null && !curricularSemestersList.isEmpty()) {
+			ListIterator iterator = curricularSemestersList.listIterator();
+			while (iterator.hasNext()) {
+				ICurricularSemester curricularSemester = (ICurricularSemester) iterator.next();
+				InfoCurricularSemester infoCurricularSemester = copyCurricularSemester2InfoCurricularSemester(curricularSemester);
+				infoCurricularSemestersList.add(infoCurricularSemester);
+			}
+		}
+
+		copyObjectProperties(infoCurricularCourse, curricularCourse);
+
+		infoCurricularCourse.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+		infoCurricularCourse.setAssociatedInfoCurricularSemesters(infoCurricularSemestersList);
+
+		return infoCurricularCourse;
+	}
+
+	/**
+	 * @author dcs-rjao
+	 * @param InfoCurricularSemester
+	 * @return ICurricularSemester
+	 */
+	public static ICurricularSemester copyInfoCurricularSemester2CurricularSemester(InfoCurricularSemester infoCurricularSemester) {
+//		List infoCurricularCoursesList = null;
+//		List curricularCoursesList = new ArrayList();
+		ICurricularSemester curricularSemester = new CurricularSemester();
+
+		ICurricularYear curricularYear = copyInfoCurricularYear2CurricularYear(infoCurricularSemester.getInfoCurricularYear());
+
+//		infoCurricularCoursesList = infoCurricularSemester.getAssociatedInfoCurricularCourses();
+//		if (infoCurricularCoursesList != null && !infoCurricularCoursesList.isEmpty()) {
+//			ListIterator iterator = infoCurricularCoursesList.listIterator();
+//			while (iterator.hasNext()) {
+//				InfoCurricularCourse infoCurricularCourse = (InfoCurricularCourse) iterator.next();
+//				ICurricularCourse curricularCourse = copyInfoCurricularCourse2CurricularCourse(infoCurricularCourse);
+//				curricularCoursesList.add(curricularCourse);
+//			}
+//		}
+
+		copyObjectProperties(curricularSemester, infoCurricularSemester);
+		curricularSemester.setCurricularYear(curricularYear);
+//		curricularSemester.setAssociatedCurricularCourses(curricularCoursesList);
+
+		return curricularSemester;
+	}
+
+	/**
+	 * @author dcs-rjao
+	 * @param ICurricularSemester
+	 * @return InfoCurricularSemester
+	 */
+
+	public static InfoCurricularSemester copyCurricularSemester2InfoCurricularSemester(ICurricularSemester curricularSemester) {
+//		List infoCurricularCoursesList = new ArrayList();
+//		List curricularCoursesList = null;
+		InfoCurricularSemester infoCurricularSemester = new InfoCurricularSemester();
+
+		InfoCurricularYear infoCurricularYear = copyCurricularYear2InfoCurricularYear(curricularSemester.getCurricularYear());
+
+//		curricularCoursesList = curricularSemester.getAssociatedCurricularCourses();
+//		if (curricularCoursesList != null && !curricularCoursesList.isEmpty()) {
+//			ListIterator iterator = curricularCoursesList.listIterator();
+//			while (iterator.hasNext()) {
+//				ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
+//				InfoCurricularCourse infoCurricularCourse = copyCurricularCourse2InfoCurricularCourse(curricularCourse);
+//				infoCurricularCoursesList.add(infoCurricularCourse);
+//			}
+//		}
+
+		copyObjectProperties(infoCurricularSemester, curricularSemester);
+
+		infoCurricularSemester.setInfoCurricularYear(infoCurricularYear);
+//		infoCurricularSemester.setAssociatedInfoCurricularCourses(infoCurricularCoursesList);
+
+		return infoCurricularSemester;
+	}
+
+	/**
+	 * @author dcs-rjao
+	 * @param InfoCurricularYear
+	 * @return ICurricularYear
+	 */
+	public static ICurricularYear copyInfoCurricularYear2CurricularYear(InfoCurricularYear infoCurricularYear) {
+		ICurricularYear curricularYear = new CurricularYear();
+		copyObjectProperties(curricularYear, infoCurricularYear);
+		return curricularYear;
+	}
+
+	/**
+	 * @author dcs-rjao
+	 * @param ICurricularYear
+	 * @return InfoCurricularYear
+	 */
+
+	public static InfoCurricularYear copyCurricularYear2InfoCurricularYear(ICurricularYear curricularYear) {
+		InfoCurricularYear infoCurricularYear = new InfoCurricularYear();
+		copyObjectProperties(infoCurricularYear, curricularYear);
+		return infoCurricularYear;
+	}
+
+	//	---------------------------------------------- DCS-RJAO -----------------------------------------------
 
 	/**
 	 * @author joana-nuno
 	 * @param IContributor
 	 * @return InfoContributor
 	 */
-	 
+
 	public static InfoContributor copyIContributor2InfoContributor(IContributor contributor) {
 
 		InfoContributor infoContributor = new InfoContributor();
 		copyObjectProperties(infoContributor, contributor);
 		return infoContributor;
 	}
-	
+
 	/**
 	 * 
 	 * @param contributor
@@ -1187,5 +1212,5 @@ public abstract class Cloner {
 		copyObjectProperties(contributor, infoContributor);
 		return contributor;
 	}
-	
+
 }

@@ -7,6 +7,7 @@
 package DataBeans;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -23,6 +24,7 @@ public class InfoCurricularCourse implements Serializable {
 	private Integer curricularYear;
 	private Integer semester;
 	private InfoDegreeCurricularPlan infoDegreeCurricularPlan;
+	private List associatedInfoCurricularSemesters;
 
 
 	public InfoCurricularCourse() {}
@@ -209,6 +211,21 @@ public class InfoCurricularCourse implements Serializable {
 	 */
 	public void setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
 		this.infoDegreeCurricularPlan = infoDegreeCurricularPlan;
+	}
+
+	/**
+	 * @return List
+	 */
+	public List getAssociatedInfoCurricularSemesters() {
+		return associatedInfoCurricularSemesters;
+	}
+
+	/**
+	 * Sets the associatedInfoCurricularSemesters.
+	 * @param associatedInfoCurricularSemesters The associatedInfoCurricularSemesters to set
+	 */
+	public void setAssociatedInfoCurricularSemesters(List associatedInfoCurricularSemesters) {
+		this.associatedInfoCurricularSemesters = associatedInfoCurricularSemesters;
 	}
 
 }

@@ -289,7 +289,5 @@ public class CurricularCourseOJBTest extends TestCaseOJB {
 			fail("Read Existing CurricularCourse");
 		}
 		assertNotNull(list);
-		System.out.println("*********** " + list.toString());
-		System.out.println("\nSIZE: " + list.size());
 	}
 }
