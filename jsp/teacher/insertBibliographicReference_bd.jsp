@@ -5,7 +5,7 @@
 <h2><bean:message key="title.editBibligraphicReference"/></h2>
 
 <logic:present name="siteView"> 
-<bean:define id="bibliographicReference" name="siteView" property="component"/>
+
 
 <html:form action="/createBibliographicReference">
 <html:hidden property="page" value="1"/>
