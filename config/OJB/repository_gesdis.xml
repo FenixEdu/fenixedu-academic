@@ -49,12 +49,12 @@
 	/>
     <field-descriptor id="3"
         name="date"
-        column="DATE"
+        column="CREATION_DATE"
         jdbc-type="DATE"
 	/>
     <field-descriptor id="4"
         name="lastModifiedDate"
-        column="DATE"
+        column="LAST_MODIFICATION_DATE"
         jdbc-type="DATE"
 	/>
     <field-descriptor id="5"
@@ -162,7 +162,7 @@
    >
       <field-descriptor id="1"
          name="internalCode"
-         column="INTERNAL_CODE"
+         column="ID_INTERNAL"
          jdbc-type="INTEGER"
          primarykey="true"
          autoincrement="true"
