@@ -6,7 +6,6 @@ package ServidorAplicacao.Servico.grant.contract;
 
 import DataBeans.InfoObject;
 import DataBeans.grant.contract.InfoGrantContractMovement;
-import DataBeans.util.Cloner;
 import Dominio.IDomainObject;
 import Dominio.grant.contract.GrantContract;
 import Dominio.grant.contract.GrantContractMovement;

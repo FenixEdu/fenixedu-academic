@@ -1,7 +1,5 @@
 package DataBeans.util;
 
-import java.beans.XMLDecoder;
-import java.io.ByteArrayInputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -37,7 +35,6 @@ import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoDegreeInfo;
 import DataBeans.InfoDepartment;
 import DataBeans.InfoDepartmentCourse;
-import DataBeans.InfoDistributedTest;
 import DataBeans.InfoEmployee;
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
@@ -68,7 +65,6 @@ import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.InfoMasterDegreeProofVersion;
 import DataBeans.InfoMasterDegreeThesis;
 import DataBeans.InfoMasterDegreeThesisDataVersion;
-import DataBeans.InfoMetadata;
 import DataBeans.InfoObject;
 import DataBeans.InfoOnlineTest;
 import DataBeans.InfoPaymentPhase;
@@ -76,7 +72,6 @@ import DataBeans.InfoPeriod;
 import DataBeans.InfoPerson;
 import DataBeans.InfoPrice;
 import DataBeans.InfoProfessorship;
-import DataBeans.InfoQuestion;
 import DataBeans.InfoResponsibleFor;
 import DataBeans.InfoRole;
 import DataBeans.InfoRoom;
@@ -91,14 +86,8 @@ import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.InfoStudentGroup;
 import DataBeans.InfoStudentGroupAttend;
 import DataBeans.InfoStudentKind;
-import DataBeans.InfoStudentTestLog;
-import DataBeans.InfoStudentTestQuestion;
-import DataBeans.InfoStudentTestQuestionMark;
 import DataBeans.InfoSummary;
 import DataBeans.InfoTeacher;
-import DataBeans.InfoTest;
-import DataBeans.InfoTestQuestion;
-import DataBeans.InfoTestScope;
 import DataBeans.InfoTutor;
 import DataBeans.InfoUniversity;
 import DataBeans.InfoWebSite;
@@ -224,7 +213,6 @@ import Dominio.teacher.workTime.ITeacherInstitutionWorkTime;
 import Dominio.teacher.workTime.TeacherInstitutionWorkTime;
 import Util.EvaluationType;
 import Util.State;
-import Util.tests.Response;
 
 /**
  * @author jpvl

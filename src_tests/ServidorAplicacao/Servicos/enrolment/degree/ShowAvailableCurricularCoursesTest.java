@@ -39,8 +39,7 @@ import framework.factory.ServiceManagerServiceFactory;
  * @author Ricardo Rodrigues
  */
 
-public class ShowAvailableCurricularCoursesTest extends TestCase
-{
+public class ShowAvailableCurricularCoursesTest extends TestCase {
     private dbaccess dbAcessPoint = null;
 
     private static String EXPECTED_SECONDARY_CREDITS_PROPERTY = "CreditsInSecundaryArea";
@@ -53,11 +52,9 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
 
     private static String STUDENT_NUMBER = "StudentNumber";
 
-    protected void setUp()
-    {
+    protected void setUp() {
         System.out.println("setup start");
-        try
-        {
+        try {
 
             dbAcessPoint = new dbaccess();
 
@@ -65,35 +62,28 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
 
             //            dbAcessPoint.backUpDataBaseContents("etc/testBackup.xml");
 
-            try
-            {
+            try {
                 dbAcessPoint.loadDataBase(getDataSetFilePath());
-            }
-            catch (RuntimeException e)
-            {
+            } catch (RuntimeException e) {
                 System.out.println(e);
             }
 
             dbAcessPoint.closeConnection();
 
             System.out.println("setup end");
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             System.out.println("Setup failed: " + ex);
         }
 
     }
 
-    protected void tearDown()
-    {
+    protected void tearDown() {
     }
 
     /**
      * @param name
      */
-    public ShowAvailableCurricularCoursesTest(String testName, String iteration)
-    {
+    public ShowAvailableCurricularCoursesTest(String testName, String iteration) {
         super(testName);
         ITERATION = iteration;
     }
@@ -103,43 +93,36 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
      * 
      * @see ServiceNeedsAuthenticationTestCase#getApplication()
      */
-    protected String getApplication()
-    {
+    protected String getApplication() {
         return Autenticacao.EXTRANET;
     }
 
-    protected String getNameOfServiceToBeTested()
-    {
+    protected String getNameOfServiceToBeTested() {
         return "ShowAvailableCurricularCoursesNew";
     }
 
-    protected String getDataSetFilePath()
-    {
+    protected String getDataSetFilePath() {
         return "etc/LEEC_Enrollment_Tests_Arguments/" + ITERATION
                 + "/input.xml";
     }
 
-    protected String getExpectedDataSetFilePath()
-    {
+    protected String getExpectedDataSetFilePath() {
         return "etc/LEEC_Enrollment_Tests_Arguments/" + ITERATION
                 + "/input.xml";
     }
 
-    protected String getConfigFilePath()
-    {
+    protected String getConfigFilePath() {
         return "etc/LEEC_Enrollment_Tests_Arguments/" + ITERATION
                 + "/test.properties";
     }
 
-    protected String getExpectedResultFilePath()
-    {
+    protected String getExpectedResultFilePath() {
         return "etc/LEEC_Enrollment_Tests_Arguments/" + ITERATION
                 + "/output.txt";
 
     }
 
-    protected String getDatabaseBackupFilePath()
-    {
+    protected String getDatabaseBackupFilePath() {
         return "etc/LEEC_Enrollment_Tests_Arguments/" + ITERATION
                 + "/backupDataSet.xml";
 
@@ -150,33 +133,25 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
      * 
      * @see ServiceNeedsAuthenticationTestCase#getAuthenticatedAndAuthorizedUser()
      */
-    protected String[] getAuthenticatedAndAuthorizedUser()
-    {
+    protected String[] getAuthenticatedAndAuthorizedUser() {
         System.out.println("getUser start");
-        try
-        {
+        try {
             ResourceBundle bundle = new PropertyResourceBundle(
                     new FileInputStream(getConfigFilePath()));
             USER = bundle.getString(STUDENT_NUMBER);
             System.out.println("getUser end");
-        }
-        catch (FileNotFoundException e)
-        {
+        } catch (FileNotFoundException e) {
             // 
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             //
         }
-        String[] args = {"L" + USER, "pass", getApplication()};
+        String[] args = { "L" + USER, "pass", getApplication() };
         return args;
     }
 
-    protected Object[] getArguments()
-    {
+    protected Object[] getArguments() {
 
-        try
-        {
+        try {
             ResourceBundle bundle = new PropertyResourceBundle(
                     new FileInputStream(getConfigFilePath()));
 
@@ -197,26 +172,20 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
                     .readAllFromStudent(studentNumber.intValue());
 
             IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) CollectionUtils
-                    .find(curricularPlans, new Predicate()
-                    {
+                    .find(curricularPlans, new Predicate() {
 
-                        public boolean evaluate(Object arg0)
-                        {
+                        public boolean evaluate(Object arg0) {
                             IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) arg0;
                             if (studentCurricularPlan.getDegreeCurricularPlan()
-                                    .getIdInternal().intValue() == 48)
-                            {
+                                    .getIdInternal().intValue() == 48) {
                                 return true;
                             }
-                            else
-                            {
-                                return false;
-                            }
+
+                            return false;
 
                         }
                     });
-            if (studentCurricularPlan == null)
-            {
+            if (studentCurricularPlan == null) {
                 fail("Not a LEEC Student");
             }
 
@@ -224,22 +193,16 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
 
             studentCurricularPlanId = studentCurricularPlan.getIdInternal();
 
-            Object[] args = {new Integer(48), studentCurricularPlanId,
-                    studentNumber};
+            Object[] args = { new Integer(48), studentCurricularPlanId,
+                    studentNumber };
 
             return args;
 
-        }
-        catch (FileNotFoundException e)
-        {
+        } catch (FileNotFoundException e) {
             //
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             //
-        }
-        catch (ExcepcaoPersistencia e1)
-        {
+        } catch (ExcepcaoPersistencia e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
@@ -253,28 +216,23 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
      * 
      * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthorizeArguments()
      */
-    protected Object[] getAuthorizeArguments()
-    {
+    protected Object[] getAuthorizeArguments() {
         return getArguments();
     }
 
     /** ********** Inicio dos testes ao serviço ************* */
 
-    public boolean testShowAvailableCurricularCoursesTest()
-    {
+    public boolean testShowAvailableCurricularCoursesTest() {
         System.out.println("test start");
         String[] args = getAuthenticatedAndAuthorizedUser();
         IUserView id = authenticateUser(args);
         Object[] args2 = getArguments();
         InfoStudentEnrollmentContext infoSEC = null;
 
-        try
-        {
+        try {
             infoSEC = (InfoStudentEnrollmentContext) ServiceManagerServiceFactory
                     .executeService(id, getNameOfServiceToBeTested(), args2);
-        }
-        catch (FenixServiceException e)
-        {
+        } catch (FenixServiceException e) {
             System.out.println("service execution failed:" + e);
             fail("Executing Service: " + getNameOfServiceToBeTested());
             e.printStackTrace();
@@ -283,15 +241,12 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
         System.out.println("service executed: comparing results");
         boolean result = CompareExpectedCCAndCreditsWithDataReturnedFromService(infoSEC);
 
-        if (result)
-        {
+        if (result) {
             System.out
                     .println(getNameOfServiceToBeTested()
                             + " was SUCCESSFULY runned by test: testCreateGrantSubsidySuccessfull");
 
-        }
-        else
-        {
+        } else {
             fail("Returned curricular courses dont macth the expected curricular courses");
             return false;
 
@@ -304,68 +259,53 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
      * @return
      */
     private boolean CompareExpectedCCAndCreditsWithDataReturnedFromService(
-            InfoStudentEnrollmentContext infoSEC)
-    {
+            InfoStudentEnrollmentContext infoSEC) {
 
         //  Integer secondaryCredits = infoSEC.getCreditsInSecundaryArea();
         //        Integer specializationCredits = infoSEC
         //                .getCreditsInSpecializationArea();
         List curricularCourses = infoSEC
                 .getFinalInfoCurricularCoursesWhereStudentCanBeEnrolled();
-       
-        List curricularCoursesNames = (List) CollectionUtils.collect(
-                curricularCourses, new Transformer()
-                {
 
-                    public Object transform(Object arg0)
-                    {
+        List curricularCoursesNames = (List) CollectionUtils.collect(
+                curricularCourses, new Transformer() {
+
+                    public Object transform(Object arg0) {
                         InfoCurricularCourse curricularCourse = null;
-                        try
-                        {
+                        try {
                             curricularCourse = (InfoCurricularCourse) arg0;
-                        }
-                        catch (RuntimeException e)
-                        {
+                        } catch (RuntimeException e) {
                             return "XPTO";
                         }
                         return curricularCourse.getName();
                     }
                 });
-       // System.out.println("para inscrever->"+curricularCoursesNames);
-       
-        if (infoSEC.getStudentCurrentSemesterInfoEnrollments() != null)
-        {
+        // System.out.println("para inscrever->"+curricularCoursesNames);
+
+        if (infoSEC.getStudentCurrentSemesterInfoEnrollments() != null) {
 
             List forcedEnrollments = (List) CollectionUtils.collect(infoSEC
                     .getStudentCurrentSemesterInfoEnrollments(),
-                    new Transformer()
-                    {
+                    new Transformer() {
 
-                        public Object transform(Object arg0)
-                        {
+                        public Object transform(Object arg0) {
                             InfoEnrolment infoEnrolment = (InfoEnrolment) arg0;
                             if (infoEnrolment.getInfoCurricularCourse()
-                                    .getMandatory().booleanValue())
-                            {
+                                    .getMandatory().booleanValue()) {
                                 return infoEnrolment.getInfoCurricularCourse()
                                         .getName();
                             }
-                            else
-                            {
-                                return "XPTO";
-                            }
+                            return "XPTO";
 
                         }
                     });
-           // System.out.println("inscrição obrigatória->"+forcedEnrollments);
+            // System.out.println("inscrição obrigatória->"+forcedEnrollments);
             curricularCoursesNames.addAll(forcedEnrollments);
 
         }
-        CollectionUtils.filter(curricularCoursesNames, new Predicate()
-        {
+        CollectionUtils.filter(curricularCoursesNames, new Predicate() {
 
-            public boolean evaluate(Object arg0)
-            {
+            public boolean evaluate(Object arg0) {
                 return !arg0.equals("XPTO");
             }
         });
@@ -402,34 +342,26 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
     /**
      * @return
      */
-    private List readExpectedCCAndCredits()
-    {
+    private List readExpectedCCAndCredits() {
         List ccAndCredits = new ArrayList();
-        try
-        {
+        try {
 
             ResourceBundle bundle = new PropertyResourceBundle(
                     new FileInputStream(getConfigFilePath()));
 
             Integer creditsInSecundaryArea;
-            try
-            {
+            try {
                 creditsInSecundaryArea = new Integer(bundle
                         .getString(EXPECTED_SECONDARY_CREDITS_PROPERTY));
-            }
-            catch (NumberFormatException e)
-            {
+            } catch (NumberFormatException e) {
                 creditsInSecundaryArea = new Integer(0);
             }
 
             Integer creditsInSpecializationArea;
-            try
-            {
+            try {
                 creditsInSpecializationArea = new Integer(bundle
                         .getString(EXPECTED_SPECIALIZATION_CREDITS_PROPERTY));
-            }
-            catch (NumberFormatException e1)
-            {
+            } catch (NumberFormatException e1) {
                 creditsInSpecializationArea = new Integer(0);
             }
 
@@ -441,18 +373,12 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
 
             ccAndCredits.add(creditsInSpecializationArea);
 
-        }
-        catch (MissingResourceException ex)
-        {
+        } catch (MissingResourceException ex) {
             ex.printStackTrace();
-        }
-        catch (FileNotFoundException ex)
-        {
+        } catch (FileNotFoundException ex) {
             fail("File " + getConfigFilePath() + " not found.");
             ex.printStackTrace();
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             fail("IOException reading file " + getConfigFilePath() + ex);
             ex.printStackTrace();
         }
@@ -460,8 +386,7 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
         return ccAndCredits;
     }
 
-    private static List readFile(String filePath) throws IOException
-    {
+    private static List readFile(String filePath) throws IOException {
 
         List lista = new ArrayList();
         BufferedReader leitura = null;
@@ -474,32 +399,25 @@ public class ShowAvailableCurricularCoursesTest extends TestCase
         leitura = new BufferedReader(new InputStreamReader(ficheiro, "8859_1"),
                 new Long(file.length()).intValue());
 
-        do
-        {
+        do {
             linhaFicheiro = leitura.readLine();
 
-            if (linhaFicheiro != null)
-            {
+            if (linhaFicheiro != null) {
                 lista.add(linhaFicheiro.trim());
             }
-        }
-        while ((linhaFicheiro != null));
+        } while ((linhaFicheiro != null));
 
         return lista;
     }
 
-    protected IUserView authenticateUser(String[] arguments)
-    {
+    protected IUserView authenticateUser(String[] arguments) {
         SuportePersistenteOJB.resetInstance();
         String args[] = arguments;
 
-        try
-        {
+        try {
             return (IUserView) ServiceManagerServiceFactory.executeService(
                     null, "Autenticacao", args);
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             ex.printStackTrace();
             fail("Authenticating User!" + ex);
             return null;

@@ -1,70 +1,76 @@
 package Util;
 
-
 /**
  * @author Luis Cruz & Sara Ribeiro
- *
+ * 
  * 22/Abr/2003
  */
 public class ExamSeason extends FenixUtil {
 
-	public static final int FIRST_SEASON = 1;
-	public static final int SECOND_SEASON = 2;
-	public static final int SPECIAL_SEASON = 3;
-	
-	public static final ExamSeason FIRST_SEASON_OBJ = new ExamSeason(ExamSeason.FIRST_SEASON);
-	public static final ExamSeason SECOND_SEASON_OBJ = new ExamSeason(ExamSeason.SECOND_SEASON);
-	public static final ExamSeason SPECIAL_SEASON_OBJ = new ExamSeason(ExamSeason.SPECIAL_SEASON);
+    public static final int FIRST_SEASON = 1;
 
-	private Integer type;
+    public static final int SECOND_SEASON = 2;
 
-	public ExamSeason() {
-	}
+    public static final int SPECIAL_SEASON = 3;
 
-	public ExamSeason(int state) {
-		this.type = new Integer(state);
-	}
+    public static final ExamSeason FIRST_SEASON_OBJ = new ExamSeason(
+            ExamSeason.FIRST_SEASON);
 
-	public ExamSeason(Integer state) {
-		this.type = state;
-	}
+    public static final ExamSeason SECOND_SEASON_OBJ = new ExamSeason(
+            ExamSeason.SECOND_SEASON);
 
-	public java.lang.Integer getType() {
-		return type;
-	}
+    public static final ExamSeason SPECIAL_SEASON_OBJ = new ExamSeason(
+            ExamSeason.SPECIAL_SEASON);
 
-	public void setType(Integer state) {
-		this.type = state;
-	}
+    private Integer type;
 
-	public boolean equals(Object o) {
-		if (o instanceof ExamSeason) {
-			ExamSeason aux = (ExamSeason) o;
-			return this.type.equals(aux.getType());
-		} else {
-			return false;
-		}
-	}
+    public ExamSeason() {
+    }
 
-	public String toString() {
+    public ExamSeason(int state) {
+        this.type = new Integer(state);
+    }
 
-		int value = this.type.intValue();
-		String values = null;
+    public ExamSeason(Integer state) {
+        this.type = state;
+    }
 
-		switch (value) {
-			case FIRST_SEASON :
-				values = "FIRST_SEASON";
-				break;
-			case SECOND_SEASON :
-				values = "SECOND_SEASON";
-				break;
-			case SPECIAL_SEASON :
-				values = "SPECIAL_SEASON";
-				break;
-			default:
-				break;
-		}
+    public java.lang.Integer getType() {
+        return type;
+    }
 
-		return "[" + this.getClass().getName() + ": " + values + "]";
-	}
+    public void setType(Integer state) {
+        this.type = state;
+    }
+
+    public boolean equals(Object o) {
+        if (o instanceof ExamSeason) {
+            ExamSeason aux = (ExamSeason) o;
+            return this.type.equals(aux.getType());
+        }
+        return false;
+
+    }
+
+    public String toString() {
+
+        int value = this.type.intValue();
+        String values = null;
+
+        switch (value) {
+        case FIRST_SEASON:
+            values = "FIRST_SEASON";
+            break;
+        case SECOND_SEASON:
+            values = "SECOND_SEASON";
+            break;
+        case SPECIAL_SEASON:
+            values = "SPECIAL_SEASON";
+            break;
+        default:
+            break;
+        }
+
+        return "[" + this.getClass().getName() + ": " + values + "]";
+    }
 }

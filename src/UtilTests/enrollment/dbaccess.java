@@ -27,7 +27,8 @@ public class dbaccess {
     public void openConnection() throws Exception {
         if (_connection == null) {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection jdbcConnection = DriverManager.getConnection(this.getDbName(), this.getUsername(), this.getPassword());
+            Connection jdbcConnection = DriverManager.getConnection(this
+                    .getDbName(), this.getUsername(), this.getPassword());
             _connection = new DatabaseConnection(jdbcConnection);
         }
     }
@@ -56,9 +57,9 @@ public class dbaccess {
     public String getDbName() {
         if (this.dbName == null) {
             return "jdbc:mysql://localhost/ciapl";
-        } else {
-            return "jdbc:mysql://localhost/" + this.dbName;
         }
+        return "jdbc:mysql://localhost/" + this.dbName;
+
     }
 
     public void setDbName(String dbName) {
@@ -68,9 +69,9 @@ public class dbaccess {
     public String getPassword() {
         if (this.password == null) {
             return "";
-        } else {
-            return this.password;
         }
+        return this.password;
+
     }
 
     public void setPassword(String password) {
@@ -80,9 +81,9 @@ public class dbaccess {
     public String getUsername() {
         if (this.username == null) {
             return "root";
-        } else {
-            return this.username;
         }
+        return this.username;
+
     }
 
     public void setUsername(String username) {

@@ -25,7 +25,6 @@ import Dominio.IExecutionCourse;
 import Dominio.IMetadata;
 import Dominio.IQuestion;
 import Dominio.Metadata;
-import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
@@ -116,7 +115,7 @@ public class ReadExerciseTest extends ServiceNeedsAuthenticationTestCase
 
         try
         {
-            IUserView userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
+            authenticateUser(getAuthenticatedAndAuthorizedUser());
             Object[] args = getAuthorizeArguments();
             Object[] args1 = getAuthorizeArguments1();
             Object[] args2 = getAuthorizeArguments2();

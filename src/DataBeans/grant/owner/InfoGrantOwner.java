@@ -9,7 +9,6 @@ import java.util.Date;
 
 import DataBeans.InfoObject;
 import DataBeans.InfoPerson;
-import DataBeans.InfoPersonWithInfoCountry;
 import Dominio.grant.owner.GrantOwner;
 import Dominio.grant.owner.IGrantOwner;
 /**
