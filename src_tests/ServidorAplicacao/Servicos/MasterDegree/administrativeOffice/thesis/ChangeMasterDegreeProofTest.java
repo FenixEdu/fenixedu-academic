@@ -101,7 +101,7 @@ public class ChangeMasterDegreeProofTest extends AdministrativeOfficeBaseTest {
 					infoMasterDegreeProofVersion.getInfoJuries()};
 
 			serviceManager.executar(userView, getNameOfServiceToBeTested(), argsChangeMasterDegreeProof);
-			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/MasterDegree/administrativeOffice/thesis/testExpectedChangeMasterDegreeProofDataSet.xml");
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/MasterDegree/administrativeOffice/thesis/testExpectedChangeMasterDegreeProofDataSet.xml");
 			//ok
 
 		} catch (Exception ex) {
@@ -231,7 +231,7 @@ public class ChangeMasterDegreeProofTest extends AdministrativeOfficeBaseTest {
 					infoTeacherJuries };
 
 			serviceManager.executar(userView, getNameOfServiceToBeTested(), argsChangeMasterDegreeProof);
-			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/MasterDegree/administrativeOffice/thesis/testExpectedChangeMasterDegreeProofWhenProofDoesNotExistDataSet.xml");
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/MasterDegree/administrativeOffice/thesis/testExpectedChangeMasterDegreeProofWhenProofDoesNotExistDataSet.xml");
 			//ok
 
 		} catch (Exception ex) {

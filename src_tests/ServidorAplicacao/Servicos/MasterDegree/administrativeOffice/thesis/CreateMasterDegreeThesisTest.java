@@ -120,7 +120,7 @@ public class CreateMasterDegreeThesisTest extends AdministrativeOfficeBaseTest {
 				{ userView, infoStudentCurricularPlan, "some title", guiders, assistentGuiders, externalAssistentGuiders };
 
 			serviceManager.executar(this.userView, getNameOfServiceToBeTested(), argsCreateMasterDegreeThesis);
-			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/MasterDegree/administrativeOffice/thesis/testExpectedCreateMasterDegreeThesisDataSet.xml");
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/MasterDegree/administrativeOffice/thesis/testExpectedCreateMasterDegreeThesisDataSet.xml");
 			//ok
 
 		} catch (Exception ex) {

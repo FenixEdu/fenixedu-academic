@@ -115,7 +115,7 @@ public class ChangeMasterDegreeThesisDataTest extends AdministrativeOfficeBaseTe
 				{ userView, infoStudentCurricularPlan, "some title", guiders, assistentGuiders, externalAssistentGuiders };
 
 			serviceManager.executar(this.userView, getNameOfServiceToBeTested(), argsChangeMasterDegreeThesis);
-			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/MasterDegree/administrativeOffice/thesis/testExpectedChangeMasterDegreeThesisDataSet.xml");
+			compareDataSetUsingExceptedDataSetTablesAndColumns("etc/datasets/servicos/MasterDegree/administrativeOffice/thesis/testExpectedChangeMasterDegreeThesisDataSet.xml");
 			//ok
 
 		} catch (Exception ex) {
