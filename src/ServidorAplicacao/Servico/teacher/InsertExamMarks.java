@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.apache.struts.action.ActionError;
-
 import DataBeans.ISiteComponent;
 import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoMark;
@@ -107,8 +105,8 @@ public class InsertExamMarks implements IServico {
 				InfoMark infoMark = (InfoMark) iterMarks.next();
 
 				if (!isValidMark(infoMark)) {
-					marksErrors.add(
-						new ActionError("errors.invalidMark", infoMark.getMark(), infoMark.getInfoFrequenta().getAluno().getNumber()));
+					marksErrors.add(infoMark);	
+//						new ActionError("errors.invalidMark", infoMark.getMark(), infoMark.getInfoFrequenta().getAluno().getNumber()));
 				}
 
 				IMark mark = new Mark();
@@ -126,7 +124,7 @@ public class InsertExamMarks implements IServico {
 					}
 				}
 				if (!foundStudent) {
-					marksErrors.add(new ActionError("errors.student.nonExisting", infoMark.getInfoFrequenta().getAluno().getNumber()));
+					marksErrors.add(infoMark);
 				} else {
 					infoMarksList.add(Cloner.copyIMark2InfoMark(mark));
 					foundStudent = false;
@@ -150,7 +148,7 @@ public class InsertExamMarks implements IServico {
 		TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(commonComponent, infoSiteMarks);
 		return siteView;
 	}
-
+	
 	private boolean isValidMark(InfoMark infoMark) {
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
 			infoMark.getInfoFrequenta().getEnrolment().getInfoStudentCurricularPlan().getInfoDegreeCurricularPlan();
@@ -164,4 +162,5 @@ public class InsertExamMarks implements IServico {
 
 		return degreeCurricularPlanStrategy.checkMark(infoMark.getMark());
 	}
+
 }
