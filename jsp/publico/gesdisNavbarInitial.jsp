@@ -24,7 +24,7 @@
 <li> <a href="/" onclick="houdini('seccao');return false;">Informa&ccedil;&atilde;o Curricular</a></li>
 </ul>
  <dl id="seccao" style="display: none;">
-            <dd><html:link page="/accessObjectives.do?method=acessObjectives">
+            <dd><html:link page="<%= "/accessObjectives.do?method=acessObjectives" + "&amp;executionCourse=" + pageContext.findAttribute("executionCourseName") + "&amp;executionPeriod=" + pageContext.findAttribute("executionPeriodName") + "&amp;executionYear=" + pageContext.findAttribute("executionYearYear") %>">
 				<bean:message key="link.objectives"/>
 				</html:link></dd>
             <dd><html:link page="<%= "/accessProgram.do?method=acessProgram" + "&amp;executionCourse=" + pageContext.findAttribute("executionCourseName") + "&amp;executionPeriod=" + pageContext.findAttribute("executionPeriodName") + "&amp;executionYear=" + pageContext.findAttribute("executionYearYear") %>">
