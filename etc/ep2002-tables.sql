@@ -1,17 +1,3 @@
-#-----------------------------------
-# Table structure for table 'ITEM'
-#-----------------------------------
-drop table if exists ITEM;
-CREATE TABLE ITEM (
-  CODIGO_INTERNO int(11) NOT NULL default '0',
-  NOME varchar(100) NOT NULL default '',
-  ORDEM int(3) default NULL,
-  INFORMACAO text,
-  URGENTE int(1) default NULL,
-  CHAVE_SECCAO int(11) NOT NULL default '0',
-  PRIMARY KEY  (CODIGO_INTERNO),
-  UNIQUE KEY U1 (NOME,CHAVE_SECCAO)
-) TYPE=InnoDB;
 
 #
 #------------------------------------
