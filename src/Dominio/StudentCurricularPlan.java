@@ -2,7 +2,6 @@ package Dominio;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -16,16 +15,12 @@ import Dominio.degree.enrollment.rules.IEnrollmentRule;
 import ServidorAplicacao.Servico.exceptions.BothAreasAreTheSameServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentExecutionPeriod;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.AreaType;
 import Util.EnrollmentState;
 import Util.Specialization;
 import Util.StudentCurricularPlanState;
 import Util.enrollment.CurricularCourseEnrollmentType;
 import Util.enrollment.EnrollmentCondition;
-import Util.enrollment.EnrollmentRuleType;
 
 /**
  * @author David Santos in Jun 24, 2004
@@ -308,10 +303,8 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
         return allEnrollments;
     }
 
-    public List getCurricularCoursesToEnroll(IExecutionPeriod executionPeriod, EnrollmentRuleType enrollmentRuleType)
-            throws ExcepcaoPersistencia {
-
-        executionPeriod = getExecutionPeriod(executionPeriod);
+    public List getCurricularCoursesToEnroll(IExecutionPeriod executionPeriod)
+{
 
         calculateStudentAcumulatedEnrollments();
 
@@ -319,7 +312,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 
         setOfCurricularCoursesToEnroll = initAcumulatedEnrollments(setOfCurricularCoursesToEnroll);
 
-        List enrollmentRules = getListOfEnrollmentRules(executionPeriod, enrollmentRuleType);
+        List enrollmentRules = getListOfEnrollmentRules(executionPeriod);
         int size = enrollmentRules.size();
 
         for (int i = 0; i < size; i++) {
@@ -455,15 +448,13 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
         return initAcumulatedEnrollments(getStudentEnrollmentsWithEnrolledState());
     }
 
-    public List getAllStudentEnrolledEnrollmentsInExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
-
-        final IExecutionPeriod executionPeriod2Compare = getExecutionPeriod(executionPeriod);
+    public List getAllStudentEnrolledEnrollmentsInExecutionPeriod(final IExecutionPeriod executionPeriod) {
 
         return initAcumulatedEnrollments((List) CollectionUtils.select(getStudentEnrollmentsWithEnrolledState(), new Predicate() {
 
             public boolean evaluate(Object arg0) {
 
-                return ((IEnrollment) arg0).getExecutionPeriod().equals(executionPeriod2Compare);
+                return ((IEnrollment) arg0).getExecutionPeriod().equals(executionPeriod);
             }
         }));
     }
@@ -480,7 +471,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
     }
 
     public CurricularCourseEnrollmentType getCurricularCourseEnrollmentType(ICurricularCourse curricularCourse,
-            IExecutionPeriod currentExecutionPeriod) throws ExcepcaoPersistencia {
+            IExecutionPeriod currentExecutionPeriod) {
 
         if (isCurricularCourseApproved(curricularCourse)) {
             return CurricularCourseEnrollmentType.NOT_ALLOWED;
@@ -568,7 +559,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
     }
 
     protected CurricularCourse2Enroll transformToCurricularCourse2Enroll(ICurricularCourse curricularCourse,
-            IExecutionPeriod currentExecutionPeriod) throws ExcepcaoPersistencia {
+            IExecutionPeriod currentExecutionPeriod) {
         return new CurricularCourse2Enroll(curricularCourse, getCurricularCourseEnrollmentType(
                 curricularCourse, currentExecutionPeriod));
     }
@@ -692,8 +683,8 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
         this.acumulatedEnrollments = acumulatedEnrollments;
     }
 
-    protected List getListOfEnrollmentRules(IExecutionPeriod executionPeriod, EnrollmentRuleType enrollmentRuleType) {
-        return getDegreeCurricularPlan().getListOfEnrollmentRules(this, executionPeriod, enrollmentRuleType);
+    protected List getListOfEnrollmentRules(IExecutionPeriod executionPeriod) {
+        return getDegreeCurricularPlan().getListOfEnrollmentRules(this, executionPeriod);
     }
 
     protected List getStudentNotNeedToEnrollCurricularCourses() {
@@ -706,7 +697,7 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
         });
     }
 
-    protected List getCommonBranchAndStudentBranchesCourses(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
+    protected List getCommonBranchAndStudentBranchesCourses(IExecutionPeriod executionPeriod) {
 
         List curricularCourses = new ArrayList();
         IDegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
@@ -748,19 +739,6 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
         return result;
     }
 
-    protected IExecutionPeriod getExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
-
-        IExecutionPeriod executionPeriod2Return = executionPeriod;
-
-        if (executionPeriod == null) {
-            ISuportePersistente daoFactory = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionPeriod executionPeriodDAO = daoFactory.getIPersistentExecutionPeriod();
-            executionPeriod2Return = executionPeriodDAO.readActualExecutionPeriod();
-        }
-
-        return executionPeriod2Return;
-    }
-
     /* (non-Javadoc)
      * @see Dominio.IStudentCurricularPlan#getCreditsInSecundaryArea()
      */
@@ -787,24 +765,6 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
      */
     public void setCreditsInSpecializationArea(Integer creditsInSpecializationArea) {
         //do nothing
-    }
-
-    /* (non-Javadoc)
-     * @see Dominio.IStudentCurricularPlan#getCurricularCoursesToEnroll(Dominio.IExecutionYear, Util.enrollment.EnrollmentRuleType)
-     */
-    public List getCurricularCoursesToEnrollInExecutionYear(IExecutionYear executionYear, EnrollmentRuleType enrollmentRuleType) throws ExcepcaoPersistencia {
-            List result = new ArrayList();
-            List executionPeriods=null;
-        if (executionYear==null){
-            executionPeriods = getExecutionPeriod(null).getExecutionYear().getExecutionPeriods();
-        } else {
-            executionPeriods = executionYear.getExecutionPeriods();
-        }
-            Iterator iter = executionPeriods.iterator();
-            while (iter.hasNext()){
-                result.addAll(getCurricularCoursesToEnroll((IExecutionPeriod) iter.next(),enrollmentRuleType));
-            }
-        return result;
     }
 
     // -------------------------------------------------------------

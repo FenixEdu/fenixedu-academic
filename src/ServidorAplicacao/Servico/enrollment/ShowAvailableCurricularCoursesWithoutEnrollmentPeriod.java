@@ -33,7 +33,6 @@ import ServidorPersistente.IStudentCurricularPlanPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoCurso;
-import Util.enrollment.EnrollmentRuleType;
 
 /**
  * @author David Santos in Jan 27, 2004
@@ -85,7 +84,7 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
 
         InfoStudentEnrollmentContext infoStudentEnrolmentContext = new InfoStudentEnrollmentContext();
         List curricularCourses2Enroll = studentCurricularPlan
-                .getCurricularCoursesToEnroll(null, EnrollmentRuleType.TOTAL);
+                .getCurricularCoursesToEnroll(getExecutionPeriod(null));
 
         infoStudentEnrolmentContext
                 .setCurricularCourses2Enroll((List) CollectionUtils.collect(
@@ -102,7 +101,7 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
                                                             .getCurricularYearByBranchAndSemester(
                                                                     studentCurricularPlan
                                                                             .getBranch(),
-                                                                    getCurrentExecutionPeriod()
+                                                                            getExecutionPeriod(null)
                                                                             .getSemester())));
                                 } catch (ExcepcaoPersistencia e) {
                                     infoCurricularCourse
@@ -145,7 +144,7 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
                         .newInfoFromDomain(studentCurricularPlan));
         infoStudentEnrolmentContext
                 .setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear
-                        .newInfoFromDomain(getCurrentExecutionPeriod()));
+                        .newInfoFromDomain(getExecutionPeriod(null)));
         infoStudentEnrolmentContext
                 .setCreditsInSpecializationArea(studentCurricularPlan
                         .getCreditsInSpecializationArea());
@@ -218,18 +217,16 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
                 .getNumber(), student.getDegreeType());
     }
 
-    /**
-     * @return IExecutionPeriod
-     * @throws ExcepcaoPersistencia
-     */
-    protected IExecutionPeriod getCurrentExecutionPeriod()
-            throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = SuportePersistenteOJB
-                .getInstance();
-        IPersistentExecutionPeriod executionPeriodDAO = persistentSuport
-                .getIPersistentExecutionPeriod();
+    protected IExecutionPeriod getExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
 
-        return executionPeriodDAO.readActualExecutionPeriod();
+        IExecutionPeriod executionPeriod2Return = executionPeriod;
+
+        if (executionPeriod == null) {
+            ISuportePersistente daoFactory = SuportePersistenteOJB.getInstance();
+            IPersistentExecutionPeriod executionPeriodDAO = daoFactory.getIPersistentExecutionPeriod();
+            executionPeriod2Return = executionPeriodDAO.readActualExecutionPeriod();
+        }
+
+        return executionPeriod2Return;
     }
-
 }

@@ -7,7 +7,6 @@ import Dominio.IEnrollment;
 import Dominio.IExecutionPeriod;
 import Dominio.IStudentCurricularPlan;
 import Dominio.degree.enrollment.CurricularCourse2Enroll;
-import ServidorPersistente.ExcepcaoPersistencia;
 
 /**
  * @author David Santos in Jun 23, 2004
@@ -25,7 +24,7 @@ public class MaximumNumberOfCurricularCoursesEnrollmentRule implements IEnrollme
 		this.executionPeriod = executionPeriod;
 	}
 
-	public List apply(List curricularCoursesToBeEnrolledIn) throws ExcepcaoPersistencia
+	public List apply(List curricularCoursesToBeEnrolledIn)
 	{
 		List curricularCoursesToRemove = new ArrayList();
 		List allStudentEnrolledEnrollments = this.studentCurricularPlan

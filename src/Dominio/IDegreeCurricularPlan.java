@@ -3,11 +3,9 @@ package Dominio;
 import java.util.Date;
 import java.util.List;
 
-import ServidorPersistente.ExcepcaoPersistencia;
 import Util.AreaType;
 import Util.DegreeCurricularPlanState;
 import Util.MarkType;
-import Util.enrollment.EnrollmentRuleType;
 
 /**
  * @author David Santos in Jun 25, 2004
@@ -54,9 +52,8 @@ public interface IDegreeCurricularPlan extends IDomainObject
 	// BEGIN: Only for enrollment purposes
 	// -------------------------------------------------------------
 
-	public List getListOfEnrollmentRules(IStudentCurricularPlan studentCurricularPlan, IExecutionPeriod executionPeriod,
-		EnrollmentRuleType enrollmentRuleType);
-	public List getCurricularCoursesFromArea(IBranch area, AreaType areaType) throws ExcepcaoPersistencia;
+	public List getListOfEnrollmentRules(IStudentCurricularPlan studentCurricularPlan, IExecutionPeriod executionPeriod);
+	public List getCurricularCoursesFromArea(IBranch area, AreaType areaType);
 	public List getCommonAreas();
     public List getSpecializationAreas();
     public List getSecundaryAreas();

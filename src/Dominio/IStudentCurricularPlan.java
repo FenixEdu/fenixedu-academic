@@ -8,7 +8,6 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import Util.Specialization;
 import Util.StudentCurricularPlanState;
 import Util.enrollment.CurricularCourseEnrollmentType;
-import Util.enrollment.EnrollmentRuleType;
 
 /**
  * @author David Santos in Jun 24, 2004
@@ -52,12 +51,9 @@ public interface IStudentCurricularPlan extends IDomainObject
 	// -------------------------------------------------------------
 	// BEGIN: Only for enrollment purposes
 	// -------------------------------------------------------------
-	public List getCurricularCoursesToEnroll(IExecutionPeriod executionPeriod, EnrollmentRuleType enrollmentRuleType)
-            throws ExcepcaoPersistencia;
-	public List getCurricularCoursesToEnrollInExecutionYear(IExecutionYear executionYear, EnrollmentRuleType enrollmentRuleType)
-    throws ExcepcaoPersistencia;
+	public List getCurricularCoursesToEnroll(IExecutionPeriod executionPeriod);
 	public List getAllStudentEnrolledEnrollments();
-	public List getAllStudentEnrolledEnrollmentsInExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
+	public List getAllStudentEnrolledEnrollmentsInExecutionPeriod(IExecutionPeriod executionPeriod);
 //	public List getStudentTemporarilyEnrolledEnrollments();
 	public Integer getMinimumNumberOfCoursesToEnroll();
 	public Integer getMaximumNumberOfCoursesToEnroll();

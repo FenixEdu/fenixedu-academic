@@ -18,7 +18,6 @@ import Util.AreaType;
 import Util.BranchType;
 import Util.DegreeCurricularPlanState;
 import Util.MarkType;
-import Util.enrollment.EnrollmentRuleType;
 
 /**
  * @author David Santos in Jun 25, 2004
@@ -256,8 +255,7 @@ public class DegreeCurricularPlan extends DomainObject implements
 
     public List getListOfEnrollmentRules(
             IStudentCurricularPlan studentCurricularPlan,
-            IExecutionPeriod executionPeriod,
-            EnrollmentRuleType enrollmentRuleType) {
+            IExecutionPeriod executionPeriod) {
         
         List result = new ArrayList();
         
@@ -268,30 +266,31 @@ public class DegreeCurricularPlan extends DomainObject implements
         return result;
     }
 
-    public List getCurricularCoursesFromArea(IBranch area, AreaType areaType)
-            throws ExcepcaoPersistencia {
-
-        ISuportePersistente persistentSuport = SuportePersistenteOJB
-                .getInstance();
-        IPersistentCurricularCourseScope curricularCourseScopeDAO = persistentSuport
-                .getIPersistentCurricularCourseScope();
-
-        List scopes = curricularCourseScopeDAO.readByBranch(area);
+    public List getCurricularCoursesFromArea(IBranch area, AreaType areaType) {
 
         List curricularCourses = new ArrayList();
 
-        int scopesSize = scopes.size();
+        try {
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            IPersistentCurricularCourseScope curricularCourseScopeDAO = persistentSuport
+                    .getIPersistentCurricularCourseScope();
 
-        for (int i = 0; i < scopesSize; i++) {
-            ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) scopes
-                    .get(i);
+            List scopes = curricularCourseScopeDAO.readByBranch(area);
 
-            ICurricularCourse curricularCourse = curricularCourseScope
-                    .getCurricularCourse();
+            int scopesSize = scopes.size();
 
-            if (!curricularCourses.contains(curricularCourse)) {
-                curricularCourses.add(curricularCourse);
+            for (int i = 0; i < scopesSize; i++) {
+                ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) scopes.get(i);
+
+                ICurricularCourse curricularCourse = curricularCourseScope.getCurricularCourse();
+
+                if (!curricularCourses.contains(curricularCourse)) {
+                    curricularCourses.add(curricularCourse);
+                }
             }
+
+        } catch (ExcepcaoPersistencia e) {
+            throw new RuntimeException(e);
         }
 
         return curricularCourses;

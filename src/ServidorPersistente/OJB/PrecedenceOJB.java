@@ -10,7 +10,7 @@ import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.ICurricularCourse;
 import Dominio.IDegreeCurricularPlan;
-import Dominio.Precedence;
+import Dominio.precedences.Precedence;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentPrecedence;
 import Util.PrecedenceScopeToApply;

@@ -21,38 +21,41 @@ public class DegreeCurricularPlanLEEC extends DegreeCurricularPlan implements ID
 		ojbConcreteClass = getClass().getName();
 	}
 
-    public List getCurricularCoursesFromArea(IBranch area, AreaType areaType) throws ExcepcaoPersistencia {
+    public List getCurricularCoursesFromArea(IBranch area, AreaType areaType) {
 
-        ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-		IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport.getIPersistentCurricularCourseGroup();
+        List curricularCourses = new ArrayList();
 
-		List groups = curricularCourseGroupDAO.readByBranchAndAreaType(area, areaType);
-		
-		List curricularCourses = new ArrayList();
-		
-		int groupsSize = groups.size();
+        try {
+            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+            IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
+                    .getIPersistentCurricularCourseGroup();
 
-		for (int i = 0; i < groupsSize; i++)
-		{
-			ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) groups.get(i);
-			
-			List courses = curricularCourseGroup.getCurricularCourses();
+            List groups = curricularCourseGroupDAO.readByBranchAndAreaType(area, areaType);
 
-			int coursesSize = courses.size();
+            int groupsSize = groups.size();
 
-			for (int j = 0; j < coursesSize; j++)
-			{
-				ICurricularCourse curricularCourse = (ICurricularCourse) courses.get(j);
+            for (int i = 0; i < groupsSize; i++) {
+                ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) groups.get(i);
 
-				if (!curricularCourses.contains(curricularCourse))
-				{
-					curricularCourses.add(curricularCourse);
-				}
-			}
-		}
-		
-		return curricularCourses;
-	}
+                List courses = curricularCourseGroup.getCurricularCourses();
+
+                int coursesSize = courses.size();
+
+                for (int j = 0; j < coursesSize; j++) {
+                    ICurricularCourse curricularCourse = (ICurricularCourse) courses.get(j);
+
+                    if (!curricularCourses.contains(curricularCourse)) {
+                        curricularCourses.add(curricularCourse);
+                    }
+                }
+            }
+
+        } catch (ExcepcaoPersistencia e) {
+            throw new RuntimeException(e);
+        }
+
+        return curricularCourses;
+    }
     
     public List getSecundaryAreas() {
         return getSpecializationAreas();

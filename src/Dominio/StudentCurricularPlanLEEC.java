@@ -86,10 +86,8 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlan implements
     /**
      * @param studentCurricularPlan
      * @return CurricularCoursesBelongingToAnySpecializationAndSecundaryArea
-     * @throws ExcepcaoPersistencia
      */
-    protected List getCurricularCoursesBelongingToAnySpecializationAndSecundaryArea()
-            throws ExcepcaoPersistencia {
+    protected List getCurricularCoursesBelongingToAnySpecializationAndSecundaryArea() {
         List curricularCourses = new ArrayList();
         List specializationAreas = getDegreeCurricularPlan()
                 .getSpecializationAreas();
@@ -107,11 +105,9 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlan implements
     /**
      * @param curricularCourses
      * @param specializationAreas
-     * @throws ExcepcaoPersistencia
      */
     protected void addAreasCurricularCoursesWithoutRepetitions(
-            List curricularCourses, List areas, AreaType areaType)
-            throws ExcepcaoPersistencia {
+            List curricularCourses, List areas, AreaType areaType) {
         Iterator iterator = areas.iterator();
         while (iterator.hasNext()) {
             IBranch area = (IBranch) iterator.next();
@@ -138,11 +134,9 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlan implements
      * @param specializationArea
      * @param secundaryArea
      * @return CurricularCoursesFromGivenAreas
-     * @throws ExcepcaoPersistencia
      */
     protected List getCurricularCoursesFromGivenAreas(
-            IBranch specializationArea, IBranch secundaryArea)
-            throws ExcepcaoPersistencia {
+            IBranch specializationArea, IBranch secundaryArea) {
         List curricularCoursesFromNewSpecializationArea = new ArrayList();
         List curricularCoursesFromNewSecundaryArea = new ArrayList();
 

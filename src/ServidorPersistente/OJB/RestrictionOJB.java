@@ -9,14 +9,14 @@ import java.util.List;
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.ICurricularCourse;
-import Dominio.Restriction;
+import Dominio.precedences.Restriction;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentRestriction;
 
 /**
  * @author jpvl
  */
-public class PersistentRestriction extends ObjectFenixOJB implements IPersistentRestriction
+public class RestrictionOJB extends ObjectFenixOJB implements IPersistentRestriction
 {
 
     /*

@@ -33,7 +33,7 @@ public class ShowAvailableCurricularCourses extends
 
                 if (studentCurricularPlan != null) {
                     IEnrolmentPeriod enrolmentPeriod = getEnrolmentPeriod(studentCurricularPlan);
-                    IExecutionPeriod executionPeriod = getCurrentExecutionPeriod();
+                    IExecutionPeriod executionPeriod = getExecutionPeriod(null);
                     if (executionPeriod.equals(enrolmentPeriod
                             .getExecutionPeriod())) {
                         try {

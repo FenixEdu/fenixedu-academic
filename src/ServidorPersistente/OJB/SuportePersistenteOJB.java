@@ -558,7 +558,7 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 
     public IPersistentRestriction getIPersistentRestriction()
     {
-        return new PersistentRestriction();
+        return new RestrictionOJB();
     }
 
     public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod()
