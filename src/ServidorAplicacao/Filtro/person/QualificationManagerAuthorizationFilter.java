@@ -72,35 +72,41 @@ public class QualificationManagerAuthorizationFilter extends Filtro
                 throw new NotAuthorizedException();
             }
 
-            InfoQualification infoqualification = null;
-            if( (arguments[0] == null) || ((Integer) arguments[0]).equals(new Integer(0)))
-            {
-            	//New Qualification, second argument is a qualification
-            	infoqualification = (InfoQualification)arguments[1];
-            } else
-            {
-				infoqualification = getInfoQualification((Integer) arguments[0]);
-            }
+            boolean isNew = (arguments[0] == null) || ((Integer) arguments[0]).equals(new Integer(0));
 
-			if (infoqualification == null)
-				throw new NotAuthorizedException();
-            
-			boolean valid = false;
-			//Verify if:
-			// 1: The user ir a Grant Owner Manager and the qualification belongs to a Grant Owner
-			// 2: The user ir a Teacher and the qualification is his own
-            if (AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeGrantOwnerManager())
-            	 && isGrantOwner(infoqualification))
-            	valid = true;
-            
-            if(AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeTeacher())
-            	&& isTeacher(infoqualification)
-            	&& isOwnQualification(id.getUtilizador(), infoqualification))
-                valid = true;
+            if (!AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeGrantOwnerManager())
+                && !AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeTeacher()))
+                throw new NotAuthorizedException();
+
+            InfoQualification infoqualification = null;
+            if (!isNew)
+            {
+                //New Qualification, second argument is a qualification
+                infoqualification = (InfoQualification) arguments[1];
+                //            } else
+                //            {
+                //                infoqualification = getInfoQualification((Integer) arguments[0]);
+                //            }
+
+                if (infoqualification == null)
+                    throw new NotAuthorizedException();
+
+                boolean valid = false;
+                //Verify if:
+                // 1: The user ir a Grant Owner Manager and the qualification belongs to a Grant Owner
+                // 2: The user ir a Teacher and the qualification is his own
+                if (AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeGrantOwnerManager())
+                    && isGrantOwner(infoqualification))
+                    valid = true;
+
+                if (AuthorizationUtils.containsRole(id.getRoles(), getRoleTypeTeacher())
+                    && isOwnQualification(id.getUtilizador(), infoqualification))
+                    valid = true;
 
                 if (!valid)
                     throw new NotAuthorizedException();
-                
+            }
+
         } catch (RuntimeException e)
         {
             throw new NotAuthorizedException();
@@ -108,7 +114,7 @@ public class QualificationManagerAuthorizationFilter extends Filtro
     }
 
     /**
-	 * Verifies if the qualification user ir a grant owner
+	 * Verifies if the qualification user is a grant owner
 	 * 
 	 * @param arguments
 	 * @return true or false
@@ -138,39 +144,6 @@ public class QualificationManagerAuthorizationFilter extends Filtro
         } catch (Exception e)
         {
             return false; //The qualification user is not a grant owner.
-        }
-    }
-
-    /**
-	 * Verifies if the qualification user ir a teacher
-	 * 
-	 * @param arguments
-	 * @return true or false
-	 */
-    private boolean isTeacher(InfoQualification infoqualification)
-    {
-        ISuportePersistente persistentSuport = null;
-        IPersistentTeacher persistentTeacher = null;
-
-        try
-        {
-            persistentSuport = SuportePersistenteOJB.getInstance();
-            persistentTeacher = persistentSuport.getIPersistentTeacher();
-
-            //Try to read the teacher from de database
-            ITeacher teacher = null;
-            teacher =
-                persistentTeacher.readTeacherByUsername(infoqualification.getInfoPerson().getUsername());
-
-            if (teacher != null) //The teacher exists!
-            {
-                return true;
-            }
-            return false; //The qualification user is not a teacher
-
-        } catch (Exception e)
-        {
-            return false;
         }
     }
 

@@ -93,4 +93,41 @@
 	</reference-descriptor>
 </class-descriptor>
 
+<!-- Definitions for Dominio.teacher.Orientation -->
+<class-descriptor class="Dominio.teacher.Orientation" table="ORIENTATION">
+    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
+    <field-descriptor name="orientationType" 
+    				  column="ORIENTATION_TYPE" 
+    				  conversion="ServidorPersistente.Conversores.OrientationTypeFieldConversion" 
+    				  jdbc-type="INTEGER"/>
+    <field-descriptor name="lastModificationDate" 
+    				  column="LAST_MODIFICATION_DATE" 
+    				  jdbc-type="TIMESTAMP"
+    				  conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"/>
+    <field-descriptor name="numberOfStudents" column="NUMBER_OF_STUDENTS" jdbc-type="INTEGER"/>
+    <field-descriptor name="description" column="DESCRIPTION" jdbc-type="LONGVARCHAR"/>    				  
+    <field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
+    <reference-descriptor name="teacher" class-ref="Dominio.Teacher" proxy="false">
+		<foreignkey field-ref="keyTeacher"/>
+	</reference-descriptor>
+</class-descriptor>
+
+<!-- Definitions for Dominio.teacher.PublicationsNumber -->
+<class-descriptor class="Dominio.teacher.PublicationsNumber" table="PUBLICATIONS_NUMBER">
+    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
+    <field-descriptor name="publicationType" 
+    				  column="PUBLICATION_TYPE" 
+    				  conversion="ServidorPersistente.Conversores.PublicationTypeFieldConversion" 
+    				  jdbc-type="INTEGER"/>
+    <field-descriptor name="lastModificationDate" 
+    				  column="LAST_MODIFICATION_DATE" 
+    				  jdbc-type="TIMESTAMP"
+    				  conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"/>
+    <field-descriptor name="national" column="NATIONAL" jdbc-type="INTEGER"/>
+    <field-descriptor name="international" column="INTERNATIONAL" jdbc-type="INTEGER"/>
+    <field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>
+    <reference-descriptor name="teacher" class-ref="Dominio.Teacher" proxy="false">
+		<foreignkey field-ref="keyTeacher"/>
+	</reference-descriptor>
+</class-descriptor>
 <!-- Mapping of User defined classses ends here -->

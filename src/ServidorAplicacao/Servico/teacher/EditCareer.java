@@ -10,6 +10,7 @@ import DataBeans.util.Cloner;
 import Dominio.IDomainObject;
 import Dominio.teacher.ICareer;
 import ServidorAplicacao.Servico.framework.EditDomainObjectService;
+import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.teacher.IPersistentCareer;
@@ -46,7 +47,7 @@ public class EditCareer extends EditDomainObjectService
         return "EditCareer";
     }
 
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp)
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia
     {
         IPersistentCareer persistentCareer = sp.getIPersistentCareer();
         return persistentCareer;
@@ -57,5 +58,4 @@ public class EditCareer extends EditDomainObjectService
         ICareer career = Cloner.copyInfoCareer2ICareer((InfoCareer) infoObject);
         return career;
     }
-
 }

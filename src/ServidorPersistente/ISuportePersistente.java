@@ -15,16 +15,18 @@ import ServidorPersistente.Seminaries.IPersistentSeminaryModality;
 import ServidorPersistente.Seminaries.IPersistentSeminaryTheme;
 import ServidorPersistente.degree.finalProject.IPersistentDegreeFinalProjectOrientation;
 import ServidorPersistente.gesdis.IPersistentCourseReport;
-import ServidorPersistente.grant.IPersistentGrantOwner;
 import ServidorPersistente.grant.IPersistentGrantContract;
-import ServidorPersistente.grant.IPersistentGrantType;
-import ServidorPersistente.grant.IPersistentGrantResponsibleTeacher;
 import ServidorPersistente.grant.IPersistentGrantOrientationTeacher;
+import ServidorPersistente.grant.IPersistentGrantOwner;
+import ServidorPersistente.grant.IPersistentGrantResponsibleTeacher;
+import ServidorPersistente.grant.IPersistentGrantType;
 import ServidorPersistente.guide.IPersistentReimbursementGuide;
 import ServidorPersistente.guide.IPersistentReimbursementGuideSituation;
 import ServidorPersistente.teacher.IPersistentCareer;
 import ServidorPersistente.teacher.IPersistentCategory;
 import ServidorPersistente.teacher.IPersistentExternalActivity;
+import ServidorPersistente.teacher.IPersistentOrientation;
+import ServidorPersistente.teacher.IPersistentPublicationsNumber;
 import ServidorPersistente.teacher.IPersistentServiceProviderRegime;
 import ServidorPersistente.teacher.IPersistentWeeklyOcupation;
 
@@ -218,4 +220,6 @@ public interface ISuportePersistente
 
     public IPersistentReimbursementGuide getIPersistentReimbursementGuide();
     public IPersistentReimbursementGuideSituation getIPersistentReimbursementGuideSituation();
+    public IPersistentOrientation getIPersistentOrientation();
+    public IPersistentPublicationsNumber getIPersistentPublicationsNumber();
 }

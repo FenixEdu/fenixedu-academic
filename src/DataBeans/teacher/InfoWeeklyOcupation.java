@@ -24,6 +24,8 @@ public class InfoWeeklyOcupation extends InfoObject implements ISiteComponent {
 	private InfoTeacher infoTeacher;
     private Integer research;
     private Integer management;
+    private Integer lecture;
+    private Integer support;
     private Integer other;
     private Date lastModificationDate;
 
@@ -115,6 +117,38 @@ public class InfoWeeklyOcupation extends InfoObject implements ISiteComponent {
     public void setLastModificationDate(Date lastModificationDate)
     {
         this.lastModificationDate = lastModificationDate;
+    }
+
+    /**
+     * @return Returns the lecture.
+     */
+    public Integer getLecture()
+    {
+        return lecture;
+    }
+
+    /**
+     * @param lecture The lecture to set.
+     */
+    public void setLecture(Integer lecture)
+    {
+        this.lecture = lecture;
+    }
+
+    /**
+     * @return Returns the support.
+     */
+    public Integer getSupport()
+    {
+        return support;
+    }
+
+    /**
+     * @param support The support to set.
+     */
+    public void setSupport(Integer support)
+    {
+        this.support = support;
     }
 
 }

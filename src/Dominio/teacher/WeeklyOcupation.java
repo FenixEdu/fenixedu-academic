@@ -19,6 +19,8 @@ public class WeeklyOcupation extends DomainObject implements IWeeklyOcupation
     private Integer research;
     private Integer management;
     private Integer other;
+    private Integer lecture;
+    private Integer support;
     private ITeacher teacher;
     private Integer keyTeacher;
     private Date lastModificationDate;
@@ -128,6 +130,38 @@ public class WeeklyOcupation extends DomainObject implements IWeeklyOcupation
     public void setLastModificationDate(Date lastModificationDate)
     {
         this.lastModificationDate = lastModificationDate;
+    }
+
+    /**
+     * @return Returns the lecture.
+     */
+    public Integer getLecture()
+    {
+        return lecture;
+    }
+
+    /**
+     * @param lecture The lecture to set.
+     */
+    public void setLecture(Integer lecture)
+    {
+        this.lecture = lecture;
+    }
+
+    /**
+     * @return Returns the support.
+     */
+    public Integer getSupport()
+    {
+        return support;
+    }
+
+    /**
+     * @param support The support to set.
+     */
+    public void setSupport(Integer support)
+    {
+        this.support = support;
     }
 
 }

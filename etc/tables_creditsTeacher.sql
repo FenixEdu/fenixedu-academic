@@ -47,8 +47,8 @@ drop table if exists CATEGORY;
 create table CATEGORY (
    ID_INTERNAL int(11) not null auto_increment,
    CODE varchar(20) not null,
-   LONG_NAME varchar(50) not null,
-   SHORT_NAME varchar(20) not null,
+   LONG_NAME varchar(250) not null,
+   SHORT_NAME varchar(50) not null,
    primary key (ID_INTERNAL),
    unique U1 (CODE))
    type=InnoDB;

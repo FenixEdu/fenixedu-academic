@@ -537,6 +537,11 @@
             column="TITLE"
             jdbc-type="VARCHAR"
          />
+         <field-descriptor
+         	name="degree"
+         	column="DEGREE"
+         	jdbc-type="VARCHAR"
+         />
          <field-descriptor 
             name="personKey"
             column="KEY_PERSON"

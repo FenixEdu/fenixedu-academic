@@ -49,6 +49,8 @@ import ServidorApresentacao.mapping.framework.CRUDMapping;
  * 
  * 
  * 
+ * 
+ * 
  * Methods availables are: <br>
  * 
  * <pre>
@@ -57,6 +59,8 @@ import ServidorApresentacao.mapping.framework.CRUDMapping;
  * 	<b>delete</b> <br>
  *     <b>read</b>
  * </pre>
+ * 
+ * 
  * 
  * 
  * 
@@ -72,7 +76,7 @@ import ServidorApresentacao.mapping.framework.CRUDMapping;
  * @see ServidorApresentacao.framework.actions.mappings.CRUDMapping
  * @author jpvl
  */
-public abstract class CRUDActionByOID extends DispatchAction
+public class CRUDActionByOID extends DispatchAction
 {
     /**
 	 * Method that invokes a service that extends @link
@@ -80,7 +84,7 @@ public abstract class CRUDActionByOID extends DispatchAction
 	 * CRUDMapping#getDeleteService()
 	 * 
 	 * @param mapping
-	 *                   should be an instance of @link CRUDMapping
+	 *            should be an instance of @link CRUDMapping
 	 * @param form
 	 * @param request
 	 * @param response
@@ -109,7 +113,7 @@ public abstract class CRUDActionByOID extends DispatchAction
 	 * CRUDMapping#getEditService()
 	 * 
 	 * @param mapping
-	 *                   should be an instance of @link CRUDMapping
+	 *            should be an instance of @link CRUDMapping
 	 * @param form
 	 * @param request
 	 * @param response
@@ -162,7 +166,7 @@ public abstract class CRUDActionByOID extends DispatchAction
             {
                 Map.Entry entry = (Map.Entry) iterator.next();
                 String formProperty = (String) entry.getKey();
-                StringTokenizer propertyTokenizer = new StringTokenizer(formProperty, ".");
+                StringTokenizer propertyTokenizer = new StringTokenizer(formProperty, "#");
 
                 if (propertyTokenizer.countTokens() == 1)
                 {
@@ -175,7 +179,7 @@ public abstract class CRUDActionByOID extends DispatchAction
                         String property = propertyTokenizer.nextToken();
 
                         PropertyDescriptor propertyDescriptor =
-                            PropertyUtils.getPropertyDescriptor(propertyTokenizer, property);
+                            PropertyUtils.getPropertyDescriptor(infoObject, property);
                         if (value == null)
                         {
                             value = propertyDescriptor.getPropertyType().newInstance();
@@ -239,11 +243,13 @@ public abstract class CRUDActionByOID extends DispatchAction
         ActionMapping mapping,
         InfoObject infoObject,
         ActionForm form,
-        HttpServletRequest request) throws FenixActionException
+        HttpServletRequest request)
+        throws FenixActionException
     {
         try
         {
-            Map formPropertiesHashMap = PropertyUtils.describe(form);
+
+            Map formPropertiesHashMap = BeanUtils.describe(form);
 
             Iterator iterator = formPropertiesHashMap.entrySet().iterator();
 
@@ -251,7 +257,8 @@ public abstract class CRUDActionByOID extends DispatchAction
             {
                 Map.Entry entry = (Map.Entry) iterator.next();
                 String formProperty = (String) entry.getKey();
-                Object value = PropertyUtils.getProperty(infoObject, formProperty);
+                String string = formProperty.replace('#', '.');
+                Object value = PropertyUtils.getProperty(infoObject, string);
                 BeanUtils.copyProperty(form, formProperty, value);
             }
         } catch (Exception e1)
@@ -269,7 +276,7 @@ public abstract class CRUDActionByOID extends DispatchAction
 	 * infoObject readed.
 	 * 
 	 * @param mapping
-	 *                   should be an instance of @link CRUDMapping
+	 *            should be an instance of @link CRUDMapping
 	 * @param form
 	 * @param request
 	 * @param response
@@ -315,7 +322,7 @@ public abstract class CRUDActionByOID extends DispatchAction
 	 * CRUDMapping#getReadService()
 	 * 
 	 * @param mapping
-	 *                   should be an instance of @link CRUDMapping
+	 *            should be an instance of @link CRUDMapping
 	 * @param form
 	 * @param request
 	 * @param response

@@ -10,22 +10,22 @@
 <logic:present name="infoExternalActivity">
 <bean:message key="message.externalActivities.edit" />
 </logic:present>
-<logic:notPresent name="infoExternalCareer">
-<bean:message key="message.externalActivities.insert" />
+<logic:notPresent name="infoExternalActivity">
+<bean:message key="message.externalActivities.insertActivity" />
 </logic:notPresent>
 </h3>
 <p class="infoop"><span class="emphasis-box">1</span>
 <bean:message key="message.externalActivities.managementEdit" /></p>
 	<html:hidden property="page" value="1"/>
-	<html:hidden property="externalActivityId"/>
-	<html:hidden property="teacherId"/>
+	<html:hidden property="idInternal"/>
+	<html:hidden property="infoTeacher#idInternal"/>
 	<html:hidden property="method" value="edit"/>
 <table>
 	<tr>
 		<td><bean:message key="message.externalActivities.activity" /></td>
 	</tr>
 	<tr>
-		<td><html:textarea property="activity" cols="100%" rows="4"/></td>
+		<td><html:textarea property="activity" cols="90%" rows="4"/></td>
 	<tr/>
 </table>
 <br/>

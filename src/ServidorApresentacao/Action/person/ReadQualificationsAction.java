@@ -12,11 +12,12 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import DataBeans.person.InfoSiteQualifications;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
-import antlr.collections.List;
+
 
 
 /**
@@ -47,9 +48,9 @@ public class ReadQualificationsAction extends FenixAction
 		   {	
 		   		Object[] args = { userView.getUtilizador() };
 
-			   List infoQualifications = (List)ServiceUtils.executeService(userView, "ReadQualifications", args);
+			   InfoSiteQualifications infoSiteQualifications = (InfoSiteQualifications) ServiceUtils.executeService(userView, "ReadQualifications", args);
 
-			   request.setAttribute("infoQualifications", infoQualifications);
+			   request.setAttribute("infoSiteQualifications", infoSiteQualifications);
 		   }
 		   return mapping.findForward("show-form");
 	   }

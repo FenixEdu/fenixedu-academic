@@ -8,12 +8,13 @@ import DataBeans.InfoObject;
 import DataBeans.person.InfoQualification;
 import DataBeans.util.Cloner;
 import Dominio.IDomainObject;
+import Dominio.IQualification;
 import ServidorAplicacao.Servico.framework.EditDomainObjectService;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
+import ServidorPersistente.IPersistentQualification;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-
 
 /**
  * @author Barbosa
@@ -22,180 +23,66 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class EditQualification extends EditDomainObjectService
 {
-	
-	private static EditQualification service = new EditQualification();
 
-	public static EditQualification getService()
-	{
-		return service;
-	}
-	
-	private EditQualification()
-	{}
-	
-	/* (non-Javadoc)
+    private static EditQualification service = new EditQualification();
+
+    public static EditQualification getService()
+    {
+        return service;
+    }
+
+    private EditQualification()
+    {
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * 
 	 * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
 	 */
-	protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia
-	{
-		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-		return persistentSuport.getIPersistentQualification();
-	}
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia
+    {
+        ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+        return persistentSuport.getIPersistentQualification();
+    }
 
-	/* (non-Javadoc)
+    /*
+	 * (non-Javadoc)
+	 * 
 	 * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#clone2DomainObject(DataBeans.InfoObject)
 	 */
-	protected IDomainObject clone2DomainObject(InfoObject infoObject)
-	{
-		return Cloner.copyInfoQualification2IQualification((InfoQualification) infoObject);
-	}
+    protected IDomainObject clone2DomainObject(InfoObject infoObject)
+    {
+        return Cloner.copyInfoQualification2IQualification((InfoQualification) infoObject);
+    }
 
-	/* (non-Javadoc)
+    /*
+	 * (non-Javadoc)
+	 * 
 	 * @see ServidorAplicacao.IServico#getNome()
 	 */
-	public String getNome()
-	{
-		return "EditQualification";
-	}
+    public String getNome()
+    {
+        return "EditQualification";
+    }
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-//	private static EditQualification service = new EditQualification();
-//
-//	/**
-//	 * The singleton access method of this class.
-//	 */
-//	public static EditQualification getService()
-//	{
-//		return service;
-//	}
-//
-//	/**
-//	 * The constructor of this class.
-//	 */
-//	private EditQualification()
-//	{
-//	}
-//
-//	/**
-//	 * The name of the service
-//	 */
-//	public final String getNome()
-//	{
-//		return "EditQualification";
-//	}
-
-	/**
-	 * Method that returns a qualification that exists in the database. If the qualification does not
-	 * exists returns a empty IQualification object.
+    /**
+	 * This method invokes a persistent method to read an IDomainObject from database
 	 * 
-	 * @param info
-	 *                    a infoQualification with the information that is going to be read
-	 * @param persistenQualification
-	 *                    persistent object for executing the query
-	 *//*
-	private IQualification checkIfQualificationExists(
-		InfoQualification infoQualification,
-		IPersistentQualification persistentQualification)
-		throws FenixServiceException
-	{
-		IQualification qualification = null;
-		try
-		{
-			qualification =
-				(IQualification) persistentQualification.readByOID(
-					Qualification.class,
-					infoQualification.getIdInternal());
-		} catch (ExcepcaoPersistencia e)
-		{
-			throw new FenixServiceException(e.getMessage());
-		}
-		return qualification;
-	}*/
-
-	/**
-	 * Executes the service
-	 * 
-	 * @param managerPersonKey
-	 *                    the identification of the person that is running the service
-	 * @param infoQualification
-	 *                    the create/edit qualification to be
-	 *//*
-	public IQualification run(Integer managerPersonKey, InfoQualification infoQualification)
-		throws FenixServiceException
-	{
-		ISuportePersistente persistentSupport = null;
-		IPersistentQualification persistentQualification = null;
-
-		try
-		{
-			persistentSupport = SuportePersistenteOJB.getInstance();
-		} catch (ExcepcaoPersistencia e)
-		{
-			e.printStackTrace();
-			throw new FenixServiceException("Unable to dao factory!", e);
-		}
-
-		try
-		{
-			persistentQualification = persistentSupport.getIPersistentQualification();
-
-			//Check if qualification exists in the database
-			IQualification qualification =
-				checkIfQualificationExists(infoQualification, persistentQualification);
-
-			//next 2lines are necessary due to a possible OJB lock problem
-			persistentSupport.confirmarTransaccao();
-			persistentSupport.iniciarTransaccao();
-
-			if (qualification == null) //Lets create a qualification
-			{
-				qualification = new Qualification();
-			}
-
-			//Change the OJB object
-			persistentQualification.simpleLockWrite(qualification);
-
-			if (infoQualification.getMark() != null)
-				qualification.setMark(infoQualification.getMark());
-
-			if (infoQualification.getInfoPerson() != null)
-				qualification.setPerson(
-					Cloner.copyInfoPerson2IPerson(infoQualification.getInfoPerson()));
-
-			if (infoQualification.getSchool() != null)
-				qualification.setSchool(infoQualification.getSchool());
-
-			if (infoQualification.getTitle() != null)
-				qualification.setTitle(infoQualification.getTitle());
-
-			if (infoQualification.getYear() != null)
-				qualification.setYear(infoQualification.getYear());
-
-			return qualification;
-
-		} catch (ExcepcaoPersistencia e)
-		{
-			throw new FenixServiceException(e.getMessage());
-		} catch (Exception e)
-		{
-			throw new FenixServiceException(e.getMessage());
-		}
-	}*/
+	 * @param domainObject
+	 * @return
+	 */
+    protected IDomainObject readObjectByUnique(IDomainObject domainObject, ISuportePersistente sp)
+        throws ExcepcaoPersistencia
+    {
+        IPersistentQualification persistentQualification = sp.getIPersistentQualification();
+        IQualification oldQualification = (IQualification) domainObject;
+        IQualification newQualification =
+            persistentQualification.readByYearAndSchoolAndDegreeAndPerson(
+                oldQualification.getYear(),
+                oldQualification.getSchool(),
+                oldQualification.getDegree(),
+                oldQualification.getPerson());
+        return newQualification;
+    }
 }

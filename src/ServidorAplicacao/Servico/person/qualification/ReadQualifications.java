@@ -9,6 +9,8 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import DataBeans.InfoPerson;
+import DataBeans.person.InfoSiteQualifications;
 import DataBeans.util.Cloner;
 import Dominio.IPessoa;
 import Dominio.IQualification;
@@ -56,34 +58,7 @@ public class ReadQualifications implements IServico
 	/**
 	 * Executes the service
 	 */
-	//	public Collection run(Integer qualificationKey, InfoQualification infoQualification)
-	//		throws FenixServiceException
-	//	{
-	//		ISuportePersistente persistentSupport = null;
-	//		IPersistentQualification persistentQualification = null;
-	//
-	//		try
-	//		{
-	//			persistentSupport = SuportePersistenteOJB.getInstance();
-	//			persistentQualification = persistentSupport.getIPersistentQualification();
-	//
-	//			//Reads the qualifications
-	//			List qualifications = null;
-	//			qualifications =
-	//				persistentQualification.readQualificationsByPerson(
-	//					Cloner.copyInfoPerson2IPerson(infoQualification.getInfoPerson()));
-	//
-	//			return qualifications;
-	//
-	//		} catch (ExcepcaoPersistencia e)
-	//		{
-	//			throw new FenixServiceException(e.getMessage());
-	//		} catch (Exception e)
-	//		{
-	//			throw new FenixServiceException(e.getMessage());
-	//		}
-
-	public List run(String user) throws FenixServiceException
+	public InfoSiteQualifications run(String user) throws FenixServiceException
 	{
 		try
 		{
@@ -92,6 +67,7 @@ public class ReadQualifications implements IServico
 			IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
 
 			IPessoa person = persistentPerson.lerPessoaPorUsername(user);
+            InfoPerson infoPerson = Cloner.copyIPerson2InfoPerson(person);
 			List qualifications = persistentQualification.readQualificationsByPerson(person);
 
 			List infoQualifications = (List) CollectionUtils.collect(qualifications, new Transformer()
@@ -102,8 +78,12 @@ public class ReadQualifications implements IServico
 					return Cloner.copyIQualification2InfoQualification(qualification);
 				}
 			});
-
-			return infoQualifications;
+            
+            InfoSiteQualifications infoSiteQualifications = new InfoSiteQualifications();
+            infoSiteQualifications.setInfoQualifications(infoQualifications);
+            infoSiteQualifications.setInfoPerson(infoPerson);
+            
+			return infoSiteQualifications;
 		} catch (ExcepcaoPersistencia e)
 		{
 			throw new FenixServiceException(e.getMessage());

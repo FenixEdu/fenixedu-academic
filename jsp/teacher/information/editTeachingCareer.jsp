@@ -11,7 +11,7 @@
 <bean:message key="message.teachingCareer.edit" />
 </logic:present>
 <logic:notPresent name="infoTeachingCareer">
-<bean:message key="message.teachingCareer.insert" />
+<bean:message key="message.teachingCareer.insertCareer" />
 </logic:notPresent>
 <logic:present name="categories">
 </h3>
@@ -19,9 +19,8 @@
 <bean:message key="message.teachingCareer.managementEdit" /></p>
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="method" value="edit"/>
-	<html:hidden property="careerId"/>
-	<html:hidden property="careerType"/>
-	<html:hidden property="teacherId"/>
+	<html:hidden property="idInternal"/>
+	<html:hidden property="infoTeacher#idInternal"/>
 <table>
 	<tr>
 		<td><bean:message key="message.teachingCareer.years" /></td>
@@ -37,7 +36,7 @@
 	</tr>
 	<tr>
 		<td>
-			<html:select property="categoryId">
+			<html:select property="infoCategory#idInternal">
 				<option></option>
 				<html:options collection="categories" property="idInternal" labelProperty="shortName"/>
 			</html:select>

@@ -72,12 +72,12 @@
       <form-bean name="qualificationForm" 
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
-        <form-property name="mark"   type="java.lang.String" />
-        <form-property name="year"   type="java.lang.String" />
+        <form-property name="idInternal" type="java.lang.Integer" initial="0"/>
+        <form-property name="mark" type="java.lang.String" />
+        <form-property name="year" type="java.lang.String" />
         <form-property name="school" type="java.lang.String" />
-        <form-property name="degree"  type="java.lang.String" />
+        <form-property name="degree" type="java.lang.String" />
         <form-property name="title" type="java.lang.String" />
-        <form-property name="idInternal" type="java.lang.Integer" />
         <form-property name="infoPerson#idInternal" type="java.lang.Integer" />
       </form-bean>
 

@@ -9,6 +9,13 @@
 
 	<!-- ========== Form Bean Definitions ================================== -->
 	<form-beans type="org.apache.struts.action.ActionFormBean">
+	
+	   <form-bean name="voidForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+          <form-property name="voidProperty" type="java.lang.Integer" />
+      </form-bean>
+      
 	 <!-- FILE UPLOAD -->
       <form-bean name="fileForm"
                  type="org.apache.struts.validator.DynaValidatorForm"
@@ -399,28 +406,24 @@
 		<form-bean name="professionalCareerForm"
 			type="org.apache.struts.validator.DynaValidatorForm"
 			dynamic="true">
-			<form-property name="careerId" type="java.lang.Integer" initial="0" />
+			<form-property name="idInternal" type="java.lang.Integer" initial="0"/>
 			<form-property name="beginYear" type="java.lang.String" />
-			<form-property name="endYear" type="java.lang.String" />
-			<form-property name="type" type="java.lang.Integer" />			
+			<form-property name="endYear" type="java.lang.String" />			
 			<form-property name="entity" type="java.lang.String" />
 			<form-property name="function" type="java.lang.String" />
-			<form-property name="teacherId" type="java.lang.Integer" />
-			<form-property name="careerType" type="java.lang.String"/>
+			<form-property name="infoTeacher#idInternal" type="java.lang.Integer" />
 		</form-bean>
 		
 		<!-- TEACHING CAREER FORM -->
 		<form-bean name="teachingCareerForm"
 			type="org.apache.struts.validator.DynaValidatorForm"
 			dynamic="true">
-			<form-property name="careerId" type="java.lang.Integer" initial="0" />
+			<form-property name="idInternal" type="java.lang.Integer" initial="0"/>
 			<form-property name="beginYear" type="java.lang.String" />
-			<form-property name="endYear" type="java.lang.String" />
-			<form-property name="type" type="java.lang.Integer" />
+			<form-property name="endYear" type="java.lang.String" />	
 			<form-property name="courseOrPosition" type="java.lang.String" />
-			<form-property name="categoryId" type="java.lang.Integer" />
-			<form-property name="teacherId" type="java.lang.Integer" />
-			<form-property name="careerType" type="java.lang.String"/>
+			<form-property name="infoCategory#idInternal" type="java.lang.Integer" />
+			<form-property name="infoTeacher#idInternal" type="java.lang.Integer" />
 		</form-bean>
 		
 		<!-- READ CAREERS FORM -->
@@ -434,9 +437,9 @@
 		<form-bean name="externalActivityForm"
 			type="org.apache.struts.validator.DynaValidatorForm"
 			dynamic="true">
-			<form-property name="externalActivityId" type="java.lang.Integer" initial="0" />
+			<form-property name="idInternal" type="java.lang.Integer" initial="0"/>
 			<form-property name="activity" type="java.lang.String" />
-			<form-property name="teacherId" type="java.lang.Integer" />
+			<form-property name="infoTeacher#idInternal" type="java.lang.Integer" />
 		</form-bean>
 		
 		<!-- TEACHER INFORMATION FORM  -->
@@ -449,7 +452,33 @@
 			<form-property name="teacherId" type="java.lang.Integer" />
 			<form-property name="research" type="java.lang.String" />
 			<form-property name="management" type="java.lang.String" />
+			<form-property name="lecture" type="java.lang.String" />
+			<form-property name="support" type="java.lang.String" />			
 			<form-property name="other" type="java.lang.String" />
+			<form-property name="degreeOrientationId" type="java.lang.Integer"/>
+			<form-property name="degreeStudentsNumber" type="java.lang.String"/>
+			<form-property name="degreeDescription" type="java.lang.String"/>
+			<form-property name="masterOrientationId" type="java.lang.Integer"/>
+			<form-property name="masterStudentsNumber" type="java.lang.String"/>
+			<form-property name="masterDescription" type="java.lang.String"/>
+			<form-property name="phdOrientationId" type="java.lang.Integer"/>
+			<form-property name="phdStudentsNumber" type="java.lang.String"/>
+			<form-property name="phdDescription" type="java.lang.String"/>
+			<form-property name="comunicationPublicationsNumberId" type="java.lang.Integer"/>
+			<form-property name="comunicationNational" type="java.lang.String"/>
+			<form-property name="comunicationInternational" type="java.lang.String"/>
+			<form-property name="magArticlePublicationsNumberId" type="java.lang.Integer"/>
+			<form-property name="magArticleNational" type="java.lang.String"/>
+			<form-property name="magArticleInternational" type="java.lang.String"/>
+			<form-property name="authorBookPublicationsNumberId" type="java.lang.Integer"/>
+			<form-property name="authorBookNational" type="java.lang.String"/>
+			<form-property name="authorBookInternational" type="java.lang.String"/>
+			<form-property name="editorBookPublicationsNumberId" type="java.lang.Integer"/>
+			<form-property name="editorBookNational" type="java.lang.String"/>
+			<form-property name="editorBookInternational" type="java.lang.String"/>
+			<form-property name="articlesChaptersPublicationsNumberId" type="java.lang.Integer"/>
+			<form-property name="articlesChaptersNational" type="java.lang.String"/>
+			<form-property name="articlesChaptersInternational" type="java.lang.String"/>
 		</form-bean>
     </form-beans>
 
@@ -484,6 +513,11 @@
 
 	<!-- ========== Action Mapping Definitions =============================== -->
 	<action-mappings type="org.apache.struts.action.ActionMapping">
+	
+	<action path="/voidAction" type="ServidorApresentacao.Action.commons.VoidAction" name="voidForm">
+      <!-- form is not used -->
+		<forward name="Success" path="/teacherInformation.do?method=prepareEdit&amp;page=0" />
+	</action>
    
    
 	<!-- for editing -->
@@ -1354,7 +1388,7 @@
 	  </action>
       
       <!-- Professional Career -->
-      <action type="ServidorApresentacao.Action.teacher.CareerAction"
+      <action type="ServidorApresentacao.Action.framework.CRUDActionByOID"
       		path="/professionalCareer"
       		name="professionalCareerForm"
       		parameter="method"
@@ -1364,8 +1398,9 @@
       	<set-property property="editService" value="EditCareer" />
       	<set-property property="deleteService" value="DeleteCareer" />
       	<set-property property="readService" value="ReadCareer" />
-      	<set-property property="oidProperty" value="careerId" />
-      	<set-property property="requestAttribute" value="infoProfessionalCareer" />      	
+      	<set-property property="oidProperty" value="idInternal" />
+      	<set-property property="requestAttribute" value="infoProfessionalCareer" />   
+      	<set-property property="infoObjectClassName" value="DataBeans.teacher.InfoProfessionalCareer" />   	
       	<forward name="show-form" path="edit-professional-career"/> 
 		<forward name="successfull-edit" path="/readCareers.do?careerType=Professional&amp;page=0"/> 
 		<forward name="successfull-read" path="/readCareers.do?careerType=Professional&amp;page=0"/>
@@ -1383,8 +1418,9 @@
       	<set-property property="editService" value="EditCareer" />
       	<set-property property="deleteService" value="DeleteCareer" />
       	<set-property property="readService" value="ReadCareer" />
-      	<set-property property="oidProperty" value="careerId" />
+      	<set-property property="oidProperty" value="idInternal" />
     	<set-property property="requestAttribute" value="infoTeachingCareer" />
+    	<set-property property="infoObjectClassName" value="DataBeans.teacher.InfoTeachingCareer" />
       	<forward name="show-form" path="edit-teaching-career"/> 
 		<forward name="successfull-edit" path="/readCareers.do?careerType=Teaching&amp;page=0"/> 
 		<forward name="successfull-read" path="/readCareers.do?careerType=Teaching&amp;page=0"/>
@@ -1401,7 +1437,7 @@
 	  </action>
 		
 	  <!-- External Activity -->
-	  <action type="ServidorApresentacao.Action.teacher.ExternalActivityAction"
+	  <action type="ServidorApresentacao.Action.framework.CRUDActionByOID"
 	  		path="/externalActivity"
 	  		name="externalActivityForm"
 	  		parameter="method"
@@ -1411,8 +1447,9 @@
 	  	<set-property property="editService" value="EditExternalActivity" />
 	  	<set-property property="deleteService" value="DeleteExternalActivity" />
 	  	<set-property property="readService" value="ReadExternalActivity" />
-	  	<set-property property="oidProperty" value="externalActivityId" />
+	  	<set-property property="oidProperty" value="idInternal" />
     	<set-property property="requestAttribute" value="infoExternalActivity" />
+    	<set-property property="infoObjectClassName" value="DataBeans.teacher.InfoExternalActivity" />
       	<forward name="show-form" path="edit-external-activity"/> 
 		<forward name="successfull-edit" path="/readExternalActivities.do?page=0"/> 
 		<forward name="successfull-read" path="/readExternalActivities.do?page=0"/>
@@ -1425,7 +1462,7 @@
 	  		scope="request">
 	  	<forward name="show-form" path="view-external-activities"/>
 	  </action>	  	
-	  
+
 	  <!-- Teacher Information -->
 	  <action type="ServidorApresentacao.Action.teacher.TeacherInformationAction"
 	  		path="/teacherInformation"

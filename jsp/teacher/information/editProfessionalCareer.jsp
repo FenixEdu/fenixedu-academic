@@ -11,16 +11,15 @@
 <bean:message key="message.professionalCareer.edit" />
 </logic:present>
 <logic:notPresent name="infoProfessionalCareer">
-<bean:message key="message.professionalCareer.insert" />
+<bean:message key="message.professionalCareer.insertProfessional" />
 </logic:notPresent>
 </h3>
 <p class="infoop"><span class="emphasis-box">1</span>
 <bean:message key="message.professionalCareer.managementEdit" /></p>
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="method" value="edit"/>
-	<html:hidden property="careerId"/>
-	<html:hidden property="careerType"/>
-	<html:hidden property="teacherId"/>
+	<html:hidden property="idInternal"/>
+	<html:hidden property="infoTeacher#idInternal"/>
 <table>
 	<tr>
 		<td><bean:message key="message.professionalCareer.years" /></td>

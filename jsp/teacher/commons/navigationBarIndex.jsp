@@ -2,12 +2,12 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <ul>
   <li>
-  	<html:link page='/manageExecutionCourses.do'>
+  	<html:link href="<%= request.getContextPath() + "/teacher/manageExecutionCourses.do" %>">
   		<bean:message key="link.manage.executionCourse"/>
   	</html:link>
   </li>
   <li>
-  	<html:link page='/teacherInformation.do?method=prepareEdit&amp;page=0'>
+  	<html:link href="<%= request.getContextPath() + "/teacher/teacherInformation.do?method=prepareEdit&amp;page=0" %>">
   		<bean:message key="link.manage.teacherInformation"/>
   	</html:link>
   </li>

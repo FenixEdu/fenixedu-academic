@@ -1,0 +1,98 @@
+/*
+ * Created on 21/Nov/2003
+ *  
+ */
+package DataBeans.teacher;
+
+import DataBeans.InfoObject;
+import DataBeans.InfoTeacher;
+import Util.OrientationType;
+
+/**
+ * @author Leonor Almeida
+ * @author Sergio Montelobo
+ *  
+ */
+public class InfoOrientation extends InfoObject
+{
+    private InfoTeacher infoTeacher;
+    private OrientationType orientationType;
+    private String description;
+    private Integer numberOfStudents;
+
+    /**
+	 *  
+	 */
+    public InfoOrientation()
+    {
+        super();
+    }
+
+    /**
+	 * @return Returns the description.
+	 */
+    public String getDescription()
+    {
+        return description;
+    }
+
+    /**
+	 * @param description
+	 *            The description to set.
+	 */
+    public void setDescription(String description)
+    {
+        this.description = description;
+    }
+
+    /**
+	 * @return Returns the infoTeacher.
+	 */
+    public InfoTeacher getInfoTeacher()
+    {
+        return infoTeacher;
+    }
+
+    /**
+	 * @param infoTeacher
+	 *            The infoTeacher to set.
+	 */
+    public void setInfoTeacher(InfoTeacher infoTeacher)
+    {
+        this.infoTeacher = infoTeacher;
+    }
+
+    /**
+	 * @return Returns the numberOfStudents.
+	 */
+    public Integer getNumberOfStudents()
+    {
+        return numberOfStudents;
+    }
+
+    /**
+	 * @param numberOfStudents
+	 *            The numberOfStudents to set.
+	 */
+    public void setNumberOfStudents(Integer numberOfStudents)
+    {
+        this.numberOfStudents = numberOfStudents;
+    }
+
+    /**
+	 * @return Returns the orientationType.
+	 */
+    public OrientationType getOrientationType()
+    {
+        return orientationType;
+    }
+
+    /**
+	 * @param orientationType
+	 *            The orientationType to set.
+	 */
+    public void setOrientationType(OrientationType orientationType)
+    {
+        this.orientationType = orientationType;
+    }
+}

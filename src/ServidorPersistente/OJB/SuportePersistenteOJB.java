@@ -133,6 +133,8 @@ import ServidorPersistente.OJB.person.qualification.QualificationOJB;
 import ServidorPersistente.OJB.teacher.CareerOJB;
 import ServidorPersistente.OJB.teacher.CategoryOJB;
 import ServidorPersistente.OJB.teacher.ExternalActivityOJB;
+import ServidorPersistente.OJB.teacher.OrientationOJB;
+import ServidorPersistente.OJB.teacher.PublicationsNumberOJB;
 import ServidorPersistente.OJB.teacher.ServiceProviderRegimeOJB;
 import ServidorPersistente.OJB.teacher.WeeklyOcupationOJB;
 import ServidorPersistente.OJB.teacher.professorship.PersistentShiftProfessorship;
@@ -155,6 +157,8 @@ import ServidorPersistente.guide.IPersistentReimbursementGuideSituation;
 import ServidorPersistente.teacher.IPersistentCareer;
 import ServidorPersistente.teacher.IPersistentCategory;
 import ServidorPersistente.teacher.IPersistentExternalActivity;
+import ServidorPersistente.teacher.IPersistentOrientation;
+import ServidorPersistente.teacher.IPersistentPublicationsNumber;
 import ServidorPersistente.teacher.IPersistentServiceProviderRegime;
 import ServidorPersistente.teacher.IPersistentWeeklyOcupation;
 
@@ -944,5 +948,21 @@ public class SuportePersistenteOJB implements ISuportePersistente
     public IPersistentReimbursementGuideSituation getIPersistentReimbursementGuideSituation()
     {
         return new ReimbursementGuideSituationOJB();
+    }
+
+    /* (non-Javadoc)
+     * @see ServidorPersistente.ISuportePersistente#getIPersistentOrientation()
+     */
+    public IPersistentOrientation getIPersistentOrientation()
+    {
+        return new OrientationOJB();
+    }
+
+    /* (non-Javadoc)
+     * @see ServidorPersistente.ISuportePersistente#getIPersistentPublicationsNumber()
+     */
+    public IPersistentPublicationsNumber getIPersistentPublicationsNumber()
+    {
+        return new PublicationsNumberOJB();
     }
 }

@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <h2><bean:message key="title.teacherInformation"/></h2>
 <logic:present name="siteView"> 
-<bean:define id="infoSiteTeachingCareers" name="siteView" property="component"/>
+<bean:define id="infoSiteCareers" name="siteView" property="component"/>
 <br/>
 <h3><bean:message key="message.teachingCareer" /></h3>
 <p class="infoop"><span class="emphasis-box">1</span>
@@ -14,9 +14,8 @@
 <bean:message key="message.teachingCareer.managementCleanExplanation" />
 <bean:message key="message.teachingCareer.managementInsertCareerExplanation" />
 <bean:message key="message.teachingCareer.managementSaveExplanation" />
-<bean:message key="message.teachingCareer.managementSeeExplanation" />
-<table border="1">
-<logic:iterate id="infoTeachingCareer" name="infoSiteTeachingCareers" property="infoCareers">
+<table border="1" style="margin-top:10px">	
+<logic:iterate id="infoTeachingCareer" name="infoSiteCareers" property="infoCareers">
 <tr>
 	<td>
 		<bean:write name="infoTeachingCareer" property="beginYear" />-
@@ -31,7 +30,7 @@
 		<td>
 		<div class="gen-button">
 			<html:link page="/teachingCareer.do?method=prepareEdit&amp;page=0" 
-					   paramId="careerId" 
+					   paramId="idInternal" 
 					   paramName="infoTeachingCareer" 
 					   paramProperty="idInternal">
 				<bean:message key="label.edit" />
@@ -41,7 +40,7 @@
 	<td>
 		<div class="gen-button">
 			<html:link page="/teachingCareer.do?method=delete&amp;page=0" 
-					   paramId="careerId" 
+					   paramId="idInternal" 
 					   paramName="infoTeachingCareer" 
 					   paramProperty="idInternal">
 				<bean:message key="label.delete" />
@@ -51,10 +50,11 @@
 </tr>
 </logic:iterate>
 </table>
+<br />
 <div class="gen-button">
 	<html:link page="/teachingCareer.do?method=prepareEdit&amp;page=0&amp;careerType=Teaching" 
-			   paramId="teacherId" 
-			   paramName="infoSiteTeachingCareers" 
+			   paramId="infoTeacher#idInternal" 
+			   paramName="infoSiteCareers" 
 			   paramProperty="infoTeacher.idInternal" >
 		<bean:message key="message.teachingCareer.insert" />
 	</html:link>
@@ -64,9 +64,11 @@
 <table>
 <tr align="center">	
 	<td>
-	<html:submit styleClass="inputbutton" property="confirm">
-		<bean:message key="button.continue"/>
-	</html:submit>
+	<html:form action="/voidAction">
+		<html:submit styleClass="inputbutton" property="confirm">
+			<bean:message key="button.continue"/>
+		</html:submit>
+	</html:form>
 	</td>
 </tr>
 </table>

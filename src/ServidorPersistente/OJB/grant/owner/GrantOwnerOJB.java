@@ -35,7 +35,7 @@ public class GrantOwnerOJB
     {
         IGrantOwner grantOwner = null;
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("key_person", personIdInternal);
+        criteria.addEqualTo("keyPerson", personIdInternal);
         grantOwner = (IGrantOwner) queryObject(GrantOwner.class, criteria);
         return grantOwner;
     }

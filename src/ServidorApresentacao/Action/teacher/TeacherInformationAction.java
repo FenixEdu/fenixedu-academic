@@ -4,6 +4,10 @@
  */
 package ServidorApresentacao.Action.teacher;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,6 +21,8 @@ import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.InfoTeacher;
 import DataBeans.SiteView;
+import DataBeans.teacher.InfoOrientation;
+import DataBeans.teacher.InfoPublicationsNumber;
 import DataBeans.teacher.InfoServiceProviderRegime;
 import DataBeans.teacher.InfoSiteTeacherInformation;
 import DataBeans.teacher.InfoWeeklyOcupation;
@@ -24,7 +30,9 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import Util.OrientationType;
 import Util.ProviderRegimeType;
+import Util.PublicationType;
 
 /**
  * @author Leonor Almeida
@@ -59,7 +67,9 @@ public class TeacherInformationAction extends DispatchAction
     {
         InfoServiceProviderRegime infoServiceProviderRegime = getInfoServiceProviderRegimeFromForm(form);
         InfoWeeklyOcupation infoWeeklyOcupation = getInfoWeeklyOcupationFromForm(form);
-        Object[] args = { infoServiceProviderRegime, infoWeeklyOcupation };
+        List infoOrientations = getInfoOrientationsFromForm(form);
+        List infoPublicationsNumber = getInfoPublicationsNumberFromForm(form);
+        Object[] args = { infoServiceProviderRegime, infoWeeklyOcupation, infoOrientations, infoPublicationsNumber };
         ServiceUtils.executeService(SessionUtils.getUserView(request), getEditService(), args);
         return read(mapping, form, request, response);
     }
@@ -90,6 +100,138 @@ public class TeacherInformationAction extends DispatchAction
     }
 
     /**
+	 * This method creates an List of infoOrientations using the form properties.
+	 * 
+	 * @param form
+	 * @return InfoServiceProviderRegime created
+	 */
+    protected List getInfoOrientationsFromForm(ActionForm form)
+    {
+        DynaActionForm dynaForm = (DynaActionForm) form;
+        Integer teacherId = (Integer) dynaForm.get("teacherId");
+        Integer degreeOrientationId = (Integer) dynaForm.get("degreeOrientationId");
+        Integer degreeStudentsNumber = new Integer((String) dynaForm.get("degreeStudentsNumber"));
+        String degreeDescription = (String) dynaForm.get("degreeDescription");
+        Integer masterOrientationId = (Integer) dynaForm.get("masterOrientationId");
+        Integer masterStudentsNumber = new Integer((String) dynaForm.get("masterStudentsNumber"));
+        String masterDescription = (String) dynaForm.get("masterDescription");
+        Integer phdOrientationId = (Integer) dynaForm.get("phdOrientationId");
+        Integer phdStudentsNumber = new Integer((String) dynaForm.get("phdStudentsNumber"));
+        String phdDescription = (String) dynaForm.get("phdDescription");
+
+        InfoTeacher infoTeacher = new InfoTeacher();
+        infoTeacher.setIdInternal(teacherId);
+
+        InfoOrientation degreeOrientation = new InfoOrientation();
+        degreeOrientation.setIdInternal(degreeOrientationId);
+        degreeOrientation.setNumberOfStudents(degreeStudentsNumber);
+        degreeOrientation.setOrientationType(OrientationType.DEGREE);
+        degreeOrientation.setDescription(degreeDescription);
+        degreeOrientation.setInfoTeacher(infoTeacher);
+
+        InfoOrientation masterOrientation = new InfoOrientation();
+        masterOrientation.setIdInternal(masterOrientationId);
+        masterOrientation.setNumberOfStudents(masterStudentsNumber);
+        masterOrientation.setOrientationType(OrientationType.MASTER);
+        masterOrientation.setDescription(masterDescription);
+        masterOrientation.setInfoTeacher(infoTeacher);
+
+        InfoOrientation phdOrientation = new InfoOrientation();
+        phdOrientation.setIdInternal(phdOrientationId);
+        phdOrientation.setNumberOfStudents(phdStudentsNumber);
+        phdOrientation.setOrientationType(OrientationType.PHD);
+        phdOrientation.setDescription(phdDescription);
+        phdOrientation.setInfoTeacher(infoTeacher);
+
+        List infoOrientations = new ArrayList();
+        infoOrientations.add(degreeOrientation);
+        infoOrientations.add(masterOrientation);
+        infoOrientations.add(phdOrientation);
+        return infoOrientations;
+    }
+
+    /**
+	 * This method creates an List of infoPublicationsNumber using the form properties.
+	 * 
+	 * @param form
+	 * @return List created
+	 */
+    protected List getInfoPublicationsNumberFromForm(ActionForm form)
+    {
+        DynaActionForm dynaForm = (DynaActionForm) form;
+        Integer teacherId = (Integer) dynaForm.get("teacherId");
+        Integer comunicationPublicationsNumberId =
+            (Integer) dynaForm.get("comunicationPublicationsNumberId");
+        Integer comunicationNational = new Integer((String) dynaForm.get("comunicationNational"));
+        Integer comunicationInternational =
+            new Integer((String) dynaForm.get("comunicationInternational"));
+        Integer magArticlePublicationsNumberId =
+            (Integer) dynaForm.get("magArticlePublicationsNumberId");
+        Integer magArticleNational = new Integer((String) dynaForm.get("magArticleNational"));
+        Integer magArticleInternational = new Integer((String) dynaForm.get("magArticleInternational"));
+        Integer authorBookPublicationsNumberId =
+            (Integer) dynaForm.get("authorBookPublicationsNumberId");
+        Integer authorBookNational = new Integer((String) dynaForm.get("authorBookNational"));
+        Integer authorBookInternational = new Integer((String) dynaForm.get("authorBookInternational"));
+        Integer editorBookPublicationsNumberId =
+            (Integer) dynaForm.get("editorBookPublicationsNumberId");
+        Integer editorBookNational = new Integer((String) dynaForm.get("editorBookNational"));
+        Integer editorBookInternational = new Integer((String) dynaForm.get("editorBookInternational"));
+        Integer articlesChaptersPublicationsNumberId =
+            (Integer) dynaForm.get("articlesChaptersPublicationsNumberId");
+        Integer articlesChaptersNational =
+            new Integer((String) dynaForm.get("articlesChaptersNational"));
+        Integer articlesChaptersInternational =
+            new Integer((String) dynaForm.get("articlesChaptersInternational"));
+
+        InfoTeacher infoTeacher = new InfoTeacher();
+        infoTeacher.setIdInternal(teacherId);
+
+        InfoPublicationsNumber comunicationPublicationsNumber = new InfoPublicationsNumber();
+        comunicationPublicationsNumber.setIdInternal(comunicationPublicationsNumberId);
+        comunicationPublicationsNumber.setNational(comunicationNational);
+        comunicationPublicationsNumber.setInternational(comunicationInternational);
+        comunicationPublicationsNumber.setPublicationType(PublicationType.COMUNICATION);
+        comunicationPublicationsNumber.setInfoTeacher(infoTeacher);
+
+        InfoPublicationsNumber magArticlePublicationsNumber = new InfoPublicationsNumber();
+        magArticlePublicationsNumber.setIdInternal(magArticlePublicationsNumberId);
+        magArticlePublicationsNumber.setNational(magArticleNational);
+        magArticlePublicationsNumber.setInternational(magArticleInternational);
+        magArticlePublicationsNumber.setPublicationType(PublicationType.MAG_ARTICLE);
+        magArticlePublicationsNumber.setInfoTeacher(infoTeacher);
+
+        InfoPublicationsNumber authorBookPublicationsNumber = new InfoPublicationsNumber();
+        authorBookPublicationsNumber.setIdInternal(authorBookPublicationsNumberId);
+        authorBookPublicationsNumber.setNational(authorBookNational);
+        authorBookPublicationsNumber.setInternational(authorBookInternational);
+        authorBookPublicationsNumber.setPublicationType(PublicationType.AUTHOR_BOOK);
+        authorBookPublicationsNumber.setInfoTeacher(infoTeacher);
+
+        InfoPublicationsNumber editorBookPublicationsNumber = new InfoPublicationsNumber();
+        editorBookPublicationsNumber.setIdInternal(editorBookPublicationsNumberId);
+        editorBookPublicationsNumber.setNational(editorBookNational);
+        editorBookPublicationsNumber.setInternational(editorBookInternational);
+        editorBookPublicationsNumber.setPublicationType(PublicationType.EDITOR_BOOK);
+        editorBookPublicationsNumber.setInfoTeacher(infoTeacher);
+
+        InfoPublicationsNumber articlesChaptersPublicationsNumber = new InfoPublicationsNumber();
+        articlesChaptersPublicationsNumber.setIdInternal(articlesChaptersPublicationsNumberId);
+        articlesChaptersPublicationsNumber.setNational(articlesChaptersNational);
+        articlesChaptersPublicationsNumber.setInternational(articlesChaptersInternational);
+        articlesChaptersPublicationsNumber.setPublicationType(PublicationType.ARTICLES_CHAPTERS);
+        articlesChaptersPublicationsNumber.setInfoTeacher(infoTeacher);
+
+        List infoPublicationsNumbers = new ArrayList();
+        infoPublicationsNumbers.add(comunicationPublicationsNumber);
+        infoPublicationsNumbers.add(magArticlePublicationsNumber);
+        infoPublicationsNumbers.add(authorBookPublicationsNumber);
+        infoPublicationsNumbers.add(editorBookPublicationsNumber);
+        infoPublicationsNumbers.add(articlesChaptersPublicationsNumber);
+        return infoPublicationsNumbers;
+    }
+
+    /**
 	 * This method creates an InfoWeeklyOcupation using the form properties.
 	 * 
 	 * @param form
@@ -103,6 +245,8 @@ public class TeacherInformationAction extends DispatchAction
         Integer management = new Integer((String) dynaForm.get("management"));
         Integer other = new Integer((String) dynaForm.get("other"));
         Integer research = new Integer((String) dynaForm.get("research"));
+        Integer support = new Integer((String) dynaForm.get("support"));
+        Integer lecture = new Integer((String) dynaForm.get("lecture"));
 
         InfoTeacher infoTeacher = new InfoTeacher();
         infoTeacher.setIdInternal(teacherId);
@@ -112,6 +256,8 @@ public class TeacherInformationAction extends DispatchAction
         infoWeeklyOcupation.setManagement(management);
         infoWeeklyOcupation.setOther(other);
         infoWeeklyOcupation.setResearch(research);
+        infoWeeklyOcupation.setSupport(support);
+        infoWeeklyOcupation.setLecture(lecture);
         infoWeeklyOcupation.setInfoTeacher(infoTeacher);
 
         return infoWeeklyOcupation;
@@ -134,10 +280,12 @@ public class TeacherInformationAction extends DispatchAction
 	 * @param form
 	 * @param request
 	 */
-    protected void populateFormFromInfoWeeklyOcupationAndInfoServiceProviderRegime(
+    protected void populateFormFrom(
         ActionMapping mapping,
         InfoWeeklyOcupation infoWeeklyOcupation,
         InfoServiceProviderRegime infoServiceProviderRegime,
+        List infoOrientations,
+        List infoPublicationsNumbers,
         ActionForm form,
         HttpServletRequest request)
     {
@@ -152,11 +300,79 @@ public class TeacherInformationAction extends DispatchAction
             dynaForm.set("teacherId", infoTeacher.getIdInternal());
             dynaForm.set("serviceProviderRegimeId", infoServiceProviderRegime.getIdInternal());
             ProviderRegimeType providerRegimeType = infoServiceProviderRegime.getProviderRegimeType();
-            dynaForm.set("serviceProviderRegimeTypeName", providerRegimeType == null ? null : providerRegimeType.getName());
+            dynaForm.set(
+                "serviceProviderRegimeTypeName",
+                providerRegimeType == null ? null : providerRegimeType.getName());
             dynaForm.set("weeklyOcupationId", infoWeeklyOcupation.getIdInternal());
             dynaForm.set("management", infoWeeklyOcupation.getManagement().toString());
             dynaForm.set("research", infoWeeklyOcupation.getResearch().toString());
             dynaForm.set("other", infoWeeklyOcupation.getOther().toString());
+            dynaForm.set("support", infoWeeklyOcupation.getSupport().toString());
+            dynaForm.set("lecture", infoWeeklyOcupation.getLecture().toString());
+
+            Iterator iter = infoOrientations.iterator();
+            while (iter.hasNext())
+            {
+                InfoOrientation infoOrientation = (InfoOrientation) iter.next();
+                Integer orientationId = infoOrientation.getIdInternal();
+                Integer numberOfStudents = infoOrientation.getNumberOfStudents();
+                String description = infoOrientation.getDescription();
+                if (infoOrientation.getOrientationType().equals(OrientationType.DEGREE))
+                {
+                    dynaForm.set("degreeOrientationId", orientationId);
+                    dynaForm.set("degreeDescription", description);
+                    dynaForm.set("degreeStudentsNumber", numberOfStudents.toString());
+                } else if (infoOrientation.getOrientationType().equals(OrientationType.MASTER))
+                {
+                    dynaForm.set("masterOrientationId", orientationId);
+                    dynaForm.set("masterDescription", description);
+                    dynaForm.set("masterStudentsNumber", numberOfStudents.toString());
+                } else
+                {
+                    dynaForm.set("phdOrientationId", orientationId);
+                    dynaForm.set("phdDescription", description);
+                    dynaForm.set("phdStudentsNumber", numberOfStudents.toString());
+                }
+            }
+
+            iter = infoPublicationsNumbers.iterator();
+            while (iter.hasNext())
+            {
+                InfoPublicationsNumber infoPublicationsNumber = (InfoPublicationsNumber) iter.next();
+                Integer publicationsNumberId = infoPublicationsNumber.getIdInternal();
+                Integer national = infoPublicationsNumber.getNational();
+                Integer international = infoPublicationsNumber.getInternational();
+
+                if (infoPublicationsNumber.getPublicationType().equals(PublicationType.COMUNICATION))
+                {
+                    dynaForm.set("comunicationPublicationsNumberId", publicationsNumberId);
+                    dynaForm.set("comunicationNational", national.toString());
+                    dynaForm.set("comunicationInternational", international.toString());
+                } else if (
+                    infoPublicationsNumber.getPublicationType().equals(PublicationType.MAG_ARTICLE))
+                {
+                    dynaForm.set("magArticlePublicationsNumberId", publicationsNumberId);
+                    dynaForm.set("magArticleNational", national.toString());
+                    dynaForm.set("magArticleInternational", international.toString());
+                } else if (
+                    infoPublicationsNumber.getPublicationType().equals(PublicationType.AUTHOR_BOOK))
+                {
+                    dynaForm.set("authorBookPublicationsNumberId", publicationsNumberId);
+                    dynaForm.set("authorBookNational", national.toString());
+                    dynaForm.set("authorBookInternational", international.toString());
+                } else if (
+                    infoPublicationsNumber.getPublicationType().equals(PublicationType.EDITOR_BOOK))
+                {
+                    dynaForm.set("editorBookPublicationsNumberId", publicationsNumberId);
+                    dynaForm.set("editorBookNational", national.toString());
+                    dynaForm.set("editorBookInternational", international.toString());
+                } else
+                {
+                    dynaForm.set("articlesChaptersPublicationsNumberId", publicationsNumberId);
+                    dynaForm.set("articlesChaptersNational", national.toString());
+                    dynaForm.set("articlesChaptersInternational", international.toString());
+                }
+            }
         } catch (Exception e)
         {
             e.printStackTrace();
@@ -186,10 +402,26 @@ public class TeacherInformationAction extends DispatchAction
                 infoSiteTeacherInformation.getInfoServiceProviderRegime();
             InfoWeeklyOcupation infoWeeklyOcupation =
                 infoSiteTeacherInformation.getInfoWeeklyOcupation();
-            populateFormFromInfoWeeklyOcupationAndInfoServiceProviderRegime(
+            List infoOrientations = new ArrayList();
+            infoOrientations.add(infoSiteTeacherInformation.getInfoDegreeOrientation());
+            infoOrientations.add(infoSiteTeacherInformation.getInfoMasterOrientation());
+            infoOrientations.add(infoSiteTeacherInformation.getInfoPhdOrientation());
+            List infoPublicationsNumbers = new ArrayList();
+            infoPublicationsNumbers.add(
+                infoSiteTeacherInformation.getInfoComunicationPublicationsNumber());
+            infoPublicationsNumbers.add(
+                infoSiteTeacherInformation.getInfoMagArticlePublicationsNumber());
+            infoPublicationsNumbers.add(
+                infoSiteTeacherInformation.getInfoArticleChapterPublicationsNumber());
+            infoPublicationsNumbers.add(infoSiteTeacherInformation.getInfoEditBookPublicationsNumber());
+            infoPublicationsNumbers.add(
+                infoSiteTeacherInformation.getInfoAuthorBookPublicationsNumber());
+            populateFormFrom(
                 mapping,
                 infoWeeklyOcupation,
                 infoServiceProviderRegime,
+                infoOrientations,
+                infoPublicationsNumbers,
                 form,
                 request);
         }
@@ -234,10 +466,7 @@ public class TeacherInformationAction extends DispatchAction
     {
         IUserView userView = SessionUtils.getUserView(request);
         Object[] args = { userView.getUtilizador()};
-        SiteView siteView = (SiteView) ServiceUtils.executeService(
-            userView,
-            getReadService(),
-            args);
+        SiteView siteView = (SiteView) ServiceUtils.executeService(userView, getReadService(), args);
         return (InfoSiteTeacherInformation) siteView.getComponent();
     }
 

@@ -19,6 +19,7 @@ public class InfoQualification extends InfoObject implements ISiteComponent
 	private String mark;
 	private String school;
 	private String title;
+    private String degree;
 	private InfoPerson infoPerson;
 
 	public InfoQualification()
@@ -31,9 +32,8 @@ public class InfoQualification extends InfoObject implements ISiteComponent
 		if (obj != null && obj instanceof InfoQualification)
 		{
 			result =
-				getMark().equals(((InfoQualification) obj).getMark())
+				getMark().equals(((InfoQualification) obj).getDegree())
 					&& getSchool().equals(((InfoQualification) obj).getSchool())
-					&& getTitle().equals(((InfoQualification) obj).getTitle())
 					&& getYear().equals(((InfoQualification) obj).getYear())
 					&& getInfoPerson().equals(((InfoQualification) obj).getInfoPerson());
 		}
@@ -133,5 +133,21 @@ public class InfoQualification extends InfoObject implements ISiteComponent
 	{
 		this.title = title;
 	}
+
+    /**
+     * @return Returns the degree.
+     */
+    public String getDegree()
+    {
+        return degree;
+    }
+
+    /**
+     * @param degree The degree to set.
+     */
+    public void setDegree(String degree)
+    {
+        this.degree = degree;
+    }
 
 }

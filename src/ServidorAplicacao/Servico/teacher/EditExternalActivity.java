@@ -10,6 +10,7 @@ import DataBeans.util.Cloner;
 import Dominio.IDomainObject;
 import Dominio.teacher.IExternalActivity;
 import ServidorAplicacao.Servico.framework.EditDomainObjectService;
+import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentObject;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.teacher.IPersistentExternalActivity;
@@ -46,7 +47,7 @@ public class EditExternalActivity extends EditDomainObjectService
         return "EditExternalActivity";
     }
 
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp)
+    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) throws ExcepcaoPersistencia
     {
         IPersistentExternalActivity persistentExternalActivity = sp.getIPersistentExternalActivity();
         return persistentExternalActivity;
@@ -57,5 +58,11 @@ public class EditExternalActivity extends EditDomainObjectService
         IExternalActivity externalActivity =
             Cloner.copyInfoExternalActivity2IExternalActivity((InfoExternalActivity) infoObject);
         return externalActivity;
+    }
+    
+    protected boolean canCreate(IDomainObject newDomainObject, ISuportePersistente sp)
+        throws ExcepcaoPersistencia
+    {
+        return true;
     }
 }

@@ -35,13 +35,13 @@ drop table if exists QUALIFICATION;
 create table QUALIFICATION(
    ID_INTERNAL integer(11) not null auto_increment,
    KEY_PERSON integer(11) not null ,
-   YEAR integer(11),
+   YEAR integer(11) not null,
    MARK varchar(200),
-   SCHOOL varchar(200),
+   SCHOOL varchar(200) not null,
    TITLE varchar(200),
-   
+   DEGREE varchar(200) not null,
    primary key (ID_INTERNAL),
-   unique U1 (YEAR,SCHOOL,TITLE,KEY_PERSON))
+   unique U1 (YEAR,SCHOOL,DEGREE,KEY_PERSON))
    type=InnoDB;
 
 #------------------------------------------

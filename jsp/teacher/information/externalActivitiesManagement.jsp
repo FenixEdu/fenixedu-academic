@@ -14,15 +14,15 @@
 <bean:message key="message.externalActivities.managementCleanExplanation" />
 <bean:message key="message.externalActivities.managementInsertActExplanation" />
 <bean:message key="message.externalActivities.managementSaveExplanation" />
-<bean:message key="message.externalActivities.managementSeeExplanation" />
-<table border="1">
+<table border="1" style="margin-top:10px">
 <logic:iterate id="infoExternalActivity" name="infoSiteExternalActivities" property="infoExternalActivities">
 <tr>
 	<td><bean:write name="infoExternalActivity" property="activity" /></td>
 	<td>
 		<div class="gen-button">
+		<%--					   paramId="externalActivityId" --%>
 			<html:link page="/externalActivity.do?method=prepareEdit&amp;page=0" 
-					   paramId="externalActivityId" 
+						paramId="idInternal"
 					   paramName="infoExternalActivity" 
 					   paramProperty="idInternal">
 				<bean:message key="label.edit" />
@@ -32,7 +32,7 @@
 	<td>
 		<div class="gen-button">
 			<html:link page="/externalActivity.do?method=delete&amp;page=0" 
-					   paramId="externalActivityId" 
+					   paramId="idInternal" 
 					   paramName="infoExternalActivity" 
 					   paramProperty="idInternal">
 				<bean:message key="label.delete" />
@@ -42,9 +42,10 @@
 </tr>
 </logic:iterate>
 </table>
+<br />	
 <div class="gen-button">
 	<html:link page="/externalActivity.do?method=prepareEdit&amp;page=0" 
-			   paramId="teacherId" 
+			   paramId="infoTeacher#idInternal" 
 			   paramName="infoSiteExternalActivities" 
 			   paramProperty="infoTeacher.idInternal" >
 		<bean:message key="message.externalActivities.insert" />
@@ -55,14 +56,11 @@
 <table>
 <tr align="center">	
 	<td>
-	<html:submit styleClass="inputbutton" property="confirm">
-		<bean:message key="button.continue"/>
-	</html:submit>
-	</td>
-	<td>
-		<html:reset styleClass="inputbutton">
-		<bean:message key="button.seeInformation"/>
-	</html:reset>
+	<html:form action="/voidAction">
+		<html:submit styleClass="inputbutton" property="confirm">
+			<bean:message key="button.continue"/>
+		</html:submit>
+	</html:form>
 	</td>
 </tr>
 </table>

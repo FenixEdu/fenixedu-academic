@@ -4,7 +4,7 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 		<definition name="view-qualifications" extends="teacher-information">
-		<put name="body" value="/person/qualificationsManagement.jsp" />
+		<put name="body" value="/person/qualificationManagement.jsp" />
 	</definition>
 	<definition name="edit-qualification" extends="teacher-information">
 		<put name="body" value="/person/editQualification.jsp" />

@@ -25,7 +25,14 @@ public class InfoSiteTeacherInformation extends InfoObject implements ISiteCompo
     private List infoExternalActivities;
     private List infoExecutionCourses;
     private InfoWeeklyOcupation infoWeeklyOcupation;
-    // TODO: faltam os estágios, tfc's, mestrados, doutoramentos
+    private InfoOrientation infoDegreeOrientation;
+    private InfoOrientation infoMasterOrientation;
+    private InfoOrientation infoPhdOrientation;
+    private InfoPublicationsNumber infoComunicationPublicationsNumber;
+    private InfoPublicationsNumber infoMagArticlePublicationsNumber;
+    private InfoPublicationsNumber infoAuthorBookPublicationsNumber;
+    private InfoPublicationsNumber infoEditBookPublicationsNumber;
+    private InfoPublicationsNumber infoArticleChapterPublicationsNumber;
     // TODO: faltam os cargos de gestão
     // TODO: faltam as publicacoes
         
@@ -162,6 +169,134 @@ public class InfoSiteTeacherInformation extends InfoObject implements ISiteCompo
     public void setInfoWeeklyOcupation(InfoWeeklyOcupation infoWeeklyOcupation)
     {
         this.infoWeeklyOcupation = infoWeeklyOcupation;
+    }
+
+    /**
+     * @return Returns the infoDegreeOrientation.
+     */
+    public InfoOrientation getInfoDegreeOrientation()
+    {
+        return infoDegreeOrientation;
+    }
+
+    /**
+     * @param infoDegreeOrientation The infoDegreeOrientation to set.
+     */
+    public void setInfoDegreeOrientation(InfoOrientation infoDegreeOrientation)
+    {
+        this.infoDegreeOrientation = infoDegreeOrientation;
+    }
+
+    /**
+     * @return Returns the infoMasterOrientation.
+     */
+    public InfoOrientation getInfoMasterOrientation()
+    {
+        return infoMasterOrientation;
+    }
+
+    /**
+     * @param infoMasterOrientation The infoMasterOrientation to set.
+     */
+    public void setInfoMasterOrientation(InfoOrientation infoMasterOrientation)
+    {
+        this.infoMasterOrientation = infoMasterOrientation;
+    }
+
+    /**
+     * @return Returns the infoPhdOrientation.
+     */
+    public InfoOrientation getInfoPhdOrientation()
+    {
+        return infoPhdOrientation;
+    }
+
+    /**
+     * @param infoPhdOrientation The infoPhdOrientation to set.
+     */
+    public void setInfoPhdOrientation(InfoOrientation infoPhdOrientation)
+    {
+        this.infoPhdOrientation = infoPhdOrientation;
+    }
+
+    /**
+     * @return Returns the infoArticleChapterPublicationsNumber.
+     */
+    public InfoPublicationsNumber getInfoArticleChapterPublicationsNumber()
+    {
+        return infoArticleChapterPublicationsNumber;
+    }
+
+    /**
+     * @param infoArticleChapterPublicationsNumber The infoArticleChapterPublicationsNumber to set.
+     */
+    public void setInfoArticleChapterPublicationsNumber(InfoPublicationsNumber infoArticleChapterPublicationsNumber)
+    {
+        this.infoArticleChapterPublicationsNumber = infoArticleChapterPublicationsNumber;
+    }
+
+    /**
+     * @return Returns the infoAuthorBookPublicationsNumber.
+     */
+    public InfoPublicationsNumber getInfoAuthorBookPublicationsNumber()
+    {
+        return infoAuthorBookPublicationsNumber;
+    }
+
+    /**
+     * @param infoAuthorBookPublicationsNumber The infoAuthorBookPublicationsNumber to set.
+     */
+    public void setInfoAuthorBookPublicationsNumber(InfoPublicationsNumber infoAuthorBookPublicationsNumber)
+    {
+        this.infoAuthorBookPublicationsNumber = infoAuthorBookPublicationsNumber;
+    }
+
+    /**
+     * @return Returns the infoComunicationPublicationsNumber.
+     */
+    public InfoPublicationsNumber getInfoComunicationPublicationsNumber()
+    {
+        return infoComunicationPublicationsNumber;
+    }
+
+    /**
+     * @param infoComunicationPublicationsNumber The infoComunicationPublicationsNumber to set.
+     */
+    public void setInfoComunicationPublicationsNumber(InfoPublicationsNumber infoComunicationPublicationsNumber)
+    {
+        this.infoComunicationPublicationsNumber = infoComunicationPublicationsNumber;
+    }
+
+    /**
+     * @return Returns the infoEditBookPublicationsNumber.
+     */
+    public InfoPublicationsNumber getInfoEditBookPublicationsNumber()
+    {
+        return infoEditBookPublicationsNumber;
+    }
+
+    /**
+     * @param infoEditBookPublicationsNumber The infoEditBookPublicationsNumber to set.
+     */
+    public void setInfoEditBookPublicationsNumber(InfoPublicationsNumber infoEditBookPublicationsNumber)
+    {
+        this.infoEditBookPublicationsNumber = infoEditBookPublicationsNumber;
+    }
+
+    /**
+     * @return Returns the infoMagArticlePublicationsNumber.
+     */
+    public InfoPublicationsNumber getInfoMagArticlePublicationsNumber()
+    {
+        return infoMagArticlePublicationsNumber;
+    }
+
+    /**
+     * @param infoMagArticlePublicationsNumber The infoMagArticlePublicationsNumber to set.
+     */
+    public void setInfoMagArticlePublicationsNumber(InfoPublicationsNumber infoMagArticlePublicationsNumber)
+    {
+        this.infoMagArticlePublicationsNumber = infoMagArticlePublicationsNumber;
     }
 
 }
