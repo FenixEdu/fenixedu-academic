@@ -4,6 +4,8 @@
  */
 package Dominio;
 
+import java.util.Date;
+
 /**
  * @author Ivo Brandão
  */
@@ -11,8 +13,8 @@ public class Announcement implements IAnnouncement {
 
 	private Integer internalCode;
 	private String title;
-	private Long date;
-	private Long lastModifiedDate;
+	private Date date;
+	private Date lastModifiedDate;
 	private String information;
 	private ISite site;
 	private Integer keySite; 
@@ -25,8 +27,8 @@ public class Announcement implements IAnnouncement {
 	/** 
 	 * Construtor
 	 */
-	public Announcement(Integer internalCode, String title, Long date, 
-		Long lastModifiedDate, String information, ISite site, Integer keySite) {
+	public Announcement(Integer internalCode, String title, Date date, 
+		Date lastModifiedDate, String information, ISite site, Integer keySite) {
 			
 		this.internalCode = internalCode;
 		this.title = title;
@@ -38,9 +40,24 @@ public class Announcement implements IAnnouncement {
 	}
 	
 	/**
-	 * @return Long
+	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
-	public Long getDate() {
+	public boolean equals(Object arg0) {
+		boolean result = false;
+		if (arg0 instanceof IAnnouncement) {
+			result = (getTitle().equals(((IAnnouncement) arg0).getTitle()))&&
+				(getDate().equals(((IAnnouncement) arg0).getDate()))&&
+				(getLastModifiedDate().equals(((IAnnouncement) arg0).getLastModifiedDate()))&&
+				(getSite().equals(((IAnnouncement) arg0).getSite()))&&				
+				(getInformation().equals(((IAnnouncement) arg0).getInformation()));
+		} 
+		return result;		
+	}
+
+	/**
+	 * @return Date
+	 */
+	public Date getDate() {
 		return date;
 	}
 
@@ -66,9 +83,9 @@ public class Announcement implements IAnnouncement {
 	}
 
 	/**
-	 * @return Long
+	 * @return Date
 	 */
-	public Long getLastModifiedDate() {
+	public Date getLastModifiedDate() {
 		return lastModifiedDate;
 	}
 
@@ -90,7 +107,7 @@ public class Announcement implements IAnnouncement {
 	 * Sets the date.
 	 * @param date The date to set
 	 */
-	public void setDate(Long date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 
@@ -122,7 +139,7 @@ public class Announcement implements IAnnouncement {
 	 * Sets the lastModifiedDate.
 	 * @param lastModifiedDate The lastModifiedDate to set
 	 */
-	public void setLastModifiedDate(Long lastModifiedDate) {
+	public void setLastModifiedDate(Date lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
 	}
 
@@ -140,21 +157,6 @@ public class Announcement implements IAnnouncement {
 	 */
 	public void setTitle(String title) {
 		this.title = title;
-	}
-
-	/**
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	public boolean equals(Object arg0) {
-		boolean result = false;
-		if (arg0 instanceof IAnnouncement) {
-			result = (getTitle().equals(((IAnnouncement) arg0).getTitle()))&&
-				(getDate().equals(((IAnnouncement) arg0).getDate()))&&
-				(getLastModifiedDate().equals(((IAnnouncement) arg0).getLastModifiedDate()))&&
-				(getSite().equals(((IAnnouncement) arg0).getSite()))&&				
-				(getInformation().equals(((IAnnouncement) arg0).getInformation()));
-		} 
-		return result;		
 	}
 
 }

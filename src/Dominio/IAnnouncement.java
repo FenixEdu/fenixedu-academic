@@ -4,20 +4,22 @@
  */
 package Dominio;
 
+import java.util.Date;
+
 /**
  * @author Ivo Brandão
  */
 public interface IAnnouncement {
 
 	String getTitle();
-	Long getDate();
-	Long getLastModifiedDate();
+	Date getDate();
+	Date getLastModifiedDate();
 	String getInformation();
 	ISite getSite();
 
 	void setTitle(String title);
-	void setDate(Long date);
-	void setLastModifiedDate(Long lastModifiedDate);
+	void setDate(Date date);
+	void setLastModifiedDate(Date lastModifiedDate);
 	void setInformation(String information);
 	void setSite(ISite site);
 }
