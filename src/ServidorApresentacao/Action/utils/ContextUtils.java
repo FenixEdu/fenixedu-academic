@@ -1,6 +1,6 @@
 /*
  * Created on 2003/07/28
- *
+ *  
  */
 package ServidorApresentacao.Action.utils;
 
@@ -38,745 +38,763 @@ import Util.TipoSala;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- *
+ *  
  */
-public class ContextUtils {
+public class ContextUtils
+{
 
-	public static final void setExecutionPeriodContext(HttpServletRequest request) {
-		String executionPeriodOIDString =
-			(String) request.getAttribute(
-				SessionConstants.EXECUTION_PERIOD_OID);
-		if (executionPeriodOIDString == null) {
-			executionPeriodOIDString =
-				request.getParameter(SessionConstants.EXECUTION_PERIOD_OID);
-		}
+    public static final void setExecutionPeriodContext(HttpServletRequest request)
+    {
+        String executionPeriodOIDString =
+            (String) request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID);
+        if (executionPeriodOIDString == null)
+        {
+            executionPeriodOIDString = request.getParameter(SessionConstants.EXECUTION_PERIOD_OID);
+        }
 
-		Integer executionPeriodOID = null;
-		if (executionPeriodOIDString != null
-			&& !executionPeriodOIDString.equals("")
-			&& !executionPeriodOIDString.equals("null")) {
-			executionPeriodOID = new Integer(executionPeriodOIDString);
-		}
+        Integer executionPeriodOID = null;
+        if (executionPeriodOIDString != null
+            && !executionPeriodOIDString.equals("")
+            && !executionPeriodOIDString.equals("null"))
+        {
+            executionPeriodOID = new Integer(executionPeriodOIDString);
+        }
+        InfoExecutionPeriod infoExecutionPeriod = null;
 
-		InfoExecutionPeriod infoExecutionPeriod = null;
+        if (executionPeriodOID != null)
+        {
+            // Read from database
+            try
+            {
+                Object[] args = { executionPeriodOID };
+                infoExecutionPeriod =
+                    (InfoExecutionPeriod) ServiceUtils.executeService(
+                        null,
+                        "ReadExecutionPeriodByOID",
+                        args);
+            } catch (FenixServiceException e)
+            {
+                e.printStackTrace();
+            }
+        } else
+        {
 
-		if (executionPeriodOID != null) {
-			// Read from database
-			try {
-				Object[] args = { executionPeriodOID };
-				infoExecutionPeriod =
-					(InfoExecutionPeriod) ServiceUtils.executeService(
-						null,
-						"ReadExecutionPeriodByOID",
-						args);
-			} catch (FenixServiceException e) {
-				e.printStackTrace();
-			}
-		} else {
+            // Read current execution period from database
+            try
+            {
+                infoExecutionPeriod =
+                    (InfoExecutionPeriod) ServiceUtils.executeService(
+                        null,
+                        "ReadCurrentExecutionPeriod",
+                        new Object[0]);
+            } catch (FenixServiceException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        if (infoExecutionPeriod != null)
+        {
+            // Place it in request
+            request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
+            request.setAttribute(
+                SessionConstants.EXECUTION_PERIOD_OID,
+                infoExecutionPeriod.getIdInternal().toString());
+            if (infoExecutionPeriod.getInfoExecutionYear() != null)
+            {
+                request.setAttribute("schoolYear", infoExecutionPeriod.getInfoExecutionYear().getYear());
+            }
 
-			// Read current execution period from database
-			try {
-				infoExecutionPeriod =
-					(InfoExecutionPeriod) ServiceUtils.executeService(
-						null,
-						"ReadCurrentExecutionPeriod",
-						new Object[0]);
-			} catch (FenixServiceException e) {
-				e.printStackTrace();
-			}
-		}
-		if (infoExecutionPeriod != null) {
-			// Place it in request
-			request.setAttribute(
-				SessionConstants.EXECUTION_PERIOD,
-				infoExecutionPeriod);
-			request.setAttribute(
-				SessionConstants.EXECUTION_PERIOD_OID,
-				infoExecutionPeriod.getIdInternal().toString());
-			
-		} else {
-			System.out.println(
-				"#### ERROR: Unexisting or invalid executionPeriod - throw proper exception: Someone was playing with the links");
-		}
-	}
+        } else
+        {
+            System.out.println(
+                "#### ERROR: Unexisting or invalid executionPeriod - throw proper exception: Someone was playing with the links");
+        }
+    }
 
-	/**
+    /**
 	 * @param request
 	 */
-	public static void setExecutionDegreeContext(HttpServletRequest request) {
-		String executionDegreeOIDString =
-			(String) request.getAttribute(
-				SessionConstants.EXECUTION_DEGREE_OID);
+    public static void setExecutionDegreeContext(HttpServletRequest request)
+    {
+        String executionDegreeOIDString =
+            (String) request.getAttribute(SessionConstants.EXECUTION_DEGREE_OID);
 
-		if ((executionDegreeOIDString == null)
-			|| (executionDegreeOIDString.length() == 0)) {
-			executionDegreeOIDString =
-				request.getParameter(SessionConstants.EXECUTION_DEGREE_OID);
+        if ((executionDegreeOIDString == null) || (executionDegreeOIDString.length() == 0))
+        {
+            executionDegreeOIDString = request.getParameter(SessionConstants.EXECUTION_DEGREE_OID);
 
-			// No degree was chosen
-			if ((executionDegreeOIDString == null)
-				|| (executionDegreeOIDString.length() == 0)) {
-				request.setAttribute(SessionConstants.EXECUTION_DEGREE, null);
-			}
-		}
+            // No degree was chosen
+            if ((executionDegreeOIDString == null) || (executionDegreeOIDString.length() == 0))
+            {
+                request.setAttribute(SessionConstants.EXECUTION_DEGREE, null);
+            }
+        }
 
-		Integer executionDegreeOID = null;
-		if (executionDegreeOIDString != null) {
-			try {
-				executionDegreeOID = new Integer(executionDegreeOIDString);
-			} catch (NumberFormatException ex) {
-				return;
-			}
-		}
+        Integer executionDegreeOID = null;
+        if (executionDegreeOIDString != null)
+        {
+            try
+            {
+                executionDegreeOID = new Integer(executionDegreeOIDString);
+            } catch (NumberFormatException ex)
+            {
+                return;
+            }
+        }
 
-		InfoExecutionDegree infoExecutionDegree = null;
+        InfoExecutionDegree infoExecutionDegree = null;
 
-		if (executionDegreeOID != null) {
-			// Read from database
-			try {
-				Object[] args = { executionDegreeOID };
-				infoExecutionDegree =
-					(InfoExecutionDegree) ServiceUtils.executeService(
-						null,
-						"ReadExecutionDegreeByOID",
-						args);
-			} catch (FenixServiceException e) {
-				e.printStackTrace();
-			}
+        if (executionDegreeOID != null)
+        {
+            // Read from database
+            try
+            {
+                Object[] args = { executionDegreeOID };
+                infoExecutionDegree =
+                    (InfoExecutionDegree) ServiceUtils.executeService(
+                        null,
+                        "ReadExecutionDegreeByOID",
+                        args);
+            } catch (FenixServiceException e)
+            {
+                e.printStackTrace();
+            }
 
-			if (infoExecutionDegree != null) {
-				// Place it in request
-				request.setAttribute(
-					SessionConstants.EXECUTION_DEGREE,
-					infoExecutionDegree);
-				request.setAttribute(
-					SessionConstants.EXECUTION_DEGREE_OID,
-					infoExecutionDegree.getIdInternal().toString());
-			} else {
-				System.out.println(
-					"#### ERROR: Unexisting or invalid executionDegree - throw proper exception: Someone was playing with the links");
-			}
-		}
-	}
+            if (infoExecutionDegree != null)
+            {
+                // Place it in request
+                request.setAttribute(SessionConstants.EXECUTION_DEGREE, infoExecutionDegree);
+                request.setAttribute(
+                    SessionConstants.EXECUTION_DEGREE_OID,
+                    infoExecutionDegree.getIdInternal().toString());
+            } else
+            {
+                System.out.println(
+                    "#### ERROR: Unexisting or invalid executionDegree - throw proper exception: Someone was playing with the links");
+            }
+        }
+    }
 
-	/**
+    /**
 	 * @param request
 	 */
-	public static void setCurricularYearContext(HttpServletRequest request) {
-		String curricularYearOIDString =
-			(String) request.getAttribute(SessionConstants.CURRICULAR_YEAR_OID);
-		if (curricularYearOIDString == null) {
-			curricularYearOIDString =
-				request.getParameter(SessionConstants.CURRICULAR_YEAR_OID);
-		}
+    public static void setCurricularYearContext(HttpServletRequest request)
+    {
+        String curricularYearOIDString =
+            (String) request.getAttribute(SessionConstants.CURRICULAR_YEAR_OID);
+        if (curricularYearOIDString == null)
+        {
+            curricularYearOIDString = request.getParameter(SessionConstants.CURRICULAR_YEAR_OID);
+        }
 
-		Integer curricularYearOID = null;
-		if (curricularYearOIDString != null) {
-			curricularYearOID = new Integer(curricularYearOIDString);
-		}
+        Integer curricularYearOID = null;
+        if (curricularYearOIDString != null)
+        {
+            curricularYearOID = new Integer(curricularYearOIDString);
+        }
 
-		InfoCurricularYear infoCurricularYear = null;
+        InfoCurricularYear infoCurricularYear = null;
 
-		if (curricularYearOID != null) {
-			// Read from database
-			try {
-				Object[] args = { curricularYearOID };
-				infoCurricularYear =
-					(InfoCurricularYear) ServiceUtils.executeService(
-						null,
-						"ReadCurricularYearByOID",
-						args);
-			} catch (FenixServiceException e) {
-				e.printStackTrace();
-			}
+        if (curricularYearOID != null)
+        {
+            // Read from database
+            try
+            {
+                Object[] args = { curricularYearOID };
+                infoCurricularYear =
+                    (InfoCurricularYear) ServiceUtils.executeService(
+                        null,
+                        "ReadCurricularYearByOID",
+                        args);
+            } catch (FenixServiceException e)
+            {
+                e.printStackTrace();
+            }
 
-			if (infoCurricularYear != null) {
-				// Place it in request
-				request.setAttribute(
-					SessionConstants.CURRICULAR_YEAR,
-					infoCurricularYear);
-				request.setAttribute(
-					SessionConstants.CURRICULAR_YEAR_OID,
-					infoCurricularYear.getIdInternal().toString());
-			} else {
-				System.out.println(
-					"#### ERROR: Unexisting or invalid curricularYear - throw proper exception: Someone was playing with the links");
-			}
+            if (infoCurricularYear != null)
+            {
+                // Place it in request
+                request.setAttribute(SessionConstants.CURRICULAR_YEAR, infoCurricularYear);
+                request.setAttribute(
+                    SessionConstants.CURRICULAR_YEAR_OID,
+                    infoCurricularYear.getIdInternal().toString());
+            } else
+            {
+                System.out.println(
+                    "#### ERROR: Unexisting or invalid curricularYear - throw proper exception: Someone was playing with the links");
+            }
 
-		}
-	}
+        }
+    }
 
-	/**
+    /**
 	 * @param request
 	 */
-	public static void setCurricularYearsContext(HttpServletRequest request) {
-		List curricularYearsB =
-			(List) request.getAttribute(SessionConstants.CURRICULAR_YEARS_LIST);
+    public static void setCurricularYearsContext(HttpServletRequest request)
+    {
+        List curricularYearsB = (List) request.getAttribute(SessionConstants.CURRICULAR_YEARS_LIST);
 
-		String curricularYears_1 =
-			(String) request.getAttribute(SessionConstants.CURRICULAR_YEARS_1);
-		String curricularYears_2 =
-			(String) request.getAttribute(SessionConstants.CURRICULAR_YEARS_2);
-		String curricularYears_3 =
-			(String) request.getAttribute(SessionConstants.CURRICULAR_YEARS_3);
-		String curricularYears_4 =
-			(String) request.getAttribute(SessionConstants.CURRICULAR_YEARS_4);
-		String curricularYears_5 =
-			(String) request.getAttribute(SessionConstants.CURRICULAR_YEARS_5);
-		if (curricularYears_1 == null) {
-			curricularYears_1 =
-				request.getParameter(SessionConstants.CURRICULAR_YEARS_1);
-		}
-		if (curricularYears_2 == null) {
-			curricularYears_2 =
-				request.getParameter(SessionConstants.CURRICULAR_YEARS_2);
-		}
-		if (curricularYears_3 == null) {
-			curricularYears_3 =
-				request.getParameter(SessionConstants.CURRICULAR_YEARS_3);
-		}
-		if (curricularYears_4 == null) {
-			curricularYears_4 =
-				request.getParameter(SessionConstants.CURRICULAR_YEARS_4);
-		}
-		if (curricularYears_5 == null) {
-			curricularYears_5 =
-				request.getParameter(SessionConstants.CURRICULAR_YEARS_5);
-		}
+        String curricularYears_1 = (String) request.getAttribute(SessionConstants.CURRICULAR_YEARS_1);
+        String curricularYears_2 = (String) request.getAttribute(SessionConstants.CURRICULAR_YEARS_2);
+        String curricularYears_3 = (String) request.getAttribute(SessionConstants.CURRICULAR_YEARS_3);
+        String curricularYears_4 = (String) request.getAttribute(SessionConstants.CURRICULAR_YEARS_4);
+        String curricularYears_5 = (String) request.getAttribute(SessionConstants.CURRICULAR_YEARS_5);
+        if (curricularYears_1 == null)
+        {
+            curricularYears_1 = request.getParameter(SessionConstants.CURRICULAR_YEARS_1);
+        }
+        if (curricularYears_2 == null)
+        {
+            curricularYears_2 = request.getParameter(SessionConstants.CURRICULAR_YEARS_2);
+        }
+        if (curricularYears_3 == null)
+        {
+            curricularYears_3 = request.getParameter(SessionConstants.CURRICULAR_YEARS_3);
+        }
+        if (curricularYears_4 == null)
+        {
+            curricularYears_4 = request.getParameter(SessionConstants.CURRICULAR_YEARS_4);
+        }
+        if (curricularYears_5 == null)
+        {
+            curricularYears_5 = request.getParameter(SessionConstants.CURRICULAR_YEARS_5);
+        }
 
-		List curricularYears = new ArrayList();
+        List curricularYears = new ArrayList();
 
-		if (curricularYears_1 != null) {
-			try {
-				curricularYears.add(new Integer(curricularYears_1));
-			} catch (NumberFormatException ex) {
-			}
-		}
-		if (curricularYears_2 != null) {
-			try {
-				curricularYears.add(new Integer(curricularYears_2));
-			} catch (NumberFormatException ex) {
-			}
-		}
-		if (curricularYears_3 != null) {
-			try {
-				curricularYears.add(new Integer(curricularYears_3));
-			} catch (NumberFormatException ex) {
-			}
-		}
-		if (curricularYears_4 != null) {
-			try {
-				curricularYears.add(new Integer(curricularYears_4));
-			} catch (NumberFormatException ex) {
-			}
-		}
-		if (curricularYears_5 != null) {
-			try {
-				curricularYears.add(new Integer(curricularYears_5));
-			} catch (NumberFormatException ex) {
-			}
-		}
+        if (curricularYears_1 != null)
+        {
+            try
+            {
+                curricularYears.add(new Integer(curricularYears_1));
+            } catch (NumberFormatException ex)
+            {
+            }
+        }
+        if (curricularYears_2 != null)
+        {
+            try
+            {
+                curricularYears.add(new Integer(curricularYears_2));
+            } catch (NumberFormatException ex)
+            {
+            }
+        }
+        if (curricularYears_3 != null)
+        {
+            try
+            {
+                curricularYears.add(new Integer(curricularYears_3));
+            } catch (NumberFormatException ex)
+            {
+            }
+        }
+        if (curricularYears_4 != null)
+        {
+            try
+            {
+                curricularYears.add(new Integer(curricularYears_4));
+            } catch (NumberFormatException ex)
+            {
+            }
+        }
+        if (curricularYears_5 != null)
+        {
+            try
+            {
+                curricularYears.add(new Integer(curricularYears_5));
+            } catch (NumberFormatException ex)
+            {
+            }
+        }
 
-		request.setAttribute(
-			SessionConstants.CURRICULAR_YEARS_LIST,
-			curricularYears);
-	}
+        request.setAttribute(SessionConstants.CURRICULAR_YEARS_LIST, curricularYears);
+    }
 
-	/**
+    /**
 	 * @param request
 	 */
-	public static void setExecutionCourseContext(HttpServletRequest request) {
-		System.out.println("Setting execution course context.");
+    public static void setExecutionCourseContext(HttpServletRequest request)
+    {
+        System.out.println("Setting execution course context.");
 
-		String executionCourseOIDString =
-			(String) request.getAttribute(
-				SessionConstants.EXECUTION_COURSE_OID);
-		if (executionCourseOIDString == null) {
-			executionCourseOIDString =
-				request.getParameter(SessionConstants.EXECUTION_COURSE_OID);
-		}
+        String executionCourseOIDString =
+            (String) request.getAttribute(SessionConstants.EXECUTION_COURSE_OID);
+        if (executionCourseOIDString == null)
+        {
+            executionCourseOIDString = request.getParameter(SessionConstants.EXECUTION_COURSE_OID);
+        }
 
-		Integer executionCourseOID = null;
-		if (executionCourseOIDString != null
-			&& !executionCourseOIDString.equals("")
-			&& !executionCourseOIDString.equals("null")) {
-			executionCourseOID = new Integer(executionCourseOIDString);
-		}
+        Integer executionCourseOID = null;
+        if (executionCourseOIDString != null
+            && !executionCourseOIDString.equals("")
+            && !executionCourseOIDString.equals("null"))
+        {
+            executionCourseOID = new Integer(executionCourseOIDString);
+        }
 
-		InfoExecutionCourse infoExecutionCourse = null;
+        InfoExecutionCourse infoExecutionCourse = null;
 
-		if (executionCourseOID != null) {
-			// Read from database
-			try {
-				Object[] args = { executionCourseOID };
-				infoExecutionCourse =
-					(InfoExecutionCourse) ServiceUtils.executeService(
-						null,
-						"ReadExecutionCourseByOID",
-						args);
-			} catch (FenixServiceException e) {
-				e.printStackTrace();
-			}
+        if (executionCourseOID != null)
+        {
+            // Read from database
+            try
+            {
+                Object[] args = { executionCourseOID };
+                infoExecutionCourse =
+                    (InfoExecutionCourse) ServiceUtils.executeService(
+                        null,
+                        "ReadExecutionCourseByOID",
+                        args);
+            } catch (FenixServiceException e)
+            {
+                e.printStackTrace();
+            }
 
-			if (infoExecutionCourse != null) {
-				// Place it in request
-				request.setAttribute(
-					SessionConstants.EXECUTION_COURSE,
-					infoExecutionCourse);
-			} else {
-				System.out.println(
-					"#### ERROR: Unexisting or invalid executionCourse - throw proper exception: Someone was playing with the links");
-			}
-		}
-	}
+            if (infoExecutionCourse != null)
+            {
+                // Place it in request
+                request.setAttribute(SessionConstants.EXECUTION_COURSE, infoExecutionCourse);
+            } else
+            {
+                System.out.println(
+                    "#### ERROR: Unexisting or invalid executionCourse - throw proper exception: Someone was playing with the links");
+            }
+        }
+    }
 
-	/**
+    /**
 	 * @param request
 	 */
-	public static void setShiftContext(HttpServletRequest request) {
-		String shiftOIDString =
-			(String) request.getAttribute(SessionConstants.SHIFT_OID);
-		if (shiftOIDString == null) {
-			shiftOIDString = request.getParameter(SessionConstants.SHIFT_OID);
-		}
+    public static void setShiftContext(HttpServletRequest request)
+    {
+        String shiftOIDString = (String) request.getAttribute(SessionConstants.SHIFT_OID);
+        if (shiftOIDString == null)
+        {
+            shiftOIDString = request.getParameter(SessionConstants.SHIFT_OID);
+        }
 
-		Integer shiftOID = null;
-		if (shiftOIDString != null) {
-			shiftOID = new Integer(shiftOIDString);
-		}
+        Integer shiftOID = null;
+        if (shiftOIDString != null)
+        {
+            shiftOID = new Integer(shiftOIDString);
+        }
 
-		InfoShift infoShift = null;
+        InfoShift infoShift = null;
 
-		if (shiftOID != null) {
-			// Read from database
-			try {
-				Object[] args = { shiftOID };
-				infoShift =
-					(InfoShift) ServiceUtils.executeService(
-						null,
-						"ReadShiftByOID",
-						args);
-			} catch (FenixServiceException e) {
-				e.printStackTrace();
-			}
+        if (shiftOID != null)
+        {
+            // Read from database
+            try
+            {
+                Object[] args = { shiftOID };
+                infoShift = (InfoShift) ServiceUtils.executeService(null, "ReadShiftByOID", args);
+            } catch (FenixServiceException e)
+            {
+                e.printStackTrace();
+            }
 
-			if (infoShift != null) {
-				/* Sort the list of lesson */
-				ComparatorChain chainComparator = new ComparatorChain();
-				chainComparator.addComparator(
-					new BeanComparator("diaSemana.diaSemana"));
-				chainComparator.addComparator(new Comparator() {
+            if (infoShift != null)
+            {
+                /* Sort the list of lesson */
+                ComparatorChain chainComparator = new ComparatorChain();
+                chainComparator.addComparator(new BeanComparator("diaSemana.diaSemana"));
+                chainComparator.addComparator(new Comparator()
+                {
 
-					public int compare(Object o1, Object o2) {
-						Calendar ctime1 = ((InfoLesson) o1).getInicio();
-						Calendar ctime2 = ((InfoLesson) o2).getInicio();
+                    public int compare(Object o1, Object o2)
+                    {
+                        Calendar ctime1 = ((InfoLesson) o1).getInicio();
+                        Calendar ctime2 = ((InfoLesson) o2).getInicio();
 
-						Integer time1 =
-							new Integer(
-								ctime1.get(Calendar.HOUR_OF_DAY) * 60
-									+ ctime1.get(Calendar.MINUTE));
+                        Integer time1 =
+                            new Integer(
+                                ctime1.get(Calendar.HOUR_OF_DAY) * 60 + ctime1.get(Calendar.MINUTE));
 
-						Integer time2 =
-							new Integer(
-								ctime2.get(Calendar.HOUR_OF_DAY) * 60
-									+ ctime2.get(Calendar.MINUTE));
+                        Integer time2 =
+                            new Integer(
+                                ctime2.get(Calendar.HOUR_OF_DAY) * 60 + ctime2.get(Calendar.MINUTE));
 
-						return time1.compareTo(time2);
-					}
-				});
-				chainComparator.addComparator(new Comparator() {
+                        return time1.compareTo(time2);
+                    }
+                });
+                chainComparator.addComparator(new Comparator()
+                {
 
-					public int compare(Object o1, Object o2) {
-						Calendar ctime1 = ((InfoLesson) o1).getFim();
-						Calendar ctime2 = ((InfoLesson) o2).getFim();
+                    public int compare(Object o1, Object o2)
+                    {
+                        Calendar ctime1 = ((InfoLesson) o1).getFim();
+                        Calendar ctime2 = ((InfoLesson) o2).getFim();
 
-						Integer time1 =
-							new Integer(
-								ctime1.get(Calendar.HOUR_OF_DAY) * 60
-									+ ctime1.get(Calendar.MINUTE));
+                        Integer time1 =
+                            new Integer(
+                                ctime1.get(Calendar.HOUR_OF_DAY) * 60 + ctime1.get(Calendar.MINUTE));
 
-						Integer time2 =
-							new Integer(
-								ctime2.get(Calendar.HOUR_OF_DAY) * 60
-									+ ctime2.get(Calendar.MINUTE));
+                        Integer time2 =
+                            new Integer(
+                                ctime2.get(Calendar.HOUR_OF_DAY) * 60 + ctime2.get(Calendar.MINUTE));
 
-						return time1.compareTo(time2);
-					}
-				});
-				chainComparator.addComparator(
-					new BeanComparator("infoSala.nome"));
-				Collections.sort(infoShift.getInfoLessons(), chainComparator);
+                        return time1.compareTo(time2);
+                    }
+                });
+                chainComparator.addComparator(new BeanComparator("infoSala.nome"));
+                Collections.sort(infoShift.getInfoLessons(), chainComparator);
 
-				if (infoShift.getInfoLessons().isEmpty()) {
-					infoShift.setInfoLessons(null);
-				}
+                if (infoShift.getInfoLessons().isEmpty())
+                {
+                    infoShift.setInfoLessons(null);
+                }
 
-				if (infoShift.getInfoClasses().isEmpty()) {
-					infoShift.setInfoClasses(null);
-				}
+                if (infoShift.getInfoClasses().isEmpty())
+                {
+                    infoShift.setInfoClasses(null);
+                }
 
-				// Place it in request
-				request.setAttribute(SessionConstants.SHIFT, infoShift);
-			} else {
-				System.out.println(
-					"#### ERROR: Unexisting or invalid shift - throw proper exception: Someone was playing with the links");
-			}
-		}
-	}
+                // Place it in request
+                request.setAttribute(SessionConstants.SHIFT, infoShift);
+            } else
+            {
+                System.out.println(
+                    "#### ERROR: Unexisting or invalid shift - throw proper exception: Someone was playing with the links");
+            }
+        }
+    }
 
-	/**
+    /**
 	 * @param request
 	 */
-	public static void setClassContext(HttpServletRequest request) {
-		String classOIDString =
-			(String) request.getAttribute(SessionConstants.CLASS_VIEW_OID);
-		if (classOIDString == null) {
-			classOIDString =
-				request.getParameter(SessionConstants.CLASS_VIEW_OID);
-		}
+    public static void setClassContext(HttpServletRequest request)
+    {
+        String classOIDString = (String) request.getAttribute(SessionConstants.CLASS_VIEW_OID);
+        if (classOIDString == null)
+        {
+            classOIDString = request.getParameter(SessionConstants.CLASS_VIEW_OID);
+        }
 
-		Integer classOID = null;
-		if (classOIDString != null) {
-			classOID = new Integer(classOIDString);
-		}
+        Integer classOID = null;
+        if (classOIDString != null)
+        {
+            classOID = new Integer(classOIDString);
+        }
 
-		InfoClass infoClass = null;
+        InfoClass infoClass = null;
 
-		if (classOID != null) {
-			// Read from database
-			try {
-				Object[] args = { classOID };
-				infoClass =
-					(InfoClass) ServiceUtils.executeService(
-						null,
-						"ReadClassByOID",
-						args);
-			} catch (FenixServiceException e) {
-				e.printStackTrace();
-			}
+        if (classOID != null)
+        {
+            // Read from database
+            try
+            {
+                Object[] args = { classOID };
+                infoClass = (InfoClass) ServiceUtils.executeService(null, "ReadClassByOID", args);
+            } catch (FenixServiceException e)
+            {
+                e.printStackTrace();
+            }
 
-			// Place it in request
-			request.setAttribute(SessionConstants.CLASS_VIEW, infoClass);
-		}
-	}
+            // Place it in request
+            request.setAttribute(SessionConstants.CLASS_VIEW, infoClass);
+        }
+    }
 
-	/**
+    /**
 	 * @param request
 	 */
-	public static void setLessonContext(HttpServletRequest request) {
-		String lessonOIDString =
-			(String) request.getAttribute(SessionConstants.LESSON_OID);
-		if (lessonOIDString == null) {
-			lessonOIDString = request.getParameter(SessionConstants.LESSON_OID);
-		}
+    public static void setLessonContext(HttpServletRequest request)
+    {
+        String lessonOIDString = (String) request.getAttribute(SessionConstants.LESSON_OID);
+        if (lessonOIDString == null)
+        {
+            lessonOIDString = request.getParameter(SessionConstants.LESSON_OID);
+        }
 
-		Integer lessonOID = null;
-		if (lessonOIDString != null) {
-			lessonOID = new Integer(lessonOIDString);
-		}
+        Integer lessonOID = null;
+        if (lessonOIDString != null)
+        {
+            lessonOID = new Integer(lessonOIDString);
+        }
 
-		InfoLesson infoLesson = null;
+        InfoLesson infoLesson = null;
 
-		if (lessonOID != null) {
-			// Read from database
-			try {
-				Object[] args = { lessonOID };
-				infoLesson =
-					(InfoLesson) ServiceUtils.executeService(
-						null,
-						"ReadLessonByOID",
-						args);
-			} catch (FenixServiceException e) {
-				e.printStackTrace();
-			}
+        if (lessonOID != null)
+        {
+            // Read from database
+            try
+            {
+                Object[] args = { lessonOID };
+                infoLesson = (InfoLesson) ServiceUtils.executeService(null, "ReadLessonByOID", args);
+            } catch (FenixServiceException e)
+            {
+                e.printStackTrace();
+            }
 
-			// Place it in request
-			request.setAttribute(SessionConstants.LESSON, infoLesson);
-		}
-	}
+            // Place it in request
+            request.setAttribute(SessionConstants.LESSON, infoLesson);
+        }
+    }
 
-	public static void setSelectedRoomsContext(HttpServletRequest request)
-		throws FenixActionException {
-		GestorServicos gestor = GestorServicos.manager();
+    public static void setSelectedRoomsContext(HttpServletRequest request) throws FenixActionException
+    {
+        GestorServicos gestor = GestorServicos.manager();
 
-		Object argsSelectRooms[] =
-			{
-				 new InfoRoom(
-					readRequestValue(request, "selectRoomCriteria_Name"),
-					readRequestValue(request, "selectRoomCriteria_Building"),
-					readIntegerRequestValue(
-						request,
-						"selectRoomCriteria_Floor"),
-					readTypeRoomRequestValue(
-						request,
-						"selectRoomCriteria_Type"),
-					readIntegerRequestValue(
-						request,
-						"selectRoomCriteria_CapacityNormal"),
-					readIntegerRequestValue(
-						request,
-						"selectRoomCriteria_CapacityExame"))};
+        Object argsSelectRooms[] =
+            {
+                 new InfoRoom(
+                    readRequestValue(request, "selectRoomCriteria_Name"),
+                    readRequestValue(request, "selectRoomCriteria_Building"),
+                    readIntegerRequestValue(request, "selectRoomCriteria_Floor"),
+                    readTypeRoomRequestValue(request, "selectRoomCriteria_Type"),
+                    readIntegerRequestValue(request, "selectRoomCriteria_CapacityNormal"),
+                    readIntegerRequestValue(request, "selectRoomCriteria_CapacityExame"))};
 
-		List selectedRooms = null;
-		try {
-			selectedRooms =
-				(List) gestor.executar(null, "SelectRooms", argsSelectRooms);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-		if (selectedRooms != null && !selectedRooms.isEmpty()) {
-			Collections.sort(selectedRooms);
-		}
-		request.setAttribute(SessionConstants.SELECTED_ROOMS, selectedRooms);
+        List selectedRooms = null;
+        try
+        {
+            selectedRooms = (List) gestor.executar(null, "SelectRooms", argsSelectRooms);
+        } catch (FenixServiceException e)
+        {
+            throw new FenixActionException(e);
+        }
+        if (selectedRooms != null && !selectedRooms.isEmpty())
+        {
+            Collections.sort(selectedRooms);
+        }
+        request.setAttribute(SessionConstants.SELECTED_ROOMS, selectedRooms);
 
-		setRoomSearchCriteriaContext(request);
+        setRoomSearchCriteriaContext(request);
 
-	}
+    }
 
-	/**
+    /**
 	 * @param request
 	 */
-	private static void setRoomSearchCriteriaContext(HttpServletRequest request) {
+    private static void setRoomSearchCriteriaContext(HttpServletRequest request)
+    {
 
-		request.setAttribute(
-			"selectRoomCriteria_Name",
-			readRequestValue(request, "selectRoomCriteria_Name"));
-		request.setAttribute(
-			"selectRoomCriteria_Building",
-			readRequestValue(request, "selectRoomCriteria_Building"));
-		request.setAttribute(
-			"selectRoomCriteria_Floor",
-			readRequestValue(request, "selectRoomCriteria_Floor"));
-		request.setAttribute(
-			"selectRoomCriteria_Type",
-			readRequestValue(request, "selectRoomCriteria_Type"));
-		request.setAttribute(
-			"selectRoomCriteria_CapacityNormal",
-			readRequestValue(request, "selectRoomCriteria_CapacityNormal"));
-		request.setAttribute(
-			"selectRoomCriteria_CapacityExame",
-			readRequestValue(request, "selectRoomCriteria_CapacityExame"));
+        request.setAttribute(
+            "selectRoomCriteria_Name",
+            readRequestValue(request, "selectRoomCriteria_Name"));
+        request.setAttribute(
+            "selectRoomCriteria_Building",
+            readRequestValue(request, "selectRoomCriteria_Building"));
+        request.setAttribute(
+            "selectRoomCriteria_Floor",
+            readRequestValue(request, "selectRoomCriteria_Floor"));
+        request.setAttribute(
+            "selectRoomCriteria_Type",
+            readRequestValue(request, "selectRoomCriteria_Type"));
+        request.setAttribute(
+            "selectRoomCriteria_CapacityNormal",
+            readRequestValue(request, "selectRoomCriteria_CapacityNormal"));
+        request.setAttribute(
+            "selectRoomCriteria_CapacityExame",
+            readRequestValue(request, "selectRoomCriteria_CapacityExame"));
 
-	}
+    }
 
-	/**
+    /**
 	 * @param request
 	 */
-	public static void setSelectedRoomIndexContext(HttpServletRequest request) {
-		String selectedRoomIndexString =
-			(String) request.getAttribute(SessionConstants.SELECTED_ROOM_INDEX);
+    public static void setSelectedRoomIndexContext(HttpServletRequest request)
+    {
+        String selectedRoomIndexString =
+            (String) request.getAttribute(SessionConstants.SELECTED_ROOM_INDEX);
 
-		if (selectedRoomIndexString == null) {
-			selectedRoomIndexString =
-				request.getParameter(SessionConstants.SELECTED_ROOM_INDEX);
-		}
+        if (selectedRoomIndexString == null)
+        {
+            selectedRoomIndexString = request.getParameter(SessionConstants.SELECTED_ROOM_INDEX);
+        }
 
-		Integer selectedRoomIndex = null;
-		if (selectedRoomIndexString != null) {
-			selectedRoomIndex = new Integer(selectedRoomIndexString);
-			// Place it in request
-			request.setAttribute(
-				SessionConstants.SELECTED_ROOM_INDEX,
-				selectedRoomIndex);
-		} else {
-			System.out.println("ERROR: Missing selectedRoomIndex in request");
-		}
-	}
+        Integer selectedRoomIndex = null;
+        if (selectedRoomIndexString != null)
+        {
+            selectedRoomIndex = new Integer(selectedRoomIndexString);
+            // Place it in request
+            request.setAttribute(SessionConstants.SELECTED_ROOM_INDEX, selectedRoomIndex);
+        } else
+        {
+            System.out.println("ERROR: Missing selectedRoomIndex in request");
+        }
+    }
 
-	public static void prepareChangeExecutionDegreeAndCurricularYear(HttpServletRequest request) {
-		IUserView userView = SessionUtils.getUserView(request);
+    public static void prepareChangeExecutionDegreeAndCurricularYear(HttpServletRequest request)
+    {
+        IUserView userView = SessionUtils.getUserView(request);
 
-		InfoExecutionPeriod infoExecutionPeriod =
-			(InfoExecutionPeriod) request.getAttribute(
-				SessionConstants.EXECUTION_PERIOD);
+        InfoExecutionPeriod infoExecutionPeriod =
+            (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
 
-		/* Obtain a list of curricular years */
-		List labelListOfCurricularYears = getLabelListOfCurricularYears();
-		request.setAttribute(
-			SessionConstants.LABELLIST_CURRICULAR_YEARS,
-			labelListOfCurricularYears);
+        /* Obtain a list of curricular years */
+        List labelListOfCurricularYears = getLabelListOfCurricularYears();
+        request.setAttribute(SessionConstants.LABELLIST_CURRICULAR_YEARS, labelListOfCurricularYears);
 
-		/* Obtain a list of degrees for the specified execution year */
-		Object argsLerLicenciaturas[] =
-			{ infoExecutionPeriod.getInfoExecutionYear()};
-		List executionDegreeList = null;
-		try {
-			executionDegreeList =
-				(List) ServiceUtils.executeService(
-					userView,
-					"ReadExecutionDegreesByExecutionYear",
-					argsLerLicenciaturas);
+        /* Obtain a list of degrees for the specified execution year */
+        Object argsLerLicenciaturas[] = { infoExecutionPeriod.getInfoExecutionYear()};
+        List executionDegreeList = null;
+        try
+        {
+            executionDegreeList =
+                (List) ServiceUtils.executeService(
+                    userView,
+                    "ReadExecutionDegreesByExecutionYear",
+                    argsLerLicenciaturas);
 
-			/* Sort the list of degrees */
-			Collections.sort(
-				executionDegreeList,
-				new ComparatorByNameForInfoExecutionDegree());
-		} catch (FenixServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            /* Sort the list of degrees */
+            Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
+        } catch (FenixServiceException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-		/* Generate a label list for the above list of degrees */
-		List labelListOfExecutionDegrees =
-			getLabelListOfExecutionDegrees(executionDegreeList);
-		request.setAttribute("licenciaturas", labelListOfExecutionDegrees);
+        /* Generate a label list for the above list of degrees */
+        List labelListOfExecutionDegrees = getLabelListOfExecutionDegrees(executionDegreeList);
+        request.setAttribute("licenciaturas", labelListOfExecutionDegrees);
 
-		///////////////////////////////////////////////////////////////////////
-		// TODO : place the following code in a seperate function and call it
-		//        here and anywhere else the execution period may be selected.
+        ///////////////////////////////////////////////////////////////////////
+        // TODO : place the following code in a seperate function and call it
+        //        here and anywhere else the execution period may be selected.
 
-		//HttpSession session = request.getSession(false);
+        //HttpSession session = request.getSession(false);
 
-		//IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
-		GestorServicos gestor = GestorServicos.manager();
+        //IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
+        GestorServicos gestor = GestorServicos.manager();
 
-		InfoExecutionPeriod selectedExecutionPeriod =
-			(InfoExecutionPeriod) request.getAttribute(
-				SessionConstants.EXECUTION_PERIOD);
+        InfoExecutionPeriod selectedExecutionPeriod =
+            (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
 
-		Object argsReadExecutionPeriods[] = {
-		};
-		ArrayList executionPeriods;
-		try {
-			executionPeriods =
-				(ArrayList) gestor.executar(
-					userView,
-					"ReadExecutionPeriods",
-					argsReadExecutionPeriods);
+        Object argsReadExecutionPeriods[] = {
+        };
+        ArrayList executionPeriods;
+        try
+        {
+            executionPeriods =
+                (ArrayList) gestor.executar(userView, "ReadExecutionPeriods", argsReadExecutionPeriods);
 
-			selectedExecutionPeriod.getInfoExecutionYear().getYear();
-			selectedExecutionPeriod.getSemester();
-			ComparatorChain chainComparator = new ComparatorChain();
-			chainComparator.addComparator(
-				new BeanComparator("infoExecutionYear.year"));
-			chainComparator.addComparator(new BeanComparator("semester"));
-			Collections.sort(executionPeriods, chainComparator);
+            selectedExecutionPeriod.getInfoExecutionYear().getYear();
+            selectedExecutionPeriod.getSemester();
+            ComparatorChain chainComparator = new ComparatorChain();
+            chainComparator.addComparator(new BeanComparator("infoExecutionYear.year"));
+            chainComparator.addComparator(new BeanComparator("semester"));
+            Collections.sort(executionPeriods, chainComparator);
 
-			ArrayList executionPeriodsLabelValueList = new ArrayList();
-			for (int i = 0; i < executionPeriods.size(); i++) {
-				InfoExecutionPeriod infoExecutionPeriod2 =
-					(InfoExecutionPeriod) executionPeriods.get(i);
-				executionPeriodsLabelValueList.add(
-					new LabelValueBean(
-						infoExecutionPeriod2.getName()
-							+ " - "
-							+ infoExecutionPeriod2
-								.getInfoExecutionYear()
-								.getYear(),
-						"" + infoExecutionPeriod2.getIdInternal()));
-			}
+            ArrayList executionPeriodsLabelValueList = new ArrayList();
+            for (int i = 0; i < executionPeriods.size(); i++)
+            {
+                InfoExecutionPeriod infoExecutionPeriod2 = (InfoExecutionPeriod) executionPeriods.get(i);
+                executionPeriodsLabelValueList.add(
+                    new LabelValueBean(
+                        infoExecutionPeriod2.getName()
+                            + " - "
+                            + infoExecutionPeriod2.getInfoExecutionYear().getYear(),
+                        "" + infoExecutionPeriod2.getIdInternal()));
+            }
 
-			request.setAttribute(
-				SessionConstants.LIST_INFOEXECUTIONPERIOD,
-				executionPeriods);
+            request.setAttribute(SessionConstants.LIST_INFOEXECUTIONPERIOD, executionPeriods);
 
-			request.setAttribute(
-				SessionConstants.LABELLIST_EXECUTIONPERIOD,
-				executionPeriodsLabelValueList);
-		} catch (FenixServiceException e1) {
-		}
+            request.setAttribute(
+                SessionConstants.LABELLIST_EXECUTIONPERIOD,
+                executionPeriodsLabelValueList);
+        } catch (FenixServiceException e1)
+        {
+        }
 
-	}
+    }
 
-	// -------------------------------------------------------------------------------
-	// Read from request utils
-	// -------------------------------------------------------------------------------
-	private static String readRequestValue(
-		HttpServletRequest request,
-		String name) {
-		String obj = null;
-		if (((String) request.getAttribute(name)) != null
-			&& !((String) request.getAttribute(name)).equals(""))
-			obj = (String) request.getAttribute(name);
-		else if (
-			request.getParameter(name) != null
-				&& !request.getParameter(name).equals("")
-				&& !request.getParameter(name).equals("null"))
-			obj = request.getParameter(name);
+    // -------------------------------------------------------------------------------
+    // Read from request utils
+    // -------------------------------------------------------------------------------
+    private static String readRequestValue(HttpServletRequest request, String name)
+    {
+        String obj = null;
+        if (((String) request.getAttribute(name)) != null
+            && !((String) request.getAttribute(name)).equals(""))
+            obj = (String) request.getAttribute(name);
+        else if (
+            request.getParameter(name) != null
+                && !request.getParameter(name).equals("")
+                && !request.getParameter(name).equals("null"))
+            obj = request.getParameter(name);
 
-		return obj;
-	}
+        return obj;
+    }
 
-	private static Integer readIntegerRequestValue(
-		HttpServletRequest request,
-		String name) {
-		String obj = readRequestValue(request, name);
-		if (obj != null)
-			return new Integer(obj);
-		else
-			return null;
-	}
+    private static Integer readIntegerRequestValue(HttpServletRequest request, String name)
+    {
+        String obj = readRequestValue(request, name);
+        if (obj != null)
+            return new Integer(obj);
+        else
+            return null;
+    }
 
-	private static TipoSala readTypeRoomRequestValue(
-		HttpServletRequest request,
-		String name) {
-		Integer obj = readIntegerRequestValue(request, name);
-		if (obj != null)
-			return new TipoSala(obj);
-		else
-			return null;
-	}
+    private static TipoSala readTypeRoomRequestValue(HttpServletRequest request, String name)
+    {
+        Integer obj = readIntegerRequestValue(request, name);
+        if (obj != null)
+            return new TipoSala(obj);
+        else
+            return null;
+    }
 
-	public static List getLabelListOfCurricularYears() {
-		ArrayList labelListOfCurricularYears = new ArrayList();
-		labelListOfCurricularYears.add(new LabelValueBean("escolher", ""));
-		labelListOfCurricularYears.add(new LabelValueBean("1 �", "1"));
-		labelListOfCurricularYears.add(new LabelValueBean("2 �", "2"));
-		labelListOfCurricularYears.add(new LabelValueBean("3 �", "3"));
-		labelListOfCurricularYears.add(new LabelValueBean("4 �", "4"));
-		labelListOfCurricularYears.add(new LabelValueBean("5 �", "5"));
-		return labelListOfCurricularYears;
-	}
+    public static List getLabelListOfCurricularYears()
+    {
+        ArrayList labelListOfCurricularYears = new ArrayList();
+        labelListOfCurricularYears.add(new LabelValueBean("escolher", ""));
+        labelListOfCurricularYears.add(new LabelValueBean("1 �", "1"));
+        labelListOfCurricularYears.add(new LabelValueBean("2 �", "2"));
+        labelListOfCurricularYears.add(new LabelValueBean("3 �", "3"));
+        labelListOfCurricularYears.add(new LabelValueBean("4 �", "4"));
+        labelListOfCurricularYears.add(new LabelValueBean("5 �", "5"));
+        return labelListOfCurricularYears;
+    }
 
-	public static List getLabelListOfOptionalCurricularYears() {
-		ArrayList labelListOfCurricularYears = new ArrayList();
-		labelListOfCurricularYears.add(new LabelValueBean("todos", ""));
-		labelListOfCurricularYears.add(new LabelValueBean("1 �", "1"));
-		labelListOfCurricularYears.add(new LabelValueBean("2 �", "2"));
-		labelListOfCurricularYears.add(new LabelValueBean("3 �", "3"));
-		labelListOfCurricularYears.add(new LabelValueBean("4 �", "4"));
-		labelListOfCurricularYears.add(new LabelValueBean("5 �", "5"));
-		return labelListOfCurricularYears;
-	}
+    public static List getLabelListOfOptionalCurricularYears()
+    {
+        ArrayList labelListOfCurricularYears = new ArrayList();
+        labelListOfCurricularYears.add(new LabelValueBean("todos", ""));
+        labelListOfCurricularYears.add(new LabelValueBean("1 �", "1"));
+        labelListOfCurricularYears.add(new LabelValueBean("2 �", "2"));
+        labelListOfCurricularYears.add(new LabelValueBean("3 �", "3"));
+        labelListOfCurricularYears.add(new LabelValueBean("4 �", "4"));
+        labelListOfCurricularYears.add(new LabelValueBean("5 �", "5"));
+        return labelListOfCurricularYears;
+    }
 
-	public static List getLabelListOfExecutionDegrees(List executionDegreeList) {
-		List labelListOfExecutionDegrees =
-			(List) CollectionUtils.collect(
-				executionDegreeList,
-				new EXECUTION_DEGREE_2_EXECUTION_DEGREE_LABEL());
-		labelListOfExecutionDegrees.add(0, new LabelValueBean("escolher", ""));
-		return labelListOfExecutionDegrees;
-	}
+    public static List getLabelListOfExecutionDegrees(List executionDegreeList)
+    {
+        List labelListOfExecutionDegrees =
+            (List) CollectionUtils.collect(
+                executionDegreeList,
+                new EXECUTION_DEGREE_2_EXECUTION_DEGREE_LABEL());
+        labelListOfExecutionDegrees.add(0, new LabelValueBean("escolher", ""));
+        return labelListOfExecutionDegrees;
+    }
 
-	private static class EXECUTION_DEGREE_2_EXECUTION_DEGREE_LABEL
-		implements Transformer {
+    private static class EXECUTION_DEGREE_2_EXECUTION_DEGREE_LABEL implements Transformer
+    {
 
-		/* (non-Javadoc)
+        /*
+		 * (non-Javadoc)
+		 * 
 		 * @see org.apache.commons.collections.Transformer#transform(java.lang.Object)
 		 */
-		public Object transform(Object arg0) {
-			InfoExecutionDegree infoExecutionDegree =
-				(InfoExecutionDegree) arg0;
+        public Object transform(Object arg0)
+        {
+            InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) arg0;
 
-			String name =
-				infoExecutionDegree
-					.getInfoDegreeCurricularPlan()
-					.getInfoDegree()
-					.getNome();
+            String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
 
-			name =
-				infoExecutionDegree
-					.getInfoDegreeCurricularPlan()
-					.getInfoDegree()
-					.getTipoCurso()
-					.toString()
-					+ " de "
-					+ name;
+            name =
+                infoExecutionDegree
+                    .getInfoDegreeCurricularPlan()
+                    .getInfoDegree()
+                    .getTipoCurso()
+                    .toString()
+                    + " de "
+                    + name;
 
-			return new LabelValueBean(
-				name,
-				infoExecutionDegree.getIdInternal().toString());
-		}
-	}
+            return new LabelValueBean(name, infoExecutionDegree.getIdInternal().toString());
+        }
+    }
 
 }
