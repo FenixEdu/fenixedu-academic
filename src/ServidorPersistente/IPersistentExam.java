@@ -21,6 +21,7 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 public interface IPersistentExam extends IPersistentObject {
 	public IExam readBy(Date day, Calendar beginning, IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia;
 	public List readBy(Date day, Calendar beginning) throws ExcepcaoPersistencia;	
+	public List readBy(IDisciplinaExecucao disciplinaExecucao) throws ExcepcaoPersistencia;
 	public List readAll() throws ExcepcaoPersistencia;
     public void lockWrite(IExam exam) throws ExcepcaoPersistencia, ExistingPersistentException;
     public void delete(IExam exam) throws ExcepcaoPersistencia;

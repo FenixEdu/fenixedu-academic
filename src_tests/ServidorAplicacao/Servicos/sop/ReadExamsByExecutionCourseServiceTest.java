@@ -22,9 +22,9 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
 
-public class ReadExamsByDayAndBeginningServiceTest
+public class ReadExamsByExecutionCourseServiceTest
 	extends TestCaseReadServices {
-	public ReadExamsByDayAndBeginningServiceTest(java.lang.String testName) {
+	public ReadExamsByExecutionCourseServiceTest(java.lang.String testName) {
 		super(testName);
 	}
 
@@ -34,7 +34,7 @@ public class ReadExamsByDayAndBeginningServiceTest
 
 	public static Test suite() {
 		TestSuite suite =
-			new TestSuite(ReadExamsByDayAndBeginningServiceTest.class);
+			new TestSuite(ReadExamsByExecutionCourseServiceTest.class);
 
 		return suite;
 	}
@@ -51,23 +51,26 @@ public class ReadExamsByDayAndBeginningServiceTest
 	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNameOfServiceToBeTested()
 	 */
 	protected String getNameOfServiceToBeTested() {
-		return "ReadExamsByDayAndBeginning";
+		return "ReadExamsByExecutionCourse";
 	}
 
 	/* (non-Javadoc)
 	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
 	 */
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		Calendar beginning = Calendar.getInstance();
-		beginning.set(Calendar.YEAR, 2002);
-		beginning.set(Calendar.MONTH, Calendar.MARCH);
-		beginning.set(Calendar.DAY_OF_MONTH, 19);
-		beginning.set(Calendar.HOUR_OF_DAY, 9);
-		beginning.set(Calendar.MINUTE, 0);
-		beginning.set(Calendar.SECOND, 0);
-		Date day = beginning.getTime();
+		InfoExecutionCourse infoExecutionCourse =
+			new InfoExecutionCourse(
+				"Unexisting Course",
+				"UC",
+				"blob",
+				new Double(1),
+				new Double(0),
+				new Double(0),
+				new Double(0),
+				new InfoExecutionPeriod("2º semestre",new InfoExecutionYear("2002/2003")));
 
-		Object[] result = { day, beginning };
+
+		Object[] result = { infoExecutionCourse };
 		return result;
 	}
 
@@ -75,16 +78,18 @@ public class ReadExamsByDayAndBeginningServiceTest
 	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedSuccessfuly()
 	 */
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		Calendar beginning = Calendar.getInstance();
-		beginning.set(Calendar.YEAR, 2003);
-		beginning.set(Calendar.MONTH, Calendar.MARCH);
-		beginning.set(Calendar.DAY_OF_MONTH, 19);
-		beginning.set(Calendar.HOUR_OF_DAY, 9);
-		beginning.set(Calendar.MINUTE, 0);
-		beginning.set(Calendar.SECOND, 0);
-		Date day = beginning.getTime();
+		InfoExecutionCourse infoExecutionCourse =
+			new InfoExecutionCourse(
+			"Redes de Computadores I",
+			"RCI",
+			"blob",
+			new Double(0),
+			new Double(0),
+			new Double(0),
+			new Double(0),
+			new InfoExecutionPeriod("2º semestre",new InfoExecutionYear("2002/2003")));
 
-		Object[] result = { day, beginning };
+		Object[] result = { infoExecutionCourse };
 		return result;
 	}
 
@@ -104,7 +109,7 @@ public class ReadExamsByDayAndBeginningServiceTest
 		beginning.set(Calendar.YEAR, 2003);
 		beginning.set(Calendar.MONTH, Calendar.MARCH);
 		beginning.set(Calendar.DAY_OF_MONTH, 19);
-		beginning.set(Calendar.HOUR_OF_DAY, 9);
+		beginning.set(Calendar.HOUR_OF_DAY, 13);
 		beginning.set(Calendar.MINUTE, 0);
 		beginning.set(Calendar.SECOND, 0);
 		Date day = beginning.getTime();
@@ -112,19 +117,19 @@ public class ReadExamsByDayAndBeginningServiceTest
 		end.set(Calendar.YEAR, 2003);
 		end.set(Calendar.MONTH, Calendar.MARCH);
 		end.set(Calendar.DAY_OF_MONTH, 19);
-		end.set(Calendar.HOUR_OF_DAY, 12);
+		end.set(Calendar.HOUR_OF_DAY, 15);
 		end.set(Calendar.MINUTE, 0);
 		end.set(Calendar.SECOND, 0);
 		InfoExecutionCourse infoExecutionCourse =
 			new InfoExecutionCourse(
-				"Engenharia da Programacao",
-				"EP",
-				"blob",
-				new Double(0),
-				new Double(0),
-				new Double(0),
-				new Double(0),
-				new InfoExecutionPeriod("2º semestre",new InfoExecutionYear("2002/2003")));
+			"Redes de Computadores I",
+			"RCI",
+			"blob",
+			new Double(0),
+			new Double(0),
+			new Double(0),
+			new Double(0),
+			new InfoExecutionPeriod("2º semestre",new InfoExecutionYear("2002/2003")));
 		InfoExam infoExam =
 			new InfoExam(day, beginning, end, infoExecutionCourse);
 

@@ -131,10 +131,48 @@ public class ExamOJBTest extends TestCaseOJB {
 	} catch (ExcepcaoPersistencia e) {
 		fail("testReadByDayAndBeginning: unexpected exception: " + e);
 	}
-  	
-  	
-  	
   }
+
+
+
+  public void testReadByExecutionCourse(){
+	Calendar beginning = Calendar.getInstance();
+	beginning.set(Calendar.YEAR, 2003);
+	beginning.set(Calendar.MONTH, Calendar.MARCH);
+	beginning.set(Calendar.DAY_OF_MONTH, 19);
+	beginning.set(Calendar.HOUR_OF_DAY, 9);
+	beginning.set(Calendar.MINUTE, 0);
+	beginning.set(Calendar.SECOND, 0);
+	IDisciplinaExecucao executionCourse = null;
+	IExecutionPeriod executionPeriod = null;
+	IExecutionYear executionYear = null;
+
+	try {
+		persistentSupport.iniciarTransaccao();
+		executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
+		executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);
+		executionCourse = persistentExecutionCourse.readByExecutionCourseInitialsAndExecutionPeriod("EP", executionPeriod);
+		// Make sure test data set is ok
+		assertNotNull("testReadByDayAndBeginningAndExecutionCourse: test data has been altered!!!", executionCourse);
+
+		// Read Existing
+		List exams = persistentExam.readBy(executionCourse);
+		assertEquals("testReadByDayAndBeginningAndExecutionCourse: expected a result",2, exams.size());
+		persistentSupport.confirmarTransaccao();
+		
+		executionCourse.setNome("UnexistingCourse");
+		executionCourse.setSigla("UC");
+		persistentSupport.iniciarTransaccao();
+		// Read Non-Existing
+		exams = persistentExam.readBy(executionCourse);
+		assertEquals("testReadByDayAndBeginningAndExecutionCourse: expected no result", 0, exams.size());
+
+		persistentSupport.confirmarTransaccao();
+	} catch (ExcepcaoPersistencia e) {
+		fail("testReadByDayAndBeginningAndExecutionCourse: unexpected exception: " + e);
+	}  	
+  }
+
 
 
   public void testReadAll() {
