@@ -69,5 +69,35 @@ public class AnnouncementOJB extends ObjectFenixOJB implements IPersistentAnnoun
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, queryEx);
 		}
 	}
+
+	/**
+	 * @see ServidorPersistente.IPersistentAnnouncement#readLastAnnouncement()
+	 */
+	public IAnnouncement readLastAnnouncementForSite(ISite site) throws ExcepcaoPersistencia {
+		try {
+			IAnnouncement announcementResult = null;
+
+			String oqlQuery = "select announcement from " + Announcement.class.getName();
+			oqlQuery += " where site.executionCourse.sigla = $1";
+			oqlQuery += " and site.executionCourse.executionPeriod.name = $2";
+			oqlQuery += " and site.executionCourse.executionPeriod.executionYear.year = $3";
+			oqlQuery += " order by creationDate desc";
+
+			//should be done with max to reduce overhead
+
+			query.create(oqlQuery);
+			query.bind(site.getExecutionCourse().getSigla());
+			query.bind(site.getExecutionCourse().getExecutionPeriod().getName());
+			query.bind(site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
+
+			List result = (List) query.execute();
+			lockRead(result);
+			
+			if (!(result.isEmpty())) announcementResult = (IAnnouncement) result.get(0);
+			return announcementResult;
+		} catch (QueryException queryEx) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, queryEx);
+		}
+	}
     
 }
