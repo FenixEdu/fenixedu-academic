@@ -117,7 +117,7 @@ public class ExamsMapRenderer {
 
 				if (user.equals("public")) {
 					strBuffer.append(
-						"<a href='siteViewer.do?method=executionCourseViewer&amp;exeCourseCode="
+						"<a href='viewSite.do?method=firstPage&amp;exeCode="
 							+ infoExecutionCourse.getSigla()
 							+"&amp;ePName="
 							+ infoExecutionCourse.getInfoExecutionPeriod().getName()
