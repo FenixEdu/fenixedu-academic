@@ -9,6 +9,7 @@
 	<html:link page="/viewSite.do">
 	<li><bean:message key="link.home"/></li>
 </html:link>
+<p/>
 <html:link page="/alternativeSite.do?method=management">
 	<li>	<bean:message key="link.personalizationOptions"/></li>
 	</html:link>
@@ -34,7 +35,8 @@
 	<logic:notPresent name="<%= SessionConstants.INFO_SECTION %>" >
 	<app:generateSectionMenu name="<%= SessionConstants.SECTIONS %>" path="<%=  request.getContextPath() + RequestUtils.getModuleName(request,application)%>" renderer="teacher" />
 	</logic:notPresent>		
-</logic:present>	
+</logic:present>
+<p/>
 </html:link>
 	<html:link forward="logoff">
 	<li><bean:message key="link.logout"/></li>
