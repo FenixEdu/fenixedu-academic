@@ -49,6 +49,13 @@ public class CreateExamActionDA extends DispatchAction {
 			ArrayList examSeasons = Util.getExamSeasons();
 			session.setAttribute(SessionConstants.LABLELIST_SEASONS, examSeasons);
 
+			DynaValidatorForm chooseDayAndShiftForm = (DynaValidatorForm) form;
+			chooseDayAndShiftForm.set("year", null);
+			chooseDayAndShiftForm.set("month", null);
+			chooseDayAndShiftForm.set("day", null);
+			chooseDayAndShiftForm.set("beginning", null);
+			chooseDayAndShiftForm.set("season", null);
+
 			return mapping.findForward("showCreateForm");
 	}
 
