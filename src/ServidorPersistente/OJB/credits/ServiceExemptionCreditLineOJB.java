@@ -29,7 +29,7 @@ public class ServiceExemptionCreditLineOJB extends ObjectFenixOJB implements IPe
         
         criteria.addEqualTo("teacher.idInternal", teacher.getIdInternal());
         criteria.addGreaterThan("end", executionPeriod.getBeginDate());
-        criteria.addGreaterOrEqualThan("start", executionPeriod.getEndDate());
+        criteria.addLessThan("start", executionPeriod.getEndDate());
         
         return queryList(ServiceExemptionCreditLine.class, criteria);
     }

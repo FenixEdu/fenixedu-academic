@@ -29,7 +29,7 @@ public class ManagementPositionCreditLineOJB extends ObjectFenixOJB implements I
         
         criteria.addEqualTo("teacher.idInternal", teacher.getIdInternal());
         criteria.addGreaterThan("end", executionPeriod.getBeginDate());
-        criteria.addGreaterOrEqualThan("start", executionPeriod.getEndDate());
+        criteria.addLessThan("start", executionPeriod.getEndDate());
         
         return queryList(ManagementPositionCreditLine.class, criteria);
     }
