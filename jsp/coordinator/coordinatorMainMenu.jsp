@@ -9,6 +9,7 @@
 <logic:present name="<%= SessionConstants.MASTER_DEGREE %>"  >
 	<bean:define id="infoExecutionDegree" name="<%= SessionConstants.MASTER_DEGREE %>" scope="session" type="InfoExecutionDegree" />
 	<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
+	<bean:define id="executionDegreeID" name="infoExecutionDegree" property="idInternal" />
 
 	<%-- Start of Master Degree Coordinator Options --%>
 	<logic:equal name="infoExecutionDegree" 
@@ -90,13 +91,13 @@
 		<br /><br />
 		<ul>
 			<li>
-				<html:link page="/executionCoursesInformation.do?method=prepareChoice">
+				<html:link page="<%= "/executionCoursesInformation.do?method=prepareChoice&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 				<bean:message key="link.coordinator.executionCoursesInformation"/></html:link>
 				<br/>
 				<br/>
 			</li>
 			<li>
-				<html:link page="/teachersInformation.do" paramId="executionDegreeId" paramName="infoExecutionDegree" paramProperty="idInternal">
+				<html:link page="<%= "/teachersInformation.do?executionDegreeId=" + executionDegreeID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">				
 					<bean:message key="link.coordinator.teachersInformation"/>
 				</html:link>
 				<br/>
@@ -104,14 +105,14 @@
 			</li>
 			
 			<li>
-				<html:link page="/tutorManagement.do?method=prepareChooseTutor" paramId="executionDegreeId" paramName="infoExecutionDegree" paramProperty="idInternal">
+				<html:link page="<%= "/tutorManagement.do?method=prepareChooseTutor&executionDegreeId=" + executionDegreeID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">				
 					<bean:message key="label.coordinator.tutors"/>
 				</html:link>
 				<br/>
 				<br/>
 			</li>
 			<li>
-				<html:link page="/studentEnrollementSection.do" paramId="executionDegreeId" paramName="infoExecutionDegree" paramProperty="idInternal">
+				<html:link page="<%= "/studentEnrollementSection.do?executionDegreeId=" + executionDegreeID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">							
 					<bean:message key="label.coordinator.studentInformation"/>
 				</html:link>
 				<br/>
@@ -125,7 +126,6 @@
 	<br /><br />
 	<ul>
 		<li>
-			<bean:define id="infoExecutionDegreeCode" name="infoExecutionDegree" property="idInternal"/>
 			<html:link page="<%="/degreeCurricularPlanManagement.do?method=showActiveCurricularCourses&amp;degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 				<bean:message key="link.coordinator.degreeCurricularPlan.management"/>
 			</html:link> 
