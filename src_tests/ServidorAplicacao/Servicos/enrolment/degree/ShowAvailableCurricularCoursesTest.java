@@ -1,126 +1,265 @@
 package ServidorAplicacao.Servicos.enrolment.degree;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.MissingResourceException;
+import java.util.PropertyResourceBundle;
+import java.util.ResourceBundle;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
+
+import Dominio.ICurricularCourse;
+import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.Autenticacao;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.strategy.enrolment.context.InfoStudentEnrolmentContext;
 import framework.factory.ServiceManagerServiceFactory;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import DataBeans.InfoCurricularCourseScope;
-import DataBeans.util.Cloner;
-import Dominio.ICurricularCourse;
-import Dominio.ICurricularCourseScope;
-import ServidorAplicacao.Servicos.TestCaseReadServices;
-import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentCurricularCourse;
-import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
+/**
+ * 
+ * @author Nuno Correia
+ * @author Ricardo Rodrigues
+ */
 
-public class ShowAvailableCurricularCoursesTest extends TestCaseReadServices {
-	
-	public ShowAvailableCurricularCoursesTest(java.lang.String testName) {
-		super(testName);
-	}
+public class ShowAvailableCurricularCoursesTest
+    extends ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase
+{
 
-	public static void main(java.lang.String[] args) {
-		junit.textui.TestRunner.run(suite());
-	}
+    private static String EXPECTED_CURRICULAR_COURSES_PROPERTY = "ExpectedCurricularCoursesFilePath";
+    private static String EXPECTED_SECONDARY_CREDITS_PROPERTY = "CreditsInSecundaryArea";
+    private static String EXPECTED_SPECIALIZATION_CREDITS_PROPERTY = "CreditsInSpecializationArea";
 
-	public static Test suite() {
-		TestSuite suite = new TestSuite(ShowAvailableCurricularCoursesTest.class);
+    /**
+     * @param name
+     */
+    protected ShowAvailableCurricularCoursesTest(String testName)
+    {
+        super(testName);
+    }
 
-		return suite;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServiceNeedsAuthenticationTestCase#getApplication()
+     */
+    protected String getApplication()
+    {
+        return Autenticacao.INTRANET;
+    }
 
-	protected void setUp() {
-		super.setUp();
-	}
+    protected String getNameOfServiceToBeTested()
+    {
+        return "ShowAvailableCurricularCourses";
+    }
 
-	protected void tearDown() {
-		super.tearDown();
-	}
+    protected String getDataSetFilePath()
+    {
+        return "etc/datasets/servicos/student/testShowAvailableCurricularCoursesDataSet.xml";
+    }
 
-	protected String getNameOfServiceToBeTested() {
-		return "ShowAvailableCurricularCourses";
-	}
+    protected String getExpectedDataSetFilePath()
+    {
+        return "etc/datasets/servicos/student/testShowAvailableCurricularCoursesExpectedDataSet.xml";
+    }
 
-	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		return null;
-	}
+    protected String getConfigFilePath()
+    {
+        return "config/gera.properties";
+    }
 
-	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		return null;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServiceNeedsAuthenticationTestCase#getAuthenticatedAndAuthorizedUser()
+     */
+    protected String[] getAuthenticatedAndAuthorizedUser()
+    {
+        String[] args = { "16", "pass", getApplication()};
+        return args;
+    }
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServiceNeedsAuthenticationTestCase#getAuthenticatedAndUnauthorizedUser()
+     */
+    protected String[] getAuthenticatedAndUnauthorizedUser()
+    {
+        String[] args = { "julia", "pass", getApplication()};
+        return args;
+    }
 
-	protected int getNumberOfItemsToRetrieve() {
-		return 0;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see ServiceNeedsAuthenticationTestCase#getNonAuthenticatedUser()
+     */
+    protected String[] getNotAuthenticatedUser()
+    {
+        String[] args = { "fiado", "pass", getApplication()};
+        return args;
+    }
 
-	protected Object getObjectToCompare() {
-		return null;
-	}
+    protected Object[] getArguments()
+    {
+        Integer studentNumber = new Integer(54503);
+        Object[] args = { studentNumber };
+        return args;
+    }
 
-	protected String getDataSetFilePath() {
-		return "etc/testEnrolmentDataSet.xml";
-	}
-	
-	public void testShowAvailableCurricularCoursesServiceRun() {
+    /* (non-Javadoc)
+     * @see ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase#getAuthorizeArguments()
+     */
+    protected Object[] getAuthorizeArguments()
+    {
+        return getArguments();
+    }
 
-		Object args[] = {_userView };
-		InfoEnrolmentContext result = null;
-		try {
-			result = (InfoEnrolmentContext) ServiceManagerServiceFactory.executeService(_userView, getNameOfServiceToBeTested(), args);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			fail("Execution of service!");
-		}
+    /** ********** Inicio dos testes ao serviço ************* */
 
-		List finalSpan = result.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled();
-		List automaticSpan = result.getInfoCurricularCoursesScopesAutomaticalyEnroled();
+    public void testShowAvailableCurricularCourses()
+    {
 
-		assertEquals("Final span size:",  6, finalSpan.size());
-		assertEquals("Automatic span size:",  5, automaticSpan.size());
+        String[] args = getAuthenticatedAndAuthorizedUser();
+        IUserView id = authenticateUser(args);
+        Object[] args2 = getArguments();
+        InfoStudentEnrolmentContext infoSEC = null;
 
-		ICurricularCourse curricularCourse = getCurricularCourse("SISTEMAS OPERATIVOS", "");
-		ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) curricularCourse.getScopes().get(0);
-		InfoCurricularCourseScope infoCurricularCourseScope = Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
-		assertEquals(true, finalSpan.contains(infoCurricularCourseScope));
+        try
+        {
+            infoSEC =
+                (InfoStudentEnrolmentContext) ServiceManagerServiceFactory.executeService(
+                    id,
+                    getNameOfServiceToBeTested(),
+                    args2);
+        }
+        catch (FenixServiceException e)
+        {
+            fail("Executing Service: " + getNameOfServiceToBeTested());
+            e.printStackTrace();
+        }
 
-		curricularCourse = getCurricularCourse("ÁLGEBRA LINEAR", "QN");
-		curricularCourseScope = (ICurricularCourseScope) curricularCourse.getScopes().get(0);
-		infoCurricularCourseScope = Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
-		assertEquals(true, automaticSpan.contains(infoCurricularCourseScope));
+        boolean result = CompareExpectedCCAndCreditsWithDataReturnedFromService(infoSEC);
 
-		curricularCourse = getCurricularCourse("TRABALHO FINAL DE CURSO I", "");
-		curricularCourseScope = (ICurricularCourseScope) curricularCourse.getScopes().get(0);
-		infoCurricularCourseScope = Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
-		assertEquals(true, !finalSpan.contains(curricularCourseScope));
-		assertEquals(true, !automaticSpan.contains(curricularCourseScope));
-	}
+        if (result)
+            System.out.println(
+                getNameOfServiceToBeTested()
+                    + " was SUCCESSFULY runned by test: testCreateGrantSubsidySuccessfull");
+        else
+            fail("Returned curricular courses dont macth the expected curricular courses");
+    }
 
-	public ICurricularCourse getCurricularCourse (String name, String code){
-		ISuportePersistente sp = null;
-		ICurricularCourse curricularCourse = null;
+    /**
+     * @param infoSEC
+     * @return
+     */
+    private boolean CompareExpectedCCAndCreditsWithDataReturnedFromService(InfoStudentEnrolmentContext infoSEC)
+    {
+        Integer secondaryCredits = infoSEC.getCreditsInSecundaryArea();
+        Integer specializationCredits = infoSEC.getCreditsInSpecializationArea();
+        List curricularCourses = infoSEC.getFinalInfoCurricularCoursesWhereStudentCanBeEnrolled();
+        List curricularCoursesNames = filterCurricularCoursesNames(curricularCourses);
+        List expectedCCAndCredits = readExpectedCCAndCredits();
+        List expectedCurricularCoursesNames = (List) expectedCCAndCredits.get(0);
+        sortCurricularCourses(curricularCoursesNames);
+        sortCurricularCourses(expectedCurricularCoursesNames);
 
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-		} catch (ExcepcaoPersistencia e) {
-			e.printStackTrace(System.out);
-			fail("Getting persistent layer!");
-		}
+        Integer expectedSecondaryCredits = (Integer) expectedCCAndCredits.get(1);
+        Integer expectedSpecializationCredits = (Integer) expectedCCAndCredits.get(2);
 
-		IPersistentCurricularCourse curricularCourseDAO = sp.getIPersistentCurricularCourse();
-		try {
-			sp.iniciarTransaccao();
-			curricularCourse = curricularCourseDAO.readCurricularCourseByNameAndCode(name, code);
-			sp.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia e) {
-			e.printStackTrace(System.out);
-			fail("Reading curricular course! (name:"+name+";code:"+code);
-		}
-		assertNotNull("Reading curricular course (name:"+name+";code:"+code+"!",curricularCourse);
+        return (
+            curricularCoursesNames.equals(expectedCurricularCoursesNames)
+                && (specializationCredits.equals(expectedSpecializationCredits))
+                && (secondaryCredits.equals(expectedSecondaryCredits)));
+    }
 
-		return curricularCourse;
-	}
+    /**
+     * @return
+     */
+    private List readExpectedCCAndCredits()
+    {
+        List ccAndCredits = null;
+        try
+        {
+            ResourceBundle bundle = new PropertyResourceBundle(new FileInputStream(getConfigFilePath()));
+            String expectedCCFilePath = bundle.getString(EXPECTED_CURRICULAR_COURSES_PROPERTY);
+            Integer creditsInSecundaryArea =
+                new Integer(bundle.getString(EXPECTED_SECONDARY_CREDITS_PROPERTY));
+            Integer creditsInSpecializationArea =
+                new Integer(bundle.getString(EXPECTED_SPECIALIZATION_CREDITS_PROPERTY));
+            List curricularCoursesNames = readFile(expectedCCFilePath);
+        }
+        catch (MissingResourceException ex)
+        {
+            ex.printStackTrace();
+        }
+        catch (FileNotFoundException ex)
+        {
+            fail("File " + getConfigFilePath() + " not found.");
+            ex.printStackTrace();
+        }
+        catch (IOException ex)
+        {
+            fail("IOException reading file " + getConfigFilePath() + ex);
+            ex.printStackTrace();
+        }
+
+        return ccAndCredits;
+    }
+
+    private static List readFile(String filePath) throws IOException
+    {
+        ArrayList lista = new ArrayList();
+        BufferedReader leitura = null;
+        String linhaFicheiro = null;
+
+        File file = new File(filePath);
+        InputStream ficheiro = new FileInputStream(file);
+        leitura =
+            new BufferedReader(
+                new InputStreamReader(ficheiro, "8859_1"),
+                new Long(file.length()).intValue());
+        do
+        {
+            linhaFicheiro = leitura.readLine();
+
+            if (linhaFicheiro != null)
+                lista.add(linhaFicheiro);
+        }
+        while ((linhaFicheiro != null));
+
+        return lista;
+    }
+
+    /**
+     * @param curricularCourses
+     * @return
+     */
+    private List filterCurricularCoursesNames(List curricularCourses)
+    {
+        ArrayList curricularCoursesName = new ArrayList();
+
+        Iterator iter = curricularCourses.iterator();
+        while (iter.hasNext())
+            curricularCoursesName.add(((ICurricularCourse) iter.next()).getName());
+
+        return curricularCoursesName;
+    }
+
+    private static void sortCurricularCourses(List curricularCourseList)
+    {
+        ComparatorChain comparatorChain = new ComparatorChain();
+        comparatorChain.addComparator(new BeanComparator("name"));
+
+        Collections.sort(curricularCourseList, comparatorChain);
+    }
 }
