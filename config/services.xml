@@ -5750,7 +5750,6 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="ManagerAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -5760,7 +5759,6 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="ManagerAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -8192,7 +8190,7 @@
 		<filterChains>
 			<chain name="ManagerAuthorization"/>
 		</filterChains>		
-	</service>		
+	</service>
 	<service>
 		<name>DeleteGuideVersionInManager</name>
 		<implementationClass>
@@ -8203,5 +8201,16 @@
 		<filterChains>
 			<chain name="ManagerAuthorization"/>
 		</filterChains>		
+	</service>		
+	<service>
+		<name>CopySiteExecutionCourse</name>
+		<implementationClass>
+			ServidorAplicacao.Servico.teacher.CopySiteExecutionCourse
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>
 	</service>		
 </serviceDefinitions>

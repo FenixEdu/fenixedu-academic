@@ -23,11 +23,7 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
  */
 public class InsertItem implements IService {
 
-    public InsertItem() {
-
-    }
-
-    private int organizeExistingItemsOrder(ISection section, int insertItemOrder)
+    protected int organizeExistingItemsOrder(ISection section, int insertItemOrder)
             throws FenixServiceException {
 
         IPersistentItem persistentItem = null;
@@ -58,46 +54,34 @@ public class InsertItem implements IService {
                 }
             }
         } catch (ExistingPersistentException excepcaoPersistencia) {
-
             throw new ExistingServiceException(excepcaoPersistencia);
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-
             throw new FenixServiceException(excepcaoPersistencia);
         }
         return insertItemOrder;
     }
 
-    //infoItem with an infoSection
-
     public Boolean run(Integer infoExecutionCourseCode, Integer sectionCode, InfoItem infoItem)
-            throws FenixServiceException {
+            throws FenixServiceException, ExcepcaoPersistencia {
 
-        IItem item = null;
-        ISection section = null;
+        final ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+        final IPersistentSection persistentSection = persistentSuport.getIPersistentSection();
+        final IPersistentItem persistentItem = persistentSuport.getIPersistentItem();
 
-        try {
-            ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-            IPersistentSection persistentSection = persistentSuport.getIPersistentSection();
-            IPersistentItem persistentItem = persistentSuport.getIPersistentItem();
+        final ISection section = (ISection) persistentSection.readByOID(Section.class, sectionCode);
+        infoItem.setInfoSection(Cloner.copyISection2InfoSection(section));
 
-            section = (ISection) persistentSection.readByOID(Section.class, sectionCode);
-
-            infoItem.setInfoSection(Cloner.copyISection2InfoSection(section));
-            item = Cloner.copyInfoItem2IItem(infoItem);
-            persistentItem.simpleLockWrite(item);
-            Integer itemOrder = new Integer(organizeExistingItemsOrder(section, infoItem.getItemOrder()
-                    .intValue()));
-
-            item.setItemOrder(itemOrder);
-
-        } catch (ExistingPersistentException e) {
-
-            throw new ExistingServiceException(e);
-        } catch (ExcepcaoPersistencia excepcaoPersistencia) {
-
-            throw new FenixServiceException(excepcaoPersistencia);
+        if (persistentItem.readBySectionAndName(section, infoItem.getName()) != null) {
+            throw new ExistingServiceException();
         }
+
+        final IItem item = Cloner.copyInfoItem2IItem(infoItem);
+        persistentItem.simpleLockWrite(item);
+        final Integer itemOrder = new Integer(organizeExistingItemsOrder(section, infoItem
+                .getItemOrder().intValue()));
+        item.setItemOrder(itemOrder);
 
         return new Boolean(true);
     }
+
 }

@@ -2041,6 +2041,9 @@
        		scope="request"
 			input="/teacherAdministrationViewer.do?method=instructions&amp;page=0"
        		parameter="method">
+			<exception	type="ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException"
+						key="error.NotAuthorized"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
        		<forward name="chooseExecutionPeriod" path="choose-execution-period"/>
        		<forward name="chooseExecDegreeAndCurYear" path="choose-exec-degree-and-cur-year"/>
        		<forward name="viewExecutionCourses" path="view-execution-courses"/>
