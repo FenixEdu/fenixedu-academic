@@ -56,7 +56,7 @@
 	<definition name="df.page.verifyEnrolmentWithoutRules" extends="definition.degreeAdministrativeOffice.curricular.course.enrolment.without.rules">
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/verifyEnrolmentWithoutRules.jsp"/>
 	</definition>
-	<definition name="df.page.acceptEnrolmentWithoutRules" extends="definition.degreeAdministrativeOffice.curricular.course.enrolment.without.rules">
+	<definition name="df.page.acceptEnrolmentWithoutRules" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/acceptEnrolmentWithoutRules.jsp"/>
 	</definition>
 
