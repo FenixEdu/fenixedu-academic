@@ -21,12 +21,13 @@
 <html:form action="/createProfessorship">
 	<html:hidden property="teacherNumber"/>
 	<html:hidden property="method" value="createProfessorship"/>	
-
+	<html:hidden property="page" />
+	
 
 	<h2>
 		<span class="emphasis-box">1</span> <i><bean:message key="label.professorship.chooseExecutionPeriod"/></i>
 	</h2>
-	<html:select property="executionPeriodId" onchange="this.form.method.value='showExecutionDegrees';this.form.submit();">
+	<html:select property="executionPeriodId" onchange="this.form.page.value='1';this.form.method.value='showExecutionDegrees';this.form.submit();">
 		<option></option>
 		<html:options collection="executionPeriods" property="idInternal" labelProperty="description"/>
 	</html:select>
@@ -35,7 +36,7 @@
 		<h2>
 			<span class="emphasis-box">2</span> <i><bean:message key="label.professorship.chooseExecutionDegree"/></i>
 		</h2>
-		<html:select property="executionDegreeId" onchange="this.form.method.value='showExecutionDegreeExecutionCourses';this.form.submit();">
+		<html:select property="executionDegreeId" onchange="this.form.page.value='2';this.form.method.value='showExecutionDegreeExecutionCourses';this.form.submit();">
 			<option></option>
 			<logic:iterate id="executionDegree" name="executionDegrees">
 				<bean:define id="executionDegreeId" name="executionDegree" property="idInternal"/>

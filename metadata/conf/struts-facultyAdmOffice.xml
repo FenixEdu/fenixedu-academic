@@ -394,6 +394,9 @@
             <set-property property="requestAttribute" value="infoManagementPosition" />
             <set-property property="infoObjectClassName" 
                 value="DataBeans.credits.InfoManagementPositionCreditLine" />
+			
+			<exception key="error.credits.nonExistingManagementPosition" type="ServidorAplicacao.Servico.exceptions.NonExistingServiceException" path="/prepareManagementPositionsManagement.do?method=doSearch" />	
+
             <forward name="show-form" path="editManagementPosition"/>
             <forward name="successfull-edit" 
                 path="/prepareManagementPositionsManagement.do?method=doSearch"/>
