@@ -51,7 +51,6 @@ import DataBeans.util.Cloner;
 import Dominio.Announcement;
 import Dominio.BibliographicReference;
 import Dominio.CurricularCourse;
-import Dominio.Curriculum;
 import Dominio.DisciplinaExecucao;
 import Dominio.Evaluation;
 import Dominio.EvaluationExecutionCourse;
@@ -83,7 +82,6 @@ import Dominio.Section;
 import Dominio.StudentGroup;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentBibliographicReference;
 import ServidorPersistente.IPersistentCurricularCourse;
@@ -129,15 +127,15 @@ public class TeacherAdministrationSiteComponentBuilder {
 		} else if (component instanceof InfoAnnouncement) {
 			return getInfoAnnouncement((InfoAnnouncement) component, site, (Integer) obj1);
 		} else if (component instanceof InfoSiteObjectives) {
-			return getInfoSiteObjectives((InfoSiteObjectives) component, site, (Integer) obj1);
+			return getInfoSiteObjectives((InfoSiteObjectives) component, site);
 		} else if (component instanceof InfoSitePrograms) {
 			return getInfoSitePrograms((InfoSitePrograms) component, site);
 		} else if (component instanceof InfoCurriculum) {
 			return getInfoCurriculum((InfoCurriculum) component, site,(Integer) obj1);
 		} else if (component instanceof InfoSiteEvaluationMethods) {
 			return getInfoEvaluationMethods((InfoSiteEvaluationMethods) component, site);
-		} else if (component instanceof InfoCurriculum) {
-			return getInfoEvaluationMethod((InfoCurriculum) component, site, (Integer) obj1);
+		//} else if (component instanceof InfoCurriculum) {
+		//	return getInfoEvaluationMethod((InfoCurriculum) component, site, (Integer) obj1);
 		} else if (component instanceof InfoSiteBibliography) {
 			return getInfoSiteBibliography((InfoSiteBibliography) component, site);
 		} else if (component instanceof InfoBibliographicReference) {
@@ -291,48 +289,35 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 * @param site
 	 * @return
 	 */
-	private ISiteComponent getInfoSiteObjectives(InfoSiteObjectives component, ISite site, Integer curriculumId) throws FenixServiceException {
-		try {
-			if (curriculumId == null) {
-				List curriculums = readCurriculum(site);
-				Iterator iter = curriculums.iterator();
-				List infoCurriculums = new ArrayList();
-				while (iter.hasNext()) {
-					ICurriculum curriculum = (ICurriculum) iter.next();
-					InfoCurriculum infoCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
-					infoCurriculums.add(infoCurriculum);
-				}
-
-				List infoCurricularCourses = readInfoCurricularCourses(site);
-
-				component.setInfoCurricularCourses(infoCurricularCourses);
-				component.setInfoCurriculums(infoCurriculums);
-				
-			} else {
-
+	private ISiteComponent getInfoSiteObjectives(InfoSiteObjectives component, ISite site) throws FenixServiceException {
+		try {	
 				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 				IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
-				ICurriculum curriculum = new Curriculum(curriculumId);
-				curriculum = (ICurriculum) persistentCurriculum.readByOId(curriculum, false);
-				if (curriculum == null) {
-					throw new InvalidArgumentsServiceException();
+			
+				IDisciplinaExecucao executionCourse = site.getExecutionCourse();				
+				List curricularCourses = executionCourse.getAssociatedCurricularCourses();
+				Iterator iter = curricularCourses.iterator();
+				List infoCurriculums = new ArrayList();
+			
+				while (iter.hasNext()) {
+					ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
+					ICurriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse);
+				
+					if (curriculum != null) {
+						infoCurriculums.add(Cloner.copyICurriculum2InfoCurriculum(curriculum));
+					}			
 				}
-
-				InfoCurriculum infoCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
-
-				component.setGeneralObjectives(infoCurriculum.getGeneralObjectives());
-				component.setOperacionalObjectives(infoCurriculum.getOperacionalObjectives());
-				component.setGeneralObjectivesEn(infoCurriculum.getGeneralObjectivesEn());
-				component.setOperacionalObjectivesEn(infoCurriculum.getOperacionalObjectivesEn());
-
+				component.setInfoCurriculums(infoCurriculums);
+				component.setInfoCurricularCourses(readInfoCurricularCourses(site));
+			
+			} catch (ExcepcaoPersistencia e) {
+				throw new FenixServiceException(e);
 			}
 
-		} catch (ExcepcaoPersistencia e) {
-			throw new FenixServiceException(e);
-		}
-		return component;
+			return component;
 	}
-
+	
+	
 	/**
 	 * @param program
 	 * @param site
@@ -369,35 +354,6 @@ public class TeacherAdministrationSiteComponentBuilder {
 				return component;
 			}
 	
-	/**
-		* @param methods
-		* @param site
-		* @param integer
-		* @return
-		*/
-		private ISiteComponent getInfoSiteProgram(InfoCurriculum component, ISite site, Integer curricularCourseCode) throws FenixServiceException {
-			try {
-				ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-				IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
-				ICurricularCourse curricularCourse = new CurricularCourse(curricularCourseCode);
-				curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(curricularCourse, false);
-				IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
-				
-				ICurriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse);
-				InfoCurriculum infoCurriculum = null;
-		
-				if (curriculum != null) {
-					infoCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
-					infoCurriculum.setInfoCurricularCourse(Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse));
-				}
-				
-				return infoCurriculum;
-			
-				} catch (ExcepcaoPersistencia e) {
-					throw new FenixServiceException(e);
-				}
-			}
-
 	/**
 	 * @param evaluation
 	 * @param site
@@ -445,12 +401,9 @@ public class TeacherAdministrationSiteComponentBuilder {
 			ICurricularCourse curricularCourse = new CurricularCourse(curricularCourseCode);
 			curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(curricularCourse, false);
 			IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
-		
-			
 			//if(curricularCourse.getBasic().booleanValue()){
 			//		throw new IllegalEditException();
 			//}	
-		
 			ICurriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse);
 			InfoCurriculum infoCurriculum = null;
 		

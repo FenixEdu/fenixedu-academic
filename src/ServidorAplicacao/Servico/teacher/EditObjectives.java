@@ -1,6 +1,6 @@
 package ServidorAplicacao.Servico.teacher;
 
-import DataBeans.InfoSiteObjectives;
+import DataBeans.InfoCurriculum;
 import Dominio.CurricularCourse;
 import Dominio.Curriculum;
 import Dominio.ICurricularCourse;
@@ -32,56 +32,40 @@ public class EditObjectives implements IServico {
 	}
 
 	public boolean run(
-		Integer infoExecutionCourseCode,
-		Integer infoCurricularCourseCode,
-		InfoSiteObjectives infoSiteObjectivesNew)
+	Integer infoExecutionCourseCode,
+	Integer infoCurricularCourseCode,
+	InfoCurriculum infoCurriculumNew)
 		throws FenixServiceException {
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			
-			IPersistentCurriculum persistentCurriculum =
-				sp.getIPersistentCurriculum();
 			IPersistentCurricularCourse persistentCurricularCourse =
 				sp.getIPersistentCurricularCourse();
+
 			ICurricularCourse curricularCourse =
-				(ICurricularCourse) persistentCurricularCourse.readByOId(
-						new CurricularCourse(infoCurricularCourseCode),
-						false);
-		
-			
-		
-		
-				ICurriculum curriculum = null;
-				curriculum =
-					persistentCurriculum.readCurriculumByCurricularCourse(
-						curricularCourse);
+				(ICurricularCourse) persistentCurricularCourse.readByOId(new CurricularCourse(infoCurricularCourseCode),false);
 
-				if (curriculum != null) {
-					persistentCurriculum.lockWrite(curriculum);
-					curriculum.setCurricularCourse(curricularCourse);
-					curriculum.setGeneralObjectives(
-						infoSiteObjectivesNew.getGeneralObjectives());
-					curriculum.setOperacionalObjectives(
-						infoSiteObjectivesNew.getOperacionalObjectives());
-					curriculum.setGeneralObjectivesEn(
-						infoSiteObjectivesNew.getGeneralObjectivesEn());
-					curriculum.setOperacionalObjectivesEn(
-						infoSiteObjectivesNew.getOperacionalObjectivesEn());
-				} else {
-					System.out.println("novo curriculo");
-					curriculum =
-						new Curriculum(
-							curricularCourse,
-							infoSiteObjectivesNew.getGeneralObjectives(),
-							infoSiteObjectivesNew.getOperacionalObjectives(),
-							infoSiteObjectivesNew.getGeneralObjectivesEn(),
-							infoSiteObjectivesNew.getOperacionalObjectivesEn());
-					persistentCurriculum.lockWrite(curriculum);
-				}
+			IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
 
-			
-
+			ICurriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse);
+			if (curriculum != null) {		
+				curriculum.setCurricularCourse(curricularCourse);
+				curriculum.setGeneralObjectives(infoCurriculumNew.getGeneralObjectives());
+				curriculum.setGeneralObjectivesEn(infoCurriculumNew.getGeneralObjectivesEn());
+				curriculum.setOperacionalObjectives(infoCurriculumNew.getOperacionalObjectives());
+				curriculum.setOperacionalObjectivesEn(infoCurriculumNew.getOperacionalObjectivesEn());
+				persistentCurriculum.lockWrite(curriculum);
+				
+			} else {
+				curriculum = new Curriculum();
+				curriculum.setCurricularCourse(curricularCourse);
+				curriculum.setGeneralObjectives(infoCurriculumNew.getGeneralObjectives());
+				curriculum.setGeneralObjectivesEn(infoCurriculumNew.getGeneralObjectivesEn());
+				curriculum.setOperacionalObjectives(infoCurriculumNew.getOperacionalObjectives());
+				curriculum.setOperacionalObjectivesEn(infoCurriculumNew.getOperacionalObjectivesEn());
+				persistentCurriculum.lockWrite(curriculum);
+			}
+		
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}

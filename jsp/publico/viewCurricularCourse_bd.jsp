@@ -25,8 +25,6 @@
 				</td>
 			</tr>
 			
-			
-
 				<logic:iterate id="infoCurricularCourseScope" name="curricularCourse" property="infoScopes">
 					<%-- FIXME: hardcoded semester 2 
 					<logic:equal name="infoCurricularCourseScope" property="infoCurricularSemester.semester" value="2">
@@ -51,22 +49,12 @@
 						
 					<%--</logic:equal>--%>
 					
-				</logic:iterate>
-				
-			
-			
+				</logic:iterate>	
 		</table>
-		
-	
 <br/>
 <br/>
 <logic:present name="component" property="infoCurriculum">
 <bean:define id="curriculum" name="component" property="infoCurriculum"/>
-
-	
-	<logic:empty name="curriculum" property="generalObjectives">
-	<h2><bean:message key="message.objectives.not.available"/></h2>
-	</logic:empty>
 
 	<logic:notEmpty name="curriculum" property="generalObjectives">
 		<h2><bean:message key="label.generalObjectives" />	</h2>
@@ -80,22 +68,23 @@
 			<bean:write name="curriculum" property="operacionalObjectives" filter="false"/>
 		</p>
 	</logic:notEmpty>
-
-
 <br/>
 <br/>
-	
-	<logic:empty name="curriculum" property="program">
-		<h2><bean:message key="message.program.not.available"/></h2>
-	</logic:empty>
 	<logic:notEmpty name="curriculum" property="program">
 		<h2><bean:message key="label.program" /></h2>	
 		<p>
 			<bean:write name="curriculum" property="program" filter="false" />
 		</p>	
 	</logic:notEmpty>
+<br/>
+<br/>
+	
+	<logic:notEmpty name="curriculum" property="evaluationElements">
+		<h2><bean:message key="label.evaluation" /></h2>	
+		<p>
+			<bean:write name="curriculum" property="evaluationElements" filter="false" />
+		</p>	
+	</logic:notEmpty>
+	
 </logic:present >
-<logic:notPresent name="component" property="infoCurriculum">
-<h2><bean:message key="message.program.not.available"/></h2>
-<h2><bean:message key="message.objectives.not.available"/></h2>
-</logic:notPresent >
+

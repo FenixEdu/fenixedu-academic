@@ -4,11 +4,12 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <logic:present name="siteView">
-		<h2><bean:message key="title.program"/></h2> 
+
 		<html:form action="/programManagerDA">
 		
 		<logic:present name="siteView" property="component">
 			<bean:define id="curriculum" name="siteView" property="component"/>
+			<h3><bean:write name="curriculum" property="infoCurricularCourse.name"/> -- <bean:write name="curriculum" property="infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.nome"/></h3>
 			<bean:define id="curricularCourseCode" name="curriculum" property="infoCurricularCourse.idInternal"/>
 			<html:hidden property="curricularCourseCode" value="<%= curricularCourseCode.toString() %>"/>
 		</logic:present>
@@ -17,6 +18,8 @@
 			<bean:define id="curricularCourseCode" name="curricularCourseCode"/>
 			<html:hidden property="curricularCourseCode" value="<%= curricularCourseCode.toString() %>"/>
 		</logic:notPresent> 
+		
+		<h2><bean:message key="title.program"/></h2>
 		
 		<html:hidden property="page" value="1"/>
 		<table>	

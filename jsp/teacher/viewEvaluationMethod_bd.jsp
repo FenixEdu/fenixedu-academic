@@ -3,6 +3,13 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <br />
+<table width="100%">
+	<tr>
+		<td class="infoop">
+			<bean:message key="label.evaluationMethod.explanation" />
+		</td>
+	</tr>
+</table>
 
 <logic:present name="siteView">
 	<bean:define id="component" name="siteView" property="component"/>
@@ -17,9 +24,9 @@
 			<logic:iterate id="infoCurriculum" name="infoEvaluations">
 			
 				<bean:define id="infoCurriculumCurricularCourse" name="infoCurriculum" property="infoCurricularCourse"/>
-	
+				
 				<logic:equal name="infoCurriculumCurricularCourse" property="idInternal" value="<%= curricularCourseId.toString() %>">
-					<h2><bean:message key="title.evaluationMethod"/></h2>				
+				<h2><bean:message key="title.evaluationMethod"/></h2>				
 					<table>
 						<tr>
 							<td> 

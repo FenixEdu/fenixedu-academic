@@ -56,11 +56,7 @@ public class EditObjectivesTest extends TestCaseDeleteAndEditServices {
 			e.printStackTrace();
 		}
 		InfoSiteObjectives infoSiteObjectives = new InfoSiteObjectives();
-		infoSiteObjectives.setGeneralObjectives("generalObjectives");
-		infoSiteObjectives.setGeneralObjectivesEn("generalObjectivesEn");
-		infoSiteObjectives.setOperacionalObjectives("operacionalObjectives");
-		infoSiteObjectives.setOperacionalObjectivesEn("operacionalObjectivesEn");
-
+		
 		Object[] args = { executionCourse.getIdInternal(), infoSiteObjectives };
 		return args;
 	}

@@ -512,10 +512,11 @@
 	<action 
 		name="executionCourseObjectivesForm"
 		parameter="method"
+		scope="request"
 		input="/editObjectives.jsp"
 		path="/objectivesManagerDA"
 		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"
-        validate="true"
+        validate="false"
         className="ServidorApresentacao.mapping.SiteManagementActionMapping">		
 		<set-property property="componentClassName" value="DataBeans.InfoSiteObjectives"/>
 		<set-property property="inputForwardName" value="editObjectives"/>
@@ -527,12 +528,13 @@
 	<action 
 		name="executionCourseProgramForm"
 		parameter="method"
+		scope="request"
 		input="/editProgram.jsp"
 		path="/programManagerDA"
 		type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction"
         validate="false"	
         className="ServidorApresentacao.mapping.SiteManagementActionMapping">		
-			<set-property property="componentClassName" value="DataBeans.InfoSiteProgram"/>
+			<set-property property="componentClassName" value="DataBeans.InfoSitePrograms"/>
 			<set-property property="inputForwardName" value="editProgram"/>
 			<forward name="viewProgram" path="/viewProgram.jsp"/>
 			<forward name="editProgram" path="/editProgram.jsp"/>
@@ -541,10 +543,11 @@
 	<action 
 		name="executionCourseCurriculumForm"
 		parameter="method"
+		scope="request"
 		input="/viewObjectives.jsp"
 		path="/curriculumManagerDA"
 		type="ServidorApresentacao.Action.teacher.CurriculumManagerDispatchAction"
-        validate="true"	>    
+        validate="false"	>    
        <forward name="viewCurriculum" path="/viewSite.jsp"/>
 	</action>
 	

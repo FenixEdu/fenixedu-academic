@@ -28,11 +28,6 @@
 				<bean:message key="link.bibliography"/>
 	</html:link>
 </li>
-<li>
-	<html:link page="<%= "/viewSite.do?method=evaluationMethod&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;executionPeriodOID=" + pageContext.findAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>">
-				<bean:message key="link.evaluationMethod"/>
-	</html:link>
-</li>
 <li> <a href="/" onclick="houdini('seccao');return false;"><bean:message key="label.curricular.information"/></a></li>
 </ul>
  <dl id="seccao" style="display: none;">

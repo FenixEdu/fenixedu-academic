@@ -54,6 +54,7 @@ import DataBeans.InfoSiteSummary;
 import DataBeans.InfoSiteTeachers;
 import DataBeans.SiteView;
 import DataBeans.TeacherAdministrationSiteView;
+import Dominio.CurricularCourse;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.UserView;
@@ -72,6 +73,7 @@ import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import ServidorApresentacao.mapping.SiteManagementActionMapping;
 import Util.EnrolmentGroupPolicyType;
 import Util.TipoAula;
@@ -320,78 +322,67 @@ public class TeacherAdministrationViewerDispatchAction
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
-		ISiteComponent objectivesComponent = new InfoSiteObjectives();
-		String curriculumIdString =
-			(String) request.getParameter("curriculumCode");
-		Integer curriculumId = null;
-		if (curriculumIdString != null) {
-			curriculumId = new Integer(curriculumIdString);
+		ISiteComponent objectivesComponent = new InfoCurriculum();
+
+		String curricularCourseCodeString = request.getParameter("curricularCourseCode");
+		Integer curricularCourseCode = new Integer(curricularCourseCodeString);
+
+		try {
+			readSiteView(request,objectivesComponent,null,curricularCourseCode,null);
+		} catch (FenixActionException e1) {
+			throw e1;
 		}
-		String curricularCourseCodeString =
-			request.getParameter("curricularCourseCode");
-		Integer curricularCourseCode = null;
-		if (curricularCourseCodeString != null) {
-			curricularCourseCode = new Integer(curricularCourseCodeString);
-			request.setAttribute("curricularCourseCode", curricularCourseCode);
+		
+		TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) request.getAttribute("siteView");
+
+		if (siteView.getComponent() != null) {
+			DynaActionForm objectivesForm = (DynaActionForm) form;
+			
+			objectivesForm.set("generalObjectives",((InfoCurriculum) siteView.getComponent()).getGeneralObjectives());
+			objectivesForm.set("generalObjectivesEn",((InfoCurriculum) siteView.getComponent()).getGeneralObjectivesEn());
+			objectivesForm.set("operacionalObjectives",((InfoCurriculum) siteView.getComponent()).getOperacionalObjectives());
+			objectivesForm.set("operacionalObjectivesEn",((InfoCurriculum) siteView.getComponent()).getOperacionalObjectivesEn());
 		}
-		readSiteView(request, objectivesComponent, null, curriculumId, null);
-		TeacherAdministrationSiteView siteView =
-			(TeacherAdministrationSiteView) request.getAttribute("siteView");
-		DynaActionForm objectivesForm = (DynaActionForm) form;
-		objectivesForm.set(
-			"generalObjectives",
-			((InfoSiteObjectives) siteView.getComponent())
-				.getGeneralObjectives());
-		objectivesForm.set(
-			"operacionalObjectives",
-			((InfoSiteObjectives) siteView.getComponent())
-				.getOperacionalObjectives());
-		objectivesForm.set(
-			"generalObjectivesEn",
-			((InfoSiteObjectives) siteView.getComponent())
-				.getGeneralObjectivesEn());
-		objectivesForm.set(
-			"operacionalObjectivesEn",
-			((InfoSiteObjectives) siteView.getComponent())
-				.getOperacionalObjectivesEn());
+		request.setAttribute("curricularCourseCode", curricularCourseCode);
 		return mapping.findForward("editObjectives");
 	}
+
 	public ActionForward editObjectives(
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
-		HttpSession session = request.getSession(false);
-		Integer objectCode = getObjectCode(request);
-		DynaActionForm objectivesForm = (DynaActionForm) form;
-		InfoSiteObjectives infoSiteObjectivesNew = new InfoSiteObjectives();
-		infoSiteObjectivesNew.setGeneralObjectives(
-			(String) objectivesForm.get("generalObjectives"));
-		infoSiteObjectivesNew.setOperacionalObjectives(
-			(String) objectivesForm.get("operacionalObjectives"));
-		infoSiteObjectivesNew.setGeneralObjectivesEn(
-			(String) objectivesForm.get("generalObjectivesEn"));
-		infoSiteObjectivesNew.setOperacionalObjectivesEn(
-			(String) objectivesForm.get("operacionalObjectivesEn"));
-		String curricularCourseCodeString =
-			request.getParameter("curricularCourseCode");
-		Integer curricularCourseCode = null;
-		if (curricularCourseCodeString != null) {
-			curricularCourseCode = new Integer(curricularCourseCodeString);
+			HttpSession session = request.getSession(false);
+			Integer objectCode = getObjectCode(request);
+			String curricularCourseCodeString = request.getParameter("curricularCourseCode");
+			Integer curricularCourseCode = new Integer(curricularCourseCodeString);
+			DynaActionForm objectivesForm = (DynaActionForm) form;
+
+			InfoCurriculum infoCurriculumNew = new InfoCurriculum();
+			
+			infoCurriculumNew.setIdInternal(curricularCourseCode);
+			infoCurriculumNew.setGeneralObjectives((String) objectivesForm.get("generalObjectives"));
+			infoCurriculumNew.setGeneralObjectivesEn((String) objectivesForm.get("generalObjectivesEn"));
+			infoCurriculumNew.setOperacionalObjectives((String) objectivesForm.get("operacionalObjectives"));
+			infoCurriculumNew.setOperacionalObjectivesEn((String) objectivesForm.get("operacionalObjectivesEn"));
+			
+			Object args[] = { objectCode, curricularCourseCode, infoCurriculumNew };
+
+			UserView userView =
+				(UserView) session.getAttribute(SessionConstants.U_VIEW);
+			GestorServicos serviceManager = GestorServicos.manager();
+			try {
+				serviceManager.executar(userView, "EditObjectives", args);
+
+			} catch (FenixServiceException e) {
+				throw new FenixActionException(e);
+			}
+			return viewObjectives(mapping, form, request, response);
 		}
-		Object args[] =
-			{ objectCode, curricularCourseCode, infoSiteObjectivesNew };
-		UserView userView =
-			(UserView) session.getAttribute(SessionConstants.U_VIEW);
-		GestorServicos serviceManager = GestorServicos.manager();
-		try {
-			serviceManager.executar(userView, "EditObjectives", args);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-		return viewObjectives(mapping, form, request, response);
-	}
+		
+		
+		
 	//	========================  Program Management  ========================
 	public ActionForward viewProgram(
 		ActionMapping mapping,
@@ -403,7 +394,7 @@ public class TeacherAdministrationViewerDispatchAction
 		readSiteView(request, programComponent, null, null, null);
 		return mapping.findForward("viewProgram");
 	}
-	
+
 	public ActionForward prepareEditProgram(
 		ActionMapping mapping,
 		ActionForm form,
@@ -411,50 +402,54 @@ public class TeacherAdministrationViewerDispatchAction
 		HttpServletResponse response)
 		throws FenixActionException {
 
-			String curricularCourseCodeString = request.getParameter("curricularCourseCode");
-			Integer curricularCourseCode = new Integer(curricularCourseCodeString);
-			ISiteComponent programComponent = new InfoCurriculum();	
-			
-			try {
-				readSiteView(request,programComponent,null,curricularCourseCode,null);
-			} catch (FenixActionException e1) {
-				throw e1;
-			}
-			TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) request.getAttribute("siteView");
-			
-			if(siteView.getComponent() != null){
-				DynaActionForm programForm = (DynaActionForm) form;
-				programForm.set("program",((InfoCurriculum) siteView.getComponent()).getProgram());
-				programForm.set("programEn",((InfoCurriculum) siteView.getComponent()).getProgramEn());
-			}
-						
-			request.setAttribute("curricularCourseCode", curricularCourseCode);
-			return mapping.findForward("editProgram");
+		String curricularCourseCodeString = request.getParameter("curricularCourseCode");
+		Integer curricularCourseCode = new Integer(curricularCourseCodeString);
+		ISiteComponent programComponent = new InfoCurriculum();
+
+		try {
+			readSiteView(request,programComponent,null,curricularCourseCode,null);
+		
+		} catch (FenixActionException e1) {
+			throw e1;
 		}
-	
+		TeacherAdministrationSiteView siteView =
+			(TeacherAdministrationSiteView) request.getAttribute("siteView");
+
+		if (siteView.getComponent() != null) {
+			DynaActionForm programForm = (DynaActionForm) form;
+			programForm.set("program",((InfoCurriculum) siteView.getComponent()).getProgram());
+			programForm.set("programEn",((InfoCurriculum) siteView.getComponent()).getProgramEn());
+		}
+
+		request.setAttribute("curricularCourseCode", curricularCourseCode);
+		return mapping.findForward("editProgram");
+	}
+
 	public ActionForward editProgram(
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
-			
+
 		HttpSession session = request.getSession(false);
 		Integer objectCode = getObjectCode(request);
-		String curricularCourseCodeString = request.getParameter("curricularCourseCode");
+		String curricularCourseCodeString =
+			request.getParameter("curricularCourseCode");
 		Integer curricularCourseCode = new Integer(curricularCourseCodeString);
-		
+
 		DynaActionForm programForm = (DynaActionForm) form;
-		
+
 		InfoCurriculum infoCurriculumNew = new InfoCurriculum();
 		infoCurriculumNew.setIdInternal(curricularCourseCode);
 		infoCurriculumNew.setProgram((String) programForm.get("program"));
 		infoCurriculumNew.setProgramEn((String) programForm.get("programEn"));
-			
+
 		Object args[] = { objectCode, curricularCourseCode, infoCurriculumNew };
-		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+		UserView userView =
+			(UserView) session.getAttribute(SessionConstants.U_VIEW);
 		GestorServicos serviceManager = GestorServicos.manager();
-		
+
 		try {
 			serviceManager.executar(userView, "EditProgram", args);
 		} catch (FenixServiceException e) {
@@ -462,7 +457,7 @@ public class TeacherAdministrationViewerDispatchAction
 		}
 		return viewProgram(mapping, form, request, response);
 	}
-	
+
 	//	========================  EvaluationMethod Management  ========================
 	public ActionForward viewEvaluationMethod(
 		ActionMapping mapping,
@@ -474,7 +469,7 @@ public class TeacherAdministrationViewerDispatchAction
 		readSiteView(request, evaluationComponent, null, null, null);
 		return mapping.findForward("viewEvaluationMethod");
 	}
-	
+
 	public ActionForward prepareEditEvaluationMethod(
 		ActionMapping mapping,
 		ActionForm form,
@@ -484,32 +479,26 @@ public class TeacherAdministrationViewerDispatchAction
 
 		ISiteComponent evaluationComponent = new InfoCurriculum();
 
-		String curricularCourseCodeString = request.getParameter("curricularCourseCode");
+		String curricularCourseCodeString =	request.getParameter("curricularCourseCode");
 		Integer curricularCourseCode = new Integer(curricularCourseCodeString);
 
 		try {
 			readSiteView(request,evaluationComponent,null,curricularCourseCode,null);
+			
 		} catch (FenixActionException e1) {
-			//if (e1.getCause()!= null && e1.getCause() instanceof IllegalEditException) {
-			//	ActionErrors errors = new ActionErrors();
-			//	errors.add("illegalAccessException",new ActionError("error.basicCurricularCourse"));
-			//	saveErrors(request, errors);
-			//} else {
-				throw e1;
-			//}
+			throw e1;
 		}
 		TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) request.getAttribute("siteView");
-		
-		//if ( siteView!= null && siteView.getComponent() != null) {
-		if(siteView.getComponent() != null){
+
+		if (siteView.getComponent() != null) {
 			DynaActionForm evaluationForm = (DynaActionForm) form;
 			evaluationForm.set("evaluationElements",((InfoCurriculum) siteView.getComponent()).getEvaluationElements());
 			evaluationForm.set("evaluationElementsEn",((InfoCurriculum) siteView.getComponent()).getEvaluationElementsEn());
 		}
-		request.setAttribute("curricularCourseCode", curricularCourseCode);
+		
 		return mapping.findForward("editEvaluationMethod");
 	}
-	
+
 	public ActionForward editEvaluationMethod(
 		ActionMapping mapping,
 		ActionForm form,
@@ -518,17 +507,15 @@ public class TeacherAdministrationViewerDispatchAction
 		throws FenixActionException {
 		HttpSession session = request.getSession(false);
 		Integer objectCode = getObjectCode(request);
-		String curricularCourseCodeString =
-			request.getParameter("curricularCourseCode");
+		String curricularCourseCodeString =	request.getParameter("curricularCourseCode");
 		Integer curricularCourseCode = new Integer(curricularCourseCodeString);
+		
 		DynaActionForm evaluationForm = (DynaActionForm) form;
 
 		InfoCurriculum infoCurriculumNew = new InfoCurriculum();
 		infoCurriculumNew.setIdInternal(curricularCourseCode);
-		infoCurriculumNew.setEvaluationElements(
-			(String) evaluationForm.get("evaluationElements"));
-		infoCurriculumNew.setEvaluationElementsEn(
-			(String) evaluationForm.get("evaluationElementsEn"));
+		infoCurriculumNew.setEvaluationElements((String) evaluationForm.get("evaluationElements"));
+		infoCurriculumNew.setEvaluationElementsEn((String) evaluationForm.get("evaluationElementsEn"));
 
 		Object args[] = { objectCode, curricularCourseCode, infoCurriculumNew };
 
@@ -1206,7 +1193,11 @@ public class TeacherAdministrationViewerDispatchAction
 					"TeacherAdministrationSiteComponentService",
 					args);
 			request.setAttribute("siteView", siteView);
-			request.setAttribute("objectCode",((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getIdInternal());
+			request.setAttribute(
+				"objectCode",
+				((InfoSiteCommon) siteView.getCommonComponent())
+					.getExecutionCourse()
+					.getIdInternal());
 			if (siteView.getComponent() instanceof InfoSiteSection) {
 				request.setAttribute(
 					"infoSection",
@@ -1623,44 +1614,56 @@ public class TeacherAdministrationViewerDispatchAction
 		HttpServletResponse response)
 		throws FenixActionException {
 		HttpSession session = request.getSession(false);
-		
 		String groupPropertiesCodeString =
 			(String) request.getParameter("groupPropertiesCode");
 		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
 		ISiteComponent viewGroupProperties = new InfoSiteGroupProperties();
-		SiteView siteView =readSiteView(request,viewGroupProperties,null,groupPropertiesCode,null);
-		
+		SiteView siteView =
+			readSiteView(
+				request,
+				viewGroupProperties,
+				null,
+				groupPropertiesCode,
+				null);
+
 		List shiftTypeValues = new ArrayList();
 		shiftTypeValues.add(new Integer(1));
 		shiftTypeValues.add(new Integer(2));
 		shiftTypeValues.add(new Integer(3));
 		shiftTypeValues.add(new Integer(4));
-		
+
 		List shiftTypeNames = new ArrayList();
 		shiftTypeNames.add("Teórica");
 		shiftTypeNames.add("Prática");
 		shiftTypeNames.add("Teórico-Prática");
 		shiftTypeNames.add("Laboratorial");
-		
+
 		List enrolmentPolicyValues = new ArrayList();
 		enrolmentPolicyValues.add(new Integer(1));
 		enrolmentPolicyValues.add(new Integer(2));
-		
+
 		List enrolmentPolicyNames = new ArrayList();
 		enrolmentPolicyNames.add("Atómica");
 		enrolmentPolicyNames.add("Individual");
-		
-		InfoGroupProperties infoGroupProperties =((InfoSiteGroupProperties) siteView.getComponent()).getInfoGroupProperties();
-		
-		Integer enrolmentPolicy =infoGroupProperties.getEnrolmentPolicy().getType();
-		
+
+		InfoGroupProperties infoGroupProperties =
+			((InfoSiteGroupProperties) siteView.getComponent())
+				.getInfoGroupProperties();
+
+		Integer enrolmentPolicy =
+			infoGroupProperties.getEnrolmentPolicy().getType();
+
 		enrolmentPolicyValues.remove(enrolmentPolicy.intValue() - 1);
-		String enrolmentPolicyName =enrolmentPolicyNames.remove(enrolmentPolicy.intValue() - 1).toString();
-		
+		String enrolmentPolicyName =
+			enrolmentPolicyNames
+				.remove(enrolmentPolicy.intValue() - 1)
+				.toString();
+
 		Integer shiftType = infoGroupProperties.getShiftType().getTipo();
 		shiftTypeValues.remove(shiftType.intValue() - 1);
-		String shiftTypeName =shiftTypeNames.remove(shiftType.intValue() - 1).toString();
-		
+		String shiftTypeName =
+			shiftTypeNames.remove(shiftType.intValue() - 1).toString();
+
 		request.setAttribute("shiftTypeName", shiftTypeName);
 		request.setAttribute("shiftTypeValue", shiftType);
 		request.setAttribute("shiftTypeValues", shiftTypeValues);
@@ -1669,7 +1672,7 @@ public class TeacherAdministrationViewerDispatchAction
 		request.setAttribute("enrolmentPolicyValue", enrolmentPolicy);
 		request.setAttribute("enrolmentPolicyValues", enrolmentPolicyValues);
 		request.setAttribute("enrolmentPolicyNames", enrolmentPolicyNames);
-		
+
 		return mapping.findForward("editGroupProperties");
 	}
 	public ActionForward editGroupProperties(
@@ -1678,7 +1681,7 @@ public class TeacherAdministrationViewerDispatchAction
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
-			
+
 		HttpSession session = request.getSession(false);
 		DynaActionForm editGroupPropertiesForm = (DynaActionForm) form;
 		String groupPropertiesString =
@@ -1698,7 +1701,8 @@ public class TeacherAdministrationViewerDispatchAction
 		String enrolmentEndDayString =
 			(String) editGroupPropertiesForm.get("enrolmentEndDayFormatted");
 		String shiftType = (String) editGroupPropertiesForm.get("shiftType");
-		String enrolmentPolicy =(String) editGroupPropertiesForm.get("enrolmentPolicy");
+		String enrolmentPolicy =
+			(String) editGroupPropertiesForm.get("enrolmentPolicy");
 		Calendar enrolmentBeginDay = null;
 		if (!enrolmentBeginDayString.equals("")) {
 			String[] beginDate = enrolmentBeginDayString.split("/");
@@ -1732,7 +1736,8 @@ public class TeacherAdministrationViewerDispatchAction
 		infoGroupProperties.setIdInternal(groupPropertiesCode);
 		infoGroupProperties.setEnrolmentBeginDay(enrolmentBeginDay);
 		infoGroupProperties.setEnrolmentEndDay(enrolmentEndDay);
-		infoGroupProperties.setEnrolmentPolicy(new EnrolmentGroupPolicyType(new Integer(enrolmentPolicy)));
+		infoGroupProperties.setEnrolmentPolicy(
+			new EnrolmentGroupPolicyType(new Integer(enrolmentPolicy)));
 		if (!groupMaximumNumber.equals(""))
 			infoGroupProperties.setGroupMaximumNumber(
 				new Integer(groupMaximumNumber));
@@ -1760,25 +1765,33 @@ public class TeacherAdministrationViewerDispatchAction
 			throw new FenixActionException(e);
 		}
 		if (result.size() != 0) {
-		
+
 			Iterator iter = result.iterator();
 			ActionErrors actionErrors = new ActionErrors();
 			ActionError error = null;
 			while (iter.hasNext()) {
 				Object exception = iter.next();
-				if (exception.getClass().equals(ExistingServiceException.class)) {
-					error =new ActionError("error.exception.existing.groupProperties");
-					actionErrors.add("error.exception.existing.groupProperties",error);
+				if (exception
+					.getClass()
+					.equals(ExistingServiceException.class)) {
+					error =
+						new ActionError("error.exception.existing.groupProperties");
+					actionErrors.add(
+						"error.exception.existing.groupProperties",
+						error);
 					saveErrors(request, actionErrors);
-				} 
-				else 
-					if (exception.getClass().equals(NonValidChangeServiceException.class)) {
+				} else if (
+					exception.getClass().equals(
+						NonValidChangeServiceException.class)) {
 					System.out.println("entra no else");
-				
-					error =new ActionError("error.exception.nonValidChange.editGroupProperties");
-					actionErrors.add("error.exception.nonValidChange.editGroupProperties",error);
-					System.out.println("actionErros"+actionErrors);
-				
+
+					error =
+						new ActionError("error.exception.nonValidChange.editGroupProperties");
+					actionErrors.add(
+						"error.exception.nonValidChange.editGroupProperties",
+						error);
+					System.out.println("actionErros" + actionErrors);
+
 					saveErrors(request, actionErrors);
 				}
 			}
@@ -1794,14 +1807,12 @@ public class TeacherAdministrationViewerDispatchAction
 		throws FenixActionException {
 		Boolean result;
 		HttpSession session = request.getSession(false);
-		
 		UserView userView =
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);
-		Integer objectCode = getObjectCode(request);
 		String studentGroupCodeString =
 			(String) request.getParameter("studentGroupCode");
 		Integer studentGroupCode = new Integer(studentGroupCodeString);
-		Object[] args = { objectCode, studentGroupCode };
+		Object[] args = { studentGroupCode };
 		GestorServicos gestorServicos = GestorServicos.manager();
 		try {
 			gestorServicos.executar(userView, "DeleteStudentGroup", args);
@@ -1882,58 +1893,41 @@ public class TeacherAdministrationViewerDispatchAction
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
-			
-		System.out.println("---------------ENTRA NA ACCAO CREATE STUDENT GROUP");	
 		HttpSession session = request.getSession(false);
 		UserView userView = (UserView) session.getAttribute("UserView");
 		Integer objectCode = getObjectCode(request);
-		
 		String groupPropertiesCodeString =
 			(String) request.getParameter("groupPropertiesCode");
 		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
-		System.out.println("GROUP PROPERTIES CODE "+groupPropertiesCode);
-		
-		
 		DynaActionForm insertStudentGroupForm = (DynaActionForm) form;
-		
 		List studentCodes =
 			Arrays.asList(
 				(Integer[]) insertStudentGroupForm.get("studentCodes"));
-		System.out.println("STUDENT CODES "+studentCodes);
-		
 		String groupNumberString =
 			(String) insertStudentGroupForm.get("groupNumber");
 		Integer groupNumber = new Integer(groupNumberString);
-		System.out.println("GROUP NUMBER "+groupNumber);
-		
 		String newShiftString = (String) insertStudentGroupForm.get("shift");
-		
 		if (newShiftString.equals("")) {
 			ActionErrors actionErrors = new ActionErrors();
 			ActionError error = null;
 			// Create an ACTION_ERROR 
 			error = new ActionError("errors.invalid.insert.studentGroupShift");
-			actionErrors.add(
-				"errors.invalid.edit.studentGroupShift",
-				error);
+			actionErrors.add("errors.invalid.edit.studentGroupShift", error);
 			saveErrors(request, actionErrors);
 			return prepareCreateStudentGroup(mapping, form, request, response);
 		} else {
 			Integer shiftCode = new Integer(newShiftString);
-			System.out.println("SHIFT CODE "+shiftCode);
 			Object args[] =
 				{
-					objectCode,
 					groupNumber,
 					groupPropertiesCode,
 					shiftCode,
-					studentCodes };
+					studentCodes,
+					objectCode };
 			GestorServicos gestor = GestorServicos.manager();
 			Boolean result;
-			System.out.println("ANTES DO TRY PARA EXECUTAR O SERVICO!!!");
 			try {
 				gestor.executar(userView, "CreateStudentGroup", args);
-				System.out.println("DEPOIS DO TRY PARA EXECUTAR O SERVICO!!!");
 			} catch (ExistingServiceException e) {
 				ActionErrors actionErrors = new ActionErrors();
 				ActionError error = null;
@@ -2025,7 +2019,7 @@ public class TeacherAdministrationViewerDispatchAction
 			return viewProjectStudentGroups(mapping, form, request, response);
 		} else {
 			Integer newShiftCode = new Integer(newShiftString);
-			Object args[] = {objectCode, studentGroupCode, newShiftCode };
+			Object args[] = { studentGroupCode, newShiftCode };
 			GestorServicos gestor = GestorServicos.manager();
 			Boolean result;
 			try {
@@ -2117,7 +2111,7 @@ public class TeacherAdministrationViewerDispatchAction
 			Arrays.asList(
 				(Integer[]) insertStudentGroupForm.get("studentCodes"));
 
-		Object args[] = { objectCode, studentGroupCode, studentCodes };
+		Object args[] = { studentGroupCode, studentCodes, objectCode };
 		GestorServicos gestor = GestorServicos.manager();
 		Boolean result;
 		try {
@@ -2146,14 +2140,14 @@ public class TeacherAdministrationViewerDispatchAction
 			Arrays.asList(
 				(String[]) deleteStudentGroupForm.get("studentsToRemove"));
 
-			Object args[] = { objectCode, studentGroupCode, studentUsernames };
-				GestorServicos gestor = GestorServicos.manager();
-				Boolean result;
-				try {
-					gestor.executar(userView, "DeleteStudentGroupMembers", args);
-				} catch (FenixServiceException e) {
-					throw new FenixActionException(e);
-				}
-				return prepareEditStudentGroupMembers(mapping, form, request, response);
-			}
+		Object args[] = { studentGroupCode, studentUsernames, objectCode };
+		GestorServicos gestor = GestorServicos.manager();
+		Boolean result;
+		try {
+			gestor.executar(userView, "DeleteStudentGroupMembers", args);
+		} catch (FenixServiceException e) {
+			throw new FenixActionException(e);
 		}
+		return prepareEditStudentGroupMembers(mapping, form, request, response);
+	}
+}

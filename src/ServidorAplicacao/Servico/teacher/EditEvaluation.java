@@ -51,7 +51,6 @@ public class EditEvaluation implements IServico {
 			ICurriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse);
 		
 			if (curriculum != null) {		
-					
 				curriculum.setCurricularCourse(curricularCourse);
 				curriculum.setEvaluationElements(infoCurriculumNew.getEvaluationElements());
 				curriculum.setEvaluationElementsEn(infoCurriculumNew.getEvaluationElementsEn());

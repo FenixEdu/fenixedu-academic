@@ -5,20 +5,22 @@
 <span class="error"><html:errors /></span> 
 
 	<logic:present name="siteView">
-		<h2><bean:message key="label.evaluation"/></h2> 
 		<html:form action="/editEvaluationMethod">
 		
 		<logic:present name="siteView" property="component">
 			<bean:define id="curriculum" name="siteView" property="component"/>
 			<bean:define id="curricularCourseCode" name="curriculum" property="infoCurricularCourse.idInternal"/>
 			<html:hidden property="curricularCourseCode" value="<%= curricularCourseCode.toString() %>"/>
+			<h3><bean:write name="curriculum" property="infoCurricularCourse.name"/> -- <bean:write name="curriculum" property="infoCurricularCourse.infoDegreeCurricularPlan.infoDegree.nome"/></h3>
 		</logic:present>
-	
+		
 		<logic:notPresent name="siteView" property="component">
 			<bean:define id="curricularCourseCode" name="curricularCourseCode"/>
 			<html:hidden property="curricularCourseCode" value="<%= curricularCourseCode.toString() %>"/>
+			
 		</logic:notPresent> 
 	
+		<h2><bean:message key="label.evaluation"/></h2> 
 	
 		<html:hidden property="page" value="1"/>
 		<table>	
@@ -47,7 +49,6 @@
 		</table>   
 		<html:hidden property="method" value="editEvaluationMethod" />
 		<html:hidden property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
-		
-		
+	
 	</html:form>
 </logic:present>

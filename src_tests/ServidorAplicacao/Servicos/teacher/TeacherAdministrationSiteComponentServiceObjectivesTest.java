@@ -104,10 +104,6 @@ public class TeacherAdministrationSiteComponentServiceObjectivesTest extends Tes
 		InfoCurriculum infoCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
 
 		InfoSiteObjectives infoSiteObjectives = new InfoSiteObjectives();
-		infoSiteObjectives.setGeneralObjectives(infoCurriculum.getGeneralObjectives());
-		infoSiteObjectives.setGeneralObjectivesEn(infoCurriculum.getGeneralObjectivesEn());
-		infoSiteObjectives.setOperacionalObjectives(infoCurriculum.getOperacionalObjectives());
-		infoSiteObjectives.setOperacionalObjectivesEn(infoCurriculum.getOperacionalObjectivesEn());
 		
 		InfoSite infoSite = Cloner.copyISite2InfoSite(site);
  
