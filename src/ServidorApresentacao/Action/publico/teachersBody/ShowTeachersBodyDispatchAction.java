@@ -6,6 +6,7 @@ package ServidorApresentacao.Action.publico.teachersBody;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import DataBeans.InfoDegree;
+import DataBeans.InfoExecutionDegree;
 import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import DataBeans.teacher.professorship.DetailedProfessorship;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -42,7 +45,6 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction
         try
         {
 
-
             Object[] args = { executionYearId };
 
             List executionDegrees =
@@ -52,6 +54,20 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction
                 (List) ServiceUtils.executeService(null, "ReadAllExecutionYears", null);
 
             Collections.sort(executionDegrees, new ComparatorByNameForInfoExecutionDegree());
+
+            Iterator iter = executionDegrees.iterator();
+            while (iter.hasNext())
+            {
+                InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iter.next();
+                if (duplicateInfoDegree(executionDegrees, infoExecutionDegree))
+                {
+                    infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().setNome(
+                        infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome()
+                            + "-"
+                            + infoExecutionDegree.getInfoDegreeCurricularPlan().getName());
+                }
+            }
+
             request.setAttribute("executionDegrees", executionDegrees);
             request.setAttribute("executionYears", executionYears);
         }
@@ -61,6 +77,24 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction
         }
 
         return mapping.findForward("showForm");
+    }
+
+    private boolean duplicateInfoDegree(
+        List executionDegreeList,
+        InfoExecutionDegree infoExecutionDegree)
+    {
+        InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
+        Iterator iterator = executionDegreeList.iterator();
+
+        while (iterator.hasNext())
+        {
+            InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) iterator.next();
+            if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
+                && !(infoExecutionDegree.equals(infoExecutionDegree2)))
+                return true;
+
+        }
+        return false;
     }
 
     public ActionForward showProfessorshipsByExecutionDegree(
@@ -101,7 +135,7 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction
                 }
 
             });
-            
+
             request.setAttribute("detailedProfessorShipsListofLists", detailedProfessorShipsListofLists);
         }
         catch (FenixServiceException e)
