@@ -156,8 +156,6 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 		}
 
 		//read sections
-		
-		
 		try {
 			sections =
 				(ArrayList) manager.executar(
@@ -215,16 +213,32 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 		HttpSession session = request.getSession();
 
 		DynaActionForm sectionForm = (DynaValidatorForm) form;
-		String sectionName = (String) sectionForm.get("name");
 		Integer index = (Integer) sectionForm.get("index");
+		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		List allSections = (List) session.getAttribute("ALL_SECTIONS");
 
-		System.out.println(
-			"index: "
-				+ index
-				+ " section.getName: "
-				+ ((InfoSection) allSections.get(index.intValue())).getName());
+		System.out.println("index: " + index + " section.getName: " + ((InfoSection) allSections.get(index.intValue())).getName());
+		InfoSection newParent = (InfoSection) allSections.get(index.intValue());
+
+		InfoSection oldSection = (InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
+		InfoSection newSection = new InfoSection(oldSection.getName(), oldSection.getSectionOrder(), oldSection.getInfoSite(), newParent);
+		
+		System.out.println("oldSection.getSuperiorInfoSection: " + oldSection.getSuperiorInfoSection().getName());
+		System.out.println("newSection.getSuperiorInfoSection: " + newSection.getSuperiorInfoSection().getName());
+
+		//perform edition
+		Object editionArgs[] = { oldSection, newSection };
+		GestorServicos manager = GestorServicos.manager();
+		
+		try {
+			manager.executar(userView, "EditSection", editionArgs);
+		} catch (FenixServiceException fenixServiceException) {
+			throw new FenixActionException(fenixServiceException.getMessage());
+		}
+		
+		session.removeAttribute(SessionConstants.INFO_SECTION);
+		session.setAttribute(SessionConstants.INFO_SECTION, newSection);
 
 		return mapping.findForward("prepareEditSection");
 	}

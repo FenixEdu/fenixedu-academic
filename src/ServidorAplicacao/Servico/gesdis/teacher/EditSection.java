@@ -11,6 +11,9 @@ import java.util.List;
 
 import DataBeans.gesdis.InfoSection;
 import DataBeans.util.Cloner;
+import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionPeriod;
+import Dominio.IExecutionYear;
 import Dominio.IItem;
 import Dominio.ISection;
 import Dominio.ISite;
@@ -164,13 +167,33 @@ public class EditSection implements IServico {
 		try {       		
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentSection persistentSection = sp.getIPersistentSection();
-			
-			ISite site = Cloner.copyInfoSite2ISite(oldInfoSection.getInfoSite());
+
+			IExecutionYear executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(
+					oldInfoSection
+						.getInfoSite().getInfoExecutionCourse()
+						.getInfoExecutionPeriod().getInfoExecutionYear()
+						.getYear());
+			IExecutionPeriod executionPeriod = sp.getIPersistentExecutionPeriod().readByNameAndExecutionYear(
+					oldInfoSection
+						.getInfoSite()
+						.getInfoExecutionCourse().getInfoExecutionPeriod()
+						.getName(), executionYear);
+			IDisciplinaExecucao executionCourse =
+				sp.getIDisciplinaExecucaoPersistente()
+					.readByExecutionCourseInitialsAndExecutionPeriod(oldInfoSection
+							.getInfoSite()
+							.getInfoExecutionCourse()
+							.getSigla(),
+						executionPeriod);
+
+			ISite site = sp.getIPersistentSite().readByExecutionCourse(executionCourse);
 			
 			InfoSection oldSuperiorInfoSection = oldInfoSection.getSuperiorInfoSection();
 
-			if(oldSuperiorInfoSection != null) 
+			if(oldSuperiorInfoSection != null) {
 				superiorSection = Cloner.copyInfoSection2ISection(oldSuperiorInfoSection);
+				superiorSection.setSite(site);
+			}
 			
 			ISection section = persistentSection.readBySiteAndSectionAndName(site, superiorSection, oldInfoSection.getName());
 			
@@ -183,8 +206,11 @@ public class EditSection implements IServico {
 		
 			if(newSuperiorInfoSection!= oldSuperiorInfoSection)
 			{
-				if(newSuperiorInfoSection != null) 
+				if(newSuperiorInfoSection != null){ 
 					newSuperiorSection = Cloner.copyInfoSection2ISection(newSuperiorInfoSection);
+					newSuperiorSection.setSite(site);
+				}
+					
 				organizeSections(newOrder,oldOrder,newSuperiorSection,superiorSection,site);
 				section.setSectionOrder(new Integer(newOrder));						
 				section.setSuperiorSection(newSuperiorSection);
