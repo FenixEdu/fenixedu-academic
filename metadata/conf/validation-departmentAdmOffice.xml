@@ -2,32 +2,171 @@
 <!-- @validation.doctype@ -->
 <form-validation>
     <formset>
-    	<form name="teacherSearchForm">
-    		<field property="x1" depends="required"></field>
+        <constant>
+			<constant-name>weekDayMask</constant-name>
+			<constant-value>^[23456sSdD]$</constant-value>
+        </constant>
+        <constant>
+			<constant-name>minHours</constant-name>
+			<constant-value>0</constant-value>
+        </constant>
+        <constant>
+			<constant-name>maxHours</constant-name>
+			<constant-value>24</constant-value>
+        </constant>
+        <constant>
+			<constant-name>minMinutes</constant-name>
+			<constant-value>0</constant-value>
+        </constant>
+        <constant>
+			<constant-name>maxMinutes</constant-name>
+			<constant-value>59</constant-value>
+        </constant>
+		<!-- ================================================================ -->    	    	
+		<form name="teacherSearchForm">
+			<field property="teacherNumber" depends="integer" page="1">
+				<msg name="integer" key="errors.invalid.teacher-number"/>
+				<arg0 key="label.property.teacher-number" />
+			</field>
     	</form>
-
-    	<form name="professorshipForm">
-    		<field property="x1" depends="required"></field>
-    	</form>
-
-    	<form name="teacherExecutionCourseShiftProfessorshipForm">
-    		<field property="x1" depends="required"></field>
-    	</form>
-
+		<!-- ================================================================ -->    	    	
     	<form name="supportLessonForm">
-    		<field property="x1" depends="required"></field>
+			<field property="weekDay" depends="required,mask" page="1">
+				<msg name="mask" key="errors.invalid.weekDay"/>
+				<arg0 key="label.property.weekDay" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>${weekDayMask}</var-value>
+				</var>
+			</field>
+			<field property="startTimeHour" depends="required,integer,range" page="1">
+				<msg name="integer" key="errors.invalid.startTimeHour"/>
+				<msg name="range" key="errors.invalid.startTimeHour"/>				
+				<arg0 key="label.property.startTimeHour" />
+				<var>
+					<var-name>min</var-name>
+					<var-value>${minHours}</var-value>
+				</var>
+				<var>
+					<var-name>max</var-name>
+					<var-value>${maxHours}</var-value>
+				</var>
+			</field>
+			<field property="startTimeMinutes" depends="required,integer,range" page="1">
+				<msg name="integer" key="errors.invalid.startTimeMinutes"/>				
+				<msg name="range" key="errors.invalid.startTimeMinutes"/>								
+				<arg0 key="label.property.startTimeMinutes" />
+				<var>
+					<var-name>min</var-name>
+					<var-value>${minMinutes}</var-value>
+				</var>
+				<var>
+					<var-name>max</var-name>
+					<var-value>${maxMinutes}</var-value>
+				</var>					
+			</field>
+			<field property="endTimeHour" depends="required,integer,range" page="1">
+				<msg name="integer" key="errors.invalid.endTimeHour"/>				
+				<msg name="range" key="errors.invalid.endTimeHour"/>				
+				<arg0 key="label.property.endTimeHour" />
+				<var>
+					<var-name>min</var-name>
+					<var-value>${minHours}</var-value>
+				</var>
+				<var>
+					<var-name>max</var-name>
+					<var-value>${maxHours}</var-value>
+				</var>
+			</field>
+			<field property="endTimeMinutes" depends="required,integer,range" page="1">
+				<msg name="integer" key="errors.invalid.endTimeMinutes"/>
+				<msg name="range" key="errors.invalid.endTimeMinutes"/>				
+				<arg0 key="label.property.endTimeMinutes" />
+				<var>
+					<var-name>min</var-name>
+					<var-value>${minMinutes}</var-value>
+				</var>
+				<var>
+					<var-name>max</var-name>
+					<var-value>${maxMinutes}</var-value>
+				</var>				
+			</field>
+			<field property="place" depends="required" page="1">
+				<arg0 key="label.property.support-lesson-place" />
+			</field>
     	</form>
-
+		<!-- ================================================================ -->    	
     	<form name="teacherDegreeFinalProjectStudentForm">
-    		<field property="x1" depends="required"></field>
+			<field property="studentNumber" depends="required,integer" page="1">
+				<msg name="integer" key="errors.invalid.student-number"/>
+				<msg name="required" key="errors.invalid.student-number"/>				
+				<arg0 key="label.property.student-number" />
+			</field>
     	</form>
-    	
-    	<form name="teacherInstitutionWorkingTimeForm">
-    		<field property="x1" depends="required"></field>
-    	</form>
-
-
-
+		<!-- ================================================================ -->    	
+	   	<form name="teacherInstitutionWorkingTimeForm">
+			<field property="weekDay" depends="required,mask" page="1">
+				<msg name="mask" key="errors.invalid.weekDay"/>
+				<arg0 key="label.property.weekDay" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>${weekDayMask}</var-value>
+				</var>
+			</field>
+			<field property="startTimeHour" depends="required,integer,range" page="1">
+				<msg name="integer" key="errors.invalid.startTimeHour"/>
+				<msg name="range" key="errors.invalid.startTimeHour"/>				
+				<arg0 key="label.property.startTimeHour" />
+				<var>
+					<var-name>min</var-name>
+					<var-value>${minHours}</var-value>
+				</var>
+				<var>
+					<var-name>max</var-name>
+					<var-value>${maxHours}</var-value>
+				</var>
+			</field>
+			<field property="startTimeMinutes" depends="required,integer,range" page="1">
+				<msg name="integer" key="errors.invalid.startTimeMinutes"/>				
+				<msg name="range" key="errors.invalid.startTimeMinutes"/>
+				<arg0 key="label.property.startTimeMinutes" />
+				<var>
+					<var-name>min</var-name>
+					<var-value>${minMinutes}</var-value>
+				</var>
+				<var>
+					<var-name>max</var-name>
+					<var-value>${maxMinutes}</var-value>
+				</var>
+			</field>
+			<field property="endTimeHour" depends="required,integer,range" page="1">
+				<msg name="integer" key="errors.invalid.endTimeHour"/>				
+				<msg name="range" key="errors.invalid.endTimeHour"/>								
+				<arg0 key="label.property.endTimeHour" />
+				<var>
+					<var-name>min</var-name>
+					<var-value>${minHours}</var-value>
+				</var>
+				<var>
+					<var-name>max</var-name>
+					<var-value>${maxHours}</var-value>
+				</var>
+			</field>
+			<field property="endTimeMinutes" depends="required,integer,range" page="1">
+				<msg name="integer" key="errors.invalid.endTimeMinutes"/>
+				<msg name="range" key="errors.invalid.endTimeMinutes"/>
+				<arg0 key="label.property.endTimeMinutes" />
+				<var>
+					<var-name>min</var-name>
+					<var-value>${minMinutes}</var-value>
+				</var>
+				<var>
+					<var-name>max</var-name>
+					<var-value>${maxMinutes}</var-value>
+				</var>				
+			</field>
+   		</form>
+		<!-- ================================================================ -->    	   		
     </formset>
 </form-validation>
 
