@@ -8,7 +8,7 @@
 <%@ page import="DataBeans.InfoShiftWithAssociatedInfoClassesAndInfoLessons"%>
 <%@ page import="DataBeans.InfoLesson"%>
 <%@ page import="java.util.Calendar" %>
-
+ 
 <logic:notPresent name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" scope="session">
 <table align="center"  cellpadding='0' cellspacing='0'>
 			<tr align="center">
