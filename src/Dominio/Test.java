@@ -17,6 +17,7 @@ public class Test extends DomainObject implements ITest {
 	private Date lastModifiedDate;
 	private IDisciplinaExecucao executionCourse;
 	private Integer keyExecutionCourse;
+	private Boolean visible;
 
 	public Test() {
 	}
@@ -79,6 +80,14 @@ public class Test extends DomainObject implements ITest {
 
 	public void setInformation(String string) {
 		information = string;
+	}
+
+	public Boolean getVisible() {
+		return visible;
+	}
+
+	public void setVisible(Boolean visible) {
+		this.visible = visible;
 	}
 
 }

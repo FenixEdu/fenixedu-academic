@@ -1,17 +1,17 @@
 /*
- * Created on 11/Ago/2003
+ * Created on 26/Ago/2003
  *
  */
 package ServidorAplicacao.Servicos.teacher;
 
-import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
+import ServidorAplicacao.Servicos.TestCaseReadServices;
 
 /**
  * @author Susana Fernandes
  */
-public class DeleteTestTest extends TestCaseDeleteAndEditServices {
+public class InsertTestAsNewTestTest extends TestCaseReadServices {
 
-	public DeleteTestTest(String testName) {
+	public InsertTestAsNewTestTest(String testName) {
 		super(testName);
 	}
 
@@ -22,20 +22,29 @@ public class DeleteTestTest extends TestCaseDeleteAndEditServices {
 	protected void tearDown() {
 		super.tearDown();
 	}
-	
+
 	protected String getNameOfServiceToBeTested() {
-		return "DeleteTest";
+		return "InsertTestAsNewTest";
 	}
-	
+
 	protected boolean needsAuthorization() {
 		return true;
 	}
+
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 		Object[] args = {new Integer(3)};
 		return args;
 	}
-	
+
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 		return null;
+	}
+
+	protected int getNumberOfItemsToRetrieve() {
+		return 0;
+	}
+
+	protected Object getObjectToCompare() {
+		return new Integer(8);
 	}
 }

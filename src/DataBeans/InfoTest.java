@@ -17,6 +17,7 @@ public class InfoTest extends InfoObject {
 	private Date creationDate;
 	private Date lastModifiedDate;
 	private InfoExecutionCourse infoExecutionCourse;
+	private Boolean visible;
 
 	public InfoTest() {
 	}
@@ -112,6 +113,14 @@ public class InfoTest extends InfoObject {
 		return result;
 	}
 
+	public Boolean getVisible() {
+		return visible;
+	}
+
+	public void setVisible(Boolean boolean1) {
+		visible = boolean1;
+	}
+
 	public boolean equals(Object obj) {
 		boolean result = false;
 		if (obj instanceof InfoTest) {
@@ -131,4 +140,5 @@ public class InfoTest extends InfoObject {
 		}
 		return result;
 	}
+
 }

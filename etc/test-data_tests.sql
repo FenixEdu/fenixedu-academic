@@ -27,9 +27,9 @@ INSERT INTO `XML_DOCUMENTS` VALUES("10","<?xml version=\"1.0\" encoding=\"Latin1
 # Data for table 'TESTS'
 #-----------------------
 DELETE FROM TESTS;
-INSERT INTO `TESTS` VALUES("3","Ficha de Trabalho 1","Informações sobre a ficha de trabalho 1","2","20030811143228","20030814094555","26");
-INSERT INTO `TESTS` VALUES("4","Ficha de Trabalho 2","","1","20030811145835","20030814094732","26");
-INSERT INTO `TESTS` VALUES("7","Ficha de Trabalho 25","Informações sobre a ficha de Trabalho 25","0","20030811173125","20030814094719","25");
+INSERT INTO `TESTS` VALUES("3","Ficha de Trabalho 1","Informações sobre a ficha de trabalho 1","2","20030811143228","20030814094555","26","1");
+INSERT INTO `TESTS` VALUES("4","Ficha de Trabalho 2","","1","20030811145835","20030814094732","26","1");
+INSERT INTO `TESTS` VALUES("7","Ficha de Trabalho 25","Informações sobre a ficha de Trabalho 25","0","20030811173125","20030814094719","25","1");
 
 #-------------------------------
 # Data for table 'TEST_QUESTION'
@@ -39,3 +39,10 @@ INSERT INTO `TEST_QUESTION` VALUES("6","1","1","1","3");
 INSERT INTO `TEST_QUESTION` VALUES("7","2","1","7","3");
 INSERT INTO `TEST_QUESTION` VALUES("8","1","1","1","4");
 
+#-----------------------------------
+# Data for table 'DISTRIBUTED_TESTS'
+#-----------------------------------
+DELETE FROM DISTRIBUTED_TESTS;
+INSERT INTO `DISTRIBUTED_TESTS` VALUES("23","2003-08-26","10:00:00","2003-08-26","12:00:00","1","1","1","3");
+INSERT INTO `DISTRIBUTED_TESTS` VALUES("24","2003-08-26","10:00:00","2004-08-30","12:00:00","1","1","1","3");
+INSERT INTO `DISTRIBUTED_TESTS` VALUES("25","2005-12-30","10:00:00","2005-12-30","12:00:00","1","1","1","3");

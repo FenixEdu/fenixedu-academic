@@ -35,7 +35,7 @@
 		</html:link></div>
 		&nbsp;
 		<div class="gen-button">
-		<html:link page="<%= "/testsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")%>">
+		<html:link page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")%>">
 		<bean:message key="label.test.insertQuestion"/>
 		</html:link></div>
 		&nbsp;

@@ -4,11 +4,9 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <h2><bean:message key="title.createTest"/></h2>
 
-<bean:define id="component" name="siteView" property="commonComponent"/>
-<bean:define id="executionCourse" name="component" property="executionCourse"/>
-<bean:define id="objectCode" name="executionCourse" property="idInternal"/>
+<bean:define id="bodyComponent" name="siteView" property="commonComponent"/>
 
-<bean:size id="metadatasSize" name="component" property="infoMetadatas"/>
+<bean:size id="metadatasSize" name="bodyComponent" property="infoMetadatas"/>
 <logic:equal name="metadatasSize" value="0">
 	<span class="error"><bean:message key="message.tests.no.exercices"/></span>
 </logic:equal>

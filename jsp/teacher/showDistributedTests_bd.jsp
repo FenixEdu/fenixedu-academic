@@ -1,0 +1,43 @@
+<%@ page language="java" %>
+<%@ page import="javax.swing.ImageIcon" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<h2><bean:message key="title.showDistributedTests"/></h2>
+
+<logic:present name="siteView"> 
+<bean:define id="component" name="siteView" property="component"/>
+<bean:define id="executionCourse" name="component" property="executionCourse"/>
+<bean:define id="objectCode" name="executionCourse" property="idInternal"/>
+
+<bean:size id="distrubutedTestsSize" name="component" property="infoDistributedTests"/>
+<logic:equal name="distrubutedTestsSize" value="0">
+	<span class="error"><bean:message key="message.tests.no.distributedTests"/></span>
+</logic:equal>
+<logic:notEqual name="distrubutedTestsSize" value="0">
+
+<table>
+	<tr>
+		<td width="100" class="listClasses-header"><bean:message key="label.test.title"/></td>
+		<td width="100" class="listClasses-header"><bean:message key="message.testBeginDate"/></td>
+		<td width="100" class="listClasses-header"><bean:message key="message.testEndDate"/></td>
+	</tr>
+	<logic:iterate id="distributedTest" name="component" property="infoDistributedTests" type="DataBeans.InfoDistributedTest">
+	<tr>
+		<bean:define id="test" name="distributedTest" property="infoTest"/>
+		<td class="listClasses"><bean:write name="test" property="title"/></td>
+		<td class="listClasses"><bean:write name="distributedTest" property="beginDateTimeFormatted"/></td>
+		<td class="listClasses"><bean:write name="distributedTest" property="endDateTimeFormatted"/></td>
+		<bean:define id="distributedTestCode" name="distributedTest" property="idInternal" />
+		<td>
+		<div class="gen-button">
+		<html:link page="<%= "/distributedTestEdition.do?method=prepareEditDistributedTest&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;distributedTestCode=" + distributedTestCode %>">
+		<bean:message key="label.edit" />
+		</html:link></div>
+		</td>
+	</tr>
+	</logic:iterate>
+</table>
+</logic:notEqual>
+
+</logic:present>

@@ -5,7 +5,7 @@
 <h2><bean:message key="title.showAvailableQuestions"/></h2>
 
 <logic:present name="siteView"> 
-<bean:define id="component" name="siteView" property="component"/>
+<bean:define id="component" name="siteView" property="commonComponent"/>
 <bean:define id="executionCourse" name="component" property="executionCourse"/>
 <bean:define id="objectCode" name="executionCourse" property="idInternal"/>
 <span class="error"><html:errors/></span>
@@ -67,7 +67,7 @@
 	</td>
 	<td>
 		<div class="gen-button">
-			<html:link page="<%= "/testsManagement.do?method=deleteTest&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;testCode=" + pageContext.findAttribute("testCode") %>">
+			<html:link page="<%= "/testsManagement.do?method=prepareDeleteTest&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;testCode=" + pageContext.findAttribute("testCode") %>">
 				<bean:message key="link.removeTest" />
 			</html:link>
 		</div>

@@ -4,11 +4,19 @@
  */
 package ServidorAplicacao.Servico.teacher;
 
+import java.util.Calendar;
+import java.util.Iterator;
+import java.util.List;
+
+import DataBeans.comparators.CalendarDateComparator;
+import DataBeans.comparators.CalendarHourComparator;
+import Dominio.IDistributedTest;
 import Dominio.ITest;
 import Dominio.Test;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentDistributedTest;
 import ServidorPersistente.IPersistentTest;
 import ServidorPersistente.IPersistentTestQuestion;
 import ServidorPersistente.ISuportePersistente;
@@ -32,8 +40,8 @@ public class DeleteTest implements IServico {
 	public String getNome() {
 		return "DeleteTest";
 	}
-	public boolean run(Integer testId)
-		throws FenixServiceException {
+
+	public boolean run(Integer testId) throws FenixServiceException {
 
 		try {
 			ISuportePersistente persistentSuport =
@@ -42,15 +50,59 @@ public class DeleteTest implements IServico {
 			IPersistentTest persistentTest =
 				persistentSuport.getIPersistentTest();
 			ITest test = new Test(testId);
-			test = (ITest) persistentTest.readByOId(test, true);		
-			if (test != null) {
-				IPersistentTestQuestion persistentTestQuestion = persistentSuport.getIPersistentTestQuestion();
-				persistentTestQuestion.deleteByTest(test);	
+			test = (ITest) persistentTest.readByOId(test, true);
+			if (test == null)
+				throw new FenixServiceException();
+
+			IPersistentDistributedTest persistentDistributedTest =
+				persistentSuport.getIPersistentDistributedTest();
+
+			List distributedTestList =
+				(List) persistentDistributedTest.readByTest(test);
+
+			Calendar thisDate = Calendar.getInstance();
+			boolean setVisibility = false;
+			Iterator it = distributedTestList.iterator();
+			while (it.hasNext()) {
+				IDistributedTest distributedTest = (IDistributedTest) it.next();
+				if (compareDates(thisDate,
+					distributedTest.getBeginDate(),
+					distributedTest.getBeginHour())) {
+					setVisibility = true;
+					if (!compareDates(thisDate,
+						distributedTest.getEndDate(),
+						distributedTest.getEndHour())) {
+						persistentDistributedTest.lockWrite(distributedTest);
+						distributedTest.setEndDate(thisDate);
+						distributedTest.setEndHour(thisDate);
+					}
+				} else
+					persistentDistributedTest.delete(distributedTest);
+			}
+
+			if (setVisibility == false) {
+				persistentDistributedTest.deleteByTest(test);
+				IPersistentTestQuestion persistentTestQuestion =
+					persistentSuport.getIPersistentTestQuestion();
+				persistentTestQuestion.deleteByTest(test);
 				persistentTest.delete(test);
-			}			
+			} else
+				test.setVisible(new Boolean(false));
 			return true;
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}
+	}
+
+	private boolean compareDates(
+		Calendar calendar,
+		Calendar date,
+		Calendar hour) {
+		CalendarDateComparator dateComparator = new CalendarDateComparator();
+		CalendarHourComparator hourComparator = new CalendarHourComparator();
+		if (dateComparator.compare(calendar, date) >= 0)
+			if (hourComparator.compare(calendar, hour) >= 0)
+				return true;
+		return false;
 	}
 }

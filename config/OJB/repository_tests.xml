@@ -65,9 +65,9 @@
 	</reference-descriptor>
 </class-descriptor>
 
-<!-- ***************************** -->
-<!-- Definitions for Dominio.Tests -->
-<!-- ***************************** -->
+<!-- **************************** -->
+<!-- Definitions for Dominio.Test -->
+<!-- **************************** -->
 <class-descriptor class="Dominio.Test"
                   table="TESTS">
     <field-descriptor id="1"
@@ -111,6 +111,12 @@
         column="KEY_EXECUTION_COURSE"
         jdbc-type="INTEGER"
 	/>
+	<field-descriptor id="8"
+        name="visible"
+        column="VISIBLE"
+        jdbc-type="INTEGER"
+        conversion="ServidorPersistente.Conversores.Int2BooleanFieldConversion"
+ 	/>
 	<reference-descriptor
          name="executionCourse"
          class-ref="Dominio.DisciplinaExecucao"
@@ -170,6 +176,77 @@
 	<foreignkey field-id-ref="5"/>
 	</reference-descriptor>
 	<attribute
+		attribute-name="cacheable"
+     	attribute-value="false" />
+</class-descriptor>
+
+<!-- *************************************** -->
+<!-- Definitions for Dominio.DistributedTest -->
+<!-- *************************************** -->
+<class-descriptor class="Dominio.DistributedTest"
+                  table="DISTRIBUTED_TESTS">
+    <field-descriptor id="1"
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />
+     <field-descriptor id="2"
+        name="beginDate"
+        column="TEST_BEGIN_DATE"
+        jdbc-type="DATE"
+        conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+	/>
+	<field-descriptor id="3"
+        name="beginHour"
+        column="TEST_BEGIN_HOUR"
+        jdbc-type="TIME"
+        conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+	/>
+   <field-descriptor id="4"
+        name="endDate"
+        column="TEST_END_DATE"
+        jdbc-type="DATE"
+        conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+	/>
+	<field-descriptor id="5"
+        name="endHour"
+        column="TEST_END_HOUR"
+        jdbc-type="TIME"
+        conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
+	/>
+   <field-descriptor id="6"
+        name="testType"
+        column="TEST_TYPE"
+        jdbc-type="INTEGER"
+        conversion="ServidorPersistente.Conversores.TestType2EnumTestTypeFieldConversion"
+	/>
+   <field-descriptor id="7"
+        name="correctionAvailability"
+        column="CORRECTION_AVAILABILITY"
+        jdbc-type="INTEGER"
+        conversion="ServidorPersistente.Conversores.CorrectionAvailability2EnumCorrectionAvailabilityFieldConversion"
+	/>
+   <field-descriptor id="8"
+        name="studentFeedback"
+        column="STUDENT_FEEDBACK"
+        jdbc-type="INTEGER"
+        conversion="ServidorPersistente.Conversores.Int2BooleanFieldConversion"
+ 	/>
+	<field-descriptor id="9"
+        name="keyTest"
+        column="KEY_TEST"
+        jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+        name="test"
+        class-ref="Dominio.Test"
+        proxy="true"
+    >
+	<foreignkey field-id-ref="9"/>
+	</reference-descriptor>
+	 <attribute
 		attribute-name="cacheable"
      	attribute-value="false" />
 </class-descriptor>

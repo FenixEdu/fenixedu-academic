@@ -24,4 +24,6 @@ public interface ITest extends IDomainObject {
 	public abstract void setLastModifiedDate(Date date);
 	public abstract String getInformation();
 	public abstract void setInformation(String string);
+	public abstract Boolean getVisible();
+	public abstract void setVisible(Boolean visible);
 }

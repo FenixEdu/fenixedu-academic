@@ -9,6 +9,7 @@
 <ul>
 <li><html:link page="/testsManagement.do?method=prepareCreateTest" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.createTest"/></html:link></li>
 <li><html:link page="/testsManagement.do?method=showTests" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.showTests"/></html:link></li>
+<li><html:link page="/testDistribution.do?method=showDistributedTests" paramId="objectCode" paramName="executionCourse" paramProperty="idInternal"><bean:message key="link.showDistributedTests"/></html:link></li>
 </ul>
 <br/>
 <ul>

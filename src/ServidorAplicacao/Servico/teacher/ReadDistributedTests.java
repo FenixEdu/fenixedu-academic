@@ -1,5 +1,5 @@
 /*
- * Created on 28/Jul/2003
+ * Created on 20/Ago/2003
  *
  */
 package ServidorAplicacao.Servico.teacher;
@@ -9,35 +9,35 @@ import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.ExecutionCourseSiteView;
-import DataBeans.InfoSiteTests;
-import DataBeans.InfoTest;
+import DataBeans.InfoDistributedTest;
+import DataBeans.InfoSiteDistributedTests;
 import DataBeans.SiteView;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
 import Dominio.IDisciplinaExecucao;
-import Dominio.ITest;
+import Dominio.IDistributedTest;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
-import ServidorPersistente.IPersistentTest;
+import ServidorPersistente.IPersistentDistributedTest;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Susana Fernandes
  */
-public class ReadTests implements IServico {
+public class ReadDistributedTests implements IServico {
 
-	private static ReadTests service = new ReadTests();
+	private static ReadDistributedTests service = new ReadDistributedTests();
 
-	public static ReadTests getService() {
+	public static ReadDistributedTests getService() {
 		return service;
 	}
 
 	public String getNome() {
-		return "ReadTests";
+		return "ReadDistributedTests";
 	}
 	public SiteView run(Integer executionCourseId)
 		throws FenixServiceException {
@@ -57,20 +57,25 @@ public class ReadTests implements IServico {
 			if (executionCourse == null) {
 				throw new InvalidArgumentsServiceException();
 			}
-			IPersistentTest persistentTest =
-				(IPersistentTest) persistentSuport.getIPersistentTest();
-			List tests = persistentTest.readByExecutionCourse(executionCourse);
+			IPersistentDistributedTest persistentDistrubutedTest =
+				(IPersistentDistributedTest) persistentSuport
+					.getIPersistentDistributedTest();
+			List distributedTests =
+				persistentDistrubutedTest.readByExecutionCourse(
+					executionCourse);
 			List result = new ArrayList();
-			Iterator iter = tests.iterator();
+			Iterator iter = distributedTests.iterator();
 			while (iter.hasNext()) {
-				ITest test = (ITest) iter.next();
-				if (test.getVisible().booleanValue() == true) {
-					InfoTest infoTest = Cloner.copyITest2InfoTest(test);
-					result.add(infoTest);
-				}
+				IDistributedTest distributedTest =
+					(IDistributedTest) iter.next();
+				InfoDistributedTest infoDistributedTest =
+					Cloner.copyIDistributedTest2InfoDistributedTest(
+						distributedTest);
+				result.add(infoDistributedTest);
 			}
-			InfoSiteTests bodyComponent = new InfoSiteTests();
-			bodyComponent.setInfoTests(result);
+			InfoSiteDistributedTests bodyComponent =
+				new InfoSiteDistributedTests();
+			bodyComponent.setInfoDistributedTests(result);
 			bodyComponent.setExecutionCourse(
 				Cloner.copyIExecutionCourse2InfoExecutionCourse(
 					executionCourse));
@@ -81,5 +86,4 @@ public class ReadTests implements IServico {
 			throw new FenixServiceException(e);
 		}
 	}
-
 }
