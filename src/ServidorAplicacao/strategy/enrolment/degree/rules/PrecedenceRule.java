@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Dominio.ICurricularCourse;
+import Dominio.ICurricularCourseScope;
 import Dominio.IPrecedence;
 import Dominio.IStudentCurricularPlan;
 import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
@@ -38,26 +39,30 @@ public class PrecedenceRule implements IEnrolmentRule {
 			precedenceDAO.readByDegreeCurricularPlan(
 				studentActiveCurricularPlan.getDegreeCurricularPlan());
 
-		List curricularCoursesToStay = new ArrayList();
+		List curricularCourseScopesToStay = new ArrayList();
 
-		List finalCurricularCourseSpan =
+		List finalCurricularCourseScopesSpan =
 			enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled();
-
 		for (int i = 0; i < precedenceList.size(); i++) {
 			IPrecedence precedence = (IPrecedence) precedenceList.get(i);
 			if (precedence.evaluate(enrolmentContext)) {
 				ICurricularCourse curricularCourse =
 					precedence.getCurricularCourse();
-				if (!(curricularCoursesToStay.contains(curricularCourse))
-					&& (finalCurricularCourseSpan.contains(curricularCourse))) {
-					curricularCoursesToStay.add(curricularCourse);
+					
+					
+				List scopes = curricularCourse.getScopes();	
+				for (int scopeIndex = 0; scopeIndex < scopes.size(); scopeIndex++){
+					ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) scopes.get(scopeIndex);
+					if (! (curricularCourseScopesToStay.contains(curricularCourse))
+						&& (finalCurricularCourseScopesSpan.contains(curricularCourseScope))){
+							curricularCourseScopesToStay.add(curricularCourseScope);
+						}
 				}
 			}
 		}
 
 		enrolmentContext.setFinalCurricularCoursesScopesSpanToBeEnrolled(
-			curricularCoursesToStay);
+			curricularCourseScopesToStay);
 		return enrolmentContext;
 	}
-
 }
