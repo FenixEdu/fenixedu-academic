@@ -35,7 +35,7 @@ import ServidorAplicacao.Servico.exceptions.InvalidTimeIntervalServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.InterceptingActionException;
 import ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException;
-import ServidorApresentacao.Action.sop.base.FenixExecutionDegreeAndCurricularYearContextLookupDispatchAction;
+import ServidorApresentacao.Action.sop.base.FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextAction;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -48,7 +48,7 @@ import Util.TipoAula;
  * @author Luis Cruz & Sara Ribeiro
  */
 public class LessonManagerDispatchAction
-	extends FenixExecutionDegreeAndCurricularYearContextLookupDispatchAction {
+	extends FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextAction {
 
 	public static String INVALID_TIME_INTERVAL =
 		"errors.lesson.invalid.time.interval";

@@ -48,6 +48,8 @@ public abstract class SessionConstants {
 	// -------------------------------------------------------------------------------
 	public static final String CURRICULAR_YEAR = "curricular_year";
 	public static final String CURRICULAR_YEAR_OID = "curricular_year_oid";
+	public static final String EXECUTION_COURSE = "execution_course";
+	public static final String EXECUTION_COURSE_OID = "execution_course_oid"; 
 	public static final String EXECUTION_DEGREE = "execution_degree";
 	public static final String EXECUTION_DEGREE_OID = "execution_degree_oid";
 	public static final String EXECUTION_PERIOD = "execution_period";
@@ -96,7 +98,8 @@ public abstract class SessionConstants {
 	// -------------------------------------------------------------------------------
 	//    Master Degree Constants - For Master Degree
 	// -------------------------------------------------------------------------------
-	public static final String SPECIALIZATIONS = "specializations"; 
+	public static final String SPECIALIZATIONS = "specializations";
+
 	public static final String DEGREE_LIST = "degree_list";
 	public static final String NEW_MASTER_DEGREE_CANDIDATE = "new_master_degree_candidate";
 	public static final String APPLICATION_INFO = "application_info";

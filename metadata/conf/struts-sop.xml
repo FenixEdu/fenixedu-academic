@@ -448,7 +448,7 @@
 
       <action path="/escolherAulas"
               type="ServidorApresentacao.Action.sop.EscolherAulasFormAction"
-              scope="session">
+              scope="request">
           <forward name="Sucesso" path="/manipularAulas.jsp"/>
       </action>
      
@@ -456,7 +456,7 @@
               input="/manipularAulas.jsp"
               name="manipularAulasForm"
               path="/manipularAulasForm"
-              scope="session"
+              scope="request"
               type="ServidorApresentacao.Action.sop.ManipularAulasFormAction">
          <forward name="Editar" path="/prepararEditarAula.do"/>
          <forward name="Apagar" path="/apagarAula.do"/>

@@ -17,97 +17,153 @@ import DataBeans.InfoRoom;
 import DataBeans.comparators.InfoLessonComparatorByWeekDayAndTime;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
-import ServidorApresentacao.Action.base.FenixAction;
+import ServidorApresentacao
+	.Action
+	.sop
+	.base
+	.FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextAction;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.DiaSemana;
 import Util.TipoAula;
 
 /**
  * @author tfc130
  */
-public class EscolherAulasFormAction extends FenixAction {
+public class EscolherAulasFormAction
+	extends FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextAction {
 
-  public ActionForward execute(ActionMapping mapping, ActionForm form,
-                                HttpServletRequest request,
-                                HttpServletResponse response)
-      throws Exception {
-		
-    HttpSession sessao = request.getSession(false);
-    if (sessao != null) {
-        ArrayList diasSemana = new ArrayList();
-        diasSemana.add(new LabelValueBean("segunda", (new Integer(DiaSemana.SEGUNDA_FEIRA)).toString() ));
-        diasSemana.add(new LabelValueBean("terca", (new Integer(DiaSemana.TERCA_FEIRA)).toString() ));
-        diasSemana.add(new LabelValueBean("quarta", (new Integer(DiaSemana.QUARTA_FEIRA)).toString() ));
-        diasSemana.add(new LabelValueBean("quinta", (new Integer(DiaSemana.QUINTA_FEIRA)).toString() ));
-        diasSemana.add(new LabelValueBean("sexta", (new Integer(DiaSemana.SEXTA_FEIRA)).toString() ));
-        diasSemana.add(new LabelValueBean("sabado", (new Integer(DiaSemana.SABADO)).toString() ));
-        request.setAttribute("diasSemana", diasSemana);
+	public ActionForward execute(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception {
 
-        ArrayList tiposAula = new ArrayList();
-        tiposAula.add(new LabelValueBean("Teórica", (new Integer(TipoAula.TEORICA)).toString() ));
-        tiposAula.add(new LabelValueBean("Prática", (new Integer(TipoAula.PRATICA)).toString() ));
-        tiposAula.add(new LabelValueBean("Teórico-Prática", (new Integer(TipoAula.TEORICO_PRATICA)).toString() ));
-        tiposAula.add(new LabelValueBean("Laboratorial", (new Integer(TipoAula.LABORATORIAL)).toString() ));
-        tiposAula.add(new LabelValueBean("Dúvidas", (new Integer(TipoAula.DUVIDAS)).toString() ));
-        tiposAula.add(new LabelValueBean("Reserva", (new Integer(TipoAula.RESERVA)).toString() ));
-        request.setAttribute("tiposAula", tiposAula);
+		super.execute(mapping, form, request, response);
 
-        ArrayList horas = new ArrayList();
-        horas.add("8");
-        horas.add("9");
-        horas.add("10");
-        horas.add("11");
-        horas.add("12");
-        horas.add("13");
-        horas.add("14");
-        horas.add("15");
-        horas.add("16");
-        horas.add("17");
-        horas.add("18");
-        horas.add("19");
-        horas.add("20");
-        horas.add("21");
-        horas.add("22");
-        horas.add("23");
-        request.setAttribute("horas",horas);
-        
-        ArrayList minutos = new ArrayList();        
-        minutos.add("00");
-        minutos.add("30");
-        request.setAttribute("minutos",minutos);
+		HttpSession sessao = request.getSession(false);
+		if (sessao != null) {
+			ArrayList diasSemana = new ArrayList();
+			diasSemana.add(
+				new LabelValueBean(
+					"segunda",
+					(new Integer(DiaSemana.SEGUNDA_FEIRA)).toString()));
+			diasSemana.add(
+				new LabelValueBean(
+					"terca",
+					(new Integer(DiaSemana.TERCA_FEIRA)).toString()));
+			diasSemana.add(
+				new LabelValueBean(
+					"quarta",
+					(new Integer(DiaSemana.QUARTA_FEIRA)).toString()));
+			diasSemana.add(
+				new LabelValueBean(
+					"quinta",
+					(new Integer(DiaSemana.QUINTA_FEIRA)).toString()));
+			diasSemana.add(
+				new LabelValueBean(
+					"sexta",
+					(new Integer(DiaSemana.SEXTA_FEIRA)).toString()));
+			diasSemana.add(
+				new LabelValueBean(
+					"sabado",
+					(new Integer(DiaSemana.SABADO)).toString()));
+			request.setAttribute("diasSemana", diasSemana);
 
+			ArrayList tiposAula = new ArrayList();
+			tiposAula.add(
+				new LabelValueBean(
+					"Teórica",
+					(new Integer(TipoAula.TEORICA)).toString()));
+			tiposAula.add(
+				new LabelValueBean(
+					"Prática",
+					(new Integer(TipoAula.PRATICA)).toString()));
+			tiposAula.add(
+				new LabelValueBean(
+					"Teórico-Prática",
+					(new Integer(TipoAula.TEORICO_PRATICA)).toString()));
+			tiposAula.add(
+				new LabelValueBean(
+					"Laboratorial",
+					(new Integer(TipoAula.LABORATORIAL)).toString()));
+			tiposAula.add(
+				new LabelValueBean(
+					"Dúvidas",
+					(new Integer(TipoAula.DUVIDAS)).toString()));
+			tiposAula.add(
+				new LabelValueBean(
+					"Reserva",
+					(new Integer(TipoAula.RESERVA)).toString()));
+			request.setAttribute("tiposAula", tiposAula);
 
-        IUserView userView = (IUserView) sessao.getAttribute("UserView");
-        GestorServicos gestor = GestorServicos.manager();
+			ArrayList horas = new ArrayList();
+			horas.add("8");
+			horas.add("9");
+			horas.add("10");
+			horas.add("11");
+			horas.add("12");
+			horas.add("13");
+			horas.add("14");
+			horas.add("15");
+			horas.add("16");
+			horas.add("17");
+			horas.add("18");
+			horas.add("19");
+			horas.add("20");
+			horas.add("21");
+			horas.add("22");
+			horas.add("23");
+			request.setAttribute("horas", horas);
 
-		// Ler as Salas
-        Object argsLerSalas[] = new Object[0];
-        ArrayList infoSalas = (ArrayList) gestor.executar(userView, "LerSalas", argsLerSalas);
+			ArrayList minutos = new ArrayList();
+			minutos.add("00");
+			minutos.add("30");
+			request.setAttribute("minutos", minutos);
 
-        ArrayList listaSalas = new ArrayList();
-        for(int i = 0; i < infoSalas.size(); i++) {
-            InfoRoom elem = (InfoRoom)infoSalas.get(i);
-            listaSalas.add(new LabelValueBean(elem.getNome(), elem.getNome()));	        	
-        }
-        request.setAttribute("listaSalas", listaSalas);
-        request.setAttribute("listaInfoSalas", infoSalas);    
-        
-        // Fim ler salas.
+			IUserView userView = (IUserView) sessao.getAttribute("UserView");
+			GestorServicos gestor = GestorServicos.manager();
 
-		// Ler Disciplinas em Execucao
-        InfoExecutionCourse iDE = (InfoExecutionCourse) request.getAttribute("infoDisciplinaExecucao");
+			// Ler as Salas
+			Object argsLerSalas[] = new Object[0];
+			ArrayList infoSalas =
+				(ArrayList) gestor.executar(userView, "LerSalas", argsLerSalas);
 
-        Object argsLerAulas[] = new Object[1];
-        argsLerAulas[0] = iDE;
-        ArrayList infoAulas = (ArrayList) gestor.executar(userView, "LerAulasDeDisciplinaExecucao", argsLerAulas);
+			ArrayList listaSalas = new ArrayList();
+			for (int i = 0; i < infoSalas.size(); i++) {
+				InfoRoom elem = (InfoRoom) infoSalas.get(i);
+				listaSalas.add(
+					new LabelValueBean(elem.getNome(), elem.getNome()));
+			}
+			request.setAttribute("listaSalas", listaSalas);
+			request.setAttribute("listaInfoSalas", infoSalas);
 
-        //sessao.removeAttribute("listaAulas");
-        if (infoAulas != null && !infoAulas.isEmpty()) {
-			Collections.sort(infoAulas, new InfoLessonComparatorByWeekDayAndTime());        	
-	        request.setAttribute("listaAulas", infoAulas);
-        }
-		//sessao.removeAttribute(SessionConstants.CLASS_VIEW);
-		return mapping.findForward("Sucesso");
-    } else
-      throw new Exception();  // nao ocorre... pedido passa pelo filtro Autorizacao 
-  }
+			// Fim ler salas.
+
+			// Ler Disciplinas em Execucao
+			InfoExecutionCourse iDE =
+				(InfoExecutionCourse) request.getAttribute(
+					SessionConstants.EXECUTION_COURSE);
+
+			Object argsLerAulas[] = new Object[1];
+			argsLerAulas[0] = iDE;
+			ArrayList infoAulas =
+				(ArrayList) gestor.executar(
+					userView,
+					"LerAulasDeDisciplinaExecucao",
+					argsLerAulas);
+
+			//sessao.removeAttribute("listaAulas");
+			if (infoAulas != null && !infoAulas.isEmpty()) {
+				Collections.sort(
+					infoAulas,
+					new InfoLessonComparatorByWeekDayAndTime());
+				request.setAttribute("listaAulas", infoAulas);
+			}
+			//sessao.removeAttribute(SessionConstants.CLASS_VIEW);
+			return mapping.findForward("Sucesso");
+		} else
+			throw new Exception();
+		// nao ocorre... pedido passa pelo filtro Autorizacao
+	}
 }

@@ -7,6 +7,7 @@ package ServidorApresentacao.Action.utils;
 import javax.servlet.http.HttpServletRequest;
 
 import DataBeans.InfoCurricularYear;
+import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -151,6 +152,47 @@ public class ContextUtils {
 			request.setAttribute(
 				SessionConstants.CURRICULAR_YEAR,
 				infoCurricularYear);
+		}
+	}
+
+	/**
+	 * @param request
+	 */
+	public static void setExecutionCourseContext(HttpServletRequest request) {
+		String executionCourseOIDString =
+			(String) request.getAttribute(
+				SessionConstants.EXECUTION_COURSE_OID);
+		System.out.println("ExecutionCourse from request: " + executionCourseOIDString);
+		if (executionCourseOIDString == null) {
+			executionCourseOIDString =
+				request.getParameter(SessionConstants.EXECUTION_COURSE_OID);
+			System.out.println("ExecutionCourse from parameter: " + executionCourseOIDString);
+		}
+
+		Integer executionCourseOID = null;
+		if (executionCourseOIDString != null) {
+			executionCourseOID = new Integer(executionCourseOIDString);
+		}
+
+		InfoExecutionCourse infoExecutionCourse = null;
+
+		if (executionCourseOID != null) {
+			// Read from database
+			try {
+				Object[] args = { executionCourseOID };
+				infoExecutionCourse =
+					(InfoExecutionCourse) ServiceUtils.executeService(
+						null,
+						"ReadExecutionCourseByOID",
+						args);
+			} catch (FenixServiceException e) {
+				e.printStackTrace();
+			}
+
+			// Place it in request
+			request.setAttribute(
+				SessionConstants.EXECUTION_COURSE,
+				infoExecutionCourse);
 		}
 	}
 
