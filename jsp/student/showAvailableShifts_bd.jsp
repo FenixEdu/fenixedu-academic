@@ -7,53 +7,39 @@
 <%@ page import="java.util.Calendar" %>
 <%@ page import="DataBeans.InfoLesson" %>
 <h3>
-<html:link page="/studentShiftEnrolmentManager.do?method=initializeShiftEnrolment">Visualizar Turmas e Horário</html:link>
+<html:link page="/studentShiftEnrolmentManager.do?method=initializeShiftEnrolment">
+	Visualizar Turmas e Horário
+</html:link>
 </h3>
 
 <bean:define id="infoStudentShiftEnrolment" name="<%= SessionConstants.INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY %>" />
-<table width="70%" align="center">
+<div align="center"><h3><bean:write name="infoStudentShiftEnrolment" property="infoStudent.infoPerson.nome"/></h3></div>
+
+<logic:present name="infoStudentShiftEnrolment">
+				
+<div align="center"><table>
 	<tr>
-		<td align="left">
-			<bean:write name="infoStudentShiftEnrolment" property="infoStudent.infoPerson.nome"/>
+		<td class="listClasses-header">
+			Turnos onde está inscrito:
+		</td>
+		<td class="listClasses-header">
+			Tipo:
+		</td>
+		<td class="listClasses-header">
+			Aulas:
 		</td>
 	</tr>
-	<tr>
-		<td align="left">
-			<logic:present name="infoStudentShiftEnrolment">
-				<!-- aqui falta scope ? -->
-				<h3>
-					Turnos onde está inscrito:
-				</h3>
-				
-				<logic:iterate id="enroledShift" name="infoStudentShiftEnrolment"  property="currentEnrolment" offset="0" length="1" type="DataBeans.InfoShift">
-					<bean:define id="infoExecutionCourseOID" value="<%= enroledShift.getInfoDisciplinaExecucao().getIdInternal().toString() %>"/>
-					<h4>
+		
+	<logic:iterate name="infoStudentShiftEnrolment"  id="enroledShift" property="currentEnrolment"  type="DataBeans.InfoShift">
+	<tr>		
+		<td class="listClasses">	
 						<bean:write name="enroledShift" property="infoDisciplinaExecucao.nome"/>
-					</h4>
-				</logic:iterate>
-				
-				
-				<logic:iterate name="infoStudentShiftEnrolment"  id="enroledShift" property="currentEnrolment" offset="1" type="DataBeans.InfoShift">
-					<bean:define id="actualInfoExecutionCourseOID" value="<%= enroledShift.getInfoDisciplinaExecucao().getIdInternal().toString() %>" />
-					<logic:notEqual name="infoExecutionCourseOID" value="<%= actualInfoExecutionCourseOID %>" >
-						<bean:define id="infoExecutionCourseOID" value="<%= enroledShift.getInfoDisciplinaExecucao().getIdInternal().toString() %>" />
-						<h4>
-							<bean:write name="enroledShift" property="infoDisciplinaExecucao.nome"/>
-						</h4>
-					</logic:notEqual>
-					<blockquote>
-						<b>
-							Disciplina:
-						</b>
-						<bean:write name="enroledShift" property="infoDisciplinaExecucao.nome"/>
-						<b>
-							Tipo:
-						</b>
+		</td>
+		<td class="listClasses">
 						<bean:write name="enroledShift" property="tipo.fullNameTipoAula"/>
-						<br />
-						<blockquote>
-						
-						<logic:iterate id="lesson" name="enroledShift" property="infoLessons">
+		</td>
+		<td class="listClasses">	
+			<logic:iterate id="lesson" name="enroledShift" property="infoLessons">
 								<bean:write name="lesson" property="diaSemana"/>
 								das
 								<dt:format pattern="HH:mm">
@@ -63,44 +49,56 @@
 								<dt:format pattern="HH:mm">
 									<bean:write name="lesson" property="fim.time.time"/>
 								</dt:format>
-								<br />
-							</logic:iterate> 
+								<br/>
+			</logic:iterate> 
+		</td>
+	</tr>		
+	</logic:iterate>
+</table></div>	
 
-						</blockquote>
-					</blockquote>
-				</logic:iterate>
-							
+
+				
 				<br /> 
-				<h3>
-					Turnos onde se pode inscrever:
-				</h3>
+
+<div align="center"><h3>Turnos onde se pode inscrever:</h3></div>
+<div align="center"><table>
 				<html:form action="studentShiftEnrolmentManager">
 					<html:hidden property="method" value="validateAndConfirmShiftEnrolment"/>
 					<bean:define id="index" value="0"/>
 					<logic:notEmpty name="infoStudentShiftEnrolment" property="dividedList"	>							
+
 					<logic:iterate name="infoStudentShiftEnrolment"  id="list" property="dividedList" indexId="courseIndex">
-						<br />
-					<b>	Disciplina:</b>
-						<bean:write name="list" property="type"/>
-						<br />
-					<b>	Turnos </b>
+
+<tr>
+	<td class="listClasses-header">
+					<bean:write name="list" property="type"/>
+	</td>
+	<td class="listClasses-header">
+				&nbsp;
+	</td>	
+	<td class="listClasses-header">
+		Aulas:
+	</td>
+</tr>
 						<logic:iterate name="list" id="sublist" property="list" indexId="groupIndex">
-						<br />
-						<b>	Tipo: </b>
-							<bean:write name="sublist" property="type"/>
-							<br />
+
+		<tr>
+		<td class="listClasses">
+			<bean:write name="sublist" property="type"/>
+		</td>
+		
 							<logic:iterate name="sublist" id="shiftWithLessons" property="list" >
-								
+				<td class="listClasses">			
 								<bean:define id="shift" name="shiftWithLessons" property="infoShift" />
 								&nbsp
 								<html:radio property='<%= "shifts[" + index + "]" %>' idName="shift" value="idInternal" />
-								<%--<bean:write name="shiftWithLessons" property="infoShift.nome"/>
-								: --%>
 								
 								
-								
+				</td>		
+				<td class="listClasses">				
 									<logic:iterate id="lesson" name="shiftWithLessons" property="infoLessons">
-										<bean:write name="lesson" property="diaSemana"/>
+									
+									<bean:write name="lesson" property="diaSemana"/>
 										das
 										<dt:format pattern="HH:mm">
 											<bean:write name="lesson" property="inicio.time.time"/>
@@ -111,15 +109,20 @@
 										</dt:format>
 										<br />
 									</logic:iterate>
-								</blockquote>
+					</td>			
 							</logic:iterate>
 					<bean:define id="index" value="<%=  (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
+				</tr>
 						</logic:iterate>
 					</logic:iterate>
 					</logic:notEmpty>
-					<html:submit value="Inscrever"/>
+
+</table></div>
+<br/>
+<br/>
+			<div align="center"><html:submit value="Inscrever"/></div>
 				</html:form> 
-			</logic:present>
-		</td>
-	</tr>
-</table>
+		
+
+
+</logic:present>			
