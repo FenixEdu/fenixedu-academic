@@ -51,4 +51,7 @@ public abstract class SessionConstants {
 	public static final String EXCEPTION_STACK_TRACE = "exception_stack_trace";
 	
 	public static final String REQUEST_CONTEXT="request_context";
+	
+	public static final String SESSION_IS_VALID="session_is_valid";
+	
 }

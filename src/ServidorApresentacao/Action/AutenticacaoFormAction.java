@@ -11,6 +11,7 @@ import org.apache.struts.action.DynaActionForm;
 
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author jorge
@@ -35,12 +36,13 @@ public class AutenticacaoFormAction extends FenixAction {
     if(sessao != null) {
       sessao.invalidate();
     }
-
+    
     // Create a new session for this user
     sessao = request.getSession(true);
 
     // Store the UserView into the session and return
     sessao.setAttribute("UserView", userView);   
+ 	sessao.setAttribute(SessionConstants.SESSION_IS_VALID, new Boolean(true));
  
     return mapping.findForward("Docente");
   }
