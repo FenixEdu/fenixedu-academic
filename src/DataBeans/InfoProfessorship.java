@@ -15,7 +15,7 @@ public class InfoProfessorship extends InfoObject {
 
     protected InfoExecutionCourse infoExecutionCourse;
 
-    private Double credits;
+    private Double hours;
 
     private String toDelete;
 
@@ -60,16 +60,16 @@ public class InfoProfessorship extends InfoObject {
     /**
      * @return Returns the credits.
      */
-    public Double getCredits() {
-        return this.credits;
+    public Double getHours() {
+        return this.hours;
     }
 
     /**
      * @param credits
      *            The credits to set.
      */
-    public void setCredits(Double credits) {
-        this.credits = credits;
+    public void setHours(Double hours) {
+        this.hours = hours;
     }
 
     /**
@@ -90,7 +90,7 @@ public class InfoProfessorship extends InfoObject {
     public void copyFromDomain(IProfessorship professorship) {
         super.copyFromDomain(professorship);
         if (professorship != null) {
-            setCredits(professorship.getCredits());
+            setHours(professorship.getHours());
         }
     }
 
