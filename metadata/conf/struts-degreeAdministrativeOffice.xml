@@ -190,7 +190,6 @@
 				scope="request"
 				validate="true"
 				input="/viewStudentCurriculum.do?method=prepareViewStudentCurriculumChooseStudent&amp;page=0">
-<!--        	<forward name="ShowStudentCurricularPlans" path="df.page.showStudentCurricularPlans"/>-->
         	<forward name="ShowStudentCurriculum" path="df.page.showStudentCurriculum"/>
         	<forward name="NotAuthorized" path="df.page.notAuthorized"/>	
       	</action>

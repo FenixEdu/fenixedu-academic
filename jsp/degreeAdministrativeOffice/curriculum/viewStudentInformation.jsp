@@ -3,9 +3,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
-<jsp:include page="/student/curriculum/viewCurricularPlans_bd.jsp"/>
-
-
 <html:link page="/viewStudentSchedule.do" paramId="userName" paramName="studentPerson" paramProperty="username" target="_blank">
 	<bean:message key="link.student.schedule"/>
 </html:link> 
+<br></br>
+<jsp:include page="/student/curriculum/displayStudentCurriculum_bd.jsp"/>
