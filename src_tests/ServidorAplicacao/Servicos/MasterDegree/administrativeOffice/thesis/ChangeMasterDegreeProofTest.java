@@ -1,10 +1,13 @@
 package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.thesis;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import DataBeans.InfoMasterDegreeProofVersion;
 import DataBeans.InfoStudentCurricularPlan;
+import DataBeans.InfoTeacher;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.ScholarshipNotFinishedServiceException;
@@ -52,7 +55,7 @@ public class ChangeMasterDegreeProofTest extends AdministrativeOfficeBaseTest {
 		return argsChangeMasterDegreeProof;
 	}
 
-	protected Object[] getServiceArgumentsForNotAuthorizedUser() throws FenixServiceException{
+	protected Object[] getServiceArgumentsForNotAuthorizedUser() throws FenixServiceException {
 		Object[] argsReadStudentCurricularPlan = { new Integer(142), new TipoCurso(TipoCurso.MESTRADO)};
 		InfoStudentCurricularPlan infoStudentCurricularPlan =
 			(InfoStudentCurricularPlan) serviceManager.executar(
@@ -94,7 +97,8 @@ public class ChangeMasterDegreeProofTest extends AdministrativeOfficeBaseTest {
 					new GregorianCalendar(2003, Calendar.DECEMBER, 15).getTime(),
 					infoMasterDegreeProofVersion.getThesisDeliveryDate(),
 					MasterDegreeClassification.APPROVED,
-					infoMasterDegreeProofVersion.getAttachedCopiesNumber()};
+					infoMasterDegreeProofVersion.getAttachedCopiesNumber(),
+					infoMasterDegreeProofVersion.getInfoJuries()};
 
 			serviceManager.executar(userView, getNameOfServiceToBeTested(), argsChangeMasterDegreeProof);
 			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/MasterDegree/administrativeOffice/thesis/testExpectedChangeMasterDegreeProofDataSet.xml");
@@ -116,13 +120,13 @@ public class ChangeMasterDegreeProofTest extends AdministrativeOfficeBaseTest {
 					"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
 					argsReadStudentCurricularPlan);
 
-			Object[] argsReadMasterDegreeProofVersion = { infoStudentCurricularPlan };
+			/*Object[] argsReadMasterDegreeProofVersion = { infoStudentCurricularPlan };
 			InfoMasterDegreeProofVersion infoMasterDegreeProofVersion =
 				(InfoMasterDegreeProofVersion) serviceManager.executar(
 					userView,
 					"ReadActiveMasterDegreeProofVersionByStudentCurricularPlan",
 					argsReadMasterDegreeProofVersion);
-
+			
 			Object[] argsChangeMasterDegreeProof =
 				{
 					userView,
@@ -130,7 +134,23 @@ public class ChangeMasterDegreeProofTest extends AdministrativeOfficeBaseTest {
 					new GregorianCalendar(2003, Calendar.DECEMBER, 15).getTime(),
 					infoMasterDegreeProofVersion.getThesisDeliveryDate(),
 					MasterDegreeClassification.APPROVED,
-					infoMasterDegreeProofVersion.getAttachedCopiesNumber()};
+					infoMasterDegreeProofVersion.getAttachedCopiesNumber(),
+					infoMasterDegreeProofVersion.getInfoJuries()}; */
+
+			InfoTeacher infoTeacherJury = new InfoTeacher();
+			infoTeacherJury.setIdInternal(new Integer(954));
+			ArrayList infoTeacherJuries = new ArrayList();
+			infoTeacherJuries.add(infoTeacherJury);
+
+			Object[] argsChangeMasterDegreeProof =
+				{
+					userView,
+					infoStudentCurricularPlan,
+					new GregorianCalendar(2003, Calendar.DECEMBER, 15).getTime(),
+					new GregorianCalendar(2003, Calendar.DECEMBER, 10).getTime(),
+					MasterDegreeClassification.APPROVED,
+					new Integer(5),
+					infoTeacherJuries };
 
 			serviceManager.executar(userView, getNameOfServiceToBeTested(), argsChangeMasterDegreeProof);
 
@@ -155,6 +175,12 @@ public class ChangeMasterDegreeProofTest extends AdministrativeOfficeBaseTest {
 					"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
 					argsReadStudentCurricularPlan);
 
+			InfoTeacher infoTeacherJury = new InfoTeacher();
+			infoTeacherJury.setIdInternal(new Integer(954));
+
+			List infoTeacherJuries = new ArrayList();
+			infoTeacherJuries.add(infoTeacherJury);
+
 			Object[] argsChangeMasterDegreeProof =
 				{
 					userView,
@@ -162,7 +188,8 @@ public class ChangeMasterDegreeProofTest extends AdministrativeOfficeBaseTest {
 					new GregorianCalendar(2003, Calendar.DECEMBER, 15).getTime(),
 					new GregorianCalendar(2003, Calendar.NOVEMBER, 15).getTime(),
 					MasterDegreeClassification.APPROVED,
-					new Integer(5)};
+					new Integer(5),
+					infoTeacherJuries };
 
 			serviceManager.executar(userView, getNameOfServiceToBeTested(), argsChangeMasterDegreeProof);
 
@@ -187,6 +214,12 @@ public class ChangeMasterDegreeProofTest extends AdministrativeOfficeBaseTest {
 					"student.ReadActiveStudentCurricularPlanByNumberAndDegreeType",
 					argsReadStudentCurricularPlan);
 
+			InfoTeacher infoTeacherJury = new InfoTeacher();
+			infoTeacherJury.setIdInternal(new Integer(954));
+
+			List infoTeacherJuries = new ArrayList();
+			infoTeacherJuries.add(infoTeacherJury);
+
 			Object[] argsChangeMasterDegreeProof =
 				{
 					userView,
@@ -194,7 +227,8 @@ public class ChangeMasterDegreeProofTest extends AdministrativeOfficeBaseTest {
 					new GregorianCalendar(2003, Calendar.OCTOBER, 10).getTime(),
 					new GregorianCalendar(2003, Calendar.NOVEMBER, 11).getTime(),
 					MasterDegreeClassification.UNDEFINED,
-					new Integer(5)};
+					new Integer(5),
+					infoTeacherJuries };
 
 			serviceManager.executar(userView, getNameOfServiceToBeTested(), argsChangeMasterDegreeProof);
 			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/MasterDegree/administrativeOffice/thesis/testExpectedChangeMasterDegreeProofWhenProofDoesNotExistDataSet.xml");

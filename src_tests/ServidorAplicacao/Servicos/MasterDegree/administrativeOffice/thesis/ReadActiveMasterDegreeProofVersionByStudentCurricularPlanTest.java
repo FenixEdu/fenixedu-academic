@@ -6,6 +6,7 @@ import java.util.GregorianCalendar;
 
 import DataBeans.InfoMasterDegreeProofVersion;
 import DataBeans.InfoStudentCurricularPlan;
+import DataBeans.InfoTeacher;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.ScholarshipNotFinishedServiceException;
@@ -77,6 +78,7 @@ public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlanTest exten
 			assertEquals(infoMasterDegreeProofVersion.getProofDate(), proofDate);
 			Date thesisDeliveryDate = new GregorianCalendar(2003, Calendar.NOVEMBER, 11).getTime();
 			assertEquals(infoMasterDegreeProofVersion.getThesisDeliveryDate(), thesisDeliveryDate);
+			assertEquals(((InfoTeacher) infoMasterDegreeProofVersion.getInfoJuries().get(0)).getIdInternal(), new Integer(954));
 
 			//ok
 
