@@ -9,12 +9,10 @@
 	<property name="build.home" location="build"/>
 	<property name="build.app-server" value="${build.home}/app-server"/>
 
-	<property file="${config}/configurationSQLInstructions.properties"/>
-
     <target name="reverse-roleback-file"
     		description="Reverses the contents of the sql file with the roleback instructions.">
 		<java classname="Tools.io.ReverseFile" fork="true">
-			<arg value="${storageFileName}"/>
+			<arg value="${roleback.filename}"/>
 			<classpath>
 				<pathelement path="${build.app-server}"/>
                 <fileset dir="${lib}">
@@ -33,14 +31,14 @@
             userid="${db.user}"
             password="${db.pass}"
             encoding="${encoding}"
-            src="${storageFileName}">
+            src="${roleback.filename}">
             <classpath>
                 <fileset dir="${lib}">
                     <include name="**/*.jar"/>
                 </fileset>
             </classpath>
         </sql>
-        <delete file="${storageFileName}"/>
+        <delete file="${roleback.filename}"/>
     </target>
 
 </project>

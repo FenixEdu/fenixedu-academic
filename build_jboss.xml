@@ -137,6 +137,7 @@
 			<include name="**/SMSConfiguration.properties"/>
 			<include name="**/**/logAnalyser.properties"/>
 			<include name="**/GratuitySituationCreatorTask.properties"/>
+			<include name="**/configurationSQLInstructions.properties"/>
 
 			<replacefilter token="&lt;!-- @validation.doctype@ -->"
 						   property="validation.doctype"/>
@@ -276,8 +277,11 @@
                            
 			<replacefilter token="@gratuity.situation.creator.task.hour@"
 		    			   property="gratuity.situation.creator.task.hour"/>
-                      
 
+			<replacefilter token="@JdbcAccessClass@"
+		    			   property="JdbcAccessClass"/>
+			<replacefilter token="@roleback.filename@"
+		    			   property="roleback.filename"/>
 		</replace>
 	</target>
 
