@@ -10,6 +10,11 @@ public class CurricularCourseExecutionScope {
 	public static final int SEMESTRIAL = 1;
 	public static final int ANUAL = 2;
 	
+	
+	public static final CurricularCourseExecutionScope SEMESTRIAL_OBJ = new CurricularCourseExecutionScope(CurricularCourseExecutionScope.SEMESTRIAL);
+	public static final CurricularCourseExecutionScope ANUAL_OBJ = new CurricularCourseExecutionScope(CurricularCourseExecutionScope.ANUAL);
+	
+	
 	private Integer type;
 
 	public CurricularCourseExecutionScope() {
