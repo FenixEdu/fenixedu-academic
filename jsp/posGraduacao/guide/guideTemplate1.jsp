@@ -102,7 +102,9 @@
         	  <tr>
     			<td><bean:write name="guideEntry" property="documentType"/>&nbsp;<bean:write name="guideEntry" property="description"/></td>
     			<td>.........................................</td>&nbsp;
-    			<td><bean:write name="guideEntry" property="price"/>&nbsp;<bean:message key="label.currencySymbol"/></td>
+                <bean:define id="price" name="guideEntry" property="price" />
+                <bean:define id="quantity" name="guideEntry" property="quantity" />
+                <td><%= new Double(pageContext.findAttribute("price").toString()).floatValue() *  new Integer(pageContext.findAttribute("quantity").toString()).intValue() %>&nbsp;<bean:message key="label.currencySymbol"/></td>
         	  </tr>
         	</logic:iterate >
         <tr>

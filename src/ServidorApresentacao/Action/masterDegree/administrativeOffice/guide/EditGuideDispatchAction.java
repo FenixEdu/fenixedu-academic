@@ -275,6 +275,10 @@ public class EditGuideDispatchAction extends DispatchAction {
 				if ((othersQuantityString != null) && (othersQuantityString.length() != 0))
 					othersQuantity = new Integer(othersQuantityString);
 
+				// Check for invalid quantities and prices
+				if (((othersPrice != null) && (othersPrice.floatValue() < 0)) ||
+				    ((othersQuantity != null) && (othersQuantity.intValue() < 0)))
+					throw new InvalidInformationInFormActionException(null);
 
 				while(arguments.hasMoreElements()){
 					String parameter = (String) arguments.nextElement();
@@ -283,8 +287,11 @@ public class EditGuideDispatchAction extends DispatchAction {
 						String position = parameter.substring(arrayPosition);
 						
 						// This is made to verify if the argument is a valid one. If it's not
-						// iot will give a NumberFormatException 
+						// it will give a NumberFormatException 
 						Integer value = new Integer(request.getParameter(parameter));
+						if (value.intValue() < 0 )
+							throw new InvalidInformationInFormActionException(null);
+						
 						quantityList[new Integer(position).intValue()] = String.valueOf(value);
 					}
 				}
