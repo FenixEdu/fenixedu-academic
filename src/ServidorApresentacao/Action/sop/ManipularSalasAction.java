@@ -20,6 +20,7 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.notAuthorizedServiceDeleteException;
 import ServidorApresentacao.Action.FenixAction;
 import ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import ServidorApresentacao.Action.sop.utils.Util;
 
 /**
@@ -56,6 +57,7 @@ public class ManipularSalasAction extends FenixAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
+			SessionUtils.validSessionVerification(request, mapping);
 		HttpSession sessao = getSession(request);
 		String parameter = request.getParameter("operation");
 

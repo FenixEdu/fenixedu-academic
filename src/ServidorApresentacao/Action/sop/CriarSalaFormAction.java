@@ -16,6 +16,7 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.TipoSala;
 
 /**
@@ -29,6 +30,7 @@ public class CriarSalaFormAction extends Action {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
+			SessionUtils.validSessionVerification(request, mapping);	
 		DynaActionForm criarSalaForm = (DynaActionForm) form;
 
 		HttpSession sessao = request.getSession(false);

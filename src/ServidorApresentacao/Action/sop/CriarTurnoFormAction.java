@@ -2,10 +2,12 @@ package ServidorApresentacao.Action.sop;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShift;
 import ServidorAplicacao.IUserView;
@@ -14,6 +16,7 @@ import ServidorApresentacao.Action.FenixAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.TipoAula;
 /**
  * @author tfc130
@@ -25,6 +28,7 @@ public class CriarTurnoFormAction extends FenixAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
+			SessionUtils.validSessionVerification(request, mapping);
 		DynaActionForm criarTurnoForm = (DynaActionForm) form;
 		HttpSession sessao = request.getSession(false);
 		if (sessao != null) {

@@ -9,19 +9,18 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import ServidorApresentacao.Action.FenixAction;
-
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 /**
  * @author tfc130
  */
 
 public class ManipularTurnosFormAction extends FenixAction {
 
-
   public ActionForward execute(ActionMapping mapping, ActionForm form,
                                 HttpServletRequest request,
                                 HttpServletResponse response)
       throws Exception {
-    
+		SessionUtils.validSessionVerification(request, mapping);
     HttpSession sessao = request.getSession(false);
     if (sessao != null) {
          /* Obtem o parametro do submit que indica a operacao a realizar */
@@ -33,7 +32,5 @@ public class ManipularTurnosFormAction extends FenixAction {
       throw new Exception();  // nao ocorre... pedido passa pelo filtro Autorizacao 
   }
  
-
 }
-
 

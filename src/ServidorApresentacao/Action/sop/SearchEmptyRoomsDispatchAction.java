@@ -36,6 +36,7 @@ public class SearchEmptyRoomsDispatchAction extends DispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
+			SessionUtils.validSessionVerification(request, mapping);	
 		HttpSession session = request.getSession(false);
 		session.setAttribute("minutes", Util.getMinutes());
 		session.setAttribute("hours", Util.getHours());
@@ -52,7 +53,7 @@ public class SearchEmptyRoomsDispatchAction extends DispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		
+			SessionUtils.validSessionVerification(request, mapping);
 		try {
 			FenixDynaValidatorForm searchForm = (FenixDynaValidatorForm) form;
 			Integer normalCapacity = new Integer(0);

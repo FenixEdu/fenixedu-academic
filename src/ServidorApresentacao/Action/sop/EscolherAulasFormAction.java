@@ -16,6 +16,7 @@ import DataBeans.InfoRoom;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.FenixAction;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.DiaSemana;
 import Util.TipoAula;
 
@@ -28,7 +29,7 @@ public class EscolherAulasFormAction extends FenixAction {
                                 HttpServletRequest request,
                                 HttpServletResponse response)
       throws Exception {
-    
+		SessionUtils.validSessionVerification(request, mapping);
     HttpSession sessao = request.getSession(false);
     if (sessao != null) {
         ArrayList diasSemana = new ArrayList();

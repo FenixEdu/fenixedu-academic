@@ -12,6 +12,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoShift;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 /**
 @author tfc130
 */
@@ -22,6 +23,7 @@ public class PrepararEditarTurnoFormAction extends Action {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
+			SessionUtils.validSessionVerification(request, mapping);
 		DynaActionForm editarTurnoForm = (DynaActionForm) form;
 		HttpSession sessao = request.getSession(false);
 		if (sessao != null) {

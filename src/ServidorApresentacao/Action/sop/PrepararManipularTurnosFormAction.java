@@ -1,5 +1,6 @@
 package ServidorApresentacao.Action.sop;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -9,11 +10,11 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import DataBeans.InfoExecutionCourse;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-
-import DataBeans.InfoExecutionCourse;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
 @author tfc130
@@ -25,7 +26,7 @@ public class PrepararManipularTurnosFormAction extends Action {
                                 HttpServletRequest request,
                                 HttpServletResponse response)
       throws Exception {
-    
+		SessionUtils.validSessionVerification(request, mapping);
     HttpSession sessao = request.getSession(false);
     if (sessao != null) {
         IUserView userView = (IUserView) sessao.getAttribute(SessionConstants.U_VIEW);

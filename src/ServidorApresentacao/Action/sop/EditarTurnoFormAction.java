@@ -20,6 +20,7 @@ import ServidorApresentacao.Action.FenixAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 /**
  * @author tfc130
  */
@@ -30,6 +31,7 @@ public class EditarTurnoFormAction extends FenixAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
+			SessionUtils.validSessionVerification(request, mapping);
 		DynaActionForm editarTurnoForm = (DynaActionForm) form;
 		HttpSession session = request.getSession(false);
 		if (session != null) {

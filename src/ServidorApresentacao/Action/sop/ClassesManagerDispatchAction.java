@@ -39,7 +39,7 @@ public class ClassesManagerDispatchAction extends DispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-
+			SessionUtils.validSessionVerification(request, mapping);
 		HttpSession session = request.getSession(false);
 		
 		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);

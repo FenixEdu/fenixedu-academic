@@ -30,6 +30,7 @@ public class ViewClassesWithShift extends Action {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
+			SessionUtils.validSessionVerification(request, mapping);
 		try {
 			DynaValidatorForm shiftForm = (DynaValidatorForm) form;
 			String name = (String)shiftForm.get("name");

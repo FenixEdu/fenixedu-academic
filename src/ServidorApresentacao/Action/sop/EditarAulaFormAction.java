@@ -30,6 +30,7 @@ import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.InterceptingActionException;
 import ServidorApresentacao.Action.exceptions.InvalidTimeIntervalActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.DiaSemana;
 import Util.TipoAula;
 
@@ -48,6 +49,7 @@ public class EditarAulaFormAction extends FenixAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
+			SessionUtils.validSessionVerification(request, mapping);
 		DynaActionForm editarAulaForm = (DynaActionForm) form;
 
 		HttpSession sessao = request.getSession(false);

@@ -11,6 +11,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import ServidorApresentacao.Action.FenixDispatchAction;
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import ServidorApresentacao.Action.sop.utils.Util;
 
 /**
@@ -24,7 +25,7 @@ public class PrepararCriarSalaFormAction extends FenixDispatchAction {
 	public ActionForward prepareSearch(ActionMapping mapping, ActionForm form,
 					 HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
-
+			SessionUtils.validSessionVerification(request, mapping);
 	  HttpSession sessao = getSession(request);
 
 	  List edificios = Util.readExistingBuldings("*", null);

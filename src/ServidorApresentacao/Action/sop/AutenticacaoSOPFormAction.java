@@ -75,7 +75,7 @@ public class AutenticacaoSOPFormAction extends FenixAction {
 
 		// Store the UserView into the session and return
 		sessao.setAttribute(SessionConstants.U_VIEW, userView);
-
+		sessao.setAttribute(SessionConstants.SESSION_IS_VALID, new Boolean(true));
 		return mapping.findForward("SOP");
 	}
 }

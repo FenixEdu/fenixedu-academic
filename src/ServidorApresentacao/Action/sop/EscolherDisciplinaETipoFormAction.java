@@ -13,7 +13,7 @@ import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoExecutionCourse;
 import ServidorApresentacao.Action.FenixAction;
-
+import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author tfc130
@@ -25,6 +25,7 @@ public class EscolherDisciplinaETipoFormAction extends FenixAction {
                                 HttpServletRequest request,
                                 HttpServletResponse response)
       throws Exception {
+		SessionUtils.validSessionVerification(request, mapping);
     DynaActionForm escolherDisciplinaETipoForm = (DynaActionForm) form;
     
     HttpSession sessao = request.getSession(false);
@@ -40,4 +41,3 @@ public class EscolherDisciplinaETipoFormAction extends FenixAction {
   }
  
 }
-
