@@ -41,7 +41,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author Tânia Pousão
- *
+ *  
  */
 public class MarksListAction extends DispatchAction
 {
@@ -56,7 +56,7 @@ public class MarksListAction extends DispatchAction
 
         HttpSession session = request.getSession(false);
 
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        UserView userView = (UserView)session.getAttribute(SessionConstants.U_VIEW);
 
         Integer executionCourseCode = getFromRequest("objectCode", request);
 
@@ -69,7 +69,7 @@ public class MarksListAction extends DispatchAction
         try
         {
             TeacherAdministrationSiteView siteView =
-                (TeacherAdministrationSiteView) ServiceUtils.executeService(
+                (TeacherAdministrationSiteView)ServiceUtils.executeService(
                     userView,
                     "TeacherAdministrationSiteComponentService",
                     args);
@@ -77,8 +77,9 @@ public class MarksListAction extends DispatchAction
             request.setAttribute("siteView", siteView);
             request.setAttribute(
                 "objectCode",
-                ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getIdInternal());
-        } catch (FenixServiceException e)
+                ((InfoSiteCommon)siteView.getCommonComponent()).getExecutionCourse().getIdInternal());
+        }
+        catch (FenixServiceException e)
         {
             throw new FenixActionException(e);
         }
@@ -89,10 +90,10 @@ public class MarksListAction extends DispatchAction
 
     }
 
-    /** 
-     * @author Tânia Pousão 
-     *
-     */
+    /**
+	 * @author Tânia Pousão
+	 *  
+	 */
     public ActionForward loadMarksOnline(
         ActionMapping mapping,
         ActionForm form,
@@ -102,7 +103,7 @@ public class MarksListAction extends DispatchAction
     {
         HttpSession session = request.getSession(false);
 
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        UserView userView = (UserView)session.getAttribute(SessionConstants.U_VIEW);
 
         Integer executionCourseCode = getFromRequest("objectCode", request);
 
@@ -115,17 +116,18 @@ public class MarksListAction extends DispatchAction
         try
         {
             siteView =
-                (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(
+                (TeacherAdministrationSiteView)ServiceManagerServiceFactory.executeService(
                     userView,
                     "ReadStudentsAndMarksByEvaluation",
                     args);
-        } catch (FenixServiceException e)
+        }
+        catch (FenixServiceException e)
         {
             e.printStackTrace();
             throw new FenixActionException(e.getMessage());
         }
 
-        InfoSiteMarks infoSiteMarks = (InfoSiteMarks) siteView.getComponent();
+        InfoSiteMarks infoSiteMarks = (InfoSiteMarks)siteView.getComponent();
         Collections.sort(infoSiteMarks.getMarksList(), new BeanComparator("infoFrequenta.aluno.number"));
 
         request.setAttribute("siteView", siteView);
@@ -135,10 +137,10 @@ public class MarksListAction extends DispatchAction
         return mapping.findForward("marksList");
     }
 
-    /** 
-     * @author Fernanda Quitério 
-     *
-     */
+    /**
+	 * @author Fernanda Quitério
+	 *  
+	 */
     public ActionForward preparePublishMarks(
         ActionMapping mapping,
         ActionForm form,
@@ -153,7 +155,7 @@ public class MarksListAction extends DispatchAction
         Integer infoExecutionCourseCode = getFromRequest("objectCode", request);
 
         ISiteComponent commonComponent = new InfoSiteCommon();
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        UserView userView = (UserView)session.getAttribute(SessionConstants.U_VIEW);
         Object[] args =
             {
                 infoExecutionCourseCode,
@@ -166,12 +168,13 @@ public class MarksListAction extends DispatchAction
         try
         {
             siteView =
-                (TeacherAdministrationSiteView) ServiceUtils.executeService(
+                (TeacherAdministrationSiteView)ServiceUtils.executeService(
                     userView,
                     "TeacherAdministrationSiteComponentService",
                     args);
 
-        } catch (FenixServiceException e)
+        }
+        catch (FenixServiceException e)
         {
             throw new FenixActionException(e);
         }
@@ -183,10 +186,10 @@ public class MarksListAction extends DispatchAction
         return mapping.findForward("preparePublishMarks");
     }
 
-    /** 
-     * @author Fernanda Quitério 
-     *
-     */
+    /**
+	 * @author Fernanda Quitério
+	 *  
+	 */
     public ActionForward publishMarks(
         ActionMapping mapping,
         ActionForm form,
@@ -200,9 +203,9 @@ public class MarksListAction extends DispatchAction
 
         Integer objectCode = getFromRequest("objectCode", request);
 
-        DynaValidatorForm publishForm = (DynaValidatorForm) form;
-        String publishmentMessage = (String) publishForm.get("publishmentMessage");
-        Boolean sendSMS = (Boolean) publishForm.get("sendSMS");
+        DynaValidatorForm publishForm = (DynaValidatorForm)form;
+        String publishmentMessage = (String)publishForm.get("publishmentMessage");
+        Boolean sendSMS = (Boolean)publishForm.get("sendSMS");
 
         String announcementTitle = null;
         if (publishmentMessage != null && publishmentMessage.length() > 0)
@@ -212,11 +215,12 @@ public class MarksListAction extends DispatchAction
         }
 
         Object[] args = { objectCode, evaluationCode, publishmentMessage, sendSMS, announcementTitle };
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        UserView userView = (UserView)session.getAttribute(SessionConstants.U_VIEW);
         try
         {
             ServiceManagerServiceFactory.executeService(userView, "PublishMarks", args);
-        } catch (FenixServiceException e)
+        }
+        catch (FenixServiceException e)
         {
             e.printStackTrace();
             throw new FenixActionException(e.getMessage());
@@ -227,10 +231,10 @@ public class MarksListAction extends DispatchAction
         return mapping.findForward("viewMarksOptions");
     }
 
-    /** 
-     * @author Tânia Pousão 
-     *
-     */
+    /**
+	 * @author Tânia Pousão
+	 *  
+	 */
     public ActionForward prepareSubmitMarks(
         ActionMapping mapping,
         ActionForm form,
@@ -240,21 +244,25 @@ public class MarksListAction extends DispatchAction
     {
         ActionErrors actionErrors = new ActionErrors();
         HttpSession session = request.getSession(false);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        UserView userView = (UserView)session.getAttribute(SessionConstants.U_VIEW);
 
         Integer evaluationCode = getFromRequest("evaluationCode", request);
 
         Integer executionCourseCode = getFromRequest("objectCode", request);
 
         //valiadate if is possible submit marks
-        Object[] args = { evaluationCode, evaluationCode, userView };
+        Object[] args = { executionCourseCode, evaluationCode, userView };
 
         InfoSiteSubmitMarks infoSiteSubmitMarks = null;
         try
         {
             infoSiteSubmitMarks =
-                (InfoSiteSubmitMarks) ServiceManagerServiceFactory.executeService(userView, "ValidateSubmitMarks", args);
-        } catch (FenixServiceException exception)
+                (InfoSiteSubmitMarks)ServiceManagerServiceFactory.executeService(
+                    userView,
+                    "ValidateSubmitMarks",
+                    args);
+        }
+        catch (FenixServiceException exception)
         {
             //exception.printStackTrace();
 
@@ -277,8 +285,9 @@ public class MarksListAction extends DispatchAction
         try
         {
             infoEvaluationsList =
-                (List) ServiceUtils.executeService(userView, "ReadEvaluations", argsReadEvaluations);
-        } catch (FenixServiceException e)
+                (List)ServiceUtils.executeService(userView, "ReadEvaluations", argsReadEvaluations);
+        }
+        catch (FenixServiceException e)
         {
             throw new FenixActionException(e);
         }
@@ -293,12 +302,13 @@ public class MarksListAction extends DispatchAction
         try
         {
             siteView =
-                (TeacherAdministrationSiteView) ServiceUtils.executeService(
+                (TeacherAdministrationSiteView)ServiceUtils.executeService(
                     userView,
                     "TeacherAdministrationSiteComponentService",
                     args2);
 
-        } catch (FenixServiceException e)
+        }
+        catch (FenixServiceException e)
         {
             throw new FenixActionException(e);
         }
@@ -311,7 +321,7 @@ public class MarksListAction extends DispatchAction
             calendar.setTime(evaluationDate);
         }
 
-        DynaValidatorForm dateAvaliationForm = (DynaValidatorForm) form;
+        DynaValidatorForm dateAvaliationForm = (DynaValidatorForm)form;
         dateAvaliationForm.set("day", new Integer(calendar.get(Calendar.DAY_OF_MONTH)));
         dateAvaliationForm.set("month", new Integer(calendar.get(Calendar.MONTH) + 1));
         dateAvaliationForm.set("year", new Integer(calendar.get(Calendar.YEAR)));
@@ -326,7 +336,7 @@ public class MarksListAction extends DispatchAction
     private Date lastDateEvaluation(List infoEvaluationsList)
     {
         List infoEvaluationsListWithoutFinal =
-            (List) CollectionUtils.select(infoEvaluationsList, new Predicate()
+            (List)CollectionUtils.select(infoEvaluationsList, new Predicate()
         {
             public boolean evaluate(Object input)
             {
@@ -354,10 +364,10 @@ public class MarksListAction extends DispatchAction
         return null;
     }
 
-    /** 
-     * @author Tânia Pousão 
-     *
-     */
+    /**
+	 * @author Tânia Pousão
+	 *  
+	 */
     public ActionForward submitMarks(
         ActionMapping mapping,
         ActionForm form,
@@ -367,16 +377,16 @@ public class MarksListAction extends DispatchAction
     {
         ActionErrors actionErrors = new ActionErrors();
         HttpSession session = request.getSession(false);
-        UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+        UserView userView = (UserView)session.getAttribute(SessionConstants.U_VIEW);
 
         Integer evaluationCode = getFromRequest("evaluationCode", request);
 
         Integer objectCode = getFromRequest("objectCode", request);
 
-        DynaValidatorForm dateForm = (DynaValidatorForm) form;
-        Integer yearEvaluationDate = (Integer) dateForm.get("year");
-        Integer monthEvaluationDate = (Integer) dateForm.get("month");
-        Integer dayEvaluationDate = (Integer) dateForm.get("day");
+        DynaValidatorForm dateForm = (DynaValidatorForm)form;
+        Integer yearEvaluationDate = (Integer)dateForm.get("year");
+        Integer monthEvaluationDate = (Integer)dateForm.get("month");
+        Integer dayEvaluationDate = (Integer)dateForm.get("day");
         Date evaluationDate = null;
         if (yearEvaluationDate != null
             && monthEvaluationDate != null
@@ -399,8 +409,12 @@ public class MarksListAction extends DispatchAction
         try
         {
             administrationSiteView =
-                (TeacherAdministrationSiteView) ServiceManagerServiceFactory.executeService(userView, "SubmitMarks", args);
-        } catch (FenixServiceException exception)
+                (TeacherAdministrationSiteView)ServiceManagerServiceFactory.executeService(
+                    userView,
+                    "SubmitMarks",
+                    args);
+        }
+        catch (FenixServiceException exception)
         {
             System.out.println("exception no action");
             exception.printStackTrace();
@@ -416,7 +430,7 @@ public class MarksListAction extends DispatchAction
         request.setAttribute("evaluationCode", evaluationCode);
 
         InfoSiteSubmitMarks infoSiteSubmitMarks =
-            (InfoSiteSubmitMarks) administrationSiteView.getComponent();
+            (InfoSiteSubmitMarks)administrationSiteView.getComponent();
         actionErrors = sendErrors(infoSiteSubmitMarks);
         if (actionErrors.size() > 0)
         {
@@ -435,12 +449,14 @@ public class MarksListAction extends DispatchAction
         if (infoSiteSubmitMarks.getNoMarks())
         {
             actionErrors.add("noMarks", new ActionError("errors.submitMarks.noMarks"));
-        } else if (infoSiteSubmitMarks.getAllMarksNotPublished())
+        }
+        else if (infoSiteSubmitMarks.getAllMarksNotPublished())
         {
             actionErrors.add(
                 "allMarksNotPublished",
                 new ActionError("errors.submitMarks.allMarksNotPublished"));
-        } else
+        }
+        else
         {
 
             if ((infoSiteSubmitMarks.getErrorsNotEnrolmented() != null
@@ -452,11 +468,11 @@ public class MarksListAction extends DispatchAction
                 if (infoSiteSubmitMarks.getErrorsNotEnrolmented() != null
                     && infoSiteSubmitMarks.getErrorsNotEnrolmented().size() > 0)
                 {
-                    //list with	errors Student Not Enrolmented
+                    //list with errors Student Not Enrolmented
                     ListIterator iterator = infoSiteSubmitMarks.getErrorsNotEnrolmented().listIterator();
                     while (iterator.hasNext())
                     {
-                        InfoMark infoMark = (InfoMark) iterator.next();
+                        InfoMark infoMark = (InfoMark)iterator.next();
                         actionErrors.add(
                             "errorsNotEnrolmented",
                             new ActionError(
@@ -469,12 +485,12 @@ public class MarksListAction extends DispatchAction
                 if (infoSiteSubmitMarks.getErrorsMarkNotPublished() != null
                     && infoSiteSubmitMarks.getErrorsMarkNotPublished().size() > 0)
                 {
-                    //list with	errors Mark Not Published
+                    //list with errors Mark Not Published
                     ListIterator iterator =
                         infoSiteSubmitMarks.getErrorsMarkNotPublished().listIterator();
                     while (iterator.hasNext())
                     {
-                        InfoMark infoMark = (InfoMark) iterator.next();
+                        InfoMark infoMark = (InfoMark)iterator.next();
                         actionErrors.add(
                             "markNotPublished",
                             new ActionError(
@@ -495,7 +511,7 @@ public class MarksListAction extends DispatchAction
         String parameterCodeString = request.getParameter(parameter);
         if (parameterCodeString == null)
         {
-            parameterCodeString = (String) request.getAttribute(parameter);
+            parameterCodeString = (String)request.getAttribute(parameter);
         }
         if (parameterCodeString != null)
         {
