@@ -39,6 +39,9 @@
 		</td>
 	</tr>
 	</table>
+	<br/>
+
+	<span class="error"><html:errors/></span> 	
 <br/>
 <br/>
 	<html:link page="/createGroupProperties.do?method=prepareCreateGroupProperties" paramId="objectCode" paramName="objectCode" ><bean:message key="link.groupPropertiesDefinition"/></html:link>

@@ -1784,9 +1784,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 			saveErrors(request, actionErrors);
 
 		}
-
-		return viewShiftsAndGroups(mapping, form, request, response);
+		return viewExecutionCourseProjects(mapping, form, request, response);
 	}
+	
 	public ActionForward deleteStudentGroup(
 		ActionMapping mapping,
 		ActionForm form,
