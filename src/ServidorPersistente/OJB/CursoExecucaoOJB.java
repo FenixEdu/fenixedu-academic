@@ -33,54 +33,61 @@ public class CursoExecucaoOJB
 	public void lockWrite(ICursoExecucao cursoExecucaoToWrite)
 		throws ExcepcaoPersistencia, ExistingPersistentException {
 
-			ICursoExecucao cursoExecucaoFromDB = null;
+		ICursoExecucao cursoExecucaoFromDB = null;
 
-			// If there is nothing to write, simply return.
-			if (cursoExecucaoToWrite == null)
-				return;
+		// If there is nothing to write, simply return.
+		if (cursoExecucaoToWrite == null)
+			return;
 
-			// Read cursoExecucao from database.
-			cursoExecucaoFromDB =
-				this.readByDegreeCurricularPlanAndExecutionYear(
-					cursoExecucaoToWrite.getCurricularPlan(),
-					cursoExecucaoToWrite.getExecutionYear());
+		// Read cursoExecucao from database.
+		cursoExecucaoFromDB =
+			this.readByDegreeCurricularPlanAndExecutionYear(
+				cursoExecucaoToWrite.getCurricularPlan(),
+				cursoExecucaoToWrite.getExecutionYear());
 
-			// If cursoExecucao is not in database, then write it.
-			if (cursoExecucaoFromDB == null)
-				super.lockWrite(cursoExecucaoToWrite);
-			// else If the cursoExecucao is mapped to the database, then write any existing changes.
-			else if (
-				(cursoExecucaoToWrite instanceof CursoExecucao)
-					&& ((CursoExecucao) cursoExecucaoFromDB)
-						.getCodigoInterno()
-						.equals(
-						((CursoExecucao) cursoExecucaoToWrite)
-							.getCodigoInterno())) {
-				super.lockWrite(cursoExecucaoToWrite);
-				// else Throw an already existing exception
-			} else
-				throw new ExistingPersistentException();
+		// If cursoExecucao is not in database, then write it.
+		if (cursoExecucaoFromDB == null)
+			super.lockWrite(cursoExecucaoToWrite);
+		// else If the cursoExecucao is mapped to the database, then write any existing changes.
+		else if (
+			(cursoExecucaoToWrite instanceof CursoExecucao)
+				&& ((CursoExecucao) cursoExecucaoFromDB)
+					.getCodigoInterno()
+					.equals(
+					((CursoExecucao) cursoExecucaoToWrite)
+						.getCodigoInterno())) {
+			super.lockWrite(cursoExecucaoToWrite);
+			// else Throw an already existing exception
+		} else
+			throw new ExistingPersistentException();
 	}
 
-	public void delete(ICursoExecucao executionDegree) throws ExcepcaoPersistencia {
+	public void delete(ICursoExecucao executionDegree)
+		throws ExcepcaoPersistencia {
 		// Delete all Classes associated
-		List classes = SuportePersistenteOJB.getInstance().getITurmaPersistente().readByExecutionDegree(executionDegree);
-		
+		List classes =
+			SuportePersistenteOJB
+				.getInstance()
+				.getITurmaPersistente()
+				.readByExecutionDegree(executionDegree);
+
 		Iterator iterator = classes.iterator();
-		while(iterator.hasNext()){
-			SuportePersistenteOJB.getInstance().getITurmaPersistente().delete((ITurma) iterator.next());
+		while (iterator.hasNext()) {
+			SuportePersistenteOJB.getInstance().getITurmaPersistente().delete(
+				(ITurma) iterator.next());
 		}
 		super.delete(executionDegree);
 	}
 
 	public void deleteAll() throws ExcepcaoPersistencia {
 		try {
-			String oqlQuery = "select all from " + CursoExecucao.class.getName();
+			String oqlQuery =
+				"select all from " + CursoExecucao.class.getName();
 			query.create(oqlQuery);
 			List result = (List) query.execute();
 			lockRead(result);
 			Iterator iterator = result.iterator();
-			while(iterator.hasNext()){
+			while (iterator.hasNext()) {
 				delete((ICursoExecucao) iterator.next());
 			}
 		} catch (QueryException ex) {
@@ -153,10 +160,12 @@ public class CursoExecucaoOJB
 
 			List result = (List) query.execute();
 			lockRead(result);
-			if (result.size() != 0)
+			if (result.size() != 0) {
 				return (ICursoExecucao) result.get(0);
-			else
+			} else {
 				return null;
+			}
+
 		} catch (QueryException e) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, e);
 		}
@@ -193,14 +202,15 @@ public class CursoExecucaoOJB
 		}
 	}
 
-	public List readMasterDegrees(String executionYear) throws ExcepcaoPersistencia{
+	public List readMasterDegrees(String executionYear)
+		throws ExcepcaoPersistencia {
 		try {
 			String oqlQuery =
 				"select all from " + CursoExecucao.class.getName();
 			oqlQuery += " where executionYear.year = $1"
-			+ " and ( curricularPlan.degree.tipoCurso = $2"
-			+ " or curricularPlan.degree.tipoCurso = $3"
-			+ " or curricularPlan.degree.tipoCurso = $4 )";
+				+ " and ( curricularPlan.degree.tipoCurso = $2"
+				+ " or curricularPlan.degree.tipoCurso = $3"
+				+ " or curricularPlan.degree.tipoCurso = $4 )";
 			query.create(oqlQuery);
 
 			query.bind(executionYear);
@@ -214,14 +224,19 @@ public class CursoExecucaoOJB
 		} catch (QueryException e) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, e);
 		}
-		
+
 	}
-	
-	public ICursoExecucao readByDegreeNameAndExecutionYear(String degreeName, IExecutionYear executionYear) throws ExcepcaoPersistencia {
+
+	public ICursoExecucao readByDegreeNameAndExecutionYear(
+		String degreeName,
+		IExecutionYear executionYear)
+		throws ExcepcaoPersistencia {
 		try {
-			String oqlQuery = "select all from " + CursoExecucao.class.getName()
-							+ " where executionYear.year = $1"
-							+ " and curricularPlan.degree.nome = $2";
+			String oqlQuery =
+				"select all from "
+					+ CursoExecucao.class.getName()
+					+ " where executionYear.year = $1"
+					+ " and curricularPlan.degree.nome = $2";
 			query.create(oqlQuery);
 
 			query.bind(executionYear.getYear());
