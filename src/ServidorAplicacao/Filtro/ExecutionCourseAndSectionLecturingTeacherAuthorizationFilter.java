@@ -118,7 +118,11 @@ public class ExecutionCourseAndSectionLecturingTeacherAuthorizationFilter
 		} catch (Exception e) {
 			return false;
 		}
-		return section.getSite().getExecutionCourse().equals(executionCourse);
+		
+		if(section == null)
+			return false;
+		else
+			return section.getSite().getExecutionCourse().equals(executionCourse);
 	}
 
 	/**
