@@ -19,8 +19,6 @@ import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
 
 import ServidorAplicacao.GestorServicos;
-import ServidorAplicacao.IUserView;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public abstract class ServiceTestCase extends TestCase {
 
