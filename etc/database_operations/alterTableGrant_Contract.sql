@@ -1,0 +1,3 @@
+ALTER TABLE `grant_contract` ADD `KEY_COST_CENTER` INT(11)  UNSIGNED
+
+ALTER TABLE `grant_contract_regime` ADD `KEY_COST_CENTER` INT(11)  UNSIGNED
