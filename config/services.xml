@@ -2612,14 +2612,6 @@
         </filterChains>
     </service>
     <service>
-        <name>GetEnrolmentGrade</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.commons.student.GetEnrolmentGrade</implementationClass>
-        <description/>
-        <isTransactional>false</isTransactional>
-        <filterChains/>
-    </service>
-    <service>
         <name>ReadStudentCurriculum</name>
         <implementationClass> 
             ServidorAplicacao.Servico.commons.student.ReadStudentCurriculum</implementationClass>
@@ -7024,7 +7016,7 @@
         <isTransactional>true</isTransactional>
         <filterChains/>
     </service>
-<service>
+	<service>
         <name>ReadInsuranceTransactionByStudentIDAndExecutionYearID</name>
         <implementationClass> 
             ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.transactions.ReadInsuranceTransactionByStudentIDAndExecutionYearID</implementationClass>
@@ -7371,4 +7363,14 @@
 		<description/>
 		<isTransactional>true</isTransactional>
 	</service>
+	<service>
+        <name>ReadStudentCurricularPlansByPersonAndCriteria</name>
+        <implementationClass>ServidorAplicacao.Servico.commons.student.ReadStudentCurricularPlansByPersonAndCriteria</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+		<filterChains/>
+<!--            <chain name="StudentCurriculumAccess"/>
+        </filterChains>-->
+    </service>
+
 </serviceDefinitions>
