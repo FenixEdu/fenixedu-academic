@@ -81,8 +81,8 @@ public class CreateMasterDegreeCandidate implements IServico {
 			
 			// Read the Execution of this degree in the current execution Year
 			
-			ICursoExecucao executionDegree = sp.getICursoExecucaoPersistente().readByDegreeNameAndExecutionYear(
-						 newMasterDegreeCandidate.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getInfoDegree().getNome(),
+			ICursoExecucao executionDegree = sp.getICursoExecucaoPersistente().readByDegreeCodeAndExecutionYear(
+						 newMasterDegreeCandidate.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getInfoDegree().getSigla(),
 						 Cloner.copyInfoExecutionYear2IExecutionYear(newMasterDegreeCandidate.getInfoExecutionDegree().getInfoExecutionYear()));
 			
 			// Create the Candidate
@@ -108,7 +108,7 @@ public class CreateMasterDegreeCandidate implements IServico {
 			// Generate the Candidate's number	
 			Integer number = sp.getIPersistentMasterDegreeCandidate().generateCandidateNumber(
 								masterDegreeCandidate.getExecutionDegree().getExecutionYear().getYear(),
-								masterDegreeCandidate.getExecutionDegree().getCurricularPlan().getDegree().getNome(), 
+								masterDegreeCandidate.getExecutionDegree().getCurricularPlan().getDegree().getSigla(), 
 								masterDegreeCandidate.getSpecialization());
 
 			masterDegreeCandidate.setCandidateNumber(number);

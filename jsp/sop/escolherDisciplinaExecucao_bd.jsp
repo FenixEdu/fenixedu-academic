@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 	   	<table width="100%" border="0" cellpadding="0" cellspacing="0">
           <tr>
-            <td class="infoselected"><p>A licenciatura seleccionada
+            <td class="infoselected"><p>O curso seleccionado
               &eacute;:</p>
 			  <strong><jsp:include page="context.jsp"/></strong>
             </td>
@@ -26,4 +26,4 @@
           <html:submit value="Procurar" styleClass="inputbutton">
            	  <bean:message key="label.search"/>
           </html:submit>
-        </html:form>    
+        </html:form>

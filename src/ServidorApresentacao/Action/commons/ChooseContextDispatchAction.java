@@ -36,6 +36,7 @@ import ServidorApresentacao.Action.sop.utils.RequestUtils;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import Util.TipoCurso;
 
 /**
  * @author jpvl
@@ -119,6 +120,16 @@ public class ChooseContextDispatchAction extends DispatchAction {
 						.getInfoDegreeCurricularPlan()
 						.getInfoDegree()
 						.getNome();
+
+				name =
+					infoExecutionDegree
+						.getInfoDegreeCurricularPlan()
+						.getInfoDegree()
+						.getTipoCurso()
+						.toString()
+						+ " de "
+						+ name;
+
 				name
 					+= duplicateInfoDegree(
 						executionDegreeList,
@@ -218,6 +229,16 @@ public class ChooseContextDispatchAction extends DispatchAction {
 					.getInfoDegreeCurricularPlan()
 					.getInfoDegree()
 					.getNome();
+
+			name =
+				infoExecutionDegree
+					.getInfoDegreeCurricularPlan()
+					.getInfoDegree()
+					.getTipoCurso()
+					.toString()
+					+ " de "
+					+ name;
+
 			name
 				+= duplicateInfoDegree(executionDegreeList, infoExecutionDegree)
 				? "-"

@@ -68,14 +68,14 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements IStudent
 				oqlQuery += " where student.number = $1";
 				oqlQuery += " and student.degreeType = $2";
 				oqlQuery += " and degreeCurricularPlan.name = $3";
-				oqlQuery += " and degreeCurricularPlan.degree.nome = $4";
+				oqlQuery += " and degreeCurricularPlan.degree.sigla = $4";
 				oqlQuery += " and currentState = $5";
 
 				query.create(oqlQuery);
 				query.bind(studentCurricularPlanToRead.getStudent().getNumber());
 				query.bind(studentCurricularPlanToRead.getStudent().getDegreeType());
 				query.bind(studentCurricularPlanToRead.getDegreeCurricularPlan().getName());
-				query.bind(studentCurricularPlanToRead.getDegreeCurricularPlan().getDegree().getNome());
+				query.bind(studentCurricularPlanToRead.getDegreeCurricularPlan().getDegree().getSigla());
 				query.bind(studentCurricularPlanToRead.getCurrentState());
 
 				List result = (List) query.execute();

@@ -7,7 +7,7 @@
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 	<table width="100%" cellpadding="0" cellspacing="0">
           <tr>
-            <td  class="infoselected"><p>A licenciatura seleccionada &eacute;:</p>
+            <td  class="infoselected"><p>O curso seleccionado &eacute;:</p>
 			  <strong><jsp:include page="context.jsp"/></strong>
             </td>
           </tr>

@@ -10,7 +10,8 @@
 	<html:hidden property="method" value="choose"/>
     <table width="100%">
     	<tr>
-        	<td class="infoop">Por favor, proceda &agrave; escolha da licenciatura pretendida.</td>
+        	<td class="infoop">Por favor, proceda &agrave; escolha
+            do curso pretendido.</td>
         </tr>
     </table>
 	<br />

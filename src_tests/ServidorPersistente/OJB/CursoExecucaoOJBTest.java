@@ -332,7 +332,7 @@ public class CursoExecucaoOJBTest extends TestCaseOJB {
 			persistentSupport.iniciarTransaccao();
 			IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
 			assertNotNull(executionYear);
-			ICursoExecucao result = persistentExecutionDegree.readByDegreeNameAndExecutionYear("Mestrado em Engenharia Electrotecnica e de Computadores", executionYear);
+			ICursoExecucao result = persistentExecutionDegree.readByDegreeCodeAndExecutionYear("MEEC", executionYear);
 			persistentSupport.confirmarTransaccao();
 			assertNotNull(result);
 

@@ -121,17 +121,17 @@ public class MasterDegreeCandidateOJB extends ObjectFenixOJB implements IPersist
     }
     
     
-	public Integer generateCandidateNumber(String executionYear, String degreeName, Specialization specialization) throws ExcepcaoPersistencia {
+	public Integer generateCandidateNumber(String executionYear, String degreeCode, Specialization specialization) throws ExcepcaoPersistencia {
 		try {
 			int number = 0;
 			String oqlQuery = "select all from " + MasterDegreeCandidate.class.getName()
 							+ " where executionDegree.executionYear.year = $1"
-							+ " and executionDegree.curricularPlan.degree.nome = $2"
+							+ " and executionDegree.curricularPlan.degree.sigla = $2"
 							+ " and specialization = $3"
 							+ " order by candidateNumber desc";
 			query.create(oqlQuery);
 			query.bind(executionYear);
-			query.bind(degreeName);
+			query.bind(degreeCode);
 			query.bind(specialization.getSpecialization());
 			List result = (List) query.execute();
 

@@ -1,6 +1,7 @@
 package ServidorApresentacao.Action.sop;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import org.apache.struts.util.LabelValueBean;
 import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
+import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -68,6 +70,10 @@ public class PrepararEscolherContextoFormAction extends Action {
 					"ReadExecutionDegreesByExecutionYear",
 					argsLerLicenciaturas);
 
+			Collections.sort(
+				executionDegreeList,
+				new ComparatorByNameForInfoExecutionDegree());
+
 			ArrayList licenciaturas = new ArrayList();
 
 			licenciaturas.add(new LabelValueBean("escolher", ""));
@@ -83,6 +89,16 @@ public class PrepararEscolherContextoFormAction extends Action {
 						.getInfoDegreeCurricularPlan()
 						.getInfoDegree()
 						.getNome();
+
+				name =
+					infoExecutionDegree
+						.getInfoDegreeCurricularPlan()
+						.getInfoDegree()
+						.getTipoCurso()
+						.toString()
+						+ " de "
+						+ name;						
+						
 				name
 					+= duplicateInfoDegree(
 						executionDegreeList,

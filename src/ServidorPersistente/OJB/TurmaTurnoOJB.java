@@ -41,7 +41,7 @@ public class TurmaTurnoOJB
 				+ " and turma.executionPeriod.executionYear.year = $3"
 				+ " and turma.executionDegree.executionYear.year = $4"
 				+ " and turma.executionDegree.curricularPlan.name = $5"
-				+ " and turma.executionDegree.curricularPlan.degree.nome = $6"
+				+ " and turma.executionDegree.curricularPlan.degree.sigla = $6"
 				// Unique from Shift
 				+ " and turno.nome = $7"
 				+ " and turno.disciplinaExecucao.sigla = $8"
@@ -54,7 +54,7 @@ public class TurmaTurnoOJB
 			query.bind(turma.getExecutionPeriod().getExecutionYear().getYear());
 			query.bind(turma.getExecutionDegree().getExecutionYear().getYear());
 			query.bind(turma.getExecutionDegree().getCurricularPlan().getName());
-			query.bind(turma.getExecutionDegree().getCurricularPlan().getDegree().getNome());
+			query.bind(turma.getExecutionDegree().getCurricularPlan().getDegree().getSigla());
 			
 			query.bind(turno.getNome());
 			query.bind(turno.getDisciplinaExecucao().getSigla());

@@ -9,6 +9,7 @@
 		<bean:define id="infoDegree" name="<%= SessionConstants.INFO_EXECUTION_DEGREE_KEY %>" property="infoDegreeCurricularPlan.infoDegree"scope="session" />
 	   	<bean:define id="infoExecutionPeriod" name="<%= SessionConstants.INFO_EXECUTION_PERIOD_KEY %>" scope="session"/>
 	   	<bean:define id="curricularYear" name="<%= SessionConstants.CURRICULAR_YEAR_KEY %>" scope="session"/>
+  		<jsp:getProperty name="infoDegree" property="tipoCurso" /> em 
 		<jsp:getProperty name="infoDegree" property="nome" />
 		<br/>
 		<bean:message key="label.year" arg0="<%= curricularYear.toString() %>" /> -	

@@ -9,6 +9,7 @@
 	<bean:define id="curricularCourses" name="component" property="associatedDegrees" />
 	<div id="associated-degrees">
 		<logic:iterate id="curricularCourse" name="curricularCourses" >
+			<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.tipoCurso"/> em 
 			<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.nome"/><br>
 		</logic:iterate>
 	</div>

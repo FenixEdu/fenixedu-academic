@@ -44,7 +44,7 @@ create table DEGREE (
    TYPE_DEGREE int(11) not null,
    primary key (ID_INTERNAL),
    unique U1 (CODE),
-   unique U2 (NAME)
+   unique U2 (NAME, TYPE_DEGREE)
 )type=InnoDB;
 
 -- ----------------------------

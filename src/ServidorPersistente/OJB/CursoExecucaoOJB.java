@@ -14,6 +14,11 @@ package ServidorPersistente.OJB;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.ojb.broker.PersistenceBroker;
+import org.apache.ojb.broker.query.Criteria;
+import org.apache.ojb.broker.query.Query;
+import org.apache.ojb.broker.query.QueryByCriteria;
+import org.apache.ojb.odmg.HasBroker;
 import org.odmg.QueryException;
 
 import Dominio.CursoExecucao;
@@ -125,20 +130,13 @@ public class CursoExecucaoOJB
 	 */
 	public List readByExecutionYear(IExecutionYear executionYear)
 		throws ExcepcaoPersistencia {
-		try {
-			String oqlQuery =
-				"select all from " + CursoExecucao.class.getName();
-			oqlQuery += " where executionYear.year = $1";
-			
-			query.create(oqlQuery);
-			query.bind(executionYear.getYear());
-			List result = (List) query.execute();
-			lockRead(result);
-			return result;
-		} catch (QueryException e) {
-			e.printStackTrace(System.out);
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, e);
-		}
+			PersistenceBroker broker = ((HasBroker) odmg.currentTransaction()).getBroker(); 
+
+			Criteria criteria = new Criteria();
+			criteria.addEqualTo("executionYear.year",executionYear.getYear());
+			criteria.addOrderBy("KEY_DEGREE_CURRICULAR_PLAN", true);
+			Query queryPB = new QueryByCriteria(CursoExecucao.class, criteria);
+			return (List) broker.getCollectionByQuery(queryPB);
 	}
 
 	/**
@@ -225,8 +223,8 @@ public class CursoExecucaoOJB
 
 	}
 
-	public ICursoExecucao readByDegreeNameAndExecutionYear(
-		String degreeName,
+	public ICursoExecucao readByDegreeCodeAndExecutionYear(
+		String degreeCode,
 		IExecutionYear executionYear)
 		throws ExcepcaoPersistencia {
 		try {
@@ -234,11 +232,11 @@ public class CursoExecucaoOJB
 				"select all from "
 					+ CursoExecucao.class.getName()
 					+ " where executionYear.year = $1"
-					+ " and curricularPlan.degree.nome = $2";
+					+ " and curricularPlan.degree.sigla = $2";
 			query.create(oqlQuery);
 
 			query.bind(executionYear.getYear());
-			query.bind(degreeName);
+			query.bind(degreeCode);
 
 			List result = (List) query.execute();
 			lockRead(result);

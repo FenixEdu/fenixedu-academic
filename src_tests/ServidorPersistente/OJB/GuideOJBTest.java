@@ -83,7 +83,7 @@ public class GuideOJBTest extends TestCaseOJB {
 			
 			IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
 			assertNotNull(executionYear);
-			ICursoExecucao executionDegree = persistentExecutionDegree.readByDegreeNameAndExecutionYear("Mestrado em Engenharia Electrotecnica e de Computadores", executionYear);
+			ICursoExecucao executionDegree = persistentExecutionDegree.readByDegreeCodeAndExecutionYear("MEEC", executionYear);
 			assertNotNull(executionDegree);
 			
 			
@@ -158,7 +158,7 @@ public class GuideOJBTest extends TestCaseOJB {
 
 			IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
 			assertNotNull(executionYear);
-			ICursoExecucao executionDegree = persistentExecutionDegree.readByDegreeNameAndExecutionYear("Mestrado em Engenharia Electrotecnica e de Computadores", executionYear);
+			ICursoExecucao executionDegree = persistentExecutionDegree.readByDegreeCodeAndExecutionYear("MEEC", executionYear);
 			assertNotNull(executionDegree);
 
 			guide.setExecutionDegree(executionDegree);
@@ -190,7 +190,7 @@ public class GuideOJBTest extends TestCaseOJB {
 
 				IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
 				assertNotNull(executionYear);
-				ICursoExecucao executionDegree = persistentExecutionDegree.readByDegreeNameAndExecutionYear("Mestrado em Engenharia Electrotecnica e de Computadores", executionYear);
+				ICursoExecucao executionDegree = persistentExecutionDegree.readByDegreeCodeAndExecutionYear("MEEC", executionYear);
 				assertNotNull(executionDegree);
 
 				Calendar date = Calendar.getInstance();

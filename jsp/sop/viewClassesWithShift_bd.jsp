@@ -5,7 +5,7 @@
 <%@ page import="java.util.List"%>
    	<table width="100%" border="0" cellpadding="0" cellspacing="0">
           <tr>
-            <td bgcolor="#FFFFFF" class="infoselected"><p>A licenciatura seleccionada
+            <td bgcolor="#FFFFFF" class="infoselected"><p>O curso seleccionado
               &eacute;:</p>
 			  <strong><jsp:include page="context.jsp"/></strong>
             </td>
