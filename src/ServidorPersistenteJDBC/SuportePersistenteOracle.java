@@ -19,19 +19,23 @@ public class SuportePersistenteOracle {
   private SuportePersistenteOracle(String filename) {
     UtilRelacionalOracle.inicializarBaseDados(filename);
   }
-  
+
+  /**
+   * 
+   *@deprecated
+   */
   public void apagarDados() {
-    try {
-      iniciarTransaccao();
-      try {
-        UtilRelacionalOracle.limparTabelas();
-      } catch (Exception e) {
-        cancelarTransaccao();
-      }
-      confirmarTransaccao();
-    } catch (Exception e) {
-      System.out.println("SuportePersistenteOracle.apagarDados: " + e.toString());
-    }
+//    try {
+//      iniciarTransaccao();
+//      try {
+//        UtilRelacionalOracle.limparTabelas();
+//      } catch (Exception e) {
+//        cancelarTransaccao();
+//      }
+//      confirmarTransaccao();
+//    } catch (Exception e) {
+//      System.out.println("SuportePersistenteOracle.apagarDados: " + e.toString());
+//    }
   }
   
   public int ultimoIdGerado() {

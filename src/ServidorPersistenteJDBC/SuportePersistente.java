@@ -27,7 +27,7 @@ public class SuportePersistente {
 	private static SuportePersistente _instance = null;
 
 	private SuportePersistente(String filename) {
-		UtilRelacional.inicializarBaseDados(filename);
+//		UtilRelacional.inicializarBaseDados(filename);
 	}
 	/**
 	 * 
