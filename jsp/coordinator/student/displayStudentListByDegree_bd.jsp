@@ -32,7 +32,8 @@
     		</tr>
      	<logic:iterate id="studentCP" name="studentList">
         	<bean:define id="studentLink">
-        		<bean:write name="link"/><bean:write name="studentCP" property="idInternal"/>
+        		<bean:write name="link"/><bean:write name="studentCP" property="idInternal"/>&amp;
+        		&amp;executionDegreeId=<bean:write name="infoExecutionDegree" property="idInternal"/>&amp;
         	</bean:define>
         <tr>
         	<td class="listClasses">

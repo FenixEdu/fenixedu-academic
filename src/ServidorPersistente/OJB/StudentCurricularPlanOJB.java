@@ -51,6 +51,17 @@ public class StudentCurricularPlanOJB
 
     }
 
+	public List readAllActiveStudentCurricularPlan(
+		Integer studentNumber)
+		throws ExcepcaoPersistencia
+	{
+		Criteria crit = new Criteria();
+		crit.addEqualTo("student.number", studentNumber);
+		crit.addEqualTo("currentState", new Integer(StudentCurricularPlanState.ACTIVE));
+		return queryList(StudentCurricularPlan.class, crit);
+
+	}
+
     public List readAllByDegreeCurricularPlanAndState(
         IDegreeCurricularPlan degreeCurricularPlan,
         StudentCurricularPlanState state)

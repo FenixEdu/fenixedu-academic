@@ -238,16 +238,26 @@ public class StudentCurriculumAuthorizationFilter extends AccessControlFilter
 					}
 					IStudentCurricularPlanPersistente persistentStudentCurricularPlan =
 						sp.getIStudentCurricularPlanPersistente();
-					IStudentCurricularPlan activeStudentCurricularPlan =
-						persistentStudentCurricularPlan.readActiveStudentCurricularPlan(
-							studentCurricularPlan.getStudent().getNumber(),
-							TipoCurso.LICENCIATURA_OBJ);
-
-					if (!coordinator
-						.getExecutionDegree()
-						.getCurricularPlan()
-						.getIdInternal()
-						.equals(activeStudentCurricularPlan.getDegreeCurricularPlan().getIdInternal()))
+					List activeStudentCurricularPlans = 
+						persistentStudentCurricularPlan.readAllActiveStudentCurricularPlan(
+							studentCurricularPlan.getStudent().getNumber());
+					System.out.println("activeStudentCurricularPlans.size= " + activeStudentCurricularPlans.size());
+					boolean hasAnActiveCurricularPlanThatCoincidesWithTheCoordinatorsCurricularPlan = false;
+					for (int i = 0; i < activeStudentCurricularPlans.size(); i++)
+					{
+						IStudentCurricularPlan activeStudentCurricularPlan = (IStudentCurricularPlan) activeStudentCurricularPlans.get(i);
+						if (coordinator
+							.getExecutionDegree()
+							.getCurricularPlan()
+							.getIdInternal()
+							.equals(
+								activeStudentCurricularPlan
+									.getDegreeCurricularPlan()
+									.getIdInternal())) {
+							hasAnActiveCurricularPlanThatCoincidesWithTheCoordinatorsCurricularPlan = true;
+						}	
+					}
+					if (!hasAnActiveCurricularPlanThatCoincidesWithTheCoordinatorsCurricularPlan)
 					{
 						return "noAuthorization";
 					}
