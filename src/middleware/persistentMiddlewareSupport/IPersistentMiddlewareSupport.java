@@ -33,4 +33,6 @@ public interface IPersistentMiddlewareSupport {
 	public IPersistentMWDisciplinaIleec getIPersistentMWDisciplinasIleec();
 	public IPersistentMWTipoEquivalenciaIleec getIPersistentMWTipoEquivalenciaIleec();
 	public IPersistentMWAreaCientificaIleec getIPersistentMWAreaCientificaIleec();
+	public IPersistentMWPrecedenciaDisciplinaDisciplinaIleec getIPersistentMWPrecedenciaDisciplinaDisciplinaIleec();
+	public IPersistentMWPrecedenciaNumeroDisciplinasIleec getIPersistentMWPrecedenciaNumeroDisciplinas();
 }

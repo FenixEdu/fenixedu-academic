@@ -13,7 +13,7 @@ import Util.PrecedenceScopeToApply;
 /**
  * @author jpvl
  */
-public interface IPersistentPrecedence {
+public interface IPersistentPrecedence extends IPersistentObject {
 
 
 	/**

@@ -2,8 +2,8 @@ package middleware.persistentMiddlewareSupport.OJBDatabaseSupport;
 
 import middleware.persistentMiddlewareSupport.IPersistentMWAluno;
 import middleware.persistentMiddlewareSupport.IPersistentMWAreaCientificaIleec;
-import middleware.persistentMiddlewareSupport.IPersistentMWAreaSecundariaIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMWAreaEspecializacaoIleec;
+import middleware.persistentMiddlewareSupport.IPersistentMWAreaSecundariaIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMWBranch;
 import middleware.persistentMiddlewareSupport.IPersistentMWCurricularCourse;
 import middleware.persistentMiddlewareSupport.IPersistentMWCurricularCourseOutsideStudentDegree;
@@ -14,6 +14,8 @@ import middleware.persistentMiddlewareSupport.IPersistentMWDisciplinaIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMWEnrolment;
 import middleware.persistentMiddlewareSupport.IPersistentMWEquivalenciaIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMWGrupoIleec;
+import middleware.persistentMiddlewareSupport.IPersistentMWPrecedenciaDisciplinaDisciplinaIleec;
+import middleware.persistentMiddlewareSupport.IPersistentMWPrecedenciaNumeroDisciplinasIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMWStudentClass;
 import middleware.persistentMiddlewareSupport.IPersistentMWTipoEquivalenciaIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMWUniversity;
@@ -141,4 +143,15 @@ public class PersistentMiddlewareSupportOJB implements IPersistentMiddlewareSupp
 	{
 		return new MWAreaCientificaIleecOJB();
 	}	
+
+	public IPersistentMWPrecedenciaDisciplinaDisciplinaIleec getIPersistentMWPrecedenciaDisciplinaDisciplinaIleec()
+	{
+
+		return new MWPrecedenciaDisciplinaDisciplinaIleecOJB();
+	}
+
+	public IPersistentMWPrecedenciaNumeroDisciplinasIleec getIPersistentMWPrecedenciaNumeroDisciplinas()
+	{
+		return new MWPrecedenciaNumeroDisciplinasIleecOJB();
+	}
 }

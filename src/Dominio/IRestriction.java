@@ -10,7 +10,7 @@ import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
  * @author jpvl
  */
 
-public interface IRestriction {
+public interface IRestriction extends IDomainObject{
 
 	public abstract IPrecedence getPrecedence();
 

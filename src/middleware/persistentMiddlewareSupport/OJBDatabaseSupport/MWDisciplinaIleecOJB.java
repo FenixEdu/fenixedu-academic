@@ -80,4 +80,11 @@ public class MWDisciplinaIleecOJB extends ObjectFenixOJB implements IPersistentM
 
 		return courses;
 	}
+	
+	public MWDisciplinaIleec readByIdInternal(Integer idInternal) throws ExcepcaoPersistencia
+	{
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("idDisciplina", idInternal);
+		return (MWDisciplinaIleec) queryObject(MWDisciplinaIleec.class, criteria);
+	}
 }

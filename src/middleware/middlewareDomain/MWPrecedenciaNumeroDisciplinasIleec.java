@@ -1,4 +1,15 @@
+/*
+ * Created on 16/Dez/2003
+ *
+ */
 package middleware.middlewareDomain;
+
+
+/**
+ * @author Nuno Correia
+ * @author Ricardo Rodrigues
+ *
+ */
 
 public class MWPrecedenciaNumeroDisciplinasIleec extends MWDomainObject
 {
@@ -19,7 +30,7 @@ public class MWPrecedenciaNumeroDisciplinasIleec extends MWDomainObject
 	{
 		return this.numeroDisciplinas;
 	}
-	
+
 	public void setNumeroDisciplinas(Integer param)
 	{
 		this.numeroDisciplinas = param;
@@ -37,7 +48,9 @@ public class MWPrecedenciaNumeroDisciplinasIleec extends MWDomainObject
 		if (obj instanceof MWPrecedenciaNumeroDisciplinasIleec)
 		{
 			MWPrecedenciaNumeroDisciplinasIleec mwpnd = (MWPrecedenciaNumeroDisciplinasIleec) obj;
-			result = getIdDisciplina().equals(mwpnd.getIdDisciplina()) && getNumeroDisciplinas().equals(mwpnd.getNumeroDisciplinas());
+			result =
+				getIdDisciplina().equals(mwpnd.getIdDisciplina())
+					&& getNumeroDisciplinas().equals(mwpnd.getNumeroDisciplinas());
 		}
 		return result;
 	}

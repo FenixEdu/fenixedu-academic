@@ -11,7 +11,7 @@ import Dominio.ICurricularCourse;
 /**
  * @author jpvl
  */
-public interface IPersistentRestriction {
+public interface IPersistentRestriction extends IPersistentObject {
 
 	/**
 	 * @param curricularCourse
