@@ -42,7 +42,7 @@ public class EditGrantContractMovementAction extends FenixDispatchAction
 		DynaValidatorForm grantContractMovementForm = (DynaValidatorForm) form;
 
 		Integer idGrantMovement = null;
-		Integer loaddb = null;
+		Integer loaddb = null;		
 		if (verifyParameterInRequest(request,"loaddb"))
 		{
 			loaddb = new Integer(request.getParameter("loaddb"));
@@ -114,9 +114,16 @@ public class EditGrantContractMovementAction extends FenixDispatchAction
 		IUserView userView = SessionUtils.getUserView(request);
 		try
 		{
-			infoGrantContractMovement = populateInfoFromForm(editGrantContractMovementForm);
+            infoGrantContractMovement = populateInfoFromForm(editGrantContractMovementForm);
 
-			Object[] args = { infoGrantContractMovement };
+            if (infoGrantContractMovement.getDepartureDate() != null
+                    && infoGrantContractMovement.getArrivalDate() != null
+                    && infoGrantContractMovement.getDepartureDate().after(
+                            infoGrantContractMovement.getArrivalDate())) {
+                return setError(request, mapping, "errors.grant.contract.movement.beginDateBeforeEnd", null, null);
+            }
+
+            Object[] args = { infoGrantContractMovement };
 			ServiceUtils.executeService(userView, "EditGrantContractMovement", args);
 
 			request.setAttribute("idContract", editGrantContractMovementForm.get("grantContractId"));

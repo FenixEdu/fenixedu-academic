@@ -33,7 +33,7 @@ public class CalculateStatGrantOwnerByCriteria implements IService {
                     .getIPersistentGrantContract();
             IPersistentGrantOwner persistentGrantOwner = suportePersistente.getIPersistentGrantOwner();
 
-            //Querys count
+            //Queries count
             Integer totalNumberOfGrantOwners = persistentGrantOwner.countAll();
             Integer numberOfGrantOwnersByCriteria = persistentGrantOwner.countAllByCriteria(
                     infoStatGrantOwner.getJustActiveContracts(), infoStatGrantOwner
