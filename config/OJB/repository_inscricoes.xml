@@ -1,70 +1,3 @@
-<!-- Please keep user defined mappings in this file only
-     to avoid mixing user defined and system mappings. -->
-<!-- Mapping of User defined classes starts here -->
-
-<!-- *************************************************************************************************************** -->
-<!-- Definitions for Dominio.Departamento -->
-<!-- *************************************************************************************************************** -->
-<class-descriptor class="Dominio.Departamento" table="DEPARTMENT">
-	<field-descriptor
-		name="codigoInterno"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	<field-descriptor
-		name="nome"
-		column="NAME"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="sigla"
-		column="CODE"
-		jdbc-type="VARCHAR"
-	/>
-	<collection-descriptor
-			name="disciplinasAssociadas"
-			collection-class="org.apache.ojb.broker.util.collections.ManageableHashSet"
-			element-class-ref="Dominio.DisciplinaDepartamento">
-		<inverse-foreignkey field-ref="chaveDepartamento"/>
-	</collection-descriptor>    
-</class-descriptor>   
-
-<!-- *************************************************************************************************************** -->
-<!-- Definitions for Dominio.DisciplinaDepartamento -->
-<!-- *************************************************************************************************************** -->
-<class-descriptor class="Dominio.DisciplinaDepartamento" table="DEPARTMENT_COURSE">
-	<field-descriptor
-		name="codigoInterno"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	<field-descriptor
-		name="nome"
-		column="NAME"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="sigla"
-		column="CODE"
-		jdbc-type="VARCHAR"
-	/>
-	<field-descriptor
-		name="chaveDepartamento"
-		column="KEY_DEPARTMENT"
-		jdbc-type="INTEGER"
-	/>
-	<reference-descriptor
-			name="departamento"
-			class-ref="Dominio.Departamento"
-			proxy="true">
-		<foreignkey field-ref="chaveDepartamento"/>
-	</reference-descriptor>     
-</class-descriptor>
-
 <!-- *************************************************************************************************************** -->
 <!-- Definitions for Dominio.Curso -->
 <!-- *************************************************************************************************************** -->
@@ -1016,6 +949,7 @@
 			proxy="false">
 		<foreignkey field-ref="personResponsibleForGradeKey"/>
 	</reference-descriptor>
+	
 	<reference-descriptor
 			name="employee"
 			class-ref="Dominio.Funcionario"

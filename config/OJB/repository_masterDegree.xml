@@ -59,6 +59,12 @@
 	     jdbc-type="DOUBLE"
 	  />
 
+	 <field-descriptor id="10"
+	     name="specializationArea"
+	     column="SPECIALIZATION_AREA"
+	     jdbc-type="VARCHAR"
+	  />
+
       	  <reference-descriptor
          	name="person"
          	class-ref="Dominio.Pessoa"

@@ -3,171 +3,171 @@
      *********************************** -->
 <class-descriptor class="Dominio.Pessoa"
                   table="PERSON">
-    <field-descriptor id="1"
+    <field-descriptor
         name="idInternal"
         column="ID_INTERNAL"
         jdbc-type="INTEGER"
         primarykey="true"
         autoincrement="true"
     />
-    <field-descriptor id="2"
+    <field-descriptor
         name="numeroDocumentoIdentificacao"
         column="DOCUMENT_ID_NUMBER"
         jdbc-type="VARCHAR"
     />
-    <field-descriptor id="3"
+    <field-descriptor
         name="localEmissaoDocumentoIdentificacao"
         column="EMISSION_LOCATION_OF_DOCUMENT_ID"
         jdbc-type="VARCHAR"
     />
-    <field-descriptor id="4"
+    <field-descriptor
         name="dataEmissaoDocumentoIdentificacao"
         column="EMISSION_DATE_OF_DOCUMENT_ID"
         jdbc-type="DATE"
     />
-    <field-descriptor id="5"
+    <field-descriptor
         name="dataValidadeDocumentoIdentificacao"
         column="EXPERATION_DATE_OF_DOCUMENT_ID"
         jdbc-type="DATE"
     />
-    <field-descriptor id="6"
+    <field-descriptor
         name="nome"
         column="NAME"
         jdbc-type="VARCHAR"
     />
-    <field-descriptor id="7"
+    <field-descriptor
         name="nascimento"
         column="DATE_OF_BIRTH"
         jdbc-type="DATE"
     />
-    <field-descriptor id="8"
+    <field-descriptor
         name="nomePai"
         column="NAME_OF_FATHER"
         jdbc-type="VARCHAR"
     />
-    <field-descriptor id="9"
+    <field-descriptor
         name="nomeMae"
         column="NAME_OF_MOTHER"
         jdbc-type="VARCHAR"
     />
-    <field-descriptor id="10"
+    <field-descriptor
         name="nacionalidade"
         column="NATIONALITY"
         jdbc-type="VARCHAR"
     />
-    <field-descriptor id="11"
+    <field-descriptor
         name="freguesiaNaturalidade"
         column="PARISH_OF_BIRTH"
         jdbc-type="VARCHAR"
     />
-    <field-descriptor id="12"
+    <field-descriptor
         name="concelhoNaturalidade"
         column="DISTRICT_SUBDIVISION_OF_BIRTH"
         jdbc-type="VARCHAR"
     />
-    <field-descriptor id="13"
+    <field-descriptor
         name="distritoNaturalidade"
         column="DISTRICT_OF_BIRTH"
         jdbc-type="VARCHAR"
     />
-    <field-descriptor id="14"
+    <field-descriptor
         name="morada"
         column="ADDRESS"
         jdbc-type="VARCHAR"
     />
-    <field-descriptor id="15"
+    <field-descriptor
         name="localidade"
         column="AREA"
         jdbc-type="VARCHAR"
     />
-    <field-descriptor id="16"
+    <field-descriptor
         name="codigoPostal"
         column="AREA_CODE"
         jdbc-type="VARCHAR"
     />
-    <field-descriptor id="17"
+    <field-descriptor
         name="localidadeCodigoPostal"
         column="AREA_OF_AREA_CODE"
         jdbc-type="VARCHAR"
     />
-    <field-descriptor id="18"
+    <field-descriptor
         name="freguesiaMorada"
         column="PARISH_OF_RESIDENCE"
         jdbc-type="VARCHAR"
     />
-    <field-descriptor id="19"
+    <field-descriptor
         name="concelhoMorada"
         column="DISTRICT_SUBDIVISION_OF_RESIDENCE"
         jdbc-type="VARCHAR"
     />
-    <field-descriptor id="20"
+    <field-descriptor
         name="distritoMorada"
         column="DISTRICT_OF_RESIDENCE"
         jdbc-type="VARCHAR"
     />
-    <field-descriptor id="21"
+    <field-descriptor
         name="telefone"
         column="PHONE"
         jdbc-type="VARCHAR"
     />
-    <field-descriptor id="22"
+    <field-descriptor
         name="telemovel"
         column="MOBILE"
         jdbc-type="VARCHAR"
     />
-    <field-descriptor id="23"
+    <field-descriptor
         name="email"
         column="EMAIL"
         jdbc-type="VARCHAR"
     />
-    <field-descriptor id="24"
+    <field-descriptor
         name="enderecoWeb"
         column="WEB_ADRDRESS"
         jdbc-type="VARCHAR"
     />
-    <field-descriptor id="25"
+    <field-descriptor
         name="numContribuinte"
         column="SOCIAL_SECURITY_NUMBER"
         jdbc-type="VARCHAR"
     />
-    <field-descriptor id="26"
+    <field-descriptor
         name="profissao"
         column="PROFESSION"
         jdbc-type="VARCHAR"
     />
-    <field-descriptor id="27"
+    <field-descriptor
         name="username"
         column="USERNAME"
         jdbc-type="VARCHAR"
     />
-    <field-descriptor id="28"
+    <field-descriptor
         name="password"
         column="PASSWD"
         jdbc-type="VARCHAR"
     />
-    <field-descriptor id="29"
+    <field-descriptor
         name="chavePais"
         column="KEY_COUNTRY"
         jdbc-type="INTEGER"
     />
-    <field-descriptor id="30"
+    <field-descriptor
         name="codigoFiscal"
         column="FISCAL_CODE"
         jdbc-type="VARCHAR"
     />
-    <field-descriptor id="31"
+    <field-descriptor
         name="tipoDocumentoIdentificacao"
         column="TYPE_ID_DOCUMENT"
         jdbc-type="INTEGER"
 		conversion="ServidorPersistente.Conversores.JavaTipoDocId2SqlTipoDocIdFieldConversion"
     />
-    <field-descriptor id="32"
+    <field-descriptor
         name="sexo"
         column="SEX"
         jdbc-type="INTEGER"
 		conversion="ServidorPersistente.Conversores.JavaSexo2SqlSexoFieldConversion"
     />
-    <field-descriptor id="33"
+    <field-descriptor
         name="estadoCivil"
         column="MARITAL_STATUS"
         jdbc-type="INTEGER"
@@ -178,7 +178,7 @@
          class-ref="Dominio.Country"
          proxy="false"
     >
-         <foreignkey field-id-ref="29"/>
+         <foreignkey field-ref="chavePais"/>
     </reference-descriptor>
     <collection-descriptor
          name="personRoles"
@@ -192,6 +192,20 @@
       >
     	<fk-pointing-to-this-class  column="KEY_PERSON" />
     	<fk-pointing-to-element-class column="KEY_ROLE" />
+      </collection-descriptor>    
+
+    <collection-descriptor
+         name="manageableDepartmentCredits"
+         element-class-ref="Dominio.Department"
+         proxy="true"
+         indirection-table = "CREDITS_MANAGER_DEPARTMENT"
+         auto-retrieve="true"
+         refresh="true"
+         auto-update="false"
+         auto-delete="false"
+      >
+    	<fk-pointing-to-this-class  column="KEY_PERSON" />
+    	<fk-pointing-to-element-class column="KEY_DEPARTMENT" />
       </collection-descriptor>    
       
 </class-descriptor>

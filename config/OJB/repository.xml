@@ -6,6 +6,7 @@
 <!DOCTYPE descriptor-repository SYSTEM "repository.dtd" [
 <!ENTITY database SYSTEM "repository_database.xml">
 <!ENTITY internal SYSTEM "repository_internal.xml">
+<!ENTITY fenix-department SYSTEM "repository-department.xml">
 <!ENTITY secretaria SYSTEM "repository_secretaria.xml">
 <!ENTITY enrolment SYSTEM "repository_inscricoes.xml">
 <!ENTITY enrolment-precedences SYSTEM "repository-precedences.xml">
@@ -36,6 +37,7 @@
     &internal;
 
     <!-- include user defined mappings here -->
+	&fenix-department;
     &secretaria;
     &enrolment;
     &enrolment-precedences;
