@@ -60,6 +60,7 @@ public class CreateDeclaration implements IServico {
 		IRole role = null;
 		IPessoa person = null;
 		sp = SuportePersistenteOJB.getInstance();
+		
 		try {
 			studentCurricularPlan =
 				sp
@@ -69,19 +70,22 @@ public class CreateDeclaration implements IServico {
 					infoStudent.getDegreeType(), 
 					specialization);
 					
-	
+
 		} catch (ExistingPersistentException ex) {
 			throw new ExistingServiceException(ex);
 		} catch (ExcepcaoPersistencia ex) {
+			
 			FenixServiceException newEx =
 				new FenixServiceException("Persistence layer error");
 			newEx.fillInStackTrace();
 			throw newEx;
 		}
 
-		if (studentCurricularPlan == null)
-		    return null;
+		if (studentCurricularPlan.getIdInternal() == null) 
+			return null;
+		 
 		else
+		
 			return Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(studentCurricularPlan);
 			
 				
