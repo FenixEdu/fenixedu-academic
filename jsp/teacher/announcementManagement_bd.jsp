@@ -16,9 +16,9 @@
     <html:form action="/announcementManagementAction">
             <tr>
                 <td>
-					<html:link page="/announcementManagementAction.do?method=prepareCreateAnnouncement">
+					<div class="gen-button"><html:link page="/announcementManagementAction.do?method=prepareCreateAnnouncement">
 						<bean:message key="label.insertAnnouncement" />
-					</html:link>
+					</html:link></div>
 					<br />
 					<br />
                 </td>
@@ -32,7 +32,7 @@
                 </tr>
                	<tr>
                     <td>
-						<bean:write name="announcement" property="creationDate"/>
+						<span class="px10"><bean:write name="announcement" property="creationDate"/></span>
                     </td>
                 </tr>
                 <tr>
@@ -44,18 +44,15 @@
                 </tr>
                 <tr>
                 	<td>
-                		<bean:message key="label.lastModificationDate" /><bean:write name="announcement" property="lastModifiedDate"/>
+                		<span class="px10"><bean:message key="label.lastModificationDate" /><bean:write name="announcement" property="lastModifiedDate"/></span>
                 	</td>
             	</tr>
                 <tr>
                     <td>
-						<html:link page="/announcementManagementAction.do?method=prepareEditAnnouncement" indexId="index" indexed="true">
-							(<bean:message key="button.edit" />)
-						</html:link>
-						<html:link page="/announcementManagementAction.do?method=deleteAnnouncement" indexId="index" indexed="true">
-							(<bean:message key="button.delete" />)
-						</html:link>
-	                    &nbsp;&nbsp;
+						<div class="gen-button"><html:link page="/announcementManagementAction.do?method=prepareEditAnnouncement" indexId="index" indexed="true"><bean:message key="button.edit" />
+						</html:link></div>
+						<div class="gen-button"><html:link page="/announcementManagementAction.do?method=deleteAnnouncement" indexId="index" indexed="true"><bean:message key="button.delete" />
+						</html:link></div>
     	                <br />
     	                <br />
     	                <br />
