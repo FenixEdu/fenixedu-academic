@@ -131,9 +131,11 @@
 		<form-bean name="teacherForm"
 			type="org.apache.struts.validator.DynaValidatorForm"
                 dynamic="true">
-                <form-property name="professorShipTeachersIds" type="java.lang.Integer[]" />
-                <form-property name="responsibleTeachersIds" type="java.lang.Integer[]" />
 				<form-property name="number" type="java.lang.String" />
+        <form-property name="professorshipsListSize" type="java.lang.Integer" />
+        <form-property name="responsibleForListSize" type="java.lang.Integer" />
+				<form-property name="deletePS" type="java.lang.Boolean" />
+				<form-property name="deleteRF" type="java.lang.Boolean" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
 		
@@ -151,15 +153,13 @@
 				<form-property name="internalIds" type="java.lang.Integer[]" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
-		
+		<!--
 		<form-bean name="teacherForm"
 			type="org.apache.struts.validator.DynaValidatorForm"
                 dynamic="true">
-                <form-property name="professorShipTeachersIds" type="java.lang.Integer[]" />
-                <form-property name="responsibleTeachersIds" type="java.lang.Integer[]" />
 				<form-property name="number" type="java.lang.String" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
-		</form-bean>
+		</form-bean>-->
 		
 
 	  <!-- ========== EXECUTION PERIOD MANIPULATION ========== -->
@@ -211,6 +211,20 @@
 		<form-property name="username" type="java.lang.String"/>
 		<form-property name="page" type="java.lang.Integer"/>
       </form-bean>   
+
+	  <!-- ========== TEACHERS MANAGEMENT ========== -->
+
+	<form-bean name="teacherManagementForm"
+      			type="org.apache.struts.validator.DynaValidatorForm"
+      			dynamic="true">
+		<form-property name="teacherNumber" type="java.lang.String"/>
+		<form-property name="deletePS" type="java.lang.Boolean"/>
+		<form-property name="deleteRF" type="java.lang.Boolean"/>
+    <form-property name="professorshipsListSize" type="java.lang.Integer" />
+    <form-property name="responsibleForListSize" type="java.lang.Integer" />
+		<form-property name="page" type="java.lang.Integer" initial="0"/>
+      </form-bean>   
+
     </form-beans>
 
 	 <!-- ========== Global Exception Definitions ============================== -->
@@ -919,6 +933,25 @@
 			<forward name="Success" path="/password/newPasswordTemplate.jsp"/>
 		</action>
 		
+		
+		<!-- ================== Begin of Teachers Management ======================-->
+		<action path="/teachersManagement"
+				type="ServidorApresentacao.Action.manager.teachersManagement.TeachersManagementAction"
+				parameter="method"
+				name="teacherManagementForm"
+				scope="request"
+				validate="true"
+				input="/teachersManagement.do?method=prepareDissociateEC&amp;page=0">
+
+			<forward name="firstPage" path="df.page.firstPage"/>
+			<forward name="prepareDissociateEC" path="df.page.prepareDissociateEC"/>
+			<forward name="prepareDissociateECShowProfShipsAndRespFor" path="df.page.prepareDissociateECShowProfShipsAndRespFor"/>
+		</action>
+		
+		
+		<!-- ================== End of Teachers Management ======================-->
+		
+
 		<!-- ========== Merge Execution Courses ========== -->	
 	<action	name="chooseDegreesForExecutionCourseMerge"
 				type="ServidorApresentacao.Action.manager.MergeExecutionCourseDispatchionAction"

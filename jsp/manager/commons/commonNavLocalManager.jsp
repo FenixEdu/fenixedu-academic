@@ -23,12 +23,20 @@
 </strong></p>
 
 <p><strong>&raquo; 
+
 	<html:link page="/chooseDegreesForExecutionCourseMerge.do?method=prepareChooseDegreesAndExecutionPeriod">
-		Juntar Dsiciplinas Execução
+		Juntar Disciplinas Execução
 	</html:link>
 </strong></p>
 
 <p><strong>&raquo; 
+	<html:link page="/teachersManagement.do?method=firstPage">
+		<bean:message key="link.manager.teachersManagement" />
+	</html:link>
+</strong></p>
+
+<p><strong>&raquo; 
+
 	<html:link page="/manageCache.do?method=prepare">
 		Gest&atilde;o da Cache
 	</html:link>
@@ -48,7 +56,8 @@
 
 
 <p><strong>&raquo;
-	<html:link page="/generateNewPassword.do?method=prepare&page=0"><bean:message key="link.operator.newPassword" /></html:link>
-   </strong>	
-</p>
+	<html:link page="/generateNewPassword.do?method=prepare&page=0">
+		<bean:message key="link.operator.newPassword" />
+	</html:link>
+</strong></p>
 

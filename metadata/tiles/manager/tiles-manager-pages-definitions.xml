@@ -137,6 +137,23 @@
 	<definition name="df.page.manage-advisories" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/manageAdvisories_bd.jsp" />
 	</definition>	
+	
+	<!-- ========== TEACHERS MANAGEMENT ========== -->
+	<definition name="df.page.firstPage" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/teachersManagement/welcomeScreen.jsp" />
+		<put name="navLocal" value="/manager/teachersManagement/mainMenu.jsp" />
+	</definition>	
+
+	<definition name="df.page.prepareDissociateEC" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/teachersManagement/prepareDissociateEC.jsp" />
+		<put name="navLocal" value="/manager/teachersManagement/mainMenu.jsp" />
+	</definition>	
+
+	<definition name="df.page.prepareDissociateECShowProfShipsAndRespFor" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/teachersManagement/prepareDissociateECShowProfShipsAndRespFor.jsp" />
+		<put name="navLocal" value="/manager/teachersManagement/mainMenu.jsp" />
+	</definition>	
+
 	<!-- ========== ROLES MANIPULATION ========== -->
 	<definition name="df.page.manage-roles" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/manageRoles_bd.jsp" />

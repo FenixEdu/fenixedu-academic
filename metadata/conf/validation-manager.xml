@@ -313,6 +313,12 @@
       </field>
     </form>
 
+    <form name="teacherManagementForm">
+      <field property="teacherNumber" depends="required,integer" page="1" >
+        <arg0 key="label.manager.teacher.number" resource="true"/>
+      </field>
+    </form>
+
     </formset>
 </form-validation>
 

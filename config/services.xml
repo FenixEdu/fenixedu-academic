@@ -5346,5 +5346,24 @@
 			  <chain id="13"/>
 		</filterChains>
 	</service>
-	
+	<service>
+		<idInternal>454461</idInternal>
+		<name>ReadInfoTeacherByTeacherNumber</name>
+		<implementationClass>ServidorAplicacao.Servico.manager.teachersManagement.ReadInfoTeacherByTeacherNumber</implementationClass>
+		<description></description>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain id="13"/>
+		</filterChains>
+	</service>
+	<service>
+		<idInternal>454462</idInternal>
+		<name>DissociateProfessorShipsAndResponsibleFor</name>
+		<implementationClass>ServidorAplicacao.Servico.manager.teachersManagement.DissociateProfessorShipsAndResponsibleFor</implementationClass>
+		<description></description>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain id="13"/>
+		</filterChains>
+	</service>
 </serviceDefinitions>

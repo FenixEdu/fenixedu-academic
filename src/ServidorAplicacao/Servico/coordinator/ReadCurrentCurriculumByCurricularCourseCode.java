@@ -144,7 +144,6 @@ public class ReadCurrentCurriculumByCurricularCourseCode implements IServico
 
 		List scopes = new ArrayList();
 		
-//		curriculum.getCurricularCourse().getScopes();
 		CollectionUtils.collect(curriculum.getCurricularCourse().getScopes(), new Transformer()
 		{
 			public Object transform(Object arg0)
