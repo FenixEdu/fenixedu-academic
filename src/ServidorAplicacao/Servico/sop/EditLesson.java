@@ -123,8 +123,9 @@ public class EditLesson implements IServico {
 					valid(shift, newLesson);
 
 				if (result.isSUCESS() && resultB && infoShiftServiceResult.isSUCESS()) {
-					// TODO: Temporary solution to lock object for write. In the future we'll use readByUnique()
-					aula = (IAula) aulaPersistente.readByOId(aula, true);
+					//aula = (IAula) aulaPersistente.readByOId(aula, true);
+					aula = (IAula) aulaPersistente.readByOID(Aula.class, aula.getIdInternal());
+					aulaPersistente.simpleLockWrite(aula);
 					aula.setDiaSemana(aulaNova.getDiaSemana());
 					aula.setInicio(aulaNova.getInicio());
 					aula.setFim(aulaNova.getFim());
