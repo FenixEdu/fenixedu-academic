@@ -96,5 +96,19 @@ create table site (
    unique ID_INTERNAL (ID_INTERNAL, KEY_EXECUTION_COURSE))
    type=InnoDB comment="InnoDB free: 372736 kB";
 
+#----------------------------
+# Table structure for bibliographic_reference
+#----------------------------
+create table bibliographic_reference (
+   ID_INTERNAL int(50) not null auto_increment,
+   TITLE varchar(50) not null,
+   AUTHORS varchar(50) not null,
+   REFERENCE varchar(50) not null,
+   `YEAR` varchar(50) not null,
+   OPTIONAL int(11) not null default '0',
+   KEY_EXECUTION_COURSE int(11) not null default '0',
+   primary key (ID_INTERNAL),
+   unique U1 (TITLE, AUTHORS, REFERENCE, `YEAR`))
+   type=MyISAM;
 
 
