@@ -222,13 +222,6 @@
         <isTransactional>false</isTransactional>
     </filter>
     <filter>
-        <name>DegreeAndMasterAdministrativeOfficeAuthorization</name>
-        <implementationClass> 
-            ServidorAplicacao.Filtro.DegreeAndMasterAdministrativeOfficeAuthorizationFilter</implementationClass>
-        <description/>
-        <isTransactional>false</isTransactional>
-    </filter>
-    <filter>
         <name>CandidacyAccess</name>
         <implementationClass>
             ServidorAplicacao.Filtro.Seminaries.CandidacyAccessFilter</implementationClass>
