@@ -167,30 +167,30 @@ public class DownloadStudentList extends FenixAction
                         (InfoGroupProperties) projectsIterator.next();
                     int projectIdInternal = infoGroupProperties.getIdInternal().intValue();
                     int groupNumber = -1;
-                    int shiftCode = -1;
-                    int executionCourseCode = -1;
-                    int groupPropertiesCode = -1;
-                    int studentGroupCode = -1;
+//                    int shiftCode = -1;
+//                    int executionCourseCode = -1;
+//                    int groupPropertiesCode = -1;
+//                    int studentGroupCode = -1;
                     Integer studentNumber = infoFrequenta.getAluno().getNumber();
                     for (Iterator groupsIterator = infosGroups.iterator(); groupsIterator.hasNext();)
                     {
                         InfoGroupProjectStudents groupInfo =
                             (InfoGroupProjectStudents) groupsIterator.next();
                         if (projectIdInternal
-                            == groupInfo.getStudentGroup().getGroupProperties().getIdInternal().intValue()
+                            == groupInfo.getStudentGroup().getInfoGroupProperties().getIdInternal().intValue()
                             && groupInfo.isStudentMemberOfThisGroup(studentNumber))
                         {
-                            groupNumber = groupInfo.getStudentGroup().getGroupNumber().intValue();
-                            studentGroupCode = groupInfo.getStudentGroup().getIdInternal().intValue();
-                            shiftCode =
-                                groupInfo.getStudentGroup().getShift().getIdInternal().intValue();
-                            executionCourseCode =
-                                groupInfo
-                                    .getStudentGroup()
-                                    .getGroupProperties()
-                                    .getExecutionCourse()
-                                    .getIdInternal()
-                                    .intValue();
+//                            groupNumber = groupInfo.getStudentGroup().getGroupNumber().intValue();
+//                            studentGroupCode = groupInfo.getStudentGroup().getIdInternal().intValue();
+//                            shiftCode =
+//                                groupInfo.getStudentGroup().getInfoShift().getIdInternal().intValue();
+//                            executionCourseCode =
+//                                groupInfo
+//                                    .getStudentGroup()
+//                                    .getInfoGroupProperties()
+//                                    .getInfoExecutionCourse()
+//                                    .getIdInternal()
+//                                    .intValue();
                             break;
                         }
                     }

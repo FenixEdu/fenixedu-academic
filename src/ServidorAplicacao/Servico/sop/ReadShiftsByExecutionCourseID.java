@@ -54,16 +54,11 @@ public class ReadShiftsByExecutionCourseID implements IServico {
 		try {
 			SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
 			
-			IExecutionCourse executionCourseTemp = new ExecutionCourse();
-			executionCourseTemp.setIdInternal(executionCourseID);
-			
-			
-			IExecutionCourse executionCourse = new ExecutionCourse();
-			executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse().readByOId(executionCourseTemp, false);
+			IExecutionCourse executionCourseTemp = new ExecutionCourse(executionCourseID);
+			IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse().readByOId(executionCourseTemp, false);
 	
 	
 			List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse);
-		
 		
 			infoExecutionCourseOccupancy.setInfoExecutionCourse(Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse));
 			

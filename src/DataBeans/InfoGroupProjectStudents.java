@@ -6,8 +6,8 @@
 package DataBeans;
 import java.util.Iterator;
 import java.util.List;
+
 import Dominio.IStudent;
-import Dominio.IStudentGroup;
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
  *
@@ -17,12 +17,12 @@ import Dominio.IStudentGroup;
  */
 public class InfoGroupProjectStudents extends InfoObject
 {
-	private IStudentGroup studentGroup;
+	private InfoStudentGroup studentGroup;
 	private List studentList;
 	/**
 	 * @return
 	 */
-	public IStudentGroup getStudentGroup()
+	public InfoStudentGroup getStudentGroup()
 	{
 		return studentGroup;
 	}
@@ -36,7 +36,7 @@ public class InfoGroupProjectStudents extends InfoObject
 	/**
 	 * @param group
 	 */
-	public void setStudentGroup(IStudentGroup group)
+	public void setStudentGroup(InfoStudentGroup group)
 	{
 		studentGroup= group;
 	}

@@ -2,15 +2,11 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="org.apache.struts.action.Action" %>
-<%@ page import="java.util.List" %>
 <%@ page import="java.util.TreeMap" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="DataBeans.InfoGroupProperties" %>
 <%@ page import="DataBeans.InfoGroupProjectStudents" %>
 <%@ page import="java.util.Iterator" %>
-<%@ page import="java.util.Date" %>
-<%@ page import="Util.Data" %>
 <%@ page import="java.util.Calendar" %>
 <%@ page import="DataBeans.InfoLesson" %>
 
@@ -236,13 +232,13 @@
 					{
 					
 						InfoGroupProjectStudents groupInfo= (InfoGroupProjectStudents) groupsIterator.next();
-						if (projectIdInternal == groupInfo.getStudentGroup().getGroupProperties().getIdInternal().intValue() &&
+						if (projectIdInternal == groupInfo.getStudentGroup().getInfoGroupProperties().getIdInternal().intValue() &&
 							groupInfo.isStudentMemberOfThisGroup(studentNumber))
 						{
 							groupNumber = groupInfo.getStudentGroup().getGroupNumber().intValue();
 							studentGroupCode = groupInfo.getStudentGroup().getIdInternal().intValue();
-							shiftCode = groupInfo.getStudentGroup().getShift().getIdInternal().intValue();
-							executionCourseCode = groupInfo.getStudentGroup().getGroupProperties().getExecutionCourse().getIdInternal().intValue();
+							shiftCode = groupInfo.getStudentGroup().getInfoShift().getIdInternal().intValue();
+							executionCourseCode = groupInfo.getStudentGroup().getInfoGroupProperties().getInfoExecutionCourse().getIdInternal().intValue();
 							break;
 						}
 					}

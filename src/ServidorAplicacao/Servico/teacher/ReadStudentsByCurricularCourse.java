@@ -1,8 +1,9 @@
 package ServidorAplicacao.Servico.teacher;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 
 import DataBeans.ISiteComponent;
 import DataBeans.InfoSiteCommon;
@@ -12,11 +13,9 @@ import DataBeans.TeacherAdministrationSiteView;
 import DataBeans.util.Cloner;
 import Dominio.CurricularCourseScope;
 import Dominio.ExecutionCourse;
-import Dominio.Enrolment;
-import Dominio.Frequenta;
 import Dominio.ICurricularCourseScope;
-import Dominio.IExecutionCourse;
 import Dominio.IEnrolment;
+import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.ISite;
 import Dominio.IStudent;
@@ -25,7 +24,6 @@ import ServidorAplicacao.Factory.TeacherAdministrationSiteComponentBuilder;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentCurricularCourseScope;
 import ServidorPersistente.IPersistentEnrolment;
@@ -35,17 +33,17 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
  * @author Fernanda Quitério
- * @author Tânia Pousão 
+ * @author Tânia Pousão
  * @author Ângela
- *
+ *  
  */
 public class ReadStudentsByCurricularCourse implements IServico
 {
     private static ReadStudentsByCurricularCourse _servico = new ReadStudentsByCurricularCourse();
 
     /**
-    	* The actor of this class.
-    	**/
+     * The actor of this class.
+     */
     private ReadStudentsByCurricularCourse()
     {
 
@@ -61,6 +59,7 @@ public class ReadStudentsByCurricularCourse implements IServico
 
     /**
      * Returns the _servico.
+     * 
      * @return ReadExecutionCourse
      */
     public static ReadStudentsByCurricularCourse getService()
@@ -68,78 +67,45 @@ public class ReadStudentsByCurricularCourse implements IServico
         return _servico;
     }
 
-    public Object run(Integer executionCourseCode, Integer scopeCode)
-        throws ExcepcaoInexistente, FenixServiceException
+    public Object run( Integer executionCourseCode, Integer scopeCode ) throws ExcepcaoInexistente,
+                    FenixServiceException
     {
-
-        List infoStudentList = new ArrayList();
+        List infoStudentList = null;
         ISite site = null;
-        IExecutionCourse executionCourse = null;
         ICurricularCourseScope curricularCourseScope = null;
         try
         {
-            executionCourse = new ExecutionCourse();
-            executionCourse.setIdInternal(executionCourseCode);
-
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-            IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
-            executionCourse = (IExecutionCourse) executionCourseDAO.readByOId(executionCourse, false);
+
+            IExecutionCourse executionCourse = new ExecutionCourse();
+            executionCourse.setIdInternal(executionCourseCode);
 
             IPersistentSite persistentSite = sp.getIPersistentSite();
             site = persistentSite.readByExecutionCourse(executionCourse);
 
-            List studentsList = new ArrayList();
             if (scopeCode == null)
             {
-
-                //				all students that attend this execution course
-                IFrequentaPersistente frequentaPersistente = sp.getIFrequentaPersistente();
-                List attendList = frequentaPersistente.readByExecutionCourse(executionCourse);
-
-                Iterator iterStudent = attendList.listIterator();
-                while (iterStudent.hasNext())
-                {
-                    IFrequenta attend = (Frequenta) iterStudent.next();
-                    IStudent student = attend.getAluno();
-                    studentsList.add(student);
-                }
-            } else
+                infoStudentList = getAllAttendingStudents(sp, executionCourse);
+            }
+            else
             {
-
                 curricularCourseScope = new CurricularCourseScope();
                 curricularCourseScope.setIdInternal(scopeCode);
-                IEnrolment enrolmentForCriteria = new Enrolment();
-                enrolmentForCriteria.setCurricularCourseScope(curricularCourseScope);
-                IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
-                List enrolments = persistentEnrolment.readByCriteria(enrolmentForCriteria);
+                
+                infoStudentList = getCurricularCourseScopeStudents(curricularCourseScope, sp);
 
-                Iterator iterEnrolments = enrolments.listIterator();
-                while (iterEnrolments.hasNext())
-                {
-                    IEnrolment enrolment = (IEnrolment) iterEnrolments.next();
-                    IStudent student = enrolment.getStudentCurricularPlan().getStudent();
-                    studentsList.add(student);
-                }
-
-                IPersistentCurricularCourseScope persistentCurricularCourseScope =
-                    sp.getIPersistentCurricularCourseScope();
-                curricularCourseScope =
-                    (ICurricularCourseScope) persistentCurricularCourseScope.readByOId(
-                        curricularCourseScope,
-                        false);
+                IPersistentCurricularCourseScope persistentCurricularCourseScope = sp
+                                .getIPersistentCurricularCourseScope();
+                curricularCourseScope = (ICurricularCourseScope) persistentCurricularCourseScope
+                                .readByOId(curricularCourseScope, false);
 
             }
 
-            Iterator iterStudents = studentsList.listIterator();
-
-            while (iterStudents.hasNext())
-            {
-
-                IStudent student = (IStudent) iterStudents.next();
-                InfoStudent infoStudent = Cloner.copyIStudent2InfoStudent(student);
-                infoStudentList.add(infoStudent);
-            }
-        } catch (ExcepcaoPersistencia ex)
+            TeacherAdministrationSiteView siteView = createSiteView(infoStudentList, site, curricularCourseScope);
+            return siteView;
+            
+        }
+        catch (ExcepcaoPersistencia ex)
         {
             ex.printStackTrace();
             FenixServiceException newEx = new FenixServiceException("");
@@ -147,20 +113,66 @@ public class ReadStudentsByCurricularCourse implements IServico
             throw newEx;
         }
 
+    }
+
+    private List getCurricularCourseScopeStudents( ICurricularCourseScope curricularCourseScope, ISuportePersistente sp ) throws ExcepcaoPersistencia
+    {
+        List infoStudentList;
+        IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
+
+        List enrolments = persistentEnrolment.readByCurricularCourseScope(curricularCourseScope);
+
+        infoStudentList = (List) CollectionUtils.collect(enrolments, new Transformer()
+        {
+            public Object transform( Object input )
+            {
+                IEnrolment enrolment = (IEnrolment) input;
+                IStudent student = enrolment.getStudentCurricularPlan().getStudent();
+                InfoStudent infoStudent = Cloner.copyIStudent2InfoStudent(student);
+                return infoStudent;
+            }
+        });
+        return infoStudentList;
+    }
+
+    private List getAllAttendingStudents( ISuportePersistente sp, IExecutionCourse executionCourse ) throws ExcepcaoPersistencia
+    {
+        List infoStudentList;
+        //	all students that attend this execution course
+        IFrequentaPersistente frequentaPersistente = sp.getIFrequentaPersistente();
+        List attendList = frequentaPersistente.readByExecutionCourse(executionCourse);
+
+        infoStudentList = (List) CollectionUtils.collect(attendList, new Transformer()
+        {
+
+            public Object transform( Object input )
+            {
+                IFrequenta attend = (IFrequenta) input;
+                IStudent student = attend.getAluno();
+                InfoStudent infoStudent = Cloner.copyIStudent2InfoStudent(student);
+                return infoStudent;
+            }
+        });
+        return infoStudentList;
+    }
+
+    private TeacherAdministrationSiteView createSiteView( List infoStudentList, ISite site, ICurricularCourseScope curricularCourseScope ) throws FenixServiceException
+    {
         InfoSiteStudents infoSiteStudents = new InfoSiteStudents();
         infoSiteStudents.setStudents(infoStudentList);
+
         if (curricularCourseScope != null)
         {
-            infoSiteStudents.setInfoCurricularCourseScope(
-                Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope));
+            infoSiteStudents
+                            .setInfoCurricularCourseScope(Cloner
+                                            .copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope));
         }
-        TeacherAdministrationSiteComponentBuilder componentBuilder =
-            new TeacherAdministrationSiteComponentBuilder();
-        ISiteComponent commonComponent =
-            componentBuilder.getComponent(new InfoSiteCommon(), site, null, null, null);
+        TeacherAdministrationSiteComponentBuilder componentBuilder = new TeacherAdministrationSiteComponentBuilder();
+        ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site,
+                        null, null, null);
 
-        TeacherAdministrationSiteView siteView =
-            new TeacherAdministrationSiteView(commonComponent, infoSiteStudents);
+        TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(commonComponent,
+                        infoSiteStudents);
         return siteView;
     }
 }
