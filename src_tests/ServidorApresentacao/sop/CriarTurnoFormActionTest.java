@@ -182,10 +182,10 @@ public class CriarTurnoFormActionTest extends TestCasePresentation {
 		}
 
 		actionPerform();
-		verifyForwardPath("/naoExecutado.do");
+		verifyForwardPath("/criarTurno.jsp");
 
 		verifyActionErrors(
-			new String[] { "ServidorAplicacao.FenixServiceException" });
+			new String[] { "error.exception.existing" });
 	}
 
 }

@@ -102,10 +102,10 @@ public class ClassShiftManagerDispatchActionTest extends TestCasePresentation {
 		actionPerform();
 
 		//verify that there are errors
-		String[] errors = { "ServidorAplicacao.NotAuthorizedException" };
+		String[] errors = { "error.exception.existing" };
 		verifyActionErrors(errors);
 		
-		verifyForwardPath("/naoAutorizado.do");
+		verifyForwardPath("/viewShiftList.jsp");
 
 	}
 

@@ -182,8 +182,8 @@ public class CriarAulaFormActionTest extends TestCasePresentation {
 			System.out.println("Erro na invocacao do servico " + ex);
 		}
 		actionPerform();
-		verifyForwardPath("/naoExecutado.do");
+		verifyForwardPath("/criarAula.jsp");
 
-		verifyActionErrors(new String[] { "ServidorAplicacao.FenixServiceException" });	}
+		verifyActionErrors(new String[] { "error.exception.existing" });	}
 
 }
