@@ -40,7 +40,7 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente {
 	public ITurno readByNameAndExecutionCourse(String shiftName, IDisciplinaExecucao executionCourse)
 		throws ExcepcaoPersistencia {
 		Criteria crit = new Criteria();
-		crit.addEqualTo("keyExecutionCourse", executionCourse.getIdInternal());
+		crit.addEqualTo("disciplinaExecucao.idInternal", executionCourse.getIdInternal());
 		crit.addEqualTo("nome", shiftName);
 		return (ITurno) queryObject(Turno.class, crit);
 	}
