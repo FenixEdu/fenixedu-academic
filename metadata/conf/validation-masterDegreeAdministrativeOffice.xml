@@ -111,7 +111,7 @@
         <arg0 key="label.person.name" />
       </field>
       
-      <field property="identificationDocumentNumber" depends="required, integer" page="1">
+      <field property="identificationDocumentNumber" depends="required" page="1">
         <arg0 key="label.person.identificationDocumentNumber" />
       </field>
       
