@@ -113,7 +113,7 @@ public class MaxOfAcumulatedEnrollmentsRule extends SelectionUponMaximumNumberEn
      */
     private Integer getIncrementNAC(ICurricularCourse curricularCourse) {
 
-        if (this.studentCurricularPlan.getCurricularCourseAcumulatedEnrolments(curricularCourse).intValue() > 1)
+        if (this.studentCurricularPlan.getCurricularCourseAcumulatedEnrollments(curricularCourse).intValue() > 1)
             return curricularCourse.getMaximumValueForAcumulatedEnrollments();
         else
             return curricularCourse.getMinimumValueForAcumulatedEnrollments();

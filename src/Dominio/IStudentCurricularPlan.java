@@ -62,7 +62,7 @@ public interface IStudentCurricularPlan extends IDomainObject
 	public boolean isCurricularCourseApproved(ICurricularCourse curricularCourse);
 	public boolean isCurricularCourseEnrolled(ICurricularCourse curricularCourse);
     public void calculateStudentAcumulatedEnrollments();
-    public Integer getCurricularCourseAcumulatedEnrolments(ICurricularCourse curricularCourse);
+    public Integer getCurricularCourseAcumulatedEnrollments(ICurricularCourse curricularCourse);
 	public List getNotNeedToEnrollCurricularCourses();
 	public void setNotNeedToEnrollCurricularCourses(List notNeedToEnrollCurricularCourses);
 	// -------------------------------------------------------------

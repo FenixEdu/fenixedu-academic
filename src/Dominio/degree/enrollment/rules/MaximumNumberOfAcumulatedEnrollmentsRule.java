@@ -33,7 +33,7 @@ public class MaximumNumberOfAcumulatedEnrollmentsRule implements IEnrollmentRule
         {
             IEnrollment enrollment = (IEnrollment) this.studentCurricularPlan.getAllStudentEnrolledEnrollments().get(i);
             ICurricularCourse curricularCourse = enrollment.getCurricularCourse();
-            totalNAC += this.studentCurricularPlan.getCurricularCourseAcumulatedEnrolments(curricularCourse).intValue();
+            totalNAC += this.studentCurricularPlan.getCurricularCourseAcumulatedEnrollments(curricularCourse).intValue();
         }
 		
 		int maxNAC = this.studentCurricularPlan.getMaximumNumberOfAcumulatedEnrollments().intValue();
@@ -49,7 +49,7 @@ public class MaximumNumberOfAcumulatedEnrollmentsRule implements IEnrollmentRule
 		for(int i = 0; i < size; i++)
         {
             ICurricularCourse curricularCourse = (ICurricularCourse) curricularCoursesToBeEnrolledIn.get(i);
-            int ac = this.studentCurricularPlan.getCurricularCourseAcumulatedEnrolments(curricularCourse).intValue();
+            int ac = this.studentCurricularPlan.getCurricularCourseAcumulatedEnrollments(curricularCourse).intValue();
             if (ac > availableNACToEnroll)
             {
             	curricularCoursesToRemove.add(curricularCourse);
