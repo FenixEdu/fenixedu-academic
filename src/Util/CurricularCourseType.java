@@ -14,6 +14,12 @@ public class CurricularCourseType {
 	public static final int PROJECT_COURSE = 3;
 	public static final int TFC_COURSE = 4;
 
+
+	public static final CurricularCourseType NORMAL_COURSE_OBJ = new CurricularCourseType(CurricularCourseType.NORMAL_COURSE);
+	public static final CurricularCourseType OPTIONAL_COURSE_OBJ = new CurricularCourseType(CurricularCourseType.OPTIONAL_COURSE);
+	public static final CurricularCourseType PROJECT_COURSE_OBJ = new CurricularCourseType(CurricularCourseType.PROJECT_COURSE);
+	public static final CurricularCourseType TFC_COURSE_OBJ = new CurricularCourseType(CurricularCourseType.TFC_COURSE);
+
 	private Integer type;
 
 	public CurricularCourseType() {
