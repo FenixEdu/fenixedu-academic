@@ -665,7 +665,7 @@
 	<!-- change master degree proof form bean validation -->
 	<form name="changeMasterDegreeProofForm">
 		<field 	property="proofDateYear"
-	       		depends="required, validateDate" page="1">
+	       		depends="validateDate" page="1">
 	       	<arg0 key="label.masterDegree.administrativeOffice.proofDate" resource="true" />
 	        <var>
 	        	<var-name>month</var-name>
@@ -677,7 +677,7 @@
 	        </var>
         </field>
         <field 	property="thesisDeliveryDateYear"
-	       		depends="required, validateDate" page="1">
+	       		depends="validateDate" page="1">
 	       	<arg0 key="label.masterDegree.administrativeOffice.thesisDeliveryDate" resource="true" />
 	        <var>
 	        	<var-name>month</var-name>
