@@ -7,10 +7,9 @@
 package ServidorApresentacao;
 
 import java.util.Enumeration;
-import java.util.HashMap;
+import java.util.Map;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import ServidorAplicacao.GestorServicos;
@@ -58,18 +57,18 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 
 	public void testSuccessfulExecutionOfAction() {
 
-		doTest(	(HashMap) getItemsToPutInRequestForActionToBeTestedSuccessfuly(),
-				(HashMap) getItemsToPutInSessionForActionToBeTestedSuccessfuly(),
-				getSuccessfulForward(), (HashMap) getExistingAttributesListToVerifyInSuccessfulExecution(),
-				(HashMap) getNonExistingAttributesListToVerifyInSuccessfulExecution() );
+		doTest(	(Map) getItemsToPutInRequestForActionToBeTestedSuccessfuly(),
+				(Map) getItemsToPutInSessionForActionToBeTestedSuccessfuly(),
+				getSuccessfulForward(), (Map) getExistingAttributesListToVerifyInSuccessfulExecution(),
+				(Map) getNonExistingAttributesListToVerifyInSuccessfulExecution() );
 	}
 
 	public void testUnsuccessfulExecutionOfAction() {
 
-		doTest(	(HashMap) getItemsToPutInRequestForActionToBeTestedUnsuccessfuly(),
-				(HashMap) getItemsToPutInSessionForActionToBeTestedUnsuccessfuly(),
-				getUnsuccessfulForward(), (HashMap) getExistingAttributesListToVerifyInUnsuccessfulExecution(),
-				(HashMap) getNonExistingAttributesListToVerifyInUnsuccessfulExecution()	);
+		doTest(	(Map) getItemsToPutInRequestForActionToBeTestedUnsuccessfuly(),
+				(Map) getItemsToPutInSessionForActionToBeTestedUnsuccessfuly(),
+				getUnsuccessfulForward(), (Map) getExistingAttributesListToVerifyInUnsuccessfulExecution(),
+				(Map) getNonExistingAttributesListToVerifyInUnsuccessfulExecution()	);
 	}
    
 	/**
@@ -79,8 +78,8 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	 * @param existingAttributesList
 	 * @param nonExistingAttributesList
 	 */
-	protected void doTest(HashMap itemsToPutInRequest, HashMap itemsToPutInSession, String forward,
-	HashMap existingAttributesList, HashMap nonExistingAttributesList) {
+	protected void doTest(Map itemsToPutInRequest, Map itemsToPutInSession, String forward,
+	Map existingAttributesList, Map nonExistingAttributesList) {
 
 		String pathOfAction = getRequestPathInfoPathAction();
 		String nameOfAction = getRequestPathInfoNameAction();
@@ -195,7 +194,7 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	/**
 	 * This method must return a Map with all the items that should be in session to execute
 	 * the action successfuly.
-	 * The Map must be an HashMap and it's keys must be the SessionUtils string constants
+	 * The Map must be an Map and it's keys must be the SessionUtils string constants
 	 * correspondent to each object to put in session.
 	 * This method must return null if not to be used.
 	 */
@@ -206,7 +205,7 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	/**
 	 * This method must return a Map with all the items that should be in session to execute
 	 * the action unsuccessfuly.
-	 * The Map must be an HashMap and it's keys must be the SessionUtils string constants
+	 * The Map must be an Map and it's keys must be the SessionUtils string constants
 	 * correspondent to each object to put in session.
 	 * This method must return null if not to be used.
 	 */
@@ -217,7 +216,7 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	/**
 	 * This method must return a Map with all the items that should be in request (form) to execute
 	 * the action successfuly.
-	 * The Map must be an HashMap and it's keys must be the form fiel names
+	 * The Map must be an Map and it's keys must be the form fiel names
 	 * correspondent to each property to get out of the request.
 	 * This method must return null if not to be used.
 	 */
@@ -228,7 +227,7 @@ public abstract class TestCaseActionExecution extends TestCasePresentation {
 	/**
 	 * This method must return a Map with all the items that should be in request (form) to execute
 	 * the action unsuccessfuly.
-	 * The Map must be an HashMap and it's keys must be the form fiel names
+	 * The Map must be an Map and it's keys must be the form fiel names
 	 * correspondent to each property to get out of the request.
 	 * This method must return null if not to be used.
 	 */
