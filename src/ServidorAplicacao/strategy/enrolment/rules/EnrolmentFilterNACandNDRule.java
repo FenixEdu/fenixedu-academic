@@ -17,7 +17,7 @@ import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
  * or/and the maximum number of curricular courses that a student can be enrolled in one semester.
  */
 
-// NOTE DAVID-RICARDO: Esta regra para ser geral para todos os cursos TEM que ser a ultima a ser chamada
+// NOTE [DAVID]: Esta regra para ser geral para todos os cursos TEM que ser a ultima a ser chamada
 public class EnrolmentFilterNACandNDRule implements IEnrolmentRule {
 
 	public EnrolmentContext apply(EnrolmentContext enrolmentContext) {

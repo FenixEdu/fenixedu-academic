@@ -184,7 +184,7 @@ public class ShowAvailableCurricularCoursesForOptionWithoutRules implements ISer
 		return aprovedAndEnroledStudentCurricularCourses;
 	}
 
-	// FIXME DAVID-RICARDO: Eventualmente esta filtragem deverá ser feita dentro da própria regra.
+	// FIXME [DAVID]: Eventualmente esta filtragem deverá ser feita dentro da própria regra.
 	private List filterByExecutionCourses(List curricularCoursesList, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
 
 		ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();

@@ -57,7 +57,7 @@ public class ShowAvailableDegreesForOptionWithoutRules implements IServico {
 		return infoEnrolmentContext2;
 	}
 
-	// FIXME DAVID-RICARDO: Eventualmente esta filtragem deverá ser feita dentro da própria regra.
+	// FIXME [DAVID]: Eventualmente esta filtragem deverá ser feita dentro da própria regra.
 	private List filterByExecutionDegrees(List infoDegreesList, InfoExecutionPeriod infoExecutionPeriod) throws FenixServiceException {
 
 		try {

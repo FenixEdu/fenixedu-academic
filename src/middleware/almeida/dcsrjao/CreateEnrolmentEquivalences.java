@@ -325,13 +325,13 @@ public class CreateEnrolmentEquivalences extends LoadDataToFenix {
 		}
 
 		notaFinal = somaNotas / numeroNotas;
-		// NOTE DAVID-RICARDO: Qual a nota quando à mais que um enrolment para equivalencia?
+		// NOTE [DAVID]: Qual a nota quando à mais que um enrolment para equivalencia?
 		equivalentEnrolmentEvaluation.setGrade("" + notaFinal);
-		// NOTE DAVID-RICARDO: Quais são os restantes campos quando à mais que um enrolment para equivalencia?
+		// NOTE [DAVID]: Quais são os restantes campos quando à mais que um enrolment para equivalencia?
 		equivalentEnrolmentEvaluation.setEnrolmentEvaluationType(EnrolmentEvaluationType.EQUIVALENCE_OBJ);
 		equivalentEnrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ);
 		equivalentEnrolmentEvaluation.setEnrolment(newEnrolment);
-		// TODO DAVID-RICARDO: Quando o algoritmo do checksum estiver feito tem de ser actualizar este campo
+		// TODO [DAVID]: Quando o algoritmo do checksum estiver feito tem de ser actualizar este campo
 		equivalentEnrolmentEvaluation.setCheckSum(null);
 
 		return equivalentEnrolmentEvaluation;
@@ -489,13 +489,13 @@ public class CreateEnrolmentEquivalences extends LoadDataToFenix {
 	//		}
 	//
 	//		notaFinal = somaNotas / numeroNotas;
-	//		// NOTE DAVID-RICARDO: Qual a nota quando à mais que um enrolment para equivalencia?
+	//		// NOTE [DAVID]: Qual a nota quando à mais que um enrolment para equivalencia?
 	//		equivalentEnrolmentEvaluation.setGrade("" + notaFinal);
-	//		// NOTE DAVID-RICARDO: Quais são os restantes campos quando à mais que um enrolment para equivalencia?
+	//		// NOTE [DAVID]: Quais são os restantes campos quando à mais que um enrolment para equivalencia?
 	//		equivalentEnrolmentEvaluation.setEnrolmentEvaluationType(EnrolmentEvaluationType.EQUIVALENCE_OBJ);
 	//		equivalentEnrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ);
 	//		equivalentEnrolmentEvaluation.setEnrolment(newEnrolment);
-	//		// TODO DAVID-RICARDO: Quando o algoritmo do checksum estiver feito tem de ser actualizar este campo
+	//		// TODO [DAVID]: Quando o algoritmo do checksum estiver feito tem de ser actualizar este campo
 	//		equivalentEnrolmentEvaluation.setCheckSum(null);
 	//
 	//		return equivalentEnrolmentEvaluation;

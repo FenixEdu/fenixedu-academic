@@ -31,7 +31,7 @@ public class EnrolmentValidatePrecedenceDuringEnrolmentRule extends EnrolmentPre
 			if (this.contains(curricularCourseToApply, precedenceCurricularCourse)){
 				
 				if (!precedence.evaluate(enrolmentContext)){
-					// TODO DAVID-RICARDO: A mensagem tem de ser mais clara incluindo os nomes das disciplinas precedentes.
+					// TODO [DAVID]: A mensagem tem de ser mais clara incluindo os nomes das disciplinas precedentes.
 					enrolmentValidationResult.setErrorMessage(EnrolmentValidationResult.PRECEDENCE_DURING_ENROLMENT, precedenceCurricularCourse.getName());
 				}
 			}

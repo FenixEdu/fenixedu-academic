@@ -153,7 +153,7 @@ public class ChangeEnrolmentStateFromTemporarilyToEnroled implements IServico {
 			enrolmentEvaluation.setEnrolmentEvaluationType(enrolment.getEnrolmentEvaluationType());
 			enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
 			enrolmentEvaluation.setWhen(new Date());
-			// TODO DAVID-RICARDO: Quando o algoritmo do checksum estiver feito tem de ser actualizar este campo
+			// TODO [DAVID]: Quando o algoritmo do checksum estiver feito tem de ser actualizar este campo
 			enrolmentEvaluation.setCheckSum(null);
 			persistentEnrolmentEvaluation.lockWrite(enrolmentEvaluation);
 		} catch (ExcepcaoPersistencia e) {

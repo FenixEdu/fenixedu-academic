@@ -19,7 +19,7 @@ import Util.PrecedenceScopeToApply;
  */
 public class EnrolmentFilterPrecedenceSpanRule extends EnrolmentPrecedenceRule implements IEnrolmentRule {
 
-	//	NOTE DAVID-RICARDO: Esta regra para ser geral para todos os cursos TEM que ser chamada em penultimo
+	//	NOTE [DAVID]: Esta regra para ser geral para todos os cursos TEM que ser chamada em penultimo
 	protected void doApply(EnrolmentContext enrolmentContext, List precedenceList, List curricularCourseToApply) {
 		List curricularCourseScopesNotToStay = new ArrayList();
 		for (int i = 0; i < precedenceList.size(); i++) {

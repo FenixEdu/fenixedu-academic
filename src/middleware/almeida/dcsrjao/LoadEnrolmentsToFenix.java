@@ -405,7 +405,7 @@ public class LoadEnrolmentsToFenix extends LoadDataToFenix {
 		enrolmentEvaluation.setEnrolment(enrolment);
 		enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ); //		}
 		
-		//FIXME DAVID-RICARDO: As datas estão mal migradas
+		//FIXME [DAVID]: As datas estão mal migradas
 		if (almeida_enrolment.getDatexa() != null) {
 			Calendar newCalendar = Calendar.getInstance();
 			int year = 0;
@@ -450,7 +450,7 @@ public class LoadEnrolmentsToFenix extends LoadDataToFenix {
 		} else {
 			enrolmentEvaluation.setPersonResponsibleForGrade(null);
 		}
-		//	TODO DAVID-RICARDO: Quando o algoritmo do checksum estiver feito tem de ser actualizar este campo
+		//	TODO [DAVID]: Quando o algoritmo do checksum estiver feito tem de ser actualizar este campo
 		enrolmentEvaluation.setCheckSum(null);
 		writeElement(enrolmentEvaluation);
 		loader.numberElementsWritten--;
