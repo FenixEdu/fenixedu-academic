@@ -16,6 +16,9 @@ public class InfoSiteShiftsAndGroups extends DataTranferObject implements ISiteC
 	private List infoSiteGroupsByShiftList;
 	private InfoAttendsSet infoAttendsSet;
 	private InfoGroupProperties infoGroupProperties;
+	private Integer numberOfStudentsOutsideAttendsSet;
+	private Integer numberOfStudentsInsideAttendsSet;
+	
 	
 	/**
 	* @return
@@ -88,4 +91,22 @@ public class InfoSiteShiftsAndGroups extends DataTranferObject implements ISiteC
     public InfoGroupProperties getInfoGroupProperties() {
         return infoGroupProperties;
     }
+    
+    public Integer getNumberOfStudentsOutsideAttendsSet() {
+		return numberOfStudentsOutsideAttendsSet;
+	}
+
+	public void setNumberOfStudentsOutsideAttendsSet(Integer numberOfStudentsOutsideAttendsSet) {
+		this.numberOfStudentsOutsideAttendsSet = numberOfStudentsOutsideAttendsSet;
+	}
+
+    public Integer getNumberOfStudentsInsideAttendsSet() {
+		return numberOfStudentsInsideAttendsSet;
+	}
+
+	public void setNumberOfStudentsInsideAttendsSet(Integer numberOfStudentsInsideAttendsSet) {
+		this.numberOfStudentsInsideAttendsSet = numberOfStudentsInsideAttendsSet;
+	}
+
+    
 }

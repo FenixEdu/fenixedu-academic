@@ -1182,7 +1182,7 @@ public class TeacherAdministrationSiteComponentBuilder {
         return component;
     }
 
-    public List readExecutionCourseProjects(Integer executionCourseCode)
+    private List readExecutionCourseProjects(Integer executionCourseCode)
             throws ExcepcaoInexistente, FenixServiceException {
 
         List projects = null;
@@ -1245,7 +1245,7 @@ public class TeacherAdministrationSiteComponentBuilder {
         return component;
     }
 
-    public List readExecutionCourseNewProjectProposals(Integer executionCourseCode)
+    private List readExecutionCourseNewProjectProposals(Integer executionCourseCode)
             throws ExcepcaoInexistente, FenixServiceException {
 
         List projects = null;
@@ -1304,7 +1304,7 @@ public class TeacherAdministrationSiteComponentBuilder {
         return component;
     }
 
-    public List readExecutionCourseSentedProjectProposalsWaiting(Integer executionCourseCode)
+    private List readExecutionCourseSentedProjectProposalsWaiting(Integer executionCourseCode)
             throws ExcepcaoInexistente, FenixServiceException {
 
         List projects = null; 
@@ -1367,41 +1367,58 @@ public class TeacherAdministrationSiteComponentBuilder {
             InfoSiteShiftsAndGroups component, Integer groupPropertiesCode)
             throws FenixServiceException {
     	
+        IGroupProperties groupProperties = null; 
         
-        List infoSiteShiftsAndGroups = readShiftsAndGroups(groupPropertiesCode);
-        component.setInfoSiteGroupsByShiftList(infoSiteShiftsAndGroups);
-        InfoAttendsSet infoAttendsSet =  readAttendsSetCode(groupPropertiesCode);
-        component.setInfoAttendsSet(infoAttendsSet);
-        return component;
-    }
-
-    
-    
-    
-    public InfoAttendsSet readAttendsSetCode(Integer groupPropertiesCode)
-    throws FenixServiceException {
-
-    	IAttendsSet attendsSet = null;
-    	IGroupProperties groupProperties = null; 
-    	try {
+        try {
     		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-    		groupProperties = (IGroupProperties) sp
-			.getIPersistentGroupProperties().readByOID(
-					GroupProperties.class, groupPropertiesCode);
+    		groupProperties = (IGroupProperties) sp.getIPersistentGroupProperties()
+    		.readByOID(GroupProperties.class, groupPropertiesCode);
     		
-    		if(groupProperties == null)return null;
-    		
-    		attendsSet = groupProperties.getAttendsSet(); 
-
-    	} catch (ExcepcaoPersistencia e) {
-
+        List infoSiteShiftsAndGroups = readShiftsAndGroups(groupProperties);
+        component.setInfoSiteGroupsByShiftList(infoSiteShiftsAndGroups);
+        Integer numberOfStudentsOutsideAttendsSet = readNumberOfStudentsOutsideAttendsSet(groupProperties);
+        component.setNumberOfStudentsOutsideAttendsSet(numberOfStudentsOutsideAttendsSet);
+        Integer numberOfStudentsInsideAttendsSet = readNumberOfStudentsInsideAttendsSet(groupProperties);
+        component.setNumberOfStudentsInsideAttendsSet(numberOfStudentsInsideAttendsSet);
+        InfoAttendsSet infoAttendsSet =  readAttendsSetCode(groupProperties);
+        component.setInfoAttendsSet(infoAttendsSet);
+        
+        } catch (ExcepcaoPersistencia e) {
     		throw new FenixServiceException(e);
     	}
+        return component;
+    }
+    
+    
+    private InfoAttendsSet readAttendsSetCode(IGroupProperties groupProperties){
+
+    	IAttendsSet attendsSet = null;
+    	
+    	if(groupProperties == null)return null;
+    		
+    	attendsSet = groupProperties.getAttendsSet(); 
+
     	return InfoAttendsSet.newInfoFromDomain(attendsSet);
     }
     
     
-    public List readShiftsAndGroups(Integer groupPropertiesCode)
+    private Integer readNumberOfStudentsOutsideAttendsSet(IGroupProperties groupProperties){
+        
+    	if(groupProperties == null)return null;
+    	
+    	return groupProperties.getAttendsSet().getNumberOfStudentsNotInAttendsSet();
+    	
+    }
+    
+    private Integer readNumberOfStudentsInsideAttendsSet(IGroupProperties groupProperties){
+        
+    	if(groupProperties == null)return null;
+    	
+    	return groupProperties.getAttendsSet().getNumberOfStudentsInAttendsSet();
+    	
+    }
+    
+    private List readShiftsAndGroups(IGroupProperties groupProperties)
     throws ExcepcaoInexistente, FenixServiceException {
 
     	List infoSiteShiftsAndGroups = null;
@@ -1411,10 +1428,6 @@ public class TeacherAdministrationSiteComponentBuilder {
     		ITurnoPersistente persistentShift = sp.getITurnoPersistente();
     		IPersistentStudentGroup persistentStudentGroup = sp
 			.getIPersistentStudentGroup();
-
-    		IGroupProperties groupProperties = (IGroupProperties) sp
-			.getIPersistentGroupProperties().readByOID(
-					GroupProperties.class, groupPropertiesCode);
     
     		if(groupProperties == null)return null;
     
@@ -1888,7 +1901,7 @@ public class TeacherAdministrationSiteComponentBuilder {
     }
 
     
-    public InfoSiteShiftsAndGroups readShiftAndGroups(Integer groupPropertiesCode, Integer shiftCode)
+    private InfoSiteShiftsAndGroups readShiftAndGroups(Integer groupPropertiesCode, Integer shiftCode)
     throws ExcepcaoInexistente, FenixServiceException {
     	
     	InfoSiteShiftsAndGroups infoSiteShiftsAndGroups = new InfoSiteShiftsAndGroups();
@@ -1954,7 +1967,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	}
 
     
-    public List readStudentGroupAndStudents(Integer groupPropertiesCode, Integer shiftCode)
+    private List readStudentGroupAndStudents(Integer groupPropertiesCode, Integer shiftCode)
     throws ExcepcaoInexistente, FenixServiceException {
     	
     	List infoSiteStudentsAndShiftByStudentGroupList = new ArrayList();
@@ -2053,7 +2066,7 @@ public class TeacherAdministrationSiteComponentBuilder {
         return component;
     }
 
-    public InfoGroupProperties readGroupProperties(Integer groupPropertiesCode)
+    private InfoGroupProperties readGroupProperties(Integer groupPropertiesCode)
             throws ExcepcaoInexistente, FenixServiceException {
 
         IGroupProperties groupProperties = null;
@@ -2201,7 +2214,7 @@ public class TeacherAdministrationSiteComponentBuilder {
         return component;
     }
 
-    public InfoAttendsSet readAttendsSet(Integer attendsSetCode)
+    private InfoAttendsSet readAttendsSet(Integer attendsSetCode)
     throws FenixServiceException {
 
     	IAttendsSet attendsSet = null;

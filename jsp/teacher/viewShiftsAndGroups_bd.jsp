@@ -17,6 +17,8 @@
 <logic:present name="siteView" property="component">
 	<bean:define id="component" name="siteView" property="component" />
 	<bean:define id="infoAttendsSet" name="component" property="infoAttendsSet" />
+	<bean:define id="numberOfStudentsOutsideAttendsSet" name="component" property="numberOfStudentsOutsideAttendsSet" />
+	<bean:define id="numberOfStudentsInsideAttendsSet" name="component" property="numberOfStudentsInsideAttendsSet" />
 	<bean:define id="attendsSetCode" name="infoAttendsSet" property="idInternal" />
 	<bean:define id="onclick">
 		return confirm('<bean:message key="message.confirm.delete.groupProperties"/>')
@@ -37,8 +39,29 @@
 		<span class="error"><html:errors/></span> 	
 		<br/>
 		<br/>
-		
-		
+		<br/>
+		<logic:greaterThan name="numberOfStudentsOutsideAttendsSet" value="0">
+		<table align="left" width="95%" cellspacing='1' cellpadding='1'>	
+		<tbody>			
+			
+			<tr>
+				<td  class="listClasses">
+				<font color="red">ATENÇÃO: <b><bean:write name="numberOfStudentsOutsideAttendsSet"/></b> <bean:message key="message.numberOfStudentsOutsideAttendsSet"/></font>
+				</td>
+				<td  class="listClasses">
+				<html:link page="<%="/prepareInsertStudentsInAttendsSet.do?method=prepareInsertStudentsInAttendsSet&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")+ "&amp;attendsSetCode=" + attendsSetCode.toString()%>">
+    			<bean:message key="link.insertStudentsInAttendsSet"/>
+		    	</html:link>
+				</td>
+
+			</tr>
+	  </tbody>    
+	 </table>
+	 <br/>
+		<br/><br/>
+		<br/><br/>
+		</logic:greaterThan>
+			
 		<table width="95%" border="0" style="text-align: left;">
 		<tbody>
 		<b><bean:message key="label.groupPropertiesManagement"/></b>&nbsp
@@ -57,7 +80,8 @@
 			&nbsp;&nbsp;&nbsp;&nbsp;
 			<html:link page="<%= "/deleteGroupProperties.do?method=deleteGroupProperties&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="objectCode" paramName="objectCode" onclick='<%= onclick.toString() %>'>
 				<bean:message key="link.deleteGroupProperties"/>
-			</html:link>		
+			</html:link>
+			</tbody>
 		</table>
 	</logic:present>
 	
@@ -85,7 +109,28 @@
 		<br/>
 		<span class="error"><html:errors/></span> 	
 		<br/>
-		
+		<br/>
+	<logic:greaterThan name="numberOfStudentsOutsideAttendsSet" value="0">
+		<table align="left" width="95%" cellspacing='1' cellpadding='1'>	
+		<tbody>			
+			
+			<tr>
+				<td  class="listClasses">
+				<font color="red">ATENÇÃO: <b><bean:write name="numberOfStudentsOutsideAttendsSet"/></b> <bean:message key="message.numberOfStudentsOutsideAttendsSet"/></font>
+				</td>
+				<td  class="listClasses">
+				<html:link page="<%="/prepareInsertStudentsInAttendsSet.do?method=prepareInsertStudentsInAttendsSet&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")+ "&amp;attendsSetCode=" + attendsSetCode.toString()%>">
+    			<bean:message key="link.insertStudentsInAttendsSet"/>
+		    	</html:link>
+				</td>
+
+			</tr>
+	  </tbody>    
+	 </table>
+	 <br/>
+		<br/><br/>
+		<br/><br/>
+		</logic:greaterThan>
 		<table width="95%" border="0" style="text-align: left;">
 		<tbody>
 		<b><bean:message key="label.groupPropertiesManagement"/></b>&nbsp
@@ -105,6 +150,7 @@
 			<html:link page="<%= "/deleteGroupProperties.do?method=deleteGroupProperties&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="objectCode" paramName="objectCode" onclick='<%= onclick.toString() %>'>
 				<bean:message key="link.deleteGroupProperties"/>
 			</html:link>
+			</tbody>
 		</table>
 			</logic:notPresent>
 	
@@ -126,7 +172,28 @@
     	<br/>
 		 <span class="error"><html:errors/></span> 	
 		<br/>
-		
+		<br/>
+		<logic:greaterThan name="numberOfStudentsOutsideAttendsSet" value="0">
+		<table align="left" width="95%" cellspacing='1' cellpadding='1'>	
+		<tbody>			
+			
+			<tr>
+				<td  class="listClasses">
+				<font color="red">ATENÇÃO: <b><bean:write name="numberOfStudentsOutsideAttendsSet"/></b> <bean:message key="message.numberOfStudentsOutsideAttendsSet"/></font>
+				</td>
+				<td  class="listClasses">
+				<html:link page="<%="/prepareInsertStudentsInAttendsSet.do?method=prepareInsertStudentsInAttendsSet&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")+ "&amp;attendsSetCode=" + attendsSetCode.toString()%>">
+    			<bean:message key="link.insertStudentsInAttendsSet"/>
+		    	</html:link>
+				</td>
+
+			</tr>
+	  </tbody>    
+	 </table>
+	 <br/>
+		<br/><br/>
+		<br/><br/>
+		</logic:greaterThan>
 		
 		<table width="95%" border="0" style="text-align: left;">
 		<tbody>

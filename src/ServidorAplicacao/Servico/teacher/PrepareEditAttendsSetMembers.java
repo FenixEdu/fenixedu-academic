@@ -95,11 +95,6 @@ public class PrepareEditAttendsSetMembers implements IServico{
                 }
             }
             
-            Iterator iteratorFR = frequentasPossiveis.iterator();
-            while (iteratorFR.hasNext()) {
-            	IFrequenta frequentaA=(IFrequenta)iteratorFR.next();
-            	
-            }
             
             Iterator iterator2 = frequentasAttendsSet.iterator();
             IFrequenta frequenta = null;

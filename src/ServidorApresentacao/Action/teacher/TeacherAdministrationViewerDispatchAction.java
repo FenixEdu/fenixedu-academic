@@ -3098,6 +3098,85 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		return prepareEditAttendsSetMembers(mapping, form, request, response);
 	}
 
+	/////////////////
+	public ActionForward prepareInsertStudentsInAttendsSet(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws FenixActionException, FenixFilterException
+			{
+
+		HttpSession session = request.getSession(false);
+
+		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+
+		String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
+		Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
+		
+		String attendsSetCodeString = request.getParameter("attendsSetCode");
+		Integer attendsSetCode = new Integer(attendsSetCodeString);
+		
+		Integer objectCode = getObjectCode(request);
+
+		TeacherAdministrationSiteView siteView = (TeacherAdministrationSiteView) readSiteView(request,
+				null, null, null, null);
+		
+		Object args[] = {objectCode, groupPropertiesCode, attendsSetCode};
+		List infoStudentList = null;
+		try
+		{
+			infoStudentList = (List) ServiceManagerServiceFactory.executeService(userView,
+						"PrepareEditAttendsSetMembers", args);
+		} catch (FenixServiceException e)
+		{
+			throw new FenixActionException(e);
+		}
+		Collections.sort(infoStudentList, new BeanComparator("number"));
+		request.setAttribute("infoStudentList", infoStudentList);
+		return mapping.findForward("insertStudentsInAttendsSet");
+			}
+	
+	public ActionForward insertStudentsInAttendsSet(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws FenixActionException, FenixFilterException
+			{
+
+	    HttpSession session = request.getSession(false);
+	    UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
+	    Integer objectCode = getObjectCode(request);
+	    String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
+	    Integer groupPropertiesCode = new Integer(groupPropertiesCodeString);
+	    DynaActionForm insertAttendsSetForm = (DynaActionForm) form;
+	    List studentCodes = Arrays.asList((Integer[]) insertAttendsSetForm.get("studentCodesToInsert"));
+
+	    Object args[] = {objectCode, groupPropertiesCode, studentCodes};
+
+	    try
+	    {
+	        ServiceManagerServiceFactory.executeService(userView, "InsertAttendsSetMembers", args);
+	    } catch (ExistingServiceException e)
+	    {
+	        ActionErrors actionErrors = new ActionErrors();
+	        ActionError error = null;
+	        error = new ActionError("error.noAttendsSet");
+	        actionErrors.add("error.noAttendsSet", error);
+	        saveErrors(request, actionErrors);
+	        return prepareViewExecutionCourseProjects(mapping, form, request, response);
+	    } catch (InvalidSituationServiceException e)
+	    {
+	        ActionErrors actionErrors = new ActionErrors();
+	        ActionError error = null;
+	        error = new ActionError("errors.existing.studentInAttendsSet");
+	        actionErrors.add("errors.existing.studentInAttendsSet", error);
+	        saveErrors(request, actionErrors);
+	        return prepareInsertStudentsInAttendsSet(mapping, form, request, response);
+	    } catch (FenixServiceException e)
+	    {
+	        throw new FenixActionException(e);
+	    }
+	    return viewShiftsAndGroups(mapping, form, request, response);
+			}
+	
+	/////////////////
+	
 	public ActionForward deleteAttendsSetMembers(ActionMapping mapping, ActionForm form,
 					HttpServletRequest request, HttpServletResponse response)
 					throws FenixActionException, FenixFilterException

@@ -186,4 +186,59 @@ public class AttendsSet extends DomainObject implements IAttendsSet{
 		} 
 		return result;
 	}
+	
+	public Integer getNumberOfStudentsInAttendsSet(){
+	    return new Integer(attendInAttendsSet.size());
+	}
+	
+	public Integer getNumberOfStudentsNotInAttendsSet(){
+	    
+	    List frequentasPossiveis = new ArrayList();
+        List frequentasAttendsSet = new ArrayList();
+        List frequentasStudentNumbersInsert = new ArrayList();
+        frequentasAttendsSet.addAll(attendInAttendsSet); 
+	    List allGroupPropertiesExecutionCourse = groupProperties.getGroupPropertiesExecutionCourse();            
+        
+	    // Create List with all attends related with possible ExecutionCourses 
+	    
+        Iterator iterator = allGroupPropertiesExecutionCourse.iterator();
+        while (iterator.hasNext()) {
+            IGroupPropertiesExecutionCourse groupPropertiesExecutionCourse = (IGroupPropertiesExecutionCourse)iterator.next(); 
+        	if(groupPropertiesExecutionCourse.getProposalState().getState().intValue()==1
+        		|| groupPropertiesExecutionCourse.getProposalState().getState().intValue()==2){
+            IExecutionCourse executionCourse = groupPropertiesExecutionCourse.getExecutionCourse();
+            List allExecutionCourseAttends = executionCourse.getAttends();
+            frequentasPossiveis.addAll(allExecutionCourseAttends);
+            }
+        }
+        
+        // Delete students in attendsSet from frequentasPossiveis
+        
+        Iterator iterator2 = frequentasAttendsSet.iterator();
+        IFrequenta frequenta = null;
+        while (iterator2.hasNext()) {
+            IAttendInAttendsSet attendInAttendsSet = (IAttendInAttendsSet)iterator2.next();
+        	frequenta = attendInAttendsSet.getAttend();
+        	frequentasStudentNumbersInsert.add(frequenta.getAluno().getNumber());
+        	
+        	if (frequentasPossiveis.contains(frequenta)) {
+        		frequentasPossiveis.remove(frequenta);
+        	}
+        }
+        
+        // Delete duplicate students from frequentasPossiveis
+        
+        List frequentasOutside = new ArrayList();
+        Iterator iteratorFreqPoss = frequentasPossiveis.iterator();
+        while (iteratorFreqPoss.hasNext()) {
+        	frequenta = (IFrequenta)iteratorFreqPoss.next();
+        	if(!frequentasStudentNumbersInsert.contains(frequenta.getAluno().getNumber())){
+        		
+        		frequentasStudentNumbersInsert.add(frequenta.getAluno().getNumber());
+                frequentasOutside.add(frequenta);
+        	}
+        }
+    return new Integer(frequentasOutside.size());    
+	}
+	
 }

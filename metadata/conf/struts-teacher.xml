@@ -410,6 +410,11 @@
             <form-property name="studentsToRemove" type="java.lang.String[]" />
             <form-property name="page" type="java.lang.Integer" initial="0"/>
         </form-bean>
+        <form-bean name="insertStudentsInAttendsSetForm" type="org.apache.struts.validator.DynaValidatorForm" 
+            dynamic="true">
+            <form-property name="studentCodesToInsert" type="java.lang.Integer[]" />
+            <form-property name="page" type="java.lang.Integer" initial="0"/>
+        </form-bean>
 						
         <form-bean name="showCandidacies" type="org.apache.struts.validator.DynaValidatorForm" 
             dynamic="true">
@@ -1549,7 +1554,26 @@
             <forward name="viewAttendsSet" path="/viewAttendsSet.jsp"/>
             <forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
         </action>
-
+		<action path="/prepareInsertStudentsInAttendsSet" name="insertStudentsInAttendsSetForm" parameter="method" 
+            scope="request" 
+            input="/prepareInsertStudentsInAttendsSet.do?method=prepareInsertStudentsInAttendsSet&amp;page=0" 
+            validate="true" 
+            type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
+            <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException" 
+                key="ServidorApresentacao.Action.exceptions.NonExistingActionException" 
+                handler="ServidorApresentacao.config.FenixErrorExceptionHandler" />
+            <forward name="insertStudentsInAttendsSet" path="/insertStudentsInAttendsSet.jsp"/>
+        </action>
+		<action path="/insertStudentsInAttendsSet" name="insertStudentsInAttendsSetForm" parameter="method" 
+            scope="request" 
+            type="ServidorApresentacao.Action.teacher.TeacherAdministrationViewerDispatchAction">
+            <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException" 
+                key="ServidorApresentacao.Action.exceptions.NonExistingActionException" 
+                handler="ServidorApresentacao.config.FenixErrorExceptionHandler" />
+			<forward name="insertStudentsInAttendsSet" path="/insertStudentsInAttendsSet.jsp"/>
+            <forward name="viewShiftsAndGroups" path="/viewShiftsAndGroups.jsp"/>
+            <forward name="viewProjectsAndLink" path="/viewProjectsAndLink.jsp"/>
+        </action>
 
 
         <!-- FILE UPLOAD 	-->

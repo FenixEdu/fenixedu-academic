@@ -40,5 +40,7 @@ public interface IAttendsSet extends IDomainObject {
 	public IFrequenta getStudentAttend(IStudent student);
 	public List getStudentGroupsWithoutShift();
 	public List getStudentGroupsWithShift();
+	public Integer getNumberOfStudentsInAttendsSet();
+	public Integer getNumberOfStudentsNotInAttendsSet();
 	
 }
