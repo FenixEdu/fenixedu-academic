@@ -1,19 +1,4 @@
 #----------------------------------
-# Table structure for table student
-#----------------------------------
-DROP TABLE IF EXISTS STUDENT;
-CREATE TABLE STUDENT (
-  ID_INTERNAL int(11) unsigned NOT NULL auto_increment,
-  NUMBER smallint(10) unsigned NOT NULL default '0',
-  KEY_PERSON int(11) unsigned NOT NULL default '0',
-  STATE int(11) unsigned NOT NULL default '1',
-  DEGREE_TYPE integer(11) not null,
-  PRIMARY KEY  (ID_INTERNAL),
-  UNIQUE KEY U1 (NUMBER, DEGREE_TYPE),
-  UNIQUE KEY U2 (DEGREE_TYPE, KEY_PERSON)
-) TYPE=InnoDB;
-
-#----------------------------------
 # Table structure for degree
 #----------------------------------
 drop table if exists DEGREE;
