@@ -105,7 +105,7 @@ public class ExamExecutionCourseOJBTest extends TestCaseOJB {
 			ps.confirmarTransaccao();
 			exam.setSeason(new Season(Season.SEASON2));
 			ps.iniciarTransaccao();
-			executionCourse = ps.getIDisciplinaExecucaoPersistente().readByExecutionCourseInitialsAndExecutionPeriod("EP",executionPeriod);
+			executionCourse = ps.getIDisciplinaExecucaoPersistente().readByExecutionCourseInitialsAndExecutionPeriod("IP",executionPeriod);
 			// Make sure test data set is ok
 			assertNotNull("testReadByExamExecutionCourse: test data (executionCourse) have been altered!!!",executionCourse);
 
@@ -118,6 +118,51 @@ public class ExamExecutionCourseOJBTest extends TestCaseOJB {
 			fail("testReadByDayAndBeginningAndExecutionCourse: unexpected exception: " + e);
 		}
 	}	
+
+	public void testReadByExecutionCourse() {
+			
+			IDisciplinaExecucao executionCourse = null;
+			IExecutionPeriod executionPeriod = null;
+			IExecutionYear executionYear = null;
+			IExam exam = null;
+			IExamExecutionCourse examExecutionCourse = null;
+			List exams=null;
+
+			try {
+				ps.iniciarTransaccao();
+				executionYear =	ps.getIPersistentExecutionYear().readExecutionYearByName("2002/2003");
+				executionPeriod =ps.getIPersistentExecutionPeriod().readByNameAndExecutionYear("2º Semestre", executionYear);
+				executionCourse = ps.getIDisciplinaExecucaoPersistente().readByExecutionCourseInitialsAndExecutionPeriod("RCI", executionPeriod);
+//				exam = (IExam) executionCourse.getAssociatedExams().get(0);
+				// Make sure test data set is ok
+				assertNotNull("testReadByExecutionCourse: test data (executionCourse) have been altered!!!",executionCourse);
+//				assertNotNull("testReadByExecutionCourse: test data (exans) have been altered!!!", exam);
+
+				// Read Existing
+				exams = ps.getIPersistentExamExecutionCourse().readByExecutionCourse(executionCourse);
+				assertNotNull("testReadByExecutionCourse: expected a result",exams);
+				assertEquals("testReadByExecutionCourse: expected a different number of exams",exams.size(),2);
+//				assertNotNull("testReadByExecutionCourse: expected a result",exams);
+
+				// Prepare for next test
+				ps.confirmarTransaccao();
+			
+				ps.iniciarTransaccao();
+				executionCourse = ps.getIDisciplinaExecucaoPersistente().readByExecutionCourseInitialsAndExecutionPeriod("IP",executionPeriod);
+				// Make sure test data set is ok
+				assertNotNull("testReadByExecutionCourse: test data (executionCourse) have been altered!!!",executionCourse);
+
+				// Read Non-Existing
+				exams =ps.getIPersistentExamExecutionCourse().readByExecutionCourse( executionCourse);
+				assertEquals("testReadByExecutionCourse: expected no result",	exams.size(),0);
+
+				ps.confirmarTransaccao();
+			} catch (ExcepcaoPersistencia e) {
+				fail("testReadByExecutionCourse: unexpected exception: " + e);
+			}
+		}	
+
+	
 
 	public void testLockWrite(){
 
