@@ -66,6 +66,40 @@ public class ExamExecutionCourseOJB
 		}
 	}
 
+	public List readByExecutionCourse(IDisciplinaExecucao executionCourse)
+		throws ExcepcaoPersistencia {
+		try {
+
+			String oqlQuery =
+				"select examexecutioncourse from "
+					+ ExamExecutionCourse.class.getName();
+
+			oqlQuery += " where executionCourse.sigla = $1";
+			oqlQuery += " and executionCourse.executionPeriod.name = $2";
+			oqlQuery
+				+= " and executionCourse.executionPeriod.executionYear.year = $3";
+
+			query.create(oqlQuery);
+
+			query.bind(executionCourse.getSigla());
+			query.bind(executionCourse.getExecutionPeriod().getName());
+			query.bind(
+				executionCourse
+					.getExecutionPeriod()
+					.getExecutionYear()
+					.getYear());
+
+			List result = (List) query.execute();
+			lockRead(result);
+
+			return result;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
+
+	
+
 	public List readAll() throws ExcepcaoPersistencia {
 		try {
 			String oqlQuery =
@@ -147,7 +181,7 @@ public class ExamExecutionCourseOJB
 		List examsExecutionCourses = readByCriteria(exam);
 		for (int i = 0; i < examsExecutionCourses.size(); i++) {
 			IExamExecutionCourse examExecutionCourse =
-				(IExamExecutionCourse) examsExecutionCourses.get(i);				
+				(IExamExecutionCourse) examsExecutionCourses.get(i);
 			super.delete(examExecutionCourse);
 		}
 	}
