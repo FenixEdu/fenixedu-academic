@@ -16,8 +16,6 @@ import framework.factory.ServiceManagerServiceFactory;
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  * 
- * TODO: VER COMO METER MSISDN E INTEGRAR AUTENTICAÇÃO (sugestão: colocar
- * hashmap de variáveis locais e adicionar o SENDERMSISDN)
  *  
  */
 public class SmsCommand {
