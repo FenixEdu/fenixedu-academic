@@ -6,5 +6,5 @@
   <tiles:put name="navLocal" value="" />
   <tiles:put name="body-context" value=""/>  
   <tiles:put name="body" value="/person/error_bd.jsp" />
-  <tiles:put name="footer" value="/person/commonFooter.jsp" />
+  <tiles:put name="footer" value="/copyright.jsp" />
 </tiles:insert>

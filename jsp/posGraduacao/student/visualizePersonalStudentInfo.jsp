@@ -6,5 +6,5 @@
   <tiles:put name="navGeral" value="/posGraduacao/commonNavGeralPosGraduacao.jsp" />
   <tiles:put name="body-context" value=""/>   
   <tiles:put name="body" value="/posGraduacao/student/visualizePersonalStudentInfo_bd.jsp" />
-  <tiles:put name="footer" value="/posGraduacao/commonFooter.jsp" />
+  <tiles:put name="footer" value="/copyright.jsp" />
 </tiles:insert>

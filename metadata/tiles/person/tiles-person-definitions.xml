@@ -9,7 +9,7 @@
 		<put name="navLocal" value="/person/mainMenu.jsp"/>
 		<put name="body-context" value=""/>
 		<put name="body" value="/person/welcomeScreen.jsp"/>
-		<put name="footer" value="/person/commonFooter.jsp"/>
+		<put name="footer" value="/copyright.jsp"/>
 	</definition>
 
 
