@@ -142,6 +142,22 @@
 	
 	
 	<!-- CREDITS related tiles =================================================================== -->
+
+	<!-- == USE CASE : Professorships management ================================================= -->
+    <definition name="search-for-teacherExecutionCourseAssociation-management" 
+        extends="facultyAdmOffice.masterPage">
+        <put name="body" value="search-for-teacherExecutionCourseAssociation-body"/>
+    </definition>
+    <definition name="search-for-teacherExecutionCourseAssociation-body" 
+        extends="teacher-search-form-layout">
+        <put name="searchInfo" value="label.search.for.teacherExecutionCourseAssociation.management"/>
+    </definition>
+    <definition name="show-teacher-professorships-for-management" 
+        extends="facultyAdmOffice.masterPage" >
+        <put name="body" 
+            value="/departmentAdmOffice/teacher/showTeacherProfessorshipsForManagement.jsp"/>
+    </definition>
+
 	<!-- == USE CASE : List Teacher Service Exemptions =========================================== -->
 	<definition name="searchTeacherFormForListServiceExemptions" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/credits/serviceExemption/searchTeacherFormForListServiceExemptions.jsp"></put>
