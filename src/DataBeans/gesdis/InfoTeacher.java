@@ -13,9 +13,10 @@ import DataBeans.InfoPerson;
 /**
  * @author jmota
  */
-public class InfoTeacher extends InfoPerson{
+public class InfoTeacher {
 
 	private Integer teacherNumber;
+	private InfoPerson infoPerson;
 	private List professorShipsExecutionCourses;
 	private List responsibleForExecutionCourses;
 
@@ -25,12 +26,16 @@ public class InfoTeacher extends InfoPerson{
 	public InfoTeacher() {
 		
 	}
+	public InfoTeacher(Integer teacherNumber,InfoPerson infoPerson) {
+		setTeacherNumber(teacherNumber);
+		setInfoPerson(infoPerson);
+		}
 
-
-	public InfoTeacher(Integer teacherNumber,List professorShipsExecutionCourses,List responsibleForExecutionCourses) {
+	public InfoTeacher(Integer teacherNumber,List professorShipsExecutionCourses,List responsibleForExecutionCourses,InfoPerson infoPerson) {
 			setTeacherNumber(teacherNumber);
 			setProfessorShipsExecutionCourses(professorShipsExecutionCourses);
 			setResponsibleForExecutionCourses(responsibleForExecutionCourses);
+		setInfoPerson(infoPerson);
 		}
 
 
@@ -80,4 +85,30 @@ public class InfoTeacher extends InfoPerson{
 		this.teacherNumber = teacherNumber;
 	}
 
+	/**
+	 * @return InfoPerson
+	 */
+	public InfoPerson getInfoPerson() {
+		return infoPerson;
+	}
+
+	/**
+	 * Sets the person.
+	 * @param person The person to set
+	 */
+	public void setInfoPerson(InfoPerson person) {
+		this.infoPerson = person;
+	}
+    
+	public boolean equals(Object obj) {
+		 boolean result = false;
+		 if (obj instanceof InfoTeacher) {
+			InfoTeacher infoTeacher = (InfoTeacher) obj;
+			 result = (infoTeacher!=null) && 
+				 getTeacherNumber().equals(infoTeacher.getTeacherNumber())
+					 && getInfoPerson().equals(infoTeacher.getInfoPerson());
+		 }
+		 return result;
+	 }
+    
 }

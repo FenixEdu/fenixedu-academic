@@ -35,7 +35,7 @@ public class ViewUtils {
 		
 		while (iter.hasNext()) {
 			InfoTeacher teacher =  (InfoTeacher) iter.next();
-			result.add(teacher.getNome());
+			result.add(teacher.getInfoPerson().getNome());
 		}
 		return result;
 	}

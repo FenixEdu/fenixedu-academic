@@ -29,6 +29,7 @@ import DataBeans.gesdis.InfoCurriculum;
 import DataBeans.gesdis.InfoItem;
 import DataBeans.gesdis.InfoSection;
 import DataBeans.gesdis.InfoSite;
+import DataBeans.gesdis.InfoTeacher;
 import Dominio.Announcement;
 import Dominio.Aula;
 import Dominio.BibliographicReference;
@@ -38,6 +39,7 @@ import Dominio.CurricularCourse;
 import Dominio.Curriculum;
 import Dominio.Curso;
 import Dominio.CursoExecucao;
+import Dominio.DegreeCurricularPlan;
 import Dominio.DisciplinaExecucao;
 import Dominio.Exam;
 import Dominio.ExecutionPeriod;
@@ -51,6 +53,7 @@ import Dominio.ICurricularCourse;
 import Dominio.ICurriculum;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
+import Dominio.IDegreeCurricularPlan;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExam;
 import Dominio.IExecutionPeriod;
@@ -58,22 +61,22 @@ import Dominio.IExecutionYear;
 import Dominio.IItem;
 import Dominio.IMasterDegreeCandidate;
 import Dominio.IPessoa;
-import Dominio.IDegreeCurricularPlan;
 import Dominio.IRole;
 import Dominio.ISala;
 import Dominio.ISection;
 import Dominio.ISite;
 import Dominio.IStudent;
+import Dominio.ITeacher;
 import Dominio.ITurma;
 import Dominio.ITurno;
 import Dominio.Item;
 import Dominio.MasterDegreeCandidate;
 import Dominio.Pessoa;
-import Dominio.DegreeCurricularPlan;
 import Dominio.Sala;
 import Dominio.Section;
 import Dominio.Site;
 import Dominio.Student;
+import Dominio.Teacher;
 import Dominio.Turma;
 import Dominio.Turno;
 import Util.TipoCurso;
@@ -1090,5 +1093,32 @@ public abstract class Cloner {
 
 		return exam;
 	}
+/**
+ * 
+ * @param teacher
+ * @return
+ */
+		public static InfoTeacher copyITeacher2InfoTeacher(ITeacher teacher) {
+			InfoTeacher infoTeacher = new InfoTeacher();
+			InfoPerson infoPerson = new InfoPerson();
+			infoPerson=copyIPerson2InfoPerson(teacher.getPerson());		
+			copyObjectProperties(infoTeacher, teacher);
+			infoTeacher.setInfoPerson(infoPerson);
 
+			return infoTeacher;
+		}
+	/**
+	 * 
+	 * @param infoTeacher
+	 * @return
+	 */
+	public static ITeacher copyInfoTeacher2Teacher(InfoTeacher infoTeacher) {
+				ITeacher teacher = new Teacher();		
+				IPessoa person = new Pessoa();
+				person=copyInfoPerson2IPerson(infoTeacher.getInfoPerson());
+				copyObjectProperties(teacher,infoTeacher);
+			    teacher.setPerson(person);
+
+				return teacher;
+			}		
 }

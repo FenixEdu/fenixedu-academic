@@ -125,7 +125,7 @@ public class InfoPerson {
 	public boolean equals(Object o) {
 		return ((o instanceof InfoPerson) &&
 				(numeroDocumentoIdentificacao.equals(((InfoPerson) o).getNumeroDocumentoIdentificacao())) &&
-				(tipoDocumentoIdentificacao	== ((InfoPerson) o).getTipoDocumentoIdentificacao()));
+				(tipoDocumentoIdentificacao.equals(((InfoPerson) o).getTipoDocumentoIdentificacao())));
 	}
 	
 	

@@ -86,7 +86,7 @@ public class PessoaOJB extends ObjectFenixOJB implements IPessoaPersistente {
             query.create(oqlQuery);
             query.bind(username);
             List result = (List) query.execute();
-            super.lockRead(result);
+            lockRead(result);
             if(result.size() != 0)
                 pessoa = (IPessoa) result.get(0);
             return pessoa;
