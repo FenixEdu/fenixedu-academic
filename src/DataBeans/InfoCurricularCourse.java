@@ -9,6 +9,7 @@ package DataBeans;
 import java.util.Iterator;
 import java.util.List;
 
+import Dominio.IUniversity;
 import Util.CurricularCourseExecutionScope;
 import Util.CurricularCourseType;
 
@@ -30,7 +31,7 @@ public class InfoCurricularCourse  extends InfoObject{
 	private CurricularCourseType type;
 	private CurricularCourseExecutionScope curricularCourseExecutionScope;
 	private Boolean mandatory;
-	private String universityCode;
+	private IUniversity university;
 
 	public InfoCurricularCourse() {
 	}
@@ -283,14 +284,6 @@ public class InfoCurricularCourse  extends InfoObject{
 		return mandatory.booleanValue();
 	}
 
-	public String getUniversityCode() {
-		return this.universityCode;
-	}
-
-	public void setUniversityCode(String universityCode) {
-		this.universityCode = universityCode;
-	}
-
 	public InfoCurricularCourseScope getInfoCurricularCourseScope(InfoBranch infoBranch, Integer semester) {
 		InfoCurricularCourseScope infoCurricularCourseScope = null;
 		Iterator iterator = this.getInfoScopes().iterator();
@@ -303,4 +296,12 @@ public class InfoCurricularCourse  extends InfoObject{
 		}
 		return infoCurricularCourseScope;
 	}
+	public IUniversity getUniversity() {
+		return university;
+	}
+
+	public void setUniversity(IUniversity university) {
+		this.university = university;
+	}
+
 }

@@ -235,10 +235,16 @@
 		jdbc-type="BIT"
 	/>
 	<field-descriptor
-		name="universityCode"
-		column="UNIVERSITY_CODE"
-		jdbc-type="VARCHAR"
+		name="universityKey"
+		column="KEY_UNIVERSITY"
+		jdbc-type="INTEGER"
 	/>
+	<reference-descriptor
+			name="university"
+			class-ref="Dominio.University"
+			proxy="true">
+		<foreignkey field-ref="universityKey"/> 
+	</reference-descriptor>
 	<reference-descriptor
 			name="departmentCourse"
 			class-ref="Dominio.DisciplinaDepartamento"
@@ -250,7 +256,7 @@
 			class-ref="Dominio.DegreeCurricularPlan"
 			proxy="false">
 		<foreignkey field-ref="degreeCurricularPlanKey"/>
-	</reference-descriptor> 
+	</reference-descriptor> -->
 	<collection-descriptor
 			name="associatedExecutionCourses"
 			element-class-ref="Dominio.DisciplinaExecucao"
@@ -679,6 +685,71 @@
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
+<!-- Definitions for Dominio.EnrolmentEquivalence -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="Dominio.EnrolmentEquivalence" table="ENROLMENT_EQUIVALENCE">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+		name="enrolmentKey"
+		column="KEY_ENROLMENT"
+		jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+		name="enrolment"
+		class-ref="Dominio.Enrolment"
+		proxy="false">
+		<foreignkey field-ref="enrolmentKey"/>
+	</reference-descriptor>
+    <collection-descriptor 
+    	name="equivalenceRestrictions" 
+    	element-class-ref="Dominio.EnrolmentEquivalenceRestriction" 
+    	proxy="true">
+	    <inverse-foreignkey field-ref="enrolmentEquivalenceKey"/>
+    </collection-descriptor> 
+</class-descriptor>
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for Dominio.EnrolmentEquivalenceRestriction -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="Dominio.EnrolmentEquivalenceRestriction" table="ENROLMENT_EQUIVALENCE_RESTRICTION">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+		name="enrolmentEquivalenceKey"
+		column="KEY_ENROLMENT_EQUIVALENCE"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="equivalentEnrolmentKey"
+		column="KEY_EQUIVALENT_ENROLMENT"
+		jdbc-type="INTEGER"
+	/>
+	<reference-descriptor
+		name="enrolmentEquivalence"
+		class-ref="Dominio.EnrolmentEquivalence"
+		proxy="false">
+		<foreignkey field-ref="enrolmentEquivalenceKey"/>
+	</reference-descriptor>
+	<reference-descriptor
+		name="equivalentEnrolment"
+		class-ref="Dominio.Enrolment"
+		proxy="false">
+		<foreignkey field-ref="equivalentEnrolmentKey"/>
+	</reference-descriptor>
+</class-descriptor>
+
+<!-- ************************************************************************************************************ -->
 <!-- Definitions for Dominio.CurricularCourseScope -->
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="Dominio.CurricularCourseScope" table="CURRICULAR_COURSE_SCOPE">
@@ -739,16 +810,17 @@
 		column="LAB_HOURS"
 		jdbc-type="DOUBLE"
 	/>
-<!--	<field-descriptor
+	<field-descriptor
 		name="credits"
 		column="CREDITS"
 		jdbc-type="DOUBLE"
 	/>
-	<field-descriptor
+<!--	<field-descriptor
 		name="executionYear"
 		column="EXECUTION_YEAR"
 		jdbc-type="INTEGER"
-	/>-->
+	/>
+-->	
 	<reference-descriptor
 			name="curricularCourse"
 			class-ref="Dominio.CurricularCourse"
@@ -933,71 +1005,6 @@
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.EnrolmentEquivalence -->
-<!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.EnrolmentEquivalence" table="ENROLMENT_EQUIVALENCE">
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	<field-descriptor
-		name="enrolmentKey"
-		column="KEY_ENROLMENT"
-		jdbc-type="INTEGER"
-	/>
-	<reference-descriptor
-		name="enrolment"
-		class-ref="Dominio.Enrolment"
-		proxy="false">
-		<foreignkey field-ref="enrolmentKey"/>
-	</reference-descriptor>
-    <collection-descriptor 
-    	name="equivalenceRestrictions" 
-    	element-class-ref="Dominio.EnrolmentEquivalenceRestriction" 
-    	proxy="true">
-	    <inverse-foreignkey field-ref="enrolmentEquivalenceKey"/>
-    </collection-descriptor> 
-</class-descriptor>
-
-<!-- ************************************************************************************************************ -->
-<!-- Definitions for Dominio.EnrolmentEquivalenceRestriction -->
-<!-- ************************************************************************************************************ -->
-<class-descriptor class="Dominio.EnrolmentEquivalenceRestriction" table="ENROLMENT_EQUIVALENCE_RESTRICTION">
-	<field-descriptor
-		name="idInternal"
-		column="ID_INTERNAL"
-		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
-	/>
-	<field-descriptor
-		name="enrolmentEquivalenceKey"
-		column="KEY_ENROLMENT_EQUIVALENCE"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="equivalentEnrolmentKey"
-		column="KEY_EQUIVALENT_ENROLMENT"
-		jdbc-type="INTEGER"
-	/>
-	<reference-descriptor
-		name="enrolmentEquivalence"
-		class-ref="Dominio.EnrolmentEquivalence"
-		proxy="false">
-		<foreignkey field-ref="enrolmentEquivalenceKey"/>
-	</reference-descriptor>
-	<reference-descriptor
-		name="equivalentEnrolment"
-		class-ref="Dominio.Enrolment"
-		proxy="false">
-		<foreignkey field-ref="equivalentEnrolmentKey"/>
-	</reference-descriptor>
-</class-descriptor>
-
-<!-- ************************************************************************************************************ -->
 <!-- Definitions for Dominio.CurricularCourseEquivalence -->
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="Dominio.CurricularCourseEquivalence" table="CURRICULAR_COURSE_EQUIVALENCE">
@@ -1062,5 +1069,27 @@
 	</reference-descriptor>
 </class-descriptor>
 
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for Dominio.University -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="Dominio.University" table="UNIVERSITY">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+		name="code"
+		column="CODE"
+		jdbc-type="VARCHAR"
+	/>
+	<field-descriptor
+		name="name"
+		column="NAME"
+		jdbc-type="VARCHAR"
+	/>
+</class-descriptor>
 
 <!-- Mapping of User defined classes ends here -->

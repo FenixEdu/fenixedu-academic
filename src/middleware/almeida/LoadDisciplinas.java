@@ -63,7 +63,7 @@ public class LoadDisciplinas extends LoadDataFile {
 	 */
 	private void processCurricularCourse(Almeida_disc almeida_disc) {
 		ICurricularCourse curricularCourse =
-			persistentObjectOJB.readCurricularCourse(
+			persistentObjectOJB.readCurricularCourseByNameAndDegreeIDAndCode(
 				almeida_disc.getNomedis(),
 				new Integer("" + almeida_disc.getCodcur()),
 				almeida_disc.getCoddis());

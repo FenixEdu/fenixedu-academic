@@ -20,6 +20,12 @@ public class InfoCurricularCourseScope extends InfoObject implements Serializabl
 	private Integer maxIncrementNac;
 	private Integer minIncrementNac;
 	private Integer weigth;
+	
+	private Double theoreticalHours;
+	private Double praticalHours;
+	private Double theoPratHours;
+	private Double labHours;
+	private Double credits;
 
 	public InfoCurricularCourseScope() {}
 
@@ -111,4 +117,44 @@ public class InfoCurricularCourseScope extends InfoObject implements Serializabl
 	public void setWeigth(Integer integer) {
 		weigth = integer;
 	}
+	public Double getCredits() {
+		return credits;
+	}
+
+	public Double getLabHours() {
+		return labHours;
+	}
+
+	public Double getPraticalHours() {
+		return praticalHours;
+	}
+
+	public Double getTheoPratHours() {
+		return theoPratHours;
+	}
+
+	public Double getTheoreticalHours() {
+		return theoreticalHours;
+	}
+
+	public void setCredits(Double double1) {
+		credits = double1;
+	}
+
+	public void setLabHours(Double double1) {
+		labHours = double1;
+	}
+
+	public void setPraticalHours(Double double1) {
+		praticalHours = double1;
+	}
+
+	public void setTheoPratHours(Double double1) {
+		theoPratHours = double1;
+	}
+
+	public void setTheoreticalHours(Double double1) {
+		theoreticalHours = double1;
+	}
+
 }

@@ -230,9 +230,9 @@
 
 	<target name="MigrateDataFromTablesToFenix"
 	        depends="compile-proj"
-	        description="Imports data from external data sources"
+	        description="Migrates data from Temporarily tables to FENIX"
 	>
-<!--		<java classname="middleware.almeida.dcsrjao.LoadCurramToFenix"
+		<java classname="middleware.almeida.dcsrjao.LoadCurramToFenix"
 			fork="yes"
 			failonerror="false"
 			maxmemory="128m"
@@ -247,7 +247,7 @@
 	            </fileset>
 	        </classpath>
 		</java>
-        <java classname="middleware.almeida.dcsrjao.LoadCurricularCoursesToFenix"
+		<java classname="middleware.almeida.dcsrjao.LoadEscolasToFenix"
 			fork="yes"
 			failonerror="false"
 			maxmemory="128m"
@@ -262,8 +262,7 @@
 	            </fileset>
 	        </classpath>
 		</java>
-		-->
-        <java classname="middleware.almeida.dcsrjao.LoadLEQEnrolmentsToFenix"
+       <java classname="middleware.almeida.dcsrjao.LoadCurricularCoursesToFenix"
 			fork="yes"
 			failonerror="false"
 			maxmemory="128m"
@@ -278,13 +277,67 @@
 	            </fileset>
 	        </classpath>
 		</java>
-   	</target>   	
+		
+        <java classname="middleware.almeida.dcsrjao.LoadEnrolmentsToFenix"
+			fork="yes"
+			failonerror="false"
+			maxmemory="128m"
+		>
+	    	<classpath>
+	        	<pathelement path="${webapp.classes}"/>
+	            <pathelement path="${config}"/>
+	            <pathelement path="${sql}"/>
+	            <pathelement path="${src}"/>
+	            <fileset dir="${webapp.lib}">
+	                <include name="**/*.jar"/>
+	            </fileset>
+	        </classpath>
+		</java>
+
+<!-- ************************************************************************************************* 
+		O maxmemory TEM de ser OBRIGATORIAMENTE 521m ou mais, 
+		caso contrario a migração rebenta por falta de Memoria
+ ************************************************************************************************* -->
+		<java classname="middleware.almeida.dcsrjao.CreateEnrolmentEquivalences"
+			fork="yes"
+			failonerror="false"
+			maxmemory="512m"
+		>
+	    	<classpath>
+	        	<pathelement path="${webapp.classes}"/>
+	            <pathelement path="${config}"/>
+	            <pathelement path="${sql}"/>
+	            <pathelement path="${src}"/>
+	            <fileset dir="${webapp.lib}">
+	                <include name="**/*.jar"/>
+	            </fileset>
+	        </classpath>
+		</java>
+<!-- ************************************************************************************************* 
+		isto é para sair, serve apenas enquanto se testa a aplicação com os dados migrados
+ ************************************************************************************************* -->
+		<java classname="middleware.almeida.dcsrjao.CreatetExecutionCoursesForLEQCurricularCourses"
+			fork="yes"
+			failonerror="false"
+			maxmemory="128m"
+		>
+	    	<classpath>
+	        	<pathelement path="${webapp.classes}"/>
+	            <pathelement path="${config}"/>
+	            <pathelement path="${sql}"/>
+	            <pathelement path="${src}"/>
+	            <fileset dir="${webapp.lib}">
+	                <include name="**/*.jar"/>
+	            </fileset>
+	        </classpath>
+		</java>
+	</target>   	
 
 	<target name="MigrateAlmeidaDataToTables"
 	        depends="compile-proj"
-	        description="Imports data from external data sources"
+	        description="Migrates data from Almeida files to Temporaryly Tables"
 	>
-        <java classname="middleware.almeida.dcsrjao.LoadAlmeidaCurricularCoursesCodesFromFileToTable"
+		<java classname="middleware.almeida.dcsrjao.LoadAlmeidaCurricularCoursesCodesFromFileToTable"
 			fork="yes"
 			failonerror="false"
 			maxmemory="128m"
@@ -314,7 +367,7 @@
 	            </fileset>
 	        </classpath>
 		</java>
-        <java classname="middleware.almeida.dcsrjao.LoadAlmeidaCurramFromFileToTable"
+<!--        <java classname="middleware.almeida.dcsrjao.LoadAlmeidaCurramFromFileToTable"
 			fork="yes"
 			failonerror="false"
 			maxmemory="128m"
@@ -329,7 +382,7 @@
 	            </fileset>
 	        </classpath>
 		</java>
-        <java classname="middleware.almeida.dcsrjao.LoadAlmeidaLEQEnrolmentsFromFileToTable"
+		<java classname="middleware.almeida.dcsrjao.LoadAlmeidaEscolasFromFileToTable"
 			fork="yes"
 			failonerror="false"
 			maxmemory="128m"
@@ -344,12 +397,28 @@
 	            </fileset>
 	        </classpath>
 		</java>
+        <java classname="middleware.almeida.dcsrjao.LoadAlmeidaEnrolmentsFromFileToTable"
+			fork="yes"
+			failonerror="false"
+			maxmemory="128m"
+		>
+	    	<classpath>
+	        	<pathelement path="${webapp.classes}"/>
+	            <pathelement path="${config}"/>
+	            <pathelement path="${sql}"/>
+	            <pathelement path="${src}"/>
+	            <fileset dir="${webapp.lib}">
+	                <include name="**/*.jar"/>
+	            </fileset>
+	        </classpath>
+		</java>
+-->
    	</target>   	
 	<target name="MigrateAllEnrolmentData"
 	        depends="compile-proj"
-	        description="Imports data from external data sources"
+	        description="Migrates data from Almeida files to FENIX"
 	> 	
-<!--		<java classname="middleware.almeida.dcsrjao.LoadAlmeidaCurricularCoursesCodesFromFileToTable"
+		<java classname="middleware.almeida.dcsrjao.LoadAlmeidaCurricularCoursesCodesFromFileToTable"
 			fork="yes"
 			failonerror="false"
 			maxmemory="128m"
@@ -394,7 +463,22 @@
 	            </fileset>
 	        </classpath>
 		</java>
-        <java classname="middleware.almeida.dcsrjao.LoadAlmeidaLEQEnrolmentsFromFileToTable"
+		<java classname="middleware.almeida.dcsrjao.LoadAlmeidaEscolasFromFileToTable"
+			fork="yes"
+			failonerror="false"
+			maxmemory="128m"
+		>
+	    	<classpath>
+	        	<pathelement path="${webapp.classes}"/>
+	            <pathelement path="${config}"/>
+	            <pathelement path="${sql}"/>
+	            <pathelement path="${src}"/>
+	            <fileset dir="${webapp.lib}">
+	                <include name="**/*.jar"/>
+	            </fileset>
+	        </classpath>
+		</java>
+        <java classname="middleware.almeida.dcsrjao.LoadAlmeidaEnrolmentsFromFileToTable"
 			fork="yes"
 			failonerror="false"
 			maxmemory="128m"
@@ -424,22 +508,7 @@
 	            </fileset>
 	        </classpath>
 		</java>
-        <java classname="middleware.almeida.dcsrjao.LoadCurricularCoursesToFenix"
-			fork="yes"
-			failonerror="false"
-			maxmemory="128m"
-		>
-	    	<classpath>
-	        	<pathelement path="${webapp.classes}"/>
-	            <pathelement path="${config}"/>
-	            <pathelement path="${sql}"/>
-	            <pathelement path="${src}"/>
-	            <fileset dir="${webapp.lib}">
-	                <include name="**/*.jar"/>
-	            </fileset>
-	        </classpath>
-		</java>		
-        <java classname="middleware.almeida.dcsrjao.LoadLEQEnrolmentsToFenix"
+		<java classname="middleware.almeida.dcsrjao.LoadEscolasToFenix"
 			fork="yes"
 			failonerror="false"
 			maxmemory="128m"
@@ -454,8 +523,7 @@
 	            </fileset>
 	        </classpath>
 		</java>
--->
-        <java classname="middleware.almeida.dcsrjao.CreateCurricularCoursesEquivalences"
+       <java classname="middleware.almeida.dcsrjao.LoadCurricularCoursesToFenix"
 			fork="yes"
 			failonerror="false"
 			maxmemory="128m"
@@ -470,5 +538,73 @@
 	            </fileset>
 	        </classpath>
 		</java>
-    </target>   	
+        <java classname="middleware.almeida.dcsrjao.LoadEnrolmentsToFenix"
+			fork="yes"
+			failonerror="false"
+			maxmemory="512m"
+		>
+	    	<classpath>
+	        	<pathelement path="${webapp.classes}"/>
+	            <pathelement path="${config}"/>
+	            <pathelement path="${sql}"/>
+	            <pathelement path="${src}"/>
+	            <fileset dir="${webapp.lib}">
+	                <include name="**/*.jar"/>
+	            </fileset>
+	        </classpath>
+		</java>
+        <java classname="middleware.almeida.dcsrjao.LoadCurricularCoursesEquivalencesFromFileToTable"
+			fork="yes"
+			failonerror="false"
+			maxmemory="512m"
+		>
+	    	<classpath>
+	        	<pathelement path="${webapp.classes}"/>
+	            <pathelement path="${config}"/>
+	            <pathelement path="${sql}"/>
+	            <pathelement path="${src}"/>
+	            <fileset dir="${webapp.lib}">
+	                <include name="**/*.jar"/>
+	            </fileset>
+	        </classpath>
+		</java>
+
+<!-- ************************************************************************************************* 
+		O maxmemory TEM de ser OBRIGATORIAMENTE 521m ou mais, 
+		caso contrario a migração rebenta por falta de Memoria
+ ************************************************************************************************* -->
+		<java classname="middleware.almeida.dcsrjao.CreateEnrolmentEquivalences"
+			fork="yes"
+			failonerror="false"
+			maxmemory="512m"
+		>
+	    	<classpath>
+	        	<pathelement path="${webapp.classes}"/>
+	            <pathelement path="${config}"/>
+	            <pathelement path="${sql}"/>
+	            <pathelement path="${src}"/>
+	            <fileset dir="${webapp.lib}">
+	                <include name="**/*.jar"/>
+	            </fileset>
+	        </classpath>
+		</java>
+<!-- ************************************************************************************************* 
+		isto é para sair, serve apenas enquanto se testa a aplicação com os dados migrados
+ ************************************************************************************************* -->
+	<java classname="middleware.almeida.dcsrjao.CreatetExecutionCoursesForLEQCurricularCourses"
+			fork="yes"
+			failonerror="false"
+			maxmemory="128m"
+		>
+	    	<classpath>
+	        	<pathelement path="${webapp.classes}"/>
+	            <pathelement path="${config}"/>
+	            <pathelement path="${sql}"/>
+	            <pathelement path="${src}"/>
+	            <fileset dir="${webapp.lib}">
+	                <include name="**/*.jar"/>
+	            </fileset>
+	        </classpath>
+		</java>
+	</target>   	
 </project>

@@ -21,11 +21,13 @@ public class CurricularCourseScope extends DomainObject implements ICurricularCo
 	private Integer maxIncrementNac;
 	private Integer minIncrementNac;
 	private Integer weigth;
+//	private Integer executionYear;
 	
 	private Double theoreticalHours;
 	private Double praticalHours;
 	private Double theoPratHours;
 	private Double labHours;
+	private Double credits;
 
 	public CurricularCourseScope() {
 		setIdInternal(null);
@@ -60,6 +62,7 @@ public class CurricularCourseScope extends DomainObject implements ICurricularCo
 			resultado = getCurricularCourse().equals(ccs.getCurricularCourse()) &&
 									getCurricularSemester().equals(ccs.getCurricularSemester()) &&
 									getBranch().equals(ccs.getBranch());
+//									getExecutionYear().equals(ccs.getExecutionYear());
 		}
 
 		return resultado;
@@ -222,4 +225,19 @@ public class CurricularCourseScope extends DomainObject implements ICurricularCo
 		theoreticalHours = double1;
 	}
 
+	public Double getCredits() {
+		return credits;
+	}
+
+	public void setCredits(Double double1) {
+		credits = double1;
+	}
+
+//	public Integer getExecutionYear() {
+//		return executionYear;
+//	}
+//
+//	public void setExecutionYear(Integer integer) {
+//		executionYear = integer;
+//	}
 }

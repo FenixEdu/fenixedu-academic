@@ -21,7 +21,6 @@ import ServidorAplicacao.strategy.enrolment.context.EnrolmentContextManager;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentValidationResult;
 import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentCurricularCourseScope;
 import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentExecutionPeriod;
@@ -87,7 +86,7 @@ public class ConfirmActualEnrolment implements IServico {
 		ISuportePersistente sp = null;
 		IPersistentEnrolment persistentEnrolment = null;
 		IStudentCurricularPlanPersistente persistentStudentCurricularPlan = null;
-		IPersistentCurricularCourse persistentCurricularCourse = null;
+		//		IPersistentCurricularCourse persistentCurricularCourse = null;
 		IPersistentCurricularCourseScope persistentCurricularCourseScope = null;
 		IPersistentExecutionPeriod persistentExecutionPeriod = null;
 
@@ -95,22 +94,25 @@ public class ConfirmActualEnrolment implements IServico {
 			sp = SuportePersistenteOJB.getInstance();
 			persistentEnrolment = sp.getIPersistentEnrolment();
 			persistentStudentCurricularPlan = sp.getIStudentCurricularPlanPersistente();
-			persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+			//			persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 			persistentCurricularCourseScope = sp.getIPersistentCurricularCourseScope();
 			persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
-			IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) persistentStudentCurricularPlan.readDomainObjectByCriteria(enrolmentContext.getStudentActiveCurricularPlan());
+			IStudentCurricularPlan studentCurricularPlan =
+				(IStudentCurricularPlan) persistentStudentCurricularPlan.readDomainObjectByCriteria(enrolmentContext.getStudentActiveCurricularPlan());
 			IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readDomainObjectByCriteria(enrolmentContext.getExecutionPeriod());
 
 			// list of all temporarily enrolments.
-			final List temporarilyEnrolmentsRead = persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(
+			final List temporarilyEnrolmentsRead =
+				persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(
 					enrolmentContext.getStudentActiveCurricularPlan(),
 					EnrolmentState.TEMPORARILY_ENROLED);
-			
+
 			// enrolments in (anual) curricular courses that the student is doing.
-			final List doingEnrolmentsRead = 
+			final List doingEnrolmentsRead =
 				persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(
-				enrolmentContext.getStudentActiveCurricularPlan(), EnrolmentState.ENROLED);
+					enrolmentContext.getStudentActiveCurricularPlan(),
+					EnrolmentState.ENROLED);
 			List doingCurricularCoursesRead = (List) CollectionUtils.collect(doingEnrolmentsRead, new Transformer() {
 				public Object transform(Object obj) {
 					IEnrolment enrolment = (IEnrolment) obj;
@@ -118,19 +120,34 @@ public class ConfirmActualEnrolment implements IServico {
 				}
 			});
 
-			
 			// list of all enrolments to be writen
 			List temporarilyEnrolmentsToWrite = new ArrayList();
 			Iterator iterator = enrolmentContext.getActualEnrolments().iterator();
 			IEnrolment enrolmentToWrite = null;
 			while (iterator.hasNext()) {
-				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
-//				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(curricularCourseScope.getCurricularCourse());
-				ICurricularCourseScope curricularCourseScope2 = (ICurricularCourseScope) persistentCurricularCourseScope.readDomainObjectByCriteria(curricularCourseScope);
-				if(!doingCurricularCoursesRead.contains(curricularCourseScope.getCurricularCourse())) {
+				ICurricularCourseScope curricularCourseScopeChosen = (ICurricularCourseScope) iterator.next();
+
+				//				ICurricularCourse curricularCourseForCriteria = new CurricularCourse();
+				//				curricularCourseForCriteria.setCode(curricularCourseScopeChosen.getCurricularCourse().getCode());
+				//				curricularCourseForCriteria.setName(curricularCourseScopeChosen.getCurricularCourse().getName());
+				//				curricularCourseForCriteria.setDegreeCurricularPlan(curricularCourseScopeChosen.getCurricularCourse().getDegreeCurricularPlan());
+				//				ICurricularCourseScope curricularCourseScopeForCriteria = new CurricularCourseScope();
+				//				curricularCourseScopeForCriteria.setBranch(curricularCourseScopeChosen.getBranch());
+				//				curricularCourseScopeForCriteria.setCurricularCourse(curricularCourseForCriteria);
+				//				curricularCourseScopeForCriteria.setCurricularSemester(curricularCourseScopeChosen.getCurricularSemester());
+
+				//				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(curricularCourseScope.getCurricularCourse());
+				ICurricularCourseScope curricularCourseScopeToWrite =
+					(ICurricularCourseScope) persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(
+						curricularCourseScopeChosen.getCurricularCourse(),
+						curricularCourseScopeChosen.getCurricularSemester(),
+						curricularCourseScopeChosen.getBranch());
+				//				ICurricularCourseScope curricularCourseScopeToWrite =
+				//					(ICurricularCourseScope) persistentCurricularCourseScope.readDomainObjectByCriteria(curricularCourseScopeForCriteria);
+				if (!doingCurricularCoursesRead.contains(curricularCourseScopeToWrite.getCurricularCourse())) {
 					enrolmentToWrite = new Enrolment();
-//					enrolmentToWrite.setCurricularCourse(curricularCourse);
-					enrolmentToWrite.setCurricularCourseScope(curricularCourseScope2);
+					//					enrolmentToWrite.setCurricularCourse(curricularCourse);
+					enrolmentToWrite.setCurricularCourseScope(curricularCourseScopeToWrite);
 					enrolmentToWrite.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
 					enrolmentToWrite.setExecutionPeriod(executionPeriod);
 					enrolmentToWrite.setEnrolmentState(EnrolmentState.TEMPORARILY_ENROLED);
@@ -144,7 +161,7 @@ public class ConfirmActualEnrolment implements IServico {
 			iterator = temporarilyEnrolmentsRead.iterator();
 			while (iterator.hasNext()) {
 				IEnrolment enrolment = (IEnrolment) iterator.next();
-				if(temporarilyEnrolmentsToWrite.contains(enrolment)){
+				if (temporarilyEnrolmentsToWrite.contains(enrolment)) {
 					enrolmentsIntersection.add(enrolment);
 				}
 			}
@@ -157,28 +174,39 @@ public class ConfirmActualEnrolment implements IServico {
 				IEnrolment enrolment = (IEnrolment) iterator.next();
 				persistentEnrolment.delete(enrolment);
 			}
-			
+
 			// add to data base the new enrolments
 			iterator = temporarilyEnrolmentsToWrite.iterator();
 			while (iterator.hasNext()) {
 				IEnrolment enrolment = (IEnrolment) iterator.next();
 				persistentEnrolment.lockWrite(enrolment);
 			}
-			
+
 			// options
 			Iterator iterator2 = enrolmentContext.getOptionalCurricularCoursesEnrolments().iterator();
 			while (iterator2.hasNext()) {
 				IEnrolmentInOptionalCurricularCourse enrolmentInOptionalCurricularCourse = (IEnrolmentInOptionalCurricularCourse) iterator2.next();
-				
-				IEnrolmentInOptionalCurricularCourse enrolment = (IEnrolmentInOptionalCurricularCourse) persistentEnrolment.readEnrolmentByStudentCurricularPlanAndCurricularCourseScopeAndExecutionPeriod(enrolmentInOptionalCurricularCourse.getStudentCurricularPlan(), enrolmentInOptionalCurricularCourse.getCurricularCourseScope(), enrolmentInOptionalCurricularCourse.getExecutionPeriod());
-//				ICurricularCourse curricularCourseForOption = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(enrolmentInOptionalCurricularCourse.getCurricularCourseForOption());
+
+				IEnrolmentInOptionalCurricularCourse enrolment =
+					(IEnrolmentInOptionalCurricularCourse) persistentEnrolment.readEnrolmentByStudentCurricularPlanAndCurricularCourseScopeAndExecutionPeriod(
+						enrolmentInOptionalCurricularCourse.getStudentCurricularPlan(),
+						enrolmentInOptionalCurricularCourse.getCurricularCourseScope(),
+						enrolmentInOptionalCurricularCourse.getExecutionPeriod());
+				//				ICurricularCourse curricularCourseForOption = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(enrolmentInOptionalCurricularCourse.getCurricularCourseForOption());
 				ICurricularCourse curricularCourseForOption = enrolmentInOptionalCurricularCourse.getCurricularCourseForOption();
-				
-				if(enrolment == null) {
-//					ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(enrolmentInOptionalCurricularCourse.getCurricularCourse());
-//					enrolmentInOptionalCurricularCourse.setCurricularCourse(curricularCourse);
-					ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) persistentCurricularCourseScope.readDomainObjectByCriteria(enrolmentInOptionalCurricularCourse.getCurricularCourseScope());
-					enrolmentInOptionalCurricularCourse.setCurricularCourseScope(curricularCourseScope);
+
+				if (enrolment == null) {
+					//					ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(enrolmentInOptionalCurricularCourse.getCurricularCourse());
+					//					enrolmentInOptionalCurricularCourse.setCurricularCourse(curricularCourse);
+					ICurricularCourseScope optionalCurricularCourseScopeChosen = enrolmentInOptionalCurricularCourse.getCurricularCourseScope();
+
+					ICurricularCourseScope optionalCurricularCourseScopeToWrite =
+						(ICurricularCourseScope) persistentCurricularCourseScope.readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(
+							optionalCurricularCourseScopeChosen.getCurricularCourse(),
+							optionalCurricularCourseScopeChosen.getCurricularSemester(),
+							optionalCurricularCourseScopeChosen.getBranch());
+
+					enrolmentInOptionalCurricularCourse.setCurricularCourseScope(optionalCurricularCourseScopeToWrite);
 					enrolmentInOptionalCurricularCourse.setCurricularCourseForOption(curricularCourseForOption);
 					enrolmentInOptionalCurricularCourse.setExecutionPeriod(executionPeriod);
 					enrolmentInOptionalCurricularCourse.setStudentCurricularPlan(studentCurricularPlan);

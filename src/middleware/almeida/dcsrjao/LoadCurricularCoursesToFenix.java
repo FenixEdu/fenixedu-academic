@@ -1,0 +1,299 @@
+package middleware.almeida.dcsrjao;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+
+import middleware.almeida.Almeida_disc;
+import Dominio.CurricularCourse;
+import Dominio.CurricularCourseScope;
+import Dominio.IBranch;
+import Dominio.ICurricularCourse;
+import Dominio.ICurricularCourseScope;
+import Dominio.ICurricularSemester;
+import Dominio.ICurricularYear;
+import Dominio.IDegreeCurricularPlan;
+import Dominio.IUniversity;
+import Util.CurricularCourseExecutionScope;
+import Util.CurricularCourseType;
+import Util.DegreeCurricularPlanState;
+
+/**
+ * @author dcs-rjao
+ *
+ * 21/Mai/2003
+ */
+
+public class LoadCurricularCoursesToFenix extends LoadDataToFenix {
+
+	private static LoadCurricularCoursesToFenix loader = null;
+	protected static String logString = "";
+	private static HashMap error = new HashMap();
+	private static String errorMessage = "";
+	private static String errorDBID = "";
+//	private IDegreeCurricularPlan newDegreeCurricularPlan = null;
+//	private String nameOfNewDegreeCurricularPlan = "";
+
+	public LoadCurricularCoursesToFenix() {
+	}
+
+	public static void main(String[] args) {
+		if (loader == null) {
+			loader = new LoadCurricularCoursesToFenix();
+		}
+
+		loader.migrationStart("LoadCurricularCoursesToFenix");
+
+		loader.setupDAO();
+		List almeida_curricularCourse = loader.persistentObjectOJB.readAllAlmeidaDisc();
+		loader.shutdownDAO();
+		Almeida_disc almeida_disc = null;
+		Iterator iterator = almeida_curricularCourse.iterator();
+		while (iterator.hasNext()) {
+			almeida_disc = (Almeida_disc) iterator.next();
+			loader.printIteration(loader.getClassName(), almeida_disc.getCodint());
+			loader.setupDAO();
+			loader.processCurricularCourse(almeida_disc);
+			loader.shutdownDAO();
+		}
+		logString += error.toString();
+		loader.migrationEnd("LoadCurricularCoursesToFenix", logString);
+	}
+
+	public void processCurricularCourse(Almeida_disc almeida_disc) {
+
+//		Integer keyDegree = new Integer("" + almeida_disc.getCodcur());
+//		IDegreeCurricularPlan degreeCurricularPlan = persistentObjectOJB.readDegreeCurricularPlanByDegreeKeyAndState(keyDegree, DegreeCurricularPlanState.CONCLUDED_OBJ);
+		IDegreeCurricularPlan degreeCurricularPlan = processOldDegreeCurricularPlan(almeida_disc);
+
+		if (degreeCurricularPlan == null) {
+//			errorMessage = "\n O plano curricular do curso [" + keyDegree + "] não existe! Registos: ";
+//			errorDBID = almeida_disc.getCodint() + ",";
+//			error = loader.setErrorMessage(errorMessage, errorDBID, error);
+			loader.numberUntreatableElements++;
+			return;
+		}
+
+		ICurricularCourse curricularCourse = persistentObjectOJB.readCurricularCourseByCodeAndNameAndDegreeCurricularPlan(almeida_disc.getCoddis(), almeida_disc.getNomedis(), degreeCurricularPlan);
+		if (curricularCourse == null) {
+			curricularCourse = new CurricularCourse();
+			curricularCourse.setDegreeCurricularPlan(degreeCurricularPlan);
+			curricularCourse.setName(almeida_disc.getNomedis());
+			curricularCourse.setCode(almeida_disc.getCoddis());
+			
+			curricularCourse.setUniversity(processUniversity(almeida_disc));
+
+			// nao ha informacao disponivel para deduzir este campo, por isso, todas sao as disciplinas sao semestrais
+			curricularCourse.setCurricularCourseExecutionScope(CurricularCourseExecutionScope.SEMESTRIAL_OBJ);
+
+			if (almeida_disc.getTipo() == 0) {
+				curricularCourse.setMandatory(new Boolean(true));
+				curricularCourse.setType(CurricularCourseType.NORMAL_COURSE_OBJ);
+			} else if (almeida_disc.getTipo() == 1) {
+				curricularCourse.setMandatory(new Boolean(false));
+				curricularCourse.setType(CurricularCourseType.OPTIONAL_COURSE_OBJ);
+			} else {
+				errorMessage = "\n O tipo " + almeida_disc.getTipo() + " é inválido! Registos: ";
+				errorDBID = almeida_disc.getCodint() + ",";
+				error = loader.setErrorMessage(errorMessage, errorDBID, error);
+				loader.numberUntreatableElements++;
+				return;
+			}
+
+			writeElement(curricularCourse);
+//			processCurricularCourseEquivalence(curricularCourse);
+		}
+
+		processCurricularCourseScope(curricularCourse, almeida_disc);
+	}
+
+	private void processCurricularCourseScope(ICurricularCourse curricularCourse, Almeida_disc almeida_disc) {
+		IBranch branch = processBranch(almeida_disc);
+		if (branch == null) {
+			return;
+		}
+
+		ICurricularSemester curricularSemester = processCurricularSemester(almeida_disc);
+		if (curricularSemester == null) {
+			return;
+		}
+
+		//		Integer executionYear = new Integer("" + almeida_disc.getAnoLectivo());
+
+		//		ICurricularCourseScope curricularCourseScope = persistentObjectOJB.readCurricularCourseScopeByUnique(curricularCourse, branch, curricularSemester, executionYear);
+		ICurricularCourseScope curricularCourseScope = persistentObjectOJB.readCurricularCourseScopeByUnique(curricularCourse, branch, curricularSemester);
+		if (curricularCourseScope == null) {
+			curricularCourseScope = new CurricularCourseScope();
+			curricularCourseScope.setBranch(branch);
+			curricularCourseScope.setCurricularCourse(curricularCourse);
+			curricularCourseScope.setCurricularSemester(curricularSemester);
+			//			curricularCourseScope.setExecutionYear(executionYear);
+			curricularCourseScope.setMaxIncrementNac(new Integer(2));
+			curricularCourseScope.setMinIncrementNac(new Integer(1));
+			curricularCourseScope.setWeigth(new Integer(1));
+			curricularCourseScope.setPraticalHours(new Double(almeida_disc.getPra()));
+			curricularCourseScope.setTheoreticalHours(new Double(almeida_disc.getTeo()));
+			curricularCourseScope.setLabHours(new Double(almeida_disc.getLab()));
+			curricularCourseScope.setTheoPratHours(new Double(almeida_disc.getTeopra()));
+			curricularCourseScope.setCredits(new Double(almeida_disc.getCredits()));
+			writeElement(curricularCourseScope);
+			loader.numberElementsWritten--;
+		}
+		//		else {
+		//			errorMessage = "\n O scope com o " + "curricular course [" + curricularCourse.getCode() + "] branch [" + branch.getCode() + "] semester [" + curricularSemester.getSemester().intValue() + "] executionYear [" + executionYear + "] já existe! Registos: ";
+		//			errorMessage = "\n O scope com o " + "curricular course [" + curricularCourse.getCode() + "] branch [" + branch.getCode() + "] semester [" + curricularSemester.getSemester().intValue() + "] já existe! Registos: ";
+		//			errorDBID = almeida_disc.getCodint() + ",";
+		//			error = loader.setErrorMessage(errorMessage, errorDBID, error);
+		//		}
+	}
+
+	private ICurricularSemester processCurricularSemester(Almeida_disc almeida_disc) {
+		Integer semester = new Integer("" + almeida_disc.getSemdis());
+		Integer year = new Integer("" + almeida_disc.getAnodis());
+
+		ICurricularYear curricularYear = persistentObjectOJB.readCurricularYearByYear(year);
+		if (curricularYear == null) {
+			errorMessage = "\n O curricularYear [" + year + "] não existe! Registos: ";
+			errorDBID = almeida_disc.getCodint() + ",";
+			error = loader.setErrorMessage(errorMessage, errorDBID, error);
+			return null;
+		}
+		ICurricularSemester curricularSemester = persistentObjectOJB.readCurricularSemesterBySemesterAndCurricularYear(semester, curricularYear);
+		if (curricularSemester == null) {
+			errorMessage = "\n O curricularSemester [" + semester + "] não existe! Registos: ";
+			errorDBID = almeida_disc.getCodint() + ",";
+			error = loader.setErrorMessage(errorMessage, errorDBID, error);
+			return null;
+		}
+		return curricularSemester;
+	}
+
+	private IBranch processBranch(Almeida_disc almeida_disc) {
+		String code = "";
+
+		if (almeida_disc.getCodram() != 0) {
+			code = code + almeida_disc.getCodcur() + almeida_disc.getCodram() + almeida_disc.getOrientation();
+		}
+
+		Integer keyDegree = new Integer("" + almeida_disc.getCodcur());
+		IDegreeCurricularPlan degreeCurricularPlan = persistentObjectOJB.readDegreeCurricularPlanByDegreeKeyAndState(keyDegree, DegreeCurricularPlanState.CONCLUDED_OBJ);
+		if (degreeCurricularPlan == null) {
+			errorMessage = "\n O plano curricular do curso [" + keyDegree + "] não existe! Registos: ";
+			errorDBID = almeida_disc.getCodint() + ",";
+			error = loader.setErrorMessage(errorMessage, errorDBID, error);
+			return null;
+		}
+
+		IBranch branch = persistentObjectOJB.readBranchByUnique(code, degreeCurricularPlan);
+		if (branch == null) {
+			errorMessage = "\n O ramo com o code [" + code + "] e plano curricular [" + degreeCurricularPlan.getName() + "] não existe! Registos: ";
+			errorDBID = almeida_disc.getCodint() + ",";
+			error = loader.setErrorMessage(errorMessage, errorDBID, error);
+			return null;
+		}
+		return branch;
+	}
+
+	protected String getFilenameOutput() {
+		return "etc/migration/dcs-rjao/logs/LoadCurricularCoursesToFenix.txt";
+	}
+
+	private IDegreeCurricularPlan processNewDegreeCurricularPlan() {
+		IDegreeCurricularPlan degreeCurricularPlan = persistentObjectOJB.readDegreeCurricularPlanByName(InfoForMigration.NAME_OF_NEW_DEGREE_CURRICULAR_PLAN);
+		if (degreeCurricularPlan == null) {
+			errorMessage = "\n O plano curricular " + InfoForMigration.NAME_OF_NEW_DEGREE_CURRICULAR_PLAN + " não existe!";
+			errorDBID = "";
+			error = loader.setErrorMessage(errorMessage, errorDBID, error);
+			return null;
+		}
+
+		return degreeCurricularPlan;
+	}
+
+	protected String getClassName() {
+		return "LoadCurricularCoursesToFenix";
+	}
+
+	private IDegreeCurricularPlan processOldDegreeCurricularPlan(Almeida_disc almeida_disc) {
+		Integer keyDegree;
+		try {
+			keyDegree = new Integer("" + almeida_disc.getCodcur());
+		} catch (NumberFormatException e) {
+			errorMessage = "\n O curso " + almeida_disc.getCodcur() + "é inválido! Registos: ";
+			errorDBID = almeida_disc.getCodint() + ", ";
+			error = loader.setErrorMessage(errorMessage, errorDBID, error);
+			return null;
+		}
+
+		IDegreeCurricularPlan degreeCurricularPlan = persistentObjectOJB.readDegreeCurricularPlanByDegreeKeyAndState(keyDegree, DegreeCurricularPlanState.CONCLUDED_OBJ);
+		if (degreeCurricularPlan == null) {
+			errorMessage = "\n O degree Curricular Plan do curso " + almeida_disc.getCodcur() + " não existe! Registos: ";
+			errorDBID = almeida_disc.getCodint() + ", ";
+			error = loader.setErrorMessage(errorMessage, errorDBID, error);
+			return null;
+		}
+
+		return degreeCurricularPlan;
+	}
+	
+	private IUniversity processUniversity(Almeida_disc almeida_disc) {
+		String universityCodeRead = almeida_disc.getUniversidade();
+		if(universityCodeRead == null){
+			return null;
+		}
+		IUniversity universityCode = persistentObjectOJB.readUniversityByCode(universityCodeRead);
+		if (universityCode == null) {
+			errorMessage = "\n Não existe a universidade com o code [" + universityCodeRead + "]. Registos: ";
+			errorDBID = almeida_disc.getCodint() + ", ";
+			error = loader.setErrorMessage(errorMessage, errorDBID, error);
+			return null;
+		}
+		return universityCode;
+	}
+
+	//	private String processCurricularCourseCode(String code) {
+	//		if ((code.equals("24")) || (code.equals("P6")) || (code.equals("QJ"))) {
+	//			code = "QN";
+	//		} else if ((code.equals("AG")) || (code.equals("QA")) || (code.equals("QM")) || (code.equals("AC0"))) {
+	//			code = "PY";
+	//		} else if ((code.equals("AH")) || (code.equals("QF")) || (code.equals("PS")) || (code.equals("AC1"))) {
+	//			code = "P5";
+	//		} else if ((code.equals("AJ")) || (code.equals("S6")) || (code.equals("UY")) || (code.equals("AC2"))) {
+	//			code = "UN";
+	//		} else if ((code.equals("AK")) || (code.equals("V5"))) {
+	//			code = "U8";
+	//		} else if (code.equals("8Z")) {
+	//			code = "AV7";
+	//		} else if (code.equals("BG")) {
+	//			code = "APS";
+	//		} else if (code.equals("2R")) {
+	//			code = "AME";
+	//		} else if (code.equals("9R")) {
+	//			code = "AR7";
+	//		} else if (code.equals("ALG")) {
+	//			code = "AP9";
+	//		} else if (code.equals("Z7")) {
+	//			code = "C4";
+	//		} else if (code.equals("ZD")) {
+	//			code = "C5";
+	//		} else if (code.equals("2S")) {
+	//			code = "AMG";
+	//		} else if (code.equals("2U")) {
+	//			code = "AMD";
+	//		} else if (code.equals("9S")) {
+	//			code = "7W";
+	//		} else if ((code.equals("UP")) || (code.equals("UZ"))) {
+	//			code = "SF";
+	//		} else if (code.equals("A5H")) {
+	//			code = "AMH";
+	//		} else if (code.equals("A5Y")) {
+	//			code = "AR8";
+	//		} else if (code.equals("QW")) {
+	//			code = "HU";
+	//		} else if ((code.equals("V4")) || (code.equals("HV"))) {
+	//			code = "AJM";
+	//		}
+	//
+	//		return code;
+	//	}
+}

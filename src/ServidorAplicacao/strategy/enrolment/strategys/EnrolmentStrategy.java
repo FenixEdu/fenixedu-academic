@@ -34,7 +34,7 @@ public abstract class EnrolmentStrategy implements IEnrolmentStrategy {
 		final IExecutionPeriod executionPeriod = enrolmentContext.getExecutionPeriod();
 		
 		List curricularCoursesToRemove = new ArrayList();
-		
+		// FIXME DAVID-RICARDO: Não se pode filtar as opções porque elas não têm EXECUTION_COURSE associados
 		Iterator spanIterator = enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled().iterator();
 		while (spanIterator.hasNext()) {
 			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) spanIterator.next();

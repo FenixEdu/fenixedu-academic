@@ -34,6 +34,8 @@ public class Almeida_enrolment
   private String result;
 
   private long semdis;
+  
+  private long valid;
 
   public long getAnodis()
   {
@@ -193,4 +195,12 @@ public class Almeida_enrolment
   public long getNumdocLong() {
 	 return (new Integer(this.numdoc)).longValue();
   }
+public long getValid() {
+	return valid;
+}
+
+public void setValid(long l) {
+	valid = l;
+}
+
 }

@@ -36,6 +36,8 @@ public class Almeida_disc {
 
 	private long orientation;
 
+	private String universidade;
+	
 	public long getAnodis() {
 		return this.anodis;
 	}
@@ -158,6 +160,14 @@ public class Almeida_disc {
 
 	public void setAnoLectivo(long l) {
 		anoLectivo = l;
+	}
+
+	public String getUniversidade() {
+		return universidade;
+	}
+
+	public void setUniversidade(String string) {
+		universidade = string;
 	}
 
 }

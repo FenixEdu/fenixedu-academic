@@ -279,14 +279,14 @@ public class ReadFile extends LoadDataFile {
 	}
 
 	private IStudentCurricularPlan readStudentCurricularPlan(Almeida_enrolment almeida_enrolment) {
-		return persistentObjectOJB.readStudentCurricularPlan(new Integer("" + almeida_enrolment.getNumalu()));
+		return persistentObjectOJB.readStudentCurricularPlanByStudentNumber(new Integer("" + almeida_enrolment.getNumalu()));
 	} //readStudentCurricularPlan
 
 	private ICurricularCourse readCurricularCourse(Almeida_enrolment almeida_enrolment, IDegreeCurricularPlan degreeCurricularPlan) {
 
 		// First search the curricular course in Almeida's table
 		Almeida_disc almeida_disc =
-			persistentObjectOJB.readAlmeidaCurricularCourse(
+			persistentObjectOJB.readAlmeidaCurricularCourseByCodeAndDegreeAndYear(
 				almeida_enrolment.getCoddis(),
 				Long.valueOf(almeida_enrolment.getCurso()).longValue(),
 				almeida_enrolment.getAnoins());
@@ -301,7 +301,7 @@ public class ReadFile extends LoadDataFile {
 		ICurricularCourse curricularCourse = null;
 		//TODO
 		curricularCourse =
-			persistentObjectOJB.readCurricularCourse(
+			persistentObjectOJB.readCurricularCourseByNameAndDegreeIDAndCode(
 				almeida_disc.getNomedis(),
 				degreeCurricularPlan.getIdInternal(),
 				almeida_disc.getCoddis());
@@ -330,14 +330,14 @@ public class ReadFile extends LoadDataFile {
 		}
 
 		ICurricularSemester curricularSemester =
-			persistentObjectOJB.readCurricularSemester(new Integer(String.valueOf(almeida_enrolment.getSemdis())), curricularYear);
+			persistentObjectOJB.readCurricularSemesterBySemesterAndCurricularYear(new Integer(String.valueOf(almeida_enrolment.getSemdis())), curricularYear);
 		if (curricularSemester != null) {
 			if (branch != null) {
 				return persistentObjectOJB.readCurricularCourseScopeByUnique(
 					curricularCourse,
 					branch,
-					curricularSemester,
-					new Integer(String.valueOf(almeida_enrolment.getAnoins())));
+					curricularSemester
+					/*,	new Integer(String.valueOf(almeida_enrolment.getAnoins()))*/);
 			} else {
 				return persistentObjectOJB.readCurricularCourseScopeByUniqueWithoutBranch(
 					curricularCourse,

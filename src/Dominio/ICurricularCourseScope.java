@@ -19,6 +19,8 @@ public interface ICurricularCourseScope extends IDomainObject {
 	public Double getPraticalHours();
 	public Double getTheoPratHours();
 	public Double getTheoreticalHours();
+	public Double getCredits();
+//	public Integer getExecutionYear();
 
 	public void setMaxIncrementNac(Integer integer);
 	public void setMinIncrementNac(Integer integer);
@@ -30,4 +32,6 @@ public interface ICurricularCourseScope extends IDomainObject {
 	public void setPraticalHours(Double double1);
 	public void setTheoPratHours(Double double1);
 	public void setTheoreticalHours(Double double1);
+	public void setCredits(Double double1);
+//	public void setExecutionYear(Integer integer);
 }

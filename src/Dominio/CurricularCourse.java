@@ -16,6 +16,7 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
 
 	private Integer departmentCourseKey;
 	private Integer degreeCurricularPlanKey;
+	private Integer universityKey;
 	
 	private Double credits;
 	private Double theoreticalHours;
@@ -29,7 +30,7 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
 	private CurricularCourseType type;
 	private CurricularCourseExecutionScope curricularCourseExecutionScope;
 	private Boolean mandatory;
-	private String universityCode;
+	private IUniversity university;
 
 	private List associatedExecutionCourses;
 	private List scopes;
@@ -392,14 +393,6 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
 		mandatory = boolean1;
 	}
 
-	public String getUniversityCode() {
-		return this.universityCode;
-	}
-
-	public void setUniversityCode(String universityCode) {
-		this.universityCode = universityCode;
-	}
-
 	public ICurricularCourseScope getCurricularCourseScope(IBranch branch, Integer curricularSemester) {
 		ICurricularCourseScope curricularCourseScope = null;
 		Iterator iterator = this.getScopes().iterator();
@@ -412,4 +405,20 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
 		}
 		return curricularCourseScope;
 	}
+	public IUniversity getUniversity() {
+		return university;
+	}
+
+	public Integer getUniversityKey() {
+		return universityKey;
+	}
+
+	public void setUniversity(IUniversity code) {
+		university = code;
+	}
+
+	public void setUniversityKey(Integer integer) {
+		universityKey = integer;
+	}
+
 }

@@ -80,7 +80,7 @@ public class LoadInscricoes extends LoadDataFile {
 		if (curricularCourse != null) {
 			executionPeriod = readActiveExecutionPeriod();
 
-			IEnrolment enrolment = persistentObjectOJB.readEnrolment(studentCurricularPlan, curricularCourse, executionPeriod);
+			IEnrolment enrolment = persistentObjectOJB.readEnrolmentByOldUnique(studentCurricularPlan, curricularCourse, executionPeriod);
 			if (enrolment == null) {
 				enrolment = new Enrolment();
 				//				enrolment.setCurricularCourse(curricularCourse);
@@ -150,7 +150,7 @@ public class LoadInscricoes extends LoadDataFile {
 
 		// First read Almeidas curricular course
 		Almeida_disc almeida_disc =
-			persistentObjectOJB.readAlmeidaCurricularCourse(almeida_inscricoes.getCoddis(), almeida_inscricoes.getCurso());
+			persistentObjectOJB.readAlmeidaCurricularCourseByCodeAndDegree(almeida_inscricoes.getCoddis(), almeida_inscricoes.getCurso());
 
 		// Log the ones that don't exist in his database!
 		if (almeida_disc == null) {
@@ -159,7 +159,7 @@ public class LoadInscricoes extends LoadDataFile {
 		} else {
 			// Read our corresponding curricular couse
 			curricularCourse =
-				persistentObjectOJB.readCurricularCourse(
+				persistentObjectOJB.readCurricularCourseByNameAndDegreeIDAndCode(
 					almeida_disc.getNomedis(),
 					new Integer("" + almeida_disc.getCodcur()),
 					almeida_disc.getCoddis());
@@ -179,11 +179,11 @@ public class LoadInscricoes extends LoadDataFile {
 	 */
 	private IStudentCurricularPlan readStudentCurricularPlan(Almeida_inscricoes almeida_inscricoes) {
 		IStudentCurricularPlan studentCurricularPlan =
-			persistentObjectOJB.readStudentCurricularPlan(new Integer("" + almeida_inscricoes.getNumero()));
+			persistentObjectOJB.readStudentCurricularPlanByStudentNumber(new Integer("" + almeida_inscricoes.getNumero()));
 
 		if (studentCurricularPlan == null) {
 			IStudent student =
-				persistentObjectOJB.readStudent(new Integer("" + almeida_inscricoes.getNumero()), new TipoCurso(TipoCurso.LICENCIATURA));
+				persistentObjectOJB.readStudentByNumberAndDegreeType(new Integer("" + almeida_inscricoes.getNumero()), new TipoCurso(TipoCurso.LICENCIATURA));
 
 			studentCurricularPlan =
 				new StudentCurricularPlan(
