@@ -47,20 +47,20 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
     
     public void delete(ISala sala) throws ExcepcaoPersistencia {
 		try {
-					IAula aula = null;
-					String oqlQuery = "select all from " + Aula.class.getName();
-					oqlQuery += " where sala.nome = $1";
-					query.create(oqlQuery);
-					query.bind(sala.getNome());
-					List result = (List) query.execute();
-					lockRead(result);
-					if (result.size() != 0) {
-					throw new ExcepcaoPersistencia("Não é possível apagar salas com aulas associadas");
-					}
-					
-				} catch (QueryException ex) {
-					throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-				}
+			IAula aula = null;
+			String oqlQuery = "select all from " + Aula.class.getName();
+			oqlQuery += " where sala.nome = $1";
+			query.create(oqlQuery);
+			query.bind(sala.getNome());
+			List result = (List) query.execute();
+			lockRead(result);
+			if (result.size() != 0) {
+			throw new ExcepcaoPersistencia("Não é possível apagar salas com aulas associadas");
+			}
+			
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
         super.delete(sala);
     }
     
