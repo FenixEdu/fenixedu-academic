@@ -19,7 +19,8 @@ import Util.MasterDegreeClassification;
 import Util.TipoCurso;
 
 /**
- * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed (naat@mega.ist.utl.pt)
+ * @author Shezad Anavarali (sana@mega.ist.utl.pt)
+ * @author Nadir Tarmahomed (naat@mega.ist.utl.pt)
  */
 public class ChangeMasterDegreeProofTest extends AdministrativeOfficeBaseTest
 {
