@@ -245,8 +245,8 @@
 	
  	<action path="/deleteSection"
               type="ServidorApresentacao.Action.teacher.DeleteSectionAction">
-          <forward name="AccessSiteManagement" path="/viewSite.jsp"/>
-          <forward name="AccessSectionManagement" path="/viewSection.jsp"/>
+          <forward name="AccessSiteManagement" path="/viewSite.do"/>
+          <forward name="AccessSectionManagement" path="/viewSection.do"/>
       </action>
 	
 	
@@ -320,6 +320,17 @@
         type="ServidorApresentacao.Action.teacher.ViewSectionAction">    
      <forward name="Sucess" path="/viewSection.jsp"/>         
 	</action>
+	
+	<!-- Edit Item -->
+	
+	<action name="itemForm"
+		path="/editItem"
+		parameter="method"
+		type="ServidorApresentacao.Action.teacher.EditItemAction"
+        validate="false" >
+       <forward name="viewSection" path="/viewSection.do"/>
+	</action>
+	
 	
 	</action-mappings>
 
