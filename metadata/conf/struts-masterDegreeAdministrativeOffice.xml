@@ -555,7 +555,7 @@
 	  		<form-property name="page" type="java.lang.Integer"/>
 	  		<form-property name="guideId" type="java.lang.Integer"/>
 	  </form-bean>
-
+	  
 	  <form-bean name="insertExternalPersonForm"  
 	  			 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
@@ -568,6 +568,23 @@
 	  		<form-property name="email" type="java.lang.String"/>
 	  		<form-property name="page" type="java.lang.Integer"/>
 	  </form-bean>
+	  
+	  <!-- Bean to Insert Work Location  -->
+	  <form-bean name="insertWorkLocationForm"
+	  			 type="org.apache.struts.validator.DynaValidatorForm"
+	  			 dynamic="true">
+	  		<form-property name="page" type="java.lang.Integer" />
+	  		<form-property name="name" type="java.lang.String" />
+	  </form-bean>
+	  
+	  <!-- Bean to Edit Work Location  -->
+	  <form-bean name="editWorkLocationForm"
+	  			 type="org.apache.struts.validator.DynaValidatorForm"
+	  			 dynamic="true">
+	  		<form-property name="page" type="java.lang.Integer" />
+	  		<form-property name="workLocationId" type="java.lang.Integer" />
+	  		<form-property name="name" type="java.lang.String" />
+	  </form-bean> 
 
    </form-beans>
     
@@ -1968,7 +1985,39 @@
 						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
 			<forward name="start" path="df.page.insertExternalPerson"/>
 			<forward name="error" path="df.page.insertExternalPerson"/>			
-	</action>	
+	</action>
+	
+	<!-- insert work location -->
+	<action		name="insertWorkLocationForm"
+				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.externalPerson.workLocation.InsertWorkLocationDispatchAction"
+				path="/insertWorkLocation"
+				parameter="method"
+				scope="request"
+				input="df.page.insertWorkLocation"
+				validate="true">
+		<exception	type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+					key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+		<forward name="error" path="df.page.insertWorkLocation" />
+		<forward name="success" path="df.page.insertWorkLocation_success" />
+		<forward name="start" path="df.page.insertWorkLocation" />
+    </action>
+    
+    <!-- edit work location -->
+    <action		name="editWorkLocationForm"
+				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.externalPerson.workLocation.EditWorkLocationDispatchAction"
+				path="/editWorkLocation"
+				parameter="method"
+				scope="request"
+				input="df.page.editWorkLocation"
+				validate="true">
+		<exception	type="ServidorApresentacao.Action.exceptions.ExistingActionException"
+					key="ServidorApresentacao.Action.exceptions.ExistingActionException"
+					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
+		<forward name="error" path="df.page.editWorkLocation" />
+		<forward name="success" path="df.page.editWorkLocation_success" />
+		<forward name="start" path="df.page.editWorkLocation" />
+    </action>	
 	
 	<action type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.reimbursementGuide.ReimbursementGuideDispatchAction"
 			name="createReimbursementGuide"
@@ -1976,10 +2025,12 @@
 			parameter="method"
 			scope="request"	
 	>
-	<forward name="createReimbursementGuide" path="df.page.createReimbursementGuide"/>
-	<forward name="viewReimbursementGuide" path="df.page.viewReimbursementGuide"/>
-	<forward name="viewGuide" path="/chooseGuideDispatchAction.do?method=choose"/>  
+		<forward name="createReimbursementGuide" path="df.page.createReimbursementGuide"/>
+		<forward name="viewReimbursementGuide" path="df.page.viewReimbursementGuide"/>
+		<forward name="viewGuide" path="/chooseGuideDispatchAction.do?method=choose"/>  
 	</action>
+    
+       
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->
