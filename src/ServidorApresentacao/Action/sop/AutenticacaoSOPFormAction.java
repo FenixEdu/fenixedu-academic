@@ -61,13 +61,13 @@ public class AutenticacaoSOPFormAction extends FenixAction {
 		}
 
 		// Invalidate existing session if it exists
-		HttpSession sessao = request.getSession(false);
-		if (sessao != null) {
-			sessao.invalidate();
-		}
+		HttpSession sessao = request.getSession(true);
+//		if (sessao != null) {
+//			sessao.invalidate();
+//		}
 
 		// Create a new session for this user
-		sessao = request.getSession(true);
+//		sessao = request.getSession(true);
 
 		// Store the UserView into the session and return
 		sessao.setAttribute(SessionConstants.U_VIEW, userView);

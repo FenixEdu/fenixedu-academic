@@ -46,7 +46,7 @@ public class StartFilter implements Filter {
 		
 		/*:FIXME: use other context constant (not SessionConstants.) */
 		session.setAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY, context.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY));
-		
+				
 		chain.doFilter(request, response);
 	}
 

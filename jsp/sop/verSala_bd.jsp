@@ -79,7 +79,7 @@
         <table align="center">
             <tr align="center">
                 <td>
-                    <html:link page="/prepareViewRoomOcupation.do"> Ver Ocupação </html:link>
+                    <html:link page="/viewRoomOcupation.do"> Ver Ocupação </html:link>
                 </td>
             </tr>
         </table>
