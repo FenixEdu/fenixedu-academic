@@ -743,16 +743,16 @@ public abstract class Cloner {
 				Cloner.copyInfoSection2ISection(infoSuperiorSection);
 		}
 
-		List inferiorSections = Cloner.copyListInfoSections2ListISections(infoSection.getInferiorInfoSections());
-
-		List items=Cloner.copyListInfoItems2ListIItems(infoSection.getInfoItems());
+//		List inferiorSections = Cloner.copyListInfoSections2ListISections(infoSection.getInferiorInfoSections());
+//
+//		List items=Cloner.copyListInfoItems2ListIItems(infoSection.getInfoItems());
 
 		copyObjectProperties(section, infoSection);
 
 		section.setSuperiorSection(fatherSection);
 		section.setSite(site);
-		section.setInferiorSections(inferiorSections);
-		section.setItems(items);
+//		section.setInferiorSections(inferiorSections);
+//		section.setItems(items);
 		
 		return section;
 
@@ -781,16 +781,16 @@ public abstract class Cloner {
 				Cloner.copyISection2InfoSection(superiorSection);
 		}
 
-		List inferiorInfoSections = Cloner.copyListISections2ListInfoSections(section.getInferiorSections());
-
-		List infoItems=Cloner.copyListIItems2ListInfoItems(section.getItems());
+//		List inferiorInfoSections = Cloner.copyListISections2ListInfoSections(section.getInferiorSections());
+//
+//		List infoItems=Cloner.copyListIItems2ListInfoItems(section.getItems());
 
 		copyObjectProperties(infoSection, section);
 
 		infoSection.setSuperiorInfoSection(fatherInfoSection);
 		infoSection.setInfoSite(infoSite);
-		infoSection.setInferiorInfoSections(inferiorInfoSections);
-		infoSection.setInfoItems(infoItems);
+//		infoSection.setInferiorInfoSections(inferiorInfoSections);
+//		infoSection.setInfoItems(infoItems);
 		
 		return infoSection;
 
