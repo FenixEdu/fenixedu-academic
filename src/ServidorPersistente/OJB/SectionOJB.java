@@ -42,7 +42,7 @@ public class SectionOJB extends ObjectFenixOJB implements IPersistentSection {
 			Section section = (Section) superiorSection;
 			String oqlQuery = "select section from " + Section.class.getName();
 			oqlQuery += " where name = $1 ";
-			oqlQuery +=	" and site.executionCourse.sigla = $2";
+			oqlQuery +=	" and site.executionCourse.code = $2";
 			oqlQuery += " and site.executionCourse.executionPeriod.name = $3";
 			oqlQuery += " and site.executionCourse.executionPeriod.executionYear.year = $4";
 			if (section == null) {
@@ -85,7 +85,7 @@ public class SectionOJB extends ObjectFenixOJB implements IPersistentSection {
 			
 		Section section = (Section) superiorSection;
 		String oqlQuery = "select all from " + Section.class.getName();
-		oqlQuery +=	" where site.executionCourse.sigla = $1";
+		oqlQuery +=	" where site.executionCourse.code = $1";
 		oqlQuery += " and site.executionCourse.executionPeriod.name = $2";
 		oqlQuery += " and site.executionCourse.executionPeriod.executionYear.year = $3";
 		if (section == null) {
@@ -120,6 +120,40 @@ public class SectionOJB extends ObjectFenixOJB implements IPersistentSection {
 	}
 }
 
+public List readBySite(ISite site) throws ExcepcaoPersistencia {
+		try {
+			String oqlQuery = "select section from " + Section.class.getName();
+			oqlQuery +=	" where site.executionCourse.code = $1";
+			oqlQuery += " and site.executionCourse.executionPeriod.name = $2";
+			oqlQuery += " and site.executionCourse.executionPeriod.executionYear.year = $3";
+
+			query.create(oqlQuery);
+			
+			query.bind(site.getExecutionCourse().getSigla());
+			query.bind(site.getExecutionCourse().getExecutionPeriod().getName());
+			query.bind(site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
+
+			List result = (List) query.execute();
+			lockRead(result);
+			
+			return result;
+		} catch (QueryException queryEx) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, queryEx);
+		}
+	}
+	
+	public List readAll() throws ExcepcaoPersistencia {
+		 try {
+			 String oqlQuery = "select section from " + Section.class.getName();
+			 query.create(oqlQuery);
+			 List result = (List) query.execute();
+			 lockRead(result);
+			 return result;
+		 } catch (QueryException ex) {
+			 throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		 }
+	 }
+	 
 	public void lockWrite(ISection section) throws ExcepcaoPersistencia {
 		super.lockWrite(section);
 	}
@@ -131,13 +165,13 @@ public class SectionOJB extends ObjectFenixOJB implements IPersistentSection {
 		SectionOJB inferiorSectionOJB = new SectionOJB();			
 				
 		List imediatlyInferiorSections = readBySiteAndSection(section.getSite(),  section);
-		Iterator iterator = imediatlyInferiorSections.iterator();
-			
-		while(iterator.hasNext()){
-		    	
-		    inferiorSection = (ISection) iterator.next();
-	  		delete(inferiorSection);
-		}
+		  
+		   Iterator iterator = imediatlyInferiorSections.iterator();
+		   while(iterator.hasNext())
+		        {
+		    	 inferiorSection = (ISection) iterator.next();
+	  		     delete(inferiorSection);
+		        }
 		    
 	  		super.delete(inferiorSection);
 	
@@ -149,9 +183,9 @@ public class SectionOJB extends ObjectFenixOJB implements IPersistentSection {
 			ItemOJB itemOJB = new ItemOJB();
 			String oqlQuery = "select all from " + Item.class.getName();
 			oqlQuery
-			+= " where section.nome = $1 and section.site.disciplinaExecucao.sigla = $2 "
-			+ "and  section.site.disciplinaExecucao.executionPeriod.name = $3  "
-			+ "and  section.disciplinaExecucao.executionPeriod.executionYear.year = $4  ";
+			+= " where section.name = $1 and section.site.executionCourse.code = $2 "
+			+ "and  section.site.executionCourse.executionPeriod.name = $3  "
+			+ "and  section.site.executionCourse.executionPeriod.executionYear.year = $4  ";
 			query.create(oqlQuery);
 			query.bind(section.getName());
 			query.bind(section.getSite().getExecutionCourse().getSigla());
@@ -180,26 +214,6 @@ public class SectionOJB extends ObjectFenixOJB implements IPersistentSection {
 		super.deleteAll(oqlQuery);
 	}
 
-	public List readBySite(ISite site) throws ExcepcaoPersistencia {
-		try {
-			String oqlQuery = "select section from " + Section.class.getName();
-			oqlQuery +=	" where site.executionCourse.sigla = $1";
-			oqlQuery += " and site.executionCourse.executionPeriod.name = $2";
-			oqlQuery += " and site.executionCourse.executionPeriod.executionYear.year = $3";
-
-			query.create(oqlQuery);
-			
-			query.bind(site.getExecutionCourse().getSigla());
-			query.bind(site.getExecutionCourse().getExecutionPeriod().getName());
-			query.bind(site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
-
-			List result = (List) query.execute();
-			lockRead(result);
-			
-			return result;
-		} catch (QueryException queryEx) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, queryEx);
-		}
-	}
+	
 
 }

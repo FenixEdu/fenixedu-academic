@@ -22,5 +22,6 @@ public interface IPersistentSection {
     void lockWrite(ISection section) throws ExcepcaoPersistencia;
     void delete(ISection section) throws ExcepcaoPersistencia;
     void deleteAll() throws ExcepcaoPersistencia;
-	public List readBySite(ISite site) throws ExcepcaoPersistencia;     
+	List readBySite(ISite site) throws ExcepcaoPersistencia;
+	List readAll() throws ExcepcaoPersistencia;     
 }
