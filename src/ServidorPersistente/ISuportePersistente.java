@@ -99,4 +99,6 @@ public interface ISuportePersistente {
 	public IPersistentTeacherShiftPercentage getIPersistentTeacherShiftPercentage();
 	public IPersistentCreditsTeacher getIPersistentCreditsTeacher();
 	
+	public IPersistentExamStudentRoom getIPersistentExamStudentRoom();
+	
 }

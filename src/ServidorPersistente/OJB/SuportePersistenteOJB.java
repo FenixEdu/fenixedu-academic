@@ -32,7 +32,8 @@ import ServidorPersistente.IPersistentAnnouncement;
 import ServidorPersistente.IPersistentBibliographicReference;
 import ServidorPersistente.IPersistentBranch;
 import ServidorPersistente.IPersistentCandidateSituation;
-import ServidorPersistente.IPersistentChosenCurricularCourseForOptionalCurricularCourse;
+import ServidorPersistente
+	.IPersistentChosenCurricularCourseForOptionalCurricularCourse;
 import ServidorPersistente.IPersistentContributor;
 import ServidorPersistente.IPersistentCountry;
 import ServidorPersistente.IPersistentCreditsTeacher;
@@ -49,6 +50,7 @@ import ServidorPersistente.IPersistentEquivalence;
 import ServidorPersistente.IPersistentEvaluation;
 import ServidorPersistente.IPersistentExam;
 import ServidorPersistente.IPersistentExamExecutionCourse;
+import ServidorPersistente.IPersistentExamStudentRoom;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentGuide;
@@ -123,9 +125,9 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 
 	public void iniciarTransaccao() throws ExcepcaoPersistencia {
 		try {
-				openDatabase();
-				Transaction tx = _odmg.newTransaction();
-				tx.begin();
+			openDatabase();
+			Transaction tx = _odmg.newTransaction();
+			tx.begin();
 		} catch (ODMGException ex1) {
 			throw new ExcepcaoPersistencia(
 				ExcepcaoPersistencia.OPEN_DATABASE,
@@ -155,8 +157,8 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 					"SuportePersistente.OJB - Nao ha transaccao activa");
 			else {
 				tx.commit();
-//				Database db =_odmg.getDatabase(null); 
-//				if (db!= null) db.close();
+				//				Database db =_odmg.getDatabase(null); 
+				//				if (db!= null) db.close();
 			}
 		} catch (ODMGException ex1) {
 			throw new ExcepcaoPersistencia(
@@ -171,13 +173,13 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 
 	public void cancelarTransaccao() throws ExcepcaoPersistencia {
 		try {
-				openDatabase();
-				Transaction tx = _odmg.currentTransaction();
+			openDatabase();
+			Transaction tx = _odmg.currentTransaction();
 
-				if (tx != null) {
-					tx.abort();
-//					_odmg.getDatabase(null).close();
-				}
+			if (tx != null) {
+				tx.abort();
+				//					_odmg.getDatabase(null).close();
+			}
 
 		} catch (ODMGException ex1) {
 			throw new ExcepcaoPersistencia(
@@ -400,10 +402,10 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 	public IPersistentRestriction getIPersistentRestriction() {
 		return new PersistentRestriction();
 	}
-	
+
 	public IPersistentEvaluation getIPersistentEvaluation() {
-			return new EvaluationOJB();
-		}
+		return new EvaluationOJB();
+	}
 
 	public IPersistentEnrolmentPeriod getIPersistentEnrolmentPeriod() {
 		return new PersistentEnrolmentPeriod();
@@ -417,10 +419,9 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 		return new ChosenCurricularCourseForOptionalCurricularCourseOJB();
 	}
 
-	
 	public IPersistentStudentKind getIPersistentStudentKind() {
-			return new StudentKindOJB();
-		}
+		return new StudentKindOJB();
+	}
 
 	public IPersistentTeacherShiftPercentage getIPersistentTeacherShiftPercentage() {
 		return new TeacherShiftPercentageOJB();
@@ -428,6 +429,13 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 
 	public IPersistentCreditsTeacher getIPersistentCreditsTeacher() {
 		return new CreditsTeacherOJB();
+	}
+
+	/* (non-Javadoc)
+	 * @see ServidorPersistente.ISuportePersistente#getIPersistentExamStudentRoom()
+	 */
+	public IPersistentExamStudentRoom getIPersistentExamStudentRoom() {
+		return new ExamStudentRoomOJB();
 	}
 
 }
