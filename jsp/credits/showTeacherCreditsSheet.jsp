@@ -7,6 +7,7 @@
 
 <bean:define id="infoTeacher" name="teacherCreditsSheet" property="infoTeacher"/>
 <bean:define id="infoExecutionPeriod" name="teacherCreditsSheet" property="infoExecutionPeriod"/>
+<bean:define id="executionPeriodId" name="infoExecutionPeriod" property="idInternal" />
 <logic:present name="teacherCreditsSheet" property="infoCredits">
 	<bean:define id="infoCredits" name="teacherCreditsSheet" property="infoCredits"/>
 </logic:present>
@@ -15,7 +16,7 @@
 	<b><bean:message key="label.teacher.name"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b> <bean:write name="infoTeacher" property="infoPerson.nome"/><br />
 	<bean:define id="teacherNumber" name="infoTeacher" property="teacherNumber"/>
 	<b><bean:message key="label.teacher.number" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b> <bean:write name="teacherNumber"/> <br />
-	<b><bean:message key="label.execution-period" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b> <bean:write name="infoExecutionPeriod" property="name"/>
+	<b><bean:message key="label.execution-period" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b> <bean:write name="infoExecutionPeriod" property="description"/>
 </p>
 
 <u><strong><bean:message key="label.credits.legenda" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></strong></u>:
@@ -86,7 +87,7 @@
 				<td colspan="7" class="listClasses-subheader">
 					<bean:message key="label.teacherCreditsSheet.shiftProfessorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 						<logic:present role="role.department.credits.manager">
-							(<html:link page='<%= "/manageTeacherShiftProfessorships.do?page=0&amp;method=showForm&amp;executionCourseId="+ executionCourseId + "&amp;teacherId=" + teacherId %>'>
+							(<html:link page='<%= "/manageTeacherShiftProfessorships.do?page=0&amp;method=showForm&amp;executionCourseId="+ executionCourseId + "&amp;teacherId=" + teacherId + "&amp;executionPeriodId=" + executionPeriodId %>'>
 								<bean:message key="link.teacherCreditsTeacher.shiftProfessorship.management" />
 							</html:link>)
 						</logic:present>
@@ -189,7 +190,7 @@
 				<td colspan="4" class="listClasses-subheader">
 					<bean:message key="label.teacherCreditsSheet.supportLessons" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>				
 					<logic:present role="role.department.credits.manager">
-						(<html:link page='<%= "/manageTeacherExecutionCourseSupportLessons.do?page=0&amp;method=showForm&amp;executionCourseId="+ executionCourseId + "&amp;teacherId=" + teacherId %>'>
+						(<html:link page='<%= "/manageTeacherExecutionCourseSupportLessons.do?page=0&amp;method=showForm&amp;executionCourseId="+ executionCourseId + "&amp;teacherId=" + teacherId + "&amp;executionPeriodId=" + executionPeriodId %>'>
 							<bean:message key="link.teacherCreditsTeacher.supportLessons.management" />
 						</html:link>)
 					</logic:present>
@@ -250,7 +251,7 @@
 		<td colspan="3" class="listClasses-subheader">
 			<bean:message key="label.teacherCreditsSheet.degreeFinalProjectStudents.items" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 			<logic:present role="role.department.credits.manager">
-				(<html:link page="/manageTeacherDFPStudent.do?method=list&amp;page=0" paramId="teacherId" paramName="infoTeacher" paramProperty="idInternal">
+				(<html:link page='<%= "/manageTeacherDFPStudent.do?method=list&amp;page=0" + "&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherId" paramName="infoTeacher" paramProperty="idInternal">
 					<bean:message key="link.teacherCreditsTeacher.manageDegreeFinalProjectStudents"/>
 				</html:link>)
 			</logic:present>
@@ -305,7 +306,7 @@
 		<td colspan="3" class="listClasses-subheader">
 			<bean:message key="label.teacherCreditsSheet.institutionWorkingTime.items" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 			<logic:present role="role.department.credits.manager">
-				(<html:link page="/manageTeacherInstitutionWorkingTime.do?method=list&amp;page=0" paramId="teacherId" paramName="infoTeacher" paramProperty="idInternal">
+				(<html:link page='<%= "/manageTeacherInstitutionWorkingTime.do?method=list&amp;page=0" + "&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherId" paramName="infoTeacher" paramProperty="idInternal">
 					<bean:message key="link.teacherCreditsTeacher.manageInstitutionWorkingTime"/>
 				</html:link>)
 			</logic:present>

@@ -12,33 +12,8 @@
 				</html:link>
 			</li>
 			<li>
-				<html:link page="/teacherSearchForShiftManagement.do?method=searchForm&amp;page=0">
-					<bean:message key="link.lessons"/>
-				</html:link>
-			</li>
-			<li>
-				<html:link page="/teacherSearchForSupportLessonsManagement.do?method=searchForm&amp;page=0">			
-					<bean:message key="link.support.lessons"/>
-				</html:link>					
-			</li>						
-			<li>
-				<html:link page="/teacherSearchForDFPStudentManagement.do?method=searchForm&amp;page=0">			
-					<bean:message key="link.degree.final.project.students"/>
-				</html:link>					
-			</li>
-			<li>
-				<html:link page="/teacherSearchForTeacherInstitutionWorkingTimeManagement.do?method=searchForm&amp;page=0">
-					<bean:message key="link.teacher-working-time-management"/>
-				</html:link>
-			</li>
-			<li>
-				<html:link page="/teacherSearchForTeacherCreditsSheet.do?method=searchForm&amp;page=0">
-					<bean:message key="link.teacher.sheet"/>
-				</html:link>
-			</li>
-			<li>
-				<html:link page="/prepareListDepartmentTeachers.do">
-					<bean:message key="link.list-department-teachers"/>
+				<html:link page="/creditsManagementIndex.do">
+					<bean:message key="link.teacherCreditsManagement"/>
 				</html:link>
 			</li>
 		</ul>

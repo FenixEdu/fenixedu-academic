@@ -124,7 +124,10 @@ public class CRUDTeacherDegreeFinalProjectStudent extends CRUDActionByOID
             Integer teacherId = (Integer) teacherDegreeFinalProjectStudentForm.get("teacherId");
             infoTeacher = new InfoTeacher(teacherId);
         }
-        Object args[] = { infoTeacher, null };
+
+        DynaActionForm dynaForm = (DynaActionForm) form;
+        
+        Object args[] = { infoTeacher, dynaForm.get("executionPeriodId") };
 
         TeacherDegreeFinalProjectStudentsDTO teacherDFPStudents =
             (TeacherDegreeFinalProjectStudentsDTO) ServiceUtils.executeService(

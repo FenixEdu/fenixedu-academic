@@ -6,12 +6,15 @@
 <bean:define id="hoursPattern">HH:mm</bean:define>
 
 <bean:define id="infoTeacher" name="teacherDegreeFinalProjectStudents" property="infoTeacher" scope="request" />
-
+<bean:define id="infoExecutionPeriod" name="teacherDegreeFinalProjectStudents" property="infoExecutionPeriod" />
+<bean:define id="executionPeriodId" name="infoExecutionPeriod" property="idInternal"/>
 <p class="infoselected">
 	<b><bean:message key="label.teacher.name" /></b> <bean:write name="infoTeacher" property="infoPerson.nome"/><br />
 	<bean:define id="teacherNumber" name="infoTeacher" property="teacherNumber"/>
 	<b><bean:message key="label.teacher.number" /></b> <bean:write name="teacherNumber"/> <br />
-	(<i><html:link page="/teacherSearchForTeacherCreditsSheet.do?method=doSearch&page=1" paramId="teacherNumber" paramName="infoTeacher" paramProperty="teacherNumber">
+	<b><bean:message key="label.execution-period" /></b> <bean:write name="infoExecutionPeriod" property="description"/> <br />
+	
+	(<i><html:link page='<%= "/teacherSearchForTeacherCreditsSheet.do?method=doSearch&page=1&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherNumber" paramName="infoTeacher" paramProperty="teacherNumber">
 		<bean:message key="label.departmentTeachersList.teacherCreditsSheet"/>
 	</html:link></i>)
 </p>
@@ -96,9 +99,9 @@
 					<td class="listClasses">
 						<bean:write name="infoTeacherDfpStudent" property="percentage"/> %
 					</td>
-
+					
 					<td class="listClasses">
-						<html:link page='<%= "/manageTeacherDFPStudent.do?method=delete&amp;page=0&amp;teacherId=" + teacherId.toString() %>' paramId="idInternal" paramName="infoTeacherDfpStudent" paramProperty="idInternal">
+						<html:link page='<%= "/manageTeacherDFPStudent.do?method=delete&amp;page=0&amp;teacherId=" + teacherId.toString()+"&amp;executionPeriodId=" + executionPeriodId %>' paramId="idInternal" paramName="infoTeacherDfpStudent" paramProperty="idInternal">
 							<bean:message key="link.remove"/>
 						</html:link>
 					</td>

@@ -5,14 +5,16 @@
 
 <bean:define id="infoTeacher" name="infoProfessorship" property="infoTeacher" scope="request" />
 <bean:define id="infoExecutionCourse" name="infoProfessorship" property="infoExecutionCourse" scope="request" />
-
+<bean:define id="executionPeriodId" name="infoExecutionCourse" property="infoExecutionPeriod.idInternal" />
 <p class="infoselected">
 	<b><bean:message key="label.teacher.name" /></b> <bean:write name="infoTeacher" property="infoPerson.nome"/><br />
 	<bean:define id="teacherNumber" name="infoTeacher" property="teacherNumber"/>
 	<b><bean:message key="label.teacher.number" /></b> <bean:write name="teacherNumber"/> <br />
 
 	<b> <bean:message key="label.execution-course.name" /></b> <bean:write name="infoExecutionCourse" property="nome"/><br />
-	(<i><html:link page="/teacherSearchForTeacherCreditsSheet.do?method=doSearch&page=1" paramId="teacherNumber" paramName="infoTeacher" paramProperty="teacherNumber">
+	<b> <bean:message key="label.execution-period" /></b> <bean:write name="infoExecutionCourse" property="infoExecutionPeriod.description"/> <br />	
+	
+	(<i><html:link page='<%= "/teacherSearchForTeacherCreditsSheet.do?method=doSearch&page=1&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherNumber" paramName="infoTeacher" paramProperty="teacherNumber">
 		<bean:message key="label.departmentTeachersList.teacherCreditsSheet"/>
 	</html:link></i>)	
 </p>
@@ -33,6 +35,7 @@
 	<html:hidden property="page" value="1"/>	
 	<html:hidden property="idInternal"/>
 	<html:hidden property="infoProfessorshipId"/>	
+	<html:hidden property="executionPeriodId"/>		
 
 	<html:hidden property="teacherId"/>	
 	<html:hidden property="executionCourseId"/>		

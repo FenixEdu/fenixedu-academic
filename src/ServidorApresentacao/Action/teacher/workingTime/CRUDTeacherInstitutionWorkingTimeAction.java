@@ -206,7 +206,8 @@ public class CRUDTeacherInstitutionWorkingTimeAction extends CRUDActionByOID
             Integer teacherId = Integer.valueOf((String) teacherInstitutionWorkTimeForm.get("teacherId"));
             infoTeacher = new InfoTeacher(teacherId);
         }
-        Object args[] = {infoTeacher};
+        DynaActionForm dynaForm = (DynaActionForm) form;
+        Object args[] = {infoTeacher, Integer.valueOf((String) dynaForm.get("executionPeriodId"))};
 
         TeacherInstitutionWorkingTimeDTO teacherInstitutionWorkingTimeDTO = (TeacherInstitutionWorkingTimeDTO) ServiceUtils
                 .executeService(userView, "ReadTeacherInstitutionWorkingTime", args);

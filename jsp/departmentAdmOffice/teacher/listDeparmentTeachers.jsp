@@ -18,24 +18,26 @@
 <bean:size id="listSize" name="infoTeacherList"/>
 <u><bean:message key="label.departmentTeachersList.teachersFound" arg0="<%= listSize.toString() %>"/></u>
 <br />
+<bean:parameter id="executionPeriodId" name="executionPeriodId" />
 <html:form action="/listDepartmentTeachers">
 	<html:hidden property="idInternal"/>
 	<html:hidden property="sortBy" value=""/>
 	<html:hidden property="method" value="sortBy"/>
+	<html:hidden property="executionPeriodId"/>
 	<table width="100%">
 		<tr>
 			<td class="listClasses-header" width="10%">
-				<html:link href="javascript:void" onclick="document.forms[0].sortBy.value='teacherNumber'; document.forms[0].submit();return true;">			
+				<html:link href="javascript:void()" onclick="document.forms[0].sortBy.value='teacherNumber'; document.forms[0].submit();return true;">			
 					<bean:message key="label.departmentTeachersList.teacherNumber" />
 				</html:link>
 			</td>
 			<td class="listClasses-header" style="text-align:left">
-				<html:link href="javascript:void" onclick="document.forms[0].sortBy.value='infoPerson.nome';document.forms[0].submit();return true;">			
+				<html:link href="javascript:void()" onclick="document.forms[0].sortBy.value='infoPerson.nome';document.forms[0].submit();return true;">			
 					<bean:message key="label.departmentTeachersList.teacherName" />
 				</html:link>
 			</td>
 			<td class="listClasses-header" width="10%">
-				<html:link href="javascript:void" onclick="document.forms[0].sortBy.value='infoCategory.shortName';document.forms[0].submit();return true;">
+				<html:link href="javascript:void()" onclick="document.forms[0].sortBy.value='infoCategory.shortName';document.forms[0].submit();return true;">
 					<bean:message key="label.departmentTeachersList.teacherCategory" />
 				</html:link>
 			</td>
@@ -92,7 +94,7 @@
 					
 				</td>
 				<td class="listClasses">
-					<html:link page="/teacherSearchForTeacherCreditsSheet.do?method=doSearch&amp;page=1" paramId="teacherNumber" paramName="infoTeacherCreditsDetails" paramProperty="teacherNumber">
+					<html:link page='<%= "/teacherSearchForTeacherCreditsSheet.do?method=doSearch&amp;page=1&amp;executionPeriodId=" + executionPeriodId %>'  paramId="teacherNumber" paramName="infoTeacherCreditsDetails" paramProperty="teacherNumber">
 						<bean:message key="link.view"/>
 					</html:link>
 				</td>

@@ -12,6 +12,12 @@
       <put name="body" value="" />
       <put name="footer" value="/copyright.jsp" />
 	</definition>
+
+
+	<definition name="creditsManagement.masterPage" extends="departmentAdmOffice.masterPage">
+	  <put name="navLocal" value="/departmentAdmOffice/commons/localCreditsNavigationBar.jsp" />
+	</definition>
+
 	<definition name="teacher-search-form-layout" page="/departmentAdmOffice/commons/searchTeacherLayout.jsp">
 			<put name="searchInfo" value=""></put>
 	</definition>

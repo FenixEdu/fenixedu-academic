@@ -10,20 +10,26 @@
             dynamic="true">
             <form-property name="idInternal" type="java.lang.Integer"/>
         </form-bean>
+	  <form-bean name="executionPeriodForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+		<form-property name="executionPeriodId" type="java.lang.Integer"/>
+        </form-bean>
         <form-bean name="teacherSearchForm" type="org.apache.struts.validator.DynaValidatorForm" 
             dynamic="true">
             <form-property name="teacherNumber" type="java.lang.String"/>
+		<form-property name="executionPeriodId" type="java.lang.Integer"/>
             <form-property name="page" type="java.lang.Integer" initial="0"/>
         </form-bean>
         <form-bean name="professorshipForm" type="org.apache.struts.validator.DynaValidatorForm" 
             dynamic="true">
             <form-property name="teacherId" type="java.lang.Integer"/>
             <form-property name="executionCourseId" type="java.lang.Integer"/>
+		<form-property name="executionPeriodId" type="java.lang.Integer" />
         </form-bean>
         <form-bean name="teacherExecutionCourseShiftProfessorshipForm" 
             type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
             <form-property name="teacherId" type="java.lang.Integer"/>
             <form-property name="executionCourseId" type="java.lang.Integer"/>
+		<form-property name="executionPeriodId" type="java.lang.Integer"/>
             <form-property name="teacherPercentageMap" type="java.util.HashMap"/>
             <form-property name="page" type="java.lang.Integer" initial="0"/>
         </form-bean>
@@ -32,6 +38,7 @@
             <form-property name="page" type="java.lang.Integer" initial="0"/>
             <form-property name="teacherId" type="java.lang.Integer"/>
             <form-property name="executionCourseId" type="java.lang.Integer"/>
+            <form-property name="executionPeriodId" type="java.lang.Integer"/>
             <form-property name="idInternal" type="java.lang.Integer"/>
             <form-property name="infoProfessorshipId" type="java.lang.Integer"/>
             <form-property name="weekDay" type="java.lang.String"/>
@@ -81,6 +88,12 @@
             <form-property  name="executionYearId" type="java.lang.Integer" />
             <form-property name="executionCourseResponsability" type="java.lang.Integer[]" />
         </form-bean>
+        <form-bean name="searchTeachersDepartmentForm" type="org.apache.struts.validator.DynaValidatorForm" 
+            dynamic="true">
+            <form-property name="idInternal" type="java.lang.Integer"/>
+            <form-property name="executionPeriodId" type="java.lang.Integer"/>
+        </form-bean>
+
     </form-beans>
     <!-- ========== Global Exception Definitions ============================== -->
     <global-exceptions>
@@ -98,6 +111,12 @@
         <action path="/index" type="ServidorApresentacao.Action.commons.VoidAction">
             <forward name="Success" path="index"/>
         </action>
+
+	  <!-- USE CASE: Management Teacher Credits =================================== -->
+	  <action path="/creditsManagementIndex" name="executionPeriodForm" type="ServidorApresentacao.Action.credits.IndexAction" >
+		<forward name="successfull-read" path="creditsManagementIndex"/>
+	  </action>
+
         <!-- ======= USE CASE: Associate teacher to executionCourse ================= -->
         <action path="/teacherSearchForExecutionCourseAssociation" input="search-for-shift-management" 
             name="teacherSearchForm" scope="request" parameter="method" 
@@ -193,7 +212,7 @@
             <forward name="list-many" path="view-teachers-for-lessons-management"/>
         </action>
         <action path="/showTeacherProfessorships" input="show-teacher-professorships" 
-            name="objectOIDForm" scope="request" 
+            name="executionPeriodForm" scope="request" 
             type="ServidorApresentacao.Action.department.ReadTeacherProfessorshipsByExecutionPeriodAction">
             <exception type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException" 
                 key="message.teacher-not-belong-to-department" 
@@ -409,12 +428,13 @@
         <!-- =======  USE CASE : List deparment teachers ===================================== -->
         <action path="/prepareListDepartmentTeachers" 
             type="ServidorApresentacao.Action.department.PrepareListDepartmentTeachersAction" 
+		name="searchTeachersDepartmentForm"
             input="/index.do" scope="request">
             <forward name="successfull-prepare" path="/listDepartmentTeachers.do?method=doSearch"/>
         </action>
         <action path="/listDepartmentTeachers" 
             type="ServidorApresentacao.Action.department.ListDepartmentTeachersAction" 
-            name="objectOIDForm" input="/index.do" scope="request" parameter="method" 
+            name="searchTeachersDepartmentForm" input="/index.do" scope="request" parameter="method" 
             className="ServidorApresentacao.mapping.framework.SearchActionMapping">
             <set-property property="serviceName" value="ReadDepartmentTeachersCreditsDetailsService"/>
             <set-property property="objectAttribute" value="infoTeacher"/>
@@ -439,6 +459,7 @@
             <forward name="list-many" path=""/>
         </action>
         <action path="/showTeacherCreditsSheet" 
+		name="executionPeriodForm"
             type="ServidorApresentacao.Action.credits.ReadTeacherCreditsSheetAction">
             <forward name="successfull-read" path="showTeacherCreditsSheet"/>
         </action>

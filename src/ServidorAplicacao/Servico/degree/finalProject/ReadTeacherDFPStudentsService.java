@@ -9,6 +9,7 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoTeacher;
 import DataBeans.degree.finalProject.InfoTeacherDegreeFinalProjectStudent;
@@ -19,7 +20,6 @@ import Dominio.IExecutionPeriod;
 import Dominio.ITeacher;
 import Dominio.Teacher;
 import Dominio.degree.finalProject.ITeacherDegreeFinalProjectStudent;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionPeriod;
@@ -31,26 +31,12 @@ import ServidorPersistente.degree.finalProject.IPersistentTeacherDegreeFinalProj
 /**
  * @author jpvl
  */
-public class ReadTeacherDFPStudentsService implements IServico
+public class ReadTeacherDFPStudentsService implements IService
 {
-
-    public ReadTeacherDFPStudentsService()
-    {
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorAplicacao.IServico#getNome()
-     */
-    public String getNome()
-    {
-        return "ReadTeacherDFPStudents";
-    }
 
     public TeacherDegreeFinalProjectStudentsDTO run(
         InfoTeacher infoTeacher,
-        InfoExecutionPeriod infoExecutionPeriodParam)
+        Integer executionPeriodId)
         throws FenixServiceException
     {
         TeacherDegreeFinalProjectStudentsDTO teacherDfpStudentsDTO =
@@ -62,7 +48,7 @@ public class ReadTeacherDFPStudentsService implements IServico
             IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
             IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
             
-            IExecutionPeriod executionPeriod = getExecutionPeriod(infoExecutionPeriodParam, executionPeriodDAO);
+            IExecutionPeriod executionPeriod = getExecutionPeriod(executionPeriodId, executionPeriodDAO);
             
             InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(executionPeriod);
 
@@ -111,10 +97,10 @@ public class ReadTeacherDFPStudentsService implements IServico
      * @return
      * @throws ExcepcaoPersistencia
      */
-    private IExecutionPeriod getExecutionPeriod(InfoExecutionPeriod infoExecutionPeriodParam, IPersistentExecutionPeriod executionPeriodDAO) throws ExcepcaoPersistencia
+    private IExecutionPeriod getExecutionPeriod(Integer executionPeriodId, IPersistentExecutionPeriod executionPeriodDAO) throws ExcepcaoPersistencia
     {
         IExecutionPeriod executionPeriod;
-        if (infoExecutionPeriodParam == null)
+        if ((executionPeriodId == null) || (executionPeriodId.intValue() == 0))
         {
             executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
 
@@ -122,7 +108,7 @@ public class ReadTeacherDFPStudentsService implements IServico
         {
             executionPeriod =
                 (IExecutionPeriod) executionPeriodDAO.readByOId(
-                    new ExecutionPeriod(infoExecutionPeriodParam.getIdInternal()),
+                    new ExecutionPeriod(executionPeriodId),
                     false);
         }
         return executionPeriod;

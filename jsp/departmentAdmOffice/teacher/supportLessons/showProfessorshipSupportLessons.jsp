@@ -10,13 +10,16 @@
 <bean:define id="infoSupportLessonList" name="professorshipSupportLessons" property="infoSupportLessonList" scope="request" />
 <bean:define id="infoProfessorship" name="professorshipSupportLessons" property="infoProfessorship" scope="request" />
 
+<bean:define id="executionPeriodId" name="infoExecutionCourse" property="infoExecutionPeriod.idInternal" />
+
 <p class="infoselected">
 	<b><bean:message key="label.teacher.name" /></b> <bean:write name="infoTeacher" property="infoPerson.nome"/><br />
 	<bean:define id="teacherNumber" name="infoTeacher" property="teacherNumber"/>
 	<b><bean:message key="label.teacher.number" /></b> <bean:write name="teacherNumber"/> <br />
 
 	<b> <bean:message key="label.execution-course.name" /></b> <bean:write name="infoExecutionCourse" property="nome"/> <br />
-	(<i><html:link page="/teacherSearchForTeacherCreditsSheet.do?method=doSearch&page=1" paramId="teacherNumber" paramName="infoTeacher" paramProperty="teacherNumber">
+	<b> <bean:message key="label.execution-period" /></b> <bean:write name="infoExecutionCourse" property="infoExecutionPeriod.description"/> <br />
+	(<i><html:link page='<%= "/teacherSearchForTeacherCreditsSheet.do?method=doSearch&page=1&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherNumber" paramName="infoTeacher" paramProperty="teacherNumber">
 		<bean:message key="label.departmentTeachersList.teacherCreditsSheet"/>
 	</html:link></i>)
 </p>
@@ -27,7 +30,7 @@
 
 <bean:define id="link" type="java.lang.String">
 /manageSupportLesson.do?method=prepareEdit&amp;page=0&amp;infoProfessorshipId=<bean:write name="infoProfessorship" property="idInternal"/>
-&amp;teacherId=<bean:write name="infoTeacher" property="idInternal"/>&amp;executionCourseId=<bean:write name="infoExecutionCourse" property="idInternal"/>
+&amp;teacherId=<bean:write name="infoTeacher" property="idInternal"/>&amp;executionCourseId=<bean:write name="infoExecutionCourse" property="idInternal"/>&amp;executionPeriodId=<bean:write name="infoExecutionCourse" property="infoExecutionPeriod.idInternal"/>
 </bean:define>
 <html:link page="<%= link %>">
 	<bean:message key="link.support-lesson.create"/>
@@ -56,7 +59,7 @@
 
 		<bean:define id="linkDelete" type="java.lang.String">
 			/manageSupportLesson.do?method=delete&amp;page=0&amp;infoProfessorshipId=<bean:write name="infoProfessorship" property="idInternal"/>
-			&amp;teacherId=<bean:write name="infoTeacher" property="idInternal"/>&amp;executionCourseId=<bean:write name="infoExecutionCourse" property="idInternal"/>
+			&amp;teacherId=<bean:write name="infoTeacher" property="idInternal"/>&amp;executionCourseId=<bean:write name="infoExecutionCourse" property="idInternal"/>&amp;executionPeriodId=<bean:write name="infoExecutionCourse" property="infoExecutionPeriod.idInternal"/>
 		</bean:define>
 		<logic:iterate id="infoSupportLesson" name="infoSupportLessonList">
 			<tr>

@@ -5,17 +5,18 @@
 <tiles:importAttribute/>
 <tiles:useAttribute id="executionCourseLink" name="executionCourseLink" classname="java.lang.String"/>
 <tiles:useAttribute id="paramId" name="paramId" classname="java.lang.String"/>
+<bean:parameter id="executionPeriodId" name="executionPeriodId"/>
 <p class="infoselected">
 	<b><bean:message key="label.teacher.name" /></b> <bean:write name="infoTeacher" property="infoPerson.nome"/><br />
-	<b><bean:message key="label.teacher.number" /></b> <bean:write name="infoTeacher" property="teacherNumber"/>
-	(<i><html:link page="/teacherSearchForTeacherCreditsSheet.do?method=doSearch&page=1" paramId="teacherNumber" paramName="infoTeacher" paramProperty="teacherNumber">
+	<b><bean:message key="label.teacher.number" /></b> <bean:write name="infoTeacher" property="teacherNumber"/><br />
+	(<i><html:link page='<%= "/teacherSearchForTeacherCreditsSheet.do?method=doSearch&page=1&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherNumber" paramName="infoTeacher" paramProperty="teacherNumber">
 		<bean:message key="label.departmentTeachersList.teacherCreditsSheet"/>
 	</html:link></i>)
 </p>
 
 <logic:notEmpty name="detailedProfessorshipList" >
 	<h2><bean:message key="label.teacher.professorships"/></h2>
-		<table width="100%"cellpadding="5" border="0">
+		<table width="100%" cellpadding="5" border="0">
 			<tr>
 				<td class="listClasses-header" style="text-align:left"><bean:message key="label.execution-course.name" />
 				</td>

@@ -14,6 +14,7 @@ import DataBeans.InfoTeacher;
 import DataBeans.teacher.workTime.InfoTeacherInstitutionWorkTime;
 import DataBeans.teacher.workTime.TeacherInstitutionWorkingTimeDTO;
 import DataBeans.util.Cloner;
+import Dominio.ExecutionPeriod;
 import Dominio.IExecutionPeriod;
 import Dominio.ITeacher;
 import Dominio.Teacher;
@@ -36,24 +37,25 @@ public class ReadTeacherInstitutionWorkingTime implements IServico
     private static ReadTeacherInstitutionWorkingTime service = new ReadTeacherInstitutionWorkingTime();
 
     /**
-	 * The singleton access method of this class.
-	 */
+     * The singleton access method of this class.
+     */
     public static ReadTeacherInstitutionWorkingTime getService()
     {
         return service;
     }
 
     /*
-	 * (non-Javadoc)
-	 * 
-	 * @see ServidorAplicacao.IServico#getNome()
-	 */
+     * (non-Javadoc)
+     * 
+     * @see ServidorAplicacao.IServico#getNome()
+     */
     public String getNome()
     {
         return "ReadTeacherInstitutionWorkingTime";
     }
 
-    public TeacherInstitutionWorkingTimeDTO run(InfoTeacher infoTeacher) throws FenixServiceException
+    public TeacherInstitutionWorkingTimeDTO run(InfoTeacher infoTeacher, Integer executionPeriodId)
+        throws FenixServiceException
     {
         TeacherInstitutionWorkingTimeDTO teacherInstitutionWorkingTimeDTO =
             new TeacherInstitutionWorkingTimeDTO();
@@ -70,9 +72,18 @@ public class ReadTeacherInstitutionWorkingTime implements IServico
                 (ITeacher) teacherDAO.readByOId(new Teacher(infoTeacher.getIdInternal()), false);
             InfoTeacher infoTeacher2 = Cloner.copyITeacher2InfoTeacher(teacher);
 
-            IExecutionPeriod executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
-            InfoExecutionPeriod infoExecutionPeriod =
-                (InfoExecutionPeriod) Cloner.get(executionPeriod);
+            IExecutionPeriod executionPeriod = null;
+            if ((executionPeriodId == null) || (executionPeriodId.intValue() == 0))
+            {
+                executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
+            } else
+            {
+                executionPeriod =
+                    (IExecutionPeriod) executionPeriodDAO.readByOId(
+                        new ExecutionPeriod(executionPeriodId),
+                        false);
+            }
+            InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) Cloner.get(executionPeriod);
 
             List teacherInstitutionWorkTimeList =
                 teacherInstitutionWorkingTimeDAO.readByTeacherAndExecutionPeriod(
@@ -98,8 +109,7 @@ public class ReadTeacherInstitutionWorkingTime implements IServico
             teacherInstitutionWorkingTimeDTO.setInfoTeacher(infoTeacher2);
             teacherInstitutionWorkingTimeDTO.setInfoTeacherInstitutionWorkTimeList(
                 infoTeacherInstitutionWorkTimeList);
-        }
-        catch (ExcepcaoPersistencia e)
+        } catch (ExcepcaoPersistencia e)
         {
             e.printStackTrace(System.out);
             throw new FenixServiceException("Problems on database!", e);

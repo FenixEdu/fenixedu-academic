@@ -9,14 +9,15 @@
 <bean:define id="infoTeacher" name="teacherInstitutionWorkingTime" property="infoTeacher" scope="request" />
 <bean:define id="infoExecutionPeriod" name="teacherInstitutionWorkingTime" property="infoExecutionPeriod" scope="request" />
 <bean:define id="infoTeacherInstitutionWorkingTimeList" name="teacherInstitutionWorkingTime" property="infoTeacherInstitutionWorkTimeList" scope="request" />
+<bean:define id="executionPeriodId" name="infoExecutionPeriod" property="idInternal" />
 
 <p class="infoselected">
 	<b><bean:message key="label.teacher.name" /></b> <bean:write name="infoTeacher" property="infoPerson.nome"/><br />
 	<bean:define id="teacherNumber" name="infoTeacher" property="teacherNumber"/>
 	<b><bean:message key="label.teacher.number" /></b> <bean:write name="teacherNumber"/> <br />
 
-	<b> <bean:message key="label.execution-period.name" /></b> <bean:write name="infoExecutionPeriod" property="name"/><br />
-	(<i><html:link page="/teacherSearchForTeacherCreditsSheet.do?method=doSearch&page=1" paramId="teacherNumber" paramName="infoTeacher" paramProperty="teacherNumber">
+	<b><bean:message key="label.execution-period" /></b> <bean:write name="infoExecutionPeriod" property="description"/><br />
+	(<i><html:link page='<%= "/teacherSearchForTeacherCreditsSheet.do?method=doSearch&page=1&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherNumber" paramName="infoTeacher" paramProperty="teacherNumber">
 		<bean:message key="label.departmentTeachersList.teacherCreditsSheet"/>
 	</html:link></i>)
 </p>

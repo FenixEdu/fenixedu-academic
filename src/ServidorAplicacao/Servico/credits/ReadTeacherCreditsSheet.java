@@ -61,21 +61,21 @@ public class ReadTeacherCreditsSheet implements IService
     }
 
     private IExecutionPeriod readExecutionPeriod(
-        InfoExecutionPeriod infoExecutionPeriod,
+        Integer executionPeriodId,
         IPersistentExecutionPeriod executionPeriodDAO)
         throws FenixServiceException
     {
         IExecutionPeriod executionPeriod;
         try
         {
-            if (infoExecutionPeriod == null)
+            if ((executionPeriodId == null) || (executionPeriodId.intValue() == 0))
             {
                 executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
             } else
             {
                 executionPeriod =
                     (IExecutionPeriod) executionPeriodDAO.readByOId(
-                        new ExecutionPeriod(infoExecutionPeriod.getIdInternal()),
+                        new ExecutionPeriod(executionPeriodId),
                         false);
             }
         } catch (ExcepcaoPersistencia e1)
@@ -277,7 +277,7 @@ public class ReadTeacherCreditsSheet implements IService
 
     public TeacherCreditsSheetDTO run(
         InfoTeacher infoTeacherParam,
-        InfoExecutionPeriod infoExecutionPeriodParam)
+        Integer executionPeriodId)
         throws FenixServiceException
     {
 
@@ -291,7 +291,7 @@ public class ReadTeacherCreditsSheet implements IService
             IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
             IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
             IExecutionPeriod executionPeriod =
-                readExecutionPeriod(infoExecutionPeriodParam, executionPeriodDAO);
+                readExecutionPeriod(executionPeriodId, executionPeriodDAO);
             ITeacher teacher = readTeacher(infoTeacherParam.getTeacherNumber(), teacherDAO);
 
             List infoMasterDegreeProfessorships =

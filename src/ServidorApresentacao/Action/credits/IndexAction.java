@@ -1,77 +1,110 @@
 /*
  * Created on 3/Jul/2003 by jpvl
- *
+ *  
  */
 package ServidorApresentacao.Action.credits;
 
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.validator.DynaValidatorForm;
 
-import DataBeans.DepartmentTeachersDTO;
+import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
-import Util.RoleType;
+import Util.PeriodState;
 
 /**
  * @author jpvl
  */
-public class IndexAction extends Action {
+public class IndexAction extends Action
+{
 
-	/* (non-Javadoc)
-	 * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping, org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
-	 */
-	public ActionForward execute(
-		ActionMapping mapping,
-		ActionForm form,
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws Exception {
-		IUserView userView = SessionUtils.getUserView(request);
-		ActionForward actionForward = null;
-		if (userView.hasRoleType(RoleType.CREDITS_MANAGER)) {
-			actionForward = mapping.findForward("creditsManager");
-		} else if (userView.hasRoleType(RoleType.DEPARTMENT_CREDITS_MANAGER)) {
-			Object args[] = { userView.getUtilizador()};
-			List  departmentList =
-				(List) ServiceUtils.executeService(
-					userView,
-					"ReadUserManageableDepartments",
-					args);
-					
-			if (departmentList == null
-				|| departmentList.isEmpty()) {
-				response.sendError(HttpServletResponse.SC_FORBIDDEN);
-				return null;
-			} else {
-				sortList(departmentList);
-				request.setAttribute("departmentTeachersDTOList", departmentList);
-				actionForward =
-					mapping.findForward("creditsManagerDepartment");
-			}
-			return actionForward;
-		}
-		return actionForward;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping,
+     *      org.apache.struts.action.ActionForm,
+     *      javax.servlet.http.HttpServletRequest,
+     *      javax.servlet.http.HttpServletResponse)
+     */
+    public ActionForward execute(
+        ActionMapping mapping,
+        ActionForm form,
+        HttpServletRequest request,
+        HttpServletResponse response)
+        throws Exception
+    {
+        IUserView userView = SessionUtils.getUserView(request);
 
-	private void sortList(List departmentList) {
-		Collections.sort(departmentList, new BeanComparator("infoDepartment.name"));
-		
-		Iterator departmentIterator = departmentList.iterator();
-		while (departmentIterator.hasNext()) {		
-			DepartmentTeachersDTO departmentTeachersDTO	= (DepartmentTeachersDTO) departmentIterator.next();
-			Collections.sort(departmentTeachersDTO.getInfoTeacherList(), new BeanComparator("teacherNumber"));
-		}
-	}
+        DynaValidatorForm executionPeriodForm = (DynaValidatorForm) form;
 
+        List executionPeriodsNotClosed =
+            (List) ServiceUtils.executeService(userView, "ReadNotClosedExecutionPeriods", null);
+
+        setChoosedExecutionPeriod(request, executionPeriodsNotClosed, executionPeriodForm);
+
+        BeanComparator initialDateComparator = new BeanComparator("beginDate");
+        Collections.sort(executionPeriodsNotClosed, new ReverseComparator(initialDateComparator));
+
+        request.setAttribute("executionPeriods", executionPeriodsNotClosed);
+
+        return mapping.findForward("successfull-read");
+    }
+
+    /**
+     * If the executionPeriod is not already selected it chooses the current executionPeriod.
+     * @param request
+     * @param executionPeriodNotClosed
+     * @param executionPeriodForm
+     */
+    private void setChoosedExecutionPeriod(
+        HttpServletRequest request,
+        List executionPeriodsNotClosed,
+        DynaValidatorForm executionPeriodForm)
+    {
+        final Integer executionPeriodId = (Integer) executionPeriodForm.get("executionPeriodId");
+        InfoExecutionPeriod infoExecutionPeriod = null;
+        if (executionPeriodId == null)
+        {
+            infoExecutionPeriod =
+                (InfoExecutionPeriod) CollectionUtils.find(executionPeriodsNotClosed, new Predicate()
+            {
+
+                public boolean evaluate(Object input)
+                {
+                    InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) input;
+
+                    return infoExecutionPeriod.getState().equals(PeriodState.CURRENT);
+                }
+            });
+        } else
+        {
+            infoExecutionPeriod =
+                (InfoExecutionPeriod) CollectionUtils.find(executionPeriodsNotClosed, new Predicate()
+            {
+
+                public boolean evaluate(Object input)
+                {
+                    InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) input;
+
+                    return infoExecutionPeriod.getIdInternal().equals(executionPeriodId);
+                }
+            });
+
+        }
+        request.setAttribute("infoExecutionPeriod", infoExecutionPeriod);
+    }
 }

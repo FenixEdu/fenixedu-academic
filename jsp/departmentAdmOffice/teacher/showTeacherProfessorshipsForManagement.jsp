@@ -8,26 +8,10 @@
 	<b> <bean:message key="label.teacher.department"/> </b> <bean:write name="teacherDepartment" property="name"/> 
 	<logic:present role="role.department.credits.manager">
 		<logic:equal name="isDepartmentManager" value="true">
-			<br />
-			(<i><html:link page="/teacherSearchForTeacherCreditsSheet.do?method=doSearch&page=1" paramId="teacherNumber" paramName="infoTeacher" paramProperty="teacherNumber">
-				<bean:message key="label.departmentTeachersList.teacherCreditsSheet"/>
-			</html:link></i>)		
 		</logic:equal>
 	</logic:present>
-
 </p>
 
-<logic:present role="role.department.credits.manager">
-	<logic:equal name="isDepartmentManager" value="true">
-		<br />
-		<br />
-		<html:link page="/createProfessorship.do?method=showExecutionYearExecutionPeriods&amp;page=0" paramId="teacherNumber" paramName="infoTeacher" paramProperty="teacherNumber">
-			<bean:message key="link.professorship.addExecutionCourse"/>
-		</html:link>
-		<br />
-		<br />
-	</logic:equal>
-</logic:present>
 <logic:messagesPresent>
 	<html:errors />
 </logic:messagesPresent>
@@ -121,3 +105,12 @@
 		</logic:present>		 	
 	</html:form>		 	
 </logic:notEmpty>
+<logic:present role="role.department.credits.manager">
+	<logic:equal name="isDepartmentManager" value="true">
+		<br />
+		<br />
+		<html:link page="/createProfessorship.do?method=showExecutionYearExecutionPeriods&amp;page=0" paramId="teacherNumber" paramName="infoTeacher" paramProperty="teacherNumber">
+			<bean:message key="link.professorship.addExecutionCourse"/>
+		</html:link>
+	</logic:equal>
+</logic:present>
