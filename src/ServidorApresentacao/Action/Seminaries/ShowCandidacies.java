@@ -286,7 +286,7 @@ public class ShowCandidacies extends FenixAction
 				{
 					InfoEnrolment ie = (InfoEnrolment) iter.next();
 					String stringGrade = ie.getInfoEnrolmentEvaluation().getGrade();
-					if (!stringGrade.equals("RE"))
+					if (!stringGrade.equals("RE") && !stringGrade.equals("NA"))
 					{
 						grade = new Float(stringGrade).floatValue();
 						acc += grade;
