@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-import DataBeans.util.Cloner;
+import DataBeans.InfoStudentWithInfoPerson;
 import Dominio.DistributedTest;
 import Dominio.ExecutionCourse;
 import Dominio.Frequenta;
@@ -48,7 +48,6 @@ public class ReadStudentsWithoutDistributedTest implements IService {
 							DistributedTest.class, distributedTestId);
 			if (distributedTest == null)
 				throw new FenixServiceException();
-
 			//Todos os alunos
 			List attendList = persistentSuport.getIFrequentaPersistente()
 					.readByExecutionCourse(executionCourse);
@@ -56,16 +55,14 @@ public class ReadStudentsWithoutDistributedTest implements IService {
 			List studentList = persistentSuport
 					.getIPersistentStudentTestQuestion()
 					.readStudentsByDistributedTest(distributedTest);
-
 			Iterator it = attendList.iterator();
 			while (it.hasNext()) {
 				IFrequenta attend = (Frequenta) it.next();
 
 				if (!studentList.contains(attend.getAluno()))
-					infoStudentList.add(Cloner.copyIStudent2InfoStudent(attend
-							.getAluno()));
+					infoStudentList.add(InfoStudentWithInfoPerson
+							.newInfoFromDomain(attend.getAluno()));
 			}
-
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}

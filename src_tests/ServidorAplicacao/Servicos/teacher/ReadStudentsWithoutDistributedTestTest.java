@@ -19,12 +19,12 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Susana Fernandes
  */
-public class ReadStudentsWithoutDistributedTestTest
-	extends TestCaseReadServices {
+public class ReadStudentsWithoutDistributedTestTest extends
+		TestCaseReadServices {
 
 	/**
-	* @param testName
-	*/
+	 * @param testName
+	 */
 	public ReadStudentsWithoutDistributedTestTest(String testName) {
 		super(testName);
 
@@ -39,7 +39,7 @@ public class ReadStudentsWithoutDistributedTestTest
 	}
 
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
-		Object[] args = { new Integer(26), new Integer(25)};
+		Object[] args = { new Integer(26), new Integer(25) };
 		return args;
 	}
 
@@ -52,26 +52,22 @@ public class ReadStudentsWithoutDistributedTestTest
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			sp.iniciarTransaccao();
-			IStudent student10 = new Student(new Integer(10));
-			IStudent student11 = new Student(new Integer(11));
 
-			student10 =
-				(IStudent) sp.getIPersistentStudent().readByOId(
-					student10,
-					false);
-			student11 =
-				(IStudent) sp.getIPersistentStudent().readByOId(
-					student11,
-					false);
+			IStudent student10 = (IStudent) sp.getIPersistentStudent()
+					.readByOID(Student.class, new Integer(10));
+
+			IStudent student11 = (IStudent) sp.getIPersistentStudent()
+					.readByOID(Student.class, new Integer(11));
+
 			assertNotNull("student10 null", student10);
 			assertNotNull("student11 null", student11);
 
 			sp.confirmarTransaccao();
 
-			InfoStudent infoStudent10 =
-				Cloner.copyIStudent2InfoStudent(student10);
-			InfoStudent infoStudent11 =
-				Cloner.copyIStudent2InfoStudent(student11);
+			InfoStudent infoStudent10 = Cloner
+					.copyIStudent2InfoStudent(student10);
+			InfoStudent infoStudent11 = Cloner
+					.copyIStudent2InfoStudent(student11);
 
 			infoStudentList.add(infoStudent10);
 			infoStudentList.add(infoStudent11);

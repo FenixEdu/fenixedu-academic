@@ -153,7 +153,7 @@ public class ReadExerciseTest extends ServiceNeedsAuthenticationTestCase
         IExecutionCourse executionCourse = (IExecutionCourse) broker.getObjectByQuery(queryCriteria);
         broker.close();
 
-        InfoMetadata infoMetadata = Cloner.copyIMetadata2InfoMetadata(metadata);
+        InfoMetadata infoMetadata = InfoMetadata.newInfoFromDomain(metadata);
         Iterator it = metadata.getVisibleQuestions().iterator();
         List visibleInfoQuestions = new ArrayList();
         List xmlNames = new ArrayList();
@@ -164,7 +164,7 @@ public class ReadExerciseTest extends ServiceNeedsAuthenticationTestCase
                     .toString()));
             if ((question.getIdInternal().equals(args[2])) || ((Integer)args[2]).equals(new Integer(-2)))
             {
-                InfoQuestion infoQuestion = Cloner.copyIQuestion2InfoQuestion(question);
+                InfoQuestion infoQuestion = InfoQuestion.newInfoFromDomain(question);
                 ParseQuestion parse = new ParseQuestion();
                 try
                 {
@@ -185,7 +185,8 @@ public class ReadExerciseTest extends ServiceNeedsAuthenticationTestCase
 
         InfoMetadata serviceInfoMetadata = ((InfoSiteExercise) serviceSiteView.getComponent())
                 .getInfoMetadata();
-        if (!infoMetadata.getIdInternal().equals(serviceInfoMetadata.getIdInternal()))
+        if (!infoMetadata.getIdInternal().equals(
+				serviceInfoMetadata.getIdInternal()))
             fail("ReadExerciseTest " + "InfoMetadata notEqual");
 
         InfoExecutionCourse serviceInfoExecutionCourse = ((InfoSiteExercise) serviceSiteView

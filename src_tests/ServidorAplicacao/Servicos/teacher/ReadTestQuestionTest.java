@@ -78,30 +78,26 @@ public class ReadTestQuestionTest extends TestCaseReadServices
             sp.iniciarTransaccao();
 
             IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse = new ExecutionCourse(new Integer(26));
-            executionCourse =
-                (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
+            IExecutionCourse executionCourse =
+                (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, new Integer(26));
             assertNotNull("executionCourse null", executionCourse);
 
             IPersistentTest persistentTest = sp.getIPersistentTest();
-            ITest test = new Test(new Integer(4));
-            test = (ITest) persistentTest.readByOId(test, false);
+            ITest test = (ITest) persistentTest.readByOID(Test.class, new Integer(4));
             assertNotNull("test null", test);
 
             IPersistentQuestion persistentQuestion = sp.getIPersistentQuestion();
-            IQuestion question = new Question(new Integer(1));
-            question = (IQuestion) persistentQuestion.readByOId(question, false);
+            IQuestion question = (IQuestion) persistentQuestion.readByOID(Question.class, new Integer(1));
             assertNotNull("Question null", question);
 
             IPersistentTestQuestion persistentTestQuestion = sp.getIPersistentTestQuestion();
-            ITestQuestion testQuestion = new TestQuestion(new Integer(8));
-            testQuestion = (ITestQuestion) persistentTestQuestion.readByOId(testQuestion, false);
+            ITestQuestion testQuestion = (ITestQuestion) persistentTestQuestion.readByOID(TestQuestion.class, new Integer(8));
             assertNotNull("TestQuestion null", testQuestion);
 
             sp.confirmarTransaccao();
             infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
 
-            infoQuestion = Cloner.copyIQuestion2InfoQuestion(question);
+            infoQuestion = InfoQuestion.newInfoFromDomain(question);
             ParseQuestion parse = new ParseQuestion();
             try
             {
@@ -111,7 +107,7 @@ public class ReadTestQuestionTest extends TestCaseReadServices
             {
                 fail("exception: ExcepcaoPersistencia ");
             }
-            infoTestQuestion = Cloner.copyITestQuestion2InfoTestQuestion(testQuestion);
+            infoTestQuestion = InfoTestQuestion.newInfoFromDomain(testQuestion);
             infoTestQuestion.setQuestion(infoQuestion);
         }
         catch (ExcepcaoPersistencia e)

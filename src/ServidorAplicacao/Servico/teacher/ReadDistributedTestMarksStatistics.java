@@ -11,10 +11,10 @@ import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.ExecutionCourseSiteView;
+import DataBeans.InfoDistributedTestWithTestScope;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSiteStudentsTestMarksStatistics;
 import DataBeans.SiteView;
-import DataBeans.util.Cloner;
 import Dominio.DistributedTest;
 import Dominio.IDistributedTest;
 import Dominio.IStudentTestQuestion;
@@ -121,8 +121,9 @@ public class ReadDistributedTestMarksStatistics implements IService {
 					.setNotAnsweredPercentage(notAnsweredPercentageList);
 			infoSiteStudentsTestMarksStatistics
 					.setAnsweredPercentage(answeredPercentageList);
-			infoSiteStudentsTestMarksStatistics.setInfoDistributedTest(Cloner
-					.copyIDistributedTest2InfoDistributedTest(distributedTest));
+			infoSiteStudentsTestMarksStatistics
+					.setInfoDistributedTest(InfoDistributedTestWithTestScope
+							.newInfoFromDomain(distributedTest));
 			infoSiteStudentsTestMarksStatistics
 					.setExecutionCourse((InfoExecutionCourse) infoSiteStudentsTestMarksStatistics
 							.getInfoDistributedTest().getInfoTestScope()

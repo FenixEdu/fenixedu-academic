@@ -8,9 +8,9 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoQuestion;
+import DataBeans.InfoQuestionWithInfoMetadata;
 import DataBeans.InfoSiteQuestion;
 import DataBeans.SiteView;
-import DataBeans.util.Cloner;
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IMetadata;
@@ -72,8 +72,8 @@ public class ReadQuestion implements IService {
 			if (question == null) {
 				throw new InvalidArgumentsServiceException();
 			}
-			InfoQuestion infoQuestion = Cloner
-					.copyIQuestion2InfoQuestion(question);
+			InfoQuestion infoQuestion = InfoQuestionWithInfoMetadata
+					.newInfoFromDomain(question);
 			ParseQuestion parse = new ParseQuestion();
 			try {
 				infoQuestion = parse.parseQuestion(infoQuestion.getXmlFile(),
@@ -89,8 +89,8 @@ public class ReadQuestion implements IService {
 			}
 			InfoSiteQuestion bodyComponent = new InfoSiteQuestion();
 			bodyComponent.setInfoQuestion(infoQuestion);
-			bodyComponent.setExecutionCourse((InfoExecutionCourse) Cloner
-					.get(executionCourse));
+			bodyComponent.setExecutionCourse(InfoExecutionCourse
+					.newInfoFromDomain(executionCourse));
 			SiteView siteView = new ExecutionCourseSiteView(bodyComponent,
 					bodyComponent);
 			return siteView;

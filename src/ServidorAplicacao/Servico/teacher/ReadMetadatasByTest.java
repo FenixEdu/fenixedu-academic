@@ -12,9 +12,9 @@ import java.util.List;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoMetadata;
 import DataBeans.InfoSiteMetadatas;
 import DataBeans.SiteView;
-import DataBeans.util.Cloner;
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IMetadata;
@@ -69,13 +69,13 @@ public class ReadMetadatasByTest implements IService {
 							order, asc);
 			Iterator iter = metadatasList.iterator();
 			while (iter.hasNext())
-				result.add(Cloner.copyIMetadata2InfoMetadata((IMetadata) iter
+				result.add(InfoMetadata.newInfoFromDomain((IMetadata) iter
 						.next()));
 
 			InfoSiteMetadatas bodyComponent = new InfoSiteMetadatas();
 			bodyComponent.setInfoMetadatas(result);
-			bodyComponent.setExecutionCourse((InfoExecutionCourse) Cloner
-					.get(executionCourse));
+			bodyComponent.setExecutionCourse(InfoExecutionCourse
+					.newInfoFromDomain(executionCourse));
 			SiteView siteView = new ExecutionCourseSiteView(bodyComponent,
 					bodyComponent);
 			return siteView;

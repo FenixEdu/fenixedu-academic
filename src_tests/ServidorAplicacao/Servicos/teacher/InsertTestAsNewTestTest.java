@@ -7,7 +7,6 @@ package ServidorAplicacao.Servicos.teacher;
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.query.Criteria;
-import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
 import Dominio.ITest;
@@ -88,12 +87,12 @@ public class InsertTestAsNewTestTest extends ServiceNeedsAuthenticationTestCase
 
 			criteria = new Criteria();
 			criteria.addEqualTo("idInternal", args[1]);
-			Query queryCriteria = new QueryByCriteria(Test.class, criteria);
+			QueryByCriteria queryCriteria = new QueryByCriteria(Test.class, criteria);
 			ITest oldTest = (ITest) broker.getObjectByQuery(queryCriteria);
 
 			criteria = new Criteria();
-			criteria.addOrderBy("idInternal", false);
 			queryCriteria = new QueryByCriteria(Test.class, criteria);
+			queryCriteria.addOrderBy("idInternal", false);
 			ITest newTest = (ITest) broker.getObjectByQuery(queryCriteria);
 			broker.close();
 

@@ -10,7 +10,7 @@ import org.apache.struts.util.LabelValueBean;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoStudentTestQuestion;
-import DataBeans.util.Cloner;
+import DataBeans.InfoStudentTestQuestionWithInfoQuestion;
 import Dominio.DistributedTest;
 import Dominio.IDistributedTest;
 import Dominio.IStudent;
@@ -60,8 +60,8 @@ public class ReadStudentTestQuestionImage implements IService {
 						.next();
 				if (studentTestQuestion.getKeyQuestion().equals(questionId)) {
 					ParseQuestion parse = new ParseQuestion();
-					InfoStudentTestQuestion infoStudentTestQuestion = Cloner
-							.copyIStudentTestQuestion2InfoStudentTestQuestion(studentTestQuestion);
+					InfoStudentTestQuestion infoStudentTestQuestion = InfoStudentTestQuestionWithInfoQuestion
+							.newInfoFromDomain(studentTestQuestion);
 					try {
 						infoStudentTestQuestion = parse
 								.parseStudentTestQuestion(

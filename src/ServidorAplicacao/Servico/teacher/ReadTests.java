@@ -54,7 +54,7 @@ public class ReadTests implements IService {
 			Iterator iter = tests.iterator();
 			while (iter.hasNext()) {
 				ITest test = (ITest) iter.next();
-				InfoTest infoTest = Cloner.copyITest2InfoTest(test);
+				InfoTest infoTest = InfoTest.newInfoFromDomain(test);
 				result.add(infoTest);
 			}
 			InfoSiteTests bodyComponent = new InfoSiteTests();

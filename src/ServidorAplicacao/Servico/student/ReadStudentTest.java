@@ -10,7 +10,7 @@ import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoStudentTestQuestion;
-import DataBeans.util.Cloner;
+import DataBeans.InfoStudentTestQuestionWithInfoQuestionAndInfoDistributedTest;
 import Dominio.DistributedTest;
 import Dominio.IDistributedTest;
 import Dominio.IStudent;
@@ -79,8 +79,8 @@ public class ReadStudentTest implements IService {
 										.getQuestion().getXmlFile(), shuffle,
 										this.path));
 					}
-					infoStudentTestQuestion = Cloner
-							.copyIStudentTestQuestion2InfoStudentTestQuestion(studentTestQuestion);
+					infoStudentTestQuestion = InfoStudentTestQuestionWithInfoQuestionAndInfoDistributedTest
+							.newInfoFromDomain(studentTestQuestion);
 					infoStudentTestQuestion = parse.parseStudentTestQuestion(
 							infoStudentTestQuestion, this.path);
 				} catch (Exception e) {

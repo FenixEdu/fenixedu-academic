@@ -8,14 +8,20 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import Dominio.IStudentTestLog;
+
 /**
  * @author Susana Fernandes
  */
 public class InfoStudentTestLog extends InfoObject {
 	private InfoStudent infoStudent;
+
 	private InfoDistributedTest infoDistributedTest;
+
 	private Date date;
+
 	private String event;
+
 	private List eventList;
 
 	public InfoStudentTestLog() {
@@ -67,7 +73,7 @@ public class InfoStudentTestLog extends InfoObject {
 		Date date = getDate();
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTimeInMillis(date.getTime());
-		
+
 		result += calendar.get(Calendar.DAY_OF_MONTH);
 		result += "/";
 		result += calendar.get(Calendar.MONTH) + 1;
@@ -91,15 +97,34 @@ public class InfoStudentTestLog extends InfoObject {
 		if (obj instanceof InfoStudentTestLog) {
 			InfoStudentTestLog infoStudentTestLog = (InfoStudentTestLog) obj;
 			result = getIdInternal().equals(infoStudentTestLog.getIdInternal());
-			result =
-				result
-					|| (getInfoStudent()
-						.equals(infoStudentTestLog.getInfoStudent()))
-					&& (getInfoDistributedTest()
-						.equals(infoStudentTestLog.getInfoDistributedTest()))
+			result = result
+					|| (getInfoStudent().equals(infoStudentTestLog
+							.getInfoStudent()))
+					&& (getInfoDistributedTest().equals(infoStudentTestLog
+							.getInfoDistributedTest()))
 					&& (getDate().equals(infoStudentTestLog.getDate()))
 					&& (getEvent().equals(infoStudentTestLog.getEvent()));
 		}
 		return result;
 	}
+
+	public void copyFromDomain(IStudentTestLog studentTestLog) {
+		super.copyFromDomain(studentTestLog);
+		if (studentTestLog != null) {
+			setDate(studentTestLog.getDate());
+			setEvent(studentTestLog.getEvent());
+			//setEventList(studentTestLog.getEventList());
+		}
+	}
+
+	public static InfoStudentTestLog newInfoFromDomain(
+			IStudentTestLog studentTestLog) {
+		InfoStudentTestLog infoStudentTestLog = null;
+		if (studentTestLog != null) {
+			infoStudentTestLog = new InfoStudentTestLog();
+			infoStudentTestLog.copyFromDomain(studentTestLog);
+		}
+		return infoStudentTestLog;
+	}
+
 }

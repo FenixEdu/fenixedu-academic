@@ -3049,8 +3049,8 @@ public abstract class Cloner
         }
         else if (evaluation instanceof IOnlineTest)
         {
-            infoEvaluation = copyIOnlineTest2InfoOnlineTest((IOnlineTest) evaluation);
-            infoEvaluation.setEvaluationType(EvaluationType.ONLINE_TEST_TYPE);
+            infoEvaluation = InfoOnlineTest.newInfoFromDomain((IOnlineTest) evaluation);
+            //infoEvaluation.setEvaluationType(EvaluationType.ONLINE_TEST_TYPE);
         }
         copyObjectProperties(infoEvaluation, evaluation);
 
@@ -3819,144 +3819,6 @@ public abstract class Cloner
         departmentCourse.setDepartamento(
             Cloner.copyInfoDepartment2IDepartment(infoDepartmentCourse.getInfoDepartment()));
         return departmentCourse;
-    }
-
-    public static InfoMetadata copyIMetadata2InfoMetadata(IMetadata metadata)
-    {
-
-        InfoMetadata infoMetadata = new InfoMetadata();
-        //		copyObjectProperties(infoMetadata, metadata);
-        infoMetadata.setMetadataFile(metadata.getMetadataFile());
-        infoMetadata.setDescription(metadata.getDescription());
-        infoMetadata.setAuthor(metadata.getAuthor());
-        infoMetadata.setDifficulty(metadata.getDifficulty());
-        infoMetadata.setIdInternal(metadata.getIdInternal());
-        infoMetadata.setLearningTime(metadata.getLearningTime());
-        infoMetadata.setLevel(metadata.getLevel());
-        infoMetadata.setMainSubject(metadata.getMainSubject());
-        infoMetadata.setNumberOfMembers(metadata.getNumberOfMembers());
-        infoMetadata.setSecondarySubject(metadata.getSecondarySubject());
-        infoMetadata.setVisibility(metadata.getVisibility());
-
-        InfoExecutionCourse infoExecutionCourse =
-            (InfoExecutionCourse) get(metadata.getExecutionCourse());
-        infoMetadata.setInfoExecutionCourse(infoExecutionCourse);
-        return infoMetadata;
-    }
-
-    public static InfoQuestion copyIQuestion2InfoQuestion(IQuestion question)
-    {
-        InfoQuestion infoQuestion = new InfoQuestion();
-        copyObjectProperties(infoQuestion, question);
-        InfoMetadata infoMetadata = copyIMetadata2InfoMetadata(question.getMetadata());
-        infoQuestion.setInfoMetadata(infoMetadata);
-        return infoQuestion;
-    }
-    public static InfoTest copyITest2InfoTest(ITest test)
-    {
-        InfoTest infoTest = new InfoTest();
-        copyObjectProperties(infoTest, test);
-        infoTest.setInfoTestScope(copyITestScope2InfoTestScope(test.getTestScope()));
-        return infoTest;
-    }
-
-    public static InfoTestQuestion copyITestQuestion2InfoTestQuestion(ITestQuestion testQuestion)
-    {
-        InfoTestQuestion infoTestQuestion = new InfoTestQuestion();
-        //copyObjectProperties(infoTestQuestion,testQuestion);
-        infoTestQuestion.setIdInternal(testQuestion.getIdInternal());
-        infoTestQuestion.setTestQuestionOrder(testQuestion.getTestQuestionOrder());
-        infoTestQuestion.setTestQuestionValue(testQuestion.getTestQuestionValue());
-        infoTestQuestion.setCorrectionFormula(testQuestion.getCorrectionFormula());
-        InfoTest infoTest = copyITest2InfoTest(testQuestion.getTest());
-        infoTestQuestion.setTest(infoTest);
-        InfoQuestion infoQuestion = copyIQuestion2InfoQuestion(testQuestion.getQuestion());
-        infoTestQuestion.setQuestion(infoQuestion);
-        return infoTestQuestion;
-    }
-
-    public static InfoDistributedTest copyIDistributedTest2InfoDistributedTest(IDistributedTest distributedTest)
-    {
-        InfoDistributedTest infoDistributedTest = new InfoDistributedTest();
-        copyObjectProperties(infoDistributedTest, distributedTest);
-        infoDistributedTest.setInfoTestScope(
-            copyITestScope2InfoTestScope(distributedTest.getTestScope()));
-        return infoDistributedTest;
-    }
-
-    public static InfoTestScope copyITestScope2InfoTestScope(ITestScope testScope)
-    {
-        InfoTestScope infoTestScope = new InfoTestScope();
-        if (testScope.getDomainObject() instanceof IExecutionCourse)
-            infoTestScope.setInfoObject(get(testScope.getDomainObject()));
-        return infoTestScope;
-    }
-
-    public static InfoStudentTestQuestion copyIStudentTestQuestion2InfoStudentTestQuestion(
-            IStudentTestQuestion studentTestQuestion)
-    {
-        InfoStudentTestQuestion infoStudentTestQuestion = new InfoStudentTestQuestion();
-        //copyObjectProperties(infoStudentTestQuestion, studentTestQuestion);
-        infoStudentTestQuestion.setIdInternal(studentTestQuestion.getIdInternal());
-        infoStudentTestQuestion.setOptionShuffle(studentTestQuestion.getOptionShuffle());
-        infoStudentTestQuestion.setOldResponse(studentTestQuestion.getOldResponse());
-        infoStudentTestQuestion.setTestQuestionOrder(studentTestQuestion.getTestQuestionOrder());
-        infoStudentTestQuestion.setTestQuestionValue(studentTestQuestion.getTestQuestionValue());
-        infoStudentTestQuestion.setTestQuestionMark(studentTestQuestion.getTestQuestionMark());
-        infoStudentTestQuestion.setCorrectionFormula(studentTestQuestion.getCorrectionFormula());
-        //  
-        InfoDistributedTest infoDistributedTest = copyIDistributedTest2InfoDistributedTest(studentTestQuestion
-                .getDistributedTest());
-        InfoStudent infoStudent = copyIStudent2InfoStudent(studentTestQuestion.getStudent());
-        InfoQuestion infoQuestion = copyIQuestion2InfoQuestion(studentTestQuestion.getQuestion());
-        infoStudentTestQuestion.setDistributedTest(infoDistributedTest);
-        infoStudentTestQuestion.setStudent(infoStudent);
-        infoStudentTestQuestion.setQuestion(infoQuestion);
-        if (studentTestQuestion.getResponse() != null)
-        {
-            XMLDecoder decoder = new XMLDecoder(new ByteArrayInputStream(studentTestQuestion
-                    .getResponse().getBytes()));
-            infoStudentTestQuestion.setResponse((Response) decoder.readObject());
-            decoder.close();
-        }
-        return infoStudentTestQuestion;
-    }
-
-    public static InfoStudentTestQuestionMark copyIStudentTestQuestion2InfoStudentTestQuestionMark(IStudentTestQuestion studentTestQuestion)
-    {
-        InfoStudentTestQuestionMark infoStudentTestQuestionMark = new InfoStudentTestQuestionMark();
-        infoStudentTestQuestionMark.setTestQuestionMark(studentTestQuestion.getTestQuestionMark());
-
-        if (studentTestQuestion.getStudent() != null)
-        {
-            infoStudentTestQuestionMark.setStudentIdInternal(
-                studentTestQuestion.getStudent().getIdInternal());
-            infoStudentTestQuestionMark.setStudentNumber(studentTestQuestion.getStudent().getNumber());
-            if (studentTestQuestion.getStudent().getPerson() != null)
-                infoStudentTestQuestionMark.setStudentName(
-                    studentTestQuestion.getStudent().getPerson().getNome());
-
-        }
-        return infoStudentTestQuestionMark;
-    }
-
-    public static InfoStudentTestLog copyIStudentTestLog2InfoStudentTestLog(IStudentTestLog studentTestLog)
-    {
-        InfoStudentTestLog infoStudentTestLog = new InfoStudentTestLog();
-        copyObjectProperties(infoStudentTestLog, studentTestLog);
-        infoStudentTestLog.setInfoDistributedTest(
-            copyIDistributedTest2InfoDistributedTest(studentTestLog.getDistributedTest()));
-        infoStudentTestLog.setInfoStudent(copyIStudent2InfoStudent(studentTestLog.getStudent()));
-        return infoStudentTestLog;
-    }
-
-    public static InfoOnlineTest copyIOnlineTest2InfoOnlineTest(IOnlineTest onlineTest)
-    {
-        InfoOnlineTest infoOnlineTest = new InfoOnlineTest();
-        copyObjectProperties(infoOnlineTest, onlineTest);
-        infoOnlineTest.setInfoDistributedTest(
-            copyIDistributedTest2InfoDistributedTest(onlineTest.getDistributedTest()));
-        return infoOnlineTest;
     }
 
     public static IWrittenTest copyInfoWrittenTest2IWrittenTest(InfoWrittenTest infoWrittenTest)

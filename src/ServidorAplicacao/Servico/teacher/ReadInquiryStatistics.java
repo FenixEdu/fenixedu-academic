@@ -18,8 +18,8 @@ import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoInquiryStatistics;
 import DataBeans.InfoSiteInquiryStatistics;
 import DataBeans.InfoStudentTestQuestion;
+import DataBeans.InfoStudentTestQuestionWithAll;
 import DataBeans.SiteView;
-import DataBeans.util.Cloner;
 import Dominio.DistributedTest;
 import Dominio.ExecutionCourse;
 import Dominio.IDistributedTest;
@@ -64,10 +64,9 @@ public class ReadInquiryStatistics implements IService {
 							DistributedTest.class, distributedTestId);
 			if (distributedTest == null)
 				throw new InvalidArgumentsServiceException();
-			infoSiteInquiryStatistics
-					.setExecutionCourse((InfoExecutionCourse) Cloner
-							.get(distributedTest.getTestScope()
-									.getDomainObject()));
+			infoSiteInquiryStatistics.setExecutionCourse(InfoExecutionCourse
+					.newInfoFromDomain((IExecutionCourse) distributedTest
+							.getTestScope().getDomainObject()));
 			IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport
 					.getIPersistentStudentTestQuestion();
 
@@ -95,8 +94,8 @@ public class ReadInquiryStatistics implements IService {
 										.getQuestion().getXmlFile(), shuffle,
 										this.path));
 					}
-					infoStudentTestQuestion = Cloner
-							.copyIStudentTestQuestion2InfoStudentTestQuestion(studentTestQuestion);
+					infoStudentTestQuestion = InfoStudentTestQuestionWithAll
+							.newInfoFromDomain(studentTestQuestion);
 					infoStudentTestQuestion = parse.parseStudentTestQuestion(
 							infoStudentTestQuestion, this.path);
 				} catch (Exception e) {

@@ -10,7 +10,6 @@ import DataBeans.InfoDistributedTest;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSiteDistributedTest;
 import DataBeans.SiteView;
-import DataBeans.util.Cloner;
 import Dominio.DistributedTest;
 import Dominio.ExecutionCourse;
 import Dominio.IDistributedTest;
@@ -51,12 +50,12 @@ public class ReadDistributedTest implements IService {
 			if (distributedTest == null)
 				throw new InvalidArgumentsServiceException();
 
-			InfoDistributedTest infoDistributedTest = Cloner
-					.copyIDistributedTest2InfoDistributedTest(distributedTest);
+			InfoDistributedTest infoDistributedTest = InfoDistributedTest
+					.newInfoFromDomain(distributedTest);
 			InfoSiteDistributedTest bodyComponent = new InfoSiteDistributedTest();
 			bodyComponent.setInfoDistributedTest(infoDistributedTest);
-			bodyComponent.setExecutionCourse((InfoExecutionCourse) Cloner
-					.get(executionCourse));
+			bodyComponent.setExecutionCourse(InfoExecutionCourse
+					.newInfoFromDomain(executionCourse));
 			SiteView siteView = new ExecutionCourseSiteView(bodyComponent,
 					bodyComponent);
 			return siteView;

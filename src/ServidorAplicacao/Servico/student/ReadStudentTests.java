@@ -15,7 +15,6 @@ import DataBeans.InfoDistributedTest;
 import DataBeans.InfoSiteStudentDistributedTests;
 import DataBeans.comparators.CalendarDateComparator;
 import DataBeans.comparators.CalendarHourComparator;
-import DataBeans.util.Cloner;
 import Dominio.ExecutionCourse;
 import Dominio.IDistributedTest;
 import Dominio.IExecutionCourse;
@@ -55,13 +54,13 @@ public class ReadStudentTests implements IService {
 			while (it.hasNext()) {
 				IDistributedTest distributedTest = (IDistributedTest) it.next();
 				if (testsToDo(distributedTest)) {
-					InfoDistributedTest infoDistributedTest = Cloner
-							.copyIDistributedTest2InfoDistributedTest(distributedTest);
+					InfoDistributedTest infoDistributedTest = InfoDistributedTest
+							.newInfoFromDomain(distributedTest);
 					if (!testToDoList.contains(infoDistributedTest))
 						testToDoList.add(infoDistributedTest);
 				} else if (doneTests(distributedTest)) {
-					InfoDistributedTest infoDistributedTest = Cloner
-							.copyIDistributedTest2InfoDistributedTest(distributedTest);
+					InfoDistributedTest infoDistributedTest = InfoDistributedTest
+							.newInfoFromDomain(distributedTest);
 					if (!doneTestsList.contains(infoDistributedTest))
 						doneTestsList.add(infoDistributedTest);
 				}

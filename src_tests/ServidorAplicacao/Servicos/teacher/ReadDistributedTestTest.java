@@ -64,14 +64,12 @@ public class ReadDistributedTestTest extends TestCaseReadServices
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
             IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse = new ExecutionCourse(new Integer(26));
-            executionCourse =
-                (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
+            IExecutionCourse executionCourse =
+                (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, new Integer(26));
             assertNotNull("executionCourse null", executionCourse);
             IPersistentDistributedTest persistentDistributedTest = sp.getIPersistentDistributedTest();
-            IDistributedTest distributedTest = new DistributedTest(new Integer(25));
-            distributedTest =
-                (IDistributedTest) persistentDistributedTest.readByOId(distributedTest, false);
+            IDistributedTest distributedTest =
+                (IDistributedTest) persistentDistributedTest.readByOID(DistributedTest.class, new Integer(25));
             assertNotNull("test null", distributedTest);
             sp.confirmarTransaccao();
 

@@ -76,25 +76,21 @@ public class ReadTestTest extends TestCaseReadServices
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
             IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse = new ExecutionCourse(new Integer(26));
-            executionCourse =
-                (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
+            IExecutionCourse executionCourse =
+                (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, new Integer(26));
             assertNotNull("executionCourse null", executionCourse);
             IPersistentTest persistentTest = sp.getIPersistentTest();
-            ITest test = new Test(new Integer(4));
-            test = (ITest) persistentTest.readByOId(test, false);
+            ITest test = (ITest) persistentTest.readByOID(Test.class, new Integer(4));
             assertNotNull("test null", test);
             IPersistentTestQuestion persistentTestQuestion = sp.getIPersistentTestQuestion();
-            ITestQuestion testQuestion = new TestQuestion(new Integer(8));
-
-            testQuestion = (ITestQuestion) persistentTestQuestion.readByOId(testQuestion, false);
+            ITestQuestion testQuestion = (ITestQuestion) persistentTestQuestion.readByOID(TestQuestion.class, new Integer(8));
             assertNotNull("testQuestion null", testQuestion);
             sp.confirmarTransaccao();
             infoExecutionCourse = (InfoExecutionCourse) Cloner.get(executionCourse);
-            infoTest = Cloner.copyITest2InfoTest(test);
+          //  infoTest = Cloner.copyITest2InfoTest(test);
 
             ParseQuestion parse = new ParseQuestion();
-            InfoTestQuestion infoTestQuestion = Cloner.copyITestQuestion2InfoTestQuestion(testQuestion);
+            InfoTestQuestion infoTestQuestion = InfoTestQuestion.newInfoFromDomain(testQuestion);
             try
             {
                 infoTestQuestion.setQuestion(

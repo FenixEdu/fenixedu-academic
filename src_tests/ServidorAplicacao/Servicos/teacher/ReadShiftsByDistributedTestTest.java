@@ -59,9 +59,7 @@ public class ReadShiftsByDistributedTestTest extends TestCaseReadServices
         {
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             sp.iniciarTransaccao();
-            ITurno shift = new Turno(new Integer(19));
-
-            shift = (ITurno) sp.getITurnoPersistente().readByOId(shift, false);
+            ITurno shift = (ITurno) sp.getITurnoPersistente().readByOID(Turno.class, new Integer(19));
             assertNotNull("shift null", shift);
             sp.confirmarTransaccao();
 

@@ -10,7 +10,6 @@ import java.util.List;
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.query.Criteria;
-import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
 import DataBeans.InfoDistributedTest;
@@ -103,8 +102,8 @@ public class ReadStudentDistributedTestTest extends ServiceNeedsAuthenticationTe
 			Criteria criteria = new Criteria();
 			criteria.addEqualTo("keyDistributedTest", args[1]);
 			criteria.addEqualTo("keyStudent", args[2]);
-			criteria.addOrderBy("testQuestionOrder", true);
-			Query queryCriteria = new QueryByCriteria(StudentTestQuestion.class, criteria);
+			QueryByCriteria queryCriteria = new QueryByCriteria(StudentTestQuestion.class, criteria);
+			queryCriteria.addOrderBy("testQuestionOrder", true);
 			List studentTestQuestionList = (List) broker.getCollectionByQuery(queryCriteria);
 			broker.close();
 
@@ -153,7 +152,7 @@ public class ReadStudentDistributedTestTest extends ServiceNeedsAuthenticationTe
 		}
 
 		InfoStudent infoStudent = Cloner.copyIStudent2InfoStudent(studentTestQuestion.getStudent());
-		InfoQuestion infoQuestion = Cloner.copyIQuestion2InfoQuestion(studentTestQuestion.getQuestion());
+		InfoQuestion infoQuestion = InfoQuestion.newInfoFromDomain(studentTestQuestion.getQuestion());
 		infoStudentTestQuestion.setDistributedTest(infoDistributedTest);
 		infoStudentTestQuestion.setStudent(infoStudent);
 		infoStudentTestQuestion.setQuestion(infoQuestion);

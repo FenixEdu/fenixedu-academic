@@ -10,7 +10,6 @@ import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoQuestion;
-import DataBeans.util.Cloner;
 import Dominio.IMetadata;
 import Dominio.IQuestion;
 import Dominio.ITest;
@@ -101,8 +100,8 @@ public class InsertTestQuestion implements IService {
 				if (questionValue == null) {
 					ParseQuestion parseQuestion = new ParseQuestion();
 					try {
-						InfoQuestion infoQuestion = Cloner
-								.copyIQuestion2InfoQuestion(question);
+						InfoQuestion infoQuestion = InfoQuestion
+								.newInfoFromDomain(question);
 						infoQuestion = parseQuestion.parseQuestion(infoQuestion
 								.getXmlFile(), infoQuestion, this.path);
 						thisQuestionValue = infoQuestion.getQuestionValue();

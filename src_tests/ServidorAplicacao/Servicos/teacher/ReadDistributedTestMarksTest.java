@@ -10,7 +10,6 @@ import java.util.List;
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.query.Criteria;
-import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
 import DataBeans.InfoDistributedTest;
@@ -31,50 +30,43 @@ import ServidorAplicacao.Servicos.ServiceNeedsAuthenticationTestCase;
 import framework.factory.ServiceManagerServiceFactory;
 
 /**
- *
+ * 
  * @author Susana Fernandes
- *
+ *  
  */
-public class ReadDistributedTestMarksTest extends ServiceNeedsAuthenticationTestCase
-{
-	public ReadDistributedTestMarksTest(String testName)
-	{
+public class ReadDistributedTestMarksTest extends
+		ServiceNeedsAuthenticationTestCase {
+	public ReadDistributedTestMarksTest(String testName) {
 		super(testName);
 	}
 
-	protected String getDataSetFilePath()
-	{
+	protected String getDataSetFilePath() {
 		return "etc/datasets/servicos/teacher/testEditDistributedTestDataSet.xml";
 	}
 
-	protected String getNameOfServiceToBeTested()
-	{
+	protected String getNameOfServiceToBeTested() {
 		return "ReadDistributedTestMarks";
 	}
 
-	protected String[] getAuthenticatedAndAuthorizedUser()
-	{
+	protected String[] getAuthenticatedAndAuthorizedUser() {
 
-		String[] args = { "D2543", "pass", getApplication()};
+		String[] args = { "D2543", "pass", getApplication() };
 		return args;
 	}
 
-	protected String[] getAuthenticatedAndUnauthorizedUser()
-	{
+	protected String[] getAuthenticatedAndUnauthorizedUser() {
 
-		String[] args = { "L48283", "pass", getApplication()};
+		String[] args = { "L48283", "pass", getApplication() };
 		return args;
 	}
 
-	protected String[] getNotAuthenticatedUser()
-	{
+	protected String[] getNotAuthenticatedUser() {
 
-		String[] args = { "L48283", "pass", getApplication()};
+		String[] args = { "L48283", "pass", getApplication() };
 		return args;
 	}
 
-	protected Object[] getAuthorizeArguments()
-	{
+	protected Object[] getAuthorizeArguments() {
 		Integer executionCourseId = new Integer(34882);
 		Integer distributedTestId = new Integer(1);
 		Object[] args = { executionCourseId, distributedTestId };
@@ -82,82 +74,75 @@ public class ReadDistributedTestMarksTest extends ServiceNeedsAuthenticationTest
 		return args;
 	}
 
-	protected String getApplication()
-	{
+	protected String getApplication() {
 		return Autenticacao.EXTRANET;
 	}
 
-	public void testSuccessfull()
-	{
-		try
-		{
+	public void testSuccessfull() {
+		try {
 			IUserView userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
 			Object[] args = getAuthorizeArguments();
 
-			SiteView siteView =
-				(SiteView) ServiceManagerServiceFactory.executeService(
-					userView,
-					getNameOfServiceToBeTested(),
-					args);
-			InfoSiteStudentsTestMarks infoSiteStudentsTestMarks =
-				(InfoSiteStudentsTestMarks) siteView.getComponent();
-			PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
+			SiteView siteView = (SiteView) ServiceManagerServiceFactory
+					.executeService(userView, getNameOfServiceToBeTested(),
+							args);
+			InfoSiteStudentsTestMarks infoSiteStudentsTestMarks = (InfoSiteStudentsTestMarks) siteView
+					.getComponent();
+			PersistenceBroker broker = PersistenceBrokerFactory
+					.defaultPersistenceBroker();
 			Criteria criteria = new Criteria();
 			criteria.addEqualTo("idInternal", args[0]);
-			Query queryCriteria = new QueryByCriteria(ExecutionCourse.class, criteria);
-			IExecutionCourse executionCourse = (IExecutionCourse) broker.getObjectByQuery(queryCriteria);
+			QueryByCriteria queryCriteria = new QueryByCriteria(
+					ExecutionCourse.class, criteria);
+			IExecutionCourse executionCourse = (IExecutionCourse) broker
+					.getObjectByQuery(queryCriteria);
 
 			criteria = new Criteria();
 			criteria.addEqualTo("keyDistributedTest", args[1]);
-			criteria.addOrderBy("keyStudent", true);
-			criteria.addOrderBy("testQuestionOrder", true);
-			queryCriteria = new QueryByCriteria(StudentTestQuestion.class, criteria);
-			List studentTestQuestionList = (List) broker.getCollectionByQuery(queryCriteria);
+			queryCriteria = new QueryByCriteria(StudentTestQuestion.class,
+					criteria);
+			queryCriteria.addOrderBy("keyStudent", true);
+			queryCriteria.addOrderBy("testQuestionOrder", true);
+
+			List studentTestQuestionList = (List) broker
+					.getCollectionByQuery(queryCriteria);
 			broker.close();
+			assertEquals(studentTestQuestionList.size(),
+					infoSiteStudentsTestMarks.getInfoStudentTestQuestionList()
+							.size());
+			assertEquals(Cloner.get(executionCourse), infoSiteStudentsTestMarks
+					.getExecutionCourse());
 			assertEquals(
-				studentTestQuestionList.size(),
-				infoSiteStudentsTestMarks.getInfoStudentTestQuestionList().size());
-			assertEquals(
-				Cloner.get(executionCourse),
-				infoSiteStudentsTestMarks.getExecutionCourse());
-			assertEquals(
-				copyIDistributedTest2InfoDistributedTest(
-					((IStudentTestQuestion) studentTestQuestionList.get(0)).getDistributedTest()),
-				infoSiteStudentsTestMarks.getInfoDistributedTest());
-			Iterator it = infoSiteStudentsTestMarks.getInfoStudentTestQuestionList().iterator();
+					copyIDistributedTest2InfoDistributedTest(((IStudentTestQuestion) studentTestQuestionList
+							.get(0)).getDistributedTest()),
+					infoSiteStudentsTestMarks.getInfoDistributedTest());
+			Iterator it = infoSiteStudentsTestMarks
+					.getInfoStudentTestQuestionList().iterator();
 			int i = 0;
-			while (it.hasNext())
-			{
-				InfoStudentTestQuestionMark infoStudentTestQuestionMark =
-					(InfoStudentTestQuestionMark) it.next();
-				IStudentTestQuestion studentTestQuestion =
-					(IStudentTestQuestion) studentTestQuestionList.get(i);
-				assertEquals(
-					infoStudentTestQuestionMark,
-					Cloner.copyIStudentTestQuestion2InfoStudentTestQuestionMark(studentTestQuestion));
+			while (it.hasNext()) {
+				InfoStudentTestQuestionMark infoStudentTestQuestionMark = (InfoStudentTestQuestionMark) it
+						.next();
+				IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) studentTestQuestionList
+						.get(i);
+				assertEquals(infoStudentTestQuestionMark,
+						InfoStudentTestQuestionMark
+								.newInfoFromDomain(studentTestQuestion));
 				i++;
 			}
 
-		}
-		catch (FenixServiceException ex)
-		{
+		} catch (FenixServiceException ex) {
 			fail("ReadDistributedTestMarksTest " + ex);
-		}
-		catch (Exception ex)
-		{
+		} catch (Exception ex) {
 			fail("ReadDistributedTestMarksTest " + ex);
 		}
 	}
 
-	private static InfoDistributedTest copyIDistributedTest2InfoDistributedTest(IDistributedTest distributedTest)
-	{
+	private static InfoDistributedTest copyIDistributedTest2InfoDistributedTest(
+			IDistributedTest distributedTest) {
 		InfoDistributedTest infoDistributedTest = new InfoDistributedTest();
-		try
-		{
+		try {
 			CopyUtils.copyProperties(infoDistributedTest, distributedTest);
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			fail("ReadStudentTestsToDoTest " + "cloner");
 		}
 		return infoDistributedTest;

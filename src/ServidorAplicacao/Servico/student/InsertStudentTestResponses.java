@@ -15,9 +15,9 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoQuestion;
 import DataBeans.InfoSiteStudentTestFeedback;
 import DataBeans.InfoStudentTestQuestion;
+import DataBeans.InfoStudentTestQuestionWithInfoQuestion;
 import DataBeans.comparators.CalendarDateComparator;
 import DataBeans.comparators.CalendarHourComparator;
-import DataBeans.util.Cloner;
 import Dominio.DistributedTest;
 import Dominio.IDistributedTest;
 import Dominio.IExecutionCourse;
@@ -125,8 +125,8 @@ public class InsertStudentTestResponses implements IService {
 					persistentStudentTestQuestion
 							.lockWrite(studentTestQuestion);
 
-					InfoStudentTestQuestion infoStudentTestQuestion = Cloner
-							.copyIStudentTestQuestion2InfoStudentTestQuestion(studentTestQuestion);
+					InfoStudentTestQuestion infoStudentTestQuestion = InfoStudentTestQuestionWithInfoQuestion
+							.newInfoFromDomain(studentTestQuestion);
 					infoStudentTestQuestion
 							.setResponse(response[studentTestQuestion
 									.getTestQuestionOrder().intValue() - 1]);

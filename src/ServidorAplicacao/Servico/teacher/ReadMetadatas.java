@@ -13,11 +13,11 @@ import java.util.List;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoMetadata;
 import DataBeans.InfoSiteMetadatas;
 import DataBeans.SiteView;
 import DataBeans.comparators.QuestionDifficultyTypeComparatorByAscendingOrder;
 import DataBeans.comparators.QuestionDifficultyTypeComparatorByDescendingOrder;
-import DataBeans.util.Cloner;
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IMetadata;
@@ -33,6 +33,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Susana Fernandes
  */
 public class ReadMetadatas implements IService {
+
 	private String path = new String();
 
 	public ReadMetadatas() {
@@ -66,7 +67,7 @@ public class ReadMetadatas implements IService {
 			List result = new ArrayList();
 			Iterator iter = metadatas.iterator();
 			while (iter.hasNext())
-				result.add(Cloner.copyIMetadata2InfoMetadata((IMetadata) iter
+				result.add(InfoMetadata.newInfoFromDomain((IMetadata) iter
 						.next()));
 			if (order.equals("difficulty")) {
 				if (asc != null && asc.equals("false"))
@@ -82,8 +83,8 @@ public class ReadMetadatas implements IService {
 			}
 			InfoSiteMetadatas bodyComponent = new InfoSiteMetadatas();
 			bodyComponent.setInfoMetadatas(result);
-			bodyComponent.setExecutionCourse((InfoExecutionCourse) Cloner
-					.get(executionCourse));
+			bodyComponent.setExecutionCourse(InfoExecutionCourse
+					.newInfoFromDomain(executionCourse));
 			SiteView siteView = new ExecutionCourseSiteView(bodyComponent,
 					bodyComponent);
 			return siteView;

@@ -7,15 +7,22 @@ package DataBeans;
 import java.util.Calendar;
 import java.util.Date;
 
+import Dominio.ITest;
+
 /**
  * @author Susana Fernandes
  */
 public class InfoTest extends InfoObject {
 	private String title;
+
 	private String information;
+
 	private Integer numberOfQuestions;
+
 	private Date creationDate;
+
 	private Date lastModifiedDate;
+
 	private InfoTestScope infoTestScope;
 
 	public InfoTest() {
@@ -89,6 +96,7 @@ public class InfoTest extends InfoObject {
 
 		return result;
 	}
+
 	public String getCreationDateFormatted() {
 		String result = "";
 		Date date = getCreationDate();
@@ -116,19 +124,36 @@ public class InfoTest extends InfoObject {
 		if (obj instanceof InfoTest) {
 			InfoTest infoTest = (InfoTest) obj;
 			result = getIdInternal().equals(infoTest.getIdInternal());
-			result =
-				result
-					|| (getInfoTestScope()
-						.equals(infoTest.getInfoTestScope()))
+			result = result
+					|| (getInfoTestScope().equals(infoTest.getInfoTestScope()))
 					&& (getTitle().equals(infoTest.getTitle()))
 					&& (getInformation().equals(infoTest.getInformation()))
-					&& (getNumberOfQuestions()
-						.equals(infoTest.getNumberOfQuestions()))
+					&& (getNumberOfQuestions().equals(infoTest
+							.getNumberOfQuestions()))
 					&& (getCreationDate().equals(infoTest.getCreationDate()))
-					&& (getLastModifiedDate()
-						.equals(infoTest.getLastModifiedDate()));
+					&& (getLastModifiedDate().equals(infoTest
+							.getLastModifiedDate()));
 		}
 		return result;
 	}
 
+	public void copyFromDomain(ITest test) {
+		super.copyFromDomain(test);
+		if (test != null) {
+			setTitle(test.getTitle());
+			setInformation(test.getInformation());
+			setNumberOfQuestions(test.getNumberOfQuestions());
+			setCreationDate(test.getCreationDate());
+			setLastModifiedDate(test.getLastModifiedDate());
+		}
+	}
+
+	public static InfoTest newInfoFromDomain(ITest test) {
+		InfoTest infoTest = null;
+		if (test != null) {
+			infoTest = new InfoTest();
+			infoTest.copyFromDomain(test);
+		}
+		return infoTest;
+	}
 }

@@ -12,12 +12,14 @@ import org.apache.commons.collections.Transformer;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.ExecutionCourseSiteView;
+import DataBeans.InfoDistributedTest;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSiteStudentsTestMarks;
+import DataBeans.InfoStudentTestQuestionMark;
 import DataBeans.SiteView;
-import DataBeans.util.Cloner;
 import Dominio.DistributedTest;
 import Dominio.IDistributedTest;
+import Dominio.IExecutionCourse;
 import Dominio.IStudentTestQuestion;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
@@ -61,8 +63,8 @@ public class ReadDistributedTestMarks implements IService {
 
 						public Object transform(Object arg0) {
 							IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) arg0;
-							return Cloner
-									.copyIStudentTestQuestion2InfoStudentTestQuestionMark(studentTestQuestion);
+							return InfoStudentTestQuestionMark
+									.newInfoFromDomain(studentTestQuestion);
 						}
 
 					});
@@ -72,16 +74,12 @@ public class ReadDistributedTestMarks implements IService {
 							.getMaximumDistributedTestMark(distributedTest));
 			infoSiteStudentsTestMarks
 					.setInfoStudentTestQuestionList(infoStudentTestQuestionList);
+			infoSiteStudentsTestMarks.setExecutionCourse(InfoExecutionCourse
+					.newInfoFromDomain((IExecutionCourse) distributedTest
+							.getTestScope().getDomainObject()));
 			infoSiteStudentsTestMarks
-					.setExecutionCourse((InfoExecutionCourse) Cloner
-							.get(distributedTest.getTestScope()
-									.getDomainObject()));
-			infoSiteStudentsTestMarks
-					.setExecutionCourse((InfoExecutionCourse) Cloner
-							.get(distributedTest.getTestScope()
-									.getDomainObject()));
-			infoSiteStudentsTestMarks.setInfoDistributedTest(Cloner
-					.copyIDistributedTest2InfoDistributedTest(distributedTest));
+					.setInfoDistributedTest(InfoDistributedTest
+							.newInfoFromDomain(distributedTest));
 
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);

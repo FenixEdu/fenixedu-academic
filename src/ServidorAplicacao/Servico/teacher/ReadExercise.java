@@ -14,6 +14,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoMetadata;
+import DataBeans.InfoMetadataWithVisibleQuestions;
 import DataBeans.InfoQuestion;
 import DataBeans.InfoSiteExercise;
 import DataBeans.SiteView;
@@ -62,8 +63,8 @@ public class ReadExercise implements IService {
 			if (metadata == null) {
 				throw new InvalidArgumentsServiceException();
 			}
-			InfoMetadata infoMetadata = Cloner
-					.copyIMetadata2InfoMetadata(metadata);
+			InfoMetadata infoMetadata = InfoMetadataWithVisibleQuestions
+					.newInfoFromDomain(metadata);
 			List visibleInfoQuestions = new ArrayList();
 			List questionNames = new ArrayList();
 			if (metadata.getVisibleQuestions() != null) {
@@ -72,8 +73,8 @@ public class ReadExercise implements IService {
 					IQuestion question = (IQuestion) it.next();
 					if (question.getIdInternal().equals(variationId)
 							|| variationId.intValue() == -2) {
-						InfoQuestion infoQuestion = Cloner
-								.copyIQuestion2InfoQuestion(question);
+						InfoQuestion infoQuestion = InfoQuestion
+								.newInfoFromDomain(question);
 						ParseQuestion parse = new ParseQuestion();
 						try {
 							infoQuestion = parse.parseQuestion(infoQuestion

@@ -11,9 +11,9 @@ import java.util.List;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoMetadata;
 import DataBeans.InfoSiteMetadatas;
 import DataBeans.SiteView;
-import DataBeans.util.Cloner;
 import Dominio.DistributedTest;
 import Dominio.ExecutionCourse;
 import Dominio.IDistributedTest;
@@ -71,13 +71,13 @@ public class ReadMetadatasByDistributedTest implements IService {
 			List result = new ArrayList();
 			Iterator iter = metadatas.iterator();
 			while (iter.hasNext())
-				result.add(Cloner.copyIMetadata2InfoMetadata((IMetadata) iter
+				result.add(InfoMetadata.newInfoFromDomain((IMetadata) iter
 						.next()));
 
 			InfoSiteMetadatas bodyComponent = new InfoSiteMetadatas();
 			bodyComponent.setInfoMetadatas(result);
-			bodyComponent.setExecutionCourse((InfoExecutionCourse) Cloner
-					.get(executionCourse));
+			bodyComponent.setExecutionCourse(InfoExecutionCourse
+					.newInfoFromDomain(executionCourse));
 			SiteView siteView = new ExecutionCourseSiteView(bodyComponent,
 					bodyComponent);
 			return siteView;
