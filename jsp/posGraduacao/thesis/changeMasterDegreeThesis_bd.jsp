@@ -249,6 +249,13 @@
 			</tr>
 
 		</logic:present>
+		<!-- No results found -->
+		<logic:notPresent name="<%= SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_SEARCH_RESULTS %>" scope="request">
+			<logic:present name="<%= SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_SEARCH_RESULTS_FLAG %>" scope="request">
+				<bean:message key="label.masterDegree.administrativeOffice.searchResultsEmpty"/>
+			</logic:present>				
+		</logic:notPresent>
+		
 		
 		<tr>
 			<tr> 
