@@ -41,6 +41,7 @@ public class InsertItem implements IServico {
 		return service;	
 	}
 
+	
 	private InsertItem() {
 	
 	}
@@ -53,24 +54,37 @@ public class InsertItem implements IServico {
 	
 	
 	private void organizeExistingItemsOrder(ISection section, int insertItemOrder)
-	{
+	throws FenixServiceException {
 	
-		List itemsList = section.getItems();
-	
+		IPersistentItem persistentItem=null;
+		try{
 		
-		if (itemsList!= null) {
+			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();	
+			persistentItem = persistentSuport.getIPersistentItem();
+		
+			List itemsList = section.getItems();
+	
+			if (itemsList!= null) {
 			
-			Iterator iterItems = itemsList.iterator();
-			while (iterItems.hasNext()) {
+				Iterator iterItems = itemsList.iterator();
+				while (iterItems.hasNext()) {
 
-				IItem item = (IItem) iterItems.next();
-				int itemOrder = item.getItemOrder().intValue();
+					IItem item = (IItem) iterItems.next();
+					int itemOrder = item.getItemOrder().intValue();
 
-				if (itemOrder >= insertItemOrder) 
-					item.setItemOrder(new Integer(itemOrder+1));
-		   	}
+					if (itemOrder >= insertItemOrder) {
+						item.setItemOrder(new Integer(itemOrder+1));
+						persistentItem.lockWrite(item);
+					}
+		   			
+		   		}
 
+			}
 		}
+		catch (ExcepcaoPersistencia excepcaoPersistencia){
+	
+			throw new FenixServiceException(excepcaoPersistencia);
+			}
 	}
 	
 	

@@ -2,17 +2,14 @@ package ServidorAplicacao.Servico.gesdis.teacher;
 
 /**
  *
- * @author  EP15
+ * @author  asnr e scpo
  */
 
 import java.util.Iterator;
 import java.util.List;
 
-import DataBeans.InfoExecutionCourse;
 import DataBeans.gesdis.InfoSection;
-import DataBeans.gesdis.InfoSite;
 import DataBeans.util.Cloner;
-import Dominio.IDisciplinaExecucao;
 import Dominio.IItem;
 import Dominio.ISection;
 import Dominio.ISite;
@@ -21,7 +18,6 @@ import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentItem;
 import ServidorPersistente.IPersistentSection;
-import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -40,101 +36,40 @@ public class DeleteItem implements IServico {
 
 	public final String getNome() {
 
-		return "gesdis.teacher.DeleteItem";
+		return "DeleteItem";
 
 	}
 
-	public void run(
-		InfoSite siteView,
-		InfoSection sectionView,
-		InfoExecutionCourse infoExecutionCourse,
-		String itemName)
+	public Boolean run(InfoSection infoSection, String itemName)
 		throws FenixServiceException {
 
 		try {
-			IDisciplinaExecucao executionCourse = null;
-			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
 			
-			IPersistentSite persistentSite = sp.getIPersistentSite();
 			
-			IPersistentSection persistentSection = sp.getIPersistentSection();
+			IPersistentSection persistentSection = persistentSuport.getIPersistentSection();
 			
-			IPersistentItem persistentItem = sp.getIPersistentItem();
+			IPersistentItem persistentItem = persistentSuport.getIPersistentItem();
+		
+			ISite site = Cloner.copyInfoSite2ISite(infoSection.getInfoSite());
+	 		
+			ISection section = persistentSection.readBySiteAndSectionAndName(site,null,infoSection.getName());
+						
 			
-			ISite site = persistentSite.readByExecutionCourse(executionCourse);
+			IItem deletedItem = persistentItem.readBySectionAndName(section, itemName);
 			
-			executionCourse =
-				Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
+			Integer orderOfDeletedItem = deletedItem.getItemOrder();
 			
-			List geneologicTree = (List) sectionView.getSuperiorSectionsNames();
-			
-			List inferiorSections = null;
-			
-			ISection fatherSection = null;
-			
-			ISection sonSection = null;
-			
-			String fatherSectionName = null;
-			
-			String sonSectionName = sectionView.getName();
-			
-			if (geneologicTree.isEmpty() == false) {
-			
-				Iterator iter = geneologicTree.iterator();
-			
-				while (iter.hasNext()) {
-			
-					fatherSectionName = (String) iter.next();
-			
-					fatherSection =
-						persistentSection.readBySiteAndSectionAndName(
-							site,
-							fatherSection,
-							fatherSectionName);
-			
-				}
-			
-			}
-			
-			sonSection =
-				persistentSection.readBySiteAndSectionAndName(
-					site,
-					fatherSection,
-					sonSectionName);
-			
-			Integer orderOfDeletedItem = new Integer(-1);
-			
-			List itemsList = null;
-			
-			Iterator iterItems = null;
-			
-			itemsList = sonSection.getItems();
-			
-			iterItems = itemsList.iterator();
-			
-			while (iterItems.hasNext()) {
-			
-				IItem item = (IItem) iterItems.next();
-			
-				if (item.getName().equals(itemName)) {
-			
-					orderOfDeletedItem = item.getItemOrder();
-			
-					persistentItem.delete(item);
-			
-					break;
-			
-				}
-			
-			}
-			
-			if (orderOfDeletedItem == new Integer(-1))
-				throw new FenixServiceException("non existing item");
+			if (deletedItem == null) throw new FenixServiceException("non existing item");
 			//	throw new ItemInexistenteException("Item inexistente");
 			
-			itemsList = sonSection.getItems();
+			persistentItem.delete(deletedItem);
 			
-			iterItems = itemsList.iterator();
+			List itemsList =null;
+			
+			itemsList = section.getItems();
+			
+			Iterator iterItems = itemsList.iterator();
 			
 			while (iterItems.hasNext()) {
 			
@@ -151,6 +86,10 @@ public class DeleteItem implements IServico {
 				}
 			
 			}
+			
+			return new Boolean(true);
+		
+		
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}
