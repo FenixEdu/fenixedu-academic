@@ -45,7 +45,7 @@ public class CandidateOperationDispatchAction extends DispatchAction {
 	  try {
 		candidates = (List) gestor.executar(userView, "ReadDegreeCandidates", args);
 	  } catch (FenixServiceException e) {
-		  throw new NonExistingActionException("error.exception.nonExistingCandidates", e);
+		  throw new NonExistingActionException("error.exception.nonExistingCandidates","", e);
 	  }	  
 
 	  session.removeAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST);

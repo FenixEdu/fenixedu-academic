@@ -5,15 +5,14 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
-   <span class="error"><html:errors/></span>
-
     <bean:define id="title" name="<%= SessionConstants.ACTION %>" scope="session" />
     <h2><bean:message name="title"/></h2>
     
     
-
+   <span class="error"><html:errors/></span>
+   <br>
+   
    <table>
-
     <html:form action="/chooseGuideDispatchAction?method=choose">
    	  <html:hidden property="page" value="1"/>
        <!-- Guide Year -->
@@ -31,10 +30,10 @@
        </tr>
 
 
-      </table>
-
-     <html:submit value="Seguinte" styleClass="button" property="ok"/>
-     <html:reset value="Limpar" styleClass="button"/>
-
+    	<tr> 
+         <td><html:submit value="Seguinte" styleClass="button" property="ok"/></td>
+    	</tr>
     </html:form>
-	</logic:present>
+   </table>
+
+

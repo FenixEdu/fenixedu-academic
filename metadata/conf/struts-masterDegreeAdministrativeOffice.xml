@@ -381,8 +381,12 @@
 		      scope="request"
               type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.ChooseGuideDispatchAction"
               validate="true">
+     		 <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+		                key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                        handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
 	         <forward name="PrepareReady" path="/guide/chooseGuide.jsp"/> 
 	         <forward name="ActionReady" path="/guide/visualizeGuide.jsp"/>  
+	         <forward name="ShowVersionList" path="/guide/chooseVersionPage.jsp"/>  
       </action>
 
       <!-- Create Guide -->

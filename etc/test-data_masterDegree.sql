@@ -66,6 +66,7 @@ INSERT INTO GUIDE_SITUATION values (1, 1, 1, '2003-3-12', 'nao pago', 0);
 INSERT INTO GUIDE_SITUATION values (2, 1, 2, '2003-10-6', 'pago', 1);
 INSERT INTO GUIDE_SITUATION values (3, 2, 3, '2003-5-4', 'anulado', 1);
 INSERT INTO GUIDE_SITUATION values (4, 4, 3, '2003-5-4', 'anulado', 1);
+INSERT INTO GUIDE_SITUATION values (5, 3, 1, '2003-5-4', 'Ainda nao foi pago', 1);
 
 
 #-----------------------------

@@ -17,6 +17,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
+import DataBeans.InfoGuide;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -84,8 +85,6 @@ public class ChooseGuideDispatchAction extends DispatchAction {
 			
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			
-			session.removeAttribute(SessionConstants.ACTION);
-			
 			// Get the Information
 			Integer guideNumber = new Integer((String) chooseGuide.get("guideNumber"));
 			Integer guideYear = new Integer((String) chooseGuide.get("guideYear"));
@@ -105,11 +104,51 @@ public class ChooseGuideDispatchAction extends DispatchAction {
 				return mapping.findForward("ActionReady");
 			}
 
-		  	request.setAttribute(SessionConstants.GUIDE_LIST, result);
+			request.setAttribute(SessionConstants.GUIDE_LIST, result);
+			request.setAttribute(SessionConstants.GUIDE_YEAR, guideYear);
+			request.setAttribute(SessionConstants.GUIDE_NUMBER, guideNumber);
 		  
-		  	return mapping.findForward("ShowList");
+		  	return mapping.findForward("ShowVersionList");
 		} else
 		  throw new Exception();   
 	  }
+	  
+	  
+	public ActionForward chooseVersion(ActionMapping mapping, ActionForm form,
+									HttpServletRequest request,
+									HttpServletResponse response)
+		throws Exception {
+
+		SessionUtils.validSessionVerification(request, mapping);
+		HttpSession session = request.getSession(false);
+
+		if (session != null) {
+			
+			DynaActionForm chooseGuide = (DynaActionForm) form;
+			
+			GestorServicos serviceManager = GestorServicos.manager();
+			
+			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+			
+			// Get the Information
+			Integer guideNumber = new Integer((String) request.getParameter("number"));
+			Integer guideYear = new Integer((String) request.getParameter("year"));
+			Integer guideVersion = new Integer((String) request.getParameter("version"));
+					
+			Object args[] = { guideNumber, guideYear , guideVersion };
+	  
+			InfoGuide infoGuide = null;
+			try {
+				infoGuide = (InfoGuide) serviceManager.executar(userView, "ChooseGuide", args);
+			} catch (NonExistingServiceException e) {
+				throw new NonExistingActionException("A Versão da Guia", e);
+			}
+
+			request.setAttribute(SessionConstants.GUIDE, infoGuide);
+			return mapping.findForward("ActionReady");
+		} else
+		  throw new Exception();   
+	  }
+
 	  
 }

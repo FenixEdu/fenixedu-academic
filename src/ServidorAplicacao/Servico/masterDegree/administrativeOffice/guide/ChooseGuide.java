@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import DataBeans.InfoGuide;
 import DataBeans.util.Cloner;
 import Dominio.IGuide;
 import ServidorAplicacao.FenixServiceException;
@@ -62,7 +63,7 @@ public class ChooseGuide implements IServico {
 			throw newEx;
 		}
 
-		if (guides.size() == 0) {
+		if (guides == null) {
 			throw new NonExistingServiceException();		
 		}
 		
@@ -74,4 +75,28 @@ public class ChooseGuide implements IServico {
 		}
 		return result;
 	}
+	
+	public InfoGuide run(Integer guideNumber, Integer guideYear, Integer guideVersion) throws Exception {
+
+		ISuportePersistente sp = null;
+		InfoGuide infoGuide = null;
+		IGuide guide = null;
+		
+		try {
+			sp = SuportePersistenteOJB.getInstance();
+			guide = sp.getIPersistentGuide().readByNumberAndYearAndVersion(guideNumber, guideYear, guideVersion);
+			
+		} catch (ExcepcaoPersistencia ex) {
+			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+			newEx.fillInStackTrace();
+			throw newEx;
+		}
+
+		if (guide == null) {
+			throw new NonExistingServiceException();		
+		}
+		
+		return Cloner.copyIGuide2InfoGuide(guide);
+	}
+
 }

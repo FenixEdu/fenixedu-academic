@@ -54,9 +54,10 @@ public class GuideOJB extends ObjectFenixOJB implements IPersistentGuide {
 
 	public List readByNumberAndYear(Integer number, Integer year) throws ExcepcaoPersistencia {
 		try {
-			String oqlQuery = "select all from " + Guide.class.getName();
-			oqlQuery += " where number = $1";
-			oqlQuery += " and year = $2";
+			String oqlQuery = "select all from " + Guide.class.getName()
+			                + " where number = $1"
+			                + " and year = $2"
+			                + " order by version asc ";
 			query.create(oqlQuery);
 
 			query.bind(number);
