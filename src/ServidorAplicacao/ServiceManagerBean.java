@@ -1,6 +1,7 @@
 package ServidorAplicacao;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectOutputStream;
 import java.util.Calendar;
@@ -65,33 +66,27 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
             verifySerializable = Boolean.FALSE;
             try {
                 // load the properties file from the classpath root
-                InputStream inputStream = getClass().getResourceAsStream(
-                        "/serialization_verifier.properties");
-                System.out.println("**********************************");
-                System.out
-                        .println("Resource /serialization_verifier.properties="
-                                + inputStream);
-                System.out.println("**********************************");
-                System.out.println("**********************************");
+                InputStream inputStream = getClass().getResourceAsStream("/serialization_verifier.properties");
+
                 if (inputStream != null) {
                     serProps = new Properties();
                     serProps.load(inputStream);
-                    String propSerVerify = serProps
-                            .getProperty("verify_serializable");
-                    if (propSerVerify != null)
+                    String propSerVerify = serProps.getProperty("verify_serializable");
+                    if (propSerVerify != null) {
                             propSerVerify = propSerVerify.trim();
-                    System.out.println("Verify Serialization=(" + propSerVerify
-                            + ")");
+                    }
                     if ("true".equalsIgnoreCase(propSerVerify)
                             || "1".equalsIgnoreCase(propSerVerify)
                             || "on".equalsIgnoreCase(propSerVerify)
-                            || "yes".equalsIgnoreCase(propSerVerify))
+                            || "yes".equalsIgnoreCase(propSerVerify)) {
                             verifySerializable = Boolean.TRUE;
-
+                            System.out.println("Serialization verification is turned on.");
+                    } else {
+                        System.out.println("Serialization verification is turned off.");
+                    }
                 }
             } catch (java.io.IOException ex) {
-                System.out
-                        .println("Couldn't load serialization_verifier.properties file!");
+                System.out.println("Couldn't load serialization_verifier.properties file!");
             }
         }
     }
@@ -149,43 +144,7 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
                             serviceStartTime, serviceEndTime);
                 }
                 if (verifySerializable.booleanValue()) {
-                    System.out.println("**********************************");
-                    System.out.println("**********************************");
-                    System.out
-                            .println("Verifying serialization of service execution result. Executing service="
-                                    + service + " method=" + method);
-                    System.out.println("**********************************");
-                    System.out.println("**********************************");
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    ObjectOutputStream oos = new ObjectOutputStream(baos);
-                    try {
-                        oos.writeObject(serviceResult);
-                        oos.flush();
-                    } catch (Exception e) {
-                        System.out
-                                .println("**********************************");
-                        System.out
-                                .println("**********************************");
-                        System.out.println("Executing service=" + service
-                                + " method=" + method);
-                        System.out
-                                .println("Problem serializing service Result - Exception was as follows");
-                        e.printStackTrace();
-                        System.out
-                                .println("**********************************");
-                        System.out
-                                .println("**********************************");
-
-                    } finally {
-                        if (oos != null) try {
-                            oos.close();
-                        } catch (Exception ignored) {
-                        }
-                        if (baos != null) try {
-                            baos.close();
-                        } catch (Exception ignored) {
-                        }
-                    }
+                    verifyResultIsSerializable(service, method, serviceResult);
                 }
 
                 return serviceResult;
@@ -211,17 +170,48 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
                             + ex.getCause().getClass().getName());
                     throw (FenixServiceException) ex.getCause();
                 } else {
-                    //TODO: What´s wrong with berserk?? It isn't throwing
+                    //TODO: What's wrong with berserk?? It isn't throwing
                     // correct exception
                     System.out.println("else= " + ex.getClass().getName());
                     throw new NotAuthorizedException();
                 }
             }
         }
-
         catch (Exception e) {
             System.out.println("Exception= " + e.getClass().getName());
             throw (EJBException) new EJBException(e).initCause(e);
+        }
+    }
+
+    private void verifyResultIsSerializable(Object service, String method,
+            Object serviceResult) {
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(baos);
+            try {
+                oos.writeObject(serviceResult);
+                oos.flush();
+            } catch (Exception e) {
+                System.out.println("Executing service= " + service + "." + method + "()");
+                System.out.println("Problem serializing service result!");
+                if (serviceResult != null) {
+                    System.out.println(serviceResult.getClass().getName() + " is not serializable.");
+                }
+                //e.printStackTrace();
+            } finally {
+                if (oos != null) try {
+                    oos.close();
+                } catch (Exception ignored) {
+                    // ignore exception
+                    }
+                if (baos != null) try {
+                    baos.close();
+                } catch (Exception ignored) {
+                    // ignore exception
+                    }
+            }
+        } catch (IOException e1) {
+            System.out.println("IOException while verifying service result serialization.");
         }
     }
 
@@ -231,6 +221,7 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
      * @see javax.ejb.SessionBean#ejbActivate()
      */
     public void ejbCreate() {
+        // nothing to do
     }
 
     /*
@@ -239,6 +230,7 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
      * @see javax.ejb.SessionBean#ejbActivate()
      */
     public void ejbActivate() throws EJBException {
+        // nothing to do
     }
 
     /*
@@ -247,6 +239,7 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
      * @see javax.ejb.SessionBean#ejbPassivate()
      */
     public void ejbPassivate() throws EJBException {
+        // nothing to do
     }
 
     /*
@@ -255,6 +248,7 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper {
      * @see javax.ejb.SessionBean#ejbRemove()
      */
     public void ejbRemove() throws EJBException {
+        // nothing to do
     }
 
     /*

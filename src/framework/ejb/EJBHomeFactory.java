@@ -47,20 +47,11 @@ public class EJBHomeFactory {
                 Properties jndiParams = new Properties();
                 jndiParams.load(inputStream);
 
-                System.out.println("String INITIAL_CONTEXT=("
-                        + Context.INITIAL_CONTEXT_FACTORY + ")");
-                System.out.println("String PROVIDER_URL=("
-                        + Context.PROVIDER_URL + ")");
-                System.out.println("INITIAL_CONTEXT="
-                        + jndiParams
-                                .getProperty(Context.INITIAL_CONTEXT_FACTORY));
-                System.out.println("PROVIDER_URL="
-                        + jndiParams.getProperty(Context.PROVIDER_URL));
-
                 Hashtable properties = new Hashtable();
                 properties.put(Context.INITIAL_CONTEXT_FACTORY, jndiParams
                         .getProperty(Context.INITIAL_CONTEXT_FACTORY));
-                //properties.put(Context.PROVIDER_URL, jndiParams.getProperty(Context.PROVIDER_URL));
+                //properties.put(Context.PROVIDER_URL,
+                // jndiParams.getProperty(Context.PROVIDER_URL));
                 properties.put(Context.PROVIDER_URL, "localhost:1099");
                 properties.put(Context.URL_PKG_PREFIXES,
                         "jboss.naming:org.jnp.interfaces");
