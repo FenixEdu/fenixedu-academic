@@ -4,22 +4,20 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.collections.Predicate;
 import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.Aula;
 import Dominio.CurricularCourse;
 import Dominio.CursoExecucao;
-import Dominio.ExecutionCourse;
 import Dominio.Exam;
+import Dominio.ExecutionCourse;
 import Dominio.ExecutionPeriod;
 import Dominio.IAula;
 import Dominio.ICurricularCourse;
 import Dominio.ICursoExecucao;
-import Dominio.IDegreeCurricularPlan;
-import Dominio.IExecutionCourse;
 import Dominio.IExam;
+import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.IProfessorship;
@@ -1102,109 +1100,6 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
         criteria.addEqualTo("executionPeriod.idInternal", executionPeriodToImportDataTo.getIdInternal());
         criteria.addEqualTo("nome", turma.getNome());
         return (ITurma) queryObject(Turma.class, criteria);
-    }
-
-    private class PREDICATE_EXECUTION_DEGREE implements Predicate
-    {
-
-        private IExecutionPeriod executionPeriod;
-        private IDegreeCurricularPlan degreeCurricularPlan;
-
-        public PREDICATE_EXECUTION_DEGREE(
-            IExecutionPeriod executionPeriod,
-            IDegreeCurricularPlan degreeCurricularPlan)
-        {
-            this.executionPeriod = executionPeriod;
-            this.degreeCurricularPlan = degreeCurricularPlan;
-        }
-
-        public boolean evaluate(Object arg0)
-        {
-            ICursoExecucao executionDegree = (ICursoExecucao) arg0;
-
-            return this.executionPeriod.getExecutionYear().getYear().equals(
-                executionDegree.getExecutionYear().getYear())
-                && this.degreeCurricularPlan.getDegree().getSigla().equals(
-                    executionDegree.getCurricularPlan().getDegree().getSigla());
-        }
-    }
-
-    private class PREDICATE_EXECUTION_COURSE implements Predicate
-    {
-
-        private IExecutionCourse executionCourse;
-
-        public PREDICATE_EXECUTION_COURSE(IExecutionCourse executionCourse)
-        {
-            this.executionCourse = executionCourse;
-        }
-
-        public boolean evaluate(Object arg0)
-        {
-            IExecutionCourse executionCourse = (IExecutionCourse) arg0;
-
-            return this.executionCourse.getSigla().equals(executionCourse.getSigla());
-        }
-    }
-
-    private class PREDICATE_LESSON implements Predicate
-    {
-
-        private IAula lesson;
-
-        public PREDICATE_LESSON(IAula lesson)
-        {
-            this.lesson = lesson;
-        }
-
-        public boolean evaluate(Object arg0)
-        {
-            IAula lesson = (IAula) arg0;
-
-            return this.lesson.getDiaSemana().getDiaSemana().equals(
-                lesson.getDiaSemana().getDiaSemana())
-                && this.lesson.getInicio().equals(lesson.getInicio())
-                && this.lesson.getFim().equals(lesson.getFim())
-                && this.lesson.getSala().getNome().equals(lesson.getSala().getNome());
-        }
-    }
-
-    private class PREDICATE_SHIFT implements Predicate
-    {
-
-        private ITurno shift;
-
-        public PREDICATE_SHIFT(ITurno shift)
-        {
-            this.shift = shift;
-        }
-
-        public boolean evaluate(Object arg0)
-        {
-            ITurno shift = (ITurno) arg0;
-
-            return this.shift.getNome().equals(shift.getNome());
-        }
-    }
-
-    private class PREDICATE_CLASS implements Predicate
-    {
-
-        private ITurma ourClass;
-
-        public PREDICATE_CLASS(ITurma ourClass)
-        {
-            this.ourClass = ourClass;
-        }
-
-        public boolean evaluate(Object arg0)
-        {
-            ITurma ourClass = (ITurma) arg0;
-
-            return this.ourClass.getNome().equals(ourClass.getNome())
-                && this.ourClass.getExecutionDegree().getCurricularPlan().getDegree().getSigla().equals(
-                    ourClass.getExecutionDegree().getCurricularPlan().getDegree().getSigla());
-        }
     }
 
     public List readByExecutionYear(IExecutionYear executionYear) throws ExcepcaoPersistencia
