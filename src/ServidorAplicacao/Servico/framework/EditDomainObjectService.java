@@ -26,7 +26,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public abstract class EditDomainObjectService implements IServico
 {
-    public Boolean run(InfoObject infoObject) throws FenixServiceException
+    public Boolean run(Integer objectId, InfoObject infoObject) throws FenixServiceException
     {
         try
         {
@@ -124,7 +124,6 @@ public abstract class EditDomainObjectService implements IServico
     
     {
         Integer objectId = domainObject.getIdInternal();
-
         return ((objectId == null) || objectId.equals(new Integer(0)));
     }
 
