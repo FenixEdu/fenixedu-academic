@@ -80,6 +80,7 @@
        		<include name="ServidorPersistente/**/*.class"/>
        		<include name="ServidorPersistenteFiltroPessoa/**/*.class"/>
        		<include name="ServidorPersistenteJDBC/**/*.class"/>
+       		<include name="ServidorPersistenteOracle/**/*.class"/>
        		<include name="Util/**/*.class"/>
        		<include name="UtilInsc/**/*.class"/>
 		</patternset>
@@ -138,6 +139,7 @@
 			<include name="**/**/logAnalyser.properties"/>
 			<include name="**/GratuitySituationCreatorTask.properties"/>
 			<include name="**/configurationSQLInstructions.properties"/>
+			<include name="**/projectsManagement.properties"/>
 
 			<replacefilter token="&lt;!-- @validation.doctype@ -->"
 						   property="validation.doctype"/>
@@ -292,6 +294,12 @@
 			<replacefilter token="@log4j.email.smtp.subject@"
 						   property="log4j.email.smtp.subject"/>
 
+			<replacefilter token="@db.projectManagement.user@"
+						   property="db.projectManagement.user"/>
+			<replacefilter token="@db.projectManagement.pass@"
+						   property="db.projectManagement.pass"/>
+			<replacefilter token="@db.projectManagement.alias@"
+						   property="db.projectManagement.alias"/>
 		</replace>
 	</target>
 
@@ -315,6 +323,7 @@
        		<include name="ServidorPersistente/**/*.java"/>
        		<include name="ServidorPersistenteFiltroPessoa/**/*.java"/>
        		<include name="ServidorPersistenteJDBC/**/*.java"/>
+       		<include name="ServidorPersistenteOracle/**/*.java"/>
        		<include name="Util/**/*.java"/>
        		<include name="UtilInsc/**/*.java"/>
        		<include name="UtilTests/**/*.java"/>
@@ -727,5 +736,4 @@
 			</classpath>
 		</java>
 	</target>
-
 </project>

@@ -1,0 +1,146 @@
+<%@ page language="java"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/struts-report.tld" prefix="report"%>
+<logic:present name="infoExpensesReport">
+	<logic:notEmpty name="infoExpensesReport" property="infoProject">
+		<bean:define id="infoProject" name="infoExpensesReport" property="infoProject" />
+		<table width="100%" cellspacing="0">
+			<tr>
+				<td class="infoop">
+				<h2><bean:message key="title.expensesReport" /></h2>
+				</td>
+				<logic:notEmpty name="infoExpensesReport" property="lines">
+					<bean:define id="projectCode" name="infoProject" property="projectCode" />
+					<bean:define id="rubric2url" value="" />
+					<logic:present name="rubric" scope="request">
+						<bean:define id="rubric" value="<%=request.getAttribute("rubric").toString()%>" />
+						<bean:define id="rubric2url" value="<%="&amp;rubric="+rubric%>" />
+					</logic:present>
+					<td class="infoop" width="20"><html:link
+						page="<%="/projectReport.do?method=exportToExcel&amp;reportType=expensesReport&amp;projectCode="+projectCode+rubric2url%>">
+						<html:img border="0" src="<%= request.getContextPath() + "/images/excel.bmp"%>" altKey="link.exportToExcel" align="right" />
+					</html:link></td>
+					<td class="infoop" width="20"><html:link target="_blank"
+						page="<%="/projectReport.do?method=getReport&amp;reportType=expensesReport&amp;projectCode="+projectCode+"&amp;print=true"+rubric2url%>">
+						<html:img border="0" src="<%= request.getContextPath() + "/images/printer.gif"%>" altKey="label.print" align="right" />
+					</html:link></td>
+				</logic:notEmpty>
+			</tr>
+		</table>
+		<br />
+		<table>
+			<tr>
+				<td><strong><bean:message key="label.acronym" />:</strong></td>
+				<td><bean:write name="infoProject" property="title" /></td>
+			</tr>
+			<tr>
+				<td><strong><bean:message key="label.projectNumber" />:</strong></td>
+				<td><bean:write name="infoProject" property="projectIdentification" /></td>
+			</tr>
+			<tr>
+				<td><strong><bean:message key="label.type" />:</strong></td>
+				<bean:define id="type" name="infoProject" property="type" />
+				<td><bean:write name="type" property="label" />&nbsp;-&nbsp;<bean:write name="type" property="value" /></td>
+			</tr>
+			<tr>
+				<td><strong><bean:message key="label.coordinator" />:</strong></td>
+				<td><bean:write name="infoProject" property="coordinatorName" /></td>
+			</tr>
+			<tr>
+				<td><strong><bean:message key="label.date" />:</strong></td>
+				<td><report:computeDate /></td>
+			</tr>
+		</table>
+		<br />
+		<br />
+		<html:form action="/projectReport">
+			<html:hidden property="method" value="getReport" />
+			<html:hidden property="reportType" value="expensesReport" />
+			<html:hidden property="projectCode" value="<%=(pageContext.findAttribute("projectCode")).toString()%>" />
+			<table>
+				<tr>
+					<td><html:select property="rubric">
+						<html:option value="">
+							<bean:message key="label.allRubrics" />
+						</html:option>
+						<logic:iterate id="rubric" name="infoExpensesReport" property="rubricList">
+							<bean:define id="r" name="rubric" property="label" />
+							<html:option value="<%=r.toString()%>">
+								<bean:write name="rubric" property="label" />&nbsp;-&nbsp;<bean:write name="rubric" property="value" />
+							</html:option>
+						</logic:iterate>
+					</html:select></td>
+					<td><html:submit styleClass="inputbutton">
+						<bean:message key="label.select" />
+					</html:submit></td>
+				</tr>
+			</table>
+		</html:form>
+		<br />
+		<br />
+		<logic:notEmpty name="infoExpensesReport" property="lines">
+			<bean:define id="expensesLines" name="infoExpensesReport" property="lines" />
+			<bean:define id="startSpan" value="0" />
+			<bean:define id="length" name="infoExpensesReport" property="linesSize" />
+
+			<logic:present name="numberOfSpanElements">
+				<bean:define id="span" value="<%=request.getAttribute("span").toString()%>" />
+				<bean:define id="startSpan" value="<%=request.getAttribute("startSpan").toString()%>" />
+				<bean:define id="length" value="<%=request.getAttribute("length").toString()%>" />
+				<bean:define id="numberOfSpanElements" value="<%=request.getAttribute("numberOfSpanElements").toString()%>" />
+				<bean:define id="spanNumber" value="<%=request.getAttribute("spanNumber").toString()%>" />
+
+
+				<report:navigation-bar linesId="infoExpensesReport" spanId="span" numberOfSpanElements="numberOfSpanElements" />
+
+				<br />
+			</logic:present>
+
+			<table class="report-table">
+				<tr>
+					<td class="report-hdr"><bean:message key="label.idMov" /></td>
+					<td class="report-hdr"><bean:message key="label.member" /></td>
+					<td class="report-hdr"><bean:message key="label.rubric" /></td>
+					<td class="report-hdr"><bean:message key="label.type" /></td>
+					<td class="report-hdr"><bean:message key="label.date" /></td>
+					<td class="report-hdr"><bean:message key="label.description" /></td>
+					<td class="report-hdr"><bean:message key="label.value" /></td>
+					<td class="report-hdr"><bean:message key="label.tax" /></td>
+					<td class="report-hdr"><bean:message key="label.total" /></td>
+				</tr>
+				<logic:iterate id="line" name="expensesLines" indexId="lineIndex" offset="<%=startSpan.toString()%>" length="<%=length.toString()%>">
+					<tr>
+						<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="center"><bean:write name="line" property="movementId" /></td>
+						<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="center"><bean:write name="line" property="member" /></td>
+						<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="center"><bean:write name="line" property="rubric" /></td>
+						<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="center"><bean:write name="line" property="type" /></td>
+						<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="center"><bean:write name="line" property="date" /></td>
+						<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="center"><bean:write name="line" property="description" /></td>
+						<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="right"><report:formatDoubleValue name="line" property="value" /></td>
+						<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="right"><report:formatDoubleValue name="line" property="tax" /></td>
+						<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="right"><report:formatDoubleValue name="line" property="total" /></td>
+					</tr>
+				</logic:iterate>
+				<logic:present name="lastSpan">
+					<bean:define id="lastSpan" value="<%=request.getAttribute("lastSpan").toString()%>" />
+					<logic:equal name="lastSpan" value="true">
+						<tr>
+							<td class="report-line-total-first" colspan="6"><bean:message key="label.total" /></td>
+							<td class="report-line-total"><report:sumColumn id="expensesLines" column="6" /></td>
+							<td class="report-line-total"><report:sumColumn id="expensesLines" column="7" /></td>
+							<td class="report-line-total-last"><report:sumColumn id="expensesLines" column="8" /></td>
+						</tr>
+					</logic:equal>
+				</logic:present>
+			</table>
+			<logic:present name="infoExpensesReport" property="summaryPTEReport">
+				<jsp:include page="showExtraReportLines.jsp" />
+			</logic:present>
+		</logic:notEmpty>
+		<br />
+		<br />
+		<br />
+	</logic:notEmpty>
+</logic:present>

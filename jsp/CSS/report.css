@@ -1,0 +1,170 @@
+/*****************************************************************
+	Reports - layout reports
+******************************************************************/
+
+.report-table {
+	border: 1px solid #333;
+	width: 100%;
+	font: 9px/1em Verdana, Arial, Helvetica, sans-serif;
+	border-collapse:collapse;
+}
+.rubric-table {
+	border: 1px solid #333;
+	width: 50%;
+	align: center;
+	font: 9px/1em Verdana, Arial, Helvetica, sans-serif;
+	border-collapse:collapse;
+}
+
+.report-hdr {
+	padding: 5px;
+	font-weight: bold;
+	text-align: center;
+	background: #ccc;
+	border-right: 1px solid #333;
+	border-bottom: 1px solid #333;
+}
+
+.report-hdr-last {
+	padding: 5px;
+	font-weight: bold;
+	text-align: center;
+	background: #ccc;
+	border-bottom: 1px solid #333;
+}
+	
+.report-td-0 {
+	padding: 5px;
+	background: #ebeced;
+	border-right: 1px solid #333;   
+	border-bottom: 1px solid #ccc;                               
+}
+	
+.report-td-last-0 {
+	padding: 5px;
+	background: #ebeced;  
+	border-bottom: 1px solid #ccc;                               
+}
+
+.report-td-1 {
+	padding: 5px;
+	background: #fff;
+	border-right: 1px solid #333;   
+	border-bottom: 1px solid #ccc;                               
+}
+	
+.report-td-last-1 {
+	padding: 5px;
+	background: #fff;
+	border-bottom: 1px solid #ccc;                               
+}
+
+.report-finalrow-0 {
+	padding: 5px;
+	background: #ebeced;
+	border-right: 1px solid #333;
+}
+
+.report-finalrow-last-0 {
+	padding: 5px;
+	background: #ebeced;
+}                   
+
+.report-finalrow-1 {
+	padding: 5px;
+	background: #fff;
+	border-right: 1px solid #333;
+}
+
+.report-finalrow-last-1 {
+	padding: 5px;
+	background: #fff;
+}                   
+
+.report-line-total-first {
+	padding: 5px;
+	background: #fff;  
+	border-top: 2px solid #ccc;     
+	border-right: 1px solid #333;   	                          
+	text-align: left;
+}
+
+.report-line-total {
+	padding: 5px;
+	background: #fff;  
+	border-top: 2px solid #ccc;     
+	border-right: 1px solid #333;   	                          
+	text-align: right;	
+}
+
+.report-line-total-last {
+	padding: 5px;
+	background: #fff;  
+	border-top: 2px solid #ccc;     
+	text-align: right;	
+}
+
+/*****************************************************************
+	Report Navigation Bar
+******************************************************************/
+.navigation-bar{
+	border: 1px solid #333;
+	font: 12px/1em Verdana, Arial, Helvetica, sans-serif;	
+	color: #000;	
+	align:right;
+	padding: 2px;
+	font-weight: bold;
+}
+
+.navigation-bar a:link {
+	font: 10px/1em Verdana, Arial, Helvetica, sans-serif;	
+	color: #000;
+	font-weight: normal;
+	text-decoration: none;	
+}
+	
+.navigation-bar a:visited {
+	font: 10px/1em Verdana, Arial, Helvetica, sans-serif;	
+	color: #000;
+	text-decoration: none;
+	font-weight: normal;		
+}
+
+.navigation-bar a:hover {
+	font: 10px/1em Verdana, Arial, Helvetica, sans-serif;	
+	background-color: transparent;
+	text-decoration: underline;	
+	font-weight: normal;	
+	color: #B5BDD6;
+}
+
+.report-navigation-bar{
+	font-size: 10pt;
+	text-align: right;
+	color: #003F7D;
+	background-color: white;
+}
+
+.report-navigation-bar a:link{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #003F7D;
+	text-decoration: underline;
+}
+
+.report-navigation-bar a:active {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #003F7D;
+	text-decoration: underline;
+}
+
+.report-navigation-bar a:visited {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #003F7D;
+	text-decoration: underline;
+}
+
+.report-navigation-bar a:hover {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: transparent;
+	color: #003F7D;
+}

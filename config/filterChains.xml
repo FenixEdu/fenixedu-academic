@@ -810,4 +810,11 @@
 		<invocationTiming>2</invocationTiming>
 		<filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
 	</filterChain>
+	<filterChain>
+        <name>ProjectsManagerAuthorization</name>
+        <expression>ProjectsManagerAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
 </filterChainsDefinitions>

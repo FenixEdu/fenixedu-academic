@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+	<definition name="df.page.projectManager" extends="definition.projectManager.two-column">
+		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
+		<put name="body" value="/projectsManagement/firstPage.jsp" />
+	</definition>
+	<definition name="project-List" extends="definition.projectManager.two-column">
+		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
+		<put name="body" value="/projectsManagement/projectList.jsp" />
+	</definition>
+	<definition name="show-Summary-Report" extends="definition.projectManager.two-column">
+		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
+		<put name="body" value="/projectsManagement/showSummaryReport.jsp" />
+	</definition>
+	<definition name="show-Expenses-Report" extends="definition.projectManager.two-column">
+		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
+		<put name="body" value="/projectsManagement/showExpensesReport.jsp" />
+	</definition>
+	<definition name="show-Revenue-Report" extends="definition.projectManager.two-column">
+		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
+		<put name="body" value="/projectsManagement/showRevenueReport.jsp" />
+	</definition>
+	<definition name="help-Page" extends="definition.projectManager.two-column">
+		<put name="navLocal" value="/projectsManagement/navBar.jsp"/>
+		<put name="body" value="/projectsManagement/helpPage.jsp" />
+	</definition>
+</tiles-definitions>

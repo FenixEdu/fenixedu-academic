@@ -776,4 +776,10 @@
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
+        <filter>
+        <name>ProjectsManagerAuthorization</name>
+        <implementationClass>ServidorAplicacao.Filtro.ProjectsManagerAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>
 </filterDefinitions>

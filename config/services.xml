@@ -8039,7 +8039,7 @@
 		<description/>
 		<isTransactional>true</isTransactional>
 	</service>
-    <service>
+	<service>
 		<name>ReadInfoRegistrationDeclaration</name>
 		<implementationClass>
 			ServidorAplicacao.Servico.student.ReadInfoRegistrationDeclaration
@@ -8049,5 +8049,49 @@
 		<filterChains>
 			<chain name="DegreeAdministrativeOfficeAuthorization"/>
 		</filterChains>
+	</service>	
+	<service>
+		<name>ReadUserProjects</name>
+		<implementationClass>
+			ServidorAplicacao.Servico.projectsManagement.ReadUserProjects
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+            <chain name="ProjectsManagerAuthorization"/>
+        </filterChains>
+	</service>
+	<service>
+		<name>ReadReport</name>
+		<implementationClass>
+			ServidorAplicacao.Servico.projectsManagement.ReadReport
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+            <chain name="ProjectsManagerAuthorization"/>
+        </filterChains>
+	</service>
+		<service>
+		<name>ReadExpensesReport</name>
+		<implementationClass>
+			ServidorAplicacao.Servico.projectsManagement.ReadExpensesReport
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+            <chain name="ProjectsManagerAuthorization"/>
+        </filterChains>
+	</service>
+	<service>
+		<name>ReadRubric</name>
+		<implementationClass>
+			ServidorAplicacao.Servico.projectsManagement.ReadRubric
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+            <chain name="ProjectsManagerAuthorization"/>
+        </filterChains>
 	</service>
 </serviceDefinitions>
