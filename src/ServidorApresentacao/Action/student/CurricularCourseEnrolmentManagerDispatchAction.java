@@ -173,7 +173,6 @@ public class CurricularCourseEnrolmentManagerDispatchAction extends GeneralCurri
 
 		InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) session.getAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY);
 
-		// FIXME DAVID-RICARDO: Problema com index out of bounds
 		if(isCancelled(request)) {
 			super.uncheckCurricularCourse(enrolmentForm, infoEnrolmentContext);
 			return mapping.findForward(forwards[0]);
@@ -212,7 +211,6 @@ public class CurricularCourseEnrolmentManagerDispatchAction extends GeneralCurri
 
 		InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) session.getAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY);
 
-		// FIXME DAVID-RICARDO: Problema com index out of bounds
 		if(isCancelled(request)) {
 			List infoDegreeList = infoEnrolmentContext.getInfoDegreesForOptionalCurricularCourses();
 			if(infoDegreeList.size() == 1) {

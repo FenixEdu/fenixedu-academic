@@ -11,18 +11,32 @@
 				<arg0 key="error.no.student.selected" resource="true"/>
 			</field>
 		</form>
-	</formset>
 
-	<formset>
 		<form name="getDegreeAndCurricularSemesterAndCurricularYearForm">
-			<field property="infoExecutionDegreeName" depends="required,integer" page="1">
+			<field property="infoExecutionDegree" depends="required,integer" page="1">
 				<arg0 key="error.no.degree.selected" resource="true"/>
 			</field>
-			<field property="semester" depends="required,integer" page="1">
-				<arg0 key="error.no.semester.selected" resource="true"/>
-			</field>
-			<field property="year" depends="required,integer" page="1">
+			<field property="curricularYears" depends="validateMultiBox" page="1">
 				<arg0 key="error.no.year.selected" resource="true"/>
+					<var>
+						<var-name>arrayProperty</var-name>
+						<var-value>curricularYears</var-value>
+					</var>
+					<var>
+						<var-name>femininProperty</var-name>
+						<var-value>false</var-value>
+					</var>
+			</field>
+			<field property="curricularSemesters" depends="validateMultiBox" page="1">
+				<arg0 key="error.no.year.selected" resource="true"/>
+					<var>
+						<var-name>arrayProperty</var-name>
+						<var-value>curricularSemesters</var-value>
+					</var>
+					<var>
+						<var-name>femininProperty</var-name>
+						<var-value>false</var-value>
+					</var>
 			</field>
 		</form>
 	</formset>

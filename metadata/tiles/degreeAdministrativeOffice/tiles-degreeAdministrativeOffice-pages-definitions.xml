@@ -51,7 +51,7 @@
 <!-- **************************************************************************************************************************** -->
 
 	<definition name="df.page.showAvailableCurricularCoursesWithoutRules" extends="definition.degreeAdministrativeOffice.curricular.course.enrolment.without.rules">
-		<put name="body" value="/degreeAdministrativeOffice/enrolment/showAvailableCurricularCoursesWithoutRules.jsp"/>
+		<put name="body" value="/degreeAdministrativeOffice/enrolment/showAvailableCurricularCoursesWithoutRules2.jsp"/>
 	</definition>
 	<definition name="df.page.verifyEnrolmentWithoutRules" extends="definition.degreeAdministrativeOffice.curricular.course.enrolment.without.rules">
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/verifyEnrolmentWithoutRules.jsp"/>

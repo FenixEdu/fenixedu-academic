@@ -13,13 +13,7 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.InfoExecutionDegree;
-import DataBeans.InfoExecutionPeriod;
-import DataBeans.InfoStudent;
-import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
-import ServidorApresentacao.Action.exceptions.FenixActionException;
-import ServidorApresentacao.Action.sop.utils.ServiceUtils;
+import DataBeans.degreeAdministrativeOffice.InfoCurricularCourseEnromentWithoutRules;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
@@ -39,54 +33,20 @@ public class PrepareEnrolmentContextDispatchAction extends DispatchAction {
 		DynaActionForm getDegreeAndCurricularSemesterAndCurricularYearForm = (DynaActionForm) form;
 		HttpSession session = request.getSession();
 
-		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getServletContext().getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+		InfoCurricularCourseEnromentWithoutRules infoCurricularCourseEnromentWithoutRules = (InfoCurricularCourseEnromentWithoutRules) session.getAttribute(SessionConstants.ENROLMENT_WITHOUT_RULES_INFO_KEY);
+		List infoExecutionDegreesList = infoCurricularCourseEnromentWithoutRules.getInfoExecutionDegreesList();
 
-		InfoStudent infoStudent = (InfoStudent) session.getAttribute(SessionConstants.ENROLMENT_ACTOR_KEY);
-		if(infoStudent == null) {
-			// It's probably a refresh to the page so those session attributes were already removed
-			// but a infoEnrolmentContext was already added to the session.
-			InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) session.getAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY);
-			infoStudent = infoEnrolmentContext.getInfoStudent();
-		}
-
-		List infoExecutionDegreesList = (List) session.getAttribute(SessionConstants.DEGREES);
-		if(infoExecutionDegreesList == null) {
-			// It's probably a refresh to the page so those session attributes were already removed
-			// but a infoEnrolmentContext was already added to the session.
-			try {
-				InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) session.getAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY);
-				Object args[] = { infoExecutionPeriod.getInfoExecutionYear(), infoEnrolmentContext.getChosenOptionalInfoDegree().getTipoCurso() };
-				infoExecutionDegreesList = (List) ServiceUtils.executeService(userView, "ReadExecutionDegreesByExecutionYearAndDegreeType", args);
-			} catch (FenixServiceException e) {
-				throw new FenixActionException(e);
-			}
-		}
-
-		Integer infoExecutionDegreeIndex = new Integer((String) getDegreeAndCurricularSemesterAndCurricularYearForm.get("infoExecutionDegreeName"));
+		Integer infoExecutionDegreeIndex = new Integer((String) getDegreeAndCurricularSemesterAndCurricularYearForm.get("infoExecutionDegree"));
 		Integer semester = new Integer((String) getDegreeAndCurricularSemesterAndCurricularYearForm.get("semester"));
 		Integer year = new Integer((String) getDegreeAndCurricularSemesterAndCurricularYearForm.get("year"));
 		
 		InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegreesList.get(infoExecutionDegreeIndex.intValue());
+		
+		infoCurricularCourseEnromentWithoutRules.setChosenInfoExecutionDegree(infoExecutionDegree);
+		infoCurricularCourseEnromentWithoutRules.setChosenSemester(semester);
+		infoCurricularCourseEnromentWithoutRules.setChosenYear(year);
 
-		Object args[] = { infoStudent, infoExecutionPeriod, infoExecutionDegree, semester, year };
-
-		InfoEnrolmentContext infoEnrolmentContext = null;
-		try {
-			infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "PrepareEnrolmentContext", args);
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
-		}
-
-		session.removeAttribute(SessionConstants.ENROLMENT_ACTOR_KEY);
-		session.removeAttribute(SessionConstants.DEGREES);
-
-		session.setAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY, infoEnrolmentContext);
-		session.setAttribute(SessionConstants.ENROLMENT_STUDENT_NUMBER_KEY, infoStudent.getNumber());
-		session.setAttribute(SessionConstants.ENROLMENT_SEMESTER_KEY, semester);
-		session.setAttribute(SessionConstants.ENROLMENT_YEAR_KEY, year);
-		session.setAttribute(SessionConstants.ENROLMENT_DEGREE_NAME_KEY, infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome());
-		session.setAttribute(SessionConstants.ENROLMENT_CAN_BE_REMOVED_KEY, new Integer(infoEnrolmentContext.getInfoCurricularCoursesScopesAutomaticalyEnroled().size()));
+		session.setAttribute(SessionConstants.ENROLMENT_WITHOUT_RULES_INFO_KEY, infoCurricularCourseEnromentWithoutRules);
 
 		return mapping.findForward(forwards[0]);
 	}
@@ -98,15 +58,9 @@ public class PrepareEnrolmentContextDispatchAction extends DispatchAction {
 	private boolean isSessionAttributesValid(HttpServletRequest request) {
 		boolean result = true;
 		HttpSession session = request.getSession();
-		
-		InfoStudent infoStudent = (InfoStudent) session.getAttribute(SessionConstants.ENROLMENT_ACTOR_KEY);
-		List infoExecutionDegreesList = (List) session.getAttribute(SessionConstants.DEGREES);
-		InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) session.getAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY);
-		
-		if( (infoStudent == null) || (infoExecutionDegreesList == null) ) {
-			if(infoEnrolmentContext == null) {
-				result = false;
-			}
+		InfoCurricularCourseEnromentWithoutRules infoCurricularCourseEnromentWithoutRules = (InfoCurricularCourseEnromentWithoutRules) session.getAttribute(SessionConstants.ENROLMENT_WITHOUT_RULES_INFO_KEY);
+		if(infoCurricularCourseEnromentWithoutRules == null) {
+			result = false;
 		}
 		return result;
 	}

@@ -104,7 +104,8 @@
 			<logic:iterate id="curricularScope" name="infoEnrolmentContext" property="infoFinalCurricularCoursesScopesSpanToBeEnrolled" indexId="index">
 				<tr>
 					<td>
-						<html:multibox property="curricularCourses">
+						<html:multibox property='<%= "curricularCourses[" + index +"]" %>'>
+						<%--<html:multibox property="curricularCourses">--%>
 							<bean:write name="index"/>
 						</html:multibox>
 					</td>

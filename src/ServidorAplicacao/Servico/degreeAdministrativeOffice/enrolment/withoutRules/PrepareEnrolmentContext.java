@@ -40,7 +40,7 @@ public class PrepareEnrolmentContext implements IServico {
 		IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoExecutionPeriod);
 		ICursoExecucao executionDegree = Cloner.copyInfoExecutionDegree2ExecutionDegree(infoExecutionDegree);
 		try {
-			EnrolmentContext enrolmentContext = EnrolmentContextManager.initialEnrolmentWithoutRulesContextForDegreeAdministrativeOffice(student, executionPeriod, executionDegree, semester, year);
+			EnrolmentContext enrolmentContext = EnrolmentContextManager.initialEnrolmentWithoutRulesContextForDegreeAdministrativeOffice2(student, executionPeriod, executionDegree, semester, year);
 			infoEnrolmentContext = EnrolmentContextManager.getInfoEnrolmentContext(enrolmentContext);
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);

@@ -1,7 +1,6 @@
 package ServidorApresentacao.Action.degreeAdministrativeOffice;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,11 +11,10 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.apache.struts.util.LabelValueBean;
 
-import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoStudent;
+import DataBeans.degreeAdministrativeOffice.InfoCurricularCourseEnromentWithoutRules;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -43,18 +41,6 @@ public class PrepareStudentDataForEnrolmentWithoutRulesDispatchAction extends Pr
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
 			List infoExecutionDegreesList = null;
-			InfoStudent infoStudent = null;
-
-			Integer degreeTypeInt = new Integer((String) getStudentByNumberAndDegreeTypeForm.get("degreeType"));
-			Integer studentNumber = new Integer((String) getStudentByNumberAndDegreeTypeForm.get("studentNumber"));
-
-			try {
-				Object args[] = { degreeTypeInt, studentNumber };
-				infoStudent = (InfoStudent) ServiceUtils.executeService(userView, "GetStudentByNumberAndDegreeType", args);
-			} catch (FenixServiceException e) {
-				throw new FenixActionException(e);
-			}
-
 			try {
 				Integer degreeType = new Integer((String) getStudentByNumberAndDegreeTypeForm.get("degreeType"));
 				InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getServletContext().getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
@@ -65,11 +51,14 @@ public class PrepareStudentDataForEnrolmentWithoutRulesDispatchAction extends Pr
 				throw new FenixActionException(e);
 			}
 
-			session.setAttribute(SessionConstants.ENROLMENT_ACTOR_KEY, infoStudent);
-			session.setAttribute(SessionConstants.DEGREE_LIST, this.getExecutionDegreesLableValueBeanList(infoExecutionDegreesList));
-			session.setAttribute(SessionConstants.DEGREES, infoExecutionDegreesList);
+			InfoStudent infoStudent = (InfoStudent) request.getAttribute(SessionConstants.STUDENT);
+			InfoCurricularCourseEnromentWithoutRules infoCurricularCourseEnromentWithoutRules = new InfoCurricularCourseEnromentWithoutRules();
+			infoCurricularCourseEnromentWithoutRules.setInfoExecutionDegreesList(infoExecutionDegreesList);
+			infoCurricularCourseEnromentWithoutRules.setInfoStudent(infoStudent);
 
-			session.removeAttribute(SessionConstants.DEGREE_TYPE);
+			session.setAttribute(SessionConstants.ENROLMENT_WITHOUT_RULES_INFO_KEY, infoCurricularCourseEnromentWithoutRules);
+			request.setAttribute(SessionConstants.ENROLMENT_YEAR_LIST_KEY, this.generateCurricularYearList());
+			request.setAttribute(SessionConstants.ENROLMENT_SEMESTER_LIST_KEY, this.generateCurricularSemesterList());
 
 			return mapping.findForward(forwards[0]);
 		} else {
@@ -81,18 +70,20 @@ public class PrepareStudentDataForEnrolmentWithoutRulesDispatchAction extends Pr
 		return mapping.findForward(forwards[1]);
 	}
 
-	private List getExecutionDegreesLableValueBeanList(List infoExecutionDegreesList) {
-		ArrayList result = null;
-		if ( (infoExecutionDegreesList != null) && (!infoExecutionDegreesList.isEmpty()) ) {
-			result = new ArrayList();
-			result.add(new LabelValueBean("Escolha", ""));
-			Iterator iterator = infoExecutionDegreesList.iterator();
-			while(iterator.hasNext()) {
-				InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
-				Integer index = new Integer(infoExecutionDegreesList.indexOf(infoExecutionDegree));
-				result.add(new LabelValueBean(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome(), index.toString()));
-			}
-		}
-		return result;	
+	private List generateCurricularYearList() {
+		List years = new ArrayList();
+		years.add("label.first.year");
+		years.add("label.second.year");
+		years.add("label.third.year");
+		years.add("label.fourth.year");
+		years.add("label.fiveth.year");
+		return years;
+	}
+
+	private List generateCurricularSemesterList() {
+		List years = new ArrayList();
+		years.add("label.first.semester");
+		years.add("label.second.semester");
+		return years;
 	}
 }

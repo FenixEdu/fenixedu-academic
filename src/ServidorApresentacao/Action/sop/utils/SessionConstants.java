@@ -20,6 +20,9 @@ public abstract class SessionConstants {
 	// -------------------------------------------------------------------------------
 	public static final String ENROLMENT_TO_REMOVE_LIST_KEY = "erolmentsToRemoveList";
 	public static final String ACTUAL_ENROLMENT_KEY = "actualEnrolment";
+	public static final String ENROLMENT_WITHOUT_RULES_INFO_KEY = "enrolmentWithoutRulesInfo";
+	public static final String ENROLMENT_YEAR_LIST_KEY = "curricularYears";
+	public static final String ENROLMENT_SEMESTER_LIST_KEY = "curricularSemesters";
 
 	public static final String EQUIVALENCE_CONTEXT_KEY = "equivalenceContext";
 	public static final String INFO_ENROLMENT_KEY = "infoEnrolment";

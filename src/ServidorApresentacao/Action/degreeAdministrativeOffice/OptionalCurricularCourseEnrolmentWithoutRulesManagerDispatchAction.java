@@ -155,7 +155,6 @@ public class OptionalCurricularCourseEnrolmentWithoutRulesManagerDispatchAction 
 
 		InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) session.getAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY);
 
-		// FIXME DAVID-RICARDO: Problema com index out of bounds
 		if(isCancelled(request)) {
 			super.uncheckCurricularCourse(enrolmentForm, infoEnrolmentContext);
 			return mapping.findForward(forwards[0]);

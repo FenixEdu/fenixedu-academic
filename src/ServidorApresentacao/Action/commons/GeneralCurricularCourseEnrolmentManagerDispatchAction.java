@@ -188,19 +188,11 @@ public class GeneralCurricularCourseEnrolmentManagerDispatchAction extends Trans
 
 	protected void uncheckCurricularCourse(DynaValidatorForm enrolmentForm, InfoEnrolmentContext infoEnrolmentContext) {
 
-		// FIXME DAVID-RICARDO: Problema com index out of bounds
 		if(enrolmentForm.get("curricularCourses") == null) {
 			enrolmentForm.set("curricularCourses", new Integer[infoEnrolmentContext.getInfoFinalCurricularCoursesScopesSpanToBeEnrolled().size()]);
-
-			System.out.println("PASSEI NULL");
-
 		}
 		Integer[] curricularCoursesIndexes = (Integer[]) enrolmentForm.get("curricularCourses");
 		Integer optionalCurricularCourseIndex = (Integer) enrolmentForm.get("optionalCourseIndex");
-
-		System.out.println("SIZE: [" + curricularCoursesIndexes.length + "]");
-		System.out.println("INDEX: [" + optionalCurricularCourseIndex + "]");
-
 		curricularCoursesIndexes[optionalCurricularCourseIndex.intValue()] = null;
 		enrolmentForm.set("curricularCourses", curricularCoursesIndexes);
 	}

@@ -22,9 +22,9 @@
 		<form-bean name="getDegreeAndCurricularSemesterAndCurricularYearForm" type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer"/>
-			<form-property name="infoExecutionDegreeName" type="java.lang.String"/>
-			<form-property name="semester" type="java.lang.String"/>
-			<form-property name="year" type="java.lang.String"/>
+			<form-property name="infoExecutionDegree" type="java.lang.String"/>
+			<form-property name="curricularYears" type="java.lang.Integer[]"/>
+			<form-property name="curricularSemesters" type="java.lang.Integer[]"/>
 		</form-bean>
 
 		<form-bean name="curricularCourseEnrolmentForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
@@ -118,7 +118,7 @@
 				path="/prepareStudentDataForEnrolmentWithoutRules"
 				input="/prepareStudentDataForEnrolmentWithoutRules.do?method=error&amp;page=0"
 				parameter="method"
-				scope="session"
+				scope="request"
 				validate="true">
 			<forward name="startCurricularCourseEnrolmentWithoutRules" path="df.page.chooseDegreeAndCurricularSemesterAndCurricularYear"/>
 			<forward name="error" path="/functionRedirect.do?method=chooseStudentAndDegreeTypeForEnrolmentWithoutRules"/>
@@ -154,7 +154,7 @@
 				scope="request"
 				validate="true">
 			<forward name="showAvailableCurricularCourses" path="/curricularCourseEnrolmentWithoutRulesManager.do?method=start"/>
-			<forward name="error" path="df.page.chooseDegreeAndCurricularSemesterAndCurricularYear"/>
+			<forward name="error" path="/prepareStudentDataForEnrolmentWithoutRules.do?method=getStudentAndDegreeTypeForEnrolmentWithoutRules&amp;page=1"/>
 			<forward name="home" path="df.page.main"/>
 		</action>
 
@@ -180,19 +180,6 @@
 			<forward name="cancel" path="/functionRedirect.do?method=chooseStudentAndDegreeTypeForEnrolmentWithRules"/>
 		</action>
 
-		<action	name="curricularCourseEnrolmentWithoutRulesForm"
-				type="ServidorApresentacao.Action.degreeAdministrativeOffice.CurricularCourseEnrolmentWithoutRulesManagerDispatchAction"
-				path="/curricularCourseEnrolmentWithoutRulesManager"
-				parameter="method"
-				scope="session"
-				validate="false">
-			<forward name="showAvailableCurricularCourses" path="df.page.showAvailableCurricularCoursesWithoutRules"/>
-			<forward name="verifyEnrolment" path="df.page.verifyEnrolmentWithoutRules"/>
-			<forward name="acceptEnrolment" path="df.page.acceptEnrolmentWithoutRules"/>
-			<forward name="cancel" path="/prepareStudentDataForEnrolmentWithoutRules.do?method=getStudentAndDegreeTypeForEnrolmentWithoutRules"/>
-			<forward name="home" path="df.page.main"/>
-		</action>
-
 		<action	name="curricularCourseEnrolmentForm"
 				type="ServidorApresentacao.Action.degreeAdministrativeOffice.OptionalCurricularCourseEnrolmentWithoutRulesManagerDispatchAction"
 				path="/optionalCurricularCourseEnrolmentWithoutRulesManager"
@@ -209,6 +196,19 @@
 			<forward name="verifyEnrolment" path="df.page.verifyOptionalEnrolmentWithoutRules"/>
 			<forward name="acceptEnrolment" path="df.page.acceptOptionalEnrolmentWithoutRules"/>
 			<forward name="cancel" path="/functionRedirect.do?method=chooseStudentAndDegreeTypeForEnrolmentInOptionalWithoutRules"/>
+		</action>
+
+		<action	name="curricularCourseEnrolmentWithoutRulesForm"
+				type="ServidorApresentacao.Action.degreeAdministrativeOffice.CurricularCourseEnrolmentWithoutRulesManagerDispatchAction"
+				path="/curricularCourseEnrolmentWithoutRulesManager"
+				parameter="method"
+				scope="session"
+				validate="false">
+			<forward name="showAvailableCurricularCourses" path="df.page.showAvailableCurricularCoursesWithoutRules"/>
+			<forward name="verifyEnrolment" path="df.page.verifyEnrolmentWithoutRules"/>
+			<forward name="acceptEnrolment" path="df.page.acceptEnrolmentWithoutRules"/>
+			<forward name="cancel" path="/prepareStudentDataForEnrolmentWithoutRules.do?method=getStudentAndDegreeTypeForEnrolmentWithoutRules"/>
+			<forward name="home" path="df.page.main"/>
 		</action>
 	</action-mappings>
 

@@ -62,7 +62,7 @@
 				</logic:notEqual>
 				<tr>
 					<td>
-						<html:multibox property="curricularCourses" onclick="<%= pageContext.findAttribute("onclick").toString() %>">
+						<html:multibox property='<%= "curricularCourses[" + index +"]" %>' onclick="<%= pageContext.findAttribute("onclick").toString() %>">
 							<bean:write name="index"/>
 						</html:multibox>
 					</td>
