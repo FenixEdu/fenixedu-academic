@@ -23,26 +23,27 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author Fernanda Quitério 5/Nov/2003
+ * @author Fernanda Quitério 
+ * 10/Nov/2003
  *  
  */
-public class ReadActiveDegreeCurricularPlanByExecutionDegreeCode implements IServico {
+public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCode implements IServico {
 
-	private static ReadActiveDegreeCurricularPlanByExecutionDegreeCode service =
-		new ReadActiveDegreeCurricularPlanByExecutionDegreeCode();
+	private static ReadDegreeCurricularPlanHistoryByExecutionDegreeCode service =
+		new ReadDegreeCurricularPlanHistoryByExecutionDegreeCode();
 
-	public static ReadActiveDegreeCurricularPlanByExecutionDegreeCode getService() {
+	public static ReadDegreeCurricularPlanHistoryByExecutionDegreeCode getService() {
 
 		return service;
 	}
 
-	private ReadActiveDegreeCurricularPlanByExecutionDegreeCode() {
+	private ReadDegreeCurricularPlanHistoryByExecutionDegreeCode() {
 
 	}
 
 	public final String getNome() {
 
-		return "ReadActiveDegreeCurricularPlanByExecutionDegreeCode";
+		return "ReadDegreeCurricularPlanHistoryByExecutionDegreeCode";
 	}
 
 	public InfoDegreeCurricularPlan run(Integer executionDegreeCode) throws FenixServiceException {
@@ -75,7 +76,7 @@ public class ReadActiveDegreeCurricularPlanByExecutionDegreeCode implements ISer
 						ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
 
 						List curricularCourseScopes =
-							(List) sp.getIPersistentCurricularCourseScope().readActiveCurricularCourseScopesByCurricularCourse(curricularCourse);
+							(List) sp.getIPersistentCurricularCourseScope().readByCurricularCourse(curricularCourse);
 
 						if (curricularCourseScopes != null) {
 							curricularCourse.setScopes(curricularCourseScopes);
@@ -83,6 +84,8 @@ public class ReadActiveDegreeCurricularPlanByExecutionDegreeCode implements ISer
 					}
 					infoDegreeCurricularPlan = createInfoDegreeCurricularPlan(executionDegree, allCurricularCourses);
 				}
+			} else {
+				System.out.println("o degree curricular plan esta a null no servico");
 			}
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);

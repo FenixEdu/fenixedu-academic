@@ -378,6 +378,16 @@
 			<forward name="viewSite" path="viewSite" />
 		</action>		
 
+		<!-- ======== degree curricular plan management mappings -->
+		<action path="/degreeCurricularPlanManagement"
+				input="/chooseDegree.do" 
+				parameter="method"
+		        type="ServidorApresentacao.Action.coordinator.DegreeCurricularPlanManagementDispatchAction" 
+		        >
+			<forward name="showActiveCurricularCourses" path="activeDegreeCurricularPlan" />
+			<forward name="showCurricularCoursesHistory" path="degreeCurricularPlanHistory" />
+		</action>		
+
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->

@@ -2,21 +2,20 @@ package Dominio;
 
 import java.util.List;
 
-
 /**
  * @author dcs-rjao
- *
+ * 
  * 19/Mar/2003
  */
 
 public class Branch extends DomainObject implements IBranch {
 
 	private Integer keyDegreeCurricularPlan;
-	
+
 	private String name;
 	private String code;
 	private List scopes;
-	private IDegreeCurricularPlan degreeCurricularPlan; 
+	private IDegreeCurricularPlan degreeCurricularPlan;
 
 	public Branch() {
 		setName(null);
@@ -48,7 +47,16 @@ public class Branch extends DomainObject implements IBranch {
 		return result;
 	}
 
-	
+	/**
+	 * @author Fernanda Quitério
+	 */
+	public Boolean representsCommonBranch() {
+		if (this.name != null && this.name.equals("") && this.code != null && this.code.equals("")) {
+			return Boolean.TRUE;
+		}
+		return Boolean.FALSE;
+	}
+
 	/**
 	 * @return String
 	 */
@@ -65,21 +73,23 @@ public class Branch extends DomainObject implements IBranch {
 
 	/**
 	 * Sets the code.
-	 * @param code The code to set
+	 * 
+	 * @param code
+	 *          The code to set
 	 */
 	public void setCode(String code) {
 		this.code = code;
 	}
 
-
 	/**
 	 * Sets the name.
-	 * @param name The name to set
+	 * 
+	 * @param name
+	 *          The name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
-
 
 	/**
 	 * @return List
@@ -90,7 +100,9 @@ public class Branch extends DomainObject implements IBranch {
 
 	/**
 	 * Sets the scopes.
-	 * @param scopes The scopes to set
+	 * 
+	 * @param scopes
+	 *          The scopes to set
 	 */
 	public void setScopes(List scopes) {
 		this.scopes = scopes;

@@ -72,8 +72,9 @@
 	<%-- Start of Common Options --%>
 	<ul>
 		<li>
-			<html:link page="/executionCoursesInformation.do?method=prepareChoice">
-				Gestão de Planos Curriculares
+			<bean:define id="infoExecutionDegreeCode" name="infoExecutionDegree" property="idInternal"/>
+			<html:link page="<%="/degreeCurricularPlanManagement.do?method=showActiveCurricularCourses&amp;infoExecutionDegreeCode=" + infoExecutionDegreeCode %>">
+				<bean:message key="link.coordinator.degreeCurricularPlan.management"/>
 			</html:link> 
 			<br/>
 			<br/>

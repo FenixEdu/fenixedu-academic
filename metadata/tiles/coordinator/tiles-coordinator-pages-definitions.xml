@@ -28,4 +28,14 @@
 		<put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
 		<put name="body" value="/coordinator/degreeSite/viewDegreeInfo.jsp" />
 	</definition>		
+
+	<definition name="activeDegreeCurricularPlan" extends="definition.coordinator.two-column.extra-menu">
+		<put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp" />
+		<put name="body" value="/coordinator/degreeCurricularPlan/showActiveDegreeCurricularPlan.jsp" />
+	</definition>		
+	
+	<definition name="degreeCurricularPlanHistory" extends="definition.coordinator.two-column.extra-menu">
+		<put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp" />
+		<put name="body" value="/coordinator/degreeCurricularPlan/showDegreeCurricularPlanHistory.jsp" />
+	</definition>		
 </tiles-definitions>	

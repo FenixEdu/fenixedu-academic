@@ -38,13 +38,13 @@ public class InfoCurricularCourseScope extends InfoObject implements Serializabl
 	public boolean equals(Object obj) {
 		boolean resultado = false;
 		if (obj instanceof InfoCurricularCourseScope) {
-			InfoCurricularCourseScope infoCurricularCourse = (InfoCurricularCourseScope) obj;
+			InfoCurricularCourseScope infoCurricularCourseScope = (InfoCurricularCourseScope) obj;
 			resultado =
-				(getInfoBranch().equals(infoCurricularCourse.getInfoBranch())
-					&& getInfoCurricularCourse().equals(infoCurricularCourse.getInfoCurricularCourse())
-					&& getInfoCurricularSemester().equals(infoCurricularCourse.getInfoCurricularSemester())
-					&& ((getEndDate() == null && infoCurricularCourse.getEndDate() == null)
-						|| (getEndDate() != null && infoCurricularCourse.getEndDate() != null && getEndDate().equals(infoCurricularCourse.getEndDate()))));
+				(getInfoBranch().equals(infoCurricularCourseScope.getInfoBranch())
+					&& getInfoCurricularCourse().equals(infoCurricularCourseScope.getInfoCurricularCourse())
+					&& getInfoCurricularSemester().equals(infoCurricularCourseScope.getInfoCurricularSemester())
+					&& ((getEndDate() == null && infoCurricularCourseScope.getEndDate() == null)
+						|| (getEndDate() != null && infoCurricularCourseScope.getEndDate() != null && getEndDate().equals(infoCurricularCourseScope.getEndDate()))));
 		}
 		return resultado;
 	}
