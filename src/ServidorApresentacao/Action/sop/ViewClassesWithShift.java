@@ -13,7 +13,6 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
@@ -37,22 +36,23 @@ public class ViewClassesWithShift extends Action {
 		HttpSession session = request.getSession(false);
 		
 		try {
-			DynaValidatorForm shiftForm = (DynaValidatorForm) form;
-			String name = (String) shiftForm.get("name");
+			//DynaValidatorForm shiftForm = (DynaValidatorForm) form;
+			//String name = (String) shiftForm.get("name");
+			String name = request.getParameter("name");
 			
 			InfoExecutionDegree infoExecutionDegree =
 				(InfoExecutionDegree) session.getAttribute(
 					SessionConstants.INFO_EXECUTION_DEGREE_KEY);
 
 			InfoShift infoShift = getInfoShift(name, request);
-
+			
 			Object[] args = { infoShift, infoExecutionDegree };
 			List infoClasses =
 				(List) ServiceUtils.executeService(
 					SessionUtils.getUserView(request),
 					"ReadClassesWithShiftService",
 					args);
-
+					
 			if (infoClasses == null || infoClasses.isEmpty()) {
 				ActionErrors actionErrors = new ActionErrors();
 				actionErrors.add(

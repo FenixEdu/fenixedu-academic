@@ -12,6 +12,7 @@ package ServidorPersistente;
  */
 import java.util.List;
 
+import Dominio.ICursoExecucao;
 import Dominio.ITurma;
 import Dominio.ITurmaTurno;
 import Dominio.ITurno;
@@ -24,5 +25,6 @@ public interface ITurmaTurnoPersistente extends IPersistentObject {
     public void delete(ITurmaTurno turmaTurno) throws ExcepcaoPersistencia;
     public void deleteAll() throws ExcepcaoPersistencia;
     public List readByClass(ITurma group) throws ExcepcaoPersistencia;
-	public List readClassesWithShift(ITurno turno) throws ExcepcaoPersistencia;    
+	public List readClassesWithShift(ITurno turno) throws ExcepcaoPersistencia;
+	public List readByShiftAndExecutionDegree(ITurno turno, ICursoExecucao execucao) throws ExcepcaoPersistencia;
 }

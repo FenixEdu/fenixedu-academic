@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.ICursoExecucao;
@@ -36,30 +37,42 @@ public class TurmaTurnoOJB
 			String oqlQuery =
 				"select turmaturno from " + TurmaTurno.class.getName()
 				// Unique from Class
-				+ " where turma.nome = $1"
-				+ " and turma.executionPeriod.name = $2"
-				+ " and turma.executionPeriod.executionYear.year = $3"
-				+ " and turma.executionDegree.executionYear.year = $4"
-				+ " and turma.executionDegree.curricularPlan.name = $5"
-				+ " and turma.executionDegree.curricularPlan.degree.sigla = $6"
+	+" where turma.nome = $1"
+		+ " and turma.executionPeriod.name = $2"
+		+ " and turma.executionPeriod.executionYear.year = $3"
+		+ " and turma.executionDegree.executionYear.year = $4"
+		+ " and turma.executionDegree.curricularPlan.name = $5"
+		+ " and turma.executionDegree.curricularPlan.degree.sigla = $6"
 				// Unique from Shift
-				+ " and turno.nome = $7"
-				+ " and turno.disciplinaExecucao.sigla = $8"
-				+ " and turno.disciplinaExecucao.executionPeriod.name = $9"
-				+ " and turno.disciplinaExecucao.executionPeriod.executionYear.year = $10";
-				
+	+" and turno.nome = $7"
+		+ " and turno.disciplinaExecucao.sigla = $8"
+		+ " and turno.disciplinaExecucao.executionPeriod.name = $9"
+		+ " and turno.disciplinaExecucao.executionPeriod.executionYear.year = $10";
+
 			query.create(oqlQuery);
 			query.bind(turma.getNome());
 			query.bind(turma.getExecutionPeriod().getName());
 			query.bind(turma.getExecutionPeriod().getExecutionYear().getYear());
 			query.bind(turma.getExecutionDegree().getExecutionYear().getYear());
-			query.bind(turma.getExecutionDegree().getCurricularPlan().getName());
-			query.bind(turma.getExecutionDegree().getCurricularPlan().getDegree().getSigla());
-			
+			query.bind(
+				turma.getExecutionDegree().getCurricularPlan().getName());
+			query.bind(
+				turma
+					.getExecutionDegree()
+					.getCurricularPlan()
+					.getDegree()
+					.getSigla());
+
 			query.bind(turno.getNome());
 			query.bind(turno.getDisciplinaExecucao().getSigla());
-			query.bind(turno.getDisciplinaExecucao().getExecutionPeriod().getName());
-			query.bind(turno.getDisciplinaExecucao().getExecutionPeriod().getExecutionYear().getYear());
+			query.bind(
+				turno.getDisciplinaExecucao().getExecutionPeriod().getName());
+			query.bind(
+				turno
+					.getDisciplinaExecucao()
+					.getExecutionPeriod()
+					.getExecutionYear()
+					.getYear());
 			List result = (List) query.execute();
 			lockRead(result);
 			if (result.size() != 0)
@@ -71,7 +84,7 @@ public class TurmaTurnoOJB
 	}
 
 	public void lockWrite(ITurmaTurno classShiftToWrite)
-			throws ExcepcaoPersistencia, ExistingPersistentException {
+		throws ExcepcaoPersistencia, ExistingPersistentException {
 
 		ITurmaTurno classShiftFromDB = null;
 
@@ -127,18 +140,18 @@ public class TurmaTurnoOJB
 			query.bind(group.getNome());
 			query.bind(group.getExecutionPeriod().getName());
 			query.bind(group.getExecutionPeriod().getExecutionYear().getYear());
-			
+
 			ICursoExecucao executionDegree = group.getExecutionDegree();
 			query.bind(executionDegree.getExecutionYear().getYear());
-			
-			
+
 			query.bind(executionDegree.getCurricularPlan().getName());
-			
-			query.bind(executionDegree.getCurricularPlan().getDegree().getSigla());
+
+			query.bind(
+				executionDegree.getCurricularPlan().getDegree().getSigla());
 
 			List result = (List) query.execute();
 			lockRead(result);
-			
+
 			List shiftList = new ArrayList();
 			Iterator resultIterator = result.iterator();
 			while (resultIterator.hasNext()) {
@@ -182,5 +195,16 @@ public class TurmaTurnoOJB
 		}
 	}
 
+	public List readByShiftAndExecutionDegree(
+		ITurno turno,
+		ICursoExecucao execucao)
+		throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("turno.nome", turno.getNome());
+		criteria.addEqualTo(
+			"turma.executionDegree.curricularPlan.degree.sigla",
+			execucao.getCurricularPlan().getDegree().getSigla());
+		return queryList(TurmaTurno.class, criteria);
+	}
 
 }
