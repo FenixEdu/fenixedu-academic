@@ -110,14 +110,16 @@
 	    	<include name="**/**/*.xml"/>
 	    	<include name="**/**/ApplicationResources.properties"/>
 	    	<include name="**/ServidorPersistenteConfig.properties"/>
+	    	<include name="**/ServidorPersistenteOracleConfig.properties"/>
 		  <replacefilter 
 		    token="&lt;!-- @validation.doctype@ -->" property="validation.doctype"/>
 		  <replacefilter 
-		    token="@db.user@" 
-		    property="db.user"/>
-		  <replacefilter 
 		    token="@login.page@" 
 		    property="login.page"/>
+		  
+		  <replacefilter 
+		    token="@db.user@" 
+		    property="db.user"/>
 		  <replacefilter 
 		    token="@db.pass@" 
 		    property="db.pass"/>
@@ -127,6 +129,20 @@
 		  <replacefilter 
 		    token="@db.alias@" 
 		    property="db.alias"/>
+		    
+		  <replacefilter 
+		    token="@dbMarcacoesPonto.user@" 
+		    property="dbMarcacoesPonto.user"/>
+		  <replacefilter 
+		    token="@dbMarcacoesPonto.pass@" 
+		    property="dbMarcacoesPonto.pass"/>
+		  <replacefilter 
+		    token="@dbMarcacoesPonto.name@" 
+		    property="dbMarcacoesPonto.name"/>
+		  <replacefilter 
+		    token="@dbMarcacoesPonto.alias@" 
+		    property="dbMarcacoesPonto.alias"/>
+		    
 		  <replacefilter 
 		    token="@application@" 
 		    property="application"/>
@@ -455,14 +471,14 @@
             password="${db.pass}"
             encoding="${encoding}"
         >
-        DROP DATABASE IF EXISTS AssiduidadeOracle;
-        CREATE DATABASE AssiduidadeOracle;
+        DROP DATABASE IF EXISTS ${dbMarcacoesPonto.name};
+        CREATE DATABASE ${dbMarcacoesPonto.name};
         </sql>
         <sql
             driver="com.mysql.jdbc.Driver"
-            url="jdbc:mysql://localhost/AssiduidadeOracle"
-            userid="${db.user}"
-            password="${db.pass}"
+            url="jdbc:mysql://localhost/${dbMarcacoesPonto.name}"
+            userid="${dbMarcacoesPonto.user}"
+            password="${dbMarcacoesPonto.pass}"
             encoding="${encoding}">
 	        <fileset dir="${sql}">
 			 <include name="tables_AssiduidadeASSMARCAS.sql" />

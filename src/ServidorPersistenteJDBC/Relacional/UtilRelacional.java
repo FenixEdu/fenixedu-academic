@@ -13,7 +13,7 @@ import java.util.Properties;
 import ServidorPersistenteJDBC.config.IST2002Properties;
 
 public class UtilRelacional {
-	private static String _dataSource;
+	//private static String _dataSource;
 	private static String _userName;
 	private static String _password;
 	private static String _urlBD;
@@ -22,12 +22,12 @@ public class UtilRelacional {
 	private static Map mapaLigacoes = new HashMap();
 
 	public static synchronized void inicializarBaseDados(String filename) {
-		_properties = new IST2002Properties(filename);
-		_dataSource = _properties.getProperty("IST2002.ServidorPersistente.nomeBD");
+		_properties = new IST2002Properties(filename);	
 		_userName = _properties.getProperty("IST2002.ServidorPersistente.usernameBD");
 		_password = _properties.getProperty("IST2002.ServidorPersistente.passwordBD");
-		_urlBD = _properties.getProperty("IST2002.ServidorPersistente.URLServidorBD") + _dataSource;
-		if (_dataSource == null || _userName == null || _password == null) {
+		_urlBD = _properties.getProperty("IST2002.ServidorPersistente.URLServidorBD");
+		_urlBD = _properties.getProperty("IST2002.ServidorPersistente.URLServidorBD");
+			if (_userName == null || _password == null) {
 			System.out.println("ServidorPersistente: propriedades indefinidas.");
 		}
 		loadDriver();

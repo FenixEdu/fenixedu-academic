@@ -13,7 +13,7 @@ manager.url=http://localhost:8080/manager
 manager.username=admin
 
 # Tokens for replace
-db.name=ciapl
+db.name=fenix
 db.user=root
 db.pass=
 db.alias=//localhost:3306/ciapl
