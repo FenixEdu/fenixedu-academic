@@ -1,5 +1,4 @@
 <?xml version='1.0' encoding='ISO-8859-1'?>
-<!DOCTYPE dataset SYSTEM "@project.base.path@/metadata/dtds/fenix-database.dtd">
 <dataset>
   <ANNOUNCEMENT ID_INTERNAL='1' TITLE='announcement1deTFCI' CREATION_DATE='2003-01-21 00:00:00.0' LAST_MODIFICATION_DATE='2003-01-21 00:00:00.0' INFORMATION='information1' KEY_SITE='1'/>
   <ANNOUNCEMENT ID_INTERNAL='2' TITLE='announcement2deTFCI' CREATION_DATE='2003-01-22 00:00:00.0' LAST_MODIFICATION_DATE='2003-01-22 00:00:00.0' INFORMATION='information2' KEY_SITE='1'/>
