@@ -93,30 +93,10 @@ public class PessoaOJB extends ObjectFenixOJB implements IPessoaPersistente {
     public IPessoa lerPessoaPorUsername(String username) throws ExcepcaoPersistencia {
 		IPessoa person = null;
 
-		PersistenceBroker broker = ((HasBroker) odmg.currentTransaction()).getBroker(); 
-		//PersistenceBrokerFactory.defaultPersistenceBroker();
-		//((HasBroker) tx).getBroker();
-
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("username",username);
-		Query queryPB = new QueryByCriteria(Pessoa.class, criteria);
-		person = (IPessoa) broker.getObjectByQuery(queryPB);
+		person = (IPessoa) queryObject(Pessoa.class,criteria);
 		return person;
-    	
-//        try {
-//            
-//            String oqlQuery = "select all from " + Pessoa.class.getName();
-//            oqlQuery += " where username = $1";
-//            query.create(oqlQuery);
-//            query.bind(username);
-//            List result = (List) query.execute();
-//            lockRead(result);
-//            if(result.size() != 0)
-//                pessoa = (IPessoa) result.get(0);
-//            return pessoa;
-//        } catch(QueryException ex) {
-//            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-//        }
     }
 
     public IPessoa lerPessoaPorNumDocIdETipoDocId(String numeroDocumentoIdentificacao, TipoDocumentoIdentificacao tipoDocumentoIdentificacao) throws ExcepcaoPersistencia {
