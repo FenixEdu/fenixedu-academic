@@ -39,8 +39,10 @@ INSERT INTO SECTION VALUES (1, 'Seccao1dePO',0,4,null,'2003-01-21');
 # Data for table 'ITEM'
 #
 
-#DELETE FROM ITEM;
-#INSERT INTO ITEM VALUES (1, 'Item1', 0,'item1 da seccao1dePO',1,1);
+DELETE FROM ITEM;
+INSERT INTO ITEM VALUES (1,'Item1',0,'item1 da seccao1dePO',1,1);
+
+
 #INSERT INTO ITEM VALUES (2, 'Item2', 1,'item2 da seccao1dePO',1,1);
 #INSERT INTO ITEM VALUES (3, 'Item3', 2,'item3 da seccao1dePO',0,1);
 
