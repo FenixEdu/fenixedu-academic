@@ -18,6 +18,8 @@ public abstract class SessionConstants {
 
 	
 
+	
+
 	public static final String CONTEXT_PREFIX = "context.";
 
 	public static final String CONTEXT_KEY =
@@ -71,4 +73,5 @@ public abstract class SessionConstants {
 	
 	public static final String INFO_SITE_ANNOUNCEMENT_LIST= "info_site_announcement_list";
 	
+	public static final String INFO_SITES_LIST = "info_sites_list";
 }
