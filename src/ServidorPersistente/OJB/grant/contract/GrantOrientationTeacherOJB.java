@@ -26,11 +26,12 @@ public class GrantOrientationTeacherOJB extends ObjectFenixOJB implements
             IGrantContract contract, Integer idInternal)
             throws ExcepcaoPersistencia {
         List grantOrientationTeacher = null;
+        
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyContract", contract.getIdInternal());
         criteria.addNotEqualTo("idInternal", idInternal);
-        grantOrientationTeacher = queryList(GrantOrientationTeacher.class,
-                criteria, "beginDate", false);
+        grantOrientationTeacher = queryList(GrantOrientationTeacher.class,criteria, "beginDate", false);
+        
         Iterator respIter = grantOrientationTeacher.iterator();
         IGrantOrientationTeacher orientationTeacher = null;
         if (respIter.hasNext())

@@ -28,6 +28,7 @@
 <html:hidden property="beginContract"/>
 <html:hidden property="endContract"/>
 
+<bean:define id="spanNumber" name="listGrantContractByCriteriaForm" property="spanNumber"/>
 <bean:define id="orderBy" name="listGrantContractByCriteriaForm" property="orderBy"/>
 <bean:define id="totalElements" name="listGrantContractByCriteriaForm" property="totalElements"/>
 <bean:define id="numberOfElementsInSpan" name="listGrantContractByCriteriaForm" property="numberOfElementsInSpan"/>
@@ -56,32 +57,49 @@
 	</tr>
 	</table>
 	<br/>
-</html:form>
+
 
     <table border="0" cellspacing="1" cellpadding="1" align="center">
     <%-- Table with list grant owner description rows --%>
     <tr>
         <td class="listClasses-header">
+			<html:link page='<%= "/listGrantContractByCriteria.do?method=prepareListGrantContractByCriteria&amp;spanNumber=" + spanNumber + "&amp;numberOfElementsInSpan=" + numberOfElementsInSpan + "&amp;orderBy=orderByGrantOwnerNumber&amp;totalElements=" + totalElements + "&amp;argsInRequest=1&amp;filterType=" + filterType + "&amp;beginContract=" + beginContract + "&amp;endContract=" + endContract %>' >
 	    	<bean:message key="label.list.grant.owner.number"/>
+	    	</html:link>
 		</td>
         <td class="listClasses-header">
+			<html:link page='<%= "/listGrantContractByCriteria.do?method=prepareListGrantContractByCriteria&amp;spanNumber=" + spanNumber + "&amp;numberOfElementsInSpan=" + numberOfElementsInSpan + "&amp;orderBy=orderByFirstName&amp;totalElements=" + totalElements + "&amp;argsInRequest=1&amp;filterType=" + filterType + "&amp;beginContract=" + beginContract + "&amp;endContract=" + endContract %>' >
             <bean:message key="label.list.grant.owner.first.name"/>
+            </html:link>
 		</td>
         <td class="listClasses-header">
             <bean:message key="label.list.grant.owner.last.name"/>
         </td>
         <td class="listClasses-header">
+			<html:link page='<%= "/listGrantContractByCriteria.do?method=prepareListGrantContractByCriteria&amp;spanNumber=" + spanNumber + "&amp;numberOfElementsInSpan=" + numberOfElementsInSpan + "&amp;orderBy=orderByGrantContractNumber&amp;totalElements=" + totalElements + "&amp;argsInRequest=1&amp;filterType=" + filterType + "&amp;beginContract=" + beginContract + "&amp;endContract=" + endContract %>' >
+	    	<bean:message key="label.grant.contract.contractnumber"/>
+	    	</html:link>
+		</td>
+        <td class="listClasses-header">
+			<html:link page='<%= "/listGrantContractByCriteria.do?method=prepareListGrantContractByCriteria&amp;spanNumber=" + spanNumber + "&amp;numberOfElementsInSpan=" + numberOfElementsInSpan + "&amp;orderBy=orderByGrantType&amp;totalElements=" + totalElements + "&amp;argsInRequest=1&amp;filterType=" + filterType + "&amp;beginContract=" + beginContract + "&amp;endContract=" + endContract %>' >
         	<bean:message key="label.list.grant.owner.contract.type"/>
+        	</html:link>
 		</td>
 		<td class="listClasses-header">
+			<html:link page='<%= "/listGrantContractByCriteria.do?method=prepareListGrantContractByCriteria&amp;spanNumber=" + spanNumber + "&amp;numberOfElementsInSpan=" + numberOfElementsInSpan + "&amp;orderBy=orderByDateBeginContract&amp;totalElements=" + totalElements + "&amp;argsInRequest=1&amp;filterType=" + filterType + "&amp;beginContract=" + beginContract + "&amp;endContract=" + endContract %>' >
 			<bean:message key="label.list.byCriteria.grant.owner.dateBegin"/>
+			</html:link>
 		</td>
 		<td class="listClasses-header">
+			<html:link page='<%= "/listGrantContractByCriteria.do?method=prepareListGrantContractByCriteria&amp;spanNumber=" + spanNumber + "&amp;numberOfElementsInSpan=" + numberOfElementsInSpan + "&amp;orderBy=orderByDateEndContract&amp;totalElements=" + totalElements + "&amp;argsInRequest=1&amp;filterType=" + filterType + "&amp;beginContract=" + beginContract + "&amp;endContract=" + endContract %>' >
 			<bean:message key="label.list.byCriteria.grant.owner.dateEnd"/>
+			</html:link>
         </td>
         <td class="listClasses-header">&nbsp;</td>
     </tr>   
-    
+
+</html:form>
+
     <%-- Table with result of search --%>
     <logic:iterate id="infoListGrantOwnerByOrder" name="listGrantContract">
         <tr>
@@ -100,6 +118,11 @@
 		            <bean:write name="infoListGrantOwnerByOrder" property="lastName"/>
 	            </logic:present>&nbsp;
             </td>
+            <td class="listClasses">&nbsp;
+	        	<logic:present name="infoListGrantOwnerByOrder" property="contractNumber">
+		            <bean:write name="infoListGrantOwnerByOrder" property="contractNumber"/>
+	            </logic:present>&nbsp;
+        	</td>
             <td class="listClasses">&nbsp;
 	        	<logic:present name="infoListGrantOwnerByOrder" property="grantType">
 		            <bean:write name="infoListGrantOwnerByOrder" property="grantType"/>

@@ -130,12 +130,14 @@ public class ListGrantContractByCriteria implements IService {
 	 */
 	private String propertyOrderBy(String orderBy) {
 		String result = null;
-		if (orderBy.equals("orderByNumber")) {
+		if (orderBy.equals("orderByGrantOwnerNumber")) {
 			result = "grantOwner.number";
+		} else if (orderBy.equals("orderByGrantContractNumber")) {
+			result = "contractNumber"; 
 		} else if (orderBy.equals("orderByFirstName")) {
 			result = "grantOwner.person.nome";
 		} else if (orderBy.equals("orderByGrantType")) {
-			result = "grantType.name";
+			result = "grantType.sigla";
 		} else if (orderBy.equals("orderByDateBeginContract")) {
 			result = "contractRegimes.dateBeginContract";
 		} else if (orderBy.equals("orderByDateEndContract")) {
