@@ -233,6 +233,7 @@
 		scope="request"
 		parameter="method"      			
         path="/announcementManagementAction" 
+        input="announcementManagement.jsp"
 		validate="false">
 
 		<forward name="accessAnnouncementManagement" path="/accessAnnouncementManagementAction"/>	            
