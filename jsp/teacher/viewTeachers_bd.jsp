@@ -35,12 +35,8 @@
 	</tr>
 	</logic:iterate>	
 </table>
+<br />
 <logic:equal name="<%= SessionConstants.IS_RESPONSIBLE %>" value="true">
-<table>
-	<tr>
-		<td><html:link page="/teacherManagerDA.do?method=prepareAssociateTeacher"><bean:message key="link.addTeacher"/>
-			</html:link>
-		</td>
-	</tr>
-</table>
+<div class="gen-button"><html:link page="/teacherManagerDA.do?method=prepareAssociateTeacher"><bean:message key="link.addTeacher"/>
+</html:link></div>
 </logic:equal>

@@ -41,7 +41,7 @@
 </table>
 <br />	
 <html:hidden property="method" value="prepareEditObjectives"/> 	
-<html:link page="/objectivesManagerDA.do?method=prepareEditObjectives">
-(<bean:message key="button.edit"/>)
-</html:link>
+<div class="gen-button"><html:link page="/objectivesManagerDA.do?method=prepareEditObjectives">
+<bean:message key="button.edit"/>
+</html:link></div>
 </logic:present>

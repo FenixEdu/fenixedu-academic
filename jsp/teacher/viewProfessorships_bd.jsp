@@ -17,7 +17,7 @@
 				<% int index = 0; %>	 
 				<logic:iterate name="<%= SessionConstants.INFO_SITES_LIST %>" id="site" >
 			<tr>
-					<bean:define id="executionCourse" name="site" property="infoExecutionCourse"/>
+				<bean:define id="executionCourse" name="site" property="infoExecutionCourse"/>
 				<td class="listClasses"><html:link page="/viewSite.do" indexId="index" indexed="true"><bean:write name="executionCourse" property="sigla"/></html:link>
 				</td>			
 				<td class="listClasses"><html:link page="/viewSite.do" indexId="index" indexed="true"><bean:write name="executionCourse" property="nome"/></html:link>

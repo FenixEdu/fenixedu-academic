@@ -18,10 +18,6 @@
 <h2><bean:message key="title.program"/></h2>
 <table>
 	<tr>
-		<td><strong><bean:message key="label.program" /></strong>	
-		</td>
-	</tr>
-	<tr>
 		<td><bean:define id="program" name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="program"></bean:define>
 			<bean:write name="program" filter="false"/>
 		</td>
