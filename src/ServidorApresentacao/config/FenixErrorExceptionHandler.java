@@ -51,4 +51,7 @@ public class FenixErrorExceptionHandler extends ExceptionHandler {
 	
 		return mapping.getInputForward();
 	}
+	
+	
+
 }

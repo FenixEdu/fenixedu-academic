@@ -433,7 +433,7 @@ public class TurmaOJBTest extends TestCaseOJB {
 			fail("testReadByNome:fail read existing turma");
 		}
 	}
-
+//TODO: test readbynameandexecutionyearandexecutionperiod
 	public void testReadByExecutionPeriod() {
 		List classesList = null;
 		IExecutionPeriod executionPeriod = null;

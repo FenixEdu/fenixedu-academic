@@ -26,7 +26,6 @@ import ServidorPersistente.ITurmaPersistente;
 
 public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 
-
 	public void lockWrite(ITurma turma) throws ExcepcaoPersistencia {
 		super.lockWrite(turma);
 	}
@@ -41,15 +40,22 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 			oqlQuery += " and turma.executionPeriod.executionYear.year = $3 ";
 			oqlQuery += " and turma.executionDegree.executionYear.year = $4 ";
 			oqlQuery += " and turma.executionDegree.curricularPlan.name = $5 ";
-			oqlQuery += " and turma.executionDegree.curricularPlan.curso.sigla = $6 ";
+			oqlQuery
+				+= " and turma.executionDegree.curricularPlan.curso.sigla = $6 ";
 
 			query.create(oqlQuery);
 			query.bind(turma.getNome());
 			query.bind(turma.getExecutionPeriod().getName());
 			query.bind(turma.getExecutionPeriod().getExecutionYear().getYear());
 			query.bind(turma.getExecutionDegree().getExecutionYear().getYear());
-			query.bind(turma.getExecutionDegree().getCurricularPlan().getName());
-			query.bind(turma.getExecutionDegree().getCurricularPlan().getCurso().getSigla());			
+			query.bind(
+				turma.getExecutionDegree().getCurricularPlan().getName());
+			query.bind(
+				turma
+					.getExecutionDegree()
+					.getCurricularPlan()
+					.getCurso()
+					.getSigla());
 			List result = (List) query.execute();
 			Iterator iterador = result.iterator();
 			while (iterador.hasNext()) {
@@ -69,13 +75,13 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 			query.create(oqlQuery);
 			List result = (List) query.execute();
 			Iterator iter = result.iterator();
-			while(iter.hasNext()){
+			while (iter.hasNext()) {
 				delete((ITurma) iter.next());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new ExcepcaoPersistencia();
-		} 
+		}
 	}
 
 	public List readAll() throws ExcepcaoPersistencia {
@@ -107,7 +113,6 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 				+ " and executionDegree.curricularPlan.name = $5"
 				+ " and executionDegree.curricularPlan.curso.sigla = $6";
 
-			
 			query.create(oqlQuery);
 
 			query.bind(executionPeriod.getExecutionYear().getYear());
@@ -119,7 +124,7 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 			query.bind(executionDegree.getCurricularPlan().getName());
 			query.bind(
 				executionDegree.getCurricularPlan().getCurso().getSigla());
-			
+
 			List result = (List) query.execute();
 			lockRead(result);
 
@@ -134,41 +139,46 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 	public ITurma readByNameAndExecutionDegreeAndExecutionPeriod(
 		String className,
 		ICursoExecucao executionDegree,
-		IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
-			try {
-				String oqlQuery = "select turmas from " + Turma.class.getName();
-				oqlQuery += " where executionPeriod.executionYear.year = $1"
-					+ " and executionPeriod.name = $2"
-					+ " and nome = $3"
-					+ " and executionDegree.executionYear.year = $4"
-					+ " and executionDegree.curricularPlan.name = $5"
-					+ " and executionDegree.curricularPlan.curso.sigla = $6";
+		IExecutionPeriod executionPeriod)
+		throws ExcepcaoPersistencia {
+		try {
+			String oqlQuery = "select turmas from " + Turma.class.getName();
+			//				oqlQuery += " where executionPeriod.executionYear.year = $1"
+			//					+ " and executionPeriod.name = $2"
+			//					+ " and nome = $3"
+			//					+ " and executionDegree.executionYear.year = $4"
+			//					+ " and executionDegree.curricularPlan.name = $5"
+			//					+ " and executionDegree.curricularPlan.curso.sigla = $6";
 
-			
-				query.create(oqlQuery);
+			oqlQuery += " where nome = $1 ";
+			oqlQuery += " and executionPeriod.name = $2 ";
+			oqlQuery += " and executionPeriod.executionYear.year = $3 ";
+			oqlQuery += " and executionDegree.executionYear.year = $4 ";
+			oqlQuery += " and executionDegree.curricularPlan.name = $5 ";
+			oqlQuery += " and executionDegree.curricularPlan.curso.sigla = $6 ";
+			query.create(oqlQuery);
+			query.bind(className);
+			query.bind(executionPeriod.getName());
+			query.bind(executionPeriod.getExecutionYear().getYear());	
+		
+			query.bind(executionDegree.getExecutionYear().getYear());
+			query.bind(executionDegree.getCurricularPlan().getName());
+			query.bind(
+				executionDegree.getCurricularPlan().getCurso().getSigla());
 
-				query.bind(executionPeriod.getExecutionYear().getYear());
-				query.bind(executionPeriod.getName());
-
-				query.bind(className);
-
-				query.bind(executionDegree.getExecutionYear().getYear());
-				query.bind(executionDegree.getCurricularPlan().getName());
-				
-				query.bind(executionDegree.getCurricularPlan().getCurso().getSigla());
-				
-				List result = (List) query.execute();
-				lockRead(result);
-				ITurma iClass = null; 
-				if (!result.isEmpty())
-					iClass = (ITurma) result.get(0);
-				return iClass;
-			} catch (QueryException ex) {
-				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-			}
+			List result = (List) query.execute();
+			lockRead(result);
+			ITurma iClass = null;
+			if (!result.isEmpty())
+				iClass = (ITurma) result.get(0);
+			return iClass;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
 	}
 
-	public List readByDegreeNameAndDegreeCode(String name, String code) throws ExcepcaoPersistencia {
+	public List readByDegreeNameAndDegreeCode(String name, String code)
+		throws ExcepcaoPersistencia {
 		try {
 			String oqlQuery = "select turmas from " + Turma.class.getName();
 			oqlQuery += " where executionDegree.curricularPlan.curso.nome = $1"
@@ -177,7 +187,7 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 			query.create(oqlQuery);
 			query.bind(name);
 			query.bind(code);
-			
+
 			List result = (List) query.execute();
 			lockRead(result);
 
@@ -192,42 +202,43 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 	 */
 	public List readByExecutionPeriod(IExecutionPeriod executionPeriod)
 		throws ExcepcaoPersistencia {
-				try {
-				String oqlQuery = "select turmas from " + Turma.class.getName();
-				oqlQuery += " where executionPeriod.executionYear.year = $1"
-					+ " and executionPeriod.name = $2";
-						
-				query.create(oqlQuery);
+		try {
+			String oqlQuery = "select turmas from " + Turma.class.getName();
+			oqlQuery += " where executionPeriod.executionYear.year = $1"
+				+ " and executionPeriod.name = $2";
 
-				query.bind(executionPeriod.getExecutionYear().getYear());
-				query.bind(executionPeriod.getName());
+			query.create(oqlQuery);
 
-				List result = (List) query.execute();
-				lockRead(result);
+			query.bind(executionPeriod.getExecutionYear().getYear());
+			query.bind(executionPeriod.getName());
 
-				return result;
-			} catch (QueryException ex) {
-				throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-			}
+			List result = (List) query.execute();
+			lockRead(result);
+
+			return result;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
 	}
 
-	public List readByExecutionDegree(ICursoExecucao executionDegree)	throws ExcepcaoPersistencia {
+	public List readByExecutionDegree(ICursoExecucao executionDegree)
+		throws ExcepcaoPersistencia {
 		try {
 			String oqlQuery = "select turmas from " + Turma.class.getName();
 			oqlQuery += " where executionDegree.executionYear.year = $1"
-			+ " and executionDegree.curricularPlan.name = $2"
-			+ " and executionDegree.curricularPlan.curso.sigla = $3";
-					
+				+ " and executionDegree.curricularPlan.name = $2"
+				+ " and executionDegree.curricularPlan.curso.sigla = $3";
+
 			query.create(oqlQuery);
-	
+
 			query.bind(executionDegree.getExecutionYear().getYear());
 			query.bind(executionDegree.getCurricularPlan().getName());
-			query.bind(executionDegree.getCurricularPlan().getCurso().getSigla());
-			
-	
+			query.bind(
+				executionDegree.getCurricularPlan().getCurso().getSigla());
+
 			List result = (List) query.execute();
 			lockRead(result);
-	
+
 			return result;
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);

@@ -28,6 +28,7 @@ import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.NotAuthorizedException;
+import ServidorAplicacao.NotExecutedException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -138,16 +139,17 @@ public class ClassManagerDispatchAction extends DispatchAction {
 
 			newClassView.setNome(className);
 
-			Object[] argsEditarTurma = { newClassView, oldClassView };
+			Object[] argsEditarTurma = {  oldClassView,newClassView };
 			try {
 
 				ServiceUtils.executeService(
 					userView,
 					"EditarTurma",
 					argsEditarTurma);
+			
 			} catch (NotAuthorizedException e){
 				throw e; 
-			} catch (Exception e) {
+			} catch (NotExecutedException e) {
 				e.printStackTrace(System.out);
 				oldClassView.setNome(newClassView.getNome());
 				ActionErrors actionErrors = new ActionErrors();

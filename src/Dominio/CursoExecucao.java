@@ -20,9 +20,9 @@ public class CursoExecucao implements ICursoExecucao {
 	private Integer chaveCurso;
 
 	private IExecutionYear executionYear;
-	
+
 	private Integer academicYear;
-	
+
 	private IPlanoCurricularCurso degreeCurricularPlan;
 	private Integer keyCurricularPlan;
 
@@ -30,25 +30,30 @@ public class CursoExecucao implements ICursoExecucao {
 	public CursoExecucao() {
 	}
 
-/**
- * @deprecated
- * @param anoLectivo
- * @param curso
- * @param executionYear
- * @param curricularPlan
- */
-	public CursoExecucao(String anoLectivo, ICurso curso,IExecutionYear executionYear,IPlanoCurricularCurso curricularPlan) {
+	/**
+	 * @deprecated
+	 * @param anoLectivo
+	 * @param curso
+	 * @param executionYear
+	 * @param curricularPlan
+	 */
+	public CursoExecucao(
+		String anoLectivo,
+		ICurso curso,
+		IExecutionYear executionYear,
+		IPlanoCurricularCurso curricularPlan) {
 		setAnoLectivo(anoLectivo);
 		setCurso(curso);
 		setExecutionYear(executionYear);
 		setCurricularPlan(curricularPlan);
 	}
 
-
-	public CursoExecucao(IExecutionYear executionYear,IPlanoCurricularCurso curricularPlan) {
-			setExecutionYear(executionYear);
-			setCurricularPlan(curricularPlan);
-		}
+	public CursoExecucao(
+		IExecutionYear executionYear,
+		IPlanoCurricularCurso curricularPlan) {
+		setExecutionYear(executionYear);
+		setCurricularPlan(curricularPlan);
+	}
 	public Integer getCodigoInterno() {
 		return codigoInterno;
 	}
@@ -95,8 +100,10 @@ public class CursoExecucao implements ICursoExecucao {
 		String result = "[CURSO_EXECUCAO";
 		result += ", codInt=" + codigoInterno;
 		result += ", anoLectivo=" + anoLectivo;
-		result += ", curso=" + curso;
-		result += ", chaveCurso=" + chaveCurso;
+		result += ", executionYear=" + executionYear;
+		result += ", keyExecutionYear=" + academicYear;
+		result += ", planoCurricularCurso=" + degreeCurricularPlan;
+		result += ", chaveplanoCurricularCurso=" + keyCurricularPlan;
 		result += "]";
 		return result;
 	}
