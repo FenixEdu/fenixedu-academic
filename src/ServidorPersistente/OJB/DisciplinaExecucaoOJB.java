@@ -125,56 +125,36 @@ public class DisciplinaExecucaoOJB
 		ICursoExecucao executionDegree)
 		throws ExcepcaoPersistencia {
 		List resultList = new ArrayList();
-
 		try {
-			String oqlQuery = "select all from " + DisciplinaExecucao.class.getName();
-			query.create(oqlQuery);
-			List result = (List) query.execute();
-			lockRead(result);
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-
-
-		try {
-
 			String oqlQuery =
-				"select distinct all from "
+				"select all from "
 					+ CurricularCourse.class.getName()
 					+ " where associatedCurricularSemesters.curricularYear.year = $1"
-//					+ " where curricularYear = $1 "
 					+ " and degreeCurricularPlan.name = $2"
 					+ " and degreeCurricularPlan.degree.sigla = $3";
-
 			query.create(oqlQuery);
-
 			query.bind(curricularYear);
 			query.bind(executionDegree.getCurricularPlan().getName());
 			query.bind(executionDegree.getCurricularPlan().getDegree().getSigla());
-
 			List result = (List) query.execute();
 			lockRead(result);
-			
-			
 			Iterator iterator = result.listIterator();
-
 			
 			while (iterator.hasNext()) {
 				ICurricularCourse curricularCourse =
 					(ICurricularCourse) iterator.next();
-				Iterator executionCourseIterator =
-					curricularCourse.getAssociatedExecutionCourses().iterator();
-
-
-
-				while (executionCourseIterator.hasNext()) {
-					IDisciplinaExecucao executionCourse =
-						(IDisciplinaExecucao) executionCourseIterator.next();
-					if (executionCourse
-						.getExecutionPeriod()
-						.equals(executionPeriod)
-						&& !resultList.contains(executionCourse)) {
-						resultList.add(executionCourse);
+				List associatedExecutionCourses = curricularCourse.getAssociatedExecutionCourses();
+				if (associatedExecutionCourses != null){
+					Iterator executionCourseIterator = associatedExecutionCourses.iterator();
+					while (executionCourseIterator.hasNext()) {
+						IDisciplinaExecucao executionCourse =
+							(IDisciplinaExecucao) executionCourseIterator.next();
+						if (executionCourse
+							.getExecutionPeriod()
+							.equals(executionPeriod)
+							&& !resultList.contains(executionCourse)) {
+							resultList.add(executionCourse);
+						}
 					}
 				}
 			}
