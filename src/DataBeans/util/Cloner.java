@@ -671,7 +671,8 @@ public abstract class Cloner {
 	 **/
 
 	public static InfoSection copyISection2InfoSection(ISection section) {
-
+		
+		
 		InfoSection infoSection = new InfoSection();
 
 		InfoSection fatherInfoSection = null;
@@ -696,7 +697,7 @@ public abstract class Cloner {
 		
 		//		infoSection.setInferiorInfoSections(inferiorInfoSections);
 		//		infoSection.setInfoItems(infoItems);
-
+		
 		return infoSection;
 
 	}
@@ -707,9 +708,9 @@ public abstract class Cloner {
 	* @return listISections
 	*/
 
-	private static List copyListInfoSections2ListISections(List listInfoSections) {
+	public static List copyListInfoSections2ListISections(List listInfoSections) {
 
-		List listSections = null;
+		List listSections = new ArrayList(listInfoSections.size());
 
 		Iterator iterListInfoSections = listInfoSections.iterator();
 
@@ -728,17 +729,24 @@ public abstract class Cloner {
 	* @return listInfoSections
 	*/
 
-	private static List copyListISections2ListInfoSections(List listISections) {
-		List listInfoSections = null;
-
+	public static List copyListISections2ListInfoSections(List listISections) {
+		
+		List listInfoSections = new ArrayList(listISections.size());
 		Iterator iterListISections = listISections.iterator();
-
+		
+		
+		
 		while (iterListISections.hasNext()) {
+			
 			ISection section = (ISection) iterListISections.next();
+				
 			InfoSection infoSection = Cloner.copyISection2InfoSection(section);
+			
 			listInfoSections.add(infoSection);
+			
+			
 		}
-
+		
 		return listInfoSections;
 	}
 
@@ -787,8 +795,8 @@ public abstract class Cloner {
 	* @return listIItems
 	*/
 
-	private static List copyListInfoItems2ListIItems(List listInfoItems) {
-		List listItems = null;
+	public static List copyListInfoItems2ListIItems(List listInfoItems) {
+		List listItems = new ArrayList(listInfoItems.size());
 
 		Iterator iterListInfoItems = listInfoItems.iterator();
 
@@ -807,8 +815,8 @@ public abstract class Cloner {
 	* @return listInfoItems
 	*/
 
-	private static List copyListIItems2ListInfoItems(List listIItems) {
-		List listInfoItems = null;
+	public static List copyListIItems2ListInfoItems(List listIItems) {
+		List listInfoItems = new ArrayList(listIItems.size());
 
 		Iterator iterListIItems = listIItems.iterator();
 
