@@ -93,16 +93,19 @@ public class GetEnrolmentGrade implements IServico {
 			return getInfoLatestEvaluation(latestEvaluation);
 		}
 
-		if (latestEvaluation.getObservation().equals(GetEnrolmentGrade.RECTIFIED))
-		{
-			Iterator iterator = enrolmentEvaluations.iterator();
-			while(iterator.hasNext())
+		
+		if (latestEvaluation.getObservation() != null){
+			if (latestEvaluation.getObservation().equals(GetEnrolmentGrade.RECTIFIED))
 			{
-				IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator.next();
-				if(enrolmentEvaluation.getObservation().equals(GetEnrolmentGrade.RECTIFICATION))
+				Iterator iterator = enrolmentEvaluations.iterator();
+				while(iterator.hasNext())
 				{
-					latestEvaluation = enrolmentEvaluation;
-					break;
+					IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator.next();
+					if(enrolmentEvaluation.getObservation().equals(GetEnrolmentGrade.RECTIFICATION))
+					{
+						latestEvaluation = enrolmentEvaluation;
+						break;
+					}
 				}
 			}
 		}
