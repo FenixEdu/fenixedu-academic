@@ -32,6 +32,7 @@ import Dominio.Site;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionCourse;
 import Util.TipoCurso;
+import Util.classProperties.ExecutionCoursePropertyName;
 
 public class ExecutionCourseOJB extends ObjectFenixOJB implements IPersistentExecutionCourse
 {
@@ -249,7 +250,7 @@ public class ExecutionCourseOJB extends ObjectFenixOJB implements IPersistentExe
 		return result;
 	}
 
-	public IExecutionCourse readbyCurricularCourseAndExecutionPeriod(
+	public List readbyCurricularCourseAndExecutionPeriod(
 		ICurricularCourse curricularCourse,
 		IExecutionPeriod executionPeriod)
 		throws ExcepcaoPersistencia
@@ -259,9 +260,10 @@ public class ExecutionCourseOJB extends ObjectFenixOJB implements IPersistentExe
 		criteria.addEqualTo("keyExecutionPeriod", executionPeriod.getIdInternal());
 		criteria.addEqualTo("associatedCurricularCourses.idInternal", curricularCourse.getIdInternal());
 
-		return (IExecutionCourse) queryObject(ExecutionCourse.class, criteria);
+		return queryList(ExecutionCourse.class, criteria);
 
 	}
+
 	public List readListbyCurricularCourseAndExecutionPeriod(
 		ICurricularCourse curricularCourse,
 		IExecutionPeriod executionPeriod)
@@ -365,4 +367,15 @@ public class ExecutionCourseOJB extends ObjectFenixOJB implements IPersistentExe
 		lockRead(collection);
 		return collection;
 	}
+
+	public IExecutionCourse readbyCurricularCourseAndExecutionPeriodAndExecutionCoursePropertyName(ICurricularCourse curricularCourse,
+		IExecutionPeriod executionPeriod, ExecutionCoursePropertyName executionCoursePropertyName) throws ExcepcaoPersistencia
+	{
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("keyExecutionPeriod", executionPeriod.getIdInternal());
+		criteria.addEqualTo("associatedCurricularCourses.idInternal", curricularCourse.getIdInternal());
+		criteria.addEqualTo("executionCourseProperties.name", executionCoursePropertyName);
+		return (IExecutionCourse) queryObject(ExecutionCourse.class, criteria);
+	}
+
 }

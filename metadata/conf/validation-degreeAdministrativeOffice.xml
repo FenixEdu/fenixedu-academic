@@ -3,43 +3,6 @@
 
 <form-validation>
 	<formset>
-		<form name="getStudentByNumberAndDegreeTypeForm">
-			<field property="degreeType" depends="required,integer" page="1">
-				<arg0 key="error.no.degree.type.selected" resource="true"/>
-			</field>
-			<field property="studentNumber" depends="required,integer" page="1">
-				<arg0 key="error.no.student.selected" resource="true"/>
-			</field>
-		</form>
-
-		<form name="getDegreeAndCurricularSemesterAndCurricularYearForm">
-			<field property="infoExecutionDegree" depends="required,integer" page="1">
-				<arg0 key="error.no.degree.selected" resource="true"/>
-			</field>
-			<field property="curricularYears" depends="validateMultiBox" page="1">
-				<arg0 key="ano" resource="true"/>
-					<var>
-						<var-name>arrayProperty</var-name>
-						<var-value>curricularYears</var-value>
-					</var>
-					<var>
-						<var-name>femininProperty</var-name>
-						<var-value>false</var-value>
-					</var>
-			</field>
-			<field property="curricularSemesters" depends="validateMultiBox" page="1">
-				<arg0 key="semestre" resource="true"/>
-					<var>
-						<var-name>arrayProperty</var-name>
-						<var-value>curricularSemesters</var-value>
-					</var>
-					<var>
-						<var-name>femininProperty</var-name>
-						<var-value>false</var-value>
-					</var>
-			</field>
-		</form>
-		
 		<form name="curricularCoursesEnrollmentForm">
 			<field property="studentNumber" depends="required,integer" page="1">
 				<arg0 key="label.student.number" resource="true"/>
@@ -89,5 +52,13 @@
 				<arg0 key="label.degree.name" resource="true"/>
 			</field>		
 		</form>
+
+		<!-- =================== Change student areas =================== -->
+		<form name="changeStudentAreasForm">
+			<field property="studentNumber" depends="required,integer" page="1">
+				<arg0 key="label.student.number" resource="true"/>
+			</field>
+		</form>
+
 	</formset>
 </form-validation>

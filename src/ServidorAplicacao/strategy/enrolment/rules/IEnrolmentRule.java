@@ -8,6 +8,5 @@ import ServidorAplicacao.strategy.enrolment.context.StudentEnrolmentContext;
 
 public interface IEnrolmentRule
 {
-//	public EnrolmentContext apply(EnrolmentContext enrolmentContext);
 	public StudentEnrolmentContext apply(StudentEnrolmentContext studentEnrolmentContext);
 }

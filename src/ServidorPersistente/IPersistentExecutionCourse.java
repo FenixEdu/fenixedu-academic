@@ -75,7 +75,7 @@ public interface IPersistentExecutionCourse extends IPersistentObject
      * @return @throws
      *         ExcepcaoPersistencia
      */
-    public IExecutionCourse readbyCurricularCourseAndExecutionPeriod(ICurricularCourse curricularCourse,
+    public List readbyCurricularCourseAndExecutionPeriod(ICurricularCourse curricularCourse,
             IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
 
     public List readListbyCurricularCourseAndExecutionPeriod(ICurricularCourse curricularCourse,

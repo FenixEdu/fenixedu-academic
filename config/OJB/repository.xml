@@ -31,6 +31,7 @@
 <!ENTITY gaugingTests SYSTEM "repository_gaugingTests.xml">
 <!ENTITY student SYSTEM "repository_student.xml">
 <!ENTITY finalDegreeWork SYSTEM "repository_finalDegreeWork.xml">
+<!ENTITY classProperties SYSTEM "repository-properties.xml">
 ]>
 
 
@@ -67,4 +68,5 @@
     &gaugingTests;
     &student;
     &finalDegreeWork;    
+    &classProperties;
 </descriptor-repository>

@@ -3,6 +3,7 @@ package ServidorPersistente;
 import java.util.List;
 
 import Dominio.ICurricularCourse;
+import Dominio.ICurso;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrolment;
 import Dominio.IExecutionPeriod;
@@ -20,10 +21,9 @@ public interface IPersistentEnrolment extends IPersistentObject
 {
     public void delete(IEnrolment enrolment) throws ExcepcaoPersistencia;
 
-    public List readEnrollmentsByStudentAndCurricularCourseNameAndCurricularCourseDegree(
-        IStudent student,
-        ICurricularCourse curricularCourse)
-        throws ExcepcaoPersistencia;
+    public List readEnrollmentsByStudentAndCurricularCourseNameAndDegree(
+            IStudent student, ICurricularCourse curricularCourse, ICurso degree)
+            throws ExcepcaoPersistencia;
 
     public List readEnrolmentsByStudentCurricularPlanAndEnrolmentState(
         IStudentCurricularPlan studentCurricularPlan,

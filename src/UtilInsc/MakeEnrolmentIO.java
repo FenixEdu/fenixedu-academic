@@ -4,7 +4,7 @@ import java.util.List;
 
 import DataBeans.InfoCurricularCourse;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.context.depercated.InfoEnrolmentContext;
 
 /**
  * @author David Santos

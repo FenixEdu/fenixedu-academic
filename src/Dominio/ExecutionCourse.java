@@ -23,7 +23,7 @@ public class ExecutionCourse extends DomainObject implements IExecutionCourse {
 
 	protected String comment;
 	private List attendingStudents;
-	/* Construtores */
+	private List executionCourseProperties;
 
 	public ExecutionCourse() {
 	}
@@ -288,5 +288,21 @@ public class ExecutionCourse extends DomainObject implements IExecutionCourse {
 	public INode getParentNode() {	
 		IExecutionPeriod executionPeriod = getExecutionPeriod();	
 		return executionPeriod;
+	}
+
+	/**
+	 * @return Returns the executionCourseProperties.
+	 */
+	public List getExecutionCourseProperties()
+	{
+		return executionCourseProperties;
+	}
+
+	/**
+	 * @param executionCourseProperties The executionCourseProperties to set.
+	 */
+	public void setExecutionCourseProperties(List executionCourseProperties)
+	{
+		this.executionCourseProperties = executionCourseProperties;
 	}
 }

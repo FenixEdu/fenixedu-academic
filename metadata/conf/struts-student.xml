@@ -29,25 +29,6 @@
 	    <form-property name="classId" type="java.lang.String"/>
       </form-bean>
       
-<!--
-	  <form-bean name="curricularCourseEnrolmentForm"
-                 type="org.apache.struts.validator.DynaValidatorForm"
-                 dynamic="true">
-      	<form-property name="method" type="java.lang.String" />
-      	<form-property name="page" type="java.lang.Integer"/>
-      	<form-property name="curricularCourses" type="java.lang.Integer[]" />
-      	<form-property name="optionalCourseIndex" type="java.lang.Integer" />
-      	<form-property name="optionalCurricularCourse" type="java.lang.Integer" />      	
-      </form-bean>
--->
-		<form-bean name="curricularCourseEnrolmentForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-			<form-property name="method" type="java.lang.String"/>
-			<form-property name="infoDegree" type="java.lang.Integer"/>
-			<form-property name="curricularCourses" type="java.lang.Integer[]"/>
-			<form-property name="optionalCourseIndex" type="java.lang.Integer"/>
-			<form-property name="optionalCurricularCourse" type="java.lang.Integer"/>
-		</form-bean>
-
 	  <form-bean name="selectShiftEnrolmentForm"
                  type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
@@ -162,7 +143,6 @@
     <global-forwards type="org.apache.struts.action.ActionForward">
       <forward name="home" path="/mainPortalPage.jsp" redirect="true" contextRelative="true"/>
       <forward name="logoff" path="/logoff.do" contextRelative="true"/>
-      <forward name="globalOutOfPeriod" path="definition.out.of.period"/>              
     </global-forwards>
     
     <!-- ========== Action Mapping Definitions =============================== -->
@@ -195,29 +175,6 @@
         <forward name="ShowStudentCurriculum" path="df.page.showStudentCurriculum"/>
         <forward name="NotAuthorized" path="df.page.notAuthorized"/>
         
-      </action>
-
-	  <action name="curricularCourseEnrolmentForm"
-              type="ServidorApresentacao.Action.student.CurricularCourseEnrolmentManagerDispatchAction"
-              path="/curricularCourseEnrolmentManager"
-              input="/curricularCourseEnrolmentManager.do?method=start"
-              parameter="method"
-              scope="session"
-              validate="false">
-    	<exception type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
-		           key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
-                   handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
-    	<exception type="ServidorApresentacao.Action.exceptions.OutOfCurricularEnrolmentPeriodActionException"
-		           key="ServidorApresentacao.Action.exceptions.OutOfCurricularEnrolmentPeriodActionException"
-                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
-        <forward name="beginTransaction" path="/curricularCourseEnrolmentManager.do?method=start"/>              
-        <forward name="showAvailableCurricularCourses" path="df.page.showAvailableCurricularCourses"/>
-        <forward name="verifyEnrolment" path="df.page.verifyEnrolment"/>
-        <forward name="acceptEnrolment" path="df.page.acceptEnrolment"/>
-        <forward name="concreteOptionalList" path="df.page.concreteOptionalList"/>
-        <forward name="searchOptionalCurricularCourses" path="df.page.searchOptionalCurricularCourses"/>
-		<forward name="cancel" path="/dotIstPortal.do?prefix=/student&amp;page=/index.do" contextRelative="true"/>
-		<forward name="cantEnroll" path="/cantEnroll.do"/>
       </action>
 
       <!-- Student Shift Enrolment Manager-->
@@ -567,7 +524,6 @@
 				parameter="method"
 				scope="request"
 				validate="false">
-
 			<forward name="curricularCoursesEnrollment" path="/curricularCoursesEnrollment.do?method=start"/>
 		</action>
     	<action	path="/curricularCoursesEnrollment"
@@ -577,11 +533,9 @@
 				scope="request"
 				validate="true"
 				input="df.page.main">
-
 			<exception	type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
 						key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
 						handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
-				
 			<forward name="beginTransaction" path="/curricularCoursesEnrollment.do?method=start"/>
 			<forward name="prepareEnrollmentChooseAreas" path="df.page.prepareEnrollmentChooseAreas"/>
 			<forward name="prepareChooseAreas" path="/curricularCoursesEnrollment.do?method=prepareEnrollmentPrepareChooseAreas&amp;page=0"/>

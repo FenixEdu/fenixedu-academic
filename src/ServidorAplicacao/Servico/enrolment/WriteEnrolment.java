@@ -1,6 +1,9 @@
 package ServidorAplicacao.Servico.enrolment;
 
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -101,6 +104,7 @@ public class WriteEnrolment implements IService
 				enrolmentToWrite.setExecutionPeriod(executionPeriod);
 				enrolmentToWrite.setStudentCurricularPlan(studentCurricularPlan);
 				enrolmentToWrite.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
+				enrolmentToWrite.setCreationDate(new Date());
 
 				createEnrollmentEvaluation(enrolmentToWrite);
 
@@ -143,10 +147,25 @@ public class WriteEnrolment implements IService
 			createdAttends = new HashMap();
 		}
 
-		IExecutionCourse executionCourse =
-			executionCourseDAO.readbyCurricularCourseAndExecutionPeriod(
-				curricularCourse,
-				executionPeriod);
+		List executionCourses = executionCourseDAO.readbyCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
+		IExecutionCourse executionCourse = null;
+		if (executionCourses.size() > 1)
+		{
+			Iterator iterator = executionCourses.iterator();
+			while (iterator.hasNext())
+			{
+				IExecutionCourse executionCourse2 = (IExecutionCourse) iterator.next();
+				if (executionCourse2.getExecutionCourseProperties() == null
+					|| executionCourse2.getExecutionCourseProperties().isEmpty())
+				{
+					executionCourse = executionCourse2;
+				}
+			}
+		} else if (executionCourses.size() == 1)
+		{
+			executionCourse = (IExecutionCourse) executionCourses.get(0);
+		}
+
 		if (executionCourse != null)
 		{
 			IFrequenta attend = attendDAO.readByAlunoAndDisciplinaExecucao(student, executionCourse);

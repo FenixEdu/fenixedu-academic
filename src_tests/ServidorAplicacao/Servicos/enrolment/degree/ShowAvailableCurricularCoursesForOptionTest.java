@@ -2,8 +2,6 @@ package ServidorAplicacao.Servicos.enrolment.degree;
 
 import java.util.List;
 
-import framework.factory.ServiceManagerServiceFactory;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoCurricularCourse;
@@ -11,11 +9,12 @@ import DataBeans.InfoDegree;
 import DataBeans.util.Cloner;
 import Dominio.ICurricularCourse;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
-import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.context.depercated.InfoEnrolmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import framework.factory.ServiceManagerServiceFactory;
 
 public class ShowAvailableCurricularCoursesForOptionTest extends TestCaseReadServices {
 	

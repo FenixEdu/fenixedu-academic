@@ -1,5 +1,6 @@
 package Dominio;
 
+import java.util.Date;
 import java.util.List;
 
 import Util.EnrolmentEvaluationType;
@@ -26,6 +27,7 @@ public class Enrolment extends DomainObject implements IEnrolment
 
 	private List evaluations;
 	private String ojbConcreteClass;
+    private Date creationDate;
 
 	public Enrolment()
 	{
@@ -216,5 +218,21 @@ public class Enrolment extends DomainObject implements IEnrolment
 		result += "execution Period = " + this.getExecutionPeriod() + "; ";
 		result += "curricularCourse = " + this.getCurricularCourse() + "]\n";
 		return result;
+	}
+
+	/**
+	 * @return Returns the creationDate.
+	 */
+	public Date getCreationDate()
+	{
+		return creationDate;
+	}
+	
+	/**
+	 * @param creationDate The creationDate to set.
+	 */
+	public void setCreationDate(Date creationDate)
+	{
+		this.creationDate = creationDate;
 	}
 }

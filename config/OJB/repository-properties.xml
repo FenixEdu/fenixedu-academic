@@ -1,0 +1,15 @@
+<class-descriptor class="Dominio.classProperties.GeneralClassProperty" table="GENERAL_CLASS_PROPERTY">
+	<extent-class class-ref="Dominio.ExecutionCourseProperty"/>
+</class-descriptor>
+
+<class-descriptor class="Dominio.classProperties.ExecutionCourseProperty" table="GENERAL_CLASS_PROPERTY">
+    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
+    <field-descriptor name="keyExecutionCourse" column="KEY_OWNER_OF_PROPERTY" jdbc-type="INTEGER" nullable="false"/>
+	<field-descriptor name="name" column="NAME" jdbc-type="VARCHAR" nullable="false" conversion="ServidorPersistente.Conversores.classProperties.GeneralClassPropertyNameJava2SqlConversion"/>
+	<field-descriptor name="value" column="VALUE" jdbc-type="VARCHAR" nullable="false" conversion="ServidorPersistente.Conversores.classProperties.GeneralClassPropertyValueJava2SqlConversion"/>
+    <field-descriptor name="ojbConcreteClass" column="CLASS_NAME" jdbc-type="VARCHAR" nullable="false"/>      
+	<field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="true"/>
+    <reference-descriptor name="executionCourse" class-ref="Dominio.ExecutionCourse" proxy="true">
+	    <foreignkey field-ref="keyExecutionCourse"/>
+    </reference-descriptor>
+</class-descriptor>

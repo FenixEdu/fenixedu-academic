@@ -68,9 +68,6 @@
 	<%-- Start of Degree Coordinator Options --%>
 	<logic:notEqual name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" value="<%= TipoCurso.MESTRADO_OBJ.toString() %>">
 		<ul>
-			<%-- <html:link forward="equivalenceForCoordinator">
-			<bean:message key="link.coordinator.equivalence"/></html:link><br/>
-		  	--%>
 			<li>
 				<html:link page="/executionCoursesInformation.do?method=prepareChoice">
 				<bean:message key="link.coordinator.executionCoursesInformation"/></html:link>

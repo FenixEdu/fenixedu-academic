@@ -34,7 +34,7 @@ public class ReadSpecializationAndSecundaryAreasByStudent implements IService
 	// some of these arguments may be null. they are only needed for filter
 	public List run(Integer executionDegreeId, Integer studentCurricularPlanId, Integer studentNumber) throws FenixServiceException
 	{
-		List finalAreas = null;
+		List finalAreas = new ArrayList();
 		try
 		{
 			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
@@ -64,7 +64,6 @@ public class ReadSpecializationAndSecundaryAreasByStudent implements IService
 				branchDAO.readByDegreeCurricularPlan(studentCurricularPlan.getDegreeCurricularPlan());
 			if (areas != null)
 			{
-				finalAreas = new ArrayList();
 				Iterator iterator = areas.iterator();
 				while (iterator.hasNext())
 				{

@@ -87,9 +87,10 @@ public class GetAttendaciesByStudentList implements IService
                 if (attendacy.getEnrolment() != null)
                 {
                     List enrollmentList = persistentEnrolment
-                            .readEnrollmentsByStudentAndCurricularCourseNameAndCurricularCourseDegree(
+                            .readEnrollmentsByStudentAndCurricularCourseNameAndDegree(
                                     attendacy.getEnrolment().getStudentCurricularPlan().getStudent(),
-                                    attendacy.getEnrolment().getCurricularCourse());
+                                    attendacy.getEnrolment().getCurricularCourse(),
+									attendacy.getEnrolment().getCurricularCourse().getDegreeCurricularPlan().getDegree());
                     enrollments = new Integer(enrollmentList.size());
                     if (enrollments.intValue() == 0)
                     {

@@ -43,4 +43,7 @@ public interface IExecutionCourse extends  IDomainObject, INode
     public void setComment(String string);
     public List getAttendingStudents();
     public void setAttendingStudents(List attendingStudents);
+
+    public List getExecutionCourseProperties();
+	public void setExecutionCourseProperties(List executionCourseProperties);
 }

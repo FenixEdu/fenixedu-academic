@@ -24,22 +24,8 @@
 
 <!-- **************************************************************************************************************************** -->
 
-	<definition name="definition.degreeAdministrativeOffice.curricular.course.enrolment.with.rules" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body-context" value="/degreeAdministrativeOffice/enrolment/enrolmentContextWithRules.jsp"/>
-	</definition>
-	<definition name="definition.degreeAdministrativeOffice.optional.curricular.course.enrolment.with.rules" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body-context" value="/degreeAdministrativeOffice/enrolment/enrolmentInOptionalCurricularCourseContext.jsp"/>
+	<definition name="definition.degreeAdministrativeOffice.change.student.areas" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body-context" value="/degreeAdministrativeOffice/areas/changeStudentAreasContext.jsp"/>
 	</definition>
 
-<!-- **************************************************************************************************************************** -->
-
-	<definition name="definition.degreeAdministrativeOffice.curricular.course.enrolment.without.rules" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body-context" value="/degreeAdministrativeOffice/enrolment/enrolmentContextWithoutRules.jsp"/>
-	</definition>
-
-<!-- **************************************************************************************************************************** -->
-
-	<definition name="definition.degreeAdministrativeOffice.curricular.course.manual.equivalence" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body-context" value="/degreeAdministrativeOffice/equivalence/equivalenceContext.jsp"/>
-	</definition>
 </tiles-definitions>

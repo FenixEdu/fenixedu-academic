@@ -2,128 +2,207 @@
 <!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
 <struts-config>
 
-	<!-- ========== Data Source Configuration =============================== -->
+	<!-- ==================================================================== -->
+	<!-- ========== DATA SOURCE CONFIGURATION =============================== -->
+	<!-- ==================================================================== -->
 	<data-sources/>
 
-	<!-- ========== Form Bean Definitions =================================== -->
+	<!-- ==================================================================== -->
+	<!-- ========== FORM BEAN DEFINITIONS =================================== -->
+	<!-- ==================================================================== -->
 	<form-beans type="org.apache.struts.action.ActionFormBean">
-		<form-bean name="manualEquivalenceFrom" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+
+		<form-bean name="studentNumberForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="method" type="java.lang.String"/>
-			<form-property name="studentOID" type="java.lang.Integer"/>
-			<form-property name="enrolmentIndex" type="java.lang.Integer"/>
-			<form-property name="grades" type="java.lang.String[]"/>
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+			<form-property name="degreeType" type="java.lang.Integer"/>
+			<form-property name="studentNumber" type="java.lang.String"/>
+			<form-property name="backLink" type="java.lang.String"/>
+		</form-bean>
+
+		<form-bean name="selectStudentCurricularPlansForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String"/>
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+			<form-property name="degreeType" type="java.lang.Integer"/>
+			<form-property name="studentNumber" type="java.lang.String"/>
+			<form-property name="backLink" type="java.lang.String"/>
+			<form-property name="fromStudentCurricularPlanID" type="java.lang.Integer"/>
+			<form-property name="toStudentCurricularPlanID" type="java.lang.Integer"/>
+		</form-bean>
+
+		<form-bean name="enrollmentEquivalenceFrom" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String"/>
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+			<form-property name="degreeType" type="java.lang.Integer"/>
+			<form-property name="studentNumber" type="java.lang.String"/>
+			<form-property name="backLink" type="java.lang.String"/>
+			<form-property name="fromStudentCurricularPlanID" type="java.lang.Integer"/>
+			<form-property name="toStudentCurricularPlanID" type="java.lang.Integer"/>
 			<form-property name="curricularCoursesToGiveEquivalence" type="java.lang.Integer[]"/>
 			<form-property name="curricularCoursesToGetEquivalence" type="java.lang.Integer[]"/>
 		</form-bean>
+
 	</form-beans>
 
-    <!-- ========== Global Exception Definitions ============================== -->
+	<!-- ==================================================================== -->
+    <!-- ========== GLOBAL EXCEPTION DEFINITIONS ============================ -->
+	<!-- ==================================================================== -->
 	<global-exceptions>
-        <exception
-			type="java.lang.Exception"
-			key="error.Exception"
-            handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
-			/>
-		<exception
-			type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
-			key="error.NotAuthorized"
-			handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
-			/>
+        <exception	type="java.lang.Exception"
+        			key="error.Exception"
+        			handler="ServidorApresentacao.config.FenixContainerExceptionHandler"/>
+
+		<exception	type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+					key="error.NotAuthorized"
+					handler="ServidorApresentacao.config.FenixContainerExceptionHandler"/>
 	</global-exceptions>
 
-	<!-- ========== Global Forward Definitions ============================== -->
+	<!-- ==================================================================== -->
+	<!-- ========== GLOBAL FORWARD DEFINITIONS ============================== -->
+	<!-- ==================================================================== -->
 	<global-forwards type="org.apache.struts.action.ActionForward">
-		<forward name="enrolment" path="/degreeAdministrativeOffice/globalEnrolment.do" contextRelative="true"/>
-		<forward name="equivalenceForDegreeAdministrativeOffice" path="/degreeAdministrativeOffice/functionRedirect.do?method=chooseStudentAndDegreeTypeForManualEquivalence" contextRelative="true"/>
-
-		<forward name="backForCoordinator" path="/coordinator/index.do?" contextRelative="true"/>
-		<forward name="equivalenceForCoordinator" path="/coordinator/equivalence.do?method=begin" contextRelative="true"/>
-
-		<forward name="backToMasterDegreeAdministrativeOffice" path="/posGraduacao/studentSection.do?" contextRelative="true"/>
-		<forward name="equivalenceForMasterDegreeAdministrativeOffice" path="/posGraduacao/equivalence.do" contextRelative="true"/>
-
-		<forward name="ciaplIndex" path="/index.do" contextRelative="true"/>
 		<forward name="logoff" path="/logoff.do" contextRelative="true"/>
 		<forward name="index" path="/index.do" redirect="true"/>
+		<forward name="backToDegreeAdministrativeOfficeHome" path="/degreeAdministrativeOffice/index.do" contextRelative="true"/>
+		<forward name="backToMasterDegreeAdministrativeOfficeHome" path="/posGraduacao/index.do" contextRelative="true"/>
+		<forward name="backToCoordinatorHome" path="/coordinator/index.do" contextRelative="true"/>
 	</global-forwards>
 
-	<!-- ========== Action Mapping Definitions ============================== -->
+	<!-- ==================================================================== -->
+	<!-- ========== ACTION MAPPING DEFINITIONS ============================== -->
+	<!-- ==================================================================== -->
 	<action-mappings type="org.apache.struts.action.ActionMapping">
-		<!-- page fronting actions -->
+
+		<!-- Page Fronting Actions -->
 		<action path="/home" forward="/switchAction.do?prefix=&amp;page=/mainPortalPage.jsp"/>
 		<action path="/switchAction" type="org.apache.struts.actions.SwitchAction"/>
+		<!-- ===================== -->
 
-		<action path="/index" type="ServidorApresentacao.Action.commons.VoidAction">
-			<forward name="Success" path="df.page.main"/>
+
+		<!-- Other Actions -->
+		<action	path="/equivalence"
+				type="ServidorApresentacao.Action.equivalence.PrepareAplicationContextForEnrollmentEquivalenceAction">
+			<forward name="enrollmentEquivalenceForDegreeAdministratorOffice" path="df.page.chooseStudentForDegreeAdministrativeOfficeEnrollmentEquivalence"/>
+			<forward name="enrollmentEquivalenceForMasterDegreeAdministratorOffice" path="df.page.chooseStudentForMasterDegreeAdministrativeOfficeEnrollmentEquivalence"/>
+			<forward name="enrollmentEquivalenceForCoordinator" path="df.page.chooseStudentForCoordinatorEnrollmentEquivalence"/>
 		</action>
 
-		<action	name="manualEquivalenceFrom"
-				type="ServidorApresentacao.Action.equivalence.ManualEquivalenceManagerDispatchAction"
-				path="/manualEquivalenceManagerForDegreeAdministrativeOffice"
+
+		<action	name="studentNumberForm"
+				type="ServidorApresentacao.Action.equivalence.PrepareStudentForEnrollmentEquivalenceDispachAction"
+				path="/prepareStudentForEnrollmentEquivalence"
+				input="/prepareStudentForEnrollmentEquivalence.do?method=error&amp;page=0"
 				parameter="method"
-				scope="session"
-				validate="false">
-			<exception	type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
-						key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
-						handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
-			<forward name="beginTransaction" path="/manualEquivalenceManagerForDegreeAdministrativeOffice.do?method=show"/>
-			<forward name="showCurricularCoursesForEquivalence" path="df.page.showCurricularCoursesForDegreeAdministrativeOfficeEquivalence"/>
-			<forward name="verifyCurricularCoursesForEquivalence" path="df.page.verifyCurricularCoursesForDegreeAdministrativeOfficeEquivalence"/>
-			<forward name="confirmCurricularCoursesForEquivalence" path="df.page.confirmCurricularCoursesForDegreeAdministrativeOfficeEquivalence"/>
-			<forward name="acceptCurricularCoursesForEquivalence" path="df.page.acceptCurricularCoursesForDegreeAdministrativeOfficeEquivalence"/>
-			<forward name="detailsCurricularCourseScope" path="df.page.detailsCurricularCourseScopeForDegreeAdministrativeOfficeEquivalence"/>
-			<forward name="begin" path="/manualEquivalenceManagerForDegreeAdministrativeOffice.do?method=show"/>
-			<forward name="home" path="/degreeAdministrativeOffice/functionRedirect.do?method=chooseStudentAndDegreeTypeForManualEquivalence" contextRelative="true"/>
+				scope="request"
+				validate="true">
+			<forward name="start" path="/showMenuForEnrollmentEquivalence.do"/>
+			<forward name="error" path="/equivalence.do"/>
 		</action>
 
-		<action	name="manualEquivalenceFrom"
-				type="ServidorApresentacao.Action.equivalence.ManualEquivalenceManagerDispatchAction"
-				path="/manualEquivalenceManagerForCoordinator"
-				parameter="method"
-				scope="session"
-				validate="false">
-			<exception	type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
-						key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
-						handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
-			<forward name="beginTransaction" path="/manualEquivalenceManagerForCoordinator.do?method=show"/>
-			<forward name="showCurricularCoursesForEquivalence" path="df.page.showCurricularCoursesForCoordinatorEquivalence"/>
-			<forward name="verifyCurricularCoursesForEquivalence" path="df.page.verifyCurricularCoursesForCoordinatorEquivalence"/>
-			<forward name="confirmCurricularCoursesForEquivalence" path="df.page.confirmCurricularCoursesForCoordinatorEquivalence"/>
-			<forward name="acceptCurricularCoursesForEquivalence" path="df.page.acceptCurricularCoursesForCoordinatorEquivalence"/>
-			<forward name="detailsCurricularCourseScope" path="df.page.detailsCurricularCourseScopeForCoordinatorEquivalence"/>
-			<forward name="begin" path="/manualEquivalenceManagerForCoordinator.do?method=show"/>
-			<forward name="home" path="/coordinator/equivalence.do?method=begin" contextRelative="true"/>
+
+		<action	path="/showMenuForEnrollmentEquivalence"
+				type="ServidorApresentacao.Action.equivalence.PrepareAplicationContextForEnrollmentEquivalenceAction">
+			<forward name="enrollmentEquivalenceForDegreeAdministratorOffice" path="df.page.showMenuForDegreeAdministrativeOfficeEnrollmentEquivalence"/>
+			<forward name="enrollmentEquivalenceForMasterDegreeAdministratorOffice" path="df.page.showMenuForMasterDegreeAdministrativeOfficeEnrollmentEquivalence"/>
+			<forward name="enrollmentEquivalenceForCoordinator" path="df.page.showMenuForCoordinatorEnrollmentEquivalence"/>
 		</action>
 
-		<action	name="manualEquivalenceFrom"
-				type="ServidorApresentacao.Action.equivalence.ManualEquivalenceManagerDispatchAction"
-				path="/manualEquivalenceManagerForMasterDegreeAdministrativeOffice"
+
+		<action path="/selectStudentCurricularPlansToMakeEnrollmentEquivalence"
+				type="ServidorApresentacao.Action.equivalence.SelectStudentCurricularPlansForEnrollmentEquivalenceDispatchAction"
+				name="selectStudentCurricularPlansForm"
+				attribute="selectStudentCurricularPlansMakeForm"
+				input="/selectStudentCurricularPlansToMakeEnrollmentEquivalence.do?method=error&amp;commingFrom=chooseStudentCurricularPlans&amp;page=0"
 				parameter="method"
-				scope="session"
-				validate="false">
-			<exception	type="ServidorApresentacao.Action.exceptions.FenixTransactionException"
-						key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
-						handler="ServidorApresentacao.config.FenixTransactionExceptionHandler"/>
-			<forward name="beginTransaction" path="/manualEquivalenceManagerForMasterDegreeAdministrativeOffice.do?method=show"/>
-			<forward name="showCurricularCoursesForEquivalence" path="df.page.showCurricularCoursesForMasterDegreeAdministrativeOfficeEquivalence"/>
-			<forward name="verifyCurricularCoursesForEquivalence" path="df.page.verifyCurricularCoursesForMasterDegreeAdministrativeOfficeEquivalence"/>
-			<forward name="confirmCurricularCoursesForEquivalence" path="df.page.confirmCurricularCoursesForMasterDegreeAdministrativeOfficeEquivalence"/>
-			<forward name="acceptCurricularCoursesForEquivalence" path="df.page.acceptCurricularCoursesForMasterDegreeAdministrativeOfficeEquivalence"/>
-			<forward name="detailsCurricularCourseScope" path="df.page.detailsCurricularCourseScopeForMasterDegreeAdministrativeOfficeEquivalence"/>
-			<forward name="begin" path="/manualEquivalenceManagerForMasterDegreeAdministrativeOffice.do?method=show"/>
-			<forward name="home" path="/posGraduacao/equivalence.do" contextRelative="true"/>
+				scope="request"
+				validate="true">
+			<forward name="showStudentCurricularPlansForDegreeAdministratorOffice" path="df.page.showStudentCurricularPlansToMakeEnrollmentEquivalenceInDegreeAdministrativeOffice"/>
+			<forward name="showStudentCurricularPlansForMasterDegreeAdministratorOffice" path="df.page.showStudentCurricularPlansToMakeEnrollmentEquivalenceInMasterDegreeAdministrativeOffice"/>
+			<forward name="showStudentCurricularPlansForCoordinator" path="df.page.showStudentCurricularPlansToMakeEnrollmentEquivalenceInCoordinator"/>
+			<forward name="chooseStudentCurricularPlansForDegreeAdministratorOffice" path="/makeEnrollmentEquivalence.do?method=show"/>
+			<forward name="chooseStudentCurricularPlansForMasterDegreeAdministratorOffice" path="/makeEnrollmentEquivalence.do?method=show"/>
+			<forward name="chooseStudentCurricularPlansForCoordinator" path="/makeEnrollmentEquivalence.do?method=show"/>
 		</action>
+
+
+		<action path="/selectStudentCurricularPlansToDeleteEnrollmentEquivalence"
+				type="ServidorApresentacao.Action.equivalence.SelectStudentCurricularPlansForEnrollmentEquivalenceDispatchAction"
+				name="selectStudentCurricularPlansForm"
+				attribute="selectStudentCurricularPlansDeleteForm"
+				input="/selectStudentCurricularPlansToDeleteEnrollmentEquivalence.do?method=error&amp;commingFrom=chooseStudentCurricularPlans&amp;page=0"
+				parameter="method"
+				scope="request"
+				validate="true">
+			<forward name="showStudentCurricularPlansForDegreeAdministratorOffice" path="df.page.showStudentCurricularPlansToDeleteEnrollmentEquivalenceInDegreeAdministrativeOffice"/>
+			<forward name="showStudentCurricularPlansForMasterDegreeAdministratorOffice" path="df.page.showStudentCurricularPlansToDeleteEnrollmentEquivalenceInMasterDegreeAdministrativeOffice"/>
+			<forward name="showStudentCurricularPlansForCoordinator" path="df.page.showStudentCurricularPlansToDeleteEnrollmentEquivalenceInCoordinator"/>
+			<forward name="chooseStudentCurricularPlansForDegreeAdministratorOffice" path="/deleteEnrollmentEquivalence.do?method=show"/>
+			<forward name="chooseStudentCurricularPlansForMasterDegreeAdministratorOffice" path="/deleteEnrollmentEquivalence.do?method=show"/>
+			<forward name="chooseStudentCurricularPlansForCoordinator" path="/deleteEnrollmentEquivalence.do?method=show"/>
+		</action>
+
+		<action path="/makeEnrollmentEquivalence"
+				type="ServidorApresentacao.Action.equivalence.EnrollmentEquivalenceDispatchAction"
+				name="enrollmentEquivalenceFrom"
+				input="/makeEnrollmentEquivalence.do?method=error&amp;commingFrom=grades&amp;page=0"
+				parameter="method"
+				scope="request"
+				validate="true">
+			<forward name="showForDegreeAdministratorOffice" path="df.page.showCurricularCoursesToMakeEnrollmentEquivalenceInDegreeAdministrativeOffice"/>
+			<forward name="showForMasterDegreeAdministratorOffice" path="df.page.showCurricularCoursesToMakeEnrollmentEquivalenceInMasterDegreeAdministrativeOffice"/>
+			<forward name="showForCoordinator" path="df.page.showCurricularCoursesToMakeEnrollmentEquivalenceInCoordinator"/>
+			<forward name="gradesForDegreeAdministratorOffice" path="df.page.getGradesToMakeEnrollmentEquivalenceInDegreeAdministrativeOffice"/>
+			<forward name="gradesForMasterDegreeAdministratorOffice" path="df.page.getGradesToMakeEnrollmentEquivalenceInMasterDegreeAdministrativeOffice"/>
+			<forward name="gradesForCoordinator" path="df.page.getGradesToMakeEnrollmentEquivalenceInCoordinator"/>
+			<forward name="confirmForDegreeAdministratorOffice" path="df.page.confirmGradesToMakeEnrollmentEquivalenceInDegreeAdministrativeOffice"/>
+			<forward name="confirmForMasterDegreeAdministratorOffice" path="df.page.confirmGradesToMakeEnrollmentEquivalenceInMasterDegreeAdministrativeOffice"/>
+			<forward name="confirmForCoordinator" path="df.page.confirmGradesToMakeEnrollmentEquivalenceInCoordinator"/>
+			<forward name="acceptForDegreeAdministratorOffice" path="df.page.acceptToMakeEnrollmentEquivalenceInDegreeAdministrativeOffice"/>
+			<forward name="acceptForMasterDegreeAdministratorOffice" path="df.page.acceptToMakeEnrollmentEquivalenceInMasterDegreeAdministrativeOffice"/>
+			<forward name="acceptForCoordinator" path="df.page.acceptToMakeEnrollmentEquivalenceInCoordinator"/>
+			<forward name="detailsForDegreeAdministratorOffice" path="df.page.enrollmentDetailsToMakeEnrollmentEquivalenceInDegreeAdministrativeOffice"/>
+			<forward name="detailsForMasterDegreeAdministratorOffice" path="df.page.enrollmentDetailsToMakeEnrollmentEquivalenceInMasterDegreeAdministrativeOffice"/>
+			<forward name="detailsForCoordinator" path="df.page.enrollmentDetailsToMakeEnrollmentEquivalenceInCoordinator"/>
+		</action>
+
+		<action path="/deleteEnrollmentEquivalence"
+				type="ServidorApresentacao.Action.equivalence.DeleteEnrollmentEquivalenceDispatchAction"
+				name="enrollmentEquivalenceFrom"
+				input="/deleteEnrollmentEquivalence.do?method=error&amp;page=0"
+				parameter="method"
+				scope="request"
+				validate="true">
+			<forward name="showForDegreeAdministratorOffice" path="df.page.showCurricularCoursesToDeleteEnrollmentEquivalenceInDegreeAdministrativeOffice"/>
+			<forward name="showForMasterDegreeAdministratorOffice" path="df.page.showCurricularCoursesToDeleteEnrollmentEquivalenceInMasterDegreeAdministrativeOffice"/>
+			<forward name="showForCoordinator" path="df.page.showCurricularCoursesToDeleteEnrollmentEquivalenceInCoordinator"/>
+			<forward name="confirmForDegreeAdministratorOffice" path="df.page.confirmDeletionOfEnrollmentEquivalenceInDegreeAdministrativeOffice"/>
+			<forward name="confirmForMasterDegreeAdministratorOffice" path="df.page.confirmDeletionOfEnrollmentEquivalenceInMasterDegreeAdministrativeOffice"/>
+			<forward name="confirmForCoordinator" path="df.page.confirmDeletionOfEnrollmentEquivalenceInCoordinator"/>
+			<forward name="acceptForDegreeAdministratorOffice" path="df.page.acceptDeletionOfEnrollmentEquivalenceInDegreeAdministrativeOffice"/>
+			<forward name="acceptForMasterDegreeAdministratorOffice" path="df.page.acceptDeletionOfEnrollmentEquivalenceInMasterDegreeAdministrativeOffice"/>
+			<forward name="acceptForCoordinator" path="df.page.acceptDeletionOfEnrollmentEquivalenceInCoordinator"/>
+			<forward name="detailsForDegreeAdministratorOffice" path="df.page.enrollmentDetailsToDeleteEnrollmentEquivalenceInDegreeAdministrativeOffice"/>
+			<forward name="detailsForMasterDegreeAdministratorOffice" path="df.page.enrollmentDetailsToDeleteEnrollmentEquivalenceInMasterDegreeAdministrativeOffice"/>
+			<forward name="detailsForCoordinator" path="df.page.enrollmentDetailsToDeleteEnrollmentEquivalenceInCoordinator"/>
+		</action>
+
 	</action-mappings>
 
-	<!-- ========== Controller Configuration ================================ -->
+	<!-- ==================================================================== -->
+	<!-- ========== CONTROLLER CONFIGURATION ================================ -->
+	<!-- ==================================================================== -->
 	<controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
 
-	<!-- ========== Message Resources Definitions =========================== -->
+	<!-- ==================================================================== -->
+	<!-- ========== MESSAGE RESOURCES DEFINITIONS =========================== -->
+	<!-- ==================================================================== -->
 	<message-resources parameter="ServidorApresentacao.EquivalenceResources" null="false"/>
 
-	<!-- ========== Plug Ins Configuration ================================== -->
+	<!-- ==================================================================== -->
+	<!-- ========== PLUG INS CONFIGURATION ================================== -->
+	<!-- ==================================================================== -->
 	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
-		<!--<set-property property="pathnames" value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-degreeAdministrativeOffice.xml"/>-->
+		<set-property property="pathnames" value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-equivalence.xml"/>
 	</plug-in>
 
 	<plug-in className="org.apache.struts.tiles.TilesPlugin">

@@ -2794,88 +2794,11 @@
         <filterChains/>
     </service>
     <service>
-        <name>ReadEvaluation</name>
-        <implementationClass>ServidorAplicacao.Servico.gesdis.ReadEvaluation</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains/>
-    </service>
-    <service>
         <name>ReadEvaluations</name>
         <implementationClass>ServidorAplicacao.Servico.gesdis.ReadEvaluations</implementationClass>
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains/>
-    </service>
-    <service>
-        <name>ShowAvailableCurricularCourses</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.enrolment.degree.ShowAvailableCurricularCourses</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="StudentAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
-        <name>ValidateActualEnrolment</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.enrolment.degree.ValidateActualEnrolment</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="StudentAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
-        <name>ShowAvailableDegreesForOption</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.enrolment.degree.ShowAvailableDegreesForOption</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="StudentAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
-        <name>ShowAvailableCurricularCoursesForOption</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.enrolment.degree.ShowAvailableCurricularCoursesForOption</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="StudentAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
-        <name>SelectOptionalCurricularCourse</name>
-        <implementationClass> ServidorAplicacao.Servico.enrolment.degree.SelectOptionalCurricularCourse 
-            </implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="StudentAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
-        <name>ChangeEnrolmentStateFromTemporarilyToEnroled</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.enrolment.degree.ChangeEnrolmentStateFromTemporarilyToEnroled</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="StudentAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
-        <name>ConfirmActualEnrolment</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.enrolment.degree.ConfirmActualEnrolment</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="StudentAuthorization"/>
-        </filterChains>
     </service>
     <service>
         <name>ExecutionCourseSiteComponentService</name>
@@ -3885,265 +3808,6 @@
         <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
-        <name>SelectOptionalCurricularCourseWithRules</name>
-        <implementationClass>ServidorAplicacao.Servico.enrolment.degree.SelectOptionalCurricularCourse 
-            </implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="DegreeAdministrativeOfficeAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
-        <name>ShowAvailableCurricularCoursesForOptionWithRules</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.enrolment.degree.ShowAvailableCurricularCoursesForOption</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="DegreeAdministrativeOfficeAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
-        <name>ShowAvailableCurricularCoursesWithRules</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.enrolment.degree.ShowAvailableCurricularCourses</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="DegreeAdministrativeOfficeAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
-        <name>ShowAvailableDegreesForOptionWithRules</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.enrolment.degree.ShowAvailableDegreesForOption</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="DegreeAdministrativeOfficeAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
-        <name>ValidateActualEnrolmentWithRules</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.enrolment.degree.ValidateActualEnrolment</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="DegreeAdministrativeOfficeAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
-        <name>CreateTemporarilyEnrolmentPeriod</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withRules.CreateTemporarilyEnrolmentPeriod</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="DegreeAdministrativeOfficeAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
-        <name>DeleteTemporarilyEnrolmentPeriod</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withRules.DeleteTemporarilyEnrolmentPeriod</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="DegreeAdministrativeOfficeAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
-        <name>GetStudentByNumberAndDegreeType</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules.GetStudentByNumberAndDegreeType</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="DegreeAndMasterAdministrativeOfficeAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
-        <name>ReadExecutionDegreesByExecutionYearAndDegreeType</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules.ReadExecutionDegreesByExecutionYearAndDegreeType</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="DegreeAndMasterAdministrativeOfficeAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
-        <name>PrepareEnrolmentContext</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules.PrepareEnrolmentContext</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <!-- <chain name="DegreeAndMasterAdministrativeOfficeAuthorization"/>-->
-        </filterChains>
-    </service>
-    <service>
-        <name>ValidateActualEnrolmentWithoutRules</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules.ValidateActualEnrolmentWithoutRules</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <!-- <chain name="DegreeAndMasterAdministrativeOfficeAuthorization"/>-->
-        </filterChains>
-    </service>
-    <service>
-        <name>ConfirmActualEnrolmentWithoutRules</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules.ConfirmActualEnrolmentWithoutRules</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <!--  <chain name="DegreeAndMasterAdministrativeOfficeAuthorization"/>-->
-        </filterChains>
-    </service>
-    <service>
-        <name>ReadAllExecutionPeriodsForEnrollment</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules.ReadAllExecutionPeriodsForEnrollment</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="DegreeAndMasterAdministrativeOfficeAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
-        <name>ReadExecutionPeriodByOIDForEnrollment</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules.ReadExecutionPeriodByOIDForEnrollment</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="DegreeAndMasterAdministrativeOfficeAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
-        <name>ShowAvailableOptionalCurricularCoursesWithoutRules</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules.ShowAvailableOptionalCurricularCoursesWithoutRules</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="DegreeAdministrativeOfficeSuperUserAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
-        <name>ShowAvailableDegreesForOptionWithoutRules</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules.ShowAvailableDegreesForOptionWithoutRules</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="DegreeAdministrativeOfficeSuperUserAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
-        <name>ShowAvailableCurricularCoursesForOptionWithoutRules</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules.ShowAvailableCurricularCoursesForOptionWithoutRules</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="DegreeAdministrativeOfficeSuperUserAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
-        <name>SelectOptionalCurricularCourseWithoutRules</name>
-        <implementationClass> ServidorAplicacao.Servico.enrolment.degree.SelectOptionalCurricularCourse 
-            </implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="DegreeAdministrativeOfficeSuperUserAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
-        <name>ValidateActualOptionalEnrolmentWithouRules</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules.ValidateActualOptionalEnrolmentWithouRules</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="DegreeAdministrativeOfficeSuperUserAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
-        <name>ConfirmActualOptionalEnrolmentWithoutRules</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.degreeAdministrativeOffice.enrolment.withoutRules.ConfirmActualOptionalEnrolmentWithoutRules</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="DegreeAdministrativeOfficeSuperUserAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
-        <name>GetListsOfCurricularCoursesForEquivalence</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.equivalence.GetListsOfCurricularCoursesForEquivalence</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="EquivalenceAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
-        <name>ValidateEquivalence</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.equivalence.ValidateEquivalence</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="EquivalenceAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
-        <name>ConfirmEquivalence</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.equivalence.ConfirmEquivalence</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="EquivalenceAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
-        <name>GetStudentByOID</name>
-        <implementationClass>ServidorAplicacao.Servico.equivalence.GetStudentByOID</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="EquivalenceAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
-        <name>GetAllAvailableCurricularCoursesForCoordinatorEquivalence</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.equivalence.GetAllAvailableCurricularCoursesForCoordinatorEquivalence</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="CoordinatorAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
-        <name>GetEnrolmentEvaluation</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.equivalence.GetEnrolmentEvaluation</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="EquivalenceAuthorization"/>
         </filterChains>
     </service>
     <service>
@@ -6596,4 +6260,113 @@
 			<chain name="StudentAuthorization"/>
         </filterChains>
     </service>
+
+	<service>
+        <name>WriteStudentAreasWithoutRestrictions</name>
+        <description>Writes student areas regardless of any restriction the student may have</description>
+        <implementationClass>
+            ServidorAplicacao.Servico.degreeAdministrativeOffice.areas.WriteStudentAreasWithoutRestrictions</implementationClass>
+        <isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="EnrollmentWithoutRulesAuthorization"/>
+        </filterChains>
+    </service>
+
+<!-- =============================================================================================== -->
+<!-- ==================================== Enrollment Equivalence =================================== -->
+<!-- =============================================================================================== -->
+	<service>
+        <name>ReadListsOfCurricularCoursesForEnrollmentEquivalence</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.equivalence.ReadListsOfCurricularCoursesForEnrollmentEquivalence</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="EquivalenceAuthorization"/>
+        </filterChains>
+    </service>
+	<service>
+        <name>PrepareToGetGradesOfCurricularCoursesForEnrollmentEquivalence</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.equivalence.PrepareToGetGradesOfCurricularCoursesForEnrollmentEquivalence</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+			<chain name="EquivalenceAuthorization"/>
+        </filterChains>
+    </service>
+	<service>
+        <name>ValidateCurricularCourseGradesForEnrollmentEquivalence</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.equivalence.ValidateCurricularCourseGradesForEnrollmentEquivalence</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+			<chain name="EquivalenceAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>WriteEnrollmentEquivalences</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.equivalence.WriteEnrollmentEquivalences</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+			<chain name="EquivalenceAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>GetEnrollmentEvaluation</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.equivalence.GetEnrollmentEvaluation</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+			<chain name="EquivalenceAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadListsOfEnrollmentsWithEquivalences</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.equivalence.ReadListsOfEnrollmentsWithEquivalences</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+			<chain name="EquivalenceAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>DeleteChosenEnrollmentEquivalences</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.equivalence.DeleteChosenEnrollmentEquivalences</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+			<chain name="EquivalenceAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>GetEnrollmentEvaluationWithEquivalence</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.equivalence.GetEnrollmentEvaluationWithEquivalence</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+			<chain name="EquivalenceAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>ReadStudentByNumberAndDegreeTypeForEnrollmentEquivalence</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.student.ReadStudentByNumberAndDegreeType</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+			<chain name="EquivalenceAuthorization"/>
+        </filterChains>
+    </service>
+<!-- =============================================================================================== -->
+<!-- =============================================================================================== -->
+<!-- =============================================================================================== -->
+
 </serviceDefinitions>

@@ -26,6 +26,7 @@ public class ExecutionDegreesFormat extends FenixUtil
 		while (iterator.hasNext())
 		{
 			InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
+			
 			String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
 
 			name =

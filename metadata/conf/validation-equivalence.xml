@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- @validation.doctype@ -->
+
+<form-validation>
+	<formset>
+
+		<form name="studentNumberForm">
+			<field property="studentNumber" depends="required,integer" page="1">
+				<arg0 key="errors.enrollment.equivalence.student.number" resource="true"/>
+			</field>
+		</form>
+		
+		<form name="selectStudentCurricularPlansMakeForm">
+			<field property="fromStudentCurricularPlanID" depends="required,integer" page="1">
+				<arg0 key="errors.enrollment.equivalence.no.origin.student.curricular.plan" resource="true"/>
+			</field>
+			<field property="toStudentCurricularPlanID" depends="required,integer" page="1">
+				<arg0 key="errors.enrollment.equivalence.no.destination.student.curricular.plan" resource="true"/>
+			</field>
+		</form>
+		
+		<form name="selectStudentCurricularPlansDeleteForm">
+			<field property="fromStudentCurricularPlanID" depends="required,integer" page="1">
+				<arg0 key="errors.enrollment.equivalence.no.student.curricular.plan.to.delete.equivalence" resource="true"/>
+			</field>
+		</form>
+		
+	</formset>
+</form-validation>

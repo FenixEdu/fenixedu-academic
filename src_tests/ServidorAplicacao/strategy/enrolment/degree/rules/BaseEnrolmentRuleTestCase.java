@@ -4,7 +4,6 @@
  */
 package ServidorAplicacao.strategy.enrolment.degree.rules;
 
-import framework.factory.ServiceManagerServiceFactory;
 import junit.framework.TestCase;
 import Dominio.ICurricularCourse;
 import Dominio.IStudentCurricularPlan;
@@ -12,9 +11,9 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
-import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
-import ServidorAplicacao.strategy.enrolment.context.EnrolmentContextManager;
-import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.context.depercated.EnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.context.depercated.EnrolmentContextManager;
+import ServidorAplicacao.strategy.enrolment.context.depercated.InfoEnrolmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IStudentCurricularPlanPersistente;
@@ -22,6 +21,7 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Tools.dbaccess;
 import Util.TipoCurso;
+import framework.factory.ServiceManagerServiceFactory;
 
 /**
  * @author jpvl

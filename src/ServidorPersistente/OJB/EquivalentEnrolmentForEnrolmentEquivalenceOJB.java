@@ -76,4 +76,12 @@ public class EquivalentEnrolmentForEnrolmentEquivalenceOJB
        return queryList(EquivalentEnrolmentForEnrolmentEquivalence.class,new Criteria());
     }
 
+    public List readByEnrolmentEquivalence(IEnrolmentEquivalence enrolmentEquivalence)
+		throws ExcepcaoPersistencia
+	{
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("enrolmentEquivalence.idInternal", enrolmentEquivalence.getIdInternal());
+		return queryList(EquivalentEnrolmentForEnrolmentEquivalence.class, criteria);
+	}
+
 }

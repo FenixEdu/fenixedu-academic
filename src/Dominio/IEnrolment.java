@@ -1,5 +1,6 @@
 package Dominio;
 
+import java.util.Date;
 import java.util.List;
 
 import Util.EnrolmentEvaluationType;
@@ -19,8 +20,7 @@ public interface IEnrolment extends IDomainObject
 	public IExecutionPeriod getExecutionPeriod();
 	public EnrolmentEvaluationType getEnrolmentEvaluationType();
 	public List getEvaluations();
-   
-	
+	public Date getCreationDate();
 
 	public void setEnrolmentState(EnrolmentState state);
 	public void setCurricularCourse(ICurricularCourse curricularCourse);
@@ -28,5 +28,5 @@ public interface IEnrolment extends IDomainObject
 	public void setExecutionPeriod(IExecutionPeriod executionPeriod);
 	public void setEnrolmentEvaluationType(EnrolmentEvaluationType type);
 	public void setEvaluations(List list);
-   
+	public void setCreationDate(Date creationDate);
 }

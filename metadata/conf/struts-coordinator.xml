@@ -260,8 +260,8 @@
       <forward name="firstPage" path="/index.do"/>
       <forward name="logoff" path="/logoff.do" contextRelative="true"/>
 
-		<forward name="equivalenceForCoordinator" path="/equivalence.do?method=begin"/>
-		<forward name="backForCoordinator" path="/index.do?"/>
+		<forward name="equivalence" path="/equivalence/equivalence.do" contextRelative="true"/>
+
     </global-forwards>
     
     <!-- ========== Action Mapping Definitions =============================== -->
@@ -414,15 +414,6 @@
 	         <forward name="Success" path="/candidate/backErrorPage.jsp"/> 
       	</action>
 
-		<action	type="ServidorApresentacao.Action.equivalence.PrepareManualEquivalenceForCoordinatorDispatchAction"
-				path="/equivalence"
-				parameter="method"
-				scope="session"
-				validate="false">
-			<forward name="begin" path="/equivalence/showAllAvailableCurricularCoursesForEquivalence.jsp"/>
-			<forward name="show" path="/equivalence/manualEquivalenceManagerForCoordinator.do?method=show" contextRelative="true"/>
-		</action>
-		
       <!-- Display List To Make Candidate Study Plan -->
       <action path="/displayCandidateListToMakeStudyPlan"
        		  input="/candidate/displayCandidateListToMakeStudyPlan.jsp"

@@ -558,6 +558,12 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
+	<field-descriptor
+		name="creationDate"
+		column="CREATION_DATE"
+		jdbc-type="TIMESTAMP"
+		conversion="ServidorPersistente.Conversores.TimeStamp2DateFieldConversion"
+	/>
 	<reference-descriptor
 			name="studentCurricularPlan"
 			class-ref="Dominio.StudentCurricularPlan"

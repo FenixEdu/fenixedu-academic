@@ -64,24 +64,6 @@
 	</definition>-->
 	<!-- END OF SHIFT ENROLMENT DEFINITIONS -->
 
-	<definition name="df.page.acceptEnrolment" extends="definition.student.masterPage" >
-		<put name="body" value="/student/acceptEnrolment_bd.jsp" />
-	</definition>
-	<definition name="df.page.showAvailableCurricularCourses" extends="definition.student.curricular.course.enrolment" >
-		<put name="body" value="/student/showAvailableCurricularCourses_bd.jsp" />
-	</definition>	
-	<definition name="df.page.showAvailableCurricularCourses2" extends="definition.student.curricular.course.enrolment" >
-		<put name="body" value="/student/showAvailableCurricularCourses_bd_2.jsp" />
-	</definition>	
-	<definition name="df.page.verifyEnrolment" extends="definition.student.curricular.course.enrolment" >
-		<put name="body" value="/student/verifyEnrolment_bd.jsp" />
-	</definition>	
-	<definition name="df.page.concreteOptionalList" extends="definition.student.choose.optional.curricular.course.enrolment" >
-		<put name="body" value="/student/concreteOptionalList_bd.jsp" />
-	</definition>	
-	<definition name="df.page.searchOptionalCurricularCourses" extends="definition.student.choose.optional.curricular.course.enrolment" >
-		<put name="body" value="/student/searchOptionalCurricularCourses_bd.jsp" />
-	</definition>	
 	<definition name="df.page.notAuthorized" extends="definition.student.masterPage" >
 		<put name="body" value="/student/notAuthorized_bd.jsp" />
 	</definition>	
@@ -132,15 +114,14 @@
 
 	<!--  ******************* LEEC Enrollment ******************** -->
 	<definition name="df.page.prepareEnrollmentChooseAreas" extends="definition.student.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/enrolment/prepareEnrollmentChooseAreas.jsp"/>
+		<put name="body" value="/degreeAdministrativeOffice/enrolment/withRules/prepareEnrollmentChooseAreas.jsp"/>
 	</definition>
 	<definition name="df.page.prepareEnrollmentChooseCurricularCourses" extends="definition.student.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/enrolment/prepareEnrollmentChooseCurricularCourses.jsp"/>
+		<put name="body" value="/degreeAdministrativeOffice/enrolment/withRules/prepareEnrollmentChooseCurricularCourses.jsp"/>
 	</definition>
 	<definition name="df.page.enrollmentConfirmation" extends="definition.student.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/enrolment/enrollmentConfirmation.jsp"/>
+		<put name="body" value="/degreeAdministrativeOffice/enrolment/withRules/enrollmentConfirmation.jsp"/>
 	</definition>
-
 	<definition name="df.page.warning" extends="definition.student.masterPage">
 		<put name="body" value="/student/enrollment/warning.jsp"/>
 	</definition>

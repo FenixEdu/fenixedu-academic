@@ -7,6 +7,7 @@ import org.apache.ojb.broker.query.Criteria;
 import Dominio.Enrolment;
 import Dominio.EquivalentEnrolmentForEnrolmentEquivalence;
 import Dominio.ICurricularCourse;
+import Dominio.ICurso;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrolment;
 import Dominio.IExecutionPeriod;
@@ -217,18 +218,13 @@ public class EnrolmentOJB extends ObjectFenixOJB implements
      * @see ServidorPersistente.IPersistentEnrolment#readEnrollmentsByStudentAndCurricularCourseNameAndCode(Dominio.IStudent,
      *      Dominio.ICurricularCourse)
      */
-    public List readEnrollmentsByStudentAndCurricularCourseNameAndCurricularCourseDegree(
-            IStudent student, ICurricularCourse curricularCourse)
-            throws ExcepcaoPersistencia {
+    public List readEnrollmentsByStudentAndCurricularCourseNameAndDegree(
+            IStudent student, ICurricularCourse curricularCourse, ICurso degree) throws ExcepcaoPersistencia
+    {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("studentCurricularPlan.student.idInternal", student
-                .getIdInternal());
-        criteria
-                .addEqualTo("curricularCourse.name", curricularCourse.getName());
-        criteria.addEqualTo(
-                "studentCurricularPlan.degreeCurricularPlan.degree.idInternal",
-                curricularCourse.getDegreeCurricularPlan().getDegree()
-                        .getIdInternal());
+        criteria.addEqualTo("studentCurricularPlan.student.idInternal", student.getIdInternal());
+        criteria.addEqualTo("curricularCourse.name", curricularCourse.getName());
+        criteria.addEqualTo("studentCurricularPlan.degreeCurricularPlan.degree.idInternal", degree.getIdInternal());
 
         return queryList(Enrolment.class, criteria);
     }

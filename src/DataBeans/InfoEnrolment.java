@@ -1,5 +1,6 @@
 package DataBeans;
 
+import java.util.Date;
 import java.util.List;
 
 import Util.EnrolmentEvaluationType;
@@ -17,6 +18,7 @@ public class InfoEnrolment extends InfoObject
     private InfoExecutionPeriod infoExecutionPeriod;
     private EnrolmentState enrolmentState;
     private EnrolmentEvaluationType enrolmentEvaluationType;
+    private Date creationDate;
 
     // to be used to keep the actual enrolment evaluation
     private InfoEnrolmentEvaluation infoEnrolmentEvaluation;
@@ -170,4 +172,19 @@ public class InfoEnrolment extends InfoObject
         infoEnrolmentEvaluation = evaluation;
     }
 
+	/**
+	 * @return Returns the creationDate.
+	 */
+	public Date getCreationDate()
+	{
+		return creationDate;
+	}
+
+	/**
+	 * @param creationDate The creationDate to set.
+	 */
+	public void setCreationDate(Date creationDate)
+	{
+		this.creationDate = creationDate;
+	}
 }

@@ -67,10 +67,12 @@ public class EnrolmentInOptionalCurricularCourse extends Enrolment implements IE
 	{
 		boolean result = false;
 
-		if (obj instanceof IEnrolment) {
+		if (obj instanceof IEnrolmentInOptionalCurricularCourse)
+		{
 			IEnrolmentInOptionalCurricularCourse enrolment = (IEnrolmentInOptionalCurricularCourse) obj;
-			
-			result = super.equals(enrolment) && this.getCurricularCourseForOption().equals(enrolment.getCurricularCourseForOption());
+
+			result = super.equals(enrolment)
+				&& this.getCurricularCourseForOption().equals(enrolment.getCurricularCourseForOption());
 		}
 		return result;
 	}

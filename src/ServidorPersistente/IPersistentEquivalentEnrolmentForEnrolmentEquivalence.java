@@ -26,4 +26,5 @@ public interface IPersistentEquivalentEnrolmentForEnrolmentEquivalence extends I
     public List readAll() throws ExcepcaoPersistencia;
 
     public List readByEquivalentEnrolment(IEnrolment equivalentEnrolment) throws ExcepcaoPersistencia;
+    public List readByEnrolmentEquivalence(IEnrolmentEquivalence enrolmentEquivalence) throws ExcepcaoPersistencia;
 }

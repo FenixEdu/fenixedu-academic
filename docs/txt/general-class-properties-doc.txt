@@ -1,0 +1,49 @@
+INTRODUÇÃO:
+===========
+Este ficheiro tem como objectivo documentar a existência do conceito "propriedades de uma classe" que foi recentemente introduzido.
+
+CONCEITO:
+=========
+A tabela GENERAL_CLASS_PROPERTY serve para associar a qualquer outra classe do Dominio do Fénix,
+propriedades que possam ser mapeadas como strings. E agora a pergunta: "mas se eu quero adicionar
+uma propriedade a uma classe do Dominio que já existe, porque não adiciono uma coluna à respectiva tabela?".
+Resposta: porque este novo conceito trata de propriedades que podem dar jeito mas não são parte integrante
+do objecto ao qual as queremos adicionar. Por exemplo, um ambientador para o carro dá jeito mas não faz parte
+da definição de carro como por exemplo as rodas, o motor, etc.
+
+ESTRUTURA:
+==========
+Dominio.classProperties.GeneralClassProperty.java
+Dominio.classProperties.IGeneralClassProperty.java
+
+Util.classProperties.GeneralClassPropertyName.java
+Util.classProperties.GeneralClassPropertyValue.java
+
+ServidorPersistente.Conversores.classProperties.GeneralClassPropertyNameJava2SqlConversion.java
+ServidorPersistente.Conversores.classProperties.GeneralClassPropertyValueJava2SqlConversion.java
+
+UTILIZAÇÃO:
+===========
+Por cada classe Dominio.*.<XPTO> à qual se quer adicionar este tipo de propriedades, deve-se criar:
+1. Uma nova classe de Dominio.classProperties.<XPTO>Property e respectiva interface que estendem
+   Dominio.classProperties.GeneralClassProperty.java e Dominio.classProperties.IGeneralClassProperty.java respectivamente.
+   A classe Dominio.classProperties.<XPTO>Property deve implementar os metodos equals e toString e deve ainda implementar
+   a referencia à class Dominio.*.<XPTO>.
+2. Uma collection de Dominio.classProperties.<XPTO>Property na classe Dominio.*.<XPTO>.
+3. Duas novas classes Util.classProperties.<XPTO>PropertyName e Util.classProperties.<XPTO>PropertyValue que estendem
+   Util.classProperties.GeneralClassPropertyName.java e Util.classProperties.GeneralClassPropertyValue.java respectivamente.
+   Estas classes devem conter todos os nomes e valores de propriedades (respectivamente) para a classe Dominio.*.<XPTO>.
+4. Estender o mapeamento OJB da classe Dominio.classProperties.GeneralClassProperty.java para conter a nova classe
+   Dominio.classProperties.<XPTO>Property.java.
+
+EXEMPLO:
+========
+Foi adicionada uma destas propriedades à classe ExecutionCourse, desta forma foram criadas as seguintes classes:
+	Dominio.classProperties.ExecutionCourseProperty.java
+	Dominio.classProperties.IExecutionCourseProperty.java
+	Util.classProperties.ExecutionCoursePropertyName.java
+	Util.classProperties.ExecutionCoursePropertyValue.java
+A razão de ter adicionado uma destas propriedades a esta classe foi a necessidade de distinguir uma ExecutionCourse de "1ª fase"
+de uma ExecutionCourse de "2ª fase" uma vez que ambas são execução da mesma CurricularCourse no mesmo ExecutionPeriod.
+Não era correcto adicionar uma coluna à tabela EXECUTION_COURSE para distinguir uma da outra pois esta informação não faz parte
+da definição de ExecutionCourse e é um tipo de informação que não faz sentido em outras escolas.

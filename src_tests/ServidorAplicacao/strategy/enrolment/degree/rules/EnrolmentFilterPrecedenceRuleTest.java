@@ -6,7 +6,7 @@ package ServidorAplicacao.strategy.enrolment.degree.rules;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.context.depercated.EnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.rules.IEnrolmentRule;
 import ServidorPersistente.ExcepcaoPersistencia;
 

@@ -1,7 +1,7 @@
 package UtilInsc;
 
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.context.depercated.InfoEnrolmentContext;
 
 /**
  * @author David Santos

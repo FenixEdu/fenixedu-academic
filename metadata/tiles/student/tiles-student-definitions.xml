@@ -18,15 +18,6 @@
 	  <put name="footer" value="/student/commons/commonFooterStudent.jsp" />
 	</definition>
 	
-	<definition name="definition.student.curricular.course.enrolment" extends="definition.student.masterPage">
-		<put name="body-context" value="/student/enrolmentContext.jsp"/>
-	</definition>
-	<definition name="definition.student.choose.optional.curricular.course.enrolment" extends="definition.student.masterPage">
-		<put name="body-context" value="/student/enrolmentInOptionalCurricularCourseContext.jsp"/>
-	</definition>
-	<definition name="definition.out.of.period" extends="definition.student.masterPage">
-		<put name="body" value="/outOfPeriod.jsp"/>
-	</definition>
 	<definition name="definition.myExams" extends="definition.student.masterPage">
 		<put name="body" value="/student/viewExams_bd.jsp"/>
 	</definition>

@@ -97,55 +97,61 @@ public class DeleteEnrolment implements IService
         ITurnoAlunoPersistente shiftStudentDAO = persistentSuport
                 .getITurnoAlunoPersistente();
 
-        IExecutionCourse executionCourse = executionCourseDAO
+        List executionCourses = executionCourseDAO
                 .readbyCurricularCourseAndExecutionPeriod(enrolment
                         .getCurricularCourse(), enrolment.getExecutionPeriod());
 
-        if (executionCourse != null)
-        {
-            IFrequenta attend = attendDAO.readByAlunoAndDisciplinaExecucao(
-                    enrolment.getStudentCurricularPlan().getStudent(),
-                    executionCourse);
+        Iterator iterator = executionCourses.iterator();
+        while (iterator.hasNext())
+		{
+			IExecutionCourse executionCourse = (IExecutionCourse) iterator.next();
 
-            if (attend != null)
-            {
-                List marks = markDAO.readBy(attend);
-                if (marks == null || marks.isEmpty())
-                {
-                    IStudentGroupAttend studentGroupAttend = studentGroupAttendDAO
-                            .readBy(attend);
-                    if (studentGroupAttend == null)
-                    {
-                        List shiftsStudentIsIn = shiftStudentDAO
-                                .readByStudent(enrolment
-                                        .getStudentCurricularPlan()
-                                        .getStudent());
+	        if (executionCourse != null)
+	        {
+	            IFrequenta attend = attendDAO.readByAlunoAndDisciplinaExecucao(
+	                    enrolment.getStudentCurricularPlan().getStudent(),
+	                    executionCourse);
 
-                        if (shiftsStudentIsIn == null
-                                || shiftsStudentIsIn.isEmpty())
-                        {
+	            if (attend != null)
+	            {
+	                List marks = markDAO.readBy(attend);
+	                if (marks == null || marks.isEmpty())
+	                {
+	                    IStudentGroupAttend studentGroupAttend = studentGroupAttendDAO
+	                            .readBy(attend);
+	                    if (studentGroupAttend == null)
+	                    {
+	                        List shiftsStudentIsIn = shiftStudentDAO
+	                                .readByStudent(enrolment
+	                                        .getStudentCurricularPlan()
+	                                        .getStudent());
 
-                            attendDAO.deleteByOID(Frequenta.class, attend
-                                    .getIdInternal());
-                        }
-                        else
-                        {
-                            attendDAO.simpleLockWrite(attend);
-                            attend.setEnrolment(null);
-                        }
-                    }
-                    else
-                    {
-                        attendDAO.simpleLockWrite(attend);
-                        attend.setEnrolment(null);
-                    }
-                }
-                else
-                {
-                    attendDAO.simpleLockWrite(attend);
-                    attend.setEnrolment(null);
-                }
-            }
-        }
+	                        if (shiftsStudentIsIn == null
+	                                || shiftsStudentIsIn.isEmpty())
+	                        {
+
+	                            attendDAO.deleteByOID(Frequenta.class, attend
+	                                    .getIdInternal());
+	                        }
+	                        else
+	                        {
+	                            attendDAO.simpleLockWrite(attend);
+	                            attend.setEnrolment(null);
+	                        }
+	                    }
+	                    else
+	                    {
+	                        attendDAO.simpleLockWrite(attend);
+	                        attend.setEnrolment(null);
+	                    }
+	                }
+	                else
+	                {
+	                    attendDAO.simpleLockWrite(attend);
+	                    attend.setEnrolment(null);
+	                }
+	            }
+	        }
+	    }
     }
 }

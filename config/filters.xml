@@ -162,7 +162,7 @@
     <filter>
         <name>EquivalenceAuthorization</name>
         <implementationClass>
-            ServidorAplicacao.Filtro.EquivalenceAuthorizationFilter</implementationClass>
+            ServidorAplicacao.Filtro.equivalence.EquivalenceAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
     </filter>

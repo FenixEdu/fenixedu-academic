@@ -1,16 +1,16 @@
 package ServidorAplicacao.Servicos.enrolment.degree;
 
-import framework.factory.ServiceManagerServiceFactory;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoCurricularCourseScope;
 import Dominio.ICurricularCourse;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
-import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.context.depercated.InfoEnrolmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import framework.factory.ServiceManagerServiceFactory;
 
 public class ValidateActualEnrolmentTest extends TestCaseReadServices {
 
