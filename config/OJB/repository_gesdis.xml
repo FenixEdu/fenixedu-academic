@@ -33,6 +33,16 @@
          name="mail"
          column="MAIL"
     	 jdbc-type="VARCHAR"/>
+    
+    <field-descriptor id="6"
+         name="initialStatement"
+         column="INITIAL_STATEMENT"
+    	 jdbc-type="VARCHAR"/>
+    	 
+    <field-descriptor id="7"
+         name="introduction"
+         column="INTRODUCTION"
+    	 jdbc-type="VARCHAR"/>	 
 	
     <reference-descriptor
          name="executionCourse"

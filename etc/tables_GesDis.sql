@@ -99,6 +99,8 @@ create table SITE (
    KEY_INITIAL_SECTION int(11),
    ALTERNATIVE_SITE varchar(50),
    MAIL varchar(50),
+   INITIAL_STATEMENT varchar(255),
+   INTRODUCTION 	varchar(255),
    primary key (ID_INTERNAL),
    unique ID_INTERNAL (ID_INTERNAL, KEY_EXECUTION_COURSE))
    type=InnoDB comment="InnoDB free: 372736 kB";

@@ -14,12 +14,15 @@ public class Site implements ISite {
 	private Integer internalCode;
 	private IDisciplinaExecucao executionCourse;
 	private Integer keyExecutionCourse;
-//	private List sections;
+
 	private ISection initialSection;
 	private Integer keyInitialSection;
+	
 	private String alternativeSite;
 	private String mail;
-//	private List announcements;
+
+	private String initialStatement;
+	private String introduction;
 	
 	/** 
 	 * Construtor
@@ -39,11 +42,11 @@ public class Site implements ISite {
 	* Construtor
 	*/
 	
-	public Site(ISection initialSection, List sections, IDisciplinaExecucao executionCourse, List announcements){
+	public Site(ISection initialSection, List sections, IDisciplinaExecucao executionCourse, List announcements, String initialStatement,String introduction){
 		setInitialSection(initialSection);
-//		setSections(sections);
 		setExecutionCourse(executionCourse);
-//		setAnnouncements(announcements);
+		setInitialStatement(initialStatement);
+		setIntroduction(introduction);
 	}
 	
 	
@@ -191,9 +194,11 @@ public class Site implements ISite {
 			String result = "[SITE";
 			result += ", codInt=" + getInternalCode();
 			result += ", executionCourse=" + getExecutionCourse();
-//			result += ", sections=" + getSections();
 			result += ", initialSection=" + getInitialSection();
-//			result += ", announcements=" + getAnnouncements();
+			result += ", initialStatement=" + getInitialStatement();
+			result += ", introduction=" + getIntroduction();
+			result += ", mail =" + getMail();
+			result += ", alternativeSite="+getAlternativeSite();
 			result += "]";
 			return result;
 		}
@@ -211,6 +216,36 @@ public class Site implements ISite {
 	 */
 	public void setMail(String mail) {
 		this.mail = mail;
+	}
+
+	/**
+	 * @return String
+	 */
+	public String getInitialStatement() {
+		return initialStatement;
+	}
+
+	/**
+	 * @return String
+	 */
+	public String getIntroduction() {
+		return introduction;
+	}
+
+	/**
+	 * Sets the initialStatement.
+	 * @param initialStatement The initialStatement to set
+	 */
+	public void setInitialStatement(String initialStatement) {
+		this.initialStatement = initialStatement;
+	}
+
+	/**
+	 * Sets the introduction.
+	 * @param introduction The introduction to set
+	 */
+	public void setIntroduction(String introduction) {
+		this.introduction = introduction;
 	}
 
 }

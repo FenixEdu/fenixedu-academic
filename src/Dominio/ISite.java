@@ -18,4 +18,9 @@ public interface ISite {
 	public void setAlternativeSite(String alternativeSite);
 	public String getMail();
 	public void setMail(String mail);
+	public String getInitialStatement(); 
+	public String getIntroduction();
+	public void setInitialStatement(String initialStatement);
+	public void setIntroduction(String introduction);
+	
 }
