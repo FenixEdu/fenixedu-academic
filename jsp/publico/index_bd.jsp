@@ -17,6 +17,7 @@
 <bean:message key="message.public.index.timetable.consult"/>
 </p>
 <br />
+<%--
 	<table width="100%" border="0" cellpadding="0" cellspacing="0">
   		<tr>
     		<td class="infoop">
@@ -25,7 +26,6 @@
   		</tr>
 	</table>
 <br />
-<%--
 <p>
 <bean:message key="message.public.index.degree.nonMaster.consult"/>
 </p>
@@ -42,6 +42,7 @@
 <bean:message key="message.public.index.degree.master.consult"/>
 </p>
 <br />
+--%>
 	<table width="100%" border="0" cellpadding="0" cellspacing="0">
   		<tr>
     		<td class="infoop"><html:link page="<%= "/chooseContextDA.do?method=preparePublic&amp;nextPage=executionCourseSearch&amp;inputPage=chooseContext&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>"><h2 style="display: inline;"><bean:message key="link.executionCourse.consult"/></h2></html:link></td>
@@ -58,7 +59,7 @@
   		</tr>
 	</table>
 <br />
---%>
+
 <p>
 <bean:message key="message.public.index.room.consult"/>
 </p>
