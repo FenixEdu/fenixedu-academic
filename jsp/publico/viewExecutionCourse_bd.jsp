@@ -114,13 +114,7 @@
 		</logic:notEqual>
 	</blockquote>
 
-	</br>
-	</br>
-	</br>
-	</br>
-
-	<app:gerarHorario name="<%= SessionConstants.LESSON_LIST_ATT %>" type="<%= TimeTableType.EXECUTION_COURSE_TIMETABLE %>"/> 
-
+	
 	
 </logic:present>	
 		

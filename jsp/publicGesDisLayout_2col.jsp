@@ -12,7 +12,7 @@
 <!-- Navbar Lateral e Body Content -->
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
    <tr>
-     <td  align="left"  bgcolor="#B5BED6"  class="barraist">
+     <td  align="left" valign="top" bgcolor="#B5BED6"  class="barraist">
      <img alt="" border="0"  src="<%= request.getContextPath() %>/images/LogoIST.gif"  />
 	</td>
     <td id="principal" bgcolor="#FFFFFF">

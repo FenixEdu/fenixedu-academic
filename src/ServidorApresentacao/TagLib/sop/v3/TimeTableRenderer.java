@@ -52,7 +52,7 @@ public class TimeTableRenderer {
 		TimeTableSlot[][] grid = timeTable.getTimeTableGrid();
 
 		strBuffer.append(
-			"<table cellspacing='0' cellpadding='0' width='100%'>");
+			"<table cellspacing='0' cellpadding='0' width='90%'>");
 
 		renderHeader(strBuffer);
 

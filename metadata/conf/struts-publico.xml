@@ -220,6 +220,9 @@
       </action>
 
 <!-- Start of Gesdis-->
+<action path="/viewTimeTable" forward="/viewTimeTable.jsp"/>
+
+
 <action     path="/bibliographicReferenceManager"
 				parameter="method"      			
 				scope="session"
