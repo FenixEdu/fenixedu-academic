@@ -303,12 +303,21 @@
 				<form-property name="newGrantOwnerNumber" type="java.lang.String"/>
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 			</form-bean>				
+
+			<form-bean name="teacherExecutionCourseResponsabilities" 
+				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+				<form-property name="idInternal" type="java.lang.Integer" />
+				<form-property name="teacherId" type="java.lang.Integer" />
+				<form-property  name="executionYearId" type="java.lang.Integer" />
+				<form-property name="executionCourseResponsability" type="java.lang.Integer[]" />
+				<form-property name="hours" type="java.util.HashMap" />			
+			</form-bean>
 							
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
 	<global-exceptions>
-        <exception
+		<exception
 			type="java.lang.Exception"
 			key="error.Exception"
             handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
@@ -317,7 +326,7 @@
 			type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
 			key="error.NotAuthorized"
 			handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
-			/>
+			/> 
 	</global-exceptions>
 
 	<!-- ========== Global Forward Definitions =============================== -->
@@ -439,6 +448,44 @@
             <forward name="successfull-read" path="showTeacherCreditsSheet"/>
         </action>
         <!-- =======================================================================  -->
+    	<!-- ==  USE CASE : Manage Professorships ================================== -->
+        <action path="/teacherSearchForExecutionCourseAssociation" input="search-for-teacherExecutionCourseAssociation-management" 
+            name="teacherSearchForm" scope="request" parameter="method" 
+            type="ServidorApresentacao.Action.framework.SearchAction" 
+            className="ServidorApresentacao.mapping.framework.SearchActionMapping">
+            <set-property property="serviceName" value="FindTeachersService"/>
+            <set-property property="objectAttribute" value="infoTeacher"/>
+            <set-property property="listAttribute" value="infoTeacherList"/>
+            <set-property property="notFoundMessageKey" value="errors.teacher.not.found"/>
+            <forward name="search-form" path="search-for-teacherExecutionCourseAssociation-management"/>
+            <forward name="list-one" path="/showTeacherProfessorshipsForManagement.do"/>
+            <forward name="list-many" path=""/>
+        </action>        
+		
+		<action path="/showTeacherProfessorshipsForManagement" input="show-teacher-professorships-for-management" 
+            name="teacherExecutionCourseResponsabilities" scope="request" 
+            type="ServidorApresentacao.Action.department.ReadTeacherProfessorshipsByExecutionYearAction">
+            <exception type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException" 
+                key="message.teacher-not-belong-to-department" 
+                path="/teacherSearchForExecutionCourseAssociation.do?method=searchForm&amp;page=0"/>
+            <forward name="list-professorships" path="show-teacher-professorships-for-management"/>
+        </action>        
+        
+        <action path="/updateTeacherExecutionYearExecutionCourseResponsabilities" 
+            input="show-teacher-professorships-for-management" 
+            name="teacherExecutionCourseResponsabilities" scope="request" 
+            type="ServidorApresentacao.Action.teacher.professorship.UpdateProfessorshipHoursAction">
+            <exception 
+                type="ServidorAplicacao.Servico.teacher.professorship.ResponsibleForValidator$InvalidCategory" 
+                key="message.professorship.invalidCategory" 
+                path="/showTeacherProfessorshipsForManagement.do"/>
+            <exception 
+                type="ServidorAplicacao.Servico.teacher.professorship.ResponsibleForValidator$MaxResponsibleForExceed" 
+                key="message.professorship.numberOfResponsibleForExceeded" 
+                path="/showTeacherProfessorshipsForManagement.do" 
+                handler="ServidorApresentacao.Action.teacher.professorship.exception.handler.MaxResponsibleForExceedHandler"/>
+            <forward name="successfull-update" path="/showTeacherProfessorshipsForManagement.do"/>
+        </action>
 
     <!-- ===================== USE CASE: SEARCH GRANT OWNER ============================== -->
 	<action path="/searchGrantOwner" 
