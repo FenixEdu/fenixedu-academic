@@ -118,7 +118,11 @@
         <table border="0">
       	  <tr>
             <td width="300" align="right">
-              <html:link forward="ConsultarFuncionarioMostrarAction"><bean:message key="link.novaConsulta"/></html:link>
+              <html:form action="/consultarFuncionarioMostrar" focus="submit">
+                <html:submit property="submit" styleClass="inputbutton">
+                  <bean:message key="link.novaConsulta"/>
+                </html:submit>
+    	      </html:form>		   			
               &nbsp;&nbsp;&nbsp;
             </td>
             <td width="300" align="left">

@@ -46,22 +46,14 @@
         &nbsp;&nbsp;&nbsp; <p></p><p></p>
       </td>
     </tr>
-    <tr>
+    <tr>	
       <td colspan='2' align="center">
-        <logic:equal name="linkBotao" scope="session" value="PrepararConsultarMarcacaoPontoAction">
-          <html:link forward="PrepararConsultarMarcacaoPontoAction"><bean:message key="link.novaConsulta"/></html:link>
-        </logic:equal>
-        <logic:equal name="linkBotao" scope="session" value="ConsultarFuncionarioMostrar">
-          <html:link forward="ConsultarFuncionarioMostrarAction"><bean:message key="link.novaConsulta"/></html:link>
-        </logic:equal>
-        &nbsp;&nbsp;&nbsp;
+        <html:form action="/consultarFuncionarioMostrar" focus="submit">
+    	  <html:submit property="submit" styleClass="inputbutton">
+            <bean:message key="link.novaConsulta"/>
+          </html:submit>
+    	</html:form>		   			
       </td>
-      <%--
-      <td align="left">
-        &nbsp;&nbsp;&nbsp;
-        <html:link forward="PortalAssiduidadeAction"><bean:message key="link.menu"/></html:link> 
-      </td>
-      --%>
     </tr>
   </table>
 </div>
