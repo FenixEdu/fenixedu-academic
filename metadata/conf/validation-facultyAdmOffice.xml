@@ -362,6 +362,10 @@
 				<msg name="phone" key="errors.integer"/>
 				<arg0 key="label.grant.owner.infoperson.phone" resource="true"/>
 			</field>
+			<field property="workphone" depends="integer" page="1">
+				<msg name="workphone" key="errors.integer"/>
+				<arg0 key="label.grant.owner.infoperson.workphone" resource="true"/>
+			</field>
 			<field property="cellphone" depends="integer" page="1">
 				<msg name="cellphone" key="errors.integer"/>
 				<arg0 key="label.grant.owner.infoperson.cellPhone" resource="true"/>

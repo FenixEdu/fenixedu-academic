@@ -688,6 +688,7 @@
 			</td>
 		</tr>
 	</table>
+	<br/><br/>
 	</logic:iterate>
 	<br/>
 

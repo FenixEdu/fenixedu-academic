@@ -86,6 +86,7 @@
 				<form-property name="addressDistrictSub" type="java.lang.String"/>				
 				<form-property name="addressDistrict" type="java.lang.String"/>				
 				<form-property name="phone" type="java.lang.String"/>												
+				<form-property name="workphone" type="java.lang.String"/>												
 				<form-property name="cellphone" type="java.lang.String"/>				
 				<form-property name="email" type="java.lang.String"/>				
 				<form-property name="homepage" type="java.lang.String"/>				

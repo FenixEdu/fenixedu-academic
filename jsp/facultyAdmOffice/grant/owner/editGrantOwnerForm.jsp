@@ -251,6 +251,14 @@
 	</tr>
 	<tr>
 		<td align="left">
+			<bean:message key="label.grant.owner.infoperson.workphone"/>:&nbsp;
+		</td>
+		<td>
+			<html:text property="workphone"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="left">
 			<bean:message key="label.grant.owner.infoperson.cellPhone"/>:&nbsp;
 		</td>
 		<td>

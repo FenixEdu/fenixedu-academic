@@ -258,6 +258,8 @@ public class EditGrantOwnerAction extends FenixDispatchAction
 			form.set("addressDistrict", infoPerson.getDistritoMorada());
 		if (infoPerson.getTelefone() != null)
 			form.set("phone", infoPerson.getTelefone());
+		if (infoPerson.getWorkPhone() != null)
+			form.set("workphone", infoPerson.getWorkPhone());
 		if (infoPerson.getTelemovel() != null)
 			form.set("cellphone", infoPerson.getTelemovel());
 		if (infoPerson.getEmail() != null)
@@ -365,6 +367,7 @@ public class EditGrantOwnerAction extends FenixDispatchAction
 		infoPerson.setConcelhoMorada((String) editGrantOwnerForm.get("addressDistrictSub"));
 		infoPerson.setDistritoMorada((String) editGrantOwnerForm.get("addressDistrict"));
 		infoPerson.setTelefone((String) editGrantOwnerForm.get("phone"));
+		infoPerson.setWorkPhone((String) editGrantOwnerForm.get("workphone"));
 		infoPerson.setTelemovel((String) editGrantOwnerForm.get("cellphone"));
 		infoPerson.setEmail((String) editGrantOwnerForm.get("email"));
 		infoPerson.setEnderecoWeb((String) editGrantOwnerForm.get("homepage"));

@@ -45,7 +45,7 @@
 	<reference-descriptor
 		name="person"
 		class-ref="Dominio.Pessoa"
-		proxy="false">
+		proxy="true">
 		<foreignkey field-ref="keyPerson"/>
 	</reference-descriptor>   
 	<collection-descriptor
