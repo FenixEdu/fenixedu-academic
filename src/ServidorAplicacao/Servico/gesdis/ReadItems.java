@@ -6,10 +6,13 @@
  */
 package ServidorAplicacao.Servico.gesdis;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.gesdis.InfoSection;
 import DataBeans.util.Cloner;
+import Dominio.IItem;
 import Dominio.ISection;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
@@ -19,7 +22,7 @@ import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author lmac2
+ * @author lmac2 & lmac1
  */
 
 public class ReadItems implements IServico {
@@ -52,7 +55,7 @@ public class ReadItems implements IServico {
 	 **/
 	public List run(InfoSection infoSection) throws FenixServiceException {
 		List itemsList = null;
-		
+
 		try {
 
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
@@ -61,15 +64,22 @@ public class ReadItems implements IServico {
 			ISection section = Cloner.copyInfoSection2ISection(infoSection);
 
 			itemsList = persistentItem.readAllItemsBySection(section);
-
-//			if (itemsList == null || itemsList.isEmpty())
-//				throw new InvalidArgumentsServiceException();
-
-			return itemsList;
-
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}
+
+		List infoItemsList = new ArrayList(itemsList.size());
+		Iterator iter = itemsList.iterator();
+		
+		while(iter.hasNext())
+			infoItemsList.add(Cloner.copyIItem2InfoItem((IItem) iter.next()));
+		
+
+		//			if (itemsList == null || itemsList.isEmpty())
+		//				throw new InvalidArgumentsServiceException();
+
+		return infoItemsList;
+
 	}
 
 }
