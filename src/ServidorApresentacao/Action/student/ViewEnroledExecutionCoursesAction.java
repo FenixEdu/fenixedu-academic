@@ -54,7 +54,7 @@ public class ViewEnroledExecutionCoursesAction extends FenixContextAction {
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-		System.out.println("-----DP DO SERVICO-lista de disciplinas"+allInfoExecutionCourses);
+		
 		List infoExecutionCourses = new ArrayList();
 		if (allInfoExecutionCourses.size() != 0) {
 			infoExecutionCourses.add(new LabelValueBean("[Escolha a Disciplina]", ""));

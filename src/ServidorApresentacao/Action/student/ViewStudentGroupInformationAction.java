@@ -39,8 +39,7 @@ public class ViewStudentGroupInformationAction extends FenixContextAction {
 		HttpSession session = request.getSession(false);
 		IUserView userView =
 			(IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		System.out.println("ENTRA NA ACCAO PARA VER A INF DE CADA PROJECTO");
-
+		
 		String studentGroupCodeString =
 			request.getParameter("studentGroupCode");
 

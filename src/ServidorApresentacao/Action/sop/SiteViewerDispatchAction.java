@@ -84,7 +84,6 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 					args);
 			request.setAttribute("objectCode", objectCode);
 			if (siteView == null){
-System.out.println(" ----------------------siteView is null" + siteView == null);
 				result=false;
 				
 				ActionErrors actionErrors = new ActionErrors();

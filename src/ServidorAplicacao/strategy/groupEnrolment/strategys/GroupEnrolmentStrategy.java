@@ -4,6 +4,7 @@
  */
 package ServidorAplicacao.strategy.groupEnrolment.strategys;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import Dominio.IStudentGroup;
 import Dominio.ITurno;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentStudentGroup;
+import ServidorPersistente.IPersistentStudentGroupAttend;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -114,6 +116,32 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy{
 	{
 		boolean result = false;
 		if(shift.getTipo().equals(groupProperties.getShiftType()))
+			result = true;
+		
+		return result;
+	}
+	
+	
+	public boolean checkNumberOfGroupElements(IGroupProperties groupProperties,IStudentGroup studentGroup) throws ExcepcaoPersistencia {
+		
+		boolean result = false;
+				
+		List allStudentGroupAttend = new ArrayList();
+		try {
+		
+		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+		IPersistentStudentGroupAttend persistentStudentGroupAttend = persistentSuport.getIPersistentStudentGroupAttend();
+		
+		allStudentGroupAttend = (List) persistentStudentGroupAttend.readAllByStudentGroup(studentGroup);
+		
+		} catch (ExcepcaoPersistencia ex){
+			throw ex;
+		}	
+		
+		int numberOfGroupElements = allStudentGroupAttend.size();
+		
+//		se o nr de elementos do grupo for maior que o nr minimo,entao podemos desinscrever o aluno,caso contrario nao
+		if(numberOfGroupElements > groupProperties.getMinimumCapacity().intValue())
 			result = true;
 		
 		return result;

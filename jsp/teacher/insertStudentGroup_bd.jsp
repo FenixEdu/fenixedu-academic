@@ -15,8 +15,6 @@
 <h2><span class="error"><html:errors/></span></h2>
 <br>		 
 <table width="50%" cellpadding="0" border="0">
-	
-	
 	<tr>
 		<td>
 		<bean:message key="label.GroupNumber"/>
@@ -39,9 +37,8 @@
     	</td>
 			
 	</tr>	
-	
-	
 </table>
+
 <br>
 
 <table width="50%" cellpadding="0" border="0">	

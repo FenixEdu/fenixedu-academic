@@ -10,6 +10,8 @@ import java.util.List;
 import Dominio.IGroupProperties;
 import Dominio.IStudentGroup;
 import Dominio.ITurno;
+import ServidorAplicacao.strategy.groupEnrolment.strategys.GroupEnrolmentStrategy;
+import ServidorAplicacao.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;

@@ -139,14 +139,11 @@ public class CreateStudentGroup implements IServico {
 			while (iterator.hasNext()) 
 			{
 				IStudent student = (IStudent) persistentStudent.readByOId(new Student((Integer) iterator.next()),false);
-						
 				IFrequenta attend = persistentAttend.readByAlunoAndDisciplinaExecucao(student,executionCourse);
-						
 				IStudentGroupAttend newStudentGroupAttend = new StudentGroupAttend(newStudentGroup, attend);
-											
 				persistentStudentGroupAttend.lockWrite(newStudentGroupAttend);	
 		
-				}
+			}
 			
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia.getMessage());			

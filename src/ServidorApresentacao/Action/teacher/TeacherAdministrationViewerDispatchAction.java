@@ -1903,7 +1903,7 @@ public class TeacherAdministrationViewerDispatchAction
 			// Create an ACTION_ERROR 
 			error = new ActionError("errors.invalid.insert.studentGroupShift");
 			actionErrors.add(
-				"errors.invalid.edit.studentGroupShiftShift",
+				"errors.invalid.insert.studentGroupShift",
 				error);
 			saveErrors(request, actionErrors);
 			return prepareCreateStudentGroup(mapping, form, request, response);

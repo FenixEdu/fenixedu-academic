@@ -20,7 +20,7 @@
                         
                         <h2><li>             
                         <html:link page="/viewProjectStudentGroups.do" paramId="groupPropertiesCode" paramName="infoGroupProperties" paramProperty="idInternal">
-								<bean:write name="infoGroupProperties" property="name"/>
+							<bean:write name="infoGroupProperties" property="name"/>
 						</html:link>
 						</li></h2>
 							

@@ -16,7 +16,6 @@ import ServidorPersistente.IPersistentStudentGroup;
 import ServidorPersistente.IPersistentStudentGroupAttend;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistente.exceptions.ExistingPersistentException;
 
 /**
  * @author asnr and scpo
@@ -53,8 +52,7 @@ public class DeleteStudentGroup implements IServico {
 				throw new ExistingServiceException();
 			
 			persistentStudentGroup.delete(deletedStudentGroup);
-			persistentSuport.confirmarTransaccao();		
-			
+				
 		} 
 		catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);

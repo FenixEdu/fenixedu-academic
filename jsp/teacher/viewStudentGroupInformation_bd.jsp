@@ -33,8 +33,8 @@
 			</td>		
 			
 			<td class="listClasses">
-					<bean:define id="mail" name="infoSiteStudentInformation" property="email"/>
-					<html:link href="<%= "mailto:"+ mail %>"><bean:write name="infoSiteStudentInformation" property="email"/></html:link>
+				<bean:define id="mail" name="infoSiteStudentInformation" property="email"/>
+				<html:link href="<%= "mailto:"+ mail %>"><bean:write name="infoSiteStudentInformation" property="email"/></html:link>
 			</td>
 		</tr>
 		

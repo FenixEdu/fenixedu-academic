@@ -296,14 +296,16 @@
         <forward name="Inexistente" path="/naoExecutado.do"/>
       </action>
  	-->
- 			<!-- GROUPS -->
+ 			
+ 			
+	<!-- GROUPS -->
  	   
- 	   <action type="ServidorApresentacao.Action.student.ViewEnroledExecutionCoursesAction"
-              path="/viewEnroledExecutionCourses"
-              scope="request"
-              validate="true">
-        <forward name="sucess" path="view-Enroled-ExecutionCourses"/>
-      </action>
+ 	<action type="ServidorApresentacao.Action.student.ViewEnroledExecutionCoursesAction"
+            path="/viewEnroledExecutionCourses"
+            scope="request"
+            validate="true">
+    	  <forward name="sucess" path="view-Enroled-ExecutionCourses"/>
+    </action>
       
  	<action type="ServidorApresentacao.Action.student.ViewExecutionCourseProjectsAction"
               path="/viewExecutionCourseProjects"
@@ -311,23 +313,37 @@
               name="enroledExecutionCoursesForm"
               validate="true">
         <forward name="sucess" path="view-ExecutionCourse-Projects"/>
-      </action>
+    </action>
  	
  	<action type="ServidorApresentacao.Action.student.ViewProjectStudentGroupsAction"
               path="/viewProjectStudentGroups"
               scope="request"
-              validate="true">
+              validate="true"
+              name="enroledExecutionCoursesForm">
         <forward name="sucess" path="view-Project-StudentGroups"/>
-      </action>
-      
-      	<action type="ServidorApresentacao.Action.student.ViewStudentGroupInformationAction"
+    </action>
+     
+   	<action type="ServidorApresentacao.Action.student.ViewStudentGroupInformationAction"
               path="/viewStudentGroupInformation"
               scope="request"
               validate="true">
         <forward name="sucess" path="view-StudentGroup-Information"/>
-      </action>
+    </action>
+    
+  	<action type="ServidorApresentacao.Action.student.UnEnrollStudentInGroupDispatchAction"
+            path="/removeGroupEnrolment"
+            scope="request"
+            validate="true"
+            parameter="method"
+            name="enroledExecutionCoursesForm">
+        <forward name="sucess" path="remove-Student-InGroup"/>
+        <forward name="remove" path="view-Project-StudentGroups"/>
+    </action>
+    
       
-     </action-mappings>     
+ </action-mappings>     
+
+
 
     
     <!-- ========== Controller Configuration ================================ -->

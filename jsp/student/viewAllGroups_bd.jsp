@@ -5,12 +5,11 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
-
-
 <logic:present name="infoSiteGroupsByShiftList">
 	<logic:empty name="infoSiteGroupsByShiftList">
 	<h2><bean:message key="message.infoSiteGroupsByShiftList.not.available" /></h2>
 	</logic:empty>
+	
 	<h2><span class="error"><html:errors/></span></h2>
 	
 <table border="0" style="text-align: left;">
@@ -19,11 +18,11 @@
 	<logic:iterate id="infoSiteGroupsByShift" name="infoSiteGroupsByShiftList" >
      <tr>
      	<td>
-<br>
+        <br>
         <h2>
         	<bean:define id="infoShift" name="infoSiteGroupsByShift" property="infoShift"/>
 			<bean:write name="infoShift" property="nome"/></h2>
-            <br>
+			<br>
              
 			<table width="500" cellpadding="0" border="0" style="text-align: left;">
           	<tbody>
@@ -49,8 +48,8 @@
                	
                		<td class="listClasses">
                	
-                    	<html:link page="/removeEnrolment.do">
-               				<b><bean:message key="link.removeEnrolment"/></b></html:link>
+                   	<html:link page="<%="/removeGroupEnrolment.do?method=prepareRemove&groupPropertiesCode=" + request.getParameter("groupPropertiesCode") %>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="idInternal">
+               			<b><bean:message key="link.removeEnrolment"/></b></html:link>
                 	</td>
                 
              	</td>
@@ -58,13 +57,24 @@
 
             	</logic:iterate>
             </tbody>
-			</table>   
+			</table>
             </td>
             </tr>
             </logic:iterate>
             <br>
         </tbody>
 </table>
+
+	<html:form action="/viewProjectStudentGroups" method="get">
+	
+	<html:submit styleClass="inputbutton"><bean:message key="button.refresh"/>                    		         	
+	</html:submit>
+	
+	<html:hidden property="method" value="execute"/>
+	<html:hidden  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode")%>"/>
+	</html:form>
+
+
 </logic:present>
 
 <logic:notPresent name="infoSiteGroupsByShiftList">
