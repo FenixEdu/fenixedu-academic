@@ -57,7 +57,7 @@ public class FenixCacheFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
 
-        String uri = request.getRequestURI();
+        //String uri = request.getRequestURI();
 
         // customize to match parameters
         String queryString = constructQueryString(request);

@@ -90,10 +90,10 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
 
         super.validateToken(request, form, mapping, "error.transaction.schoolRegistration");
 
-        IUserView userView = SessionUtils.getUserView(request);
+        //IUserView userView = SessionUtils.getUserView(request);
 
-        DynaActionForm inquiryForm = (DynaActionForm) form;
-        HashMap answersMap = (HashMap) inquiryForm.get("answersMap");
+        //DynaActionForm inquiryForm = (DynaActionForm) form;
+        //HashMap answersMap = (HashMap) inquiryForm.get("answersMap");
 
         return mapping.findForward("viewQuestions");
     }
@@ -119,7 +119,7 @@ public class SchoolRegistrationAction extends TransactionalDispatchAction {
         String nameOfMother = (String) totalForm.get("nameOfMother");
         String nacionality = (String) totalForm.get("nacionality");
         String parishOfBirth = (String) totalForm.get("parishOfBirth");
-        String districtSubvisionOfBirth = (String) totalForm.get("districtSubvisionOfBirth");
+        //String districtSubvisionOfBirth = (String) totalForm.get("districtSubvisionOfBirth");
         String districtOfBirth = (String) totalForm.get("districtOfBirth");
         String address = (String) totalForm.get("address");
         String area = (String) totalForm.get("area");

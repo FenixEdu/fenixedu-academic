@@ -189,7 +189,7 @@ public class InsertPublicationAction extends CRUDActionByOID {
 
 		IUserView userView = SessionUtils.getUserView(request);
 
-		InfoPublication pub = (InfoPublication) infoObject;
+		//InfoPublication pub = (InfoPublication) infoObject;
 		Integer keyPublicationType = (Integer) dynaForm.get("infoPublicationTypeId");
 
 		Object[] argReqAtt = { userView.getUtilizador(), keyPublicationType };
