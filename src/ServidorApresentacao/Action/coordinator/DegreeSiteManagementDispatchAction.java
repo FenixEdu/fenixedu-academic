@@ -103,11 +103,11 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
             return (new ActionForward(mapping.getInput()));
         }
 
+        Integer infoDegreeInfoId = infoDegreeInfo.getIdInternal();
+        request.setAttribute("infoDegreeInfoID", infoDegreeInfoId);
+
         DynaActionForm degreeInfoForm = (DynaActionForm) form;
         fillForm(infoDegreeInfo, degreeInfoForm);
-        Integer infoDegreeInfoId = infoDegreeInfo.getIdInternal();
-
-        request.setAttribute("infoDegreeInfoID", infoDegreeInfoId);
 
         return mapping.findForward("viewInformation");
     }
@@ -287,16 +287,15 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
             return (new ActionForward(mapping.getInput()));
         }
 
+		request.setAttribute("infoDegreeCurricularPlanID", infoDegreeCurricularPlan.getIdInternal());
+		
         DynaActionForm descriptionCurricularPlanForm = (DynaActionForm) form;
-
         descriptionCurricularPlanForm.set(
             "descriptionDegreeCurricularPlan",
             infoDegreeCurricularPlan.getDescription());
         descriptionCurricularPlanForm.set(
             "descriptionDegreeCurricularPlanEn",
             infoDegreeCurricularPlan.getDescriptionEn());
-
-        request.setAttribute("infoDegreeCurricularPlanID", infoDegreeCurricularPlan.getIdInternal());
 
         return mapping.findForward("viewDescriptionCurricularPlan");
     }
@@ -379,7 +378,8 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
         ActionErrors errors = new ActionErrors();
 
         Integer executionDegreeId = getFromRequest("infoExecutionDegreeID", request);
-
+		request.setAttribute("infoExecutionDegreeID", executionDegreeId);
+		
         GestorServicos gestorServicos = GestorServicos.manager();
 
         //read execution degree
@@ -393,22 +393,22 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
                 (InfoExecutionDegree) gestorServicos.executar(null, "ReadExecutionDegreeByOID", args);
         } catch (FenixServiceException e)
         {
-            errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));            
+            errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
         }
-		if (infoExecutionDegree == null
-			|| infoExecutionDegree.getInfoDegreeCurricularPlan() == null
-			|| infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree() == null)
-		{
-			errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));			
-		}
-		if (!errors.isEmpty())
-		{
-			saveErrors(request, errors);
-			return (new ActionForward(mapping.getInput()));
-		}
-		
-		degreeId = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal();
-        
+        if (infoExecutionDegree == null
+            || infoExecutionDegree.getInfoDegreeCurricularPlan() == null
+            || infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree() == null)
+        {
+            errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
+        }
+        if (!errors.isEmpty())
+        {
+            saveErrors(request, errors);
+            return (new ActionForward(mapping.getInput()));
+        }
+
+        degreeId = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal();
+
         //read all execution degres this degree
         Object[] args2 = { degreeId };
 
@@ -425,7 +425,7 @@ public class DegreeSiteManagementDispatchAction extends FenixDispatchAction
         }
 
         request.setAttribute("infoExecutionDegrees", infoExecutionDegrees);
-        request.setAttribute("infoExecutionDegreeID", executionDegreeId);
+
 
         return mapping.findForward("viewHistoric");
     }

@@ -22,7 +22,6 @@ import DataBeans.InfoDegreeCurricularPlan;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixContextDispatchAction;
-import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author Tânia Pousão Created on 9/Out/2003
@@ -42,8 +41,12 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction
         HttpSession session = request.getSession(true);
 
         Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
+        
         Integer degreeId = getFromRequest("degreeID", request);
+		request.setAttribute("degreeID", degreeId);
+		
         Integer degreeCurricularPlanId = getFromRequest("degreeCurricularPlanID", request);
+        request.setAttribute("degreeCurricularPlanID", request);
 
         GestorServicos gestorServicos = GestorServicos.manager();
         Object[] args = { degreeCurricularPlanId };
@@ -62,7 +65,8 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction
             saveErrors(request, errors);
             return (new ActionForward(mapping.getInput()));
         }
-
+		request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
+        
         //order list by year, next semester, next course
         List curricularCourseScopesList = infoDegreeCurricularPlan.getCurricularCourses();
         if (curricularCourseScopesList != null && curricularCourseScopesList.size() > 0)
@@ -84,9 +88,7 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction
             request.setAttribute("allActiveCurricularCourseScopes", allActiveCurricularCourseScopes);
         }
 
-        request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, executionPeriodOId);
-        request.setAttribute("infoDegreeCurricularPlan", infoDegreeCurricularPlan);
-        request.setAttribute("degreeID", degreeId);
+
         return mapping.findForward("showDegreeCurricularPlan");
     }
 

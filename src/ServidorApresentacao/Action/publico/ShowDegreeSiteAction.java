@@ -42,8 +42,10 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
         HttpSession session = request.getSession(true);
 
         Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
-        Integer degreeId = getFromRequest("degreeID", request);
+        //request.setAttribute("executionPeriodOID", executionPeriodOId);
 
+        Integer degreeId = getFromRequest("degreeID", request);
+        request.setAttribute("degreeID", degreeId);
 
         //If degreeId is null then this was call by coordinator
         //Don't have a degreeId but a executionDegreeId
@@ -51,9 +53,10 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
         if (degreeId == null)
         {
             Integer executionDegreeId = getFromRequest("executionDegreeID", request);
+            request.setAttribute("executionDegreeID", executionDegreeId);
 
-			GestorServicos gestorServicos = GestorServicos.manager();
-            
+            GestorServicos gestorServicos = GestorServicos.manager();
+
             //degree information
             Object[] args = { executionDegreeId };
 
@@ -69,29 +72,29 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
             {
                 errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
             }
-			if (infoExecutionDegree == null
-				|| infoExecutionDegree.getInfoDegreeCurricularPlan() == null
-				|| infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree() == null)
-			{
-				errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));			
-			}
-			if (!errors.isEmpty())
-			{
-				saveErrors(request, errors);
-				return (new ActionForward(mapping.getInput()));
-			}
-		
-			degreeId = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal();
+            if (infoExecutionDegree == null
+                || infoExecutionDegree.getInfoDegreeCurricularPlan() == null
+                || infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree() == null)
+            {
+                errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
+            }
+            if (!errors.isEmpty())
+            {
+                saveErrors(request, errors);
+                return (new ActionForward(mapping.getInput()));
+            }
 
-			//Read execution period
+            degreeId = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getIdInternal();
+
+            //Read execution period
             InfoExecutionYear infoExecutionYear = infoExecutionDegree.getInfoExecutionYear();
             if (infoExecutionYear == null)
             {
                 errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
                 saveErrors(request, errors);
-				return (new ActionForward(mapping.getInput()));
+                return (new ActionForward(mapping.getInput()));
             }
-            
+
             Object[] args2 = { infoExecutionYear };
 
             List executionPeriods = null;
@@ -107,27 +110,28 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
             {
                 errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
             }
-			if (!errors.isEmpty())
-			{
-				saveErrors(request, errors);
-				return (new ActionForward(mapping.getInput()));
-			}
-			
+            if (!errors.isEmpty())
+            {
+                saveErrors(request, errors);
+                return (new ActionForward(mapping.getInput()));
+            }
+
             Collections.sort(executionPeriods, new BeanComparator("endDate"));
 
-            InfoExecutionPeriod infoExecutionPeriod = ((InfoExecutionPeriod) executionPeriods.get(executionPeriods.size() - 1));
+            InfoExecutionPeriod infoExecutionPeriod =
+                ((InfoExecutionPeriod) executionPeriods.get(executionPeriods.size() - 1));
             executionPeriodOId = infoExecutionPeriod.getIdInternal();
-            
-			request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
-			request.setAttribute(
-				SessionConstants.EXECUTION_PERIOD_OID,
-				infoExecutionPeriod.getIdInternal().toString());
-			request.setAttribute("schoolYear", infoExecutionYear.getYear());
-            
+
+            request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
+            request.setAttribute(
+                SessionConstants.EXECUTION_PERIOD_OID,
+                infoExecutionPeriod.getIdInternal().toString());
+            request.setAttribute("schoolYear", infoExecutionYear.getYear());
+
         }
 
-		GestorServicos gestorServicos = GestorServicos.manager();
-		
+        GestorServicos gestorServicos = GestorServicos.manager();
+
         //degree information
         Object[] args = { executionPeriodOId, degreeId };
 
@@ -143,7 +147,7 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
         {
             errors.add("impossibleDegreeSite", new ActionError("error.impossibleDegreeSite"));
             saveErrors(request, errors);
-			return (new ActionForward(mapping.getInput()));
+            return (new ActionForward(mapping.getInput()));
         }
 
         //execution degrees of this degree
@@ -157,11 +161,10 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
                     args);
         } catch (FenixServiceException e)
         {
-			errors.add("impossibleDegreeSite", new ActionError("error.impossibleExecutionDegreeList"));
-			saveErrors(request, errors);
-		}
-        
-        request.setAttribute("degreeID", degreeId);
+            errors.add("impossibleDegreeSite", new ActionError("error.impossibleExecutionDegreeList"));
+            saveErrors(request, errors);
+        }
+
         request.setAttribute("infoDegreeInfo", infoDegreeInfo);
         request.setAttribute("infoExecutionDegrees", executionDegreeList);
         return mapping.findForward("showDescription");
@@ -179,7 +182,10 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
         HttpSession session = request.getSession(true);
 
         Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
+        //request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, executionPeriodOId);
+
         Integer degreeId = getFromRequest("degreeID", request);
+        request.setAttribute("degreeID", degreeId);
 
         GestorServicos gestorServicos = GestorServicos.manager();
 
@@ -202,8 +208,6 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
 
         }
 
-        //request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, executionPeriodOId);
-        request.setAttribute("degreeID", degreeId);
         request.setAttribute("infoDegreeInfo", infoDegreeInfo);
         return mapping.findForward("showAccessRequirements");
     }
@@ -220,8 +224,11 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
         HttpSession session = request.getSession(true);
 
         Integer executionPeriodOId = getFromRequest("executionPeriodOID", request);
+		//request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, executionPeriodOId);
+		
         Integer degreeId = getFromRequest("degreeID", request);
-
+		request.setAttribute("degreeID", degreeId);
+		
         GestorServicos gestorServicos = GestorServicos.manager();
 
         //degree information
@@ -246,8 +253,6 @@ public class ShowDegreeSiteAction extends FenixContextDispatchAction
 
         Collections.sort(infoDegreeCurricularPlanList, comparatorChain);
 
-        //request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, executionPeriodOId);
-        request.setAttribute("degreeID", degreeId);
         request.setAttribute("infoDegreeCurricularPlanList", infoDegreeCurricularPlanList);
 
         return mapping.findForward("showCurricularPlans");

@@ -65,9 +65,7 @@ public class ShowDegreesAction extends FenixContextDispatchAction
 
         //put both list in request
         request.setAttribute("degreesList", degreesList);
-        //request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
-        //request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal());
-
+ 
         return mapping.findForward("showDegrees");
     }
 
@@ -109,8 +107,6 @@ public class ShowDegreesAction extends FenixContextDispatchAction
 
         //put both list in request
         request.setAttribute("degreesList", degreesList);
-        //request.setAttribute(SessionConstants.EXECUTION_PERIOD, infoExecutionPeriod);
-        //request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, infoExecutionPeriod.getIdInternal());
 
         return mapping.findForward("showDegrees");
     }
