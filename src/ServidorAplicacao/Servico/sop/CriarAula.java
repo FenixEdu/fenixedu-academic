@@ -24,13 +24,9 @@ import Dominio.IExecutionPeriod;
 import Dominio.ISala;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.Servico.sop.exceptions.ExistingServiceException;
-import ServidorAplicacao.Servico.sop.exceptions.InterceptingServiceException;
-import ServidorAplicacao
-	.Servico
-	.sop
-	.exceptions
-	.InvalidTimeIntervalServiceException;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
+import ServidorAplicacao.Servico.exceptions.InterceptingServiceException;
+import ServidorAplicacao.Servico.exceptions.InvalidTimeIntervalServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;

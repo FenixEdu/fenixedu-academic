@@ -4,7 +4,7 @@
  * March 2nd, 2003, Sometime in the afternoon
  */
  
-package ServidorAplicacao.Servico.sop.exceptions;
+package ServidorAplicacao.Servico.exceptions;
 
 /**
  *

@@ -13,8 +13,8 @@ import org.apache.struts.action.DynaActionForm;
 import DataBeans.InfoRoom;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
-import ServidorAplicacao.Servico.sop.exceptions.ExistingServiceException;
-import ServidorApresentacao.Action.sop.exceptions.ExistingActionException;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
+import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.TipoSala;
 

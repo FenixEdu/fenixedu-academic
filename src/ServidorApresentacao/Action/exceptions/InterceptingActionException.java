@@ -4,13 +4,12 @@
  * March 2nd, 2003, 17h38
  */
  
-package ServidorApresentacao.Action.sop.exceptions;
+package ServidorApresentacao.Action.exceptions;
 
 /**
  *
  * @author  Luis Cruz & Sara Ribeiro
  */
-import ServidorApresentacao.Action.exceptions.FenixActionException;
 
 public class InterceptingActionException extends FenixActionException {
 

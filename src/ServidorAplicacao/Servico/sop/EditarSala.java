@@ -15,7 +15,7 @@ import DataBeans.InfoRoom;
 import DataBeans.RoomKey;
 import Dominio.ISala;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.Servico.sop.exceptions.ExistingServiceException;
+import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;

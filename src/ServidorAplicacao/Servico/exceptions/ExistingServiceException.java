@@ -4,7 +4,7 @@
  * Febuary 28th, 2003, Sometime in the morning
  */
  
-package ServidorAplicacao.Servico.sop.exceptions;
+package ServidorAplicacao.Servico.exceptions;
 
 /**
  *

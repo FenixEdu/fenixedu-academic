@@ -4,7 +4,7 @@
  * To change this generated comment go to 
  * Window>Preferences>Java>Code Generation>Code Template
  */
-package ServidorAplicacao.Servico.sop.exceptions;
+package ServidorAplicacao.Servico.exceptions;
 
 import ServidorAplicacao.FenixServiceException;
 

@@ -4,13 +4,12 @@
  * Febuary 28th, 2003, Sometime in the morning
  */
  
-package ServidorApresentacao.Action.sop.exceptions;
+package ServidorApresentacao.Action.exceptions;
 
 /**
  *
  * @author  Luis Cruz & Nuno Nunes & João Mota
  */
-import ServidorApresentacao.Action.exceptions.FenixActionException;
 
 public class ExistingActionException extends FenixActionException {
 
