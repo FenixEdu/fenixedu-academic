@@ -13,8 +13,11 @@ public interface ISite {
 
 	public IDisciplinaExecucao getExecutionCourse();
 	public void setExecutionCourse(IDisciplinaExecucao executionCourse);
-	List getSections();
 	ISection getInitialSection();
-	List getAnnouncements();
 	public void setInitialSection(ISection section);
+	List getSections();
+	public void setSections(List sections);
+	List getAnnouncements();
+	public void setAnnouncements(List announcements);
+
 }
