@@ -6,10 +6,12 @@
 <logic:present name="infoSiteTeachersInformation">
 	<logic:iterate id="infoSiteTeacherInformation" name="infoSiteTeachersInformation">
 		<h2><bean:message key="label.acred.teacherInfo" bundle="GEP_RESOURCES"/></h2>
-		<h2>
-			<bean:message key="label.acred.degree" bundle="GEP_RESOURCES"/>
-			<bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.nome"/>
-		</h2>
+		<logic:present name="infoExecutionDegree">
+			<h2>
+				<bean:message key="label.acred.degree" bundle="GEP_RESOURCES"/>
+				<bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.nome"/>
+			</h2>
+		</logic:present>
 		<table class="infoselected" width="100%">
 			<tr>
 				<td width="70%"><bean:message key="label.acred.teacherInformation.name" bundle="GEP_RESOURCES"/>

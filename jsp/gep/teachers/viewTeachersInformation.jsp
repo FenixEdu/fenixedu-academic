@@ -4,22 +4,31 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 <logic:present name="infoSiteTeachersInformation">	
-	<table width="90%" border="0" cellpadding="0" cellspacing="0">
-		<tr>
-			<td align="center" class="infoselected">
-				<p>
-					<strong><bean:message key="title.gep.teachersInformationSelectedDegree"
-										  bundle="GEP_RESOURCES"/>:</strong> 
-					<bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.nome"/>
-					<br />
-					<strong><bean:message key="title.gep.executionYear"
-										  bundle="GEP_RESOURCES"/>:</strong>
-					<bean:write name="infoExecutionDegree" property="infoExecutionYear.year"/>
-				</p>			
-			</td>
-		</tr>
-	</table>
+	<logic:present name="infoExecutionDegree">
+		<table width="90%" border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="center" class="infoselected">
+					<p>
+						<strong><bean:message key="title.gep.teachersInformationSelectedDegree"
+											  bundle="GEP_RESOURCES"/>:</strong> 
+						<bean:write name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.nome"/>
+						<br />
+						<strong><bean:message key="title.gep.executionYear"
+											  bundle="GEP_RESOURCES"/>:</strong>
+						<bean:write name="infoExecutionDegree" property="infoExecutionYear.year"/>
+					</p>			
+				</td>
+			</tr>
+		</table>
+	</logic:present>
 	<br/>
+	<h2>
+		<bean:message key="title.gep.teachersInformation"
+					  bundle="GEP_RESOURCES"/>
+  			(<dt:format pattern="dd/MM/yyyy">
+  				<dt:currentTime/>
+  			</dt:format>)
+  	</h2>
 	<logic:present name="infoExecutionDegree">
 		<logic:present name="basic">
 			<div class="button">
@@ -42,13 +51,22 @@
 			</div>
 		</logic:notPresent>
 	</logic:present>
-	<h2>
-		<bean:message key="title.gep.teachersInformation"
-					  bundle="GEP_RESOURCES"/>
-  			(<dt:format pattern="dd/MM/yyyy">
-  				<dt:currentTime/>
-  			</dt:format>)
-  	</h2>
+	<logic:notPresent name="infoExecutionDegree">
+		<logic:present name="basic">
+			<div class="button">
+				<html:link page="/listTeachersAcreditation.do?method=doSearch&amp;basic=basic&amp;executionDegreeId=all" target="_blank">
+					<bean:message key="label.list.acred" bundle="GEP_RESOURCES" />
+				</html:link>
+			</div>
+		</logic:present>
+		<logic:notPresent name="basic">
+			<div class="button">
+				<html:link page="/listTeachersAcreditation.do?method=doSearch&amp;basic=false&amp;executionDegreeId=all" target="_blank">
+					<bean:message key="label.list.acred" bundle="GEP_RESOURCES" />
+				</html:link>
+			</div>
+		</logic:notPresent>
+	</logic:notPresent>	
 	<table width="90%" border="0" cellspacing="1" style="margin-top:10px">
 		<tr> 
 			<td class="listClasses-header"><bean:message key="label.gep.teacher" bundle="GEP_RESOURCES"/></td>
@@ -164,4 +182,20 @@
 			</div>
 		</logic:notPresent>
 	</logic:present>
+	<logic:notPresent name="infoExecutionDegree">
+		<logic:present name="basic">
+			<div class="button">
+				<html:link page="/listTeachersAcreditation.do?method=doSearch&amp;basic=basic&amp;executionDegreeId=all" target="_blank">
+					<bean:message key="label.list.acred" bundle="GEP_RESOURCES" />
+				</html:link>
+			</div>
+		</logic:present>
+		<logic:notPresent name="basic">
+			<div class="button">
+				<html:link page="/listTeachersAcreditation.do?method=doSearch&amp;basic=false&amp;executionDegreeId=all" target="_blank">
+					<bean:message key="label.list.acred" bundle="GEP_RESOURCES" />
+				</html:link>
+			</div>
+		</logic:notPresent>
+	</logic:notPresent>
 </logic:present>
