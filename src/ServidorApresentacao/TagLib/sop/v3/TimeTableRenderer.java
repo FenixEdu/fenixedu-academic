@@ -279,9 +279,9 @@ public class TimeTableRenderer {
 				lessonSlot.getInfoLessonWrapper();
 
 			if (infoLessonWrapper.isLocked()) {
-				System.out.println(
-					"***************** Tenho uma disciplina locked at "
-						+ infoLessonWrapper.getSlotIndex());
+//				System.out.println(
+//					"***************** Tenho uma disciplina locked at "
+//						+ infoLessonWrapper.getSlotIndex());
 				list[infoLessonWrapper.getSlotIndex()] = infoLessonWrapper;
 			} else {
 				lessonSlotNotLocked.add(infoLessonWrapper);
@@ -299,7 +299,7 @@ public class TimeTableRenderer {
 			for (int index = 0; index < list.length; index++) {
 				if (list[index] == null) {
 					list[index] = infoLessonWrapper;
-					System.out.println("Lockei em " + index);
+//					System.out.println("Lockei em " + index);
 					infoLessonWrapper.setLocked(true, index);
 					break;
 				}
