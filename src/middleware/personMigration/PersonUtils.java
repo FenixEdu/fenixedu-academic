@@ -236,7 +236,7 @@ public class PersonUtils {
 	 * @param Country Code
 	 * @return The corresponding object
 	 */
-	public static ICountry getCountry(Integer countryCode) throws ExcepcaoPersistencia {
+	public static ICountry getCountry(Integer countryCode) {
 		return PersonUtils.convertCountry(countryCode.toString());
 	}
 

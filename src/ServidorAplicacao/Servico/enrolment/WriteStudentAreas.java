@@ -1,7 +1,5 @@
 package ServidorAplicacao.Servico.enrolment;
 
-import org.apache.commons.lang.IncompleteArgumentException;
-
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.Branch;
 import Dominio.Frequenta;
