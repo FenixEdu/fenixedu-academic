@@ -53,10 +53,13 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter
 		IServico servico,
 		Object[] argumentos)
 		throws Exception {
-		if ((id == null)
-			|| (id.getRoles() == null)
-			|| !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
-			|| !lecturesExecutionCourse(id, argumentos)) {
+		try {
+			if ((id == null)
+				|| (id.getRoles() == null)
+				|| !AuthorizationUtils.containsRole(id.getRoles(), getRoleType())
+				|| !lecturesExecutionCourse(id, argumentos)) {
+				throw new NotAuthorizedException();
+			} catch (RuntimeException e) {
 			throw new NotAuthorizedException();
 		}
 	}
