@@ -209,6 +209,9 @@ public abstract class SessionConstants {
 	public static final String SEARCH_EXTERNAL_JURIES = "search_external_juries";
 	public static final String EXTERNAL_JURIES_SEARCH_RESULTS = "external_juries_search_results";
 	public static final String EXECUTION_DEGREE_LIST = "execution_degree_list";
+	public static final String REIMBURSEMENT_GUIDE = "reimbursement_guide";
+	public static final String REIMBURSEMENT_GUIDES_LIST = "reimbursement_guides_list";
+	public static final String REIMBURSEMENT_GUIDE_STATES_LIST = "reimbursement_guide_states_list";
 	
 
 	// -------------------------------------------------------------------------------

@@ -105,10 +105,9 @@
         		</logic:iterate>
 
 				<tr>
-					<td><bean:message key="label.masterDegree.administrativeOffice.others" /></td>
-					<td><html:textarea property="othersRemarks"/></td>
-					<td><html:text property="othersQuantity"/></td>
-					<td><html:text property="othersPrice"/> <bean:message key="label.currencySymbol" /></td>
+					<td><html:hidden property="othersRemarks"/></td>
+					<td><html:hidden property="othersQuantity"/></td>
+					<td><html:hidden property="othersPrice"/></td>
 				</tr>
 		
 		<%

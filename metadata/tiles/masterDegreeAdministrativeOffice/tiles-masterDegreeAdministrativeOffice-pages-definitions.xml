@@ -33,10 +33,24 @@
 	<definition name="df.page.createReimbursementGuide" extends="definition.masterDegreeAdministrativeOffice.guide.reimbursementGuideOperations">
 		<put name="body" value="/posGraduacao/guide/reimbursementGuide/createReimbursementGuide.jsp"/>
 	</definition>
-	<definition name="df.page.viewReimbursementGuide" extends="definition.masterDegreeAdministrativeOffice.guide.reimbursementGuideOperations">
-		<put name="body" value="/posGraduacao/guide/reimbursementGuide/viewReimbursementGuide.jsp"/>
+	<definition name="df.page.reimbursementGuide_Error" extends="definition.masterDegreeAdministrativeOffice.guide.reimbursementGuideOperations">
+		<put name="body" value="/posGraduacao/guide/reimbursementGuide/reimbursementGuide_Error.jsp"/>
 	</definition>
-	
+	<definition name="df.page.createReimbursementGuide_Success" extends="definition.masterDegreeAdministrativeOffice.guide.reimbursementGuideOperations">
+		<put name="body" value="/posGraduacao/guide/reimbursementGuide/createReimbursementGuide_Success.jsp"/>
+	</definition>	
+	<definition name="df.page.viewReimbursementGuides" extends="definition.masterDegreeAdministrativeOffice.guide.reimbursementGuideOperations">
+		<put name="body" value="/posGraduacao/guide/reimbursementGuide/viewReimbursementGuides.jsp"/>
+	</definition>
+	<definition name="df.page.viewReimbursementGuideDetails" extends="definition.masterDegreeAdministrativeOffice.guide.reimbursementGuideOperations">
+		<put name="body" value="/posGraduacao/guide/reimbursementGuide/viewReimbursementGuideDetails.jsp"/>
+	</definition>
+	<definition name="df.page.editReimbursementGuideSituation" extends="definition.masterDegreeAdministrativeOffice.guide.reimbursementGuideOperations">
+		<put name="body" value="/posGraduacao/guide/reimbursementGuide/editReimbursementGuideSituation.jsp"/>
+	</definition>
+	<definition name="df.page.editReimbursementGuideSituation_Success" extends="definition.masterDegreeAdministrativeOffice.guide.reimbursementGuideOperations">
+		<put name="body" value="/posGraduacao/guide/reimbursementGuide/editReimbursementGuideSituation_Success.jsp"/>
+	</definition>	
 	<definition name="df.page.externalPersonIndex" extends="definition.masterDegreeAdministrativeOffice.externalPerson">
 		<put name="body" value="/posGraduacao/welcomeScreen.jsp"/>
 	</definition>

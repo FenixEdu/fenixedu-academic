@@ -22,8 +22,10 @@ NEW FEATURES:
 - Manage Grant Cost Center (Create and edit).
 - Manage Grant Projects (Create and edit).
 - Manage Qualifications of a grant owner (Create, Edit, Delete). All qualifications are showned in a table.
-
-
+- Create Reembursement Guides
+- Edit Reembursement Guide Situation
+- View Reembursement Guides
+- Print Reembursement Guides
 NOTES:
 - updateWebSiteItem-14-04-2004.sql: 
 - added field ftpName in website_item table
@@ -55,6 +57,7 @@ BUG FIXES:
 - webSiteManager: fixed ordering of months in news archive
 - masterDegreeAdministrativeOffice: fixed sum of needed credits for final work proposal that were managed in float way
   and passed to double way in class MasterDegreeCurricularPlanStrategy in method checkEndOfScholarship
+- Removed possibility of editing guide entries in guides with state = PAYED
 
 KNOWN ISSUES:
 - method in CursoExecucaoOJB: readByDegreeCodeAndExecutionYear, that asks database for execution degree 

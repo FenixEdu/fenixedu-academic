@@ -5056,6 +5056,16 @@
         </filterChains>
     </service>
     <service>
+        <name>ReadReimbursementGuidesByGuide</name>
+        <implementationClass> 
+            ServidorAplicacao.Servico.masterDegree.administrativeOffice.guide.reimbursementGuide.ReadReimbursementGuidesByGuide</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
         <name>ReadCoordinationTeam</name>
         <implementationClass> 
             ServidorAplicacao.Servico.coordinator.ReadCoordinationTeam</implementationClass>

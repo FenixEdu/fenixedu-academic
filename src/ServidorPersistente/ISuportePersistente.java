@@ -32,6 +32,7 @@ import ServidorPersistente.grant.IPersistentGrantProject;
 import ServidorPersistente.grant.IPersistentGrantSubsidy;
 import ServidorPersistente.grant.IPersistentGrantType;
 import ServidorPersistente.guide.IPersistentReimbursementGuide;
+import ServidorPersistente.guide.IPersistentReimbursementGuideEntry;
 import ServidorPersistente.guide.IPersistentReimbursementGuideSituation;
 import ServidorPersistente.places.campus.IPersistentCampus;
 import ServidorPersistente.student.IPersistentDelegate;
@@ -233,6 +234,7 @@ public interface ISuportePersistente
 
 	public IPersistentReimbursementGuide getIPersistentReimbursementGuide();
 	public IPersistentReimbursementGuideSituation getIPersistentReimbursementGuideSituation();
+    public IPersistentReimbursementGuideEntry getIPersistentReimbursementGuideEntry();
 	public IPersistentOrientation getIPersistentOrientation();
 	public IPersistentPublicationsNumber getIPersistentPublicationsNumber();
 	public IPersistentOldPublication getIPersistentOldPublication();

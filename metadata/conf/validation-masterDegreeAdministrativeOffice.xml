@@ -1030,5 +1030,13 @@
 	        <arg0 key="label.masterDegree.gratuity.situation" />
 		</field>
     </form>
+    
+    <!-- edit reimbursement guide situation form bean validation -->
+	<form name="editReimbursementGuideSituationForm">
+			<field property="situation" depends="required" page="1">
+				<arg0 key="label.masterDegree.administrativeOffice.guide.reimbursementGuide.newSituation" />
+			</field>
+	</form>
+	
   </formset>
 </form-validation>

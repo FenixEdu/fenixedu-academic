@@ -1,6 +1,6 @@
 /*
  * Created on 12/Nov/2003
- *
+ *  
  */
 package Dominio.reimbursementGuide;
 
@@ -17,164 +17,175 @@ import Util.State;
 /**
  * 
  * 
- * This class contains all the information regarding a Reimbursement Guide.
- * <br>
- *@author <a href="mailto:joao.mota@ist.utl.pt">João Mota</a>
- *
+ * This class contains all the information regarding a Reimbursement Guide. <br>
+ * 
+ * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota</a>
+ *  
  */
 public class ReimbursementGuide extends DomainObject implements IReimbursementGuide
 {
 
-    protected Integer number;
-    protected IGuide guide;
-    protected Double value;
-    protected String justification;
-    protected Calendar creationDate;
-    protected List reimbursementGuideSituations;
-    private Integer keyGuide;
+	protected Integer number;
+	protected IGuide guide;
+	protected Calendar creationDate;
+	protected List reimbursementGuideSituations;
+	protected List reimbursementGuideEntries;
+	private Integer keyGuide;
 
-    /**
-     * 
-     */
-    public ReimbursementGuide()
-    {
+	/**
+	 *  
+	 */
+	public ReimbursementGuide()
+	{
 
-    }
+	}
 
-    /**
-     * @param reimbursementGuideId
-     */
-    public ReimbursementGuide(Integer reimbursementGuideId)
-    {
-        setIdInternal(reimbursementGuideId);
-    }
+	/**
+	 * @param reimbursementGuideId
+	 */
+	public ReimbursementGuide(Integer reimbursementGuideId)
+	{
+		setIdInternal(reimbursementGuideId);
+	}
 
-    /**
-     * @return
-     */
-    public Calendar getCreationDate()
-    {
-        return creationDate;
-    }
+	/**
+	 * @return
+	 */
+	public Calendar getCreationDate()
+	{
+		return creationDate;
+	}
 
-    /**
-     * @param creationDate
-     */
-    public void setCreationDate(Calendar creationDate)
-    {
-        this.creationDate = creationDate;
-    }
+	/**
+	 * @param creationDate
+	 */
+	public void setCreationDate(Calendar creationDate)
+	{
+		this.creationDate = creationDate;
+	}
 
-    /**
-     * @return
-     */
-    public String getJustification()
-    {
-        return justification;
-    }
+	/**
+	 * @return
+	 */
+	public IGuide getGuide()
+	{
+		return guide;
+	}
 
-    /**
-     * @param justification
-     */
-    public void setJustification(String justification)
-    {
-        this.justification = justification;
-    }
+	/**
+	 * @param paymentGuide
+	 */
+	public void setGuide(IGuide paymentGuide)
+	{
+		this.guide = paymentGuide;
+	}
 
-    /**
-     * @return
-     */
-    public IGuide getGuide()
-    {
-        return guide;
-    }
+	/**
+	 * @return
+	 */
+	public Integer getKeyGuide()
+	{
+		return keyGuide;
+	}
 
-    /**
-     * @param paymentGuide
-     */
-    public void setGuide(IGuide paymentGuide)
-    {
-        this.guide = paymentGuide;
-    }
+	/**
+	 * @param keyPaymentGuide
+	 */
+	public void setKeyGuide(Integer keyPaymentGuide)
+	{
+		this.keyGuide = keyPaymentGuide;
+	}
 
-    /**
-     * @return
-     */
-    public Double getValue()
-    {
-        return value;
-    }
+	/**
+	 * @return
+	 */
+	public Integer getNumber()
+	{
+		return number;
+	}
 
-    /**
-     * @param value
-     */
-    public void setValue(Double value)
-    {
-        this.value = value;
-    }
+	/**
+	 * @param number
+	 */
+	public void setNumber(Integer number)
+	{
+		this.number = number;
+	}
 
-    /**
-     * @return
-     */
-    public Integer getKeyGuide()
-    {
-        return keyGuide;
-    }
+	/**
+	 * @return
+	 */
+	public List getReimbursementGuideSituations()
+	{
+		return reimbursementGuideSituations;
+	}
 
-    /**
-     * @param keyPaymentGuide
-     */
-    public void setKeyGuide(Integer keyPaymentGuide)
-    {
-        this.keyGuide = keyPaymentGuide;
-    }
+	/**
+	 * @param reimbursementGuideSituations
+	 */
+	public void setReimbursementGuideSituations(List reimbursementGuideSituations)
+	{
+		this.reimbursementGuideSituations = reimbursementGuideSituations;
+	}
 
-    /**
-     * @return
-     */
-    public Integer getNumber()
-    {
-        return number;
-    }
+	public IReimbursementGuideSituation getActiveReimbursementGuideSituation()
+	{
 
-    /**
-     * @param number
-     */
-    public void setNumber(Integer number)
-    {
-        this.number = number;
-    }
+		return (
+			IReimbursementGuideSituation) CollectionUtils
+				.find(getReimbursementGuideSituations(), new Predicate()
+		{
+			public boolean evaluate(Object obj)
+			{
+				IReimbursementGuideSituation situation = (IReimbursementGuideSituation) obj;
+				return situation.getState().getState().intValue() == State.ACTIVE;
+			}
+		});
 
-    /**
-     * @return
-     */
-    public List getReimbursementGuideSituations()
-    {
-        return reimbursementGuideSituations;
-    }
+	}
 
-    /**
-     * @param reimbursementGuideSituations
-     */
-    public void setReimbursementGuideSituations(List reimbursementGuideSituations)
-    {
-        this.reimbursementGuideSituations = reimbursementGuideSituations;
-    }
+	/**
+	 * @return Returns the reimbursementGuideEntries.
+	 */
+	public List getReimbursementGuideEntries()
+	{
+		return reimbursementGuideEntries;
+	}
 
-    public IReimbursementGuideSituation getActiveReimbursementGuideSituation()
-    {
+	/**
+	 * @param reimbursementGuideEntries
+	 *            The reimbursementGuideEntries to set.
+	 */
+	public void setReimbursementGuideEntries(List reimbursementGuideEntries)
+	{
+		this.reimbursementGuideEntries = reimbursementGuideEntries;
+	}
 
-        return (
-            IReimbursementGuideSituation) CollectionUtils
-                .find(getReimbursementGuideSituations(), new Predicate()
-        {
-            public boolean evaluate(Object obj)
-            {
-                IReimbursementGuideSituation situation = (IReimbursementGuideSituation) obj;
-                return situation.getState().getState().intValue() == State.ACTIVE;
-            }
-        });
+	public boolean equals(Object obj)
+	{
+		boolean result = false;
+		if (obj instanceof IReimbursementGuide)
+		{
+			IReimbursementGuide reimbursementGuide = (IReimbursementGuide) obj;
 
-    }
+			if ((getNumber() == null && reimbursementGuide.getNumber() == null)
+				|| (getNumber().equals(reimbursementGuide.getNumber())))
+			{
+				result = true;
+			}
+		}
+
+		return result;
+	}
+
+	public String toString()
+	{
+		String result = "[" + this.getClass().getName() + ": ";
+		result += " idInternal=" + getIdInternal();
+		result += ", number=" + number;
+		result += ", creation Date=" + creationDate;
+		result += "]";
+		return result;
+	}
 
 }

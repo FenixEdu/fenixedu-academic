@@ -128,6 +128,7 @@ import DataBeans.grant.contract.InfoGrantSubsidy;
 import DataBeans.grant.contract.InfoGrantType;
 import DataBeans.grant.owner.InfoGrantOwner;
 import DataBeans.guide.reimbursementGuide.InfoReimbursementGuide;
+import DataBeans.guide.reimbursementGuide.InfoReimbursementGuideEntry;
 import DataBeans.guide.reimbursementGuide.InfoReimbursementGuideSituation;
 import DataBeans.person.InfoQualification;
 import DataBeans.student.InfoDelegate;
@@ -188,7 +189,9 @@ import Dominio.grant.contract.IGrantType;
 import Dominio.grant.owner.GrantOwner;
 import Dominio.grant.owner.IGrantOwner;
 import Dominio.reimbursementGuide.IReimbursementGuide;
+import Dominio.reimbursementGuide.IReimbursementGuideEntry;
 import Dominio.reimbursementGuide.IReimbursementGuideSituation;
+import Dominio.reimbursementGuide.ReimbursementGuideEntry;
 import Dominio.student.Delegate;
 import Dominio.student.IDelegate;
 import Dominio.teacher.Category;
@@ -460,7 +463,8 @@ public abstract class Cloner
             return null;
         }
 
-		try {
+		try
+		{
 			// Temporary bug fix.
 			// Try to materialize the proxy... if it fails return null.
 			// Should look into this further... but I don't have the time
@@ -469,7 +473,8 @@ public abstract class Cloner
 			//System.out.println("lesson= " + lesson);
 			//System.out.println("lesson.id= " + lesson.getIdInternal() + "\n\n");
 			lesson.getIdInternal();
-		} catch (Throwable nex)
+		}
+		catch (Throwable nex)
 		{
 			//nex.printStackTrace();
 			//System.out.println("Returning null in the lessons place\n\n\n\n");
@@ -4646,6 +4651,18 @@ public abstract class Cloner
         InfoReimbursementGuide infoReimbursementGuide = new InfoReimbursementGuide();
         InfoGuide infoGuide = copyIGuide2InfoGuide(reimbursementGuide.getGuide());
 
+		List infoReimbursementGuideSituations = new ArrayList();
+		Iterator it = reimbursementGuide.getReimbursementGuideSituations().iterator();
+
+		while (it.hasNext())
+		{
+
+			infoReimbursementGuideSituations.add(
+				copyIReimbursementGuideSituation2InfoReimbursementGuideSituation(
+					(IReimbursementGuideSituation) it.next()));
+		}
+
+		infoReimbursementGuide.setInfoReimbursementGuideSituations(infoReimbursementGuideSituations);
         copyObjectProperties(infoReimbursementGuide, reimbursementGuide);
         infoReimbursementGuide.setInfoGuide(infoGuide);
 
@@ -4656,13 +4673,9 @@ public abstract class Cloner
     {
         InfoReimbursementGuideSituation infoReimbursementGuideSituation =
             new InfoReimbursementGuideSituation();
-        InfoReimbursementGuide infoReimbursementGuide =
-            copyIReimbursementGuide2InfoReimbursementGuide(
-                reimbursementGuideSituation.getReimbursementGuide());
         InfoEmployee infoEmployee =
             copyIEmployee2InfoEmployee(reimbursementGuideSituation.getEmployee());
         copyObjectProperties(infoReimbursementGuideSituation, reimbursementGuideSituation);
-        infoReimbursementGuideSituation.setInfoReimbursementGuide(infoReimbursementGuide);
         infoReimbursementGuideSituation.setInfoEmployee(infoEmployee);
 
         return infoReimbursementGuideSituation;
@@ -5272,5 +5285,55 @@ public abstract class Cloner
         infoCreditLine.setInfoTeacher(infoTeacher);
         return infoCreditLine;
     }
+
+	public static IReimbursementGuideEntry copyInfoReimbursementGuideEntry2IReimbursementGuideEntry(InfoReimbursementGuideEntry infoReimbursementGuideEntry)
+	{
+
+		IReimbursementGuideEntry reimbursementGuideEntry = new ReimbursementGuideEntry();
+
+		IGuideEntry guideEntry = null;
+
+		if (infoReimbursementGuideEntry.getInfoGuideEntry() != null)
+		{
+			guideEntry = copyInfoGuideEntry2IGuideEntry(infoReimbursementGuideEntry.getInfoGuideEntry());
+			reimbursementGuideEntry.setGuideEntry(guideEntry);
+		}
+		copyObjectProperties(reimbursementGuideEntry, infoReimbursementGuideEntry);
+
+		return reimbursementGuideEntry;
+
+	}
+
+	public static List copyListInfoReimbursementGuideEntries2ListIReimbursementGuideEntries(List listInfoReimbursementGuideEntries)
+	{
+		List listReimbursementGuideEntries = new ArrayList(listInfoReimbursementGuideEntries.size());
+
+		Iterator iterListInfoReimbursementGuideEntries = listInfoReimbursementGuideEntries.iterator();
+
+		while (iterListInfoReimbursementGuideEntries.hasNext())
+		{
+			InfoReimbursementGuideEntry infoReimbursementGuideEntry =
+				(InfoReimbursementGuideEntry) iterListInfoReimbursementGuideEntries.next();
+			IReimbursementGuideEntry reimbursementGuideEntry =
+				Cloner.copyInfoReimbursementGuideEntry2IReimbursementGuideEntry(
+					infoReimbursementGuideEntry);
+			listReimbursementGuideEntries.add(reimbursementGuideEntry);
+		}
+
+		return listReimbursementGuideEntries;
+	}
+
+	public static InfoReimbursementGuideEntry copyIReimbursementGuideEntry2InfoReimbursementGuideEntry(IReimbursementGuideEntry reimbursementGuideEntry)
+	{
+		InfoReimbursementGuideEntry infoReimbursementGuideEntry = new InfoReimbursementGuideEntry();
+
+		InfoGuideEntry infoGuideEntry =
+			copyIGuideEntry2InfoGuideEntry(reimbursementGuideEntry.getGuideEntry());
+
+		copyObjectProperties(infoReimbursementGuideEntry, reimbursementGuideEntry);
+		infoReimbursementGuideEntry.setInfoGuideEntry(infoGuideEntry);
+
+		return infoReimbursementGuideEntry;
+	}
 
 }

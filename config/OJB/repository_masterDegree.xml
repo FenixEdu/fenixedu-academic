@@ -370,10 +370,13 @@
        <inverse-foreignkey field-ref="keyGuide"/>
      </collection-descriptor>
      
-      <collection-descriptor
+     <collection-descriptor
          name="reimbursementGuides"
          refresh="true"
-     	proxy="true"
+		 proxy="true"
+		 auto-update="false"
+		 auto-delete="false"
+		 auto-retrieve="true"
          element-class-ref="Dominio.reimbursementGuide.ReimbursementGuide"
        >
        <inverse-foreignkey field-ref="keyGuide"/>
@@ -444,6 +447,17 @@
       	  >
           <foreignkey field-ref="keyGuide"/>
       </reference-descriptor>
+	  
+	 <collection-descriptor
+         name="reimbursementGuideEntries"
+         refresh="true"
+         auto-retrieve="true"
+   		 auto-update="false"
+		 auto-delete="false"
+         element-class-ref="Dominio.reimbursementGuide.ReimbursementGuideEntry"
+      >
+		<inverse-foreignkey field-ref="keyGuideEntry"/>
+	  </collection-descriptor>
 	  
 	 </class-descriptor>
 	 
@@ -1101,16 +1115,6 @@
 	     jdbc-type="INTEGER"
 	  />
 	  <field-descriptor 
-	     name="value"
-	     column="VALUE"
-	     jdbc-type="DOUBLE"
-	  />
-	  <field-descriptor 
-	     name="justification"
-	     column="JUSTIFICATION"
-	     jdbc-type="LONGVARCHAR"
-	  />
-	  <field-descriptor 
 	     name="keyGuide"
 	     column="KEY_GUIDE"
 	     jdbc-type="INTEGER"
@@ -1127,31 +1131,36 @@
       	jdbc-type="INTEGER"
       	locking="true"
       />
- 	  <reference-descriptor
+ 	 <reference-descriptor
          	name="guide"
          	class-ref="Dominio.Guide"
          	proxy="true"
-			refresh="true"
       	  >
           <foreignkey field-ref="keyGuide"/>
       </reference-descriptor>
+      
       <collection-descriptor
          name="reimbursementGuideSituations"
          refresh="true"
+         auto-retrieve="true"
+   		 auto-update="false"
+		 auto-delete="false"
          element-class-ref="Dominio.reimbursementGuide.ReimbursementGuideSituation"
        >
-       <inverse-foreignkey field-ref="keyReimbursementGuide"/>
-     </collection-descriptor>
-  
-<!--
-    <collection-descriptor
-         name="guideSituations"
+		<inverse-foreignkey field-ref="keyReimbursementGuide"/>
+	  </collection-descriptor>
+	  
+	  <collection-descriptor
+         name="reimbursementGuideEntries"
          refresh="true"
-         element-class-ref="Dominio.GuideSituation"
+         auto-retrieve="true"
+         auto-update="false"
+		 auto-delete="false"
+         element-class-ref="Dominio.reimbursementGuide.ReimbursementGuideEntry"
        >
-       <inverse-foreignkey field-ref="keyGuide"/>
-     </collection-descriptor>
-        -->
+		<inverse-foreignkey field-ref="keyReimbursementGuide"/>
+	   </collection-descriptor>
+
 	 </class-descriptor>
 <!-- End of definitions for class Dominio.reimbursementGuide.ReimbursementGuide -->
 
@@ -1195,9 +1204,16 @@
          conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
 	 />
 	 <field-descriptor 
+	     name="officialDate"
+	     column="OFFICIAL_DATE"
+         jdbc-type="DATE"
+         conversion="ServidorPersistente.Conversores.Calendar2DateFieldConversion"
+	 />	 
+	 <field-descriptor 
 	     name="reimbursementGuideState"
 	     column="REIMBURSEMENT_GUIDE_STATE"
-         jdbc-type="INTEGER"         		 conversion="ServidorPersistente.Conversores.JavaReimbursementGuideState2SqlReimbursementGuideStateFieldConversion"
+         jdbc-type="INTEGER"         		 
+         conversion="ServidorPersistente.Conversores.JavaReimbursementGuideState2SqlReimbursementGuideStateFieldConversion"
 	 />
       <field-descriptor
       	name="ackOptLock"
@@ -1209,7 +1225,6 @@
          	name="reimbursementGuide"
          	class-ref="Dominio.reimbursementGuide.ReimbursementGuide"
          	proxy="true"
-			refresh="true"
       	  >
           <foreignkey field-ref="keyReimbursementGuide"/>
       </reference-descriptor>
@@ -1223,7 +1238,71 @@
       </reference-descriptor>
 
 	 </class-descriptor>
-<!-- End of definitions for class Dominio.reimbursementGuide.ReimbursementGuide -->
+<!-- End of definitions for class Dominio.reimbursementGuide.ReimbursementGuideSituation -->
+
+<!-- Definitions for class Dominio.reimbursementGuide.ReimbursementGuideEntry -->
+
+	<class-descriptor
+		class="Dominio.reimbursementGuide.ReimbursementGuideEntry"
+		table="REIMBURSEMENT_GUIDE_ENTRY"
+	>
+	  <field-descriptor 
+	     name="idInternal"    
+	     column="ID_INTERNAL"  
+	     jdbc-type="INTEGER"
+	     primarykey="true"
+	     autoincrement="true"
+	  />
+	  <field-descriptor 
+	     name="keyReimbursementGuide"
+	     column="KEY_REIMBURSEMENT_GUIDE"
+	     jdbc-type="INTEGER"
+	  />
+	  <field-descriptor 
+	     name="keyGuideEntry"
+	     column="KEY_GUIDE_ENTRY"
+	     jdbc-type="INTEGER"
+	  />
+	  <field-descriptor 
+	     name="value"
+	     column="VALUE"
+	     jdbc-type="DOUBLE"
+	  />
+	  <field-descriptor 
+	     name="justification"
+	     column="JUSTIFICATION"
+	     jdbc-type="LONGVARCHAR"
+	  />
+      <field-descriptor
+      	name="ackOptLock"
+      	column="ACK_OPT_LOCK"
+      	jdbc-type="INTEGER"
+      	locking="true"
+      />
+      
+	  <reference-descriptor
+         	name="reimbursementGuide"
+         	class-ref="Dominio.reimbursementGuide.ReimbursementGuide"
+         	proxy="true"
+      	  >
+          <foreignkey field-ref="keyReimbursementGuide"/>
+      </reference-descriptor>
+      
+      <reference-descriptor
+         	name="guideEntry"
+         	class-ref="Dominio.GuideEntry"
+         	proxy="true"
+      	  >
+          <foreignkey field-ref="keyGuideEntry"/>
+      </reference-descriptor>
+      
+	 </class-descriptor>
+	 
+
+<!-- End of Definitions for class REIMBURSEMENT_GUIDE_ENTRY -->
+
+
+
 
 <!-- Definitions for class Dominio.WorkLocation -->
 	

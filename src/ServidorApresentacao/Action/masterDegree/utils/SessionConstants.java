@@ -23,4 +23,6 @@ public abstract class SessionConstants {
 	public static final String NOT_PAYED_INSURANCE = "label.notPayed";
 	public static final String PAYED_INSURANCE =  "label.payed";
 	
+	public static final String REIMBURSEMENT_GUIDE = "reimbursement_guide";
+	
 }

@@ -166,22 +166,35 @@
 			%>	
         	<table>
         		<tr>
-        		<td width="30%">
+        		<td width="20%">
         			<bean:define id="linkChangeSituation">/editGuideSituation.do?method=prepareEditSituation<bean:write name="arguments"/>
                 	</bean:define>
         			<html:link page='<%= pageContext.findAttribute("linkChangeSituation").toString() %>'>
         				<bean:message key="link.masterDegree.administrativeOffice.changeGuideSituation" />
         			</html:link>
         		</td>
-        		<td width="30%">
+        		<td width="20%">
         			<bean:define id="linkChangeInformation">/editGuideInformation.do?method=prepareEditInformation<bean:write name="arguments"/>
                 	</bean:define>
         			<html:link page='<%= pageContext.findAttribute("linkChangeInformation").toString() %>'>
         				<bean:message key="link.masterDegree.administrativeOffice.changeGuideInformation" />
         			</html:link>
         		</td>
-        		
-	       		<td width="30%">
+        		<td width="20%">
+        			<bean:define id="linkCreateReimbursementGuide">/createReimbursementGuide.do?method=prepare<bean:write name="arguments"/>
+                	</bean:define>
+        			<html:link page='<%= pageContext.findAttribute("linkCreateReimbursementGuide").toString() %>'>
+        				<bean:message key="link.masterDegree.administrativeOffice.createReimbursementGuide" />
+        			</html:link>
+        		</td>
+        		<td width="20%">
+        			<bean:define id="linkViewReimbursementGuides">/viewReimbursementGuides.do?method=view<bean:write name="arguments"/>
+                	</bean:define>
+        			<html:link page='<%= pageContext.findAttribute("linkViewReimbursementGuides").toString() %>'>
+        				<bean:message key="link.masterDegree.administrativeOffice.viewReimbursementGuides" />
+        			</html:link>
+        		</td>
+	       		<td width="20%">
         			<bean:define id="linkPrintGuide">/printGuide.do?method=print<bean:write name="arguments"/>
                 	</bean:define>
         			<html:link page='<%= pageContext.findAttribute("linkPrintGuide").toString() %>' target="_blank">

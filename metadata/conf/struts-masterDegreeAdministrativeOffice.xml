@@ -576,6 +576,32 @@
 	  		<form-property name="guideId" type="java.lang.Integer"/>
 	  </form-bean>
 
+	  <!-- Bean to Create Reimbursement Guide -->
+	  <form-bean name="createReimbursementGuideForm"  
+	  			 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+	  		<form-property name="values" type="java.lang.Double[]"/>
+	  		<form-property name="justifications" type="java.lang.String[]"/>
+	  		<form-property name="remarks" type="java.lang.String"/>
+	  		<form-property name="page" type="java.lang.Integer"/>
+	  		<form-property name="number" type="java.lang.Integer"/>
+	  		<form-property name="year" type="java.lang.Integer"/>
+	  		<form-property name="version" type="java.lang.Integer"/>
+	  </form-bean>
+
+	  <!-- Bean to Edit Reimbursement Guide Situation -->
+	  <form-bean name="editReimbursementGuideSituationForm"  
+	  			 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+	  		<form-property name="remarks" type="java.lang.String"/>
+	  		<form-property name="situation" type="java.lang.String"/>
+	  		<form-property name="id" type="java.lang.Integer"/>
+   	        <form-property name="officialDateDay" type="java.lang.Integer"/>
+   	        <form-property name="officialDateMonth" type="java.lang.Integer"/>
+   	        <form-property name="officialDateYear" type="java.lang.Integer"/> 	  		
+	  		<form-property name="page" type="java.lang.Integer"/>
+	  </form-bean>	  
+
 	  <form-bean name="insertExternalPersonForm"  
 	  			 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
@@ -2195,6 +2221,97 @@
 	<forward name="viewReimbursementGuide" path="df.page.viewReimbursementGuide"/>
 	<forward name="viewGuide" path="/chooseGuideDispatchAction.do?method=choose"/>  
 	</action>
+	
+	<!-- create reimbursement guide -->
+	<action	name="createReimbursementGuideForm"
+			type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.reimbursementGuide.CreateReimbursementGuideDispatchAction"
+			path="/createReimbursementGuide"
+			input="/createReimbursementGuide.do?page=0&amp;method=prepare"
+			parameter="method"
+			scope="request">
+		<exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+					key="ServidorApresentacao.Action.exceptions.FenixActionException"
+					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>					
+		<exception type="ServidorApresentacao.Action.exceptions.NoEntryChosenActionException"
+					key="ServidorApresentacao.Action.exceptions.NoEntryChosenActionException"
+					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>														
+		<exception type="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+					key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>																								
+		<forward name="start" path="df.page.createReimbursementGuide"/>
+		<forward name="error" path="df.page.reimbursementGuide_Error"/>
+		<forward name="success" path="df.page.createReimbursementGuide_Success"/>			
+	</action>	
+	
+	<!-- view reimbursement guides -->
+	<action	type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.reimbursementGuide.ViewReimbursementGuidesDispatchAction"
+			path="/viewReimbursementGuides"
+			input="/viewReimbursementGuides.do?page=0&amp;method=view"
+			parameter="method"
+			scope="request">
+		<exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+					key="ServidorApresentacao.Action.exceptions.FenixActionException"
+					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>					
+		<exception type="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+					key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>																								
+		<forward name="start" path="df.page.viewReimbursementGuides"/>
+		<forward name="error" path="df.page.reimbursementGuide_Error"/>		
+	</action>	
+	
+	<!-- view reimbursement guide details -->
+	<action	type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.reimbursementGuide.ViewReimbursementGuideDetailsDispatchAction"
+			path="/viewReimbursementGuideDetails"
+			input="/viewReimbursementGuideDetails.do?page=0&amp;method=view"
+			parameter="method"
+			scope="request">
+		<exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+					key="ServidorApresentacao.Action.exceptions.FenixActionException"
+					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>					
+		<exception type="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+					key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>																								
+		<forward name="start" path="df.page.viewReimbursementGuideDetails"/>
+		<forward name="error" path="df.page.reimbursementGuide_Error"/>		
+	</action>	
+	
+	<!-- print reimbursement guide -->
+	<action	type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.reimbursementGuide.PrintReimbursementGuideDispatchAction"
+			path="/printReimbursementGuide"
+			input="/printReimbursementGuide.do?page=0&amp;method=print"
+			parameter="method"
+			scope="request">
+		<exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+					key="ServidorApresentacao.Action.exceptions.FenixActionException"
+					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>					
+		<exception type="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+					key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>																								
+		<forward name="start" path="/guide/reimbursementGuide/reimbursementGuideTemplate1.jsp"/>
+		<forward name="error" path="df.page.reimbursementGuide_Error"/>		
+	</action>	
+	
+	<!-- edit reimbursement guide situation -->
+	<action	name="editReimbursementGuideSituationForm"
+			type="ServidorApresentacao.Action.masterDegree.administrativeOffice.guide.reimbursementGuide.EditReimbursementGuideSituationDispatchAction"
+			path="/editReimbursementGuideSituation"
+			input="/editReimbursementGuideSituation.do?page=0&amp;method=prepare"
+			parameter="method"
+			scope="request">
+		<exception type="ServidorApresentacao.Action.exceptions.FenixActionException"
+					key="ServidorApresentacao.Action.exceptions.FenixActionException"
+					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>					
+		<exception type="ServidorApresentacao.Action.exceptions.NoEntryChosenActionException"
+					key="ServidorApresentacao.Action.exceptions.NoEntryChosenActionException"
+					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>														
+		<exception type="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+					key="ServidorApresentacao.Action.exceptions.InvalidSituationActionException"
+					handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>																								
+		<forward name="start" path="df.page.editReimbursementGuideSituation"/>
+		<forward name="error" path="df.page.reimbursementGuide_Error"/>
+		<forward name="success" path="df.page.editReimbursementGuideSituation_Success"/>			
+	</action>
+
 	
 	<!-- ++++++++++++++++++++++++++++++Gratuity Section+++++++++++++++++++++++++++++++++++++++++++++ -->
 	<action path="/gratuitySection"

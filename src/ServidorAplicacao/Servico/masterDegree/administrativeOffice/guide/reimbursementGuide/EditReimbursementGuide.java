@@ -4,6 +4,8 @@
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.guide.reimbursementGuide;
 
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.IEmployee;
@@ -14,6 +16,7 @@ import Dominio.reimbursementGuide.ReimbursementGuide;
 import Dominio.reimbursementGuide.ReimbursementGuideSituation;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.guide.InvalidGuideSituationServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEmployee;
@@ -26,157 +29,158 @@ import Util.ReimbursementGuideState;
 import Util.State;
 
 /**
- * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota</a><br><strong>
- *         Description:</strong><br>This service edits a reimbursement
- *         guide. Editing a reimbursement guide is in reallity the creation of
- *         a new reimbursement guide situation associated with the
- *         reimbursement guide in question. The former active situation of the
- *         reimbursement guide changes state and a new situation with an active
- *         state. Also there are some rules related with the
- *         ReimbursementGuideSituationState that the service enforces. The
- *         allowed states are: a) if the current state is issued it can be
- *         changed to approved,payed and annulled b) if the current state is
- *         approved it can be changed to payed and annuled c) if the current
- *         state is payed it cannot be changed d) if the current state is
- *         annuled it cannot be changed
+ * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota</a><br><strong>Description:</strong>
+ *         <br>This service edits a reimbursement guide. Editing a reimbursement guide is in reallity
+ *         the creation of a new reimbursement guide situation associated with the reimbursement guide
+ *         in question. The former active situation of the reimbursement guide changes state and a new
+ *         situation with an active state. Also there are some rules related with the
+ *         ReimbursementGuideSituationState that the service enforces. The allowed states are: a) if the
+ *         current state is issued it can be changed to approved,payed and annulled b) if the current
+ *         state is approved it can be changed to payed and annuled c) if the current state is payed it
+ *         cannot be changed d) if the current state is annuled it cannot be changed
  */
 public class EditReimbursementGuide implements IService
 {
 
-    public EditReimbursementGuide()
-    {
-    }
+	public EditReimbursementGuide()
+	{
+	}
 
-    /**
-     * @throws FenixServiceException,
-     *             InvalidGuideSituationServiceException
-     */
+	/**
+	 * @throws FenixServiceException,
+	 *             InvalidGuideSituationServiceException
+	 */
 
-    public void run(Integer reimbursementGuideId, String situation,
-            String remarks, IUserView userView) throws FenixServiceException
-    {
-        try
-        {
-            ISuportePersistente ps = SuportePersistenteOJB.getInstance();
-            IPersistentReimbursementGuide persistentReimbursementGuide = ps
-                    .getIPersistentReimbursementGuide();
-            IReimbursementGuide reimbursementGuide = new ReimbursementGuide(
-                    reimbursementGuideId);
-            reimbursementGuide = (IReimbursementGuide) persistentReimbursementGuide
-                    .readByOId(reimbursementGuide, false);
+	public void run(
+		Integer reimbursementGuideId,
+		String situation,
+		Date officialDate,
+		String remarks,
+		IUserView userView)
+		throws FenixServiceException
+	{
+		try
+		{
+			ISuportePersistente ps = SuportePersistenteOJB.getInstance();
 
-            IPersistentReimbursementGuideSituation persistentReimbursementGuideSituation = ps
-                    .getIPersistentReimbursementGuideSituation();
-            IReimbursementGuideSituation activeSituation = reimbursementGuide
-                    .getActiveReimbursementGuideSituation();
+			IPersistentReimbursementGuide persistentReimbursementGuide =
+				ps.getIPersistentReimbursementGuide();
+			IReimbursementGuide reimbursementGuide = new ReimbursementGuide(reimbursementGuideId);
+			reimbursementGuide =
+				(IReimbursementGuide) persistentReimbursementGuide.readByOId(reimbursementGuide, false);
 
-            if (!validateReimbursementGuideSituation(activeSituation, situation))
-            {
-                throw new InvalidGuideSituationServiceException();
-            }
-            else
-            {
-                persistentReimbursementGuideSituation
-                        .simpleLockWrite(activeSituation);
-                activeSituation.setState(new State(State.INACTIVE_STRING));
-                IReimbursementGuideSituation newActiveSituation = new ReimbursementGuideSituation();
-                persistentReimbursementGuideSituation
-                        .simpleLockWrite(newActiveSituation);
+			if (reimbursementGuide == null)
+				throw new NonExistingServiceException();
 
-                IPersistentEmployee persistentEmployee = ps
-                        .getIPersistentEmployee();
-                IPessoaPersistente persistentPerson = ps
-                        .getIPessoaPersistente();
-                IPessoa person = persistentPerson.lerPessoaPorUsername(userView
-                        .getUtilizador());
-                IEmployee employee = persistentEmployee.readByPerson(person);
+			IPersistentReimbursementGuideSituation persistentReimbursementGuideSituation =
+				ps.getIPersistentReimbursementGuideSituation();
+			IReimbursementGuideSituation activeSituation =
+				reimbursementGuide.getActiveReimbursementGuideSituation();
 
-                newActiveSituation.setEmployee(employee);
-                newActiveSituation.setModificationDate(Calendar.getInstance());
-                newActiveSituation.setReimbursementGuide(reimbursementGuide);
-                newActiveSituation
-                        .setReimbursementGuideState((ReimbursementGuideState) ReimbursementGuideState
-                                .getEnumMap().get(situation));
-                newActiveSituation.setState(new State(State.ACTIVE));
-                newActiveSituation.setRemarks(remarks);
-            }
+			if (!validateReimbursementGuideSituation(activeSituation, situation))
+			{
+				throw new InvalidGuideSituationServiceException();
+			}
+			else
+			{
+				persistentReimbursementGuideSituation.simpleLockWrite(activeSituation);
+				activeSituation.setState(new State(State.INACTIVE_STRING));
+				IReimbursementGuideSituation newActiveSituation = new ReimbursementGuideSituation();
+				persistentReimbursementGuideSituation.simpleLockWrite(newActiveSituation);
 
-        }
-        catch (ExcepcaoPersistencia e)
-        {
-            throw new FenixServiceException(e);
-        }
-    }
+				IPersistentEmployee persistentEmployee = ps.getIPersistentEmployee();
+				IPessoaPersistente persistentPerson = ps.getIPessoaPersistente();
+				IPessoa person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+				IEmployee employee = persistentEmployee.readByPerson(person);
 
-    /**
-     * @param activeSituation
-     * @param situation
-     * @return The allowed states are: a) if the current state is issued it can
-     *         be changed to approved,payed and annulled b) if the current
-     *         state is approved it can be changed to payed and annuled c) if
-     *         the current state is payed it cannot be changed d) if the
-     *         current state is annuled it cannot be changed Also the state
-     *         doesnt need to change
-     */
-    private boolean validateReimbursementGuideSituation(
-            IReimbursementGuideSituation activeSituation, String situation)
-    {
+				newActiveSituation.setEmployee(employee);
+				newActiveSituation.setModificationDate(Calendar.getInstance());
 
-        ReimbursementGuideState newState = ReimbursementGuideState
-                .getEnum(situation);
-        ReimbursementGuideState currentState = activeSituation
-                .getReimbursementGuideState();
+				if (officialDate != null)
+				{
+					Calendar officialDateCalendar = new GregorianCalendar();
+					officialDateCalendar.setTime(officialDate);
+					newActiveSituation.setOfficialDate(officialDateCalendar);
+				}
+				else
+				{
+					newActiveSituation.setOfficialDate(Calendar.getInstance());
+				}
 
-        if (currentState.equals(ReimbursementGuideState.ISSUED))
-        {
-            if (newState.equals(ReimbursementGuideState.ISSUED)
-                    || newState.equals(ReimbursementGuideState.APPROVED)
-                    || newState.equals(ReimbursementGuideState.PAYED)
-                    || newState.equals(ReimbursementGuideState.ANNULLED))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        if (currentState.equals(ReimbursementGuideState.APPROVED))
-        {
-            if (newState.equals(ReimbursementGuideState.APPROVED)
-                    || newState.equals(ReimbursementGuideState.PAYED)
-                    || newState.equals(ReimbursementGuideState.ANNULLED))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        if (currentState.equals(ReimbursementGuideState.PAYED))
-        {
-            if (newState.equals(ReimbursementGuideState.PAYED))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        if (currentState.equals(ReimbursementGuideState.ANNULLED))
-        {
-            if (newState.equals(ReimbursementGuideState.ANNULLED))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        return false;
-    }
+				ReimbursementGuideState newState = ReimbursementGuideState.getEnum(situation);
+				newActiveSituation.setReimbursementGuideState(newState);
+
+				newActiveSituation.setReimbursementGuide(reimbursementGuide);
+				newActiveSituation.setState(new State(State.ACTIVE));
+				newActiveSituation.setRemarks(remarks);
+
+				if (newState.equals(ReimbursementGuideState.PAYED))
+				{
+					//TODO: create reimbursement transactions
+				}
+
+			}
+
+		}
+		catch (ExcepcaoPersistencia e)
+		{
+			throw new FenixServiceException(e);
+		}
+	}
+
+	/**
+	 * @param activeSituation
+	 * @param situation
+	 * @return The allowed states are: a) if the current state is issued it can be changed to
+	 *         approved,payed and annulled b) if the current state is approved it can be changed to
+	 *         payed and annuled c) if the current state is payed it cannot be changed d) if the current
+	 *         state is annuled it cannot be changed Also the state doesnt need to change
+	 */
+	private boolean validateReimbursementGuideSituation(
+		IReimbursementGuideSituation activeSituation,
+		String situation)
+	{
+
+		ReimbursementGuideState newState = ReimbursementGuideState.getEnum(situation);
+		ReimbursementGuideState currentState = activeSituation.getReimbursementGuideState();
+
+		if (currentState.equals(newState))
+			return false;
+
+		if (currentState.equals(ReimbursementGuideState.ISSUED))
+		{
+			if (newState.equals(ReimbursementGuideState.APPROVED)
+				|| newState.equals(ReimbursementGuideState.PAYED)
+				|| newState.equals(ReimbursementGuideState.ANNULLED))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		if (currentState.equals(ReimbursementGuideState.APPROVED))
+		{
+			if (newState.equals(ReimbursementGuideState.PAYED)
+				|| newState.equals(ReimbursementGuideState.ANNULLED))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		if (currentState.equals(ReimbursementGuideState.PAYED))
+		{
+			return false;
+		}
+		if (currentState.equals(ReimbursementGuideState.ANNULLED))
+		{
+			return false;
+		}
+		return false;
+	}
 
 }

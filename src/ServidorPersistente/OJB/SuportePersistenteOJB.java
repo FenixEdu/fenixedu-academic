@@ -53,6 +53,7 @@ import ServidorPersistente.OJB.grant.contract.GrantProjectOJB;
 import ServidorPersistente.OJB.grant.contract.GrantSubsidyOJB;
 import ServidorPersistente.OJB.grant.contract.GrantTypeOJB;
 import ServidorPersistente.OJB.grant.owner.GrantOwnerOJB;
+import ServidorPersistente.OJB.guide.ReimbursementGuideEntryOJB;
 import ServidorPersistente.OJB.guide.ReimbursementGuideOJB;
 import ServidorPersistente.OJB.guide.ReimbursementGuideSituationOJB;
 import ServidorPersistente.OJB.person.qualification.QualificationOJB;
@@ -94,6 +95,7 @@ import ServidorPersistente.grant.IPersistentGrantProject;
 import ServidorPersistente.grant.IPersistentGrantSubsidy;
 import ServidorPersistente.grant.IPersistentGrantType;
 import ServidorPersistente.guide.IPersistentReimbursementGuide;
+import ServidorPersistente.guide.IPersistentReimbursementGuideEntry;
 import ServidorPersistente.guide.IPersistentReimbursementGuideSituation;
 import ServidorPersistente.places.campus.IPersistentCampus;
 import ServidorPersistente.student.IPersistentDelegate;
@@ -218,14 +220,16 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
         try
         {
             openDatabase();
-        } catch (ODMGException e)
+		}
+		catch (ODMGException e)
         {
             throw new ExcepcaoPersistencia();
         } 
     }
 
     protected void finalize() throws Throwable
-    {}
+	{
+	}
 
     public void iniciarTransaccao() throws ExcepcaoPersistencia
     {
@@ -234,10 +238,12 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
             openDatabase();
             Transaction tx = _odmg.newTransaction();
             tx.begin();
-        } catch (ODMGException ex1)
+		}
+		catch (ODMGException ex1)
         {
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.OPEN_DATABASE, ex1);
-        } catch (ODMGRuntimeException ex)
+		}
+		catch (ODMGRuntimeException ex)
         {
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.BEGIN_TRANSACTION, ex);
         }
@@ -268,10 +274,12 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
                 //				Database db =_odmg.getDatabase(null);
                 //				if (db!= null) db.close();
             }
-        } catch (ODMGException ex1)
+		}
+		catch (ODMGException ex1)
         {
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.CLOSE_DATABASE, ex1);
-        } catch (ODMGRuntimeException ex)
+		}
+		catch (ODMGRuntimeException ex)
         {
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.COMMIT_TRANSACTION, ex);
         }
@@ -290,10 +298,12 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
                 //					_odmg.getDatabase(null).close();
             }
 
-        } catch (ODMGException ex1)
+		}
+		catch (ODMGException ex1)
         {
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.CLOSE_DATABASE, ex1);
-        } catch (ODMGRuntimeException ex)
+		}
+		catch (ODMGRuntimeException ex)
         {
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.ABORT_TRANSACTION, ex);
         }
@@ -1251,5 +1261,11 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentWrittenTest getIPersistentWrittenTest()
 	{
 		return new WrittenTestOJB();
+	}
+
+	public IPersistentReimbursementGuideEntry getIPersistentReimbursementGuideEntry()
+	{
+		return new ReimbursementGuideEntryOJB();
+
 	}
 }
