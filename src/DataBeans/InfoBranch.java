@@ -4,6 +4,7 @@ import java.util.StringTokenizer;
 
 /**
  * @author dcs-rjao
+ * @author Fernanda Quitério
  * 
  * 19/Mar/2003
  */
@@ -13,6 +14,8 @@ public class InfoBranch extends InfoObject
 
     private String name;
     private String code;
+    private Integer specializationCredits;
+    private Integer secondaryCredits;
     //	private List associatedCurricularCourses;
     //	private List associatedStudentCurricularPlans;
     //	private List infoScopes;
@@ -181,6 +184,38 @@ public class InfoBranch extends InfoObject
 	public void setAcronym(String acronym)
 	{
 		this.acronym = acronym;
+	}
+
+	/**
+	 * @return Returns the secondaryCredits.
+	 */
+	public Integer getSecondaryCredits()
+	{
+		return secondaryCredits;
+	}
+
+	/**
+	 * @param secondaryCredits The secondaryCredits to set.
+	 */
+	public void setSecondaryCredits(Integer secondaryCredits)
+	{
+		this.secondaryCredits = secondaryCredits;
+	}
+
+	/**
+	 * @return Returns the specializationCredits.
+	 */
+	public Integer getSpecializationCredits()
+	{
+		return specializationCredits;
+	}
+
+	/**
+	 * @param specializationCredits The specializationCredits to set.
+	 */
+	public void setSpecializationCredits(Integer specializationCredits)
+	{
+		this.specializationCredits = specializationCredits;
 	}
 
 }
