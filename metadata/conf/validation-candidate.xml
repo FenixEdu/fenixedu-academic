@@ -20,12 +20,12 @@
   <!-- validation for the Password Change form -->
     <form name="changePasswordForm">
       <field property="oldPassword" depends="required">
-        <arg0 key="candidate.password" />
+        <arg0 key="candidate.oldPasswordError" />
       </field>
 
         <field property="newPassword"
                depends="required,twoFields">
-                  <arg0 key="candidate.password"/>
+                  <arg0 key="candidate.newPasswordError"/>
                   <var>
                      <var-name>secondProperty</var-name>
                      <var-value>reTypeNewPassword</var-value>
@@ -136,152 +136,44 @@
         <arg0 key="candidate.occupation" />
       </field>
 	
-      <field property="birthDay" depends="required,integer,range">
-        <msg name="range" key="errors.invalid.date.format"/>
-        <arg0 key="candidate.day"/>
-        <arg1 key="candidate.birth"/>
-        <arg2 key="${var:min}" resource="false"/>
-        <arg3 key="${var:max}" resource="false"/>        
-        <var>
-          <var-name>min</var-name>
-          <var-value>1</var-value>
-        </var>
-        <var>
-          <var-name>max</var-name>
-          <var-value>31</var-value>
-        </var>
-      </field>
+        <field property="birthYear"
+               depends="required,validateDate">
+                  <arg0 key="Data de Nascimento" />
+                  <var>
+                     <var-name>month</var-name>
+                     <var-value>birthMonth</var-value>
+                  </var>
+                  <var>
+                     <var-name>day</var-name>
+                     <var-value>birthDay</var-value>
+                  </var>
+        </field>
 
-      <field property="birthMonth" depends="required,integer,range">
-        <msg name="range" key="errors.invalid.date.format"/>
-        <arg0 key="candidate.month"/> 
-        <arg1 key="candidate.birth"/>
-        <arg2 key="Janeiro" resource="false"/>
-        <arg3 key="Dezembro" resource="false"/>        
-        <var>
-          <var-name>min</var-name>
-          <var-value>0</var-value>
-        </var>
-        <var>
-          <var-name>max</var-name>
-          <var-value>11</var-value>
-        </var>
-      </field>
+        <field property="idIssueDateYear"
+               depends="required,validateDate">
+                  <arg0 key="Data de Emissao do Documento de Identificacao" />
+                  <var>
+                     <var-name>month</var-name>
+                     <var-value>idIssueDateMonth</var-value>
+                  </var>
+                  <var>
+                     <var-name>day</var-name>
+                     <var-value>idIssueDateDay</var-value>
+                  </var>
+        </field>
 
-      <field property="birthYear" depends="required,integer,range">
-        <msg name="range" key="errors.invalid.date.format"/>
-        <arg0 key="candidate.year"/>
-        <arg1 key="candidate.birth"/>
-        <arg2 key="${var:min}" resource="false"/>
-        <arg3 key="${var:max}" resource="false"/>        
-        <var>
-          <var-name>min</var-name>
-          <var-value>1900</var-value>
-        </var>
-        <var>
-          <var-name>max</var-name>
-          <var-value>2100</var-value>
-        </var>
-      </field>
-
-      <field property="idIssueDateDay" depends="required,integer,range">
-        <msg name="range" key="errors.invalid.date.format"/>
-        <arg0 key="candidate.day"/>
-        <arg1 key="candidate.identificationDocumentIssueDate"/>
-        <arg2 key="${var:min}" resource="false"/>
-        <arg3 key="${var:max}" resource="false"/>        
-        <var>
-          <var-name>min</var-name>
-          <var-value>1</var-value>
-        </var>
-        <var>
-          <var-name>max</var-name>
-          <var-value>31</var-value>
-        </var>
-      </field>
-
-      <field property="idIssueDateMonth" depends="required,integer,range">
-        <msg name="range" key="errors.invalid.date.format"/>
-        <arg0 key="candidate.month"/>
-        <arg1 key="candidate.identificationDocumentIssueDate"/>
-        <arg2 key="Janeiro" resource="false"/>
-        <arg3 key="Dezembro" resource="false"/>        
-        <var>
-          <var-name>min</var-name>
-          <var-value>0</var-value>
-        </var>
-        <var>
-          <var-name>max</var-name>
-          <var-value>11</var-value>
-        </var>
-      </field>
-
-      <field property="idIssueDateYear" depends="required,integer,range">
-        <msg name="range" key="errors.invalid.date.format"/>
-        <arg0 key="candidate.year"/>
-        <arg1 key="candidate.identificationDocumentIssueDate"/>
-        <arg2 key="${var:min}" resource="false"/>
-        <arg3 key="${var:max}" resource="false"/>        
-        <var>
-          <var-name>min</var-name>
-          <var-value>1900</var-value>
-        </var>
-        <var>
-          <var-name>max</var-name>
-          <var-value>2100</var-value>
-        </var>
-      </field>
-
-
-
-      <field property="idExpirationDateDay" depends="required,integer,range">
-        <msg name="range" key="errors.invalid.date.format"/>
-        <arg0 key="candidate.day"/>
-        <arg1 key="candidate.identificationDocumentExpirationDate"/>
-        <arg2 key="${var:min}" resource="false"/>
-        <arg3 key="${var:max}" resource="false"/>        
-        <var>
-          <var-name>min</var-name>
-          <var-value>1</var-value>
-        </var>
-        <var>
-          <var-name>max</var-name>
-          <var-value>31</var-value>
-        </var>
-      </field>
-
-      <field property="idExpirationDateMonth" depends="required,integer,range">
-        <msg name="range" key="errors.invalid.date.format"/>
-        <arg0 key="candidate.month"/>
-        <arg1 key="candidate.identificationDocumentExpirationDate"/>
-        <arg2 key="Janeiro" resource="false"/>
-        <arg3 key="Dezembro" resource="false"/>        
-        <var>
-          <var-name>min</var-name>
-          <var-value>0</var-value>
-        </var>
-        <var>
-          <var-name>max</var-name>
-          <var-value>11</var-value>
-        </var>
-      </field>
-
-      <field property="idExpirationDateYear" depends="required,integer,range">
-        <msg name="range" key="errors.invalid.date.format"/>
-        <arg0 key="candidate.year"/>
-        <arg1 key="candidate.identificationDocumentExpirationDate"/>
-        <arg2 key="${var:min}" resource="false"/>
-        <arg3 key="${var:max}" resource="false"/>        
-        <var>
-          <var-name>min</var-name>
-          <var-value>1900</var-value>
-        </var>
-        <var>
-          <var-name>max</var-name>
-          <var-value>2100</var-value>
-        </var>
-      </field>
-
+        <field property="idExpirationDateYear"
+               depends="required,validateDate">
+                  <arg0 key="Data de Validade do Documento de Identificacao" />
+                  <var>
+                     <var-name>month</var-name>
+                     <var-value>idExpirationDateMonth</var-value>
+                  </var>
+                  <var>
+                     <var-name>day</var-name>
+                     <var-value>idExpirationDateDay</var-value>
+                  </var>
+        </field>
 
       <field property="average" depends="required,float,floatRange">
         <arg0 key="candidate.average" />
