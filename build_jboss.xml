@@ -391,6 +391,11 @@
     <target name="war-web-client"
     		depends="compile-web-client"
             description="Creates a war for the fenix web client">
+		<copy todir="${libs.web}">
+			<fileset dir="${env.JBOSS_HOME}/client">
+				<include name="*.jar"/>
+			</fileset>
+		</copy>
         <mkdir dir="${deploy.jars}"/>
 		<war destfile="${deploy.jars}/${deploy.war.web-client}"
 			 webxml="${config.web}/web.xml">
@@ -404,6 +409,7 @@
 			</lib>
 			<classes dir="${build.web-client.webinf.classes}"/>
 		</war>
+		<delete file="${libs.web}/jboss-j2ee.jar"/>
 	</target>
 
     <target name="deploy-web-client"
@@ -465,6 +471,11 @@
     <target name="war-standalone"
     		depends="compile-standalone"
             description="Creates a war for the standalone fenix application">
+		<copy todir="${libs.web}">
+			<fileset dir="${env.JBOSS_HOME}/client">
+				<include name="jboss-j2ee.jar"/>
+			</fileset>
+		</copy>
         <mkdir dir="${deploy.jars}"/>
 		<war destfile="${deploy.jars}/${deploy.war.standalone}"
 			 webxml="${config.web}/web.xml">
@@ -478,6 +489,7 @@
 			</lib>
 			<classes dir="${build.standalone.webinf.classes}"/>
 		</war>
+		<delete file="${libs.web}/jboss-j2ee.jar"/>
 	</target>
 
     <target name="deploy-standalone"
