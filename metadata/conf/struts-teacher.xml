@@ -33,13 +33,13 @@
     		<form-property name="operacionalObjectives" type="java.lang.String" />
     		<form-property name="page" type="java.lang.Integer" initial="0"/>
     	</form-bean>
-    	
     		
     <form-bean name="executionCourseProgramForm"
 		type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
 		<form-property name="program" type="java.lang.String" />
 		<form-property name="page" type="java.lang.Integer" initial="0"/>
 	</form-bean>
+
 	<!-- Announcement Forms  -->
     <form-bean name="insertAnnouncementForm"
     	type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
@@ -48,10 +48,6 @@
         <form-property name="information" type="java.lang.String" />
         <form-property name="page" type="java.lang.Integer" initial="0" />
     </form-bean>    			
-    	
-	
-	
-	
 	
 	<form-bean name="bibliographicReferenceForm"
 				type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
@@ -64,13 +60,14 @@
             <form-property name="page" type="java.lang.Integer" initial="0" />
             <form-property name="method" type="java.lang.String"/>
 	</form-bean>    			
+
 	<!--Teacher form -->
-   <form-bean name="teacherForm"
+   	<form-bean name="teacherForm"
 				type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                 dynamic="true">        
             <form-property name="teacherNumber" type="java.lang.String" />
             <form-property name="page" type="java.lang.Integer" initial="0"/>
-     </form-bean>    	
+    </form-bean>    	
 
 	<form-bean name="alternativeSiteForm"
 				type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
@@ -85,8 +82,7 @@
 
 	<form-bean name="sectionForm"
 		type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
-        dynamic="true">        
-        <form-property name="parentName" type="java.lang.String" />
+        dynamic="true">
         <form-property name="name" type="java.lang.String" /> 
         <form-property name="order" type="java.lang.Integer" />    
         <form-property name="page" type="java.lang.Integer" initial="0" />           
@@ -280,6 +276,15 @@
         type="ServidorApresentacao.Action.teacher.ReadSite">    
      <forward name="viewSite" path="/viewSite.jsp"/>         
 	</action>
+	
+	<action name="sectionForm"
+		input="/viewSection.jsp"
+		path="/editSection"
+		type="ServidorApresentacao.Action.teacher.CurriculumManagerDispatchAction"
+        validate="true"	>    
+       <forward name="viewSite" path="/viewSite.do"/>
+	</action>
+	
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
