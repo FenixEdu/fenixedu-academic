@@ -53,7 +53,8 @@ public class SectionMenuTeacherContentRenderer extends TagSupport
 			strBuffer.append("<li>\n");
 			strBuffer.append(renderDepthIdent(getInfoSection()));
 			
-			strBuffer.append("<a href=\""+path+"/viewSection.do?index="+i+"\""+ " onclick=\"houdini('"+infoSection.getName()+"');\">\n");
+			strBuffer.append("<a href=\""+path+"/viewSection.do?index="+i+"\""+ ">\n");
+			//" onclick=\"houdini('"+infoSection.getName()+"');\
 			
 			
 			strBuffer.append(infoSection.getName());
