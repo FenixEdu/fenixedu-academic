@@ -28,15 +28,15 @@ public class AcessAnnouncementManagement extends FenixAction {
         session.removeAttribute("ReferenciaBibliografica");
         session.removeAttribute("Curriculum");
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
-        userView.setSeccaoNome(null);
-        userView.setAnunciosNome(null);
-        userView.setCurriculumNome(null);
+//        userView.setSeccaoNome(null);
+//        userView.setAnunciosNome(null);
+//        userView.setCurriculumNome(null);
         InfoSite infoSite = (InfoSite) session.getAttribute("Sitio");
         Object args[] = {infoSite};
         GestorServicos manager = GestorServicos.manager();
         List announcements = (List) manager.executar(userView, "ObterAnuncios", args);
         session.setAttribute("Anuncios", announcements);
-        userView.setAnunciosNome("Anuncios");
+//        userView.setAnunciosNome("Anuncios");
         return mapping.findForward("GestaoDeAnuncios");
     }
 }
