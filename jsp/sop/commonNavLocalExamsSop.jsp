@@ -63,7 +63,7 @@
 		</html:link>
 	</li>
 	<li>
-		<html:link page="<%= "/consultAllRoomsForExams.do&amp;"
+		<html:link page="<%= "/consultAllRoomsForExams.do?"
   							+ SessionConstants.EXECUTION_PERIOD_OID
   							+ "="
   							+ pageContext.findAttribute("executionPeriodOID") %>">

@@ -14,6 +14,7 @@ import org.apache.struts.action.ActionMapping;
 import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorApresentacao.Action.base.FenixContextAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -21,7 +22,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 /**
  * @author Luis Cruz e Sara Ribeiro
  */
-public class ViewAllExamsByDegreeAndCurricularYearAction extends Action {
+public class ViewAllExamsByDegreeAndCurricularYearAction extends FenixContextAction {
 	public ActionForward execute(
 		ActionMapping mapping,
 		ActionForm form,
@@ -29,6 +30,8 @@ public class ViewAllExamsByDegreeAndCurricularYearAction extends Action {
 		HttpServletResponse response)
 		throws Exception {
 
+		super.execute(mapping, form, request, response);
+		
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			GestorServicos gestor = GestorServicos.manager();

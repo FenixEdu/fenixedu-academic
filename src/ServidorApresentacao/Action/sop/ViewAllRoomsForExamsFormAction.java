@@ -15,7 +15,7 @@ import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
-import ServidorApresentacao.Action.base.FenixAction;
+import ServidorApresentacao.Action.base.FenixContextAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -23,14 +23,16 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
-public class ViewAllRoomsForExamsFormAction extends FenixAction {
+public class ViewAllRoomsForExamsFormAction extends FenixContextAction {
 
 	public ActionForward execute(
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws FenixActionException {
+		throws Exception {
+
+		super.execute(mapping, form, request, response);
 
 		HttpSession session = request.getSession();
 

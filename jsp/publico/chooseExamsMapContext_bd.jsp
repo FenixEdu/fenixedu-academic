@@ -11,11 +11,13 @@
 	<html:hidden property="page" value="1"/>
 	<html:hidden property="method" value="choose"/>
 
+<%--
 	<p style="font-size:12px">
 		<b style="color: #f00">Nota:</b> Para os exames das <b>Licenciaturas LERCI, LESIM e LEGI</b> <u>onde se lê 9:00 dever-se-á ler 10:00</u>, com excepção de <b>PE</b>
 		 e <b>CG</b> que se mantém às 9:00.
 	</p>
 	<br/>
+--%>
 	<br/>	
 	<p class="infoop">
 		<bean:message key="message.public.degree.choose"/>
