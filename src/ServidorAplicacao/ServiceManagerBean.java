@@ -7,8 +7,10 @@ import javax.ejb.EJBException;
 import javax.ejb.SessionBean;
 import javax.ejb.SessionContext;
 
+import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
 import pt.utl.ist.berserk.logic.serviceManager.IServiceManager;
 import pt.utl.ist.berserk.logic.serviceManager.ServiceManager;
+import pt.utl.ist.berserk.logic.serviceManager.exceptions.ExecutedFilterException;
 import pt.utl.ist.berserk.logic.serviceManager.exceptions.ExecutedServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 
@@ -64,6 +66,18 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper
 			if (ex.getServiceThrownException() instanceof FenixServiceException)
 			{
 				throw (FenixServiceException) ex.getServiceThrownException();
+			}
+			else
+			{
+				throw new FenixServiceException(ex);
+			}
+
+		}
+		catch (ExecutedFilterException ex)
+		{
+			if (ex.getCause() instanceof FenixServiceException)
+			{
+				throw (FenixServiceException) ex.getCause();
 			}
 			else
 			{
