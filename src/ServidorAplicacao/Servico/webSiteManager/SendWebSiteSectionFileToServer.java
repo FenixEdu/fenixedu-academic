@@ -127,7 +127,7 @@ public class SendWebSiteSectionFileToServer implements IServico {
 			// send file to server by ftp
 			Ftp.enviarFicheiro(
 				"/IstFtpServerConfig.properties",
-				infoWebSiteSection.getName() + "-excerpts.shtml",
+				infoWebSiteSection.getName() + "-excerpts.html",
 				infoWebSiteSection.getName() + "_principal/");
 			// delete created file
 			excerpts.delete();
