@@ -87,7 +87,7 @@ CREATE TABLE EXECUTION_COURSE (
   ID_INTERNAL int(11) NOT NULL auto_increment,
   NAME varchar(100) default NULL,
   CODE varchar(50) NOT NULL default '',
-  KEY_EXECUTION_DEGREE int(11) NOT NULL default '0',
+  KEY_EXECUTION_DEGREE int(11),
   KEY_TEACHER_IN_CHARGE int(11) NOT NULL default '0',
   PROGRAM text,
   THEORETICAL_HOURS double default NULL,
