@@ -11,6 +11,7 @@
 <!ENTITY masterDegree SYSTEM "repository_masterDegree.xml">
 <!ENTITY sopload SYSTEM "repository_sopload.xml">
 <!ENTITY gesdis SYSTEM "repository_gesdis.xml">
+<!ENTITY authentication-roles SYSTEM "repository_authentication_roles.xml">
 <!ENTITY internal SYSTEM "repository_internal.xml">
 
 
@@ -40,7 +41,7 @@
     &masterDegree;
     &sopload;
     &gesdis;
-
+    &authentication-roles;
     <!-- include ojb internal mappings here -->
     &internal;
 
