@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
 import Dominio.CursoExecucao;
@@ -147,22 +148,9 @@ public class ExecutionYearOJB
 		}
 	}
 
-	public IExecutionYear readActualExecutionYear() throws ExcepcaoPersistencia {
-		try {
-			IExecutionYear executionYear = null;
-			String oqlQuery = "select all from " + ExecutionYear.class.getName()
-							+ " where state = $1";
-			query.create(oqlQuery);
-			query.bind(PeriodState.CURRENT);
-			List result = (List) query.execute();
-
-			lockRead(result);
-			
-			if (result.size() != 0)
-				executionYear = (IExecutionYear) result.get(0);
-			return executionYear;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
+	public IExecutionYear readCurrentExecutionYear() throws ExcepcaoPersistencia {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("state", PeriodState.CURRENT);
+		return (IExecutionYear) queryObject(ExecutionYear.class, criteria);
 	}
 }
