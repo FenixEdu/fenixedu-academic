@@ -21,11 +21,6 @@ public class DegreeCurricularPlan implements IDegreeCurricularPlan {
 	private Date endDate;
 
 	public DegreeCurricularPlan() {
-		setName(null);
-		setDegree(null);
-		setState(null);
-		setInitialDate(null);
-		setEndDate(null);
 	}
 
 	public DegreeCurricularPlan(String nome, ICurso degree) {
@@ -36,7 +31,12 @@ public class DegreeCurricularPlan implements IDegreeCurricularPlan {
 		setEndDate(null);
 	}
 
-	public DegreeCurricularPlan(String nome, ICurso degree, DegreeCurricularPlanState state, Date initialDate, Date endDate) {
+	public DegreeCurricularPlan(
+		String nome,
+		ICurso degree,
+		DegreeCurricularPlanState state,
+		Date initialDate,
+		Date endDate) {
 		setName(nome);
 		setDegree(degree);
 		setState(state);
@@ -48,7 +48,9 @@ public class DegreeCurricularPlan implements IDegreeCurricularPlan {
 		boolean resultado = false;
 		if (obj instanceof DegreeCurricularPlan) {
 			DegreeCurricularPlan dcp = (DegreeCurricularPlan) obj;
-			resultado = this.getName().equals(dcp.getName()) && this.getDegree().equals(dcp.getDegree());
+			resultado =
+				this.getName().equals(dcp.getName())
+					&& this.getDegree().equals(dcp.getDegree());
 		}
 		return resultado;
 	}
