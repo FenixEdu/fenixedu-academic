@@ -7885,4 +7885,20 @@
 		<description/>
 		<isTransactional>true</isTransactional>
 	</service>
+	<service>
+		<name>ReadAllMoneyCostCenterByYear</name>
+		<implementationClass> 
+            ServidorAplicacao.Servico.managementAssiduousness.ReadAllMoneyCostCenterByYear
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+	</service>
+	<service>
+		<name>UpdateAllMoneyCostCenterByYear</name>
+		<implementationClass> 
+            ServidorAplicacao.Servico.managementAssiduousness.UpdateAllMoneyCostCenterByYear
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+	</service>
 </serviceDefinitions>

@@ -58,6 +58,9 @@ import ServidorPersistente.OJB.gratuity.masterDegree.SibsPaymentFileEntryOJB;
 import ServidorPersistente.OJB.gratuity.masterDegree.SibsPaymentFileOJB;
 import ServidorPersistente.OJB.guide.ReimbursementGuideEntryOJB;
 import ServidorPersistente.OJB.guide.ReimbursementGuideOJB;
+import ServidorPersistente.OJB.managementAssiduousness.CostCenterOJB;
+import ServidorPersistente.OJB.managementAssiduousness.ExtraWorkOJB;
+import ServidorPersistente.OJB.managementAssiduousness.MoneyCostCenterOJB;
 import ServidorPersistente.OJB.person.qualification.QualificationOJB;
 import ServidorPersistente.OJB.places.campus.CampusOJB;
 import ServidorPersistente.OJB.publication.AuthorOJB;
@@ -116,6 +119,9 @@ import ServidorPersistente.gratuity.masterDegree.IPersistentSibsPaymentFile;
 import ServidorPersistente.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
 import ServidorPersistente.guide.IPersistentReimbursementGuide;
 import ServidorPersistente.guide.IPersistentReimbursementGuideEntry;
+import ServidorPersistente.managementAssiduousness.IPersistentCostCenter;
+import ServidorPersistente.managementAssiduousness.IPersistentExtraWork;
+import ServidorPersistente.managementAssiduousness.IPersistentMoneyCostCenter;
 import ServidorPersistente.places.campus.IPersistentCampus;
 import ServidorPersistente.publication.IPersistentAuthor;
 import ServidorPersistente.publication.IPersistentPublication;
@@ -1240,6 +1246,17 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 
     public IPersistentPublicationTeacher getIPersistentPublicationTeacher(){
     	return new PublicationTeacherOJB();
+    }
+    public IPersistentCostCenter getIPersistentCostCenter() {
+        return new CostCenterOJB();
+    }
+    
+    public IPersistentMoneyCostCenter getIPersistentMoneyCostCenter() {
+        return new MoneyCostCenterOJB();
+    }
+    
+    public IPersistentExtraWork getIPersistentExtraWork() {
+        return new ExtraWorkOJB();
     }
     
 }

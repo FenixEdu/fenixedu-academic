@@ -37,6 +37,9 @@ import ServidorPersistente.gratuity.masterDegree.IPersistentSibsPaymentFile;
 import ServidorPersistente.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
 import ServidorPersistente.guide.IPersistentReimbursementGuide;
 import ServidorPersistente.guide.IPersistentReimbursementGuideEntry;
+import ServidorPersistente.managementAssiduousness.IPersistentCostCenter;
+import ServidorPersistente.managementAssiduousness.IPersistentExtraWork;
+import ServidorPersistente.managementAssiduousness.IPersistentMoneyCostCenter;
 import ServidorPersistente.places.campus.IPersistentCampus;
 import ServidorPersistente.publication.IPersistentAuthor;
 import ServidorPersistente.publication.IPersistentPublication;
@@ -442,4 +445,9 @@ public interface ISuportePersistente {
 
     public IPersistentGroupPropertiesExecutionCourse getIPersistentGroupPropertiesExecutionCourse();
 
+    public IPersistentCostCenter getIPersistentCostCenter();
+    
+    public IPersistentMoneyCostCenter getIPersistentMoneyCostCenter();
+    
+    public IPersistentExtraWork getIPersistentExtraWork();
 }

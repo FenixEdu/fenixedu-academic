@@ -359,7 +359,13 @@ select.degrees {
 	text-align: center;
 	height: 30px;
 	}
-	
+
+.listClassesWhite	{
+	border: 1px solid #ccc;
+	text-align: center;
+	height: 30px;
+	}
+			
 .listClasses-header	{
 	background: #ccc;
 	font-weight: bold;

@@ -58,6 +58,7 @@
 <!ENTITY faqSection SYSTEM "repository_faqSection.xml">
 <!ENTITY glossaryEntry SYSTEM "repository_glossaryEntry.xml">
 <!ENTITY executionPeriod SYSTEM "repository_execution_period.xml">
+<!ENTITY managementAssiduousness SYSTEM "repository_managementAssiduousness.xml">
 ]>
 
 
@@ -122,5 +123,6 @@
 	&faqSection;
 	&glossaryEntry;
 	&executionPeriod;
+	&managementAssiduousness;
 
 </descriptor-repository>

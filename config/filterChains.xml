@@ -767,8 +767,7 @@
     	<description>Verifies whether a given employee belongs to the same department the teacher does</description>
 		<invocationTiming>1</invocationTiming>
 		<filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
-	</filterChain>	
-
+	</filterChain>
 	<filterChain>
 		<name>ReadStudentCurricularPlansAccess</name>
 		<expression>StudentCurricularPlanOwnerAuthorization || StudentTutorAuthorization || StudentDegreeCoordinatorAuthorization || DegreeAdministrativeOfficeAuthorization || DegreeAdministrativeOfficeSuperUserAuthorization</expression>

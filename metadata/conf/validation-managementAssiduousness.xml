@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- @validation.doctype@ -->
+<form-validation>
+    <formset>
+	    <form name="moneyCostCenterFormBean">
+	      <field property="year" depends="required, integer" page="1" >
+	        <arg0 key="label.year" resource="true"/>
+	      </field>
+	    </form>
+    </formset>
+</form-validation>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+	<definition name="managementAssiduousnessWelcome" extends="definition.managementAssiduousness.masterPage">
+		<put name="body" value="/managementAssiduousness/welcomeScreen.jsp"/>
+	</definition>
+	<definition name="managementAssiduousnessWelcome.extraWork" extends="definition.managementAssiduousness.masterPage">
+		<put name="navLocal" value="/managementAssiduousness/menuExtraWork.jsp"/>
+		<put name="body" value="/managementAssiduousness/welcomeScreenExtraWork.jsp"/>
+	</definition>
+	<definition name="managementAssiduousnessWelcome.extraWork.inputYear" extends="definition.managementAssiduousness.masterPage">
+		<put name="navLocal" value="/managementAssiduousness/menuExtraWork.jsp"/>
+		<put name="body" value="/managementAssiduousness/moneyCostCenter/inputYear.jsp"/>
+	</definition>
+	<definition name="managementAssiduousnessWelcome.extraWork.moneyCostCenterList" extends="definition.managementAssiduousness.masterPage">
+		<put name="navLocal" value="/managementAssiduousness/menuExtraWork.jsp"/>
+		<put name="body" value="/managementAssiduousness/moneyCostCenter/showMoneyCostCenterList.jsp"/>
+	</definition>
+</tiles-definitions>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC       
+	  "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+      "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+    <!-- ========== Data Source Configuration =============================== -->
+    <data-sources />
+
+	<!-- ========== Form Bean Definitions ================================== -->
+	<form-beans type="org.apache.struts.action.ActionFormBean">
+		<form-bean name="moneyCostCenterFormBean"
+			type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+				<form-property name="year" type="java.lang.Integer" />    
+				<form-property name="size" type="java.lang.Integer" />    
+				<form-property name="id" type="java.lang.Integer" />  
+				<form-property name="initialValue" type="java.lang.Double" />    
+				<form-property name="totalValue" type="java.lang.Double" />    
+		</form-bean>
+	</form-beans>
+	
+	<!-- ========== Global Forward Definitions =============================== -->
+	<global-forwards type="org.apache.struts.action.ActionForward"/>
+
+	<!-- ========== Action Mapping Definitions =============================== -->      		  
+	<action-mappings type="org.apache.struts.action.ActionMapping">
+		<action path="/index" 
+	      		  type="ServidorApresentacao.Action.base.FenixForwardAction" 
+	      		  forward="managementAssiduousnessWelcome"/>
+		<action path="/extraWork" 
+	      		  type="ServidorApresentacao.Action.base.FenixForwardAction" 
+	      		  forward="managementAssiduousnessWelcome.extraWork"/>
+		<action path="/managementMoneyCostCenter" 
+	      		type="ServidorApresentacao.Action.managementAssiduousness.ManagementMoneyCostCenterAction" 
+				name="moneyCostCenterFormBean"
+				parameter="method"
+				scope="request"
+				validate="true">
+			<forward name="inputYear" path="managementAssiduousnessWelcome.extraWork.inputYear"/>
+			<forward name="showMoneyCostCenterList" path="managementAssiduousnessWelcome.extraWork.moneyCostCenterList"/>
+		</action>	
+		<action path="/consultSheetExtraWork" 
+	      		  type="ServidorApresentacao.Action.base.FenixForwardAction" 
+	      		  forward="managementAssiduousnessWelcome.extraWork"/>
+ 	</action-mappings>
+
+	<!-- ========== Controller Configuration ================================ -->
+	<controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
+
+	<!-- ========== Message Resources Definitions ============================ -->
+	<message-resources parameter="ServidorApresentacao.AssiduousnessResources" null="false"/>
+	
+	<!-- ========== Plug Ins Configuration ================================= -->
+	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+      <set-property property="pathnames" 
+		value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-managementAssiduousness.xml"/>
+	</plug-in>
+
+	<plug-in className="org.apache.struts.tiles.TilesPlugin" >
+		<set-property property="definitions-config"
+					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/managementAssiduousness/tiles-managementAssiduousness-definitions.xml,/WEB-INF/tiles/managementAssiduousness/tiles-managementAssiduousness-pages-definitions.xml" />
+		<set-property property="moduleAware" value="true" />
+		<set-property property="definitions-parser-validate" value="true" />
+	</plug-in>    
+</struts-config>

@@ -1,0 +1,44 @@
+DROP TABLE IF EXISTS MONEY_COST_CENTER;
+CREATE TABLE MONEY_COST_CENTER(
+	ID_INTERNAL int(11) NOT NULL auto_increment,
+  	INITIAL_VALUE float default '0',
+  	TOTAL_VALUE float default '0',
+  	SPENT_VALUE float default '0',
+	YEAR int(11) NOT NULL,
+  	KEY_COST_CENTER int(11) NOT NULL,  
+	KEY_EMPLOYEE int(11) unsigned default NULL,
+	WHEN_ALTER timestamp(14) NOT NULL,
+	ACK_OPT_LOCK int(11) default NULL,
+    PRIMARY KEY  (ID_INTERNAL),
+    UNIQUE KEY U1 (KEY_COST_CENTER, YEAR)
+) TYPE=InnoDB;
+
+DROP TABLE IF EXISTS EXTRA_WORK;
+CREATE TABLE EXTRA_WORK(
+	ID_INTERNAL int(11) NOT NULL auto_increment,
+	DAY date NOT NULL,
+	BEGIN_HOUR time NOT NULL,
+	END_HOUR time NOT NULL,
+  	MEAL_SUBSIDY int(11) default NULL,
+  	DIURNAL_FIRST_HOUR time default NULL,
+  	DIURNAL_AFTER_SECOND_HOUR time default NULL,
+  	NOCTURNAL_FIRST_HOUR time default NULL,
+  	NOCTURNAL_AFTER_SECOND_HOUR time default NULL,
+  	REST_DAY time default NULL,
+  	MEAL_SUBSIDY_AUTHORIZED tinyint(1) NOT NULL default '0',
+  	DIURNAL_FIRST_HOUR_AUTHORIZED tinyint(1) NOT NULL default '0',
+  	DIURNAL_AFTER_SECOND_HOUR_AUTHORIZED tinyint(1) NOT NULL default '0',
+  	NOCTURNAL_FIRST_HOUR_AUTHORIZED tinyint(1) NOT NULL default '0',
+  	NOCTURNAL_AFTER_SECOND_HOUR_AUTHORIZED tinyint(1) NOT NULL default '0',
+  	REST_DAY_AUTHORIZED tinyint(1) NOT NULL default '0',
+  	DAY_PER_WEEK tinyint(1) NOT NULL default '0',
+  	HOLIDAY tinyint(1) NOT NULL default '0',
+  	REMUNERATION tinyint(1) NOT NULL default '0', 	
+	KEY_EMPLOYEE int(11) unsigned default NULL,
+  	KEY_COST_CENTER int(11) NOT NULL,
+	KEY_EMPLOYEE_DB int(11) unsigned default NULL,
+	WHEN_ALTER timestamp(14) NOT NULL,
+	ACK_OPT_LOCK int(11) default NULL,
+    PRIMARY KEY  (ID_INTERNAL),
+    UNIQUE KEY U1 (KEY_EMPLOYEE, DAY, BEGIN_HOUR, END_HOUR)
+) TYPE=InnoDB;
