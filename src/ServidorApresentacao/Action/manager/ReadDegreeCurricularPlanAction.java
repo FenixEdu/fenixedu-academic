@@ -15,7 +15,6 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoDegreeCurricularPlan;
 import ServidorAplicacao.GestorServicos;
@@ -39,13 +38,10 @@ public class ReadDegreeCurricularPlanAction extends FenixAction  {
 			throws FenixActionException {
 				
 				HttpSession session = request.getSession(false);
-				DynaActionForm readDegreeForm = (DynaActionForm) form;
 						
-				UserView userView =
-					(UserView) session.getAttribute(SessionConstants.U_VIEW);
+				UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 					
-				Integer degreeCurricularPlanId = (Integer) readDegreeForm.get("degreeCurricularPlanId");
-				
+				Integer degreeCurricularPlanId = new Integer(request.getParameter("degreeCurricularPlanId"));
 				Integer	degreeId = new Integer(request.getParameter("degreeId"));	
 				
 				Object args[] = { degreeCurricularPlanId };

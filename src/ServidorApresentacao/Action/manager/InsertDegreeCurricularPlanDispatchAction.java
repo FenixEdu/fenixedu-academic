@@ -4,7 +4,6 @@
 package ServidorApresentacao.Action.manager;
 
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +31,7 @@ import Util.MarkType;
 /**
  * @author lmac1
  */
+
 public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchAction {
 
 
@@ -45,7 +45,7 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
 				Integer degreeId = new Integer(request.getParameter("degreeId"));
 				request.setAttribute("degreeId", degreeId);
 				return mapping.findForward("insertDegreeCurricularPlan");
-		}
+	}
 
 
 	public ActionForward insert(
@@ -119,30 +119,15 @@ public class InsertDegreeCurricularPlanDispatchAction extends FenixDispatchActio
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
-		
-		Object arguments[] = { degreeId };
-		try {	
-				List degreeCurricularPlans = null;
-				degreeCurricularPlans = (List) manager.executar(
-													userView,
-													"ReadDegreeCurricularPlansService",
-													arguments);
 			
-				if (serviceResult != null) {
-					ActionErrors actionErrors = new ActionErrors();
-					ActionError error = null;
-					if(serviceResult.get(0) != null) {
-						error = new ActionError("message.existingDegreeCPNameAndDegree", serviceResult.get(1), serviceResult.get(0));
-						actionErrors.add("message.existingDegreeCPNameAndDegree", error);
-					}			
-					saveErrors(request, actionErrors);
-				}
-				Collections.sort(degreeCurricularPlans);
-				request.setAttribute("lista de planos curriculares", degreeCurricularPlans);
-				request.setAttribute("degreeId", degreeId);
-			
-		} catch (FenixServiceException e) {
-			throw new FenixActionException(e);
+		if(serviceResult != null) {
+			ActionErrors actionErrors = new ActionErrors();
+			ActionError error = null;
+			if(serviceResult.get(0) != null) {
+				error = new ActionError("message.existingDegreeCPNameAndDegree", serviceResult.get(1), serviceResult.get(0));
+				actionErrors.add("message.existingDegreeCPNameAndDegree", error);
+			}			
+			saveErrors(request, actionErrors);
 		}
 		return mapping.findForward("readDegree");
 	}			

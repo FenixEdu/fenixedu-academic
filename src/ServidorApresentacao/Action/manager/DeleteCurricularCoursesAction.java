@@ -71,5 +71,4 @@ public class DeleteCurricularCoursesAction extends FenixAction {
 		}
 		return mapping.findForward("readDegreeCurricularPlan");
 	}
-
 }

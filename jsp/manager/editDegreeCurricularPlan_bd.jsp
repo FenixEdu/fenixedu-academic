@@ -20,7 +20,6 @@
 		<span class="error"><html:errors property="name"  /></span>
 	</td>
 </tr>
-<%----%>
 <tr>
 	<td>
 		<bean:message key="message.manager.degree.curricular.plan.state"/>
@@ -137,8 +136,5 @@
 </html:submit>
 <html:reset  styleClass="inputbutton">
 <bean:message key="label.clear"/>
-</html:reset>			
-
-
+</html:reset>				
 </html:form>
-<%--</logic:present>--%>

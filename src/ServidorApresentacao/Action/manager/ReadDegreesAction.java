@@ -21,6 +21,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 /**
  * @author lmac1
  */
+
 public class ReadDegreesAction extends FenixAction {
 
 		public ActionForward execute(
@@ -31,8 +32,7 @@ public class ReadDegreesAction extends FenixAction {
 			throws FenixActionException {
 		
 			HttpSession session = getSession(request);
-			UserView userView =
-				(UserView) session.getAttribute(SessionConstants.U_VIEW);
+			UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 		
 			try {		
 		        	List degrees = null;
@@ -43,11 +43,10 @@ public class ReadDegreesAction extends FenixAction {
 								null);
 		
 					Collections.sort(degrees);
-					request.setAttribute(SessionConstants.INFO_DEGREES_LIST, degrees);
+					request.setAttribute("Lista de licenciaturas", degrees);
 			} catch (FenixServiceException e) {
 				throw new FenixActionException(e);
 			}
-
 			return mapping.findForward("readDegrees");
 		}
 

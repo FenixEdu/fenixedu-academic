@@ -16,7 +16,6 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoDegree;
 import ServidorAplicacao.GestorServicos;
@@ -40,13 +39,11 @@ public class ReadDegreeAction extends FenixAction  {
 			throws FenixActionException {
 				
 				HttpSession session = request.getSession(false);
-				DynaActionForm readDegreeForm = (DynaActionForm) form;
 						
 				UserView userView =
 					(UserView) session.getAttribute(SessionConstants.U_VIEW);
-					
-				Integer degreeId = (Integer) readDegreeForm.get("degreeId");				
-					
+									
+				Integer degreeId = new Integer(request.getParameter("degreeId"));	
 				Object args[] = { degreeId };
 				
 				GestorServicos manager = GestorServicos.manager();
@@ -81,7 +78,7 @@ public class ReadDegreeAction extends FenixAction  {
 				Collections.sort(degreeCurricularPlans);
 				request.setAttribute("degreeId", degreeId);
 				request.setAttribute("infoDegree", degree);					
-				request.setAttribute(SessionConstants.INFO_DEGREE_CURRICULAR_PLANS_LIST, degreeCurricularPlans);
+				request.setAttribute("lista de planos curriculares", degreeCurricularPlans);
 				return mapping.findForward("viewDegree");
 	}
 }

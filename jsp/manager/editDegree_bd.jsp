@@ -3,8 +3,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
-<%--<logic:present name="degreeId" >--%>
-	<%--<bean:define id="degreeId" name="degreeId" />--%>
 <h2><bean:message key="message.editDegree" /></h2>
 <br/>
 <table>
@@ -65,4 +63,3 @@
 
 
 </html:form>
-<%--</logic:present>--%>

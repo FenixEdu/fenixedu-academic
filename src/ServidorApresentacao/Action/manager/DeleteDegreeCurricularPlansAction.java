@@ -67,5 +67,4 @@ public class DeleteDegreeCurricularPlansAction extends FenixAction {
 		}
 		return mapping.findForward("readDegree");
 	}
-
 }

@@ -2,9 +2,8 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
-<logic:present name="<%= SessionConstants.INFO_DEGREES_LIST %>" scope="request">
-<logic:notEmpty name="<%= SessionConstants.INFO_DEGREES_LIST %>" >
+<logic:present name="Lista de licenciaturas" scope="request">
+<logic:notEmpty name="Lista de licenciaturas" >
 		<h2><bean:message key="label.manager.degrees"/></h2>
 <ul style="list-style-type: square;">
 <li><html:link page="/insertDegree.do?method=prepareInsert"><bean:message key="label.manager.insert.degree"/></html:link></li>
@@ -25,7 +24,7 @@
 		</td>
 	</tr>
 		 
-	<logic:iterate id="degree" name="<%= SessionConstants.INFO_DEGREES_LIST %>">			
+	<logic:iterate id="degree" name="Lista de licenciaturas">			
 		<tr>	
 			<td class="listClasses">
 			<html:multibox property="internalIds">

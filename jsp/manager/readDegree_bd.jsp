@@ -1,5 +1,4 @@
 <%@ page language="java" %>
-<%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -34,12 +33,12 @@
 
 <br>
 
-<logic:empty name="<%= SessionConstants.INFO_DEGREE_CURRICULAR_PLANS_LIST %>">
+<logic:empty name="lista de planos curriculares">
 <i><bean:message key="label.manager.degreeCurricularPlans.nonExisting"/></i>
 </logic:empty>
 
-<logic:present name="<%= SessionConstants.INFO_DEGREE_CURRICULAR_PLANS_LIST %>" scope="request">
-<logic:notEmpty name="<%= SessionConstants.INFO_DEGREE_CURRICULAR_PLANS_LIST %>">
+<logic:present name="lista de planos curriculares" scope="request">
+<logic:notEmpty name="lista de planos curriculares">
 	
 <html:form action="/deleteDegreeCurricularPlans" method="get">
 
@@ -53,7 +52,7 @@
 		</td>
 	</tr>
 	<tr>	 
-		<logic:iterate id="degreeCurricularPlan" name="<%= SessionConstants.INFO_DEGREE_CURRICULAR_PLANS_LIST %>">			
+		<logic:iterate id="degreeCurricularPlan" name="lista de planos curriculares">			
 		<td class="listClasses">
 		<html:multibox property="internalIds">
 		<bean:write name="degreeCurricularPlan" property="idInternal"/>
