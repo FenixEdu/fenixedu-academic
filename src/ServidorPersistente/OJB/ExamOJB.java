@@ -33,6 +33,7 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
 			query.bind(beginning);
 			List result = (List) query.execute();
 			lockRead(result);
+			
 			return result;
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);

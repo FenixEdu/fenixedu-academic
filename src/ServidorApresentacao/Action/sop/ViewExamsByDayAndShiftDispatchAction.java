@@ -48,7 +48,24 @@ public class ViewExamsByDayAndShiftDispatchAction extends DispatchAction {
 		Calendar examDateAndTime =
 			(Calendar) session.getAttribute(SessionConstants.EXAM_DATEANDTIME);
 
-		Object args[] = { examDateAndTime, examDateAndTime };
+		Calendar examDate = Calendar.getInstance();
+		Calendar examTime = Calendar.getInstance();
+		
+		examDate.set(Calendar.DAY_OF_MONTH, examDateAndTime.get(Calendar.DAY_OF_MONTH));
+		examDate.set(Calendar.MONTH, examDateAndTime.get(Calendar.MONTH));
+		examDate.set(Calendar.YEAR, examDateAndTime.get(Calendar.YEAR));
+		examDate.set(Calendar.HOUR_OF_DAY, 0);
+		examDate.set(Calendar.MINUTE, 0);
+		examDate.set(Calendar.SECOND, 0);
+
+		examTime.set(Calendar.DAY_OF_MONTH, 1);
+		examTime.set(Calendar.MONTH, 1);
+		examTime.set(Calendar.YEAR, 1970);		
+		examTime.set(Calendar.HOUR_OF_DAY, examDateAndTime.get(Calendar.HOUR_OF_DAY));
+		examTime.set(Calendar.MINUTE, 0);
+		examTime.set(Calendar.SECOND, 0);
+
+		Object args[] = { examDate, examTime };
 		InfoViewExam infoViewExams = 
 			(InfoViewExam) ServiceUtils.executeService(
 				userView,

@@ -34,10 +34,10 @@ public class Exam extends DomainObject implements IExam {
 
 	public String toString() {
 		return "[EXAM:"
-			+ " day= '"             + this.getDay()             + "'"
-			+ " beginning= '"       + this.getBeginning()       + "'"
-			+ " end= '"             + this.getEnd()             + "'"
-			+ " season= '"           + this.getSeason()           + "'"			
+			+ " day= '"             + this.getDay()             + "'\n"
+			+ " beginning= '"       + this.getBeginning()       + "'\n"
+			+ " end= '"             + this.getEnd()             + "'\n"
+			+ " season= '"           + this.getSeason()           + "'\n"			
 			+ "";
 	}
 

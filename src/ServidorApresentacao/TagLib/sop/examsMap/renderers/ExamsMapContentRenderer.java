@@ -35,21 +35,41 @@ public class ExamsMapContentRenderer
 		return strBuffer;
 	}
 
-	public StringBuffer renderExams(ExamsMapSlot examsMapSlot) {
+	public StringBuffer renderDayContents(ExamsMapSlot examsMapSlot, Integer year1, Integer year2) {
 		StringBuffer strBuffer = new StringBuffer();
 
 		for (int i = 0; i < examsMapSlot.getExams().size(); i++) {
 			InfoExam infoExam = (InfoExam) examsMapSlot.getExams().get(i);
+			Integer curicularYear = infoExam.getInfoExecutionCourse().getCurricularYear();
 
-			strBuffer.append(infoExam.getInfoExecutionCourse().getSigla());
+			if (curicularYear.equals(year1) || curicularYear.equals(year2)) {
+				boolean isOnValidWeekDay = onValidWeekDay(infoExam);
+				String courseInitials = infoExam.getInfoExecutionCourse().getSigla();
 
-			if (infoExam.getBeginning() != null) {
-				strBuffer.append(" às ");
-				strBuffer.append(infoExam.getBeginning().get(Calendar.HOUR_OF_DAY));
-				strBuffer.append("H");
+				strBuffer.append("<a href='viewExamsDayAndShiftForm.do?method=edit&amp;indexExam=" + i + "'>");
+
+				if (isOnValidWeekDay) {
+					strBuffer.append(courseInitials);
+				} else {
+					strBuffer.append("<font color='red'>" + courseInitials + "</font>");
+				}				
+
+				if (infoExam.getBeginning() != null) {
+					boolean isAtValidHour = atValidHour(infoExam);
+					String hoursText = infoExam.getBeginning().get(Calendar.HOUR_OF_DAY) + "H";
+
+					strBuffer.append(" às ");
+					if (isAtValidHour) {
+						strBuffer.append(hoursText);
+					} else {
+						strBuffer.append("<font color='red'>" + hoursText + "</font>");
+					}
+				}
+
+				strBuffer.append("</a>");
+
+				strBuffer.append("</br>");
 			}
-
-			strBuffer.append("</br>");
 		}
 
 		strBuffer.append("</br>");
@@ -57,6 +77,40 @@ public class ExamsMapContentRenderer
 		return strBuffer;
 	}
 
+
+	/**
+	 * @param infoExam
+	 * @return
+	 */
+	private boolean atValidHour(InfoExam infoExam) {
+		int curricularYear = infoExam.getInfoExecutionCourse().getCurricularYear().intValue();
+		int beginning = infoExam.getBeginning().get(Calendar.HOUR_OF_DAY);
+		int weekDay = infoExam.getDay().get(Calendar.DAY_OF_WEEK);
+		
+		return (
+			(curricularYear == 1 || curricularYear == 2) && (beginning == 9))
+			|| (curricularYear == 3 && beginning == 17)
+			|| (curricularYear == 4
+				&& (((weekDay == Calendar.TUESDAY || weekDay == Calendar.THURSDAY)
+					&& beginning == 17)
+					|| (weekDay == Calendar.SATURDAY && beginning == 9)))
+			|| (curricularYear == 5 && beginning == 13);
+	}
+
+	private boolean onValidWeekDay(InfoExam infoExam) {
+		int curricularYear = infoExam.getInfoExecutionCourse().getCurricularYear().intValue();
+		int weekDay = infoExam.getDay().get(Calendar.DAY_OF_WEEK);		
+		
+		return (
+			(curricularYear == 1 || curricularYear == 3 || curricularYear == 5)
+				&& (weekDay == Calendar.MONDAY
+					|| weekDay == Calendar.WEDNESDAY
+					|| weekDay == Calendar.FRIDAY))
+			|| ((curricularYear == 2 || curricularYear == 4)
+				&& (weekDay == Calendar.TUESDAY
+					|| weekDay == Calendar.THURSDAY
+					|| weekDay == Calendar.SATURDAY));
+	}
 
 	private String monthToString(int month)  {
 		switch (month) {

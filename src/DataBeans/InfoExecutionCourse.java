@@ -29,7 +29,15 @@ public class InfoExecutionCourse implements Serializable {
 	// na base de dados.
 
 	private InfoExecutionPeriod infoExecutionPeriod;
-	
+
+	// The following variable serves the purpose of indicating the
+	// the curricular year in which the execution course is given
+	// for a certain execution degree through which
+	// the execution course was obtained. It should serve only for
+	// view purposes!!!
+	// It was created to be used and set by the ExamsMap Utilities.
+	// It has no meaning in the buisness logic.
+	private Integer curricularYear;
 
 	public InfoExecutionCourse() {
 	}
@@ -247,6 +255,20 @@ public class InfoExecutionCourse implements Serializable {
 	 */
 	public void setAssociatedInfoExams(List list) {
 		associatedInfoExams = list;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getCurricularYear() {
+		return curricularYear;
+	}
+
+	/**
+	 * @param integer
+	 */
+	public void setCurricularYear(Integer integer) {
+		curricularYear = integer;
 	}
 
 }

@@ -96,8 +96,6 @@ public class ReadExamsMap implements IServico {
 			
 			// Obtain execution courses and associated information
 			// of the given execution degree for each curricular year specified
-			System.out.println("curricularYears = " + curricularYears.size());
-			
 			for (int i = 0; i < curricularYears.size(); i++) {
 				// Obtain list os execution courses
 				List executionCourses =	sp
@@ -112,6 +110,8 @@ public class ReadExamsMap implements IServico {
 					InfoExecutionCourse infoExecutionCourse =
 						Cloner.copyIExecutionCourse2InfoExecutionCourse(
 							(IDisciplinaExecucao) executionCourses.get(j));
+
+					infoExecutionCourse.setCurricularYear((Integer) curricularYears.get(i));
 
 					List associatedInfoCurricularCourses = new ArrayList();
 					List associatedCurricularCourses =

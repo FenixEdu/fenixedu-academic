@@ -246,8 +246,8 @@ public class Util {
 		monthsOfYearList.add(new LabelValueBean("Junho", "" + Calendar.JUNE));
 		monthsOfYearList.add(new LabelValueBean("Julho", "" + Calendar.JULY));
 		monthsOfYearList.add(new LabelValueBean("Agosto", "" + Calendar.AUGUST));
+		monthsOfYearList.add(new LabelValueBean("Setembro", "" + Calendar.SEPTEMBER));
 		monthsOfYearList.add(new LabelValueBean("Outubro", "" + Calendar.OCTOBER));
-		monthsOfYearList.add(new LabelValueBean("Setembro", "" + Calendar.SEPTEMBER));		
 		monthsOfYearList.add(new LabelValueBean("Novembro", "" + Calendar.NOVEMBER));
 		monthsOfYearList.add(new LabelValueBean("Dezembro", "" + Calendar.DECEMBER));
 

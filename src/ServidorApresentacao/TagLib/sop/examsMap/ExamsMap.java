@@ -19,10 +19,15 @@ import DataBeans.InfoExecutionCourse;
 public class ExamsMap {
 
 	private List days;
+	private List curricularYears;
+	private List executionCourses;
 
 	public ExamsMap(InfoExamsMap infoExamsMap) {
 		Calendar firstDayOfSeason = infoExamsMap.getStartSeason1();
 		Calendar lastDayOfSeason = infoExamsMap.getEndSeason2();
+
+		curricularYears = infoExamsMap.getCurricularYears();
+		executionCourses = infoExamsMap.getExecutionCourses();
 
 		days = new ArrayList();
 		if (firstDayOfSeason.get(Calendar.YEAR) != lastDayOfSeason.get(Calendar.YEAR)) {
@@ -201,6 +206,34 @@ public class ExamsMap {
 	 */
 	public List getDays() {
 		return days;
+	}
+
+	/**
+	 * @return
+	 */
+	public List getCurricularYears() {
+		return curricularYears;
+	}
+
+	/**
+	 * @param list
+	 */
+	private void setCurricularYears(List list) {
+		curricularYears = list;
+	}
+
+	/**
+	 * @return
+	 */
+	public List getExecutionCourses() {
+		return executionCourses;
+	}
+
+	/**
+	 * @param list
+	 */
+	private void setExecutionCourses(List list) {
+		executionCourses = list;
 	}
 
 }
