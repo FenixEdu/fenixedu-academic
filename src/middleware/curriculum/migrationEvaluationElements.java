@@ -59,8 +59,8 @@ public class migrationEvaluationElements {
 							IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) iterator2.next();
 							System.out.println("Writing EvaluationMethods of the execution course " + executionCourse.getIdInternal());
 
-							if (curriculum.getEvaluationElements() != null && curriculum.getEvaluationElements().length() > 0 &&
-							curriculum.getEvaluationElementsEn() != null && curriculum.getEvaluationElementsEn().length() > 0) {
+							//if (curriculum.getEvaluationElements() != null && curriculum.getEvaluationElements().length() > 0 &&
+							//curriculum.getEvaluationElementsEn() != null && curriculum.getEvaluationElementsEn().length() > 0) {
 								//put Evaluation Elements of the curriculum in Evaluation Method Objects
 								IEvaluationMethod evaluationMethod = new EvaluationMethod();
 								evaluationMethod.setEvaluationElements(curriculum.getEvaluationElements());
@@ -72,7 +72,7 @@ public class migrationEvaluationElements {
 								sp.iniciarTransaccao();
 								persistentEvaluationMethod.lockWrite(evaluationMethod);
 								sp.confirmarTransaccao();
-							}
+							//}
 						}
 					} else {
 						System.out.println("Don't exist execution course!!");

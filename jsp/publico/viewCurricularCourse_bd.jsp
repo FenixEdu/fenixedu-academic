@@ -83,12 +83,12 @@
 <br/>
 <br/>
 	
-	<logic:notEmpty name="curriculum" property="evaluationElements">
+<%--	<logic:notEmpty name="curriculum" property="evaluationElements">
 		<h2><bean:message key="label.evaluation" /></h2>	
 		<p>
 			<bean:write name="curriculum" property="evaluationElements" filter="false" />
 		</p>	
-	</logic:notEmpty>
+	</logic:notEmpty> --%>
 	
 </logic:present >
 

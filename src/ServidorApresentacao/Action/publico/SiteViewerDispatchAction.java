@@ -307,7 +307,6 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 		Integer sectionIndex,
 		Integer curricularCourseId)
 		throws FenixActionException {
-			System.out.println("Read site!");
 			
 		Integer objectCode = null;
 		if (infoExecutionCourseCode == null) {

@@ -8,8 +8,10 @@
 	<bean:define id="component" name="siteView" property="component"/>
 	
 	<blockquote>
+		
 			
 		<h2><bean:message key="title.evaluationMethod"/></h2>				
+		<logic:notEmpty name="component" property="evaluationElements">	
 		<table>
 			<tr>
 				<td > 
@@ -17,6 +19,7 @@
 	 			</td>
 			</tr>
 		</table>
+		</logic:notEmpty>
 		
 		<br />
 		
