@@ -63,7 +63,23 @@
 
 
 
-
+<class-descriptor 
+  class="Dominio.FuncNaoDocente"
+  table="ass_FUNC_NAO_DOCENTE"
+>
+  <field-descriptor id="0"
+    name="codigoInterno"
+    column="codigoInterno"
+    jdbc-type="INTEGER"
+    primarykey="true"
+    autoincrement="true"
+  />
+  <field-descriptor id="1"
+    name="chaveFuncionario"
+    column="chaveFuncionario"
+    jdbc-type="INTEGER"
+  />
+</class-descriptor>
 
 
 
