@@ -20,37 +20,40 @@
 <logic:present name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" scope="session">
 <h2><bean:message key="property.executionCourse.curricularHours"/></h2>
 <table cellspacing="0" cellpadding="0" width="90%">
-       <tr>
+       <tr> <td class="listClasses">
           <logic:notEqual name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" property="theoreticalHours" value="0">
-			 <td class="listClasses">
+			
 				<b><bean:message key="property.executionCourse.theoreticalHours"/><b>
 				<bean:write name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" property="theoreticalHours"/>
 				<bean:message key="property.hours"/>
-			</td>
-			</logic:notEqual>
-			<logic:notEqual name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" property="praticalHours" value="0">
+			
+			</logic:notEqual></td>
 			 <td class="listClasses">
+			<logic:notEqual name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" property="praticalHours" value="0">
+			
 				<b><bean:message key="property.executionCourse.practicalHours"/><b>
 				<bean:write name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" property="praticalHours"/>
 				<bean:message key="property.hours"/>
-			</td>
-			</logic:notEqual>
+			
+			</logic:notEqual></td>
          </tr>      
          <tr class="listClasses">
+         	 <td class="listClasses">
           <logic:notEqual name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" property="theoPratHours" value="0">
-			 <td class="listClasses">
+			
 				<b><bean:message key="property.executionCourse.theoreticalPracticalHours"/><b>
 				<bean:write name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" property="theoPratHours"/>
 			<bean:message key="property.hours"/>
-			</td>
-			</logic:notEqual>
-			<logic:notEqual name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" property="labHours" value="0">
+			
+			</logic:notEqual></td>
 			 <td class="listClasses">
+			<logic:notEqual name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" property="labHours" value="0">
+			
 				<b><bean:message key="property.executionCourse.labHours"/><b>
 				<bean:write name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" property="labHours"/>
 			<bean:message key="property.hours"/>
-			</td>
-			</logic:notEqual>
+			
+			</logic:notEqual></td>
          </tr>                     
             </table>
 		<br/>
