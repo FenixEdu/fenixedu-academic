@@ -128,13 +128,12 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
         }  
         catch (FenixServiceException e) {
             if (e.getMessage().equals("degree")) {
-                errors.add("degree", new ActionError("error.student.degreeCurricularPlan.LEEC"));
-            }
-            if (e.getMessage().equals("enrolmentPeriod")) {
+                errors.add("degree", new ActionError("error.student.degreeCurricularPlan.LEEC"));                
+            } else if (e.getMessage().equals("enrolmentPeriod")) {
                 errors.add("enrolmentPeriod", new ActionError("error.student.enrolmentPeriod"));
-            }
-
-            throw new FenixActionException(e);
+            } else if(errors.isEmpty()) {                
+                throw new FenixActionException(e);
+            }            
         }
         if (!errors.isEmpty()) {
             saveErrors(request, errors);
