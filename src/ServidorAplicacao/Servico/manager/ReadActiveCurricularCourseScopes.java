@@ -7,12 +7,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-
 import DataBeans.util.Cloner;
 import Dominio.CurricularCourse;
-import Dominio.CurricularCourseScope;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
 import ServidorAplicacao.IServico;

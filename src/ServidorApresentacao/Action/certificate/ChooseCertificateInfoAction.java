@@ -18,7 +18,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
-import DataBeans.InfoEnrolment;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoPrice;
 import DataBeans.InfoStudent;

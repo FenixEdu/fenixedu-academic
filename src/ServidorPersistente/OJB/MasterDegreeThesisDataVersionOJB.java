@@ -1,12 +1,8 @@
 /*
  * Created on Oct 13, 2003
  *
- * To change the template for this generated file go to
- * Window - Preferences - Java - Code Generation - Code and Comments
  */
 package ServidorPersistente.OJB;
-
-import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
 
