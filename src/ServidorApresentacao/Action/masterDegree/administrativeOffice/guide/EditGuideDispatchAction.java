@@ -127,17 +127,27 @@ public class EditGuideDispatchAction extends DispatchAction {
 
 
 			ActionErrors actionErrors = new ActionErrors();
-			if ((situationOfGuide.equals(SituationOfGuide.PAYED_STRING)) && (
-				(day == null) || (day.length() == 0) || 					
-				(month == null) || (month.length() == 0) || 					
-				(year == null) || (year.length() == 0))) {
+
+			Calendar calendar = Calendar.getInstance();
+			if (situationOfGuide.equals(SituationOfGuide.PAYED_STRING)) {
+				if ((day == null) || (day.length() == 0) || 					
+					(month == null) || (month.length() == 0) || 					
+					(year == null) || (year.length() == 0)) {
 				
-				ActionError actionError = new ActionError("error.required.paymentDate");
-				actionErrors.add("UnNecessary1", actionError);
-			} else {
-				paymentDateYear = new Integer((String) request.getParameter("paymentDateYear"));
-				paymentDateMonth = new Integer((String) request.getParameter("paymentDateMonth"));
-				paymentDateDay = new Integer((String) request.getParameter("paymentDateDay"));
+					ActionError actionError = new ActionError("error.required.paymentDate");
+					actionErrors.add("UnNecessary1", actionError);
+				} else {
+					paymentDateYear = new Integer((String) request.getParameter("paymentDateYear"));
+					paymentDateMonth = new Integer((String) request.getParameter("paymentDateMonth"));
+					paymentDateDay = new Integer((String) request.getParameter("paymentDateDay"));
+					
+					if (!Data.validDate(paymentDateDay, paymentDateMonth, paymentDateYear)){
+						ActionError actionError = new ActionError("error.required.paymentDate");
+						actionErrors.add("UnNecessary1", actionError);
+					} else { 
+						calendar.set(paymentDateYear.intValue(), paymentDateMonth.intValue(), paymentDateDay.intValue());
+					}
+				}
 			}
 	
 			if ((situationOfGuide.equals(SituationOfGuide.PAYED_STRING)) && (paymentType.equals(PaymentType.DEFAULT_STRING))){
@@ -149,12 +159,7 @@ public class EditGuideDispatchAction extends DispatchAction {
 				return mapping.getInputForward();
 			}
 
-
 		
-			
-			Calendar calendar = Calendar.getInstance();
-			calendar.set(paymentDateYear.intValue(), paymentDateMonth.intValue(), paymentDateDay.intValue());
-			
 			Object args[] = {guideNumber, guideYear, guideVersion, calendar.getTime(), remarks, situationOfGuide, paymentType};
 			
 			try {

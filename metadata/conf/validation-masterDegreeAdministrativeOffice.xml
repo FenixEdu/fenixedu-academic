@@ -239,7 +239,7 @@
 
 
    <!-- validation for the edition of a Guide Situation Form -->
-    <form name="editGuideSituationForm">
+<!--   <form name="editGuideSituationForm">
       <field property="guideSituation" depends="required" page="1">
         <arg0 key="label.masterDegree.administrativeOffice.guideSituation" />
       </field>
@@ -255,6 +255,7 @@
           </var>
       </field> 
    </form>
+-->
 
    <!-- validation for the choose Year form -->
     <form name="chooseYearForm">
