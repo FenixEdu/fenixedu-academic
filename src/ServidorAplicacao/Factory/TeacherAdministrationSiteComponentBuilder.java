@@ -33,6 +33,7 @@ import DataBeans.InfoItem;
 import DataBeans.InfoLesson;
 import DataBeans.InfoSection;
 import DataBeans.InfoSectionWithAll;
+import DataBeans.InfoSectionWithInfoSiteAndInfoExecutionCourse;
 import DataBeans.InfoShift;
 import DataBeans.InfoShiftWithInfoLessons;
 import DataBeans.InfoSite;
@@ -253,8 +254,7 @@ public class TeacherAdministrationSiteComponentBuilder {
             infoSectionsList = new ArrayList(allSections.size());
             while (iterator.hasNext()) {
                 
-                //infoSectionsList.add(Cloner
-                        //.copyISection2InfoSection((ISection) iterator.next()));
+                
                 infoSectionsList.add(InfoSectionWithAll.newInfoFromDomain((ISection) iterator.next()));                
             }
             Collections.sort(infoSectionsList);
@@ -263,8 +263,6 @@ public class TeacherAdministrationSiteComponentBuilder {
             component.setMail(site.getMail());
             component.setSections(infoSectionsList);
             
-            //InfoExecutionCourse executionCourse = (InfoExecutionCourse) Cloner
-                    //.get(site.getExecutionCourse());
             InfoExecutionCourse executionCourse = InfoExecutionCourseWithExecutionPeriod.newInfoFromDomain(site.getExecutionCourse());
             component.setExecutionCourse(executionCourse);
         } catch (ExcepcaoPersistencia excepcaoPersistencia) {
@@ -960,7 +958,7 @@ public class TeacherAdministrationSiteComponentBuilder {
             while (iter.hasNext()) {
                 IItem item = (IItem) iter.next();
                 
-                //InfoItem infoItem = Cloner.copyIItem2InfoItem(item);
+                
                 InfoItem infoItem = InfoItem.newInfoFromDomain(item);
                 try {
                     infoItem.setLinks(CMSUtils.getItemLinks(fileSuport, item
@@ -979,7 +977,7 @@ public class TeacherAdministrationSiteComponentBuilder {
             }
         }
         
-        //component.setSection(Cloner.copyISection2InfoSection(iSection));
+        
         component.setSection(InfoSectionWithAll.newInfoFromDomain(iSection));
         Collections.sort(infoItemsList);
         component.setItems(infoItemsList);
@@ -1100,13 +1098,13 @@ public class TeacherAdministrationSiteComponentBuilder {
 
             IItem iItem = (IItem) persistentItem
                     .readByOID(Item.class, itemCode);
-            //InfoItem infoItem = Cloner.copyIItem2InfoItem(iItem);
+           
             InfoItem infoItem = InfoItem.newInfoFromDomain(iItem);
             
             
             ISection iSection = (ISection) persistentSection.readByOID(
                     Section.class, iItem.getSection().getIdInternal());
-            infoItem.setInfoSection(InfoSection.newInfoFromDomain(iSection));
+            infoItem.setInfoSection(InfoSectionWithInfoSiteAndInfoExecutionCourse.newInfoFromDomain(iSection));
             List allItems = persistentItem.readAllItemsBySection(iSection);
 
             // build the result of this service

@@ -54,3 +54,4 @@ naodocente.dat
 output.doc
 pessoa.dat
 outputGuides.txt
+${log.image.directory}
