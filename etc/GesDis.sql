@@ -110,6 +110,6 @@ create table BIBLIOGRAPHIC_REFERENCE (
    KEY_EXECUTION_COURSE int(11) not null default '0',
    primary key (ID_INTERNAL),
    unique U1 (TITLE, AUTHORS, REFERENCE, `YEAR`))
-   type=MyISAM;
+   type=InnoDB comment="InnoDB free: 372736 kB";
 
 
