@@ -18,7 +18,7 @@ create table ANNOUNCEMENT (
    INFORMATION varchar(100),
    KEY_SITE int(11) unsigned not null default '0',
    primary key (ID_INTERNAL),
-   UNIQUE KEY U1(TITLE, KEY_SITE, CREATION_DATE))
+   UNIQUE KEY U1( KEY_SITE, CREATION_DATE))
    type=InnoDB comment="InnoDB free: 372736 kB; InnoDB free: 372736 kB";
 
 #----------------------------

@@ -84,11 +84,11 @@ INSERT INTO RESPONSIBLEFOR VALUES (3,1, 26);
 #
 #---------
 DELETE FROM ANNOUNCEMENT;
-INSERT INTO ANNOUNCEMENT VALUES (1, 'announcement1deTFCI', '2003-01-21', '2003-01-21', 'information1', 1);
-INSERT INTO ANNOUNCEMENT VALUES (2, 'announcement2deTFCI', '2003-01-22', '2003-01-22', 'information2', 1);
-INSERT INTO ANNOUNCEMENT VALUES (3, 'announcement1dePO', '2003-01-23', '2003-01-23', 'information3', 4);
-INSERT INTO ANNOUNCEMENT VALUES (4, 'announcement2dePO', '2003-01-21', '2003-01-25', 'information4', 4);
-INSERT INTO ANNOUNCEMENT VALUES (5, 'announcement3dePO', '2003-01-21', '2003-01-24', 'information5', 4);
+INSERT INTO ANNOUNCEMENT VALUES (1, 'announcement1deTFCI', '2003-01-21 13:20:00', '2003-01-21 13:28:00', 'information1', 1);
+INSERT INTO ANNOUNCEMENT VALUES (2, 'announcement2deTFCI', '2003-01-22 13:20:00', '2003-01-22 13:28:00', 'information2', 1);
+INSERT INTO ANNOUNCEMENT VALUES (3, 'announcement1dePO', '2003-01-23 13:28:00', '2003-01-23 13:28:00', 'information3', 4);
+INSERT INTO ANNOUNCEMENT VALUES (4, 'announcement2dePO', '2003-01-21 13:28:00', '2003-01-25 13:28:00', 'information4', 4);
+INSERT INTO ANNOUNCEMENT VALUES (5, 'announcement3dePO', '2003-01-21 13:30:00', '2003-01-24 13:28:00', 'information5', 4);
 
 #
 # Data for table 'BIBLIOGRAPHIC_REFERENCE'
