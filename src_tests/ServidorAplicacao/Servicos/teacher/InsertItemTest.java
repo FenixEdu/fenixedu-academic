@@ -30,7 +30,7 @@ public class InsertItemTest extends SectionBelongsExecutionCourseTest {
 	}
 
 	protected String getDataSetFilePath() {
-		return "etc/datasets/testInsertItemDataSet.xml";
+		return "etc/datasets/servicos/teacher/testInsertItemDataSet.xml";
 	}
 
 	protected String[] getAuthorizedUser() {
@@ -108,7 +108,7 @@ public class InsertItemTest extends SectionBelongsExecutionCourseTest {
 			fail("testInsertExistingItem");
 
 		} catch (ExistingServiceException e) {
-			compareDataSet("etc/datasets/testExpectedInsertExistingItemDataSet.xml");
+			compareDataSet("etc/datasets/servicos/teacher/testExpectedInsertExistingItemDataSet.xml");
 			System.out.println(
 				"testInsertExistingItem was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
@@ -161,7 +161,7 @@ public class InsertItemTest extends SectionBelongsExecutionCourseTest {
 
 			persistentItem.delete(iItem);
 			persistentSuport.confirmarTransaccao();
-			compareDataSet("etc/datasets/testExpectedInsertItemBeforeFirstDataSet.xml");
+			compareDataSet("etc/datasets/servicos/teacher/testExpectedInsertItemBeforeFirstDataSet.xml");
 			System.out.println(
 				"testInsertNonExistingItemBeforeFirst was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
@@ -217,7 +217,7 @@ public class InsertItemTest extends SectionBelongsExecutionCourseTest {
 
 			persistentItem.delete(iItem);
 			persistentSuport.confirmarTransaccao();
-			compareDataSet("etc/datasets/testExpectedInsertItemInMiddleDataSet.xml");
+			compareDataSet("etc/datasets/servicos/teacher/testExpectedInsertItemInMiddleDataSet.xml");
 			System.out.println(
 				"testInsertNonExistingItemInMiddle was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
@@ -273,7 +273,7 @@ public class InsertItemTest extends SectionBelongsExecutionCourseTest {
 
 			persistentItem.delete(iItem);
 			persistentSuport.confirmarTransaccao();
-			compareDataSet("etc/datasets/testExpectedInsertItemBeforeEndDataSet.xml");
+			compareDataSet("etc/datasets/servicos/teacher/testExpectedInsertItemBeforeEndDataSet.xml");
 			System.out.println(
 				"testInsertNonExistingItemBeforeEnd was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());

@@ -22,7 +22,7 @@ public class EditSectionTest extends SectionBelongsExecutionCourseTest {
 	}
 
 	protected String getDataSetFilePath() {
-		return "etc/datasets/testEditSectionDataSet.xml";
+		return "etc/datasets/servicos/teacher/testEditSectionDataSet.xml";
 	}
 
 	protected String[] getAuthorizedUser() {
@@ -69,7 +69,7 @@ public class EditSectionTest extends SectionBelongsExecutionCourseTest {
 		try {
 			gestor.executar(userView, getNameOfServiceToBeTested(), args);
 
-			compareDataSet("etc/datasets/testExpectedEditSectionDataSet.xml");
+			compareDataSet("etc/datasets/servicos/teacher/testExpectedEditSectionDataSet.xml");
 			System.out.println(
 				"testEditExistingSection was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());

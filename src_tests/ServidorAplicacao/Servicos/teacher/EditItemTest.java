@@ -23,7 +23,7 @@ public class EditItemTest extends ItemBelongsExecutionCourseTest {
 	}
 
 	protected String getDataSetFilePath() {
-		return "etc/datasets/testEditItemDataSet.xml";
+		return "etc/datasets/servicos/teacher/testEditItemDataSet.xml";
 	}
 	
 	protected String[] getAuthorizedUser() {
@@ -88,7 +88,7 @@ public class EditItemTest extends ItemBelongsExecutionCourseTest {
 			result =
 				gestor.executar(userView, getNameOfServiceToBeTested(), args);
 
-			compareDataSet("etc/datasets/testExpectedEditItemDataSet.xml");
+			compareDataSet("etc/datasets/servicos/teacher/testExpectedEditItemDataSet.xml");
 			System.out.println(
 				"testEditExistingItem was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());

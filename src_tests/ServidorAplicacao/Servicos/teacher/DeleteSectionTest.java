@@ -22,7 +22,7 @@ public class DeleteSectionTest extends SectionBelongsExecutionCourseTest {
 	}
 
 	protected String getDataSetFilePath() {
-		return "etc/datasets/testDeleteSectionDataSet.xml";
+		return "etc/datasets/servicos/teacher/testDeleteSectionDataSet.xml";
 	}
 
 	protected String[] getAuthorizedUser() {
@@ -65,7 +65,7 @@ public class DeleteSectionTest extends SectionBelongsExecutionCourseTest {
 		try {
 			gestor.executar(userView, getNameOfServiceToBeTested(), args);
 
-			compareDataSet("etc/datasets/testExpectedDeleteSectionDataSet.xml");
+			compareDataSet("etc/datasets/servicos/teacher/testExpectedDeleteSectionDataSet.xml");
 			System.out.println(
 				"testDeleteExistingSection was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());

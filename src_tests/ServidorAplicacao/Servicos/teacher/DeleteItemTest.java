@@ -22,7 +22,7 @@ public class DeleteItemTest extends ItemBelongsExecutionCourseTest {
 	}
 
 	protected String getDataSetFilePath() {
-		return "etc/datasets/testDeleteItemDataSet.xml";
+		return "etc/datasets/servicos/teacher/testDeleteItemDataSet.xml";
 	}
 
 	protected String[] getAuthorizedUser() {
@@ -73,7 +73,7 @@ public class DeleteItemTest extends ItemBelongsExecutionCourseTest {
 			result =
 				gestor.executar(userView, getNameOfServiceToBeTested(), args);
 
-			compareDataSet("etc/datasets/testExpectedDeleteItemDataSet.xml");
+			compareDataSet("etc/datasets/servicos/teacher/testExpectedDeleteItemDataSet.xml");
 			System.out.println(
 				"testDeleteExistingItem was SUCCESSFULY runned by class: "
 					+ this.getClass().getName());
