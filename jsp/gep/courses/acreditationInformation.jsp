@@ -72,36 +72,47 @@
 								https://fenix.ist.utl.pt/publico/viewSiteExecutionCourse.do?method=firstPage&objectCode=<%= objectCode %>
 							</td>
 						</tr>
-						<logic:iterate id="infoTeacher" name="infoSiteCourseInformation" property="infoResponsibleTeachers" length="1">
+						<bean:define id="labels" value="false"/>
+						<logic:iterate id="infoTeacher" name="infoSiteCourseInformation" property="infoResponsibleTeachers">
 							<tr>
-								<td><strong><bean:message key="label.ects.responsibleTeacher"
-														  bundle="GEP_RESOURCES"/></strong></td>
+								<td>
+									<logic:equal name="labels" value="false">
+										<strong><bean:message key="label.ects.responsibleTeacher"
+															  bundle="GEP_RESOURCES"/></strong>
+									</logic:equal>
+							  	</td>
 								<td><bean:write name="infoTeacher" property="infoPerson.nome"/></td>
-								<td><strong><bean:message key="label.acred.categoryResponsibleTeacher"
-														  bundle="GEP_RESOURCES"/></strong></td>
+								<td>
+									<logic:equal name="labels" value="false">
+										<strong><bean:message key="label.acred.categoryResponsibleTeacher"
+															  bundle="GEP_RESOURCES"/></strong>
+									</logic:equal>
+								</td>
 								<td><bean:write name="infoTeacher" property="infoCategory.longName"/></td>
 							</tr>
+							<bean:define id="labels" value="true"/>
 						</logic:iterate>
-						<logic:iterate id="infoTeacher" name="infoSiteCourseInformation" property="infoResponsibleTeachers" offset="2">
-							<tr>
-								<td>&nbsp;</td>
-								<td><bean:write name="infoTeacher" property="infoPerson.nome"/></td>
-								<td>&nbsp;</td>
-								<td><bean:write name="infoTeacher" property="infoCategory.longName"/></td>
-							</tr>
-						</logic:iterate>
-						<logic:iterate id="infoTeacher" name="infoSiteCourseInformation" property="infoLecturingTeachers" length="1">
-							<tr>
-								<td><strong><bean:message key="label.acred.professorshipTeacher"
-														  bundle="GEP_RESOURCES"/></strong></td>
-								<td colspan="3"><bean:write name="infoTeacher" property="infoPerson.nome"/></td>
-							</tr>
-						</logic:iterate>
-						<logic:iterate id="infoTeacher" name="infoSiteCourseInformation" property="infoLecturingTeachers" offset="2">
-							<tr>
-								<td>&nbsp;</td>
-								<td colspan="3"><bean:write name="infoTeacher" property="infoPerson.nome"/></td>
-							</tr>
+						<br />
+						<bean:define id="labels" value="false"/>
+						<logic:iterate id="infoTeacherId" name="infoSiteCourseInformation" property="infoLecturingTeachers" type="DataBeans.InfoTeacher">
+							<bean:define id="present">false</bean:define>
+							<logic:iterate id="infoResponsible" name="infoSiteCourseInformation" property="infoResponsibleTeachers" type="DataBeans.InfoTeacher">
+								<logic:equal name="infoResponsible" property="idInternal" value="<%=infoTeacherId.getIdInternal().toString()%>">
+									<bean:define id="present">true</bean:define>
+								</logic:equal>
+							</logic:iterate>
+							<logic:equal name="present" value="false">
+								<tr>
+									<td>
+										<logic:equal name="labels" value="false">
+											<strong><bean:message key="label.acred.professorshipTeacher"
+																	  bundle="GEP_RESOURCES"/></strong>
+										</logic:equal>
+									</td>					  
+									<td colspan="3"><bean:write name="infoTeacherId" property="infoPerson.nome"/></td>
+								</tr>
+								<bean:define id="labels" value="true"/>
+							</logic:equal>
 						</logic:iterate>
 					</table>
 					<br />
@@ -305,36 +316,47 @@
 							https://fenix.ist.utl.pt/publico/viewSiteExecutionCourse.do?method=firstPage&objectCode=<%= objectCode %>
 						</td>
 					</tr>
-					<logic:iterate id="infoTeacher" name="infoSiteCourseInformation" property="infoResponsibleTeachers" length="1">
+					<bean:define id="labels" value="false"/>
+					<logic:iterate id="infoTeacher" name="infoSiteCourseInformation" property="infoResponsibleTeachers">
 						<tr>
-							<td><strong><bean:message key="label.ects.responsibleTeacher"
-													  bundle="GEP_RESOURCES"/></strong></td>
+							<td>
+								<logic:equal name="labels" value="false">
+									<strong><bean:message key="label.ects.responsibleTeacher"
+														  bundle="GEP_RESOURCES"/></strong>
+								</logic:equal>
+						  	</td>
 							<td><bean:write name="infoTeacher" property="infoPerson.nome"/></td>
-							<td><strong><bean:message key="label.acred.categoryResponsibleTeacher"
-													  bundle="GEP_RESOURCES"/></strong></td>
+							<td>
+								<logic:equal name="labels" value="false">
+									<strong><bean:message key="label.acred.categoryResponsibleTeacher"
+														  bundle="GEP_RESOURCES"/></strong>
+								</logic:equal>
+							</td>
 							<td><bean:write name="infoTeacher" property="infoCategory.longName"/></td>
 						</tr>
+						<bean:define id="labels" value="true"/>
 					</logic:iterate>
-					<logic:iterate id="infoTeacher" name="infoSiteCourseInformation" property="infoResponsibleTeachers" offset="2">
-						<tr>
-							<td>&nbsp;</td>
-							<td><bean:write name="infoTeacher" property="infoPerson.nome"/></td>
-							<td>&nbsp;</td>
-							<td><bean:write name="infoTeacher" property="infoCategory.longName"/></td>
-						</tr>
-					</logic:iterate>
-					<logic:iterate id="infoTeacher" name="infoSiteCourseInformation" property="infoLecturingTeachers" length="1">
-						<tr>
-							<td><strong><bean:message key="label.acred.professorshipTeacher"
-													  bundle="GEP_RESOURCES"/></strong></td>
-							<td colspan="3"><bean:write name="infoTeacher" property="infoPerson.nome"/></td>
-						</tr>
-					</logic:iterate>
-					<logic:iterate id="infoTeacher" name="infoSiteCourseInformation" property="infoLecturingTeachers" offset="2">
-						<tr>
-							<td>&nbsp;</td>
-							<td colspan="3"><bean:write name="infoTeacher" property="infoPerson.nome"/></td>
-						</tr>
+					<br />
+					<bean:define id="labels" value="false"/>
+					<logic:iterate id="infoTeacherId" name="infoSiteCourseInformation" property="infoLecturingTeachers" type="DataBeans.InfoTeacher">
+						<bean:define id="present">false</bean:define>
+						<logic:iterate id="infoResponsible" name="infoSiteCourseInformation" property="infoResponsibleTeachers" type="DataBeans.InfoTeacher">
+							<logic:equal name="infoResponsible" property="idInternal" value="<%=infoTeacherId.getIdInternal().toString()%>">
+								<bean:define id="present">true</bean:define>
+							</logic:equal>
+						</logic:iterate>
+						<logic:equal name="present" value="false">
+							<tr>
+								<td>
+									<logic:equal name="labels" value="false">
+										<strong><bean:message key="label.acred.professorshipTeacher"
+																  bundle="GEP_RESOURCES"/></strong>
+									</logic:equal>
+								</td>					  
+								<td colspan="3"><bean:write name="infoTeacherId" property="infoPerson.nome"/></td>
+							</tr>
+							<bean:define id="labels" value="true"/>
+						</logic:equal>
 					</logic:iterate>
 				</table>
 				<br />

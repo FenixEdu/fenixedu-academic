@@ -108,7 +108,7 @@
 <br/><br/>
 
 <bean:message key="message.grant.contract.creation"/>:&nbsp;
-<html:link page='<%= "/editGrantContract.do?method=prepareEditGrantContractForm&amp;idInternal=" + request.getAttribute("idInternal").toString() %>'>
+<html:link page='<%= "/editGrantContract.do?method=prepareEditGrantContractForm&amp;idInternal=" + request.getAttribute("idGrantOwner").toString() %>'>
 	<bean:message key="link.grant.contract.create"/>
 </html:link>
 
@@ -117,7 +117,7 @@
 <html:form action="/manageGrantOwner" style="display:inline">
 	<html:hidden property="method" value="prepareManageGrantOwnerForm"/>
 	<html:hidden property="page" value="1"/>
-	<html:hidden property="idInternal" value='<%= request.getAttribute("idInternal").toString() %>'/>
+	<html:hidden property="idInternal" value='<%= request.getAttribute("idGrantOwner").toString() %>'/>
 	<html:submit styleClass="inputbutton" style="display:inline">
 		<bean:message key="button.manageGrantOwner"/>
 	</html:submit>

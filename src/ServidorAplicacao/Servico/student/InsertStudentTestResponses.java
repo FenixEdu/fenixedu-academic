@@ -1,5 +1,6 @@
 /*
  * Created on 3/Set/2003
+ *
  */
 
 package ServidorAplicacao.Servico.student;
@@ -8,7 +9,6 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
-import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoStudentTestQuestion;
 import DataBeans.comparators.CalendarDateComparator;
 import DataBeans.comparators.CalendarHourComparator;
@@ -24,6 +24,7 @@ import Dominio.IStudentTestLog;
 import Dominio.IStudentTestQuestion;
 import Dominio.Mark;
 import Dominio.StudentTestLog;
+import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentStudentTestLog;
@@ -36,14 +37,19 @@ import UtilTests.ParseQuestion;
 /**
  * @author Susana Fernandes
  */
-public class InsertStudentTestResponses implements IService
+public class InsertStudentTestResponses implements IServico
 {
-
+	private static InsertStudentTestResponses service = new InsertStudentTestResponses();
     private String path = new String();
 
-    public InsertStudentTestResponses()
+	public static InsertStudentTestResponses getService()
     {
+		return service;
+	}
 
+	public String getNome()
+	{
+		return "InsertStudentTestResponses";
     }
 
     public boolean run(String userName, Integer distributedTestId, String[] options, String path)
@@ -110,8 +116,8 @@ public class InsertStudentTestResponses implements IService
                         studentTestQuestion.setResponse(new Integer(options[studentTestQuestion
                                 .getTestQuestionOrder().intValue() - 1]));
                         if (studentTestQuestion.getResponse().intValue() != 0
-                                && distributedTest.getTestType().equals(
-                                        new TestType(TestType.EVALUATION))
+								&& (!distributedTest.getTestType().equals(
+										new TestType(TestType.INQUIRY)))
                                 && infoStudentTestQuestion.getQuestion().getCorrectResponse().size() != 0)
                         {
 

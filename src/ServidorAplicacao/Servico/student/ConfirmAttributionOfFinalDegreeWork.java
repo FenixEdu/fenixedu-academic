@@ -10,6 +10,7 @@ import Dominio.finalDegreeWork.GroupProposal;
 import Dominio.finalDegreeWork.IGroup;
 import Dominio.finalDegreeWork.IGroupProposal;
 import Dominio.finalDegreeWork.IGroupStudent;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentFinalDegreeWork;
 import ServidorPersistente.ISuportePersistente;
@@ -18,40 +19,46 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 /**
  * @author Luis Cruz
  */
-public class ConfirmAttributionOfFinalDegreeWork implements IService
-{
+public class ConfirmAttributionOfFinalDegreeWork implements IService {
 
-    public ConfirmAttributionOfFinalDegreeWork()
-    {
+    public ConfirmAttributionOfFinalDegreeWork() {
         super();
     }
 
-    public boolean run(String username, Integer selectedGroupProposalOID) throws ExcepcaoPersistencia
-    {
-        ISuportePersistente persistentSupport = SuportePersistenteOJB.getInstance();
+    public boolean run(String username, Integer selectedGroupProposalOID)
+            throws ExcepcaoPersistencia, FenixServiceException {
+        ISuportePersistente persistentSupport = SuportePersistenteOJB
+                .getInstance();
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                 .getIPersistentFinalDegreeWork();
 
-        IGroupProposal groupProposal = (IGroupProposal) persistentFinalDegreeWork.readByOID(
-                GroupProposal.class, selectedGroupProposalOID);
+        IGroupProposal groupProposal = (IGroupProposal) persistentFinalDegreeWork
+                .readByOID(GroupProposal.class, selectedGroupProposalOID);
 
-        if (groupProposal != null)
-        {
+        if (groupProposal != null) {
+            IGroup groupAttributed = groupProposal.getFinalDegreeWorkProposal()
+                    .getGroupAttributed();
+
+            if (groupAttributed == null) { throw new NoAttributionToConfirmException(); }
+
             IGroup group = groupProposal.getFinalDegreeDegreeWorkGroup();
-            if (group != null)
-            {
+            if (group != null) {
+                if (!group.getIdInternal().equals(
+                        groupAttributed.getIdInternal())) { throw new NoAttributionToConfirmException(); }
+
                 List groupStudents = group.getGroupStudents();
-                if (groupStudents != null && !groupStudents.isEmpty())
-                {
-                    for (int i = 0; i < groupStudents.size(); i++)
-                    {
-                        IGroupStudent groupStudent = (IGroupStudent) groupStudents.get(i);
+                if (groupStudents != null && !groupStudents.isEmpty()) {
+                    for (int i = 0; i < groupStudents.size(); i++) {
+                        IGroupStudent groupStudent = (IGroupStudent) groupStudents
+                                .get(i);
                         if (groupStudent != null
-                                && groupStudent.getStudent().getPerson().getUsername().equals(username))
-                        {
-                            persistentFinalDegreeWork.simpleLockWrite(groupStudent);
-                            groupStudent.setFinalDegreeWorkProposalConfirmation(groupProposal
-                                    .getFinalDegreeWorkProposal());
+                                && groupStudent.getStudent().getPerson()
+                                        .getUsername().equals(username)) {
+                            persistentFinalDegreeWork
+                                    .simpleLockWrite(groupStudent);
+                            groupStudent
+                                    .setFinalDegreeWorkProposalConfirmation(groupProposal
+                                            .getFinalDegreeWorkProposal());
                         }
                     }
                 }
@@ -59,6 +66,29 @@ public class ConfirmAttributionOfFinalDegreeWork implements IService
         }
 
         return true;
+    }
+
+    public class NoAttributionToConfirmException extends FenixServiceException {
+
+        public NoAttributionToConfirmException() {
+            super();
+        }
+
+        public NoAttributionToConfirmException(int errorType) {
+            super(errorType);
+        }
+
+        public NoAttributionToConfirmException(String s) {
+            super(s);
+        }
+
+        public NoAttributionToConfirmException(Throwable cause) {
+            super(cause);
+        }
+
+        public NoAttributionToConfirmException(String message, Throwable cause) {
+            super(message, cause);
+        }
     }
 
 }

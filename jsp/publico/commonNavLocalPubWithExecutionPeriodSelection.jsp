@@ -8,6 +8,8 @@
 
 	<html:form action="/index">
 		<html:hidden  property="<%SessionConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID)%>" />
+		<html:hidden property="page" value="1"/>
+		<html:hidden property="method" value="choose"/>
 		
 		<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
@@ -17,22 +19,13 @@
 			</tr>
 			<tr>
 			    <td nowrap="nowrap">
-			    	<html:select property="index" size="1">
+			    	<html:select property="index" size="1"
+			    				 onchange='this.form.submit();'>
 						<html:options property="value"
 							labelProperty="label" 
 							collection="<%= SessionConstants.LABELLIST_EXECUTIONPERIOD%>"/>
 					</html:select>
 			    </td>
-			</tr>
-			<tr>
-				<td>
-					<br />
-					<html:hidden property="page" value="1"/>
-					<html:hidden property="method" value="choose"/>
-				    <html:submit styleClass="inputbutton">
-				    	<bean:message key="label.choose"/>
-	          		</html:submit>
-				</td>
 			</tr>
 		</table>
 	</html:form> 

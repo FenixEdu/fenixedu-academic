@@ -51,3 +51,5 @@ ftp.degree.grades.server.address=address
 login.page=https://fenix.ist.utl.pt/privado
 application=extranet
 validation.doctype=<!DOCTYPE form-validation PUBLIC "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.0//EN" "file:///D:/eclipse-M3/workspace/fenix-head/metadata/dtds/validator_1_0.dtd">
+
+index.html.link=publico/index.do?method=prepare&amp;page=0

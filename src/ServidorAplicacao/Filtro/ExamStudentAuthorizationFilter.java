@@ -4,23 +4,14 @@
  */
 package ServidorAplicacao.Filtro;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import org.apache.commons.collections.CollectionUtils;
-
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import DataBeans.InfoExam;
 import DataBeans.util.Cloner;
 import Dominio.Exam;
 import Dominio.IExam;
-import Dominio.IExecutionCourse;
-import Dominio.IFrequenta;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.exception.NotAuthorizedFilterException;
-import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentExam;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -35,6 +26,7 @@ public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter
 
     public ExamStudentAuthorizationFilter()
     {
+        super();
     }
 
     protected RoleType getRoleType()
@@ -72,7 +64,6 @@ public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter
         ISuportePersistente sp;
         IExam exam = null;
         InfoExam infoExam = null;
-        List intersection = null;
 
         if (argumentos == null)
         {
@@ -82,7 +73,6 @@ public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter
         {
             sp = SuportePersistenteOJB.getInstance();
             IPersistentExam persistentExam = sp.getIPersistentExam();
-            IFrequentaPersistente persistentFrequenta = sp.getIFrequentaPersistente();
 
             if (argumentos[1] instanceof InfoExam)
             {
@@ -94,25 +84,14 @@ public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter
                 exam = (IExam) persistentExam.readByOId(new Exam((Integer) argumentos[1]), false);
             }
 
-            List frequentaList = persistentFrequenta.readByUsername((String) argumentos[0]);
-            List executionCourses = exam.getAssociatedExecutionCourses();
-            List frequentaExecutionCourses = new ArrayList();
-            Iterator iter = frequentaList.iterator();
-            while (iter.hasNext())
-            {
-                IFrequenta frequenta = (IFrequenta) iter.next();
-                IExecutionCourse disciplinaExecucao = frequenta.getDisciplinaExecucao();
-                frequentaExecutionCourses.add(disciplinaExecucao);
-            }
-            intersection = (List) CollectionUtils.intersection(
-                            frequentaExecutionCourses, executionCourses);
-
+            String username = (String) argumentos[0];
+            return persistentExam.isExamOfExecutionCourseTheStudentAttends(exam.getIdInternal(), username);
         }
         catch (Exception ex)
         {
             return false;
         }
-        return intersection.size() != 0;
+        
 
     }
 

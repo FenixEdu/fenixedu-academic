@@ -608,6 +608,9 @@
 				scope="request"
 				validate="true"
 				input="/finalDegreeWorkAttribution.do?method=prepare&amp;page=0">
+			<exception	type="ServidorAplicacao.Servico.student.ConfirmAttributionOfFinalDegreeWork$NoAttributionToConfirmException"
+						key="error.message.NoAttributionToConfirmException"
+						handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
 			<forward name="showFinalDegreeWorkList" path="df.page.finalDegreeWork.attribution"/>
 			<forward name="prepareShowFinalDegreeWorkList" path="/finalDegreeWorkAttribution.do?method=prepare&amp;page=0"/>
 		</action>

@@ -34,6 +34,9 @@ CHANGES:
 
 BUG FIXES:
 ==========
+- fixed bug [ #218 ] Exams listing by degree and curricular year on SOP's portal
+- fixed bug [ #229 ] Error on examEnrollmentManager
+- fixed bug [ #224 ] GEP's Portal - wrong presentation of responsible teachers for acreditation listing
 
 
 KNOWN ISSUES:

@@ -6,10 +6,13 @@
 package ServidorApresentacao.TagLib.sop.examsMapNew;
 
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.comparators.ComparatorChain;
 
 import DataBeans.InfoExam;
 import DataBeans.InfoExecutionCourse;
@@ -75,22 +78,24 @@ public class ExamsMapRenderer implements IExamsMapRenderer
 			
 			
             strBuffer.append("<td width='100%'>");
-			// PRINT EXECUTION DEGREE
-			if (user.equals("sop"))	
-			{
-				strBuffer.append("<strong>" + examsMap.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getName() + "</strong><br/>");
-			}
-			if (year2 == null)
-            {
-                strBuffer.append("<strong>" + year1 + "º<strong> ano");
-            }
-            else
-            {
-                strBuffer.append("<strong>" + year1 + "º</strong>");
-                strBuffer.append(" e <strong>" + year2 + "º</strong> ano");
-            }
+			if (!mapType.equals("DegreeAndYear")) {
+            	// PRINT EXECUTION DEGREE
+				if (user.equals("sop"))	
+				{
+					strBuffer.append("<strong>" + examsMap.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getName() + "</strong><br/>");
+				}
+			    if (year2 == null)
+			    {
+			        strBuffer.append("<strong>" + year1 + "º<strong> ano");
+			    }
+			    else
+			    {
+			        strBuffer.append("<strong>" + year1 + "º</strong>");
+			        strBuffer.append(" e <strong>" + year2 + "º</strong> ano");
+			    }
 
-            renderExamsMapForFilteredYears(strBuffer, year1, year2);
+			    renderExamsMapForFilteredYears(strBuffer, year1, year2);
+			}
             strBuffer.append("</td>");
 			strBuffer.append("</tr>");
             strBuffer.append("<tr>");
@@ -100,6 +105,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer
             strBuffer.append("<br />");
             if (mapType.equals("DegreeAndYear"))
             {
+                strBuffer.append("<h2>Calendário de Exames</h2><br />");
                 renderExamsExecutionCourseTableForYear(strBuffer, year1);
             }
             else
@@ -113,9 +119,11 @@ public class ExamsMapRenderer implements IExamsMapRenderer
 				strBuffer.append("</tr>");
 				strBuffer.append("<tr>");
 				strBuffer.append("<td class='courseList'>");
+				strBuffer.append("<br style='page-break-before:always;' />");
                 strBuffer.append("<br />");
                 if (mapType.equals("DegreeAndYear"))
                 {
+                    strBuffer.append("<h2>Calendário de Exames</h2><br />");
                     renderExamsExecutionCourseTableForYear(strBuffer, year2);
                 }
                 else
@@ -125,6 +133,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer
                 strBuffer.append("</td>");
                 strBuffer.append("</tr>");
                 strBuffer.append("</table>");
+                strBuffer.append("<br style='page-break-before:always;' />");
 
                 if (i < numberOfCurricularYearsToDisplay - 1)
                 {
@@ -794,66 +803,65 @@ public class ExamsMapRenderer implements IExamsMapRenderer
     private void renderExamsExecutionCourseTableForYear(StringBuffer strBuffer, Integer year)
     {
 		// PRINT EXECUTION DEGREE
-		strBuffer.append("<strong>" + examsMap.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getName() + "</strong><br />");
-        strBuffer.append("<strong>" + year + "º ano:</strong><br />");
+		strBuffer.append("<strong>" + examsMap.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getInfoDegree().getNome() + "</strong><br />");
+        strBuffer.append("<strong>" + year + "º ano</strong>");
+        strBuffer.append(" - <strong>" + ((InfoExecutionCourse) examsMap.getExecutionCourses().get(0)).getInfoExecutionPeriod().getSemester() + "º semestre</strong>");
+        strBuffer.append(" - <strong>" + ((InfoExecutionCourse) examsMap.getExecutionCourses().get(0)).getInfoExecutionPeriod().getInfoExecutionYear().getYear() + "</strong><br />");
         strBuffer.append("<table border='1' cellspacing='0' cellpadding='3' width='95%'>");
 
         renderExamsTableHeader(strBuffer);
 
-        for (int week = 0; week < numberOfWeks; week++)
-        {
-            for (int slot = 0; slot < daysOfWeek.length; slot++)
-            {
-                ExamsMapSlot examsMapSlot =
-                    (ExamsMapSlot) examsMap.getDays().get(week * daysOfWeek.length + slot);
-				
-                for (int i = 0; i < examsMapSlot.getExams().size(); i++)
-                {
+        Collections.sort(examsMap.getExecutionCourses(), new BeanComparator("nome"));
 
-                    InfoExam infoExam = (InfoExam) examsMapSlot.getExams().get(i);
+        for (int i = 0; i < examsMap.getExecutionCourses().size(); i++) {
+            InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) examsMap.getExecutionCourses().get(i);
+            if (infoExecutionCourse.getCurricularYear().equals(year) && !infoExecutionCourse.getAssociatedInfoExams().isEmpty()) {
+                strBuffer.append("<tr>");
+            		strBuffer.append("<td rowspan='2'>");
+            			strBuffer.append(infoExecutionCourse.getNome());
+            		strBuffer.append("</td>");
 
-					if(infoExam.getInfoExecutionCourse().getCurricularYear().equals(year))
-                    {
-                        strBuffer.append("<tr>");
-                        strBuffer.append("<td>");
-                        strBuffer.append(infoExam.getInfoExecutionCourse().getSigla());
+            		writeLineForExecutionCourseAndExamOfSeason(strBuffer, infoExecutionCourse, Season.SEASON1);
+            	strBuffer.append("</tr>");
 
-                        strBuffer.append("</td>");
-                        strBuffer.append("<td>" + infoExam.getSeason().getSeason() + "ª </td>");
-                        strBuffer.append("<td>" + infoExam.getDate() + "</td>");
-                        strBuffer.append("<td>" + infoExam.getBeginningHour() + "</td>");
-                        strBuffer.append("<td>" + infoExam.getEndHour() + "</td>");
-
-                        strBuffer.append("<td>");
-
-						if(infoExam.getAssociatedRoomOccupation().size() == 0)
-						{
-							strBuffer.append("-");
-						}
-						else
-						{
-	                        for (int iterRO = 0;
-	                            iterRO < infoExam.getAssociatedRoomOccupation().size();
-	                            iterRO++)
-	                        {
-	                            InfoRoomOccupation infoRO =
-	                                (InfoRoomOccupation) infoExam.getAssociatedRoomOccupation().get(iterRO);
-	
-	                            String roomName = infoRO.getInfoRoom().getNome();
-	
-	                            strBuffer.append(roomName);
-	                            strBuffer.append("; ");
-	                        }
-						}
-                        strBuffer.append("</td>");
-
-                        strBuffer.append("</tr>");
-                    }
-                }
+            	strBuffer.append("<tr>");
+            		writeLineForExecutionCourseAndExamOfSeason(strBuffer, infoExecutionCourse, Season.SEASON2);
+            	strBuffer.append("</tr>");
             }
         }
-
+        
         strBuffer.append("</table>");
+    }
+
+    private void writeLineForExecutionCourseAndExamOfSeason(StringBuffer strBuffer, InfoExecutionCourse infoExecutionCourse, int season) {
+        boolean hasExam = false;
+
+    	for (int j = 0; j < infoExecutionCourse.getAssociatedInfoExams().size(); j++) {
+    	    InfoExam infoExam = (InfoExam) infoExecutionCourse.getAssociatedInfoExams().get(j);
+   	        if (infoExam.getSeason().getSeason().intValue() == season) {
+   	            hasExam = true;
+
+   	            strBuffer.append("<td>" + season + "ª </td>");
+                   strBuffer.append("<td>" + infoExam.getDate() + "</td>");
+                   strBuffer.append("<td>" + infoExam.getBeginningHour() + "</td>");
+                   strBuffer.append("<td>" + infoExam.getEndHour() + "</td>");
+                   strBuffer.append("<td>");
+                   		ComparatorChain comparatorChain = new ComparatorChain();
+                   		comparatorChain.addComparator(new BeanComparator("infoRoom.capacidadeExame"), true);
+                   		comparatorChain.addComparator(new BeanComparator("infoRoom.nome"));
+                   		Collections.sort(infoExam.getAssociatedRoomOccupation(), comparatorChain);
+                   		for (int k = 0; k < infoExam.getAssociatedRoomOccupation().size(); k++) {
+                   		    if (k > 0) {
+                   		     strBuffer.append(" ");
+                   		    }
+
+                   		    InfoRoomOccupation infoRoomOccupation = (InfoRoomOccupation) infoExam.getAssociatedRoomOccupation().get(k);
+                   		    strBuffer.append(infoRoomOccupation.getInfoRoom().getNome());
+                   		}
+                   strBuffer.append("</td>");
+                   
+   	        }
+    	}
     }
 
     private void renderExamsTableHeader(StringBuffer strBuffer)

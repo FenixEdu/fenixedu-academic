@@ -338,14 +338,22 @@
 		</copy>
 		<!-- Replace tokens in configuration files with local config -->
 		<antcall target="replace-web-client-property-values"/>
+
+		<antcall target="delete-public-jsp-folder"/>
 	</target>
 
+	<target name="delete-public-jsp-folder" if="delete.public.jsp.folder">
+		<delete dir="${build.web-client}/publico"/>
+    </target>
+	
 	<target name="replace-web-client-property-values">
 		<replace dir="${build.web-client}"
 				 propertyFile="build.properties">
 			<include name="**/**/*.xml"/>
 			<include name="**/**/ApplicationResources.properties"/>
             <include name="**/**/IstFtpServerConfig.properties"/>
+			<include name="index.html"/>
+
 			<replacefilter token="&lt;!-- @validation.doctype@ -->"
 						   property="validation.doctype"/>
          <replacefilter 
@@ -363,6 +371,10 @@
 		  	<replacefilter token="@login.page@"
 		  				   property="login.page"/>
 
+		<replacefilter 
+		    token="@index.html.link@" 
+		    property="index.html.link"/>
+			
 		</replace>
 	</target>
 

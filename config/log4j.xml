@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+        
+  <appender name="ConsoleAppender" class="org.apache.log4j.ConsoleAppender">
+    <layout class="org.apache.log4j.PatternLayout">
+   	 <param name= "ConversionPattern" value= "%5p [%t] (%F:%L) - %m%n"/>
+    </layout>
+  </appender>
+
+ <appender name= "profileLog" class= "org.apache.log4j.DailyRollingFileAppender">
+	<param name= "File" value= "${catalina.home}/logs/logprofile.log"/>
+	<param name= "DatePattern" value= "'.'yyyy-MM-dd"/>
+	<layout class= "org.apache.log4j.PatternLayout">
+		<param name= "ConversionPattern" value= "%m%n"/>
+	</layout>
+	<filter class= "org.apache.log4j.varia.LevelRangeFilter">
+		<param name= "LevelMin" value= "INFO"/>
+		<param name= "LevelMax" value= "WARN"/>
+		<param name= "AcceptOnMatch" value= "true"/>
+	</filter > 
+	<filter class= "org.apache.log4j.varia.DenyAllFilter"/>
+ </appender >
+
+  <logger name="org.apache.ojb.broker.accesslayer.sql">
+  	<level value="error"/>
+  	<appender-ref ref="ConsoleAppender"/>
+  </logger>
+  
+  <logger name="org.apache.ojb.broker.accesslayer.StatementsForClass">
+    <level value="error"/>
+    <appender-ref ref="ConsoleAppender"/>
+  </logger>
+  
+  <logger name="org.apache.ojb.broker.accesslayer.sql.SqlGeneratorDefaultImpl">
+    <level value="error"/>
+    <appender-ref ref="ConsoleAppender"/>
+  </logger>
+  
+  <logger name="org.apache.ojb.odmg">
+    <level value="error"/>
+    <appender-ref ref="ConsoleAppender"/>
+  </logger>
+  
+  <logger name="com.atlassian.util.profiling" additivity="false">
+    <level value="info"/>
+    <appender-ref ref="profileLog"/>
+  </logger>
+
+  <root>
+    <priority value="error"/>    
+    <appender-ref ref="ConsoleAppender"/>
+  </root>
+  
+
+
+</log4j:configuration> 

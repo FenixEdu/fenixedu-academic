@@ -29,4 +29,8 @@ public interface IPersistentExam extends IPersistentObject
             throws ExcepcaoPersistencia;
 
     public List readBy(Calendar day, Calendar beginning, Calendar end) throws ExcepcaoPersistencia;
+
+    public boolean isExamOfExecutionCourseTheStudentAttends(Integer examOID, String studentsUsername)
+    		throws ExcepcaoPersistencia;
+
 }
