@@ -18,7 +18,7 @@
 	<tr>
 	<logic:present name="<%= SessionConstants.INFO_BRANCH %>" >
 		<bean:define id="infoBranch" name="<%= SessionConstants.INFO_BRANCH %>" scope="session" />
-	 		<td>Area de Especialização em <b><bean:write name="infoBranch" property="name"/></b>   			
+	 		<td>Area de Especialização em <b><bean:write name="infoBranch" /></b>   			
 			</td>	
 		<tr>
 	</logic:present>
