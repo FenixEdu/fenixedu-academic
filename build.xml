@@ -242,8 +242,8 @@
             description="Executa todos os testes"
             name="generate_unitTest-reports">
 
-		<mkdir dir="${reports.tests}"/>
 		<delete dir="${reports.tests}"/>
+		<mkdir dir="${reports.tests}"/>
 		
 		<junit printsummary="yes" haltonfailure="no">
             <classpath>
