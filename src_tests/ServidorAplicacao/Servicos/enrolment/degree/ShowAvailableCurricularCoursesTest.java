@@ -79,7 +79,7 @@ public class ShowAvailableCurricularCoursesTest extends TestCaseReadServices {
 
 		finalSpan = ((InfoEnrolmentContext) result).getInfoFinalCurricularCoursesScopesSpanToBeEnrolled();
 
-		assertEquals("Final span size:", true, finalSpan.size() == getNumberOfItemsToRetrieve());
+		assertEquals("Final span size:", finalSpan.size(), this.getNumberOfItemsToRetrieve());
 
 		ICurricularCourse curricularCourse = getCurricularCourse("SISTEMAS OPERATIVOS", "");
 		ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) curricularCourse.getScopes().get(0);
