@@ -89,7 +89,7 @@ public class SectionOJB extends ObjectFenixOJB implements IPersistentSection {
 	public List readBySite(ISite site) throws ExcepcaoPersistencia {
 		try {
 			String oqlQuery = "select section from " + Section.class.getName();
-			oqlQuery +=	" and site.executionCourse.sigla = $1";
+			oqlQuery +=	" where site.executionCourse.sigla = $1";
 			oqlQuery += " and site.executionCourse.executionPeriod.name = $2";
 			oqlQuery += " and site.executionCourse.executionPeriod.executionYear.year = $3";
 

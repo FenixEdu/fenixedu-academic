@@ -52,19 +52,19 @@ public class AnnouncementOJB extends ObjectFenixOJB implements IPersistentAnnoun
 
 	public List readAnnouncementsBySite(ISite site) throws ExcepcaoPersistencia {
 		try {
-			String oqlQuery1 = "select announcement from " + Announcement.class.getName();
-			oqlQuery1 += " and site.executionCourse.sigla = $1";
-			oqlQuery1 += " and site.executionCourse.executionPeriod.name = $2";
-			oqlQuery1 += " and site.executionCourse.executionPeriod.executionYear.year = $3";
+			String oqlQuery = "select announcement from " + Announcement.class.getName();
+			oqlQuery += " where site.executionCourse.sigla = $1";
+			oqlQuery += " and site.executionCourse.executionPeriod.name = $2";
+			oqlQuery += " and site.executionCourse.executionPeriod.executionYear.year = $3";
 
-			query.create(oqlQuery1);
+			query.create(oqlQuery);
 			query.bind(site.getExecutionCourse().getSigla());
 			query.bind(site.getExecutionCourse().getExecutionPeriod().getName());
 			query.bind(site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
 
-			List result1 = (List) query.execute();
-			lockRead(result1);
-			return result1;
+			List result = (List) query.execute();
+			lockRead(result);
+			return result;
 		} catch (QueryException queryEx) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, queryEx);
 		}

@@ -2,6 +2,7 @@ package ServidorPersistente.OJB;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -262,4 +263,19 @@ public class AnnouncementOJBTest extends TestCaseOJB {
 		}
 		assertNull(announcement);
     }
+    
+	public void testReadAnnouncementsBySite() {
+
+		List result = null;
+		
+		try {
+			persistentSupport.iniciarTransaccao();
+			result = persistentAnnouncement.readAnnouncementsBySite(this.site);
+			persistentSupport.confirmarTransaccao();
+		} catch(ExcepcaoPersistencia excepcaoPersistencia) {
+			fail("testLockWrite: readAnnouncementsBySite: " + excepcaoPersistencia);	
+		}
+		assertNotNull(result);
+		assertEquals(result.isEmpty(), false);        
+	}
 }
