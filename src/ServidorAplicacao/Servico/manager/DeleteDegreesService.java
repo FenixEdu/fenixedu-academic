@@ -1,17 +1,16 @@
 package ServidorAplicacao.Servico.manager;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import Dominio.ICurso;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.Servico.exceptions.CantDeleteServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistente.exceptions.CantDeletePersistentException;
 
 /**
  * @author lmac1
@@ -32,7 +31,7 @@ public class DeleteDegreesService implements IServico {
 	}
 	
 // delete a set of degrees
-	public Boolean run(List degreesInternalIds) throws FenixServiceException {
+	public List run(List degreesInternalIds) throws FenixServiceException {
 
 		try {
 
@@ -40,20 +39,22 @@ public class DeleteDegreesService implements IServico {
 			ICursoPersistente persistentDegree = sp.getICursoPersistente();
 
 			Iterator iter = degreesInternalIds.iterator();
+			String undeletedDegreeName = "null";
+			List undeletedDegreesNames = new ArrayList();
 
 			while (iter.hasNext()) {
-				try {
 
 					Integer internalId = (Integer) iter.next();
 					ICurso degree =
 						persistentDegree.readByIdInternal(internalId);
 					if (degree != null)
-						persistentDegree.delete(degree);
-				} catch (CantDeletePersistentException e) {
-					throw new CantDeleteServiceException(e.getMessage(), e);
-				}
+						undeletedDegreeName = persistentDegree.delete(degree);
+				
+					undeletedDegreesNames.add((String) undeletedDegreeName);
+				
 			}
-			return new Boolean(true);
+			
+			return undeletedDegreesNames;
 
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);

@@ -1,13 +1,17 @@
 package ServidorApresentacao.Action.manager;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -15,10 +19,8 @@ import org.apache.struts.action.DynaActionForm;
 
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
-import ServidorAplicacao.Servico.exceptions.CantDeleteServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
-import ServidorApresentacao.Action.exceptions.CantDeleteActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
@@ -43,19 +45,16 @@ public class DeleteDegreesAction extends FenixAction{
 		
 		List degreesInternalIds = Arrays.asList((Integer [])deleteDegreesForm.get("internalIds"));
 
-		//ESTE SERVICO PASSA A RECEBER O CODIGO INTERNO EM VEZ DO INFO DEGREE
 		
 		Object args[] = { degreesInternalIds };
 		GestorServicos manager = GestorServicos.manager();
+		List result = new ArrayList();
 		
 		try {
-			Boolean result = (Boolean) manager.executar(userView, "DeleteDegreesService", args);
-		session.removeAttribute(SessionConstants.INFO_DEGREES_LIST);	
+			result = (List) manager.executar(userView, "DeleteDegreesService", args);
+		    session.removeAttribute(SessionConstants.INFO_DEGREES_LIST);	
 			
 		} 
-		catch (CantDeleteServiceException e) {
-     	    throw new CantDeleteActionException(e.getMessage(),e);
-     	     }
 		catch (FenixServiceException fenixServiceException) {
 	    	throw new FenixActionException(fenixServiceException.getMessage());
 			}
@@ -66,13 +65,50 @@ public class DeleteDegreesAction extends FenixAction{
 			
 			allInfoDegrees = (List) manager.executar(userView, "ReadDegreesService",null);
 			
+			//AQUI PARA PODER ACTUALIZAR,CASO TENHA APAGADO ALGUM
+			
+			Iterator iter = result.iterator();
+			List errorNames = new ArrayList();
+			String name;
+			
+			
+			
+			
+			while(iter.hasNext()){System.out.println("NOMES"+(String)iter.next());}
+			
+			
+			iter = result.iterator();
+			while(iter.hasNext())
+			{
+				name = (String)iter.next();
+				System.out.println("NOME DOS DEGREES QUE EU QUIS APAGAR"+name);
+				System.out.println("VALOR DO IF"+name.compareTo("null"));
+				if(name.compareTo("null")!=0) errorNames.add((String) name);
+			}
+			
+				if(!errorNames.isEmpty())
+				{
+					ActionErrors actionErrors = new ActionErrors();
+					Iterator namesIter = errorNames.iterator();
+					ActionError error = null;
+					
+					while(namesIter.hasNext())
+					{
+//						CRIO UM ACTION ERROR PARA CADA DEGREE
+						error = new ActionError("errors.invalid.delete.not.empty", (String)namesIter.next());
+						actionErrors.add("errors.invalid.delete.not.empty", error);
+						
+					}   
+					saveErrors(request, actionErrors);                                          
+					
+				}
 		   }
 			catch (FenixServiceException fenixServiceException){
 			   throw new FenixActionException(fenixServiceException.getMessage());
 		   }
 		     
 		    Collections.sort(allInfoDegrees);
-	       session.setAttribute(SessionConstants.INFO_DEGREES_LIST, allInfoDegrees);
+	        session.setAttribute(SessionConstants.INFO_DEGREES_LIST, allInfoDegrees);
 		    
 		    
         	

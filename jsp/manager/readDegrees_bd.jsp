@@ -5,7 +5,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <logic:present name="<%= SessionConstants.INFO_DEGREES_LIST %>" scope="session">
 <logic:notEmpty name="<%= SessionConstants.INFO_DEGREES_LIST %>" >
-	<h2><bean:message key="label.manager.degrees" /></h2>
+
+		<h2><bean:message key="label.manager.degrees" /></h2>
 		
 	<html:link page="/insertDegree.do"><b><bean:message key="label.manager.insert.degree" /></b></html:link>
 	<br>
@@ -34,11 +35,13 @@
 				</td>			
 				<td class="listClasses"><html:link page="/readDegree.do" paramId="idInternal" paramName="degree" paramProperty="idInternal"><bean:write name="degree" property="nome"/></html:link>
 				</td>
-				<% index++; %>
+						<% index++; %>
 	 		</tr>
 	 				
 				</logic:iterate>
-			<span class="error"><html:errors /></span>
+				<span class="error"><html:errors/></span>
+			
+				
 				
 				
 	 	</table>
