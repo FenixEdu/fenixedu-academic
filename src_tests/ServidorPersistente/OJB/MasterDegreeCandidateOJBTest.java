@@ -12,9 +12,8 @@
  *  - 5 : Delete existing MasterDegreeCandidate 
  *  - 6 : Delete non-existing MasterDegreeCandidate 
  *  - 7 : Delete all MasterDegreeCandidates 
- *  - 8 : Test equal MasterDegreeCandidates
- *  - 9 : Read existing MasterDegreeCandidate by candidateNumber, applicationYear and masterDegreeCode
- *  - 10 : Read non-existing MasterDegreeCandidate by candidateNumber, applicationYear and masterDegreeCode
+ *  - 8 : Read existing MasterDegreeCandidate by candidateNumber, applicationYear and masterDegreeCode
+ *  - 9 : Read non-existing MasterDegreeCandidate by candidateNumber, applicationYear and masterDegreeCode
  */
  
 /**
@@ -111,7 +110,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         assertTrue(masterDegreeCandidateTemp.getBirth().toString().equals("2000-12-10"));
         assertTrue(masterDegreeCandidateTemp.getFatherName().equals("Manuel"));
         assertTrue(masterDegreeCandidateTemp.getMotherName().equals("Maria"));
-        assertTrue(masterDegreeCandidateTemp.getNationality().equals("Portugal"));
+        assertTrue(masterDegreeCandidateTemp.getNationality().getNationality().equals("Portuguesa"));
         assertTrue(masterDegreeCandidateTemp.getBirthPlaceParish().equals("Oeiras"));
         assertTrue(masterDegreeCandidateTemp.getBirthPlaceMunicipality().equals("Oeiras"));
         assertTrue(masterDegreeCandidateTemp.getBirthPlaceDistrict().equals("Lisboa"));
@@ -177,7 +176,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         }
 
 
-        IMasterDegreeCandidate candidateTemp = new MasterDegreeCandidate("1", new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE), "1", data.getTime(), "Nome", new Sexo(Sexo.MASCULINO), new EstadoCivil(EstadoCivil.SOLTEIRO), data.getTime(), "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "Cand1", "Pass1", new Integer(1), new Integer(2002), new Specialization(Specialization.MESTRADO), "1", new Integer(1), new Double(1.0), masterDegreeTemp, countryTemp);
+        IMasterDegreeCandidate candidateTemp = new MasterDegreeCandidate("1", new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE), "1", data.getTime(), "Nome", new Sexo(Sexo.MASCULINO), new EstadoCivil(EstadoCivil.SOLTEIRO), data.getTime(), "1", "1", countryTemp, "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "Cand1", "Pass1", new Integer(1), new Integer(2002), new Specialization(Specialization.MESTRADO), "1", new Integer(1), new Double(1.0), masterDegreeTemp, countryTemp);
         try {
             persistentSupport.iniciarTransaccao();
             persistentMasterDegreeCandidate.writeMasterDegreeCandidate(candidateTemp);
@@ -213,7 +212,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
 		assertNotNull(masterDegreeTemp);
 		assertNotNull(countryTemp);
 
-        IMasterDegreeCandidate candidateTemp = new MasterDegreeCandidate("3", new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE), "2", data.getTime(), "Nome2", new Sexo(Sexo.MASCULINO), new EstadoCivil(EstadoCivil.SOLTEIRO), data.getTime(), "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "Cand3", "Pass12", new Integer(12), new Integer(2002), new Specialization(Specialization.MESTRADO), "12", new Integer(12), new Double(2.0), masterDegreeTemp, countryTemp);
+        IMasterDegreeCandidate candidateTemp = new MasterDegreeCandidate("3", new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE), "2", data.getTime(), "Nome2", new Sexo(Sexo.MASCULINO), new EstadoCivil(EstadoCivil.SOLTEIRO), data.getTime(), "12", "12", countryTemp, "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "Cand3", "Pass12", new Integer(12), new Integer(2002), new Specialization(Specialization.MESTRADO), "12", new Integer(12), new Double(2.0), masterDegreeTemp, countryTemp);
         
         try {
             persistentSupport.iniciarTransaccao();
@@ -246,7 +245,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         assertTrue(candidateTemp.getBirth().toString().equals("2002-11-17"));
         assertTrue(candidateTemp.getFatherName().equals("12"));
         assertTrue(candidateTemp.getMotherName().equals("12"));
-        assertTrue(candidateTemp.getNationality().equals("12"));
+        assertTrue(candidateTemp.getNationality().getNationality().equals("Inglesa"));
         assertTrue(candidateTemp.getBirthPlaceParish().equals("12"));
         assertTrue(candidateTemp.getBirthPlaceMunicipality().equals("12"));
         assertTrue(candidateTemp.getBirthPlaceDistrict().equals("12"));
@@ -358,179 +357,9 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         }
     } 
     
-    public  void testEqualMasterDegreeCandidates() {
-        System.out.println("- Test 8 : Test if two Master Degree Candidates are equal");
-        IMasterDegreeCandidate masterDegreeCandidateTemp1 = null;
-        IMasterDegreeCandidate masterDegreeCandidateTemp2 = null;
-
-        Calendar data = Calendar.getInstance();
-        data.set(2002, Calendar.NOVEMBER, 17);
-
-        Calendar data2 = Calendar.getInstance();
-        data2.set(2002, 12, 18);
-
-        ICurso masterDegreeTemp1 = null;
-        ICountry countryTemp = null;
-        try {
-            persistentSupport.iniciarTransaccao();
-	        masterDegreeTemp1 = persistentDegree.readBySigla("MEIC");
-			countryTemp = persistentCountry.readCountryByName("Portugal");
-            persistentSupport.confirmarTransaccao();
-        } catch (ExcepcaoPersistencia ex) {
-            fail("    -> Error on test");
-        }
-
-
-        
-        masterDegreeCandidateTemp1 = new MasterDegreeCandidate("2", new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE), "2", data.getTime(), "Nome2", new Sexo(Sexo.MASCULINO), new EstadoCivil(EstadoCivil.SOLTEIRO), data.getTime(), "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "Cand2", "Pass12", new Integer(12), new Integer(2002), new Specialization(Specialization.MESTRADO), "12", new Integer(12), new Double(2.0), masterDegreeTemp1, countryTemp);
-        masterDegreeCandidateTemp2 = new MasterDegreeCandidate("2", new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE), "2", data.getTime(), "Nome2", new Sexo(Sexo.MASCULINO), new EstadoCivil(EstadoCivil.SOLTEIRO), data.getTime(), "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "12", "Cand2", "Pass12", new Integer(12), new Integer(2002), new Specialization(Specialization.MESTRADO), "12", new Integer(12), new Double(2.0), masterDegreeTemp1, countryTemp);
-        
-        assertTrue(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2));  
-        
-        masterDegreeCandidateTemp1.setIdentificationDocumentNumber("3");
-        assertEquals(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2), false);  
-        masterDegreeCandidateTemp1.setIdentificationDocumentNumber("2");
-        
-        masterDegreeCandidateTemp1.setIdentificationDocumentType(new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.PASSAPORTE));
-        assertEquals(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2), false);  
-        masterDegreeCandidateTemp1.setIdentificationDocumentType(new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
-        
-        masterDegreeCandidateTemp1.setIdentificationDocumentIssuePlace("3");
-        assertEquals(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2), false);  
-        masterDegreeCandidateTemp1.setIdentificationDocumentIssuePlace("2");
-        
-        masterDegreeCandidateTemp1.setIdentificationDocumentIssueDate(data2.getTime());
-        assertEquals(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2), false);  
-        masterDegreeCandidateTemp1.setIdentificationDocumentIssueDate(data.getTime());
-
-        masterDegreeCandidateTemp1.setName("OLA");
-        assertEquals(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2), false);  
-        masterDegreeCandidateTemp1.setName("Nome2");
-
-        masterDegreeCandidateTemp1.setSex(new Sexo(Sexo.FEMININO));
-        assertEquals(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2), false);  
-        masterDegreeCandidateTemp1.setSex(new Sexo(Sexo.MASCULINO));
-
-        masterDegreeCandidateTemp1.setMaritalStatus(new EstadoCivil(EstadoCivil.CASADO));
-        assertEquals(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2), false);  
-        masterDegreeCandidateTemp1.setMaritalStatus(new EstadoCivil(EstadoCivil.SOLTEIRO));
-        
-        masterDegreeCandidateTemp1.setBirth(data2.getTime());
-        assertEquals(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2), false);
-        masterDegreeCandidateTemp1.setBirth(data.getTime());
-
-        masterDegreeCandidateTemp1.setFatherName("pai");
-        assertEquals(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2), false);  
-        masterDegreeCandidateTemp1.setFatherName("1");
-
-        masterDegreeCandidateTemp1.setMotherName("mae");
-        assertEquals(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2), false);  
-        masterDegreeCandidateTemp1.setMotherName("1");
-        
-        masterDegreeCandidateTemp1.setNationality("tuga");
-        assertEquals(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2), false);  
-        masterDegreeCandidateTemp1.setNationality("1");
-
-        masterDegreeCandidateTemp1.setBirthPlaceParish("lisboa");
-        assertEquals(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2), false);  
-        masterDegreeCandidateTemp1.setBirthPlaceParish("1");
-        
-        masterDegreeCandidateTemp1.setBirthPlaceMunicipality("lisboa");
-        assertEquals(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2), false);  
-        masterDegreeCandidateTemp1.setBirthPlaceMunicipality("1");
-        
-        masterDegreeCandidateTemp1.setBirthPlaceDistrict("lisboa");
-        assertEquals(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2), false);  
-        masterDegreeCandidateTemp1.setBirthPlaceDistrict("1");
-
-        masterDegreeCandidateTemp1.setAddress("lisboa");
-        assertEquals(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2), false);  
-        masterDegreeCandidateTemp1.setAddress("1");
-        
-        masterDegreeCandidateTemp1.setPlace("lisboa");
-        assertEquals(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2), false);  
-        masterDegreeCandidateTemp1.setPlace("1");
-        
-        masterDegreeCandidateTemp1.setPostCode("1234-567");
-        assertEquals(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2), false);  
-        masterDegreeCandidateTemp1.setPostCode("1");
-        
-        masterDegreeCandidateTemp1.setAddressParish("lisboa");
-        assertEquals(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2), false);  
-        masterDegreeCandidateTemp1.setAddressParish("1");
-        
-        masterDegreeCandidateTemp1.setAddressMunicipality("lisboa");
-        assertEquals(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2), false);  
-        masterDegreeCandidateTemp1.setAddressMunicipality("1");
-        
-        masterDegreeCandidateTemp1.setAddressDistrict("lisboa");
-        assertEquals(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2), false);  
-        masterDegreeCandidateTemp1.setAddressDistrict("1");
-
-        masterDegreeCandidateTemp1.setTelephone("123456789");
-        assertEquals(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2), false);  
-        masterDegreeCandidateTemp1.setTelephone("1");
-        
-        masterDegreeCandidateTemp1.setMobilePhone("123456789");
-        assertEquals(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2), false);  
-        masterDegreeCandidateTemp1.setMobilePhone("1");
-        
-        masterDegreeCandidateTemp1.setEmail("mail@mail");
-        assertEquals(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2), false);  
-        masterDegreeCandidateTemp1.setEmail("1");
-        
-        masterDegreeCandidateTemp1.setWebSite("www.ola.pt");
-        assertEquals(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2), false);  
-        masterDegreeCandidateTemp1.setWebSite("1");
-        
-        masterDegreeCandidateTemp1.setContributorNumber("123456789");
-        assertEquals(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2), false);  
-        masterDegreeCandidateTemp1.setContributorNumber("1");
-        
-        masterDegreeCandidateTemp1.setOccupation("estudante");
-        assertEquals(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2), false);  
-        masterDegreeCandidateTemp1.setOccupation("1");
-        
-        masterDegreeCandidateTemp1.setMajorDegree("LEIC");
-        assertEquals(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2), false);  
-        masterDegreeCandidateTemp1.setMajorDegree("1");
-        
-        masterDegreeCandidateTemp1.setUsername("ola");
-        assertEquals(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2), false);  
-        masterDegreeCandidateTemp1.setUsername("Cand1");
-        
-        masterDegreeCandidateTemp1.setPassword("njvifmcvkd");
-        assertEquals(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2), false);  
-        masterDegreeCandidateTemp1.setPassword("Pass1");
-        
-        masterDegreeCandidateTemp1.setCandidateNumber(new Integer(123456789));
-        assertEquals(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2), false);  
-        masterDegreeCandidateTemp1.setCandidateNumber(new Integer(1));
-        
-        masterDegreeCandidateTemp1.setApplicationYear(new Integer(2000));
-        assertEquals(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2), false);  
-        masterDegreeCandidateTemp1.setApplicationYear(new Integer(2002));
-
-        masterDegreeCandidateTemp1.setSpecialization(new Specialization(Specialization.ESPECIALIZACAO));
-        assertEquals(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2), false);  
-        masterDegreeCandidateTemp1.setSpecialization(new Specialization(Specialization.MESTRADO));
-        
-        masterDegreeCandidateTemp1.setMajorDegreeSchool("IST");
-        assertEquals(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2), false);  
-        masterDegreeCandidateTemp1.setMajorDegreeSchool("1");
-        
-        masterDegreeCandidateTemp1.setMajorDegreeYear(new Integer(2000));
-        assertEquals(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2), false);  
-        masterDegreeCandidateTemp1.setMajorDegreeYear(new Integer(2002));
-        
-        masterDegreeCandidateTemp1.setAverage(new Double(20));
-        assertEquals(masterDegreeCandidateTemp1.equals(masterDegreeCandidateTemp2), false);  
-        masterDegreeCandidateTemp1.setAverage(new Double(1.0));
-    }
-
     
     public void testReadExistingMasterDegreeCandidate2() {
-        System.out.println("- Test 9 : Read existing Master Degree Candidate by candidateNumber, applicationYear and masterDegreeCode");
+        System.out.println("- Test 8 : Read existing Master Degree Candidate by candidateNumber, applicationYear and masterDegreeCode");
         IMasterDegreeCandidate masterDegreeCandidateTemp = null;
         
         try {
@@ -556,7 +385,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
         assertTrue(masterDegreeCandidateTemp.getBirth().toString().equals("2000-12-10"));
         assertTrue(masterDegreeCandidateTemp.getFatherName().equals("Manuel"));
         assertTrue(masterDegreeCandidateTemp.getMotherName().equals("Maria"));
-        assertTrue(masterDegreeCandidateTemp.getNationality().equals("Portugal"));
+        assertTrue(masterDegreeCandidateTemp.getNationality().getNationality().equals("Portuguesa"));
         assertTrue(masterDegreeCandidateTemp.getBirthPlaceParish().equals("Oeiras"));
         assertTrue(masterDegreeCandidateTemp.getBirthPlaceMunicipality().equals("Oeiras"));
         assertTrue(masterDegreeCandidateTemp.getBirthPlaceDistrict().equals("Lisboa"));
@@ -585,7 +414,7 @@ public class MasterDegreeCandidateOJBTest extends TestCaseOJB {
     }
 
     public void testReadNonExistingMasterDegreeCandidate2() {
-        System.out.println("- Test 10 : Read non existing MasterDegreeCandidate by candidateNumber, applicationYear and masterDegreeCode");
+        System.out.println("- Test 9 : Read non existing MasterDegreeCandidate by candidateNumber, applicationYear and masterDegreeCode");
         IMasterDegreeCandidate masterDegreeCandidateTemp = null;
         
         try {

@@ -122,7 +122,7 @@ public class ChangeMasterDegreeCandidateTest extends TestCaseServicosCandidato {
 //        assertTrue(masterDegreeCandidate.getBirth().toString().equals("2000-12-10"));
         assertTrue(masterDegreeCandidate.getFatherName().equals("Manuel"));
         assertTrue(masterDegreeCandidate.getMotherName().equals("Maria"));
-        assertTrue(masterDegreeCandidate.getNationality().equals("Portugal"));
+        assertTrue(masterDegreeCandidate.getNationality().getNationality().equals("Portuguesa"));
         assertTrue(masterDegreeCandidate.getBirthPlaceParish().equals("Oeiras"));
         assertTrue(masterDegreeCandidate.getBirthPlaceMunicipality().equals("Oeiras"));
         assertTrue(masterDegreeCandidate.getBirthPlaceDistrict().equals("Lisboa"));

@@ -130,7 +130,8 @@ public class CountryOJBTest extends TestCaseOJB {
     public void testReadCountry() {
         ICountry country = null;
 
-        
+
+		// Read By Name        
         try {
             persistentSupport.iniciarTransaccao();
             country = persistentCountry.readCountryByName("Portugal");
@@ -143,6 +144,20 @@ public class CountryOJBTest extends TestCaseOJB {
         assertTrue(country.getNationality().equals("Portuguesa"));
         assertTrue(country.getCode().equals("PT"));
         
+		// Read By Nationality
+		country = null;
+		try {
+			persistentSupport.iniciarTransaccao();
+			country = persistentCountry.readCountryByNationality("Portuguesa");
+			persistentSupport.confirmarTransaccao();
+		} catch(ExcepcaoPersistencia ex2) {
+			fail("testLerPais: confirmarTransaccao_1");
+		}
+		assertNotNull(country);
+		assertTrue(country.getName().equals("Portugal"));
+		assertTrue(country.getNationality().equals("Portuguesa"));
+		assertTrue(country.getCode().equals("PT"));
+
 
         country = null;
         try {

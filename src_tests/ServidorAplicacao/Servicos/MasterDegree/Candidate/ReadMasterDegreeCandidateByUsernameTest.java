@@ -82,7 +82,7 @@ public class ReadMasterDegreeCandidateByUsernameTest extends TestCaseServicosCan
         assertTrue(candidateTemp.getBirth().toString().equals("2000-12-10"));
         assertTrue(candidateTemp.getFatherName().equals("Manuel"));
         assertTrue(candidateTemp.getMotherName().equals("Maria"));
-        assertTrue(candidateTemp.getNationality().equals("Portugal"));
+        assertTrue(candidateTemp.getInfoNationality().getNationality().equals("Portuguesa"));
         assertTrue(candidateTemp.getBirthPlaceParish().equals("Oeiras"));
         assertTrue(candidateTemp.getBirthPlaceMunicipality().equals("Oeiras"));
         assertTrue(candidateTemp.getBirthPlaceDistrict().equals("Lisboa"));
