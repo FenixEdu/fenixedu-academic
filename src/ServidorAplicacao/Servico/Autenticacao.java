@@ -144,6 +144,10 @@ public class Autenticacao implements IServico {
 		degreeAdministrativeOfficeSuperUser.setRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
 		rolesIntranet.add(degreeAdministrativeOfficeSuperUser);
 
+		InfoRole manager = new InfoRole();
+		manager.setRoleType(RoleType.MANAGER);
+		rolesIntranet.add(manager);
+
 
 //InfoRole person = new InfoRole();
 //person.setRoleType(RoleType.PERSON);
