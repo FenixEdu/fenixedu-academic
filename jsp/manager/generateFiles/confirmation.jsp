@@ -2,10 +2,4 @@
 
 <h2><bean:message key="label.generateFiles"/></h2>
 
-<table>
-	<tr>
-		<td class="infoop">
-			<bean:message key="label.manager.generateFiles.confirmation"/>		
-		</td>
-	</tr>
-</table>
+<b><bean:message key="label.manager.generateFiles.confirmation"/></b>

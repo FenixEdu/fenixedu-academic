@@ -10,7 +10,7 @@
 	</html:link>
 </strong></p>
 
-<h2><<bean:message key="label.generateFiles"/></h2>
+<h2><bean:message key="label.generateFiles"/></h2>
 
 <p><strong>&raquo;
 	<html:link page="/generateFiles.do?method=prepareChooseForGenerateFiles&amp;file=sibs">

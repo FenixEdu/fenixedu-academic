@@ -356,5 +356,11 @@
 		</var>        
       </field>
     </form>
+    
+    <form name="chooseForGenerateFilesForm">
+    	<field property="executionYear" depends="required" page="1">
+	        <arg0 key="label.masterDegree.gratuity.executionYear" />
+		</field> 
+	</form>	
     </formset>
 </form-validation>

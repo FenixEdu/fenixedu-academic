@@ -258,7 +258,7 @@
     		<form-property name="page" type="java.lang.Integer" initial="0"/>     		    		
     </form-bean>  
     
-    <form-bean name="chooseForGenerateFiles"
+    <form-bean name="chooseForGenerateFilesForm"
     	type="org.apache.struts.validator.DynaValidatorForm"
     	dynamic="true">
     		<form-property name="page" type="java.lang.Integer" initial="0"/> 
@@ -1172,8 +1172,8 @@
 		type="ServidorApresentacao.Action.manager.generateFiles.GenerateFilesAction"
 		parameter="method"
 		scope="request"
-		name="chooseForGenerateFiles"
-		input="/generateFiles.do?method=prepareChooseForGenerateFiles"
+		name="chooseForGenerateFilesForm"
+		input="/generateFiles.do?method=prepareChooseForGenerateFiles&amp;page=0"
 	>
 		<forward name="firstPage" path="firstPageGenerateFiles"/>
 		<forward name="chooseForGenerateFiles" path="chooseForGenerateFiles"/>
