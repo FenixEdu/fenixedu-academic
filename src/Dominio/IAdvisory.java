@@ -1,8 +1,6 @@
 /*
  * Created on Aug 26, 2003
  *
- * To change the template for this generated file go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 package Dominio;
 
@@ -11,8 +9,6 @@ import java.util.Date;
 /**
  * @author tfc130
  *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public interface IAdvisory  extends IDomainObject {
 	/**

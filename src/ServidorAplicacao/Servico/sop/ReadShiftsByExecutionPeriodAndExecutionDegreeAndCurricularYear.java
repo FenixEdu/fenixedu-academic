@@ -13,6 +13,7 @@ package ServidorAplicacao.Servico.sop;
 import java.util.ArrayList;
 import java.util.List;
 
+import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoCurricularYear;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
@@ -29,38 +30,19 @@ import Dominio.ICurricularYear;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.ITurno;
-import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
-public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear implements IServico
+public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear implements IService
 {
-
-    private static ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear _servico =
-        new ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear();
-    /**
-	 * The singleton access method of this class.
-	 */
-    public static ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear getService()
-    {
-        return _servico;
-    }
 
     /**
 	 * The actor of this class.
 	 */
-    private ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear()
+    public ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear()
     {
-    }
-
-    /**
-	 * Devolve o nome do servico
-	 */
-    public final String getNome()
-    {
-        return "ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear";
     }
 
     public Object run(
@@ -110,7 +92,7 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear impl
 
             //			transformerStartTime = Calendar.getInstance();
             // This is the nice way to get the job done, but the eficiency is
-			// very poor...
+            // very poor...
             // It takes about 15seconds for an average list of shifts.
             //			infoShifts =
             //				(List) CollectionUtils.collect(shifts, new Transformer() {
@@ -149,8 +131,7 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear impl
 
                 infoShift.setInfoLessons(new ArrayList());
                 InfoExecutionCourse infoExecutionCourse =
-                    (InfoExecutionCourse) Cloner.get(
-                    ((ITurno) shifts.get(i)).getDisciplinaExecucao());
+                    (InfoExecutionCourse) Cloner.get(((ITurno) shifts.get(i)).getDisciplinaExecucao());
                 infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
                 for (int j = 0; j < ((ITurno) shifts.get(i)).getAssociatedLessons().size(); j++)
                 {
@@ -181,24 +162,24 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear impl
         //		serviceEndTime = Calendar.getInstance();
 
         //		long totalServiceRuntime = serviceEndTime.getTimeInMillis() -
-		// serviceStartTime.getTimeInMillis();
+        // serviceStartTime.getTimeInMillis();
         //		long queryRuntime = queryEndTime.getTimeInMillis() -
-		// queryStartTime.getTimeInMillis();
+        // queryStartTime.getTimeInMillis();
         //		long transformerRuntime =
         //			transformerEndTime.getTimeInMillis() -
-		// transformerStartTime.getTimeInMillis();
+        // transformerStartTime.getTimeInMillis();
         //		long serviceRuntime = totalServiceRuntime - queryRuntime -
-		// transformerRuntime;
+        // transformerRuntime;
         //
         //		System.out.println("Query runtime = [" + (queryRuntime / 1000) +
-		// "]s");
+        // "]s");
         //		System.out.println("Transformer runtime = [" + (transformerRuntime /
-		// 1000) + "]s");
+        // 1000) + "]s");
         //		System.out.println("Service runtime = [" + (serviceRuntime / 1000) +
-		// "]s");
+        // "]s");
         //		System.out.println("------------------------------------");
         //		System.out.println("Total runtime = [" + (totalServiceRuntime /
-		// 1000) + "]s");
+        // 1000) + "]s");
 
         return infoShifts;
 
