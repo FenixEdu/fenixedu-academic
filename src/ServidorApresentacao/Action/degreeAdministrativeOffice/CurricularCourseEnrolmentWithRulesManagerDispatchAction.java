@@ -22,6 +22,7 @@ import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoDegree;
 import DataBeans.InfoEnrolmentInOptionalCurricularCourse;
+import DataBeans.InfoExecutionPeriod;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentValidationResult;
@@ -39,7 +40,7 @@ import Util.CurricularCourseType;
 
 public class CurricularCourseEnrolmentWithRulesManagerDispatchAction extends DispatchAction {
 
-	private final String[] forwards = { "showAvailableCurricularCourses", "verifyEnrolment", "acceptEnrolment" };
+	private final String[] forwards = { "showAvailableCurricularCourses", "verifyEnrolment", "acceptEnrolment", "cancel" };
 
 	public ActionForward start(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -58,7 +59,36 @@ public class CurricularCourseEnrolmentWithRulesManagerDispatchAction extends Dis
 			throw new OutOfCurricularEnrolmentPeriodActionException(e.getMessageKey(), e.getStartDate(), e.getEndDate(), mapping.findForward("globalOutOfPeriod"));
 		}
 
-		session.removeAttribute(SessionConstants.ENROLMENT_ACTOR_KEY);
+//		session.removeAttribute(SessionConstants.ENROLMENT_ACTOR_KEY);
+		session.setAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY, infoEnrolmentContext);
+		initializeForm(infoEnrolmentContext, (DynaActionForm) form);
+		return mapping.findForward(forwards[0]);
+	}
+
+	public ActionForward outOfPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		if (isCancelled(request)) {
+			return mapping.findForward(forwards[3]);
+		}
+		validateToken(request, form, mapping);
+
+		HttpSession session = request.getSession();
+
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		IUserView actor = (IUserView) session.getAttribute(SessionConstants.ENROLMENT_ACTOR_KEY);
+
+		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getServletContext().getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
+
+		Object args1[] = { infoExecutionPeriod, actor };
+		ServiceUtils.executeService(userView, "CreateTemporarilyEnrolmentPeriod", args1);
+
+		Object args2[] = { actor };
+		InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "ShowAvailableCurricularCoursesWithRules", args2);
+
+		Object args3[] = { infoExecutionPeriod, infoEnrolmentContext };
+		ServiceUtils.executeService(userView, "DeleteTemporarilyEnrolmentPeriod", args3);
+
+//		session.removeAttribute(SessionConstants.ENROLMENT_ACTOR_KEY);
 		session.setAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY, infoEnrolmentContext);
 		initializeForm(infoEnrolmentContext, (DynaActionForm) form);
 		return mapping.findForward(forwards[0]);
@@ -155,6 +185,7 @@ public class CurricularCourseEnrolmentWithRulesManagerDispatchAction extends Dis
 
 		return forward;
 	}
+
 	public ActionForward chooseOptionalCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		if (isCancelled(request)) {
@@ -181,7 +212,7 @@ public class CurricularCourseEnrolmentWithRulesManagerDispatchAction extends Dis
 
 		Object args[] = { infoEnrolmentContext, infoCurricularCourseOptional };
 
-		System.out.println("Escolhida:" + infoCurricularCourseOptional.toString());
+//		System.out.println("Escolhida:" + infoCurricularCourseOptional.toString());
 
 		infoEnrolmentContext = (InfoEnrolmentContext) ServiceUtils.executeService(userView, "SelectOptionalCurricularCourseWithRules", args);
 		session.setAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY, infoEnrolmentContext);

@@ -349,19 +349,19 @@ insert into ENROLMENT values (10, 1, 10, 2, 1, 'Dominio.Enrolment', null, 1);
 insert into ENROLMENT values (11, 1, 11, 2, 1, 'Dominio.Enrolment', null, 1);
 insert into ENROLMENT values (12, 1, 12, 2, 1, 'Dominio.Enrolment', null, 1);
 
--- insert into ENROLMENT values (13, 1, 13, 3, 1, 'Dominio.Enrolment', null, 1);
--- insert into ENROLMENT values (14, 1, 14, 3, 1, 'Dominio.Enrolment', null, 1);
--- insert into ENROLMENT values (15, 1, 15, 3, 1, 'Dominio.Enrolment', null, 1);
--- insert into ENROLMENT values (16, 1, 16, 3, 1, 'Dominio.Enrolment', null, 1);
--- insert into ENROLMENT values (17, 1, 17, 3, 1, 'Dominio.Enrolment', null, 1);
--- insert into ENROLMENT values (18, 1, 18, 3, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (13, 1, 13, 3, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (14, 1, 14, 3, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (15, 1, 15, 3, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (16, 1, 16, 3, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (17, 1, 17, 3, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (18, 1, 18, 3, 1, 'Dominio.Enrolment', null, 1);
 
--- insert into ENROLMENT values (19, 1, 19, 4, 1, 'Dominio.Enrolment', null, 1);
--- insert into ENROLMENT values (20, 1, 20, 4, 1, 'Dominio.Enrolment', null, 1);
--- insert into ENROLMENT values (21, 1, 21, 4, 1, 'Dominio.Enrolment', null, 1);
--- insert into ENROLMENT values (22, 1, 22, 4, 1, 'Dominio.Enrolment', null, 1);
--- insert into ENROLMENT values (23, 1, 23, 4, 1, 'Dominio.Enrolment', null, 1);
--- insert into ENROLMENT values (24, 1, 24, 4, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (19, 1, 19, 4, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (20, 1, 20, 4, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (21, 1, 21, 4, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (22, 1, 22, 4, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (23, 1, 23, 4, 1, 'Dominio.Enrolment', null, 1);
+insert into ENROLMENT values (24, 1, 24, 4, 1, 'Dominio.Enrolment', null, 1);
 
 -- insert into ENROLMENT values (25, 1, 25, 5, 1, 'Dominio.Enrolment', null, 1);
 -- insert into ENROLMENT values (26, 1, 26, 5, 1, 'Dominio.Enrolment', null, 1);

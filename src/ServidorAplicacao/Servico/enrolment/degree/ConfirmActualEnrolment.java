@@ -102,7 +102,7 @@ public class ConfirmActualEnrolment implements IServico {
 			IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) persistentStudentCurricularPlan.readDomainObjectByCriteria(enrolmentContext.getStudentActiveCurricularPlan());
 			IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readDomainObjectByCriteria(enrolmentContext.getExecutionPeriod());
 
-			// lista de todos os enrolments temporarios				
+			// list of all temporarily enrolments.
 			final List temporarilyEnrolmentsRead = persistentEnrolment.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(
 					enrolmentContext.getStudentActiveCurricularPlan(),
 					EnrolmentState.TEMPORARILY_ENROLED_OBJ);
@@ -119,7 +119,7 @@ public class ConfirmActualEnrolment implements IServico {
 			});
 
 			
-			// lista de todos os enrolments a escrever
+			// list of all enrolments to be writen
 			List temporarilyEnrolmentsToWrite = new ArrayList();
 			Iterator iterator = enrolmentContext.getActualEnrolments().iterator();
 			IEnrolment enrolmentToWrite = null;
@@ -140,7 +140,7 @@ public class ConfirmActualEnrolment implements IServico {
 				}
 			}
 
-			// interseccao das duas listas de enrolments
+			// get the intersection of the 2 lists of enrolments
 			List enrolmentsIntersection = new ArrayList();
 			iterator = temporarilyEnrolmentsRead.iterator();
 			while (iterator.hasNext()) {
@@ -152,21 +152,21 @@ public class ConfirmActualEnrolment implements IServico {
 			temporarilyEnrolmentsRead.removeAll(enrolmentsIntersection);
 			temporarilyEnrolmentsToWrite.removeAll(enrolmentsIntersection);
 
-			// apagar da base de dados os enrolments que nao interessam
+			// delete from data base the enrolments that don't mather.
 			iterator = temporarilyEnrolmentsRead.iterator();
 			while (iterator.hasNext()) {
 				IEnrolment enrolment = (IEnrolment) iterator.next();
 				persistentEnrolment.delete(enrolment);
 			}
 			
-			// adicionar a base de dados os novos enrolments
+			// add to data base the new enrolments
 			iterator = temporarilyEnrolmentsToWrite.iterator();
 			while (iterator.hasNext()) {
 				IEnrolment enrolment = (IEnrolment) iterator.next();
 				persistentEnrolment.lockWrite(enrolment);
 			}
 			
-			// opcoes
+			// options
 			Iterator iterator2 = enrolmentContext.getOptionalCurricularCoursesEnrolments().iterator();
 			while (iterator2.hasNext()) {
 				IEnrolmentInOptionalCurricularCourse enrolmentInOptionalCurricularCourse = (IEnrolmentInOptionalCurricularCourse) iterator2.next();

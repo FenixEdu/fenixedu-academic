@@ -574,7 +574,6 @@ public abstract class EnrolmentContextManager {
 		
 		enrolmentContext.setAcumulatedEnrolments(null);
 		enrolmentContext.setCurricularCoursesFromStudentCurricularPlan(new ArrayList());
-		enrolmentContext.setCurricularCoursesScopesAutomaticalyEnroled(new ArrayList());
 		enrolmentContext.setActualEnrolments(new ArrayList());
 		enrolmentContext.setDegreesForOptionalCurricularCourses(new ArrayList());
 		enrolmentContext.setOptionalCurricularCoursesEnrolments(new ArrayList());
@@ -601,6 +600,22 @@ public abstract class EnrolmentContextManager {
 			}
 		});
 		enrolmentContext.setEnrolmentsAprovedByStudent(invalidStudentEnrolmentsForSelectedDegree);
+
+		List studentEnrolmentsWithStateEnroled = (List) CollectionUtils.select(invalidStudentEnrolmentsForSelectedDegree, new Predicate() {
+			public boolean evaluate(Object obj) {
+				IEnrolment enrolment = (IEnrolment) obj;
+				return	enrolment.getEnrolmentState().equals(EnrolmentState.TEMPORARILY_ENROLED_OBJ) ||
+						enrolment.getEnrolmentState().equals(EnrolmentState.ENROLED_OBJ);
+			}
+		});
+
+		List studentCurricularCoursesScopesFromEnrolmentsWithStateEnroled = (List) CollectionUtils.collect(studentEnrolmentsWithStateEnroled, new Transformer() {
+			public Object transform(Object obj) {
+				IEnrolment enrolment = (IEnrolment) obj;
+				return enrolment.getCurricularCourseScope();
+			}
+		});
+		enrolmentContext.setCurricularCoursesScopesAutomaticalyEnroled(studentCurricularCoursesScopesFromEnrolmentsWithStateEnroled);
 
 		return enrolmentContext;
 	}

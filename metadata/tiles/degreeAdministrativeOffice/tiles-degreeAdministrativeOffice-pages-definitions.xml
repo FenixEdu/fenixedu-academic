@@ -17,7 +17,7 @@
 	</definition>
 
 	<definition name="df.page.acceptEnrolment" extends="definition.degreeAdministrativeOffice.curricular.course.enrolment.with.rules">
-		<put name="body" value="/degreeAdministrativeOffice/enrolment/acceptEnrolment.jsp"/>
+		<put name="body" value="/degreeAdministrativeOffice/enrolment/acceptEnrolmentWithRules.jsp"/>
 	</definition>
 	<definition name="df.page.showAvailableCurricularCoursesWithRules" extends="definition.degreeAdministrativeOffice.curricular.course.enrolment.with.rules">
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/showAvailableCurricularCoursesWithRules.jsp"/>
@@ -40,6 +40,6 @@
 		<put name="body" value="/degreeAdministrativeOffice/enrolment/verifyEnrolmentWithoutRules.jsp"/>
 	</definition>
 	<definition name="df.page.acceptEnrolmentWithoutRules" extends="definition.degreeAdministrativeOffice.curricular.course.enrolment.without.rules">
-		<put name="body" value="/degreeAdministrativeOffice/enrolment/acceptEnrolment.jsp"/>
+		<put name="body" value="/degreeAdministrativeOffice/enrolment/acceptEnrolmentWithoutRules.jsp"/>
 	</definition>
 </tiles-definitions>

@@ -4,17 +4,35 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
-<bean:define id="infoEnrolmentContext" name="<%= SessionConstants.INFO_ENROLMENT_CONTEXT_KEY %>"/>
+<bean:define id="infoEnrolmentContext" name="<%= SessionConstants.INFO_ENROLMENT_CONTEXT_KEY %>" scope="session"/>
+<bean:size id="sizeToEnroll" name="infoEnrolmentContext" property="actualEnrolment"/>
+<logic:present name="<%= SessionConstants.ENROLMENT_TO_REMOVE_LIST_KEY %>" scope="session">
+	<bean:define id="erolmentsToRemoveList" name="<%= SessionConstants.ENROLMENT_TO_REMOVE_LIST_KEY %>" scope="session"/>
+	<bean:size id="sizeToRemove" name="erolmentsToRemoveList"/>
+</logic:present>
 
 <br/>
-<b><bean:message key="label.curricular.courses.choosen"/></b>
 <html:form action="/curricularCourseEnrolmentWithoutRulesManager.do">
 	<html:hidden property="method" value="accept"/>
-	<ul>
-		<logic:iterate id="curricularScope" name="infoEnrolmentContext" property="actualEnrolment" indexId="index">
-			<li><bean:write name="curricularScope" property="infoCurricularCourse.name"/></li>
-		</logic:iterate>
-	</ul>	
+	<logic:notEqual name="sizeToEnroll" value="0">
+		<b><bean:message key="label.curricular.courses.choosen"/></b>
+		<ul>
+			<logic:iterate id="curricularScope" name="infoEnrolmentContext" property="actualEnrolment" indexId="index">
+				<li><bean:write name="curricularScope" property="infoCurricularCourse.name"/></li>
+			</logic:iterate>
+		</ul>
+	</logic:notEqual>
+	<br/>
+	<logic:present name="<%= SessionConstants.ENROLMENT_TO_REMOVE_LIST_KEY %>" scope="session">
+		<logic:notEqual name="sizeToRemove" value="0">
+			<b><bean:message key="label.curricular.course.to.remove"/></b>
+			<ul>
+				<logic:iterate id="infoEnrolment" name="erolmentsToRemoveList">
+					<li><bean:write name="infoEnrolment" property="infoCurricularCourseScope.infoCurricularCourse.name"/></li>
+				</logic:iterate>
+			</ul>
+		</logic:notEqual>
+	</logic:present>
 	<html:submit styleClass="inputbutton">	
 		<bean:message key="button.finalize.enrolment"/>
 	</html:submit>

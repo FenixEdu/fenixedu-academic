@@ -30,16 +30,18 @@
 </logic:notEqual>
 
 <logic:notEqual name="sizeToBeEnroled" value="0">
-	<html:form action="curricularCourseEnrolmentWithRulesManager">
+	<html:form action="/curricularCourseEnrolmentWithRulesManager.do">
 		<html:hidden property="step" value="0"/>
 		<html:hidden property="method" value="verifyEnrolment"/>
 		<html:hidden property="optionalCourseIndex" value=""/>
 		<b><bean:message key="label.enrolment.curricular.courses"/></b>
-		<table>
+		<br/>
+		<br/>
+		<table border="0" cellpadding="2" cellspacing="0">
 			<tr>
 				<td>&nbsp;</td>
 				<td><u><bean:message key="label.curricular.course.name"/></u></td>
-				<td><u><bean:message key="label.curricular.course.year"/></u></td>
+				<td align="center"><u><bean:message key="label.curricular.course.year"/></u></td>
 			</tr>
 			<logic:iterate id="curricularScope" name="infoEnrolmentContext" property="infoFinalCurricularCoursesScopesSpanToBeEnrolled" indexId="index">
 				<logic:equal name="curricularScope" property="infoCurricularCourse.type" value="<%= CurricularCourseType.OPTIONAL_COURSE_OBJ.toString() %>">
@@ -50,7 +52,7 @@
 					<logic:iterate id="optionalEnrolment" name="infoEnrolmentContext" property="infoOptionalCurricularCoursesEnrolments">
 						<logic:equal name="optionalEnrolment" property="infoCurricularCourseScope.infoCurricularCourse" value="<%= pageContext.findAttribute("optionalCourse").toString() %>">
 							<bean:define id="optionalEnrolmentString">
-								<br/>&nbsp;&nbsp;<bean:write name="optionalEnrolment" property="infoCurricularCourseForOption.name"/>
+								-&nbsp;<bean:write name="optionalEnrolment" property="infoCurricularCourseForOption.name"/>
 							</bean:define>
 						</logic:equal> 
 					</logic:iterate>
@@ -70,19 +72,14 @@
 							<bean:write name="optionalEnrolmentString" filter="false"/>
 						</logic:present>
 					</td>
-					<td align="right">
+					<td align="center">
 						<bean:write name="curricularScope" property="infoCurricularSemester.infoCurricularYear.year"/>
 					</td>
 				</tr>
 			</logic:iterate>
-			<tr>
-				<td colspan="3" align="center">
-					<p>&nbsp;</p>
-					<html:submit styleClass="inputbutton">
-						<bean:message key="button.continue.enrolment"/>
-					</html:submit>
-				</td>
-			</tr>
 		</table>
+		<br/>
+		<br/>
+		<html:submit styleClass="inputbutton"><bean:message key="button.continue.enrolment"/></html:submit>
 	</html:form>
 </logic:notEqual>

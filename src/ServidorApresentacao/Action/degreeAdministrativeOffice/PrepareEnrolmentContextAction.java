@@ -28,9 +28,13 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 public class PrepareEnrolmentContextAction extends Action {
 	
-	private final String[] forwards = { "showAvailableCurricularCourses" };
+	private final String[] forwards = { "showAvailableCurricularCourses", "home" };
 
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		if(!this.isSessionAttributesValid(request)) {
+			return mapping.findForward(forwards[1]);
+		}
 
 		DynaActionForm getDegreeAndCurricularSemesterAndCurricularYearForm = (DynaActionForm) form;
 		HttpSession session = request.getSession();
@@ -40,12 +44,16 @@ public class PrepareEnrolmentContextAction extends Action {
 
 		InfoStudent infoStudent = (InfoStudent) session.getAttribute(SessionConstants.ENROLMENT_ACTOR_KEY);
 		if(infoStudent == null) {
+			// It's probably a refresh to the page so those session attributes were already removed
+			// but a infoEnrolmentContext was already added to the session.
 			InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) session.getAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY);
 			infoStudent = infoEnrolmentContext.getInfoStudent();
 		}
 
 		List infoExecutionDegreesList = (List) session.getAttribute(SessionConstants.DEGREES);
 		if(infoExecutionDegreesList == null) {
+			// It's probably a refresh to the page so those session attributes were already removed
+			// but a infoEnrolmentContext was already added to the session.
 			try {
 				InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) session.getAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY);
 				Object args[] = { infoExecutionPeriod.getInfoExecutionYear(), infoEnrolmentContext.getChosenOptionalInfoDegree().getTipoCurso() };
@@ -71,15 +79,31 @@ public class PrepareEnrolmentContextAction extends Action {
 		}
 
 		session.removeAttribute(SessionConstants.ENROLMENT_ACTOR_KEY);
-		session.removeAttribute(SessionConstants.DEGREE_LIST);
 		session.removeAttribute(SessionConstants.DEGREES);
 
 		session.setAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY, infoEnrolmentContext);
-		request.setAttribute(SessionConstants.ENROLMENT_STUDENT_NUMBER_KEY, infoStudent.getNumber());
-		request.setAttribute(SessionConstants.ENROLMENT_SEMESTER_KEY, semester);
-		request.setAttribute(SessionConstants.ENROLMENT_YEAR_KEY, year);
-		request.setAttribute(SessionConstants.ENROLMENT_DEGREE_NAME_KEY, infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome());
+		session.setAttribute(SessionConstants.ENROLMENT_STUDENT_NUMBER_KEY, infoStudent.getNumber());
+		session.setAttribute(SessionConstants.ENROLMENT_SEMESTER_KEY, semester);
+		session.setAttribute(SessionConstants.ENROLMENT_YEAR_KEY, year);
+		session.setAttribute(SessionConstants.ENROLMENT_DEGREE_NAME_KEY, infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome());
 
 		return mapping.findForward(forwards[0]);
+	}
+
+	private boolean isSessionAttributesValid(HttpServletRequest request) {
+		boolean result = true;
+		HttpSession session = request.getSession();
+		
+		InfoStudent infoStudent = (InfoStudent) session.getAttribute(SessionConstants.ENROLMENT_ACTOR_KEY);
+		List infoExecutionDegreesList = (List) session.getAttribute(SessionConstants.DEGREES);
+		InfoEnrolmentContext infoEnrolmentContext = (InfoEnrolmentContext) session.getAttribute(SessionConstants.INFO_ENROLMENT_CONTEXT_KEY);
+		
+		if( (infoStudent == null) || (infoExecutionDegreesList == null) ) {
+			if(infoEnrolmentContext == null) {
+				result = false;
+			}
+		}
+
+		return result;
 	}
 }

@@ -13,7 +13,7 @@
 	</definition>
 
 	<definition name="definition.out.of.period" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/outOfPeriod.jsp"/>
+		<put name="body" value="/degreeAdministrativeOffice/commons/outOfPeriod.jsp"/>
 	</definition>
 
 	<definition name="definition.degreeAdministrativeOffice.curricular.course.enrolment.with.rules" extends="definition.degreeAdministrativeOffice.masterPage">

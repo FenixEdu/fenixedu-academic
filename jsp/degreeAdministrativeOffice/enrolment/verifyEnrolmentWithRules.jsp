@@ -4,11 +4,11 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 
-<bean:define id="infoEnrolmentContext" name="<%= SessionConstants.INFO_ENROLMENT_CONTEXT_KEY %>" />
+<bean:define id="infoEnrolmentContext" name="<%= SessionConstants.INFO_ENROLMENT_CONTEXT_KEY %>"/>
 
 <br/>
-<bean:message key="label.curricular.courses.choosen"/>
-<html:form action="curricularCourseEnrolmentWithRulesManager">
+<b><bean:message key="label.curricular.courses.choosen"/></b>
+<html:form action="/curricularCourseEnrolmentWithRulesManager.do">
 	<html:hidden property="method" value="accept"/>
 	<html:hidden property="step" value="1"/>	
 	<ul>

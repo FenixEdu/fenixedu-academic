@@ -23,6 +23,7 @@ public abstract class SessionConstants {
 	public static final String ENROLMENT_YEAR_KEY = "year";
 	public static final String ENROLMENT_DEGREE_NAME_KEY = "degreeName";
 	public static final String ENROLMENT_ACTOR_KEY = "actor";
+	public static final String ENROLMENT_TO_REMOVE_LIST_KEY = "erolmentsToRemoveList";
 
 	//
 	// Constants for Student Enrolment...

@@ -27,10 +27,13 @@ public class ValidateActualEnrolmentWithoutRules implements IServico {
 		return "ValidateActualEnrolmentWithoutRules";
 	}
 
-	public InfoEnrolmentContext run(InfoEnrolmentContext infoEnrolmentContext) throws FenixServiceException{
+	public InfoEnrolmentContext run(InfoEnrolmentContext infoEnrolmentContext, List erolmentsToRemoveList) throws FenixServiceException{
 		List currentEnroloments = infoEnrolmentContext.getActualEnrolment();
-		if( (currentEnroloments == null) || (currentEnroloments.isEmpty()) ) {
+
+		if( ((currentEnroloments == null) || (currentEnroloments.isEmpty())) && ((erolmentsToRemoveList == null) || (erolmentsToRemoveList.isEmpty())) ) {
 			infoEnrolmentContext.getEnrolmentValidationResult().setErrorMessage(EnrolmentValidationResult.NO_CURRICULAR_COURSES_TO_ENROLL);
+		} else {
+			infoEnrolmentContext.getEnrolmentValidationResult().setSucess(true);
 		}
 		return infoEnrolmentContext;
 	}
