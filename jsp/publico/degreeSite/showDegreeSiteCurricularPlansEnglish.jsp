@@ -39,12 +39,14 @@
 	<span class="greytxt">
 	<bean:message key="label.curricularPlan.en"/>
 	of
-	<bean:define id="initialDate" name="infoDegreeCurricularPlan" property="initialDate" />		
-	<%= initialDate.toString().substring(initialDate.toString().lastIndexOf(" ")+1) %>
-	<logic:notEmpty name="infoDegreeCurricularPlan" property="endDate">
-		<bean:define id="endDate" name="infoDegreeCurricularPlan" property="endDate" />	
-		-<%= endDate.toString().substring(endDate.toString().lastIndexOf(" ")) %>
-	</logic:notEmpty>
+	<logic:notEmpty name="infoDegreeCurricularPlan" property="initialDate">
+		<bean:define id="initialDate" name="infoDegreeCurricularPlan" property="initialDate" />		
+		<%= initialDate.toString().substring(initialDate.toString().lastIndexOf(" ")+1) %>
+		<logic:notEmpty name="infoDegreeCurricularPlan" property="endDate">
+			<bean:define id="endDate" name="infoDegreeCurricularPlan" property="endDate" />	
+			-<%= endDate.toString().substring(endDate.toString().lastIndexOf(" ")) %>
+		</logic:notEmpty>
+	</logic:empty>
 	</span>
 	</h2>
 	<br />
@@ -90,6 +92,7 @@
 						<bean:define id="otherDegreeCurricularPlanID" name="infoDegreeCurricularPlanElem" property="idInternal" />						
 	  					<logic:equal name="infoDegreeCurricularPlanElem" property="state" value="<%= DegreeCurricularPlanState.ACTIVE_OBJ.toString() %>" > <!-- If is active -->
 	  						<li><html:link page="<%= "/showDegreeSite.do?method=showCurricularPlan&amp;inEnglish=true&amp;degreeID=" + request.getAttribute("degreeID") + "&amp;degreeCurricularPlanID=" + pageContext.findAttribute("otherDegreeCurricularPlanID").toString() + "&amp;executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" >
+								<bean:define id="initialDate" name="infoDegreeCurricularPlan" property="initialDate" />
 								<bean:define id="initialDate" name="infoDegreeCurricularPlanElem" property="initialDate" />		
 								<%= initialDate.toString().substring(initialDate.toString().lastIndexOf(" ")) %>
 								<logic:notEmpty name="infoDegreeCurricularPlanElem" property="endDate">
