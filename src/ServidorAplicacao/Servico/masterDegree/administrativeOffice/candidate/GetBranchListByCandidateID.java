@@ -59,16 +59,21 @@ public class GetBranchListByCandidateID implements IServico {
 			mdcTemp.setIdInternal(candidateID);
 			
 			IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp.getIPersistentMasterDegreeCandidate().readByOId(mdcTemp, false);
-
 			result = sp.getIPersistentBranch().readByExecutionDegree(masterDegreeCandidate.getExecutionDegree());
-
 		} catch (ExcepcaoPersistencia ex) {
 			FenixServiceException newEx = new FenixServiceException("Persistence layer error",ex);
 			throw newEx;
 		} 
-
-		Iterator iterator = result.iterator();
 		List branchList = new ArrayList();
+		if (result == null){
+			InfoBranch infoBranch = new InfoBranch();
+			infoBranch.setName("Tronco Comum");
+			branchList.add(infoBranch);
+			return branchList;
+		}
+		
+		Iterator iterator = result.iterator();
+		
 		while(iterator.hasNext()){
 			IBranch branch = (IBranch) iterator.next();
 			InfoBranch infoBranch = Cloner.copyIBranch2InfoBranch(branch);

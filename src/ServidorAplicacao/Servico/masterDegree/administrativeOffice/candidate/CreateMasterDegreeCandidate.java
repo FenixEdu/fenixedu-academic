@@ -8,14 +8,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import DataBeans.InfoExecutionYear;
 import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.util.Cloner;
 import Dominio.CandidateSituation;
 import Dominio.CursoExecucao;
 import Dominio.ICandidateSituation;
 import Dominio.ICursoExecucao;
-import Dominio.IExecutionYear;
 import Dominio.IMasterDegreeCandidate;
 import Dominio.IPersonRole;
 import Dominio.IPessoa;
@@ -33,7 +31,6 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.RoleType;
 import Util.SituationName;
-import Util.Specialization;
 import Util.State;
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -158,8 +155,7 @@ public class CreateMasterDegreeCandidate implements IServico
 			// Write the new Candidate
 			sp.getIPersistentMasterDegreeCandidate().writeMasterDegreeCandidate(masterDegreeCandidate);
 
-		} catch (ExistingPersistentException ex)
-		{
+		} catch (ExistingPersistentException ex){
 			throw new ExistingServiceException(ex);
 		} catch (ExcepcaoPersistencia ex)
 		{

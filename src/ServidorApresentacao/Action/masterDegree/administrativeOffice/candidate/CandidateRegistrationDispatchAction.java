@@ -130,9 +130,7 @@ public class CandidateRegistrationDispatchAction extends DispatchAction {
 		Integer candidateID = new Integer(request.getParameter("candidateID"));
 		
 		candidateRegistration.set("candidateID", candidateID);		
-
 		candidateRegistration.set("studentNumber", null);
-
 		List branchList = null;
 		try {
 			Object args[] = { candidateID };
@@ -142,8 +140,7 @@ public class CandidateRegistrationDispatchAction extends DispatchAction {
 		}
 					
 		request.setAttribute("branchList", branchList);					
-					
-					
+						
 		InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;					
 		try {
 			Object args[] = { candidateID };
