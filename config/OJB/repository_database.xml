@@ -65,3 +65,30 @@ using the MetadataManager.
             <attribute attribute-name="grabSize" attribute-value="20"/>
         </sequence-manager> -->
    </jdbc-connection-descriptor>
+
+
+    <jdbc-connection-descriptor
+   		jcd-alias="personFilter"
+   		default-connection="false"
+   		platform="@db.personFilter.platform@"
+   		jdbc-level="2.0"
+   		driver="@db.personFilter.driver@"
+   		protocol="@db.personFilter.protocol@"
+   		subprotocol="@db.personFilter.subprotocol@"
+   		dbalias="@db.personFilter.alias@"
+   		username="@db.personFilter.user@"
+   		password="@db.personFilter.pass@"
+   		batch-mode="false"
+        useAutoCommit="2"
+        ignoreAutoCommitExceptions="false"
+     >
+
+        <connection-pool
+            maxActive="21"
+            validationQuery="@db.personFilter.validationQuery@"
+            whenExhaustedAction="2"/>
+
+<!--        <sequence-manager className="org.apache.ojb.broker.util.sequence.SequenceManagerHighLowImpl">
+            <attribute attribute-name="grabSize" attribute-value="20"/>
+        </sequence-manager> -->
+   </jdbc-connection-descriptor>

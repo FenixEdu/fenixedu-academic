@@ -13,6 +13,7 @@ import org.apache.ojb.broker.accesslayer.LookupException;
 
 public class UtilRelacional {
 	private static Map pbMap = new FastHashMap(); 
+	
 	/**
 	 * 
 	 * @param filename

@@ -118,7 +118,7 @@ public class ServicoSeguroActualizarFuncsDocentes {
 					newTeachers++;
 				} else if (resultTeacher.size() == 1) {
 					teacher = (ITeacher) resultTeacher.get(0);
-					if (!teacher.getPerson().equals(funcionario.getPerson())) {
+					if ((teacher.getPerson() == null) || (!teacher.getPerson().equals(funcionario.getPerson()))) {
 						teacher.setPerson(funcionario.getPerson());
 					}
 				} else {

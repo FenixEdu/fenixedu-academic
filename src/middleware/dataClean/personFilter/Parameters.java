@@ -1,3 +1,6 @@
+//provalvelmente não será preciso
+
+
 package middleware.dataClean.personFilter;
 
 import java.io.BufferedReader;
@@ -42,7 +45,7 @@ public class Parameters {
 
 		// The RDBMS user
 		{
-			"clean.user", "ciist" },
+			"clean.user", "root" },
 
 		// The RDBMS user's password
 		{
@@ -50,7 +53,7 @@ public class Parameters {
 
 		// The error log file location
 		{
-			"clean.errorFile", "D:/FicheiroErros.txt" },
+			"clean.errorFile", "FicheiroErros.txt" },
 
 		// Flag for generation oof log file
 		{
@@ -63,7 +66,7 @@ public class Parameters {
 
 	private Parameters() {
 		try {
-			String confFile = "D:/projectos/fenixLocalhost/config/filterPerson.conf";
+			String confFile = "/personFilter.properties";
 
 			BufferedReader br = new BufferedReader(new FileReader(confFile));
 			cleanProperties = new Properties();

@@ -109,8 +109,6 @@
 	    	propertyFile="build.properties">
 	    	<include name="**/**/*.xml"/>
 	    	<include name="**/**/ApplicationResources.properties"/>
-	    	<include name="**/ServidorPersistenteConfig.properties"/>
-	    	<include name="**/ServidorPersistenteOracleConfig.properties"/>
 		  <replacefilter 
 		    token="&lt;!-- @validation.doctype@ -->" property="validation.doctype"/>
 		  <replacefilter 
@@ -157,7 +155,44 @@
 		  <replacefilter 
 		    token="@db.assiduousness.validationQuery@" 
 		    property="db.assiduousness.validationQuery"/>
-		  		    
+		  		    		  		    
+		  <replacefilter 
+		    token="@db.personFilter.user@" 
+		    property="db.personFilter.user"/>
+		  <replacefilter 
+		    token="@db.personFilter.pass@" 
+		    property="db.personFilter.pass"/>
+		  <replacefilter 
+		    token="@db.personFilter.name@" 
+		    property="db.personFilter.name"/>
+		  <replacefilter 
+		    token="@db.personFilter.alias@" 
+		    property="db.personFilter.alias"/>
+		  <replacefilter 
+		    token="@db.personFilter.platform@" 
+		    property="db.personFilter.platform"/>
+		  <replacefilter 
+		    token="@db.personFilter.driver@" 
+		    property="db.personFilter.driver"/>
+		  <replacefilter 
+		    token="@db.personFilter.protocol@" 
+		    property="db.personFilter.protocol"/>
+		  <replacefilter 
+		    token="@db.personFilter.subprotocol@" 
+		    property="db.personFilter.subprotocol"/>
+		  <replacefilter 
+		    token="@db.personFilter.validationQuery@" 
+		    property="db.personFilter.validationQuery"/>
+		  <replacefilter 
+		    token="@db.personFilter.other@" 
+		    property="db.personFilter.other"/>
+		  <replacefilter 
+		    token="@db.personFilter.errorFile@" 
+		    property="db.personFilter.errorFile"/>
+		  <replacefilter 
+		    token="@db.personFilter.log@" 
+		    property="db.personFilter.log"/>		    
+		    		    		    
 		  <replacefilter 
 		    token="@application@" 
 		    property="application"/>
@@ -506,6 +541,37 @@
             </classpath>
         </sql>
     </target>
+
+    <target name="create-tables_filterperson"
+            description="Cria as tabelas da base de dados.">
+        <sql
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost/"
+            userid="${db.personFilter.user}"
+            password="${db.personFilter.pass}"
+            encoding="${encoding}"
+        >
+        DROP DATABASE IF EXISTS ${db.personFilter.name};
+        CREATE DATABASE ${db.personFilter.name};
+        </sql>
+        <sql
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost/${db.personFilter.name}"
+            userid="${db.personFilter.user}"
+            password="${db.personFilter.pass}"
+            encoding="${encoding}">
+	        <fileset dir="${sql}">
+			 <include name="tables_personFilter.sql" />
+			 <include name="test-data_personFilter.sql" />
+  			</fileset>
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </sql>
+    </target>
+
 
     <target name="load-database"
             depends="create-tables"

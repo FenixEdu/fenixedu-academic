@@ -18,6 +18,8 @@ import org.apache.ojb.broker.accesslayer.LookupException;
 public class UtilRelacionalOracle {
 	private static Map pbMap = new FastHashMap();
 	private static PBKey pbKey = new PBKey("assiduousness");
+	
+	
 	public static synchronized void inicializarBaseDados(String filename) {
 	}
 
@@ -67,7 +69,7 @@ public class UtilRelacionalOracle {
 	
 		PersistenceBroker pb = (PersistenceBroker) pbMap.get(Thread.currentThread());	
 		if (pb == null) {
-			throw new IllegalStateException("######################### MAYBE IT IS OLD SHARED CONNECTION CODE!");	
+			throw new IllegalStateException("#MAYBE IT IS OLD SHARED CONNECTION CODE!");	
 		}
 		try {
 			conn = pb.serviceConnectionManager().getConnection();
@@ -77,7 +79,7 @@ public class UtilRelacionalOracle {
 		}
 		try {
 			if (conn == null || conn.isClosed()){
-				throw new IllegalStateException("#####################################################################Connection closed!");
+				throw new IllegalStateException("#Connection closed!");
 			}
 		} catch (SQLException e2) {
 			e2.printStackTrace();
@@ -89,7 +91,7 @@ public class UtilRelacionalOracle {
 			sql = conn.prepareStatement(statement);
 		} catch (java.sql.SQLException e) {
 			e.printStackTrace(System.out);
-			System.out.println("#######################UtilRelacional: " + e.toString());
+			System.out.println("#UtilRelacional: " + e.toString());
 		} finally {
 			return sql;
 		}

@@ -40,6 +40,7 @@ public class LimpaNaturalidades {
 		_mapDistrConcelhos = sa.lerMapConcelhos();
 		_mapDistrFreguesias = sa.lerMapDistrFreguesias();
 		_mapConcFreguesias = sa.lerMapFreguesias();
+		
 		Parameters par = Parameters.getInstance();
 		try {
 			other = new Integer(par.get("clean.other")).intValue();

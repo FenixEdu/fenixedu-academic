@@ -54,7 +54,7 @@ public class ServicoSeguroPessoasInactivas {
 			broker.beginTransaction();
 
 			//Read all person from Data Base
-			servico._listaPessoasFromDB = readAllPersons(broker);
+			servico._listaPessoasFromDB = readAllPersonsEmployee(broker);
 			if (servico._listaPessoasFromDB != null) {
 
 				Iterator iterador = servico._listaPessoasFromDB.iterator();
@@ -63,23 +63,22 @@ public class ServicoSeguroPessoasInactivas {
 					pessoaFromDB = (IPessoa) iterador.next();
 					try {
 						final IPessoa pessoaPredicate = pessoaFromDB;
-
 						//Find if the person from BD exists in file with active persons.
 						IPessoa pessoaFromFile = (IPessoa) CollectionUtils.find(servico._listaPessoasFromFile, new Predicate() {
 							public boolean evaluate(Object obj) {
 								IPessoa pessoa = (IPessoa) obj;
-								return pessoa.getNumeroDocumentoIdentificacao().equals(pessoaPredicate)
-									&& pessoa.getTipoDocumentoIdentificacao().equals(pessoaPredicate);
+								return pessoa.getNumeroDocumentoIdentificacao().equals(pessoaPredicate.getNumeroDocumentoIdentificacao())
+									&& pessoa.getTipoDocumentoIdentificacao().equals(pessoaPredicate.getTipoDocumentoIdentificacao());
 							}
 						});
-
-						if (pessoaFromFile == null && pessoaFromDB.getPersonRoles().contains(RoleType.EMPLOYEE)) {
+						
+						if (pessoaFromFile == null) {
 							//person is inactive, then delete roles and put password null
 							pessoaFromDB.setPassword(null);
 							pessoaFromDB.setPersonRoles(null);
 							broker.store(pessoaFromDB);
 
-							System.out.println("Inactive person: " + pessoaFromDB);
+							System.out.println("Inactive person: " + pessoaFromDB.getNumeroDocumentoIdentificacao() + "-" + pessoaFromDB.getTipoDocumentoIdentificacao().getTipo());
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -95,15 +94,15 @@ public class ServicoSeguroPessoasInactivas {
 		System.out.println("  Done !");
 	}
 
-	private static List readAllPersons(PersistenceBroker broker) {
+	private static List readAllPersonsEmployee(PersistenceBroker broker) {
 		System.out.println("Reading persons from DB");
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("personRoles.roleType", RoleType.EMPLOYEE);
-		
+
 		Query query = new QueryByCriteria(Pessoa.class, criteria);
 
 		List result = (List) broker.getCollectionByQuery(query);
-		
+
 		System.out.println("Finished read persons from DB(" + result.size() + ")");
 		return result;
 	}

@@ -60,7 +60,8 @@ public class ServicoSeguroActualizarPessoas {
 			PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
 			broker.clearCache();
 			broker.beginTransaction();
-			DB.initConnection();
+
+			DB.iniciarTransaccao();
 			LimpaNaturalidades limpaNaturalidades = new LimpaNaturalidades();
 
 			Iterator iterador = servico._listaPessoas.iterator();
@@ -117,14 +118,13 @@ public class ServicoSeguroActualizarPessoas {
 				} catch (Exception e) {
 					e.printStackTrace();
 					System.out.println("Erro a converter a pessoa " + servico._pessoa + "\n");
-					//broker.abortTransaction();
 					//throw new Exception("Erro a converter a pessoa " + servico._pessoa + "\n" + e);
 					continue;
 				}
 			}
 
 			//close databases
-			DB.closeConnection();
+			DB.confirmarTransaccao();
 			broker.commitTransaction();
 		}
 		System.out.println("New persons added : " + newPersons);

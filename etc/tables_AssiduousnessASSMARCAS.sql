@@ -5,6 +5,7 @@ Source Server Version: 3.23.49-max-nt
 Source Database:       AssiduidadeOracle
 Date:                  2003-03-20 18:20:46
 */
+
 ------------------------------
 -- Table structure for ass_marcas
 ------------------------------
