@@ -291,12 +291,7 @@
 	         <forward name="Success" path="/guide/indexGuideListing.jsp"/> 
       </action>    
       
-      <action path="/printDeclarationPage"  
-	    	  parameter="method"
-              type="ServidorApresentacao.Action.commons.VoidAction"
-              >
-	     	 <forward name="Success" path="/certificate/printDeclarationPage.jsp"/> 
-      </action>
+    
       
       <!-- action definition -->
       

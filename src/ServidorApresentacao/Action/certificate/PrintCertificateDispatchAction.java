@@ -31,20 +31,25 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 		HttpSession session = request.getSession(false);
 		String[] destination = null;
 		if (session != null) {
-			if (SessionConstants.DOCUMENT_REASON_LIST != null)
-				destination = (String[]) session.getAttribute(SessionConstants.DOCUMENT_REASON_LIST);
-				
+
 			InfoStudentCurricularPlan infoStudentCurricularPlan = (InfoStudentCurricularPlan) session.getAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN);
 			String certificate = (String) session.getAttribute(SessionConstants.CERTIFICATE_TYPE);	
 			
-			if ((certificate.equals("Matrícula")) && (certificate.equals("Matrícula e Inscrição")));
-					//por em sessao o tipo de certificado a imprimir
+			if ((certificate.equals("Matrícula")) && (certificate.equals("Matrícula e Inscrição"))){
+				if (certificate.equals("Matrícula"))
+							session.setAttribute(SessionConstants.MATRICULA,"matricula");
+				if (certificate.equals("Matrícula e Inscrição"))
+							session.setAttribute(SessionConstants.MATRICULA_ENROLMENT,"matriculaInscricao");
+				
+			}
+  			session.setAttribute(SessionConstants.INFO_STUDENT_CURRICULAR_PLAN, infoStudentCurricularPlan.toString().toUpperCase());
+			//por em sessao o tipo de certificado a imprimir
 			
-					
+System.out.println(infoStudentCurricularPlan);
 		    // para os restantes ir a base de dados ler os respectivos dados
 		    //e por as respectivas variaveis em sessao
 		    
-		    return mapping.findForward("PrintReadyMatricula");
+		    return mapping.findForward("PrintReady");
 			
 		  } else
 			throw new Exception();   

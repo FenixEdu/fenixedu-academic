@@ -69,7 +69,7 @@ public class ReadCertificateList implements IServico {
 		
 		List result = new ArrayList();
 		Iterator iterator = certificates.iterator();
-		result.add("[Escolha um tipo de Certidão]");
+		
 		while(iterator.hasNext()) {	
 			IPrice price = (IPrice) iterator.next(); 
 			result.add(price.getDescription());
