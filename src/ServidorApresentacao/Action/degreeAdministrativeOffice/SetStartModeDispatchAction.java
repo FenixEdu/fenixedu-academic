@@ -16,10 +16,11 @@ import Util.TipoCurso;
 
 /**
  * @author David Santos
- *
  */
 
 public class SetStartModeDispatchAction extends DispatchAction {
+	
+	private final String[] forwards = { "chooseStudentAndDegreeTypeWithRules", "chooseStudentAndDegreeTypeWithoutRules" };
 
 	public ActionForward withRules(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
@@ -27,7 +28,7 @@ public class SetStartModeDispatchAction extends DispatchAction {
 		session.setAttribute(SessionConstants.ENROLMENT_MODE_KEY, "withRules");
 		List degreeTypeList = TipoCurso.toLabelValueBeanList();
 		request.setAttribute(SessionConstants.DEGREE_TYPE, degreeTypeList);
-		return mapping.findForward("chooseStudentAndTypeDegree");
+		return mapping.findForward(forwards[0]);
 	}
 
 	public ActionForward withoutRules(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -36,6 +37,6 @@ public class SetStartModeDispatchAction extends DispatchAction {
 		session.setAttribute(SessionConstants.ENROLMENT_MODE_KEY, "withoutRules");
 		List degreeTypeList = TipoCurso.toLabelValueBeanList();
 		request.setAttribute(SessionConstants.DEGREE_TYPE, degreeTypeList);
-		return mapping.findForward("chooseStudentAndTypeDegree");
+		return mapping.findForward(forwards[1]);
 	}
 }

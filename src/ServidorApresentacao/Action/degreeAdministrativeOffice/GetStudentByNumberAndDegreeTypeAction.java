@@ -18,10 +18,12 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 /**
  * @author David Santos
- *
  */
 
 public class GetStudentByNumberAndDegreeTypeAction extends Action {
+	
+	private final String[] forwards = { "startCurricularCourseEnrolmentWithRules", "startCurricularCourseEnrolmentWithoutRules" };
+	private final String[] modes = { "withRules", "withoutRules" };
 
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -44,12 +46,15 @@ public class GetStudentByNumberAndDegreeTypeAction extends Action {
 		
 		String mode = (String) session.getAttribute(SessionConstants.ENROLMENT_MODE_KEY);
 		String forward = null;
-		if(mode.equals("withRules")) {
-			forward = new String("startCurricularCourseEnrolmentWithRules");
-		} else if(mode.equals("withoutRules")) {
-			forward = new String("startCurricularCourseEnrolmentWithoutRules");
+		if(mode.equals(modes[0])) {
+			forward = new String(forwards[0]);
+		} else if(mode.equals(modes[1])) {
+			forward = new String(forwards[1]);
 		}
 
+		// FIXME DAVID-RICARDO: Devido a remover este atributo, se for feito um refresh á página e o código desta
+		// action for executado sem executar o código da action que coloca este atributo na sessão, vai dar uma excepção
+		// (java.lang.NullPointerException) no if acima.
 		session.removeAttribute(SessionConstants.ENROLMENT_MODE_KEY);
 		session.setAttribute(SessionConstants.ENROLMENT_ACTOR_KEY, actor);
 		return mapping.findForward(forward);

@@ -5,9 +5,14 @@
 	<definition name="df.page.main" extends="definition.degreeAdministrativeOffice.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/welcomeScreen.jsp"/>
 	</definition>
-	<definition name="df.page.chooseStudentAndTypeDegree" extends="definition.degreeAdministrativeOffice.masterPage">
-		<put name="body" value="/degreeAdministrativeOffice/chooseStudentAndTypeDegree.jsp"/>
+
+	<definition name="df.page.chooseStudentAndDegreeTypeWithRules" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/chooseStudentAndDegreeTypeWithRules.jsp"/>
 	</definition>
+	<definition name="df.page.chooseStudentAndDegreeTypeWithoutRules" extends="definition.degreeAdministrativeOffice.masterPage">
+		<put name="body" value="/degreeAdministrativeOffice/chooseStudentAndDegreeTypeWithoutRules.jsp"/>
+	</definition>
+
 	<definition name="df.page.acceptEnrolment" extends="definition.degreeAdministrativeOffice.curricular.course.enrolment">
 		<put name="body" value="/degreeAdministrativeOffice/student/acceptEnrolment.jsp"/>
 	</definition>
@@ -17,6 +22,7 @@
 	<definition name="df.page.verifyEnrolment" extends="definition.degreeAdministrativeOffice.curricular.course.enrolment">
 		<put name="body" value="/degreeAdministrativeOffice/student/verifyEnrolment.jsp"/>
 	</definition>
+
 	<definition name="df.page.concreteOptionalList" extends="definition.degreeAdministrativeOffice.optional.curricular.course.enrolment">
 		<put name="body" value="/degreeAdministrativeOffice/student/concreteOptionalList.jsp"/>
 	</definition>

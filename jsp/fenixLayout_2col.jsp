@@ -34,7 +34,9 @@
    <tr>
      <td class="navlateral-td" align="left" valign="top" nowrap="nowrap"><tiles:insert attribute="navLocal" ignore="true"/>
     </td>
-     <td class="bodycontent" width="100%" align="left" valign="top" ><tiles:insert attribute="body" />
+     <td class="bodycontent" width="100%" align="left" valign="top" >
+     	<tiles:insert attribute="body-context" />
+     	<tiles:insert attribute="body" />
 	</td>
   </tr>
 </table>

@@ -75,7 +75,8 @@
 				parameter="method"
 				scope="session"
 				validate="false">
-			<forward name="chooseStudentAndTypeDegree" path="df.page.chooseStudentAndTypeDegree"/>
+			<forward name="chooseStudentAndDegreeTypeWithRules" path="df.page.chooseStudentAndDegreeTypeWithRules"/>
+			<forward name="chooseStudentAndDegreeTypeWithoutRules" path="df.page.chooseStudentAndDegreeTypeWithoutRules"/>
 		</action>
 
 		<action	name="getStudentByNumberAndDegreeTypeForm"
