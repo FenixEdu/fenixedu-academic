@@ -49,31 +49,42 @@
 					<html:text name="enrolmentEvaluation" property="grade" size="4"  />
 				</td>
 			</tr>
-			<tr>	
-				<logic:present name="enrolmentEvaluation" property="examDate" >
-				<bean:define id="date" name="enrolmentEvaluation" property="examDate" />								
+			<tr>								
 				<td align="left">
 					<bean:message key="label.examDate" />:
 				</td>
-				<td align="left">
-					<html:text name="enrolmentEvaluation" property="examDate" value="<%= Data.format2DayMonthYear((Date) date) %>" size="10"  />
-				</logic:present>
-				</td>
+				 <!-- Data de Exame -->
+             	<td><html:select property="examDateYear">
+                    <html:options collection="<%= SessionConstants.YEARS_KEY %>" property="value" labelProperty="label"/>
+                 </html:select>
+                 <html:select property="examDateMonth">
+                    <html:options collection="<%= SessionConstants.MONTH_LIST_KEY %>" property="value" labelProperty="label"/>
+                 </html:select>
+                 <html:select property="examDateDay">
+                    <html:options collection="<%= SessionConstants.MONTH_DAYS_KEY %>" property="value" labelProperty="label"/>
+                 </html:select>    
+             	</td>          
+		
 			</tr>
 			<tr>	
 			  
-	        </tr>
-				<logic:present name="enrolmentEvaluation" property="gradeAvailableDate" >
-				<bean:define id="date" name="enrolmentEvaluation" property="gradeAvailableDate" />							
+	        </tr>							
 				<td align="left">
 					<bean:message key="label.gradeAvailableDate" />:
 				</td>
-				<td align="left">
-					<html:text name="enrolmentEvaluation" property="gradeAvailableDate" value="<%= Data.format2DayMonthYear((Date) date) %>" size="10" />
-				</td>
-				</logic:present>
-				
+				 <!-- Data de Exame -->
+             	<td><html:select property="gradeAvailableDateYear">
+                    <html:options collection="<%= SessionConstants.YEARS_KEY %>" property="value" labelProperty="label"/>
+                 </html:select>
+                 <html:select property="gradeAvailableDateMonth">
+                    <html:options collection="<%= SessionConstants.MONTH_LIST_KEY %>" property="value" labelProperty="label"/>
+                 </html:select>
+                 <html:select property="gradeAvailableDateDay">
+                    <html:options collection="<%= SessionConstants.MONTH_DAYS_KEY %>" property="value" labelProperty="label"/>
+                 </html:select>    
+             	</td>          
 			</tr>
+			
 			<tr>									
 				<td align="left">
 					<bean:message key="label.enrolmentEvaluationType" />:

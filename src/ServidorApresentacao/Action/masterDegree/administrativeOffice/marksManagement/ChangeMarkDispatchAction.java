@@ -1,7 +1,7 @@
 package ServidorApresentacao.Action.masterDegree.administrativeOffice.marksManagement;
 
 import java.text.DateFormat;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -15,6 +15,7 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.MessageResources;
 
@@ -31,6 +32,7 @@ import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import Util.Data;
 import Util.EnrolmentEvaluationType;
 import Util.FormataData;
 
@@ -166,11 +168,36 @@ public class ChangeMarkDispatchAction extends DispatchAction {
 				throw new ExistingActionException(e);
 			}
 			
+			Locale locale = new Locale("pt", "PT");
+			InfoEnrolmentEvaluation enrolmentEvaluation = (InfoEnrolmentEvaluation) infoSiteEnrolmentEvaluation.getEnrolmentEvaluations().get(0);
+			String examDay = FormataData.getDay(DateFormat.getDateInstance(DateFormat.SHORT, locale).format(enrolmentEvaluation.getExamDate()));
+			String examMonth = FormataData.getMonth(DateFormat.getDateInstance(DateFormat.SHORT, locale).format(enrolmentEvaluation.getExamDate()));
+			String examYear = FormataData.getYear(DateFormat.getDateInstance(DateFormat.SHORT, locale).format(enrolmentEvaluation.getExamDate()));	
+			String gradeAvailableDay = FormataData.getDay(DateFormat.getDateInstance(DateFormat.SHORT, locale).format(enrolmentEvaluation.getGradeAvailableDate()));
+			String gradeAvailableMonth = FormataData.getMonth(DateFormat.getDateInstance(DateFormat.SHORT, locale).format(enrolmentEvaluation.getGradeAvailableDate()));
+			String gradeAvailableYear = FormataData.getYear(DateFormat.getDateInstance(DateFormat.SHORT, locale).format(enrolmentEvaluation.getGradeAvailableDate()));	
+			
+			DynaActionForm studentNumberForm = (DynaActionForm) form;
+			
+			studentNumberForm.set("examDateYear" , examYear);
+			int month = Integer.valueOf(examMonth).intValue() - 1;
+			studentNumberForm.set("examDateMonth" ,String.valueOf(month));
+			studentNumberForm.set("examDateDay" , examDay);
+			
+			studentNumberForm.set("gradeAvailableDateYear" , gradeAvailableYear);
+			month = Integer.valueOf(gradeAvailableMonth).intValue() - 1;
+			studentNumberForm.set("gradeAvailableDateMonth" ,String.valueOf(month));
+			studentNumberForm.set("gradeAvailableDateDay" , gradeAvailableDay);
+			
 			request.setAttribute("executionYear", executionYear);
 			request.setAttribute("degree", degree);
 			request.setAttribute("curricularCourse", curricularCourse);
 			request.setAttribute("curricularCourseCode", curricularCourseCode);
 			request.setAttribute(SessionConstants.ENROLMENT_EVALUATION_TYPE_LIST, new EnrolmentEvaluationType().toArrayList());
+			request.setAttribute(SessionConstants.MONTH_DAYS_KEY, Data.getMonthDays());
+			request.setAttribute(SessionConstants.MONTH_LIST_KEY, Data.getMonths());
+			request.setAttribute(SessionConstants.YEARS_KEY, Data.getYears());
+			
 			request.setAttribute("infoSiteEnrolmentEvaluation",infoSiteEnrolmentEvaluation);
 			return mapping.findForward("editStudentMark");
 		
@@ -186,7 +213,7 @@ public class ChangeMarkDispatchAction extends DispatchAction {
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
-		
+			DynaActionForm studentNumberForm = (DynaActionForm) form;
 // get input
 			String executionYear = getFromRequest("executionYear", request);
 			String degree = getFromRequest("degree", request);
@@ -197,36 +224,80 @@ public class ChangeMarkDispatchAction extends DispatchAction {
 			Integer evaluationType = Integer.valueOf(getFromRequest("enrolmentEvaluationType.type",request));
 			EnrolmentEvaluationType enrolmentEvaluationType = new EnrolmentEvaluationType(evaluationType);
 			Integer teacherNumber = Integer.valueOf(getFromRequest("teacherNumber",request));
-			String examDay = FormataData.getDay(getFromRequest("examDate",request));
-			String examMonth = FormataData.getMonth(getFromRequest("examDate",request));
-			String examYear = FormataData.getYear(getFromRequest("examDate",request));	
+			
 			String observation = getFromRequest("observation",request);	
 			Integer studentNumber = Integer.valueOf(getFromRequest("studentNumber",request));	
+			Calendar examDate = Calendar.getInstance();
 			
-//			boolean result = true;
-//			
-//			
-//
-//
-//			if (!Util.Data.validDate(Integer.valueOf(examDay),Integer.valueOf(examMonth),Integer.valueOf(examYear))){
-//
-//				ActionErrors actionErrors = new ActionErrors();
-//					actionErrors.add(
-//							"StudentNotEnroled",
-//							new ActionError(
-//								"error.student.Mark.NotAvailable"));
-//					saveErrors(request, actionErrors);
-//					return mapping.findForward("studentMarks");			
-//			}
-			Locale locale = new Locale("pt", "PT");
-			Date examDate = DateFormat.getDateInstance(DateFormat.SHORT, locale).parse(getFromRequest("examDate",request));
-			Date gradeAvailableDate = DateFormat.getDateInstance(DateFormat.SHORT, locale).parse(getFromRequest("gradeAvailableDate",request));
-//ver isso das datas
-////			result = DataIndisponivel.isDataIndisponivel(examDate);
+			String examMonth = getFromRequest("examDateMonth",request);
+			String examYear = getFromRequest("examDateYear",request);	
+			String examDay = getFromRequest("examDateDay",request);
 			
+			String gradeAvailableDateMonth = getFromRequest("gradeAvailableDateMonth",request);
+			String gradeAvailableDateYear = getFromRequest("gradeAvailableDateYear",request);	
+			String gradeAvailableDateDay = getFromRequest("gradeAvailableDateDay",request);
+			Integer day = null;
+			Integer month = null;
+			Integer year = null;
+
 			InfoEnrolmentEvaluation infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();
 			InfoTeacher infoTeacher = new InfoTeacher();
-			
+		
+		
+			if ((examDay == null)
+							|| (examMonth == null)
+							|| (examYear == null)
+							|| (examDay.length() == 0)
+							|| (examMonth.length() == 0)
+							|| (examYear.length() == 0)) {
+				infoEnrolmentEvaluation.setExamDate(null);
+			} else {
+				day =
+					new Integer(
+						(String) studentNumberForm.get("examDateDay"));
+				month =
+					new Integer(
+						(String) studentNumberForm.get("examDateMonth"));
+				year =
+					new Integer(
+						(String) studentNumberForm.get("examDateYear"));
+
+				examDate.set(
+					year.intValue(),
+					month.intValue(),
+					day.intValue());
+					infoEnrolmentEvaluation.setExamDate(examDate.getTime());
+			}
+
+			day = null;
+			month = null;
+			year = null;
+			examDate = Calendar.getInstance();
+
+			if ((gradeAvailableDateDay == null)
+							|| (gradeAvailableDateMonth == null)
+							|| (gradeAvailableDateYear == null)
+							|| (gradeAvailableDateDay.length() == 0)
+							|| (gradeAvailableDateMonth.length() == 0)
+							|| (gradeAvailableDateYear.length() == 0)) {
+				infoEnrolmentEvaluation.setGradeAvailableDate(null);
+			} else {
+				day =
+					new Integer(
+						(String) studentNumberForm.get("gradeAvailableDateDay"));
+				month =
+					new Integer(
+						(String) studentNumberForm.get("gradeAvailableDateMonth"));
+				year =
+					new Integer(
+						(String) studentNumberForm.get("gradeAvailableDateYear"));
+
+				examDate.set(
+					year.intValue(),
+					month.intValue(),
+					day.intValue());
+					infoEnrolmentEvaluation.setGradeAvailableDate(examDate.getTime());
+			}
 			infoTeacher.setTeacherNumber(teacherNumber);
 			
 			InfoStudent infoStudent = new InfoStudent();
@@ -242,14 +313,13 @@ public class ChangeMarkDispatchAction extends DispatchAction {
 			infoEnrolmentEvaluation.setEnrolmentEvaluationType(enrolmentEvaluationType);
 
 			infoEnrolmentEvaluation.setGrade(grade);
-			infoEnrolmentEvaluation.setExamDate(examDate);
-			infoEnrolmentEvaluation.setGradeAvailableDate(gradeAvailableDate);
+//			infoEnrolmentEvaluation.setExamDate(examDate);
+//			infoEnrolmentEvaluation.setGradeAvailableDate(gradeAvailableDate);
 			infoEnrolmentEvaluation.setObservation(observation);
 			infoEnrolmentEvaluation.setInfoEnrolment(infoEnrolment);
 			
 			
 			
-//			Object args[] = {enrolmentEvaluationCode,infoEnrolmentEvaluation,infoTeacher};
 			request.setAttribute("executionYear", executionYear);
 			request.setAttribute("degree", degree);
 			request.setAttribute("curricularCourse", curricularCourse);
