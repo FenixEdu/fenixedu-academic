@@ -4,46 +4,43 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.util.Cloner;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.IExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistenceSupportFactory;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
+
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
  * @author Luis Cruz
- *  
+ * 
  */
 public class ReadExecutionYearsService implements IService {
 
-    public ReadExecutionYearsService() {
-        super();
-    }
+	public List run() throws ExcepcaoPersistencia {
 
-    public List run() throws FenixServiceException {
+		final ISuportePersistente sp = PersistenceSupportFactory
+				.getDefaultPersistenceSupport();
+		final IPersistentExecutionYear executionYearDAO = sp
+				.getIPersistentExecutionYear();
 
-        List result = new ArrayList();
-        try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
+		final List executionYears = executionYearDAO.readAllExecutionYear();
+		return (List) CollectionUtils.collect(executionYears,
+				new Transformer() {
+					public Object transform(Object arg0) {
+						final IExecutionYear executionYear = (IExecutionYear) arg0;
+						return InfoExecutionYear
+								.newInfoFromDomain(executionYear);
+					}
+				});
 
-            List executionYears = executionYearDAO.readAllExecutionYear();
-            if (executionYears != null && !executionYears.isEmpty()) {
-                for (int i = 0; i < executionYears.size(); i++) {
-                    result.add(Cloner.get((IExecutionYear) executionYears.get(i)));
-                }
-            }
-        } catch (ExcepcaoPersistencia ex) {
-            throw new FenixServiceException(ex);
-        }
-
-        return result;
-    }
+	}
 
 }
