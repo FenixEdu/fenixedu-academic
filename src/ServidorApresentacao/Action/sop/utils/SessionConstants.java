@@ -74,4 +74,6 @@ public abstract class SessionConstants {
 	public static final String INFO_SITE_ANNOUNCEMENT_LIST= "info_site_announcement_list";
 	
 	public static final String INFO_SITES_LIST = "info_sites_list";
+	
+	public static final String INFO_TEACHER = "info_teacher";
 }

@@ -61,10 +61,10 @@ public class ReadProfessorships implements IServico {
 				List infoSites = new ArrayList();
 				
 			try {
-				ISuportePersistente sp;
-				sp = SuportePersistenteOJB.getInstance();
-				IPersistentTeacher persistentTeacher=sp.getIPersistentTeacher();
-				IPersistentSite persistentSite=sp.getIPersistentSite();
+				ISuportePersistente persistentSuport;
+				persistentSuport = SuportePersistenteOJB.getInstance();
+				IPersistentTeacher persistentTeacher=persistentSuport.getIPersistentTeacher();
+				IPersistentSite persistentSite=persistentSuport.getIPersistentSite();
 				List executionCourseList=persistentTeacher.readProfessorShipsExecutionCoursesByNumber(infoTeacher.getTeacherNumber());
 				Iterator iter = executionCourseList.iterator();
 				while (iter.hasNext()){

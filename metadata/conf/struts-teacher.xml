@@ -256,7 +256,15 @@
      <forward name="editProgram" path="/editProgram.jsp"/>
      
 	</action>
-	<action path="/jm" forward="/navbar.jsp"/>
+	
+	<action 
+		path="/teacherLogin"
+        type="ServidorApresentacao.Action.teacher.TeacherLoginAction"
+		>    
+     <forward name="viewProfessorships" path="/viewProfessorships.jsp"/>
+         
+	</action>
+	
 	<!--
 	<action path="/index" forward="/obterSitios.do"/>
 	<action path="/autenticacao" forward="/autenticacao.jsp"/>
