@@ -273,14 +273,14 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 					.getSpecialization()
 					.equals(Specialization.ESPECIALIZACAO_TYPE)))
 		{
-			System.out.println("---------------------------------------------------------");
-			System.out.println("-->Aluno de Especialização: " + infoGratuitySituation.getInfoStudentCurricularPlan().getInfoStudent().getNumber());
+			//System.out.println("---------------------------------------------------------");
+			//System.out.println("-->Aluno de Especialização: " + infoGratuitySituation.getInfoStudentCurricularPlan().getInfoStudent().getNumber());
 			
 			if (infoGratuitySituation.getInfoStudentCurricularPlan().getInfoEnrolments() != null
 				&& infoGratuitySituation.getInfoStudentCurricularPlan().getInfoEnrolments().size() > 0)
 			{
 
-				System.out.println("-->Inscrições: " + infoGratuitySituation.getInfoStudentCurricularPlan().getInfoEnrolments().size());
+				//System.out.println("-->Inscrições: " + infoGratuitySituation.getInfoStudentCurricularPlan().getInfoEnrolments().size());
 				if (infoGratuitySituation.getInfoGratuityValues().getCourseValue() != null)
 				{
 					infoGratuitySituation.setRemainingValue(
@@ -291,7 +291,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 									.getInfoEnrolments()
 									.size()));
 
-					System.out.println("-->Disciplinas: " + infoGratuitySituation.getRemainingValue());
+					//System.out.println("-->Disciplinas: " + infoGratuitySituation.getRemainingValue());
 				}
 				else
 				{
@@ -310,7 +310,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 					}
 					infoGratuitySituation.setRemainingValue(new Double(totalToPay));
 					
-					System.out.println("-->Creditos: " + infoGratuitySituation.getRemainingValue());
+					//System.out.println("-->Creditos: " + infoGratuitySituation.getRemainingValue());
 				}
 			}
 			else
@@ -326,22 +326,22 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 			double exemptionDiscount =
 			infoGratuitySituation.getRemainingValue().doubleValue()
 			* (infoGratuitySituation.getExemptionPercentage().doubleValue() / 100.0);
-			System.out.println("-->Isenção: " + exemptionDiscount);
+			//System.out.println("-->Isenção: " + exemptionDiscount);
 			double newValue =
 			infoGratuitySituation.getRemainingValue().doubleValue() - exemptionDiscount;
 		
 			infoGratuitySituation.setRemainingValue(new Double(newValue));
-			System.out.println("-->Isenção: " + infoGratuitySituation.getRemainingValue());
+			//System.out.println("-->Isenção: " + infoGratuitySituation.getRemainingValue());
 		}
 		
 		
 		//now find the remaining value to pay
 		double remainingValue = infoGratuitySituation.getRemainingValue().doubleValue() - infoGratuitySituation.getPayedValue().doubleValue();
 		infoGratuitySituation.setRemainingValue(new Double(remainingValue));
-		System.out.println("-->valor Pago: " + infoGratuitySituation.getPayedValue());
-		System.out.println("-->valor por Pagar: " + infoGratuitySituation.getRemainingValue());
+		//System.out.println("-->valor Pago: " + infoGratuitySituation.getPayedValue());
+		//System.out.println("-->valor por Pagar: " + infoGratuitySituation.getRemainingValue());
 
-		System.out.println("---------------------------------------------------------");
+		//System.out.println("---------------------------------------------------------");
 		
 	}
 
