@@ -118,6 +118,7 @@ public class DisciplinaExecucaoOJB
 	/**
 	 * @see ServidorPersistente.IDisciplinaExecucaoPersistente#readByAnoCurricularAndAnoLectivoAndSiglaLicenciatura(java.lang.Integer, Dominio.IExecutionPeriod, java.lang.String)
 	 */
+//	TODO: David: Este metodo faz uma query atraves de CurricularCourse.curricularYear. Serviços onde isto é usado: sop.LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular e publico.SelectExecutionCourse.
 	public List readByCurricularYearAndExecutionPeriodAndExecutionDegree(
 		Integer curricularYear,
 		IExecutionPeriod executionPeriod,
