@@ -3,6 +3,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
+
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.SendFailedException;
@@ -11,6 +12,8 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeUtility;
+
 public class EMail
 {
 	private String Servidor;
@@ -131,15 +134,17 @@ public class EMail
 		/* Obtem a sessao */
 		Session sessao= Session.getDefaultInstance(props, null);
 		/* Cria a mensagem */
-		MimeMessage mensagem= new MimeMessage(sessao);
+		MimeMessage message= new MimeMessage(sessao);
+		
 		try
 		{
 			/* Define os parametros da mensagem */
-			mensagem.setFrom(new InternetAddress(Origem));
-			mensagem.addRecipient(Message.RecipientType.TO, new InternetAddress(Destino));
-			mensagem.setSubject(Assunto);
-			mensagem.setText(Texto);
-			Transport.send(mensagem);
+			message.setHeader("Content-Type", "text/plain; charset=\"iso-8859-1\"");
+			message.setFrom(new InternetAddress(Origem));
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(Destino));
+			message.setSubject(Assunto);
+			message.setText(Texto);
+			Transport.send(message);
 		}
 		catch (AddressException e)
 		{
