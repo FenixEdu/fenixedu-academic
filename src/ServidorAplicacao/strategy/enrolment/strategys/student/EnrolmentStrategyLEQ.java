@@ -1,8 +1,5 @@
 package ServidorAplicacao.strategy.enrolment.strategys.student;
 
-import java.util.ArrayList;
-
-import middleware.almeida.PersistentObjectOJBReader;
 import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
 import ServidorAplicacao.strategy.enrolment.rules.EnrolmentFilterAutomaticEnrolmentRule;
 import ServidorAplicacao.strategy.enrolment.rules.EnrolmentFilterCurricularYearPrecedence;
@@ -34,7 +31,7 @@ public class EnrolmentStrategyLEQ extends EnrolmentStrategy implements IEnrolmen
 		
 		IEnrolmentRule enrolmentRule = null;
 
-		if(this.isStudentAlowed()) {
+//		if(this.isStudentAlowed()) {
 
 			super.setEnrolmentContext(super.filterBySemester(super.getEnrolmentContext()));
 
@@ -58,7 +55,7 @@ public class EnrolmentStrategyLEQ extends EnrolmentStrategy implements IEnrolmen
 			// Esta regra para ser geral para todos os cursos TEM que ser a ultima a ser chamada
 			enrolmentRule = new EnrolmentFilterNACandNDRule();
 			super.setEnrolmentContext(enrolmentRule.apply(super.getEnrolmentContext()));
-		}
+//		}
 
 		return super.getEnrolmentContext();
 	}
@@ -103,15 +100,15 @@ public class EnrolmentStrategyLEQ extends EnrolmentStrategy implements IEnrolmen
 		return super.getEnrolmentContext();
 	}
 
-	private boolean isStudentAlowed() {
-		PersistentObjectOJBReader persistentObjectOJB = new PersistentObjectOJBReader();
-		persistentObjectOJB.beginTransaction();
-		Integer firstEnrolmentYear = persistentObjectOJB.readFirstEnrolmentYearOfStudentCurricularPlan(super.getEnrolmentContext().getStudentActiveCurricularPlan());
-		if(firstEnrolmentYear.intValue() < 1997) {
-			super.getEnrolmentContext().setFinalCurricularCoursesScopesSpanToBeEnrolled(new ArrayList());
-			return false;
-		} else {
-			return true;
-		}
-	}
+//	private boolean isStudentAlowed() {
+//		PersistentObjectOJBReader persistentObjectOJB = new PersistentObjectOJBReader();
+//		persistentObjectOJB.beginTransaction();
+//		Integer firstEnrolmentYear = persistentObjectOJB.readFirstEnrolmentYearOfStudentCurricularPlan(super.getEnrolmentContext().getStudentActiveCurricularPlan());
+//		if(firstEnrolmentYear.intValue() < 1997) {
+//			super.getEnrolmentContext().setFinalCurricularCoursesScopesSpanToBeEnrolled(new ArrayList());
+//			return false;
+//		} else {
+//			return true;
+//		}
+//	}
 }
