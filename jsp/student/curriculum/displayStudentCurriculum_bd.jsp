@@ -12,19 +12,23 @@
   <bean:define id="student" name="<%= SessionConstants.STUDENT_CURRICULAR_PLAN %>" scope="request" />
   
   
-  <bean:message key="label.person.name" />:
-  <bean:write name="student" property="infoStudent.infoPerson.nome"/>
-  </br>
-  
-  <bean:message key="label.degree.name" />:
-  <bean:write name="student" property="infoDegreeCurricularPlan.infoDegree.nome"/>
-  </br>
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+		<tr>
+			<td bgcolor="#FFFFFF" class="infoselected">
+				<bean:message key="label.person.name" />:
+				<bean:write name="student" property="infoStudent.infoPerson.nome"/>
+				<br/>
+				<bean:message key="label.degree.name" />:
+				<bean:write name="student" property="infoDegreeCurricularPlan.infoDegree.nome"/>
+				<br/>
+				<bean:message key="label.number" />:
+				<bean:write name="student" property="infoStudent.number"/>
+			</td>
+		</tr>
+	</table>
 
-  <bean:message key="label.number" />:
-  <bean:write name="student" property="infoStudent.number"/>
-  </br>
-  </br>
-  
+	<br/>
+	<br/>
   
   
   <logic:notEqual name="enrolmentNumber" value="0">
