@@ -65,6 +65,7 @@ public class testUpdateStudents
 				if (infoStudentTestQuestion.getResponse().intValue() != 0)
 				{
 					System.out.println("Aqui");
+					persistentStudentTestQuestion.lockWrite(studentTestQuestion);
 					if (infoStudentTestQuestion.getQuestion().getCorrectResponse().contains(studentTestQuestion.getResponse())) {
 						studentTestQuestion.setTestQuestionMark(new Double(studentTestQuestion.getTestQuestionValue().doubleValue()));
 						System.out.println("AQUI 2" + new Double(studentTestQuestion.getTestQuestionValue().doubleValue()));
@@ -78,7 +79,7 @@ public class testUpdateStudents
 									infoStudentTestQuestion.getTestQuestionValue().intValue()
 										* (java.lang.Math.pow(infoStudentTestQuestion.getQuestion().getOptionNumber().intValue() - 1, -1)))));
 					}
-					//persistentStudentTestQuestion.lockWrite(studentTestQuestion);
+					
 				}
 
 			}
