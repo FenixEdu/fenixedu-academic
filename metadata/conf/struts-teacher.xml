@@ -652,18 +652,19 @@
 		type="ServidorApresentacao.Action.teacher.WriteMarksAction"
 		>
        <forward name="marksList" path="/marksList.jsp" />
-       <forward name="viewExams" path="/viewExams.do?method=viewExams"/>       
+       <forward name="viewExams" path="/viewExams.do?method=viewExams"/>    
+       <forward name="loadMarks" path="/loadMarks.jsp" />   
 	</action>
 	
 	<action 
 		path="/loadMarks"
-		input="/marksList.do?method=loadFile"
+		input="/marksList.jsp"
 		name="marksForm"
 		parameter="method"
 		scope="request"
 		type="ServidorApresentacao.Action.teacher.WriteMarksAction"
 		  >
-       <forward name="success" path="/loadMarks.jsp" /> 
+       <forward name="success" path="/markList.jsp" /> 
        <forward name="viewExams" path="/viewExams.do?method=viewExams"/>  
             
 	</action>

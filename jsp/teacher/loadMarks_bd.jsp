@@ -2,12 +2,12 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-
-
+<span class="error"><html:errors/></span>
+ 
 <h2><bean:message key="title.loadMarks"/></h2>
 
-
- <html:form action="/writeMarks.do?method=loadFile" method="post" enctype="multipart/form-data">
+<%--method=post"--%>
+ <html:form action="/writeMarks.do?method=loadFile" enctype="multipart/form-data">
  
  	<%--<bean:define id="commonComponent" name="siteView" property="commonComponent" type="DataBeans.InfoSiteCommon"/>--%>
 	<html:file property="theFile" />
