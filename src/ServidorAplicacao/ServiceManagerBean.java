@@ -17,6 +17,7 @@ import pt.utl.ist.berserk.logic.serviceManager.exceptions.ExecutedFilterExceptio
 import pt.utl.ist.berserk.logic.serviceManager.exceptions.ExecutedServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.logging.ServiceExecutionLog;
+import ServidorAplicacao.logging.SystemInfo;
 import ServidorAplicacao.logging.UserExecutionLog;
 
 /**
@@ -319,6 +320,10 @@ public class ServiceManagerBean implements SessionBean, IServiceManagerWrapper
 	public Boolean userLoggingIsOn(IUserView id)
 	{
 		return new Boolean(userLoggingIsOn);
+	}
+
+	public SystemInfo getSystemInfo(IUserView id) {
+		return new SystemInfo();
 	}
 
 }

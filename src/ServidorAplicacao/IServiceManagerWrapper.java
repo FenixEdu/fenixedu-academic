@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.util.HashMap;
 
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.logging.SystemInfo;
 
 /**
  * The business interface for the service manager seassion bean.
@@ -44,5 +45,5 @@ public interface IServiceManagerWrapper {
   public void turnUserLoggingOff(IUserView id);
   public void clearServiceLogHistory(IUserView id);
   public void clearUserLogHistory(IUserView id);
-
+  public SystemInfo getSystemInfo(IUserView id);
 }

@@ -145,10 +145,14 @@
 	<!-- ========== SERVICE MONITORING MANIPULATION ========== -->
 	<definition name="df.page.monitor-services" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/monitorServices_bd.jsp" />
-	</definition>	
+	</definition>
 	<!-- ========== USER MONITORING MANIPULATION ========== -->
 	<definition name="df.page.monitor-users" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/monitorUsers_bd.jsp" />
+	</definition>
+	<!-- ========== SYSTEM MONITORING MANIPULATION ========== -->
+	<definition name="df.page.monitor-system" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/monitorSystem_bd.jsp" />
 	</definition>
 	
 	<!-- ========== TEACHERS MANAGEMENT ========== -->

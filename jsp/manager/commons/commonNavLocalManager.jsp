@@ -64,3 +64,9 @@
 		Monitorização de Utilizadores
 	</html:link>
 </strong></p>
+
+<p><strong>&raquo; 
+	<html:link page="/monitorSystem.do?method=monitor">
+		Informações do Sistema
+	</html:link>
+</strong></p>

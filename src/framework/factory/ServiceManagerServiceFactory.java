@@ -11,6 +11,7 @@ import java.util.Map;
 import ServidorAplicacao.IServiceManagerWrapper;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.logging.SystemInfo;
 import framework.delegate.DynamicServiceManagerEJBDelegate;
 
 /**
@@ -119,6 +120,23 @@ public class ServiceManagerServiceFactory
 		}
 
 		return (Boolean) execute(method, methodArgs);
+	}
+
+	public static SystemInfo getSystemInfo(IUserView userView) throws FenixServiceException
+	{
+		Object[] methodArgs = { userView };
+		Method method = null;
+		Method[] methods = IServiceManagerWrapper.class.getDeclaredMethods();
+		for (int i = 0; i < methods.length; i++)
+		{
+			if (methods[i].getName().equals("getSystemInfo")
+				&& (methods[i].getParameterTypes().length == 1))
+			{
+				method = methods[i];
+			}
+		}
+
+		return (SystemInfo) execute(method, methodArgs);
 	}
 
 	public static void turnServiceLoggingOn(IUserView userView) throws FenixServiceException
