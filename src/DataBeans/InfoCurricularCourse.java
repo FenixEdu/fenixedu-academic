@@ -45,7 +45,7 @@ public class InfoCurricularCourse implements Serializable {
 		result += ", nome =" + name;
 		result += ", sigla =" + code;
 		result += ", type =" + this.type;
-		result += "]";
+		result += "]\n";
 		return result;
 	}
 

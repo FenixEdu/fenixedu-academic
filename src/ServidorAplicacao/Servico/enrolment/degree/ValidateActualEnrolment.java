@@ -43,7 +43,6 @@ public class ValidateActualEnrolment implements IServico {
 	 */
 	public InfoEnrolmentContext run(InfoEnrolmentContext infoEnrolmentContext) {
 
-//	FIXME: David-Ricardo: ler o semestre do execution Period quando este tiver esta informacao
 		IEnrolmentStrategyFactory enrolmentStrategyFactory = EnrolmentStrategyFactory.getInstance();
 		IEnrolmentStrategy strategy = enrolmentStrategyFactory.getEnrolmentStrategyInstance(EnrolmentContextManager.getEnrolmentContext(infoEnrolmentContext));
 		return EnrolmentContextManager.getInfoEnrolmentContext(strategy.validateEnrolment());

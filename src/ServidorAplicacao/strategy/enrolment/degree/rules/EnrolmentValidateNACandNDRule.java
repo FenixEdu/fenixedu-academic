@@ -13,31 +13,36 @@ import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 
 public class EnrolmentValidateNACandNDRule implements IEnrolmentRule {
 
+	// FIXME : David-Ricardo: Todas estas constantes sao para parametrizar
+	private static final int MINCOURSES = 3;
+	private static final int MAXCOURSES = 7;
+	private static final int MAXNAC = 10;
+	private static final int MAX_INCREMENT_NAC = 2;
+	private static final int MIN_INCREMENT_NAC = 1;
+	
 	public EnrolmentContext apply(EnrolmentContext enrolmentContext) {
-		
-
+		 
 		int NAC = 0;
 
 		Iterator iterator = enrolmentContext.getActualEnrolment().iterator();
 		while (iterator.hasNext()) {
 			ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator.next();
 			if (enrolmentContext.getCurricularCourseAcumulatedEnrolments(curricularCourseScope.getCurricularCourse()).intValue() > 0) {
-				NAC = NAC + 2;
+				NAC = NAC + MAX_INCREMENT_NAC;
 			} else {
-				NAC = NAC + 1;
+				NAC = NAC + MIN_INCREMENT_NAC;
 			}
 		}
 
-		// FIXME: David-Ricardo: Parametrizar possibleND, possibleNAC e year
 		// FIXME: David-Ricardo: Aqui as strings devem ser keys do aplication resource.
-		// FIXME: David-Ricardo: A regra dos 3 nao se aplica aos trabalhadores estudantes
-		if (enrolmentContext.getActualEnrolment().size() < 3) {
+		// FIXME: David-Ricardo: A regra dos MINCOURSES nao se aplica aos trabalhadores estudantes
+		if (enrolmentContext.getActualEnrolment().size() < MINCOURSES) {
 			enrolmentContext.getEnrolmentValidationResult().setErrorMessage("Deve inscrever-se a pelo menos 3 disciplinas");
 		}
-		if (enrolmentContext.getActualEnrolment().size() > 7) {
+		if (enrolmentContext.getActualEnrolment().size() > MAXCOURSES) {
 			enrolmentContext.getEnrolmentValidationResult().setErrorMessage("Não se pode inscrever a mais de 7 disciplinas");
 		}
-		if (NAC > 10) {
+		if (NAC > MAXNAC) {
 			enrolmentContext.getEnrolmentValidationResult().setErrorMessage("Não se pode inscrever a mais de 10 disciplinas acumuladas");
 		}
 		return enrolmentContext;

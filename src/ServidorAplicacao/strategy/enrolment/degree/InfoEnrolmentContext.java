@@ -3,6 +3,7 @@ package ServidorAplicacao.strategy.enrolment.degree;
 import java.util.List;
 import java.util.Map;
 
+import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoDegree;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
@@ -21,15 +22,17 @@ public class InfoEnrolmentContext {
 	private Integer semester;
 	private EnrolmentValidationResult enrolmentValidationResult;
 	private InfoDegree chosenOptionalInfoDegree;
+	private InfoCurricularCourse infoChosenOptionalCurricularCourse;
 
 	private Map acumulatedEnrolments;
 
 	private List actualEnrolment;
 	private List infoFinalCurricularCoursesScopesSpanToBeEnrolled;
 	private List infoCurricularCoursesScopesEnroledByStudent;
-	
 	private List infoDegreesForOptionalCurricularCourses;
 	private List optionalInfoCurricularCoursesToChooseFromDegree;
+	private List infoCurricularCoursesDoneByStudent;
+	private List infoOptionalCurricularCoursesEquivalences;
 
 	public InfoEnrolmentContext() {
 		setAcumulatedEnrolments(null);
@@ -229,6 +232,51 @@ public class InfoEnrolmentContext {
 	 */
 	public void setOptionalInfoCurricularCoursesToChooseFromDegree(List optionalInfoCurricularCoursesToChooseFromDegree) {
 		this.optionalInfoCurricularCoursesToChooseFromDegree = optionalInfoCurricularCoursesToChooseFromDegree;
+	}
+
+	/**
+	 * @return List
+	 */
+	public List getInfoCurricularCoursesDoneByStudent() {
+		return infoCurricularCoursesDoneByStudent;
+	}
+
+	/**
+	 * Sets the infoCurricularCoursesDoneByStudent.
+	 * @param infoCurricularCoursesDoneByStudent The infoCurricularCoursesDoneByStudent to set
+	 */
+	public void setInfoCurricularCoursesDoneByStudent(List infoCurricularCoursesDoneByStudent) {
+		this.infoCurricularCoursesDoneByStudent = infoCurricularCoursesDoneByStudent;
+	}
+
+	/**
+	 * @return List
+	 */
+	public List getInfoOptionalCurricularCoursesEquivalences() {
+		return infoOptionalCurricularCoursesEquivalences;
+	}
+
+	/**
+	 * Sets the infoOptionalCurricularCoursesEquivalences.
+	 * @param infoOptionalCurricularCoursesEquivalences The infoOptionalCurricularCoursesEquivalences to set
+	 */
+	public void setInfoOptionalCurricularCoursesEquivalences(List infoOptionalCurricularCoursesEquivalences) {
+		this.infoOptionalCurricularCoursesEquivalences = infoOptionalCurricularCoursesEquivalences;
+	}
+
+	/**
+	 * @return InfoCurricularCourse
+	 */
+	public InfoCurricularCourse getInfoChosenOptionalCurricularCourse() {
+		return infoChosenOptionalCurricularCourse;
+	}
+
+	/**
+	 * Sets the infoChosenOptionalCurricularCourse.
+	 * @param infoChosenOptionalCurricularCourse The infoChosenOptionalCurricularCourse to set
+	 */
+	public void setInfoChosenOptionalCurricularCourse(InfoCurricularCourse infoChosenOptionalCurricularCourse) {
+		this.infoChosenOptionalCurricularCourse = infoChosenOptionalCurricularCourse;
 	}
 
 }

@@ -15,6 +15,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import Util.CurricularCourseType;
 import Util.DegreeCurricularPlanState;
 
 /**
@@ -24,8 +25,11 @@ import Util.DegreeCurricularPlanState;
  */
 public class EnrolmentFilterAllOptionalCoursesRule implements IEnrolmentRule {
 
-	public EnrolmentContext apply(EnrolmentContext enrolmentContext) {
+	// FIXME : David-Ricardo: Todas estas constantes sao para parametrizar
+	private static final int MIN_YEAR_OF_OPTIONAL_COURSES = 2;
 
+	public EnrolmentContext apply(EnrolmentContext enrolmentContext) {
+		
 		List degreeCurricularPlanList = enrolmentContext.getChosenOptionalDegree().getDegreeCurricularPlans();
 
 		List activeDegreeCurricularPlanList = (List) CollectionUtils.select(degreeCurricularPlanList, new Predicate() {
@@ -35,7 +39,7 @@ public class EnrolmentFilterAllOptionalCoursesRule implements IEnrolmentRule {
 			}
 		});
 
-		List finalCurricularCourseScopesList = new ArrayList();
+		List finalCurricularCourseList = new ArrayList();
 		if (activeDegreeCurricularPlanList != null && !activeDegreeCurricularPlanList.isEmpty()) {
 			List curricularCoursesFromDegreeList = new ArrayList();
 			Iterator iterator = activeDegreeCurricularPlanList.iterator();
@@ -59,17 +63,50 @@ public class EnrolmentFilterAllOptionalCoursesRule implements IEnrolmentRule {
 				curricularCourseScopesFromDegreeList.addAll(curricularCourse.getScopes());
 			}
 
+			List curricularCoursesEnroledByStudent = getDistinctCurricularCoursesOfScopes(enrolmentContext.getCurricularCoursesScopesEnroledByStudent());
+			List curricularCoursesFromFinalSpan = getDistinctCurricularCoursesOfScopes(enrolmentContext.getFinalCurricularCoursesScopesSpanToBeEnrolled());
+
 			Iterator iterator3 = curricularCourseScopesFromDegreeList.iterator();
 			while (iterator3.hasNext()) {
 				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator3.next();
-				if( (curricularCourseScope.getCurricularSemester().getSemester().equals(enrolmentContext.getSemester())) &&
-						(curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().intValue() > 2) ) {
-							finalCurricularCourseScopesList.add(curricularCourseScope);
+				if(
+						(curricularCourseScope.getCurricularSemester().getSemester().equals(enrolmentContext.getSemester())) &&
+						(curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().intValue() > MIN_YEAR_OF_OPTIONAL_COURSES) &&
+						(!finalCurricularCourseList.contains(curricularCourseScope.getCurricularCourse())) &&
+						(!curricularCourseScope.getCurricularCourse().getType().equals(new CurricularCourseType(CurricularCourseType.OPTIONAL_COURSE))) &&
+						(!curricularCourseScope.getCurricularCourse().getType().equals(new CurricularCourseType(CurricularCourseType.TFC_COURSE))) &&
+						(!enrolmentContext.getCurricularCoursesDoneByStudent().contains(curricularCourseScope.getCurricularCourse())) &&
+						(!curricularCoursesEnroledByStudent.contains(curricularCourseScope.getCurricularCourse())) &&
+						(!curricularCoursesFromFinalSpan.contains(curricularCourseScope.getCurricularCourse()))
+					) {
+						finalCurricularCourseList.add(curricularCourseScope.getCurricularCourse());
 				}
 			}
 		}
 		
-		enrolmentContext.setOptionalCurricularCoursesToChooseFromDegree(finalCurricularCourseScopesList);
+		
+		//		TODO: tirar ja inscritas em opcoes anterioes
+
+		enrolmentContext.setOptionalCurricularCoursesToChooseFromDegree(finalCurricularCourseList);
 		return enrolmentContext;
+	}
+
+	private List getDistinctCurricularCoursesOfScopes(List curricularCoursesScopes) {
+
+		List finalCurricularCoursesList = new ArrayList();
+
+		while(!curricularCoursesScopes.isEmpty()) {
+			final ICurricularCourseScope curricularCourseScope1 = (ICurricularCourseScope) curricularCoursesScopes.get(0);
+			List aux = (List) CollectionUtils.select(curricularCoursesScopes, new Predicate() {
+				public boolean evaluate(Object obj) {
+					ICurricularCourseScope curricularCourseScope2 = (ICurricularCourseScope) obj;
+					return curricularCourseScope2.getCurricularCourse().equals(curricularCourseScope1.getCurricularCourse());
+				}
+			});
+
+			curricularCoursesScopes.removeAll(aux);
+			finalCurricularCoursesList.add(( (ICurricularCourseScope) aux.get(0) ).getCurricularCourse());
+		}
+		return finalCurricularCoursesList;
 	}
 }

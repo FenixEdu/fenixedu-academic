@@ -57,7 +57,6 @@ public class ShowAvailableCurricularCourses implements IServico {
 			IPersistentStudent studentDAO = persistentSupport.getIPersistentStudent();
 			IStudent student = studentDAO.readByUsername(((UserView) userView).getUtilizador());
 
-			//			FIXME: David-Ricardo: ler o semestre do execution Period quando este tiver esta informacao
 			IEnrolmentStrategyFactory enrolmentStrategyFactory = EnrolmentStrategyFactory.getInstance();
 			IEnrolmentStrategy strategy = enrolmentStrategyFactory.getEnrolmentStrategyInstance(EnrolmentContextManager.initialEnrolmentContext(student, semester));
 

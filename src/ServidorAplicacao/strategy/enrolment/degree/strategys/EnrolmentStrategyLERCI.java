@@ -99,5 +99,4 @@ public class EnrolmentStrategyLERCI implements IEnrolmentStrategy {
 
 		return this.enrolmentContext;
 	}
-
 }

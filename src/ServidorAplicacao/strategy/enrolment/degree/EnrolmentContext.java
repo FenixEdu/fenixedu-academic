@@ -28,6 +28,7 @@ public final class EnrolmentContext {
 	private IStudentCurricularPlan studentActiveCurricularPlan;
 	private EnrolmentValidationResult enrolmentValidationResult;
 	private ICurso chosenOptionalDegree;
+	private ICurricularCourse chosenOptionalCurricularCourse;
 
 	private List curricularCoursesDoneByStudent;
 	private List actualEnrolment;
@@ -37,6 +38,7 @@ public final class EnrolmentContext {
 
 	private List degreesForOptionalCurricularCourses;
 	private List optionalCurricularCoursesToChooseFromDegree;
+	private List optionalCurricularCoursesEquivalences;
 
 	/**
 	 *  
@@ -255,6 +257,36 @@ public final class EnrolmentContext {
 	 */
 	public void setChosenOptionalDegree(ICurso chosenDegree) {
 		this.chosenOptionalDegree = chosenDegree;
+	}
+
+	/**
+	 * @return List
+	 */
+	public List getOptionalCurricularCoursesEquivalences() {
+		return optionalCurricularCoursesEquivalences;
+	}
+
+	/**
+	 * Sets the optionalCurricularCoursesEquivalences.
+	 * @param optionalCurricularCoursesEquivalences The optionalCurricularCoursesEquivalences to set
+	 */
+	public void setOptionalCurricularCoursesEquivalences(List optionalCurricularCoursesEquivalences) {
+		this.optionalCurricularCoursesEquivalences = optionalCurricularCoursesEquivalences;
+	}
+
+	/**
+	 * @return ICurricularCourse
+	 */
+	public ICurricularCourse getChosenOptionalCurricularCourse() {
+		return chosenOptionalCurricularCourse;
+	}
+
+	/**
+	 * Sets the chosenOptionalCurricularCourse.
+	 * @param chosenOptionalCurricularCourse The chosenOptionalCurricularCourse to set
+	 */
+	public void setChosenOptionalCurricularCourse(ICurricularCourse chosenOptionalCurricularCourse) {
+		this.chosenOptionalCurricularCourse = chosenOptionalCurricularCourse;
 	}
 
 }

@@ -17,6 +17,7 @@ import DataBeans.InfoCurricularSemester;
 import DataBeans.InfoCurricularYear;
 import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
+import DataBeans.InfoEnrolment;
 import DataBeans.InfoExam;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
@@ -56,6 +57,7 @@ import Dominio.Curso;
 import Dominio.CursoExecucao;
 import Dominio.DegreeCurricularPlan;
 import Dominio.DisciplinaExecucao;
+import Dominio.Enrolment;
 import Dominio.Exam;
 import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
@@ -78,6 +80,7 @@ import Dominio.ICurso;
 import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IDisciplinaExecucao;
+import Dominio.IEnrolment;
 import Dominio.IExam;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
@@ -1069,7 +1072,7 @@ public abstract class Cloner {
 			}
 		}
 		infoGuide.setInfoGuideEntries(infoGuideEntries);
-				
+
 		List infoGuideSituations = new ArrayList();
 		if (guide.getGuideSituations() != null) {
 			Iterator iterator = guide.getGuideSituations().iterator();
@@ -1077,7 +1080,7 @@ public abstract class Cloner {
 				infoGuideSituations.add(Cloner.copyIGuideSituation2InfoGuideSituation((IGuideSituation) iterator.next()));
 			}
 		}
-		infoGuide.setInfoGuideSituations(infoGuideSituations);		
+		infoGuide.setInfoGuideSituations(infoGuideSituations);
 		return infoGuide;
 	}
 
@@ -1113,7 +1116,7 @@ public abstract class Cloner {
 	public static InfoGuideSituation copyIGuideSituation2InfoGuideSituation(IGuideSituation guideSituation) {
 		InfoGuideSituation infoGuideSituation = new InfoGuideSituation();
 		copyObjectProperties(infoGuideSituation, guideSituation);
-//		infoGuideSituation.setInfoGuide(Cloner.copyIGuide2InfoGuide(guideSituation.getGuide()));
+		//		infoGuideSituation.setInfoGuide(Cloner.copyIGuide2InfoGuide(guideSituation.getGuide()));
 		return infoGuideSituation;
 	}
 
@@ -1288,11 +1291,10 @@ public abstract class Cloner {
 	}
 
 	/**
-		 * @author dcs-rjao
-		 * @param InfoCurricularCourseScope
-		 * @return ICurricularCourseScope
-		 */
-
+	 * @author dcs-rjao
+	 * @param InfoCurricularCourseScope
+	 * @return ICurricularCourseScope
+	 */
 	public static ICurricularCourseScope copyInfoCurricularCourseScope2ICurricularCourseScope(InfoCurricularCourseScope infoCurricularCourseScope) {
 
 		ICurricularCourseScope curricularCourseScope = new CurricularCourseScope();
@@ -1344,7 +1346,6 @@ public abstract class Cloner {
 	 * @param ICurricularSemester
 	 * @return InfoCurricularSemester
 	 */
-
 	public static InfoCurricularSemester copyCurricularSemester2InfoCurricularSemester(ICurricularSemester curricularSemester) {
 		//		List infoCurricularCoursesList = new ArrayList();
 		//		List curricularCoursesList = null;
@@ -1386,7 +1387,6 @@ public abstract class Cloner {
 	 * @param ICurricularYear
 	 * @return InfoCurricularYear
 	 */
-
 	public static InfoCurricularYear copyCurricularYear2InfoCurricularYear(ICurricularYear curricularYear) {
 		InfoCurricularYear infoCurricularYear = new InfoCurricularYear();
 		copyObjectProperties(infoCurricularYear, curricularYear);
@@ -1394,10 +1394,10 @@ public abstract class Cloner {
 	}
 
 	/**
-		 * @author dcs-rjao
-		 * @param copyInfoStudentCurricularPlan2IStudentCurricularPlan
-		 * @return IStudentCurricularPlan
-		 */
+	 * @author dcs-rjao
+	 * @param copyInfoStudentCurricularPlan2IStudentCurricularPlan
+	 * @return IStudentCurricularPlan
+	 */
 	public static IStudentCurricularPlan copyInfoStudentCurricularPlan2IStudentCurricularPlan(InfoStudentCurricularPlan infoStudentCurricularPlan) {
 
 		IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
@@ -1421,10 +1421,10 @@ public abstract class Cloner {
 	}
 
 	/**
-			 * @author dcs-rjao
-			 * @param copyIStudentCurricularPlan2InfoStudentCurricularPlan
-			 * @return InfoStudentCurricularPlan
-			 */
+	 * @author dcs-rjao
+	 * @param copyIStudentCurricularPlan2InfoStudentCurricularPlan
+	 * @return InfoStudentCurricularPlan
+	 */
 	public static InfoStudentCurricularPlan copyIStudentCurricularPlan2InfoStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan) {
 
 		InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan();
@@ -1446,5 +1446,50 @@ public abstract class Cloner {
 
 		return infoStudentCurricularPlan;
 	}
+
+	/**
+		* @author dcs-rjao
+		* @param copyIEnrolment2InfoEnrolment
+		* @return InfoEnrolment
+		*/
+	public static InfoEnrolment copyIEnrolment2InfoEnrolment(IEnrolment enrolment) {
+
+		InfoEnrolment infoEnrolment = new InfoEnrolment();
+
+		InfoStudentCurricularPlan infoStudentCurricularPlan =	Cloner.copyIStudentCurricularPlan2InfoStudentCurricularPlan(enrolment.getStudentCurricularPlan());
+		InfoCurricularCourse infoCurricularCourse = Cloner.copyCurricularCourse2InfoCurricularCourse(enrolment.getCurricularCourse());
+		InfoExecutionPeriod infoExecutionPeriod = Cloner.copyIExecutionPeriod2InfoExecutionPeriod(enrolment.getExecutionPeriod());
+
+		copyObjectProperties(infoEnrolment, enrolment);
+
+		infoEnrolment.setInfoCurricularCourse(infoCurricularCourse);
+		infoEnrolment.setInfoExecutionPeriod(infoExecutionPeriod);
+		infoEnrolment.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
+
+		return infoEnrolment;
+	}
+
+	/**
+		* @author dcs-rjao
+		* @param copyInfoEnrolment2IEnrolment
+		* @return IEnrolment
+		*/
+	public static IEnrolment copyInfoEnrolment2IEnrolment(InfoEnrolment infoEnrolment) {
+
+		IEnrolment enrolment = new Enrolment();
+
+		IStudentCurricularPlan studentCurricularPlan =	Cloner.copyInfoStudentCurricularPlan2IStudentCurricularPlan(infoEnrolment.getInfoStudentCurricularPlan());
+		ICurricularCourse curricularCourse = Cloner.copyInfoCurricularCourse2CurricularCourse(infoEnrolment.getInfoCurricularCourse());
+		IExecutionPeriod executionPeriod = Cloner.copyInfoExecutionPeriod2IExecutionPeriod(infoEnrolment.getInfoExecutionPeriod());
+
+		copyObjectProperties(enrolment, infoEnrolment);
+
+		enrolment.setCurricularCourse(curricularCourse);
+		enrolment.setExecutionPeriod(executionPeriod);
+		enrolment.setStudentCurricularPlan(studentCurricularPlan);
+
+		return enrolment;
+	}
+
 	//	---------------------------------------------- DCS-RJAO -----------------------------------------------
 }
