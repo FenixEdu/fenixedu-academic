@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 <bean:define id="hoursPattern" value="HH : mm"/>
@@ -19,37 +20,14 @@
 	<b><bean:message key="label.execution-period" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b> <bean:write name="infoExecutionPeriod" property="description"/>
 </p>
 
-<u><strong><bean:message key="label.credits.legenda" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></strong></u>:
-<p>
-<bean:message key="label.credits.lessons.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.lessons.code.explanation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,&nbsp;
-<bean:message key="label.credits.supportLessons.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.supportLessons.code.explanation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,&nbsp;
-<bean:message key="label.credits.degreeFinalProjectStudents.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.degreeFinalProjectStudents.code.explanation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,&nbsp;
-<bean:message key="label.credits.institutionWorkTime.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.institutionWorkTime.code.explanation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>.
-</p>
+
+<tiles:insert definition="creditsLegend"/>
+
 
 <b><bean:message key="label.credits.resume" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b>:
-	<logic:present name="infoCredits">
-			<b>
-				<bean:write name="infoCredits" property="lessonsFormatted"/>						
-			</b>
-			<bean:message key="label.credits.lessons.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,
-			<b>	
-				<bean:write name="infoCredits" property="supportLessonsFormatted"/>						
-			</b>							
-			<bean:message key="label.credits.supportLessons.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,
-	
-			<b>
-				<bean:write name="infoCredits" property="degreeFinalProjectStudentsFormatted"/>						
-			</b>							
-			<bean:message key="label.credits.degreeFinalProjectStudents.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,
-			<b>							
-				<bean:write name="infoCredits" property="institutionWorkTimeFormatted"/>						
-			</b>							
-			<bean:message key="label.credits.institutionWorkTime.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
-	</logic:present>
-	<logic:notPresent name="infoCredits">
-		--
-	</logic:notPresent>	
+<tiles:insert definition="creditsResume">
+	<tiles:put name="infoCredits" beanName="infoCredits"/>
+</tiles:insert>
 <br/>
 <br/>
 <%-- ========================== PROFESSOR SHIPS ========================================== --%>
@@ -344,6 +322,53 @@
 		</tr>
 	</logic:empty>
 </table>	
+
+<%-- ================================================================================== --%>
+<%-- ========================== Other Type Credit Lines =============================== --%>
+<h2>
+<span class="emphasis-box">4</span> <bean:message key="label.teacherCreditsSheet.otherTypeCreditLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+</h2>
+
+<bean:define id="otherCreditLines" name="teacherCreditsSheet" property="infoTeacherOtherTypeCreditLineList"/>
+
+<table width="100%" cellspacing="1" cellpadding="1" style="margin-bottom:0;margin-top:0">
+	<tr>
+		<td colspan="2" class="listClasses-subheader">
+				<bean:message key="label.teacherCreditsSheet.otherTypeCreditLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+				<logic:present role="role.department.credits.manager">
+					<bean:define id="teacherNumber" name="infoTeacher" property="teacherNumber"/>
+					(<html:link page='<%= "/teacherSearchForOtherTypeCreditLine.do?page=0&amp;method=doSearch&amp;teacherNumber=" + teacherNumber + "&amp;executionPeriodId=" + executionPeriodId %>'>
+						<bean:message key="link.teacherCreditsTeacher.shiftProfessorship.management" />
+					</html:link>)
+				</logic:present>
+		</td>
+	</tr>
+
+	<logic:notEmpty name="otherCreditLines">
+		<tr>
+			<td class="listClasses-header" width="10%"><bean:message key="label.otherTypeCreditLine.credits" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td>
+			<td class="listClasses-header"> <bean:message key="label.otherTypeCreditLine.reason" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td>
+		</tr>
+		<logic:iterate id="creditLine" name="otherCreditLines" >
+			<tr>
+				<td class="listClasses">
+					<bean:write name="creditLine" property="credits"/>
+				</td>
+				<td class="listClasses">
+					<pre><bean:write name="creditLine" property="reason"/></pre>
+				</td>
+			</tr>
+		</logic:iterate>
+	</logic:notEmpty>
+	<logic:empty name="otherCreditLines">
+		<tr>
+			<td colspan="7" class="listClasses"> 
+				<i><bean:message key="message.otherTypeCreditLine.noRegists" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></i>						
+			</td>
+		</tr>
+	</logic:empty>
+</table>								
+
 
 <%-- ================================================================================== --%>
 
