@@ -23,12 +23,12 @@
 		column="CODE"
 		jdbc-type="VARCHAR"
 	/>
-	<collection-descriptor
+<!--	<collection-descriptor
 			name="disciplinasAssociadas"
 			element-class-ref="Dominio.DisciplinaDepartamento"
 			proxy="true">
 		<inverse-foreignkey field-ref="chaveDepartamento"/>
-	</collection-descriptor>    
+	</collection-descriptor>     -->
 </class-descriptor>   
 
 <!-- *************************************************************************************************************** -->
