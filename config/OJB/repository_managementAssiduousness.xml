@@ -107,7 +107,7 @@
 	    jdbc-type="INTEGER"
 	/>
   	<field-descriptor  
-		name="diurnnalFirstHour" 
+		name="diurnalFirstHour" 
 		column="DIURNAL_FIRST_HOUR" 
 		jdbc-type="TIME"
     	conversion="ServidorPersistente.Conversores.Time2DateFieldConversion"
@@ -141,7 +141,7 @@
   		column="MEAL_SUBSIDY_AUTHORIZED" 
   		jdbc-type="BIT"/>  
 	<field-descriptor
-  		name="diurnnalFirstHourAuthorized" 
+  		name="diurnalFirstHourAuthorized" 
   		column="DIURNAL_FIRST_HOUR_AUTHORIZED" 
   		jdbc-type="BIT"/>  
 	<field-descriptor
@@ -290,7 +290,7 @@
 		jdbc-type="INTEGER"
 	/>  
 	<field-descriptor
-	   	name="costCenterMoneykKey"
+	   	name="costCenterMoneyKey"
 	   	column="KEY_COST_CENTER_MONEY"
 		jdbc-type="INTEGER"
 	/>
