@@ -164,7 +164,7 @@ public class ReadCurriculumServiceTest extends TestCaseReadServices {
 
 		InfoExecutionCourse infoExecutionCourse =
 			Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
-		return new InfoCurriculum("bla","bla","bla",infoExecutionCourse);
+		return new InfoCurriculum("bla","bla","bla",null,null,null,infoExecutionCourse);
 
 	}
 
