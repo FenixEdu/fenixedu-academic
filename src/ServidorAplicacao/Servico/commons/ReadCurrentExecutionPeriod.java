@@ -13,12 +13,12 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  *   14/Fev/2003
  *   @author     jpvl
  */
-public class ReadActualExecutionPeriod implements IServico {
-	private static ReadActualExecutionPeriod service = new ReadActualExecutionPeriod();
+public class ReadCurrentExecutionPeriod implements IServico {
+	private static ReadCurrentExecutionPeriod service = new ReadCurrentExecutionPeriod();
 	/**
 	 * The singleton access method of this class.
 	 **/
-	public static ReadActualExecutionPeriod getService() {
+	public static ReadCurrentExecutionPeriod getService() {
 	  return service;
 	}
 
@@ -26,7 +26,7 @@ public class ReadActualExecutionPeriod implements IServico {
 	 * @see ServidorAplicacao.IServico#getNome()
 	 */
 	public String getNome() {
-		return "ReadActualExecutionPeriod";
+		return "ReadCurrentExecutionPeriod";
 	}
 	
 	public InfoExecutionPeriod run() {

@@ -14,12 +14,12 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  *         Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class ReadActualExecutionYear implements IServico {
-	private static ReadActualExecutionYear service = new ReadActualExecutionYear();
+public class ReadCurrentExecutionYear implements IServico {
+	private static ReadCurrentExecutionYear service = new ReadCurrentExecutionYear();
 	/**
 	 * The singleton access method of this class.
 	 **/
-	public static ReadActualExecutionYear getService() {
+	public static ReadCurrentExecutionYear getService() {
 	  return service;
 	}
 
@@ -27,7 +27,7 @@ public class ReadActualExecutionYear implements IServico {
 	 * @see ServidorAplicacao.IServico#getNome()
 	 */
 	public String getNome() {
-		return "ReadActualExecutionYear";
+		return "ReadCurrentExecutionYear";
 	}
 	
 	public InfoExecutionYear run() {
