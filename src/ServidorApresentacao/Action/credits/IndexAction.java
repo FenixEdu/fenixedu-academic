@@ -4,17 +4,20 @@
  */
 package ServidorApresentacao.Action.credits;
 
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import DataBeans.DepartmentCreditsView;
+import DataBeans.DepartmentTeachersDTO;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
@@ -35,46 +38,39 @@ public class IndexAction extends Action {
 		HttpServletResponse response)
 		throws Exception {
 		IUserView userView = SessionUtils.getUserView(request);
-
+		ActionForward actionForward = null;
 		if (userView.hasRoleType(RoleType.CREDITS_MANAGER)) {
-			return mapping.findForward("creditsManager");
+			actionForward = mapping.findForward("creditsManager");
 		} else if (userView.hasRoleType(RoleType.CREDITS_MANAGER_DEPARTMENT)) {
-			ActionForward actionForward = new ActionForward();
-			ActionForward mappingForward =
-				mapping.findForward("creditsManagerDepartment");
-			actionForward.setContextRelative(
-				mappingForward.getContextRelative());
-			actionForward.setRedirect(mappingForward.getRedirect());
-
-			
 			Object args[] = { userView.getUtilizador()};
-			DepartmentCreditsView departmentCreditsView =
-				(DepartmentCreditsView) ServiceUtils.executeService(
+			List  departmentList =
+				(List) ServiceUtils.executeService(
 					userView,
 					"ReadUserManageableDepartments",
 					args);
 					
-			List manageableDeparments =
-				departmentCreditsView.getDepartmentList();
-			if (manageableDeparments == null
-				|| manageableDeparments.isEmpty()) {
+			if (departmentList == null
+				|| departmentList.isEmpty()) {
 				response.sendError(HttpServletResponse.SC_FORBIDDEN);
 				return null;
-			} else if (manageableDeparments.size() == 1) {
-				String departmentCode = "";
-				actionForward.setPath(
-					mappingForward.getPath()
-						+ "&amp;departmentCode="
-						+ departmentCode);
 			} else {
-				request.setAttribute("departmentCreditsView", departmentCreditsView);
+				sortList(departmentList);
+				request.setAttribute("departmentTeachersDTOList", departmentList);
 				actionForward =
-					mapping.findForward("departament.teachers.list");
+					mapping.findForward("creditsManagerDepartment");
 			}
 			return actionForward;
-		} else {
-			response.sendError(HttpServletResponse.SC_FORBIDDEN);
-			return null;
+		}
+		return actionForward;
+	}
+
+	private void sortList(List departmentList) {
+		Collections.sort(departmentList, new BeanComparator("infoDepartment.name"));
+		
+		Iterator departmentIterator = departmentList.iterator();
+		while (departmentIterator.hasNext()) {		
+			DepartmentTeachersDTO departmentTeachersDTO	= (DepartmentTeachersDTO) departmentIterator.next();
+			Collections.sort(departmentTeachersDTO.getInfoTeacherList(), new BeanComparator("teacherNumber"));
 		}
 	}
 
