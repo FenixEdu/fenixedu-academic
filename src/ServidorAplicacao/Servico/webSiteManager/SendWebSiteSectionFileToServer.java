@@ -3,6 +3,7 @@ package ServidorAplicacao.Servico.webSiteManager;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -129,11 +130,18 @@ public class SendWebSiteSectionFileToServer implements IServico {
 				return Boolean.FALSE;
 			}
 
-			// send file to server by ftp
-			Ftp.enviarFicheiro(
-				"/IstFtpServerConfig.properties",
-				infoWebSiteSection.getName() + "-excerpts.html",
-				infoWebSiteSection.getName() + "_principal/");
+			try
+            {
+                // send file to server by ftp
+                Ftp.enviarFicheiro(
+                	"/IstFtpServerConfig.properties",
+                	infoWebSiteSection.getName() + "-excerpts.html",
+                	infoWebSiteSection.getName() + "_principal/");
+            }
+            catch (IOException e1)
+            {
+                throw new FenixServiceException();
+            }
 			// delete created file
 			excerpts.delete();
 
@@ -281,7 +289,14 @@ public class SendWebSiteSectionFileToServer implements IServico {
 				} else {
 					fileForFTP = infoWebSiteSection.getName() + "-" + thisMonthString.toString() + ".html";
 				}
-				Ftp.enviarFicheiro("/IstFtpServerConfig.properties", fileForFTP, infoWebSiteSection.getName() + "_principal/");
+				try
+                {
+                    Ftp.enviarFicheiro("/IstFtpServerConfig.properties", fileForFTP, infoWebSiteSection.getName() + "_principal/");
+                }
+                catch (IOException e2)
+                {
+                   throw new FenixServiceException(e2);
+                }
 				// delete created file
 				itemsFileToTransfer.delete();
 			}
