@@ -44,13 +44,6 @@ public class TeacherInstitutionWorkTime extends DomainObject implements ITeacher
         super();
     }
 
-    /**
-     * @param idInternal
-     */
-    public TeacherInstitutionWorkTime(Integer idInternal) {
-        super(idInternal);
-    }
-
     /*
      * (non-Javadoc)
      * 

@@ -2278,17 +2278,28 @@ public abstract class Cloner {
                 InfoCaseStudyChoice element = (InfoCaseStudyChoice) iter.next();
                 ICaseStudyChoice caseStudy = new CaseStudyChoice();
                 caseStudy.setOrder(element.getOrder());
-                caseStudy.setCaseStudy(new CaseStudy(element.getCaseStudy().getIdInternal()));
+                caseStudy.setCaseStudy(new CaseStudy());
+                caseStudy.getCaseStudy().setIdInternal(element.getCaseStudy().getIdInternal());
                 caseStudyChoices.add(caseStudy);
             }
 
             candidacy.setCaseStudyChoices(caseStudyChoices);
-            candidacy.setCurricularCourse(new CurricularCourse(infoCandidacy.getCurricularCourse()
-                    .getIdInternal()));
+            
+            candidacy.setCurricularCourse(new CurricularCourse());
+            candidacy.getCurricularCourse().setIdInternal(infoCandidacy.getCurricularCourse()
+                    .getIdInternal());
+            
             candidacy.setStudent(new Student(infoCandidacy.getInfoStudent().getIdInternal()));
-            candidacy.setTheme(new Theme(infoCandidacy.getTheme().getIdInternal()));
-            candidacy.setModality(new Modality(infoCandidacy.getInfoModality().getIdInternal()));
-            candidacy.setSeminary(new Seminary(infoCandidacy.getInfoSeminary().getIdInternal()));
+            
+            candidacy.setTheme(new Theme());
+            candidacy.getTheme().setIdInternal(infoCandidacy.getTheme().getIdInternal());
+            
+            candidacy.setModality(new Modality());
+            candidacy.getModality().setIdInternal(infoCandidacy.getInfoModality().getIdInternal());
+            
+            candidacy.setSeminary(new Seminary());
+            candidacy.getSeminary().setIdInternal(infoCandidacy.getInfoSeminary().getIdInternal());
+            
             candidacy.setIdInternal(infoCandidacy.getIdInternal());
         }
         return candidacy;

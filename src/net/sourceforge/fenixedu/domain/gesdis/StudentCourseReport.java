@@ -38,13 +38,6 @@ public class StudentCourseReport extends DomainObject implements IStudentCourseR
     }
 
     /**
-     * @param idInternal
-     */
-    public StudentCourseReport(Integer idInternal) {
-        super(idInternal);
-    }
-
-    /**
      * @return Returns the curricularCourse.
      */
     public ICurricularCourse getCurricularCourse() {

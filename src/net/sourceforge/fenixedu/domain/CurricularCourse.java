@@ -81,10 +81,6 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
     public CurricularCourse() {
     }
 
-    public CurricularCourse(Integer idInternal) {
-        super(idInternal);
-    }
-
     public boolean equals(Object obj) {
         if (obj instanceof ICurricularCourse) {
             final ICurricularCourse curricularCourse = (ICurricularCourse) obj;

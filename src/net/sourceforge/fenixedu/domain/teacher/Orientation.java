@@ -37,14 +37,6 @@ public class Orientation extends DomainObject implements IOrientation {
     }
 
     /**
-     * @param orientationId
-     */
-    public Orientation(Integer idInternal) {
-        super(idInternal);
-
-    }
-
-    /**
      * @return Returns the description.
      */
     public String getDescription() {

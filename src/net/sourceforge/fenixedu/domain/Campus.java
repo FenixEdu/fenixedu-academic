@@ -10,10 +10,6 @@ public class Campus extends DomainObject implements ICampus {
         super();
     }
 
-    public Campus(Integer campusId) {
-        super(campusId);
-    }
-
     public String getName() {
         return name;
     }

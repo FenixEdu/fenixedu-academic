@@ -37,13 +37,6 @@ public class TeacherDegreeFinalProjectStudent extends DomainObject implements
     public TeacherDegreeFinalProjectStudent() {
     }
 
-    /**
-     * @param teacherDegreeFinalProjectStudentId
-     */
-    public TeacherDegreeFinalProjectStudent(Integer teacherDegreeFinalProjectStudentId) {
-        super(teacherDegreeFinalProjectStudentId);
-    }
-
     /*
      * (non-Javadoc)
      * 

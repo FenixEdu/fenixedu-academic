@@ -32,13 +32,6 @@ public class ServiceProviderRegime extends DomainObject implements IServiceProvi
     }
 
     /**
-     * @param serviceProviderRegimeId
-     */
-    public ServiceProviderRegime(Integer idInternal) {
-        super(idInternal);
-    }
-
-    /**
      * @return Returns the keyTeacher.
      */
     public Integer getKeyTeacher() {

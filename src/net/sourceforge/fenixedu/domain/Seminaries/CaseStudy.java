@@ -34,10 +34,6 @@ public class CaseStudy extends DomainObject implements ICaseStudy {
     public CaseStudy() {
     }
 
-    public CaseStudy(Integer idInternal) {
-        super(idInternal);
-    }
-
     public CaseStudy(String name, String description, String code) {
         this.setName(name);
         this.setDescription(description);

@@ -31,13 +31,6 @@ public class GrantInsurance extends DomainObject implements IGrantInsurance {
     }
 
     /**
-     * @param idInternal
-     */
-    public GrantInsurance(Integer idInternal) {
-        super(idInternal);
-    }
-
-    /**
      * @return Returns the grantContract.
      */
     public IGrantContract getGrantContract() {

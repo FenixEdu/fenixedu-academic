@@ -26,10 +26,6 @@ public class TestScope extends DomainObject implements ITestScope {
         setKeyClass(object.getIdInternal());
     }
 
-    public TestScope(Integer idInternal) {
-        super(idInternal);
-    }
-
     public IDomainObject getDomainObject() {
         return domainObject;
     }

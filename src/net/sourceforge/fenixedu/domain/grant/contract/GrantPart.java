@@ -30,13 +30,6 @@ public class GrantPart extends DomainObject implements IGrantPart {
     }
 
     /**
-     * @param idInternal
-     */
-    public GrantPart(Integer idInternal) {
-        super(idInternal);
-    }
-
-    /**
      * @return Returns the grantPaymentEntity.
      */
     public IGrantPaymentEntity getGrantPaymentEntity() {

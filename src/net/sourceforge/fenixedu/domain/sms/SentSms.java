@@ -33,13 +33,6 @@ public class SentSms extends DomainObject implements ISentSms {
     }
 
     /**
-     * @param idInternal
-     */
-    public SentSms(Integer idInternal) {
-        super(idInternal);
-    }
-
-    /**
      * @return Returns the deliveryDate.
      */
     public Date getDeliveryDate() {

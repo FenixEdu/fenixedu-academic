@@ -34,14 +34,6 @@ public abstract class CurricularCourseGroup extends DomainObject {
         this.ojbConcreteClass = this.getClass().getName();
     }
 
-    /**
-     * @param idInternal
-     */
-    public CurricularCourseGroup(Integer idInternal) {
-        super(idInternal);
-        this.ojbConcreteClass = this.getClass().getName();
-    }
-
     public Integer getKeyBranch() {
         return keyBranch;
     }

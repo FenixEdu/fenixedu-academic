@@ -23,10 +23,6 @@ public class Modality extends DomainObject implements IModality {
     public Modality() {
     }
 
-    public Modality(Integer idInternal) {
-        super(idInternal);
-    }
-
     public Modality(String name, String description) {
         this.setDescription(description);
         this.setName(name);

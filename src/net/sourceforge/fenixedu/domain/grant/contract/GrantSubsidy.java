@@ -37,13 +37,6 @@ public class GrantSubsidy extends DomainObject implements IGrantSubsidy {
     }
 
     /**
-     * @param idInternal
-     */
-    public GrantSubsidy(Integer idInternal) {
-        super(idInternal);
-    }
-
-    /**
      * @return Returns the grantContract.
      */
     public IGrantContract getGrantContract() {

@@ -28,10 +28,6 @@ public class Theme extends DomainObject implements ITheme {
     public Theme() {
     }
 
-    public Theme(Integer idInternal) {
-        super(idInternal);
-    }
-
     public Theme(String name, String description) {
         this.setName(name);
         this.setDescription(description);

@@ -22,13 +22,6 @@ public abstract class CreditLine extends DomainObject implements ICreditLine, IC
     private Integer keyTeacher;
 
     /**
-     * @param idInternal
-     */
-    public CreditLine(Integer idInternal) {
-        super(idInternal);
-    }
-
-    /**
      *  
      */
     public CreditLine() {

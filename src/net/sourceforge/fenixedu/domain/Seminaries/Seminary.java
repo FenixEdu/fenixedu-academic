@@ -56,13 +56,6 @@ public class Seminary extends DomainObject implements ISeminary {
     }
 
     /**
-     * @param idInternal
-     */
-    public Seminary(Integer idInternal) {
-        super(idInternal);
-    }
-
-    /**
      * @return
      */
     public String getDescription() {

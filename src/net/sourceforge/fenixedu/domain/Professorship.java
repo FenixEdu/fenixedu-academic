@@ -49,13 +49,6 @@ public class Professorship extends DomainObject implements IProfessorship, ICred
     }
 
     /**
-     * @param integer
-     */
-    public Professorship(Integer idInternal) {
-        super(idInternal);
-    }
-
-    /**
      * @return IDisciplinaExecucao
      */
     public IExecutionCourse getExecutionCourse() {

@@ -28,13 +28,6 @@ public class Department extends DomainObject implements IDepartment {
         setCode(code);
     }
 
-    /**
-     * @param departmentId
-     */
-    public Department(Integer departmentId) {
-        super(departmentId);
-    }
-
     public boolean equals(Object obj) {
         boolean resultado = false;
         if (obj instanceof IDepartment) {

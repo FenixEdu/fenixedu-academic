@@ -23,13 +23,6 @@ public class OtherTypeCreditLine extends CreditLine implements IOtherTypeCreditL
     }
 
     /**
-     * @param id
-     */
-    public OtherTypeCreditLine(Integer idInternal) {
-        super(idInternal);
-    }
-
-    /**
      * @return Returns the executionPeriod.
      */
     public IExecutionPeriod getExecutionPeriod() {

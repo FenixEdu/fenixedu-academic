@@ -38,13 +38,6 @@ public class ExecutionYear extends DomainObject implements IExecutionYear {
     }
 
     /**
-     * @param executionYearId
-     */
-    public ExecutionYear(Integer executionYearId) {
-        super(executionYearId);
-    }
-
-    /**
      * Returns the year.
      * 
      * @return String

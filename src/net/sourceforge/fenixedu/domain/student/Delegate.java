@@ -55,13 +55,6 @@ public class Delegate extends DomainObject implements IDelegate {
     }
 
     /**
-     * @param idInternal
-     */
-    public Delegate(Integer idInternal) {
-        super(idInternal);
-    }
-
-    /**
      * @return Returns the degree.
      */
     public IDegree getDegree() {
