@@ -383,7 +383,6 @@
             userid="root"
             password=""
             encoding="${encoding}"
-            src="${sql}/test-data_GesDis.sql"
             src="${sql}/test-data_sop.sql"
         >
             <classpath>
