@@ -21,6 +21,9 @@
 		<form-property name="generalObjectives" type="java.lang.String" />
 		<form-property name="operacionalObjectives" type="java.lang.String" />
 		<form-property name="program" type="java.lang.String" />
+		<form-property name="generalObjectivesEn" type="java.lang.String" />
+		<form-property name="operacionalObjectivesEn" type="java.lang.String" />
+		<form-property name="programEn" type="java.lang.String" />
 		<form-property name="page" type="java.lang.Integer" initial="0"/>
 	</form-bean>
 	
@@ -28,12 +31,15 @@
     		type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">		
     		<form-property name="generalObjectives" type="java.lang.String" />
     		<form-property name="operacionalObjectives" type="java.lang.String" />
+    		<form-property name="generalObjectivesEn" type="java.lang.String" />
+    		<form-property name="operacionalObjectivesEn" type="java.lang.String" />
     		<form-property name="page" type="java.lang.Integer" initial="0"/>
     	</form-bean>
     		
     <form-bean name="executionCourseProgramForm"
 		type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
 		<form-property name="program" type="java.lang.String" />
+		<form-property name="programEn" type="java.lang.String" />
 		<form-property name="page" type="java.lang.Integer" initial="0"/>
 	</form-bean>
 
