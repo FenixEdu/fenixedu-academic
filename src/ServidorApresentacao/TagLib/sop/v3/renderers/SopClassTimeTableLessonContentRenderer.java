@@ -1,6 +1,9 @@
 package ServidorApresentacao.TagLib.sop.v3.renderers;
 
+import java.util.List;
+
 import DataBeans.InfoLesson;
+import DataBeans.InfoShift;
 import ServidorApresentacao.TagLib.sop.v3.LessonSlot;
 import ServidorApresentacao.TagLib.sop.v3.LessonSlotContentRenderer;
 
@@ -18,9 +21,14 @@ public class SopClassTimeTableLessonContentRenderer
 		InfoLesson lesson = lessonSlot.getInfoLessonWrapper().getInfoLesson();
 		
 		strBuffer.append(lesson.getInfoDisciplinaExecucao().getSigla());
-		strBuffer.append("&nbsp;(").append(lesson.getTipo()).append(")&nbsp;");
+		
+		List infoShiftList = lesson.getInfoShiftList();
+		for (int index = 0; index < infoShiftList.size(); index++) {
+			InfoShift infoShift = (InfoShift) infoShiftList.get(index);
+			strBuffer.append("&nbsp;(").append("<a href='viewClassesWithShift.do?name=").append(infoShift.getNome()).append("&amp;ecCode=").append(infoShift.getInfoDisciplinaExecucao().getSigla()).append("'>").append(lesson.getTipo()).append("</a>").append(")&nbsp;");	
+		}
+		
 		strBuffer
-//			.append(" <a class='timetable' href='siteViewer.do?method=roomViewer&amp;roomName=")
 			.append(" <a class='timetable' href='pesquisarSala.do?name=")
 			.append(lesson.getInfoSala().getNome())
 			.append("'>")
