@@ -183,11 +183,14 @@ public abstract class Cloner
 
 	public static InfoObject get(IDomainObject domainObject)
 	{
-		String key = InfoObjectCache.getKey(domainObject);
-		InfoObject infoObject = InfoObjectCache.lookup(key);
-		if (infoObject == null
-			|| infoObject.getAckOptLock().intValue() < domainObject.getAckOptLock().intValue())
-		{
+        if (domainObject == null) {
+            return null;
+        }
+		//String key = InfoObjectCache.getKey(domainObject);
+		InfoObject infoObject;// = InfoObjectCache.lookup(key);
+		//if (infoObject == null
+		//	|| infoObject.getAckOptLock().intValue() < domainObject.getAckOptLock().intValue())
+		//{
 			Class[] parameters = { domainObject.getClass()};
 			Object[] args = { domainObject };
 			try
@@ -215,8 +218,8 @@ public abstract class Cloner
 			{
 				throw new RuntimeException(e);
 			}
-			InfoObjectCache.cache(key, infoObject);
-		}
+			//InfoObjectCache.cache(key, infoObject);
+		//}
 		return infoObject;
 	}
 
