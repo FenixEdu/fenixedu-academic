@@ -3,10 +3,8 @@ package ServidorAplicacao.Servico.masterDegree.administrativeOffice.marksManagem
 import java.util.ArrayList;
 import java.util.List;
 
-import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
-import DataBeans.InfoPerson;
 import DataBeans.InfoSiteEnrolmentEvaluation;
 import DataBeans.InfoTeacher;
 import DataBeans.util.Cloner;
@@ -19,12 +17,9 @@ import Dominio.ITeacher;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentCurricularCourseScope;
-import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentEnrolmentEvaluation;
 import ServidorPersistente.IPersistentTeacher;
-import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -66,15 +61,9 @@ public class ReadStudentEnrolmentEvaluation implements IServico {
 		List infoEnrolmentEvaluations = new ArrayList();
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 			IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp.getIPersistentEnrolmentEvaluation();
-			IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
 			IPersistentCurricularCourseScope persistentCurricularCourseScope = sp.getIPersistentCurricularCourseScope();
 			IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-			IPessoaPersistente pessoaPersistente = sp.getIPessoaPersistente();
-
-			
-			
 			enrolmentEvaluation.setIdInternal(studentEvaluationCode);
 			enrolmentEvaluation = (IEnrolmentEvaluation) persistentEnrolmentEvaluation.readByOId(enrolmentEvaluation,false);
 //			get curricularCourseScope for enrolmentEvaluation
@@ -82,15 +71,11 @@ public class ReadStudentEnrolmentEvaluation implements IServico {
 			curricularCourseScope.setIdInternal(enrolmentEvaluation.getEnrolment().getCurricularCourseScope().getIdInternal());
 			curricularCourseScope =	(ICurricularCourseScope) persistentCurricularCourseScope.readByOId(curricularCourseScope, false);
 
-			//			this becomes necessary to use criteria
-			InfoCurricularCourseScope infoCurricularCourseScope =
-				Cloner.copyICurricularCourseScope2InfoCurricularCourseScope(curricularCourseScope);
-//			ICurricularCourseScope curricularCourseScopeForCriteria =
+			//			ICurricularCourseScope curricularCourseScopeForCriteria =
 //				Cloner.copyInfoCurricularCourseScope2ICurricularCourseScope(infoCurricularCourseScope);
 			infoEnrolment = Cloner.copyIEnrolment2InfoEnrolment(enrolmentEvaluation.getEnrolment());
 	
 			IPessoa person = (IPessoa) enrolmentEvaluation.getPersonResponsibleForGrade();
-			InfoPerson person2 = Cloner.copyIPerson2InfoPerson(person);
 			ITeacher teacher = persistentTeacher.readTeacherByUsername(person.getUsername());
 			infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
 

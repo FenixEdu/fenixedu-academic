@@ -43,7 +43,6 @@ import ServidorPersistente.IPersistentCandidateSituation;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.SituationName;
-import Util.Specialization;
 import Util.State;
 
 public class ChangeApplicationInfo implements IServico {

@@ -166,11 +166,6 @@ public class ChangeMasterDegreeThesisLookupDispatchAction extends LookupDispatch
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		DynaActionForm createMasterDegreeForm = (DynaActionForm) form;
-
-		//to display the external persons search form	
-		//request.setAttribute(SessionConstants.SEARCH_EXTERNAL_ASSISTENT_GUIDERS, new Boolean(true));
-
 		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
 		ActionErrors actionErrors = new ActionErrors();
 

@@ -1,8 +1,6 @@
 package ServidorAplicacao.Servicos.MasterDegree.administrativeOffice.student;
 
 
-import java.util.List;
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -15,7 +13,6 @@ import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Tools.dbaccess;
 import Util.TipoCurso;
-import Util.TipoDocumentoIdentificacao;
 
 /**
  * @author David Santos
@@ -79,13 +76,8 @@ public class ReadStudentByNumberAndTypeTest extends TestCase {
 	}
 
 	public void testReadStudentByNumberAndTypeTest() {
-		List result = null;
-
 		Integer studentNumber = new Integer(5212);
-		String idNumber = "5";
 		TipoCurso tipoCurso = new TipoCurso(TipoCurso.MESTRADO );
-		TipoDocumentoIdentificacao idType = new TipoDocumentoIdentificacao(TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE);
-
 		Object args1[] = {studentNumber,tipoCurso};
 		IStudent student = new Student();
 		try {

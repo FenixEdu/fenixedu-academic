@@ -1,8 +1,5 @@
 package ServidorAplicacao.Servico.masterDegree.commons.candidate;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import Dominio.CandidateEnrolment;
 import Dominio.CurricularCourseScope;
 import Dominio.ICandidateEnrolment;
@@ -47,8 +44,6 @@ public class WriteCandidateEnrolments implements IServico {
 	}
 
 	public void run(Integer[] selection, Integer candidateID, Double credits, String givenCreditsRemarks) throws FenixServiceException {
-		List curricularCourses = null;
-		List result = new ArrayList();
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 

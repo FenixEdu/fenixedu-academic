@@ -4,7 +4,6 @@
 package ServidorAplicacao.Servico.manager;
 
 import DataBeans.InfoExecutionDegree;
-import DataBeans.InfoTeacher;
 import Dominio.CursoExecucao;
 import Dominio.ExecutionYear;
 import Dominio.ICursoExecucao;
@@ -70,7 +69,6 @@ public class EditExecutionDegree implements IServico {
 				oldExecutionDegree.setTemporaryExamMap(infoExecutionDegree.getTemporaryExamMap());
 
 				IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
-				InfoTeacher infoTeacher = infoExecutionDegree.getInfoCoordinator();
 				ITeacher teacher = (ITeacher) persistentTeacher.readByOId(new Teacher(infoExecutionDegree.getInfoCoordinator().getIdInternal()), false);
 				
 				if(teacher == null)

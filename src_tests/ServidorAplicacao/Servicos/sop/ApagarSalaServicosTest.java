@@ -67,9 +67,8 @@ public class ApagarSalaServicosTest extends TestCaseDeleteAndEditServices {
 		Object argsDeleteSala[] = new Object[1];
 		argsDeleteSala[0] = new RoomKey(new String("Ga1"));
 
-		Object result = null;
 		try {
-			result =
+		
 				_gestor.executar(
 					_userView,
 					getNameOfServiceToBeTested(),

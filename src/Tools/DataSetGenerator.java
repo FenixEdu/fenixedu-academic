@@ -10,7 +10,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Properties;
 
 import org.dbunit.database.DatabaseConnection;
@@ -80,7 +79,6 @@ public class DataSetGenerator {
 	}
 
 	public void writeDataSet() {
-		HashMap tables = new HashMap();
 		IDataSet dataset = null;
 		IDatabaseConnection con = null;
 

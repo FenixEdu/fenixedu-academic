@@ -37,10 +37,6 @@ public class ManageAdvisoriesDA extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 
-		IUserView userView = SessionUtils.getUserView(request);
-
-		// TODO : Read Advisory List and place it in request.
-
 		return mapping.findForward("Manage");
 	}
 

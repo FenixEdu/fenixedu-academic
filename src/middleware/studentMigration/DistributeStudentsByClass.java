@@ -57,9 +57,6 @@ public class DistributeStudentsByClass
 	private static void applyStudentToClass(IStudent student, ITurma group, ISuportePersistente sp, IPersistentMiddlewareSupport spmw)
 		throws ExcepcaoPersistencia
 	{
-		// ler todos os turnos da turma.
-		ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
-
 		List groupShiftList = group.getAssociatedShifts();
 
 		List groupShiftListFiltered = (List) CollectionUtils.select(groupShiftList, new Predicate()

@@ -12,7 +12,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.InfoGuide;
@@ -42,7 +41,6 @@ public class PrintGuideDispatchAction extends DispatchAction {
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
-			DynaActionForm createContributorForm = (DynaActionForm) form;
 			GestorServicos serviceManager = GestorServicos.manager();
 			
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -99,7 +97,6 @@ public class PrintGuideDispatchAction extends DispatchAction {
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
-			DynaActionForm createContributorForm = (DynaActionForm) form;
 			GestorServicos serviceManager = GestorServicos.manager();
 			
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);

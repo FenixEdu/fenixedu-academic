@@ -25,10 +25,11 @@ public abstract class ProgramBelongsExecutionCourse extends ServiceNeedsAuthenti
 
 		Object serviceArguments[] = getTestProgramSuccessfullArguments();
 
-		Object result = null;
+//		Object result = null;
 
 		try {
-			result = gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
+//			result =
+			 gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
 			System.out.println(
 				"testProgramBelongsExecutionCourse was SUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());
@@ -44,10 +45,9 @@ public abstract class ProgramBelongsExecutionCourse extends ServiceNeedsAuthenti
 
 		Object serviceArguments[] = getTestProgramUnsuccessfullArguments();
 
-		Object result = null;
-
 		try {
-			result = gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
+//			result = 
+			gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
 			fail(getNameOfServiceToBeTested() + "fail testProgramNotBelongsExecutionCourse");
 		} catch (NotAuthorizedException ex) {
 

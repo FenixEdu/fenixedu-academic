@@ -46,7 +46,6 @@ public class ReadCandidateEnrolmentsByCandidateID implements IServico {
 	}
 
 	public List run(Integer candidateID) throws FenixServiceException {
-		List curricularCourses = null;
 		List result = new ArrayList();
 
 		try {

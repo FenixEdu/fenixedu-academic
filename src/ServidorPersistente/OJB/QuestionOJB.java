@@ -29,7 +29,6 @@ public class QuestionOJB
 		String fileName,
 		IMetadata metadata)
 		throws ExcepcaoPersistencia {
-		Question result = null;
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("keyMetadata", metadata.getIdInternal());
 		criteria.addEqualTo("xmlFileName", fileName);

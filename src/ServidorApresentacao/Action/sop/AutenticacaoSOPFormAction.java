@@ -12,7 +12,6 @@ package ServidorApresentacao.Action.sop;
  **/
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -59,15 +58,6 @@ public class AutenticacaoSOPFormAction extends FenixAction {
 			return mapping.getInputForward();
 
 		}
-
-		// Invalidate existing session if it exists
-		HttpSession sessao = request.getSession(true);
-//		if (sessao != null) {
-//			sessao.invalidate();
-//		}
-
-		// Create a new session for this user
-//		sessao = request.getSession(true);
 
 		// Store the UserView into the session and return
 		request.setAttribute(SessionConstants.U_VIEW, userView);

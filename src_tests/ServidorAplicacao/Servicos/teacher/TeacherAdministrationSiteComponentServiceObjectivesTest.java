@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 
-import DataBeans.InfoCurriculum;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoSection;
 import DataBeans.InfoSite;
@@ -14,7 +13,6 @@ import DataBeans.InfoSiteObjectives;
 import DataBeans.TeacherAdministrationSiteView;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
-import Dominio.ICurriculum;
 import Dominio.IDisciplinaExecucao;
 import Dominio.ISection;
 import Dominio.ISite;
@@ -67,8 +65,6 @@ public class TeacherAdministrationSiteComponentServiceObjectivesTest extends Tes
 		InfoExecutionCourse infoExecutionCourse = null;
 		ISite site = null;
 		List sections = null;
-		ICurriculum curriculum = null;
-
 		try {
 			sp = SuportePersistenteOJB.getInstance();
 			sp.iniciarTransaccao();
@@ -100,8 +96,6 @@ public class TeacherAdministrationSiteComponentServiceObjectivesTest extends Tes
 			InfoSection infoSection = (InfoSection) Cloner.copyISection2InfoSection((ISection)iter.next());
 			infoSections.add(infoSection);
 		}
-
-		InfoCurriculum infoCurriculum = Cloner.copyICurriculum2InfoCurriculum(curriculum);
 
 		InfoSiteObjectives infoSiteObjectives = new InfoSiteObjectives();
 		

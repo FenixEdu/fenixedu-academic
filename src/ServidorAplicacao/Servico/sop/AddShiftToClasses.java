@@ -5,8 +5,6 @@
  */
 package ServidorAplicacao.Servico.sop;
 
-import java.util.List;
-
 import Dominio.ITurma;
 import Dominio.ITurmaTurno;
 import Dominio.ITurno;
@@ -54,7 +52,6 @@ public class AddShiftToClasses implements IServico {
 
 	public void run(Integer keyShift, String[] classesList)
 		throws FenixServiceException {
-		List errors = null;
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			ITurnoPersistente persistentShift = sp.getITurnoPersistente();

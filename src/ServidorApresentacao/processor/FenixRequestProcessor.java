@@ -10,7 +10,6 @@ import java.io.UnsupportedEncodingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionError;
@@ -30,7 +29,6 @@ public class FenixRequestProcessor extends RequestProcessor {
 	protected boolean processPreprocess(
 		HttpServletRequest request,
 		HttpServletResponse response) {
-		HttpSession session = request.getSession(true);
 		String uri = request.getRequestURI();
 		try {
 			request.setCharacterEncoding("ISO-8859-1");

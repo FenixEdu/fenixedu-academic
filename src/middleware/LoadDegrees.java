@@ -15,7 +15,6 @@ import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionYear;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
-import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoCurso;
@@ -37,14 +36,6 @@ public class LoadDegrees extends DataFileLoader{
 			System.exit(1);
 		}
 		try {
-
-			// Obter as interfaces para o suporte persistente.
-			ICursoPersistente iLicenciaturaPersistente =
-				SuportePersistenteOJB.getInstance().getICursoPersistente();
-			ICursoExecucaoPersistente iLicenciaturaExecucaoPersistente =
-				SuportePersistenteOJB
-					.getInstance()
-					.getICursoExecucaoPersistente();
 
 			// Ler o ficheiro de entrada.
 			BufferedReader bufferedReader =
@@ -69,9 +60,6 @@ public class LoadDegrees extends DataFileLoader{
 
 		SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
 
-		// Obter as interfaces para o suporte persistente.
-		ICursoPersistente iLicenciaturaPersistente =
-			sp.getICursoPersistente();
 		ICursoExecucaoPersistente iLicenciaturaExecucaoPersistente =
 			sp.getICursoExecucaoPersistente();
 		IPersistentDegreeCurricularPlan degreeCurricularPlanDAO = sp.getIPersistentDegreeCurricularPlan(); 

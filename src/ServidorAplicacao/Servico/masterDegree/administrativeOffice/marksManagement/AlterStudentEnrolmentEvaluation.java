@@ -122,7 +122,6 @@ public class AlterStudentEnrolmentEvaluation implements IServico {
 				//check for an alteration
 				if (!enrolmentEvaluation.getGrade().equals(iEnrolmentEvaluation.getGrade())) {
 					try {
-						Integer grade = new Integer(enrolmentEvaluation.getGrade());
 						iEnrolmentEvaluation.getEnrolment().setEnrolmentState(EnrolmentState.APROVED);
 					} catch (NumberFormatException e) {
 						if (enrolmentEvaluation.getGrade().equals("RE"))
@@ -197,8 +196,6 @@ public class AlterStudentEnrolmentEvaluation implements IServico {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-			IStudentCurricularPlanPersistente persistentStudentCurricularPlan = sp.getIStudentCurricularPlanPersistente();
-
 			//			Student
 			IStudent student = new Student();
 			student =

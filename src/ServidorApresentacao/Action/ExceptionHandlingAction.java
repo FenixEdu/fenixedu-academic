@@ -51,7 +51,7 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 		String requestContext= (String) session.getAttribute(SessionConstants.REQUEST_CONTEXT);
 
 		String sender = "Sender: " + formEmail;
-		String subject = "Error Report - " + formSubject;
+		String subject = " - " + formSubject;
 
 		String mailBody = "Error Report\n\n";
 		mailBody += sender +"\n\n";
@@ -68,7 +68,7 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 		
 		if (!request.getServerName().equals("localhost")) { 
 			email = new EMail("mail.adm", "erro@dot.ist.utl.pt");
-			email.send("suporte@dot.ist.utl.pt","Fenix Error Report",mailBody);
+			email.send("suporte@dot.ist.utl.pt","Fenix Error Report"+subject,mailBody);
 		}
 		
 		else{ email = new EMail("mail.rnl.ist.utl.pt", "erro@dot.ist.utl.pt");

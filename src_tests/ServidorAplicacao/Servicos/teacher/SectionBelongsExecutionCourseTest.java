@@ -48,10 +48,8 @@ public abstract class SectionBelongsExecutionCourseTest
 
 		Object serviceArguments[] = getTestSectionUnsuccessfullArguments();
 
-		Object result = null;
-
 		try {
-			result =
+			
 				gestor.executar(
 					userView,
 					getNameOfServiceToBeTested(),

@@ -21,11 +21,9 @@ import DataBeans.InfoStudent;
 import DataBeans.TypeLessonAndInfoShift;
 import DataBeans.util.Cloner;
 import Dominio.Curso;
-import Dominio.CursoExecucao;
 import Dominio.DisciplinaExecucao;
 import Dominio.Frequenta;
 import Dominio.ICurso;
-import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
@@ -92,8 +90,7 @@ public class ReadOtherCoursesWithShifts implements IServico {
 
 		ICurso c = new Curso();
 		c.setSigla(sCP.getDegreeCurricularPlan().getDegree().getSigla());
-		ICursoExecucao cE = new CursoExecucao();
-	//	cE.setCurso(c);
+		//	cE.setCurso(c);
 		IDisciplinaExecucao dE = new DisciplinaExecucao();
 	//	dE.setLicenciaturaExecucao(cE);
 		List ldE = sp.getIDisciplinaExecucaoPersistente().readByCriteria(dE);
@@ -127,14 +124,6 @@ public class ReadOtherCoursesWithShifts implements IServico {
 //			iEC.setInfoLicenciaturaExecucao(iED);
 
 
-//////////			
-			ICurso degree = new Curso();
-//			degree.setSigla(disciplinaExecucao.getLicenciaturaExecucao().getCurso().getSigla());
-			ICursoExecucao executionCoure = new CursoExecucao();
-//			executionCoure.setExecutionYear();
-//			executionCoure.setCurricularPlan();
-			
-			
 //			executionCoure.setAnoLectivo(disciplinaExecucao.getLicenciaturaExecucao().getAnoLectivo());
 //			executionCoure.setCurso(degree);
 			IDisciplinaExecucao executionDegree = new DisciplinaExecucao();

@@ -2,7 +2,6 @@
 package ServidorAplicacao.Servico.masterDegree.administrativeOffice.student.certificate;
 
 import java.util.Date;
-import java.util.List;
 
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.util.Cloner;
@@ -13,7 +12,6 @@ import ServidorAplicacao.strategy.degreeCurricularPlan.DegreeCurricularPlanStrat
 import ServidorAplicacao.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
 import ServidorAplicacao.strategy.degreeCurricularPlan.strategys.IMasterDegreeCurricularPlanStrategy;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.ISuportePersistente;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -46,11 +44,7 @@ public class GetEndOfScholarshipDate implements IServico {
 	
 	public Date run(InfoStudentCurricularPlan infoStudentCurricularPlan) throws FenixServiceException, ExcepcaoPersistencia {
 
-			ISuportePersistente sp = null;
-			List certificates = null;
-			
-			
-		IStudentCurricularPlan studentCurricularPlan = Cloner.copyInfoStudentCurricularPlan2IStudentCurricularPlan(infoStudentCurricularPlan);
+			IStudentCurricularPlan studentCurricularPlan = Cloner.copyInfoStudentCurricularPlan2IStudentCurricularPlan(infoStudentCurricularPlan);
 
 
 		IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory.getInstance();

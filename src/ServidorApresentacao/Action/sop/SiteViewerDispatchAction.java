@@ -2,7 +2,6 @@ package ServidorApresentacao.Action.sop;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -12,7 +11,6 @@ import org.apache.struts.action.ActionMapping;
 
 import DataBeans.ExecutionCourseSiteView;
 import DataBeans.ISiteComponent;
-import DataBeans.InfoSite;
 import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteCurricularCoursesAndAssociatedShiftsAndClasses;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -31,7 +29,6 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws FenixActionException {
         
-		HttpSession session = request.getSession(false);
 		ISiteComponent firstPageComponent =  new InfoSiteCurricularCoursesAndAssociatedShiftsAndClasses();
 
 		String objectCodeString = request.getParameter("objectCode");
@@ -54,7 +51,6 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 		Integer sectionIndex)
 		throws FenixActionException {
 			
-		InfoSite infoSite = null;
 		Integer objectCode = null;
 		if (infoExecutionCourseCode == null) {
 			String objectCodeString = request.getParameter("objectCode");

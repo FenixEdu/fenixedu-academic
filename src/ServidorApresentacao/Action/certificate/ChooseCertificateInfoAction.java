@@ -49,7 +49,6 @@ public class ChooseCertificateInfoAction extends DispatchAction {
 
 		
 		HttpSession session = request.getSession(false);
-		DynaActionForm chooseDeclaration = (DynaActionForm) form;
 		GestorServicos serviceManager = GestorServicos.manager();	
 
 
@@ -72,8 +71,6 @@ public class ChooseCertificateInfoAction extends DispatchAction {
 			
 			// output
 			List getCertificateList = null;
-//			//get informations
-			ArrayList certificateList = new ArrayList();
 //			certificateList = CertificateList.toArrayList();
 			try {
 				getCertificateList = (List) serviceManager.executar(userView, "ReadCertificateList", args);

@@ -8,7 +8,6 @@ package ServidorApresentacao.Action.publico;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -38,7 +37,6 @@ public class ViewClassTimeTableWithClassNameAndDegreeInitialsAction
 		throws Exception {
 		super.execute(mapping, form, request, response);
 
-		HttpSession session = request.getSession(true);
 		String degreeInitials = request.getParameter("degreeInitials");
 		String nameDegreeCurricularPlan =
 			request.getParameter("nameDegreeCurricularPlan");

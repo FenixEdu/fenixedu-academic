@@ -56,8 +56,6 @@ public class GratuityOperationsDispatchAction extends DispatchAction {
 			} 
 			
 			
-			DynaActionForm gratuityForm = (DynaActionForm) form;
-			
 			InfoGratuity result = null;
 		
 			try {

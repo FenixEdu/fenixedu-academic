@@ -15,9 +15,6 @@ import java.util.Calendar;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import DataBeans.InfoExam;
-import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoExecutionPeriod;
-import DataBeans.InfoExecutionYear;
 import DataBeans.InfoViewExamByDayAndShift;
 import ServidorAplicacao.Servicos.TestCaseDeleteAndEditServices;
 import Util.Season;
@@ -52,15 +49,15 @@ public class DeleteExamServiceTest extends TestCaseDeleteAndEditServices {
 
 	protected Object[] getArgumentsOfServiceToBeTestedSuccessfuly() {
 
-		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse(
-			"Engenharia da Programação",
-			"EP",
-			"blob",
-			new Double(1),
-			new Double(0),
-			new Double(0),
-			new Double(0),
-			new InfoExecutionPeriod("2º semestre",new InfoExecutionYear("2002/2003")));
+//		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse(
+//			"Engenharia da Programação",
+//			"EP",
+//			"blob",
+//			new Double(1),
+//			new Double(0),
+//			new Double(0),
+//			new Double(0),
+//			new InfoExecutionPeriod("2º semestre",new InfoExecutionYear("2002/2003")));
 
 		Calendar beginning = Calendar.getInstance();
 		beginning.set(Calendar.YEAR, 2003);
@@ -76,7 +73,7 @@ public class DeleteExamServiceTest extends TestCaseDeleteAndEditServices {
 		end.set(Calendar.HOUR_OF_DAY, 12);
 		end.set(Calendar.MINUTE, 0);
 		end.set(Calendar.SECOND, 0);
-		Season season = new Season(Season.SEASON1);
+//		Season season = new Season(Season.SEASON1);
 
 
 		//InfoExam infoExam = new InfoExam(beginning, end, null, season);
@@ -98,15 +95,15 @@ public class DeleteExamServiceTest extends TestCaseDeleteAndEditServices {
 
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
 
-		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse(
-			"Unexisting Course",
-			"UC",
-			"blob",
-			new Double(1),
-			new Double(0),
-			new Double(0),
-			new Double(0),
-			new InfoExecutionPeriod("2º semestre",new InfoExecutionYear("2002/2003")));
+//		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse(
+//			"Unexisting Course",
+//			"UC",
+//			"blob",
+//			new Double(1),
+//			new Double(0),
+//			new Double(0),
+//			new Double(0),
+//			new InfoExecutionPeriod("2º semestre",new InfoExecutionYear("2002/2003")));
 
 		Calendar beginning = Calendar.getInstance();
 		beginning.set(Calendar.YEAR, 2003);

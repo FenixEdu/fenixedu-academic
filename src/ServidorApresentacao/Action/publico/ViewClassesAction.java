@@ -2,19 +2,15 @@ package ServidorApresentacao.Action.publico;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import DataBeans.ISiteComponent;
-import DataBeans.InfoClass;
-import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoSiteClasses;
 import DataBeans.SiteView;
-import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixContextAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -41,10 +37,6 @@ public class ViewClassesAction extends FenixContextAction {
 			e.printStackTrace();
 		}
 
-		HttpSession session = request.getSession(true);
-		GestorServicos gestor = GestorServicos.manager();
-		InfoClass infoClass = new InfoClass();
-
 		InfoExecutionPeriod infoExecutionPeriod =
 			(InfoExecutionPeriod) request.getAttribute(
 				SessionConstants.EXECUTION_PERIOD);
@@ -66,7 +58,6 @@ public class ViewClassesAction extends FenixContextAction {
 				null,
 				curricularYear };
 
-		InfoExecutionDegree infoExecutionDegree;
 		try {
 			siteView =
 				(SiteView) ServiceUtils.executeService(

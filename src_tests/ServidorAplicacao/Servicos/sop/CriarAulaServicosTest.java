@@ -138,9 +138,8 @@ public class CriarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 		argsCriarAula[0] = new InfoLesson(new DiaSemana(DiaSemana.SEGUNDA_FEIRA), inicio, fim, new TipoAula(1), infoSala, infoDisciplinaExecucao);
 
 		GestorServicos serviceManager = GestorServicos.manager();
-		Object result = null;
 		try {
-			result = serviceManager.executar(_userView, "CriarAula", argsCriarAula);
+			 serviceManager.executar(_userView, "CriarAula", argsCriarAula);
 			fail("testCreateExistingLessonCompleteMatch");
 		} catch (ExistingServiceException ex) {
 			// all is ok
@@ -167,9 +166,8 @@ public class CriarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 		 fim.set(Calendar.SECOND, 0);
 		 argsCriarAula[0] = new InfoLesson(new DiaSemana(2), inicio, fim, new TipoAula(1), infoSala, infoDisciplinaExecucao);
 		 GestorServicos serviceManager = GestorServicos.manager();
-		 Object result = null;
 		 try {
-			result = serviceManager.executar(_userView, "CriarAula", argsCriarAula);
+			serviceManager.executar(_userView, "CriarAula", argsCriarAula);
 			fail("testCreateExistingLessonInterceptingMatch: Expected an Exception");
 		 } catch (InterceptingServiceException ex) {
 		 	assertNotNull("testCreateExistingLessonInterceptingMatch");

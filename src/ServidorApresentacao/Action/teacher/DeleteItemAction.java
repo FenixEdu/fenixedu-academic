@@ -1,8 +1,6 @@
 /*
  * Created on 7/Abr/2003
  *
- * To change this generated comment go to 
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 package ServidorApresentacao.Action.teacher;
 
@@ -57,7 +55,7 @@ public class DeleteItemAction extends FenixAction{
 			Object deleteItemArguments[] = { infoItem };
 			GestorServicos manager = GestorServicos.manager();
 			
-			Boolean result = (Boolean) manager.executar(userView, "DeleteItem", deleteItemArguments);
+			 manager.executar(userView, "DeleteItem", deleteItemArguments);
 
 			session.removeAttribute(SessionConstants.INFO_SECTION_ITEMS_LIST);
 			InfoSection infoSection = infoItem.getInfoSection();

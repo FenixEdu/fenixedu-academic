@@ -77,7 +77,6 @@ public class ManipularSalasAction extends FenixSelectedRoomsContextAction {
 		throws Exception {
 		super.execute(mapping, form, request, response);
 		
-		HttpSession session = getSession(request);
 		request.removeAttribute(mapping.getAttribute());		
 
 		DynaActionForm posicaoSalaFormBean = (DynaActionForm) form;
@@ -107,8 +106,6 @@ public class ManipularSalasAction extends FenixSelectedRoomsContextAction {
 		HttpServletResponse response)
 		throws Exception {
 		super.execute(mapping, form, request, response);			
-
-		HttpSession session = getSession(request);
 
 		InfoRoom salaBean = getSelectedSala(form, request);
 		

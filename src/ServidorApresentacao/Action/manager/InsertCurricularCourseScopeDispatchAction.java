@@ -91,7 +91,6 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
 
 		List executionPeriodsLabels = new ArrayList();
 		InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
-		Calendar calendarExecutionPeriod = Calendar.getInstance();
 		Iterator iterExecutionPeriods = infoExecutionPeriods.iterator();
 		String labelExecutionPeriod, valueExecutionPeriod;
 		while (iterExecutionPeriods.hasNext()) {

@@ -4,18 +4,14 @@ import java.util.Calendar;
 
 import DataBeans.InfoCurricularCourseScope;
 import Dominio.CurricularCourseScope;
-import Dominio.IBranch;
 import Dominio.ICurricularCourseScope;
-import Dominio.ICurricularSemester;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorAplicacao.Servico.exceptions.InvalidSituationServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentBranch;
 import ServidorPersistente.IPersistentCurricularCourseScope;
-import ServidorPersistente.IPersistentCurricularSemester;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -42,13 +38,8 @@ public class EndCurricularCourseScope implements IServico {
 	public void run(InfoCurricularCourseScope newInfoCurricularCourseScope) throws FenixServiceException {
 
 		ICurricularCourseScope oldCurricularCourseScope = null;
-		ICurricularSemester newCurricularSemester = null;
-		IBranch newBranch = null;
-
 		try {
 			ISuportePersistente ps = SuportePersistenteOJB.getInstance();
-			IPersistentBranch persistentBranch = ps.getIPersistentBranch();
-			IPersistentCurricularSemester persistentCurricularSemester = ps.getIPersistentCurricularSemester();
 			IPersistentCurricularCourseScope persistentCurricularCourseScope = ps.getIPersistentCurricularCourseScope();
 			
 			if(!newInfoCurricularCourseScope.getEndDate().after(newInfoCurricularCourseScope.getBeginDate())) {

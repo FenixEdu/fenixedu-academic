@@ -50,7 +50,7 @@ public class DeleteSectionAction extends FenixAction{
 		try {
 			Object deleteSectionArguments[] = { infoSection };
 			GestorServicos manager = GestorServicos.manager();
-			Boolean result = (Boolean) manager.executar(userView, "DeleteSection", deleteSectionArguments);
+			 manager.executar(userView, "DeleteSection", deleteSectionArguments);
 
 			session.removeAttribute(SessionConstants.INFO_SECTION);
 			session.removeAttribute(SessionConstants.SECTIONS);

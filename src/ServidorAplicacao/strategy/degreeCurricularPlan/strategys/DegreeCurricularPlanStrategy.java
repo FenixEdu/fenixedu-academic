@@ -51,7 +51,6 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 		List enrolments = SuportePersistenteOJB.getInstance().getIPersistentEnrolment().readAllByStudentCurricularPlan(studentCurricularPlan);
 	
 		Iterator iterator = enrolments.iterator();
-		int courses = 0;
 		while(iterator.hasNext()){
 			IEnrolment enrolment = (IEnrolment) iterator.next();
 			if ((enrolment.getEnrolmentState().equals(EnrolmentState.APROVED)) &&
@@ -91,7 +90,6 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 		List enrolments = SuportePersistenteOJB.getInstance().getIPersistentEnrolment().readAllByStudentCurricularPlan(studentCurricularPlan);
 	
 		Iterator iterator = enrolments.iterator();
-		int courses = 0;
 		while(iterator.hasNext()){
 			IEnrolment enrolment = (IEnrolment) iterator.next();
 			if ((enrolment.getEnrolmentState().equals(EnrolmentState.APROVED)) &&

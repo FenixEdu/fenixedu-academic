@@ -43,15 +43,10 @@ public class ChooseDeclarationInfoAction extends DispatchAction {
 
 		
 		HttpSession session = request.getSession(false);
-		DynaActionForm chooseDeclaration = (DynaActionForm) form;
-
-
 		if (session != null) {
 			
 			session.removeAttribute(SessionConstants.SPECIALIZATIONS);
 			session.removeAttribute(SessionConstants.DOCUMENT_REASON);
-			
-			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			
 			ArrayList specializations = Specialization.toArrayList();
 			ArrayList documentReason = DocumentReason.toArrayList();

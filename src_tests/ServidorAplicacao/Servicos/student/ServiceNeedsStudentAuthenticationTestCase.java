@@ -37,10 +37,8 @@ public abstract class ServiceNeedsStudentAuthenticationTestCase
 
 	public void testAuthorizedUser() {
 		Object serviceArguments[] = getAuthorizeArguments();
-		Object result = null;
-
 		try {
-			result =
+			
 				gestor.executar(
 					userView,
 					getNameOfServiceToBeTested(),
@@ -69,10 +67,8 @@ public abstract class ServiceNeedsStudentAuthenticationTestCase
 
 	public void testUnauthorizedUser() {
 		Object serviceArguments[] = getAuthorizeArguments();
-		Object result = null;
-
 		try {
-			result =
+		
 				gestor.executar(
 					userView2,
 					getNameOfServiceToBeTested(),
@@ -103,10 +99,8 @@ public abstract class ServiceNeedsStudentAuthenticationTestCase
 
 		Object serviceArguments[] = getAuthorizeArguments();
 
-		Object result = null;
-
 		try {
-			result =
+			
 				gestor.executar(
 					userView3,
 					getNameOfServiceToBeTested(),

@@ -18,7 +18,6 @@ import Dominio.StudentGroupAttend;
 import ServidorAplicacao.IServico;
 import ServidorApresentacao.Action.Seminaries.Exceptions.BDException;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.IPersistentGroupProperties;
 import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.IPersistentStudentGroup;
@@ -64,7 +63,6 @@ public class GetProjectsGroupsByExecutionCourseID implements IServico
             IPersistentGroupProperties persistentGroupProperties =persistenceSupport.getIPersistentGroupProperties();
             IPersistentStudentGroupAttend persistentGroupAttend = persistenceSupport.getIPersistentStudentGroupAttend();
             IPersistentStudent persistentStudent = persistenceSupport.getIPersistentStudent();            
-            IFrequentaPersistente persistentAttendacy =  persistenceSupport.getIFrequentaPersistente();
             IPersistentStudentGroup persistentStudentGroup = persistenceSupport.getIPersistentStudentGroup();
             List projects = persistentGroupProperties.readAllGroupPropertiesByExecutionCourseID(id);
             for (Iterator projectIterator= projects.iterator(); projectIterator.hasNext();)
@@ -76,7 +74,6 @@ public class GetProjectsGroupsByExecutionCourseID implements IServico
 					IStudentGroup group= (IStudentGroup) groupsIterator.next();
 					List attendacies = persistentGroupAttend.readAllByStudentGroup(group);
                     List students = new LinkedList();
-                    List enrolments = new LinkedList();                    
                     for (Iterator attendaciesIterator= attendacies.iterator(); attendaciesIterator.hasNext();)
 					{
 						IFrequenta attendacy = ((StudentGroupAttend) attendaciesIterator.next()).getAttend();

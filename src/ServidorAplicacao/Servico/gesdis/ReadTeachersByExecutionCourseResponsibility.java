@@ -19,7 +19,6 @@ import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentResponsibleFor;
-import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -59,7 +58,6 @@ public class ReadTeachersByExecutionCourseResponsibility implements IServico {
 				sp = SuportePersistenteOJB.getInstance();
 				IDisciplinaExecucao executionCourse =
 							Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
-				IPersistentTeacher persistentTeacher=sp.getIPersistentTeacher();
 				IPersistentResponsibleFor persistentResponsibleFor= sp.getIPersistentResponsibleFor();
 				result = persistentResponsibleFor.readByExecutionCourse(executionCourse);
 				

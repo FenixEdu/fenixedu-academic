@@ -32,7 +32,6 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
-import Util.SituationName;
 import Util.State;
 
 public class ChangeCandidate implements IServico {

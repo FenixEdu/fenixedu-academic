@@ -8,15 +8,10 @@ import middleware.persistentMiddlewareSupport.IPersistentMWAluno;
 import middleware.persistentMiddlewareSupport.IPersistentMiddlewareSupport;
 import middleware.persistentMiddlewareSupport.OJBDatabaseSupport.PersistentMiddlewareSupportOJB;
 import middleware.personMigration.PersonUtils;
-
-import org.apache.ojb.broker.PersistenceBroker;
-import org.apache.ojb.broker.PersistenceBrokerFactory;
-
 import Dominio.IExecutionPeriod;
 import Dominio.IPessoa;
 import Dominio.IStudent;
 import Dominio.Pessoa;
-import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoCurso;
 
@@ -31,8 +26,6 @@ public class UpdateStudentIDNumbers {
 
 	public static void main(String args[]) throws Exception {
 
-		PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();		
-		
 		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
 		IPersistentMWAluno persistentAluno = mws.getIPersistentMWAluno();
 		
@@ -69,9 +62,6 @@ public class UpdateStudentIDNumbers {
 		
 		try {
 			
-			IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-
-
 			// Check if the Person Exists
 			IPessoa person = sp.getIPessoaPersistente().lerPessoaPorNumDocIdETipoDocId(oldStudent.getDocumentidnumber(), PersonUtils.getDocumentIdType(oldStudent.getMiddlewarePerson().getDocumentidtype()));
 

@@ -166,7 +166,6 @@ public class EnrolmentOJB extends ObjectFenixOJB implements IPersistentEnrolment
 		throws ExcepcaoPersistencia {
 
 		try {
-			List enrolment = null;
 			String oqlQuery = "select all from " + Enrolment.class.getName();
 			oqlQuery += " where studentCurricularPlan.student.number = $1";
 			oqlQuery += " and studentCurricularPlan.student.degreeType = $2";

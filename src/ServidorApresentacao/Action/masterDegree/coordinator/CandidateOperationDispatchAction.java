@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.InfoExecutionDegree;
@@ -33,7 +32,6 @@ public class CandidateOperationDispatchAction extends DispatchAction {
 	HttpSession session = request.getSession(false);
 	
 	if (session != null) {
-	  DynaActionForm changeApplicationInfoForm = (DynaActionForm) form;
 	  IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 	  GestorServicos gestor = GestorServicos.manager();
  
@@ -70,12 +68,6 @@ public class CandidateOperationDispatchAction extends DispatchAction {
 
 	  if (session != null) {
 			
-		  DynaActionForm listCandidatesForm = (DynaActionForm) form;
-
-
-		  GestorServicos serviceManager = GestorServicos.manager();
-			
-		  IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		  List candidateList = (List) session.getAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST);
 			
 

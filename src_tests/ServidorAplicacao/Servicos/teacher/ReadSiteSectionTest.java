@@ -118,8 +118,6 @@ public class ReadSiteSectionTest extends ServiceNeedsAuthenticationTestCase {
 	}
 
 	public void testReadNonSiteSection() {
-		TeacherAdministrationSiteView result = null;
-
 		Integer infoExecutionCourseCode = new Integer(27);
 		Integer infoSiteCode = new Integer(4);
 		InfoSiteCommon commonComponent = new InfoSiteCommon();
@@ -138,8 +136,9 @@ public class ReadSiteSectionTest extends ServiceNeedsAuthenticationTestCase {
 
 		try {
 
-			result =
-				(TeacherAdministrationSiteView) gestor.executar(
+			//result =
+//				(TeacherAdministrationSiteView) 
+				gestor.executar(
 					userView,
 					getNameOfServiceToBeTested(),
 					args);

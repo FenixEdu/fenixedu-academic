@@ -635,10 +635,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		HttpSession session = getSession(request);
-		UserView userView =
-			(UserView) session.getAttribute(SessionConstants.U_VIEW);
-
 		Integer objectCode = getCodeFromRequest(request, "objectCode");
 		Integer testCode = getCodeFromRequest(request, "testCode");
 
@@ -795,7 +791,6 @@ public class TestsManagementAction extends FenixDispatchAction {
 				selected,
 				new Boolean(insertByShifts)};
 
-		SiteView siteView = null;
 		try {
 			ServiceUtils.executeService(
 				userView,

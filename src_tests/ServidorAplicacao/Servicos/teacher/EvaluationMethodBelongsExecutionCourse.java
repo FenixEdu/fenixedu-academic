@@ -26,10 +26,8 @@ public abstract class EvaluationMethodBelongsExecutionCourse
 
 		Object serviceArguments[] = getTestEvaluationMethodSuccessfullArguments();
 
-		Object result = null;
-
 		try {
-			result = gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
+			gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
 			System.out.println(
 				"testEvaluationMethodBelongsExecutionCourse was SUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());
@@ -45,10 +43,8 @@ public abstract class EvaluationMethodBelongsExecutionCourse
 
 		Object serviceArguments[] = getTestEvaluationMethodUnsuccessfullArguments();
 
-		Object result = null;
-
 		try {
-			result = gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
+			gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
 			fail(
 				getNameOfServiceToBeTested()
 					+ "fail testEvaluationMethodNotBelongsExecutionCourse");

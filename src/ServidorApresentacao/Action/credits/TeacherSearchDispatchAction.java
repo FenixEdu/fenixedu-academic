@@ -68,10 +68,10 @@ public class TeacherSearchDispatchAction extends DispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		DynaActionForm teacherSearchForm = (DynaActionForm) form;
-		IUserView userView = SessionUtils.getUserView(request);
-		
-		String departmentCode = (String) teacherSearchForm.get("departamentCode");
+		//DynaActionForm teacherSearchForm = (DynaActionForm) form;
+//		IUserView userView = SessionUtils.getUserView(request);
+//		
+//		String departmentCode = (String) teacherSearchForm.get("departamentCode");
 		
 		List departmentTeachers = null;
 		

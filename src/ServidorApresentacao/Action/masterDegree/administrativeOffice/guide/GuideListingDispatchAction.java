@@ -103,8 +103,6 @@ public class GuideListingDispatchAction extends DispatchAction {
 
 		if (session != null) {
 			
-			DynaActionForm chooseGuide = (DynaActionForm) form;
-			
 			GestorServicos serviceManager = GestorServicos.manager();
 			
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -139,12 +137,6 @@ public class GuideListingDispatchAction extends DispatchAction {
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
-			DynaActionForm createCandidateForm = (DynaActionForm) form;
-			GestorServicos serviceManager = GestorServicos.manager();
-
-			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			
-
 			// Create the type of Identification Document
 			request.setAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST, TipoDocumentoIdentificacao.toArrayList());  
 			
@@ -163,7 +155,6 @@ public class GuideListingDispatchAction extends DispatchAction {
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
-			DynaActionForm createCandidateForm = (DynaActionForm) form;
 			GestorServicos serviceManager = GestorServicos.manager();
 
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -205,7 +196,6 @@ public class GuideListingDispatchAction extends DispatchAction {
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
-			DynaActionForm createCandidateForm = (DynaActionForm) form;
 			GestorServicos serviceManager = GestorServicos.manager();
 
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);

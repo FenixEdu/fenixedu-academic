@@ -82,8 +82,6 @@ public class ExamSiteComponentServiceTest extends ServiceTestCase {
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente persistentExecutionCourse =
-				sp.getIDisciplinaExecucaoPersistente();
 			IPersistentExecutionPeriod persistentExecutionPeriod =
 				sp.getIPersistentExecutionPeriod();
 			IPersistentExecutionYear persistentExecutionYear =
@@ -216,7 +214,6 @@ public class ExamSiteComponentServiceTest extends ServiceTestCase {
 			int size = executionCourses1ano.size();
 
 			int n_exams = 0;
-			int exames = 0;
 			for (int i = 0; i < size; i++) {
 				InfoExecutionCourse infoExecutionCourse =
 					(InfoExecutionCourse) executionCourses.get(i);

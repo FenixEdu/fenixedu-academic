@@ -17,7 +17,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
-import org.apache.struts.util.MessageResources;
 
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentEvaluation;
@@ -74,7 +73,6 @@ InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		Object args[] = {userView,curricularCourseCode,executionYear};
 		GestorServicos serviceManager = GestorServicos.manager();
-		InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
 		List listEnrolmentEvaluation = null;
 		try {
 		 listEnrolmentEvaluation =
@@ -109,12 +107,8 @@ InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
 		throws Exception {
 
 		HttpSession session = request.getSession(false);
-		MessageResources messages = getResources(request);
-
 		String executionYear = (String) getFromRequest("executionYear", request); 
 		String degree = getFromRequest("degree", request);
-		String tilte = getFromRequest("jspTitle", request);
-
 		String curricularCourse = getFromRequest("curricularCourse", request);
 		Integer curricularCourseCode = Integer.valueOf(getFromRequest("curricularCourseCode", request));
 		Integer studentNumber= null;
@@ -426,7 +420,6 @@ InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
 				IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 				GestorServicos serviceManager = GestorServicos.manager();
 				Object args[] = {curricularCourseCode, enrolmentEvaluationCode,infoEnrolmentEvaluation,infoTeacher.getTeacherNumber(), userView};
-				InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
 				evaluationsWithError = (List) serviceManager.executar(userView, "AlterStudentEnrolmentEvaluation", args);
 			} catch (NonExistingServiceException e) {
 				throw new NonExistingActionException(teacherNumber.toString(), e);

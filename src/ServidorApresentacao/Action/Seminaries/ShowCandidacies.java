@@ -8,16 +8,18 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoDegreeCurricularPlan;
-import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoStudent;
 import DataBeans.InfoStudentCurricularPlan;
 import DataBeans.SiteView;
@@ -183,7 +185,6 @@ public class ShowCandidacies extends FenixAction
 				InfoCurricularCourse curricularCourse= null;
 				InfoTheme theme= null;
 				InfoModality modality= null;
-				String motivation= null;
 				InfoSeminary seminary= null;
 				InfoStudentCurricularPlan studentCurricularPlan= null;
 				List casesChoices= null;
@@ -208,7 +209,7 @@ public class ShowCandidacies extends FenixAction
 				theme= (InfoTheme) gestor.executar(userView, "Seminaries.GetThemeById", argsReadTheme);
 				modality= (InfoModality) gestor.executar(userView, "Seminaries.GetModalityById", argsReadModality);
 				seminary= (InfoSeminary) gestor.executar(userView, "Seminaries.GetSeminary", argsReadSeminary);
-				motivation= candidacy.getMotivation();
+			//	motivation= candidacy.getMotivation();
 				casesChoices= candidacy.getCaseStudyChoices();
 				//
 				for (Iterator casesIterator= casesChoices.iterator(); casesIterator.hasNext();)
@@ -266,9 +267,10 @@ public class ShowCandidacies extends FenixAction
 		List equivalencies= null;
 		List themes= null;
 		List curricularCoursesWithEquivalency= new LinkedList();
-		InfoExecutionPeriod executionPeriod= null;
+		
 		try
 		{
+			
 			Object[] argsReadSeminaries= {
 			};
 			Object[] argsReadCasesStudy= {
@@ -291,8 +293,7 @@ public class ShowCandidacies extends FenixAction
 			themes= (List) gestor.executar(userView, "Seminaries.GetAllThemes", argsReadThemes);
 			equivalencies=
 				(List) gestor.executar(userView, "Seminaries.GetAllEquivalencies", argsReadEquivalencies);
-			executionPeriod=
-				(InfoExecutionPeriod) gestor.executar(
+			 gestor.executar(
 					userView,
 					"ReadCurrentExecutionPeriod",
 					argsReadCurrentExecutionPeriod);

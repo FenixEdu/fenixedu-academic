@@ -91,7 +91,6 @@ public class ChooseGuide implements IServico {
 		throws Exception {
 
 		ISuportePersistente sp = null;
-		InfoGuide infoGuide = null;
 		IGuide guide = null;
 
 		try {

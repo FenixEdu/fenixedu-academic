@@ -5,7 +5,6 @@ import java.util.Calendar;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -42,7 +41,6 @@ public class EditExamAction extends FenixCurricularYearsAndExecutionCourseAndExe
 
 		super.execute(mapping, form, request, response);
 		
-			HttpSession session = request.getSession(false);
 			IUserView userView = SessionUtils.getUserView(request);
 
 			String input = (String) request.getParameter("input");

@@ -18,8 +18,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.ojb.broker.PersistenceBroker;
-import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
@@ -91,8 +89,6 @@ public class CandidateSituationOJB extends ObjectFenixOJB implements IPersistent
     
 	public List readActiveSituationsBySituationList(ICursoExecucao executionDegree, List situations) throws ExcepcaoPersistencia {
 		 	
-		PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
-
 		Criteria criteria = new Criteria();
 		Criteria criteriaSituations = new Criteria();
 		criteria.addEqualTo("validation", new State(State.ACTIVE));
@@ -130,8 +126,6 @@ public class CandidateSituationOJB extends ObjectFenixOJB implements IPersistent
 
 
 	public List readCandidateListforRegistration(ICursoExecucao executionDegree) throws ExcepcaoPersistencia {
-		PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
-	
 		Criteria criteria = new Criteria();
 		Criteria criteriaDocs = new Criteria();
 		criteria.addEqualTo("validation", new State(State.ACTIVE));

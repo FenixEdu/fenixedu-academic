@@ -33,12 +33,10 @@ public class ReadPublishedMarksByExamTest extends ServiceTestCase {
 	public void testNonExistingEvaluation() {
 
 		Object[] args = { new Integer(4), new Integer(1000)};
-		ExecutionCourseSiteView result = null;
-
 		try {
 
-			result =
-				(ExecutionCourseSiteView) gestor.executar(
+			
+				 gestor.executar(
 					null,
 					getNameOfServiceToBeTested(),
 					args);
@@ -64,12 +62,9 @@ public class ReadPublishedMarksByExamTest extends ServiceTestCase {
 	public void testNonExistingSite() {
 
 		Object[] args = { new Integer(1000), new Integer(5)};
-		ExecutionCourseSiteView result = null;
-
 		try {
 
-			result =
-				(ExecutionCourseSiteView) gestor.executar(
+		 gestor.executar(
 					null,
 					getNameOfServiceToBeTested(),
 					args);

@@ -563,8 +563,6 @@ public class MakeCandidateStudyPlanDispatchAction extends DispatchAction {
 		throws Exception {
 	
 			HttpSession session = request.getSession(false);
-			DynaActionForm chooseCurricularCoursesForm = (DynaActionForm) form;
-		
 			GestorServicos serviceManager = GestorServicos.manager();	
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 

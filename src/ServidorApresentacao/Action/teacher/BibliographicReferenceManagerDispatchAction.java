@@ -238,9 +238,6 @@ public class BibliographicReferenceManagerDispatchAction
 		throws FenixActionException {
 
 		
-		DynaActionForm bibRefForm= (DynaActionForm) form;
-
-		
 		HttpSession session = request.getSession(false);
 		session.removeAttribute(SessionConstants.INFO_SECTION);
 		InfoSite infoSite =

@@ -193,10 +193,8 @@ public class EditObjectivesTest extends ServiceNeedsAuthenticationTestCase {
 
 		Object serviceArguments[] = getTestObjectivesUnsuccessfullArguments();
 
-		Object result = null;
-
 		try {
-			result = gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
+			gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
 			fail(getNameOfServiceToBeTested() + "fail testObjectivesNotBelongsExecutionCourse");
 		} catch (NotAuthorizedException ex) {
 

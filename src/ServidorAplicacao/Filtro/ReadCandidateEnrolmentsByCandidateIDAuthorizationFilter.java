@@ -55,8 +55,6 @@ public class ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter extends Fil
 	 * @return boolean
 	 */
 	private boolean containsRole(Collection roles) {
-		Iterator rolesIterator = roles.iterator();
-
 		CollectionUtils.intersection(roles, getNeededRoles());
 
 		if (roles.size() != 0){
@@ -97,8 +95,6 @@ public class ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter extends Fil
 
 		SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
 
-		IUserView userView = (IUserView) id;
-		
 		List roleTemp = new ArrayList();
 		roleTemp.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
 		if (CollectionUtils.containsAny(roles, roleTemp)) {

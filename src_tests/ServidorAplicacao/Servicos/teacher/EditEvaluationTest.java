@@ -181,10 +181,8 @@ public class EditEvaluationTest extends ServiceNeedsAuthenticationTestCase {
 
 		Object serviceArguments[] = getTestEvaluationMethodUnsuccessfullArguments();
 
-		Object result = null;
-
 		try {
-			result = gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
+			 gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
 			fail(getNameOfServiceToBeTested() + "fail testEvaluationMethodNotBelongsExecutionCourse");
 		} catch (NotAuthorizedException ex) {
 

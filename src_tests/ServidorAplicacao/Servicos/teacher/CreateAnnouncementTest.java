@@ -65,7 +65,6 @@ public class CreateAnnouncementTest
 
 	public void testCreateAnnouncementSuccessful() {
 		try {
-			boolean result = false;
 			String[] args = getAuthenticatedAndAuthorizedUser();
 			IUserView id = authenticateUser(args);
 			Object[] args2 = getAuthorizeArguments();

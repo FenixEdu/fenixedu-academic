@@ -106,7 +106,6 @@ public class InitiateSessionDispatchAction extends FenixContextDispatchAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-		HttpSession session = request.getSession(false);
 		DynaActionForm indexForm = (DynaActionForm) form;
 
 		Object argsReadExecutionPeriods[] = {

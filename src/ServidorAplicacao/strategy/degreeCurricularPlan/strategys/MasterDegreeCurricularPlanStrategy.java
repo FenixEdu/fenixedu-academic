@@ -35,7 +35,6 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
 	 * @return A boolean indicating if he has fineshed it or not.
 	 */
 	public boolean checkEndOfScholarship(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia{
-		boolean result = false;
 		float studentCredits = 0;
 		
 		IDegreeCurricularPlan degreeCurricularPlan = super.getDegreeCurricularPlan();
@@ -65,10 +64,9 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
 		
 		Calendar date = null;
 		
-		boolean result = false;
-		float studentCredits = 0;
-		
-		IDegreeCurricularPlan degreeCurricularPlan = super.getDegreeCurricularPlan();
+//		float studentCredits = 0;
+//		
+//		IDegreeCurricularPlan degreeCurricularPlan = super.getDegreeCurricularPlan();
 		
 		List enrolments = SuportePersistenteOJB.getInstance().getIPersistentEnrolment().readAllByStudentCurricularPlan(studentCurricularPlan);
 		

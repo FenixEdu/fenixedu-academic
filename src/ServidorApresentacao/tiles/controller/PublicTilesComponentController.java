@@ -1,7 +1,6 @@
 package ServidorApresentacao.tiles.controller;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -105,7 +104,7 @@ public class PublicTilesComponentController extends ControllerSupport {
 		
 		if (component instanceof InfoSiteProjects) 
 		{
-			List infoGroupPropertiesList = ((InfoSiteProjects)component).getInfoGroupPropertiesList();
+			//List infoGroupPropertiesList = ((InfoSiteProjects)component).getInfoGroupPropertiesList();
 				tileContext.putAttribute("body","/publico/viewProjectsName_bd.jsp");
 		}
 		else if (component instanceof InfoSiteShiftsAndGroups) {

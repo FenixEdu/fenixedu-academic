@@ -17,7 +17,6 @@ import java.util.List;
 
 import DataBeans.InfoShift;
 import DataBeans.util.Cloner;
-import Dominio.IDisciplinaExecucao;
 import Dominio.ITurno;
 import Dominio.Turno;
 import ServidorAplicacao.IServico;
@@ -50,7 +49,6 @@ public class LerOcupacaoDeTurnos implements IServico {
 
 	public Object run(List infoShiftList) {
 
-		List IShiftList = new ArrayList();
 		List alunos = new ArrayList();
 		
  		try {
@@ -65,10 +63,7 @@ public class LerOcupacaoDeTurnos implements IServico {
 				ITurno shift = new Turno();
 				shift = Cloner.copyInfoShift2IShift(infoShift);
 
-				IDisciplinaExecucao executionCourse =
-					shift.getDisciplinaExecucao();
-
-			    alunos = sp.getITurnoAlunoPersistente().readByShift(shift);
+				alunos = sp.getITurnoAlunoPersistente().readByShift(shift);
 				
 				Integer ocupation = new Integer(alunos.size());
 				Double percentage = new Double(alunos.size()*100/shift.getLotacao().intValue());

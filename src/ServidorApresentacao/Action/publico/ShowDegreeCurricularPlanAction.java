@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -14,7 +13,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoExecutionPeriod;
-import DataBeans.InfoExecutionYear;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixContextAction;
@@ -31,13 +29,11 @@ public class ShowDegreeCurricularPlanAction extends FenixContextAction {
 		throws Exception {
 		super.execute(mapping, form, request, response);
 
-		HttpSession session = request.getSession(true);
-
 		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
-		InfoExecutionYear infoExecutionYear = null;
-		if (infoExecutionPeriod != null) {
-			infoExecutionYear = infoExecutionPeriod.getInfoExecutionYear();
-		}
+	//	InfoExecutionYear infoExecutionYear = null;
+		//if (infoExecutionPeriod != null) {
+		//	InfoExecutionYear infoExecutionYear = infoExecutionPeriod.getInfoExecutionYear();
+	//	}
 
 		Integer degreeCurricularPlanId = null;
 		String degreeCurricularPlanIdString = request.getParameter("degreeCurricularPlanId");

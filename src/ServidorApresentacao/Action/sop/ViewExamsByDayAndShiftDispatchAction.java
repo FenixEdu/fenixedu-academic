@@ -51,7 +51,6 @@ public class ViewExamsByDayAndShiftDispatchAction
 		HttpServletResponse response)
 		throws Exception {
 
-		HttpSession session = request.getSession(false);
 		IUserView userView = SessionUtils.getUserView(request);
 
 		Calendar examDateAndTime =
@@ -82,7 +81,6 @@ public class ViewExamsByDayAndShiftDispatchAction
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		HttpSession session = request.getSession(false);
 		IUserView userView = SessionUtils.getUserView(request);
 
 		//List infoExams =
@@ -125,7 +123,6 @@ public class ViewExamsByDayAndShiftDispatchAction
 		HttpServletResponse response)
 		throws Exception {
 
-		HttpSession session = request.getSession(false);
 		IUserView userView = SessionUtils.getUserView(request);
 
 		DynaValidatorForm editExamForm = (DynaValidatorForm) form;

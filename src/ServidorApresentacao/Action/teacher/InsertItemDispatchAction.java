@@ -126,8 +126,7 @@ public class InsertItemDispatchAction extends FenixDispatchAction {
 		Object args[] = { infoItem };
 
 		try {
-			Boolean result =
-				(Boolean) manager.executar(userView, "InsertItem", args);
+			manager.executar(userView, "InsertItem", args);
 		} catch (ExistingServiceException e) {
 			throw new ExistingActionException("Um item com esse nome", e);
 		} catch (FenixServiceException fenixServiceException) {

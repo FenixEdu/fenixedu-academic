@@ -358,7 +358,6 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
 	// TODO When session is removed from SOP, use method with same name from RequestUtils
 	private InfoExecutionPeriod setExecutionContext(HttpServletRequest request) throws Exception {
 
-		HttpSession session = request.getSession(false);
 		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 		if (infoExecutionPeriod == null) {
 			IUserView userView = SessionUtils.getUserView(request);

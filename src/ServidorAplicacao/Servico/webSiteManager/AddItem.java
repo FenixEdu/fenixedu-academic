@@ -99,7 +99,6 @@ public class AddItem implements IServico {
 			// treat author of item
 			String authorName = infoWebSiteItem.getAuthorName();
 			String authorEmail = infoWebSiteItem.getAuthorEmail();
-			IPessoa authorPerson = null;
 			if ((authorName == null || authorName.length() == 0)
 				&& (authorEmail == null || authorEmail.length() == 0)) {
 					// in case author was not filled editor becomes the author

@@ -4,7 +4,6 @@ package ServidorAplicacao.Servico.masterDegree.commons.candidate;
 import java.util.ArrayList;
 import java.util.List;
 
-import DataBeans.InfoCandidateApproval;
 import DataBeans.util.Cloner;
 import Dominio.IMasterDegreeCandidate;
 import Dominio.MasterDegreeCandidate;
@@ -65,8 +64,6 @@ public class ReadSubstituteCandidates implements IServico {
 					IMasterDegreeCandidate masterDegreeCandidateTemp = new MasterDegreeCandidate();
 					masterDegreeCandidateTemp.setIdInternal(idInternal);
 					IMasterDegreeCandidate masterDegreeCandidateToWrite = (IMasterDegreeCandidate) sp.getIPersistentMasterDegreeCandidate().readByOId(masterDegreeCandidateTemp, false);
-					InfoCandidateApproval infoCandidateApproval = new InfoCandidateApproval();
-					
 					result.add(Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidateToWrite));
 				}
 			}

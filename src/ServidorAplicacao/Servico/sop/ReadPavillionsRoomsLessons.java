@@ -28,7 +28,6 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.ISalaPersistente;
 import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.ITurnoAulaPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public class ReadPavillionsRoomsLessons implements IServico {
@@ -67,9 +66,6 @@ public class ReadPavillionsRoomsLessons implements IServico {
 
 			ISalaPersistente roomDAO = sp.getISalaPersistente();
 			IAulaPersistente lessonDAO = sp.getIAulaPersistente();
-			ITurnoAulaPersistente shiftLessonDAO =
-				sp.getITurnoAulaPersistente();
-
 			// Read pavillions rooms
 			List rooms = new ArrayList();
 			for (int i = 0; i < pavillions.size(); i++ ){

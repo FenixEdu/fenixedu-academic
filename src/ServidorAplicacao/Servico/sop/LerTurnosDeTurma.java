@@ -61,7 +61,6 @@ public class LerTurnosDeTurma implements IServico {
 		InfoExecutionDegree infoExecutionDegree,
 		InfoExecutionPeriod infoExecutionPeriod) throws FenixServiceException {
 		
-		List infoTurnos = new ArrayList();
 		List infoShiftAndLessons = new ArrayList();
 
 		try {
@@ -82,7 +81,7 @@ public class LerTurnosDeTurma implements IServico {
 			List shiftList = classShiftDAO.readByClass(group);
 
 			Iterator iterator = shiftList.iterator();
-			infoTurnos = new ArrayList();
+//			infoTurnos = new ArrayList();
 
 			while (iterator.hasNext()) {
 				ITurno turno = (ITurno) iterator.next();

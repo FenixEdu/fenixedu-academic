@@ -23,13 +23,10 @@ import DataBeans.InfoShift;
 import DataBeans.InfoViewClassSchedule;
 import DataBeans.util.Cloner;
 import Dominio.IAula;
-import Dominio.IExecutionPeriod;
 import Dominio.ITurma;
 import Dominio.ITurno;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IAulaPersistente;
-import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurmaPersistente;
 import ServidorPersistente.ITurnoAulaPersistente;
@@ -68,14 +65,7 @@ public class ReadDegreesClassesLessons implements IServico {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-			IExecutionPeriod executionPeriod =
-				Cloner.copyInfoExecutionPeriod2IExecutionPeriod(
-					infoExecutionPeriod);
-
-			ICursoExecucaoPersistente executionDegreeDAO =
-				sp.getICursoExecucaoPersistente();
 			ITurmaPersistente classDAO = sp.getITurmaPersistente();
-			IAulaPersistente lessonDAO = sp.getIAulaPersistente();
 			ITurnoAulaPersistente shiftLessonDAO =
 				sp.getITurnoAulaPersistente();
 

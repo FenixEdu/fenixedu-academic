@@ -125,9 +125,6 @@ public class ListContributorsDispatchAction extends DispatchAction {
 		if (session != null) {
 			
 
-			GestorServicos serviceManager = GestorServicos.manager();
-			
-			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			List contributorList = (List) session.getAttribute(SessionConstants.CONTRIBUTOR_LIST);
 			
 
@@ -156,9 +153,6 @@ public class ListContributorsDispatchAction extends DispatchAction {
 		if (session != null) {
 			DynaActionForm editContributorForm = (DynaActionForm) form;
 
-			GestorServicos serviceManager = GestorServicos.manager();
-			
-			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			InfoContributor infoContributor = (InfoContributor) session.getAttribute(SessionConstants.CONTRIBUTOR); 
 
 

@@ -43,8 +43,8 @@ public class DuplicateDegreeCurricularPlan {
 
 	public static void main(String args[]) throws Exception {
 
-		String originalDCPNames[] = new String[15];
-		String newDCPNames[] = new String[15];
+//		String originalDCPNames[] = new String[15];
+//		String newDCPNames[] = new String[15];
 
 //		originalDCPNames[0] = "MC02/03";
 //		newDCPNames[0] = "MC03/05";
@@ -188,7 +188,6 @@ public class DuplicateDegreeCurricularPlan {
 			throw new Exception("Error Reading Curricular Courses for Degree Curricular Plan [" + degreeCurricularPlan.getName() + "]");
 		}
 
-		IExecutionPeriod executionPeriodFromBD = null;
 		criteria = new Criteria();
 		criteria.addEqualTo("executionYear.year", executionPeriod.getExecutionYear().getYear());
 		criteria.addEqualTo("name", executionPeriod.getName());
@@ -216,12 +215,12 @@ public class DuplicateDegreeCurricularPlan {
 			executionCourse.setAttendingStudents(null);
 			executionCourse.setComment("None");
 			executionCourse.setExecutionPeriod(executionPeriod);
-			executionCourse.setLabHours(curricularCourse.getLabHours());
+//			executionCourse.setLabHours(curricularCourse.getLabHours());
 			executionCourse.setNome(curricularCourse.getName());
-			executionCourse.setPraticalHours(curricularCourse.getPraticalHours());
+//			executionCourse.setPraticalHours(curricularCourse.getPraticalHours());
 			executionCourse.setSigla(curricularCourse.getCode());
-			executionCourse.setTheoPratHours(curricularCourse.getTheoPratHours());
-			executionCourse.setTheoreticalHours(curricularCourse.getTheoreticalHours());
+//			executionCourse.setTheoPratHours(curricularCourse.getTheoPratHours());
+//			executionCourse.setTheoreticalHours(curricularCourse.getTheoreticalHours());
 
 			broker.store(executionCourse);
 			
@@ -281,12 +280,12 @@ public class DuplicateDegreeCurricularPlan {
 			newCurrilarCourse.setCredits(curricularCourseFromBD.getCredits());
 			newCurrilarCourse.setDegreeCurricularPlan(degreeCurricularPlan);
 			newCurrilarCourse.setDepartmentCourse(null);
-			newCurrilarCourse.setLabHours(curricularCourseFromBD.getLabHours());
+	//		newCurrilarCourse.setLabHours(curricularCourseFromBD.getLabHours());
 			newCurrilarCourse.setMandatory(curricularCourseFromBD.getMandatory());
 			newCurrilarCourse.setName(curricularCourseFromBD.getName());
-			newCurrilarCourse.setPraticalHours(curricularCourseFromBD.getPraticalHours());
-			newCurrilarCourse.setTheoPratHours(curricularCourseFromBD.getTheoPratHours());
-			newCurrilarCourse.setTheoreticalHours(curricularCourseFromBD.getTheoreticalHours());
+	//		newCurrilarCourse.setPraticalHours(curricularCourseFromBD.getPraticalHours());
+	//		newCurrilarCourse.setTheoPratHours(curricularCourseFromBD.getTheoPratHours());
+	//		newCurrilarCourse.setTheoreticalHours(curricularCourseFromBD.getTheoreticalHours());
 			newCurrilarCourse.setType(curricularCourseFromBD.getType());
 			newCurrilarCourse.setUniversity(curricularCourseFromBD.getUniversity());
 			newCurrilarCourse.setCurricularCourseExecutionScope(curricularCourseFromBD.getCurricularCourseExecutionScope());

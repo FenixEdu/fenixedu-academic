@@ -56,8 +56,6 @@ public class SearchExecutionCoursesAuthorizationFilter extends Filtro {
 	 * @return boolean
 	 */
 	private boolean containsRole(Collection roles) {
-		Iterator rolesIterator = roles.iterator();
-
 		CollectionUtils.intersection(roles, getNeededRoles());
 
 		if (roles.size() != 0){
@@ -98,8 +96,6 @@ public class SearchExecutionCoursesAuthorizationFilter extends Filtro {
 
 		SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();
 
-		IUserView userView = (IUserView) id;
-		
 		List roleTemp = new ArrayList();
 		roleTemp.add(RoleType.TIME_TABLE_MANAGER);
 		if (CollectionUtils.containsAny(roles, roleTemp)) {

@@ -20,7 +20,6 @@ import Dominio.IStudent;
 import Dominio.Student;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentStudent;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -72,7 +71,6 @@ public class ReadStudentsWithoutGroupTest extends TestCaseReadServices {
 
 		try {
 			ISuportePersistente ps = SuportePersistenteOJB.getInstance();
-			IPersistentStudent persistentStudent = ps.getIPersistentStudent();
 			ps.iniciarTransaccao();
 			IStudent student = null;
 			List infoStudentList = new ArrayList();

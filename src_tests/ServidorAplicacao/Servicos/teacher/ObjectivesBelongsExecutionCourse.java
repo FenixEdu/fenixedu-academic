@@ -24,10 +24,9 @@ public abstract class ObjectivesBelongsExecutionCourse extends ServiceNeedsAuthe
 
 		Object serviceArguments[] = getTestObjectivesSuccessfullArguments();
 
-		Object result = null;
-
 		try {
-			result = gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
+
+			gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
 			System.out.println(
 				"testObjectivesBelongsExecutionCourse was SUCCESSFULY runned by service: "
 					+ getNameOfServiceToBeTested());
@@ -43,10 +42,8 @@ public abstract class ObjectivesBelongsExecutionCourse extends ServiceNeedsAuthe
 
 		Object serviceArguments[] = getTestObjectivesUnsuccessfullArguments();
 
-		Object result = null;
-
 		try {
-			result = gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
+			 gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
 			fail(getNameOfServiceToBeTested() + "fail testObjectivesNotBelongsExecutionCourse");
 		} catch (NotAuthorizedException ex) {
 

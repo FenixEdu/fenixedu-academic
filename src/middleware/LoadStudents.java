@@ -99,7 +99,8 @@ public class LoadStudents extends DataFileLoader {
 		String bi = stringTokenizer.nextToken();
 		String nome = stringTokenizer.nextToken();
 		String chaveLicenciatura = stringTokenizer.nextToken();
-		String chaveRamo = stringTokenizer.nextToken();
+		//String chaveRamo = 
+		stringTokenizer.nextToken();
 		String email = stringTokenizer.nextToken();
 
 		SuportePersistenteOJB sp = SuportePersistenteOJB.getInstance();

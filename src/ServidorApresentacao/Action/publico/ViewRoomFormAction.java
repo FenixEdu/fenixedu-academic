@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -33,9 +32,7 @@ public class ViewRoomFormAction extends FenixContextAction {
 
 		DynaActionForm indexForm = (DynaActionForm) form;
 
-		HttpSession session = request.getSession(true);
-
-		List infoRooms = (List) request.getAttribute("publico.infoRooms");
+		//List infoRooms = (List) request.getAttribute("publico.infoRooms");
 		String roomName = (String) indexForm.get("nome");
 
 		InfoRoom argRoom = new InfoRoom();

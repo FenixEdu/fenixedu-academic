@@ -9,17 +9,8 @@ package ServidorAplicacao.Servicos.gesdis.teacher;
 import java.util.HashMap;
 
 import DataBeans.InfoCurriculum;
-import DataBeans.InfoExecutionCourse;
-import DataBeans.util.Cloner;
-import Dominio.IDisciplinaExecucao;
-import Dominio.IExecutionPeriod;
-import Dominio.IExecutionYear;
 import ServidorAplicacao.Servicos.TestCaseCreateServices;
 import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
-import ServidorPersistente.IPersistentCurriculum;
-import ServidorPersistente.IPersistentExecutionPeriod;
-import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -51,30 +42,30 @@ public class InsertCurriculumServiceTest extends TestCaseCreateServices {
 		InfoCurriculum oldCurriculum = new InfoCurriculum();
 
 		ISuportePersistente sp = null;
-		IExecutionYear executionYear = null;
-		IExecutionPeriod executionPeriod = null;
-		IDisciplinaExecucao executionCourse = null;
+//		IExecutionYear executionYear = null;
+//		IExecutionPeriod executionPeriod = null;
+//		IDisciplinaExecucao executionCourse = null;
 		try {
 			sp = SuportePersistenteOJB.getInstance();
 			sp.iniciarTransaccao();
 
-			IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
-			executionYear = ieyp.readExecutionYearByName("2002/2003");
+//			IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
+//			executionYear = ieyp.readExecutionYearByName("2002/2003");
 
-			IPersistentExecutionPeriod iepp =
-				sp.getIPersistentExecutionPeriod();
+//			IPersistentExecutionPeriod iepp =
+//				sp.getIPersistentExecutionPeriod();
 
-			executionPeriod =
-				iepp.readByNameAndExecutionYear("2º Semestre", executionYear);
+//			executionPeriod =
+//				iepp.readByNameAndExecutionYear("2º Semestre", executionYear);
 
-			IDisciplinaExecucaoPersistente idep =
-				sp.getIDisciplinaExecucaoPersistente();
-			executionCourse =
-				idep.readByExecutionCourseInitialsAndExecutionPeriod(
-					"TFCI",
-					executionPeriod);
-			IPersistentCurriculum persistentCurriculum =
-				sp.getIPersistentCurriculum();
+//			IDisciplinaExecucaoPersistente idep =
+//				sp.getIDisciplinaExecucaoPersistente();
+//			executionCourse =
+//				idep.readByExecutionCourseInitialsAndExecutionPeriod(
+//					"TFCI",
+//					executionPeriod);
+//			IPersistentCurriculum persistentCurriculum =
+//				sp.getIPersistentCurriculum();
 
 //			ICurriculum curriculum =
 //				persistentCurriculum.readCurriculumByExecutionCourse(
@@ -98,33 +89,33 @@ public class InsertCurriculumServiceTest extends TestCaseCreateServices {
 		InfoCurriculum oldCurriculum = new InfoCurriculum();
 
 		ISuportePersistente sp = null;
-		IExecutionYear executionYear = null;
-		IExecutionPeriod executionPeriod = null;
-		IDisciplinaExecucao executionCourse = null;
+//		IExecutionYear executionYear = null;
+//		IExecutionPeriod executionPeriod = null;
+//		IDisciplinaExecucao executionCourse = null;
 		try {
 			sp = SuportePersistenteOJB.getInstance();
 			sp.iniciarTransaccao();
 
-			IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
-			executionYear = ieyp.readExecutionYearByName("2002/2003");
+//			IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
+//			executionYear = ieyp.readExecutionYearByName("2002/2003");
 
-			IPersistentExecutionPeriod iepp =
-				sp.getIPersistentExecutionPeriod();
+//			IPersistentExecutionPeriod iepp =
+//				sp.getIPersistentExecutionPeriod();
 
-			executionPeriod =
-				iepp.readByNameAndExecutionYear("2º Semestre", executionYear);
+//			executionPeriod =
+//				iepp.readByNameAndExecutionYear("2º Semestre", executionYear);
 
-			IDisciplinaExecucaoPersistente idep =
-				sp.getIDisciplinaExecucaoPersistente();
-			executionCourse =
-				idep.readByExecutionCourseInitialsAndExecutionPeriod(
-					"IP",
-					executionPeriod);
+//			IDisciplinaExecucaoPersistente idep =
+//				sp.getIDisciplinaExecucaoPersistente();
+//			executionCourse =
+//				idep.readByExecutionCourseInitialsAndExecutionPeriod(
+//					"IP",
+//					executionPeriod);
 
 			sp.confirmarTransaccao();
-			InfoExecutionCourse infoExecutionCourse =
-				Cloner.copyIExecutionCourse2InfoExecutionCourse(
-					executionCourse);
+//			InfoExecutionCourse infoExecutionCourse =
+//				Cloner.copyIExecutionCourse2InfoExecutionCourse(
+//					executionCourse);
 
 			oldCurriculum = new InfoCurriculum();
 			oldCurriculum.setGeneralObjectives("bla");

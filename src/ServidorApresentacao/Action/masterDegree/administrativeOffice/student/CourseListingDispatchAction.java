@@ -1,8 +1,6 @@
 
 package ServidorApresentacao.Action.masterDegree.administrativeOffice.student;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -52,11 +50,10 @@ public class CourseListingDispatchAction extends DispatchAction {
 			String yearString = getFromRequest("executionYear", request);
 			
 			Object args[] = { scopeCode, yearString };
-			List result = null;
-		
 			try {
 
-			result = (List) serviceManager.executar(userView, "ReadStudentsAndMarksByCurricularCourse", args);
+		//	result = (List)
+			 serviceManager.executar(userView, "ReadStudentsAndMarksByCurricularCourse", args);
 
 			} catch (NonExistingServiceException e) {
 				ActionErrors errors = new ActionErrors();

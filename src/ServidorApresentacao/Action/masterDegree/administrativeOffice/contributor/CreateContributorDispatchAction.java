@@ -43,10 +43,6 @@ public class CreateContributorDispatchAction extends DispatchAction {
 
 		if (session != null) {
 			DynaActionForm createContributorForm = (DynaActionForm) form;
-			GestorServicos serviceManager = GestorServicos.manager();
-			
-			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			
 			createContributorForm.set("contributorNumber", null);
 			createContributorForm.set("contributorName", null);
 			createContributorForm.set("contributorAddress", null);

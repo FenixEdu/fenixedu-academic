@@ -11,9 +11,7 @@ import java.util.List;
 
 import DataBeans.util.Cloner;
 import Dominio.IStudent;
-import Dominio.ITurno;
 import Dominio.ShiftStudent;
-import Dominio.Turno;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentStudent;
@@ -59,10 +57,7 @@ public class ReadStudentsByShiftID implements IServico
          ISuportePersistente sp = SuportePersistenteOJB.getInstance();
       
       
-         ITurno shift = new Turno();
-      
-           
-           shiftStudentAssociations = sp.getITurnoAlunoPersistente().readByShiftID(shiftID);
+         shiftStudentAssociations = sp.getITurnoAlunoPersistente().readByShiftID(shiftID);
            IPersistentStudent persistentStudent = sp.getIPersistentStudent();
            for (Iterator associationsIterator= shiftStudentAssociations.iterator(); associationsIterator.hasNext();)
 		{

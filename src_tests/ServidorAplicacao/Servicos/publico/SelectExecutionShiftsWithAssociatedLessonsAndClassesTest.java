@@ -16,9 +16,6 @@ import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.ISala;
-import Dominio.ITurma;
-import Dominio.ITurno;
-import Dominio.Turno;
 import ServidorAplicacao.Servicos.TestCaseServicos;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
@@ -30,13 +27,11 @@ import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISalaPersistente;
 import ServidorPersistente.ISuportePersistente;
-import ServidorPersistente.ITurmaPersistente;
 import ServidorPersistente.ITurmaTurnoPersistente;
 import ServidorPersistente.ITurnoAulaPersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.DiaSemana;
-import Util.TipoAula;
 
 /**
  * @author tfc130
@@ -230,12 +225,12 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClassesTest
 					executionCourse);
 
 			ITurnoPersistente turnoPersistente = sp.getITurnoPersistente();
-			ITurno shift =
-				new Turno(
-					"turno",
-					new TipoAula(TipoAula.TEORICA),
-					new Integer(100),
-					executionCourse);
+//			ITurno shift =
+//				new Turno(
+//					"turno",
+//					new TipoAula(TipoAula.TEORICA),
+//					new Integer(100),
+//					executionCourse);
 
 			ISalaPersistente salaPersistente = sp.getISalaPersistente();
 			ISala room1 = salaPersistente.readByName("Ga1");
@@ -267,13 +262,13 @@ public class SelectExecutionShiftsWithAssociatedLessonsAndClassesTest
 			ITurmaTurnoPersistente turmaTurnoPersistente =
 				sp.getITurmaTurnoPersistente();
 
-			ITurmaPersistente turmaPersistente = sp.getITurmaPersistente();
-			ITurma class0 =
-				turmaPersistente
-					.readByNameAndExecutionDegreeAndExecutionPeriod(
-					"turmaParaTestarInscricoesDeAlunos2",
-					executionDegree,
-					executionPeriod);
+	//		ITurmaPersistente turmaPersistente = sp.getITurmaPersistente();
+//			ITurma class0 =
+//				turmaPersistente
+//					.readByNameAndExecutionDegreeAndExecutionPeriod(
+//					"turmaParaTestarInscricoesDeAlunos2",
+//					executionDegree,
+//					executionPeriod);
 
 			if (testCase == 2) {
 				//System.out.println("###### Turnos sem aulas e sem turmas associadas");

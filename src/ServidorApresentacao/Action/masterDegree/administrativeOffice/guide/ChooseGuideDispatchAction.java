@@ -124,8 +124,6 @@ public class ChooseGuideDispatchAction extends DispatchAction {
 
 		if (session != null) {
 			
-			DynaActionForm chooseGuide = (DynaActionForm) form;
-			
 			GestorServicos serviceManager = GestorServicos.manager();
 			
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);

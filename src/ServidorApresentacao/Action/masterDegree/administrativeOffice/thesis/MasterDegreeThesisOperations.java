@@ -83,8 +83,6 @@ public class MasterDegreeThesisOperations extends DispatchAction {
 		ActionErrors actionErrors)
 		throws FenixActionException {
 
-		boolean result = false;
-
 		DynaActionForm masterDegreeThesisForm = (DynaActionForm) form;
 		IUserView userView = SessionUtils.getUserView(request);
 
@@ -163,8 +161,6 @@ public class MasterDegreeThesisOperations extends DispatchAction {
 		String sessionConstant,
 		ActionErrors actionErrors)
 		throws FenixActionException {
-
-		boolean result = false;
 
 		DynaActionForm masterDegreeThesisForm = (DynaActionForm) form;
 		IUserView userView = SessionUtils.getUserView(request);

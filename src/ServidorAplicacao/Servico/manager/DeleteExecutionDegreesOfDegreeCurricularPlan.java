@@ -46,7 +46,6 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan implements IServico {
 
 			Iterator iter = executionDegreesIds.iterator();
 
-			Boolean result = new Boolean(true);
 			List undeletedExecutionDegreesYears = new ArrayList();
 			List classes;
 			Integer executionDegreeId;

@@ -6,7 +6,6 @@ package ServidorApresentacao.Action.masterDegree.administrativeOffice.candidate;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +19,6 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.InfoExecutionDegree;
-import DataBeans.InfoExecutionYear;
 import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.InfoPerson;
 import ServidorAplicacao.GestorServicos;

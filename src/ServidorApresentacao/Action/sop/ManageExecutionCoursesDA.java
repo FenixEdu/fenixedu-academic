@@ -192,8 +192,6 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
 
 	public ActionForward changeExecutionPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		IUserView userView = (IUserView) request.getSession(false).getAttribute("UserView");
-		GestorServicos gestor = GestorServicos.manager();
 		DynaActionForm searchExecutionCourse = (DynaActionForm) form;
 		Integer executionPeriodOID = new Integer((String) searchExecutionCourse.get("executionPeriodOID"));
 		request.setAttribute(SessionConstants.EXECUTION_PERIOD_OID, executionPeriodOID.toString());

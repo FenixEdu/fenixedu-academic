@@ -106,8 +106,6 @@ public class ViewExamsMapDA
 		HttpServletResponse response)
 		throws Exception {
 
-		HttpSession session = request.getSession(false);
-
 		InfoExamsMap infoExamsMap = getExamsMap(request);
 
 		Integer indexExecutionCourse =
@@ -258,8 +256,6 @@ public class ViewExamsMapDA
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws Exception {
-
-		HttpSession session = request.getSession(false);
 
 		InfoExamsMap infoExamsMap =
 			(InfoExamsMap) request.getAttribute(

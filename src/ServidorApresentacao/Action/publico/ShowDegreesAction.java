@@ -7,7 +7,6 @@ import java.util.ListIterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -30,8 +29,6 @@ public class ShowDegreesAction extends FenixContextDispatchAction {
 
 	public ActionForward nonMaster(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
-
-		HttpSession session = request.getSession(true);
 
 		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
 		InfoExecutionYear infoExecutionYear = null;
@@ -63,8 +60,6 @@ public class ShowDegreesAction extends FenixContextDispatchAction {
 
 	public ActionForward master(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
-
-		HttpSession session = request.getSession(true);
 
 		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
 		InfoExecutionYear infoExecutionYear = null;

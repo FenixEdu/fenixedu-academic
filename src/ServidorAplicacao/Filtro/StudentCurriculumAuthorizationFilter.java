@@ -58,8 +58,6 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
 	 * @return boolean
 	 */
 	private boolean containsRole(Collection roles) {
-		Iterator rolesIterator = roles.iterator();
-
 		CollectionUtils.intersection(roles, getNeededRoles());
 
 		if (roles.size() != 0){
@@ -102,7 +100,6 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
 		List roles = getRoleList((List) id.getRoles());
 		CollectionUtils.intersection(roles, getNeededRoles());
 
-		IUserView userView = (IUserView) arguments[0];
 		Integer studentCurricularPlanID = (Integer) arguments[1];
 		
 

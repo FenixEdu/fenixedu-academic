@@ -101,7 +101,6 @@ public class EditGuideDispatchAction extends DispatchAction {
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
-			DynaActionForm editGuideForm = (DynaActionForm) form;
 			GestorServicos serviceManager = GestorServicos.manager();
 			
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -191,7 +190,6 @@ public class EditGuideDispatchAction extends DispatchAction {
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
-			DynaActionForm editGuideForm = (DynaActionForm) form;
 			GestorServicos serviceManager = GestorServicos.manager();
 
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -267,7 +265,6 @@ public class EditGuideDispatchAction extends DispatchAction {
 			// Read the Guide 
 			
 			InfoGuide infoGuide = null;
-			List contributors = null;			
 			try {
 				Object args[] = { guideNumber, guideYear, guideVersion };
 				infoGuide = (InfoGuide) serviceManager.executar(userView, "ChooseGuide", args);
@@ -326,8 +323,6 @@ public class EditGuideDispatchAction extends DispatchAction {
 
 			
 			
-			Integer oldGuideVersion = new Integer(infoGuide.getVersion().intValue());
-
 			InfoGuide result = null;
 			try {
 				Object args[] = {infoGuide, quantityList, contributorNumber , othersRemarks, othersQuantity, othersPrice};

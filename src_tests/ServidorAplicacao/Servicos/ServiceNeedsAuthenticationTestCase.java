@@ -51,10 +51,9 @@ public abstract class ServiceNeedsAuthenticationTestCase extends ServiceTestCase
 	public void testUnauthorizedUser()
 	{
 		Object serviceArguments[] = getAuthorizeArguments();
-		Object result = null;
 		try
 		{
-			result = gestor.executar(userView2, getNameOfServiceToBeTested(), serviceArguments);
+			 gestor.executar(userView2, getNameOfServiceToBeTested(), serviceArguments);
 			fail(this.getClass().getName() + ": Service " + getNameOfServiceToBeTested() + ": fail testUnauthorizedUser");
 		} catch (NotAuthorizedException ex)
 		{

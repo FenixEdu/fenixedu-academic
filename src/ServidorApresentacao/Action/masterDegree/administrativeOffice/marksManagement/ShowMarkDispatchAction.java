@@ -13,9 +13,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
-import DataBeans.InfoEnrolment;
-import DataBeans.InfoEnrolmentEvaluation;
-import DataBeans.InfoSiteEnrolmentEvaluation;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
@@ -60,7 +57,6 @@ public class ShowMarkDispatchAction extends DispatchAction {
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 		Object args[] = {userView,curricularCourseCode,executionYear};
 		GestorServicos serviceManager = GestorServicos.manager();
-		InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
 		List listEnrolmentEvaluation = null;
 		
 		try {
@@ -84,10 +80,6 @@ public class ShowMarkDispatchAction extends DispatchAction {
 			saveErrors(request, actionErrors);
 			return mapping.findForward("NoStudents");
 		}
-		InfoEnrolment infoEnrolment = (InfoEnrolment)listEnrolmentEvaluation.get(0);
-		InfoEnrolmentEvaluation eva = (InfoEnrolmentEvaluation)infoEnrolment.getInfoEvaluations().get(0);
-		
-
 		request.setAttribute("showMarks", "showMarks");
 		request.setAttribute("studentList", listEnrolmentEvaluation);
 		return mapping.findForward("displayStudentList");

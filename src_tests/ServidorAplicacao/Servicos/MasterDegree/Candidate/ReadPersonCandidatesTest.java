@@ -94,9 +94,8 @@ public class ReadPersonCandidatesTest extends TestCaseServicosCandidato {
 	
 	  Object[] args = { userView }; 
 	
-	  List result = null;
 	  try {
-		  result = (List) gestor.executar(userView, "ReadPersonCandidates", args);
+		 gestor.executar(userView, "ReadPersonCandidates", args);
 	  } catch (FenixServiceException ex) {
 		  // All is OK
 	  } catch (Exception ex) {

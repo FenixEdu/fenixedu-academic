@@ -15,7 +15,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -52,7 +51,6 @@ public class EditExamRoomsDA extends FenixDateAndTimeAndCurricularYearsAndExecut
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		HttpSession session = request.getSession(false);
 		IUserView userView = SessionUtils.getUserView(request);
 		GestorServicos gestor = GestorServicos.manager();
 		DynaActionForm editExamRoomsForm = (DynaActionForm) form;
@@ -143,7 +141,6 @@ public class EditExamRoomsDA extends FenixDateAndTimeAndCurricularYearsAndExecut
 		HttpServletResponse response)
 		throws FenixActionException {
 
-		HttpSession session = request.getSession(false);
 		IUserView userView = SessionUtils.getUserView(request);
 		GestorServicos gestor = GestorServicos.manager();
 		DynaActionForm editExamRoomsForm = (DynaActionForm) form;

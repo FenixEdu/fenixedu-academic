@@ -47,7 +47,6 @@ public class ReadSites implements IServico {
    * Executes the service. Returns the current collection of infosites .
    */
   public List run() throws FenixServiceException {
-    ISite site = null;
     ISuportePersistente sp;
     List allSites = null;
 

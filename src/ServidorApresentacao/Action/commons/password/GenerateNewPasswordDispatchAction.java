@@ -30,11 +30,6 @@ public class GenerateNewPasswordDispatchAction extends DispatchAction {
 
 	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		HttpSession session = request.getSession();
-
-
-		DynaActionForm newPasswordForm = (DynaActionForm) form;
-
 		return mapping.findForward("PrepareSuccess");
 	}
 	

@@ -1,8 +1,6 @@
 
 package ServidorApresentacao.Action.student;
 
-import java.util.ArrayList;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -53,13 +51,9 @@ public class GrauMestreAction extends Action {
 		System.out.println(Tipo);
 		// Temporario
 
-		boolean Inscricao = true;
-
-		Object[] argsReadDisciplinesByStudent = { infoStudent.getNumber(), infoStudent.getDegreeType() };
 		Object[] argsReadCourseByStudent = { infoStudent.getNumber(), infoStudent.getDegreeType() };
 
 
-		ArrayList DisciplinesList = new ArrayList();
 		InfoDegree infoDegree = null;
 		String result="Inexistente";
 

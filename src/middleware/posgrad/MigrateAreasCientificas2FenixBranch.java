@@ -54,7 +54,6 @@ public class MigrateAreasCientificas2FenixBranch {
 		List result = null;
 		Query query = null;
 		Criteria criteria = null;
-		QueryByCriteria queryByCriteria = null;
 		DegreeCurricularPlan degreeCurricularPlan = null;
 		try {
 			System.out.print("Reading PosGrad Areas Cientificas ...");

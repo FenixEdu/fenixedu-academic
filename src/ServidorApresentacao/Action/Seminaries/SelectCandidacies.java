@@ -68,7 +68,6 @@ public class SelectCandidacies extends FenixDispatchAction
 			{
 				InfoStudent student= null;
 				InfoStudentCurricularPlan studentCurricularPlan= null;
-				List casesChoices= null;
 				InfoCandidacy candidacy= (InfoCandidacy) iterator.next();
 				Object[] argsReadStudent= { candidacy.getStudentIdInternal()};
 				student= (InfoStudent) gestor.executar(userView, "student.ReadStudentById", argsReadStudent);

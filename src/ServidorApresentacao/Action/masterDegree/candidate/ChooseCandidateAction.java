@@ -22,7 +22,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoMasterDegreeCandidate;
-import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
 public class ChooseCandidateAction extends ServidorApresentacao.Action.base.FenixAction {
@@ -36,8 +35,7 @@ public class ChooseCandidateAction extends ServidorApresentacao.Action.base.Feni
 
 	HttpSession session = request.getSession(false);
 	if (session != null) {
-      IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-	  List candidateList = (List) session.getAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST);
+      List candidateList = (List) session.getAttribute(SessionConstants.MASTER_DEGREE_CANDIDATE_LIST);
 			
 	  Integer choosenCandidatePosition = Integer.valueOf(request.getParameter("candidate"));
 			

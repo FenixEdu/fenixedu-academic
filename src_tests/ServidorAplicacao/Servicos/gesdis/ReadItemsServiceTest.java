@@ -30,7 +30,6 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
-import ServidorPersistente.IPersistentItem;
 import ServidorPersistente.IPersistentSection;
 import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
@@ -97,7 +96,6 @@ public class ReadItemsServiceTest extends TestCaseReadServices {
 		IDisciplinaExecucaoPersistente persistentExecutionCourse = null;
 		IPersistentSite persistentSite = null;
 		IPersistentSection persistentSection = null;
-		IPersistentItem persistentItem = null;
 		ISection section = null;
 
 		try {
@@ -110,7 +108,7 @@ public class ReadItemsServiceTest extends TestCaseReadServices {
 				persistentSupport.getIDisciplinaExecucaoPersistente();
 			persistentSite = persistentSupport.getIPersistentSite();
 			persistentSection = persistentSupport.getIPersistentSection();
-			persistentItem = persistentSupport.getIPersistentItem();
+			
 
 			persistentSupport.iniciarTransaccao();
 

@@ -15,10 +15,7 @@ import java.util.Calendar;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import DataBeans.InfoDegree;
-import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoLesson;
@@ -76,19 +73,19 @@ public class EditarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 				new TipoSala(1),
 				new Integer(100),
 				new Integer(50));
-		InfoDegree infoLicenciatura =
-			new InfoDegree(
-				"LEIC",
-				"Licenciatura de Engenharia Informatica e de Computadores");
+//		InfoDegree infoLicenciatura =
+//			new InfoDegree(
+//				"LEIC",
+//				"Licenciatura de Engenharia Informatica e de Computadores");
 		InfoExecutionYear infoExecutionYear =
 			new InfoExecutionYear("2002/2003");
 		InfoExecutionPeriod infoExecutionPeriod =
 			new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
-		InfoDegreeCurricularPlan curricularPlan =
-			new InfoDegreeCurricularPlan("plano1", infoLicenciatura);
+//		InfoDegreeCurricularPlan curricularPlan =
+//			new InfoDegreeCurricularPlan("plano1", infoLicenciatura);
 
-		InfoExecutionDegree infoLicenciaturaExecucao =
-			new InfoExecutionDegree(curricularPlan, infoExecutionYear);
+//		InfoExecutionDegree infoLicenciaturaExecucao =
+//			new InfoExecutionDegree(curricularPlan, infoExecutionYear);
 		InfoExecutionCourse iDE =
 			new InfoExecutionCourse(
 				"Trabalho Final de Curso I",
@@ -156,19 +153,19 @@ public class EditarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 				new TipoSala(1),
 				new Integer(100),
 				new Integer(50));
-		InfoDegree infoLicenciatura =
-			new InfoDegree(
-				"LEIC",
-				"Licenciatura de Engenharia Informatica e de Computadores");
+//		InfoDegree infoLicenciatura =
+//			new InfoDegree(
+//				"LEIC",
+//				"Licenciatura de Engenharia Informatica e de Computadores");
 		InfoExecutionYear infoExecutionYear =
 			new InfoExecutionYear("2002/2003");
 		InfoExecutionPeriod infoExecutionPeriod =
 			new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
-		InfoDegreeCurricularPlan curricularPlan =
-			new InfoDegreeCurricularPlan("plano1", infoLicenciatura);
+//		InfoDegreeCurricularPlan curricularPlan =
+//			new InfoDegreeCurricularPlan("plano1", infoLicenciatura);
 
-		InfoExecutionDegree infoLicenciaturaExecucao =
-			new InfoExecutionDegree(curricularPlan, infoExecutionYear);
+//		InfoExecutionDegree infoLicenciaturaExecucao =
+//			new InfoExecutionDegree(curricularPlan, infoExecutionYear);
 		InfoExecutionCourse iDE =
 			new InfoExecutionCourse(
 				"Trabalho Final de Curso I",
@@ -210,10 +207,8 @@ public class EditarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 				infoSala,
 				iDE);
 
-		Object result = null;
-
 		try {
-			result = _gestor.executar(_userView, "EditarAula", argsEditarAula);
+			 _gestor.executar(_userView, "EditarAula", argsEditarAula);
 			fail("testEditExistingAulaWithInvalidTimeInterval: ");
 		} catch (InvalidTimeIntervalServiceException e) {
 			
@@ -235,19 +230,19 @@ public class EditarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 				new TipoSala(1),
 				new Integer(100),
 				new Integer(50));
-		InfoDegree infoLicenciatura =
-			new InfoDegree(
-				"LEIC",
-				"Licenciatura de Engenharia Informatica e de Computadores");
+//		InfoDegree infoLicenciatura =
+//			new InfoDegree(
+//				"LEIC",
+//				"Licenciatura de Engenharia Informatica e de Computadores");
 		InfoExecutionYear infoExecutionYear =
 			new InfoExecutionYear("2002/2003");
 		InfoExecutionPeriod infoExecutionPeriod =
 			new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
-		InfoDegreeCurricularPlan curricularPlan =
-			new InfoDegreeCurricularPlan("plano1", infoLicenciatura);
+//		InfoDegreeCurricularPlan curricularPlan =
+//			new InfoDegreeCurricularPlan("plano1", infoLicenciatura);
 
-		InfoExecutionDegree infoLicenciaturaExecucao =
-			new InfoExecutionDegree(curricularPlan, infoExecutionYear);
+//		InfoExecutionDegree infoLicenciaturaExecucao =
+//			new InfoExecutionDegree(curricularPlan, infoExecutionYear);
 		InfoExecutionCourse iDE =
 			new InfoExecutionCourse(
 				"Trabalho Final de Curso I",
@@ -281,10 +276,8 @@ public class EditarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 				infoSala,
 				iDE);
 
-		Object result = null;
-
 		try {
-			result = _gestor.executar(_userView, "EditarAula", argsEditarAula);
+			 _gestor.executar(_userView, "EditarAula", argsEditarAula);
 			// all is ok
 		} catch (ExistingServiceException ex) {
 			fail("testEditExistingLessonCompleteMatch");
@@ -298,14 +291,14 @@ public class EditarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 	//	edit new existing lesson with intercepting match
 	public void testEditExistingLessonInterceptingMatch() {
 
-		InfoRoom infoSala =
-			new InfoRoom(
-				"Ga1",
-				"Pavilhao Central",
-				new Integer(0),
-				new TipoSala(1),
-				new Integer(100),
-				new Integer(50));
+//		InfoRoom infoSala =
+//			new InfoRoom(
+//				"Ga1",
+//				"Pavilhao Central",
+//				new Integer(0),
+//				new TipoSala(1),
+//				new Integer(100),
+//				new Integer(50));
 		InfoRoom infoSala1 =
 			new InfoRoom(
 				"Ga2",
@@ -314,19 +307,19 @@ public class EditarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 				new TipoSala(1),
 				new Integer(100),
 				new Integer(50));
-		InfoDegree infoLicenciatura =
-			new InfoDegree(
-				"LEIC",
-				"Licenciatura de Engenharia Informatica e de Computadores");
+//		InfoDegree infoLicenciatura =
+//			new InfoDegree(
+//				"LEIC",
+//				"Licenciatura de Engenharia Informatica e de Computadores");
 		InfoExecutionYear infoExecutionYear =
 			new InfoExecutionYear("2002/2003");
 		InfoExecutionPeriod infoExecutionPeriod =
 			new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
-		InfoDegreeCurricularPlan curricularPlan =
-			new InfoDegreeCurricularPlan("plano1", infoLicenciatura);
+//		InfoDegreeCurricularPlan curricularPlan =
+//			new InfoDegreeCurricularPlan("plano1", infoLicenciatura);
 
-		InfoExecutionDegree infoLicenciaturaExecucao =
-			new InfoExecutionDegree(curricularPlan, infoExecutionYear);
+//		InfoExecutionDegree infoLicenciaturaExecucao =
+//			new InfoExecutionDegree(curricularPlan, infoExecutionYear);
 		InfoExecutionCourse iDE =
 			new InfoExecutionCourse(
 				"Trabalho Final de Curso I",
@@ -369,10 +362,8 @@ public class EditarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 				infoSala1,
 				iDE);
 
-		Object result = null;
-
 		try {
-			result = _gestor.executar(_userView, "EditarAula", argsEditarAula);
+			 _gestor.executar(_userView, "EditarAula", argsEditarAula);
 			fail("testEditExistingLessonInterceptingMatch: Expected Exception");
 		} catch (InterceptingServiceException ex) {
 			assertNotNull("testEditExistingLessonInterceptingMatch: " + ex);
@@ -394,19 +385,19 @@ public class EditarAulaServicosTest extends TestCaseNeedAuthorizationServices {
 				new TipoSala(1),
 				new Integer(100),
 				new Integer(50));
-		InfoDegree infoLicenciatura =
-			new InfoDegree(
-				"LEIC",
-				"Licenciatura de Engenharia Informatica e de Computadores");
+//		InfoDegree infoLicenciatura =
+//			new InfoDegree(
+//				"LEIC",
+//				"Licenciatura de Engenharia Informatica e de Computadores");
 		InfoExecutionYear infoExecutionYear =
 			new InfoExecutionYear("2002/2003");
 		InfoExecutionPeriod infoExecutionPeriod =
 			new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
-		InfoDegreeCurricularPlan curricularPlan =
-			new InfoDegreeCurricularPlan("plano1", infoLicenciatura);
+//		InfoDegreeCurricularPlan curricularPlan =
+//			new InfoDegreeCurricularPlan("plano1", infoLicenciatura);
 
-		InfoExecutionDegree infoLicenciaturaExecucao =
-			new InfoExecutionDegree(curricularPlan, infoExecutionYear);
+//		InfoExecutionDegree infoLicenciaturaExecucao =
+//			new InfoExecutionDegree(curricularPlan, infoExecutionYear);
 		InfoExecutionCourse iDE =
 			new InfoExecutionCourse(
 				"Trabalho Final de Curso I",

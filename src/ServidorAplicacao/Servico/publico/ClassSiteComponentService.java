@@ -7,9 +7,7 @@
 package ServidorAplicacao.Servico.publico;
 
 import DataBeans.ISiteComponent;
-import DataBeans.InfoExecutionDegree;
 import DataBeans.SiteView;
-import DataBeans.util.Cloner;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
@@ -20,7 +18,6 @@ import ServidorAplicacao.Factory.PublicSiteComponentBuilder;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
-import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.ISuportePersistente;
@@ -71,11 +68,8 @@ public class ClassSiteComponentService implements IServico {
 		throws FenixServiceException {
 
 		SiteView siteView = null;
-		InfoExecutionDegree infoExecutionDegree = null;
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente persistentExecutionCourse =
-				sp.getIDisciplinaExecucaoPersistente();
 			IPersistentExecutionPeriod persistentExecutionPeriod =
 				sp.getIPersistentExecutionPeriod();
 			IPersistentExecutionYear persistentExecutionYear =
@@ -99,11 +93,11 @@ public class ClassSiteComponentService implements IServico {
 					degreeInitials,
 					nameDegreeCurricularPlan,
 					executionYear);
-			if (executionDegree != null) {
-				infoExecutionDegree =
-					Cloner.copyIExecutionDegree2InfoExecutionDegree(
-						executionDegree);
-			}
+//			if (executionDegree != null) {
+//				infoExecutionDegree =
+//					Cloner.copyIExecutionDegree2InfoExecutionDegree(
+//						executionDegree);
+//			}
 			PublicSiteComponentBuilder componentBuilder =
 				PublicSiteComponentBuilder.getInstance();
 

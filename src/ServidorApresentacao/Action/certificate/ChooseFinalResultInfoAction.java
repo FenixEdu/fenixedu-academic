@@ -55,14 +55,9 @@ public class ChooseFinalResultInfoAction extends DispatchAction {
 
 		
 		HttpSession session = request.getSession(false);
-		DynaActionForm chooseDeclaration = (DynaActionForm) form;
-
-
 		if (session != null) {
 			
 			session.removeAttribute(SessionConstants.SPECIALIZATIONS);
-			
-			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			
 			ArrayList specializations = Specialization.toArrayList();
 			session.setAttribute(SessionConstants.SPECIALIZATIONS, specializations);
@@ -189,8 +184,6 @@ public class ChooseFinalResultInfoAction extends DispatchAction {
 							}					 
 						}			
 						List newEnrolmentList = new ArrayList();
-						InfoEnrolment infoEnrolment = new InfoEnrolment();
-						
 						//get the last enrolmentEvaluation
 						Iterator iterator1 = enrolmentList.iterator();
 						double sum = 0;

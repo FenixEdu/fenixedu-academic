@@ -143,10 +143,8 @@ public class EditBibliographicReferenceTest extends ServiceNeedsAuthenticationTe
 
 		Object serviceArguments[] = getTestBibliographicReferenceUnsuccessfullArguments();
 
-		Object result = null;
-
 		try {
-			result = gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
+			 gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
 			fail(getNameOfServiceToBeTested() + "fail testBibliographicReferenceNotBelongsExecutionCourse");
 		} catch (NotAuthorizedException ex) {
 

@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoRoom;
@@ -35,7 +34,6 @@ public class ViewRoomForExamsFormAction extends FenixAction {
 		throws FenixActionException {
 
 		HttpSession session = request.getSession();
-		DynaActionForm indexForm = (DynaActionForm) form;
 		request.removeAttribute(SessionConstants.INFO_SECTION);
 		if (session != null) {
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
