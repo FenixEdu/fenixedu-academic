@@ -468,4 +468,166 @@
 	<foreignkey field-id-ref="3"/>
     </reference-descriptor>
 </class-descriptor>	
+
+
+<!-- ******************************************************************************************************************************* -->
+<!-- Definitions for Dominio.StudentGroup -->
+<!-- ******************************************************************************************************************************* -->
+<class-descriptor class="Dominio.StudentGroup"
+                  table="STUDENT_GROUP">
+    <field-descriptor id="1"
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />
+    <field-descriptor id="2"
+        name="groupNumber"
+        column="GROUP_NUMBER"
+        jdbc-type="INTEGER"
+	/>
+         
+    <field-descriptor id="3"
+         name="keyShift"
+         column="KEY_SHIFT"
+    	  jdbc-type="INTEGER"
+    />
+    	 
+    <field-descriptor id="4"
+         name="keyGroupProperties"
+         column="KEY_GROUP_PROPERTIES"
+    	  jdbc-type="INTEGER"
+    />
+        
+    <reference-descriptor
+         name="shift"
+         class-ref="Dominio.Turno"
+         proxy="true"
+    >
+	<foreignkey field-id-ref="3"/>
+	
+
+	</reference-descriptor>
+
+    <reference-descriptor
+         name="groupProperties"
+         class-ref="Dominio.GroupProperties"
+         proxy="true"
+    >
+	<foreignkey field-id-ref="4"/>
+	
+	</reference-descriptor>
+
+</class-descriptor>
+
+
+<!-- ******************************************************************************************************************************* -->
+<!-- Definitions for Dominio.StudentGroupAttend -->
+<!-- ******************************************************************************************************************************* -->
+<class-descriptor class="Dominio.StudentGroupAttend"
+                  table="STUDENT_GROUP_ATTEND">
+    <field-descriptor id="1"
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />
+         
+    <field-descriptor id="2"
+         name="keyAttend"
+         column="KEY_ATTEND"
+    	  jdbc-type="INTEGER"
+    />
+    	 
+    <field-descriptor id="3"
+         name="keyStudentGroup"
+         column="KEY_STUDENT_GROUP"
+    	  jdbc-type="INTEGER"
+    />
+        
+    <reference-descriptor
+         name="attend"
+         class-ref="Dominio.Frequenta"
+         proxy="true"
+    >
+	<foreignkey field-id-ref="2"/>
+	</reference-descriptor>
+
+    
+    <reference-descriptor
+         name="studentGroup"
+         class-ref="Dominio.StudentGroup"
+         proxy="true"
+    >
+	<foreignkey field-id-ref="3"/>
+	
+	</reference-descriptor>
+
+</class-descriptor>
+
+
+<!-- ******************************************************************************************************************************* -->
+<!-- Definitions for Dominio.GroupProperties -->
+<!-- ******************************************************************************************************************************* -->
+<class-descriptor class="Dominio.GroupProperties"
+                  table="GROUP_PROPERTIES">
+    <field-descriptor id="1"
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />
+         
+    <field-descriptor id="2"
+         name="maximumCapacity"
+         column="MAXIMUM_CAPACITY"
+    	  jdbc-type="INTEGER"
+    />
+    	 
+    <field-descriptor id="3"
+         name="minimumCapacity"
+         column="MINIMUM_CAPACITY"
+    	  jdbc-type="INTEGER"
+    />
+        
+    <field-descriptor id="4"
+         name="idealCapacity"
+         column="IDEAL_CAPACITY"
+    	  jdbc-type="INTEGER"
+    />
+
+    <field-descriptor id="5"
+         name="enrolmentPolicy"
+         column="ENROLMENT_POLICY"
+    	  jdbc-type="CLOB"
+        conversion="ServidorPersistente.Conversores.Clob2StringFieldConversion"
+    />
+    
+    <field-descriptor id="6"
+         name="groupMaximumNumber"
+         column="GROUP_MAXIMUM_NUMBER"
+    	  jdbc-type="INTEGER"
+    />
+
+    <field-descriptor id="7"
+         name="keyExecutionCourse"
+         column="KEY_EXECUTION_COURSE"
+    	  jdbc-type="INTEGER"
+    />
+            
+    <reference-descriptor
+         name="executionCourse"
+         class-ref="Dominio.DisciplinaExecucao"
+         proxy="true"
+    >
+	<foreignkey field-id-ref="7"/>
+	
+	</reference-descriptor>
+
+</class-descriptor>
+
+
 <!-- Mapping of User defined classes ends here -->
