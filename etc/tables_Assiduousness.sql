@@ -131,7 +131,7 @@ CREATE TABLE ass_FUNCIONARIO (
   PRIMARY KEY  (codigoInterno),
   UNIQUE KEY u1 (numeroMecanografico),
   UNIQUE KEY u2 (chavePessoa)
-) TYPE=InnoDB;TYPE=InnoDB COMMENT='InnoDB free: 378880 kB; InnoDB free: 378880 kB';
+) TYPE=InnoDB;
 
 --
 -- Table structure for table 'ass_FUNCIONARIO_HISTORICO'
