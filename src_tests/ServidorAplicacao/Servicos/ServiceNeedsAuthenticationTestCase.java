@@ -1,6 +1,6 @@
 /*
  * Created on 7/Out/2003
- *
+ *  
  */
 package ServidorAplicacao.Servicos;
 
@@ -9,22 +9,23 @@ import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 /**
- * @author  Luis Egidio, lmre@mega.ist.utl.pt
- * 			Nuno Ochoa,  nmgo@mega.ist.utl.pt
- *
+ * @author Luis Egidio, lmre@mega.ist.utl.pt Nuno Ochoa, nmgo@mega.ist.utl.pt
+ *  
  */
-public abstract class ServiceNeedsAuthenticationTestCase
-	extends ServiceTestCase {
+public abstract class ServiceNeedsAuthenticationTestCase extends ServiceTestCase
+{
 
 	protected IUserView userView = null;
 	protected IUserView userView2 = null;
 	protected IUserView userView3 = null;
 
-	protected ServiceNeedsAuthenticationTestCase(String name) {
+	protected ServiceNeedsAuthenticationTestCase(String name)
+	{
 		super(name);
 	}
 
-	protected void setUp() {
+	protected void setUp()
+	{
 		super.setUp();
 		userView = authenticateUser(getAuthenticatedAndAuthorizedUser());
 		userView2 = authenticateUser(getAuthenticatedAndUnauthorizedUser());
@@ -32,98 +33,80 @@ public abstract class ServiceNeedsAuthenticationTestCase
 
 	}
 
-	public void testAuthorizedUser() {
+	public void testAuthorizedUser()
+	{
 		Object serviceArguments[] = getAuthorizeArguments();
 
-		try {
-			gestor.executar(
-				userView,
-				getNameOfServiceToBeTested(),
-				serviceArguments);
-			System.out.println(
-				"testAuthorizedUser was SUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested());
-
-		} catch (NotAuthorizedException ex) {
-			ex.printStackTrace();
-			System.out.println(
-				"testAuthorizedUser was UNSUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested());
+		try
+		{
+			Object result = gestor.executar(userView, getNameOfServiceToBeTested(), serviceArguments);
+			assertAuthorizedResult(result);
+		} catch (Throwable ex)
+		{
+			ex.printStackTrace(System.out);
 			fail(getNameOfServiceToBeTested() + ": fail testAuthorizedUser");
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			System.out.println(
-				"testAuthorizedUser was UNSUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested());
-			fail("Unable to run service: " + getNameOfServiceToBeTested());
 		}
 	}
 
-	public void testUnauthorizedUser() {
+	public void testUnauthorizedUser()
+	{
+		Object serviceArguments[] = getAuthorizeArguments();
+		Object result = null;
+		try
+		{
+			result = gestor.executar(userView2, getNameOfServiceToBeTested(), serviceArguments);
+			fail(this.getClass().getName() + ": Service " + getNameOfServiceToBeTested() + ": fail testUnauthorizedUser");
+		} catch (NotAuthorizedException ex)
+		{
+			ex.printStackTrace(System.out);
+		} catch (Exception ex)
+		{
+			ex.printStackTrace();
+			fail("Test class:" + this.getClass().getName() + "Unable to run service: " + getNameOfServiceToBeTested());
+		}
+	}
+
+	/**
+	 * This method by default does nothing. This should be used to assert the
+	 * result from an authorized service call.
+	 * 
+	 * @param result
+	 *                   Represents the result from service execution.
+	 */
+	protected void assertAuthorizedResult(Object result)
+	{}
+
+	public void testNonAuthenticatedUser()
+	{
 		Object serviceArguments[] = getAuthorizeArguments();
 
-		try {
-			gestor.executar(
-				userView2,
-				getNameOfServiceToBeTested(),
-				serviceArguments);
-			System.out.println(
-				"testUnauthorizedUser was UNSUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested());
-			fail(getNameOfServiceToBeTested() + ": fail testUnauthorizedUser");
-
-		} catch (NotAuthorizedException ex) {
+		try
+		{
+			gestor.executar(userView3, getNameOfServiceToBeTested(), serviceArguments);
+			fail(this.getClass().getName() + ": Service " + getNameOfServiceToBeTested() + "fail testNonAuthenticatedUser");
+		} catch (NotAuthorizedException ex)
+		{
 			ex.printStackTrace();
-			System.out.println(
-				"testUnauthorizedUser was SUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested());
+			System.out.println("testNonAuthenticatedUser was SUCCESSFULY runned by service: " + getNameOfServiceToBeTested());
 
-		} catch (Exception ex) {
+		} catch (Exception ex)
+		{
 			ex.printStackTrace();
-			System.out.println(
-				"testUnauthorizedUser was UNSUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested());
+			System.out.println("testNonAuthenticatedUser was UNSUCCESSFULY runned by service: " + getNameOfServiceToBeTested());
 			fail("Unable to run service: " + getNameOfServiceToBeTested());
 		}
 	}
 
-	public void testNonAuthenticatedUser() {
-		Object serviceArguments[] = getAuthorizeArguments();
-
-		try {
-			gestor.executar(
-				userView3,
-				getNameOfServiceToBeTested(),
-				serviceArguments);
-			System.out.println(
-				"testNonAuthenticatedUser was UNSUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested());
-			fail(
-				getNameOfServiceToBeTested() + "fail testNonAuthenticatedUser");
-
-		} catch (NotAuthorizedException ex) {
-			ex.printStackTrace();
-			System.out.println(
-				"testNonAuthenticatedUser was SUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested());
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			System.out.println(
-				"testNonAuthenticatedUser was UNSUCCESSFULY runned by service: "
-					+ getNameOfServiceToBeTested());
-			fail("Unable to run service: " + getNameOfServiceToBeTested());
-		}
-	}
-
-	protected IUserView authenticateUser(String[] arguments) {
+	protected IUserView authenticateUser(String[] arguments)
+	{
 		SuportePersistenteOJB.resetInstance();
 		String args[] = arguments;
 
-		try {
+		try
+		{
 			return (IUserView) gestor.executar(null, "Autenticacao", args);
-		} catch (Exception ex) {
+		} catch (Exception ex)
+		{
 			ex.printStackTrace();
 			fail("Authenticating User!" + ex);
 			return null;
