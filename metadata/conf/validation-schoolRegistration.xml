@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- @validation.doctype@ -->
+<form-validation>
+  <formset>
+
+   <form name="schoolRegistrationForm">
+      	<field property="oldPassword" depends="required">
+        	<arg0 key="label.candidate.oldPasswordError"/>
+      	</field>
+
+  		<field property="newPassword" depends="required,twoFields">
+			<arg0 key="label.candidate.newPasswordError" />
+            <var>
+            	<var-name>secondProperty</var-name>
+           		<var-value>reTypeNewPassword</var-value>
+            </var>
+        </field>
+    </form>
+  </formset>
+</form-validation>
