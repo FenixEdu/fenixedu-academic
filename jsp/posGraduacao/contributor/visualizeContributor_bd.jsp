@@ -33,10 +33,9 @@
             <td><bean:write name="contributor" property="contributorAddress"/></td>
           </tr>
         </logic:present>
+    </table>
         <html:link page="/editContributor.do?method=prepareEdit">
         	<bean:message key="link.masterDegree.administrativeOffice.editContributor" />
         </html:link>
-    </table>
-    
   </body>
 </html>

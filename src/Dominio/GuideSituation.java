@@ -52,7 +52,7 @@ public class GuideSituation implements IGuideSituation {
   }
   
   public String toString() {
-    String result = "[GUIDE ENTRY";
+    String result = "[GUIDE SITUATION";
     result += ", codInt=" + internalCode;
     result += ", remarks=" + remarks;
     result += ", guide=" + guide;

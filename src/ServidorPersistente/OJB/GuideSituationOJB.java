@@ -96,6 +96,10 @@ public class GuideSituationOJB extends ObjectFenixOJB implements IPersistentGuid
 							+ " and guide.year = $2"
 							+ " and situation = $3";
 			
+			System.out.println("number " + guide.getNumber());
+			System.out.println("year " + guide.getYear());
+			System.out.println("situation " + situationOfGuide);
+			
 			query.create(oqlQuery);
 
 			query.bind(guide.getNumber());

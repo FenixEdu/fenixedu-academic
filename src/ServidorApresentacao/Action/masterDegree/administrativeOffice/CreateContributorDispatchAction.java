@@ -48,6 +48,10 @@ public class CreateContributorDispatchAction extends DispatchAction {
 			
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			
+			createContributorForm.set("contributorNumber", null);
+			createContributorForm.set("contributorName", null);
+			createContributorForm.set("contributorAddress", null);
+			
 			return mapping.findForward("PrepareReady");
 		  } else
 			throw new Exception();   
@@ -83,8 +87,6 @@ public class CreateContributorDispatchAction extends DispatchAction {
 				return mapping.getInputForward();
 			}
 				
-				
-			
 			// Create the new Contributor
 			InfoContributor infoContributor = new InfoContributor();
 			infoContributor.setContributorNumber(contributorNumber);

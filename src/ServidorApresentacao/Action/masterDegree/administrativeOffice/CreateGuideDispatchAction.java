@@ -33,6 +33,8 @@ import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.GuideRequester;
+import Util.PaymentType;
+import Util.SituationOfGuide;
 import Util.Specialization;
 
 /**
@@ -171,8 +173,11 @@ public class CreateGuideDispatchAction extends DispatchAction {
 			}
 			
 			session.removeAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR);
-
 			session.setAttribute(SessionConstants.GUIDE, infoGuide);
+			
+			session.setAttribute(SessionConstants.PAYMENT_TYPE, PaymentType.toArrayList());
+			session.setAttribute(SessionConstants.GUIDE_SITUATION_LIST, SituationOfGuide.toArrayList());
+
 			
 			if (requesterType.equals(GuideRequester.CANDIDATE_STRING)){
 				return mapping.findForward("CreateCandidateGuide");
@@ -184,4 +189,51 @@ public class CreateGuideDispatchAction extends DispatchAction {
 			return null;
 		} else throw new Exception();   
 	  }
+	  
+	public ActionForward create(ActionMapping mapping, ActionForm form,
+									HttpServletRequest request,
+									HttpServletResponse response)
+		throws Exception {
+
+		SessionUtils.validSessionVerification(request, mapping);
+		HttpSession session = request.getSession(false);
+
+		if (session != null) {
+			DynaActionForm createGuideForm = (DynaActionForm) form;
+			GestorServicos serviceManager = GestorServicos.manager();
+			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+				
+			// Get the information
+
+			String othersRemarks = (String) createGuideForm.get("othersRemarks");
+			String othersPriceString = (String) createGuideForm.get("othersPrice");
+			String remarks = (String) createGuideForm.get("remarks");
+			String guideSituationString = (String) createGuideForm.get("guideSituation");
+			Integer paymentType = (Integer) createGuideForm.get("paymentType");
+			
+			Double othersPrice = null;
+			if ((othersPriceString != null) && (othersPriceString.length() != 0))
+				othersPrice = new Double(othersPriceString);
+				
+			SituationOfGuide situationOfGuide = new SituationOfGuide(new Integer(guideSituationString));
+			
+			InfoGuide infoGuide = (InfoGuide) session.getAttribute(SessionConstants.GUIDE);
+	
+			InfoGuide newInfoGuide = null;
+			
+			try {
+				Object args[] = {infoGuide, othersRemarks, othersPrice, remarks, situationOfGuide, paymentType};
+				newInfoGuide = (InfoGuide) serviceManager.executar(userView, "CreateGuide", args);
+			} catch (NonExistingContributorServiceException e) {
+				session.setAttribute(SessionConstants.UNEXISTING_CONTRIBUTOR, Boolean.TRUE);
+				return mapping.getInputForward();
+			}
+						
+			session.removeAttribute(SessionConstants.GUIDE);
+			session.setAttribute(SessionConstants.GUIDE, newInfoGuide);
+			
+			return mapping.findForward("CreateSuccess");
+			
+		} else throw new Exception();
+	}
 }

@@ -17,6 +17,7 @@ import ServidorPersistente.IPersistentGuide;
 import ServidorPersistente.IPessoaPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.GuideRequester;
+import Util.PaymentType;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -84,6 +85,7 @@ public class GuideOJBTest extends TestCaseOJB {
 			
 			IGuide guide = persistentGuide.readByNumberAndYear(new Integer(1), new Integer(2003));
 			assertNotNull(guide);
+			
 			assertEquals(guide.getNumber(), new Integer(1));
 			assertEquals(guide.getYear(), new Integer(2003));
 			assertEquals(guide.getPerson(), person);
@@ -91,6 +93,8 @@ public class GuideOJBTest extends TestCaseOJB {
 			assertEquals(guide.getRemarks(), "guia1");
 			assertEquals(guide.getTotal(), new Double(600.04));
 			assertEquals(guide.getGuideRequester(), GuideRequester.CANDIDATE_TYPE);
+			assertEquals(guide.getGuideSituations().size(), 2);
+			assertEquals(guide.getPaymentType(), PaymentType.CASH_TYPE);
 			
 			guide = persistentGuide.readByNumberAndYear(new Integer(2), new Integer(2003));
 			assertNotNull(guide);
@@ -104,6 +108,8 @@ public class GuideOJBTest extends TestCaseOJB {
 			
 			assertEquals(guide.getGuideEntries().size(), 2);
 			assertEquals(guide.getGuideRequester(), GuideRequester.CANDIDATE_TYPE);
+			assertEquals(guide.getGuideSituations().size(), 1);
+			assertEquals(guide.getPaymentType(), PaymentType.ATM_TYPE);
 					
 
 			guide = persistentGuide.readByNumberAndYear(new Integer(5), new Integer(2003));

@@ -243,7 +243,15 @@
 	     column="KEY_EXECUTION_DEGREE"
 	     jdbc-type="INTEGER"
 	  />
-	  
+
+	  <field-descriptor 
+	     name="paymentType"
+	     column="PAYMENT_TYPE"
+	     jdbc-type="INTEGER"
+	     conversion="ServidorPersistente.Conversores.JavaPaymentType2SqlPaymentTypeFieldConversion"
+	  />
+
+
  	  <reference-descriptor
          	name="contributor"
          	class-ref="Dominio.Contributor"
@@ -271,6 +279,13 @@
     <collection-descriptor
          name="guideEntries"
          element-class-ref="Dominio.GuideEntry"
+       >
+       <inverse-foreignkey field-ref="keyGuide"/>
+     </collection-descriptor>
+
+    <collection-descriptor
+         name="guideSituations"
+         element-class-ref="Dominio.GuideSituation"
        >
        <inverse-foreignkey field-ref="keyGuide"/>
      </collection-descriptor>

@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import Util.GuideRequester;
+import Util.PaymentType;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -26,11 +27,12 @@ public class InfoGuide implements Serializable{
 	private List infoGuideEntries;
 	private GuideRequester guideRequester; 
 	private InfoExecutionDegree infoExecutionDegree;
+	private PaymentType paymentType;
 
 	public InfoGuide() {} 
 		
 	public InfoGuide(Integer number, Integer year, Double total, String remarks, InfoPerson infoPerson, InfoContributor infoContributor, GuideRequester guideRequester,
-			InfoExecutionDegree infoExecutionDegree){	 		
+			InfoExecutionDegree infoExecutionDegree, PaymentType paymentType){	 		
 		this.number = number;
 		this.year = year;
 		this.total = total;
@@ -39,6 +41,7 @@ public class InfoGuide implements Serializable{
 		this.infoContributor = infoContributor;
 		this.guideRequester = guideRequester;
 		this.infoExecutionDegree = infoExecutionDegree;
+		this.paymentType = paymentType;
 	}
 	
 	public boolean equals(Object obj) {
@@ -64,10 +67,13 @@ public class InfoGuide implements Serializable{
 	  result += ", infoGuideEntries=" + infoGuideEntries;
 	  result += ", guideRequester=" + guideRequester;
 	  result += ", infoExecutionDegree=" + infoExecutionDegree;
+	  result += ", paymentType=" + paymentType;
 	  result += "]";
 	  return result;
 	}
 
+	
+	
 	    
 	/**
 	 * @return
@@ -193,6 +199,20 @@ public class InfoGuide implements Serializable{
 	 */
 	public void setYear(Integer integer) {
 		year = integer;
+	}
+
+	/**
+	 * @return
+	 */
+	public PaymentType getPaymentType() {
+		return paymentType;
+	}
+
+	/**
+	 * @param type
+	 */
+	public void setPaymentType(PaymentType type) {
+		paymentType = type;
 	}
 
 }

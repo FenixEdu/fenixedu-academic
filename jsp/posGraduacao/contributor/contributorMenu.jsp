@@ -13,8 +13,8 @@
   
   	<bean:message key="label.masterDegree.administrativeOffice.contributor" /><br>
         &nbsp;&nbsp;- <html:link page="/createContributorDispatchAction.do?method=prepare"><bean:message key="link.masterDegree.administrativeOffice.createContributor" /></html:link><br>
-        &nbsp;&nbsp;- <html:link page="/visualizeContributors.do?method=prepare&action=visualize"><bean:message key="link.masterDegree.administrativeOffice.visualizeContributor" /></html:link><br>
-        &nbsp;&nbsp;- <html:link page="/editContributors.do?method=prepare&action=edit"><bean:message key="link.masterDegree.administrativeOffice.editContributor" /></html:link><br>
+        &nbsp;&nbsp;- <html:link page="/visualizeContributors.do?method=prepare&action=visualize&page=0"><bean:message key="link.masterDegree.administrativeOffice.visualizeContributor" /></html:link><br>
+        &nbsp;&nbsp;- <html:link page="/editContributors.do?method=prepare&action=edit&page=0"><bean:message key="link.masterDegree.administrativeOffice.editContributor" /></html:link><br>
 	<br>
 	
 	<html:link page="/guideSection.do"><bean:message key="link.masterDegree.administrativeOffice.guide" />

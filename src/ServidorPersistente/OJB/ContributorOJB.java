@@ -88,11 +88,14 @@ public class ContributorOJB extends ObjectFenixOJB implements IPersistentContrib
 		try {
 			String oqlQuery = "select all from " + Contributor.class.getName();
 			
-			if (contributorNumber != null) {
+			if (contributorNumber != null)
 				oqlQuery += " where contributorNumber = $1";
-				query.create(oqlQuery);
+
+			oqlQuery += " order by contributorNumber asc ";
+			query.create(oqlQuery);
+
+			if (contributorNumber != null)
 				query.bind(contributorNumber);
-			} else query.create(oqlQuery);
 			
 			List result = (List) query.execute();
 			super.lockRead(result);

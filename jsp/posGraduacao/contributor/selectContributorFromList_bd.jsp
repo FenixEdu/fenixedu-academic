@@ -19,7 +19,7 @@
         
     <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>" />
 	<bean:define id="link">
-		<bean:write name="path"/>.do?method=chooseContributor<%= "&" %>contributorPosition=
+		<bean:write name="path"/>.do?method=chooseContributor<%= "&" %>page=0<%= "&" %>contributorPosition=
 	</bean:define>
     <h2><bean:message name="title"/></h2>
     

@@ -10,9 +10,9 @@
     <title><bean:message key="title.masterDegree.administrativeOffice.listCandidates" /></title>
   </head>
   <body>
-   
+
+    <span class="error"><html:errors/><br></span>
    <table>
-    <span class="error"><html:errors/></span>
     <bean:define id="title" name="<%= SessionConstants.CONTRIBUTOR_ACTION %>" scope="session" />
     
     <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>" />
@@ -24,7 +24,7 @@
        <!-- Contributor Number -->
        <tr>
          <td><bean:message key="label.masterDegree.administrativeOffice.contributorNumber"/></td>
-         <td><html:text property="contributorNumber"/></td>
+         <td><html:text property="contributorNumber" /></td>
          </td>
        </tr>
     

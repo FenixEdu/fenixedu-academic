@@ -3,6 +3,7 @@ package Dominio;
 import java.util.List;
 
 import Util.GuideRequester;
+import Util.PaymentType;
 
 /**
  * 
@@ -24,15 +25,18 @@ public class Guide implements IGuide {
   protected IPessoa person;
   protected IContributor contributor;
   protected ICursoExecucao executionDegree;
-  
+  protected PaymentType paymentType;
+    
   protected GuideRequester guideRequester;
   
   protected List guideEntries;
+  protected List guideSituations;
   
 
   public Guide() { }
     
-  public Guide(Integer number,Integer year,Double total, String remarks,IPessoa person,IContributor contributor, GuideRequester guideRequester, ICursoExecucao executionDegree) {
+  public Guide(Integer number,Integer year,Double total, String remarks,IPessoa person,IContributor contributor,
+  			 	GuideRequester guideRequester, ICursoExecucao executionDegree, PaymentType paymentType) {
 	this.contributor = contributor;
 	this.number = number;
 	this.person = person;
@@ -41,6 +45,7 @@ public class Guide implements IGuide {
 	this.year = year;
 	this.guideRequester = guideRequester;
 	this.executionDegree = executionDegree;
+	this.paymentType = paymentType;
   }
   
   public boolean equals(Object obj) {
@@ -60,11 +65,9 @@ public class Guide implements IGuide {
     result += ", codInt=" + internalCode;
     result += ", number=" + number;
     result += ", year=" + year;
-    result += ", person=" + person;
     result += ", contributor=" + contributor;
 	result += ", total=" + total;
 	result += ", remarks=" + remarks;
-	result += ", guideEntries=" + guideEntries;
 	result += ", guide Requester=" + guideRequester;
 	result += ", execution Degree=" + executionDegree;
     result += "]";
@@ -72,7 +75,7 @@ public class Guide implements IGuide {
   }
 
 	
-
+	
 	/**
 	 * @return
 	 */
@@ -113,6 +116,13 @@ public class Guide implements IGuide {
 	 */
 	public Integer getKeyContributor() {
 		return keyContributor;
+	}
+	
+	/**
+	 * @return
+	 */
+	public Integer getKeyExecutionDegree() {
+		return keyExecutionDegree;
 	}
 	
 	/**
@@ -202,6 +212,13 @@ public class Guide implements IGuide {
 	/**
 	 * @param integer
 	 */
+	public void setKeyExecutionDegree(Integer integer) {
+		keyExecutionDegree = integer;
+	}
+	
+	/**
+	 * @param integer
+	 */
 	public void setKeyPerson(Integer integer) {
 		keyPerson = integer;
 	}
@@ -240,19 +257,33 @@ public class Guide implements IGuide {
 	public void setYear(Integer integer) {
 		year = integer;
 	}
+	
+	/**
+	 * @return
+	 */
+	public PaymentType getPaymentType() {
+		return paymentType;
+	}
+	
+	/**
+	 * @param type
+	 */
+	public void setPaymentType(PaymentType type) {
+		paymentType = type;
+	}
 
 	/**
 	 * @return
 	 */
-	public Integer getKeyExecutionDegree() {
-		return keyExecutionDegree;
+	public List getGuideSituations() {
+		return guideSituations;
 	}
 	
 	/**
-	 * @param integer
+	 * @param list
 	 */
-	public void setKeyExecutionDegree(Integer integer) {
-		keyExecutionDegree = integer;
+	public void setGuideSituations(List list) {
+		guideSituations = list;
 	}
 
 }

@@ -24,6 +24,7 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import DataBeans.InfoGuide;
 import DataBeans.InfoGuideEntry;
+import DataBeans.InfoGuideSituation;
 import DataBeans.InfoLesson;
 import DataBeans.InfoMasterDegreeCandidate;
 import DataBeans.InfoPerson;
@@ -58,6 +59,7 @@ import Dominio.ExecutionPeriod;
 import Dominio.ExecutionYear;
 import Dominio.Guide;
 import Dominio.GuideEntry;
+import Dominio.GuideSituation;
 import Dominio.IAnnouncement;
 import Dominio.IAula;
 import Dominio.IBibliographicReference;
@@ -78,6 +80,7 @@ import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
 import Dominio.IGuide;
 import Dominio.IGuideEntry;
+import Dominio.IGuideSituation;
 import Dominio.IItem;
 import Dominio.IMasterDegreeCandidate;
 import Dominio.IPessoa;
@@ -350,6 +353,9 @@ public abstract class Cloner {
 	public static InfoDegree copyIDegree2InfoDegree(ICurso degree) {
 		InfoDegree infoDegree = new InfoDegree();
 		try {
+			System.out.println("nome " + degree.getNome());
+			System.out.println("sigla " + degree.getSigla());
+			System.out.println("curso " + degree.getTipoCurso());
 			BeanUtils.copyProperties(infoDegree, degree);
 			infoDegree.setDegreeType(degree.getTipoCurso().toString());
 		} catch (Exception e) {
@@ -1219,18 +1225,29 @@ public abstract class Cloner {
 	public static IGuide copyInfoGuide2IGuide(InfoGuide infoGuide) {
 		IGuide guide = new Guide();
 		copyObjectProperties(guide, infoGuide);
+
+System.out.println("Cloner 1");		
+
 		guide.setContributor(Cloner.copyInfoContributor2IContributor(infoGuide.getInfoContributor()));
+		System.out.println("Cloner 2");		
 		guide.setPerson(Cloner.copyInfoPerson2IPerson(infoGuide.getInfoPerson()));
+		System.out.println("Cloner 3");		
 		guide.setExecutionDegree(Cloner.copyInfoExecutionDegree2ExecutionDegree(infoGuide.getInfoExecutionDegree()));
+		System.out.println("Cloner 4");		
 		
 		if (infoGuide.getInfoGuideEntries() != null){
+			System.out.println("Cloner 5");		
 			Iterator iterator = infoGuide.getInfoGuideEntries().iterator();
 			List guideEntries = new ArrayList();
 			while(iterator.hasNext()) {
 				guideEntries.add(Cloner.copyInfoGuideEntry2IGuideEntry((InfoGuideEntry) iterator.next())); 
 			}
+			System.out.println("Cloner 6");		
+
 			guide.setGuideEntries(guideEntries);			
 		}
+		System.out.println("Cloner 7");		
+
 		return guide;
 	}
 
@@ -1266,7 +1283,7 @@ public abstract class Cloner {
 	public static InfoGuideEntry copyIGuideEntry2InfoGuideEntry(IGuideEntry guideEntry) {
 		InfoGuideEntry infoGuideEntry = new InfoGuideEntry();
 		copyObjectProperties(infoGuideEntry, guideEntry);
-		infoGuideEntry.setInfoGuide(Cloner.copyIGuide2InfoGuide(guideEntry.getGuide()));
+//		infoGuideEntry.setInfoGuide(Cloner.copyIGuide2InfoGuide(guideEntry.getGuide()));
 		return infoGuideEntry;
 	}
 
@@ -1278,9 +1295,33 @@ public abstract class Cloner {
 	public static IGuideEntry copyInfoGuideEntry2IGuideEntry(InfoGuideEntry infoGuideEntry) {
 		IGuideEntry guideEntry = new GuideEntry();
 		copyObjectProperties(guideEntry, infoGuideEntry);
-		guideEntry.setGuide(Cloner.copyInfoGuide2IGuide(infoGuideEntry.getInfoGuide()));
+//		guideEntry.setGuide(Cloner.copyInfoGuide2IGuide(infoGuideEntry.getInfoGuide()));
 		return guideEntry;
 	}
 
+
+	/**
+	 * 
+	 * @param guideSituation
+	 * @return InfoGuideSituation
+	 */
+	public static InfoGuideSituation copyIGuideSituation2InfoGuideSituation(IGuideSituation guideSituation) {
+		InfoGuideSituation infoGuideSituation = new InfoGuideSituation();
+		copyObjectProperties(infoGuideSituation, guideSituation);
+		infoGuideSituation.setInfoGuide(Cloner.copyIGuide2InfoGuide(guideSituation.getGuide()));
+		return infoGuideSituation;
+	}
+
+	/**
+	 * 
+	 * @param infoGuideSituation
+	 * @return IGuideSituation
+	 */
+	public static IGuideSituation copyInfoGuideSituation2IGuideSituation(InfoGuideSituation infoGuideSituation) {
+		IGuideSituation guideSituation = new GuideSituation();
+		copyObjectProperties(guideSituation, infoGuideSituation);
+		guideSituation.setGuide(Cloner.copyInfoGuide2IGuide(infoGuideSituation.getInfoGuide()));
+		return guideSituation;
+	}
 
 }

@@ -38,11 +38,19 @@ public class ListContributorsDispatchAction extends DispatchAction {
 									HttpServletResponse response)
 		throws Exception {
 
+
+System.out.println("Prepare");
+
 		SessionUtils.validSessionVerification(request, mapping);
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
-			DynaActionForm createCandidateForm = (DynaActionForm) form;
+			DynaActionForm createContributorForm = (DynaActionForm) form;
+
+			// Clean the form
+			createContributorForm.set("contributorNumber", null);
+
+			
 			String action = request.getParameter("action");
 			
 			if (action.equals("visualize")) {
@@ -61,10 +69,13 @@ public class ListContributorsDispatchAction extends DispatchAction {
 	}
 		
 
-	public ActionForward getCContributors(ActionMapping mapping, ActionForm form,
+	public ActionForward getContributors(ActionMapping mapping, ActionForm form,
 										HttpServletRequest request,
 										HttpServletResponse response)
 		throws Exception {
+
+System.out.println("Get Contributors");
+
 
 		SessionUtils.validSessionVerification(request, mapping);
 		HttpSession session = request.getSession(false);
@@ -146,6 +157,8 @@ public class ListContributorsDispatchAction extends DispatchAction {
 										 HttpServletResponse response)
 		throws Exception {
 
+System.out.println("Prepare Edit");
+
 		SessionUtils.validSessionVerification(request, mapping);
 		HttpSession session = request.getSession(false);
 
@@ -156,6 +169,9 @@ public class ListContributorsDispatchAction extends DispatchAction {
 			
 			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 			InfoContributor infoContributor = (InfoContributor) session.getAttribute(SessionConstants.CONTRIBUTOR); 
+
+
+System.out.println("Contribuinte em sessao : " + infoContributor);
 
 			// Fill in The Form
 			

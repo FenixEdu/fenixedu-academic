@@ -144,8 +144,6 @@ public class PrepareCreateGuide implements IServico {
 			guide.setYear(year);
 			guide.setTotal(price.getPrice());
 			
-System.out.println(executionDegree);
-
 			guide.setExecutionDegree(executionDegree);
 
 			infoGuide = Cloner.copyIGuide2InfoGuide(guide);
@@ -157,11 +155,12 @@ System.out.println(executionDegree);
 			infoGuideEntry.setInfoGuide(infoGuide);
 			infoGuideEntry.setPrice(price.getPrice());
 			infoGuideEntry.setQuantity(new Integer(1));
-			
+
 			List infoGuideEntries = new ArrayList();
 			infoGuideEntries.add(infoGuideEntry);
 			
 			infoGuide.setInfoGuideEntries(infoGuideEntries);
+			infoGuide.setGuideRequester(GuideRequester.CANDIDATE_TYPE);			
 
 		}
 

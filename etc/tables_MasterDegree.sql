@@ -62,6 +62,7 @@ create table GUIDE (
    REMARKS text,
    GUIDE_REQUESTER integer(11) not null,
    KEY_EXECUTION_DEGREE integer(11) not null,
+   PAYMENT_TYPE integer(11),
    primary key (ID_INTERNAL),
    unique u1 (NUMBER,YEAR))
    type=InnoDB;

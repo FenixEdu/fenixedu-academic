@@ -52,9 +52,9 @@ public class SituationOfGuide {
 	public static ArrayList toArrayList() {
 		ArrayList result = new ArrayList();
 		result.add(new LabelValueBean(SituationOfGuide.DEFAULT, null));
-		result.add(new LabelValueBean(SituationOfGuide.ANNULLED_STRING, SituationOfGuide.ANNULLED_STRING));
-		result.add(new LabelValueBean(SituationOfGuide.NON_PAYED_STRING, SituationOfGuide.NON_PAYED_STRING));
-		result.add(new LabelValueBean(SituationOfGuide.PAYED_STRING, SituationOfGuide.PAYED_STRING));
+		result.add(new LabelValueBean(SituationOfGuide.ANNULLED_STRING, String.valueOf(SituationOfGuide.ANNULLED)));
+		result.add(new LabelValueBean(SituationOfGuide.NON_PAYED_STRING, String.valueOf(SituationOfGuide.NON_PAYED)));
+		result.add(new LabelValueBean(SituationOfGuide.PAYED_STRING, String.valueOf(SituationOfGuide.PAYED)));
 		return result;	
 	}
     
