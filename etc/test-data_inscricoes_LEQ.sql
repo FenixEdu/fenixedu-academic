@@ -45,16 +45,14 @@ insert into DEPARTMENT_COURSE values (1, 'Disciplina Departamento', 'DD', 1);
 -- (ID_INTERNAL, BRANCH_CODE, BRANCH_NAME)
 delete from BRANCH;
 insert into BRANCH values (1, '', '');
-insert into BRANCH values (2, 'AAGR', 'ÁREA DE ARQUITECTURA E GESTÃO DE REDES');
-insert into BRANCH values (3, 'AAS', 'ÁREA DE APLICAÇÕES E SERVIÇOS');
 
 -- -----------------------------
 -- Data for table 'DEGREE'
 -- -----------------------------
 -- (ID_INTERNAL, CODE, NAME, TYPE_DEGREE)
 delete from DEGREE;
-insert into DEGREE values (1, 'LARQ', 'Licenciatura em Arquitectura', 1);
-insert into DEGREE values (2, 'LERCI', 'Licenciatura em Engenharia de Redes de Comunicação e de Informação', 1);
+insert into DEGREE values (1, 'LERCI', 'Licenciatura em Engenharia de Redes de Comunicação e de Informação', 1);
+insert into DEGREE values (2, 'LARQ', 'Licenciatura em Arquitectura', 1);
 insert into DEGREE values (3, 'LEQ', 'Licenciatura em Engenharia Quimica', 1);
 
 -- -----------------------------
@@ -62,8 +60,8 @@ insert into DEGREE values (3, 'LEQ', 'Licenciatura em Engenharia Quimica', 1);
 -- -----------------------------
 -- (ID_INTERNAL, NAME, KEY_DEGREE, STATE, INITIAL_DATE, END_DATE)
 delete from DEGREE_CURRICULAR_PLAN;
-insert into DEGREE_CURRICULAR_PLAN values (1, 'LARQ-2003', 1, 1, '0000-00-00', '0000-00-00');
-insert into DEGREE_CURRICULAR_PLAN values (2, 'LERCI-2003', 2, 1, '0000-00-00', '0000-00-00');
+insert into DEGREE_CURRICULAR_PLAN values (1, 'LERCI-2003', 1, 1, '0000-00-00', '0000-00-00');
+insert into DEGREE_CURRICULAR_PLAN values (2, 'LARQ-2003', 2, 1, '0000-00-00', '0000-00-00');
 insert into DEGREE_CURRICULAR_PLAN values (3, 'LEQ-2003', 3, 1, '0000-00-00', '0000-00-00');
 
 -- -----------------------------
@@ -71,9 +69,7 @@ insert into DEGREE_CURRICULAR_PLAN values (3, 'LEQ-2003', 3, 1, '0000-00-00', '0
 -- -----------------------------
 -- (ID_INTERNAL, KEY_STUDENT, KEY_DEGREE_CURRICULAR_PLAN, CURRENT_STATE, START_DATE, KEY_BRANCH)
 delete from STUDENT_CURRICULAR_PLAN;
--- insert into STUDENT_CURRICULAR_PLAN values (1, 6, 1, 1, '0000-00-00', 2);
--- insert into STUDENT_CURRICULAR_PLAN values (2, 6, 2, 1, '0000-00-00', 2);
-insert into STUDENT_CURRICULAR_PLAN values (3, 6, 3, 1, '0000-00-00', 1);
+insert into STUDENT_CURRICULAR_PLAN values (1, 6, 3, 1, '0000-00-00', 1);
 
 
 -- -----------------------------
@@ -81,7 +77,6 @@ insert into STUDENT_CURRICULAR_PLAN values (3, 6, 3, 1, '0000-00-00', 1);
 -- -----------------------------
 -- (ID_INTERNAL, KEY_DEPARTMENT_COURSE, KEY_DEGREE_CURRICULAR_PLAN, CREDITS, THEORETICAL_HOURS, PRATICAL_HOURS, THEO_PRAT_HOURS, LAB_HOURS, NAME, CODE, TYPE)
 
--- LEQ
 -- PRIMEIRO ANO, PRIMEIRO SEMESTRE:
 delete from CURRICULAR_COURSE;
 insert into CURRICULAR_COURSE values (1, 1, 3, 4.0, 3.0, 2.0, 0.0, 0.0, "INTRODUÇÃO À QUÍMICA-FÍSICA", "D3", 1);

@@ -1,6 +1,7 @@
 package ServidorAplicacao.strategy.enrolment.degree;
 
 import ServidorAplicacao.strategy.enrolment.degree.strategys.EnrolmentStrategyLARQ;
+import ServidorAplicacao.strategy.enrolment.degree.strategys.EnrolmentStrategyLEQ;
 import ServidorAplicacao.strategy.enrolment.degree.strategys.EnrolmentStrategyLERCI;
 import ServidorAplicacao.strategy.enrolment.degree.strategys.IEnrolmentStrategy;
 
@@ -52,13 +53,15 @@ public class EnrolmentStrategyFactory implements IEnrolmentStrategyFactory {
 		// FIXME: David-Ricardo: O nome do plano curricular e estratégias tem de ser alterados 
 		if ( (degree.equals("LERCI")) && degreeCurricularPlan.equals("LERCI-2003")) {
 			strategyInstance = new EnrolmentStrategyLERCI();
-			strategyInstance.setEnrolmentContext(enrolmentContext);
 		} else if ( (degree.equals("LARQ")) && degreeCurricularPlan.equals("LARQ-2003")) {
 			strategyInstance = new EnrolmentStrategyLARQ();
-			strategyInstance.setEnrolmentContext(enrolmentContext);
+		} else if ( (degree.equals("LEQ")) && degreeCurricularPlan.equals("LEQ-2003")) {
+			strategyInstance = new EnrolmentStrategyLEQ();
 		}else{
 			throw new IllegalArgumentException("Degree or DegreeCurricularPlan invalid!");
 		}
+		
+		strategyInstance.setEnrolmentContext(enrolmentContext);
 		return strategyInstance;
 	}
 
