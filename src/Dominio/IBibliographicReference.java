@@ -10,7 +10,7 @@ package Dominio;
  * To enable and disable the creation of type comments go to
  * Window>Preferences>Java>Code Generation.
  */
-public interface IBibliographicReference {
+public interface IBibliographicReference extends IDomainObject {
     String getTitle();
     String getAuthors();
     String getReference();

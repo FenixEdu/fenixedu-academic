@@ -8,21 +8,21 @@ import java.sql.Timestamp;
 /**
  * @author Ivo Brandão
  */
-public class Announcement  extends DomainObject implements IAnnouncement {
+public class Announcement extends DomainObject implements IAnnouncement {
 
-	
 	private String title;
 	private Timestamp creationDate;
 	private Timestamp lastModifiedDate;
 	private String information;
 	private ISite site;
-	private Integer keySite; 
+	private Integer keySite;
 
 	/** 
 	 * Construtor
 	 */
-	public Announcement() {}
-	
+	public Announcement() {
+	}
+
 	/** 
 	 * Construtor
 	 */
@@ -33,36 +33,44 @@ public class Announcement  extends DomainObject implements IAnnouncement {
 	/** 
 	 * Construtor
 	 */
-	public Announcement(String title, Timestamp date, 
-		Timestamp lastModifiedDate, String information, ISite site) {
-			
+	public Announcement(String title, Timestamp date, Timestamp lastModifiedDate, String information, ISite site) {
+
 		this.title = title;
 		this.creationDate = date;
 		this.lastModifiedDate = lastModifiedDate;
 		this.information = information;
 		this.site = site;
 	}
-	
+
 	/** 
 	 * Construtor
 	 */
 	public Announcement(String title, Timestamp date, ISite site) {
-			
+
 		this.title = title;
 		this.creationDate = date;
 		this.site = site;
 	}
-	
+
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	public boolean equals(Object arg0) {
 		boolean result = false;
-		if (arg0 instanceof IAnnouncement) {
-			result = (getCreationDate().equals(((IAnnouncement) arg0).getCreationDate()))&&
-					 (getSite().equals(((IAnnouncement) arg0).getSite()));
-		} 
-		return result;		
+		if (arg0 instanceof IAnnouncement
+			&& (((((Announcement) arg0).getCreationDate() != null
+				&& this.getCreationDate() != null
+				&& ((Announcement) arg0).getCreationDate().equals(this.getCreationDate()))
+				|| ((Announcement) arg0).getCreationDate() == null
+				&& this.getCreationDate() == null))
+			&& (((((Announcement) arg0).getSite() != null
+				&& this.getSite() != null
+				&& ((Announcement) arg0).getSite().equals(this.getSite()))
+				|| ((Announcement) arg0).getSite() == null
+				&& this.getSite() == null))) {
+			result = true;
+		}
+		return result;
 	}
 
 	/**
@@ -70,7 +78,7 @@ public class Announcement  extends DomainObject implements IAnnouncement {
 	 */
 	public String toString() {
 		String result = "[ANNOUNCEMENT";
-		
+
 		result += ", creationDate=" + getCreationDate();
 		result += ", lastModifiedDate=" + getLastModifiedDate();
 		result += ", information=" + getInformation();
@@ -93,7 +101,6 @@ public class Announcement  extends DomainObject implements IAnnouncement {
 		return information;
 	}
 
-	
 	/**
 	 * @return Integer
 	 */
@@ -138,7 +145,6 @@ public class Announcement  extends DomainObject implements IAnnouncement {
 		this.information = information;
 	}
 
-	
 	/**
 	 * Sets the keySite.
 	 * @param keySite The keySite to set

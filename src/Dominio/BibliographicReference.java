@@ -107,16 +107,16 @@ public class BibliographicReference extends DomainObject implements IBibliograph
 		return result;
 	}
 
-	//    public String toString() {
-	//        String result = "[REFERENCIA BIBLIOGRAFICA";
-	//        result += ", codInt=" + _codigoInterno;
-	//        result += ", sitio=" + ((Curriculum)_curriculum).getSitio().getNome();
-	//        result += ", titulo=" + _titulo;
-	//        result += ", autor=" + _autores;
-	//        result += ", ano=" + _ano;
-	//        result += ", referencia=" + _referencia;
-	//        result += ", facultativo=" + _facultativo;
-	//        result += "]";
-	//        return result;
-	//    }
+	    public String toString() {
+	        String result = "[REFERENCIA BIBLIOGRAFICA";
+	        result += ", codInt=" + getIdInternal();
+	        result += ", disciplinaExecucao=" + getExecutionCourse();
+	        result += ", titulo=" + getTitle();
+	        result += ", autor=" + getAuthors();
+	        result += ", ano=" + getYear();
+	        result += ", referencia=" + getReference();
+	        result += ", facultativo=" + getOptional();
+	        result += "]";
+	        return result;
+	    }
 }

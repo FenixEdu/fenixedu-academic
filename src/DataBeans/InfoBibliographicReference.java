@@ -12,7 +12,7 @@ import java.io.Serializable;
  *
  * @author  EP 15
  */
-public class InfoBibliographicReference implements Serializable {
+public class InfoBibliographicReference extends InfoObject implements Serializable,ISiteComponent {
 	protected String title;
 	protected String authors;
 	protected String reference;

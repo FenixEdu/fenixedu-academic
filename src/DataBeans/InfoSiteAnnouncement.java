@@ -17,26 +17,42 @@ public class InfoSiteAnnouncement implements ISiteComponent {
 
 	private List announcements;
 
-	public boolean equals(Object siteView) {
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	public String toString() {
+		String result = "[INFOSITEANNOUNCEMENT";
+		result += ", announcements=" + getAnnouncements();
+		result += "]";
+		return result;
+	}
+
+	public boolean equals(Object obj) {
 		boolean result = false;
-		if (siteView instanceof InfoSiteAnnouncement) {
+		if (obj instanceof InfoSiteAnnouncement) {
 			result = true;
 		}
 
-		if (((InfoSiteAnnouncement) siteView).getAnnouncements() == null && this.getAnnouncements() == null) {
+		if (((InfoSiteAnnouncement) obj).getAnnouncements() == null && this.getAnnouncements() == null) {
 			return true;
 		}
-		if (((InfoSiteAnnouncement) siteView).getAnnouncements() == null
+		if (((InfoSiteAnnouncement) obj).getAnnouncements() == null
 			|| this.getAnnouncements() == null
-			|| ((InfoSiteAnnouncement) siteView).getAnnouncements().size() != this.getAnnouncements().size()) {
+			|| ((InfoSiteAnnouncement) obj).getAnnouncements().size() != this.getAnnouncements().size()) {
 			return false;
-		}
-		ListIterator iter1 = ((InfoSiteAnnouncement) siteView).getAnnouncements().listIterator();
+		} 
+//		if (((InfoSiteAnnouncement) obj).getAnnouncements().containsAll(this.getAnnouncements())
+//			&& this.getAnnouncements().containsAll(((InfoSiteAnnouncement) obj).getAnnouncements())){
+//				result = true;
+//			}
+			
+			
+			ListIterator iter1 = ((InfoSiteAnnouncement) obj).getAnnouncements().listIterator();
 		ListIterator iter2 = this.getAnnouncements().listIterator();
 		while (result && iter1.hasNext()) {
 			InfoAnnouncement infoAnnouncement1 = (InfoAnnouncement) iter1.next();
 			InfoAnnouncement infoAnnouncement2 = (InfoAnnouncement) iter2.next();
-			if(!infoAnnouncement1.equals(infoAnnouncement2)){
+			if (!infoAnnouncement1.equals(infoAnnouncement2)) {
 				result = false;
 			}
 		}

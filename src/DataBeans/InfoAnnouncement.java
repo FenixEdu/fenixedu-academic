@@ -43,7 +43,7 @@ public class InfoAnnouncement extends InfoObject implements Comparable,ISiteComp
 
 
 	 public String toString() {
-	    String result = "[INFOANNONCEMENT";
+	    String result = "[INFOANNOUNCEMENT";
 	    result += ", title=" + getTitle();
 	    result += ", information=" + getInformation();
 		result += ", creationDate=" + getCreationDate();

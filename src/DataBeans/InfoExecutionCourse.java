@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author  tfc130
  */
-public class InfoExecutionCourse extends InfoObject implements Serializable  {
+public class InfoExecutionCourse extends InfoObject implements Serializable {
 	protected String _nome;
 	protected String _sigla;
 	protected String _programa;
@@ -24,9 +24,9 @@ public class InfoExecutionCourse extends InfoObject implements Serializable  {
 
 	protected List associatedInfoCurricularCourses;
 	protected List associatedInfoExams;
-	
+
 	protected String comment;
-	
+
 	// A chave do responsavel falta ainda porque ainda nao existe a respeciva ligacao
 	// na base de dados.
 
@@ -45,40 +45,39 @@ public class InfoExecutionCourse extends InfoObject implements Serializable  {
 	}
 	public InfoExecutionCourse(Integer idInternal) {
 		setIdInternal(idInternal);
-		}
+	}
 
-/**
- * 
- * @param nome
- * @param sigla
- * @param programa
- * @param infoLicenciaturaExecucao
- * @param theoreticalHours
- * @param praticalHours
- * @param theoPratHours
- * @param labHours
- * @deprecated
- */
+	/**
+	 * 
+	 * @param nome
+	 * @param sigla
+	 * @param programa
+	 * @param infoLicenciaturaExecucao
+	 * @param theoreticalHours
+	 * @param praticalHours
+	 * @param theoPratHours
+	 * @param labHours
+	 * @deprecated
+	 */
 	public InfoExecutionCourse(
-			String nome,
-			String sigla,
-			String programa,
-			InfoExecutionDegree infoLicenciaturaExecucao,
-			Double theoreticalHours,
-			Double praticalHours,
-			Double theoPratHours,
-			Double labHours) {
-			setNome(nome);
-			setSigla(sigla);
-			setPrograma(programa);
-	//		setInfoLicenciaturaExecucao(infoLicenciaturaExecucao);
-			setTheoreticalHours(theoreticalHours);
-			setPraticalHours(praticalHours);
-			setTheoPratHours(theoPratHours);
-			setLabHours(labHours);
-			
-		}
+		String nome,
+		String sigla,
+		String programa,
+		InfoExecutionDegree infoLicenciaturaExecucao,
+		Double theoreticalHours,
+		Double praticalHours,
+		Double theoPratHours,
+		Double labHours) {
+		setNome(nome);
+		setSigla(sigla);
+		setPrograma(programa);
+		//		setInfoLicenciaturaExecucao(infoLicenciaturaExecucao);
+		setTheoreticalHours(theoreticalHours);
+		setPraticalHours(praticalHours);
+		setTheoPratHours(theoPratHours);
+		setLabHours(labHours);
 
+	}
 
 	public InfoExecutionCourse(
 		String nome,
@@ -99,19 +98,18 @@ public class InfoExecutionCourse extends InfoObject implements Serializable  {
 		setInfoExecutionPeriod(infoExecutionPeriod);
 	}
 
-
-/**
- * @deprecated
- * @param nome
- * @param sigla
- * @param programa
- * @param infoLicenciaturaExecucao
- * @param theoreticalHours
- * @param praticalHours
- * @param theoPratHours
- * @param labHours
- * @param semester
- */
+	/**
+	 * @deprecated
+	 * @param nome
+	 * @param sigla
+	 * @param programa
+	 * @param infoLicenciaturaExecucao
+	 * @param theoreticalHours
+	 * @param praticalHours
+	 * @param theoPratHours
+	 * @param labHours
+	 * @param semester
+	 */
 	public InfoExecutionCourse(
 		String nome,
 		String sigla,
@@ -125,7 +123,7 @@ public class InfoExecutionCourse extends InfoObject implements Serializable  {
 		setNome(nome);
 		setSigla(sigla);
 		setPrograma(programa);
-	//	setInfoLicenciaturaExecucao(infoLicenciaturaExecucao);
+		//	setInfoLicenciaturaExecucao(infoLicenciaturaExecucao);
 		setTheoreticalHours(theoreticalHours);
 		setPraticalHours(praticalHours);
 		setTheoPratHours(theoPratHours);
@@ -138,8 +136,6 @@ public class InfoExecutionCourse extends InfoObject implements Serializable  {
 	public void setNome(String nome) {
 		_nome = nome;
 	}
-
-	
 
 	public String getSigla() {
 		return _sigla;
@@ -189,18 +185,17 @@ public class InfoExecutionCourse extends InfoObject implements Serializable  {
 		_labHours = labHours;
 	}
 
-	
-
-	public boolean equals(Object obj) {
-		boolean resultado = false;
-		if (obj instanceof InfoExecutionCourse) {
-			InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) obj;
-			resultado =
-				(getSigla().equals(infoExecutionCourse.getSigla())
-					&& getInfoExecutionPeriod().equals(infoExecutionCourse.getInfoExecutionPeriod()));
+		public boolean equals(Object obj) {
+			boolean resultado = false;
+			if (obj instanceof InfoExecutionCourse) {
+				InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) obj;
+				resultado =
+					(getSigla().equals(infoExecutionCourse.getSigla())
+						&& getInfoExecutionPeriod().equals(infoExecutionCourse.getInfoExecutionPeriod()));
+			}
+			
+			return resultado;
 		}
-		return resultado;
-	}
 
 	public String toString() {
 		String result = "[INFODISCIPLINAEXECUCAO";
@@ -216,7 +211,6 @@ public class InfoExecutionCourse extends InfoObject implements Serializable  {
 		return result;
 	}
 
-
 	/**
 	 * Returns the infoExecutionPeriod.
 	 * @return InfoExecutionPeriod
@@ -224,7 +218,6 @@ public class InfoExecutionCourse extends InfoObject implements Serializable  {
 	public InfoExecutionPeriod getInfoExecutionPeriod() {
 		return infoExecutionPeriod;
 	}
-
 
 	/**
 	 * Sets the infoExecutionPeriod.

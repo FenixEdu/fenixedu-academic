@@ -36,6 +36,7 @@ public class InfoSiteCommon implements ISiteComponent {
 				&& ((InfoSiteCommon) objectToCompare).getMail().equals(this.getMail()))
 				|| ((InfoSiteCommon) objectToCompare).getMail() == null
 				&& this.getMail() == null))
+				
 			&& (((((InfoSiteCommon) objectToCompare).getExecutionCourse() != null
 				&& this.getExecutionCourse() != null
 				&& ((InfoSiteCommon) objectToCompare).getExecutionCourse().equals(this.getExecutionCourse()))
@@ -44,12 +45,13 @@ public class InfoSiteCommon implements ISiteComponent {
 			result = true;
 		}
 
-		if (((InfoSiteCommon) objectToCompare).getSections() == null && this.getSections() == null) {
+		if (((InfoSiteCommon) objectToCompare).getSections() == null && this.getSections() == null && result == true) {
 			return true;
 		}
 		if (((InfoSiteCommon) objectToCompare).getSections() == null
 			|| this.getSections() == null
 			|| ((InfoSiteCommon) objectToCompare).getSections().size() != this.getSections().size()) {
+
 			return false;
 		}
 		ListIterator iter1 = ((InfoSiteCommon) objectToCompare).getSections().listIterator();
@@ -61,7 +63,6 @@ public class InfoSiteCommon implements ISiteComponent {
 				result = false;
 			}
 		}
-
 		return result;
 	}
 
