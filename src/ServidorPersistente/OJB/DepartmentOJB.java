@@ -183,27 +183,27 @@ public class DepartmentOJB extends ObjectFenixOJB implements IPersistentDepartme
         EmployeeHistoric employeeHistoric = getEmployee(teacher);
 
         ICostCenter workingCC = employeeHistoric.getWorkingPlaceCostCenter();
-        Criteria criteria = new Criteria();
-        if (workingCC != null)
-        {
-            String code = workingCC.getSigla();
-            if ((code != null) && !(code.equals("")))
-            {
-                Criteria workingCCCriteria = new Criteria();
-                workingCCCriteria.addLike("code", workingCC.getSigla().substring(0, 2) + "%");
-                criteria.addOrCriteria(workingCCCriteria);
-            }
-        }
 
-        if (criteria.getElements().hasMoreElements())
-        {
-            return (IDepartment) queryObject(Department.class, criteria);
-        }
-        else
-        {
-            return null;
-        }
+        List departmentList = null;
+        
+        String code = workingCC.getSigla();
+        
 
+        if (code != null && !(code.equals("")))
+        {
+            Criteria workingCCCriteria = new Criteria();
+            workingCCCriteria.addLike("code", code.substring(0, 2) + "%");
+            departmentList =  queryList(Department.class, workingCCCriteria);
+        }
+        IDepartment department;
+        if(departmentList.size() != 1) {
+            Criteria criteria = new Criteria();
+            criteria.addEqualTo("code", code);
+            department = (IDepartment) queryObject(Department.class, criteria);
+        } else {
+            department = (IDepartment) departmentList.get(0);
+        }
+        return department;
     }
 
     /**
