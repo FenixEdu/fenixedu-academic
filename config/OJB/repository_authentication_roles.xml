@@ -352,19 +352,7 @@
 			proxy="false">
 		<foreignkey field-ref="studentKindKey"/>
 	</reference-descriptor>
-     <collection-descriptor
-			name="examsEnrolled"
-			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			element-class-ref="Dominio.Exam"
-			indirection-table="EXAM_STUDENT"
-			proxy="true"
-			auto-retrieve="true"
-			auto-update="false"
-			auto-delete="false"
-			>
-		<fk-pointing-to-this-class column="KEY_STUDENT"/>
-		<fk-pointing-to-element-class column="KEY_EXAM"/>
-	</collection-descriptor> 
+     
    </class-descriptor>
 <!-- Definitions for Dominio.Teacher -->
    <class-descriptor

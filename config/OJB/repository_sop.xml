@@ -476,20 +476,6 @@
 		<fk-pointing-to-this-class column="KEY_EXAM"/>
 		<fk-pointing-to-element-class column="KEY_ROOM"/>
 	</collection-descriptor>
-	<collection-descriptor
-			name="studentsEnrolled"
-			collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			element-class-ref="Dominio.Student"
-			indirection-table="EXAM_STUDENT"
-			proxy="true"
-			refresh="true"
-			auto-retrieve="true"
-			auto-update="false"
-			auto-delete="false"
-			>
-		<fk-pointing-to-this-class column="KEY_EXAM"/>
-		<fk-pointing-to-element-class column="KEY_STUDENT"/>
-	</collection-descriptor> 
 </class-descriptor>
 
 <class-descriptor class="Dominio.ExamStudentRoom"  table="EXAM_STUDENT_ROOM">
