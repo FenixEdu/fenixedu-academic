@@ -15,10 +15,14 @@ import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
+import Util.TipoCurso;
+
 import Dominio.Branch;
 import Dominio.CurricularCourse;
 import Dominio.CurricularCourseScope;
 import Dominio.CurricularSemester;
+import Dominio.Curso;
+import Dominio.DegreeCurricularPlan;
 import Dominio.ICurricularCourseScope;
 import Dominio.ICurricularSemester;
 
@@ -54,6 +58,7 @@ public class MigrateDisciplinaArea2FenixScopes {
 		Query query = null;
 		Criteria criteria = null;
 		QueryByCriteria queryByCriteria = null;
+		Branch branch = null;
 		int scopesWritten = 0;
 		int discAreasIgnored = 0;
 		
@@ -83,31 +88,90 @@ public class MigrateDisciplinaArea2FenixScopes {
 				
 				
 				// Skip unwanted Areas Cientificas
-				if (areaCientifica.getNome().equals("DISCIPLINAS DE ESCOLHA LIVRE") ||
-					areaCientifica.getNome().equals("DISCIPLINAS PROPEDÊUTICAS") ||
-					(areaCientifica.getCodigocursomestrado() == 15) ||
+				if ((areaCientifica.getCodigocursomestrado() == 15) ||
 					(areaCientifica.getCodigocursomestrado() == 31) ||
 					(areaCientifica.getCodigocursomestrado() == 50)) {
 						discAreasIgnored++;
 						continue;
 				}
 
-				
-				
-				// Get the Corresponding Branch
-				
-				criteria = new Criteria();
-				criteria.addEqualTo("internalID", new Integer(String.valueOf(areaCientifica.getCodigoInternoRamo())));
-				query = new QueryByCriteria(Branch.class,criteria);
-				result = (List) broker.getCollectionByQuery(query);		
+				if (areaCientifica.getNome().equals("DISCIPLINAS DE ESCOLHA LIVRE") ||
+					areaCientifica.getNome().equals("DISCIPLINAS PROPEDÊUTICAS")) {
+					
+					// Read the Curso Mestrado 
+
+					criteria = new Criteria();
+					criteria.addEqualTo("codigoInterno", new Integer(String.valueOf(areaCientifica.getCodigocursomestrado())));
+					query = new QueryByCriteria(Posgrad_curso_mestrado.class,criteria);
+					result = (List) broker.getCollectionByQuery(query);		
 		
-				if (result.size() == 0){
-					throw new Exception("Error Reading Branch (" + discArea.getCodigointerno() + ")");
-				}
+					if (result.size() == 0){
+						throw new Exception("Error Reading Curso Mestrado (" + discArea.getCodigointerno() + ")");
+					}
 
-				Branch branch = (Branch) result.get(0);
+					Posgrad_curso_mestrado posgrad_curso_mestrado = (Posgrad_curso_mestrado) result.get(0);
+					
+					// Get the Degree											
 
+					criteria = new Criteria();
+					criteria.addEqualTo("nome", posgrad_curso_mestrado.getNomemestrado());
+					criteria.addEqualTo("tipoCurso", new Integer(TipoCurso.MESTRADO));
+					query = new QueryByCriteria(Curso.class,criteria);
+					result = (List) broker.getCollectionByQuery(query);		
+		
+					if (result.size() == 0){
+						throw new Exception("Error Reading Degree (" + discArea.getCodigointerno() + ")");
+					}
+
+					Curso degree = (Curso) result.get(0);
+					
+					
+					// Get the Degree Curricular Plan
+					
+					criteria = new Criteria();
+					criteria.addEqualTo("degreeKey", degree.getIdInternal());
+					query = new QueryByCriteria(DegreeCurricularPlan.class,criteria);
+					result = (List) broker.getCollectionByQuery(query);		
+		
+					if (result.size() == 0){
+						throw new Exception("Error Reading Degree Curricular Plan (" + discArea.getCodigointerno() + ")");
+					}
+
+					DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) result.get(0);
+					
+					// Get the Branch
+					
+					
+					criteria = new Criteria();
+					criteria.addEqualTo("code", "");
+					criteria.addEqualTo("name", "");
+					criteria.addEqualTo("keyDegreeCurricularPlan", degreeCurricularPlan.getIdInternal());
+					query = new QueryByCriteria(Branch.class,criteria);
+					result = (List) broker.getCollectionByQuery(query);		
+
+					if (result.size() == 0){
+						throw new Exception("Error Reading Branch (Curricular Plan Key: " + degreeCurricularPlan.getIdInternal() + ")");
+					}
+
+					branch = (Branch) result.get(0);
+
+						
+				} else { 
 				
+					// Get the Corresponding Branch
+					
+					criteria = new Criteria();
+					criteria.addEqualTo("internalID", new Integer(String.valueOf(areaCientifica.getCodigoInternoRamo())));
+					query = new QueryByCriteria(Branch.class,criteria);
+					result = (List) broker.getCollectionByQuery(query);		
+			
+					if (result.size() == 0){
+						throw new Exception("Error Reading Branch (" + discArea.getCodigointerno() + ")");
+					}
+	
+					branch = (Branch) result.get(0);
+
+				}				
 				// Get the Disciplina
 				
 				criteria = new Criteria();

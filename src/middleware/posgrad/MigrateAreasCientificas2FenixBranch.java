@@ -140,14 +140,13 @@ public class MigrateAreasCientificas2FenixBranch {
 
 
 				if (areaCientifica.getCodigocursomestrado() == 14) {
-					createTransportationBranch((Branch) branch2Write, broker);					
+					createTransportationBranch((Branch) branch2Write, areaCientifica, broker);					
 				} else {
 					broker.store(branch2Write);
 				
 					areaCientifica.setCodigoInternoRamo(branch2Write.getInternalID());
-					broker.store(areaCientifica);
-					
 				}
+				broker.store(areaCientifica);
 			}
 			System.out.println("  Done !");
 
@@ -166,7 +165,7 @@ public class MigrateAreasCientificas2FenixBranch {
 		return (List) broker.getCollectionByQuery(query);
 	}
 	
-	private void createTransportationBranch(Branch branch2Write, PersistenceBroker broker) throws IllegalAccessException, InvocationTargetException {
+	private void createTransportationBranch(Branch branch2Write, Posgrad_area_cientifica posgrad_area_cientifica, PersistenceBroker broker) throws IllegalAccessException, InvocationTargetException {
 		Branch branchAux = new Branch();
 		BeanUtils.copyProperties(branchAux, branch2Write);
 		
@@ -174,6 +173,8 @@ public class MigrateAreasCientificas2FenixBranch {
 		branchAux.setName(branch2Write.getName() + " (Perfil A)");
 		branchAux.setCode(branch2Write.getCode() + " (A)");
 		broker.store(branchAux);
+		posgrad_area_cientifica.setCodigoInternoRamo(branchAux.getInternalID());
+		
 		
 		branchAux = new Branch();
 		BeanUtils.copyProperties(branchAux, branch2Write);

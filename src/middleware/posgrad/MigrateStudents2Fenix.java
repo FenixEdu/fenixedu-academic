@@ -6,6 +6,7 @@
  */
 package middleware.posgrad;
 
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -15,15 +16,24 @@ import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
+import Dominio.Branch;
+import Dominio.Curso;
+import Dominio.DegreeCurricularPlan;
 import Dominio.Funcionario;
+import Dominio.IBranch;
+import Dominio.IDegreeCurricularPlan;
 import Dominio.IPersonRole;
 import Dominio.IPessoa;
 import Dominio.IStudent;
+import Dominio.IStudentCurricularPlan;
 import Dominio.IStudentKind;
 import Dominio.Pessoa;
 import Dominio.Student;
+import Dominio.StudentCurricularPlan;
 import Dominio.StudentKind;
 import Util.RoleType;
+import Util.Specialization;
+import Util.StudentCurricularPlanState;
 import Util.StudentState;
 import Util.StudentType;
 import Util.TipoCurso;
@@ -146,6 +156,81 @@ public class MigrateStudents2Fenix {
 					student2Write.setStudentKind(studentGroupInfo);
 					broker.store(student2Write);
 					studentsWritten++;
+					
+					IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
+					studentCurricularPlan.setCurrentState(StudentCurricularPlanState.ACTIVE_OBJ);
+					if ((student2Convert.getEspecializacao().equalsIgnoreCase("Mestrado"))){
+						studentCurricularPlan.setSpecialization(new Specialization(Specialization.MESTRADO));
+					} else {
+						studentCurricularPlan.setSpecialization(new Specialization(Specialization.ESPECIALIZACAO));
+					}
+					studentCurricularPlan.setStartDate(Calendar.getInstance().getTime());
+					studentCurricularPlan.setStudent(student2Write);
+					
+					
+					criteria = new Criteria();
+					criteria.addEqualTo("codigoInterno", new Integer(String.valueOf(student2Convert.getCodigocursomestrado())));
+					query = new QueryByCriteria(Posgrad_curso_mestrado.class,criteria);
+					result = (List) broker.getCollectionByQuery(query);		
+		
+					if (result.size() == 0){
+						throw new Exception("Error Reading Curso Mestrado (" + student2Convert.getCodigocursomestrado() + ")");
+					}
+
+					Posgrad_curso_mestrado posgrad_curso_mestrado = (Posgrad_curso_mestrado) result.get(0);
+					
+					// Get the Degree											
+
+					criteria = new Criteria();
+					criteria.addEqualTo("nome", posgrad_curso_mestrado.getNomemestrado());
+					criteria.addEqualTo("tipoCurso", new Integer(TipoCurso.MESTRADO));
+					query = new QueryByCriteria(Curso.class,criteria);
+					result = (List) broker.getCollectionByQuery(query);		
+		
+					if (result.size() == 0){
+						throw new Exception("Error Reading Degree (" + posgrad_curso_mestrado.getNomemestrado() + ")");
+					}
+
+					Curso degree = (Curso) result.get(0);
+
+					// Get the Degree Curricular Plan
+					
+					criteria = new Criteria();
+					criteria.addEqualTo("degreeKey", degree.getIdInternal());
+					query = new QueryByCriteria(DegreeCurricularPlan.class,criteria);
+					result = (List) broker.getCollectionByQuery(query);		
+		
+					if (result.size() == 0){
+						throw new Exception("Error Reading Degree Curricular Plan (" + degree.getNome() + ")");
+					}
+
+					DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) result.get(0);
+
+					// Get the Branch
+					
+					criteria = new Criteria();
+					criteria.addEqualTo("code", "");
+					criteria.addEqualTo("name", "");
+					criteria.addEqualTo("keyDegreeCurricularPlan", degreeCurricularPlan.getIdInternal());
+					query = new QueryByCriteria(Branch.class,criteria);
+					result = (List) broker.getCollectionByQuery(query);		
+
+					if (result.size() == 0){
+						throw new Exception("Error Reading Branch (Curricular Plan Key: " + degreeCurricularPlan.getIdInternal() + ")");
+					}
+
+
+					studentCurricularPlan.setDegreeCurricularPlan((IDegreeCurricularPlan) degreeCurricularPlan);
+					studentCurricularPlan.setBranch((IBranch) result.get(0));
+					
+					
+					if ((student2Convert.getCreditos() != null) && (student2Convert.getCreditos().length() != 0)){
+						System.out.println(student2Convert.getCreditos());
+						studentCurricularPlan.setGivenCredits(new Double(student2Convert.getCreditos()));
+						System.out.println("-> " + studentCurricularPlan.getGivenCredits());
+					}
+					 
+					broker.store(studentCurricularPlan);
 					
 				} 
 
