@@ -167,6 +167,21 @@
        <forward name="readDegree" path="/readDegree.do"/>      	      
 	</action>
 	
+	 <!-- Action for editing a degree curricular plan  -->
+	<action
+		path="/editDegreeCurricularPlan"
+		name="degreeCurricularPlanForm"
+		input="/editDegreeCurricularPlanInput.do"
+		parameter="method"
+		scope="request"
+		type="ServidorApresentacao.Action.manager.EditDegreeCurricularPlanDispatchAction"
+        validate="true">  
+       <forward name="editDegreeCP" path="df.page.edit-degree-curricular-plan"/>
+       <forward name="readDegree" path="/readDegree.do"/>      	      
+	</action>
+	
+  
+	
 	<!-- Action for deleting curricularCourses --> 
       <action 
       		 path="/deleteCurricularCourses"
@@ -226,6 +241,11 @@
       	  <forward name="Success" path="df.page.read-degree-curricular-plan"/>      	      
       </action>
       
+       <action path="/editDegreeCurricularPlanInput"
+     		scope="request"
+      	      type="ServidorApresentacao.Action.commons.VoidAction">
+      	  <forward name="Success" path="df.page.edit-degree-curricular-plan"/>      	      
+      </action>
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

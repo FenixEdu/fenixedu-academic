@@ -13,43 +13,63 @@
       </field>
     </form>
 
+
+
     	<!--validation to the form to insert and edit a DegreeCurricularPlan-->
-
-
     <form name="degreeCurricularPlanForm">
       <field property="name" depends="required" page="1" >
         <arg0 key="message.manager.degree.curricular.plan.name" resource="true"/>
       </field>
-
-     <!-- <field property="state" depends="required" page="1">
-        <arg0 key="message.manager.degree.curricular.plan.state" resource="true" />
-      </field>-->
       
-      <field property="initialDate" depends="required" page="1">
-        <arg0 key="message.manager.degree.curricular.plan.initialDate" resource="true" />
+      <field property="state" depends="required" page="1" >
+        <arg0 key="message.manager.degree.curricular.plan.state" resource="true"/>
       </field>
       
-      <field property="endDate" depends="required" page="1">
-        <arg0 key="message.manager.degree.curricular.plan.endDate" resource="true" />
+      <field property="initialDate" depends="mask,date" page="1">
+      	<msg name="date" key="errors.invalid.date"/>
+      	<msg name="mask" key="errors.invalid.date"/>
+        <arg0 key="message.initialDate" resource="true" />
+     	<var>
+           <var-name>datePattern</var-name>
+           <var-value>dd/MM/yyyy</var-value>
+        </var>
+        <var>
+           <var-name>mask</var-name>
+           <var-value>^((.||..)/(.||..)/2...)$</var-value>
+        </var>
       </field>
       
-      <field property="degreeDuration" depends="required" page="1">
+      <field property="endDate" depends="mask,date" page="1">
+      	<msg name="date" key="errors.invalid.date"/>
+      	<msg name="mask" key="errors.invalid.date"/>
+        <arg0 key="message.endDate" resource="true" />
+        <var>
+           <var-name>datePattern</var-name>
+           <var-value>dd/MM/yyyy</var-value>
+        </var>
+        <var>
+           <var-name>mask</var-name>
+           <var-value>^((.||..)/(.||..)/2...)$</var-value>
+        </var>
+      </field>
+      
+      <field property="degreeDuration" depends="required,integer" page="1">
         <arg0 key="message.manager.degree.curricular.plan.degreeDuration" resource="true" />
       </field>
       
-      <field property="minimalYearForOptionalCourses" depends="required" page="1">
+      <field property="minimalYearForOptionalCourses" depends="required,integer" page="1">
         <arg0 key="message.manager.degree.curricular.plan.minimalYearForOptionalCourses" resource="true" />
       </field>
       
-      <field property="neededCredits" depends="required" page="1">
+      <field property="neededCredits" depends="double" page="1">
         <arg0 key="message.manager.degree.curricular.plan.neededCredits" resource="true" />
       </field>
       
-      <!--<field property="markType" depends="required" page="1">
+      <field property="markType" depends="" page="1">
         <arg0 key="message.manager.degree.curricular.plan.markType" resource="true" />
-      </field>-->
+      </field>
       
-      <field property="numerusClausus" depends="required" page="1">
+      <field property="numerusClausus" depends="integer" page="1">
         <arg0 key="message.manager.degree.curricular.plan.numerusClausus" resource="true" />
       </field>
       

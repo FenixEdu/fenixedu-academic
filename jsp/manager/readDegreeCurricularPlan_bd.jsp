@@ -19,7 +19,7 @@
 </table>
 
 <ul style="list-style-type: square;">
-	<li><html:link page="/editDegreeCurricularPlan.do?method=prepareEdit"  paramId="degreeCurricularPlanId" paramName="degreeCurricularPlanId"><bean:message key="label.manager.edit.degreeCurricularPlan"/></html:link></li>
+	<li><html:link page="<%="/editDegreeCurricularPlan.do?method=prepareEdit&amp;degreeId="  + request.getAttribute("degreeId")%>"  paramId="degreeCurricularPlanId" paramName="degreeCurricularPlanId"><bean:message key="label.manager.edit.degreeCurricularPlan"/></html:link></li>
 	<li><html:link page="<%= "/insertCurricularCourse.do?method=prepareInsert&degreeId=" + request.getAttribute("degreeId")%>" paramId="degreeCurricularPlanId" paramName="degreeCurricularPlanId"><bean:message key="label.manager.insert.curricularCourse"/></html:link></li>			
 	<li><html:link page="/insertExecutionDegree.do?method=prepareInsert" paramId="degreeCurricularPlanId" paramName="degreeCurricularPlanId"><bean:message key="label.manager.insert.executionDegree"/></html:link></li>			
 </ul>

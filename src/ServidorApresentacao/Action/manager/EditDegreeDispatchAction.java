@@ -48,7 +48,6 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 				
 			Integer degreeId =new Integer(request.getParameter("degreeId"));
 			
-			System.out.println("NO PREPARE EDIT"+degreeId);
 			
 			InfoDegree oldInfoDegree = null;
 
@@ -92,6 +91,9 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 				
 //		Integer oldDegreeId = (Integer)request.getAttribute("degreeId");
 //		System.out.println("NO EDIT"+oldDegreeId);
+		
+//		ver o get parameter para ir buscar qq coisa que teja no URL
+//		ver pq só funbciona a ir buscar ao form ver s tb da como get parameeter
 		
 		Integer oldDegreeId = (Integer) editDegreeForm.get("degreeId");
 //		System.out.println("DEGREEIDaaaaaaaaaaaaaaaaaaaAA"+oldDegreeId);	

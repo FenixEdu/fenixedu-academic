@@ -37,10 +37,11 @@
 		<bean:message key="message.degreeType"/>
 	</td>
 	<td>
+		
 		<html:select property="degreeType">
-		<option value="1"selected>Licenciatura
-		<option value="2">Mestrado
-		</html:select>
+    		<html:option key="option.editDegree.degree" value="1"/>
+    		<html:option key="option.editDegree.masterDegree" value="2"/>
+    	</html:select>
 		
 	</td>
 </tr>
