@@ -45,6 +45,16 @@
           <td><bean:write name="personalInfo" property="username"/></td>
 		  <html:hidden property="username" />
         </tr>
+        
+       <!-- Specialization Area -->
+       <tr>
+         <td><bean:message key="label.candidate.specializationArea"/> </td>
+         <td><html:text property="specializationArea"/></td>
+         </td>
+       </tr>
+        
+        
+        
         <!-- Nome do Pai -->
         <tr>
          <td width="30%"><bean:message key="label.person.fatherName" /></td>

@@ -9,6 +9,12 @@
     
     <!-- ========== Form Bean Definitions ================================== -->
     <form-beans type="org.apache.struts.action.ActionFormBean">
+    
+    <form-bean name="addShiftToClasses"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+         <form-property name="classesList" type="java.lang.String[]" />  
+      </form-bean>
       <!-- AUTORIZACAO -->
       <!-- Dynamic-FormBean para Autorizacao -->
       <form-bean name="autenticacaoSOPForm" 
@@ -974,6 +980,26 @@
               validate="true"
               type="ServidorApresentacao.Action.sop.ViewRoomForExamsFormAction">
           <forward name="Sucess" path="/viewRoomForExams.jsp"/>
+      </action>
+
+	<action 
+      		  path="/listClasses"
+              scope="request"
+              type="ServidorApresentacao.Action.sop.AddShiftsToClassesDA"
+              parameter="method"
+             >
+          <forward name="showClasses" path="/addShiftToClasses.jsp"/>
+      </action>
+      <action 
+			  input="/listClasses.do?method=showClasses"	
+			  name="addShiftToClasses"	
+      		  path="/addShiftToClasses"
+              scope="request"
+              type="ServidorApresentacao.Action.sop.AddShiftsToClassesDA"
+              parameter="method"
+              validate="true">
+         
+           <forward name="sucess" path="/gestaoHorarios.do"/>         
       </action>
 
       <action path="/consultAllRoomsForExams"

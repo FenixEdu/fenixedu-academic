@@ -30,6 +30,13 @@
     </tr>
 </table>
 <br />
+     
+          <!-- Specialization Area -->
+          <tr>
+            <td><bean:message key="label.candidate.specializationArea" /></td>
+            <td><bean:write name="masterDegreeCandidate" property="specializationArea"/></td>
+          </tr>
+          
  	<!-- Dados Pessoais -->
 <table width="100%" cellspacing="0">    
     <tr>

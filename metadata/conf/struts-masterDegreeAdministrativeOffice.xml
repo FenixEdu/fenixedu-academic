@@ -172,6 +172,7 @@
         	<form-property name="majorDegreeYear" type="java.lang.String" />
         	<form-property name="situationRemarks" type="java.lang.String" />
         	<form-property name="situation" type="java.lang.String" />
+        	<form-property name="specializationArea" type="java.lang.String" />
       </form-bean>
 
 

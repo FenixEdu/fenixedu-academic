@@ -2,7 +2,19 @@
 <!-- @validation.doctype@ -->
 <form-validation>
   <formset>
-
+<form name="addShiftToClasses">
+	<field property="classesList" depends="validateMultiBox" >
+	<arg0 key="turma" resource="true"/>
+		<var>
+        	<var-name>arrayProperty</var-name>
+            <var-value>classesList</var-value>
+        </var>
+        <var>
+        	<var-name>femininProperty</var-name>
+            <var-value>true</var-value>
+        </var>
+	</field>
+</form>
 	<!-- Validation for exam context form -->
 	<form name="chooseDayAndShiftForm">
 		<field property="day" depends="required, integer" page="1">

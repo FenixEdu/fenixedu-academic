@@ -18,3 +18,6 @@
     	<jsp:include page="./informationTemplate1.jsp" flush="true" />
 	</logic:present >	
 
+    <logic:present name="<%= SessionConstants.PRINT_INFORMATION %>">
+    	<jsp:include page="./informationTemplate1.jsp" flush="true" />
+	</logic:present >	

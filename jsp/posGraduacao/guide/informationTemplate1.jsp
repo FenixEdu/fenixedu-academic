@@ -86,10 +86,14 @@
             <td> <bean:message key="label.candidate.username"/> </td>
             <td> <bean:write name="candidate" property="infoPerson.username"/> </td>
           </tr>
-          <tr>
-            <td> <bean:message key="label.candidate.password"/> </td>
-            <td> <bean:write name="candidate" property="infoPerson.password"/> </td>
-          </tr>
+          
+          <logic:present name="<%= SessionConstants.PRINT_PASSWORD %>">
+		      <tr>
+		        <td> <bean:message key="label.candidate.password"/> </td>
+		        <td> <bean:write name="candidate" property="infoPerson.password"/> </td>
+		      </tr>
+	      </logic:present>
+          
           <tr>
             <td> <bean:message key="label.candidate.accessAddress"/> </td>
             <td> <bean:message key="label.candidate.url"/> </td>
@@ -99,12 +103,26 @@
             <td>&nbsp;</td>
             <td>&nbsp;</td>
           </tr>
+          
+
+
+
 	  </table>
+
+	  <tr>
+	  	<td>
+		  <jsp:include page="./warning.jsp" flush="true" />
+		</td>
+	  </tr>
+
 	 </td>
 	 </tr>
 	</table>
 	</td>
 	</tr>
+
+
+
 
 	<tr height="30">
 	<td>

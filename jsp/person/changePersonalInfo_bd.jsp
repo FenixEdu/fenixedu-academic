@@ -21,10 +21,14 @@
 <h2><bean:message key="label.person.title.changePersonalInfo" /></h2>
         <table>
       		<tr>
+
+<%--
             <% IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW); 
                if ((userView.getCandidateView() != null) && (userView.getRoles().size() == 2) &&
                    (userView.hasRoleType(RoleType.MASTER_DEGREE_CANDIDATE)) && 
                    (userView.getCandidateView().changeablePersonalInfo())) { %>
+--%>
+<%--
         	    <html:hidden property="page" value="2"/>
                 <!-- Estado Civil -->
                 <tr>
@@ -195,7 +199,9 @@
                  </td>
                 </tr>
          	<% }else { %>
+--%>
       	   	    <html:hidden property="page" value="1"/>
+
               	<html:hidden property="sex" />
               	<html:hidden property="identificationDocumentType" />
               	<html:hidden property="identificationDocumentNumber" />
@@ -237,7 +243,8 @@
          				</i><br/><br/>
          			</td>
          		</tr>
-         	<% } %>
+<%--         	<% } %>
+--%>
           <!-- Telemovel -->
           <tr>
             <td width="15%"><bean:message key="label.person.mobilePhone" /></td>

@@ -42,33 +42,51 @@
             <td><bean:message key="label.candidate.specialization" /></td>
             <td><bean:write name="applicationInfo" property="specialization"/></td>
           </tr>
+          <!-- Specialization Area -->
+          <tr>
+            <td><bean:message key="label.candidate.specializationArea" /></td>
+            <td><bean:write name="applicationInfo" property="specializationArea"/></td>
+          </tr>
 
 
           <!-- Situacao da Candidatura -->
-    	  <tr>
-            <td><h2><bean:message key="label.candidate.applicationSituation" /></h2></td>
-          </tr>
-
-          <!-- Situacao -->
-          <tr>
-            <td><bean:message key="label.candidate.infoCandidateSituation" /></td>
-            <td><bean:write name="applicationInfo" property="infoCandidateSituation.situation"/></td>
-          </tr>
-
-          <!-- Data da Situacao -->
-          <tr>
-            <td><bean:message key="label.candidate.infoCandidateSituationDate" /></td>
-            <logic:present name="applicationInfo" property="infoCandidateSituation.date" >
-	            <bean:define id="date" name="applicationInfo" property="infoCandidateSituation.date" />
-				<td><%= Data.format2DayMonthYear((Date) date) %></td>   
-			</logic:present>
-          </tr>
-
-          <!-- Observacoes -->
-          <tr>
-            <td><bean:message key="label.candidate.infoCandidateSituationRemarks" /></td>
-            <td><bean:write name="applicationInfo" property="infoCandidateSituation.remarks"/></td>
-          </tr>
+          <logic:present name="applicationInfo" property="infoCandidateSituation">
+	    	  <tr>
+	            <td><h2><bean:message key="label.candidate.applicationSituation" /></h2></td>
+	          </tr>
+	
+	          <!-- Situacao -->
+	          <tr>
+	            <td><bean:message key="label.candidate.infoCandidateSituation" /></td>
+	            <td><bean:write name="applicationInfo" property="infoCandidateSituation.situation"/></td>
+	          </tr>
+	
+	          <!-- Data da Situacao -->
+	          <tr>
+	            <td><bean:message key="label.candidate.infoCandidateSituationDate" /></td>
+	            <logic:present name="applicationInfo" property="infoCandidateSituation.date" >
+		            <bean:define id="date" name="applicationInfo" property="infoCandidateSituation.date" />
+					<td><%= Data.format2DayMonthYear((Date) date) %></td>   
+				</logic:present>
+	          </tr>
+	
+	          <!-- Observacoes -->
+	          <tr>
+	            <td><bean:message key="label.candidate.infoCandidateSituationRemarks" /></td>
+	            <td><bean:write name="applicationInfo" property="infoCandidateSituation.remarks"/></td>
+	          </tr>
+	      </logic:present>
+	      <logic:notPresent name="applicationInfo" property="infoCandidateSituation">
+	    	  <tr>
+	            <td colspan="2"><h2><bean:message key="label.candidate.applicationSituation" /></h2></td>
+	          </tr>
+	
+	          <!-- Situacao -->
+	          <tr>
+	            <td colspan="2"><font size="+2">Não tem situação activa. Contacte-nos clicando <a href="mailto:suporte@dot.ist.utl.pt?subject=Situacao Indefinida (pos-graduacao)">aqui</a></font></td>
+	          </tr>
+	      
+	      </logic:notPresent>
 
 
    	      <!-- Informacao de Licenciatura -->

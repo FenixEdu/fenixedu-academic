@@ -28,6 +28,10 @@
 <html:link page="/prepararEditarAulasDeTurno.do"> <bean:message key="link.add.remove.aulas"/></html:link>
 <br />
 <br />
+<html:link page="/listClasses.do?method=showClasses"> <bean:message key="link.add.shift.classes"/></html:link>
+<br />
+<br />
+<br />
 <html:submit styleClass="inputbutton"><bean:message key="label.save"/></html:submit>
 <html:reset styleClass="inputbutton"><bean:message key="label.clear"/></html:reset>
 </html:form>
