@@ -131,6 +131,7 @@
 				<form-property name="labHours" type="java.lang.String" />
 				<form-property name="semester" type="java.lang.String" />
 				<form-property name="comment" type="java.lang.String" />
+				<form-property name="internalIds" type="java.lang.Integer[]" />
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
 		
@@ -779,6 +780,16 @@
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"/>
        <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>    	      
 	</action>
+	<!-- Action for deleting execution courses --> 
+      <action 
+      	  path="/deleteExecutionCourses"
+      	  name="executionCourseForm"
+      	  
+      	  scope="request"
+      	  type="ServidorApresentacao.Action.manager.DeleteExecutionCoursesAction">
+      	  <forward name="readExecutionCourses" path="/readExecutionCourses.do"/>      	      
+      </action>
+	
       <!--Input actions-->  
      <action path="/readDegreesInput"
      		scope="request"
