@@ -11,14 +11,14 @@ import DataBeans.InfoExecutionPeriod;
 import DataBeans.InfoExecutionYear;
 import DataBeans.gesdis.InfoSection;
 import DataBeans.gesdis.InfoSite;
-import ServidorApresentacao.TestCasePresentationSopPortal;
+import ServidorApresentacao.TestCasePresentationTeacherPortal;
 
 /**
  * AccessAnnouncementManagementTest.java
  * 
  * @author Ivo Brandão
  */
-public class AccessAnnouncementManagementActionTest extends TestCasePresentationSopPortal{
+public class AccessAnnouncementManagementActionTest extends TestCasePresentationTeacherPortal {
 
 	public static void main(java.lang.String[] args) {
 		junit.textui.TestRunner.run(suite());
