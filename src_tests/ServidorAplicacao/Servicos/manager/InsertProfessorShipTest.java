@@ -33,7 +33,7 @@ public class InsertProfessorShipTest extends TestCaseManagerInsertAndEditService
 		infoProfessorShip.setInfoExecutionCourse(infoExecutionCourse);
 		infoProfessorShip.setInfoTeacher(infoTeacher);
 		
-		Object[] args = { infoProfessorShip };
+		Object[] args = { infoProfessorShip, Boolean.FALSE };
 		return args;
 	}
 

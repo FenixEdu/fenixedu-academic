@@ -38,6 +38,9 @@ public class CreateProfessorshipDispatchAction extends DispatchAction
         DynaActionForm teacherExecutionCourseForm = (DynaActionForm) form;
         Integer teacherNumber = Integer
                 .valueOf((String) teacherExecutionCourseForm.get("teacherNumber"));
+        
+        Boolean responsibleFor = (Boolean) teacherExecutionCourseForm.get("responsibleFor");
+        
         Integer executionCourseId = Integer.valueOf((String) teacherExecutionCourseForm.get(
                 "executionCourseId"));
 
@@ -50,7 +53,7 @@ public class CreateProfessorshipDispatchAction extends DispatchAction
         infoProfessorship.setInfoExecutionCourse(infoExecutionCourse);
         infoProfessorship.setInfoTeacher(infoTeacher);
 
-        Object arguments[] = {infoProfessorship};
+        Object arguments[] = {infoProfessorship, responsibleFor};
 
         executeService("InsertProfessorshipByDepartment", request, arguments);
 
