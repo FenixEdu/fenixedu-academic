@@ -28,6 +28,7 @@ import Dominio.IStudentCurricularPlan;
 import Dominio.ITeacher;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentEmployee;
+import ServidorPersistente.IPersistentEnrolment;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
 import ServidorPersistente.IPersistentTeacher;
@@ -263,8 +264,10 @@ public abstract class CreateUpdateDeleteEnrollments
 	/**
 	 * @param enrolment
 	 * @param enrolmentEvaluation
+	 * @throws Throwable
 	 */
 	protected void updateEnrollmentStateAndEvaluationType(IEnrolment enrolment, IEnrolmentEvaluation enrolmentEvaluation)
+		throws Throwable
 	{
 		MWEnrolment mwEnrolment = new MWEnrolment();
 		mwEnrolment.setGrade(enrolmentEvaluation.getGrade());
@@ -272,6 +275,9 @@ public abstract class CreateUpdateDeleteEnrollments
 
 		if (!enrolment.getEnrolmentState().equals(enrolmentStateFromEnrolmentEvaluation))
 		{
+			IPersistentEnrolment enrollmentDAO = this.persistentSuport.getIPersistentEnrolment();
+			enrollmentDAO.simpleLockWrite(enrolment);
+			
 			if (enrolment.getEnrolmentState().equals(EnrolmentState.NOT_APROVED)
 				&& enrolmentStateFromEnrolmentEvaluation.equals(EnrolmentState.APROVED))
 			{
