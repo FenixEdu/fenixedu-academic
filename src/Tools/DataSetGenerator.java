@@ -72,7 +72,7 @@ public class DataSetGenerator {
 		String user = this.props.getProperty(DB_USER_PROPERTY);
 		String pass = this.props.getProperty(DB_PASS_PROPERTY);
 
-		Class driverClass = Class.forName(driver);
+		Class.forName(driver);
 		Connection jdbcConnection = DriverManager.getConnection(url, user, pass);
 
 		return new DatabaseConnection(jdbcConnection);

@@ -576,16 +576,6 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 		return originalArray;
 	}
 
-	private String getFromRequest(String parameter, HttpServletRequest request)
-	{
-		String parameterString = request.getParameter(parameter);
-		if (parameterString == null)
-		{
-			parameterString = (String) request.getAttribute(parameter);
-		}
-		return parameterString;
-	}
-
 	/* (non-Javadoc)
 	 * @see org.apache.struts.actions.LookupDispatchAction#getKeyMethodMap()
 	 */

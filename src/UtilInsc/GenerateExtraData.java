@@ -22,19 +22,16 @@ import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
-import Dominio.ITeacher;
-import Dominio.Teacher;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 import ServidorPersistente.ICursoPersistente;
-import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentBranch;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.IPersistentCurricularCourseScope;
 import ServidorPersistente.IPersistentDegreeCurricularPlan;
+import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentExecutionPeriod;
 import ServidorPersistente.IPersistentExecutionYear;
-import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -96,10 +93,10 @@ public class GenerateExtraData
 				persistentCurricularCourse.readCurricularCoursesByDegreeCurricularPlan(
 					oldDegreeCurricularPlan);
 
-			IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-			ITeacher teacherCriteria = new Teacher();
-			teacherCriteria.setIdInternal(new Integer(1));
-			ITeacher teacher = (ITeacher) persistentTeacher.readByOId(teacherCriteria, true);
+//			IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
+//			ITeacher teacherCriteria = new Teacher();
+//			teacherCriteria.setIdInternal(new Integer(1));
+//			ITeacher teacher = (ITeacher) persistentTeacher.readByOId(teacherCriteria, true);
 			IPersistentExecutionYear persistentExecutionYear =
 				persistentSupport.getIPersistentExecutionYear();
 			IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
@@ -218,14 +215,14 @@ public class GenerateExtraData
 			IPersistentExecutionYear persistentExecutionYear =
 				persistentSupport.getIPersistentExecutionYear();
 			persistentExecutionDegree = persistentSupport.getICursoExecucaoPersistente();
-			IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
+//			IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 			try
 			{
 				degreeCurricularPlan2 =
 					(IDegreeCurricularPlan) persistentDegreeCurricularPlan.readDomainObjectByCriteria(
 						degreeCurricularPlan);
 				IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
-				ITeacher teacher = persistentTeacher.readByNumber(new Integer(1));
+//				ITeacher teacher = persistentTeacher.readByNumber(new Integer(1));
 				ICursoExecucao executionDegree = new CursoExecucao();
 				//executionDegree.setCoordinator(teacher);
 				executionDegree.setCurricularPlan(degreeCurricularPlan2);

@@ -121,7 +121,7 @@ public class SmartDataSetGenerator
         String user = this.props.getProperty(DB_USER_PROPERTY);
         String pass = this.props.getProperty(DB_PASS_PROPERTY);
 
-        Class driverClass = Class.forName(driver);
+        Class.forName(driver);
         this.connection = DriverManager.getConnection(url, user, pass);
         this.databaseMetaData = this.connection.getMetaData();
 
@@ -295,13 +295,6 @@ public class SmartDataSetGenerator
                     this.processedTables.put(tableInfo.getTableName(), processedTableInfo);
                 }
 
-            }
-
-            Collection processed = this.processedTables.values();
-            for (Iterator iter = processed.iterator(); iter.hasNext();)
-            {
-                TableInfo element = (TableInfo) iter.next();
-                //System.out.println(element.toSql());
             }
         } catch (SQLException e)
         {

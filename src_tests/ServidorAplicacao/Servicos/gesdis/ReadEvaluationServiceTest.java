@@ -43,34 +43,34 @@ public class ReadEvaluationServiceTest extends TestCaseReadServices {
 	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getArgumentsOfServiceToBeTestedUnsuccessfuly()
 	 */
 	protected Object[] getArgumentsOfServiceToBeTestedUnsuccessfuly() {
-		ISuportePersistente sp = null;
-		IExecutionYear executionYear = null;
-		IExecutionPeriod executionPeriod = null;
-		IExecutionCourse executionCourse = null;
-		try {
-			sp = SuportePersistenteOJB.getInstance();
-			sp.iniciarTransaccao();
-
-			IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
-			executionYear = ieyp.readExecutionYearByName("2002/2003");
-
-			IPersistentExecutionPeriod iepp =
-				sp.getIPersistentExecutionPeriod();
-
-			executionPeriod =
-				iepp.readByNameAndExecutionYear("2º Semestre", executionYear);
-
-			IPersistentExecutionCourse idep =
-				sp.getIPersistentExecutionCourse();
-			executionCourse =
-				idep.readByExecutionCourseInitialsAndExecutionPeriod(
-					"PO",
-					executionPeriod);
-
-			sp.confirmarTransaccao();
-		} catch (ExcepcaoPersistencia e) {
-			System.out.println("failed setting up the test data");
-		}
+//		ISuportePersistente sp = null;
+//		IExecutionYear executionYear = null;
+//		IExecutionPeriod executionPeriod = null;
+//		IExecutionCourse executionCourse = null;
+//		try {
+//			sp = SuportePersistenteOJB.getInstance();
+//			sp.iniciarTransaccao();
+//
+//			IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
+//			executionYear = ieyp.readExecutionYearByName("2002/2003");
+//
+//			IPersistentExecutionPeriod iepp =
+//				sp.getIPersistentExecutionPeriod();
+//
+//			executionPeriod =
+//				iepp.readByNameAndExecutionYear("2º Semestre", executionYear);
+//
+//			IPersistentExecutionCourse idep =
+//				sp.getIPersistentExecutionCourse();
+//			executionCourse =
+//				idep.readByExecutionCourseInitialsAndExecutionPeriod(
+//					"PO",
+//					executionPeriod);
+//
+//			sp.confirmarTransaccao();
+//		} catch (ExcepcaoPersistencia e) {
+//			System.out.println("failed setting up the test data");
+//		}
 
 		return null;
 	}
@@ -126,39 +126,39 @@ public class ReadEvaluationServiceTest extends TestCaseReadServices {
 	 */
 	protected Object getObjectToCompare() {
 		
-		ISuportePersistente sp = null;
-			IExecutionYear executionYear = null;
-			IExecutionPeriod executionPeriod = null;
-			IExecutionCourse executionCourse = null;
-			try {
-				sp = SuportePersistenteOJB.getInstance();
-				sp.iniciarTransaccao();
-
-				IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
-				executionYear = ieyp.readExecutionYearByName("2002/2003");
-
-				IPersistentExecutionPeriod iepp =
-					sp.getIPersistentExecutionPeriod();
-
-				executionPeriod =
-					iepp.readByNameAndExecutionYear("2º Semestre", executionYear);
-
-				IPersistentExecutionCourse idep =
-					sp.getIPersistentExecutionCourse();
-				executionCourse =
-					idep.readByExecutionCourseInitialsAndExecutionPeriod(
-						"TFCI",
-						executionPeriod);
-
-				sp.confirmarTransaccao();
-			} catch (ExcepcaoPersistencia e) {
-				System.out.println("failed setting up the test data");
-			}
-
-			InfoExecutionCourse infoExecutionCourse =
-				Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
-		//InfoEvaluationMethod infoEvaluation = new InfoEvaluationMethod(infoExecutionCourse,"bla",null);	
-		//return infoEvaluation;
+//		ISuportePersistente sp = null;
+//			IExecutionYear executionYear = null;
+//			IExecutionPeriod executionPeriod = null;
+//			IExecutionCourse executionCourse = null;
+//			try {
+//				sp = SuportePersistenteOJB.getInstance();
+//				sp.iniciarTransaccao();
+//
+//				IPersistentExecutionYear ieyp = sp.getIPersistentExecutionYear();
+//				executionYear = ieyp.readExecutionYearByName("2002/2003");
+//
+//				IPersistentExecutionPeriod iepp =
+//					sp.getIPersistentExecutionPeriod();
+//
+//				executionPeriod =
+//					iepp.readByNameAndExecutionYear("2º Semestre", executionYear);
+//
+//				IPersistentExecutionCourse idep =
+//					sp.getIPersistentExecutionCourse();
+//				executionCourse =
+//					idep.readByExecutionCourseInitialsAndExecutionPeriod(
+//						"TFCI",
+//						executionPeriod);
+//
+//				sp.confirmarTransaccao();
+//			} catch (ExcepcaoPersistencia e) {
+//				System.out.println("failed setting up the test data");
+//			}
+//
+//			InfoExecutionCourse infoExecutionCourse =
+//				Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+//		//InfoEvaluationMethod infoEvaluation = new InfoEvaluationMethod(infoExecutionCourse,"bla",null);	
+//		//return infoEvaluation;
 		return null;
 	}
 

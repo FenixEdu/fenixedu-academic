@@ -18,10 +18,7 @@ import ServidorAplicacao.Servicos.TestCaseReadServices;
 
 public class ReadStudentLessonsTest extends TestCaseReadServices {
 
-	private InfoPerson infoPerson = null;
-	private InfoStudent infoStudent = null;
-	
-    public ReadStudentLessonsTest(java.lang.String testName) {
+	public ReadStudentLessonsTest(java.lang.String testName) {
     super(testName);
   }
     

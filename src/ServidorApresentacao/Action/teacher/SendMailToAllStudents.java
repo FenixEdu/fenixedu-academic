@@ -61,14 +61,14 @@ public class SendMailToAllStudents extends FenixDispatchAction
         UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
         TeacherAdministrationSiteView siteView = null;
         Integer objectCode = null;
-        Integer shiftID = null;
-        try
-        {
-            shiftID = new Integer(request.getParameter("shiftID"));
-        } catch (NumberFormatException ex)
-        {
-            //ok, we don't want to view a shift's student list
-        }
+//        Integer shiftID = null;
+//        try
+//        {
+//            shiftID = new Integer(request.getParameter("shiftID"));
+//        } catch (NumberFormatException ex)
+//        {
+//            //ok, we don't want to view a shift's student list
+//        }
         String objectCodeString = request.getParameter("objectCode");
         if (objectCodeString == null)
         {
@@ -126,7 +126,7 @@ public class SendMailToAllStudents extends FenixDispatchAction
         DynaActionForm sendMailForm = (DynaActionForm) form;
         sendMailForm.set("from", infoPerson.getEmail());
         sendMailForm.set("fromName", infoPerson.getNome());
-        String subject = request.getParameter("subject");
+//        String subject = request.getParameter("subject");
         sendMailForm.set("text", "");
         request.setAttribute("siteView", siteView);
         return mapping.findForward("showEmailForm");
@@ -251,7 +251,6 @@ public class SendMailToAllStudents extends FenixDispatchAction
         String text = request.getParameter("text");
         String subject = request.getParameter("subject");
         List candidacies = new LinkedList();
-        ActionForward destiny = null;
         List candidaciesExtendedInfo = new LinkedList();
         List failedEmails = null;
         try
@@ -265,7 +264,7 @@ public class SendMailToAllStudents extends FenixDispatchAction
                 InfoCurricularCourse curricularCourse = null;
                 InfoTheme theme = null;
                 InfoModality modality = null;
-                String motivation = null;
+//                String motivation = null;
                 InfoSeminary seminary = null;
                 List casesChoices = null;
                 List cases = new LinkedList();
@@ -291,7 +290,7 @@ public class SendMailToAllStudents extends FenixDispatchAction
                         argsReadModality);
                 seminary =
                     (InfoSeminary) ServiceManagerServiceFactory.executeService(userView, "Seminaries.GetSeminary", argsReadSeminary);
-                motivation = candidacy.getMotivation();
+//                motivation = candidacy.getMotivation();
                 casesChoices = candidacy.getCaseStudyChoices();
                 //
                 for (Iterator casesIterator = casesChoices.iterator(); casesIterator.hasNext();)
