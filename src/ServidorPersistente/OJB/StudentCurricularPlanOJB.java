@@ -29,6 +29,7 @@ public class StudentCurricularPlanOJB extends ObjectFenixOJB implements IStudent
     public StudentCurricularPlanOJB() {
     }
     
+    // TODO Remove TipoCurso from method interface...
     public IStudentCurricularPlan readActiveStudentCurricularPlan(Integer studentNumber , TipoCurso degreeType ) throws ExcepcaoPersistencia {
         try {
             IStudentCurricularPlan studentCurricularPlan = null;
