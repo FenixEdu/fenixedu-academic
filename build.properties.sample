@@ -133,5 +133,14 @@ verify_serializable=true
 #
 #
 #------------------------------------------------------------------------------
+# Logging Configuratio
+#------------------------------------------------------------------------------
+#
+#   log.profile.filename: name of file where profiling log will be stored
+#
+log.profile.filename=profileing.log
+#
+#
+#------------------------------------------------------------------------------
 # End of build.properties.sample file
 #------------------------------------------------------------------------------

@@ -10,7 +10,7 @@
   </appender>
 
  <appender name= "profileLog" class= "org.apache.log4j.DailyRollingFileAppender">
-	<param name= "File" value= "${catalina.home}/logs/logprofile.log"/>
+	<param name= "File" value= "@log.profile.filename@"/>
 	<param name= "DatePattern" value= "'.'yyyy-MM-dd"/>
 	<layout class= "org.apache.log4j.PatternLayout">
 		<param name= "ConversionPattern" value= "%m%n"/>
@@ -52,7 +52,5 @@
     <priority value="error"/>    
     <appender-ref ref="ConsoleAppender"/>
   </root>
-  
 
-
-</log4j:configuration> 
+</log4j:configuration>

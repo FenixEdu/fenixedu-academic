@@ -129,6 +129,7 @@
 	    	<include name="**/ServidorPersistenteOracleConfig.properties"/>
 	    	<include name="**/**/IstFtpServerConfig.properties"/>
 	    	<include name="**/**/DegreeGradesFtpServerConfig.properties"/>
+			<include name="log4j.xml"/>
 			<replacefilter token="&lt;!-- @validation.doctype@ -->"
 						   property="validation.doctype"/>
 
@@ -219,6 +220,9 @@
 
 			<replacefilter token="@verify_serializable@" 
 		    			   property="verify_serializable"/>
+
+			<replacefilter token="@log.profile.filename@"
+			   			   value="${env.CATALINA_HOME}/logs/${log.profile.filename}"/>
 		</replace>
 	</target>
 
