@@ -13,6 +13,11 @@ Actual Enrolment <br />
 	<logic:iterate id="curricularScope" name="infoEnrolmentContext" property="actualEnrolment" indexId="index">
 		<bean:write name="curricularScope" property="infoCurricularCourse.name"/><br/>
 	</logic:iterate>
+	
+	<logic:iterate id="optionalEnrolment" name="infoEnrolmentContext" property="infoOptionalCurricularCoursesEnrolments">
+			<bean:write name="optionalEnrolment" property="infoCurricularCourse.name"/> - <bean:write name="optionalEnrolment" property="infoCurricularCourseForOption.name"/>
+	</logic:iterate>
+	
 	<html:submit value="Finalizar"/>
 	<html:cancel value="Cancelar"/>		
 </html:form>
