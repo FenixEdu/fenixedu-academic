@@ -9,6 +9,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -21,6 +24,7 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -30,6 +34,7 @@ import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
+import Util.renderer.BarChart;
 import Util.renderer.container.RequestEntry;
 
 /**
@@ -38,6 +43,8 @@ import Util.renderer.container.RequestEntry;
 public class MonitorRequestLogsDA extends FenixDispatchAction {
 
 	private static String logImageDir = null;
+
+	private static final DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
 	public ActionForward listFiles(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
@@ -101,7 +108,7 @@ public class MonitorRequestLogsDA extends FenixDispatchAction {
 					"\n");
 			while (stringTokenizer.hasMoreElements()) {
 				String line = (String) stringTokenizer.nextElement();
-				if (line.startsWith("[") && line.endsWith(".do")) {
+				if (!StringUtils.contains(line, "[Filter: profiling]")) {
 					// the line contains usefull info
 					processLine(profileMap, line);
 				} else {
@@ -121,8 +128,8 @@ public class MonitorRequestLogsDA extends FenixDispatchAction {
 		}
 
 		SortedSet sortedProfileSet = sortProfileMap(profileMap);
-		//BarChart barChart = new BarChart(sortedProfileSet, "Average Execution Time",
-		//		logImageDir + "/" + filename + ".bar.png", 20);
+		BarChart barChart = new BarChart(sortedProfileSet, "Average Execution Time",
+				logImageDir + "/" + filename + ".bar.png", 20);
 		return sortedProfileSet;
 	}
 
@@ -152,44 +159,33 @@ public class MonitorRequestLogsDA extends FenixDispatchAction {
 	}
 
 	private void processLine(Map profileMap, String line) {
-		Integer getTime = getTime(line);
-		String requestPath = getRequestPath(line);
+		StringTokenizer stringTokenizer = new StringTokenizer(line, " \t[]-");
+		Long logTime = parseTime(stringTokenizer.nextToken());
+		String executionTimeString = stringTokenizer.nextToken();
+		Integer executionTime = new Integer(executionTimeString.substring(0, executionTimeString.length() - 2));
+		String requestPath = stringTokenizer.nextToken();
 
 		RequestEntry requestEntry = (RequestEntry) profileMap.get(requestPath);
 		if (requestEntry == null) {
 			requestEntry = getNewHashKey();
 			requestEntry.setRequestPath(requestPath);
-			requestEntry.setExecutionTime(getTime.intValue());
+			requestEntry.setExecutionTime(executionTime.intValue());
 			requestEntry.setNumberCalls(1);
 			profileMap.put(requestPath, requestEntry);
 		} else {
 			requestEntry.setExecutionTime(requestEntry.getExecutionTime()
-					+ getTime.intValue());
+					+ executionTime.intValue());
 			requestEntry.setNumberCalls(requestEntry.getNumberCalls() + 1);
 		}
 	}
 
-	private Integer getTime(String line) {
-		int i_start = 0;
-		// First find where the time starts
-		while (line.charAt(i_start) < '0' || line.charAt(i_start) > '9') {
-			i_start++;
+	private Long parseTime(String timeString) {
+		Long result = null; 
+		try {
+			result = new Long(dateFormat.parse(timeString).getTime());
+		} catch (ParseException e) {
 		}
-		int i_end = i_start;
-		// Next find where the time ends
-		while (line.charAt(i_end) >= '0' && line.charAt(i_end) <= '9') {
-			i_end++;
-		}
-		if (i_start != i_end) {
-			return new Integer(line.substring(i_start, i_end));
-		} 
-			return null;
-		
-	}
-
-	private String getRequestPath(String line) {
-		int i = line.lastIndexOf(" - ");
-		return line.substring(i + 3, line.length());
+		return result;
 	}
 
 	private String readFileContents(File file) {
