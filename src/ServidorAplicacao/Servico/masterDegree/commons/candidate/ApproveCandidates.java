@@ -56,10 +56,17 @@ public class ApproveCandidates implements IServico {
 				
 				IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp.getIPersistentMasterDegreeCandidate().readByOId(masterDegreeCandidateTemp, false);
 				ICandidateSituation candidateSituationOld = masterDegreeCandidate.getActiveCandidateSituation();
-				sp.getIPersistentCandidateSituation().writeCandidateSituation(candidateSituationOld);
-				candidateSituationOld.setValidation(new State(State.INACTIVE));
+//				sp.getIPersistentCandidateSituation().writeCandidateSituation(candidateSituationOld);
+//				candidateSituationOld.setValidation(new State(State.INACTIVE));
 			
-				masterDegreeCandidate.getSituations().add(candidateSituationOld);			
+//				masterDegreeCandidate.getSituations().add(candidateSituationOld);			
+
+			
+				ICandidateSituation candidateSituationTemp = new CandidateSituation();
+				candidateSituationTemp.setIdInternal(candidateSituationOld.getIdInternal());
+				ICandidateSituation candidateSituationOldFromBD = (ICandidateSituation) sp.getIPersistentCandidateSituation().readByOId(candidateSituationTemp, true);
+				candidateSituationOldFromBD.setValidation(new State(State.INACTIVE));
+
 				
 				if ((substitutes[i] != null) && (substitutes[i].length() > 0)){
 					masterDegreeCandidate.setSubstituteOrder(new Integer(substitutes[i]));	
@@ -74,6 +81,9 @@ public class ApproveCandidates implements IServico {
 				candidateSituation.setRemarks(remarks[i]);
 				candidateSituation.setSituation(new SituationName(situations[i]));
 				candidateSituation.setValidation(new State(State.ACTIVE));
+				
+//				masterDegreeCandidate.getSituations().add(candidateSituation);			
+				
 			}
 			
 		} catch (ExcepcaoPersistencia ex) {

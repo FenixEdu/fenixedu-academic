@@ -81,21 +81,34 @@ public class CreateCandidateSituation implements IServico {
 			while (iterator.hasNext()){
 				ICandidateSituation candidateSituation = (ICandidateSituation) iterator.next();
 				if (candidateSituation.getValidation().equals(new State(State.ACTIVE))){
-					sp.getIPersistentCandidateSituation().writeCandidateSituation(candidateSituation);
-					candidateSituation.setValidation(new State(State.INACTIVE));
+//					sp.getIPersistentCandidateSituation().writeCandidateSituation(candidateSituation);
+//					candidateSituation.setValidation(new State(State.INACTIVE));
+
+					
+					ICandidateSituation candidateSituationTemp = new CandidateSituation();
+					candidateSituationTemp.setIdInternal(candidateSituation.getIdInternal());
+					
+					ICandidateSituation candidateSituationFromBD = (ICandidateSituation) sp.getIPersistentCandidateSituation().readByOId(candidateSituationTemp, true);
+					
+					candidateSituationFromBD.setValidation(new State(State.INACTIVE));
+
 				}
 					
 			}
 		
 			// Create the New Candidate Situation			
 			ICandidateSituation candidateSituation = new CandidateSituation();
+			sp.getIPersistentCandidateSituation().simpleLockWrite(candidateSituation);
 			Calendar calendar = Calendar.getInstance();
 			candidateSituation.setDate(calendar.getTime());
 			candidateSituation.setSituation(new SituationName(SituationName.PENDENTE_STRING));
 			candidateSituation.setValidation(new State(State.ACTIVE));
 			candidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
 			sp.getIPersistentCandidateSituation().writeCandidateSituation(candidateSituation);
-			masterDegreeCandidate.getSituations().add(candidateSituation);
+//			masterDegreeCandidate.getSituations().add(candidateSituation);
+
+
+
 
 		} catch (ExistingPersistentException ex) {
 			// The situation Already Exists ... Something wrong ?

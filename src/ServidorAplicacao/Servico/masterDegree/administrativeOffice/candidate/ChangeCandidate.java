@@ -11,10 +11,8 @@ package ServidorAplicacao.Servico.masterDegree.administrativeOffice.candidate;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import DataBeans.InfoCandidateSituation;
 import DataBeans.InfoMasterDegreeCandidate;
@@ -158,27 +156,38 @@ public class ChangeCandidate implements IServico {
 		// Change Situation
 		
 		ICandidateSituation candidateSituation = null;
-		Set situations = new HashSet();
+		List situations = new ArrayList();
 				
 				
 		if (!masterDegreeCandidate.getActiveCandidateSituation().getSituation().equals(new SituationName(newCandidate.getInfoCandidateSituation().getSituation()))){
 
-			candidateSituation = new CandidateSituation();
-			sp.getIPersistentCandidateSituation().writeCandidateSituation(candidateSituation);
 			
 			// Change the Active Situation
 			Iterator iterator = masterDegreeCandidate.getSituations().iterator();
 			while(iterator.hasNext()) {
 				ICandidateSituation candidateSituationTemp = (ICandidateSituation) iterator.next();
 				if (candidateSituationTemp.getValidation().equals(new State(State.ACTIVE))){
-					sp.getIPersistentCandidateSituation().writeCandidateSituation(candidateSituationTemp);
-					candidateSituationTemp.setValidation(new State(State.INACTIVE));
+//					sp.getIPersistentCandidateSituation().writeCandidateSituation(candidateSituationTemp);
+//					candidateSituationTemp.setValidation(new State(State.INACTIVE));
+//					masterDegreeCandidate.getSituations().add(candidateSituationTemp);
+					
+					
+					ICandidateSituation csTemp = new CandidateSituation();
+					csTemp.setIdInternal(candidateSituationTemp.getIdInternal());
+					ICandidateSituation candidateSituationFromBD = (ICandidateSituation) sp.getIPersistentCandidateSituation().readByOId(csTemp, true);
+					candidateSituationFromBD.setValidation(new State(State.INACTIVE));
+					
+					
+					
 				}
-				situations.add(candidateSituationTemp);
+//				situations.add(candidateSituationTemp);
 			}
 //sp.getIPersistentCandidateSituation().writeCandidateSituation(masterDegreeCandidate.getActiveCandidateSituation());			
 //masterDegreeCandidate.getActiveCandidateSituation().setValidation(new State(State.INACTIVE));
 
+  			candidateSituation = new CandidateSituation();
+			sp.getIPersistentCandidateSituation().writeCandidateSituation(candidateSituation);
+			
 			Calendar calendar = Calendar.getInstance();
 			candidateSituation.setDate(calendar.getTime());
 			candidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
@@ -186,23 +195,35 @@ public class ChangeCandidate implements IServico {
 		
 			candidateSituation.setSituation(new SituationName(newCandidate.getInfoCandidateSituation().getSituation()));
 			candidateSituation.setValidation(new State(State.ACTIVE));
-			try {		
-				sp.getIPersistentCandidateSituation().writeCandidateSituation(candidateSituation);
-			} catch (ExcepcaoPersistencia ex) {
-			  FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-			  newEx.fillInStackTrace();
-			  throw newEx;
-			}	
-			
-			situations.add(candidateSituation);
-		} else 
-			situations.addAll(masterDegreeCandidate.getSituations());
+//			try {		
+//				sp.getIPersistentCandidateSituation().writeCandidateSituation(candidateSituation);
+//				masterDegreeCandidate.getSituations().add(candidateSituation);
+//			} catch (ExcepcaoPersistencia ex) {
+//			  FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+//			  newEx.fillInStackTrace();
+//			  throw newEx;
+//			}	
+//			
+//			situations.add(candidateSituation);
+//		} else 
+//			situations.addAll(masterDegreeCandidate.getSituations());
 	
+		}
+	
+		sp.confirmarTransaccao();
+		sp.iniciarTransaccao();
+		
+		
+		IMasterDegreeCandidate masterDegreeCandidateTemp = new MasterDegreeCandidate();
+		masterDegreeCandidateTemp.setIdInternal(masterDegreeCandidate.getIdInternal());
+		
+		IMasterDegreeCandidate masterDegreeCandidateFromBD = (IMasterDegreeCandidate) sp.getIPersistentMasterDegreeCandidate().readByOId(masterDegreeCandidateTemp, false);
+
 			
-		InfoMasterDegreeCandidate infoMasterDegreeCandidate = Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate);
+		InfoMasterDegreeCandidate infoMasterDegreeCandidate = Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidateFromBD);
 		
 		List situationsList = new ArrayList();
-		Iterator iterator = situations.iterator();
+		Iterator iterator = masterDegreeCandidateFromBD.getSituations().iterator();
 		while(iterator.hasNext()){
 			InfoCandidateSituation infoCandidateSituation = Cloner.copyICandidateSituation2InfoCandidateSituation((ICandidateSituation) iterator.next()); 
 			situationsList.add(infoCandidateSituation);

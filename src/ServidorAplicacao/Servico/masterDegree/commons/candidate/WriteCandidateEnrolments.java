@@ -52,13 +52,6 @@ public class WriteCandidateEnrolments implements IServico {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
-//			FIXME 
-//			FIXME 
-//			FIXME 
-sp.confirmarTransaccao();
-sp.iniciarTransaccao();
-
-
 			IMasterDegreeCandidate mdcTemp = new MasterDegreeCandidate();
 			mdcTemp.setIdInternal(candidateID);
 			IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp.getIPersistentMasterDegreeCandidate().readByOId(mdcTemp, true);

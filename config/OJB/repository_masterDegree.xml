@@ -102,6 +102,7 @@
          <collection-descriptor
 	         name="situations"
 	         element-class-ref="Dominio.CandidateSituation"
+    		 collection-class="org.apache.ojb.odmg.collections.DListImpl"
 	         refresh="true"
 	         auto-retrieve="true">
            <inverse-foreignkey field-ref="candidateKey"/>
