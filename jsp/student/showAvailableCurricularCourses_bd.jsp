@@ -20,13 +20,6 @@
 		<html:hidden property="method" value="verifyEnrolment" />
 		<html:hidden property="optionalCourseIndex" value="" />
 		<bean:message key="label.enrolment.curricular.courses"/>
-		<table>
-			<tr>
-				<th>&nbsp;</th>	
-				<th>Nome da disciplina</th>
-				<th>Ano</th>
-			</tr>
-			
 			<script type="text/javascript" language="JavaScript">
 				function disableAllElements(form, elementName){
 					var elements = form.elements;
@@ -39,6 +32,13 @@
 					}
 				}
 			</script>
+		<table>
+			<tr>
+				<th>&nbsp;</th>	
+				<th>Nome da disciplina</th>
+				<th>Ano</th>
+			</tr>
+			
 			
 			<logic:iterate id="curricularScope" name="infoEnrolmentContext" property="infoFinalCurricularCoursesScopesSpanToBeEnrolled" indexId="index">
 				<bean:define id="optionalEnrolmentString" value="" />
@@ -67,7 +67,9 @@
 				</logic:notEqual>
 				<tr>
 					<td>
-						<html:multibox property="curricularCourses" value="<%= pageContext.findAttribute("index").toString() %>" onclick="<%= pageContext.findAttribute("onclick").toString() %>"/>
+						<html:multibox property="curricularCourses" onclick="<%= pageContext.findAttribute("onclick").toString() %>">
+							<bean:write name="index"/>
+						</html:multibox>
 					</td>
 					<td>
 						<bean:write name="curricularScope" property="infoCurricularCourse.name"/>
