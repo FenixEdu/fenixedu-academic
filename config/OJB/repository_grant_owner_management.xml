@@ -167,12 +167,12 @@
       />
        <field-descriptor
 		name="beginDate"
-		column="BEGIN_DATE"
+		column="DATE_BEGIN"
 		jdbc-type="DATE"
 	/>
 	 <field-descriptor
 		name="endDate"
-		column="END_DATE"
+		column="DATE_END"
 		jdbc-type="DATE"
 	/>
 	 <field-descriptor
@@ -216,12 +216,12 @@
       />
        <field-descriptor
 		name="beginDate"
-		column="BEGIN_DATE"
+		column="DATE_BEGIN"
 		jdbc-type="DATE"
 	/>
 	 <field-descriptor
 		name="endDate"
-		column="END_DATE"
+		column="DATE_END"
 		jdbc-type="DATE"
 	/>
 	 <field-descriptor

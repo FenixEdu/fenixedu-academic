@@ -101,7 +101,7 @@ CREATE TABLE GRANT_ORIENTATION_TEACHER (
   ID_INTERNAL int(11) unsigned NOT NULL auto_increment,
   DATE_BEGIN date NOT NULL,
   DATE_END date default NULL,
-  KEY_GRANT_CONTRACT int(11) unsigned  NOT NULL default '0',
+  KEY_GRANT_CONTRACT int(11) unsigned NOT NULL default '0',
   KEY_GRANT_TEACHER int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (ID_INTERNAL)
 ) TYPE=InnoDB;

@@ -31,6 +31,23 @@ public class GrantContract extends DomainObject implements IGrantContract
     public GrantContract()
     {
     }
+
+    /**
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public boolean equals(Object obj)
+    {
+        boolean result = false;
+        if (obj instanceof IGrantContract)
+        {
+            IGrantContract grantContract = (IGrantContract) obj;
+            result =
+                (((this.contractNumber.equals(grantContract.getContractNumber()))
+                    && (this.grantOwner.equals(grantContract.getGrantOwner()))));
+        }
+        return result;
+    }
+
     /**
      * @return
      */

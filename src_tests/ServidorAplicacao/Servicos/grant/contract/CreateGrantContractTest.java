@@ -125,8 +125,10 @@ public class CreateGrantContractTest
 
         infoGrantContract.setGrantOwnerInfo(infoGrantOwner);
         infoGrantContract.setGrantTypeInfo(grantType);
+        responsibleTeacher.setGrantContractInfo(infoGrantContract);
+        orientationTeacher.setGrantContractInfo(infoGrantContract);
         infoGrantContract.setGrantResponsibleTeacherInfo(responsibleTeacher);
-		infoGrantContract.setGrantOrientationTeacherInfo(orientationTeacher);
+        infoGrantContract.setGrantOrientationTeacherInfo(orientationTeacher);
 
         Object[] args = { infoGrantContract };
         return args;
@@ -138,18 +140,35 @@ public class CreateGrantContractTest
      */
     protected Object[] getAuthorizeArguments()
     {
-    	InfoGrantType grantType = new InfoGrantType();
-    	InfoGrantResponsibleTeacher responsibleTeacherInfo = new InfoGrantResponsibleTeacher();
-		InfoGrantOrientationTeacher orientationTeacherInfo = new InfoGrantOrientationTeacher();
-		InfoTeacher responsibleTeacher = new InfoTeacher();
-		InfoTeacher orientationTeacher = new InfoTeacher();
-		
-		grantType.setSigla("M");
-		responsibleTeacher.setTeacherNumber(new Integer(1));
-		orientationTeacher.setTeacherNumber(new Integer(6));
-		responsibleTeacherInfo.setResponsibleTeacherInfo(responsibleTeacher);
-		orientationTeacherInfo.setOrientationTeacherInfo(orientationTeacher);
-		
+        InfoGrantType grantType = new InfoGrantType();
+        InfoGrantResponsibleTeacher responsibleTeacherInfo = new InfoGrantResponsibleTeacher();
+        InfoGrantOrientationTeacher orientationTeacherInfo = new InfoGrantOrientationTeacher();
+        InfoTeacher responsibleTeacher = new InfoTeacher();
+        InfoTeacher orientationTeacher = new InfoTeacher();
+
+        grantType.setSigla("M");
+
+        responsibleTeacher.setIdInternal(new Integer(1));
+        responsibleTeacher.setTeacherNumber(new Integer(1));
+
+        orientationTeacher.setIdInternal(new Integer(2));
+        orientationTeacher.setTeacherNumber(new Integer(6));
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, 2003);
+        calendar.set(Calendar.MONTH, Calendar.NOVEMBER);
+        calendar.set(Calendar.DAY_OF_MONTH, 12);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        Date dateBegin = calendar.getTime();
+        responsibleTeacherInfo.setBeginDate(dateBegin);
+        orientationTeacherInfo.setBeginDate(dateBegin);
+
+        responsibleTeacherInfo.setResponsibleTeacherInfo(responsibleTeacher);
+        orientationTeacherInfo.setOrientationTeacherInfo(orientationTeacher);
+
         Object[] args = getArguments(grantType, responsibleTeacherInfo, orientationTeacherInfo);
         return args;
     }
@@ -232,55 +251,55 @@ public class CreateGrantContractTest
         }
     }
 
-    //    /*
-    //     * Grant Contract Creation Unsuccessfull: unknown (responsible) teacher
-    //     */
-    //    public void testCreateGrantContractUnsuccessfullUnknownResponsibleTeacher()
-    //    {
-    //        try
-    //        {
-    //            String[] args = getAuthenticatedAndAuthorizedUser();
-    //            IUserView id = authenticateUser(args);
-    //            Object[] args2 = getUnauthorizeArgumentsUnknownResponsibleTeacher();
-    //
-    //            gestor.executar(id, getNameOfServiceToBeTested(), args2);
-    //
-    //            fail("Creating a new GrantContract with Unknown Responsible Teacher: test failed!");
-    //        } catch (FenixServiceException e)
-    //        {
-    //            compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-    //            System.out.println(
-    //                getNameOfServiceToBeTested()
-    //                    + " was SUCCESSFULY runned by test: testCreateGrantContractUnsuccessfullUnknownResponsibleTeacher");
-    //        } catch (Exception e)
-    //        {
-    //            fail("Creating a new GrantContract with Unknown Responsible Teacher " + e);
-    //        }
-    //    }
-    //
-    //    /*
-    //     * Grant Contract Creation Unsuccessfull: unknown (grant orientation) teacher
-    //     */
-    //    public void testCreateGrantContractUnsuccessfullUnknownGrantOrientationTeacher()
-    //    {
-    //        try
-    //        {
-    //            String[] args = getAuthenticatedAndAuthorizedUser();
-    //            IUserView id = authenticateUser(args);
-    //            Object[] args2 = getUnauthorizeArgumentsUnknownGrantOrientationTeacher();
-    //
-    //            gestor.executar(id, getNameOfServiceToBeTested(), args2);
-    //
-    //            fail("Creating a new GrantContract with Unknown Grant Orientation Teacher: test failed!");
-    //        } catch (FenixServiceException e)
-    //        {
-    //            compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
-    //            System.out.println(
-    //                getNameOfServiceToBeTested()
-    //                    + " was SUCCESSFULY runned by test: testCreateGrantContractUnsuccessfullUnknownGrantOrientationTeacher");
-    //        } catch (Exception e)
-    //        {
-    //            fail("Creating a new GrantContract with Unknown Grant Orientation Teacher " + e);
-    //        }
-    //    }
+    /*
+     * Grant Contract Creation Unsuccessfull: unknown (responsible) teacher
+     */
+    public void testCreateGrantContractUnsuccessfullUnknownResponsibleTeacher()
+    {
+        try
+        {
+            String[] args = getAuthenticatedAndAuthorizedUser();
+            IUserView id = authenticateUser(args);
+            Object[] args2 = getUnauthorizeArgumentsUnknownResponsibleTeacher();
+
+            gestor.executar(id, getNameOfServiceToBeTested(), args2);
+
+            fail("Creating a new GrantContract with Unknown Responsible Teacher: test failed!");
+        } catch (FenixServiceException e)
+        {
+            compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
+            System.out.println(
+                getNameOfServiceToBeTested()
+                    + " was SUCCESSFULY runned by test: testCreateGrantContractUnsuccessfullUnknownResponsibleTeacher");
+        } catch (Exception e)
+        {
+            fail("Creating a new GrantContract with Unknown Responsible Teacher " + e);
+        }
+    }
+
+    /*
+     * Grant Contract Creation Unsuccessfull: unknown (grant orientation) teacher
+     */
+    public void testCreateGrantContractUnsuccessfullUnknownGrantOrientationTeacher()
+    {
+        try
+        {
+            String[] args = getAuthenticatedAndAuthorizedUser();
+            IUserView id = authenticateUser(args);
+            Object[] args2 = getUnauthorizeArgumentsUnknownGrantOrientationTeacher();
+
+            gestor.executar(id, getNameOfServiceToBeTested(), args2);
+
+            fail("Creating a new GrantContract with Unknown Grant Orientation Teacher: test failed!");
+        } catch (FenixServiceException e)
+        {
+            compareDataSetUsingExceptedDataSetTableColumns(getDataSetFilePath());
+            System.out.println(
+                getNameOfServiceToBeTested()
+                    + " was SUCCESSFULY runned by test: testCreateGrantContractUnsuccessfullUnknownGrantOrientationTeacher");
+        } catch (Exception e)
+        {
+            fail("Creating a new GrantContract with Unknown Grant Orientation Teacher " + e);
+        }
+    }
 }

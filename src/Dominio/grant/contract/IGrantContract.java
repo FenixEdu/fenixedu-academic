@@ -22,8 +22,6 @@ public interface IGrantContract extends IDomainObject
 	public String getEndContractMotive();
 	public IGrantOwner getGrantOwner();
 	public IGrantType getGrantType();
-	public Integer getKeyGrantOwner();
-	public Integer getKeyGrantType();
 
 	public void setContractNumber(Integer contractNumber);
 	public void setDateBeginContract(Date dateBeginContract);
@@ -31,6 +29,4 @@ public interface IGrantContract extends IDomainObject
 	public void setEndContractMotive(String endContractMotive);
 	public void setGrantOwner(IGrantOwner grantOwner);
 	public void setGrantType(IGrantType grantType);
-	public void setKeyGrantOwner(Integer keyGrantOwner);
-	public void setKeyGrantType(Integer keyGrantType);
 }
