@@ -21,9 +21,11 @@ import Dominio.IFrequenta;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.StudentCurricularPlan;
+import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
 import Util.StudentCurricularPlanState;
 import Util.TipoCurso;
+import Util.UniversityCode;
 
 /**
  *
@@ -47,7 +49,7 @@ public class LoadInscricoes extends LoadDataFile {
 
 	protected void processLine(String line) {
 		StringTokenizer stringTokenizer =
-			new StringTokenizer(line, getFieldSeperator());
+			new StringTokenizer(line, getFieldSeparator());
 
 		String numero = stringTokenizer.nextToken();
 		String ano = stringTokenizer.nextToken();
@@ -89,16 +91,19 @@ public class LoadInscricoes extends LoadDataFile {
 					curricularCourse,
 					executionPeriod);
 			if (enrolment == null) {
-				enrolment = new Enrolment(
-					studentCurricularPlan,
-					curricularCourse,
-					new EnrolmentState(EnrolmentState.ENROLED),
-					executionPeriod);
-					writeElement(enrolment);
+				enrolment = new Enrolment();
+				enrolment.setCurricularCourse(curricularCourse);
+				enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
+				enrolment.setExecutionPeriod(executionPeriod);
+				enrolment.setEnrolmentState(EnrolmentState.ENROLED_OBJ);
+				enrolment.setStudentCurricularPlan(studentCurricularPlan);
+				enrolment.setUniversityCode(UniversityCode.IST);					
+
+				writeElement(enrolment);
 			} else {
 				enrolment.setCurricularCourse(curricularCourse);
 				enrolment.setExecutionPeriod(executionPeriod);
-				enrolment.setEnrolmentState(new EnrolmentState(EnrolmentState.ENROLED));
+				enrolment.setEnrolmentState(EnrolmentState.ENROLED_OBJ);
 				enrolment.setStudentCurricularPlan(studentCurricularPlan);
 				writeElement(enrolment);
 			}
@@ -232,7 +237,7 @@ public class LoadInscricoes extends LoadDataFile {
 		return "etc/migration/INSCRICOES.TXT";
 	}
 
-	protected String getFieldSeperator() {
+	protected String getFieldSeparator() {
 		return "\t";
 	}
 

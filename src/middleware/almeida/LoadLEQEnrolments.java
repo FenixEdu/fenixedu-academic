@@ -1,246 +1,243 @@
-/*
- * Created on May 15, 2003
- *
- * To change the template for this generated file go to
- * Window>Preferences>Java>Code Generation>Code and Comments
- */
 package middleware.almeida;
 
-import java.util.Date;
+import java.util.List;
 import java.util.StringTokenizer;
 
-import Dominio.Branch;
 import Dominio.Enrolment;
-import Dominio.Frequenta;
+import Dominio.ExecutionPeriod;
+import Dominio.ExecutionYear;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IEnrolment;
 import Dominio.IExecutionPeriod;
-import Dominio.IFrequenta;
-import Dominio.IStudent;
+import Dominio.IExecutionYear;
 import Dominio.IStudentCurricularPlan;
-import Dominio.StudentCurricularPlan;
-import Util.EnrolmentState;
-import Util.StudentCurricularPlanState;
-import Util.TipoCurso;
+import Util.EnrolmentEvaluationType;
+import Util.PeriodState;
+import Util.UniversityCode;
 
 /**
+ * @author dcs-rjao
  *
- * @author  Luis Cruz & Sara Ribeiro
+ * 21/Mai/2003
  */
+
 public class LoadLEQEnrolments extends LoadDataFile {
 
 	private static LoadLEQEnrolments loader = null;
-
-//	static String executionCoursesNotFound = "";
+	protected static String logString = "";
+	protected List almeidaCurricularCourseList = null;
 
 	private LoadLEQEnrolments() {
+		this.almeidaCurricularCourseList = persistentObjectOJB.readAllAlmeidaCurricularCourses();
 	}
 
 	public static void main(String[] args) {
 		loader = new LoadLEQEnrolments();
 		loader.load();
-
-//		loader.writeToFile(executionCoursesNotFound);
+		loader.writeToFile(logString);
 	}
 
 	protected void processLine(String line) {
-		StringTokenizer stringTokenizer =
-			new StringTokenizer(line, getFieldSeperator());
+		StringTokenizer stringTokenizer = new StringTokenizer(line, getFieldSeparator());
 
-		String numero = stringTokenizer.nextToken();
-		String ano = stringTokenizer.nextToken();
-		String semestre = stringTokenizer.nextToken();
-		String codigoDisciplina = stringTokenizer.nextToken();
-		String anoInscricao = stringTokenizer.nextToken();
-		String curso = stringTokenizer.nextToken();
-		String ramo = stringTokenizer.nextToken();
-		//String nota = stringTokenizer.nextToken();
+		String studentNumber = stringTokenizer.nextToken();
+		String enrolmentYear = stringTokenizer.nextToken();
+		String curricularYear = stringTokenizer.nextToken();
+		String curricularSemester = stringTokenizer.nextToken();
+		String epoca = stringTokenizer.nextToken();
+		String curricularCourseCode = stringTokenizer.nextToken();
+		String degreeCode = stringTokenizer.nextToken();
+		String branchCode = stringTokenizer.nextToken();
+		String grade = stringTokenizer.nextToken();
+		String teacherNumber = stringTokenizer.nextToken();
+		String evaluationDate = stringTokenizer.nextToken();
+		String universityCode = stringTokenizer.nextToken();
+		String observation = stringTokenizer.nextToken();
 
-		Almeida_inscricoes almeida_inscricoes = new Almeida_inscricoes();
-		almeida_inscricoes.setCodint(loader.numberElementsWritten + 1);
-		almeida_inscricoes.setNumero((new Integer(numero)).longValue());
-		almeida_inscricoes.setAno((new Integer(ano)).longValue());
-		almeida_inscricoes.setSemestre((new Integer(semestre)).longValue());
-		almeida_inscricoes.setCoddis(codigoDisciplina);
-		almeida_inscricoes.setAnoinscricao(
-			(new Integer(anoInscricao)).longValue());
-		almeida_inscricoes.setCurso((new Integer(curso)).longValue());
-		almeida_inscricoes.setRamo(ramo);
+		Almeida_enrolment almeida_enrolment = new Almeida_enrolment();
+		almeida_enrolment.setId_internal(loader.numberElementsWritten + 1);
+		almeida_enrolment.setNumalu(studentNumber);
+	
+		if(epoca.equals(" ")){
+			epoca = "5"; // corresponde ao valor de uma inscrição noutra universidade	
+		}
+		
+		if(branchCode.equals(" ")){
+			branchCode = "-1"; // por enquanto nao interessa, por isso, passe-se um valor só para nao dar erro no set	
+		}
+		
+		try {
+			almeida_enrolment.setAnoins((new Integer(enrolmentYear)).longValue());
+			almeida_enrolment.setAnodis((new Integer(curricularYear)).longValue());
+			almeida_enrolment.setSemdis((new Integer(curricularSemester)).longValue());
+			almeida_enrolment.setEpoca((new Integer(epoca)).longValue());
+			almeida_enrolment.setRamo((new Integer(branchCode)).longValue());
+		} catch (NumberFormatException e) {
+			logString += " Os valores lidos do ficheiro são invalidos para a criação de Integers!\n" ;
+		}
+		
+		almeida_enrolment.setCoddis(curricularCourseCode);
+		almeida_enrolment.setCurso(degreeCode);
+		almeida_enrolment.setResult(grade);
+		almeida_enrolment.setNumdoc(teacherNumber);
+		almeida_enrolment.setDatexa(evaluationDate);
+		almeida_enrolment.setCoduniv(universityCode);
+		almeida_enrolment.setObserv(observation);
 
-		processEnrolement(almeida_inscricoes);
+		processEnrolment(almeida_enrolment);
 	}
 
-	private void processEnrolement(Almeida_inscricoes almeida_inscricoes) {
-		IStudentCurricularPlan studentCurricularPlan =
-			readStudentCurricularPlan(almeida_inscricoes);
-		ICurricularCourse curricularCourse =
-			readCurricularCourse(almeida_inscricoes);
-		IExecutionPeriod executionPeriod = null;
-		IDisciplinaExecucao disciplinaExecucao = null;
+	private void processEnrolment(Almeida_enrolment almeida_enrolment) {
 
+		IStudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(almeida_enrolment);
+		ICurricularCourse curricularCourse = readCurricularCourse(almeida_enrolment);
+		IExecutionPeriod executionPeriod = processExecutionPeriod(almeida_enrolment.getAnoins(),almeida_enrolment.getSemdis());
+
+		// existe referencia a esta CC na BD, ou seja, a CC pertence ao degreeCurricularPlan deste semestre (e não o novo)
 		if (curricularCourse != null) {
-			executionPeriod = readActiveExecutionPeriod();
 
-			IEnrolment enrolment =
-				persistentObjectOJB.readEnrolment(
-					studentCurricularPlan,
-					curricularCourse,
-					executionPeriod);
+			IEnrolment enrolment = persistentObjectOJB.readEnrolment(studentCurricularPlan, curricularCourse, executionPeriod);
 			if (enrolment == null) {
-				enrolment = new Enrolment(
-					studentCurricularPlan,
-					curricularCourse,
-					new EnrolmentState(EnrolmentState.ENROLED),
-					executionPeriod);
-					writeElement(enrolment);
-			} else {
+				enrolment = new Enrolment();
 				enrolment.setCurricularCourse(curricularCourse);
 				enrolment.setExecutionPeriod(executionPeriod);
-				enrolment.setEnrolmentState(new EnrolmentState(EnrolmentState.ENROLED));
 				enrolment.setStudentCurricularPlan(studentCurricularPlan);
+				enrolment.setEnrolmentEvaluationType(processEvaluationType(almeida_enrolment.getEpoca()));
+				enrolment.setUniversityCode(processUniversityCode(almeida_enrolment.getCoduniv()));
 				writeElement(enrolment);
 			}
-
-			disciplinaExecucao =
-				readExecutionCourse(curricularCourse, executionPeriod);
-
-			if (disciplinaExecucao == null) {
-//				executionCoursesNotFound += "Curricular: code= "
-//					+ curricularCourse.getCode()
-//					+ "  name= "
-//					+ curricularCourse.getName()
-//					+ "  curso= "
-//					+ almeida_inscricoes.getCurso()
-//					+ "\n";
-//				//writeElement(almeida_inscricoes);
-//				numberUntreatableElements++;
-			} else {
-				IFrequenta frequenta =
-					persistentObjectOJB.readFrequenta(
-						studentCurricularPlan.getStudent(),
-						disciplinaExecucao);
-				if (frequenta == null) {
-					frequenta = new Frequenta(
-						studentCurricularPlan.getStudent(),
-						disciplinaExecucao);
-					writeElement(frequenta);
-				} else {
-					frequenta.setAluno(studentCurricularPlan.getStudent());
-					frequenta.setDisciplinaExecucao(disciplinaExecucao);
-					writeElement(frequenta);
-				}
-			}
+//			} else {
+//				enrolment.setCurricularCourse(curricularCourse);
+//				enrolment.setExecutionPeriod(executionPeriod);
+//				enrolment.setEnrolmentState(EnrolmentState.ENROLED_OBJ);
+//				enrolment.setStudentCurricularPlan(studentCurricularPlan);
+//				enrolment.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
+//				enrolment.setUniversityCode(UniversityCode.IST);
+//				writeElement(enrolment);
+//			}
 		}
 	}
 
-	/**
-	 * @param curricularCourse
-	 * @param executionPeriod
-	 * @return
-	 */
-	private IDisciplinaExecucao readExecutionCourse(
-		ICurricularCourse curricularCourse,
-		IExecutionPeriod executionPeriod) {
-		return persistentObjectOJB.readExecutionCourse(
-			curricularCourse,
-			executionPeriod);
 
+	private String processUniversityCode(String universityCodeRead) {
+		String universityCode = null;
+		if(universityCode.equals("IST")){
+			universityCode = UniversityCode.IST;
+		}else if (universityCode.equals("UBI")){
+			universityCode = UniversityCode.UBI;
+		}else {
+			logString += "Novo University Code: " + universityCodeRead + "\n";
+		}
+		return universityCode;
 	}
 
-	/**
-	 * @return
-	 */
+	private EnrolmentEvaluationType processEvaluationType(long epocaLong) {
+		EnrolmentEvaluationType enrolmentEvaluationType = null;
+		
+		int epoca = (new Integer("" + epocaLong)).intValue();
+		switch (epoca) {
+			case 0 :
+				enrolmentEvaluationType = EnrolmentEvaluationType.NORMAL_OBJ;
+			case 1 :
+				enrolmentEvaluationType = EnrolmentEvaluationType.NORMAL_OBJ;
+			case 2 :
+				enrolmentEvaluationType = EnrolmentEvaluationType.NORMAL_OBJ;
+			case 3 :
+				enrolmentEvaluationType = EnrolmentEvaluationType.SPECIAL_OBJ;
+			case 4 :
+				enrolmentEvaluationType = EnrolmentEvaluationType.IMPROVEMENT_OBJ;
+			case 5 :
+				enrolmentEvaluationType = EnrolmentEvaluationType.EXTERNAL_OBJ;
+			default:
+				logString += "A epoca [" + epocaLong + "] é invalida!\n";
+				break;
+		}
+		
+		return enrolmentEvaluationType;
+	}
+
+	private IExecutionPeriod processExecutionPeriod(long yearLong, long semesterLong) {
+		
+		Integer semester = new Integer("" + semesterLong);
+		Integer year = new Integer("" + yearLong);
+		
+		IExecutionYear executionYear = persistentObjectOJB.readExecutionYearByYear(year);
+		if(executionYear == null)
+		{
+			executionYear = new ExecutionYear();
+			executionYear.setState(PeriodState.CLOSED);
+			executionYear.setYear(new String("" + year));
+			writeElement(executionYear); 
+		}
+		
+		IExecutionPeriod executionPeriod  = persistentObjectOJB.readExecutionPeriodByYearAndSemester(executionYear, semester);
+		if(executionPeriod == null)
+		{
+			executionPeriod = new ExecutionPeriod();
+			executionPeriod.setExecutionYear(executionYear);
+			executionPeriod.setSemester(semester);
+			executionPeriod.setState(PeriodState.CLOSED);
+			executionPeriod.setName(year.intValue() + "/" + (year.intValue() + 1));
+			writeElement(executionPeriod); 
+		}
+		
+		return executionPeriod;	
+	}
+
+	private IDisciplinaExecucao readExecutionCourse(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod) {
+		return persistentObjectOJB.readExecutionCourse(curricularCourse, executionPeriod);
+	}
+
 	private IExecutionPeriod readActiveExecutionPeriod() {
 		return persistentObjectOJB.readActiveExecutionPeriod();
 	}
 
-	/**
-	 * @param string
-	 * @return
-	 */
-	private ICurricularCourse readCurricularCourse(Almeida_inscricoes almeida_inscricoes) {
+	private ICurricularCourse readCurricularCourse(Almeida_enrolment almeida_enrolment) {
 		ICurricularCourse curricularCourse = null;
-
-		// First read Almeidas curricular course
-		Almeida_disc almeida_disc =
-			persistentObjectOJB.readAlmeidaCurricularCourse(
-				almeida_inscricoes.getCoddis(), almeida_inscricoes.getCurso());
-
-		// Log the ones that don't exist in his database!
-		if (almeida_disc == null) {
-			writeElement(almeida_inscricoes);
-			numberUntreatableElements++;
-		} else {
-			// Read our corresponding curricular couse
-			curricularCourse =
-				persistentObjectOJB.readCurricularCourse(
-					almeida_disc.getNomedis(),
-					new Integer("" + almeida_disc.getCodcur()),
-					almeida_disc.getCoddis());
-			if (curricularCourse == null) {
-				// Log the ones we can't match
-				writeElement(almeida_inscricoes);
-				numberUntreatableElements++;
-			}
+		
+		Almeida_curricular_course almeida_curricular_course = new Almeida_curricular_course();
+		almeida_curricular_course.setCode(almeida_enrolment.getCoddis());
+		if(this.almeidaCurricularCourseList.contains(almeida_curricular_course)) {
+			String code = almeida_enrolment.getCoddis();
+			int index = this.almeidaCurricularCourseList.indexOf(almeida_curricular_course);
+			String name = ((Almeida_curricular_course) this.almeidaCurricularCourseList.get(index)).getName();
+			//curricularCourse = persistentObjectOJB.readCurricularCourseByCodeAndName(code, name);
 		}
+
+//		curricularCourse = persistentObjectOJB.readCurricularCourse(almeida_disc.getNomedis(), new Integer("" + almeida_disc.getCodcur()), almeida_disc.getCoddis());
+//		if (curricularCourse == null) {
+//			// Log the ones we can't match
+//			writeElement(almeida_inscricoes);
+//			numberUntreatableElements++;
+//		}
 
 		return curricularCourse;
 	}
 
-	/**
-	 * @param almeida_inscricoes
-	 * @return
-	 */
-	private IStudentCurricularPlan readStudentCurricularPlan(Almeida_inscricoes almeida_inscricoes) {
-		IStudentCurricularPlan studentCurricularPlan =
-			persistentObjectOJB.readStudentCurricularPlan(
-				new Integer("" + almeida_inscricoes.getNumero()));
-
+	private IStudentCurricularPlan readStudentCurricularPlan(Almeida_enrolment almeida_enrolment) {
+		IStudentCurricularPlan studentCurricularPlan = persistentObjectOJB.readStudentCurricularPlan(new Integer(almeida_enrolment.getNumalu()));
 		if (studentCurricularPlan == null) {
-			IStudent student =
-				persistentObjectOJB.readStudent(
-					new Integer("" + almeida_inscricoes.getNumero()),
-					new TipoCurso(TipoCurso.LICENCIATURA));
-
-			studentCurricularPlan =
-				new StudentCurricularPlan(
-					student,
-					persistentObjectOJB.readDegreeCurricularPlan(
-						new Integer("" + almeida_inscricoes.getCurso())),
-					getBranch(almeida_inscricoes),
-					new Date(),
-					new StudentCurricularPlanState(
-						StudentCurricularPlanState.ACTIVE));
-			studentCurricularPlan.setBranch(new Branch());
-			writeElement(studentCurricularPlan);
+			logString += "NÃO HÁ PLANO CURRICULAR DE ALUNO PARA O ALUNO [" + almeida_enrolment.getNumalu() + "]\n";
 		}
-
 		return studentCurricularPlan;
 	}
 
-	/**
-	 * @param string
-	 */
 	private IBranch getBranch(Almeida_inscricoes almeida_inscricoes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	protected String getFilename() {
-		return "etc/migration/INSCRICOES.TXT";
+		return "etc/migration/curriculo_05.txt";
 	}
 
-	protected String getFieldSeperator() {
+	protected String getFieldSeparator() {
 		return "\t";
 	}
 
-	/* (non-Javadoc)
-	 * @see middleware.almeida.LoadDataFile#getFilenameOutput()
-	 */
 	protected String getFilenameOutput() {
-		return "ExecutionCoursesNotFound.txt";
+		return "enrolmentMigrationLog.txt";
 	}
-
 }
