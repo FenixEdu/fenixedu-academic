@@ -563,7 +563,16 @@
                 redirect = "true"/>
 	</action>
 
-	-->        
+	-->   
+	<!--attention: this action is incomplete --> 
+	<action 
+		parameter="method"
+		path="/CurriculumManagerDA"
+        type="ServidorApresentacao.Action.teacher.CurriculumManagerDispatchAction"
+		>
+     <forward name="AcederGestaoBibliografia" path="/acederGestaoBibliografia.do"/>
+	</action>
+	    
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
