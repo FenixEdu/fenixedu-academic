@@ -17,37 +17,40 @@ public class DocumentType implements Serializable {
 	public static final int CERTIFICATE_OF_DEGREE = 2;
 	public static final int ACADEMIC_PROOF_EMOLUMENT = 3;
 	public static final int APPLICATION_EMOLUMENT = 4;
+	public static final int EMOLUMENT = 11;
 	public static final int ENROLMENT = 5;
 	public static final int FINE = 6;
 	public static final int INSURANCE = 7;
 	public static final int RANK_RECOGNITION_AND_EQUIVALENCE_PROCESS = 8;
 	public static final int OTHERS = 9;
 	public static final int GRATUITY = 10;
-	public static final int EMOLUMENT = 11;
+	
 
 	public static final DocumentType CERTIFICATE_TYPE = new DocumentType(CERTIFICATE);
 	public static final DocumentType CERTIFICATE_OF_DEGREE_TYPE = new DocumentType(CERTIFICATE_OF_DEGREE);
 	public static final DocumentType ACADEMIC_PROOF_EMOLUMENT_TYPE = new DocumentType(ACADEMIC_PROOF_EMOLUMENT);
 	public static final DocumentType APPLICATION_EMOLUMENT_TYPE = new DocumentType(APPLICATION_EMOLUMENT);
+	public static final DocumentType EMOLUMENT_TYPE = new DocumentType(EMOLUMENT);
 	public static final DocumentType ENROLMENT_TYPE = new DocumentType(ENROLMENT);
 	public static final DocumentType FINE_TYPE = new DocumentType(FINE);
 	public static final DocumentType INSURANCE_TYPE = new DocumentType(INSURANCE);
 	public static final DocumentType RANK_RECOGNITION_AND_EQUIVALENCE_PROCESS_TYPE = new DocumentType(RANK_RECOGNITION_AND_EQUIVALENCE_PROCESS);
 	public static final DocumentType OTHERS_TYPE = new DocumentType(OTHERS);
 	public static final DocumentType GRATUITY_TYPE = new DocumentType(GRATUITY);
-	public static final DocumentType EMOLUMENT_TYPE = new DocumentType(EMOLUMENT);
+	
 
 	public static final String CERTIFICATE_STRING = "Certidão";
 	public static final String CERTIFICATE_OF_DEGREE_STRING = "Diploma";
 	public static final String ACADEMIC_PROOF_EMOLUMENT_STRING = "Emolumentos para Admissão a Provas Académicas";
 	public static final String APPLICATION_EMOLUMENT_STRING = "Emolumentos de Candidatura";
+	public static final String EMOLUMENT_STRING = "Emolumento";
 	public static final String ENROLMENT_STRING = "Inscrições";
 	public static final String FINE_STRING = "Multa";
 	public static final String INSURANCE_STRING = "Seguro";
 	public static final String RANK_RECOGNITION_AND_EQUIVALENCE_PROCESS_STRING = "Processo de Equivalência e Reconhecimento de Grau";
 	public static final String OTHERS_STRING = "Outros Documentos";
 	public static final String GRATUITY_STRING = "Propinas";
-	public static final String EMOLUMENT_STRING = "Emolumento";
+	
 	public static final String DEFAULT = "[Escolha um Tipo de Documento]";
 
 

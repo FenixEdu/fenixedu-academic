@@ -181,15 +181,17 @@ public class CreateGuideDispatchAction extends DispatchAction
 
             ArrayList degrees = (ArrayList) session.getAttribute(SessionConstants.DEGREE_LIST);
 
-            List types = new ArrayList();
-            types.add(DocumentType.INSURANCE_TYPE);
-            types.add(DocumentType.CERTIFICATE_TYPE);
-            types.add(DocumentType.ENROLMENT_TYPE);
-            types.add(DocumentType.FINE_TYPE);
-            types.add(DocumentType.CERTIFICATE_OF_DEGREE_TYPE);
-            types.add(DocumentType.ACADEMIC_PROOF_EMOLUMENT_TYPE);
-            types.add(DocumentType.RANK_RECOGNITION_AND_EQUIVALENCE_PROCESS_TYPE);
-            types.add(DocumentType.GRATUITY_TYPE);
+			List types = new ArrayList();
+			types.add(DocumentType.INSURANCE_TYPE);
+			types.add(DocumentType.CERTIFICATE_TYPE);
+			types.add(DocumentType.ENROLMENT_TYPE);
+			types.add(DocumentType.EMOLUMENT_TYPE);
+			types.add(DocumentType.FINE_TYPE);
+			types.add(DocumentType.CERTIFICATE_OF_DEGREE_TYPE);
+			types.add(DocumentType.ACADEMIC_PROOF_EMOLUMENT_TYPE);
+			types.add(DocumentType.RANK_RECOGNITION_AND_EQUIVALENCE_PROCESS_TYPE);
+			types.add(DocumentType.GRATUITY_TYPE);
+			
 
             Object argsAux[] = { GraduationType.MASTER_DEGREE_TYPE, types };
 
