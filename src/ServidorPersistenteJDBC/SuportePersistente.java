@@ -29,19 +29,22 @@ public class SuportePersistente {
 	private SuportePersistente(String filename) {
 		UtilRelacional.inicializarBaseDados(filename);
 	}
-
+	/**
+	 * 
+	 *@deprecated
+	 */
 	public void apagarDados() {
-		try {
-			iniciarTransaccao();
-			try {
-				UtilRelacional.limparTabelas();
-			} catch (Exception e) {
-				cancelarTransaccao();
-			}
-			confirmarTransaccao();
-		} catch (Exception e) {
-			System.out.println("SuportePersistente.apagarDados: " + e.toString());
-		}
+//		try {
+//			iniciarTransaccao();
+//			try {
+//				UtilRelacional.limparTabelas();
+//			} catch (Exception e) {
+//				cancelarTransaccao();
+//			}
+//			confirmarTransaccao();
+//		} catch (Exception e) {
+//			System.out.println("SuportePersistente.apagarDados: " + e.toString());
+//		}
 	}
 
 	public int ultimoIdGerado() {
