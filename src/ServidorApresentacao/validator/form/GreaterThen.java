@@ -33,7 +33,7 @@ public class GreaterThen {
 		}
 		Double input = null;
 		Double lowerValue = null;
-
+	
 		try {
 			input = new Double(inputString);
 			lowerValue = new Double(lowerValueString);
@@ -41,7 +41,7 @@ public class GreaterThen {
 			errors.add(field.getKey(), Resources.getActionError(request, va, field));
 			return false;
 		}
-
+		
 		if (!GenericValidator.isBlankOrNull(inputString)) {
 			if (input.floatValue() <= lowerValue.floatValue()){
 				errors.add(field.getKey(), Resources.getActionError(request, va, field));				
@@ -51,5 +51,41 @@ public class GreaterThen {
 
 		return true;
 	}
+	
+	public static boolean validateFloat0(
+			Object bean,
+			ValidatorAction va,
+			Field field,
+			ActionErrors errors,
+			HttpServletRequest request,
+			ServletContext application) {
+
+			String inputString = ValidatorUtil.getValueAsString(bean, field.getProperty());
+			String lowerValueString = field.getVarValue("value");
+		
+			if ((inputString == null) || (inputString.length() == 0)){
+				return true;
+			}
+			Double input = null;
+			Double lowerValue = null;
+	
+			try {
+				input = new Double(inputString);
+				lowerValue = new Double(lowerValueString);
+			} catch (NumberFormatException e) {
+				errors.add(field.getKey(), Resources.getActionError(request, va, field));
+				return false;
+			}
+		
+			if (!GenericValidator.isBlankOrNull(inputString)) {
+				if (input.floatValue() < lowerValue.floatValue()){
+					errors.add(field.getKey(), Resources.getActionError(request, va, field));				
+				}
+				return false;
+			}
+
+			return true;
+		}
+
 
 }

@@ -12,7 +12,7 @@
 <span class="error"><html:errors/></span>
    
    <table>
-    <html:form action="/studentGuideDispatchAction?method=createReady">
+<html:form action="/studentGuideDispatchAction?method=createReady">
     <html:hidden property="page" value="1"/>
     <bean:define id="graduationType" name="graduationType"/>
     <html:hidden property="graduationType" value='<%= pageContext.findAttribute("graduationType").toString()%>'/>

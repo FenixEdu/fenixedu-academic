@@ -304,7 +304,7 @@ public class RegisterCandidate implements IServico
         } catch (ExcepcaoPersistencia ex)
         {
             FenixServiceException newEx = new FenixServiceException("Persistence layer error");
-            newEx.fillInStackTrace();
+            //newEx.fillInStackTrace();
             throw newEx;
         }
 

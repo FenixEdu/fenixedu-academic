@@ -500,7 +500,7 @@
 
 
    <form name="chooseStudentGuideForm">
-      <field property="specializationGratuityQuantity" depends="integer, floatGreaterThen" page="1">
+      <field property="specializationGratuityQuantity" depends="integer, floatGreater" page="1">
         <arg0 key="error.exception.invalidInformationInForm" />
         
        	<var>
@@ -509,7 +509,7 @@
 		</var>
       </field>
 
-      <field property="specializationGratuityAmount" depends="floatGreaterThen" page="1">
+      <field property="specializationGratuityAmount" depends="floatGreater" page="1">
         <arg0 key="label.specializationGratuityAmount" />
         <arg1 key="${var:value}" resource="false"/>
        	<var>

@@ -45,26 +45,34 @@ public class StudentGuideDispatchAction extends DispatchAction
 
         if (session != null)
         {
+		
             DynaActionForm studentGuideForm = (DynaActionForm) form;
             InfoGuide infoGuide = (InfoGuide) session.getAttribute(SessionConstants.GUIDE);
 
-            List certificateList = (List) session.getAttribute(SessionConstants.CERTIFICATE_LIST);
 
+            List certificateList = (List) session.getAttribute(SessionConstants.CERTIFICATE_LIST);
+			
             String[] quantityList = request.getParameterValues("quantityList");
 
             String specializationGratuityQuantityString =
                 (String) studentGuideForm.get("specializationGratuityQuantity");
             String specializationGratuityAmountString =
                 (String) studentGuideForm.get("specializationGratuityAmount");
-
+			if (specializationGratuityAmountString.equals("0.0"))
+				specializationGratuityAmountString="0";
+			
             String graduationType = (String) request.getAttribute("graduationType");
             if (graduationType == null)
                 graduationType = request.getParameter("graduationType");
+
             request.setAttribute("graduationType", graduationType);
 
             String othersGratuityAmountString = (String) studentGuideForm.get("othersGratuityAmount");
             Integer othersGratuityAmount = null;
-
+            
+			if (othersGratuityAmountString.equals("0.0"))
+				othersGratuityAmountString="0";
+				
             if ((othersGratuityAmountString != null) && (othersGratuityAmountString.length() > 0))
             {
                 try
@@ -73,7 +81,7 @@ public class StudentGuideDispatchAction extends DispatchAction
                     if (othersGratuityAmount.intValue() < 0)
                         throw new NumberFormatException();
                 } catch (NumberFormatException e)
-                {
+                {	
                     throw new InvalidInformationInFormActionException(new Throwable());
                 }
             }
@@ -116,7 +124,7 @@ public class StudentGuideDispatchAction extends DispatchAction
                 position++;
 
             }
-
+			
             if ((specializationGratuityAmountString != null)
                 && (specializationGratuityAmountString.length() != 0)
                 && (specializationGratuityQuantityString != null)
@@ -127,10 +135,11 @@ public class StudentGuideDispatchAction extends DispatchAction
                 infoGuideEntry.setGraduationType(GraduationType.MASTER_DEGREE_TYPE);
                 infoGuideEntry.setDocumentType(DocumentType.GRATUITY_TYPE);
                 infoGuideEntry.setPrice(new Double(specializationGratuityAmountString));
+
                 infoGuideEntry.setQuantity(new Integer(specializationGratuityQuantityString));
                 infoGuide.getInfoGuideEntries().add(infoGuideEntry);
             }
-
+			
             if (othersGratuityAmount != null)
             {
                 InfoGuideEntry infoGuideEntry = new InfoGuideEntry();
@@ -141,7 +150,7 @@ public class StudentGuideDispatchAction extends DispatchAction
                 infoGuideEntry.setQuantity(new Integer(1));
                 infoGuide.getInfoGuideEntries().add(infoGuideEntry);
             }
-
+			
             if (infoGuide.getInfoGuideEntries().size() == 0)
                 throw new NoChangeMadeActionException("error.exception.noCertificateChosen");
 
@@ -149,6 +158,7 @@ public class StudentGuideDispatchAction extends DispatchAction
             saveToken(request);
 
             request.setAttribute(SessionConstants.GUIDE, infoGuide);
+
 
             return mapping.findForward("CreateStudentGuideReady");
 
