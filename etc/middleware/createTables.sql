@@ -142,4 +142,6 @@ create table mw_STUDENT_CLASS(
 	AVERAGE float(10,2),
 	CLASS_NAME varchar(20)
 )type=InnoDB;
+#	ID_INTERNAL int(11) auto_increment,
+#	PRIMARY KEY(ID_INTERNAL)
 
