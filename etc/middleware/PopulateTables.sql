@@ -8,6 +8,13 @@ LOAD DATA INFILE '@load.data.infile.root@nomedis.txt' into table mw_CURRICULAR_C
 LOAD DATA INFILE '@load.data.infile.root@disciplinas.txt' into table mw_CURRICULAR_COURSE_SCOPE_temp;
 -- LOAD DATA INFILE '@load.data.infile.root@student-class-distribution.txt' into table mw_STUDENT_CLASS IGNORE 1 LINES;
 
+
+UPDATE mw_COURSE SET courseCode = LTRIM(courseCode);
+UPDATE mw_CURRICULAR_COURSE SET courseCode = LTRIM(courseCode);
+UPDATE mw_ENROLMENT_temp SET courseCode = LTRIM(courseCode);
+UPDATE mw_CURRICULAR_COURSE_SCOPE_temp SET courseCode = LTRIM(courseCode);
+
+
 delete from mw_DEGREE_TRANSLATION;
 insert into mw_DEGREE_TRANSLATION values (01,1),(02,2),(03,3),(05,5),(06,6)
 ,(07,7),(08,8),(09,9),(10,10),(19,19),(11,11),(12,12),(13,13),(14,14)

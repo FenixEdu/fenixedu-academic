@@ -3,7 +3,7 @@ package middleware.persistentMiddlewareSupport.OJBDatabaseSupport;
 
 import java.util.List;
 
-import middleware.middlewareDomain.MwEnrolment;
+import middleware.middlewareDomain.MWEnrolment;
 import middleware.persistentMiddlewareSupport.IPersistentMWEnrolment;
 import middleware.persistentMiddlewareSupport.exceptions.PersistentMiddlewareSupportException;
 
@@ -27,7 +27,7 @@ public class MWEnrolmentOJB extends ObjectFenixOJB implements IPersistentMWEnrol
 	public List readByStudentNumber(Integer number) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("number", number);
-		return queryList(MwEnrolment.class, criteria);
+		return queryList(MWEnrolment.class, criteria);
 	}
     
 }

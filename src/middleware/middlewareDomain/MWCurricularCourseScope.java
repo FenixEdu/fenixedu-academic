@@ -4,7 +4,7 @@
 
 package middleware.middlewareDomain;
 
-public class MwCurricularCourseScope {
+public class MWCurricularCourseScope {
 
 	private Integer branchcode;
 	private String coursecode;
@@ -21,7 +21,7 @@ public class MwCurricularCourseScope {
 	private Double theoreticalhours;
 	private Integer idInternal;
 
-	public MwCurricularCourseScope() {
+	public MWCurricularCourseScope() {
 	}
 
 

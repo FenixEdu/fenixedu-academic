@@ -6,7 +6,7 @@
 
 package middleware.persistentMiddlewareSupport;
 
-import middleware.middlewareDomain.MwCurricularCourse;
+import middleware.middlewareDomain.MWCurricularCourse;
 import middleware.persistentMiddlewareSupport.exceptions.PersistentMiddlewareSupportException;
 import ServidorPersistente.ExcepcaoPersistencia;
 
@@ -20,7 +20,7 @@ public interface IPersistentMWCurricularCourse  {
      * @throws PersistentMiddlewareSupportException
      * @throws ExcepcaoPersistencia
      */
-	public MwCurricularCourse readByCode(String code) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia;
+	public MWCurricularCourse readByCode(String code) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia;
     
     
 	

@@ -4,8 +4,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import middleware.middlewareDomain.MWBranch;
-import middleware.middlewareDomain.MwCurricularCourse;
-import middleware.middlewareDomain.MwCurricularCourseScope;
+import middleware.middlewareDomain.MWCurricularCourse;
+import middleware.middlewareDomain.MWCurricularCourseScope;
 import middleware.persistentMiddlewareSupport.IPersistentMWBranch;
 import middleware.persistentMiddlewareSupport.IPersistentMWCurricularCourse;
 import middleware.persistentMiddlewareSupport.IPersistentMWCurricularCourseScope;
@@ -62,7 +62,7 @@ public class CreateAndUpdateScopes {
 
 		Iterator iterator = result.iterator();
 		while(iterator.hasNext()) {
-			MwCurricularCourseScope scope = (MwCurricularCourseScope) iterator.next();
+			MWCurricularCourseScope scope = (MWCurricularCourseScope) iterator.next();
 		
 			try {
 				sp.iniciarTransaccao();
@@ -90,7 +90,7 @@ public class CreateAndUpdateScopes {
 	 */ 
 
 	
-	public static void createAndUpdate(MwCurricularCourseScope mwCurricularCourseScope, SuportePersistenteOJB sp) throws Exception {
+	public static void createAndUpdate(MWCurricularCourseScope mwCurricularCourseScope, SuportePersistenteOJB sp) throws Exception {
 		
 		try {
 			// Read The Degree Curricular Plan
@@ -126,7 +126,7 @@ public class CreateAndUpdateScopes {
 				IPersistentMiddlewareSupport pms = PersistentMiddlewareSupportOJB.getInstance();
 				IPersistentMWCurricularCourse persistentMWCurricularCourse = pms.getIPersistentMWCurricularCourse();
 				
-				MwCurricularCourse mwCurricularCourse = persistentMWCurricularCourse.readByCode(mwCurricularCourseScope.getCoursecode());
+				MWCurricularCourse mwCurricularCourse = persistentMWCurricularCourse.readByCode(mwCurricularCourseScope.getCoursecode());
 				if (mwCurricularCourse == null) {
 					System.out.println("Error Reading Middleware Curricular Course " + mwCurricularCourseScope.getCoursecode());
 					return;
@@ -199,7 +199,7 @@ public class CreateAndUpdateScopes {
 	 * @throws ExcepcaoPersistencia
 	 */
 
-	private static IDegreeCurricularPlan getDegreeCurricularPlan(MwCurricularCourseScope mwCurricularCourseScope, ISuportePersistente sp) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia {
+	private static IDegreeCurricularPlan getDegreeCurricularPlan(MWCurricularCourseScope mwCurricularCourseScope, ISuportePersistente sp) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia {
 	
 		IDegreeCurricularPlan degreeCurricularPlan = null;
 		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
@@ -236,7 +236,7 @@ public class CreateAndUpdateScopes {
 	 * @throws PersistentMiddlewareSupportException
 	 * @throws ExcepcaoPersistencia
 	 */
-	private static IBranch getBranch(MwCurricularCourseScope mwCurricularCourseScope, IDegreeCurricularPlan degreeCurricularPlan, ISuportePersistente sp) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia {
+	private static IBranch getBranch(MWCurricularCourseScope mwCurricularCourseScope, IDegreeCurricularPlan degreeCurricularPlan, ISuportePersistente sp) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia {
 
 		IBranch branch = null;
 		

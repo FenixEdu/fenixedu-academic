@@ -1,7 +1,7 @@
 
 package middleware.persistentMiddlewareSupport.OJBDatabaseSupport;
 
-import middleware.middlewareDomain.MwCurricularCourse;
+import middleware.middlewareDomain.MWCurricularCourse;
 import middleware.persistentMiddlewareSupport.IPersistentMWCurricularCourse;
 import middleware.persistentMiddlewareSupport.exceptions.PersistentMiddlewareSupportException;
 
@@ -22,10 +22,10 @@ public class MWCurricularCourseOJB extends ObjectFenixOJB implements IPersistent
     }
 
 
-	public MwCurricularCourse readByCode(String code) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia {
+	public MWCurricularCourse readByCode(String code) throws PersistentMiddlewareSupportException, ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("coursecode", code);
-		return (MwCurricularCourse) queryObject(MwCurricularCourse.class, criteria);
+		return (MWCurricularCourse) queryObject(MWCurricularCourse.class, criteria);
 	}
     
 }

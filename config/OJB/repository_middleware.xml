@@ -312,7 +312,7 @@
 
 
 <class-descriptor 
-  class="middleware.middlewareDomain.MwCurricularCourse"
+  class="middleware.middlewareDomain.MWCurricularCourse"
   table="mw_CURRICULAR_COURSE"
 >
   <field-descriptor id="0"
@@ -335,7 +335,7 @@
 </class-descriptor>
 
 <class-descriptor 
-  class="middleware.middlewareDomain.MwCurricularCourseScope"
+  class="middleware.middlewareDomain.MWCurricularCourseScope"
   table="mw_CURRICULAR_COURSE_SCOPE"
 >
   <field-descriptor id="0"
@@ -413,7 +413,7 @@
 </class-descriptor>
 
 <class-descriptor 
-  class="middleware.middlewareDomain.MwEnrolment"
+  class="middleware.middlewareDomain.MWEnrolment"
   table="mw_ENROLMENT"
 >
   <field-descriptor id="0"
