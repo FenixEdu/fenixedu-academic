@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+	<definition name="df.page.showCurricularCoursesForDegreeAdministrativeOfficeEquivalence" extends="definition.equivalence.for.degreeAdministrativeOffice">
+		<put name="body" value="/equivalence/showCurricularCoursesForEquivalence.jsp"/>
+	</definition>
+	<definition name="df.page.verifyCurricularCoursesForDegreeAdministrativeOfficeEquivalence" extends="definition.equivalence.for.degreeAdministrativeOffice">
+		<put name="body" value="/equivalence/verifyCurricularCoursesForEquivalence.jsp"/>
+	</definition>
+	<definition name="df.page.acceptCurricularCoursesForDegreeAdministrativeOfficeEquivalence" extends="definition.equivalence.for.degreeAdministrativeOffice">
+		<put name="body" value="/equivalence/acceptCurricularCoursesForEquivalence.jsp"/>
+	</definition>
+
+	<definition name="df.page.showCurricularCoursesForCoordinatorEquivalence" extends="definition.equivalence.for.coordinator">
+		<put name="body" value="/equivalence/showCurricularCoursesForEquivalence.jsp"/>
+	</definition>
+	<definition name="df.page.verifyCurricularCoursesForCoordinatorEquivalence" extends="definition.equivalence.for.coordinator">
+		<put name="body" value="/equivalence/verifyCurricularCoursesForEquivalence.jsp"/>
+	</definition>
+	<definition name="df.page.acceptCurricularCoursesForCoordinatorEquivalence" extends="definition.equivalence.for.coordinator">
+		<put name="body" value="/equivalence/acceptCurricularCoursesForEquivalence.jsp"/>
+	</definition>
+</tiles-definitions>

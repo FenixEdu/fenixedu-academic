@@ -6,11 +6,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
@@ -26,11 +26,11 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  * @author David Santos
  */
 
-public class PrepareEnrolmentContextAction extends Action {
+public class PrepareEnrolmentContextDispatchAction extends DispatchAction {
 	
-	private final String[] forwards = { "showAvailableCurricularCourses", "home" };
+	private final String[] forwards = { "showAvailableCurricularCourses", "home", "error" };
 
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		if(!this.isSessionAttributesValid(request)) {
 			return mapping.findForward(forwards[1]);
@@ -91,6 +91,10 @@ public class PrepareEnrolmentContextAction extends Action {
 		return mapping.findForward(forwards[0]);
 	}
 
+	public ActionForward error(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		return mapping.findForward(forwards[2]);
+	}
+
 	private boolean isSessionAttributesValid(HttpServletRequest request) {
 		boolean result = true;
 		HttpSession session = request.getSession();
@@ -104,7 +108,6 @@ public class PrepareEnrolmentContextAction extends Action {
 				result = false;
 			}
 		}
-
 		return result;
 	}
 }

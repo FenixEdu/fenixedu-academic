@@ -14,8 +14,9 @@
 <center>
 <br/>
 <br/>
-<html:form action="/prepareStudentData.do">
+<html:form action="/prepareStudentDataForEnrolmentInOptionalWithoutRules.do">
 	<html:hidden property="method" value="getStudentAndDegreeTypeForEnrolmentInOptionalWithoutRules"/>
+	<html:hidden property="page" value="1"/>
 	<table border="0">
 		<tr>
 			<td align="left"><bean:message key="label.choose.degree.type"/>&nbsp;</td>

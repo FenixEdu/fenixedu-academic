@@ -3,12 +3,15 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
+<%@ page import="org.apache.struts.action.Action" %>
 
 <bean:define id="infoEquivalenceContext" name="<%= SessionConstants.EQUIVALENCE_CONTEXT_KEY %>" scope="session"/>
 <bean:define id="chosenInfoCurricularCourseScopesToGiveEquivalence" name="infoEquivalenceContext" property="chosenInfoCurricularCourseScopesToGiveEquivalence"/>
 <bean:define id="chosenInfoCurricularCourseScopesToGetEquivalence" name="infoEquivalenceContext" property="chosenInfoCurricularCourseScopesToGetEquivalence"/>
 
-<html:form action="/manualEquivalenceManager.do">
+<bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Action.MAPPING_KEY %>"/>
+
+<html:form action="<%= path %>">
 	<html:hidden property="method" value="accept"/>
 
 	<b><bean:message key="label.curricular.courses.that.will.give.equivalence"/></b>

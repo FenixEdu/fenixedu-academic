@@ -1,4 +1,4 @@
-package ServidorApresentacao.Action.degreeAdministrativeOffice;
+package ServidorApresentacao.Action.equivalence;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -18,8 +18,13 @@ import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoExecutionPeriod;
+import DataBeans.InfoStudent;
 import DataBeans.degreeAdministrativeOffice.InfoEquivalenceContext;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.UserView;
+import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.exceptions.FenixTransactionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 
@@ -34,16 +39,31 @@ public class ManualEquivalenceManagerDispatchAction extends DispatchAction {
 
 	public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+		createToken(request);
+
+		DynaActionForm equivalenceForm = (DynaActionForm) form;
 		HttpSession session = request.getSession();
 
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-		IUserView actor = (IUserView) session.getAttribute(SessionConstants.ENROLMENT_ACTOR_KEY);
+		InfoStudent infoStudent = (InfoStudent) request.getAttribute(SessionConstants.STUDENT);
+		if(infoStudent == null) {
+			Integer infoStudentOID = (Integer) equivalenceForm.get("studentOID");
+			try {
+				Object args[] = { infoStudentOID };
+				infoStudent = (InfoStudent) ServiceUtils.executeService(userView, "GetStudentByOID", args);
+			} catch(FenixServiceException e) {
+				throw new FenixActionException(e);
+			}
+		} else {
+			equivalenceForm.set("studentOID", infoStudent.getIdInternal());
+		}
+		IUserView actor = new UserView(infoStudent.getInfoPerson().getUsername(), null);
+
 		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) session.getServletContext().getAttribute(SessionConstants.INFO_EXECUTION_PERIOD_KEY);
 		Object args[] = { actor, infoExecutionPeriod };
 
 		InfoEquivalenceContext infoEquivalenceContext = (InfoEquivalenceContext) ServiceUtils.executeService(userView, "GetListsOfCurricularCoursesForEquivalence", args);
 
-		session.removeAttribute(SessionConstants.ENROLMENT_ACTOR_KEY);
 		session.setAttribute(SessionConstants.EQUIVALENCE_CONTEXT_KEY, infoEquivalenceContext);
 		this.initializeForm(infoEquivalenceContext, (DynaActionForm) form);
 		return mapping.findForward(forwards[0]);
@@ -54,6 +74,8 @@ public class ManualEquivalenceManagerDispatchAction extends DispatchAction {
 		if (isCancelled(request)) {
 			return mapping.findForward(forwards[3]);
 		}
+		
+		validateToken(request, form, mapping);
 
 		DynaActionForm equivalenceForm = (DynaActionForm) form;
 		HttpSession session = request.getSession();
@@ -82,6 +104,8 @@ public class ManualEquivalenceManagerDispatchAction extends DispatchAction {
 			return mapping.findForward(forwards[0]);
 		}
 
+		validateToken(request, form, mapping);
+		
 		HttpSession session = request.getSession();
 
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
@@ -181,4 +205,18 @@ public class ManualEquivalenceManagerDispatchAction extends DispatchAction {
 		saveErrors(request, actionErrors);
 	}
 
+	private void createToken(HttpServletRequest request) {
+		generateToken(request);
+		saveToken(request);
+	}
+
+	private void validateToken(HttpServletRequest request, ActionForm form, ActionMapping mapping) throws FenixTransactionException {
+
+		if (!isTokenValid(request)) {
+			form.reset(mapping, request);
+			throw new FenixTransactionException("error.transaction.equivalence");
+		} else {
+			createToken(request);
+		}
+	}
 }

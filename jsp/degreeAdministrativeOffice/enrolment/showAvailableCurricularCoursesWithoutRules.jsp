@@ -47,6 +47,18 @@
 					<bean:define id="link">
 						/curricularCourseEnrolmentWithoutRulesManager.do?method=unEnroll&enrolmentToRemoveIndex=<bean:write name="index"/>
 					</bean:define>
+
+					<logic:equal name="infoEnrolment" property="enrolmentState" value="<%= EnrolmentState.APROVED.toString() %>">
+						<bean:message key="message.enrolment.state.aproved"/>
+					</logic:equal>
+					<logic:equal name="infoEnrolment" property="enrolmentState" value="<%= EnrolmentState.ENROLED.toString() %>">
+						<bean:message key="message.enrolment.state.enroled"/>&nbsp;-&nbsp;<html:link page="<%= pageContext.findAttribute("link").toString() %>"><bean:message key="link.student.unenrolment"/></html:link>
+					</logic:equal>
+					<logic:equal name="infoEnrolment" property="enrolmentState" value="<%= EnrolmentState.TEMPORARILY_ENROLED.toString() %>">
+						<bean:message key="message.enrolment.state.enroled"/>&nbsp;-&nbsp;<html:link page="<%= pageContext.findAttribute("link").toString() %>"><bean:message key="link.student.unenrolment"/></html:link>
+					</logic:equal>
+
+<%--
 					<logic:equal name="infoEnrolment" property="enrolmentState.value" value="1">
 						<bean:message key="message.enrolment.state.aproved"/>
 					</logic:equal>
@@ -56,6 +68,8 @@
 					<logic:equal name="infoEnrolment" property="enrolmentState.value" value="4">
 						<bean:message key="message.enrolment.state.enroled"/>&nbsp;-&nbsp;<html:link page="<%= pageContext.findAttribute("link").toString() %>"><bean:message key="link.student.unenrolment"/></html:link>
 					</logic:equal>
+--%>
+
 				</td>
 			</tr>
 		</logic:iterate>

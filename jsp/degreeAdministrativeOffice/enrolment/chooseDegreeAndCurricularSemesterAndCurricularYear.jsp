@@ -15,6 +15,8 @@
 <br/>
 <br/>
 <html:form action="/prepareEnrolmentContext.do">
+	<html:hidden property="method" value="prepare"/>
+	<html:hidden property="page" value="1"/>
 	<table border="0">
 		<tr>
 			<td align="left"><bean:message key="label.choose.degree"/>&nbsp;</td>

@@ -88,6 +88,10 @@
             <param-name>config/credits</param-name>
             <param-value>/WEB-INF/conf/struts-credits.xml</param-value>
         </init-param>
+        <init-param>
+            <param-name>config/equivalence</param-name>
+            <param-value>/WEB-INF/conf/struts-equivalence.xml</param-value>
+        </init-param>
         
         <init-param>
             <param-name>debug</param-name>

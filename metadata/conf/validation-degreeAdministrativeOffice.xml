@@ -4,10 +4,10 @@
 <form-validation>
 	<formset>
 		<form name="getStudentByNumberAndDegreeTypeForm">
-			<field property="degreeType" depends="required,integer">
+			<field property="degreeType" depends="required,integer" page="1">
 				<arg0 key="error.no.degree.type.selected" resource="true"/>
 			</field>
-			<field property="studentNumber" depends="required,integer">
+			<field property="studentNumber" depends="required,integer" page="1">
 				<arg0 key="error.no.student.selected" resource="true"/>
 			</field>
 		</form>
@@ -15,13 +15,13 @@
 
 	<formset>
 		<form name="getDegreeAndCurricularSemesterAndCurricularYearForm">
-			<field property="infoExecutionDegreeName" depends="required,integer">
+			<field property="infoExecutionDegreeName" depends="required,integer" page="1">
 				<arg0 key="error.no.degree.selected" resource="true"/>
 			</field>
-			<field property="semester" depends="required,integer">
+			<field property="semester" depends="required,integer" page="1">
 				<arg0 key="error.no.semester.selected" resource="true"/>
 			</field>
-			<field property="year" depends="required,integer">
+			<field property="year" depends="required,integer" page="1">
 				<arg0 key="error.no.year.selected" resource="true"/>
 			</field>
 		</form>

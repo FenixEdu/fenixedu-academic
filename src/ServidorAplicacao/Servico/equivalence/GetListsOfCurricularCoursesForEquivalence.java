@@ -1,4 +1,4 @@
-package ServidorAplicacao.Servico.degreeAdministrativeOffice.equivalence;
+package ServidorAplicacao.Servico.equivalence;
 
 import java.util.ArrayList;
 import java.util.Iterator;
