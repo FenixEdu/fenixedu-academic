@@ -17,6 +17,9 @@
 		<tr><td>Preencha correctamente o formulário (não deixando campos obrigatórios em branco).</td></tr>
 </table>
 <br>
+
+<html:hidden property="idInternal"/>
+<html:hidden property="grantOwnerNumber"/>
 <table>
 	<tr>
 		<td colspan="2" ><b><bean:message key="label.grant.owner.information"/></b></td>
@@ -282,12 +285,10 @@
 				<html:text property="fiscalCode"/>
 			</td>
 		</tr>
-	</table>
-	
+	</table>	
 	<html:hidden property="personUsername"/>
 	<html:hidden property="password"/>
-	<html:hidden property="idInternal"/>
-	
+	<html:hidden property="idInternalPerson"/>
 	<br>
 	<table>
 	<tr>
@@ -298,11 +299,14 @@
 	</html:form>		
 	</td>
 	<td>
-	<html:form action="/searchGrantOwner?page=1&amp;method=searchForm" style="display:inline">
-		<html:submit styleClass="inputbutton" style="display:inline">
-			<bean:message key="button.cancel"/>
-		</html:submit>
-	</html:form>					
+		<logic:present name="idInternalGrantOwner">
+			<html:form action="/manageGrantOwner.do?method=prepareManageGrantOwnerForm" style="display:inline">
+				<html:hidden property="idInternal" value='<%= request.getAttribute("idInternalGrantOwner").toString() %>'/>
+				<html:submit styleClass="inputbutton" style="display:inline">
+					<bean:message key="button.cancel"/>
+				</html:submit>
+			</html:form>					
+		</logic:present>
 	</td>
 	</tr>
 	</table>

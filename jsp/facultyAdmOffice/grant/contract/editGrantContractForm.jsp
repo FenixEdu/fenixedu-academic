@@ -3,7 +3,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
-
 <html:form action="/editGrantContract" style="display:inline">
 
 <logic:messagesPresent>
@@ -11,6 +10,12 @@
 	<html:errors/>
 </span>
 </logic:messagesPresent>
+
+<html:hidden property="method" value="doEdit"/>
+<html:hidden property="page" value="1"/>
+<html:hidden property="idGrantContract"/>
+<html:hidden property="contractNumber"/>
+<html:hidden property="idInternal"/>
 
 <table>
 	<tr>
@@ -34,9 +39,13 @@
 			<bean:message key="label.grant.contract.type"/>:&nbsp;
 		</td>
 		<td>
-			<html:text property="grantType"/>
+			<html:select property="grantType">
+				<html:options collection="grantTypeList" property="sigla" labelProperty="name"/>
+			</html:select>
 		</td>
 	</tr>
+	
+	
 	<tr>
 		<td align="left">
 			<bean:message key="label.grant.contract.endMotive"/>:&nbsp;
@@ -73,7 +82,8 @@
 		</html:form>
 	</td>
 	<td>
-		<html:form action="/searchGrantOwner?page=1&amp;method=searchForm" style="display:inline">
+		<html:form action="/manageGrantOwner.do?method=prepareManageGrantOwnerForm" style="display:inline">
+		<html:hidden property="idInternal" value='<%= request.getAttribute("idInternal").toString() %>'/>
 			<html:submit styleClass="inputbutton" style="display:inline">
 				<bean:message key="button.cancel"/>
 			</html:submit>

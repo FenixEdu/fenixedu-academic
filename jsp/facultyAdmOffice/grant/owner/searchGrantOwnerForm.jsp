@@ -14,12 +14,14 @@
 	<html:hidden property="method" value="doSearch"/>
 	<html:hidden property="page" value="1"/>
 	
+	<%--
 	<table class="listClasses" align="center">
 		<tr><td>Para fazer uma procura insira o nome e/ou os dados de documento de identificação da pessoa bolseira a gerir,</td></tr>
 		<tr><td>ou</td></tr>
 		<tr><td>Insira o número do bolseiro</td></tr>
-	</table>
-	<br>
+	</table> --%>
+	
+	<br/>
 	<table>
 		<tr>
 			<td align="left"><bean:message key="label.grant.owner.name"/>:&nbsp;</td>
