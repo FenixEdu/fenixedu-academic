@@ -29,6 +29,8 @@ import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
 
 import ServidorAplicacao.GestorServicos;
+import ServidorPersistente.ISuportePersistente;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
 
 public abstract class ServiceTestCase extends TestCase {
 
@@ -73,19 +75,23 @@ public abstract class ServiceTestCase extends TestCase {
 
 		try {
 			super.setUp();
-
 			backUpDataBaseContents();
 
 			IDatabaseConnection connection = getConnection();
 			IDataSet dataSet = getDataSet();
 
-			DatabaseOperation.CLEAN_INSERT.execute(connection, dataSet);
+			//String[] tableNames = { "OJB_HL_SEQ" };
+			IDataSet fullDataSet = connection.createDataSet();
+			DatabaseOperation.DELETE_ALL.execute(connection, fullDataSet);
+
+			DatabaseOperation.INSERT.execute(connection, dataSet);
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			sp.clearCache();
 
 			gestor = GestorServicos.manager();
 
 			connection.close();
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			fail("Setup failed loading database with test data set: " + ex);
 		}
 	}
@@ -111,15 +117,15 @@ public abstract class ServiceTestCase extends TestCase {
 
 			LinkedList tableNamesToFilter = readTableNamesToFilter();
 
-			int size =  tableNamesToFilter.size();
+			int size = tableNamesToFilter.size();
 			String[] tableNames = new String[size];
-			for(int i = 0; i < size; i++)
+			for (int i = 0; i < size; i++)
 				tableNames[i] = (String) tableNamesToFilter.get(i);
-			 
-			IDataSet filteredDateSet = new FilteredDataSet(tableNames, currentDataSet);
+
+			IDataSet filteredDateSet =
+				new FilteredDataSet(tableNames, currentDataSet);
 			Assertion.assertEquals(expectedDataSet, filteredDateSet);
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			fail("compareDataSet failed to read data set files" + ex);
 		}
 	}
@@ -135,20 +141,20 @@ public abstract class ServiceTestCase extends TestCase {
 			ResourceBundle bundle =
 				new PropertyResourceBundle(
 					new FileInputStream(getTableNamesToFilterFilePath()));
-					
+
 			stringTableNamesToFilter =
 				bundle.getString(getNameOfServiceToBeTested());
-				
+
 			defaultStringTableNamesToFilter = bundle.getString("Default");
-		}
-		catch(MissingResourceException ex)
-		{
-			fail("Resource " + getNameOfServiceToBeTested() + " not found in "+getTableNamesToFilterFilePath());
-		}
-		catch (FileNotFoundException ex) {
+		} catch (MissingResourceException ex) {
+			fail(
+				"Resource "
+					+ getNameOfServiceToBeTested()
+					+ " not found in "
+					+ getTableNamesToFilterFilePath());
+		} catch (FileNotFoundException ex) {
 			fail("File " + getTableNamesToFilterFilePath() + " not found.");
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			fail(
 				"IOException reading file "
 					+ getTableNamesToFilterFilePath()
