@@ -158,6 +158,55 @@
     <attribute
      	attribute-name="cacheable"
      	attribute-value="false" />
-    
-</class-descriptor>				  		
+
+</class-descriptor>			
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for Dominio.PublicationAuthor -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="Dominio.PublicationAuthor" table="PUBLICATION_AUTHOR">
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+		name="keyPublication"
+		column="KEY_PUBLICATION"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="keyAuthor"
+		column="KEY_AUTHOR"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="order"
+		column="ORDER"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="ackOptLock"
+		column="ACK_OPT_LOCK"
+		jdbc-type="INTEGER"
+		locking="true"
+	/>
+	<reference-descriptor
+			name="author"
+			class-ref="Dominio.Author"
+			proxy="true"
+			refresh="true">
+		<foreignkey field-ref="keyAuthor"/>
+	</reference-descriptor>
+	<reference-descriptor
+			name="publication"
+			class-ref="Dominio.Publication"
+			proxy="true"
+			refresh="true">
+		<foreignkey field-ref="keyPublication"/>
+	</reference-descriptor>
+</class-descriptor>		
+  		
 <!-- Mapping of User defined classses ends here -->
