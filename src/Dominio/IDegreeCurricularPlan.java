@@ -20,7 +20,8 @@ public interface IDegreeCurricularPlan {
 	public Date getInitialDate();
 	List getCurricularCourses();
 	public IDegreeCurricularPlanEnrolmentInfo getDegreeCurricularPlanEnrolmentInfo();
-	
+	public List getEnrolmentInfo();
+
 	public void setName(String name);
 	public void setDegree(ICurso curso);
 	public void setState(DegreeCurricularPlanState state);
@@ -28,4 +29,5 @@ public interface IDegreeCurricularPlan {
 	public void setInitialDate(Date initialDate);
 	void setCurricularCourses(List curricularCourses);	
 	public void setDegreeCurricularPlanEnrolmentInfo(IDegreeCurricularPlanEnrolmentInfo degreeCurricularPlanEnrolmentInfo);
+	public void setEnrolmentInfo(List list);
 }

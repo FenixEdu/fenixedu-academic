@@ -2,6 +2,7 @@ package DataBeans;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import Util.DegreeCurricularPlanState;
 
@@ -18,6 +19,7 @@ public class InfoDegreeCurricularPlan implements Serializable {
 	private DegreeCurricularPlanState state;
 	private Date initialDate;
 	private Date endDate;
+	private List enrolmentInfo;
 
 	public InfoDegreeCurricularPlan() {
 		setName(null);
@@ -135,6 +137,32 @@ public class InfoDegreeCurricularPlan implements Serializable {
 	 */
 	public void setState(DegreeCurricularPlanState state) {
 		this.state = state;
+	}
+
+	/**
+	 * @return
+	 */
+	public List getEnrolmentInfo() {
+		return enrolmentInfo;
+	}
+
+	/**
+	 * @param list
+	 */
+	public void setEnrolmentInfo(List list) {
+		enrolmentInfo = list;
+	}
+
+	public InfoDegreeCurricularPlanEnrolmentInfo getInfoDegreeCurricularPlanEnrolmentInfo(){
+		if(enrolmentInfo.isEmpty()){
+			return null;
+		}else{
+			return (InfoDegreeCurricularPlanEnrolmentInfo) enrolmentInfo.get(0);
+		}
+	}
+
+	public void setDegreeCurricularPlanEnrolmentInfo(InfoDegreeCurricularPlanEnrolmentInfo infoDegreeCurricularPlanEnrolmentInfo) {
+		enrolmentInfo.set(0, infoDegreeCurricularPlanEnrolmentInfo);
 	}
 
 }

@@ -22,6 +22,8 @@ public class DegreeCurricularPlanEnrolmentInfo implements IDegreeCurricularPlanE
 	public DegreeCurricularPlanEnrolmentInfo(IDegreeCurricularPlan degreeCurricularPlan, Integer degreeDuration, Integer minimalYearForOptionalCourses) {
 		this();
 		setDegreeCurricularPlan(degreeCurricularPlan);
+		setDegreeDuration(degreeDuration);
+		setMinimalYearForOptionalCourses(minimalYearForOptionalCourses);
 	}
 
 	public boolean equals(Object obj) {

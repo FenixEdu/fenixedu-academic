@@ -3,12 +3,8 @@ package DataBeans.util;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Stack;
 
 import org.apache.commons.beanutils.BeanUtils;
-
-import Util.SituationOfGuide;
-import Util.State;
 
 import DataBeans.InfoBranch;
 import DataBeans.InfoCandidateSituation;
@@ -21,6 +17,7 @@ import DataBeans.InfoCurricularSemester;
 import DataBeans.InfoCurricularYear;
 import DataBeans.InfoDegree;
 import DataBeans.InfoDegreeCurricularPlan;
+import DataBeans.InfoDegreeCurricularPlanEnrolmentInfo;
 import DataBeans.InfoEnrolment;
 import DataBeans.InfoEnrolmentInOptionalCurricularCourse;
 import DataBeans.InfoEquivalence;
@@ -63,6 +60,7 @@ import Dominio.Curriculum;
 import Dominio.Curso;
 import Dominio.CursoExecucao;
 import Dominio.DegreeCurricularPlan;
+import Dominio.DegreeCurricularPlanEnrolmentInfo;
 import Dominio.DisciplinaExecucao;
 import Dominio.Enrolment;
 import Dominio.EnrolmentInOptionalCurricularCourse;
@@ -89,6 +87,7 @@ import Dominio.ICurriculum;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
 import Dominio.IDegreeCurricularPlan;
+import Dominio.IDegreeCurricularPlanEnrolmentInfo;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IEnrolment;
 import Dominio.IEnrolmentInOptionalCurricularCourse;
@@ -123,6 +122,7 @@ import Dominio.StudentCurricularPlan;
 import Dominio.Teacher;
 import Dominio.Turma;
 import Dominio.Turno;
+import Util.State;
 
 /**
  * @author jpvl
@@ -1166,19 +1166,21 @@ public abstract class Cloner {
 	 * @return IDegreeCurricularPlan
 	 */
 	public static IDegreeCurricularPlan copyInfoDegreeCurricularPlan2IDegreeCurricularPlan(InfoDegreeCurricularPlan infoDegreeCurricularPlan) {
-
 		IDegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
 
 		ICurso degree = Cloner.copyInfoDegree2IDegree(infoDegreeCurricularPlan.getInfoDegree());
 
-		try {
-			BeanUtils.copyProperties(degreeCurricularPlan, infoDegreeCurricularPlan);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
+		List degreeCurricularPlanEnrolmentInfoList = new ArrayList();
+		Iterator iterator = infoDegreeCurricularPlan.getEnrolmentInfo().iterator();
+		while(iterator.hasNext()) {
+			InfoDegreeCurricularPlanEnrolmentInfo infoDegreeCurricularPlanEnrolmentInfo = (InfoDegreeCurricularPlanEnrolmentInfo) iterator.next();
+			degreeCurricularPlanEnrolmentInfoList.add(Cloner.copyInfoDegreeCurricularPlanEnrolmentInfo2IDegreeCurricularPlanEnrolmentInfo(infoDegreeCurricularPlanEnrolmentInfo));
 		}
 
-		degreeCurricularPlan.setDegree(degree);
+		copyObjectProperties(degreeCurricularPlan, infoDegreeCurricularPlan);
 
+		degreeCurricularPlan.setDegree(degree);
+		degreeCurricularPlan.setEnrolmentInfo(degreeCurricularPlanEnrolmentInfoList);
 		return degreeCurricularPlan;
 	}
 
@@ -1193,13 +1195,17 @@ public abstract class Cloner {
 
 		InfoDegree infoDegree = Cloner.copyIDegree2InfoDegree(degreeCurricularPlan.getDegree());
 
-		try {
-			BeanUtils.copyProperties(infoDegreeCurricularPlan, degreeCurricularPlan);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
+		List infoDegreeCurricularPlanEnrolmentInfoList = new ArrayList();
+		Iterator iterator = degreeCurricularPlan.getEnrolmentInfo().iterator();
+		while(iterator.hasNext()) {
+			IDegreeCurricularPlanEnrolmentInfo degreeCurricularPlanEnrolmentInfo = (IDegreeCurricularPlanEnrolmentInfo) iterator.next();
+			infoDegreeCurricularPlanEnrolmentInfoList.add(Cloner.copyIDegreeCurricularPlanEnrolmentInfo2InfoDegreeCurricularPlanEnrolmentInfo(degreeCurricularPlanEnrolmentInfo));
 		}
 
+		copyObjectProperties(infoDegreeCurricularPlan, degreeCurricularPlan);
+
 		infoDegreeCurricularPlan.setInfoDegree(infoDegree);
+		infoDegreeCurricularPlan.setEnrolmentInfo(infoDegreeCurricularPlanEnrolmentInfoList);
 
 		return infoDegreeCurricularPlan;
 	}
@@ -1574,7 +1580,44 @@ public abstract class Cloner {
 
 		return equivalence;
 	}
+	
+	/**
+		* @author dcs-rjao
+		* @param IDegreeCurricularPlanEnrolmentInfo
+		* @return InfoDegreeCurricularPlanEnrolmentInfo
+		*/
+	public static InfoDegreeCurricularPlanEnrolmentInfo copyIDegreeCurricularPlanEnrolmentInfo2InfoDegreeCurricularPlanEnrolmentInfo(IDegreeCurricularPlanEnrolmentInfo degreeCurricularPlanEnrolmentInfo){
 
+		InfoDegreeCurricularPlanEnrolmentInfo infoDegreeCurricularPlanEnrolmentInfo = new InfoDegreeCurricularPlanEnrolmentInfo();
+
+		//InfoDegreeCurricularPlan infoDegreeCurricularPlan = Cloner.copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(degreeCurricularPlanEnrolmentInfo.getDegreeCurricularPlan());
+		
+		copyObjectProperties(infoDegreeCurricularPlanEnrolmentInfo, degreeCurricularPlanEnrolmentInfo);
+
+		//infoDegreeCurricularPlanEnrolmentInfo.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+
+		return infoDegreeCurricularPlanEnrolmentInfo;
+	}
+
+	/**
+		* @author dcs-rjao
+		* @param IDegreeCurricularPlanEnrolmentInfo
+		* @return InfoDegreeCurricularPlanEnrolmentInfo
+		*/
+	public static IDegreeCurricularPlanEnrolmentInfo copyInfoDegreeCurricularPlanEnrolmentInfo2IDegreeCurricularPlanEnrolmentInfo(InfoDegreeCurricularPlanEnrolmentInfo infoDegreeCurricularPlanEnrolmentInfo){
+
+		IDegreeCurricularPlanEnrolmentInfo degreeCurricularPlanEnrolmentInfo = new DegreeCurricularPlanEnrolmentInfo();
+
+		//InfoDegreeCurricularPlan infoDegreeCurricularPlan = Cloner.copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(degreeCurricularPlanEnrolmentInfo.getDegreeCurricularPlan());
+		
+		copyObjectProperties(degreeCurricularPlanEnrolmentInfo, infoDegreeCurricularPlanEnrolmentInfo);
+
+		//infoDegreeCurricularPlanEnrolmentInfo.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
+
+		return degreeCurricularPlanEnrolmentInfo;
+	}
+
+//	---------------------------------------------- DCS-RJAO -----------------------------------------------
 	public static IEvaluation copyInfoEvaluation2IEvaluation(InfoEvaluation infoEvaluation) {
 
 		IEvaluation evaluation = new Evaluation();
@@ -1598,6 +1641,4 @@ public abstract class Cloner {
 
 			return infoEvaluation;
 			}	
-
-	//	---------------------------------------------- DCS-RJAO -----------------------------------------------
 }
