@@ -30,4 +30,6 @@ public interface IAula extends Serializable,IDomainObject{
   public void setTipo(TipoAula tipo);
   public void setSala(ISala sala);
   public void setDisciplinaExecucao(IExecutionCourse disciplinaExecucao);
+  
+  public double hours();
 }

@@ -7,196 +7,214 @@
 package Dominio;
 
 /**
- *
- * @author  tfc130
+ * 
+ * @author tfc130
  */
 import java.util.List;
 
 import Util.TipoAula;
 
 public class Turno extends DomainObject implements ITurno {
-	protected String _nome;
-	protected TipoAula _tipo;
-	protected Integer _lotacao;
-	protected Integer ocupation;
-	protected Double percentage;
-	private   Integer  availabilityFinal;
-	protected IExecutionCourse _disciplinaExecucao;
-	private List associatedShiftProfessorship;
-	
-	private List associatedLessons;
-	private List associatedClasses;
+    protected String _nome;
 
-	// c�digos internos da base de dados	
-	private Integer chaveDisciplinaExecucao;
+    protected TipoAula _tipo;
 
-	/** Construtor sem argumentos p�blico requerido pela moldura de objectos OJB */
-	public Turno() {
-	}
-	public Turno(Integer idInternal) {
-		setIdInternal(idInternal);
-		}
+    protected Integer _lotacao;
 
-	public Turno(
-		String nome,
-		TipoAula tipo,
-		Integer lotacao,
-		IExecutionCourse disciplinaExecucao) {
-		setNome(nome);
-		setTipo(tipo);
-		setLotacao(lotacao);
-		setDisciplinaExecucao(disciplinaExecucao);
-	}
+    protected Integer ocupation;
 
-	public String getNome() {
-		return _nome;
-	}
+    protected Double percentage;
 
-	public void setNome(String nome) {
-		_nome = nome;
-	}
+    private Integer availabilityFinal;
 
-	public Integer getChaveDisciplinaExecucao() {
-		return this.chaveDisciplinaExecucao;
-	}
+    protected IExecutionCourse _disciplinaExecucao;
 
-	public void setChaveDisciplinaExecucao(Integer chaveDisciplinaExecucao) {
-		this.chaveDisciplinaExecucao = chaveDisciplinaExecucao;
-	}
+    private List associatedShiftProfessorship;
 
-	public TipoAula getTipo() {
-		return _tipo;
-	}
+    private List associatedLessons;
 
-	public void setTipo(TipoAula tipo) {
-		_tipo = tipo;
-	}
+    private List associatedClasses;
 
-	public Integer getLotacao() {
-		return _lotacao;
-	}
+    // c�digos internos da base de dados
+    private Integer chaveDisciplinaExecucao;
 
-	public void setLotacao(Integer lotacao) {
-		_lotacao = lotacao;
-	}
+    /**
+     * Construtor sem argumentos p�blico requerido pela moldura de objectos
+     * OJB
+     */
+    public Turno() {
+    }
 
-	public IExecutionCourse getDisciplinaExecucao() {
-		return _disciplinaExecucao;
-	}
+    public Turno(Integer idInternal) {
+        setIdInternal(idInternal);
+    }
 
-	public void setDisciplinaExecucao(IExecutionCourse disciplinaExecucao) {
-		_disciplinaExecucao = disciplinaExecucao;
-	}
+    public Turno(String nome, TipoAula tipo, Integer lotacao, IExecutionCourse disciplinaExecucao) {
+        setNome(nome);
+        setTipo(tipo);
+        setLotacao(lotacao);
+        setDisciplinaExecucao(disciplinaExecucao);
+    }
 
-	public boolean equals(Object obj) {
-		boolean resultado = false;
-		if (obj instanceof ITurno) {
-			ITurno turno = (ITurno) obj;
-			resultado =
-				(getNome().equals(turno.getNome()))
-					&& (getTipo().equals(turno.getTipo()))
-					&& (getDisciplinaExecucao()
-						.equals(turno.getDisciplinaExecucao()))
-					&& (getLotacao().equals(turno.getLotacao()));
-		}
-		return resultado;
-	}
+    public String getNome() {
+        return _nome;
+    }
 
-	public String toString() {
-		String result = "[TURNO";
-		result += ", codigoInterno=" + this.getIdInternal();
-		result += ", nome=" + _nome;
-		result += ", tipo=" + _tipo;
-		result += ", lotacao=" + _lotacao;
-		result += ", chaveDisciplinaExecucao=" + this.chaveDisciplinaExecucao;
-		result += "]";
-		return result;
-	}
+    public void setNome(String nome) {
+        _nome = nome;
+    }
 
+    public Integer getChaveDisciplinaExecucao() {
+        return this.chaveDisciplinaExecucao;
+    }
 
-	/**
-	 * @return
-	 */
-	public List getAssociatedShiftProfessorship() {
-		return associatedShiftProfessorship;
-	}
+    public void setChaveDisciplinaExecucao(Integer chaveDisciplinaExecucao) {
+        this.chaveDisciplinaExecucao = chaveDisciplinaExecucao;
+    }
 
-	/**
-	 * @param list
-	 */
-	public void setAssociatedShiftProfessorship(List list) {
-		associatedShiftProfessorship = list;
-	}
+    public TipoAula getTipo() {
+        return _tipo;
+    }
 
-	/**
-	 * @return List lessons that belong to this shift
-	 */
-	public List getAssociatedLessons() {
-		return associatedLessons;
-	}
+    public void setTipo(TipoAula tipo) {
+        _tipo = tipo;
+    }
 
-	/**
-	 * @param lessons list of lessons that belong to this shift
-	 */
-	public void setAssociatedLessons(List lessons) {
-		associatedLessons = lessons;
-	}
-	
-	/**
-	 * @return
-	 */
-	public Integer getAvailabilityFinal() {
-		return availabilityFinal;
-	}
+    public Integer getLotacao() {
+        return _lotacao;
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setAvailabilityFinal(Integer integer) {
-		availabilityFinal = integer;
-	}
+    public void setLotacao(Integer lotacao) {
+        _lotacao = lotacao;
+    }
 
-	/**
-	 * @return
-	 */
-	public List getAssociatedClasses() {
-		return associatedClasses;
-	}
-	
-	/**
-	 * @return
-	 */
-	public Integer getOcupation() {
-		return ocupation;
-	}
+    public IExecutionCourse getDisciplinaExecucao() {
+        return _disciplinaExecucao;
+    }
 
-	/**
-	 * @param list
-	 */
-	public void setAssociatedClasses(List list) {
-		associatedClasses = list;
-	}
+    public void setDisciplinaExecucao(IExecutionCourse disciplinaExecucao) {
+        _disciplinaExecucao = disciplinaExecucao;
+    }
 
+    public boolean equals(Object obj) {
+        boolean resultado = false;
+        if (obj instanceof ITurno) {
+            ITurno turno = (ITurno) obj;
+            resultado = (getNome().equals(turno.getNome())) && (getTipo().equals(turno.getTipo()))
+                    && (getDisciplinaExecucao().equals(turno.getDisciplinaExecucao()))
+                    && (getLotacao().equals(turno.getLotacao()));
+        }
+        return resultado;
+    }
 
-	/**
-	 * @return
-	 */
-	public Double getPercentage() {
-		return percentage;
-	}
+    public String toString() {
+        String result = "[TURNO";
+        result += ", codigoInterno=" + this.getIdInternal();
+        result += ", nome=" + _nome;
+        result += ", tipo=" + _tipo;
+        result += ", lotacao=" + _lotacao;
+        result += ", chaveDisciplinaExecucao=" + this.chaveDisciplinaExecucao;
+        result += "]";
+        return result;
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setOcupation(Integer integer) {
-		ocupation = integer;
-	}
+    /**
+     * @return
+     */
+    public List getAssociatedShiftProfessorship() {
+        return associatedShiftProfessorship;
+    }
 
-	/**
-	 * @param integer
-	 */
-	public void setPercentage(Double percentage) {
-		this.percentage = percentage;
-	}
+    /**
+     * @param list
+     */
+    public void setAssociatedShiftProfessorship(List list) {
+        associatedShiftProfessorship = list;
+    }
 
+    /**
+     * @return List lessons that belong to this shift
+     */
+    public List getAssociatedLessons() {
+        return associatedLessons;
+    }
+
+    /**
+     * @param lessons
+     *            list of lessons that belong to this shift
+     */
+    public void setAssociatedLessons(List lessons) {
+        associatedLessons = lessons;
+    }
+
+    /**
+     * @return
+     */
+    public Integer getAvailabilityFinal() {
+        return availabilityFinal;
+    }
+
+    /**
+     * @param integer
+     */
+    public void setAvailabilityFinal(Integer integer) {
+        availabilityFinal = integer;
+    }
+
+    /**
+     * @return
+     */
+    public List getAssociatedClasses() {
+        return associatedClasses;
+    }
+
+    /**
+     * @return
+     */
+    public Integer getOcupation() {
+        return ocupation;
+    }
+
+    /**
+     * @param list
+     */
+    public void setAssociatedClasses(List list) {
+        associatedClasses = list;
+    }
+
+    /**
+     * @return
+     */
+    public Double getPercentage() {
+        return percentage;
+    }
+
+    /**
+     * @param integer
+     */
+    public void setOcupation(Integer integer) {
+        ocupation = integer;
+    }
+
+    /**
+     * @param integer
+     */
+    public void setPercentage(Double percentage) {
+        this.percentage = percentage;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see Dominio.ITurno#hours()
+     */
+    public double hours() {
+        double hours = 0;
+        List lessons = this.getAssociatedLessons();
+        for (int i = 0; i < lessons.size(); i++) {
+            IAula lesson = (IAula) lessons.get(i);
+            hours += lesson.hours();
+        }
+        return hours;
+    }
 }

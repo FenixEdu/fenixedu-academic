@@ -39,5 +39,7 @@ public interface ITurno extends IDomainObject {
   List getAssociatedClasses();
   void setAssociatedClasses(List classes);
   
+  double hours();
+  
 }
 
