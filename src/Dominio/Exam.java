@@ -19,8 +19,6 @@ public class Exam extends DomainObject implements IExam {
 	protected Calendar end;
 	protected Season season;
 	protected List associatedExecutionCourses;
-	protected String comment;
-
 
 	public Exam() {}
 
@@ -122,20 +120,6 @@ public class Exam extends DomainObject implements IExam {
 	 */
 	public void setAssociatedExecutionCourses(List list) {
 		associatedExecutionCourses = list;
-	}
-
-	/**
-	 * @return
-	 */
-	public String getComment() {
-		return comment;
-	}
-
-	/**
-	 * @param string
-	 */
-	public void setComment(String string) {
-		comment = string;
 	}
 
 }

@@ -145,7 +145,6 @@ CREATE TABLE EXAM (
   BEGINNING time,
   END time,
   SEASON int(11) not null,
-  COMMENT text,
   PRIMARY KEY (ID_INTERNAL)
 ) TYPE=InnoDB;
 
