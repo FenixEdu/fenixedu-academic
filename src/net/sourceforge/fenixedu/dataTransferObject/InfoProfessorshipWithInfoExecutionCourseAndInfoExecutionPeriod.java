@@ -15,7 +15,7 @@ public class InfoProfessorshipWithInfoExecutionCourseAndInfoExecutionPeriod exte
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.InfoProfessorship#copyFromDomain(Dominio.IProfessorship)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship#copyFromDomain(Dominio.IProfessorship)
      */
     public void copyFromDomain(IProfessorship professorship) {
         super.copyFromDomain(professorship);

@@ -15,7 +15,7 @@ public class InfoRoomOccupationWithInfoRoom extends InfoRoomOccupation {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.InfoRoomOccupation#copyFromDomain(Dominio.IRoomOccupation)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation#copyFromDomain(Dominio.IRoomOccupation)
      */
     public void copyFromDomain(IRoomOccupation roomOccupation) {
         super.copyFromDomain(roomOccupation);

@@ -258,7 +258,7 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.ISmsDTO#toSmsText()
+     * @see net.sourceforge.fenixedu.dataTransferObject.ISmsDTO#toSmsText()
      */
     public String toSmsText() {
 

@@ -16,7 +16,7 @@ public class InfoTeacherWithPersonAndCategory extends InfoTeacherWithPerson {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.InfoTeacher#copyFromDomain(Dominio.ITeacher)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoTeacher#copyFromDomain(Dominio.ITeacher)
      */
     public void copyFromDomain(ITeacher teacher) {
         super.copyFromDomain(teacher);

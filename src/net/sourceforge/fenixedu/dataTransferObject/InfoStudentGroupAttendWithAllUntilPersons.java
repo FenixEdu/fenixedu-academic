@@ -15,7 +15,7 @@ public class InfoStudentGroupAttendWithAllUntilPersons extends InfoStudentGroupA
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.InfoStudentGroupAttend#copyFromDomain(Dominio.IStudentGroupAttend)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroupAttend#copyFromDomain(Dominio.IStudentGroupAttend)
      */
     public void copyFromDomain(IStudentGroupAttend studentGroupAttend) {
         super.copyFromDomain(studentGroupAttend);

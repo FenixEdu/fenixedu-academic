@@ -14,7 +14,7 @@ public class InfoCreditsWrapper extends InfoCredits {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.credits.InfoCredits#getContainsManagementPositions()
+     * @see net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits#getContainsManagementPositions()
      */
     public Boolean getContainsManagementPositions() {
         return infoCredits.getContainsManagementPositions();
@@ -23,7 +23,7 @@ public class InfoCreditsWrapper extends InfoCredits {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.credits.InfoCredits#getContainsServiceExemptionsSituations()
+     * @see net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits#getContainsServiceExemptionsSituations()
      */
     public Boolean getContainsServiceExemptionsSituations() {
         return infoCredits.getContainsServiceExemptionsSituations();
@@ -32,7 +32,7 @@ public class InfoCreditsWrapper extends InfoCredits {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.credits.InfoCredits#getDegreeFinalProjectStudents()
+     * @see net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits#getDegreeFinalProjectStudents()
      */
     public Double getDegreeFinalProjectStudents() {
         return infoCredits.getDegreeFinalProjectStudents();
@@ -41,7 +41,7 @@ public class InfoCreditsWrapper extends InfoCredits {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.credits.InfoCredits#getDegreeFinalProjectStudentsFormatted()
+     * @see net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits#getDegreeFinalProjectStudentsFormatted()
      */
     public String getDegreeFinalProjectStudentsFormatted() {
         return infoCredits.getDegreeFinalProjectStudentsFormatted();
@@ -50,7 +50,7 @@ public class InfoCreditsWrapper extends InfoCredits {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.credits.InfoCredits#getInstitutionWorkTime()
+     * @see net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits#getInstitutionWorkTime()
      */
     public Double getInstitutionWorkTime() {
         return infoCredits.getInstitutionWorkTime();
@@ -59,7 +59,7 @@ public class InfoCreditsWrapper extends InfoCredits {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.credits.InfoCredits#getInstitutionWorkTimeFormatted()
+     * @see net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits#getInstitutionWorkTimeFormatted()
      */
     public String getInstitutionWorkTimeFormatted() {
         return infoCredits.getInstitutionWorkTimeFormatted();
@@ -68,7 +68,7 @@ public class InfoCreditsWrapper extends InfoCredits {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.credits.InfoCredits#getLessons()
+     * @see net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits#getLessons()
      */
     public Double getLessons() {
         return infoCredits.getLessons();
@@ -77,7 +77,7 @@ public class InfoCreditsWrapper extends InfoCredits {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.credits.InfoCredits#getLessonsFormatted()
+     * @see net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits#getLessonsFormatted()
      */
     public String getLessonsFormatted() {
         return infoCredits.getLessonsFormatted();
@@ -86,7 +86,7 @@ public class InfoCreditsWrapper extends InfoCredits {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.credits.InfoCredits#getMasterDegreeCredits()
+     * @see net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits#getMasterDegreeCredits()
      */
     public Double getMasterDegreeCredits() {
         return infoCredits.getMasterDegreeCredits();
@@ -95,7 +95,7 @@ public class InfoCreditsWrapper extends InfoCredits {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.credits.InfoCredits#getMasterDegreeCreditsFormatted()
+     * @see net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits#getMasterDegreeCreditsFormatted()
      */
     public String getMasterDegreeCreditsFormatted() {
         return infoCredits.getMasterDegreeCreditsFormatted();
@@ -104,7 +104,7 @@ public class InfoCreditsWrapper extends InfoCredits {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.credits.InfoCredits#getOtherTypeCredits()
+     * @see net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits#getOtherTypeCredits()
      */
     public Double getOtherTypeCredits() {
         return infoCredits.getOtherTypeCredits();
@@ -113,7 +113,7 @@ public class InfoCreditsWrapper extends InfoCredits {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.credits.InfoCredits#getOtherTypeCreditsFormatted()
+     * @see net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits#getOtherTypeCreditsFormatted()
      */
     public String getOtherTypeCreditsFormatted() {
         return infoCredits.getOtherTypeCreditsFormatted();
@@ -122,7 +122,7 @@ public class InfoCreditsWrapper extends InfoCredits {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.credits.InfoCredits#getSupportLessons()
+     * @see net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits#getSupportLessons()
      */
     public Double getSupportLessons() {
         return infoCredits.getSupportLessons();
@@ -131,7 +131,7 @@ public class InfoCreditsWrapper extends InfoCredits {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.credits.InfoCredits#getSupportLessonsFormatted()
+     * @see net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits#getSupportLessonsFormatted()
      */
     public String getSupportLessonsFormatted() {
         return infoCredits.getSupportLessonsFormatted();
@@ -140,7 +140,7 @@ public class InfoCreditsWrapper extends InfoCredits {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.credits.InfoCredits#setContainsManagementPositions(java.lang.Boolean)
+     * @see net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits#setContainsManagementPositions(java.lang.Boolean)
      */
     public void setContainsManagementPositions(Boolean containsManagementPositions) {
         infoCredits.setContainsManagementPositions(containsManagementPositions);
@@ -149,7 +149,7 @@ public class InfoCreditsWrapper extends InfoCredits {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.credits.InfoCredits#setContainsServiceExemptionsSituations(java.lang.Boolean)
+     * @see net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits#setContainsServiceExemptionsSituations(java.lang.Boolean)
      */
     public void setContainsServiceExemptionsSituations(Boolean containsServiceExemptionsSituations) {
         infoCredits.setContainsServiceExemptionsSituations(containsServiceExemptionsSituations);
@@ -158,7 +158,7 @@ public class InfoCreditsWrapper extends InfoCredits {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.credits.InfoCredits#setDegreeFinalProjectStudents(java.lang.Double)
+     * @see net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits#setDegreeFinalProjectStudents(java.lang.Double)
      */
     public void setDegreeFinalProjectStudents(Double degreeFinalProjectStudents) {
         infoCredits.setDegreeFinalProjectStudents(degreeFinalProjectStudents);
@@ -167,7 +167,7 @@ public class InfoCreditsWrapper extends InfoCredits {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.credits.InfoCredits#setInstitutionWorkTime(java.lang.Double)
+     * @see net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits#setInstitutionWorkTime(java.lang.Double)
      */
     public void setInstitutionWorkTime(Double institutionWorkTime) {
         infoCredits.setInstitutionWorkTime(institutionWorkTime);
@@ -176,7 +176,7 @@ public class InfoCreditsWrapper extends InfoCredits {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.credits.InfoCredits#setLessons(java.lang.Double)
+     * @see net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits#setLessons(java.lang.Double)
      */
     public void setLessons(Double lessons) {
         infoCredits.setLessons(lessons);
@@ -185,7 +185,7 @@ public class InfoCreditsWrapper extends InfoCredits {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.credits.InfoCredits#setMasterDegreeCredits(java.lang.Double)
+     * @see net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits#setMasterDegreeCredits(java.lang.Double)
      */
     public void setMasterDegreeCredits(Double masterDegreeCredits) {
         infoCredits.setMasterDegreeCredits(masterDegreeCredits);
@@ -194,7 +194,7 @@ public class InfoCreditsWrapper extends InfoCredits {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.credits.InfoCredits#setOtherTypeCredits(java.lang.Double)
+     * @see net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits#setOtherTypeCredits(java.lang.Double)
      */
     public void setOtherTypeCredits(Double otherTypeCredits) {
         infoCredits.setOtherTypeCredits(otherTypeCredits);
@@ -203,7 +203,7 @@ public class InfoCreditsWrapper extends InfoCredits {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.credits.InfoCredits#setSupportLessons(java.lang.Double)
+     * @see net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits#setSupportLessons(java.lang.Double)
      */
     public void setSupportLessons(Double supportLessons) {
         infoCredits.setSupportLessons(supportLessons);

@@ -57,7 +57,7 @@ public class InfoProfessionalCareer extends InfoCareer {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.teacher.InfoCareer#copyFromDomain(Dominio.teacher.ICareer)
+     * @see net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCareer#copyFromDomain(Dominio.teacher.ICareer)
      */
     public void copyFromDomain(IProfessionalCareer professionalCareer) {
         super.copyFromDomain(professionalCareer);

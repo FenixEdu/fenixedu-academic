@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 /**
  * @author João Mota
  * 
- * 25/Jun/2003 fenix-branch DataBeans.comparators
+ * 25/Jun/2003 fenix-branch net.sourceforge.fenixedu.dataTransferObject.comparators
  *  
  */
 public class RoomAlphabeticComparator implements Comparator {

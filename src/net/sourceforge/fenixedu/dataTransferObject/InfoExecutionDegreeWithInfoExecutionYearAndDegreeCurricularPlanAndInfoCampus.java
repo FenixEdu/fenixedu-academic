@@ -16,7 +16,7 @@ public class InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlanAndI
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.InfoExecutionDegree#copyFromDomain(Dominio.IExecutionDegree)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree#copyFromDomain(Dominio.IExecutionDegree)
      */
     public void copyFromDomain(IExecutionDegree executionDegree) {
         super.copyFromDomain(executionDegree);

@@ -10,7 +10,7 @@ public class InfoTutorWithInfoStudentAndInfoTeacher extends InfoTutorWithInfoTea
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.InfoTeacher#copyFromDomain(Dominio.ITeacher)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoTeacher#copyFromDomain(Dominio.ITeacher)
      */
     public void copyFromDomain(ITutor tutor) {
         super.copyFromDomain(tutor);

@@ -113,7 +113,7 @@ public class InfoPublicationsNumber extends InfoObject {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.IDomainObject)
      */
     public void copyFromDomain(IPublicationsNumber publicationsNumber) {
         super.copyFromDomain(publicationsNumber);

@@ -15,7 +15,7 @@ public class InfoGratuityValuesWithInfoExecutionDegree extends InfoGratuityValue
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.InfoGratuityValues#copyFromDomain(Dominio.IGratuityValues)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues#copyFromDomain(Dominio.IGratuityValues)
      */
     public void copyFromDomain(IGratuityValues gratuityValues) {
         super.copyFromDomain(gratuityValues);

@@ -15,7 +15,7 @@ public class InfoCurricularCourseScopeWithBranchAndSemesterAndYear extends InfoC
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.InfoCurricularCourseScope#copyFromDomain(Dominio.ICurricularCourseScope)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope#copyFromDomain(Dominio.ICurricularCourseScope)
      */
     public void copyFromDomain(ICurricularCourseScope curricularCourseScope) {
         super.copyFromDomain(curricularCourseScope);

@@ -24,7 +24,7 @@ public class InfoPublicationAuthor extends InfoObject {
     private InfoPublication infoPublication;
     
     /* (non-Javadoc)
-     * @see DataBeans.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.IDomainObject)
      */
     public void copyFromDomain(IPublicationAuthor publicationAuthor) {
         super.copyFromDomain(publicationAuthor);

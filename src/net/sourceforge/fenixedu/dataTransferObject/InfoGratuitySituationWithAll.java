@@ -15,7 +15,7 @@ public class InfoGratuitySituationWithAll extends InfoGratuitySituation {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.InfoGratuitySituation#copyFromDomain(Dominio.IGratuitySituation)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation#copyFromDomain(Dominio.IGratuitySituation)
      */
     public void copyFromDomain(IGratuitySituation gratuitySituation) {
         super.copyFromDomain(gratuitySituation);

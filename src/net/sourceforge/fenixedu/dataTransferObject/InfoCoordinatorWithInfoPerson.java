@@ -15,7 +15,7 @@ public class InfoCoordinatorWithInfoPerson extends InfoCoordinator {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.InfoCoordinator#copyFromDomain(Dominio.ICoordinator)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoCoordinator#copyFromDomain(Dominio.ICoordinator)
      */
     public void copyFromDomain(ICoordinator coordinator) {
         super.copyFromDomain(coordinator);

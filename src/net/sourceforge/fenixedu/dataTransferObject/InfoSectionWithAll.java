@@ -15,7 +15,7 @@ public class InfoSectionWithAll extends InfoSection {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.InfoSection#copyFromDomain(Dominio.ISection)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoSection#copyFromDomain(Dominio.ISection)
      */
     public void copyFromDomain(ISection section) {
         super.copyFromDomain(section);

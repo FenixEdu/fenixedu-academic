@@ -15,7 +15,7 @@ public class InfoTeachingCareerWithInfoCategory extends InfoTeachingCareer {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.teacher.InfoTeachingCareer#copyFromDomain(Dominio.teacher.ITeachingCareer)
+     * @see net.sourceforge.fenixedu.dataTransferObject.teacher.InfoTeachingCareer#copyFromDomain(Dominio.teacher.ITeachingCareer)
      */
     public void copyFromDomain(ITeachingCareer teachingCareer) {
         super.copyFromDomain(teachingCareer);

@@ -26,7 +26,7 @@ public class InfoAuthorWithInfoPublications extends InfoAuthor {
 
 	
     /* (non-Javadoc)
-     * @see DataBeans.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.IDomainObject)
      */
     public void copyFromDomain(IAuthor author) {
         if (author != null){

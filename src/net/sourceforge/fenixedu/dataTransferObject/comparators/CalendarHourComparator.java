@@ -12,7 +12,7 @@ import java.util.Comparator;
  * @author João Mota
  * @author Susana Fernandes
  * 
- * 22/Jul/2003 fenix-head DataBeans.comparators
+ * 22/Jul/2003 fenix-head net.sourceforge.fenixedu.dataTransferObject.comparators
  *  
  */
 public class CalendarHourComparator implements Comparator {

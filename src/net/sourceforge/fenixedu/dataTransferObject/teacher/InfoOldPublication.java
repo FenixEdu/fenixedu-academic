@@ -114,7 +114,7 @@ public class InfoOldPublication extends InfoObject {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.IDomainObject)
      */
     public void copyFromDomain(IOldPublication oldPublication) {
         super.copyFromDomain(oldPublication);

@@ -17,7 +17,7 @@ public class ClassTimeTableColorPicker extends ColorPicker {
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorApresentacao.TagLib.sop.v3.ColorPicker#getColorKeyFromInfoLesson(DataBeans.InfoLesson)
+     * @see ServidorApresentacao.TagLib.sop.v3.ColorPicker#getColorKeyFromInfoLesson(net.sourceforge.fenixedu.dataTransferObject.InfoLesson)
      */
     protected String getColorKeyFromInfoLesson(InfoShowOccupation infoShowOccupation) {
         StringBuffer strBuffer = new StringBuffer();

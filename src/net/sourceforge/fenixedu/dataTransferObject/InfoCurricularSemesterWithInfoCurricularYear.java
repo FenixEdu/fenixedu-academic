@@ -15,7 +15,7 @@ public class InfoCurricularSemesterWithInfoCurricularYear extends InfoCurricular
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.InfoCurricularSemester#copyFromDomain(Dominio.ICurricularSemester)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoCurricularSemester#copyFromDomain(Dominio.ICurricularSemester)
      */
     public void copyFromDomain(ICurricularSemester curricularSemester) {
         super.copyFromDomain(curricularSemester);

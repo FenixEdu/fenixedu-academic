@@ -32,7 +32,7 @@ public class EditShiftProfessorshipByOID extends EditDomainObjectService {
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#clone2DomainObject(DataBeans.InfoObject)
+     * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#clone2DomainObject(net.sourceforge.fenixedu.dataTransferObject.InfoObject)
      */
     protected IDomainObject clone2DomainObject(InfoObject infoObject) {
         return Cloner

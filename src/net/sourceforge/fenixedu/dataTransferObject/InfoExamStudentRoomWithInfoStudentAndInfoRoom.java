@@ -15,7 +15,7 @@ public class InfoExamStudentRoomWithInfoStudentAndInfoRoom extends InfoExamStude
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.IDomainObject)
      */
     public void copyFromDomain(IExamStudentRoom examStudentRoom) {
         super.copyFromDomain(examStudentRoom);

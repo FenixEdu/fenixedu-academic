@@ -21,7 +21,7 @@ public class InfoGuideWithGuideEntries extends InfoGuide {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.InfoGuide#copyFromDomain(Dominio.IGuide)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoGuide#copyFromDomain(Dominio.IGuide)
      */
     public void copyFromDomain(IGuide guide) {
         super.copyFromDomain(guide);

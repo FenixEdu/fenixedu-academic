@@ -246,7 +246,7 @@ public class InfoQualification extends InfoObject implements ISiteComponent {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.IDomainObject)
      */
     public void copyFromDomain(IQualification qualification) {
         super.copyFromDomain(qualification);

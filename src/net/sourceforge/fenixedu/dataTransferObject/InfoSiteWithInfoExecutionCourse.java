@@ -15,7 +15,7 @@ public class InfoSiteWithInfoExecutionCourse extends InfoSite {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.InfoSite#copyFromDomain(Dominio.ISite)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoSite#copyFromDomain(Dominio.ISite)
      */
     public void copyFromDomain(ISite site) {
         super.copyFromDomain(site);

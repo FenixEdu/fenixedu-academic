@@ -15,7 +15,7 @@ public class InfoCurriculumWithInfoCurricularCourseAndInfoDegree extends InfoCur
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.InfoCurriculum#copyFromDomain(Dominio.ICurriculum)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum#copyFromDomain(Dominio.ICurriculum)
      */
     public void copyFromDomain(ICurriculum curriculum) {
         super.copyFromDomain(curriculum);

@@ -69,7 +69,7 @@ public class InfoAreaCurricularCourseGroup extends InfoCurricularCourseGroup {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.InfoCurricularCourseGroup#getType()
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseGroup#getType()
      */
     public String getType() {
         return "label.curricularCourseGroup.area";

@@ -21,7 +21,7 @@ public class InfoExamWithRoomOccupations extends InfoExam {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.InfoExam#copyFromDomain(Dominio.IExam)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoExam#copyFromDomain(Dominio.IExam)
      */
     public void copyFromDomain(IExam exam) {
         super.copyFromDomain(exam);

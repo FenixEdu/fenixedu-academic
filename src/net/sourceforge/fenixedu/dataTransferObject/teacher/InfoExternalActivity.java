@@ -83,7 +83,7 @@ public class InfoExternalActivity extends InfoObject implements ISiteComponent {
     /*
      * (non-Javadoc)
      * 
-     * @see DataBeans.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.IDomainObject)
      */
     public void copyFromDomain(IExternalActivity externalActivity) {
         super.copyFromDomain(externalActivity);
