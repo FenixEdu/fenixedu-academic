@@ -59,24 +59,17 @@ public abstract class SessionConstants {
 	
 	//gesdis constants
 	public static final String INFO_SITE="info_site";
-	
 	public static final String EXECUTION_COURSE_CURRICULUM= "execution_course_curriculum";
-	
 	public static final String INFO_SITE_ANNOUNCEMENT= "info_site_announcement";
-	
 	public static final String INFO_SITE_SECTION= "info_site_section";
-	
 	public static final String INFO_SITE_ITEM= "info_site_item";
-	
 	public static final String INFO_SITE_ANNOUNCEMENT_LIST= "info_site_announcement_list";
-	
 	public static final String INFO_SITES_LIST = "info_sites_list";
-	
 	public static final String INFO_TEACHER = "info_teacher";	
-	
 	public static final String INFO_BIBLIOGRAPHIC_REFERENCE_LIST = "BibliographicReferences";		
-	
 	public static final String INFO_BIBLIOGRAPHIC_REFERENCE = "BibliographicReference";
+	public static final String TEACHERS_LIST ="teachers_list";
+	public static final String RESPONSIBLE_TEACHERS_LIST = "responsible_teachers_list";
 	// Master Degree 
 	public static final String SPECIALIZATIONS = "specializations"; 
 	public static final String DEGREE_LIST = "degree_list";
@@ -106,4 +99,5 @@ public abstract class SessionConstants {
 	
 	
 	public static final String INFO_EXAMS_KEY = "INFO_EXAMS_KEY";
+
 }

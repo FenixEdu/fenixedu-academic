@@ -6,11 +6,15 @@
  */
 package ServidorAplicacao.Servico.gesdis;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import DataBeans.InfoExecutionCourse;
+import DataBeans.gesdis.InfoTeacher;
 import DataBeans.util.Cloner;
 import Dominio.IDisciplinaExecucao;
+import Dominio.ITeacher;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -57,8 +61,21 @@ public class ReadTeachersByExecutionCourseProfessorship implements IServico {
 						Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
 			IPersistentTeacher persistentTeacher=sp.getIPersistentTeacher();
 			result=persistentTeacher.readTeacherByExecutionCourseProfessorship(executionCourse);	
-				
-					return result;
+			List infoResult = new ArrayList();
+			if (result!=null){
+			
+			Iterator iter = result.iterator();	
+			while(iter.hasNext()) {
+				ITeacher teacher = (ITeacher) iter.next();
+				InfoTeacher infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+				infoResult.add(infoTeacher);				
+			}
+			return infoResult;
+			}
+			else {
+				return result;
+			}
+					
 				} catch (ExcepcaoPersistencia e) {
 					throw new FenixServiceException(e);
 				} 

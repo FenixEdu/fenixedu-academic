@@ -30,4 +30,9 @@
 	<bean:message key="link.logout"/>
 </html:link></td>
 </tr>
+<tr><td>
+	<html:link page="/teachersManagerDA.do?method=viewTeachersByProfessorship">
+	<bean:message key="link.teachers"/>
+</html:link></td>
+</tr>
 </table>

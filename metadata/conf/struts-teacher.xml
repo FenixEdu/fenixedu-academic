@@ -161,6 +161,16 @@
       	  <forward name="Success" path="/index.do"/>
       </action>
 	
+	<!-- Actions For Teachers  -->
+	<action 
+		parameter="method"
+		path="/teachersManagerDA"
+        type="ServidorApresentacao.Action.teacher.TeacherManagerDispatchAction"
+		>    
+    <forward name="viewTeachers" path="/viewTeachers.jsp"/>    
+    
+	</action>
+	
 	<!-- Actions For Objectives and Program -->
 	<action 
 		name="executionCourseObjectivesForm"
@@ -202,7 +212,7 @@
 	
 	<action path="/viewSite"
         type="ServidorApresentacao.Action.teacher.ReadSite">    
-     <forward name="viewSite" path="/viewSite.jsp"/>         
+     <forward name="viewSite" path="/navbar.jsp"/>         
 	</action>
 	</action-mappings>
 
