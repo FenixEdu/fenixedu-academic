@@ -29,7 +29,7 @@ import Util.TipoDocumentoIdentificacao;
  * 2/Out/2003
  */
 
-public class SeeStudentCurricularPlansDispatchAction extends DispatchAction {
+public class SeeStudentAndCurricularPlansDispatchAction extends DispatchAction {
 
 	public ActionForward start(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
 

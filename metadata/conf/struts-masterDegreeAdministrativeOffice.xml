@@ -1459,7 +1459,7 @@
 
 
 		<action	name="seeStudentCurricularPlansForm"
-				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.studentCurricularPlan.SeeStudentCurricularPlansDispatchAction"
+				type="ServidorApresentacao.Action.masterDegree.administrativeOffice.student.studentCurricularPlan.SeeStudentAndCurricularPlansDispatchAction"
 				path="/seeStudentCurricularPlans"
 				parameter="method"
 				scope="request"
