@@ -99,7 +99,7 @@ public class StudentGroupAttendOJBTest extends TestCaseOJB{
 			IGroupProperties groupProperties2 = persistentGroupProperties.readGroupPropertiesByExecutionCourseAndProjectName(executionCourse2,"projectB");
 			
 			studentGroup1 = persistentStudentGroup.readBy(groupProperties1,new Integer(1));
-			studentGroup2 = persistentStudentGroup.readBy(groupProperties2,new Integer(1));
+			studentGroup2 = persistentStudentGroup.readBy(groupProperties2,new Integer(3));
 			
 			
 			IStudent student = persistentStudent.readByUsername("user");
@@ -151,6 +151,34 @@ public class StudentGroupAttendOJBTest extends TestCaseOJB{
 					fail("testReadBy:fail read non - existing StudentGroupAttend");
 				}
 			}	
+  
+	/** Test of lockWrite method, of class ServidorPersistente.OJB.StudentGroupAttendOJB. */
+		  public void testReadAllByStudentGroup() {
+		
+	  	
+				  //read existing StudentGroupAttend  
+				  try {
+						  persistentSupport.iniciarTransaccao();	
+						  List existingStudentGroupAttend = persistentStudentGroupAttend.readAllByStudentGroup(studentGroup1);
+						  assertEquals(existingStudentGroupAttend.size(),3);			
+						  persistentSupport.confirmarTransaccao();
+
+					} catch (ExcepcaoPersistencia ex) {
+						fail("testReadBy:fail read existing list of StudentGroupAttend");
+					}
+
+					// read unexisting StudentGroupAttend
+					try {
+						  persistentSupport.iniciarTransaccao();	
+						  List unexistingStudentGroupAttend = persistentStudentGroupAttend.readAllByStudentGroup(studentGroup2);
+						  assertEquals(unexistingStudentGroupAttend.size(),0);			
+						  persistentSupport.confirmarTransaccao();
+
+					} catch (ExcepcaoPersistencia ex) {
+						fail("testReadBy:fail read non - existing StudentGroupAttend");
+					}
+				}	
+  
   
 	/** Test of delete method, of class ServidorPersistente.OJB.StudentGroupAttendOJB. */
 			public void testDeleteStudentGroupAttend() {
@@ -232,7 +260,7 @@ public class StudentGroupAttendOJBTest extends TestCaseOJB{
 				//	read all StudentGroupAttend	
 					persistentSupport.iniciarTransaccao();	
 					allStudentGroupAttend = persistentStudentGroupAttend.readAll();
-					assertEquals(allStudentGroupAttend.size(),4);
+					assertEquals(allStudentGroupAttend.size(),5);
 					persistentSupport.confirmarTransaccao();
 					
 				//	deleteAll Method
@@ -262,7 +290,7 @@ public class StudentGroupAttendOJBTest extends TestCaseOJB{
 					//	read all StudentGroupAttend	
 						persistentSupport.iniciarTransaccao();	
 						allStudentGroupAttend = persistentStudentGroupAttend.readAll();
-						assertEquals(allStudentGroupAttend.size(),4);
+						assertEquals(allStudentGroupAttend.size(),5);
 						persistentSupport.confirmarTransaccao();
 					
 					

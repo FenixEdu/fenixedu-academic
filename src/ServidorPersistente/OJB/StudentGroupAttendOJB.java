@@ -43,6 +43,14 @@ public class StudentGroupAttendOJB extends ObjectFenixOJB implements IPersistent
 			return (IStudentGroupAttend) queryObject(StudentGroupAttend.class, criteria1);
 		}
 		
+	public List readAllByStudentGroup(IStudentGroup studentGroup) throws ExcepcaoPersistencia {
+
+			Criteria criteria = new Criteria();
+				
+			criteria.addEqualTo("keyStudentGroup",studentGroup.getIdInternal());
+				
+			return (List) queryList(StudentGroupAttend.class, criteria);
+			}
 		
 	public List readAll() throws ExcepcaoPersistencia {
 
