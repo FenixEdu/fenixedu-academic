@@ -249,7 +249,6 @@
                 <fileset dir="${src.tests}">
                     <!--<include name="**/*Test.java"/>-->
                     <include name="**/CriarSalaFormActionTest.java"/>
-                    <exclude name="**/FrequentaOJBTest.java"/>
                     <exclude name="**/commons/*.java"/>
                     <exclude name="**/student/*.java"/>
                     <exclude name="**/SessionUtilsTest.java"/>
@@ -353,7 +352,6 @@
                     <exclude name="**/SectionOJBTest.java"/>
 					<!-- Theese tests where already failling, no need for me to worry about them for now -->
 
-                    <exclude name="**/FrequentaOJBTest.java"/>
                     <exclude name="**/SuportePersistenteOJBTest.java"/>
                     <exclude name="ServidorAplicacao/**/*.java"/>
                     <exclude name="ServidorApresentacao/**/*.java"/>

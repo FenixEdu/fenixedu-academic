@@ -64,8 +64,12 @@ public class ReadExamsByDayAndBeginning implements IServico {
 			List tempAssociatedCurricularCourses = null;
 			ICurso tempDegree = null;
 			List tempInfoDegrees = null;
+			Integer numberStudentesAttendingCourse = null;
 
-			// For every exam: return exam info and degrees associated with exam
+			// For every exam return:
+			//    - exam info
+			//    - degrees associated with exam
+			//    - number of students attending course (potentially attending exam)
 			for (int i = 0; i < exams.size(); i++) {
 				// prepare exam info
 				tempExam = (IExam) exams.get(i);
@@ -79,8 +83,11 @@ public class ReadExamsByDayAndBeginning implements IServico {
 					tempInfoDegrees.add(Cloner.copyIDegree2InfoDegree(tempDegree));
 				}
 
+				// determine number of students attending course
+				numberStudentesAttendingCourse = sp.getIFrequentaPersistente().countStudentsAttendingExecutionCourse(tempExam.getExecutionCourse());
+
 				// add exam and degree info to result list
-				infoViewExams.add(new InfoViewExamByDayAndShift(tempInfoExam, tempInfoDegrees));
+				infoViewExams.add(new InfoViewExamByDayAndShift(tempInfoExam, tempInfoDegrees, numberStudentesAttendingCourse));
 			}
 
 		} catch (ExcepcaoPersistencia ex) {

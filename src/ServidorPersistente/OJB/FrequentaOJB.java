@@ -22,32 +22,38 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 
-public class FrequentaOJB extends ObjectFenixOJB implements IFrequentaPersistente {
-    
-    public IFrequenta readByAlunoAndDisciplinaExecucao(IStudent aluno,
-                    IDisciplinaExecucao disciplinaExecucao) throws ExcepcaoPersistencia {
-        try {
-            IFrequenta frequenta = null;
-            String oqlQuery = "select alunodisciplinaexecucao from " + Frequenta.class.getName();
-				   oqlQuery += " where disciplinaExecucao.sigla = $1"
-				            +  " and aluno.number = $2";
-            query.create(oqlQuery);
-            query.bind(disciplinaExecucao.getSigla());
-            query.bind(aluno.getNumber());
-            List result = (List) query.execute();
-            lockRead(result);
-            if (result.size() != 0)
-                frequenta = (IFrequenta) result.get(0);
-            return frequenta;
-        } catch (QueryException ex) {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
-    }
+public class FrequentaOJB
+	extends ObjectFenixOJB
+	implements IFrequentaPersistente {
 
-    public void lockWrite(IFrequenta attendanceToWrite)
+	public IFrequenta readByAlunoAndDisciplinaExecucao(
+		IStudent aluno,
+		IDisciplinaExecucao disciplinaExecucao)
+		throws ExcepcaoPersistencia {
+		try {
+			IFrequenta frequenta = null;
+			String oqlQuery =
+				"select alunodisciplinaexecucao from "
+					+ Frequenta.class.getName();
+			oqlQuery += " where disciplinaExecucao.sigla = $1"
+				+ " and aluno.number = $2";
+			query.create(oqlQuery);
+			query.bind(disciplinaExecucao.getSigla());
+			query.bind(aluno.getNumber());
+			List result = (List) query.execute();
+			lockRead(result);
+			if (result.size() != 0)
+				frequenta = (IFrequenta) result.get(0);
+			return frequenta;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
+
+	public void lockWrite(IFrequenta attendanceToWrite)
 		throws ExcepcaoPersistencia, ExistingPersistentException {
 
-			IFrequenta attendanceFromDB = null;
+		IFrequenta attendanceFromDB = null;
 
 		// If there is nothing to write, simply return.
 		if (attendanceToWrite == null)
@@ -71,20 +77,21 @@ public class FrequentaOJB extends ObjectFenixOJB implements IFrequentaPersistent
 			// else Throw an already existing exception
 		} else
 			throw new ExistingPersistentException();
-    }
-    
-    public void delete(IFrequenta frequenta) throws ExcepcaoPersistencia {
-        super.delete(frequenta);
-    }
-    
-    public void deleteAll() throws ExcepcaoPersistencia {
-        String oqlQuery = "select all from " + Frequenta.class.getName();
-        super.deleteAll(oqlQuery);
-    }
-    
+	}
+
+	public void delete(IFrequenta frequenta) throws ExcepcaoPersistencia {
+		super.delete(frequenta);
+	}
+
+	public void deleteAll() throws ExcepcaoPersistencia {
+		String oqlQuery = "select all from " + Frequenta.class.getName();
+		super.deleteAll(oqlQuery);
+	}
+
 	public List readByStudentId(Integer id) throws ExcepcaoPersistencia {
 		try {
-			String oqlQuery = "select frequentas from " + Frequenta.class.getName();
+			String oqlQuery =
+				"select frequentas from " + Frequenta.class.getName();
 			oqlQuery += " where aluno.number = $1";
 			query.create(oqlQuery);
 			query.bind(id);
@@ -96,17 +103,23 @@ public class FrequentaOJB extends ObjectFenixOJB implements IFrequentaPersistent
 		}
 	}
 
-	public List readByExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia {
+	public List readByExecutionCourse(IDisciplinaExecucao executionCourse)
+		throws ExcepcaoPersistencia {
 		try {
-			String oqlQuery = "select frequentas from " + Frequenta.class.getName();
+			String oqlQuery =
+				"select frequentas from " + Frequenta.class.getName();
 			oqlQuery += " where disciplinaExecucao.sigla = $1 "
-			+ " and disciplinaExecucao.executionPeriod.name = $2 "
-			+ " and disciplinaExecucao.executionPeriod.executionYear.year = $3 ";
+				+ " and disciplinaExecucao.executionPeriod.name = $2 "
+				+ " and disciplinaExecucao.executionPeriod.executionYear.year = $3 ";
 			query.create(oqlQuery);
 			query.bind(executionCourse.getSigla());
 			query.bind(executionCourse.getExecutionPeriod().getName());
-			query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
-			
+			query.bind(
+				executionCourse
+					.getExecutionPeriod()
+					.getExecutionYear()
+					.getYear());
+
 			List result = (List) query.execute();
 			lockRead(result);
 			return result;
@@ -115,5 +128,27 @@ public class FrequentaOJB extends ObjectFenixOJB implements IFrequentaPersistent
 		}
 	}
 
-    
+	// TODO : find another more efficient way of obtainning results...
+	//        all we want is the count... no need to retrieve the entire list!!!
+	public Integer countStudentsAttendingExecutionCourse(IDisciplinaExecucao executionCourse)
+		throws ExcepcaoPersistencia {
+		try {
+			String oqlQuery = "select frequentas from " + Frequenta.class.getName();
+			oqlQuery += " where disciplinaExecucao.sigla = $1";
+			oqlQuery += " and disciplinaExecucao.executionPeriod.name = $2";
+			oqlQuery += " and disciplinaExecucao.executionPeriod.executionYear.year = $3";
+
+			query.create(oqlQuery);
+			query.bind(executionCourse.getSigla());
+			query.bind(executionCourse.getExecutionPeriod().getName());
+			query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
+
+			List result = (List) query.execute();
+			lockRead(result);
+			return new Integer(result.size());
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
+
 }

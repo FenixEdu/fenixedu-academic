@@ -7,6 +7,9 @@
 <h2><bean:message key="title.exams"/></h2>
 <span class="error"><html:errors/></span>
 
+<br/> Falta colocar aqui uma secção de contexto do gégnero que
+aparece qd se escolhe a licenciatura e ano curricular na gestão
+de horários. <br/> <br/>
 
 <logic:notPresent name="infoExams" scope="session">
 	<table align="center"  cellpadding='0' cellspacing='0'>
@@ -27,6 +30,12 @@
 			<td>
 				<bean:message key="property.degrees"/>
 			</td>
+			<td>
+				<bean:message key="property.number.students.attending.course"/>
+			</td>
+			<td>
+				manipular
+			</td>
 		</tr>
 		<logic:iterate id="infoViewExam" name="infoExams" scope="session">
 			<tr align="center">
@@ -38,10 +47,18 @@
 						<bean:write name="infoDegree" property="sigla"/> <br/>
 					</logic:iterate>
 				</td>
+				<td>
+					<bean:write name="infoViewExam" property="numberStudentesAttendingCourse"/>
+				</td>
+				<td>
+					link.editar ; link.apagar
+				</td>
 			</tr>
 		</logic:iterate>
 	</table>
-		
-</logic:present>
 
-		
+	<br/> <br/>
+	- Nº de vagas para exames: todo <br/>
+	- Havia mais uma coisa para indicar aqui... consultar folha de proposta.
+
+</logic:present>

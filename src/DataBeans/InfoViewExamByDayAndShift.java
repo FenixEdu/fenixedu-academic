@@ -14,16 +14,21 @@ import java.util.List;
  */
 
 public class InfoViewExamByDayAndShift {
-	
+
 	protected InfoExam infoExam;
 	protected List infoDegrees;
+	protected Integer numberStudentesAttendingCourse;
 
 	public InfoViewExamByDayAndShift() {
 	}
 
-	public InfoViewExamByDayAndShift(InfoExam infoExam, List infoDegrees) {
+	public InfoViewExamByDayAndShift(
+		InfoExam infoExam,
+		List infoDegrees,
+		Integer numberStudentesAttendingCourse) {
 		this.setInfoExam(infoExam);
 		this.setInfoDegrees(infoDegrees);
+		this.setNumberStudentesAttendingCourse(numberStudentesAttendingCourse);
 	}
 
 	public boolean equals(Object obj) {
@@ -37,11 +42,11 @@ public class InfoViewExamByDayAndShift {
 
 	public String toString() {
 		return "[INFOVIEWEXAMBYDAYANDSHIFT:"
-			+ " exam= '" + this.getInfoExam() + "'"
+			+ " exam= '"
+			+ this.getInfoExam()
+			+ "'"
 			+ "]";
 	}
-
-
 
 	/**
 	 * @return
@@ -69,6 +74,20 @@ public class InfoViewExamByDayAndShift {
 	 */
 	public void setInfoDegrees(List list) {
 		infoDegrees = list;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getNumberStudentesAttendingCourse() {
+		return numberStudentesAttendingCourse;
+	}
+
+	/**
+	 * @param integer
+	 */
+	public void setNumberStudentesAttendingCourse(Integer integer) {
+		numberStudentesAttendingCourse = integer;
 	}
 
 }
