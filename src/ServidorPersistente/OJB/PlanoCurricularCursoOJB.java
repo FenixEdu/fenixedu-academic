@@ -13,7 +13,9 @@ import java.util.ListIterator;
 
 import org.odmg.QueryException;
 
+import Dominio.CurricularCourse;
 import Dominio.CursoExecucao;
+import Dominio.ICurricularCourse;
 import Dominio.ICurso;
 import Dominio.ICursoExecucao;
 import Dominio.IPlanoCurricularCurso;
@@ -48,22 +50,6 @@ public class PlanoCurricularCursoOJB extends ObjectFenixOJB implements IPlanoCur
         super.lockWrite(planoCurricularCurso);
     }
     
-    public void apagarPlanoCurricularPorNomeESigla(String nome, String sigla) throws ExcepcaoPersistencia {
-        try {
-            String oqlQuery = "select all from " + PlanoCurricularCurso.class.getName();
-            oqlQuery += " where nome = $1 and sigla = $2";
-            query.create(oqlQuery);
-            query.bind(nome);
-            query.bind(sigla);
-            List result = (List) query.execute();
-            ListIterator iterator = result.listIterator();
-            while(iterator.hasNext())
-                super.delete(iterator.next());
-        } catch (QueryException ex) {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
-    }
-    
     public ArrayList lerTodosOsPlanosCurriculares() throws ExcepcaoPersistencia {
         try {
             ArrayList listade = new ArrayList();
@@ -84,10 +70,11 @@ public class PlanoCurricularCursoOJB extends ObjectFenixOJB implements IPlanoCur
     
     public void apagarPlanoCurricular(IPlanoCurricularCurso planoCurricularCurso) throws ExcepcaoPersistencia {
 		try {
+		  // Delete all Execution Degree
 		  CursoExecucaoOJB executionDegreeOJB = new CursoExecucaoOJB();
-		   String oqlQuery = "select all from " + CursoExecucao.class.getName();
-		  oqlQuery += " where degreeCurricularPlan.name = $1 ";
-		  oqlQuery += " and degreeCurricularPlan.curso.sigla = $2 ";
+		  String oqlQuery = "select all from " + CursoExecucao.class.getName();
+		  oqlQuery += " where curricularPlan.name = $1 ";
+		  oqlQuery += " and curricularPlan.curso.sigla = $2 ";
 		  query.create(oqlQuery);
 		  query.bind(planoCurricularCurso.getName());
 		  query.bind(planoCurricularCurso.getCurso().getSigla());
@@ -96,13 +83,28 @@ public class PlanoCurricularCursoOJB extends ObjectFenixOJB implements IPlanoCur
 		  while(iter.hasNext()){
 			  ICursoExecucao executionDegree = (ICursoExecucao) iter.next();
 			  executionDegreeOJB.delete(executionDegree);
-			    
 		  }
-  super.delete(planoCurricularCurso);
-  } catch (Exception e) {
-	  e.printStackTrace();
-  throw new ExcepcaoPersistencia();
-  }
+		  
+		  // Delete All Curricular Courses
+		  CurricularCourseOJB curricularCourseOJB = new CurricularCourseOJB();
+		  oqlQuery = "select all from " + CurricularCourse.class.getName();
+		  oqlQuery += " where degreeCurricularPlan.name = $1 ";
+		  oqlQuery += " and degreeCurricularPlan.curso.sigla = $2 ";
+		  query.create(oqlQuery);
+		  query.bind(planoCurricularCurso.getName());
+		  query.bind(planoCurricularCurso.getCurso().getSigla());
+		  result = (List) query.execute();
+		  iter = result.iterator();
+		  while(iter.hasNext()){
+			  ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
+			  curricularCourseOJB.delete(curricularCourse);
+		  }
+		  
+		  super.delete(planoCurricularCurso);
+	  } catch (Exception e) {
+		  e.printStackTrace();
+	  throw new ExcepcaoPersistencia();
+	  }
     }
     
     

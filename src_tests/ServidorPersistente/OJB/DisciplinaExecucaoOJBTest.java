@@ -23,6 +23,7 @@ import org.odmg.OQLQuery;
 import org.odmg.QueryException;
 
 import Dominio.DisciplinaExecucao;
+import Dominio.ICurso;
 import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
@@ -101,7 +102,10 @@ public class DisciplinaExecucaoOJBTest extends TestCaseOJB {
 		assertNotNull(executionYear);
 		IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear("2º Semestre", executionYear);		
 		assertNotNull(executionPeriod);
-		IPlanoCurricularCurso degreeCurricularPlan = planoCurricularCursoPersistente.readByName("plano1");
+		ICurso degree = cursoPersistente.readBySigla("LEIC");
+		assertNotNull(degree);
+
+		IPlanoCurricularCurso degreeCurricularPlan = planoCurricularCursoPersistente.readByNameAndDegree("plano1", degree);
 		assertNotNull(degreeCurricularPlan);
 		ICursoExecucao executionDegree = cursoExecucaoPersistente.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
 		assertNotNull(executionDegree);
