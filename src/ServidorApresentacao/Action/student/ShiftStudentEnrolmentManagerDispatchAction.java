@@ -508,7 +508,18 @@ public class ShiftStudentEnrolmentManagerDispatchAction
 		InfoShiftStudentEnrolment infoShiftStudentEnrolment =
 			(InfoShiftStudentEnrolment) session.getAttribute(
 				SessionConstants.INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY);
-
+	    
+		System.out.println("CurrentEnrolment"+infoShiftStudentEnrolment.getCurrentEnrolment());
+		System.out.println("dividedList"+infoShiftStudentEnrolment.getDividedList());
+//		dividedList
+//		System.out.println("infoShiftStudentEnrolment"+infoShiftStudentEnrolment);
+//		System.out.println("infoShiftStudentEnrolment"+infoShiftStudentEnrolment);
+//		System.out.println("infoShiftStudentEnrolment"+infoShiftStudentEnrolment);
+		
+		
+		
+		
+		
 		if (infoShiftStudentEnrolment == null) {
 			throw new FenixTransactionException("Erro. Por favor nao faça isto.");
 			// TODO: tdi-dev (bruno) -> change this to something 'normal'. this is a placeholder
@@ -547,6 +558,8 @@ public class ShiftStudentEnrolmentManagerDispatchAction
 		}
 		//request.setAttribute(wantedClass, filter)
 		infoShiftStudentEnrolment.setDividedList(infoShiftDividedList);
+		System.out.println("CurrentEnrolment"+infoShiftStudentEnrolment.getCurrentEnrolment());
+		
 		session.setAttribute(
 			SessionConstants.INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY,
 			infoShiftStudentEnrolment);
@@ -623,7 +636,7 @@ public class ShiftStudentEnrolmentManagerDispatchAction
 			// TODO: tdi-dev (bruno) -> here we will catch the errors that say "hey, you made a boo boo". or not
 			throw new FenixActionException(e);
 		}
-
+		session.setAttribute(SessionConstants.INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY,infoShiftStudentEnrolment);
 		return mapping.findForward("validateAndConfirmShiftEnrolment");
 		// TODO: tdi-dev (bruno) -> clean up session variable?
 	}

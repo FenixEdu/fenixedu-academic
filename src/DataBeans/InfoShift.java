@@ -104,6 +104,7 @@ public class InfoShift extends InfoObject {
 		result += ", tipo=" + _tipo;
 		result += ", lotacao=" + _lotacao;
 		result += ", infoDisciplinaExecucao=" + _infoDisciplinaExecucao;
+		result += ", infoLessons=" + infoLessons;
 		result += "]";
 		return result;
 

@@ -19,10 +19,9 @@
       <form-bean name="studentShiftEnrolmentForm"
       			type="org.apache.struts.validator.DynaValidatorForm"
       			dynamic="true">
-      		<form-property name="method" type="java.lang.String"/>
-	      	<form-property name="shifts" type="java.lang.Integer[]"/>
-	      	<form-property name="class" type="java.lang.String"/>
-
+      	<form-property name="method" type="java.lang.String"/>
+	    <form-property name="shifts" type="java.lang.Integer[]"/>
+	    <form-property name="class" type="java.lang.String"/>
 		<form-property name="degree" type="java.lang.String"/>
 		<form-property name="course" type="java.lang.String[]"/>
 		<form-property name="wantedCourse" type="java.lang.String[]"/>

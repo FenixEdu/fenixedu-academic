@@ -6,6 +6,10 @@
 <%@ page import="ServidorApresentacao.Action.sop.utils.SessionConstants" %>
 <%@ page import="java.util.Calendar" %>
 <%@ page import="DataBeans.InfoLesson" %>
+<h3>
+<html:link page="/studentShiftEnrolmentManager.do?method=initializeShiftEnrolment">Ver Horário</html:link>
+</h3>
+
 <bean:define id="infoStudentShiftEnrolment" name="<%= SessionConstants.INFO_STUDENT_SHIFT_ENROLMENT_CONTEXT_KEY %>" />
 <table width="70%" align="center">
 	<tr>
@@ -20,12 +24,15 @@
 				<h3>
 					Turnos onde estás inscrito:
 				</h3>
+				
 				<logic:iterate id="enroledShift" name="infoStudentShiftEnrolment"  property="currentEnrolment" offset="0" length="1" type="DataBeans.InfoShift">
 					<bean:define id="infoExecutionCourseOID" value="<%= enroledShift.getInfoDisciplinaExecucao().getIdInternal().toString() %>"/>
 					<h4>
 						<bean:write name="enroledShift" property="infoDisciplinaExecucao.nome"/>
 					</h4>
 				</logic:iterate>
+				
+				
 				<logic:iterate name="infoStudentShiftEnrolment"  id="enroledShift" property="currentEnrolment" offset="1" type="DataBeans.InfoShift">
 					<bean:define id="actualInfoExecutionCourseOID" value="<%= enroledShift.getInfoDisciplinaExecucao().getIdInternal().toString() %>" />
 					<logic:notEqual name="infoExecutionCourseOID" value="<%= actualInfoExecutionCourseOID %>" >
@@ -45,7 +52,8 @@
 						<bean:write name="enroledShift" property="tipo.siglaTipoAula"/>
 						<br />
 						<blockquote>
-							<logic:iterate id="lesson" name="enroledShift" property="infoLessons">
+						
+						<logic:iterate id="lesson" name="enroledShift" property="infoLessons">
 								<bean:write name="lesson" property="diaSemana"/>
 								das
 								<dt:format pattern="HH:mm">
@@ -56,17 +64,20 @@
 									<bean:write name="lesson" property="fim.time.time"/>
 								</dt:format>
 								<br />
-							</logic:iterate>
+							</logic:iterate> 
+
 						</blockquote>
 					</blockquote>
 				</logic:iterate>
-				<br />
+							
+				<br /> 
 				<h3>
 					Turnos onde te podes inscrever:
 				</h3>
 				<html:form action="studentShiftEnrolmentManager">
 					<html:hidden property="method" value="validateAndConfirmShiftEnrolment"/>
 					<bean:define id="index" value="0"/>
+					<logic:notEmpty name="infoStudentShiftEnrolment" property="dividedList"	>							
 					<logic:iterate name="infoStudentShiftEnrolment"  id="list" property="dividedList" indexId="courseIndex">
 						<br />
 						Disciplina:
@@ -107,8 +118,9 @@
 					<bean:define id="index" value="<%=  (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
 						</logic:iterate>
 					</logic:iterate>
+					</logic:notEmpty>
 					<html:submit value="Inscrever"/>
-				</html:form>
+				</html:form> 
 			</logic:present>
 		</td>
 	</tr>

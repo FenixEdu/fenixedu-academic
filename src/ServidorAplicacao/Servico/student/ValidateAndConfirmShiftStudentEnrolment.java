@@ -17,10 +17,12 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
 import DataBeans.InfoClass;
+import DataBeans.InfoLesson;
 import DataBeans.InfoShift;
 import DataBeans.InfoShiftStudentEnrolment;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
+import Dominio.IAula;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IStudent;
 import Dominio.ITurma;
@@ -38,6 +40,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.ITurmaTurnoPersistente;
 import ServidorPersistente.ITurnoAlunoPersistente;
+import ServidorPersistente.ITurnoAulaPersistente;
 import ServidorPersistente.ITurnoPersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.TipoAula;
@@ -149,7 +152,7 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico {
 			(List) CollectionUtils.collect(
 				infoShiftStudentEnrolment.getWantedShifts(),
 				shiftTransformerInverse);
-		
+
 		//make the shifts persistent
 		wantedShifts = getPersistentShifts(wantedShifts);
 		//		Copy of the current Enrolment (actual Shifts), in ITurno format
@@ -443,7 +446,47 @@ public class ValidateAndConfirmShiftStudentEnrolment implements IServico {
 		} else {
 			result.setErrors(errors);
 		}
+		
+		result.setCurrentEnrolment(
+			setLessons2InfoShifts(result.getCurrentEnrolment()));
+//			result.setCurrentEnrolment(
+//						(List) CollectionUtils.collect(actualShifts, shiftTransformer));
 		return result;
+	}
+
+	/**
+	 * @param list
+	 * @return
+	 */
+	private List setLessons2InfoShifts(List list)
+		throws ExcepcaoPersistencia {
+		if (list == null) {
+			return null;
+		} else {
+			List infoShiftsWithLessons = new ArrayList();
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			ITurnoPersistente persistentShift = sp.getITurnoPersistente();
+			ITurnoAulaPersistente persistentShiftLesson = sp.getITurnoAulaPersistente();
+			Iterator iter = list.iterator();
+			while(iter.hasNext()){
+				InfoShift infoShift = (InfoShift) iter.next();
+				ITurno shift = Cloner.copyInfoShift2IShift(infoShift);
+				shift = (ITurno) persistentShift.readByOId(shift,false);
+				List lessons = persistentShiftLesson.readByShift(shift);
+				Iterator iter1 = lessons.iterator();
+				List infoLessons = new ArrayList();
+				while(iter1.hasNext()) {
+					IAula lesson = (IAula) iter1.next();
+					InfoLesson infoLesson = Cloner.copyILesson2InfoLesson(lesson);
+					infoLessons.add(infoLesson);
+				}
+				infoShift.setInfoLessons(infoLessons);
+				infoShiftsWithLessons.add(infoShift);
+			}
+			
+			return infoShiftsWithLessons;
+		}
+
 	}
 
 	/**

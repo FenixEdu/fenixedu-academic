@@ -21,6 +21,7 @@ import org.apache.commons.collections.Transformer;
 
 import DataBeans.InfoClass;
 import DataBeans.InfoExecutionCourse;
+import DataBeans.InfoLesson;
 import DataBeans.InfoShift;
 import DataBeans.InfoShiftStudentEnrolment;
 import DataBeans.InfoShiftWithAssociatedInfoClassesAndInfoLessons;
@@ -267,39 +268,81 @@ public class ReadStudentShiftEnrolment implements IServico {
 		//Shifts with vacancies of the courses the student is enrolled with 
 		infoShiftStudentEnrolment.setAvailableShift(
 			infoAvailableShiftsFiltered);
-		
+
 		//adds the student lessons to the structure for timetable display
-	infoShiftStudentEnrolment.setLessons(getStudentLessons(infoShiftStudentEnrolment));
-		
+		infoShiftStudentEnrolment.setLessons(
+			getStudentLessons(infoShiftStudentEnrolment));
+		infoShiftStudentEnrolment.setCurrentEnrolment(
+			setLessons2InfoShifts(
+				infoShiftStudentEnrolment.getCurrentEnrolment()));
 		return infoShiftStudentEnrolment;
+	}
+
+	/**
+		 * @param list
+		 * @return
+		 */
+	private List setLessons2InfoShifts(List list) throws ExcepcaoPersistencia {
+		if (list == null) {
+			return null;
+		} else {
+			List infoShiftsWithLessons = new ArrayList();
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			ITurnoPersistente persistentShift = sp.getITurnoPersistente();
+			ITurnoAulaPersistente persistentShiftLesson =
+				sp.getITurnoAulaPersistente();
+			Iterator iter = list.iterator();
+			while (iter.hasNext()) {
+				InfoShift infoShift = (InfoShift) iter.next();
+				ITurno shift = Cloner.copyInfoShift2IShift(infoShift);
+				shift = (ITurno) persistentShift.readByOId(shift, false);
+				List lessons = persistentShiftLesson.readByShift(shift);
+				Iterator iter1 = lessons.iterator();
+				List infoLessons = new ArrayList();
+				while (iter1.hasNext()) {
+					IAula lesson = (IAula) iter1.next();
+					InfoLesson infoLesson =
+						Cloner.copyILesson2InfoLesson(lesson);
+					infoLessons.add(infoLesson);
+				}
+				infoShift.setInfoLessons(infoLessons);
+				infoShiftsWithLessons.add(infoShift);
+			}
+
+			return infoShiftsWithLessons;
+		}
+
 	}
 
 	/**
 	 * @return
 	 */
-	private List getStudentLessons(InfoShiftStudentEnrolment infoShiftStudentEnrolment) throws ExcepcaoPersistencia {
+	private List getStudentLessons(InfoShiftStudentEnrolment infoShiftStudentEnrolment)
+		throws ExcepcaoPersistencia {
 		ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 		ITurnoPersistente persistentShift = sp.getITurnoPersistente();
-		ITurnoAulaPersistente persistentShiftLesson = sp.getITurnoAulaPersistente();
-		List currentEnrollment = infoShiftStudentEnrolment.getCurrentEnrolment();
+		ITurnoAulaPersistente persistentShiftLesson =
+			sp.getITurnoAulaPersistente();
+		List currentEnrollment =
+			infoShiftStudentEnrolment.getCurrentEnrolment();
 		Iterator iter = currentEnrollment.iterator();
 		List lessons = new ArrayList();
-		while (iter.hasNext()){
+		while (iter.hasNext()) {
 			InfoShift infoShift = (InfoShift) iter.next();
 			ITurno shift = Cloner.copyInfoShift2IShift(infoShift);
-			shift = (ITurno) persistentShift.readByOId(shift,false);
-			List shiftLessons =persistentShiftLesson.readByShift(shift);
-			List infoLessons=new ArrayList();
+			shift = (ITurno) persistentShift.readByOId(shift, false);
+			List shiftLessons = persistentShiftLesson.readByShift(shift);
+			List infoLessons = new ArrayList();
 			Iterator iter1 = shiftLessons.iterator();
-			while(iter1.hasNext()){
+			while (iter1.hasNext()) {
 				IAula lesson = (IAula) iter1.next();
 				infoLessons.add(Cloner.copyILesson2InfoLesson(lesson));
 			}
-			lessons.addAll(infoLessons);			
+			lessons.addAll(infoLessons);
 		}
-		if (lessons.isEmpty()){
-			lessons=null;
-		}		
+		if (lessons.isEmpty()) {
+			lessons = null;
+		}
 		return lessons;
 	}
 
