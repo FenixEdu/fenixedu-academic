@@ -14,7 +14,7 @@
 
 	<logic:messagesPresent>
 		<span class="error">
-			<html:errors />
+			<html:errors /> 
 		</span>
 	</logic:messagesPresent>	
 <br/>

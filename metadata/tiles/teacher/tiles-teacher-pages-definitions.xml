@@ -388,6 +388,12 @@
 			value="/publication/PublicationsManagement.jsp"></put>
 	</definition>
 	
+	<definition name="confirm-delete-publication" 
+		extends="teacher-information">
+		<put name="body" 
+			value="/publication/ConfirmDeletePublication.jsp"></put>
+	</definition>
+	
 	<definition name="view-authors-form" 
 		extends="teacher-information">
 		<put name="body" 

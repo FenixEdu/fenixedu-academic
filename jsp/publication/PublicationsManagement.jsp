@@ -11,6 +11,13 @@
 		</span>
 		</logic:messagesPresent>
 		
+		<html:messages id="msg" message="true">
+			<br/>
+			<span class="sucessfulOperarion"><bean:write name="msg"/></span><br>
+			<br/>
+		</html:messages>
+
+		
 		<table class="listClasses" width="100%">
 			<tr>
 				<td>
@@ -31,27 +38,35 @@
 					&nbsp;<bean:write name="infoSitePublications" property="infoTeacher.infoCategory.shortName" /></td>
 			</tr>
 		</table>
-		<br />
-		<p class="infoop"><span class="emphasis-box">1</span>
-		<bean:message key="message.publications.authorPublications" />
-		</p>
+
 		<br />
 		<bean:message key="message.publications.managementEditPublication"/>
 		<bean:message key="message.publications.managementInsertPublication"/>
+		
 		<br/>
 		<table style="text-align:left" width="100%">	
-			<logic:iterate id="infoPublicationDidatic" name="infoSitePublications" property="infoDidaticPublications">
+			<logic:iterate id="infoPublication" name="infoSitePublications" property="infoPublications">
 				<tr>
 					<td class="listClasses" style="text-align:left">
-						<bean:write name="infoPublicationDidatic" property="publicationString" />
+						<bean:write name="infoPublication" property="publicationString" />
 					</td>
 					<td class="listClasses" style="text-align:left">
-						<bean:define id="publicationTypeId" name="infoPublicationDidatic" property="keyPublicationType"/>
-						<html:link page='<%= "/publicationDidatic.do?method=prepareEdit&amp;typePublication=Didatic&amp;page=0&amp;infoPublicationTypeId=" + publicationTypeId %>'
+						<bean:define id="publicationTypeId" name="infoPublication" property="keyPublicationType"/>
+						<%-- Tratar isto como uma qualquer publicação e não como sendo especificamente didatica --%>
+						<html:link page='<%= "/publicationDidatic.do?method=prepareEdit&amp;typePublication=Didatic&amp;page=0&amp;publicationTypeId=" + publicationTypeId %>'
 							paramId="idInternal"
-							paramName="infoPublicationDidatic" 
+							paramName="infoPublication" 
 							paramProperty="idInternal">
 							<bean:message key="label.edit" />
+						</html:link>
+					</td>
+					<td class="listClasses" style="text-align:left">
+						<bean:define id="publicationTypeId" name="infoPublication" property="keyPublicationType"/>
+						<html:link page="/prepareDeletePublication.do"
+							paramId="idInternal"
+							paramName="infoPublication" 
+							paramProperty="idInternal">
+							<bean:message key="label.delete" />
 						</html:link>
 					</td>
 				</tr>
@@ -67,38 +82,4 @@
 				</html:link>
 			</div>
 		<br />
-
-		<p class="infoop"><span class="emphasis-box">2</span>
-		<bean:message key="message.publications.cientificPublications" /></p>
-		<br />
-		<bean:message key="message.publications.managementEditPublication"/>
-		<bean:message key="message.publications.managementInsertPublication"/>	
-		<br/>
-		<table style="text-align:left" width="100%">
-			<logic:iterate id="infoPublicationCientific" name="infoSitePublications" property="infoCientificPublications">
-				<tr>
-					<td class="listClasses" style="text-align:left">
-						<bean:write name="infoPublicationCientific" property="publicationString" />
-					</td>
-					<td class="listClasses" style="text-align:left">
-						<bean:define id="publicationTypeId" name="infoPublicationCientific" property="keyPublicationType"/>
-						<html:link page='<%= "/publicationCientific.do?method=prepareEdit&amp;typePublication=Cientific&amp;page=0&amp;infoPublicationTypeId=" + publicationTypeId %>'
-							paramId="idInternal"
-							 paramName="infoPublicationCientific" 
-							paramProperty="idInternal">
-							<bean:message key="label.edit" />
-						</html:link>
-					</td>
-				</tr>
-			</logic:iterate>
-		</table>
-		<br />
-		<div class="gen-button">
-			<html:link page="/readPublicationTypes.do?method=prepareEdit&amp;typePublication=Cientific&amp;page=0"
-					paramId="infoTeacher#idInternal" 
-					paramName="infoSitePublications" 
-					paramProperty="infoTeacher.idInternal">
-				<bean:message key="message.publications.insert" />
-			</html:link>
-		</div>	
 </logic:present>

@@ -61,7 +61,7 @@ public class InsertPublicationAction extends CRUDActionByOID {
 
         ActionForward actionForward = null;
         DynaActionForm dynaForm = (DynaActionForm) form;
-        Integer publicationTypeId = new Integer(request.getParameter("infoPublicationTypeId"));
+        Integer publicationTypeId = new Integer(request.getParameter("publicationTypeId"));
 
         Integer idInternal = new Integer(request.getParameter("idInternal"));
 

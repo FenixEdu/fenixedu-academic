@@ -415,6 +415,13 @@
         <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
     </filterChain>
     <filterChain>
+        <name>PublicationAuthorAuthorization</name>
+        <expression>PublicationAuthorAuthorizationFilter</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+    <filterChain>
         <name>ExternalActivityTeacherAuthorization</name>
         <expression>ExternalActivityTeacherAuthorization</expression>
         <description/>

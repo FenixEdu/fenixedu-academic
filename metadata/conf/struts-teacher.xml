@@ -580,6 +580,12 @@
             <form-property name="teacherId" type="java.lang.Integer" />
         </form-bean>
         <!-- TJBF & PFON -->
+		
+		<!-- Carlos Pereira & Francisco Passos -->
+        <form-bean name="confirmDeletePublicationForm" type="org.apache.struts.validator.DynaValidatorForm" 
+            dynamic="true">
+			<form-property name="idInternal" type="java.lang.Integer" />
+        </form-bean>
         
         
         
@@ -1622,6 +1628,22 @@
 			<forward name="show-publications" path="publications-management"/>
 		</action>
 		
+		<!-- Carlos Pereira & Francisco Passos -->
+        <action 
+			type="ServidorApresentacao.Action.publication.PrepareDeletePublicationAction" 
+			path="/prepareDeletePublication"
+			parameter="method" scope="request" validate="false">
+			<forward name="prepared" path="confirm-delete-publication"/>
+		</action>
+
+		<!-- Carlos Pereira & Francisco Passos -->
+        <action name="confirmDeletePublicationForm"
+			type="ServidorApresentacao.Action.publication.DeletePublicationAction" 
+			path="/deletePublication"
+			parameter="method" scope="request" validate="false">
+			<forward name="deleted" path="/publicationManagement.do"/>
+		</action>
+				
 		<!-- PrepareSearchPerson-->
 		<action type="ServidorApresentacao.Action.publication.SearchAuthorPublicationAction" 
             path="/prepareSearchPerson" name="publicationManagementForm" scope="request"

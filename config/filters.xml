@@ -702,8 +702,14 @@
         <implementationClass>ServidorAplicacao.Filtro.OperatorAuthorizationFilter</implementationClass>
         <description/>
         <isTransactional>false</isTransactional>
-    </filter>
+    </filter>    
     <filter>
+        <name>PublicationAuthorAuthorizationFilter</name>
+        <implementationClass>ServidorAplicacao.Filtro.publication.PublicationAuthorAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+    </filter>   
+	<filter>
     	<name>FirstTimeStudentAuthorization</name>
     	<implementationClass>ServidorAplicacao.Filtro.student.FirstTimeStudentAuthorizationFilter</implementationClass>
     	<description/>

@@ -20,7 +20,7 @@
             userid="${db.user}"
             password="${db.pass}"
             encoding="${encoding}"
-            classpath="${lib}/mysql-connector-java-3.0.7.jar"
+            classpath="${lib}/mysql-connector-java-3.0.10-stable-bin.jar"
         >
         DROP DATABASE IF EXISTS ${db.name};
         CREATE DATABASE ${db.name};
@@ -32,7 +32,7 @@
             password="${db.pass}"
             encoding="${encoding}">
 	        <fileset dir="${sql}">
-	        	<include name="tables.sql" />
+	        	<include name="fenix.data.structure.sql" />
   			</fileset>
             <classpath>
                 <fileset dir="${lib}">

@@ -3242,9 +3242,27 @@
         </filterChains>
     </service>
     
+	<!-- Carlos Pereira & Francisco Passos -->
+    <service>
+        <name>ReadPublicationByInternalId</name>
+        <implementationClass>ServidorAplicacao.Servico.publication.ReadPublicationByInternalId</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="TeacherAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+    <name>DeletePublication</name>
+        <implementationClass>ServidorAplicacao.Servico.publication.DeletePublication</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="PublicationOwnerAuthorization"/>
+        </filterChains>
+    </service>
     
     <!--TJBF & PFON-->
-
     <service>
         <name>ReadPublications</name>
         <implementationClass>ServidorAplicacao.Servico.publication.ReadPublications</implementationClass>
@@ -3278,7 +3296,7 @@
         <description/>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="TeacherAuthorization"/>
+            <chain name="PublicationOwnerAuthorization"/>
         </filterChains>
     </service>
 	<service>

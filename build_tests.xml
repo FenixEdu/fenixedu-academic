@@ -118,6 +118,48 @@
 		</javac>
 	</target>
 
+	<target name="compile-service-tests-publication"
+			depends="compile-app-server"
+            description="Compiles application server.">
+		<mkdir dir="${build.tests.services}"/>
+		<javac classpath="${build.app-server}"
+               destdir="${build.tests.services}"
+               extdirs="${lib}" 
+               srcdir="${src.tests}"
+               debug="true"
+               optimize="true"
+               deprecation="true"
+               encoding="${encoding}"
+               fork="yes">
+			<include name="ServidorAplicacao/Servicos/publication/*Test.java"/>
+		</javac>
+	</target>
+	
+	<target name="run-tests-publication"
+    		depends="compile-service-tests-publication"
+            description="Executes tests for publications">
+        <ant antfile="build_dataBaseUtils.xml" target="create-tables"/>
+        <junit haltonfailure="false" printsummary="yes" dir="${basedir}">
+            <formatter type="plain" usefile="false"/>
+            <batchtest fork="yes">
+                <fileset dir="${src.tests}">
+                	<include name="ServidorAplicacao/Servicos/publication/*Test.java"/>                  
+                </fileset>
+            </batchtest>
+            <classpath>
+                <pathelement path="${build.app-server}"/>
+                <pathelement path="${build.tests.services}"/>
+                <pathelement path="${sql}"/>
+                <fileset dir="${env.JBOSS_HOME}/client">
+                	<include name="*.jar"/>
+                </fileset>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </junit>
+    </target>
+
     <target name="create-tables"
             description="Cria as tabelas da base de dados.">
         <sql
@@ -177,8 +219,10 @@
                     <include name="ServidorAplicacao/Servicos/sop/exams/SearchRoomsTest.java"/>
 	                <include name="ServidorAplicacao/Servicos/sop/exams/ReadExecutionCourseWithAssociatedCurricularCoursesTest.java"/>
 -->
+	                <include name="ServidorAplicacao/Servicos/sop/exams/*Test.java"/>                  
 
-                	<include name="ServidorAplicacao/Servicos/sop/exams/*Test.java"/>                  
+               
+                	
 
                 </fileset>
             </batchtest>

@@ -43,7 +43,7 @@
 							   paramId="idPublication" 
 							   paramName="infoPublication" 
 							   paramProperty="idInternal">
-						<bean:message key="label.delete" />
+						<bean:message key="label.remove" />
 					</html:link>
 				</div>
 			</td>
