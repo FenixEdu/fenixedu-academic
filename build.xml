@@ -14,7 +14,6 @@
     <property name="metadata" location="metadata" />
     <property name="javadoc.home" location="javaDoc" />
     
-    
 	<property name="build.home" location="build"/>
 
     <!--Directorios destino da compilacao do projecto-->
@@ -379,7 +378,7 @@
             <batchtest fork="yes">
                 <fileset dir="${src.tests}">
                     <!--<include name="**/*Test.java"/>-->
-                    <include name="**/ReadCurricularCourseListOfExecutionCourseTest.java"/>
+                    <include name="**/person/*Test.java"/>
                     <exclude name="**/BaseEnrolmentRuleTest.java.java"/>
                     <exclude name="**/ReadOtherCoursesWithShiftsTest.java"/>
                     <exclude name="**/ReadShiftEnrolmentTest.java"/>
@@ -729,11 +728,14 @@
             <packageset dir="${src}" defaultexcludes="yes">
               <include name="**" />
             </packageset>
-<!--            
-			<packageset dir="${src.tests}" defaultexcludes="yes">
-              <include name="**" />
-            </packageset>
--->            
+
+		    <classpath>
+		      <pathelement path="${lib}"/>
+		      <fileset dir="lib">
+		        <include name="**/*.jar"/>
+		      </fileset>
+		    </classpath>
+           
          </javadoc>
     </target>
 	
