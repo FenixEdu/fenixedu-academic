@@ -90,16 +90,6 @@
          <td><bean:message key="candidate.username" /></td>
             <td><bean:write name="candidateInformation" property="username"/></td>
         </tr>
-        <!-- Password -->
-        <tr>
-         <td><bean:message key="candidate.password" /></td>
-          <td><html:password property="password"/></td>
-        </tr>
-        <!-- Password -->
-        <tr>
-         <td><bean:message key="candidate.reTypePassword" /></td>
-          <td><html:password property="reTypePassword"/></td>
-        </tr>
         <!-- Licenciatura -->
         <tr>
          <td><bean:message key="candidate.majorDegree" /></td>
