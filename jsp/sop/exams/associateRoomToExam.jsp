@@ -88,8 +88,8 @@ dia <bean:write name="<%=SessionConstants.DATE%>"/>
 <html:submit styleClass="inputbutton">
 	<bean:message key="label.choose"/>
 </html:submit>
-<html:reset value="Limpar" styleClass="inputbutton">
-	<bean:message key="label.clear"/>
+<html:reset value="Repor" styleClass="inputbutton">
+	<bean:message key="label.repor"/>
 </html:reset>
 </html:form>
 

@@ -60,9 +60,10 @@ Se quiser ver todas as salas não preencha nenhum.
 	<html:submit styleClass="inputbutton">
 		<bean:message key="lable.choose"/>
 	</html:submit>
-	
+
+<%--	
 	<html:cancel value="Cancelar" styleClass="inputbutton">
 		<bean:message key="label.cancel"/>
 	</html:cancel>
-
+--%>
 </html:form>	

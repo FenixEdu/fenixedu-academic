@@ -442,8 +442,8 @@ public class ExamsMapRenderer implements IExamsMapRenderer
 
 							int numLugaresAPreencher = numAlunos.intValue() - numLugaresSalas;
 
-							if (numLugaresAPreencher < 0)
-								numLugaresAPreencher = 0;
+//							if (numLugaresAPreencher < 0)
+//								numLugaresAPreencher = 0;
 
 							strBuffer.append(numLugaresAPreencher);
 							strBuffer.append(" lugares");
@@ -609,8 +609,8 @@ public class ExamsMapRenderer implements IExamsMapRenderer
 
 							int numLugaresAPreencher = numAlunos.intValue() - numLugaresSalas;
 
-							if (numLugaresAPreencher < 0)
-								numLugaresAPreencher = 0;
+//							if (numLugaresAPreencher < 0)
+//								numLugaresAPreencher = 0;
 
 							strBuffer.append(numLugaresAPreencher);
 							strBuffer.append(" lugares");

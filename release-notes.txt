@@ -3,6 +3,11 @@ Release 2004-04-29
 ---------------------------------------------------------------------
 
 NEW FEATURES:
+- New SOP exams application, with the same use cases but new interface and  
+ association of exams to curricular course scopes. More flexible exam hours 
+ (end and beggining). Exams associated to room occupations to make the room
+ search algorithm more reliable.
+
 - Added double credits field to ManagementCreditLine
 - added a migration script for math courses responsabilities
 - added a migration script for erasmus/air force/etc students
@@ -35,7 +40,9 @@ NEW FEATURES:
   search algorithm more reliable.
 
 NOTES:
-- deployCredits.sql has the necessary sql in order to pass this minor release to production.
+- etc\prepareSOPTables.sql necessary to update database with the new tables
+ corresponding to the domain changes.
+ - deployCredits.sql has the necessary sql in order to pass this minor release to production.
 - updateWebSiteItem-14-04-2004.sql: 
 - added field ftpName in website_item table
 - updated items that have erroneous item begin day filled

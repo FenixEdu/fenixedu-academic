@@ -68,8 +68,9 @@
 		<bean:message key="lable.choose"/>
 	</html:submit>
 	
+<%--
 	<html:cancel value="Cancelar" styleClass="inputbutton">
 		<bean:message key="label.cancel"/>
 	</html:cancel>
-
+--%>
 </html:form>	
