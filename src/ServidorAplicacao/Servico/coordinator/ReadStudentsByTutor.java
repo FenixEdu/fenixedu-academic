@@ -11,11 +11,13 @@ import java.util.ListIterator;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.InfoTutor;
 import DataBeans.util.Cloner;
+import Dominio.IDepartment;
 import Dominio.ITeacher;
 import Dominio.ITutor;
 import Dominio.Teacher;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
+import ServidorPersistente.IPersistentDepartment;
 import ServidorPersistente.IPersistentTutor;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -49,6 +51,12 @@ public class ReadStudentsByTutor implements IService
 			
 			ITeacher teacher = new Teacher();
 			teacher.setTeacherNumber(tutorNumber);
+			
+			IPersistentDepartment persistentDepartment = sp.getIDepartamentoPersistente();
+			IDepartment department = persistentDepartment.readByTeacher(teacher);
+			if(!department.getCode().equals(new String("21"))){
+				throw new FenixServiceException("error.tutor.tutor.notLEEC");
+			}
 			
 			List tutorStudents = persistentTutor.readStudentsByTeacher(teacher);
 			if(tutorStudents == null || tutorStudents.size() <= 0){

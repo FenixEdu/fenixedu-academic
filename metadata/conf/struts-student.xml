@@ -208,10 +208,10 @@
 
       <!-- TODO: tdi-dev (bruno) -> redo this-->
 	  <action path="/studentShiftEnrolmentManager"
-	  				name="studentShiftEnrolmentForm"
-	  				attribute="studentShiftEnrolmentForm"
+	  	name="studentShiftEnrolmentForm"
+	  	attribute="studentShiftEnrolmentForm"
         type="ServidorApresentacao.Action.student.ShiftStudentEnrolmentManagerDispatchAction"
-					input="/studentShiftEnrolmentManager.do?method=enrollCourse&amp;firstTime=yes" 
+		input="/studentShiftEnrolmentManager.do?method=enrollCourse&amp;firstTime=yes" 
         parameter="method"
         scope="session"
         validate="false">

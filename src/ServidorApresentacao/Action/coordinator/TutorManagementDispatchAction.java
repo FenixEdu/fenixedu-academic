@@ -110,6 +110,7 @@ public class TutorManagementDispatchAction extends FenixDispatchAction
 			e.printStackTrace();
 			errors.add("error", new ActionError(e.getMessage(), tutorNumber));
 			saveErrors(request, errors);
+			return mapping.getInputForward();
 		}
 
 		if (infoStudentsOfTutor != null && infoStudentsOfTutor.size() >= 0)

@@ -106,7 +106,7 @@ public class CurriculumDispatchAction extends DispatchAction {
 		if(studentNumber == null) {
 			InfoStudent infoStudent = null;
 			try {
-				Object args[] = { userView };
+				Object args[] = { userView.getUtilizador() };
 				infoStudent = (InfoStudent) ServiceManagerServiceFactory.executeService(userView, "ReadStudentByUsername", args);
 			} catch (FenixServiceException e) {
 				throw new FenixActionException(e);
