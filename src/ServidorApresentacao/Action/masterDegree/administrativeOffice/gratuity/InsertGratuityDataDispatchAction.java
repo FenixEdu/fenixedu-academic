@@ -218,7 +218,6 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 		request.setAttribute("degree", degree);
 		request.setAttribute("executionYear", executionYear);
 
-		System.out.println("valores do form lidos");
 		InfoGratuityValues infoGratuityValues = null;
 		Object args[] = { degreeId };
 		try
@@ -236,17 +235,14 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 
 		if (infoGratuityValues == null)
 		{
-			System.out.println("propina nova");
 			infoGratuityValues = new InfoGratuityValues();
 		}
 		if (request.getAttribute("infoPaymentPhases") == null)
 		{
-			System.out.println("primeira vez");
 
 			fillForm(gratuityForm, infoGratuityValues);
 			request.setAttribute("infoPaymentPhases", infoGratuityValues.getInfoPaymentPhases());
 		}
-		System.out.println("vai sair");
 
 		return mapping.findForward("insertGratuityData");
 	}
@@ -257,17 +253,20 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 		{
 			aForm.set("gratuityId", infoGratuityValues.getIdInternal().toString());
 		}
-		System.out.println("preenchendo form");
+		System.out.println(infoGratuityValues.toString());
 
-		if (infoGratuityValues.getAnualValue() != null)
+		if (infoGratuityValues.getAnualValue() != null
+			&& infoGratuityValues.getAnualValue().toString().length() > 0)
 		{
 			aForm.set("annualValue", infoGratuityValues.getAnualValue().toString());
 		}
-		if (infoGratuityValues.getScholarShipValue() != null)
+		if (infoGratuityValues.getScholarShipValue() != null
+			&& infoGratuityValues.getScholarShipValue().toString().length() > 0)
 		{
 			aForm.set("scholarPart", infoGratuityValues.getScholarShipValue().toString());
 		}
-		if (infoGratuityValues.getFinalProofValue() != null)
+		if (infoGratuityValues.getFinalProofValue() != null
+			&& infoGratuityValues.getFinalProofValue().toString().length() > 0)
 		{
 			aForm.set("thesisPart", infoGratuityValues.getFinalProofValue().toString());
 		}
@@ -276,11 +275,13 @@ public class InsertGratuityDataDispatchAction extends DispatchAction
 		{
 			aForm.set("paymentWhen", Boolean.TRUE);
 		}
-		if (infoGratuityValues.getCourseValue() != null)
+		if (infoGratuityValues.getCourseValue() != null
+			&& infoGratuityValues.getCourseValue().toString().length() > 0)
 		{
 			aForm.set("unitaryValueCourse", infoGratuityValues.getCourseValue().toString());
 		}
-		else if (infoGratuityValues.getCreditValue() != null)
+		if (infoGratuityValues.getCreditValue() != null
+			&& infoGratuityValues.getCreditValue().toString().length() > 0)
 		{
 			aForm.set("unitaryValueCredit", infoGratuityValues.getCreditValue().toString());
 		}

@@ -91,9 +91,7 @@ public class ReadGratuityValuesByExecutionDegree implements IServico
 		InfoGratuityValues infoGratuityValues = null;
 		if (gratuityValues != null)
 		{
-			System.out.println("encontrou propina1");
 			infoGratuityValues = Cloner.copyIGratuityValues2InfoGratuityValues(gratuityValues);
-			System.out.println("encontrou propina2");
 			
 			infoPaymentPhases = new ArrayList();
 			CollectionUtils.collect(gratuityValues.getPaymentPhaseList(), new Transformer()
@@ -104,7 +102,6 @@ public class ReadGratuityValuesByExecutionDegree implements IServico
 					return Cloner.copyIPaymentPhase2InfoPaymentPhase(paymentPhase);
 				}
 			}, infoPaymentPhases);
-			System.out.println("encontrou propina3");
 			
 			InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) CollectionUtils.find(infoPaymentPhases, new Predicate()
 			{
@@ -117,12 +114,10 @@ public class ReadGratuityValuesByExecutionDegree implements IServico
 					return false;
 				}
 			});
-			System.out.println("encontrou propina4");
 			
 			if(infoPaymentPhase != null) {
 				infoGratuityValues.setRegistrationPayment(Boolean.TRUE);
 			}
-			System.out.println("encontrou propina5");
 			
 			infoGratuityValues.setInfoPaymentPhases(infoPaymentPhases);
 		}

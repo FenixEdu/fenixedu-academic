@@ -55,14 +55,12 @@ public class InsertGratuityData implements IService
 	{
 		if (infoGratuityValues == null)
 		{
-			System.out.println("argumento null");
 			throw new FenixServiceException("impossible.insertGratuityValues");
 		}
 		if (infoGratuityValues.getInfoExecutionDegree() == null
 			|| infoGratuityValues.getInfoExecutionDegree().getIdInternal() == null
 			|| infoGratuityValues.getInfoExecutionDegree().getIdInternal().intValue() <= 0)
 		{
-			System.out.println("executiondegree null");
 			throw new FenixServiceException("impossible.insertGratuityValues");
 		}
 
@@ -71,15 +69,12 @@ public class InsertGratuityData implements IService
 			|| infoGratuityValues.getInfoEmployee().getPerson().getUsername() == null
 			|| infoGratuityValues.getInfoEmployee().getPerson().getUsername().length() <= 0)
 		{
-			System.out.println("employee null");
 			throw new FenixServiceException("impossible.insertGratuityValues");
 		}
-		System.out.println("passou os argumentos");
 
 		ISuportePersistente sp = null;
 
 		validateGratuity(sp, infoGratuityValues);
-		System.out.println("validou a propina");
 
 		try
 		{
@@ -92,8 +87,6 @@ public class InsertGratuityData implements IService
 			gratuityValues = (IGratuityValues) persistentGratuityValues.readByOId(gratuityValues, true);
 			if (gratuityValues == null) //it doesn't exist in database, then write it
 			{
-				System.out.println("propina nova");
-
 				gratuityValues = new GratuityValues();
 
 				//execution Degree
@@ -110,10 +103,8 @@ public class InsertGratuityData implements IService
 			}
 
 			validatePaymentPhasesWithTransaction(sp, gratuityValues);
-			System.out.println("validou prestacoes sem transaccoes");
 
 			registerWhoAndWhen(sp, infoGratuityValues, gratuityValues);
-			System.out.println("colocou o autor da mudança da propina");
 
 			gratuityValues.setAnualValue(infoGratuityValues.getAnualValue());
 			gratuityValues.setScholarShipValue(infoGratuityValues.getScholarShipValue());
@@ -126,13 +117,10 @@ public class InsertGratuityData implements IService
 
 			//write all payment phases
 			writePaymentPhases(sp, infoGratuityValues, gratuityValues);
-			System.out.println("escreveu as prestacoes");
 
 			//update gratuity values in all student curricular plan that belong to this execution
 			// degree
 			updateStudentsGratuitySituation(sp, infoGratuityValues, gratuityValues);
-			System.out.println("actualizou situacoes de estudantes que se referem a esta propina");
-
 		}
 		catch (ExcepcaoPersistencia e)
 		{

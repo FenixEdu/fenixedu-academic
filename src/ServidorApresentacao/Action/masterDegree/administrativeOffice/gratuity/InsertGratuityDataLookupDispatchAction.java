@@ -193,7 +193,6 @@ public class InsertGratuityDataLookupDispatchAction extends LookupDispatchAction
 
 		InfoGratuityValues infoGratuityValues = fillGratuity(userView, gratuityForm);
 
-		System.out.println("id da propina: " +infoGratuityValues.getIdInternal());
 		Object[] args = { infoGratuityValues };
 		try
 		{
