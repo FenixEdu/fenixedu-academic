@@ -228,7 +228,7 @@ public class SiteViewerDispatchAction extends FenixDispatchAction {
 			request.setAttribute("objectCode",objectCode);
 		}
 			request.setAttribute("siteView", siteView);
-		
+			request.setAttribute("executionCourseCode",((InfoSiteCommon)siteView.getCommonComponent()).getExecutionCourse().getIdInternal());
 			if (siteView.getComponent() instanceof InfoSiteSection) {			
 			request.setAttribute("infoSection", ((InfoSiteSection)siteView.getComponent()).getSection());}
 		} catch (FenixServiceException e) {
