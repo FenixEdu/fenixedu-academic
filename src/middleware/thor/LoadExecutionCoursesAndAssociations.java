@@ -299,12 +299,6 @@ public class LoadExecutionCoursesAndAssociations extends LoadDataFile {
 				siglaDE += "-" + numElements.intValue() + 1;
 			}
 
-			// PROBLEM : Se isto não for corrido tendo todos os curriculos,
-			//           quando aparecerem pautas novas, no caso de serem
-			//           agregadas mais disciplinas com siglas diferentes às
-			//           que já existem, estas vão ser introduzidas no sistema
-			//           como sendo novas execuções!!! Sempre que isto
-			//           acontecer é necesário corrigir os dados!!!
 			IDisciplinaExecucao disciplinaExecucao = null;
 //				persistentObjectOJB.readExecutionCourse(siglaDE);
 
