@@ -50,8 +50,8 @@ public class ReadDistributedTestMarksToString implements IService {
 							DistributedTest.class, distributedTestId);
 			if (distributedTest == null)
 				throw new InvalidArgumentsServiceException();
-			int numberOfQuestions = distributedTest.getNumberOfQuestions()
-					.intValue();
+//			int numberOfQuestions = distributedTest.getNumberOfQuestions()
+//					.intValue();
 			String result = new String("Número\tNome\t");
 			for (int i = 1; i <= distributedTest.getNumberOfQuestions()
 					.intValue(); i++) {

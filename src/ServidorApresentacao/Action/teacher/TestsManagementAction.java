@@ -1106,7 +1106,7 @@ public class TestsManagementAction extends FenixDispatchAction {
         Integer objectCode = getCodeFromRequest(request, "objectCode");
         Integer distributedTestCode = getCodeFromRequest(request,
                 "distributedTestCode");
-        String path = getServlet().getServletContext().getRealPath("/");
+//        String path = getServlet().getServletContext().getRealPath("/");
         Object[] args = { objectCode, distributedTestCode};
         SiteView siteView = null;
         try {

@@ -97,8 +97,8 @@ public class ExercisesManagementAction extends FenixDispatchAction {
 
         Integer questionType = (Integer) ((DynaActionForm) form)
                 .get("questionType");
-        Integer cardinalityType = (Integer) ((DynaActionForm) form)
-                .get("cardinalityType");
+//        Integer cardinalityType = (Integer) ((DynaActionForm) form)
+//                .get("cardinalityType");
         Integer optionNumber = (Integer) ((DynaActionForm) form)
                 .get("optionNumber");
 
@@ -518,8 +518,8 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         } else
             ((DynaActionForm) form).set("correctOptions", newOptions);
 
-        Boolean evaluationQuestion = (Boolean) ((DynaActionForm) form)
-                .get("evaluationQuestion");
+//        Boolean evaluationQuestion = (Boolean) ((DynaActionForm) form)
+//                .get("evaluationQuestion");
         return prepareCreateExercise(mapping, form, request, response);
     }
 

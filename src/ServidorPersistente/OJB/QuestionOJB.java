@@ -65,7 +65,7 @@ public class QuestionOJB extends ObjectFenixOJB implements IPersistentQuestion {
             throws ExcepcaoPersistencia {
         String original = fileName.replaceAll(".xml","");
         String newName = fileName;
-        boolean notReady = true;
+        
         for(int i=1;;i++){
             
             Criteria criteria = new Criteria();

@@ -4,7 +4,6 @@
  */
 package ServidorAplicacao.Servico.teacher;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -55,7 +54,7 @@ public class ReadDistributedTestMarks implements IService {
 					.getIPersistentStudentTestQuestion();
 			List studentTestQuestionList = persistentStudentTestQuestion
 					.readByDistributedTest(distributedTest);
-			Iterator it = studentTestQuestionList.iterator();
+
 			List infoStudentTestQuestionList = null;
 
 			infoStudentTestQuestionList = (List) CollectionUtils.collect(

@@ -24,7 +24,6 @@ import ServidorAplicacao.Servico.exceptions.InvalidArgumentsServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentDistributedTest;
 import ServidorPersistente.IPersistentExecutionCourse;
-import ServidorPersistente.IPersistentMetadata;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 
@@ -52,8 +51,6 @@ public class ReadMetadatasByDistributedTest implements IService {
 			if (executionCourse == null) {
 				throw new InvalidArgumentsServiceException();
 			}
-			IPersistentMetadata persistentMetadata = persistentSuport
-					.getIPersistentMetadata();
 
 			IPersistentDistributedTest persistentDistributedTest = persistentSuport
 					.getIPersistentDistributedTest();

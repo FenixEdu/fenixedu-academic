@@ -549,7 +549,6 @@ public class ParseQuestion extends DefaultHandler {
         while (it.hasNext()) {
             Element element = (Element) it.next();
             String tag = element.getQName();
-            Attributes atts = element.getAttributes();
             if ((tag.equals("matimage"))) if (imageIdAux == imageId){
                 return element.getValue();}
             
@@ -559,7 +558,6 @@ public class ParseQuestion extends DefaultHandler {
         while (it.hasNext()) {
             Element element = (Element) it.next();
             String tag = element.getQName();
-            Attributes atts = element.getAttributes();
             if ((tag.equals("matimage"))) if (imageIdAux == imageId){
                 return element.getValue();}
             
@@ -569,7 +567,6 @@ public class ParseQuestion extends DefaultHandler {
         while (it.hasNext()) {
             Element element = (Element) it.next();
             String tag = element.getQName();
-            Attributes atts = element.getAttributes();
             if ((tag.equals("matimage"))) if (imageIdAux == imageId){
                 return element.getValue();}
             
@@ -779,13 +776,11 @@ public class ParseQuestion extends DefaultHandler {
     private List getRidOfNot(List responseList) {
         Iterator it = listResponse.iterator();
         List resultList = new ArrayList();
-        ResponseProcessing responseProcessing = null;
+//        ResponseProcessing responseProcessing = null;
         int not = 0;
         while (it.hasNext()) {
             Element element = (Element) it.next();
             String tag = element.getQName();
-            Attributes atts = element.getAttributes();
-
             if (tag.startsWith("var")) {
                 if ((not % 2) == 0)
                     resultList.add(element);

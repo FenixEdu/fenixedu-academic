@@ -125,7 +125,7 @@ public class TutorManagementDispatchAction extends FenixDispatchAction
 		{
 			//order list by number
 			Collections.sort((List)infoTeacherAndStudents.get(1), new BeanComparator("infoStudent.number"));
-			request.setAttribute("studentsOfTutor", (List)infoTeacherAndStudents.get(1));
+			request.setAttribute("studentsOfTutor", infoTeacherAndStudents.get(1));
 		}
 
 		cleanForm(tutorForm);
