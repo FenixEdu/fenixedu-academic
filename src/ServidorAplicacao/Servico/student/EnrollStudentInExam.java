@@ -65,9 +65,11 @@ public class EnrollStudentInExam implements IServico {
 			if (examStudentRoom != null){
 				throw new ExistingServiceException();
 			}
-			examStudentRoom = new ExamStudentRoom(exam,student,null);
-			persistentExamStudentRoom.lockWrite(examStudentRoom);
-	
+			examStudentRoom = new ExamStudentRoom();
+			persistentExamStudentRoom.simpleLockWrite(examStudentRoom);
+			examStudentRoom.setExam(exam);
+			examStudentRoom.setStudent(student);
+				
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}
