@@ -12,12 +12,18 @@ package ServidorPersistente.OJB;
  */
 import java.util.List;
 
+import org.apache.ojb.broker.PersistenceBroker;
+import org.apache.ojb.broker.query.Criteria;
+import org.apache.ojb.broker.query.Query;
+import org.apache.ojb.broker.query.QueryByCriteria;
+import org.apache.ojb.odmg.HasBroker;
 import org.odmg.QueryException;
 
 import Dominio.Frequenta;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
+import Dominio.StudentCurricularPlan;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IFrequentaPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -128,27 +134,42 @@ public class FrequentaOJB
 		}
 	}
 
-	// TODO : find another more efficient way of obtainning results...
-	//        all we want is the count... no need to retrieve the entire list!!!
 	public Integer countStudentsAttendingExecutionCourse(IDisciplinaExecucao executionCourse)
 		throws ExcepcaoPersistencia {
-		try {
-			String oqlQuery = "select frequentas from " + Frequenta.class.getName();
-			oqlQuery += " where disciplinaExecucao.sigla = $1";
-			oqlQuery += " and disciplinaExecucao.executionPeriod.name = $2";
-			oqlQuery += " and disciplinaExecucao.executionPeriod.executionYear.year = $3";
+			PersistenceBroker broker = ((HasBroker) tx).getBroker();
+			//try{
+			Criteria criteria = new Criteria();
+			criteria.addEqualTo(
+				"disciplinaExecucao.sigla",
+				executionCourse.getSigla());
+			criteria.addEqualTo(
+				"disciplinaExecucao.executionPeriod.name",
+				executionCourse.getExecutionPeriod().getName());
+			criteria.addEqualTo(
+				"disciplinaExecucao.executionPeriod.executionYear.year",
+				executionCourse
+					.getExecutionPeriod()
+					.getExecutionYear()
+					.getYear());
+			Query queryPB = new QueryByCriteria(Frequenta.class, criteria);
+			return new Integer(broker.getCount(queryPB));
 
-			query.create(oqlQuery);
-			query.bind(executionCourse.getSigla());
-			query.bind(executionCourse.getExecutionPeriod().getName());
-			query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
-
-			List result = (List) query.execute();
-			lockRead(result);
-			return new Integer(result.size());
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
+			//			String oqlQuery = "select attendence from " + Frequenta.class.getName();
+			//			oqlQuery += " where disciplinaExecucao.sigla = $1";
+			//			oqlQuery += " and disciplinaExecucao.executionPeriod.name = $2";
+			//			oqlQuery += " and disciplinaExecucao.executionPeriod.executionYear.year = $3";
+			//
+			//			query.create(oqlQuery);
+			//			query.bind(executionCourse.getSigla());
+			//			query.bind(executionCourse.getExecutionPeriod().getName());
+			//			query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
+			//
+			//			List result = (List) query.execute();
+			//			lockRead(result);
+			//return new Integer(result.size());
+		//} catch (QueryException ex) {
+		//	throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		//}
 	}
 
 }
