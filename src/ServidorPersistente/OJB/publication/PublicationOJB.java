@@ -7,6 +7,8 @@ package ServidorPersistente.OJB.publication;
 import java.util.List;
 
 import org.apache.ojb.broker.query.Criteria;
+import org.apache.ojb.broker.query.Query;
+import org.apache.ojb.broker.query.QueryByCriteria;
 
 import Dominio.IPessoa;
 import Dominio.publication.Publication;
@@ -39,6 +41,13 @@ public class PublicationOJB extends ObjectFenixOJB implements IPersistentPublica
         criteria.addEqualTo("didatic",publicationType);
         List lista = queryList(Publication.class, criteria);      
         return lista;
+    }
+    
+    public List readAll() throws ExcepcaoPersistencia
+    {
+    	Query query = new QueryByCriteria(Publication.class);
+    	List result = queryList(query);
+    	return result;
     }
 
 }

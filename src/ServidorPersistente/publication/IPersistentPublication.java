@@ -19,4 +19,6 @@ public interface IPersistentPublication extends IPersistentObject
 
     List readAllByPersonAndPublicationType(IPessoa pessoa, Integer publicationType)
         throws ExcepcaoPersistencia;
+    
+    List readAll() throws ExcepcaoPersistencia;
 }
