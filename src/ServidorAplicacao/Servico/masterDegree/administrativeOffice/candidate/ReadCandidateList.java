@@ -79,6 +79,7 @@ public class ReadCandidateList implements IServico {
 		while(iterator.hasNext()){
 			IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) iterator.next(); 
 			InfoMasterDegreeCandidate infoMasterDegreeCandidate = Cloner.copyIMasterDegreeCandidate2InfoMasterDegreCandidate(masterDegreeCandidate);
+			
 			Iterator situationIterator = masterDegreeCandidate.getSituations().iterator();
 			List situations = new ArrayList();
 			while (situationIterator.hasNext()){ 
@@ -86,8 +87,8 @@ public class ReadCandidateList implements IServico {
 				situations.add(infoCandidateSituation);
 				
 				// Check if this is the Active Situation
-				if 	(infoCandidateSituation.getValidation().equals(new State(State.ACTIVE)))
-					infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);
+				/*if 	(infoCandidateSituation.getValidation().equals(new State(State.ACTIVE)))
+					infoMasterDegreeCandidate.setInfoCandidateSituation(infoCandidateSituation);*/
 			}			
 			infoMasterDegreeCandidate.setSituationList(situations);
 			candidateList.add(infoMasterDegreeCandidate);
