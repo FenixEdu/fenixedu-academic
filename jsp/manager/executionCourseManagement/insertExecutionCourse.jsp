@@ -16,7 +16,7 @@
 				</td>
 				<td>
 					<html:select property="executionPeriodId">
-						<html:option value="-1" key="label.manager.executionCourseManagement.select">
+						<html:option value="" key="label.manager.executionCourseManagement.select">
 							<bean:message key="label.manager.executionCourseManagement.select"/>
 						</html:option>
 						<html:optionsCollection name="<%= SessionConstants.LIST_EXECUTION_PERIODS %>"/>

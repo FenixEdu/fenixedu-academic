@@ -4,9 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @author Fernanda Quitério
- * 10/Jan/2004
- *
+ * @author Fernanda Quitério 10/Jan/2004
+ *  
  */
 public class InfoPaymentPhase extends InfoObject implements Serializable
 {
@@ -16,7 +15,24 @@ public class InfoPaymentPhase extends InfoObject implements Serializable
 	private String description;
 
 	private InfoGratuityValues infoGratuityValues;
-	
+
+	public String toString()
+	{
+		StringBuffer object = new StringBuffer();
+		object =
+			object
+				.append("[InfoPaymentPhase: ")
+				.append("starDate= ")
+				.append(startDate.toString())
+				.append("; endDate= ")
+				.append(endDate.toString())
+				.append("; value= ")
+				.append(value.toString())
+				.append("; description= ")
+				.append(description);
+
+		return object.toString();
+	}
 	/**
 	 * @return Returns the description.
 	 */
@@ -26,7 +42,8 @@ public class InfoPaymentPhase extends InfoObject implements Serializable
 	}
 
 	/**
-	 * @param description The description to set.
+	 * @param description
+	 *            The description to set.
 	 */
 	public void setDescription(String description)
 	{
@@ -42,7 +59,8 @@ public class InfoPaymentPhase extends InfoObject implements Serializable
 	}
 
 	/**
-	 * @param endDate The endDate to set.
+	 * @param endDate
+	 *            The endDate to set.
 	 */
 	public void setEndDate(Date endDate)
 	{
@@ -58,7 +76,8 @@ public class InfoPaymentPhase extends InfoObject implements Serializable
 	}
 
 	/**
-	 * @param infoGratuityValues The infoGratuityValues to set.
+	 * @param infoGratuityValues
+	 *            The infoGratuityValues to set.
 	 */
 	public void setInfoGratuityValues(InfoGratuityValues infoGratuityValues)
 	{
@@ -74,7 +93,8 @@ public class InfoPaymentPhase extends InfoObject implements Serializable
 	}
 
 	/**
-	 * @param startDate The startDate to set.
+	 * @param startDate
+	 *            The startDate to set.
 	 */
 	public void setStartDate(Date startDate)
 	{
@@ -90,7 +110,8 @@ public class InfoPaymentPhase extends InfoObject implements Serializable
 	}
 
 	/**
-	 * @param value The value to set.
+	 * @param value
+	 *            The value to set.
 	 */
 	public void setValue(Float value)
 	{

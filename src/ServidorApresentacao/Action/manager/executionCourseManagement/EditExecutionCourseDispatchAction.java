@@ -158,10 +158,9 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction
 
 	private Integer separateLabel(ActionForm form, HttpServletRequest request, String property, String id, String name)
 	{
-		DynaActionForm executionCourseForm = (DynaValidatorForm) form;
+		DynaActionForm executionCourseForm = (DynaActionForm) form;
 		// the value returned to action is a string name#idInternal
 		String object = (String) executionCourseForm.get(property);
-		System.out.println(object);
 		Integer objectId = Integer.valueOf(StringUtils.substringAfter(object, "#"));
 		object = object.substring(0, object.indexOf("#"));
 		request.setAttribute(name, object);

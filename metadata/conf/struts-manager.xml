@@ -160,6 +160,20 @@
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
 	
+		<form-bean name="insertExecutionCourseForm"
+			type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+                <form-property name="name" type="java.lang.String" />
+                <form-property name="code" type="java.lang.String" />
+                <form-property name="theoreticalHours" type="java.lang.String" />
+				<form-property name="praticalHours" type="java.lang.String" />
+				<form-property name="theoPratHours" type="java.lang.String" />
+				<form-property name="labHours" type="java.lang.String" />
+				<form-property name="semester" type="java.lang.String" />
+				<form-property name="comment" type="java.lang.String" />
+				<form-property name="executionPeriodId" type="java.lang.String" />
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
 
 	  <!-- ========== EXECUTION PERIOD MANIPULATION ========== -->
 
@@ -1058,7 +1072,7 @@
 	<action path="/insertExecutionCourse"
 			type="ServidorApresentacao.Action.manager.executionCourseManagement.InsertExecutionCourseDispatchAction"
 			parameter="method"
-			name="executionCourseForm"
+			name="insertExecutionCourseForm"
 			scope="request"
 			input="/insertExecutionCourse.do?method=prepareInsertExecutionCourse&amp;page=0">
         <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"

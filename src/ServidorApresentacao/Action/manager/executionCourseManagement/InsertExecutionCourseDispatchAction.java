@@ -150,7 +150,7 @@ public class InsertExecutionCourseDispatchAction extends FenixDispatchAction
 		infoExecutionCourse.setSigla(code);
 
 		InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
-		infoExecutionPeriod.setIdInternal(new Integer(request.getParameter("executionPeriodId")));
+		infoExecutionPeriod.setIdInternal(new Integer((String) dynaForm.get("executionPeriodId")));
 		infoExecutionCourse.setInfoExecutionPeriod(infoExecutionPeriod);
 
 		String labHours = (String) dynaForm.get("labHours");
