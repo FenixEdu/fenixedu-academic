@@ -151,7 +151,7 @@ public class ReadTeacherInformation implements IServico
             {
                 IExternalActivity externalActivity = (IExternalActivity) iter.next();
                 InfoExternalActivity infoExternalActivity =
-                    (InfoExternalActivity) Cloner.copyIExternalActivity2InfoExternalActivity(externalActivity);
+                    Cloner.copyIExternalActivity2InfoExternalActivity(externalActivity);
                 infoExternalActivities.add(infoExternalActivity);
             }
             infoSiteTeacherInformation.setInfoExternalActivities(infoExternalActivities);
@@ -165,7 +165,7 @@ public class ReadTeacherInformation implements IServico
                 IProfessorship professorShip = (IProfessorship) iter.next();
                 IDisciplinaExecucao executionCourse = professorShip.getExecutionCourse();
                 InfoExecutionCourse infoExecutionCourse =
-                    (InfoExecutionCourse) Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
+                    Cloner.copyIExecutionCourse2InfoExecutionCourse(executionCourse);
                 infoExecutionCourses.add(infoExecutionCourse);
             }
             infoSiteTeacherInformation.setInfoExecutionCourses(infoExecutionCourses);
