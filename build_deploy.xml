@@ -53,7 +53,6 @@
 
 		<!-- Upload generated packages -->
         <scp todir="${server.username}:${server.password}@${server.hostname}:/tmp"
-        	 file="${deploy.jars}/*.*ar"
         	 trust="yes">
         	<fileset dir="${deploy.jars}">
 				<include name="*.*ar"/>
