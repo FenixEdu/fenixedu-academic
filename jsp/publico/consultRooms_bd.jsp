@@ -1,8 +1,14 @@
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-        <h2><bean:message key="title.chooseRooms"/></h2>
-        <br/>
+<h2><bean:message key="title.search.rooms"/></h2>
+<br/>
+	<table width="100%">
+		<tr>
+			<td class="infoop"><bean:message key="message.search.rooms" />
+			</td>
+		</tr>
+	</table>
         <html:errors/>
         <html:form action="/chooseRoomsForm">
             <table border="0" cellpadding="0" cellspacing="0">

@@ -4,8 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ page import="java.util.ArrayList" %>
-	<center><h2><bean:message key="title.chooseRoom"/></h2></center>
-	<br/>
+<h2><bean:message key="title.chooseRoom"/></h2>
+<br/>
 	<logic:present name="publico.infoRooms" scope="session">
 	<html:form action="/viewRoom.do">
 		<table border='0' cellpadding='10' cellspacing='0'>		

@@ -2,7 +2,6 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <span class="error"><html:errors/></span>
-<h1><bean:message key="label.section.name" /></h1> 	
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
   		<tr>
     		<td class="infoop">
