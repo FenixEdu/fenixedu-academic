@@ -266,12 +266,10 @@ public class DeleteEnrollmentsInCurrentStudentCurricularPlans
 
 		if (enrolment.getEvaluations().size() == 1)
 		{
-			enrollmentEvaluationDAO.simpleLockWrite(enrolmentEvaluation);
 			enrollmentEvaluationDAO.deleteByOID(EnrolmentEvaluation.class, enrolmentEvaluation.getIdInternal());
 
 			ReportEnrolment.addEnrolmentEvaluationDeleted();
 
-			enrollmentDAO.simpleLockWrite(enrolment);
 			enrollmentDAO.deleteByOID(Enrolment.class, enrolment.getIdInternal());
 
 			this.cleanEnrollmentRelations(enrolment);
@@ -281,7 +279,6 @@ public class DeleteEnrollmentsInCurrentStudentCurricularPlans
 			super.writeTreatedMWEnrollment(mwEnrolment);
 		} else if (enrolment.getEvaluations().size() > 1)
 		{
-			enrollmentEvaluationDAO.simpleLockWrite(enrolmentEvaluation);
 			enrollmentEvaluationDAO.deleteByOID(EnrolmentEvaluation.class, enrolmentEvaluation.getIdInternal());
 
 			ReportEnrolment.addEnrolmentEvaluationDeleted();

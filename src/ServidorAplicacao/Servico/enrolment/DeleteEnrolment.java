@@ -29,101 +29,124 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class DeleteEnrolment implements IService
 {
-	public DeleteEnrolment()
-	{
-	}
-	// some of these arguments may be null. they are only needed for filter
-	public void run(Integer executionDegreeId, Integer studentCurricularPlanId, Integer enrolmentID) throws FenixServiceException
-	{
-		try
-		{
-			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-			IPersistentEnrolment enrolmentDAO = persistentSuport.getIPersistentEnrolment();
-			IPersistentEnrolmentEvaluation enrolmentEvaluationDAO = persistentSuport.getIPersistentEnrolmentEvaluation();
+    public DeleteEnrolment()
+    {
+    }
 
-			IEnrolment enrolment = (IEnrolment) enrolmentDAO.readByOID(Enrolment.class, enrolmentID);
+    // some of these arguments may be null. they are only needed for filter
+    public void run(Integer executionDegreeId, Integer studentCurricularPlanId,
+            Integer enrolmentID) throws FenixServiceException
+    {
+        try
+        {
+            ISuportePersistente persistentSuport = SuportePersistenteOJB
+                    .getInstance();
+            IPersistentEnrolment enrolmentDAO = persistentSuport
+                    .getIPersistentEnrolment();
+            IPersistentEnrolmentEvaluation enrolmentEvaluationDAO = persistentSuport
+                    .getIPersistentEnrolmentEvaluation();
 
-			if (enrolment != null)
-			{
-				if (enrolment.getEvaluations() != null)
-				{
-					Iterator iterator = enrolment.getEvaluations().iterator();
-					while (iterator.hasNext())
-					{
-						IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator.next();
-						enrolmentEvaluationDAO.simpleLockWrite(enrolment);
-						enrolmentEvaluationDAO.deleteByOID(EnrolmentEvaluation.class, enrolmentEvaluation.getIdInternal());
-					}
-				}
-				
-				deleteAttend(enrolment);
+            IEnrolment enrolment = (IEnrolment) enrolmentDAO.readByOID(
+                    Enrolment.class, enrolmentID);
 
-				enrolmentDAO.simpleLockWrite(enrolment);
-				enrolmentDAO.deleteByOID(Enrolment.class, enrolment.getIdInternal());
-			}
-		} catch (ExcepcaoPersistencia e)
-		{
-			e.printStackTrace();
-			throw new FenixServiceException(e);
-		}
-	}
+            if (enrolment != null)
+            {
+                if (enrolment.getEvaluations() != null)
+                {
+                    Iterator iterator = enrolment.getEvaluations().iterator();
+                    while (iterator.hasNext())
+                    {
+                        IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator
+                                .next();
+                        
+                        enrolmentEvaluationDAO.deleteByOID(
+                                EnrolmentEvaluation.class, enrolmentEvaluation
+                                        .getIdInternal());
+                    }
+                }
 
-	/**
-	 * @param enrolment
-	 * @throws ExcepcaoPersistencia
-	 */
-	public static void deleteAttend(IEnrolment enrolment) throws ExcepcaoPersistencia
-	{
-		ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-		IPersistentExecutionCourse executionCourseDAO = persistentSuport.getIPersistentExecutionCourse();
-		IFrequentaPersistente attendDAO = persistentSuport.getIFrequentaPersistente();
-		IPersistentMark markDAO = persistentSuport.getIPersistentMark();
-		IPersistentStudentGroupAttend studentGroupAttendDAO = persistentSuport.getIPersistentStudentGroupAttend();
-		ITurnoAlunoPersistente shiftStudentDAO = persistentSuport.getITurnoAlunoPersistente();
-		
-		IExecutionCourse executionCourse =
-			executionCourseDAO.readbyCurricularCourseAndExecutionPeriod(
-				enrolment.getCurricularCourse(),
-				enrolment.getExecutionPeriod());
+                deleteAttend(enrolment);
 
-		if (executionCourse != null)
-		{
-			IFrequenta attend =
-				attendDAO.readByAlunoAndDisciplinaExecucao(
-					enrolment.getStudentCurricularPlan().getStudent(),
-					executionCourse);
+                
+                enrolmentDAO.deleteByOID(Enrolment.class, enrolment
+                        .getIdInternal());
+            }
+        }
+        catch (ExcepcaoPersistencia e)
+        {
+            e.printStackTrace();
+            throw new FenixServiceException(e);
+        }
+    }
 
-			if (attend != null)
-			{
-				List marks = markDAO.readBy(attend);
-				if (marks == null || marks.isEmpty())
-				{
-					IStudentGroupAttend studentGroupAttend = studentGroupAttendDAO.readBy(attend);
-					if (studentGroupAttend == null)
-					{
-						List shiftsStudentIsIn =
-							shiftStudentDAO.readByStudent(enrolment.getStudentCurricularPlan().getStudent());
+    /**
+     * @param enrolment
+     * @throws ExcepcaoPersistencia
+     */
+    public static void deleteAttend(IEnrolment enrolment)
+            throws ExcepcaoPersistencia
+    {
+        ISuportePersistente persistentSuport = SuportePersistenteOJB
+                .getInstance();
+        IPersistentExecutionCourse executionCourseDAO = persistentSuport
+                .getIPersistentExecutionCourse();
+        IFrequentaPersistente attendDAO = persistentSuport
+                .getIFrequentaPersistente();
+        IPersistentMark markDAO = persistentSuport.getIPersistentMark();
+        IPersistentStudentGroupAttend studentGroupAttendDAO = persistentSuport
+                .getIPersistentStudentGroupAttend();
+        ITurnoAlunoPersistente shiftStudentDAO = persistentSuport
+                .getITurnoAlunoPersistente();
 
-						if (shiftsStudentIsIn == null || shiftsStudentIsIn.isEmpty())
-						{
-							attendDAO.simpleLockWrite(attend);
-							attendDAO.deleteByOID(Frequenta.class, attend.getIdInternal());
-						} else
-						{
-							attendDAO.simpleLockWrite(attend);
-							attend.setEnrolment(null);
-						}
-					} else
-					{
-						attendDAO.simpleLockWrite(attend);
-						attend.setEnrolment(null);
-					}
-				} else
-				{
-					attendDAO.simpleLockWrite(attend);
-					attend.setEnrolment(null);
-				}
-			}
-		}
-	}
+        IExecutionCourse executionCourse = executionCourseDAO
+                .readbyCurricularCourseAndExecutionPeriod(enrolment
+                        .getCurricularCourse(), enrolment.getExecutionPeriod());
+
+        if (executionCourse != null)
+        {
+            IFrequenta attend = attendDAO.readByAlunoAndDisciplinaExecucao(
+                    enrolment.getStudentCurricularPlan().getStudent(),
+                    executionCourse);
+
+            if (attend != null)
+            {
+                List marks = markDAO.readBy(attend);
+                if (marks == null || marks.isEmpty())
+                {
+                    IStudentGroupAttend studentGroupAttend = studentGroupAttendDAO
+                            .readBy(attend);
+                    if (studentGroupAttend == null)
+                    {
+                        List shiftsStudentIsIn = shiftStudentDAO
+                                .readByStudent(enrolment
+                                        .getStudentCurricularPlan()
+                                        .getStudent());
+
+                        if (shiftsStudentIsIn == null
+                                || shiftsStudentIsIn.isEmpty())
+                        {
+                            
+                            attendDAO.deleteByOID(Frequenta.class, attend
+                                    .getIdInternal());
+                        }
+                        else
+                        {
+                            attendDAO.simpleLockWrite(attend);
+                            attend.setEnrolment(null);
+                        }
+                    }
+                    else
+                    {
+                        attendDAO.simpleLockWrite(attend);
+                        attend.setEnrolment(null);
+                    }
+                }
+                else
+                {
+                    attendDAO.simpleLockWrite(attend);
+                    attend.setEnrolment(null);
+                }
+            }
+        }
+    }
 }
