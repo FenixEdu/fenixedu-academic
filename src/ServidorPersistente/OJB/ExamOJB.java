@@ -22,7 +22,8 @@ import ServidorPersistente.IPersistentExam;
 
 public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
 
-	public List readBy(Calendar day, Calendar beginning) throws ExcepcaoPersistencia{
+	public List readBy(Calendar day, Calendar beginning)
+		throws ExcepcaoPersistencia {
 		try {
 			String oqlQuery = "select exams from " + Exam.class.getName();
 			oqlQuery += " where day = $1";
@@ -32,7 +33,7 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
 			query.bind(beginning);
 			List result = (List) query.execute();
 			lockRead(result);
-			
+
 			return result;
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
@@ -42,7 +43,7 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
 	public List readAll() throws ExcepcaoPersistencia {
 		try {
 			String oqlQuery = "select all from " + Exam.class.getName();
-			oqlQuery += " order by season asc";			
+			oqlQuery += " order by season asc";
 			query.create(oqlQuery);
 			List result = (List) query.execute();
 			lockRead(result);
