@@ -14,6 +14,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -35,6 +36,7 @@ import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.renderer.BarChart;
+import Util.renderer.TimeLineChart;
 import Util.renderer.container.RequestEntry;
 
 /**
@@ -130,6 +132,7 @@ public class MonitorRequestLogsDA extends FenixDispatchAction {
 		SortedSet sortedProfileSet = sortProfileMap(profileMap);
 		BarChart barChart = new BarChart(sortedProfileSet, "Average Execution Time",
 				logImageDir + "/" + filename + ".bar.png", 20);
+		TimeLineChart timeLineChart = new TimeLineChart(sortedProfileSet, logImageDir + "/" + filename + ".timeline.png");
 		return sortedProfileSet;
 	}
 
@@ -160,29 +163,23 @@ public class MonitorRequestLogsDA extends FenixDispatchAction {
 
 	private void processLine(Map profileMap, String line) {
 		StringTokenizer stringTokenizer = new StringTokenizer(line, " \t[]-");
-		Long logTime = parseTime(stringTokenizer.nextToken());
+		Date logTime = parseTime(stringTokenizer.nextToken());
 		String executionTimeString = stringTokenizer.nextToken();
 		Integer executionTime = new Integer(executionTimeString.substring(0, executionTimeString.length() - 2));
 		String requestPath = stringTokenizer.nextToken();
 
 		RequestEntry requestEntry = (RequestEntry) profileMap.get(requestPath);
 		if (requestEntry == null) {
-			requestEntry = getNewHashKey();
-			requestEntry.setRequestPath(requestPath);
-			requestEntry.setExecutionTime(executionTime.intValue());
-			requestEntry.setNumberCalls(1);
+			requestEntry = getNewHashKey(requestPath);
 			profileMap.put(requestPath, requestEntry);
-		} else {
-			requestEntry.setExecutionTime(requestEntry.getExecutionTime()
-					+ executionTime.intValue());
-			requestEntry.setNumberCalls(requestEntry.getNumberCalls() + 1);
 		}
+		requestEntry.addEntry(executionTime, logTime);
 	}
 
-	private Long parseTime(String timeString) {
-		Long result = null; 
+	private Date parseTime(String timeString) {
+		Date result = null; 
 		try {
-			result = new Long(dateFormat.parse(timeString).getTime());
+			result = dateFormat.parse(timeString);
 		} catch (ParseException e) {
 		}
 		return result;
@@ -213,8 +210,8 @@ public class MonitorRequestLogsDA extends FenixDispatchAction {
 		return null;
 	}
 
-	public RequestEntry getNewHashKey() {
-		return new RequestEntry();
+	public RequestEntry getNewHashKey(String requestPath) {
+		return new RequestEntry(requestPath);
 	}
 
 }
