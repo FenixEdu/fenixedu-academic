@@ -27,176 +27,167 @@ import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 
 /**
- * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota</a> 19/Dez/2003
+ * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 19/Dez/2003
  *  
  */
 public class ShowTeachersBodyDispatchAction extends FenixDispatchAction
 {
 
-    public ActionForward prepareForm(
-        ActionMapping mapping,
-        ActionForm actionForm,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
-        DynaActionForm executionYearForm = (DynaActionForm) actionForm;
-        Integer executionYearId = (Integer) executionYearForm.get("executionYearId");
-        try
-        {
+	public ActionForward prepareForm(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws FenixActionException
+	{
 
-            Object[] args = { executionYearId };
+		DynaActionForm executionYearForm = (DynaActionForm) actionForm;
+		Integer executionYearId = (Integer) executionYearForm.get("executionYearId");
+		try
+		{
 
-            List executionDegrees =
-                (List) ServiceUtils.executeService(null, "ReadExecutionDegreesByExecutionYearId", args);
+			Object[] args = {executionYearId};
 
-            List executionYears =
-                (List) ServiceUtils.executeService(null, "ReadAllExecutionYears", null);
+			List executionDegrees = (List) ServiceUtils.executeService(null,
+					"ReadExecutionDegreesByExecutionYearId", args);
 
-            List departments = (List) ServiceUtils.executeService(null, "ReadAllDepartments", null);
+			List executionYears = (List) ServiceUtils
+					.executeService(null, "ReadAllExecutionYears", null);
 
-            Collections.sort(executionDegrees, new ComparatorByNameForInfoExecutionDegree());
+			List departments = (List) ServiceUtils.executeService(null, "ReadAllDepartments", null);
 
-            Iterator iter = executionDegrees.iterator();
-            while (iter.hasNext())
-            {
-                InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iter.next();
-                if (duplicateInfoDegree(executionDegrees, infoExecutionDegree))
-                {
-                    infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().setNome(
-                        infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome()
-                            + "-"
-                            + infoExecutionDegree.getInfoDegreeCurricularPlan().getName());
-                }
-            }
+			if (executionDegrees != null && executionDegrees.size() > 0)
+			{
+				//put execution year in the form
+				if (executionYearId == null)
+				{
+					executionYearId = ((InfoExecutionDegree) executionDegrees.get(0))
+							.getInfoExecutionYear().getIdInternal();
 
-            request.setAttribute("executionDegrees", executionDegrees);
-            request.setAttribute("executionYears", executionYears);
-            request.setAttribute("departments", departments);
-        }
-        catch (FenixServiceException e)
-        {
-            throw new FenixActionException(e);
-        }
+					executionYearForm.set("executionYearId", executionYearId);
+				}
 
-        return mapping.findForward("showForm");
-    }
+				Collections.sort(executionDegrees, new ComparatorByNameForInfoExecutionDegree());
+				Iterator iter = executionDegrees.iterator();
+				while (iter.hasNext())
+				{
+					InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iter.next();
+					if (duplicateInfoDegree(executionDegrees, infoExecutionDegree))
+					{
+						infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().setNome(
+								infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
+										.getNome()
+										+ "-"
+										+ infoExecutionDegree.getInfoDegreeCurricularPlan().getName());
+					}
+				}
 
-    private boolean duplicateInfoDegree(
-        List executionDegreeList,
-        InfoExecutionDegree infoExecutionDegree)
-    {
-        InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
-        Iterator iterator = executionDegreeList.iterator();
+			}
 
-        while (iterator.hasNext())
-        {
-            InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) iterator.next();
-            if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
-                && !(infoExecutionDegree.equals(infoExecutionDegree2)))
-                return true;
+			request.setAttribute("executionDegrees", executionDegrees);
+			request.setAttribute("executionYears", executionYears);
+			request.setAttribute("departments", departments);
+		} catch (FenixServiceException e)
+		{
+			throw new FenixActionException(e);
+		}
 
-        }
-        return false;
-    }
+		return mapping.findForward("showForm");
+	}
 
-    public ActionForward showProfessorshipsByExecutionDegree(
-        ActionMapping mapping,
-        ActionForm actionForm,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
-        DynaActionForm executionDegreeForm = (DynaActionForm) actionForm;
-        Integer executionDegreeId = (Integer) executionDegreeForm.get("executionDegreeId");
-        try
-        {
+	private boolean duplicateInfoDegree(List executionDegreeList, InfoExecutionDegree infoExecutionDegree)
+	{
 
-            Object[] args = { executionDegreeId };
+		InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
+		Iterator iterator = executionDegreeList.iterator();
 
-            List detailedProfessorShipsListofLists =
-                (List) ServiceUtils.executeService(
-                    null,
-                    "ReadProfessorshipsAndResponsibilitiesByExecutionDegree",
-                    args);
-            Collections.sort(detailedProfessorShipsListofLists, new Comparator()
-            {
+		while (iterator.hasNext())
+		{
+			InfoExecutionDegree infoExecutionDegree2 = (InfoExecutionDegree) iterator.next();
+			if (infoDegree.equals(infoExecutionDegree2.getInfoDegreeCurricularPlan().getInfoDegree())
+					&& !(infoExecutionDegree.equals(infoExecutionDegree2)))
+				return true;
 
-                public int compare(Object o1, Object o2)
-                {
-                    List list1 = (List) o1;
-                    List list2 = (List) o2;
-                    DetailedProfessorship dt1 = (DetailedProfessorship) list1.get(0);
-                    DetailedProfessorship dt2 = (DetailedProfessorship) list2.get(0);
+		}
+		return false;
+	}
 
-                    return dt1
-                        .getInfoProfessorship()
-                        .getInfoExecutionCourse()
-                        .getNome()
-                        .compareToIgnoreCase(
-                        dt2.getInfoProfessorship().getInfoExecutionCourse().getNome());
-                }
+	public ActionForward showProfessorshipsByExecutionDegree(ActionMapping mapping,
+			ActionForm actionForm, HttpServletRequest request, HttpServletResponse response)
+			throws FenixActionException
+	{
 
-            });
+		DynaActionForm executionDegreeForm = (DynaActionForm) actionForm;
+		Integer executionDegreeId = (Integer) executionDegreeForm.get("executionDegreeId");
+		try
+		{
 
-            request.setAttribute("detailedProfessorShipsListofLists", detailedProfessorShipsListofLists);
-        }
-        catch (FenixServiceException e)
-        {
-            throw new FenixActionException(e);
-        }
+			Object[] args = {executionDegreeId};
 
-        return mapping.findForward("showProfessorships");
-    }
+			List detailedProfessorShipsListofLists = (List) ServiceUtils.executeService(null,
+					"ReadProfessorshipsAndResponsibilitiesByExecutionDegree", args);
+			Collections.sort(detailedProfessorShipsListofLists, new Comparator()
+			{
 
-    public ActionForward showTeachersBodyByDepartment(
-        ActionMapping mapping,
-        ActionForm actionForm,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws FenixActionException
-    {
+				public int compare(Object o1, Object o2)
+				{
 
-        DynaActionForm departmentForm = (DynaActionForm) actionForm;
-        Integer departmentId = (Integer) departmentForm.get("departmentId");
-        try
-        {
+					List list1 = (List) o1;
+					List list2 = (List) o2;
+					DetailedProfessorship dt1 = (DetailedProfessorship) list1.get(0);
+					DetailedProfessorship dt2 = (DetailedProfessorship) list2.get(0);
 
-            Object[] args = { departmentId };
+					return dt1.getInfoProfessorship().getInfoExecutionCourse().getNome()
+							.compareToIgnoreCase(
+									dt2.getInfoProfessorship().getInfoExecutionCourse().getNome());
+				}
 
-            List detailedProfessorShipsListofLists =
-                (List) ServiceUtils.executeService(
-                    null,
-                    "ReadProfessorshipsAndResponsibilitiesByDepartment",
-                    args);
-            Collections.sort(detailedProfessorShipsListofLists, new Comparator()
-            {
+			});
 
-                public int compare(Object o1, Object o2)
-                {
-                    List list1 = (List) o1;
-                    List list2 = (List) o2;
-                    DetailedProfessorship dt1 = (DetailedProfessorship) list1.get(0);
-                    DetailedProfessorship dt2 = (DetailedProfessorship) list2.get(0);
+			request.setAttribute("detailedProfessorShipsListofLists", detailedProfessorShipsListofLists);
+		} catch (FenixServiceException e)
+		{
+			throw new FenixActionException(e);
+		}
 
-                    return dt1
-                        .getInfoProfessorship()
-                        .getInfoExecutionCourse()
-                        .getNome()
-                        .compareToIgnoreCase(
-                        dt2.getInfoProfessorship().getInfoExecutionCourse().getNome());
-                }
+		return mapping.findForward("showProfessorships");
+	}
 
-            });
+	public ActionForward showTeachersBodyByDepartment(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws FenixActionException
+	{
 
-            request.setAttribute("detailedProfessorShipsListofLists", detailedProfessorShipsListofLists);
-        }
-        catch (FenixServiceException e)
-        {
-            throw new FenixActionException(e);
-        }
+		DynaActionForm departmentForm = (DynaActionForm) actionForm;
+		Integer departmentId = (Integer) departmentForm.get("departmentId");
+		Integer executionYearId = (Integer) departmentForm.get("executionYearId");
+		try
+		{
 
-        return mapping.findForward("showProfessorships");
-    }
+			Object[] args = {departmentId, executionYearId};
+
+			List detailedProfessorShipsListofLists = (List) ServiceUtils.executeService(null,
+					"ReadProfessorshipsAndResponsibilitiesByDepartment", args);
+			Collections.sort(detailedProfessorShipsListofLists, new Comparator()
+			{
+
+				public int compare(Object o1, Object o2)
+				{
+
+					List list1 = (List) o1;
+					List list2 = (List) o2;
+					DetailedProfessorship dt1 = (DetailedProfessorship) list1.get(0);
+					DetailedProfessorship dt2 = (DetailedProfessorship) list2.get(0);
+
+					return dt1.getInfoProfessorship().getInfoExecutionCourse().getNome()
+							.compareToIgnoreCase(
+									dt2.getInfoProfessorship().getInfoExecutionCourse().getNome());
+				}
+
+			});
+
+			request.setAttribute("detailedProfessorShipsListofLists", detailedProfessorShipsListofLists);
+		} catch (FenixServiceException e)
+		{
+			throw new FenixActionException(e);
+		}
+
+		return mapping.findForward("showProfessorships");
+	}
 
 }

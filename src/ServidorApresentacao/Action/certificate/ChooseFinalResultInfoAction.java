@@ -1,6 +1,7 @@
 
 package ServidorApresentacao.Action.certificate;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -262,7 +263,9 @@ public class ChooseFinalResultInfoAction extends DispatchAction
                                         String.valueOf(infoStudentCurricularPlan.getGivenCredits()));
                             session.setAttribute("givenCredits", "POR ATRIBUIÇÃO DE CRÉDITOS");
                         }
-                        session.setAttribute("total", String.valueOf(sum));
+                        
+                        BigDecimal roundedSum = new BigDecimal(sum);
+                        session.setAttribute("total", roundedSum.setScale(2, BigDecimal.ROUND_HALF_UP).toBigInteger());
 
                         session.setAttribute(SessionConstants.CONCLUSION_DATE, conclusionDate);
                         try

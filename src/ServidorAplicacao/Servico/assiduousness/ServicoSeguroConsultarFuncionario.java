@@ -25,79 +25,99 @@ import ServidorPersistenteJDBC.IStatusAssiduidadePersistente;
 import ServidorPersistenteJDBC.SuportePersistente;
 
 /**
- *
- * @author  Fernanda Quitério & Tania Pousão
+ * @author Fernanda Quitério & Tania Pousão
  */
-public class ServicoSeguroConsultarFuncionario extends ServicoSeguro {
+public class ServicoSeguroConsultarFuncionario extends ServicoSeguro
+{
 
 	private int _numMecanografico;
 
 	private Funcionario _funcionario = null;
+
 	private StatusAssiduidade _status = null;
+
 	private CentroCusto _centroCusto = null;
+
 	private Pessoa _pessoa = null;
+
 	private FuncNaoDocente _funcNaoDocente = null;
+
 	private ArrayList _rotacaoHorario = null;
+
 	private HashMap _listaRegimesRotacao = null;
 
-	public ServicoSeguroConsultarFuncionario(
-		ServicoAutorizacao servicoAutorizacaoLerFuncionario,
-		int numMecanografico) {
+	public ServicoSeguroConsultarFuncionario(ServicoAutorizacao servicoAutorizacaoLerFuncionario,
+			int numMecanografico)
+	{
+
 		super(servicoAutorizacaoLerFuncionario);
 		_numMecanografico = numMecanografico;
 	}
 
-	public void execute() throws NotExecuteException {
+	public void execute() throws NotExecuteException
+	{
 
-		IFuncionarioPersistente iFuncionarioPersistente =
-			SuportePersistente.getInstance().iFuncionarioPersistente();
-		if ((_funcionario =
-			iFuncionarioPersistente.lerFuncionarioPorNumMecanografico(_numMecanografico, Calendar.getInstance().getTime()))
-			== null) {
+		IFuncionarioPersistente iFuncionarioPersistente = SuportePersistente.getInstance()
+				.iFuncionarioPersistente();
+		if ((_funcionario = iFuncionarioPersistente.lerFuncionarioPorNumMecanografico(_numMecanografico,
+				Calendar.getInstance().getTime())) == null)
+		{
 			throw new NotExecuteException("error.funcionario.naoExiste");
 		}
 
-		IStatusAssiduidadePersistente iStatusPersistente =
-			SuportePersistente.getInstance().iStatusAssiduidadePersistente();
-		if ((_status = iStatusPersistente.lerStatus(_funcionario.getChaveStatus().intValue())) == null) {
-			throw new NotExecuteException("error.assiduidade.naoExiste");
-		}
-		
-		
-		ICentroCustoPersistente iCentroCustoPersistente =
-			SuportePersistente.getInstance().iCentroCustoPersistente();
-		if ((_centroCusto =
-			iCentroCustoPersistente.lerCentroCusto(_funcionario.getChaveCCCorrespondencia().intValue()))
-			== null) {
-			throw new NotExecuteException("error.centroCusto.naoExiste");
+		IStatusAssiduidadePersistente iStatusPersistente = SuportePersistente.getInstance()
+				.iStatusAssiduidadePersistente();
+		if (_funcionario.getChaveStatus() != null)
+		{
+			if ((_status = iStatusPersistente.lerStatus(_funcionario.getChaveStatus().intValue())) == null)
+			{
+				throw new NotExecuteException("error.assiduidade.naoExiste");
+			}
+		} else {
+			throw new NotExecuteException("error.persistence");
 		}
 
+		ICentroCustoPersistente iCentroCustoPersistente = SuportePersistente.getInstance()
+				.iCentroCustoPersistente();
+		if (_funcionario.getChaveCCCorrespondencia() != null)
+		{
+			if ((_centroCusto = iCentroCustoPersistente.lerCentroCusto(_funcionario
+					.getChaveCCCorrespondencia().intValue())) == null)
+			{
+				throw new NotExecuteException("error.centroCusto.naoExiste");
+			}
+		} else {
+			throw new NotExecuteException("error.persistence");
+		}
+		
 		IPessoaPersistente iPessoaPersistente = SuportePersistente.getInstance().iPessoaPersistente();
-		if ((_pessoa = iPessoaPersistente.lerPessoa(_funcionario.getChavePessoa())) == null) {
+		if ((_pessoa = iPessoaPersistente.lerPessoa(_funcionario.getChavePessoa())) == null)
+		{
 			throw new NotExecuteException("error.pessoa.naoExiste");
 		}
-		
-//		IFuncNaoDocentePersistente iFuncNaoDocentePersistente =
-//			SuportePersistente.getInstance().iFuncNaoDocentePersistente();
-//		if ((_funcNaoDocente =
-//			iFuncNaoDocentePersistente.lerFuncNaoDocentePorFuncionario(_funcionario.getCodigoInterno()))
-//			== null) {
-//			throw new NotExecuteException("error.funcionario.naoExiste");
-//		}
 
-		IHorarioPersistente iHorarioPersistente =
-			SuportePersistente.getInstance().iHorarioPersistente();
-		// Leitura de uma horário seja ele rotativo ou não 
+		//		IFuncNaoDocentePersistente iFuncNaoDocentePersistente =
+		//			SuportePersistente.getInstance().iFuncNaoDocentePersistente();
+		//		if ((_funcNaoDocente =
+		//			iFuncNaoDocentePersistente.lerFuncNaoDocentePorFuncionario(_funcionario.getCodigoInterno()))
+		//			== null) {
+		//			throw new NotExecuteException("error.funcionario.naoExiste");
+		//		}
+
+		IHorarioPersistente iHorarioPersistente = SuportePersistente.getInstance().iHorarioPersistente();
+		// Leitura de uma horário seja ele rotativo ou não
 		_rotacaoHorario = iHorarioPersistente.lerHorarioActualPorNumMecanografico(_numMecanografico);
 		//_rotacaoHorario = iHorarioPersistente.lerRotacoesPorNumMecanografico(_numMecanografico);
-		if (_rotacaoHorario == null) {
+		if (_rotacaoHorario == null)
+		{
 			throw new NotExecuteException("error.funcionario.semHorario");
-		} else if (_rotacaoHorario.isEmpty()) {
+		} else if (_rotacaoHorario.isEmpty())
+		{
 			throw new NotExecuteException("error.funcionario.semAssiduidade");
 		}
 
-		IHorarioTipoPersistente iHorarioTipoPersistente =
-			SuportePersistente.getInstance().iHorarioTipoPersistente();
+		IHorarioTipoPersistente iHorarioTipoPersistente = SuportePersistente.getInstance()
+				.iHorarioTipoPersistente();
 		IRegimePersistente iRegimePersistente = SuportePersistente.getInstance().iRegimePersistente();
 
 		_listaRegimesRotacao = new HashMap();
@@ -107,31 +127,36 @@ public class ServicoSeguroConsultarFuncionario extends ServicoSeguro {
 		HorarioTipo horarioTipo = null;
 		ArrayList listaIdRegimes = null;
 		ArrayList listaRegimes = null;
-		while (iterador.hasNext()) {
-			horario = (Horario)iterador.next();
+		while (iterador.hasNext())
+		{
+			horario = (Horario) iterador.next();
 
-			if (horario.getChaveHorarioTipo() == 0) {
-				if ((listaIdRegimes = iHorarioPersistente.lerRegimes(horario.getCodigoInterno()))
-					== null) {
+			if (horario.getChaveHorarioTipo() == 0)
+			{
+				if ((listaIdRegimes = iHorarioPersistente.lerRegimes(horario.getCodigoInterno())) == null)
+				{
 					throw new NotExecuteException("error.regime.impossivel");
 				}
-				if ((listaRegimes = iRegimePersistente.lerDesignacaoRegimes(listaIdRegimes)) == null) {
+				if ((listaRegimes = iRegimePersistente.lerDesignacaoRegimes(listaIdRegimes)) == null)
+				{
 					throw new NotExecuteException("error.regime.impossivel");
 				}
-			} else {
-				if ((horarioTipo = iHorarioTipoPersistente.lerHorarioTipo(horario.getChaveHorarioTipo()))
-					== null) {
+			} else
+			{
+				if ((horarioTipo = iHorarioTipoPersistente.lerHorarioTipo(horario.getChaveHorarioTipo())) == null)
+				{
 					throw new NotExecuteException("error.funcionario.semHorario");
 				}
 
 				/* regista a modalidade e a sigla */
 				horario.transforma(horarioTipo);
 
-				if ((listaIdRegimes = iHorarioTipoPersistente.lerRegimes(horario.getChaveHorarioTipo()))
-					== null) {
+				if ((listaIdRegimes = iHorarioTipoPersistente.lerRegimes(horario.getChaveHorarioTipo())) == null)
+				{
 					throw new NotExecuteException("error.regime.impossivel");
 				}
-				if ((listaRegimes = iRegimePersistente.lerDesignacaoRegimes(listaIdRegimes)) == null) {
+				if ((listaRegimes = iRegimePersistente.lerDesignacaoRegimes(listaIdRegimes)) == null)
+				{
 					throw new NotExecuteException("error.regime.impossivel");
 				}
 			}
@@ -140,25 +165,45 @@ public class ServicoSeguroConsultarFuncionario extends ServicoSeguro {
 		}
 	}
 
-	public Funcionario getFuncionario() {
+	public Funcionario getFuncionario()
+	{
+
 		return _funcionario;
 	}
-	public StatusAssiduidade getStatusAssiduidade() {
+
+	public StatusAssiduidade getStatusAssiduidade()
+	{
+
 		return _status;
 	}
-	public CentroCusto getCentroCusto() {
+
+	public CentroCusto getCentroCusto()
+	{
+
 		return _centroCusto;
 	}
-	public Pessoa getPessoa() {
+
+	public Pessoa getPessoa()
+	{
+
 		return _pessoa;
 	}
-	public FuncNaoDocente getFuncNaoDocente() {
+
+	public FuncNaoDocente getFuncNaoDocente()
+	{
+
 		return _funcNaoDocente;
 	}
-	public ArrayList getRotacaoHorario() {
+
+	public ArrayList getRotacaoHorario()
+	{
+
 		return _rotacaoHorario;
 	}
-	public HashMap getListaRegimesRotacao() {
+
+	public HashMap getListaRegimesRotacao()
+	{
+
 		return _listaRegimesRotacao;
 	}
 }

@@ -6249,7 +6249,7 @@
         <filterChains>
             <chain name="ManagerAuthorization"/>
         </filterChains>
-    </service>    
+    </service> 
 	<service>
         <name>PrepareStudentEnrolmentContextForOptionalCoursesEnrolment</name>
         <description></description>

@@ -31,16 +31,23 @@ import Util.RoleType;
 /**
  * @author Ivo Brandão
  */
-public class ServicoSeguroActualizarPessoas
+public class ServicoSeguroActualizarPessoas extends ServicoSeguroSuperMigracaoPessoas
 {
-
 	private String _ficheiro = null;
 	private String _delimitador = new String(";");
 
 	/** Construtor */
-	public ServicoSeguroActualizarPessoas(String[] args)
+	public ServicoSeguroActualizarPessoas(String[] args) throws NotExecuteException
 	{
-		_ficheiro = args[0];
+		String path;
+		try
+		{
+			path = readPathFile();
+		} catch (NotExecuteException e)
+		{
+			throw new NotExecuteException("error.ficheiro.naoEncontrado");
+		}
+		_ficheiro = path.concat(args[0]);
 	}
 
 	/** executa a actualizacao da tabela Pessoa na Base de Dados */
@@ -266,10 +273,9 @@ public class ServicoSeguroActualizarPessoas
 						if (pessoaFromFile == null)
 						{
 							//person is inactive, then delete roles and put password null
-							pessoaFromDB.setPassword(null);
-							pessoaFromDB.setUsername(
-								"INA" + pessoaFromDB.getNumeroDocumentoIdentificacao());
-
+							//but if the person has other roles 
+							//for beyond Teacher and Employee, 
+							//then must desactiva her
 							IRole role = RoleFunctions.readRole(RoleType.EMPLOYEE, broker);
 							if (role != null
 								&& pessoaFromDB.getPersonRoles() != null
@@ -287,7 +293,8 @@ public class ServicoSeguroActualizarPessoas
 							{
 								pessoaFromDB.getPersonRoles().remove(role);
 							}
-
+							
+							
 							role = RoleFunctions.readRole(RoleType.PERSON, broker);
 							if (role != null
 								&& pessoaFromDB.getPersonRoles() != null
@@ -295,8 +302,11 @@ public class ServicoSeguroActualizarPessoas
 								&& pessoaFromDB.getPersonRoles().contains(role))
 							{
 								pessoaFromDB.getPersonRoles().remove(role);
+								pessoaFromDB.setPassword(null);
+								pessoaFromDB.setUsername(
+									"INA" + pessoaFromDB.getNumeroDocumentoIdentificacao());
 							}
-
+							
 							broker.store(pessoaFromDB);
 
 							// The employee correspont to the person

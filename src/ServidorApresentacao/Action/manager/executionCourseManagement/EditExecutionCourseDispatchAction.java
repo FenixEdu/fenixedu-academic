@@ -437,7 +437,11 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction
 		try
 		{
 			infoExecutionCourse.setIdInternal(new Integer((String) editExecutionCourseForm
-					.get("executionCourseId")));
+						.get("executionCourseId")));			
+			infoExecutionCourse.setNome((String) editExecutionCourseForm
+					.get("name"));
+			infoExecutionCourse.setSigla((String) editExecutionCourseForm
+					.get("code"));	
 			infoExecutionCourse.setTheoreticalHours(new Double((String) editExecutionCourseForm
 					.get("theoreticalHours")));
 			infoExecutionCourse.setTheoPratHours(new Double((String) editExecutionCourseForm

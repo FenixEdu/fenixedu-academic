@@ -25,15 +25,15 @@ import Dominio.ITeacher;
 import Dominio.Teacher;
 import Dominio.teacher.Category;
 import Dominio.teacher.ICategory;
+import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import Util.RoleType;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class ServicoSeguroActualizarFuncsDocentes
+public class ServicoSeguroActualizarFuncsDocentes extends ServicoSeguroSuperMigracaoPessoas
 {
-
 	private static String ficheiro = null;
 	private static String delimitador;
 	private static Hashtable estrutura;
@@ -41,9 +41,18 @@ public class ServicoSeguroActualizarFuncsDocentes
 	private static Collection lista;
 
 	/** Construtor */
-	public ServicoSeguroActualizarFuncsDocentes(String[] args)
+	public ServicoSeguroActualizarFuncsDocentes(String[] args) throws NotExecuteException 
 	{
-		ficheiro = args[0];
+		String path;
+		try
+		{
+			path = readPathFile();
+		} catch (NotExecuteException e)
+		{
+			throw new NotExecuteException("error.ficheiro.naoEncontrado");
+		}
+		ficheiro = path.concat(args[0]);
+		
 		delimitador = new String("\t");
 
 		/* Inicializar Hashtable com atributos a recuperar do ficheiro de texto requeridos */

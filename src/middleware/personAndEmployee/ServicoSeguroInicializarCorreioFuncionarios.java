@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -25,19 +26,33 @@ import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 /**
  * @author Fernanda Quitério & Tânia Pousão
  */
-public class ServicoSeguroInicializarCorreioFuncionarios
+public class ServicoSeguroInicializarCorreioFuncionarios extends ServicoSeguroSuperMigracaoPessoas
 {
 
 	private static String ficheiro = null;
+
 	private static String delimitador;
+
 	private static Hashtable estrutura;
+
 	private static Collection ordem;
+
 	private static Collection lista;
 
 	/** Construtor */
-	public ServicoSeguroInicializarCorreioFuncionarios(String[] args)
+	public ServicoSeguroInicializarCorreioFuncionarios(String[] args) throws NotExecuteException
 	{
-		ficheiro = args[0];
+
+		String path;
+		try
+		{
+			path = readPathFile();
+		} catch (NotExecuteException e)
+		{
+			throw new NotExecuteException("error.ficheiro.naoEncontrado");
+		}
+		ficheiro = path.concat(args[0]);
+
 		delimitador = new String(";");
 
 		/* Inicializar Hashtable com atributos a recuperar do ficheiro de texto requeridos */
@@ -67,18 +82,18 @@ public class ServicoSeguroInicializarCorreioFuncionarios
 	 */
 	public static void main(String[] args) throws NotExecuteException
 	{
+
 		new ServicoSeguroInicializarCorreioFuncionarios(args);
 
-		LeituraFicheiroFuncionarioCentroCusto servicoLeitura =
-			new LeituraFicheiroFuncionarioCentroCusto();
+		LeituraFicheiroFuncionarioCentroCusto servicoLeitura = new LeituraFicheiroFuncionarioCentroCusto();
 
 		lista = servicoLeitura.lerFicheiro(ficheiro, delimitador, estrutura, ordem);
 
 		System.out.println("ServicoSeguroInicializarCorreioFuncionarios.main:Lista de Resultados...");
-		
+
 		int newEmployees = 0;
 		Iterator iteradorNovo = lista.iterator();
-				
+
 		PersistenceBroker broker = PersistenceBrokerFactory.defaultPersistenceBroker();
 		broker.clearCache();
 		broker.beginTransaction();
@@ -89,8 +104,8 @@ public class ServicoSeguroInicializarCorreioFuncionarios
 			{
 				Hashtable instanciaTemporaria = (Hashtable) iteradorNovo.next();
 
-				Integer numeroMecanografico =
-					new Integer((String) instanciaTemporaria.get("numeroMecanografico"));
+				Integer numeroMecanografico = new Integer((String) instanciaTemporaria
+						.get("numeroMecanografico"));
 				String sigla = (String) instanciaTemporaria.get("sigla");
 				String departamento = (String) instanciaTemporaria.get("departamento");
 				String seccao1 = (String) instanciaTemporaria.get("seccao1");
@@ -109,8 +124,7 @@ public class ServicoSeguroInicializarCorreioFuncionarios
 				{
 					costCenter = new CostCenter(sigla, departamento, seccao1, seccao2);
 					broker.store(costCenter);
-				}
-				else
+				} else
 				{
 					costCenter = (CostCenter) resultCC.get(0);
 				}
@@ -125,22 +139,26 @@ public class ServicoSeguroInicializarCorreioFuncionarios
 
 				if (resultEmployee.size() == 0)
 				{
-					throw new Exception(
-						"Erro ao Ler centro de custo do Funcionario " + numeroMecanografico);
-				}
-				else
+					throw new Exception("Erro ao Ler centro de custo do Funcionario "
+							+ numeroMecanografico);
+				} else
 				{
 					employee = (IEmployee) resultEmployee.get(0);
 				}
 
-				//Read hisctoric employee
-				employee.fillEmployeeHistoric();
-				IEmployeeHistoric employeeHistoric = employee.getEmployeeHistoric();
-				if (employeeHistoric == null
-					|| employeeHistoric.getMailingCostCenter() == null
-					|| !employeeHistoric.getMailingCostCenter().equals(costCenter))
+				// Read the employee historic about Mailing Cost Center
+				criteria = new Criteria();
+				query = null;
+				criteria.addEqualTo("keyEmployee", employee.getIdInternal());
+				criteria.addNotNull("mailingCostCenter");
+				criteria.addIsNull("endDate");
+				criteria.addOrderBy("beginDate", false);
+				query = new QueryByCriteria(EmployeeHistoric.class, criteria);
+				List resultEmployeeHitoric = (List) broker.getCollectionByQuery(query);
+
+				if (resultEmployeeHitoric.size() == 0)
 				{
-					employeeHistoric = new EmployeeHistoric();
+					IEmployeeHistoric employeeHistoric = new EmployeeHistoric();
 					employeeHistoric.setEmployee(employee);
 					employeeHistoric.setMailingCostCenter(costCenter);
 					employeeHistoric.setBeginDate(Calendar.getInstance().getTime());
@@ -148,11 +166,53 @@ public class ServicoSeguroInicializarCorreioFuncionarios
 					employeeHistoric.setWho(new Integer(0));
 
 					broker.store(employeeHistoric);
-					
+
 					newEmployees++;
+				} else if (resultEmployeeHitoric.size() == 1)
+				{
+					IEmployeeHistoric employeeHistoric = (IEmployeeHistoric) resultEmployeeHitoric
+							.get(0);
+					if (!employeeHistoric.getMailingCostCenter().equals(costCenter))
+					{
+						Calendar lastDay = Calendar.getInstance();
+						lastDay.add(Calendar.DAY_OF_MONTH, -1);
+						employeeHistoric.setEndDate(lastDay.getTime());
+						broker.store(employeeHistoric);
+
+						//new cc for mailing cost center
+						IEmployeeHistoric newEmployeeHistoric = new EmployeeHistoric();
+						newEmployeeHistoric.setEmployee(employee);
+						newEmployeeHistoric.setMailingCostCenter(costCenter);
+						newEmployeeHistoric.setBeginDate(Calendar.getInstance().getTime());
+						newEmployeeHistoric.setWhen(new Timestamp(Calendar.getInstance()
+								.getTimeInMillis()));
+						newEmployeeHistoric.setWho(new Integer(0));
+
+						broker.store(newEmployeeHistoric);
+
+						newEmployees++;
+					}
+				} else if (resultEmployeeHitoric.size() > 1)
+				{
+					Date beginDate = null;
+					for(int i = 0; i < resultEmployeeHitoric.size(); i++) {
+						IEmployeeHistoric employeeHistoric = (IEmployeeHistoric) resultEmployeeHitoric.get(i);
+	
+						//if it's the most recent register, then it isn't valid put end date
+						if(i > 0 && employeeHistoric.getEndDate() == null) {							
+							Calendar lastDay = Calendar.getInstance();
+							lastDay.setTimeInMillis(beginDate.getTime());
+							lastDay.add(Calendar.DAY_OF_MONTH, -1);
+							
+							employeeHistoric.setEndDate(lastDay.getTime());
+							broker.store(employeeHistoric);
+						}
+												
+						//keep begin date for next historic put in end date
+						beginDate = employeeHistoric.getBeginDate();						
+					}
 				}
-			}
-			catch (Exception exception)
+			} catch (Exception exception)
 			{
 				exception.printStackTrace();
 				continue;
@@ -160,8 +220,7 @@ public class ServicoSeguroInicializarCorreioFuncionarios
 		}
 		broker.commitTransaction();
 		broker.clearCache();
-		
-		
+
 		System.out.println("New Employees with  Mailing Cost Center: " + newEmployees);
 		System.out.println("  Done !");
 	}

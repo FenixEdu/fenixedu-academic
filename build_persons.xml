@@ -260,4 +260,7 @@
 	</target>
 	<target name="all" depends="compile-proj, update_persons, update_employees, update_teachers, update_not_teachers, update_mail_cc, update_work_cc">
 	</target>
+	
+	<target name="cc" depends="compile-proj, update_mail_cc, update_work_cc">
+	</target>
 </project>

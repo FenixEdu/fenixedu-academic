@@ -6,12 +6,15 @@ NEW FEATURES:
 
 
 NOTES:
-
-
+ ficheiro de sql "guiasAAlterar.sql" que lista as guias onde se alterarão o execution degree.
+ ficheiro de sql "guias20022004.sql" que procede às alterações dos execution degrees.
+ A fazer: mysql fenix < guiasAAlterar.sql > guiasAlteradas.txt
+ 	e	  mysql fenix < guias20022004.sql > guias20022004_result.txt
+ 	
 CHANGES:
-
+ na pos-graduação na "folha de apuramento final" sobre o arredondamento do total de créditos	
 
 BUG FIXES:
-
-
+ bug número 116 - www.ist.utl.pt/serviços/	
+ bug nas migrações de pessoas do IST. 
 KNOWN ISSUES:

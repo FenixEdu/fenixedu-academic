@@ -76,6 +76,8 @@ public class EditExecutionCourse implements IServico
 			{
 				throw new NonExistingServiceException();
 			}
+			executionCourse.setNome(infoExecutionCourse.getNome());
+			executionCourse.setSigla(infoExecutionCourse.getSigla());
 			executionCourse.setTheoreticalHours(infoExecutionCourse.getTheoreticalHours());
 			executionCourse.setTheoPratHours(infoExecutionCourse.getTheoPratHours());
 			executionCourse.setPraticalHours(infoExecutionCourse.getPraticalHours());

@@ -27,18 +27,25 @@ import Util.RoleType;
 /**
  * @author Ivo Brandão
  */
-public class ServicoSeguroTodasPessoas
+public class ServicoSeguroTodasPessoas extends ServicoSeguroSuperMigracaoPessoas
 {
-
 	private String _ficheiro = null;
 	private Collection _listaPessoas = null;
 	private Pessoa _pessoa = null;
 	private String _delimitador = new String(";");
 
 	/** Construtor */
-	public ServicoSeguroTodasPessoas(String[] args)
+	public ServicoSeguroTodasPessoas(String[] args) throws NotExecuteException
 	{
-		_ficheiro = args[0];
+		String path;
+		try
+		{
+			path = readPathFile();
+		} catch (NotExecuteException e)
+		{
+			throw new NotExecuteException("error.ficheiro.naoEncontrado");
+		}
+		_ficheiro = path.concat(args[0]);		
 	}
 
 	/** executa a actualizacao da tabela Pessoa na Base de Dados */

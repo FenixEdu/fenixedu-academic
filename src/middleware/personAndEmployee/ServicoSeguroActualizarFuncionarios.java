@@ -20,22 +20,33 @@ import Dominio.IEmployee;
 import Dominio.IPersonRole;
 import Dominio.IPessoa;
 import Dominio.IRole;
+import ServidorAplicacao.Servico.exceptions.NotExecuteException;
 import Util.RoleType;
 
 /**
  * @author Ivo Brandão
  */
-public class ServicoSeguroActualizarFuncionarios
+public class ServicoSeguroActualizarFuncionarios extends ServicoSeguroSuperMigracaoPessoas
 {
-
+	private static String file = null;
 	private static String delimitador;
 	private static Hashtable estrutura;
 	private static Collection ordem;
 	private static Collection lista;
 
 	/** Construtor */
-	public ServicoSeguroActualizarFuncionarios(String[] args)
+	public ServicoSeguroActualizarFuncionarios(String[] args) throws NotExecuteException
 	{
+		String path;
+		try
+		{
+			path = readPathFile();
+		} catch (NotExecuteException e)
+		{
+			throw new NotExecuteException("error.ficheiro.naoEncontrado");
+		}
+		file = path.concat(args[0]);
+		
 		delimitador = new String(";");
 
 		/* Inicializar Hashtable com atributos a recuperar do ficheiro de texto requeridos */
@@ -60,8 +71,8 @@ public class ServicoSeguroActualizarFuncionarios
 
 		LeituraFicheiroFuncionario servicoLeitura = new LeituraFicheiroFuncionario();
 
-		String ficheiro = args[0];
-		lista = servicoLeitura.lerFicheiro(ficheiro, delimitador, estrutura, ordem);
+		
+		lista = servicoLeitura.lerFicheiro(file, delimitador, estrutura, ordem);
 
 		Integer numeroMecanografico = null;
 
@@ -231,4 +242,6 @@ public class ServicoSeguroActualizarFuncionarios
 		System.out.println("  Done !");
 
 	}
+	
+
 }
