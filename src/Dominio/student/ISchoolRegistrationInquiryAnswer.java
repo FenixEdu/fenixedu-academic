@@ -5,6 +5,7 @@
 package Dominio.student;
 
 import Dominio.IDomainObject;
+import Dominio.IStudent;
 
 
 /**
@@ -23,7 +24,8 @@ public interface ISchoolRegistrationInquiryAnswer extends IDomainObject{
     public Boolean getAnswer7();
     
     public void setAnswer(Integer id, Boolean answer);
-    public Integer getKeyStudent();
-    public void setKeyStudent(Integer keyStudent);
+
+    public void setStudent(IStudent student);
+    public IStudent getStudent();
     
 }

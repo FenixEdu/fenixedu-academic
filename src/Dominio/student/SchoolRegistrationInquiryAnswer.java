@@ -1,6 +1,7 @@
 package Dominio.student;
 
 import Dominio.DomainObject;
+import Dominio.IStudent;
 
 /**
  * @author Nuno Correia & Ricardo Rodrigues
@@ -18,8 +19,8 @@ public class SchoolRegistrationInquiryAnswer extends DomainObject implements ISc
     private Boolean answer6;
     private Boolean answer7;
     private Integer keyStudent;
-
-    
+    private IStudent student;
+      
     public Boolean getAnswer1() {
         return this.answer1;
     }
@@ -72,6 +73,13 @@ public class SchoolRegistrationInquiryAnswer extends DomainObject implements ISc
 
     public void setKeyStudent(Integer keyStudent) {
         this.keyStudent = keyStudent;
+    }
+    
+    public IStudent getStudent() {
+        return student;
+    }
+    public void setStudent(IStudent student) {
+        this.student = student;
     }
     
     public void setAnswer(Integer id, Boolean answer){

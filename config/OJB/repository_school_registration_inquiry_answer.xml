@@ -57,6 +57,13 @@
     jdbc-type="INTEGER"
 	locking="true"
   />
+
+  <reference-descriptor
+	name="student"
+	class-ref="Dominio.Student"
+	proxy="false">
+	<foreignkey field-ref="keyStudent"/>
+  </reference-descriptor>
 </class-descriptor>
 
 
