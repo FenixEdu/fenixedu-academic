@@ -12,6 +12,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+
 import DataBeans.InfoRole;
 import DataBeans.util.Cloner;
 import Dominio.ICandidateSituation;
@@ -29,7 +31,8 @@ import Util.RoleType;
 import Util.State;
 
 public class Autenticacao implements IServico {
-
+	private final String EXTRANET = "extranet";
+	private final String INTRANET = "intranet"; 
 	private static Autenticacao _servico = new Autenticacao();
 
 	/**
@@ -52,7 +55,7 @@ public class Autenticacao implements IServico {
 		return "Autenticacao";
 	}
 
-	public IUserView run(String utilizador, String password)
+	public IUserView run(String utilizador, String password, String application)
 		throws FenixServiceException, ExcepcaoAutenticacao {
 		IPessoa pessoa = null;
 
@@ -113,8 +116,28 @@ public class Autenticacao implements IServico {
 			} else userView.setCandidateView(null);
 			
 			
-			return userView;
+			return filterUserView(userView, application);
 		} else
 			throw new ExcepcaoAutenticacao("Autenticacao incorrecta");
+	}
+
+	/**
+	 * @param userView
+	 * @return IUserView filtered by application type.
+	 */
+	private IUserView filterUserView(UserView userView, String application) {
+		Collection rolesIntranet = new ArrayList();
+		InfoRole masterDegreeAdministrativeOffice = new InfoRole();
+		masterDegreeAdministrativeOffice.setRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
+		
+		rolesIntranet.add(masterDegreeAdministrativeOffice);
+		System.out.println("======================"+application);
+		if (application.equals(INTRANET)){
+			Collection roles = CollectionUtils.intersection(userView.getRoles(), rolesIntranet);
+			userView.setRoles(roles);	
+		}else if (application.equals("") || application.equals(EXTRANET)){
+			userView.getRoles().removeAll(rolesIntranet);
+		}
+		return userView;
 	}
 }
