@@ -18,6 +18,14 @@
         <form-property name="password" type="java.lang.String" />
       </form-bean>
 
+      <form-bean name="errorMailForm" 
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="email" type="java.lang.String" />
+        <form-property name="subject" type="java.lang.String" />
+        <form-property name="body" type="java.lang.String" />
+      </form-bean>
+
       <!-- Bean for change of Application Information -->
       <form-bean name="changeApplicationInfoForm" 
                  type="org.apache.struts.validator.DynaValidatorForm"
@@ -34,7 +42,7 @@
 	<form-property name="average" type="java.lang.String" />
  	<form-property name="country" type="java.lang.String" />
 	<form-property name="candidateNumber" type="java.lang.Integer" />
-	<form-property name="applicationYear" type="java.lang.Integer" />
+	<form-property name="applicationYear" type="java.lang.String" />
 	<form-property name="degreeName" type="java.lang.String" />
 	<form-property name="degreeCode" type="java.lang.String" />
 	<form-property name="password" type="java.lang.String" />
@@ -148,6 +156,17 @@
               scope="request">
         <forward name="Success" path="/changeSuccess.jsp"/>
       </action>
+
+
+      	<!-- ExceptionHandling -->   
+      <action parameter="method"
+              name="errorMailForm" 
+              path="/exceptionHandling"
+              scope="request"
+              type="ServidorApresentacao.Action.ExceptionHandlingAction"     
+              >
+      </action>
+
 
     </action-mappings>
     
