@@ -11,6 +11,7 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
@@ -167,8 +168,15 @@ public class DeleteExercice implements IServico {
 				new URL(
 					"file://"
 						+ path.concat("WEB-INF/ims/removeXmlLocation.xsl"));
+			String doctypeSystem =
+				new String(
+					"file://" + path.concat("WEB-INF/ims/imsmd2_rootv1p2.dtd"));
+
 			Transformer transformer =
 				tf.newTransformer(new StreamSource(xsl.openStream()));
+			transformer.setOutputProperty(
+				OutputKeys.DOCTYPE_SYSTEM,
+				doctypeSystem);
 			transformer.setParameter("xmlDocument", xmlName);
 
 			Source source = new StreamSource(new StringReader(metadataFile));
