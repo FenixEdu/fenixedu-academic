@@ -166,8 +166,7 @@
       </form-bean>
 
 	  <!-- TURMAS -->
-      <!-- Dynamic-FormBean para Criar Turma -->
-
+	      <!-- Dynamic-FormBean para Criar Turma -->
      <form-bean name="classForm" type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">
         <form-property name="className" type="java.lang.String"/>
         <form-property name="method" type="java.lang.String" initial="createClass"/>
@@ -198,23 +197,18 @@
 			       handler="ServidorApresentacao.config.FenixExceptionHandler"/>
 		<exception type="ServidorAplicacao.NotAuthorizedException"
 			       key="ServidorAplicacao.NotAuthorizedException"
-			       path="/naoAutorizado.do"
-			       />
+			       path="/naoAutorizado.do"/>
 		<exception type="ServidorAplicacao.FenixServiceException"
 		  	       key="ServidorAplicacao.FenixServiceException"
 		  	       path="/naoExecutado.do"
 		  	       handler="ServidorApresentacao.config.FenixExceptionHandler" />
-		<exception type="ServidorAplicacao.Servico.ExcepcaoInexistente"
-			       key="ServidorAplicacao.Servico.ExcepcaoInexistente"
-			       path="/naoExistente.do"
-			       handler="ServidorApresentacao.config.FenixExceptionHandler" />
 	</global-exceptions>
 
     
     <!-- ========== Global Forward Definitions =============================== -->
     <global-forwards type="org.apache.struts.action.ActionForward">
       <forward name="index" path="/index.do" redirect="true"/>
-      <forward name="firstPage" path="/autenticacaoSOP.jsp"/>
+      <forward name="firstPage" path="/switchAction.do?prefix=&amp;page=/loginPage.jsp"/>
     </global-forwards>
     
     <!-- ========== Action Mapping Definitions =============================== -->
@@ -226,7 +220,6 @@
       <action path="/autenticacaoSOP" forward="/autenticacaoSOP.jsp"/>
       <action path="/naoAutorizado" forward="/notAuthorizedError.jsp"/>
       <action path="/naoExecutado" forward="/error.jsp"/>
-      <action path="/principalSalas" forward="/principalSalas.jsp"/>
       <action path="/criarSala" forward="/criarSala.jsp"/>
       <action path="/gestaoHorarios" forward="/gestaoHorarios.jsp"/>
       <action path="/principalAulas" forward="/principalAulas.jsp"/>
@@ -235,8 +228,18 @@
       <action path="/escolherDisciplinaETipo" forward="/escolherDisciplinaETipo.jsp"/>
       <action path="/manipularTurnos" forward="/manipularTurnos.jsp"/>
       
-      <action path="/home" forward="/switchAction.do?prefix=&amp;page=/mainPortalPage.jsp"/>
-     <action path="/switchAction" type="org.apache.struts.actions.SwitchAction" />
+      <action path="/home" forward="/switchAction.do?prefix=&amp;page=/home.do"/>
+      <action path="/switchAction" type="org.apache.struts.actions.SwitchAction"/>
+
+      <action path="/principalSalas" 
+              type="ServidorApresentacao.Action.base.FenixForwardAction" 
+              parameter="/sop/principalSalas.jsp"/>
+
+      <!-- Action For LogOff -->
+      <action path="/logoff" 
+		      type="ServidorApresentacao.Action.base.FenixForwardAction"
+		      forward="/switchAction.do?prefix=&amp;page=/logoff.do"/>
+
      
 <!--      <action path="/editarTurno" forward="/editarTurno.jsp"/>-->
 
@@ -729,14 +732,6 @@
 <!--			<forward name="executionCourseViewer" path="/viewExecutionCourse.jsp"/>
 -->
 		</action>
-
-      <!-- Action For LogOff -->
-      <action path="/logoff"
-      	      type="ServidorApresentacao.Action.commons.LogOffAction">
-      	  <forward name="Success" path="/switchAction.do?prefix=&amp;page=/loginPage.jsp"/>
-      </action>
-
-      
      </action-mappings>     
 
     

@@ -32,38 +32,48 @@
 		  	       key="ServidorAplicacao.FenixServiceException"
 		  	       path="/naoExecutado.do"
 		  	       handler="ServidorApresentacao.config.FenixExceptionHandler" />
-	</global-exceptions>
+		<exception type="ServidorAplicacao.Servico.ExcepcaoInexistente"
+			       key="ServidorAplicacao.Servico.ExcepcaoInexistente"
+			       path="/naoExistente.do"
+			       handler="ServidorApresentacao.config.FenixExceptionHandler" />
+    </global-exceptions>
 
     
     <!-- ========== Global Forward Definitions =============================== -->
     <global-forwards type="org.apache.struts.action.ActionForward">
-      <forward name="student" path="/student"
-               contextRelative="true" redirect="true" />
-      <forward name="docente" path="/docente"
-               contextRelative="true" redirect="true" />
-      <forward name="sop" path="/sop"
-               contextRelative="true" redirect="true" />
-      <forward name="publico" path="/publico"
-               contextRelative="true" redirect="true" />
+      <forward name="firstPage" path="/loginPage.jsp"/>
     </global-forwards>
     
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
+      <action path="/naoAutorizado" forward="/notAuthorizedError.jsp"/>
+      <action path="/naoExecutado" forward="/error.jsp"/>
 
       <!-- page fronting actions -->
       <action path="/autenticacao" forward="/autenticacao.jsp" />
       <action path="/naoExistente" forward="/naoExistente.jsp" />
+
+
+
+      <action path="/home" 
+      		  type="ServidorApresentacao.Action.base.FenixForwardAction" 
+      		  parameter="/mainPortalPage.jsp"/>
 
 	  <action path="/login"
 			  type="ServidorApresentacao.Action.AuthenticationAction"
 			  name="authenticationForm" 	  		  
 			  input="/loginPage.jsp"
 	  		  scope="request">
-		<forward name="sucess" path="/mainPortalPage.jsp"/>
+		<forward name="sucess" path="/home.do"/>
 	  </action>
 
+      <action path="/logoff"
+      	      type="ServidorApresentacao.Action.commons.LogOffAction">
+      	  <forward name="Success" path="/loginPage.jsp"/>
+      </action>
+
 	  <action path="/dotIstPortal"
-			  type="org.apache.struts.actions.SwitchAction">
+			  type="ServidorApresentacao.Action.base.FenixSwitchAction">
 	  </action>
     </action-mappings> 
     

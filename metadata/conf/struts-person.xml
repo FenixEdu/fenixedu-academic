@@ -102,13 +102,17 @@
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
       <!-- page fronting actions -->
-      <action path="/index" forward="/personMainPage.jsp"/>
-      <action path="/changePasswordForward" forward="/changePassword.jsp"/>
-      <action path="/authentication" forward="/autenticacaoCand.jsp"/>
+      <action path="/index" type="ServidorApresentacao.Action.base.FenixForwardAction" forward="/personMainPage.jsp"/>
+      <action path="/changePasswordForward" type="ServidorApresentacao.Action.base.FenixForwardAction" forward="/changePassword.jsp"/>
       <action path="/naoExecutado" forward="/error.jsp"/>
-      <action path="/naoAutorizado" forward="/notAuthorizedError.jsp"/>      
-      <action path="/home" forward="/switchAction.do?prefix=&amp;page=/mainPortalPage.jsp"/>
-      <action path="/switchAction" type="org.apache.struts.actions.SwitchAction" />
+
+	  <!-- Action for home portal -->
+      <action path="/home" forward="/switchAction.do?prefix=&amp;page=/home.do"/>
+      <!-- Action For LogOff -->
+      <action path="/logoff" forward="/switchAction.do?prefix=&amp;page=/logoff.do"/>
+
+      <action path="/switchAction" type="ServidorApresentacao.Action.base.FenixSwitchAction" />
+
      
       <!-- Action for Visualization Of the Person's Personal Information -->
       <action path="/visualizePersonalInfo"
@@ -117,17 +121,13 @@
       	  <forward name="Success" path="/visualizePersonalInfo.jsp"/>      	      
       </action>
 
-      <!-- Action For LogOff -->
-      <action path="/logoff"
-      	      type="ServidorApresentacao.Action.commons.LogOffAction">
-      	  <forward name="Success" path="/switchAction.do?prefix=&amp;page=/loginPage.jsp"/>
-      </action>
+
       
       <!-- Action to Prepare the Change of the Candidate's Application Information -->
       <action path="/changePersonalInfoDispatchAction"
 	     attribute="changePersonalInfoForm"
-	          name="changePersonalInfoForm"
-	         input="/changePersonalInfo.jsp"
+          name="changePersonalInfoForm"
+         input="/changePersonalInfo.jsp"
 	      validate="true"
 		 parameter="method"
       	      type="ServidorApresentacao.Action.person.ChangePersonalInfoDispatchAction">
