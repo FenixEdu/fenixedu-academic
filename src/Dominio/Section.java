@@ -14,7 +14,7 @@ public class Section implements ISection {
 
 	private Integer internalCode;
 	private String name;
-	private Integer order;
+	private Integer sectionOrder;
 	private Date lastModifiedDate;
 	private ISite site;
 	private Integer keySite;	
@@ -36,7 +36,7 @@ public class Section implements ISection {
 
 		this.internalCode = internalCode;
 		this.name = name;
-		this.order = order;
+		this.sectionOrder = order;
 		this.lastModifiedDate = lastModifiedDate;
 		this.site = site;
 		this.keySite = keySite;
@@ -90,8 +90,8 @@ public class Section implements ISection {
 	/**
 	 * @return Integer
 	 */
-	public Integer getOrder() {
-		return order;
+	public Integer getSectionOrder() {
+		return sectionOrder;
 	}
 
 	/**
@@ -160,8 +160,8 @@ public class Section implements ISection {
 	 * Sets the order.
 	 * @param order The order to set
 	 */
-	public void setOrder(Integer order) {
-		this.order = order;
+	public void setSectionOrder(Integer order) {
+		this.sectionOrder = order;
 	}
 
 	/**
@@ -187,12 +187,9 @@ public class Section implements ISection {
 		boolean result = false;
 		if (arg0 instanceof ISection) {
 			result = (getName().equals(((ISection) arg0).getName()))&&
-				(getOrder().equals(((ISection) arg0).getOrder()))&&
-				(getLastModifiedDate().equals(((ISection) arg0).getLastModifiedDate()))&&
+				(getSectionOrder().equals(((ISection) arg0).getSectionOrder()))&&
 				(getSite().equals(((ISection) arg0).getSite()))&&				
-				(getSuperiorSection().equals(((ISection) arg0).getSuperiorSection()))&&
-				(getInferiorSections().equals(((ISection) arg0).getInferiorSections()))&&
-				(getItems().equals(((ISection) arg0).getItems()));
+				(getSuperiorSection().equals(((ISection) arg0).getSuperiorSection()));
 		} 
 		return result;		
 	}

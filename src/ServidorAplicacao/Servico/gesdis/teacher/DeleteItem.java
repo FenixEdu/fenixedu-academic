@@ -118,7 +118,7 @@ public class DeleteItem implements IServico {
 			
 				if (item.getName().equals(itemName)) {
 			
-					orderOfDeletedItem = item.getOrder();
+					orderOfDeletedItem = item.getItemOrder();
 			
 					persistentItem.delete(item);
 			
@@ -140,11 +140,11 @@ public class DeleteItem implements IServico {
 			
 				IItem item = (IItem) iterItems.next();
 			
-				Integer itemOrder = item.getOrder();
+				Integer itemOrder = item.getItemOrder();
 			
 				if (itemOrder.intValue() > orderOfDeletedItem.intValue()) {
 			
-					item.setOrder(new Integer(itemOrder.intValue() - 1));
+					item.setItemOrder(new Integer(itemOrder.intValue() - 1));
 			
 					persistentItem.lockWrite(item);
 			

@@ -13,13 +13,13 @@ package Dominio;
 public interface IItem {
   public String getName();
   public ISection getSection();
-  public Integer getOrder();
+  public Integer getItemOrder();
   public String getInformation();
   public Boolean getUrgent();
 
   public void setName(String name);
   public void setSection(ISection section);
-  public void setOrder(Integer order);
+  public void setItemOrder(Integer order);
   public void setInformation(String information);
   public void setUrgent(Boolean urgent);
   

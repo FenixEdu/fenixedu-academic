@@ -82,10 +82,10 @@ public class DeleteSection implements IServico {
 			Iterator iter = inferiorSections.iterator();
 			while (iter.hasNext()) {
 				testSection = (ISection) iter.next();
-				testSectionOrder = testSection.getOrder();
+				testSectionOrder = testSection.getSectionOrder();
 				if (testSectionOrder.intValue()
-					> sonSection.getOrder().intValue()) {
-					testSection.setOrder(
+					> sonSection.getSectionOrder().intValue()) {
+					testSection.setSectionOrder(
 						new Integer(testSectionOrder.intValue() - 1));
 					persistentSection.lockWrite(testSection);
 				}

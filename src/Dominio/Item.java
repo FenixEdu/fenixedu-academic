@@ -16,7 +16,7 @@ public class Item implements IItem {
 	private Integer internalCode;
 	private String information;
 	private String name;
-	private Integer order;
+	private Integer itemOrder;
 	private ISection section;
 	private Boolean urgent;
 
@@ -34,7 +34,7 @@ public class Item implements IItem {
 	public Item(String name, ISection section, Integer order, String information, Boolean urgent) {
 		setName(name);
 		setSection(section);
-		setOrder(order);
+		setItemOrder(order);
 		setInformation(information);
 		setUrgent(urgent);
 	}
@@ -54,7 +54,7 @@ public class Item implements IItem {
 		result += ", codInt=" + internalCode;
 		result += ", nome=" + name;
 		result += ", seccao=" + section;
-		result += ", ordem=" + order;
+		result += ", ordem=" + itemOrder;
 		result += ", informacao=" + information;
 		result += ", urgente=" + urgent;
 		result += ", chaveSeccao=" + keySection;
@@ -93,8 +93,8 @@ public class Item implements IItem {
 	/**
 	 * @return Integer
 	 */
-	public Integer getOrder() {
-		return order;
+	public Integer getItemOrder() {
+		return itemOrder;
 	}
 
 	/**
@@ -147,8 +147,8 @@ public class Item implements IItem {
 	 * Sets the order.
 	 * @param order The order to set
 	 */
-	public void setOrder(Integer order) {
-		this.order = order;
+	public void setItemOrder(Integer order) {
+		this.itemOrder = order;
 	}
 
 	/**

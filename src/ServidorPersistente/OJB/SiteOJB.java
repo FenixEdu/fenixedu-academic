@@ -60,12 +60,10 @@ public class SiteOJB extends ObjectFenixOJB implements IPersistentSite {
 			oqlQuery += " where executionCourse.nome = $1";
 			oqlQuery += " and executionCourse.executionPeriod.name = $2";
 			oqlQuery += " and executionCourse.executionPeriod.executionYear.year = $3";
-			
 			query.create(oqlQuery);
 			query.bind(executionCourse.getNome());
 			query.bind(executionCourse.getExecutionPeriod().getName());
 			query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
-
 			List result = (List) query.execute();
 			lockRead(result);
 			if (result.size() != 0)

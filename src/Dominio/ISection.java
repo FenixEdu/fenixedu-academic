@@ -13,7 +13,7 @@ import java.util.List;
 public interface ISection {
 	
 	String getName();
-	Integer getOrder();
+	Integer getSectionOrder();
 	Date getLastModifiedDate();
 	ISite getSite();
 	ISection getSuperiorSection();
@@ -21,7 +21,7 @@ public interface ISection {
 	List getItems();
     
 	void setName(String name);
-	void setOrder(Integer order);
+	void setSectionOrder(Integer order);
 	void setLastModifiedDate(Date lastModifiedDate);
 	void setSite(ISite site);
 	void setSuperiorSection(ISection section);
