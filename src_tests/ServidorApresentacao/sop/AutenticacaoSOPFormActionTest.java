@@ -60,17 +60,7 @@ public class AutenticacaoSOPFormActionTest extends MockStrutsTestCase {
     _pessoa1.setPrivilegios(privilegios);
     _pessoaPersistente.escreverPessoa(_pessoa1);
     
-    privilegios = new HashSet();
-    _pessoa2 = new Pessoa();
-    _pessoa2.setNumeroDocumentoIdentificacao("0321654987");
-    _pessoa2.setCodigoFiscal("7894561230");
-    _pessoa2.setTipoDocumentoIdentificacao(new TipoDocumentoIdentificacao(
-    			 TipoDocumentoIdentificacao.BILHETE_DE_IDENTIDADE));
-    _pessoa2.setUsername("nome2");
-    _pessoa2.setPassword("pass2");
-    privilegios.add(new Privilegio(_pessoa2, new String("AlterarSitio")));
-    _pessoa2.setPrivilegios(privilegios);
-    _pessoaPersistente.escreverPessoa(_pessoa2);
+
     
     _suportePersistente.confirmarTransaccao();
   }
@@ -129,10 +119,10 @@ public class AutenticacaoSOPFormActionTest extends MockStrutsTestCase {
     actionPerform();
     
     // verifica endereço do reencaminhamento (ExcepcaoAutorizacao)
-    verifyForwardPath("/autenticacaoSOP.do");
+    verifyForwardPath("/autenticacaoSOP.jsp");
     
     //verifica existencia de erros
-    verifyActionErrors(new String[] {"ServidorAplicacao.Servico.ExcepcaoAutenticacao"});
+    verifyActionErrors(new String[] {"errors.invalidAuthentication"});
 
     
     //verifica UserView guardado na sessão

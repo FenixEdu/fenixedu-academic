@@ -10,6 +10,9 @@ public class InfoExecutionYear {
 	public InfoExecutionYear() {
 	}
 
+	public InfoExecutionYear(String year) {
+		setYear(year);
+		}
 	/**
 	 * Returns the year.
 	 * @return String

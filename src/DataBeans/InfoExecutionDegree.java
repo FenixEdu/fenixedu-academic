@@ -24,6 +24,7 @@ public class InfoExecutionDegree implements Serializable {
 	 * 
 	 * @param anoLectivo
 	 * @param infoLicenciatura
+	 * @deprecated
 	 */
 	public InfoExecutionDegree(
 		String anoLectivo,
@@ -31,7 +32,19 @@ public class InfoExecutionDegree implements Serializable {
 		setAnoLectivo(anoLectivo);
 		setInfoLicenciatura(infoLicenciatura);
 	}
-
+/**
+ * 
+ * @param anoLectivo
+ * @param infoLicenciatura
+ * @param infoExecutionYear
+ */
+	public InfoExecutionDegree(
+			String anoLectivo,
+			InfoDegree infoLicenciatura,InfoExecutionYear infoExecutionYear) {
+			setAnoLectivo(anoLectivo);
+			setInfoLicenciatura(infoLicenciatura);
+			setInfoExecutionYear(infoExecutionYear);
+		}
 	public String getAnoLectivo() {
 		return _anoLectivo;
 	}

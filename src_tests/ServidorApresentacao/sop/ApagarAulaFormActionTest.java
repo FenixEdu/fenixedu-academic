@@ -10,6 +10,8 @@ import servletunit.struts.MockStrutsTestCase;
 import DataBeans.InfoDegree;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoExecutionPeriod;
+import DataBeans.InfoExecutionYear;
 import DataBeans.InfoLesson;
 import Dominio.Aula;
 import Dominio.CurricularCourse;
@@ -18,6 +20,8 @@ import Dominio.CursoExecucao;
 import Dominio.Departamento;
 import Dominio.DisciplinaDepartamento;
 import Dominio.DisciplinaExecucao;
+import Dominio.ExecutionPeriod;
+import Dominio.ExecutionYear;
 import Dominio.IAula;
 import Dominio.ICurricularCourse;
 import Dominio.ICurso;
@@ -25,6 +29,8 @@ import Dominio.ICursoExecucao;
 import Dominio.IDepartamento;
 import Dominio.IDisciplinaDepartamento;
 import Dominio.IDisciplinaExecucao;
+import Dominio.IExecutionPeriod;
+import Dominio.IExecutionYear;
 import Dominio.IPessoa;
 import Dominio.IPlanoCurricularCurso;
 import Dominio.ISala;
@@ -94,7 +100,7 @@ public class ApagarAulaFormActionTest extends MockStrutsTestCase {
     return suite;
   }
   public void setUp() throws Exception {
-    super.setUp();
+   super.setUp();
     // define ficheiro de configuracao Struts a utilizar
     setServletConfigFile("/WEB-INF/tests/web-sop.xml");
     
@@ -109,19 +115,23 @@ public class ApagarAulaFormActionTest extends MockStrutsTestCase {
     _cursoPersistente.lockWrite(_curso1);
     _curso2 =
     	new Curso("LEGI", "Gestao", new TipoCurso(TipoCurso.LICENCIATURA));
-    _cursoExecucao1 = new CursoExecucao("2002/03", _curso1);
+	IPlanoCurricularCurso degreeCurricularPlan1 = new PlanoCurricularCurso("plano1", _curso1);
+	IPlanoCurricularCurso degreeCurricularPlan2 = new PlanoCurricularCurso("plano2", _curso2);
+	IExecutionYear executionYear1 = new ExecutionYear("2002/03");
+	IExecutionYear executionYear2 = new ExecutionYear("2003/04");
+    _cursoExecucao1 = new CursoExecucao("2002/03", _curso1,executionYear1,degreeCurricularPlan1);
     _cursoExecucaoPersistente.lockWrite(_cursoExecucao1);
-    _cursoExecucao2 = new CursoExecucao("2003/04", _curso2);
+    _cursoExecucao2 = new CursoExecucao("2003/04", _curso2,executionYear2,degreeCurricularPlan2);
     _cursoExecucaoPersistente.lockWrite(_cursoExecucao2);
     
     IDepartamento departamento = null;
     departamento = new Departamento("Departamento de Engenharia Informatica","DEI");
     IDisciplinaDepartamento departmentCourse = null;
     IPlanoCurricularCurso degreeCurricularPlan = null;
-
+ 
     departmentCourse = new DisciplinaDepartamento("Engenharia da Programacao","ep",
                                                   departamento);
-    degreeCurricularPlan = new PlanoCurricularCurso("plano1", _curso1);
+    
 
     _disciplinaCurricular1 =
     	new CurricularCourse(
@@ -135,7 +145,7 @@ public class ApagarAulaFormActionTest extends MockStrutsTestCase {
     		"Trabalho Final Curso",
     		"TFC",
     		departmentCourse,
-    		degreeCurricularPlan);
+    		degreeCurricularPlan1);
     _disciplinaCurricular2 =
     	new CurricularCourse(
 	new Double(5.0),
@@ -148,12 +158,14 @@ public class ApagarAulaFormActionTest extends MockStrutsTestCase {
     		"Trabalho Final Curso2",
     		"TFC2",
     		departmentCourse,
-    		degreeCurricularPlan);
+    		degreeCurricularPlan1);
     _disciplinaCurricularPersistente.writeCurricularCourse(
     	_disciplinaCurricular1);
     _disciplinaCurricularPersistente.writeCurricularCourse(
     	_disciplinaCurricular2);
-    _disciplinaExecucao1 =
+   
+  IExecutionPeriod executionPeriod = new ExecutionPeriod("2º semestre",executionYear1); 
+_disciplinaExecucao1 =
     	new DisciplinaExecucao(
     		"Trabalho Final Curso",
     		"TFC",
@@ -162,7 +174,7 @@ public class ApagarAulaFormActionTest extends MockStrutsTestCase {
     		new Double(10.0),
     		new Double(5.0),
     		new Double(3.0),
-    		new Double(2.0));
+    		new Double(2.0),executionPeriod);
     _disciplinaExecucao2 =
     	new DisciplinaExecucao(
     		"Trabalho Final Curso2",
@@ -172,7 +184,7 @@ public class ApagarAulaFormActionTest extends MockStrutsTestCase {
     		new Double(11.0),
     		new Double(6.0),
     		new Double(4.0),
-    		new Double(3.0));
+    		new Double(3.0),executionPeriod);
 
     _disciplinaExecucaoPersistente.escreverDisciplinaExecucao(
     	_disciplinaExecucao2);
@@ -233,7 +245,7 @@ public class ApagarAulaFormActionTest extends MockStrutsTestCase {
   	addRequestParameter("indexAula", new Integer(0).toString());
   	addRequestParameter("operation", "Apagar Aula");
   	actionPerform();
-
+	
     // define mapping de origem
     setRequestPathInfo("/sop", "/apagarAula");
     // coloca credenciais na sessao
@@ -248,13 +260,15 @@ public class ApagarAulaFormActionTest extends MockStrutsTestCase {
 
     try {
     	GestorServicos gestor = GestorServicos.manager();
-    	InfoExecutionCourse iDE = new InfoExecutionCourse(_disciplinaExecucao1.getNome(), _disciplinaExecucao1.getSigla(),
-    															_disciplinaExecucao1.getPrograma(),
-    															 new InfoExecutionDegree (_disciplinaExecucao1.getLicenciaturaExecucao().getAnoLectivo(),
-    																						   new InfoDegree(_disciplinaExecucao1.getLicenciaturaExecucao().getCurso().getSigla(),
-    																												_disciplinaExecucao1.getLicenciaturaExecucao().getCurso().getSigla())),
-																_disciplinaExecucao1.getTheoreticalHours(), _disciplinaExecucao1.getPraticalHours(),
-																_disciplinaExecucao1.getTheoPratHours(), _disciplinaExecucao1.getLabHours());
+    	InfoExecutionCourse iDE = 
+    	new InfoExecutionCourse(_disciplinaExecucao1.getNome(),
+    	 			_disciplinaExecucao1.getSigla(),
+    				_disciplinaExecucao1.getPrograma(),
+    				new InfoExecutionDegree (_disciplinaExecucao1.getLicenciaturaExecucao().getAnoLectivo(),
+    					new InfoDegree(_disciplinaExecucao1.getLicenciaturaExecucao().getCurso().getSigla(),
+    								_disciplinaExecucao1.getLicenciaturaExecucao().getCurso().getSigla()),new InfoExecutionYear(_cursoExecucao1.getExecutionYear().getYear())),
+							_disciplinaExecucao1.getTheoreticalHours(), _disciplinaExecucao1.getPraticalHours(),
+						_disciplinaExecucao1.getTheoPratHours(), _disciplinaExecucao1.getLabHours(),new InfoExecutionPeriod(_disciplinaExecucao1.getExecutionPeriod().getName(),new InfoExecutionYear(_disciplinaExecucao1.getExecutionPeriod().getExecutionYear().getYear())));
 
     	getSession().setAttribute("infoDisciplinaExecucao", iDE);
     	Object argsLerSalas[] = new Object[0];

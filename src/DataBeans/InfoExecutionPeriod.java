@@ -13,6 +13,10 @@ public class InfoExecutionPeriod {
 
 	}
 
+	public InfoExecutionPeriod(String name,InfoExecutionYear infoExecutionYear) {
+		setName(name);
+		setInfoExecutionYear(infoExecutionYear);
+		}
 	/**
 	 * Returns the infoExecutionYear.
 	 * @return InfoExecutionYear
