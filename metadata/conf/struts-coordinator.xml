@@ -117,11 +117,18 @@
         <form-property name="programEn" type="java.lang.String"/>        
       </form-bean>
 			
-       <form-bean name="courseInformationForm" 
+      <form-bean name="courseInformationForm" 
                    type="org.apache.struts.validator.DynaValidatorForm" 
                     dynamic="true">
             <form-property name="executionCourseId" type="java.lang.Integer"/>
-        </form-bean>
+      </form-bean>
+      
+      <form-bean name="tutorForm"
+      		type="org.apache.struts.validator.DynaValidatorForm"
+	        dynamic="true">
+        <form-property name="page" type="java.lang.Integer" initial="0"/>
+	    <form-property name="tutorNumber" type="java.lang.Integer"/>
+      </form-bean>
     </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -450,6 +457,16 @@
       		input="/courseInformation.do?method=read">
 		<forward name="successfull-read" path="view-course-information"/>
 	  </action>	
+	  
+	  <!-- Tutor Information -->
+	  <action type="ServidorApresentacao.Action.coordinator.TutorManagementDispatchAction"
+	  	path="/tutorManagement"
+	  	name="tutorForm"
+	  	parameter="method"
+	  	scope="request"
+	  >
+	  	<forward name="chooseTutor" path="chooseTutor" />
+	  </action>
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->

@@ -78,4 +78,9 @@
     <definition name="view-teacher-information" extends="definition.coordinator.two-column">
 		 <put name="body" value="/teacher/information/viewTeacherInformation.jsp" />
 	</definition>
+	
+	<definition name="chooseTutor" extends="definition.coordinator.two-column">
+		 <put name="body" value="/tutor/chooseTutor.jsp" />
+	</definition>
+	
 </tiles-definitions>

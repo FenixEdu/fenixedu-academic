@@ -193,4 +193,44 @@
 			<foreignkey field-ref="degreeKey"/>
 		</reference-descriptor>     	   	
    </class-descriptor>	
+   
+<!-- Definitions for Dominio.Tutor -->    
+   <class-descriptor class="Dominio.Tutor"
+   	table="TUTOR_SHIP">
+   		<field-descriptor id="1"
+	        name="idInternal"
+	        column="ID_INTERNAL"
+	        jdbc-type="INTEGER"
+	        primarykey="true"
+	        autoincrement="true"
+	    />   	
+      	<field-descriptor
+      		name="ackOptLock"
+	      	column="ACK_OPT_LOCK"
+    	  	jdbc-type="INTEGER"
+      		locking="true"
+      	/>
+		<field-descriptor
+			name="teacherKey"
+			column="KEY_TEACHER"
+			jdbc-type="INTEGER"
+		/>
+		<field-descriptor
+			name="studentKey"
+			column="KEY_STUDENT"
+			jdbc-type="INTEGER"
+		/>
+	    <reference-descriptor
+				name="teacher"
+				class-ref="Dominio.Teacher"
+				proxy="true">
+			<foreignkey field-ref="teacherKey"/>
+		</reference-descriptor> 
+	    <reference-descriptor
+				name="student"
+				class-ref="Dominio.Student"
+				proxy="true">
+			<foreignkey field-ref="studentKey"/>
+		</reference-descriptor> 
+   </class-descriptor>
 <!-- Mapping of User defined classses ends here -->
