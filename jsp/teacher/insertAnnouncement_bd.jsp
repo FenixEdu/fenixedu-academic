@@ -13,8 +13,8 @@
 				<h2><bean:message key="label.title" /></h2>
 				</td>
 				<td>
-					<html:text name="insertAnnouncementForm" property="title" >
-					</html:text>
+					<html:textarea rows="4" cols="56" name="insertAnnouncementForm" property="title" >
+					</html:textarea>
 				</td>
 				<td><span class="error"><html:errors property="title"/></span></td>
 			</tr>
@@ -23,8 +23,8 @@
 					<h2><bean:message key="label.information" /></h2>	
 				</td>
 				<td>
-					<html:text name="insertAnnouncementForm" property="information" >
-					</html:text>
+					<html:textarea rows="4" cols="56" name="insertAnnouncementForm" property="information" >
+					</html:textarea>
 				</td>
 				<td><span class="error"><html:errors property="information"/></span></td>
 			</tr>
