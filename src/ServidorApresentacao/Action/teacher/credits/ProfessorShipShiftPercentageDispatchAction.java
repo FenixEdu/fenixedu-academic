@@ -21,9 +21,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
-import org.apache.struts.util.RequestUtils;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import DataBeans.CreditsView;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShift;
 import DataBeans.InfoTeacher;
@@ -67,11 +67,18 @@ public class ProfessorShipShiftPercentageDispatchAction
 				userView,
 				"ReadTeacherExecutionCourseShiftsPercentage",
 				args);
+		
+		CreditsView creditsView =
+			(CreditsView) ServiceUtils.executeService(
+				userView,
+				"ReadCreditsTeacher",
+				new Object[]{teacherOID});
+		request.setAttribute("creditsView", creditsView);
 
 		Collections.sort(
 			infoShiftPercentageList,
 			new BeanComparator("shift.tipo.tipo"));
-
+		
 		request.setAttribute(
 			"infoShiftPercentageList",
 			infoShiftPercentageList);
