@@ -210,7 +210,8 @@
         parameter="method"
         scope="request"
         validate="false">                         
-        <forward name="beginTransaction" path="/studentShiftEnrolmentManager.do?method=start&amp;firstTime=true"/>
+        <forward name="prepareEnrollmentViewWarning" path="prepare-enrollment-view-warning"/>
+        <forward name="beginTransaction" path="/studentShiftEnrolmentManager.do?method=start"/>
 		<forward name="selectCourses" path="show-courses-by-degree"/>
 		<forward name="showShiftsEnrollment" path="show-shifts-enrollment"/>
       </action>
@@ -232,12 +233,20 @@
         <forward name="classTimeTable" path="/classTimeTable.jsp"/>
       </action>
       
+	  <action path="/enrollStudentInShifts"
+        type="ServidorApresentacao.Action.student.enrollment.EnrollStudentInShiftsAction"
+	  	name="studentShiftEnrolmentForm"
+        scope="request"
+        validate="false"
+        input="/studentShiftEnrolmentManagerLoockup.do?method=proceedToShiftEnrolment&amp;page=0" >                         
+        <forward name="enrollmentConfirmation" path="enrollment-confirmation"/>
+      </action>
+      
       <action 
         type="ServidorApresentacao.Action.student.ViewStudentTimeTable"
         path="/studentTimeTable">
         <forward name="sucess" path="/classTimeTable.jsp"/>
       </action>
-      
       
       <action 
         type="ServidorApresentacao.Action.commons.VoidAction"

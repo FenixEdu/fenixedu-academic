@@ -29,6 +29,11 @@ import Util.TipoCurso;
  */
 public class WriteStudentAttendingCourse implements IService
 {
+	public class ReachedAttendsLimitServiceException extends FenixServiceException
+	{
+
+	}
+	
 	public WriteStudentAttendingCourse()
 	{
 	}
@@ -43,7 +48,7 @@ public class WriteStudentAttendingCourse implements IService
 			IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
 			IStudentCurricularPlanPersistente persistentStudentCurricularPlan =
 				sp.getIStudentCurricularPlanPersistente();
-
+			
 			if (infoStudent == null)
 			{
 				return new Boolean(false);
@@ -58,11 +63,11 @@ public class WriteStudentAttendingCourse implements IService
 
 				//Read every course the student attends to:
 				List attends =
-					persistentAttend.readByStudentNumber(studentCurricularPlan.getStudent().getNumber());
+					persistentAttend.readByStudentNumberInCurrentExecutionPeriod(studentCurricularPlan.getStudent().getNumber());
 
 				if (attends != null && attends.size() >= 8)
 				{
-					throw new FenixServiceException("reachedAteendsLimit");
+					throw new ReachedAttendsLimitServiceException();
 				}
 
 				IFrequenta attendsEntry =

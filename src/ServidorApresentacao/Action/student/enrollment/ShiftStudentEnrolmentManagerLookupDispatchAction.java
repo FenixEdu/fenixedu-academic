@@ -21,7 +21,12 @@ import org.apache.struts.action.DynaActionForm;
 import DataBeans.InfoStudent;
 import DataBeans.enrollment.shift.InfoClassEnrollmentDetails;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.enrolment.shift.DeleteStudentAttendingCourse.AlreadyEnrolledInGroupServiceException;
+import ServidorAplicacao.Servico.enrolment.shift.DeleteStudentAttendingCourse.AlreadyEnrolledInShiftServiceException;
+import ServidorAplicacao.Servico.enrolment.shift.DeleteStudentAttendingCourse.AlreadyEnrolledServiceException;
+import ServidorAplicacao.Servico.enrolment.shift.WriteStudentAttendingCourse.ReachedAttendsLimitServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 import ServidorApresentacao.Action.commons.TransactionalLookupDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixTransactionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -66,22 +71,22 @@ public class ShiftStudentEnrolmentManagerLookupDispatchAction extends Transactio
 					"WriteStudentAttendingCourse",
 					args);
 		}
+		catch (NotAuthorizedException exception)
+		{
+			errors.add("error", new ActionError("error.attend.curricularCourse.impossibleToEnroll"));
+		}
+		catch (ReachedAttendsLimitServiceException exception)
+		{
+			errors.add(
+				"error",
+				new ActionError("message.maximum.number.curricular.courses.to.enroll", new Integer(8)));
+		}
 		catch (FenixServiceException exception)
 		{
-			exception.printStackTrace();
-			if (exception.getMessage().endsWith("reachedAteendsLimit"))
-			{
-				errors.add(
-					"error",
-					new ActionError(
-						"message.maximum.number.curricular.courses.to.enroll",
-						new Integer(8)));
-			}
-			else
-			{
-				errors.add("error", new ActionError("errors.impossible.operation"));
-			}
-
+			errors.add("error", new ActionError("errors.impossible.operation"));
+		}
+		if (!errors.isEmpty())
+		{
 			saveErrors(request, errors);
 			return mapping.getInputForward();
 		}
@@ -129,26 +134,24 @@ public class ShiftStudentEnrolmentManagerLookupDispatchAction extends Transactio
 					"DeleteStudentAttendingCourse",
 					args);
 		}
+		catch (AlreadyEnrolledInGroupServiceException exception)
+		{
+			errors.add("error", new ActionError("errors.student.already.enroled.in.group"));
+		}
+		catch (AlreadyEnrolledServiceException exception)
+		{
+			errors.add("error", new ActionError("errors.student.already.enroled"));
+		}
+		catch (AlreadyEnrolledInShiftServiceException exception)
+		{
+			errors.add("error", new ActionError("errors.student.already.enroled.in.shift"));
+		}
 		catch (FenixServiceException exception)
 		{
-			exception.printStackTrace();
-			if (exception.getMessage().endsWith("alreadyEnrolledInGroup"))
-			{
-				errors.add("error", new ActionError("errors.student.already.enroled.in.group"));
-			}
-			else if (exception.getMessage().endsWith("alreadyEnrolled"))
-			{
-				errors.add("error", new ActionError("errors.student.already.enroled"));
-			}
-			else if (exception.getMessage().endsWith("alreadyEnrolledInShift"))
-			{
-				errors.add("error", new ActionError("errors.student.already.enroled.in.shift"));
-			}
-			else
-			{
-				errors.add("error", new ActionError("errors.impossible.operation"));
-			}
-
+			errors.add("error", new ActionError("errors.impossible.operation"));
+		}
+		if (!errors.isEmpty())
+		{
 			saveErrors(request, errors);
 			return mapping.getInputForward();
 		}
@@ -217,9 +220,8 @@ public class ShiftStudentEnrolmentManagerLookupDispatchAction extends Transactio
 		Integer studentId = (Integer) enrollmentForm.get("studentId");
 		if (studentId == null)
 		{
-			String studentIdString = request.getParameter("studentId"); 
+			String studentIdString = request.getParameter("studentId");
 			if (studentIdString != null)
-
 			{
 				studentId = Integer.valueOf(request.getParameter("studentId"));
 			}

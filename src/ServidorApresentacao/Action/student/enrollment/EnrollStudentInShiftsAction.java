@@ -3,20 +3,24 @@
  */
 package ServidorApresentacao.Action.student.enrollment;
 
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ActionMessage;
-import org.apache.struts.action.ActionMessages;
+import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoShift;
 import DataBeans.enrollment.shift.ShiftEnrollmentErrorReport;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.enrolment.shift.EnrollStudentInShifts.StudentNotFoundServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.base.FenixAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
@@ -25,6 +29,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
 /**
  * @author jmota
+ * Modified by Fernanda Quitério
  */
 public class EnrollStudentInShiftsAction extends FenixAction
 {
@@ -35,8 +40,14 @@ public class EnrollStudentInShiftsAction extends FenixAction
     {
 
         IUserView userView = SessionUtils.getUserView(request);
-        Object[] args = {};
-        ActionMessages actionErrors = new ActionMessages();
+        ActionErrors actionErrors = new ActionErrors();
+        DynaValidatorForm enrollmentForm = (DynaValidatorForm) actionForm;
+        
+        Integer studentId = (Integer) enrollmentForm.get("studentId");
+        Integer[] shiftsToEnroll = (Integer[]) enrollmentForm.get("shifts");
+        List shiftsList = Arrays.asList(shiftsToEnroll);
+        
+        Object[] args = {studentId, shiftsList};
         try
         {
             ShiftEnrollmentErrorReport errorReport = (ShiftEnrollmentErrorReport) ServiceUtils
@@ -46,24 +57,26 @@ public class EnrollStudentInShiftsAction extends FenixAction
             while (iter.hasNext())
             {
                 InfoShift infoShift = (InfoShift) iter.next();
-                ActionMessage actionMessage = new ActionMessage("shift.enrollment.capacityExceded", infoShift.getNome());               
-                actionErrors.add("capacityExceded",actionMessage);
+                ActionError actionError = new ActionError("error.shift.enrollment.capacityExceded", infoShift.getNome());               
+                actionErrors.add("capacityExceded",actionError);
             }
-            iter = errorReport.getUnExistingShifts().iterator();
-            while (iter.hasNext())
-            {
-                Integer shiftId = (Integer) iter.next();
-                ActionMessage actionMessage = new ActionMessage("shift.enrollment.nonExistingShift", shiftId);               
-                actionErrors.add("nonExisting",actionMessage);
+            if(errorReport.getUnExistingShifts() != null && errorReport.getUnExistingShifts().size() > 0) {
+            	ActionError actionError = new ActionError("error.shift.enrollment.nonExistingShift");               
+            	actionErrors.add("nonExisting",actionError);
             }
+        }catch (StudentNotFoundServiceException e)
+        {
+        	ActionError actionError = new ActionError("error.shift.enrollment.nonExistingStudent");               
+        	actionErrors.add("nonExisting",actionError);
         }
         catch (FenixServiceException e)
         {
-            
             throw new FenixActionException(e);
         }
-
-        return null;
+        if(!actionErrors.isEmpty()) {
+        	saveErrors(request, actionErrors);
+        	return mapping.getInputForward();
+        }
+        return mapping.findForward("enrollmentConfirmation");
     }
-
 }

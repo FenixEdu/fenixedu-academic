@@ -105,6 +105,7 @@ public class EnrollStudentInShifts implements IService
         }
         catch (ExcepcaoPersistencia e)
         {
+        	e.printStackTrace();
             throw new FenixServiceException(e);
         }
     }

@@ -27,6 +27,19 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class DeleteStudentAttendingCourse implements IService
 {
+	public class AlreadyEnrolledInGroupServiceException extends FenixServiceException
+	{
+
+	}
+	public class AlreadyEnrolledServiceException extends FenixServiceException
+	{
+
+	}
+	public class AlreadyEnrolledInShiftServiceException extends FenixServiceException
+	{
+
+	}
+	
 	public DeleteStudentAttendingCourse()
 	{
 	}
@@ -108,14 +121,14 @@ public class DeleteStudentAttendingCourse implements IService
 			IStudentGroupAttend studentGroupAttend = studentGroupAttendDAO.readBy(attend);
 			if (studentGroupAttend != null)
 			{
-				throw new FenixServiceException("alreadyEnrolledInGroup");
+				throw new AlreadyEnrolledInGroupServiceException();
 			}
 
 			if (attend != null)
 			{
 				if (attend.getEnrolment() != null)
 				{
-					throw new FenixServiceException("alreadyEnrolled");
+					throw new AlreadyEnrolledServiceException();
 				}
 
 				List shiftAttendsToDelete =
@@ -123,7 +136,7 @@ public class DeleteStudentAttendingCourse implements IService
 				
 				if (shiftAttendsToDelete != null && shiftAttendsToDelete.size() > 0)
 				{
-					throw new FenixServiceException("alreadyEnrolledInShift");
+					throw new AlreadyEnrolledInShiftServiceException();
 				}
 				persistentAttends.delete(attend);
 			}
