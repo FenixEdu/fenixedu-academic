@@ -6,6 +6,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 
+import Util.BranchType;
 import Util.CurricularCourseExecutionScope;
 import Util.CurricularCourseType;
 import Util.TipoCurso;
@@ -61,7 +62,7 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
     private Double ectsCredits;
 
     private Double weigth;
-    
+
     private String acronym;
 
     // For enrollment purposes
@@ -89,7 +90,7 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
             final ICurricularCourse curricularCourse = (ICurricularCourse) obj;
             return getIdInternal().equals(curricularCourse.getIdInternal());
         }
-        return false;        
+        return false;
     }
 
     public String toString() {
@@ -123,10 +124,10 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
 
     public void setCode(String code) {
         this.code = code;
-        TipoCurso tipoCurso = (this.getDegreeCurricularPlan() != null &&
-                this.getDegreeCurricularPlan().getDegree() != null) ?
-                        this.getDegreeCurricularPlan().getDegree().getTipoCurso() : null;
-        this.uniqueKeyForEnrollment = constructUniqueEnrollmentKey(this.getCode(), this.getName(), tipoCurso);
+        TipoCurso tipoCurso = (this.getDegreeCurricularPlan() != null && this.getDegreeCurricularPlan()
+                .getDegree() != null) ? this.getDegreeCurricularPlan().getDegree().getTipoCurso() : null;
+        this.uniqueKeyForEnrollment = constructUniqueEnrollmentKey(this.getCode(), this.getName(),
+                tipoCurso);
     }
 
     public Double getCredits() {
@@ -152,10 +153,10 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
 
     public void setDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) {
         this.degreeCurricularPlan = degreeCurricularPlan;
-        TipoCurso tipoCurso = (this.getDegreeCurricularPlan() != null &&
-                this.getDegreeCurricularPlan().getDegree() != null) ?
-                        this.getDegreeCurricularPlan().getDegree().getTipoCurso() : null;
-        this.uniqueKeyForEnrollment = constructUniqueEnrollmentKey(this.getCode(), this.getName(), tipoCurso);
+        TipoCurso tipoCurso = (this.getDegreeCurricularPlan() != null && this.getDegreeCurricularPlan()
+                .getDegree() != null) ? this.getDegreeCurricularPlan().getDegree().getTipoCurso() : null;
+        this.uniqueKeyForEnrollment = constructUniqueEnrollmentKey(this.getCode(), this.getName(),
+                tipoCurso);
     }
 
     public Integer getDegreeCurricularPlanKey() {
@@ -252,10 +253,10 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
 
     public void setName(String name) {
         this.name = name;
-        TipoCurso tipoCurso = (this.getDegreeCurricularPlan() != null &&
-                this.getDegreeCurricularPlan().getDegree() != null) ?
-                        this.getDegreeCurricularPlan().getDegree().getTipoCurso() : null;
-        this.uniqueKeyForEnrollment = constructUniqueEnrollmentKey(this.getCode(), this.getName(), tipoCurso);
+        TipoCurso tipoCurso = (this.getDegreeCurricularPlan() != null && this.getDegreeCurricularPlan()
+                .getDegree() != null) ? this.getDegreeCurricularPlan().getDegree().getTipoCurso() : null;
+        this.uniqueKeyForEnrollment = constructUniqueEnrollmentKey(this.getCode(), this.getName(),
+                tipoCurso);
     }
 
     public Double getPraticalHours() {
@@ -329,13 +330,13 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
     public void setWeigth(Double weigth) {
         this.weigth = weigth;
     }
-    
+
     public String getAcronym() {
-    	return acronym;
+        return acronym;
     }
-    
+
     public void setAcronym(String acronym) {
-    	this.acronym = acronym;
+        this.acronym = acronym;
     }
 
     public boolean curricularCourseIsMandatory() {
@@ -467,6 +468,23 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
         return !result.isEmpty();
     }
 
+    public boolean hasActiveScopeInGivenSemesterForCommonAndGivenBranch(final Integer semester,
+            final IBranch branch) {
+        List scopes = this.getScopes();
+
+        List result = (List) CollectionUtils.select(scopes, new Predicate() {
+            public boolean evaluate(Object obj) {
+                ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) obj;
+                return ((curricularCourseScope.getBranch().getBranchType().equals(
+                        BranchType.COMMON_BRANCH) || curricularCourseScope.getBranch().equals(branch))
+                        && curricularCourseScope.getCurricularSemester().getSemester().equals(semester)
+                        && curricularCourseScope.isActive().booleanValue());
+            }
+        });
+
+        return !result.isEmpty();
+    }
+
     private ICurricularYear getCurricularYearWithLowerYear(List listOfScopes) {
 
         ICurricularYear maxCurricularYear = new CurricularYear();
@@ -513,7 +531,7 @@ public class CurricularCourse extends DomainObject implements ICurricularCourse 
         StringBuffer stringBuffer = new StringBuffer(50);
         stringBuffer.append(code);
         stringBuffer.append(name);
-        if (tipoCurso != null) { 
+        if (tipoCurso != null) {
             stringBuffer.append(tipoCurso.toString());
         }
         return StringUtils.lowerCase(stringBuffer.toString());
