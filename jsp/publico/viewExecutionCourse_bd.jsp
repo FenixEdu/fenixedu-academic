@@ -21,7 +21,7 @@
 
 <logic:present name="<%= SessionConstants.EXECUTION_COURSE_KEY %>" scope="session">
  <logic:present name="<%= SessionConstants.INFO_SITE %>" property="initialStatement">
-	<table cellspacing="0">
+	<table cellspacing="0" width="90%">
         <tr>
           <td class="citation">
             <p>&quot;<bean:write name="<%= SessionConstants.INFO_SITE %>" property="initialStatement" />&quot;</p>
@@ -32,7 +32,7 @@
       <br/>
 	</logic:present>		
  <logic:present name="<%= SessionConstants.LAST_ANNOUNCEMENT %>" scope="session">		
-        <table id="anuncios" align="center" cellspacing="0">
+        <table id="anuncios" align="center" cellspacing="0" width="90%">
           <tr>
             <td  class="ultAnuncioAviso"> 
             <img alt="" border="0"  src="<%= request.getContextPath() %>/images/icon_warning.gif"  />
@@ -88,57 +88,6 @@
       <br/>
       <br/>
 	</logic:present>	
-			
-	<bean:message key="property.executionCourse.associatedCurricularCourses"/>
-	<logic:present name="publico.infoCurricularCourses" scope="session">
-			<table align="center" border='1' cellpadding='10'>
-					<tr align="center">
-						<td>
-							<bean:message key="property.curricularCourse.name"/>
-						</td>
-						<td>
-							<bean:message key="property.degree.initials"/>
-						</td>
-						<td>
-							<bean:message key="property.curricularCourse.curricularYear"/>
-						</td>
-						<td>
-							<bean:message key="property.curricularCourse.semester"/>
-						</td>
-					</tr>			
-				<logic:iterate id="curricularCourse" name="publico.infoCurricularCourses" scope="session">
-					<tr align="center">
-						<td>
-							<bean:write name="curricularCourse" property="name"/>
-						</td>
-						<td>
-							<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.sigla"/>
-						</td>
-						<td>
-							<logic:iterate id="infoCurricularSemester" name="curricularCourse" property="associatedInfoCurricularSemesters">
-								<bean:write name="infoCurricularSemester" property="infoCurricularYear.year"/>&nbsp;
-							</logic:iterate>
-						</td>
-						<td>
-							<logic:iterate id="infoCurricularSemester" name="curricularCourse" property="associatedInfoCurricularSemesters">
-								<bean:write name="infoCurricularSemester" property="semester"/>&nbsp;
-							</logic:iterate>
-						</td>
-					</tr>
-				</logic:iterate>
-			</table>			
-	</logic:present>
-	
-	<logic:notPresent name="publico.infoCurricularCourses" scope="session">
-		<bean:message key="message.public.notfound.curricularCourses"/>
-	</logic:notPresent>
-
-	</br>
-	</br>
-
-	
-
-	
 	
 </logic:present>	
 		
