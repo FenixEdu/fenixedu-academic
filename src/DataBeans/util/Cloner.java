@@ -2926,7 +2926,7 @@ public abstract class Cloner
         infoGroupProperties =
             copyIGroupProperties2InfoGroupProperties(studentGroup.getGroupProperties());
 
-        infoShift = (InfoShift) get(studentGroup.getShift());
+        infoShift = copyShift2InfoShift(studentGroup.getShift());
 
         infoStudentGroup.setGroupNumber(studentGroup.getGroupNumber());
         infoStudentGroup.setIdInternal(studentGroup.getIdInternal());
