@@ -88,10 +88,6 @@ public class AlternativeSiteManagementAction extends FenixDispatchAction {
 			throw new FenixActionException(e);
 		}
 		session.setAttribute(SessionConstants.INFO_SITE,infoSiteNew);
-//		session.setAttribute(
-//			SessionConstants.ALTERNATIVE_SITE,
-//			alternativeSite);
-//		session.setAttribute(SessionConstants.MAIL, mail);
 		session.setAttribute("alternativeSiteForm", alternativeSiteForm);
 
 		return mapping.findForward("editAlternativeSite");
