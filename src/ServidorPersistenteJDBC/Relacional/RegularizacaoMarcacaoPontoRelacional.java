@@ -55,10 +55,7 @@ public class RegularizacaoMarcacaoPontoRelacional implements IRegularizacaoMarca
                 "RegularizacaoMarcacaoPontoRelacional.alterarRegularizacaoMarcacaoPonto: "
                     + e.toString());
         }
-        finally
-        {
             return resultado;
-        }
     } /* alterarRegularizacaoMarcacaoPonto */
 
     public boolean apagarRegularizacaoMarcacaoPonto(int chaveMarcacaoPonto)
@@ -83,10 +80,7 @@ public class RegularizacaoMarcacaoPontoRelacional implements IRegularizacaoMarca
                 "RegularizacaoMarcacaoPontoRelacional.apagarRegularizacaoMarcacaoPonto: "
                     + e.toString());
         }
-        finally
-        {
             return resultado;
-        }
     } /* apagarRegularizacaoMarcacaoPonto */
 
     public boolean apagarRegularizacoesMarcacoesPonto()
@@ -111,10 +105,7 @@ public class RegularizacaoMarcacaoPontoRelacional implements IRegularizacaoMarca
                 "RegularizacaoMarcacaoPontoRelacional.apagarRegularizacoesMarcacoesPonto: "
                     + e.toString());
         }
-        finally
-        {
             return resultado;
-        }
     } /* apagarRegularizacoesMarcacoesPonto */
 
     public boolean escreverRegularizacaoMarcacaoPonto(RegularizacaoMarcacaoPonto regularizacao)
@@ -148,10 +139,7 @@ public class RegularizacaoMarcacaoPontoRelacional implements IRegularizacaoMarca
                 "RegularizacaoMarcacaoPontoRelacional.escreverRegularizacaoMarcacaoPonto: "
                     + e.toString());
         }
-        finally
-        {
             return resultado;
-        }
     } /* escreverRegularizacaoMarcacaoPonto */
 
     public boolean escreverRegularizacoesMarcacoesPonto(ArrayList listaRegularizacoes)
@@ -194,10 +182,9 @@ public class RegularizacaoMarcacaoPontoRelacional implements IRegularizacaoMarca
                 "RegularizacaoMarcacaoPontoRelacional.escreverRegularizacoesMarcacoesPonto: "
                     + e.toString());
         }
-        finally
-        {
+
             return resultado;
-        }
+
     } /* escreverRegularizacoesMarcacoesPonto */
 
     public boolean existeRegularizacaoMarcacaoPonto(RegularizacaoMarcacaoPonto regularizacao)
@@ -239,10 +226,9 @@ public class RegularizacaoMarcacaoPontoRelacional implements IRegularizacaoMarca
                     + e.toString());
             e.printStackTrace();
         }
-        finally
-        {
+
             return resultado;
-        }
+
     } /* existeRegularizacaoMarcacaoPonto */
 
     public RegularizacaoMarcacaoPonto lerRegularizacaoMarcacaoPonto(int chaveMarcacaoPonto)
@@ -275,10 +261,9 @@ public class RegularizacaoMarcacaoPontoRelacional implements IRegularizacaoMarca
             System.out.println(
                 "RegularizacaoMarcacaoPontoRelacional.lerRegularizacaoMarcacaoPonto: " + e.toString());
         }
-        finally
-        {
+
             return regularizacao;
-        }
+
     } /* lerRegularizacaoMarcacaoPonto */
 
     public ArrayList lerTodasRegularizacoes()
