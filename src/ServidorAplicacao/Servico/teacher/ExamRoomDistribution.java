@@ -163,6 +163,7 @@ public class ExamRoomDistribution implements IServico {
 			if (students.size() > 0) {
 				throw new InvalidArgumentsServiceException("students");
 			}
+			result = new Boolean(true);
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}
