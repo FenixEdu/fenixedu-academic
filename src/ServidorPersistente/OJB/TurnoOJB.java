@@ -1,14 +1,13 @@
 /*
  * ITurnoOJB.java
- *
+ * 
  * Created on 17 de Outubro de 2002, 19:35
  */
 
 package ServidorPersistente.OJB;
 
 /**
- *
- * @author  tfc130
+ * @author tfc130
  */
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -65,14 +64,16 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente
         // If shift is not in database, then write it.
         if (shiftFromDB == null)
             super.lockWrite(shiftToWrite);
-        // else If the shift is mapped to the database, then write any existing changes.
+        // else If the shift is mapped to the database, then write any existing
+		// changes.
         else if (
             (shiftToWrite instanceof Turno)
                 && ((Turno) shiftFromDB).getIdInternal().equals(((Turno) shiftToWrite).getIdInternal()))
         {
             super.lockWrite(shiftToWrite);
             // else Throw an already existing exception
-        } else
+        }
+        else
             throw new ExistingPersistentException();
     }
 
@@ -141,7 +142,8 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente
             {
                 delete((ITurno) iterator.next());
             }
-        } catch (QueryException ex)
+        }
+        catch (QueryException ex)
         {
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
         }
@@ -178,7 +180,8 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente
                 try
                 {
                     oqlQuery = "select all from " + TurmaTurno.class.getName();
-                    //oqlQuery += ", " + Turma.class.getName() + ", " + TurmaTurno.class.getName() + ")";
+                    //oqlQuery += ", " + Turma.class.getName() + ", " +
+					// TurmaTurno.class.getName() + ")";
                     oqlQuery += " where turno.tipo = $1 and turma.nome = $2";
                     query.create(oqlQuery);
                     query.bind(new Integer(TipoAula.PRATICA));
@@ -187,7 +190,8 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente
                     {
                         result2 = (List) query.execute();
                         lockRead(result2);
-                    } else
+                    }
+                    else
                     {
                         List result_tmp = (List) query.execute();
                         lockRead(result_tmp);
@@ -195,14 +199,16 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente
                             if (!result2.contains(result_tmp.get(j)))
                                 result2.add(result_tmp.get(j));
                     }
-                } catch (QueryException ex)
+                }
+                catch (QueryException ex)
                 {
                     throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
                 }
             }
             return new Integer(result2.size());
 
-        } catch (QueryException ex)
+        }
+        catch (QueryException ex)
         {
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
         }
@@ -228,7 +234,8 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente
             for (int i = 0; i != result.size(); i++)
                 turnos.add((result.get(i)));
             return turnos;
-        } catch (QueryException ex)
+        }
+        catch (QueryException ex)
         {
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
         }
@@ -251,14 +258,15 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente
             List result = (List) query.execute();
             lockRead(result);
             return result;
-        } catch (QueryException ex)
+        }
+        catch (QueryException ex)
         {
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
         }
     }
     /**
-     * @see ServidorPersistente.ITurnoPersistente#readByExecutionCourse(Dominio.IDisciplinaExecucao)
-     */
+	 * @see ServidorPersistente.ITurnoPersistente#readByExecutionCourse(Dominio.IDisciplinaExecucao)
+	 */
     public List readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia
     {
         try
@@ -275,15 +283,19 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente
             List result = (List) query.execute();
             lockRead(result);
             return result;
-        } catch (QueryException ex)
+        }
+        catch (QueryException ex)
         {
             throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
         }
     }
 
-    /* (non-Javadoc)
-     * @see ServidorPersistente.ITurnoPersistente#readByExecutionDegreeAndCurricularYear(Dominio.ICursoExecucao, Dominio.ICurricularYear)
-     */
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ITurnoPersistente#readByExecutionDegreeAndCurricularYear(Dominio.ICursoExecucao,
+	 *      Dominio.ICurricularYear)
+	 */
     public List readByExecutionPeriodAndExecutionDegreeAndCurricularYear(
         IExecutionPeriod executionPeriod,
         ICursoExecucao executionDegree,
@@ -307,9 +319,11 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente
         return shifts;
     }
 
-    /* (non-Javadoc)
-     * @see ServidorPersistente.ITurnoPersistente#readAvailableShiftsForClass(Dominio.ITurma)
-     */
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.ITurnoPersistente#readAvailableShiftsForClass(Dominio.ITurma)
+	 */
     public List readAvailableShiftsForClass(ITurma schoolClass) throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();

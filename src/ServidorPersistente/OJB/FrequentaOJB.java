@@ -1,14 +1,13 @@
 /*
  * FrequentaOJB.java
- *
+ * 
  * Created on 20 de Outubro de 2002, 15:36
  */
 
 package ServidorPersistente.OJB;
 
 /**
- *
- * @author  tfc130
+ * @author tfc130
  */
 import java.util.List;
 
@@ -17,11 +16,10 @@ import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 import org.apache.ojb.odmg.HasBroker;
-import org.odmg.QueryException;
 
 import Dominio.Frequenta;
-import Dominio.IExecutionCourse;
 import Dominio.IEnrolment;
+import Dominio.IExecutionCourse;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -44,8 +42,7 @@ public class FrequentaOJB extends ObjectFenixOJB implements IFrequentaPersistent
         IExecutionCourse disciplinaExecucao)
         throws ExcepcaoPersistencia
     {
-     
-        
+
         Criteria crit = new Criteria();
         crit.addEqualTo("aluno.idInternal", aluno.getIdInternal());
         crit.addEqualTo("chaveDisciplinaExecucao", disciplinaExecucao.getIdInternal());
@@ -86,7 +83,8 @@ public class FrequentaOJB extends ObjectFenixOJB implements IFrequentaPersistent
         // If attendance is not in database, then write it.
         if (attendanceFromDB == null)
             super.lockWrite(attendanceToWrite);
-        // else If the attendance is mapped to the database, then write any existing changes.
+        // else If the attendance is mapped to the database, then write any
+        // existing changes.
         else if (
             (attendanceToWrite instanceof Frequenta)
                 && ((Frequenta) attendanceFromDB).getIdInternal().equals(
@@ -94,7 +92,8 @@ public class FrequentaOJB extends ObjectFenixOJB implements IFrequentaPersistent
         {
             super.lockWrite(attendanceToWrite);
             // else Throw an already existing exception
-        } else
+        }
+        else
             throw new ExistingPersistentException();
     }
 
@@ -114,19 +113,6 @@ public class FrequentaOJB extends ObjectFenixOJB implements IFrequentaPersistent
         Criteria criteria = new Criteria();
         criteria.addEqualTo("aluno.number", id);
         return queryList(Frequenta.class, criteria);
-
-        //		try {
-        //			String oqlQuery =
-        //				"select frequentas from " + Frequenta.class.getName();
-        //			oqlQuery += " where aluno.number = $1";
-        //			query.create(oqlQuery);
-        //			query.bind(id);
-        //			List result = (List) query.execute();
-        //			lockRead(result);
-        //			return result;
-        //		} catch (QueryException ex) {
-        //			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        //		}
     }
     public List readByStudentNumberInCurrentExecutionPeriod(Integer number) throws ExcepcaoPersistencia
     {
@@ -139,24 +125,9 @@ public class FrequentaOJB extends ObjectFenixOJB implements IFrequentaPersistent
 
     public List readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia
     {
-        try
-        {
-            String oqlQuery = "select frequentas from " + Frequenta.class.getName();
-            oqlQuery += " where disciplinaExecucao.sigla = $1 "
-                + " and disciplinaExecucao.executionPeriod.name = $2 "
-                + " and disciplinaExecucao.executionPeriod.executionYear.year = $3 ";
-            query.create(oqlQuery);
-            query.bind(executionCourse.getSigla());
-            query.bind(executionCourse.getExecutionPeriod().getName());
-            query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
-
-            List result = (List) query.execute();
-            lockRead(result);
-            return result;
-        } catch (QueryException ex)
-        {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
+        Criteria crit = new Criteria();
+        crit.addEqualTo("disciplinaExecucao.idInternal", executionCourse.getIdInternal());
+        return queryList(Frequenta.class, crit);
     }
 
     public Integer countStudentsAttendingExecutionCourse(IExecutionCourse executionCourse)
@@ -171,28 +142,8 @@ public class FrequentaOJB extends ObjectFenixOJB implements IFrequentaPersistent
 
     public IFrequenta readByEnrolment(IEnrolment enrolment) throws ExcepcaoPersistencia
     {
-        try
-        {
-            IFrequenta attend = null;
-            String oqlQuery = "select all from " + Frequenta.class.getName();
-            oqlQuery += " where enrolment.idInternal = $1";
-
-            query.create(oqlQuery);
-
-            query.bind(enrolment.getIdInternal());
-
-            List result = (List) query.execute();
-
-            lockRead(result);
-            if (result.size() != 0)
-            {
-                attend = (IFrequenta) result.get(0);
-            }
-            return attend;
-
-        } catch (QueryException ex)
-        {
-            throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-        }
+        Criteria crit = new Criteria();
+        crit.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
+        return (IFrequenta) queryObject(Frequenta.class, crit);
     }
 }
