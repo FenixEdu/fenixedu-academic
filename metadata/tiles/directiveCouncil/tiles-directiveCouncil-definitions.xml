@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+	<definition name="definition.directiveCouncil.masterPage" extends="df.layout.two-column">
+		<put name="title" value=".IST - Conselho Directivo"/>
+		<put name="serviceName" value="Conselho Directivo"/>
+		<put name="navLocal" value="/directiveCouncil/pgMainMenu.jsp"/>
+		<put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp"/>
+		<put name="body-context" value=""/>
+		<put name="body" value=""/>
+	</definition>
+	<definition name="definition.directiveCouncil.gratuity" extends="definition.directiveCouncil.gratuity">
+		<put name="navLocal" value="/directiveCouncil/gratuityMenu.jsp"/>
+	</definition>
+</tiles-definitions>

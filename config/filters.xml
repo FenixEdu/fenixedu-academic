@@ -549,4 +549,11 @@
         <description/>
         <isTransactional>true</isTransactional>
     </filter>
+    <filter>
+        <name>DirectiveCouncilAuthorization</name>
+        <implementationClass> 
+            ServidorAplicacao.Filtro.DirectiveCouncilAuthorizationFilter</implementationClass>
+        <description/>
+        <isTransactional>false</isTransactional>
+    </filter>    
 </filterDefinitions>

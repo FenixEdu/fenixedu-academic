@@ -113,6 +113,10 @@
             <param-value>/WEB-INF/conf/struts-gep.xml</param-value>
         </init-param>
         <init-param>
+            <param-name>config/directiveCouncil</param-name>
+            <param-value>/WEB-INF/conf/struts-directiveCouncil.xml</param-value>
+        </init-param>
+        <init-param>
             <param-name>debug</param-name>
             <param-value>3</param-value>
         </init-param>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- @validation.doctype@ -->
+
+<form-validation>
+  <formset>
+    <form name="studentsGratuityListForm">
+    	<field property="executionYear" depends="required" page="1">
+	        <arg0 key="label.masterDegree.gratuity.executionYear" />
+		</field>   
+		<field property="specialization" depends="required" page="2">
+	        <arg0 key="label.masterDegree.gratuity.specializationArea" />
+		</field>
+		<field property="degree" depends="required" page="2">
+	        <arg0 key="label.qualification.degree" />
+		</field>
+		<field property="situation" depends="required" page="2">
+	        <arg0 key="label.masterDegree.gratuity.situation" />
+		</field>
+    </form>
+  </formset>
+</form-validation>

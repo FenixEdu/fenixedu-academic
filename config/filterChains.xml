@@ -564,4 +564,11 @@
         <filterClass>
             ServidorAplicacao.Filtro.MetadataManager.RepositoryDescriptorPerThreadFilter</filterClass>
     </filterChain>
+    <filterChain>
+        <name>DirectiveCouncilAuthorization</name>
+        <expression>DirectiveCouncilAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>ServidorAplicacao.Filtro.AuthorizationByRoleFilter</filterClass>
+    </filterChain>
 </filterChainsDefinitions>

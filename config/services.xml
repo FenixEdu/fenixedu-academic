@@ -5469,4 +5469,13 @@
             <chain name="MasterDegreeAdministrativeOfficeAuthorization"/>
         </filterChains>
     </service>
+    <service>
+    	<name>ReadGratuitySituationListByExecutionDegreeAndSpecializationInDirectiveCouncil</name>
+    	<description>Return a list of gratuity situation of a execution degree or/and specialization or/and situation</description>
+    	<implementationClass>ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuitySituationListByExecutionDegreeAndSpecialization</implementationClass>
+    	<isTransactional>True</isTransactional>
+        <filterChains>
+            <chain name="DirectiveCouncilAuthorization"/>
+        </filterChains>
+    </service>    
 </serviceDefinitions>

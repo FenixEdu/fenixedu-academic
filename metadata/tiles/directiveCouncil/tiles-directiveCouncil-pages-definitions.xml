@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+	<definition name="firstPageGratuitySection" extends="definition.directiveCouncil.gratuity">
+		<put name="body" value=""/>
+	</definition>
+	<definition name="chooseStudentsGratuityList" extends="definition.directiveCouncil.gratuity">
+		<put name="body" value="/directiveCouncil/chooseStudentsGratuityList.jsp"/>
+	</definition>
+	<definition name="studentsGratuityList" extends="definition.directiveCouncil.gratuity">
+		<put name="body" value="/directiveCouncil/studentsGratuityList.jsp"/>
+	</definition>	
+</tiles-definitions>
