@@ -21,7 +21,9 @@
     			<td class="listClasses"><bean:write name="equivalency" property="modality.name"/></td>		
     			<td class="listClasses">
     				<logic:iterate indexId="index_1" id="theme_1" type="DataBeans.Seminaries.InfoTheme" name="equivalency" property="themes">
-    					<% if(index_1.intValue()>0) out.print(',');%>
+						<logic:notEqual name="index_1" value="0">
+							,
+						</logic:notEqual>
     					<bean:write name="theme_1" property="shortName"/>
     				</logic:iterate>
     			</td>
