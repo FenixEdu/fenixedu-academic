@@ -12,7 +12,6 @@ import org.apache.ojb.broker.PersistenceBrokerFactory;
 import org.apache.ojb.broker.accesslayer.LookupException;
 
 public class DB {
-	private static Connection _conn;
 	private static Map pbMap = new FastHashMap();
 	private static PBKey pbKey = new PBKey("personFilter");
 	
@@ -62,10 +61,10 @@ public class DB {
 		PreparedStatement sql = null;
 		try {
 			sql = conn.prepareStatement(statement);
+			return sql;
 		} catch (java.sql.SQLException e) {
 			e.printStackTrace(System.out);
 			System.out.println("#UtilRelacional: " + e.toString());
-		} finally {
 			return sql;
 		}
 	}
