@@ -193,9 +193,10 @@ public class GroupSiteComponentBuilder {
 							infoSiteStudentGroupsList.add(infoSiteStudentGroup);
 
 						}
+						Collections.sort(infoSiteStudentGroupsList, new BeanComparator("infoStudentGroup.groupNumber"));
+					
 					}
 
-					Collections.sort(infoSiteStudentGroupsList, new BeanComparator("infoStudentGroup.groupNumber"));
 					infoSiteGroupsByShift.setInfoSiteStudentGroupsList(infoSiteStudentGroupsList);
 
 					infoSiteShiftsAndGroups.add(infoSiteGroupsByShift);
