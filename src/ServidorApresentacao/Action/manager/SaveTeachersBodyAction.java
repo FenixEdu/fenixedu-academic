@@ -4,13 +4,11 @@
 package ServidorApresentacao.Action.manager;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -40,7 +38,7 @@ public class SaveTeachersBodyAction extends FenixAction {
 		Integer[] professorShipTeachersIds = (Integer[]) actionForm.get("professorShipTeachersIds");
 		List respTeachersIds = Arrays.asList(responsibleTeachersIds);
 		List profTeachersIds = Arrays.asList(professorShipTeachersIds);
-		Collections.sort(profTeachersIds, new BeanComparator("name"));
+//TODO:		Collections.sort(profTeachersIds, new BeanComparator("name"));
 		Object args[] = { respTeachersIds, profTeachersIds, executionCourseId };
 		Boolean result;
 		

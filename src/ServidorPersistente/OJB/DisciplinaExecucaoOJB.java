@@ -18,8 +18,10 @@ import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IFrequenta;
+import Dominio.ISite;
 import Dominio.ITurno;
 import Dominio.Professorship;
+import Dominio.Site;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -331,6 +333,20 @@ public class DisciplinaExecucaoOJB
 			  throw new ExistingPersistentException();
 	  }
 
-
+	  public Boolean readSite(Integer executionCourseId)
+			  throws ExcepcaoPersistencia {
+		Boolean result = null;
+		
+			  Criteria criteria = new Criteria();
+		
+			  criteria.addEqualTo("keyExecutionCourse", executionCourseId);
+			  
+			  ISite site = (ISite) queryObject(Site.class, criteria);
+			  if(site==null)
+			    result = new Boolean(false);
+			  else
+			  result = new Boolean(true);
+			  return result;
+		  }
 
 }

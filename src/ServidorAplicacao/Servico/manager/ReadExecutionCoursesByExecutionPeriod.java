@@ -50,6 +50,7 @@ public class ReadExecutionCoursesByExecutionPeriod implements IServico {
   public List run(Integer executionPeriodId) throws FenixServiceException {
 	ISuportePersistente sp;
 	List allExecutionCoursesFromExecutionPeriod = null;
+	List allExecutionCourses = null;
 	try {
 			sp = SuportePersistenteOJB.getInstance();
 		IExecutionPeriod executionPeriodToRead= new ExecutionPeriod();
@@ -63,16 +64,28 @@ public class ReadExecutionCoursesByExecutionPeriod implements IServico {
 			allExecutionCoursesFromExecutionPeriod = 
 			(List) sp.getIDisciplinaExecucaoPersistente().readByExecutionPeriod(executionPeriod);
 		    
+		    allExecutionCourses = new ArrayList(allExecutionCoursesFromExecutionPeriod.size()); 
+		    Iterator iter = allExecutionCoursesFromExecutionPeriod.iterator();
+		    while(iter.hasNext()){
+		    IDisciplinaExecucao executionCourse = (IDisciplinaExecucao) iter.next();
+		    Integer executionCourseId = executionCourse.getIdInternal();
+			Boolean hasSite =(Boolean) sp.getIDisciplinaExecucaoPersistente().readSite(executionCourseId);
+			executionCourse.setHasSite(hasSite);
+			allExecutionCourses.add(executionCourse);
+		    }
+		    
+		     
+		    
 	} catch (ExcepcaoPersistencia excepcaoPersistencia){
 		throw new FenixServiceException(excepcaoPersistencia);
 	}
 
-	if (allExecutionCoursesFromExecutionPeriod == null || allExecutionCoursesFromExecutionPeriod.isEmpty()) 
-		return allExecutionCoursesFromExecutionPeriod;
+	if (allExecutionCourses == null || allExecutionCourses.isEmpty()) 
+		return allExecutionCourses;
 
 	// build the result of this service
-	Iterator iterator = allExecutionCoursesFromExecutionPeriod.iterator();
-	List result = new ArrayList(allExecutionCoursesFromExecutionPeriod.size());
+	Iterator iterator = allExecutionCourses.iterator();
+	List result = new ArrayList(allExecutionCourses.size());
     
 	while (iterator.hasNext())
 		result.add(Cloner.copyIExecutionCourse2InfoExecutionCourse((IDisciplinaExecucao) iterator.next()));

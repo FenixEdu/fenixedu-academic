@@ -8,6 +8,8 @@ import Dominio.DisciplinaExecucao;
 import Dominio.ExecutionPeriod;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
+import Dominio.ISite;
+import Dominio.Site;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -15,6 +17,7 @@ import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IPersistentExecutionPeriod;
+import ServidorPersistente.IPersistentSite;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
@@ -45,13 +48,14 @@ public class InsertExecutionCourseAtExecutionPeriod implements IServico {
 								
 				IPersistentExecutionPeriod persistentExecutionPeriod = persistentSuport.getIPersistentExecutionPeriod();
 				IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOId(new ExecutionPeriod(infoExecutionCourse.getInfoExecutionPeriod().getIdInternal()), false);
-				System.out.println("EEEEEeeee"+executionPeriod);
+				
 				if(executionPeriod == null)
 					throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
 			
 				IDisciplinaExecucaoPersistente persistentExecutionCourse = persistentSuport.getIDisciplinaExecucaoPersistente();
 				
-			
+			IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
+				
 			
 			executionCourse.setNome(infoExecutionCourse.getNome());
 			
@@ -64,9 +68,14 @@ public class InsertExecutionCourseAtExecutionPeriod implements IServico {
 			executionCourse.setTheoPratHours(infoExecutionCourse.getTheoPratHours());
 			executionCourse.setTheoreticalHours(infoExecutionCourse.getTheoreticalHours());
 			executionCourse.setComment(infoExecutionCourse.getComment());
-
-					
+			executionCourse.setHasSite(new Boolean(true));
+	
+			ISite site = new Site();
+			site.setExecutionCourse(executionCourse);
+			
+				
 				persistentExecutionCourse.lockWrite(executionCourse);
+			persistentSite.lockWrite(site);
 					
 		} catch (ExistingPersistentException existingException) {
 			throw new ExistingServiceException("A disciplina execução com sigla:"+ executionCourse.getSigla(), existingException); 

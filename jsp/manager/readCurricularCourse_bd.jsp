@@ -54,6 +54,8 @@
 					</td>
 					<td class="listClasses-header"><bean:message key="label.manager.executionCourse.executionPeriod" />
 					</td>
+					<td class="listClasses-header"><bean:message key="label.manager.executionCourse.site" />
+					</td>
 					<td class="listClasses-header">
 					</td>
 				</tr>
@@ -68,6 +70,16 @@
 						<td class="listClasses"><bean:write name="infoExecutionPeriod" property="name"/> - <bean:write name="infoExecutionPeriod" property="infoExecutionYear.year"/>
 						</td>
 						<td class="listClasses">
+						 <bean:define id="hasSite" name="executionCourse" property="hasSite"/>
+					
+						<logic:equal name="hasSite" value="true">
+						<bean:message key="label.manager.yes"/>
+						</logic:equal>
+						<logic:notEqual name="hasSite" value="true">
+						<bean:message key="label.manager.no"/>
+						</logic:notEqual>
+						</td>
+						<td class="listClasses">
 						 <bean:define id="deleteConfirm">
 			return confirm('<bean:message key="message.confirm.remove.execution.course"/>')
 		  </bean:define>
@@ -77,6 +89,12 @@
 							<html:link page="<%="/readTeacherInCharge.do?degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="executionCourseId" paramName="executionCourse" paramProperty="idInternal">
 								<bean:message key="label.manager.edit.execution.course.teachers"/>
 							</html:link>
+							<logic:equal name="hasSite" value="false">
+							/
+							<html:link page="<%="/createSite.do?degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="executionCourseId" paramName="executionCourse" paramProperty="idInternal">
+								<bean:message key="label.manager.create.site"/>
+							</html:link>
+						</logic:equal>
 						</td>
 	 				</tr>
 	 			</logic:iterate>						

@@ -53,6 +53,8 @@
 					</td>
 					<td class="listClasses-header"><bean:message key="label.manager.executionCourse.executionPeriod" />
 					</td>
+					<td class="listClasses-header"><bean:message key="label.manager.executionCourse.site" />
+					</td>
 				</tr>
 				<logic:iterate id="infoExecutionCourse" name="infoExecutionCoursesList">
 					<bean:define id="infoExecutionCourse" name="infoExecutionCourse"/>		
@@ -65,6 +67,16 @@
 						<td class="listClasses"><bean:write name="infoExecutionCourse" property="sigla"/>
 						</td>
 						<td class="listClasses"><bean:write name="infoExecutionCourse" property="infoExecutionPeriod.name"/>
+						</td>
+						<td class="listClasses">
+						 <bean:define id="hasSite" name="infoExecutionCourse" property="hasSite"/>
+					
+						<logic:equal name="hasSite" value="true">
+						<bean:message key="label.manager.yes"/>
+						</logic:equal>
+						<logic:notEqual name="hasSite" value="true">
+						<bean:message key="label.manager.no"/>
+						</logic:notEqual>
 						</td>
 					</tr>
 				</logic:iterate>	
@@ -87,6 +99,8 @@
 				</td>
 				<td class="listClasses-header"><bean:message key="label.manager.executionCourse.executionPeriod" />
 				</td>
+				<td class="listClasses-header"><bean:message key="label.manager.executionCourse.site" />
+					</td>
 			</tr>
 			<logic:iterate id="infoExecutionCourse" name="infoExecutionCoursesList">
 				<bean:define id="infoExecutionCourse" name="infoExecutionCourse"/>			
@@ -97,6 +111,17 @@
 					</td>
 					<td class="listClasses"><bean:write name="infoExecutionCourse" property="infoExecutionPeriod.name"/>
 					</td>
+				 <td class="listClasses">
+				 
+				 <bean:define id="hasSite" name="infoExecutionCourse" property="hasSite"/>
+					
+						<logic:equal name="hasSite" value="true">
+						<bean:message key="label.manager.yes"/>
+						</logic:equal>
+						<logic:notEqual name="hasSite" value="true">
+						<bean:message key="label.manager.no"/>
+						</logic:notEqual>
+						</td>
 				</tr>
 			</logic:iterate>	
 		</table>

@@ -48,6 +48,8 @@ public class InfoExecutionCourse extends InfoObject implements Serializable {
 	// It was created to be used and set by the ExamsMap Utilities.
 	// It has no meaning in the buisness logic.
 	private Integer curricularYear;
+	private Boolean hasSite;
+		
 
 	public InfoExecutionCourse() {
 	}
@@ -347,5 +349,11 @@ public class InfoExecutionCourse extends InfoObject implements Serializable {
 	public void setEqualLoad(String equalLoad) {
 		this.equalLoad = equalLoad;
 	}
+	public Boolean getHasSite() {	
+			return hasSite;
+		}
+		public void setHasSite(Boolean hasSite) {
+			this.hasSite = hasSite;
+			}
 
 }

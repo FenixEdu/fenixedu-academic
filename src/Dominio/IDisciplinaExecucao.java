@@ -44,4 +44,6 @@ public interface IDisciplinaExecucao extends Serializable, IDomainObject,INode {
 	public void setComment(String string);
 	public List getAttendingStudents();
 	public void setAttendingStudents(List attendingStudents);
+	public void setHasSite(Boolean hasSite);
+	public Boolean getHasSite();
 }

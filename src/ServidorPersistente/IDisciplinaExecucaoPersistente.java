@@ -78,5 +78,5 @@ public interface IDisciplinaExecucaoPersistente extends IPersistentObject {
 	  
 	public List readExecutionCourseTeachers(Integer executionCourseId) throws ExcepcaoPersistencia ;
 	public void lockWrite(IDisciplinaExecucao executionCourseToWrite) throws ExcepcaoPersistencia, ExistingPersistentException;
-		
+	public Boolean readSite(Integer executionCourseId) throws ExcepcaoPersistencia;
 }
