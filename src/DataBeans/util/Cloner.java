@@ -73,6 +73,8 @@ import Util.State;
 public abstract class Cloner {
 
 	public static ITurno copyInfoShift2Shift(InfoShift infoShift) {
+		
+		
 		ITurno shift = new Turno();
 		IDisciplinaExecucao executionCourse =
 			Cloner.copyInfoExecutionCourse2ExecutionCourse(
@@ -187,6 +189,8 @@ public abstract class Cloner {
 	 * @return ITurno
 	 */
 	public static ITurno copyInfoShift2IShift(InfoShift infoShift) {
+		if(infoShift==null)
+					return null;
 		ITurno shift = new Turno();
 		IDisciplinaExecucao executionCourse =
 			Cloner.copyInfoExecutionCourse2ExecutionCourse(
@@ -204,6 +208,7 @@ public abstract class Cloner {
 	 * @return ITurno
 	 */
 	public static InfoShift copyShift2InfoShift(ITurno shift) {
+		
 		InfoShift infoShift = new InfoShift();
 
 		InfoExecutionCourse infoExecutionCourse =
@@ -443,6 +448,9 @@ public abstract class Cloner {
 	 * @return Object
 	 */
 	public static InfoShift copyIShift2InfoShift(ITurno shift) {
+
+		if(shift==null)
+			return null;
 		InfoShift infoShift = new InfoShift();
 		InfoExecutionCourse infoExecutionCourse =
 			Cloner.copyIExecutionCourse2InfoExecutionCourse(
