@@ -318,24 +318,19 @@ public class GratuityFileSIBS
 		String valueString = String.valueOf(value);
 		String intPart = valueString.substring(0, valueString.indexOf('.'));
 		String decPart = valueString.substring(valueString.indexOf('.') + 1);
-//		
-//		System.out.println("-->1 " + valueString);
-//		System.out.println("-->2 " + intPart);
-//		System.out.println("-->3 " + decPart);
-		
+
 		for (int i = 0; i < intDigits - intPart.length(); i++)
 		{
 			stringBuffer.append(ZERO);
 		}
 		stringBuffer.append(intPart);
-//		System.out.println("-->4 " + stringBuffer);
 		
+		stringBuffer.append(decPart);
 		for (int i = 0; i < decDigits - decPart.length(); i++)
 		{
 			stringBuffer.append(ZERO);
 		}
-		stringBuffer.append(decPart);
-//		System.out.println("-->5 " + stringBuffer);
+		
 		
 		return stringBuffer.toString();
 	}

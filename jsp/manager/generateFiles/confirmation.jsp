@@ -13,7 +13,7 @@
 			<logic:equal name="fileToGenerate" value="letters">
 				<bean:message key="label.generateFiles.letters" />
 			</logic:equal>
-		<logic:notEmpty>			
+		</logic:notEmpty>			
 		<logic:empty name="fileToGenerate">
 			<bean:message key="label.generateFiles.file" />
 		</logic:empty>
