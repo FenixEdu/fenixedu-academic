@@ -10,12 +10,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoTeacher;
@@ -29,6 +26,7 @@ import ServidorAplicacao.Servico.exceptions.grant.GrantContractEndDateBeforeBegi
 import ServidorAplicacao.Servico.exceptions.grant.GrantOrientationTeacherNotFoundException;
 import ServidorAplicacao.Servico.exceptions.grant.GrantOrientationTeacherPeriodNotWithinContractPeriodException;
 import ServidorAplicacao.Servico.exceptions.grant.GrantTypeNotFoundException;
+import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
@@ -38,7 +36,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  *  
  */
 
-public class EditGrantContractAction extends DispatchAction
+public class EditGrantContractAction extends FenixDispatchAction
 {
 	/*
 	 * Fills the form with the correspondent data
@@ -243,16 +241,14 @@ public class EditGrantContractAction extends DispatchAction
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
 		//set dateBeginContract and dateEndContract
-		if (editGrantContractForm.get("dateBeginContract") != null
-			&& !editGrantContractForm.get("dateBeginContract").equals(""))
+        if(verifyStringParameterInForm(editGrantContractForm,"dateBeginContract"))
 		{
 			infoGrantContract.setDateBeginContract(
 				sdf.parse((String) editGrantContractForm.get("dateBeginContract")));
 			orientationTeacher.setBeginDate(
 				sdf.parse((String) editGrantContractForm.get("dateBeginContract")));
 		}
-		if (editGrantContractForm.get("dateEndContract") != null
-			&& !editGrantContractForm.get("dateEndContract").equals(""))
+        if(verifyStringParameterInForm(editGrantContractForm,"dateEndContract"))
 		{
 			infoGrantContract.setDateEndContract(
 				sdf.parse((String) editGrantContractForm.get("dateEndContract")));
@@ -261,31 +257,25 @@ public class EditGrantContractAction extends DispatchAction
 		}
 
 		//set other dates
-		if (editGrantContractForm.get("dateSendDispatchCC") != null
-			&& !editGrantContractForm.get("dateSendDispatchCC").equals(""))
+        if(verifyStringParameterInForm(editGrantContractForm,"dateSendDispatchCC"))
 			infoGrantContract.setDateSendDispatchCC(
 				sdf.parse((String) editGrantContractForm.get("dateSendDispatchCC")));
-		if (editGrantContractForm.get("dateDispatchCC") != null
-			&& !editGrantContractForm.get("dateDispatchCC").equals(""))
+        if(verifyStringParameterInForm(editGrantContractForm,"dateDispatchCC"))
 			infoGrantContract.setDateDispatchCC(
 				sdf.parse((String) editGrantContractForm.get("dateDispatchCC")));
-		if (editGrantContractForm.get("dateSendDispatchCD") != null
-			&& !editGrantContractForm.get("dateSendDispatchCD").equals(""))
+        if(verifyStringParameterInForm(editGrantContractForm,"dateSendDispatchCD"))
 			infoGrantContract.setDateSendDispatchCD(
 				sdf.parse((String) editGrantContractForm.get("dateSendDispatchCD")));
-		if (editGrantContractForm.get("dateDispatchCD") != null
-			&& !editGrantContractForm.get("dateDispatchCD").equals(""))
+        if(verifyStringParameterInForm(editGrantContractForm,"dateDispatchCD"))
 			infoGrantContract.setDateDispatchCD(
 				sdf.parse((String) editGrantContractForm.get("dateDispatchCD")));
-		if (editGrantContractForm.get("dateAcceptTerm") != null
-			&& !editGrantContractForm.get("dateAcceptTerm").equals(""))
+        if(verifyStringParameterInForm(editGrantContractForm,"dateAcceptTerm"))
 			infoGrantContract.setDateAcceptTerm(
 				sdf.parse((String) editGrantContractForm.get("dateAcceptTerm")));
 
-		if (editGrantContractForm.get("idGrantContract") != null)
+        if(verifyStringParameterInForm(editGrantContractForm,"idGrantContract"))
 			infoGrantContract.setIdInternal((Integer) editGrantContractForm.get("idGrantContract"));
-		if (editGrantContractForm.get("contractNumber") != null
-			&& !editGrantContractForm.get("contractNumber").equals(""))
+        if(verifyStringParameterInForm(editGrantContractForm,"contractNumber"))
 			infoGrantContract.setContractNumber(
 				new Integer((String) editGrantContractForm.get("contractNumber")));
 		infoGrantOwner.setIdInternal((Integer) editGrantContractForm.get("idInternal"));
@@ -304,26 +294,4 @@ public class EditGrantContractAction extends DispatchAction
 
 		return infoGrantContract;
 	}
-
-	/*
-	 * Sets an error to be displayed in the page and sets the mapping forward
-	 */
-	private ActionForward setError(
-		HttpServletRequest request,
-		ActionMapping mapping,
-		String errorMessage,
-		String forwardPage,
-		Object actionArg)
-	{
-		ActionErrors errors = new ActionErrors();
-		ActionError error = new ActionError(errorMessage, actionArg);
-		errors.add(errorMessage, error);
-		saveErrors(request, errors);
-
-		if (forwardPage != null)
-			return mapping.findForward(forwardPage);
-		else
-			return mapping.getInputForward();
-	}
-
 }

@@ -7,15 +7,13 @@ package ServidorApresentacao.Action.grant.qualification;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.actions.DispatchAction;
 
 import DataBeans.person.InfoSiteQualifications;
 import ServidorAplicacao.IUserView;
+import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
@@ -24,7 +22,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  * @author Pica
  */
 
-public class ManageGrantQualificationAction extends DispatchAction
+public class ManageGrantQualificationAction extends FenixDispatchAction
 {
 	/*
 	 * Fills the form with the correspondent data
@@ -73,26 +71,5 @@ public class ManageGrantQualificationAction extends DispatchAction
 			return setError(request,mapping,"errors.grant.unrecoverable","manage-grant-qualification",null);
 		}
 		return mapping.findForward("manage-grant-qualification");
-	}
-
-	/*
-	 * Sets an error to be displayed in the page and sets the mapping forward
-	 */
-	private ActionForward setError(
-		HttpServletRequest request,
-		ActionMapping mapping,
-		String errorMessage,
-		String forwardPage,
-		Object actionArg)
-	{
-		ActionErrors errors = new ActionErrors();
-		ActionError error = new ActionError(errorMessage, actionArg);
-		errors.add(errorMessage, error);
-		saveErrors(request, errors);
-
-		if (forwardPage != null)
-			return mapping.findForward(forwardPage);
-		else
-			return mapping.getInputForward();
 	}
 }

@@ -15,7 +15,6 @@ import Dominio.IDomainObject;
 import Dominio.ITeacher;
 import Dominio.Teacher;
 import Dominio.grant.contract.GrantCostCenter;
-import Dominio.grant.contract.GrantPart;
 import Dominio.grant.contract.GrantPaymentEntity;
 import Dominio.grant.contract.GrantProject;
 import Dominio.grant.contract.IGrantPart;
@@ -59,8 +58,8 @@ public class EditGrantPart extends EditDomainObjectService
 	{
 		IPersistentGrantPart pgs = sp.getIPersistentGrantPart();
 		IGrantPart grantPart = (IGrantPart) domainObject;
-
-		return pgs.readByOID(GrantPart.class, grantPart.getIdInternal());
+        
+		return pgs.readGrantPartByUnique(grantPart.getGrantSubsidy(),grantPart.getGrantPaymentEntity());
 	}
 
 	/*

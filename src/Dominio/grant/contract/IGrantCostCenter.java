@@ -3,12 +3,11 @@
  */
 package Dominio.grant.contract;
 
-import Dominio.IDomainObject;
 
 /**
  * @author pica
  * @author barbosa
  */
-public interface IGrantCostCenter extends IDomainObject
+public interface IGrantCostCenter extends IGrantPaymentEntity
 {
 }

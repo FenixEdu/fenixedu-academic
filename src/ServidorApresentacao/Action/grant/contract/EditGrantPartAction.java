@@ -10,12 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoTeacher;
@@ -30,6 +27,7 @@ import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.grant.InvalidPartResponsibleTeacherException;
+import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
@@ -38,7 +36,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  * @author Pica
  */
 
-public class EditGrantPartAction extends DispatchAction
+public class EditGrantPartAction extends FenixDispatchAction
 {
 	/*
 	 * Fills the form with the correspondent data
@@ -153,11 +151,10 @@ public class EditGrantPartAction extends DispatchAction
 
 			infoGrantPart = populateInfoFromForm(editGrantPartForm);
 
-
 			if (infoGrantPart.getInfoResponsibleTeacher() == null)
 			{
-                //NO part responsible teacher set YET.
-                //The part responsbile teacher will be set to be the payment entity responsible teacher
+				//NO part responsible teacher set YET.
+				//The part responsbile teacher will be set to be the payment entity responsible teacher
 				Object[] args = { infoGrantPart.getInfoGrantPaymentEntity().getIdInternal()};
 				InfoGrantPaymentEntity infoGrantPaymentEntity =
 					(InfoGrantPaymentEntity) ServiceUtils.executeService(
@@ -247,20 +244,22 @@ public class EditGrantPartAction extends DispatchAction
 
 	private InfoGrantPart populateInfoFromForm(DynaValidatorForm editGrantPartForm) throws Exception
 	{
-		InfoGrantPart infoGrantPart = new InfoGrantPart();
-		if (editGrantPartForm.get("idInternal") != null
-			&& !editGrantPartForm.get("idInternal").equals(""))
+        InfoGrantPart infoGrantPart = new InfoGrantPart();
+        
+        //Percentage
+        BeanUtils.copyProperties(infoGrantPart, editGrantPartForm);
+
+		if(verifyStringParameterInForm(editGrantPartForm,"idInternal"))
 			infoGrantPart.setIdInternal((Integer) editGrantPartForm.get("idInternal"));
 
 		InfoGrantSubsidy infoGrantSubsidy = new InfoGrantSubsidy();
 		infoGrantSubsidy.setIdInternal((Integer) editGrantPartForm.get("grantSubsidyId"));
 		infoGrantPart.setInfoGrantSubsidy(infoGrantSubsidy);
 
-        //The part responsible teacher is only set HERE if the user has chosen one in the form
-        //Otherwise, the part responsible teacher will be the payment entity responsible teacher
-		if (editGrantPartForm.get("responsibleTeacherNumber") != null
-			&& !editGrantPartForm.get("responsibleTeacherNumber").equals(""))
-        {
+		//The part responsible teacher is only set HERE if the user has chosen one in the form
+		//Otherwise, the part responsible teacher will be the payment entity responsible teacher
+        if(verifyStringParameterInForm(editGrantPartForm,"responsibleTeacherNumber"))
+		{
 			InfoTeacher infoTeacher = new InfoTeacher();
 			infoTeacher.setTeacherNumber(
 				new Integer((String) editGrantPartForm.get("responsibleTeacherNumber")));
@@ -283,10 +282,7 @@ public class EditGrantPartAction extends DispatchAction
 
 		infoPaymentEntity.setIdInternal(paymentEntityID);
 		infoGrantPart.setInfoGrantPaymentEntity(infoPaymentEntity);
-
-		//Percentage
-		BeanUtils.copyProperties(infoGrantPart, editGrantPartForm);
-
+        
 		return infoGrantPart;
 	}
 
@@ -340,26 +336,5 @@ public class EditGrantPartAction extends DispatchAction
 			return setError(request, mapping, "errors.grant.part.loadingCostCenters", null, null);
 		}
 		return null;
-	}
-
-	/*
-	 * Sets an error to be displayed in the page and sets the mapping forward
-	 */
-	private ActionForward setError(
-		HttpServletRequest request,
-		ActionMapping mapping,
-		String errorMessage,
-		String forwardPage,
-		Object actionArg)
-	{
-		ActionErrors errors = new ActionErrors();
-		ActionError error = new ActionError(errorMessage, actionArg);
-		errors.add(errorMessage, error);
-		saveErrors(request, errors);
-
-		if (forwardPage != null)
-			return mapping.findForward(forwardPage);
-		else
-			return mapping.getInputForward();
 	}
 }

@@ -12,10 +12,10 @@ import DataBeans.InfoTeacher;
  */
 public class InfoGrantPaymentEntity extends InfoObject
 {
-    private Integer number;
-    private String designation;
-    private String ojbConcreteClass;
-    private InfoTeacher infoResponsibleTeacher;
+    protected String number;
+    protected String designation;
+    protected String ojbConcreteClass;
+    protected InfoTeacher infoResponsibleTeacher;
 	
 	public InfoGrantPaymentEntity()
 	{
@@ -41,7 +41,7 @@ public class InfoGrantPaymentEntity extends InfoObject
 	/**
 	 * @return Returns the number.
 	 */
-	public Integer getNumber()
+	public String getNumber()
 	{
 		return number;
 	}
@@ -49,7 +49,7 @@ public class InfoGrantPaymentEntity extends InfoObject
 	/**
 	 * @param number The number to set.
 	 */
-	public void setNumber(Integer number)
+	public void setNumber(String number)
 	{
 		this.number = number;
 	}

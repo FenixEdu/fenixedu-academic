@@ -5456,6 +5456,26 @@
         </filterChains>
     </service>
     <service>
+        <name>ReadPaymentEntityByNumberAndClass</name>
+        <implementationClass>
+            ServidorAplicacao.Servico.grant.contract.ReadPaymentEntityByNumberAndClass</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="GrantOwnerManagerAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+        <name>EditGrantPaymentEntity</name>
+        <implementationClass>
+            ServidorAplicacao.Servico.grant.contract.EditGrantPaymentEntity</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="GrantOwnerManagerAuthorization"/>
+        </filterChains>
+    </service>    
+    <service>
         <name>DeleteGrantPart</name>
         <implementationClass>
             ServidorAplicacao.Servico.grant.contract.DeleteGrantPart</implementationClass>

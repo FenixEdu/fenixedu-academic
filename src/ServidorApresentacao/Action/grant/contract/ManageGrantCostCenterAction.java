@@ -1,5 +1,5 @@
 /*
- * Created on 20/Jan/2004
+ * Created on 15/Fev/2004
  */
 
 package ServidorApresentacao.Action.grant.contract;
@@ -23,12 +23,12 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  * @author Barbosa
  * @author Pica
  */
-public class ManageGrantTypeAction extends FenixDispatchAction
+public class ManageGrantCostCenterAction extends FenixDispatchAction
 {
 	/*
 	 * Fills the form with the correspondent data
 	 */
-	public ActionForward prepareManageGrantTypeForm(
+	public ActionForward prepareManageGrantCostCenter(
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
@@ -36,20 +36,21 @@ public class ManageGrantTypeAction extends FenixDispatchAction
 		throws Exception
 	{
 		try
-		{
-			Object[] args = {};
+ 		{
+			//Object[] args = { GrantCostCenter.class };
+			Object[] args = { "Dominio.grant.contract.GrantCostCenter" };
 			IUserView userView = SessionUtils.getUserView(request);
-			List infoGrantTypeList =
-				(List) ServiceUtils.executeService(userView, "ReadAllGrantTypes", args);
+			List infoGrantCostCenterList =
+				(List) ServiceUtils.executeService(userView, "ReadAllGrantPaymentEntitiesByClassName", args);
 
 			//If they exist put them on request
-			if (infoGrantTypeList != null && !infoGrantTypeList.isEmpty())
-				request.setAttribute("infoGrantTypeList", infoGrantTypeList);
+			if (infoGrantCostCenterList != null && !infoGrantCostCenterList.isEmpty())
+				request.setAttribute("infoGrantCostCenterList", infoGrantCostCenterList);
 		}
 		catch (FenixServiceException e)
 		{
-			return setError(request, mapping, "errors.grant.unrecoverable", "manage-grant-type", null);
+			return setError(request, mapping, "errors.grant.unrecoverable", "manage-grant-costcenter", null);
 		}
-		return mapping.findForward("manage-grant-type");
+		return mapping.findForward("manage-grant-costcenter");
 	}
 }

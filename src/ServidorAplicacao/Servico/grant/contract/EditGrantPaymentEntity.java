@@ -5,7 +5,9 @@
 package ServidorAplicacao.Servico.grant.contract;
 
 import DataBeans.InfoObject;
+import DataBeans.grant.contract.InfoGrantCostCenter;
 import DataBeans.grant.contract.InfoGrantPaymentEntity;
+import DataBeans.grant.contract.InfoGrantProject;
 import DataBeans.util.Cloner;
 import Dominio.IDomainObject;
 import Dominio.grant.contract.GrantPaymentEntity;
@@ -48,9 +50,14 @@ public class EditGrantPaymentEntity extends EditDomainObjectService
 
         return pgs.readByOID(GrantPaymentEntity.class,grantPaymentEntity.getIdInternal());
     }
-    
-    public void run(InfoGrantPaymentEntity infoGrantPaymentEntity) throws FenixServiceException
+   
+    public void run(InfoGrantCostCenter infoObject) throws FenixServiceException
     {
-        super.run(new Integer(0), infoGrantPaymentEntity);
+        super.run(new Integer(0), infoObject);
+    }
+    
+    public void run(InfoGrantProject infoObject) throws FenixServiceException
+    {
+        super.run(new Integer(0), infoObject);
     }
 }

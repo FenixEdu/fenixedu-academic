@@ -283,7 +283,7 @@
        <field-descriptor
 		name="number"
 		column="NUMBER"
-		jdbc-type="INTEGER"
+		jdbc-type="VARCHAR"
 	/>
 	 <field-descriptor
 		name="designation"
@@ -295,12 +295,24 @@
 		column="KEY_TEACHER"
 		jdbc-type="INTEGER"
 	  />
+	  <field-descriptor
+		name="keyGrantCostCenter"
+		column="KEY_COST_CENTER"
+		jdbc-type="INTEGER"
+	  />
 	  <reference-descriptor
 		name="responsibleTeacher"
 		class-ref="Dominio.Teacher"
 		proxy="true">
 		<foreignkey field-ref="keyResponsibleTeacher"/>
 	  </reference-descriptor>
+	  <reference-descriptor
+		name="grantCostCenter"
+		class-ref="Dominio.grant.contract.GrantCostCenter"
+		proxy="true">
+		<foreignkey field-ref="keyGrantCostCenter"/>
+	  </reference-descriptor>
+	  
    </class-descriptor>
 
 <!-- ************************************************************** -->
@@ -331,7 +343,7 @@
       <field-descriptor
       	name="number"
       	column="NUMBER"
-      	jdbc-type="INTEGER"
+      	jdbc-type="VARCHAR"
       	locking="true"
       />
       <field-descriptor
@@ -383,7 +395,7 @@
        <field-descriptor
       	name="number"
       	column="NUMBER"
-      	jdbc-type="INTEGER"
+      	jdbc-type="VARCHAR"
       	locking="true"
       />
       <field-descriptor

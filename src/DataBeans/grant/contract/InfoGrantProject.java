@@ -9,7 +9,25 @@ package DataBeans.grant.contract;
  */
 public class InfoGrantProject extends InfoGrantPaymentEntity
 {	
+    private InfoGrantCostCenter infoGrantCostCenter;
+    
 	public InfoGrantProject()
 	{
 	}
+	/**
+	 * @return Returns the infoGrantCostCenter.
+	 */
+	public InfoGrantCostCenter getInfoGrantCostCenter()
+	{
+		return infoGrantCostCenter;
+	}
+
+	/**
+	 * @param infoGrantCostCenter The infoGrantCostCenter to set.
+	 */
+	public void setInfoGrantCostCenter(InfoGrantCostCenter infoGrantCostCenter)
+	{
+		this.infoGrantCostCenter = infoGrantCostCenter;
+	}
+
 }

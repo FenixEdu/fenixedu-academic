@@ -58,4 +58,19 @@
 		<definition name="editGrantPartForm" extends="facultyAdmOffice.masterPage">
 		<put name="body" value="/facultyAdmOffice/grant/contract/editGrantPart.jsp"></put>
 	</definition>
+	<!-- GRANT COSTCENTER -->
+	<definition name="manageGrantCostCenter" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/contract/manageGrantCostCenter.jsp"></put>
+	</definition>
+		<definition name="editGrantCostCenterForm" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/contract/editGrantCostCenter.jsp"></put>
+	</definition>
+	<!-- GRANT PROJECT -->
+	<definition name="manageGrantProject" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/contract/manageGrantProject.jsp"></put>
+	</definition>
+		<definition name="editGrantProjectForm" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/facultyAdmOffice/grant/contract/editGrantProject.jsp"></put>
+	</definition>
+	
 </tiles-definitions>

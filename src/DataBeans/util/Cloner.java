@@ -1088,6 +1088,14 @@ public abstract class Cloner
 		{
 			infoGrantProject = new InfoGrantProject();
 			copyObjectProperties(infoGrantProject, grantProject);
+
+			InfoTeacher infoResponsibleTeacher =
+				Cloner.copyITeacher2InfoTeacher(grantProject.getResponsibleTeacher());
+			infoGrantProject.setInfoResponsibleTeacher(infoResponsibleTeacher);
+
+			InfoGrantCostCenter infoGrantCostCenter =
+				Cloner.copyIGrantCostCenter2InfoGrantCostCenter(grantProject.getGrantCostCenter());
+			infoGrantProject.setInfoGrantCostCenter(infoGrantCostCenter);
 		}
 		return infoGrantProject;
 	}
@@ -1106,6 +1114,20 @@ public abstract class Cloner
 		{
 			grantProject = new GrantProject();
 			copyObjectProperties(grantProject, infoGrantProject);
+
+			if (infoGrantProject.getInfoResponsibleTeacher() != null)
+			{
+				ITeacher responsibleTeacher =
+					Cloner.copyInfoTeacher2Teacher(infoGrantProject.getInfoResponsibleTeacher());
+				grantProject.setResponsibleTeacher(responsibleTeacher);
+			}
+			if (infoGrantProject.getInfoGrantCostCenter() != null)
+			{
+				IGrantCostCenter costCenter =
+					Cloner.copyInfoGrantCostCenter2IGrantCostCenter(
+						infoGrantProject.getInfoGrantCostCenter());
+				grantProject.setGrantCostCenter(costCenter);
+			}
 		}
 		return grantProject;
 	}
@@ -1124,6 +1146,10 @@ public abstract class Cloner
 		{
 			infoGrantCostCenter = new InfoGrantCostCenter();
 			copyObjectProperties(infoGrantCostCenter, grantCostCenter);
+
+			InfoTeacher infoResponsibleTeacher =
+				Cloner.copyITeacher2InfoTeacher(grantCostCenter.getResponsibleTeacher());
+			infoGrantCostCenter.setInfoResponsibleTeacher(infoResponsibleTeacher);
 		}
 		return infoGrantCostCenter;
 	}
@@ -1142,6 +1168,13 @@ public abstract class Cloner
 		{
 			grantCostCenter = new GrantCostCenter();
 			copyObjectProperties(grantCostCenter, infoGrantCostCenter);
+
+			if (infoGrantCostCenter.getInfoResponsibleTeacher() != null)
+			{
+				ITeacher responsibleTeacher =
+					Cloner.copyInfoTeacher2Teacher(infoGrantCostCenter.getInfoResponsibleTeacher());
+				grantCostCenter.setResponsibleTeacher(responsibleTeacher);
+			}
 		}
 		return grantCostCenter;
 	}
@@ -1154,23 +1187,15 @@ public abstract class Cloner
 	 */
 	public static InfoGrantPaymentEntity copyIGrantPaymentEntity2InfoGrantPaymentEntity(IGrantPaymentEntity grantPaymentEntity)
 	{
-		InfoGrantPaymentEntity infoGrantPaymentEntity = null;
-
 		if (grantPaymentEntity != null)
 		{
 			if (grantPaymentEntity instanceof GrantCostCenter)
-				infoGrantPaymentEntity = new InfoGrantCostCenter();
+				return Cloner.copyIGrantCostCenter2InfoGrantCostCenter(
+					(IGrantCostCenter) grantPaymentEntity);
 			else if (grantPaymentEntity instanceof GrantProject)
-				infoGrantPaymentEntity = new InfoGrantProject();
-
-			copyObjectProperties(infoGrantPaymentEntity, grantPaymentEntity);
-
-			InfoTeacher infoResponsibleTeacher =
-				Cloner.copyITeacher2InfoTeacher(grantPaymentEntity.getResponsibleTeacher());
-			infoGrantPaymentEntity.setInfoResponsibleTeacher(infoResponsibleTeacher);
+				return Cloner.copyIGrantProject2InfoGrantProject((IGrantProject) grantPaymentEntity);
 		}
-
-		return infoGrantPaymentEntity;
+		return null;
 	}
 
 	/**
@@ -1181,24 +1206,16 @@ public abstract class Cloner
 	 */
 	public static IGrantPaymentEntity copyInfoGrantPaymentEntity2IGrantPaymentEntity(InfoGrantPaymentEntity infoGrantPaymentEntity)
 	{
-		IGrantPaymentEntity grantPaymentEntity = null;
-
 		if (infoGrantPaymentEntity != null)
 		{
 			if (infoGrantPaymentEntity instanceof InfoGrantCostCenter)
-				grantPaymentEntity = new GrantCostCenter();
+				return Cloner.copyInfoGrantCostCenter2IGrantCostCenter(
+					(InfoGrantCostCenter) infoGrantPaymentEntity);
 			else if (infoGrantPaymentEntity instanceof InfoGrantProject)
-				grantPaymentEntity = new GrantProject();
-
-			copyObjectProperties(grantPaymentEntity, infoGrantPaymentEntity);
-			if (infoGrantPaymentEntity.getInfoResponsibleTeacher() != null)
-			{
-				ITeacher responsibleTeacher =
-					Cloner.copyInfoTeacher2Teacher(infoGrantPaymentEntity.getInfoResponsibleTeacher());
-				grantPaymentEntity.setResponsibleTeacher(responsibleTeacher);
-			}
+				return Cloner.copyInfoGrantProject2IGrantProject(
+					(InfoGrantProject) infoGrantPaymentEntity);
 		}
-		return grantPaymentEntity;
+		return null;
 	}
 
 	/**

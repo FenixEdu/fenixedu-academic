@@ -32,7 +32,7 @@
 		</tr>
 		<tr>
 			<td align="left">
-				<bean:message key="label.grant.contract.type"/>:&nbsp;
+				<bean:message key="label.grant.part.grantPaymentEntity.designation"/>:&nbsp;
 			</td>
 			<td>
 				<html:select property="project">

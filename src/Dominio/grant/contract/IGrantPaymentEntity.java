@@ -12,12 +12,12 @@ import Dominio.ITeacher;
  */
 public interface IGrantPaymentEntity extends IDomainObject
 {
-    public Integer getNumber();
+    public String getNumber();
     public String getDesignation();
     public String getOjbConcreteClass();
     public ITeacher getResponsibleTeacher();
     
-    public void setNumber(Integer number);
+    public void setNumber(String number);
     public void setDesignation(String designation);
     public void setOjbConcreteClass(String ojbConcreteClass);
     public void setResponsibleTeacher(ITeacher responsibleTeacher);    

@@ -10,12 +10,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoCountry;
@@ -24,6 +21,7 @@ import DataBeans.person.InfoQualification;
 import Dominio.Country;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
@@ -33,7 +31,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  *  
  */
 
-public class EditGrantQualificationAction extends DispatchAction
+public class EditGrantQualificationAction extends FenixDispatchAction
 {
 	/*
 	 * Fills the form with the correspondent data
@@ -71,7 +69,12 @@ public class EditGrantQualificationAction extends DispatchAction
 			}
 			catch (FenixServiceException e)
 			{
-				return setError(request,mapping,"errors.grant.qualification.read","manage-grant-qualification",null);
+				return setError(
+					request,
+					mapping,
+					"errors.grant.qualification.read",
+					"manage-grant-qualification",
+					null);
 			}
 		}
 		else //New
@@ -221,63 +224,41 @@ public class EditGrantQualificationAction extends DispatchAction
 		InfoPerson infoPerson = new InfoPerson();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
-        if (editGrantQualificationForm.get("equivalenceDate") != null
-			&& !editGrantQualificationForm.get("equivalenceDate").equals(""))
-		{
-			infoQualification.setEquivalenceDate(
-				sdf.parse((String) editGrantQualificationForm.get("equivalenceDate")));
-		}
 		infoQualification.setDate(
 			sdf.parse((String) editGrantQualificationForm.get("qualificationDate")));
-
-		if (editGrantQualificationForm.get("idQualification") != null
-			&& !editGrantQualificationForm.get("idQualification").equals(""))
-			infoQualification.setIdInternal((Integer) editGrantQualificationForm.get("idQualification"));
-		if (editGrantQualificationForm.get("mark") != null)
-			infoQualification.setMark((String) editGrantQualificationForm.get("mark"));
 		infoQualification.setSchool((String) editGrantQualificationForm.get("school"));
-		if (editGrantQualificationForm.get("title") != null)
-			infoQualification.setTitle((String) editGrantQualificationForm.get("title"));
 		infoQualification.setDegree((String) editGrantQualificationForm.get("degree"));
-		if (editGrantQualificationForm.get("branch") != null)
+		infoPerson.setIdInternal((Integer) editGrantQualificationForm.get("idPerson"));
+
+		if (verifyStringParameterInForm(editGrantQualificationForm, "equivalenceDate"))
+			infoQualification.setEquivalenceDate(
+				sdf.parse((String) editGrantQualificationForm.get("equivalenceDate")));
+		if (verifyStringParameterInForm(editGrantQualificationForm, "idQualification"))
+			infoQualification.setIdInternal((Integer) editGrantQualificationForm.get("idQualification"));
+		if (verifyStringParameterInForm(editGrantQualificationForm, "mark"))
+			infoQualification.setMark((String) editGrantQualificationForm.get("mark"));
+		if (verifyStringParameterInForm(editGrantQualificationForm, "title"))
+			infoQualification.setTitle((String) editGrantQualificationForm.get("title"));
+		if (verifyStringParameterInForm(editGrantQualificationForm, "branch"))
 			infoQualification.setBranch((String) editGrantQualificationForm.get("branch"));
-		if (editGrantQualificationForm.get("specializationArea") != null)
+		if (verifyStringParameterInForm(editGrantQualificationForm, "specializationArea"))
 			infoQualification.setSpecializationArea(
 				(String) editGrantQualificationForm.get("specializationArea"));
-		if (editGrantQualificationForm.get("degreeRecognition") != null)
+		if (verifyStringParameterInForm(editGrantQualificationForm, "degreeRecognition"))
 			infoQualification.setDegreeRecognition(
 				(String) editGrantQualificationForm.get("degreeRecognition"));
-		if (editGrantQualificationForm.get("equivalenceSchool") != null)
+		if (verifyStringParameterInForm(editGrantQualificationForm, "equivalenceSchool"))
 			infoQualification.setEquivalenceSchool(
 				(String) editGrantQualificationForm.get("equivalenceSchool"));
-		infoPerson.setIdInternal((Integer) editGrantQualificationForm.get("idPerson"));
-		infoQualification.setInfoPerson(infoPerson);
+		
 		InfoCountry infoCountry = new InfoCountry();
 		if (((Integer) editGrantQualificationForm.get("country")).equals(new Integer(0)))
 			infoCountry.setIdInternal(null);
 		else
 			infoCountry.setIdInternal((Integer) editGrantQualificationForm.get("country"));
+        
+        infoQualification.setInfoPerson(infoPerson);
 		infoQualification.setInfoCountry(infoCountry);
 		return infoQualification;
-	}
-	/*
-	 * Sets an error to be displayed in the page and sets the mapping forward
-	 */
-	private ActionForward setError(
-		HttpServletRequest request,
-		ActionMapping mapping,
-		String errorMessage,
-		String forwardPage,
-		Object actionArg)
-	{
-		ActionErrors errors = new ActionErrors();
-		ActionError error = new ActionError(errorMessage, actionArg);
-		errors.add(errorMessage, error);
-		saveErrors(request, errors);
-
-		if (forwardPage != null)
-			return mapping.findForward(forwardPage);
-		else
-			return mapping.getInputForward();
 	}
 }

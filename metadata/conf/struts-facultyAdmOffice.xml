@@ -154,7 +154,27 @@
 				<form-property name="responsibleTeacherNumber" type="java.lang.String"/>
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 			</form-bean>
-						
+
+			<form-bean name="editGrantCostCenterForm" 
+				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+				<form-property name="idInternal" type="java.lang.Integer"/>
+				<form-property name="number" type="java.lang.String"/>
+				<form-property name="designation" type="java.lang.String"/>
+				<form-property name="ojbConcreteClass" type="java.lang.String"/>
+				<form-property name="responsibleTeacherNumber" type="java.lang.String"/>
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+			</form-bean>
+
+			<form-bean name="editGrantProjectForm" 
+				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+				<form-property name="idInternal" type="java.lang.Integer"/>
+				<form-property name="number" type="java.lang.String"/>
+				<form-property name="designation" type="java.lang.String"/>
+				<form-property name="ojbConcreteClass" type="java.lang.String"/>
+				<form-property name="responsibleTeacherNumber" type="java.lang.String"/>
+				<form-property name="grantCostCenterNumber" type="java.lang.String"/>
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+			</form-bean>						
     </form-beans>
 
 	 <!-- ========== Global Exception Definitions ============================== -->
@@ -367,6 +387,49 @@
   			<forward name="show-teachers" path="/grant/contract/showTeachers.jsp"/>
     </action>
 
+	<!-- ===================== USE CASE: MANAGE GRANT COSTCENTER  ============================== -->
+	<action path="/manageGrantCostCenter"
+			input="/manageGrantCostCenter.do?page=0&amp;method=prepareManageGrantCostCenter" 
+			name="voidForm"
+			scope="request"
+   			parameter="method"
+   			type="ServidorApresentacao.Action.grant.contract.ManageGrantCostCenterAction">
+  			<forward name="manage-grant-costcenter" path="manageGrantCostCenter"/> 
+    </action>
+
+    <!-- ===================== USE CASE: EDIT GRANT COSTCENTER ============================== -->
+	<action path="/editGrantCostCenter" 
+			input="/editGrantCostCenter.do?page=0&amp;method=prepareEditGrantCostCenterForm" 
+			name="editGrantCostCenterForm"
+			scope="request"
+   			parameter="method"
+     		validate="true"
+   			type="ServidorApresentacao.Action.grant.contract.EditGrantCostCenterAction">
+  			<forward name="edit-grant-costcenter" path="editGrantCostCenterForm"/>
+  			<forward name="manage-grant-costcenter" path="/manageGrantCostCenter.do?method=prepareManageGrantCostCenter"/>
+    </action>
+
+	<!-- ===================== USE CASE: MANAGE GRANT PROJECT  ============================== -->
+	<action path="/manageGrantProject"
+			input="/manageGrantProject.do?page=0&amp;method=prepareManageGrantProject" 
+			name="voidForm"
+			scope="request"
+   			parameter="method"
+   			type="ServidorApresentacao.Action.grant.contract.ManageGrantProjectAction">
+  			<forward name="manage-grant-project" path="manageGrantProject"/> 
+    </action>
+
+    <!-- ===================== USE CASE: EDIT GRANT PROJECT ============================== -->
+	<action path="/editGrantProject" 
+			input="/editGrantProject.do?page=0&amp;method=prepareEditGrantProjectForm" 
+			name="editGrantProjectForm"
+			scope="request"
+   			parameter="method"
+     		validate="true"
+   			type="ServidorApresentacao.Action.grant.contract.EditGrantProjectAction">
+  			<forward name="edit-grant-project" path="editGrantProjectForm"/>
+  			<forward name="manage-grant-project" path="/manageGrantProject.do?method=prepareManageGrantProject"/>
+    </action>
 
     <!-- ================================================================================= -->
 

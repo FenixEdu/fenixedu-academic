@@ -11,12 +11,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.InfoCountry;
@@ -26,6 +23,7 @@ import Dominio.Country;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 import Util.EstadoCivil;
@@ -37,7 +35,7 @@ import Util.TipoDocumentoIdentificacao;
  * @author Pica
  */
 
-public class EditGrantOwnerAction extends DispatchAction
+public class EditGrantOwnerAction extends FenixDispatchAction
 {
 	/*
 	 * Fills the form with the correspondent data
@@ -422,27 +420,4 @@ public class EditGrantOwnerAction extends DispatchAction
 		infoGrantOwner.setPersonInfo(infoPerson);
 		return infoGrantOwner;
 	}
-
-	/*
-	 * Sets an error to be displayed in the page and sets the mapping forward
-	 */
-	private ActionForward setError(
-		HttpServletRequest request,
-		ActionMapping mapping,
-		String errorMessage,
-		String forwardPage,
-		Object actionArg)
-	{
-		ActionErrors errors = new ActionErrors();
-		String notMessageKey = errorMessage;
-		ActionError error = new ActionError(notMessageKey, actionArg);
-		errors.add(notMessageKey, error);
-		saveErrors(request, errors);
-
-		if (forwardPage != null)
-			return mapping.findForward(forwardPage);
-		else
-			return mapping.getInputForward();
-	}
-
 }

@@ -7,18 +7,16 @@ package ServidorApresentacao.Action.grant.contract;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import DataBeans.grant.contract.InfoGrantContract;
 import DataBeans.grant.contract.InfoGrantSubsidy;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
@@ -28,7 +26,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  *  
  */
 
-public class EditGrantSubsidyAction extends DispatchAction
+public class EditGrantSubsidyAction extends FenixDispatchAction
 {
 	/*
 	 * Fills the form with the correspondent data
@@ -153,16 +151,14 @@ public class EditGrantSubsidyAction extends DispatchAction
 		InfoGrantSubsidy infoGrantSubsidy = new InfoGrantSubsidy();
 		InfoGrantContract infoGrantContract = new InfoGrantContract();
 
-		if (editGrantSubsidyForm.get("idGrantSubsidy") != null)
+        if(verifyStringParameterInForm(editGrantSubsidyForm, "idGrantSubsidy"))
 			infoGrantSubsidy.setIdInternal((Integer) editGrantSubsidyForm.get("idGrantSubsidy"));
 
-		if (editGrantSubsidyForm.get("value") != null && !editGrantSubsidyForm.get("value").equals(""))
+        if(verifyStringParameterInForm(editGrantSubsidyForm, "value"))
 			infoGrantSubsidy.setValue(new Double((String) editGrantSubsidyForm.get("value")));
-		if (editGrantSubsidyForm.get("valueFullName") != null
-			&& !editGrantSubsidyForm.get("valueFullName").equals(""))
-			infoGrantSubsidy.setValueFullName((String) editGrantSubsidyForm.get("valueFullName"));
-		if (editGrantSubsidyForm.get("totalCost") != null
-			&& !editGrantSubsidyForm.get("totalCost").equals(""))
+        if(verifyStringParameterInForm(editGrantSubsidyForm, "valueFullName"))
+        	infoGrantSubsidy.setValueFullName((String) editGrantSubsidyForm.get("valueFullName"));
+        if(verifyStringParameterInForm(editGrantSubsidyForm, "totalCost"))
 			infoGrantSubsidy.setTotalCost(new Double((String) editGrantSubsidyForm.get("totalCost")));
 
 		infoGrantContract.setIdInternal((Integer) editGrantSubsidyForm.get("idGrantContract"));
@@ -170,25 +166,4 @@ public class EditGrantSubsidyAction extends DispatchAction
 
 		return infoGrantSubsidy;
 	}
-	/*
-	 * Sets an error to be displayed in the page and sets the mapping forward
-	 */
-	private ActionForward setError(
-		HttpServletRequest request,
-		ActionMapping mapping,
-		String errorMessage,
-		String forwardPage,
-		Object actionArg)
-	{
-		ActionErrors errors = new ActionErrors();
-		ActionError error = new ActionError(errorMessage, actionArg);
-		errors.add(errorMessage, error);
-		saveErrors(request, errors);
-
-		if (forwardPage != null)
-			return mapping.findForward(forwardPage);
-		else
-			return mapping.getInputForward();
-	}
-
 }

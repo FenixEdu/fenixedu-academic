@@ -12,11 +12,11 @@ import Dominio.ITeacher;
  */
 public abstract class GrantPaymentEntity extends DomainObject implements IGrantPaymentEntity
 {
-    protected Integer number;
+    protected String number;
     protected String designation;
     protected String ojbConcreteClass;
-    private ITeacher responsibleTeacher;
-    private Integer keyResponsibleTeacher;
+    protected ITeacher responsibleTeacher;
+    protected Integer keyResponsibleTeacher;
     
     /**
      * Constructor
@@ -46,7 +46,7 @@ public abstract class GrantPaymentEntity extends DomainObject implements IGrantP
 	/**
 	 * @return Returns the number.
 	 */
-	public Integer getNumber()
+	public String getNumber()
 	{
 		return number;
 	}
@@ -54,7 +54,7 @@ public abstract class GrantPaymentEntity extends DomainObject implements IGrantP
 	/**
 	 * @param number The number to set.
 	 */
-	public void setNumber(Integer number)
+	public void setNumber(String number)
 	{
 		this.number = number;
 	}

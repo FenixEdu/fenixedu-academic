@@ -21,12 +21,13 @@ import ServidorPersistente.grant.IPersistentGrantPaymentEntity;
  */
 public class GrantPaymentEntityOJB extends ObjectFenixOJB implements IPersistentGrantPaymentEntity
 {
-	public IGrantPaymentEntity readByNumber(Integer entityNumber) throws ExcepcaoPersistencia
+	public IGrantPaymentEntity readByNumberAndClass(String entityNumber, String entityClass) throws ExcepcaoPersistencia
     {
         IGrantPaymentEntity paymentEntity = null;
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("number", entityNumber);
+        criteria.addEqualTo("ojbConcreteClass", entityClass);
         paymentEntity = (IGrantPaymentEntity) queryObject(GrantPaymentEntity.class, criteria);
         return paymentEntity;
     }

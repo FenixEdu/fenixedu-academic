@@ -9,15 +9,13 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.ActionError;
-import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import ServidorAplicacao.IUserView;
+import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
@@ -25,7 +23,7 @@ import ServidorApresentacao.Action.sop.utils.SessionUtils;
  * @author Pica
  * @author Barbosa
  */
-public class SearchGrantOwnerByNumberAction extends DispatchAction
+public class SearchGrantOwnerByNumberAction extends FenixDispatchAction
 {
 	public ActionForward searchGrantOwner(
 		ActionMapping mapping,
@@ -60,27 +58,5 @@ public class SearchGrantOwnerByNumberAction extends DispatchAction
 		{
 			return setError(request, mapping, "errors.grant.owner.not.found","search-unSuccesfull",null);
 		}
-	}
-	
-	/*
-	 * Sets an error to be displayed in the page and sets the mapping forward
-	 */
-	private ActionForward setError(
-			HttpServletRequest request,
-			ActionMapping mapping,
-			String errorMessage,
-			String forwardPage,
-			Object actionArg)
-	{
-		ActionErrors errors = new ActionErrors();
-		String notMessageKey = errorMessage;
-		ActionError error = new ActionError(notMessageKey, actionArg);
-		errors.add(notMessageKey, error);
-		saveErrors(request, errors);
-
-		if (forwardPage != null)
-			return mapping.findForward(forwardPage);
-		else
-			return mapping.getInputForward();
-	}
+	}	
 }

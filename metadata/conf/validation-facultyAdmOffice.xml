@@ -307,6 +307,40 @@
 		    </field>
 		</form>
 		
+     	<!-- Edit Grant Cost Center Form -->
+        <form name="editGrantCostCenterForm">
+            <field property="number" depends="required, integer" page="1">
+				<msg name="number" key="errors.integer"/>
+				<arg0 key="label.grant.costcenter.number" resource="true"/>
+		    </field>
+		    <field property="designation" depends="required" page="1">
+		    	<arg0 key="label.grant.costcenter.designation" resource="true"/>
+		    </field>
+		    <field property="responsibleTeacherNumber" depends="required, integer" page="1">
+				<msg name="responsibleTeacherNumber" key="errors.integer"/>
+				<arg0 key="label.grant.costcenter.responsibleTeacher.number" resource="true"/>
+		    </field>
+		</form>
+   	
+     	<!-- Edit Grant Project Form -->
+		<form name="editGrantProjectForm">
+            <field property="number" depends="required, integer" page="1">
+				<msg name="number" key="errors.integer"/>
+				<arg0 key="label.grant.project.number" resource="true"/>
+		    </field>
+		    <field property="designation" depends="required" page="1">
+		    	<arg0 key="label.grant.project.designation" resource="true"/>
+		    </field>
+		    <field property="responsibleTeacherNumber" depends="required, integer" page="1">
+				<msg name="responsibleTeacherNumber" key="errors.integer"/>
+				<arg0 key="label.grant.project.responsibleTeacher.number" resource="true"/>
+		    </field>
+		    <field property="grantCostCenterNumber" depends="required, integer" page="1">
+				<msg name="grantCostCenterNumber" key="errors.integer"/>
+				<arg0 key="label.grant.project.grantCostCenter.number" resource="true"/>
+		    </field>		    
+		</form>
+
     </formset>
 </form-validation>
 

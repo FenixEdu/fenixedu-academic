@@ -7,7 +7,6 @@ import DataBeans.InfoObject;
 import DataBeans.grant.contract.InfoGrantType;
 import DataBeans.util.Cloner;
 import Dominio.IDomainObject;
-import Dominio.grant.contract.GrantType;
 import Dominio.grant.contract.IGrantType;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.framework.EditDomainObjectService;
@@ -45,7 +44,7 @@ public class EditGrantType extends EditDomainObjectService
         IPersistentGrantType pgs = sp.getIPersistentGrantType();
         IGrantType grantType = (IGrantType) domainObject;
 
-        return pgs.readByOID(GrantType.class,grantType.getIdInternal());
+        return pgs.readGrantTypeBySigla(grantType.getSigla());
     }
     
     public void run(InfoGrantType infoGrantType) throws FenixServiceException
