@@ -15,7 +15,6 @@
 				<th>
 				<bean:message key="property.context.curricular.year"/> 
 			</th>
-			
 		</tr>		
 	<logic:iterate id="classview" name="publico.infoClasses" scope="session"	>
 		<tr>
@@ -30,17 +29,15 @@
 			<jsp:getProperty name="classview" property="anoCurricular"/>
 			</td>
 		</tr>	
-	
 	</logic:iterate>
-		</table>
+</table>
 </logic:present>
-
 <logic:notPresent name="publico.infoClasses" scope="session">
-<table align="center" border='1' cellpadding='10'>
+<table align="center" border="0" cellpadding="0" cellspacing="0">
 			<tr align="center">
 				<td>
-					<font color='red'> <bean:message key="message.public.notfound.classes"/> </font>
+					<span class="error"><bean:message key="message.public.notfound.classes"/></span>
 				</td>
 			</tr>
-		</table>
+</table>
 </logic:notPresent>
