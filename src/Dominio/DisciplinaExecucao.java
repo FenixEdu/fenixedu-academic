@@ -2,7 +2,7 @@ package Dominio;
 
 import java.util.List;
 
-public class DisciplinaExecucao implements IDisciplinaExecucao {
+public class DisciplinaExecucao extends DomainObject implements IDisciplinaExecucao {
 
 	private String nome;
 	private String sigla;
@@ -11,8 +11,6 @@ public class DisciplinaExecucao implements IDisciplinaExecucao {
 	private Double praticalHours;
 	private Double theoPratHours;
 	private Double labHours;
-
-	private Integer codigoInterno;
 
 	private List associatedCurricularCourses = null;
 	private List associatedExams = null;
@@ -60,7 +58,7 @@ public class DisciplinaExecucao implements IDisciplinaExecucao {
 
 	public String toString() {
 		String result = "[EXECUTION_COURSE";
-		result += ", codInt=" + codigoInterno;
+		result += ", codInt=" + getIdInternal();
 		result += ", sigla=" + sigla;
 		result += ", nome=" + nome;
 		result += ", theoreticalHours=" + theoreticalHours;
@@ -78,14 +76,6 @@ public class DisciplinaExecucao implements IDisciplinaExecucao {
 	 */
 	public List getAssociatedCurricularCourses() {
 		return associatedCurricularCourses;
-	}
-
-	/**
-	 * Returns the codigoInterno.
-	 * @return Integer
-	 */
-	public Integer getCodigoInterno() {
-		return codigoInterno;
 	}
 
 	/**
@@ -142,14 +132,6 @@ public class DisciplinaExecucao implements IDisciplinaExecucao {
 	 */
 	public void setAssociatedCurricularCourses(List associatedCurricularCourses) {
 		this.associatedCurricularCourses = associatedCurricularCourses;
-	}
-
-	/**
-	 * Sets the codigoInterno.
-	 * @param codigoInterno The codigoInterno to set
-	 */
-	public void setCodigoInterno(Integer codigoInterno) {
-		this.codigoInterno = codigoInterno;
 	}
 
 	/**

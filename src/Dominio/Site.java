@@ -8,9 +8,8 @@ package Dominio;
 /**
  * @author Ivo Brandão
  */
-public class Site implements ISite {
-
-	private Integer internalCode;
+public class Site extends DomainObject implements ISite {
+	
 	private IDisciplinaExecucao executionCourse;
 	private Integer keyExecutionCourse;
 
@@ -43,26 +42,11 @@ public class Site implements ISite {
 	}
 
 	/**
-	 * @return Integer
-	 */
-	public Integer getInternalCode() {
-		return internalCode;
-	}
-
-	/**
 	 * Sets the executionCourse.
 	 * @param executionCourse The executionCourse to set
 	 */
 	public void setExecutionCourse(IDisciplinaExecucao executionCourse) {
 		this.executionCourse = executionCourse;
-	}
-
-	/**
-	 * Sets the internalCode.
-	 * @param internalCode The internalCode to set
-	 */
-	public void setInternalCode(Integer internalCode) {
-		this.internalCode = internalCode;
 	}
 
 	/**
@@ -177,7 +161,7 @@ public class Site implements ISite {
 		 */
 		public String toString() {
 			String result = "[SITE";
-			result += ", codInt=" + getInternalCode();
+			result += ", codInt=" + getIdInternal();
 			result += ", executionCourse=" + getExecutionCourse();
 //			result += ", initialSection=" + getInitialSection();
 			result += ", initialStatement=" + getInitialStatement();
