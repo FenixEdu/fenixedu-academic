@@ -3,20 +3,21 @@
       "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
       "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
 <struts-config>
+
     <!-- ========== Data Source Configuration =============================== -->
     <data-sources />
+
     <!-- ========== Form Bean Definitions ================================== -->
     <form-beans type="org.apache.struts.action.ActionFormBean">
-        <!-- Dynamic-FormBean para Autorizacao -->
-        <form-bean name="authenticationForm" type="org.apache.struts.validator.DynaValidatorForm" 
-            dynamic="true">
+        <form-bean name="authenticationForm"
+				type="org.apache.struts.validator.DynaValidatorForm" 
+            	dynamic="true">
             <form-property name="username" type="java.lang.String" />
             <form-property name="password" type="java.lang.String" />
         </form-bean>
-        <!-- ERROR HANDLING  -->
-        <!-- Dynamic-FormBean for Error handling -->
-        <form-bean name="errorMailForm" type="org.apache.struts.validator.DynaValidatorForm" 
-            dynamic="true">
+        <form-bean name="errorMailForm"
+				type="org.apache.struts.validator.DynaValidatorForm" 
+            	dynamic="true">
             <form-property name="email" type="java.lang.String" />
             <form-property name="subject" type="java.lang.String" />
             <form-property name="body" type="java.lang.String" />
@@ -25,15 +26,13 @@
 
     <!-- ========== Global Exception Definitions ============================== -->
 	<global-exceptions>
-        <exception
-			type="java.lang.Exception"
-			key="error.Exception"
-            handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+        <exception type="java.lang.Exception"
+				key="error.Exception"
+            	handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
 			/>
-		<exception
-			type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
-			key="error.NotAuthorized"
-			handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
+		<exception type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
+				key="error.NotAuthorized"
+				handler="ServidorApresentacao.config.FenixContainerExceptionHandler"
 			/>
 	</global-exceptions>
 
@@ -43,68 +42,69 @@
         <forward name="logoff" path="/logoff.do" contextRelative="true"/>
         <forward name="home" path="/mainPortalPage.jsp" redirect="true" contextRelative="true"/>
         <forward name="firstPage" path="/loginPage.jsp"/>
-        <forward name="exceptionHandling" path="/exceptionHandlingAction.do?method=goBack" 
-            contextRelative="true"/>
+        <forward name="exceptionHandling" path="/exceptionHandlingAction.do?method=goBack" contextRelative="true"/>
     </global-forwards>
+
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
 		<action path="/showErrorPage" forward="/exception/error.jsp"/>
         <action path="/naoAutorizado" forward="/error.jsp"/>
         <action path="/naoExecutado" forward="/error.jsp"/>
 		<action path="/notAuthorized" forward="/exception/notAuthorized.jsp"/>
-
-        <!-- page fronting actions -->
         <action path="/autenticacao" forward="/autenticacao.jsp" />
         <action path="/naoExistente" forward="/error.jsp" />
-        <!-- null pointer exceptions from readByOId -->
         <action path="/nonExistingObject" forward="/nonExistingError.jsp"/>
-        <action path="/home" type="ServidorApresentacao.Action.base.FenixForwardAction" 
-            parameter="/person/index.do"/>
-        <action path="/login" type="ServidorApresentacao.Action.AuthenticationAction" 
-            name="authenticationForm" input="/loginPage.jsp" scope="request" 
-            className="ServidorApresentacao.mapping.ActionMappingForAuthentication">
+
+        <action path="/home"
+				type="ServidorApresentacao.Action.base.FenixForwardAction" 
+            	parameter="/person/index.do"/>
+        <action path="/login"
+				type="ServidorApresentacao.Action.AuthenticationAction" 
+            	name="authenticationForm"
+				input="/loginPage.jsp"
+				scope="request" 
+            	className="ServidorApresentacao.mapping.ActionMappingForAuthentication">
             <set-property property="application" value="@application@"/>
             <forward name="sucess" path="/home.do"/>
         </action>
-        <action path="/logoff" type="ServidorApresentacao.Action.commons.LogOffAction">
+        <action path="/logoff"
+				type="ServidorApresentacao.Action.commons.LogOffAction">
             <forward name="Success" path="/loginPage.jsp"/>
         </action>
         <action path="/dotIstPortal" type="ServidorApresentacao.Action.base.FenixSwitchAction">
         </action>
-        <!-- ExceptionHandling -->
-        <action parameter="method" name="errorMailForm" path="/exceptionHandlingAction" scope="request" 
-            type="ServidorApresentacao.Action.ExceptionHandlingAction" >
+        <action path="/exceptionHandlingAction"
+				parameter="method"
+				name="errorMailForm"
+				scope="request" 
+            	type="ServidorApresentacao.Action.ExceptionHandlingAction" >
         </action>
     </action-mappings>
+
     <!-- ========== Controller Configuration ================================ -->
     <controller processorClass="ServidorApresentacao.processor.FenixRequestProcessorWithTiles"/>
+
     <!-- ========== Message Resources Definitions ============================ -->
     <message-resources parameter="ServidorApresentacao.ApplicationResources" key="DEFAULT" null="false"/>
-    <message-resources parameter="ServidorApresentacao.PortalResources" key="PORTAL_RESOURCES" 
-        null="false"/>
-    <message-resources parameter="ServidorApresentacao.EnumerationResources" key="ENUMERATION_RESOURCES" 
-        null="false"/>
-    <message-resources parameter="ServidorApresentacao.StudentResources" key="STUDENT_RESOURCES" 
-        null="false"/>
-    <message-resources parameter="ServidorApresentacao.TeacherCreditsSheetResources" 
-        key="TEACHER_CREDITS_SHEET_RESOURCES" null="false"/>
+    <message-resources parameter="ServidorApresentacao.PortalResources" key="PORTAL_RESOURCES" null="false"/>
+    <message-resources parameter="ServidorApresentacao.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
+    <message-resources parameter="ServidorApresentacao.StudentResources" key="STUDENT_RESOURCES" null="false"/>
+    <message-resources parameter="ServidorApresentacao.TeacherCreditsSheetResources" key="TEACHER_CREDITS_SHEET_RESOURCES" null="false"/>
     <message-resources parameter="ServidorApresentacao.GEPResources" key="GEP_RESOURCES" null="false"/>
     <message-resources parameter="ServidorApresentacao.GEPResources_en" key="GEP_RESOURCES_EN" null="false"/>
     <message-resources parameter="ServidorApresentacao.DegreeAdministrativeOfficeResources" key="DEGREE_ADM_OFFICE" null="false"/>
 	<message-resources parameter="ServidorApresentacao.SchoolRegistrationResources" key="SCHOOL_REGISTRATION_RESOURCES" null="false"/>
 	<message-resources parameter="ServidorApresentacao.CurriculumHistoricResources" key="CURRICULUM_HISTORIC_RESOURCES" null="false"/>
 
-    
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
-        <set-property property="pathnames" 
-            value="/WEB-INF/validator-rules.xml,/WEB-INF/conf/validation-default.xml"/>
+        <set-property property="pathnames" value="/WEB-INF/validator-rules.xml,/WEB-INF/conf/validation-default.xml"/>
     </plug-in>
     <plug-in className="org.apache.struts.tiles.TilesPlugin" >
-        <set-property property="definitions-config" 
-            value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml" />
+        <set-property property="definitions-config" value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml" />
         <set-property property="moduleAware" value="true" />
         <set-property property="definitions-parser-validate" value="true" />
     </plug-in>
+
 </struts-config>
 
