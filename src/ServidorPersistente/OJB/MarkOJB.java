@@ -23,6 +23,7 @@ import ServidorPersistente.exceptions.ExistingPersistentException;
 public class MarkOJB extends ObjectFenixOJB implements IPersistentMark {
 
 	public MarkOJB() {
+		super();
 	}
 
 	public void deleteAll() throws ExcepcaoPersistencia {
@@ -67,24 +68,14 @@ public class MarkOJB extends ObjectFenixOJB implements IPersistentMark {
 	public List readBy(IExam exam) throws ExcepcaoPersistencia {
 
 		try {
-//			IExam exam = null;
+			
 			String oqlQuery = "select all from " + Mark.class.getName();
 			oqlQuery += " where exam = $1";
 			query.create(oqlQuery);
 			query.bind(exam.getIdInternal());
-		
-
 			List result = (List) query.execute();
-			try {
-				lockRead(result);
-			} catch (ExcepcaoPersistencia ex) {
-				throw ex;
-			}
-			List mark = new ArrayList();
-			if( (result != null) && (result.size() != 0) ) {
-				mark= (List) result.get(0);
-			}
-			return mark;
+			lockRead(result);
+			return result;
 
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
