@@ -11,11 +11,9 @@ import Util.TipoCurso;
  * @author dcs-rjao 24/Mar/2003
  */
 
-public class EnrolmentEvaluation extends DomainObject implements
-        IEnrolmentEvaluation, Comparable
+public class EnrolmentEvaluation extends DomainObject implements IEnrolmentEvaluation, Comparable
 {
-
-    //	private String RECTIFIED = "RECTIFICADO";
+	//private String RECTIFIED = "RECTIFICADO";
     private String RECTIFICATION = "RECTIFICAÇÃO";
 
     private String grade;
@@ -50,43 +48,33 @@ public class EnrolmentEvaluation extends DomainObject implements
     {
     }
 
-    public boolean equals(Object obj)
-    {
-        boolean result = false;
+	public boolean equals(Object obj)
+	{
+		boolean result = false;
+		if (obj instanceof IEnrolmentEvaluation)
+		{
+			IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) obj;
+			result = this.getEnrolment().equals(enrolmentEvaluation.getEnrolment())
+						&& this.getIdInternal().equals(enrolmentEvaluation.getIdInternal());
+		}
+		return result;
+	}
 
-        if (obj instanceof IEnrolmentEvaluation)
-        {
-            IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) obj;
-            result = this.getEnrolment().equals(
-                    enrolmentEvaluation.getEnrolment())
-                    && this.getIdInternal().equals(
-                            enrolmentEvaluation.getIdInternal())/*
-                                                                 * && //
-                                                                 * this.getEnrolmentEvaluationType().equals(enrolmentEvaluation.getEnrolmentEvaluationType()) &&
-                                                                 * this.getGrade().equals(enrolmentEvaluation.getGrade()) &&
-                                                                 */;
-        }
-        return result;
-    }
-
-    public String toString()
-    {
-        String result = "[" + this.getClass().getName() + "; ";
-        result += "grade = " + this.grade + "; ";
-        result += "enrolmentEvaluationType = " + this.enrolmentEvaluationType
-                + "; ";
-        result += "examDate = " + this.examDate + "; ";
-        result += "personResponsibleForGrade = "
-                + this.personResponsibleForGrade + "; ";
-        result += "enrolmentEvaluationState = " + this.enrolmentEvaluationState
-                + "; ";
-        result += "when = " + this.when + "; ";
-        result += "checkSum = " + this.checkSum + "; ";
-        result += "enrolment = " + this.enrolment + "; ";
-        result += "gradeAvailableDate = " + this.gradeAvailableDate + "]\n";
-        result += "employee = " + this.employee + "; ";
-        return result;
-    }
+	public String toString()
+	{
+		String result = "[" + this.getClass().getName() + "; ";
+		result += "grade = " + this.grade + "; ";
+		result += "enrolmentEvaluationType = " + this.enrolmentEvaluationType + "; ";
+		result += "examDate = " + this.examDate + "; ";
+		result += "personResponsibleForGrade = " + this.personResponsibleForGrade + "; ";
+		result += "enrolmentEvaluationState = " + this.enrolmentEvaluationState + "; ";
+		result += "when = " + this.when + "; ";
+		result += "checkSum = " + this.checkSum + "; ";
+		result += "enrolment = " + this.enrolment + "; ";
+		result += "gradeAvailableDate = " + this.gradeAvailableDate + "]\n";
+		result += "employee = " + this.employee + "; ";
+		return result;
+	}
 
     public IEnrolment getEnrolment()
     {
@@ -234,10 +222,8 @@ public class EnrolmentEvaluation extends DomainObject implements
     public int compareTo(Object o)
     {
         IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) o;
-        EnrolmentState myEnrolmentState = getEnrollmentStateByGrade(this
-                .getGrade());
-        EnrolmentState otherEnrolmentState = getEnrollmentStateByGrade(enrolmentEvaluation
-                .getGrade());
+		EnrolmentState myEnrolmentState = getEnrollmentStateByGrade(this.getGrade());
+		EnrolmentState otherEnrolmentState = getEnrollmentStateByGrade(enrolmentEvaluation.getGrade());
         String otherGrade = enrolmentEvaluation.getGrade();
         Date otherWhenAltered = enrolmentEvaluation.getWhen();
 
@@ -257,8 +243,8 @@ public class EnrolmentEvaluation extends DomainObject implements
         {
             return 1;
         }
-        else if (this.getObservation() != null
-                && this.getObservation().equals(this.RECTIFICATION))
+        else if (enrolmentEvaluation.getObservation() != null
+                && enrolmentEvaluation.getObservation().equals(this.RECTIFICATION))
         {
             return -1;
         }
@@ -274,8 +260,7 @@ public class EnrolmentEvaluation extends DomainObject implements
         }
     }
 
-    private int compareMyWhenAlteredDateToAnotherWhenAlteredDate(
-            Date whenAltered)
+	private int compareMyWhenAlteredDateToAnotherWhenAlteredDate(Date whenAltered)
     {
         if (this.getWhen() == null) { return -1; }
         if (whenAltered == null) { return 1; }

@@ -1,12 +1,11 @@
 package middleware.middlewareDomain;
 
-import Dominio.IDomainObject;
 
 /**
  * @author David Santos
  * Feb 5, 2004
  */
-public interface IMWTreatedEnrollment extends IDomainObject
+public interface IMWTreatedEnrollment /*extends IDomainObject*/
 {
 	public abstract Integer getBranchcode();
 	public abstract void setBranchcode(Integer param);
@@ -38,6 +37,4 @@ public interface IMWTreatedEnrollment extends IDomainObject
 	public abstract void setCoursecode(String coursecode);
 	public abstract String toString();
 	public abstract String toFlatString();
-	public Integer getIdInternal();
-	public void setIdInternal(Integer idInternal);
 }

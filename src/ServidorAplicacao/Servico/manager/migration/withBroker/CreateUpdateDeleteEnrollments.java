@@ -1,15 +1,10 @@
-package ServidorAplicacao.Servico.manager.migration;
+package ServidorAplicacao.Servico.manager.migration.withBroker;
 
 import java.io.PrintWriter;
 import java.util.Calendar;
 
-import middleware.middlewareDomain.IMWTreatedEnrollment;
 import middleware.middlewareDomain.MWEnrolment;
-import middleware.middlewareDomain.MWTreatedEnrollment;
-import middleware.persistentMiddlewareSupport.IPersistentMWTreatedEnrollment;
-import middleware.persistentMiddlewareSupport.IPersistentMiddlewareSupport;
-import middleware.persistentMiddlewareSupport.OJBDatabaseSupport.PersistentMiddlewareSupportOJB;
-import middleware.studentMigration.enrollments.ReportAllPastEnrollmentMigration;
+import middleware.persistentMiddlewareSupport.PersistanceBrokerForMigrationProcess;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularCourseScope;
@@ -26,13 +21,6 @@ import Dominio.IPessoa;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.ITeacher;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentEmployee;
-import ServidorPersistente.IPersistentEnrolment;
-import ServidorPersistente.IPersistentExecutionPeriod;
-import ServidorPersistente.IPersistentExecutionYear;
-import ServidorPersistente.IPersistentTeacher;
-import ServidorPersistente.ISuportePersistente;
 import Util.EnrolmentState;
 
 /**
@@ -42,33 +30,14 @@ import Util.EnrolmentState;
 public abstract class CreateUpdateDeleteEnrollments
 {
 	protected PrintWriter out = null;
-	protected ISuportePersistente persistentSuport = null;
-	protected IPersistentMiddlewareSupport persistentMiddlewareSuport = null;
+	protected PersistanceBrokerForMigrationProcess persistentSuport = null;
 
 	/**
 	 * @param mwEnrolment
-	 * @throws ExcepcaoPersistencia
 	 */
-	protected void writeTreatedMWEnrollment(MWEnrolment mwEnrolment) throws ExcepcaoPersistencia
+	protected void markMWEnrollmentAsTreated(MWEnrolment mwEnrolment)
 	{
-		IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
-		IPersistentMWTreatedEnrollment mwTreatedEnrollmentDAO = mws.getIPersistentMWTreatedEnrollment();
-		IMWTreatedEnrollment mwTreatedEnrollment = new MWTreatedEnrollment();
-		mwTreatedEnrollmentDAO.simpleLockWrite(mwTreatedEnrollment);
-		mwTreatedEnrollment.setBranchcode(mwEnrolment.getBranchcode());
-		mwTreatedEnrollment.setCoursecode(mwEnrolment.getCoursecode());
-		mwTreatedEnrollment.setCurricularcoursesemester(mwEnrolment.getCurricularcoursesemester());
-		mwTreatedEnrollment.setCurricularcourseyear(mwEnrolment.getCurricularcourseyear());
-		mwTreatedEnrollment.setDegreecode(mwEnrolment.getDegreecode());
-		mwTreatedEnrollment.setEnrolmentyear(mwEnrolment.getEnrolmentyear());
-		mwTreatedEnrollment.setExamdate(mwEnrolment.getExamdate());
-		mwTreatedEnrollment.setGrade(mwEnrolment.getGrade());
-		mwTreatedEnrollment.setIdinternal(mwEnrolment.getIdinternal());
-		mwTreatedEnrollment.setNumber(mwEnrolment.getNumber());
-		mwTreatedEnrollment.setRemarks(mwEnrolment.getRemarks());
-		mwTreatedEnrollment.setSeason(mwEnrolment.getSeason());
-		mwTreatedEnrollment.setTeachernumber(mwEnrolment.getTeachernumber());
-		mwTreatedEnrollment.setUniversitycode(mwEnrolment.getUniversitycode());
+		this.persistentSuport.delete(mwEnrolment);
 	}
 
 	/**
@@ -77,7 +46,6 @@ public abstract class CreateUpdateDeleteEnrollments
 	 */
 	protected EnrolmentState getEnrollmentStateByGrade(MWEnrolment mwEnrolment)
 	{
-
 		String grade = mwEnrolment.getGrade();
 
 		if (mwEnrolment.getRemarks() != null)
@@ -125,13 +93,13 @@ public abstract class CreateUpdateDeleteEnrollments
 			intGrade = new Integer(grade).intValue();
 		} catch (NumberFormatException e)
 		{
-			out.println("[ERROR 301] Grade from MWEnrolment is not a number: [" + mwEnrolment.getGrade() + "]!");
+			out.println("[ERROR 001] Grade from MWEnrolment is not a number: [" + mwEnrolment.getGrade() + "]!");
 			return null;
 		}
 
 		if ((intGrade > 20) || (intGrade < 0))
 		{
-			out.println("[ERROR 302] Grade from MWEnrolment is not valid: [" + mwEnrolment.getGrade() + "]!");
+			out.println("[ERROR 002] Grade from MWEnrolment is not valid: [" + mwEnrolment.getGrade() + "]!");
 			return null;
 		} else if (intGrade < 10)
 		{
@@ -143,23 +111,19 @@ public abstract class CreateUpdateDeleteEnrollments
 
 	/**
 	 * @param mwEnrolment
-	 * @param persistentSuport
 	 * @return IPessoa
-	 * @throws Throwable
 	 */
-	protected IPessoa getPersonResponsibleForGrade(MWEnrolment mwEnrolment) throws Throwable
+	protected IPessoa getPersonResponsibleForGrade(MWEnrolment mwEnrolment)
 	{
-		IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
-
-		ITeacher teacher = persistentTeacher.readByNumber(mwEnrolment.getTeachernumber());
+		ITeacher teacher = this.persistentSuport.readTeacherByNumber(mwEnrolment.getTeachernumber());
 
 		if (teacher == null)
 		{
 			if (mwEnrolment.getTeachernumber().intValue() != 0)
 			{
 				out.println(
-					"[WARNING 301] No Teacher with number: [" + mwEnrolment.getTeachernumber() + "] was found in the Fenix DB!");
-				ReportAllPastEnrollmentMigration.addUnknownTeachersAndEmployees(mwEnrolment);
+					"[WARNING 001] No Teacher with number: [" + mwEnrolment.getTeachernumber() + "] was found in the Fenix DB!");
+				ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.addUnknownTeachersAndEmployees(mwEnrolment);
 			}
 			return null;
 		}
@@ -169,23 +133,19 @@ public abstract class CreateUpdateDeleteEnrollments
 
 	/**
 	 * @param mwEnrolment
-	 * @param persistentSuport
 	 * @return IEmployee
-	 * @throws Throwable
 	 */
-	protected IEmployee getEmployee(MWEnrolment mwEnrolment) throws Throwable
+	protected IEmployee getEmployee(MWEnrolment mwEnrolment)
 	{
-		IPersistentEmployee persistentEmployee = persistentSuport.getIPersistentEmployee();
-
-		IEmployee employee = persistentEmployee.readByNumber(mwEnrolment.getTeachernumber());
+		IEmployee employee = this.persistentSuport.readEmployeeByNumber(mwEnrolment.getTeachernumber());
 
 		if (employee == null)
 		{
 			if (mwEnrolment.getTeachernumber().intValue() != 0)
 			{
-				ReportAllPastEnrollmentMigration.addUnknownTeachersAndEmployees(mwEnrolment);
+				ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.addUnknownTeachersAndEmployees(mwEnrolment);
 				out.println(
-					"[WARNING 302] No Employee with number: [" + mwEnrolment.getTeachernumber() + "] was found in the Fenix DB!");
+					"[WARNING 002] No Employee with number: [" + mwEnrolment.getTeachernumber() + "] was found in the Fenix DB!");
 			}
 			return null;
 		}
@@ -195,19 +155,15 @@ public abstract class CreateUpdateDeleteEnrollments
 
 	/**
 	 * @param mwEnrolment
-	 * @param persistentSuport
 	 * @return IExecutionPeriod
-	 * @throws Throwable
 	 */
-	protected IExecutionPeriod getExecutionPeriodForThisMWEnrolment(MWEnrolment mwEnrolment) throws Throwable
+	protected IExecutionPeriod getExecutionPeriodForThisMWEnrolment(MWEnrolment mwEnrolment)
 	{
-		IPersistentExecutionPeriod persistentExecutionPeriod = persistentSuport.getIPersistentExecutionPeriod();
-		IPersistentExecutionYear persistentExecutionYear = persistentSuport.getIPersistentExecutionYear();
-
 		String executionYearName = mwEnrolment.getEnrolmentyear().intValue() + "/" + (mwEnrolment.getEnrolmentyear().intValue() + 1);
-		IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName(executionYearName);
+		IExecutionYear executionYear = this.persistentSuport.readExecutionYearByName(executionYearName);
 		String executionPeriodName = mwEnrolment.getCurricularcoursesemester() + " Semestre";
-		IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear(executionPeriodName, executionYear);
+		IExecutionPeriod executionPeriod =
+			this.persistentSuport.readExecutionPeriodByNameAndExecutionYear(executionPeriodName, executionYear);
 
 		return executionPeriod;
 	}
@@ -247,13 +203,13 @@ public abstract class CreateUpdateDeleteEnrollments
 			intGrade = new Integer(grade).intValue();
 		} catch (NumberFormatException e)
 		{
-			out.println("[ERROR 303] Grade from MWEnrolment is not a number: [" + mwEnrolment.getGrade() + "]!");
+			out.println("[ERROR 003] Grade from MWEnrolment is not a number: [" + mwEnrolment.getGrade() + "]!");
 			return "0";
 		}
 
 		if ((intGrade > 20) || (intGrade < 0))
 		{
-			out.println("[ERROR 304] Grade from MWEnrolment is not valid: [" + mwEnrolment.getGrade() + "]!");
+			out.println("[ERROR 004] Grade from MWEnrolment is not valid: [" + mwEnrolment.getGrade() + "]!");
 			return "0";
 		} else
 		{
@@ -264,10 +220,8 @@ public abstract class CreateUpdateDeleteEnrollments
 	/**
 	 * @param enrolment
 	 * @param enrolmentEvaluation
-	 * @throws Throwable
 	 */
 	protected void updateEnrollmentStateAndEvaluationType(IEnrolment enrolment, IEnrolmentEvaluation enrolmentEvaluation)
-		throws Throwable
 	{
 		MWEnrolment mwEnrolment = new MWEnrolment();
 		mwEnrolment.setGrade(enrolmentEvaluation.getGrade());
@@ -275,9 +229,6 @@ public abstract class CreateUpdateDeleteEnrollments
 
 		if (!enrolment.getEnrolmentState().equals(enrolmentStateFromEnrolmentEvaluation))
 		{
-			IPersistentEnrolment enrollmentDAO = this.persistentSuport.getIPersistentEnrolment();
-			enrollmentDAO.simpleLockWrite(enrolment);
-			
 			if (enrolment.getEnrolmentState().equals(EnrolmentState.NOT_APROVED)
 				&& enrolmentStateFromEnrolmentEvaluation.equals(EnrolmentState.APROVED))
 			{
@@ -320,24 +271,26 @@ public abstract class CreateUpdateDeleteEnrollments
 				enrolment.setEnrolmentState(enrolmentStateFromEnrolmentEvaluation);
 				enrolment.setEnrolmentEvaluationType(enrolmentEvaluation.getEnrolmentEvaluationType());
 			} else if (
-					enrolment.getEnrolmentState().equals(EnrolmentState.ENROLED)
+				enrolment.getEnrolmentState().equals(EnrolmentState.ENROLED)
 					&& enrolmentStateFromEnrolmentEvaluation.equals(EnrolmentState.APROVED))
 			{
 				enrolment.setEnrolmentState(enrolmentStateFromEnrolmentEvaluation);
 				enrolment.setEnrolmentEvaluationType(enrolmentEvaluation.getEnrolmentEvaluationType());
 			} else if (
-					enrolment.getEnrolmentState().equals(EnrolmentState.ENROLED)
+				enrolment.getEnrolmentState().equals(EnrolmentState.ENROLED)
 					&& enrolmentStateFromEnrolmentEvaluation.equals(EnrolmentState.NOT_APROVED))
 			{
 				enrolment.setEnrolmentState(enrolmentStateFromEnrolmentEvaluation);
 				enrolment.setEnrolmentEvaluationType(enrolmentEvaluation.getEnrolmentEvaluationType());
 			} else if (
-					enrolment.getEnrolmentState().equals(EnrolmentState.ENROLED)
+				enrolment.getEnrolmentState().equals(EnrolmentState.ENROLED)
 					&& enrolmentStateFromEnrolmentEvaluation.equals(EnrolmentState.NOT_EVALUATED))
 			{
 				enrolment.setEnrolmentState(enrolmentStateFromEnrolmentEvaluation);
 				enrolment.setEnrolmentEvaluationType(enrolmentEvaluation.getEnrolmentEvaluationType());
 			}
+
+			this.persistentSuport.store(enrolment);
 		}
 	}
 
@@ -392,8 +345,10 @@ public abstract class CreateUpdateDeleteEnrollments
 	protected String getStudentCurricularPlanKey(IStudentCurricularPlan studentCurricularPlan)
 	{
 		return this.getStudentKey(studentCurricularPlan.getStudent())
-			+ "-" + this.getDegreeCurricularPlanKey(studentCurricularPlan.getDegreeCurricularPlan())
-			+ "-" + studentCurricularPlan.getCurrentState().toString();
+			+ "-"
+			+ this.getDegreeCurricularPlanKey(studentCurricularPlan.getDegreeCurricularPlan())
+			+ "-"
+			+ studentCurricularPlan.getCurrentState().toString();
 	}
 
 	/**
@@ -421,8 +376,10 @@ public abstract class CreateUpdateDeleteEnrollments
 	protected String getCurricularCourseKey(ICurricularCourse curricularCourse)
 	{
 		return this.getDegreeCurricularPlanKey(curricularCourse.getDegreeCurricularPlan())
-			+ "-" + curricularCourse.getName()
-			+ "-" + curricularCourse.getCode();
+			+ "-"
+			+ curricularCourse.getName()
+			+ "-"
+			+ curricularCourse.getCode();
 	}
 
 	/**
@@ -477,8 +434,10 @@ public abstract class CreateUpdateDeleteEnrollments
 	protected String getEnrollmentKey(IEnrolment enrolment)
 	{
 		return this.getStudentCurricularPlanKey(enrolment.getStudentCurricularPlan())
-			+ "-" + this.getCurricularCourseKey(enrolment.getCurricularCourse())
-			+ "-" + this.getExecutionPeriodKey(enrolment.getExecutionPeriod());
+			+ "-"
+			+ this.getCurricularCourseKey(enrolment.getCurricularCourse())
+			+ "-"
+			+ this.getExecutionPeriodKey(enrolment.getExecutionPeriod());
 	}
 
 	/**

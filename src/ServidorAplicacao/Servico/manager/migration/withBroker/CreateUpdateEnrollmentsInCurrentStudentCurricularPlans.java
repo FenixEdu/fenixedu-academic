@@ -1,4 +1,4 @@
-package ServidorAplicacao.Servico.manager.migration;
+package ServidorAplicacao.Servico.manager.migration.withBroker;
 
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
@@ -10,13 +10,11 @@ import java.util.List;
 
 import middleware.middlewareDomain.MWEnrolment;
 import middleware.middlewareDomain.MWStudent;
-import middleware.persistentMiddlewareSupport.IPersistentMWAluno;
-import middleware.persistentMiddlewareSupport.IPersistentMWEnrolment;
-import middleware.persistentMiddlewareSupport.OJBDatabaseSupport.PersistentMiddlewareSupportOJB;
-import middleware.studentMigration.enrollments.ReportEnrolment;
+import middleware.persistentMiddlewareSupport.PersistanceBrokerForMigrationProcess;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import Dominio.Enrolment;
 import Dominio.EnrolmentEvaluation;
+import Dominio.Frequenta;
 import Dominio.ICurricularCourse;
 import Dominio.IDegreeCurricularPlan;
 import Dominio.IEnrolment;
@@ -26,13 +24,6 @@ import Dominio.IExecutionPeriod;
 import Dominio.IFrequenta;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
-import ServidorAplicacao.Servico.enrolment.WriteEnrolment;
-import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorPersistente.ExcepcaoPersistencia;
-import ServidorPersistente.IPersistentEnrolment;
-import ServidorPersistente.IPersistentEnrolmentEvaluation;
-import ServidorPersistente.IPersistentStudent;
-import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.EnrolmentEvaluationState;
 import Util.EnrolmentEvaluationType;
 import Util.EnrolmentState;
@@ -48,27 +39,28 @@ public class CreateUpdateEnrollmentsInCurrentStudentCurricularPlans
 {
 	private HashMap enrollmentsCreated;
 	private HashMap enrollmentEvaluationsCreated;
+	private HashMap createdAttends;
 
-	public CreateUpdateEnrollmentsInCurrentStudentCurricularPlans()
+	public CreateUpdateEnrollmentsInCurrentStudentCurricularPlans(PersistanceBrokerForMigrationProcess pb)
 	{
-		try
+		if (pb == null)
 		{
-			super.persistentSuport = SuportePersistenteOJB.getInstance();
-			super.persistentMiddlewareSuport = PersistentMiddlewareSupportOJB.getInstance();
-		} catch (ExcepcaoPersistencia e)
+			super.persistentSuport = new PersistanceBrokerForMigrationProcess();
+		} else
 		{
-			e.printStackTrace(System.out);
+			super.persistentSuport = pb;
 		}
-
+		
 		this.enrollmentsCreated = new HashMap();
 		this.enrollmentEvaluationsCreated = new HashMap();
+		this.createdAttends = new HashMap();
 		super.executionPeriod = null;
 		super.out = null;
 		super.numberOfElementsInSpan = 150;
 		super.maximumNumberOfElementsToConsider = 10000;
 	}
 
-	public void run(Boolean toLogToFile, String fileName) throws FenixServiceException
+	public void run(Boolean toLogToFile, String fileName) throws Throwable
 	{
 		MWStudent mwStudent = null;
 
@@ -81,10 +73,7 @@ public class CreateUpdateEnrollmentsInCurrentStudentCurricularPlans
 				super.out = new PrintWriter(file);
 			}
 
-			IPersistentMWAluno mwAlunoDAO = super.persistentMiddlewareSuport.getIPersistentMWAluno();
-			IPersistentMWEnrolment mwEnrollmentDAO = super.persistentMiddlewareSuport.getIPersistentMWEnrolment();
-
-			Integer numberOfStudents = mwAlunoDAO.countAll();
+			Integer numberOfStudents = super.persistentSuport.countAllMWStudents();
 			super.out.println("[INFO] Updating a total of [" + numberOfStudents.intValue() + "] student curriculums.");
 
 			int numberOfSpans = numberOfStudents.intValue() / super.numberOfElementsInSpan;
@@ -95,13 +84,16 @@ public class CreateUpdateEnrollmentsInCurrentStudentCurricularPlans
 			{
 				super.out.println("[INFO] Reading MWStudents...");
 
-				Iterator iterator = mwAlunoDAO.readAllBySpanIterator(new Integer(span), new Integer(super.numberOfElementsInSpan));
+				Iterator iterator =
+					super.persistentSuport.readAllMWStudentsBySpanIterator(
+						new Integer(span),
+						new Integer(super.numberOfElementsInSpan));
 
 				while (iterator.hasNext())
 				{
-					mwStudent = (MWStudent) mwAlunoDAO.lockIteratorNextObj(iterator);
+					mwStudent = (MWStudent) iterator.next();
 
-					mwStudent.setEnrolments(mwEnrollmentDAO.readByStudentNumber(mwStudent.getNumber()));
+					mwStudent.setEnrolments(super.persistentSuport.readMWEnrolmentsByStudentNumber(mwStudent.getNumber()));
 
 					this.writeUpdateStudentEnrollments(mwStudent);
 
@@ -112,45 +104,42 @@ public class CreateUpdateEnrollmentsInCurrentStudentCurricularPlans
 		{
 			if (mwStudent != null)
 			{
-				super.out.println("[ERROR 101.1] Exception migrating student [" + mwStudent.getNumber() + "] enrolments!");
-				super.out.println("[ERROR 101.1] Number: [" + mwStudent.getNumber() + "]");
-				super.out.println("[ERROR 101.1] Degree: [" + mwStudent.getDegreecode() + "]");
-				super.out.println("[ERROR 101.1] Branch: [" + mwStudent.getBranchcode() + "]");
+				super.out.println("[ERROR 011] Exception migrating student [" + mwStudent.getNumber() + "] enrolments!");
+				super.out.println("[ERROR 011] Number: [" + mwStudent.getNumber() + "]");
+				super.out.println("[ERROR 011] Degree: [" + mwStudent.getDegreecode() + "]");
+				super.out.println("[ERROR 011] Branch: [" + mwStudent.getBranchcode() + "]");
 			}
 			e.printStackTrace(super.out);
-			throw new FenixServiceException(e);
+			throw new Throwable(e);
 		}
 
-		WriteEnrolment.resetAttends();
-		ReportEnrolment.report(super.out);
+		ReportForCreateUpdateEnrollmentsInCurrentStudentCurricularPlans.report(super.out);
 		super.out.close();
 	}
 
 	/**
 	 * @param mwStudent
-	 * @throws Throwable
 	 */
-	private void writeUpdateStudentEnrollments(MWStudent mwStudent) throws Throwable
+	private void writeUpdateStudentEnrollments(MWStudent mwStudent)
 	{
-		IPersistentStudent studentDAO = super.persistentSuport.getIPersistentStudent();
-
-		IStudent student = studentDAO.readStudentByNumberAndDegreeType(mwStudent.getNumber(), TipoCurso.LICENCIATURA_OBJ);
+		IStudent student =
+			super.persistentSuport.readStudentByNumberAndDegreeType(mwStudent.getNumber(), TipoCurso.LICENCIATURA_OBJ);
 
 		if (student == null)
 		{
-			super.out.println("[ERROR 102.1] Cannot find Fenix student with number [" + mwStudent.getNumber() + "]!");
+			super.out.println("[ERROR 012] Cannot find Fenix student with number [" + mwStudent.getNumber() + "]!");
 			return;
 		}
 
 		IStudentCurricularPlan studentCurricularPlan =
-			super.persistentSuport.getIStudentCurricularPlanPersistente().readActiveByStudentNumberAndDegreeType(
+			super.persistentSuport.readActiveStudentCurricularPlanByStudentNumberAndDegreeType(
 				student.getNumber(),
 				TipoCurso.LICENCIATURA_OBJ);
 
 		if (studentCurricularPlan == null)
 		{
 			super.out.println(
-				"[ERROR 103.1] Cannot find Fenix StudentCurricularPlan for student number [" + mwStudent.getNumber() + "]!");
+				"[ERROR 013] Cannot find Fenix StudentCurricularPlan for student number [" + mwStudent.getNumber() + "]!");
 			return;
 		}
 
@@ -163,10 +152,8 @@ public class CreateUpdateEnrollmentsInCurrentStudentCurricularPlans
 	 * @param enrolments2Write
 	 * @param studentCurricularPlan
 	 * @param mwStudent
-	 * @throws Throwable
 	 */
 	private void writeUpdateEnrollments(List enrolments2Write, IStudentCurricularPlan studentCurricularPlan, MWStudent mwStudent)
-		throws Throwable
 	{
 		Iterator iterator = enrolments2Write.iterator();
 		while (iterator.hasNext())
@@ -180,7 +167,7 @@ public class CreateUpdateEnrollmentsInCurrentStudentCurricularPlans
 
 			if (degreeCurricularPlan == null)
 			{
-				super.out.println("[ERROR 104.1] Degree Curricular Plan Not Found!");
+				super.out.println("[ERROR 014] Degree Curricular Plan Not Found!");
 				continue;
 			}
 
@@ -188,26 +175,20 @@ public class CreateUpdateEnrollmentsInCurrentStudentCurricularPlans
 
 			if (curricularCourse == null)
 			{
-//				curricularCourse = super.getCurricularCourse(mwEnrolment, studentCurricularPlan.getDegreeCurricularPlan(), true);
-//
-//				if (curricularCourse == null)
-//				{
-					continue;
-//				}
+				continue;
 			}
 
-			IExecutionPeriod currentExecutionPeriod =
-				super.persistentSuport.getIPersistentExecutionPeriod().readActualExecutionPeriod();
+			IExecutionPeriod currentExecutionPeriod = super.persistentSuport.readCurrentExecutionPeriod();
 
 			if (super.executionPeriod.equals(currentExecutionPeriod))
 			{
 				if (!this.hasExecutionInGivenPeriod(curricularCourse, super.executionPeriod))
 				{
-					ReportEnrolment.addExecutionCourseNotFound(
+					ReportForCreateUpdateEnrollmentsInCurrentStudentCurricularPlans.addExecutionCourseNotFound(
 						mwEnrolment.getCoursecode(),
 						mwEnrolment.getDegreecode().toString(),
-						mwEnrolment.getNumber().toString());
-//					continue;
+						mwEnrolment.getNumber().toString(),
+						super.persistentSuport);
 				}
 			}
 
@@ -226,10 +207,11 @@ public class CreateUpdateEnrollmentsInCurrentStudentCurricularPlans
 					// is executed, the enrolment for this particular CurricularCourse will have already been created in the
 					// DB so this CurricularCourse is no longer considered for this execution of the process.
 					// This is for information only.
-					ReportEnrolment.addAttendNotFound(
+					ReportForCreateUpdateEnrollmentsInCurrentStudentCurricularPlans.addAttendNotFound(
 						mwEnrolment.getCoursecode(),
 						mwEnrolment.getDegreecode().toString(),
-						mwEnrolment.getNumber().toString());
+						mwEnrolment.getNumber().toString(),
+						super.persistentSuport);
 					this.createAttend(curricularCourse, enrolment, mwEnrolment);
 				}
 			}
@@ -239,16 +221,12 @@ public class CreateUpdateEnrollmentsInCurrentStudentCurricularPlans
 	/**
 	 * @param curricularCourse
 	 * @param executionPeriod
-	 * @param mwEnrolment
 	 * @return true/false
-	 * @throws Throwable
 	 */
-	private boolean hasExecutionInGivenPeriod(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod) throws Throwable
+	private boolean hasExecutionInGivenPeriod(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod)
 	{
 		IExecutionCourse executionCourse =
-			super.persistentSuport.getIPersistentExecutionCourse().readbyCurricularCourseAndExecutionPeriod(
-				curricularCourse,
-				executionPeriod);
+			super.persistentSuport.readExecutionCourseByCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
 		if (executionCourse == null)
 		{
 			return false;
@@ -259,16 +237,15 @@ public class CreateUpdateEnrollmentsInCurrentStudentCurricularPlans
 	}
 
 	/**
+	 * @param mwEnrolment
 	 * @param studentCurricularPlan
 	 * @param curricularCourse
 	 * @return IEnrolment
-	 * @throws Throwable
 	 */
 	private IEnrolment writeUpdateEnrollment(
 		MWEnrolment mwEnrolment,
 		IStudentCurricularPlan studentCurricularPlan,
 		ICurricularCourse curricularCourse)
-		throws Throwable
 	{
 		IEnrolment enrolment = this.getEnrollment(mwEnrolment, studentCurricularPlan, curricularCourse);
 		this.writeUpdateEnrollmentEvaluation(mwEnrolment, enrolment);
@@ -280,18 +257,14 @@ public class CreateUpdateEnrollmentsInCurrentStudentCurricularPlans
 	 * @param studentCurricularPlan
 	 * @param curricularCourse
 	 * @return IEnrolment
-	 * @throws Throwable
 	 */
 	private IEnrolment getEnrollment(
 		MWEnrolment mwEnrolment,
 		IStudentCurricularPlan studentCurricularPlan,
 		ICurricularCourse curricularCourse)
-		throws Throwable
 	{
-		IPersistentEnrolment enrollmentDAO = super.persistentSuport.getIPersistentEnrolment();
-
 		IEnrolment enrolment =
-			enrollmentDAO.readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
+			super.persistentSuport.readEnrolmentByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
 				studentCurricularPlan,
 				curricularCourse,
 				this.executionPeriod);
@@ -309,7 +282,6 @@ public class CreateUpdateEnrollmentsInCurrentStudentCurricularPlans
 			if (enrolment == null)
 			{
 				enrolment = new Enrolment();
-				enrollmentDAO.simpleLockWrite(enrolment);
 				enrolment.setCurricularCourse(curricularCourse);
 				enrolment.setExecutionPeriod(this.executionPeriod);
 				enrolment.setStudentCurricularPlan(studentCurricularPlan);
@@ -324,9 +296,12 @@ public class CreateUpdateEnrollmentsInCurrentStudentCurricularPlans
 					enrolmentState = super.getEnrollmentStateByGrade(mwEnrolment);
 				}
 				enrolment.setEnrolmentState(enrolmentState);
+				enrolment.setAckOptLock(new Integer(1));
+
+				super.persistentSuport.store(enrolment);
 
 				this.enrollmentsCreated.put(key, enrolment);
-				ReportEnrolment.addEnrolmentMigrated();
+				ReportForCreateUpdateEnrollmentsInCurrentStudentCurricularPlans.addEnrolmentMigrated();
 			}
 		}
 
@@ -336,19 +311,16 @@ public class CreateUpdateEnrollmentsInCurrentStudentCurricularPlans
 	/**
 	 * @param mwEnrolment
 	 * @param enrolment
-	 * @throws Throwable
 	 */
-	private void writeUpdateEnrollmentEvaluation(MWEnrolment mwEnrolment, IEnrolment enrolment) throws Throwable
+	private void writeUpdateEnrollmentEvaluation(MWEnrolment mwEnrolment, IEnrolment enrolment)
 	{
-		IPersistentEnrolmentEvaluation enrollmentEvaluationDAO = super.persistentSuport.getIPersistentEnrolmentEvaluation();
-
-		IExecutionPeriod currentExecutionPeriod = super.persistentSuport.getIPersistentExecutionPeriod().readActualExecutionPeriod();
+		IExecutionPeriod currentExecutionPeriod = super.persistentSuport.readCurrentExecutionPeriod();
 
 		if (((mwEnrolment.getGrade() == null) || (mwEnrolment.getGrade().equals("")))
 			&& super.executionPeriod.equals(currentExecutionPeriod))
 		{
 			IEnrolmentEvaluation enrolmentEvaluation =
-				enrollmentEvaluationDAO.readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGrade(
+				super.persistentSuport.readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGrade(
 					enrolment,
 					EnrolmentEvaluationType.NORMAL_OBJ,
 					null);
@@ -356,7 +328,6 @@ public class CreateUpdateEnrollmentsInCurrentStudentCurricularPlans
 			if (enrolmentEvaluation == null)
 			{
 				enrolmentEvaluation = new EnrolmentEvaluation();
-				enrollmentEvaluationDAO.simpleLockWrite(enrolmentEvaluation);
 				enrolmentEvaluation.setCheckSum(null);
 				enrolmentEvaluation.setEmployee(null);
 				enrolmentEvaluation.setEnrolment(enrolment);
@@ -370,16 +341,18 @@ public class CreateUpdateEnrollmentsInCurrentStudentCurricularPlans
 				enrolmentEvaluation.setWhen(null);
 				enrolmentEvaluation.setAckOptLock(new Integer(1));
 
-				ReportEnrolment.addEnrolmentEvaluationMigrated();
+				super.persistentSuport.store(enrolmentEvaluation);
+
+				ReportForCreateUpdateEnrollmentsInCurrentStudentCurricularPlans.addEnrolmentEvaluationMigrated();
 			}
-			super.writeTreatedMWEnrollment(mwEnrolment);
+			super.markMWEnrollmentAsTreated(mwEnrolment);
 		} else
 		{
 			Date whenAltered = this.getWhenAlteredDate(mwEnrolment);
 			String grade = super.getAcurateGrade(mwEnrolment);
 
 			IEnrolmentEvaluation enrolmentEvaluation =
-				enrollmentEvaluationDAO.readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGrade(
+				super.persistentSuport.readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGrade(
 					enrolment,
 					EnrolmentEvaluationType.NORMAL_OBJ,
 					grade);
@@ -398,36 +371,33 @@ public class CreateUpdateEnrollmentsInCurrentStudentCurricularPlans
 				if (enrolmentEvaluation == null)
 				{
 					enrolmentEvaluation = new EnrolmentEvaluation();
-					enrollmentEvaluationDAO.simpleLockWrite(enrolmentEvaluation);
 					enrolmentEvaluation.setEnrolment(enrolment);
 					enrolmentEvaluation.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL_OBJ);
 					enrolmentEvaluation.setGrade(grade);
+					enrolmentEvaluation.setAckOptLock(new Integer(1));
 
 					this.setEnrollmentEvaluationValues(mwEnrolment, enrolment, whenAltered, enrolmentEvaluation);
+					super.updateEnrollmentStateAndEvaluationType(enrolment, enrolmentEvaluation);
+
+					super.persistentSuport.store(enrolmentEvaluation);
 
 					this.enrollmentEvaluationsCreated.put(key, enrolmentEvaluation);
 
-					super.updateEnrollmentStateAndEvaluationType(enrolment, enrolmentEvaluation);
-
-					ReportEnrolment.addEnrolmentEvaluationMigrated();
-					super.writeTreatedMWEnrollment(mwEnrolment);
+					ReportForCreateUpdateEnrollmentsInCurrentStudentCurricularPlans.addEnrolmentEvaluationMigrated();
+					super.markMWEnrollmentAsTreated(mwEnrolment);
 				} else
 				{
-					enrollmentEvaluationDAO.simpleLockWrite(enrolmentEvaluation);
 					this.setEnrollmentEvaluationValues(mwEnrolment, enrolment, whenAltered, enrolmentEvaluation);
-
 					super.updateEnrollmentStateAndEvaluationType(enrolment, enrolmentEvaluation);
-
-					super.writeTreatedMWEnrollment(mwEnrolment);
+					super.persistentSuport.store(enrolmentEvaluation);
+					super.markMWEnrollmentAsTreated(mwEnrolment);
 				}
 			} else
 			{
-				enrollmentEvaluationDAO.simpleLockWrite(enrolmentEvaluation);
 				this.setEnrollmentEvaluationValues(mwEnrolment, enrolment, whenAltered, enrolmentEvaluation);
-
 				super.updateEnrollmentStateAndEvaluationType(enrolment, enrolmentEvaluation);
-
-				super.writeTreatedMWEnrollment(mwEnrolment);
+				super.persistentSuport.store(enrolmentEvaluation);
+				super.markMWEnrollmentAsTreated(mwEnrolment);
 			}
 		}
 	}
@@ -459,14 +429,12 @@ public class CreateUpdateEnrollmentsInCurrentStudentCurricularPlans
 	 * @param enrolment
 	 * @param newDate
 	 * @param enrolmentEvaluation
-	 * @throws Throwable
 	 */
 	private void setEnrollmentEvaluationValues(
 		MWEnrolment mwEnrolment,
 		IEnrolment enrolment,
 		Date newDate,
 		IEnrolmentEvaluation enrolmentEvaluation)
-		throws Throwable
 	{
 		if (enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
 		{
@@ -482,7 +450,6 @@ public class CreateUpdateEnrollmentsInCurrentStudentCurricularPlans
 		enrolmentEvaluation.setWhen(newDate);
 		enrolmentEvaluation.setEmployee(super.getEmployee(mwEnrolment));
 		enrolmentEvaluation.setCheckSum(null);
-		enrolmentEvaluation.setAckOptLock(new Integer(1));
 	}
 
 	/**
@@ -490,37 +457,32 @@ public class CreateUpdateEnrollmentsInCurrentStudentCurricularPlans
 	 * @param enrolment
 	 * @param mwEnrolment
 	 * @return IFrequenta
-	 * @throws Throwable
 	 */
 	private IFrequenta updateAttend(ICurricularCourse curricularCourse, IEnrolment enrolment, MWEnrolment mwEnrolment)
-		throws Throwable
 	{
 		IExecutionCourse executionCourse =
-			super.persistentSuport.getIPersistentExecutionCourse().readbyCurricularCourseAndExecutionPeriod(
-				curricularCourse,
-				this.executionPeriod);
+			super.persistentSuport.readExecutionCourseByCurricularCourseAndExecutionPeriod(curricularCourse, this.executionPeriod);
 
 		IFrequenta attend = null;
 
 		if (executionCourse == null)
 		{
 			// NOTE [DAVID]: This should not happen at this point.
-			ReportEnrolment.addExecutionCourseNotFound(
+			ReportForCreateUpdateEnrollmentsInCurrentStudentCurricularPlans.addExecutionCourseNotFound(
 				mwEnrolment.getCoursecode(),
 				mwEnrolment.getDegreecode().toString(),
-				mwEnrolment.getNumber().toString());
+				mwEnrolment.getNumber().toString(),
+				super.persistentSuport);
 		} else
 		{
 			IStudent student =
-				super.persistentSuport.getIPersistentStudent().readStudentByNumberAndDegreeType(
-					mwEnrolment.getNumber(),
-					TipoCurso.LICENCIATURA_OBJ);
-			attend = super.persistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(student, executionCourse);
+				super.persistentSuport.readStudentByNumberAndDegreeType(mwEnrolment.getNumber(), TipoCurso.LICENCIATURA_OBJ);
+			attend = super.persistentSuport.readAttendByStudentAndExecutionCourse(student, executionCourse);
 
 			if (attend != null)
 			{
-				super.persistentSuport.getIFrequentaPersistente().simpleLockWrite(attend);
 				attend.setEnrolment(enrolment);
+				super.persistentSuport.store(attend);
 			}
 
 		}
@@ -531,36 +493,73 @@ public class CreateUpdateEnrollmentsInCurrentStudentCurricularPlans
 	 * @param curricularCourse
 	 * @param enrolment
 	 * @param mwEnrolment
-	 * @throws Throwable
 	 */
-	private void createAttend(ICurricularCourse curricularCourse, IEnrolment enrolment, MWEnrolment mwEnrolment) throws Throwable
+	private void createAttend(ICurricularCourse curricularCourse, IEnrolment enrolment, MWEnrolment mwEnrolment)
 	{
 		IExecutionCourse executionCourse =
-			super.persistentSuport.getIPersistentExecutionCourse().readbyCurricularCourseAndExecutionPeriod(
-				curricularCourse,
-				this.executionPeriod);
+			super.persistentSuport.readExecutionCourseByCurricularCourseAndExecutionPeriod(curricularCourse, this.executionPeriod);
 
 		if (executionCourse == null)
 		{
 			// NOTE [DAVID]: This error report can be added here even if it was added before in the
 			// updateAttend() method
 			// because this addition wont repeat same occurrences. This should not happen at this point.
-			ReportEnrolment.addExecutionCourseNotFound(
+			ReportForCreateUpdateEnrollmentsInCurrentStudentCurricularPlans.addExecutionCourseNotFound(
 				mwEnrolment.getCoursecode(),
 				mwEnrolment.getDegreecode().toString(),
-				mwEnrolment.getNumber().toString());
+				mwEnrolment.getNumber().toString(),
+				super.persistentSuport);
 		} else
 		{
 			IStudent student =
-				super.persistentSuport.getIPersistentStudent().readStudentByNumberAndDegreeType(
-					mwEnrolment.getNumber(),
-					TipoCurso.LICENCIATURA_OBJ);
-			WriteEnrolment.createAttend(student, curricularCourse, this.executionPeriod, enrolment);
+				super.persistentSuport.readStudentByNumberAndDegreeType(mwEnrolment.getNumber(), TipoCurso.LICENCIATURA_OBJ);
+			this.createAttend(student, curricularCourse, this.executionPeriod, enrolment);
 			// NOTE [DAVID]: This is for information only.
-			ReportEnrolment.addCreatedAttend(
+			ReportForCreateUpdateEnrollmentsInCurrentStudentCurricularPlans.addCreatedAttend(
 				mwEnrolment.getCoursecode(),
 				mwEnrolment.getDegreecode().toString(),
 				mwEnrolment.getNumber().toString());
+		}
+	}
+
+	/**
+	 * @param studentCurricularPlan
+	 * @param curricularCourse
+	 * @param executionPeriod
+	 * @param enrolmentToWrite
+	 */
+	private void createAttend(
+		IStudent student,
+		ICurricularCourse curricularCourse,
+		IExecutionPeriod executionPeriod,
+		IEnrolment enrolmentToWrite)
+	{
+		IExecutionCourse executionCourse =
+			super.persistentSuport.readExecutionCourseByCurricularCourseAndExecutionPeriod(curricularCourse, executionPeriod);
+		if (executionCourse != null)
+		{
+			IFrequenta attend = super.persistentSuport.readAttendByStudentAndExecutionCourse(student, executionCourse);
+			String key = student.getIdInternal().toString() + "-" + executionCourse.getIdInternal().toString();
+
+			if (attend == null)
+			{
+				attend = (IFrequenta) createdAttends.get(key);
+			}
+
+			if (attend != null)
+			{
+				attend.setEnrolment(enrolmentToWrite);
+				super.persistentSuport.store(attend);
+			} else
+			{
+				IFrequenta attendToWrite = new Frequenta();
+				attendToWrite.setAluno(student);
+				attendToWrite.setDisciplinaExecucao(executionCourse);
+				attendToWrite.setEnrolment(enrolmentToWrite);
+				attendToWrite.setAckOptLock(new Integer(1));
+				createdAttends.put(key, attendToWrite);
+				super.persistentSuport.store(attend);
+			}
 		}
 	}
 

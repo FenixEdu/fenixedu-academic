@@ -16,7 +16,7 @@ import middleware.persistentMiddlewareSupport.IPersistentMWDegreeTranslation;
 import middleware.persistentMiddlewareSupport.IPersistentMWEquivalenciaIleec;
 import middleware.persistentMiddlewareSupport.IPersistentMiddlewareSupport;
 import middleware.persistentMiddlewareSupport.OJBDatabaseSupport.PersistentMiddlewareSupportOJB;
-import middleware.studentMigration.enrollments.CreateAndUpdateAllStudentsPastEnrolments;
+import middleware.studentMigration.enrollments.StudentCurriculumsMigrationUtils;
 import Dominio.CreditsInAnySecundaryArea;
 import Dominio.CreditsInScientificArea;
 import Dominio.CurricularCourse;
@@ -444,7 +444,7 @@ if(enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
 		IEnrolmentEquivalence enrolmentEquivalence = enrolmentEquivalenceDAO.readByEnrolment(newEnrolment);
 		if (enrolmentEquivalence == null)
 		{
-			String key = CreateAndUpdateAllStudentsPastEnrolments.getEnrollmentKey(newEnrolment);
+			String key = StudentCurriculumsMigrationUtils.getEnrollmentKey(newEnrolment);
 			enrolmentEquivalence = (IEnrolmentEquivalence) MakeEquivalencesForILEECStudents.enrolmentEquivalencesCreated.get(key);
 			if (enrolmentEquivalence == null)
 			{
@@ -462,7 +462,7 @@ if(enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
 				oldEnrolment);
 		if (equivalentEnrolmentForEnrolmentEquivalence == null)
 		{
-			String key = CreateAndUpdateAllStudentsPastEnrolments.getEnrollmentKey(oldEnrolment);
+			String key = StudentCurriculumsMigrationUtils.getEnrollmentKey(oldEnrolment);
 			equivalentEnrolmentForEnrolmentEquivalence =
 				(IEquivalentEnrolmentForEnrolmentEquivalence) MakeEquivalencesForILEECStudents
 					.equivalentEnrolmentForEnrolmentEquivalencesCreated
@@ -840,7 +840,7 @@ if(enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
 			enrolmentToObtainKey.setStudentCurricularPlan(currentStudentCurricularPlan);
 			enrolmentToObtainKey.setCurricularCourse(curricularCourse);
 			enrolmentToObtainKey.setExecutionPeriod(executionPeriod);
-			String key = CreateAndUpdateAllStudentsPastEnrolments.getEnrollmentKey(enrolmentToObtainKey);
+			String key = StudentCurriculumsMigrationUtils.getEnrollmentKey(enrolmentToObtainKey);
 
 			enrolmentToWrite = (IEnrolment) MakeEquivalencesForILEECStudents.enrollmentsCreated.get(key);
 
@@ -898,7 +898,7 @@ if(enrolment.getEnrolmentState().equals(EnrolmentState.APROVED))
 			enrolmentEvaluationToObtainKey.setGrade(enrolmentEvaluation.getGrade());
 			enrolmentEvaluationToObtainKey.setEnrolmentEvaluationType(EnrolmentEvaluationType.EQUIVALENCE_OBJ);
 			enrolmentEvaluationToObtainKey.setWhen(enrolmentEvaluation.getWhen());
-			String key = CreateAndUpdateAllStudentsPastEnrolments.getEnrollmentEvaluationKey(enrolmentEvaluationToObtainKey);
+			String key = StudentCurriculumsMigrationUtils.getEnrollmentEvaluationKey(enrolmentEvaluationToObtainKey);
 
 			enrolmentEvaluationToWrite =
 				(IEnrolmentEvaluation) MakeEquivalencesForILEECStudents.enrollmentEvaluationsCreated.get(key);

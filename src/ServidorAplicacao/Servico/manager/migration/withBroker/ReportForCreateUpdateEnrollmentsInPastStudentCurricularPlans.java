@@ -1,4 +1,4 @@
-package middleware.studentMigration.enrollments;
+package ServidorAplicacao.Servico.manager.migration.withBroker;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import middleware.middlewareDomain.MWStudent;
  * 14/Out/2003
  */
 
-public class ReportAllPastEnrollmentMigration
+public class ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans
 {
 	// For errors:
 	private static HashMap unknownCurricularCourses = new HashMap();
@@ -42,12 +42,12 @@ public class ReportAllPastEnrollmentMigration
 	
 	public static void addEnrollmentsDeleted()
 	{
-		ReportAllPastEnrollmentMigration.totalEnrollmentsDeleted++;
+		ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.totalEnrollmentsDeleted++;
 	}
 	
 	public static void addEnrollmentEvaluationsDeleted()
 	{
-		ReportAllPastEnrollmentMigration.totalEnrollmentEvaluationsDeleted++;
+		ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.totalEnrollmentEvaluationsDeleted++;
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class ReportAllPastEnrollmentMigration
 	public static void addClassCastExceptions(MWStudent mwStudent)
 	{
 		String value = "Number: [" + mwStudent.getNumber() + "] Degree: [" + mwStudent.getDegreecode() + "] Branch: [" + mwStudent.getBranchcode() + "] Document ID number: [" + mwStudent.getDocumentidnumber() + "]";
-		ReportAllPastEnrollmentMigration.classCastExceptions.add(value);
+		ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.classCastExceptions.add(value);
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class ReportAllPastEnrollmentMigration
 	{
 		String key = mwEnrolment.getCoursecode();
 
-		List mwEnrolmentCasesList = (List) ReportAllPastEnrollmentMigration.unknownCurricularCourses.get(key);
+		List mwEnrolmentCasesList = (List) ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.unknownCurricularCourses.get(key);
 		if (mwEnrolmentCasesList == null)
 		{
 			mwEnrolmentCasesList = new ArrayList();
@@ -78,8 +78,8 @@ public class ReportAllPastEnrollmentMigration
 			}
 		}
 		
-		ReportAllPastEnrollmentMigration.unknownCurricularCourses.put(key, mwEnrolmentCasesList);
-		ReportAllPastEnrollmentMigration.unknownCurricularCoursesTimes++;
+		ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.unknownCurricularCourses.put(key, mwEnrolmentCasesList);
+		ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.unknownCurricularCoursesTimes++;
 	}
 
 	/**
@@ -89,7 +89,7 @@ public class ReportAllPastEnrollmentMigration
 	{
 		String key = mwEnrolment.getTeachernumber().toString();
 
-		List mwEnrolmentCasesList = (List) ReportAllPastEnrollmentMigration.unknownTeachersAndEmployees.get(key);
+		List mwEnrolmentCasesList = (List) ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.unknownTeachersAndEmployees.get(key);
 		if (mwEnrolmentCasesList == null)
 		{
 			mwEnrolmentCasesList = new ArrayList();
@@ -101,8 +101,8 @@ public class ReportAllPastEnrollmentMigration
 			}
 		}
 		
-		ReportAllPastEnrollmentMigration.unknownTeachersAndEmployees.put(key, mwEnrolmentCasesList);
-		ReportAllPastEnrollmentMigration.unknownTeachersAndEmployeesTimes++;
+		ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.unknownTeachersAndEmployees.put(key, mwEnrolmentCasesList);
+		ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.unknownTeachersAndEmployeesTimes++;
 	}
 
 	/**
@@ -110,7 +110,7 @@ public class ReportAllPastEnrollmentMigration
 	 */
 	public static void addNotCreatedEnrolmentEvaluation(String key, MWEnrolment mwEnrolment)
 	{
-		List mwEnrolmentCasesList = (List) ReportAllPastEnrollmentMigration.notCreatedEnrolmentEvaluations.get(key);
+		List mwEnrolmentCasesList = (List) ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.notCreatedEnrolmentEvaluations.get(key);
 		if (mwEnrolmentCasesList == null)
 		{
 			mwEnrolmentCasesList = new ArrayList();
@@ -122,8 +122,8 @@ public class ReportAllPastEnrollmentMigration
 			}
 		}
 		
-		ReportAllPastEnrollmentMigration.notCreatedEnrolmentEvaluations.put(key, mwEnrolmentCasesList);
-		ReportAllPastEnrollmentMigration.notCreatedEnrolmentEvaluationsTimes++;
+		ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.notCreatedEnrolmentEvaluations.put(key, mwEnrolmentCasesList);
+		ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.notCreatedEnrolmentEvaluationsTimes++;
 	}
 
 	/**
@@ -131,7 +131,7 @@ public class ReportAllPastEnrollmentMigration
 	 */
 	public static void addEnrolmentsMigrated(int value)
 	{
-		ReportAllPastEnrollmentMigration.totalEnrollmentsCreated += value;
+		ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.totalEnrollmentsCreated += value;
 	}
 
 	/**
@@ -139,7 +139,7 @@ public class ReportAllPastEnrollmentMigration
 	 */
 	public static void addStudentCurricularPlansMigrated(int value)
 	{
-		ReportAllPastEnrollmentMigration.totalStudentCurricularPlansCreated += value;
+		ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.totalStudentCurricularPlansCreated += value;
 	}
 
 	/**
@@ -147,7 +147,7 @@ public class ReportAllPastEnrollmentMigration
 	 */
 	public static void addEnrollmentEvaluationsMigrated(int value)
 	{
-		ReportAllPastEnrollmentMigration.totalEnrollmentEvaluationsCreated += value;
+		ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.totalEnrollmentEvaluationsCreated += value;
 	}
 
 	/**
@@ -155,7 +155,7 @@ public class ReportAllPastEnrollmentMigration
 	 */
 	public static void addCurricularCoursesMigrated(int value)
 	{
-		ReportAllPastEnrollmentMigration.totalCurricularCoursesCreated += value;
+		ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.totalCurricularCoursesCreated += value;
 	}
 
 	/**
@@ -163,7 +163,7 @@ public class ReportAllPastEnrollmentMigration
 	 */
 	public static void addCurricularCourseScopesMigrated(int value)
 	{
-		ReportAllPastEnrollmentMigration.totalCurricularCourseScopesCreated += value;
+		ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.totalCurricularCourseScopesCreated += value;
 	}
 
 	/**
@@ -172,10 +172,10 @@ public class ReportAllPastEnrollmentMigration
 	 */
 	private static void printUnknownCurricularCourses(PrintWriter out)
 	{
-		if(!ReportAllPastEnrollmentMigration.unknownCurricularCourses.entrySet().isEmpty()) {
+		if(!ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.unknownCurricularCourses.entrySet().isEmpty()) {
 			out.println("");
 			out.println("ERROR TYPE 1 - UNKNOWN CURRICULAR COURSES");
-			Iterator iterator = ReportAllPastEnrollmentMigration.unknownCurricularCourses.entrySet().iterator();
+			Iterator iterator = ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.unknownCurricularCourses.entrySet().iterator();
 			while (iterator.hasNext())
 			{
 				Map.Entry mapEntry = (Map.Entry) iterator.next();
@@ -189,7 +189,7 @@ public class ReportAllPastEnrollmentMigration
 					out.println("\t\t" + mwEnrolment.toFlatString());
 				}
 			}
-			out.println("TOTAL: " + ReportAllPastEnrollmentMigration.unknownCurricularCoursesTimes);
+			out.println("TOTAL: " + ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.unknownCurricularCoursesTimes);
 		}
 	}
 
@@ -199,10 +199,10 @@ public class ReportAllPastEnrollmentMigration
 	 */
 	private static void printNotFoundCurricularCourseScopes(PrintWriter out)
 	{
-		if(!ReportAllPastEnrollmentMigration.unknownTeachersAndEmployees.entrySet().isEmpty()) {
+		if(!ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.unknownTeachersAndEmployees.entrySet().isEmpty()) {
 			out.println("");
 			out.println("ERROR TYPE 2 - UNKNOWN TEACHERS AND EMPLOYEES");
-			Iterator iterator = ReportAllPastEnrollmentMigration.unknownTeachersAndEmployees.entrySet().iterator();
+			Iterator iterator = ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.unknownTeachersAndEmployees.entrySet().iterator();
 			while (iterator.hasNext())
 			{
 				Map.Entry mapEntry = (Map.Entry) iterator.next();
@@ -216,7 +216,7 @@ public class ReportAllPastEnrollmentMigration
 					out.println("\t\t" + mwEnrolment.toFlatString());
 				}
 			}
-			out.println("TOTAL: " + ReportAllPastEnrollmentMigration.unknownTeachersAndEmployeesTimes);
+			out.println("TOTAL: " + ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.unknownTeachersAndEmployeesTimes);
 		}
 	}
 
@@ -226,16 +226,16 @@ public class ReportAllPastEnrollmentMigration
 	 */
 	private static void printClassCastExceptions(PrintWriter out)
 	{
-		if(!ReportAllPastEnrollmentMigration.classCastExceptions.isEmpty()) {
+		if(!ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.classCastExceptions.isEmpty()) {
 			out.println("");
 			out.println("ERROR TYPE 3 - CLASS CAST EXCEPTIONS");
-			Iterator iterator = ReportAllPastEnrollmentMigration.classCastExceptions.iterator();
+			Iterator iterator = ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.classCastExceptions.iterator();
 			while (iterator.hasNext())
 			{
 				String value = (String) iterator.next();
 				out.println("\t" + value);
 			}
-			out.println("TOTAL: " + ReportAllPastEnrollmentMigration.classCastExceptions.size());
+			out.println("TOTAL: " + ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.classCastExceptions.size());
 		}
 	}
 
@@ -245,11 +245,11 @@ public class ReportAllPastEnrollmentMigration
 	 */
 	private static void printNotCreatedEnrolmentEvaluations(PrintWriter out)
 	{
-		if(!ReportAllPastEnrollmentMigration.notCreatedEnrolmentEvaluations.entrySet().isEmpty()) {
+		if(!ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.notCreatedEnrolmentEvaluations.entrySet().isEmpty()) {
 			out.println("");
 			out.println("WARNING TYPE 1 - ENROLLMENT EVALUATIONS NOT CREATED");
 			out.println("\tCases:");
-			Iterator iterator = ReportAllPastEnrollmentMigration.notCreatedEnrolmentEvaluations.entrySet().iterator();
+			Iterator iterator = ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.notCreatedEnrolmentEvaluations.entrySet().iterator();
 			while (iterator.hasNext())
 			{
 				Map.Entry mapEntry = (Map.Entry) iterator.next();
@@ -260,7 +260,7 @@ public class ReportAllPastEnrollmentMigration
 					out.println("\t" + mwEnrolment.toFlatString());
 				}
 			}
-			out.println("TOTAL: " + ReportAllPastEnrollmentMigration.notCreatedEnrolmentEvaluationsTimes);
+			out.println("TOTAL: " + ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.notCreatedEnrolmentEvaluationsTimes);
 		}
 	}
 
@@ -270,13 +270,13 @@ public class ReportAllPastEnrollmentMigration
 //	 */
 //	private static void printEnrollmentsAndEvaluationsDeleted(PrintWriter out)
 //	{
-//		if(ReportAllPastEnrollmentMigration.totalEnrollmentsDeleted != 0)
+//		if(ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.totalEnrollmentsDeleted != 0)
 //		{
-//			out.println("\n[INFO] ENROLLMENTS DELETED: " + ReportAllPastEnrollmentMigration.totalEnrollmentsDeleted);
+//			out.println("\n[INFO] ENROLLMENTS DELETED: " + ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.totalEnrollmentsDeleted);
 //		}
-//		if(ReportAllPastEnrollmentMigration.totalEnrollmentEvaluationsDeleted != 0)
+//		if(ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.totalEnrollmentEvaluationsDeleted != 0)
 //		{
-//			out.println("\n[INFO] ENROLLMENT EVALUATIONS DELETED: " + ReportAllPastEnrollmentMigration.totalEnrollmentEvaluationsDeleted);
+//			out.println("\n[INFO] ENROLLMENT EVALUATIONS DELETED: " + ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.totalEnrollmentEvaluationsDeleted);
 //		}
 //	}
 
@@ -292,15 +292,15 @@ public class ReportAllPastEnrollmentMigration
 		out.println("");
 		out.println("---------------------------------------------------------------------------");
 
-		ReportAllPastEnrollmentMigration.printUnknownCurricularCourses(out);
-		ReportAllPastEnrollmentMigration.printNotFoundCurricularCourseScopes(out);
-		ReportAllPastEnrollmentMigration.printClassCastExceptions(out);
+		ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.printUnknownCurricularCourses(out);
+		ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.printNotFoundCurricularCourseScopes(out);
+		ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.printClassCastExceptions(out);
 
-		if(ReportAllPastEnrollmentMigration.totalEnrollmentsCreated > 0) {
-			out.println("[INFO] TOTAL MIGRATED ENROLMENTS: " + ReportAllPastEnrollmentMigration.totalEnrollmentsCreated);
+		if(ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.totalEnrollmentsCreated > 0) {
+			out.println("[INFO] TOTAL MIGRATED ENROLMENTS: " + ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.totalEnrollmentsCreated);
 		}
 
-		int totalEnrolmentsNotMigrated = ReportAllPastEnrollmentMigration.unknownCurricularCoursesTimes + ReportAllPastEnrollmentMigration.unknownTeachersAndEmployeesTimes;
+		int totalEnrolmentsNotMigrated = ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.unknownCurricularCoursesTimes + ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.unknownTeachersAndEmployeesTimes;
 		if(totalEnrolmentsNotMigrated > 0) {
 			out.println("[INFO] TOTAL ENROLMENTS NOT MIGRADTED: " + totalEnrolmentsNotMigrated);
 		}
@@ -312,7 +312,7 @@ public class ReportAllPastEnrollmentMigration
 		out.println("");
 		out.println("---------------------------------------------------------------------------");
 
-		ReportAllPastEnrollmentMigration.printNotCreatedEnrolmentEvaluations(out);
+		ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.printNotCreatedEnrolmentEvaluations(out);
 
 		out.println("");
 		out.println("---------------------------------------------------------------------------");
@@ -322,15 +322,15 @@ public class ReportAllPastEnrollmentMigration
 		out.println("---------------------------------------------------------------------------");
 		
 		out.println("[INFO] DONE!");
-		out.println("[INFO] Total StudentCurricularPlans created: [" + ReportAllPastEnrollmentMigration.totalStudentCurricularPlansCreated + "].");
-		out.println("[INFO] Total Enrolments created: [" + ReportAllPastEnrollmentMigration.totalEnrollmentsCreated + "].");
-		out.println("[INFO] Total EnrolmentEvaluations created: [" + ReportAllPastEnrollmentMigration.totalEnrollmentEvaluationsCreated + "].");
-		out.println("[INFO] Total CurricularCourses created: [" + ReportAllPastEnrollmentMigration.totalCurricularCoursesCreated + "].");
-//		out.println("[INFO] Total CurricularCourseScopes created: [" + ReportAllPastEnrollmentMigration.totalCurricularCourseScopesCreated + "].");
-		out.println("[INFO] Total Enrolments deleted: [" + ReportAllPastEnrollmentMigration.totalEnrollmentsDeleted + "]");
-		out.println("[INFO] Total EnrolmentEvaluations deleted: [" + ReportAllPastEnrollmentMigration.totalEnrollmentEvaluationsDeleted + "]");
+		out.println("[INFO] Total StudentCurricularPlans created: [" + ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.totalStudentCurricularPlansCreated + "].");
+		out.println("[INFO] Total Enrolments created: [" + ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.totalEnrollmentsCreated + "].");
+		out.println("[INFO] Total EnrolmentEvaluations created: [" + ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.totalEnrollmentEvaluationsCreated + "].");
+		out.println("[INFO] Total CurricularCourses created: [" + ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.totalCurricularCoursesCreated + "].");
+//		out.println("[INFO] Total CurricularCourseScopes created: [" + ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.totalCurricularCourseScopesCreated + "].");
+		out.println("[INFO] Total Enrolments deleted: [" + ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.totalEnrollmentsDeleted + "]");
+		out.println("[INFO] Total EnrolmentEvaluations deleted: [" + ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.totalEnrollmentEvaluationsDeleted + "]");
 		
-		ReportAllPastEnrollmentMigration.reset();
+		ReportForCreateUpdateEnrollmentsInPastStudentCurricularPlans.reset();
 	}
 
 	/**

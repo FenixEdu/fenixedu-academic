@@ -1,0 +1,1 @@
+DELETE from OJB_HL_SEQ;

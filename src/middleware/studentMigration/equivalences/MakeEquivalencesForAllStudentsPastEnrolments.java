@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import middleware.studentMigration.enrollments.CreateAndUpdateAllStudentsPastEnrolments;
+import middleware.studentMigration.enrollments.StudentCurriculumsMigrationUtils;
 import Dominio.DegreeCurricularPlan;
 import Dominio.Enrolment;
 import Dominio.EnrolmentEvaluation;
@@ -300,7 +300,7 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 			enrolmentToObtainKey.setStudentCurricularPlan(currentStudentCurricularPlan);
 			enrolmentToObtainKey.setCurricularCourse(curricularCourse);
 			enrolmentToObtainKey.setExecutionPeriod(executionPeriod);
-			String key = CreateAndUpdateAllStudentsPastEnrolments.getEnrollmentKey(enrolmentToObtainKey);
+			String key = StudentCurriculumsMigrationUtils.getEnrollmentKey(enrolmentToObtainKey);
 
 			enrolmentToWrite = (IEnrolment) MakeEquivalencesForAllStudentsPastEnrolments.enrollmentsCreated.get(key);
 
@@ -407,7 +407,7 @@ public class MakeEquivalencesForAllStudentsPastEnrolments
 			enrolmentEvaluationToObtainKey.setGrade(enrolmentEvaluation.getGrade());
 			enrolmentEvaluationToObtainKey.setEnrolmentEvaluationType(enrolmentEvaluation.getEnrolmentEvaluationType());
 			enrolmentEvaluationToObtainKey.setWhen(enrolmentEvaluation.getWhen());
-			String key = CreateAndUpdateAllStudentsPastEnrolments.getEnrollmentEvaluationKey(enrolmentEvaluationToObtainKey);
+			String key = StudentCurriculumsMigrationUtils.getEnrollmentEvaluationKey(enrolmentEvaluationToObtainKey);
 
 			enrolmentEvaluationToWrite = (IEnrolmentEvaluation) MakeEquivalencesForAllStudentsPastEnrolments.enrollmentEvaluationsCreated.get(key);
 

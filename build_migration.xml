@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
 <project basedir="." default="MigrateData" name="CIAPL">
 
 	<property name="sshtools.home" location="lib"/>
@@ -7,27 +8,21 @@
 
 	<property file="build.properties"/>
 
-    <!-- Directorios com codigo fonte -->
     <property name="src" location="src"/>
 	<property name="build.home" location="build"/>
 
-    <!-- Directorios destino da compilacao do projecto -->
 	<property name="webapp"          location="${build.home}/app"/>
     <property name="webapp.metadata" value="${webapp}/WEB-INF"/>
     <property name="webapp.classes"  value="${webapp.metadata}/classes"/>
     <property name="webapp.lib"      value="${webapp.metadata}/lib"/>
 
-    <!-- Directorio com bibliotecas (JAR) a utilizar -->
     <property name="lib" location="lib"/>
 	<property location="lib_web" name="libs.web"/>
 
-    <!-- Directorio com configuracoes -->
     <property location="config" name="config"/>
 
-    <!-- Directorio com instrucoes SQL -->
     <property location="etc" name="sql"/>
 
-	<!-- Compilation options -->
 	<property name="compile.debug"       value="on"/>
   	<property name="compile.deprecation" value="on"/>
   	<property name="compile.optimize"    value="on"/>
@@ -39,11 +34,9 @@
     </target>
 
 	<target name="prepare">
-		<!-- Create build directories as needed -->
 		<mkdir dir="${webapp.classes}"/>	
 		<mkdir dir="${webapp.lib}"/>
 
-		<!-- Copy external dependencies as required -->
 		<copy todir="${webapp.metadata}">
 			<fileset dir="${basedir}/metadata"/>    
 		</copy>
@@ -84,16 +77,10 @@
 	    	<include name="**/ServidorPersistenteConfig.properties"/>
 	    	<include name="**/ServidorPersistenteOracleConfig.properties"/>
 
-			<replacefilter token="&lt;!-- @validation.doctype@ -->" property="validation.doctype"/>
-
-			<replacefilter token="@login.page@" property="login.page"/>
-
 			<replacefilter token="@db.user@" property="db.user"/>
 			<replacefilter token="@db.pass@" property="db.pass"/>
 			<replacefilter token="@db.name@" property="db.name"/>
 			<replacefilter token="@db.alias@" property="db.alias"/>
-
-			<replacefilter token="@application@" property="application"/>
 		</replace>
     </target>
 
@@ -191,19 +178,11 @@
 		</exec>
 	</target>
 
-<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
-<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
-<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
-<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
-<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
-<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
-<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
-<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
-<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
-<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
-<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
-<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
-<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
+
+
+
+
+
 
 	<target name="load-new-students">
 		<sql
@@ -269,27 +248,147 @@
 		</java>
 	</target>
 
-<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
-<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
-<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
-<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
-<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
-<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
-<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
-<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
-<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
-<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
-<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
-<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
-<!-- »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»» -->
+</project>
+-->
+
+
+
+<project basedir="." default="" name="">
+
+	<property name="sshtools.home" location="lib"/>
+
+    <property environment="env"/>
+
+	<property file="build.properties"/>
+
+    <property name="src" location="src"/>
+	<property name="build.home" location="build"/>
+
+	<property name="webapp"          location="${build.home}/app"/>
+    <property name="webapp.metadata" value="${webapp}/WEB-INF"/>
+    <property name="webapp.classes"  value="${webapp.metadata}/classes"/>
+    <property name="webapp.lib"      value="${webapp.metadata}/lib"/>
+
+    <property name="lib" location="lib"/>
+	<property location="lib_web" name="libs.web"/>
+
+    <property location="config" name="config"/>
+
+    <property location="etc" name="sql"/>
+
+	<property name="compile.debug"       value="on"/>
+  	<property name="compile.deprecation" value="on"/>
+  	<property name="compile.optimize"    value="on"/>
+
+	<property name="encoding" value="ISO-8859-15"/>	
+
+    <target name="clean-all" description="Removes any generated files">
+		<delete dir="${build.home}"/>
+    </target>
+
+	<target name="prepare">
+		<mkdir dir="${webapp.classes}"/>	
+		<mkdir dir="${webapp.lib}"/>
+
+		<copy todir="${webapp.metadata}">
+			<fileset dir="${basedir}/metadata"/>    
+		</copy>
+
+		<copy todir="${webapp.lib}">
+			<fileset dir="${basedir}/lib">    
+				<exclude name="servlet.jar"/>
+				<exclude name="strutstest.jar"/>
+			</fileset>
+			<fileset dir="${basedir}/lib_web">
+				<exclude name="servlet.jar"/>
+				<exclude name="strutstest.jar"/>
+			</fileset>
+		</copy>
+
+		<copy todir="${webapp.classes}">
+			<fileset dir="${basedir}/config"/>
+		</copy>
+	</target>
+  
+    <target name="compile-proj"
+            description="Compila o projecto principal" depends="prepare">
+        <tstamp/>
+        <javac destdir="${webapp.classes}"
+               extdirs="${lib};${libs.web}"
+               debug="${compile.debug}"
+               optimize="${compile.optimize}"
+               deprecation="${compile.deprecation}"
+               encoding="${encoding}"
+               memoryInitialSize="512m"
+               memoryMaximumSize="512m"
+               fork="yes">
+			<src path="${src}"/>
+        </javac>
+		<replace dir="${webapp.metadata}" propertyFile="build.properties">
+	    	<include name="**/**/*.xml"/>
+	    	<include name="**/**/ApplicationResources.properties"/>
+	    	<include name="**/ServidorPersistenteConfig.properties"/>
+	    	<include name="**/ServidorPersistenteOracleConfig.properties"/>
+
+			<replacefilter token="@db.user@" property="db.user"/>
+			<replacefilter token="@db.pass@" property="db.pass"/>
+			<replacefilter token="@db.name@" property="db.name"/>
+			<replacefilter token="@db.alias@" property="db.alias"/>
+		</replace>
+    </target>
+
+    <target name="create-tables" description="">
+        <sql
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql:${db.alias}"
+            userid="${db.user}"
+            password="${db.pass}"
+            encoding="${encoding}">
+	        <fileset dir="${sql}">
+				<include name="middleware/periodicEnrollmentMigration/createTables.sql"/>
+  			</fileset>
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </sql>
+    </target>
+
+	<target name="replace-tokens">
+        <delete file="${sql}/middleware/periodicEnrollmentMigration/PopulateTables_generated.sql"/>
+		<copy file="${sql}/middleware/periodicEnrollmentMigration/PopulateTables.sql" toFile="${sql}/middleware/periodicEnrollmentMigration/PopulateTables_generated.sql"/>
+		<replace dir="${sql}/middleware/periodicEnrollmentMigration" propertyFile="middleware.properties">
+	    	<include name="PopulateTables_generated.sql"/>
+		    <replacefilter token="@load.data.infile.root@" property="load.data.infile.root"/>
+    	</replace>
+	</target>
+
+    <target name="load-data-from-old-system" depends="create-tables, replace-tokens" description="">
+        <sql
+            driver="com.mysql.jdbc.Driver"
+            url="jdbc:mysql:${db.alias}"
+            userid="${db.user}"
+            password="${db.pass}"
+            encoding="${encoding}">
+	        <fileset dir="${sql}">
+				<include name="middleware/periodicEnrollmentMigration/PopulateTables_generated.sql"/>
+  			</fileset>
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </sql>
+    </target>
 
 	<target name="select-only-what-is-new-from-old-system">
 		<echo message=""/>
 		<echo message="Loading file [selectOnlyWhatIsNewFromOldSystem.sql]"/>
 		<echo message=""/>
-        <sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/${db.name}" userid="${db.user}" password="${db.pass}" encoding="${encoding}">
+        <sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql:${db.alias}" userid="${db.user}" password="${db.pass}" encoding="${encoding}">
 	        <fileset dir="${sql}">
-				<include name="selectOnlyWhatIsNewFromOldSystem.sql"/>
+				<include name="middleware/periodicEnrollmentMigration/selectOnlyWhatIsNewFromOldSystem.sql"/>
   			</fileset>
             <classpath>
                 <fileset dir="${lib}">
@@ -303,9 +402,9 @@
 		<echo message=""/>
 		<echo message="Loading file [selectOnlyWhatIsNewFromOldSystemForThisSemester.sql]"/>
 		<echo message=""/>
-        <sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/${db.name}" userid="${db.user}" password="${db.pass}" encoding="${encoding}">
+        <sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql:${db.alias}" userid="${db.user}" password="${db.pass}" encoding="${encoding}">
 	        <fileset dir="${sql}">
-				<include name="selectOnlyWhatIsNewFromOldSystemForThisSemester.sql"/>
+				<include name="middleware/periodicEnrollmentMigration/selectOnlyWhatIsNewFromOldSystemForThisSemester.sql"/>
   			</fileset>
             <classpath>
                 <fileset dir="${lib}">
@@ -319,9 +418,9 @@
 		<echo message=""/>
 		<echo message="Loading file [recalculateNewMWEnrollmentsToBeTreatedNextTime.sql]"/>
 		<echo message=""/>
-        <sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/${db.name}" userid="${db.user}" password="${db.pass}" encoding="${encoding}">
+        <sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql:${db.alias}" userid="${db.user}" password="${db.pass}" encoding="${encoding}">
 	        <fileset dir="${sql}">
-				<include name="recalculateNewMWEnrollmentsToBeTreatedNextTime.sql"/>
+				<include name="middleware/periodicEnrollmentMigration/recalculateNewMWEnrollmentsToBeTreatedNextTime.sql"/>
   			</fileset>
             <classpath>
                 <fileset dir="${lib}">
@@ -336,9 +435,9 @@
 		<echo message=""/>
 		<echo message="Loading file [selectOnlyWhatIsNoLongerInOldSystem.sql]"/>
 		<echo message=""/>
-        <sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/${db.name}" userid="${db.user}" password="${db.pass}" encoding="${encoding}">
+        <sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql:${db.alias}" userid="${db.user}" password="${db.pass}" encoding="${encoding}">
 	        <fileset dir="${sql}">
-				<include name="selectOnlyWhatIsNoLongerInOldSystem.sql"/>
+				<include name="middleware/periodicEnrollmentMigration/selectOnlyWhatIsNoLongerInOldSystem.sql"/>
   			</fileset>
             <classpath>
                 <fileset dir="${lib}">
@@ -352,9 +451,9 @@
 		<echo message=""/>
 		<echo message="Loading file [selectOnlyWhatIsNoLongerInOldSystemForThisSemester.sql]"/>
 		<echo message=""/>
-        <sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/${db.name}" userid="${db.user}" password="${db.pass}" encoding="${encoding}">
+        <sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql:${db.alias}" userid="${db.user}" password="${db.pass}" encoding="${encoding}">
 	        <fileset dir="${sql}">
-				<include name="selectOnlyWhatIsNoLongerInOldSystemForThisSemester.sql"/>
+				<include name="middleware/periodicEnrollmentMigration/selectOnlyWhatIsNoLongerInOldSystemForThisSemester.sql"/>
   			</fileset>
             <classpath>
                 <fileset dir="${lib}">
@@ -368,9 +467,9 @@
 		<echo message=""/>
 		<echo message="Loading file [recalculateOldMWEnrollmentsToBeTreatedNextTime.sql]"/>
 		<echo message=""/>
-        <sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost/${db.name}" userid="${db.user}" password="${db.pass}" encoding="${encoding}">
+        <sql driver="com.mysql.jdbc.Driver" url="jdbc:mysql:${db.alias}" userid="${db.user}" password="${db.pass}" encoding="${encoding}">
 	        <fileset dir="${sql}">
-				<include name="recalculateOldMWEnrollmentsToBeTreatedNextTime.sql"/>
+				<include name="middleware/periodicEnrollmentMigration/recalculateOldMWEnrollmentsToBeTreatedNextTime.sql"/>
   			</fileset>
             <classpath>
                 <fileset dir="${lib}">
@@ -381,15 +480,15 @@
 	</target>
 
 	<target name="fixe-problems" depends="">
-		<exec executable="${sql}/fixes/run.sh" os="Linux, Unix">
+		<exec executable="${sql}/middleware/periodicEnrollmentMigration/fixes/run.sh" os="Linux, Unix">
 			<arg value="stop"/>
 		</exec>
-		<exec executable="${sql}/fixes/run.bat" vmlauncher="true" os="Windows, Windows 2000, Windows XP">
+		<exec executable="${sql}/middleware/periodicEnrollmentMigration/fixes/run.bat" vmlauncher="true" os="Windows, Windows 2000, Windows XP">
 		</exec>
 	</target>
 
-	<target name="run-migration-process-for-past-curriculums-write" depends="compile-proj">
-		<java classname="middleware.studentMigration.enrollments.RunMigrationProcess" fork="no" failonerror="false" maxmemory="896m">
+	<target name="run-migration-process-write-new-records-for-past-curriculums" depends="compile-proj">
+		<java classname="middleware.studentMigration.enrollments.RunMigrationProcess" fork="yes" failonerror="false" maxmemory="896m">
 			<classpath>
 				<pathelement path="${webapp.classes}"/>
 				<pathelement path="${config}"/>
@@ -403,8 +502,8 @@
 		</java>
 	</target>
 
-	<target name="run-migration-process-for-current-curriculums-write" depends="compile-proj">
-		<java classname="middleware.studentMigration.enrollments.RunMigrationProcess" fork="no" failonerror="false" maxmemory="896m">
+	<target name="run-migration-process-write-new-records-for-current-curriculums" depends="compile-proj">
+		<java classname="middleware.studentMigration.enrollments.RunMigrationProcess" fork="yes" failonerror="false" maxmemory="896m">
 			<classpath>
 				<pathelement path="${webapp.classes}"/>
 				<pathelement path="${config}"/>
@@ -418,8 +517,8 @@
 		</java>
 	</target>
 
-	<target name="run-migration-process-for-past-curriculums-delete" depends="compile-proj">
-		<java classname="middleware.studentMigration.enrollments.RunMigrationProcess" fork="no" failonerror="false" maxmemory="896m">
+	<target name="run-migration-process-delete-old-records-for-past-curriculums" depends="compile-proj">
+		<java classname="middleware.studentMigration.enrollments.RunMigrationProcess" fork="yes" failonerror="false" maxmemory="896m">
 			<classpath>
 				<pathelement path="${webapp.classes}"/>
 				<pathelement path="${config}"/>
@@ -433,8 +532,8 @@
 		</java>
 	</target>
 
-	<target name="run-migration-process-for-current-curriculums-delete" depends="compile-proj">
-		<java classname="middleware.studentMigration.enrollments.RunMigrationProcess" fork="no" failonerror="false" maxmemory="896m">
+	<target name="run-migration-process-delete-old-records-for-current-curriculums" depends="compile-proj">
+		<java classname="middleware.studentMigration.enrollments.RunMigrationProcess" fork="yes" failonerror="false" maxmemory="896m">
 			<classpath>
 				<pathelement path="${webapp.classes}"/>
 				<pathelement path="${config}"/>
@@ -448,29 +547,34 @@
 		</java>
 	</target>
 
-	<target name="process-new-incoming-enrolments-script"
+	<target name="process-new-incoming-enrolments"
 		depends="compile-proj,
 				 select-only-what-is-new-from-old-system,
-				 run-migration-process-for-past-curriculums-write,
+				 run-migration-process-write-new-records-for-past-curriculums,
 				 select-only-what-is-new-from-old-system-for-this-semester,
-				 run-migration-process-for-current-curriculums-write,
+				 run-migration-process-write-new-records-for-current-curriculums,
 				 recalculate-NEW-MWEnrollments-to-be-treated-next-time">
 	</target>
 
-	<target name="process-enrolments-no-longer-coming-script"
+	<target name="process-enrolments-no-longer-coming"
 		depends="compile-proj,
 				 select-only-what-is-no-longer-in-old-system,
-				 run-migration-process-for-past-curriculums-delete,
+				 run-migration-process-delete-old-records-for-past-curriculums,
 				 select-only-what-is-no-longer-in-old-system-for-this-semester,
-				 run-migration-process-for-current-curriculums-delete,
+				 run-migration-process-delete-old-records-for-current-curriculums,
 				 recalculate-OLD-MWEnrollments-to-be-treated-next-time">
 	</target>
 
-	<target name="process-all-enrolments-script"
+	<target name="process-all-enrolments"
 		depends="load-data-from-old-system,
-				 process-new-incoming-enrolments-script,
-				 process-enrolments-no-longer-coming-script,
+				 process-new-incoming-enrolments,
+				 process-enrolments-no-longer-coming,
 				 fixe-problems">
+	</target>
+
+	<target name="process-all-enrolments-test"
+		depends="process-new-incoming-enrolments,
+				 process-enrolments-no-longer-coming">
 	</target>
 
 </project>

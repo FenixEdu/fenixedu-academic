@@ -1,4 +1,4 @@
-package middleware.studentMigration.enrollments;
+package ServidorAplicacao.Servico.manager.migration.withBroker;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -9,20 +9,15 @@ import java.util.Map;
 
 import middleware.middlewareDomain.MWCurricularCourse;
 import middleware.middlewareDomain.MWDegreeTranslation;
-import middleware.persistentMiddlewareSupport.IPersistentMWCurricularCourse;
-import middleware.persistentMiddlewareSupport.IPersistentMWDegreeTranslation;
-import middleware.persistentMiddlewareSupport.IPersistentMiddlewareSupport;
-import middleware.persistentMiddlewareSupport.OJBDatabaseSupport.PersistentMiddlewareSupportOJB;
-import middleware.persistentMiddlewareSupport.exceptions.PersistentMiddlewareSupportException;
+import middleware.persistentMiddlewareSupport.PersistanceBrokerForMigrationProcess;
 import Dominio.ICurricularCourse;
 import Dominio.ICurso;
-import ServidorPersistente.ExcepcaoPersistencia;
 
 /**
  * @author David Santos
  * 14/Out/2003
  */
-public class ReportEnrolment
+public class ReportForCreateUpdateEnrollmentsInCurrentStudentCurricularPlans
 {
 	// For errors:
 	private static HashMap curricularCoursesFoundInOtherDegree = new HashMap();
@@ -53,10 +48,10 @@ public class ReportEnrolment
 	 * @param degreeCode
 	 * @param studentNumber
 	 */
-	public static void addExecutionCourseNotFound(String courseCode, String degreeCode, String studentNumber)
+	public static void addExecutionCourseNotFound(String courseCode, String degreeCode, String studentNumber, PersistanceBrokerForMigrationProcess pb)
 	{
-		addCurricularCourseName(courseCode);
-		addDegreeName(degreeCode);
+		addCurricularCourseName(courseCode, pb);
+		addDegreeName(degreeCode, pb);
 
 		StringBuffer key = new StringBuffer(courseCode).append(" - ").append(degreeCode);
 
@@ -80,10 +75,10 @@ public class ReportEnrolment
 	 * @param degreeCode
 	 * @param studentNumber
 	 */
-	public static void addFoundCurricularCourseInOtherDegrees(String courseCode, String degreeCode, String studentNumber)
+	public static void addFoundCurricularCourseInOtherDegrees(String courseCode, String degreeCode, String studentNumber, PersistanceBrokerForMigrationProcess pb)
 	{
-		addCurricularCourseName(courseCode);
-		addDegreeName(degreeCode);
+		addCurricularCourseName(courseCode, pb);
+		addDegreeName(degreeCode, pb);
 
 		StringBuffer key = new StringBuffer(courseCode).append(" - ").append(degreeCode);
 
@@ -110,10 +105,10 @@ public class ReportEnrolment
 	 * @param semester
 	 * @param branchCode
 	 */
-	public static void addCurricularCourseScopeNotFound(String courseCode, String degreeCode, String studentNumber, String year, String semester, String branchCode)
+	public static void addCurricularCourseScopeNotFound(String courseCode, String degreeCode, String studentNumber, String year, String semester, String branchCode, PersistanceBrokerForMigrationProcess pb)
 	{
-		addCurricularCourseName(courseCode);
-		addDegreeName(degreeCode);
+		addCurricularCourseName(courseCode, pb);
+		addDegreeName(degreeCode, pb);
 
 		StringBuffer key = new StringBuffer(courseCode).append(" - ").append(degreeCode).append(" - ").append(year).append(" - ").append(semester).append(" - ").append(branchCode);
 
@@ -137,10 +132,10 @@ public class ReportEnrolment
 	 * @param degreeCode
 	 * @param studentNumber
 	 */
-	public static void addCurricularCourseNotFound(String courseCode, String degreeCode, String studentNumber)
+	public static void addCurricularCourseNotFound(String courseCode, String degreeCode, String studentNumber, PersistanceBrokerForMigrationProcess pb)
 	{
-		addCurricularCourseName(courseCode);
-		addDegreeName(degreeCode);
+		addCurricularCourseName(courseCode, pb);
+		addDegreeName(degreeCode, pb);
 
 		StringBuffer key = new StringBuffer(courseCode).append(" - ").append(degreeCode);
 
@@ -164,11 +159,11 @@ public class ReportEnrolment
 	 * @param degreeCode
 	 * @param studentNumber
 	 */
-	public static void addAttendNotFound(String courseCode, String degreeCode, String studentNumber)
+	public static void addAttendNotFound(String courseCode, String degreeCode, String studentNumber, PersistanceBrokerForMigrationProcess pb)
 	{
 		if(!smallReport) {
-			addCurricularCourseName(courseCode);
-			addDegreeName(degreeCode);
+			addCurricularCourseName(courseCode, pb);
+			addDegreeName(degreeCode, pb);
 		}
 
 		StringBuffer key = new StringBuffer(courseCode).append(" - ").append(degreeCode);
@@ -251,10 +246,10 @@ public class ReportEnrolment
 	/**
 	 * @param courseCode
 	 */
-	private static void addCurricularCourseName(String courseCode)
+	private static void addCurricularCourseName(String courseCode, PersistanceBrokerForMigrationProcess pb)
 	{
 		String key = courseCode;
-		String courseName = findCurricularCourseName(courseCode);
+		String courseName = findCurricularCourseName(courseCode, pb);
 
 		String value = (String) curricularCourses.get(key);
 		if (value == null) {
@@ -265,10 +260,10 @@ public class ReportEnrolment
 	/**
 	 * @param degreeCode
 	 */
-	private static void addDegreeName(String degreeCode)
+	private static void addDegreeName(String degreeCode, PersistanceBrokerForMigrationProcess pb)
 	{
 		String key = degreeCode;
-		String degreeName = findDegreeName(degreeCode);
+		String degreeName = findDegreeName(degreeCode, pb);
 
 		String value = (String) degrees.get(key);
 		if (value == null) {
@@ -317,10 +312,10 @@ public class ReportEnrolment
 	public static void report(PrintWriter out)
 	{
 		out.println("[INFO] DONE!");
-		out.println("[INFO] Total Enrolments created: [" + ReportEnrolment.enrolmentsMigrated + "].");
-		out.println("[INFO] Total EnrolmentEvaluations created: [" + ReportEnrolment.enrolmentEvaluationsMigrated + "].");
-		out.println("[INFO] Total Enrolments deleted: [" + ReportEnrolment.enrolmentsDeleted + "]");
-		out.println("[INFO] Total EnrolmentEvaluations deleted: [" + ReportEnrolment.enrolmentEvaluationsDeleted + "]");
+		out.println("[INFO] Total Enrolments created: [" + ReportForCreateUpdateEnrollmentsInCurrentStudentCurricularPlans.enrolmentsMigrated + "].");
+		out.println("[INFO] Total EnrolmentEvaluations created: [" + ReportForCreateUpdateEnrollmentsInCurrentStudentCurricularPlans.enrolmentEvaluationsMigrated + "].");
+		out.println("[INFO] Total Enrolments deleted: [" + ReportForCreateUpdateEnrollmentsInCurrentStudentCurricularPlans.enrolmentsDeleted + "]");
+		out.println("[INFO] Total EnrolmentEvaluations deleted: [" + ReportForCreateUpdateEnrollmentsInCurrentStudentCurricularPlans.enrolmentEvaluationsDeleted + "]");
 		
 		out.println("");
 		out.println("---------------------------------------------------------------------------");
@@ -506,7 +501,7 @@ public class ReportEnrolment
 			}
 		}
 		
-		ReportEnrolment.reset();
+		ReportForCreateUpdateEnrollmentsInCurrentStudentCurricularPlans.reset();
 	}
 
 //	------------------------------------------------------------------------------------------------------------------------------
@@ -517,22 +512,12 @@ public class ReportEnrolment
 	 * @param courseCode
 	 * @return
 	 */
-	public static String findCurricularCourseName(String courseCode) {
-
-		try {
-			IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
-			IPersistentMWCurricularCourse persistentMWCurricularCourse = mws.getIPersistentMWCurricularCourse();
-
-			MWCurricularCourse mwCurricularCourse = persistentMWCurricularCourse.readByCode(courseCode);
-			
-			if(mwCurricularCourse != null) {
-				return mwCurricularCourse.getCoursename();
-			}
-
-		} catch (PersistentMiddlewareSupportException e) {
-			e.printStackTrace();
-		} catch (ExcepcaoPersistencia e) {
-			e.printStackTrace();
+	public static String findCurricularCourseName(String courseCode, PersistanceBrokerForMigrationProcess pb)
+	{
+		MWCurricularCourse mwCurricularCourse = pb.readMWCurricularCourseByCode(courseCode);
+		
+		if(mwCurricularCourse != null) {
+			return mwCurricularCourse.getCoursename();
 		}
 
 		return null;
@@ -542,23 +527,16 @@ public class ReportEnrolment
 	 * @param degreeCode
 	 * @return
 	 */
-	public static String findDegreeName(String degreeCode) {
+	public static String findDegreeName(String degreeCode, PersistanceBrokerForMigrationProcess pb) {
 
 		try {
-			IPersistentMiddlewareSupport mws = PersistentMiddlewareSupportOJB.getInstance();
-			IPersistentMWDegreeTranslation persistentMWDegreeTranslation = mws.getIPersistentMWDegreeTranslation();
-
-			MWDegreeTranslation mwDegreeTranslation = persistentMWDegreeTranslation.readByDegreeCode(Integer.valueOf(degreeCode));
+			MWDegreeTranslation mwDegreeTranslation = pb.readMWDegreeTranslationByDegreeCode(Integer.valueOf(degreeCode));
 
 			if(mwDegreeTranslation != null) {
 				return mwDegreeTranslation.getDegree().getNome();
 			}
 
-		} catch (PersistentMiddlewareSupportException e) {
-			e.printStackTrace();
 		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();
 		}
 

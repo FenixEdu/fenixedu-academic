@@ -5707,14 +5707,6 @@
         <filterChains/>
     </service>
     <service>
-        <name>StartMigrationProcess</name>
-        <implementationClass>
-            ServidorAplicacao.Servico.manager.migration.StartMigrationProcess</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains/>
-    </service>
-    <service>
         <name>ClearCacheForMigrationProcess</name>
         <implementationClass>ServidorAplicacao.Servico.manager.ClearCache</implementationClass>
         <description/>

@@ -1,14 +1,12 @@
 package middleware.middlewareDomain;
 
-import Dominio.DomainObject;
 
 /**
  * @author David Santos Feb 5, 2004
  */
 
-public class MWTreatedEnrollment extends DomainObject implements IMWTreatedEnrollment
+public class MWTreatedEnrollment /*extends DomainObject*/ implements IMWTreatedEnrollment
 {
-	private Integer idInternal;
 	private Integer branchcode;
 	private String coursecode;
 	private Integer curricularcoursesemester;
@@ -178,22 +176,6 @@ public class MWTreatedEnrollment extends DomainObject implements IMWTreatedEnrol
 		this.coursecode = coursecode;
 	}
 
-	/**
-	 * @return Returns the idInternal.
-	 */
-	public Integer getIdInternal()
-	{
-		return idInternal;
-	}
-
-	/**
-	 * @param idInternal The idInternal to set.
-	 */
-	public void setIdInternal(Integer idInternal)
-	{
-		this.idInternal = idInternal;
-	}
-	
 	public String toString()
 	{
 		StringBuffer stringBuffer = new StringBuffer();
@@ -245,11 +227,6 @@ public class MWTreatedEnrollment extends DomainObject implements IMWTreatedEnrol
 		.append("]\n");
 
 		return stringBuffer.toString();
-		//    return " [branchCode] " + branchcode + " [courseCode] " + coursecode + " [curricularCourseSemester] " +
-		// curricularcoursesemester + " [curricularCourseYear] " + curricularcourseyear + " [degreeCode] " + degreecode + "
-		// [enrolmentYear] " + enrolmentyear + " [examDate] " + examdate + " [grade] " + grade + " [idinternal] " + idinternal + "
-		// [number] " + number + " [remarks] " + remarks + " [season] " + season + " [teacherNumber] " + teachernumber + "
-		// [universityCode] " + universitycode;
 	}
 
 	public String toFlatString()

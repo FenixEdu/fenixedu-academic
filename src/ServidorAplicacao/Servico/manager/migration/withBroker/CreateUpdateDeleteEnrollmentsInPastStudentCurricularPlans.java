@@ -1,4 +1,4 @@
-package ServidorAplicacao.Servico.manager.migration;
+package ServidorAplicacao.Servico.manager.migration.withBroker;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,17 +12,13 @@ import middleware.middlewareDomain.MWDegreeTranslation;
 import middleware.middlewareDomain.MWEnrolment;
 import middleware.middlewareDomain.MWStudent;
 import middleware.middlewareDomain.MWUniversity;
-import middleware.persistentMiddlewareSupport.IPersistentMWBranch;
-import middleware.persistentMiddlewareSupport.IPersistentMWCurricularCourse;
-import middleware.persistentMiddlewareSupport.IPersistentMWDegreeTranslation;
-import middleware.persistentMiddlewareSupport.IPersistentMWUniversity;
-import middleware.studentMigration.enrollments.CreateAndUpdateAllPastCurriculums;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
+import Dominio.Branch;
 import Dominio.CurricularCourse;
 import Dominio.IBranch;
 import Dominio.ICurricularCourse;
@@ -32,11 +28,7 @@ import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.IUniversity;
 import Dominio.StudentCurricularPlan;
-import ServidorPersistente.IPersistentBranch;
-import ServidorPersistente.IPersistentCurricularCourse;
-import ServidorPersistente.IPersistentDegreeCurricularPlan;
-import ServidorPersistente.IPersistentUniversity;
-import ServidorPersistente.IStudentCurricularPlanPersistente;
+import Util.BranchType;
 import Util.CurricularCourseType;
 import Util.EnrolmentEvaluationType;
 import Util.StudentCurricularPlanState;
@@ -51,27 +43,24 @@ public abstract class CreateUpdateDeleteEnrollmentsInPastStudentCurricularPlans
 {
 	protected HashMap studentCurricularPlansCreated;
 	protected HashMap curricularCoursesCreated;
+	protected HashMap branchesCreated;
 	protected int numberOfElementsInSpan;
 	protected int maximumNumberOfElementsToConsider;
 
 	/**
 	 * @param degreeCode
 	 * @return IDegreeCurricularPlan
-	 * @throws Throwable
 	 */
-	protected IDegreeCurricularPlan getDegreeCurricularPlan(Integer degreeCode) throws Throwable
+	protected IDegreeCurricularPlan getDegreeCurricularPlan(Integer degreeCode)
 	{
-		IPersistentMWDegreeTranslation mwDegreeTranslationDAO = super.persistentMiddlewareSuport.getIPersistentMWDegreeTranslation();
-		IPersistentDegreeCurricularPlan degreeCurricularPlanDAO = super.persistentSuport.getIPersistentDegreeCurricularPlan();
-
-		MWDegreeTranslation mwDegreeTranslation = mwDegreeTranslationDAO.readByDegreeCode(degreeCode);
+		MWDegreeTranslation mwDegreeTranslation = super.persistentSuport.readMWDegreeTranslationByDegreeCode(degreeCode);
 
 		if (mwDegreeTranslation != null)
 		{
 			String degreeCurricularPlanName = "PAST-" + mwDegreeTranslation.getDegree().getSigla();
 			ICurso degree = mwDegreeTranslation.getDegree();
 			IDegreeCurricularPlan degreeCurricularPlan =
-				degreeCurricularPlanDAO.readByNameAndDegree(degreeCurricularPlanName, degree);
+				super.persistentSuport.readDegreeCurricularPlanByNameAndDegree(degreeCurricularPlanName, degree);
 			return degreeCurricularPlan;
 		} else
 		{
@@ -84,17 +73,14 @@ public abstract class CreateUpdateDeleteEnrollmentsInPastStudentCurricularPlans
 	 * @param student
 	 * @param mwStudent
 	 * @return IStudentCurricularPlan
-	 * @throws Throwable
 	 */
 	protected IStudentCurricularPlan getStudentCurricularPlan(
 		IDegreeCurricularPlan degreeCurricularPlan,
 		IStudent student,
 		MWStudent mwStudent)
-		throws Throwable
 	{
-		IStudentCurricularPlanPersistente studentCurricularPlanDAO = super.persistentSuport.getIStudentCurricularPlanPersistente();
-
-		List result = studentCurricularPlanDAO.readAllByStudentAntState(student, StudentCurricularPlanState.PAST_OBJ);
+		List result =
+			super.persistentSuport.readStudentCurricularPlansByStudentAntState(student, StudentCurricularPlanState.PAST_OBJ);
 		if ((result == null) || (result.isEmpty()))
 		{
 			IStudentCurricularPlan studentCurricularPlanToObtainKey = new StudentCurricularPlan();
@@ -111,7 +97,7 @@ public abstract class CreateUpdateDeleteEnrollmentsInPastStudentCurricularPlans
 				if (branch == null)
 				{
 					super.out.println(
-						"[ERROR 201] No record of Branch with code: ["
+						"[ERROR 007] No record of Branch with code: ["
 							+ mwStudent.getBranchcode()
 							+ "] for Degree with code: ["
 							+ mwStudent.getDegreecode()
@@ -134,8 +120,6 @@ public abstract class CreateUpdateDeleteEnrollmentsInPastStudentCurricularPlans
 
 				studentCurricularPlan = new StudentCurricularPlan();
 
-				studentCurricularPlanDAO.simpleLockWrite(studentCurricularPlan);
-
 				studentCurricularPlan.setDegreeCurricularPlan(degreeCurricularPlan);
 				studentCurricularPlan.setCurrentState(StudentCurricularPlanState.PAST_OBJ);
 				studentCurricularPlan.setStartDate(startDate);
@@ -151,6 +135,9 @@ public abstract class CreateUpdateDeleteEnrollmentsInPastStudentCurricularPlans
 				studentCurricularPlan.setObservations(null);
 				studentCurricularPlan.setSpecialization(null);
 				studentCurricularPlan.setWhen(null);
+				studentCurricularPlan.setAckOptLock(new Integer(1));
+
+				super.persistentSuport.store(studentCurricularPlan);
 
 				this.studentCurricularPlansCreated.put(key, studentCurricularPlan);
 			}
@@ -170,16 +157,11 @@ public abstract class CreateUpdateDeleteEnrollmentsInPastStudentCurricularPlans
 	 * @param branchCode
 	 * @param degreeCurricularPlan
 	 * @return IBranch
-	 * @throws Throwable
 	 */
-	private IBranch getBranch(Integer degreeCode, Integer branchCode, IDegreeCurricularPlan degreeCurricularPlan) throws Throwable
+	private IBranch getBranch(Integer degreeCode, Integer branchCode, IDegreeCurricularPlan degreeCurricularPlan)
 	{
 		IBranch branch = null;
-
-		IPersistentMWBranch mwBranchDAO = super.persistentMiddlewareSuport.getIPersistentMWBranch();
-		IPersistentBranch branchDAO = super.persistentSuport.getIPersistentBranch();
-
-		MWBranch mwBranch = mwBranchDAO.readByDegreeCodeAndBranchCode(degreeCode, branchCode);
+		MWBranch mwBranch = super.persistentSuport.readMWBranchByDegreeCodeAndBranchCode(degreeCode, branchCode);
 
 		if (mwBranch != null)
 		{
@@ -197,16 +179,11 @@ public abstract class CreateUpdateDeleteEnrollmentsInPastStudentCurricularPlans
 							+ mwBranch.getOrientationcode().toString());
 			}
 
-			branch = branchDAO.readByDegreeCurricularPlanAndCode(degreeCurricularPlan, realBranchCode);
+			branch = super.persistentSuport.readBranchByDegreeCurricularPlanAndCode(degreeCurricularPlan, realBranchCode);
 
 		} else
 		{
-			branch =
-				CreateAndUpdateAllPastCurriculums.solveBranchesProblemsForDegrees1And4And6And51And53And54And64(
-					degreeCode,
-					branchCode,
-					degreeCurricularPlan,
-					branchDAO);
+			branch = this.solveBranchesProblemsForDegrees1And4And6And51And53And54And64(degreeCode, branchCode, degreeCurricularPlan);
 		}
 
 		return branch;
@@ -216,13 +193,9 @@ public abstract class CreateUpdateDeleteEnrollmentsInPastStudentCurricularPlans
 	 * @param mwEnrolment
 	 * @param degreeCurricularPlan
 	 * @return ICurricularCourse
-	 * @throws Throwable
 	 */
 	protected ICurricularCourse getCurricularCourse(MWEnrolment mwEnrolment, IDegreeCurricularPlan degreeCurricularPlan)
-		throws Throwable
 	{
-		IPersistentCurricularCourse curricularCourseDAO = super.persistentSuport.getIPersistentCurricularCourse();
-
 		ICurricularCourse curricularCourseToObtainKey = new CurricularCourse();
 		curricularCourseToObtainKey.setDegreeCurricularPlan(degreeCurricularPlan);
 		curricularCourseToObtainKey.setCode(mwEnrolment.getCoursecode());
@@ -240,11 +213,11 @@ public abstract class CreateUpdateDeleteEnrollmentsInPastStudentCurricularPlans
 			IUniversity university = this.getUniversity(mwEnrolment.getUniversitycode());
 			if (university == null)
 			{
-				super.out.println("[WARNING 201] No record of University with code: [" + mwEnrolment.getUniversitycode() + "]!");
+				super.out.println("[WARNING 003] No record of University with code: [" + mwEnrolment.getUniversitycode() + "]!");
 			} else
 			{
-				curricularCourseDAO.simpleLockWrite(curricularCourse);
 				curricularCourse.setUniversity(university);
+				super.persistentSuport.store(curricularCourse);
 			}
 		}
 		return curricularCourse;
@@ -253,14 +226,10 @@ public abstract class CreateUpdateDeleteEnrollmentsInPastStudentCurricularPlans
 	/**
 	 * @param curricularCourseCode
 	 * @return String
-	 * @throws Throwable
 	 */
-	private String getCurricularCourseName(String curricularCourseCode) throws Throwable
+	private String getCurricularCourseName(String curricularCourseCode)
 	{
-		IPersistentMWCurricularCourse persistentMWCurricualrCourse =
-			super.persistentMiddlewareSuport.getIPersistentMWCurricularCourse();
-
-		MWCurricularCourse mwCurricularCourse = persistentMWCurricualrCourse.readByCode(curricularCourseCode);
+		MWCurricularCourse mwCurricularCourse = super.persistentSuport.readMWCurricularCourseByCode(curricularCourseCode);
 
 		if (mwCurricularCourse != null)
 		{
@@ -276,15 +245,13 @@ public abstract class CreateUpdateDeleteEnrollmentsInPastStudentCurricularPlans
 	 * @param degreeCurricularPlan
 	 * @param key
 	 * @return ICurricularCourse
-	 * @throws Throwable
 	 */
 	private ICurricularCourse getCurricularCourse(String courseCode, IDegreeCurricularPlan degreeCurricularPlan, String key)
-		throws Throwable
 	{
-		IPersistentCurricularCourse persistentCurricularCourse = super.persistentSuport.getIPersistentCurricularCourse();
-
 		List curricularCourses =
-			persistentCurricularCourse.readbyCourseCodeAndDegreeCurricularPlan(StringUtils.trim(courseCode), degreeCurricularPlan);
+			super.persistentSuport.readCurricularCoursesByCourseCodeAndDegreeCurricularPlan(
+				StringUtils.trim(courseCode),
+				degreeCurricularPlan);
 
 		if (curricularCourses == null)
 		{
@@ -294,7 +261,7 @@ public abstract class CreateUpdateDeleteEnrollmentsInPastStudentCurricularPlans
 		if (curricularCourses.size() > 1)
 		{
 			System.out.println(
-				"[ERROR 203] Several Fenix CurricularCourses with code ["
+				"[ERROR 008] Several Fenix CurricularCourses with code ["
 					+ StringUtils.trim(courseCode)
 					+ "] were found for Degree ["
 					+ degreeCurricularPlan.getDegree().getNome()
@@ -309,13 +276,11 @@ public abstract class CreateUpdateDeleteEnrollmentsInPastStudentCurricularPlans
 			if (curricularCourseName == null)
 			{
 				System.out.println(
-					"[ERROR 204] Couldn't find name for CurricularCourse with code [" + StringUtils.trim(courseCode) + "]!");
+					"[ERROR 009] Couldn't find name for CurricularCourse with code [" + StringUtils.trim(courseCode) + "]!");
 				return null;
 			}
 
 			ICurricularCourse curricularCourse = new CurricularCourse();
-
-			persistentCurricularCourse.simpleLockWrite(curricularCourse);
 
 			curricularCourse.setCode(StringUtils.trim(courseCode));
 			curricularCourse.setDegreeCurricularPlan(degreeCurricularPlan);
@@ -330,6 +295,9 @@ public abstract class CreateUpdateDeleteEnrollmentsInPastStudentCurricularPlans
 			curricularCourse.setBasic(null);
 			curricularCourse.setCredits(null);
 			curricularCourse.setDepartmentCourse(null);
+			curricularCourse.setAckOptLock(new Integer(1));
+
+			super.persistentSuport.store(curricularCourse);
 
 			this.curricularCoursesCreated.put(key, curricularCourse);
 
@@ -344,21 +312,18 @@ public abstract class CreateUpdateDeleteEnrollmentsInPastStudentCurricularPlans
 	/**
 	 * @param universityCode
 	 * @return IUniversity
-	 * @throws Throwable
 	 */
-	private IUniversity getUniversity(String universityCode) throws Throwable
+	private IUniversity getUniversity(String universityCode)
 	{
-		IPersistentMWUniversity mwUniversityDAO = super.persistentMiddlewareSuport.getIPersistentMWUniversity();
-		IPersistentUniversity universityDAO = super.persistentSuport.getIPersistentUniversity();
-
-		MWUniversity mwUniversity = mwUniversityDAO.readByCode(universityCode);
+		MWUniversity mwUniversity = super.persistentSuport.readMWUniversityByCode(universityCode);
 
 		if (mwUniversity == null)
 		{
 			return null;
 		}
 
-		IUniversity university = universityDAO.readByNameAndCode(mwUniversity.getUniversityName(), mwUniversity.getUniversityCode());
+		IUniversity university =
+			super.persistentSuport.readUniversityByNameAndCode(mwUniversity.getUniversityName(), mwUniversity.getUniversityCode());
 
 		return university;
 	}
@@ -394,11 +359,65 @@ public abstract class CreateUpdateDeleteEnrollmentsInPastStudentCurricularPlans
 				enrolmentEvaluationType = EnrolmentEvaluationType.EXTERNAL_OBJ;
 				break;
 			default :
-				super.out.println("[ERROR 205] No record of EnrolmentEvaluationType with code: [" + mwEnrolment.getSeason() + "]!");
+				super.out.println("[ERROR 010] No record of EnrolmentEvaluationType with code: [" + mwEnrolment.getSeason() + "]!");
 				break;
 		}
 
 		return enrolmentEvaluationType;
+	}
+
+	//	----------------------------------------------------------------------------------------------------------------------
+	//	----------------------------------------------------------------------------------------------------------------------
+	//	------------------------------- METHODS TO SOLVE SPECIFIC PROBLEMS ---------------------------------------------------
+	//	----------------------------------------------------------------------------------------------------------------------
+	//	----------------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * @param degreeCode
+	 * @param branchCode
+	 * @param degreeCurricularPlan
+	 * @return IBranch
+	 */
+	public IBranch solveBranchesProblemsForDegrees1And4And6And51And53And54And64(
+		Integer degreeCode,
+		Integer branchCode,
+		IDegreeCurricularPlan degreeCurricularPlan)
+	{
+		if ((degreeCode.intValue() == 6)
+			|| (degreeCode.intValue() == 1)
+			|| (degreeCode.intValue() == 4)
+			|| (degreeCode.intValue() == 51)
+			|| (degreeCode.intValue() == 53)
+			|| (degreeCode.intValue() == 54)
+			|| (degreeCode.intValue() == 64))
+		{
+
+			String realBranchCode = new String(degreeCode.toString() + branchCode.toString() + 0);
+			IBranch branch = super.persistentSuport.readBranchByDegreeCurricularPlanAndCode(degreeCurricularPlan, realBranchCode);
+
+			if (branch == null)
+			{
+				branch = (IBranch) this.branchesCreated.get(realBranchCode);
+			}
+
+			if (branch == null)
+			{
+				branch = new Branch();
+				branch.setName(new String("RAMO QUE JÁ NÃO EXISTE"));
+				branch.setCode(realBranchCode);
+				branch.setDegreeCurricularPlan(degreeCurricularPlan);
+				branch.setScopes(null);
+				branch.setBranchType(BranchType.COMMON_BRANCH);
+				branch.setAckOptLock(new Integer(1));
+				super.persistentSuport.store(branch);
+				this.branchesCreated.put(realBranchCode, branch);
+			}
+
+			return branch;
+		} else
+		{
+			return null;
+		}
 	}
 
 }
