@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -16,6 +18,7 @@ import org.apache.struts.action.ActionMapping;
 import DataBeans.SiteView;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.notAuthorizedServiceDeleteException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
@@ -69,7 +72,7 @@ public class ExamEnrollmentManager extends FenixDispatchAction {
 		Integer examId = new Integer(examIdString);
 
 		Object[] args = { userView.getUtilizador(), examId };
-		SiteView siteView = null;
+
 		try {
 
 			ServiceUtils.executeService(userView, "EnrollStudentInExam", args);
@@ -95,13 +98,19 @@ public class ExamEnrollmentManager extends FenixDispatchAction {
 		Integer examId = new Integer(examIdString);
 
 		Object[] args = { userView.getUtilizador(), examId };
-		SiteView siteView = null;
+
 		try {
 
 			ServiceUtils.executeService(
 				userView,
 				"UnEnrollStudentInExam",
 				args);
+		} catch (notAuthorizedServiceDeleteException e) {
+			ActionErrors actionErrors = new ActionErrors();
+			actionErrors.add(
+				"notAuthorizedUnEnrollment",
+				new ActionError("error.notAuthorizedUnEnrollment"));
+			saveErrors(request, actionErrors);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
