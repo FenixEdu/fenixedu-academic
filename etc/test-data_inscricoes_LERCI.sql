@@ -1,31 +1,4 @@
 -- -----------------------------
--- Data for table 'CURRICULAR_YEAR'
--- (ID_INTERNAL, YEAR)
--- -----------------------------
-delete from CURRICULAR_YEAR;
-insert into CURRICULAR_YEAR values (1, 1);
-insert into CURRICULAR_YEAR values (2, 2);
-insert into CURRICULAR_YEAR values (3, 3);
-insert into CURRICULAR_YEAR values (4, 4);
-insert into CURRICULAR_YEAR values (5, 5);
-
--- -----------------------------
--- Data for table 'CURRICULAR_SEMESTER'
--- (ID_INTERNAL, KEY_CURRICULAR_YEAR, SEMESTER)
--- -----------------------------
-delete from CURRICULAR_SEMESTER;
-insert into CURRICULAR_SEMESTER values (1, 1, 1);
-insert into CURRICULAR_SEMESTER values (2, 1, 2);
-insert into CURRICULAR_SEMESTER values (3, 2, 1);
-insert into CURRICULAR_SEMESTER values (4, 2, 2);
-insert into CURRICULAR_SEMESTER values (5, 3, 1);
-insert into CURRICULAR_SEMESTER values (6, 3, 2);
-insert into CURRICULAR_SEMESTER values (7, 4, 1);
-insert into CURRICULAR_SEMESTER values (8, 4, 2);
-insert into CURRICULAR_SEMESTER values (9, 5, 1);
-insert into CURRICULAR_SEMESTER values (10, 5, 2);
-
--- -----------------------------
 -- Data for table 'DEPARTMENT'
 -- (ID_INTERNAL, NAME, CODE)
 -- -----------------------------
@@ -341,57 +314,57 @@ insert into PRECEDENCE values (39, 47, 'SP');
 -- (ID_INTERNAL, CLASS_NAME, KEY_PRECEDENCE, KEY_CURRICULAR_COURSE, NUMBER_OF_CURRICULAR_COURSE_DONE)
 -- -----------------------------
 delete from RESTRICTION;
-insert into RESTRICTION values (1, 'Dominio.RestrictionCurricularCourseDone', 1, 12, 0);
-insert into RESTRICTION values (2, 'Dominio.RestrictionCurricularCourseDone', 1, 11, 0);
-insert into RESTRICTION values (3, 'Dominio.RestrictionCurricularCourseDone', 2, 2, 0);
-insert into RESTRICTION values (4, 'Dominio.RestrictionCurricularCourseDone', 3, 8, 0);
-insert into RESTRICTION values (5, 'Dominio.RestrictionCurricularCourseDone', 4, 11, 0);
-insert into RESTRICTION values (6, 'Dominio.RestrictionCurricularCourseDone', 5, 11, 0);
-insert into RESTRICTION values (7, 'Dominio.RestrictionCurricularCourseDone', 6, 12, 0);
-insert into RESTRICTION values (8, 'Dominio.RestrictionCurricularCourseDone', 6, 10, 0);
-insert into RESTRICTION values (9, 'Dominio.RestrictionCurricularCourseDone', 7, 21, 0);
-insert into RESTRICTION values (10, 'Dominio.RestrictionCurricularCourseDone', 8, 8, 0);
-insert into RESTRICTION values (11, 'Dominio.RestrictionCurricularCourseDone', 9, 19, 0);
-insert into RESTRICTION values (12, 'Dominio.RestrictionCurricularCourseDone', 9, 17, 0);
-insert into RESTRICTION values (13, 'Dominio.RestrictionCurricularCourseDone', 10, 22, 0);
-insert into RESTRICTION values (14, 'Dominio.RestrictionCurricularCourseDone', 11, 19, 0);
-insert into RESTRICTION values (15, 'Dominio.RestrictionCurricularCourseDone', 12, 15, 0);
-insert into RESTRICTION values (16, 'Dominio.RestrictionCurricularCourseDone', 12, 14, 0);
-insert into RESTRICTION values (17, 'Dominio.RestrictionCurricularCourseDone', 13, 30, 0);
-insert into RESTRICTION values (18, 'Dominio.RestrictionCurricularCourseDone', 13, 35, 0);
-insert into RESTRICTION values (19, 'Dominio.RestrictionCurricularCourseDone', 14, 6, 0);
-insert into RESTRICTION values (20, 'Dominio.RestrictionCurricularCourseDone', 15, 15, 0);
-insert into RESTRICTION values (21, 'Dominio.RestrictionCurricularCourseDone', 15, 17, 0);
-insert into RESTRICTION values (22, 'Dominio.RestrictionCurricularCourseDone', 16, 24, 0);
-insert into RESTRICTION values (23, 'Dominio.RestrictionCurricularCourseDone', 17, 30, 0);
-insert into RESTRICTION values (24, 'Dominio.RestrictionCurricularCourseDone', 18, 30, 0);
-insert into RESTRICTION values (25, 'Dominio.RestrictionCurricularCourseDone', 19, 4, 0);
-insert into RESTRICTION values (26, 'Dominio.RestrictionCurricularCourseDone', 20, 6, 0);
-insert into RESTRICTION values (27, 'Dominio.RestrictionCurricularCourseDone', 21, 13, 0);
-insert into RESTRICTION values (28, 'Dominio.RestrictionCurricularCourseDone', 22, 13, 0);
-insert into RESTRICTION values (29, 'Dominio.RestrictionCurricularCourseDone', 22, 15, 0);
-insert into RESTRICTION values (30, 'Dominio.RestrictionCurricularCourseDone', 23, 23, 0);
-insert into RESTRICTION values (31, 'Dominio.RestrictionCurricularCourseDone', 24, 14, 0);
-insert into RESTRICTION values (32, 'Dominio.RestrictionCurricularCourseDone', 25, 15, 0);
-insert into RESTRICTION values (33, 'Dominio.RestrictionCurricularCourseDone', 26, 1, 0);
-insert into RESTRICTION values (34, 'Dominio.RestrictionCurricularCourseDone', 27, 6, 0);
-insert into RESTRICTION values (35, 'Dominio.RestrictionCurricularCourseDone', 28, 3, 0);
-insert into RESTRICTION values (36, 'Dominio.RestrictionCurricularCourseDone', 28, 14, 0);
-insert into RESTRICTION values (37, 'Dominio.RestrictionCurricularCourseDone', 29, 17, 0);
-insert into RESTRICTION values (38, 'Dominio.RestrictionCurricularCourseDone', 29, 18, 0);
-insert into RESTRICTION values (39, 'Dominio.RestrictionCurricularCourseDone', 30, 20, 0);
-insert into RESTRICTION values (40, 'Dominio.RestrictionCurricularCourseDone', 31, 14, 0);
-insert into RESTRICTION values (41, 'Dominio.RestrictionCurricularCourseDone', 31, 23, 0);
-insert into RESTRICTION values (42, 'Dominio.RestrictionCurricularCourseDone', 32, 6, 0);
-insert into RESTRICTION values (43, 'Dominio.RestrictionCurricularCourseDone', 33, 6, 0);
-insert into RESTRICTION values (44, 'Dominio.RestrictionCurricularCourseDone', 33, 5, 0);
-insert into RESTRICTION values (45, 'Dominio.RestrictionCurricularCourseDone', 34, 32, 0);
-insert into RESTRICTION values (46, 'Dominio.RestrictionCurricularCourseDone', 35, 34, 0);
-insert into RESTRICTION values (47, 'Dominio.RestrictionCurricularCourseDone', 36, 20, 0);
-insert into RESTRICTION values (48, 'Dominio.RestrictionCurricularCourseDone', 37, 40, 0);
-insert into RESTRICTION values (49, 'Dominio.RestrictionCurricularCourseDone', 37, 32, 0);
-insert into RESTRICTION values (50, 'Dominio.RestrictionCurricularCourseDone', 38, 32, 0);
-insert into RESTRICTION values (51, 'Dominio.RestrictionCurricularCourseDone', 39, 25, 0);
+insert into RESTRICTION values (1, 'Dominio.CurricularCourseDoneRestriction', 1, 12, 0);
+insert into RESTRICTION values (2, 'Dominio.CurricularCourseDoneRestriction', 1, 11, 0);
+insert into RESTRICTION values (3, 'Dominio.CurricularCourseDoneRestriction', 2, 2, 0);
+insert into RESTRICTION values (4, 'Dominio.CurricularCourseDoneRestriction', 3, 8, 0);
+insert into RESTRICTION values (5, 'Dominio.CurricularCourseDoneRestriction', 4, 11, 0);
+insert into RESTRICTION values (6, 'Dominio.CurricularCourseDoneRestriction', 5, 11, 0);
+insert into RESTRICTION values (7, 'Dominio.CurricularCourseDoneRestriction', 6, 12, 0);
+insert into RESTRICTION values (8, 'Dominio.CurricularCourseDoneRestriction', 6, 10, 0);
+insert into RESTRICTION values (9, 'Dominio.CurricularCourseDoneRestriction', 7, 21, 0);
+insert into RESTRICTION values (10, 'Dominio.CurricularCourseDoneRestriction', 8, 8, 0);
+insert into RESTRICTION values (11, 'Dominio.CurricularCourseDoneRestriction', 9, 19, 0);
+insert into RESTRICTION values (12, 'Dominio.CurricularCourseDoneRestriction', 9, 17, 0);
+insert into RESTRICTION values (13, 'Dominio.CurricularCourseDoneRestriction', 10, 22, 0);
+insert into RESTRICTION values (14, 'Dominio.CurricularCourseDoneRestriction', 11, 19, 0);
+insert into RESTRICTION values (15, 'Dominio.CurricularCourseDoneRestriction', 12, 15, 0);
+insert into RESTRICTION values (16, 'Dominio.CurricularCourseDoneRestriction', 12, 14, 0);
+insert into RESTRICTION values (17, 'Dominio.CurricularCourseDoneRestriction', 13, 30, 0);
+insert into RESTRICTION values (18, 'Dominio.CurricularCourseDoneRestriction', 13, 35, 0);
+insert into RESTRICTION values (19, 'Dominio.CurricularCourseDoneRestriction', 14, 6, 0);
+insert into RESTRICTION values (20, 'Dominio.CurricularCourseDoneRestriction', 15, 15, 0);
+insert into RESTRICTION values (21, 'Dominio.CurricularCourseDoneRestriction', 15, 17, 0);
+insert into RESTRICTION values (22, 'Dominio.CurricularCourseDoneRestriction', 16, 24, 0);
+insert into RESTRICTION values (23, 'Dominio.CurricularCourseDoneRestriction', 17, 30, 0);
+insert into RESTRICTION values (24, 'Dominio.CurricularCourseDoneRestriction', 18, 30, 0);
+insert into RESTRICTION values (25, 'Dominio.CurricularCourseDoneRestriction', 19, 4, 0);
+insert into RESTRICTION values (26, 'Dominio.CurricularCourseDoneRestriction', 20, 6, 0);
+insert into RESTRICTION values (27, 'Dominio.CurricularCourseDoneRestriction', 21, 13, 0);
+insert into RESTRICTION values (28, 'Dominio.CurricularCourseDoneRestriction', 22, 13, 0);
+insert into RESTRICTION values (29, 'Dominio.CurricularCourseDoneRestriction', 22, 15, 0);
+insert into RESTRICTION values (30, 'Dominio.CurricularCourseDoneRestriction', 23, 23, 0);
+insert into RESTRICTION values (31, 'Dominio.CurricularCourseDoneRestriction', 24, 14, 0);
+insert into RESTRICTION values (32, 'Dominio.CurricularCourseDoneRestriction', 25, 15, 0);
+insert into RESTRICTION values (33, 'Dominio.CurricularCourseDoneRestriction', 26, 1, 0);
+insert into RESTRICTION values (34, 'Dominio.CurricularCourseDoneRestriction', 27, 6, 0);
+insert into RESTRICTION values (35, 'Dominio.CurricularCourseDoneRestriction', 28, 3, 0);
+insert into RESTRICTION values (36, 'Dominio.CurricularCourseDoneRestriction', 28, 14, 0);
+insert into RESTRICTION values (37, 'Dominio.CurricularCourseDoneRestriction', 29, 17, 0);
+insert into RESTRICTION values (38, 'Dominio.CurricularCourseDoneRestriction', 29, 18, 0);
+insert into RESTRICTION values (39, 'Dominio.CurricularCourseDoneRestriction', 30, 20, 0);
+insert into RESTRICTION values (40, 'Dominio.CurricularCourseDoneRestriction', 31, 14, 0);
+insert into RESTRICTION values (41, 'Dominio.CurricularCourseDoneRestriction', 31, 23, 0);
+insert into RESTRICTION values (42, 'Dominio.CurricularCourseDoneRestriction', 32, 6, 0);
+insert into RESTRICTION values (43, 'Dominio.CurricularCourseDoneRestriction', 33, 6, 0);
+insert into RESTRICTION values (44, 'Dominio.CurricularCourseDoneRestriction', 33, 5, 0);
+insert into RESTRICTION values (45, 'Dominio.CurricularCourseDoneRestriction', 34, 32, 0);
+insert into RESTRICTION values (46, 'Dominio.CurricularCourseDoneRestriction', 35, 34, 0);
+insert into RESTRICTION values (47, 'Dominio.CurricularCourseDoneRestriction', 36, 20, 0);
+insert into RESTRICTION values (48, 'Dominio.CurricularCourseDoneRestriction', 37, 40, 0);
+insert into RESTRICTION values (49, 'Dominio.CurricularCourseDoneRestriction', 37, 32, 0);
+insert into RESTRICTION values (50, 'Dominio.CurricularCourseDoneRestriction', 38, 32, 0);
+insert into RESTRICTION values (51, 'Dominio.CurricularCourseDoneRestriction', 39, 25, 0);
 
 -- -----------------------------
 -- Data for table 'DEGREE_ENROLMENT_INFO'
@@ -442,4 +415,31 @@ insert into EXECUTION_YEAR values (5, '2007/2008','NO');
 insert into EXECUTION_YEAR values (6, '2008/2009','NO');
 insert into EXECUTION_YEAR values (7, '2009/2010','NO');
 insert into EXECUTION_YEAR values (8, '2010/2011','NO');
+
+-- -----------------------------
+-- Data for table 'CURRICULAR_YEAR'
+-- (ID_INTERNAL, YEAR)
+-- -----------------------------
+delete from CURRICULAR_YEAR;
+insert into CURRICULAR_YEAR values (1, 1);
+insert into CURRICULAR_YEAR values (2, 2);
+insert into CURRICULAR_YEAR values (3, 3);
+insert into CURRICULAR_YEAR values (4, 4);
+insert into CURRICULAR_YEAR values (5, 5);
+
+-- -----------------------------
+-- Data for table 'CURRICULAR_SEMESTER'
+-- (ID_INTERNAL, KEY_CURRICULAR_YEAR, SEMESTER)
+-- -----------------------------
+delete from CURRICULAR_SEMESTER;
+insert into CURRICULAR_SEMESTER values (1, 1, 1);
+insert into CURRICULAR_SEMESTER values (2, 1, 2);
+insert into CURRICULAR_SEMESTER values (3, 2, 1);
+insert into CURRICULAR_SEMESTER values (4, 2, 2);
+insert into CURRICULAR_SEMESTER values (5, 3, 1);
+insert into CURRICULAR_SEMESTER values (6, 3, 2);
+insert into CURRICULAR_SEMESTER values (7, 4, 1);
+insert into CURRICULAR_SEMESTER values (8, 4, 2);
+insert into CURRICULAR_SEMESTER values (9, 5, 1);
+insert into CURRICULAR_SEMESTER values (10, 5, 2);
 -- para sair até aqui

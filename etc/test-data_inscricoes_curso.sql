@@ -1,31 +1,4 @@
 -- -----------------------------
--- Data for table 'CURRICULAR_YEAR'
--- (ID_INTERNAL, YEAR)
--- -----------------------------
-delete from CURRICULAR_YEAR;
-insert into CURRICULAR_YEAR values (1, 1);
-insert into CURRICULAR_YEAR values (2, 2);
-insert into CURRICULAR_YEAR values (3, 3);
-insert into CURRICULAR_YEAR values (4, 4);
-insert into CURRICULAR_YEAR values (5, 5);
-
--- -----------------------------
--- Data for table 'CURRICULAR_SEMESTER'
--- (ID_INTERNAL, KEY_CURRICULAR_YEAR, SEMESTER)
--- -----------------------------
-delete from CURRICULAR_SEMESTER;
-insert into CURRICULAR_SEMESTER values (1, 1, 1);
-insert into CURRICULAR_SEMESTER values (2, 1, 2);
-insert into CURRICULAR_SEMESTER values (3, 2, 1);
-insert into CURRICULAR_SEMESTER values (4, 2, 2);
-insert into CURRICULAR_SEMESTER values (5, 3, 1);
-insert into CURRICULAR_SEMESTER values (6, 3, 2);
-insert into CURRICULAR_SEMESTER values (7, 4, 1);
-insert into CURRICULAR_SEMESTER values (8, 4, 2);
-insert into CURRICULAR_SEMESTER values (9, 5, 1);
-insert into CURRICULAR_SEMESTER values (10, 5, 2);
-
--- -----------------------------
 -- Data for table 'DEPARTMENT'
 -- (ID_INTERNAL, NAME, CODE)
 -- -----------------------------
@@ -319,19 +292,82 @@ insert into ENROLMENT values (34, 1, 34, 1, 1, 'Dominio.Enrolment', null);
 insert into ENROLMENT values (35, 1, 35, 1, 1, 'Dominio.Enrolment', null);
 insert into ENROLMENT values (36, 1, 36, 1, 1, 'Dominio.Enrolment', null);
 
--- insert into ENROLMENT values (37, 1, 37, 1, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (38, 1, 38, 1, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (39, 1, 39, 1, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (40, 1, 40, 1, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (41, 1, 41, 1, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (42, 1, 42, 1, 1, 'Dominio.Enrolment', null);
+#insert into ENROLMENT values (37, 1, 37, 1, 1, 'Dominio.Enrolment', null);
+#insert into ENROLMENT values (38, 1, 38, 1, 1, 'Dominio.Enrolment', null);
+#insert into ENROLMENT values (39, 1, 39, 1, 1, 'Dominio.Enrolment', null);
+#insert into ENROLMENT values (40, 1, 40, 1, 1, 'Dominio.Enrolment', null);
+#insert into ENROLMENT values (41, 1, 41, 1, 1, 'Dominio.Enrolment', null);
+#insert into ENROLMENT values (42, 1, 42, 1, 1, 'Dominio.Enrolment', null);
 
--- insert into ENROLMENT values (43, 1, 43, 1, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (44, 1, 44, 1, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (45, 1, 45, 1, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (46, 1, 46, 1, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (47, 1, 47, 1, 1, 'Dominio.Enrolment', null);
--- insert into ENROLMENT values (48, 1, 48, 1, 1, 'Dominio.Enrolment', null);
+#insert into ENROLMENT values (43, 1, 43, 1, 1, 'Dominio.Enrolment', null);
+#insert into ENROLMENT values (44, 1, 44, 1, 1, 'Dominio.Enrolment', null);
+#insert into ENROLMENT values (45, 1, 45, 1, 1, 'Dominio.Enrolment', null);
+#insert into ENROLMENT values (46, 1, 46, 1, 1, 'Dominio.Enrolment', null);
+#insert into ENROLMENT values (47, 1, 47, 1, 1, 'Dominio.Enrolment', null);
+#insert into ENROLMENT values (48, 1, 48, 1, 1, 'Dominio.Enrolment', null);
+
+-- -----------------------------
+-- Data for table 'PRECEDENCE'
+-- -----------------------------
+-- (ID_INTERNAL, KEY_CURRICULAR_COURSE, SCOPE_TO_APPLY)
+delete from PRECEDENCE;
+
+-- precedencias do tipo Done
+insert into PRECEDENCE values (1, 14, 'SP');
+insert into PRECEDENCE values (2, 17, 'SP');
+insert into PRECEDENCE values (3, 22, 'SP');
+insert into PRECEDENCE values (4, 19, 'SP');
+insert into PRECEDENCE values (5, 21, 'SP');
+insert into PRECEDENCE values (6, 26, 'SP');
+insert into PRECEDENCE values (7, 25, 'SP');
+insert into PRECEDENCE values (8, 34, 'SP');
+insert into PRECEDENCE values (9, 24, 'SP');
+insert into PRECEDENCE values (10, 9, 'SP');
+insert into PRECEDENCE values (11, 13, 'SP');
+insert into PRECEDENCE values (12, 20, 'SP');
+
+-- precedencias do tipo Enroled in the Past
+insert into PRECEDENCE values (13, 10, 'SP');
+insert into PRECEDENCE values (14, 12, 'SP');
+insert into PRECEDENCE values (15, 7, 'SP');
+insert into PRECEDENCE values (16, 14, 'SP');
+insert into PRECEDENCE values (17, 26, 'SP');
+insert into PRECEDENCE values (18, 25, 'SP');
+insert into PRECEDENCE values (19, 34, 'SP');
+
+insert into PRECEDENCE values (20, 20, 'SP');
+insert into PRECEDENCE values (21, 20, 'SP');
+insert into PRECEDENCE values (22, 20, 'SP');
+insert into PRECEDENCE values (23, 20, 'SP');
+
+-- -----------------------------
+-- Data for table 'RESTRICTION'
+-- -----------------------------
+-- (ID_INTERNAL, CLASS_NAME, KEY_PRECEDENCE, KEY_CURRICULAR_COURSE, NUMBER_OF_CURRICULAR_COURSE_DONE)
+delete from RESTRICTION;
+insert into RESTRICTION values (1, 'Dominio.CurricularCourseDoneRestriction', 1, 1, 0);
+insert into RESTRICTION values (2, 'Dominio.CurricularCourseDoneRestriction', 2, 7, 0);
+insert into RESTRICTION values (3, 'Dominio.CurricularCourseDoneRestriction', 3, 14, 0);
+insert into RESTRICTION values (4, 'Dominio.CurricularCourseDoneRestriction', 4, 3, 0);
+insert into RESTRICTION values (5, 'Dominio.CurricularCourseDoneRestriction', 4, 9, 0);
+insert into RESTRICTION values (6, 'Dominio.CurricularCourseDoneRestriction', 5, 3, 0);
+insert into RESTRICTION values (7, 'Dominio.CurricularCourseDoneRestriction', 6, 19, 0);
+insert into RESTRICTION values (8, 'Dominio.CurricularCourseDoneRestriction', 7, 10, 0);
+insert into RESTRICTION values (9, 'Dominio.CurricularCourseDoneRestriction', 8, 19, 0);
+insert into RESTRICTION values (10, 'Dominio.CurricularCourseDoneRestriction', 9, 11, 0);
+insert into RESTRICTION values (11, 'Dominio.CurricularCourseDoneRestriction', 10, 2, 0);
+insert into RESTRICTION values (12, 'Dominio.CurricularCourseDoneRestriction', 11,9, 0);
+insert into RESTRICTION values (13, 'Dominio.CurricularCourseDoneRestriction', 12, 13, 0);
+
+insert into RESTRICTION values (14, 'dominio', 13, 1, 0);
+insert into RESTRICTION values (15, 'dominio', 14, 1, 0);
+insert into RESTRICTION values (16, 'dominio', 15, 1, 0);
+insert into RESTRICTION values (17, 'dominio', 15, 5, 0);
+insert into RESTRICTION values (18, 'dominio', 16, 9, 0);
+insert into RESTRICTION values (19, 'dominio', 17, 13, 0);
+insert into RESTRICTION values (20, 'dominio', 18, 15, 0);
+insert into RESTRICTION values (21, 'dominio', 19, 20, 0);
+insert into RESTRICTION values (22, 'dominio', 19, 26, 0);
 
 -- -----------------------------
 -- Data for table 'DEGREE_ENROLMENT_INFO'
@@ -382,5 +418,32 @@ insert into EXECUTION_YEAR values (5, '2007/2008','NO');
 insert into EXECUTION_YEAR values (6, '2008/2009','NO');
 insert into EXECUTION_YEAR values (7, '2009/2010','NO');
 insert into EXECUTION_YEAR values (8, '2010/2011','NO');
+
+-- -----------------------------
+-- Data for table 'CURRICULAR_YEAR'
+-- (ID_INTERNAL, YEAR)
+-- -----------------------------
+delete from CURRICULAR_YEAR;
+insert into CURRICULAR_YEAR values (1, 1);
+insert into CURRICULAR_YEAR values (2, 2);
+insert into CURRICULAR_YEAR values (3, 3);
+insert into CURRICULAR_YEAR values (4, 4);
+insert into CURRICULAR_YEAR values (5, 5);
+
+-- -----------------------------
+-- Data for table 'CURRICULAR_SEMESTER'
+-- (ID_INTERNAL, KEY_CURRICULAR_YEAR, SEMESTER)
+-- -----------------------------
+delete from CURRICULAR_SEMESTER;
+insert into CURRICULAR_SEMESTER values (1, 1, 1);
+insert into CURRICULAR_SEMESTER values (2, 1, 2);
+insert into CURRICULAR_SEMESTER values (3, 2, 1);
+insert into CURRICULAR_SEMESTER values (4, 2, 2);
+insert into CURRICULAR_SEMESTER values (5, 3, 1);
+insert into CURRICULAR_SEMESTER values (6, 3, 2);
+insert into CURRICULAR_SEMESTER values (7, 4, 1);
+insert into CURRICULAR_SEMESTER values (8, 4, 2);
+insert into CURRICULAR_SEMESTER values (9, 5, 1);
+insert into CURRICULAR_SEMESTER values (10, 5, 2);
 
 -- para sair até aqui

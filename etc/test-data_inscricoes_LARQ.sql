@@ -1,31 +1,4 @@
 -- -----------------------------
--- Data for table 'CURRICULAR_YEAR'
--- (ID_INTERNAL, YEAR)
--- -----------------------------
-delete from CURRICULAR_YEAR;
-insert into CURRICULAR_YEAR values (1, 1);
-insert into CURRICULAR_YEAR values (2, 2);
-insert into CURRICULAR_YEAR values (3, 3);
-insert into CURRICULAR_YEAR values (4, 4);
-insert into CURRICULAR_YEAR values (5, 5);
-
--- -----------------------------
--- Data for table 'CURRICULAR_SEMESTER'
--- (ID_INTERNAL, KEY_CURRICULAR_YEAR, SEMESTER)
--- -----------------------------
-delete from CURRICULAR_SEMESTER;
-insert into CURRICULAR_SEMESTER values (1, 1, 1);
-insert into CURRICULAR_SEMESTER values (2, 1, 2);
-insert into CURRICULAR_SEMESTER values (3, 2, 1);
-insert into CURRICULAR_SEMESTER values (4, 2, 2);
-insert into CURRICULAR_SEMESTER values (5, 3, 1);
-insert into CURRICULAR_SEMESTER values (6, 3, 2);
-insert into CURRICULAR_SEMESTER values (7, 4, 1);
-insert into CURRICULAR_SEMESTER values (8, 4, 2);
-insert into CURRICULAR_SEMESTER values (9, 5, 1);
-insert into CURRICULAR_SEMESTER values (10, 5, 2);
-
--- -----------------------------
 -- Data for table 'DEPARTMENT'
 -- (ID_INTERNAL, NAME, CODE)
 -- -----------------------------
@@ -331,5 +304,32 @@ insert into EXECUTION_YEAR values (5, '2007/2008','NO');
 insert into EXECUTION_YEAR values (6, '2008/2009','NO');
 insert into EXECUTION_YEAR values (7, '2009/2010','NO');
 insert into EXECUTION_YEAR values (8, '2010/2011','NO');
+
+-- -----------------------------
+-- Data for table 'CURRICULAR_YEAR'
+-- (ID_INTERNAL, YEAR)
+-- -----------------------------
+delete from CURRICULAR_YEAR;
+insert into CURRICULAR_YEAR values (1, 1);
+insert into CURRICULAR_YEAR values (2, 2);
+insert into CURRICULAR_YEAR values (3, 3);
+insert into CURRICULAR_YEAR values (4, 4);
+insert into CURRICULAR_YEAR values (5, 5);
+
+-- -----------------------------
+-- Data for table 'CURRICULAR_SEMESTER'
+-- (ID_INTERNAL, KEY_CURRICULAR_YEAR, SEMESTER)
+-- -----------------------------
+delete from CURRICULAR_SEMESTER;
+insert into CURRICULAR_SEMESTER values (1, 1, 1);
+insert into CURRICULAR_SEMESTER values (2, 1, 2);
+insert into CURRICULAR_SEMESTER values (3, 2, 1);
+insert into CURRICULAR_SEMESTER values (4, 2, 2);
+insert into CURRICULAR_SEMESTER values (5, 3, 1);
+insert into CURRICULAR_SEMESTER values (6, 3, 2);
+insert into CURRICULAR_SEMESTER values (7, 4, 1);
+insert into CURRICULAR_SEMESTER values (8, 4, 2);
+insert into CURRICULAR_SEMESTER values (9, 5, 1);
+insert into CURRICULAR_SEMESTER values (10, 5, 2);
 
 -- para sair até aqui

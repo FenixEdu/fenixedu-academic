@@ -48,7 +48,10 @@ public class EnrolmentValidateCurricularYearPrecedenceRule implements IEnrolment
 			iterator = enrolmentContext.getOptionalCurricularCoursesEnrolments().iterator();
 			while (iterator.hasNext()) {
 //				IEnrolmentInOptionalCurricularCourse enrolmentInOptionalCurricularCourse = (IEnrolmentInOptionalCurricularCourse) iterator.next();
-				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(((IEnrolmentInOptionalCurricularCourse) enrolmentContext.getOptionalCurricularCoursesEnrolments().get(0)).getCurricularCourse());
+//				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria(((IEnrolmentInOptionalCurricularCourse) enrolmentContext.getOptionalCurricularCoursesEnrolments().get(0)).getCurricularCourse());
+				
+				IEnrolmentInOptionalCurricularCourse enrolmentInOptionalCurricularCourse = (IEnrolmentInOptionalCurricularCourse) iterator.next();
+				ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readDomainObjectByCriteria( enrolmentInOptionalCurricularCourse.getCurricularCourse());
 				year2 =  ((ICurricularCourseScope) curricularCourse.getScopes().get(0)).getCurricularSemester().getCurricularYear().getYear().intValue();
 				if (year2 > year) {
 					year = year2;
