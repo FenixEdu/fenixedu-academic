@@ -10,6 +10,8 @@ package ServidorApresentacao.Action.teacher;
  * @author lmac1
  *
  */
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -19,6 +21,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import DataBeans.gesdis.InfoSection;
+import DataBeans.gesdis.InfoSite;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
@@ -36,7 +39,7 @@ public class DeleteSectionAction extends FenixAction{
 				HttpServletResponse response)
 				throws FenixActionException {
 					
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 //		DynaActionForm deleteSectionForm = (DynaActionForm) form;				
 //					
 //		String option = (String) deleteSectionForm.get("option");
@@ -47,15 +50,25 @@ public class DeleteSectionAction extends FenixAction{
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 		
 		InfoSection infoSection = (InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
-		InfoSection infoSuperiorSection = infoSection.getSuperiorInfoSection();
 		
 		
-		try{
+		
+		try {
 			Object deleteSectionArguments[] = { infoSection };
 			GestorServicos manager = GestorServicos.manager();
-			Boolean result =(Boolean) manager.executar(userView, "ServidorAplicacao.Servico.gesdis.teacher.DeleteSection", deleteSectionArguments);
+			Boolean result = (Boolean) manager.executar(userView, "ServidorAplicacao.Servico.gesdis.teacher.DeleteSection", deleteSectionArguments);
+
+			session.removeAttribute(SessionConstants.INFO_SECTION);
+			session.removeAttribute("Sections");
+			
+//			nao sei s é + correcto ir buscar assim o infosite ou pla sessao		
+			InfoSite infoSite = infoSection.getInfoSite();
+			Object readSectionsArguments[] = { infoSite };
+			List allInfoSections = (List) manager.executar(null, "ServidorAplicacao.Servico.gesdis.ReadSections", readSectionsArguments);
+			session.setAttribute("Sections", allInfoSections);	
 		
-        	if(infoSuperiorSection ==null){ 
+		    InfoSection infoSuperiorSection = infoSection.getSuperiorInfoSection();
+        	if(infoSuperiorSection == null) { 
     
 
 //			   Object ReadTeacherSiteArguments[] = { infoSite.getInfoExecutionCourse() };
@@ -63,17 +76,17 @@ public class DeleteSectionAction extends FenixAction{
 
 //	           session.setAttribute("Site", infoSite);
 
-			return mapping.findForward("AccessSiteManagement");		
+					return mapping.findForward("AccessSiteManagement");		
+		   	}
+		    else {
+//			        session.setAttribute("superiorSection", null);
+			        return mapping.findForward("AccessSectionManagement");
+		          }
 		   }
-		   else{
-//			   session.setAttribute("superiorSection", null);
-			   return mapping.findForward("AccessSectionManagement");
-		   }
-			  
-		   }catch (FenixServiceException fenixServiceException){
+			catch (FenixServiceException fenixServiceException){
 					   throw new FenixActionException(fenixServiceException.getMessage());
 				   }
 			
-				}			
+		}			
 			
 }
