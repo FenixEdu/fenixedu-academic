@@ -5,6 +5,7 @@ import DataBeans.util.Cloner;
 import Dominio.ICurso;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -53,7 +54,7 @@ public class ReadDegree implements IServico {
    
        
 	if (degree == null) {
-		return null;
+		throw new NonExistingServiceException();
 	}
 
 	infoDegree = Cloner.copyIDegree2InfoDegree(degree); 

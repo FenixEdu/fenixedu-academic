@@ -10,6 +10,7 @@ import Dominio.ICurso;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.ISuportePersistente;
@@ -78,7 +79,8 @@ public class EditDegree implements IServico {
 				} catch (ExistingPersistentException ex) {
 					throw new ExistingServiceException("O curso com esses dados", ex);
 				}
-			}
+			}else
+			throw new NonExistingServiceException();
 
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia);

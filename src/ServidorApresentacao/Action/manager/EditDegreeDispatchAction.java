@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -17,9 +19,11 @@ import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
 import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
+import ServidorApresentacao.Action.exceptions.NonExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.TipoCurso;
 
@@ -45,9 +49,30 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 
 		try {
 			oldInfoDegree = (InfoDegree) manager.executar(userView, "ReadDegree", args);
-		} catch (FenixServiceException fenixServiceException) {
-			throw new FenixActionException(fenixServiceException.getMessage());
+		
+		}catch (NonExistingServiceException e) {
+					ActionErrors actionErrors = new ActionErrors();
+					actionErrors.add(
+						"nonExisting",
+						new ActionError("errors.non.existing"));
+					saveErrors(request, actionErrors);
+					return mapping.findForward("readDegrees");
+
+				}  catch (FenixServiceException fenixServiceException) {
+	throw new FenixActionException(fenixServiceException.getMessage());
 		}
+				
+//		catch (NonExistingServiceException e) {
+//					throw new NonExistingActionException("O curso", e);
+//				}
+//		if (oldInfoDegree == null) {
+//					ActionErrors actionErrors = new ActionErrors();
+//					ActionError error = new ActionError("message.nonExistingDegree");
+//					actionErrors.add("message.nonExistingDegree", error);
+//					saveErrors(request, actionErrors);
+//					return mapping.findForward("readDegrees");
+//				}
+
 
 		TipoCurso degreeType = (TipoCurso) oldInfoDegree.getTipoCurso();
 
@@ -77,6 +102,8 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 
 		try {
 			manager.executar(userView, "EditDegree", args);
+		} catch (NonExistingServiceException e) {
+			throw new NonExistingActionException("O curso", e);
 		} catch (ExistingServiceException e) {
 			throw new ExistingActionException(e.getMessage(), e);
 		} catch (FenixServiceException fenixServiceException) {

@@ -9,6 +9,7 @@ import Dominio.DegreeCurricularPlan;
 import Dominio.IDegreeCurricularPlan;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -53,7 +54,7 @@ public class ReadDegreeCurricularPlan implements IServico {
 	}
      
 	if (degreeCurricularPlan == null) {
-		return null;
+		throw new NonExistingServiceException();
 	}
 
 	InfoDegreeCurricularPlan infoDegreeCurricularPlan = Cloner.copyIDegreeCurricularPlan2InfoDegreeCurricularPlan(degreeCurricularPlan); 

@@ -137,12 +137,18 @@
       	  <forward name="readDegrees" path="df.page.read-degrees"/>      	      
       </action>
       
+      
 	 <!-- Action for reading a degree -->
       <action path="/readDegree"
-              input="/readDegreesInput.do"
+              input="/readDegrees.do"
       	      type="ServidorApresentacao.Action.manager.ReadDegreeAction">
+      	  <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+            key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+          /> 
+          <forward name="readDegrees" path="/readDegrees.do"/> 	  
       	  <forward name="viewDegree" path="df.page.read-degree"/>  
-      	  <forward name="readDegrees" path="/readDegrees.do"/> 	      
+      	      
       </action>
          
      <!-- Action for inserting a degree -->
@@ -172,7 +178,7 @@
       	  <forward name="readDegrees" path="/readDegrees.do"/>      	      
       </action>
       
-      <!-- Action for editing a degree -->
+      <!-- Action for editing a degree  path="/manager/readDegrees.do"-->
 	<action
 		path="/editDegree"
 		name="degreeForm"
@@ -185,6 +191,9 @@
          	       key="ServidorApresentacao.Action.exceptions.ExistingActionException"
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                    /> 
+          <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+         	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                  />
        <forward name="editDegree" path="df.page.edit-degree"/>
        <forward name="readDegrees" path="/readDegrees.do"/>      	      
 	</action>
@@ -197,8 +206,12 @@
     
     <!-- Action for reading a degree curricular plan -->
     <action path="/readDegreeCurricularPlan"
-         input="/readDegreeInput.do"
+         input="/readDegree.do"
          type="ServidorApresentacao.Action.manager.ReadDegreeCurricularPlanAction">
+          <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+            key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+            handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+          /> 
      <forward name="viewDegreeCurricularPlan" path="df.page.read-degree-curricular-plan"/>  
      <forward name="readDegree" path="/readDegree.do"/> 	      
     </action>
@@ -256,6 +269,10 @@
     <action path="/readCurricularCourse"
         input="/readDegreeCurricularPlan.do"
         type="ServidorApresentacao.Action.manager.ReadCurricularCourseAction">
+         <exception type="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+         	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+                   /> 
       <forward name="readDegreeCurricularPlan" path="/readDegreeCurricularPlan.do"/>  
       <forward name="viewCurricularCourse" path="df.page.read-curricular-course"/> 	      
     </action>	

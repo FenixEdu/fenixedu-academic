@@ -70,6 +70,10 @@
 	
 			<table width="70%" cellpadding="0" border="0">
 				<tr>
+					<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularYear" />
+					</td>
+					<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularSemester" />
+					</td>
 					<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.theoreticalHours" />
 					</td>
 					<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.praticalHours" />
@@ -88,17 +92,17 @@
 					</td>
 					<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.branch" />
 					</td>
-					<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularSemester" />
-					</td>
-					<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularYear" />
-					</td>
 				</tr>
 				<logic:iterate id="curricularCourseScope" name="curricularCourseScopesList">
 				
 					<bean:define id="infoBranch" name="curricularCourseScope" property="infoBranch"/>
 					<bean:define id="infoCurricularSemester" name="curricularCourseScope" property="infoCurricularSemester"/>
 					<bean:define id="infoCurricularYear" name="infoCurricularSemester" property="infoCurricularYear"/>
-					<tr>	 			
+					<tr>
+						<td class="listClasses"><bean:write name="infoCurricularYear" property="year"/>
+						</td>
+						<td class="listClasses"><bean:write name="infoCurricularSemester" property="semester"/>
+						</td>	 			
 						<td class="listClasses"><bean:write name="curricularCourseScope" property="theoreticalHours"/>
 						</td>
 						<td class="listClasses"><bean:write name="curricularCourseScope" property="praticalHours"/>
@@ -117,11 +121,7 @@
 						</td>
 						<td class="listClasses"><bean:write name="infoBranch" property="code"/>
 						</td>
-						<td class="listClasses"><bean:write name="infoCurricularYear" property="year"/>
-						</td>
-						<td class="listClasses"><bean:write name="infoCurricularSemester" property="semester"/>
-						</td>
-						
+												
 						<td>
 							<ul style="list-style-type: square;">
 								<li><html:link page="<%="/editCurricularCourseScope.do?method=prepareEdit&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="idInternal"><bean:message key="label.manager.edit.curricularCourseScope"/></html:link></li>

@@ -41,50 +41,54 @@ public class EditExecutionDegree implements IServico {
 		return "EditExecutionDegree";
 	}
 
-	public Boolean run(InfoExecutionDegree infoExecutionDegree, Integer executionDegreeId) throws FenixServiceException {
+	public void run(InfoExecutionDegree infoExecutionDegree, Integer executionDegreeId) throws FenixServiceException {
 
 		ICursoExecucaoPersistente persistentExecutionDegree = null;
-		String executionYearString = "";
-		
+
 		try {
-				ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
-				persistentExecutionDegree = persistentSuport.getICursoExecucaoPersistente();
-				CursoExecucao execDegree = new CursoExecucao();
-				execDegree.setIdInternal(executionDegreeId);
-				ICursoExecucao oldExecutionDegree = (ICursoExecucao) persistentExecutionDegree.readByOId(execDegree, false);
-		
-				if(oldExecutionDegree != null) {
-					InfoExecutionYear infoExecutionYear = infoExecutionDegree.getInfoExecutionYear();
-					executionYearString = infoExecutionYear.getYear();
+			ISuportePersistente persistentSuport = SuportePersistenteOJB.getInstance();
+			persistentExecutionDegree = persistentSuport.getICursoExecucaoPersistente();
+			CursoExecucao execDegree = new CursoExecucao();
+			execDegree.setIdInternal(executionDegreeId);
+			ICursoExecucao oldExecutionDegree = (ICursoExecucao) persistentExecutionDegree.readByOId(execDegree, false);
+
+			if (oldExecutionDegree != null) {
+
+				InfoExecutionYear infoExecutionYear = infoExecutionDegree.getInfoExecutionYear();
+				String executionYearString = infoExecutionYear.getYear();
+				//check if the year has been modified
+
+				if (infoExecutionYear != null) {
 
 					IPersistentExecutionYear persistentExecutionYear = persistentSuport.getIPersistentExecutionYear();
 					IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName(executionYearString);
 
 					oldExecutionDegree.setExecutionYear(executionYear);
+				}
 
-					Boolean tempExamMap = infoExecutionDegree.getTemporaryExamMap();
-					if (tempExamMap != null)
-						oldExecutionDegree.setTemporaryExamMap(tempExamMap);
-					else
-						oldExecutionDegree.setTemporaryExamMap(null);
+				Boolean tempExamMap = infoExecutionDegree.getTemporaryExamMap();
+				if (tempExamMap != null)
+					oldExecutionDegree.setTemporaryExamMap(tempExamMap);
 
-					IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
-					InfoTeacher infoTeacher = infoExecutionDegree.getInfoCoordinator();
+				IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
+				InfoTeacher infoTeacher = infoExecutionDegree.getInfoCoordinator();
 
+				// check if the teacher has been modified
+				if (infoTeacher != null) {
 					ITeacher teacher = (ITeacher) persistentTeacher.readByOId(new Teacher(infoExecutionDegree.getInfoCoordinator().getIdInternal()), false);
 					oldExecutionDegree.setCoordinator(teacher);
-
-					persistentExecutionDegree.lockWrite(oldExecutionDegree);
-					
-					return new Boolean(true);
 				}
-				
-				return new Boolean(false);
-						
-		} catch (ExistingPersistentException ex) {
-			throw new ExistingServiceException("O curso execução relativo ao ano " + executionYearString, ex);
+
+				try {
+					persistentExecutionDegree.lockWrite(oldExecutionDegree);
+				} catch (ExistingPersistentException ex) {
+					throw new ExistingServiceException("O curso execução relativo ao ano " + executionYearString, ex);
+				}
+
+			}
+
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia);
-		} 
+		}
 	}
 }

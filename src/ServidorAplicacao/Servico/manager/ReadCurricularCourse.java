@@ -9,6 +9,7 @@ import Dominio.CurricularCourse;
 import Dominio.ICurricularCourse;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
+import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -52,7 +53,7 @@ public class ReadCurricularCourse implements IServico {
 		}
      
 		if (curricularCourse == null) {
-			return null;
+			throw new NonExistingServiceException();
 		}
 
 		InfoCurricularCourse infoCurricularCourse = Cloner.copyCurricularCourse2InfoCurricularCourse(curricularCourse); 

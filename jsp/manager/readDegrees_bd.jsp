@@ -11,6 +11,9 @@
 </ul>
 <br>
 <br>
+
+<span class="error"><html:errors/></span>
+
 <html:form action="/deleteDegrees" method="get">
 
 <table width="50%" cellpadding="0" border="0">
@@ -43,7 +46,6 @@
 	 </logic:iterate>
 	
 </table>
-<span class="error"><html:errors/></span>
 <br>
 <br>	
 <html:submit><bean:message key="label.manager.delete.selected.degrees"/></html:submit>
