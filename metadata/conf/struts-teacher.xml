@@ -15,6 +15,23 @@
 	 	<form-property name="evaluationElements" type="java.lang.String"/>
 	 	<form-property name="evaluationElementsEn" type="java.lang.String"/>
 	 </form-bean>
+	 
+	 <!-- examEnrollment form -->
+   	<form-bean name="examEnrollmentForm"
+		type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">        
+        <form-property name="beginDay" type="java.lang.String" />
+        <form-property name="beginMounth" type="java.lang.String" />
+        <form-property name="beginYear" type="java.lang.String" />
+        <form-property name="beginHour" type="java.lang.String" />
+        <form-property name="beginMinutes" type="java.lang.String" />
+        <form-property name="endDay" type="java.lang.String" />
+        <form-property name="endMounth" type="java.lang.String" />
+        <form-property name="endYear" type="java.lang.String" />
+        <form-property name="endHour" type="java.lang.String" />
+        <form-property name="endMinutes" type="java.lang.String" />
+        <form-property name="page" type="java.lang.Integer" initial="0"/>
+    </form-bean>    	
+	 
      <!--curriculum forms --> 
      <form-bean name="executionCourseCurriculumForm"
 		type="ServidorApresentacao.validator.form.FenixDynaValidatorForm" dynamic="true">		
@@ -264,8 +281,7 @@
     <forward name="associateTeacher" path="/associateTeacher.jsp"/>    
     
 	</action>
-	
-	
+		
 	<!-- Actions For Objectives and Program -->
 	<action 
 		name="executionCourseObjectivesForm"
@@ -418,7 +434,38 @@
        <forward name="insertItem" path="/insertItem.jsp"/>
        <forward name="viewSection" path="/viewSection.jsp"/>
 	</action>
+
+
+<!-- ------------------------------------------------------------------------- -->	
+	<!-- Actions For ExamEnrollments -->
+	
+	<action 
+		path="/showExams"
+		parameter="method"
+		scope="request"
+		type="ServidorApresentacao.Action.teacher.ShowExamsAction">
 		
+       <forward name="showExams" path="/viewExams.jsp"/>
+	</action>
+	
+	<action 
+		name="examEnrollmentForm"
+		path="/examEnrollmentManager"
+		parameter="method"
+		scope="request"
+		type="ServidorApresentacao.Action.teacher.ExamEnrollmentDispatchAction"
+		validate="true"
+        >
+       <forward name="showExams" path="/showExams.jsp"/>
+       <forward name="prepareEdit" path="/viewExamEnrollment.jsp"/>
+	</action>
+	
+	
+	
+	<!-- End Of Actions For ExamEnrollments -->
+<!-- ------------------------------------------------------------------------- -->	
+
+
 	<!-- start of evaluation mappings -->
 	
 	<action 
