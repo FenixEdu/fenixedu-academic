@@ -7,16 +7,18 @@ package ServidorPersistente.OJB;
 
 import java.util.List;
 
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
-import junit.framework.*;
-import java.util.List;
 import org.apache.ojb.odmg.OJB;
-import org.odmg.QueryException;
-import org.odmg.OQLQuery;
 import org.odmg.Implementation;
-import ServidorPersistente.*;
+import org.odmg.OQLQuery;
+import org.odmg.QueryException;
+
+import Dominio.IPessoa;
+import Dominio.Pessoa;
+import ServidorPersistente.ExcepcaoPersistencia;
 import Util.TipoDocumentoIdentificacao;
-import Dominio.*;
 
 
 /**

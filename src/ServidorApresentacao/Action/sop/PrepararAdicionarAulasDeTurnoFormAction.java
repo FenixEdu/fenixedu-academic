@@ -14,7 +14,6 @@ import org.apache.struts.action.ActionMapping;
 import DataBeans.ExecutionCourseKeyAndLessonType;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoShift;
-import DataBeans.InfoExecutionCourse;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 

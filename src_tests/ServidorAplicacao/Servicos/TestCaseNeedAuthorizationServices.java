@@ -31,8 +31,8 @@ abstract public class TestCaseNeedAuthorizationServices extends TestCaseServicos
 				System.out.println("testUnauthorizedExecutionOfService was UNSUCCESSFULY runned by class: " + this.getClass().getName());
 				fail(this.getClass().getName() + " : testUnauthorizedExecutionOfService - Service Name: " + getNameOfServiceToBeTested());
 			} catch (Exception ex) {
-				System.out.println("testUnauthorizedExecutionOfService was SUCCESSFULY runned by class: " + this.getClass().getName());
 				assertNull(this.getClass().getName() + " : testUnauthorizedExecutionOfService", result);
+				System.out.println("testUnauthorizedExecutionOfService was SUCCESSFULY runned by class: " + this.getClass().getName());
 			}
 		}
 	}
