@@ -128,6 +128,12 @@
               path="/chooseOtherCourse">
         <forward name="sucess" path="/chooseOtherCourse.jsp"/>
       </action>
+      
+       <action type="ServidorApresentacao.Action.student.ExamEnrollmentManager"
+              path="/examEnrollmentManager"
+              parameter="method">
+        <forward name="sucess" path="/viewExams.jsp"/>
+      </action>
 
       <!-- VIEW SCHEDULE -->
 <!--      <action 
