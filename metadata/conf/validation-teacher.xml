@@ -13,13 +13,13 @@
         <arg0 key="message.operacionalObjectives" resource="true"/>
       </field>
 
-      <field property="program" depends="required" page="1">
+	  <field property="program" depends="required" page="1">
         <arg0 key="message.program" resource="true"/>
       </field>
     </form>
-   
-   
-    <form name="executionCourseObjectivesForm">
+
+
+<form name="executionCourseObjectivesForm">
       <field property="generalObjectives" depends="required" page="1">
         <arg0 key="message.generalObjectives" resource="true"/>
       </field>
@@ -41,7 +41,9 @@
         <arg0 key="message.teacherNumber" resource="true"/>
       </field>
     </form>
-	<!-- Validacao para o formulario de bibliografia -->
+
+                
+	<!-- Validation for bibliographicReferenceForm -->
     <form name="bibliographicReferenceForm">
       <field property="title" depends="required" page="1">
         <arg0 key="message.bibliographicReferenceTitle" resource="true"/>
@@ -59,6 +61,23 @@
         <arg0 key="message.bibliographicReferenceYear" resource="true"/>
       </field>
     </form>
+    
+    <!-- Validation for alternativeSiteForm -->
+    <form name="alternativeSiteForm">
+      <field property="siteAddress" depends="mask" page="1">
+        <arg0 key="message.siteAddress" resource="true"/>
+         <var>
+           <var-name>mask</var-name>
+           <var-value>^((http://)|(https://))(.)*</var-value>
+        </var>
+        
+      </field>
+
+      <field property="mail" depends="email" page="1">
+        <arg0 key="message.mailAddress" resource="true"/>
+      </field>
+    </form>
+    
 
 	<!-- validation for insertAnnouncementForm -->
     <form name="insertAnnouncementForm">
