@@ -41,8 +41,8 @@
             	</tr>
                 <tr>
                     <td>
-                        <html:submit indexed="true" property="option" value="Edit"/>&nbsp;&nbsp;
-                        <html:submit indexed="true" property="option" value="Delete"/><br><br><hr>
+                        <html:submit indexed="true" property="option" value="Editar"/>&nbsp;&nbsp;
+                        <html:submit indexed="true" property="option" value="Apagar"/><br><br><hr>
                     </td>
                 </tr>
             </logic:iterate>
