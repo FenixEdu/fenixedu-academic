@@ -11,10 +11,7 @@ import ServidorAplicacao.Servico.Autenticacao;
 import ServidorAplicacao.Servico.exceptions.NotAuthorizedException;
 
 /**
- *fenix-head
- *ServidorAplicacao.Servicos.coordinator
- * @author João Mota
- *6/Nov/2003
+ * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota</a>
  *
  */
 public class DeleteCoordinatorsTestCase extends CoordinatorIsResponsibleByExecutionDegree {
