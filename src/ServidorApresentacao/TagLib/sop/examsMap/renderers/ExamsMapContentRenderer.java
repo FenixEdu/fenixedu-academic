@@ -17,8 +17,7 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 
 	public StringBuffer renderDayLabel(ExamsMapSlot examsMapSlot) {
 		StringBuffer strBuffer = new StringBuffer();
-
-		strBuffer.append("<strong>");
+		
 		strBuffer.append(examsMapSlot.getDay().get(Calendar.DAY_OF_MONTH));
 		if (examsMapSlot.getDay().get(Calendar.DAY_OF_MONTH) == 1) {
 			strBuffer.append(" de ");
@@ -29,7 +28,6 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 			strBuffer.append(", ");
 			strBuffer.append(examsMapSlot.getDay().get(Calendar.YEAR));
 		}
-		strBuffer.append("</strong>");
 		strBuffer.append("</br>");
 
 		return strBuffer;

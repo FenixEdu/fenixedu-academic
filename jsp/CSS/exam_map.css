@@ -1,0 +1,106 @@
+.examMapContainer{
+	margin-left: 5px;
+	margin-bottom: 5px;	
+}
+
+.courseList{
+	align:left;
+	vertical-align: top;
+}
+
+.examMap{
+	border-style: solid;
+	border-color: #000;
+	border-width: 2px;
+	width: 100%;
+}
+.examMap_header_first{
+	border-style: solid;	
+	border-color: #000;
+	border-width: 0px;	
+	border-bottom-width: 2px;
+	background-color: #33CCFF;
+	text-align: center;	
+	width: 16.7%;
+	font-weight: bold;
+}
+
+.examMap_header{
+	border-style: solid;
+	border-color: #000;	
+	border-width: 0px;
+	border-left-width: 2px;
+	border-bottom-width: 2px;
+	background-color: #33CCFF;
+	text-align: center;
+	width: 16.7%;	
+	font-weight: bold;	
+}
+
+.exam_cell_day_first{
+	background-color: #CCC;
+	text-align: right;
+	color: #FFF;
+	font-weight: bold;	
+}
+
+.exam_cell_day{
+	border-style: solid;
+	border-color: #000;	
+	border-width: 0px;
+	border-left-width: 2px;
+	background-color: #CCC;
+	text-align: right;
+	color: #FFF;
+	font-weight: bold;	
+}
+
+
+.exam_cell_content{
+	border-style: solid;
+	border-color: #000;	
+	border-width: 0px;
+	border-left-width: 2px;
+	border-bottom-width: 1px;	
+	background-color: #CCC;
+	text-align: left;
+	color: #FFF;
+}
+
+.exam_cell_content_first{
+	border-style: solid;
+	border-color: #000;	
+	border-width: 0px;
+	border-bottom-width: 1px;
+	background-color: #CCC;
+	text-align: left;
+	color: #FFF;
+}
+
+.exam_cell_content_bottom{
+	border-style: solid;
+	border-color: #000;	
+	border-width: 0px;
+	border-left-width: 2px;
+	background-color: #CCC;
+	text-align: left;
+	color: #FFF;
+}
+
+.exam_cell_content_first_bottom{
+	background-color: #CCC;
+	text-align: left;
+	color: #FFF;
+}
+
+td a:link{
+	text-decoration: underline;
+}
+
+td a:hover{
+	text-decoration: none;
+}
+
+td a:visited{
+	text-decoration: underline;	
+}

@@ -5,6 +5,8 @@
 
 package ServidorApresentacao.TagLib.sop.examsMap;
 
+import java.util.Calendar;
+
 import DataBeans.InfoExecutionCourse;
 import ServidorApresentacao
 	.TagLib
@@ -53,6 +55,12 @@ public class ExamsMapRenderer {
 				i++;
 			}
 
+			strBuffer.append(
+				"<table class='examMapContainer'cellspacing='0' cellpadding='3' width='100%'>");
+			strBuffer.append("<tr>");
+
+			// Generate Exam Map
+			strBuffer.append("<td width='75%'>");
 			strBuffer.append("Mapa de Exames para o ");
 			if (year2 == null) {
 				strBuffer.append("<strong>" + year1 + "º<strong> ano");
@@ -61,17 +69,12 @@ public class ExamsMapRenderer {
 				strBuffer.append(" e <strong>" + year2 + "º</strong> ano");
 			}
 
-			strBuffer.append(
-				"<table cellspacing='3' cellpadding='3' width='100%%'>");
-			strBuffer.append("<tr>");
-
-			// Generate Exam Map
-			strBuffer.append("<td width='75%'>");
 			renderExamsMapForFilteredYears(strBuffer, year1, year2);
 			strBuffer.append("</td>");
 
 			// Generate Exam Map Side Lable
-			strBuffer.append("<td align='center'  width='25%'>");
+			strBuffer.append("<td class='courseList'>");
+			strBuffer.append("<br/>");
 			renderExecutionCourseListForYear(strBuffer, year1);
 			if (year2 != null) {
 				strBuffer.append("<br/>");
@@ -125,7 +128,7 @@ public class ExamsMapRenderer {
 		Integer year1,
 		Integer year2) {
 		strBuffer.append(
-			"<table cellspacing='3' cellpadding='3' width='100%%'>");
+			"<table class='examMap' cellspacing='0' cellpadding='3'>");
 
 		strBuffer.append("<tr>");
 		renderHeader(strBuffer);
@@ -149,7 +152,22 @@ public class ExamsMapRenderer {
 		Integer year1,
 		Integer year2) {
 		for (int slot = 0; slot < daysOfWeek.length; slot++) {
-			strBuffer.append("<td align='left'>");
+			ExamsMapSlot examsMapSlot =
+				(ExamsMapSlot) examsMap.getDays().get(
+					week * daysOfWeek.length + slot);
+
+			String classCSS = "exam_cell_content";
+			if (examsMapSlot.getDay().get(Calendar.DAY_OF_WEEK)
+				== Calendar.MONDAY) {
+				classCSS += "_first";
+			}
+
+			if (week == numberOfWeks - 1) {
+				classCSS += "_bottom";
+			}
+
+			strBuffer.append("<td ").append("class='").append(classCSS).append(
+				"'>");
 			strBuffer.append(
 				examsMapSlotContentRenderer.renderDayContents(
 					(ExamsMapSlot) examsMap.getDays().get(
@@ -162,22 +180,30 @@ public class ExamsMapRenderer {
 
 	private void renderLabelsForRowOfDays(StringBuffer strBuffer, int week) {
 		for (int slot = 0; slot < daysOfWeek.length; slot++) {
-			strBuffer.append("<td align='right'>");
+			ExamsMapSlot examsMapSlot =
+				(ExamsMapSlot) examsMap.getDays().get(
+					week * daysOfWeek.length + slot);
+
+			String classCSS = "exam_cell_day";
+			if (examsMapSlot.getDay().get(Calendar.DAY_OF_WEEK)
+				== Calendar.MONDAY) {
+				classCSS += "_first";
+			}
+
+			strBuffer.append("<td ").append("class='").append(classCSS).append(
+				"'>");
 			strBuffer.append(
-				examsMapSlotContentRenderer.renderDayLabel(
-					(ExamsMapSlot) examsMap.getDays().get(
-						week * daysOfWeek.length + slot)));
+				examsMapSlotContentRenderer.renderDayLabel(examsMapSlot));
 			strBuffer.append("</td>");
 		}
 	}
 
 	private void renderHeader(StringBuffer strBuffer) {
 		for (int index = 0; index < this.daysOfWeek.length; index++) {
-
-			StringBuffer classCSS = new StringBuffer("horarioHeader");
-
-			if (index == 0)
+			StringBuffer classCSS = new StringBuffer("examMap_header");
+			if (index == 0) {
 				classCSS.append("_first");
+			}
 			strBuffer
 				.append("<td class='")
 				.append(classCSS)
@@ -185,20 +211,6 @@ public class ExamsMapRenderer {
 				.append(daysOfWeek[index])
 				.append("</td>\r\n");
 		}
-	}
-
-	/**
-	 * @return
-	 */
-	private ExamsMap getExamsMap() {
-		return examsMap;
-	}
-
-	/**
-	 * @return
-	 */
-	private ExamsMapSlotContentRenderer getExamsMapSlotContentRenderer() {
-		return examsMapSlotContentRenderer;
 	}
 
 	/**
