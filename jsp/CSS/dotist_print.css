@@ -8,22 +8,23 @@ body {
 	font: 11pt/1em Arial, Helvetica, sans-serif;
 	color: #fff;
 	text-align: left;
+	background: white;
 	margin: 0;
 	}
 
 table {
 	font: 9pt Arial, Helvetica, sans-serif;
-	color: #000;
+	color: black;
 	}
 
 h2	{
 	font: bold 12pt "Trebuchet MS", Arial, Helvetica, sans-serif;
-	color: #000;
+	color: black;
 	}
 
 h3 {
 	font: bold 12pt "Trebuchet MS", Arial, Helvetica, sans-serif;
-	color: #000;
+	color: black;
 	}
 
 /******************************************
@@ -32,7 +33,7 @@ h3 {
 
 a:link {
 	font: 11pt Arial, Helvetica, sans-serif;
-	color: #000;
+	color: black;
 	text-decoration: underline;
 	}
 
@@ -55,23 +56,10 @@ a:visited {
 
 .bodycontent {
 	font-family: 11pt/em Arial, Helvetica, sans-serif;
-	color: #000;
+	color: black;
 	margin:0;
 	}
-	
-/**********************************************
-	 navlateral list
-***********************************************/	
 
-.navlateral ul {
-	list-style-type: square;
-	}
-	
-.navlateral li {
-	font: 11px Arial, Helvetica, sans-serif;
-	color: #333;
-	margin: 5pt 0 5pt 0;
-	}
 
 /**********************************************
 	 FORMS Classes: inputs
@@ -79,13 +67,13 @@ a:visited {
 
 .error {
 	font: bold 11pt Arial, Helvetica, sans-serif;
-	color: #C00;
-	background: #ffc;
+	color: red;
+	background: yellow;
 	}
 	
 .inputlist {
 	font: 11pt Arial, Helvetica, sans-serif;
-	color: #333;
+	color: black;
 	}
 	
 .inputbutton {
@@ -94,7 +82,7 @@ a:visited {
 
 .inputbuttonSmall {
 	font: 11pt Arial, Helvetica, sans-serif;
-	color: #333;
+	color: black;
 	background: #b5bdd6;
 	}
 
