@@ -38,3 +38,10 @@
 </tr>
 
 </table>
+
+<logic:present name="<%= SessionConstants.LAST_ANNOUNCEMENT %>" >
+	<br><br><br>
+	<b><bean:message key="label.lastAnnouncement"/></b><br><br>
+	<b><bean:write name="<%= SessionConstants.LAST_ANNOUNCEMENT %>" property="title" /></b><br>
+	<bean:write name="<%= SessionConstants.LAST_ANNOUNCEMENT %>" property="information" /><br>
+</logic:present>
