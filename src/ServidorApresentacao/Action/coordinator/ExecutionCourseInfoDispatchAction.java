@@ -166,6 +166,7 @@ public class ExecutionCourseInfoDispatchAction extends DispatchAction
         return mapping.findForward("ShowCurricularCourseList");
     }
 
+    //SCOPE
     public ActionForward showOccupancyLevels(
         ActionMapping mapping,
         ActionForm form,
@@ -320,14 +321,14 @@ public class ExecutionCourseInfoDispatchAction extends DispatchAction
                 "ReadExecutionCourseByOID",
                 args);
 
-        List scopes =
+        List curricularCoursesWithScopes =
             (List) ServiceManagerServiceFactory.executeService(
                 userView,
                 "ReadCurricularCourseScopesByExecutionCourseID",
                 args);
 
         request.setAttribute("infoExecutionCourse", infoExecutionCourse);
-        request.setAttribute("curricularCourses", scopes);
+        request.setAttribute("curricularCourses", curricularCoursesWithScopes);
 
         return mapping.findForward("showLoads");
 

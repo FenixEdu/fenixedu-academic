@@ -32,7 +32,7 @@ import Util.CurricularCourseType;
 
 public class InsertCurricularCourseDispatchAction extends FenixDispatchAction {
 
-	public ActionForward prepareInsert(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws FenixActionException {
+	public ActionForward prepareInsert(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
 		return mapping.findForward("insertCurricularCourse");
 	}
@@ -57,8 +57,39 @@ public class InsertCurricularCourseDispatchAction extends FenixDispatchAction {
 		infoCurricularCourse.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 		infoCurricularCourse.setMandatory(new Boolean(mandatory));
 		infoCurricularCourse.setName((String) dynaForm.get("name"));
-
 		infoCurricularCourse.setType(new CurricularCourseType(new Integer(type)));
+		
+		String credits = (String) dynaForm.get("credits");
+		if (credits.compareTo("") != 0) {
+			infoCurricularCourse.setCredits(new Double(credits));
+		}
+		String ectsCredits = (String) dynaForm.get("ectsCredits");
+		if (ectsCredits != null && ectsCredits.length() > 0) {
+			infoCurricularCourse.setEctsCredits(new Double(ectsCredits));
+		}
+		
+		String labHours = (String) dynaForm.get("labHours");
+		if (labHours.compareTo("") != 0) {
+			infoCurricularCourse.setLabHours(new Double(labHours));
+		}
+		infoCurricularCourse.setMaximumValueForAcumulatedEnrollments(new Integer((String) dynaForm.get("maxIncrementNac")));
+		infoCurricularCourse.setMinimumValueForAcumulatedEnrollments(new Integer((String) dynaForm.get("minIncrementNac")));
+
+		String praticalHours = (String) dynaForm.get("praticalHours");
+		if (praticalHours.compareTo("") != 0) {
+			infoCurricularCourse.setPraticalHours(new Double(praticalHours));
+		}
+
+		String theoPratHours = (String) dynaForm.get("theoPratHours");
+		if (theoPratHours.compareTo("") != 0) {
+			infoCurricularCourse.setTheoPratHours(new Double(theoPratHours));
+		}
+		String theoreticalHours = (String) dynaForm.get("theoreticalHours");
+		if (theoreticalHours.compareTo("") != 0) {
+			infoCurricularCourse.setTheoreticalHours(new Double(theoreticalHours));
+		}
+		infoCurricularCourse.setEnrollmentWeigth(new Integer((String) dynaForm.get("weight")));
+		
 
 		Object args[] = { infoCurricularCourse };
 

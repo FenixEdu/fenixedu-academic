@@ -31,6 +31,7 @@ import ServidorApresentacao.Action.sop.base.FenixExecutionDegreeAndCurricularYea
 import ServidorApresentacao.Action.sop.utils.ServiceUtils;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import ServidorApresentacao.Action.utils.ContextUtils;
+import Util.ExecutionDegreesFormat;
 import Util.TipoAula;
 
 /**
@@ -92,7 +93,7 @@ public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularY
 		}
 
 		/* Generate a label list for the above list of degrees */
-		List labelListOfExecutionDegrees = ContextUtils.getLabelListOfExecutionDegrees(executionDegreeList);
+		List labelListOfExecutionDegrees = ExecutionDegreesFormat.buildExecutionDegreeLabelValueBean(executionDegreeList);//ContextUtils.getLabelListOfExecutionDegrees(executionDegreeList);
 		request.setAttribute(SessionConstants.LIST_INFOEXECUTIONDEGREE, labelListOfExecutionDegrees);
 
 		return mapping.findForward("ShowSearchForm");

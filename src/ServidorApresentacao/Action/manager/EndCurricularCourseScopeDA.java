@@ -55,15 +55,6 @@ public class EndCurricularCourseScopeDA extends FenixDispatchAction {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
 
-		if (oldInfoCurricularCourseScope.getMaxIncrementNac() != null)
-			dynaForm.set("maxIncrementNac", oldInfoCurricularCourseScope.getMaxIncrementNac().toString());
-
-		if (oldInfoCurricularCourseScope.getMinIncrementNac() != null)
-			dynaForm.set("minIncrementNac", oldInfoCurricularCourseScope.getMinIncrementNac().toString());
-
-		if (oldInfoCurricularCourseScope.getWeigth() != null)
-			dynaForm.set("weight", oldInfoCurricularCourseScope.getWeigth().toString());
-
 		if (oldInfoCurricularCourseScope.getBeginDate() != null)
 			dynaForm.set("beginDate", Data.format2DayMonthYear(oldInfoCurricularCourseScope.getBeginDate().getTime(), "/"));
 

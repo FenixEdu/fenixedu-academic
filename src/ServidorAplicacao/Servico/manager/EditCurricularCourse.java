@@ -59,6 +59,15 @@ public class EditCurricularCourse implements IServico {
 			oldCurricularCourse.setType(newInfoCurricularCourse.getType());
 			oldCurricularCourse.setMandatory(newInfoCurricularCourse.getMandatory());
 			oldCurricularCourse.setBasic(newInfoCurricularCourse.getBasic());
+			oldCurricularCourse.setTheoreticalHours(newInfoCurricularCourse.getTheoreticalHours());
+			oldCurricularCourse.setTheoPratHours(newInfoCurricularCourse.getTheoPratHours());
+			oldCurricularCourse.setPraticalHours(newInfoCurricularCourse.getPraticalHours());
+			oldCurricularCourse.setLabHours(newInfoCurricularCourse.getLabHours());
+			oldCurricularCourse.setMaximumValueForAcumulatedEnrollments(newInfoCurricularCourse.getMaximumValueForAcumulatedEnrollments());
+			oldCurricularCourse.setMinimumValueForAcumulatedEnrollments(newInfoCurricularCourse.getMinimumValueForAcumulatedEnrollments());
+			oldCurricularCourse.setCredits(newInfoCurricularCourse.getCredits());
+			oldCurricularCourse.setEctsCredits(newInfoCurricularCourse.getEctsCredits());
+			oldCurricularCourse.setEnrollmentWeigth(newInfoCurricularCourse.getEnrollmentWeigth());
 				
 			persistentCurricularCourse.lockWrite(oldCurricularCourse);
 			

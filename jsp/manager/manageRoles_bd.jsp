@@ -6,7 +6,7 @@
 <br />
 <span class="error"><html:errors/></span>
 
-<html:form action="/manageRoles">
+<html:form action="/manageRoles" focus="username">
 	<html:hidden property="method" value="selectUser"/>
 	<html:hidden property="page" value="1"/>
 

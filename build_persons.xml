@@ -143,7 +143,7 @@
 					<include name="**/*.jar"/>
 				</fileset>
 			</classpath>
-			<arg line="pessoa-todos.dat"/>
+			<arg line="pessoa.dat"/>
 		</java>
 	</target>
 
@@ -159,7 +159,7 @@
 					<include name="**/*.jar"/>
 				</fileset>
 			</classpath>
-			<arg line="pessoa-activos.dat"/>
+			<arg line="pessoa.dat"/>
 		</java>
 	</target>
     
@@ -175,7 +175,7 @@
 					<include name="**/*.jar"/>
 				</fileset>
 			</classpath>
-			<arg line="pessoa-activos.dat"/>
+			<arg line="pessoa.dat"/>
 		</java>
 	</target>
     

@@ -140,7 +140,7 @@ public class ServicoSeguroActualizarFuncsDocentes
 					if(resultCategory != null){
 						teacher.setCategory((ICategory) resultCategory.get(0));
 					}
-
+					System.out.println("New teacher with person: " + numeroMecanografico + "-" + teacher.getPerson().getNome() + "-" + teacher.getPerson().getNumeroDocumentoIdentificacao());
 					newTeachers++;
 				}
 				else if (resultTeacher.size() == 1)
@@ -183,6 +183,7 @@ public class ServicoSeguroActualizarFuncsDocentes
 					else
 					{
 						teacher.getPerson().getPersonRoles().add(role);
+						System.out.println("New role: " + numeroMecanografico + "-" + teacher.getPerson().getNome() + "-" + teacher.getPerson().getNumeroDocumentoIdentificacao());
 						newRoles++;
 					}
 				}

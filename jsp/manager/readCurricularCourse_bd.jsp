@@ -25,6 +25,8 @@
 </ul>
 
 <br>
+<span class="error"><html:errors/></span>
+<br>
 
 <logic:present name="basic">
 		<h2><font color="#0066CC"><bean:message key="label.manager.curricularCourse.message.basic"/></font></h2>
@@ -34,9 +36,57 @@
 		<h2><font color="#0066CC"><bean:message key="label.manager.curricularCourse.message.non.basic"/></font></h2>
 </logic:notPresent>
 
+<table width="70%" cellpadding="0" border="0">
+	<tr>
+		<td class="listClasses-header"><bean:message key="message.manager.theoreticalHours" />
+		</td>
+		<td class="listClasses-header"><bean:message key="message.manager.praticalHours" />
+		</td>
+		<td class="listClasses-header"><bean:message key="message.manager.theoPratHours" />
+		</td>
+		<td class="listClasses-header"><bean:message key="message.manager.labHours" />
+		</td>
+		<td class="listClasses-header"><bean:message key="message.manager.curricular.course.maxIncrementNac" />
+		</td>
+		<td class="listClasses-header"><bean:message key="message.manager.curricular.course.minIncrementNac" />
+		</td>
+		<td class="listClasses-header"><bean:message key="message.manager.curricular.course.credits" />
+		</td>
+		<td class="listClasses-header"><bean:message key="message.manager.curricular.course.ectsCredits" />
+		</td>
+		<td class="listClasses-header"><bean:message key="message.manager.curricular.course.weight" />
+		</td>
+	</tr>
+	<tr>
+		<td class="listClasses">
+			<bean:write name="infoCurricularCourse" property="theoreticalHours"/>
+		</td>
+		<td class="listClasses">
+			<bean:write name="infoCurricularCourse" property="praticalHours"/>
+		</td>
+		<td class="listClasses">
+			<bean:write name="infoCurricularCourse" property="theoPratHours"/>
+		</td>
+		<td class="listClasses">
+			<bean:write name="infoCurricularCourse" property="labHours"/>
+		</td>
+		<td class="listClasses">
+			<bean:write name="infoCurricularCourse" property="maximumValueForAcumulatedEnrollments"/>		
+		</td>
+		<td class="listClasses">
+			<bean:write name="infoCurricularCourse" property="minimumValueForAcumulatedEnrollments"/>
+		</td>
+		<td class="listClasses">
+			<bean:write name="infoCurricularCourse" property="credits"/>
+		</td>
+		<td class="listClasses">
+			<bean:write name="infoCurricularCourse" property="ectsCredits"/>
+		</td>
+		<td class="listClasses">
+			<bean:write name="infoCurricularCourse" property="enrollmentWeigth"/>
+		</td>
+</table>
 <br>
-
-<span class="error"><html:errors/></span>
 	
 <h3><bean:message key="label.manager.executionCourses"/></h3>
 
@@ -126,24 +176,6 @@
 						</td>
 						<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularSemester" />
 						</td>
-						<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.theoreticalHours" />
-						</td>
-						<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.praticalHours" />
-						</td>
-						<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.theoPratHours" />
-						</td>
-						<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.labHours" />
-						</td>
-						<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.maxIncrementNac" />
-						</td>
-						<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.minIncrementNac" />
-						</td>
-						<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.credits" />
-						</td>
-						<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.ectsCredits" />
-						</td>
-						<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.weigth" />
-						</td>
 						<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.branch" />
 						</td>
 						<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.beginDate" />
@@ -163,24 +195,6 @@
 						</td>
 						<td class="listClasses"><bean:write name="infoCurricularSemester" property="semester"/>
 						</td>	 			
-						<td class="listClasses"><bean:write name="curricularCourseScope" property="theoreticalHours"/>
-						</td>
-						<td class="listClasses"><bean:write name="curricularCourseScope" property="praticalHours"/>
-						</td>
-						<td class="listClasses"><bean:write name="curricularCourseScope" property="theoPratHours"/>
-						</td>
-						<td class="listClasses"><bean:write name="curricularCourseScope" property="labHours"/>
-						</td>
-						<td class="listClasses"><bean:write name="curricularCourseScope" property="maxIncrementNac"/>
-						</td>
-						<td class="listClasses"><bean:write name="curricularCourseScope" property="minIncrementNac"/>
-						</td>
-						<td class="listClasses"><bean:write name="curricularCourseScope" property="credits"/>
-						</td>
-						<td class="listClasses"><bean:write name="curricularCourseScope" property="ectsCredits"/>
-						</td>
-						<td class="listClasses"><bean:write name="curricularCourseScope" property="weigth"/>
-						</td>
 						<logic:empty name="infoBranch" property="code">
 							<td class="listClasses">&nbsp;</td>										
 						</logic:empty>

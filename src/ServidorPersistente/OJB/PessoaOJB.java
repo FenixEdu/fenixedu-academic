@@ -158,7 +158,7 @@ public class PessoaOJB extends ObjectFenixOJB implements IPessoaPersistente
         return personList;
     }
 
-    public List findPersonByNameAndEmailAndUsername(String name, String email, String username)
+    public List findPersonByNameAndEmailAndUsernameAndDocumentId(String name, String email, String username, String documentIdNumber)
         throws ExcepcaoPersistencia
     {
         List personList = null;
@@ -178,6 +178,11 @@ public class PessoaOJB extends ObjectFenixOJB implements IPessoaPersistente
         if (username != null && username.length() > 0)
         {
             criteria.addLike("username", username);
+        }
+        
+        if (documentIdNumber != null && documentIdNumber.length() > 0)
+        {
+        	criteria.addLike("numeroDocumentoIdentificacao", documentIdNumber);
         }
 
         personList = queryList(Pessoa.class, criteria);
@@ -201,7 +206,6 @@ public class PessoaOJB extends ObjectFenixOJB implements IPessoaPersistente
     }
 
     public void alterarPessoa(String numDocId, TipoDocumentoIdentificacao tipoDocId, IPessoa pessoa)
-        throws ExcepcaoPersistencia
     {
     }
 }

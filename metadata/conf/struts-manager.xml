@@ -62,9 +62,17 @@
 				<form-property name="mandatory" type="java.lang.String" />
 				<form-property name="basic" type="java.lang.String" />
 				<form-property name="departmentCourse" type="java.lang.String" />
-				<!--copiei pq a falta tava a dar erro-->
 				<form-property name="branchId" type="java.lang.String" />
 				<form-property name="curricularSemesterId" type="java.lang.String" />
+				<form-property name="credits" type="java.lang.String" />			
+	            <form-property name="ectsCredits" type="java.lang.String" />	
+				<form-property name="theoreticalHours" type="java.lang.String" />
+				<form-property name="praticalHours" type="java.lang.String" />
+				<form-property name="theoPratHours" type="java.lang.String" />
+				<form-property name="labHours" type="java.lang.String" />		
+				<form-property name="maxIncrementNac" type="java.lang.String" />
+				<form-property name="minIncrementNac" type="java.lang.String" />
+				<form-property name="weight" type="java.lang.String" />		            
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
 		
@@ -78,15 +86,6 @@
 		<form-bean name="curricularCourseScopeForm"
 			type="org.apache.struts.validator.DynaValidatorForm"
                 dynamic="true">
-				<form-property name="theoreticalHours" type="java.lang.String" />
-				<form-property name="praticalHours" type="java.lang.String" />
-				<form-property name="theoPratHours" type="java.lang.String" />
-				<form-property name="labHours" type="java.lang.String" />
-	            <form-property name="credits" type="java.lang.String" />			
-	            <form-property name="ectsCredits" type="java.lang.String" />			
-				<form-property name="maxIncrementNac" type="java.lang.String" />
-				<form-property name="minIncrementNac" type="java.lang.String" />
-				<form-property name="weight" type="java.lang.String" />
 	            <form-property name="beginDate" type="java.lang.String" />			
 	            <form-property name="endDate" type="java.lang.String" />			
 				<form-property name="branchId" type="java.lang.String" />
@@ -255,6 +254,7 @@
     		<form-property name="name" type="java.lang.String"/>	
     		<form-property name="email" type="java.lang.String"/>
     		<form-property name="username" type="java.lang.String"/>
+    		<form-property name="documentIdNumber" type="java.lang.String"/>
     		<form-property name="page" type="java.lang.Integer" initial="0"/>     		    		
     </form-bean>  
     
@@ -1139,7 +1139,7 @@
 	</action>
 
 	
-	<!-- ========== PERSON MANAGEMENT MANAGEMENT ========== -->
+	<!-- ========== PERSON MANAGEMENT ========== -->
 	<action path="/personManagement"
 	type="ServidorApresentacao.Action.manager.personManagement.PersonManagementAction"
 	parameter="method"
@@ -1159,6 +1159,7 @@
 		<forward name="findPerson" path="findPerson"/>
 		<forward name="displayPerson" path="displayPerson"/>
 	</action>
+	
 	<action path="/displayEmployee"	
 	type="ServidorApresentacao.Action.manager.personManagement.PersonManagementAction"
 	parameter="method"
@@ -1168,6 +1169,7 @@
 		<forward name="displayEmployee" path="displayEmployee"/>
 	</action>
 	
+	<!-- ========== GENERATE FILES ABOUT GRATUITY ========== -->	
 	<action path="/generateFiles"
 		type="ServidorApresentacao.Action.manager.generateFiles.GenerateFilesAction"
 		parameter="method"

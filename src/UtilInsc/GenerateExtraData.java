@@ -59,7 +59,7 @@ public class GenerateExtraData
 		turnOnPersistentSuport();
 		IPersistentExecutionCourse persistentExecutionCourse =
 			persistentSupport.getIPersistentExecutionCourse();
-	//TODO: deleted->	persistentExecutionCourse.apagarTodasAsDisciplinasExecucao();
+		//TODO: deleted-> persistentExecutionCourse.apagarTodasAsDisciplinasExecucao();
 		turnOffPersistentSuport();
 
 		// APAGO TODOS OS EXECUTION_DEGREE PORQUE VOU ESCREVELOS DE RAIZ:
@@ -93,10 +93,10 @@ public class GenerateExtraData
 				persistentCurricularCourse.readCurricularCoursesByDegreeCurricularPlan(
 					oldDegreeCurricularPlan);
 
-//			IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-//			ITeacher teacherCriteria = new Teacher();
-//			teacherCriteria.setIdInternal(new Integer(1));
-//			ITeacher teacher = (ITeacher) persistentTeacher.readByOId(teacherCriteria, true);
+			//			IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
+			//			ITeacher teacherCriteria = new Teacher();
+			//			teacherCriteria.setIdInternal(new Integer(1));
+			//			ITeacher teacher = (ITeacher) persistentTeacher.readByOId(teacherCriteria, true);
 			IPersistentExecutionYear persistentExecutionYear =
 				persistentSupport.getIPersistentExecutionYear();
 			IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
@@ -215,14 +215,14 @@ public class GenerateExtraData
 			IPersistentExecutionYear persistentExecutionYear =
 				persistentSupport.getIPersistentExecutionYear();
 			persistentExecutionDegree = persistentSupport.getICursoExecucaoPersistente();
-//			IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
+			//			IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 			try
 			{
 				degreeCurricularPlan2 =
 					(IDegreeCurricularPlan) persistentDegreeCurricularPlan.readDomainObjectByCriteria(
 						degreeCurricularPlan);
 				IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
-//				ITeacher teacher = persistentTeacher.readByNumber(new Integer(1));
+				//				ITeacher teacher = persistentTeacher.readByNumber(new Integer(1));
 				ICursoExecucao executionDegree = new CursoExecucao();
 				//executionDegree.setCoordinator(teacher);
 				executionDegree.setCurricularPlan(degreeCurricularPlan2);
@@ -314,16 +314,10 @@ public class GenerateExtraData
 			turnOnPersistentSuport();
 			ICurricularCourse curricularCourseToWrite = new CurricularCourse();
 			curricularCourseToWrite.setAssociatedExecutionCourses(null);
-			curricularCourseToWrite.setCredits(null);
 			curricularCourseToWrite.setDepartmentCourse(null);
 			curricularCourseToWrite.setIdInternal(null);
 			curricularCourseToWrite.setScopes(null);
 			curricularCourseToWrite.setBasic(new Boolean(true));
-
-			//			curricularCourseToWrite.setLabHours(curricularCourse.getLabHours());
-			//			curricularCourseToWrite.setPraticalHours(curricularCourse.getPraticalHours());
-			//			curricularCourseToWrite.setTheoPratHours(curricularCourse.getTheoPratHours());
-			//			curricularCourseToWrite.setTheoreticalHours(curricularCourse.getTheoreticalHours());
 			curricularCourseToWrite.setCode(curricularCourse.getCode() + i);
 			curricularCourseToWrite.setCurricularCourseExecutionScope(
 				curricularCourse.getCurricularCourseExecutionScope());
@@ -332,6 +326,16 @@ public class GenerateExtraData
 			curricularCourseToWrite.setName(curricularCourse.getName() + i);
 			curricularCourseToWrite.setType(curricularCourse.getType());
 			curricularCourseToWrite.setUniversity(curricularCourse.getUniversity());
+
+			curricularCourseToWrite.setLabHours(curricularCourse.getLabHours());
+			curricularCourseToWrite.setPraticalHours(curricularCourse.getPraticalHours());
+			curricularCourseToWrite.setTheoPratHours(curricularCourse.getTheoPratHours());
+			curricularCourseToWrite.setTheoreticalHours(curricularCourse.getTheoreticalHours());
+			curricularCourseToWrite.setMaximumValueForAcumulatedEnrollments(curricularCourse.getMaximumValueForAcumulatedEnrollments());
+			curricularCourseToWrite.setMinimumValueForAcumulatedEnrollments(curricularCourse.getMinimumValueForAcumulatedEnrollments());
+			curricularCourseToWrite.setCredits(null);
+			curricularCourseToWrite.setEctsCredits(curricularCourse.getEctsCredits());
+			curricularCourseToWrite.setEnrollmentWeigth(curricularCourse.getEnrollmentWeigth());
 
 			persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
 			try
@@ -352,23 +356,13 @@ public class GenerateExtraData
 			{
 				ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator2.next();
 
-				// ESCREVO O CURRICULAR_COURSE_SCOPE:
+				// ESCREVO O CURRICULARCOURSESCOPE
 				turnOnPersistentSuport();
 				ICurricularCourseScope curricularCourseScopeToWrite = new CurricularCourseScope();
 				curricularCourseScopeToWrite.setIdInternal(null);
-				curricularCourseScopeToWrite.setLabHours(null);
-				curricularCourseScopeToWrite.setPraticalHours(null);
-				curricularCourseScopeToWrite.setTheoPratHours(null);
-				curricularCourseScopeToWrite.setTheoreticalHours(null);
 
-				curricularCourseScopeToWrite.setMaxIncrementNac(
-					curricularCourseScope.getMaxIncrementNac());
-				curricularCourseScopeToWrite.setMinIncrementNac(
-					curricularCourseScope.getMinIncrementNac());
-				curricularCourseScopeToWrite.setWeigth(curricularCourseScope.getWeigth());
 				curricularCourseScopeToWrite.setBeginDate(Calendar.getInstance());
 				curricularCourseScopeToWrite.setEndDate(null);
-				curricularCourseScopeToWrite.setEctsCredits(curricularCourseScope.getEctsCredits());
 				try
 				{
 					persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();

@@ -103,6 +103,15 @@ public class LoadCurricularCoursesToFenix extends LoadDataToFenix {
 				return;
 			}
 			
+			curricularCourse.setMaximumValueForAcumulatedEnrollments(new Integer(2));
+			curricularCourse.setMinimumValueForAcumulatedEnrollments(new Integer(1));
+			curricularCourse.setEnrollmentWeigth(new Integer(1));
+			curricularCourse.setPraticalHours(new Double(almeida_disc.getPra()));
+			curricularCourse.setTheoreticalHours(new Double(almeida_disc.getTeo()));
+			curricularCourse.setLabHours(new Double(almeida_disc.getLab()));
+			curricularCourse.setTheoPratHours(new Double(almeida_disc.getTeopra()));
+			curricularCourse.setCredits(new Double(almeida_disc.getCredits()));
+			
 			writeElement(curricularCourse);
 //			processCurricularCourseEquivalence(curricularCourse);
 		}
@@ -131,15 +140,8 @@ public class LoadCurricularCoursesToFenix extends LoadDataToFenix {
 			curricularCourseScope.setCurricularCourse(curricularCourse);
 			curricularCourseScope.setCurricularSemester(curricularSemester);
 			//			curricularCourseScope.setExecutionYear(executionYear);
-			curricularCourseScope.setMaxIncrementNac(new Integer(2));
-			curricularCourseScope.setMinIncrementNac(new Integer(1));
-			curricularCourseScope.setWeigth(new Integer(1));
-			curricularCourseScope.setPraticalHours(new Double(almeida_disc.getPra()));
-			curricularCourseScope.setTheoreticalHours(new Double(almeida_disc.getTeo()));
-			curricularCourseScope.setLabHours(new Double(almeida_disc.getLab()));
-			curricularCourseScope.setTheoPratHours(new Double(almeida_disc.getTeopra()));
-			curricularCourseScope.setCredits(new Double(almeida_disc.getCredits()));
-//		TODO: add sets for begin and end dates and ectsCredits
+			
+			//		TODO: add sets for begin and end dates and ectsCredits
 			writeElement(curricularCourseScope);
 			loader.numberElementsWritten--;
 		}

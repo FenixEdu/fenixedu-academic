@@ -59,33 +59,6 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
 
-		if (oldInfoCurricularCourseScope.getTheoreticalHours() != null)
-			dynaForm.set("theoreticalHours", oldInfoCurricularCourseScope.getTheoreticalHours().toString());
-
-		if (oldInfoCurricularCourseScope.getPraticalHours() != null)
-			dynaForm.set("praticalHours", oldInfoCurricularCourseScope.getPraticalHours().toString());
-
-		if (oldInfoCurricularCourseScope.getTheoPratHours() != null)
-			dynaForm.set("theoPratHours", oldInfoCurricularCourseScope.getTheoPratHours().toString());
-
-		if (oldInfoCurricularCourseScope.getLabHours() != null)
-			dynaForm.set("labHours", oldInfoCurricularCourseScope.getLabHours().toString());
-
-		if (oldInfoCurricularCourseScope.getCredits() != null)
-			dynaForm.set("credits", oldInfoCurricularCourseScope.getCredits().toString());
-
-		if (oldInfoCurricularCourseScope.getEctsCredits() != null)
-			dynaForm.set("ectsCredits", oldInfoCurricularCourseScope.getEctsCredits().toString());
-
-		if (oldInfoCurricularCourseScope.getMaxIncrementNac() != null)
-			dynaForm.set("maxIncrementNac", oldInfoCurricularCourseScope.getMaxIncrementNac().toString());
-
-		if (oldInfoCurricularCourseScope.getMinIncrementNac() != null)
-			dynaForm.set("minIncrementNac", oldInfoCurricularCourseScope.getMinIncrementNac().toString());
-
-		if (oldInfoCurricularCourseScope.getWeigth() != null)
-			dynaForm.set("weight", oldInfoCurricularCourseScope.getWeigth().toString());
-
 		if (oldInfoCurricularCourseScope.getBeginDate() != null)
 			dynaForm.set("beginDate", Data.format2DayMonthYear(oldInfoCurricularCourseScope.getBeginDate().getTime(), "/"));
 
@@ -161,16 +134,6 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 
 		String curricularSemesterIdString = (String) dynaForm.get("curricularSemesterId");
 		String branchIdString = (String) dynaForm.get("branchId");
-
-		String theoreticalHoursString = (String) dynaForm.get("theoreticalHours");
-		String praticalHoursString = (String) dynaForm.get("praticalHours");
-		String theoPratHoursString = (String) dynaForm.get("theoPratHours");
-		String labHoursString = (String) dynaForm.get("labHours");
-		String maxIncrementNacString = (String) dynaForm.get("maxIncrementNac");
-		String minIncrementNacString = (String) dynaForm.get("minIncrementNac");
-		String weightString = (String) dynaForm.get("weight");
-		String creditsString = (String) dynaForm.get("credits");
-		String ectsCreditsString = (String) dynaForm.get("ectsCredits");
 		String beginDateString = (String) dynaForm.get("beginDate");
 
 		Integer curricularSemesterId = new Integer(curricularSemesterIdString);
@@ -185,51 +148,6 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 		infoBranch.setIdInternal(branchId);
 		newInfoCurricularCourseScope.setInfoBranch(infoBranch);
 		newInfoCurricularCourseScope.setIdInternal(oldCurricularCourseScopeId);
-
-		if (theoreticalHoursString.compareTo("") != 0) {
-			Double theoreticalHours = new Double(theoreticalHoursString);
-			newInfoCurricularCourseScope.setTheoreticalHours(theoreticalHours);
-		}
-
-		if (praticalHoursString.compareTo("") != 0) {
-			Double praticalHours = new Double(praticalHoursString);
-			newInfoCurricularCourseScope.setPraticalHours(praticalHours);
-		}
-
-		if (theoPratHoursString.compareTo("") != 0) {
-			Double theoPratHours = new Double(theoPratHoursString);
-			newInfoCurricularCourseScope.setTheoPratHours(theoPratHours);
-		}
-
-		if (labHoursString.compareTo("") != 0) {
-			Double labHours = new Double(labHoursString);
-			newInfoCurricularCourseScope.setLabHours(labHours);
-		}
-
-		if (maxIncrementNacString.compareTo("") != 0) {
-			Integer maxIncrementNac = new Integer(maxIncrementNacString);
-			newInfoCurricularCourseScope.setMaxIncrementNac(maxIncrementNac);
-		}
-
-		if (minIncrementNacString.compareTo("") != 0) {
-			Integer minIncrementNac = new Integer(minIncrementNacString);
-			newInfoCurricularCourseScope.setMinIncrementNac(minIncrementNac);
-		}
-
-		if (weightString.compareTo("") != 0) {
-			Integer weight = new Integer(weightString);
-			newInfoCurricularCourseScope.setWeigth(weight);
-		}
-
-		if (creditsString.compareTo("") != 0) {
-			Double credits = new Double(creditsString);
-			newInfoCurricularCourseScope.setCredits(credits);
-		}
-
-		if (ectsCreditsString.compareTo("") != 0) {
-			Double ectsCredits = new Double(ectsCreditsString);
-			newInfoCurricularCourseScope.setEctsCredits(ectsCredits);
-		}
 
 		if (beginDateString.compareTo("") != 0) {
 			Calendar beginDateCalendar = Calendar.getInstance();

@@ -16,7 +16,6 @@ import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
 import Dominio.CurricularCourse;
-import Dominio.CurricularCourseScope;
 import Dominio.DomainObject;
 import Dominio.ExecutionCourse;
 import Dominio.ExecutionPeriod;
@@ -126,7 +125,6 @@ public class MissingCurricularCourses
 		ExecutionPeriod executionPeriod,
 		CurricularCourse curricularCourse)
 	{
-		CurricularCourseScope scope = (CurricularCourseScope) curricularCourse.getScopes().get(0);
 		
 		ExecutionCourse executionCourse = new ExecutionCourse();
 		executionCourse.setAssociatedCurricularCourses(makeListWihtElement(curricularCourse));
@@ -137,12 +135,14 @@ public class MissingCurricularCourses
 		executionCourse.setExecutionPeriod(executionPeriod);
 		//executionCourse.setIdInternal();
 		//executionCourse.setKeyExecutionPeriod();
-		executionCourse.setLabHours(scope.getLabHours());
+		
 		executionCourse.setNome(curricularCourse.getName());
-		executionCourse.setPraticalHours(scope.getPraticalHours());
 		executionCourse.setSigla(makeCode(executionPeriod, curricularCourse.getName()));
-		executionCourse.setTheoPratHours(scope.getTheoPratHours());
-		executionCourse.setTheoreticalHours(scope.getTheoreticalHours());
+		executionCourse.setTheoPratHours(curricularCourse.getTheoPratHours());
+		executionCourse.setTheoreticalHours(curricularCourse.getTheoreticalHours());
+		executionCourse.setLabHours(curricularCourse.getLabHours());
+		executionCourse.setPraticalHours(curricularCourse.getPraticalHours());
+		
 		broker.store(executionCourse);
 		return executionCourse;
 	}

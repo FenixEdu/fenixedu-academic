@@ -83,6 +83,33 @@
       <field property="code" depends="required" page="1" >
         <arg0 key="label.manager.curricularCourse.code" resource="true"/>
       </field>
+      <field property="theoreticalHours" depends="double" page="1" >
+        <arg0 key="message.manager.theoreticalHours" resource="true"/>
+      </field>
+      <field property="praticalHours" depends="double" page="1" >
+        <arg0 key="message.manager.praticalHours" resource="true"/>
+      </field>
+      <field property="theoPratHours" depends="double" page="1" >
+        <arg0 key="message.manager.theoPratHours" resource="true"/>
+      </field>
+      <field property="labHours" depends="double" page="1" >
+        <arg0 key="message.manager.labHours" resource="true"/>
+      </field>
+      <field property="maxIncrementNac" depends="required,integer" page="1" >
+        <arg0 key="message.manager.curricular.course.maxIncrementNac" resource="true"/>
+      </field>
+      <field property="minIncrementNac" depends="required,integer" page="1" >
+        <arg0 key="message.manager.curricular.course.minIncrementNac" resource="true"/>
+      </field>
+      <field property="weight" depends="required,integer" page="1" >
+        <arg0 key="message.manager.curricular.course.weight" resource="true"/>
+      </field>
+      <field property="credits" depends="double" page="1">
+        <arg0 key="message.manager.curricular.course.scope.credits" resource="true" />
+      </field>
+      <field property="ectsCredits" depends="double" page="1">
+        <arg0 key="message.manager.curricular.course.scope.ectsCredits" resource="true" />
+      </field>      
     </form>
 
  	<!--validation to the form associate a ExecutionCourse to a CurricularCourse-->
@@ -164,35 +191,7 @@
  
  
   <!--validation to the form to insert and edit a CurricularCourseScope-->
-    <form name="curricularCourseScopeForm">
-      
-      <field property="theoreticalHours" depends="double" page="1" >
-        <arg0 key="message.manager.curricular.course.scope.theoreticalHours" resource="true"/>
-      </field>
-      <field property="praticalHours" depends="double" page="1" >
-        <arg0 key="message.manager.curricular.course.scope.praticalHours" resource="true"/>
-      </field>
-      <field property="theoPratHours" depends="double" page="1" >
-        <arg0 key="message.manager.curricular.course.scope.theoPratHours" resource="true"/>
-      </field>
-      <field property="labHours" depends="double" page="1" >
-        <arg0 key="message.manager.curricular.course.scope.labHours" resource="true"/>
-      </field>
-      <field property="maxIncrementNac" depends="required,integer" page="1" >
-        <arg0 key="message.manager.curricular.course.scope.maxIncrementNac" resource="true"/>
-      </field>
-      <field property="minIncrementNac" depends="required,integer" page="1" >
-        <arg0 key="message.manager.curricular.course.scope.minIncrementNac" resource="true"/>
-      </field>
-      <field property="weight" depends="required,integer" page="1" >
-        <arg0 key="message.manager.curricular.course.scope.weight" resource="true"/>
-      </field>
-      <field property="credits" depends="double" page="1">
-        <arg0 key="message.manager.curricular.course.scope.credits" resource="true" />
-      </field>
-      <field property="ectsCredits" depends="double" page="1">
-        <arg0 key="message.manager.curricular.course.scope.ectsCredits" resource="true" />
-      </field>
+    <form name="curricularCourseScopeForm">   
       <field property="beginDate" depends="required, date, mask" page="1">
       	<msg name="date" key="errors.invalid.date"/>
       	<msg name="mask" key="errors.invalid.date"/>

@@ -22,7 +22,6 @@ import Dominio.CurricularSemester;
 import Dominio.Curso;
 import Dominio.DegreeCurricularPlan;
 import Dominio.ICurricularCourseScope;
-import Dominio.ICurricularSemester;
 import Util.TipoCurso;
 
 /**
@@ -265,19 +264,12 @@ public class MigrateDisciplinaArea2FenixScopes
 
                 //				Iterator iteratorCurricularSemester = result.iterator();
                 //				while(iteratorCurricularSemester.hasNext()) {
-                // Create the Scope
 
+                // Create the Scope
                 ICurricularCourseScope curricularCourseScope = new CurricularCourseScope();
                 curricularCourseScope.setBranch(branch);
                 curricularCourseScope.setCurricularCourse(curricularCourse);
-                curricularCourseScope.setMaxIncrementNac(new Integer(2));
-                curricularCourseScope.setMinIncrementNac(new Integer(1));
-                curricularCourseScope.setWeigth(new Integer(1));
-                curricularCourseScope.setCurricularSemester((ICurricularSemester) result.get(0));
-                curricularCourseScope.setPraticalHours(new Double(0));
-                curricularCourseScope.setTheoPratHours(new Double(0));
-                curricularCourseScope.setTheoreticalHours(new Double(0));
-                curricularCourseScope.setLabHours(new Double(0));
+                
                 //			TODO: add sets for begin and end dates and ectsCredits
                 scopesWritten++;
                 broker.store(curricularCourseScope);

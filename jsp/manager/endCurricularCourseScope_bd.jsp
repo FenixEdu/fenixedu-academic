@@ -27,9 +27,6 @@
 	<html:hidden property="degreeCurricularPlanId" value="<%= request.getParameter("degreeCurricularPlanId") %>"/>
 	<html:hidden property="curricularCourseId" value="<%= request.getParameter("curricularCourseId") %>"/>
 	<html:hidden property="curricularCourseScopeId" value="<%= request.getParameter("curricularCourseScopeId") %>"/>
-	<html:hidden property="weight"/>
-	<html:hidden property="maxIncrementNac"/>
-	<html:hidden property="minIncrementNac"/>
 	<html:hidden property="beginDate"/>
 	<table>	
 		<tr>

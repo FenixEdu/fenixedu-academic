@@ -626,6 +626,17 @@ public class LoadEnrolmentsToFenix extends LoadDataToFenix {
 			newCurricularCourse.setType(processedCurricularCourse.getType());
 			newCurricularCourse.setUniversity(this.university);
 			newCurricularCourse.setBasic(processedCurricularCourse.getBasic());
+			
+			newCurricularCourse.setLabHours(processedCurricularCourse.getLabHours());
+			newCurricularCourse.setPraticalHours(processedCurricularCourse.getPraticalHours());
+			newCurricularCourse.setTheoPratHours(processedCurricularCourse.getTheoPratHours());
+			newCurricularCourse.setTheoreticalHours(
+					processedCurricularCourse.getTheoreticalHours());
+			newCurricularCourse.setMaximumValueForAcumulatedEnrollments(processedCurricularCourse.getMaximumValueForAcumulatedEnrollments());
+			newCurricularCourse.setMinimumValueForAcumulatedEnrollments(processedCurricularCourse.getMinimumValueForAcumulatedEnrollments());
+			newCurricularCourse.setCredits(processedCurricularCourse.getCredits());
+			newCurricularCourse.setEctsCredits(processedCurricularCourse.getEctsCredits());
+			newCurricularCourse.setEnrollmentWeigth(processedCurricularCourse.getEnrollmentWeigth());
 			writeElement(newCurricularCourse);
 			numberElementsWritten--;
 
@@ -635,15 +646,9 @@ public class LoadEnrolmentsToFenix extends LoadDataToFenix {
 
 			newCurricularCourseScope.setBranch(tempCurricularCourseScope.getBranch());
 			newCurricularCourseScope.setCurricularSemester(tempCurricularCourseScope.getCurricularSemester());
-			newCurricularCourseScope.setCredits(tempCurricularCourseScope.getCredits());
-			newCurricularCourseScope.setLabHours(tempCurricularCourseScope.getLabHours());
-			newCurricularCourseScope.setMaxIncrementNac(tempCurricularCourseScope.getMaxIncrementNac());
-			newCurricularCourseScope.setMinIncrementNac(tempCurricularCourseScope.getMinIncrementNac());
-			newCurricularCourseScope.setPraticalHours(tempCurricularCourseScope.getPraticalHours());
-			newCurricularCourseScope.setTheoPratHours(tempCurricularCourseScope.getTheoPratHours());
-			newCurricularCourseScope.setTheoreticalHours(tempCurricularCourseScope.getTheoreticalHours());
-			newCurricularCourseScope.setWeigth(tempCurricularCourseScope.getWeigth());
-//		TODO: add sets for begin and end dates and ectsCredits
+			
+			//TODO: add sets for begin and end dates and ectsCredits
+			
 			writeElement(newCurricularCourseScope);
 
 			processedCurricularCourse = newCurricularCourse;

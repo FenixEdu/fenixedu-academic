@@ -75,19 +75,9 @@ public class EditCurricularCourseScope implements IServico {
 			if(oldCurricularCourseScope == null)
 				throw new NonExistingServiceException("message.non.existing.curricular.course.scope", null);
 
-			oldCurricularCourseScope.setCredits(newInfoCurricularCourseScope.getCredits());
-			oldCurricularCourseScope.setTheoreticalHours(newInfoCurricularCourseScope.getTheoreticalHours());
-			oldCurricularCourseScope.setPraticalHours(newInfoCurricularCourseScope.getPraticalHours());
-			oldCurricularCourseScope.setTheoPratHours(newInfoCurricularCourseScope.getTheoPratHours());
-			oldCurricularCourseScope.setLabHours(newInfoCurricularCourseScope.getLabHours());
-			oldCurricularCourseScope.setMaxIncrementNac(newInfoCurricularCourseScope.getMaxIncrementNac());
-			oldCurricularCourseScope.setMinIncrementNac(newInfoCurricularCourseScope.getMinIncrementNac());
-			oldCurricularCourseScope.setWeigth(newInfoCurricularCourseScope.getWeigth());
-
 			oldCurricularCourseScope.setBranch(newBranch);
 			//it already includes the curricular year
 			oldCurricularCourseScope.setCurricularSemester(newCurricularSemester);
-			oldCurricularCourseScope.setEctsCredits(newInfoCurricularCourseScope.getEctsCredits());
 			oldCurricularCourseScope.setBeginDate(newInfoCurricularCourseScope.getBeginDate());
 			oldCurricularCourseScope.setEndDate(null);
 			

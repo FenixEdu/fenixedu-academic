@@ -92,18 +92,9 @@ public class InsertCurricularCourseScopeAtCurricularCourse implements IServico {
 			persistentCurricularCourseScope.simpleLockWrite(curricularCourseScope);
 
 			curricularCourseScope.setBranch(branch);
-			curricularCourseScope.setCredits(infoCurricularCourseScope.getCredits());
-			curricularCourseScope.setEctsCredits(infoCurricularCourseScope.getEctsCredits());
 			curricularCourseScope.setCurricularCourse(curricularCourse);
 			curricularCourseScope.setCurricularSemester(curricularSemester);
-			curricularCourseScope.setLabHours(infoCurricularCourseScope.getLabHours());
-			curricularCourseScope.setMaxIncrementNac(infoCurricularCourseScope.getMaxIncrementNac());
-			curricularCourseScope.setMinIncrementNac(infoCurricularCourseScope.getMinIncrementNac());
-			curricularCourseScope.setPraticalHours(infoCurricularCourseScope.getPraticalHours());
-			curricularCourseScope.setTheoPratHours(infoCurricularCourseScope.getTheoPratHours());
-			curricularCourseScope.setTheoreticalHours(infoCurricularCourseScope.getTheoreticalHours());
-			curricularCourseScope.setWeigth(infoCurricularCourseScope.getWeigth());
-
+			
 			curricularCourseScope.setBeginDate(infoCurricularCourseScope.getBeginDate());
 			curricularCourseScope.setEndDate(null);
 

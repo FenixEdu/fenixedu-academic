@@ -52,8 +52,9 @@ public class SearchPerson extends SearchService
 		String name = (String) parametersSearch.get(new String("name"));
 		String email = (String) parametersSearch.get(new String("email"));
 		String username = (String) parametersSearch.get(new String("username"));
+		String documentIdNumber = (String) parametersSearch.get(new String("documentIdNumber"));
 
-		return persistentPerson.findPersonByNameAndEmailAndUsername(name, email, username);
+		return persistentPerson.findPersonByNameAndEmailAndUsernameAndDocumentId(name, email, username, documentIdNumber);
 	}
 
 }

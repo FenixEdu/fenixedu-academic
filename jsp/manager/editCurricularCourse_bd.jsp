@@ -73,6 +73,78 @@
 				<html:checkbox property="basic" value ="true"/>
 			</td>
 		</tr>
+		<tr>
+			<td>
+				<bean:message key="message.manager.theoreticalHours"/>
+			</td>
+			<td>
+				<html:text size="5" property="theoreticalHours" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<bean:message key="message.manager.praticalHours"/>
+			</td>
+			<td>
+				<html:text size="5" property="praticalHours" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<bean:message key="message.manager.theoPratHours"/>
+			</td>
+			<td>
+				<html:text size="5" property="theoPratHours" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<bean:message key="message.manager.labHours"/>
+			</td>
+			<td>
+				<html:text size="5" property="labHours" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<bean:message key="message.manager.curricular.course.maxIncrementNac"/>
+			</td>
+			<td>
+				<html:text size="5" property="maxIncrementNac" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<bean:message key="message.manager.curricular.course.minIncrementNac"/>
+			</td>
+			<td>
+				<html:text size="5" property="minIncrementNac" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<bean:message key="message.manager.curricular.course.credits" />
+			</td>
+			<td>
+				<html:text size="5" property="credits" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<bean:message key="message.manager.curricular.course.ectsCredits"/>
+			</td>
+			<td>
+				<html:text size="5" property="ectsCredits" />
+			</td>
+		</tr>			
+		<tr>
+			<td>
+				<bean:message key="message.manager.curricular.course.weight"/>
+			</td>
+			<td>
+				<html:text size="5" property="weight" />
+			</td>
+		</tr>			
 	</table>
 	
 	<br>

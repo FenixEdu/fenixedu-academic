@@ -94,7 +94,15 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
         result += ", nome =" + name;
         result += ", sigla =" + code;
         result += ", type =" + this.type;
+        result += ", theoreticalHours =" + this.theoreticalHours;
+        result += ", theoPratHours =" + this.theoPratHours;
+        result += ", praticalHours =" + this.praticalHours;
+        result += ", labHours =" + this.labHours;
+        result += ", maximumValueForAcumulatedEnrollments =" + this.maximumValueForAcumulatedEnrollments;
+        result += ", minimumValueForAcumulatedEnrollments =" + this.minimumValueForAcumulatedEnrollments;
         result += ", credits =" + this.credits;
+        result += ", ectsCredits =" + this.ectsCredits;
+        result += ", enrollmentWeigth =" + this.enrollmentWeigth;
         result += "]\n";
         return result;
     }

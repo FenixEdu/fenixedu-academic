@@ -135,7 +135,7 @@ public class ServicoSeguroActualizarFuncionarios
 						employee2Write.setWorkingHours(new Integer(0));
 						employee2Write.setAntiquity(new Date());
 						employee2Write.setActive(Boolean.TRUE);
-
+						System.out.println("New employee without person: " + numeroMecanografico + "-" + employee2Write.getPerson().getNome() + "-" + employee2Write.getPerson().getNumeroDocumentoIdentificacao());						
 					}
 					else
 					{
@@ -154,6 +154,7 @@ public class ServicoSeguroActualizarFuncionarios
 						}
 
 						employee2Write.setActive(Boolean.TRUE);
+						System.out.println("New employee with person: " + numeroMecanografico + "-" + employee2Write.getPerson().getNome() + "-" + employee2Write.getPerson().getNumeroDocumentoIdentificacao());												
 					}
 					broker.store(employee2Write);
 					usedPersons.add(person);
@@ -193,6 +194,7 @@ public class ServicoSeguroActualizarFuncionarios
 					else
 					{
 						person.getPersonRoles().add(role);
+						System.out.println("New role: " + numeroMecanografico + "-" + person.getNome() + "-" + person.getNumeroDocumentoIdentificacao());
 						newRoles++;
 					}					
 				}

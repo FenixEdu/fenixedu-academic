@@ -73,40 +73,72 @@
 					Curso :	<bean:write name="curricularCourse" property="infoDegreeCurricularPlan.infoDegree.nome" />
 				</h3>
 				
-				<%-- Scopes --%>				
-				<table width="100%" cellpadding="1" cellspacing="1">				
-					<tr>				
-						<td class="listClasses-header" rowspan="2" width="30%">
-							<bean:message key="label.manager.curricularCourseScope.branch"/>
+			
+				<table width="70%" cellpadding="0" border="0">
+					<tr>
+						<td class="listClasses-header"><bean:message key="message.manager.theoreticalHours" />
 						</td>
-						<td class="listClasses-header" rowspan="2" width="5%">
-							<bean:message key="label.manager.curricularCourseScope.curricularYear"/>
+						<td class="listClasses-header"><bean:message key="message.manager.praticalHours" />
 						</td>
-						<td class="listClasses-header" rowspan="2" width="5%">
-							Sem.
-<%--							<bean:message key="label.manager.curricularCourseScope.curricularSemester"/> --%>
+						<td class="listClasses-header"><bean:message key="message.manager.theoPratHours" />
 						</td>
-						<td class="listClasses-header" colspan="4" width="60%">
-							Carga
+						<td class="listClasses-header"><bean:message key="message.manager.labHours" />
 						</td>
-					
 					</tr>
 					<tr>
+						<td class="listClasses">
+							<logic:equal  name="curricularCourse" property="theoreticalHours"  value="<%= theoreticalHours.toString() %>" >
+								<font color="#008000"><bean:write name="curricularCourse" property="theoreticalHours"/></font>
+							</logic:equal>
+							<logic:notEqual name="curricularCourse" property="theoreticalHours" value="<%= theoreticalHours.toString() %>">
+								<font color="red"><bean:write name="curricularCourse" property="theoreticalHours"/></font>
+							</logic:notEqual>
+						</td>
+						<td class="listClasses">
+							<logic:equal name="curricularCourse" property="theoPratHours" value="<%= theoPratHours.toString() %>" >
+								<font color="#008000"><bean:write name="curricularCourse" property="theoPratHours"/></font>
+							</logic:equal>
+							<logic:notEqual name="curricularCourse" property="theoPratHours" value="<%= theoPratHours.toString() %>">
+								<font color="red"><bean:write name="curricularCourse" property="theoPratHours"/></font>
+							</logic:notEqual>							
+						</td>
+						<td class="listClasses">
+							<logic:equal name="curricularCourse" property="praticalHours" value="<%= praticalHours.toString() %>" >
+								<font color="#008000"><bean:write name="curricularCourse" property="praticalHours"/></font>
+							</logic:equal>
+							<logic:notEqual name="curricularCourse" property="praticalHours" value="<%= praticalHours.toString() %>">
+								<font color="red"><bean:write name="curricularCourse" property="praticalHours"/></font>
+							</logic:notEqual>								
+						</td>
+						<td class="listClasses">
+							<logic:equal name="curricularCourse" property="labHours" value="<%= labHours.toString() %>" >
+								<font color="#008000"><bean:write name="curricularCourse" property="labHours"/></font>
+							</logic:equal>
+							<logic:notEqual name="curricularCourse" property="labHours" value="<%= labHours.toString() %>">
+								<font color="red"><bean:write name="curricularCourse" property="labHours"/></font>
+							</logic:notEqual>								
+						</td>
+					</tr>
+				</table>
+				<br />
+				<br />
+				<table width="50%" cellpadding="0" border="0">				
+					<tr>				
 						<td class="listClasses-header">
-							<bean:message key="label.hours.load.theoretical"/>
+							<bean:message key="label.manager.curricularCourseScope.branch"/>
 						</td>
 						<td class="listClasses-header">
-							<bean:message key="label.hours.load.theoretical_practical"/>
+							<bean:message key="label.manager.curricularCourseScope.curricularYear"/>
 						</td>
 						<td class="listClasses-header">
-							<bean:message key="label.hours.load.practical"/>
-						</td>
-						<td class="listClasses-header">
-							<bean:message key="label.hours.load.laboratorial"/>
+							Sem.
+							<%--<bean:message key="label.manager.curricularCourseScope.curricularSemester"/> --%>
 						</td>	
-					</tr>	
-				
-				
+						<td>
+							&nbsp;
+						</td>				
+					</tr>		
+					<%-- Scopes --%>
 					<logic:iterate id="scope" name="curricularCourse" property="infoScopes" >
 						<tr>
 							<td class="listClasses">
@@ -122,42 +154,10 @@
 							</td>
 							<td class="listClasses">
 								<bean:write name="scope" property="infoCurricularSemester.semester"/>
-							</td>
-							<td class="listClasses">
-								<logic:equal  name="scope" property="theoreticalHours"  value="<%= theoreticalHours.toString() %>" >
-									<font color="#008000"><bean:write name="scope" property="theoreticalHours"/></font>
-								</logic:equal>
-								<logic:notEqual name="scope" property="theoreticalHours" value="<%= theoreticalHours.toString() %>">
-									<font color="red"><bean:write name="scope" property="theoreticalHours"/></font>
-								</logic:notEqual>
-							</td>
-							<td class="listClasses">
-								<logic:equal name="scope" property="theoPratHours" value="<%= theoPratHours.toString() %>" >
-									<font color="#008000"><bean:write name="scope" property="theoPratHours"/></font>
-								</logic:equal>
-								<logic:notEqual name="scope" property="theoPratHours" value="<%= theoPratHours.toString() %>">
-									<font color="red"><bean:write name="scope" property="theoPratHours"/></font>
-								</logic:notEqual>
-								
-							</td>
-							<td class="listClasses">
-								<logic:equal name="scope" property="praticalHours" value="<%= praticalHours.toString() %>" >
-									<font color="#008000"><bean:write name="scope" property="praticalHours"/></font>
-								</logic:equal>
-								<logic:notEqual name="scope" property="praticalHours" value="<%= praticalHours.toString() %>">
-									<font color="red"><bean:write name="scope" property="praticalHours"/></font>
-								</logic:notEqual>
-								
-							</td>
-							<td class="listClasses">
-								<logic:equal name="scope" property="labHours" value="<%= labHours.toString() %>" >
-									<font color="#008000"><bean:write name="scope" property="labHours"/></font>
-								</logic:equal>
-								<logic:notEqual name="scope" property="labHours" value="<%= labHours.toString() %>">
-									<font color="red"><bean:write name="scope" property="labHours"/></font>
-								</logic:notEqual>
-								
-							</td>
+							</td>								
+							<td>
+								&nbsp;
+							</td>	
 						</tr>
 					</logic:iterate>
 				</table>

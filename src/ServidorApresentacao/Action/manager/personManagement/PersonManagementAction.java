@@ -64,11 +64,13 @@ public class PersonManagementAction extends FenixDispatchAction
 		String name = (String) findPersonForm.get("name");
 		String email = (String) findPersonForm.get("email");
 		String username = (String) findPersonForm.get("username");
+		String documentIdNumber = (String) findPersonForm.get("documentIdNumber");
 		
 		HashMap parametersSearch = new HashMap();
 		parametersSearch.put(new String("name"), name);
 		parametersSearch.put(new String("email"), email);
 		parametersSearch.put(new String("username"), username);
+		parametersSearch.put(new String("documentIdNumber"), documentIdNumber);
 		
 		Object[] args = { parametersSearch };
 		

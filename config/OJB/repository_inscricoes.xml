@@ -999,51 +999,6 @@
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
-		name="maxIncrementNac"
-		column="MAX_INCREMENT_NAC"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="minIncrementNac"
-		column="MIN_INCREMENT_NAC"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="weigth"
-		column="WEIGTH"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
-		name="theoreticalHours"
-		column="THEORETICAL_HOURS"
-		jdbc-type="DOUBLE"
-	/>
-	<field-descriptor
-		name="praticalHours"
-		column="PRATICAL_HOURS"
-		jdbc-type="DOUBLE"
-	/>
-	<field-descriptor
-		name="theoPratHours"
-		column="THEO_PRAT_HOURS"
-		jdbc-type="DOUBLE"
-	/>
-	<field-descriptor
-		name="labHours"
-		column="LAB_HOURS"
-		jdbc-type="DOUBLE"
-	/>
-	<field-descriptor
-		name="credits"
-		column="CREDITS"
-		jdbc-type="DOUBLE"
-	/>
-	<field-descriptor
-		name="ectsCredits"
-		column="ECTS_CREDITS"
-		jdbc-type="DOUBLE"
-	/>
-	<field-descriptor
 		name="beginDate"
 		column="BEGIN_DATE"
         jdbc-type="DATE"

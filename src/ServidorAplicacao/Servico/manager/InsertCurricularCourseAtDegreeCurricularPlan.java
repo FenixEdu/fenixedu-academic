@@ -65,6 +65,16 @@ public class InsertCurricularCourseAtDegreeCurricularPlan implements IServico {
 				curricularCourse.setMandatory(infoCurricularCourse.getMandatory());
 				curricularCourse.setName(name);
 				curricularCourse.setType(infoCurricularCourse.getType());
+				curricularCourse.setTheoreticalHours(infoCurricularCourse.getTheoreticalHours());
+				curricularCourse.setTheoPratHours(infoCurricularCourse.getTheoPratHours());
+				curricularCourse.setPraticalHours(infoCurricularCourse.getPraticalHours());
+				curricularCourse.setLabHours(infoCurricularCourse.getLabHours());
+				curricularCourse.setMaximumValueForAcumulatedEnrollments(infoCurricularCourse.getMaximumValueForAcumulatedEnrollments());
+				curricularCourse.setMinimumValueForAcumulatedEnrollments(infoCurricularCourse.getMinimumValueForAcumulatedEnrollments());
+				curricularCourse.setCredits(infoCurricularCourse.getCredits());
+				curricularCourse.setEctsCredits(infoCurricularCourse.getEctsCredits());
+				curricularCourse.setEnrollmentWeigth(infoCurricularCourse.getEnrollmentWeigth());
+				
 				curricularCourse.setAssociatedExecutionCourses(new ArrayList());							
 
 				persistentCurricularCourse.lockWrite(curricularCourse);

@@ -142,17 +142,20 @@ public class LoadDisciplinas extends LoadDataFile {
 					curricularCourse.setType(
 						new CurricularCourseType(
 							CurricularCourseType.OPTIONAL_COURSE));
-				}
-				curricularCourse.setCredits(
-					new Double(almeida_disc.getCredits()));
-
+				}				
 				processCurricularCourseScope(curricularCourse, almeida_disc);
-				// Deprecated fields ------------------
-				curricularCourse.setTheoreticalHours(null);
-				curricularCourse.setPraticalHours(null);
-				curricularCourse.setLabHours(null);
-				curricularCourse.setTheoPratHours(null);
-				//-------------------------------------
+				
+				curricularCourse.setTheoreticalHours(new Double(almeida_disc.getTeo()));
+				curricularCourse.setTheoPratHours(new Double(almeida_disc.getTeopra()));
+				curricularCourse.setPraticalHours(new Double(almeida_disc.getPra()));
+				curricularCourse.setLabHours(new Double(almeida_disc.getLab()));
+				curricularCourse.setMaximumValueForAcumulatedEnrollments(null);
+				curricularCourse.setMinimumValueForAcumulatedEnrollments(null);				
+				curricularCourse.setCredits(
+						new Double(almeida_disc.getCredits()));
+				curricularCourse.setEctsCredits(null);
+				curricularCourse.setEnrollmentWeigth(null);
+				
 				curricularCourse.setMandatory(null); //	not available
 				writeElement(curricularCourse);
 				numberElementsWritten++;
@@ -228,17 +231,9 @@ public class LoadDisciplinas extends LoadDataFile {
 			makeCurricularSemester(
 				almeida_disc.getAnodis(),
 				almeida_disc.getSemdis()));
-		curricularCourseScope.setMaxIncrementNac(null);
-		curricularCourseScope.setMinIncrementNac(null);
-		curricularCourseScope.setWeigth(null);
-		curricularCourseScope.setTheoreticalHours(
-			new Double(almeida_disc.getTeo()));
-		curricularCourseScope.setTheoPratHours(
-			new Double(almeida_disc.getTeopra()));
-		curricularCourseScope.setPraticalHours(
-			new Double(almeida_disc.getPra()));
-		curricularCourseScope.setLabHours(new Double(almeida_disc.getLab()));
-//	TODO: add sets for begin and end dates and ectsCredits
+
+		//	TODO: add sets for begin and end dates and ectsCredits
+		
 		// Write this elemente
 		writeElement(curricularCourseScope);
 		numberElementsWritten++;

@@ -117,6 +117,7 @@ public class ServicoSeguroActualizarFuncsNaoDocentes
 					employeeNotTeacher = new EmployeeNotTeacher();
 					employeeNotTeacher.setEmployee(employee);
 					broker.store(employeeNotTeacher);
+					System.out.println("New not teacher employee: " + numeroMecanografico + "-" + employee.getPerson().getNome() + "-" + employee.getPerson().getNumeroDocumentoIdentificacao());
 					newEmployees++;
 
 					IPersonRole personRole =
@@ -132,6 +133,7 @@ public class ServicoSeguroActualizarFuncsNaoDocentes
 						{
 							employee.getPerson().getPersonRoles().add(role);
 							broker.store(employee.getPerson());
+							System.out.println("New role: " + numeroMecanografico + "-" + employeeNotTeacher.getEmployee().getPerson().getNome() + "-" + employeeNotTeacher.getEmployee().getPerson().getNumeroDocumentoIdentificacao());						
 							newRoles++;
 						}
 					}

@@ -119,15 +119,6 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
 		infoBranch.setIdInternal(new Integer((String) dynaForm.get("branchId")));
 		infoCurricularCourseScope.setInfoBranch(infoBranch);
 
-		String credits = (String) dynaForm.get("credits");
-		if (credits.compareTo("") != 0)
-			infoCurricularCourseScope.setCredits(new Double(credits));
-
-		String ectsCredits = (String) dynaForm.get("ectsCredits");
-		if (ectsCredits != null && ectsCredits.length() > 0) {
-			infoCurricularCourseScope.setEctsCredits(new Double(ectsCredits));
-		}
-
 		InfoCurricularCourse infoCurricularCourse = new InfoCurricularCourse();
 		infoCurricularCourse.setIdInternal(new Integer(request.getParameter("curricularCourseId")));
 		infoCurricularCourseScope.setInfoCurricularCourse(infoCurricularCourse);
@@ -135,27 +126,6 @@ public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchActi
 		InfoCurricularSemester infoCurricularSemester = new InfoCurricularSemester();
 		infoCurricularSemester.setIdInternal(new Integer((String) dynaForm.get("curricularSemesterId")));
 		infoCurricularCourseScope.setInfoCurricularSemester(infoCurricularSemester);
-
-		String labHours = (String) dynaForm.get("labHours");
-		if (labHours.compareTo("") != 0)
-			infoCurricularCourseScope.setLabHours(new Double(labHours));
-
-		infoCurricularCourseScope.setMaxIncrementNac(new Integer((String) dynaForm.get("maxIncrementNac")));
-		infoCurricularCourseScope.setMinIncrementNac(new Integer((String) dynaForm.get("minIncrementNac")));
-
-		String praticalHours = (String) dynaForm.get("praticalHours");
-		if (praticalHours.compareTo("") != 0)
-			infoCurricularCourseScope.setPraticalHours(new Double(praticalHours));
-
-		String theoPratHours = (String) dynaForm.get("theoPratHours");
-		if (theoPratHours.compareTo("") != 0)
-			infoCurricularCourseScope.setTheoPratHours(new Double(theoPratHours));
-
-		String theoreticalHours = (String) dynaForm.get("theoreticalHours");
-		if (theoreticalHours.compareTo("") != 0)
-			infoCurricularCourseScope.setTheoreticalHours(new Double(theoreticalHours));
-
-		infoCurricularCourseScope.setWeigth(new Integer((String) dynaForm.get("weight")));
 
 		String beginDateString = (String) dynaForm.get("beginDate");
 		if (beginDateString.compareTo("") != 0) {

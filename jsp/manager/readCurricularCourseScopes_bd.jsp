@@ -43,24 +43,6 @@
 				</td>
 				<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.curricularSemester" />
 				</td>
-				<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.theoreticalHours" />
-				</td>
-				<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.praticalHours" />
-				</td>
-				<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.theoPratHours" />
-				</td>
-				<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.labHours" />
-				</td>
-				<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.maxIncrementNac" />
-				</td>
-				<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.minIncrementNac" />
-				</td>
-				<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.credits" />
-				</td>
-				<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.ectsCredits" />
-				</td>
-				<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.weigth" />
-				</td>
 				<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.branch" />
 				</td>
 				<td class="listClasses-header"><bean:message key="label.manager.curricularCourseScope.beginDate" />
@@ -83,51 +65,6 @@
 							<bean:write name="infoCurricularSemester" property="semester"/>
 						</html:link>
 					</td>	 			
-					<td class="listClasses">
-						<html:link page="<%="/insertCurricularCourseScopeFromAnother.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="idInternal">
-							<bean:write name="curricularCourseScope" property="theoreticalHours"/>
-						</html:link>
-					</td>
-					<td class="listClasses">
-						<html:link page="<%="/insertCurricularCourseScopeFromAnother.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="idInternal">
-							<bean:write name="curricularCourseScope" property="praticalHours"/>
-						</html:link>
-					</td>
-					<td class="listClasses">
-						<html:link page="<%="/insertCurricularCourseScopeFromAnother.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="idInternal">
-							<bean:write name="curricularCourseScope" property="theoPratHours"/>
-						</html:link>
-					</td>
-					<td class="listClasses">
-						<html:link page="<%="/insertCurricularCourseScopeFromAnother.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="idInternal">
-							<bean:write name="curricularCourseScope" property="labHours"/>
-						</html:link>
-					</td>
-					<td class="listClasses">
-						<html:link page="<%="/insertCurricularCourseScopeFromAnother.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="idInternal">
-							<bean:write name="curricularCourseScope" property="maxIncrementNac"/>
-						</html:link>
-					</td>
-					<td class="listClasses">
-						<html:link page="<%="/insertCurricularCourseScopeFromAnother.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="idInternal">
-							<bean:write name="curricularCourseScope" property="minIncrementNac"/>
-						</html:link>
-					</td>
-					<td class="listClasses">
-						<html:link page="<%="/insertCurricularCourseScopeFromAnother.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="idInternal">
-							<bean:write name="curricularCourseScope" property="credits"/>
-						</html:link>
-					</td>
-					<td class="listClasses">
-						<html:link page="<%="/insertCurricularCourseScopeFromAnother.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="idInternal">
-							<bean:write name="curricularCourseScope" property="ectsCredits"/>
-						</html:link>
-					</td>
-					<td class="listClasses">
-						<html:link page="<%="/insertCurricularCourseScopeFromAnother.do?method=prepareInsert&amp;degreeId=" + request.getParameter("degreeId") + "&amp;degreeCurricularPlanId=" + request.getParameter("degreeCurricularPlanId")  + "&amp;curricularCourseId=" + request.getParameter("curricularCourseId")%>" paramId="curricularCourseScopeId" paramName="curricularCourseScope" paramProperty="idInternal">
-							<bean:write name="curricularCourseScope" property="weigth"/>
-						</html:link>
-					</td>
 					<logic:empty name="infoBranch" property="code">
 						<td class="listClasses">&nbsp;</td>										
 					</logic:empty>

@@ -43,42 +43,6 @@
 			</td>
 		</tr>
 		<tr>
-			<td><bean:message key="message.manager.theoreticalHours"/></td>
-			<td><html:text size="5" property="theoreticalHours" /></td>
-		</tr>
-		<tr>
-			<td><bean:message key="message.manager.praticalHours"/></td>
-			<td><html:text size="5" property="praticalHours" /></td>
-		</tr>
-		<tr>
-			<td><bean:message key="message.manager.theoPratHours"/></td>
-			<td><html:text size="5" property="theoPratHours" /></td>
-		</tr>
-		<tr>
-			<td><bean:message key="message.manager.labHours"/></td>
-			<td><html:text size="5" property="labHours" /></td>
-		</tr>
-		<tr>
-			<td><bean:message key="message.manager.curricular.course.scope.credits"/></td>
-			<td><html:text size="5" property="credits" /></td>
-		</tr>
-		<tr>
-			<td><bean:message key="message.manager.curricular.course.scope.ectsCredits"/></td>
-			<td><html:text size="5" property="ectsCredits" /></td>
-		</tr>
-		<tr>
-			<td><bean:message key="message.manager.curricular.course.scope.maxIncrementNac"/></td>
-			<td><html:text size="5" property="maxIncrementNac" /></td>
-		</tr>
-		<tr>
-			<td><bean:message key="message.manager.curricular.course.scope.minIncrementNac"/></td>
-			<td><html:text size="5" property="minIncrementNac" /></td>
-		</tr>
-		<tr>
-			<td><bean:message key="message.manager.curricular.course.scope.weight"/></td>
-			<td><html:text size="5" property="weight" /></td>
-		</tr>
-		<tr>
 			<td>
 				<bean:message key="label.manager.curricularCourseScope.beginDate"/>
 			</td>
