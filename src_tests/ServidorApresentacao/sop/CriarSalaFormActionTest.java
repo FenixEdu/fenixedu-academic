@@ -26,7 +26,7 @@ public class CriarSalaFormActionTest extends TestCasePresentationSopPortal {
 
 	
 	protected String getServletConfigFile() {
-			return "/WEB-INF/tests/web-sop.xml";
+			return "/WEB-INF/web.xml";
 		}
 	public CriarSalaFormActionTest(String testName) {
 		super(testName);
@@ -38,7 +38,7 @@ public class CriarSalaFormActionTest extends TestCasePresentationSopPortal {
 			SessionConstants.SESSION_IS_VALID);
 
 		// define mapping de origem
-		setRequestPathInfo("", "/criarSalaForm");
+		setRequestPathInfo("sop", "/criarSalaForm");
 
 		// Preenche campos do formulário
 		addRequestParameter("name", "Fa2");
@@ -63,7 +63,7 @@ public class CriarSalaFormActionTest extends TestCasePresentationSopPortal {
 	}
 
 	public void testUnsuccessfulCriarSala() {
-		setRequestPathInfo("", "/criarSalaForm");
+		setRequestPathInfo("sop", "/criarSalaForm");
 		
 		setAuthorizedUser();
 		addRequestParameter("name", "GA1");

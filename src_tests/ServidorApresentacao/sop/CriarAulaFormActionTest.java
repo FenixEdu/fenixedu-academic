@@ -30,7 +30,7 @@ public class CriarAulaFormActionTest extends TestCasePresentationSopPortal {
 	}
 	
 	protected String getServletConfigFile() {
-			return "/WEB-INF/tests/web-sop.xml";
+			return "/WEB-INF/web.xml";
 		}
 	public CriarAulaFormActionTest(String testName) {
 		super(testName);

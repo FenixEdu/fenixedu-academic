@@ -31,10 +31,9 @@ public class CriarTurnoFormActionTest extends TestCasePresentationSopPortal {
 		return suite;
 	}
 
-	
 	protected String getServletConfigFile() {
-			return "/WEB-INF/tests/web-sop.xml";
-		}
+		return "/WEB-INF/web.xml";
+	}
 	public CriarTurnoFormActionTest(String testName) {
 		super(testName);
 	}
@@ -53,7 +52,7 @@ public class CriarTurnoFormActionTest extends TestCasePresentationSopPortal {
 		addRequestParameter("lotacao", (new Integer(100).toString()));
 
 		// coloca credenciais na sessao
-setAuthorizedUser();
+		setAuthorizedUser();
 		try {
 			InfoDegree iL =
 				new InfoDegree(
@@ -110,7 +109,6 @@ setAuthorizedUser();
 	}
 
 	public void testUnsuccessfulCriarTurno() {
-		
 
 		setRequestPathInfo("sop", "/criarTurnoForm");
 		addRequestParameter("nome", "turno1");
@@ -170,17 +168,14 @@ setAuthorizedUser();
 		actionPerform();
 		verifyForwardPath("/criarTurno.jsp");
 
-		verifyActionErrors(
-			new String[] { "error.exception.existing" });
+		verifyActionErrors(new String[] { "error.exception.existing" });
 	}
-
-	
 
 	/* (non-Javadoc)
 	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoPathAction()
 	 */
 	protected String getRequestPathInfoPathAction() {
-		
+
 		return null;
 	}
 
@@ -188,7 +183,7 @@ setAuthorizedUser();
 	 * @see ServidorApresentacao.TestCaseActionExecution#getRequestPathInfoNameAction()
 	 */
 	protected String getRequestPathInfoNameAction() {
-		
+
 		return null;
 	}
 
@@ -196,7 +191,7 @@ setAuthorizedUser();
 	 * @see ServidorApresentacao.TestCaseActionExecution#getItemsToPutInSessionForActionToBeTestedSuccessfuly()
 	 */
 	protected Map getItemsToPutInSessionForActionToBeTestedSuccessfuly() {
-		
+
 		return null;
 	}
 

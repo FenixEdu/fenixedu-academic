@@ -29,11 +29,11 @@ public class EditarTurnoFormActionTest extends TestCasePresentationSopPortal {
   public void setUp() {
     super.setUp();
     // define ficheiro de configuracao Struts a utilizar
-    setServletConfigFile("/WEB-INF/tests/web-sop.xml");
+    setServletConfigFile("/WEB-INF/web.xml");
   }
 
   protected String getServletConfigFile() {
-		  return "/WEB-INF/tests/web-sop.xml";
+		  return "/WEB-INF/web.xml";
 	  }
   public EditarTurnoFormActionTest(String testName) {
     super(testName);

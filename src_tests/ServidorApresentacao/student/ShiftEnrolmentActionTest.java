@@ -125,7 +125,7 @@ public class ShiftEnrolmentActionTest extends MockStrutsTestCase {
 
 		initializeDAO();
 
-		setServletConfigFile("/WEB-INF/tests/web-student.xml");
+		setServletConfigFile("/WEB-INF/web.xml");
 		setRequestPathInfo("", "/shiftEnrolment");
 
 	}

@@ -110,7 +110,7 @@ public class ChooseOtherCoursesActionTest extends MockStrutsTestCase {
   public void setUp() throws Exception {
     super.setUp();
     // define ficheiro de configuração a utilizar
-    setServletConfigFile("/WEB-INF/tests/web-student.xml");
+    setServletConfigFile("/WEB-INF/web.xml");
 
     ligarSuportePersistente();
     cleanData();
