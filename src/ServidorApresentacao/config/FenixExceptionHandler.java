@@ -84,7 +84,7 @@ public class FenixExceptionHandler extends ExceptionHandler {
 		}
 
 		// Store the exception
-		request.setAttribute(Globals.EXCEPTION_KEY, ex);
+		request.getSession().setAttribute(Globals.EXCEPTION_KEY, ex);
 		super.storeException(request, property, error, forward, ae.getScope());
 	
 		return super.execute(ex, ae, mapping, formInstance, request, response);

@@ -27,10 +27,12 @@ public class InvocadorServicosTransaccional extends InvocadorServicos {
       	if (ex.getCause() instanceof ExcepcaoPersistencia) {
 	        try {
     	      sp.cancelarTransaccao();
-        	} catch (ExcepcaoPersistencia newEx) {
-          	throw new FenixServiceException(newEx.getMessage());
-        	}
-			throw new FenixServiceException(ex.getMessage());         	
+        		} 
+        	catch (ExcepcaoPersistencia newEx) {
+          		throw new FenixServiceException(newEx.getMessage());
+        		}
+			throw ex;
+			//throw new FenixServiceException(ex.getMessage());         	
       	} else
       		throw ex;
       }

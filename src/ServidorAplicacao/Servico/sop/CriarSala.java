@@ -14,49 +14,63 @@ package ServidorAplicacao.Servico.sop;
 import DataBeans.InfoRoom;
 import Dominio.ISala;
 import Dominio.Sala;
+import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.IServico;
+import ServidorAplicacao.Servico.sop.exceptions.ExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
+import ServidorPersistente.exceptions.ExistingPersistentException;
 
 public class CriarSala implements IServico {
 
-  private static CriarSala _servico = new CriarSala();
-  /**
-   * The singleton access method of this class.
-   **/
-  public static CriarSala getService() {
-    return _servico;
-  }
+	private static CriarSala _servico = new CriarSala();
+	/**
+	 * The singleton access method of this class.
+	 **/
+	public static CriarSala getService() {
+		return _servico;
+	}
 
-  /**
-   * The actor of this class.
-   **/
-  private CriarSala() { }
+	/**
+	 * The actor of this class.
+	 **/
+	private CriarSala() {
+	}
 
-  /**
-   * Devolve o nome do servico
-   **/
-  public final String getNome() {
-    return "CriarSala";
-  }
+	/**
+	 * Devolve o nome do servico
+	 **/
+	public final String getNome() {
+		return "CriarSala";
+	}
 
-  public Object run(InfoRoom infoSala) {
-                        
-    ISala sala = null;
-    boolean result = false;
+	public Object run(InfoRoom infoSala) throws FenixServiceException {
 
-    try {
-      ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-      sala = new Sala(infoSala.getNome(), infoSala.getEdificio(), infoSala.getPiso(), infoSala.getTipo(),
-                      infoSala.getCapacidadeNormal(), infoSala.getCapacidadeExame());
-      sp.getISalaPersistente().lockWrite(sala);
-      result = true;
-    } catch (ExcepcaoPersistencia ex) {
-      ex.printStackTrace();
-    }
-    
-    return new Boolean (result);
-  }
-  
+		ISala sala = null;
+		boolean result = false;
+
+		try {
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			sala =
+				new Sala(
+					infoSala.getNome(),
+					infoSala.getEdificio(),
+					infoSala.getPiso(),
+					infoSala.getTipo(),
+					infoSala.getCapacidadeNormal(),
+					infoSala.getCapacidadeExame());
+			try {
+				sp.getISalaPersistente().lockWrite(sala);
+				result = true;
+			} catch (ExistingPersistentException ex) {
+				throw new ExistingServiceException(ex);
+			}
+		} catch (ExcepcaoPersistencia ex) {
+			throw new FenixServiceException(ex.getMessage());
+		}
+
+		return new Boolean(result);
+	}
+
 }

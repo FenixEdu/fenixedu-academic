@@ -340,6 +340,7 @@
               type="ServidorApresentacao.Action.sop.PrepararCriarSalaFormAction"
               scope="request"
 	      parameter="method">
+	      
           <forward name="CriarSala" path="/criarSala.jsp"/>
           <forward name="PesquisarSalas" path="/pesquisarSalas.jsp"/>
       </action>
@@ -351,6 +352,9 @@
               scope="request"
               type="ServidorApresentacao.Action.sop.CriarSalaFormAction"
               validate="true">
+         <exception type="ServidorApresentacao.Action.sop.exceptions.ExistingActionException"
+               handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
+               />
         <forward name="Sucesso" path="/principalSalas.do"/>
       </action>
 

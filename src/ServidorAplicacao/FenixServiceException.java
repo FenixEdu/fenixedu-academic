@@ -17,6 +17,14 @@ public class FenixServiceException extends Exception {
 		super(message, cause);
 	}
 
+	public String toString() {
+			String result = "[FenixServiceException\n";
+			result += "message" +this.getMessage()+ "\n";
+			result += "cause" +this.getCause()+ "\n";
+			result += "]";
+			return result;
+		}
+
 }
 
 /* Created by Nuno Antão */

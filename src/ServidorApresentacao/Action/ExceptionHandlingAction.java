@@ -56,6 +56,7 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 		mailBody += sender +"\n\n";
 		mailBody += "User Comment: \n" + formBody + "\n\n";
 		mailBody += "Error Origin: \n";
+		mailBody += "Exception: \n" + request.getSession().getAttribute(Globals.EXCEPTION_KEY) + "\n\n";
 		mailBody += "RequestContext: \n" + requestContext + "\n\n\n";
 		mailBody += "SessionContext: \n" + sessionContextGetter(request) + "\n\n\n";
 		mailBody += "Path: " + originalMapping.getPath() + "\n";

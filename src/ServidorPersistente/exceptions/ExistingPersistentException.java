@@ -26,5 +26,12 @@ public class ExistingPersistentException extends ExcepcaoPersistencia {
 	public ExistingPersistentException(String msg) {
 		super(msg);
 	}
-
+	public String toString() {
+			String result = "[ExistingPersistentException\n";
+			result += "message" + this.getMessage() + "\n";
+			result += "error" + this.getErrorKey() + "\n";
+			result += "cause" + this.getCause() + "\n";
+			result += "]";
+			return result;
+		}
 }

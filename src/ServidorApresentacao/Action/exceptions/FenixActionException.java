@@ -3,7 +3,7 @@
  *
  * Febuary 28th, 2003, Sometime in the morning
  */
- 
+
 package ServidorApresentacao.Action.exceptions;
 
 import org.apache.struts.action.ActionError;
@@ -18,7 +18,7 @@ import org.apache.struts.action.ActionError;
 // implemented methods and constructors.
 
 public class FenixActionException extends Exception {
-	
+
 	protected String property = null;
 	protected ActionError error = null;
 
@@ -39,12 +39,21 @@ public class FenixActionException extends Exception {
 		error = new ActionError(key, value0, value1);
 	}
 
-	public FenixActionException(String key, Object value0, Object value1, Object value2) {
+	public FenixActionException(
+		String key,
+		Object value0,
+		Object value1,
+		Object value2) {
 		super(key);
 		error = new ActionError(key, value0, value1, value2);
 	}
 
-	public FenixActionException(String key, Object value0, Object value1, Object value2, Object value3) {
+	public FenixActionException(
+		String key,
+		Object value0,
+		Object value1,
+		Object value2,
+		Object value3) {
 		super(key);
 		error = new ActionError(key, value0, value1, value2, value3);
 	}
@@ -64,17 +73,32 @@ public class FenixActionException extends Exception {
 		error = new ActionError(key, value);
 	}
 
-	public FenixActionException(String key, Object value0, Object value1, Throwable cause) {
+	public FenixActionException(
+		String key,
+		Object value0,
+		Object value1,
+		Throwable cause) {
 		super(key, cause);
 		error = new ActionError(key, value0, value1);
 	}
 
-	public FenixActionException(String key, Object value0, Object value1, Object value2, Throwable cause) {
+	public FenixActionException(
+		String key,
+		Object value0,
+		Object value1,
+		Object value2,
+		Throwable cause) {
 		super(key, cause);
 		error = new ActionError(key, value0, value1, value2);
 	}
 
-	public FenixActionException(String key, Object value0, Object value1, Object value2, Object value3, Throwable cause) {
+	public FenixActionException(
+		String key,
+		Object value0,
+		Object value1,
+		Object value2,
+		Object value3,
+		Throwable cause) {
 		super(key, cause);
 		error = new ActionError(key, value0, value1, value2, value3);
 	}
@@ -85,13 +109,21 @@ public class FenixActionException extends Exception {
 	}
 
 	// --- End of Constructores ------------------------------------------
+	public String toString() {
+		String result = "[FenixActionException\n";
+		result += "property" +this.getProperty()+ "\n";
+		result += "error" +this.getError()+ "\n";
+		result += "cause" +this.getCause()+ "\n";
+		result += "]";
+		return result;
+	}
 
 	public String getProperty() {
-		return (property != null) ? property : error.getKey(); 
+		return (property != null) ? property : error.getKey();
 	}
 
 	public void setProperty(String property) {
-		this.property = property; 
+		this.property = property;
 	}
 
 	public ActionError getError() {

@@ -13,6 +13,8 @@ import org.apache.struts.action.DynaActionForm;
 import DataBeans.InfoRoom;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import ServidorAplicacao.Servico.sop.exceptions.ExistingServiceException;
+import ServidorApresentacao.Action.sop.exceptions.ExistingActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
 import Util.TipoSala;
 
@@ -47,10 +49,15 @@ public class CriarSalaFormAction extends Action {
 						new Integer(
 							(String) criarSalaForm.get("capacityExame")))};
 
-			gestor.executar(userView, "CriarSala", argsCriarSala);
+			try {
+				gestor.executar(userView, "CriarSala", argsCriarSala);
+			} catch (ExistingServiceException e) {
+				System.out.println("================1");
+				throw new ExistingActionException("A Sala", e);
+			} 
 			return mapping.findForward("Sucesso");
 		} else
-			throw new Exception();
+		throw new Exception();
 		// nao ocorre... pedido passa pelo filtro Autorizacao
 	}
 }
