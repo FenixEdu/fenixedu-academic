@@ -28,8 +28,7 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  */
 public class ExecutionCourseSiteComponentService implements IServico {
 
-	private static ExecutionCourseSiteComponentService _servico =
-		new ExecutionCourseSiteComponentService();
+	private static ExecutionCourseSiteComponentService _servico = new ExecutionCourseSiteComponentService();
 
 	/**
 	  * The actor of this class.
@@ -65,8 +64,7 @@ public class ExecutionCourseSiteComponentService implements IServico {
 
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
-			IDisciplinaExecucaoPersistente persistentExecutionCourse =
-				sp.getIDisciplinaExecucaoPersistente();
+			IDisciplinaExecucaoPersistente persistentExecutionCourse = sp.getIDisciplinaExecucaoPersistente();
 			IPersistentSite persistentSite = sp.getIPersistentSite();
 			ISite site = null;
 			if (infoSiteCode != null) {
@@ -77,30 +75,17 @@ public class ExecutionCourseSiteComponentService implements IServico {
 				}
 			} else {
 				IDisciplinaExecucao executionCourse =
-					(IDisciplinaExecucao) persistentExecutionCourse.readByOId(
-						new DisciplinaExecucao(infoExecutionCourseCode), false);
+					(IDisciplinaExecucao) persistentExecutionCourse.readByOId(new DisciplinaExecucao(infoExecutionCourseCode), false);
 				if (executionCourse == null) {
 					throw new NonExistingServiceException();
 				}
 				site = persistentSite.readByExecutionCourse(executionCourse);
 			}
-			ExecutionCourseSiteComponentBuilder componentBuilder =
-				ExecutionCourseSiteComponentBuilder.getInstance();
-			commonComponent =
-				componentBuilder.getComponent(
-					commonComponent,
-					site,
-					null,
-					null);
-			bodyComponent =
-				componentBuilder.getComponent(
-					bodyComponent,
-					site,
-					commonComponent,
-					sectionIndex);
+			ExecutionCourseSiteComponentBuilder componentBuilder = ExecutionCourseSiteComponentBuilder.getInstance();
+			commonComponent = componentBuilder.getComponent(commonComponent, site, null, null);
+			bodyComponent = componentBuilder.getComponent(bodyComponent, site, commonComponent, sectionIndex);
 
-			siteView =
-				new ExecutionCourseSiteView(commonComponent, bodyComponent);
+			siteView = new ExecutionCourseSiteView(commonComponent, bodyComponent);
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);
 		}

@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import DataBeans.ExecutionCourseSiteView;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoEvaluation;
 import DataBeans.InfoMark;
 import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteMarks;
-import DataBeans.TeacherAdministrationSiteView;
 import DataBeans.util.Cloner;
 import Dominio.Evaluation;
 import Dominio.IEvaluation;
@@ -17,7 +17,7 @@ import Dominio.IMark;
 import Dominio.ISite;
 import Dominio.Site;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.Factory.TeacherAdministrationSiteComponentBuilder;
+import ServidorAplicacao.Factory.ExecutionCourseSiteComponentBuilder;
 import ServidorAplicacao.Servico.ExcepcaoInexistente;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -56,16 +56,14 @@ public class ReadPublishedMarksByExam implements IServico {
 		return _servico;
 	}
 
-	public Object run(Integer siteCode, Integer /*examCode*/evaluationCode) throws ExcepcaoInexistente, FenixServiceException {
+	public Object run(Integer siteCode, Integer evaluationCode) throws ExcepcaoInexistente, FenixServiceException {
 		List marksList = null;
 		List infoMarksList = null;
 
 		ISite site = null;
 		IEvaluation evaluation = null;
 		InfoEvaluation infoEvaluation = null;
-//		IExam exam = null;
-//		InfoExam infoExam = null;
-				
+
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 
@@ -80,18 +78,10 @@ public class ReadPublishedMarksByExam implements IServico {
 			IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
 			evaluation = (IEvaluation)persistentEvaluation.readByOId(evaluation, false);
 			infoEvaluation = Cloner.copyIEvaluation2InfoEvaluation(evaluation);			
-						
-			//Exam
-//			exam = new Exam();
-//			exam.setIdInternal(examCode);
-//			IPersistentExam examDAO = sp.getIPersistentExam();
-//			exam = (IExam) examDAO.readByOId(exam, false);
-//			infoExam = Cloner.copyIExam2InfoExam(exam);
 			
 			//Marks
 			IPersistentMark markDAO = sp.getIPersistentMark();
 			marksList = markDAO.readBy(evaluation);
-//			marksList = markDAO.readBy(exam);
 
 			infoMarksList = new ArrayList();
 			Iterator iterator = marksList.listIterator();
@@ -112,11 +102,10 @@ public class ReadPublishedMarksByExam implements IServico {
 		InfoSiteMarks infoSiteMarks = new InfoSiteMarks();
 		infoSiteMarks.setMarksList(infoMarksList);
 		infoSiteMarks.setInfoEvaluation(infoEvaluation);
-//		infoSiteMarks.setInfoEvaluation(infoExam);
-		TeacherAdministrationSiteComponentBuilder componentBuilder = new TeacherAdministrationSiteComponentBuilder();
-		ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site, null, null, null);
+		ExecutionCourseSiteComponentBuilder componentBuilder = new ExecutionCourseSiteComponentBuilder();
+		ISiteComponent commonComponent = componentBuilder.getComponent(new InfoSiteCommon(), site, null, null);
 
-		TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView(commonComponent, infoSiteMarks);
+		ExecutionCourseSiteView siteView = new ExecutionCourseSiteView(commonComponent, infoSiteMarks);
 
 		return siteView;
 	}

@@ -1,9 +1,0 @@
-<%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
-<tiles:insert page="/publicGesDisLayout_2col.jsp" flush="true">
-  <tiles:put name="title" value=".Instituto Superior T&eaccute;cnico" />
-  <tiles:put name="serviceName" value="Instituto Superior T&eaccute;cnico" /> 
-  <tiles:put name="navbarGeral" value="/publico/commonNavLocalPub.jsp" />
-  <tiles:put name="navbar" value="/publico/gesdisNavbarInitial.jsp"/>
-  <tiles:put name="body" value="/publico/viewPublishedMarks_bd.jsp" />
-  <tiles:put name="footer" value="/publico/commonFooterPub.jsp" />
-</tiles:insert>

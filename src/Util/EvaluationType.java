@@ -16,12 +16,10 @@ public class EvaluationType {
 	public static final EvaluationType EXAM_TYPE = new EvaluationType(EXAM);
 	public static final EvaluationType FINAL_TYPE = new EvaluationType(FINAL);
 	
-	public static final String EXAM_STRING = "Exam";
+	public static final String EXAM_STRING = "Exame";
 	public static final String FINAL_STRING = "Final";
 	
 	
-
-
 
 	private Integer type;
 

@@ -10,6 +10,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import DataBeans.ExecutionCourseSiteView;
+import DataBeans.InfoSiteCommon;
 import DataBeans.InfoSiteMarks;
 import DataBeans.TeacherAdministrationSiteView;
 import ServidorAplicacao.GestorServicos;
@@ -35,9 +37,9 @@ public class ViewPublishedMarksAction extends FenixDispatchAction {
 
 		Object[] args = { objectCode, examCode };
 		GestorServicos gestorServicos = GestorServicos.manager();
-		TeacherAdministrationSiteView siteView = null;
+		ExecutionCourseSiteView siteView = null;
 		try {
-			siteView = (TeacherAdministrationSiteView) gestorServicos.executar(null, "ReadPublishedMarksByExam", args);
+			siteView = (ExecutionCourseSiteView) gestorServicos.executar(null, "ReadPublishedMarksByExam", args);
 		} catch (FenixServiceException e) {
 			e.printStackTrace();
 			throw new FenixActionException(e.getMessage());
@@ -48,6 +50,7 @@ public class ViewPublishedMarksAction extends FenixDispatchAction {
 
 		request.setAttribute("siteView", siteView);
 		request.setAttribute("objectCode", objectCode);
+		request.setAttribute("executionCourseCode", ((InfoSiteCommon)siteView.getCommonComponent()).getExecutionCourse().getIdInternal());
 
 		return mapping.findForward("viewPublishedMarks");
 	}

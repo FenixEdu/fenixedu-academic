@@ -6,32 +6,26 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="Util.Data" %>
-
+<%@ page import="Util.EvaluationType" %>
 <logic:present name="siteView">
 <bean:define id="marksListComponent" name="siteView" property="component" type="DataBeans.InfoSiteMarks"/>
-<bean:define id="commonComponent" name="siteView" property="commonComponent" type="DataBeans.InfoSiteCommon"/>
-
-<bean:define id="executionCourseId" name="commonComponent" property="executionCourse.idInternal"/>
-<bean:define id="examId" name="marksListComponent" property="infoExam.idInternal" />
-	
+<bean:define id="infoEvaluation" name="marksListComponent" property="infoEvaluation" type="DataBeans.InfoEvaluation"/>
 <span class="error"><html:errors/></span>
-
 <table width="90%" align="center">
 	<tr>
 		<td colspan="3" align="center">
-			 <h2><bean:write name="commonComponent" property="executionCourse.nome" /></h2>
-			
-			<logic:present name="marksListComponent" property="infoExam">  		
+			<logic:equal name="infoEvaluation" property="evaluationType" value="<%= EvaluationType.EXAM_STRING %>">  		
 				<h2>
-				&nbsp;-&nbsp;				
-				<bean:write name="marksListComponent" property="infoExam.season"/>&nbsp;
-				<bean:write name="marksListComponent" property="infoExam.date"/> - <bean:write name="marksListComponent" property="infoExam.beginningHour"/>
-				&nbsp;-&nbsp;				
+					<bean:message key="label.exam"/>:				
+					<bean:write name="marksListComponent" property="infoEvaluation.season"/>&nbsp;
+					<bean:write name="marksListComponent" property="infoEvaluation.date"/> - 
+					<bean:write name="marksListComponent" property="infoEvaluation.beginningHour"/>
 				</h2>
 				<br />
-		   </logic:present>
-			
-			<h2><bean:message key="label.publishedMarks"/></h2>
+			</logic:equal>
+			<logic:equal name="infoEvaluation" property="evaluationType" value="<%= EvaluationType.FINAL_STRING %>">  		
+				<h2><bean:message key="label.publishedMarks"/>&nbsp;<%= EvaluationType.EXAM_STRING %></h2><br />
+			</logic:equal>
 			<br />
 		</td>	   
 	</tr> 

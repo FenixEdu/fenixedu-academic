@@ -74,18 +74,11 @@ public class PublishMarks implements IServico {
 			IPersistentSite siteDAO = sp.getIPersistentSite();
 			ISite site = siteDAO.readByExecutionCourse(executionCourse);
 
-			//Exam
-//			IExam exam = new Exam(examCode);
-//			IPersistentExam examDAO = sp.getIPersistentExam();
-//			exam = (IExam) examDAO.readByOId(exam, true);
-
+			//		find what type of evaluation we are dealing with
 			IEvaluation evaluation = new Evaluation(evaluationCode);
 			IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
-			persistentEvaluation.readByOId(evaluation, true);
-			
-			persistentEvaluation.lockWrite(evaluation);
-			
-//			examDAO.lockWrite(exam);
+			evaluation = (IEvaluation) persistentEvaluation.readByOId(evaluation, true);
+
 			if (publishmentMessage == null || publishmentMessage.length() == 0) {
 				evaluation.setPublishmentMessage(" ");
 			} else {
@@ -116,7 +109,6 @@ public class PublishMarks implements IServico {
 					// update published mark
 					persistentMark.simpleLockWrite(mark);
 					mark.setPublishedMark(mark.getMark());
-
 					if (sendSMS != null && sendSMS.booleanValue()) {
 						// send SMS with student's mark and publishment message if exists
 						// TODO: send SMS 					

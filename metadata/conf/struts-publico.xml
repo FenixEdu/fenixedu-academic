@@ -350,7 +350,7 @@
             type="ServidorApresentacao.Action.publico.ViewPublishedMarksAction"
             parameter="method"
             >
-        <forward name="viewPublishedMarks" path="/viewPublishedMarks.jsp"/>
+        <forward name="viewPublishedMarks" path="/executionCourseSite.jsp"/>
     </action>
 	
 <!-- END OF EXAMS -->
