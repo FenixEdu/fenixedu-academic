@@ -1,4 +1,4 @@
-class domain.ExecutionCourse {
+class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fenixedu.domain.DomainObject {
 	String nome;
 	Double theoreticalHours;
 	String sigla;
@@ -12,7 +12,7 @@ class domain.ExecutionCourse {
 }
 
 
-class domain.GroupPropertiesExecutionCourse {
+class net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keySenderExecutionCourse;
 	Integer ackOptLock;
 	Integer idInternal;
@@ -23,7 +23,7 @@ class domain.GroupPropertiesExecutionCourse {
 }
 
 
-class domain.GroupProperties {
+class net.sourceforge.fenixedu.domain.GroupProperties extends net.sourceforge.fenixedu.domain.DomainObject {
 	String projectDescription;
 	Integer idInternal;
 	Integer keyAttendsSet;
@@ -36,14 +36,14 @@ class domain.GroupProperties {
 }
 
 
-class domain.AttendsSet {
+class net.sourceforge.fenixedu.domain.AttendsSet extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer ackOptLock;
 	Integer idInternal;
 	String name;
 	Integer keyGroupProperties;
 }
 
-class domain.AttendInAttendsSet {
+class net.sourceforge.fenixedu.domain.AttendInAttendsSet extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer ackOptLock;
 	Integer idInternal;
 	Integer keyAttend;
@@ -51,7 +51,7 @@ class domain.AttendInAttendsSet {
 }
 
 
-class domain.Frequenta {
+class net.sourceforge.fenixedu.domain.Attends extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer chaveDisciplinaExecucao;
 	Integer chaveAluno;
 	Integer ackOptLock;
@@ -60,7 +60,7 @@ class domain.Frequenta {
 }
 
 
-class domain.StudentGroup {
+class net.sourceforge.fenixedu.domain.StudentGroup extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyShift;
 	Integer ackOptLock;
 	Integer idInternal;
@@ -69,7 +69,7 @@ class domain.StudentGroup {
 }
 
 
-class domain.Turno {
+class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.domain.DomainObject {
 	String nome;
 	Integer ackOptLock;
 	Integer idInternal;
@@ -78,7 +78,7 @@ class domain.Turno {
 	Integer lotacao;
 }
 
-class domain.StudentGroupAttend {
+class net.sourceforge.fenixedu.domain.StudentGroupAttend extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyStudentGroup;
 	Integer ackOptLock;
 	Integer idInternal;
@@ -87,100 +87,91 @@ class domain.StudentGroupAttend {
 
 
 relation sendProposal {
-	domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
+	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
 		multiplicity *;
 	}
-	domain.ExecutionCourse playsRole senderExecutionCourse;
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole senderExecutionCourse;
 }
 
 
 
 relation goalExecutionCourse {
-	domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
+	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
 		multiplicity *;
 	}
-	domain.ExecutionCourse playsRole executionCourse;
-}
-
-
---->>relation ??? {
-	domain.ExecutionCourse playsRole senderExecutionCourse
-
-	domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
-		multiplicity *;
-	}
+	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
 }
 
 
 relation permission {
-	domain.AttendsSet playsRole attendsSet;
-	domain.GroupProperties playsRole groupProperties;
+	net.sourceforge.fenixedu.domain.AttendsSet playsRole attendsSet;
+	net.sourceforge.fenixedu.domain.GroupProperties playsRole groupProperties;
 }
 
 
 relation belongsTo {
-	domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
+	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
 		multiplicity *;
 	}
-	domain.GroupProperties playsRole groupProperties;
+	net.sourceforge.fenixedu.domain.GroupProperties playsRole groupProperties;
 }
 
 relation answerExportProposal {
-	domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
+	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
 		multiplicity *;
 	}
-	domain.Pessoa playsRole receiverPerson;
+	net.sourceforge.fenixedu.domain.Pessoa playsRole receiverPerson;
 }
 
 
 relation makeExportProposal {
-	domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
+	net.sourceforge.fenixedu.domain.GroupPropertiesExecutionCourse playsRole groupPropertiesExecutionCourse {
 		multiplicity *;
 	}
-	domain.Pessoa playsRole senderPerson;
+	net.sourceforge.fenixedu.domain.Pessoa playsRole senderPerson;
 }
 
 relation studentGroupBelongsToGroupProperties {
-	domain.StudentGroup playsRole studentGroups {
+	net.sourceforge.fenixedu.domain.StudentGroup playsRole studentGroups {
 		multiplicity *;
 	}
-	domain.AttendsSet playsRole attendsSet;
+	net.sourceforge.fenixedu.domain.AttendsSet playsRole attendsSet;
 }
 
 relation attendsSetHasAttend {
-	domain.AttendInAttendsSet playsRole attendInAttendsSet {
+	net.sourceforge.fenixedu.domain.AttendInAttendsSet playsRole attendInAttendsSet {
 		multiplicity *;
 	}
-	domain.AttendsSet playsRole attendsSet;
+	net.sourceforge.fenixedu.domain.AttendsSet playsRole attendsSet;
 }
 
 relation attendBelongsToAttendsSet {
-	domain.AttendInAttendsSet playsRole attendInAttendsSet {
+	net.sourceforge.fenixedu.domain.AttendInAttendsSet playsRole attendInAttendsSet {
 		multiplicity *;
 	}
-	domain.Frequenta playsRole attend;
+	net.sourceforge.fenixedu.domain.Frequenta playsRole attend;
 }
 
 
 relation StudentGroupAttendFrequenta {
-	domain.StudentGroupAttend playsRole studentGroupAttends {
+	net.sourceforge.fenixedu.domain.StudentGroupAttend playsRole studentGroupAttends {
 		multiplicity *;
 	}
-	domain.Frequenta playsRole attend;
+	net.sourceforge.fenixedu.domain.Frequenta playsRole attend;
 }
 
 relation StudentGroupAttendStudentGroup {
-	domain.StudentGroupAttend playsRole studentGroupAttends {
+	net.sourceforge.fenixedu.domain.StudentGroupAttend playsRole studentGroupAttends {
 		multiplicity *;
 	}
-	domain.StudentGroup playsRole studentGroup;
+	net.sourceforge.fenixedu.domain.StudentGroup playsRole studentGroup;
 }
 
 relation StudentGroup {
-	domain.StudentGroup playsRole associatedStudentGroups {
+	net.sourceforge.fenixedu.domain.StudentGroup playsRole associatedStudentGroups {
 		multiplicity *;
 	}
-	domain.Turno playsRole shift;
+	net.sourceforge.fenixedu.domain.Turno playsRole shift;
 }
 
 
