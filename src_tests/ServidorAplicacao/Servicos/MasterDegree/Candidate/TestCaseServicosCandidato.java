@@ -11,7 +11,6 @@ package ServidorAplicacao.Servicos.MasterDegree.Candidate;
 
 import junit.framework.TestCase;
 import ServidorAplicacao.GestorServicos;
-import ServidorAplicacao.IUserView;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.IDepartamentoPersistente;
@@ -28,10 +27,7 @@ public class TestCaseServicosCandidato extends TestCase {
 	    
     protected GestorServicos gestor = null;
     
-    protected IUserView userView1 = null;
-    protected IUserView userView2 = null;
-
-	protected dbaccess db = null;
+    protected dbaccess db = null;
 
     
     public TestCaseServicosCandidato(String testName) {

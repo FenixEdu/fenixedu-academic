@@ -34,7 +34,7 @@ public class ServicosCandidatoSuite extends TestCase {
         
         TestSuite suite = new TestSuite("ServicosCandidatoSuite");
 		suite.addTest(ReadActiveCandidateSituationTest.suite());
-		suite.addTest(ServidorAplicacao.Servicos.MasterDegree.Candidate.ChangeMasterDegreeCandidateTest.suite());
+		suite.addTest(ServidorAplicacao.Servicos.MasterDegree.Candidate.ChangeApplicationInfoTest.suite());
         
         //:JUNIT--
         //This value MUST ALWAYS be returned from this function.
