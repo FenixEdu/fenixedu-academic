@@ -34,9 +34,11 @@ public class ValidateDate {
 		ServletContext application) {
 			
 		String valueString = ValidatorUtil.getValueAsString(bean,field.getProperty());
-		String sProperty2 = field.getVarValue("month");
-		String sProperty3 = field.getVarValue("day");
-
+		
+		
+		String sProperty2 = ValidatorUtil.getValueAsString(bean,field.getVarValue("month"));
+		String sProperty3 = ValidatorUtil.getValueAsString(bean,field.getVarValue("day"));
+		
 
 		if ((valueString == null) || (sProperty2 == null) || (sProperty3 == null) ||
 			(valueString.length() == 0) || (sProperty2.length() == 0) || (sProperty3.length() == 0)){
