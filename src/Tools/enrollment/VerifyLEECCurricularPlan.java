@@ -199,12 +199,17 @@ public class VerifyLEECCurricularPlan
 				while (iterator3.hasNext())
 				{
 					ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator3.next();
-					String name = curricularCourseScope.getCurricularCourse().getName();
-					String year = curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().toString();
-					String semester = curricularCourseScope.getCurricularSemester().getSemester().toString();
-					System.out.print("\t\t\t");
-					System.out.println("NOME: [" + name + "], ANO: [" + year + "], SEMESTRE: [" + semester + "]");
-//					System.out.println("NOME: [" + name + "], ANO: [" + year + "], SEMESTRE: [" + semester + "], ID [" + curricularCourseScope.getCurricularCourse().getIdInternal().toString() + "]");
+					if (curricularCourseScope.getEndDate() == null) {
+						String name = curricularCourseScope.getCurricularCourse().getName();
+						String year = curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().toString();
+						String semester = curricularCourseScope.getCurricularSemester().getSemester().toString();
+						System.out.print("\t\t\t");
+						System.out.println("NOME: [" + name + "], ANO: [" + year + "], SEMESTRE: [" + semester + "]");
+//						System.out.println("NOME: [" + name + "], ANO: [" + year + "], SEMESTRE: ["
+//                                + semester + "], ID ["
+//                                + curricularCourseScope.getCurricularCourse().getIdInternal().toString()
+//                                + "]");
+					}
 				}
 			}
 		}
