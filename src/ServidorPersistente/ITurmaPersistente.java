@@ -56,6 +56,6 @@ public interface ITurmaPersistente extends IPersistentObject {
 		
 	public List readByDegreeNameAndDegreeCode(String name, String code) throws ExcepcaoPersistencia;
 		
-	
+	public List readByExecutionDegree(ICursoExecucao executionDegree) throws ExcepcaoPersistencia;
 		
 }

@@ -40,4 +40,6 @@ public interface ICursoExecucaoPersistente extends IPersistentObject {
 		IPlanoCurricularCurso degreeCurricularPlan,
 		IExecutionYear executionYear)
 		throws ExcepcaoPersistencia;
+		
+	
 }

@@ -259,4 +259,28 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 			}
 	}
 
+	public List readByExecutionDegree(ICursoExecucao executionDegree)	throws ExcepcaoPersistencia {
+		try {
+			String oqlQuery = "select turmas from " + Turma.class.getName();
+			oqlQuery += " where executionDegree.executionYear.year = $1"
+			+ " and executionDegree.curricularPlan.name = $2"
+			+ " and executionDegree.curricularPlan.curso.sigla = $3";
+					
+			query.create(oqlQuery);
+	
+			query.bind(executionDegree.getExecutionYear().getYear());
+			query.bind(executionDegree.getCurricularPlan().getName());
+			query.bind(executionDegree.getCurricularPlan().getCurso().getSigla());
+			
+	
+			List result = (List) query.execute();
+			lockRead(result);
+	
+			return result;
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
+
+
 }

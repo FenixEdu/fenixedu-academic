@@ -11,6 +11,7 @@ package ServidorPersistente.OJB;
  * @author  rpfi
  */
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.odmg.QueryException;
@@ -20,6 +21,7 @@ import Dominio.ICurso;
 import Dominio.ICursoExecucao;
 import Dominio.IExecutionYear;
 import Dominio.IPlanoCurricularCurso;
+import Dominio.ITurma;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoExecucaoPersistente;
 
@@ -27,41 +29,35 @@ public class CursoExecucaoOJB
 	extends ObjectFenixOJB
 	implements ICursoExecucaoPersistente {
 
-	public ICursoExecucao readByDegreeAndExecutionYear(
-		ICurso curso,
-		String anoLectivo)
-		throws ExcepcaoPersistencia {
-		try {
-			ICursoExecucao cursoExecucao = null;
-			String oqlQuery =
-				"select all from " + CursoExecucao.class.getName();
-			oqlQuery += " where curso.sigla = $1 and anoLectivo = $2";
-			query.create(oqlQuery);
-			query.bind(curso.getSigla());
-			query.bind(anoLectivo);
-			List result = (List) query.execute();
-			lockRead(result);
-			if (result.size() != 0)
-				cursoExecucao = (ICursoExecucao) result.get(0);
-			return cursoExecucao;
-		} catch (QueryException ex) {
-			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
-		}
-	}
-
 	public void lockWrite(ICursoExecucao cursoExecucao)
 		throws ExcepcaoPersistencia {
 		super.lockWrite(cursoExecucao);
 	}
 
-	public void delete(ICursoExecucao cursoExecucao)
-		throws ExcepcaoPersistencia {
-		super.delete(cursoExecucao);
+	public void delete(ICursoExecucao executionDegree) throws ExcepcaoPersistencia {
+		// Delete all Classes associated
+		List classes = SuportePersistenteOJB.getInstance().getITurmaPersistente().readByExecutionDegree(executionDegree);
+		
+		Iterator iterator = classes.iterator();
+		while(iterator.hasNext()){
+			SuportePersistenteOJB.getInstance().getITurmaPersistente().delete((ITurma) iterator.next());
+		}
+		super.delete(executionDegree);
 	}
 
 	public void deleteAll() throws ExcepcaoPersistencia {
-		String oqlQuery = "select all from " + CursoExecucao.class.getName();
-		super.deleteAll(oqlQuery);
+		try {
+			String oqlQuery = "select all from " + CursoExecucao.class.getName();
+			query.create(oqlQuery);
+			List result = (List) query.execute();
+			lockRead(result);
+			Iterator iterator = result.iterator();
+			while(iterator.hasNext()){
+				delete((ICursoExecucao) iterator.next());
+			}
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
 	}
 
 	/**

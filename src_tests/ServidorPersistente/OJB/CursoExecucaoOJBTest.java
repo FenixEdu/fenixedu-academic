@@ -45,41 +45,38 @@ public class CursoExecucaoOJBTest extends TestCaseOJB {
   }
     
   /** Test of readByCursoAndAnoLectivo method, of class ServidorPersistente.OJB.CursoExecucaoOJB. */
-  public void testReadByCursoAndAnoLectivo() {
-    ICursoExecucao cursoExecucao = null;
+  public void testReadAllExecutionDegreesByExecutionYear() {
+    List executionDegrees = null;
+    IExecutionYear executionYear = null;
     // read existing CursoExecucao
     try {
       _suportePersistente.iniciarTransaccao();
-      cursoExecucao = cursoExecucaoPersistente.readByDegreeAndExecutionYear(curso1,"2002/03");
+      
+      executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
+      assertNotNull(executionYear);
+      executionDegrees = cursoExecucaoPersistente.readByExecutionYear(executionYear);
       _suportePersistente.confirmarTransaccao();
     } catch (ExcepcaoPersistencia ex) {
       fail("testReadByCursoAndAnoLectivo:fail read existing cursoExecucao");
     }
-    assertEquals("testReadByCursoAndAnoLectivo:read existing cursoExecucao",cursoExecucao,cursoExecucao1);
-        
-    // read unexisting CursoExecucao
-    try {
-      _suportePersistente.iniciarTransaccao();
-      cursoExecucao = cursoExecucaoPersistente.readByDegreeAndExecutionYear(curso1,"5000");
-      assertNull(cursoExecucao);
-      _suportePersistente.confirmarTransaccao();
-    } catch (ExcepcaoPersistencia ex) {
-      fail("testReadByCursoAndAnoLectivo:fail read unexisting cursoExecucao");
-    }
+    assertEquals("testReadByCursoAndAnoLectivo:read existing cursoExecucao",1 ,executionDegrees.size());
   }
 
   // write new non-existing cursoExecucao
   public void testCreateNonExistingCursoExecucao() {
     try {
     	_suportePersistente.iniciarTransaccao();
-    	ICurso curso = cursoPersistente.readBySigla("LEIC");
+		IPlanoCurricularCurso degreeCurricularPlan = planoCurricularCursoPersistente.readByName("plano2");
+		assertNotNull(degreeCurricularPlan);
+		IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
+		assertNotNull(executionYear);
     	_suportePersistente.confirmarTransaccao();
 
-    	ICursoExecucao cursoExecucao = new CursoExecucao("2004/05", curso);
+    	ICursoExecucao executionDegree = new CursoExecucao(executionYear, degreeCurricularPlan);
 
-      _suportePersistente.iniciarTransaccao();
-      cursoExecucaoPersistente.lockWrite(cursoExecucao);
-      _suportePersistente.confirmarTransaccao();
+        _suportePersistente.iniciarTransaccao();
+        cursoExecucaoPersistente.lockWrite(executionDegree);
+        _suportePersistente.confirmarTransaccao();
     } catch (ExcepcaoPersistencia ex) {
       fail("testCreateNonExistingCursoExecucao"); 
     }
@@ -87,69 +84,92 @@ public class CursoExecucaoOJBTest extends TestCaseOJB {
 
   // write new existing cursoExecucao
   public void testCreateExistingCursoExecucao() {
-    ICursoExecucao cursoExecucao = new CursoExecucao("2002/03", curso1);
-    try {
-      _suportePersistente.iniciarTransaccao();
-      cursoExecucaoPersistente.lockWrite(cursoExecucao);
-      _suportePersistente.confirmarTransaccao();
-      fail("testCreateExistingCursoExecucao");
-    } catch (ExcepcaoPersistencia ex) {
-      //all is ok
-    }
-  }
+	try {
+		_suportePersistente.iniciarTransaccao();
+		IPlanoCurricularCurso degreeCurricularPlan = planoCurricularCursoPersistente.readByName("plano1");
+		assertNotNull(degreeCurricularPlan);
+		IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
+		assertNotNull(executionYear);
+		_suportePersistente.confirmarTransaccao();
 
-  /** Test of write method, of class ServidorPersistente.OJB.ItemOJB. */
-  public void testWriteExistingUnchangedObject() {
-    // write cursoExecucao already mapped into memory
-    try {
-    	_suportePersistente.iniciarTransaccao();
-    	ICursoExecucao le = cursoExecucaoPersistente.readByDegreeAndExecutionYear(curso1,"2002/03");
-    	_suportePersistente.confirmarTransaccao();
+		ICursoExecucao executionDegree = new CursoExecucao(executionYear, degreeCurricularPlan);
 
-      _suportePersistente.iniciarTransaccao();
-      cursoExecucaoPersistente.lockWrite(le);
-      _suportePersistente.confirmarTransaccao();
-    } catch (ExcepcaoPersistencia ex) {
-      fail("testWriteExistingUnchangedObject");
-    }
+		_suportePersistente.iniciarTransaccao();
+		cursoExecucaoPersistente.lockWrite(executionDegree);
+		_suportePersistente.confirmarTransaccao();
+		fail("testCreateNonExistingCursoExecucao");	
+	} catch (ExcepcaoPersistencia ex) {
+	   // All is OK
+	}
   }
 
   /** Test of write method, of class ServidorPersistente.OJB.ItemOJB. */
   public void testWriteExistingChangedObject() {
-    // write item already mapped into memory
-    try {
-      _suportePersistente.iniciarTransaccao();
-      ICursoExecucao le = cursoExecucaoPersistente.readByDegreeAndExecutionYear(curso1,"2002/03");
-      le.setAnoLectivo("10000");
-      _suportePersistente.confirmarTransaccao();
+	IPlanoCurricularCurso degreeCurricularPlan1 = null;
+	IExecutionYear executionYear1 = null;
+	IExecutionYear executionYear2 = null;
+	ICursoExecucao executionDegree = null;
 
-      _suportePersistente.iniciarTransaccao();
-      le = cursoExecucaoPersistente.readByDegreeAndExecutionYear(curso1,"10000");
-      _suportePersistente.confirmarTransaccao();
-      assertEquals(le.getAnoLectivo(),"10000");
-    } catch (ExcepcaoPersistencia ex) {
-      fail("testWriteExistingChangedObject");
-    }
+	try {
+		_suportePersistente.iniciarTransaccao();
+		degreeCurricularPlan1 = planoCurricularCursoPersistente.readByName("plano1");
+		assertNotNull(degreeCurricularPlan1);
+		
+		executionYear1 = persistentExecutionYear.readExecutionYearByName("2002/2003");
+		assertNotNull(executionYear1);
+
+		executionYear2 = persistentExecutionYear.readExecutionYearByName("2003/2004");
+		assertNotNull(executionYear2);
+
+		executionDegree = cursoExecucaoPersistente.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan1, executionYear1);
+		executionDegree.setExecutionYear(executionYear2);
+
+		_suportePersistente.confirmarTransaccao();
+
+		_suportePersistente.iniciarTransaccao();
+		ICursoExecucao executionDegreeTemp = cursoExecucaoPersistente.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan1, executionYear2);		
+		_suportePersistente.confirmarTransaccao();
+
+		assertEquals(executionDegreeTemp, executionDegree);
+
+	} catch (ExcepcaoPersistencia ex) {
+		fail("testWriteExistingChangedObject");
+	}		
+
   }
 
   /** Test of delete method, of class ServidorPersistente.OJB.CursoExecucaoOJB. */
   public void testDeleteCursoExecucao() {
-//    try {
-//    	_suportePersistente.iniciarTransaccao();
-//    	ICursoExecucao le = cursoExecucaoPersistente.readByDegreeAndExecutionYear(curso1,"2002/03");
-//    	_suportePersistente.confirmarTransaccao();
-//
-//      _suportePersistente.iniciarTransaccao();
-//      cursoExecucaoPersistente.delete(le);
-//      _suportePersistente.confirmarTransaccao();
-//
-//      _suportePersistente.iniciarTransaccao();
-//      ICursoExecucao cursoExecucao = cursoExecucaoPersistente.readByDegreeAndExecutionYear(cursoExecucao1.getCurso(),cursoExecucao1.getAnoLectivo());
-//      _suportePersistente.confirmarTransaccao();
-//      assertEquals(cursoExecucao, null);
-//    } catch (ExcepcaoPersistencia ex) {
+	IPlanoCurricularCurso degreeCurricularPlan = null;
+	IExecutionYear executionYear = null;
+	ICursoExecucao executionDegree = null;
+  	
+    try {
+		_suportePersistente.iniciarTransaccao();
+		degreeCurricularPlan = planoCurricularCursoPersistente.readByName("plano1");
+		assertNotNull(degreeCurricularPlan);
+		executionYear = persistentExecutionYear.readExecutionYearByName("2002/2003");
+		assertNotNull(executionYear);
+		executionDegree = cursoExecucaoPersistente.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);		
+    	_suportePersistente.confirmarTransaccao();
+
+      _suportePersistente.iniciarTransaccao();
+	  assertEquals(SuportePersistenteOJB.getInstance().getITurmaPersistente().readByExecutionDegree(executionDegree).isEmpty(), false);
+
+      cursoExecucaoPersistente.delete(executionDegree);
+      _suportePersistente.confirmarTransaccao();
+
+      _suportePersistente.iniciarTransaccao();
+      ICursoExecucao executionDegreeTemp = cursoExecucaoPersistente.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan, executionYear);
+	  assertNull(executionDegreeTemp);
+	  assertEquals(SuportePersistenteOJB.getInstance().getITurmaPersistente().readByExecutionDegree(executionDegree).size(), 0);
+
+      _suportePersistente.confirmarTransaccao();
+      
+      
+    } catch (ExcepcaoPersistencia ex) {
       fail("testDeleteCursoExecucao");
-//    }
+    }
   }
 
 
