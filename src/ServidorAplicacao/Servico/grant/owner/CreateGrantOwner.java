@@ -12,7 +12,6 @@ import Dominio.PersonRole;
 import Dominio.grant.owner.GrantOwner;
 import Dominio.grant.owner.IGrantOwner;
 import ServidorAplicacao.IServico;
-import ServidorAplicacao.Servico.exceptions.ExistingServiceException;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentPersonRole;
@@ -73,12 +72,11 @@ public class CreateGrantOwner
 		return person;
 	}
 
-	private void checkIfGrantOwnerExists(
+	private IGrantOwner checkIfGrantOwnerExists(
 		Integer personIdInternal,
 		IPessoaPersistente persistentPerson,
 		IPersistentGrantOwner persistentGrantOwner)
 		throws FenixServiceException {
-		IPessoa person = null;
 		IGrantOwner grantOwner = null;
 		try {
 			grantOwner =
@@ -86,8 +84,7 @@ public class CreateGrantOwner
 		} catch (ExcepcaoPersistencia persistentException) {
 			throw new FenixServiceException(persistentException.getMessage());
 		}
-		if (grantOwner != null)
-			throw new ExistingServiceException();
+		return grantOwner;
 	}
 
 	/**
@@ -109,54 +106,71 @@ public class CreateGrantOwner
 		persistentGrantOwner = persistentSupport.getIPersistentGrantOwner();
 		persistentPersonRole = persistentSupport.getIPersistentPersonRole();
 		persistentPerson = persistentSupport.getIPessoaPersistente();
-
-		IPessoa person = null;
-
-		person = checkIfPersonExists(
-			infoGrantOwner.getPersonInfo(),
-			persistentPerson);
-
-		if (person != null)
-			checkIfGrantOwnerExists(
-				person.getIdInternal(),
-				persistentPerson,
-				persistentGrantOwner);
-				
+		
 		try {
-			//next 2lines are necessary due to a possible OJB lock problem
+			IPessoa person = null;
+			person = checkIfPersonExists(
+				infoGrantOwner.getPersonInfo(),
+				persistentPerson);
+				
+			//next 2 lines are necessary due to a possible OJB lock problem
+			persistentSupport.confirmarTransaccao();
+			persistentSupport.iniciarTransaccao();
+		
+			IGrantOwner grantOwner = null;
+			if (person != null)
+				grantOwner = checkIfGrantOwnerExists(
+									person.getIdInternal(),
+									persistentPerson,
+									persistentGrantOwner);
+		
+			//next 2 lines are necessary due to a possible OJB lock problem
 			persistentSupport.confirmarTransaccao();
 			persistentSupport.iniciarTransaccao();
 			
+			//create or edit person information
 			person =
 				createPersonBase(
 					infoGrantOwner.getPersonInfo(),
 					persistentSupport,
 					persistentPerson,
 					persistentPersonRole);
-			IGrantOwner grantOwner = new GrantOwner();
+			
+			//create or edit grantOwner information
+			IPersonRole personRole = null;
+			if(grantOwner == null) {
+				grantOwner = new GrantOwner();
+
+				//Set the GRANT_OWNER Role to this new GrantOwner
+				personRole = new PersonRole();
+				personRole.setPerson(person);
+				persistentPersonRole.simpleLockWrite(personRole);
+				personRole.setRole(
+					persistentSupport.getIPersistentRole().readByRoleType(
+						RoleType.GRANT_OWNER));
+			}
+			
 			grantOwner.setPerson(person);
-			grantOwner.setCardCopyNumber(infoGrantOwner.getCardCopyNumber());
-			grantOwner.setDateSendCGD(infoGrantOwner.getDateSendCGD());
+			if(grantOwner.getCardCopyNumber() == null)
+				grantOwner.setCardCopyNumber(infoGrantOwner.getCardCopyNumber());
+			if(grantOwner.getDateSendCGD() == null)
+				grantOwner.setDateSendCGD(infoGrantOwner.getDateSendCGD());
 			persistentGrantOwner.simpleLockWrite(grantOwner);
 
-			//Generate the GrantOwner's number
-			Integer maxNumber = persistentGrantOwner.readMaxGrantOwnerNumber();
-			int aux = maxNumber.intValue() + 1;
-			Integer nextNumber = new Integer(aux);
-			grantOwner.setNumber(nextNumber);
+			if(infoGrantOwner.getGrantOwnerNumber() == null) {
+				//Generate the GrantOwner's number
+				Integer maxNumber = persistentGrantOwner.readMaxGrantOwnerNumber();
+				int aux = maxNumber.intValue() + 1;
+				Integer nextNumber = new Integer(aux);
+				grantOwner.setNumber(nextNumber);
+			}
+			else grantOwner.setNumber(infoGrantOwner.getGrantOwnerNumber());
 
 			//Generate the GrantOwner's Person Username
 			if (person.getUsername() == null)
 				person.setUsername(
 					generateGrantOwnerPersonUsername(grantOwner.getNumber()));
 
-			//Set the GRANT_OWNER Role to this new GrantOwner
-			IPersonRole personRole = new PersonRole();
-			personRole.setPerson(person);
-			persistentPersonRole.simpleLockWrite(personRole);
-			personRole.setRole(
-				persistentSupport.getIPersistentRole().readByRoleType(
-					RoleType.GRANT_OWNER));
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia.getMessage());
 		}
