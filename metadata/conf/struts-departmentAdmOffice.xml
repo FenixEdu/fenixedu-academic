@@ -42,8 +42,13 @@
 			<form-property name="idInternal" type="java.lang.Integer"/>
 			<form-property name="infoProfessorshipId" type="java.lang.Integer"/>
 			<form-property name="weekDay" type="java.lang.String"/>
-			<form-property name="startTime" type="java.lang.String"/>			
-			<form-property name="endTime" type="java.lang.String"/>
+
+			<form-property name="startTimeHour" type="java.lang.String"/>			
+			<form-property name="startTimeMinutes" type="java.lang.String"/>			
+
+			<form-property name="endTimeHour" type="java.lang.String"/>
+			<form-property name="endTimeMinutes" type="java.lang.String"/>
+
 			<form-property name="place" type="java.lang.String"/>
 		</form-bean>
 
@@ -70,8 +75,12 @@
 			<form-property name="executionPeriodId" type="java.lang.Integer"/>			
 
 			<form-property name="weekDay" type="java.lang.String"/>
-			<form-property name="startTime" type="java.lang.String"/>			
-			<form-property name="endTime" type="java.lang.String"/>
+			<form-property name="startTimeHour" type="java.lang.String"/>			
+			<form-property name="startTimeMinutes" type="java.lang.String"/>			
+
+			<form-property name="endTimeHour" type="java.lang.String"/>
+			<form-property name="endTimeMinutes" type="java.lang.String"/>
+		
 		</form-bean>
 
     </form-beans>
