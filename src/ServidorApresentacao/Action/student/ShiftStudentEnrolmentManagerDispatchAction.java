@@ -7,6 +7,7 @@ package ServidorApresentacao.Action.student;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -29,6 +30,7 @@ import DataBeans.InfoShift;
 import DataBeans.InfoShiftStudentEnrolment;
 import DataBeans.InfoShiftWithAssociatedInfoClassesAndInfoLessons;
 import DataBeans.InfoStudent;
+import DataBeans.comparators.ComparatorByNameForInfoExecutionDegree;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorApresentacao.Action.commons.TransactionalDispatchAction;
@@ -249,7 +251,7 @@ public class ShiftStudentEnrolmentManagerDispatchAction
 			degreeList =
 				(List) ServiceUtils.executeService(
 					userView,
-					"ReadExecutionDegreesByExecutionYear",
+					"ReadNonMasterExecutionDegreesByExecutionYear",
 					new Object[] { currentExecutionYear });
 		} catch (FenixServiceException e2) {
 			throw new FenixActionException(e2);
@@ -259,7 +261,7 @@ public class ShiftStudentEnrolmentManagerDispatchAction
 		// already selected
 		String selectedDegreeAbbrev = request.getParameter("degree");
 		InfoExecutionDegree selectedDegree = null, idtemp = null;
-
+		Collections.sort(degreeList,new ComparatorByNameForInfoExecutionDegree());
 		// if there is no selected degree
 		if (selectedDegreeAbbrev == null) {
 			// retrieve the student's own curricular plan
