@@ -76,5 +76,21 @@ public class InfoRole{
 	public void setRoleType(RoleType roleType) {
 		this.roleType = roleType;
 	}
-
+	
+	public String toString(){
+		String result = "Info Role :\n";
+		result += "\n  - Page : " + page;
+		result += "\n  - PageNameProperty : " + pageNameProperty;
+		result += "\n  - PortalSubApplication : " + portalSubApplication;
+		result += "\n  - RoleType : " + roleType;
+	
+		return result;		
+	}
+	
+	public boolean equals(Object o) {
+			return
+			((o instanceof InfoRole) &&
+		
+			this.roleType.equals(((InfoRole)o).getRoleType()));
+	} 
 }

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--<!DOCTYPE form-validation PUBLIC 
+      "-//Apache Software Foundation//DTD Struts Validation Configuration 1.1//EN"
+      "http://jakarta.apache.org/struts/dtds/validation_1_1.dtd">-->
+
+<form-validation>
+  <formset>
+
+
+  <!-- validation for the Password Change form -->
+    <form name="changePasswordForm">
+      <field property="oldPassword" depends="required">
+        <arg0 key="candidate.oldPasswordError" />
+      </field>
+
+        <field property="newPassword"
+               depends="required,twoFields">
+                  <arg0 key="candidate.newPasswordError"/>
+                  <var>
+                     <var-name>secondProperty</var-name>
+                     <var-value>reTypeNewPassword</var-value>
+                  </var>
+        </field>
+    </form>
+
+    
+
+    <!-- validation for the Change Application Info Form-->
+    <form name="changePersonalInfoForm">
+      
+      <field property="name" depends="required" page="1">
+        <arg0 key="candidate.name" />
+      </field>
+      
+      <field property="fatherName" depends="required" page="1">
+        <arg0 key="candidate.fatherName" />
+      </field>
+      
+      <field property="motherName" depends="required" page="1">
+        <arg0 key="candidate.motherName" />
+      </field>
+      
+      <field property="birthPlaceParish" depends="required" page="1">
+        <arg0 key="candidate.birthPlaceParish" />
+      </field>
+      
+      <field property="birthPlaceMunicipality" depends="required" page="1">
+        <arg0 key="candidate.birthPlaceMunicipality" />
+      </field>
+      
+      <field property="birthPlaceDistrict" depends="required" page="1">
+        <arg0 key="candidate.birthPlaceDistrict" />
+      </field>
+      
+      <field property="identificationDocumentNumber" depends="required,integer" page="1">
+        <arg0 key="candidate.identificationDocumentNumber" />
+      </field>
+      
+      <field property="identificationDocumentIssuePlace" depends="required" page="1">
+        <arg0 key="candidate.identificationDocumentIssuePlace" />
+      </field>
+      
+      <field property="address" depends="required" page="1">
+        <arg0 key="candidate.address" />
+      </field>
+      
+      <field property="place" depends="required" page="1">
+        <arg0 key="candidate.place" />
+      </field>
+      
+      <field property="postCode" depends="required" page="1">
+        <arg0 key="candidate.postCode" />
+      </field>
+      
+      <field property="addressParish" depends="required" page="1">
+        <arg0 key="candidate.addressParish" />
+      </field>
+      
+      <field property="addressMunicipality" depends="required" page="1">
+        <arg0 key="candidate.addressMunicipality" />
+      </field>
+      
+      <field property="addressDistrict" depends="required" page="1">
+        <arg0 key="candidate.addressDistrict" />
+      </field>
+      
+      <field property="telephone" depends="required,integer" page="1">
+        <arg0 key="candidate.telephone" />
+      </field>
+      
+      <field property="mobilePhone" depends="required,integer" page="1">
+        <arg0 key="candidate.mobilePhone" />
+      </field>
+      
+      <field property="email" depends="email" page="1">
+        <arg0 key="Este" resource="false" />
+      </field>
+
+      <field property="contributorNumber" depends="required,integer" page="1">
+        <arg0 key="candidate.contributorNumber" />
+      </field>
+	
+      <field property="occupation" depends="required" page="1">
+        <arg0 key="candidate.occupation" />
+      </field>
+	
+        <field property="birthYear"
+               depends="required,validateDate" page="1">
+                  <arg0 key="Data de Nascimento" />
+                  <var>
+                     <var-name>month</var-name>
+                     <var-value>birthMonth</var-value>
+                  </var>
+                  <var>
+                     <var-name>day</var-name>
+                     <var-value>birthDay</var-value>
+                  </var>
+        </field>
+
+        <field property="idIssueDateYear"
+               depends="required,validateDate" page="1">
+                  <arg0 key="Data de Emissao do Documento de Identificacao" />
+                  <var>
+                     <var-name>month</var-name>
+                     <var-value>idIssueDateMonth</var-value>
+                  </var>
+                  <var>
+                     <var-name>day</var-name>
+                     <var-value>idIssueDateDay</var-value>
+                  </var>
+        </field>
+
+        <field property="idExpirationDateYear"
+               depends="required,validateDate" page="1">
+                  <arg0 key="Data de Validade do Documento de Identificacao" />
+                  <var>
+                     <var-name>month</var-name>
+                     <var-value>idExpirationDateMonth</var-value>
+                  </var>
+                  <var>
+                     <var-name>day</var-name>
+                     <var-value>idExpirationDateDay</var-value>
+                  </var>
+        </field>
+
+      <field property="postCode" depends="mask" page="1">
+        <msg name="mask" key="errors.invalid.zipCode"/>
+        <var>
+        	<var-name>mask</var-name>
+        	<var-value>^\d{4}(-\d{3})$</var-value>
+        </var>
+        
+      </field>
+    </form>
+
+
+  </formset>
+</form-validation>

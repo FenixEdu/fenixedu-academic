@@ -46,8 +46,9 @@ public class VisualizePersonalInfoAction extends ServidorApresentacao.Action.Fen
 	  
       infoPerson = (InfoPerson) gestor.executar(userView, "ReadPersonByUsername", args);
 	  
-	  
+	  request.removeAttribute("personalInfo");
       request.setAttribute("personalInfo", infoPerson);
+
       return mapping.findForward("Success");
     } else
       throw new Exception();   

@@ -73,13 +73,8 @@
           </tr>
           <!-- Nacionalidade -->
           <tr>
-            <td><bean:message key="label.person.nationality" /></td>
-            <td><bean:write name="personalInfo" property="nacionalidade"/></td>
-          </tr>
-          <!-- Naturalidade -->
-          <tr>
             <td><bean:message key="label.person.country" /></td>
-            <td><bean:write name="personalInfo" property="infoPais.name"/></td>
+            <td><bean:write name="personalInfo" property="infoPais.nationality"/></td>
           </tr>
           
           <!-- Freguesia de Naturalidade -->

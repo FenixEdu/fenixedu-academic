@@ -1,8 +1,11 @@
 package ServidorAplicacao.Servico;
 
 import java.util.Collection;
+import java.util.Iterator;
 
+import DataBeans.InfoRole;
 import ServidorAplicacao.IUserView;
+import Util.RoleType;
 
 /**
  * @author jorge
@@ -14,6 +17,16 @@ public class UserView implements IUserView {
 	public UserView(String utilizador, Collection roles) {
 		setUtilizador(utilizador);
 		this.roles = roles;
+	}
+
+
+	public boolean hasRoleType(RoleType roleType){
+		Iterator iterator = this.roles.iterator();
+		while (iterator.hasNext()) {
+			if (((InfoRole) iterator.next()).getRoleType().equals(roleType))
+				return true;
+		}
+		return false;
 	}
 
 	public String getUtilizador() {

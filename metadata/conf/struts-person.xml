@@ -29,27 +29,18 @@
       </form-bean>
 
       <!-- Bean for change of Application Information -->
-      <form-bean name="changeApplicationInfoForm" 
-                 type="org.apache.struts.validator.DynaValidatorForm"
+      <form-bean name="changePersonalInfoForm" 
+                 type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                  dynamic="true">
-        
+<!--            <form-property name="page" type="java.lang.Integer" />
+-->
         	<form-property name="identificationDocumentType" type="java.lang.String" />
         	<form-property name="identificationDocumentNumber" type="java.lang.String" />
         	<form-property name="identificationDocumentIssuePlace" type="java.lang.String" />		
         	<form-property name="name" type="java.lang.String" />
         	<form-property name="sex" type="java.lang.String" />
         	<form-property name="maritalStatus" type="java.lang.String" />
-        	<form-property name="specialization" type="java.lang.String" />
         	<form-property name="nationality" type="java.lang.String" />
-        	<form-property name="average" type="java.lang.String" />
-         	<form-property name="country" type="java.lang.String" />
-        	<form-property name="candidateNumber" type="java.lang.Integer" />
-        	<form-property name="applicationYear" type="java.lang.String" />
-        	<form-property name="degreeName" type="java.lang.String" />
-        	<form-property name="degreeCode" type="java.lang.String" />
-        	<form-property name="majorDegree" type="java.lang.String" />
-        	<form-property name="majorDegreeSchool" type="java.lang.String" />
-        	<form-property name="majorDegreeYear" type="java.lang.Integer" />
         	<form-property name="fatherName" type="java.lang.String" />
         	<form-property name="motherName" type="java.lang.String" />
         	<form-property name="birthPlaceParish" type="java.lang.String" />
@@ -76,6 +67,7 @@
         	<form-property name="idExpirationDateDay" type="java.lang.String" /> 
             <form-property name="idExpirationDateMonth" type="java.lang.String" /> 
         	<form-property name="idExpirationDateYear" type="java.lang.String" /> 
+        	<form-property name="username" type="java.lang.String" /> 
       </form-bean>
 
     </form-beans>
@@ -99,7 +91,7 @@
     <!-- ========== Global Forward Definitions =============================== -->
     <global-forwards type="org.apache.struts.action.ActionForward">
 	  <forward name="index" path="index.do" redirect="true"/>
-      <forward name="firstPage" path="/index.do"/>
+      <forward name="firstPage" path="/home.do"/>
     </global-forwards>
     
     <!-- ========== Action Mapping Definitions =============================== -->
@@ -125,15 +117,15 @@
       </action>
       
       <!-- Action to Prepare the Change of the Candidate's Application Information -->
-      <action path="/changePersonalInfo"
+      <action path="/changePersonalInfoDispatchAction"
 	     attribute="changePersonalInfoForm"
 	          name="changePersonalInfoForm"
+	         input="/changePersonalInfo.jsp"
 	      validate="false"
-             scope="request"
 		 parameter="method"
       	      type="ServidorApresentacao.Action.person.ChangePersonalInfoDispatchAction">
-      	  <forward name="Success" path="/changePersonalInfo.jsp"/>
-      	  <forward name="Unchangeable" path="/changeUnsuccess.jsp"/>
+      	  <forward name="Success" path="/changeSuccess.jsp"/>
+      	  <forward name="prepareReady" path="/changePersonalInfo.jsp"/>
       </action>
 
       <!-- Action to Change Candidate's Password -->

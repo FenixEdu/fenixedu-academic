@@ -41,5 +41,12 @@ public class RoleType {
 	public int getId() {
 		return this.id;
 	}
+	
+	public String toString(){
+		String result = "Role Type:\n";
+		result += "\n  - Role Type : " + id;
+		
+		return result;		
+	}
 
 }
