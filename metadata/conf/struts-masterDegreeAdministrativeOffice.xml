@@ -930,6 +930,7 @@
               
 	         <forward name="MarksConfirmationMenu" path="/marksManagement/marksConfirmationMenu.jsp"/> 
 	         <forward name="MarksConfirmation" path="/marksManagement/marksConfirmation.jsp"/> 
+	         <forward name="MarksPrint" path="/marksManagement/marksPrint.jsp"/> 
 	         <forward name="ShowMarksManagementMenu" path="/marksManagement/showMarksManagementMenu.jsp"/> 	         
       </action>
     </action-mappings>

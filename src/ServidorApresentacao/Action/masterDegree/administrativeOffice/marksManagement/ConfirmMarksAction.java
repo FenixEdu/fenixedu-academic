@@ -32,7 +32,11 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  */
 public class ConfirmMarksAction extends DispatchAction {
 
-	public ActionForward prepareMarksConfirmation(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	public ActionForward prepareMarksConfirmation(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
 		throws Exception {
 
 		HttpSession session = request.getSession(false);
@@ -54,10 +58,10 @@ public class ConfirmMarksAction extends DispatchAction {
 		} catch (ExistingServiceException e) {
 			sendErrors(request, "existing", "message.masterDegree.evaluation.alreadyConfirmed");
 			return mapping.findForward("ShowMarksManagementMenu");
-		}catch (InvalidSituationServiceException e) {
-		sendErrors(request, "invalidSituation", "error.masterDegree.studentsWithoutGrade");
-		return mapping.getInputForward();
-	} catch (FenixServiceException e) {
+		} catch (InvalidSituationServiceException e) {
+			sendErrors(request, "invalidSituation", "error.masterDegree.studentsWithoutGrade");
+			return mapping.findForward("ShowMarksManagementMenu");
+		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
 
@@ -67,11 +71,19 @@ public class ConfirmMarksAction extends DispatchAction {
 
 		request.setAttribute("infoSiteEnrolmentEvaluation", infoSiteEnrolmentEvaluation);
 
-		if(useCase != null){
-			return mapping.findForward("MarksConfirmation");
-		}
-		return mapping.findForward("MarksConfirmationMenu");
+		String forward = findForward(useCase);
+		return mapping.findForward(forward);
 
+	}
+
+	private String findForward(String useCase) {
+		String forward = new String("MarksConfirmationMenu");
+				if (useCase != null && useCase.equals("confirm")) {
+					forward = "MarksConfirmation";
+				} else if (useCase != null && useCase.equals("print")) {
+					forward = "MarksPrint";
+				}
+		return forward;
 	}
 
 	private void sendErrors(HttpServletRequest request, String arg0, String arg1) {

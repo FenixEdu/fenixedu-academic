@@ -2,15 +2,12 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<h2><bean:message key="label.masterDegree.administrativeOffice.marksConfirmation" /></h2>
-<br />
 <bean:message key="label.masterDegree.administrativeOffice.executionYear"/>:<bean:write name="executionYear" />
 &nbsp;-&nbsp;
 <bean:message key="label.masterDegree.administrativeOffice.degree"/>:<bean:write name="degree" />
 &nbsp;-&nbsp;
 <bean:message key="label.masterDegree.administrativeOffice.curricularCourse"/>:<bean:write name="curricularCourse" />
 <br /><br />
-<span class="error"><html:errors /></span>
 <logic:present name="infoSiteEnrolmentEvaluation">
 	<bean:define id="teacher" name="infoSiteEnrolmentEvaluation" property="infoTeacher"/>
 	<bean:define id="availableEvaluationDate" name="infoSiteEnrolmentEvaluation" property="lastEvaluationDate"/>
@@ -45,14 +42,6 @@
     </table>
     <br />
     <table>
-<%--		<tr>
-			<td>
-				<bean:message key="label.data.avaliacao"/>:
-			</td>
-			<td> 
-				<bean:write name="availableEvaluationDate"/>
-			</td>
-		</tr> --%>
 		<tr>
 			<td colspan="2">
 				<b><bean:message key="label.masterDegree.administrativeOffice.responsibleTeacher" /></b>
@@ -70,13 +59,4 @@
 			</td>
 		</tr>
     </table>
-	<br />
-	<html:link target="_blank" page="<%="/marksConfirmation.do?method=prepareMarksConfirmation&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") + "&amp;scopeCode=" + pageContext.findAttribute("scopeCode") + "&amp;useCase=print" %>">
-		<bean:message key="link.masterDegree.administrativeOffice.print" />
-	</html:link>
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	<html:link page="<%="/marksConfirmation.do?method=prepareMarksConfirmation&amp;executionYear=" + pageContext.findAttribute("executionYear") + "&amp;degree=" + pageContext.findAttribute("degree") + "&amp;curricularCourse=" + pageContext.findAttribute("curricularCourse") + "&amp;scopeCode=" + pageContext.findAttribute("scopeCode") + "&amp;useCase=confirm" %>">
-		<bean:message key="link.masterDegree.administrativeOffice.marksConfirmation" />
-	</html:link>
-		
 </logic:present>   
