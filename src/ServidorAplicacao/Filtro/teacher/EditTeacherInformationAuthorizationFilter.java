@@ -7,8 +7,6 @@ package ServidorAplicacao.Filtro.teacher;
 import DataBeans.teacher.InfoServiceProviderRegime;
 import DataBeans.teacher.InfoWeeklyOcupation;
 import Dominio.ITeacher;
-import Dominio.teacher.Career;
-import Dominio.teacher.ICareer;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.IUserView;
 import ServidorAplicacao.Filtro.AuthorizationByRoleFilter;
@@ -19,7 +17,6 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
-import ServidorPersistente.teacher.IPersistentCareer;
 import Util.RoleType;
 
 /**
