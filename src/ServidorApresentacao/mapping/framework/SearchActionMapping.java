@@ -15,6 +15,8 @@ public class SearchActionMapping extends ActionMapping
     private String objectAttribute;
     private String listAttribute;
     private String notFoundMessageKey;
+    private String defaultSortBy;
+    
     /**
      * @return Returns the listAttribute.
      */
@@ -79,4 +81,18 @@ public class SearchActionMapping extends ActionMapping
         this.notFoundMessageKey = notFoundMessageKey;
     }
 
+    /**
+     * @return Returns the defaultSortBy.
+     */
+    public String getDefaultSortBy()
+    {
+        return this.defaultSortBy;
+    }
+    /**
+     * @param defaultSortBy The defaultSortBy to set.
+     */
+    public void setDefaultSortBy(String defaultSortBy)
+    {
+        this.defaultSortBy = defaultSortBy;
+    }
 }
