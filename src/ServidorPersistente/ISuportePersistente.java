@@ -101,4 +101,5 @@ public interface ISuportePersistente {
 	
 	public IPersistentExamStudentRoom getIPersistentExamStudentRoom();
 	
+	public IPersistentMark getIPersistentMark();
 }

@@ -57,6 +57,7 @@ import ServidorPersistente.IPersistentGuide;
 import ServidorPersistente.IPersistentGuideEntry;
 import ServidorPersistente.IPersistentGuideSituation;
 import ServidorPersistente.IPersistentItem;
+import ServidorPersistente.IPersistentMark;
 import ServidorPersistente.IPersistentMasterDegreeCandidate;
 import ServidorPersistente.IPersistentPersonRole;
 import ServidorPersistente.IPersistentPrecedence;
@@ -438,4 +439,7 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 		return new ExamStudentRoomOJB();
 	}
 
+	public IPersistentMark getIPersistentMark() {
+		return new MarkOJB();
+	}
 }
