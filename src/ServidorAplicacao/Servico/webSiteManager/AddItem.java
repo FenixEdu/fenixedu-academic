@@ -82,9 +82,7 @@ public class AddItem implements IServico {
 			webSiteItem.setEditor(person);
 
 			if (webSiteSection.getWhatToSort().equals("ITEM_BEGIN_DAY")) {
-				System.out.println("tem que ordenar por itembeginday");
 				if (infoWebSiteItem.getItemBeginDayCalendar() == null) {
-					System.out.println("itembeginday esta a null");
 					throw new InvalidArgumentsServiceException();
 				}
 			} else if (webSiteSection.getWhatToSort().equals("ITEM_END_DAY")) {
