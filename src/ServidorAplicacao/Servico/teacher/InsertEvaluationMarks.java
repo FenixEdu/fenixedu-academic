@@ -8,7 +8,6 @@ import java.util.ListIterator;
 
 import DataBeans.ISiteComponent;
 import DataBeans.InfoEvaluation;
-import DataBeans.InfoFrequenta;
 import DataBeans.InfoFrequentaWithInfoStudentAndPerson;
 import DataBeans.InfoMark;
 import DataBeans.InfoSiteCommon;

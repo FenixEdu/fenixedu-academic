@@ -589,9 +589,9 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
             }
 
             return result;
-        } else {
+        } 
             return elements;
-        }
+        
     }
 
     protected ICurricularCourse getCurricularCourseInCurricularCourseEquivalences(

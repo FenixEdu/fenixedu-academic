@@ -121,9 +121,9 @@ public class FenixCacheFilter implements Filter {
 
 		if (queryString.length() != 0) {
 			return queryString.toString();
-		} else { 
+		} 
 			return null;
-		}
+		
 	}
 
 }

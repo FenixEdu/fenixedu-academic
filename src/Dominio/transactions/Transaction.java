@@ -81,4 +81,10 @@ public abstract class Transaction extends DomainObject {
     public void setPaymentType(PaymentType paymentType) {
         this.paymentType = paymentType;
     }
+    public IPessoa getResponsible() {
+        return responsible;
+    }
+    public void setResponsible(IPessoa responsible) {
+        this.responsible = responsible;
+    }
 }

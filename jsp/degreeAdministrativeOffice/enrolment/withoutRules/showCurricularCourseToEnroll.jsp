@@ -49,7 +49,7 @@
 						</html:multibox>
 						</td>
 						<td class="listClasses">
-						<html:radio property='<%= "optionalEnrollments(" + infoCurricularCourseId.toString() + ")" %>' value="false"/>
+						<input type="radio" checked name="<%= "optionalEnrollments(" + infoCurricularCourseId.toString() + ")" %>" value="false"/>
 						</td>
 						<td class="listClasses">
 						<html:radio property='<%= "optionalEnrollments(" + infoCurricularCourseId.toString() + ")" %>' value="true"/>

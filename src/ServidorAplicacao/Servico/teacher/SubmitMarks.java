@@ -18,7 +18,6 @@ import org.apache.commons.collections.Transformer;
 
 import DataBeans.ISiteComponent;
 import DataBeans.InfoEvaluation;
-import DataBeans.InfoFrequenta;
 import DataBeans.InfoFrequentaWithInfoStudentAndPerson;
 import DataBeans.InfoMark;
 import DataBeans.InfoMarkWithInfoAttendAndInfoStudent;

@@ -40,9 +40,9 @@ public class RequestEntry {
 	public int getAverageExecutionTime() {
 		if (numberCalls != 0) {
 			return executionTime / numberCalls;
-		} else { 
+		} 
 			return 0;
-		}
+		
 	}
 
 	public String getRequestPath() {
