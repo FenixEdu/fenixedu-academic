@@ -4,7 +4,8 @@
  */
 package ServidorAplicacao.Servico.framework;
 
-infoQualification.setDate(date);import Dominio.IDomainObject;
+import pt.utl.ist.berserk.logic.serviceManager.IService;
+import Dominio.IDomainObject;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorAplicacao.Servico.exceptions.NonExistingServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
