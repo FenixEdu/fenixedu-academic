@@ -242,7 +242,7 @@ CREATE TABLE MASTER_DEGREE_THESIS_DATA_VERSION_EXTERNAL_GUIDER (
 DROP TABLE if exists EXTERNAL_PERSON;
 CREATE TABLE EXTERNAL_PERSON (
    ID_INTERNAL int(11) unsigned not null auto_increment,
-   WORK_LOCATION varchar(50) not null,
+   KEY_WORK_LOCATION int(11) unsigned not null,
    KEY_PERSON int(11) unsigned  not null, 
    primary key (ID_INTERNAL),
    UNIQUE KEY U1 (KEY_PERSON)
@@ -289,4 +289,15 @@ CREATE TABLE MASTER_DEGREE_PROOF_VERSION_EXTERNAL_JURY (
   KEY_EXTERNAL_PERSON int(11) not null,
   PRIMARY KEY (ID_INTERNAL),
   UNIQUE KEY U1 (KEY_MASTER_DEGREE_PROOF_VERSION,KEY_EXTERNAL_PERSON)
+) TYPE=InnoDB;
+
+#------------------------------------------------------------
+# Table structure for table work location
+#------------------------------------------------------------
+DROP TABLE IF EXISTS WORK_LOCATION;
+CREATE TABLE WORK_LOCATION (
+  ID_INTERNAL int(11) unsigned NOT NULL auto_increment,
+  NAME varchar(255) not null,
+  PRIMARY KEY  (ID_INTERNAL),
+  UNIQUE (NAME)
 ) TYPE=InnoDB;
