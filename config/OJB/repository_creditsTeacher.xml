@@ -48,6 +48,8 @@
       <field-descriptor name="institutionWorkTime" column="INSTITUTION_WORK_TIME" jdbc-type="DOUBLE"/>
 
       <field-descriptor name="otherTypeCredits" column="OTHER_TYPE_CREDITS" jdbc-type="DOUBLE"/>
+	  
+      <field-descriptor name="masterDegreeCredits" column="MASTER_DEGREE_CREDITS" jdbc-type="DOUBLE"/>	  
 
       <field-descriptor name="containsManagementPositions" column="CONTAINS_MANAGEMENT_POSITIONS" jdbc-type="BIT"/>
 
