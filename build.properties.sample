@@ -50,4 +50,4 @@ slide.config=D:\\\\eclipse-M3\\\\workspace\\\\fenix-head\\\\build\\\\app\\\\WEB-
 
 login.page=https://fenix.ist.utl.pt/privado
 application=extranet
-validation.doctype=<!DOCTYPE form-validation SYSTEM "file:///D:/eclipse-M3/workspace/fenix-head/metadata/conf/validator_1_0.dtd">
+validation.doctype=<!DOCTYPE form-validation PUBLIC "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.0//EN" "file:///D:/eclipse-M3/workspace/fenix-head/metadata/conf/validator_1_0.dtd">
