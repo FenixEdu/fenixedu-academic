@@ -3371,15 +3371,6 @@
         </filterChains>
     </service>
     <service>
-        <name>WriteCreditsTeacher</name>
-        <implementationClass>ServidorAplicacao.Servico.credits.WriteCreditsTeacher</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="CAFilter"/>
-        </filterChains>
-    </service>
-    <service>
         <name>ReadTeacherCreditsSheet</name>
         <implementationClass> 
             ServidorAplicacao.Servico.credits.ReadTeacherCreditsSheet</implementationClass>
