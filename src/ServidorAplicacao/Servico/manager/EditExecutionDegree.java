@@ -81,7 +81,7 @@ public class EditExecutionDegree implements IServico {
 				persistentExecutionDegree.lockWrite(oldExecutionDegree);
 						
 		} catch (ExistingPersistentException ex) {
-			throw new ExistingServiceException("O curso execução relativo ao ano " + executionYear.getYear(), ex);
+			throw new ExistingServiceException(ex);
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia);
 		} 

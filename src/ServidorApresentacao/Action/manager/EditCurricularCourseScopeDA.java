@@ -199,7 +199,7 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
 		} catch (NonExistingServiceException ex) {
 			throw new NonExistingActionException(ex.getMessage(), mapping.findForward("readCurricularCourse"));
 		} catch (ExistingServiceException e) {
-			throw new ExistingActionException(e.getMessage(), e);
+			throw new ExistingActionException("message.manager.existing.curricular.course.scope");
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}

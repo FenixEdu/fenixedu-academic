@@ -187,7 +187,7 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 			manager.executar(userView, "EditDegreeCurricularPlan", args);
 
 		} catch (ExistingServiceException e) {
-			throw new ExistingActionException(e.getMessage(), e);
+			throw new ExistingActionException("message.manager.existing.degree.curricular.plan");
 		} catch (NonExistingServiceException e) {
 			throw new NonExistingActionException(e.getMessage(), mapping.findForward("readDegree"));
 		} catch (FenixServiceException fenixServiceException) {

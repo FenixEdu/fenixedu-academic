@@ -92,14 +92,7 @@ public class EditCurricularCourseScope implements IServico {
 			persistentCurricularCourseScope.lockWrite(oldCurricularCourseScope);
 			
 		} catch (ExistingPersistentException ex) {
-			throw new ExistingServiceException(
-						"O âmbito do "
-							+ newCurricularSemester.getCurricularYear().getYear()
-							+ "º ano/ "
-							+ newCurricularSemester.getSemester()
-							+ "º semestre, do ramo"
-							+ newBranch.getCode(),
-						ex);
+			throw new ExistingServiceException(ex);
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia);
 		}

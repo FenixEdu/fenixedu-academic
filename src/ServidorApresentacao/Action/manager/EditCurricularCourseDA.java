@@ -58,11 +58,9 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 		dynaForm.set("type", oldInfoCurricularCourse.getType().getCurricularCourseType().toString());
 		System.out.println("type"+oldInfoCurricularCourse.getType().getCurricularCourseType());
 
-//		if (oldInfoCurricularCourse.getMandatory() != null)
-			dynaForm.set("mandatory", oldInfoCurricularCourse.getMandatory().toString());
+		dynaForm.set("mandatory", oldInfoCurricularCourse.getMandatory().toString());
 
-//		if (oldInfoCurricularCourse.getBasic() != null)
-			dynaForm.set("basic", oldInfoCurricularCourse.getBasic().toString());
+		dynaForm.set("basic", oldInfoCurricularCourse.getBasic().toString());
 
 		return mapping.findForward("editCurricularCourse");
 	}
@@ -91,15 +89,9 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 		CurricularCourseType type = new CurricularCourseType(new Integer(typeString));
 		newInfoCurricularCourse.setType(type);
 
-//		if (mandatoryString.compareTo("") != 0) {
-			Boolean mandatory = new Boolean(mandatoryString);
-			newInfoCurricularCourse.setMandatory(mandatory);
+		newInfoCurricularCourse.setMandatory(new Boolean(mandatoryString));
 		
-
-//		if (basicString.compareTo("") != 0) {
-			Boolean basic = new Boolean(basicString);
-			newInfoCurricularCourse.setBasic(basic);
-		
+		newInfoCurricularCourse.setBasic(new Boolean(basicString));
 
 		Object args[] = { newInfoCurricularCourse };
 		GestorServicos manager = GestorServicos.manager();
@@ -109,7 +101,7 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 		} catch (NonExistingServiceException ex) {
 			throw new NonExistingActionException("message.nonExistingCurricularCourse", mapping.findForward("readDegreeCP"));
 		} catch (ExistingServiceException e) {
-			throw new ExistingActionException(e.getMessage(), e);
+			throw new ExistingActionException("message.manager.existing.curricular.course");
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}

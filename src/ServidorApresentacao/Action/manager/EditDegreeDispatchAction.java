@@ -88,7 +88,7 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 		} catch (NonExistingServiceException e) {
 			throw new NonExistingActionException("message.nonExistingDegree", mapping.findForward("readDegrees"));
 		} catch (ExistingServiceException e) {
-			throw new ExistingActionException(e.getMessage(), e);
+			throw new ExistingActionException("message.manager.existing.degree");
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}

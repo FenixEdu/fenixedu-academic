@@ -68,7 +68,7 @@ public class EditDegree implements IServico {
 			persistentDegree.lockWrite(oldDegree);
 						
 		} catch (ExistingPersistentException ex) {
-			throw new ExistingServiceException("O curso com esses dados", ex);
+			throw new ExistingServiceException(ex);
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia);
 		}

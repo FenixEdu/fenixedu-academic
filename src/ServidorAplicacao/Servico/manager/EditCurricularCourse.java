@@ -39,8 +39,8 @@ public class EditCurricularCourse implements IServico {
 	
 		IPersistentCurricularCourse persistentCurricularCourse = null;
 		ICurricularCourse oldCurricularCourse = null;
-		String newName = "";
-		String newCode = "";
+		String newName = null;
+		String newCode = null;
 		
 		try {
 			
@@ -63,7 +63,7 @@ public class EditCurricularCourse implements IServico {
 			persistentCurricularCourse.lockWrite(oldCurricularCourse);
 			
 		} catch (ExistingPersistentException ex) {
-			throw new ExistingServiceException("A disciplina curricular de nome "+newName+" e sigla "+newCode, ex);
+			throw new ExistingServiceException(ex);
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia);
 		}

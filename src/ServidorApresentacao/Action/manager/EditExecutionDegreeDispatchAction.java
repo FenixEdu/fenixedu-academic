@@ -149,7 +149,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 				manager.executar(userView, "EditExecutionDegree", args);
 				
 		} catch (ExistingServiceException e) {
-			throw new ExistingActionException(e.getMessage(), e);
+			throw new ExistingActionException("message.manager.existing.execution.degree");
 		} catch (NonExistingServiceException ex) {
 			throw new NonExistingActionException(ex.getMessage(), mapping.findForward("readDegreeCurricularPlan"));
 		} catch (FenixServiceException fenixServiceException) {

@@ -6,6 +6,7 @@
  
 package ServidorApresentacao.Action.exceptions;
 
+
 /**
  *
  * @author  Luis Cruz & Nuno Nunes & João Mota
@@ -26,6 +27,10 @@ public class ExistingActionException extends FenixActionException {
 	
 	public ExistingActionException(Object[] values, Throwable cause) {
 		super(key, values, cause);
+	}
+	
+	public ExistingActionException(String text) {
+		super(text);
 	}
     
 

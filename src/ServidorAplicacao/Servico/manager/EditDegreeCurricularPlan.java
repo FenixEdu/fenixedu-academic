@@ -42,7 +42,7 @@ public class EditDegreeCurricularPlan implements IServico {
 		IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = null;
 		IDegreeCurricularPlan oldDegreeCP = null;
 		ICursoPersistente persistentDegree = null;
-		String newName = "";
+		String newName = null;
 
 		try {
 			
@@ -76,7 +76,7 @@ public class EditDegreeCurricularPlan implements IServico {
 			persistentDegreeCurricularPlan.write(oldDegreeCP);
 			
 		} catch (ExistingPersistentException ex) {
-			throw new ExistingServiceException("O Plano curricular de nome " + newName, ex);
+			throw new ExistingServiceException(ex);
 		} catch (ExcepcaoPersistencia excepcaoPersistencia) {
 			throw new FenixServiceException(excepcaoPersistencia);
 		}
