@@ -160,7 +160,7 @@ public class ConversorSOP {
 	 * @param args the command line arguments
 	 */
 	public static void main(String[] args) {
-		ConversorSOP conversor = new ConversorSOP();
+//		ConversorSOP conversor = new ConversorSOP();
 		System.out.println("Findou!!!");
 	}
 
@@ -308,8 +308,8 @@ public class ConversorSOP {
 			new PredicateExecutionCourseWithDanglingCurricularCourse());
 
 
-		List migrationShiftList =
-			createShiftList(classList, consistentMigrationLessonList);
+//		List migrationShiftList =
+//			createShiftList(classList, consistentMigrationLessonList);
 /*
 		saveExecutionCourse(migrationExecutionCourseCollection);
 		saveClasses(classList);

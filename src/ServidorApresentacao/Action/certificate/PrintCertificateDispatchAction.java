@@ -130,7 +130,7 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 					List normalEnrolment = new ArrayList();
 					List extraEnrolment = new ArrayList();
 					
-					InfoEnrolment infoEnrolment = new InfoEnrolment();
+			//		InfoEnrolment infoEnrolment = new InfoEnrolment();
 					Object result = null;
 					Iterator iterator = enrolmentList.iterator();
 					while(iterator.hasNext()) {	
@@ -179,7 +179,7 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 					List normalEnrolment = new ArrayList();
 					List extraEnrolment = new ArrayList();
 					
-					InfoEnrolment infoEnrolment = new InfoEnrolment();
+				//	InfoEnrolment infoEnrolment = new InfoEnrolment();
 					Object result = null;
 					Iterator iterator = enrolmentList.iterator();
 					while(iterator.hasNext()) {	
@@ -277,7 +277,7 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 								saveErrors(request, errors);
 								return new ActionForward(mapping.getInput());
 							}
-							InfoEnrolmentEvaluation infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();
+					//		InfoEnrolmentEvaluation infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();
 							
 							
 							String conclusionDate = null;
@@ -293,12 +293,12 @@ public class PrintCertificateDispatchAction extends DispatchAction {
 							
 							conclusionDate = Data.format2DayMonthYear(endOfScholarshipDate);
 							
-							String dataAux = null;					
+				//			String dataAux = null;					
 //							Object result = null;
 							List normalEnrolment = new ArrayList();
 							List extraEnrolment = new ArrayList();
 							
-							InfoEnrolment infoEnrolment = new InfoEnrolment();
+					//		InfoEnrolment infoEnrolment = new InfoEnrolment();
 							Object result = null;
 							Iterator iterator = enrolmentList.iterator();
 							while(iterator.hasNext()) {	

@@ -29,14 +29,12 @@ import org.odmg.QueryException;
 import Dominio.Branch;
 import Dominio.Country;
 import Dominio.CurricularCourse;
-import Dominio.CurricularCourseScope;
 import Dominio.Curso;
 import Dominio.DegreeCurricularPlan;
 import Dominio.Funcionario;
 import Dominio.IBranch;
 import Dominio.ICountry;
 import Dominio.ICurricularCourse;
-import Dominio.ICurricularCourseScope;
 import Dominio.IPersonRole;
 import Dominio.IPessoa;
 import Dominio.IStudent;
@@ -116,10 +114,10 @@ public static void main(String args[]) throws Exception{
 
 
 	public void updatePasswords() throws Exception{
-		List result = null;
-		Query query = null;
-		Criteria criteria = null;
-		QueryByCriteria queryByCriteria = null;
+//		List result = null;
+//		Query query = null;
+//		Criteria criteria = null;
+//		QueryByCriteria queryByCriteria = null;
 		IPessoa person = null;
 		try {
 			System.out.print("Reading Persons ...");
@@ -146,10 +144,10 @@ public static void main(String args[]) throws Exception{
 	
 	
 	public void updateGraduationStudentsUsernames() throws Exception{
-		List result = null;
-		Query query = null;
-		Criteria criteria = null;
-		QueryByCriteria queryByCriteria = null;
+//		List result = null;
+//		Query query = null;
+//		Criteria criteria = null;
+//		QueryByCriteria queryByCriteria = null;
 		IStudent student = null;
 		try {
 			System.out.print("Reading Students ...");
@@ -180,7 +178,7 @@ public static void main(String args[]) throws Exception{
 		List result = null;
 		Query query = null;
 		Criteria criteria = null;
-		QueryByCriteria queryByCriteria = null;
+//		QueryByCriteria queryByCriteria = null;
 		try {
 			System.out.print("Reading PosGrad Areas Cientificas ...");
 			List areasCientificasPG = getAreasCientificas();
@@ -282,7 +280,7 @@ public static void main(String args[]) throws Exception{
 		List result = null;
 		Query query = null;
 		Criteria criteria = null;
-		QueryByCriteria queryByCriteria = null;
+//		QueryByCriteria queryByCriteria = null;
 		try {
 			System.out.print("A Ler Funcionarios ...");
 			List employees = getEmployes();
@@ -342,7 +340,7 @@ public static void main(String args[]) throws Exception{
 		List result = null;
 		Query query = null;
 		Criteria criteria = null;
-		QueryByCriteria queryByCriteria = null;
+//		QueryByCriteria queryByCriteria = null;
 		try {
 			System.out.print("Reading PosGrad Curricular Courses ...");
 			List curricularCoursesPG = getDisciplinas();
@@ -483,7 +481,7 @@ public static void main(String args[]) throws Exception{
 				
 				// Create Scopes
 				
-				ICurricularCourseScope curricularCourseScope = new CurricularCourseScope();
+//				ICurricularCourseScope curricularCourseScope = new CurricularCourseScope();
 				
 	
 			}

@@ -13,7 +13,6 @@ import DataBeans.InfoSiteProgram;
 import DataBeans.TeacherAdministrationSiteView;
 import DataBeans.util.Cloner;
 import Dominio.DisciplinaExecucao;
-import Dominio.ICurriculum;
 import Dominio.IDisciplinaExecucao;
 import Dominio.ISection;
 import Dominio.ISite;
@@ -66,7 +65,7 @@ public class TeacherAdministrationSiteComponentServiceProgramTest extends TestCa
 		InfoExecutionCourse infoExecutionCourse = null;
 		ISite site = null;
 		List sections = null;
-		ICurriculum curriculum = null;
+//		ICurriculum curriculum = null;
 
 		try {
 			sp = SuportePersistenteOJB.getInstance();

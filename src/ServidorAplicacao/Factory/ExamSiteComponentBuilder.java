@@ -69,8 +69,8 @@ public class ExamSiteComponentBuilder {
 		ICursoExecucao executionDegree,
 		List curricularYears)
 		throws FenixServiceException {
-		List classes = new ArrayList();
-		List infoClasses = new ArrayList();
+//		List classes = new ArrayList();
+//		List infoClasses = new ArrayList();
 
 //		Object to be returned
 			 InfoExamsMap infoExamsMap = new InfoExamsMap();

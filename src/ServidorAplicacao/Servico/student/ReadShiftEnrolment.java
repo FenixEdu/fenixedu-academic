@@ -16,17 +16,12 @@ import java.util.List;
 
 import DataBeans.InfoCourseExecutionAndListOfTypeLessonAndInfoShift;
 import DataBeans.InfoExecutionCourse;
-import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoShift;
 import DataBeans.InfoShiftEnrolment;
 import DataBeans.InfoStudent;
 import DataBeans.TypeLessonAndInfoShift;
 import DataBeans.util.Cloner;
-import Dominio.Curso;
-import Dominio.CursoExecucao;
 import Dominio.DisciplinaExecucao;
-import Dominio.ICurso;
-import Dominio.ICursoExecucao;
 import Dominio.IDisciplinaExecucao;
 import Dominio.IFrequenta;
 import Dominio.ITurma;
@@ -78,17 +73,17 @@ public class ReadShiftEnrolment implements IServico {
 		IFrequenta frequent = (IFrequenta) frequencies.get(i);
 		IDisciplinaExecucao de = frequent.getDisciplinaExecucao();
 		
-		InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
+	//	InfoExecutionDegree infoExecutionDegree = new InfoExecutionDegree();
 		
 				
 		 
 		InfoExecutionCourse ide = Cloner.copyIExecutionCourse2InfoExecutionCourse(de);
 
 
-		ICurso degree = new Curso();
+	//	ICurso degree = new Curso();
 //		degree.setSigla(de.getLicenciaturaExecucao().getCurso().getSigla());
 
-		ICursoExecucao executionCoure = new CursoExecucao();
+		//ICursoExecucao executionCoure = new CursoExecucao();
 //		executionCoure.setAnoLectivo(de.getLicenciaturaExecucao().getAnoLectivo());
 //		executionCoure.setCurso(degree);
 

@@ -23,10 +23,10 @@ import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.ITurno;
 import Dominio.ITurnoAluno;
+import Dominio.ShiftStudent;
 import Dominio.Student;
 import Dominio.StudentCurricularPlan;
 import Dominio.Turno;
-import Dominio.ShiftStudent;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 import ServidorPersistente.IFrequentaPersistente;
@@ -62,8 +62,8 @@ public class LoadCourseEnrolments extends DataFileLoader {
 
 			// Obter interfaces de acesso ao suporte persistente.
 			IPersistentStudent iAlunoPersistente = sp.getIPersistentStudent();
-			IPersistentCurricularCourse iDisciplinaCurricularPersistente =
-				sp.getIPersistentCurricularCourse();
+//			IPersistentCurricularCourse iDisciplinaCurricularPersistente =
+//				sp.getIPersistentCurricularCourse();
 			IDisciplinaExecucaoPersistente iDisciplinaExecucaoPersistente =
 				sp.getIDisciplinaExecucaoPersistente();
 			IPersistentEnrolment persistentEnrolment =
@@ -123,11 +123,11 @@ public class LoadCourseEnrolments extends DataFileLoader {
 				//curricularCourseCriteria.setName(alunoDisciplinaCurricular.getNomeDisciplinaCurricular());
 				curricularCourseCriteria.setCode(
 					alunoDisciplinaCurricular.getSiglaDisciplinaCurricular());
-				ICurricularCourse curricularCourse =
-					(
-						ICurricularCourse) iDisciplinaCurricularPersistente
-							.readDomainObjectByCriteria(
-						curricularCourseCriteria);
+//				ICurricularCourse curricularCourse =
+//					(
+//						ICurricularCourse) iDisciplinaCurricularPersistente
+//							.readDomainObjectByCriteria(
+//						curricularCourseCriteria);
 
 				// Ver se a inscricao do aluno na disciplina está na base de dados do CIAPL
 				IEnrolment enrolmentCriteria = new Enrolment();
