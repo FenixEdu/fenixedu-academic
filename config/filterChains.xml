@@ -567,4 +567,13 @@
 		<invocationTiming>1</invocationTiming>
 		<filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
 	</filterChain>
+	<filterChain>
+		<idInternal>413291</idInternal>
+		<name>DepartamentRemoveProfessorshipAuthorizationChain</name>
+		<expression>CreditsServiceWithTeacherIdInSecondArgumentAuthorizationFilter</expression>
+		<description></description>
+		<invocationTiming>1</invocationTiming>
+		<filterClass>ServidorAplicacao.Filtro.AccessControlFilter</filterClass>
+	</filterChain>
+	
 </filterChainsDefinitions>

@@ -20,6 +20,7 @@ public class TeacherDegreeFinalProjectStudent extends DomainObject
     private Integer keyExecutionYear;
     private Integer keyStudent;
     private Integer keyTeacher;
+    private Double percentage;
     private IStudent student;
     private ITeacher teacher;
 
@@ -33,6 +34,26 @@ public class TeacherDegreeFinalProjectStudent extends DomainObject
     public TeacherDegreeFinalProjectStudent(Integer teacherDegreeFinalProjectStudentId)
     {
         super(teacherDegreeFinalProjectStudentId);
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+    public boolean equals(Object obj)
+    {
+        if (obj instanceof TeacherDegreeFinalProjectStudent)
+        {
+            TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = (TeacherDegreeFinalProjectStudent) obj;
+
+            return (this.getStudent()
+                    .equals(teacherDegreeFinalProjectStudent.getStudent().getIdInternal())
+                    && this.getTeacher().equals(teacherDegreeFinalProjectStudent.getTeacher()) && this.getExecutionYear()
+                    .equals(teacherDegreeFinalProjectStudent.getExecutionYear()));
+
+        }
+        return false;
     }
 
     /**
@@ -65,6 +86,14 @@ public class TeacherDegreeFinalProjectStudent extends DomainObject
     public Integer getKeyTeacher()
     {
         return this.keyTeacher;
+    }
+
+    /**
+     * @return Returns the percentage.
+     */
+    public Double getPercentage()
+    {
+        return this.percentage;
     }
 
     /**
@@ -118,6 +147,13 @@ public class TeacherDegreeFinalProjectStudent extends DomainObject
     {
         this.keyTeacher = keyTeacher;
     }
+    /**
+     * @param percentage The percentage to set.
+     */
+    public void setPercentage(Double percentage)
+    {
+        this.percentage = percentage;
+    }
 
     /**
 	 * @param student
@@ -136,25 +172,4 @@ public class TeacherDegreeFinalProjectStudent extends DomainObject
     {
         this.teacher = teacher;
     }
-
-    /*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-    public boolean equals(Object obj)
-    {
-        if (obj instanceof TeacherDegreeFinalProjectStudent)
-        {
-            TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = (TeacherDegreeFinalProjectStudent) obj;
-
-            return (this.getStudent()
-                    .equals(teacherDegreeFinalProjectStudent.getStudent().getIdInternal())
-                    && this.getTeacher().equals(teacherDegreeFinalProjectStudent.getTeacher()) && this.getExecutionYear()
-                    .equals(teacherDegreeFinalProjectStudent.getExecutionYear()));
-
-        }
-        return false;
-    }
-
 }

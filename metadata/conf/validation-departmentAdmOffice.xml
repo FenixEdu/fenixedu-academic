@@ -102,6 +102,9 @@
 				<msg name="required" key="errors.invalid.student-number"/>				
 				<arg0 key="label.property.student-number" />
 			</field>
+			<field property="percentage" depends="required,double" page="1">
+				<arg0 key="label.teacher-dfp-student.percentage" />
+			</field>
     	</form>
 		<!-- ================================================================ -->    	
 	   	<form name="teacherInstitutionWorkingTimeForm">

@@ -53,6 +53,7 @@ create table CATEGORY (
 drop table if exists TEACHER_DEGREE_FINAL_PROJECT_STUDENT;
 create table TEACHER_DEGREE_FINAL_PROJECT_STUDENT (
    ID_INTERNAL int(11) not null auto_increment,
+   PERCENTAGE float not null default '100.0',
    KEY_STUDENT int(11) not null,
    KEY_TEACHER int(11) not null,   
    KEY_EXECUTION_YEAR int(11) not null,

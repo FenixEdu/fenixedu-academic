@@ -64,6 +64,7 @@
         		 password="${server.password}"
         		 command="${server.dumpScript}; zip ${server.dumpFilename}.zip ${server.dumpFilename}; rm ${server.dumpFilename}"
         		 timeout="0"
+        		 trust="yes"
         		 />
 
 		<!-- Transfer DB Dump File to Destination -->
@@ -82,6 +83,7 @@
         		 password="${server.password}"
         		 command="rm ${server.dumpFilename}.zip"
         		 timeout="0"
+        		 trust="yes"
         		 />
 
 		<!-- Remove temporary local copy of DB Dump File -->
@@ -93,6 +95,7 @@
         		 password="${destination.password}"
         		 command="loadFenixImage"
         		 timeout="0"
+        		 trust="yes"
         		 />
 
     </target>

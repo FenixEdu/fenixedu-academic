@@ -29,7 +29,8 @@
 
 		<!-- Obtain propper build.properties -->
 		<move file="build.properties" tofile="build.properties_backup" />
-		<scp file="${server.username}:${server.password}@${server.hostname}:/root/configs/build_fenix-tests_extra.properties" todir="./"/>
+		<scp file="${server.username}:${server.password}@${server.hostname}:/root/configs/build_fenix-tests_extra.properties" todir="./" 
+			trust="yes"/>
 		<move file="build_fenix-tests_extra.properties"  tofile="build.properties" />
 	<!--
 		<property file="build.properties"/>
@@ -41,7 +42,8 @@
 		<sleep seconds="5"/>
 
 		<delete file="build.properties"/>
-		<scp file="${server.username}:${server.password}@${server.hostname}:/root/configs/build_fenix-tests_intra.properties" todir="./"/>
+		<scp file="${server.username}:${server.password}@${server.hostname}:/root/configs/build_fenix-tests_intra.properties" todir="./" 
+			trust="yes"/>
 
 		<move file="build_fenix-tests_intra.properties"  tofile="build.properties"  />
 
@@ -68,7 +70,7 @@
 		<!-- Obtain propper build.properties -->
 		<move file="build.properties"  tofile="build.properties_backup" />
 		<scp file="${server.username}:${server.password}@${server.hostname}:/root/configs/build_fenix.properties" todir="./" 
-			/>
+			trust="yes"/>
 		<move file="build_fenix.properties"  tofile="build.properties" />
 
 		<!-- Deploy the application-->
@@ -82,7 +84,7 @@
 		<delete file="build.properties"/>
 
 		<scp file="${server.username}:${server.password}@${server.hostname}:/root/configs/build_wwwapl.properties"
-			 todir="./" />
+			 todir="./" trust="yes"/>
 		<move file="build_wwwapl.properties"  tofile="build.properties" />
 		<sleep seconds="5"/>
 
@@ -108,7 +110,8 @@
 
 		<!-- Obtain propper build.properties -->
 		<move file="build.properties" tofile="build.properties_backup" />
-		<scp file="${server.username}:${server.password}@${server.hostname}:/root/configs/build_fenix-ashes_extra.properties" todir="./"/>
+		<scp file="${server.username}:${server.password}@${server.hostname}:/root/configs/build_fenix-ashes_extra.properties" todir="./"
+			trust="yes"/>
 		<move file="build_fenix-ashes_extra.properties"  tofile="build.properties" />
 	<!--
 		<property file="build.properties"/>
@@ -120,7 +123,8 @@
 		<sleep seconds="5"/>
 
 		<delete file="build.properties"/>
-		<scp file="${server.username}:${server.password}@${server.hostname}:/root/configs/build_fenix-ashes_intra.properties" todir="./"/>
+		<scp file="${server.username}:${server.password}@${server.hostname}:/root/configs/build_fenix-ashes_intra.properties" todir="./" 
+			trust="yes"/>
 
 		<move file="build_fenix-ashes_intra.properties"  tofile="build.properties"  />
 
@@ -139,16 +143,18 @@
         <ant antfile="build.xml" target="clean-all" />
 
 		<!-- Create WAR's -->
-        <ant antfile="build.xml" target="deploy-webapp" />
-
+        <ant antfile="build_jboss.xml" target="jar-standalone" />
+	<move file="deploy/jars/fenix-standalone.jar"  tofile="deploy/${app.name}.jar" />
 		<!-- Transfer WAR's to server -->
-        <scp todir="${server.username}:${server.password}@${server.hostname}:${server.deployDirectory}" file="deploy/${app.name}.war" />
+        <scp todir="${server.username}:${server.password}@${server.hostname}:${server.deployDirectory}" file="deploy/${app.name}.jar" 
+        	trust="yes"/>
 
 		<!-- Decompress WAR'S -->
 		<!-- Delete WAR'S -->
 		<!-- Restart Server -->
         <sshexec host="${server.hostname}" username="${server.username}" password="${server.password}"
-        		 command="cd ${server.deployDirectory}; rm -rf ${app.name}; unzip ${app.name}.war -d ${app.name} ; rm -f ${app.name}.war" />
+        		 command="cd ${server.deployDirectory}; rm -rf ${app.name}; unzip ${app.name}.jar -d ${app.name} ; rm -f ${app.name}.jar" 
+        		 trust="yes"/>
 		<!-- Clean-all -->
         <ant antfile="build.xml" target="clean-all" />
     </target>
@@ -164,7 +170,8 @@
         <ant antfile="build.xml" target="deploy-webapp" />
 
 		<!-- Transfer WAR's to server -->
-        <scp todir="${server.username}:${server.password}@${server.hostname}:/tmp" file="deploy/${app.name}.war"/>
+        <scp todir="${server.username}:${server.password}@${server.hostname}:/tmp" file="deploy/${app.name}.war"
+         trust="yes"/>
 
 		<sleep seconds="5"/>
 
@@ -172,18 +179,18 @@
 		<!-- Delete WAR'S -->
 		<!-- Restart Server -->
         <sshexec host="${server.hostname}" username="${server.username}" password="${server.password}"
-        		 command="cd /root/configs/; ant -f build_deploy_wwwapl.xml" />
+        		 command="cd /root/configs/; ant -f build_deploy_wwwapl.xml" trust="yes"/>
 		<!-- Clean-all -->
         <ant antfile="build.xml" target="clean-all" />
     </target>
     
 	<target name="stop-server">
         <sshexec host="${server.hostname}" username="${server.username}" password="${server.password}"
-        				 command="${server.stopCommand}" />
+        				 command="${server.stopCommand}" trust="yes"/>
 	</target>
 	<target name="start-server">
         <sshexec host="${server.hostname}" username="${server.username}" password="${server.password}"
-        				 command="${server.startCommand}" />
+        				 command="${server.startCommand}" trust="yes"/>
 	</target>
 	
 </project>

@@ -17,7 +17,7 @@ public class InfoTeacherDegreeFinalProjectStudent extends InfoObject
     private InfoExecutionYear infoExecutionYear;
     private InfoStudent infoStudent;
     private InfoTeacher infoTeacher;
-
+    private Double percentage;
     /**
 	 * @return Returns the infoExecutionYear.
 	 */
@@ -40,6 +40,14 @@ public class InfoTeacherDegreeFinalProjectStudent extends InfoObject
     public InfoTeacher getInfoTeacher()
     {
         return this.infoTeacher;
+    }
+
+    /**
+     * @return Returns the percentage.
+     */
+    public Double getPercentage()
+    {
+        return this.percentage;
     }
 
     /**
@@ -68,5 +76,11 @@ public class InfoTeacherDegreeFinalProjectStudent extends InfoObject
     {
         this.infoTeacher = infoTeacher;
     }
-
+    /**
+     * @param percentage The percentage to set.
+     */
+    public void setPercentage(Double percentage)
+    {
+        this.percentage = percentage;
+    }
 }

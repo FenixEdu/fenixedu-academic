@@ -63,6 +63,7 @@
 			<form-property name="executionYearId" type="java.lang.Integer"/>
 
 			<form-property name="studentNumber" type="java.lang.String"/>
+			<form-property name="percentage" type="java.lang.String" initial="100"/>			
 		</form-bean>
 
 		<form-bean name="teacherInstitutionWorkingTimeForm" 
@@ -83,6 +84,17 @@
 		
 		</form-bean>
 
+		<form-bean name="teacherExecutionCourseForm" 
+							type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+
+			<form-property name="teacherNumber" type="java.lang.String"/>
+			<form-property name="teacherId" type="java.lang.String"/>
+			<form-property name="executionDegreeId" type="java.lang.String"/>
+			<form-property name="executionYearId" type="java.lang.String"/>			
+			<form-property name="executionCourseId" type="java.lang.String"/>						
+		</form-bean>
     </form-beans>
 
 	 <!-- ========== Global Exception Definitions ============================== -->
@@ -260,6 +272,11 @@
 			<exception type="ServidorAplicacao.Servico.degree.finalProject.EditTeacherDegreeFinalProjectStudentByOID$StudentNotFoundServiceException"
 		  	       key="message.student-not-found"
 		  	       path="/manageTeacherDFPStudent.do?method=list&amp;page=0"/>			
+
+			<exception type="ServidorAplicacao.Servico.degree.finalProject.EditTeacherDegreeFinalProjectStudentByOID$StudentPercentageExceed"
+								key="message.teacherDegreeFinalProjectStudent.percentageExceed"
+								path="/manageTeacherDFPStudent.do?method=list&amp;page=0"/>	   			
+
 			<exception type="ServidorAplicacao.Servico.exceptions.NotAuthorizedException"
 								key="message.teacher-not-belong-to-department"
 								path="/teacherSearchForDFPStudentManagement.do?method=searchForm&amp;page=0"/>	   			
@@ -267,9 +284,11 @@
 			<exception type="ServidorAplicacao.Servico.credits.validator.OverlappingInstitutionWorkingPeriod"
 								key="message.overlapping.institution.working.period"
 								path="/manageTeacherDFPStudent.do?method=list&amp;page=0"/>	   			
+
 			<exception type="ServidorAplicacao.Servico.credits.validator.OverlappingLessonPeriod"
 								key="message.overlapping.lesson.period"
 								path="/manageTeacherDFPStudent.do?method=list&amp;page=0"/>	   			
+
 			<exception type="ServidorAplicacao.Servico.credits.validator.OverlappingSupportLessonPeriod"
 								key="message.overlapping.support.lesson.period"
 								path="/manageTeacherDFPStudent.do?method=list&amp;page=0"/>	   			
@@ -389,6 +408,39 @@
 	   	</action>
 
  	   <!-- =======================================================================  -->
+
+		<!-- ====================== USE CASE: Insert Professorship ========================== -->
+	   	<action path="/createProfessorship" 
+	   			input="/createProfessorship?method=showExecutionDegreeExecutionCourses" 
+	   			name="teacherExecutionCourseForm" 
+	   			scope="request"
+	   			parameter="method"
+	   			type="ServidorApresentacao.Action.teacher.professorship.CreateProfessorshipDispatchAction">
+   			<forward name="first-step" path="createProfessorship"/>
+  			<forward name="second-step" path="createProfessorship"/> 
+    		<forward name="final-step" path="/teacherSearchForShiftManagement.do?method=doSearch&amp;page=1"/>
+	   	</action>
+	   	<!-- ======================================================================== -->
+	   	
+		<!-- ====================== USE CASE: Remove Professorship ========================== -->
+	   	<action path="/removeProfessorship" 
+	   			input="/teacherSearchForShiftManagement.do?method=doSearch&amp;page=1" 
+	   			name="teacherExecutionCourseForm" 
+	   			scope="request"
+	   			parameter="method"
+	   			type="ServidorApresentacao.Action.teacher.professorship.RemoveProfessorshipAction">
+
+			<exception type="ServidorAplicacao.Servico.teacher.DeleteTeacher$ExistingShiftProfessorship"
+								key="message.existing.shiftProfessorship"
+								path="/teacherSearchForShiftManagement.do?method=doSearch&amp;page=1"/>	   			
+			<exception type="ServidorAplicacao.Servico.exceptions.notAuthorizedServiceDeleteException"
+								key="message.professorship.isResponsibleFor"
+								path="/teacherSearchForShiftManagement.do?method=doSearch&amp;page=1"/>	   			
+								
+
+    		<forward name="successfull-delete" path="/teacherSearchForShiftManagement.do?method=doSearch&amp;page=1"/>
+	   	</action>		
+	   	<!-- ======================================================================== -->
 
 	</action-mappings>
 

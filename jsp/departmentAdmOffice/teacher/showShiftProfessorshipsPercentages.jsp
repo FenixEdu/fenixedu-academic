@@ -14,7 +14,10 @@
 	<bean:define id="teacherNumber" name="infoTeacher" property="teacherNumber"/>
 	<b><bean:message key="label.teacher.number" /></b> <bean:write name="teacherNumber"/> <br />
 
-	<b> <bean:message key="label.execution-course.name" /></b> <bean:write name="infoExecutionCourse" property="nome"/>
+	<b> <bean:message key="label.execution-course.name" /></b> <bean:write name="infoExecutionCourse" property="nome"/> <br />
+	(<i><html:link page="/teacherSearchForTeacherCreditsSheet.do?method=doSearch&page=1" paramId="teacherNumber" paramName="infoTeacher" paramProperty="teacherNumber">
+		<bean:message key="label.departmentTeachersList.teacherCreditsSheet"/>
+	</html:link></i>)
 </p>
 
 <html:errors/>

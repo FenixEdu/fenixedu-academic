@@ -496,4 +496,13 @@
 		<description></description>
 		<isTransactional>false</isTransactional>
 	</filter>
+	<filter>
+		<idInternal>413291</idInternal>
+		<name>CreditsServiceWithTeacherIdInSecondArgumentAuthorizationFilter</name>
+		<implementationClass>ServidorAplicacao.Filtro.credits.CreditsServiceWithTeacherIdInSecondArgumentAuthorization</implementationClass>
+		<description></description>
+		<isTransactional>false</isTransactional>
+	</filter>
+	
+
 </filterDefinitions>

@@ -5,8 +5,10 @@ import java.util.List;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularYear;
 import Dominio.ICursoExecucao;
+import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
+import Dominio.IExecutionYear;
 import ServidorPersistente.exceptions.ExistingPersistentException;
 import Util.TipoCurso;
 
@@ -91,5 +93,7 @@ public interface IPersistentExecutionCourse extends IPersistentObject {
 	public IExecutionCourse readbyCurricularCourseAndExecutionPeriod(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
 
 	public List readListbyCurricularCourseAndExecutionPeriod(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
+
+	public List readByDegreeCurricularPlanAndExecutionYear(IDegreeCurricularPlan degreeCurricularPlan, IExecutionYear executionYear) throws ExcepcaoPersistencia;
 	
 }

@@ -7,6 +7,10 @@ import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 
+import pt.utl.ist.berserk.ServiceRequest;
+import pt.utl.ist.berserk.ServiceResponse;
+import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
+
 import DataBeans.InfoRole;
 import Dominio.ICursoExecucao;
 import Dominio.IStudentCurricularPlan;
@@ -25,34 +29,17 @@ import Util.TipoCurso;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  * @author Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class StudentCurriculumAuthorizationFilter extends Filtro
+public class StudentCurriculumAuthorizationFilter extends AccessControlFilter
 {
 
-    public final static StudentCurriculumAuthorizationFilter instance =
-        new StudentCurriculumAuthorizationFilter();
-
     /**
-     * The singleton access method of this class.
-     *
-     * @return Returns the instance of this class responsible for the
-     * authorization access to services.
-     **/
-    public static Filtro getInstance()
+     * 
+     */
+    public StudentCurriculumAuthorizationFilter()
     {
-        return instance;
+        super();
     }
 
-    public void preFiltragem(IUserView id, Object[] argumentos) throws Exception
-    {
-
-        if ((id != null && id.getRoles() != null && !containsRole(id.getRoles()))
-            || (id != null && id.getRoles() != null && !hasProvilege(id, argumentos))
-            || (id == null)
-            || (id.getRoles() == null))
-        {
-            throw new NotAuthorizedException();
-        }
-    }
 
     /**
      * @param collection
@@ -69,6 +56,22 @@ public class StudentCurriculumAuthorizationFilter extends Filtro
         {
             return false;
         }
+    }
+
+    /* (non-Javadoc)
+     * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest, pt.utl.ist.berserk.ServiceResponse)
+     */
+    public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception
+    {
+        IUserView id = (IUserView) request.getRequester();
+		if ((id != null && id.getRoles() != null && !containsRole(id.getRoles()))
+			|| (id != null && id.getRoles() != null && !hasProvilege(id, request.getArguments()))
+			|| (id == null)
+			|| (id.getRoles() == null))
+		{
+			throw new NotAuthorizedException();
+		}
+        
     }
 
     /**
@@ -91,6 +94,18 @@ public class StudentCurriculumAuthorizationFilter extends Filtro
         roles.add(infoRole);
 
         return roles;
+    }
+
+    private List getRoleList(List roles)
+    {
+        List result = new ArrayList();
+        Iterator iterator = roles.iterator();
+        while (iterator.hasNext())
+        {
+            result.add(((InfoRole) iterator.next()).getRoleType());
+        }
+
+        return result;
     }
 
     /**
@@ -214,17 +229,4 @@ public class StudentCurriculumAuthorizationFilter extends Filtro
 
         return false;
     }
-
-    private List getRoleList(List roles)
-    {
-        List result = new ArrayList();
-        Iterator iterator = roles.iterator();
-        while (iterator.hasNext())
-        {
-            result.add(((InfoRole) iterator.next()).getRoleType());
-        }
-
-        return result;
-    }
-
 }

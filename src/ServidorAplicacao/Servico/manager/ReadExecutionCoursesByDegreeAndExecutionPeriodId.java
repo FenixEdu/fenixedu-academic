@@ -50,7 +50,6 @@ public class ReadExecutionCoursesByDegreeAndExecutionPeriodId implements IServic
 	 */
     public String getNome()
     {
-
         return "ReadExecutionCoursesByDegreeAndExecutionPeriodId";
     }
 

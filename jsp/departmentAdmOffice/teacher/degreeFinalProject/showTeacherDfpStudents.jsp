@@ -11,6 +11,9 @@
 	<b><bean:message key="label.teacher.name" /></b> <bean:write name="infoTeacher" property="infoPerson.nome"/><br />
 	<bean:define id="teacherNumber" name="infoTeacher" property="teacherNumber"/>
 	<b><bean:message key="label.teacher.number" /></b> <bean:write name="teacherNumber"/> <br />
+	(<i><html:link page="/teacherSearchForTeacherCreditsSheet.do?method=doSearch&page=1" paramId="teacherNumber" paramName="infoTeacher" paramProperty="teacherNumber">
+		<bean:message key="label.departmentTeachersList.teacherCreditsSheet"/>
+	</html:link></i>)
 </p>
 
 <h3>
@@ -24,20 +27,33 @@
 	<html:hidden property="teacherId"/>	
 	<html:hidden property="executionYearId"/>		
 	<html:errors />
-	<p>
-	
-		<bean:message key="label.teacher-dfp-student.student-number"/>
-		<logic:messagesPresent>
-			<html:text property="studentNumber"/>		
-		</logic:messagesPresent>
-		<logic:messagesNotPresent>
-			<html:text property="studentNumber" value=""/>		
-		</logic:messagesNotPresent>		
-
-		<html:submit styleClass="inputbutton">
-			<bean:message key="button.ok"/>
-		</html:submit>
-	</p>
+	<table>
+		<tr>
+			<td>
+				<bean:message key="label.teacher-dfp-student.student-number"/>				
+			</td>
+			<td>
+				<logic:messagesPresent>
+					<html:text property="studentNumber" size="6"/>		
+				</logic:messagesPresent>
+				<logic:messagesNotPresent>
+					<html:text property="studentNumber" value="" size="6"/>		
+				</logic:messagesNotPresent>		
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<bean:message key="label.teacher-dfp-student.percentage"/>
+			</td>
+			
+			<td>
+				<html:text property="percentage" size="4"/>
+				<html:submit styleClass="inputbutton">
+					<bean:message key="button.ok"/>
+				</html:submit>
+			</td>
+		</tr>
+	</table>	
 </html:form>
 
 <bean:define id="teacherDfpStudentsList" name="teacherDegreeFinalProjectStudents" property="infoTeacherDegreeFinalProjectStudentList" scope="request"/>
@@ -61,8 +77,12 @@
 				<bean:message key="label.teacher-dfp-student.student-name"/>
 			</td>
 			<td class="listClasses-header">
+				<bean:message key="label.teacher-dfp-student.percentage"/>
+			</td>
+			<td class="listClasses-header">
 				<bean:message key="label.teacher-dfp-student.remove-student"/>
 			</td>
+			
 		</tr>			
 			<bean:define id="teacherId" name="infoTeacher" property="idInternal"/>
 			<logic:iterate id="infoTeacherDfpStudent" name="teacherDfpStudentsList">
@@ -73,6 +93,10 @@
 					<td class="listClasses">
 						<bean:write name="infoTeacherDfpStudent" property="infoStudent.infoPerson.nome"/>
 					</td>
+					<td class="listClasses">
+						<bean:write name="infoTeacherDfpStudent" property="percentage"/> %
+					</td>
+
 					<td class="listClasses">
 						<html:link page='<%= "/manageTeacherDFPStudent.do?method=delete&amp;page=0&amp;teacherId=" + teacherId.toString() %>' paramId="idInternal" paramName="infoTeacherDfpStudent" paramProperty="idInternal">
 							<bean:message key="link.remove"/>

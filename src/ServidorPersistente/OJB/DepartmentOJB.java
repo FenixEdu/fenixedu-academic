@@ -197,17 +197,6 @@ public class DepartmentOJB extends ObjectFenixOJB implements IPersistentDepartme
             }
         }
 
-        if (mailingCC != null)
-        {
-            String code = mailingCC.getSigla();
-            if ((code != null) && !(code.equals("")))
-            {
-                Criteria mailingCCCriteria = new Criteria();
-                mailingCCCriteria.addLike("code", mailingCC.getSigla().substring(0, 2) + "%");
-                criteria.addOrCriteria(mailingCCCriteria);
-            }
-        }
-
         if (criteria.getElements().hasMoreElements())
         {
             return (IDepartment) queryObject(Department.class, criteria);

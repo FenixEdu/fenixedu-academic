@@ -22,19 +22,10 @@ public interface IPersistentShiftProfessorship extends IPersistentObject {
 	IShiftProfessorship readByUnique(IShiftProfessorship teacherShiftPercentage) throws ExcepcaoPersistencia;
 	void delete (IShiftProfessorship teacherShiftPercentage) throws ExcepcaoPersistencia;
     IShiftProfessorship readByProfessorshipAndShift(IProfessorship professorship, ITurno shift) throws ExcepcaoPersistencia;
-    /**
-     * @param teacher
-     * @param executionPeriod
-     * @param weekDay
-     * @param startTime
-     * @param endTime
-     * @return
-     */
+
     List readOverlappingPeriod(ITeacher teacher, IExecutionPeriod executionPeriod, DiaSemana weekDay, Date startTime, Date endTime) throws ExcepcaoPersistencia;
-    /**
-     * @param teacher
-     * @param executionPeriod
-     * @return
-     */
+
     List readByTeacherAndExecutionPeriodAndDegreeType(ITeacher teacher, IExecutionPeriod executionPeriod, TipoCurso curso) throws ExcepcaoPersistencia;
+
+    List readByProfessorship(IProfessorship professorship) throws ExcepcaoPersistencia;
 }

@@ -38,26 +38,20 @@ public class CRUDTeacherDegreeFinalProjectStudent extends CRUDActionByOID
 	 *          DataBeans.InfoObject, org.apache.struts.action.ActionForm,
 	 *          javax.servlet.http.HttpServletRequest)
 	 */
-    protected void populateFormFromInfoObject(
-        ActionMapping mapping,
-        InfoObject infoObject,
-        ActionForm form,
-        HttpServletRequest request)
-        throws FenixActionException
+    protected void populateFormFromInfoObject(ActionMapping mapping, InfoObject infoObject,
+            ActionForm form, HttpServletRequest request) throws FenixActionException
     {
         DynaActionForm teacherDegreeFinalProjectStudentForm = (DynaActionForm) form;
-        InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent =
-            (InfoTeacherDegreeFinalProjectStudent) infoObject;
+        InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = (InfoTeacherDegreeFinalProjectStudent) infoObject;
 
-        teacherDegreeFinalProjectStudentForm.set(
-            "idInternal",
-            infoTeacherDegreeFinalProjectStudent.getIdInternal());
-        teacherDegreeFinalProjectStudentForm.set(
-            "teacherId",
-            infoTeacherDegreeFinalProjectStudent.getInfoTeacher().getIdInternal());
-        teacherDegreeFinalProjectStudentForm.set(
-            "executionYearId",
-            infoTeacherDegreeFinalProjectStudent.getInfoExecutionYear().getIdInternal());
+        teacherDegreeFinalProjectStudentForm.set("idInternal", infoTeacherDegreeFinalProjectStudent
+                .getIdInternal());
+        teacherDegreeFinalProjectStudentForm.set("teacherId", infoTeacherDegreeFinalProjectStudent
+                .getInfoTeacher().getIdInternal());
+        teacherDegreeFinalProjectStudentForm
+                .set("executionYearId", infoTeacherDegreeFinalProjectStudent.getInfoExecutionYear()
+                        .getIdInternal());
+        teacherDegreeFinalProjectStudentForm.set("percentage", "100");
     }
 
     /*
@@ -67,38 +61,36 @@ public class CRUDTeacherDegreeFinalProjectStudent extends CRUDActionByOID
 	 *          ServidorApresentacao.mapping.framework.CRUDMapping)
 	 */
     protected InfoObject populateInfoObjectFromForm(ActionForm form, CRUDMapping mapping)
-        throws FenixActionException
+            throws FenixActionException
     {
         DynaActionForm teacherDegreeFinalProjectStudentForm = (DynaActionForm) form;
-        InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent =
-            new InfoTeacherDegreeFinalProjectStudent();
+        InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = new InfoTeacherDegreeFinalProjectStudent();
 
         Integer idInternal = (Integer) teacherDegreeFinalProjectStudentForm.get("idInternal");
         Integer teacherId = (Integer) teacherDegreeFinalProjectStudentForm.get("teacherId");
-        Integer studentNumber =
-            Integer.valueOf((String) teacherDegreeFinalProjectStudentForm.get("studentNumber"));
+        Integer studentNumber = Integer.valueOf((String) teacherDegreeFinalProjectStudentForm.get(
+                "studentNumber"));
         Integer executionYearId = (Integer) teacherDegreeFinalProjectStudentForm.get("executionYearId");
+        Double percentage = Double.valueOf((String) teacherDegreeFinalProjectStudentForm.get(
+                "percentage"));
 
         infoTeacherDegreeFinalProjectStudent.setIdInternal(idInternal);
 
-        infoTeacherDegreeFinalProjectStudent.setInfoExecutionYear(
-            new InfoExecutionYear(executionYearId));
+        infoTeacherDegreeFinalProjectStudent
+                .setInfoExecutionYear(new InfoExecutionYear(executionYearId));
 
         InfoStudent infoStudent = new InfoStudent();
         infoStudent.setNumber(studentNumber);
-        infoTeacherDegreeFinalProjectStudent.setInfoStudent(infoStudent);
 
+        infoTeacherDegreeFinalProjectStudent.setInfoStudent(infoStudent);
         infoTeacherDegreeFinalProjectStudent.setInfoTeacher(new InfoTeacher(teacherId));
+        infoTeacherDegreeFinalProjectStudent.setPercentage(percentage);
 
         return infoTeacherDegreeFinalProjectStudent;
     }
 
-    public ActionForward list(
-        ActionMapping mapping,
-        ActionForm form,
-        HttpServletRequest request,
-        HttpServletResponse response)
-        throws Exception
+    public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception
     {
         IUserView userView = SessionUtils.getUserView(request);
 
@@ -109,22 +101,18 @@ public class CRUDTeacherDegreeFinalProjectStudent extends CRUDActionByOID
             Integer teacherId = (Integer) teacherDegreeFinalProjectStudentForm.get("teacherId");
             infoTeacher = new InfoTeacher(teacherId);
         }
-        Object args[] = { infoTeacher };
+        Object args[] = {infoTeacher};
 
-        TeacherDegreeFinalProjectStudentsDTO teacherDFPStudents =
-            (TeacherDegreeFinalProjectStudentsDTO) ServiceUtils.executeService(
-                userView,
-                "ReadTeacherDFPStudents",
-                args);
+        TeacherDegreeFinalProjectStudentsDTO teacherDFPStudents = (TeacherDegreeFinalProjectStudentsDTO) ServiceUtils
+                .executeService(userView, "ReadTeacherDFPStudents", args);
 
         request.setAttribute("teacherDegreeFinalProjectStudents", teacherDFPStudents);
 
-        InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent =
-            new InfoTeacherDegreeFinalProjectStudent();
+        InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = new InfoTeacherDegreeFinalProjectStudent();
 
         infoTeacherDegreeFinalProjectStudent.setInfoTeacher(teacherDFPStudents.getInfoTeacher());
-        infoTeacherDegreeFinalProjectStudent.setInfoExecutionYear(
-            teacherDFPStudents.getInfoExecutionYear());
+        infoTeacherDegreeFinalProjectStudent.setInfoExecutionYear(teacherDFPStudents
+                .getInfoExecutionYear());
         populateFormFromInfoObject(mapping, infoTeacherDegreeFinalProjectStudent, form, request);
         return mapping.findForward("list-teacher-degree-final-project-students");
     }

@@ -75,6 +75,9 @@
 		<put name="body" value="/credits/showTeacherCreditsSheet.jsp"/>
 	</definition>
 
+	<definition name="createProfessorship" extends="departmentAdmOffice.masterPage">
+		<put name="body" value="/departmentAdmOffice/teacher/professorship/createProfessorship.jsp"/>
+	</definition>
 
 
 

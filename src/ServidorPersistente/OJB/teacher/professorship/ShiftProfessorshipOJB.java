@@ -180,9 +180,19 @@ public class ShiftProfessorshipOJB extends ObjectFenixOJB implements IPersistent
     public List readByTeacherAndExecutionPeriodAndDegreeType(ITeacher teacher, IExecutionPeriod executionPeriod, TipoCurso degreeType) throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
-        criteria.addEqualTo("professorship.keyTeacher", teacher.getIdInternal());
-        criteria.addEqualTo("professorship.executionCourse.keyExecutionPeriod", executionPeriod.getIdInternal());
+        criteria.addEqualTo("professorship.teacher.idInternal", teacher.getIdInternal());
+        criteria.addEqualTo("professorship.executionCourse.executionPeriod.idInternal", executionPeriod.getIdInternal());
 		criteria.addEqualTo("professorship.executionCourse.associatedCurricularCourses.degreeCurricularPlan.degree.tipoCurso", degreeType);
         return queryList(ShiftProfessorship.class, criteria, true);
+    }
+
+    /* (non-Javadoc)
+     * @see ServidorPersistente.IPersistentShiftProfessorship#readByProfessorship(Dominio.IProfessorship)
+     */
+    public List readByProfessorship(IProfessorship professorship) throws ExcepcaoPersistencia
+    {
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("professorship.idInternal", professorship.getIdInternal());		
+        return queryList(ShiftProfessorship.class, criteria);
     }
 }

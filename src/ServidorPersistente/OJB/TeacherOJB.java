@@ -163,8 +163,10 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher
         String likeCode = department.getCode() + "%";
         Criteria workingCostCenter = new Criteria();
         workingCostCenter.addLike("workingPlaceCostCenter.sigla", likeCode);
-        Criteria mailingCostCenter = new Criteria();
-        mailingCostCenter.addLike("mailingCostCenter.sigla", likeCode);
+        
+//        Criteria mailingCostCenter = new Criteria();
+//        mailingCostCenter.addLike("mailingCostCenter.sigla", likeCode);
+        
         Date now = Calendar.getInstance().getTime();
         Criteria criteriaDate = new Criteria();
         criteriaDate.addLessOrEqualThan("beginDate", now);
@@ -175,9 +177,10 @@ public class TeacherOJB extends ObjectFenixOJB implements IPersistentTeacher
         criteriaDate2.addGreaterOrEqualThan("endDate", now);
         Criteria criteriaFinal = new Criteria();
         criteriaFinal.addOrCriteria(workingCostCenter);
-        criteriaFinal.addOrCriteria(mailingCostCenter);
+//        criteriaFinal.addOrCriteria(mailingCostCenter);
         criteriaFinal.addAndCriteria(criteriaDate);
         criteriaFinal.addOrCriteria(criteriaDate2);
+        
         List employeesHistoric = queryList(EmployeeHistoric.class, criteriaFinal);
 
         Collection employeesIdInternals = CollectionUtils.collect(employeesHistoric, new Transformer() {

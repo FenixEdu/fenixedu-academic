@@ -12,12 +12,15 @@ import java.util.List;
 import org.apache.ojb.broker.query.Criteria;
 import org.odmg.QueryException;
 
+import Dominio.CursoExecucao;
 import Dominio.ExecutionCourse;
 import Dominio.ICurricularCourse;
 import Dominio.ICurricularYear;
 import Dominio.ICursoExecucao;
+import Dominio.IDegreeCurricularPlan;
 import Dominio.IExecutionCourse;
 import Dominio.IExecutionPeriod;
+import Dominio.IExecutionYear;
 import Dominio.IFrequenta;
 import Dominio.ISite;
 import Dominio.ITurno;
@@ -374,5 +377,16 @@ public class ExecutionCourseOJB extends ObjectFenixOJB implements IPersistentExe
 
         return queryList(ExecutionCourse.class, criteria);
 
+    }
+
+    /* (non-Javadoc)
+     * @see ServidorPersistente.IPersistentExecutionCourse#readByExecutionDegree(Dominio.CursoExecucao)
+     */
+    public List readByDegreeCurricularPlanAndExecutionYear(IDegreeCurricularPlan degreeCurricularPlan, IExecutionYear executionYear) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("associatedCurricularCourses.degreeCurricularPlanKey", degreeCurricularPlan.getIdInternal());
+		criteria.addEqualTo("executionPeriod.keyExecutionYear", executionYear.getIdInternal());
+        return queryList(ExecutionCourse.class, criteria);
     }
 }

@@ -3156,6 +3156,17 @@
 		</filterChains>
 	</service>
 	<service>
+		<idInternal>413293</idInternal>
+		<name>RemoveProfessorshipByDepartment</name>
+		<implementationClass>ServidorAplicacao.Servico.teacher.DeleteTeacher</implementationClass>
+		<description></description>
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain id="413291"/>
+		</filterChains>
+	</service>	
+
+	<service>
 		<idInternal>349</idInternal>
 		<name>InsertSection</name>
 		<implementationClass>ServidorAplicacao.Servico.teacher.InsertSection</implementationClass>
@@ -5265,4 +5276,26 @@
 		<isTransactional>true</isTransactional>
 		<filterChains></filterChains>
 	</service>
+	<service>
+		<idInternal>413291</idInternal>
+		<name>ReadExecutionCoursesByExecutionDegree</name>
+		<implementationClass>ServidorAplicacao.Servico.degree.execution.ReadExecutionCoursesByExecutionDegreeService</implementationClass>
+		<description>Reads execution courses from an execution degree</description>
+		<isTransactional>true</isTransactional>
+		<filterChains></filterChains>
+	</service>
+	<service>
+		<idInternal>413292</idInternal>
+		<name>ReadExecutionDegreesByExecutionYearAndDegreeType</name>
+		<implementationClass>ServidorAplicacao.Servico.degree.execution.ReadExecutionDegreesByExecutionYearAndDegreeType</implementationClass>
+		<description>
+				Reads all execution degrees by execution year and degree type. 
+				If degree type is null then it reads all. 
+				If execution year is null then it reads by current execution year.
+		</description>
+		<isTransactional>true</isTransactional>
+		<filterChains></filterChains>
+	</service>
+	
+
 </serviceDefinitions>

@@ -7,6 +7,7 @@ package ServidorPersistente.degree.finalProject;
 import java.util.List;
 
 import Dominio.IExecutionYear;
+import Dominio.IStudent;
 import Dominio.ITeacher;
 import Dominio.degree.finalProject.ITeacherDegreeFinalProjectStudent;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -18,8 +19,12 @@ import ServidorPersistente.IPersistentObject;
 public interface IPersistentTeacherDegreeFinalProjectStudent extends IPersistentObject
 {
 
-    List readByTeacherAndExecutionYear(ITeacher teacher, IExecutionYear executionYear) throws ExcepcaoPersistencia;
+    List readByTeacherAndExecutionYear(ITeacher teacher, IExecutionYear executionYear)
+            throws ExcepcaoPersistencia;
 
-	ITeacherDegreeFinalProjectStudent  readByUnique(ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent)  throws ExcepcaoPersistencia;
+    ITeacherDegreeFinalProjectStudent readByUnique(
+            ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent) throws ExcepcaoPersistencia;
+
+    List readByStudent(IStudent student) throws ExcepcaoPersistencia;
 
 }

@@ -1,4 +1,6 @@
 package ServidorAplicacao.Servico.teacher;
+import java.util.List;
+
 import Dominio.ExecutionCourse;
 import Dominio.IExecutionCourse;
 import Dominio.IProfessorship;
@@ -13,6 +15,7 @@ import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionCourse;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentResponsibleFor;
+import ServidorPersistente.IPersistentShiftProfessorship;
 import ServidorPersistente.IPersistentTeacher;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
@@ -21,7 +24,21 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
  *
  */
 public class DeleteTeacher implements IServico {
-	private static DeleteTeacher service = new DeleteTeacher();
+    /**
+     * @author jpvl
+     */
+    public class ExistingShiftProfessorship extends FenixServiceException
+    {
+        /**
+         * 
+         */
+        public ExistingShiftProfessorship()
+        {
+            super();
+        }
+    }
+
+    private static DeleteTeacher service = new DeleteTeacher();
 	/**
 	 * The singleton access method of this class.
 	 **/
@@ -49,12 +66,15 @@ public class DeleteTeacher implements IServico {
 			IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
 			IPersistentResponsibleFor persistentResponsibleFor = sp.getIPersistentResponsibleFor();
 			IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+			
+			IPersistentShiftProfessorship shiftProfessorshipDAO = sp.getIPersistentShiftProfessorship();
 
 			Teacher teacher = new Teacher(teacherCode);
 			ITeacher iTeacher = (ITeacher) persistentTeacher.readByOId(teacher, false);
 			if (teacher == null) {
 				throw new InvalidArgumentsServiceException();
 			}
+			
 			
 			ExecutionCourse executionCourse = new ExecutionCourse(infoExecutionCourseCode);
 			IExecutionCourse iExecutionCourse = (IExecutionCourse) persistentExecutionCourse.readByOId(executionCourse, false);
@@ -66,7 +86,15 @@ public class DeleteTeacher implements IServico {
 				throw new notAuthorizedServiceDeleteException();
 			}
 			IProfessorship professorshipToDelete = persistentProfessorship.readByTeacherAndExecutionCourse(iTeacher, iExecutionCourse);
-			persistentProfessorship.delete(professorshipToDelete);
+			
+			List shiftProfessorshipList = shiftProfessorshipDAO.readByProfessorship(professorshipToDelete);
+						
+			if (shiftProfessorshipList.isEmpty()) {
+				persistentProfessorship.delete(professorshipToDelete);
+			}else {
+			    throw new ExistingShiftProfessorship();
+			}
+			
 			return Boolean.TRUE;
 		} catch (ExcepcaoPersistencia e) {
 			throw new FenixServiceException(e);

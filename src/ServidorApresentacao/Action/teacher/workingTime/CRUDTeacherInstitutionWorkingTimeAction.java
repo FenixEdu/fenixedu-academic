@@ -5,11 +5,14 @@
 package ServidorApresentacao.Action.teacher.workingTime;
 
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -208,6 +211,17 @@ public class CRUDTeacherInstitutionWorkingTimeAction extends CRUDActionByOID
         TeacherInstitutionWorkingTimeDTO teacherInstitutionWorkingTimeDTO = (TeacherInstitutionWorkingTimeDTO) ServiceUtils
                 .executeService(userView, "ReadTeacherInstitutionWorkingTime", args);
 
+        ComparatorChain comparatorChain = new ComparatorChain();
+        
+        BeanComparator weekDayComparator = new BeanComparator("weekDay.diaSemana");
+		BeanComparator startTimeComparator = new BeanComparator("startTime");
+		
+		comparatorChain.addComparator(weekDayComparator);
+		comparatorChain.addComparator(startTimeComparator);
+        
+        Collections.sort(teacherInstitutionWorkingTimeDTO.getInfoTeacherInstitutionWorkTimeList(), comparatorChain);
+        
+        
         request.setAttribute("teacherInstitutionWorkingTime", teacherInstitutionWorkingTimeDTO);
 
         return mapping.findForward("list-teacher-institution-working-time");

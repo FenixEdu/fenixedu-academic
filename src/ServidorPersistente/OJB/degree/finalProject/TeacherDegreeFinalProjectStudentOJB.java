@@ -9,6 +9,7 @@ import java.util.List;
 import org.apache.ojb.broker.query.Criteria;
 
 import Dominio.IExecutionYear;
+import Dominio.IStudent;
 import Dominio.ITeacher;
 import Dominio.degree.finalProject.ITeacherDegreeFinalProjectStudent;
 import Dominio.degree.finalProject.TeacherDegreeFinalProjectStudent;
@@ -19,9 +20,9 @@ import ServidorPersistente.degree.finalProject.IPersistentTeacherDegreeFinalProj
 /**
  * @author jpvl
  */
-public class TeacherDegreeFinalProjectStudentOJB
-    extends ObjectFenixOJB
-    implements IPersistentTeacherDegreeFinalProjectStudent
+public class TeacherDegreeFinalProjectStudentOJB extends ObjectFenixOJB
+        implements
+            IPersistentTeacherDegreeFinalProjectStudent
 {
 
     /*
@@ -29,26 +30,43 @@ public class TeacherDegreeFinalProjectStudentOJB
 	 * 
 	 * @see ServidorPersistente.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent#readByTeacher(Dominio.ITeacher)
 	 */
-    public List readByTeacherAndExecutionYear(ITeacher teacher, IExecutionYear executionYear) throws ExcepcaoPersistencia
+    public List readByTeacherAndExecutionYear(ITeacher teacher, IExecutionYear executionYear)
+            throws ExcepcaoPersistencia
     {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyTeacher", teacher.getIdInternal());
-		criteria.addEqualTo("keyExecutionYear", executionYear.getIdInternal());
+        criteria.addEqualTo("keyExecutionYear", executionYear.getIdInternal());
         return queryList(TeacherDegreeFinalProjectStudent.class, criteria);
     }
 
-    /* (non-Javadoc)
-     * @see ServidorPersistente.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent#readByUnique(Dominio.degree.finalProject.ITeacherDegreeFinalProjectStudent)
-     */
-    public ITeacherDegreeFinalProjectStudent readByUnique(ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent) throws ExcepcaoPersistencia
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent#readByUnique(Dominio.degree.finalProject.ITeacherDegreeFinalProjectStudent)
+	 */
+    public ITeacherDegreeFinalProjectStudent readByUnique(
+            ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent) throws ExcepcaoPersistencia
     {
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo("keyTeacher", teacherDegreeFinalProjectStudent.getTeacher().getIdInternal());
-		criteria.addEqualTo("keyExecutionYear", teacherDegreeFinalProjectStudent.getExecutionYear().getIdInternal());
-		criteria.addEqualTo("keyStudent", teacherDegreeFinalProjectStudent.getStudent().getIdInternal());		
-		return (ITeacherDegreeFinalProjectStudent) queryObject(TeacherDegreeFinalProjectStudent.class, criteria);
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("keyTeacher", teacherDegreeFinalProjectStudent.getTeacher().getIdInternal());
+        criteria.addEqualTo("keyExecutionYear", teacherDegreeFinalProjectStudent.getExecutionYear()
+                .getIdInternal());
+        criteria.addEqualTo("keyStudent", teacherDegreeFinalProjectStudent.getStudent().getIdInternal());
+        return (ITeacherDegreeFinalProjectStudent) queryObject(TeacherDegreeFinalProjectStudent.class,
+                criteria);
 
-        
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorPersistente.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent#readByStudent(Dominio.IStudent)
+	 */
+    public List readByStudent(IStudent student) throws ExcepcaoPersistencia
+    {
+        Criteria criteria = new Criteria();
+        criteria.addEqualTo("student.idInternal", student.getIdInternal());
+        return queryList(TeacherDegreeFinalProjectStudent.class, criteria);
     }
 
 }

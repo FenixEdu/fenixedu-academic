@@ -79,6 +79,8 @@
       <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER"
 				        		 primarykey="true" autoincrement="true"/>
 
+      <field-descriptor name="percentage" column="PERCENTAGE" jdbc-type="DOUBLE"/>
+      
       <field-descriptor name="keyExecutionYear" column="KEY_EXECUTION_YEAR" jdbc-type="INTEGER"/>
 
       <field-descriptor name="keyTeacher" column="KEY_TEACHER" jdbc-type="INTEGER"/>

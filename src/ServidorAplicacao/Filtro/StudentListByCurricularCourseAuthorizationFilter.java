@@ -7,6 +7,10 @@ import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 
+import pt.utl.ist.berserk.ServiceRequest;
+import pt.utl.ist.berserk.ServiceResponse;
+import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
+
 import DataBeans.InfoRole;
 import Dominio.CurricularCourse;
 import Dominio.ICurricularCourse;
@@ -21,43 +25,24 @@ import Util.RoleType;
 import Util.TipoCurso;
 
 /**
- * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  * @author Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class StudentListByCurricularCourseAuthorizationFilter extends Filtro
+public class StudentListByCurricularCourseAuthorizationFilter extends AccessControlFilter
 {
 
-    public final static StudentListByCurricularCourseAuthorizationFilter instance =
-        new StudentListByCurricularCourseAuthorizationFilter();
-
     /**
-     * The singleton access method of this class.
-     *
-     * @return Returns the instance of this class responsible for the
-     * authorization access to services.
-     **/
-    public static Filtro getInstance()
+	 *  
+	 */
+    public StudentListByCurricularCourseAuthorizationFilter()
     {
-        return instance;
-    }
-
-    public void preFiltragem(IUserView id, Object[] argumentos) throws Exception
-    {
-
-        if ((id != null && id.getRoles() != null && !containsRole(id.getRoles()))
-            || (id != null && id.getRoles() != null && !hasPrivilege(id, argumentos))
-            || (id == null)
-            || (id.getRoles() == null))
-        {
-            throw new NotAuthorizedException();
-        }
+        super();
     }
 
     /**
-     * @param collection
-     * @return boolean
-     */
+	 * @param collection
+	 * @return boolean
+	 */
     private boolean containsRole(Collection roles)
     {
         CollectionUtils.intersection(roles, getNeededRoles());
@@ -65,15 +50,33 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro
         if (roles.size() != 0)
         {
             return true;
-        } else
+        }
+        else
         {
             return false;
         }
     }
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see pt.utl.ist.berserk.logic.filterManager.IFilter#execute(pt.utl.ist.berserk.ServiceRequest,
+	 *          pt.utl.ist.berserk.ServiceResponse)
+	 */
+    public void execute(ServiceRequest request, ServiceResponse response)
+            throws FilterException, Exception
+    {
+        IUserView id = (IUserView) request.getRequester();
+        if ((id != null && id.getRoles() != null && !containsRole(id.getRoles()))
+                || (id != null && id.getRoles() != null && !hasPrivilege(id, request.getArguments()))
+                || (id == null) || (id.getRoles() == null))
+        {
+            throw new NotAuthorizedException();
+        }
+    }
 
     /**
-     * @return The Needed Roles to Execute The Service
-     */
+	 * @return The Needed Roles to Execute The Service
+	 */
     private Collection getNeededRoles()
     {
         List roles = new ArrayList();
@@ -89,11 +92,23 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro
         return roles;
     }
 
+    private List getRoleList(List roles)
+    {
+        List result = new ArrayList();
+        Iterator iterator = roles.iterator();
+        while (iterator.hasNext())
+        {
+            result.add(((InfoRole) iterator.next()).getRoleType());
+        }
+
+        return result;
+    }
+
     /**
-     * @param id
-     * @param argumentos
-     * @return  
-     */
+	 * @param id
+	 * @param argumentos
+	 * @return
+	 */
     private boolean hasPrivilege(IUserView id, Object[] arguments)
     {
 
@@ -107,14 +122,15 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro
         // Read The DegreeCurricularPlan
         try
         {
-            IPersistentCurricularCourse persistentCurricularCourse =
-                SuportePersistenteOJB.getInstance().getIPersistentCurricularCourse();
+            IPersistentCurricularCourse persistentCurricularCourse = SuportePersistenteOJB.getInstance()
+                    .getIPersistentCurricularCourse();
             ICurricularCourse curricularCourseTemp = new CurricularCourse();
             curricularCourseTemp.setIdInternal(curricularCourseID);
 
-            curricularCourse =
-                (ICurricularCourse) persistentCurricularCourse.readByOId(curricularCourseTemp, false);
-        } catch (Exception e)
+            curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOId(
+                    curricularCourseTemp, false);
+        }
+        catch (Exception e)
         {
             return false;
         }
@@ -128,14 +144,12 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro
         roleTemp.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
         if (CollectionUtils.containsAny(roles, roleTemp))
         {
-            if (curricularCourse
-                .getDegreeCurricularPlan()
-                .getDegree()
-                .getTipoCurso()
-                .equals(TipoCurso.MESTRADO_OBJ))
+            if (curricularCourse.getDegreeCurricularPlan().getDegree().getTipoCurso()
+                    .equals(TipoCurso.MESTRADO_OBJ))
             {
                 return true;
-            } else
+            }
+            else
             {
                 return false;
             }
@@ -150,17 +164,16 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro
             // Read The ExecutionDegree
             try
             {
-                ICursoExecucaoPersistente persistentExecutionDegree =
-                    SuportePersistenteOJB.getInstance().getICursoExecucaoPersistente();
+                ICursoExecucaoPersistente persistentExecutionDegree = SuportePersistenteOJB
+                        .getInstance().getICursoExecucaoPersistente();
 
-                List executionDegrees =
-                    persistentExecutionDegree.readByDegreeCurricularPlan(
+                List executionDegrees = persistentExecutionDegree.readByDegreeCurricularPlan(
                         curricularCourse.getDegreeCurricularPlan());
                 if (executionDegrees == null)
                 {
                     return false;
                 }
-                // IMPORTANT: It's assumed that the coordinator for a Degree is ALWAYS the same	
+                // IMPORTANT: It's assumed that the coordinator for a Degree is ALWAYS the same
                 teacher = ((ICursoExecucao) executionDegrees.get(0)).getCoordinator();
 
                 if (teacher == null)
@@ -171,28 +184,17 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro
                 if (id.getUtilizador().equals(teacher.getPerson().getUsername()))
                 {
                     return true;
-                } else
+                }
+                else
                 {
                     return false;
                 }
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 return false;
             }
         }
         return false;
     }
-
-    private List getRoleList(List roles)
-    {
-        List result = new ArrayList();
-        Iterator iterator = roles.iterator();
-        while (iterator.hasNext())
-        {
-            result.add(((InfoRole) iterator.next()).getRoleType());
-        }
-
-        return result;
-    }
-
 }

@@ -4,7 +4,11 @@
  */
 package ServidorAplicacao.Servico.degree.finalProject;
 
+import java.util.Iterator;
+import java.util.List;
+
 import DataBeans.InfoObject;
+import DataBeans.InfoStudent;
 import DataBeans.degree.finalProject.InfoTeacherDegreeFinalProjectStudent;
 import DataBeans.util.Cloner;
 import Dominio.IDomainObject;
@@ -29,11 +33,17 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends EditDomainObjectS
 	 */
     public class StudentNotFoundServiceException extends FenixServiceException
     {
-
-        /**
-		 *  
-		 */
         public StudentNotFoundServiceException()
+        {
+            super();
+        }
+    }
+    /**
+	 * @author jpvl
+	 */
+    public class StudentPercentageExceed extends FenixServiceException
+    {
+        public StudentPercentageExceed()
         {
             super();
         }
@@ -58,6 +68,61 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends EditDomainObjectS
         InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = (InfoTeacherDegreeFinalProjectStudent) infoObject;
         return Cloner.copyInfoTeacherDegreeFinalProjectStudent2ITeacherDegreeFinalProjectStudent(
                 infoTeacherDegreeFinalProjectStudent);
+    }
+
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see ServidorAplicacao.Servico.framework.EditDomainObjectService#doBeforeLock(Dominio.IDomainObject,
+	 *          DataBeans.InfoObject, ServidorPersistente.ISuportePersistente)
+	 */
+    protected void doBeforeLock(IDomainObject domainObjectToLock, InfoObject infoObject,
+            ISuportePersistente sp) throws FenixServiceException
+    {
+        try
+        {
+            InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = (InfoTeacherDegreeFinalProjectStudent) infoObject;
+
+            InfoStudent infoStudent = infoTeacherDegreeFinalProjectStudent.getInfoStudent();
+            IPersistentStudent studentDAO = sp.getIPersistentStudent();
+
+            IStudent student = studentDAO.readByNumero(infoStudent.getNumber(),
+                    TipoCurso.LICENCIATURA_OBJ);
+            if (student == null)
+            {
+                throw new StudentNotFoundServiceException();
+            }
+            IPersistentTeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudentDAO = sp
+                    .getIPersistentTeacherDegreeFinalProjectStudent();
+            List teacherDegreeFinalProjectStudentList = teacherDegreeFinalProjectStudentDAO
+                    .readByStudent(student);
+
+            double requestedPercentage = ((InfoTeacherDegreeFinalProjectStudent) infoObject)
+                    .getPercentage().doubleValue();
+
+            Iterator iterator = teacherDegreeFinalProjectStudentList.iterator();
+            double percentage = requestedPercentage;
+            while (iterator.hasNext())
+            {
+                ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = (ITeacherDegreeFinalProjectStudent) iterator
+                        .next();
+
+                if (teacherDegreeFinalProjectStudent.getTeacher().getIdInternal().intValue() != infoTeacherDegreeFinalProjectStudent
+                        .getInfoTeacher().getIdInternal().intValue())
+                {
+                    percentage += teacherDegreeFinalProjectStudent.getPercentage().doubleValue();
+                }
+            }
+            if (percentage > 100)
+            {
+                throw new StudentPercentageExceed();
+            }
+        }
+        catch (ExcepcaoPersistencia e)
+        {
+            e.printStackTrace(System.out);
+            throw new FenixServiceException("Problems on database!", e);
+        }
     }
     /*
 	 * (non-Javadoc)
@@ -107,5 +172,4 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends EditDomainObjectS
 
         return teacherDegreeFinalProjectStudent;
     }
-
 }

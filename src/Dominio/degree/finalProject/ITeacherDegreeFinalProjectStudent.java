@@ -14,6 +14,9 @@ import Dominio.ITeacher;
  */
 public interface ITeacherDegreeFinalProjectStudent extends IDomainObject
 {
+	public void setPercentage(Double percentage);
+	public Double getPercentage();
+  
     /**
      * @return Returns the executionYear.
      */
