@@ -1,5 +1,6 @@
 package Dominio;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import Util.EnrolmentState;
 import Util.Specialization;
 import Util.StudentCurricularPlanState;
 import Util.enrollment.EnrollmentRuleType;
+import Dominio.degree.enrollment.rules.IEnrollmentRule;
 
 public class StudentCurricularPlan extends DomainObject implements IStudentCurricularPlan {
 
@@ -383,7 +385,20 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 	public List getCurricularCoursesToEnroll(IExecutionPeriod executionPeriod, IDegreeCurricularPlan degreeCurricularPlan,
 		EnrollmentRuleType enrollmentRuleType)
 	{
-		return null;
+		List setOfCurricularCoursesToEnroll = this.getCommonBranchAndStudentBranchesCourses();
+		List enrollmentRules = this.getListOfEnrollmentRules(enrollmentRuleType);
+		
+		for (int i = 0; i < enrollmentRules.size(); i++)
+		{
+			IEnrollmentRule enrollmentRule = (IEnrollmentRule) enrollmentRules.get(i);
+			setOfCurricularCoursesToEnroll = enrollmentRule.apply(setOfCurricularCoursesToEnroll);
+			if (setOfCurricularCoursesToEnroll.isEmpty())
+			{
+				return new ArrayList();
+			}
+		}
+
+		return setOfCurricularCoursesToEnroll;
 	}
 
 	public List getListOfEnrollmentRules(EnrollmentRuleType enrollmentRuleType)
@@ -425,14 +440,29 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 		return null;
 	}
 
-	public List getCommonBranchCourses()
+	private List getCommonBranchAndStudentBranchesCourses()
 	{
-		return this.getDegreeCurricularPlan().getCommonBranchCourses();
-	}
+		List curricularCourses = new ArrayList();
 
-	public List getStudentBranchesCourses()
-	{
-		return null;
+		List commonAreas = this.getDegreeCurricularPlan().getCommonAreas();
+		
+		for (int i = 0; i < commonAreas.size(); i++)
+		{
+			IBranch area = (IBranch) commonAreas.get(i);
+			curricularCourses.addAll(this.getDegreeCurricularPlan().getCurricularCoursesFromArea(area));
+		}
+
+		if (this.getBranch() != null)
+		{
+			curricularCourses.addAll(this.getDegreeCurricularPlan().getCurricularCoursesFromArea(this.getBranch()));
+		}
+
+		if (this.getSecundaryBranch() != null)
+		{
+			curricularCourses.addAll(this.getDegreeCurricularPlan().getCurricularCoursesFromArea(this.getSecundaryBranch()));
+		}
+
+		return curricularCourses;
 	}
 
 	public List getAllEnrollmentsInCoursesWhereStudentIsEnrolledAtTheMoment()
@@ -462,6 +492,21 @@ public class StudentCurricularPlan extends DomainObject implements IStudentCurri
 				return result.contains(key);
 			}
 		});
+	}
+
+	public Integer getMinimumNumberOfCoursesToEnroll()
+	{
+		return this.getStudent().getStudentKind().getMinCoursesToEnrol();
+	}
+
+	public Integer getMaximumNumberOfCoursesToEnroll()
+	{
+		return this.getStudent().getStudentKind().getMaxCoursesToEnrol();
+	}
+
+	public Integer getMaximumNumberOfAcumulatedEnrollments()
+	{
+		return this.getStudent().getStudentKind().getMaxNACToEnrol();
 	}
 
 	// -------------------------------------------------------------

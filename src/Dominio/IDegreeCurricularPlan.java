@@ -50,7 +50,8 @@ public interface IDegreeCurricularPlan extends IDomainObject {
 	// BEGIN: Only for enrollment purposes
 	// -------------------------------------------------------------
 	public List getListOfEnrollmentRules(EnrollmentRuleType enrollmentRuleType);
-	public List getCommonBranchCourses();
+	public List getCurricularCoursesFromArea(IBranch area);
+	public List getCommonAreas();
 	// -------------------------------------------------------------
 	// END: Only for enrollment purposes
 	// -------------------------------------------------------------

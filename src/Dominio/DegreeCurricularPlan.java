@@ -299,7 +299,12 @@ public class DegreeCurricularPlan extends DomainObject implements IDegreeCurricu
 		return EnrollmentRulesFactory.getInstance().getListOfEnrollmentRules(this, enrollmentRuleType);
 	}
 
-	public List getCommonBranchCourses()
+	public List getCurricularCoursesFromArea(IBranch area)
+	{
+		return null;
+	}
+
+	public List getCommonAreas()
 	{
 		return null;
 	}

@@ -15,7 +15,7 @@ public class MinimumCurricularCoursesEnrollment implements IEnrollmentRule {
 
     public MinimumCurricularCoursesEnrollment(IStudentCurricularPlan studentCurricularPlan) {
 
-        minCoursesToBeEnrolled = studentCurricularPlan.getStudent().getStudentKind().getMinCoursesToEnrol().intValue();
+        minCoursesToBeEnrolled = studentCurricularPlan.getMinimumNumberOfCoursesToEnroll().intValue();
         temporaryEnrollments = studentCurricularPlan.getStudentTemporarilyEnrolledEnrollments();
     }
 

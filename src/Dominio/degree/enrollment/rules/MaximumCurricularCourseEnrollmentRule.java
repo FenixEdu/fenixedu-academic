@@ -19,7 +19,7 @@ public class MaximumCurricularCourseEnrollmentRule implements IEnrollmentRule {
 
     public MaximumCurricularCourseEnrollmentRule(IStudentCurricularPlan studentCurricularPlan) {
 
-        maxCoursesToBeEnrolled = studentCurricularPlan.getStudent().getStudentKind().getMaxCoursesToEnrol().intValue();
+        maxCoursesToBeEnrolled = studentCurricularPlan.getMaximumNumberOfCoursesToEnroll().intValue();
         temporaryEnrollments = studentCurricularPlan.getStudentTemporarilyEnrolledEnrollments();
 
     }

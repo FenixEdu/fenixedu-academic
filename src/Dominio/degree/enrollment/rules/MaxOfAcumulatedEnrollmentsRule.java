@@ -43,7 +43,7 @@ public class MaxOfAcumulatedEnrollmentsRule implements IEnrollmentRule {
 
         acumulatedEnrollments = CollectionUtils.getCardinalityMap(curricularCourses);
         enrolledEnrollments = studentCurricularPlan.getStudentEnrolledEnrollments();
-        maxTotalNAC = studentCurricularPlan.getStudent().getStudentKind().getMaxNACToEnrol().intValue();
+        maxTotalNAC = studentCurricularPlan.getMaximumNumberOfAcumulatedEnrollments().intValue();
     }
 
     /**

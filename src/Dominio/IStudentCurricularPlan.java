@@ -59,9 +59,10 @@ public interface IStudentCurricularPlan extends IDomainObject
 	public List getStudentEnrolledEnrollments();
 	public List getStudentTemporarilyEnrolledEnrollments();
 	public List getStudentNotNeedToEnrollCourses();
-	public List getCommonBranchCourses();
-	public List getStudentBranchesCourses();
 	public List getAllEnrollmentsInCoursesWhereStudentIsEnrolledAtTheMoment();
+	public Integer getMinimumNumberOfCoursesToEnroll();
+	public Integer getMaximumNumberOfCoursesToEnroll();
+	public Integer getMaximumNumberOfAcumulatedEnrollments();
 	// -------------------------------------------------------------
 	// END: Only for enrollment purposes
 	// -------------------------------------------------------------
