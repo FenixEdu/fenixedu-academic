@@ -17,7 +17,7 @@
                 </tr>
                 <tr>
                     <td>
-						<bean:write name="announcement" property="information"/>
+						<bean:write name="announcement" property="information" filter="false"/>
                         <br><br>
                     </td>
                 </tr>

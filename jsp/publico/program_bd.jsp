@@ -15,7 +15,7 @@
 			<td>
 				<bean:define id="program" name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="program">
 				</bean:define> 
-				<bean:write name="program" />
+				<bean:write name="program" filter="false"/>
 			</td>
 		</tr>
 	</table>

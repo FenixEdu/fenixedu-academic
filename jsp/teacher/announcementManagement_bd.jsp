@@ -36,7 +36,7 @@
                 </tr>
                 <tr>
                     <td class="bckgr-blue">
-						<bean:write name="announcement" property="information"/>
+						<bean:write name="announcement" property="information" filter="false"/>
                         <br />
                         <br />
                     </td>

@@ -14,7 +14,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td><bean:define id="generalObjectives" name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="generalObjectives"></bean:define> <bean:write name="generalObjectives" />
+		<td><bean:define id="generalObjectives" name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="generalObjectives"></bean:define> 
+			<bean:write name="generalObjectives" filter="false"/>
 	 	</td>
 	</tr>
 </table>
@@ -25,7 +26,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td><bean:define id="operacionalObjectives" name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="operacionalObjectives"></bean:define><bean:write name="operacionalObjectives" />
+		<td><bean:define id="operacionalObjectives" name="<%= SessionConstants.EXECUTION_COURSE_CURRICULUM %>" property="operacionalObjectives"></bean:define>
+			<bean:write name="operacionalObjectives" filter="false"/>
 		</td>
 	</tr>
 </table>
