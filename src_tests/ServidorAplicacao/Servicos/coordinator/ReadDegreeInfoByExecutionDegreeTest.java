@@ -199,10 +199,8 @@ public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase {
 			String[] argsUser = getSecondAuthenticatedAndAuthorizedUser();
 			IUserView id = (IUserView) gestor.executar(null, "Autenticacao", argsUser);
 
-			//Service
-			InfoDegreeInfo infoDegreeInfo = null;
 			try {
-				infoDegreeInfo = (InfoDegreeInfo) gestor.executar(id, getNameOfServiceToBeTested(), args);
+				 gestor.executar(id, getNameOfServiceToBeTested(), args);
 			} catch (FenixServiceException e) {
 				String msg = e.getMessage().substring(e.getMessage().lastIndexOf(".") + 1, e.getMessage().lastIndexOf(".") + 23);
 				if (!msg.equals(new String("invalidExecutionDegree"))) {
@@ -233,10 +231,8 @@ public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase {
 			String[] argsUser = getSecondAuthenticatedAndAuthorizedUser();
 			IUserView id = (IUserView) gestor.executar(null, "Autenticacao", argsUser);
 
-			//Service
-			InfoDegreeInfo infoDegreeInfo = null;
 			try {
-				infoDegreeInfo = (InfoDegreeInfo) gestor.executar(id, getNameOfServiceToBeTested(), args);
+				 gestor.executar(id, getNameOfServiceToBeTested(), args);
 			} catch (FenixServiceException e) {
 				String msg = e.getMessage().substring(e.getMessage().lastIndexOf(".") + 1, e.getMessage().lastIndexOf(".") + 21);
 				if (!msg.equals(new String("impossibleDegreeInfo"))) {
@@ -267,10 +263,8 @@ public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase {
 			String[] argsUser = getSecondAuthenticatedAndAuthorizedUser();
 			IUserView id = (IUserView) gestor.executar(null, "Autenticacao", argsUser);
 
-			//Service
-			InfoDegreeInfo infoDegreeInfo = null;
 			try {
-				infoDegreeInfo = (InfoDegreeInfo) gestor.executar(id, getNameOfServiceToBeTested(), args);
+				 gestor.executar(id, getNameOfServiceToBeTested(), args);
 			} catch (FenixServiceException e) {
 				String msg = e.getMessage().substring(e.getMessage().lastIndexOf(".") + 1, e.getMessage().lastIndexOf(".") + 21);
 				if (!msg.equals(new String("impossibleDegreeInfo"))) {
@@ -324,14 +318,9 @@ public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase {
 
 	public void testUserUnsuccessfull() {
 		try {
-			//Service Argument
-			Integer infoExecutionDegreeCode = new Integer(10);
-
-			Object[] args = { infoExecutionDegreeCode };
-
 			//Valid user
 			String[] argsUser = getAuthenticatedAndUnauthorizedUser();
-			IUserView id = (IUserView) gestor.executar(null, "Autenticacao", argsUser);
+			 gestor.executar(null, "Autenticacao", argsUser);
 
 			fail("Reading a degree site with invalid user");
 
@@ -348,14 +337,9 @@ public class ReadDegreeInfoByExecutionDegreeTest extends ServiceTestCase {
 
 	public void testSecondUserUnsuccessfull() {
 		try {
-			//Service Argument
-			Integer infoExecutionDegreeCode = new Integer(10);
-
-			Object[] args = { infoExecutionDegreeCode };
-
 			//Valid user
 			String[] argsUser = getNotAuthenticatedUser();
-			IUserView id = (IUserView) gestor.executar(null, "Autenticacao", argsUser);
+			 gestor.executar(null, "Autenticacao", argsUser);
 
 			fail("Reading a degree site with invalid user");
 

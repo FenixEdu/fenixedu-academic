@@ -145,9 +145,6 @@ public class ReadPublishedMarksByExamTest extends ServiceTestCase {
 			assertEquals(marksList.size(), 6);
 			
 			Object[] values = { new Integer(1), new Integer(2), new Integer(3), new Integer(4), new Integer(5), new Integer(6)};
-			Object[] argumentos = {};
-			
-			
 			assertTrue(UtilsTestCase.readTestList(marksList, values, "idInternal", InfoMark.class));
 			
 			compareDataSetUsingExceptedDataSetTableColumns("etc/datasets/servicos/publico/testReadPublishedMarksByExamExpectedDataSet.xml");
