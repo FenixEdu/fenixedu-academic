@@ -19,7 +19,7 @@ public interface ICurso {
   public String getNome();
   public TipoCurso getTipoCurso();
   public List getDegreeCurricularPlans();
-
+    
   public void setSigla(String sigla);
   public void setNome(String nome);
   public void setTipoCurso(TipoCurso tipoCurso);

@@ -98,6 +98,7 @@ INSERT INTO DEGREE VALUES (8,'LEIC','Licenciatura de Engenharia Informatica e de
 INSERT INTO DEGREE VALUES (9,'MEEC','Mestrado em Engenharia Electrotecnica e de Computadores',2);
 INSERT INTO DEGREE VALUES (10,'MIC','Mestrado em Informatica e Computadores',2);
 INSERT INTO DEGREE VALUES (11,'MEM','Mestrado em Engenharia Mecanica',2);
+INSERT INTO DEGREE VALUES (12,'CURSO','Curso para apagar',1);
 
 #-----------------------------
 # Data for table 'DEGREE_CURRICULAR_PLAN'

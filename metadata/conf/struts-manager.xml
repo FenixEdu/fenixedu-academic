@@ -65,7 +65,14 @@
       	      type="ServidorApresentacao.Action.manager.ReadDegreeAction">
       	  <forward name="viewDegree" path="/readDegree.jsp"/>      	      
       </action>
-
+         
+      
+	<!-- Action for deletinging a degree -->
+      <!--input="readDegree_bd.jsp"-->  
+      <action path="/deleteDegree"
+             type="ServidorApresentacao.Action.manager.DeleteDegreeAction">
+      	  <forward name="readDegrees" path="/readDegrees.jsp"/>      	      
+      </action>
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
