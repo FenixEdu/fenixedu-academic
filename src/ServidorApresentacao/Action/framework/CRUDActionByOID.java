@@ -375,8 +375,13 @@ public class CRUDActionByOID extends DispatchAction
         throws FenixServiceException
     {
         IUserView userView = SessionUtils.getUserView(request);
-        Object[] args = { getOIDProperty(crudMapping, form)};
-        return (InfoObject) ServiceUtils.executeService(userView, crudMapping.getReadService(), args);
+        Integer oid= getOIDProperty(crudMapping, form);
+        InfoObject infoObject = null;
+        if (oid != null) {
+	        Object[] args = { getOIDProperty(crudMapping, form)};
+	        infoObject = (InfoObject) ServiceUtils.executeService(userView, crudMapping.getReadService(), args);
+        }
+        return infoObject;
     }
 
     /**
