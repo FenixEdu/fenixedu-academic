@@ -11,8 +11,6 @@ package ServidorPersistente.OJB;
  * @author  ars
  */
 
-import org.apache.ojb.broker.PersistenceBroker;
-import org.apache.ojb.odmg.HasBroker;
 import org.apache.ojb.odmg.OJB;
 import org.odmg.Database;
 import org.odmg.Implementation;
@@ -20,7 +18,6 @@ import org.odmg.ODMGException;
 import org.odmg.ODMGRuntimeException;
 import org.odmg.Transaction;
 
-import ServidorPersistente.*;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IAulaPersistente;
 import ServidorPersistente.ICursoExecucaoPersistente;
@@ -57,6 +54,7 @@ import ServidorPersistente.IPersistentPrecedence;
 import ServidorPersistente.IPersistentPrice;
 import ServidorPersistente.IPersistentProfessorship;
 import ServidorPersistente.IPersistentResponsibleFor;
+import ServidorPersistente.IPersistentRestriction;
 import ServidorPersistente.IPersistentRole;
 import ServidorPersistente.IPersistentSection;
 import ServidorPersistente.IPersistentSite;
@@ -141,19 +139,11 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 
 	public void confirmarTransaccao() throws ExcepcaoPersistencia {
 		try {
-			//System.out.println("SuportePersistente.OJB::confirmarTransaccao()");
 			Transaction tx = _odmg.currentTransaction();
 			if (tx == null)
 				System.out.println(
 					"SuportePersistente.OJB - Nao ha transaccao activa");
 			else {
-				///////////////////////////////////////////////////////////////////
-				// Cache must be cleared because of OJB bug.
-				///////////////////////////////////////////////////////////////////
-				PersistenceBroker broker = ((HasBroker) tx).getBroker();
-				broker.clearCache();
-				//broker.removeFromCache(obj);
-				///////////////////////////////////////////////////////////////////
 				
 				tx.commit();				
 				_odmg.getDatabase(null).close();
@@ -171,7 +161,6 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 
 	public void cancelarTransaccao() throws ExcepcaoPersistencia {
 		try {
-			//System.out.println("SuportePersistente.OJB::cancelarTransaccao()");
 			Transaction tx = _odmg.currentTransaction();
 
 			if (tx != null) {
@@ -188,8 +177,6 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 				ex);
 		}
 	}
-
-	//public IPessoaPersistente getIPessoaPersistente() { return new PessoaOJB(); }
 
 	public IAulaPersistente getIAulaPersistente() {
 		return new AulaOJB();
@@ -397,17 +384,10 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 		return new PersonRoleOJB();
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorPersistente.ISuportePersistente#getIPersistentPrecedence()
-	 */
 	public IPersistentPrecedence getIPersistentPrecedence() {
-		// TODO Auto-generated method stub
 		return new PrecedenceOJB();
 	}
 
-	/* (non-Javadoc)
-	 * @see ServidorPersistente.ISuportePersistente#getIPersistentRestriction()
-	 */
 	public IPersistentRestriction getIPersistentRestriction() {
 		return new PersistentRestriction();
 	}

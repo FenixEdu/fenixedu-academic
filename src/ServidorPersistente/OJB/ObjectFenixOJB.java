@@ -58,9 +58,6 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 	public ObjectFenixOJB() {
 		odmg = OJB.getInstance();
 
-		///////////////////////////////////////////////////////////////////
-		// Added Code due to Upgrade from OJB 0.9.5 to OJB rc1
-		///////////////////////////////////////////////////////////////////
 		db = odmg.newDatabase();
 
 		try {
@@ -68,9 +65,6 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 		} catch (ODMGException e) {
 			e.printStackTrace();
 		}
-		///////////////////////////////////////////////////////////////////
-		// End of Added Code
-		///////////////////////////////////////////////////////////////////
 
 		query = odmg.newOQLQuery();
 	}
@@ -104,22 +98,15 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 
 	public void delete(Object obj) throws ExcepcaoPersistencia {
 		try {
-
 			tx = odmg.currentTransaction();
 			tx.lock(obj, Transaction.WRITE);
-
-			///////////////////////////////////////////////////////////////////
-			// Removed Code due to Upgrade from OJB 0.9.5 to OJB rc1
-			///////////////////////////////////////////////////////////////////
-			//db = odmg.getDatabase(null);
-			///////////////////////////////////////////////////////////////////
-			// End of Removed Code
-			///////////////////////////////////////////////////////////////////
 
 			db.deletePersistent(obj);
 
 			deletedObject.add(obj);
 
+			PersistenceBroker broker = ((HasBroker) tx).getBroker();
+			broker.removeFromCache(obj);
 		} catch (ODMGRuntimeException ex) {
 			ex.printStackTrace();
 			throw new ExcepcaoPersistencia(
@@ -315,6 +302,9 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 				if (xpto[k].getName().equals(objref.getAttributeName())) {
 					try {
 						Object propValue = getM.invoke(anExample, null);
+						// --- Try This---
+						//Object propValue = getM.invoke(c, null);
+						// ---------------
 						if (propValue != null) {
 							crit =
 								criteriaBuilder(
