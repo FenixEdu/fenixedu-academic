@@ -39,7 +39,7 @@
   </dl>
 <logic:present name="<%= SessionConstants.SECTIONS %>" >
 	<ul>
-<logic:iterate id="section" name="<%= SessionConstants.SECTIONS %>" indexId="index">
+<logic:iterate id="infoSection" name="<%= SessionConstants.SECTIONS %>" type="DataBeans.gesdis.InfoSection" indexId="index">
 
 <%-- <logic:match name="section" property="class" value="List">
 	<dl id="seccao" style="display: none;">
@@ -56,7 +56,7 @@
 </logic:notMatch> --%>
 
 
-<li><html:link page="/viewSection.do" indexed="true">section</html:link></li>
+<li><html:link page="/viewSection.do" indexed="true">Depth=<bean:write name="infoSection" property="sectionDepth" ignore="true"/></html:link></li>
 </logic:iterate>
 </ul>	
 </logic:present>	
