@@ -97,7 +97,7 @@ public class ReadSiteAnnouncementTest
 			assertEquals(infoAnnouncements.size(), 4);
 
 			//check if database hasn't changed
-			compareDataSet(getExpectedDataSetFilePath());
+			compareDataSetUsingExceptedDataSetTableColumns(getExpectedDataSetFilePath());
 		} catch (FenixServiceException ex) {
 			fail("Reading the Announcements of a Site with announcements" + ex);
 		} catch (Exception ex) {
@@ -139,7 +139,7 @@ public class ReadSiteAnnouncementTest
 			List infoAnnouncements = infoSiteAnnouncement.getAnnouncements();
 			assertEquals(infoAnnouncements.size(), 0);
 			//check if database hasn't changed
-			compareDataSet(getExpectedDataSetFilePath());
+			compareDataSetUsingExceptedDataSetTableColumns(getExpectedDataSetFilePath());
 		} catch (FenixServiceException ex) {
 			fail("Reading the Announcements of a Site without announcements" + ex);
 		} catch (Exception ex) {
