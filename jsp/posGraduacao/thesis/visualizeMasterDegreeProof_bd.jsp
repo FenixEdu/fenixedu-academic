@@ -10,12 +10,20 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
 
+
 <bean:define id="student" name="<%= SessionConstants.STUDENT %>" scope="request"/>
 <bean:define id="dissertationTitle" name="<%= SessionConstants.DISSERTATION_TITLE %>" />
 <bean:define id="finalResult" name="<%= SessionConstants.FINAL_RESULT %>" />
 <bean:define id="attachedCopiesNumber" name="<%= SessionConstants.ATTACHED_COPIES_NUMBER %>" />
-<bean:define id="proofDate" name="<%= SessionConstants.PROOF_DATE %>" />
-<bean:define id="thesisDeliveryDate" name="<%= SessionConstants.THESIS_DELIVERY_DATE %>" />
+<logic:present name="<%= SessionConstants.PROOF_DATE %>" scope="request">
+	<bean:define id="proofDate" name="<%= SessionConstants.PROOF_DATE %>" />
+</logic:present>
+<logic:present name="<%= SessionConstants.THESIS_DELIVERY_DATE %>" scope="request">
+	<bean:define id="thesisDeliveryDate" name="<%= SessionConstants.THESIS_DELIVERY_DATE %>" />
+</logic:present>
+
+
+
 <bean:define id="responsibleEmployee" name="<%= SessionConstants.RESPONSIBLE_EMPLOYEE %>" scope="request"/>
 <bean:define id="lastModification" name="<%= SessionConstants.LAST_MODIFICATION %>" scope="request"/>
 
@@ -58,17 +66,35 @@
 		</tr>
 		
 		<!-- Proof Date -->
-		<tr >
-			<th align="left" ><bean:message key="label.masterDegree.administrativeOffice.proofDate"/>:&nbsp;</th>
-			<td><bean:write name="proofDate"/></td>
-		</tr>
+		<logic:present name="<%= SessionConstants.PROOF_DATE %>" scope="request">
+			<tr>
+				<th align="left" ><bean:message key="label.masterDegree.administrativeOffice.proofDate"/>:&nbsp;</th>
+				<td><bean:write name="proofDate"/></td>
+			</tr>
+		</logic:present>
+		<logic:notPresent name="<%= SessionConstants.PROOF_DATE %>" scope="request">
+			<tr>
+				<th align="left" ><bean:message key="label.masterDegree.administrativeOffice.proofDate"/>:&nbsp;</th>
+				<td><bean:message key="message.masterDegree.administrativeOffice.proofDateNotDefined" /></td>
+			</tr>
+		</logic:notPresent>
+		
 		
 		<!-- Thesis Delivery Date -->
-		<tr >
-			<th align="left" ><bean:message key="label.masterDegree.administrativeOffice.thesisDeliveryDate"/>:&nbsp;</th>
-			<td><bean:write name="thesisDeliveryDate"/></td>
-		</tr>
-			
+		<logic:present name="<%= SessionConstants.THESIS_DELIVERY_DATE %>" scope="request">
+			<tr>
+				<th align="left" ><bean:message key="label.masterDegree.administrativeOffice.thesisDeliveryDate"/>:&nbsp;</th>
+				<td><bean:write name="thesisDeliveryDate"/></td>
+			</tr>
+		</logic:present>
+		<logic:notPresent name="<%= SessionConstants.THESIS_DELIVERY_DATE %>" scope="request">
+			<tr>
+				<th align="left" ><bean:message key="label.masterDegree.administrativeOffice.thesisDeliveryDate"/>:&nbsp;</th>
+				<td><bean:message key="message.masterDegree.administrativeOffice.thesisDeliveryDateNotDefined" /></td>
+			</tr>
+		</logic:notPresent>
+		
+				
 	
 	<!-- Final Result -->
 		<tr>	
@@ -111,6 +137,27 @@
 		<tr> 
 			<td>&nbsp;</td>
 		</tr>
+		
+		<!-- External Juries -->
+		<logic:present name="<%= SessionConstants.EXTERNAL_JURIES_LIST %>" scope="request">
+			<tr>
+				<th align="left" colspan="2"><bean:message key="label.masterDegree.administrativeOffice.externalJuries"/></th>				
+			</tr>
+			<bean:define id="externalJuriesList" name="<%= SessionConstants.EXTERNAL_JURIES_LIST %>" type="java.util.List"/>
+			<tr>
+				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonName"/></th>
+				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonWorkLocation"/></th>				
+			</tr>					
+			<logic:iterate id="externalJury" name="externalJuriesList">
+				<tr>
+					<td align="left" ><bean:write name="externalJury" property="infoPerson.nome"/></td>
+					<td align="left"><bean:write name="externalJury" property="workLocation"/></td>					
+				</tr>				
+			</logic:iterate>
+			<tr> 
+				<td>&nbsp;</td>
+			</tr>
+		</logic:present>				
 
 		<tr>
 			<td align="left" colspan="2">
