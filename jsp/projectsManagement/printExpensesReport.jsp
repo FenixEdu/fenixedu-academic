@@ -18,7 +18,8 @@
 			<logic:notEmpty name="infoExpensesReport" property="infoProject">
 				<table>
 					<tr>
-						<td rowspan="7"><html:img height="110" src="<%= request.getContextPath() + "/images/LogoIST.gif"%>" /></td>
+					<img alt="Logo <bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/>" src="<bean:message key="dot.logo" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>"/>
+						<td rowspan="7"><html:img height="110" src="<bean:message key="university.logo" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>" /></td>
 					</tr>
 					<tr>
 						<td colspan="3">
