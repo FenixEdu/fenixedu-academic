@@ -21,14 +21,16 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
  *
  */
 
-public class CreateMasterDegreeThesisDispatchAction extends DispatchAction {
+public class CreateMasterDegreeThesisDispatchAction extends DispatchAction
+{
 
 	public ActionForward getStudentForCreateMasterDegreeThesis(
 		ActionMapping mapping,
 		ActionForm form,
 		HttpServletRequest request,
 		HttpServletResponse response)
-		throws Exception {
+		throws Exception
+	{
 
 		Integer degreeType = (Integer) request.getAttribute("degreeType");
 		Integer studentNumber = (Integer) request.getAttribute("studentNumber");
@@ -37,24 +39,44 @@ public class CreateMasterDegreeThesisDispatchAction extends DispatchAction {
 		ActionErrors actionErrors = new ActionErrors();
 		boolean isSuccess = operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 
-		if (isSuccess) {
+		if (isSuccess)
+		{
 			return mapping.findForward("start");
-		} else {
-			throw new NonExistingActionException("error.exception.masterDegree.nonExistentStudent", mapping.findForward("error"));
+		} else
+		{
+			throw new NonExistingActionException(
+				"error.exception.masterDegree.nonExistentStudent",
+				mapping.findForward("error"));
 
 		}
 
 	}
 
-	public ActionForward reloadForm(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-		throws Exception {
+	public ActionForward reloadForm(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws Exception
+	{
 
 		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
 		ActionErrors actionErrors = new ActionErrors();
 
-		try {
-			operations.getTeachersByNumbers(form, request, "guidersNumbers", SessionConstants.GUIDERS_LIST, actionErrors);
-			operations.getTeachersByNumbers(form, request, "assistentGuidersNumbers", SessionConstants.ASSISTENT_GUIDERS_LIST, actionErrors);
+		try
+		{
+			operations.getTeachersByNumbers(
+				form,
+				request,
+				"guidersNumbers",
+				SessionConstants.GUIDERS_LIST,
+				actionErrors);
+			operations.getTeachersByNumbers(
+				form,
+				request,
+				"assistentGuidersNumbers",
+				SessionConstants.ASSISTENT_GUIDERS_LIST,
+				actionErrors);
 			operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 			operations.getExternalPersonsByIDs(
 				form,
@@ -62,8 +84,15 @@ public class CreateMasterDegreeThesisDispatchAction extends DispatchAction {
 				"externalAssistentGuidersIDs",
 				SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST,
 				actionErrors);
+			operations.getExternalPersonsByIDs(
+				form,
+				request,
+				"externalGuidersIDs",
+				SessionConstants.EXTERNAL_GUIDERS_LIST,
+				actionErrors);
 
-		} catch (Exception e1) {
+		} catch (Exception e1)
+		{
 			throw new FenixActionException(e1);
 		}
 

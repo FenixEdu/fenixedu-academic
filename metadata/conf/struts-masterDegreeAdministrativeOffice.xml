@@ -486,11 +486,14 @@
    	        <form-property name="dissertationTitle" type="java.lang.String"/>
    	        <form-property name="guidersNumbers" type="java.lang.Integer[]"/>
    	        <form-property name="assistentGuidersNumbers" type="java.lang.Integer[]"/>
+   	        <form-property name="externalGuidersIDs" type="java.lang.Integer[]"/>
+   	        <form-property name="externalGuiderName" type="java.lang.String"/>
    	        <form-property name="externalAssistentGuidersIDs" type="java.lang.Integer[]"/>
    	        <form-property name="externalAssistentGuiderName" type="java.lang.String"/>
    	        <form-property name="removedGuidersNumbers" type="java.lang.Integer[]"/>
    	        <form-property name="removedAssistentGuidersNumbers" type="java.lang.Integer[]"/>
-   	        <form-property name="removedExternalAssistentGuidersIDs" type="java.lang.Integer[]"/>   	        
+   	        <form-property name="removedExternalGuidersIDs" type="java.lang.Integer[]"/>   	        
+      		<form-property name="removedExternalAssistentGuidersIDs" type="java.lang.Integer[]"/>   	        
       </form-bean>
       
 	  <form-bean name="changeMasterDegreeThesisForm" 
@@ -502,12 +505,15 @@
    	        <form-property name="method" type="java.lang.String"/>
    	        <form-property name="dissertationTitle" type="java.lang.String"/>
    	        <form-property name="guidersNumbers" type="java.lang.Integer[]"/>
+   	        <form-property name="externalGuidersIDs" type="java.lang.Integer[]"/>
+   	        <form-property name="externalGuiderName" type="java.lang.String"/>
    	        <form-property name="assistentGuidersNumbers" type="java.lang.Integer[]"/>
    	        <form-property name="externalAssistentGuidersIDs" type="java.lang.Integer[]"/>
    	        <form-property name="externalAssistentGuiderName" type="java.lang.String"/>
    	        <form-property name="removedGuidersNumbers" type="java.lang.Integer[]"/>
    	        <form-property name="removedAssistentGuidersNumbers" type="java.lang.Integer[]"/>
-   	        <form-property name="removedExternalAssistentGuidersIDs" type="java.lang.Integer[]"/>   	        
+   	        <form-property name="removedExternalGuidersIDs" type="java.lang.Integer[]"/>   	        
+      		<form-property name="removedExternalAssistentGuidersIDs" type="java.lang.Integer[]"/>   	        
       </form-bean>
      
 	  <form-bean name="changeMasterDegreeProofForm" 
