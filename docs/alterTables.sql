@@ -137,6 +137,8 @@ alter table Aulas add ACK_OPT_LOCK int(11) not null default '1';
 alter table TEST_QUESTION add ACK_OPT_LOCK int(11) not null default '1';
 alter table Turmas add ACK_OPT_LOCK int(11) not null default '1';
 alter table TESTS add ACK_OPT_LOCK int(11) not null default '1';
+alter table mw_ENROLMENT_temp add ACK_OPT_LOCK int(11) not null default '1';
+alter table mw_ALUNO_temp add ACK_OPT_LOCK int(11) not null default '1';
 
 -- alter table posgrad_pessoa_cargo add ACK_OPT_LOCK int(11) not null default '1';
 -- alter table ALMEIDA_ESCOLA add ACK_OPT_LOCK int(11) not null default '1';
