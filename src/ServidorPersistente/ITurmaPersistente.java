@@ -16,6 +16,7 @@ import Dominio.ICursoExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.ITurma;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.TipoCurso;
 
 public interface ITurmaPersistente extends IPersistentObject {
 	public void lockWrite(ITurma turma) throws ExcepcaoPersistencia, ExistingPersistentException;
@@ -52,4 +53,6 @@ public interface ITurmaPersistente extends IPersistentObject {
 	public List readByDegreeNameAndDegreeCode(String name, String code) throws ExcepcaoPersistencia;
 		
 	public List readByExecutionDegree(ICursoExecucao executionDegree) throws ExcepcaoPersistencia;
+
+	public List readByExecutionPeriodAndDegreeType(IExecutionPeriod executionPeriod, TipoCurso curso) throws ExcepcaoPersistencia;;
 }

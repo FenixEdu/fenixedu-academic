@@ -13,6 +13,9 @@ package ServidorPersistente.OJB;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.ojb.broker.query.Criteria;
+import org.apache.ojb.broker.query.Query;
+import org.apache.ojb.broker.query.QueryByCriteria;
 import org.odmg.QueryException;
 
 import Dominio.ICursoExecucao;
@@ -24,6 +27,7 @@ import Dominio.TurmaTurno;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ITurmaPersistente;
 import ServidorPersistente.exceptions.ExistingPersistentException;
+import Util.TipoCurso;
 
 public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 
@@ -272,5 +276,16 @@ public class TurmaOJB extends ObjectFenixOJB implements ITurmaPersistente {
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
+	}
+
+	public List readByExecutionPeriodAndDegreeType(IExecutionPeriod executionPeriod, TipoCurso tipoCurso)
+		throws ExcepcaoPersistencia {
+
+		Criteria criteria = new Criteria();
+		criteria.addEqualTo("executionPeriod.executionYear.year", executionPeriod.getExecutionYear().getYear());
+		criteria.addEqualTo("executionPeriod.name", executionPeriod.getName());		
+		criteria.addEqualTo("executionDegree.curricularPlan.degree.tipoCurso", tipoCurso);
+		Query queryPB = new QueryByCriteria(Turma.class, criteria);
+		return queryList(Turma.class, criteria);
 	}
 }

@@ -329,10 +329,12 @@
     		scope="request"
     		>
   		<forward name="showForm" path="/chooseExecutionPeriod.jsp"/>
-  		<forward name="choose" path="/prepararEscolherContexto.do"/>
+  		<forward name="choose" path="/test.do"/>
   		<forward name="viewRoom" path="/sopViewRoom.jsp"/>
 	</action>
 
+      <action path="/test" forward="/commonNavLocalBeforeSop.jsp"/>
+      
 	  <!-- Choose Context for Timetables Management-->
       <action path="/prepararEscolherContexto"
               type="ServidorApresentacao.Action.sop.PrepararEscolherContextoFormAction"
@@ -355,6 +357,19 @@
 
 
      <!-- Gestao de Horarios -->
+     <!-- LISTAGENS -->
+	<action path="/viewAllClassesSchedules"
+    		type="ServidorApresentacao.Action.sop.ViewAllClassesSchedulesAction"
+    		>
+    	<forward name="Sucess" path="/viewAllClassesSchedules.jsp"/>
+	</action>     
+     
+	<action path="/viewAllRoomsSchedules"
+    		type="ServidorApresentacao.Action.sop.ViewAllRoomsSchedulesAction"
+    		>
+    	<forward name="Sucess" path="/viewAllRoomsSchedules.jsp"/>
+	</action>     
+
 	 <!-- AULAS -->
       <action path="/prepararAula"
               type="ServidorApresentacao.Action.sop.PrepararAulaFormAction"

@@ -15,6 +15,7 @@ package ServidorApresentacao.Action.sop.utils;
  */
 public abstract class SessionConstants {
 
+
 	// -------------------------------------------------------------------------------
 	//    Degree Administrative Office Constants
 	// -------------------------------------------------------------------------------
@@ -199,6 +200,14 @@ public abstract class SessionConstants {
 	public static final String AVAILABLE_ROOMS              = "availableRooms";
 	public static final String ALL_INFO_EXAMS_KEY           = "ALL_INFO_EXAMS_KEY";
 	public static final String INFO_EMPTY_ROOMS_KEY         = "INFO_EMPTY_ROOMS_KEY";
+
+	// -------------------------------------------------------------------------------
+	//    SOP Constants - For Timetables Management
+	// -------------------------------------------------------------------------------
+	public static final String ALL_INFO_VIEW_CLASS_SCHEDULE = "ALL_INFO_VIEW_CLASS_SCHEDULE";
+
+
+
 
 	// -------------------------------------------------------------------------------
 	//    Messy Constants Section - For All Sorts of Purposes
