@@ -14,6 +14,7 @@
 	<tr> 
 		<td>
 			<div class="gen-button">
+			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" /> 
 				<html:link page="<%= "/editSection.do?method=prepareEditSection&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;currentSectionCode=" + currentSectionCode %>">		
 					<bean:message key="button.editSection"/>
 				</html:link>
@@ -21,6 +22,8 @@
 		</td>
 		<td>
 			<div class="gen-button">
+			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="" /> 
+				<bean:define id="sectionName" name="section" property="name"/>
 				<logic:notEmpty name="section" property="superiorInfoSection">
 					<bean:define id="superiorSection" name="section" property="superiorInfoSection"/>
 					<bean:define id="superiorSectionCode" name="superiorSection" property="idInternal"/>
@@ -29,7 +32,7 @@
 					</html:link>
 				</logic:notEmpty>
 				<logic:empty name="section" property="superiorInfoSection">
-					<html:link page="<%= "/deleteSection.do?method=deleteSection&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;currentSectionCode=" + currentSectionCode %>" onclick="return confirm('Tem a certeza que deseja apagar esta secção?')">		
+					<html:link page="<%= "/deleteSection.do?method=deleteSection&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;currentSectionCode=" + currentSectionCode %>" onclick="return confirm('Tem a certeza que deseja apagar esta secção'+<%= sectionName %>+'?')">		
 						<bean:message key="button.deleteSection"/>
 					</html:link>
 				</logic:empty>
@@ -75,7 +78,7 @@
 		<tr><td class="listClasses">
 			<html:link page="<%= "/fileDownload.do?itemCode=" + itemCode %>" paramId="fileName" paramName="infoLink" paramProperty="link" ><bean:write name="infoLink" property="linkName"/></html:link>
 		</td>
-		<td class="listClasses"><html:link page="<%= "/fileDelete.do?method=deleteFile&objectCode=" + pageContext.findAttribute("objectCode") + "&amp;itemCode=" + itemCode + "&amp;currentSectionCode=" + currentSectionCode%>" paramId="fileName" paramName="infoLink" paramProperty="link" >Apagar Ficheiro</html:link>
+		<td class="listClasses"><html:link page="<%= "/fileDelete.do?method=deleteFile&objectCode=" + pageContext.findAttribute("objectCode") + "&amp;itemCode=" + itemCode + "&amp;currentSectionCode=" + currentSectionCode%>" paramId="fileName" paramName="infoLink" paramProperty="link" onclick="return confirm('Tem a certeza que deseja apagar este ficheiro?')" >Apagar Ficheiro</html:link>
 		
 		</td>
 		</tr>
