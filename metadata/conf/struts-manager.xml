@@ -71,7 +71,7 @@
 		<form-bean name="executionDegreeForm"
 			type="ServidorApresentacao.validator.form.FenixDynaValidatorForm"
                 dynamic="true">
-				<form-property name="executionYear" type="java.lang.String" />
+				<form-property name="executionYearId" type="java.lang.String" />
 				<form-property name="coordinatorId" type="java.lang.String" />
 				<form-property name="tempExamMap" type="java.lang.String" />
 				<form-property name="internalIds" type="java.lang.Integer[]" />

@@ -30,7 +30,7 @@
 				<bean:message key="label.manager.executionDegree.executionYear"/>
 			</td>
 			<td>
-				<html:select property="executionYear">
+				<html:select property="executionYearId">
 					<html:options collection="infoExecutionYearsList" property="value" labelProperty="label"/>
 				</html:select>				
 			</td>

@@ -110,7 +110,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 		else
 			dynaForm.set("tempExamMap", "");
 		dynaForm.set("coordinatorId", oldInfoExecutionDegree.getInfoCoordinator().getIdInternal().toString());
-		dynaForm.set("executionYear", oldInfoExecutionDegree.getInfoExecutionYear().getYear());
+		dynaForm.set("executionYearId", oldInfoExecutionDegree.getInfoExecutionYear().getIdInternal().toString());
 
 		return mapping.findForward("editExecutionDegree");
 	}
@@ -124,7 +124,7 @@ public class EditExecutionDegreeDispatchAction extends FenixDispatchAction {
 		Integer executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
 
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
-		String executionYearString = (String) dynaForm.get("executionYear");
+		String executionYearString = (String) dynaForm.get("executionYearId");
 		String coordinatorIdString = (String) dynaForm.get("coordinatorId");
 		String tempExamMapString = (String) dynaForm.get("tempExamMap");
 

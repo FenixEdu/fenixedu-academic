@@ -115,7 +115,7 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
 		DynaActionForm dynaForm = (DynaValidatorForm) form;
 		
 		InfoExecutionYear infoExecutionYear = new InfoExecutionYear();
-		infoExecutionYear.setIdInternal(new Integer((String) dynaForm.get("executionYear")));
+		infoExecutionYear.setIdInternal(new Integer((String) dynaForm.get("executionYearId")));
 		InfoTeacher infoTeacher = new InfoTeacher();
 		infoTeacher.setIdInternal(new Integer((String) dynaForm.get("coordinatorId")));
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
