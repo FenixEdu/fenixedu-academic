@@ -124,4 +124,18 @@ public class Data {
   }
   
   
+  public static boolean validDate(Integer day, Integer month) {
+  	
+	// check 30 day months
+	if (month.equals(APRIL) || month.equals(JUNE) || month.equals(SETEMBER) || month.equals(NOVEMBER))
+		if (day.intValue() == 31)
+		return false;
+
+	if (month.equals(FEBRUARY) && day.intValue() >= 30)
+		return false;	 
+	
+	
+  	return true;
+  }
+  
 }

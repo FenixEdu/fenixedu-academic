@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.struts.action.ActionError;
+import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -28,6 +30,7 @@ import DataBeans.InfoCountry;
 import DataBeans.InfoMasterDegreeCandidate;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
+import Util.Data;
 
 public class ChangeCandidateApplicationFormAction extends ServidorApresentacao.Action.FenixAction {
 
@@ -44,6 +47,12 @@ public class ChangeCandidateApplicationFormAction extends ServidorApresentacao.A
       IUserView userView = (IUserView) sessao.getAttribute("UserView");
       GestorServicos gestor = GestorServicos.manager();
  
+ 	  
+ 	  // Verify last errors in form
+	  if (!validateForm(changePersonalInformationForm, request))
+	  	return mapping.getInputForward();
+ 
+ 	  
  	  // Create Dates
  	  
 	  Calendar birthDate = Calendar.getInstance();
@@ -114,6 +123,38 @@ public class ChangeCandidateApplicationFormAction extends ServidorApresentacao.A
       throw new Exception();  
   }
 
+  
+  
+  private boolean validateForm(DynaActionForm form, HttpServletRequest request){
+  	boolean result = true;
+
+	ActionErrors actionErrors = new ActionErrors();
+
+	Integer month = new Integer(((String) form.get("birthMonth")));
+	Integer day = new Integer(((String) form.get("birthDay")));
+					
+  	// Validate the birth Date
+  	
+  	if (!Data.validDate(day, month)){
+  		result = false;
+		actionErrors.add("invalidBirthDate", new ActionError("errors.invalid.date", "Data de Nascimento"));
+  	}
+  		
+  	// Validate the Identification Document Issue Date  
+
+
+	month = new Integer(((String) form.get("idIssueDateMonth")));
+	day = new Integer(((String) form.get("idIssueDateDay")));
+
+	if (!Data.validDate(day, month)){
+		result = false;
+		actionErrors.add("invalidBirthDate", new ActionError("errors.invalid.date", "Data de Emissão do Documento de Identificação"));
+	}
+  	
+  	if (!result) 
+		saveErrors(request, actionErrors);
+  	return result;
+  }
 
 
 
