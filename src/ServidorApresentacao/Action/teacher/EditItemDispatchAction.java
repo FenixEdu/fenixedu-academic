@@ -24,12 +24,11 @@ import DataBeans.gesdis.InfoSection;
 import ServidorAplicacao.FenixServiceException;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.Servico.UserView;
-import ServidorApresentacao.Action.base.FenixAction;
+import ServidorApresentacao.Action.base.FenixDispatchAction;
 import ServidorApresentacao.Action.exceptions.FenixActionException;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
-import ServidorApresentacao.Action.sop.utils.SessionUtils;
 
-public class EditItemDispatchAction extends FenixAction {
+public class EditItemDispatchAction extends FenixDispatchAction {
 
 	public ActionForward prepareEdit(
 		ActionMapping mapping,
@@ -38,6 +37,21 @@ public class EditItemDispatchAction extends FenixAction {
 		HttpServletResponse response)
 		throws FenixActionException {
 
+
+	
+		String indexString = (String) request.getParameter("index");
+	
+		Integer index = new Integer(indexString);
+		
+		HttpSession session = request.getSession(false);
+		
+		List infoItemsList =
+					(List) session.getAttribute(
+						SessionConstants.INFO_SECTION_ITEMS_LIST);
+
+		InfoItem oldInfoItem = (InfoItem) infoItemsList.get(index.intValue());
+		session.setAttribute(SessionConstants.INFO_ITEM, oldInfoItem);
+		
 		return mapping.findForward("editItem");
 	}
 
@@ -47,37 +61,38 @@ public class EditItemDispatchAction extends FenixAction {
 		HttpServletRequest request,
 		HttpServletResponse response)
 		throws FenixActionException {
-
+	
+		
+	
 		DynaActionForm itemForm = (DynaActionForm) form;
-		SessionUtils.validSessionVerification(request, mapping);
-
-		String indexString = (String) request.getParameter("index");
-		Integer index = new Integer(indexString);
-
 		HttpSession session = request.getSession(false);
+		
+
+		
 
 		UserView userView =
 			(UserView) session.getAttribute(SessionConstants.U_VIEW);
 
 		InfoSection infoSection =
 			(InfoSection) session.getAttribute(SessionConstants.INFO_SECTION);
-		List infoItemsList =
-			(List) session.getAttribute(
-				SessionConstants.INFO_SECTION_ITEMS_LIST);
-
-		InfoItem oldInfoItem = (InfoItem) infoItemsList.get(index.intValue());
+		
+		InfoItem oldInfoItem =
+						(InfoItem) session.getAttribute(SessionConstants.INFO_ITEM);
+		
+		//InfoItem newInfoItem = (InfoItem) session.getAttribute(SessionConstants.INFO_ITEM);
 
 		InfoItem newInfoItem = new InfoItem();
-
 		newInfoItem.setInfoSection(infoSection);
 		newInfoItem.setInformation((String) itemForm.get("information"));
-		newInfoItem.setItemOrder((Integer) itemForm.get("itemOrder"));
+		newInfoItem.setItemOrder(new Integer((String) itemForm.get("itemOrder")));
 		newInfoItem.setName((String) itemForm.get("itemName"));
-		newInfoItem.setUrgent((Boolean) itemForm.get("urgent"));
+		newInfoItem.setUrgent(new Boolean((String) itemForm.get("urgent")));
 
 		Object editItemArgs[] = { oldInfoItem, newInfoItem };
-
+		
 		GestorServicos manager = GestorServicos.manager();
+		
+		
 		try {
 			manager.executar(userView, "EditItem", editItemArgs);
 		} catch (FenixServiceException fenixServiceException) {
@@ -85,7 +100,7 @@ public class EditItemDispatchAction extends FenixAction {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
 		session.setAttribute(SessionConstants.INFO_ITEM, newInfoItem);
-
+	
 		//			read section items 
 
 		Object readSectionArgs[] = { infoSection };
@@ -93,9 +108,9 @@ public class EditItemDispatchAction extends FenixAction {
 		try {
 			items =
 				(ArrayList) manager.executar(
-					userView,
-					"ReadSection",
-					readSectionArgs);
+					null,
+					"ReadItems",
+				readSectionArgs);
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
