@@ -37,7 +37,7 @@ public class PersistentExpensesReport extends PersistentReport implements IPersi
 
             String query = new String(
                     "select \"idMov\", \"Membro\", \"Rubrica\", \"Tipo\", \"data\", \"Descrição\", \"Valor\", \"Iva\", \"Total\" from " + tableOrView
-                            + " where PROJECTCODE='" + projectCode + "' order by \"data\"");
+                            + " where PROJECTCODE='" + projectCode + "' order by \"data\", \"idMov\"");
             PreparedStatement stmt = p.prepareStatement(query);
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {

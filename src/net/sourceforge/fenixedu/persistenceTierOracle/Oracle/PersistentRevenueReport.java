@@ -33,7 +33,7 @@ public class PersistentRevenueReport extends PersistentReport implements IPersis
             String tableOrView = getTableOrViewName(p, reportType);
 
             String query = new String("select \"idMov\", \"Ent. Financ.\", \"Rubrica\", \"Data\", \"Descrição\", \"Valor\" from " + tableOrView
-                    + " where PROJECTCODE='" + projectCode + "' order by \"Data\"");
+                    + " where PROJECTCODE='" + projectCode + "' order by \"Data\", \"idMov\"");
             PreparedStatement stmt = p.prepareStatement(query);
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
