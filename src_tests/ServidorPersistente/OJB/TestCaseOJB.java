@@ -28,6 +28,7 @@ public class TestCaseOJB extends TestCase {
 		}
 		
 		try {
+			SuportePersistenteOJB.resetInstance();
 			sp = SuportePersistenteOJB.getInstance();
 		} catch (ExcepcaoPersistencia e) {
 			e.printStackTrace();

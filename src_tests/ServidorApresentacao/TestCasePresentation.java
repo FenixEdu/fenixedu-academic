@@ -12,6 +12,7 @@ package ServidorApresentacao;
 
 import servletunit.struts.MockStrutsTestCase;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
+import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Tools.dbaccess;
 public class TestCasePresentation extends MockStrutsTestCase {
 
@@ -39,6 +40,7 @@ public class TestCasePresentation extends MockStrutsTestCase {
 			this.dbAcessPoint.backUpDataBaseContents("etc/testBackup.xml");
 			this.dbAcessPoint.loadDataBase("etc/testDataSet.xml");
 			this.dbAcessPoint.closeConnection();
+			SuportePersistenteOJB.resetInstance();
 		} catch (Exception ex) {
 			System.out.println("Setup failed: " + ex);
 			fail("Setting up!");
