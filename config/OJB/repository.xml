@@ -37,6 +37,7 @@
 <!ENTITY teacher SYSTEM "repository_teacher.xml">
 <!ENTITY gaugingTests SYSTEM "repository_gaugingTests.xml">
 <!ENTITY student SYSTEM "repository_student.xml">
+<!ENTITY finalDegreeWork SYSTEM "repository_finalDegreeWork.xml">
 ]>
 
 
@@ -79,4 +80,5 @@
     &teacher;
     &gaugingTests;
     &student;
+    &finalDegreeWork
 </descriptor-repository>
