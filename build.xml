@@ -231,7 +231,7 @@
 		    token="@ftp.IST.server.address@" 
 		    property="ftp.IST.server.address"/>
 		</replace>
-		<!-- <antcall target="validate-xml"/> -->
+		<antcall target="validate-xml"/>
     </target>
     
     <target name="compile-tests"
@@ -758,7 +758,7 @@ classpath="${lib}/mysql-connector-java-3.0.7.jar"
                 </fileset>
             </classpath>
         </sql>
-             
+        
         <sql
             driver="com.mysql.jdbc.Driver"
             url="jdbc:mysql://localhost/${db.name}"
@@ -780,14 +780,13 @@ classpath="${lib}/mysql-connector-java-3.0.7.jar"
             userid="${db.user}"
             password="${db.pass}"
             encoding="${encoding}"
-            src="${sql}/test-data_places.sql"
-        >
+            src="${sql}/test-data_places.sql"        >
             <classpath>
                 <fileset dir="${lib}">
                     <include name="**/*.jar"/>
                 </fileset>
             </classpath>
-        </sql>        
+        </sql>
     </target>
 
     <target name="dump-db"

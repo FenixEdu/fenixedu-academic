@@ -102,6 +102,20 @@
 				<form-property name="descriptionDegreeCurricularPlan" type="java.lang.String" />
 				<form-property name="descriptionDegreeCurricularPlanEn" type="java.lang.String" />						
 			</form-bean>
+
+      <!-- Dynamic-FormBean for curricularCourseEdition -->
+      <form-bean name="curriculumForm"
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="page" type="java.lang.Integer" initial="0"/>
+        <form-property name="generalObjectives" type="java.lang.String"/>
+        <form-property name="operacionalObjectives" type="java.lang.String"/>
+        <form-property name="program" type="java.lang.String"/>        
+        <form-property name="generalObjectivesEn" type="java.lang.String"/>
+        <form-property name="operacionalObjectivesEn" type="java.lang.String"/>
+        <form-property name="programEn" type="java.lang.String"/>        
+      </form-bean>
+			
     </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -384,16 +398,19 @@
 
 		<!-- ======== degree curricular plan management mappings -->
 		<action path="/degreeCurricularPlanManagement"
-				input="/chooseDegree.do" 
+		    type="ServidorApresentacao.Action.coordinator.DegreeCurricularPlanManagementDispatchAction"
 				parameter="method"
-		        type="ServidorApresentacao.Action.coordinator.DegreeCurricularPlanManagementDispatchAction" 
-		        >
+				name="curriculumForm"
+				scope="request"
+				validate="true"
+				input="/chooseDegree.do">
 			<forward name="showActiveCurricularCourses" path="activeDegreeCurricularPlan" />
 			<forward name="showCurricularCoursesHistory" path="degreeCurricularPlanHistory" />
 			<forward name="degreeCurricularPlanManagement" path="/degreeCurricularPlanManagement.do?method=showActiveCurricularCourses" />
 			<forward name="viewCurricularCourseInformation" path="viewCurricularCourseInformation" />
 			<forward name="prepareViewCurricularCourseInformationHistory" path="prepareViewCurricularCourseInformationHistory" />
 			<forward name="degreeCurricularPlanManagementExecutionYears" path="/degreeCurricularPlanManagement.do?method=prepareViewCurricularCourseInformationHistory" />
+			<forward name="editCurriculum" path="editCurriculum" />
 		</action>		
 
     </action-mappings>

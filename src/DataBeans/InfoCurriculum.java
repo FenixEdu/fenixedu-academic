@@ -18,8 +18,6 @@ public class InfoCurriculum extends InfoObject implements ISiteComponent{
 	protected String programEn;
 	protected String generalObjectivesEn;
 	protected String operacionalObjectivesEn;
-	protected String evaluationElements;//TODO: to delete
-	protected String evaluationElementsEn;//TODO: to delete
 	
 	protected Date lastModificationDate;
 	
@@ -173,34 +171,6 @@ public class InfoCurriculum extends InfoObject implements ISiteComponent{
 	 */
 	public void setProgramEn(String string) {
 		programEn = string;
-	}
-
-	/**
-	 * @return
-	 */
-	public String getEvaluationElements() {
-		return evaluationElements;
-	}
-
-	/**
-	 * @return
-	 */
-	public String getEvaluationElementsEn() {
-		return evaluationElementsEn;
-	}
-
-	/**
-	 * @param string
-	 */
-	public void setEvaluationElements(String string) {
-		evaluationElements = string;
-	}
-
-	/**
-	 * @param string
-	 */
-	public void setEvaluationElementsEn(String string) {
-		evaluationElementsEn = string;
 	}
 
 	public Date getLastModificationDate() {

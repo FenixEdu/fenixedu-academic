@@ -69,8 +69,6 @@ public class EditEvaluationTest extends ServiceNeedsAuthenticationTestCase {
 		InfoCurriculum infoCurriculum = new InfoCurriculum();
 
 		infoCurriculum.setIdInternal(curricularCourseCode);
-		infoCurriculum.setEvaluationElements(evaluationMethodPT);
-		infoCurriculum.setEvaluationElementsEn(evaluationMethodEN);
 
 		Object[] args = { executionCourseCode, curricularCourseCode, infoCurriculum };
 
@@ -88,8 +86,6 @@ public class EditEvaluationTest extends ServiceNeedsAuthenticationTestCase {
 		InfoCurriculum infoCurriculum = new InfoCurriculum();
 
 		infoCurriculum.setIdInternal(curricularCourseCode);
-		infoCurriculum.setEvaluationElements(evaluationMethodPT);
-		infoCurriculum.setEvaluationElementsEn(evaluationMethodEN);
 
 		Object[] args = { executionCourseCode, curricularCourseCode, infoCurriculum };
 
@@ -107,8 +103,6 @@ public class EditEvaluationTest extends ServiceNeedsAuthenticationTestCase {
 		InfoCurriculum infoCurriculum = new InfoCurriculum();
 
 		infoCurriculum.setIdInternal(curricularCourseCode);
-		infoCurriculum.setEvaluationElements(evaluationMethodPT);
-		infoCurriculum.setEvaluationElementsEn(evaluationMethodEN);
 
 		Object[] args = { executionCourseCode, curricularCourseCode, infoCurriculum };
 		return args;
@@ -125,8 +119,6 @@ public class EditEvaluationTest extends ServiceNeedsAuthenticationTestCase {
 		InfoCurriculum infoCurriculum = new InfoCurriculum();
 
 		infoCurriculum.setIdInternal(curricularCourseCode);
-		infoCurriculum.setEvaluationElements(evaluationMethodPT);
-		infoCurriculum.setEvaluationElementsEn(evaluationMethodEN);
 
 		Object[] args = { executionCourseCode, curricularCourseCode, infoCurriculum };
 		return args;

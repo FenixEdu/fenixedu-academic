@@ -46,7 +46,7 @@
 				</li>
 				<li>
 					<html:link 		page="/studentListByDegree.do?method=getCurricularCourses&jspTitle=title.studentListByCourse&page=0">
-				<	bean:message key="link.studentListByCourse" /></html:link>
+				<bean:message key="link.studentListByCourse" /></html:link>
 		        	<br/>
 					<br/>
 				</li>

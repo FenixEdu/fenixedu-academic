@@ -17,6 +17,7 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 
 import DataBeans.InfoCurricularCourse;
 import DataBeans.InfoCurricularCourseScope;
@@ -47,8 +48,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 		HttpSession session = request.getSession(false);
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		Integer infoExecutionDegreeCode = new Integer(request.getParameter("infoExecutionDegreeCode"));
-		request.setAttribute("infoExecutionDegreeCode", infoExecutionDegreeCode);
+		Integer infoExecutionDegreeCode = getAndSetIntegerToRequest("infoExecutionDegreeCode", request);
 
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
 		ActionErrors errors = new ActionErrors();
@@ -63,7 +63,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 
 		} catch (NonExistingServiceException e)
 		{
-			errors.add("chosenDegree", new ActionError("error.coordinator.chosenDegree"));
+			errors.add("chosenDegree", new ActionError("error.coordinator.noExecutionDegree"));
 			saveErrors(request, errors);
 		} catch (FenixServiceException e)
 		{
@@ -111,6 +111,14 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 		return mapping.findForward("showActiveCurricularCourses");
 	}
 
+	private Integer getAndSetIntegerToRequest(String parameter, HttpServletRequest request)
+	{
+		Integer parameterInteger = new Integer(request.getParameter(parameter));
+		request.setAttribute(parameter, parameterInteger);
+
+		return parameterInteger;
+	}
+
 	public ActionForward showCurricularCoursesHistory(
 		ActionMapping mapping,
 		ActionForm form,
@@ -122,8 +130,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 		HttpSession session = request.getSession(false);
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		Integer infoExecutionDegreeCode = new Integer(request.getParameter("infoExecutionDegreeCode"));
-		request.setAttribute("infoExecutionDegreeCode", infoExecutionDegreeCode);
+		Integer infoExecutionDegreeCode = getAndSetIntegerToRequest("infoExecutionDegreeCode", request);
 
 		InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
 		ActionErrors errors = new ActionErrors();
@@ -138,7 +145,7 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 
 		} catch (NonExistingServiceException e)
 		{
-			errors.add("chosenDegree", new ActionError("error.coordinator.chosenDegree"));
+			errors.add("chosenDegree", new ActionError("error.coordinator.noExecutionDegree"));
 			saveErrors(request, errors);
 		} catch (FenixServiceException e)
 		{
@@ -256,13 +263,48 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 		HttpSession session = request.getSession(false);
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		Integer infoExecutionDegreeCode = new Integer(request.getParameter("infoExecutionDegreeCode"));
-		request.setAttribute("infoExecutionDegreeCode", infoExecutionDegreeCode);
-		Integer infoCurricularCourseCode = new Integer(request.getParameter("infoCurricularCourseCode"));
-		request.setAttribute("infoCurricularCourseCode", infoCurricularCourseCode);
+		Integer infoExecutionDegreeCode = getAndSetIntegerToRequest("infoExecutionDegreeCode", request);
+		Integer infoCurricularCourseCode =
+			getAndSetIntegerToRequest("infoCurricularCourseCode", request);
 
-		InfoCurriculum infoCurriculum = null;
+		//		check that this user can edit curricular course information
+		Boolean canEdit = new Boolean(false);
 		ActionErrors errors = new ActionErrors();
+		Object[] argsAuthorization = { infoExecutionDegreeCode, userView };
+		try
+		{
+			canEdit =
+				(Boolean) ServiceUtils.executeService(
+					null,
+					"LoggedCoordinatorCanEdit",
+					argsAuthorization);
+
+		} catch (FenixServiceException e)
+		{
+			if (e.getMessage().equals("nullExecutionDegreeCode"))
+			{
+				errors.add(
+					"nullExecutionDegreeCode",
+					new ActionError("error.coordinator.noExecutionDegree"));
+				saveErrors(request, errors);
+			} else if (e.getMessage().equals("nullUserView"))
+			{
+				errors.add("nullUserView", new ActionError("error.coordinator.noUserView"));
+				saveErrors(request, errors);
+			} else
+			{
+				throw new FenixActionException();
+			}
+		}
+		if (!errors.isEmpty())
+		{
+			return mapping.findForward("degreeCurricularPlanManagement");
+		}
+
+		request.setAttribute("canEdit", String.valueOf(canEdit.booleanValue()));
+
+		// get curricular course information
+		InfoCurriculum infoCurriculum = null;
 		Object[] args = { infoExecutionDegreeCode, infoCurricularCourseCode };
 		try
 		{
@@ -299,6 +341,13 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 			return mapping.findForward("degreeCurricularPlanManagement");
 		}
 
+		sortCurricularCourses(request, infoCurriculum);
+
+		return mapping.findForward("viewCurricularCourseInformation");
+	}
+
+	private void sortCurricularCourses(HttpServletRequest request, InfoCurriculum infoCurriculum)
+	{
 		//order list by year, semester
 		if (infoCurriculum.getInfoCurricularCourse() != null)
 		{
@@ -311,8 +360,8 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 
 			request.setAttribute("infoCurriculum", infoCurriculum);
 		}
-		return mapping.findForward("viewCurricularCourseInformation");
 	}
+
 	public ActionForward prepareViewCurricularCourseInformationHistory(
 		ActionMapping mapping,
 		ActionForm form,
@@ -333,16 +382,23 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 		{
 			throw new FenixActionException(e);
 		}
-		Integer infoExecutionDegreeCode = new Integer(request.getParameter("infoExecutionDegreeCode"));
-		request.setAttribute("infoExecutionDegreeCode", infoExecutionDegreeCode);
-		Integer infoCurricularCourseCode = new Integer(request.getParameter("infoCurricularCourseCode"));
-		request.setAttribute("infoCurricularCourseCode", infoCurricularCourseCode);
-		String infoCurricularCourseName = request.getParameter("infoCurricularCourseName");
-		request.setAttribute("infoCurricularCourseName", infoCurricularCourseName);
-		
+
+		Integer infoExecutionDegreeCode = getAndSetIntegerToRequest("infoExecutionDegreeCode", request);
+		Integer infoCurricularCourseCode =
+			getAndSetIntegerToRequest("infoCurricularCourseCode", request);
+		String infoCurricularCourseName = getAndSetStringToRequest("infoCurricularCourseName", request);
+
 		request.setAttribute("infoExecutionYears", infoExecutionYears);
 
 		return mapping.findForward("prepareViewCurricularCourseInformationHistory");
+	}
+
+	private String getAndSetStringToRequest(String parameter, HttpServletRequest request)
+	{
+		String parameterString = request.getParameter(parameter);
+		request.setAttribute(parameter, parameterString);
+
+		return parameterString;
 	}
 
 	public ActionForward viewCurricularCourseInformationHistory(
@@ -355,14 +411,11 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 		HttpSession session = request.getSession(false);
 		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		Integer infoExecutionDegreeCode = new Integer(request.getParameter("infoExecutionDegreeCode"));
-		request.setAttribute("infoExecutionDegreeCode", infoExecutionDegreeCode);
-		Integer infoCurricularCourseCode = new Integer(request.getParameter("infoCurricularCourseCode"));
-		request.setAttribute("infoCurricularCourseCode", infoCurricularCourseCode);
-		String executionYear = request.getParameter("executionYear");
-		request.setAttribute("executionYear", executionYear);
-		String infoCurricularCourseName = request.getParameter("infoCurricularCourseName");
-		request.setAttribute("infoCurricularCourseName", infoCurricularCourseName);
+		Integer infoExecutionDegreeCode = getAndSetIntegerToRequest("infoExecutionDegreeCode", request);
+		Integer infoCurricularCourseCode =
+			getAndSetIntegerToRequest("infoCurricularCourseCode", request);
+		String infoCurricularCourseName = getAndSetStringToRequest("infoCurricularCourseName", request);
+		String executionYear = getAndSetStringToRequest("executionYear", request);
 
 		InfoCurriculum infoCurriculum = null;
 		ActionErrors errors = new ActionErrors();
@@ -410,7 +463,9 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 		}
 		if (infoCurriculum == null)
 		{
-			errors.add("noCurriculum", new ActionError("error.coordinator.noCurriculumInExecutionYear", executionYear));
+			errors.add(
+				"noCurriculum",
+				new ActionError("error.coordinator.noCurriculumInExecutionYear", executionYear));
 			saveErrors(request, errors);
 		}
 		if (!errors.isEmpty())
@@ -418,8 +473,186 @@ public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchA
 			return mapping.findForward("degreeCurricularPlanManagementExecutionYears");
 		}
 		request.setAttribute("infoCurriculum", infoCurriculum);
-		
+		request.setAttribute("canEdit", "false");
+
 		return mapping.findForward("viewCurricularCourseInformation");
 	}
 
+	public ActionForward prepareEditCurriculum(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException
+	{
+		HttpSession session = request.getSession(false);
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
+		Integer infoExecutionDegreeCode = getAndSetIntegerToRequest("infoExecutionDegreeCode", request);
+		Integer infoCurricularCourseCode =
+			getAndSetIntegerToRequest("infoCurricularCourseCode", request);
+		String whatToEdit = getAndSetStringToRequest("whatToEdit", request);
+
+		//		check that this user can edit curricular course information
+		Boolean canEdit = new Boolean(false);
+		ActionErrors errors = new ActionErrors();
+		Object[] argsAuthorization = { infoExecutionDegreeCode, userView };
+		try
+		{
+			canEdit =
+				(Boolean) ServiceUtils.executeService(
+					null,
+					"LoggedCoordinatorCanEdit",
+					argsAuthorization);
+
+		} catch (FenixServiceException e)
+		{
+			if (e.getMessage().equals("nullExecutionDegreeCode"))
+			{
+				errors.add(
+					"nullExecutionDegreeCode",
+					new ActionError("error.coordinator.noExecutionDegree"));
+				saveErrors(request, errors);
+			} else if (e.getMessage().equals("nullUserView"))
+			{
+				errors.add("nullUserView", new ActionError("error.coordinator.noUserView"));
+				saveErrors(request, errors);
+			} else
+			{
+				throw new FenixActionException();
+			}
+		}
+		if (!errors.isEmpty())
+		{
+			return mapping.findForward("degreeCurricularPlanManagement");
+		}
+
+		request.setAttribute("canEdit", String.valueOf(canEdit.booleanValue()));
+
+		// get curricular course information
+		InfoCurriculum infoCurriculum = null;
+		Object[] args = { infoExecutionDegreeCode, infoCurricularCourseCode };
+		try
+		{
+			infoCurriculum =
+				(InfoCurriculum) ServiceUtils.executeService(
+					userView,
+					"ReadCurrentCurriculumByCurricularCourseCode",
+					args);
+
+		} catch (NonExistingServiceException e)
+		{
+			errors.add(
+				"chosenCurricularCourse",
+				new ActionError("error.coordinator.chosenCurricularCourse"));
+			saveErrors(request, errors);
+		} catch (FenixServiceException e)
+		{
+			if (e.getMessage().equals("nullCurricularCourse"))
+			{
+				errors.add("nullCode", new ActionError("error.coordinator.noCurricularCourse"));
+				saveErrors(request, errors);
+			} else
+			{
+				throw new FenixActionException(e);
+			}
+		}
+		if (infoCurriculum == null)
+		{
+			errors.add("noCurriculum", new ActionError("error.coordinator.noCurriculum"));
+			saveErrors(request, errors);
+		}
+		if (!errors.isEmpty())
+		{
+			return mapping.findForward("degreeCurricularPlanManagement");
+		}
+
+		fillForm(form, infoCurriculum, whatToEdit);
+
+		request.setAttribute("infoCurriculum", infoCurriculum);
+
+		return mapping.findForward("editCurriculum");
+	}
+
+	private void fillForm(ActionForm form, InfoCurriculum infoCurriculum, String whatToEdit)
+	{
+		DynaActionForm curriculumForm = (DynaActionForm) form;
+
+		curriculumForm.set("generalObjectives", infoCurriculum.getGeneralObjectives());
+		curriculumForm.set("operacionalObjectives", infoCurriculum.getOperacionalObjectives());
+		curriculumForm.set("program", infoCurriculum.getProgram());
+		curriculumForm.set("generalObjectivesEn", infoCurriculum.getGeneralObjectivesEn());
+		curriculumForm.set("operacionalObjectivesEn", infoCurriculum.getOperacionalObjectivesEn());
+		curriculumForm.set("programEn", infoCurriculum.getProgramEn());
+	}
+	
+	public ActionForward editCurriculum(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException
+	{
+		HttpSession session = request.getSession(false);
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+
+		Integer infoExecutionDegreeCode = getAndSetIntegerToRequest("infoExecutionDegreeCode", request);
+		Integer infoCurriculumCode =
+			getAndSetIntegerToRequest("infoCurriculumCode", request);
+
+		InfoCurriculum infoCurriculum = getDataFromForm(form);
+		
+		Boolean result = Boolean.FALSE;
+		ActionErrors errors = new ActionErrors();
+		Object[] args = { infoExecutionDegreeCode, infoCurriculumCode, infoCurriculum };
+		try
+		{
+			result =
+				(Boolean) ServiceUtils.executeService(
+					userView,
+					"EditCurriculum",
+					args);
+
+		} catch (NonExistingServiceException e)
+		{
+			errors.add(
+				"chosenCurricularCourse",
+				new ActionError("error.coordinator.chosenCurricularCourse"));
+			saveErrors(request, errors);
+		} catch (FenixServiceException e)
+		{
+			if (e.getMessage().equals("nullCurricularCourse"))
+			{
+				errors.add("nullCode", new ActionError("error.coordinator.noCurricularCourse"));
+				saveErrors(request, errors);
+			} else
+			{
+				throw new FenixActionException(e);
+			}
+		}
+		if (result.equals(Boolean.FALSE)) {
+			throw new FenixActionException();
+		}
+		if (!errors.isEmpty())
+		{
+			return mapping.findForward("degreeCurricularPlanManagement");
+		}
+
+		return viewActiveCurricularCourseInformation(mapping, form, request, response);
+	}
+
+	private InfoCurriculum getDataFromForm(ActionForm form)
+	{
+		InfoCurriculum infoCurriculum = new InfoCurriculum();
+		
+		DynaActionForm curriculumForm = (DynaActionForm) form;
+
+		infoCurriculum.setGeneralObjectives((String) curriculumForm.get("generalObjectives"));
+		infoCurriculum.setOperacionalObjectives((String) curriculumForm.get("operacionalObjectives"));
+		infoCurriculum.setProgram((String) curriculumForm.get("program"));
+		infoCurriculum.setGeneralObjectivesEn((String) curriculumForm.get("generalObjectivesEn"));
+		infoCurriculum.setOperacionalObjectivesEn((String) curriculumForm.get("operacionalObjectivesEn"));
+		infoCurriculum.setProgramEn((String) curriculumForm.get("programEn"));
+		return infoCurriculum;
+	}
 }

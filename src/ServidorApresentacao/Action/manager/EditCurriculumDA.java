@@ -55,13 +55,11 @@ public class EditCurriculumDA extends FenixDispatchAction {
 				curriculumForm.set("generalObjectives", infoCurriculum.getGeneralObjectives());
 				curriculumForm.set("operacionalObjectives", infoCurriculum.getOperacionalObjectives());
 				curriculumForm.set("program", infoCurriculum.getProgram());
-				curriculumForm.set("evaluationElements", infoCurriculum.getEvaluationElements());
 			}
 			else {
 				curriculumForm.set("generalObjectivesEn", infoCurriculum.getGeneralObjectivesEn());
 				curriculumForm.set("operacionalObjectivesEn", infoCurriculum.getOperacionalObjectivesEn());
 				curriculumForm.set("programEn", infoCurriculum.getProgramEn());
-				curriculumForm.set("evaluationElementsEn", infoCurriculum.getEvaluationElementsEn());
 			}
 		}
 		
@@ -87,8 +85,6 @@ public class EditCurriculumDA extends FenixDispatchAction {
 		infoCurriculum.setGeneralObjectivesEn((String) editForm.get("generalObjectivesEn"));
 		infoCurriculum.setOperacionalObjectivesEn((String) editForm.get("operacionalObjectivesEn"));
 		infoCurriculum.setProgramEn((String) editForm.get("programEn"));
-		infoCurriculum.setEvaluationElements((String) editForm.get("evaluationElements"));
-		infoCurriculum.setEvaluationElementsEn((String) editForm.get("evaluationElementsEn"));
 
 		Object args[] = { infoCurriculum, request.getParameter("language") };
 		
