@@ -816,6 +816,13 @@
     	<forward name="Sucess" path="/viewExamsByDegreeAndCurricularYear.jsp"/>
 	</action>
 
+	<action path="/viewAllExamsByDegreeAndCurricularYear"
+    		type="ServidorApresentacao.Action.sop.ViewAllExamsByDegreeAndCurricularYearAction"
+    		>
+    	<forward name="Sucess" path="/viewAllExamsByDegreeAndCurricularYear.jsp"/>
+	</action>
+
+
 	<!-- Choose Execution Course Form for exam -->
     <action path="/chooseExecutionCourseForm"
     		name="chooseExecutionCourseForm"

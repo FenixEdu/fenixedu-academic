@@ -8,4 +8,5 @@
   <li><html:link page="/chooseExamsMapContextDA.do?method=prepare"><bean:message key="link.exams.map"/></html:link></li>
   <li><html:link page="/chooseDayAndShiftForm.do?method=prepare&amp;nextPage=viewEmptyRooms"><bean:message key="link.exams.searchEmptyRooms"/></html:link></li>
   <li><html:link page="/consultRoomsForExams.do?method=prepare"><bean:message key="link.exams.consultRoomOccupation"/></html:link></li>
+  <li><html:link page="/viewAllExamsByDegreeAndCurricularYear.do?method=prepare"><bean:message key="link.exams.listAllByDegreeAndAcademicYear"/></html:link></li>
 </ul>
