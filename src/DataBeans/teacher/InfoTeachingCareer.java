@@ -4,6 +4,7 @@
  */
 package DataBeans.teacher;
 
+import Dominio.teacher.ITeachingCareer;
 import Util.CareerType;
 
 /**
@@ -56,4 +57,22 @@ public class InfoTeachingCareer extends InfoCareer
         this.infoCategory = infoCategory;
     }
 
+    /* (non-Javadoc)
+     * @see DataBeans.teacher.InfoCareer#copyFromDomain(Dominio.teacher.ICareer)
+     */
+    public void copyFromDomain(ITeachingCareer teachingCareer) {
+        super.copyFromDomain(teachingCareer);
+        if(teachingCareer != null) {
+            setCourseOrPosition(teachingCareer.getCourseOrPosition());
+        }
+    }
+    
+    public static InfoTeachingCareer newInfoFromDomain (ITeachingCareer teachingCareer) {
+        InfoTeachingCareer infoTeachingCareer = null;
+        if(teachingCareer != null) {
+            infoTeachingCareer = new InfoTeachingCareer();
+            infoTeachingCareer.copyFromDomain(teachingCareer);
+        }
+        return infoTeachingCareer;
+    }
 }

@@ -9,6 +9,7 @@ import java.util.Date;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoObject;
 import DataBeans.InfoTeacher;
+import Dominio.teacher.IWeeklyOcupation;
 
 /**
  * @author Leonor Almeida
@@ -147,4 +148,28 @@ public class InfoWeeklyOcupation extends InfoObject implements ISiteComponent {
         this.support = support;
     }
 
+    /* (non-Javadoc)
+     * @see DataBeans.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     */
+    public void copyFromDomain(IWeeklyOcupation weeklyOcupation) {
+        super.copyFromDomain(weeklyOcupation);
+        if(weeklyOcupation != null) {
+            setLecture(weeklyOcupation.getLecture());
+            setManagement(weeklyOcupation.getManagement());
+            setOther(weeklyOcupation.getOther());
+            setResearch(weeklyOcupation.getResearch());
+            setSupport(weeklyOcupation.getSupport());
+            setLastModificationDate(weeklyOcupation.getLastModificationDate());
+        }
+    }
+    
+    public static InfoWeeklyOcupation newInfoFromDomain(IWeeklyOcupation weeklyOcupation) {
+        InfoWeeklyOcupation infoWeeklyOcupation = null;
+        if(weeklyOcupation != null) {
+            infoWeeklyOcupation = new InfoWeeklyOcupation();
+            infoWeeklyOcupation.copyFromDomain(weeklyOcupation);
+        }
+        
+        return infoWeeklyOcupation;
+    }
 }

@@ -10,6 +10,7 @@ import DataBeans.ISiteComponent;
 import DataBeans.InfoCountry;
 import DataBeans.InfoObject;
 import DataBeans.InfoPerson;
+import Dominio.IQualification;
 
 /**
  * @author Barbosa
@@ -260,4 +261,33 @@ public class InfoQualification extends InfoObject implements ISiteComponent
 		this.specializationArea = specializationArea;
 	}
 
+	
+    /* (non-Javadoc)
+     * @see DataBeans.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     */
+    public void copyFromDomain(IQualification qualification) {
+        super.copyFromDomain(qualification);
+        if(qualification != null) {
+            setTitle(qualification.getTitle());
+            setDate(qualification.getDate());
+            setMark(qualification.getMark());
+            setSchool(qualification.getSchool());
+            setSpecializationArea(qualification.getSpecializationArea());
+            setMark(qualification.getMark());
+            setBranch(qualification.getBranch());
+            setDegree(qualification.getDegree());
+            setDegreeRecognition(qualification.getDegreeRecognition());
+            setEquivalenceDate(qualification.getEquivalenceDate());
+            setEquivalenceSchool(qualification.getEquivalenceSchool());
+        }
+    }
+    
+    public static InfoQualification newInfoFromDomain(IQualification qualification) {
+        InfoQualification infoQualification = null;
+        if(qualification != null) {
+            infoQualification = new InfoQualification();
+            infoQualification.copyFromDomain(qualification);
+        }
+        return infoQualification;
+    }
 }

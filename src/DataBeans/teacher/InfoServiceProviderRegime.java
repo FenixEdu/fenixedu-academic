@@ -8,6 +8,7 @@ import java.util.Date;
 
 import DataBeans.InfoObject;
 import DataBeans.InfoTeacher;
+import Dominio.teacher.IServiceProviderRegime;
 import Util.ProviderRegimeType;
 
 /**
@@ -73,4 +74,23 @@ public class InfoServiceProviderRegime extends InfoObject
         this.lastModificationDate = lastModificationDate;
     }
 
+    /* (non-Javadoc)
+     * @see DataBeans.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     */
+    public void copyFromDomain(IServiceProviderRegime serviceProviderRegime) {
+        super.copyFromDomain(serviceProviderRegime);
+        if(serviceProviderRegime != null) {
+            setLastModificationDate(serviceProviderRegime.getLastModificationDate());
+            setProviderRegimeType(serviceProviderRegime.getProviderRegimeType());
+        }
+    }
+    
+    public static InfoServiceProviderRegime newInfoFromDomain(IServiceProviderRegime serviceProviderRegime) {
+        InfoServiceProviderRegime infoServiceProviderRegime = null;
+        if(serviceProviderRegime != null) {
+            infoServiceProviderRegime = new InfoServiceProviderRegime();
+            infoServiceProviderRegime.copyFromDomain(serviceProviderRegime);
+        }
+        return infoServiceProviderRegime;
+    }
 }

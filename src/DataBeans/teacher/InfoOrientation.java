@@ -8,6 +8,7 @@ import java.util.Date;
 
 import DataBeans.InfoObject;
 import DataBeans.InfoTeacher;
+import Dominio.teacher.IOrientation;
 import Util.OrientationType;
 
 /**
@@ -114,4 +115,26 @@ public class InfoOrientation extends InfoObject
         this.lastModificationDate = lastModificationDate;
     }
 
+    /* (non-Javadoc)
+     * @see DataBeans.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     */
+    public void copyFromDomain(IOrientation orientation) {
+        super.copyFromDomain(orientation);
+        if(orientation != null) {
+            setDescription(orientation.getDescription());
+            setLastModificationDate(orientation.getLastModificationDate());
+            setNumberOfStudents(orientation.getNumberOfStudents());
+            setOrientationType(orientation.getOrientationType());
+        }
+    }
+    
+    public static InfoOrientation newInfoFromDomain(IOrientation orientation) {
+        InfoOrientation infoOrientation = null;
+        if(orientation != null) {
+            infoOrientation = new InfoOrientation();
+            infoOrientation.copyFromDomain(orientation);
+        }
+        
+        return infoOrientation;
+    }   
 }

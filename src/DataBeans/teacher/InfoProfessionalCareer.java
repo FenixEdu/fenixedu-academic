@@ -4,6 +4,7 @@
  */
 package DataBeans.teacher;
 
+import Dominio.teacher.IProfessionalCareer;
 import Util.CareerType;
 
 
@@ -55,5 +56,27 @@ public class InfoProfessionalCareer extends InfoCareer
     public void setFunction(String function)
     {
         this.function = function;
+    }
+    
+    
+    /* (non-Javadoc)
+     * @see DataBeans.teacher.InfoCareer#copyFromDomain(Dominio.teacher.ICareer)
+     */
+    public void copyFromDomain(IProfessionalCareer professionalCareer) {
+        super.copyFromDomain(professionalCareer);
+        if(professionalCareer != null) {
+            setEntity(professionalCareer.getEntity());
+            setFunction(professionalCareer.getFunction());
+        }
+    }
+    
+    public static InfoProfessionalCareer newInfoFromDomain(IProfessionalCareer professionalCareer) {
+        InfoProfessionalCareer infoProfessionalCareer = null;
+        if(professionalCareer == null) {
+            infoProfessionalCareer = new InfoProfessionalCareer();
+            infoProfessionalCareer.copyFromDomain(professionalCareer);
+        }
+        
+        return infoProfessionalCareer;
     }
 }

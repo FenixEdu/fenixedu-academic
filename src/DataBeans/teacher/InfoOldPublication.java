@@ -8,6 +8,7 @@ import java.util.Date;
 
 import DataBeans.InfoObject;
 import DataBeans.InfoTeacher;
+import Dominio.teacher.IOldPublication;
 import Util.OldPublicationType;
 
 /**
@@ -113,4 +114,26 @@ public class InfoOldPublication extends InfoObject
         this.oldPublicationType = OldPublicationType.getEnum(oldPublicationTypeString);
     }
 
+    /* (non-Javadoc)
+     * @see DataBeans.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     */
+    public void copyFromDomain(IOldPublication oldPublication) {
+        super.copyFromDomain(oldPublication);
+        
+        if(oldPublication != null) {
+            setLastModificationDate(oldPublication.getLastModificationDate());
+            setOldPublicationType(oldPublication.getOldPublicationType());
+            setOldPublicationTypeString(oldPublication.getOldPublicationType().toString());
+            setPublication(oldPublication.getPublication());
+        }
+    }
+    
+    public static InfoOldPublication newInfoFromDomain(IOldPublication oldPublication) {
+        InfoOldPublication infoOldPublication = null;
+        if(oldPublication != null) {
+            infoOldPublication = new InfoOldPublication();
+            infoOldPublication.copyFromDomain(oldPublication);
+        } 
+        return infoOldPublication;
+    }
 }

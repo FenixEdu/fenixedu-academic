@@ -78,7 +78,6 @@
 		    <td class="listClasses-header"><bean:message key="title.gep.teachersInformationSituation" bundle="GEP_RESOURCES"/></td> 
 		    <td class="listClasses-header"><bean:message key="label.gep.teachersInformation.lastModificationDate" bundle="GEP_RESOURCES"/></td> 
 	    </tr>
-	    
 	    <% HashMap statistics = new HashMap(); %>
    		<logic:iterate id="infoSiteTeacherInformation" name="infoSiteTeachersInformation" type="DataBeans.teacher.InfoSiteTeacherInformation">
    			<% int numberOfFields = 0; 
@@ -143,6 +142,7 @@
 					statistics.put(new Integer(numberOfFields), new Integer(value));
 				}
 			%>
+			
 			<bean:size id="numberCourses" name="infoSiteTeacherInformation" property="infoLecturingExecutionCourses"/> 
 				<logic:iterate id="infoExecutionCourse" name="infoSiteTeacherInformation" property="infoLecturingExecutionCourses" length="1"> 
 					<tr>
@@ -169,10 +169,10 @@
 					    </td>
 					    <td  class="listClasses" >
 					    	<bean:write name="infoExecutionCourse" property="nome" />
-					    	 <% if (
-					    	 ((DataBeans.teacher.InfoSiteTeacherInformation)infoSiteTeacherInformation).getInfoResponsibleExecutionCourses().contains(infoExecutionCourse)
-					    	 ){%>
-					    	 (<bean:message key="label.gep.responsible" bundle="GEP_RESOURCES"/>) <% }  %> 
+					    	<% if (((DataBeans.teacher.InfoSiteTeacherInformation)infoSiteTeacherInformation).getInfoResponsibleExecutionCourses() != null &&
+					    		((DataBeans.teacher.InfoSiteTeacherInformation)infoSiteTeacherInformation).getInfoResponsibleExecutionCourses().contains(infoExecutionCourse)
+					    	 	){%>
+					    	(<bean:message key="label.gep.responsible" bundle="GEP_RESOURCES"/>) <% }  %>					    	
 					    </td>
 					    <td  class="listClasses" >
 					    	 <logic:iterate id="curricularCourse" name="infoExecutionCourse" property="associatedInfoCurricularCourses">
@@ -202,12 +202,13 @@
     			</logic:iterate>
 				<logic:iterate  id="infoExecutionCourse" name="infoSiteTeacherInformation" property="infoLecturingExecutionCourses" offset="1">
 					<tr>
-				    	<td  class="listClasses" >
+				    	<td  class="listClasses">
+				    	
 				    		<bean:write name="infoExecutionCourse" property="nome" />
-					    	 <% if (
-					    	 ((DataBeans.teacher.InfoSiteTeacherInformation)infoSiteTeacherInformation).getInfoResponsibleExecutionCourses().contains(infoExecutionCourse)
-					    	 ){%>
-					    	 (<bean:message key="label.gep.responsible" bundle="GEP_RESOURCES"/>) <% }  %> 
+				    		<% if (((DataBeans.teacher.InfoSiteTeacherInformation)infoSiteTeacherInformation).getInfoResponsibleExecutionCourses() != null &&
+						    	 ((DataBeans.teacher.InfoSiteTeacherInformation)infoSiteTeacherInformation).getInfoResponsibleExecutionCourses().contains(infoExecutionCourse)
+						    	 ){%>
+					    	 (<bean:message key="label.gep.responsible" bundle="GEP_RESOURCES"/>) <% }  %> 				    	 	
 				    	 </td> 
 				    	<td  class="listClasses" >
 					    	<logic:iterate id="curricularCourse" name="infoExecutionCourse" property="associatedInfoCurricularCourses">
@@ -216,8 +217,9 @@
 				     	</td> 
 				     </tr>
 			     </logic:iterate>
-		</logic:iterate>
+		</logic:iterate>		
 	</table>
+	 
 	<br/>
 	<h2><bean:message key="label.gep.statistics" bundle="GEP_RESOURCES"/>:</h2>
 	<bean:size id="length" name="infoSiteTeachersInformation"/>
@@ -399,5 +401,5 @@
 				</html:link>
 			</div>
 		</logic:notPresent>
-	</logic:notPresent>
+	</logic:notPresent>	
 </logic:present>

@@ -9,6 +9,7 @@ import java.util.Date;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoObject;
 import DataBeans.InfoTeacher;
+import Dominio.teacher.IExternalActivity;
 
 /**
  * @author Leonor Almeida
@@ -85,4 +86,24 @@ public class InfoExternalActivity extends InfoObject implements ISiteComponent
         this.lastModificationDate = lastModificationDate;
     }
 
+    
+    /* (non-Javadoc)
+     * @see DataBeans.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     */
+    public void copyFromDomain(IExternalActivity externalActivity) {
+        super.copyFromDomain(externalActivity);
+        if(externalActivity != null) {
+            setActivity(externalActivity.getActivity());
+            setLastModificationDate(externalActivity.getLastModificationDate());
+        }
+    }
+    
+    public static InfoExternalActivity newInfoFromDomain(IExternalActivity externalActivity) {
+        InfoExternalActivity infoExternalActivity = null;
+        if(externalActivity != null) {
+            infoExternalActivity = new InfoExternalActivity();
+            infoExternalActivity.copyFromDomain(externalActivity);
+        }
+        return infoExternalActivity;
+    }
 }

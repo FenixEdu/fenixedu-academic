@@ -9,6 +9,9 @@ import java.util.Date;
 import DataBeans.ISiteComponent;
 import DataBeans.InfoObject;
 import DataBeans.InfoTeacher;
+import Dominio.teacher.ICareer;
+import Dominio.teacher.IProfessionalCareer;
+import Dominio.teacher.ITeachingCareer;
 import Util.CareerType;
 
 /**
@@ -16,102 +19,125 @@ import Util.CareerType;
  * @author Sergio Montelobo
  *  
  */
-public abstract class InfoCareer extends InfoObject implements ISiteComponent
-{
+public abstract class InfoCareer extends InfoObject implements ISiteComponent {
     private Integer beginYear;
+
     private Integer endYear;
+
     private CareerType careerType;
+
     private InfoTeacher infoTeacher;
+
     private Date lastModificationDate;
 
     /**
-	 *  
-	 */
-    public InfoCareer()
-    {
+     *  
+     */
+    public InfoCareer() {
         super();
     }
 
     /**
-	 * @return Returns the beginYear.
-	 */
-    public Integer getBeginYear()
-    {
+     * @return Returns the beginYear.
+     */
+    public Integer getBeginYear() {
         return beginYear;
     }
 
     /**
-	 * @param beginYear
-	 *            The beginYear to set.
-	 */
-    public void setBeginYear(Integer beginYear)
-    {
+     * @param beginYear
+     *            The beginYear to set.
+     */
+    public void setBeginYear(Integer beginYear) {
         this.beginYear = beginYear;
     }
 
     /**
-	 * @return Returns the endYear.
-	 */
-    public Integer getEndYear()
-    {
+     * @return Returns the endYear.
+     */
+    public Integer getEndYear() {
         return endYear;
     }
 
     /**
-	 * @param endYear
-	 *            The endYear to set.
-	 */
-    public void setEndYear(Integer endYear)
-    {
+     * @param endYear
+     *            The endYear to set.
+     */
+    public void setEndYear(Integer endYear) {
         this.endYear = endYear;
     }
 
     /**
-	 * @return Returns the infoTeacher.
-	 */
-    public InfoTeacher getInfoTeacher()
-    {
+     * @return Returns the infoTeacher.
+     */
+    public InfoTeacher getInfoTeacher() {
         return infoTeacher;
     }
 
     /**
-	 * @param infoTeacher
-	 *            The infoTeacher to set.
-	 */
-    public void setInfoTeacher(InfoTeacher infoTeacher)
-    {
+     * @param infoTeacher
+     *            The infoTeacher to set.
+     */
+    public void setInfoTeacher(InfoTeacher infoTeacher) {
         this.infoTeacher = infoTeacher;
     }
+
     /**
      * @return Returns the careerType.
      */
-    public CareerType getCareerType()
-    {
+    public CareerType getCareerType() {
         return careerType;
     }
 
     /**
-     * @param careerType The careerType to set.
+     * @param careerType
+     *            The careerType to set.
      */
-    public void setCareerType(CareerType careerType)
-    {
+    public void setCareerType(CareerType careerType) {
         this.careerType = careerType;
     }
 
     /**
      * @return Returns the lastModificationDate.
      */
-    public Date getLastModificationDate()
-    {
+    public Date getLastModificationDate() {
         return lastModificationDate;
     }
 
     /**
-     * @param lastModificationDate The lastModificationDate to set.
+     * @param lastModificationDate
+     *            The lastModificationDate to set.
      */
-    public void setLastModificationDate(Date lastModificationDate)
-    {
+    public void setLastModificationDate(Date lastModificationDate) {
         this.lastModificationDate = lastModificationDate;
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see DataBeans.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     */
+    public void copyFromDomain(ICareer career) {
+        super.copyFromDomain(career);
+        if (career != null) {
+            setBeginYear(career.getBeginYear());
+            setEndYear(career.getEndYear());
+            setLastModificationDate(career.getLastModificationDate());
+        }
+    }
+    
+    public static InfoCareer newInfoFromDomain(ICareer career) {
+        InfoCareer infoCareer = null;
+        if(career != null) {
+            if (career instanceof IProfessionalCareer)
+            {
+                infoCareer = InfoProfessionalCareer.newInfoFromDomain((IProfessionalCareer) career);
+            }
+            else
+            {
+                infoCareer = InfoTeachingCareerWithInfoCategory.newInfoFromDomain((ITeachingCareer) career);
+            }
+        }
+        return infoCareer;
+    }
 }

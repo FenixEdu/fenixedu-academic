@@ -8,6 +8,7 @@ import java.util.Date;
 
 import DataBeans.InfoObject;
 import DataBeans.InfoTeacher;
+import Dominio.teacher.IPublicationsNumber;
 import Util.PublicationType;
 
 /**
@@ -116,4 +117,25 @@ public class InfoPublicationsNumber extends InfoObject
         this.infoTeacher = infoTeacher;
     }
 
+    /* (non-Javadoc)
+     * @see DataBeans.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     */
+    public void copyFromDomain(IPublicationsNumber publicationsNumber) {
+        super.copyFromDomain(publicationsNumber);
+        if(publicationsNumber != null) {
+            setInternational(publicationsNumber.getInternational());
+            setNational(publicationsNumber.getNational());
+            setPublicationType(publicationsNumber.getPublicationType());
+            setLastModificationDate(publicationsNumber.getLastModificationDate());
+        }
+    }
+    
+    public static InfoPublicationsNumber newInfoFromDomain(IPublicationsNumber publicationsNumber) {
+        InfoPublicationsNumber infoPublicationsNumber = null;
+        if(publicationsNumber != null) {
+            infoPublicationsNumber = new InfoPublicationsNumber();
+            infoPublicationsNumber.copyFromDomain(publicationsNumber);
+        }
+        return infoPublicationsNumber;
+    }
 }
