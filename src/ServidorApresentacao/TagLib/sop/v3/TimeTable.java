@@ -121,7 +121,6 @@ public class TimeTable {
 	 * @return TimeTableSlot
 	 */
 	private TimeTableSlot getTimeTableSlot(DayColumn day, int hourIndex) {
-		System.out.println();
 		TimeTableSlot timeTableSlot = timeTableGrid[day.getIndex()][hourIndex];
 
 		if (timeTableSlot == null){
