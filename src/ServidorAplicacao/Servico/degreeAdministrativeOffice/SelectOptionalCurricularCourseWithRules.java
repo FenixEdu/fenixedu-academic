@@ -4,7 +4,7 @@ import DataBeans.InfoCurricularCourse;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.enrolment.degree.SelectOptionalCurricularCourse;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.strategy.enrolment.degree.InfoEnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
 
 /**
  * @author David Santos

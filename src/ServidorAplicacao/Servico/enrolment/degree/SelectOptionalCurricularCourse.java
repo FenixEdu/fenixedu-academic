@@ -10,7 +10,7 @@ import DataBeans.InfoCurricularCourseScope;
 import DataBeans.InfoEnrolmentInOptionalCurricularCourse;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.strategy.enrolment.degree.InfoEnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
 import Util.CurricularCourseType;
 import Util.EnrolmentState;
 

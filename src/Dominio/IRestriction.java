@@ -4,7 +4,7 @@
  */
 package Dominio;
 
-import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
 
 /**
  * @author jpvl

@@ -8,7 +8,7 @@ import DataBeans.InfoDegree;
 import DataBeans.util.Cloner;
 import Dominio.ICurso;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
-import ServidorAplicacao.strategy.enrolment.degree.InfoEnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.ICursoPersistente;
 import ServidorPersistente.ISuportePersistente;

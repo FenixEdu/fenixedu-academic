@@ -6,7 +6,7 @@ package Dominio;
 
 import java.util.List;
 
-import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
 import Util.PrecedenceScopeToApply;
 
 /**
@@ -67,7 +67,7 @@ public class Precedence extends DomainObject implements IPrecedence {
 	}
 
     /* (non-Javadoc)
-	 * @see Dominio.IPrecedence#evaluate(ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext)
+	 * @see Dominio.IPrecedence#evaluate(ServidorAplicacao.strategy.enrolment.EnrolmentContext)
 	 */
 	public boolean evaluate(EnrolmentContext enrolmentContext) {
 		List restrictions = getRestrictions();

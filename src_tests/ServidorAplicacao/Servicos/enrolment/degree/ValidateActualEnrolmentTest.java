@@ -5,7 +5,7 @@ import junit.framework.TestSuite;
 import DataBeans.InfoCurricularCourseScope;
 import Dominio.ICurricularCourse;
 import ServidorAplicacao.Servicos.TestCaseReadServices;
-import ServidorAplicacao.strategy.enrolment.degree.InfoEnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentCurricularCourse;
 import ServidorPersistente.ISuportePersistente;

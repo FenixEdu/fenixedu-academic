@@ -3,7 +3,7 @@ package ServidorAplicacao.Servico.degreeAdministrativeOffice;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.enrolment.degree.ShowAvailableCurricularCoursesForOption;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.strategy.enrolment.degree.InfoEnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
 
 /**
  * @author David Santos

@@ -4,7 +4,7 @@
  */
 package Dominio;
 
-import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
 
 /**
  * @author jpvl
@@ -36,7 +36,7 @@ public class RestrictionCurricularCourseDone
 	}
 
 	/* (non-Javadoc)
-	 * @see Dominio.IRestriction#evaluate(ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext)
+	 * @see Dominio.IRestriction#evaluate(ServidorAplicacao.strategy.enrolment.EnrolmentContext)
 	 */
 	public boolean evaluate(EnrolmentContext enrolmentContext) {
 //		return enrolmentContext.getEnrolmentsAprovedByStudent().contains(this.getPrecedentCurricularCourse());

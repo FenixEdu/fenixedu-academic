@@ -2,11 +2,11 @@ package ServidorAplicacao.Servico.enrolment.degree;
 
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContextManager;
-import ServidorAplicacao.strategy.enrolment.degree.EnrolmentStrategyFactory;
-import ServidorAplicacao.strategy.enrolment.degree.IEnrolmentStrategyFactory;
-import ServidorAplicacao.strategy.enrolment.degree.InfoEnrolmentContext;
-import ServidorAplicacao.strategy.enrolment.degree.strategys.IEnrolmentStrategy;
+import ServidorAplicacao.strategy.enrolment.context.EnrolmentContextManager;
+import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.strategys.EnrolmentStrategyFactory;
+import ServidorAplicacao.strategy.enrolment.strategys.IEnrolmentStrategy;
+import ServidorAplicacao.strategy.enrolment.strategys.IEnrolmentStrategyFactory;
 
 /**
  * @author dcs-rjao

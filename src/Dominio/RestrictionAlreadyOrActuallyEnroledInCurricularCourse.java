@@ -6,7 +6,7 @@ package Dominio;
 
 import java.util.List;
 
-import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
 
 /**
  * @author jpvl
@@ -15,7 +15,7 @@ public class RestrictionAlreadyOrActuallyEnroledInCurricularCourse extends Restr
 	private ICurricularCourse curricularCourseAlreadyEnroled;
 	private Integer keyCurricularCourseAlreadyEnroled;
 	/* (non-Javadoc)
-	 * @see Dominio.IRestriction#evaluate(ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext)
+	 * @see Dominio.IRestriction#evaluate(ServidorAplicacao.strategy.enrolment.EnrolmentContext)
 	 */
 	public boolean evaluate(EnrolmentContext enrolmentContext) {
 		Integer acumulatedEnrolments =

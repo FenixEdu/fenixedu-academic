@@ -6,7 +6,7 @@ package Dominio;
 
 import java.util.List;
 
-import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
 
 /**
  * @author jpvl
@@ -36,7 +36,7 @@ public class RestrictionNumberOfCurricularCourseDone extends Restriction impleme
 	}
 
 	/* (non-Javadoc)
-	 * @see Dominio.IRestriction#evaluate(ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext)
+	 * @see Dominio.IRestriction#evaluate(ServidorAplicacao.strategy.enrolment.EnrolmentContext)
 	 */
 	public boolean evaluate(EnrolmentContext enrolmentContext) {
 		List doneList = enrolmentContext.getEnrolmentsAprovedByStudent();

@@ -4,7 +4,7 @@
  */
 package Dominio;
 
-import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
 
 /**
  * @author jpvl
@@ -34,7 +34,7 @@ public class RestrictionCurricularCourseNotDone	extends Restriction implements I
 	}
 
 	/* (non-Javadoc)
-	 * @see Dominio.IRestriction#evaluate(ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext)
+	 * @see Dominio.IRestriction#evaluate(ServidorAplicacao.strategy.enrolment.EnrolmentContext)
 	 */
 	public boolean evaluate(EnrolmentContext enrolmentContext) {
 		if(enrolmentContext.isCurricularCourseDone(this.getPrecedentCurricularCourse())){

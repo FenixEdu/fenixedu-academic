@@ -6,7 +6,7 @@
  */
 package Dominio;
 
-import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.context.EnrolmentContext;
 
 /**
  * @author dcs-rjao
@@ -24,7 +24,7 @@ public interface IRestrictionCurricularCourseNotDone {
 	 */
 	public abstract void setPrecedentCurricularCourse(ICurricularCourse course);
 	/* (non-Javadoc)
-	 * @see Dominio.IRestriction#evaluate(ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext)
+	 * @see Dominio.IRestriction#evaluate(ServidorAplicacao.strategy.enrolment.EnrolmentContext)
 	 */
 	public abstract boolean evaluate(EnrolmentContext enrolmentContext);
 }

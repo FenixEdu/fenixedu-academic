@@ -3,7 +3,7 @@ package ServidorAplicacao.Servico.degreeAdministrativeOffice;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.enrolment.degree.ValidateActualEnrolment;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.strategy.enrolment.degree.InfoEnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
 
 public class ValidateActualEnrolmentWithRules implements IServico {
 

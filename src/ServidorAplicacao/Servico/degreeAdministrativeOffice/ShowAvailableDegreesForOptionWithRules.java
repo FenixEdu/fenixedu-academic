@@ -3,7 +3,7 @@ package ServidorAplicacao.Servico.degreeAdministrativeOffice;
 import ServidorAplicacao.IServico;
 import ServidorAplicacao.Servico.enrolment.degree.ShowAvailableDegreesForOption;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
-import ServidorAplicacao.strategy.enrolment.degree.InfoEnrolmentContext;
+import ServidorAplicacao.strategy.enrolment.context.InfoEnrolmentContext;
 
 public class ShowAvailableDegreesForOptionWithRules implements IServico {
 

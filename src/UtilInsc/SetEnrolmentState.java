@@ -169,8 +169,8 @@ public class SetEnrolmentState {
 				}
 			});
 			IExecutionPeriod executionPeriod = (IExecutionPeriod) finalExecutionPeriodList.get(0);
-			enrolmentPeriod.setExecutionPeriod(executionPeriod);
 			persistentEnrolmentPeriod.lockWrite(enrolmentPeriod);
+			enrolmentPeriod.setExecutionPeriod(executionPeriod);
 			String executionPeriodName = executionPeriod.getExecutionYear().getYear() + " - " + executionPeriod.getName();
 			System.out.println();
 			System.out.println("SETING NEW ENROLMENT PERIOD FOR: [" + executionPeriodName + "]");
