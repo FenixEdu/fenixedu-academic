@@ -11,9 +11,9 @@ import ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext;
 /**
  * @author jpvl
  */
-public class RestrictionEnrolmentInCurricularCourse extends Restriction {
+public class RestrictionEnrolmentInCurricularCourse extends Restriction implements IRestrictionCurricularCourseAlreadyEnrolled {
 	private ICurricularCourse curricularCourseAlreadyEnroled;
-
+	private Integer keyCurricularCourseAlreadyEnroled;
 	/* (non-Javadoc)
 	 * @see Dominio.IRestriction#evaluate(ServidorAplicacao.strategy.enrolment.degree.EnrolmentContext)
 	 */
@@ -39,6 +39,20 @@ public class RestrictionEnrolmentInCurricularCourse extends Restriction {
 	 */
 	public void setCurricularCourseAlreadyEnroled(ICurricularCourse course) {
 		curricularCourseAlreadyEnroled = course;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getKeyCurricularCourseAlreadyEnroled() {
+		return keyCurricularCourseAlreadyEnroled;
+	}
+
+	/**
+	 * @param integer
+	 */
+	public void setKeyCurricularCourseAlreadyEnroled(Integer integer) {
+		keyCurricularCourseAlreadyEnroled = integer;
 	}
 
 }
