@@ -27,7 +27,7 @@ public abstract class TestCaseActionPresentationPersonPortal extends TestCaseAct
 	public Collection getAuthorizedRolesCollection() {
 		Collection roles = new ArrayList();
 		InfoRole infoRole = new InfoRole();
-		infoRole.setRoleType(RoleType.TIME_TABLE_MANAGER);
+		infoRole.setRoleType(RoleType.PERSON);
 		roles.add(infoRole);
 		return roles;
 	}
@@ -36,7 +36,7 @@ public abstract class TestCaseActionPresentationPersonPortal extends TestCaseAct
 	 * @see ServidorApresentacao.TestCaseActionExecution#getServletConfigFile()
 	 */
 	protected String getServletConfigFile() {
-		return "/WEB-INF/tests/web-person.xml";
+		return "/WEB-INF/web.xml";
 	}
 
 	/* (non-Javadoc)
