@@ -152,7 +152,7 @@ public class SubmitMarksAction extends DispatchAction {
 		try {
 			evaluationsWithError = (List) serviceManager.executar(userView, "InsertStudentsFinalEvaluation", args);
 		} catch (NonExistingServiceException e) {
-			throw new NonExistingActionException(teacherNumber.toString(), null);
+			throw new NonExistingActionException(teacherNumber.toString(), e);
 		} catch (FenixServiceException e) {
 			throw new FenixActionException(e);
 		}
