@@ -274,7 +274,13 @@
     		<form-property name="page" type="java.lang.Integer" initial="0"/> 
     		<form-property name="responseRefreshTimeout" type="java.lang.Integer"/>
 	    </form-bean>
-
+		<form-bean name="chooseForUploadFilesForm"
+    		type="org.apache.struts.validator.DynaValidatorForm"
+    		dynamic="true">
+    			<form-property name="page" type="java.lang.Integer" initial="0"/> 
+    			<form-property name="file" type="java.lang.String"/>
+    			<form-property name="uploadedFile" type="org.apache.struts.upload.FormFile"/>	
+    	</form-bean>
 	    <form-bean name="monitorRequestLogsPathForm"
 				type="org.apache.struts.validator.DynaValidatorForm"
 				dynamic="true">
@@ -1205,7 +1211,18 @@
 		<forward name="confirmation" path="confirmation"/>		
 	</action>
 
+	<action path="/uploadFiles"
+		type="ServidorApresentacao.Action.manager.uploadFiles.UploadFilesAction"
+		parameter="method"
+		scope="request"
+		name="chooseForUploadFilesForm"
+		input="/uploadFiles.do?method=prepareChooseForUploadFiles&amp;page=0"
+	>
+		<forward name="firstPage" path="firstPageUploadFiles"/>
+		<forward name="chooseForUploadFiles" path="chooseForUploadFiles"/>
+		<forward name="error" path="chooseForUploadFiles.error"/>
 
+	</action>
 
 
 	<!-- ========== PRECEDENCES MANAGEMENT ========== -->
@@ -1221,7 +1238,6 @@
 			type="ServidorApresentacao.Action.manager.precedences.ReadPrecedencesFromDegreeCurricularPlanAction">
        <forward name="showPrecedences" path="df.page.manage.precedences"/>
 	</action>
-
 	<!-- ========== CURRICULAR COURSE GROUPS MANAGEMENT ========== -->	
 	<action path="/manageCurricularCourseGroups"
 		type="ServidorApresentacao.Action.manager.curricularCourseGroupManagement.CurricularCouseGroupManagementDispatchAction"
@@ -1230,8 +1246,7 @@
 	>
 		<forward name="viewGroups" path="viewCurricularCourseGroups"/>
      </action>
-        
-        
+
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

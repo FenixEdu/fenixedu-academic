@@ -27,6 +27,10 @@
 	<property name="build.tests.jboss" value="${build.tests}/jboss"/>
 	<property name="build.tests.services" value="${build.tests}/services"/>
 	
+    <property name="etc" location="etc"/>
+	<property name="etc.datasets" location="${etc}/datasets" />
+    <property name="etc.datasets_templates" location="${etc}/datasets_templates" />
+	
 	<property name="sshtools.home" location="lib"/>
 
     <property environment="env"/>
@@ -353,6 +357,62 @@
             </classpath>
         </junit>
     </target>
+	
+	<target name="compile-service-tests-sana-naat"
+			depends="compile-app-server"
+            description="Compiles application server.">
+		<mkdir dir="${build.tests.services}"/>
+		<javac classpath="${build.app-server}"
+               destdir="${build.tests.services}"
+               extdirs="${lib}" 
+               srcdir="${src.tests}"
+               debug="true"
+               optimize="true"
+               deprecation="true"
+               encoding="${encoding}"
+               fork="yes">
+               
+            <include name="Tools/*.java"/>
+            <include name="ServidorAplicacao/Servicos/MasterDegree/administrativeOffice/thesis/*.java"/>
+   	        <include name="ServidorAplicacao/Servicos/manager/gratuity/ProcessSibsPaymentFileTest.java"/>
+            <include name="ServidorAplicacao/Servicos/commons/workLocation/**/*.java"/>
+            <include name="ServidorAplicacao/Servicos/commons/externalPerson/*.java"/>
+			<include name="ServidorAplicacao/Servicos/MasterDegree/administrativeOffice/guide/reimbursementGuide/*.java"/>
+
+            
+		</javac>
+	</target>		
+	
+    
+    <target name="run-tests-sana-naat"
+    		depends="compile-service-tests-sana-naat,prepare-datasets"
+            description="Executes tests for branch Anavarali Tarmahomed">
+        <ant antfile="build_dataBaseUtils.xml" target="create-tables"/>
+        <junit haltonfailure="true" printsummary="yes" dir="${basedir}">
+            <formatter type="plain" usefile="false"/>
+            <batchtest fork="yes">
+                <fileset dir="${src.tests}">
+					<include name="ServidorAplicacao/Servicos/MasterDegree/administrativeOffice/thesis/*.java"/>
+       	            <include name="ServidorAplicacao/Servicos/commons/workLocation/**/*.java"/>
+   	       	        <include name="ServidorAplicacao/Servicos/manager/gratuity/ProcessSibsPaymentFileTest.java"/>
+       	            <include name="ServidorAplicacao/Servicos/commons/externalPerson/*.java"/>
+					<include name="ServidorAplicacao/Servicos/MasterDegree/administrativeOffice/guide/reimbursementGuide/*.java"/>
+                </fileset>
+            </batchtest>
+            <classpath>
+                <pathelement path="${build.app-server}"/>
+                <pathelement path="${build.tests.services}"/>
+                <pathelement path="${sql}"/>
+                <fileset dir="${lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+                <fileset dir="${env.JBOSS_HOME}/client">
+                	<include name="**/*.jar" />
+                </fileset>
+            </classpath>
+        </junit>
+    </target>
+		
 		
 	<target name="prepare">
 		<!-- Create build directories as needed -->
@@ -997,5 +1057,73 @@
 			</classpath>
 		</java>
 	</target>
+
+	<!-- generate dataset (smart mode) -->
+	<target name="smart-generate-dataset" description="Generates a dataset using the parameters specified in SmartDataSetGenerator.properties" depends="compile-app-server">
+		<java classname="Tools.SmartDataSetGeneratorMain" fork="true">
+			<classpath refid="runtime-classpath" />
+		</java>
+	</target>
+	
+	<!-- Prepare datasets -->
+	<target name="prepare-datasets">
+    	<mkdir dir="${etc.datasets}" />
+    	<copy todir="${etc.datasets}" overwrite="true">
+    		<fileset dir="${etc.datasets_templates}"/>
+    	</copy>	
+    	<tstamp>
+         	<format property="today" pattern="yyyy-MM-dd"/>
+		</tstamp>
+		<tstamp>
+	      <format property="week_before" pattern="yyyy-MM-dd"
+              offset="-1" unit="week"/>
+        </tstamp>
+        <tstamp>
+	      <format property="week_after" pattern="yyyy-MM-dd"
+              offset="1" unit="week"/>
+        </tstamp>
+        <tstamp>
+	      <format property="2weeks_before" pattern="yyyy-MM-dd"
+              offset="-2" unit="week"/>
+        </tstamp>
+        <tstamp>
+        	<format property="current_year" pattern="yyyy" />	
+        </tstamp>
+    	<replace 
+	    	dir="${etc.datasets}">    	
+	   	<include name="**/**/*.xml"/>
+    		<replacefilter 
+		    	token="@project.base.path@" 
+		    	value="${basedir}"/>
+		    <replacefilter
+		    	token="@TODAY@"
+		    	value="${today}"/>
+		    <replacefilter
+		    	token="@WEEK_BEFORE@"
+		    	value="${week_before}"/>
+		    <replacefilter
+		    	token="@WEEK_AFTER@"
+		    	value="${week_after}"/>
+		    <replacefilter
+		    	token="@2WEEKS_BEFORE@"
+		    	value="${2weeks_before}"/>
+		    <replacefilter
+		    	token="@CURRENT_YEAR@"
+		    	value="${current_year}"/>
+		</replace>
+		
+		<tstamp>
+         	<format property="today" pattern="yyyy-MM-dd"/>
+		</tstamp>
+		<tstamp>
+	      <format property="week_before" pattern="yyyy-MM-dd"
+              offset="-1" unit="week"/>
+        </tstamp>
+        <tstamp>
+	      <format property="week_before" pattern="yyyy-MM-dd"
+              offset="1" unit="week"/>
+        </tstamp>
+			
+    </target>
 
 </project>
