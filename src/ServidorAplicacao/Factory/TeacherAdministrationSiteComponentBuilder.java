@@ -564,7 +564,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 * @param site
 	 * @return
 	 */
-	private ISiteComponent getInfoSiteEvaluation(InfoSiteEvaluation component, ISite site) {
+	private ISiteComponent getInfoSiteEvaluation(InfoSiteEvaluation component, ISite site) throws FenixServiceException {
 		IDisciplinaExecucao executionCourse = site.getExecutionCourse();
 
 		List evaluations = executionCourse.getAssociatedEvaluations();
@@ -602,7 +602,8 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 				persistentEvaluationExecutionCourse.lockWrite(evalutionExecutionCourse);
 			} catch (ExcepcaoPersistencia e) {
-				e.printStackTrace();
+				e.printStackTrace(System.out);
+				throw new FenixServiceException(e);
 			}
 
 			//add final evaluation to evaluation list
@@ -808,7 +809,8 @@ public class TeacherAdministrationSiteComponentBuilder {
 			} else {
 				while (iterator.hasNext()) {
 					ISection section = (ISection) iterator.next();
-					if ((section.getSuperiorSection() != null && section.getSuperiorSection().getIdInternal().equals(iSection.getSuperiorSection().getIdInternal())) && !section.getName().equals(iSection.getName())) {
+					if ((section.getSuperiorSection() != null && section.getSuperiorSection().getIdInternal().equals(iSection.getSuperiorSection().getIdInternal()))
+						&& !section.getName().equals(iSection.getName())) {
 						infoSectionsList.add(Cloner.copyISection2InfoSection(section));
 					}
 				}
@@ -944,9 +946,8 @@ public class TeacherAdministrationSiteComponentBuilder {
 	private ISiteComponent getInfoSiteAllGroups(InfoSiteAllGroups component, Integer groupPropertiesCode) throws FenixServiceException {
 
 		List infoSiteGroupsByShiftList = readAllShiftsAndGroupsByProject(groupPropertiesCode);
-
+		
 		component.setInfoSiteGroupsByShiftList(infoSiteGroupsByShiftList);
-
 		return component;
 	}
 
@@ -968,21 +969,19 @@ public class TeacherAdministrationSiteComponentBuilder {
 				if (!shiftsInternalList.contains(shift))
 					shiftsInternalList.add(shift);
 			}
-
 			Iterator iterator2 = shiftsInternalList.iterator();
 			List studentGroupsList = null;
 			InfoSiteGroupsByShift infoSiteGroupsByShift = null;
 			shift = null;
 			infoSiteGroupsByShiftList = new ArrayList(shiftsInternalList.size());
-
+			
 			while (iterator2.hasNext()) {
 				shift = (ITurno) iterator2.next();
 
 				studentGroupsList = sp.getIPersistentStudentGroup().readAllStudentGroupByGroupPropertiesAndShift(groupProperties, shift);
-
+				
 				List infoStudentGroupList = new ArrayList(studentGroupsList.size());
 				Iterator iter = studentGroupsList.iterator();
-
 				while (iter.hasNext())
 					infoStudentGroupList.add(Cloner.copyIStudentGroup2InfoStudentGroup((IStudentGroup) iter.next()));
 
@@ -999,11 +998,6 @@ public class TeacherAdministrationSiteComponentBuilder {
 			e.printStackTrace();
 			throw new FenixServiceException("error.impossibleReadAllShiftsByProject");
 		}
-		//		System.out.println(
-		//			"-----------------------NO SERVICO-infoSiteGroupsByShiftList"
-		//				+ infoSiteGroupsByShiftList.size());
-		//		System.out.println(
-		//			"NO SERVICO-infoSiteGroupsByShiftList" + infoSiteGroupsByShiftList);
 		return infoSiteGroupsByShiftList;
 	}
 
@@ -1037,7 +1031,6 @@ public class TeacherAdministrationSiteComponentBuilder {
 			InfoStudentGroupAttend infoStudentGroupAttend = null;
 
 			while (iter.hasNext()) {
-
 				infoSiteStudentInformation = new InfoSiteStudentInformation();
 
 				infoStudentGroupAttend = Cloner.copyIStudentGroupAttend2InfoStudentGroupAttend((IStudentGroupAttend) iter.next());
@@ -1129,7 +1122,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 		component.setInfoGroupProperties(infoGroupProperties);
 		return component;
 	}
-
+	
 	public InfoGroupProperties readGroupProperties(Integer groupPropertiesCode) throws ExcepcaoInexistente, FenixServiceException {
 
 		List projects = null;
@@ -1145,7 +1138,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 		return Cloner.copyIGroupProperties2InfoGroupProperties(groupProperties);
 	}
-
+	
 	/**
 	 * 
 	 * @param component
