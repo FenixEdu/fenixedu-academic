@@ -21,7 +21,6 @@ import ServidorPersistente.IPersistentCurricularSemester;
 import ServidorPersistente.ISuportePersistente;
 import ServidorPersistente.OJB.SuportePersistenteOJB;
 import ServidorPersistente.exceptions.ExistingPersistentException;
-import Util.Data;
 
 /**
  * @author lmac1
