@@ -36,7 +36,7 @@ public class InfoGrantProject extends InfoGrantPaymentEntity {
     {
     	if(grantProject != null){
     		
-    		setIdInternal(grantProject.getIdInternal()); //FIXME
+    		super.copyFromDomain(grantProject);
     		setNumber(grantProject.getNumber());
     		setDesignation(grantProject.getDesignation());
     		setOjbConcreteClass(grantProject.getOjbConcreteClass());

@@ -8,11 +8,11 @@ import org.apache.commons.beanutils.PropertyUtils;
 
 import DataBeans.InfoObject;
 import DataBeans.InfoTeacher;
+import DataBeans.InfoTeacherWithPerson;
 import DataBeans.grant.contract.InfoGrantContract;
 import DataBeans.grant.contract.InfoGrantContractWithGrantOwnerAndGrantType;
 import DataBeans.grant.contract.InfoGrantOrientationTeacherWithTeacherAndGrantContract;
 import DataBeans.grant.contract.InfoGrantType;
-import DataBeans.util.Cloner;
 import Dominio.IDomainObject;
 import Dominio.ITeacher;
 import Dominio.Teacher;
@@ -85,7 +85,6 @@ public class EditGrantContract extends EditDomainObjectService {
                 newGrantOrientationTeacher = new GrantOrientationTeacher();
                 ot.simpleLockWrite(newGrantOrientationTeacher);
             }
-            //oldGrantOrientationTeacher = Cloner.copyInfoGrantOrientationTeacher2IGrantOrientationTeacher(infoGrantContract.getGrantOrientationTeacherInfo());
             oldGrantOrientationTeacher = InfoGrantOrientationTeacherWithTeacherAndGrantContract.newDomainFromInfo(infoGrantContract.getGrantOrientationTeacherInfo());
             Integer ack_opt_lock = newGrantOrientationTeacher.getAckOptLock();
             PropertyUtils.copyProperties(newGrantOrientationTeacher,
@@ -126,7 +125,7 @@ public class EditGrantContract extends EditDomainObjectService {
             teacher = pt.readByNumber(teacherNumber);
             if (teacher == null)
                 throw new GrantOrientationTeacherNotFoundException();
-            infoTeacher = Cloner.copyITeacher2InfoTeacher(teacher);
+            infoTeacher = InfoTeacherWithPerson.newInfoFromDomain(teacher);
         } catch (ExcepcaoPersistencia persistentException) {
             throw new FenixServiceException(persistentException.getMessage());
         }

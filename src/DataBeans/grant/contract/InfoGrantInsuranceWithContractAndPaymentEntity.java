@@ -3,7 +3,6 @@
  */
 package DataBeans.grant.contract;
 
-import DataBeans.util.Cloner;
 import Dominio.grant.contract.GrantInsurance;
 import Dominio.grant.contract.IGrantInsurance;
 
@@ -19,7 +18,7 @@ public class InfoGrantInsuranceWithContractAndPaymentEntity extends InfoGrantIns
 		super.copyFromDomain(grantInsurance);
 		if(grantInsurance != null){
 		    setInfoGrantContract(InfoGrantContractWithGrantOwnerAndGrantType.newInfoFromDomain(grantInsurance.getGrantContract()));
-		    setInfoGrantPaymentEntity(Cloner.copyIGrantPaymentEntity2InfoGrantPaymentEntity(grantInsurance.getGrantPaymentEntity()));
+		    setInfoGrantPaymentEntity(InfoGrantPaymentEntity.newInfoFromDomain(grantInsurance.getGrantPaymentEntity()));
 		}
 	}
 	

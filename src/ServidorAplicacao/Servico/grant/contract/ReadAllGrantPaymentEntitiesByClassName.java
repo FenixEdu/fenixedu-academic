@@ -10,7 +10,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
-import DataBeans.util.Cloner;
+import DataBeans.grant.contract.InfoGrantPaymentEntity;
 import Dominio.grant.contract.IGrantPaymentEntity;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -47,7 +47,7 @@ public class ReadAllGrantPaymentEntitiesByClassName implements IService
                 public Object transform(Object o)
                 {
                     IGrantPaymentEntity grantPaymentEntity = (IGrantPaymentEntity) o;
-                    return Cloner.copyIGrantPaymentEntity2InfoGrantPaymentEntity(grantPaymentEntity);
+                    return InfoGrantPaymentEntity.newInfoFromDomain(grantPaymentEntity);
                 }
             });
             

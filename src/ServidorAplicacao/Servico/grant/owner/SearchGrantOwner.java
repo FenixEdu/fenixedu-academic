@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
+import DataBeans.InfoPersonWithInfoCountry;
 import DataBeans.grant.owner.InfoGrantOwner;
 import DataBeans.grant.owner.InfoGrantOwnerWithPerson;
-import DataBeans.util.Cloner;
 import Dominio.IPessoa;
 import Dominio.grant.owner.IGrantOwner;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
@@ -95,7 +95,7 @@ public class SearchGrantOwner implements IService {
                         infoGrantOwner = InfoGrantOwnerWithPerson.newInfoFromDomain(grantOwner);
                     else {
                         //The person is NOT a GrantOwner
-                        infoGrantOwner.setPersonInfo(Cloner.copyIPerson2InfoPerson(newPerson));
+                        infoGrantOwner.setPersonInfo(InfoPersonWithInfoCountry.newInfoFromDomain(person));
                     }
                     infoGrantOwnerList.add(infoGrantOwner);
                 }

@@ -7,11 +7,11 @@ package ServidorAplicacao.Servico.grant.contract;
 import java.util.List;
 
 import DataBeans.InfoObject;
+import DataBeans.InfoTeacherWithPerson;
 import DataBeans.grant.contract.InfoGrantContractRegime;
 import DataBeans.grant.contract.InfoGrantContractRegimeWithTeacherAndContract;
 import DataBeans.grant.contract.InfoGrantContractWithGrantOwnerAndGrantType;
 import DataBeans.grant.contract.InfoGrantInsurance;
-import DataBeans.util.Cloner;
 import Dominio.IDomainObject;
 import Dominio.ITeacher;
 import Dominio.grant.contract.GrantContract;
@@ -77,11 +77,10 @@ public class EditGrantContractRegime extends EditDomainObjectService {
             grantContractRegime.setDateDispatchCD(infoGrantContractRegime.getDateDispatchCD());
             if (infoGrantContractRegime.getInfoTeacher() != null) {
                 ITeacher teacher = null;
-                teacher = Cloner.copyInfoTeacher2Teacher(infoGrantContractRegime.getInfoTeacher());
+                teacher = InfoTeacherWithPerson.newDomainFromInfo(infoGrantContractRegime.getInfoTeacher());
                 grantContractRegime.setTeacher(teacher);
             }
             IGrantContract grantContract = null;
-            //grantContract = Cloner.copyInfoGrantContract2IGrantContract(infoGrantContractRegime.getInfoGrantContract());
             grantContract = InfoGrantContractWithGrantOwnerAndGrantType.newDomainFromInfo(infoGrantContractRegime.getInfoGrantContract());
             grantContractRegime.setGrantContract(grantContract);
         }
@@ -115,8 +114,7 @@ public class EditGrantContractRegime extends EditDomainObjectService {
                 //If grantOrientationTeacher is filled in grantContractRegime
                 if (infoGrantContractRegime.getInfoTeacher() != null) {
                     //Update grant orientation teacher of contract
-                    grantOrientationTeacher.setOrientationTeacher(Cloner
-                            .copyInfoTeacher2Teacher(infoGrantContractRegime.getInfoTeacher()));
+                    grantOrientationTeacher.setOrientationTeacher(InfoTeacherWithPerson.newDomainFromInfo(infoGrantContractRegime.getInfoTeacher()));
                 } else
                 //if grantOrientationTeacher is not filled in grantContractRegime
                 {

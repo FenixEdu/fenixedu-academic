@@ -154,7 +154,7 @@ public class InfoGrantType extends InfoObject {
     	return infoGrantType;
     }
     
-    public void copyToDomain(InfoGrantType infoGrantType,GrantType grantType)
+    public void copyToDomain(InfoGrantType infoGrantType,IGrantType grantType)
     { 
         super.copyToDomain(infoGrantType,grantType);
         

@@ -79,7 +79,6 @@ public class ReadGrantContract extends ReadDomainObjectService implements IServi
 			IPersistentGrantOrientationTeacher pgot = sp.getIPersistentGrantOrientationTeacher();
 
 			InfoGrantContract infoGrantContract = (InfoGrantContract) super.run(objectId);
-			//IGrantContract contract = Cloner.copyInfoGrantContract2IGrantContract(infoGrantContract);
 			IGrantContract contract = InfoGrantContractWithGrantOwnerAndGrantType.newDomainFromInfo(infoGrantContract);
 			
 			//get the GrantOrientationTeacher for the contract

@@ -10,8 +10,9 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 import DataBeans.InfoPerson;
+import DataBeans.InfoPersonWithInfoCountry;
+import DataBeans.person.InfoQualificationWithPersonAndCountry;
 import DataBeans.person.InfoSiteQualifications;
-import DataBeans.util.Cloner;
 import Dominio.IPessoa;
 import Dominio.IQualification;
 import ServidorAplicacao.IServico;
@@ -67,7 +68,7 @@ public class ReadQualifications implements IServico
 			IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
 
 			IPessoa person = persistentPerson.lerPessoaPorUsername(user);
-            InfoPerson infoPerson = Cloner.copyIPerson2InfoPerson(person);
+            InfoPerson infoPerson = InfoPersonWithInfoCountry.newInfoFromDomain(person);
 			List qualifications = persistentQualification.readQualificationsByPerson(person);
 
 			List infoQualifications = (List) CollectionUtils.collect(qualifications, new Transformer()
@@ -75,7 +76,7 @@ public class ReadQualifications implements IServico
 				public Object transform(Object o)
 				{
 					IQualification qualification = (IQualification) o;
-					return Cloner.copyIQualification2InfoQualification(qualification);
+					return InfoQualificationWithPersonAndCountry.newInfoFromDomain(qualification);
 				}
 			});
             

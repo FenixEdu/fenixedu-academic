@@ -5,7 +5,6 @@ package ServidorAplicacao.Servico.grant.contract;
 
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 import DataBeans.grant.contract.InfoGrantPaymentEntity;
-import DataBeans.util.Cloner;
 import Dominio.grant.contract.IGrantPaymentEntity;
 import ServidorAplicacao.Servico.exceptions.FenixServiceException;
 import ServidorPersistente.ExcepcaoPersistencia;
@@ -34,7 +33,7 @@ public class ReadPaymentEntityByNumberAndClass implements IService
             ISuportePersistente sp = SuportePersistenteOJB.getInstance();
             pgpe = sp.getIPersistentGrantPaymentEntity();
             grantPaymentEntity = pgpe.readByNumberAndClass(paymentEntityNumber, className);
-            result = Cloner.copyIGrantPaymentEntity2InfoGrantPaymentEntity(grantPaymentEntity);
+            result = InfoGrantPaymentEntity.newInfoFromDomain(grantPaymentEntity);
             
         } catch (ExcepcaoPersistencia e)
         {
