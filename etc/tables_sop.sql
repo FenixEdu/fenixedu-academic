@@ -172,7 +172,7 @@ create table EXAM_ROOM (
    primary key (ID_INTERNAL),
    unique U1 (KEY_EXAM, KEY_ROOM))
    type=InnoDB;
-   
+
 #----------------------------
 # Table structure for exam_enrollment
 #----------------------------
@@ -185,3 +185,15 @@ CREATE TABLE EXAM_ENROLLMENT (
   PRIMARY KEY (ID_INTERNAL),
   unique U1 (KEY_EXAM)
 ) TYPE=InnoDB;
+
+#----------------------------
+# Table structure for exam_student
+#----------------------------
+drop table if exists EXAM_STUDENT;
+create table EXAM_STUDENT (
+   ID_INTERNAL int(11) not null auto_increment,
+   KEY_EXAM int(11) not null,
+   KEY_STUDENT int(11) not null,
+   primary key (ID_INTERNAL),
+   unique U1 (KEY_EXAM, KEY_STUDENT))
+   type=InnoDB;
