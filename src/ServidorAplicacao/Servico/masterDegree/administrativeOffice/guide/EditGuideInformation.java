@@ -117,7 +117,9 @@ public class EditGuideInformation implements IServico {
 			
 			
 		infoGuide.setInfoContributor(Cloner.copyIContributor2InfoContributor(contributor));
-
+		
+System.out.println("infoGuide " + infoGuide.getInfoContributor());
+		
 		// Check the quantities of the Guide Entries
 		// The items without a quantity or with a 0 quantity will be deleted if the guide is NON PAYED or
 		// they won't appear in the new guide version if the guide has been payed 
@@ -259,21 +261,24 @@ public class EditGuideInformation implements IServico {
 		
 		if (!change)
 			throw new NoChangeMadeServiceException();
-
-		guide.setContributor(contributor);
-
-		
+		try {
+			sp = SuportePersistenteOJB.getInstance();
+			sp.getIPersistentGuide().write(guide);
+			guide.setContributor(contributor);
+		} catch (ExcepcaoPersistencia ex) {
+			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
+			newEx.fillInStackTrace();
+			throw newEx;
+		}
 		InfoGuide newInfoGuide = null;
 		IGuide newGuide = null;
 		InfoGuide result = null;
 		try {
 			sp = SuportePersistenteOJB.getInstance();
 
-			
 			// write the Others Guide Entry if necessary
 			if (othersGuideEntry != null)
 				sp.getIPersistentGuideEntry().write(othersGuideEntry);
-			
 			
 			// Make sure that everything is written before reading ...
 			sp.confirmarTransaccao();
@@ -284,7 +289,7 @@ public class EditGuideInformation implements IServico {
 			// Update the Guide Total
 			InfoGuide infoGuideTemp = new InfoGuide();
 			infoGuideTemp.setInfoGuideEntries(newInfoGuideEntries);
-
+System.out.println("NewGuide no Serviço" + newGuide);	
 			result = Cloner.copyIGuide2InfoGuide(newGuide); 
 
 			result.setTotal(CalculateGuideTotal.calculate(result));

@@ -277,10 +277,11 @@ public class EditGuideDispatchAction extends DispatchAction {
 			
 			String contributorString = (String) editGuideForm.get("contributor");
 
+
 			Integer contributorNumber = null;
 			if ((contributorString != null) && (contributorString.length() != 0))
 				contributorNumber = new Integer(contributorString);
-			
+		
 			// Fill in the quantity List
 			Enumeration arguments = request.getParameterNames();
 			
