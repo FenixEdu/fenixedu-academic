@@ -10,6 +10,16 @@ class net.sourceforge.fenixedu.domain.DomainObject implements java.io.Serializab
 }
 
 
+class net.sourceforge.fenixedu.domain.Advisory extends net.sourceforge.fenixedu.domain.DomainObject {
+	Date created;
+	String subject;
+	Boolean onlyShowOnce;
+	Date expires;
+	String message;
+	String sender;
+}
+
+
 class net.sourceforge.fenixedu.domain.teacher.Category extends net.sourceforge.fenixedu.domain.DomainObject {
 	String code;
 	String longName;

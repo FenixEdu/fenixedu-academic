@@ -7,8 +7,7 @@ import java.util.Date;
  * 
  * /2003/08/26
  */
-
-public class Advisory extends DomainObject implements IAdvisory {
+public class Advisory extends Advisory_Base implements IAdvisory {
 
     private String sender;
 
@@ -22,9 +21,6 @@ public class Advisory extends DomainObject implements IAdvisory {
 
     private Boolean onlyShowOnce;
 
-    public Advisory() {
-    }
-
     public boolean equals(Object obj) {
         boolean result = false;
         if (obj instanceof IAdvisory) {
@@ -35,16 +31,33 @@ public class Advisory extends DomainObject implements IAdvisory {
     }
 
     public String toString() {
-        String result = "[" + this.getClass().getName() + ": ";
-        result += "idInternal = " + getIdInternal() + "; ";
-        result += "subject = " + this.subject + "; ";
-        result += "sender = " + this.sender + "\n";
-        result += "message = " + this.message + "\n";
-        result += "created = " + this.created + "\n";
-        result += "expires = " + this.expires + "\n";
-        result += "onlyShowOnce = " + this.onlyShowOnce + "]\n";
-
-        return result;
+		final StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("[");
+		stringBuilder.append(this.getClass().getName());
+		stringBuilder.append(": ");
+		stringBuilder.append("idInternal = ");
+		stringBuilder.append(getIdInternal());
+		stringBuilder.append("; ");
+		stringBuilder.append("subject = ");
+		stringBuilder.append(this.subject);
+		stringBuilder.append("; ");
+		stringBuilder.append("sender = ");
+		stringBuilder.append(this.sender);
+		stringBuilder.append("\n");
+		stringBuilder.append("message = ");
+		stringBuilder.append(this.message);
+		stringBuilder.append("\n");
+		stringBuilder.append("created = ");
+		stringBuilder.append(this.created);
+		stringBuilder.append("\n");
+		stringBuilder.append("expires = ");
+		stringBuilder.append(this.expires);
+		stringBuilder.append("\n");
+		stringBuilder.append("onlyShowOnce = ");
+		stringBuilder.append(this.onlyShowOnce);
+		stringBuilder.append("]\n");
+		
+        return stringBuilder.toString();
     }
 
     /**
