@@ -6,9 +6,9 @@
 
 <p><span class="error"><html:errors/></span></p>
 
+<div class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml">IST</a> > <html:link page="<%= "/showDegrees.do?method=nonMaster&executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" >Ensino</html:link>
 <logic:present name="infoDegreeInfo">
-
-				<div class="breadcumbs"><a href="http://www.ist.utl.pt/index.shtml">IST</a> > <html:link page="<%= "/showDegrees.do?method=nonMaster&executionPeriodOID=" + request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID) %>" >Ensino</html:link> &gt;&nbsp;
+				&gt;&nbsp;
 					<bean:write name="infoDegreeInfo" property="infoDegree.sigla" />
 				</div>
 				
