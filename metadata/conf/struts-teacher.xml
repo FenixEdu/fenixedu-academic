@@ -298,8 +298,8 @@
 	<action	path="/index"
         type="ServidorApresentacao.Action.teacher.TeacherLoginAction"
 		>    
-<!--      <forward name="viewProfessorships" path="/viewProfessorships.jsp"/>          -->
-		<forward name="viewProfessorships" path="df.page.viewProfessorships"/>
+      <forward name="viewProfessorships" path="/viewProfessorships.jsp"/>         
+<!--		<forward name="viewProfessorships" path="df.page.viewProfessorships"/> -->
 	</action>
 	
 	<action path="/viewSite"
