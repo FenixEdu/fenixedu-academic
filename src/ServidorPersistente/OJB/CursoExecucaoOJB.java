@@ -125,7 +125,9 @@ public class CursoExecucaoOJB
 
 			List result = (List) query.execute();
 			lockRead(result);
-			return (ICursoExecucao) result.get(0);
+			if (result.size() != 0)
+				return (ICursoExecucao) result.get(0);
+			else return null;
 		} catch (QueryException e) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, e);
 		}

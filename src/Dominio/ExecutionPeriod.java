@@ -91,4 +91,14 @@ public class ExecutionPeriod implements IExecutionPeriod {
 		this.executionYear = executionYear;
 	}
 
+
+	public String toString() {
+		String result = "[EXECUTION_PERIOD";
+		result += ", internalCode=" + internalCode;
+		result += ", name=" + name;
+		result += ", executionYear=" + executionYear;
+		result += "]";
+		return result;
+	}
+
 }

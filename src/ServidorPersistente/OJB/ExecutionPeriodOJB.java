@@ -1,15 +1,16 @@
 package ServidorPersistente.OJB;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 import org.odmg.QueryException;
 
 import Dominio.ExecutionPeriod;
+import Dominio.IDisciplinaExecucao;
 import Dominio.IExecutionPeriod;
 import Dominio.IExecutionYear;
+import Dominio.ITurma;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExecutionPeriod;
 
@@ -60,18 +61,16 @@ public class ExecutionPeriodOJB
 	public ArrayList readAllExecutionPeriod() throws ExcepcaoPersistencia {
 		try {
 
-			
+			IExecutionPeriod executionPeriod = null;
 			String oqlQuery =
 				"select all from " + ExecutionPeriod.class.getName();
 
 			query.create(oqlQuery);
 
-		//	ArrayList result = (ArrayList) query.execute();
-		
-			ArrayList teste = new ArrayList();
-			teste.addAll((Collection)query.execute());
-			lockRead(teste);
-			return  teste;
+			List result = (List) query.execute();
+			lockRead(result);
+
+			return (ArrayList) executionPeriod;
 		} catch (QueryException ex) {
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
@@ -91,12 +90,37 @@ public class ExecutionPeriodOJB
 	 * @see ServidorPersistente.IPersistentExecutionPeriod#delete(Dominio.IExecutionPeriod)
 	 */
 	public boolean delete(IExecutionPeriod executionPeriod) {
+		// Read all Execution Courses and delete them 
+		List result = new ArrayList();
 		try {
-			super.delete(executionPeriod);
-			return true;
+			result = SuportePersistenteOJB.getInstance().getIDisciplinaExecucaoPersistente().readByExecutionPeriod(executionPeriod);
+			Iterator iterator = result.iterator();
+			while(iterator.hasNext()){
+				SuportePersistenteOJB.getInstance().getIDisciplinaExecucaoPersistente().deleteExecutionCourse((IDisciplinaExecucao) iterator.next());
+			}
+		} catch (ExcepcaoPersistencia e) {
+					return false;
+		}
+		
+		// Read all Classes and delete them
+		
+		result = new ArrayList();
+		try {
+			result = SuportePersistenteOJB.getInstance().getITurmaPersistente().readByExecutionPeriod(executionPeriod);
+			Iterator iterator = result.iterator();
+			while(iterator.hasNext()){
+				SuportePersistenteOJB.getInstance().getITurmaPersistente().delete((ITurma) iterator.next());
+			}
 		} catch (ExcepcaoPersistencia e) {
 			return false;
 		}
+		try {
+			super.delete(executionPeriod);
+		} catch (ExcepcaoPersistencia e) {
+			return false;
+		}
+
+		return true;
 	}
 	/**
 	 * @see ServidorPersistente.IPersistentExecutionPeriod#deleteAll()
@@ -107,9 +131,8 @@ public class ExecutionPeriodOJB
 			ArrayList list = readAllExecutionPeriod();
 			Iterator iter = list.iterator();
 			while (iter.hasNext()) {
-				IExecutionPeriod executionPeriod =
-					(IExecutionPeriod) iter.next();
-				super.delete(executionPeriod);
+				IExecutionPeriod executionPeriod = (IExecutionPeriod) iter.next();
+				delete(executionPeriod);
 			}
 			return true;
 		} catch (ExcepcaoPersistencia e) {

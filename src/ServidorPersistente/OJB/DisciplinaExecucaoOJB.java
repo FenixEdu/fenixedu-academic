@@ -22,9 +22,7 @@ import Dominio.IExecutionPeriod;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IDisciplinaExecucaoPersistente;
 
-public class DisciplinaExecucaoOJB
-	extends ObjectFenixOJB
-	implements IDisciplinaExecucaoPersistente {
+public class DisciplinaExecucaoOJB extends ObjectFenixOJB implements IDisciplinaExecucaoPersistente {
 
 	public DisciplinaExecucaoOJB() {
 	}
@@ -121,7 +119,7 @@ public class DisciplinaExecucaoOJB
 		}
 	}
 
-	public IDisciplinaExecucao readBySiglaAndAnoLectivAndSiglaLicenciatura(
+	public IDisciplinaExecucao readBySiglaAndAnoLectivoAndSiglaLicenciatura(
 		String sigla,
 		String anoLectivo,
 		String siglaLicenciatura)
@@ -129,11 +127,10 @@ public class DisciplinaExecucaoOJB
 		try {
 			IDisciplinaExecucao disciplinaExecucao = null;
 			String oqlQuery =
-				"select  disciplinaExecucao  from "
-					+ DisciplinaExecucao.class.getName();
+				"select disciplinaExecucao from " + DisciplinaExecucao.class.getName();
 			oqlQuery += " where sigla = $1";
-			oqlQuery += " and licenciaturaExecucao.anoLectivo = $2";
-			oqlQuery += " and licenciaturaExecucao.curso.sigla = $3";
+			oqlQuery += " and executionPeriod.executionYear.year = $2";
+			oqlQuery += " and associatedCurricularCourses.degreeCurricularPlan.curso.sigla = $3";
 			query.create(oqlQuery);
 			query.bind(sigla);
 			query.bind(anoLectivo);
@@ -213,8 +210,6 @@ public class DisciplinaExecucaoOJB
 		ICursoExecucao executionDegree)
 		throws ExcepcaoPersistencia {
 			try {
-				
-
 				String oqlQuery =
 					"select distinct all from "
 						+ DisciplinaExecucao.class.getName();
@@ -233,7 +228,6 @@ public class DisciplinaExecucaoOJB
 
 				List resultList = new LinkedList();
 				lockRead(result);
-
 				while (iterator.hasNext()) {
 					IDisciplinaExecucao disciplinaExecucao =
 						(IDisciplinaExecucao) iterator.next();
@@ -291,5 +285,53 @@ public class DisciplinaExecucaoOJB
 			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
 		}
 	}
+
+	public void deleteExecutionCourse(IDisciplinaExecucao executionCourse) throws ExcepcaoPersistencia {
+		try {
+			String oqlQuery = "select all from " + DisciplinaExecucao.class.getName();
+			oqlQuery += " where executionPeriod.name = $1 "
+					 + " and executionPeriod.executionYear.year = $2 "
+					 + " and sigla = $3 ";
+			query.create(oqlQuery);
+				
+			query.bind(executionCourse.getExecutionPeriod().getName());
+			query.bind(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
+			query.bind(executionCourse.getNome());	
+
+			List result = (List) query.execute();
+			lockRead(result);
+
+			IDisciplinaExecucao executionCourseTemp = null;
+			if (!result.isEmpty())
+				super.delete((IDisciplinaExecucao) result.get(0));
+				
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
+	
+	public List readByExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
+		try {
+			String oqlQuery = "select all from " + DisciplinaExecucao.class.getName();
+			oqlQuery += " where executionPeriod.name = $1 "
+					 + " and executionPeriod.executionYear.year = $2 ";
+			query.create(oqlQuery);
+				
+			query.bind(executionPeriod.getName());
+			query.bind(executionPeriod.getExecutionYear().getYear());
+
+			List result = (List) query.execute();
+			lockRead(result);
+			
+			return result;
+				
+		} catch (QueryException ex) {
+			throw new ExcepcaoPersistencia(ExcepcaoPersistencia.QUERY, ex);
+		}
+	}
+
+
+
+
 
 }

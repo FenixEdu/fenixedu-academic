@@ -10,7 +10,6 @@ package ServidorPersistente;
  *
  * @author  tfc130
  */
-import java.util.ArrayList;
 import java.util.List;
 
 import Dominio.ICursoExecucao;
@@ -41,7 +40,7 @@ public interface ITurmaPersistente extends IPersistentObject {
 		Integer curricularYear,
 		ICursoExecucao executionDegree)
 		throws ExcepcaoPersistencia;
-	
+		
 	/**
 	 * 
 	 * @param executionPeriod
@@ -49,16 +48,28 @@ public interface ITurmaPersistente extends IPersistentObject {
 	 * @throws ExcepcaoPersistencia
 	 */
 	public ArrayList readByExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
+		
 	/**
 	 * Method readByNameAndExecutionDegreeAndExecutionPeriod.
 	 * @param className
 	 * @param executionDegree
 	 * @param executionPeriod
 	 * @return ITurma
+	 * @deprecated
 	 */
 	public ITurma readByNameAndExecutionDegreeAndExecutionPeriod(
 		String className,
 		ICursoExecucao executionDegree,
 		IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
+		
+	public ITurma readByNameAndExecutionDegreeAndExecutionPeriodAndCurricularYear(
+		String className,
+		ICursoExecucao executionDegree,
+		IExecutionPeriod executionPeriod, 
+		Integer curricularYear) throws ExcepcaoPersistencia;
+		
+	public List readByDegreeNameAndDegreeCode(String name, String code) throws ExcepcaoPersistencia;
+		
+	
 		
 }
