@@ -406,4 +406,45 @@
 		</ant>
 	</target>
 
+    <target name="jar"
+    		depends="compile"
+            description="Generates a java archive applications 'core' (services and domain).">
+		<mkdir dir="${deploy.home}"/>
+		<jar destfile="${deploy.home}/${app.name}.jar">
+			<fileset dir="${build.home.webinf.classes}">
+				<include name="net/sourceforge/fenixedu/_development/**/*.class"/>
+	       		<include name="net/sourceforge/fenixedu/constants/**/*.class"/>
+				<include name="net/sourceforge/fenixedu/commons/**/*.class"/>
+	       		<include name="net/sourceforge/fenixedu/DataBeans/**/*.class"/>
+	       		<include name="net/sourceforge/fenixedu/domain/**/*.class"/>
+	       		<include name="net/sourceforge/fenixedu/fileSuport/**/*.class"/>
+	       		<include name="net/sourceforge/fenixedu/middleware/**/*.class"/>
+	       		<include name="net/sourceforge/fenixedu/applicationTier/**/*.class"/>
+	       		<include name="net/sourceforge/fenixedu/persistenceTier/**/*.class"/>
+	       		<include name="net/sourceforge/fenixedu/persistenceTierFiltroPessoa/**/*.class"/>
+	       		<include name="net/sourceforge/fenixedu/persistenceTierJDBC/**/*.class"/>
+	       		<include name="net/sourceforge/fenixedu/persistenceTierOracle/**/*.class"/>
+	       		<include name="net/sourceforge/fenixedu/util/**/*.class"/>
+	       		<include name="net/sourceforge/fenixedu/utilInsc/**/*.class"/>
+	       		<include name="net/sourceforge/fenixedu/utilTests/**/*.class"/>
+	       		<include name="net/sourceforge/fenixedu/tools/**/*.class"/>
+			</fileset>
+		</jar>
+	</target>
+
+    <target name="war"
+	    	depends="compile"
+            description="Generates a web archive of the application.">
+    	<mkdir dir="${deploy.home}"/>
+		<war destfile="${deploy.home}/${app.name}.war" webxml="${build.home.webinf}/web.xml">
+			<fileset dir="${build.home}">
+				<exclude name="WEB-INF/web.xml"/>
+				<exclude name="WEB-INF/classes/**"/>
+				<exclude name="WEB-INF/lib/*"/>
+			</fileset>
+			<lib dir="${build.home.webinf.libs}"/>
+			<classes dir="${build.home.webinf.classes}"/>
+		</war>
+	</target>
+
 </project>
