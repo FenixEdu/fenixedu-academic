@@ -18,6 +18,7 @@
 </logic:notPresent>		
 <link href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<%= request.getContextPath() %>/script/gesdis-scripting.js"></script>
+<title><tiles:getAsString name="title" ignore="true" /></title>
 </head>
 <body>
 <%-- Layout component parameters : header, navLocal, body --%>
@@ -33,7 +34,7 @@
 	  		<tiles:insert attribute="degrees" ignore="true" />	
       <h1><tiles:getAsString name="executionCourseName"  ignore="true"/></h1>
       <br />
-	  <tiles:insert attribute="body" ignore="true"/>      
+	  <tiles:insert attribute="body" />      
     </td>	
     <td id="barranav" bgcolor="#EBEFFA" valign="top">
       <div class="blue-bckgr">
