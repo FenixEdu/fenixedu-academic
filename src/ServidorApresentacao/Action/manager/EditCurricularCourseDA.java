@@ -114,6 +114,6 @@ public class EditCurricularCourseDA extends FenixDispatchAction {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
 
-		return mapping.findForward("readDegreeCP");
+		return mapping.findForward("readCurricularCourse");
 	}
 }

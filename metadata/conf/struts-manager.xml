@@ -211,7 +211,7 @@
                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                   />
        <forward name="editDegree" path="df.page.edit-degree"/>
-       <forward name="readDegrees" path="/readDegrees.do"/>      	      
+       <forward name="readDegree" path="/readDegree.do"/>      	      
 	</action>
       
       
@@ -283,7 +283,7 @@
                    handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                    />
        <forward name="editDegreeCP" path="df.page.edit-degree-curricular-plan"/>
-       <forward name="readDegree" path="/readDegree.do"/>      	      
+       <forward name="readDegreeCP" path="/readDegreeCurricularPlan.do"/>      	      
 	</action>
 	
 	
@@ -348,7 +348,7 @@
                   handler="ServidorApresentacao.config.FenixErrorExceptionHandler"
                   />
        <forward name="editCurricularCourse" path="df.page.edit-curricular-course"/>
-       <forward name="readDegreeCP" path="/readDegreeCurricularPlan.do"/>      	      
+       <forward name="readCurricularCourse" path="/readCurricularCourse.do"/>      	      
 	</action>
       
       

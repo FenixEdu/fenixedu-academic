@@ -92,6 +92,6 @@ public class EditDegreeDispatchAction extends FenixDispatchAction {
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
-		return mapping.findForward("readDegrees");
+		return mapping.findForward("readDegree");
 	}
 }

@@ -193,6 +193,6 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
 		} catch (FenixServiceException fenixServiceException) {
 			throw new FenixActionException(fenixServiceException.getMessage());
 		}
-		return mapping.findForward("readDegree");
+		return mapping.findForward("readDegreeCP");
 	}
 }
