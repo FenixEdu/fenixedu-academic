@@ -241,20 +241,12 @@ public class FinalWorkManagementAction extends FenixDispatchAction
                     FinalDegreeWorkProposalHeader header = (FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeaders
                             .get(i);
 
-                    System.out.println("header.getGroupProposals()= " + header.getGroupProposals());
-                    if (header.getGroupProposals() != null)
-                    {
-                        System.out.println("header.getGroupProposals().size= "
-                                + header.getGroupProposals().size());
-                    }
-
                     if (header.getGroupAttributedByTeacher() != null)
                     {
                         InfoGroupProposal infoGroupProposal = (InfoGroupProposal) CollectionUtils.find(
                                 header.getGroupProposals(), new PREDICATE_FIND_GROUP_PROPOSAL_BY_GROUP(
                                         header.getGroupAttributedByTeacher().getIdInternal()));
                         selectedProposals[i] = infoGroupProposal.getIdInternal().toString();
-                        System.out.println("selectedProposals[" + i + "]= " + selectedProposals[i]);
                     }
                 }
                 FormBeanConfig fbc2 = new FormBeanConfig();
@@ -272,7 +264,6 @@ public class FinalWorkManagementAction extends FenixDispatchAction
                 }
                 finalWorkAttributionForm.set("selectedGroupProposals", selectedProposals);
                 request.setAttribute("finalWorkAttributionForm", finalWorkAttributionForm);
-                System.out.println("selectedProposals= " + selectedProposals);
 
                 request.setAttribute("finalDegreeWorkProposalHeaders", finalDegreeWorkProposalHeaders);
             }
@@ -705,6 +696,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction
         DynaActionForm finalWorkAttributionForm = (DynaActionForm) form;
 
         String selectedGroupProposalOID = (String) finalWorkAttributionForm.get("selectedGroupProposal");
+        System.out.println("selectedGroupProposalOID= " + selectedGroupProposalOID);
 
         IUserView userView = SessionUtils.getUserView(request);
 
@@ -752,8 +744,6 @@ public class FinalWorkManagementAction extends FenixDispatchAction
         Integer executionDegreeId = getExecutionDegree(request);
         List result = null;
 
-        System.out.println("studentCurricularPlanID= " + studentCurricularPlanID);
-        System.out.println("executionDegreeId= " + executionDegreeId);
         Object args1[] = {executionDegreeId, Integer.valueOf(studentCurricularPlanID)};
         result = (ArrayList) ServiceManagerServiceFactory.executeService(userView,
                 "ReadStudentCurriculum", args1);
