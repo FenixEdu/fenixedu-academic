@@ -59,7 +59,7 @@ public class ReadMasterDegrees implements IServico {
 			
 			// Read the degrees
 			
-			result = sp.getICursoExecucaoPersistente().readMasterDegrees(executionYear.getYear());		
+			result = sp.getICursoExecucaoPersistente().readMasterDegrees(executionYear.getYear());	
 		} catch (ExcepcaoPersistencia ex) {
 			FenixServiceException newEx = new FenixServiceException("Persistence layer error");
 			newEx.fillInStackTrace();
@@ -70,7 +70,7 @@ public class ReadMasterDegrees implements IServico {
 		Iterator iterator = result.iterator();
 		while(iterator.hasNext())
 			degrees.add(Cloner.copyIExecutionDegree2InfoExecutionDegree((ICursoExecucao) iterator.next()));
-
+			
 		return degrees;
 		
 	}

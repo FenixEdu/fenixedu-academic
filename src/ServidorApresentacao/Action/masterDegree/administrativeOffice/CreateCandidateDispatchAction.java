@@ -73,6 +73,7 @@ public class CreateCandidateDispatchAction extends DispatchAction {
 			}
 
 			session.setAttribute(SessionConstants.DEGREE_LIST, degreeList);
+
 						
 			// Create the type of Identification Document
 			session.setAttribute(SessionConstants.IDENTIFICATION_DOCUMENT_TYPE_LIST, TipoDocumentoIdentificacao.toArrayList());  
