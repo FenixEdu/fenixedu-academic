@@ -18,7 +18,10 @@ import junit.framework.TestSuite;
 import DataBeans.CurricularYearAndSemesterAndInfoExecutionDegree;
 import DataBeans.InfoClass;
 import DataBeans.InfoDegree;
+import DataBeans.InfoDegreeCurricularPlan;
 import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoExecutionPeriod;
+import DataBeans.InfoExecutionYear;
 import ServidorAplicacao.Servicos.TestCaseServicos;
 import ServidorPersistente.ExcepcaoPersistencia;
 
@@ -52,7 +55,16 @@ public class LerTurmasServicosTest extends TestCaseServicos {
 			new InfoDegree(
 				_turma1.getLicenciatura().getSigla(),
 				_turma1.getLicenciatura().getNome());
-		InfoExecutionDegree iLE = new InfoExecutionDegree("2002/03", iL);
+		InfoExecutionYear infoExecutionYear =
+			new InfoExecutionYear("2002/2003");
+		InfoExecutionPeriod infoExecutionPeriod =
+			new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
+		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
+			new InfoDegreeCurricularPlan("plano1", iL);
+		InfoExecutionDegree iLE =
+			new InfoExecutionDegree(
+				infoDegreeCurricularPlan,
+				infoExecutionYear);
 		argsLerTurmas[0] =
 			new CurricularYearAndSemesterAndInfoExecutionDegree(
 				new Integer(1),
@@ -74,14 +86,29 @@ public class LerTurmasServicosTest extends TestCaseServicos {
 			new InfoDegree(
 				_turma1.getLicenciatura().getSigla(),
 				_turma1.getLicenciatura().getNome());
-		InfoExecutionDegree iLE = new InfoExecutionDegree("2002/03", iL);
+
+		InfoExecutionYear infoExecutionYear =
+			new InfoExecutionYear("2002/2003");
+		InfoExecutionPeriod infoExecutionPeriod =
+			new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
+		InfoDegreeCurricularPlan infoDegreeCurricularPlan =
+			new InfoDegreeCurricularPlan("plano1", iL);
+		InfoExecutionDegree iLE =
+			new InfoExecutionDegree(
+				infoDegreeCurricularPlan,
+				infoExecutionYear);
+		
 		argsLerTurmas[0] =
 			new CurricularYearAndSemesterAndInfoExecutionDegree(
 				new Integer(1),
 				_turma1.getSemestre(),
 				iLE);
 		InfoClass infoturma1 =
-			new InfoClass(_turma1.getNome(), _turma1.getSemestre(),_turma1.getAnoCurricular(), iL);
+			new InfoClass(
+				_turma1.getNome(),
+				_turma1.getAnoCurricular(),
+				iLE,
+				infoExecutionPeriod);
 		Object result = null;
 
 		// Nao ha turmas na BD

@@ -16,6 +16,10 @@ import junit.framework.TestSuite;
 import DataBeans.ClassKey;
 import DataBeans.InfoClass;
 import DataBeans.InfoDegree;
+import DataBeans.InfoDegreeCurricularPlan;
+import DataBeans.InfoExecutionDegree;
+import DataBeans.InfoExecutionPeriod;
+import DataBeans.InfoExecutionYear;
 import ServidorAplicacao.Servicos.TestCaseServicos;
 
 public class LerTurmaServicosTest extends TestCaseServicos {
@@ -66,12 +70,22 @@ public class LerTurmaServicosTest extends TestCaseServicos {
 				new InfoDegree(
 					_turma1.getLicenciatura().getSigla(),
 					_turma1.getLicenciatura().getNome());
+			InfoDegreeCurricularPlan infoDegreeCurricularPlan =
+				new InfoDegreeCurricularPlan("plano1", infoLicenciatura);
+			InfoExecutionYear infoExecutionYear =
+				new InfoExecutionYear("2002/2003");
+			InfoExecutionDegree infoExecutionDegree =
+				new InfoExecutionDegree(
+					infoDegreeCurricularPlan,
+					infoExecutionYear);
+			InfoExecutionPeriod infoExecutionPeriod =
+				new InfoExecutionPeriod("2º Semestre", infoExecutionYear);
 			InfoClass infoTurma =
 				new InfoClass(
 					_turma1.getNome(),
-					_turma1.getSemestre(),
 					_turma1.getAnoCurricular(),
-					infoLicenciatura);
+					infoExecutionDegree,
+					infoExecutionPeriod);
 			result = _gestor.executar(_userView, "LerTurma", argsLerTurma);
 			assertEquals("testReadExistingTurma", infoTurma, result);
 		} catch (Exception ex) {

@@ -91,13 +91,12 @@ public class LerLicenciaturaExecucaoDeLicenciaturaServicosTest
 			assertEquals(
 				"testReadLicenciaturaExecucao:",
 				_cursoExecucao1.getAnoLectivo(),
-				((InfoExecutionDegree) result).getAnoLectivo());
+				((InfoExecutionDegree) result).getInfoExecutionYear().getYear());
 			assertEquals(
 				"testReadLicenciaturaExecucao:",
 				_cursoExecucao1.getCurso().getSigla(),
 				((InfoExecutionDegree) result)
-					.getInfoLicenciatura()
-					.getSigla());
+					.getInfoDegreeCurricularPlan().getInfoDegree().getSigla());
 		} catch (Exception ex) {
 			fail("testReadLicenciaturaExecucao:");
 		}
