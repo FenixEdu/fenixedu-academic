@@ -16,24 +16,24 @@
             <table cellspacing="0" cellpadding="0" width="100%">
                 <tr class="timeTable_line">
                     <td class="horariosHoras_first">
-                        <b><bean:message key="property.room.name"/>: <bean:write name="publico.infoRoom" property="nome"/></b>
+                        <b><bean:message key="property.room.name"/>:</b> <bean:write name="publico.infoRoom" property="nome"/>
                     </td>
                     <td class="horariosHoras_first">
-                        <b><bean:message key="property.room.building"/>: <bean:write name="publico.infoRoom" property="edificio"/></b>
+                        <b><bean:message key="property.room.building"/>:</b> <bean:write name="publico.infoRoom" property="edificio"/>
                     </td>
                     <td class="horariosHoras_first">
-                        <b><bean:message key="property.room.floor"/>: <bean:write name="publico.infoRoom" property="piso"/></b>
+                        <b><bean:message key="property.room.floor"/>:</b> <bean:write name="publico.infoRoom" property="piso"/>
                     </td>
                 </tr>
                 <tr class="timeTable_line">
                     <td class="horariosHoras_first">
-                        <b><bean:message key="property.room.type"/>: <bean:write name="publico.infoRoom" property="tipo"/></b>
+                        <b><bean:message key="property.room.type"/>:</b> <bean:write name="publico.infoRoom" property="tipo"/>
                     </td>
                     <td class="horariosHoras_first">
-                        <b><bean:message key="property.room.capacity.normal"/>: <bean:write name="publico.infoRoom" property="capacidadeNormal"/></b>
+                        <b><bean:message key="property.room.capacity.normal"/>:</b> <bean:write name="publico.infoRoom" property="capacidadeNormal"/>
                     </td>
                     <td class="horariosHoras_first">
-                        <b><bean:message key="property.room.capacity.exame"/>: <bean:write name="publico.infoRoom" property="capacidadeExame"/></b>
+                        <b><bean:message key="property.room.capacity.exame"/>:</b> <bean:write name="publico.infoRoom" property="capacidadeExame"/>
                     </td>
                 </tr>
             </table>
