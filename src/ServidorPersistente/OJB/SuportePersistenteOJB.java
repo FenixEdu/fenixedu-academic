@@ -371,8 +371,8 @@ public class SuportePersistenteOJB implements ISuportePersistente {
 		return new CurricularSemesterOJB();
 	}
 
-	public IPersistentEnrolmentEquivalence getIPersistentEquivalence() {
-		return new EquivalenceOJB();
+	public IPersistentEnrolmentEquivalence getIPersistentEnrolmentEquivalence() {
+		return new EnrolmentEquivalenceOJB();
 	}
 
 	/* (non-Javadoc)

@@ -59,6 +59,7 @@ public class LoadEnrolmentsToFenix extends LoadDataToFenix {
 	private static String errorDBID = "";
 
 	private IDegreeCurricularPlan oldDegreeCurricularPlan = null;
+	private IDegreeCurricularPlan oldMigratingDegreeCurricularPlan = null;
 	private IDegreeCurricularPlan oldISTDegreeCurricularPlan = null;
 	private IDegreeCurricularPlan newDegreeCurricularPlan = null;
 	private IBranch oldBranch = null;
@@ -72,12 +73,12 @@ public class LoadEnrolmentsToFenix extends LoadDataToFenix {
 	private EnrolmentEvaluationType enrolmentEvaluationType = null;
 	private EnrolmentState enrolmentState = null;
 	private IUniversity university = null;
-
+		
 	private int filterScopeByUnique = 1;
 	private int filterScopeWithoutSemester = 2;
 	private int filterScopeWithoutSemesterAndBranch = 3;
 	private int filterEnd = 4;
-
+	
 	public LoadEnrolmentsToFenix() {
 	}
 
@@ -87,15 +88,19 @@ public class LoadEnrolmentsToFenix extends LoadDataToFenix {
 			loader = new LoadEnrolmentsToFenix();
 		}
 
-		loader.migrationStart("LoadEnrolmentsToFenix");
+		loader.migrationStart(loader.getClassName());
 		loader.setupDAO();
 		List almeidaEnrolmentsList = loader.persistentObjectOJB.readAllAlmeidaEnrolments();
 		loader.shutdownDAO();
 
-		//		int scopeIteration = loader.filterScopeByUnique;
+		loader.oldMigratingDegreeCurricularPlan = loader.processOldMigratingDegreeCurricularPlan();
+		if (loader.oldMigratingDegreeCurricularPlan == null) {
+			logString += error.toString();
+			loader.migrationEnd(loader.getClassName(), logString);
+			return;
+		}
+
 		Iterator iterator = almeidaEnrolmentsList.iterator();
-		//		while (scopeIteration != loader.filterEnd) {
-		//			iterator = almeidaEnrolmentsList.iterator();
 		while (iterator.hasNext()) {
 			Almeida_enrolment almeida_enrolment = (Almeida_enrolment) iterator.next();
 			loader.printIteration(loader.getClassName(), almeida_enrolment.getId_internal());
@@ -103,12 +108,22 @@ public class LoadEnrolmentsToFenix extends LoadDataToFenix {
 			loader.processEnrolment(almeida_enrolment);
 			loader.shutdownDAO();
 		}
-		//			scopeIteration++;
-		//		}
 
 		logString += error.toString();
 		loader.processCoursesErrors();
-		loader.migrationEnd("LoadEnrolmentsToFenix", logString);
+		loader.migrationEnd(loader.getClassName(), logString);
+	}
+
+	private IDegreeCurricularPlan processOldMigratingDegreeCurricularPlan() {
+		IDegreeCurricularPlan degreeCurricularPlan = persistentObjectOJB.readDegreeCurricularPlanByName(InfoForMigration.NAME_OF_OLD_DEGREE_CURRICULAR_PLAN);
+		if (degreeCurricularPlan == null) {
+			errorMessage = "\n O degree Curricular Plan " + InfoForMigration.NAME_OF_OLD_DEGREE_CURRICULAR_PLAN + " não existe!";
+			errorDBID = "";
+			error = loader.setErrorMessage(errorMessage, errorDBID, error);
+			return null;
+		}
+
+		return degreeCurricularPlan;
 	}
 
 	private void processCoursesErrors() {
@@ -610,7 +625,7 @@ public class LoadEnrolmentsToFenix extends LoadDataToFenix {
 			newCurricularCourse.setUniversity(this.university);
 			writeElement(newCurricularCourse);
 			numberElementsWritten--;
-			
+
 			ICurricularCourseScope newCurricularCourseScope = new CurricularCourseScope();
 			ICurricularCourseScope tempCurricularCourseScope = (ICurricularCourseScope) processedCurricularCourse.getScopes().get(0);
 			newCurricularCourseScope.setCurricularCourse(newCurricularCourse);
@@ -627,7 +642,7 @@ public class LoadEnrolmentsToFenix extends LoadDataToFenix {
 			newCurricularCourseScope.setWeigth(tempCurricularCourseScope.getWeigth());
 
 			writeElement(newCurricularCourseScope);
-			
+
 			processedCurricularCourse = newCurricularCourse;
 		}
 
@@ -638,7 +653,7 @@ public class LoadEnrolmentsToFenix extends LoadDataToFenix {
 		String code = "";
 
 		if (almeida_enrolment.getRamo() != 0) {
-			//	NOTE DAVID-RICARDO: a orientacao esta a 0, pq ainda nao ha informacao sobre ela no ficheiro de inscricoes
+			//	A orientacao esta a 0, pq ainda nao ha informacao sobre ela no ficheiro de inscricoes
 			code = code + almeida_enrolment.getCurso() + almeida_enrolment.getRamo() + "0";
 		}
 
@@ -752,33 +767,52 @@ public class LoadEnrolmentsToFenix extends LoadDataToFenix {
 		IStudent student = persistentObjectOJB.readStudentByNumberAndDegreeType(studentNumber, TipoCurso.LICENCIATURA_OBJ);
 		if (student != null) {
 
+			//			StudentCurricularPlanState studentCurricularPlanState = StudentCurricularPlanState.INCOMPLETE_OBJ;
+			//			int newYear = new Integer("" + almeida_enrolment.getAnoins()).intValue();
+			//			Calendar newCalendar = Calendar.getInstance();
+			//			newCalendar.set(newYear, Calendar.SEPTEMBER, 1);
+			//			Date newDate = newCalendar.getTime();
+			//			studentCurricularPlan =
+			//				persistentObjectOJB.readStudentCurricularPlanByUnique(student, this.oldDegreeCurricularPlan, this.oldBranch, studentCurricularPlanState);
+			//			if (studentCurricularPlan == null) {
+			//				studentCurricularPlan = new StudentCurricularPlan();
+			//				studentCurricularPlan.setBranch(this.oldBranch);
+			//				studentCurricularPlan.setCurrentState(studentCurricularPlanState);
+			//				studentCurricularPlan.setDegreeCurricularPlan(this.oldDegreeCurricularPlan);
+			//				studentCurricularPlan.setStudent(student);
+			//				studentCurricularPlan.setStartDate(newDate);
+			//				writeElement(studentCurricularPlan);
+			//				loader.numberElementsWritten--;
+			//			} else {
+			//				Date oldDate = studentCurricularPlan.getStartDate();
+			//				Calendar oldCalendar = Calendar.getInstance();
+			//				oldCalendar.setTime(oldDate);
+			//				int oldYear = oldCalendar.get(Calendar.YEAR);
+			//				if (newYear < oldYear) {
+			//					studentCurricularPlan.setStartDate(newDate);
+			//					writeElement(studentCurricularPlan);
+			//					loader.numberElementsWritten--;
+			//				}
+			//			}
+
 			StudentCurricularPlanState studentCurricularPlanState = StudentCurricularPlanState.INCOMPLETE_OBJ;
-			int newYear = new Integer("" + almeida_enrolment.getAnoins()).intValue();
-			Calendar newCalendar = Calendar.getInstance();
-			newCalendar.set(newYear, Calendar.SEPTEMBER, 1);
-			Date newDate = newCalendar.getTime();
-			studentCurricularPlan =
-				persistentObjectOJB.readStudentCurricularPlanByUnique(student, this.oldDegreeCurricularPlan, this.oldBranch, studentCurricularPlanState);
+			studentCurricularPlan = persistentObjectOJB.readStudentCurricularPlanByStudentAndState(student, StudentCurricularPlanState.INCOMPLETE_OBJ);
 			if (studentCurricularPlan == null) {
+				int newYear = new Integer("" + almeida_enrolment.getAnoins()).intValue();
+				Calendar newCalendar = Calendar.getInstance();
+				newCalendar.set(newYear, Calendar.SEPTEMBER, 1);
+				Date newDate = newCalendar.getTime();
+
 				studentCurricularPlan = new StudentCurricularPlan();
 				studentCurricularPlan.setBranch(this.oldBranch);
 				studentCurricularPlan.setCurrentState(studentCurricularPlanState);
-				studentCurricularPlan.setDegreeCurricularPlan(this.oldDegreeCurricularPlan);
+				studentCurricularPlan.setDegreeCurricularPlan(this.oldMigratingDegreeCurricularPlan);
 				studentCurricularPlan.setStudent(student);
 				studentCurricularPlan.setStartDate(newDate);
 				writeElement(studentCurricularPlan);
 				loader.numberElementsWritten--;
-			} else {
-				Date oldDate = studentCurricularPlan.getStartDate();
-				Calendar oldCalendar = Calendar.getInstance();
-				oldCalendar.setTime(oldDate);
-				int oldYear = oldCalendar.get(Calendar.YEAR);
-				if (newYear < oldYear) {
-					studentCurricularPlan.setStartDate(newDate);
-					writeElement(studentCurricularPlan);
-					loader.numberElementsWritten--;
-				}
 			}
+
 		} else {
 			errorMessage = "\n O aluno numero " + almeida_enrolment.getNumalu() + " não está inscrito este semestre! Registos: ";
 			errorDBID = almeida_enrolment.getId_internal() + ", ";

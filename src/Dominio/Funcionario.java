@@ -12,7 +12,7 @@ import java.util.Date;
  *
  * @author  Ivo Brandão
  */
-public class Funcionario {
+public class Funcionario implements IFuncionario {
 	private Date antiguidade = null;
 	private String calendario = null;
 	private int chaveCCCorrespondencia = 0;

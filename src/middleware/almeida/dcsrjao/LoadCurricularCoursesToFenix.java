@@ -33,7 +33,7 @@ public class LoadCurricularCoursesToFenix extends LoadDataToFenix {
 	private static String errorDBID = "";
 //	private IDegreeCurricularPlan newDegreeCurricularPlan = null;
 //	private String nameOfNewDegreeCurricularPlan = "";
-
+	
 	public LoadCurricularCoursesToFenix() {
 	}
 
@@ -99,7 +99,7 @@ public class LoadCurricularCoursesToFenix extends LoadDataToFenix {
 				loader.numberUntreatableElements++;
 				return;
 			}
-
+			
 			writeElement(curricularCourse);
 //			processCurricularCourseEquivalence(curricularCourse);
 		}
@@ -136,6 +136,7 @@ public class LoadCurricularCoursesToFenix extends LoadDataToFenix {
 			curricularCourseScope.setLabHours(new Double(almeida_disc.getLab()));
 			curricularCourseScope.setTheoPratHours(new Double(almeida_disc.getTeopra()));
 			curricularCourseScope.setCredits(new Double(almeida_disc.getCredits()));
+
 			writeElement(curricularCourseScope);
 			loader.numberElementsWritten--;
 		}

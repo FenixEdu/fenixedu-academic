@@ -22,6 +22,7 @@ public class LoadCurramToFenix extends LoadDataToFenix {
 	private static HashMap error = new HashMap();
 	private static String errorMessage = "";
 	private static String errorDBID = "";
+	private int branchID = 25; // 25 porque já existem 24 na BD
 
 	public LoadCurramToFenix() {
 	}
@@ -68,6 +69,8 @@ public class LoadCurramToFenix extends LoadDataToFenix {
 				branch.setDegreeCurricularPlan(degreeCurricularPlan);
 				branch.setName(name);
 				branch.setScopes(null);
+				branch.setInternalID(new Integer(this.branchID));
+				this.branchID++;
 				writeElement(branch);
 			} else {
 				loader.numberUntreatableElements++;

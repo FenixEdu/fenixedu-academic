@@ -49,7 +49,6 @@ public class OJBSuite extends TestCase {
 		suite.addTest(DisciplinaDepartamentoOJBTest.suite());
 		suite.addTest(DisciplinaExecucaoOJBTest.suite());
 		suite.addTest(EnrolmentOJBTest.suite());
-		suite.addTest(EquivalenceOJBTest.suite());
 		suite.addTest(ExamExecutionCourseOJBTest.suite());
 		suite.addTest(ExamOJBTest.suite());
 		suite.addTest(ExecutionPeriodOJBTest.suite());

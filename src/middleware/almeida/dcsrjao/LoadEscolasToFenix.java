@@ -51,6 +51,7 @@ public class LoadEscolasToFenix extends LoadDataToFenix {
 		IUniversity university = persistentObjectOJB.readUniversityByUnique(almeida_escola.getCode(), almeida_escola.getName());
 		if (university == null) {
 			university = new University();
+			university.setIdInternal(new Integer(numberElementsWritten + 1));
 			university.setCode(almeida_escola.getCode());
 			university.setName(almeida_escola.getName());
 			writeElement(university);
