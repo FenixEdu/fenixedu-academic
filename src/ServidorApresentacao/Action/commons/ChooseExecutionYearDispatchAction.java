@@ -37,25 +37,27 @@ public class ChooseExecutionYearDispatchAction extends DispatchAction {
 		HttpSession session = request.getSession(false);
 		MessageResources messages = getResources(request);
 
-		if (session != null) {
-			// Get Execution Year List
-			
-			IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
-			GestorServicos serviceManager = GestorServicos.manager();			
-			ArrayList executionYearList = null; 			
-			try {
-				executionYearList = (ArrayList) serviceManager.executar(userView, "ReadExecutionYears", null);
-			} catch (ExistingServiceException e) {
-				throw new ExistingActionException(e);
-			}
-			request.setAttribute("jspTitle", messages.getMessage((String) request.getParameter("jspTitle")));
+		// Get Execution Year List
+		
+		IUserView userView = (IUserView) session.getAttribute(SessionConstants.U_VIEW);
+		GestorServicos serviceManager = GestorServicos.manager();			
+		ArrayList executionYearList = null; 			
+		try {
+			executionYearList = (ArrayList) serviceManager.executar(userView, "ReadExecutionYears", null);
+		} catch (ExistingServiceException e) {
+			throw new ExistingActionException(e);
+		}
+		
+					
+		if (request.getParameter("jspTitle") != null) {
+			request.setAttribute("jspTitle", messages.getMessage((String) request.getParameter("jspTitle")));	
+		}			
+		
 
-			Collections.sort(executionYearList, new BeanComparator("label"));
-			request.setAttribute(SessionConstants.EXECUTION_YEAR_LIST, executionYearList);
-						
-			return mapping.findForward("PrepareSuccess");
-		  } else
-			throw new Exception();   
+		Collections.sort(executionYearList, new BeanComparator("label"));
+		request.setAttribute(SessionConstants.EXECUTION_YEAR_LIST, executionYearList);
+					
+		return mapping.findForward("PrepareSuccess");
 	}
 
 
