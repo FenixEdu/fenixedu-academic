@@ -11,7 +11,7 @@
 		<put name="body" value="/posGraduacao/student/studentCurricularPlan/viewStudents.jsp"/>
 	</definition>
 
-	<definition name="df.page.searchGuideByState" extends="definition.masterDegreeAdministrativeOffice.studentOperations.studentCurricularPlan">
+	<definition name="df.page.searchGuideByState" extends="definition.masterDegreeAdministrativeOffice.guideListing">
 		<put name="body" value="/posGraduacao/guide/chooseGuideState.jsp"/>
 	</definition>
 
