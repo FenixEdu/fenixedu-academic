@@ -85,7 +85,6 @@ public class ContextUtils {
 				e.printStackTrace();
 			}
 		}
-
 		if (infoExecutionPeriod != null) {
 			// Place it in request
 			request.setAttribute(
@@ -94,6 +93,7 @@ public class ContextUtils {
 			request.setAttribute(
 				SessionConstants.EXECUTION_PERIOD_OID,
 				infoExecutionPeriod.getIdInternal().toString());
+			
 		} else {
 			System.out.println(
 				"#### ERROR: Unexisting or invalid executionPeriod - throw proper exception: Someone was playing with the links");

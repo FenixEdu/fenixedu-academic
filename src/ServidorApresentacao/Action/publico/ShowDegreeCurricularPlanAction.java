@@ -31,7 +31,7 @@ import ServidorApresentacao.Action.sop.utils.SessionConstants;
 public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction
 {
 
-    public ActionForward execute(
+    public ActionForward showCurricularPlan(
         ActionMapping mapping,
         ActionForm actionForm,
         HttpServletRequest request,
@@ -99,7 +99,7 @@ public class ShowDegreeCurricularPlanAction extends FenixContextDispatchAction
         }
 
 		request.setAttribute(SessionConstants.EXECUTION_PERIOD, executionPeriodOId);
-        if (infoExecutionPeriod != null && infoExecutionPeriod.getInfoExecutionYear() != null)
+       if (infoExecutionPeriod != null && infoExecutionPeriod.getInfoExecutionYear() != null)
         {
             request.setAttribute("schoolYear", infoExecutionPeriod.getInfoExecutionYear().getYear());
         }
