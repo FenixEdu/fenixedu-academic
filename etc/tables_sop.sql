@@ -110,12 +110,14 @@ create table ATTEND (
 
 #----------------------------
 # Table structure for EXECUTION_PERIOD
+# State : A = Actual; O= Open; NO= Not open; C= Closed
 #----------------------------
 drop table if exists EXECUTION_PERIOD;
 create table EXECUTION_PERIOD (
    ID_INTERNAL int(11) not null auto_increment,
    NAME varchar(50) not null,
    KEY_EXECUTION_YEAR int(11) not null default '0',
+   STATE varchar(3) not null default "NO",
    primary key (ID_INTERNAL),
    unique U1 (NAME, KEY_EXECUTION_YEAR))
    type=InnoDB comment="InnoDB free: 373760 kB";
