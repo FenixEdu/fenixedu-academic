@@ -8,8 +8,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.collections.Predicate;
+
 import DataBeans.InfoRole;
 import Dominio.ICoordinator;
+import Dominio.ISecretaryEnrolmentStudent;
 import Dominio.IStudent;
 import Dominio.IStudentCurricularPlan;
 import Dominio.ITeacher;
@@ -30,11 +33,15 @@ import ServidorPersistente.OJB.SuportePersistenteOJB;
 import Util.RoleType;
 import Util.TipoCurso;
 
+import commons.CollectionUtils;
+
 /**
  * @author João Mota
- *  
+ * 
  */
 public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilter {
+
+    private int LEIC_OLD_DCP = 10;
 
     /*
      * (non-Javadoc)
@@ -97,11 +104,36 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
                             + tutor.getTeacher().getPerson().getNome());
                 }
 
-                //TEMPORARY!!!
-                //                if(student.getSpecialSeason() == null ||
+                // check if the student is in the list of secretary enrolments
+                // students
+                ISecretaryEnrolmentStudent secretaryEnrolmentStudent = sp
+                        .getIPersistentSecretaryEnrolmentStudent().readByStudentNumber(
+                                student.getNumber());
+                if (secretaryEnrolmentStudent != null) {
+                    return "error.message.secretaryEnrolmentStudent";
+                }
+
+                // check if the student is from old Leic Curricular Plan
+                List studentCurricularPlans = sp.getIStudentCurricularPlanPersistente()
+                        .readAllActiveStudentCurricularPlan(student.getNumber());
+                boolean oldLeicStudent = CollectionUtils.exists(studentCurricularPlans, new Predicate() {
+                    public boolean evaluate(Object arg0) {
+
+                        IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) arg0;
+                        return (studentCurricularPlan.getDegreeCurricularPlan().getIdInternal()
+                                .intValue() == LEIC_OLD_DCP);
+
+                    }
+                });
+                if (oldLeicStudent) {
+                    return "error.message.oldLeicStudent";
+                }
+
+                // TEMPORARY!!!
+                // if(student.getSpecialSeason() == null ||
                 // !student.getSpecialSeason().booleanValue()) {
-                //                    return "noAuthorization";
-                //                }
+                // return "noAuthorization";
+                // }
 
             } else {
 
