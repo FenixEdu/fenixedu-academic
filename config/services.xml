@@ -782,16 +782,6 @@
         </filterChains>
     </service>
     <service>
-        <name>ValidateAndConfirmShiftStudentEnrolment</name>
-        <implementationClass> 
-            ServidorAplicacao.Servico.student.ValidateAndConfirmShiftStudentEnrolment</implementationClass>
-        <description/>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="StudentAuthorization"/>
-        </filterChains>
-    </service>
-    <service>
         <name>ReadEnroledExecutionCourses</name>
         <implementationClass> 
             ServidorAplicacao.Servico.student.ReadEnroledExecutionCourses</implementationClass>
