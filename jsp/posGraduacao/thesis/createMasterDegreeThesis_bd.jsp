@@ -201,7 +201,9 @@
 					</html:submit>
 				</td>
 			</tr>
-
+			<tr> 
+				<td>&nbsp;</td>
+			</tr>	
 		</logic:present>
 		
 		

@@ -119,6 +119,11 @@ public class ChangeMasterDegreeThesisDispatchAction extends DispatchAction
 				SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST,
 				infoMasterDegreeThesisDataVersion.getInfoExternalAssistentGuiders());
 
+		if (infoMasterDegreeThesisDataVersion.getInfoExternalGuiders().isEmpty() == false)
+			request.setAttribute(
+				SessionConstants.EXTERNAL_GUIDERS_LIST,
+				infoMasterDegreeThesisDataVersion.getInfoExternalGuiders());
+
 		//DynaActionForm changeMasterDegreeThesisForm = new DynaActionForm();
 		DynaActionForm changeMasterDegreeThesisForm = (DynaActionForm) form;
 		changeMasterDegreeThesisForm.set(
@@ -161,7 +166,13 @@ public class ChangeMasterDegreeThesisDispatchAction extends DispatchAction
 				"externalAssistentGuidersIDs",
 				SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST,
 				actionErrors);
-
+			operations.getExternalPersonsByIDs(
+				form,
+				request,
+				"externalGuidersIDs",
+				SessionConstants.EXTERNAL_GUIDERS_LIST,
+				actionErrors);
+				
 		} catch (Exception e1)
 		{
 			throw new FenixActionException(e1);

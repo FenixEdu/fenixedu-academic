@@ -74,6 +74,12 @@ public class ChangeMasterDegreeThesisLookupDispatchAction extends LookupDispatch
 				"externalAssistentGuidersIDs",
 				SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST,
 				actionErrors);
+			operations.getExternalPersonsByIDs(
+				form,
+				request,
+				"externalGuidersIDs",
+				SessionConstants.EXTERNAL_GUIDERS_LIST,
+				actionErrors);
 
 		} catch (Exception e1)
 		{
@@ -119,7 +125,12 @@ public class ChangeMasterDegreeThesisLookupDispatchAction extends LookupDispatch
 				"externalAssistentGuidersIDs",
 				SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST,
 				actionErrors);
-
+			operations.getExternalPersonsByIDs(
+				form,
+				request,
+				"externalGuidersIDs",
+				SessionConstants.EXTERNAL_GUIDERS_LIST,
+				actionErrors);
 		} catch (Exception e1)
 		{
 			throw new FenixActionException(e1);
@@ -171,7 +182,12 @@ public class ChangeMasterDegreeThesisLookupDispatchAction extends LookupDispatch
 				"externalAssistentGuidersIDs",
 				SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST,
 				actionErrors);
-
+			operations.getExternalPersonsByIDs(
+				form,
+				request,
+				"externalGuidersIDs",
+				SessionConstants.EXTERNAL_GUIDERS_LIST,
+				actionErrors);
 		} catch (Exception e1)
 		{
 			throw new FenixActionException(e1);
@@ -218,6 +234,65 @@ public class ChangeMasterDegreeThesisLookupDispatchAction extends LookupDispatch
 				request,
 				"externalAssistentGuidersIDs",
 				SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST,
+				actionErrors);
+			operations.getExternalPersonsByIDs(
+				form,
+				request,
+				"externalGuidersIDs",
+				SessionConstants.EXTERNAL_GUIDERS_LIST,
+				actionErrors);
+		} catch (Exception e1)
+		{
+			throw new FenixActionException(e1);
+		} finally
+		{
+			saveErrors(request, actionErrors);
+		}
+
+		return mapping.findForward("start");
+
+	}
+
+	public ActionForward externalGuider(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException
+	{
+
+		//	to display the external persons search form
+		request.setAttribute(SessionConstants.SEARCH_EXTERNAL_GUIDERS, new Boolean(true));
+
+		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+		ActionErrors actionErrors = new ActionErrors();
+
+		try
+		{
+			operations.getTeachersByNumbers(
+				form,
+				request,
+				"guidersNumbers",
+				SessionConstants.GUIDERS_LIST,
+				actionErrors);
+			operations.getTeachersByNumbers(
+				form,
+				request,
+				"assistentGuidersNumbers",
+				SessionConstants.ASSISTENT_GUIDERS_LIST,
+				actionErrors);
+			operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+			operations.getExternalPersonsByIDs(
+				form,
+				request,
+				"externalAssistentGuidersIDs",
+				SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST,
+				actionErrors);
+			operations.getExternalPersonsByIDs(
+				form,
+				request,
+				"externalGuidersIDs",
+				SessionConstants.EXTERNAL_GUIDERS_LIST,
 				actionErrors);
 
 		} catch (Exception e1)
@@ -270,6 +345,68 @@ public class ChangeMasterDegreeThesisLookupDispatchAction extends LookupDispatch
 				"externalAssistentGuiderName",
 				SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_SEARCH_RESULTS,
 				actionErrors);
+			operations.getExternalPersonsByIDs(
+				form,
+				request,
+				"externalGuidersIDs",
+				SessionConstants.EXTERNAL_GUIDERS_LIST,
+				actionErrors);
+		} catch (Exception e1)
+		{
+			throw new FenixActionException(e1);
+		} finally
+		{
+			saveErrors(request, actionErrors);
+		}
+
+		return mapping.findForward("start");
+
+	}
+
+	public ActionForward searchExternalGuider(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException
+	{
+
+		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+		ActionErrors actionErrors = new ActionErrors();
+
+		try
+		{
+			operations.getTeachersByNumbers(
+				form,
+				request,
+				"guidersNumbers",
+				SessionConstants.GUIDERS_LIST,
+				actionErrors);
+			operations.getTeachersByNumbers(
+				form,
+				request,
+				"assistentGuidersNumbers",
+				SessionConstants.ASSISTENT_GUIDERS_LIST,
+				actionErrors);
+			operations.getExternalPersonsByIDs(
+				form,
+				request,
+				"externalAssistentGuidersIDs",
+				SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST,
+				actionErrors);
+			operations.getExternalPersonsByIDs(
+				form,
+				request,
+				"externalGuidersIDs",
+				SessionConstants.EXTERNAL_GUIDERS_LIST,
+				actionErrors);
+			operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+			operations.getExternalPersonsByName(
+				form,
+				request,
+				"externalGuiderName",
+				SessionConstants.EXTERNAL_GUIDERS_SEARCH_RESULTS,
+				actionErrors);
 
 		} catch (Exception e1)
 		{
@@ -313,6 +450,62 @@ public class ChangeMasterDegreeThesisLookupDispatchAction extends LookupDispatch
 				request,
 				"externalAssistentGuidersIDs",
 				SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST,
+				actionErrors);
+			operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+			operations.getExternalPersonsByIDs(
+				form,
+				request,
+				"externalGuidersIDs",
+				SessionConstants.EXTERNAL_GUIDERS_LIST,
+				actionErrors);
+		} catch (Exception e1)
+		{
+			throw new FenixActionException(e1);
+		} finally
+		{
+			saveErrors(request, actionErrors);
+		}
+
+		return mapping.findForward("start");
+
+	}
+
+	public ActionForward addExternalGuider(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException
+	{
+
+		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+		ActionErrors actionErrors = new ActionErrors();
+
+		try
+		{
+			operations.getTeachersByNumbers(
+				form,
+				request,
+				"guidersNumbers",
+				SessionConstants.GUIDERS_LIST,
+				actionErrors);
+			operations.getTeachersByNumbers(
+				form,
+				request,
+				"assistentGuidersNumbers",
+				SessionConstants.ASSISTENT_GUIDERS_LIST,
+				actionErrors);
+			operations.getExternalPersonsByIDs(
+				form,
+				request,
+				"externalAssistentGuidersIDs",
+				SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST,
+				actionErrors);
+			operations.getExternalPersonsByIDs(
+				form,
+				request,
+				"externalGuidersIDs",
+				SessionConstants.EXTERNAL_GUIDERS_LIST,
 				actionErrors);
 			operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
 
@@ -371,7 +564,12 @@ public class ChangeMasterDegreeThesisLookupDispatchAction extends LookupDispatch
 				"externalAssistentGuidersIDs",
 				SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST,
 				actionErrors);
-
+			operations.getExternalPersonsByIDs(
+				form,
+				request,
+				"externalGuidersIDs",
+				SessionConstants.EXTERNAL_GUIDERS_LIST,
+				actionErrors);
 		} catch (Exception e1)
 		{
 			throw new FenixActionException(e1);
@@ -427,6 +625,72 @@ public class ChangeMasterDegreeThesisLookupDispatchAction extends LookupDispatch
 				"externalAssistentGuidersIDs",
 				SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST,
 				actionErrors);
+			operations.getExternalPersonsByIDs(
+				form,
+				request,
+				"externalGuidersIDs",
+				SessionConstants.EXTERNAL_GUIDERS_LIST,
+				actionErrors);
+		} catch (Exception e1)
+		{
+			throw new FenixActionException(e1);
+		} finally
+		{
+			saveErrors(request, actionErrors);
+		}
+
+		return mapping.findForward("start");
+
+	}
+
+	public ActionForward removeExternalGuiders(
+		ActionMapping mapping,
+		ActionForm form,
+		HttpServletRequest request,
+		HttpServletResponse response)
+		throws FenixActionException
+	{
+
+		DynaActionForm createMasterDegreeForm = (DynaActionForm) form;
+
+		Integer[] externalPersonsIDsList = (Integer[]) createMasterDegreeForm.get("externalGuidersIDs");
+		Integer[] removedExternalGuiders =
+			(Integer[]) createMasterDegreeForm.get("removedExternalGuidersIDs");
+
+		createMasterDegreeForm.set(
+			"externalGuidersIDs",
+			subtractArray(externalPersonsIDsList, removedExternalGuiders));
+
+		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
+		ActionErrors actionErrors = new ActionErrors();
+
+		try
+		{
+			operations.getTeachersByNumbers(
+				form,
+				request,
+				"guidersNumbers",
+				SessionConstants.GUIDERS_LIST,
+				actionErrors);
+			operations.getTeachersByNumbers(
+				form,
+				request,
+				"assistentGuidersNumbers",
+				SessionConstants.ASSISTENT_GUIDERS_LIST,
+				actionErrors);
+			operations.getStudentByNumberAndDegreeType(form, request, actionErrors);
+			operations.getExternalPersonsByIDs(
+				form,
+				request,
+				"externalAssistentGuidersIDs",
+				SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST,
+				actionErrors);
+			operations.getExternalPersonsByIDs(
+				form,
+				request,
+				"externalGuidersIDs",
+				SessionConstants.EXTERNAL_GUIDERS_LIST,
+				actionErrors);
 
 		} catch (Exception e1)
 		{
@@ -457,6 +721,7 @@ public class ChangeMasterDegreeThesisLookupDispatchAction extends LookupDispatch
 		InfoStudentCurricularPlan infoStudentCurricularPlan = null;
 		ArrayList infoTeacherGuiders = null;
 		ArrayList infoTeacherAssistentGuiders = null;
+		ArrayList infoExternalPersonExternalGuiders = null;
 		ArrayList infoExternalPersonExternalAssistentGuiders = null;
 
 		Object args[] = { studentNumber, new TipoCurso(degreeType)};
@@ -499,7 +764,13 @@ public class ChangeMasterDegreeThesisLookupDispatchAction extends LookupDispatch
 					"externalAssistentGuidersIDs",
 					SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST,
 					actionErrors);
-
+			infoExternalPersonExternalGuiders =
+				operations.getExternalPersonsByIDs(
+					form,
+					request,
+					"externalGuidersIDs",
+					SessionConstants.EXTERNAL_GUIDERS_LIST,
+					actionErrors);
 		} catch (Exception e1)
 		{
 			throw new FenixActionException(e1);
@@ -524,6 +795,7 @@ public class ChangeMasterDegreeThesisLookupDispatchAction extends LookupDispatch
 				dissertationTitle,
 				infoTeacherGuiders,
 				infoTeacherAssistentGuiders,
+				infoExternalPersonExternalGuiders,
 				infoExternalPersonExternalAssistentGuiders };
 
 		try
@@ -606,6 +878,10 @@ public class ChangeMasterDegreeThesisLookupDispatchAction extends LookupDispatch
 		map.put(
 			"button.submit.masterDegree.thesis.addExternalAssistentGuider",
 			"addExternalAssistentGuider");
+		map.put("button.submit.masterDegree.thesis.externalGuider", "externalGuider");
+		map.put("button.submit.masterDegree.thesis.searchExternalGuider", "searchExternalGuider");
+		map.put("button.submit.masterDegree.thesis.addExternalGuider", "addExternalGuider");
+		map.put("button.submit.masterDegree.thesis.removeExternalGuiders", "removeExternalGuiders");
 		map.put("button.submit.masterDegree.thesis.addAssistentGuider", "addAssistentGuider");
 		map.put("button.submit.masterDegree.thesis.removeAssistentGuiders", "removeAssistentGuiders");
 		map.put(

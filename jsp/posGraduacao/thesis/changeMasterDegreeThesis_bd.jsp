@@ -99,6 +99,115 @@
 			<td>&nbsp;</td>
 		</tr>
 		
+		
+		<!-- External Guiders -->
+		<tr>
+			<th align="left" colspan="4"><bean:message key="label.masterDegree.administrativeOffice.externalGuiders"/></th>				
+		</tr>
+				
+		<logic:present name="<%= SessionConstants.EXTERNAL_GUIDERS_LIST %>" scope="request">
+			<bean:define id="externalGuidersList" name="<%= SessionConstants.EXTERNAL_GUIDERS_LIST %>" type="java.util.List"/>
+			<tr>
+				<td>&nbsp;</td>	
+				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonName"/></th>
+				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonWorkLocation"/></th>
+				<td>&nbsp;</td>									
+			</tr>			
+			<logic:iterate id="externalGuider" name="externalGuidersList">
+				<html:hidden property="externalGuidersIDs" value="<%= ((InfoExternalPerson)externalGuider).getIdInternal().toString() %>"/>
+				<tr>
+					<td>&nbsp;</td>
+					<td align="left"><bean:write name="externalGuider" property="infoPerson.nome"/></td>
+					<td align="left"><bean:write name="externalGuider" property="workLocation"/></td>
+					<td align="center">
+						<html:multibox property="removedExternalGuidersIDs">
+							<bean:write name="externalGuider" property="idInternal"/>
+						</html:multibox>	
+					</td>						
+				</tr>				
+			</logic:iterate>
+			<tr>
+				<td colspan="4" align="right">
+					<html:submit styleClass="inputbuttonSmall" property="method">
+						<bean:message key="button.submit.masterDegree.thesis.removeExternalGuiders"/>
+					</html:submit>
+				</td>
+			</tr>			
+		</logic:present>		
+
+		<logic:notPresent name="<%= SessionConstants.SEARCH_EXTERNAL_GUIDERS %>" scope="request">
+			<logic:notPresent name="<%= SessionConstants.EXTERNAL_GUIDERS_SEARCH_RESULTS %>" scope="request">
+				<tr>
+					<td align="left" colspan="4">
+						<html:submit styleClass="inputbuttonSmall" property="method">
+							<bean:message key="button.submit.masterDegree.thesis.externalGuider"/>
+						</html:submit>
+					</td>
+				</tr>
+			</logic:notPresent>
+		</logic:notPresent>
+		
+		<logic:present name="<%= SessionConstants.SEARCH_EXTERNAL_GUIDERS %>" scope="request">
+			<tr><td colspan="4" >
+				<table border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td class="infoop" >
+							<span class="emphasis-box">info</span>
+						</td>
+						<td class="infoop">
+							<strong>Nota:</strong> Na indicação do nome pode ser fornecido apenas parte do nome do orientador externo.<br/>
+							Exemplo 1: Para selecionar todos os orientadores externos que começam com a letra "A" escreva <strong>A%</strong><br/>
+							Exemplo 2: Para selecionar todos os orientadores externos que começam com a letra "A" e que tenham um segundo nome que começam com a letra "M" escreva <strong>A% M%</strong>
+						</td>
+					</tr>
+				</table></td>	
+			</tr>
+			<tr>
+				<td align="left" colspan="4">
+					<bean:message key="label.masterDegree.administrativeOffice.externalPersonName"/>:
+					<input type="text" name="externalGuiderName" size="25" value=""/>
+					<html:submit styleClass="inputbuttonSmall" property="method">
+						<bean:message key="button.submit.masterDegree.thesis.searchExternalGuider"/>
+					</html:submit>
+				</td>
+			</tr>
+		</logic:present>
+		<!-- External Person search results -->
+		<logic:present name="<%= SessionConstants.EXTERNAL_GUIDERS_SEARCH_RESULTS %>" scope="request">
+			<bean:define id="externalGuidersSearchResultsList" name="<%= SessionConstants.EXTERNAL_GUIDERS_SEARCH_RESULTS %>" type="java.util.List"/>
+			<tr>
+				<th align="left" colspan="4"><bean:message key="label.masterDegree.administrativeOffice.searchResults"/></th>				
+			</tr>
+			<tr>
+				<td>&nbsp;</td>	
+				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonName"/></th>
+				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonWorkLocation"/></th>
+				<td>&nbsp;</td>									
+			</tr>				
+			<logic:iterate id="externalGuider" name="externalGuidersSearchResultsList">
+				<tr>
+					<td>&nbsp;</td>
+					<td align="left"><bean:write name="externalGuider" property="infoPerson.nome"/></td>
+					<td align="left"><bean:write name="externalGuider" property="workLocation"/></td>						
+					<td>
+						<html:radio idName="externalGuider" property="externalGuidersIDs" value="idInternal"/>	
+					</td>
+				</tr>				
+			</logic:iterate>
+			<tr>
+				<td colspan="4" align="right">
+					<html:submit styleClass="inputbuttonSmall" property="method">
+						<bean:message key="button.submit.masterDegree.thesis.addExternalGuider"/>
+					</html:submit>
+				</td>
+			</tr>
+			<tr> 
+				<td>&nbsp;</td>
+			</tr>	
+		</logic:present>
+		
+		
+		
 		<!-- Assistent Guiders -->
 		<tr>
 			<th align="left" colspan="4"><bean:message key="label.masterDegree.administrativeOffice.assistentGuiders"/></th>				

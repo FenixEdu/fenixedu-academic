@@ -47,7 +47,8 @@ public class VisualizeMasterDegreeThesisHistoryDispatchAction extends DispatchAc
 		//Integer studentNumber = (Integer) request.getAttribute("studentNumber");
 		Integer degreeType = Integer.valueOf(request.getParameter("degreeType"));
 		Integer studentNumber = Integer.valueOf(request.getParameter("studentNumber"));
-		Integer masterDegreeThesisDataVersionID = Integer.valueOf(request.getParameter("masterDegreeThesisDataVersionID"));
+		Integer masterDegreeThesisDataVersionID =
+			Integer.valueOf(request.getParameter("masterDegreeThesisDataVersionID"));
 
 		MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
 		ActionErrors actionErrors = new ActionErrors();
@@ -83,7 +84,6 @@ public class VisualizeMasterDegreeThesisHistoryDispatchAction extends DispatchAc
 			throw new FenixActionException(e);
 		}
 
-
 		if (infoMasterDegreeThesisDataVersion.getInfoGuiders().isEmpty() == false)
 			request.setAttribute(
 				SessionConstants.GUIDERS_LIST,
@@ -98,6 +98,13 @@ public class VisualizeMasterDegreeThesisHistoryDispatchAction extends DispatchAc
 			request.setAttribute(
 				SessionConstants.EXTERNAL_ASSISTENT_GUIDERS_LIST,
 				infoMasterDegreeThesisDataVersion.getInfoExternalAssistentGuiders());
+
+		if (infoMasterDegreeThesisDataVersion.getInfoExternalGuiders().isEmpty() == false)
+		{
+			request.setAttribute(
+				SessionConstants.EXTERNAL_GUIDERS_LIST,
+				infoMasterDegreeThesisDataVersion.getInfoExternalGuiders());
+		}
 
 		Date lastModification =
 			new Date(infoMasterDegreeThesisDataVersion.getLastModification().getTime());

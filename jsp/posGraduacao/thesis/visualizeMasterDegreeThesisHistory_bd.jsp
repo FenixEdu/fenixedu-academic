@@ -86,6 +86,35 @@
 		<td>&nbsp;</td>
 	</tr>
 	
+	<!-- External Guiders -->
+	
+	<logic:present name="<%= SessionConstants.EXTERNAL_GUIDERS_LIST %>" scope="request">
+		<tr>
+			<th align="left" colspan="4"><bean:message key="label.masterDegree.administrativeOffice.externalGuiders"/></th>				
+		</tr>
+	
+		<bean:define id="externalGuidersList" name="<%= SessionConstants.EXTERNAL_GUIDERS_LIST %>" type="java.util.List"/>
+		<tr>
+			<td>&nbsp;</td>
+			<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonName"/></th>
+			<th align="left"><bean:message key="label.masterDegree.administrativeOffice.externalPersonWorkLocation"/></th>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>						
+		</tr>
+		<logic:iterate id="externalGuider" name="externalGuidersList">
+			<tr>
+				<td>&nbsp;</td>
+				<td align="left"><bean:write name="externalGuider" property="infoPerson.nome"/></td>
+				<td align="left"><bean:write name="externalGuider" property="workLocation"/></td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>					
+			</tr>				
+		</logic:iterate>
+		<tr> 
+			<td>&nbsp;</td>
+		</tr>			
+	</logic:present>
+	
 	<!-- Assistent Guiders -->
 	
 	<logic:present name="<%= SessionConstants.ASSISTENT_GUIDERS_LIST %>" scope="request">
