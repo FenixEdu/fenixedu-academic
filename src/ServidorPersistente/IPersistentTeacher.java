@@ -17,12 +17,7 @@ public interface IPersistentTeacher extends IPersistentObject
 	 *              ExcepcaoPersistencia
 	 */
 	public ITeacher readTeacherByUsername(String user) throws ExcepcaoPersistencia;
-	/**
-	 * @param teacherNumber
-	 * @return @throws
-	 *              ExcepcaoPersistencia
-	 */
-	public ITeacher readTeacherByNumber(Integer teacherNumber) throws ExcepcaoPersistencia;
+
 	/**
 	 * @param teacher
 	 * @throws ExcepcaoPersistencia
