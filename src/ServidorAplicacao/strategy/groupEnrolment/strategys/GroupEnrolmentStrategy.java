@@ -74,11 +74,11 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
 			IPersistentStudentGroup persistentStudentGroup = sp.getIPersistentStudentGroup();
 			List groups = persistentStudentGroup.readAllStudentGroupByGroupPropertiesAndShift(groupProperties, shift);
 			int numberOfGroups = groups.size();
-			if(groupProperties.getGroupMaximumNumber()== null)
+			if (groupProperties.getGroupMaximumNumber() == null)
 				return true;
-			
+
 			if (numberOfGroups < groupProperties.getGroupMaximumNumber().intValue())
-					result = true;
+				result = true;
 
 		} catch (ExcepcaoPersistencia e) {
 		}
@@ -135,7 +135,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
 		return allShifts;
 	}
 
-	public boolean checkAlreadyEnroled(IGroupProperties groupProperties, List usernames) throws ExcepcaoPersistencia {
+	public boolean checkAlreadyEnroled(IGroupProperties groupProperties, String username) throws ExcepcaoPersistencia {
 		try {
 			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
 			IPersistentStudent persistentStudent = sp.getIPersistentStudent();
@@ -143,15 +143,8 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
 			IPersistentStudentGroup persistentStudentGroup = sp.getIPersistentStudentGroup();
 			IPersistentStudentGroupAttend persistentStudentGroupAttend = sp.getIPersistentStudentGroupAttend();
 
-			Iterator iterUsernames = usernames.iterator();
-			List allAttend = new ArrayList();
-			IStudent student = null;
-			IFrequenta attend = null;
-			while (iterUsernames.hasNext()) {
-				student = persistentStudent.readByUsername((String) iterUsernames.next());
-				attend = persistentAttend.readByAlunoAndDisciplinaExecucao(student, groupProperties.getExecutionCourse());
-				allAttend.add(attend);
-			}
+			IStudent student = persistentStudent.readByUsername(username);
+			IFrequenta attend = persistentAttend.readByAlunoAndDisciplinaExecucao(student, groupProperties.getExecutionCourse());
 
 			List allStudentGroup = persistentStudentGroup.readAllStudentGroupByGroupProperties(groupProperties);
 			Iterator iterStudentGroup = allStudentGroup.iterator();
@@ -164,9 +157,37 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
 				IStudentGroupAttend studentGroupAttend = null;
 				while (iterStudentGroupAttend.hasNext()) {
 					studentGroupAttend = (IStudentGroupAttend) iterStudentGroupAttend.next();
-					if (allAttend.contains(studentGroupAttend.getAttend()))
-						return false;
+					if (attend.equals(studentGroupAttend.getAttend()))
+						return true;
 				}
+			}
+
+		} catch (ExcepcaoPersistencia ex) {
+			ex.printStackTrace();
+		}
+
+		return false;
+	}
+
+	public boolean checkNotEnroledInGroup(IGroupProperties groupProperties, IStudentGroup studentGroup, String username)
+		throws ExcepcaoPersistencia {
+		try {
+			ISuportePersistente sp = SuportePersistenteOJB.getInstance();
+			IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+			IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
+			IPersistentStudentGroup persistentStudentGroup = sp.getIPersistentStudentGroup();
+			IPersistentStudentGroupAttend persistentStudentGroupAttend = sp.getIPersistentStudentGroupAttend();
+
+			IStudent student = persistentStudent.readByUsername(username);
+			IFrequenta attend = persistentAttend.readByAlunoAndDisciplinaExecucao(student, groupProperties.getExecutionCourse());
+
+			List allStudentGroupAttendByGroup = persistentStudentGroupAttend.readAllByStudentGroup(studentGroup);
+			Iterator iterStudentGroupAttend = allStudentGroupAttendByGroup.iterator();
+			IStudentGroupAttend studentGroupAttend = null;
+			while (iterStudentGroupAttend.hasNext()) {
+				studentGroupAttend = (IStudentGroupAttend) iterStudentGroupAttend.next();
+				if (studentGroupAttend.getAttend().equals(attend))
+					return false;
 			}
 
 		} catch (ExcepcaoPersistencia ex) {
@@ -190,7 +211,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
 		}
 		int nrOfElements = listStudentGroupAttend.size();
 		Integer maximumCapacity = groupProperties.getMaximumCapacity();
-		if(maximumCapacity==null)
+		if (maximumCapacity == null)
 			return true;
 		if (nrOfElements < maximumCapacity.intValue())
 			return true;
@@ -220,7 +241,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
 		return result;
 	}
 
-	public abstract boolean enrolmentPolicyNewGroup(IGroupProperties groupProperties, int numberOfStudentsToEnrole, ITurno shift);
+	public abstract Integer enrolmentPolicyNewGroup(IGroupProperties groupProperties, int numberOfStudentsToEnrole, ITurno shift);
 
 	public abstract boolean checkNumberOfGroupElements(IGroupProperties groupProperties, IStudentGroup studentGroup)
 		throws ExcepcaoPersistencia;

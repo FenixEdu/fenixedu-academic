@@ -23,16 +23,14 @@ public class IndividualGroupEnrolmentStrategy extends GroupEnrolmentStrategy imp
 	}
 	
 		
-	public boolean enrolmentPolicyNewGroup(IGroupProperties groupProperties,int numberOfStudentsToEnrole,ITurno shift){
-		
-		boolean result = false;
+	public Integer enrolmentPolicyNewGroup(IGroupProperties groupProperties,int numberOfStudentsToEnrole,ITurno shift){
 		
 		if(checkNumberOfGroups(groupProperties,shift))
-			result=true;
-		
-		return result;			
+			return new Integer(1);
+		else
+			return new Integer(-1);			
 				
-		}
+	}
 
 	
 	public boolean checkNumberOfGroupElements(IGroupProperties groupProperties,IStudentGroup studentGroup) throws ExcepcaoPersistencia {

@@ -25,29 +25,27 @@ public class AtomicGroupEnrolmentStrategy extends GroupEnrolmentStrategy impleme
 	public AtomicGroupEnrolmentStrategy() {
 	}
 
-	public boolean enrolmentPolicyNewGroup(IGroupProperties groupProperties, int numberOfStudentsToEnrole, ITurno shift) {
-		boolean result = false;
+	public Integer enrolmentPolicyNewGroup(IGroupProperties groupProperties, int numberOfStudentsToEnrole, ITurno shift) {
+		
 		if (checkNumberOfGroups(groupProperties, shift)) {
 			Integer maximumCapacity = groupProperties.getMaximumCapacity();
 			Integer minimumCapacity = groupProperties.getMinimumCapacity();
+			Integer nrStudents = new Integer(numberOfStudentsToEnrole);
 			
 			if(maximumCapacity == null && minimumCapacity == null)
-				return true;
+				return new Integer(1);
 		
-			if(minimumCapacity !=null && maximumCapacity ==null)
-				if (numberOfStudentsToEnrole>=minimumCapacity.intValue())
-					return true;
+			if(nrStudents.compareTo(minimumCapacity)<0)
+				return new Integer(-2);
 					
-			if(maximumCapacity !=null && minimumCapacity ==null)
-				if (numberOfStudentsToEnrole <= maximumCapacity.intValue())
-					return true;
-			
-			if(maximumCapacity !=null && minimumCapacity !=null)
-				if (numberOfStudentsToEnrole >= minimumCapacity.intValue()&& numberOfStudentsToEnrole <= maximumCapacity.intValue())
-					result = true;
+			if (nrStudents.compareTo(maximumCapacity)>0)
+					return new Integer(-3);
 				
 		}
-		return result;
+		else
+			return new Integer(-1);
+		
+		return new Integer(1);
 
 	}
 
@@ -75,7 +73,6 @@ public class AtomicGroupEnrolmentStrategy extends GroupEnrolmentStrategy impleme
 
 			int numberOfGroupElements = allStudentGroupAttend.size();
 
-			//se o nr de elementos do grupo for maior que o nr minimo,entao podemos desinscrever o aluno,caso contrario nao
 			if (numberOfGroupElements > minimumCapacity.intValue())
 				result = true;
 

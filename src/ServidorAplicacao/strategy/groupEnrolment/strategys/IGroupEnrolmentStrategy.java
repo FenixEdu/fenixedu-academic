@@ -26,6 +26,8 @@ public interface IGroupEnrolmentStrategy {
 	public boolean checkIfStudentGroupIsEmpty(IStudentGroupAttend studentGroupAttend,IStudentGroup studentGroup) throws ExcepcaoPersistencia;
 	public List checkShiftsType(IGroupProperties groupProperties,List shifts);
 	public boolean checkPossibleToEnrolInExistingGroup(IGroupProperties groupProperties,IStudentGroup studentGroup,ITurno shift)throws ExcepcaoPersistencia; 
-	public boolean enrolmentPolicyNewGroup(IGroupProperties groupProperties,int numberOfStudentsToEnrole,ITurno shift);
-	public boolean checkAlreadyEnroled(IGroupProperties groupProperties, List usernames )throws ExcepcaoPersistencia;
+	public Integer enrolmentPolicyNewGroup(IGroupProperties groupProperties,int numberOfStudentsToEnrole,ITurno shift);
+	public boolean checkAlreadyEnroled(IGroupProperties groupProperties, String username )throws ExcepcaoPersistencia;
+	public boolean checkNotEnroledInGroup(IGroupProperties groupProperties,IStudentGroup studentGroup, String username) throws ExcepcaoPersistencia;
+	
 }
