@@ -21,7 +21,7 @@
 	</logic:present>
 	<tr>
 		<td>
-			<app:generateSectionMenu name="ALL_SECTIONS" path="<%=  request.getContextPath() + RequestUtils.getModuleName(request,application)%>" activeSectionName="<%= SessionConstants.INFO_SECTION %>" renderer="sectionChooser" />
+			<app:generateSectionMenu name="<%=SessionConstants.POSSIBLE_PARENT_SECTIONS%>" path="<%=  request.getContextPath() + RequestUtils.getModuleName(request,application)%>" activeSectionName="<%= SessionConstants.INFO_SECTION %>" renderer="sectionChooser" />
 		</td>
 	</tr>	
 </table>

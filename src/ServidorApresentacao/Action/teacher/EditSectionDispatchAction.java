@@ -62,8 +62,7 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 			throw fenixActionException;
 		}
 
-		//TODO: add to SessionConstants w/different name
-		session.setAttribute("ALL_SECTIONS", allSections);
+		session.setAttribute(SessionConstants.POSSIBLE_PARENT_SECTIONS, allSections);
 
 		//relative to children sections
 		ArrayList sections;
@@ -188,7 +187,7 @@ public class EditSectionDispatchAction extends FenixDispatchAction {
 		Integer index = (Integer) sectionForm.get("sectionIndex");
 		UserView userView = (UserView) session.getAttribute(SessionConstants.U_VIEW);
 
-		List allSections = (List) session.getAttribute("ALL_SECTIONS");
+		List allSections = (List) session.getAttribute(SessionConstants.POSSIBLE_PARENT_SECTIONS);
 
 		InfoSection newParent = null;
 		if (index!=null) newParent = (InfoSection) allSections.get(index.intValue());

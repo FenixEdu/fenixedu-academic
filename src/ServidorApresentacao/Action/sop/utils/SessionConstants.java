@@ -52,6 +52,7 @@ public abstract class SessionConstants {
 	public static final String INFO_SECTION_ITEMS_LIST ="info_section_items_list";
 	public static final String LAST_ANNOUNCEMENT ="last_announcement";
 	public static final String INFO_SITE_ANNOUNCEMENT_LIST= "info_site_announcement_list";
+	public static final String POSSIBLE_PARENT_SECTIONS= "possible_parent_sections";	
 
 
 	// -------------------------------------------------------------------------------
