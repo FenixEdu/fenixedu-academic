@@ -16,7 +16,9 @@ import java.util.List;
 import org.odmg.QueryException;
 
 import Dominio.Exam;
+import Dominio.IDisciplinaExecucao;
 import Dominio.IExam;
+import Dominio.IExamExecutionCourse;
 import ServidorPersistente.ExcepcaoPersistencia;
 import ServidorPersistente.IPersistentExam;
 
@@ -54,7 +56,35 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
 	}
 
 	public void delete(IExam exam) throws ExcepcaoPersistencia {
+
+		List associatedExecutionCourses = exam.getAssociatedExecutionCourses();
+
+		for (int i = 0; i < associatedExecutionCourses.size(); i++) {
+			IDisciplinaExecucao executionCourse =
+				(IDisciplinaExecucao) associatedExecutionCourses.get(i);
+			executionCourse.getAssociatedExams().remove(exam);
+
+			IExamExecutionCourse examExecutionCourseToDelete =
+				SuportePersistenteOJB
+					.getInstance()
+					.getIPersistentExamExecutionCourse()
+					.readBy(
+					exam,
+					executionCourse);
+
+			SuportePersistenteOJB
+				.getInstance()
+				.getIPersistentExamExecutionCourse()
+				.delete(
+				examExecutionCourseToDelete);
+		}
+
+		exam.setAssociatedExecutionCourses(null);
+
 		super.delete(exam);
+
+//		PersistenceBroker broker = ((HasBroker) tx).getBroker();
+//		broker.clearCache();
 	}
 
 	public void deleteAll() throws ExcepcaoPersistencia {
