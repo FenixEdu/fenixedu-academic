@@ -8,7 +8,7 @@ package Dominio;
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) 
  * @author - Nadir Tarmahomed (naat@mega.ist.utl.pt)
  */
-public interface IWorkLocation
+public interface IWorkLocation extends IDomainObject
 {
     /**
      * @return Returns the name.
