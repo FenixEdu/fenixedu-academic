@@ -72,6 +72,8 @@ public class DefineExamCommentActionDA extends DispatchAction {
 		HttpServletResponse response)
 		throws Exception {
 
+		HttpSession session = request.getSession(false);
+
 		IUserView userView = SessionUtils.getUserView(request);
 
 		DynaValidatorForm defineExamCommentForm = (DynaValidatorForm) form;
@@ -80,7 +82,9 @@ public class DefineExamCommentActionDA extends DispatchAction {
 		String executionCourseCode =
 			request.getParameter("executionCourseCode");
 		String executionPeriodName =
-			request.getParameter("executionPeriodName");
+			((InfoExecutionPeriod) session.getAttribute(
+				SessionConstants.INFO_EXECUTION_PERIOD_KEY)).getName();
+			//request.getParameter("executionPeriodName");
 		String executionYear = request.getParameter("executionYear");
 
 		InfoExecutionYear infoExecutionYear =
