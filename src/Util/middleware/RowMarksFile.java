@@ -259,7 +259,7 @@ public class RowMarksFile
 			indice++;
 		}
         fileName += courseCode;
-        fileName += ".txt";
+        fileName += ".TXT";
         return fileName;
     }
 
