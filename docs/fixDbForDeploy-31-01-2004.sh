@@ -10,6 +10,7 @@ mysql -f fenix < updateQualificationBeforeScipt.sql
 mysql -f fenix < updateQualificationScript1.sql | mysql fenix
 mysql -f fenix < updateQualificationScript2.sql | mysql fenix
 mysql -f fenix < updateQualificationAfterScript.sql
+mysql -f fenix < fixDbForDeploy6-31-01-2004.sql
 
 
 
