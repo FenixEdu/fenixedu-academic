@@ -93,7 +93,7 @@ public class ReadExamsByExecutionCourseServiceTest
 	 * @see ServidorAplicacao.Servicos.TestCaseReadServices#getNumberOfItemsToRetrieve()
 	 */
 	protected int getNumberOfItemsToRetrieve() {
-		return 1;
+		return 2;
 	}
 
 	/* (non-Javadoc)

@@ -384,6 +384,12 @@
          conversion="ServidorPersistente.Conversores.Calendar2TimeFieldConversion"
       />
       <field-descriptor
+         name="season"
+         column="SEASON"
+         jdbc-type="INTEGER"
+         conversion="ServidorPersistente.Conversores.Season2EnumSeasonFieldConversion"
+      />
+      <field-descriptor
          name="keyExecutionCourse"
          column="KEY_EXECUTION_COURSE"
          jdbc-type="INTEGER"

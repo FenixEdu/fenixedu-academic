@@ -53,14 +53,15 @@ public class ReadExamsByExecutionCourse implements IServico {
       IDisciplinaExecucao executionCourse = Cloner.copyInfoExecutionCourse2ExecutionCourse(infoExecutionCourse);
       List exams = sp.getIPersistentExam().readBy(executionCourse);
 	  IExam exam = null;
-	  InfoViewExamByDayAndShift infoViewExam = new InfoViewExamByDayAndShift();
+	  
 	  Integer numberStudentsAttendingCourse = null; 
 	  for (int i = 0; i < exams.size(); i++) {
 		exam = (IExam)exams.get(i);
+		InfoViewExamByDayAndShift infoViewExam = new InfoViewExamByDayAndShift();		
 		infoViewExam.setInfoExam(Cloner.copyIExam2InfoExam(exam));
 		// determine number of students attending course
 		numberStudentsAttendingCourse = sp.getIFrequentaPersistente().countStudentsAttendingExecutionCourse(exam.getExecutionCourse());
-		infoViewExam.setNumberStudentesAttendingCourse(numberStudentsAttendingCourse);		
+		infoViewExam.setNumberStudentesAttendingCourse(numberStudentsAttendingCourse);
 		infoViewExams.add(infoViewExam);
 	}
 

@@ -13,19 +13,23 @@ package DataBeans;
 import java.util.Calendar;
 import java.util.Date;
 
+import Util.Season;
+
 public class InfoExam {
 	protected Date day;
 	protected Calendar beginning;
 	protected Calendar end;
+	protected Season season;	
 	protected InfoExecutionCourse infoExecutionCourse;
 
 	public InfoExam() {
 	}
 
-	public InfoExam(Date day, Calendar beginning, Calendar end, InfoExecutionCourse infoExecutionCourse) {
+	public InfoExam(Date day, Calendar beginning, Calendar end, Season season, InfoExecutionCourse infoExecutionCourse) {
 		this.setDay(day);
 		this.setBeginning(beginning);
 		this.setEnd(end);
+		this.setSeason(season);
 		this.setInfoExecutionCourse(infoExecutionCourse);
 	}
 
@@ -39,6 +43,7 @@ public class InfoExam {
 				   && this.getEnd().get(Calendar.HOUR_OF_DAY) == examObj.getEnd().get(Calendar.HOUR_OF_DAY)
 				   && this.getEnd().get(Calendar.MINUTE) == examObj.getEnd().get(Calendar.MINUTE)
 				   && this.getEnd().get(Calendar.SECOND) == examObj.getEnd().get(Calendar.SECOND)
+				   && this.getSeason().equals(examObj.getSeason())
 				   && this.getInfoExecutionCourse().equals(examObj.getInfoExecutionCourse());
 		}
 
@@ -49,7 +54,8 @@ public class InfoExam {
 		return "[INFOEXAM:"
 			+ " day= '"             + this.getDay()             + "'"
 			+ " beginning= '"       + this.getBeginning()       + "'"
-			+ " end= '"             + this.getEnd()             + "'"
+			+ " end= '"				+ this.getEnd()       + "'"
+			+ " season= '"          + this.getSeason()          + "'"
 			+ " executionCourse= '" + this.getInfoExecutionCourse() + "'"
 			+ "";
 	}
@@ -113,6 +119,20 @@ public class InfoExam {
 	 */
 	public void setInfoExecutionCourse(InfoExecutionCourse infoExecutionCourse) {
 		this.infoExecutionCourse = infoExecutionCourse;
+	}
+
+	/**
+	 * @return
+	 */
+	public Season getSeason() {
+		return season;
+	}
+
+	/**
+	 * @param season
+	 */
+	public void setSeason(Season season) {
+		this.season = season;
 	}
 
 }

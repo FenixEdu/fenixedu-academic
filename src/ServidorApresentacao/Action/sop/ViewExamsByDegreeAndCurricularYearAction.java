@@ -13,10 +13,10 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import DataBeans.InfoClass;
-import DataBeans.InfoExam;
 import DataBeans.InfoExecutionCourse;
 import DataBeans.InfoExecutionDegree;
 import DataBeans.InfoExecutionPeriod;
+import DataBeans.InfoViewExamByDayAndShift;
 import ServidorAplicacao.GestorServicos;
 import ServidorAplicacao.IUserView;
 import ServidorApresentacao.Action.sop.utils.SessionConstants;
@@ -57,7 +57,7 @@ public class ViewExamsByDegreeAndCurricularYearAction extends Action {
 
 			// read exams of each of the execution courses previouly read
 			InfoExecutionCourse infoExecutionCourse = null;
-			InfoExam infoExam = null;
+			InfoViewExamByDayAndShift infoViewExam = null;
 			Object argsReadExams[] = new Object[1];
 			List infoExamsOfExecutionCourse = null;
 			ArrayList infoViewExams = new ArrayList();
@@ -67,13 +67,23 @@ public class ViewExamsByDegreeAndCurricularYearAction extends Action {
 				argsReadExams[0] = infoExecutionCourse;
 				infoExamsOfExecutionCourse =
 					(List) gestor.executar(userView, "ReadExamsByExecutionCourse", argsReadExams);
-				infoViewExams.addAll(infoExamsOfExecutionCourse);
-				/*				for(int j = 0; j < infoExamsOfExecutionCourse.size(); j++) {
-									infoExam = (InfoExam) infoExamsOfExecutionCourse.get(j);
-									if(!(infoExams.contains(infoExam)))
-										infoExams.add(infoExam);
-								}
-				*/
+
+/*				if (infoExamsOfExecutionCourse.size() == 1) {
+					infoViewExam = (InfoViewExamByDayAndShift) infoExamsOfExecutionCourse.get(0);
+					InfoViewExamByDayAndShift notScheduledExam = ;					
+					if (infoViewExam.getInfoExam().getSeason().equals(new Season(Season.SEASON1))) {
+						infoViewExams.add(infoViewExam);					
+						infoViewExams.add();
+					}
+					else {
+						infoViewExams.add();
+						infoViewExams.add(infoViewExam);
+					}								
+				}
+				else
+*/				
+					infoViewExams.addAll(infoExamsOfExecutionCourse);								
+				
 			}
 
 			if (infoViewExams != null && infoViewExams.isEmpty()) {

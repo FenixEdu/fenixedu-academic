@@ -7,6 +7,8 @@ package Dominio;
 import java.util.Calendar;
 import java.util.Date;
 
+import Util.Season;
+
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
@@ -15,6 +17,7 @@ public class Exam extends DomainObject implements IExam {
 	protected Date day;
 	protected Calendar beginning;
 	protected Calendar end;
+	protected Season season;
 	protected IDisciplinaExecucao executionCourse;
 
 	private Integer keyExecutionCourse;
@@ -31,6 +34,7 @@ public class Exam extends DomainObject implements IExam {
 				   && this.getEnd().get(Calendar.HOUR_OF_DAY) == examObj.getEnd().get(Calendar.HOUR_OF_DAY)
 				   && this.getEnd().get(Calendar.MINUTE) == examObj.getEnd().get(Calendar.MINUTE)
 				   && this.getEnd().get(Calendar.SECOND) == examObj.getEnd().get(Calendar.SECOND)
+				   && this.getSeason().equals(examObj.getSeason())
 				   && this.getExecutionCourse().equals(examObj.getExecutionCourse());
 		}
 
@@ -42,15 +46,17 @@ public class Exam extends DomainObject implements IExam {
 			+ " day= '"             + this.getDay()             + "'"
 			+ " beginning= '"       + this.getBeginning()       + "'"
 			+ " end= '"             + this.getEnd()             + "'"
+			+ " season= '"           + this.getSeason()           + "'"			
 			+ " executionCourse= '" + this.getExecutionCourse() + "'"
 			+ "";
 	}
 
 
-	public Exam(Date day, Calendar beginning, Calendar end, IDisciplinaExecucao executionCourse) {
+	public Exam(Date day, Calendar beginning, Calendar end, Season season, IDisciplinaExecucao executionCourse) {
 		this.setDay(day);
 		this.setBeginning(beginning);
 		this.setEnd(end);
+		this.setSeason(season);
 		this.setExecutionCourse(executionCourse);
 	}
 
@@ -128,6 +134,20 @@ public class Exam extends DomainObject implements IExam {
 	 */
 	public void setExecutionCourse(IDisciplinaExecucao executionCourse) {
 		this.executionCourse = executionCourse;
+	}
+
+	/**
+	 * @return
+	 */
+	public Season getSeason() {
+		return season;
+	}
+
+	/**
+	 * @param season
+	 */
+	public void setSeason(Season season) {
+		this.season = season;
 	}
 
 }

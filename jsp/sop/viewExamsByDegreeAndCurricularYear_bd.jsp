@@ -66,6 +66,7 @@
 						</td>
 						<td>
 							<bean:write name="infoViewExam" property="infoExam.day"/>
+							<br/>
                            	<%= iH.toString()%> : <%= iM.toString()%>
 						</td>
 						<td>

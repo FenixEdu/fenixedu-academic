@@ -73,6 +73,7 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
 			oqlQuery += " where executionCourse.sigla = $1";
 			oqlQuery += " and executionCourse.executionPeriod.name = $2";
 			oqlQuery += " and executionCourse.executionPeriod.executionYear.year = $3";
+			oqlQuery += " order by executionCourse.sigla asc, season asc";			
 			query.create(oqlQuery);
 			query.bind(executionCourse.getSigla());
 			query.bind(executionCourse.getExecutionPeriod().getName());
@@ -89,6 +90,7 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
 	public List readAll() throws ExcepcaoPersistencia {
 		try {
 			String oqlQuery = "select all from " + Exam.class.getName();
+			oqlQuery += " order by executionCourse.sigla asc, season asc";			
 			query.create(oqlQuery);
 			List result = (List) query.execute();
 			lockRead(result);
