@@ -7,7 +7,7 @@ package middleware.middlewareDomain;
 import java.util.List;
 
 
-public class MWAluno  
+public class MWAluno extends MWDomainObject
 {
 
   private String istuniversity;
@@ -27,7 +27,6 @@ public class MWAluno
   private String worker;
   private Integer year;
   private List enrolments; 
-
 
   private MWPessoa middlewarePerson;
 
@@ -224,5 +223,4 @@ public class MWAluno
 	public void setEnrolments(List enrolments) {
 		this.enrolments = enrolments;
 	}
-
 }

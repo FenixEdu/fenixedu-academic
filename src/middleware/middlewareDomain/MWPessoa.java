@@ -4,7 +4,8 @@
 
 package middleware.middlewareDomain;
 
-public class MWPessoa {
+public class MWPessoa extends MWDomainObject
+{
 
 	private String address;
 	private String addressAreaCode;

@@ -1,6 +1,7 @@
 package middleware.middlewareDomain;
 
-public class MWUniversity {
+public class MWUniversity extends MWDomainObject
+{
 	private String universityCode;
 	private String universityName;
 

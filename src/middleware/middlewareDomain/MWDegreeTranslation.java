@@ -3,7 +3,7 @@ package middleware.middlewareDomain;
 import Dominio.ICurso;
 
 
-public class MWDegreeTranslation  
+public class MWDegreeTranslation extends MWDomainObject
 {
 	private Integer degreeCode;
 	private Integer keyDegree;

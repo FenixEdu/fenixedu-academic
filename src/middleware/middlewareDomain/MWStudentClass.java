@@ -1,7 +1,7 @@
 package middleware.middlewareDomain;
 
 
-public class MWStudentClass  
+public class MWStudentClass extends MWDomainObject
 {
 	private Double average;
 	private String className;	

@@ -1,6 +1,6 @@
 package middleware.middlewareDomain;
 
-public class MWDisciplinaGrupoIleec
+public class MWDisciplinaGrupoIleec extends MWDomainObject
 {
 
 	private Integer idDisciplina;

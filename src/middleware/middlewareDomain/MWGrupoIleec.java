@@ -1,6 +1,6 @@
 package middleware.middlewareDomain;
 
-public class MWGrupoIleec
+public class MWGrupoIleec extends MWDomainObject
 {
     private Integer idAreaEspecializacao;
     private Integer idAreaSecundaria;

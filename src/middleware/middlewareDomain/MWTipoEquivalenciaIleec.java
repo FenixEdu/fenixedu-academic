@@ -1,6 +1,6 @@
 package middleware.middlewareDomain;
 
-public class MWTipoEquivalenciaIleec
+public class MWTipoEquivalenciaIleec extends MWDomainObject
 {
 	private String descricao;
 	private Integer tipoEquivalencia;

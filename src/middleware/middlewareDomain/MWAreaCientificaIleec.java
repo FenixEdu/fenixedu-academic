@@ -1,7 +1,7 @@
 package middleware.middlewareDomain;
 
 
-public class MWAreaCientificaIleec
+public class MWAreaCientificaIleec extends MWDomainObject
 {
 	private Integer idAreaCientifica;
 	private String nome;

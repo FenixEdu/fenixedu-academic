@@ -4,7 +4,7 @@
 
 package middleware.middlewareDomain;
 
-public class MWCurricularCourseScope {
+public class MWCurricularCourseScope extends MWDomainObject {
 
 	private Integer branchcode;
 	private String coursecode;

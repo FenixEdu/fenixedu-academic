@@ -1,5 +1,6 @@
 package middleware.studentMigration.enrollments;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -92,6 +93,8 @@ public class UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments
 		
 				System.out.println("[INFO] Updating [" + result.size() + "] student curriculums...");
 		
+				MakeEquivalencesForAllStudentsPastEnrolments.printIndexes(span, numberOfElementsInSpan);
+				
 				Iterator iterator = result.iterator();
 				while (iterator.hasNext()) {
 					mwStudent = (MWAluno) iterator.next();
@@ -290,7 +293,16 @@ public class UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments
 				continue;
 			}
 
-			Date whenAltered = enrolmentEvaluation.getWhen();
+			Date whenAltered = null;
+
+			if (mwEnrolment.getExamdate() == null) {
+				Calendar calendar = Calendar.getInstance();
+				calendar.set(mwEnrolment.getEnrolmentyear().intValue(), 9, 1);
+				whenAltered = new Date(calendar.getTimeInMillis());
+			} else {
+				whenAltered = enrolmentEvaluation.getWhen();
+			}
+			
 			long dateInLongFormat = whenAltered.getTime();
 			dateInLongFormat = dateInLongFormat + mwEnrolment.getIdinternal().longValue();
 			Date newDate = new Date(dateInLongFormat);
@@ -298,6 +310,7 @@ public class UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments
 			enrolmentEvaluation.setWhen(newDate);
 
 			UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments.alteredDates++;
+			System.out.println("[INFO] Date updated from: [" + whenAltered.toString() + "] to [" + newDate.toString() + "].");
 			System.out.println("[INFO] Number of EnrolmentEvaluations dates yet updated: [" + UpdateEnrollmentEvaluationsDatesForAllStudentsPastEnrolments.alteredDates + "]");
 		}
 	}

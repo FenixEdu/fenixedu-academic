@@ -5,7 +5,7 @@
 package middleware.middlewareDomain;
 
 
-public class MWEnrolment  
+public class MWEnrolment extends MWDomainObject
 {
 
   private Integer branchcode;

@@ -8,83 +8,83 @@
   class="middleware.middlewareDomain.MWAluno"
   table="mw_ALUNO"
 >
-  <field-descriptor id="0"
+  <field-descriptor
     name="documentidnumber"
     column="documentIdNumber"
     jdbc-type="VARCHAR"
 	primarykey="true"
   />
-  <field-descriptor id="1"
+  <field-descriptor
     name="number"
     column="number"
     jdbc-type="INTEGER"
   />
-  <field-descriptor id="2"
+  <field-descriptor
     name="degreecode"
     column="degreeCode"
     jdbc-type="INTEGER"
   />
-  <field-descriptor id="3"
+  <field-descriptor
     name="branchcode"
     column="branchCode"
     jdbc-type="INTEGER"
   />
-  <field-descriptor id="4"
+  <field-descriptor
     name="year"
     column="year"
     jdbc-type="INTEGER"
   />
-  <field-descriptor id="5"
+  <field-descriptor
     name="istuniversity"
     column="ISTUniversity"
     jdbc-type="VARCHAR"
   />
-  <field-descriptor id="6"
+  <field-descriptor
     name="worker"
     column="worker"
     jdbc-type="VARCHAR"
   />
-  <field-descriptor id="7"
+  <field-descriptor
     name="gratuitysituation"
     column="gratuitySituation"
     jdbc-type="VARCHAR"
   />
-  <field-descriptor id="8"
+  <field-descriptor
     name="trash"
     column="trash"
     jdbc-type="VARCHAR"
   />
-  <field-descriptor id="9"
+  <field-descriptor
     name="answer1"
     column="answer1"
     jdbc-type="CHAR"
   />
-  <field-descriptor id="10"
+  <field-descriptor
     name="answer2"
     column="answer2"
     jdbc-type="CHAR"
   />
-  <field-descriptor id="11"
+  <field-descriptor
     name="answer3"
     column="answer3"
     jdbc-type="CHAR"
   />
-  <field-descriptor id="12"
+  <field-descriptor
     name="answer4"
     column="answer4"
     jdbc-type="CHAR"
   />
-  <field-descriptor id="13"
+  <field-descriptor
     name="answer5"
     column="answer5"
     jdbc-type="CHAR"
   />
-  <field-descriptor id="14"
+  <field-descriptor
     name="answer6"
     column="answer6"
     jdbc-type="CHAR"
   />
-  <field-descriptor id="15"
+  <field-descriptor
     name="answer7"
     column="answer7"
     jdbc-type="CHAR"
@@ -282,28 +282,28 @@
   class="middleware.middlewareDomain.MWBranch"
   table="mw_BRANCH"
 >
-  <field-descriptor id="0"
+  <field-descriptor
     name="degreecode"
     column="degreeCode"
     jdbc-type="INTEGER"
   />
-  <field-descriptor id="1"
+  <field-descriptor
     name="branchcode"
     column="branchCode"
     jdbc-type="INTEGER"
 
   />
-  <field-descriptor id="2"
+  <field-descriptor
     name="orientationcode"
     column="orientationCode"
     jdbc-type="INTEGER"
   />
-  <field-descriptor id="3"
+  <field-descriptor
     name="description"
     column="description"
     jdbc-type="VARCHAR"
   />
-  <field-descriptor id="4"
+  <field-descriptor
     name="idInternal"
     column="id_internal"
     jdbc-type="INTEGER"
@@ -323,18 +323,18 @@
   class="middleware.middlewareDomain.MWCurricularCourse"
   table="mw_CURRICULAR_COURSE"
 >
-  <field-descriptor id="0"
+  <field-descriptor
     name="coursecode"
     column="courseCode"
     jdbc-type="VARCHAR"
     primarykey="true"
   />
-  <field-descriptor id="1"
+  <field-descriptor
     name="coursename"
     column="courseName"
     jdbc-type="VARCHAR"
   />
-  <field-descriptor id="2"
+  <field-descriptor
     name="universitycode"
     column="universityCode"
     jdbc-type="VARCHAR"
@@ -351,72 +351,72 @@
   class="middleware.middlewareDomain.MWCurricularCourseScope"
   table="mw_CURRICULAR_COURSE_SCOPE"
 >
-  <field-descriptor id="0"
+  <field-descriptor
     name="executionyear"
     column="executionYear"
     jdbc-type="INTEGER"
   />
-  <field-descriptor id="1"
+  <field-descriptor
     name="coursecode"
     column="courseCode"
     jdbc-type="VARCHAR"
   />
-  <field-descriptor id="2"
+  <field-descriptor
     name="degreecode"
     column="degreeCode"
     jdbc-type="INTEGER"
   />
-  <field-descriptor id="3"
+  <field-descriptor
     name="branchcode"
     column="branchCode"
     jdbc-type="INTEGER"
   />
-  <field-descriptor id="4"
+  <field-descriptor
     name="curricularyear"
     column="curricularYear"
     jdbc-type="INTEGER"
   />
-  <field-descriptor id="5"
+  <field-descriptor
     name="curricularsemester"
     column="curricularSemester"
     jdbc-type="INTEGER"
   />
-  <field-descriptor id="6"
+  <field-descriptor
     name="coursetype"
     column="courseType"
     jdbc-type="INTEGER"
   />
-  <field-descriptor id="7"
+  <field-descriptor
     name="theoreticalhours"
     column="theoreticalHours"
     jdbc-type="FLOAT"
   />
-  <field-descriptor id="8"
+  <field-descriptor
     name="praticahours"
     column="praticaHours"
     jdbc-type="FLOAT"
   />
-  <field-descriptor id="9"
+  <field-descriptor
     name="labhours"
     column="labHours"
     jdbc-type="FLOAT"
   />
-  <field-descriptor id="10"
+  <field-descriptor
     name="theoprathours"
     column="theoPratHours"
     jdbc-type="FLOAT"
   />
-  <field-descriptor id="11"
+  <field-descriptor
     name="credits"
     column="credits"
     jdbc-type="FLOAT"
   />
-  <field-descriptor id="12"
+  <field-descriptor
     name="orientation"
     column="orientation"
     jdbc-type="VARCHAR"
   />
-    <field-descriptor id="13"
+    <field-descriptor
     name="idInternal"
     column="idInternal"
     jdbc-type="INTEGER"
@@ -434,73 +434,73 @@
   class="middleware.middlewareDomain.MWEnrolment"
   table="mw_ENROLMENT"
 >
-  <field-descriptor id="0"
+  <field-descriptor
     name="number"
     column="number"
     jdbc-type="INTEGER"
 
   />
-  <field-descriptor id="1"
+  <field-descriptor
     name="enrolmentyear"
     column="enrolmentYear"
     jdbc-type="INTEGER"
   />
-  <field-descriptor id="2"
+  <field-descriptor
     name="curricularcourseyear"
     column="curricularCourseYear"
     jdbc-type="INTEGER"
   />
-  <field-descriptor id="3"
+  <field-descriptor
     name="curricularcoursesemester"
     column="curricularCourseSemester"
     jdbc-type="INTEGER"
   />
-  <field-descriptor id="4"
+  <field-descriptor
     name="season"
     column="season"
     jdbc-type="INTEGER"
   />
-  <field-descriptor id="5"
+  <field-descriptor
     name="coursecode"
     column="courseCode"
     jdbc-type="VARCHAR"
   />
-  <field-descriptor id="6"
+  <field-descriptor
     name="degreecode"
     column="degreeCode"
     jdbc-type="INTEGER"
   />
-  <field-descriptor id="7"
+  <field-descriptor
     name="branchcode"
     column="branchCode"
     jdbc-type="INTEGER"
   />
-  <field-descriptor id="8"
+  <field-descriptor
     name="grade"
     column="grade"
     jdbc-type="CHAR"
   />
-  <field-descriptor id="9"
+  <field-descriptor
     name="teachernumber"
     column="teacherNumber"
     jdbc-type="INTEGER"
   />
-  <field-descriptor id="10"
+  <field-descriptor
     name="examdate"
     column="examDate"
     jdbc-type="DATE"
   />
-  <field-descriptor id="11"
+  <field-descriptor
     name="universitycode"
     column="universityCode"
     jdbc-type="CHAR"
   />
-  <field-descriptor id="12"
+  <field-descriptor
     name="remarks"
     column="remarks"
     jdbc-type="CHAR"
   />
-  <field-descriptor id="13"
+  <field-descriptor
     name="idinternal"
     column="idinternal"
     jdbc-type="INTEGER"
