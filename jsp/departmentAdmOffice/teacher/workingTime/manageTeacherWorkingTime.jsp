@@ -29,7 +29,7 @@
 	<bean:message key="link.teacher-institution-working-time.create"/>
 </html:link>
 <br />
-<span class="error"><html:errors/></span>
+<br />
 
 <bean:size id="listSize" name="infoTeacherInstitutionWorkingTimeList"/>
 

@@ -30,6 +30,7 @@
 	<bean:message key="link.support-lesson.create"/>
 </html:link>
 <br />
+<br />
 <span class="error"><html:errors/></span>
 
 <bean:size id="listSize" name="infoSupportLessonList"/>
